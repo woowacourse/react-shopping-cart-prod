@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <p align="middle" >
   <img src="https://techcourse-storage.s3.ap-northeast-2.amazonaws.com/3e6c6f30b11d4b098b5a3e81be19ce3a" width="400">
 </p>
@@ -19,4 +20,11 @@
 
 ## 🐞 Bug Report
 
+<<<<<<< HEAD
 버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-cart-prod/issues)에 등록해주세요.
+=======
+버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-cart/issues)에 등록해주세요.
+=======
+# react-shopping-cart-prod
+>>>>>>> 443b9a5 (Initial commit)
+>>>>>>> a36602c (Initial commit)
