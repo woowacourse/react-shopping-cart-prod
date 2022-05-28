@@ -12,8 +12,8 @@ import * as cartActions from './action';
 const getList =
   (force = false) =>
   async (dispatch, getState) => {
-    const { isLoading, isLoaded } = getState().cart.items;
-    if (force === false && (isLoading || isLoaded === true)) {
+    const { isLoading, isLoaded } = getState().cart.listAsyncState;
+    if (force === false && (isLoading === true || isLoaded === true)) {
       return;
     }
 
