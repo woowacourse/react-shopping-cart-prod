@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
+import { BASE_SERVER_URL, SERVER_PATH } from "constants";
 import { useFetch } from "hooks/useFetch";
 import { getBaseServerProductItem } from "util/fetch";
 
@@ -15,7 +16,11 @@ function ProductDetailPage() {
     data: selectedProduct,
     isLoading,
     errorMessage,
-  } = useFetch(getBaseServerProductItem(productId));
+  } = useFetch(() =>
+    getBaseServerProductItem({
+      url: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}/${productId}`,
+    })
+  );
 
   const renderContent = () => {
     if (isLoading) return <Spinner />;
