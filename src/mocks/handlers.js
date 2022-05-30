@@ -4,10 +4,8 @@ import { API_URL } from 'api/constants';
 import data from 'mocks/data';
 import images from 'mocks/images';
 
-import { removeProperty } from 'utils';
-
 const cartDB = () => {
-  let cart = JSON.parse(window.localStorage.getItem('server-shopping-cart')) || {};
+  let cart = JSON.parse(window.localStorage.getItem('server-shopping-cart')) || [];
 
   const getCart = () => cart;
   const setCart = (newCart) => {
@@ -64,11 +62,15 @@ const postShoppingCart = rest.post(`${API_URL}shopping-cart`, (req, res, ctx) =>
   const currentShoppingCart = getCart();
   const { productId, quantity } = req.body;
 
-  const newCart = changeProductQuantity(currentShoppingCart, productId, quantity);
+  const newCartProduct = {};
+  newCartProduct.productData = data.products.find(({ id }) => id === productId);
+  newCartProduct.quantity = quantity;
 
-  setCart(newCart);
+  currentShoppingCart.push(newCartProduct);
 
-  return res(ctx.json(newCart));
+  setCart(currentShoppingCart);
+
+  return res(ctx.json(currentShoppingCart));
 });
 
 export const changeProductQuantity = (cart, productId, quantity) => {
@@ -90,16 +92,20 @@ const patchShoppingCart = rest.patch(`${API_URL}shopping-cart`, (req, res, ctx) 
   const { productId, quantity } = req.body;
   const currentShoppingCart = getCart();
 
-  if (!Object.keys(currentShoppingCart).length || !currentShoppingCart[productId]) {
+  const productIndex = currentShoppingCart.findIndex(
+    ({ productData }) => productData.id === productId,
+  );
+
+  if (!currentShoppingCart.length || productIndex < 0) {
     return res(
       ctx.status(404, '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.'),
     );
   }
 
-  const targetProduct = currentShoppingCart[productId];
+  const targetProduct = currentShoppingCart[productIndex];
   targetProduct.quantity = quantity;
 
-  currentShoppingCart[productId] = targetProduct;
+  currentShoppingCart[productIndex] = targetProduct;
 
   setCart(currentShoppingCart);
 
@@ -112,13 +118,20 @@ const deleteShoppingCart = rest.delete(
     const { productId } = req.params;
     const currentShoppingCart = getCart();
 
-    if (!Object.keys(currentShoppingCart).length || !currentShoppingCart[productId]) {
+    const productIndex = currentShoppingCart.findIndex(
+      ({ productData }) => String(productData.id) === productId,
+    );
+
+    if (currentShoppingCart.length === 0 || productIndex < 0) {
       return res(
         ctx.status(404, '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.'),
       );
     }
 
-    const newCart = removeProperty(currentShoppingCart, productId);
+    const newCart = [
+      ...currentShoppingCart.slice(0, productIndex),
+      ...currentShoppingCart.slice(productIndex + 1),
+    ];
 
     setCart(newCart);
 

@@ -40,11 +40,13 @@ function CartProductList() {
       <Styled.Title>장바구니 상품 목록 ({cartLength}개)</Styled.Title>
       <Styled.ListWrapper>
         {cart &&
-          Object.keys(cart).map((id) => {
-            const { productData, quantity } = cart[id];
-
-            return <CartProductCard key={id} product={productData} quantity={quantity} />;
-          })}
+          cart.map(({ productData, quantity }) => (
+            <CartProductCard
+              key={productData.id}
+              product={productData}
+              quantity={quantity}
+            />
+          ))}
         {cartLength === 0 && (
           <ErrorContainer>장바구니에 추가된 상품이 없어요 😥</ErrorContainer>
         )}

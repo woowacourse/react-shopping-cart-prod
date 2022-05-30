@@ -1,5 +1,5 @@
 const initialState = {
-  cart: {},
+  cart: [],
   checkedProductList: [],
   isLoading: false,
 };
@@ -31,7 +31,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart,
-        checkedProductList: Object.keys(cart),
+        checkedProductList: cart.map(({ productData }) => productData.id),
         isLoading: false,
       };
     }

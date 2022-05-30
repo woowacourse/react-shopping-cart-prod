@@ -47,10 +47,10 @@ const useCart = () => {
     }
   };
 
-  const isChecked = (productId) => checkedProductList.includes(String(productId));
+  const isChecked = (productId) => checkedProductList.includes(productId);
 
   const toggleCheck = (productId) => {
-    dispatch(toggleProductCheck(String(productId)));
+    dispatch(toggleProductCheck(productId));
   };
 
   const isAllChecked = cartLength === checkedProductList.length;
@@ -61,7 +61,7 @@ const useCart = () => {
       return;
     }
 
-    dispatch(updateCheckedList(Object.keys(cart)));
+    dispatch(updateCheckedList(cart.map(({ productData }) => productData.id)));
   };
 
   const deleteCheckedProducts = () => {
@@ -76,7 +76,9 @@ const useCart = () => {
   };
 
   const checkedProductsTotalPrice = checkedProductList.reduce((total, productId) => {
-    const { productData, quantity } = cart[productId];
+    const { productData, quantity } = cart.find(
+      ({ productData }) => productData.id === productId,
+    );
     return total + productData.price * quantity;
   }, 0);
 
