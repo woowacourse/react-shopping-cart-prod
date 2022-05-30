@@ -40,7 +40,7 @@ function ProductCartItem({
         <Counter
           count={count}
           handleClickDecreaseButton={handleClickDecreaseButton(id, count)}
-          handleClickIncreaseButton={handleClickIncreaseButton(id)}
+          handleClickIncreaseButton={handleClickIncreaseButton(id, count)}
         />
         <ProductCartPrice>
           {totalPrice?.toLocaleString() || "%ERROR%"}원

@@ -36,15 +36,15 @@ function ProductCartList({ checkList, setCheckList }) {
     setCheckList([]);
   };
 
-  const handleClickIncreaseButton = (id) => () => {
+  const handleClickIncreaseButton = (id, count) => () => {
     if (!checkList.includes(id)) setCheckList((prev) => [...prev, id]);
-    dispatch(updateCartCount(id, "increase"));
+    dispatch(updateCartCount(id, count + 1));
   };
 
   const handleClickDecreaseButton = (id, count) => () => {
     if (count <= 1) return;
     if (!checkList.includes(id)) setCheckList((prev) => [...prev, id]);
-    dispatch(updateCartCount(id, "decrease"));
+    dispatch(updateCartCount(id, count - 1));
   };
 
   const handleClickDeleteItemButton = (id) => () => {

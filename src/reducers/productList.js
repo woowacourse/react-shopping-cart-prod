@@ -1,3 +1,4 @@
+import { BASE_SERVER_URL, SERVER_PATH } from "constants";
 import { getBaseServerProductList } from "util/fetch";
 
 const PRODUCT_LIST_ACTION = {
@@ -9,7 +10,18 @@ const PRODUCT_LIST_ACTION = {
 export const getProductList = () => async (dispatch) => {
   dispatch({ type: PRODUCT_LIST_ACTION.GET_LIST });
   try {
-    const data = await getBaseServerProductList();
+    const response = await getBaseServerProductList({
+      url: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}`,
+    });
+
+    if (!response.ok) {
+      throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+    }
+
+    const data = await response.json();
+    if (!data) {
+      throw new Error(`저장된 정보가 없습니다. 다시 시도해 주세요 :(`);
+    }
 
     dispatch({
       type: PRODUCT_LIST_ACTION.GET_LIST_SUCCESS,
