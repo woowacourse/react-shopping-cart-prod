@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
 import { fetchProductListAsync } from 'store/actions/product';
 import { productSelector } from 'store/selector';
+import useReduxState from './useReduxState';
 
 export default function useProductList() {
-  const dispatch = useDispatch();
-  const { isLoading, productList, pageCount } = useSelector(productSelector);
+  const [productState, dispatch] = useReduxState(productSelector);
+  const { isLoading, productList, pageCount } = productState;
+
   const [searchParams] = useSearchParams();
 
   const currentPage = searchParams.get('page') ?? 1;

@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux';
 import {
   addToCartAsync,
   deleteCartProductAsync,
@@ -10,10 +9,11 @@ import {
 import { cartStoreSelector } from 'store/selector';
 
 import { WARNING_MESSAGES } from 'constants/messages';
+import useReduxState from './useReduxState';
 
 const useCart = () => {
-  const dispatch = useDispatch();
-  const { cart, checkedProductList } = useSelector(cartStoreSelector);
+  const [cartState, dispatch] = useReduxState(cartStoreSelector);
+  const { cart, checkedProductList } = cartState;
 
   const cartLength = cart && Object.keys(cart).length;
 
