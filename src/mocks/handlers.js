@@ -58,12 +58,14 @@ const getShoppingCart = rest.get(`${API_URL}shopping-cart`, (_, res, ctx) => {
   return res(ctx.json(cart));
 });
 
+const findProductData = (productId) => data.products.find(({ id }) => id === productId);
+
 const postShoppingCart = rest.post(`${API_URL}shopping-cart`, (req, res, ctx) => {
   const currentShoppingCart = getCart();
   const { productId, quantity } = req.body;
 
   const newCartProduct = {};
-  newCartProduct.productData = data.products.find(({ id }) => id === productId);
+  newCartProduct.productData = findProductData(productId);
   newCartProduct.quantity = quantity;
 
   currentShoppingCart.push(newCartProduct);
@@ -73,28 +75,15 @@ const postShoppingCart = rest.post(`${API_URL}shopping-cart`, (req, res, ctx) =>
   return res(ctx.json(currentShoppingCart));
 });
 
-export const changeProductQuantity = (cart, productId, quantity) => {
-  const newCart = { ...cart };
-  if (newCart[productId] === undefined) {
-    const newProduct = {};
-    newProduct.productData = data.products.find(({ id }) => id === productId);
-    newProduct.quantity = quantity;
-
-    newCart[productId] = newProduct;
-  } else {
-    newCart[productId].quantity += quantity;
-  }
-
-  return newCart;
+const findProductCartIndex = (currentShoppingCart, productId) => {
+  return currentShoppingCart.findIndex(({ productData }) => productData.id === productId);
 };
 
 const patchShoppingCart = rest.patch(`${API_URL}shopping-cart`, (req, res, ctx) => {
   const { productId, quantity } = req.body;
   const currentShoppingCart = getCart();
 
-  const productIndex = currentShoppingCart.findIndex(
-    ({ productData }) => productData.id === productId,
-  );
+  const productIndex = findProductCartIndex(currentShoppingCart, productId);
 
   if (!currentShoppingCart.length || productIndex < 0) {
     return res(
@@ -115,12 +104,12 @@ const patchShoppingCart = rest.patch(`${API_URL}shopping-cart`, (req, res, ctx) 
 const deleteShoppingCart = rest.delete(
   `${API_URL}shopping-cart/:productId`,
   (req, res, ctx) => {
-    const { productId } = req.params;
+    const { productId: idString } = req.params;
+    const productId = Number(idString);
+
     const currentShoppingCart = getCart();
 
-    const productIndex = currentShoppingCart.findIndex(
-      ({ productData }) => String(productData.id) === productId,
-    );
+    const productIndex = findProductCartIndex(currentShoppingCart, productId);
 
     if (currentShoppingCart.length === 0 || productIndex < 0) {
       return res(
