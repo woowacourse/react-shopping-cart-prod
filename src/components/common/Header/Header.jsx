@@ -24,7 +24,7 @@ function Header() {
               size={windowSize >= IconSizeBreakPoint ? '50' : '30'}
               stroke="white"
             />
-            BLZZI&apos;S CAMPING
+            BLVIC&apos;S CAMPING
           </Styled.Logo>
         </Styled.NavLink>
 
