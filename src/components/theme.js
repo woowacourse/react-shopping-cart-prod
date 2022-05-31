@@ -5,6 +5,9 @@ const COLORS = {
   black: '#000000',
   brown: '#73675C',
   gray: '#cccccc',
+  gray_002: '#d8d8d8',
+  red: '#C80000',
+  green: '#009721',
 };
 
 const theme = {
