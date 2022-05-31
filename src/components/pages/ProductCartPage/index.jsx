@@ -3,14 +3,10 @@ import React, { useEffect, useState } from "react";
 import { useStore } from "hooks/useStore";
 import { getCartList } from "reducers/cartList";
 
+import PageHeader from "components/common/PageHeader";
 import PaymentAmount from "./PaymentAmount";
 import ProductCartList from "./ProductCartList";
-import {
-  CartPageContainer,
-  CartPageHeader,
-  CartPageList,
-  CartPagePayment,
-} from "./styled";
+import { CartPageContainer, CartPageList, CartPagePayment } from "./styled";
 
 function ProductCartPage() {
   const { data: cartList, isLoading, dispatch } = useStore("cartList");
@@ -38,7 +34,7 @@ function ProductCartPage() {
 
   return (
     <CartPageContainer>
-      <CartPageHeader>장바구니</CartPageHeader>
+      <PageHeader>장바구니</PageHeader>
       <CartPageList>
         <ProductCartList checkList={checkList} setCheckList={setCheckList} />
       </CartPageList>

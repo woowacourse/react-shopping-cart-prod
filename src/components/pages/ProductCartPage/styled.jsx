@@ -11,16 +11,6 @@ export const CartPageContainer = styled.section`
   overflow: auto;
 `;
 
-export const CartPageHeader = styled.h2`
-  grid-area: header;
-
-  height: fit-content;
-  padding: 16px 0;
-
-  text-align: center;
-  border-bottom: 4px solid ${({ theme: { color } }) => color.gray01};
-`;
-
 export const CartPageList = styled.div`
   grid-area: list;
 
