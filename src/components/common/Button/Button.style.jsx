@@ -5,6 +5,7 @@ export const Button = styled.button`
   padding: 15px;
 
   border: none;
+  border-radius: 4px;
 
   background-color: ${({ theme }) => theme.colorConfig.primary};
   color: ${({ theme }) => theme.colorConfig.textWhite};
@@ -15,8 +16,8 @@ export const Button = styled.button`
   ${({ isWithInput }) =>
     isWithInput &&
     css`
-      border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
+      border-top-left-radius: 0px;
+      border-bottom-left-radius: 0px;
       width: 200px;
       font-size: 20px;
     `}
