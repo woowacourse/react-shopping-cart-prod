@@ -4,7 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Wrapper from './style';
 
-import { addCart, addMoreCart, deleteCart, downCart } from 'reducers/addUpdateDeleteCart';
+import {
+  addCart,
+  addMoreCart,
+  deleteCart,
+  downCart,
+} from 'reducers/addUpdateDeleteCart';
 import { onMessage } from 'reducers/snackbar';
 import { open, close } from 'reducers/productQuantity';
 
@@ -12,11 +17,16 @@ import debounce from 'utils';
 
 import { SNACKBAR_MESSAGE } from 'constants';
 
-const ProductQuantity = ({ productId, productTitle, cartQuantity, children }) => {
+const ProductQuantity = ({
+  productId,
+  productTitle,
+  cartQuantity,
+  children,
+}) => {
   const dispatch = useDispatch();
   const [showQuantity, setShowQuantity] = useState(false);
   const [quantity, setQuantity] = useState(cartQuantity);
-  const { isOpended } = useSelector((state) => state.productQuantity);
+  const { isOpened } = useSelector((state) => state.productQuantity);
 
   const handleClickMinusButton = debounce(
     useCallback(async () => {
@@ -31,7 +41,7 @@ const ProductQuantity = ({ productId, productTitle, cartQuantity, children }) =>
       setQuantity(quantity - 1);
       dispatch(onMessage(SNACKBAR_MESSAGE.deleteProduct(productTitle)));
     }, [dispatch, productId, quantity]),
-    150,
+    150
   );
 
   const handleClickAddButton = debounce(
@@ -45,7 +55,7 @@ const ProductQuantity = ({ productId, productTitle, cartQuantity, children }) =>
       setQuantity(quantity + 1);
       dispatch(onMessage(SNACKBAR_MESSAGE.addProduct(productTitle)));
     }, [dispatch, productId, quantity]),
-    150,
+    150
   );
 
   const handleClickCartImage = useCallback(async () => {
@@ -65,10 +75,10 @@ const ProductQuantity = ({ productId, productTitle, cartQuantity, children }) =>
   }, [showQuantity, quantity]);
 
   useEffect(() => {
-    if (isOpended) {
+    if (isOpened) {
       setShowQuantity(false);
     }
-  }, [isOpended]);
+  }, [isOpened]);
 
   return (
     <Wrapper showQuantity={showQuantity}>
