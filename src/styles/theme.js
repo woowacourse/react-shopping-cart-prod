@@ -14,6 +14,7 @@ const COLORS = {
   MINT_200: '#2AC1BC',
   BROWN_100: '#84786D',
   BROWN_200: '#73675C',
+  RED_100: '#FF7676',
 };
 
 const GRADIENT = {

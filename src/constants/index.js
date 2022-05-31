@@ -3,6 +3,7 @@ export const 아이콘_코드 = {
   CART: 'f07a',
   USER: 'f007',
   DELETE: 'f2ed',
+  ALERT: 'f06a',
 };
 
 export const 비동기_요청 = {
