@@ -1,12 +1,15 @@
-import React, { ReactNode, useState, useEffect } from 'react';
+import { ReactNode, useState, useEffect } from 'react';
 import Styled from './index.style';
 import { ReactComponent as CorrectIcon } from 'assets/correct_icon.svg';
 import { ReactComponent as InCorrectIcon } from 'assets/incorrect_icon.svg';
 
 interface InputProps {
   icon: ReactNode;
-  label: LabelKind;
+  label: string;
   validator?: Function;
+  inputValue: string;
+  setInputValue: Function;
+  type?: string;
 }
 
 enum LabelKind {
@@ -15,8 +18,7 @@ enum LabelKind {
   'Password' = '비밀번호',
 }
 
-const Input = ({ icon, label, validator }: InputProps) => {
-  const [inputValue, setInputValue] = useState('');
+const Input = ({ icon, label, validator, inputValue, setInputValue, type }: InputProps) => {
   const [message, setMessage] = useState('');
   const [isCorrect, setIsCorrect] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
@@ -44,6 +46,7 @@ const Input = ({ icon, label, validator }: InputProps) => {
         {icon}
         <Styled.Input
           id={label}
+          type={type || 'text'}
           placeholder={`Enter your ${label.toLowerCase()}`}
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
