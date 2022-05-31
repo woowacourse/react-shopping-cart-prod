@@ -18,4 +18,9 @@ const CartListContainer = styled(FlexWrapper)`
   padding: 3rem;
 `;
 
-export { ProductListContainer, ProductDetailWrapper, CartListContainer };
+const LoginContainer = styled(FlexWrapper)`
+  flex-direction: column;
+  margin: auto;
+`;
+
+export { ProductListContainer, ProductDetailWrapper, CartListContainer, LoginContainer };
