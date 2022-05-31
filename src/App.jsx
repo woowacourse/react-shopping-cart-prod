@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "@shared/header/Header";
 import styles from "@/app.module";
 import Home from "@home/Home";
