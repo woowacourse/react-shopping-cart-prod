@@ -77,6 +77,7 @@ module.exports = {
       "@scss": resolve(__dirname, "../src/scss"),
       "@home": resolve(__dirname, "../src/pages/home"),
       "@cart": resolve(__dirname, "../src/pages/cart"),
+      "@product-detail": resolve(__dirname, "../src/pages/product-detail"),
       "@redux": resolve(__dirname, "../src/redux"),
       "@assets": resolve(__dirname, "../src/assets"),
       "@mock": resolve(__dirname, "../mock"),
