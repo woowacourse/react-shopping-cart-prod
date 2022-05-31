@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 const productQuantitySlice = createSlice({
   name: 'productQuantity',
   initialState: {
-    isOpened: 0,
+    isOpened: false,
   },
   reducers: {
     open(state) {
-      state.isOpened += true;
+      state.isOpened = true;
     },
     close(state) {
-      state.isOpened += false;
+      state.isOpened = false;
     },
   },
 });
