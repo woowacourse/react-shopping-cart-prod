@@ -7,8 +7,8 @@ export const Form = styled.form`
   padding: 48px 16px;
 `;
 
-function LoginForm({ children }) {
+function UserForm({ children }) {
   return <Form>{children}</Form>;
 }
 
-export default LoginForm;
+export default UserForm;

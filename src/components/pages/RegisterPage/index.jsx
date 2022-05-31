@@ -9,13 +9,13 @@ import {
   RegisterButtonContainer,
   RegisterLabel,
 } from "./styled";
-import RegisterForm from "./RegisterForm";
+import UserForm from "components/common/UserForm";
 
 function RegisterPage() {
   return (
     <RegisterPageContainer>
       <PageHeader>회원가입</PageHeader>
-      <RegisterForm>
+      <UserForm>
         <RegisterInputContainer>
           <RegisterLabel>이메일</RegisterLabel>
           <UserInput
@@ -49,7 +49,7 @@ function RegisterPage() {
             로그인
           </DefaultButton>
         </RegisterButtonContainer>
-      </RegisterForm>
+      </UserForm>
     </RegisterPageContainer>
   );
 }
