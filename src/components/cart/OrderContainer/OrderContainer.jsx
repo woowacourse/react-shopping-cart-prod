@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { Button } from 'components/common';
 import * as Styled from 'components/cart/OrderContainer/OrderContainer.style';
 import useCart from 'hooks/useCart';
 
@@ -14,9 +15,9 @@ function OrderContainer() {
           <Styled.Label>결제예상금액</Styled.Label>
           <Styled.Price>{totalPrice}원</Styled.Price>
         </Styled.ExpectedPriceWrapper>
-        <Styled.Button disabled={checkedProductCount === 0}>
+        <Button disabled={checkedProductCount === 0}>
           주문하기 ({checkedProductCount}개)
-        </Styled.Button>
+        </Button>
       </Styled.Content>
     </Styled.Container>
   );
