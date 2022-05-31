@@ -21,6 +21,12 @@ export const Input = styled.input`
 
   font-size: 20px;
 
+  ${({ isValid }) =>
+    !isValid &&
+    css`
+      border: red 2px solid;
+    `}
+
   &::placeholder {
     color: ${({ theme }) => theme.colorConfig.secondary};
   }
