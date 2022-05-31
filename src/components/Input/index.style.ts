@@ -5,7 +5,7 @@ const Styled = {
     width: 439px;
     height: 64px;
     font-size: 12px;
-    margin: 12px 0;
+    margin: 24px 0;
   `,
 
   Label: styled.label`

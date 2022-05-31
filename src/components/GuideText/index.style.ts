@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-
 import { Link } from 'react-router-dom';
+
 const Styled = {
   Container: styled.div`
-    margin: 10px 0;
+    margin: 16px 0;
   `,
 
   Guide: styled.span`

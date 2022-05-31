@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 const Styled = {
-  Container: styled.div``,
+  Container: styled.div`
+    margin-bottom: 40px;
+  `,
 
   SubTitle: styled.p`
     color: #98989e;
     font-size: 16px;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   `,
 
   MainTitle: styled.h1`

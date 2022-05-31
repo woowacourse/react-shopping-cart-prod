@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 const Styled = {
   Button: styled(Button)`
-    width: 100%;
+    margin-top: 30px;
+    width: 439px;
     height: 48px;
     border-radius: 5px;
     background-color: ${({ theme }) => theme.colors.mint_001};
