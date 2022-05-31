@@ -12,7 +12,7 @@ const LabeledInput = ({ label, id, ...props }: LabeledInputProps) => {
   return (
     <StyledRoot>
       <StyledLabel htmlFor={id}>{label}</StyledLabel>
-      <StyledInput id={id} {...props} />
+      <StyledInput required id={id} {...props} />
     </StyledRoot>
   );
 };
