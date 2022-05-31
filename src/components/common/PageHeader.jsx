@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Header = styled.h2`
   grid-area: header;
 
+  width: 100%;
   height: fit-content;
   padding: 16px 0;
 

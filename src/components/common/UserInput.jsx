@@ -27,6 +27,7 @@ const Input = styled.input`
 `;
 
 const ErrorMessage = styled.p`
+  height: 32px;
   padding: 8px;
   color: ${({ theme: { color } }) => color.point};
   font-size: ${({ theme: { fontSize } }) => fontSize.small};

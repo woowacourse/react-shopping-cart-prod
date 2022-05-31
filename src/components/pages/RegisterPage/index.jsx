@@ -1,0 +1,82 @@
+import styled from "styled-components";
+
+import { theme } from "style";
+
+import RegisterForm from "./RegisterForm";
+import UserInput from "components/common/UserInput";
+import DefaultButton from "components/common/Button/DefaultButton";
+import PageHeader from "components/common/PageHeader";
+
+function RegisterPage() {
+  return (
+    <RegisterPageContainer>
+      <PageHeader>회원가입</PageHeader>
+      <RegisterForm>
+        <RegisterInputContainer>
+          <RegisterLabel>이메일</RegisterLabel>
+          <UserInput
+            width="500px"
+            errorMessage="gelllow~~"
+            placeholder="이메일을 입력해주세요"
+          />
+        </RegisterInputContainer>
+        <RegisterInputContainer>
+          <RegisterLabel>닉네임</RegisterLabel>
+          <UserInput width="500px" placeholder="닉네임을 입력해주세요" />
+        </RegisterInputContainer>
+        <RegisterInputContainer>
+          <RegisterLabel>비밀번호</RegisterLabel>
+          <UserInput width="500px" placeholder="비밀번호를 입력해주세요" />
+        </RegisterInputContainer>
+        <RegisterInputContainer>
+          <RegisterLabel>비밀번호 확인</RegisterLabel>
+          <UserInput
+            width="500px"
+            placeholder="비밀번호를 다시 한 번 입력해주세요"
+          />
+        </RegisterInputContainer>
+        <RegisterButtonContainer>
+          <DefaultButton width="500px">가입하기</DefaultButton>
+          <DefaultButton
+            width="500px"
+            bgColor={theme.color.main}
+            textColor={theme.color.point}
+          >
+            로그인
+          </DefaultButton>
+        </RegisterButtonContainer>
+      </RegisterForm>
+    </RegisterPageContainer>
+  );
+}
+
+export default RegisterPage;
+
+const RegisterPageContainer = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+const RegisterInputContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 620px;
+  align-items: center;
+`;
+
+const RegisterButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+`;
+
+const RegisterLabel = styled.label`
+  margin-bottom: 22px;
+
+  color: ${({ theme: { color } }) => color.gray01};
+  font-weight: 700;
+`;
