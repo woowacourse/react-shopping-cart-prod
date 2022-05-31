@@ -5,10 +5,6 @@
 <p align="middle">React & Redux 데스크탑 장바구니 애플리케이션</p>
 </p>
 
-## [🛒 장바구니 데모 페이지](https://nan-noo.github.io/react-shopping-cart/)
-
-장바구니 페이지는 현재 local 환경에서만 확인할 수 있습니다.
-
 ### local 실행 방법
 
 ```bash
@@ -18,10 +14,6 @@
 # 3. 리액트 앱 실행
   npm run start
 ```
-
-## [📙 장바구니 스토리북 데모 페이지](https://6288a7606a00ac004a864838-bojkovcyzv.chromatic.com/?path=/story/component-common-checkbox--default)
-
-##
 
 ## 🚀 Getting Started
 
