@@ -44,30 +44,40 @@ function Register() {
       return;
     }
 
-    const success = await checkEmailDuplicate(emailValue);
+    try {
+      const success = await checkEmailDuplicate(emailValue);
 
-    setIsUniqueEmail(success);
+      setIsUniqueEmail(success);
+
+      if (!success) {
+        alert('사용할 수 없는 이메일입니다.');
+      }
+    } catch ({ message }) {
+      setIsUniqueEmail(false);
+      alert(message);
+    }
   };
+
+  const isAllValid =
+    isEmailValid && isPasswordValid && isPasswordConfirmValid && isNicknameValid;
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (
-      isEmailValid &&
-      isPasswordValid &&
-      isPasswordConfirmValid &&
-      isNicknameValid &&
-      passwordValue === passwordConfirmValue &&
-      isUniqueEmail
-    ) {
+    if (!isAllValid || !isUniqueEmail || passwordValue !== passwordConfirmValue) {
+      alert('땡!');
+      return;
+    }
+
+    try {
       await addUser({
         email: emailValue,
         nickname: nicknameValue,
         password: passwordValue,
       });
-      console.log('성공~~!');
-      return;
+      alert('성공~~!');
+    } catch ({ message }) {
+      alert(message);
     }
-    alert('땡!');
   };
 
   const inputAttributeList = [
