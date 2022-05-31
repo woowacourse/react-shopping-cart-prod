@@ -1,18 +1,38 @@
+import { AUTH_BASE_URL, authClient } from 'apis';
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
+import { useNavigate } from 'react-router-dom';
+import { UserInfo } from 'types/domain';
+
+import { PATH } from '../Routers';
 
 const Signup = () => {
   const [email, onChangeEmail] = useInput();
   const [password, onChangePassword] = useInput();
+  const [name, onChangeName] = useInput();
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const navigate = useNavigate();
 
-  const onSubmitAuthForm = (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password === passwordConfirmation) {
+      const signUpResponse = await authClient.post<Omit<UserInfo, 'password'>>('/customers', {
+        loginId: email,
+        name,
+        password,
+      });
+
+      if (signUpResponse.status === 400) {
+        throw new Error('회원가입이 실패하였습니다');
+      }
+
+      alert(`${signUpResponse.data.name}님 회원가입 축하드립니다.`);
+      navigate(PATH.home);
+
       return;
     }
     openSnackbar();
@@ -28,7 +48,14 @@ const Signup = () => {
         value={email}
         onChange={onChangeEmail}
       />
-      <LabeledInput label='이름' id='name' type='text' placeholder='이름을 입력해주세요' />
+      <LabeledInput
+        label='이름'
+        id='name'
+        type='text'
+        placeholder='이름을 입력해주세요'
+        name={name}
+        onChange={onChangeName}
+      />
       <LabeledInput
         label='비밀번호'
         id='password'
