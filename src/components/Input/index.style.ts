@@ -36,6 +36,7 @@ const Styled = {
     display: flex;
     align-items: center;
     height: 30px;
+    padding-left: 2px;
   `,
 
   Message: styled.span<{ isFocus: boolean; isCorrect: boolean }>`
