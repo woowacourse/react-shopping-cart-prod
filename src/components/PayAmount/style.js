@@ -2,19 +2,19 @@ import styled from 'styled-components';
 
 export default styled.div`
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.gray};
+  border: 1px solid ${({ theme }) => theme.gray_100};
 
   .title {
     height: 80px;
     padding-left: 30px;
-    border-bottom: 4px solid ${({ theme }) => theme.gray};
+    border-bottom: 4px solid ${({ theme }) => theme.gray_100};
   }
 
   .title h3 {
     line-height: 80px;
     letter-spacing: 0.5px;
     font-size: 2.4rem;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 
   .amount {
@@ -29,7 +29,7 @@ export default styled.div`
     position: relative;
     font-size: 2rem;
     letter-spacing: 0.5px;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 
   .amount div p::after {
@@ -39,7 +39,7 @@ export default styled.div`
     left: 0;
     width: 100%;
     height: 8px;
-    background-color: ${({ theme }) => theme.green};
+    background-color: ${({ theme }) => theme.green_50};
     opacity: 0.5;
     z-index: -1;
   }

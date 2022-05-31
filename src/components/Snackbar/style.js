@@ -30,7 +30,7 @@ export default styled.div`
   border-radius: 2px;
   padding: 16px;
   z-index: 1;
-  background-color: ${({ theme }) => theme.green};
+  background-color: ${({ theme }) => theme.green_50};
   color: white;
   font-size: 1.8rem;
   animation: ${fadeIn} 0.5s, ${fadeOut} 0.5s 2.7s;

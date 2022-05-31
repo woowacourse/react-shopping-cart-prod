@@ -25,15 +25,15 @@ export default styled.div`
   .title {
     font-size: 3.2rem;
     letter-spacing: 0.5px;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 
   .bottom {
     margin-top: 5px;
     padding: 10px 10px 0;
     letter-spacing: 0.5px;
-    border-top: 1px solid ${({ theme }) => theme.black};
-    color: ${({ theme }) => theme.black};
+    border-top: 1px solid ${({ theme }) => theme.black_50};
+    color: ${({ theme }) => theme.black_50};
   }
 
   .bottom p:first-child {

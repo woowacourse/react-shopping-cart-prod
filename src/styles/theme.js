@@ -1,11 +1,12 @@
 const theme = {
-  green: '#2ac1bc',
-  green2: '#22a6a2',
-  black: '#333333',
-  blue: '#00aaff',
-  red: '#ff1252',
-  gray: '#dddddd',
-  gray2: '#aaaaaa',
+  green_50: '#2ac1bc',
+  green_100: '#22a6a2',
+  black_50: '#333333',
+  blue_50: '#00aaff',
+  red_50: '#ff1252',
+  gray_50: '#bbbbbb',
+  gray_100: '#dddddd',
+  gray_200: '#aaaaaa',
   font: 'BMJUA_ttf',
 };
 

@@ -5,7 +5,7 @@ export default styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 30px 0;
-  border-bottom: 1.5px solid ${({ theme }) => theme.gray};
+  border-bottom: 1.5px solid ${({ theme }) => theme.gray_100};
 
   &:last-child {
     margin-bottom: none;
@@ -29,7 +29,7 @@ export default styled.div`
   .left .title {
     font-size: 2rem;
     letter-spacing: 0.5px;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 
   .right {
@@ -56,13 +56,13 @@ export default styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid ${({ theme }) => theme.gray};
+    border: 1px solid ${({ theme }) => theme.gray_100};
   }
 
   .quantity-wrapper .quantity p {
     font-size: 2.4rem;
     letter-spacing: 0.5px;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 
   .plus-minus-wrapper .plus {
@@ -72,19 +72,19 @@ export default styled.div`
     justify-content: center;
     width: 42px;
     height: 50%;
-    border-top: 1px solid ${({ theme }) => theme.gray};
-    border-right: 1px solid ${({ theme }) => theme.gray};
-    border-bottom: 1px solid ${({ theme }) => theme.gray};
+    border-top: 1px solid ${({ theme }) => theme.gray_100};
+    border-right: 1px solid ${({ theme }) => theme.gray_100};
+    border-bottom: 1px solid ${({ theme }) => theme.gray_100};
 
     &:hover {
-      background-color: ${({ theme }) => theme.gray};
+      background-color: ${({ theme }) => theme.gray_100};
     }
   }
 
   .plus-minus-wrapper .plus div {
     width: 0;
     height: 0;
-    border-bottom: 6px solid black;
+    border-bottom: 6px solid black_50;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
   }
@@ -96,18 +96,18 @@ export default styled.div`
     justify-content: center;
     width: 42px;
     height: 50%;
-    border-right: 1px solid ${({ theme }) => theme.gray};
-    border-bottom: 1px solid ${({ theme }) => theme.gray};
+    border-right: 1px solid ${({ theme }) => theme.gray_100};
+    border-bottom: 1px solid ${({ theme }) => theme.gray_100};
 
     &:hover {
-      background-color: ${({ theme }) => theme.gray};
+      background-color: ${({ theme }) => theme.gray_100};
     }
   }
 
   .plus-minus-wrapper .minus div {
     width: 0;
     height: 0;
-    border-top: 6px solid black;
+    border-top: 6px solid black_50;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
   }
@@ -115,6 +115,6 @@ export default styled.div`
   .right .price {
     font-size: 1.6rem;
     letter-spacing: 0.5px;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 `;

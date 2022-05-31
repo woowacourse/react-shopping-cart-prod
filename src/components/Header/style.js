@@ -5,7 +5,7 @@ export default styled.section`
   justify-content: space-between;
   height: 80px;
   padding: 0 15%;
-  background-color: ${({ theme }) => theme.green};
+  background-color: ${({ theme }) => theme.green_50};
 
   button {
     cursor: pointer;

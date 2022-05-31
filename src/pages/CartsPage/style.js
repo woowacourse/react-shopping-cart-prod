@@ -29,32 +29,32 @@ export default styled.div`
     margin-left: 10px;
     font-size: 1.6rem;
     letter-spacing: 0.5px;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 
   .header button {
     cursor: pointer;
     width: 117px;
     height: 50px;
-    border: 1px solid ${({ theme }) => theme.gray};
+    border: 1px solid ${({ theme }) => theme.gray_100};
     background-color: white;
     font-size: 1.6rem;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 
   .header button:hover {
-    background-color: ${({ theme }) => theme.gray};
+    background-color: ${({ theme }) => theme.gray_100};
   }
 
   .wrapper > .left .title {
     margin-bottom: 16px;
     font-size: 2rem;
     letter-spacing: 0.5px;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 
   .wrapper > .left .container {
-    border-top: 4px solid ${({ theme }) => theme.gray2};
+    border-top: 4px solid ${({ theme }) => theme.gray_200};
     height: 603px;
     overflow-y: auto;
   }

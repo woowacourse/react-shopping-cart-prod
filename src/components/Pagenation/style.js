@@ -10,25 +10,25 @@ export default styled.div`
     justify-content: center;
     width: 35px;
     height: 38px;
-    border: 1px solid ${({ theme }) => theme.gray2};
+    border: 1px solid ${({ theme }) => theme.gray_200};
     background-color: white;
 
     &:hover {
-      background-color: ${({ theme }) => theme.gray};
+      background-color: ${({ theme }) => theme.gray_100};
 
       p {
-        color: ${({ theme }) => theme.green2};
+        color: ${({ theme }) => theme.green_100};
       }
     }
 
     &.__disabled {
       cursor: default;
-      background-color: ${({ theme }) => theme.gray};
+      background-color: ${({ theme }) => theme.gray_100};
     }
   }
 
   .page-item p {
     font-size: 1.5rem;
-    color: ${({ theme }) => theme.green};
+    color: ${({ theme }) => theme.green_50};
   }
 `;

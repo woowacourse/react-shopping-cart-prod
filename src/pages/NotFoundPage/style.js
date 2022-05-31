@@ -18,7 +18,7 @@ export default styled.div`
   div p {
     margin-bottom: 10px;
     font-size: 2.4rem;
-    color: ${({ theme }) => theme.black};
+    color: ${({ theme }) => theme.black_50};
   }
 
   button {
@@ -26,7 +26,7 @@ export default styled.div`
     padding: 10px;
     border: none;
     border-radius: 5px;
-    background-color: ${({ theme }) => theme.green};
+    background-color: ${({ theme }) => theme.green_50};
     color: white;
   }
 

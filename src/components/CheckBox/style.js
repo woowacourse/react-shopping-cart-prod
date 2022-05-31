@@ -8,7 +8,7 @@ export default styled.input.attrs({ type: 'checkbox' })`
     position: relative;
     width: 28px;
     height: 28px;
-    border: 1px solid ${({ theme }) => theme.green2};
+    border: 1px solid ${({ theme }) => theme.green_100};
     border-radius: 2px;
   }
 
@@ -23,6 +23,6 @@ export default styled.input.attrs({ type: 'checkbox' })`
     content: '✔';
     font-size: 25px;
     text-align: center;
-    background-color: ${({ theme }) => theme.green2};
+    background-color: ${({ theme }) => theme.green_100};
   }
 `;

@@ -4,7 +4,7 @@ export default styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
-  color: ${({ theme }) => theme.black};
+  color: ${({ theme }) => theme.black_50};
 
   .circle {
     position: absolute;
@@ -24,7 +24,7 @@ export default styled.div`
     cursor: pointer;
     transition-delay: 0.1s;
     font-size: 2rem;
-    color: ${({ theme }) => theme.red};
+    color: ${({ theme }) => theme.red_50};
   }
 
   .circle.quantity {
@@ -36,7 +36,7 @@ export default styled.div`
     cursor: pointer;
     transition-delay: 0.3s;
     font-size: 2rem;
-    color: ${({ theme }) => theme.blue};
+    color: ${({ theme }) => theme.blue_50};
   }
 
   .circle.minus p {

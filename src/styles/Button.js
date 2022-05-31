@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export default styled.button`
   cursor: pointer;
   border: none;
-  background-color: ${({ theme }) => theme.green};
+  background-color: ${({ theme }) => theme.green_50};
   color: white;
   font-size: 2.4rem;
   transition: opacity 0.2s;
