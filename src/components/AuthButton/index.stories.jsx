@@ -1,7 +1,7 @@
 import AuthButton from '.';
 
 export default {
-  AuthButton: 'Components/AuthButton',
+  title: 'Components/AuthButton',
   component: AuthButton,
 };
 
