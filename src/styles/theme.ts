@@ -14,8 +14,10 @@ const theme = {
     emerald: '#29C2BC',
     white: '#FFFFFF',
     gray: '#AAAAAA',
+    lightGray: '#e9ecef',
     black: '#161616',
     brown: '#73675C',
+    blue: '#339af0',
   },
   zPriorities: {
     overEverything: 50,
