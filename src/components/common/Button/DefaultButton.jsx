@@ -2,14 +2,15 @@ import React from "react";
 import styled from "styled-components";
 
 const BoxButton = styled.button`
-  width: 100%;
+  width: ${({ width = "100%" }) => width};
   padding: 16px 8px;
 
-  ${({ theme: { color, fontSize }, bgColor }) => `
+  ${({ theme: { color, fontSize }, bgColor, textColor }) => `
     font-size: ${fontSize.medium};
     font-weight: 700;
-    color: ${color.main};
-    border: none;
+    color: ${textColor || color.main};
+    border: 1px solid ${color.point};
+    border-radius: 8px;
     background-color: ${bgColor || color.point};
   `}
 

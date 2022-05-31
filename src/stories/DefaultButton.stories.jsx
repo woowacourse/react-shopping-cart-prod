@@ -6,7 +6,6 @@ export default {
   component: DefaultButton,
   argTypes: {
     children: { controls: "text" },
-    bgColor: { controls: "text" },
   },
 };
 
@@ -16,5 +15,22 @@ export const Default = Template.bind({});
 
 Default.args = {
   children: "Sample",
-  bgColor: "",
+};
+
+export const FilledButton = Template.bind({});
+
+FilledButton.args = {
+  children: "Sample",
+  width: "500px",
+  bgColor: "#E7A0A0",
+  textColor: "#fff",
+};
+
+export const EmptyButton = Template.bind({});
+
+EmptyButton.args = {
+  children: "Sample",
+  width: "500px",
+  bgColor: "#fff",
+  textColor: "#E7A0A0",
 };
