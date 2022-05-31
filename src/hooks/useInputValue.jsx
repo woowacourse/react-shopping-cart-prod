@@ -4,7 +4,7 @@ const useInputValue = (pattern) => {
   const [inputValue, setInputValue] = useState('');
 
   const isValid = useMemo(
-    () => inputValue === '' || pattern.test(inputValue),
+    () => inputValue === '' || pattern?.test(inputValue),
     [inputValue],
   );
 

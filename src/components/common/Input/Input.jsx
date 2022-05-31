@@ -9,7 +9,7 @@ function Input({
   value,
   onChange,
   isButtonDisabled,
-  isValid,
+  isValid = true,
   buttonText,
   onButtonClick,
 }) {
