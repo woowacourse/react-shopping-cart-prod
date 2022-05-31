@@ -9,7 +9,7 @@ import { ProductListPage } from 'page';
 import { theme } from 'components';
 import store from 'store/store';
 import { dummyProductList } from 'dummy_data';
-import { BASE_URL } from 'constants';
+import { BASE_URL } from 'utils/constants';
 
 const render = ui => {
   function Wrapper({ children }) {

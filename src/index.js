@@ -5,7 +5,7 @@ import reportWebVitals from 'reportWebVitals';
 import App from 'App';
 import store from 'store/store';
 import axios from 'axios';
-import { SERVER_URL } from 'constants';
+import { SERVER_URL } from 'utils/constants';
 
 axios.defaults.baseURL = SERVER_URL;
 

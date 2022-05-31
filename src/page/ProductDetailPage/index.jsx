@@ -5,7 +5,7 @@ import { Image } from 'components';
 import store from 'store/store';
 import { doPutProductToCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
-import { LINK } from 'constants';
+import { LINK } from 'utils/constants';
 import Styled from 'page/ProductDetailPage/index.style';
 import useProduct from 'hooks/useProduct';
 import useCart from 'hooks/useCart';

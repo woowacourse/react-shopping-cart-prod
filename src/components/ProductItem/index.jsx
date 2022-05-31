@@ -11,7 +11,7 @@ import { doDeleteProductFromCart, doPutProductToCart } from 'actions/actionCreat
 
 import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';
-import { LINK } from 'constants';
+import { LINK } from 'utils/constants';
 
 const ProductItem = ({ id, name, price, image }) => {
   const [isInCart, product] = useCart(id);
