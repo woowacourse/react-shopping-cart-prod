@@ -3,12 +3,14 @@ import ItemDetail from 'pages/ItemDetailPage';
 import NotFound from 'pages/NotFoundPage';
 import ItemListPage from 'pages/ItemListPage';
 import CartPage from 'pages/CartPage';
+import LogInPage from 'pages/LogInPage';
 
 const PATH = {
   notFound: '*',
   main: '/main/:id',
   itemDetail: '/item_detail/:id',
   cart: '/cart',
+  login: '/login',
 };
 
 const Router = () => {
@@ -18,6 +20,7 @@ const Router = () => {
       <Route path={PATH.main} element={<ItemListPage />} />
       <Route path={PATH.itemDetail} element={<ItemDetail />} />
       <Route path={PATH.cart} element={<CartPage />} />
+      <Route path={PATH.login} element={<LogInPage />}></Route>
       <Route path={PATH.notFound} element={<NotFound />} />
     </Routes>
   );
