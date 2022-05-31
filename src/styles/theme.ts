@@ -40,11 +40,13 @@ const theme = {
   media,
   colors: {
     red: '#ff413b',
+    sakuraPink: '#FEF8F8',
     redPink: '#ff9c9c',
     pink: '#ffc2c2',
     white: '#FFFFFF',
     gray: '#AAAAAA',
     lightGray: '#dddddd',
+    shadow: '#0000001a',
     black: '#161616',
     brown: '#73675C',
   },

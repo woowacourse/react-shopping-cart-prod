@@ -13,8 +13,8 @@ import theme from 'styles/theme';
 function App() {
   return (
     <>
-      <GlobalStyle />
       <ThemeProvider theme={theme}>
+        <GlobalStyle />
         <Header />
         <Routes>
           <Route path={PATH.BASE} element={<MainPage />} />

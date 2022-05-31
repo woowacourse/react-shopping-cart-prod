@@ -1,7 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
+import theme from './theme';
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<{ theme: typeof theme }>`
   ${reset}
 
   body {
@@ -9,7 +10,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;
-    background: #faf7fc;
+    background: ${({ theme: { colors } }) => colors.sakuraPink};
   }
 
   button {

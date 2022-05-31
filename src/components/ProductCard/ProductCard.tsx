@@ -123,6 +123,8 @@ const CardImageContainer = styled.div`
   overflow: hidden;
   aspect-ratio: 1 / 1;
   position: relative;
+  border-radius: 5px;
+  box-shadow: ${({ theme: { colors } }) => colors.shadow} 0px 2px 2px;
 
   img {
     width: 100%;
