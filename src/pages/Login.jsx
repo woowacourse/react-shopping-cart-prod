@@ -28,43 +28,43 @@ const Login = () => {
             </label>
             <Input
               id="input-id"
-              placeholder="아이디를 입력해주세요"
-              border={`1px solid ${COLORS.GRAY_400}`}
-              focusBorderColor={COLORS.MINT_200}
               type="text"
-              margin="0.5rem 0"
+              placeholder="아이디를 입력해주세요"
               minLength={4}
               maxLength={20}
+              margin="0.5rem 0"
+              border={`1px solid ${COLORS.GRAY_400}`}
+              focusBorderColor={COLORS.MINT_200}
             />
             <label hidden html-for="input-password">
               비밀번호 입력창
             </label>
             <Input
               id="input-password"
-              placeholder="비밀번호를 입력해주세요"
-              border={`1px solid ${COLORS.GRAY_400}`}
               type="password"
-              margin="0.5rem 0"
+              placeholder="비밀번호를 입력해주세요"
               minLength={8}
               maxLength={20}
+              margin="0.5rem 0"
+              border={`1px solid ${COLORS.GRAY_400}`}
             />
 
             <CommonStyled.HR size="1px" />
 
             <Button
+              margin="0.5rem 0"
               backgroundColor={COLORS.MINT_200}
               hoverColor={COLORS.MINT_100}
-              margin="0.5rem 0"
             >
               로그인
             </Button>
             <Button
               type="button"
-              backgroundColor={COLORS.WHITE}
               color={COLORS.MINT_200}
+              backgroundColor={COLORS.WHITE}
+              margin="0.5rem 0"
               border={`1px solid ${COLORS.MINT_200}`}
               hoverColor={COLORS.MINT_100}
-              margin="0.5rem 0"
             >
               회원 가입
             </Button>

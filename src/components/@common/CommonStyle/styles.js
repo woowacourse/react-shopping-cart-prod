@@ -35,6 +35,7 @@ const PageTitle = styled.h1`
   font-size: 1.6rem;
   font-weight: bold;
   margin-bottom: 1rem;
+  margin: 0 auto;
   color: ${(props) => props.color || COLORS.BLACK};
 `;
 

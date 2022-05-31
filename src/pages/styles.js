@@ -23,4 +23,15 @@ const LoginContainer = styled(FlexWrapper)`
   margin: auto;
 `;
 
-export { ProductListContainer, ProductDetailWrapper, CartListContainer, LoginContainer };
+const SignUpContainer = styled(FlexWrapper)`
+  flex-direction: column;
+  margin: 2rem auto;
+`;
+
+export {
+  ProductListContainer,
+  ProductDetailWrapper,
+  CartListContainer,
+  LoginContainer,
+  SignUpContainer,
+};

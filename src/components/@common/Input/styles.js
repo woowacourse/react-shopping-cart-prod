@@ -4,7 +4,7 @@ import { COLORS } from 'styles/theme';
 const Input = styled.input`
   cursor: text;
   width: ${(props) => props.width || '100%'};
-  height: ${(props) => props.height || '70px'};
+  height: ${(props) => props.height || '60px'};
   border: ${(props) => props.border || 'none'};
   margin: ${(props) => props.margin || '1rem 0'};
   padding: ${(props) => props.padding || '15px;'};

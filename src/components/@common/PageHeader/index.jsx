@@ -3,19 +3,19 @@ import PropTypes from 'prop-types';
 import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 
-const PageHeader = ({ pageTitle }) => (
+const PageHeader = ({ children }) => (
   <>
-    <CommonStyled.PageTitle>{pageTitle}</CommonStyled.PageTitle>
+    <CommonStyled.PageTitle>{children}</CommonStyled.PageTitle>
     <CommonStyled.HR color={COLORS.BLACK} />
   </>
 );
 
 PageHeader.propTypes = {
-  pageTitle: PropTypes.string,
+  children: PropTypes.string,
 };
 
 PageHeader.defaultProps = {
-  pageTitle: '예시 페이지 제목',
+  children: '예시 페이지 제목',
 };
 
 export default PageHeader;
