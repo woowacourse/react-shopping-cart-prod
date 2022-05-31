@@ -4,6 +4,7 @@ import { Form, Input, PageTemplate, PageTitle } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 
 import { addUser, checkEmailDuplicate } from 'api/userApi';
+import { useNavigate } from 'react-router-dom';
 
 const emailPattern =
   /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
@@ -24,6 +25,8 @@ function Register() {
     useInputValue(nicknamePattern);
 
   const [isUniqueEmail, setIsUniqueEmail] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleEmailInput = ({ target: { value } }) => {
     setEmailValue(value);
@@ -75,6 +78,7 @@ function Register() {
         password: passwordValue,
       });
       alert('성공~~!');
+      navigate('/login');
     } catch ({ message }) {
       alert(message);
     }
