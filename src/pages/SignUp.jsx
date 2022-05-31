@@ -101,8 +101,8 @@ const SignUp = () => {
                 id="input-user-age"
                 placeholder="나이를 입력해주세요"
                 type="number"
-                min={1}
-                max={10}
+                min={0}
+                max={200}
                 margin="1rem 0"
                 border={`1px solid ${COLORS.GRAY_400}`}
               />

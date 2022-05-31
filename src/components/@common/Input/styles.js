@@ -11,8 +11,13 @@ const Input = styled.input`
   font-size: ${(props) => props.size || '1.16rem'};
   border-radius: 4px;
   outline: none;
+
   &:focus {
     border-color: ${(props) => props.focusBorderColor || COLORS.MINT_200};
+  }
+
+  &:disabled {
+    background-color: ${COLORS.GRAY_300};
   }
 `;
 
