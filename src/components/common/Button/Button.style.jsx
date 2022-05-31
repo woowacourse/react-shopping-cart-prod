@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Button = styled.button`
   width: 100%;
@@ -11,6 +11,15 @@ export const Button = styled.button`
   font-size: 24px;
 
   cursor: pointer;
+
+  ${({ isWithInput }) =>
+    isWithInput &&
+    css`
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      width: 200px;
+      font-size: 20px;
+    `}
 
   &:hover {
     opacity: 0.9;
