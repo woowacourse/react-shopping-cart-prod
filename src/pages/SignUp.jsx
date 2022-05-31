@@ -17,7 +17,7 @@ const SignUp = () => {
     <Layout>
       <Styled.SignUpContainer>
         <CommonStyled.Container flexDirection="column" justifyContent="center">
-          <PageHeader>회원가입</PageHeader>
+          <PageHeader color={COLORS.GRAY_300}>회원가입</PageHeader>
           <form style={{ width: '100%' }}>
             <CommonStyled.FlexWrapper
               alignItems="flex-end"

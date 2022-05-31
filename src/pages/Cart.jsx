@@ -54,7 +54,7 @@ const Cart = () => {
   return (
     <Layout>
       <Styled.CartListContainer>
-        <PageHeader pageTitle="장바구니" />
+        <PageHeader>장바구니</PageHeader>
         <CommonStyled.Container alignItems="flex-start" width="100%" margin="0">
           <CommonStyled.FlexWrapper margin="2rem" flexDirection="column" alignItems="flex-start">
             <CartList
