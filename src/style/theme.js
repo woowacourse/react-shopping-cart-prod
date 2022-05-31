@@ -12,6 +12,8 @@ const theme = {
     WHITE: '#FFFFFF',
     BLACK: '#000000',
     CYAN_300: '#2AC1BC',
+    PINK_200: '#F977B3',
+    PINK_300: '#F73D93',
     GREY_100: '#BBBBBB',
     GREY_200: '#E4E4E7',
     GREY_300: '#DDDDDD',
