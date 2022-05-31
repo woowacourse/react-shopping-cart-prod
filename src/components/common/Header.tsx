@@ -18,7 +18,7 @@ const Header = () => {
         <StyledNav>
           <button onClick={() => navigate('/cart')}>장바구니</button>
           <button>주문목록</button>
-          <button onClick={() => navigate('/login')}>로그인</button>
+          <button onClick={() => navigate('/signIn')}>로그인</button>
         </StyledNav>
       </div>
     </StyledRoot>

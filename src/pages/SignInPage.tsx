@@ -1,8 +1,9 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 
-const LogInPage = () => {
+const SignInPage = () => {
   return (
     <StyledRoot>
       <StyledTitle>로그인</StyledTitle>
@@ -18,7 +19,9 @@ const LogInPage = () => {
 
       <StyledLoginButton>로그인</StyledLoginButton>
 
-      <StyledFooter>회원가입</StyledFooter>
+      <StyledFooter>
+        <Link to='/signUp'>회원가입</Link>
+      </StyledFooter>
     </StyledRoot>
   );
 };
@@ -82,4 +85,4 @@ const StyledFooter = styled.div`
   letter-spacing: 0.5px;
 `;
 
-export default LogInPage;
+export default SignInPage;

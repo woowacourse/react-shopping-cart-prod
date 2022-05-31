@@ -3,14 +3,16 @@ import ItemDetail from 'pages/ItemDetailPage';
 import NotFound from 'pages/NotFoundPage';
 import ItemListPage from 'pages/ItemListPage';
 import CartPage from 'pages/CartPage';
-import LogInPage from 'pages/LogInPage';
+import SignInPage from 'pages/SignInPage';
+import SignUpPage from 'pages/SignUpPage';
 
 const PATH = {
   notFound: '*',
   main: '/main/:id',
   itemDetail: '/item_detail/:id',
   cart: '/cart',
-  login: '/login',
+  signIn: '/signIn',
+  signUp: '/signUp',
 };
 
 const Router = () => {
@@ -20,7 +22,8 @@ const Router = () => {
       <Route path={PATH.main} element={<ItemListPage />} />
       <Route path={PATH.itemDetail} element={<ItemDetail />} />
       <Route path={PATH.cart} element={<CartPage />} />
-      <Route path={PATH.login} element={<LogInPage />}></Route>
+      <Route path={PATH.signIn} element={<SignInPage />} />
+      <Route path={PATH.signUp} element={<SignUpPage />} />
       <Route path={PATH.notFound} element={<NotFound />} />
     </Routes>
   );
