@@ -22,6 +22,10 @@ export const Input = styled.input`
     &::placeholder {
       color: ${color.gray02};
     }
+
+    &:disabled {
+      outline: 1px solid ${color.gray02};
+    }
   `}
 `;
 
