@@ -1,5 +1,7 @@
 import { 숫자 } from 'constants/';
 import PropTypes from 'prop-types';
+import Input from 'components/@common/Input/styles';
+import { COLORS } from 'styles/theme';
 import Button from '../Button/styles';
 import * as CommonStyle from '../CommonStyle/styles';
 
@@ -27,12 +29,14 @@ const Counter = ({ id, count, handleItemCount }) => {
 
   return (
     <CommonStyle.FlexWrapper>
-      <CommonStyle.Input
+      <Input
         width="80px"
         height="40px"
         type="number"
         size="1.2rem"
         textAlign="center"
+        border={`1px solid ${COLORS.GRAY_500}`}
+        margin="0"
         value={count}
         onChange={(e) => onInputCounter(e)}
       />

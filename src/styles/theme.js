@@ -7,8 +7,11 @@ const COLORS = {
   GRAY_260: '#ededed',
   GRAY_300: '#DDDDDD',
   GRAY_400: '#AAAAAA',
-  GRAY_500: '#555555',
+  GRAY_500: '#666666',
+  GRAY_600: '#555555',
   BLUE_100: '#0066FF',
+  MINT_100: '#29D5CF',
+  MINT_200: '#2AC1BC',
   BROWN_100: '#84786D',
   BROWN_200: '#73675C',
 };

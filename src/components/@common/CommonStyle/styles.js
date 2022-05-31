@@ -10,6 +10,7 @@ const FlexWrapper = styled.div`
   height: ${(props) => props.height || 'unset'};
   align-items: ${(props) => props.alignItems || 'center'};
   justify-content: ${(props) => props.justifyContent};
+  border: ${(props) => props.border};
 `;
 
 const Container = styled.div`
@@ -21,6 +22,7 @@ const Container = styled.div`
   height: ${(props) => props.height || 'unset'};
   align-items: ${(props) => props.alignItems || 'flex-start'};
   justify-content: ${(props) => props.justifyContent || 'unset'};
+  border: ${(props) => props.border};
 `;
 
 const HR = styled.hr`
@@ -37,16 +39,10 @@ const PageTitle = styled.h1`
 `;
 
 const Text = styled.p`
+  margin: ${(props) => props.margin || '0'};
   padding: ${(props) => props.padding || '0'};
   font-size: ${(props) => props.size || '1rem'};
   font-weight: ${(props) => props.weight || 'normal'};
 `;
 
-const Input = styled.input`
-  width: ${(props) => props.width || '100%'};
-  height: ${(props) => props.height || '100%'};
-  text-align: ${(props) => props.textAlign || 'left'};
-  font-size: ${(props) => props.size || '1rem'};
-`;
-
-export { FlexWrapper, Container, HR, PageTitle, Text, Input };
+export { FlexWrapper, Container, HR, PageTitle, Text };
