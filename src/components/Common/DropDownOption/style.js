@@ -5,8 +5,8 @@ export const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  min-height: 90px;
-  font-size: 32px;
+  min-height: 70px;
+  font-size: 24px;
   border-bottom: ${({ hasUnderLine = true, theme }) =>
     hasUnderLine ? `2px solid ${theme.COLOR.GREY_200}` : ''};
   cursor: pointer;

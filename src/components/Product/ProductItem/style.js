@@ -15,7 +15,7 @@ export const Overlay = styled.div`
   justify-content: center;
   background-color: rgba(255, 255, 255, 0.5);
   color: #fff;
-  z-index: 2000;
+  z-index: 900;
   transition: opacity 0.3s ease;
   &:hover {
     opacity: 1;

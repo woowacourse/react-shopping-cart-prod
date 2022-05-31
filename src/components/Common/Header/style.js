@@ -48,3 +48,21 @@ export const Badge = styled.div`
   justify-content: center;
   font-size: 1.2rem;
 `;
+
+export const AuthNavWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  &:hover :nth-child(2) {
+    display: flex;
+  }
+`;
+
+export const DropDownWrapper = styled.div`
+  display: none;
+  position: absolute;
+  top: 80px;
+  right: 0;
+  z-index: 1000;
+`;
