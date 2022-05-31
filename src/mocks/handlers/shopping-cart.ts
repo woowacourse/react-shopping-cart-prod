@@ -3,7 +3,7 @@ import type { PathParams } from 'msw';
 import { rest } from 'msw';
 import { CartItem, Item } from 'types/domain';
 
-export const handlers = [
+export const cartHandler = [
   rest.get<null, null, Item[]>(`${BASE_URL}/itemList`, (req, res, ctx) => {
     const page = req.url.searchParams.get('_page');
     const limit = req.url.searchParams.get('_limit');

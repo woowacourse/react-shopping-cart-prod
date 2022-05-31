@@ -11,4 +11,14 @@ export interface CartItem {
   isSelected: boolean;
 }
 
+export interface UserInfo {
+  loginId: string;
+  name: string;
+  password: string;
+}
+
+export interface LoginResponse extends Pick<UserInfo, 'name'> {
+  accessToken: string;
+}
+
 export type ItemInCart = Item & CartItem;
