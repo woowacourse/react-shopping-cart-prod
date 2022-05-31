@@ -1,9 +1,10 @@
 import { LOCAL_BASE_URL } from 'apis';
 import { rest } from 'msw';
 import { mockItemList } from './mockDB';
-import { CartItem } from 'types/domain';
+import { CartItem, SignInInfo, SignUpInfo, UserInfo } from 'types/domain';
 
 let mockCartList: CartItem[] = [];
+let mockUserList: UserInfo[] = [];
 
 export const handlers = [
   rest.get(`${LOCAL_BASE_URL}/itemList`, (req, res, ctx) => {
@@ -68,5 +69,27 @@ export const handlers = [
     mockCartList = [...newCartList];
 
     return res(ctx.status(200), ctx.json(cartItem));
+  }),
+
+  //user
+  rest.post<SignUpInfo>(`${LOCAL_BASE_URL}/users`, (req, res, ctx) => {
+    const signUpInfo: SignUpInfo = req.body;
+
+    mockUserList = [...mockUserList, signUpInfo];
+
+    return res(ctx.status(200), ctx.json({ email: signUpInfo.email, name: signUpInfo.name }));
+  }),
+
+  rest.post<SignInInfo>(`${LOCAL_BASE_URL}/users`, (req, res, ctx) => {
+    const signInInfo: SignInInfo = req.body;
+
+    const userInfo: UserInfo = mockUserList.find(
+      user => user.email === signInInfo.email && user.password === signInInfo.password
+    );
+
+    return res(
+      ctx.status(200),
+      ctx.json({ email: userInfo.email, name: userInfo.name, token: 't1234' })
+    );
   }),
 ];
