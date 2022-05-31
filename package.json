@@ -29,7 +29,6 @@
     "@storybook/react": "^6.4.22",
     "@storybook/testing-library": "^0.0.11",
     "commitizen": "^4.2.4",
-    "commitlint-config-gitmoji": "^2.2.5",
     "cz-customizable": "^6.3.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
