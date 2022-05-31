@@ -6,9 +6,10 @@ const theme = {
   pink_50: '#ffeaea',
   pink_100: '#ffacac',
   red_50: '#ff1252',
-  gray_50: '#bbbbbb',
+  gray_50: '#fafafa',
   gray_100: '#dddddd',
   gray_200: '#aaaaaa',
+  gray_300: '#8E929F',
   font: 'BMJUA_ttf',
 };
 
