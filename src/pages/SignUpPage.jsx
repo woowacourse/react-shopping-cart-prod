@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import axios from 'axios';
 import styled from 'styled-components';
 
 import Input from '../components/common/Input';
@@ -11,9 +14,10 @@ import {
   isValidNickname,
 } from '../utils/validations';
 
-import { MESSAGE, USER } from '../constants';
+import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER } from '../constants';
 
 function SignUpPage() {
+  const navigate = useNavigate();
   const [signUpInfo, setSignUpInfo] = useState({
     email: '',
     nickname: '',
@@ -22,7 +26,7 @@ function SignUpPage() {
   });
   const { email, nickname, password, passwordConfirm } = signUpInfo;
 
-  const handleSignUpInfoSubmit = (e) => {
+  const handleSignUpInfoSubmit = async (e) => {
     e.preventDefault();
 
     if (!isValidEmail(email)) {
@@ -42,7 +46,15 @@ function SignUpPage() {
       return;
     }
 
-    alert('회원가입 성공 로직 추가하기');
+    try {
+      const userInfo = { ...signUpInfo };
+      delete userInfo.passwordConfirm;
+      await axios.post(`${SERVER_PATH.SIGN_UP}`, { userInfo });
+      alert('회원가입 성공');
+      navigate(ROUTES_PATH.LOGIN);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSignUpInfoChange = (signUpInfoKey) => (e) => {

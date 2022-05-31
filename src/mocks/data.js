@@ -73,4 +73,6 @@ const productList = [
   },
 ];
 
-export { productList };
+const user = [];
+
+export { productList, user };

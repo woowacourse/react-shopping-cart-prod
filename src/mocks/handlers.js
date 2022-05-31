@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { SERVER_PATH } from '../constants';
-import { productList } from './data';
+import { productList, user } from './data';
 
 let cartList = [];
 
@@ -43,6 +43,12 @@ const handlers = [
 
     cartList[cartItemIndex].quantity = quantity;
     return res(ctx.status(200), ctx.json(cartList));
+  }),
+
+  rest.post(`${SERVER_PATH.SIGN_UP}`, (req, res, ctx) => {
+    const { userInfo } = req.body;
+    user.push(userInfo);
+    return res(ctx.status(200), ctx.json());
   }),
 ];
 

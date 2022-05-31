@@ -1,6 +1,10 @@
+const API = '/api';
+
 const SERVER_PATH = {
   PRODUCTS: '/products',
   CART: '/cart',
+  SIGN_UP: `${API}/customers`,
+  LOGIN: `${API}/customers`,
 };
 
 const ROUTES_PATH = {
