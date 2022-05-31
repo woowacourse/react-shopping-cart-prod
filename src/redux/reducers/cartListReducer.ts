@@ -2,15 +2,15 @@ import { CartListAction, CartListActionType } from 'redux/actions/cartList';
 import { CartItem } from 'types/domain';
 
 interface CartItemState {
+  data: CartItem[];
   loading: boolean;
   error: string | null;
-  data: CartItem[];
 }
 
 const initialState: CartItemState = {
+  data: [],
   loading: false,
   error: null,
-  data: [],
 };
 
 export const cartListReducer = (state = initialState, action: CartListAction) => {

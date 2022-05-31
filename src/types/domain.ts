@@ -10,3 +10,19 @@ export interface CartItem {
   quantity: number;
   willPurchase: boolean;
 }
+
+export interface UserInfo {
+  name: string;
+  email: string;
+  password?: string;
+  token?: string;
+}
+
+export interface SignUpInfo extends UserInfo {
+  password: string;
+}
+
+export interface SignInInfo {
+  email: string;
+  password: string;
+}

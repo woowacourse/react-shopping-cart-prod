@@ -1,8 +1,26 @@
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { signUp } from 'redux/action-creators/userThunk';
+import { UserAction } from 'redux/actions/user';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 
 const SignUpPage = () => {
+  const { loading, error, data } = useAppSelector(state => state.userReducer);
+
+  const dispatch = useAppDispatch<UserAction>();
+
+  const onClick = () => {
+    const tempInfo = {
+      email: 'ansghkdbsgh',
+      name: 'yunho',
+      password: '1234',
+    };
+
+    dispatch(signUp(tempInfo));
+  };
+
   return (
     <StyledRoot>
       <StyledTitle>회원가입</StyledTitle>
@@ -26,7 +44,7 @@ const SignUpPage = () => {
         <StyledInput />
       </StyledLabel>
 
-      <StyledLoginButton>확인</StyledLoginButton>
+      <StyledLoginButton onClick={onClick}>확인</StyledLoginButton>
     </StyledRoot>
   );
 };
