@@ -1,11 +1,15 @@
-import styled from "styled-components";
-
 import { theme } from "style";
 
 import RegisterForm from "./RegisterForm";
 import UserInput from "components/common/UserInput";
 import DefaultButton from "components/common/Button/DefaultButton";
 import PageHeader from "components/common/PageHeader";
+import {
+  RegisterPageContainer,
+  RegisterInputContainer,
+  RegisterButtonContainer,
+  RegisterLabel,
+} from "./styled";
 
 function RegisterPage() {
   return (
@@ -51,32 +55,3 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
-
-const RegisterPageContainer = styled.section`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  gap: 12px;
-`;
-
-const RegisterInputContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 620px;
-  align-items: center;
-`;
-
-const RegisterButtonContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-`;
-
-const RegisterLabel = styled.label`
-  margin-bottom: 22px;
-
-  color: ${({ theme: { color } }) => color.gray01};
-  font-weight: 700;
-`;
