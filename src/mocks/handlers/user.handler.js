@@ -14,7 +14,7 @@ const { getUser, setUser } = userDB();
 
 export const checkUniqueEmail = (req, res, ctx) => {
   const currentUserList = getUser();
-  const { email } = req.params;
+  const email = req.url.searchParams.get('email');
 
   const isUnique = currentUserList.every((user) => user.email !== email);
 
