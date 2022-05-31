@@ -5,8 +5,14 @@ import { ReactComponent as InCorrectIcon } from 'assets/incorrect_icon.svg';
 
 interface InputProps {
   icon: ReactNode;
-  label: string;
+  label: LabelKind;
   validator?: Function;
+}
+
+enum LabelKind {
+  'Email Address' = '이메일',
+  'Nickname' = '닉네임',
+  'Password' = '비밀번호',
 }
 
 const Input = ({ icon, label, validator }: InputProps) => {
@@ -23,7 +29,7 @@ const Input = ({ icon, label, validator }: InputProps) => {
     try {
       validator(inputValue);
       setIsCorrect(true);
-      setMessage(`Correct ${label.toLowerCase()}`);
+      setMessage(`사용 가능한 ${LabelKind[label]}입니다.`);
     } catch (error) {
       setIsCorrect(false);
       setMessage(error.message);
