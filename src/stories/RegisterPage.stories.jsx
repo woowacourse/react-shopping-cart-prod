@@ -1,7 +1,7 @@
 import RegisterPage from "components/pages/RegisterPage";
 
 export default {
-  title: "Component/Common/RegisterPage",
+  title: "Component/Page/RegisterPage",
   component: RegisterPage,
 };
 

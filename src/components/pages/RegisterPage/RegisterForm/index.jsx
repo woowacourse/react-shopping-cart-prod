@@ -1,4 +1,4 @@
-import Form from "./styled";
+import { Form } from "./styled";
 
 function RegisterForm({ children }) {
   return <Form>{children}</Form>;

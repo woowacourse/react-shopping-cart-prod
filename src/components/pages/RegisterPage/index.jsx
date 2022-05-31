@@ -1,6 +1,5 @@
 import { theme } from "style";
 
-import RegisterForm from "./RegisterForm";
 import UserInput from "components/common/UserInput";
 import DefaultButton from "components/common/Button/DefaultButton";
 import PageHeader from "components/common/PageHeader";
@@ -10,6 +9,7 @@ import {
   RegisterButtonContainer,
   RegisterLabel,
 } from "./styled";
+import RegisterForm from "./RegisterForm";
 
 function RegisterPage() {
   return (
