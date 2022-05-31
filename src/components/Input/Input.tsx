@@ -1,12 +1,20 @@
+import { forwardRef, ComponentProps, ForwardedRef } from 'react';
 import styled from 'styled-components';
 
-const Input = styled.input`
+function Input(
+  props: ComponentProps<any>,
+  ref: ForwardedRef<HTMLInputElement>
+) {
+  return <StyledInput ref={ref} {...props} />;
+}
+
+const StyledInput = styled.input`
   width: 100%;
   height: 44px;
-  padding: 0 14px;
+  padding: 14px;
   box-sizing: border-box;
   color: ${({ theme: { colors } }) => colors.black};
-  outline: 1px solid ${({ theme: { colors } }) => colors.gray};
+  outline: ${({ theme: { colors } }) => colors.gray} solid 1px;
   border: none;
   border-radius: 4px;
 
@@ -32,4 +40,4 @@ const Input = styled.input`
   }
 `;
 
-export default Input;
+export default forwardRef(Input);

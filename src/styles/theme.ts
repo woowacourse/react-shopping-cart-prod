@@ -18,6 +18,7 @@ const theme = {
     black: '#161616',
     brown: '#73675C',
     blue: '#339af0',
+    red: '#e03131',
   },
   zPriorities: {
     overEverything: 50,
