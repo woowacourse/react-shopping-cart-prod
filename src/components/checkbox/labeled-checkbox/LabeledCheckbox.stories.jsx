@@ -1,4 +1,3 @@
-import React from "react";
 import LabeledCheckbox from "@shared/checkbox/labeled-checkbox/LabeledCheckbox";
 
 export default {
