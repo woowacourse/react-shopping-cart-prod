@@ -5,6 +5,7 @@ import Portal from './Portal';
 
 export const MESSAGE = {
   cart: '장바구니에 담았습니다.',
+  password: '비밀번호와 비밀번호 확인이 일치하지 않습니다.',
 } as const;
 
 type Message = typeof MESSAGE[keyof typeof MESSAGE];
