@@ -59,7 +59,17 @@
     "msw": "^0.40.1",
     "msw-storybook-addon": "^1.6.3",
     "prettier": "^2.6.2",
-    "webpack": "^5.72.0"
+    "webpack": "^5.72.0",
+    "@commitlint/cli": "^16.2.1",
+    "commitizen": "^4.2.4",
+    "commitlint-config-gitmoji": "^2.2.5",
+    "cz-customizable": "^6.3.0",
+    "husky": "^7.0.4"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-customizable"
+    }
   },
   "msw": {
     "workerDirectory": "public"
