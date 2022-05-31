@@ -1,10 +1,10 @@
 import React, { useRef } from 'react';
 import ICONS from '../../constants/icons';
-import * as S from './input.styled';
+import * as S from './QuantityInput.styled';
 
-type InputProps = React.HTMLProps<HTMLInputElement>;
+type Props = React.HTMLProps<HTMLInputElement>;
 
-function Input(props: InputProps) {
+function QuantityInput(props: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -34,4 +34,4 @@ function Input(props: InputProps) {
   );
 }
 
-export default Input;
+export default QuantityInput;

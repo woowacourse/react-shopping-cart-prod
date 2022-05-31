@@ -1,6 +1,6 @@
 import React from 'react';
 import { Product } from '../../types';
-import Input from '../Input/Input';
+import Input from '../QuantityInput/QuantityInput';
 import Checkbox from '../Checkbox/Checkbox';
 import ICONS from '../../constants/icons';
 import * as S from './CartItem.styled';
