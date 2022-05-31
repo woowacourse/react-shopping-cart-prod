@@ -4,7 +4,7 @@ const SERVER_PATH = {
   PRODUCTS: '/products',
   CART: '/cart',
   SIGN_UP: `${API}/customers`,
-  LOGIN: `${API}/customers`,
+  LOGIN: `${API}/login`,
 };
 
 const ROUTES_PATH = {

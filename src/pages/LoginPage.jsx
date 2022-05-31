@@ -1,21 +1,27 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
+import axios from 'axios';
 
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 
 import { isValidEmail } from '../utils/validations';
-
-import { MESSAGE } from '../constants';
+import { MESSAGE, SERVER_PATH, ROUTES_PATH } from '../constants';
+import { useDispatch, useSelector } from 'react-redux';
+import actionTypes from '../store/user/user.actions';
 
 function LoginPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
   });
   const { email, password } = loginInfo;
 
-  const handleLoginInfoSubmit = (e) => {
+  const handleLoginInfoSubmit = async (e) => {
     e.preventDefault();
 
     if (!isValidEmail(email)) {
@@ -23,7 +29,16 @@ function LoginPage() {
       return;
     }
 
-    alert('로그인 성공 로직 추가하기');
+    try {
+      const { data } = await axios.post(`${SERVER_PATH.LOGIN}`, { loginInfo });
+      const { accessToken } = data;
+      dispatch({ type: actionTypes.ADD_TOKEN, accessToken });
+
+      alert('로그인 성공');
+      navigate(ROUTES_PATH.HOME);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleLoginInfoChange = (loginInfoKey) => (e) => {

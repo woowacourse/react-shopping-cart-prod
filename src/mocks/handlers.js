@@ -1,4 +1,5 @@
 import { rest } from 'msw';
+import { v4 as uuidv4 } from 'uuid';
 import { SERVER_PATH } from '../constants';
 import { productList, user } from './data';
 
@@ -48,7 +49,14 @@ const handlers = [
   rest.post(`${SERVER_PATH.SIGN_UP}`, (req, res, ctx) => {
     const { userInfo } = req.body;
     user.push(userInfo);
+
     return res(ctx.status(200), ctx.json());
+  }),
+
+  rest.post(`${SERVER_PATH.LOGIN}`, (req, res, ctx) => {
+    const { userInfo } = req.body;
+
+    return res(ctx.status(200), ctx.json({ accessToken: uuidv4() }));
   }),
 ];
 
