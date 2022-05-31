@@ -16,5 +16,6 @@ export const GlobalStyles = createGlobalStyle`
 
   #root {
   font-family: 'BMDOHYEON';
+  font-size: 16px;
   }
 `;
