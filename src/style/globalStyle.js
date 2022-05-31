@@ -11,6 +11,12 @@ const GlobalStyle = createGlobalStyle`
   position: relative;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
 @font-face {
   font-family: 'Do Hyeon';
   src: local("Do Hyeon"),
