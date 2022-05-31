@@ -18,11 +18,16 @@ import {
 function ProductDetail({ selectedProduct: { id, thumbnailUrl, name, price } }) {
   const handleClickCartButton = async () => {
     try {
-      const { isAlreadyExists } = await postBaseServerCartItem({
+      const response = await postBaseServerCartItem({
         url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`,
         body: JSON.stringify({ id, count: 1 }),
       });
 
+      if (!response.ok) {
+        throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      }
+
+      const { isAlreadyExists } = await response.json();
       if (isAlreadyExists) {
         alert("이미 장바구니에 담은 상품입니다.");
         return;
