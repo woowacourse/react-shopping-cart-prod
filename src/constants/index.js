@@ -8,6 +8,8 @@ const ROUTES_PATH = {
   DETAIL: '/product-detail/:id',
   DETAIL_LINK: '/product-detail/',
   CART: '/shopping-cart',
+  LOGIN: '/login',
+  SIGN_UP: '/sign-up',
 };
 
 const SIZE = {

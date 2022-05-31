@@ -11,7 +11,9 @@ const Loadable = (Component) => (props) =>
 
 const ProductListPage = Loadable(lazy(() => import('../pages/ProductListPage')));
 const ProductDetailPage = Loadable(lazy(() => import('../pages/ProductDetailPage')));
-const ShoppingCart = Loadable(lazy(() => import('../pages/ShoppingCart')));
+const ShoppingCartPage = Loadable(lazy(() => import('../pages/ShoppingCartPage')));
+const LoginPage = Loadable(lazy(() => import('../pages/LoginPage')));
+const SignUpPage = Loadable(lazy(() => import('../pages/SignUpPage')));
 
 const routes = [
   {
@@ -24,7 +26,15 @@ const routes = [
   },
   {
     path: ROUTES_PATH.CART,
-    element: <ShoppingCart />,
+    element: <ShoppingCartPage />,
+  },
+  {
+    path: ROUTES_PATH.LOGIN,
+    element: <LoginPage />,
+  },
+  {
+    path: ROUTES_PATH.SIGN_UP,
+    element: <SignUpPage />,
   },
 ];
 

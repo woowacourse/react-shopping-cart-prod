@@ -18,7 +18,12 @@ function Header() {
           <Link to={ROUTES_PATH.CART}>
             <StyledNavButton>장바구니</StyledNavButton>
           </Link>
-          <StyledNavButton>주문목록</StyledNavButton>
+          <Link to={ROUTES_PATH.LOGIN}>
+            <StyledNavButton>로그인</StyledNavButton>
+          </Link>
+          <Link to={ROUTES_PATH.SIGN_UP}>
+            <StyledNavButton>회원가입</StyledNavButton>
+          </Link>
         </StyledNavWrapper>
       </StyledHeaderWrapper>
     </StyledHeader>

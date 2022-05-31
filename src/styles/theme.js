@@ -1,5 +1,6 @@
 const COLORS = {
   PRIMARY: '#2AC1BC',
+  LIGHT_PRIMARY: '#81cdcc',
   WHITE: '#fff',
   BROWN: '#73675c',
   LIGHT_BROWN: '#73675c90',

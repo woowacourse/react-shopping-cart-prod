@@ -8,7 +8,7 @@ import { MESSAGE } from '../constants';
 import useCart from '../hooks/useCart';
 import Loading from '../components/Loading';
 
-function ShoppingCart() {
+function ShoppingCartPage() {
   const { deleteItem } = useCart();
   const [totalPrice, setTotalPrice] = useState();
   const [selectedItems, setSelectedItems] = useState([]);
@@ -238,4 +238,4 @@ const StyledOrderButton = styled.button`
   border-radius: 4px;
 `;
 
-export default ShoppingCart;
+export default ShoppingCartPage;
