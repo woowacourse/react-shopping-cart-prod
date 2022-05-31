@@ -1,32 +1,93 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 
+import {
+  isValidPassword,
+  isValidPasswordConfirm,
+  isValidEmail,
+  isValidNickname,
+} from '../utils/validations';
+
+import { MESSAGE, USER } from '../constants';
+
 function SignUpPage() {
+  const [userInfo, setUserInfo] = useState({
+    email: '',
+    nickname: '',
+    password: '',
+    passwordConfirm: '',
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { email, nickname, password, passwordConfirm } = userInfo;
+
+    if (!isValidEmail(email)) {
+      alert(MESSAGE.ERROR_EMAIL);
+      return;
+    }
+    if (!isValidNickname(nickname)) {
+      alert(MESSAGE.ERROR_NICKNAME);
+      return;
+    }
+    if (!isValidPassword(password)) {
+      alert(MESSAGE.ERROR_PASSWORD);
+      return;
+    }
+    if (!isValidPasswordConfirm(password, passwordConfirm)) {
+      alert(MESSAGE.ERROR_PASSWORD_CONFIRM);
+      return;
+    }
+
+    alert('회원가입 성공 로직 추가하기');
+  };
+
+  const handleUserInfoChange = (userInfoKey) => (e) => {
+    setUserInfo((pre) => {
+      return { ...pre, [userInfoKey]: e.target.value };
+    });
+  };
+
   return (
     <StyledSignUpContainer>
       <h1 style={{ marginBottom: '40px' }}>회원가입</h1>
-      <StyledSignUpForm>
-        <Input labelText="이메일" placeholder="이메일 주소를 입력해주세요" />
+      <StyledSignUpForm onSubmit={handleSubmit}>
+        <Input
+          labelText="이메일"
+          type="email"
+          placeholder="이메일 주소를 입력해주세요"
+          value={userInfo.email}
+          onChange={handleUserInfoChange('email')}
+        />
         <Input
           labelText="닉네임"
-          minLength={1}
-          maxLength={10}
+          minLength={USER.NICKNAME.MIN}
+          maxLength={USER.NICKNAME.MAX}
           placeholder="닉네임을 입력해주세요"
+          value={userInfo.nickname}
+          onChange={handleUserInfoChange('nickname')}
         />
         <Input
           labelText="비밀번호"
           type="password"
-          minLength={8}
-          maxLength={20}
+          minLength={USER.PASSWORD.MIN}
+          maxLength={USER.PASSWORD.MAX}
+          value={userInfo.password}
           placeholder="비밀번호를 입력해주세요"
+          onChange={handleUserInfoChange('password')}
         />
         <Input
           labelText="비밀번호 확인"
           type="password"
-          minLength={8}
-          maxLength={20}
+          minLength={USER.PASSWORD.MIN}
+          maxLength={USER.PASSWORD.MAX}
+          value={userInfo.passwordConfirm}
           placeholder="비밀번호를 입력해주세요"
+          onChange={handleUserInfoChange('passwordConfirm')}
         />
         <Button text="가입하기" />
       </StyledSignUpForm>
