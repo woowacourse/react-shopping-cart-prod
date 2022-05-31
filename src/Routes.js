@@ -1,4 +1,12 @@
-import { ProductList, Product, Cart, NotFound } from 'pages';
+import {
+  ProductList,
+  Product,
+  Cart,
+  NotFound,
+  Login,
+  ModifyProfile,
+  SignUp,
+} from 'pages';
 import { PATH_NAME } from 'constants';
 import Layout from 'components/Common/Layout/Layout';
 
@@ -18,6 +26,18 @@ const routes = [
       {
         path: PATH_NAME.CART,
         element: <Cart />,
+      },
+      {
+        path: PATH_NAME.LOGIN,
+        element: <Login />,
+      },
+      {
+        path: PATH_NAME.SIGN_UP,
+        element: <SignUp />,
+      },
+      {
+        path: PATH_NAME.MODIFY_PROFILE,
+        element: <ModifyProfile />,
       },
     ],
   },

@@ -2,6 +2,9 @@ export const PATH_NAME = {
   HOME: '/',
   PRODUCT: '/product',
   CART: '/cart',
+  LOGIN: '/login',
+  SIGN_UP: '/sign-up',
+  MODIFY_PROFILE: '/modify-profile',
 };
 
 export const MESSAGE = {

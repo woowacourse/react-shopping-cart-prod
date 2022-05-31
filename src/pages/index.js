@@ -14,3 +14,8 @@ export const ProductList = Loadable(lazy(() => import('pages/ProductList')));
 export const Product = Loadable(lazy(() => import('pages/Product')));
 export const Cart = Loadable(lazy(() => import('pages/Cart')));
 export const NotFound = Loadable(lazy(() => import('pages/NotFound')));
+export const Login = Loadable(lazy(() => import('pages/Login')));
+export const SignUp = Loadable(lazy(() => import('pages/SignUp')));
+export const ModifyProfile = Loadable(
+  lazy(() => import('pages/ModifyProfile')),
+);
