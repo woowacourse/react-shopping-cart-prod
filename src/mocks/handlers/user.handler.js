@@ -18,5 +18,16 @@ export const checkUniqueEmail = (req, res, ctx) => {
 
   const isUnique = currentUserList.every((user) => user.email !== email);
 
-  return res(ctx.json({ success: isUnique }));
+  return res(ctx.status(200), ctx.json({ success: isUnique }));
+};
+
+export const postUser = (req, res, ctx) => {
+  const currentUserList = getUser();
+  const userData = req.body;
+
+  currentUserList.push(userData);
+
+  setUser(currentUserList);
+
+  return res(ctx.status(201));
 };

@@ -12,6 +12,7 @@ export const checkEmailDuplicate = async (email) => {
 
   return success;
 };
-// export const postUser = async (userData) => {
-//   await
-// }
+
+export const addUser = async (userData) => {
+  await apiInstance.post(API_ENDPOINT.USER, userData);
+};

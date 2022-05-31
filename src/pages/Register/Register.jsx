@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Form, Input, PageTemplate, PageTitle } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 
-import { checkEmailDuplicate } from 'api/userApi';
+import { addUser, checkEmailDuplicate } from 'api/userApi';
 
 const emailPattern =
   /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
@@ -49,7 +49,7 @@ function Register() {
     setIsUniqueEmail(success);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     if (
       isEmailValid &&
@@ -59,7 +59,12 @@ function Register() {
       passwordValue === passwordConfirmValue &&
       isUniqueEmail
     ) {
-      // submit
+      await addUser({
+        email: emailValue,
+        nickname: nicknameValue,
+        password: passwordValue,
+      });
+      console.log('성공~~!');
       return;
     }
     alert('땡!');
