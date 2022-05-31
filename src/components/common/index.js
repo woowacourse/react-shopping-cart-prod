@@ -10,3 +10,4 @@ export { default as PageTitle } from 'components/common/PageTitle/PageTitle';
 export { default as Pagination } from 'components/common/Pagination/Pagination';
 export { default as Button } from 'components/common/Button/Button';
 export { default as Input } from 'components/common/Input/Input';
+export { default as Form } from 'components/common/Form/Form';
