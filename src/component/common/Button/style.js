@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const ButtonLayout = styled.button`
   color: ${({theme}) => theme.WHITE};
-  font-size: 24px;
+  font-size: ${(props) => props.fontSize || '24px'};
   font-weight: 500;
   line-height: 12px;
 
