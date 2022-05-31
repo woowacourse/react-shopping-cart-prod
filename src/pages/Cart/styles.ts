@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const CartPageContainer = styled.div`
   margin: 0 180px;

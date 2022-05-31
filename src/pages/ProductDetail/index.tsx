@@ -1,4 +1,4 @@
-import Empty from "../../components/@shared/Empty";
+import Empty from '../../components/@shared/Empty';
 
 function ProductDetail() {
   return <Empty />;

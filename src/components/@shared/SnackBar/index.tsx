@@ -1,4 +1,4 @@
-import { SnackBarWrapper } from "./styles";
+import { SnackBarWrapper } from './styles';
 
 interface SnackBarProps {
   message: string;

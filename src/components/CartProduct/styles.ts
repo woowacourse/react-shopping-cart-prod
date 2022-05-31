@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { alignCenter, directionColumn } from "../../styles/mixin";
+import styled from 'styled-components';
+import { alignCenter, directionColumn } from '../../styles/mixin';
 
 const CartProductContainer = styled.div`
   display: flex;

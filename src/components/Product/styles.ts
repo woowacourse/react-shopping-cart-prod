@@ -1,5 +1,5 @@
-import styled, { keyframes, css } from "styled-components";
-import { alignCenter, directionColumn, spaceBetween } from "../../styles/mixin";
+import styled, { keyframes, css } from 'styled-components';
+import { alignCenter, directionColumn, spaceBetween } from '../../styles/mixin';
 
 const CartShake = keyframes`
   0%, 50%{

@@ -1,5 +1,5 @@
-import emptyPage from "../../../assets/emptyPage.jpeg";
-import { EmptyImageWrapper } from "./styles";
+import emptyPage from '../../../assets/emptyPage.jpeg';
+import { EmptyImageWrapper } from './styles';
 
 function Empty() {
   return (

@@ -24,14 +24,14 @@ const initialState: CartState = {
 };
 
 // 액션
-const ADD = "cart/ADD" as const;
-const DELETE = "cart/DELETE" as const;
-const DELETE_BY_SELECTED = "cart/DELETE_BY_SELECTED" as const;
-const SELECT = "cart/SELECT" as const;
-const SELECT_ALL = "cart/SELECT_ALL" as const;
-const INCREMENT = "cart/INCREMENT" as const;
-const DECREMENT = "cart/DECREMENT" as const;
-const INCREMENT_BY_NUMBER = "cart/INCREMENT_BY_NUMBER" as const;
+const ADD = 'cart/ADD' as const;
+const DELETE = 'cart/DELETE' as const;
+const DELETE_BY_SELECTED = 'cart/DELETE_BY_SELECTED' as const;
+const SELECT = 'cart/SELECT' as const;
+const SELECT_ALL = 'cart/SELECT_ALL' as const;
+const INCREMENT = 'cart/INCREMENT' as const;
+const DECREMENT = 'cart/DECREMENT' as const;
+const INCREMENT_BY_NUMBER = 'cart/INCREMENT_BY_NUMBER' as const;
 
 // 액션 크리에터
 const addItem = (item: CartItem) => ({

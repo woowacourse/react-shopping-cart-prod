@@ -1,5 +1,5 @@
-import axios from "axios";
-import { AppDispatch, RootState } from "../store";
+import axios from 'axios';
+import { AppDispatch, RootState } from '../store';
 
 type Product = {
   name: string;
@@ -27,9 +27,9 @@ const initialState: ProductState = {
 };
 
 // 액션
-const LOAD_PRODUCTS = "product/LOAD" as const;
-const LOAD_PRODUCTS_SUCCESS = "product/LOAD_SUCCESS" as const;
-const LOAD_PRODUCTS_FAILED = "product/LOAD_FAILED" as const;
+const LOAD_PRODUCTS = 'product/LOAD' as const;
+const LOAD_PRODUCTS_SUCCESS = 'product/LOAD_SUCCESS' as const;
+const LOAD_PRODUCTS_FAILED = 'product/LOAD_FAILED' as const;
 
 // 액션 크리에터
 const loadProducts = () => ({ type: LOAD_PRODUCTS });

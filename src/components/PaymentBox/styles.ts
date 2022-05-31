@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { spaceBetween } from "../../styles/mixin";
+import styled from 'styled-components';
+import { spaceBetween } from '../../styles/mixin';
 
 const PaymentContainer = styled.div`
   margin-top: 80px;

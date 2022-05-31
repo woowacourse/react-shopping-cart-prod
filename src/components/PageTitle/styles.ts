@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const PageTitle = styled.h1`
   border-bottom: 3px solid ${({ theme }) => theme.colors.GRAY_800};

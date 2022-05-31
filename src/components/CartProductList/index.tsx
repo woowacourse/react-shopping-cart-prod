@@ -1,12 +1,12 @@
-import { useDispatch } from "react-redux";
-import { CartItem, deleteBySelectedItems, selectAllItems } from "../../redux/modules/cart";
-import { useCartListSelector } from "../../hooks/useCartSelector";
+import { useDispatch } from 'react-redux';
+import { CartItem, deleteBySelectedItems, selectAllItems } from '../../redux/modules/cart';
+import { useCartListSelector } from '../../hooks/useCartSelector';
 
-import Button from "../@shared/Button/styles";
-import CheckBox from "../@shared/CheckBox/styles";
-import CartProduct from "../CartProduct";
-import { INFO_MESSAGES } from "../../constants";
-import { CartListTitle, SelectAllContainer } from "./styles";
+import Button from '../@shared/Button/styles';
+import CheckBox from '../@shared/CheckBox/styles';
+import CartProduct from '../CartProduct';
+import { INFO_MESSAGES } from '../../constants';
+import { CartListTitle, SelectAllContainer } from './styles';
 
 function CartProductList() {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function CartProductList() {
       <SelectAllContainer>
         <div>
           <CheckBox checked={isAllSelected} onChange={onToggleAllSelect} />
-          <span>{isAllSelected ? "선택해제" : "전체선택"}</span>
+          <span>{isAllSelected ? '선택해제' : '전체선택'}</span>
         </div>
         <Button onClick={onClickDeleteItems}>상품삭제</Button>
       </SelectAllContainer>

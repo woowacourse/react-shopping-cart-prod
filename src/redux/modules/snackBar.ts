@@ -3,12 +3,12 @@ type Action = ReturnType<typeof show> | ReturnType<typeof hide>;
 // initialState
 const initialState = {
   isShowSnackBar: false,
-  message: "",
+  message: '',
 };
 
 // 액션
-const SHOW = "snack/SHOW" as const;
-const HIDE = "snack/HIDE" as const;
+const SHOW = 'snack/SHOW' as const;
+const HIDE = 'snack/HIDE' as const;
 
 // 액션 크리에터
 const show = (message: string) => ({
@@ -28,7 +28,7 @@ const snackBarReducer = (state = initialState, action: Action) => {
       return { ...state, isShowSnackBar: true, message };
     }
     case HIDE: {
-      return { ...state, isShowSnackBar: false, message: "" };
+      return { ...state, isShowSnackBar: false, message: '' };
     }
     default:
       return state;

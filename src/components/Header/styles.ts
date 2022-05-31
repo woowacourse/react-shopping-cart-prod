@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
-import { alignCenter, flexCenter, spaceBetween } from "../../styles/mixin";
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { alignCenter, flexCenter, spaceBetween } from '../../styles/mixin';
 
 const HeaderContainer = styled.div`
   ${alignCenter};

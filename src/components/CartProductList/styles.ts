@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { alignCenter, spaceBetween } from "../../styles/mixin";
+import styled from 'styled-components';
+import { alignCenter, spaceBetween } from '../../styles/mixin';
 
 const SelectAllContainer = styled.div`
   ${spaceBetween};

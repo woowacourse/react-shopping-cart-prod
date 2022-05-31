@@ -1,13 +1,13 @@
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addItem, decrement, deleteItem, increment } from "../../redux/modules/cart";
-import { show } from "../../redux/modules/snackBar";
-import { useCartItemSelector, useCartListSelector } from "../../hooks/useCartSelector";
-import routes from "../../routes";
-import { INFO_MESSAGES, CART, PRODUCT } from "../../constants";
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addItem, decrement, deleteItem, increment } from '../../redux/modules/cart';
+import { show } from '../../redux/modules/snackBar';
+import { useCartItemSelector, useCartListSelector } from '../../hooks/useCartSelector';
+import routes from '../../routes';
+import { INFO_MESSAGES, CART, PRODUCT } from '../../constants';
 
-import cart from "../../assets/cart.svg";
+import cart from '../../assets/cart.svg';
 import {
   CartCounter,
   CartImageBadge,
@@ -16,7 +16,7 @@ import {
   ProductImageWrapper,
   ProductInfo,
   ProductInfoContainer,
-} from "./styles";
+} from './styles';
 
 export type ProductType = {
   name: string;

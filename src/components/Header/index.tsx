@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import Logo from "../../assets/Logo.png";
-import routes from "../../routes";
-import { HeaderContainer, HeaderTitle, HeaderMenu } from "./styles";
+import { Link } from 'react-router-dom';
+import Logo from '../../assets/Logo.png';
+import routes from '../../routes';
+import { HeaderContainer, HeaderTitle, HeaderMenu } from './styles';
 
 function Header() {
   return (

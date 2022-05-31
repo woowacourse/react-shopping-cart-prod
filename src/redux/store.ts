@@ -1,20 +1,20 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import ReduxThunk from "redux-thunk";
-import logger from "redux-logger";
-import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import ReduxThunk from 'redux-thunk';
+import logger from 'redux-logger';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-import cartReducer from "./modules/cart";
-import productsReducer from "./modules/products";
-import snackBarReducer from "./modules/snackBar";
+import cartReducer from './modules/cart';
+import productsReducer from './modules/products';
+import snackBarReducer from './modules/snackBar';
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  blacklist: ["snackBar"],
+  blacklist: ['snackBar'],
 };
 
 const rootReducer = combineReducers({

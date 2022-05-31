@@ -1,4 +1,4 @@
-import { LoaderWrapper } from "./styles";
+import { LoaderWrapper } from './styles';
 
 function Loader() {
   return (
