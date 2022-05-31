@@ -16,6 +16,11 @@ export const buttonSize = {
     height: 35px;
     font-size: 15px;
   `,
+  default: css`
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+  `,
 };
 
 export const buttonColor = {

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { buttonColor, buttonSize } from './style';
 import * as Styled from './style';
 
-const Button = ({ colorType, size, children, ...props }) => {
+const Button = ({ colorType, size = 'default', children, ...props }) => {
   return (
     <Styled.Button type="button" colorType={colorType} size={size} {...props}>
       {children}
