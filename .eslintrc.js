@@ -12,6 +12,7 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:import/recommended",
     "plugin:prettier/recommended",
+    "plugin:react/jsx-runtime",
   ],
   parserOptions: {
     sourceType: "module",
@@ -44,8 +45,6 @@ module.exports = {
     "react/prop-types": "off",
     "no-underscore-dangle": "off",
     "no-use-before-define": ["off"],
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {
@@ -57,9 +56,9 @@ module.exports = {
         ],
       },
     ],
-    "no-func-assign": "off",
     "dot-notation": "off",
   },
+
   settings: {
     "import/resolver": {
       webpack: {
