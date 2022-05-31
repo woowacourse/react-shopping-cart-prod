@@ -10,6 +10,7 @@ interface InputProps {
   inputValue: string;
   setInputValue: Function;
   type?: string;
+  checkCorrect?: Function;
 }
 
 enum LabelKind {
@@ -18,10 +19,18 @@ enum LabelKind {
   'Password' = '비밀번호',
 }
 
-const Input = ({ icon, label, validator, inputValue, setInputValue, type }: InputProps) => {
+const Input = ({
+  icon,
+  label,
+  validator,
+  inputValue,
+  setInputValue,
+  type,
+  checkCorrect,
+}: InputProps) => {
   const [message, setMessage] = useState('');
-  const [isCorrect, setIsCorrect] = useState(false);
   const [isFocus, setIsFocus] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
 
   useEffect(() => {
     if (!validator) {
@@ -31,6 +40,7 @@ const Input = ({ icon, label, validator, inputValue, setInputValue, type }: Inpu
     try {
       validator(inputValue);
       setIsCorrect(true);
+      checkCorrect(true);
       setMessage(`사용 가능한 ${LabelKind[label]}입니다.`);
     } catch (error) {
       setIsCorrect(false);
@@ -55,7 +65,7 @@ const Input = ({ icon, label, validator, inputValue, setInputValue, type }: Inpu
         />
       </Styled.InputContainer>
 
-      {validator && (
+      {validator && inputValue && (
         <Styled.ValidationContainer>
           {isCorrect ? <CorrectIcon /> : <InCorrectIcon />}
           <Styled.Message isFocus={isFocus} isCorrect={isCorrect}>
