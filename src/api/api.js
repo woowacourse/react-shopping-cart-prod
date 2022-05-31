@@ -1,23 +1,6 @@
-import axios from 'axios';
-import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
-import { API_ENDPOINT, API_URL, PRODUCT_LIST_PAGE_LIMIT } from './constants';
-
-const apiInstance = axios.create({
-  baseURL: API_URL,
-});
-
-const handleAPIError = (error) => {
-  const { status } = error.response;
-  if (status >= 500) {
-    throw Error(ERROR_MESSAGES.SERVER_ERROR);
-  }
-  if (status >= 400) {
-    throw Error(ERROR_MESSAGES.INVALID_REQUEST);
-  }
-  throw Error(ERROR_MESSAGES.UNKNOWN);
-};
-
-apiInstance.interceptors.response.use((response) => response, handleAPIError);
+import { ALERT_MESSAGES } from 'constants/messages';
+import { API_ENDPOINT, PRODUCT_LIST_PAGE_LIMIT } from 'api/constants';
+import apiInstance from 'api/customInstance';
 
 export const getProductList = async (page) => {
   const pageQuery = `?_page=${page}&_limit=${PRODUCT_LIST_PAGE_LIMIT}`;

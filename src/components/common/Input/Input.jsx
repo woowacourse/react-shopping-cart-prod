@@ -8,6 +8,7 @@ function Input({
   placeholder,
   value,
   onChange,
+  isButtonDisabled,
   isValid,
   buttonText,
   onButtonClick,
@@ -25,7 +26,7 @@ function Input({
           hasButton={buttonText && onButtonClick}
         />
         {buttonText && onButtonClick && (
-          <Button onClick={onButtonClick} isWithInput={true}>
+          <Button onClick={onButtonClick} isWithInput={true} disabled={isButtonDisabled}>
             {buttonText}
           </Button>
         )}

@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Form, Input, PageTemplate, PageTitle } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 
+import { checkEmailDuplicate } from 'api/userApi';
+
 const emailPattern =
   /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
 const passwordPattern =
@@ -21,10 +23,11 @@ function Register() {
   const [nicknameValue, setNicknameValue, isNicknameValid] =
     useInputValue(nicknamePattern);
 
-  const [isUniqueEmail, setIsUniqueEmail] = useState(true);
+  const [isUniqueEmail, setIsUniqueEmail] = useState(false);
 
   const handleEmailInput = ({ target: { value } }) => {
     setEmailValue(value);
+    setIsUniqueEmail(false);
   };
   const handlePasswordInput = ({ target: { value } }) => {
     setPasswordValue(value);
@@ -34,6 +37,16 @@ function Register() {
   };
   const handleNicknameInput = ({ target: { value } }) => {
     setNicknameValue(value);
+  };
+  const handleEmailDuplicateCheck = async () => {
+    if (emailValue.length === 0 || !isEmailValid) {
+      alert('올바르지 않은 이메일 형식입니다.');
+      return;
+    }
+
+    const success = await checkEmailDuplicate(emailValue);
+
+    setIsUniqueEmail(success);
   };
 
   const onSubmit = (e) => {
@@ -61,8 +74,9 @@ function Register() {
       value: emailValue,
       onChange: handleEmailInput,
       isValid: isEmailValid,
-      buttonText: '중복 확인',
-      onButtonClick: () => console.log('중복확인 버튼 클릭'),
+      buttonText: isUniqueEmail ? '확인 완료' : '중복 확인',
+      isButtonDisabled: isUniqueEmail,
+      onButtonClick: handleEmailDuplicateCheck,
     },
     {
       name: 'password',
