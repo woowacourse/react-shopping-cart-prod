@@ -12,22 +12,22 @@ import PasswordCheck from './PasswordCheck/PasswordCheck';
 import UserInfoUpdate from './UserInfoUpdate/UserInfoUpdate';
 import UserPasswordUpdate from './UserPasswordUpdate/UserPasswordUpdate';
 
-export const COMMON_PAGES = {
-  [ROUTE.HOME]: <Home />,
-  [ROUTE.PRODUCT_DETAIL]: <ProductDetail />,
-  '/*': <NotFound />,
-};
+export const COMMON_PAGES = [
+  { path: ROUTE.HOME, element: <Home /> },
+  { path: ROUTE.PRODUCT_DETAIL, element: <ProductDetail /> },
+  { path: ROUTE.FALLBACK, element: <NotFound /> },
+];
 
-export const NON_USER_PAGES = {
-  [ROUTE.REGISTER]: <Register />,
-  [ROUTE.LOGIN]: <Login />,
-};
+export const NON_USER_PAGES = [
+  { path: ROUTE.REGISTER, element: <Register /> },
+  { path: ROUTE.LOGIN, element: <Login /> },
+];
 
-export const USER_PAGES = {
-  [ROUTE.SHOPPING_CART]: <ShoppingCart />,
-  [ROUTE.ORDER_LIST]: <OrderList />,
-  [ROUTE.USER_INFO]: <UserInfo />,
-  [ROUTE.PASSWORD_CHECK]: <PasswordCheck />,
-  [ROUTE.USER_INFO_UPDATE]: <UserInfoUpdate />,
-  [ROUTE.USER_PASSWORD_UPDATE]: <UserPasswordUpdate />,
-};
+export const USER_PAGES = [
+  { path: ROUTE.SHOPPING_CART, element: <ShoppingCart /> },
+  { path: ROUTE.ORDER_LIST, element: <OrderList /> },
+  { path: ROUTE.USER_INFO, element: <UserInfo /> },
+  { path: ROUTE.PASSWORD_CHECK, element: <PasswordCheck /> },
+  { path: ROUTE.USER_INFO_UPDATE, element: <UserInfoUpdate /> },
+  { path: ROUTE.USER_PASSWORD_UPDATE, element: <UserPasswordUpdate /> },
+];

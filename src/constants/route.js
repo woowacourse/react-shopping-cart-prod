@@ -9,4 +9,5 @@ export const ROUTE = {
   SHOPPING_CART: '/shopping-cart',
   ORDER_LIST: '/order-list',
   PRODUCT_DETAIL: '/products/:productId',
+  FALLBACK: '/*',
 };

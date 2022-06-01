@@ -9,6 +9,7 @@ import App from 'App';
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'styles/GlobalStyles';
 import Theme from 'styles/Theme';
+import { BrowserRouter } from 'react-router-dom';
 
 if (process.env.NODE_ENV === 'development') {
   if (window.location.pathname === '/react-shopping-cart') {
@@ -35,7 +36,9 @@ root.render(
     <GlobalStyle />
     <ThemeProvider theme={Theme}>
       <Provider store={store}>
-        <App />
+        <BrowserRouter basename="/react-shopping-cart">
+          <App />
+        </BrowserRouter>
       </Provider>
     </ThemeProvider>
   </React.StrictMode>,
