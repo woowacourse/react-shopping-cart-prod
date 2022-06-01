@@ -1,6 +1,5 @@
 import cn from "classnames";
 import Logo from "@assets/images/logo.svg";
-import Menu from "@shared/header/menu/Menu";
 import styles from "@shared/header/header.module";
 import { Link } from "react-router-dom";
 
@@ -19,7 +18,16 @@ function Header({ className }) {
           </div>
           <span className={styles.title}>WOOWA SHOP</span>
         </Link>
-        <Menu />
+        <div className={cn(styles.menu)}>
+          <ul className={styles.ul}>
+            <li>
+              <Link to="/cart">장바구니</Link>
+            </li>
+            <li>
+              <Link to="/login">로그인</Link>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   );

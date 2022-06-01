@@ -31,6 +31,38 @@
   }
 }
 
+.menu {
+  display: inline-flex;
+
+  ul {
+    @include ul-no-style;
+    display: flex;
+    align-items: center;
+
+    li {
+      padding: 0 25px;
+
+      a {
+        @include a-no-style;
+        display: block;
+        padding: 10px 0;
+        font-size: 20px;
+        line-height: 20px;
+        color: white;
+
+        &:hover {
+          color: rgb(220, 220, 220);
+        }
+      }
+    }
+  }
+  
+  & > .hello {
+    height: 400px;
+    background-color: yellow;
+  }
+}
+
 @include media("<=md") {
   .siteLogo {
     .logo {
