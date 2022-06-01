@@ -18,9 +18,9 @@ const BUTTON_TYPE = {
   `,
 };
 
-const BUTTON_STATE_COLOR = (state) => {
-  const backgroundColorKey = state.toUpperCase();
-  const fontColorKey = `${state.toUpperCase()}_FONT`;
+const BUTTON_STATE_COLOR = (status) => {
+  const backgroundColorKey = status.toUpperCase();
+  const fontColorKey = `${status.toUpperCase()}_FONT`;
 
   return css`
     background-color: ${BRAND_COLORS[backgroundColorKey]};
@@ -37,9 +37,9 @@ const Container = styled.button`
   color: inherit;
 
   ${({ containerType }) => BUTTON_TYPE[containerType]}
-  ${({ state }) => BUTTON_STATE_COLOR(state)}
-  ${({ state }) =>
-    state !== 'default' &&
+  ${({ status }) => BUTTON_STATE_COLOR(status)}
+  ${({ status }) =>
+    status !== 'default' &&
     css`
       border: none;
     `}
