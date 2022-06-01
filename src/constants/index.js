@@ -3,7 +3,7 @@ const API = '/api';
 const SERVER_PATH = {
   PRODUCTS: '/products',
   CART: '/cart',
-  SIGN_UP: `${API}/customers`,
+  USER: `${API}/customers`,
   LOGIN: `${API}/login`,
 };
 
@@ -14,6 +14,9 @@ const ROUTES_PATH = {
   CART: '/shopping-cart',
   LOGIN: '/login',
   SIGN_UP: '/sign-up',
+  USER_INFO: '/user-info',
+  MODIFY_PASSWORD: '/modify-password',
+  MODIFY_USER_INFO: '/modify-user-info',
 };
 
 const SIZE = {

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../styles/theme';
 
-function Button({ text }) {
-  return <StyledButton>{text}</StyledButton>;
+function Button({ text, ...rest }) {
+  return <StyledButton {...rest}>{text}</StyledButton>;
 }
 
 const StyledButton = styled.button`

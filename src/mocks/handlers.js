@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { SERVER_PATH } from '../constants';
 import { productList } from './data';
 
-const userList = [];
+let userList = [];
 let cartList = [];
 
 const handlers = [
@@ -47,9 +47,9 @@ const handlers = [
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.post(`${SERVER_PATH.SIGN_UP}`, (req, res, ctx) => {
+  rest.post(`${SERVER_PATH.USER}`, (req, res, ctx) => {
     const { userInfo } = req.body;
-    userList.push(userInfo);
+    userList.push({ ...userInfo, id: uuidv4() });
     console.log(userList);
 
     return res(ctx.status(200), ctx.json());
@@ -57,13 +57,20 @@ const handlers = [
 
   rest.post(`${SERVER_PATH.LOGIN}`, (req, res, ctx) => {
     const { loginInfo } = req.body;
-    const isSignedUpUser = userList.some(
+    const isSignedUpUser = userList.find(
       (user) => user.email === loginInfo.email && user.password === loginInfo.password
     );
     if (isSignedUpUser) {
-      return res(ctx.status(200), ctx.json({ accessToken: uuidv4() }));
+      return res(ctx.status(200), ctx.json({ accessToken: isSignedUpUser.id }));
     }
     return res(ctx.status(404), ctx.json());
+  }),
+
+  rest.delete(`${SERVER_PATH.USER}`, (req, res, ctx) => {
+    const { accessToken } = req.body;
+    const userInfoIndex = userList.findIndex((user) => user.id === accessToken);
+    userList.splice(userInfoIndex, 1);
+    return res(ctx.status(200), ctx.json());
   }),
 ];
 

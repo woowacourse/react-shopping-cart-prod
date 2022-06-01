@@ -3,8 +3,13 @@ import { GiShoppingCart } from 'react-icons/gi';
 import { COLORS } from '../styles/theme';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from '../constants';
+import { useSelector } from 'react-redux';
+import { FaUserCircle } from 'react-icons/fa';
 
 function Header() {
+  const accessToken = useSelector(({ user }) => user.accessToken);
+  // const accessToken = true;
+
   return (
     <StyledHeader>
       <StyledHeaderWrapper>
@@ -18,12 +23,20 @@ function Header() {
           <Link to={ROUTES_PATH.CART}>
             <StyledNavButton>장바구니</StyledNavButton>
           </Link>
-          <Link to={ROUTES_PATH.LOGIN}>
-            <StyledNavButton>로그인</StyledNavButton>
-          </Link>
-          <Link to={ROUTES_PATH.SIGN_UP}>
-            <StyledNavButton>회원가입</StyledNavButton>
-          </Link>
+          {accessToken ? (
+            <Link to={ROUTES_PATH.USER_INFO}>
+              <FaUserCircle className="userIcon" />
+            </Link>
+          ) : (
+            <>
+              <Link to={ROUTES_PATH.LOGIN}>
+                <StyledNavButton>로그인</StyledNavButton>
+              </Link>
+              <Link to={ROUTES_PATH.SIGN_UP}>
+                <StyledNavButton>회원가입</StyledNavButton>
+              </Link>
+            </>
+          )}
         </StyledNavWrapper>
       </StyledHeaderWrapper>
     </StyledHeader>
@@ -62,6 +75,13 @@ const StyledTitle = styled.span`
 
 const StyledNavWrapper = styled.div`
   display: flex;
+  align-items: center;
+  .userIcon {
+    margin-left: 20px;
+    font-size: 35px;
+    color: ${COLORS.WHITE};
+    cursor: pointer;
+  }
 `;
 
 const StyledNavButton = styled.button`
