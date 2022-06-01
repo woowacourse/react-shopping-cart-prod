@@ -13,7 +13,7 @@ export const Button = styled.button`
 
   background-color: ${({ theme, variant }) => theme.colorConfig[buttonColors[variant]]};
   color: ${({ theme }) => theme.colorConfig.textWhite};
-  font-size: 24px;
+  font-size: 20px;
 
   cursor: pointer;
 

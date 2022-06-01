@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 
-import { Button, PageTitle } from 'components/common';
+import { Button, Modal, PageTitle } from 'components/common';
 
 import * as Styled from 'pages/UserInfo/UserInfo.style';
 import { getUser } from 'api/userApi';
 import { useNavigate } from 'react-router-dom';
+import { useModal } from 'hooks/useModal';
+import DeleteUserForm from 'components/user/DeleteUserForm/DeleteUserForm';
 
 function UserInfo() {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const handleNavigate = (nextPath) => () => {
     navigate('/password-check', {
@@ -51,8 +54,15 @@ function UserInfo() {
                 비밀번호 수정
               </Button>
             </Styled.ButtonWrapper>
-            <Button variant="warning">회원 탈퇴</Button>
+            <Button variant="warning" onClick={() => openModal()}>
+              회원 탈퇴
+            </Button>
           </Styled.ButtonContainer>
+          {isModalOpen && (
+            <Modal closeModal={closeModal}>
+              <DeleteUserForm closeModal={closeModal} />
+            </Modal>
+          )}
         </Styled.Section>
       </>
     )
