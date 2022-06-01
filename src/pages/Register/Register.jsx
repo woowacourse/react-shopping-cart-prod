@@ -130,7 +130,7 @@ function Register() {
       <PageTitle>회원가입</PageTitle>
       <Form buttonText="회원 가입" onSubmit={onSubmit}>
         {inputAttributeList.map((inputDescription) => (
-          <Input key={inputDescription.name} {...inputDescription} />
+          <Input key={inputDescription.name} {...inputDescription} required={true} />
         ))}
       </Form>
     </PageTemplate>

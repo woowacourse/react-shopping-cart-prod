@@ -61,7 +61,7 @@ function Login() {
       <PageTitle>로그인</PageTitle>
       <Form buttonText="Login" onSubmit={onSubmit}>
         {inputAttributeList.map((inputDescription) => (
-          <Input key={inputDescription.name} {...inputDescription} />
+          <Input key={inputDescription.name} {...inputDescription} required={true} />
         ))}
       </Form>
     </PageTemplate>

@@ -6,6 +6,7 @@ function Input({
   type = 'text',
   labelText,
   placeholder,
+  required = false,
   value,
   onChange,
   isButtonDisabled,
@@ -20,6 +21,7 @@ function Input({
         <Styled.Input
           type={type}
           value={value}
+          required={required}
           onChange={onChange}
           isValid={isValid}
           placeholder={placeholder}
