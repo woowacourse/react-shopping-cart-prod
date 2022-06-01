@@ -6,4 +6,5 @@ export const API_ENDPOINT = {
   PRODUCTS: '/products',
   SHOPPING_CART: '/shopping-cart',
   USER: '/api/members',
+  LOGIN: '/api/login',
 };

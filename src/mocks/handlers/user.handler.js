@@ -31,3 +31,20 @@ export const postUser = (req, res, ctx) => {
 
   return res(ctx.status(201));
 };
+
+export const login = (req, res, ctx) => {
+  const currentUserList = getUser();
+  const { email: requestEmail, password: requestPassword } = req.body;
+
+  const userData = currentUserList.find(
+    ({ email, password }) => email === requestEmail && password === requestPassword,
+  );
+
+  if (userData !== undefined) {
+    const { email, nickname } = userData;
+
+    return res(ctx.status(200), ctx.json({ nickname, token: email }));
+  }
+
+  return res(ctx.status(400));
+};

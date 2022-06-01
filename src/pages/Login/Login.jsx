@@ -1,11 +1,17 @@
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Form, Input, PageTemplate, PageTitle } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 import React from 'react';
+import { loginUser } from 'store/actions/user';
 
 function Login() {
   const [emailValue, setEmailValue] = useInputValue();
 
   const [passwordValue, setPasswordValue] = useInputValue();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEmailInput = ({ target: { value } }) => {
     setEmailValue(value);
@@ -19,12 +25,14 @@ function Login() {
     e.preventDefault();
 
     try {
-      // await addUser({
-      //   email: emailValue,
-      //   nickname: nicknameValue,
-      //   password: passwordValue,
-      // });
-      alert('성공~~!');
+      await dispatch(
+        loginUser({
+          email: emailValue,
+          password: passwordValue,
+        }),
+      );
+
+      navigate('/');
     } catch ({ message }) {
       alert(message);
     }
