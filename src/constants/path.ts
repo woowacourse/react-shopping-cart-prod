@@ -3,6 +3,7 @@ const PATH = {
   PRODUCT: '/product',
   CART: '/cart',
   LOGIN: '/login',
+  SIGNUP: '/signup',
   REQUEST_PRODUCT: '/products',
 };
 
