@@ -96,12 +96,14 @@ function Signup() {
         nickname: nickname.value,
       });
     } catch (error) {
-      if (error.response.data.errorCode === "1000") {
+      const { errorCode } = error.response.data;
+      if (errorCode === "1000") {
         alert("회원 정보 양식이 잘못되었습니다.");
       }
-      if (error.response.data.errorCode === "1001") {
+      if (errorCode === "1001") {
         alert("이미 존재하는 이메일입니다.");
       }
+      console.log(error);
     }
   };
 

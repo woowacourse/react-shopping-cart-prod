@@ -1,17 +1,20 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
 import StyledInput from "./Input.styled";
 
-export default function Input({
-  type = "text",
-  placeholder,
-  minLength,
-  maxLength,
-  value,
-  required,
-  disabled,
-  onChange,
-}) {
+const Input = (
+  {
+    type = "text",
+    placeholder,
+    minLength,
+    maxLength,
+    value,
+    required,
+    disabled,
+    onChange,
+  },
+  ref
+) => {
   return (
     <StyledInput
       type={type}
@@ -22,6 +25,9 @@ export default function Input({
       required={required}
       disabled={disabled}
       onChange={onChange}
+      ref={ref}
     />
   );
-}
+};
+
+export default forwardRef(Input);

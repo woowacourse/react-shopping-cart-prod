@@ -4,7 +4,7 @@ import { productList } from "@/mocks/data";
 import { BASE_URL } from "@/constants";
 
 let users = [
-  { email: "woowa@gmail.com", password: "password", nickname: "dory" },
+  { email: "woowa@gmail.com", password: "password11", nickname: "dory" },
 ];
 
 export const handlers = [
@@ -12,7 +12,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(JSON.stringify(productList)));
   }),
 
-  // 인증 인가
+  // 인증 인가 - 회원가입
   rest.post(`${BASE_URL}/users`, (req, res, ctx) => {
     // 이메일이 이미 존재하는 경우
     if (users.find((user) => user.email === req.body.email)) {
@@ -27,5 +27,29 @@ export const handlers = [
 
     users.push(req.body);
     return res(ctx.status(200));
+  }),
+
+  // 인증 인가 - 로그인
+  rest.post(`${BASE_URL}/login`, (req, res, ctx) => {
+    if (
+      users.find(
+        (user) =>
+          user.email === req.body.email && user.password === req.body.password
+      )
+    ) {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          accessToken: "accessToken",
+        })
+      );
+    }
+
+    return res(
+      ctx.status(400),
+      ctx.json({
+        errorCode: "1002",
+      })
+    );
   }),
 ];
