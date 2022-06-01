@@ -1,16 +1,12 @@
 import React from "react";
+import { forwardRef } from "react";
 import { ErrorMessage, Input, InputContainer } from "./styled";
 
-function UserInput({
-  type,
-  placeholder,
-  errorMessage,
-  onChange,
-  value,
-  width,
-  ...rest
-}) {
-  return (
+const UserInput = forwardRef(
+  (
+    { type, placeholder, errorMessage, onChange, value, width, ...rest },
+    ref
+  ) => (
     <InputContainer>
       <Input
         type={type}
@@ -18,11 +14,12 @@ function UserInput({
         onChange={onChange}
         value={value}
         width={width}
+        ref={ref}
         {...rest}
       />
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </InputContainer>
-  );
-}
+  )
+);
 
 export default UserInput;

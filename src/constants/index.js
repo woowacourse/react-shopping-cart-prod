@@ -18,3 +18,12 @@ export const ROUTES = {
   REGISTER: "/register",
   USER_INFO: "/user-info",
 };
+
+export const RANGE = {
+  EMAIL_MAX_LENGTH: 50,
+  EMAIL_MIN_LENGTH: 8,
+  NICKNAME_MAX_LENGTH: 10,
+  NICKNAME_MIN_LENGTH: 1,
+  PW_MAX_LENGTH: 20,
+  PW_MIN_LENGTH: 8,
+};
