@@ -7,6 +7,7 @@ import Layout from "@/components/layout/Layout";
 import NotFound from "@/pages/not-found/NotFound";
 import Signin from "@/pages/sign-in/Signin";
 import Signup from "@/pages/sign-up/Signup";
+import UserEdit from "@/pages/user-edit/UserEdit";
 
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/reset";
@@ -26,6 +27,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Signin />} />
           <Route path="/register" element={<Signup />} />
+          <Route path="/edit" element={<UserEdit />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

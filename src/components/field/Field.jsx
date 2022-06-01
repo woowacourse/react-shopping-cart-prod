@@ -10,6 +10,7 @@ function Field({
   minLength,
   maxLength,
   errorMessage,
+  disabled,
 }) {
   return (
     <StyledField>
@@ -22,6 +23,7 @@ function Field({
         placeholder={placeholder}
         minLength={minLength}
         maxLength={maxLength}
+        disabled={disabled}
       />
     </StyledField>
   );

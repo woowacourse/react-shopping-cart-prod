@@ -7,6 +7,7 @@ export default function Input({
   placeholder,
   minLength,
   maxLength,
+  disabled,
 }) {
   return (
     <StyledInput
@@ -14,6 +15,7 @@ export default function Input({
       placeholder={placeholder}
       minLength={minLength}
       maxLength={maxLength}
+      disabled={disabled}
     />
   );
 }
