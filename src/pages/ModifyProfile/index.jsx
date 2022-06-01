@@ -1,30 +1,62 @@
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+import Profile from 'components/User/Profile/Profile';
 import Title from 'components/Common/Title/Title';
 import Button from 'components/Common/Button/Button';
-import Profile from 'components/User/Profile/Profile';
-import * as Styled from './style';
 import Modal from 'components/Common/Modal/Modal';
-import { useState, useRef } from 'react';
 import Form from 'components/Common/Form/Form';
 import Input from 'components/Common/Input/Input';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
-import useInputValidate from 'hooks/useInputValidate';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
+
+import { updatePasswordApi, unRegisterApi } from 'api/auth';
+import { showSnackBar } from 'reducers/ui/ui.actions';
+import useInputValidate from 'hooks/useInputValidate';
+import { PATH_NAME } from 'constants';
 import PropTypes from 'prop-types';
+import * as Styled from './style';
 
 const ModifyProfile = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { name } = useSelector((state) => state.user);
   const [openChangePassworModal, setOpenChangePasswordModal] = useState(false);
   const [openWithdrawalModal, setOpenWithdrawalModal] = useState(false);
 
-  const handleSubmitChangeSubmit = (e) => {
+  const handleSubmitChangeSubmit = (isValid) => (e) => {
     e.preventDefault();
+    if (!isValid) {
+      return;
+    }
+
     const {
       oldPassword: { value: oldPassword },
       password: { value: password },
-      passwordCheck: { value: passwordCheck },
     } = e.target.elements;
 
-    console.log('회원정보 수정 모달:', oldPassword, password, passwordCheck);
-    setOpenChangePasswordModal(false);
+    updatePasswordApi({
+      oldPassword,
+      newPassword: password,
+    })
+      .then(() => {
+        setOpenChangePasswordModal(false);
+        dispatch(
+          showSnackBar({
+            type: 'SUCCESS',
+            text: '비밀번호가 성공적으로 변경되었습니다.',
+          }),
+        );
+      })
+      .catch(() => {
+        dispatch(
+          showSnackBar({
+            type: 'ERROR',
+            text: '비밀번호를 올바르게 입력하세요.',
+          }),
+        );
+      });
   };
 
   const handleSubmitWithdrawal = (e) => {
@@ -34,15 +66,26 @@ const ModifyProfile = () => {
       password: { value: password },
     } = e.target.elements;
 
-    console.log('회원 탈퇴 모달:', password);
-    setOpenWithdrawalModal(false);
+    unRegisterApi(password)
+      .then(() => {
+        setOpenWithdrawalModal(false);
+        navigate(PATH_NAME.HOME);
+      })
+      .catch(() => {
+        dispatch(
+          showSnackBar({
+            type: 'ERROR',
+            text: '비밀번호를 올바르게 입력하세요.',
+          }),
+        );
+      });
   };
 
   return (
     <Styled.Wrapper>
       <Title contents="회원정보 수정" />
       <Styled.Contents>
-        <Profile name="콜라" />
+        <Profile name={name} />
         <Styled.ButtonContainer>
           <Button
             colorType="primary"
@@ -82,10 +125,16 @@ const ChangePassword = ({ onSubmit }) => {
     useInputValidate('password');
   const [newPasswordCheckValidate, handleNewPasswordCheckBlur] =
     useInputValidate('passwordCheck');
+
+  const isAllValid =
+    oldPasswordValidate.isValid &&
+    newPasswordValidate.isValid &&
+    newPasswordCheckValidate.isValid;
+
   return (
     <>
       <Title contents="비밀번호 수정" />
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmit(isAllValid)}>
         <Fieldset>
           <Input
             description="비밀번호"

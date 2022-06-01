@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { showSnackBar } from 'reducers/ui/ui.actions';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { updateNameApi } from 'api/auth';
 
 const CONVERT_MODE = 'CONVERT_MODE';
 const CONFIRM_MODE = 'CONFIRM_MODE';
@@ -22,15 +23,24 @@ const Profile = ({ name }) => {
   };
 
   const handleClickConvertButton = () => {
-    setMode(CONFIRM_MODE);
-
-    // TODO: api 등 실패시 에러 스낵바 노출 할 것
-    dispatch(
-      showSnackBar({
-        type: 'SUCCESS',
-        text: '이름이 성공적으로 변경되었습니다!',
-      }),
-    );
+    updateNameApi(newName)
+      .then(() => {
+        setMode(CONFIRM_MODE);
+        dispatch(
+          showSnackBar({
+            type: 'SUCCESS',
+            text: '이름이 성공적으로 변경되었습니다!',
+          }),
+        );
+      })
+      .catch(() => {
+        dispatch(
+          showSnackBar({
+            type: 'ERROR',
+            text: '서버 에러가 발생했습니다',
+          }),
+        );
+      });
   };
 
   useEffect(() => {
