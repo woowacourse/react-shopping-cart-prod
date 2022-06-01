@@ -9,7 +9,7 @@ import * as Styled from 'components/common/Header/Header.style';
 
 import { deviceSizeStandard } from 'styles/Theme';
 
-function Header() {
+function Header({ navLinkInfo }) {
   const windowSize = useWindowsSize();
 
   const IconSizeBreakPoint = deviceSizeStandard.desktop;
@@ -29,8 +29,11 @@ function Header() {
         </Styled.NavLink>
 
         <Styled.NavButton>
-          <Styled.NavLink to={ROUTE.shoppingCart.path}>장바구니</Styled.NavLink>
-          <Styled.NavLink to={ROUTE.orderList.path}>주문목록</Styled.NavLink>
+          {navLinkInfo.map(({ path, name }) => (
+            <Styled.NavLink key={name} to={path}>
+              {name}
+            </Styled.NavLink>
+          ))}
         </Styled.NavButton>
       </Styled.Inner>
     </Styled.Container>

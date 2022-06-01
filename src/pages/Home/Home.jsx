@@ -7,12 +7,10 @@ import * as Styled from 'pages/Home/Home.style';
 
 function Home() {
   return (
-    <PageTemplate>
-      <Styled.Container>
-        <ProductList />
-        <Pagination />
-      </Styled.Container>
-    </PageTemplate>
+    <Styled.Container>
+      <ProductList />
+      <Pagination />
+    </Styled.Container>
   );
 }
 

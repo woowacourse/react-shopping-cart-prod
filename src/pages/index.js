@@ -8,12 +8,18 @@ import NotFound from './NotFound/NotFound';
 import Register from './Register/Register';
 import Login from './Login/Login';
 
-export const PAGES = {
+export const COMMON_PAGES = {
   [ROUTE.home.path]: <Home />,
-  [ROUTE.register.path]: <Register />,
-  [ROUTE.login.path]: <Login />,
-  [ROUTE.shoppingCart.path]: <ShoppingCart />,
-  [ROUTE.orderList.path]: <OrderList />,
   [ROUTE.productDetail.path]: <ProductDetail />,
   '/*': <NotFound />,
+};
+
+export const NON_USER_PAGES = {
+  [ROUTE.register.path]: <Register />,
+  [ROUTE.login.path]: <Login />,
+};
+
+export const USER_PAGES = {
+  [ROUTE.shoppingCart.path]: <ShoppingCart />,
+  [ROUTE.orderList.path]: <OrderList />,
 };
