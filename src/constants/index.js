@@ -13,6 +13,7 @@ export const PAGE_LIST = {
   HOME: '/',
   PRODUCT_LIST: '/products',
   CART_LIST: '/cart',
+  SIGN_UP: '/signup',
 };
 
 export const REQUEST_STATUS = {
