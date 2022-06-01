@@ -24,7 +24,7 @@ const SignUpPage = () => {
     handlePasswordConfirmInput,
   } = useSignInput();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const inputInfo = {
@@ -34,8 +34,11 @@ const SignUpPage = () => {
     };
 
     if (Object.values(validState).every(valid => valid)) {
-      dispatch(signUp(inputInfo));
-      navigate('/signIn');
+      await dispatch(signUp(inputInfo));
+
+      if (!error) {
+        navigate('/signIn');
+      }
     }
   };
 

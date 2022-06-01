@@ -1,7 +1,7 @@
 import { LOCAL_BASE_URL } from 'apis';
 import { rest } from 'msw';
 import { mockItemList } from './mockDB';
-import { CartItem, SignInInfo, SignUpInfo, UserInfo } from 'types/domain';
+import { CartItem, EditPasswordInfo, SignInInfo, SignUpInfo, UserInfo } from 'types/domain';
 
 let mockCartList: CartItem[] = [];
 let mockUserList: UserInfo[] = [];
@@ -100,5 +100,17 @@ export const handlers = [
       ctx.status(200),
       ctx.json({ email: userInfo.email, name: userInfo.name, token: 't1234' })
     );
+  }),
+
+  //edit password
+  rest.patch<EditPasswordInfo>(`${LOCAL_BASE_URL}/users/me`, (req, res, ctx) => {
+    const editPasswordInfo: EditPasswordInfo = req.body;
+
+    const targetUser = mockUserList.find(user => user.password === editPasswordInfo.password);
+    const newTargetUser = { ...targetUser, password: editPasswordInfo.newPassword };
+
+    mockUserList = [...mockUserList, newTargetUser];
+
+    return res(ctx.status(200));
   }),
 ];

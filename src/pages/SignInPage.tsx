@@ -17,7 +17,7 @@ const SignInPage = () => {
 
   const { inputState, validState, handleEmailInput, handlePasswordInput } = useSignInput();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const inputInfo = {
@@ -26,8 +26,11 @@ const SignInPage = () => {
     };
 
     if ([validState.email, validState.password].every(valid => valid)) {
-      dispatch(signIn(inputInfo));
-      navigate('/main/1');
+      await dispatch(signIn(inputInfo));
+
+      if (!error) {
+        navigate('/main/1');
+      }
     }
   };
 

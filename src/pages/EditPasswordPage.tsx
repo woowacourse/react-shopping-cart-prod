@@ -22,7 +22,7 @@ const EditPasswordPage = () => {
   const dispatch = useAppDispatch<UserAction>();
   const { loading, error, data } = useAppSelector(state => state.userReducer);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const editPasswordInfo = {
@@ -31,8 +31,11 @@ const EditPasswordPage = () => {
     };
 
     if (Object.values(passwordValid).every(valid => valid)) {
-      dispatch(editPassword(editPasswordInfo));
-      navigate('/main/1');
+      await dispatch(editPassword(editPasswordInfo));
+
+      if (!error) {
+        navigate('/main/1');
+      }
     }
   };
 

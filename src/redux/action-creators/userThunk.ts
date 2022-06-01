@@ -43,8 +43,6 @@ export const editPassword =
   (editPasswordInfo: EditPasswordInfo) => async (dispatch: Dispatch<UserAction>) => {
     dispatch({ type: UserActionType.PATCH_NEW_PASSWORD_START });
 
-    console.log(editPasswordInfo);
-
     try {
       const response = await axios({
         method: 'patch',
