@@ -3,7 +3,8 @@ import priceToDollar from "@utils/priceToDollar";
 import Checkbox from "@shared/checkbox/single/Checkbox";
 import LoadingThumbnail from "@shared/loading-thumbnail/LoadingThumbnail";
 import NumberInput from "@shared/number-input/NumberInput";
-import DeleteIcon from "@shared/icons/delete-icon/DeleteIcon";
+import FontawesomeIconButton from "@shared/fontawesome-icon-button/FontawesomeIconButton";
+import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
 import styles from "./cart-item.module";
 
 function CartItem({
@@ -34,7 +35,7 @@ function CartItem({
           <div className={styles.productName}>{name}</div>
         </div>
         <div className={styles.right}>
-          <DeleteIcon onClick={onDelete} />
+          <FontawesomeIconButton onClick={onDelete} icon={faTrashCan} />
           <NumberInput onChange={onQuantityChange} value={quantity} />
           <div className={styles.productPrice}>{priceToDollar(price)}</div>
         </div>
