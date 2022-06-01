@@ -1,7 +1,8 @@
 import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
-import { useState, ChangeEvent, FormEvent } from 'react';
+import useSignInput from 'hooks/useSingInput';
+import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
@@ -9,38 +10,19 @@ import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 
-interface InputState {
-  name: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-}
-
-const initialInputState: InputState = {
-  name: '',
-  email: '',
-  password: '',
-  passwordConfirm: '',
-};
-
-const initialValidState: ValidState = {
-  name: false,
-  email: false,
-  password: false,
-  passwordConfirm: false,
-};
-
-type ValidState = {
-  [key in keyof InputState]: boolean;
-};
-
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const { loading, error, data } = useAppSelector(state => state.userReducer);
-  const [inputState, setInputState] = useState<InputState>(initialInputState);
-  const [validState, setValidState] = useState<ValidState>(initialValidState);
-
   const dispatch = useAppDispatch<UserAction>();
+  const { loading, error, data } = useAppSelector(state => state.userReducer);
+
+  const {
+    inputState,
+    validState,
+    handleEmailInput,
+    handleNameInput,
+    handlePasswordInput,
+    handlePasswordConfirmInput,
+  } = useSignInput();
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -54,37 +36,6 @@ const SignUpPage = () => {
     if (Object.values(validState).every(valid => valid)) {
       dispatch(signUp(inputInfo));
       navigate('/signIn');
-    }
-  };
-
-  const handleEmailInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setInputState(prev => ({ ...prev, email: value }));
-
-    if (value) {
-      setValidState(prev => ({ ...prev, email: true }));
-    }
-  };
-
-  const handleNameInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setInputState(prev => ({ ...prev, name: value }));
-    if (value) {
-      setValidState(prev => ({ ...prev, name: true }));
-    }
-  };
-
-  const handlePasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setInputState(prev => ({ ...prev, password: value }));
-
-    if (/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value)) {
-      setValidState(prev => ({ ...prev, password: true }));
-    }
-  };
-
-  const handlePasswordConfirmInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setInputState(prev => ({ ...prev, passwordConfirm: value }));
-
-    if (inputState.password === value) {
-      setValidState(prev => ({ ...prev, passwordConfirm: true }));
     }
   };
 
