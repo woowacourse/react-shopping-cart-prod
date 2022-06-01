@@ -42,6 +42,29 @@ export const authHandler = [
       })
     );
   }),
+
+  rest.put<UserInfoWithPassword, null, UserInfo | string>(
+    `${AUTH_BASE_URL}/customers/me`,
+    (req, res, ctx) => {
+      const { name, loginId, password } = req.body;
+
+      const authenticatedUser = users.find(
+        user => user.loginId === loginId && user.password === password
+      );
+
+      if (authenticatedUser) {
+        return res(
+          ctx.status(200),
+          ctx.json({
+            name,
+            loginId,
+          })
+        );
+      }
+
+      return res(ctx.status(400), ctx.body('비밀번호를 다시 확인해주세요'));
+    }
+  ),
 ];
 
 // mock data
