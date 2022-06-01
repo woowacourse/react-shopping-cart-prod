@@ -3,3 +3,5 @@ declare module '*.svg' {
   const ReactComponent: (props: SVGProps<SVGElement>) => ReactElement;
   export { ReactComponent };
 }
+
+declare module '*.gif';

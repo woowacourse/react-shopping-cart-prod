@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CONDITION from 'constants/condition';
+import Loading from 'components/@shared/Loading';
 import ProductCardGrid from 'components/ProductCardGrid/ProductCardGrid';
 import { ProductStoreState } from 'types/index';
 import { getProducts } from 'redux/thunks';
@@ -9,10 +10,10 @@ import styled from 'styled-components';
 
 function MainPage() {
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition
+    (state: { product: ProductStoreState }) => state.product.condition,
   );
   const productList = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productList
+    (state: { product: ProductStoreState }) => state.product.productList,
   );
   const dispatch = useDispatch();
 
@@ -25,7 +26,7 @@ function MainPage() {
   const renderSwitch = useCallback(() => {
     switch (condition) {
       case CONDITION.LOADING:
-        return <Message>Loading...</Message>;
+        return <Loading />;
       case CONDITION.COMPLETE:
         return <ProductCardGrid productList={productList} />;
       case CONDITION.ERROR:

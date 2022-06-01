@@ -9,18 +9,19 @@ import { useEffect, useState } from 'react';
 
 import CONDITION from 'constants/condition';
 import CartContent from 'components/CartContent/CartContent';
+import Loading from 'components/@shared/Loading';
 import { getProducts } from 'redux/thunks';
 import styled from 'styled-components';
 
 function CartPage() {
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition
+    (state: { product: ProductStoreState }) => state.product.condition,
   );
   const productList = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productList
+    (state: { product: ProductStoreState }) => state.product.productList,
   );
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart
+    (state: { cart: CartStoreState }) => state.cart.cart,
   );
   const [cartItems, setCartItems] = useState<Array<CartProductState>>([]);
   const dispatch = useDispatch();
@@ -36,19 +37,17 @@ function CartPage() {
 
     setCartItems(
       cart.map(({ id, stock, checked }) => {
-        const item = productList.find(
-          (product) => product.id === id
-        ) as Product;
+        const item = productList.find(product => product.id === id) as Product;
 
         return { product: item, stock, checked };
-      })
+      }),
     );
   }, [cart, productList]);
 
   const renderSwitch = () => {
     switch (condition) {
       case CONDITION.LOADING:
-        return <Message>Loading...</Message>;
+        return <Loading />;
       case CONDITION.COMPLETE:
         return <CartContent cartItems={cartItems} />;
       case CONDITION.ERROR:

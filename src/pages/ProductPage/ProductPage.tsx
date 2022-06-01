@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import CART_MESSAGE from 'constants/message';
 import CONDITION from 'constants/condition';
+import Loading from 'components/@shared/Loading';
 import { ProductStoreState } from 'types/index';
 import { cartActions } from 'redux/actions';
 import { getProduct } from 'redux/thunks';
@@ -13,10 +14,10 @@ function ProductPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition
+    (state: { product: ProductStoreState }) => state.product.condition,
   );
   const productDetail = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productDetail
+    (state: { product: ProductStoreState }) => state.product.productDetail,
   );
 
   useEffect(() => {
@@ -31,13 +32,13 @@ function ProductPage() {
       dispatch(cartActions.addToCart(Number(id)));
       alert(CART_MESSAGE.SUCCESS_ADD);
     },
-    [dispatch, id]
+    [dispatch, id],
   );
 
   const renderSwitch = useCallback(() => {
     switch (condition) {
       case CONDITION.LOADING:
-        return <Message>Loading...</Message>;
+        return <Loading />;
       case CONDITION.COMPLETE:
         return productDetail ? (
           <>
