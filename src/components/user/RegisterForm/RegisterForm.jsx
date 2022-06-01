@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { addUser, checkEmailDuplicate } from 'api/userApi';
+import { addUser, checkEmailDuplicate } from 'api/user.api';
 import { Form, Input } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';

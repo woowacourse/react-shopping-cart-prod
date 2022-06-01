@@ -3,7 +3,7 @@ import React from 'react';
 import { Form, Input } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
-import { checkPassword } from 'api/userApi';
+import { checkPassword } from 'api/user.api';
 import { ERROR_MESSAGES } from 'constants/messages';
 
 function PasswordCheckForm({ nextPath }) {

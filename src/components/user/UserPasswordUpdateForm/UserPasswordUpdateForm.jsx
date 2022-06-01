@@ -1,4 +1,4 @@
-import { updatePassword } from 'api/userApi';
+import { updatePassword } from 'api/user.api';
 import { Form, Input } from 'components/common';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 import useInputValue from 'hooks/useInputValue';

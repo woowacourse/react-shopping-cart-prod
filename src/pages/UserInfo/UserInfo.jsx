@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Modal, PageTitle } from 'components/common';
 
 import * as Styled from 'pages/UserInfo/UserInfo.style';
-import { getUser } from 'api/userApi';
+import { getUser } from 'api/user.api';
 import { useNavigate } from 'react-router-dom';
 import { useModal } from 'hooks/useModal';
 import DeleteUserForm from 'components/user/DeleteUserForm/DeleteUserForm';

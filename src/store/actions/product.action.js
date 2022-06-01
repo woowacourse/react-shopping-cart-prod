@@ -1,4 +1,4 @@
-import { getProductList } from 'api/api';
+import { getProductList } from 'api/product.api';
 import { productActionTypes } from 'store/reducers/product.reducer';
 
 export const fetchProductListThunk = (page) => async (dispatch) => {

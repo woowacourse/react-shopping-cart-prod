@@ -3,7 +3,7 @@ import {
   deleteCartProduct,
   getCart,
   updateCartProductQuantity,
-} from 'api/api';
+} from 'api/cart.api';
 import { cartActionType } from 'store/reducers/cart.reducer';
 
 const handleCartDispatch = async ({

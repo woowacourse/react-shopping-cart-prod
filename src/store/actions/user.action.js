@@ -1,4 +1,4 @@
-import { deleteUser, login, updateNickname } from 'api/userApi';
+import { deleteUser, login, updateNickname } from 'api/user.api';
 import { ERROR_MESSAGES } from 'constants/messages';
 import { userActionType } from 'store/reducers/user.reducer';
 

@@ -1,17 +1,6 @@
 import { ALERT_MESSAGES } from 'constants/messages';
-import { API_ENDPOINT, PRODUCT_LIST_PAGE_LIMIT } from 'api/constants';
+import { API_ENDPOINT } from 'api/constants';
 import apiInstance from 'api/customInstance';
-
-export const getProductList = async (page) => {
-  const pageQuery = `?_page=${page}&_limit=${PRODUCT_LIST_PAGE_LIMIT}`;
-
-  const response = await apiInstance.get(`${API_ENDPOINT.PRODUCTS}${pageQuery}`);
-
-  const productList = response.data;
-  const totalProductCount = response.headers['x-total-count'];
-
-  return { productList, totalProductCount };
-};
 
 export const addToCart = async (productId, quantity) => {
   const response = await apiInstance.post(API_ENDPOINT.SHOPPING_CART, {
