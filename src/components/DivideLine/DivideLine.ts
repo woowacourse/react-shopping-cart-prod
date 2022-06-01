@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Theme } from '../../types';
 
 type Props = {
-  color?: 'black' | 'gray';
+  color?: keyof Theme['colors'];
   thickness?: 'thin' | 'think';
   theme: Theme;
 };
@@ -11,8 +11,9 @@ const DivideLine = styled.hr<Props>`
   width: 100%;
   box-sizing: border-box;
   border-style: solid;
+
   border-color: ${({ color, theme: { colors } }) =>
-    color === 'gray' ? colors.gray : colors.black};
+    color ? colors[color] : colors['black']};
   border-width: ${({ thickness }) => (thickness === 'thin' ? '1px' : '2px')};
 `;
 

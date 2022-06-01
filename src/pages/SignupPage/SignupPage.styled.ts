@@ -83,6 +83,6 @@ export const RadioButtonBox = styled.div`
 `;
 
 export const SubmitButtonBox = styled.div`
-  width: 160px;
+  width: 300px;
   margin: 24px auto 0;
 `;
