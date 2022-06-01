@@ -5,17 +5,10 @@ import AuthContainer from 'components/@shared/AuthContainer/AuthContainer.compon
 import Button from 'components/@shared/Button/Button.component';
 import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 import Input from 'components/@shared/Input/Input.component';
+import Logo from 'components/@shared/Logo/Logo.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
 import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
-
-const TitleBox = styled(FlexBox).attrs({
-  alignItems: 'flex-end',
-  justifyContent: 'center',
-  gap: '10px',
-})`
-  margin: 15px 0;
-`;
 
 const CopyrightBox = styled(FlexBox).attrs({
   justifyContent: 'center',
@@ -34,17 +27,12 @@ function Login() {
     <AuthContainer>
       <FlexBox height="100%" direction="column" justifyContent="flex-end" gap="25px">
         <Link to="/">
-          <TitleBox>
-            <ShoppingCart fill="#2acabc" width={40} height={35} />
-            <TextBox bold color="MINT_001" fontSize="large">
-              WOOWA SHOP
-            </TextBox>
-          </TitleBox>
+          <Logo color="MINT_001" />
         </Link>
         <FlexBox width="100%" direction="column" gap="20px" alignItems="flex-end">
           <Input type="email" placeholder="이메일" />
           <Input type="password" placeholder="비밀번호" />
-          <SignupLink to="/">회원가입</SignupLink>
+          <SignupLink to="/signup">회원가입</SignupLink>
           <Button width="100%" borderRadius="10px">
             <TextBox color="WHITE_001">로그인</TextBox>
           </Button>
