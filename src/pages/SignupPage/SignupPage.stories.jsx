@@ -1,3 +1,4 @@
+import customerHandlers from '../../mocks/handlers/customers';
 import SignupPage from './SignupPage';
 
 export default {
@@ -10,3 +11,10 @@ function Template(args) {
 }
 
 export const Default = Template.bind({});
+Default.parameters = {
+  msw: {
+    handlers: {
+      customers: customerHandlers,
+    },
+  },
+};
