@@ -2,7 +2,7 @@ import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useSignInput from 'hooks/useSignInput';
-import { FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editPassword, signUp } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
@@ -19,6 +19,7 @@ const EditPasswordPage = () => {
     new: false,
     confirm: false,
   });
+
   const dispatch = useAppDispatch<UserAction>();
   const { loading, error, data } = useAppSelector(state => state.userReducer);
 
@@ -39,7 +40,7 @@ const EditPasswordPage = () => {
     }
   };
 
-  const handlePrevPasswordInput = ({ target: { value } }) => {
+  const handlePrevPasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (value) {
       setpPasswordValid(prevState => ({ ...prevState, prev: true }));
     }

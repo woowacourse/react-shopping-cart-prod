@@ -2,7 +2,7 @@ import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useSignInput from 'hooks/useSignInput';
-import { FormEvent } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signIn } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
@@ -15,22 +15,31 @@ const SignInPage = () => {
   const dispatch = useAppDispatch<UserAction>();
   const { loading, error, data } = useAppSelector(state => state.userReducer);
 
-  const { inputState, validState, handleEmailInput, handlePasswordInput } = useSignInput();
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [passwordValid, setpPasswordValid] = useState(false);
+
+  const { inputState, validState, handleEmailInput } = useSignInput();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const inputInfo = {
       email: inputState.email,
-      password: inputState.password,
+      password: passwordRef.current.value,
     };
 
-    if ([validState.email, validState.password].every(valid => valid)) {
+    if (validState.email && passwordValid) {
       await dispatch(signIn(inputInfo));
 
       if (!error) {
         navigate('/main/1');
       }
+    }
+  };
+
+  const handlePasswordInput = ({ target: { value } }) => {
+    if (value) {
+      setpPasswordValid(true);
     }
   };
 
@@ -41,7 +50,7 @@ const SignInPage = () => {
         <SignInput type={'email'} onChange={handleEmailInput}>
           이메일
         </SignInput>
-        <SignInput type={'password'} onChange={handlePasswordInput}>
+        <SignInput type={'password'} onChange={handlePasswordInput} ref={passwordRef}>
           비밀번호
         </SignInput>
 

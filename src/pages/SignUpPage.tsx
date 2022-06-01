@@ -2,7 +2,7 @@ import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useSignInput from 'hooks/useSignInput';
-import { FormEvent } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
@@ -13,16 +13,15 @@ import theme from 'styles/theme';
 const SignUpPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const [passwordValid, setpPasswordValid] = useState({
+    password: false,
+    confirm: false,
+  });
+
   const { loading, error, data } = useAppSelector(state => state.userReducer);
 
-  const {
-    inputState,
-    validState,
-    handleEmailInput,
-    handleNameInput,
-    handlePasswordInput,
-    handlePasswordConfirmInput,
-  } = useSignInput();
+  const { inputState, validState, handleEmailInput, handleNameInput } = useSignInput();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,15 +29,30 @@ const SignUpPage = () => {
     const inputInfo = {
       email: inputState.email,
       name: inputState.name,
-      password: inputState.password,
+      password: passwordRef.current.value,
     };
 
-    if (Object.values(validState).every(valid => valid)) {
+    if (
+      Object.values(validState).every(valid => valid) &&
+      Object.values(passwordValid).every(valid => valid)
+    ) {
       await dispatch(signUp(inputInfo));
 
       if (!error) {
         navigate('/signIn');
       }
+    }
+  };
+
+  const handlePasswordInput = ({ target: { value } }) => {
+    if (/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value)) {
+      setpPasswordValid(prevState => ({ ...prevState, password: true }));
+    }
+  };
+
+  const handlePasswordConfirmInput = ({ target: { value } }) => {
+    if (passwordRef.current.value === value) {
+      setpPasswordValid(prevState => ({ ...prevState, confirm: true }));
     }
   };
 
@@ -53,7 +67,7 @@ const SignUpPage = () => {
         <SignInput type={'text'} onChange={handleNameInput}>
           이름
         </SignInput>
-        <SignInput type={'password'} onChange={handlePasswordInput}>
+        <SignInput type={'password'} onChange={handlePasswordInput} ref={passwordRef}>
           비밀번호
         </SignInput>
         <SignInput type={'password'} onChange={handlePasswordConfirmInput}>
