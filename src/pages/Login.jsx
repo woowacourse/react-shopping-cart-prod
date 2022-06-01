@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Layout from 'components/Layout';
 
 import Button from 'components/@common/Button/styles';
@@ -37,7 +38,7 @@ const Login = () => {
           <CommonStyled.Text size="1.6rem" weight="bold" margin="0 0 2rem 0">
             로그인
           </CommonStyled.Text>
-          <form onSubmit={handleLogin}>
+          <form onSubmit={(e) => handleLogin(e)}>
             <label hidden html-for="input-id">
               로그인 입력창
             </label>
@@ -73,16 +74,18 @@ const Login = () => {
             >
               로그인
             </Button>
-            <Button
-              type="button"
-              color={COLORS.MINT_200}
-              backgroundColor={COLORS.WHITE}
-              margin="0.5rem 0"
-              border={`1px solid ${COLORS.MINT_200}`}
-              hoverColor={COLORS.MINT_100}
-            >
-              회원 가입
-            </Button>
+            <Link to="/signUp">
+              <Button
+                type="button"
+                color={COLORS.MINT_200}
+                backgroundColor={COLORS.WHITE}
+                margin="0.5rem 0"
+                border={`1px solid ${COLORS.MINT_200}`}
+                hoverColor={COLORS.MINT_100}
+              >
+                회원 가입
+              </Button>
+            </Link>
           </form>
         </CommonStyled.Container>
       </Styled.LoginContainer>

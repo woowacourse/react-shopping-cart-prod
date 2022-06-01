@@ -11,6 +11,7 @@ import GlobalStyles from 'styles/GlobalStyles';
 import ProductDetail from 'pages/ProductDetail';
 import Cart from 'pages/Cart';
 import Login from 'pages/Login';
+import SignUp from 'pages/SignUp';
 
 const ShoppingCartApp = () => (
   <Provider store={store}>
@@ -22,6 +23,7 @@ const ShoppingCartApp = () => (
         <Route path="/product" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signUp" element={<SignUp />} />
         <Route path="*" element={<ProductList />} />
       </Routes>
     </BrowserRouter>

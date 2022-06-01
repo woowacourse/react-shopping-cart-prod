@@ -12,9 +12,11 @@ class RequestAsync {
   }
 
   async #getRefinedResponse(response) {
+    const responseString = await response.text();
+
     return {
-      status: response.ok ? 비동기_요청.SUCCESS : 비동기_요청.FAIL,
-      content: await response.json(),
+      status: response.ok ? 비동기_요청.SUCCESS : 비동기_요청.FAILURE,
+      content: responseString ? JSON.parse(responseString) : {},
     };
   }
 

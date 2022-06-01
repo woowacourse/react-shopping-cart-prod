@@ -16,6 +16,12 @@ const Button = styled.button`
     background-color: ${(props) => props.hoverColor || COLORS.BROWN_100};
     color: ${(props) => props.hoverFontColor || COLORS.WHITE};
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: ${COLORS.GRAY_300};
+    color: ${COLORS.WHITE};
+  }
 `;
 
 export default Button;
