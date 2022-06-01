@@ -7,6 +7,7 @@ import carts from './carts';
 import cart from './cart';
 import productQuantity from './productQuantity';
 import snackbar from './snackbar';
+import user from './user';
 
 export default combineReducers({
   products,
@@ -16,4 +17,5 @@ export default combineReducers({
   cart,
   productQuantity,
   snackbar,
+  user,
 });

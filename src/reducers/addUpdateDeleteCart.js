@@ -2,13 +2,16 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { postApi, putApi, deleteApi } from 'service';
 
-export const addCart = createAsyncThunk('cudCart/add', async (productId, { rejectWithValue }) => {
-  try {
-    await postApi(`addCart/${productId}`);
-  } catch (error) {
-    rejectWithValue(error);
-  }
-});
+export const addCart = createAsyncThunk(
+  'cudCart/add',
+  async (productId, { rejectWithValue }) => {
+    try {
+      await postApi(`addCart/${productId}`);
+    } catch (error) {
+      rejectWithValue(error);
+    }
+  },
+);
 
 export const addMoreCart = createAsyncThunk(
   'cudCart/addMore',
@@ -47,7 +50,7 @@ export const deleteCarts = createAsyncThunk(
   'cudCart/deletes',
   async (productIds, { rejectWithValue }) => {
     try {
-      await deleteApi('deleteCarts', { data: { productIds } });
+      await deleteApi('deleteCarts', { productIds });
     } catch (error) {
       rejectWithValue(error);
     }

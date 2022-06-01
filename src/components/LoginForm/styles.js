@@ -11,6 +11,7 @@ export const SignUpLink = styled(Link)`
 `;
 
 export default styled.form`
+  position: relative;
   width: 440px;
   padding: 60px 50px;
   border: 1px solid ${({ theme }) => theme.gray_100};
