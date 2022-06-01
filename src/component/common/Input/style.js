@@ -52,6 +52,7 @@ const Label = styled.label`
 `;
 
 const Message = styled.div`
+  display: ${({value}) => (value.length === 0 ? 'none' : 'block')};
   margin-top: 8px;
   color: ${({theme}) => theme.RED_500};
   line-height: 20px;

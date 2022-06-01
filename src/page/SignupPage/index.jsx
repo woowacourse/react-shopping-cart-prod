@@ -4,8 +4,13 @@ import * as S from './style';
 import Input from 'component/common/Input';
 import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
+import useFetch from 'hook/useFetch';
+import {useNavigate} from 'react-router-dom';
+import {PATH} from 'constant';
 
 function SignupPage() {
+  const navigation = useNavigate();
+
   const [onChangeId, restId] = useControlledInput({
     message: '4~16자의 영어 소문자, 숫자만 사용 가능합니다.',
     isError: (userId) => !/^[a-z0-9]{4,15}$/g.test(userId) && userId.length > 0,
@@ -47,11 +52,49 @@ function SignupPage() {
     isError: (number) => number.length !== 4 || !Number.parseInt(number),
   });
 
+  const submitError =
+    restId.isError ||
+    restNickname.isError ||
+    restPassword.isError ||
+    restConfirmPassword.isError ||
+    restAddress.isError ||
+    restStartNumber.isError ||
+    restMiddleNumber.isError ||
+    restLastNumber.isError;
+
+  const signup = useFetch('post');
+
+  const onSubmit = (inputs) => {
+    const [account, nickname, password, address, start, middle, last] = inputs;
+    signup.fetch({
+      API_URL: process.env.REACT_APP_SIGNUP_API_URL,
+      body: {
+        account: account.value,
+        nickname: nickname.value,
+        password: password.value,
+        address: address.value,
+        phoneNumber: {
+          start: start.value,
+          middle: middle.value,
+          last: last.value,
+        },
+      },
+      onSuccess: (location) => {
+        navigation(PATH.LOGIN);
+      },
+    });
+  };
+
   return (
     <S.Layout>
       <S.SignupContainer>
         <S.Header>회원가입</S.Header>
-        <S.InputCol>
+        <S.InputForm
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmit(e.target);
+          }}
+        >
           <Input
             label="아이디"
             size="medium"
@@ -127,10 +170,11 @@ function SignupPage() {
             width="300px"
             height="36px"
             type="submit"
+            isDisabled={submitError}
           >
             확인
           </S.ConfirmButton>
-        </S.InputCol>
+        </S.InputForm>
       </S.SignupContainer>
     </S.Layout>
   );

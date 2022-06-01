@@ -24,7 +24,7 @@ const Header = styled.header`
   padding-top: 40px;
 `;
 
-const InputCol = styled(FlexColumn)`
+const InputForm = styled(FlexColumn)`
   gap: 16px;
   align-items: center;
 `;
@@ -46,4 +46,4 @@ const Hyphen = styled.span`
   line-height: 83px;
 `;
 
-export {Layout, SignupContainer, Header, InputCol, ConfirmButton, PhoneNumberContainer, Hyphen};
+export {Layout, SignupContainer, Header, InputForm, ConfirmButton, PhoneNumberContainer, Hyphen};

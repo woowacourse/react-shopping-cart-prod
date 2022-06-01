@@ -26,7 +26,7 @@ const Header = styled.header`
   padding-top: 40px;
 `;
 
-const InputCol = styled.form`
+const InputForm = styled.form`
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -49,4 +49,4 @@ const LinkText = styled.span`
   margin-left: 10px;
 `;
 
-export {Layout, LoginContainer, Header, InputCol, ConfirmButton, SignupText, LinkText};
+export {Layout, LoginContainer, Header, InputForm, ConfirmButton, SignupText, LinkText};

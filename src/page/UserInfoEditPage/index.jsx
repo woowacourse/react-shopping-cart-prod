@@ -34,7 +34,7 @@ function UserInfoEditPage() {
     <S.Layout>
       <S.SignupContainer>
         <S.Header>회원 정보 수정</S.Header>
-        <S.InputCol>
+        <S.InputForm>
           <Input
             label="아이디"
             size="medium"
@@ -99,7 +99,7 @@ function UserInfoEditPage() {
           >
             확인
           </S.ConfirmButton>
-        </S.InputCol>
+        </S.InputForm>
       </S.SignupContainer>
     </S.Layout>
   );

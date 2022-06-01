@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 function useControlledInput({message, isError}) {
   const [inputValue, setInputValue] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(true);
 
   const onChange = (value) => {
     setInputValue(value);

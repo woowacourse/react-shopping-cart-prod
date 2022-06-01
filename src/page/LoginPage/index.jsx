@@ -33,7 +33,7 @@ function LoginPage() {
     <S.Layout>
       <S.LoginContainer>
         <S.Header>로그인</S.Header>
-        <S.InputCol
+        <S.InputForm
           onSubmit={(e) => {
             e.preventDefault();
             onSubmit(e.target);
@@ -62,7 +62,7 @@ function LoginPage() {
               <Link to={PATH.SIGNUP}>회원가입</Link>
             </S.LinkText>
           </S.SignupText>
-        </S.InputCol>
+        </S.InputForm>
       </S.LoginContainer>
     </S.Layout>
   );

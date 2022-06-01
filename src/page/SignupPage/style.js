@@ -26,7 +26,7 @@ const Header = styled.header`
   padding-top: 40px;
 `;
 
-const InputCol = styled.form`
+const InputForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,7 +56,7 @@ export {
   Layout,
   SignupContainer,
   Header,
-  InputCol,
+  InputForm,
   ConfirmButton,
   PhoneNumberContainer,
   PasswordContainer,

@@ -74,4 +74,13 @@ export const handlers = [
   rest.post(process.env.REACT_APP_LOGIN_API_URL, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json({accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'}));
   }),
+
+  // 회원가입
+  rest.post(process.env.REACT_APP_SIGNUP_API_URL, (req, res, ctx) => {
+    return res((res) => {
+      res.status = 201;
+      res.headers.set('Location', '/signin');
+      return res;
+    });
+  }),
 ];
