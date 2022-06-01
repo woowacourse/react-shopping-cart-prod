@@ -1,29 +1,45 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import { theme } from "style";
 
 import { ROUTES, RANGE } from "constants";
 
+import { useStore } from "hooks/useStore";
+import { login } from "reducers/user";
+
 import PageHeader from "components/common/PageHeader";
 import UserInput from "components/common/UserInput";
-import DefaultButton from "components/common/Button/DefaultButton";
 import UserForm from "components/common/UserForm";
+import Spinner from "components/common/Spinner";
+import DefaultButton from "components/common/Button/DefaultButton";
 import { LoginPageContainer, LoginButtonContainer } from "./styled";
+import ErrorPage from "../ErrorPage";
 
 function LoginPage() {
+  const navigator = useNavigate();
+  const { data: user, isLoading, errorMessage, dispatch } = useStore("user");
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
-  const login = (e) => {
+  const requestLogin = (e) => {
     e.preventDefault();
-    // TODO: 서버로 요청 후 성공시 메인페이지로 리다이렉트
+    dispatch(login(emailRef.current.value, passwordRef.current.value));
   };
+
+  const isLoginSuccess = !isLoading && !errorMessage && user.accessToken;
+  useEffect(() => {
+    if (isLoginSuccess) {
+      navigator("/");
+    }
+  }, [isLoading]);
 
   return (
     <LoginPageContainer>
       <PageHeader>로그인</PageHeader>
-      <UserForm onSubmit={login}>
+      {isLoading && <Spinner />}
+      {errorMessage && <ErrorPage>{errorMessage}</ErrorPage>}
+      <UserForm onSubmit={requestLogin}>
         <UserInput
           width="500px"
           placeholder="이메일을 입력해주세요"

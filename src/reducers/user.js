@@ -54,35 +54,38 @@ export const register =
     }
   };
 
-export const login =
-  ({ email, password }) =>
-  async (dispatch) => {
-    dispatch({ type: USER_ACTION.LOGIN });
-    try {
-      const response = await loginBaseServer({
-        url: `${BASE_SERVER_URL}${SERVER_PATH.LOGIN}`,
-        body: {
-          email,
-          password,
-        },
-      });
+export const login = (email, password) => async (dispatch) => {
+  dispatch({ type: USER_ACTION.LOGIN });
+  try {
+    const response = await loginBaseServer({
+      url: `${BASE_SERVER_URL}${SERVER_PATH.LOGIN}`,
+      body: {
+        email,
+        password,
+      },
+    });
 
-      const data = await response.json();
-      if (data.message) {
-        throw new Error(data.message);
-      }
-
-      dispatch({
-        type: USER_ACTION.LOGIN_SUCCESS,
-        user: { ...data.customer, accessToken: data.accessToken },
-      });
-    } catch (error) {
-      dispatch({
-        type: USER_ACTION.LOGIN_ERROR,
-        errorMessage: error.message,
-      });
+    const data = await response.json();
+    if (data.message) {
+      throw new Error(data.message);
     }
-  };
+
+    dispatch({
+      type: USER_ACTION.LOGIN_SUCCESS,
+      user: {
+        ...data.customer,
+        nickname: data.customer.username,
+        accessToken: data.accessToken,
+      },
+    });
+    console.log(data.accessToken, "thunk");
+  } catch (error) {
+    dispatch({
+      type: USER_ACTION.LOGIN_ERROR,
+      errorMessage: error.message,
+    });
+  }
+};
 
 export const deleteUser = (customerId) => async (dispatch) => {
   dispatch({ type: USER_ACTION.DELETE_ACCOUNT });
