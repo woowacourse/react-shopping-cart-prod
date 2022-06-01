@@ -55,3 +55,7 @@ export const updatePassword = async (password) => {
     password,
   });
 };
+
+export const deleteUser = async () => {
+  await apiInstance.delete(API_ENDPOINT.AUTH.ME);
+};

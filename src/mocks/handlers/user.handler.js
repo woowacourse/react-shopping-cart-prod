@@ -99,3 +99,15 @@ export const handleUserDataUpdate = (req, res, ctx) => {
   setUser(currentUserList);
   return res(ctx.status(204));
 };
+
+export const handleUserDelete = (req, res, ctx) => {
+  const currentUserList = getUser();
+
+  const token = req.headers.get('Authorization').split(' ')[1];
+
+  const newUserList = currentUserList.filter(({ email }) => email !== token);
+
+  setUser(newUserList);
+
+  return res(ctx.status(204));
+};

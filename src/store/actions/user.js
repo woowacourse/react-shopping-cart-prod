@@ -1,4 +1,4 @@
-import { login, updateNickname } from 'api/userApi';
+import { deleteUser, login, updateNickname } from 'api/userApi';
 import { userActionType } from 'store/reducers/user';
 
 export const loginUser = (loginData) => async (dispatch) => {
@@ -33,5 +33,19 @@ export const updateUserNickname = (newNickname) => async (dispatch) => {
   } catch (error) {
     dispatch({ type: userActionType.FAIL });
     throw new Error('회원정보 수정에 실패했습니다.');
+  }
+};
+
+export const deleteUserThunk = () => async (dispatch) => {
+  try {
+    await deleteUser();
+
+    window.sessionStorage.removeItem('nickname');
+    window.sessionStorage.removeItem('token');
+
+    dispatch({ type: userActionType.DELETE });
+  } catch (error) {
+    dispatch({ type: userActionType.FAIL });
+    throw new Error('회원정보 삭제에 실패했습니다.');
   }
 };
