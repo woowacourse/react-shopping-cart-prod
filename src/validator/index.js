@@ -22,7 +22,7 @@ const checkEmail = (value) => {
   }
 };
 
-const checkNickName = (value) => {
+export const checkNickName = (value) => {
   if (value.includes(" ")) {
     throw new Error("닉네임에 공백이 없어야 합니다.");
   }
