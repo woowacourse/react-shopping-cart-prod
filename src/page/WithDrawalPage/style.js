@@ -72,6 +72,7 @@ const WithDrawalButton = styled(Button)`
   border-radius: 4px;
 
   font-size: 14px;
+  margin-top: 48px;
 `;
 
 const TextWithCheckBox = styled(FlexRow)`

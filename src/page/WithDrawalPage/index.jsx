@@ -4,10 +4,43 @@ import * as S from './style';
 import baedaleTear from 'assets/baedale_tear.png';
 
 import CheckBox from 'component/common/CheckBox';
+import useFetch from 'hook/useFetch';
+import {useNavigate} from 'react-router-dom';
+import {PATH} from 'constant';
+import {useDispatch} from 'react-redux';
+import {AUTH} from 'store/modules/auth';
+import useControlledInput from 'hook/useControlledInput';
 
-function WithDrawal() {
-  const [isChecked, setIsChecked] = useState(true);
+function WithDrawalPage() {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const [onChangePassword, restPassword] = useControlledInput({});
+
+  const navigation = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const withDrawal = useFetch('delete');
+
   const handleCheckBoxClick = () => setIsChecked((prevState) => !prevState);
+
+  const onSubmit = async (inputs) => {
+    const [password] = inputs;
+    const accessToken = await localStorage.getItem('accessToken');
+
+    withDrawal.fetch({
+      API_URL: process.env.REACT_APP_WITHDRAWAL_API_URL,
+      body: {
+        password: password.value,
+      },
+      headers: {Authorization: `Bearer ${accessToken}`},
+      onSuccess: (location) => {
+        navigation(PATH.HOME);
+        dispatch({type: AUTH.LOGOUT});
+        localStorage.removeItem('accessToken');
+      },
+    });
+  };
 
   return (
     <S.Layout>
@@ -36,18 +69,29 @@ function WithDrawal() {
             </S.TextWithCheckBox>
           </S.WithDrawalText>
 
-          <S.WithDrawalInput
-            type="password"
-            id="password"
-            size="large"
-            label="비밀번호"
-            placeHolder="********"
-          />
-          <S.WithDrawalButton disabled={isChecked}>회원탈퇴</S.WithDrawalButton>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              onSubmit(e.target);
+            }}
+          >
+            <S.WithDrawalInput
+              type="password"
+              id="password"
+              size="large"
+              label="비밀번호"
+              placeHolder="비밀번호를 입력해주세요."
+              onChange={(e) => onChangePassword(e.target.value)}
+              {...restPassword}
+            />
+            <S.WithDrawalButton isDisabled={!isChecked || !restPassword.value} type="submit">
+              회원탈퇴
+            </S.WithDrawalButton>
+          </form>
         </S.WithDrawalSection>
       </S.WithDrawalContainer>
     </S.Layout>
   );
 }
 
-export default WithDrawal;
+export default WithDrawalPage;

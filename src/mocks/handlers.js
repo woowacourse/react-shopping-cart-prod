@@ -107,4 +107,9 @@ export const handlers = [
     };
     return res(ctx.status(200));
   }),
+
+  // 회원 탈퇴
+  rest.delete(process.env.REACT_APP_WITHDRAWAL_API_URL, (req, res, ctx) => {
+    return res(ctx.status(204));
+  }),
 ];
