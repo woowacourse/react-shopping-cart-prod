@@ -30,7 +30,7 @@ const InputCol = styled(FlexColumn)`
 `;
 
 const ConfirmButton = styled(Button)`
-  margin-top: 34px;
+  margin-top: -15px;
   border-radius: 4px;
 `;
 
