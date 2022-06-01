@@ -19,6 +19,12 @@ const GlobalStyles = css`
     font-family: 'NanumBarunGothic', sans-serif;
     background-color: ${COLORS.GRAY_200};
   }
+
+  html,
+  body,
+  #root {
+    min-height: 100%;
+  }
 `;
 
 export default GlobalStyles;
