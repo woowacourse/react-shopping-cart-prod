@@ -3,7 +3,7 @@ import { rest } from "msw";
 import db from "./db.json";
 import { BASE_SERVER_URL, SERVER_PATH } from "../constants";
 
-export const prouctsHandlers = [
+export const prouctsHandler = [
   rest.get(`${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(db.products));
   }),
@@ -22,7 +22,7 @@ export const prouctsHandlers = [
   ),
 ];
 
-export const cartsHandlers = [
+export const cartsHandler = [
   rest.get(`${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`, (req, res, ctx) => {
     const cartList = db.carts;
     const productList = db.products;
@@ -70,4 +70,58 @@ export const cartsHandlers = [
     db.carts[cartItemIndex].count = count;
     return res(ctx.status(200));
   }),
+];
+
+export const userHandler = [
+  rest.get(
+    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          id: 1,
+          email: "test@naver.com",
+          username: "test",
+        })
+      );
+    }
+  ),
+  rest.post(
+    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}`,
+    (req, res, ctx) => {
+      return res(ctx.status(201));
+    }
+  ),
+  rest.post(`${BASE_SERVER_URL}${SERVER_PATH.LOGIN}`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        accessToken: "ddfsdfadsfdsafsad",
+        customer: {
+          id: 1,
+          email: "test@naver.com",
+          username: "test",
+        },
+      })
+    );
+  }),
+  rest.post(
+    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
+    (req, res, ctx) => {
+      return res(ctx.status(204));
+    }
+  ),
+  rest.put(
+    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
+    (req, res, ctx) => {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          id: 1,
+          email: "test@naver.com",
+          username: "test222",
+        })
+      );
+    }
+  ),
 ];
