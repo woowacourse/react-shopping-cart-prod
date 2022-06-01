@@ -1,4 +1,3 @@
-import { authClient } from 'apis';
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
@@ -6,12 +5,11 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from 'redux/user/thunk';
 import { PATH } from 'Routers';
 import styled from 'styled-components';
-import type { LoginResponse } from 'types/domain';
 
 const Login = () => {
   const [email, onChangeEmail] = useInput();
@@ -20,7 +18,9 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const name = useAppSelector(state => state.user.data?.name);
   const error = useAppSelector(state => state.user.error);
+  const isLogin = useAppSelector(state => !!state.user.data);
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const isLoginAuth = useRef(false);
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,16 +31,26 @@ const Login = () => {
         password,
       })
     );
+
+    isLoginAuth.current = true;
   };
+
+  useEffect(() => {
+    if (isLogin && !isLoginAuth.current) {
+      navigate(PATH.home);
+      alert('잘못된 접근입니다.');
+    }
+  }, [isLogin, navigate]);
 
   useEffect(() => {
     if (error) {
       openSnackbar();
+      // @TODO: 에러 없애기
     }
   }, [error, openSnackbar]);
 
   useEffect(() => {
-    if (name) {
+    if (name && isLoginAuth.current) {
       alert(`${name}님 로그인 되었습니다.`);
       navigate(PATH.home);
     }
