@@ -5,14 +5,22 @@ import { flexCenter } from 'styles/mixin';
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useState } from 'react';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { UserAction, UserActionType } from 'redux/actions/user';
 
 const Header = () => {
   const navigate = useNavigate();
   const { loading, error, data } = useAppSelector(state => state.userReducer);
   const [isShowHambergur, setIsShowHambergur] = useState(false);
+  const dispatch = useAppDispatch<UserAction>();
 
   const toggleHambergur = () => {
     setIsShowHambergur(!isShowHambergur);
+  };
+
+  const handleSignOut = () => {
+    localStorage.clear();
+    dispatch({ type: UserActionType.SIGN_OUT_ACTION });
   };
 
   return (
@@ -27,13 +35,15 @@ const Header = () => {
         <StyledNav>
           <button onClick={() => navigate('/cart')}>장바구니</button>
           <button>주문목록</button>
-          {data ? (
+          {Object.keys(data).length ? (
             <button onClick={toggleHambergur}>
               마이페이지
               <MyPageHambergurList isShow={isShowHambergur}>
                 <Link to=''>회원정보 수정</Link>
                 <Link to=''>비밀번호 변경</Link>
-                <Link to=''>로그아웃</Link>
+                <Link onClick={handleSignOut} to=''>
+                  로그아웃
+                </Link>
               </MyPageHambergurList>
             </button>
           ) : (

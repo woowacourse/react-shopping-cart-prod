@@ -1,5 +1,7 @@
 import { UserInfo } from 'types/domain';
 
+//TODO type만 있는게 맞는지
+
 export enum UserActionType {
   POST_SIGN_UP_START = 'user/POST_SIGN_UP_START',
   POST_SIGN_UP_SUCCESS = 'user/POST_SIGN_UP_SUCCESS',
@@ -8,6 +10,8 @@ export enum UserActionType {
   POST_SIGN_IN_START = 'user/POST_SIGN_IN_START',
   POST_SIGN_IN_SUCCESS = 'user/POST_SIGN_IN_SUCCESS',
   POST_SIGN_IN_FAILURE = 'user/POST_SIGN_IN_FAILURE',
+
+  SIGN_OUT_ACTION = 'user/SIGN_OUT',
 }
 
 interface PostSignUpStart {
@@ -38,10 +42,15 @@ interface PostSignInFailure {
   payload: string;
 }
 
+interface SignOutAction {
+  type: UserActionType.SIGN_OUT_ACTION;
+}
+
 export type UserAction =
   | PostSignUpStart
   | PostSignUpSuccess
   | PostSignUpFailure
   | PostSignInStart
   | PostSignInSuccess
-  | PostSignInFailure;
+  | PostSignInFailure
+  | SignOutAction;

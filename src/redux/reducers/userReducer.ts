@@ -28,6 +28,8 @@ export const userReducer = (state = initialState, action: UserAction) => {
     case UserActionType.POST_SIGN_IN_FAILURE:
       return { loading: false, error: true, data: state.data };
 
+    case UserActionType.SIGN_OUT_ACTION:
+      return { ...initialState };
     default:
       return state;
   }
