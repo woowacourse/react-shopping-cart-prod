@@ -4,7 +4,7 @@ import Footer from './Footer';
 import Header from './Header';
 import * as S from './styles';
 
-function Layout() {
+function ShoppingLayout() {
   return (
     <S.Container>
       <Header />
@@ -16,4 +16,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default ShoppingLayout;
