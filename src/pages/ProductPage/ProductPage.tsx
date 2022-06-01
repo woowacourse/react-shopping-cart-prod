@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import CART_MESSAGE from 'constants/message';
+import { CART_MESSAGE } from 'constants/message';
 import CONDITION from 'constants/condition';
 import Loading from 'components/@shared/Loading';
 import { ProductStoreState } from 'types/index';
