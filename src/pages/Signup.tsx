@@ -56,7 +56,7 @@ const Signup = () => {
     }
   }, [error, openSnackbar]);
 
-  if (!isLogin) return null;
+  if (isLogin) return null;
 
   return (
     <AuthPage title='회원가입' onSubmitAuthForm={onSubmitAuthForm}>
