@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 
@@ -13,12 +13,29 @@ import baedale from 'assets/baedale.png';
 import baedaleHover from 'assets/baedale_hover.png';
 import {AUTH} from 'store/modules/auth';
 
+import useFetch from 'hook/useFetch';
+
 export default function Header() {
   const dispatch = useDispatch();
 
   const isLogined = useSelector((state) => state.authReducer.isLogined);
 
   const navigation = useNavigate();
+  const userInfo = useFetch('get');
+
+  const checkLogin = async () => {
+    const accessToken = await localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      dispatch({type: AUTH.LOGOUT});
+      return;
+    }
+
+    userInfo.fetch({
+      API_URL: process.env.REACT_APP_GET_INFO_API_URL,
+      headers: {Authorization: `Bearer ${accessToken}`},
+    });
+  };
 
   const handleLogoClick = () => navigation(PATH.HOME);
 
@@ -26,6 +43,14 @@ export default function Header() {
     localStorage.removeItem('accessToken');
     dispatch({type: AUTH.LOGOUT});
   };
+
+  useEffect(() => {
+    checkLogin();
+  }, []);
+
+  useEffect(() => {
+    userInfo.data && dispatch({type: AUTH.LOGIN});
+  }, [userInfo.data]);
 
   return (
     <S.HeaderLayout>
