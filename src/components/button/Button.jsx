@@ -8,6 +8,7 @@ function Button({
   variant,
   size,
   block,
+  outline,
   className,
 }) {
   const classNames = cn(
@@ -15,6 +16,7 @@ function Button({
     styles[variant],
     styles[size],
     { [styles.block]: block },
+    { [styles.outline]: outline },
     className
   );
   return (

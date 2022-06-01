@@ -25,11 +25,19 @@
   width: 100%;
 }
 
-.sm {
-  padding: 6px 0;
+.outline {
+  border: 1px solid black;
+  border-radius: 4px;
 }
 
-.md {}
+.sm {
+  padding: 4px 6px;
+  font-size: 14px;
+}
+
+.md {
+  padding: 6px 0;
+}
 
 .lg {}
 
