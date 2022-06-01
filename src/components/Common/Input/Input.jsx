@@ -1,22 +1,19 @@
 import * as Styled from './style';
 import PropTypes from 'prop-types';
+import { forwardRef } from 'react';
 
-const Input = ({
-  description = '이메일',
-  placeholder = '이메일을 입력해주세요.',
-  ...props
-}) => {
+const Input = ({ description = '이메일', ...props }, ref) => {
   return (
     <Styled.Wrapper>
       <Styled.Description>{description}</Styled.Description>
-      <Styled.Input placeholder={placeholder} {...props} />
+      <Styled.Input ref={ref} {...props} />
     </Styled.Wrapper>
   );
 };
 
 Input.propTypes = {
   description: PropTypes.string,
-  placeholder: PropTypes.string,
+  ref: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
 };
 
-export default Input;
+export default forwardRef(Input);

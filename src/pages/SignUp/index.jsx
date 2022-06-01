@@ -4,60 +4,51 @@ import Button from 'components/Common/Button/Button';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import * as Styled from './style';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
-import { useState } from 'react';
-
-// 영문 소문자만 가능
-// 빈 값이나 공백 불가능
-// 특수문자 (-) (_) 이외 불가능
-// 이메일 여부 (@) 확인
-// API 요청하여 중복 여부 확인
-// 소문자만 있는가 ? -> 소문자 = lowerCase / 만 => only / isLowerCaseOnly
-
-const validateEmail = (email) => {
-  console.log('validateEmail email', email);
-  const isValid =
-    /^[0-9a-z]([-_]?[0-9a-z])*@[0-9a-z]([-_.]?[0-9a-z])*\.[a-z]{2,3}$/.test(
-      email,
-    );
-
-  if (isValid) return { text: '멋진 이메일입니다!', isValid };
-
-  return {
-    text: '영문 소문자, 숫자,특수기호(_)(-)만 사용 가능합니다.',
-    isValid,
-  };
-};
-
-const useValidate = (type) => {
-  const [validation, setValidation] = useState({ text: '', isValid: false });
-
-  const handleBlur = (e) => {
-    console.log('handleBlur');
-    // func[validateType]();
-    if (type === 'email') {
-      console.log('e.target.value', e.target.value);
-      setValidation(validateEmail(e.target.value));
-    }
-  };
-  // 영문 소문자, 숫자,특수기호(_)(-)만 사용 가능합니다.
-  // 멋진 이메일입니다!
-
-  return [validation, handleBlur];
-};
+import useInputValidate from 'hooks/useInputValidate';
+import { useRef } from 'react';
 
 const SignUp = () => {
-  const [emailValidate, handleEmailBlur] = useValidate('email');
+  const pwd = useRef(null);
+  const [emailValidate, handleEmailBlur] = useInputValidate('email');
+  const [nameValidate, handleNameBlur] = useInputValidate('name');
+  const [passwordValidate, handlePasswordBlur] = useInputValidate('password');
+  const [passwordCheckValidate, handlePasswordCheckBlur] =
+    useInputValidate('passwordCheck');
+
+  const handlSubmit = (e) => {
+    e.preventDefault();
+
+    const isAllValid =
+      emailValidate.isValid &&
+      nameValidate.isValid &&
+      passwordValidate.isValid &&
+      passwordCheckValidate.isValid;
+
+    if (!isAllValid) {
+      alert('제대로 입력하세요.');
+      return;
+    }
+
+    const {
+      email: { value: email },
+      name: { value: name },
+      password: { value: password },
+    } = e.target.elements;
+
+    console.log('handlSubmit', email, name, password);
+  };
 
   return (
     <Styled.Wrapper>
       <Title contents="회원가입" />
-      <Styled.Form>
+      <Styled.Form onSubmit={handlSubmit}>
         <Fieldset>
           <Input
             description="이메일"
             placeholder="coke@coke.com"
-            onBlur={handleEmailBlur}
+            onBlur={handleEmailBlur()}
             type="email"
+            name="email"
           />
           <ValidateText
             text={emailValidate.text}
@@ -65,21 +56,45 @@ const SignUp = () => {
           />
         </Fieldset>
         <Fieldset>
-          <Input description="이름" placeholder="이름을 입력해주세요." />
+          <Input
+            description="이름"
+            placeholder="이름을 입력해주세요."
+            onBlur={handleNameBlur()}
+            name="name"
+          />
+          <ValidateText
+            text={nameValidate.text}
+            isValid={nameValidate.isValid}
+          />
         </Fieldset>
         <Fieldset>
           <Input
+            ref={pwd}
             description="비밀번호"
             placeholder="비밀번호를 입력해주세요."
+            onBlur={handlePasswordBlur()}
+            name="password"
+          />
+          <ValidateText
+            text={passwordValidate.text}
+            isValid={passwordValidate.isValid}
           />
         </Fieldset>
         <Fieldset>
           <Input
             description="비밀번호 확인"
             placeholder="비밀번호를 확인해주세요."
+            onBlur={handlePasswordCheckBlur(pwd.current?.value)}
+            name="passwordCheck"
+          />
+          <ValidateText
+            text={passwordCheckValidate.text}
+            isValid={passwordCheckValidate.isValid}
           />
         </Fieldset>
-        <Button colorType="primary">가입하기</Button>
+        <Button colorType="primary" type="submit">
+          가입하기
+        </Button>
       </Styled.Form>
     </Styled.Wrapper>
   );

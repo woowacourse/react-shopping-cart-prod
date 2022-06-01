@@ -14,5 +14,7 @@ export const Form = styled.form`
   max-width: 400px;
   height: auto;
   padding: 30px 0;
-  /* border: 1px solid black; */
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 `;
