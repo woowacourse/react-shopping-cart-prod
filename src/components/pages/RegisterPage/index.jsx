@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 import { theme } from "style";
 
-import { RANGE } from "constants";
+import { RANGE, ROUTES } from "constants";
 
 import { useInputHandler } from "hooks/useInputHandler";
 import { registerValidator } from "validator";
@@ -127,14 +129,16 @@ function RegisterPage() {
           <DefaultButton type="submit" width="500px">
             가입하기
           </DefaultButton>
-          <DefaultButton
-            type="button"
-            width="500px"
-            bgColor={theme.color.main}
-            textColor={theme.color.point}
-          >
-            로그인
-          </DefaultButton>
+          <Link to={ROUTES.LOGIN}>
+            <DefaultButton
+              type="button"
+              width="500px"
+              bgColor={theme.color.main}
+              textColor={theme.color.point}
+            >
+              로그인
+            </DefaultButton>
+          </Link>
         </RegisterButtonContainer>
       </UserForm>
     </RegisterPageContainer>
