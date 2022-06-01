@@ -1,9 +1,11 @@
 import { authClient } from 'apis';
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
+import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
+import useSnackBar from 'hooks/useSnackBar';
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from 'redux/user/thunk';
@@ -17,6 +19,8 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const name = useAppSelector(state => state.user.data?.name);
+  const error = useAppSelector(state => state.user.error);
+  const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -28,6 +32,12 @@ const Login = () => {
       })
     );
   };
+
+  useEffect(() => {
+    if (error) {
+      openSnackbar();
+    }
+  }, [error, openSnackbar]);
 
   useEffect(() => {
     if (name) {
@@ -62,6 +72,7 @@ const Login = () => {
         value={password}
         onChange={onChangePassword}
       />
+      {isOpenSnackbar && <Snackbar message={MESSAGE.login} />}
     </AuthPage>
   );
 };
