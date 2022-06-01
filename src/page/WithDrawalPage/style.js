@@ -48,6 +48,7 @@ const WithDrawalSection = styled(FlexColumn)`
 const WithDrawalImage = styled.img`
   width: 57px;
   height: 57px;
+  padding-bottom: 18px;
 `;
 
 const WithDrawalText = styled.div`

@@ -1,8 +1,8 @@
-/* eslint-disable no-unused-vars */
 import React, {useState} from 'react';
 
 import * as S from './style';
-import Empty from 'assets/empty.png';
+import baedaleTear from 'assets/baedale_tear.png';
+
 import CheckBox from 'component/common/CheckBox';
 
 function WithDrawal() {
@@ -11,7 +11,7 @@ function WithDrawal() {
     <S.Layout>
       <S.WithDrawalContainer>
         <S.HeaderRow>
-          <S.WithDrawalImage src={Empty} />
+          <S.WithDrawalImage src={baedaleTear} />
           <S.Header>회원탈퇴</S.Header>
         </S.HeaderRow>
         <S.WithDrawalSection>
