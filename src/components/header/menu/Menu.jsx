@@ -20,6 +20,9 @@ function Menu() {
         <li>
           <Link to="/not-found">주문목록</Link>
         </li>
+        <li>
+          <Link to="/login">로그인</Link>
+        </li>
       </ul>
     </StyledMenu>
   );
