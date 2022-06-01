@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {FlexColumn, FlexRow} from 'style/common';
+import {FlexRow} from 'style/common';
 import Button from 'component/common/Button';
 
 const Layout = styled.div`
@@ -24,7 +24,9 @@ const Header = styled.header`
   padding-top: 40px;
 `;
 
-const InputForm = styled(FlexColumn)`
+const InputForm = styled.form`
+  display: flex;
+  flex-direction: column;
   gap: 16px;
   align-items: center;
 `;

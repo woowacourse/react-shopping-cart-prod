@@ -2,6 +2,16 @@ import {rest} from 'msw';
 import {MOCK_PRODUCT_LIST} from './mockData';
 
 let cart = [];
+let info = {
+  account: 'leo0842',
+  nickname: '에덴',
+  address: '에덴동산',
+  phoneNumber: {
+    start: '010',
+    middle: '1234',
+    last: '2345',
+  },
+};
 
 export const handlers = [
   // 상품 리스트 가져오기
@@ -82,5 +92,19 @@ export const handlers = [
       res.headers.set('Location', '/signin');
       return res;
     });
+  }),
+
+  // 사용자 정보 조회
+  rest.get(process.env.REACT_APP_GET_INFO_API_URL, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(info));
+  }),
+
+  // 사용자 정보 수정
+  rest.put(process.env.REACT_APP_EDIT_INFO_API_URL, (req, res, ctx) => {
+    info = {
+      ...info,
+      ...req.body,
+    };
+    return res(ctx.status(200));
   }),
 ];

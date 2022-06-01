@@ -7,10 +7,14 @@ import {PATH} from 'constant';
 import useFetch from 'hook/useFetch';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
+import useControlledInput from 'hook/useControlledInput';
 
 function LoginPage() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
+
+  const [onChangeId, restId] = useControlledInput({});
+  const [onChangePassword, restPassword] = useControlledInput({});
 
   const login = useFetch('post');
 
@@ -39,13 +43,22 @@ function LoginPage() {
             onSubmit(e.target);
           }}
         >
-          <Input label="아이디" size="medium" id="id" placeHolder="아이디를 입력해주세요" />
+          <Input
+            label="아이디"
+            size="medium"
+            id="id"
+            placeHolder="아이디를 입력해주세요"
+            onChange={(e) => onChangeId(e.target.value)}
+            {...restId}
+          />
           <Input
             label="비밀번호"
             size="medium"
             id="password"
             type="password"
             placeHolder="비밀번호를 입력해주세요"
+            onChange={(e) => onChangePassword(e.target.value)}
+            {...restPassword}
           />
           <S.ConfirmButton
             fontSize="14px"

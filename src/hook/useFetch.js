@@ -7,12 +7,12 @@ export default function useFetch(method = 'get') {
   const [error, setError] = useState(null);
 
   const fetch = useCallback(
-    ({API_URL = '', body = null, onSuccess = () => void 0}) => {
+    ({API_URL = '', headers = null, body = null, onSuccess = () => void 0}) => {
       setPending(true);
       setData(null);
       setError(null);
 
-      axios[method](API_URL, body)
+      axios[method](API_URL, body, headers)
         .then((response) => {
           setPending(false);
           response.data && setData(response.data);
