@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-const SignInput = ({ children, value, onChange }) => {
+const SignInput = ({ children, type, onChange }) => {
   return (
     <StyledLabel>
       {children}
-      <StyledInput onChange={onChange} />
+      <StyledInput type={type} onChange={onChange} required />
     </StyledLabel>
   );
 };
