@@ -65,7 +65,7 @@ const Profile = styled.div`
     height: 112px;
 
     position: relative;
-    top: 5px;
+    top: 65px;
     right: 41px;
     padding: 0px;
     margin-top: 10px;
@@ -101,12 +101,21 @@ const Profile = styled.div`
   &:hover .tooltip-content {
     visibility: visible;
   }
+
+  &:hover .baedale {
+    display: none;
+  }
 `;
 
 const ProfileImage = styled.img`
+  position: absolute;
   width: 60px;
   height: 60px;
   cursor: pointer;
+
+  &:hover {
+    display: none;
+  }
 `;
 
 export {

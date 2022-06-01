@@ -8,7 +8,8 @@ import * as S from 'component/Header/style';
 
 import {PATH} from 'constant';
 
-import Empty from 'assets/empty.png';
+import baedale from 'assets/baedale.png';
+import baedaleHover from 'assets/baedale_hover.png';
 
 export default function Header() {
   const navigation = useNavigate();
@@ -24,7 +25,8 @@ export default function Header() {
         <S.NavText to={PATH.CART}>장바구니</S.NavText>
         <S.NavText to={PATH.ORDER}>구매목록</S.NavText>
         <S.Profile>
-          <S.ProfileImage src={Empty} alt="프로필 이미지" />
+          <S.ProfileImage src={baedaleHover} alt="프로필 이미지" />
+          <S.ProfileImage className="baedale" src={baedale} alt="프로필 이미지" />
           <div className="tooltip-content">
             <S.ProfileNavContainer>
               <S.ProfileNavText to={PATH.LOGIN}>로그아웃</S.ProfileNavText>
