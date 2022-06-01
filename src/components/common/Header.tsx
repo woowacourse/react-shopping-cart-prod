@@ -1,16 +1,22 @@
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
+import { useReducer } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from 'redux/user/action';
 import { PATH } from 'Routers';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 
+import Avatar from './Avatar';
+import Dropdown from './Dropdown';
+
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const isLogin = useAppSelector(state => !!state.user.data);
+  const name = useAppSelector(state => state.user.data?.name);
+  const [isShowDropdown, toggleShowDropdown] = useReducer(prev => !prev, false);
 
   const handleClickLogout = () => {
     navigate(PATH.home);
@@ -31,7 +37,15 @@ const Header = () => {
           <>
             <button onClick={() => navigate(PATH.cart)}>장바구니</button>
             <button>주문목록</button>
-            <button onClick={handleClickLogout}>로그아웃</button>
+            <StyledAvatarWrapper>
+              <Avatar name={name} onClick={toggleShowDropdown} />
+              {isShowDropdown && (
+                <Dropdown>
+                  <li>회원정보수정</li>
+                  <li onClick={handleClickLogout}>로그아웃</li>
+                </Dropdown>
+              )}
+            </StyledAvatarWrapper>
           </>
         ) : (
           <button onClick={() => navigate(PATH.login)}>로그인</button>
@@ -65,13 +79,15 @@ const StyledBrandName = styled.span`
 `;
 
 const StyledNav = styled.nav`
+  display: flex;
+  gap: 4.4rem;
   & > button {
     color: white;
     font-size: 2.4rem;
     background-color: inherit;
   }
+`;
 
-  & > button + button {
-    margin-left: 4.4rem;
-  }
+const StyledAvatarWrapper = styled.div`
+  position: relative;
 `;
