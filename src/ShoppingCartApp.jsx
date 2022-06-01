@@ -12,6 +12,8 @@ import ProductDetail from 'pages/ProductDetail';
 import Cart from 'pages/Cart';
 import Login from 'pages/Login';
 import SignUp from 'pages/SignUp';
+import EditUserInfo from 'pages/EditUserInfo';
+import Identification from 'pages/Identification';
 
 const ShoppingCartApp = () => (
   <Provider store={store}>
@@ -24,6 +26,8 @@ const ShoppingCartApp = () => (
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
+        <Route path="/identification" element={<Identification />} />
+        <Route path="/editUserInfo" element={<EditUserInfo />} />
         <Route path="*" element={<ProductList />} />
       </Routes>
     </BrowserRouter>

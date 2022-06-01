@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from 'components/Layout';
 
 import Button from 'components/@common/Button/styles';
@@ -10,6 +10,8 @@ import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
     const formData = e.target;
@@ -23,6 +25,7 @@ const Login = () => {
     const response = await requestLogin(userId, userPassword);
     const { accessToken } = response.content;
     localStorage.setItem('accessToken', accessToken);
+    navigate('/');
   };
 
   return (
