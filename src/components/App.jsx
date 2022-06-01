@@ -20,6 +20,9 @@ import {
 
 import { Main } from "./layout/Main";
 import ErrorPage from "./pages/ErrorPage";
+import RegisterPage from "./pages/RegisterPage";
+import LoginPage from "./pages/LoginPage";
+import UserInfoPage from "./pages/UserInfoPage";
 
 export const store = createStore(
   rootReducer,
@@ -44,6 +47,9 @@ function App() {
               path={ROUTES.PRODUCT_ORDER_LIST}
               element={<OrderListPage />}
             />
+            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+            <Route path={ROUTES.USER_INFO} element={<UserInfoPage />} />
             <Route
               path="*"
               element={<ErrorPage>잘못된 접근입니다.</ErrorPage>}

@@ -22,5 +22,14 @@ export const NavButtonContainer = styled.nav`
   justify-content: space-between;
   align-items: center;
 
-  width: 220px;
+  width: 450px;
+`;
+
+export const UserInfoButton = styled.div`
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: white;
+  color: ${({ theme: { color } }) => color.point};
+  line-height: 40px;
 `;

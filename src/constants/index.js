@@ -14,4 +14,7 @@ export const ROUTES = {
   PRODUCT_DETAIL: "/product-detail",
   PRODUCT_CART: "/product-cart",
   PRODUCT_ORDER_LIST: "/product-order-list",
+  LOGIN: "/login",
+  REGISTER: "/register",
+  USER_INFO: "/user-info",
 };
