@@ -9,6 +9,11 @@ const StyledButton = styled.button`
   font-size: ${(props) => props.fontSize};
   color: white;
   border: none;
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: initial;
+  }
 `;
 
 export default StyledButton;

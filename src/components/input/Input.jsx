@@ -7,7 +7,10 @@ export default function Input({
   placeholder,
   minLength,
   maxLength,
+  value,
+  required,
   disabled,
+  onChange,
 }) {
   return (
     <StyledInput
@@ -15,7 +18,10 @@ export default function Input({
       placeholder={placeholder}
       minLength={minLength}
       maxLength={maxLength}
+      value={value}
+      required={required}
       disabled={disabled}
+      onChange={onChange}
     />
   );
 }

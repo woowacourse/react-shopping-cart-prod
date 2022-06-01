@@ -3,9 +3,9 @@ import Button from "@/components/button/Button";
 
 import StyledForm from "./Form.styled";
 
-function Form({ buttonText, children }) {
+function Form({ buttonText, children, onSubmit, preventFormSubmit }) {
   return (
-    <StyledForm>
+    <StyledForm onSubmit={onSubmit}>
       {children}
       <Button
         type="submit"
@@ -14,6 +14,7 @@ function Form({ buttonText, children }) {
         backgroundColor="#2AC1BC"
         text={buttonText}
         borderRadius="4px"
+        disabled={preventFormSubmit}
       />
     </StyledForm>
   );

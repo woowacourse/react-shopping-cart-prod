@@ -8,6 +8,7 @@ function Button({
   borderRadius,
   fontSize,
   text,
+  disabled,
 }) {
   return (
     <StyledButton
@@ -17,6 +18,7 @@ function Button({
       backgroundColor={backgroundColor}
       borderRadius={borderRadius}
       fontSize={fontSize}
+      disabled={disabled}
     >
       {text}
     </StyledButton>

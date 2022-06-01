@@ -9,6 +9,8 @@ function Menu() {
   const cartList = useSelector((state) => state.cartListState);
   const count = cartList.length;
 
+  const hasSession = true;
+
   return (
     <StyledMenu>
       <ul>
@@ -22,7 +24,7 @@ function Menu() {
           <Link to="/not-found">주문목록</Link>
         </li>
         <li>
-          <Dropdown />
+          {{ hasSession } ? <Dropdown /> : <Link to="/login">로그인</Link>}
         </li>
       </ul>
     </StyledMenu>
