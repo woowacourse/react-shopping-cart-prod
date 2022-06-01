@@ -15,6 +15,8 @@ const ShoppingCartPage = Loadable(lazy(() => import('../pages/ShoppingCartPage')
 const LoginPage = Loadable(lazy(() => import('../pages/LoginPage')));
 const SignUpPage = Loadable(lazy(() => import('../pages/SignUpPage')));
 const UserInfoPage = Loadable(lazy(() => import('../pages/UserInfoPage')));
+const ModifyPasswordPage = Loadable(lazy(() => import('../pages/ModifyPasswordPage')));
+const ModifyUserInfoPage = Loadable(lazy(() => import('../pages/ModifyUserInfoPage')));
 
 const routes = [
   {
@@ -40,6 +42,14 @@ const routes = [
   {
     path: ROUTES_PATH.USER_INFO,
     element: <UserInfoPage />,
+  },
+  {
+    path: ROUTES_PATH.MODIFY_PASSWORD,
+    element: <ModifyPasswordPage />,
+  },
+  {
+    path: ROUTES_PATH.MODIFY_USER_INFO,
+    element: <ModifyUserInfoPage />,
   },
 ];
 

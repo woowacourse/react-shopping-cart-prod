@@ -47,7 +47,7 @@ const handlers = [
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.post(`${SERVER_PATH.USER}`, (req, res, ctx) => {
+  rest.post(SERVER_PATH.USER, (req, res, ctx) => {
     const { userInfo } = req.body;
     userList.push({ ...userInfo, id: uuidv4() });
     console.log(userList);
@@ -55,7 +55,7 @@ const handlers = [
     return res(ctx.status(200), ctx.json());
   }),
 
-  rest.post(`${SERVER_PATH.LOGIN}`, (req, res, ctx) => {
+  rest.post(SERVER_PATH.LOGIN, (req, res, ctx) => {
     const { loginInfo } = req.body;
     const isSignedUpUser = userList.find(
       (user) => user.email === loginInfo.email && user.password === loginInfo.password
@@ -66,10 +66,16 @@ const handlers = [
     return res(ctx.status(404), ctx.json());
   }),
 
-  rest.delete(`${SERVER_PATH.USER}`, (req, res, ctx) => {
+  rest.delete(SERVER_PATH.USER, (req, res, ctx) => {
     const { accessToken } = req.body;
     const userInfoIndex = userList.findIndex((user) => user.id === accessToken);
     userList.splice(userInfoIndex, 1);
+    return res(ctx.status(200), ctx.json());
+  }),
+
+  rest.patch(SERVER_PATH.PASSWORD, (req, res, ctx) => {
+    const { password } = req.body;
+    console.log('password', password);
     return res(ctx.status(200), ctx.json());
   }),
 ];

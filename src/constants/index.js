@@ -5,6 +5,7 @@ const SERVER_PATH = {
   CART: '/cart',
   USER: `${API}/customers`,
   LOGIN: `${API}/login`,
+  PASSWORD: `${API}/customers/password`,
 };
 
 const ROUTES_PATH = {

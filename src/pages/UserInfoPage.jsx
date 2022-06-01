@@ -15,7 +15,7 @@ function UserInfoPage() {
 
   const handleWithdrawClick = async () => {
     try {
-      await axios.delete(`${SERVER_PATH.USER}`, accessToken);
+      await axios.delete(SERVER_PATH.USER, accessToken);
       dispatch({ type: actionTypes.DELETE_TOKEN });
       navigate(ROUTES_PATH.HOME);
     } catch (error) {

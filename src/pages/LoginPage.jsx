@@ -31,7 +31,7 @@ function LoginPage() {
     }
 
     try {
-      const { data } = await axios.post(`${SERVER_PATH.LOGIN}`, { loginInfo });
+      const { data } = await axios.post(SERVER_PATH.LOGIN, { loginInfo });
       const { accessToken } = data;
       dispatch({ type: actionTypes.ADD_TOKEN, accessToken });
       alert('로그인 성공');
@@ -42,8 +42,8 @@ function LoginPage() {
   };
 
   const handleLoginInfoChange = (loginInfoKey) => (e) => {
-    setLoginInfo((pre) => {
-      return { ...pre, [loginInfoKey]: e.target.value };
+    setLoginInfo((prevState) => {
+      return { ...prevState, [loginInfoKey]: e.target.value };
     });
   };
 

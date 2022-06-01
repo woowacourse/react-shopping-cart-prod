@@ -49,7 +49,7 @@ function SignUpPage() {
     try {
       const userInfo = { ...signUpInfo };
       delete userInfo.passwordConfirm;
-      await axios.post(`${SERVER_PATH.USER}`, { userInfo });
+      await axios.post(SERVER_PATH.USER, { userInfo });
       alert('회원가입 성공');
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
@@ -58,8 +58,8 @@ function SignUpPage() {
   };
 
   const handleSignUpInfoChange = (signUpInfoKey) => (e) => {
-    setSignUpInfo((pre) => {
-      return { ...pre, [signUpInfoKey]: e.target.value };
+    setSignUpInfo((prevState) => {
+      return { ...prevState, [signUpInfoKey]: e.target.value };
     });
   };
 
