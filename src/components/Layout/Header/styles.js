@@ -43,7 +43,7 @@ const RightMenu = styled.ul`
   display: flex;
   justify-content: right;
   align-items: center;
-  gap: 1rem;
+  gap: 0.25rem;
 `;
 
 const RightMenuButton = styled.li`

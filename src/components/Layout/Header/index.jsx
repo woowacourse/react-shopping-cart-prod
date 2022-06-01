@@ -18,7 +18,12 @@ const Header = () => (
       <Link to="/cart">
         <Styled.RightMenuButton icon={아이콘_코드.CART}>장바구니</Styled.RightMenuButton>
       </Link>
-      <Styled.RightMenuButton icon={아이콘_코드.USER}>주문 목록</Styled.RightMenuButton>
+
+      {/* TODO: 주문목록은 로그인 상태일때만 보여주기
+      <Styled.RightMenuButton icon={아이콘_코드.RECEIPT}>주문 목록</Styled.RightMenuButton> */}
+      <Link to="/login">
+        <Styled.RightMenuButton icon={아이콘_코드.USER}>로그인</Styled.RightMenuButton>
+      </Link>
     </Styled.RightMenu>
   </Styled.Container>
 );

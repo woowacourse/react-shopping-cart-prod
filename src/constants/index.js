@@ -4,6 +4,7 @@ export const 아이콘_코드 = {
   USER: 'f007',
   DELETE: 'f2ed',
   ALERT: 'f06a',
+  RECEIPT: 'f543',
 };
 
 export const 비동기_요청 = {
