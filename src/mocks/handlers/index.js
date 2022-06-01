@@ -14,6 +14,7 @@ import {
   login,
   handleUserGetRequest,
   handlePasswordCheck,
+  handleUserDataUpdate,
 } from './user.handler';
 
 export default [
@@ -28,4 +29,5 @@ export default [
   rest.post(`${API_URL}api/login`, login),
   rest.get(`${API_URL}api/members/auth/me`, handleUserGetRequest),
   rest.post(`${API_URL}api/members/auth/password-check`, handlePasswordCheck),
+  rest.patch(`${API_URL}api/members/auth/me`, handleUserDataUpdate),
 ];

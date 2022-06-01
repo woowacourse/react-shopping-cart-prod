@@ -80,3 +80,22 @@ export const handlePasswordCheck = (req, res, ctx) => {
   const success = userData.password === password;
   return res(ctx.status(200), ctx.json({ success }));
 };
+
+export const handleUserDataUpdate = (req, res, ctx) => {
+  const currentUserList = getUser();
+
+  const token = req.headers.get('Authorization').split(' ')[1];
+  const newData = req.body;
+
+  const userDataIndex = currentUserList.findIndex(({ email }) => email === token);
+  const userData = currentUserList[userDataIndex];
+
+  if (userData === undefined) {
+    return res(ctx.status(404));
+  }
+
+  currentUserList[userDataIndex] = { ...userData, ...newData };
+
+  setUser(currentUserList);
+  return res(ctx.status(204));
+};

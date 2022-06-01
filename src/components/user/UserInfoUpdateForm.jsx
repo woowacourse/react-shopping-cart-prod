@@ -6,10 +6,11 @@ import useInputValue from 'hooks/useInputValue';
 import useReduxState from 'hooks/useReduxState';
 
 import { Form, Input } from 'components/common';
+import { updateUserNickname } from 'store/actions/user';
 
 const nicknamePattern = /^[가-힣]{1,5}$/;
 function UserInfoUpdateForm() {
-  const [nickname] = useReduxState(({ user }) => user.nickname);
+  const [nickname, dispatch] = useReduxState(({ user }) => user.nickname);
 
   const [nicknameValue, setNicknameValue, isNicknameValid] = useInputValue(
     nicknamePattern,
@@ -30,11 +31,9 @@ function UserInfoUpdateForm() {
     }
 
     try {
-      // await addUser({
-      //   nickname: nicknameValue,
-      // });
-      // alert('성공~~!');
-      navigate('/login');
+      dispatch(updateUserNickname(nicknameValue));
+      alert('성공~~!');
+      navigate('/user-info');
     } catch ({ message }) {
       alert(message);
     }

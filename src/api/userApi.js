@@ -43,3 +43,9 @@ export const checkPassword = async (password) => {
 
   return success;
 };
+
+export const updateNickname = async (nickname) => {
+  await apiInstance.patch(API_ENDPOINT.AUTH.ME, {
+    nickname,
+  });
+};
