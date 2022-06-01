@@ -5,3 +5,4 @@ export { default as OrderList } from './OrderList';
 export { default as ProductDetail } from './ProductDetail';
 export { default as ProductList } from './ProductList';
 export { default as Signup } from './Signup';
+export { default as UserInfo } from './UserInfo';

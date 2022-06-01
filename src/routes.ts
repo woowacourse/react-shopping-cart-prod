@@ -3,6 +3,7 @@ const CART = '/cart';
 const ORDER_LIST = '/order-list';
 const LOGIN = '/login';
 const SIGNUP = '/signup';
+const USER_INFO = '/user-info';
 
 const routes = {
   home: HOME,
@@ -13,6 +14,7 @@ const routes = {
   },
   login: LOGIN,
   signup: SIGNUP,
+  userInfo: USER_INFO,
 };
 
 export default routes;
