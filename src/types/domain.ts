@@ -20,6 +20,11 @@ export interface UserInfoWithPassword extends UserInfo {
   password: string;
 }
 
+export interface LoginRequest {
+  loginId: string;
+  password: string;
+}
+
 export interface LoginResponse extends Pick<UserInfo, 'name'> {
   accessToken: string;
 }

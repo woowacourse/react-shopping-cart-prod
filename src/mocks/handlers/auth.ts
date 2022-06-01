@@ -15,7 +15,7 @@ export const authHandler = [
     return res(ctx.status(201), ctx.json(userInfo));
   }),
 
-  rest.post<Omit<UserInfoWithPassword, 'name'>, null, LoginResponse>(
+  rest.post<Omit<UserInfoWithPassword, 'name'>, null, LoginResponse | string>(
     `${AUTH_BASE_URL}/login`,
     (req, res, ctx) => {
       const loginInfo = req.body;
@@ -28,7 +28,7 @@ export const authHandler = [
         return res(ctx.status(200), ctx.json({ name: authenticatedUser.name, accessToken: 'fff' }));
       }
 
-      return res(ctx.status(401));
+      return res(ctx.status(401), ctx.body('로그인에 실패하였습니다.'));
     }
   ),
 ];
