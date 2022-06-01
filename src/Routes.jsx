@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-wrap-multilines */
-import { Routes, Route, Outlet } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import CartListPage from 'pages/CartListPage';
 import NotFoundPage from 'pages/NotFoundPage';
