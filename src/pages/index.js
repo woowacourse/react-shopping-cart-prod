@@ -7,6 +7,7 @@ import ShoppingCart from 'pages/ShoppingCart/ShoppingCart';
 import NotFound from './NotFound/NotFound';
 import Register from './Register/Register';
 import Login from './Login/Login';
+import UserInfo from './UserInfo/UserInfo';
 
 export const COMMON_PAGES = {
   [ROUTE.home.path]: <Home />,
@@ -22,4 +23,5 @@ export const NON_USER_PAGES = {
 export const USER_PAGES = {
   [ROUTE.shoppingCart.path]: <ShoppingCart />,
   [ROUTE.orderList.path]: <OrderList />,
+  [ROUTE.userInfo.path]: <UserInfo />,
 };

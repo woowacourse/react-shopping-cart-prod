@@ -1,5 +1,9 @@
 import styled, { css } from 'styled-components';
 
+const buttonColors = {
+  default: 'primary',
+  warning: 'warning',
+};
 export const Button = styled.button`
   width: 100%;
   padding: 15px;
@@ -7,7 +11,7 @@ export const Button = styled.button`
   border: none;
   border-radius: 4px;
 
-  background-color: ${({ theme }) => theme.colorConfig.primary};
+  background-color: ${({ theme, variant }) => theme.colorConfig[buttonColors[variant]]};
   color: ${({ theme }) => theme.colorConfig.textWhite};
   font-size: 24px;
 
@@ -21,6 +25,8 @@ export const Button = styled.button`
       width: 200px;
       font-size: 20px;
     `}
+
+  ${({ variant }) => variant && css``}
 
   &:hover {
     opacity: 0.9;

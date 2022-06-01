@@ -12,12 +12,14 @@ export const color = {
   NEAR_WHITE_01: '#e0e0e0',
   NEAR_WHITE_02: '#ededed',
   BLACK_TRANSPARENT: '#00000099',
+  RED: '#A61C2D',
 };
 
 export default {
   colorConfig: {
     primary: color.NAVY,
     secondary: color.LIGHT_GRAY,
+    warning: color.RED,
     textWhite: color.WHITE,
     skeleton: color.NEAR_WHITE_01,
   },

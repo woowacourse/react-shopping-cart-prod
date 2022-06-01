@@ -10,6 +10,7 @@ import { Outlet } from 'react-router-dom';
 const userHeaderLinks = [
   { path: ROUTE.shoppingCart.path, name: '장바구니' },
   { path: ROUTE.orderList.path, name: '주문목록' },
+  { path: ROUTE.userInfo.path, name: '내 정보' },
 ];
 const nonUserHeaderLinks = [
   { path: ROUTE.login.path, name: '로그인' },
