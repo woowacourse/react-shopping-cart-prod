@@ -8,6 +8,7 @@ export default function CheckBox({
   productId = 0,
   handleCheckedTrue = () => void 0,
   handleCheckedFalse = () => void 0,
+  onClick = () => void 0,
 }) {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -24,7 +25,10 @@ export default function CheckBox({
     <S.CheckBoxLayout
       productId={productId}
       checked={isChecked}
-      onClick={() => handleClicked(isChecked, productId)}
+      onClick={() => {
+        handleClicked(isChecked, productId);
+        onClick();
+      }}
     ></S.CheckBoxLayout>
   );
 }
@@ -34,4 +38,5 @@ CheckBox.propTypes = {
   productId: PropTypes.number,
   handleCheckedTrue: PropTypes.func,
   handleCheckedFalse: PropTypes.func,
+  onClick: PropTypes.func,
 };

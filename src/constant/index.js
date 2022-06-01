@@ -6,6 +6,7 @@ const PATH = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   EDIT_USER_INFO: '/userinfo',
+  WITHDRAWAL: '/Withdrawal',
 };
 
 export {PATH};

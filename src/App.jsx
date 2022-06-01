@@ -16,6 +16,7 @@ import {PATH} from 'constant';
 import NotFoundPage from 'page/NotFoundPage';
 import LoginPage from 'page/LoginPage';
 import UserInfoEditPage from 'page/UserInfoEditPage';
+import WithDrawalPage from 'page/WithDrawalPage';
 
 if (process.env.NODE_ENV === 'development') {
   const {worker} = require('./mocks/browsers');
@@ -40,6 +41,7 @@ export default function App() {
             <Route path={PATH.LOGIN} element={<LoginPage />}></Route>
             <Route path={PATH.SIGNUP} element={<SignupPage />}></Route>
             <Route path={PATH.EDIT_USER_INFO} element={<UserInfoEditPage />}></Route>
+            <Route path={PATH.WITHDRAWAL} element={<WithDrawalPage />}></Route>
             <Route path="*" element={<NotFoundPage> 잘못 들어왔어요😢</NotFoundPage>}></Route>
           </Routes>
         </ThemeProvider>
