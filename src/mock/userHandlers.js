@@ -43,4 +43,22 @@ export default [
       }),
     );
   }),
+
+  rest.post('/api/customer', (req, res, ctx) => {
+    const { name, email, password } = req.body.data;
+    const user = users.find((user) => user.email === email);
+
+    if (user) {
+      return res(
+        ctx.status(403),
+        ctx.json({
+          message: '이미 존재하는 이메일 입니다.',
+        }),
+      );
+    }
+
+    users.push({ name, email, password, token: '' });
+
+    return res(ctx.status(201));
+  }),
 ];

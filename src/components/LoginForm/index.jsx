@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Spinner, SpinnerWrapper } from 'styles/Spinner';
 import Button from 'styles/Button';
 import Wrapper, { SignUpLink } from './styles';
+import ErrorWrapper from 'styles/ErrorWrapper';
 
 import Input from 'components/Input';
 
@@ -91,9 +92,9 @@ const LoginForm = () => {
         />
       </div>
       {emailError && (
-        <div className="error-wrapper">
+        <ErrorWrapper>
           <p>{emailError}</p>
-        </div>
+        </ErrorWrapper>
       )}
       <div className="input-wrapper">
         <Input
@@ -106,17 +107,17 @@ const LoginForm = () => {
         />
       </div>
       {passwordError && (
-        <div className="error-wrapper">
+        <ErrorWrapper>
           <p>{passwordError}</p>
-        </div>
+        </ErrorWrapper>
       )}
       <div className="link-wrapper">
         <SignUpLink to="/signUp">회원가입</SignUpLink>
       </div>
       {error && (
-        <div className="error-wrapper">
+        <ErrorWrapper>
           <p>{error}</p>
-        </div>
+        </ErrorWrapper>
       )}
       <Button>로그인</Button>
     </Wrapper>

@@ -50,8 +50,8 @@ export const Spinner = styled.div`
   text-indent: -9999em;
   border-radius: 50%;
   transform: translateZ(0);
-  -webkit-animation: ${Load} 1.7s infinite ease, ${Round} 1.7s infinite ease;
-  animation: ${Load} 1.7s infinite ease, ${Round} 1.7s infinite ease;
+  -webkit-animation: ${Load} 1s infinite ease, ${Round} 1s infinite ease;
+  animation: ${Load} 1s infinite ease, ${Round} 1s infinite ease;
 `;
 
 export const SpinnerWrapper = styled.div`

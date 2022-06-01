@@ -28,18 +28,6 @@ export default styled.form`
     margin-bottom: 15px;
   }
 
-  .error-wrapper {
-    padding: 13px;
-    margin-bottom: 15px;
-    background-color: ${({ theme }) => theme.gray_50};
-    border-radius: 8px;
-
-    p {
-      color: ${({ theme }) => theme.red_50};
-      font-size: 1.5rem;
-    }
-  }
-
   .link-wrapper {
     width: 100%;
     text-align: right;

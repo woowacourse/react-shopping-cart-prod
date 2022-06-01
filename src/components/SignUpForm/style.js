@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export default styled.form`
+  position: relative;
   width: 440px;
   padding: 80px 50px;
   border: 1px solid ${({ theme }) => theme.gray_100};
@@ -19,10 +20,14 @@ export default styled.form`
 
   .password-wrapper {
     width: 100%;
-    margin-bottom: 90px;
+    margin-bottom: 30px;
 
-    & input:last-child {
+    & input:last-of-type {
       margin-top: 15px;
     }
+  }
+
+  button {
+    margin-top: 30px;
   }
 `;

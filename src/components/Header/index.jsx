@@ -10,7 +10,6 @@ const Header = () => {
       <Link to={PATH.HOME}>
         <div className="home flex-row">
           <img src="/img/shopping-cart-white.png" alt="home-button" />
-
           <button>WOOWA SHOP</button>
         </div>
       </Link>

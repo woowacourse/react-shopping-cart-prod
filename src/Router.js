@@ -13,6 +13,7 @@ import CartsPage from 'pages/CartsPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import LoginPage from 'pages/LoginPage';
 import { PATH } from 'constants';
+import SignUpPage from 'pages/SignUpPage';
 
 const Router = () => {
   const { show, message } = useSelector((state) => state.snackbar);
@@ -30,6 +31,7 @@ const Router = () => {
           />
           <Route path={PATH.CARTS} element={<CartsPage />} />
           <Route path={PATH.LOGIN} element={<LoginPage />} />
+          <Route path={PATH.SIGNUP} element={<SignUpPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         {show && <Snackbar key={Date.now()} message={message} />}
