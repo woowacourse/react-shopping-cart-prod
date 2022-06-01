@@ -30,4 +30,5 @@ export default [
   rest.get(`${API_URL}api/members/auth/me`, handleUserGetRequest),
   rest.post(`${API_URL}api/members/auth/password-check`, handlePasswordCheck),
   rest.patch(`${API_URL}api/members/auth/me`, handleUserDataUpdate),
+  rest.patch(`${API_URL}api/members/auth/password`, handleUserDataUpdate),
 ];

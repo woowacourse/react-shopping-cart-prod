@@ -10,6 +10,7 @@ import Login from './Login/Login';
 import UserInfo from './UserInfo/UserInfo';
 import PasswordCheck from './PasswordCheck/PasswordCheck';
 import UserInfoUpdate from './UserInfoUpdate/UserInfoUpdate';
+import UserPasswordUpdate from './UserPasswordUpdate/UserPasswordUpdate';
 
 export const COMMON_PAGES = {
   [ROUTE.home.path]: <Home />,
@@ -28,5 +29,5 @@ export const USER_PAGES = {
   [ROUTE.userInfo.path]: <UserInfo />,
   [ROUTE.passwordCheck.path]: <PasswordCheck />,
   [ROUTE.userInfoUpdate.path]: <UserInfoUpdate />,
-  [ROUTE.userPasswordUpdate.path]: <Register />,
+  [ROUTE.userPasswordUpdate.path]: <UserPasswordUpdate />,
 };

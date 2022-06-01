@@ -49,3 +49,9 @@ export const updateNickname = async (nickname) => {
     nickname,
   });
 };
+
+export const updatePassword = async (password) => {
+  await apiInstance.patch(API_ENDPOINT.AUTH.PASSWORD, {
+    password,
+  });
+};
