@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 
 import StyledMenu from "@/components/header/menu/Menu.styled";
 import Badge from "@/components/badge/Badge";
+import Dropdown from "@/components/dropdown/Dropdown";
 
 function Menu() {
   const cartList = useSelector((state) => state.cartListState);
@@ -21,7 +22,7 @@ function Menu() {
           <Link to="/not-found">주문목록</Link>
         </li>
         <li>
-          <Link to="/login">로그인</Link>
+          <Dropdown />
         </li>
       </ul>
     </StyledMenu>

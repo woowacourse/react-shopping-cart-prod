@@ -19,7 +19,6 @@ const StyledMenu = styled.div`
         display: block;
         padding: 10px 0;
         font-size: 20px;
-        line-height: 20px;
         color: ${(props) => props.theme.colors.white};
       }
     }
