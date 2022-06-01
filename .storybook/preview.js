@@ -23,6 +23,7 @@ addDecorator((story) => (
         <GlobalStyle />
         {story()}
         <div id="snackbar-portal" />
+        <div id="modal-portal" />
       </StyleTheme>
     </MemoryRouter>
   </Provider>
