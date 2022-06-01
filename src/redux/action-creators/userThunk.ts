@@ -14,7 +14,7 @@ export const signUp = (signUpInfo: SignUpInfo) => async (dispatch: Dispatch<User
       data: signUpInfo,
     });
 
-    dispatch({ type: UserActionType.POST_SIGN_UP_SUCCESS, payload: response.data });
+    dispatch({ type: UserActionType.POST_SIGN_UP_SUCCESS });
   } catch (e) {
     dispatch({ type: UserActionType.POST_SIGN_UP_FAILURE, payload: e.message });
   }

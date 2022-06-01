@@ -28,7 +28,6 @@ interface PostSignUpStart {
 
 interface PostSignUpSuccess {
   type: UserActionType.POST_SIGN_UP_SUCCESS;
-  payload: UserInfo;
 }
 
 interface PostSignUpFailure {

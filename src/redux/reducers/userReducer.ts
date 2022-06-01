@@ -17,7 +17,7 @@ export const userReducer = (state = initialState, action: UserAction) => {
     case UserActionType.POST_SIGN_UP_START:
       return { loading: true, error: null, data: state.data };
     case UserActionType.POST_SIGN_UP_SUCCESS:
-      return { loading: false, error: null, data: action.payload };
+      return { loading: false, error: null, data: state.data };
     case UserActionType.POST_SIGN_UP_FAILURE:
       return { loading: false, error: true, data: state.data };
 
