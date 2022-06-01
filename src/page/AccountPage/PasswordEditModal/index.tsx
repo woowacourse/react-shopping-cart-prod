@@ -6,7 +6,6 @@ import AuthButton from 'components/AuthButton';
 import { useState } from 'react';
 import Container from 'components/@shared/Container';
 import { validatePassword } from 'utils/validator';
-import CloseButton from 'components/CloseButton';
 
 const PasswordEditModal = ({ handleModal }) => {
   const [currentPassword, setCurrentPassword] = useState('');
