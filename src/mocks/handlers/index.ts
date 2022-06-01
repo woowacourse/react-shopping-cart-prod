@@ -1,6 +1,7 @@
 import cartHandlers from './cart';
 import productsHandlers from './products';
+import customerHandlers from './customers';
 
-const handlers = [...productsHandlers, ...cartHandlers];
+const handlers = [...customerHandlers, ...productsHandlers, ...cartHandlers];
 
 export default handlers;
