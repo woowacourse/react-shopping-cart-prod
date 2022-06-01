@@ -27,3 +27,9 @@ export const login = async (loginData) => {
   apiInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   return nickname;
 };
+
+export const getUser = async () => {
+  const response = await apiInstance.get(API_ENDPOINT.AUTH.ME);
+
+  return response.data;
+};

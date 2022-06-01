@@ -7,4 +7,9 @@ export const API_ENDPOINT = {
   SHOPPING_CART: '/shopping-cart',
   USER: '/api/members',
   LOGIN: '/api/login',
+  AUTH: {
+    ME: '/api/members/auth/me',
+    PASSWORD: '/api/members/auth/password',
+    PASSWORD_CHECK: '/api/members/auth/password-check',
+  },
 };

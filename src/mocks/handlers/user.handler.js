@@ -48,3 +48,19 @@ export const login = (req, res, ctx) => {
 
   return res(ctx.status(400));
 };
+
+export const handleUserGetRequest = (req, res, ctx) => {
+  const currentUserList = getUser();
+
+  const token = req.headers.get('Authorization').split(' ')[1];
+
+  const userData = currentUserList.find(({ email }) => email === token);
+
+  if (userData !== undefined) {
+    const { email, nickname } = userData;
+
+    return res(ctx.status(200), ctx.json({ email, nickname }));
+  }
+
+  return res(ctx.status(404));
+};
