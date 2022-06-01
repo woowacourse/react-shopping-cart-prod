@@ -43,28 +43,35 @@ const SignUpPage = () => {
   };
 
   return (
-    <StyledRoot onSubmit={handleSubmit}>
-      <StyledTitle>회원가입</StyledTitle>
+    <StyledRoot>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledTitle>회원가입</StyledTitle>
 
-      <SignInput type={'email'} onChange={handleEmailInput}>
-        이메일
-      </SignInput>
-      <SignInput type={'text'} onChange={handleNameInput}>
-        이름
-      </SignInput>
-      <SignInput type={'password'} onChange={handlePasswordInput}>
-        비밀번호
-      </SignInput>
-      <SignInput type={'password'} onChange={handlePasswordConfirmInput}>
-        비밀번호 확인
-      </SignInput>
+        <SignInput type={'email'} onChange={handleEmailInput}>
+          이메일
+        </SignInput>
+        <SignInput type={'text'} onChange={handleNameInput}>
+          이름
+        </SignInput>
+        <SignInput type={'password'} onChange={handlePasswordInput}>
+          비밀번호
+        </SignInput>
+        <SignInput type={'password'} onChange={handlePasswordConfirmInput}>
+          비밀번호 확인
+        </SignInput>
 
-      <StyledSignUpButton>확인</StyledSignUpButton>
+        <StyledSignUpButton>확인</StyledSignUpButton>
+      </StyledForm>
     </StyledRoot>
   );
 };
 
-const StyledRoot = styled.form`
+const StyledRoot = styled.div`
+  ${flexCenter}
+  height: 1000px;
+`;
+
+const StyledForm = styled.form`
   ${flexCenter}
   display: flex;
   flex-direction: column;

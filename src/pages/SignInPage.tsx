@@ -35,25 +35,32 @@ const SignInPage = () => {
   };
 
   return (
-    <StyledRoot onSubmit={handleSubmit}>
-      <StyledTitle>로그인</StyledTitle>
-      <SignInput type={'email'} onChange={handleEmailInput}>
-        이메일
-      </SignInput>
-      <SignInput type={'password'} onChange={handlePasswordInput}>
-        비밀번호
-      </SignInput>
+    <StyledRoot>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledTitle>로그인</StyledTitle>
+        <SignInput type={'email'} onChange={handleEmailInput}>
+          이메일
+        </SignInput>
+        <SignInput type={'password'} onChange={handlePasswordInput}>
+          비밀번호
+        </SignInput>
 
-      <StyledSigninButton>로그인</StyledSigninButton>
+        <StyledSigninButton>로그인</StyledSigninButton>
 
-      <StyledFooter>
-        <Link to='/signUp'>회원가입</Link>
-      </StyledFooter>
+        <StyledFooter>
+          <Link to='/signUp'>회원가입</Link>
+        </StyledFooter>
+      </StyledForm>
     </StyledRoot>
   );
 };
 
-const StyledRoot = styled.form`
+const StyledRoot = styled.div`
+  ${flexCenter}
+  height: 1000px;
+`;
+
+const StyledForm = styled.form`
   ${flexCenter}
   display: flex;
   flex-direction: column;

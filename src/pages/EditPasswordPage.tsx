@@ -58,31 +58,38 @@ const EditPasswordPage = () => {
   };
 
   return (
-    <StyledRoot onSubmit={handleSubmit}>
-      <StyledTitle>비밀번호 수정</StyledTitle>
+    <StyledRoot>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledTitle>비밀번호 수정</StyledTitle>
 
-      <SignInput placeholder={data.email} type={'email'} disable={true}>
-        이메일
-      </SignInput>
-      <SignInput placeholder={data.name} type={'text'} disable={true}>
-        이름
-      </SignInput>
-      <SignInput type={'password'} onChange={handlePrevPasswordInput} ref={prevPasswordRef}>
-        이전 비밀번호
-      </SignInput>
-      <SignInput type={'password'} onChange={handleNewPasswordInput} ref={newPasswordRef}>
-        새 비밀번호
-      </SignInput>
-      <SignInput type={'password'} onChange={handleNewPasswordConfirmInput}>
-        새 비밀번호 확인
-      </SignInput>
+        <SignInput placeholder={data.email} type={'email'} disable={true}>
+          이메일
+        </SignInput>
+        <SignInput placeholder={data.name} type={'text'} disable={true}>
+          이름
+        </SignInput>
+        <SignInput type={'password'} onChange={handlePrevPasswordInput} ref={prevPasswordRef}>
+          이전 비밀번호
+        </SignInput>
+        <SignInput type={'password'} onChange={handleNewPasswordInput} ref={newPasswordRef}>
+          새 비밀번호
+        </SignInput>
+        <SignInput type={'password'} onChange={handleNewPasswordConfirmInput}>
+          새 비밀번호 확인
+        </SignInput>
 
-      <StyledSignUpButton>확인</StyledSignUpButton>
+        <StyledSignUpButton>확인</StyledSignUpButton>
+      </StyledForm>
     </StyledRoot>
   );
 };
 
-const StyledRoot = styled.form`
+const StyledRoot = styled.div`
+  ${flexCenter}
+  height: 1000px;
+`;
+
+const StyledForm = styled.form`
   ${flexCenter}
   display: flex;
   flex-direction: column;
