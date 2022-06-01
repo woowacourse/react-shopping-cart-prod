@@ -64,3 +64,19 @@ export const handleUserGetRequest = (req, res, ctx) => {
 
   return res(ctx.status(404));
 };
+
+export const handlePasswordCheck = (req, res, ctx) => {
+  const currentUserList = getUser();
+
+  const token = req.headers.get('Authorization').split(' ')[1];
+  const { password } = req.body;
+
+  const userData = currentUserList.find(({ email }) => email === token);
+
+  if (userData === undefined) {
+    return res(ctx.status(404));
+  }
+
+  const success = userData.password === password;
+  return res(ctx.status(200), ctx.json({ success }));
+};

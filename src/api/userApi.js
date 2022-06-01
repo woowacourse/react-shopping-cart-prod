@@ -33,3 +33,13 @@ export const getUser = async () => {
 
   return response.data;
 };
+
+export const checkPassword = async (password) => {
+  const response = await apiInstance.post(API_ENDPOINT.AUTH.PASSWORD_CHECK, {
+    password,
+  });
+
+  const { success } = response.data;
+
+  return success;
+};

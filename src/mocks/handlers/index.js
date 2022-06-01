@@ -8,7 +8,13 @@ import {
   patchShoppingCart,
   deleteShoppingCart,
 } from './cart.handler';
-import { checkUniqueEmail, postUser, login, handleUserGetRequest } from './user.handler';
+import {
+  checkUniqueEmail,
+  postUser,
+  login,
+  handleUserGetRequest,
+  handlePasswordCheck,
+} from './user.handler';
 
 export default [
   rest.get(`${API_URL}products`, getProducts),
@@ -21,4 +27,5 @@ export default [
   rest.post(`${API_URL}api/members`, postUser),
   rest.post(`${API_URL}api/login`, login),
   rest.get(`${API_URL}api/members/auth/me`, handleUserGetRequest),
+  rest.post(`${API_URL}api/members/auth/password-check`, handlePasswordCheck),
 ];

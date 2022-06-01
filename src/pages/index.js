@@ -8,6 +8,7 @@ import NotFound from './NotFound/NotFound';
 import Register from './Register/Register';
 import Login from './Login/Login';
 import UserInfo from './UserInfo/UserInfo';
+import PasswordCheck from './PasswordCheck/PasswordCheck';
 
 export const COMMON_PAGES = {
   [ROUTE.home.path]: <Home />,
@@ -24,4 +25,7 @@ export const USER_PAGES = {
   [ROUTE.shoppingCart.path]: <ShoppingCart />,
   [ROUTE.orderList.path]: <OrderList />,
   [ROUTE.userInfo.path]: <UserInfo />,
+  [ROUTE.passwordCheck.path]: <PasswordCheck />,
+  [ROUTE.userInfoUpdate.path]: <Register />,
+  [ROUTE.userPasswordUpdate.path]: <Register />,
 };

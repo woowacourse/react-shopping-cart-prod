@@ -1,20 +1,14 @@
+import React from 'react';
+
 import { Form, Input } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
-import React from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from 'store/actions/user';
+import { checkPassword } from 'api/userApi';
 
-function LoginForm() {
-  const [emailValue, setEmailValue] = useInputValue();
+function PasswordCheckForm({ nextPath }) {
   const [passwordValue, setPasswordValue] = useInputValue();
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const handleEmailInput = ({ target: { value } }) => {
-    setEmailValue(value);
-  };
 
   const handlePasswordInput = ({ target: { value } }) => {
     setPasswordValue(value);
@@ -24,14 +18,14 @@ function LoginForm() {
     e.preventDefault();
 
     try {
-      await dispatch(
-        loginUser({
-          email: emailValue,
-          password: passwordValue,
-        }),
-      );
+      const success = await checkPassword(passwordValue);
 
-      navigate('/');
+      if (!success) {
+        alert('비밀번호가 올바르지 않습니다.');
+        return;
+      }
+
+      navigate(nextPath);
     } catch ({ message }) {
       alert(message);
     }
@@ -39,24 +33,16 @@ function LoginForm() {
 
   const inputAttributeList = [
     {
-      name: 'email',
-      type: 'email',
-      labelText: '이메일 주소',
-      placeholder: 'example@woowacourse.com',
-      value: emailValue,
-      onChange: handleEmailInput,
-    },
-    {
       name: 'password',
       type: 'password',
-      labelText: '비밀번호',
+      labelText: '회원정보를 수정하기 위해서 비밀번호를 입력해주세요.',
       placeholder: '비밀번호를 입력해주세요',
       value: passwordValue,
       onChange: handlePasswordInput,
     },
   ];
   return (
-    <Form buttonText="로그인" onSubmit={onSubmit}>
+    <Form buttonText="비밀번호 확인" onSubmit={onSubmit}>
       {inputAttributeList.map((inputDescription) => (
         <Input key={inputDescription.name} {...inputDescription} required={true} />
       ))}
@@ -64,4 +50,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default PasswordCheckForm;
