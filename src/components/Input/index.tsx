@@ -19,6 +19,7 @@ enum LabelKind {
   'Email Address' = '이메일',
   'Nickname' = '닉네임',
   'Password' = '비밀번호',
+  'New Password' = '새로운 비밀번호',
 }
 
 const Input = ({
