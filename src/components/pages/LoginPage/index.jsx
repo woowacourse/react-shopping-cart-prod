@@ -30,7 +30,7 @@ function LoginPage() {
   const isLoginSuccess = !isLoading && !errorMessage && user.accessToken;
   useEffect(() => {
     if (isLoginSuccess) {
-      navigator("/");
+      navigator(ROUTES.ROOT);
     }
   }, [isLoading]);
 
@@ -44,6 +44,7 @@ function LoginPage() {
           width="500px"
           placeholder="이메일을 입력해주세요"
           type="email"
+          autocomplete
           ref={emailRef}
           required
         />

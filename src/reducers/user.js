@@ -1,16 +1,11 @@
 import { BASE_SERVER_URL, SERVER_PATH } from "constants";
 import {
-  registerBaseServer,
   loginBaseServer,
   deleteUserBaseServer,
   updateUserBaseServer,
 } from "util/fetch";
 
 const USER_ACTION = {
-  REGISTER: "user/REGISTER",
-  REGISTER_SUCCESS: "user/REGISTER_SUCCESS",
-  REGISTER_ERROR: "user/REGISTER_ERROR",
-
   LOGIN: "user/LOGIN",
   LOGIN_SUCCESS: "user/LOGIN_SUCCESS",
   LOGIN_ERROR: "user/LOGIN_ERROR",
@@ -23,36 +18,6 @@ const USER_ACTION = {
   UPDATE_USER_INFO_SUCCESS: "user/UPDATE_USER_INFO_SUCCESS",
   UPDATE_USER_INFO_ERROR: "user/UPDATE_USER_INFO_ERROR",
 };
-
-export const register =
-  ({ email, nickname, password }) =>
-  async (dispatch) => {
-    dispatch({ type: USER_ACTION.REGISTER });
-    try {
-      const response = await registerBaseServer({
-        url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}`,
-        body: {
-          email,
-          username: nickname,
-          password,
-        },
-      });
-
-      const data = await response.json();
-      if (data.message) {
-        throw new Error(data.message);
-      }
-
-      dispatch({
-        type: USER_ACTION.REGISTER_SUCCESS,
-      });
-    } catch (error) {
-      dispatch({
-        type: USER_ACTION.REGISTER_ERROR,
-        errorMessage: error.message,
-      });
-    }
-  };
 
 export const login = (email, password) => async (dispatch) => {
   dispatch({ type: USER_ACTION.LOGIN });
@@ -78,7 +43,6 @@ export const login = (email, password) => async (dispatch) => {
         accessToken: data.accessToken,
       },
     });
-    console.log(data.accessToken, "thunk");
   } catch (error) {
     dispatch({
       type: USER_ACTION.LOGIN_ERROR,
@@ -94,9 +58,11 @@ export const deleteUser = (customerId) => async (dispatch) => {
       url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${customerId}`,
     });
 
-    const data = await response.json();
-    if (data.message) {
-      throw new Error(data.message);
+    if (!response.ok) {
+      const data = await response.json();
+      if (data.message) {
+        throw new Error(data.message);
+      }
     }
 
     dispatch({
@@ -151,7 +117,6 @@ const reducer = (state = initialState, action) => {
     case USER_ACTION.DELETE_ACCOUNT:
     case USER_ACTION.UPDATE_USER_INFO:
     case USER_ACTION.LOGIN:
-    case USER_ACTION.REGISTER:
       return {
         isLoading: true,
         data: state.data,
@@ -178,12 +143,6 @@ const reducer = (state = initialState, action) => {
         data: action.user,
         errorMessage: "",
       };
-    case USER_ACTION.REGISTER_SUCCESS:
-      return {
-        isLoading: false,
-        data: state.data,
-        errorMessage: "",
-      };
     case USER_ACTION.DELETE_ACCOUNT_ERROR:
     case USER_ACTION.UPDATE_USER_INFO_ERROR:
       return {
@@ -192,12 +151,6 @@ const reducer = (state = initialState, action) => {
         errorMessage: action.errorMessage,
       };
     case USER_ACTION.LOGIN_ERROR:
-    case USER_ACTION.REGISTER_ERROR:
-      return {
-        isLoading: false,
-        data: initialState,
-        errorMessage: action.errorMessage,
-      };
     default:
       return state;
   }

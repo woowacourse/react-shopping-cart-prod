@@ -1,22 +1,27 @@
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { theme } from "style";
 
-import { RANGE, ROUTES } from "constants";
+import { RANGE, ROUTES, BASE_SERVER_URL, SERVER_PATH } from "constants";
 
 import { useInputHandler } from "hooks/useInputHandler";
 import { registerValidator } from "validator";
+import { registerBaseServer } from "util/fetch";
 
 import UserInput from "components/common/UserInput";
 import DefaultButton from "components/common/Button/DefaultButton";
 import PageHeader from "components/common/PageHeader";
+import UserForm from "components/common/UserForm";
+import Spinner from "components/common/Spinner";
 import {
   RegisterPageContainer,
   RegisterInputContainer,
   RegisterButtonContainer,
   RegisterLabel,
 } from "./styled";
-import UserForm from "components/common/UserForm";
 
 const initialUserInfo = {
   email: "",
@@ -26,12 +31,15 @@ const initialUserInfo = {
 };
 
 function RegisterPage() {
+  const accessToken = useSelector((state) => state.user.data.accessToken);
+  const [isLoading, setIsLoading] = useState(false);
   const {
     inputValue: userInfo,
     updateInputState: handleChangeInput,
     errorMessage,
     setErrorMessage,
   } = useInputHandler(registerValidator, initialUserInfo);
+  const navigator = useNavigate();
 
   const comparePassword = ({ target: { value } }) => {
     if (userInfo.password !== value) {
@@ -51,17 +59,57 @@ function RegisterPage() {
     return Object.values(errorMessage).some((error) => error);
   };
 
+  const requestRegister = async () => {
+    try {
+      setIsLoading(true);
+      const response = await registerBaseServer({
+        url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}`,
+        body: JSON.stringify({
+          email: userInfo.email,
+          username: userInfo.nickname,
+          password: userInfo.password,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        if (data.message) {
+          setErrorMessage((prev) => ({
+            ...prev,
+            [data.field]: data.message,
+          }));
+          throw Error("유효하지 않은 입력이 있습니다. 수정하고 가입해주세요");
+        }
+      }
+    } catch (error) {
+      setIsLoading(false);
+      alert(error.message);
+    }
+    alert("회원가입에 성공했습니다 :D");
+    navigator(ROUTES.LOGIN);
+    setIsLoading(false);
+  };
+
   const registerUserInfo = (e) => {
     e.preventDefault();
 
-    if (isErrorExist())
+    if (isErrorExist()) {
       alert("유효하지 않은 입력이 있습니다. 수정하고 가입해주세요");
-    /* TODO: API 요청 후 성공하면 로그인페이지로 리디렉트 */
+      return;
+    }
+    requestRegister();
   };
+
+  useEffect(() => {
+    if (accessToken) {
+      navigator(ROUTES.LOGIN);
+    }
+  }, []);
 
   return (
     <RegisterPageContainer>
       <PageHeader>회원가입</PageHeader>
+      {isLoading && <Spinner />}
       <UserForm onSubmit={registerUserInfo}>
         <RegisterInputContainer>
           <RegisterLabel>이메일</RegisterLabel>
