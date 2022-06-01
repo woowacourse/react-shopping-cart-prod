@@ -13,7 +13,7 @@ import ProductItem from 'components/ProductItem';
 
 import * as S from './styles';
 
-export function ProductList() {
+export function ProductListPage() {
   const dispatch = useDispatch();
 
   const productState = useSelector((state) => state.products);
@@ -79,4 +79,4 @@ export function ProductList() {
     </SwitchAsync>
   );
 }
-export default ProductList;
+export default ProductListPage;

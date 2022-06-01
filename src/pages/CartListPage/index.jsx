@@ -9,7 +9,7 @@ import CartItemManage from './Containers/CartItemManage';
 import ProductOrder from './Containers/ProductOrder';
 import * as S from './styles';
 
-export function CartList() {
+export function CartListPage() {
   const { state } = useCart();
   const { cartItems, isLoaded, checkedItemList } = state;
 
@@ -45,4 +45,4 @@ export function CartList() {
     </>
   );
 }
-export default CartList;
+export default CartListPage;

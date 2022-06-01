@@ -6,7 +6,7 @@ import { ICON_CODE, PAGE_LIST } from 'constants/';
 
 import * as S from './styles';
 
-export function NotFound() {
+export function NotFoundPage() {
   return (
     <S.Container>
       <StatusMessage status="error">존재하지 않는 페이지입니다.</StatusMessage>
@@ -20,4 +20,4 @@ export function NotFound() {
     </S.Container>
   );
 }
-export default NotFound;
+export default NotFoundPage;
