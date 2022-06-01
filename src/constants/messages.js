@@ -33,5 +33,3 @@ export const ERROR_MESSAGES = {
     INVALID_NICKNAME: '닉네임은 1 ~ 5자의 한글로 입력해주세요.',
   },
 };
-
-export const RULE_ERROR = {};
