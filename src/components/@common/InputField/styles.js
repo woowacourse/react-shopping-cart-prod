@@ -7,7 +7,7 @@ const Container = styled.div``;
 
 const Input = styled.input`
   border: 1px solid ${COLORS.GRAY_150};
-  padding: 1rem;
+  padding: 0.75rem;
   font-size: 1rem;
   outline: none;
   transition: border-color 0.3s ease;
