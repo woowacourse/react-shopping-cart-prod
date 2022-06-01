@@ -12,6 +12,12 @@ const userDB = () => {
 
 const { getUser, setUser } = userDB();
 
+const findUserData = (requestEmail) => {
+  const currentUserList = getUser();
+
+  return currentUserList.find(({ email }) => email === requestEmail);
+};
+
 export const checkUniqueEmail = (req, res, ctx) => {
   const currentUserList = getUser();
   const email = req.url.searchParams.get('email');
@@ -33,14 +39,11 @@ export const postUser = (req, res, ctx) => {
 };
 
 export const login = (req, res, ctx) => {
-  const currentUserList = getUser();
   const { email: requestEmail, password: requestPassword } = req.body;
 
-  const userData = currentUserList.find(
-    ({ email, password }) => email === requestEmail && password === requestPassword,
-  );
+  const userData = findUserData(requestEmail);
 
-  if (userData !== undefined) {
+  if (userData !== undefined && userData.password === requestPassword) {
     const { email, nickname } = userData;
 
     return res(ctx.status(200), ctx.json({ nickname, token: email }));
@@ -50,11 +53,9 @@ export const login = (req, res, ctx) => {
 };
 
 export const handleUserGetRequest = (req, res, ctx) => {
-  const currentUserList = getUser();
-
   const token = req.headers.get('Authorization').split(' ')[1];
 
-  const userData = currentUserList.find(({ email }) => email === token);
+  const userData = findUserData(token);
 
   if (userData !== undefined) {
     const { email, nickname } = userData;
@@ -66,12 +67,10 @@ export const handleUserGetRequest = (req, res, ctx) => {
 };
 
 export const handlePasswordCheck = (req, res, ctx) => {
-  const currentUserList = getUser();
-
   const token = req.headers.get('Authorization').split(' ')[1];
   const { password } = req.body;
 
-  const userData = currentUserList.find(({ email }) => email === token);
+  const userData = findUserData(token);
 
   if (userData === undefined) {
     return res(ctx.status(404));
