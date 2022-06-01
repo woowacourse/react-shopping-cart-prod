@@ -1,15 +1,15 @@
 import * as S from './Stepper.styled';
 import * as T from './Stepper.types';
 
-function Stepper({ stepList }: T.Props) {
-  const isSelected = (index: number) => index === 0;
+function Stepper({ stepList, currentStepId }: T.Props) {
+  const isCurrentStep = (id: T.Step['id']) => id === currentStepId;
 
   return (
     <S.StepList>
-      {stepList.map(({ urlParamId, title }, index) => (
-        <S.StepItem key={urlParamId}>
-          <S.Circle selected={isSelected(index)}>{index + 1}</S.Circle>
-          <S.StepTitle selected={isSelected(index)}>{title}</S.StepTitle>
+      {stepList.map(({ id, title }, index) => (
+        <S.StepItem key={id}>
+          <S.Circle selected={isCurrentStep(id)}>{index + 1}</S.Circle>
+          <S.StepTitle selected={isCurrentStep(id)}>{title}</S.StepTitle>
         </S.StepItem>
       ))}
     </S.StepList>
