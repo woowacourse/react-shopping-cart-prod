@@ -9,10 +9,34 @@ import * as Styled from 'components/common/Header/Header.style';
 
 import { deviceSizeStandard } from 'styles/Theme';
 
-function Header({ navLinkInfo }) {
+import { useDispatch } from 'react-redux';
+import { logoutUser } from 'store/actions/user';
+import { useNavigate } from 'react-router-dom';
+
+const userHeaderLinks = [
+  { path: ROUTE.shoppingCart.path, name: '장바구니' },
+  { path: ROUTE.orderList.path, name: '주문목록' },
+  { path: ROUTE.userInfo.path, name: '내 정보' },
+];
+const nonUserHeaderLinks = [
+  { path: ROUTE.login.path, name: '로그인' },
+  { path: ROUTE.register.path, name: '회원가입' },
+];
+
+function Header({ isLoggedIn }) {
   const windowSize = useWindowsSize();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const IconSizeBreakPoint = deviceSizeStandard.desktop;
+
+  const navLinkInfo = isLoggedIn ? userHeaderLinks : nonUserHeaderLinks;
+
+  const handleLogOut = () => {
+    dispatch(logoutUser());
+
+    navigate('/');
+  };
 
   return (
     <Styled.Container>
@@ -27,14 +51,16 @@ function Header({ navLinkInfo }) {
             BLVIC&apos;S CAMPING
           </Styled.Logo>
         </Styled.NavLink>
-
-        <Styled.NavButton>
+        <Styled.Nav>
           {navLinkInfo.map(({ path, name }) => (
             <Styled.NavLink key={name} to={path}>
               {name}
             </Styled.NavLink>
           ))}
-        </Styled.NavButton>
+          {isLoggedIn && (
+            <Styled.NavButton onClick={handleLogOut}>로그아웃</Styled.NavButton>
+          )}
+        </Styled.Nav>
       </Styled.Inner>
     </Styled.Container>
   );

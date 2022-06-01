@@ -10,6 +10,8 @@ export const userActionType = {
   START: 'user/ACTION_START',
   FAIL: 'user/ACTION_FAIL',
   UPDATE: 'user/UPDATE',
+  DELETE: 'user/DELETE',
+  LOGOUT: 'user/LOGOUT',
 };
 
 const userReducer = (state = initialState, action) => {
@@ -32,6 +34,14 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+      };
+
+    case userActionType.LOGOUT:
+    case userActionType.DELETE:
+      return {
+        ...state,
+        nickname: null,
+        isLoggedIn: false,
       };
 
     default:

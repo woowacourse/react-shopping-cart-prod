@@ -14,6 +14,15 @@ export const loginUser = (loginData) => async (dispatch) => {
   }
 };
 
+export const logoutUser = () => {
+  window.sessionStorage.removeItem('nickname');
+  window.sessionStorage.removeItem('token');
+
+  return {
+    type: userActionType.LOGOUT,
+  };
+};
+
 export const updateUserNickname = (newNickname) => async (dispatch) => {
   dispatch({ type: userActionType.START });
 
