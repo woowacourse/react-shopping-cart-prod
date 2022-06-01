@@ -20,7 +20,7 @@ import * as Styled from './styles';
 const EditUserInfo = () => {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
-  const { name: id } = jwt_decode(accessToken);
+  const { name: id } = accessToken ? jwt_decode(accessToken) : { name: '유저' };
 
   const {
     value: userNickName,

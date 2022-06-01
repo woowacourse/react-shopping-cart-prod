@@ -1,7 +1,7 @@
-import Header from '../components/Layout/Header';
+import Header from 'components/Layout/Header';
 
 export default {
-  title: 'Component/Header',
+  title: 'Layout/Header',
   component: Header,
   parameters: {
     layout: 'centered',

@@ -40,7 +40,12 @@ const Counter = ({ id, count, handleItemCount }) => {
         value={count}
         onChange={(e) => onInputCounter(e)}
       />
-      <CommonStyle.FlexWrapper flexDirection="column" width="30%" margin="0">
+      <CommonStyle.FlexWrapper
+        flexDirection="column"
+        width="30%"
+        margin="0"
+        alignItems="flex-start"
+      >
         <Button
           onClick={() => onClickButton(1)}
           width="40px"

@@ -1,7 +1,7 @@
 import { Provider } from 'react-redux';
 
 import Snackbar from 'components/Snackbar';
-import snackbarStore from './config/snackbarStore';
+import snackbarStore from 'stories/config/snackbarStore';
 
 export default {
   title: 'Component/Snackbar',

@@ -1,4 +1,4 @@
-import SignUp from '../pages/SignUp';
+import SignUp from 'pages/SignUp';
 
 export default {
   title: 'pages/SignUp',

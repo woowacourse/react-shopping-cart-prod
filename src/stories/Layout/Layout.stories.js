@@ -1,7 +1,7 @@
 import Layout from 'components/Layout';
 
 export default {
-  title: 'Component/Layout',
+  title: 'Layout/Layout',
   component: Layout,
   parameters: {
     layout: 'centered',

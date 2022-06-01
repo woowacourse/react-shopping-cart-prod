@@ -1,4 +1,4 @@
-import CartProductItem from '../components/CartProductItem';
+import CartProductItem from 'components/CartProductItem';
 
 export default {
   title: 'Component/CartProductItem',

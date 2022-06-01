@@ -1,7 +1,7 @@
-import Footer from '../components/Layout/Footer';
+import Footer from 'components/Layout/Footer';
 
 export default {
-  title: 'Component/Footer',
+  title: 'Layout/Footer',
   component: Footer,
   parameters: {
     layout: 'centered',

@@ -2,8 +2,8 @@ import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
 const SkeletonProductItems = () =>
-  Array.from({ length: 16 }).map(() => (
-    <CommonStyled.Container width="100%" flexDirection="column">
+  Array.from({ length: 16 }).map((_, i) => (
+    <CommonStyled.Container key={i} width="100%" flexDirection="column">
       <Styled.ImageWrapper />
       <CommonStyled.Container
         justifyContents="space-between"
