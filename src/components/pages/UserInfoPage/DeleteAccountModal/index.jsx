@@ -11,7 +11,12 @@ import {
   ModalWindow,
 } from "./styled";
 
-function Modal({ userName = "%ERROR%", onClose, onConfirm }) {
+function DeleteAccountModal({
+  userName = "%ERROR%",
+  onClose,
+  onConfirm,
+  errorMessage,
+}) {
   return (
     <ModalDimmedConatiner onClick={onClose}>
       <ModalWindow onClick={(event) => event.stopPropagation()}>
@@ -25,7 +30,7 @@ function Modal({ userName = "%ERROR%", onClose, onConfirm }) {
           type="password"
           placeholder="비밀번호를 입력해주세요"
           width="100%"
-          errorMessage="비밀번호가 틀렸습니다"
+          errorMessage={errorMessage}
         />
         <ModalButtonContainer>
           <DefaultButton width="180px" onClick={onClose}>
@@ -45,4 +50,4 @@ function Modal({ userName = "%ERROR%", onClose, onConfirm }) {
   );
 }
 
-export default Modal;
+export default DeleteAccountModal;
