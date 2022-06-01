@@ -1,9 +1,9 @@
 import PATH from 'constants/path';
-import axios from 'configs/api';
 import db from 'db.json';
+import { productAxios } from 'configs/api';
 import { rest } from 'msw';
 
-const { baseURL } = axios.defaults;
+const { baseURL } = productAxios.defaults;
 
 const productsHandlers = [
   rest.get(`${baseURL}${PATH.REQUEST_PRODUCT}`, (req, res, ctx) => {
