@@ -4,7 +4,7 @@ import { Button } from 'components/common';
 
 import * as Styled from 'components/user/DeleteUserForm/DeleteUserForm.style';
 import { useDispatch } from 'react-redux';
-import { deleteUserThunk } from 'store/actions/user';
+import { deleteUserThunk } from 'store/actions/user.action';
 import { useNavigate } from 'react-router-dom';
 
 function DeleteUserForm({ closeModal }) {

@@ -6,7 +6,7 @@ import useInputValue from 'hooks/useInputValue';
 import useReduxState from 'hooks/useReduxState';
 
 import { Form, Input } from 'components/common';
-import { updateUserNickname } from 'store/actions/user';
+import { updateUserNickname } from 'store/actions/user.action';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 
 const nicknamePattern = /^[가-힣]{1,5}$/;

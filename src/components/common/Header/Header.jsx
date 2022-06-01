@@ -10,7 +10,7 @@ import * as Styled from 'components/common/Header/Header.style';
 import { deviceSizeStandard } from 'styles/Theme';
 
 import { useDispatch } from 'react-redux';
-import { logoutUser } from 'store/actions/user';
+import { logoutUser } from 'store/actions/user.action';
 import { useNavigate } from 'react-router-dom';
 
 const userHeaderLinks = [

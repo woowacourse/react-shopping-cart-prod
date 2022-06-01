@@ -3,7 +3,7 @@ import useInputValue from 'hooks/useInputValue';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from 'store/actions/user';
+import { loginUser } from 'store/actions/user.action';
 
 function LoginForm() {
   const [emailValue, setEmailValue] = useInputValue();

@@ -1,6 +1,6 @@
 import { deleteUser, login, updateNickname } from 'api/userApi';
 import { ERROR_MESSAGES } from 'constants/messages';
-import { userActionType } from 'store/reducers/user';
+import { userActionType } from 'store/reducers/user.reducer';
 
 export const loginUser = (loginData) => async (dispatch) => {
   dispatch({ type: userActionType.START });

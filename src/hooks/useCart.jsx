@@ -5,7 +5,7 @@ import {
   toggleProductCheck,
   updateCartProductQuantityAsync,
   updateCheckedList,
-} from 'store/actions/cart';
+} from 'store/actions/cart.action';
 import { cartStoreSelector } from 'store/selector';
 
 import { WARNING_MESSAGES } from 'constants/messages';

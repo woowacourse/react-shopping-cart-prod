@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { fetchProductListAsync } from 'store/actions/product';
+import { fetchProductListAsync } from 'store/actions/product.action';
 import { productSelector } from 'store/selector';
 import useReduxState from './useReduxState';
 
