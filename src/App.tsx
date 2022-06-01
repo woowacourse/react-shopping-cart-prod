@@ -5,7 +5,7 @@ import { RootState } from './redux/store';
 import SnackBar from './components/@shared/SnackBar';
 import NavBar from './components/NavBar';
 
-import { Cart, Login, NotFound, OrderList, ProductDetail, ProductList } from './pages';
+import { Cart, Login, NotFound, OrderList, ProductDetail, ProductList, Signup } from './pages';
 import routes from './routes';
 
 function App() {
@@ -20,6 +20,7 @@ function App() {
         <Route path={routes.cart} element={<Cart />} />
         <Route path={routes.orderList} element={<OrderList />} />
         <Route path={routes.login} element={<Login />} />
+        <Route path={routes.signup} element={<Signup />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       {isShowSnackBar && <SnackBar key={Date.now()} message={message} />}
