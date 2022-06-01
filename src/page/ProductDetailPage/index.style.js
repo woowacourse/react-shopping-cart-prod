@@ -22,7 +22,7 @@ const Styled = {
   ProductContainer: styled.div`
     display: flex;
     flex-direction: column;
-    width: 638px;
+    width: 390px;
     align-items: center;
   `,
 
@@ -32,17 +32,17 @@ const Styled = {
     padding: 0 30px;
 
     font-weight: 700;
-    font-size: 32px;
-    line-height: 36px;
+    font-size: 23px;
+    line-height: 25px;
     letter-spacing: 0.5px;
     margin-top: 21px;
   `,
 
   Division: styled.hr`
-    width: 640px;
+    width: 390px;
     height: 1px;
     background-color: black;
-    margin: 33px 0;
+    margin: 16px 0;
   `,
 
   PriceContainer: styled.div`
@@ -50,32 +50,33 @@ const Styled = {
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
-    padding: 0 30px;
+    padding: 0 25px;
   `,
 
   PriceTag: styled.p`
     font-weight: 400;
-    font-size: 24px;
-    line-height: 24px;
+    font-size: 18px;
+    line-height: 20px;
     letter-spacing: 0.5px;
   `,
 
   ProductPrice: styled.p`
     font-weight: 400;
-    font-size: 32px;
-    line-height: 27px;
+    font-size: 21px;
+    line-height: 23px;
     letter-spacing: 0.5px;
   `,
 
   PutCartButton: styled(Button)`
     color: ${({ theme }) => theme.colors.white};
     background-color: ${({ theme }) => theme.colors.brown};
-    width: 638px;
-    height: 98px;
+    width: 390px;
+    height: 60px;
     font-weight: 700;
-    font-size: 32px;
+    font-size: 22px;
     line-height: 21px;
-    margin-top: 57px;
+    margin-top: 30px;
+    padding: 7px;
   `,
 };
 

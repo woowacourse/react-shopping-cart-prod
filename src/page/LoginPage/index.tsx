@@ -23,7 +23,7 @@ const LoginPage = () => {
 
   return (
     <Styled.Container>
-      <Container width="505px" height="507px">
+      <Container width="505px" height="440px">
         <div>
           <Title mainTitle="로그인" subTitle="환영합니다 👋" />
           <Input

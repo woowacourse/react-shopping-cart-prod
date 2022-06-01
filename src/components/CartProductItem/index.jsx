@@ -17,7 +17,7 @@ const CartProductItem = ({ id, quantity }) => {
     <Styled.Container>
       <Styled.LeftSide>
         <CheckBox checked={isInOrder} handleChange={updateOrder} />
-        <Image src={image} alt={name} size="200px" />
+        <Image src={image} alt={name} size="130px" />
         <Styled.ProductName>{name}</Styled.ProductName>
       </Styled.LeftSide>
 

@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const Styled = {
   Container: styled.div`
-    width: 113px;
-    height: 60px;
+    width: 83px;
+    height: 50px;
     border: 1px solid ${({ theme }) => theme.colors.gray};
     display: grid;
     box-sizing: border-box;
@@ -20,6 +20,7 @@ const Styled = {
   `,
 
   CountButton: styled.div`
+    font-size: 9px;
     grid-column: 3;
     display: flex;
     align-items: center;

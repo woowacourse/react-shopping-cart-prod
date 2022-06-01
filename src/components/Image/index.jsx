@@ -21,7 +21,7 @@ Image.propTypes = {
 };
 
 Image.defaultProps = {
-  size: '282px',
+  size: '180px',
 };
 
 export default Image;

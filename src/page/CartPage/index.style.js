@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 const Styled = {
   Container: styled.main`
-    width: 1269px;
+    width: 1000px;
     background-color: ${({ theme }) => theme.colors.white};
-    margin-top: 140px;
-    padding: 40px;
+    margin-top: 100px;
+    padding: 0 100px;
     overflow: scroll;
     height: 100%;
     display: flex;
@@ -20,17 +20,17 @@ const Styled = {
 
   Title: styled.p`
     font-weight: 700;
-    font-size: 32px;
+    font-size: 23px;
     line-height: 37px;
     text-align: center;
     letter-spacing: 0.5px;
-    margin: 29px 0;
   `,
 
   Division: styled.hr`
     width: inherit;
-    height: 4px;
+    height: 2px;
     background-color: black;
+    margin: 10px 0;
   `,
 
   SelectController: styled.div`
@@ -53,8 +53,8 @@ const Styled = {
 
   ProductListTitle: styled.p`
     font-weight: 400;
-    font-size: 20px;
-    line-height: 33px;
+    font-size: 18px;
+    line-height: 28px;
     letter-spacing: 0.5px;
     border-bottom: 2px solid #aaaaaa;
     padding: 16px 0;
@@ -62,7 +62,7 @@ const Styled = {
 
   ProductList: styled.div`
     overflow: scroll;
-    height: 670px;
+    height: 430px;
 
     -ms-overflow-style: none;
     &::-webkit-scrollbar {

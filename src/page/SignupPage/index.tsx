@@ -26,7 +26,7 @@ const SignupPage = () => {
 
   return (
     <Styled.Container>
-      <Container width="519px" height="600px">
+      <Container width="519px" height="570px">
         <div>
           <Title mainTitle="회원가입" subTitle="처음 뵙겠습니다 👋" />
           <Styled.InputContainer>

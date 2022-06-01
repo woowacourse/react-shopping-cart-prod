@@ -25,12 +25,12 @@ const ProductDetailPage = () => {
   return (
     <Styled.Container>
       <Styled.ProductContainer>
-        <Image src={image} alt={name} size="570px" />
+        <Image src={image} alt={name} size="350px" />
         <Styled.ProductName>{name}</Styled.ProductName>
         <Styled.Division />
         <Styled.PriceContainer>
           <Styled.PriceTag>금액</Styled.PriceTag>
-          <Styled.ProductPrice>{autoComma(price)}</Styled.ProductPrice>
+          <Styled.ProductPrice>{autoComma(price)}원</Styled.ProductPrice>
         </Styled.PriceContainer>
         <Styled.PutCartButton onClick={putCart}>장바구니</Styled.PutCartButton>
       </Styled.ProductContainer>

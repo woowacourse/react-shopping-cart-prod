@@ -3,8 +3,8 @@ import styled from 'styled-components';
 const Styled = {
   Container: styled.label`
     display: block;
-    height: 25px;
-    width: 25px;
+    height: 15px;
+    width: 15px;
     border-radius: 2px;
     position: relative;
     border: 1px solid ${({ theme }) => theme.colors.mint_002};
@@ -18,8 +18,8 @@ const Styled = {
 
   CheckMark: styled.span`
     position: absolute;
-    height: 25px;
-    width: 25px;
+    height: 15px;
+    width: 15px;
     border-radius: 2px;
 
     input:checked ~ & {
@@ -29,12 +29,12 @@ const Styled = {
     &:after {
       content: '';
       position: absolute;
-      left: 8px;
-      top: 4px;
+      left: 4px;
+      top: 0px;
       width: 5px;
-      height: 10px;
+      height: 8px;
       border: solid ${({ theme }) => theme.colors.white};
-      border-width: 0 3px 3px 0;
+      border-width: 0 1.5px 1.5px 0;
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
       transform: rotate(45deg);

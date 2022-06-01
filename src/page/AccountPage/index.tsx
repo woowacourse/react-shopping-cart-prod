@@ -22,7 +22,7 @@ const AccountPage = () => {
 
   return (
     <Styled.Container>
-      <Container width="519px" height="612px">
+      <Container width="519px" height="512px">
         <div>
           <Title mainTitle="회원정보 수정" />
           <Input

@@ -10,9 +10,7 @@ const Styled = {
             path {
               fill: ${theme.colors.white};
             }
-            width: 49px;
-            height: 39px;
-            margin: 0 10px;
+            height: 30px;
           `;
 
         default:
@@ -20,8 +18,7 @@ const Styled = {
             path {
               fill: ${theme.colors.black};
             }
-            width: 30px;
-            height: 26px;
+            height: 20px;
           `;
       }
     }}
