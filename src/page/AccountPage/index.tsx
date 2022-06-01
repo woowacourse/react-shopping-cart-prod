@@ -8,12 +8,15 @@ import AuthButton from 'components/AuthButton';
 
 import { useState } from 'react';
 import { validateNickname } from 'utils/validator';
+import PasswordEditModal from './PasswordEditModal';
 
-const ProfileEditPage = () => {
+const AccountPage = () => {
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
 
   const [isNicknameCorrect, setIsNicknameCorrect] = useState(false);
+
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
 
   return (
     <Styled.Container>
@@ -46,7 +49,7 @@ const ProfileEditPage = () => {
           <Styled.Line />
 
           <Styled.ButtonContainer>
-            <Styled.ChangePasswordButton onClick={() => {}}>
+            <Styled.ChangePasswordButton onClick={() => setIsPasswordModalOpen(true)}>
               Change password
             </Styled.ChangePasswordButton>
 
@@ -56,8 +59,14 @@ const ProfileEditPage = () => {
           </Styled.ButtonContainer>
         </div>
       </Container>
+
+      {isPasswordModalOpen && (
+        <PasswordEditModal handleModal={() => setIsPasswordModalOpen(false)} />
+      )}
     </Styled.Container>
   );
 };
 
-export default ProfileEditPage;
+// AccountDeleteModal
+
+export default AccountPage;
