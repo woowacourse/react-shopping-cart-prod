@@ -10,16 +10,17 @@ export const authHandler = [
     users.push(userInfo);
     localStorage.setItem('mock-users', JSON.stringify(users));
 
-    delete userInfo.password;
+    const savedUserInfo = { ...userInfo };
 
-    return res(ctx.status(201), ctx.json(userInfo));
+    delete savedUserInfo.password;
+
+    return res(ctx.status(201), ctx.json(savedUserInfo));
   }),
 
   rest.post<Omit<UserInfoWithPassword, 'name'>, null, LoginResponse | string>(
     `${AUTH_BASE_URL}/login`,
     (req, res, ctx) => {
       const loginInfo = req.body;
-
       const authenticatedUser = users.find(
         user => user.loginId === loginInfo.loginId && user.password === loginInfo.password
       );
