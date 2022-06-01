@@ -45,4 +45,12 @@ const Label = styled.label`
   margin-bottom: 4px;
 `;
 
-export {Input, Label, Layout};
+const Message = styled.div`
+  margin-top: 8px;
+  color: ${({theme}) => theme.RED_500};
+  line-height: 20px;
+  font-size: 12px;
+  max-width: 300px;
+`;
+
+export {Input, Label, Layout, Message};

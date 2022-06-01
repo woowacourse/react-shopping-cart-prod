@@ -26,13 +26,15 @@ const Header = styled.header`
   padding-top: 40px;
 `;
 
-const InputCol = styled(FlexColumn)`
-  gap: 16px;
+const InputCol = styled.form`
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 16px;
 `;
 
 const ConfirmButton = styled(Button)`
-  margin-top: 34px;
+  margin-top: -5px;
   border-radius: 4px;
 `;
 
@@ -40,14 +42,14 @@ const PasswordContainer = styled(FlexColumn)``;
 
 const PhoneNumberContainer = styled(FlexRow)`
   width: 300px;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 14px;
 `;
 
 const Hyphen = styled.span`
   color: ${({theme}) => theme.GRAY_650};
-  height: 36px;
-  line-height: 36px;
+  height: 83px;
+  line-height: 83px;
 `;
 
 export {

@@ -2,11 +2,18 @@ import React from 'react';
 import * as S from './style';
 import PropTypes from 'prop-types';
 
-function Input({size, label, placeHolder, id, isDisabled}) {
+function Input({size, label, placeHolder, id, isDisabled, isError, message, ...rest}) {
   return (
     <S.Layout>
       <S.Label htmlFor={id}>{label}</S.Label>
-      <S.Input size={size} id={id} placeholder={placeHolder} disabled={isDisabled ? true : false} />
+      <S.Input
+        size={size}
+        id={id}
+        placeholder={placeHolder}
+        disabled={isDisabled ? true : false}
+        {...rest}
+      />
+      <S.Message>{isError && message}</S.Message>
     </S.Layout>
   );
 }
@@ -17,6 +24,8 @@ Input.propTypes = {
   placeHolder: PropTypes.string,
   id: PropTypes.string,
   isDisabled: PropTypes.bool,
+  isError: PropTypes.bool,
+  message: PropTypes.string,
 };
 
 export default Input;

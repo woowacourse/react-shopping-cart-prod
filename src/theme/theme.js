@@ -12,6 +12,7 @@ const theme = {
   GRAY_400: '#F6F6F6',
   GRAY_300: '#E5E5E5',
   BLUE_300: '#3581D7',
+  RED_500: '#ff0000',
 };
 
 export default theme;
