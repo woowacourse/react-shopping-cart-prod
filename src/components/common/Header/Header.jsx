@@ -16,7 +16,11 @@ import { useNavigate } from 'react-router-dom';
 const userHeaderLinks = [
   { path: ROUTE.shoppingCart.path, name: '장바구니' },
   { path: ROUTE.orderList.path, name: '주문목록' },
-  { path: ROUTE.userInfo.path, name: '내 정보' },
+  {
+    path: ROUTE.passwordCheck.path,
+    name: '내 정보',
+    state: { isValid: true, nextPath: ROUTE.userInfo.path },
+  },
 ];
 const nonUserHeaderLinks = [
   { path: ROUTE.login.path, name: '로그인' },
@@ -52,8 +56,8 @@ function Header({ isLoggedIn }) {
           </Styled.Logo>
         </Styled.NavLink>
         <Styled.Nav>
-          {navLinkInfo.map(({ path, name }) => (
-            <Styled.NavLink key={name} to={path}>
+          {navLinkInfo.map(({ path, name, ...props }) => (
+            <Styled.NavLink key={name} to={path} {...props}>
               {name}
             </Styled.NavLink>
           ))}

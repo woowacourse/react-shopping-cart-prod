@@ -13,14 +13,14 @@ function UserInfo() {
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const handleNavigate = (nextPath) => () => {
-    navigate('/password-check', {
-      state: {
-        isValid: true,
-        nextPath,
-      },
-    });
-  };
+  // const handleNavigate = (nextPath) => () => {
+  //   navigate('/password-check', {
+  //     state: {
+  //       isValid: true,
+  //       nextPath,
+  //     },
+  //   });
+  // };
 
   useEffect(() => {
     async function fetchUser() {
@@ -49,8 +49,8 @@ function UserInfo() {
           </Styled.List>
           <Styled.ButtonContainer>
             <Styled.ButtonWrapper>
-              <Button onClick={handleNavigate('/user-info-update')}>회원정보 수정</Button>
-              <Button onClick={handleNavigate('/user-password-update')}>
+              <Button onClick={() => navigate('/user-info-update')}>회원정보 수정</Button>
+              <Button onClick={() => navigate('/user-password-update')}>
                 비밀번호 수정
               </Button>
             </Styled.ButtonWrapper>
