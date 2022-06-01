@@ -9,3 +9,14 @@ export const PAGING = {
   VIEW_COUNT: 10,
   GROUP: 5,
 };
+
+export const PATH = {
+  HOME: '/',
+  PRODUCTS: '/products',
+  PRODUCT: '/product',
+  CARTS: '/carts',
+  LOGIN: '/login',
+  SIGNUP: '/signUp',
+  PROFILE: '/profile',
+  PASSWORD: '/password',
+};

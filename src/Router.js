@@ -11,6 +11,8 @@ import ProductsPage from './pages/ProductsPage';
 import ProductPage from 'pages/ProductPage';
 import CartsPage from 'pages/CartsPage';
 import NotFoundPage from 'pages/NotFoundPage';
+import LoginPage from 'pages/LoginPage';
+import { PATH } from 'constants';
 
 const Router = () => {
   const { show, message } = useSelector((state) => state.snackbar);
@@ -20,10 +22,14 @@ const Router = () => {
       <Header />
       <Body>
         <Routes>
-          <Route path="/" element={<ProductsPage />} />
-          <Route path="/products/:page" element={<ProductsPage />} />
-          <Route path="/product/:productId" element={<ProductPage />} />
-          <Route path="/carts" element={<CartsPage />} />
+          <Route path={PATH.HOME} element={<ProductsPage />} />
+          <Route path={`${PATH.PRODUCTS}/:page`} element={<ProductsPage />} />
+          <Route
+            path={`${PATH.PRODUCT}/:productId`}
+            element={<ProductPage />}
+          />
+          <Route path={PATH.CARTS} element={<CartsPage />} />
+          <Route path={PATH.LOGIN} element={<LoginPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         {show && <Snackbar key={Date.now()} message={message} />}

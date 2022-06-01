@@ -5,7 +5,7 @@ import Wrapper from './style';
 
 import { PAGING } from 'constants';
 
-const Pagenation = ({ endPoint, totalCount, currentPage, viewCount }) => {
+const Pagination = ({ endPoint, totalCount, currentPage, viewCount }) => {
   const navigate = useNavigate();
   const totalPage = Math.ceil(totalCount / viewCount);
   const group = Math.ceil(currentPage / PAGING.GROUP);
@@ -14,7 +14,7 @@ const Pagenation = ({ endPoint, totalCount, currentPage, viewCount }) => {
 
   const handleClickPage = (page) => () => {
     if (page !== currentPage && page >= 1 && page <= totalPage) {
-      navigate(`/${endPoint}/${page}`);
+      navigate(`${endPoint}/${page}`);
     }
   };
 
@@ -34,7 +34,9 @@ const Pagenation = ({ endPoint, totalCount, currentPage, viewCount }) => {
       </div>
       {Array.from({ length: endPage - startPage + 1 }, (_, index) => (
         <div
-          className={`page-item ${currentPage === startPage + index ? '__disabled' : ''}`}
+          className={`page-item ${
+            currentPage === startPage + index ? '__disabled' : ''
+          }`}
           key={startPage + index}
           onClick={handleClickPage(startPage + index)}
         >
@@ -57,4 +59,4 @@ const Pagenation = ({ endPoint, totalCount, currentPage, viewCount }) => {
   );
 };
 
-export default Pagenation;
+export default Pagination;
