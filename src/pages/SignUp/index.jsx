@@ -1,17 +1,23 @@
+import { useRef } from 'react';
+import { useDispatch } from 'react-redux';
+
 import Input from 'components/Common/Input/Input';
 import Title from 'components/Common/Title/Title';
 import Button from 'components/Common/Button/Button';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
-import * as Styled from './style';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
-import useInputValidate from 'hooks/useInputValidate';
-import { useRef } from 'react';
 import Form from 'components/Common/Form/Form';
-import { useDispatch } from 'react-redux';
+
 import { showSnackBar } from 'reducers/ui/ui.actions';
+import useInputValidate from 'hooks/useInputValidate';
+import { useNavigate } from 'react-router-dom';
+import { signUpApi } from 'api/auth';
+import { PATH_NAME } from 'constants';
+import * as Styled from './style';
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const pwd = useRef(null);
   const [emailValidate, handleEmailBlur] = useInputValidate('email');
   const [nameValidate, handleNameBlur] = useInputValidate('name');
@@ -41,7 +47,20 @@ const SignUp = () => {
       password: { value: password },
     } = e.target.elements;
 
-    console.log('handlSubmit', email, name, password);
+    signUpApi({
+      email,
+      name,
+      password,
+    })
+      .then(() => {
+        navigate(PATH_NAME.LOGIN);
+        dispatch(showSnackBar({ type: 'SUCCESS', text: '회원가입 성공' }));
+      })
+      .catch(() => {
+        dispatch(
+          showSnackBar({ type: 'ERROR', text: '입력한 정보를 확인 하세요.' }),
+        );
+      });
   };
 
   return (

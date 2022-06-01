@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { duplicateEmailApi } from 'api/auth';
 
 const validateEmail = (email) => {
   const isValid =
@@ -12,6 +13,20 @@ const validateEmail = (email) => {
     text: '영문 소문자, 숫자,특수기호(_)(-)만 사용 가능합니다.',
     isValid,
   };
+};
+
+const validateEmailAsync = async (email) => {
+  return await duplicateEmailApi(email)
+    .then(() => {
+      return { text: '멋진 이메일입니다!', isValid: true };
+    })
+    .catch(() => {
+      //TODO: 서버에게 중복 체크 후, 에러 메시지 노출하기
+      return {
+        text: '중복된 이메일입니다.',
+        isValid: false,
+      };
+    });
 };
 
 const validateName = (name) => {
@@ -41,7 +56,6 @@ const validatePassword = (password) => {
 
 const validatePasswordCheck = (password, passwordConfirm) => {
   const isValid = password === passwordConfirm;
-
   if (isValid) return { text: '비밀번호가 일치합니다!', isValid };
 
   return {
@@ -57,11 +71,18 @@ const useInputValidate = (type) => {
 
   if (!types.includes(type)) throw new Error('타입이 잘못 되었습니다.');
 
-  const handleBlur = (args) => (e) => {
+  const handleBlur = (args) => async (e) => {
     switch (type) {
-      case 'email':
-        setValidation(validateEmail(e.target.value));
+      case 'email': {
+        const { text, isValid } = validateEmail(e.target.value);
+        if (!isValid) {
+          setValidation({ text, isValid });
+          return;
+        }
+        const result = await validateEmailAsync(e.target.value);
+        setValidation(result);
         break;
+      }
 
       case 'name':
         setValidation(validateName(e.target.value));
