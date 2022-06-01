@@ -8,6 +8,9 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
   dispatch(userActions.getUserGroup.request());
   try {
     const accessToken = localStorage.getItem('access-token');
+
+    if (!accessToken) return;
+
     const response = await authClient.get<UserInfo>('/customers/me', {
       headers: {
         Authorization: `Bearer ${accessToken}`,

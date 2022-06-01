@@ -32,6 +32,16 @@ export const authHandler = [
       return res(ctx.status(401), ctx.body('로그인에 실패하였습니다.'));
     }
   ),
+
+  rest.get<null, null, UserInfo>(`${AUTH_BASE_URL}/customers/me`, (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        loginId: 'hwangstar156@gmail.com',
+        name: '스밍',
+      })
+    );
+  }),
 ];
 
 // mock data

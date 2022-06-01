@@ -1,12 +1,20 @@
 import Header from 'components/common/Header';
 import Loading from 'components/common/Loading';
-import { Suspense } from 'react';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { Suspense, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { getUser } from 'redux/user/thunk';
 import Routers from 'Routers';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   return (
     <Suspense fallback={<Loading />}>
       <BrowserRouter basename='/react-shopping-cart'>
