@@ -3,9 +3,12 @@ import Fieldset from 'components/Common/Fieldset/Fieldset';
 import Input from 'components/Common/Input/Input';
 import Button from 'components/Common/Button/Button';
 import Title from 'components/Common/Title/Title';
+import { showSnackBar } from 'reducers/ui/ui.actions';
 import * as Styled from './style';
+import { useDispatch } from 'react-redux';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const handlSubmit = (e) => {
     e.preventDefault();
 
@@ -15,11 +18,13 @@ const Login = () => {
     } = e.target.elements;
 
     if (email.length === 0 || password.length === 0) {
-      alert('제대로 입력하세요.');
+      dispatch(
+        showSnackBar({ type: 'ERROR', text: '정보를 올바르게 입력하세요.' }),
+      );
       return;
     }
 
-    console.log('handlSubmit', email, password);
+    dispatch(showSnackBar({ type: 'SUCCESS', text: '로그인 성공' }));
   };
   return (
     <Styled.Wrapper>

@@ -7,8 +7,11 @@ import ValidateText from 'components/Common/ValidateText/ValidateText';
 import useInputValidate from 'hooks/useInputValidate';
 import { useRef } from 'react';
 import Form from 'components/Common/Form/Form';
+import { useDispatch } from 'react-redux';
+import { showSnackBar } from 'reducers/ui/ui.actions';
 
 const SignUp = () => {
+  const dispatch = useDispatch();
   const pwd = useRef(null);
   const [emailValidate, handleEmailBlur] = useInputValidate('email');
   const [nameValidate, handleNameBlur] = useInputValidate('name');
@@ -26,7 +29,9 @@ const SignUp = () => {
       passwordCheckValidate.isValid;
 
     if (!isAllValid) {
-      alert('제대로 입력하세요.');
+      dispatch(
+        showSnackBar({ type: 'ERROR', text: '정보를 올바르게 입력하세요.' }),
+      );
       return;
     }
 
