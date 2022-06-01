@@ -1,11 +1,22 @@
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
 import { Link, useNavigate } from 'react-router-dom';
+import { logout } from 'redux/user/action';
 import { PATH } from 'Routers';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const isLogin = useAppSelector(state => !!state.user.data);
+
+  const handleClickLogout = () => {
+    navigate(PATH.home);
+    dispatch(logout());
+    localStorage.removeItem('access-token');
+  };
 
   return (
     <StyledRoot>
@@ -16,8 +27,15 @@ const Header = () => {
         </StyledLogo>
       </Link>
       <StyledNav>
-        <button onClick={() => navigate(PATH.cart)}>장바구니</button>
-        <button>주문목록</button>
+        {isLogin ? (
+          <>
+            <button onClick={() => navigate(PATH.cart)}>장바구니</button>
+            <button>주문목록</button>
+            <button onClick={handleClickLogout}>로그아웃</button>
+          </>
+        ) : (
+          <button onClick={() => navigate(PATH.login)}>로그인</button>
+        )}
       </StyledNav>
     </StyledRoot>
   );
@@ -34,6 +52,7 @@ const StyledRoot = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 2rem;
 `;
 
 const StyledLogo = styled.div``;

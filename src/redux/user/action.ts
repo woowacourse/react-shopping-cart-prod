@@ -4,23 +4,31 @@ import { Valueof } from 'types/utilities';
 
 import { buildThunkActionGroup } from '../utils';
 
-export const UserActionType = {
+export const UserThunkActionType = {
   GET_USER: 'user/GET_USER',
   LOGIN: 'user/LOGIN',
   SIGN_UP: 'user/SIGN_UP',
 } as const;
 
-const getUserGroup = buildThunkActionGroup<UserInfo, typeof UserActionType.GET_USER>(
-  UserActionType.GET_USER
+const UserActionType = {
+  LOGOUT: 'user/LOGOUT',
+} as const;
+
+const getUserGroup = buildThunkActionGroup<UserInfo, typeof UserThunkActionType.GET_USER>(
+  UserThunkActionType.GET_USER
 );
 
-const loginGroup = buildThunkActionGroup<LoginResponse, typeof UserActionType.LOGIN>(
-  UserActionType.LOGIN
+const loginGroup = buildThunkActionGroup<LoginResponse, typeof UserThunkActionType.LOGIN>(
+  UserThunkActionType.LOGIN
 );
 
-const signupGroup = buildThunkActionGroup<null, typeof UserActionType.SIGN_UP>(
-  UserActionType.SIGN_UP
+const signupGroup = buildThunkActionGroup<null, typeof UserThunkActionType.SIGN_UP>(
+  UserThunkActionType.SIGN_UP
 );
+
+export const logout = () => ({
+  type: UserActionType.LOGOUT,
+});
 
 export const userActions = {
   getUserGroup,
@@ -28,4 +36,6 @@ export const userActions = {
   signupGroup,
 };
 
-export type UserAction = ActionsType<ActionGroupType<typeof userActions>>;
+export type UserAction =
+  | ActionsType<ActionGroupType<typeof userActions>>
+  | ReturnType<typeof logout>;

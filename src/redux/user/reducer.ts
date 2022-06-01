@@ -1,4 +1,3 @@
-import { stat } from 'fs';
 import { UserInfo } from 'types/domain';
 
 import { UserAction } from './action';
@@ -36,6 +35,8 @@ export const userReducer = (state = initialState, action: UserAction) => {
       return state;
     case 'user/SIGN_UP_FAILURE':
       return { ...state, loading: null, error: action.payload };
+    case 'user/LOGOUT':
+      return { ...state, data: null };
     default:
       return state;
   }
