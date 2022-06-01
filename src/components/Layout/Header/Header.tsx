@@ -18,7 +18,6 @@ function Header() {
           <Logo />
         </Link>
         <RightMenu>
-          <Link to={PATH.BASE}>내 정보</Link>
           <Link to={PATH.CART}>
             장바구니
             <Badge>{cart.length}</Badge>

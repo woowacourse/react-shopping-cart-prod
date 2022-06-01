@@ -24,6 +24,10 @@ const GlobalStyle = createGlobalStyle<{ theme: typeof theme }>`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  input:disabled {
+    background: ${({ theme: { colors } }) => colors.shadow};
+  }
 `;
 
 export default GlobalStyle;
