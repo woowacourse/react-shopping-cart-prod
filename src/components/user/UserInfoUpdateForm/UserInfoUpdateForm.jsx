@@ -9,6 +9,7 @@ import { Form, Input } from 'components/common';
 import { updateUserNicknameThunk } from 'store/actions/user.action';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 import { nicknameSelector } from 'store/selector';
+import { ROUTE } from 'constants/route';
 
 const nicknamePattern = /^[가-힣]{1,5}$/;
 function UserInfoUpdateForm() {
@@ -35,7 +36,7 @@ function UserInfoUpdateForm() {
     try {
       dispatch(updateUserNicknameThunk(nicknameValue));
       alert(ALERT_MESSAGES.USER_INFO_UPDATE_SUCCESS);
-      navigate('/user-info');
+      navigate(ROUTE.USER_INFO);
     } catch ({ message }) {
       alert(message);
     }

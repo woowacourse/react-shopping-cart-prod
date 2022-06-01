@@ -1,4 +1,4 @@
-import { ROUTE } from 'route';
+import { ROUTE } from 'constants/route';
 
 import Home from 'pages/Home/Home';
 import OrderList from 'pages/OrderList/OrderList';
@@ -13,21 +13,21 @@ import UserInfoUpdate from './UserInfoUpdate/UserInfoUpdate';
 import UserPasswordUpdate from './UserPasswordUpdate/UserPasswordUpdate';
 
 export const COMMON_PAGES = {
-  [ROUTE.home.path]: <Home />,
-  [ROUTE.productDetail.path]: <ProductDetail />,
+  [ROUTE.HOME]: <Home />,
+  [ROUTE.PRODUCT_DETAIL]: <ProductDetail />,
   '/*': <NotFound />,
 };
 
 export const NON_USER_PAGES = {
-  [ROUTE.register.path]: <Register />,
-  [ROUTE.login.path]: <Login />,
+  [ROUTE.REGISTER]: <Register />,
+  [ROUTE.LOGIN]: <Login />,
 };
 
 export const USER_PAGES = {
-  [ROUTE.shoppingCart.path]: <ShoppingCart />,
-  [ROUTE.orderList.path]: <OrderList />,
-  [ROUTE.userInfo.path]: <UserInfo />,
-  [ROUTE.passwordCheck.path]: <PasswordCheck />,
-  [ROUTE.userInfoUpdate.path]: <UserInfoUpdate />,
-  [ROUTE.userPasswordUpdate.path]: <UserPasswordUpdate />,
+  [ROUTE.SHOPPING_CART]: <ShoppingCart />,
+  [ROUTE.ORDER_LIST]: <OrderList />,
+  [ROUTE.USER_INFO]: <UserInfo />,
+  [ROUTE.PASSWORD_CHECK]: <PasswordCheck />,
+  [ROUTE.USER_INFO_UPDATE]: <UserInfoUpdate />,
+  [ROUTE.USER_PASSWORD_UPDATE]: <UserPasswordUpdate />,
 };

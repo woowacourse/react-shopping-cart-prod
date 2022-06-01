@@ -1,6 +1,7 @@
 import { updatePassword } from 'api/user.api';
 import { Form, Input } from 'components/common';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
+import { ROUTE } from 'constants/route';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,7 +35,7 @@ function UserPasswordUpdateForm() {
       await updatePassword(passwordValue);
 
       alert(ALERT_MESSAGES.USER_PASSWORD_UPDATE_SUCCESS);
-      navigate('/user-info');
+      navigate(ROUTE.USER_INFO);
     } catch ({ message }) {
       alert(message);
     }

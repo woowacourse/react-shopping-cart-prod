@@ -5,6 +5,7 @@ import { Form, Input } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
+import { ROUTE } from 'constants/route';
 
 const emailPattern =
   /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
@@ -78,7 +79,7 @@ function RegisterForm() {
         password: passwordValue,
       });
       alert(ALERT_MESSAGES.REGISTER_SUCCESS);
-      navigate('/login');
+      navigate(ROUTE.LOGIN);
     } catch ({ message }) {
       alert(message);
     }

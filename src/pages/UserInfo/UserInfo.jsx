@@ -7,20 +7,12 @@ import { getUser } from 'api/user.api';
 import { useNavigate } from 'react-router-dom';
 import { useModal } from 'hooks/useModal';
 import DeleteUserForm from 'components/user/DeleteUserForm/DeleteUserForm';
+import { ROUTE } from 'constants/route';
 
 function UserInfo() {
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
-
-  // const handleNavigate = (nextPath) => () => {
-  //   navigate('/password-check', {
-  //     state: {
-  //       isValid: true,
-  //       nextPath,
-  //     },
-  //   });
-  // };
 
   useEffect(() => {
     async function fetchUser() {
@@ -49,8 +41,10 @@ function UserInfo() {
           </Styled.List>
           <Styled.ButtonContainer>
             <Styled.ButtonWrapper>
-              <Button onClick={() => navigate('/user-info-update')}>회원정보 수정</Button>
-              <Button onClick={() => navigate('/user-password-update')}>
+              <Button onClick={() => navigate(ROUTE.USER_INFO_UPDATE)}>
+                회원정보 수정
+              </Button>
+              <Button onClick={() => navigate(ROUTE.USER_PASSWORD_UPDATE)}>
                 비밀번호 수정
               </Button>
             </Styled.ButtonWrapper>

@@ -1,4 +1,5 @@
 import { Form, Input } from 'components/common';
+import { ROUTE } from 'constants/route';
 import useInputValue from 'hooks/useInputValue';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -31,7 +32,7 @@ function LoginForm() {
         }),
       );
 
-      navigate('/');
+      navigate(ROUTE.HOME);
     } catch ({ message }) {
       alert(message);
     }

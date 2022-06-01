@@ -2,7 +2,7 @@ import React from 'react';
 
 import useWindowsSize from 'hooks/useWindowSize';
 
-import { ROUTE } from 'route';
+import { ROUTE } from 'constants/route';
 
 import { Icon } from 'components/common';
 import * as Styled from 'components/common/Header/Header.style';
@@ -14,17 +14,17 @@ import { logoutUser } from 'store/actions/user.action';
 import { useNavigate } from 'react-router-dom';
 
 const userHeaderLinks = [
-  { path: ROUTE.shoppingCart.path, name: '장바구니' },
-  { path: ROUTE.orderList.path, name: '주문목록' },
+  { path: ROUTE.SHOPPING_CART, name: '장바구니' },
+  { path: ROUTE.ORDER_LIST, name: '주문목록' },
   {
-    path: ROUTE.passwordCheck.path,
+    path: ROUTE.PASSWORD_CHECK,
     name: '내 정보',
-    state: { isValid: true, nextPath: ROUTE.userInfo.path },
+    state: { isValid: true, nextPath: ROUTE.USER_INFO },
   },
 ];
 const nonUserHeaderLinks = [
-  { path: ROUTE.login.path, name: '로그인' },
-  { path: ROUTE.register.path, name: '회원가입' },
+  { path: ROUTE.LOGIN, name: '로그인' },
+  { path: ROUTE.REGISTER, name: '회원가입' },
 ];
 
 function Header({ isLoggedIn }) {
@@ -39,13 +39,13 @@ function Header({ isLoggedIn }) {
   const handleLogOut = () => {
     dispatch(logoutUser());
 
-    navigate('/');
+    navigate(ROUTE.HOME);
   };
 
   return (
     <Styled.Container>
       <Styled.Inner>
-        <Styled.NavLink to={ROUTE.home.path}>
+        <Styled.NavLink to={ROUTE.HOME}>
           <Styled.Logo>
             <Icon
               iconName="Tent"
