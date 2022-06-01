@@ -1,14 +1,21 @@
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import Form from 'components/Common/Form/Form';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import Input from 'components/Common/Input/Input';
 import Button from 'components/Common/Button/Button';
 import Title from 'components/Common/Title/Title';
+
+import { loginApi } from 'api/auth';
 import { showSnackBar } from 'reducers/ui/ui.actions';
+import { setAuthenticated } from 'reducers/user/user.actions';
+import { PATH_NAME } from 'constants';
 import * as Styled from './style';
-import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handlSubmit = (e) => {
     e.preventDefault();
 
@@ -24,7 +31,18 @@ const Login = () => {
       return;
     }
 
-    dispatch(showSnackBar({ type: 'SUCCESS', text: '로그인 성공' }));
+    loginApi({
+      email,
+      password,
+    })
+      .then(() => {
+        dispatch(showSnackBar({ type: 'SUCCESS', text: '로그인 성공' }));
+        dispatch(setAuthenticated({ authenticated: true }));
+        navigate(PATH_NAME.HOME);
+      })
+      .catch(() => {
+        dispatch(showSnackBar({ type: 'ERROR', text: '로그인 실패' }));
+      });
   };
   return (
     <Styled.Wrapper>
