@@ -30,6 +30,8 @@ export const signIn = (signInInfo: SignInInfo) => async (dispatch: Dispatch<User
       data: signInInfo,
     });
 
+    localStorage.setItem('token', response.data.token);
+
     dispatch({ type: UserActionType.POST_SIGN_IN_START, payload: response.data });
   } catch (e) {
     dispatch({ type: UserActionType.POST_SIGN_IN_FAILURE, payload: e.message });

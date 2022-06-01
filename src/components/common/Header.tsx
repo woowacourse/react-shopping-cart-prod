@@ -1,10 +1,19 @@
 import styled from 'styled-components';
+import type { ThemedStyledProps } from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { flexCenter } from 'styles/mixin';
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
+import { useAppSelector } from 'hooks/useAppSelector';
+import { useState } from 'react';
 
 const Header = () => {
   const navigate = useNavigate();
+  const { loading, error, data } = useAppSelector(state => state.userReducer);
+  const [isShowHambergur, setIsShowHambergur] = useState(false);
+
+  const toggleHambergur = () => {
+    setIsShowHambergur(!isShowHambergur);
+  };
 
   return (
     <StyledRoot>
@@ -18,7 +27,18 @@ const Header = () => {
         <StyledNav>
           <button onClick={() => navigate('/cart')}>장바구니</button>
           <button>주문목록</button>
-          <button onClick={() => navigate('/signIn')}>로그인</button>
+          {data ? (
+            <button onClick={toggleHambergur}>
+              마이페이지
+              <MyPageHambergurList isShow={isShowHambergur}>
+                <Link to=''>회원정보 수정</Link>
+                <Link to=''>비밀번호 변경</Link>
+                <Link to=''>로그아웃</Link>
+              </MyPageHambergurList>
+            </button>
+          ) : (
+            <button onClick={() => navigate('/signIn')}>로그인</button>
+          )}
         </StyledNav>
       </div>
     </StyledRoot>
@@ -60,5 +80,26 @@ const StyledNav = styled.nav`
 
   & > button + button {
     margin-left: 4.4rem;
+  }
+`;
+
+type Hambergur = { isShow: boolean };
+const MyPageHambergurList = styled.div<Hambergur>`
+  width: 170px;
+  flex-direction: column;
+  position: absolute;
+  top: 80px;
+  background-color: #f5f5f5;
+  color: black;
+  display: ${props => (props.isShow ? 'flex' : 'none')};
+  flex-wrap: wrap;
+  z-index: 10000;
+
+  a {
+    ${flexCenter}
+    height: 60px;
+  }
+  a:hover {
+    background-color: #e3e3e3;
   }
 `;
