@@ -1,7 +1,7 @@
 import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
-import useSignInput from 'hooks/useSingInput';
+import useSignInput from 'hooks/useSignInput';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from 'redux/action-creators/userThunk';

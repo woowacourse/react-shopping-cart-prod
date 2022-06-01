@@ -60,6 +60,14 @@ const useSignInput = () => {
     }
   };
 
+  const handleNewPasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    setInputState(prev => ({ ...prev, password: value }));
+
+    if (/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value)) {
+      setValidState(prev => ({ ...prev, password: true }));
+    }
+  };
+
   return {
     inputState,
     validState,
@@ -67,6 +75,7 @@ const useSignInput = () => {
     handleNameInput,
     handlePasswordInput,
     handlePasswordConfirmInput,
+    handleNewPasswordInput,
   };
 };
 
