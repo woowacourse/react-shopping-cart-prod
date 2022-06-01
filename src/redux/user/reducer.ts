@@ -36,5 +36,7 @@ export const userReducer = (state = initialState, action: UserAction) => {
       return state;
     case 'user/SIGN_UP_FAILURE':
       return { ...state, loading: null, error: action.payload };
+    default:
+      return state;
   }
 };
