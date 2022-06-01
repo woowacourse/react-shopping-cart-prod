@@ -1,4 +1,5 @@
 import { setupWorker } from 'msw';
-import handlers from './handlers';
+import productHandlers from './productHandlers';
+import userHandlers from './userHandlers';
 
-export default setupWorker(...handlers);
+export default setupWorker(...productHandlers, ...userHandlers);
