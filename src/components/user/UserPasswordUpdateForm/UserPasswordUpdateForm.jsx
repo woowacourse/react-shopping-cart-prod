@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const passwordPattern =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
 
+const { USER_INFO_RULE_ERROR } = ERROR_MESSAGES;
+
 function UserPasswordUpdateForm() {
   const [passwordValue, setPasswordValue, isPasswordValid] =
     useInputValue(passwordPattern);
@@ -50,6 +52,7 @@ function UserPasswordUpdateForm() {
       value: passwordValue,
       onChange: handlePasswordInput,
       isValid: isPasswordValid,
+      errorMessage: isPasswordValid ? '' : USER_INFO_RULE_ERROR.INVALID_PASSWORD,
     },
     {
       name: 'password-confirm',
@@ -59,6 +62,10 @@ function UserPasswordUpdateForm() {
       value: passwordConfirmValue,
       onChange: handlePasswordConfirmInput,
       isValid: isPasswordConfirmValid,
+      errorMessage:
+        passwordConfirmValue === '' || passwordValue === passwordConfirmValue
+          ? ''
+          : USER_INFO_RULE_ERROR.PASSWORD_NO_MATCH,
     },
   ];
   return (

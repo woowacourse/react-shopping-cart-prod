@@ -13,6 +13,7 @@ function Input({
   isValid = true,
   buttonText,
   onButtonClick,
+  errorMessage,
 }) {
   return (
     <Styled.Label>
@@ -33,6 +34,7 @@ function Input({
           </Button>
         )}
       </Styled.InputWrapper>
+      <Styled.ErrorMessage>{errorMessage !== '' && errorMessage}</Styled.ErrorMessage>
     </Styled.Label>
   );
 }

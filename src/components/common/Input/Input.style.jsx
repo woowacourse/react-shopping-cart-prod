@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Label = styled.label`
   width: 100%;
+  height: 140px;
 
   display: flex;
   flex-direction: column;
@@ -13,6 +14,7 @@ export const Label = styled.label`
 
 export const Input = styled.input`
   width: 100%;
+  height: 60px;
 
   padding: 16px 32px;
 
@@ -21,10 +23,10 @@ export const Input = styled.input`
 
   font-size: 20px;
 
-  ${({ isValid }) =>
+  ${({ theme, isValid }) =>
     !isValid &&
     css`
-      border: red 2px solid;
+      border: ${theme.colorConfig.warning} 2px solid;
     `}
 
   &::placeholder {
@@ -42,4 +44,10 @@ export const Input = styled.input`
 export const InputWrapper = styled.div`
   display: flex;
   width: 100%;
+`;
+
+export const ErrorMessage = styled.p`
+  font-size: 16px;
+  font-weight: normal;
+  color: ${({ theme }) => theme.colorConfig.warning};
 `;

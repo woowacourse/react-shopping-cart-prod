@@ -12,6 +12,9 @@ import { nicknameSelector } from 'store/selector';
 import { ROUTE } from 'constants/route';
 
 const nicknamePattern = /^[가-힣]{1,5}$/;
+
+const { USER_INFO_RULE_ERROR } = ERROR_MESSAGES;
+
 function UserInfoUpdateForm() {
   const [nickname, dispatch] = useReduxState(nicknameSelector);
 
@@ -51,6 +54,7 @@ function UserInfoUpdateForm() {
       value: nicknameValue,
       onChange: handleNicknameInput,
       isValid: isNicknameValid,
+      errorMessage: isNicknameValid ? '' : USER_INFO_RULE_ERROR.INVALID_NICKNAME,
     },
   ];
   return (

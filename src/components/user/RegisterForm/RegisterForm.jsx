@@ -13,25 +13,32 @@ const passwordPattern =
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
 const nicknamePattern = /^[가-힣]{1,5}$/;
 
+const { USER_INFO_RULE_ERROR } = ERROR_MESSAGES;
+
 function RegisterForm() {
   const [emailValue, setEmailValue, isEmailValid] = useInputValue(emailPattern);
-
   const [passwordValue, setPasswordValue, isPasswordValid] =
     useInputValue(passwordPattern);
-
   const [passwordConfirmValue, setPasswordConfirmValue, isPasswordConfirmValid] =
     useInputValue(passwordPattern);
-
   const [nicknameValue, setNicknameValue, isNicknameValid] =
     useInputValue(nicknamePattern);
 
   const [isUniqueEmail, setIsUniqueEmail] = useState(false);
+
+  const [emailErrorMessage, setEmailErrorMessage] = useState('');
 
   const navigate = useNavigate();
 
   const handleEmailInput = ({ target: { value } }) => {
     setEmailValue(value);
     setIsUniqueEmail(false);
+
+    if (!isEmailValid) {
+      setEmailErrorMessage(USER_INFO_RULE_ERROR.INVALID_EMAIL);
+      return;
+    }
+    setEmailErrorMessage('');
   };
   const handlePasswordInput = ({ target: { value } }) => {
     setPasswordValue(value);
@@ -44,7 +51,7 @@ function RegisterForm() {
   };
   const handleEmailDuplicateCheck = async () => {
     if (emailValue.length === 0 || !isEmailValid) {
-      alert(ERROR_MESSAGES.INVALID_EMAIL);
+      setEmailErrorMessage(USER_INFO_RULE_ERROR.INVALID_EMAIL);
       return;
     }
 
@@ -54,7 +61,7 @@ function RegisterForm() {
       setIsUniqueEmail(success);
 
       if (!success) {
-        alert(ERROR_MESSAGES.DUPLICATE_EMAIL);
+        setEmailErrorMessage(USER_INFO_RULE_ERROR.DUPLICATE_EMAIL);
       }
     } catch ({ message }) {
       setIsUniqueEmail(false);
@@ -97,6 +104,7 @@ function RegisterForm() {
       buttonText: isUniqueEmail ? '확인 완료' : '중복 확인',
       isButtonDisabled: isUniqueEmail,
       onButtonClick: handleEmailDuplicateCheck,
+      errorMessage: emailErrorMessage,
     },
     {
       name: 'password',
@@ -106,6 +114,7 @@ function RegisterForm() {
       value: passwordValue,
       onChange: handlePasswordInput,
       isValid: isPasswordValid,
+      errorMessage: isPasswordValid ? '' : USER_INFO_RULE_ERROR.INVALID_PASSWORD,
     },
     {
       name: 'password-confirm',
@@ -115,6 +124,10 @@ function RegisterForm() {
       value: passwordConfirmValue,
       onChange: handlePasswordConfirmInput,
       isValid: isPasswordConfirmValid,
+      errorMessage:
+        passwordConfirmValue === '' || passwordValue === passwordConfirmValue
+          ? ''
+          : USER_INFO_RULE_ERROR.PASSWORD_NO_MATCH,
     },
     {
       name: 'nickname',
@@ -124,6 +137,7 @@ function RegisterForm() {
       value: nicknameValue,
       onChange: handleNicknameInput,
       isValid: isNicknameValid,
+      errorMessage: isNicknameValid ? '' : USER_INFO_RULE_ERROR.INVALID_NICKNAME,
     },
   ];
   return (
