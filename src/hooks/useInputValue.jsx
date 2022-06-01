@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
-const useInputValue = (pattern) => {
-  const [inputValue, setInputValue] = useState('');
+const useInputValue = (pattern, initialValue = '') => {
+  const [inputValue, setInputValue] = useState(initialValue);
 
   const isValid = useMemo(
     () => inputValue === '' || pattern?.test(inputValue),
