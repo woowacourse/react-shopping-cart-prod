@@ -1,11 +1,19 @@
+import { useEffect, useState } from 'react';
+
 import CheckBox from 'components/@shared/CheckBox';
 import Link from 'components/@shared/Link';
 import PATH from 'constants/path';
 import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
+import { axios } from 'configs/api';
+import { isLogin } from 'utils/auth';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { userActions } from 'redux/actions';
 
 function LoginPage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [checked, setChecked] = useState(false);
 
   const toggleChecked = (
@@ -16,6 +24,45 @@ function LoginPage() {
     setChecked(prevState => !prevState);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!(e.target instanceof HTMLFormElement)) return;
+
+    const formElements = e.target.elements;
+    const user = {
+      username: (formElements.namedItem('id') as HTMLInputElement).value,
+      password: (formElements.namedItem('password') as HTMLInputElement).value,
+    };
+
+    axios
+      .post(PATH.REQUEST_AUTH_TOKEN, user)
+      .then(({ data: { accessToken } }) => {
+        if (checked) {
+          localStorage.setItem('accessToken', accessToken);
+        } else {
+          sessionStorage.setItem('accessToken', accessToken);
+        }
+
+        axios
+          .get(PATH.REQUEST_CUSTOMER_ME, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          })
+          .then(({ data }) => {
+            dispatch(userActions.setUser(data));
+            navigate(PATH.BASE);
+          });
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    if (isLogin()) {
+      navigate(-1);
+    }
+  }, []);
+
   return (
     <StyledPage>
       <StyledLoginContainer>
@@ -23,14 +70,20 @@ function LoginPage() {
           <StyledTitle>로그인</StyledTitle>
           <ZzangguLogo width={200} height={180} />
         </header>
-        <StyledForm>
+        <StyledForm onSubmit={handleSubmit}>
           <label htmlFor="id">아이디</label>
-          <input id="id" type="text" placeholder="아이디를 입력해주세요" />
+          <input
+            id="id"
+            type="text"
+            placeholder="아이디를 입력해주세요"
+            required
+          />
           <label htmlFor="password">비밀번호</label>
           <input
             id="password"
             type="password"
             placeholder="비밀번호를 입력해주세요"
+            required
           />
           <StyledLoginHelper>
             <StyledKeepLogin>
