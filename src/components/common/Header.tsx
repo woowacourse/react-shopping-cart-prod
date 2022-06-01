@@ -41,7 +41,7 @@ const Header = () => {
               <Avatar name={name} onClick={toggleShowDropdown} />
               {isShowDropdown && (
                 <Dropdown>
-                  <li>회원정보수정</li>
+                  <li onClick={() => navigate('/edit')}>회원정보수정</li>
                   <li onClick={handleClickLogout}>로그아웃</li>
                 </Dropdown>
               )}

@@ -1,5 +1,6 @@
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
+import UserEdit from 'pages/UserEdit';
 import { lazy, ReactElement } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
@@ -16,6 +17,7 @@ export const PATH = {
   cart: '/cart',
   signup: '/signup',
   login: '/login',
+  editUser: '/edit',
   notFound: '/*',
 } as const;
 
@@ -39,6 +41,7 @@ const ROUTES: RoutesType[] = [
   { path: PATH.cart, element: <Cart /> },
   { path: PATH.signup, element: <Signup /> },
   { path: PATH.login, element: <Login /> },
+  { path: PATH.editUser, element: <UserEdit /> },
   { path: PATH.notFound, element: <NotFound /> },
 ];
 
