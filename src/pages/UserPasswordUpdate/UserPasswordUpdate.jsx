@@ -1,5 +1,5 @@
 import { PageTitle } from 'components/common';
-import UserPasswordUpdateForm from 'components/user/UserPasswordUpdateForm';
+import { UserPasswordUpdateForm } from 'components/user';
 import React from 'react';
 
 function UserPasswordUpdate() {
