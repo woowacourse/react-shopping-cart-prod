@@ -2,9 +2,12 @@ import { AUTH_BASE_URL, authClient } from 'apis';
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
 import { useNavigate } from 'react-router-dom';
+import { signup } from 'redux/user/thunk';
 import { UserInfo } from 'types/domain';
 
 import { PATH } from '../Routers';
@@ -16,21 +19,20 @@ const Signup = () => {
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password === passwordConfirmation) {
-      const signUpResponse = await authClient.post<UserInfo>('/customers', {
-        loginId: email,
-        name,
-        password,
-      });
+      dispatch(
+        signup({
+          loginId: email,
+          name,
+          password,
+        })
+      );
 
-      if (signUpResponse.status === 400) {
-        throw new Error('회원가입이 실패하였습니다');
-      }
-
-      alert(`${signUpResponse.data.name}님 회원가입 축하드립니다.`);
+      alert(`${name}님 회원가입 축하드립니다.`);
       navigate(PATH.home);
 
       return;
