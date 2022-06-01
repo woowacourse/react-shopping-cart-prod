@@ -8,6 +8,8 @@ import * as S from 'component/Header/style';
 
 import {PATH} from 'constant';
 
+import Empty from 'assets/empty.png';
+
 export default function Header() {
   const navigation = useNavigate();
 
@@ -21,9 +23,16 @@ export default function Header() {
       <S.HeaderNavBox>
         <S.NavText to={PATH.CART}>장바구니</S.NavText>
         <S.NavText to={PATH.ORDER}>구매목록</S.NavText>
-        <S.NavText to={PATH.LOGIN}>로그인</S.NavText>
-        <S.NavText to={PATH.SIGNUP}>회원가입</S.NavText> {/* 임시 */}
-        <S.NavText to={PATH.EDIT_USER_INFO}>회원정보수정</S.NavText> {/* 임시 */}
+        <S.Profile>
+          <S.ProfileImage src={Empty} alt="프로필 이미지" />
+          <div className="tooltip-content">
+            <S.ProfileNavContainer>
+              <S.ProfileNavText to={PATH.LOGIN}>로그아웃</S.ProfileNavText>
+              <S.ProfileNavText to={PATH.SIGNUP}>회원 정보 수정</S.ProfileNavText>
+              <S.ProfileNavText to={PATH.EDIT_USER_INFO}>회원탈퇴</S.ProfileNavText>
+            </S.ProfileNavContainer>
+          </div>
+        </S.Profile>
       </S.HeaderNavBox>
     </S.HeaderLayout>
   );
