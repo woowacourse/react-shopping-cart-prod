@@ -12,9 +12,19 @@ import {
   UserInfoPageContainer,
 } from "./styled";
 import { useState } from "react";
+import Modal from "./Modal";
 
 function UserInfoPage() {
-  const [isEditable, setIsEditable] = useState(true);
+  const [isEditable, setIsEditable] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const closeModal = () => {
+    setIsOpenModal(false);
+  };
+
+  const deleteAccount = () => {
+    /* TODO: 계정 삭제 API 요청 후 토큰 삭제 후 리디렉트 */
+  };
 
   return (
     <UserInfoPageContainer>
@@ -52,10 +62,18 @@ function UserInfoPage() {
         ) : (
           <UserInfoButtonContainer>
             <DefaultButton width="500px">수정하기</DefaultButton>
-            <DeleteAccountButton>탈퇴하기</DeleteAccountButton>
+            <DeleteAccountButton
+              type="button"
+              onClick={() => {
+                setIsOpenModal(true);
+              }}
+            >
+              탈퇴하기
+            </DeleteAccountButton>
           </UserInfoButtonContainer>
         )}
       </UserForm>
+      {isOpenModal && <Modal onClose={closeModal} onConfirm={deleteAccount} />}
     </UserInfoPageContainer>
   );
 }

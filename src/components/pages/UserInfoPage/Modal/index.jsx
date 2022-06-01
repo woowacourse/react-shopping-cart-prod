@@ -11,10 +11,10 @@ import {
   ModalWindow,
 } from "./styled";
 
-function Modal({ userName = "%ERROR%" }) {
+function Modal({ userName = "%ERROR%", onClose, onConfirm }) {
   return (
-    <ModalDimmedConatiner>
-      <ModalWindow>
+    <ModalDimmedConatiner onClick={onClose}>
+      <ModalWindow onClick={(event) => event.stopPropagation()}>
         <ModalTitle>{userName}님, 정말 탈퇴하시겠어요?</ModalTitle>
         <ModalParagraph>
           지금 탈퇴하시면 구매 내역과 모든 장바구니 목록이 삭제돼요! 앞으로 회원
@@ -28,11 +28,14 @@ function Modal({ userName = "%ERROR%" }) {
           errorMessage="비밀번호가 틀렸습니다"
         />
         <ModalButtonContainer>
-          <DefaultButton width="180px">닫기</DefaultButton>
+          <DefaultButton width="180px" onClick={onClose}>
+            닫기
+          </DefaultButton>
           <DefaultButton
             width="180px"
             bgColor={theme.color.main}
             textColor={theme.color.point}
+            onClick={onConfirm}
           >
             떠나기
           </DefaultButton>

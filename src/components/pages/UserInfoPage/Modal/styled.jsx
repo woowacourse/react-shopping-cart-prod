@@ -11,7 +11,7 @@ export const ModalDimmedConatiner = styled.div`
   justify-content: center;
   align-items: center;
 
-  background-color: ${({ theme: { color } }) => `${color.gray02}66`};
+  background-color: ${({ theme: { color } }) => `${color.gray01}66`};
 `;
 
 export const ModalWindow = styled.div`
