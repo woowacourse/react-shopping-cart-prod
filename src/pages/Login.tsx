@@ -37,15 +37,14 @@ const Login = () => {
 
   useEffect(() => {
     if (isLogin && !isLoginAuth.current) {
-      navigate(PATH.home);
       alert('잘못된 접근입니다.');
+      navigate(PATH.home);
     }
   }, [isLogin, navigate]);
 
   useEffect(() => {
     if (error) {
       openSnackbar();
-      // @TODO: 에러 없애기
     }
   }, [error, openSnackbar]);
 
