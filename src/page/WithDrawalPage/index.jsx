@@ -7,6 +7,8 @@ import CheckBox from 'component/common/CheckBox';
 
 function WithDrawal() {
   const [isChecked, setIsChecked] = useState(true);
+  const handleCheckBoxClick = () => setIsChecked((prevState) => !prevState);
+
   return (
     <S.Layout>
       <S.WithDrawalContainer>
@@ -30,11 +32,7 @@ function WithDrawal() {
             <br />
             <S.TextWithCheckBox>
               안내 사항을 모두 확인하였으며, 이에 동의합니다.
-              <CheckBox
-                onClick={() => {
-                  setIsChecked((prevState) => !prevState);
-                }}
-              />
+              <CheckBox onClick={handleCheckBoxClick} />
             </S.TextWithCheckBox>
           </S.WithDrawalText>
 

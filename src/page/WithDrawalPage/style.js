@@ -60,7 +60,7 @@ const WithDrawalInput = styled(Input)`
   width: 456px;
   height: 50px;
 
-  background-color: ${({theme}) => theme.MINT_500};
+  background-color: ${({theme}) => theme.WHITE};
   border-radius: 4px;
 `;
 
@@ -68,7 +68,7 @@ const WithDrawalButton = styled(Button)`
   width: 456px;
   height: 50px;
 
-  background-color: ${({theme}) => theme.MINT_500};
+  background-color: ${({theme}) => theme.RED_600};
   border-radius: 4px;
 
   font-size: 14px;
