@@ -53,7 +53,9 @@ function SignUpPage() {
       </FieldSet>
 
       <FlexContainer gap={20}>
-        <Button>회원가입</Button>
+        <Button type="button" status="primary">
+          회원가입
+        </Button>
         <S.NonMemberText>
           싱싱청과물, <Link to="/">비회원으로 계속하기</Link>
         </S.NonMemberText>
