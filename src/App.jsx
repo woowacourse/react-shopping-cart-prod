@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 
 import { COMMON_PAGES, NON_USER_PAGES, USER_PAGES } from 'pages';
-import { PageTemplate } from 'components/common';
+import PageTemplate from 'components/template/PageTemplate/PageTemplate';
 import useReduxState from 'hooks/useReduxState';
 import ProtectedRoute from 'components/route/ProtectedRoute';
 import { isLoggedInSelector } from 'store/selector';

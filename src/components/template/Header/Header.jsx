@@ -5,7 +5,7 @@ import useWindowsSize from 'hooks/useWindowSize';
 import { ROUTE } from 'constants/route';
 
 import { Icon } from 'components/common';
-import * as Styled from 'components/common/Header/Header.style';
+import * as Styled from 'components/template/Header/Header.style';
 
 import { deviceSizeStandard } from 'styles/Theme';
 
