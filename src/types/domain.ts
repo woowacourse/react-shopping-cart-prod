@@ -26,3 +26,8 @@ export interface SignInInfo {
   email: string;
   password: string;
 }
+
+export interface EditPasswordInfo {
+  password: string;
+  newPassword: string;
+}

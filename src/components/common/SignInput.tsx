@@ -1,13 +1,33 @@
 import styled from 'styled-components';
+import { forwardRef, ReactNode, ChangeEvent } from 'react';
 
-const SignInput = ({ children, type, onChange }) => {
+interface InputProps {
+  children: ReactNode;
+  placeholder?: string;
+  type: string;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  disable?: boolean;
+}
+
+const SignInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const { children, placeholder = '', type, onChange, disable = false } = props;
+
   return (
     <StyledLabel>
       {children}
-      <StyledInput type={type} onChange={onChange} required />
+      <StyledInput
+        placeholder={placeholder}
+        type={type}
+        onChange={onChange}
+        disabled={disable}
+        ref={ref}
+        required
+      />
     </StyledLabel>
   );
-};
+});
+
+SignInput.displayName = 'signInput';
 
 const StyledLabel = styled.label`
   display: flex;

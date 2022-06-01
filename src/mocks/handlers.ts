@@ -80,12 +80,21 @@ export const handlers = [
     return res(ctx.status(200), ctx.json({ email: signUpInfo.email, name: signUpInfo.name }));
   }),
 
-  rest.post<SignInInfo>(`${LOCAL_BASE_URL}/users`, (req, res, ctx) => {
+  rest.post<SignInInfo>(`${LOCAL_BASE_URL}/login`, (req, res, ctx) => {
     const signInInfo: SignInInfo = req.body;
 
     const userInfo: UserInfo = mockUserList.find(
       user => user.email === signInInfo.email && user.password === signInInfo.password
     );
+
+    if (!userInfo) {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          errorMessage: '에러임',
+        })
+      );
+    }
 
     return res(
       ctx.status(200),
