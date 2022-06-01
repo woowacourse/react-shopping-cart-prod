@@ -53,5 +53,3 @@ const Routers = () => {
 };
 
 export default Routers;
-
-const state = {};
