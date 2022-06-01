@@ -7,6 +7,7 @@ const COLORS = {
   gray: '#cccccc',
   gray_002: '#d8d8d8',
   gray_003: '#ececec',
+  gray_004: '#F1F1F1',
   red: '#C80000',
   green: '#009721',
 };

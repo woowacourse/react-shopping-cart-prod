@@ -12,6 +12,7 @@ interface InputProps {
   type?: string;
   isCorrect?: boolean;
   setIsCorrect?: Function;
+  isDisabled?: boolean;
 }
 
 enum LabelKind {
@@ -29,6 +30,7 @@ const Input = ({
   type,
   isCorrect,
   setIsCorrect,
+  isDisabled,
 }: InputProps) => {
   const [message, setMessage] = useState('');
   const [isFocus, setIsFocus] = useState(false);
@@ -50,7 +52,11 @@ const Input = ({
     <Styled.Container>
       <Styled.Label htmlFor={label}>{label}</Styled.Label>
 
-      <Styled.InputContainer isFocus={validator && isFocus} isCorrect={isCorrect}>
+      <Styled.InputContainer
+        isFocus={validator && isFocus}
+        isCorrect={isCorrect}
+        disabled={isDisabled}
+      >
         {icon}
         <Styled.Input
           id={label}
@@ -60,6 +66,7 @@ const Input = ({
           onChange={e => setInputValue(e.target.value)}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
+          disabled={isDisabled}
         />
       </Styled.InputContainer>
 

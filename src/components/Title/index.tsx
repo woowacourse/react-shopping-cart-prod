@@ -1,7 +1,7 @@
 import Styled from './index.style';
 
 interface TitleProps {
-  subTitle: string;
+  subTitle?: string;
   mainTitle: string;
 }
 
