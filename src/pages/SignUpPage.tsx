@@ -56,7 +56,7 @@ const SignUpPage = () => {
         비밀번호 확인
       </SignInput>
 
-      <StyledLoginButton>확인</StyledLoginButton>
+      <StyledSignUpButton>확인</StyledSignUpButton>
     </StyledRoot>
   );
 };
@@ -79,7 +79,7 @@ const StyledTitle = styled.h1`
   text-align: center;
 `;
 
-const StyledLoginButton = styled.button`
+const StyledSignUpButton = styled.button`
   width: 80%;
   height: 65px;
   background-color: ${theme.colors.primary};
@@ -87,16 +87,6 @@ const StyledLoginButton = styled.button`
   font-weight: bold;
   color: white;
   border-radius: 6px;
-`;
-
-const StyledFooter = styled.div`
-  display: flex;
-  width: 80%;
-  justify-content: flex-end;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.5px;
 `;
 
 export default SignUpPage;

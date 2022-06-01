@@ -1,23 +1,47 @@
-import { Link } from 'react-router-dom';
+import SignInput from 'components/common/SignInput';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
+import useSignInput from 'hooks/useSingInput';
+import { FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { signIn } from 'redux/action-creators/userThunk';
+import { UserAction } from 'redux/actions/user';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 
 const SignInPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch<UserAction>();
+  const { loading, error, data } = useAppSelector(state => state.userReducer);
+
+  const { inputState, validState, handleEmailInput, handlePasswordInput } = useSignInput();
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const inputInfo = {
+      email: inputState.email,
+      password: inputState.password,
+    };
+
+    if ([validState.email, validState.password].every(valid => valid)) {
+      dispatch(signIn(inputInfo));
+      navigate('/main/1');
+    }
+  };
+
   return (
-    <StyledRoot>
+    <StyledRoot onSubmit={handleSubmit}>
       <StyledTitle>로그인</StyledTitle>
-      <StyledLabel>
+      <SignInput type={'email'} onChange={handleEmailInput}>
         이메일
-        <StyledInput />
-      </StyledLabel>
-
-      <StyledLabel>
+      </SignInput>
+      <SignInput type={'password'} onChange={handlePasswordInput}>
         비밀번호
-        <StyledInput />
-      </StyledLabel>
+      </SignInput>
 
-      <StyledLoginButton>로그인</StyledLoginButton>
+      <StyledSigninButton>로그인</StyledSigninButton>
 
       <StyledFooter>
         <Link to='/signUp'>회원가입</Link>
@@ -26,7 +50,7 @@ const SignInPage = () => {
   );
 };
 
-const StyledRoot = styled.div`
+const StyledRoot = styled.form`
   ${flexCenter}
   display: flex;
   flex-direction: column;
@@ -44,21 +68,7 @@ const StyledTitle = styled.h1`
   text-align: center;
 `;
 
-const StyledLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-
-  letter-spacing: 0.5px;
-
-  gap: 10px;
-`;
-
-const StyledLoginButton = styled.button`
+const StyledSigninButton = styled.button`
   width: 80%;
   height: 65px;
   background-color: ${theme.colors.primary};
@@ -66,13 +76,6 @@ const StyledLoginButton = styled.button`
   font-weight: bold;
   color: white;
   border-radius: 6px;
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-  height: 65px;
-  font-size: 20px;
-  padding-left: 10px;
 `;
 
 const StyledFooter = styled.div`
