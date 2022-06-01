@@ -1,6 +1,6 @@
 import React from 'react';
 import {useNavigate} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import Button from 'component/common/Button';
 import {ReactComponent as LogoIcon} from 'assets/logoIcon.svg';
@@ -11,13 +11,21 @@ import {PATH} from 'constant';
 
 import baedale from 'assets/baedale.png';
 import baedaleHover from 'assets/baedale_hover.png';
+import {AUTH} from 'store/modules/auth';
 
 export default function Header() {
+  const dispatch = useDispatch();
+
   const isLogined = useSelector((state) => state.authReducer.isLogined);
 
   const navigation = useNavigate();
 
   const handleLogoClick = () => navigation(PATH.HOME);
+
+  const handleClickLogout = () => {
+    localStorage.removeItem('accessToken');
+    dispatch({type: AUTH.LOGOUT});
+  };
 
   return (
     <S.HeaderLayout>
@@ -33,7 +41,9 @@ export default function Header() {
             <S.ProfileImage className="baedale" src={baedale} alt="프로필 이미지" />
             <div className="tooltip-content">
               <S.ProfileNavContainer>
-                <S.ProfileNavText to={PATH.HOME}>로그아웃</S.ProfileNavText>
+                <S.ProfileNavText to={PATH.HOME} onClick={handleClickLogout}>
+                  로그아웃
+                </S.ProfileNavText>
                 <S.ProfileNavText to={PATH.EDIT_USER_INFO}>회원 정보 수정</S.ProfileNavText>
                 <S.ProfileNavText to={PATH.WITHDRAWAL}>회원탈퇴</S.ProfileNavText>
               </S.ProfileNavContainer>
