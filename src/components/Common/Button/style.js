@@ -30,6 +30,9 @@ export const buttonColor = {
   secondary: css`
     background-color: ${(props) => props.theme.COLOR.GREY_500};
   `,
+  tertiary: css`
+    background-color: ${(props) => props.theme.COLOR.PRIMARY_RED};
+  `,
 };
 
 export const Button = styled.button`
