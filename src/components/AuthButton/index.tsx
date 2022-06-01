@@ -4,11 +4,12 @@ interface AuthButtonProps {
   actionType: string;
   action: Function;
   isDisabled?: boolean;
+  color?: string;
 }
 
-const AuthButton = ({ actionType, action, isDisabled }: AuthButtonProps) => {
+const AuthButton = ({ actionType, action, isDisabled, color }: AuthButtonProps) => {
   return (
-    <Styled.Button disabled={isDisabled} onClick={action}>
+    <Styled.Button disabled={isDisabled} onClick={action} color={color}>
       {actionType}
     </Styled.Button>
   );

@@ -9,6 +9,7 @@ import AuthButton from 'components/AuthButton';
 import { useState } from 'react';
 import { validateNickname } from 'utils/validator';
 import PasswordEditModal from './PasswordEditModal';
+import AccountDeleteModal from './AccountDeleteModal';
 
 const AccountPage = () => {
   const [email, setEmail] = useState('');
@@ -17,6 +18,7 @@ const AccountPage = () => {
   const [isNicknameCorrect, setIsNicknameCorrect] = useState(false);
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [isAccountDeleteModalOpen, setIsAccountDeleteModalOpen] = useState(false);
 
   return (
     <Styled.Container>
@@ -53,7 +55,7 @@ const AccountPage = () => {
               Change password
             </Styled.ChangePasswordButton>
 
-            <Styled.DeleteAccountButton onClick={() => {}}>
+            <Styled.DeleteAccountButton onClick={() => setIsAccountDeleteModalOpen(true)}>
               Delete your account
             </Styled.DeleteAccountButton>
           </Styled.ButtonContainer>
@@ -62,6 +64,9 @@ const AccountPage = () => {
 
       {isPasswordModalOpen && (
         <PasswordEditModal handleModal={() => setIsPasswordModalOpen(false)} />
+      )}
+      {isAccountDeleteModalOpen && (
+        <AccountDeleteModal handleModal={() => setIsAccountDeleteModalOpen(false)} />
       )}
     </Styled.Container>
   );
