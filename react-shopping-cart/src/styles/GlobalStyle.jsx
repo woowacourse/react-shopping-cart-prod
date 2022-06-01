@@ -21,7 +21,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button {
-  	background-color: #ffffff;
+  	background-color: transparent;
+    border:none;
+    cursor:pointer;
   }
   
   ol, ul {
