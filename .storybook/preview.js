@@ -22,6 +22,7 @@ addDecorator((story) => (
       <StyleTheme>
         <GlobalStyle />
         {story()}
+        <div id="snackbar-portal" />
       </StyleTheme>
     </MemoryRouter>
   </Provider>

@@ -1,6 +1,7 @@
 import routes from 'Routes';
 import GlobalStyle from 'style/globalStyle';
 import StyleTheme from 'style/theme';
+import SnackBar from 'components/Common/SnackBar/SnackBar';
 import { useRoutes } from 'react-router-dom';
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
     <StyleTheme>
       <GlobalStyle />
       {element}
+      <SnackBar />
     </StyleTheme>
   );
 }
