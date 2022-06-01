@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 
 import SnackBar from './components/@shared/SnackBar';
-import Header from './components/Header';
+import NavBar from './components/NavBar';
 
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
@@ -17,12 +17,13 @@ function App() {
 
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <Header />
+      <NavBar />
       <Routes>
         <Route path={routes.home} element={<ProductList />} />
         <Route path={routes.productDetail()} element={<ProductDetail />} />
         <Route path={routes.cart} element={<Cart />} />
         <Route path={routes.orderList} element={<OrderList />} />
+        <Route path={routes.login} element={<Login />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       {isShowSnackBar && <SnackBar key={Date.now()} message={message} />}

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { alignCenter, flexCenter, spaceBetween } from '../../styles/mixin';
 
-const HeaderContainer = styled.div`
+const NavBarContainer = styled.div`
   ${alignCenter};
   justify-content: space-around;
   width: 100%;
@@ -12,7 +12,7 @@ const HeaderContainer = styled.div`
   margin-bottom: 60px;
 `;
 
-const HeaderTitle = styled(Link)`
+const NavBarTitle = styled(Link)`
   ${flexCenter};
   width: 300px;
   height: 40px;
@@ -33,7 +33,7 @@ const HeaderTitle = styled(Link)`
   }
 `;
 
-const HeaderMenu = styled.div`
+const NavBarMenu = styled.div`
   ${spaceBetween};
   width: 160px;
   font-weight: 500;
@@ -46,4 +46,4 @@ const HeaderMenu = styled.div`
   }
 `;
 
-export { HeaderContainer, HeaderTitle, HeaderMenu };
+export { NavBarContainer, NavBarTitle, NavBarMenu };
