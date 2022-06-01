@@ -9,11 +9,13 @@ import 'fonts.css';
 import selectedItemReducer from 'store/modules/selectedItem';
 import productListReducer from 'store/modules/productList';
 import cartReducer from 'store/modules/cart';
+import authReducer from 'store/modules/auth';
 
 export const rootReducer = combineReducers({
   productListReducer,
   cartReducer,
   selectedItemReducer,
+  authReducer,
 });
 
 export const store = createStore(rootReducer);
