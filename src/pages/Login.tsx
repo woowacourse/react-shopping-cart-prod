@@ -1,8 +1,12 @@
 import { authClient } from 'apis';
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { login } from 'redux/user/thunk';
 import { PATH } from 'Routers';
 import styled from 'styled-components';
 import type { LoginResponse } from 'types/domain';
@@ -11,24 +15,26 @@ const Login = () => {
   const [email, onChangeEmail] = useInput();
   const [password, onChangePassword] = useInput();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const name = useAppSelector(state => state.user.data?.name);
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const signInResponse = await authClient.post<LoginResponse>('/login', {
-      loginId: email,
-      password,
-    });
-
-    if (signInResponse.status === 401) {
-      throw new Error('로그인에 실패하였습니다');
-    }
-    const { accessToken, name } = signInResponse.data;
-
-    localStorage.setItem('access-token', accessToken);
-    alert(`${name}님 로그인 되었습니다.`);
-    navigate(PATH.home);
+    dispatch(
+      login({
+        loginId: email,
+        password,
+      })
+    );
   };
+
+  useEffect(() => {
+    if (name) {
+      alert(`${name}님 로그인 되었습니다.`);
+      navigate(PATH.home);
+    }
+  }, [name, navigate]);
 
   return (
     <AuthPage

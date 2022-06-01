@@ -1,6 +1,6 @@
 import { authClient } from 'apis';
 import type { Dispatch } from 'redux';
-import { LoginResponse, UserInfo, UserInfoWithPassword } from 'types/domain';
+import { LoginRequest, LoginResponse, UserInfo, UserInfoWithPassword } from 'types/domain';
 
 import { UserAction, userActions } from './action';
 
@@ -22,14 +22,17 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
   }
 };
 
-export const login = (userInfo: UserInfoWithPassword) => async (dispatch: Dispatch<UserAction>) => {
+export const login = (userInfo: LoginRequest) => async (dispatch: Dispatch<UserAction>) => {
   dispatch(userActions.loginGroup.request());
   try {
-    const response = await authClient.post<LoginResponse | string>('/customers/me', userInfo);
+    const response = await authClient.post<LoginResponse | string>('/login', userInfo);
 
     if (typeof response.data === 'string') {
       throw new Error(response.data);
     }
+    const { accessToken } = response.data;
+
+    localStorage.setItem('access-token', accessToken);
     dispatch(userActions.loginGroup.success(response.data));
   } catch (e: unknown) {
     if (e instanceof Error) {
@@ -42,7 +45,7 @@ export const signup =
   (userInfo: UserInfoWithPassword) => async (dispatch: Dispatch<UserAction>) => {
     dispatch(userActions.signupGroup.request());
     try {
-      const response = await authClient.post<UserInfo | string>('/customers/me', userInfo);
+      const response = await authClient.post<UserInfo | string>('/customers', userInfo);
 
       if (typeof response.data === 'string') {
         throw new Error(response.data);
