@@ -3,12 +3,18 @@ import styled from 'styled-components';
 type Props = {
   id: string;
   checked: boolean;
+  marginBottom?: string;
   onChange: (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
   ) => void;
 };
 
-function CheckBox({ id, checked = false, onChange }: Props) {
+function CheckBox({
+  id,
+  checked = false,
+  marginBottom = '95px',
+  onChange,
+}: Props) {
   return (
     <>
       <StyledInput
@@ -17,7 +23,7 @@ function CheckBox({ id, checked = false, onChange }: Props) {
         checked={checked}
         onChange={onChange}
       />
-      <StyledLabel htmlFor={id} onClick={onChange}>
+      <StyledLabel htmlFor={id} onClick={onChange} marginBottom={marginBottom}>
         <div />
       </StyledLabel>
     </>
@@ -32,13 +38,14 @@ const StyledInput = styled.input`
   }
 `;
 
-const StyledLabel = styled.label`
+const StyledLabel = styled.label<{ marginBottom?: Props['marginBottom'] }>`
   display: inline-block;
   box-sizing: border-box;
 
   width: 15px;
   height: 15px;
-  margin-bottom: 95px;
+  margin-bottom: ${({ marginBottom }) => marginBottom};
+
   padding: 1px;
   border: 1px solid ${({ theme: { colors } }) => colors.redPink};
   border-radius: 3px;

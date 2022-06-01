@@ -28,7 +28,7 @@ function Header() {
       </StyledHeader>
       <StyledSubHeader>
         <RightMenu gap="30px">
-          <Link to={PATH.BASE}>로그인</Link>
+          <Link to={PATH.LOGIN}>로그인</Link>
           <Link to={PATH.BASE}>회원가입</Link>
         </RightMenu>
       </StyledSubHeader>

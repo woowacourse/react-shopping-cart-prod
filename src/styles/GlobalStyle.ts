@@ -18,6 +18,12 @@ const GlobalStyle = createGlobalStyle<{ theme: typeof theme }>`
     cursor: pointer;
     padding: 0;
   }
+
+  input, button {
+    font-family: 'Gowun Dodum', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 `;
 
 export default GlobalStyle;
