@@ -1,11 +1,7 @@
 import { BASE_SERVER_URL, SERVER_PATH } from "constants";
-import {
-  loginBaseServer,
-  deleteUserBaseServer,
-  updateUserBaseServer,
-} from "util/fetch";
+import { loginBaseServer, deleteUserBaseServer } from "util/fetch";
 
-const USER_ACTION = {
+export const USER_ACTION = {
   LOGIN: "user/LOGIN",
   LOGIN_SUCCESS: "user/LOGIN_SUCCESS",
   LOGIN_ERROR: "user/LOGIN_ERROR",
@@ -17,6 +13,8 @@ const USER_ACTION = {
   UPDATE_USER_INFO: "user/UPDATE_USER_INFO",
   UPDATE_USER_INFO_SUCCESS: "user/UPDATE_USER_INFO_SUCCESS",
   UPDATE_USER_INFO_ERROR: "user/UPDATE_USER_INFO_ERROR",
+
+  CLEAN_ERROR: "user/CLEAN_ERROR",
 };
 
 export const login = (email, password) => async (dispatch) => {
@@ -76,31 +74,6 @@ export const deleteUser = (customerId) => async (dispatch) => {
   }
 };
 
-export const updateUser = (customerId, nickname) => async (dispatch) => {
-  dispatch({ type: USER_ACTION.UPDATE_USER_INFO });
-  try {
-    const response = await updateUserBaseServer({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${customerId}`,
-      body: { nickname },
-    });
-
-    const data = await response.json();
-    if (data.message) {
-      throw new Error(data.message);
-    }
-
-    dispatch({
-      type: USER_ACTION.UPDATE_USER_INFO_SUCCESS,
-      nickname: data.username,
-    });
-  } catch (error) {
-    dispatch({
-      type: USER_ACTION.UPDATE_USER_INFO_ERROR,
-      errorMessage: error.message,
-    });
-  }
-};
-
 const initialState = {
   isLoading: false,
   data: {
@@ -123,11 +96,7 @@ const reducer = (state = initialState, action) => {
         errorMessage: "",
       };
     case USER_ACTION.DELETE_ACCOUNT_SUCCESS:
-      return {
-        isLoading: false,
-        data: initialState,
-        errorMessage: "",
-      };
+      return initialState;
     case USER_ACTION.UPDATE_USER_INFO_SUCCESS:
       return {
         isLoading: false,
@@ -149,6 +118,12 @@ const reducer = (state = initialState, action) => {
         isLoading: false,
         data: state.data,
         errorMessage: action.errorMessage,
+      };
+    case USER_ACTION.CLEAN_ERROR:
+      return {
+        isLoading: false,
+        data: state.data,
+        errorMessage: "",
       };
     case USER_ACTION.LOGIN_ERROR:
     default:

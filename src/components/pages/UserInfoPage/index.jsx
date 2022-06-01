@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import { theme } from "style";
 
-import { ROUTES, RANGE } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, ROUTES, RANGE } from "constants";
 
 import { useStore } from "hooks/useStore";
 import { checkNickName } from "validator";
-import { updateUser } from "reducers/user";
+import { deleteUser, USER_ACTION } from "reducers/user";
+import { updateUserBaseServer } from "util/fetch";
 
 import DefaultButton from "components/common/Button/DefaultButton";
 import PageHeader from "components/common/PageHeader";
@@ -21,7 +22,7 @@ import {
   UserInfoLabel,
   UserInfoPageContainer,
 } from "./styled";
-import Modal from "./Modal";
+import DeleteAccountModal from "./DeleteAccountModal";
 
 function UserInfoPage() {
   const {
@@ -38,10 +39,13 @@ function UserInfoPage() {
 
   const closeModal = () => {
     setIsOpenModal(false);
+    dispatch({ type: USER_ACTION.CLEAN_ERROR });
+    setErrorMessage("");
+    setIsEditable(false);
   };
 
   const deleteAccount = () => {
-    /* TODO: 계정 삭제 API 요청 후 토큰 삭제 후 리디렉트 */
+    dispatch(deleteUser(user.id));
   };
 
   const handleNicknameChange = ({ target: { value } }) => {
@@ -54,23 +58,49 @@ function UserInfoPage() {
     setNickname(value);
   };
 
+  const requestUpdateUser = async () => {
+    dispatch({ type: USER_ACTION.UPDATE_USER_INFO });
+    try {
+      const response = await updateUserBaseServer({
+        url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${user.id}`,
+        body: { nickname },
+      });
+
+      const data = await response.json();
+
+      if (data.message) {
+        setErrorMessage(data.message);
+        dispatch({
+          type: USER_ACTION.UPDATE_USER_INFO_ERROR,
+          errorMessage: data.message,
+        });
+        return;
+      }
+      dispatch({
+        type: USER_ACTION.UPDATE_USER_INFO_SUCCESS,
+        nickname: data.username,
+      });
+      setIsEditable(false);
+    } catch (error) {
+      dispatch({
+        type: USER_ACTION.UPDATE_USER_INFO_ERROR,
+        errorMessage: error.message,
+      });
+      alert("문제가 발생했습니다. 다시 접속해주세요");
+    }
+  };
+
   const handleCancleEdit = () => {
     setNickname(user.nickname);
+    dispatch({ type: USER_ACTION.CLEAN_ERROR });
+    setErrorMessage("");
     setIsEditable(false);
   };
 
   const changeNickname = (e) => {
     e.preventDefault();
-    dispatch(updateUser(user.id, nickname));
-    setIsEditable(false);
+    requestUpdateUser();
   };
-
-  useEffect(() => {
-    if (serverError) {
-      setIsEditable(true);
-      setErrorMessage(serverError);
-    }
-  }, [serverError]);
 
   useEffect(() => {
     setNickname(user.nickname);
@@ -80,7 +110,7 @@ function UserInfoPage() {
     if (!user.accessToken) {
       navigator(ROUTES.ROOT);
     }
-  }, []);
+  }, [user.accessToken]);
 
   return (
     <UserInfoPageContainer>
@@ -148,7 +178,14 @@ function UserInfoPage() {
           </UserInfoButtonContainer>
         )}
       </UserForm>
-      {isOpenModal && <Modal onClose={closeModal} onConfirm={deleteAccount} />}
+      {isOpenModal && (
+        <DeleteAccountModal
+          onClose={closeModal}
+          onConfirm={deleteAccount}
+          errorMessage={serverError}
+          userName={user.nickname}
+        />
+      )}
     </UserInfoPageContainer>
   );
 }
