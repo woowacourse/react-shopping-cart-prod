@@ -49,7 +49,9 @@ function RegisterPage() {
     return Object.values(errorMessage).some((error) => error);
   };
 
-  const registerUserInfo = () => {
+  const registerUserInfo = (e) => {
+    e.preventDefault();
+
     if (isErrorExist())
       alert("유효하지 않은 입력이 있습니다. 수정하고 가입해주세요");
     /* TODO: API 요청 후 성공하면 로그인페이지로 리디렉트 */
@@ -126,6 +128,7 @@ function RegisterPage() {
             가입하기
           </DefaultButton>
           <DefaultButton
+            type="button"
             width="500px"
             bgColor={theme.color.main}
             textColor={theme.color.point}
