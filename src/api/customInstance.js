@@ -6,6 +6,11 @@ const apiInstance = axios.create({
   baseURL: API_URL,
 });
 
+const token = window.sessionStorage.getItem('token');
+if (token !== undefined) {
+  apiInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 const handleAPIError = (error) => {
   const { status } = error.response;
   if (status >= 500) {

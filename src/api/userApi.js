@@ -21,6 +21,9 @@ export const login = async (loginData) => {
   const response = await apiInstance.post(API_ENDPOINT.LOGIN, loginData);
   const { nickname, token } = response.data;
 
+  window.sessionStorage.setItem('nickname', nickname);
+  window.sessionStorage.setItem('token', token);
+
   apiInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   return nickname;
 };

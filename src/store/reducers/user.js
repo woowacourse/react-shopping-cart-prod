@@ -1,6 +1,8 @@
+const nickname = window.sessionStorage.getItem('nickname');
+
 const initialState = {
-  nickname: null,
-  isLoggedIn: false,
+  nickname: nickname || null,
+  isLoggedIn: !!nickname,
   isLoading: false,
 };
 
