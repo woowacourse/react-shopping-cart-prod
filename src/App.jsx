@@ -6,6 +6,7 @@ import Cart from "@/pages/cart/components/cart/Cart";
 import Layout from "@/components/layout/Layout";
 import NotFound from "@/pages/not-found/NotFound";
 import Signin from "@/pages/sign-in/Signin";
+import Signup from "@/pages/sign-up/Signup";
 
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/reset";
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<ProductList />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Signin />} />
+          <Route path="/register" element={<Signup />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
