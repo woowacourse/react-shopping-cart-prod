@@ -20,7 +20,7 @@ const Signup = () => {
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password === passwordConfirmation) {
-      const signUpResponse = await authClient.post<Omit<UserInfo, 'password'>>('/customers', {
+      const signUpResponse = await authClient.post<UserInfo>('/customers', {
         loginId: email,
         name,
         password,

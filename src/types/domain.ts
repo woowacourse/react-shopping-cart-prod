@@ -14,6 +14,9 @@ export interface CartItem {
 export interface UserInfo {
   loginId: string;
   name: string;
+}
+
+export interface UserInfoWithPassword extends UserInfo {
   password: string;
 }
 
