@@ -1,3 +1,4 @@
+import { ActionGroupType, ActionsType } from 'redux/types';
 import { buildThunkActionGroup } from 'redux/utils';
 import { Item } from 'types/domain';
 import { Valueof } from 'types/utilities';
@@ -15,11 +16,4 @@ export const pageItemListActions = {
   getPageItemListActionGroup,
 };
 
-type StatusType = 'success' | 'failure' | 'request';
-type ActionGroupType = Valueof<typeof pageItemListActions>;
-type AllActionType = ReturnType<ActionGroupType[StatusType]>['type'];
-
-type ActionType = (arg?: any) => { type: AllActionType; payload?: any };
-type UnionAction<T extends Record<StatusType, ActionType>> = ReturnType<T[StatusType]>;
-
-export type PageItemListAction = UnionAction<typeof getPageItemListActionGroup>;
+export type PageItemListAction = ActionsType<ActionGroupType<typeof pageItemListActions>>;

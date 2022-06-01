@@ -1,3 +1,4 @@
+import { ActionGroupType, ActionsType } from 'redux/types';
 import { buildThunkActionGroup } from 'redux/utils';
 import { CartItem } from 'types/domain';
 import { Valueof } from 'types/utilities';
@@ -54,21 +55,4 @@ export const cartListActions = {
   deleteAllCartItemActionGroup,
 };
 
-// @TODO: ReturnType에 Generic이 있으면, 타입이 정의되지 않는다. 해결법 찾기
-// type StatusType = keyof ReturnType<typeof buildThunkActionGroup>;
-
-type StatusType = 'success' | 'failure' | 'request';
-type ActionGroupType = Valueof<typeof cartListActions>;
-type AllActionType = ReturnType<ActionGroupType[StatusType]>['type'];
-
-type ActionType = (arg?: any) => { type: AllActionType; payload?: any };
-type UnionAction<T extends Record<StatusType, ActionType>> = ReturnType<T[StatusType]>;
-
-export type CartListAction =
-  | UnionAction<typeof getCartListActionGroup>
-  | UnionAction<typeof putCartItemActionGroup>
-  | UnionAction<typeof postCartItemActionGroup>
-  | UnionAction<typeof patchCartSelectedActionGroup>
-  | UnionAction<typeof patchAllCartSelectedActionGroup>
-  | UnionAction<typeof deleteCartItemActionGroup>
-  | UnionAction<typeof deleteAllCartItemActionGroup>;
+export type CartListAction = ActionsType<ActionGroupType<typeof cartListActions>>;
