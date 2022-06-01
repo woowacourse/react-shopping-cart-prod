@@ -10,6 +10,7 @@ const Styled = {
     border-radius: 16px;
     width: ${({ width }) => width};
     height: ${({ height }) => height};
+    background-color: ${({ theme }) => theme.colors.white};
   `,
 };
 
