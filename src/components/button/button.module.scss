@@ -6,11 +6,11 @@
   display: inline-block;
   font-weight: 400;
   font-size: 16px;
-  line-height: 21px;
+  // line-height: 21px;
   text-align: center;
   padding: 12px 22px;
+  letter-spacing: 0.5px;
 
-  border:  1px solid $gray800;
   background-color: white;
   color: #333333;
 }
@@ -24,3 +24,15 @@
   display: block;
   width: 100%;
 }
+
+.sm {
+  padding: 6px 0;
+}
+
+.md {}
+
+.lg {}
+
+.xl {}
+
+.xxl {}

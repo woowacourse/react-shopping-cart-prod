@@ -8,6 +8,10 @@ export default {
       options: ["default", "primary"],
       control: { type: "radio" },
     },
+    size: {
+      options: ["default", "sm"],
+      control: { type: "radio" },
+    },
     block: {
       control: { type: "boolean" },
     },
