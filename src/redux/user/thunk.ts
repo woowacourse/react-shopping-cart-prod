@@ -61,3 +61,21 @@ export const signup =
       }
     }
   };
+
+export const editUserInfo =
+  (userInfo: UserInfoWithPassword) => async (dispatch: Dispatch<UserAction>) => {
+    dispatch(userActions.editGroup.request());
+    try {
+      const response = await authClient.put<UserInfo | string>('/customers/me', userInfo);
+
+      if (typeof response.data === 'string') {
+        throw new Error(response.data);
+      }
+
+      dispatch(userActions.editGroup.success());
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch(userActions.editGroup.failure(e));
+      }
+    }
+  };

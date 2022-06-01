@@ -8,6 +8,7 @@ export const UserThunkActionType = {
   GET_USER: 'user/GET_USER',
   LOGIN: 'user/LOGIN',
   SIGN_UP: 'user/SIGN_UP',
+  EDIT: 'user/EDIT',
 } as const;
 
 const UserActionType = {
@@ -26,6 +27,10 @@ const signupGroup = buildThunkActionGroup<null, typeof UserThunkActionType.SIGN_
   UserThunkActionType.SIGN_UP
 );
 
+const editGroup = buildThunkActionGroup<UserInfo, typeof UserThunkActionType.EDIT>(
+  UserThunkActionType.EDIT
+);
+
 export const logout = () => ({
   type: UserActionType.LOGOUT,
 });
@@ -34,6 +39,7 @@ export const userActions = {
   getUserGroup,
   loginGroup,
   signupGroup,
+  editGroup,
 };
 
 export type UserAction =
