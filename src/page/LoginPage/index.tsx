@@ -9,16 +9,16 @@ import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
 
 const LoginPage = () => {
-  const [isFullFilled, setIsFullFilled] = useState(false);
+  const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
     if (email.length >= 3 && password.length >= 10) {
-      setIsFullFilled(true);
+      setIsFulfilled(true);
       return;
     }
-    setIsFullFilled(false);
+    setIsFulfilled(false);
   }, [email, password]);
 
   return (
@@ -40,7 +40,7 @@ const LoginPage = () => {
             inputValue={password}
             setInputValue={setPassword}
           />
-          <AuthButton actionType="Login" action={() => {}} isDisabled={!isFullFilled} />
+          <AuthButton actionType="Login" action={() => {}} isDisabled={!isFulfilled} />
           <GuideText guide="Don’t have an account?" destination="Sign up" path="/signup" />
         </div>
       </Container>
