@@ -11,7 +11,7 @@ export interface CartListState {
     | 'deleteCartItem'
     | 'deleteAllCartItem'
     | null;
-  readonly error: string | null;
+  readonly error: Error | null;
   readonly data: CartItem[];
 }
 

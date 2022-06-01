@@ -17,7 +17,7 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
     dispatch(userActions.getUserGroup.success(response.data));
   } catch (e: unknown) {
     if (e instanceof Error) {
-      dispatch(userActions.getUserGroup.failure(e.message));
+      dispatch(userActions.getUserGroup.failure(e));
     }
   }
 };
@@ -36,7 +36,7 @@ export const login = (userInfo: LoginRequest) => async (dispatch: Dispatch<UserA
     dispatch(userActions.loginGroup.success(response.data));
   } catch (e: unknown) {
     if (e instanceof Error) {
-      dispatch(userActions.loginGroup.failure(e.message));
+      dispatch(userActions.loginGroup.failure(e));
     }
   }
 };
@@ -54,7 +54,7 @@ export const signup =
       dispatch(userActions.signupGroup.success());
     } catch (e: unknown) {
       if (e instanceof Error) {
-        dispatch(userActions.signupGroup.failure(e.message));
+        dispatch(userActions.signupGroup.failure(e));
       }
     }
   };

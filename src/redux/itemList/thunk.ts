@@ -10,7 +10,9 @@ export const getItemList = () => async (dispatch: Dispatch<ItemListAction>) => {
     const response = await axios.get(`${BASE_URL}/itemList`);
 
     dispatch(itemListActions.getItemListActionGroup.success(response.data));
-  } catch (e) {
-    dispatch(itemListActions.getItemListActionGroup.failure(e.message));
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      dispatch(itemListActions.getItemListActionGroup.failure(e));
+    }
   }
 };

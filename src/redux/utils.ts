@@ -16,8 +16,8 @@ type AllThunkAction =
 export const buildThunkActionGroup = <T, A extends AllThunkAction>(actionType: A) => ({
   request: () => ({ type: `${actionType}_REQUEST` as const }),
   success: (data?: T) => ({ type: `${actionType}_SUCCESS` as const, payload: data }),
-  failure: (message: string) => ({
+  failure: (e: Error) => ({
     type: `${actionType}_FAILURE` as const,
-    payload: message,
+    payload: e,
   }),
 });

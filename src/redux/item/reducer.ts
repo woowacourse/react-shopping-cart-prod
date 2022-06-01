@@ -4,7 +4,7 @@ import { ItemAction } from './action';
 
 export interface ItemState {
   readonly loading: boolean;
-  readonly error: string | null;
+  readonly error: Error | null;
   readonly data: Item;
 }
 

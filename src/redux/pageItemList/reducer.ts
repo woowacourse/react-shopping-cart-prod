@@ -4,7 +4,7 @@ import { PageItemListAction } from './action';
 
 export interface PageItemListState {
   readonly loading: boolean;
-  readonly error: string | null;
+  readonly error: Error | null;
   readonly data: Item[];
 }
 

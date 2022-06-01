@@ -11,7 +11,9 @@ export const getPageItemListRequest =
       const response = await client.get(`/itemList?_page=${id}&_limit=${MAX_RESULT_ITEM_LIST}`);
 
       dispatch(pageItemListActions.getPageItemListActionGroup.success(response.data));
-    } catch (e) {
-      dispatch(pageItemListActions.getPageItemListActionGroup.failure(e.message));
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch(pageItemListActions.getPageItemListActionGroup.failure(e));
+      }
     }
   };

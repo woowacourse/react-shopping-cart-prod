@@ -10,7 +10,9 @@ export const getItemRequest = (id: string) => async (dispatch: Dispatch<ItemActi
     const response = await client.get<Item>(`/itemList/${id}`);
 
     dispatch(itemActions.getItemActionGroup.success(response.data));
-  } catch (e) {
-    dispatch(itemActions.getItemActionGroup.failure(e.message));
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      dispatch(itemActions.getItemActionGroup.failure(e));
+    }
   }
 };

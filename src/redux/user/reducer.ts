@@ -5,7 +5,7 @@ import { UserAction } from './action';
 export interface UserState {
   loading: 'getUser' | 'login' | 'signup' | null;
   data: UserInfo | null;
-  error: string | null;
+  error: Error | null;
 }
 
 export const initialState: UserState = {

@@ -11,8 +11,10 @@ export const getCartListRequest = () => async (dispatch: Dispatch<CartListAction
     const response = await axios.get(`${BASE_URL}/cartList`);
 
     dispatch(cartListActions.getCartListActionGroup.success(response.data));
-  } catch (e) {
-    dispatch(cartListActions.getCartListActionGroup.failure(e.message));
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      dispatch(cartListActions.getCartListActionGroup.failure(e));
+    }
   }
 };
 
@@ -23,8 +25,10 @@ export const putCartItemRequest =
       const response = await axios.put(`${BASE_URL}/cartList/${cartItem.id}`, cartItem);
 
       dispatch(cartListActions.putCartItemActionGroup.success(response.data));
-    } catch (e) {
-      dispatch(cartListActions.putCartItemActionGroup.failure(e.message));
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch(cartListActions.putCartItemActionGroup.failure(e));
+      }
     }
   };
 
@@ -35,8 +39,10 @@ export const postCartItemRequest =
       const response = await axios.post(`${BASE_URL}/cartList`, cartItem);
 
       dispatch(cartListActions.postCartItemActionGroup.success(response.data));
-    } catch (e) {
-      dispatch(cartListActions.postCartItemActionGroup.failure(e.message));
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch(cartListActions.postCartItemActionGroup.failure(e));
+      }
     }
   };
 
@@ -49,8 +55,10 @@ export const patchCartSelectedRequest =
       const response = await axios.patch(`${BASE_URL}/cartList/${id}`, { isSelected: !isSelected });
 
       dispatch(cartListActions.patchCartSelectedActionGroup.success(response.data));
-    } catch (e) {
-      dispatch(cartListActions.patchCartSelectedActionGroup.failure(e.message));
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch(cartListActions.patchCartSelectedActionGroup.failure(e));
+      }
     }
   };
 
@@ -67,8 +75,10 @@ export const patchAllCartSelectedRequest =
       );
 
       dispatch(cartListActions.patchAllCartSelectedActionGroup.success(!isAllSelected));
-    } catch (e) {
-      dispatch(cartListActions.patchAllCartSelectedActionGroup.failure(e.message));
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch(cartListActions.patchAllCartSelectedActionGroup.failure(e));
+      }
     }
   };
 
@@ -78,8 +88,10 @@ export const deleteCartItemRequest = (id: number) => async (dispatch: Dispatch<C
     await axios.delete(`${BASE_URL}/cartList/${id}`);
 
     dispatch(cartListActions.deleteCartItemActionGroup.success(id));
-  } catch (e) {
-    dispatch(cartListActions.deleteCartItemActionGroup.failure(e.message));
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      dispatch(cartListActions.deleteCartItemActionGroup.failure(e));
+    }
   }
 };
 
@@ -92,7 +104,9 @@ export const deleteAllCartItemRequest =
       cartList.forEach(async item => await axios.delete(`${BASE_URL}/cartList/${item.id}`));
 
       dispatch(cartListActions.deleteAllCartItemActionGroup.success());
-    } catch (e) {
-      dispatch(cartListActions.deleteAllCartItemActionGroup.failure(e.message));
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch(cartListActions.deleteAllCartItemActionGroup.failure(e));
+      }
     }
   };
