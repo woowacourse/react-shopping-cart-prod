@@ -30,8 +30,8 @@ export default function Header() {
           <div className="tooltip-content">
             <S.ProfileNavContainer>
               <S.ProfileNavText to={PATH.LOGIN}>로그아웃</S.ProfileNavText>
-              <S.ProfileNavText to={PATH.SIGNUP}>회원 정보 수정</S.ProfileNavText>
-              <S.ProfileNavText to={PATH.EDIT_USER_INFO}>회원탈퇴</S.ProfileNavText>
+              <S.ProfileNavText to={PATH.EDIT_USER_INFO}>회원 정보 수정</S.ProfileNavText>
+              <S.ProfileNavText to={PATH.WITHDRAWAL}>회원탈퇴</S.ProfileNavText>
             </S.ProfileNavContainer>
           </div>
         </S.Profile>
