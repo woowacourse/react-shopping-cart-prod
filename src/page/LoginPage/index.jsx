@@ -2,20 +2,49 @@ import Input from 'component/common/Input';
 import React from 'react';
 import * as S from './style';
 import theme from 'theme/theme';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {PATH} from 'constant';
+import useFetch from 'hook/useFetch';
+import {useDispatch} from 'react-redux';
+import {AUTH} from 'store/modules/auth';
 
 function LoginPage() {
+  const dispatch = useDispatch();
+  const navigation = useNavigate();
+
+  const login = useFetch('post');
+
+  const onSubmit = (inputs) => {
+    login.fetch({
+      API_URL: process.env.REACT_APP_LOGIN_API_URL,
+      body: {
+        account: inputs[0].value,
+        password: inputs[1].value,
+      },
+      onSuccess: (data) => {
+        localStorage.setItem('accessToken', JSON.stringify(data));
+        dispatch({type: AUTH.LOGIN});
+        navigation(PATH.HOME);
+      },
+    });
+  };
+
   return (
     <S.Layout>
       <S.LoginContainer>
         <S.Header>로그인</S.Header>
-        <S.InputCol>
+        <S.InputCol
+          onSubmit={(e) => {
+            e.preventDefault();
+            onSubmit(e.target);
+          }}
+        >
           <Input label="아이디" size="medium" id="id" placeHolder="아이디를 입력해주세요" />
           <Input
             label="비밀번호"
             size="medium"
             id="password"
+            type="password"
             placeHolder="비밀번호를 입력해주세요"
           />
           <S.ConfirmButton
@@ -23,6 +52,7 @@ function LoginPage() {
             backgroundColor={theme.MINT_500}
             width="300px"
             height="36px"
+            type="submit"
           >
             확인
           </S.ConfirmButton>

@@ -69,4 +69,9 @@ export const handlers = [
 
     return res(ctx.status(200));
   }),
+
+  // 로그인
+  rest.post(process.env.REACT_APP_LOGIN_API_URL, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'}));
+  }),
 ];
