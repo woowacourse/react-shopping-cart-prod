@@ -10,7 +10,8 @@ interface InputProps {
   inputValue: string;
   setInputValue: Function;
   type?: string;
-  checkCorrect?: Function;
+  isCorrect?: boolean;
+  setIsCorrect?: Function;
 }
 
 enum LabelKind {
@@ -26,27 +27,24 @@ const Input = ({
   inputValue,
   setInputValue,
   type,
-  checkCorrect,
+  isCorrect,
+  setIsCorrect,
 }: InputProps) => {
   const [message, setMessage] = useState('');
   const [isFocus, setIsFocus] = useState(false);
-  const [isCorrect, setIsCorrect] = useState(false);
 
   useEffect(() => {
-    if (!validator) {
-      return;
-    }
+    if (!validator) return;
 
     try {
       validator(inputValue);
       setIsCorrect(true);
-      checkCorrect(true);
       setMessage(`사용 가능한 ${LabelKind[label]}입니다.`);
     } catch (error) {
       setIsCorrect(false);
       setMessage(error.message);
     }
-  }, [validator, inputValue]);
+  }, [validator, inputValue, label, setIsCorrect]);
 
   return (
     <Styled.Container>

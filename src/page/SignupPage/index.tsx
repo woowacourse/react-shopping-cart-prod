@@ -11,22 +11,18 @@ import Container from 'components/@shared/Container';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 
 const SignupPage = () => {
-  const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
+
+  const [isFulfilled, setIsFulfilled] = useState(false);
   const [isEmailCorrect, setIsEmailCorrect] = useState(false);
   const [isNicknameCorrect, setIsNicknameCorrect] = useState(false);
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
 
   useEffect(() => {
-    if (isEmailCorrect && isNicknameCorrect && isPasswordCorrect) {
-      setIsFulfilled(true);
-      return;
-    }
-
-    setIsFulfilled(false);
-  }, [email, nickname, password]);
+    setIsFulfilled(isEmailCorrect && isNicknameCorrect && isPasswordCorrect);
+  }, [email, nickname, password, isEmailCorrect, isNicknameCorrect, isPasswordCorrect]);
 
   return (
     <Styled.Container>
@@ -41,7 +37,8 @@ const SignupPage = () => {
               inputValue={email}
               setInputValue={setEmail}
               validator={validateEmail}
-              checkCorrect={setIsEmailCorrect}
+              isCorrect={isEmailCorrect}
+              setIsCorrect={setIsEmailCorrect}
             />
             <Input
               icon={<NicknameIcon />}
@@ -49,7 +46,8 @@ const SignupPage = () => {
               inputValue={nickname}
               setInputValue={setNickname}
               validator={validateNickname}
-              checkCorrect={setIsNicknameCorrect}
+              isCorrect={isNicknameCorrect}
+              setIsCorrect={setIsNicknameCorrect}
             />
             <Input
               type="password"
@@ -58,7 +56,8 @@ const SignupPage = () => {
               inputValue={password}
               setInputValue={setPassword}
               validator={validatePassword}
-              checkCorrect={setIsPasswordCorrect}
+              isCorrect={isPasswordCorrect}
+              setIsCorrect={setIsPasswordCorrect}
             />
           </Styled.InputContainer>
           <AuthButton actionType="Sign Up" action={() => {}} isDisabled={!isFulfilled} />
