@@ -22,6 +22,7 @@ const Signup = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const error = useAppSelector(state => state.user.error);
+  const isLogin = useAppSelector(state => !!state.user.data);
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -43,10 +44,19 @@ const Signup = () => {
   };
 
   useEffect(() => {
+    if (isLogin) {
+      alert('잘못된 접근입니다.');
+      navigate(PATH.home);
+    }
+  }, [isLogin, navigate]);
+
+  useEffect(() => {
     if (error) {
       openSnackbar();
     }
   }, [error, openSnackbar]);
+
+  if (!isLogin) return null;
 
   return (
     <AuthPage title='회원가입' onSubmitAuthForm={onSubmitAuthForm}>
