@@ -9,7 +9,7 @@ export interface UserState {
 }
 
 export const initialState: UserState = {
-  loading: null,
+  loading: 'getUser',
   data: null,
   error: null,
 };

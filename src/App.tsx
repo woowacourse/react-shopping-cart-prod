@@ -1,6 +1,7 @@
 import Header from 'components/common/Header';
 import Loading from 'components/common/Loading';
 import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
 import { Suspense, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { getUser } from 'redux/user/thunk';
@@ -10,10 +11,13 @@ import { flexCenter } from 'styles/mixin';
 
 function App() {
   const dispatch = useAppDispatch();
+  const { loading } = useAppSelector(state => state.user);
 
   useEffect(() => {
     dispatch(getUser());
-  }, []);
+  }, [dispatch]);
+
+  if (loading === 'getUser') return <Loading />;
 
   return (
     <Suspense fallback={<Loading />}>
