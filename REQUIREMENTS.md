@@ -13,7 +13,7 @@
 
 ## API
 
-- [ ] MSW를 활용한 API mocking
+- [x] MSW를 활용한 API mocking
 - [ ] Token기반의 로그인
 - [ ] 회원가입
 - [ ] 회원 정보 수정

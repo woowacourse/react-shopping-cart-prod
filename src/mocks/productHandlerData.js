@@ -1,4 +1,4 @@
-export const data = [
+export const productListData = [
   {
     id: 1,
     name: '싱싱한 감자',
@@ -192,3 +192,10 @@ export const data = [
     quantity: 3,
   },
 ];
+
+export const productDetailData = (productId) => ({
+  id: productId,
+  thumbnail: 'https://storybook.takealook.kr/image/potato.jpg',
+  name: '싱싱한 감자',
+  price: '50000',
+});
