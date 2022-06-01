@@ -1,13 +1,30 @@
+import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
+import { useState, ChangeEvent } from 'react';
 import { signUp } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 
+interface InputState {
+  name: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
+
+const initialInputState: InputState = {
+  name: '',
+  email: '',
+  password: '',
+  passwordConfirm: '',
+};
+
 const SignUpPage = () => {
   const { loading, error, data } = useAppSelector(state => state.userReducer);
+  const [inputState, setInputState] = useState<InputState>(initialInputState);
 
   const dispatch = useAppDispatch<UserAction>();
 
@@ -21,28 +38,38 @@ const SignUpPage = () => {
     dispatch(signUp(tempInfo));
   };
 
+  const handleEmailInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    setInputState(prev => ({ ...prev, email: value }));
+  };
+
+  const handleNameInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    setInputState(prev => ({ ...prev, name: value }));
+  };
+
+  const handlePasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    setInputState(prev => ({ ...prev, password: value }));
+  };
+
+  const handlePasswordConfirmInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    setInputState(prev => ({ ...prev, passwordConfirm: value }));
+  };
+
   return (
     <StyledRoot>
       <StyledTitle>회원가입</StyledTitle>
-      <StyledLabel>
+
+      <SignInput value={inputState.email} onChange={handleEmailInput}>
         이메일
-        <StyledInput />
-      </StyledLabel>
-
-      <StyledLabel>
+      </SignInput>
+      <SignInput value={inputState.name} onChange={handleNameInput}>
         이름
-        <StyledInput />
-      </StyledLabel>
-
-      <StyledLabel>
+      </SignInput>
+      <SignInput value={inputState.password} onChange={handlePasswordInput}>
         비밀번호
-        <StyledInput />
-      </StyledLabel>
-
-      <StyledLabel>
+      </SignInput>
+      <SignInput value={inputState.passwordConfirm} onChange={handlePasswordConfirmInput}>
         비밀번호 확인
-        <StyledInput />
-      </StyledLabel>
+      </SignInput>
 
       <StyledLoginButton onClick={onClick}>확인</StyledLoginButton>
     </StyledRoot>
@@ -67,20 +94,6 @@ const StyledTitle = styled.h1`
   text-align: center;
 `;
 
-const StyledLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
-
-  letter-spacing: 0.5px;
-
-  gap: 10px;
-`;
-
 const StyledLoginButton = styled.button`
   width: 80%;
   height: 65px;
@@ -89,13 +102,6 @@ const StyledLoginButton = styled.button`
   font-weight: bold;
   color: white;
   border-radius: 6px;
-`;
-
-const StyledInput = styled.input`
-  width: 100%;
-  height: 65px;
-  font-size: 20px;
-  padding-left: 10px;
 `;
 
 const StyledFooter = styled.div`
