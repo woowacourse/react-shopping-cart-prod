@@ -15,6 +15,8 @@ export const USER_ACTION = {
   UPDATE_USER_INFO_ERROR: "user/UPDATE_USER_INFO_ERROR",
 
   CLEAN_ERROR: "user/CLEAN_ERROR",
+
+  LOGOUT: "user/LOGOUT",
 };
 
 export const login = (email, password) => async (dispatch) => {
@@ -96,6 +98,7 @@ const reducer = (state = initialState, action) => {
         errorMessage: "",
       };
     case USER_ACTION.DELETE_ACCOUNT_SUCCESS:
+    case USER_ACTION.LOGOUT:
       return initialState;
     case USER_ACTION.UPDATE_USER_INFO_SUCCESS:
       return {
@@ -114,6 +117,7 @@ const reducer = (state = initialState, action) => {
       };
     case USER_ACTION.DELETE_ACCOUNT_ERROR:
     case USER_ACTION.UPDATE_USER_INFO_ERROR:
+    case USER_ACTION.LOGIN_ERROR:
       return {
         isLoading: false,
         data: state.data,
@@ -125,7 +129,6 @@ const reducer = (state = initialState, action) => {
         data: state.data,
         errorMessage: "",
       };
-    case USER_ACTION.LOGIN_ERROR:
     default:
       return state;
   }
