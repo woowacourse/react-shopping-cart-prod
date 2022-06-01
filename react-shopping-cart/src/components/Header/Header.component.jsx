@@ -22,6 +22,9 @@ function Header() {
         <HeaderLink to="/" type="nav">
           주문목록
         </HeaderLink>
+        <HeaderLink to="/login" type="nav">
+          로그인
+        </HeaderLink>
       </FlexBox>
     </HeaderContainer>
   );

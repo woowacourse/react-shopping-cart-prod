@@ -15,6 +15,11 @@ const GlobalStyle = createGlobalStyle`
 	  position: relative;
   }
 
+  a { 
+    color:unset;
+    text-decoration:none;
+  }
+
   button {
   	background-color: #ffffff;
   }

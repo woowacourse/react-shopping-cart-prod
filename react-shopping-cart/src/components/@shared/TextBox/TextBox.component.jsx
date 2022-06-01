@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 const TextBox = styled.div`
   font-style: normal;
   letter-spacing: 0.5px;
-  color: ${({ theme }) => theme.colors['BLACK_001']};
+  color: ${({ color, theme }) => theme.colors[color] ?? theme.colors['BLACK_001']};
   ${({ bold }) =>
     bold &&
     css`
@@ -11,6 +11,10 @@ const TextBox = styled.div`
     `}
   ${({ fontSize }) => {
     switch (fontSize) {
+      case 'extraSmall':
+        return css`
+          font-size: 13px;
+        `;
       case 'small':
         return css`
           font-size: 16px;

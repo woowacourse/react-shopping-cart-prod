@@ -8,6 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ThemeProvider } from 'styled-components';
 
 import ErrorPage from 'pages/ErrorPage/ErrorPage.page';
+import Login from 'pages/Login/Login.page';
 import ProductList from 'pages/ProductList/ProductList.page';
 import ShoppingCartList from 'pages/ShoppingCartList/ShoppingCartList.page';
 
@@ -42,6 +43,7 @@ root.render(
               <Routes>
                 <Route path="/" element={<ProductList />} />
                 <Route path="/cart" element={<ShoppingCartList />} />
+                <Route path="/login" element={<Login />} />
                 <Route path="/*" element={<ErrorPage>존재하지 않는 페이지입니다</ErrorPage>} />
               </Routes>
             </ErrorBoundary>

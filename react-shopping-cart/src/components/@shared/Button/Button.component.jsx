@@ -8,11 +8,12 @@ const Button = styled.button`
   text-align: center;
   cursor: pointer;
 
-  ${({ width, height, mt }) =>
+  ${({ width, height, borderRadius, mt }) =>
     css`
       width: ${width};
       height: ${height};
       margin-top: ${mt};
+      border-radius: ${borderRadius};
     `}
 
   &:hover {

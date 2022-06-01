@@ -4,7 +4,6 @@ import styled, { css } from 'styled-components';
 const HeaderLink = styled(Link)`
   color: ${({ theme }) => theme.colors['WHITE_001']};
   cursor: pointer;
-  text-decoration: none;
   ${({ type }) => {
     switch (type) {
       case 'title':
