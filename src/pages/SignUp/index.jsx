@@ -6,6 +6,7 @@ import * as Styled from './style';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
 import useInputValidate from 'hooks/useInputValidate';
 import { useRef } from 'react';
+import Form from 'components/Common/Form/Form';
 
 const SignUp = () => {
   const pwd = useRef(null);
@@ -41,7 +42,7 @@ const SignUp = () => {
   return (
     <Styled.Wrapper>
       <Title contents="회원가입" />
-      <Styled.Form onSubmit={handlSubmit}>
+      <Form onSubmit={handlSubmit}>
         <Fieldset>
           <Input
             description="이메일"
@@ -95,7 +96,7 @@ const SignUp = () => {
         <Button colorType="primary" type="submit">
           가입하기
         </Button>
-      </Styled.Form>
+      </Form>
     </Styled.Wrapper>
   );
 };
