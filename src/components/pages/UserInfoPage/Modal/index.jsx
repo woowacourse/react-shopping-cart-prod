@@ -1,0 +1,45 @@
+import { theme } from "style";
+
+import DefaultButton from "components/common/Button/DefaultButton";
+import UserInput from "components/common/UserInput";
+import {
+  ModalButtonContainer,
+  ModalDimmedConatiner,
+  ModalLabel,
+  ModalParagraph,
+  ModalTitle,
+  ModalWindow,
+} from "./styled";
+
+function Modal({ userName = "%ERROR%" }) {
+  return (
+    <ModalDimmedConatiner>
+      <ModalWindow>
+        <ModalTitle>{userName}님, 정말 탈퇴하시겠어요?</ModalTitle>
+        <ModalParagraph>
+          지금 탈퇴하시면 구매 내역과 모든 장바구니 목록이 삭제돼요! 앞으로 회원
+          혜택도 받을 수 없습니다.
+        </ModalParagraph>
+        <ModalLabel>떠나시려면 비밀번호를 입력해주세요 :(</ModalLabel>
+        <UserInput
+          type="password"
+          placeholder="비밀번호를 입력해주세요"
+          width="100%"
+          errorMessage="비밀번호가 틀렸습니다"
+        />
+        <ModalButtonContainer>
+          <DefaultButton width="180px">닫기</DefaultButton>
+          <DefaultButton
+            width="180px"
+            bgColor={theme.color.main}
+            textColor={theme.color.point}
+          >
+            떠나기
+          </DefaultButton>
+        </ModalButtonContainer>
+      </ModalWindow>
+    </ModalDimmedConatiner>
+  );
+}
+
+export default Modal;
