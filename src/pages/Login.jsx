@@ -4,11 +4,26 @@ import Layout from 'components/Layout';
 import Button from 'components/@common/Button/styles';
 import Input from 'components/@common/Input/styles';
 import { COLORS } from 'styles/theme';
+import { requestLogin } from 'api';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
 const Login = () => {
-  console.log('is working!');
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const formData = e.target;
+    const userId = formData.elements['input-id'].value;
+    const userPassword = formData.elements['input-password'].value;
+    if (userId.length === 0 || userPassword.length === 0) {
+      alert('아이디와 비밀번호를 모두 입력해주세요');
+      return;
+    }
+
+    const response = await requestLogin(userId, userPassword);
+    const { accessToken } = response.content;
+    localStorage.setItem('accessToken', accessToken);
+  };
+
   return (
     <Layout>
       <Styled.LoginContainer>
@@ -22,7 +37,7 @@ const Login = () => {
           <CommonStyled.Text size="1.6rem" weight="bold" margin="0 0 2rem 0">
             로그인
           </CommonStyled.Text>
-          <form>
+          <form onSubmit={handleLogin}>
             <label hidden html-for="input-id">
               로그인 입력창
             </label>
