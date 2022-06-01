@@ -40,7 +40,7 @@ function Login({ className }) {
               placeholder="비밀번호를 입력해주세요"
               {...register("password")}
             />
-            <Button variant="primary" size="sm" block type="submit">
+            <Button variant="primary" size="md" block type="submit">
               로그인
             </Button>
           </form>
