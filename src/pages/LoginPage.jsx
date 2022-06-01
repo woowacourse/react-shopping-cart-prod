@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import styled from 'styled-components';
 import axios from 'axios';
@@ -9,7 +10,7 @@ import Input from '../components/common/Input';
 
 import { isValidEmail } from '../utils/validations';
 import { MESSAGE, SERVER_PATH, ROUTES_PATH } from '../constants';
-import { useDispatch, useSelector } from 'react-redux';
+
 import actionTypes from '../store/user/user.actions';
 
 function LoginPage() {
@@ -33,11 +34,10 @@ function LoginPage() {
       const { data } = await axios.post(`${SERVER_PATH.LOGIN}`, { loginInfo });
       const { accessToken } = data;
       dispatch({ type: actionTypes.ADD_TOKEN, accessToken });
-
       alert('로그인 성공');
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
-      console.error(error);
+      alert(error);
     }
   };
 
