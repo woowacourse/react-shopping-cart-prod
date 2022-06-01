@@ -1,4 +1,14 @@
 export const MOCK_DB = {
+  members: [
+    {
+      accessToken: 'temp1',
+      id: 1,
+      userId: 'ex@gmail.com',
+      password: 'qwer1234!',
+      nickname: '콤피',
+    },
+  ],
+
   cart: [
     {
       product: 7,
