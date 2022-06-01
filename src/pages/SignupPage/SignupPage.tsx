@@ -1,4 +1,5 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import Button from '../../components/Button/Button';
 import DivideLine from '../../components/DivideLine/DivideLine';
 import Input from '../../components/Input/Input';
@@ -24,16 +25,86 @@ const SIGNUP_STEPS = [
 
 function SignupPage() {
   const { postcode, addressData } = useDaumPostcode();
+  const [values, setValues] = useState<Record<string, any>>({
+    email: '',
+  });
+
+  const handleChange: React.FormEventHandler<HTMLInputElement> = ({
+    target,
+  }) => {
+    const { name, value } = target as HTMLInputElement;
+
+    setValues((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleClickAddressButton = () => {
     postcode?.open();
   };
 
+  const extractPayloadWithForm = (formElement: HTMLFormElement) => {
+    const formData = new FormData(formElement);
+    const {
+      email,
+      password,
+      name,
+      gender,
+      birthday,
+      contact,
+      address,
+      detailAddress,
+      zoneCode,
+    } = Object.fromEntries(formData.entries());
+
+    return {
+      email,
+      password,
+      profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
+      name,
+      gender,
+      birthday,
+      contact,
+      fullAddress: { address, detailAddress, zoneCode },
+      terms: true,
+    };
+  };
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    const payload = extractPayloadWithForm(e.target as HTMLFormElement);
 
-    const formData = new FormData(e.target as HTMLFormElement);
+    try {
+      axios({
+        method: 'post',
+        url: 'http://15.164.166.148:8080/api/customers',
+        data: payload,
+      });
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        alert('유효하지 않은 이메일 형식입니다.');
+      } else {
+        alert(e);
+      }
+    }
+  };
 
-    console.log(Object.fromEntries(formData.entries()));
+  const handleClickIsEmailDuplicated = () => {
+    const email = values['email'];
+
+    try {
+      axios({
+        method: 'get',
+        url: `http://15.164.166.148:8080/api/validation?email=${email}`,
+      });
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        alert('중복된 이메일입니다.');
+      } else {
+        alert(e);
+      }
+    }
   };
 
   return (
@@ -52,10 +123,13 @@ function SignupPage() {
               placeholder="woowashop@woowahan.com"
               pattern="[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.([a-zA-Z])+"
               required
+              onChange={handleChange}
             />
           </S.CenterFlexBox>
           <S.RightFlexBox>
-            <S.Button>중복 확인</S.Button>
+            <S.Button type="button" onClick={handleClickIsEmailDuplicated}>
+              중복 확인
+            </S.Button>
           </S.RightFlexBox>
         </S.FormFieldBox>
         {/* ------------------------------------ */}
@@ -114,14 +188,14 @@ function SignupPage() {
         {/* ------------------------------------ */}
         <S.FormFieldBox>
           <S.LeftFlexBox>
-            <S.Label required>휴대폰</S.Label>
+            <S.Label required>전화번호</S.Label>
           </S.LeftFlexBox>
           <S.CenterFlexBox>
             <Input
               type="tel"
               name="contact"
-              placeholder="010-1234-5678"
-              pattern="[0-9]{3}-[0-9]{3,4}-[0-9]{4}"
+              placeholder="01012345678"
+              pattern="[0-9]{8,11}"
               required
             />
           </S.CenterFlexBox>
