@@ -5,12 +5,12 @@ import { LoginRequest, LoginResponse, UserInfo, UserInfoWithPassword } from 'typ
 import { UserAction, userActions } from './action';
 
 export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
+  const accessToken = localStorage.getItem('access-token');
+
+  if (!accessToken) return;
+
   dispatch(userActions.getUserGroup.request());
   try {
-    const accessToken = localStorage.getItem('access-token');
-
-    if (!accessToken) return;
-
     const response = await authClient.get<UserInfo>('/customers/me', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
