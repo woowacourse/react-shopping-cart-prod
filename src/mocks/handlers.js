@@ -57,9 +57,9 @@ export const customerHandler = [
   ),
 
   // 패스워드 수정
-  rest.put(`${HOST_NAME}/customers/me`, (req, res, ctx) => res(ctx.status(200))),
+  rest.put(`${HOST_NAME}/customers/me/password`, (req, res, ctx) => res(ctx.status(200))),
 
-  rest.put(`${HOST_NAME}/customers/me/fail`, (req, res, ctx) => {
+  rest.put(`${HOST_NAME}/customers/me/password/fail`, (req, res, ctx) => {
     res(ctx.status(400), ctx.json({ message: '비밀번호 수정에 실패하였습니다' }));
   }),
 

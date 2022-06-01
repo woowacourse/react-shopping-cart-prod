@@ -43,6 +43,20 @@ class RequestAsync {
       return errorReturn(error);
     }
   }
+
+  async put(path, bodyData) {
+    try {
+      const response = await fetch(`${this.HOST_NAME}/${path}`, {
+        method: 'PUT',
+        headers: this.header,
+        body: JSON.stringify(bodyData),
+      });
+
+      return this.#getRefinedResponse(response);
+    } catch (error) {
+      return errorReturn(error);
+    }
+  }
 }
 
 const requestAsync = new RequestAsync();
