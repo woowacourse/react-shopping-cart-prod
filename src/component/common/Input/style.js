@@ -38,6 +38,12 @@ const Input = styled.input`
       width: 456px;
       height: 50px;
     `}
+  
+    ${(props) =>
+    props.disabled &&
+    css`
+      background: ${({theme}) => theme.GRAY_500};
+    `}
 `;
 
 const Label = styled.label`

@@ -6,13 +6,7 @@ function Input({size, label, placeHolder, id, isDisabled, isError, message, ...r
   return (
     <S.Layout>
       <S.Label htmlFor={id}>{label}</S.Label>
-      <S.Input
-        size={size}
-        id={id}
-        placeholder={placeHolder}
-        disabled={isDisabled ? true : false}
-        {...rest}
-      />
+      <S.Input size={size} id={id} placeholder={placeHolder} disabled={isDisabled} {...rest} />
       <S.Message>{isError && message}</S.Message>
     </S.Layout>
   );
