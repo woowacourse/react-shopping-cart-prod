@@ -13,6 +13,7 @@ function NavBar() {
       <NavBarMenu>
         <Link to={routes.cart}>장바구니</Link>
         <Link to={routes.orderList}>주문목록</Link>
+        <Link to={routes.login}>로그인</Link>
       </NavBarMenu>
     </NavBarContainer>
   );

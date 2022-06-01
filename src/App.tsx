@@ -5,7 +5,7 @@ import { RootState } from './redux/store';
 import SnackBar from './components/@shared/SnackBar';
 import NavBar from './components/NavBar';
 
-import { Cart, NotFound, OrderList, ProductDetail, ProductList } from './pages';
+import { Cart, Login, NotFound, OrderList, ProductDetail, ProductList } from './pages';
 import routes from './routes';
 
 function App() {

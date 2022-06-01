@@ -1,6 +1,7 @@
 const HOME = '/';
 const CART = '/cart';
 const ORDER_LIST = '/order-list';
+const LOGIN = '/login';
 
 const routes = {
   home: HOME,
@@ -9,6 +10,7 @@ const routes = {
   productDetail: (id?: number) => {
     return `/product/${id ?? ':id'}`;
   },
+  login: LOGIN,
 };
 
 export default routes;

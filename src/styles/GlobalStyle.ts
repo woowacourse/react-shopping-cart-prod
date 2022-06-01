@@ -1,9 +1,14 @@
 import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  body, h1{  
-     margin: 0; 
-   }   
+    * {  
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: overlay;
+    }
 `;
 
 export default GlobalStyle;
