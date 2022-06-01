@@ -1,18 +1,22 @@
-import * as Styled from './style';
-import PropTypes from 'prop-types';
-import MenuItem from 'components/Common/MenuItem/MenuItem';
-import bigCart from 'assets/svg/bigCart.svg';
-import { PATH_NAME } from 'constants';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import useCart from 'hooks/useCart';
 
+import MenuItem from 'components/Common/MenuItem/MenuItem';
 import DropDownOption from 'components/Common/DropDownOption/DropDownOption';
 import DropDown from 'components/Common/DropDown/DropDown';
 import Avatar from 'components/User/Avatar/Avatar';
 
+import { initializeUserInfo } from 'reducers/user/user.actions';
+import useCart from 'hooks/useCart';
+import { deleteCookie } from 'utils/cookie';
+import bigCart from 'assets/svg/bigCart.svg';
+import { PATH_NAME } from 'constants';
+import PropTypes from 'prop-types';
+import * as Styled from './style';
+
 const Header = () => {
   const { cartItems } = useCart();
-  const isAuthenticated = true;
+  const { authenticated, name } = useSelector((state) => state.user);
 
   return (
     <Styled.Wrapper>
@@ -26,24 +30,31 @@ const Header = () => {
           <Styled.Badge>{cartItems?.length ?? 0}</Styled.Badge>
         </MenuItem>
         <MenuItem>주문목록</MenuItem>
-        <AuthNav isAuthenticated={isAuthenticated} />
+        <AuthNav isAuthenticated={authenticated} name={name} />
       </Styled.MenuContainer>
     </Styled.Wrapper>
   );
 };
 
-const AuthNav = ({ isAuthenticated }) => {
+const AuthNav = ({ isAuthenticated, name }) => {
+  const dispatch = useDispatch();
+  const handleClickLogout = () => {
+    deleteCookie('userToken');
+    dispatch(initializeUserInfo());
+  };
   return (
     <>
       {isAuthenticated ? (
         <Styled.AuthNavWrapper>
-          <Avatar name={'호프'} />
+          <Avatar name={name} />
           <Styled.DropDownWrapper>
             <DropDown>
               <DropDownOption>
                 <Link to={PATH_NAME.MODIFY_PROFILE}>회원정보 수정</Link>
               </DropDownOption>
-              <DropDownOption hasUnderLine={false}>로그아웃</DropDownOption>
+              <DropDownOption hasUnderLine={false} onClick={handleClickLogout}>
+                로그아웃
+              </DropDownOption>
             </DropDown>
           </Styled.DropDownWrapper>
         </Styled.AuthNavWrapper>
@@ -63,6 +74,7 @@ const AuthNav = ({ isAuthenticated }) => {
 
 AuthNav.propTypes = {
   isAuthenticated: PropTypes.bool,
+  name: PropTypes.string,
 };
 
 export default Header;
