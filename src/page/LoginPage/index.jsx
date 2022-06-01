@@ -18,7 +18,12 @@ function LoginPage() {
             id="password"
             placeHolder="비밀번호를 입력해주세요"
           />
-          <S.ConfirmButton fontSize="14px" backgroundColor={theme.MINT} width="300px" height="36px">
+          <S.ConfirmButton
+            fontSize="14px"
+            backgroundColor={theme.MINT_500}
+            width="300px"
+            height="36px"
+          >
             확인
           </S.ConfirmButton>
           <S.SignupText>

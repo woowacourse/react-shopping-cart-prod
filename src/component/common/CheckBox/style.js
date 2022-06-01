@@ -13,7 +13,7 @@ const CheckBoxLayout = styled(FlexColumn)`
   background-color: transparent;
 
   box-sizing: border-box;
-  border: 1px solid ${({theme}) => theme.DARK_MINT};
+  border: 1px solid ${({theme}) => theme.MINT_600};
   border-radius: 2px;
 
   ${(props) =>
@@ -23,7 +23,7 @@ const CheckBoxLayout = styled(FlexColumn)`
         content: '✔';
       }
       color: ${({theme}) => theme.WHITE};
-      background-color: ${({theme}) => theme.DARK_MINT};
+      background-color: ${({theme}) => theme.MINT_600};
     `}
 `;
 

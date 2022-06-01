@@ -33,7 +33,12 @@ function UserInfoEditPage() {
             <S.Hyphen>-</S.Hyphen>
             <Input size="small" id="last-number" />
           </S.PhoneNumberContainer>
-          <S.ConfirmButton fontSize="14px" backgroundColor={theme.MINT} width="300px" height="36px">
+          <S.ConfirmButton
+            fontSize="14px"
+            backgroundColor={theme.MINT_500}
+            width="300px"
+            height="36px"
+          >
             확인
           </S.ConfirmButton>
         </S.InputCol>

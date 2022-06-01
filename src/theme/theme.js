@@ -1,7 +1,8 @@
 const theme = {
   BLACK: '#333333',
-  MINT: '#2AC1BC',
-  DARK_MINT: '#22A6A2',
+  MINT_500: '#2AC1BC',
+  MINT_600: '#22A6A2',
+  MINT_700: '#248080',
   WHITE: '#ffffff',
   GRAY_BROWN: '#73675C',
   GRAY_700: '#AAAAAA',

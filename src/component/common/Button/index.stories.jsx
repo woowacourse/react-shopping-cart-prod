@@ -25,7 +25,7 @@ Defaults.args = {
 export const OrderButton = Template.bind({});
 OrderButton.args = {
   children: '주문하기 (0개)',
-  backgroundColor: theme.MINT,
+  backgroundColor: theme.MINT_500,
   width: '223px',
   height: '73px',
 };

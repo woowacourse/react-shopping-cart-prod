@@ -21,7 +21,7 @@ export default function ContentBox({
         <S.PriceInfoFont>{leftContent}</S.PriceInfoFont>
         <S.PriceInfoFont>{rightContent}</S.PriceInfoFont>
       </S.PriceInfoBox>
-      <Button onClick={onClickButton} backgroundColor={theme.MINT} width="100%" height="73px">
+      <Button onClick={onClickButton} backgroundColor={theme.MINT_500} width="100%" height="73px">
         <S.PriceInfoFont>{buttonText}</S.PriceInfoFont>
       </Button>
     </S.ContentBoxLayout>
