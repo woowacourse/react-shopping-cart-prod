@@ -119,7 +119,7 @@ export const userHandler = [
         ctx.json({
           id: 1,
           email: "test@naver.com",
-          username: "test222",
+          username: Math.round(Math.random() * 100).toString(),
         })
       );
     }

@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { theme } from "style";
+
+import { ROUTES, RANGE } from "constants";
+
+import { useStore } from "hooks/useStore";
+import { checkNickName } from "validator";
+import { updateUser } from "reducers/user";
 
 import DefaultButton from "components/common/Button/DefaultButton";
 import PageHeader from "components/common/PageHeader";
 import UserForm from "components/common/UserForm";
 import UserInput from "components/common/UserInput";
+import Spinner from "components/common/Spinner";
 import {
   DeleteAccountButton,
   UserInfoButtonContainer,
@@ -14,14 +22,19 @@ import {
   UserInfoPageContainer,
 } from "./styled";
 import Modal from "./Modal";
-import { checkNickName } from "validator";
-import { RANGE } from "constants";
 
 function UserInfoPage() {
+  const {
+    data: user,
+    isLoading,
+    errorMessage: serverError,
+    dispatch,
+  } = useStore("user");
   const [isEditable, setIsEditable] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [nickname, setNickname] = useState("태태");
+  const [nickname, setNickname] = useState(user.nickname);
   const [errorMessage, setErrorMessage] = useState("");
+  const navigator = useNavigate();
 
   const closeModal = () => {
     setIsOpenModal(false);
@@ -42,26 +55,44 @@ function UserInfoPage() {
   };
 
   const handleCancleEdit = () => {
-    setNickname("태태"); // TODO: store에 있는 닉네임 초기값으로 다시 복귀
+    setNickname(user.nickname);
     setIsEditable(false);
   };
 
   const changeNickname = (e) => {
     e.preventDefault();
-    // TODO: 서버 요청 성공하면 아래 코드 실행
+    dispatch(updateUser(user.id, nickname));
     setIsEditable(false);
   };
+
+  useEffect(() => {
+    if (serverError) {
+      setIsEditable(true);
+      setErrorMessage(serverError);
+    }
+  }, [serverError]);
+
+  useEffect(() => {
+    setNickname(user.nickname);
+  }, [user.nickname]);
+
+  useEffect(() => {
+    if (!user.accessToken) {
+      navigator(ROUTES.ROOT);
+    }
+  }, []);
 
   return (
     <UserInfoPageContainer>
       <PageHeader>{isEditable ? "회원정보 수정" : "회원정보"}</PageHeader>
+      {isLoading && <Spinner />}
       <UserForm onSubmit={changeNickname}>
         <UserInfoInputContainer>
           <UserInfoLabel>이메일</UserInfoLabel>
           <UserInput
             width="500px"
             placeholder="이메일을 입력해주세요"
-            value="a@naver.com"
+            value={user.email}
             disabled
           />
         </UserInfoInputContainer>
