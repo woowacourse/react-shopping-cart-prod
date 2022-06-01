@@ -1,3 +1,6 @@
+export const isLoggedInSelector = ({ user }) => user.isLoggedIn;
+export const nicknameSelector = ({ user }) => user.nickname;
+
 export const productSelector = ({ product }) => product;
 export const productCountSelector = ({ product }) => product.pageCount;
 

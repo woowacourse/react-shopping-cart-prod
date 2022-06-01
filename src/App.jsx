@@ -4,9 +4,10 @@ import { COMMON_PAGES, NON_USER_PAGES, USER_PAGES } from 'pages';
 import { PageTemplate } from 'components/common';
 import useReduxState from 'hooks/useReduxState';
 import ProtectedRoute from 'components/route/ProtectedRoute';
+import { isLoggedInSelector } from 'store/selector';
 
 function App() {
-  const [isLoggedIn] = useReduxState(({ user }) => user.isLoggedIn);
+  const [isLoggedIn] = useReduxState(isLoggedInSelector);
 
   return (
     <BrowserRouter basename="/react-shopping-cart">

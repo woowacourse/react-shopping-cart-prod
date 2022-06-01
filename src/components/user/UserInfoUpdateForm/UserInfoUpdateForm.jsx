@@ -8,10 +8,11 @@ import useReduxState from 'hooks/useReduxState';
 import { Form, Input } from 'components/common';
 import { updateUserNicknameThunk } from 'store/actions/user.action';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
+import { nicknameSelector } from 'store/selector';
 
 const nicknamePattern = /^[가-힣]{1,5}$/;
 function UserInfoUpdateForm() {
-  const [nickname, dispatch] = useReduxState(({ user }) => user.nickname);
+  const [nickname, dispatch] = useReduxState(nicknameSelector);
 
   const [nicknameValue, setNicknameValue, isNicknameValid] = useInputValue(
     nicknamePattern,
