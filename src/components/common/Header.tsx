@@ -39,8 +39,8 @@ const Header = () => {
             <button onClick={toggleHambergur}>
               마이페이지
               <MyPageHambergurList isShow={isShowHambergur}>
-                <Link to=''>회원정보 수정</Link>
-                <Link to=''>비밀번호 변경</Link>
+                <Link to='/editProfile'>회원정보 수정</Link>
+                <Link to='/editPassword'>비밀번호 변경</Link>
                 <Link onClick={handleSignOut} to=''>
                   로그아웃
                 </Link>

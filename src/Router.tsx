@@ -5,6 +5,8 @@ import ItemListPage from 'pages/ItemListPage';
 import CartPage from 'pages/CartPage';
 import SignInPage from 'pages/SignInPage';
 import SignUpPage from 'pages/SignUpPage';
+import EditProfilePage from 'pages/EditProfilePage';
+import EditPasswordPage from 'pages/EditPasswordPage';
 
 const PATH = {
   notFound: '*',
@@ -13,6 +15,8 @@ const PATH = {
   cart: '/cart',
   signIn: '/signIn',
   signUp: '/signUp',
+  editProfile: '/editProfile',
+  editPassword: '/editPassword',
 };
 
 const Router = () => {
@@ -24,6 +28,8 @@ const Router = () => {
       <Route path={PATH.cart} element={<CartPage />} />
       <Route path={PATH.signIn} element={<SignInPage />} />
       <Route path={PATH.signUp} element={<SignUpPage />} />
+      <Route path={PATH.editProfile} element={<EditProfilePage />} />
+      <Route path={PATH.editPassword} element={<EditPasswordPage />} />
       <Route path={PATH.notFound} element={<NotFound />} />
     </Routes>
   );
