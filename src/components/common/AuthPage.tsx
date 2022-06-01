@@ -3,13 +3,18 @@ import styled from 'styled-components';
 
 import Button from './Button';
 
-interface AuthPage {
+interface AuthPageProps {
   title: string;
   onSubmitAuthForm: (e: FormEvent<HTMLFormElement>) => void;
   bottom?: ReactNode;
 }
 
-const AuthPage = ({ title, onSubmitAuthForm, bottom, children }: PropsWithChildren<AuthPage>) => {
+const AuthPage = ({
+  title,
+  onSubmitAuthForm,
+  bottom,
+  children,
+}: PropsWithChildren<AuthPageProps>) => {
   return (
     <StyledRoot>
       <StyledTitle>{title}</StyledTitle>
