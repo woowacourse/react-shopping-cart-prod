@@ -6,6 +6,7 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signup } from 'redux/user/thunk';
 import { UserInfo } from 'types/domain';
@@ -20,6 +21,7 @@ const Signup = () => {
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const error = useAppSelector(state => state.user.error);
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,6 +41,12 @@ const Signup = () => {
     }
     openSnackbar();
   };
+
+  useEffect(() => {
+    if (error) {
+      openSnackbar();
+    }
+  }, [error, openSnackbar]);
 
   return (
     <AuthPage title='회원가입' onSubmitAuthForm={onSubmitAuthForm}>
