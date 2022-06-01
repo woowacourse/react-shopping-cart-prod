@@ -1,15 +1,39 @@
-import { CartStoreState } from 'types/index';
+import { CartStoreState, User } from 'types/index';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Link from 'components/@shared/Link';
 import Logo from 'components/Logo/Logo';
 import PATH from 'constants/path';
 import RightMenu from './RightMenu';
+import { isLogin } from 'utils/auth';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { userActions } from 'redux/actions';
 
 function Header() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const cart = useSelector(
     (state: { cart: CartStoreState }) => state.cart.cart,
   );
+  const userName = useSelector((state: { user: User }) => state.user.username);
+
+  const [showUserToggle, setShowUserToggle] = useState(false);
+
+  const onClickLogoutButton = () => {
+    dispatch(userActions.resetUser());
+
+    localStorage.removeItem('accessToken');
+    sessionStorage.removeItem('accessToken');
+
+    navigate(PATH.BASE);
+  };
+
+  const onClickEditUserInfoButton = () => {
+    navigate(PATH.EDIT_USER_INFO);
+  };
 
   return (
     <>
@@ -27,8 +51,22 @@ function Header() {
       </StyledHeader>
       <StyledSubHeader>
         <RightMenu gap="30px">
-          <Link to={PATH.LOGIN}>로그인</Link>
-          <Link to={PATH.SIGNUP}>회원가입</Link>
+          {!isLogin() ? (
+            <>
+              <Link to={PATH.LOGIN}>로그인</Link>
+              <Link to={PATH.SIGNUP}>회원가입</Link>
+            </>
+          ) : (
+            <>
+              {userName}님 환영합니다
+              <StyledControlUserButton onClick={onClickLogoutButton}>
+                로그아웃
+              </StyledControlUserButton>
+              <StyledControlUserButton onClick={onClickEditUserInfoButton}>
+                회원 정보 수정
+              </StyledControlUserButton>
+            </>
+          )}
         </RightMenu>
       </StyledSubHeader>
     </>
@@ -92,6 +130,17 @@ const StyledSubHeader = styled.div`
 
   background: ${({ theme: { colors } }) => colors.white};
   color: ${({ theme: { colors } }) => colors.black};
+`;
+
+const StyledControlUserButton = styled.button`
+  border-radius: 12px;
+  padding: 0 12px;
+
+  background-color: ${({ theme: { colors } }) => colors.pink};
+  color: ${({ theme: { colors } }) => colors.white};
+
+  font-weight: 800;
+  font-size: 14px;
 `;
 
 export default Header;
