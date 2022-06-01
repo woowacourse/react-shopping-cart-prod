@@ -17,6 +17,7 @@ export const CenterFlexBox = styled.div`
   flex: 3 1 0;
   display: flex;
   align-items: center;
+  flex-direction: column;
 `;
 
 export const RightFlexBox = styled.div`

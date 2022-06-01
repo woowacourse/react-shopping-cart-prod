@@ -10,7 +10,7 @@ function Input(
 
 const StyledInput = styled.input`
   width: 100%;
-  height: 44px;
+  height: 100%;
   padding: 14px;
   box-sizing: border-box;
   color: ${({ theme: { colors } }) => colors.black};
@@ -28,6 +28,10 @@ const StyledInput = styled.input`
 
   :disabled {
     background-color: ${({ theme: { colors } }) => colors.lightGray};
+  }
+
+  :read-only {
+    color: ${({ theme: { colors } }) => colors.gray};
   }
 
   input::-webkit-outer-spin-button,

@@ -9,7 +9,7 @@ type Props = {
 
 const DivideLine = styled.hr<Props>`
   width: 100%;
-
+  box-sizing: border-box;
   border-style: solid;
   border-color: ${({ color, theme: { colors } }) =>
     color === 'gray' ? colors.gray : colors.black};
