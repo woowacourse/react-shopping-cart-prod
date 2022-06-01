@@ -11,6 +11,7 @@ import Alert from "@shared/alert/Alert";
 import productListEquality from "@redux/equalities/productListEquality";
 import ProductDetail from "@product-detail/ProductDetail";
 import Login from "./pages/login/Login";
+import Signup from "./pages/signup/Signup";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -47,6 +48,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </BrowserRouter>
