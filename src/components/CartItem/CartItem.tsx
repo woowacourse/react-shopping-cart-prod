@@ -1,4 +1,4 @@
-import CART_MESSAGE from 'constants/message';
+import { CART_MESSAGE } from 'constants/message';
 import CheckBox from 'components/@shared/CheckBox';
 import { ReactComponent as Delete } from 'assets/Delete.svg';
 import Link from 'components/@shared/Link';

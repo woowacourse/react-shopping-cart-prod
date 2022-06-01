@@ -1,4 +1,4 @@
-import CART_MESSAGE from 'constants/message';
+import { CART_MESSAGE } from 'constants/message';
 import CartItem from 'components/CartItem/CartItem';
 import { CartProductState } from 'types';
 import CheckBox from 'components/@shared/CheckBox';

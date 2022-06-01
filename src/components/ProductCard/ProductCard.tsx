@@ -1,4 +1,4 @@
-import CART_MESSAGE from 'constants/message';
+import { CART_MESSAGE } from 'constants/message';
 import Link from 'components/@shared/Link';
 import PATH from 'constants/path';
 import { Product } from 'types/index';
