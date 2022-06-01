@@ -4,6 +4,21 @@ import { rest } from 'msw';
 const apiURL = 'http://localhost:8080/api';
 const KEY = 'mockUserList';
 
+const initMSW = () => {
+  localStorage.setItem(
+    KEY,
+    JSON.stringify([
+      {
+        username: 'halee',
+        password: 'halee123!',
+        email: 'halee@naver.com',
+        address: '잠실 루터 회관',
+        phoneNumber: '010-0000-0000',
+      },
+    ]),
+  );
+};
+
 const authHandlers = [
   // 회원가입
   rest.post(
@@ -26,7 +41,7 @@ const authHandlers = [
 
       localStorage.setItem(KEY, JSON.stringify(newMockUserList));
 
-      return res(ctx.status(200));
+      return res(ctx.status(201));
     },
   ),
 
@@ -88,3 +103,4 @@ const authHandlers = [
 ];
 
 export default authHandlers;
+export { initMSW };
