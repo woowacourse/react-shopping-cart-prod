@@ -5,22 +5,25 @@ import BaedaliProfileEyesImage from "@/assets/images/baedali-profile-eyes.png";
 const StyledDropdownContainer = styled.div`
   position: relative;
 
+  &:hover {
+    cursor: pointer;
+
+    .baedali {
+      background: url(${BaedaliProfileEyesImage});
+      background-size: contain;
+      transition: all ease 1s 0s;
+    }
+
+    .dropdown-container {
+      display: block;
+    }
+  }
+
   .baedali {
     width: 50px;
     height: 50px;
     background: url(${BaedaliProfileImage});
     background-size: contain;
-
-    &:hover {
-      cursor: pointer;
-      background: url(${BaedaliProfileEyesImage});
-      background-size: contain;
-      transition: all ease 1.5s 0s;
-
-      ~ div {
-        display: block;
-      }
-    }
   }
   .dropdown-container {
     display: none;
@@ -47,6 +50,10 @@ const StyledDropdownContainer = styled.div`
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+
+    &:hover {
+      background-color: #dddddd;
+    }
   }
 `;
 
