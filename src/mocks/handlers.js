@@ -5,6 +5,7 @@ import { productList } from './data';
 
 let userList = [];
 let cartList = [];
+let mockAccessToken = null;
 
 const handlers = [
   rest.get(SERVER_PATH.PRODUCTS, (req, res, ctx) => {
@@ -48,19 +49,19 @@ const handlers = [
   }),
 
   rest.post(SERVER_PATH.USER, (req, res, ctx) => {
-    const { userInfo } = req.body;
+    const userInfo = req.body;
     userList.push({ ...userInfo, id: uuidv4() });
     console.log(userList);
-
     return res(ctx.status(200), ctx.json());
   }),
 
   rest.post(SERVER_PATH.LOGIN, (req, res, ctx) => {
-    const { loginInfo } = req.body;
+    const loginInfo = req.body;
     const isSignedUpUser = userList.find(
       (user) => user.email === loginInfo.email && user.password === loginInfo.password
     );
     if (isSignedUpUser) {
+      mockAccessToken = isSignedUpUser.id;
       return res(ctx.status(200), ctx.json({ accessToken: isSignedUpUser.id }));
     }
     return res(ctx.status(404), ctx.json());
@@ -69,14 +70,19 @@ const handlers = [
   rest.delete(SERVER_PATH.USER, (req, res, ctx) => {
     const { accessToken } = req.body;
     const userInfoIndex = userList.findIndex((user) => user.id === accessToken);
+    mockAccessToken = null;
     userList.splice(userInfoIndex, 1);
     return res(ctx.status(200), ctx.json());
   }),
 
   rest.patch(SERVER_PATH.PASSWORD, (req, res, ctx) => {
-    const { password } = req.body;
-    console.log('password', password);
+    mockAccessToken = null;
     return res(ctx.status(200), ctx.json());
+  }),
+
+  rest.get(SERVER_PATH.ME, (req, res, ctx) => {
+    const isLoggedInUser = userList.find((user) => user.id === mockAccessToken);
+    return res(ctx.status(200), ctx.json(isLoggedInUser));
   }),
 ];
 

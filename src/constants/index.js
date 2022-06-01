@@ -6,6 +6,7 @@ const SERVER_PATH = {
   USER: `${API}/customers`,
   LOGIN: `${API}/login`,
   PASSWORD: `${API}/customers/password`,
+  ME: `${API}/customers/me`,
 };
 
 const ROUTES_PATH = {

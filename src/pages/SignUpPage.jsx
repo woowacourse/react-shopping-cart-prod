@@ -47,9 +47,7 @@ function SignUpPage() {
     }
 
     try {
-      const userInfo = { ...signUpInfo };
-      delete userInfo.passwordConfirm;
-      await axios.post(SERVER_PATH.USER, { userInfo });
+      await axios.post(SERVER_PATH.USER, { email, nickname, password });
       alert('회원가입 성공');
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {

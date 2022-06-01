@@ -31,7 +31,7 @@ function LoginPage() {
     }
 
     try {
-      const { data } = await axios.post(SERVER_PATH.LOGIN, { loginInfo });
+      const { data } = await axios.post(SERVER_PATH.LOGIN, { email, password });
       const { accessToken } = data;
       dispatch({ type: actionTypes.ADD_TOKEN, accessToken });
       alert('로그인 성공');

@@ -8,7 +8,6 @@ import { FaUserCircle } from 'react-icons/fa';
 
 function Header() {
   const accessToken = useSelector(({ user }) => user.accessToken);
-  // const accessToken = true;
 
   return (
     <StyledHeader>
