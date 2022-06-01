@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 const StyledButton = styled.button`
+  cursor: pointer;
   width: ${(props) => props.width};
   height: ${(props) => props.height};
   background-color: ${(props) => props.backgroundColor};
