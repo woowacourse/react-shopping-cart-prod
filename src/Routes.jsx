@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 
 import CartListPage from 'pages/CartListPage';
+import LoginPage from 'pages/LoginPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import ProductListPage from 'pages/ProductListPage';
 import SignUpPage from 'pages/SignUpPage';
@@ -22,6 +23,7 @@ function PageRoutes() {
 
       <Route element={<MembersLayout />}>
         <Route path={PAGE_LIST.SIGN_UP} element={<SignUpPage />} />
+        <Route path={PAGE_LIST.LOGIN} element={<LoginPage />} />
       </Route>
     </Routes>
   );

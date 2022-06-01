@@ -14,6 +14,7 @@ export const PAGE_LIST = {
   PRODUCT_LIST: '/products',
   CART_LIST: '/cart',
   SIGN_UP: '/signup',
+  LOGIN: '/login',
 };
 
 export const REQUEST_STATUS = {
