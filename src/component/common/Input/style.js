@@ -7,8 +7,8 @@ const Input = styled.input`
   box-sizing: border-box;
   width: 300px;
   height: 36px;
-  background: #ffffff;
-  border: 1px solid #b4b4b4;
+  background: ${({theme}) => theme.WHITE};
+  border: 1px solid ${({theme}) => theme.GRAY_650};
   border-radius: 4px;
   letter-spacing: 0.5px;
   padding: 10px;
@@ -41,6 +41,7 @@ const Input = styled.input`
 `;
 
 const Label = styled.label`
+  height: 16px;
   margin-bottom: 4px;
 `;
 

@@ -22,6 +22,7 @@ export default function Header() {
         <S.NavText to={PATH.CART}>장바구니</S.NavText>
         <S.NavText to={PATH.ORDER}>구매목록</S.NavText>
         <S.NavText to={PATH.LOGIN}>로그인</S.NavText>
+        <S.NavText to={PATH.SIGNUP}>회원가입</S.NavText> {/* 임시 */}
       </S.HeaderNavBox>
     </S.HeaderLayout>
   );
