@@ -6,12 +6,35 @@ import AuthButton from 'components/AuthButton';
 import { useState } from 'react';
 import Container from 'components/@shared/Container';
 import { validatePassword } from 'utils/validator';
+import { getCookie } from 'utils/cookie';
+import axios from 'axios';
 
 const PasswordEditModal = ({ handleModal }) => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
+
+  const editPassword = async () => {
+    if (!isCorrectPassword) return;
+
+    const accessToken = getCookie('accessToken');
+
+    const response = await axios.patch(
+      '/customers',
+      {
+        password: currentPassword,
+        newPassword,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    console.log(response);
+  };
 
   return (
     <ModalOverlay onCloseModal={handleModal}>
@@ -37,7 +60,7 @@ const PasswordEditModal = ({ handleModal }) => {
           />
           <AuthButton
             actionType="Change Password"
-            action={() => {}}
+            action={editPassword}
             isDisabled={!isCorrectPassword}
           />
         </div>

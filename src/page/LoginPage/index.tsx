@@ -7,6 +7,8 @@ import GuideText from 'components/GuideText';
 import AuthButton from 'components/AuthButton';
 import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
+import axios from 'axios';
+import { setCookie } from 'utils/cookie';
 
 const LoginPage = () => {
   const [isFulfilled, setIsFulfilled] = useState(false);
@@ -20,6 +22,19 @@ const LoginPage = () => {
     }
     setIsFulfilled(false);
   }, [email, password]);
+
+  const login = async () => {
+    if (!isFulfilled) return;
+
+    try {
+      const response = await axios.post('/auth/login', {
+        email,
+        password,
+      });
+
+      setCookie('accessToken', response.data.accessToken);
+    } catch (error) {}
+  };
 
   return (
     <Styled.Container>
@@ -40,7 +55,7 @@ const LoginPage = () => {
             inputValue={password}
             setInputValue={setPassword}
           />
-          <AuthButton actionType="Login" action={() => {}} isDisabled={!isFulfilled} />
+          <AuthButton actionType="Login" action={login} isDisabled={!isFulfilled} />
           <GuideText guide="Don’t have an account?" destination="Sign up" path="/signup" />
         </div>
       </Container>

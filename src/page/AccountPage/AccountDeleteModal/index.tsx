@@ -6,6 +6,8 @@ import AuthButton from 'components/AuthButton';
 import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
 import Styled from './index.style';
+import { getCookie } from 'utils/cookie';
+import axios from 'axios';
 
 const AccountDeleteModal = ({ handleModal }) => {
   const [password, setPassword] = useState('');
@@ -15,6 +17,20 @@ const AccountDeleteModal = ({ handleModal }) => {
   useEffect(() => {
     setIsCorrectPassword(password.length >= 10);
   }, [password]);
+
+  const deleteAccount = async () => {
+    if (!isCorrectPassword) return;
+
+    const accessToken = getCookie('accessToken');
+
+    const response = await axios.delete('/customers', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    console.log(response);
+  };
 
   return (
     <ModalOverlay onCloseModal={handleModal}>
@@ -34,7 +50,7 @@ const AccountDeleteModal = ({ handleModal }) => {
           />
           <AuthButton
             actionType="Delete your account"
-            action={() => {}}
+            action={deleteAccount}
             isDisabled={!isCorrectPassword}
             color="red"
           />

@@ -9,6 +9,7 @@ import GuideText from 'components/GuideText';
 import AuthButton from 'components/AuthButton';
 import Container from 'components/@shared/Container';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
+import axios from 'axios';
 
 const SignupPage = () => {
   const [email, setEmail] = useState('');
@@ -23,6 +24,18 @@ const SignupPage = () => {
   useEffect(() => {
     setIsFulfilled(isEmailCorrect && isNicknameCorrect && isPasswordCorrect);
   }, [email, nickname, password, isEmailCorrect, isNicknameCorrect, isPasswordCorrect]);
+
+  const signup = async () => {
+    if (!isFulfilled) return;
+
+    const response = await axios.post('/customers', {
+      email,
+      nickname,
+      password,
+    });
+
+    console.log(response);
+  };
 
   return (
     <Styled.Container>
@@ -60,7 +73,7 @@ const SignupPage = () => {
               setIsCorrect={setIsPasswordCorrect}
             />
           </Styled.InputContainer>
-          <AuthButton actionType="Sign Up" action={() => {}} isDisabled={!isFulfilled} />
+          <AuthButton actionType="Sign Up" action={signup} isDisabled={!isFulfilled} />
           <GuideText guide="Already have an account?" destination="Login" path="/login" />
         </div>
       </Container>

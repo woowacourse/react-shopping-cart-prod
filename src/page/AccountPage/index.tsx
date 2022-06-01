@@ -10,6 +10,8 @@ import { useState } from 'react';
 import { validateNickname } from 'utils/validator';
 import PasswordEditModal from './PasswordEditModal';
 import AccountDeleteModal from './AccountDeleteModal';
+import axios from 'axios';
+import { getCookie } from 'utils/cookie';
 
 const AccountPage = () => {
   const [email, setEmail] = useState('');
@@ -19,6 +21,26 @@ const AccountPage = () => {
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isAccountDeleteModalOpen, setIsAccountDeleteModalOpen] = useState(false);
+
+  const updateProfile = async () => {
+    if (!isNicknameCorrect) return;
+
+    const accessToken = getCookie('accessToken');
+
+    const response = await axios.patch(
+      '/customers',
+      {
+        nickname,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    console.log(response);
+  };
 
   return (
     <Styled.Container>
@@ -44,7 +66,7 @@ const AccountPage = () => {
           />
           <AuthButton
             actionType="Update Profile"
-            action={() => {}}
+            action={updateProfile}
             isDisabled={!isNicknameCorrect}
           />
 
