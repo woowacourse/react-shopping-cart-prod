@@ -5,8 +5,8 @@ import { API_URL } from 'api/constants';
 import { cartActionType } from 'store/reducers/cart.reducer';
 import { productActionTypes } from 'store/reducers/product.reducer';
 
-import { addToCartAsync, getCartAsync } from 'store/actions/cart.action';
-import { fetchProductListAsync } from 'store/actions/product.action';
+import { addToCartThunk, getCartThunk } from 'store/actions/cart.action';
+import { fetchProductListThunk } from 'store/actions/product.action';
 
 import { productList } from 'store/actions/__test__/fixture';
 
@@ -59,7 +59,7 @@ describe('1. 액션 디스패치 테스트', () => {
 
   describe('1-1. 상품 스토어 정상 액션 디스패치 테스트', () => {
     test('상품을 불러오는 것에 성공하면 상품 정보와 함께 상품 정보 업데이트 action이 dispatch 되어야 한다.', async () => {
-      await fetchProductListAsync()(mockDispatch);
+      await fetchProductListThunk()(mockDispatch);
 
       expect(mockDispatch).toHaveBeenNthCalledWith(1, { type: productActionTypes.START });
       expect(mockDispatch).toHaveBeenNthCalledWith(2, {
@@ -71,7 +71,7 @@ describe('1. 액션 디스패치 테스트', () => {
 
   describe('1-2. 장바구니 스토어 정상 액션 디스패치 테스트', () => {
     async function addSampleProductToCart() {
-      await addToCartAsync(sampleProduct.id, sampleQuantity)(mockDispatch);
+      await addToCartThunk(sampleProduct.id, sampleQuantity)(mockDispatch);
     }
 
     test('상품 추가를 성공하면 해당 상품이 추가된 장바구니 정보와 함께 장바구니 갱신 action이 dispatch 되어야 한다.', async () => {
@@ -85,7 +85,7 @@ describe('1. 액션 디스패치 테스트', () => {
     });
 
     test('장바구니 목록을 불러오기에 성공하면 해당 정보와 함께 장바구니 갱신 action이 dispatch 되어야 한다.', async () => {
-      await getCartAsync()(mockDispatch);
+      await getCartThunk()(mockDispatch);
 
       expect(mockDispatch).toHaveBeenNthCalledWith(1, { type: cartActionType.START });
       expect(mockDispatch).toHaveBeenNthCalledWith(2, {
@@ -105,7 +105,7 @@ describe('2. 오류 액션 디스패치 테스트', () => {
 
   describe('2-1. 상품 스토어 오류 디스패치 테스트', () => {
     test('상품을 불러오는 것에 실패하면 실패 action이 dispatch 되어야 한다.', async () => {
-      await fetchProductListAsync()(mockDispatch);
+      await fetchProductListThunk()(mockDispatch);
 
       expect(mockDispatch).toHaveBeenNthCalledWith(1, { type: productActionTypes.START });
       expect(mockDispatch).toHaveBeenNthCalledWith(2, { type: cartActionType.FAIL });
@@ -114,7 +114,7 @@ describe('2. 오류 액션 디스패치 테스트', () => {
 
   describe('2-2. 장바구니 스토어 오류 디스패치 테스트', () => {
     async function addSampleProductToCart() {
-      await addToCartAsync(sampleProduct.id, sampleQuantity)(mockDispatch);
+      await addToCartThunk(sampleProduct.id, sampleQuantity)(mockDispatch);
     }
 
     test('상품 추가를 실패하면 실패 action이 dispatch 되어야 한다.', async () => {
@@ -125,7 +125,7 @@ describe('2. 오류 액션 디스패치 테스트', () => {
     });
 
     test('장바구니 목록을 불러오기에 실패하면 실패 action이 dispatch 되어야 한다.', async () => {
-      await getCartAsync()(mockDispatch);
+      await getCartThunk()(mockDispatch);
 
       expect(mockDispatch).toHaveBeenNthCalledWith(1, { type: cartActionType.START });
       expect(mockDispatch).toHaveBeenNthCalledWith(2, { type: cartActionType.FAIL });

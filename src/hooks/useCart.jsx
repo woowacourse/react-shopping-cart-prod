@@ -1,9 +1,9 @@
 import {
-  addToCartAsync,
-  deleteCartProductAsync,
-  getCartAsync,
-  toggleProductCheck,
-  updateCartProductQuantityAsync,
+  addToCartThunk,
+  deleteCartProductThunk,
+  getCartThunk,
+  toggleProductCheckThunk,
+  updateCartProductQuantityThunk,
   updateCheckedList,
 } from 'store/actions/cart.action';
 import { cartStoreSelector } from 'store/selector';
@@ -18,15 +18,15 @@ const useCart = () => {
   const cartLength = cart && Object.keys(cart).length;
 
   const loadCart = () => {
-    dispatch(getCartAsync());
+    dispatch(getCartThunk());
   };
 
   const addProduct = ({ id, count }) => {
-    dispatch(addToCartAsync(id, count));
+    dispatch(addToCartThunk(id, count));
   };
 
   const dispatchQuantityUpdate = (productId, quantity) => {
-    dispatch(updateCartProductQuantityAsync(productId, quantity));
+    dispatch(updateCartProductQuantityThunk(productId, quantity));
   };
 
   const incrementCartProduct = (productId, currentQuantity) => {
@@ -43,14 +43,14 @@ const useCart = () => {
 
   const deleteProduct = (productIdArray) => {
     if (window.confirm(WARNING_MESSAGES.PRODUCTS_DELETE(1))) {
-      dispatch(deleteCartProductAsync(productIdArray));
+      dispatch(deleteCartProductThunk(productIdArray));
     }
   };
 
   const isChecked = (productId) => checkedProductList.includes(productId);
 
   const toggleCheck = (productId) => {
-    dispatch(toggleProductCheck(productId));
+    dispatch(toggleProductCheckThunk(productId));
   };
 
   const isAllChecked = cartLength === checkedProductList.length;
@@ -71,7 +71,7 @@ const useCart = () => {
       checkedListLength !== 0 &&
       window.confirm(WARNING_MESSAGES.PRODUCTS_DELETE(checkedListLength))
     ) {
-      dispatch(deleteCartProductAsync(checkedProductList));
+      dispatch(deleteCartProductThunk(checkedProductList));
     }
   };
 

@@ -2,7 +2,7 @@ import { deleteUser, login, updateNickname } from 'api/userApi';
 import { ERROR_MESSAGES } from 'constants/messages';
 import { userActionType } from 'store/reducers/user.reducer';
 
-export const loginUser = (loginData) => async (dispatch) => {
+export const loginUserThunk = (loginData) => async (dispatch) => {
   dispatch({ type: userActionType.START });
 
   try {
@@ -24,7 +24,7 @@ export const logoutUser = () => {
   };
 };
 
-export const updateUserNickname = (newNickname) => async (dispatch) => {
+export const updateUserNicknameThunk = (newNickname) => async (dispatch) => {
   dispatch({ type: userActionType.START });
 
   try {

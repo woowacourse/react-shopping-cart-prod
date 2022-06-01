@@ -1,7 +1,7 @@
 import { getProductList } from 'api/api';
 import { productActionTypes } from 'store/reducers/product.reducer';
 
-export const fetchProductListAsync = (page) => async (dispatch) => {
+export const fetchProductListThunk = (page) => async (dispatch) => {
   dispatch({ type: productActionTypes.START });
   try {
     const { productList, totalProductCount } = await getProductList(page);

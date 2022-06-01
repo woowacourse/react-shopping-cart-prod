@@ -25,15 +25,15 @@ const handleCartDispatch = async ({
   }
 };
 
-export const addToCartAsync = (productId, quantity) => async (dispatch) => {
+export const addToCartThunk = (productId, quantity) => async (dispatch) => {
   await handleCartDispatch({ dispatch, func: addToCart, params: [productId, quantity] });
 };
 
-export const getCartAsync = () => async (dispatch) => {
+export const getCartThunk = () => async (dispatch) => {
   await handleCartDispatch({ dispatch, actionType: cartActionType.FETCH, func: getCart });
 };
 
-export const updateCartProductQuantityAsync =
+export const updateCartProductQuantityThunk =
   (productId, quantity) => async (dispatch) => {
     await handleCartDispatch({
       dispatch,
@@ -42,7 +42,7 @@ export const updateCartProductQuantityAsync =
     });
   };
 
-export const deleteCartProductAsync = (productIdArray) => async (dispatch) => {
+export const deleteCartProductThunk = (productIdArray) => async (dispatch) => {
   await handleCartDispatch({
     dispatch,
     actionType: cartActionType.DELETE,
@@ -51,7 +51,7 @@ export const deleteCartProductAsync = (productIdArray) => async (dispatch) => {
   });
 };
 
-export const toggleProductCheck = (productId) => (dispatch, getState) => {
+export const toggleProductCheckThunk = (productId) => (dispatch, getState) => {
   const {
     cart: { checkedProductList: prevList },
   } = getState();

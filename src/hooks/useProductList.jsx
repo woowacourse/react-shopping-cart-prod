@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-import { fetchProductListAsync } from 'store/actions/product.action';
+import { fetchProductListThunk } from 'store/actions/product.action';
 import { productSelector } from 'store/selector';
 import useReduxState from './useReduxState';
 
@@ -15,7 +15,7 @@ export default function useProductList() {
   const currentPage = searchParams.get('page') ?? 1;
 
   useEffect(() => {
-    dispatch(fetchProductListAsync(currentPage));
+    dispatch(fetchProductListThunk(currentPage));
   }, [currentPage]);
 
   return { isLoading, productList, pageCount, currentPage };
