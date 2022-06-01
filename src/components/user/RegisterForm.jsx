@@ -4,6 +4,7 @@ import { addUser, checkEmailDuplicate } from 'api/userApi';
 import { Form, Input } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
+import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 
 const emailPattern =
   /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
@@ -42,7 +43,7 @@ function RegisterForm() {
   };
   const handleEmailDuplicateCheck = async () => {
     if (emailValue.length === 0 || !isEmailValid) {
-      alert('올바르지 않은 이메일 형식입니다.');
+      alert(ERROR_MESSAGES.INVALID_EMAIL);
       return;
     }
 
@@ -52,7 +53,7 @@ function RegisterForm() {
       setIsUniqueEmail(success);
 
       if (!success) {
-        alert('사용할 수 없는 이메일입니다.');
+        alert(ERROR_MESSAGES.DUPLICATE_EMAIL);
       }
     } catch ({ message }) {
       setIsUniqueEmail(false);
@@ -66,7 +67,7 @@ function RegisterForm() {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!isAllValid || !isUniqueEmail || passwordValue !== passwordConfirmValue) {
-      alert('땡!');
+      alert(ERROR_MESSAGES.INVALID_FORM);
       return;
     }
 
@@ -76,7 +77,7 @@ function RegisterForm() {
         nickname: nicknameValue,
         password: passwordValue,
       });
-      alert('성공~~!');
+      alert(ALERT_MESSAGES.REGISTER_SUCCESS);
       navigate('/login');
     } catch ({ message }) {
       alert(message);

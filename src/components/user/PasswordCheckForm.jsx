@@ -4,6 +4,7 @@ import { Form, Input } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
 import { checkPassword } from 'api/userApi';
+import { ERROR_MESSAGES } from 'constants/messages';
 
 function PasswordCheckForm({ nextPath }) {
   const [passwordValue, setPasswordValue] = useInputValue();
@@ -21,7 +22,7 @@ function PasswordCheckForm({ nextPath }) {
       const success = await checkPassword(passwordValue);
 
       if (!success) {
-        alert('비밀번호가 올바르지 않습니다.');
+        alert(ERROR_MESSAGES.INCORRECT_PASSWORD);
         return;
       }
 

@@ -1,5 +1,6 @@
 import { updatePassword } from 'api/userApi';
 import { Form, Input } from 'components/common';
+import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
 
@@ -25,14 +26,14 @@ function UserPasswordUpdateForm() {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!isPasswordValid || passwordValue !== passwordConfirmValue) {
-      alert('땡!');
+      alert(ERROR_MESSAGES.INVALID_FORM);
       return;
     }
 
     try {
       await updatePassword(passwordValue);
 
-      alert('성공~~!');
+      alert(ALERT_MESSAGES.USER_PASSWORD_UPDATE_SUCCESS);
       navigate('/user-info');
     } catch ({ message }) {
       alert(message);

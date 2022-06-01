@@ -7,6 +7,7 @@ import useReduxState from 'hooks/useReduxState';
 
 import { Form, Input } from 'components/common';
 import { updateUserNickname } from 'store/actions/user';
+import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 
 const nicknamePattern = /^[가-힣]{1,5}$/;
 function UserInfoUpdateForm() {
@@ -26,13 +27,13 @@ function UserInfoUpdateForm() {
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!isNicknameValid) {
-      alert('땡!');
+      alert(ERROR_MESSAGES.INVALID_FORM);
       return;
     }
 
     try {
       dispatch(updateUserNickname(nicknameValue));
-      alert('성공~~!');
+      alert(ALERT_MESSAGES.USER_INFO_UPDATE_SUCCESS);
       navigate('/user-info');
     } catch ({ message }) {
       alert(message);

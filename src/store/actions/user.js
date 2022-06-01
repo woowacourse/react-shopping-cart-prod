@@ -1,4 +1,5 @@
 import { deleteUser, login, updateNickname } from 'api/userApi';
+import { ERROR_MESSAGES } from 'constants/messages';
 import { userActionType } from 'store/reducers/user';
 
 export const loginUser = (loginData) => async (dispatch) => {
@@ -10,7 +11,7 @@ export const loginUser = (loginData) => async (dispatch) => {
     dispatch({ type: userActionType.UPDATE, payload: { nickname } });
   } catch (error) {
     dispatch({ type: userActionType.FAIL });
-    throw new Error('로그인에 실패했습니다.');
+    throw new Error(ERROR_MESSAGES.LOGIN_FAIL);
   }
 };
 
@@ -32,7 +33,7 @@ export const updateUserNickname = (newNickname) => async (dispatch) => {
     dispatch({ type: userActionType.UPDATE, payload: { nickname: newNickname } });
   } catch (error) {
     dispatch({ type: userActionType.FAIL });
-    throw new Error('회원정보 수정에 실패했습니다.');
+    throw new Error(ERROR_MESSAGES.USER_INFO_UPDATE_FAIL);
   }
 };
 
@@ -46,6 +47,6 @@ export const deleteUserThunk = () => async (dispatch) => {
     dispatch({ type: userActionType.DELETE });
   } catch (error) {
     dispatch({ type: userActionType.FAIL });
-    throw new Error('회원정보 삭제에 실패했습니다.');
+    throw new Error(ERROR_MESSAGES.USER_DELETE_FAIL);
   }
 };
