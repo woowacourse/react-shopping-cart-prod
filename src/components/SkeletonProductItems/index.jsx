@@ -1,9 +1,10 @@
+import { v4 as uuidv4 } from 'uuid';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
 const SkeletonProductItems = () =>
-  Array.from({ length: 16 }).map((_, i) => (
-    <CommonStyled.Container key={i} width="100%" flexDirection="column">
+  Array.from({ length: 16 }).map(() => (
+    <CommonStyled.Container key={uuidv4()} width="100%" flexDirection="column">
       <Styled.ImageWrapper />
       <CommonStyled.Container
         justifyContents="space-between"
