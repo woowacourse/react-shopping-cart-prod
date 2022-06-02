@@ -1,10 +1,11 @@
+import { cartActionType } from 'store/reducers/cart.reducer';
+
 import {
   sendAddToCartRequest,
   sendDeleteCartProductRequest,
   sendGetCartRequest,
   sendUpdateCartProductQuantityRequest,
 } from 'api/cart.api';
-import { cartActionType } from 'store/reducers/cart.reducer';
 
 const handleCartDispatch = async ({
   dispatch,

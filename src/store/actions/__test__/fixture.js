@@ -3,7 +3,8 @@ export const productList = [
     id: 1,
     name: '캠핑 의자',
     price: 35000,
-    imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/camping-chair.jpg',
+    imageURL:
+      'https://thawing-fortress-83192.herokuapp.com/static/images/camping-chair.jpg',
     quantity: 100,
   },
   {

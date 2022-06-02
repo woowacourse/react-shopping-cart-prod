@@ -1,6 +1,8 @@
-import { PageTitle } from 'components/common';
-import { UserInfoUpdateForm } from 'components/user';
 import React from 'react';
+
+import { PageTitle } from 'components/common';
+
+import { UserInfoUpdateForm } from 'components/user';
 
 function UserInfoUpdate() {
   return (

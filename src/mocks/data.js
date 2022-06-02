@@ -4,7 +4,8 @@ export default {
       id: 1,
       name: '캠핑 의자',
       price: 35000,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/camping-chair.jpg',
+      imageURL:
+        'https://thawing-fortress-83192.herokuapp.com/static/images/camping-chair.jpg',
       quantity: 100,
     },
     {
@@ -25,7 +26,8 @@ export default {
       id: 4,
       name: '소풍 바구니',
       price: 15000,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/picnic-box.jpg',
+      imageURL:
+        'https://thawing-fortress-83192.herokuapp.com/static/images/picnic-box.jpg',
       quantity: 100,
     },
     {
@@ -46,14 +48,16 @@ export default {
       id: 7,
       name: '손전등',
       price: 45000,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/flashlight.jpg',
+      imageURL:
+        'https://thawing-fortress-83192.herokuapp.com/static/images/flashlight.jpg',
       quantity: 100,
     },
     {
       id: 8,
       name: '무쇠팬',
       price: 34000,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/frying-pan.jpg',
+      imageURL:
+        'https://thawing-fortress-83192.herokuapp.com/static/images/frying-pan.jpg',
       quantity: 100,
     },
     {
@@ -74,7 +78,8 @@ export default {
       id: 11,
       name: '침낭',
       price: 40000,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/sleeping-bag.jpg',
+      imageURL:
+        'https://thawing-fortress-83192.herokuapp.com/static/images/sleeping-bag.jpg',
       quantity: 100,
     },
     {
@@ -95,7 +100,8 @@ export default {
       id: 14,
       name: '모카포트',
       price: 40000,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/coffee-maker.jpg',
+      imageURL:
+        'https://thawing-fortress-83192.herokuapp.com/static/images/coffee-maker.jpg',
       quantity: 100,
     },
     {
@@ -109,7 +115,8 @@ export default {
       id: 16,
       name: '불꽃놀이',
       price: 5000,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/firecracker.jpg',
+      imageURL:
+        'https://thawing-fortress-83192.herokuapp.com/static/images/firecracker.jpg',
       quantity: 100,
     },
     {
@@ -123,7 +130,8 @@ export default {
       id: 18,
       name: '스위스 칼',
       price: 26700,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/swiss-knife.jpg',
+      imageURL:
+        'https://thawing-fortress-83192.herokuapp.com/static/images/swiss-knife.jpg',
       quantity: 100,
     },
     {

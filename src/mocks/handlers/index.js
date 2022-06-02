@@ -1,13 +1,13 @@
-import { rest } from 'msw';
-import { API_ENDPOINT, API_URL } from 'api/constants';
-
-import { handleGetProductsRequest, handleGetImageRequest } from './product.handler';
 import {
   handleGetShoppingCartRequest,
   handlePostShoppingCartRequest,
   handlePatchShoppingCartRequest,
   handleDeleteShoppingCartRequest,
-} from './cart.handler';
+} from 'mocks/handlers/cart.handler';
+import {
+  handleGetProductsRequest,
+  handleGetImageRequest,
+} from 'mocks/handlers/product.handler';
 import {
   handleCheckUniqueEmailRequest,
   handlePostUserRequest,
@@ -16,7 +16,10 @@ import {
   handlePasswordCheckRequest,
   handleUserDataUpdateRequest,
   handleUserDeleteRequest,
-} from './user.handler';
+} from 'mocks/handlers/user.handler';
+import { rest } from 'msw';
+
+import { API_ENDPOINT, API_URL } from 'api/constants';
 
 export default [
   rest.get(`${API_URL}${API_ENDPOINT.PRODUCTS}`, handleGetProductsRequest),

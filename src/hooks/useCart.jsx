@@ -8,8 +8,9 @@ import {
 } from 'store/actions/cart.action';
 import { cartStoreSelector } from 'store/selector';
 
+import useReduxState from 'hooks/useReduxState';
+
 import { WARNING_MESSAGES } from 'constants/messages';
-import useReduxState from './useReduxState';
 
 const useCart = () => {
   const [cartState, dispatch] = useReduxState(cartStoreSelector);

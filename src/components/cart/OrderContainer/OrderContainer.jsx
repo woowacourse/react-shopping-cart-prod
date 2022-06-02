@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { Button } from 'components/common';
-import * as S from 'components/cart/OrderContainer/OrderContainer.style';
 import useCart from 'hooks/useCart';
+
+import { Button } from 'components/common';
+
+import * as S from 'components/cart/OrderContainer/OrderContainer.style';
 
 function OrderContainer() {
   const { checkedProductCount, totalPrice } = useCart();

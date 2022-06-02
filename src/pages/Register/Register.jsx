@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { PageTitle } from 'components/common';
+
 import { RegisterForm } from 'components/user';
 
 function Register() {

@@ -1,8 +1,8 @@
 import React from 'react';
-
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { PageTitle } from 'components/common';
+
 import { PasswordCheckForm } from 'components/user';
 
 function PasswordCheck() {

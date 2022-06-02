@@ -1,8 +1,7 @@
 import React from 'react';
 
-import errorImage from 'components/common/Image/error.svg';
-
 import * as S from 'components/common/Image/Image.style';
+import errorImage from 'components/common/Image/error.svg';
 
 function Image({ src, alt, width = '100%' }) {
   const handleError = (e) => {

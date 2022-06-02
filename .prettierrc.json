@@ -5,5 +5,16 @@
   "arrowParens": "always",
   "trailingComma": "all",
   "endOfLine": "auto",
-  "singleQuote": true
+  "singleQuote": true,
+  "importOrder": [
+    "^(@|store)(.*|$)",
+    "^(@|hooks)(.*|$)",
+    "^(@|api)(.*|$)",
+    "^(@|pages)(.*|$)",
+    "^(@|components/common)(.*|$)",
+    "^(@|components)(.*|$)",
+    "^(@|constants)(.*|$)",
+    "^(@|styles)(.*|$)"
+  ],
+  "importOrderSeparation": true
 }

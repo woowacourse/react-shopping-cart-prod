@@ -1,9 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import useInputValue from 'hooks/useInputValue';
+
+import { sendCheckPasswordRequest } from 'api/user.api';
 
 import { Form, Input } from 'components/common';
-import useInputValue from 'hooks/useInputValue';
-import { useNavigate } from 'react-router-dom';
-import { sendCheckPasswordRequest } from 'api/user.api';
+
 import { ERROR_MESSAGES } from 'constants/messages';
 
 function PasswordCheckForm({ nextPath }) {

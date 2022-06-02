@@ -1,10 +1,12 @@
+import { userActionType } from 'store/reducers/user.reducer';
+
 import {
   sendDeleteUserRequest,
   sendLoginRequest,
   sendUpdateNicknameRequest,
 } from 'api/user.api';
+
 import { ERROR_MESSAGES } from 'constants/messages';
-import { userActionType } from 'store/reducers/user.reducer';
 
 export const loginUserThunk = (loginData) => async (dispatch) => {
   dispatch({ type: userActionType.START });

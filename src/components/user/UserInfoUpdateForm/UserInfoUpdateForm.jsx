@@ -1,16 +1,17 @@
 import React from 'react';
-
 import { useNavigate } from 'react-router-dom';
+
+import { updateUserNicknameThunk } from 'store/actions/user.action';
+import { nicknameSelector } from 'store/selector';
 
 import useInputValue from 'hooks/useInputValue';
 import useReduxState from 'hooks/useReduxState';
 
 import { Form, Input } from 'components/common';
-import { updateUserNicknameThunk } from 'store/actions/user.action';
+
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
-import { nicknameSelector } from 'store/selector';
-import { ROUTE } from 'constants/route';
 import { NICKNAME_PATTERN } from 'constants/pattern';
+import { ROUTE } from 'constants/route';
 
 const { USER_INFO_RULE_ERROR } = ERROR_MESSAGES;
 

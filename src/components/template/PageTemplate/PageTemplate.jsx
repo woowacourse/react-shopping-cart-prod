@@ -1,11 +1,12 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
+
+import { isLoggedInSelector } from 'store/selector';
+
+import useReduxState from 'hooks/useReduxState';
 
 import Header from 'components/template/Header/Header';
-
 import * as S from 'components/template/PageTemplate/PageTemplate.style';
-import useReduxState from 'hooks/useReduxState';
-import { Outlet } from 'react-router-dom';
-import { isLoggedInSelector } from 'store/selector';
 
 function PageTemplate() {
   const [isLoggedIn] = useReduxState(isLoggedInSelector);

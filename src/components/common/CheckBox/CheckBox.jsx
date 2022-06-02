@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Icon } from 'components/common';
-
 import * as S from 'components/common/CheckBox/CheckBox.style';
 
 function CheckBox({ checked = false, onClick = () => {} }) {

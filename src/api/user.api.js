@@ -1,5 +1,5 @@
-import customInstance from 'api/customInstance';
 import { API_ENDPOINT } from 'api/constants';
+import customInstance from 'api/customInstance';
 
 export const sendCheckEmailDuplicateRequest = async (email) => {
   const response = await customInstance.get(API_ENDPOINT.USER, {

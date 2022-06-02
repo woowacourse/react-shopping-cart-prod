@@ -1,9 +1,13 @@
-import { sendGetUserRequest } from 'api/user.api';
-import { Button } from 'components/common';
-import { ROUTE } from 'constants/route';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+import { sendGetUserRequest } from 'api/user.api';
+
+import { Button } from 'components/common';
+
 import * as S from 'components/user/UserInfoSection/UserInfoSection.style';
+
+import { ROUTE } from 'constants/route';
 
 function UserInfoSection({ openModal }) {
   const [userData, setUserData] = useState(null);

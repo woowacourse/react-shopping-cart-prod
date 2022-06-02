@@ -1,10 +1,11 @@
 import React from 'react';
 
+import { useModal } from 'hooks/useModal';
+
 import { Modal, PageTitle } from 'components/common';
 
-import { useModal } from 'hooks/useModal';
-import UserInfoSection from 'components/user/UserInfoSection/UserInfoSection';
 import DeleteUserForm from 'components/user/DeleteUserForm/DeleteUserForm';
+import UserInfoSection from 'components/user/UserInfoSection/UserInfoSection';
 
 function UserInfo() {
   const { isModalOpen, openModal, closeModal } = useModal();

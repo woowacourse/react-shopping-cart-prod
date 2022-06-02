@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { Counter } from 'components/common';
+import useCart from 'hooks/useCart';
 import { useCount } from 'hooks/useCount';
 
+import { Counter } from 'components/common';
+
 import * as S from 'components/product/CartAddForm/CartAddForm.style';
+
 import * as GlobalStyled from 'styles/GlobalStyles';
-import useCart from 'hooks/useCart';
 
 function CartAddForm({ product: { id, name, price, quantity }, closeModal }) {
   const [count, handleIncrement, handleDecrement] = useCount({

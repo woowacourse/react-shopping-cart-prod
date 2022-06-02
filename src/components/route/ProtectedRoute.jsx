@@ -1,5 +1,6 @@
-import { ROUTE } from 'constants/route';
 import { Navigate, Outlet } from 'react-router-dom';
+
+import { ROUTE } from 'constants/route';
 
 const ProtectedRoute = ({ condition, redirectPath = ROUTE.HOME }) => {
   if (!condition) {

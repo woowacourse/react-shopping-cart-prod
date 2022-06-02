@@ -1,7 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
 import { productCountSelector } from 'store/selector';
 
 import * as S from 'components/common/Pagination/Pagination.style';

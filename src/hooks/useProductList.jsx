@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-
 import { useSearchParams } from 'react-router-dom';
 
 import { fetchProductListThunk } from 'store/actions/product.action';
 import { productSelector } from 'store/selector';
-import useReduxState from './useReduxState';
+
+import useReduxState from 'hooks/useReduxState';
 
 export default function useProductList() {
   const [productState, dispatch] = useReduxState(productSelector);

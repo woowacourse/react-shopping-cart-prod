@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { CartProductList, OrderContainer } from 'components/cart';
+import * as S from 'pages/ShoppingCart/ShoppingCart.style';
+
 import { PageTitle } from 'components/common';
 
-import * as S from 'pages/ShoppingCart/ShoppingCart.style';
+import { CartProductList, OrderContainer } from 'components/cart';
 
 function ShoppingCart() {
   return (

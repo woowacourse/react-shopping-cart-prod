@@ -1,5 +1,6 @@
-import { API_ENDPOINT, PRODUCT_LIST_PAGE_LIMIT } from './constants';
-import customInstance from './customInstance';
+import customInstance from 'api/customInstance';
+
+import { API_ENDPOINT, PRODUCT_LIST_PAGE_LIMIT } from 'constants';
 
 export const sendGetProductListRequest = async (page) => {
   const response = await customInstance.get(`${API_ENDPOINT.PRODUCTS}`, {

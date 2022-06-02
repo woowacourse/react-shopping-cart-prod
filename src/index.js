@@ -1,15 +1,14 @@
+import App from 'App';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+
 import { store } from 'store/store';
 
-import App from 'App';
-
-import { ThemeProvider } from 'styled-components';
 import { GlobalStyle } from 'styles/GlobalStyles';
 import Theme from 'styles/Theme';
-import { BrowserRouter } from 'react-router-dom';
 
 if (process.env.NODE_ENV === 'development') {
   if (window.location.pathname === '/react-shopping-cart') {

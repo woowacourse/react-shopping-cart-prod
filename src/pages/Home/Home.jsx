@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Pagination } from 'components/common';
-import { ProductList } from 'components/product';
-
 import * as S from 'pages/Home/Home.style';
+
+import { Pagination } from 'components/common';
+
+import { ProductList } from 'components/product';
 
 function Home() {
   return (

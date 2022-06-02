@@ -1,16 +1,16 @@
-import { ROUTE } from 'constants/route';
-
 import Home from 'pages/Home/Home';
-import OrderList from 'pages/OrderList/OrderList';
-import ProductDetail from 'pages/ProductDetail/ProductDetail';
-import ShoppingCart from 'pages/ShoppingCart/ShoppingCart';
-import NotFound from 'pages/NotFound/NotFound';
-import Register from 'pages/Register/Register';
 import Login from 'pages/Login/Login';
-import UserInfo from 'pages/UserInfo/UserInfo';
+import NotFound from 'pages/NotFound/NotFound';
+import OrderList from 'pages/OrderList/OrderList';
 import PasswordCheck from 'pages/PasswordCheck/PasswordCheck';
+import ProductDetail from 'pages/ProductDetail/ProductDetail';
+import Register from 'pages/Register/Register';
+import ShoppingCart from 'pages/ShoppingCart/ShoppingCart';
+import UserInfo from 'pages/UserInfo/UserInfo';
 import UserInfoUpdate from 'pages/UserInfoUpdate/UserInfoUpdate';
 import UserPasswordUpdate from 'pages/UserPasswordUpdate/UserPasswordUpdate';
+
+import { ROUTE } from 'constants/route';
 
 export const COMMON_PAGES = [
   { path: ROUTE.HOME, element: <Home /> },

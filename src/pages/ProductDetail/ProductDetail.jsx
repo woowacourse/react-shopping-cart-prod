@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { ErrorContainer } from 'components/common';
 
 function ProductDetail() {

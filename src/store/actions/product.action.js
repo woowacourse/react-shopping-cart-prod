@@ -1,5 +1,6 @@
-import { sendGetProductListRequest } from 'api/product.api';
 import { productActionTypes } from 'store/reducers/product.reducer';
+
+import { sendGetProductListRequest } from 'api/product.api';
 
 export const fetchProductListThunk = (page) => async (dispatch) => {
   dispatch({ type: productActionTypes.START });

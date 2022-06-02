@@ -1,14 +1,13 @@
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
-import { API_URL } from 'api/constants';
 
+import { productList } from 'store/actions/__test__/fixture';
+import { addToCartThunk, getCartThunk } from 'store/actions/cart.action';
+import { fetchProductListThunk } from 'store/actions/product.action';
 import { cartActionType } from 'store/reducers/cart.reducer';
 import { productActionTypes } from 'store/reducers/product.reducer';
 
-import { addToCartThunk, getCartThunk } from 'store/actions/cart.action';
-import { fetchProductListThunk } from 'store/actions/product.action';
-
-import { productList } from 'store/actions/__test__/fixture';
+import { API_URL } from 'api/constants';
 
 const mockDispatch = jest.fn();
 const mockAlert = jest.fn();

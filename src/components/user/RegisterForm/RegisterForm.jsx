@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import useInputValue from 'hooks/useInputValue';
 
 import { sendAddUserRequest, sendCheckEmailDuplicateRequest } from 'api/user.api';
+
 import { Form, Input } from 'components/common';
-import useInputValue from 'hooks/useInputValue';
-import { useNavigate } from 'react-router-dom';
+
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
-import { ROUTE } from 'constants/route';
 import { EMAIL_PATTERN, NICKNAME_PATTERN, PASSWORD_PATTERN } from 'constants/pattern';
+import { ROUTE } from 'constants/route';
 
 const { USER_INFO_RULE_ERROR } = ERROR_MESSAGES;
 

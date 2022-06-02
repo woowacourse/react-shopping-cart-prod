@@ -1,7 +1,7 @@
-import { PRODUCT_LIST_PAGE_LIMIT } from 'api/constants';
-
 import cartReducer, { cartActionType } from 'store/reducers/cart.reducer';
 import productReducer, { productActionTypes } from 'store/reducers/product.reducer';
+
+import { PRODUCT_LIST_PAGE_LIMIT } from 'api/constants';
 
 describe('상품 리듀서 테스트', () => {
   const initialState = {

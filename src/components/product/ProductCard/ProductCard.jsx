@@ -6,11 +6,12 @@ import { useModal } from 'hooks/useModal';
 import { Image, Icon, Modal } from 'components/common';
 
 import { CartAddForm } from 'components/product';
-
 import * as S from 'components/product/ProductCard/ProductCard.style';
-import { color } from 'styles/Theme';
-import * as GlobalStyled from 'styles/GlobalStyles';
+
 import { WARNING_MESSAGES } from 'constants/messages';
+
+import * as GlobalStyled from 'styles/GlobalStyles';
+import { color } from 'styles/Theme';
 
 function ProductCard({ product, isLoggedIn }) {
   const { id, imageURL, name, price } = product;

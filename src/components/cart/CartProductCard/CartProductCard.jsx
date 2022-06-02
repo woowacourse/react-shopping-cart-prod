@@ -1,11 +1,13 @@
 import React, { useCallback, useMemo } from 'react';
 
+import useCart from 'hooks/useCart';
+
 import { CheckBox, Counter, Icon, Image } from 'components/common';
+
+import * as S from 'components/cart/CartProductCard/CartProductCard.style';
 
 import { Position } from 'styles/GlobalStyles';
 import { color } from 'styles/Theme.js';
-import * as S from 'components/cart/CartProductCard/CartProductCard.style';
-import useCart from 'hooks/useCart';
 
 function CartProductCard({
   product: { id: productId, name, price, imageURL },

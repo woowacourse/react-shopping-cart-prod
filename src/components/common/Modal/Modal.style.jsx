@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { color } from '../../../styles/Theme';
+
+import { color } from 'styles/Theme';
 
 export const Root = styled.div`
   width: 100vw;
