@@ -42,7 +42,7 @@ const Input = ({
     try {
       validator(inputValue);
       setIsCorrect(true);
-      setMessage(`사용 가능한 ${LabelKind[label]}입니다.`);
+      setMessage(`사용 가능한 ${LabelKind[label]} 형식입니다.`);
     } catch (error) {
       setIsCorrect(false);
       setMessage(error.message);

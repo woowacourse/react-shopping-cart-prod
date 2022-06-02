@@ -54,13 +54,10 @@ const SignupPage = () => {
         password,
       });
 
-      renderSnackbar(
-        `${response.data.nickname}님 가입해주셔서 감사합니다 👋 로그인해주세요`,
-        'SUCCESS',
-      );
+      renderSnackbar(`${response.data.nickname}${MESSAGE.SIGNUP_SUCCESS}`, 'SUCCESS');
       navigate('/login');
     } catch (error) {
-      renderSnackbar(`이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.`, 'FAILED');
+      renderSnackbar(`${email}${MESSAGE.SIGNUP_FAILURE}`, 'FAILED');
     }
   };
 

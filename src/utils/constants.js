@@ -36,6 +36,8 @@ const MESSAGE = {
   DELETE_ACCOUNT_FAILURE: '계정 삭제에 실패하였습니다.',
   ADD_CART_SUCCESS: '상품을 장바구니에 추가하였습니다.',
   REMOVE_CART_SUCCESS: '상품을 장바구니에서 제거하였습니다.',
+  SIGNUP_SUCCESS: '은 이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.',
+  SIGNUP_FAILURE: '님 가입해주셔서 감사합니다 👋 로그인해주세요',
 };
 
 export { SERVER_URL, BASE_URL, PRODUCT, MODAL, ROUTES, LINK, MESSAGE };
