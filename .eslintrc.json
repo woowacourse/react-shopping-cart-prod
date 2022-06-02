@@ -37,6 +37,7 @@
     "consistent-return": "off",
     "default-param-last": "off",
     "react/jsx-no-useless-fragment": "off",
-    "function-paren-newline": "off"
+    "function-paren-newline": "off",
+    "no-param-reassign": "off"
   }
 }
