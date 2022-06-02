@@ -1,4 +1,4 @@
-import { CART_ACTIONS, PRODUCT_LIST_ACTIONS, ORDER_ACTIONS } from 'actions/action';
+import { CART_ACTIONS, PRODUCT_LIST_ACTIONS, ORDER_ACTIONS, AUTH_ACTIONS } from 'actions/action';
 
 const doPutProductToCart = ({ id, quantity }) => ({ type: CART_ACTIONS.PUT, id, quantity });
 
@@ -14,6 +14,8 @@ const doDeleteProductFromOrder = ({ id }) => ({ type: ORDER_ACTIONS.DELETE, id }
 
 const doInitializeOrder = () => ({ type: ORDER_ACTIONS.INITIALIZE });
 
+const doLogin = ({ nickname }) => ({ type: AUTH_ACTIONS.LOGIN, nickname });
+
 export {
   doPutProductToCart,
   doDeleteProductFromCart,
@@ -22,4 +24,5 @@ export {
   doAddProdcutToOrder,
   doDeleteProductFromOrder,
   doInitializeOrder,
+  doLogin,
 };
