@@ -53,3 +53,12 @@ export const Ul = styled.ul<StyledUlProps>`
         text-align: right;
   `)};
 `;
+
+export const LogoutButton = styled.button`
+  font-size: 24px;
+  font-weight: 500;
+
+  &:hover {
+    font-weight: 700;
+  }
+`;

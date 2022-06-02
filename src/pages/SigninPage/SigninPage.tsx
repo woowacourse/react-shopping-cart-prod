@@ -21,8 +21,10 @@ function SigninPage() {
         payload
       );
 
-      const accessToken = response.data.accessToken;
+      const { accessToken, userId } = response.data;
+
       localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('userId', String(userId));
       navigate('/');
     } catch (e) {
       if (axios.isAxiosError(e)) {

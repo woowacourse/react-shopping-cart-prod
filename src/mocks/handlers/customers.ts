@@ -1,27 +1,10 @@
 import { rest, RestRequest } from 'msw';
-
-type Customer = {
-  email: string;
-  password: string;
-  profileImageUrl: string;
-  name: string;
-  gender: 'male' | 'female' | 'undefined';
-  birthday: string;
-  contact: string;
-  fullAddress: {
-    address: string;
-    detailAddress: string;
-    zoneCode: string;
-  };
-  terms: boolean;
-};
-type User = Customer & { userId: number; accessToken: string | null };
-
-type SignupRequestBody = Omit<Customer, 'userId'>;
-type SigninRequestBody = {
-  email: Customer['email'];
-  password: Customer['password'];
-};
+import {
+  Customer,
+  SigninRequestBody,
+  SignupRequestBody,
+  User,
+} from '../../types';
 
 const TOKEN_PREFIX = 'lokbawoody';
 const generateToken = (id: number) => `${TOKEN_PREFIX}${id}`;

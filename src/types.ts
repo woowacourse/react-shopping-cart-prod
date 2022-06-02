@@ -1,6 +1,30 @@
 import { TYPES } from './redux/actions';
 import theme from './styles/theme';
 
+export type Customer = {
+  email: string;
+  password: string;
+  profileImageUrl: string;
+  name: string;
+  gender: 'male' | 'female' | 'undefined';
+  birthday: string;
+  contact: string;
+  fullAddress: {
+    address: string;
+    detailAddress: string;
+    zoneCode: string;
+  };
+  terms: boolean;
+};
+export type User = Customer & { userId: number; accessToken: string | null };
+
+export type SignupRequestBody = Omit<Customer, 'userId'>;
+
+export type SigninRequestBody = {
+  email: Customer['email'];
+  password: Customer['password'];
+};
+
 export type Product = {
   id: string;
   name: string;
