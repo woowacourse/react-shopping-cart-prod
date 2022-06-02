@@ -35,8 +35,28 @@ function GlobalStyle() {
           padding-bottom: 30px;
         }
 
+        a {
+          text-decoration: none;
+          color: inherit;
+        }
+
+        ul {
+          list-style: none;
+          padding: 0;
+          margin: 0;
+
+          li {
+            padding: 0;
+            margin: 0;
+          }
+        }
+
         button {
           font-family: "dohyeon", sans-serif;
+          background-color: initial;
+          border: none;
+          outline: none;
+          cursor: pointer;
         }
       `}
     />

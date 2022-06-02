@@ -74,7 +74,6 @@ const StyledPrice = styled.section`
         width: 100%;
         padding: 20px;
         border: none;
-        cursor: pointer;
       }
     }
   }
