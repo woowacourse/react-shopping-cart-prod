@@ -1,17 +1,12 @@
-import Button from '../Button/styles';
 import { FormContainer } from './styles';
 
 interface FormProps {
+  onSubmit: (e: React.FormEvent) => void;
   children: JSX.Element | JSX.Element[];
 }
 
-function Form({ children }: FormProps) {
-  return (
-    <FormContainer>
-      {children}
-      <Button>확인</Button>
-    </FormContainer>
-  );
+function Form({ onSubmit, children }: FormProps) {
+  return <FormContainer onSubmit={onSubmit}>{children}</FormContainer>;
 }
 
 export default Form;

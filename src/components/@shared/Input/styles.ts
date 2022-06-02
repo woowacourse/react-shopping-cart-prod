@@ -13,6 +13,11 @@ const InputContainer = styled.div`
     padding: 0;
     margin-bottom: 16px;
   }
+
+  p {
+    font-size: 10px;
+    color: red;
+  }
 `;
 
 export { InputContainer };
