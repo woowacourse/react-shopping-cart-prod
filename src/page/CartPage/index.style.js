@@ -5,12 +5,12 @@ const Styled = {
   Container: styled.main`
     width: 1000px;
     background-color: ${({ theme }) => theme.colors.white};
-    margin-top: 100px;
     padding: 0 100px;
     overflow: scroll;
     height: 100%;
     display: flex;
     flex-direction: column;
+    margin-top: 50px;
 
     -ms-overflow-style: none;
     &::-webkit-scrollbar {

@@ -4,7 +4,6 @@ const Styled = {
   Container: styled.main`
     width: 1269px;
     background-color: ${({ theme }) => theme.colors.white};
-    margin-top: 140px;
     padding: 40px;
     overflow: scroll;
     height: 100%;
@@ -12,6 +11,8 @@ const Styled = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 50px;
+
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
       display: none;

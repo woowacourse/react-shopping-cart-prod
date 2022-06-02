@@ -4,7 +4,6 @@ const Styled = {
   ProductListPage: styled.main`
     width: 1269px;
     background-color: ${({ theme }) => theme.colors.white};
-    margin-top: 100px;
     padding: 40px;
     overflow: scroll;
     height: 100%;

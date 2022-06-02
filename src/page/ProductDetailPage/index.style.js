@@ -8,7 +8,6 @@ const Styled = {
     align-items: center;
     width: 1269px;
     background-color: ${({ theme }) => theme.colors.white};
-    margin-top: 140px;
     padding: 40px;
     overflow: scroll;
     height: 100%;
