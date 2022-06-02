@@ -1,5 +1,6 @@
 import { userActionType } from 'store/reducers/user.reducer';
 
+import customInstance from 'api/customInstance';
 import {
   sendDeleteUserRequest,
   sendLoginRequest,
@@ -7,6 +8,7 @@ import {
 } from 'api/user.api';
 
 import { ERROR_MESSAGES } from 'constants/messages';
+
 
 export const loginUserThunk = (loginData) => async (dispatch) => {
   dispatch({ type: userActionType.START });
@@ -24,7 +26,8 @@ export const loginUserThunk = (loginData) => async (dispatch) => {
 export const logoutUser = () => {
   window.sessionStorage.removeItem('nickname');
   window.sessionStorage.removeItem('token');
-
+  
+  delete customInstance.defaults.headers.common
   return {
     type: userActionType.LOGOUT,
   };
