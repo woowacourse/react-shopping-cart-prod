@@ -43,6 +43,21 @@ const ItemContainer = styled.div`
   }
 `;
 
+const ProductImageBox = styled.div`
+  width: fit-content;
+  height: ${({ theme }) => theme.imageSizes['medium']};
+  overflow: hidden;
+`;
+
+const ProductImage = styled(Image).attrs({ type: 'medium' })`
+  transition: all ease-in-out 0.1s;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
 function ProductListItem({ id, thumbnail, name, price }) {
   const dispatch = useDispatch();
   const shoppingCart = useSelector(state => state.shoppingCart);
@@ -53,7 +68,9 @@ function ProductListItem({ id, thumbnail, name, price }) {
 
   return (
     <ItemContainer isContained={isContained}>
-      <Image type="medium" src={thumbnail} />
+      <ProductImageBox>
+        <ProductImage type="medium" src={thumbnail} />
+      </ProductImageBox>
       <TextBox className="product-name" fontSize="small">
         {name}
       </TextBox>

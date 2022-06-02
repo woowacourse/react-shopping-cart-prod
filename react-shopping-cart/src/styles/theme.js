@@ -9,6 +9,21 @@ const colors = {
   BLACK_002: '#000000',
 };
 
-const theme = { colors };
+const imageSizes = {
+  small: {
+    width: '144px',
+    height: '144px',
+  },
+  medium: {
+    width: '282px',
+    height: '282px',
+  },
+  large: {
+    width: '570px',
+    height: '570px',
+  },
+};
+
+const theme = { colors, imageSizes };
 
 export default theme;
