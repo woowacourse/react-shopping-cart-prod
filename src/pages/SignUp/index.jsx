@@ -86,6 +86,7 @@ const SignUp = () => {
             placeholder="이름을 입력해주세요."
             onBlur={handleNameBlur()}
             name="name"
+            type="text"
           />
           <ValidateText
             text={nameValidate.text}
@@ -99,6 +100,7 @@ const SignUp = () => {
             placeholder="비밀번호를 입력해주세요."
             onBlur={handlePasswordBlur()}
             name="password"
+            type="password"
           />
           <ValidateText
             text={passwordValidate.text}
@@ -111,6 +113,7 @@ const SignUp = () => {
             placeholder="비밀번호를 확인해주세요."
             onBlur={handlePasswordCheckBlur(pwd.current?.value)}
             name="passwordCheck"
+            type="password"
           />
           <ValidateText
             text={passwordCheckValidate.text}

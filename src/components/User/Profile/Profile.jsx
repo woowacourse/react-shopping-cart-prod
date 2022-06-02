@@ -62,7 +62,7 @@ const Profile = ({ name }) => {
             </>
           ) : (
             <>
-              <input value={newName} onChange={handleChangeName} />
+              <input value={newName} onChange={handleChangeName} type="text" />
               <Styled.Button onClick={handleClickConvertButton}>
                 확인
               </Styled.Button>

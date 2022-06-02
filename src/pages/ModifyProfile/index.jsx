@@ -141,6 +141,7 @@ const ChangePassword = ({ onSubmit }) => {
             placeholder="기존 비밀번호를 입력하세요."
             onBlur={handleOldPasswordBlur()}
             name="oldPassword"
+            type="password"
           />
           <ValidateText
             text={oldPasswordValidate.text}
@@ -154,6 +155,7 @@ const ChangePassword = ({ onSubmit }) => {
             placeholder="새로운 비밀번호를 입력하세요."
             onBlur={handleNewPasswordBlur()}
             name="password"
+            type="password"
           />
           <ValidateText
             text={newPasswordValidate.text}
@@ -166,6 +168,7 @@ const ChangePassword = ({ onSubmit }) => {
             placeholder="새로운 비밀번호를 확인하세요."
             onBlur={handleNewPasswordCheckBlur(newPwd.current?.value)}
             name="passwordCheck"
+            type="password"
           />
           <ValidateText
             text={newPasswordCheckValidate.text}
@@ -192,6 +195,7 @@ const Withdrawal = ({ onSubmit }) => {
             placeholder="비밀번호를 입력하세요."
             onBlur={handlePasswordBlur()}
             name="password"
+            type="password"
           />
           <ValidateText
             text={passwordValidate.text}

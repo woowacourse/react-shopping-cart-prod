@@ -21,7 +21,6 @@ const validateEmailAsync = async (email) => {
       return { text: '멋진 이메일입니다!', isValid: true };
     })
     .catch(() => {
-      //TODO: 서버에게 중복 체크 후, 에러 메시지 노출하기
       return {
         text: '중복된 이메일입니다.',
         isValid: false,
