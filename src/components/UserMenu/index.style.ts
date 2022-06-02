@@ -35,6 +35,7 @@ const Styled = {
       0px 1px 3px rgba(0, 0, 0, 0.2);
     border: 0.5px solid ${({ theme }) => theme.colors.gray};
     font-size: 14px;
+    z-index: 500;
 
     &::after {
       top: -14px;
