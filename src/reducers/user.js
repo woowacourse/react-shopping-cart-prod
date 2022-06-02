@@ -20,11 +20,18 @@ const userSlice = createSlice({
   initialState: {
     accessToken: localStorage.getItem('accessToken') || '',
   },
+  reducers: {
+    withdraw(state) {
+      state.accessToken = '';
+    },
+  },
   extraReducers: {
     [login.fulfilled]: (state, action) => {
       state.accessToken = action.payload.accessToken;
     },
   },
 });
+
+export const { withdraw } = userSlice.actions;
 
 export default userSlice.reducer;

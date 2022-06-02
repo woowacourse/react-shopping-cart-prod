@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export default styled.button`
   cursor: pointer;
@@ -19,4 +19,10 @@ export default styled.button`
     background-color: ${({ theme }) => theme.gray_100};
     cursor: not-allowed;
   }
+
+  ${({ red }) =>
+    red &&
+    css`
+      background-color: ${({ theme }) => theme.red_50};
+    `}
 `;

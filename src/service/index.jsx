@@ -44,6 +44,9 @@ export const getUser = () => getResult('/api/customer', 'get');
 export const updateUser = (user) =>
   getResult('/api/customer', 'put', { data: user });
 
+export const deleteUser = (password) =>
+  getResult('/api/customer', 'delete', { data: { password } });
+
 export const setToken = (accessToken) => {
   localStorage.setItem('accessToken', accessToken);
   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
@@ -52,4 +55,8 @@ export const setToken = (accessToken) => {
 export const initToken = () => {
   const accessToken = localStorage.getItem('accessToken');
   accessToken && setToken(accessToken);
+};
+
+export const clearToken = () => {
+  localStorage.removeItem('accessToken');
 };

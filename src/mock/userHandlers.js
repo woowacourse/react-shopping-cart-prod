@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-const users = [
+let users = [
   {
     name: 'test',
     email: 'test@gmail.com',
@@ -8,6 +8,9 @@ const users = [
     token: 1234123412341234,
   },
 ];
+
+const parseToken = (req) =>
+  Number(req.headers._headers.authorization.replace('Bearer ', ''));
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default [
@@ -60,9 +63,7 @@ export default [
   }),
 
   rest.get('/api/customer', (req, res, ctx) => {
-    const token = Number(
-      req.headers._headers.authorization.replace('Bearer ', ''),
-    );
+    const token = parseToken(req);
     const user = users.find((user) => user.token === token);
 
     if (!user) {
@@ -79,9 +80,7 @@ export default [
   }),
 
   rest.put('/api/customer', (req, res, ctx) => {
-    const token = Number(
-      req.headers._headers.authorization.replace('Bearer ', ''),
-    );
+    const token = parseToken(req);
     const user = users.find((user) => user.token === token);
 
     if (!user) {
@@ -89,6 +88,29 @@ export default [
     }
 
     user.name = req.body.data.name;
+
+    return res(ctx.status(200));
+  }),
+
+  rest.delete('/api/customer', (req, res, ctx) => {
+    const token = parseToken(req);
+    console.log(req);
+    const user = users.find((user) => user.token === token);
+    const password = req.body.password;
+
+    if (!user) {
+      return res(
+        ctx.status(403),
+        ctx.json({ message: '너 이미 회원 아닌데..?' }),
+      );
+    }
+    console.log(user, password);
+
+    if (user.password !== password) {
+      return res(ctx.status(403), ctx.json({ message: '비밀번호 확인해!' }));
+    }
+
+    users = users.filter((user) => user.token !== token);
 
     return res(ctx.status(200));
   }),

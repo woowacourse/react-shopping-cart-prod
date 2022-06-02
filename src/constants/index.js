@@ -5,6 +5,7 @@ export const SNACKBAR_MESSAGE = {
   deletesProduct: () => `장바구니에 체크된 상품들 완전 삭제!`,
   successLogin: () => '로그인!',
   successUpdateUser: () => '프로필 수정이 완료!',
+  withdrawUser: () => '회원 탈퇴 ㅠㅠ',
 };
 
 export const PAGING = {
@@ -21,4 +22,5 @@ export const PATH = {
   SIGNUP: '/signUp',
   PROFILE: '/profile',
   PASSWORD: '/password',
+  WITHDRAWAL: '/withdrawal',
 };

@@ -14,6 +14,7 @@ import NotFoundPage from 'pages/NotFoundPage';
 import LoginPage from 'pages/LoginPage';
 import SignUpPage from 'pages/SignUpPage';
 import ProfilePage from 'pages/ProfilePage';
+import WithdrawalPage from 'pages/WithdrawalPage';
 
 import { PATH } from 'constants';
 
@@ -35,6 +36,7 @@ const Router = () => {
           <Route path={PATH.LOGIN} element={<LoginPage />} />
           <Route path={PATH.SIGNUP} element={<SignUpPage />} />
           <Route path={PATH.PROFILE} element={<ProfilePage />} />
+          <Route path={PATH.WITHDRAWAL} element={<WithdrawalPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         {show && <Snackbar key={Date.now()} message={message} />}
