@@ -5,11 +5,13 @@ import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import ICONS from '../../constants/icons';
 import * as S from './ProfilePage.styled';
+import { useNavigate } from 'react-router-dom';
 
 // 이메일 생일 수정 x
 
 function ProfilePage() {
   const { postcode, addressData, setAddressData } = useDaumPostcode();
+  const navigate = useNavigate();
   const [watchingValues, setWatchingValues] = useState({
     password: '',
     'confirm-password': '',
@@ -149,6 +151,34 @@ function ProfilePage() {
     } catch (e) {
       if (axios.isAxiosError(e)) {
         alert('유효하지 않은 이메일 형식입니다.');
+      } else {
+        alert(e);
+      }
+    }
+  };
+
+  const handleClickUnregisterButton = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    const customerId = localStorage.getItem('userId');
+
+    try {
+      await axios({
+        method: 'delete',
+        url: `http://15.164.166.148:8080/api/customers/${customerId}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('userId');
+
+      alert('계정이 삭제되었습니다.');
+
+      navigate('/');
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        alert('요청을 실패했습니다.');
       } else {
         alert(e);
       }
@@ -352,9 +382,16 @@ function ProfilePage() {
           <S.RightFlexBox />
         </S.FormFieldBox>
         {/* ------------------------------------ */}
-        <S.SubmitButtonBox>
+        <S.ButtonBox>
           <Button type="submit">다음으로</Button>
-        </S.SubmitButtonBox>
+          <Button
+            color="red"
+            type="button"
+            onClick={handleClickUnregisterButton}
+          >
+            계정 삭제하기
+          </Button>
+        </S.ButtonBox>
       </S.Form>
     </S.PageBox>
   );

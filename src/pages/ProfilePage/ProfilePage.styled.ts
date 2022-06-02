@@ -82,9 +82,12 @@ export const RadioButtonBox = styled.div`
   align-items: center;
 `;
 
-export const SubmitButtonBox = styled.div`
+export const ButtonBox = styled.div`
   width: 300px;
   margin: 24px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const HintParagraph = styled.p`
