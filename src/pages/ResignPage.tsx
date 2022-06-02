@@ -1,6 +1,7 @@
 import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
+import usePasswordInput from 'hooks/usePasswordInput';
 import { FormEvent, useRef, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { resign } from 'redux/action-creators/userThunk';
@@ -12,23 +13,17 @@ import theme from 'styles/theme';
 const ResignPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
-
-  const passwordRef = useRef<HTMLInputElement | null>(null);
-  const confirmMessageRef = useRef<HTMLInputElement | null>(null);
-
-  const [inputValid, setInputValid] = useState({
-    password: false,
-    confirmMessage: false,
-  });
-
   const { loading, error, data } = useAppSelector(state => state.userReducer);
+  const confirmMessageRef = useRef<HTMLInputElement | null>(null);
+  const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
+  const [confirmMessageValid, setConfirmMessageValid] = useState(false);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const inputInfo = passwordRef.current.value;
+    const inputInfo = currentPasswordRef.current.value;
 
-    if (Object.values(inputValid).every(valid => valid)) {
+    if (passwordValid.current && confirmMessageValid) {
       dispatch(resign(inputInfo));
 
       localStorage.clear();
@@ -36,24 +31,14 @@ const ResignPage = () => {
     }
   };
 
-  const handlePasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (value) {
-      setInputValid(prevState => ({ ...prevState, password: true }));
-
-      return;
-    }
-
-    setInputValid(prevState => ({ ...prevState, password: false }));
-  };
-
   const handleMessageInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (value === '응') {
-      setInputValid(prevState => ({ ...prevState, confirmMessage: true }));
+      setConfirmMessageValid(true);
 
       return;
     }
 
-    setInputValid(prevState => ({ ...prevState, confirmMessage: false }));
+    setConfirmMessageValid(false);
   };
 
   return (
@@ -63,7 +48,7 @@ const ResignPage = () => {
       <SignInput placeholder={data.email} type={'email'} disable={true}>
         이메일
       </SignInput>
-      <SignInput type={'password'} onChange={handlePasswordInput} ref={passwordRef}>
+      <SignInput type={'password'} onChange={handleCurrentPasswordInput} ref={currentPasswordRef}>
         비밀번호 확인
       </SignInput>
       <SignInput type={'text'} onChange={handleMessageInput} ref={confirmMessageRef}>

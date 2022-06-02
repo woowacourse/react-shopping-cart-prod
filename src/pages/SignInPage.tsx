@@ -1,6 +1,7 @@
 import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
+import usePasswordInput from 'hooks/usePasswordInput';
 import useSignInput from 'hooks/useSignInput';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -14,9 +15,7 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
   const { loading, error, data } = useAppSelector(state => state.userReducer);
-
-  const passwordRef = useRef<HTMLInputElement | null>(null);
-  const [passwordValid, setpPasswordValid] = useState(false);
+  const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
 
   const { inputState, validState, handleEmailInput } = useSignInput();
 
@@ -25,7 +24,7 @@ const SignInPage = () => {
 
     const inputInfo = {
       email: inputState.email,
-      password: passwordRef.current.value,
+      password: currentPasswordRef.current.value,
     };
 
     if (validState.email && passwordValid) {
@@ -37,15 +36,6 @@ const SignInPage = () => {
     }
   };
 
-  const handlePasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (value) {
-      setpPasswordValid(true);
-
-      return;
-    }
-    setpPasswordValid(false);
-  };
-
   return (
     <StyledRoot>
       <StyledForm onSubmit={handleSubmit}>
@@ -53,7 +43,7 @@ const SignInPage = () => {
         <SignInput type={'email'} onChange={handleEmailInput}>
           이메일
         </SignInput>
-        <SignInput type={'password'} onChange={handlePasswordInput} ref={passwordRef}>
+        <SignInput type={'password'} onChange={handleCurrentPasswordInput} ref={currentPasswordRef}>
           비밀번호
         </SignInput>
 

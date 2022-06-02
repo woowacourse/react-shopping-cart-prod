@@ -1,7 +1,8 @@
 import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import usePasswordInput from 'hooks/usePasswordInput';
+import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editPassword } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
@@ -11,23 +12,23 @@ import theme from 'styles/theme';
 
 const EditPasswordPage = () => {
   const navigate = useNavigate();
-  const prevPasswordRef = useRef<HTMLInputElement | null>(null);
-  const newPasswordRef = useRef<HTMLInputElement | null>(null);
-  const [passwordValid, setpPasswordValid] = useState({
-    prev: false,
-    new: false,
-    confirm: false,
-  });
-
   const dispatch = useAppDispatch<UserAction>();
   const { loading, error, data } = useAppSelector(state => state.userReducer);
+  const {
+    prevPasswordRef,
+    currentPasswordRef,
+    passwordValid,
+    handlePrevPasswordInput,
+    handleCurrentPasswordInput,
+    handleCurrentPasswordConfirmInput,
+  } = usePasswordInput();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const editPasswordInfo = {
       password: prevPasswordRef.current.value,
-      newPassword: newPasswordRef.current.value,
+      newPassword: currentPasswordRef.current.value,
     };
 
     if (Object.values(passwordValid).every(valid => valid)) {
@@ -37,34 +38,6 @@ const EditPasswordPage = () => {
         navigate('/main/1');
       }
     }
-  };
-
-  const handlePrevPasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (value) {
-      setpPasswordValid(prevState => ({ ...prevState, prev: true }));
-
-      return;
-    }
-    setpPasswordValid(prevState => ({ ...prevState, prev: false }));
-  };
-
-  const handleNewPasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value)) {
-      setpPasswordValid(prevState => ({ ...prevState, new: true }));
-
-      return;
-    }
-
-    setpPasswordValid(prevState => ({ ...prevState, prev: false }));
-  };
-
-  const handleNewPasswordConfirmInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (newPasswordRef.current.value === value) {
-      setpPasswordValid(prevState => ({ ...prevState, confirm: true }));
-
-      return;
-    }
-    setpPasswordValid(prevState => ({ ...prevState, prev: false }));
   };
 
   return (
@@ -88,15 +61,15 @@ const EditPasswordPage = () => {
         </SignInput>
         <SignInput
           type={'password'}
-          onChange={handleNewPasswordInput}
-          ref={newPasswordRef}
-          isValid={passwordValid.new}
+          onChange={handleCurrentPasswordInput}
+          ref={currentPasswordRef}
+          isValid={passwordValid.current}
         >
           새 비밀번호
         </SignInput>
         <SignInput
           type={'password'}
-          onChange={handleNewPasswordConfirmInput}
+          onChange={handleCurrentPasswordConfirmInput}
           isValid={passwordValid.confirm}
         >
           새 비밀번호 확인
