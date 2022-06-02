@@ -28,7 +28,6 @@ const UserEdit = () => {
       return;
     }
 
-    // dispatch(getUser());
     toggleModal();
   };
 
