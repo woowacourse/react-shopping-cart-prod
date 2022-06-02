@@ -55,6 +55,8 @@ const authAPI = {
       await axios.put(PATH.REQUEST_CUSTOMER_ME, user, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+
+      return this.getUserInfo(accessToken);
     } catch (error) {
       if (error instanceof Error) {
         throw error;

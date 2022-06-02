@@ -4,7 +4,6 @@ import PATH from 'constants/path';
 import { USER_MESSAGE } from 'constants/message';
 import { User } from 'types/index';
 import authAPI from 'apis/auth';
-import { axios } from 'configs/api';
 import { createInputValueGetter } from 'utils/dom';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -13,8 +12,9 @@ import { userActions } from 'redux/actions';
 function EditUserInfoForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const username = useSelector((state: { user: User }) => state.user.username);
-  const email = useSelector((state: { user: User }) => state.user.email);
+  const { username, email, address, phoneNumber } = useSelector(
+    (state: { user: User }) => state.user,
+  );
 
   const onClickWithdrawButton = async () => {
     if (!confirm(USER_MESSAGE.ASK_WITH_DRAW)) return;
@@ -34,15 +34,15 @@ function EditUserInfoForm() {
 
     const formElement = e.target.elements;
     const getInputValue = createInputValueGetter(formElement);
-    const user = {
+    const userInputInfo = {
       address: getInputValue('address'),
       phoneNumber: getInputValue('phoneNumber'),
     };
 
     try {
-      await authAPI.editUserInfo(user);
+      const userInfo = await authAPI.editUserInfo(userInputInfo);
 
-      dispatch(userActions.setUser(user));
+      dispatch(userActions.setUser(userInfo));
       navigate(PATH.BASE);
     } catch (error) {
       alert(USER_MESSAGE.FAIL_EDIT);
@@ -60,6 +60,7 @@ function EditUserInfoForm() {
         id="address"
         type="address"
         placeholder="주소를 입력해주세요"
+        defaultValue={address}
         required
       />
       <label htmlFor="phoneNumber">핸드폰 번호</label>
@@ -67,6 +68,7 @@ function EditUserInfoForm() {
         id="phoneNumber"
         type="tel"
         placeholder="핸드폰 번호를 입력해주세요"
+        defaultValue={phoneNumber}
         required
       />
       <StyledButtons>
