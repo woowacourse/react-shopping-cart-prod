@@ -48,19 +48,19 @@ const StyledLabel = styled.label`
   width: 80%;
 
   font-weight: 400;
-  font-size: 24px;
-  line-height: 24px;
+  font-size: 2.4rem;
+  line-height: 2.4rem;
 
   letter-spacing: 0.5px;
 
-  gap: 4px;
+  gap: 0.4rem;
 `;
 
 const StyledInput = styled.input<any>`
   width: 100%;
-  height: 65px;
-  font-size: 20px;
-  padding-left: 10px;
+  height: 6.5rem;
+  font-size: 2rem;
+  padding-left: 1rem;
 
   border-top: 0px;
   border-left: 0px;

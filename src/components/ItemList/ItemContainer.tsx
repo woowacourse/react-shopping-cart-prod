@@ -44,7 +44,11 @@ const ItemContainer = ({
             <StyledTitle>{title}</StyledTitle>
             <StyledPrice>{formatDecimal(price)}원</StyledPrice>
           </StyledDescription>
-          <StyledCartIcon width='31px' fill={theme.colors.font} onClick={handleClickCartIcon} />
+          <StyledCartIcon
+            width='31px'
+            fill={theme.colors.lightBlack}
+            onClick={handleClickCartIcon}
+          />
         </StyledBottom>
       </StyledRoot>
     </Link>

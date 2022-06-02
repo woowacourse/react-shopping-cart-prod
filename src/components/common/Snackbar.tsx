@@ -1,6 +1,7 @@
 import Portal from './Portal';
 import styled, { keyframes } from 'styled-components';
 import { flexCenter } from 'styles/mixin';
+import theme from 'styles/theme';
 
 export const Contents = {
   cart: '장바구니에 담았습니다.',
@@ -26,7 +27,7 @@ const StyledSnackbarContents = styled.div`
   position: fixed;
   width: 50rem;
   height: 7rem;
-  color: white;
+  color: ${theme.colors.white};
   background-color: ${({ theme }) => theme.colors.primary};
   left: 50%;
   bottom: -7rem;

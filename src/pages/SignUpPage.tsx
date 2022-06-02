@@ -1,16 +1,17 @@
-import SignInput from 'components/common/SignInput';
-import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
-import useSignInput from 'hooks/useSignInput';
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signUp } from 'redux/action-creators/userThunk';
-import { UserAction } from 'redux/actions/user';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 import styled from 'styled-components';
+import { FormEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signUp } from 'redux/action-creators/userThunk';
+import { UserAction } from 'redux/actions/user';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
+import useSignInput from 'hooks/useSignInput';
 import usePasswordInput from 'hooks/usePasswordInput';
 import useUpdateEffect from 'hooks/useUpdateEffect';
+import SignInput from 'components/common/SignInput';
+import { PATH } from 'Router';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const SignUpPage = () => {
 
   useUpdateEffect(() => {
     if (!error) {
-      navigate('/main/1');
+      navigate(PATH.signIn);
     }
   }, [error]);
 
@@ -82,17 +83,17 @@ const SignUpPage = () => {
 
 const StyledRoot = styled.div`
   ${flexCenter}
-  height: 1000px;
+  height: 100rem;
 `;
 
 const StyledForm = styled.form`
   ${flexCenter}
   display: flex;
   flex-direction: column;
-  width: 600px;
-  gap: 50px;
-  height: 900px;
-  border: 1px solid black;
+  width: 60rem;
+  gap: 5rem;
+  height: 90rem;
+  border: 1px solid ${theme.colors.black};
 `;
 
 const StyledTitle = styled.h1`
@@ -109,7 +110,7 @@ const StyledSignUpButton = styled.button`
   background-color: ${theme.colors.primary};
   font-size: 23px;
   font-weight: bold;
-  color: white;
+  color: ${theme.colors.white};
   border-radius: 6px;
 `;
 

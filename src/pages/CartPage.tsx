@@ -1,16 +1,17 @@
-import CartList from 'components/Cart/CartList';
-import Loading from 'components/common/Loading';
-import RequestFail from 'components/common/RequestFail';
+import styled from 'styled-components';
+import PaymentsAmount from 'components/Cart/PaymentsAmount';
+import theme from 'styles/theme';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
+import { useFetch } from 'hooks/useFetch';
 import { getCartList } from 'redux/action-creators/cartListThunk';
 import { CartListAction } from 'redux/actions/cartList';
 import { LOCAL_BASE_URL } from 'apis';
-import { useFetch } from 'hooks/useFetch';
 import { Item } from 'types/domain';
-import styled from 'styled-components';
-import PaymentsAmount from 'components/Cart/PaymentsAmount';
+import CartList from 'components/Cart/CartList';
+import Loading from 'components/common/Loading';
+import RequestFail from 'components/common/RequestFail';
 
 const CartPage = () => {
   const {
@@ -76,15 +77,15 @@ const StyledRoot = styled.div`
 const StyledHeader = styled.div`
   grid-area: hd;
   text-align: center;
-  border-bottom: 4px solid #333333;
-  margin-bottom: 53px;
-  padding: 29px;
+  border-bottom: 4px solid ${theme.colors.lightBlack};
+  margin-bottom: 5.3rem;
+  padding: 2.9rem;
 
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
-  font-size: 32px;
-  line-height: 37px;
+  font-size: 3.2rem;
+  line-height: 3.7rem;
 
   text-align: center;
   letter-spacing: 0.5px;

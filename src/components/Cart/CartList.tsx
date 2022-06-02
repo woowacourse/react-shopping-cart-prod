@@ -118,52 +118,52 @@ const CartList = ({
 const StyledRoot = styled.div`
   grid-area: cl;
   display: inline-block;
-  width: 736px;
-  height: 724px;
+  width: 73.6rem;
+  height: 72.4rem;
 `;
 
 const ButtonSet = styled.div`
   display: flex;
   justify-content: space-between;
 
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 `;
 
 const DeleteSelectedButton = styled.button`
   ${flexCenter}
-  width: 117px;
-  height: 50px;
+  width: 11.7rem;
+  height: 5rem;
   border: solid silver 1px;
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
-  font-size: 16px;
-  line-height: 21px;
+  font-size: 1.6rem;
+  line-height: 2.1rem;
 
   text-align: center;
 `;
 
 const SelectItemAll = styled.div`
   display: flex;
-  font-size: 20px;
-  width: 135px;
+  font-size: 2rem;
+  width: 13.5rem;
 
   justify-content: space-between;
 `;
 
 const CartItemListHeader = styled.p`
-  padding: 5px 0px;
+  padding: 0.5rem 0rem;
 
-  border-bottom: solid silver 4px;
-  font-size: 20px;
+  border-bottom: solid silver 0.4rem;
+  font-size: 2rem;
 `;
 
 const CartItemList = styled.div`
-  width: 736px;
-  height: 700px;
+  width: 73.6rem;
+  height: 70rem;
   overflow: auto;
 
-  padding-right: 10px;
+  padding-right: 1rem;
 
   &::-webkit-scrollbar {
     width: 6px;
@@ -180,28 +180,28 @@ const CartItemList = styled.div`
 const CartItemContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 2rem;
 
-  border-bottom: solid silver 1.5px;
-  padding: 20px 0;
+  border-bottom: solid silver 0.15rem;
+  padding: 2rem 0;
 `;
 
 const ItemName = styled.div`
-  width: 260px;
-  padding: 0px 20px;
+  width: 26rem;
+  padding: 0rem 2rem;
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 2rem;
 `;
 
 const StyledRight = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 20px;
+  gap: 2rem;
   align-items: flex-end;
-  width: 200px;
+  width: 20rem;
 `;
 
 const TrashCan = styled(TrashCanIcon)`
@@ -212,7 +212,7 @@ const TrashCan = styled(TrashCanIcon)`
 `;
 
 const TotalPrice = styled.p`
-  font-size: 16px;
+  font-size: 1.6rem;
 `;
 
 export default CartList;

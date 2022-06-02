@@ -8,7 +8,7 @@ import SignUpPage from 'pages/SignUpPage';
 import EditPasswordPage from 'pages/EditPasswordPage';
 import ResignPage from 'pages/ResignPage';
 
-const PATH = {
+export const PATH = {
   notFound: '*',
   main: '/main/:id',
   itemDetail: '/item_detail/:id',

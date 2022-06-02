@@ -7,13 +7,13 @@ import Router from 'Router';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { autoSignIn } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
+import { KEYS } from 'utils/localStorage';
 
 function App() {
   const { isSnackbarOpen } = useAppSelector(state => state.snackbarReducer);
   const dispatch = useAppDispatch<UserAction>();
 
-  if (localStorage.getItem('token')) {
-    console.log(localStorage.getItem('token'));
+  if (localStorage.getItem(KEYS.TOKEN)) {
     dispatch(autoSignIn());
   }
 

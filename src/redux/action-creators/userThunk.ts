@@ -3,6 +3,12 @@ import { UserAction, UserActionType } from 'redux/actions/user';
 import axios from 'axios';
 import { LOCAL_BASE_URL } from 'apis';
 import { SignUpInfo, SignInInfo, EditPasswordInfo } from 'types/domain';
+import {
+  getLocalStorageToken,
+  KEYS,
+  setLocalStorageCartList,
+  setLocalStorageToken,
+} from 'utils/localStorage';
 
 export const signUp = (signUpInfo: SignUpInfo) => async (dispatch: Dispatch<UserAction>) => {
   dispatch({ type: UserActionType.POST_SIGN_UP_START });
@@ -30,7 +36,7 @@ export const signIn = (signInInfo: SignInInfo) => async (dispatch: Dispatch<User
       data: signInInfo,
     });
 
-    localStorage.setItem('token', response.data.token);
+    setLocalStorageToken(response.data.token);
 
     dispatch({ type: UserActionType.POST_SIGN_IN_SUCCESS, payload: response.data });
   } catch (e) {
@@ -42,7 +48,7 @@ export const signIn = (signInInfo: SignInInfo) => async (dispatch: Dispatch<User
 export const editPassword =
   (editPasswordInfo: EditPasswordInfo) => async (dispatch: Dispatch<UserAction>) => {
     dispatch({ type: UserActionType.PATCH_NEW_PASSWORD_START });
-    const token = localStorage.getItem('token');
+    const token = getLocalStorageToken();
 
     try {
       const response = await axios({
@@ -64,7 +70,7 @@ export const editPassword =
 
 export const resign = (password: string) => async (dispatch: Dispatch<UserAction>) => {
   dispatch({ type: UserActionType.DELETE_USER_START });
-  const token = localStorage.getItem('token');
+  const token = getLocalStorageToken();
 
   try {
     const response = await axios({
@@ -86,7 +92,7 @@ export const resign = (password: string) => async (dispatch: Dispatch<UserAction
 
 export const autoSignIn = () => async (dispatch: Dispatch<UserAction>) => {
   dispatch({ type: UserActionType.AUTO_SIGN_IN_START });
-  const token = localStorage.getItem('token');
+  const token = getLocalStorageToken();
 
   try {
     const response = await axios({
@@ -98,7 +104,7 @@ export const autoSignIn = () => async (dispatch: Dispatch<UserAction>) => {
       url: `${LOCAL_BASE_URL}/login/auto`,
     });
 
-    localStorage.setItem('token', response.data.token);
+    setLocalStorageToken(response.data.token);
 
     dispatch({ type: UserActionType.AUTO_SIGN_IN_SUCCESS, payload: response.data });
   } catch (e) {

@@ -25,26 +25,26 @@ const StyledInput = styled.input`
   &:checked + label::after {
     ${flexCenter}
     content: '✔';
-    font-size: 25px;
+    font-size: 2.5rem;
 
-    color: white;
+    color: ${theme.colors.white};
     background-color: ${theme.colors.primary};
 
-    width: 30px;
-    height: 30px;
+    width: 3rem;
+    height: 3rem;
     position: absolute;
 
-    left: -3px;
-    top: -3px;
+    left: -0.3rem;
+    top: -0.3rem;
   }
 `;
 
 const StyledLabel = styled.label`
   caret-color: transparent;
   display: inline-block;
-  width: 30px;
-  height: 30px;
-  border: 3px solid #707070;
+  width: 3rem;
+  height: 3rem;
+  border: 3px solid ${theme.colors.darkgrey};
   position: relative;
 `;
 

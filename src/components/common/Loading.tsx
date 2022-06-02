@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from 'styles/theme';
 
 const Loading = () => {
   return (
@@ -43,18 +44,18 @@ const StyledLoader = styled.div`
 `;
 
 const Spinner = styled.div`
-  width: 140px;
-  height: 140px;
+  width: 14rem;
+  height: 14rem;
 
   position: relative;
-  margin: 100px auto;
+  margin: 10rem auto;
 `;
 
 const Dbounce1 = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #333;
+  background-color: ${theme.colors.darkgrey};
   opacity: 0.6;
   position: absolute;
   top: 0;
@@ -68,7 +69,7 @@ const Dbounce2 = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: #333;
+  background-color: ${theme.colors.darkgrey};
   opacity: 0.6;
   position: absolute;
   top: 0;

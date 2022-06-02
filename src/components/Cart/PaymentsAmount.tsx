@@ -25,21 +25,21 @@ const PaymentsAmount = ({ children }) => {
 const StyledRoot = styled.div`
   grid-area: pa;
 
-  width: 448px;
-  height: 318px;
+  width: 44.8rem;
+  height: 31.8rem;
 `;
 
 const Header = styled.div`
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
-  line-height: 33px;
+  font-size: 2.4rem;
+  line-height: 3.3rem;
 
   letter-spacing: 0.5px;
 
-  padding: 20px;
-  border: 1px silver solid;
+  padding: 2rem;
+  border: 0.1rem silver solid;
 `;
 
 const Bottom = styled.div`
@@ -48,7 +48,7 @@ const Bottom = styled.div`
 
   align-items: center;
 
-  padding: 20px;
+  padding: 2rem;
   border: 1px silver solid;
 `;
 
@@ -58,8 +58,8 @@ const TotalPrice = styled.div`
   font-family: 'Noto Sans KR';
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
-  line-height: 27px;
+  font-size: 2rem;
+  line-height: 2.7rem;
 
   text-align: center;
   letter-spacing: 0.5px;
@@ -67,18 +67,18 @@ const TotalPrice = styled.div`
   flex-direction: row;
   justify-content: space-between;
 
-  margin-bottom: 60px;
+  margin-bottom: 6rem;
 `;
 
 const UnderLineBox = styled.div`
-  background: linear-gradient(#fff 70%, ${theme.colors.primary} 30%);
+  background: linear-gradient(${theme.colors.white} 70%, ${theme.colors.primary} 30%);
 `;
 
 const OrderButton = styled.button`
-  width: 388px;
-  height: 73px;
-  font-size: 24px;
-  color: white;
+  width: 38.8rem;
+  height: 7.3rem;
+  font-size: 2.4rem;
+  color: ${theme.colors.white};
   background-color: ${theme.colors.primary};
 `;
 

@@ -1,16 +1,17 @@
-import SignInput from 'components/common/SignInput';
+import styled from 'styled-components';
+import { flexCenter } from 'styles/mixin';
+import theme from 'styles/theme';
+import { FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { signIn } from 'redux/action-creators/userThunk';
+import { UserAction } from 'redux/actions/user';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
 import useSignInput from 'hooks/useSignInput';
 import useUpdateEffect from 'hooks/useUpdateEffect';
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { signIn } from 'redux/action-creators/userThunk';
-import { UserAction } from 'redux/actions/user';
-import styled from 'styled-components';
-import { flexCenter } from 'styles/mixin';
-import theme from 'styles/theme';
+import SignInput from 'components/common/SignInput';
+import { PATH } from 'Router';
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const SignInPage = () => {
 
   useUpdateEffect(() => {
     if (!error) {
-      navigate('/main/1');
+      navigate(PATH.main);
     }
   }, [error]);
 
@@ -63,34 +64,34 @@ const SignInPage = () => {
 
 const StyledRoot = styled.div`
   ${flexCenter}
-  height: 1000px;
+  height: 100rem;
 `;
 
 const StyledForm = styled.form`
   ${flexCenter}
   display: flex;
   flex-direction: column;
-  width: 600px;
-  gap: 50px;
-  height: 700px;
-  border: 1px solid black;
+  width: 60rem;
+  gap: 5rem;
+  height: 70rem;
+  border: 1px solid ${theme.colors.black};
 `;
 
 const StyledTitle = styled.h1`
   font-weight: 600;
-  font-size: 34px;
-  line-height: 36px;
+  font-size: 3.4rem;
+  line-height: 3.6rem;
 
   text-align: center;
 `;
 
 const StyledSigninButton = styled.button`
   width: 80%;
-  height: 65px;
+  height: 6.5rem;
   background-color: ${theme.colors.primary};
-  font-size: 23px;
+  font-size: 2.3rem;
   font-weight: bold;
-  color: white;
+  color: ${theme.colors.white};
   border-radius: 6px;
 `;
 
@@ -99,8 +100,8 @@ const StyledFooter = styled.div`
   width: 80%;
   justify-content: flex-end;
   font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 2rem;
+  line-height: 2.4rem;
   letter-spacing: 0.5px;
 `;
 

@@ -8,8 +8,8 @@ const ControllButton = ({ onClick, children }) => {
 const StyledRoot = styled.button`
   ${flexCenter}
 
-  width: 42px;
-  height: 30px;
+  width: 4.2rem;
+  height: 3rem;
   border: solid grey 1px;
   cursor: pointer;
 `;

@@ -6,6 +6,7 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import { useState } from 'react';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { UserAction, UserActionType } from 'redux/actions/user';
+import theme from 'styles/theme';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const StyledRoot = styled.header`
 const StyledLogo = styled.div``;
 
 const StyledBrandName = styled.span`
-  color: white;
+  color: ${theme.colors.white};
   font-size: 4rem;
   font-weight: 900;
   margin-left: 1rem;
@@ -82,7 +83,7 @@ const StyledBrandName = styled.span`
 
 const StyledNav = styled.nav`
   & > button {
-    color: white;
+    color: ${theme.colors.white};
     font-size: 2.4rem;
     background-color: inherit;
   }
@@ -94,21 +95,21 @@ const StyledNav = styled.nav`
 
 type Hambergur = { isShow: boolean };
 const MyPageHambergurList = styled.div<Hambergur>`
-  width: 170px;
+  width: 17rem;
   flex-direction: column;
   position: absolute;
-  top: 80px;
-  background-color: #f5f5f5;
-  color: black;
+  top: 8rem;
+  background-color: ${theme.colors.white};
+  color: ${theme.colors.black};
   display: ${props => (props.isShow ? 'flex' : 'none')};
   flex-wrap: wrap;
   z-index: 10000;
 
   a {
     ${flexCenter}
-    height: 60px;
+    height: 6rem;
   }
   a:hover {
-    background-color: #e3e3e3;
+    background-color: ${theme.colors.hewvyWhite};
   }
 `;

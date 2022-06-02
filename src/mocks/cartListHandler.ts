@@ -1,8 +1,9 @@
 import { LOCAL_BASE_URL } from 'apis';
 import { rest } from 'msw';
 import { CartItem } from 'types/domain';
+import { getLocalStorageCartList, setLocalStorageCartList } from 'utils/localStorage';
 
-let mockCartList: CartItem[] = JSON.parse(localStorage.getItem('mockCartList')) || [];
+let mockCartList: CartItem[] = getLocalStorageCartList();
 
 export const cartListHandler = [
   rest.get(`${LOCAL_BASE_URL}/cartList`, (req, res, ctx) => {
@@ -29,7 +30,7 @@ export const cartListHandler = [
       mockCartList.push(cartItem);
     }
 
-    localStorage.setItem('mockCartList', JSON.stringify(mockCartList));
+    setLocalStorageCartList(mockCartList);
 
     return res(ctx.status(200));
   }),
@@ -40,7 +41,7 @@ export const cartListHandler = [
     const newCartList = mockCartList.filter(item => item.id !== deleteId);
 
     mockCartList = [...newCartList];
-    localStorage.setItem('mockCartList', JSON.stringify(mockCartList));
+    setLocalStorageCartList(mockCartList);
 
     return res(ctx.status(200));
   }),
@@ -57,7 +58,7 @@ export const cartListHandler = [
     });
 
     mockCartList = [...newCartList];
-    localStorage.setItem('mockCartList', JSON.stringify(mockCartList));
+    setLocalStorageCartList(mockCartList);
 
     return res(ctx.status(200), ctx.json(cartItem));
   }),

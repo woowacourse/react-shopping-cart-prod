@@ -22,19 +22,19 @@ export default Button;
 
 const StyledButton = styled.button<{ size: Size; backgroundColor: keyof typeof theme.colors }>`
   background-color: ${({ theme, backgroundColor }) => theme.colors[backgroundColor]};
-  color: white;
+  color: ${theme.colors.white};
   ${({ size }) => {
     switch (size) {
       case 'large':
         return `
-          width: 638px; 
-          height: 98px;
+          width: 63.8rem; 
+          height: 9.8rem;
           font-size: 3.2rem;
         `;
       case 'medium':
         return `
-          width: 388px; 
-          height: 73px;
+          width: 38.8rem; 
+          height: 7.3rem;
           font-size: 2.4rem;
         `;
       case 'small':

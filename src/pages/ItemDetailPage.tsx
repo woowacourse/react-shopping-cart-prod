@@ -1,17 +1,17 @@
-import { useParams } from 'react-router-dom';
-import type { Item } from 'types/domain';
-import { LOCAL_BASE_URL } from 'apis';
-import CroppedImage from 'components/common/CroppedImage';
 import styled from 'styled-components';
-import Button from 'components/common/Button';
+import { useParams } from 'react-router-dom';
+import { getCartList } from 'redux/action-creators/cartListThunk';
+import { CartListAction } from 'redux/actions/cartList';
 import useUpdateCartItem from 'hooks/useUpdateCartItem';
 import { useFetch } from 'hooks/useFetch';
+import useThunkFetch from 'hooks/useThunkFetch';
+import useSnackBar from 'hooks/useSnackBar';
+import CroppedImage from 'components/common/CroppedImage';
+import Button from 'components/common/Button';
 import RequestFail from 'components/common/RequestFail';
 import Loading from 'components/common/Loading';
-import useThunkFetch from 'hooks/useThunkFetch';
-import { CartListAction } from 'redux/actions/cartList';
-import { getCartList } from 'redux/action-creators/cartListThunk';
-import useSnackBar from 'hooks/useSnackBar';
+import { LOCAL_BASE_URL } from 'apis';
+import type { Item } from 'types/domain';
 
 const ItemDetail = () => {
   const params = useParams();
@@ -36,7 +36,7 @@ const ItemDetail = () => {
 
   return (
     <StyledRoot>
-      <CroppedImage src={thumbnailUrl} width='570px' height='570px' alt='상품' />
+      <CroppedImage src={thumbnailUrl} width='57rem' height='57rem' alt='상품' />
       <StyledTitle>{title}</StyledTitle>
       <StyldPrice>
         <StyledPriceDescription>금액</StyledPriceDescription>
@@ -71,7 +71,7 @@ const StyledTitle = styled.div`
 const StyldPrice = styled.div`
   display: flex;
   justify-content: space-between;
-  border-top: solid 0.4rem ${({ theme }) => theme.colors.divisionLine};
+  border-top: solid 0.4rem ${({ theme }) => theme.colors.grey};
   width: 100%;
   padding: 0 3.5rem;
   padding-top: 3.3rem;

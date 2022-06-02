@@ -2,15 +2,16 @@ import { LOCAL_BASE_URL } from 'apis';
 import { rest } from 'msw';
 import { EditPasswordInfo, SignInInfo, SignUpInfo, UserInfo } from 'types/domain';
 import { generateRandomCode } from 'utils';
+import { getLocalStorageUserList, setLocalStorageUserList } from 'utils/localStorage';
 
-let mockUserList: UserInfo[] = JSON.parse(localStorage.getItem('mockUserList')) || [];
+let mockUserList: UserInfo[] = getLocalStorageUserList();
 
 export const userHandlers = [
   rest.post<SignUpInfo>(`${LOCAL_BASE_URL}/users`, (req, res, ctx) => {
     const signUpInfo: SignUpInfo = req.body;
 
     mockUserList = [...mockUserList, signUpInfo];
-    localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
+    setLocalStorageUserList(mockUserList);
 
     return res(ctx.status(200), ctx.json({ email: signUpInfo.email, name: signUpInfo.name }));
   }),
@@ -37,7 +38,7 @@ export const userHandlers = [
         user.token = tokenCode;
       }
     });
-    localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
+    setLocalStorageUserList(mockUserList);
 
     return res(
       ctx.status(200),
@@ -61,7 +62,7 @@ export const userHandlers = [
         }
       });
 
-      localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
+      setLocalStorageUserList(mockUserList);
 
       return res(ctx.status(200));
     }
@@ -78,7 +79,7 @@ export const userHandlers = [
     if (targetUser.password === passwordInput) {
       mockUserList = mockUserList.filter(user => user.email !== targetUser.email);
 
-      localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
+      setLocalStorageUserList(mockUserList);
 
       return res(ctx.status(200));
     }
@@ -96,7 +97,7 @@ export const userHandlers = [
 
       targetUser.token = newToken;
 
-      localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
+      setLocalStorageUserList(mockUserList);
 
       return res(
         ctx.status(200),

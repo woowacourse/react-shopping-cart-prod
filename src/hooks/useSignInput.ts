@@ -1,27 +1,18 @@
 import { ChangeEvent, useState } from 'react';
 
-interface InputState {
-  name: string;
-  email: string;
-}
-
-const initialInputState: InputState = {
+const initialInputState = {
   name: '',
   email: '',
 };
 
-const initialValidState: ValidState = {
+const initialValidState = {
   name: false,
   email: false,
 };
 
-type ValidState = {
-  [key in keyof InputState]: boolean;
-};
-
 const useSignInput = () => {
-  const [inputState, setInputState] = useState<InputState>(initialInputState);
-  const [validState, setValidState] = useState<ValidState>(initialValidState);
+  const [inputState, setInputState] = useState(initialInputState);
+  const [validState, setValidState] = useState(initialValidState);
 
   const handleEmailInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setInputState(prev => ({ ...prev, email: value }));

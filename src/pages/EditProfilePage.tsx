@@ -1,14 +1,14 @@
-import SignInput from 'components/common/SignInput';
-import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
-import useSignInput from 'hooks/useSignInput';
-import { FormEvent, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { signUp } from 'redux/action-creators/userThunk';
-import { UserAction } from 'redux/actions/user';
-import styled from 'styled-components';
-import { flexCenter } from 'styles/mixin';
-import theme from 'styles/theme';
+// import SignInput from 'components/common/SignInput';
+// import { useAppDispatch } from 'hooks/useAppDispatch';
+// import { useAppSelector } from 'hooks/useAppSelector';
+// import useSignInput from 'hooks/useSignInput';
+// import { FormEvent, useRef, useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { signUp } from 'redux/action-creators/userThunk';
+// import { UserAction } from 'redux/actions/user';
+// import styled from 'styled-components';
+// import { flexCenter } from 'styles/mixin';
+// import theme from 'styles/theme';
 
 const EditProfilePage = () => {
   /* TODO - 회원 이름 수정 api 명세 작성 후 연동
@@ -87,7 +87,7 @@ const StyledSignUpButton = styled.button`
   background-color: ${theme.colors.primary};
   font-size: 23px;
   font-weight: bold;
-  color: white;
+  color: ${theme.colors.white};;
   border-radius: 6px;
 `;
 */

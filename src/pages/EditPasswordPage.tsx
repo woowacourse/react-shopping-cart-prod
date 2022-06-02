@@ -1,15 +1,16 @@
-import SignInput from 'components/common/SignInput';
-import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
-import usePasswordInput from 'hooks/usePasswordInput';
-import useUpdateEffect from 'hooks/useUpdateEffect';
+import styled from 'styled-components';
+import { flexCenter } from 'styles/mixin';
+import theme from 'styles/theme';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editPassword } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
-import styled from 'styled-components';
-import { flexCenter } from 'styles/mixin';
-import theme from 'styles/theme';
+import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
+import usePasswordInput from 'hooks/usePasswordInput';
+import useUpdateEffect from 'hooks/useUpdateEffect';
+import SignInput from 'components/common/SignInput';
+import { PATH } from 'Router';
 
 const EditPasswordPage = () => {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ const EditPasswordPage = () => {
 
   useUpdateEffect(() => {
     if (!error) {
-      navigate('/main/1');
+      navigate(PATH.main);
     }
   }, [error]);
 
@@ -86,34 +87,34 @@ const EditPasswordPage = () => {
 
 const StyledRoot = styled.div`
   ${flexCenter}
-  height: 1000px;
+  height: 100rem;
 `;
 
 const StyledForm = styled.form`
   ${flexCenter}
   display: flex;
   flex-direction: column;
-  width: 600px;
-  gap: 50px;
-  height: 1000px;
-  border: 1px solid black;
+  width: 60rem;
+  gap: 5rem;
+  height: 100rem;
+  border: 1px solid ${theme.colors.black};
 `;
 
 const StyledTitle = styled.h1`
   font-weight: 600;
-  font-size: 34px;
-  line-height: 36px;
+  font-size: 3.4rem;
+  line-height: 3.6rem;
 
   text-align: center;
 `;
 
 const StyledSignUpButton = styled.button`
   width: 80%;
-  height: 65px;
+  height: 6.5rem;
   background-color: ${theme.colors.primary};
-  font-size: 23px;
+  font-size: 2.3rem;
   font-weight: bold;
-  color: white;
+  color: ${theme.colors.white};
   border-radius: 6px;
 `;
 

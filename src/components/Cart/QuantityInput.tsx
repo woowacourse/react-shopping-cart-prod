@@ -8,10 +8,10 @@ const QuantityInput = ({ quantity, onChange }: { quantity: number; onChange: () 
 const StyledRoot = styled.div`
   ${flexCenter}
 
-  font-size: 24px;
+  font-size: 2.4rem;
   grid-area: qp;
-  width: 73px;
-  height: 60px;
+  width: 7.3rem;
+  height: 6rem;
   border: solid grey 1px;
 `;
 
