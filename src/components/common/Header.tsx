@@ -1,7 +1,7 @@
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from 'redux/user/action';
 import { PATH } from 'Routers';
@@ -16,7 +16,15 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const isLogin = useAppSelector(state => !!state.user.data);
   const name = useAppSelector(state => state.user.data?.name);
-  const [isShowDropdown, toggleShowDropdown] = useReducer(prev => !prev, false);
+  const [isShowDropdown, setIsShowDropdown] = useState(false);
+
+  const closeDropdown = () => {
+    setIsShowDropdown(false);
+  };
+
+  const openDropdown = () => {
+    setIsShowDropdown(true);
+  };
 
   const handleClickLogout = () => {
     navigate(PATH.home);
@@ -38,11 +46,19 @@ const Header = () => {
             <button onClick={() => navigate(PATH.cart)}>장바구니</button>
             <button>주문목록</button>
             <StyledAvatarWrapper>
-              <Avatar name={name} onClick={toggleShowDropdown} />
+              <Avatar name={name} onClick={openDropdown} />
               {isShowDropdown && (
-                <Dropdown closeDropdown={toggleShowDropdown}>
+                <Dropdown closeDropdown={closeDropdown}>
                   <li onClick={() => navigate('/edit')}>회원정보수정</li>
-                  <li onClick={handleClickLogout}>로그아웃</li>
+                  <li
+                    onClick={() => {
+                      handleClickLogout();
+                      closeDropdown();
+                    }}
+                  >
+                    로그아웃
+                  </li>
+                  <li onClick={() => navigate(PATH.withdrawal)}>회원탈퇴</li>
                 </Dropdown>
               )}
             </StyledAvatarWrapper>
