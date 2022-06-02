@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
@@ -11,8 +11,14 @@ import Empty from 'assets/empty.png';
 
 import useCartItem from 'hook/useCartItem';
 import useFetch from 'hook/useFetch';
+import {PAGINATION_LIMIT} from 'constant';
+import Pagination from 'component/Pagination';
 
 export default function ProductListPage() {
+  const [pagePosition, setPagePosition] = useState(1);
+
+  const productStartIndex = (pagePosition - 1) * PAGINATION_LIMIT;
+
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productListReducer.productList);
@@ -41,12 +47,22 @@ export default function ProductListPage() {
         pending={productPending}
         error={productError}
       >
-        <S.ProductListBox>
-          {productList &&
-            productList.map((productInfo) => (
-              <Item productInfo={productInfo} key={productInfo.id} />
-            ))}
-        </S.ProductListBox>
+        <S.ProductSection>
+          <S.ProductListBox>
+            {productList &&
+              productList
+                .slice(productStartIndex, productStartIndex + PAGINATION_LIMIT)
+                .map((productInfo) => <Item productInfo={productInfo} key={productInfo.id} />)}
+          </S.ProductListBox>
+          {productList && (
+            <Pagination
+              totalNumber={productList.length}
+              limit={PAGINATION_LIMIT}
+              pagePosition={pagePosition}
+              setPagePosition={setPagePosition}
+            />
+          )}
+        </S.ProductSection>
       </ErrorPendingBoundary>
     </S.ProductListPageLayout>
   );

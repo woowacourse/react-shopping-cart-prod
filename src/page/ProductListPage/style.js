@@ -1,4 +1,4 @@
-import {FlexRow} from 'style/common';
+import {FlexColumn, FlexRow} from 'style/common';
 import styled from 'styled-components';
 
 const ProductListPageLayout = styled(FlexRow)`
@@ -11,6 +11,12 @@ const ProductListBox = styled.div`
   gap: 3vh 3vw;
   grid-template-columns: repeat(4, 1fr);
   margin: 0 10%;
+  margin-bottom: 80px;
 `;
 
-export {ProductListPageLayout, ProductListBox};
+const ProductSection = styled(FlexColumn)`
+  justify-content: center;
+  align-items: center;
+`;
+
+export {ProductListPageLayout, ProductListBox, ProductSection};
