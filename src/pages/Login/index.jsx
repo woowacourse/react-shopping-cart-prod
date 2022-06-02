@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Form from 'components/Common/Form/Form';
@@ -7,17 +6,17 @@ import Input from 'components/Common/Input/Input';
 import Button from 'components/Common/Button/Button';
 import Title from 'components/Common/Title/Title';
 
-import { showSnackBar } from 'reducers/ui/ui.actions';
 import { PATH_NAME } from 'constants';
 
 import useAuth from 'hooks/useAuth';
+import useSnackBar from 'hooks/useSnackBar';
 import * as Styled from './style';
 import { useEffect } from 'react';
 
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
   const { isLoginSucceed, isLoginError, login, checkIsAuthenticated } =
     useAuth();
 
@@ -29,9 +28,7 @@ const Login = () => {
     } = e.target.elements;
 
     if (email.length === 0 || password.length === 0) {
-      dispatch(
-        showSnackBar({ type: 'ERROR', text: '정보를 올바르게 입력하세요.' }),
-      );
+      showErrorSnackBar('정보를 올바르게 입력하세요.');
       return;
     }
     login(email, password);
@@ -43,13 +40,13 @@ const Login = () => {
 
   useEffect(() => {
     if (isLoginSucceed) {
-      dispatch(showSnackBar({ type: 'SUCCESS', text: '로그인 성공' }));
+      showSuccessSnackBar('로그인 성공');
       navigate(PATH_NAME.HOME);
       return;
     }
 
     if (isLoginError) {
-      dispatch(showSnackBar({ type: 'ERROR', text: '로그인 실패' }));
+      showErrorSnackBar('로그인 실패');
     }
   }, [isLoginSucceed, isLoginError]);
 

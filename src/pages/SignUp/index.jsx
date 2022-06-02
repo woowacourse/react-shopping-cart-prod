@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
 
 import Input from 'components/Common/Input/Input';
 import Title from 'components/Common/Title/Title';
@@ -7,18 +6,18 @@ import Button from 'components/Common/Button/Button';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
 import Form from 'components/Common/Form/Form';
-
-import { showSnackBar } from 'reducers/ui/ui.actions';
 import useInputValidate from 'hooks/useInputValidate';
 import { useNavigate } from 'react-router-dom';
 import { PATH_NAME } from 'constants';
 import useAuth from 'hooks/useAuth';
+import useSnackBar from 'hooks/useSnackBar';
 import * as Styled from './style';
 
 const SignUp = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const pwd = useRef(null);
+
+  const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
 
   const { isSignUpSucceed, isSignUpError, signUp, checkIsAuthenticated } =
     useAuth();
@@ -38,9 +37,7 @@ const SignUp = () => {
       passwordCheckValidate.isValid;
 
     if (!isAllValid) {
-      dispatch(
-        showSnackBar({ type: 'ERROR', text: '정보를 올바르게 입력하세요.' }),
-      );
+      showErrorSnackBar('정보를 올바르게 입력하세요.');
       return;
     }
 
@@ -64,13 +61,11 @@ const SignUp = () => {
   useEffect(() => {
     if (isSignUpSucceed) {
       navigate(PATH_NAME.LOGIN);
-      dispatch(showSnackBar({ type: 'SUCCESS', text: '회원가입 성공' }));
+      showSuccessSnackBar('회원가입 성공');
       return;
     }
     if (isSignUpError) {
-      dispatch(
-        showSnackBar({ type: 'ERROR', text: '입력한 정보를 확인 하세요.' }),
-      );
+      showErrorSnackBar('입력한 정보를 확인 하세요.');
       return;
     }
   }, [isSignUpSucceed, isSignUpError]);

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Profile from 'components/User/Profile/Profile';
 import Title from 'components/Common/Title/Title';
@@ -11,17 +11,17 @@ import Input from 'components/Common/Input/Input';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
 
-import { showSnackBar } from 'reducers/ui/ui.actions';
 import useInputValidate from 'hooks/useInputValidate';
 import { PATH_NAME } from 'constants';
 
 import useModifyProfilePage from './hooks';
+import useSnackBar from 'hooks/useSnackBar';
 import PropTypes from 'prop-types';
 import * as Styled from './style';
 
 const ModifyProfile = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
   const { name } = useSelector((state) => state.user);
   const [openPasswordModal, setOpenChangePasswordModal] = useState(false);
   const [openWithdrawalModal, setOpenWithdrawalModal] = useState(false);
@@ -60,21 +60,11 @@ const ModifyProfile = () => {
   useEffect(() => {
     if (isUpdatePasswordSucceed) {
       setOpenChangePasswordModal(false);
-      dispatch(
-        showSnackBar({
-          type: 'SUCCESS',
-          text: '비밀번호가 성공적으로 변경되었습니다.',
-        }),
-      );
+      showSuccessSnackBar('비밀번호가 성공적으로 변경되었습니다.');
       return;
     }
     if (isUpdatePasswordError) {
-      dispatch(
-        showSnackBar({
-          type: 'ERROR',
-          text: '비밀번호를 올바르게 입력하세요.',
-        }),
-      );
+      showErrorSnackBar('비밀번호를 올바르게 입력하세요.');
       return;
     }
   }, [isUpdatePasswordSucceed, isUpdatePasswordError]);
@@ -86,12 +76,7 @@ const ModifyProfile = () => {
       return;
     }
     if (isUnregisterError) {
-      dispatch(
-        showSnackBar({
-          type: 'ERROR',
-          text: '비밀번호를 올바르게 입력하세요.',
-        }),
-      );
+      showErrorSnackBar('비밀번호를 올바르게 입력하세요.');
       return;
     }
   }, [isUnregisterSucceed, isUnregisterError]);

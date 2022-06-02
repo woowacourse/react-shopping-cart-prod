@@ -1,18 +1,17 @@
 import * as Styled from './style';
 import profileDefaultImg from 'assets/png/profileDefaultImg.png';
 import PropTypes from 'prop-types';
-import { showSnackBar } from 'reducers/ui/ui.actions';
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import useSnackBar from 'hooks/useSnackBar';
 import useProfile from './hooks';
 
 const CONVERT_MODE = 'CONVERT_MODE';
 const CONFIRM_MODE = 'CONFIRM_MODE';
 
 const Profile = ({ name }) => {
+  const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
   const { isUpdateNameSucceed, isUpdateNameError, updateName } = useProfile();
 
-  const dispatch = useDispatch();
   const [mode, setMode] = useState(CONFIRM_MODE);
   const [newName, setNewName] = useState(name);
 
@@ -31,23 +30,12 @@ const Profile = ({ name }) => {
   useEffect(() => {
     if (isUpdateNameSucceed) {
       setMode(CONFIRM_MODE);
-      dispatch(
-        showSnackBar({
-          type: 'SUCCESS',
-          text: '이름이 성공적으로 변경되었습니다!',
-        }),
-      );
-
+      showSuccessSnackBar('이름이 성공적으로 변경되었습니다!');
       return;
     }
 
     if (isUpdateNameError) {
-      dispatch(
-        showSnackBar({
-          type: 'ERROR',
-          text: '서버 에러가 발생했습니다',
-        }),
-      );
+      showErrorSnackBar('서버 에러가 발생했습니다');
       return;
     }
   }, [isUpdateNameSucceed, isUpdateNameError]);
