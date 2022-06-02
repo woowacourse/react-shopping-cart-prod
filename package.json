@@ -11,6 +11,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
+    "shortid": "^2.2.16",
     "styled-components": "^5.3.5",
     "styled-reset": "^4.3.4",
     "web-vitals": "^2.1.4"
@@ -37,6 +38,7 @@
     ]
   },
   "devDependencies": {
+    "@commitlint/cli": "^16.2.1",
     "@storybook/addon-actions": "^6.4.22",
     "@storybook/addon-essentials": "^6.4.22",
     "@storybook/addon-interactions": "^6.4.22",
@@ -50,21 +52,20 @@
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
+    "commitizen": "^4.2.4",
+    "commitlint-config-gitmoji": "^2.2.5",
+    "cz-customizable": "^6.3.0",
     "eslint": "^8.15.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-storybook": "^0.5.11",
     "gh-pages": "^4.0.0",
+    "husky": "^7.0.4",
     "msw": "^0.40.1",
     "msw-storybook-addon": "^1.6.3",
     "prettier": "^2.6.2",
-    "webpack": "^5.72.0",
-    "@commitlint/cli": "^16.2.1",
-    "commitizen": "^4.2.4",
-    "commitlint-config-gitmoji": "^2.2.5",
-    "cz-customizable": "^6.3.0",
-    "husky": "^7.0.4"
+    "webpack": "^5.72.0"
   },
   "config": {
     "commitizen": {

@@ -12,7 +12,12 @@ export default function useFetch(method = 'get') {
       setData(null);
       setError(null);
 
-      axios[method](API_URL, body, headers)
+      axios({
+        method,
+        url: API_URL,
+        data: body,
+        headers,
+      })
         .then((response) => {
           setPending(false);
           response.data && setData(response.data);

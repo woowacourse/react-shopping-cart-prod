@@ -44,7 +44,7 @@ export default function DetailItem({productInfo}) {
         width="640px"
         height="100px"
         onClick={handleCartButtonClick}
-        disabled={isInCart}
+        isDisabled={isInCart}
       >
         장바구니
       </Button>

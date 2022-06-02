@@ -1,15 +1,32 @@
+/* eslint-disable no-unused-vars */
 import {rest} from 'msw';
 import {MOCK_PRODUCT_LIST} from './mockData';
+import shortid from 'shortid';
 
 let cart = [];
-let info = {
-  account: 'leo0842',
-  nickname: '에덴',
-  address: '에덴동산',
-  phoneNumber: {
-    start: '010',
-    middle: '1234',
-    last: '2345',
+
+let userDB = {
+  winnieToken: {
+    account: 'winnie0512',
+    password: 'Kyj123456!',
+    nickname: '위니',
+    address: '공릉',
+    phoneNumber: {
+      start: '010',
+      middle: '1234',
+      last: '5678',
+    },
+  },
+  nineToken: {
+    account: 'jhy979',
+    password: 'Abc12345!',
+    nickname: '나인',
+    address: '하남',
+    phoneNumber: {
+      start: '010',
+      middle: '1111',
+      last: '2222',
+    },
   },
 };
 
@@ -82,11 +99,31 @@ export const handlers = [
 
   // 로그인
   rest.post(process.env.REACT_APP_LOGIN_API_URL, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json({accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9'}));
+    const {account, password} = req.body;
+    const accessToken = Object.keys(userDB).find(
+      (token) => userDB[token].account === account && userDB[token].password === password,
+    );
+
+    if (!accessToken) {
+      return res(ctx.status(404));
+    }
+
+    return res(ctx.status(200), ctx.json({accessToken}));
   }),
 
   // 회원가입
   rest.post(process.env.REACT_APP_SIGNUP_API_URL, (req, res, ctx) => {
+    const accounts = Object.values(userDB).map(({account}) => account);
+
+    const isDuplicated = accounts.some((account) => req.body.account === account);
+
+    if (isDuplicated) {
+      return res(ctx.status(404));
+    }
+
+    const accessToken = shortid.generate();
+    userDB[accessToken] = req.body;
+
     return res((res) => {
       res.status = 201;
       res.headers.set('Location', '/signin');
@@ -96,20 +133,40 @@ export const handlers = [
 
   // 사용자 정보 조회
   rest.get(process.env.REACT_APP_GET_INFO_API_URL, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(info));
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    if (!Object.hasOwnProperty.call(userDB, accessToken)) {
+      return res(ctx.status(404));
+    }
+
+    return res(ctx.status(200), ctx.json(userDB[accessToken]));
   }),
 
   // 사용자 정보 수정
   rest.put(process.env.REACT_APP_EDIT_INFO_API_URL, (req, res, ctx) => {
-    info = {
-      ...info,
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    if (!Object.hasOwnProperty.call(userDB, accessToken)) {
+      return res(ctx.status(404));
+    }
+
+    userDB[accessToken] = {
+      ...userDB[accessToken],
       ...req.body,
     };
+
     return res(ctx.status(200));
   }),
 
   // 회원 탈퇴
   rest.delete(process.env.REACT_APP_WITHDRAWAL_API_URL, (req, res, ctx) => {
+    // 클라이언트에서 요청한 accessToken에 해당하는 계정을 삭제한다
+
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+    if (req.body.password !== userDB[accessToken].password) {
+      return res(ctx.status(404));
+    }
+
     return res(ctx.status(204));
   }),
 ];

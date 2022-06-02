@@ -26,7 +26,8 @@ function WithDrawalPage() {
 
   const onSubmit = async (inputs) => {
     const [password] = inputs;
-    const accessToken = await localStorage.getItem('accessToken');
+    const response = await JSON.parse(localStorage.getItem('accessToken'));
+    const accessToken = response.accessToken;
 
     withDrawal.fetch({
       API_URL: process.env.REACT_APP_WITHDRAWAL_API_URL,

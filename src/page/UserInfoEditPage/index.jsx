@@ -52,9 +52,12 @@ function UserInfoEditPage() {
     restLastNumber.isError;
 
   const getInfo = async () => {
-    const accessToken = await localStorage.getItem('accessToken');
+    const response = await JSON.parse(localStorage.getItem('accessToken'));
+    const accessToken = response.accessToken;
+
     userInfo.fetch({
       API_URL: process.env.REACT_APP_GET_INFO_API_URL,
+      body: {test: 'test:'},
       headers: {Authorization: `Bearer ${accessToken}`},
     });
   };
@@ -63,7 +66,8 @@ function UserInfoEditPage() {
     // eslint-disable-next-line no-unused-vars
     const [account, nickname, password, address, start, middle, last] = inputs;
 
-    const accessToken = await localStorage.getItem('accessToken');
+    const response = await JSON.parse(localStorage.getItem('accessToken'));
+    const accessToken = response.accessToken;
 
     editInfo.fetch({
       API_URL: process.env.REACT_APP_EDIT_INFO_API_URL,
