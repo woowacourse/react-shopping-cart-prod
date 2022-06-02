@@ -1,4 +1,10 @@
-import { CART_ACTIONS, PRODUCT_LIST_ACTIONS, ORDER_ACTIONS, AUTH_ACTIONS } from 'actions/action';
+import {
+  CART_ACTIONS,
+  PRODUCT_LIST_ACTIONS,
+  ORDER_ACTIONS,
+  AUTH_ACTIONS,
+  SNACKBAR_ACTIONS,
+} from 'actions/action';
 
 const doPutProductToCart = ({ id, quantity }) => ({ type: CART_ACTIONS.PUT, id, quantity });
 
@@ -18,6 +24,10 @@ const doLogin = ({ nickname }) => ({ type: AUTH_ACTIONS.LOGIN, nickname });
 
 const doLogout = () => ({ type: AUTH_ACTIONS.LOGOUT });
 
+const doShowSnackbar = ({ message, status }) => ({ type: SNACKBAR_ACTIONS.SHOW, message, status });
+
+const doHideSnackbar = () => ({ type: SNACKBAR_ACTIONS.HIDE });
+
 export {
   doPutProductToCart,
   doDeleteProductFromCart,
@@ -28,4 +38,6 @@ export {
   doInitializeOrder,
   doLogin,
   doLogout,
+  doShowSnackbar,
+  doHideSnackbar,
 };
