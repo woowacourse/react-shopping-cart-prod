@@ -84,6 +84,7 @@ function RegisterPage() {
     } catch (error) {
       setIsLoading(false);
       alert(error.message);
+      return;
     }
     alert("회원가입에 성공했습니다 :D");
     navigator(ROUTES.LOGIN);
