@@ -28,12 +28,7 @@ const Login = () => {
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(
-      login({
-        loginId: email,
-        password,
-      })
-    );
+    dispatch(login({ loginId: email, password }));
 
     isLogining.current = true;
   };
