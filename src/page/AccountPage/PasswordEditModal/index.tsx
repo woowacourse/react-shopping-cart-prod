@@ -40,7 +40,7 @@ const PasswordEditModal = ({ handleModal }) => {
       renderSnackbar(MESSAGE.UPDATE_PASSWORD_SUCCESS, 'SUCCESS');
       handleModal();
     } catch (error) {
-      renderSnackbar(MESSAGE.UPDATE_PASSWORD_FAILUER, 'FAILED');
+      renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');
     }
   };
 

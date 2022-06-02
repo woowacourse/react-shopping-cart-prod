@@ -7,14 +7,12 @@ import UserMenu from 'components/UserMenu';
 
 import { useEffect, useState } from 'react';
 import Styled from './index.style';
-import { getCookie } from 'utils/cookie';
 import Logo from 'components/Logo';
 
 const Layout = () => {
   const location = useLocation();
-  const { nickname } = useSelector(state => state.authReducer);
+  const { nickname, isAuthenticated } = useSelector(state => state.authReducer);
   const [isHeaderShow, setIsHeaderShow] = useState(true);
-  const isAuthenticated = getCookie('accessToken');
 
   useEffect(() => {
     setIsHeaderShow(location.pathname !== '/login' && location.pathname !== '/signup');

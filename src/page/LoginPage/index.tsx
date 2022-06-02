@@ -9,7 +9,7 @@ import AuthButton from 'components/AuthButton';
 import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
 import axios from 'axios';
-import { setCookie, getCookie } from 'utils/cookie';
+import { setCookie } from 'utils/cookie';
 
 import { useNavigate } from 'react-router-dom';
 import store from 'store/store';
@@ -17,10 +17,11 @@ import { doLogin } from 'actions/actionCreator';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import Logo from 'components/Logo';
+import { useSelector } from 'react-redux';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const isAuthenticated = !!getCookie('accessToken');
+  const { isAuthenticated } = useSelector(state => state.authReducer);
 
   const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');
@@ -33,7 +34,6 @@ const LoginPage = () => {
       renderSnackbar(MESSAGE.ALREADY_LOGIN, 'FAILED');
       navigate('/');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

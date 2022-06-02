@@ -15,12 +15,12 @@ import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';
 import { LINK, MESSAGE } from 'utils/constants';
 import useSnackbar from 'hooks/useSnackbar';
-import { getCookie } from 'utils/cookie';
+import { useSelector } from 'react-redux';
 
 const ProductItem = ({ id, name, price, image }) => {
   const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
-  const isAuthenticated = getCookie('accessToken');
+  const { isAuthenticated } = useSelector(state => state.authReducer);
 
   const [isInCart, product] = useCart(id);
   const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);

@@ -15,12 +15,12 @@ import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import Logo from 'components/Logo';
-import { getCookie } from 'utils/cookie';
+import { useSelector } from 'react-redux';
 
 const SignupPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const isAuthenticated = getCookie('accessToken');
+  const { isAuthenticated } = useSelector(state => state.authReducer);
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
@@ -36,8 +36,6 @@ const SignupPage = () => {
       renderSnackbar(MESSAGE.ALREADY_LOGIN, 'FAILED');
       navigate('/');
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

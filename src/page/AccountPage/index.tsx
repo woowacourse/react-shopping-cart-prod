@@ -18,11 +18,12 @@ import { doLogin } from 'actions/actionCreator';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import { useSelector } from 'react-redux';
 
 const AccountPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const isAuthenticated = getCookie('accessToken');
+  const { isAuthenticated } = useSelector(state => state.authReducer);
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
@@ -41,7 +42,6 @@ const AccountPage = () => {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getProfile = async () => {

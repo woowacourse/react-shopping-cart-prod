@@ -12,12 +12,13 @@ import useProduct from 'hooks/useProduct';
 import useCart from 'hooks/useCart';
 
 import useSnackbar from 'hooks/useSnackbar';
-import { getCookie } from 'utils/cookie';
+import { useSelector } from 'react-redux';
 
 const ProductDetailPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const isAuthenticated = getCookie('accessToken');
+  const { isAuthenticated } = useSelector(state => state.authReducer);
+
   const params = useParams();
   const id = Number(params.id);
   const [{ image, name, price }] = useProduct(id);

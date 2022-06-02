@@ -25,7 +25,7 @@ const MESSAGE = {
   LOGIN_SUCCESS: '로그인에 성공하였습니다.',
   LOGIN_FAILURE: '로그인에 실패하였습니다.',
   ALREADY_LOGIN: '이미 로그인되어있습니다.',
-  NO_AUTHORIZATION: '로그인을 해주세요',
+  NO_AUTHORIZATION: '접근권한이 없습니다. 로그인을 해주세요.',
   LOGOUT_SUCCESS: '로그아웃에 성공하였습니다.',
   LOGOUT_FAILURE: '로그아웃에 실패하였습니다.',
   UPDATE_NICKNAME_SUCCESS: '닉네임 변경에 성공하였습니다.',

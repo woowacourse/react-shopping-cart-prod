@@ -15,12 +15,11 @@ import Styled from 'page/CartPage/index.style';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
 
 const CartPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const isAuthenticated = getCookie('accessToken');
+  const { isAuthenticated } = useSelector(state => state.authReducer);
 
   const { products, shoppingCart, order } = useSelector(state => state.reducer);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -47,7 +46,6 @@ const CartPage = () => {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCheckboxClick = () => {
