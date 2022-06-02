@@ -9,7 +9,7 @@ import Form from "@/components/form/Form";
 import Input from "@/components/input/Input";
 
 import { setCookie, getCookie } from "@/utils/auth";
-import { BASE_URL, MESSAGE } from "@/constants";
+import { BASE_URL, PATH, MESSAGE } from "@/constants";
 
 import StyledSigninContainer from "@/pages/sign-in/Signin.style";
 
@@ -24,7 +24,7 @@ function Signin() {
   useEffect(() => {
     if (getCookie("accessToken")) {
       dispatch(toggleSnackbarOpen(MESSAGE.NOT_AUTHORIZED));
-      navigate("/");
+      navigate(PATH.MAIN);
     }
   }, []);
 
@@ -37,7 +37,7 @@ function Signin() {
         password: password.current.value,
       });
       setCookie("accessToken", data.accessToken);
-      navigate("/");
+      navigate(PATH.MAIN);
       location.reload();
     } catch (error) {
       const { errorCode } = error.response.data;

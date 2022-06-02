@@ -13,6 +13,7 @@ import { deleteCookie } from "@/utils/auth";
 
 import {
   BASE_URL,
+  PATH,
   STATUS,
   ERROR_STATUS,
   MESSAGE,
@@ -53,7 +54,7 @@ function UserEdit() {
       setNickname((prev) => ({ ...prev, value: data.nickname }));
     } catch (error) {
       dispatch(toggleSnackbarOpen(MESSAGE.NOT_AUTHORIZED));
-      navigate("/");
+      navigate(PATH.MAIN);
     }
   };
 
@@ -113,7 +114,7 @@ function UserEdit() {
           },
         }
       );
-      navigate("/");
+      navigate(PATH.MAIN);
       location.reload();
     } catch (error) {
       console.log(error);
@@ -131,7 +132,7 @@ function UserEdit() {
         });
 
         deleteCookie("accessToken");
-        navigate("/");
+        navigate(PATH.MAIN);
         location.reload();
       } catch (error) {
         console.log(error);

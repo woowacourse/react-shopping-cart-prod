@@ -13,7 +13,7 @@ import ImageButton from "@/pages/home/components/image-button/ImageButton";
 import StyledProductInfo from "@/pages/home/components/product-item/ProductInfo.styled";
 import StyledProductItem from "@/pages/home/components/product-item/ProductItem.styled";
 
-import { MESSAGE } from "@/constants";
+import { PATH, MESSAGE } from "@/constants";
 
 function ProductItem({ id, name, price, imgUrl }) {
   const dispatch = useDispatch();
@@ -25,7 +25,7 @@ function ProductItem({ id, name, price, imgUrl }) {
   };
 
   const handleProductDetailClick = () => {
-    navigate(`/detail/${id}`);
+    navigate(`${PATH.DETAIL}/${id}`);
   };
 
   return (
