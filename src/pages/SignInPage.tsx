@@ -3,6 +3,7 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
 import useSignInput from 'hooks/useSignInput';
+import useUpdateEffect from 'hooks/useUpdateEffect';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signIn } from 'redux/action-creators/userThunk';
@@ -15,11 +16,18 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
   const { loading, error, data } = useAppSelector(state => state.userReducer);
+
   const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
 
   const { inputState, validState, handleEmailInput } = useSignInput();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  useUpdateEffect(() => {
+    if (!error) {
+      navigate('/main/1');
+    }
+  }, [error]);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const inputInfo = {
@@ -28,11 +36,7 @@ const SignInPage = () => {
     };
 
     if (validState.email && passwordValid) {
-      await dispatch(signIn(inputInfo));
-
-      if (!error) {
-        navigate('/main/1');
-      }
+      dispatch(signIn(inputInfo));
     }
   };
 

@@ -10,6 +10,7 @@ import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 import styled from 'styled-components';
 import usePasswordInput from 'hooks/usePasswordInput';
+import useUpdateEffect from 'hooks/useUpdateEffect';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -23,7 +24,13 @@ const SignUpPage = () => {
     handleCurrentPasswordConfirmInput,
   } = usePasswordInput();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  useUpdateEffect(() => {
+    if (!error) {
+      navigate('/main/1');
+    }
+  }, [error]);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const inputInfo = {
@@ -36,11 +43,7 @@ const SignUpPage = () => {
       Object.values(validState).every(valid => valid) &&
       [passwordValid.current, passwordValid.confirm].every(valid => valid)
     ) {
-      await dispatch(signUp(inputInfo));
-
-      if (!error) {
-        navigate('/signIn');
-      }
+      dispatch(signUp(inputInfo));
     }
   };
 

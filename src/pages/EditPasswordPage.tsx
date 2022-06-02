@@ -2,6 +2,7 @@ import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
+import useUpdateEffect from 'hooks/useUpdateEffect';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editPassword } from 'redux/action-creators/userThunk';
@@ -23,7 +24,13 @@ const EditPasswordPage = () => {
     handleCurrentPasswordConfirmInput,
   } = usePasswordInput();
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  useUpdateEffect(() => {
+    if (!error) {
+      navigate('/main/1');
+    }
+  }, [error]);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const editPasswordInfo = {
@@ -32,11 +39,7 @@ const EditPasswordPage = () => {
     };
 
     if (Object.values(passwordValid).every(valid => valid)) {
-      await dispatch(editPassword(editPasswordInfo));
-
-      if (!error) {
-        navigate('/main/1');
-      }
+      dispatch(editPassword(editPasswordInfo));
     }
   };
 

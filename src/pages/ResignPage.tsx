@@ -2,6 +2,7 @@ import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
+import useUpdateEffect from 'hooks/useUpdateEffect';
 import { FormEvent, useRef, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { resign } from 'redux/action-creators/userThunk';
@@ -18,6 +19,12 @@ const ResignPage = () => {
   const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
   const [confirmMessageValid, setConfirmMessageValid] = useState(false);
 
+  useUpdateEffect(() => {
+    if (!error) {
+      navigate('/main/1');
+    }
+  }, [error]);
+
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -26,8 +33,7 @@ const ResignPage = () => {
     if (passwordValid.current && confirmMessageValid) {
       dispatch(resign(inputInfo));
 
-      localStorage.clear();
-      navigate('/main/1');
+      localStorage.removeItem('token');
     }
   };
 
