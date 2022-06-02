@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { setCookie, getCookie } from 'utils/cookie';
 
+const getAuthorizationToken = () => {
+  const userToken = getCookie('userToken');
+  return `Bearer ${userToken}`;
+};
+
 export const loginApi = async (paylod) => {
   try {
     const res = await axios({
@@ -21,12 +26,11 @@ export const loginApi = async (paylod) => {
 
 export const getUserApi = async () => {
   try {
-    const userToken = getCookie('userToken');
     const res = await axios({
       method: 'GET',
       url: `/api/members/me`,
       headers: {
-        Authorization: `Bearer ${userToken}`,
+        Authorization: getAuthorizationToken(),
       },
     });
 
@@ -67,6 +71,9 @@ export const updateNameApi = async (payload) => {
     await axios({
       method: 'PUT',
       url: '/api/members/me/name',
+      headers: {
+        Authorization: getAuthorizationToken(),
+      },
       payload,
     });
   } catch (err) {
@@ -79,6 +86,9 @@ export const updatePasswordApi = async (payload) => {
     await axios({
       method: 'PUT',
       url: '/api/members/me/password',
+      headers: {
+        Authorization: getAuthorizationToken(),
+      },
       payload,
     });
   } catch (err) {
@@ -91,6 +101,9 @@ export const unRegisterApi = async (payload) => {
     await axios({
       method: 'DELETE',
       url: '/api/members/me',
+      headers: {
+        Authorization: getAuthorizationToken(),
+      },
       payload,
     });
   } catch (err) {
