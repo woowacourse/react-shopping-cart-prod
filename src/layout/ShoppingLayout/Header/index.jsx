@@ -1,13 +1,13 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-
-import useCart from 'hooks/useCart';
 
 import { PAGE_LIST } from 'constants/';
 
 import * as S from './styles';
 
 function Header() {
-  const { state: cartState } = useCart();
+  const cartItems = useSelector((state) => state.cart.items);
+  const isLoggedIn = useSelector((state) => state.members.isLoggedIn);
 
   return (
     <S.Container>
@@ -21,11 +21,16 @@ function Header() {
 
       <S.RightMenu>
         <Link to={PAGE_LIST.CART_LIST}>
-          <S.RightMenuList className="cart" count={cartState.cartItems.length}>
+          <S.RightMenuList className="cart" count={cartItems.length}>
             장바구니
           </S.RightMenuList>
         </Link>
-        <S.RightMenuList className="order-list">주문 목록</S.RightMenuList>
+
+        <Link to={!isLoggedIn ? PAGE_LIST.LOGIN : PAGE_LIST.LOGOUT}>
+          <S.RightMenuList className="order-list">
+            {!isLoggedIn ? '로그인' : '로그아웃'}
+          </S.RightMenuList>
+        </Link>
       </S.RightMenu>
     </S.Container>
   );
