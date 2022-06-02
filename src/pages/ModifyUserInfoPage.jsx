@@ -51,13 +51,12 @@ function ModifyUserInfoPage() {
   }, []);
 
   if (!userInfo) return <Loading />;
-  const email = userInfo.email;
 
   return (
     <StyledModifyUserInfoContainer>
       <h1>회원 정보 수정</h1>
       <StyledUserInfoForm onSubmit={handleUserInfoSubmit}>
-        <Input labelText="이메일" type="email" value={email} disabled />
+        <Input labelText="이메일" type="email" value={userInfo.email} disabled readonly />
         <Input
           labelText="닉네임"
           type="text"
