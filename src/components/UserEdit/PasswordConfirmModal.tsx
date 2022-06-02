@@ -60,9 +60,11 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
 export default PasswordConfirmModal;
 
 const StyledPasswordConfirmContent = styled.form`
-  width: 400px;
-  height: 100px;
+  width: 500px;
+  padding: 0 100px;
+  height: 300px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-radius: 8px;
