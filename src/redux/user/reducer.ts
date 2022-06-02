@@ -44,6 +44,9 @@ export const userReducer = (state = initialState, action: UserAction) => {
       return { ...state, loading: null, data: { ...state.data, name: action.payload.name } };
     case 'user/EDIT_FAILURE':
       return { ...state, loading: null, error: action.payload };
+
+    case 'user/RESET_ERROR':
+      return { ...state, error: null };
     default:
       return state;
   }

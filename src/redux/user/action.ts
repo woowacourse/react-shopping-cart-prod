@@ -13,6 +13,7 @@ export const UserThunkActionType = {
 
 const UserActionType = {
   LOGOUT: 'user/LOGOUT',
+  RESET_ERROR: 'user/RESET_ERROR',
 } as const;
 
 const getUserGroup = buildThunkActionGroup<UserInfo, typeof UserThunkActionType.GET_USER>(
@@ -35,6 +36,10 @@ export const logout = () => ({
   type: UserActionType.LOGOUT,
 });
 
+export const resetError = () => ({
+  type: UserActionType.RESET_ERROR,
+});
+
 export const userActions = {
   getUserGroup,
   loginGroup,
@@ -44,4 +49,5 @@ export const userActions = {
 
 export type UserAction =
   | ActionsType<ActionGroupType<typeof userActions>>
-  | ReturnType<typeof logout>;
+  | ReturnType<typeof logout>
+  | ReturnType<typeof resetError>;
