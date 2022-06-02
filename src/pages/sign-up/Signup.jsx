@@ -81,7 +81,7 @@ function Signup() {
     if (value !== password.value) {
       setPasswordConfirm((prev) => ({
         ...prev,
-        status: ERROR_STATUS.MISMATHCH,
+        status: ERROR_STATUS.MISMATCH,
       }));
       return;
     }

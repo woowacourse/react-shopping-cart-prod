@@ -19,7 +19,7 @@ const StyledProductList = styled.section`
 
     .delete-button {
       padding: 12px 22px;
-      border: 1px solid ${(props) => props.theme.colors.gray2};
+      border: 1px solid ${({ theme }) => theme.colors.gray2};
       cursor: pointer;
     }
   }
@@ -28,11 +28,11 @@ const StyledProductList = styled.section`
     display: flex;
     align-items: center;
     margin-top: 50px;
-    font-size: 20px;
+    font-size: ${({ theme }) => theme.fontSize.m};
   }
 
   .cart-title-border {
-    border: 2px solid ${(props) => props.theme.colors.gray1};
+    border: 2px solid ${({ theme }) => theme.colors.gray1};
   }
 `;
 

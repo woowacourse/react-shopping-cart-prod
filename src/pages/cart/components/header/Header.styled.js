@@ -8,14 +8,14 @@ const StyledHeader = styled.header`
   margin-top: 20px;
 
   h2 {
-    font-size: 32px;
+    font-size: ${({ theme }) => theme.fontSize.xl};
     font-weight: 700;
     margin-bottom: 0px;
   }
 
   hr {
     width: 100%;
-    border: 2px solid ${(props) => props.theme.colors.black2};
+    border: 2px solid ${({ theme }) => theme.colors.black2};
     margin-top: 20px;
   }
 `;

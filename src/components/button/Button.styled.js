@@ -11,7 +11,7 @@ const StyledButton = styled.button`
   border: none;
 
   &:disabled {
-    background-color: #cccccc;
+    background-color: ${({ theme }) => theme.colors.gray3};
     cursor: initial;
   }
 `;

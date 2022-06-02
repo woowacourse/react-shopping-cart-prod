@@ -28,7 +28,8 @@ const StyledDropdownContainer = styled.div`
   .dropdown-container {
     display: none;
     position: absolute;
-    border-color: transparent transparent #f1f1f1 transparent;
+    border-color: ${({ theme }) =>
+      `transparent transparent ${theme.colors.gray5} transparent`};
     border-style: solid;
     border-width: 0 10px 16px 10px;
     height: 0px;
@@ -39,20 +40,20 @@ const StyledDropdownContainer = styled.div`
 
   .dropdown-content {
     position: absolute;
-    background-color: #f1f1f1;
+    background-color: ${({ theme }) => theme.colors.gray5};
     min-width: 160px;
     top: 16px;
     right: -25px;
   }
 
   .dropdown-content a {
-    color: black;
+    color: ${({ theme }) => theme.colors.black1};
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 
     &:hover {
-      background-color: #dddddd;
+      background-color: ${({ theme }) => theme.colors.gray4};
     }
   }
 `;

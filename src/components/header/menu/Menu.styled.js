@@ -18,8 +18,8 @@ const StyledMenu = styled.div`
         position: relative;
         display: block;
         padding: 10px 0;
-        font-size: 20px;
-        color: ${(props) => props.theme.colors.white};
+        font-size: ${({ theme }) => theme.fontSize.m};
+        color: ${({ theme }) => theme.colors.white};
       }
     }
   }

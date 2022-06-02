@@ -5,7 +5,7 @@ const StyledPrice = styled.section`
   height: 330px;
   margin-left: 5%;
   margin-top: 80px;
-  border: 1px solid ${(props) => props.theme.colors.gray4};
+  border: 1px solid ${({ theme }) => theme.colors.gray4};
 
   .cart-right-section__top {
     display: flex;
@@ -16,13 +16,13 @@ const StyledPrice = styled.section`
     h3 {
       display: flex;
       align-items: center;
-      font-size: 20px;
+      font-size: ${({ theme }) => theme.fontSize.m};
     }
   }
 
   hr {
     width: 100%;
-    border: 1px solid ${(props) => props.theme.colors.gray1};
+    border: 1px solid ${({ theme }) => theme.colors.gray1};
   }
 
   .cart-right-section__bottom {
@@ -41,7 +41,7 @@ const StyledPrice = styled.section`
         display: inline-block;
         text-align: center;
         padding: 0 2px;
-        font-size: 20px;
+        font-size: ${({ theme }) => theme.fontSize.m};
       }
 
       .highlight-text::after {
@@ -52,7 +52,7 @@ const StyledPrice = styled.section`
         bottom: 0;
         width: 100%;
         height: 8px;
-        background-color: ${(props) => props.theme.colors.mint};
+        background-color: ${({ theme }) => theme.colors.mint};
         opacity: 0.5;
         z-index: -1;
       }
@@ -68,9 +68,9 @@ const StyledPrice = styled.section`
         display: flex;
         justify-content: center;
         align-items: center;
-        background: ${(props) => props.theme.colors.mint};
-        font-size: 24px;
-        color: ${(props) => props.theme.colors.white};
+        background: ${({ theme }) => theme.colors.mint};
+        font-size: ${({ theme }) => theme.fontSize.l};
+        color: ${({ theme }) => theme.colors.white};
         width: 100%;
         padding: 20px;
         border: none;

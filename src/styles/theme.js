@@ -9,6 +9,14 @@ const theme = {
     gray4: "#dddddd",
     gray5: "#eeeeee",
     mint: "#2ac1bc",
+    pink: "#f60579",
+  },
+  fontSize: {
+    xs: "14px",
+    s: "16px",
+    m: "20px",
+    l: "24px",
+    xl: "32px",
   },
 };
 

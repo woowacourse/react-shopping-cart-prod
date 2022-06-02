@@ -9,12 +9,12 @@ const StyledProductInfo = styled.div`
     width: 100%;
   }
 
-  color: ${(props) => props.theme.colors.black1};
+  color: ${({ theme }) => theme.colors.black1};
   .product-title {
-    font-size: 20px;
+    font-size: ${({ theme }) => theme.fontSize.m};
   }
   .product-price {
-    font-size: 20px;
+    font-size: ${({ theme }) => theme.fontSize.m};
   }
 `;
 

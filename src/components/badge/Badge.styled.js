@@ -4,7 +4,7 @@ const StyledBadge = styled.div`
   position: absolute;
   top: -5px;
   right: -18px;
-  background-color: red;
+  background-color: ${({ theme }) => theme.colors.pink};
   border-radius: 50%;
   width: 24px;
   height: 24px;
