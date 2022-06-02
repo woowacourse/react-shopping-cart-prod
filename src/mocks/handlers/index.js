@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { API_URL } from 'api/constants';
+import { API_ENDPOINT, API_URL } from 'api/constants';
 
 import { handleGetProductsRequest, handleGetImageRequest } from './product.handler';
 import {
@@ -19,18 +19,21 @@ import {
 } from './user.handler';
 
 export default [
-  rest.get(`${API_URL}products`, handleGetProductsRequest),
-  rest.get(`${API_URL}static/images/:imageFileName`, handleGetImageRequest),
-  rest.get(`${API_URL}shopping-cart`, handleGetShoppingCartRequest),
-  rest.post(`${API_URL}shopping-cart`, handlePostShoppingCartRequest),
-  rest.patch(`${API_URL}shopping-cart`, handlePatchShoppingCartRequest),
-  rest.delete(`${API_URL}shopping-cart/:productId`, handleDeleteShoppingCartRequest),
-  rest.get(`${API_URL}api/members`, handleCheckUniqueEmailRequest),
-  rest.post(`${API_URL}api/members`, handlePostUserRequest),
-  rest.post(`${API_URL}api/login`, handleLoginRequest),
-  rest.get(`${API_URL}api/members/auth/me`, handleUserGetRequest),
-  rest.post(`${API_URL}api/members/auth/password-check`, handlePasswordCheckRequest),
-  rest.patch(`${API_URL}api/members/auth/me`, handleUserDataUpdateRequest),
-  rest.patch(`${API_URL}api/members/auth/password`, handleUserDataUpdateRequest),
-  rest.delete(`${API_URL}api/members/auth/me`, handleUserDeleteRequest),
+  rest.get(`${API_URL}${API_ENDPOINT.PRODUCTS}`, handleGetProductsRequest),
+  rest.get(`${API_URL}/static/images/:imageFileName`, handleGetImageRequest),
+  rest.get(`${API_URL}${API_ENDPOINT.SHOPPING_CART}`, handleGetShoppingCartRequest),
+  rest.post(`${API_URL}${API_ENDPOINT.SHOPPING_CART}`, handlePostShoppingCartRequest),
+  rest.patch(`${API_URL}${API_ENDPOINT.SHOPPING_CART}`, handlePatchShoppingCartRequest),
+  rest.delete(
+    `${API_URL}${API_ENDPOINT.SHOPPING_CART}/:productId`,
+    handleDeleteShoppingCartRequest,
+  ),
+  rest.get(`${API_URL}${API_ENDPOINT.USER}`, handleCheckUniqueEmailRequest),
+  rest.post(`${API_URL}${API_ENDPOINT.USER}`, handlePostUserRequest),
+  rest.post(`${API_URL}${API_ENDPOINT.LOGIN}`, handleLoginRequest),
+  rest.get(`${API_URL}${API_ENDPOINT.AUTH.ME}`, handleUserGetRequest),
+  rest.post(`${API_URL}${API_ENDPOINT.AUTH.PASSWORD_CHECK}`, handlePasswordCheckRequest),
+  rest.patch(`${API_URL}${API_ENDPOINT.AUTH.ME}`, handleUserDataUpdateRequest),
+  rest.patch(`${API_URL}${API_ENDPOINT.AUTH.PASSWORD}`, handleUserDataUpdateRequest),
+  rest.delete(`${API_URL}${API_ENDPOINT.AUTH.ME}`, handleUserDeleteRequest),
 ];
