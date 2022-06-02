@@ -1,8 +1,11 @@
-const memberValidate = {
-  userId: (value) => /^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$/g.test(value),
-  password: (value) =>
-    /^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,16}$/g.test(value),
-  nickname: (value) => /^(?=.*[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ])[a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]{2,10}$/g.test(value),
-};
+const isUserId = (value) =>
+  /^([0-9a-zA-Z_\\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/g.test(value);
 
-export { memberValidate };
+const isUserPassword = (value) =>
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,16}$/g.test(value);
+
+const isPasswordConfirm = (password, passwordConfirm) => password === passwordConfirm;
+
+const isNickname = (value) => /^[a-zA-Z가-힣0-9]{2,10}$/g.test(value);
+
+export { isUserId, isUserPassword, isPasswordConfirm, isNickname };
