@@ -3,7 +3,7 @@ import { UserInfo } from 'types/domain';
 import { UserAction } from './action';
 
 export interface UserState {
-  loading: 'getUser' | 'login' | 'signup' | 'edit' | null;
+  loading: 'getUser' | 'login' | 'signup' | 'edit' | 'delete' | null;
   data: UserInfo | null;
   error: Error | null;
 }
@@ -43,6 +43,13 @@ export const userReducer = (state = initialState, action: UserAction) => {
     case 'user/EDIT_SUCCESS':
       return { ...state, loading: null, data: { ...state.data, name: action.payload.name } };
     case 'user/EDIT_FAILURE':
+      return { ...state, loading: null, error: action.payload };
+
+    case 'user/DELETE_REQUEST':
+      return { ...state, loading: 'delete' };
+    case 'user/DELETE_SUCCESS':
+      return { ...state, loading: null, data: null };
+    case 'user/DELETE_FAILURE':
       return { ...state, loading: null, error: action.payload };
 
     case 'user/RESET_ERROR':

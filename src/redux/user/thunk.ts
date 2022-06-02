@@ -79,3 +79,20 @@ export const editUserInfo =
       }
     }
   };
+
+export const deleteUser = () => async (dispatch: Dispatch<UserAction>) => {
+  dispatch(userActions.deleteGroup.request());
+  try {
+    const response = await authClient.delete('/customers/me');
+
+    if (typeof response.data === 'string') {
+      throw new Error(response.data);
+    }
+
+    dispatch(userActions.deleteGroup.success(response.data));
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      dispatch(userActions.deleteGroup.failure(e));
+    }
+  }
+};
