@@ -24,10 +24,10 @@ export const login = (email, password) => async (dispatch) => {
   try {
     const response = await loginBaseServer({
       url: `${BASE_SERVER_URL}${SERVER_PATH.LOGIN}`,
-      body: {
+      body: JSON.stringify({
         email,
         password,
-      },
+      }),
     });
 
     const data = await response.json();
@@ -51,30 +51,36 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const deleteUser = (customerId) => async (dispatch) => {
-  dispatch({ type: USER_ACTION.DELETE_ACCOUNT });
-  try {
-    const response = await deleteUserBaseServer({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${customerId}`,
-    });
+export const deleteUser =
+  (customerId, accessToken, password) => async (dispatch) => {
+    dispatch({ type: USER_ACTION.DELETE_ACCOUNT });
+    try {
+      const response = await deleteUserBaseServer({
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${customerId}`,
+        body: JSON.stringify({ password }),
+      });
 
-    if (!response.ok) {
-      const data = await response.json();
-      if (data.message) {
-        throw new Error(data.message);
+      if (!response.ok) {
+        const data = await response.json();
+        if (data.message) {
+          throw new Error(data.message);
+        }
       }
-    }
 
-    dispatch({
-      type: USER_ACTION.DELETE_ACCOUNT_SUCCESS,
-    });
-  } catch (error) {
-    dispatch({
-      type: USER_ACTION.DELETE_ACCOUNT_ERROR,
-      errorMessage: error.message,
-    });
-  }
-};
+      dispatch({
+        type: USER_ACTION.DELETE_ACCOUNT_SUCCESS,
+      });
+    } catch (error) {
+      dispatch({
+        type: USER_ACTION.DELETE_ACCOUNT_ERROR,
+        errorMessage: error.message,
+      });
+    }
+  };
 
 const initialState = {
   isLoading: false,

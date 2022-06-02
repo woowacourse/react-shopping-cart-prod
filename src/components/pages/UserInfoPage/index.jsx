@@ -23,6 +23,7 @@ import {
   UserInfoPageContainer,
 } from "./styled";
 import DeleteAccountModal from "./DeleteAccountModal";
+import { useRef } from "react";
 
 function UserInfoPage() {
   const {
@@ -36,6 +37,7 @@ function UserInfoPage() {
   const [nickname, setNickname] = useState(user.nickname);
   const [errorMessage, setErrorMessage] = useState("");
   const navigator = useNavigate();
+  const passwordRef = useRef(null);
 
   const closeModal = () => {
     setIsOpenModal(false);
@@ -45,7 +47,7 @@ function UserInfoPage() {
   };
 
   const deleteAccount = () => {
-    dispatch(deleteUser(user.id));
+    dispatch(deleteUser(user.id, user.accessToken, passwordRef.current.value));
   };
 
   const handleNicknameChange = ({ target: { value } }) => {
@@ -62,8 +64,12 @@ function UserInfoPage() {
     dispatch({ type: USER_ACTION.UPDATE_USER_INFO });
     try {
       const response = await updateUserBaseServer({
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.accessToken}`,
+        },
         url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${user.id}`,
-        body: { nickname },
+        body: JSON.stringify({ nickname }),
       });
 
       const data = await response.json();
@@ -184,6 +190,7 @@ function UserInfoPage() {
           onConfirm={deleteAccount}
           errorMessage={serverError}
           userName={user.nickname}
+          passwordRef={passwordRef}
         />
       )}
     </UserInfoPageContainer>

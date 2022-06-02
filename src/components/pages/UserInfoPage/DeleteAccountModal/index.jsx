@@ -16,6 +16,7 @@ function DeleteAccountModal({
   onClose,
   onConfirm,
   errorMessage,
+  passwordRef,
 }) {
   return (
     <ModalDimmedConatiner onClick={onClose}>
@@ -31,6 +32,7 @@ function DeleteAccountModal({
           placeholder="비밀번호를 입력해주세요"
           width="100%"
           errorMessage={errorMessage}
+          ref={passwordRef}
         />
         <ModalButtonContainer>
           <DefaultButton width="180px" onClick={onClose}>
