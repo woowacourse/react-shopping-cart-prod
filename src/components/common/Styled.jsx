@@ -49,4 +49,20 @@ const StyledCheckbox = styled.input`
   }
 `;
 
-export { StyledImageBox, StyledImg, StyledCheckbox };
+const StyledUserContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 600px;
+  padding: 44px 80px;
+  margin: 0px auto 100px;
+  border-radius: 4px;
+  box-sizing: border-box;
+`;
+
+const StyledUserForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+export { StyledImageBox, StyledImg, StyledCheckbox, StyledUserContainer, StyledUserForm };

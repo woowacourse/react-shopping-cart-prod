@@ -51,7 +51,6 @@ const handlers = [
   rest.post(SERVER_PATH.USER, (req, res, ctx) => {
     const userInfo = req.body;
     userList.push({ ...userInfo, id: uuidv4() });
-    console.log(userList);
     return res(ctx.status(200), ctx.json());
   }),
 

@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-
 import axios from 'axios';
-import styled from 'styled-components';
+
+import Input from '../components/common/Input';
+import Button from '../components/common/Button';
+import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
 import { isValidPassword, isValidPasswordConfirm } from '../utils/validations';
 import { MESSAGE, SERVER_PATH, USER, ROUTES_PATH } from '../constants';
 import actionTypes from '../store/user/user.actions';
-
-import Input from '../components/common/Input';
-import Button from '../components/common/Button';
 
 function ModifyPasswordPage() {
   const navigate = useNavigate();
@@ -39,7 +38,7 @@ function ModifyPasswordPage() {
       dispatch({ type: actionTypes.DELETE_TOKEN });
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
-      alert(error);
+      alert(error.messages);
     }
   };
 
@@ -50,9 +49,9 @@ function ModifyPasswordPage() {
   };
 
   return (
-    <StyledModifyPasswordContainer>
+    <StyledUserContainer>
       <h1>비밀번호 수정</h1>
-      <StyledPasswordForm onSubmit={handlePasswordSubmit}>
+      <StyledUserForm onSubmit={handlePasswordSubmit}>
         <Input
           labelText="현재 비밀번호"
           type="password"
@@ -81,25 +80,9 @@ function ModifyPasswordPage() {
           onChange={handlePasswordChange('newPasswordConfirm')}
         />
         <Button text="수정하기" />
-      </StyledPasswordForm>
-    </StyledModifyPasswordContainer>
+      </StyledUserForm>
+    </StyledUserContainer>
   );
 }
-
-const StyledModifyPasswordContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 600px;
-  padding: 44px 80px;
-  margin: 0px auto 100px;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
-
-const StyledPasswordForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
 
 export default ModifyPasswordPage;

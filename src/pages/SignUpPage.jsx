@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
-import styled from 'styled-components';
 
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
 import {
   isValidPassword,
@@ -62,9 +61,9 @@ function SignUpPage() {
   };
 
   return (
-    <StyledSignUpContainer>
+    <StyledUserContainer>
       <h1 style={{ marginBottom: '40px' }}>회원가입</h1>
-      <StyledSignUpForm onSubmit={handleSignUpInfoSubmit}>
+      <StyledUserForm onSubmit={handleSignUpInfoSubmit}>
         <Input
           labelText="이메일"
           type="email"
@@ -99,25 +98,9 @@ function SignUpPage() {
           onChange={handleSignUpInfoChange('passwordConfirm')}
         />
         <Button text="가입하기" />
-      </StyledSignUpForm>
-    </StyledSignUpContainer>
+      </StyledUserForm>
+    </StyledUserContainer>
   );
 }
-
-const StyledSignUpContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 600px;
-  padding: 44px 80px;
-  margin: 0px auto 100px;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
-
-const StyledSignUpForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
 
 export default SignUpPage;

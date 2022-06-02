@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styled from 'styled-components';
 
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import Loading from '../components/Loading';
+import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
 import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER } from '../constants';
 import { isValidNickname } from '../utils/validations';
@@ -53,9 +53,9 @@ function ModifyUserInfoPage() {
   if (!userInfo) return <Loading />;
 
   return (
-    <StyledModifyUserInfoContainer>
+    <StyledUserContainer>
       <h1>회원 정보 수정</h1>
-      <StyledUserInfoForm onSubmit={handleUserInfoSubmit}>
+      <StyledUserForm onSubmit={handleUserInfoSubmit}>
         <Input labelText="이메일" type="email" value={userInfo.email} disabled readonly />
         <Input
           labelText="닉네임"
@@ -67,25 +67,9 @@ function ModifyUserInfoPage() {
           onChange={handleUserInfoChange('nickname')}
         />
         <Button text="수정하기" />
-      </StyledUserInfoForm>
-    </StyledModifyUserInfoContainer>
+      </StyledUserForm>
+    </StyledUserContainer>
   );
 }
-
-const StyledModifyUserInfoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  width: 600px;
-  padding: 44px 80px;
-  margin: 0px auto 100px;
-  border-radius: 4px;
-  box-sizing: border-box;
-`;
-
-const StyledUserInfoForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
 
 export default ModifyUserInfoPage;
