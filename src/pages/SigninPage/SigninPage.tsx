@@ -5,8 +5,7 @@ import Input from '../../components/Input/Input';
 import * as S from './SigninPage.styled';
 import axios from 'axios';
 import PlainLink from '../../components/PlainLink/PlainLink';
-
-type SigninResponseBody = { accessToken: string; userId: number };
+import { SigninResponseBody } from '../../types';
 
 function SigninPage() {
   const navigate = useNavigate();

@@ -6,6 +6,7 @@ import Input from '../../../../components/Input/Input';
 import ICONS from '../../../../constants/icons';
 import * as S from './FillInfoStep.styled';
 import { useOutletContext } from 'react-router-dom';
+import { SigninResponseBody } from '../../../../types';
 
 function FillInfoStep() {
   const { goNextStep } = useOutletContext<{
@@ -95,6 +96,20 @@ function FillInfoStep() {
         url: 'http://15.164.166.148:8080/api/customers',
         data: payload,
       });
+
+      // 회원가입
+      const response = await axios.post<SigninResponseBody>(
+        'http://15.164.166.148:8080/api/customer/authentication/sign-in',
+        {
+          email: payload.email,
+          password: payload.password,
+        }
+      );
+
+      const { accessToken, userId } = response.data;
+
+      localStorage.setItem('accessToken', accessToken);
+      localStorage.setItem('userId', String(userId));
 
       goNextStep();
     } catch (e) {

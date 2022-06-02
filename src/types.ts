@@ -25,6 +25,8 @@ export type SigninRequestBody = {
   password: Customer['password'];
 };
 
+export type SigninResponseBody = { accessToken: string; userId: number };
+
 export type Product = {
   id: string;
   name: string;

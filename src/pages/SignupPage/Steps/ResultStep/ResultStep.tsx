@@ -1,4 +1,5 @@
 import Button from '../../../../components/Button/Button';
+import PlainLink from '../../../../components/PlainLink/PlainLink';
 import * as S from './ResultStep.styled';
 
 function ResultStep() {
@@ -12,7 +13,9 @@ function ResultStep() {
         </S.Paragraph>
       </S.ResultBox>
       <S.ButtonBox>
-        <Button>주문하러 가기</Button>
+        <PlainLink to="/">
+          <Button>주문하러 가기</Button>
+        </PlainLink>
       </S.ButtonBox>
     </>
   );
