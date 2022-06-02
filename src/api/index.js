@@ -7,7 +7,8 @@ const requestCheckDuplicatedId = async (id) =>
   requestAsync.get('customers/username/duplication', { username: id });
 
 const requestSignUp = async (formData) => requestAsync.post('customers', formData);
-const requestEditUserInfo = async (formData) => requestAsync.put('customers/me', formData);
+const requestEditUserInfo = async (formData) => requestAsync.put('customers/me', formData, true);
+const requestWithDrawUser = async () => requestAsync.delete('customers/me', true);
 
 export {
   requestGetProductList,
@@ -16,4 +17,5 @@ export {
   requestCheckDuplicatedId,
   requestSignUp,
   requestEditUserInfo,
+  requestWithDrawUser,
 };

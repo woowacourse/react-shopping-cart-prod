@@ -5,6 +5,11 @@ const errorReturn = (error) => ({
   content: `서버와의 통신에 실패하였습니다. (${error.message})`,
 });
 
+const authorizedHeader = (header) => ({
+  ...header,
+  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+});
+
 class RequestAsync {
   constructor() {
     this.HOST_NAME = process.env.REACT_APP_API_URL;
@@ -20,9 +25,12 @@ class RequestAsync {
     };
   }
 
-  async get(path) {
+  async get(path, authorize = false) {
     try {
-      const response = await fetch(`${this.HOST_NAME}/${path}`);
+      const response = await fetch(`${this.HOST_NAME}/${path}`, {
+        method: 'GET',
+        headers: authorize ? authorizedHeader(this.header) : this.header,
+      });
 
       return this.#getRefinedResponse(response);
     } catch (error) {
@@ -30,11 +38,11 @@ class RequestAsync {
     }
   }
 
-  async post(path, bodyData) {
+  async post(path, bodyData, authorize = false) {
     try {
       const response = await fetch(`${this.HOST_NAME}/${path}`, {
         method: 'POST',
-        headers: this.header,
+        headers: authorize ? authorizedHeader(this.header) : this.header,
         body: JSON.stringify(bodyData),
       });
 
@@ -44,12 +52,25 @@ class RequestAsync {
     }
   }
 
-  async put(path, bodyData) {
+  async put(path, bodyData, authorize = false) {
     try {
       const response = await fetch(`${this.HOST_NAME}/${path}`, {
         method: 'PUT',
-        headers: this.header,
+        headers: authorize ? authorizedHeader(this.header) : this.header,
         body: JSON.stringify(bodyData),
+      });
+
+      return this.#getRefinedResponse(response);
+    } catch (error) {
+      return errorReturn(error);
+    }
+  }
+
+  async delete(path, authorize = false) {
+    try {
+      const response = await fetch(`${this.HOST_NAME}/${path}`, {
+        method: 'DELETE',
+        headers: authorize ? authorizedHeader(this.header) : this.header,
       });
 
       return this.#getRefinedResponse(response);
