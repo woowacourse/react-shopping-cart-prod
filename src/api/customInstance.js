@@ -2,13 +2,13 @@ import axios from 'axios';
 import { ERROR_MESSAGES } from 'constants/messages';
 import { API_URL } from './constants';
 
-const apiInstance = axios.create({
+const customInstance = axios.create({
   baseURL: API_URL,
 });
 
 const token = window.sessionStorage.getItem('token');
 if (token !== undefined) {
-  apiInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  customInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
 const handleAPIError = (error) => {
@@ -22,6 +22,6 @@ const handleAPIError = (error) => {
   throw Error(ERROR_MESSAGES.UNKNOWN);
 };
 
-apiInstance.interceptors.response.use((response) => response, handleAPIError);
+customInstance.interceptors.response.use((response) => response, handleAPIError);
 
-export default apiInstance;
+export default customInstance;
