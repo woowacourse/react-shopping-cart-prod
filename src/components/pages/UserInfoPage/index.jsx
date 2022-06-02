@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { theme } from "style";
@@ -23,7 +23,6 @@ import {
   UserInfoPageContainer,
 } from "./styled";
 import DeleteAccountModal from "./DeleteAccountModal";
-import { useRef } from "react";
 
 function UserInfoPage() {
   const {
@@ -39,17 +38,6 @@ function UserInfoPage() {
   const navigator = useNavigate();
   const passwordRef = useRef(null);
 
-  const closeModal = () => {
-    setIsOpenModal(false);
-    dispatch({ type: USER_ACTION.CLEAN_ERROR });
-    setErrorMessage("");
-    setIsEditable(false);
-  };
-
-  const deleteAccount = () => {
-    dispatch(deleteUser(user.id, user.accessToken, passwordRef.current.value));
-  };
-
   const handleNicknameChange = ({ target: { value } }) => {
     try {
       checkNickName(value);
@@ -58,6 +46,11 @@ function UserInfoPage() {
       setErrorMessage(error.message);
     }
     setNickname(value);
+  };
+
+  const changeNickname = (e) => {
+    e.preventDefault();
+    requestUpdateUser();
   };
 
   const requestUpdateUser = async () => {
@@ -103,9 +96,15 @@ function UserInfoPage() {
     setIsEditable(false);
   };
 
-  const changeNickname = (e) => {
-    e.preventDefault();
-    requestUpdateUser();
+  const deleteAccount = () => {
+    dispatch(deleteUser(user.id, user.accessToken, passwordRef.current.value));
+  };
+
+  const closeModal = () => {
+    setIsOpenModal(false);
+    dispatch({ type: USER_ACTION.CLEAN_ERROR });
+    setErrorMessage("");
+    setIsEditable(false);
   };
 
   useEffect(() => {
@@ -117,6 +116,12 @@ function UserInfoPage() {
       navigator(ROUTES.ROOT);
     }
   }, [user.accessToken]);
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: USER_ACTION.CLEAN_ERROR });
+    };
+  }, []);
 
   return (
     <UserInfoPageContainer>

@@ -6,7 +6,7 @@ import { theme } from "style";
 import { ROUTES, RANGE } from "constants";
 
 import { useStore } from "hooks/useStore";
-import { login } from "reducers/user";
+import { login, USER_ACTION } from "reducers/user";
 
 import PageHeader from "components/common/PageHeader";
 import UserInput from "components/common/UserInput";
@@ -30,9 +30,16 @@ function LoginPage() {
   const isLoginSuccess = !isLoading && !errorMessage && user.accessToken;
   useEffect(() => {
     if (isLoginSuccess) {
+      alert(`${user.nickname}님, 환영합니다~~ :D`);
       navigator(ROUTES.ROOT);
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    return () => {
+      dispatch({ type: USER_ACTION.CLEAN_ERROR });
+    };
+  }, []);
 
   return (
     <LoginPageContainer>

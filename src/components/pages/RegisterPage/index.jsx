@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 import { theme } from "style";
 
@@ -10,6 +9,7 @@ import { RANGE, ROUTES, BASE_SERVER_URL, SERVER_PATH } from "constants";
 import { useInputHandler } from "hooks/useInputHandler";
 import { registerValidator } from "validator";
 import { registerBaseServer } from "util/fetch";
+import { USER_ACTION } from "reducers/user";
 
 import UserInput from "components/common/UserInput";
 import DefaultButton from "components/common/Button/DefaultButton";
@@ -32,6 +32,8 @@ const initialUserInfo = {
 
 function RegisterPage() {
   const accessToken = useSelector((state) => state.user.data.accessToken);
+  const dispatch = useDispatch();
+  const navigator = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const {
     inputValue: userInfo,
@@ -39,20 +41,15 @@ function RegisterPage() {
     errorMessage,
     setErrorMessage,
   } = useInputHandler(registerValidator, initialUserInfo);
-  const navigator = useNavigate();
 
-  const comparePassword = ({ target: { value } }) => {
-    if (userInfo.password !== value) {
-      setErrorMessage((prev) => ({
-        ...prev,
-        passwordConfirm: "비밀번호가 일치하지 않습니다",
-      }));
+  const registerUserInfo = (e) => {
+    e.preventDefault();
+
+    if (isErrorExist()) {
+      alert("유효하지 않은 입력이 있습니다. 수정하고 가입해주세요");
+      return;
     }
-  };
-
-  const handlePasswordConfirmChange = (e) => {
-    handleChangeInput(e);
-    comparePassword(e);
+    requestRegister();
   };
 
   const isErrorExist = () => {
@@ -91,20 +88,27 @@ function RegisterPage() {
     setIsLoading(false);
   };
 
-  const registerUserInfo = (e) => {
-    e.preventDefault();
+  const handlePasswordConfirmChange = (e) => {
+    handleChangeInput(e);
+    comparePassword(e);
+  };
 
-    if (isErrorExist()) {
-      alert("유효하지 않은 입력이 있습니다. 수정하고 가입해주세요");
-      return;
+  const comparePassword = ({ target: { value } }) => {
+    if (userInfo.password !== value) {
+      setErrorMessage((prev) => ({
+        ...prev,
+        passwordConfirm: "비밀번호가 일치하지 않습니다",
+      }));
     }
-    requestRegister();
   };
 
   useEffect(() => {
     if (accessToken) {
       navigator(ROUTES.LOGIN);
     }
+    return () => {
+      dispatch({ type: USER_ACTION.CLEAN_ERROR });
+    };
   }, []);
 
   return (

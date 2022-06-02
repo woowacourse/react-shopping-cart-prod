@@ -20,7 +20,7 @@ function DeleteAccountModal({
 }) {
   return (
     <ModalDimmedConatiner onClick={onClose}>
-      <ModalWindow onClick={(event) => event.stopPropagation()}>
+      <ModalWindow onClick={(e) => e.stopPropagation()}>
         <ModalTitle>{userName}님, 정말 탈퇴하시겠어요?</ModalTitle>
         <ModalParagraph>
           지금 탈퇴하시면 구매 내역과 모든 장바구니 목록이 삭제돼요! 앞으로 회원
