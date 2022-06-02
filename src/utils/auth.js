@@ -4,9 +4,8 @@ const setCookie = (name, value) => {
 
 const getCookie = (name) => {
   const matches = document.cookie.match(new RegExp(`${name}=([^;]*)`));
-  console.log(matches);
 
-  return matches ? decodeURIComponent(matches[1]) : undefined;
+  return matches ? decodeURIComponent(matches[1]) : "";
 };
 
 const deleteCookie = (name) => {

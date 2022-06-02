@@ -52,4 +52,28 @@ export const handlers = [
       })
     );
   }),
+
+  // 인증 인가 - 회원 정보 요청
+  rest.get(`${BASE_URL}/users/me`, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization;
+
+    if (!accessToken) {
+      return res(ctx.status(401));
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({ email: "example@gmail.com", nickname: "example" })
+    );
+  }),
+
+  rest.put(`${BASE_URL}/users/me`, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization;
+
+    if (!accessToken) {
+      return res(ctx.status(401));
+    }
+
+    return res(ctx.status(204));
+  }),
 ];

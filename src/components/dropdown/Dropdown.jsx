@@ -1,5 +1,6 @@
 import React from "react";
 import StyledDropdownContainer from "@/components/dropdown/Dropdown.styled";
+import { Link } from "react-router-dom";
 
 import { deleteCookie } from "@/utils/auth";
 
@@ -13,7 +14,7 @@ export default function Dropdown() {
       <div className="baedali"></div>
       <div className="dropdown-container">
         <div className="dropdown-content">
-          <a href="#">회원정보 수정</a>
+          <Link to="edit">회원정보 수정</Link>
           <a onClick={handleLogoutClick}>로그아웃</a>
         </div>
       </div>
