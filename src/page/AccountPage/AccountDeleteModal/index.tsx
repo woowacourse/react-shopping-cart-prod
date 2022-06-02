@@ -6,17 +6,19 @@ import AuthButton from 'components/AuthButton';
 import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
 import Styled from './index.style';
-import { getCookie } from 'utils/cookie';
+import { deleteCookie, getCookie } from 'utils/cookie';
 import axios from 'axios';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import store from 'store/store';
+import { doInitializeCartList, doLogout } from 'actions/actionCreator';
+import { useNavigate } from 'react-router-dom';
 
 const AccountDeleteModal = ({ handleModal }) => {
-  const [renderSnackbar] = useSnackbar();
-
+  const navigate = useNavigate();
   const [password, setPassword] = useState('');
-
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
+  const [renderSnackbar] = useSnackbar();
 
   useEffect(() => {
     setIsCorrectPassword(password.length >= 10);
@@ -37,9 +39,11 @@ const AccountDeleteModal = ({ handleModal }) => {
         },
       });
 
+      deleteCookie('accessToken');
+      store.dispatch(doLogout());
       handleModal();
-
       renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
+      navigate('/');
     } catch (error) {
       renderSnackbar(MESSAGE.DELETE_ACCOUNT_FAILURE, 'FAILED');
     }
