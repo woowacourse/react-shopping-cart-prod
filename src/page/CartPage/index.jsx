@@ -20,7 +20,6 @@ const CartPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector(state => state.authReducer);
-
   const { products, shoppingCart, order } = useSelector(state => state.reducer);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -38,14 +37,11 @@ const CartPage = () => {
   }, [products, shoppingCart, order]);
 
   useEffect(() => {
-    setTotalPrice(calculateTotalPrice());
-  }, [calculateTotalPrice]);
-
-  useEffect(() => {
     if (!isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
     }
+    setTotalPrice(calculateTotalPrice());
   }, []);
 
   const handleCheckboxClick = () => {
