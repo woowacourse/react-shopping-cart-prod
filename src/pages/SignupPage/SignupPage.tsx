@@ -30,6 +30,13 @@ function SignupPage() {
     );
   };
 
+  const formatPhoneNumber = (phoneNumber: string) => {
+    return `${phoneNumber.slice(0, 3)}-${phoneNumber.slice(
+      3,
+      7,
+    )}-${phoneNumber.slice(7, 11)}`;
+  };
+
   const handleIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
   };
@@ -58,7 +65,9 @@ function SignupPage() {
   };
 
   const handlerPhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
+    if (e.target.value.length <= 11) {
+      setPhoneNumber(e.target.value);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -71,8 +80,9 @@ function SignupPage() {
       password: (formElements.namedItem('password') as HTMLInputElement).value,
       email: (formElements.namedItem('email') as HTMLInputElement).value,
       address: (formElements.namedItem('address') as HTMLInputElement).value,
-      phoneNumber: (formElements.namedItem('phoneNumber') as HTMLInputElement)
-        .value,
+      phoneNumber: formatPhoneNumber(
+        (formElements.namedItem('phoneNumber') as HTMLInputElement).value,
+      ),
     };
 
     axios
@@ -152,7 +162,7 @@ function SignupPage() {
             placeholder="이메일을 입력해주세요"
             value={email}
             onChange={handleEmailInput}
-            pattern={'^[a-zA-Z0-9._-/s/g]+@[a-z]+[.]+[a-z]{2,3}$'}
+            pattern={'^[a-z0-9._-]+@[a-z]+[.]+[a-z]{2,3}$'}
             required
           />
           <label htmlFor="address">주소</label>
@@ -168,11 +178,10 @@ function SignupPage() {
           <label htmlFor="phoneNumber">핸드폰 번호</label>
           <input
             id="phoneNumber"
-            type="tel"
+            type="number"
             placeholder="핸드폰 번호를 입력해주세요"
             value={phoneNumber}
             onChange={handlerPhoneNumberInput}
-            pattern={'\\d{3}-\\d{4}-\\d{4}'}
             required
           />
           <StyledSignupButton type="submit">회원가입</StyledSignupButton>
