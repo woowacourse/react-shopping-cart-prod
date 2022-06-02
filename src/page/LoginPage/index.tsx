@@ -55,10 +55,10 @@ const LoginPage = () => {
 
       setCookie('accessToken', response.data.accessToken);
       store.dispatch(doLogin({ nickname: response.data.nickname }));
-      renderSnackbar(`${response.data.nickname}님 환영합니다 👋`, 'SUCCESS');
+      renderSnackbar(`${response.data.nickname}${MESSAGE.LOGIN_SUCCESS}`, 'SUCCESS');
       navigate('/');
     } catch (error) {
-      renderSnackbar(`아이디와 비밀번호를 다시 확인해주세요.`, 'FAILED');
+      renderSnackbar(MESSAGE.LOGIN_FAILURE, 'FAILED');
     }
   };
 
