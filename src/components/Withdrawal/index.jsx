@@ -36,7 +36,6 @@ const Withdrawal = () => {
       API.clearToken();
       dispatch(withdraw());
       dispatch(onMessage(SNACKBAR_MESSAGE.withdrawUser()));
-      navigate(PATH.HOME);
     } catch (e) {
       setError(e.message);
     } finally {

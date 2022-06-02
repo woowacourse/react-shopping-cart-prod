@@ -1,4 +1,6 @@
 import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import Button from 'styles/Button';
 import ErrorWrapper from 'styles/ErrorWrapper';
@@ -20,15 +22,21 @@ import {
   isEmpty,
 } from 'utils/validation';
 
+import { onMessage } from 'reducers/snackbar';
+
 import * as API from 'service';
 
+import { PATH, SNACKBAR_MESSAGE } from 'constants';
+
 const SignUpForm = () => {
+  const dispatch = useDispatch();
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleUserNameChange = useCallback(({ target }) => {
     setUserName(target.value);
@@ -65,8 +73,12 @@ const SignUpForm = () => {
     setLoading(true);
     try {
       await API.signUp({
-        data: { name: userName, email, password },
+        name: userName,
+        email,
+        password,
       });
+      navigate(PATH.HOME);
+      dispatch(onMessage(SNACKBAR_MESSAGE.signUpUser()));
     } catch ({ message }) {
       setError(message);
     } finally {

@@ -26,7 +26,8 @@ const ProductQuantity = ({
   const dispatch = useDispatch();
   const [showQuantity, setShowQuantity] = useState(false);
   const [quantity, setQuantity] = useState(cartQuantity);
-  const { openCount } = useSelector((state) => state.productQuantity);
+  const openCount = useSelector((state) => state.productQuantity.openCount);
+  const accessToken = useSelector((state) => state.user.accessToken);
 
   const handleClickMinusButton = debounce(
     useCallback(async () => {
@@ -59,6 +60,11 @@ const ProductQuantity = ({
   );
 
   const handleClickCartImage = useCallback(async () => {
+    if (!accessToken) {
+      dispatch(onMessage(SNACKBAR_MESSAGE.noAuth()));
+      return;
+    }
+
     if (quantity === 0 && !showQuantity) {
       await dispatch(addCart(productId)).unwrap();
       setQuantity(quantity + 1);
