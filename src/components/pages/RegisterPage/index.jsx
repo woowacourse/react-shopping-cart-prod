@@ -75,7 +75,7 @@ function RegisterPage() {
             ...prev,
             [data.field]: data.message,
           }));
-          throw Error("유효하지 않은 입력이 있습니다. 수정하고 가입해주세요");
+          throw Error(data.message);
         }
       }
     } catch (error) {
@@ -127,8 +127,9 @@ function RegisterPage() {
             name="email"
             value={userInfo.email}
             onChange={handleChangeInput}
-            autocomplete
+            autoComplete
             required
+            autoFocus
             errorMessage={errorMessage.email}
           />
         </RegisterInputContainer>
@@ -143,7 +144,7 @@ function RegisterPage() {
             name="nickname"
             value={userInfo.nickname}
             onChange={handleChangeInput}
-            autocomplete
+            autoComplete
             required
             errorMessage={errorMessage.nickname}
           />
