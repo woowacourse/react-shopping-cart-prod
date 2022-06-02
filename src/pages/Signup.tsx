@@ -1,16 +1,14 @@
-import { AUTH_BASE_URL, authClient } from 'apis';
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
+import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { resetError } from 'redux/user/action';
 import { signup } from 'redux/user/thunk';
-import { UserInfo } from 'types/domain';
 
 import { PATH } from '../Routers';
 
@@ -19,11 +17,12 @@ const Signup = () => {
   const [password, onChangePassword] = useInput();
   const [name, onChangeName] = useInput();
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput();
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const error = useAppSelector(state => state.user.error);
   const isLogin = useAppSelector(state => !!state.user.data);
+  const { isOpenSnackbar, openSnackbar } = useSnackBar();
+
+  useAuthError(openSnackbar);
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -50,13 +49,6 @@ const Signup = () => {
       navigate(PATH.home);
     }
   }, [isLogin, navigate]);
-
-  useEffect(() => {
-    if (error) {
-      openSnackbar();
-      dispatch(resetError());
-    }
-  }, [error, openSnackbar]);
 
   if (isLogin) return null;
 

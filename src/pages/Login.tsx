@@ -3,11 +3,11 @@ import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
+import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { resetError } from 'redux/user/action';
 import { login } from 'redux/user/thunk';
 import { PATH } from 'Routers';
 import styled from 'styled-components';
@@ -18,10 +18,11 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const name = useAppSelector(state => state.user.data?.name);
-  const error = useAppSelector(state => state.user.error);
   const isLogin = useAppSelector(state => !!state.user.data);
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
   const isLoginAuth = useRef(false);
+
+  useAuthError(openSnackbar);
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,13 +43,6 @@ const Login = () => {
       navigate(PATH.home);
     }
   }, [isLogin, navigate]);
-
-  useEffect(() => {
-    if (error) {
-      openSnackbar();
-      dispatch(resetError());
-    }
-  }, [error, openSnackbar]);
 
   useEffect(() => {
     if (name && isLoginAuth.current) {

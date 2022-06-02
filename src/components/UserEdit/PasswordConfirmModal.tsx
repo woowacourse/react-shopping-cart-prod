@@ -4,11 +4,11 @@ import Modal from 'components/common/Modal';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
+import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { resetError } from 'redux/user/action';
 import { editUserInfo } from 'redux/user/thunk';
 import { PATH } from 'Routers';
 import styled from 'styled-components';
@@ -21,10 +21,12 @@ interface PasswordConfirmModalProps {
 const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) => {
   const [password, onChangePassword] = useInput();
   const loginId = useAppSelector(state => state.user.data.loginId);
-  const { data, error } = useAppSelector(state => state.user);
+  const { data } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
+
+  useAuthError(openSnackbar);
 
   const onSubmitPassword = () => {
     dispatch(editUserInfo({ loginId, name, password }));
@@ -36,13 +38,6 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
       navigate(PATH.home);
     }
   }, [data.name]);
-
-  useEffect(() => {
-    if (error) {
-      openSnackbar();
-      dispatch(resetError());
-    }
-  }, [error]);
 
   return (
     <Modal closeModal={closeModal}>
