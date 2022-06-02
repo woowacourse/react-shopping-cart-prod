@@ -8,7 +8,7 @@ import Input from '../components/common/Input';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
 import { isValidEmail } from '../utils/validations';
-import { MESSAGE, SERVER_PATH, ROUTES_PATH } from '../constants';
+import { MESSAGE, SERVER_PATH, ROUTES_PATH, USER_INFO_KEY } from '../constants';
 import actionTypes from '../store/user/user.actions';
 
 const initialState = {
@@ -50,21 +50,21 @@ function LoginPage() {
 
   return (
     <StyledUserContainer>
-      <h1 style={{ marginBottom: '40px' }}>로그인</h1>
+      <h1>로그인</h1>
       <StyledUserForm onSubmit={handleLoginInfoSubmit}>
         <Input
           labelText="이메일"
           type="email"
           placeholder="이메일 주소를 입력해주세요"
           value={email}
-          onChange={handleLoginInfoChange('email')}
+          onChange={handleLoginInfoChange(USER_INFO_KEY.EMAIL)}
         />
         <Input
           labelText="비밀번호"
           type="password"
           value={password}
           placeholder="비밀번호를 입력해주세요"
-          onChange={handleLoginInfoChange('password')}
+          onChange={handleLoginInfoChange(USER_INFO_KEY.PASSWORD)}
         />
         <Button text="로그인" />
       </StyledUserForm>

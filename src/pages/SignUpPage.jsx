@@ -13,7 +13,7 @@ import {
   isValidNickname,
 } from '../utils/validations';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER } from '../constants';
+import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -62,14 +62,14 @@ function SignUpPage() {
 
   return (
     <StyledUserContainer>
-      <h1 style={{ marginBottom: '40px' }}>회원가입</h1>
+      <h1>회원가입</h1>
       <StyledUserForm onSubmit={handleSignUpInfoSubmit}>
         <Input
           labelText="이메일"
           type="email"
           placeholder="이메일 주소를 입력해주세요"
           value={email}
-          onChange={handleSignUpInfoChange('email')}
+          onChange={handleSignUpInfoChange(USER_INFO_KEY.EMAIL)}
         />
         <Input
           labelText="닉네임"
@@ -77,7 +77,7 @@ function SignUpPage() {
           maxLength={USER.NICKNAME.MAX}
           placeholder="닉네임을 입력해주세요"
           value={nickname}
-          onChange={handleSignUpInfoChange('nickname')}
+          onChange={handleSignUpInfoChange(USER_INFO_KEY.NICKNAME)}
         />
         <Input
           labelText="비밀번호"
@@ -86,7 +86,7 @@ function SignUpPage() {
           maxLength={USER.PASSWORD.MAX}
           value={password}
           placeholder="비밀번호를 입력해주세요"
-          onChange={handleSignUpInfoChange('password')}
+          onChange={handleSignUpInfoChange(USER_INFO_KEY.PASSWORD)}
         />
         <Input
           labelText="비밀번호 확인"
@@ -95,7 +95,7 @@ function SignUpPage() {
           maxLength={USER.PASSWORD.MAX}
           value={passwordConfirm}
           placeholder="비밀번호를 입력해주세요"
-          onChange={handleSignUpInfoChange('passwordConfirm')}
+          onChange={handleSignUpInfoChange(USER_INFO_KEY.PASSWORD_CONFIRM)}
         />
         <Button text="가입하기" />
       </StyledUserForm>

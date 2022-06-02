@@ -37,6 +37,19 @@ const USER = {
   },
 };
 
+const USER_INFO_KEY = {
+  EMAIL: 'email',
+  NICKNAME: 'nickname',
+  PASSWORD: 'password',
+  PASSWORD_CONFIRM: 'passwordConfirm',
+};
+
+const PASSWORD_INFO_KEY = {
+  PREV_PASSWORD: 'prevPassword',
+  NEW_PASSWORD: 'newPassword',
+  NEW_PASSWORD_CONFIRM: 'newPasswordConfirm',
+};
+
 const MESSAGE = {
   ADD: '🧺 장바구니에 추가 되었습니다. 🧺',
   REMOVE: '장바구니에서 제거 되었습니다.',
@@ -47,4 +60,4 @@ const MESSAGE = {
   ERROR_PASSWORD_CONFIRM: '비밀번호가 일치하지 않습니다.',
 };
 
-export { SERVER_PATH, ROUTES_PATH, SIZE, USER, MESSAGE };
+export { SERVER_PATH, ROUTES_PATH, SIZE, USER, USER_INFO_KEY, MESSAGE };

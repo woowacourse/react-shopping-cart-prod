@@ -7,7 +7,7 @@ import Button from '../components/common/Button';
 import Loading from '../components/Loading';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER } from '../constants';
+import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
 import { isValidNickname } from '../utils/validations';
 
 function ModifyUserInfoPage() {
@@ -64,7 +64,7 @@ function ModifyUserInfoPage() {
           maxLength={USER.NICKNAME.MAX}
           value={userInfo.nickname}
           placeholder="닉네임을 입력해주세요"
-          onChange={handleUserInfoChange('nickname')}
+          onChange={handleUserInfoChange(USER_INFO_KEY.NICKNAME)}
         />
         <Button text="수정하기" />
       </StyledUserForm>

@@ -8,7 +8,7 @@ import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
 import { isValidPassword, isValidPasswordConfirm } from '../utils/validations';
-import { MESSAGE, SERVER_PATH, USER, ROUTES_PATH } from '../constants';
+import { MESSAGE, SERVER_PATH, USER, ROUTES_PATH, PASSWORD_INFO_KEY } from '../constants';
 import actionTypes from '../store/user/user.actions';
 
 function ModifyPasswordPage() {
@@ -59,7 +59,7 @@ function ModifyPasswordPage() {
           maxLength={USER.PASSWORD.MAX}
           value={prevPassword}
           placeholder="비밀번호를 입력해주세요"
-          onChange={handlePasswordChange('prevPassword')}
+          onChange={handlePasswordChange(PASSWORD_INFO_KEY.PREV_PASSWORD)}
         />
         <Input
           labelText="새로운 비밀번호"
@@ -68,7 +68,7 @@ function ModifyPasswordPage() {
           maxLength={USER.PASSWORD.MAX}
           value={newPassword}
           placeholder="새로운 비밀번호를 입력해주세요"
-          onChange={handlePasswordChange('newPassword')}
+          onChange={handlePasswordChange(PASSWORD_INFO_KEY.NEW_PASSWORD)}
         />
         <Input
           labelText="새로운 비밀번호 확인"
@@ -77,7 +77,7 @@ function ModifyPasswordPage() {
           maxLength={USER.PASSWORD.MAX}
           value={newPasswordConfirm}
           placeholder="새로운 비밀번호를 입력해주세요"
-          onChange={handlePasswordChange('newPasswordConfirm')}
+          onChange={handlePasswordChange(PASSWORD_INFO_KEY.NEW_PASSWORD_CONFIRM)}
         />
         <Button text="수정하기" />
       </StyledUserForm>
