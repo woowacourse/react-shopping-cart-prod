@@ -21,7 +21,7 @@ function Login({ className }) {
     window.location.href = "/";
   };
 
-  const handleSubmit = (data, error) => {
+  const handleSubmit = (data) => {
     const { email, password } = data;
     login(email, password);
   };
@@ -42,7 +42,7 @@ function Login({ className }) {
               placeholder="woowacourse@gmail.com"
               {...register("email", {
                 pattern: {
-                  value: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                  value: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                   message: "정규식 실패할때 나올 메세지",
                 },
               })}
