@@ -13,13 +13,15 @@ import { MESSAGE, SERVER_PATH, ROUTES_PATH } from '../constants';
 
 import actionTypes from '../store/user/user.actions';
 
+const initialState = {
+  email: '',
+  password: '',
+};
+
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loginInfo, setLoginInfo] = useState({
-    email: '',
-    password: '',
-  });
+  const [loginInfo, setLoginInfo] = useState(initialState);
   const { email, password } = loginInfo;
 
   const handleLoginInfoSubmit = async (e) => {
@@ -37,6 +39,7 @@ function LoginPage() {
       alert('로그인 성공');
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
+      setLoginInfo(initialState);
       alert(error);
     }
   };
