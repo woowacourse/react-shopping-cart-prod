@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import type { ThemedStyledProps } from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { flexCenter } from 'styles/mixin';
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
@@ -39,7 +38,6 @@ const Header = () => {
             <button onClick={toggleHambergur}>
               마이페이지
               <MyPageHambergurList isShow={isShowHambergur}>
-                <Link to='/editProfile'>회원정보 수정</Link>
                 <Link to='/editPassword'>비밀번호 변경</Link>
                 <Link to='/resign'>회원 탈퇴</Link>
                 <Link onClick={handleSignOut} to=''>

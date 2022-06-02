@@ -11,6 +11,8 @@ import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 
 const EditProfilePage = () => {
+  /* TODO - 회원 이름 수정 api 명세 작성 후 연동
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
 
@@ -55,9 +57,12 @@ const EditProfilePage = () => {
 
       <StyledSignUpButton>확인</StyledSignUpButton>
     </StyledRoot>
-  );
+  );*/
+
+  return;
 };
 
+/*
 const StyledRoot = styled.form`
   ${flexCenter}
   display: flex;
@@ -85,5 +90,6 @@ const StyledSignUpButton = styled.button`
   color: white;
   border-radius: 6px;
 `;
+*/
 
 export default EditProfilePage;

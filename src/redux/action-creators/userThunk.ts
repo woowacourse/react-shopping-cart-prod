@@ -107,7 +107,7 @@ export const autoSignIn = () => async (dispatch: Dispatch<UserAction>) => {
   }
 };
 
-/*
+/* TODO - 회원 이름 수정 api 명세 작성 후 연동
 export const editProfile = (editInfo: UserInfo) => async (dispatch: Dispatch<UserAction>) => {
   dispatch({ type: UserActionType.PATCH_USER_INFO_START });
 

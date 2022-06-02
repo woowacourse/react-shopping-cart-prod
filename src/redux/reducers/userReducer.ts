@@ -49,7 +49,8 @@ export const userReducer = (state = initialState, action: UserAction) => {
     case UserActionType.AUTO_SIGN_IN_FAILURE:
       return { loading: false, error: true, data: state.data };
 
-    /*case UserActionType.PATCH_USER_INFO_START:
+    /* TODO - 회원 이름 수정 api 명세 작성 후 연동
+    case UserActionType.PATCH_USER_INFO_START:
       return { loading: true, error: null, data: state };
     case UserActionType.PATCH_USER_INFO_SUCCESS:
       return { loading: false, error: null, data: action.payload };
