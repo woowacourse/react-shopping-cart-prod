@@ -25,6 +25,16 @@ export const handlers = [
     return res(ctx.json(isDuplicateUserName));
   }),
 
+  rest.get('/api/customers/me', (req, res, ctx) => {
+    const { authorization } = req.headers._headers;
+
+    if (!authorization) return res(ctx.status(400));
+
+    const userName = authorization.replace(/^Bearer\saccessToken_+/, '');
+
+    return res(ctx.status(200), ctx.json(userName));
+  }),
+
   rest.put('/api/customers/me', (req, res, ctx) => {
     const { authorization } = req.headers._headers;
 
