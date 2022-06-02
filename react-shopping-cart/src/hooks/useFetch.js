@@ -23,7 +23,6 @@ function useFetch({ url, method = 'get', headers, skip = false }) {
 
       setData(data);
     } catch (error) {
-      console.log(error);
       setError(error.message);
     } finally {
       setIsLoading(false);
