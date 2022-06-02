@@ -1,10 +1,10 @@
 import { ALERT_MESSAGE } from 'constants/index';
 import { useAppSelector } from 'hooks/useAppSelector';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from 'Routers';
 
-const withAuthPage = (Component, canAccessOnLogin: boolean) => {
+const withAuthPage = (Component: React.ComponentType<unknown>, canAccessOnLogin: boolean) => {
   return function Wrapper({ ...props }) {
     const isLogin = useAppSelector(state => !!state.user.data);
     const navigate = useNavigate();
