@@ -7,8 +7,10 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { resetError } from 'redux/user/action';
 import { editUserInfo } from 'redux/user/thunk';
+import { PATH } from 'Routers';
 import styled from 'styled-components';
 
 interface PasswordConfirmModalProps {
@@ -21,15 +23,17 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
   const loginId = useAppSelector(state => state.user.data.loginId);
   const { data, error } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
-  const onClickPasswordConfirmButton = () => {
+  const onSubmitPassword = () => {
     dispatch(editUserInfo({ loginId, name, password }));
   };
 
   useEffect(() => {
     if (name === data.name) {
       closeModal();
+      navigate(PATH.home);
     }
   }, [data.name]);
 
@@ -50,6 +54,9 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
           type='password'
           value={password}
           onChange={onChangePassword}
+          onKeyDown={e => {
+            if (e.key === 'Enter') onSubmitPassword();
+          }}
         />
         <Button
           type='submit'
@@ -60,7 +67,7 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
           backgroundColor='primary'
           margin='24px 0 0'
           borderRadius='4px'
-          onClick={onClickPasswordConfirmButton}
+          onClick={onSubmitPassword}
         >
           확인
         </Button>
