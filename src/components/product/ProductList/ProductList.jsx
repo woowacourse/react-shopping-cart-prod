@@ -7,9 +7,12 @@ import { ProductCard } from 'components/product';
 
 import * as S from 'components/product/ProductList/ProductList.style';
 import { ERROR_MESSAGES } from 'constants/messages';
+import useReduxState from 'hooks/useReduxState';
+import { isLoggedInSelector } from 'store/selector';
 
-function ProductList({ openModal }) {
+function ProductList() {
   const { isLoading, productList, pageCount, currentPage } = useProductList();
+  const [isLoggedIn] = useReduxState(isLoggedInSelector);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -24,7 +27,7 @@ function ProductList({ openModal }) {
             <ProductCard.skeleton key={index} />
           ))
         : productList.map((product) => (
-            <ProductCard key={product.id} product={product} openModal={openModal} />
+            <ProductCard key={product.id} product={product} isLoggedIn={isLoggedIn} />
           ))}
     </S.Container>
   );

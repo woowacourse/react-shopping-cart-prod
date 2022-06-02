@@ -10,8 +10,9 @@ import { CartAddForm } from 'components/product';
 import * as S from 'components/product/ProductCard/ProductCard.style';
 import { color } from 'styles/Theme';
 import * as GlobalStyled from 'styles/GlobalStyles';
+import { WARNING_MESSAGES } from 'constants/messages';
 
-function ProductCard({ product }) {
+function ProductCard({ product, isLoggedIn }) {
   const { id, imageURL, name, price } = product;
 
   const { isModalOpen, openModal, closeModal } = useModal();
@@ -22,6 +23,10 @@ function ProductCard({ product }) {
   };
 
   const onClickCartButton = () => {
+    if (!isLoggedIn) {
+      alert(WARNING_MESSAGES.LOGIN_REQUIRED);
+      return;
+    }
     openModal();
   };
 

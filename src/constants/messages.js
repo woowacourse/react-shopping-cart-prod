@@ -10,6 +10,7 @@ export const WARNING_MESSAGES = {
   PRODUCTS_DELETE: (count) => `${count}개의 상품을 삭제하시겠습니까?`,
   MIN_QUANTITY: '구입할 수 있는 최소 수량입니다.',
   MAX_QUANTITY: '구입할 수 있는 최대 수량입니다.',
+  LOGIN_REQUIRED: '로그인 후에 장바구니에 추가할 수 있습니다.',
 };
 
 export const ERROR_MESSAGES = {
