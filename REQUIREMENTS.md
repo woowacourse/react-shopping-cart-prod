@@ -33,5 +33,5 @@
 - [ ] 서버 요청이 실패하였을 때에, 서버에서 받아오는 error.message 활용하기
 - [ ] alert -> snackbar
 - [ ] confirm -> modal
-- [ ] 서버 응답 대기시 스피너 애니메이션 띄워주기
-  - [ ] redux에서 isPending 상태로 관리하기
+- [x] 서버 응답 대기시 스피너 애니메이션 띄워주기
+  - [x] redux에서 isPending 상태로 관리하기
