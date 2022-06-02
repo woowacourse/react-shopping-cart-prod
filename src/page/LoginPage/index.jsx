@@ -1,9 +1,9 @@
 import Input from 'component/common/Input';
-import React from 'react';
+import React, {useEffect} from 'react';
 import * as S from './style';
 import theme from 'theme/theme';
 import {Link, useNavigate} from 'react-router-dom';
-import {PATH} from 'constant';
+import {ERROR_MESSAGE, PATH} from 'constant';
 import useFetch from 'hook/useFetch';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
@@ -32,6 +32,10 @@ function LoginPage() {
       },
     });
   };
+
+  useEffect(() => {
+    login.error && alert(ERROR_MESSAGE.LOGIN);
+  }, [login.error]);
 
   return (
     <S.Layout>

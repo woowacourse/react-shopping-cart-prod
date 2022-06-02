@@ -5,7 +5,7 @@ import Input from 'component/common/Input';
 import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
-import {PATH} from 'constant';
+import {ERROR_MESSAGE, PATH} from 'constant';
 import {useNavigate} from 'react-router-dom';
 
 function UserInfoEditPage() {
@@ -90,6 +90,14 @@ function UserInfoEditPage() {
   useEffect(() => {
     getInfo();
   }, []);
+
+  useEffect(() => {
+    userInfo.error && alert(ERROR_MESSAGE.VIEW_USER_INFO);
+  }, [userInfo.error]);
+
+  useEffect(() => {
+    editInfo.error && alert(ERROR_MESSAGE.EDIT_USER_INFO);
+  }, [editInfo.error]);
 
   return (
     <S.Layout>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import * as S from './style';
 import Input from 'component/common/Input';
@@ -6,7 +6,7 @@ import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
-import {PATH} from 'constant';
+import {ERROR_MESSAGE, PATH} from 'constant';
 
 function SignupPage() {
   const navigation = useNavigate();
@@ -84,6 +84,10 @@ function SignupPage() {
       },
     });
   };
+
+  useEffect(() => {
+    signup.error && alert(ERROR_MESSAGE.SIGNUP);
+  }, [signup.error]);
 
   return (
     <S.Layout>

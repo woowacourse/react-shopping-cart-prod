@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import * as S from './style';
 import baedaleTear from 'assets/baedale_tear.png';
@@ -10,6 +10,7 @@ import {PATH} from 'constant';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
 import useControlledInput from 'hook/useControlledInput';
+import {ERROR_MESSAGE} from 'constant';
 
 function WithDrawalPage() {
   const [isChecked, setIsChecked] = useState(false);
@@ -42,6 +43,10 @@ function WithDrawalPage() {
       },
     });
   };
+
+  useEffect(() => {
+    withDrawal.error && alert(ERROR_MESSAGE.WITHDRAWAL);
+  }, [withDrawal.error]);
 
   return (
     <S.Layout>
