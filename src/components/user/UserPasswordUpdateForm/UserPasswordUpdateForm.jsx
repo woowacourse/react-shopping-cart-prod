@@ -1,21 +1,19 @@
 import { sendUpdatePasswordRequest } from 'api/user.api';
 import { Form, Input } from 'components/common';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
+import { PASSWORD_PATTERN } from 'constants/pattern';
 import { ROUTE } from 'constants/route';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
-
-const passwordPattern =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
 
 const { USER_INFO_RULE_ERROR } = ERROR_MESSAGES;
 
 function UserPasswordUpdateForm() {
   const [passwordValue, setPasswordValue, isPasswordValid] =
-    useInputValue(passwordPattern);
+    useInputValue(PASSWORD_PATTERN);
 
   const [passwordConfirmValue, setPasswordConfirmValue, isPasswordConfirmValid] =
-    useInputValue(passwordPattern);
+    useInputValue(PASSWORD_PATTERN);
 
   const navigate = useNavigate();
 

@@ -10,8 +10,7 @@ import { updateUserNicknameThunk } from 'store/actions/user.action';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 import { nicknameSelector } from 'store/selector';
 import { ROUTE } from 'constants/route';
-
-const nicknamePattern = /^[가-힣]{1,5}$/;
+import { NICKNAME_PATTERN } from 'constants/pattern';
 
 const { USER_INFO_RULE_ERROR } = ERROR_MESSAGES;
 
@@ -19,7 +18,7 @@ function UserInfoUpdateForm() {
   const [nickname, dispatch] = useReduxState(nicknameSelector);
 
   const [nicknameValue, setNicknameValue, isNicknameValid] = useInputValue(
-    nicknamePattern,
+    NICKNAME_PATTERN,
     nickname,
   );
 

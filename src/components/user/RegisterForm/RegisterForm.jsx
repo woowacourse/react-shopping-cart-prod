@@ -6,23 +6,18 @@ import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 import { ROUTE } from 'constants/route';
-
-const emailPattern =
-  /^(?=.{1,64}@)[A-Za-z0-9_-]+(\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*(\.[A-Za-z]{2,})$/;
-const passwordPattern =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,20}$/;
-const nicknamePattern = /^[가-힣]{1,5}$/;
+import { EMAIL_PATTERN, NICKNAME_PATTERN, PASSWORD_PATTERN } from 'constants/pattern';
 
 const { USER_INFO_RULE_ERROR } = ERROR_MESSAGES;
 
 function RegisterForm() {
-  const [emailValue, setEmailValue, isEmailValid] = useInputValue(emailPattern);
+  const [emailValue, setEmailValue, isEmailValid] = useInputValue(EMAIL_PATTERN);
   const [passwordValue, setPasswordValue, isPasswordValid] =
-    useInputValue(passwordPattern);
+    useInputValue(PASSWORD_PATTERN);
   const [passwordConfirmValue, setPasswordConfirmValue, isPasswordConfirmValid] =
-    useInputValue(passwordPattern);
+    useInputValue(PASSWORD_PATTERN);
   const [nicknameValue, setNicknameValue, isNicknameValid] =
-    useInputValue(nicknamePattern);
+    useInputValue(NICKNAME_PATTERN);
 
   const [isUniqueEmail, setIsUniqueEmail] = useState(false);
 
