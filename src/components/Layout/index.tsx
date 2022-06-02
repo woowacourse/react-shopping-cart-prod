@@ -2,13 +2,13 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import Header from 'components/Header';
 import { ROUTES } from 'utils/constants';
-import CartIcon from 'components/CartIcon';
 import { useSelector } from 'react-redux';
 import UserMenu from 'components/UserMenu';
 
 import { useEffect, useState } from 'react';
 import Styled from './index.style';
 import { getCookie } from 'utils/cookie';
+import Logo from 'components/Logo';
 
 const Layout = () => {
   const location = useLocation();
@@ -25,11 +25,7 @@ const Layout = () => {
       {isHeaderShow && (
         <div>
           <Header
-            left={
-              <Styled.HomeLink to={ROUTES.HOME}>
-                <CartIcon category="header" /> WOOWA SHOP
-              </Styled.HomeLink>
-            }
+            left={<Logo />}
             right={
               isAuthenticated ? (
                 <Styled.RightSide>

@@ -14,6 +14,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import Logo from 'components/Logo';
+import { getCookie } from 'utils/cookie';
 
 const SignupPage = () => {
   const [renderSnackbar] = useSnackbar();
@@ -54,43 +56,43 @@ const SignupPage = () => {
 
   return (
     <Styled.Container>
+      <Logo />
+      <br />
       <Container width="519px" height="570px">
-        <div>
-          <Title mainTitle="회원가입" subTitle="처음 뵙겠습니다 👋" />
-          <Styled.InputContainer>
-            <Input
-              type="email"
-              icon={<EmailIcon />}
-              label="Email Address"
-              inputValue={email}
-              setInputValue={setEmail}
-              validator={validateEmail}
-              isCorrect={isEmailCorrect}
-              setIsCorrect={setIsEmailCorrect}
-            />
-            <Input
-              icon={<NicknameIcon />}
-              label="Nickname"
-              inputValue={nickname}
-              setInputValue={setNickname}
-              validator={validateNickname}
-              isCorrect={isNicknameCorrect}
-              setIsCorrect={setIsNicknameCorrect}
-            />
-            <Input
-              type="password"
-              icon={<PasswordIcon />}
-              label="Password"
-              inputValue={password}
-              setInputValue={setPassword}
-              validator={validatePassword}
-              isCorrect={isPasswordCorrect}
-              setIsCorrect={setIsPasswordCorrect}
-            />
-          </Styled.InputContainer>
-          <AuthButton actionType="Sign Up" action={signup} isDisabled={!isFulfilled} />
-          <GuideText guide="Already have an account?" destination="Login" path="/login" />
-        </div>
+        <Title mainTitle="회원가입" subTitle="처음 뵙겠습니다 👋" />
+        <Styled.InputContainer>
+          <Input
+            type="email"
+            icon={<EmailIcon />}
+            label="Email Address"
+            inputValue={email}
+            setInputValue={setEmail}
+            validator={validateEmail}
+            isCorrect={isEmailCorrect}
+            setIsCorrect={setIsEmailCorrect}
+          />
+          <Input
+            icon={<NicknameIcon />}
+            label="Nickname"
+            inputValue={nickname}
+            setInputValue={setNickname}
+            validator={validateNickname}
+            isCorrect={isNicknameCorrect}
+            setIsCorrect={setIsNicknameCorrect}
+          />
+          <Input
+            type="password"
+            icon={<PasswordIcon />}
+            label="Password"
+            inputValue={password}
+            setInputValue={setPassword}
+            validator={validatePassword}
+            isCorrect={isPasswordCorrect}
+            setIsCorrect={setIsPasswordCorrect}
+          />
+        </Styled.InputContainer>
+        <AuthButton actionType="Sign Up" action={signup} isDisabled={!isFulfilled} />
+        <GuideText guide="Already have an account?" destination="Login" path="/login" />
       </Container>
     </Styled.Container>
   );

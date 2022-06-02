@@ -10,7 +10,7 @@ interface ContainerProps {
 const Container = ({ children, width, height }: ContainerProps) => {
   return (
     <Styled.Container width={width} height={height}>
-      {children}
+      <div>{children}</div>
     </Styled.Container>
   );
 };

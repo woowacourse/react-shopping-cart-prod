@@ -16,6 +16,7 @@ import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import Logo from 'components/Logo';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -63,26 +64,26 @@ const LoginPage = () => {
 
   return (
     <Styled.Container>
+      <Logo />
+      <br />
       <Container width="505px" height="440px">
-        <div>
-          <Title mainTitle="로그인" subTitle="환영합니다 👋" />
-          <Input
-            type="email"
-            icon={<EmailIcon />}
-            label="Email Address"
-            inputValue={email}
-            setInputValue={setEmail}
-          />
-          <Input
-            type="password"
-            icon={<PasswordIcon />}
-            label="Password"
-            inputValue={password}
-            setInputValue={setPassword}
-          />
-          <AuthButton actionType="Login" action={login} isDisabled={!isFulfilled} />
-          <GuideText guide="Don’t have an account?" destination="Sign up" path="/signup" />
-        </div>
+        <Title mainTitle="로그인" subTitle="환영합니다 👋" />
+        <Input
+          type="email"
+          icon={<EmailIcon />}
+          label="Email Address"
+          inputValue={email}
+          setInputValue={setEmail}
+        />
+        <Input
+          type="password"
+          icon={<PasswordIcon />}
+          label="Password"
+          inputValue={password}
+          setInputValue={setPassword}
+        />
+        <AuthButton actionType="Login" action={login} isDisabled={!isFulfilled} />
+        <GuideText guide="Don’t have an account?" destination="Sign up" path="/signup" />
       </Container>
     </Styled.Container>
   );
