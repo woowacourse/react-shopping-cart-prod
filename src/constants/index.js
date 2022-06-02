@@ -7,6 +7,7 @@ export const ICON_CODE = {
   CHECK: 'f00c',
   TRASH: 'f1f8',
   TRASH_CAN: 'f2ed',
+  USER: 'f007',
 };
 
 export const PAGE_LIST = {
@@ -15,11 +16,17 @@ export const PAGE_LIST = {
   CART_LIST: '/cart',
   SIGN_UP: '/signup',
   LOGIN: '/login',
+  LOGOUT: '/logout',
+  PROFILE: '/profile',
 };
 
 export const REQUEST_STATUS = {
   SUCCESS: 0,
   FAIL: 1,
 };
+
+export const ACCESS_TOKEN_COOKIE_NAME = 'accessToken';
+
+export const ACCESS_TOKEN_EXPIRED_TIME = 10800;
 
 export const REQUEST_TIMEOUT = 3000;
