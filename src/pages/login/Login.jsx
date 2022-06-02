@@ -40,7 +40,6 @@ function Login({ className }) {
               className="mb-16"
               id="email"
               placeholder="woowacourse@gmail.com"
-              defaultValue="woowacourse@gmail.com"
               {...register("email", {
                 pattern: {
                   value: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -53,7 +52,6 @@ function Login({ className }) {
               className="mb-40"
               id="password"
               type="password"
-              defaultValue="my-password"
               placeholder="비밀번호를 입력해주세요"
               {...register("password")}
             />
