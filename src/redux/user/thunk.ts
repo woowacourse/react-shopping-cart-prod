@@ -72,7 +72,7 @@ export const editUserInfo =
         throw new Error(response.data);
       }
 
-      dispatch(userActions.editGroup.success());
+      dispatch(userActions.editGroup.success(response.data));
     } catch (e: unknown) {
       if (e instanceof Error) {
         dispatch(userActions.editGroup.failure(e));
