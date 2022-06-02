@@ -19,7 +19,7 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
   const { data } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
 
-  const onSubmitPasswordConfirm = () => {
+  const onClickPasswordConfirmButton = () => {
     dispatch(editUserInfo({ loginId, name, password }));
   };
 
@@ -31,7 +31,7 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
 
   return (
     <Modal closeModal={closeModal}>
-      <StyledPasswordConfirmContent onSubmit={onSubmitPasswordConfirm}>
+      <StyledPasswordConfirmContent>
         <LabeledInput
           label='비밀번호'
           id='password2'
@@ -49,6 +49,7 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
           backgroundColor='primary'
           margin='24px 0 0'
           borderRadius='4px'
+          onClick={onClickPasswordConfirmButton}
         >
           확인
         </Button>
@@ -59,7 +60,7 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
 
 export default PasswordConfirmModal;
 
-const StyledPasswordConfirmContent = styled.form`
+const StyledPasswordConfirmContent = styled.div`
   width: 500px;
   padding: 0 100px;
   height: 300px;
