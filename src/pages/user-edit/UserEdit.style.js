@@ -17,6 +17,8 @@ const StyledUserEditContainer = styled.div`
   .withdrawal {
     margin-top: 15px;
     align-self: flex-end;
+    cursor: pointer;
+    color: red;
   }
 `;
 

@@ -5,10 +5,11 @@ import StyledUserEditContainer from "@/pages/user-edit/UserEdit.style";
 import Form from "@/components/form/Form";
 import Field from "@/components/field/Field";
 
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { getCookie } from "@/utils/auth";
 import { BASE_URL } from "@/constants";
+import { deleteCookie } from "@/utils/auth";
 
 function UserEdit() {
   const [email, setEmail] = useState({ value: "", status: "fulfilled" });
@@ -104,6 +105,25 @@ function UserEdit() {
     }
   };
 
+  const handleWithdrawalClick = async (e) => {
+    if (confirm("정말로 탈퇴하시겠습니까??")) {
+      try {
+        await axios.delete(`${BASE_URL}/users/me`, {
+          headers: {
+            Authorization:
+              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+          },
+        });
+
+        deleteCookie("accessToken");
+        navigate("/");
+        location.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   useEffect(() => {
     getUser();
   }, []);
@@ -161,7 +181,7 @@ function UserEdit() {
         />
       </Form>
       <div className="withdrawal">
-        <Link to="/">회원탈퇴</Link>
+        <a onClick={handleWithdrawalClick}>회원탈퇴</a>
       </div>
     </StyledUserEditContainer>
   );
