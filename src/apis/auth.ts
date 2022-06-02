@@ -47,6 +47,37 @@ const authAPI = {
       }
     }
   },
+
+  editUserInfo: async function (user: User) {
+    const accessToken = getAccessToken();
+
+    try {
+      await axios.put(PATH.REQUEST_CUSTOMER_ME, user, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  },
+
+  deleteUser: async function () {
+    const accessToken = getAccessToken();
+
+    try {
+      await axios.delete(PATH.REQUEST_CUSTOMER_ME, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+
+      localStorage.removeItem('accessToken');
+      sessionStorage.removeItem('accessToken');
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  },
 };
 
 export default authAPI;
