@@ -4,6 +4,7 @@ const CART_MESSAGE = {
 };
 
 const USER_MESSAGE = {
+  FAIL_LOGIN: '아이디 혹은 비밀번호를 확인해주세요.',
   ASK_WITH_DRAW: '탈퇴하시겠습니까?',
 };
 
