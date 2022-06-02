@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 const HeaderLink = styled(Link)`
+  display: flex;
+  align-items: center;
   color: ${({ theme }) => theme.colors['WHITE_001']};
   cursor: pointer;
   ${({ type }) => {
