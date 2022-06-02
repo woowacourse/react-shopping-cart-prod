@@ -68,11 +68,11 @@
 - [x] `styled-component` 반복 코드 제거
 - [x] export, import 형식 통일
 - [x] `validation` 로직 `form`별로 한층 더 추상화
-- [ ] 유저 관련 `inputChange` 반복 로직 `Custom Hook`으로 변경
+- [x] 유저 관련 `inputChange` 반복 로직 `Custom Hook`으로 변경
 - [x] `handle~Change` 함수 인자값으로 넘겨주는 값들 상수화
 - [x] `alert` 메세지 상수화
 
-### 백엔드 API 사용 후 상황에 따른 추가사항
+### step2 백엔드 API 사용 후 상황에 따른 추가사항
 
 - [ ] 로그인 상태에 필요하다면 회원가입, 로그인 페이지 접근 X
 - [ ] 서버에 요청을 보낸 후, 필요하다면 인풋 비워주기

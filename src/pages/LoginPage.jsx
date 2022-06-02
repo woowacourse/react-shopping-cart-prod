@@ -7,7 +7,9 @@ import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUserForm from '../hooks/useUserForm';
 import { validLoginInfo } from '../utils/validations';
+
 import { MESSAGE, SERVER_PATH, ROUTES_PATH, USER_INFO_KEY } from '../constants';
 import actionTypes from '../store/user/user.actions';
 
@@ -20,6 +22,7 @@ function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loginInfo, setLoginInfo] = useState(initialState);
+  const handleUserInfoChange = useUserForm(setLoginInfo);
   const { email, password } = loginInfo;
 
   const handleLoginInfoSubmit = async (e) => {
@@ -38,12 +41,6 @@ function LoginPage() {
     }
   };
 
-  const handleLoginInfoChange = (loginInfoKey) => (e) => {
-    setLoginInfo((prevState) => {
-      return { ...prevState, [loginInfoKey]: e.target.value };
-    });
-  };
-
   return (
     <StyledUserContainer>
       <h1>로그인</h1>
@@ -53,14 +50,14 @@ function LoginPage() {
           type="email"
           placeholder="이메일 주소를 입력해주세요"
           value={email}
-          onChange={handleLoginInfoChange(USER_INFO_KEY.EMAIL)}
+          onChange={handleUserInfoChange(USER_INFO_KEY.EMAIL)}
         />
         <Input
           labelText="비밀번호"
           type="password"
           value={password}
           placeholder="비밀번호를 입력해주세요"
-          onChange={handleLoginInfoChange(USER_INFO_KEY.PASSWORD)}
+          onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD)}
         />
         <Button text="로그인" />
       </StyledUserForm>

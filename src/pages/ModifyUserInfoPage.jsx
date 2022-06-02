@@ -7,12 +7,15 @@ import Button from '../components/common/Button';
 import Loading from '../components/Loading';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+import useUserForm from '../hooks/useUserForm';
 import { validUserInfo } from '../utils/validations';
+
+import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
 
 function ModifyUserInfoPage() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
+  const handleUserInfoChange = useUserForm(setUserInfo);
 
   const handleUserInfoSubmit = async (e) => {
     e.preventDefault();
@@ -26,12 +29,6 @@ function ModifyUserInfoPage() {
     } catch (error) {
       alert(error);
     }
-  };
-
-  const handleUserInfoChange = (userInfoKey) => (e) => {
-    setUserInfo((prevState) => {
-      return { ...prevState, [userInfoKey]: e.target.value };
-    });
   };
 
   useEffect(() => {

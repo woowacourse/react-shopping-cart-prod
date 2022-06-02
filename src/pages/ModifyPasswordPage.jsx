@@ -7,6 +7,7 @@ import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUserForm from '../hooks/useUserForm';
 import { validPasswordInfo } from '../utils/validations';
 import { MESSAGE, SERVER_PATH, USER, ROUTES_PATH, PASSWORD_INFO_KEY } from '../constants';
 import actionTypes from '../store/user/user.actions';
@@ -19,6 +20,7 @@ function ModifyPasswordPage() {
     newPassword: '',
     newPasswordConfirm: '',
   });
+  const handleUserInfoChange = useUserForm(setPassword);
   const { prevPassword, newPassword, newPasswordConfirm } = password;
 
   const handlePasswordSubmit = async (e) => {
@@ -35,12 +37,6 @@ function ModifyPasswordPage() {
     }
   };
 
-  const handlePasswordChange = (passwordKey) => (e) => {
-    setPassword((prevState) => {
-      return { ...prevState, [passwordKey]: e.target.value };
-    });
-  };
-
   return (
     <StyledUserContainer>
       <h1>비밀번호 수정</h1>
@@ -52,7 +48,7 @@ function ModifyPasswordPage() {
           maxLength={USER.PASSWORD.MAX}
           value={prevPassword}
           placeholder="비밀번호를 입력해주세요"
-          onChange={handlePasswordChange(PASSWORD_INFO_KEY.PREV_PASSWORD)}
+          onChange={handleUserInfoChange(PASSWORD_INFO_KEY.PREV_PASSWORD)}
         />
         <Input
           labelText="새로운 비밀번호"
@@ -61,7 +57,7 @@ function ModifyPasswordPage() {
           maxLength={USER.PASSWORD.MAX}
           value={newPassword}
           placeholder="새로운 비밀번호를 입력해주세요"
-          onChange={handlePasswordChange(PASSWORD_INFO_KEY.NEW_PASSWORD)}
+          onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD)}
         />
         <Input
           labelText="새로운 비밀번호 확인"
@@ -70,7 +66,7 @@ function ModifyPasswordPage() {
           maxLength={USER.PASSWORD.MAX}
           value={newPasswordConfirm}
           placeholder="새로운 비밀번호를 입력해주세요"
-          onChange={handlePasswordChange(PASSWORD_INFO_KEY.NEW_PASSWORD_CONFIRM)}
+          onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD_CONFIRM)}
         />
         <Button text="수정하기" />
       </StyledUserForm>

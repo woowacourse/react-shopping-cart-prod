@@ -6,10 +6,10 @@ import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUserForm from '../hooks/useUserForm';
 import { validSignUpInfo } from '../utils/validations';
 
 import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
-
 function SignUpPage() {
   const navigate = useNavigate();
   const [signUpInfo, setSignUpInfo] = useState({
@@ -18,6 +18,7 @@ function SignUpPage() {
     password: '',
     passwordConfirm: '',
   });
+  const handleUserInfoChange = useUserForm(setSignUpInfo);
   const { email, nickname, password, passwordConfirm } = signUpInfo;
 
   const handleSignUpInfoSubmit = async (e) => {
@@ -33,12 +34,6 @@ function SignUpPage() {
     }
   };
 
-  const handleSignUpInfoChange = (signUpInfoKey) => (e) => {
-    setSignUpInfo((prevState) => {
-      return { ...prevState, [signUpInfoKey]: e.target.value };
-    });
-  };
-
   return (
     <StyledUserContainer>
       <h1>회원가입</h1>
@@ -48,7 +43,7 @@ function SignUpPage() {
           type="email"
           placeholder="이메일 주소를 입력해주세요"
           value={email}
-          onChange={handleSignUpInfoChange(USER_INFO_KEY.EMAIL)}
+          onChange={handleUserInfoChange(USER_INFO_KEY.EMAIL)}
         />
         <Input
           labelText="닉네임"
@@ -56,7 +51,7 @@ function SignUpPage() {
           maxLength={USER.NICKNAME.MAX}
           placeholder="닉네임을 입력해주세요"
           value={nickname}
-          onChange={handleSignUpInfoChange(USER_INFO_KEY.NICKNAME)}
+          onChange={handleUserInfoChange(USER_INFO_KEY.NICKNAME)}
         />
         <Input
           labelText="비밀번호"
@@ -65,7 +60,7 @@ function SignUpPage() {
           maxLength={USER.PASSWORD.MAX}
           value={password}
           placeholder="비밀번호를 입력해주세요"
-          onChange={handleSignUpInfoChange(USER_INFO_KEY.PASSWORD)}
+          onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD)}
         />
         <Input
           labelText="비밀번호 확인"
@@ -74,7 +69,7 @@ function SignUpPage() {
           maxLength={USER.PASSWORD.MAX}
           value={passwordConfirm}
           placeholder="비밀번호를 입력해주세요"
-          onChange={handleSignUpInfoChange(USER_INFO_KEY.PASSWORD_CONFIRM)}
+          onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD_CONFIRM)}
         />
         <Button text="가입하기" />
       </StyledUserForm>
