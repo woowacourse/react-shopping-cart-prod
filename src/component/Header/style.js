@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import {FlexColumn, FlexRow} from 'style/common';
 import styled from 'styled-components';
 
@@ -54,6 +54,13 @@ const ProfileNavText = styled(NavLink)`
   color: ${({theme}) => theme.BLACK};
 `;
 
+const ProfileLinkText = styled(Link)`
+  padding: 10px 0px;
+
+  font-size: 15px;
+  color: ${({theme}) => theme.BLACK};
+`;
+
 const Profile = styled.div`
   position: relative;
 
@@ -81,7 +88,7 @@ const Profile = styled.div`
   }
 
   .tooltip-content:after {
-    content: '';
+    content: ' ';
     position: absolute;
     left: 50%;
     top: 0;
@@ -98,6 +105,20 @@ const Profile = styled.div`
     margin-top: -15px;
   }
 
+  .tooltip-container {
+    position: absolute;
+    width: 120px;
+    height: 50px;
+    top: 30px;
+    left: -50%;
+    background-color: transparent;
+  }
+
+  .tooltip-content a:hover {
+    transform: scale(1.1);
+    font-weight: bold;
+  }
+
   &:hover .tooltip-content {
     visibility: visible;
   }
@@ -112,10 +133,6 @@ const ProfileImage = styled.img`
   width: 60px;
   height: 60px;
   cursor: pointer;
-
-  &:hover {
-    display: none;
-  }
 `;
 
 export {
@@ -126,4 +143,5 @@ export {
   ProfileNavText,
   ProfileNavContainer,
   ProfileImage,
+  ProfileLinkText,
 };

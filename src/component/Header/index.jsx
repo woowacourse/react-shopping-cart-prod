@@ -11,6 +11,7 @@ import {PATH} from 'constant';
 
 import baedale from 'assets/baedale.png';
 import baedaleHover from 'assets/baedale_hover.png';
+
 import {AUTH} from 'store/modules/auth';
 
 import useFetch from 'hook/useFetch';
@@ -65,11 +66,12 @@ export default function Header() {
           <S.Profile>
             <S.ProfileImage src={baedaleHover} alt="프로필 이미지" />
             <S.ProfileImage className="baedale" src={baedale} alt="프로필 이미지" />
+            <div className="tooltip-container"></div>
             <div className="tooltip-content">
               <S.ProfileNavContainer>
-                <S.ProfileNavText to={PATH.HOME} onClick={handleClickLogout}>
+                <S.ProfileLinkText to={PATH.HOME} onClick={handleClickLogout}>
                   로그아웃
-                </S.ProfileNavText>
+                </S.ProfileLinkText>
                 <S.ProfileNavText to={PATH.EDIT_USER_INFO}>회원 정보 수정</S.ProfileNavText>
                 <S.ProfileNavText to={PATH.WITHDRAWAL}>회원탈퇴</S.ProfileNavText>
               </S.ProfileNavContainer>
