@@ -48,6 +48,12 @@ const Container = styled.button`
     filter: brightness(0.95);
   }
 
+  &:disabled {
+    cursor: default;
+    background-color: ${COLORS.GRAY_150};
+    color: ${COLORS.GRAY_70};
+  }
+
   &::before {
     content: '\\${({ icon }) => icon}';
 
