@@ -219,6 +219,15 @@ export const handlers = [
         return res;
       });
     }
+
+    return res((res) => {
+      res.status = 400;
+      res.body = JSON.stringify({
+        errorCode: 1003,
+        message: "잘못된 요청입니다",
+      });
+      return res;
+    });
   }),
 
   rest.delete("/api/customers/me", (req, res) => {
