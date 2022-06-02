@@ -18,7 +18,7 @@ const findUserData = (requestEmail) => {
   return currentUserList.find(({ email }) => email === requestEmail);
 };
 
-export const checkUniqueEmail = (req, res, ctx) => {
+export const handleCheckUniqueEmailRequest = (req, res, ctx) => {
   const currentUserList = getUser();
   const email = req.url.searchParams.get('email');
 
@@ -27,7 +27,7 @@ export const checkUniqueEmail = (req, res, ctx) => {
   return res(ctx.status(200), ctx.json({ success: isUnique }));
 };
 
-export const postUser = (req, res, ctx) => {
+export const handlePostUserRequest = (req, res, ctx) => {
   const currentUserList = getUser();
   const userData = req.body;
 
@@ -38,7 +38,7 @@ export const postUser = (req, res, ctx) => {
   return res(ctx.status(201));
 };
 
-export const login = (req, res, ctx) => {
+export const handleLoginRequest = (req, res, ctx) => {
   const { email: requestEmail, password: requestPassword } = req.body;
 
   const userData = findUserData(requestEmail);
@@ -66,7 +66,7 @@ export const handleUserGetRequest = (req, res, ctx) => {
   return res(ctx.status(404));
 };
 
-export const handlePasswordCheck = (req, res, ctx) => {
+export const handlePasswordCheckRequest = (req, res, ctx) => {
   const token = req.headers.get('Authorization').split(' ')[1];
   const { password } = req.body;
 
@@ -80,7 +80,7 @@ export const handlePasswordCheck = (req, res, ctx) => {
   return res(ctx.status(200), ctx.json({ success }));
 };
 
-export const handleUserDataUpdate = (req, res, ctx) => {
+export const handleUserDataUpdateRequest = (req, res, ctx) => {
   const currentUserList = getUser();
 
   const token = req.headers.get('Authorization').split(' ')[1];
@@ -99,7 +99,7 @@ export const handleUserDataUpdate = (req, res, ctx) => {
   return res(ctx.status(204));
 };
 
-export const handleUserDelete = (req, res, ctx) => {
+export const handleUserDeleteRequest = (req, res, ctx) => {
   const currentUserList = getUser();
 
   const token = req.headers.get('Authorization').split(' ')[1];

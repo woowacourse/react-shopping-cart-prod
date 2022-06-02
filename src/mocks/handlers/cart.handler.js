@@ -14,14 +14,14 @@ const cartDB = () => {
 
 const { getCart, setCart } = cartDB();
 
-export const getShoppingCart = (_, res, ctx) => {
+export const handleGetShoppingCartRequest = (_, res, ctx) => {
   const cart = getCart();
   return res(ctx.json(cart));
 };
 
 const findProductData = (productId) => data.products.find(({ id }) => id === productId);
 
-export const postShoppingCart = (req, res, ctx) => {
+export const handlePostShoppingCartRequest = (req, res, ctx) => {
   const currentShoppingCart = getCart();
   const { productId, quantity } = req.body;
 
@@ -40,7 +40,7 @@ const findProductCartIndex = (currentShoppingCart, productId) => {
   return currentShoppingCart.findIndex(({ productData }) => productData.id === productId);
 };
 
-export const patchShoppingCart = (req, res, ctx) => {
+export const handlePatchShoppingCartRequest = (req, res, ctx) => {
   const { productId, quantity } = req.body;
   const currentShoppingCart = getCart();
 
@@ -62,7 +62,7 @@ export const patchShoppingCart = (req, res, ctx) => {
   return res(ctx.json(currentShoppingCart));
 };
 
-export const deleteShoppingCart = (req, res, ctx) => {
+export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
   const { productId: idString } = req.params;
   const productId = Number(idString);
 
