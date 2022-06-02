@@ -1,60 +1,92 @@
 export const products = [
   {
     id: 1,
-    thumbnail: 'https://cdn-mart.baemin.com/sellergoods/bulk/20220502-173334/12619-main-01.jpg',
-    name: '[든든] 전지베이컨 500g',
-    price: 6390,
+    thumbnail:
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2021/02/[9200000001636]_20210225093600536.jpg',
+    name: '콜드 브루 몰트',
+    price: 4800,
   },
   {
     id: 2,
-    thumbnail: 'https://cdn-mart.baemin.com/sellergoods/bulk/20211125-103919/12614-main-01.jpg',
-    name: '[든든] 베이컨 라이트 1kg',
-    price: 17210,
+    thumbnail:
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000000487]_20210430112319040.jpg',
+    name: '바닐라 크림 콜드 브루',
+    price: 4500,
   },
   {
     id: 3,
     thumbnail:
-      'https://cdn-mart.baemin.com/sellergoods/main/a3ce66f9-fcb1-48d4-a0e8-97ab69fc16e8.jpg',
-    name: '[든든] 팜프리츠 슈스트링 7mm 2kg',
-    price: 6250,
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[72]_20210415140949967.jpg',
+    name: '시그니처 핫 초콜릿',
+    price: 5500,
   },
   {
     id: 4,
-    thumbnail: 'https://cdn-mart.baemin.com/sellergoods/bulk/20220502-173334/12620-main-01.jpg',
-    name: '[든든] 전지베이컨 20mm 탑핑 1kg',
-    price: 12910,
+    thumbnail:
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2022/03/[9200000002672]_20220311105511600.jpg',
+    name: '제주 비자림 콜드 브루',
+    price: 6500,
   },
   {
     id: 5,
     thumbnail:
-      'https://cdn-mart.baemin.com/sellergoods/main/c7e706b8-b23a-4f87-9c1b-b4f27967ece4.jpg',
-    name: '[든든] 카벤디쉬 케이준스타일 양념감자 2kg',
-    price: 10490,
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2022/04/[9200000003988]_20220406113215251.jpg',
+    name: '롤린 민트 초코 콜드 브루',
+    price: 2800,
   },
   {
     id: 6,
-    thumbnail: 'https://cdn-mart.baemin.com/sellergoods/bulk/20211228-161230/22700-main-01.jpg',
-    name: '[든든] 코코스 통살가라아게 1kg',
-    price: 6780,
+    thumbnail:
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9300000002853]_20210419104333070.jpg',
+    name: '기운내라임',
+    price: 4800,
   },
   {
     id: 7,
-    thumbnail: 'https://cdn-mart.baemin.com/sellergoods/bulk/20211125-103919/12608-main-01.jpg',
-    name: '[든든] 베이컨블록 500g',
-    price: 10340,
+    thumbnail:
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000000038]_20210430113202458.jpg',
+    name: '콜드 브루',
+    price: 1800,
   },
   {
     id: 8,
     thumbnail:
-      'https://cdn-mart.baemin.com/sellergoods/main/9430fd5c-3e50-4569-beb1-e4aa58efbd6e.png',
-    name: '[든든] 쉐프솔루션 그릴후랑크(냉장) 660g',
-    price: 6290,
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2022/04/[9200000004119]_20220412083025862.png',
+    name: '라벤더 카페 브레베',
+    price: 5800,
   },
   {
     id: 9,
     thumbnail:
-      'https://cdn-mart.baemin.com/sellergoods/main/6bdcd431-7c45-43ab-a2eb-40bce5088656.png',
-    name: '[든든] 쉐프솔루션 칼집숑숑비엔나(냉장) 1Kg',
-    price: 7680,
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2021/02/[9200000001086]_20210225090838931.jpg',
+    name: '럼 샷 코르타도',
+    price: 5500,
+  },
+  {
+    id: 10,
+    thumbnail:
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2021/02/[9200000002095]_20210225095033382.jpg',
+    name: '사케라또 비안코 오버 아이스',
+    price: 6800,
+  },
+  {
+    id: 11,
+    thumbnail:
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2021/03/[9200000003505]_20210322093241535.jpg',
+    name: '사케라또 아포가토',
+    price: 4800,
+  },
+  {
+    id: 12,
+    thumbnail:
+      'https://image.istarbucks.co.kr/upload/store/skuimg/2021/04/[9200000002406]_20210415135507733.jpg',
+    name: '바닐라 플랫 화이트',
+    price: 5800,
   },
 ];
+
+export const customers = {
+  'abc@abc.com': {
+    password: 'abc',
+  },
+};
