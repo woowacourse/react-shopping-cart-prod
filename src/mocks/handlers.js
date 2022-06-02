@@ -64,7 +64,12 @@ const handlers = [
       mockAccessToken = isSignedUpUser.id;
       return res(ctx.status(200), ctx.json({ accessToken: isSignedUpUser.id }));
     }
-    return res(ctx.status(404), ctx.json());
+    return res(
+      ctx.status(404),
+      ctx.json({
+        message: '아이디나 비밀번호가 잘못되었습니다.',
+      })
+    );
   }),
 
   rest.delete(SERVER_PATH.USER, (req, res, ctx) => {
@@ -76,7 +81,28 @@ const handlers = [
   }),
 
   rest.patch(SERVER_PATH.PASSWORD, (req, res, ctx) => {
+    const { prevPassword, newPassword } = req.body;
+    const userInfoIndex = userList.findIndex((user) => user.id === mockAccessToken);
+
+    if (prevPassword !== userList[userInfoIndex].password) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          message: '현재 비밀번호가 틀렸습니다.',
+        })
+      );
+    }
+
+    userList[userInfoIndex].password = newPassword;
     mockAccessToken = null;
+    return res(ctx.status(200), ctx.json());
+  }),
+
+  rest.patch(SERVER_PATH.USER, (req, res, ctx) => {
+    const { nickname } = req.body;
+    const userInfoIndex = userList.findIndex((user) => user.id === mockAccessToken);
+    userList[userInfoIndex].nickname = nickname;
+
     return res(ctx.status(200), ctx.json());
   }),
 

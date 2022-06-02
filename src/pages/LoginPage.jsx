@@ -40,7 +40,7 @@ function LoginPage() {
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
       setLoginInfo(initialState);
-      alert(error);
+      alert(error.message);
     }
   };
 
