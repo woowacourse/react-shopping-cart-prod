@@ -1,8 +1,11 @@
+// @ts-nocheck
+
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useClose from 'hooks/useClose';
 import useCart from 'hooks/useCart';
+import { useSelector } from 'react-redux';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
@@ -14,10 +17,11 @@ import Styled from 'components/ProductItem/index.style';
 import { LINK } from 'utils/constants';
 
 const ProductItem = ({ id, name, price, image }) => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(state => state.authReducer);
   const [isInCart, product] = useCart(id);
   const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);
 
-  const navigate = useNavigate();
   const [isControllerOpen, setIsControllerOpen] = useState(false);
   const [clearTimer, setAutoCloseTimer, extendTimer] = useClose();
 
@@ -42,6 +46,11 @@ const ProductItem = ({ id, name, price, image }) => {
 
   const handleCartClick = e => {
     e.stopPropagation();
+
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
 
     if (isControllerOpen) {
       updateCart();

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { Image } from 'components';
@@ -9,15 +10,22 @@ import { LINK } from 'utils/constants';
 import Styled from 'page/ProductDetailPage/index.style';
 import useProduct from 'hooks/useProduct';
 import useCart from 'hooks/useCart';
+import { useSelector } from 'react-redux';
 
 const ProductDetailPage = () => {
   const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(state => state.authReducer);
   const params = useParams();
   const id = Number(params.id);
   const [{ image, name, price }] = useProduct(id);
   const [isInCart, product] = useCart(id);
 
   const putCart = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
     store.dispatch(doPutProductToCart({ id: id, quantity: isInCart ? product.quantity + 1 : 1 }));
     navigate(LINK.TO_CART);
   };
