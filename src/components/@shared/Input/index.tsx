@@ -1,4 +1,4 @@
-import { InputContainer } from './styles';
+import { InputContainer, Message } from './styles';
 
 interface InputProps {
   htmlFor: string;
@@ -7,10 +7,11 @@ interface InputProps {
   value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
-  errorMessage?: string;
+  isValid?: boolean;
+  message?: string;
 }
 
-function Input({ htmlFor, label, type, value, onChange, disabled, errorMessage }: InputProps) {
+function Input({ htmlFor, label, type, value, onChange, disabled, isValid, message }: InputProps) {
   return (
     <InputContainer>
       <label htmlFor={htmlFor}>{label}</label>
@@ -22,7 +23,7 @@ function Input({ htmlFor, label, type, value, onChange, disabled, errorMessage }
         disabled={disabled}
         required
       />
-      {errorMessage !== '' && <p>{errorMessage}</p>}
+      {message && <Message isValid={isValid}>{message}</Message>}
     </InputContainer>
   );
 }

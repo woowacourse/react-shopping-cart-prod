@@ -13,11 +13,11 @@ const InputContainer = styled.div`
     padding: 0;
     margin-bottom: 16px;
   }
-
-  p {
-    font-size: 10px;
-    color: red;
-  }
 `;
 
-export { InputContainer };
+const Message = styled.p<{ isValid?: boolean }>`
+  font-size: 10px;
+  color: ${({ isValid }) => (isValid ? 'green' : 'red')};
+`;
+
+export { InputContainer, Message };
