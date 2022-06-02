@@ -36,12 +36,23 @@ const NavBarTitle = styled(Link)`
 const NavBarMenu = styled.div`
   ${spaceBetween};
   gap: 20px;
+  align-items: center;
   font-weight: 500;
   font-size: 20px;
   color: ${({ theme }) => theme.colors.GRAY_50};
 
   a {
     text-decoration: none;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+    padding: 5px;
+    border: 1.5px solid white;
+    border-radius: 5px;
+    background: transparent;
+    font-size: 15px;
     color: inherit;
   }
 `;

@@ -27,7 +27,12 @@ function NavBar() {
         <Link to={routes.cart}>장바구니</Link>
         <Link to={routes.orderList}>주문목록</Link>
         {!isLoggedIn && <Link to={routes.login}>로그인</Link>}
-        {isLoggedIn && <button onClick={onClickLogout}>로그아웃</button>}
+        {isLoggedIn && (
+          <>
+            <Link to={routes.userInfo}>회원 정보 수정</Link>
+            <button onClick={onClickLogout}>로그아웃</button>
+          </>
+        )}
       </NavBarMenu>
     </NavBarContainer>
   );

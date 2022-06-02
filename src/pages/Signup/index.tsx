@@ -7,11 +7,12 @@ import axios from 'axios';
 import useInput from '../../hooks/useInput';
 import usePassword from '../../hooks/usePassword';
 
+import { DuplicateCheckButton, IdContainer } from './styles';
+
 import { Button, Form, Input } from '../../components/@shared';
 import PageLayout from '../../components/PageLayout';
 
 function Signup() {
-  const navigate = useNavigate();
   const [id, onChangeId] = useInput();
   const [idStatus, setIdStatus] = useState({
     isValid: false,
@@ -25,6 +26,7 @@ function Signup() {
     passwordConfirmErrorMessage,
     onChangePasswordConfirm,
   } = usePassword();
+  const navigate = useNavigate();
 
   const onClickDuplicateCheck = async () => {
     const response = await axios.post('/api/customers/duplication', { userName: id });
@@ -59,23 +61,29 @@ function Signup() {
     <PageLayout>
       <h1>회원가입</h1>
       <Form onSubmit={onSubmit}>
-        <Input
-          htmlFor="signup-id"
-          label="아이디"
-          value={id}
-          onChange={onChangeId}
-          isValid={idStatus.isValid}
-          message={idStatus.message}
-        />
-        <Button type="button" onClick={onClickDuplicateCheck}>
-          중복 확인
-        </Button>
+        <IdContainer>
+          <Input
+            htmlFor="signup-id"
+            label="아이디"
+            value={id}
+            onChange={onChangeId}
+            maxLength={10}
+            isValid={idStatus.isValid}
+            message={idStatus.message}
+          />
+          {id && (
+            <DuplicateCheckButton type="button" onClick={onClickDuplicateCheck}>
+              중복 확인
+            </DuplicateCheckButton>
+          )}
+        </IdContainer>
         <Input
           type="password"
           htmlFor="signup-password"
           label="비밀번호"
           value={password}
           onChange={onChangePassword}
+          maxLength={20}
           isValid={!passwordErrorMessage}
           message={password && passwordErrorMessage}
         />
@@ -85,6 +93,7 @@ function Signup() {
           label="비밀번호 확인"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
+          maxLength={20}
           isValid={!passwordConfirmErrorMessage}
           message={passwordConfirmErrorMessage}
         />

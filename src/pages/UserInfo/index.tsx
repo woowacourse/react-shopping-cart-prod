@@ -1,8 +1,16 @@
 import { useState, useEffect } from 'react';
 
+import { useNavigate } from 'react-router-dom';
+import routes from '../../routes';
+
+import { useDispatch } from 'react-redux';
+import { logout } from '../../redux/modules/customer';
+
 import axios from 'axios';
 
 import usePassword from '../../hooks/usePassword';
+
+import { LeaveButton } from './styles';
 
 import { Button, Form, Input } from '../../components/@shared';
 import PageLayout from '../../components/PageLayout';
@@ -19,6 +27,21 @@ function UserInfo() {
     passwordConfirmErrorMessage,
     onChangePasswordConfirm,
   } = usePassword();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onClickLeave = () => {
+    if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) return;
+
+    axios.delete('/api/customers/me', {
+      headers: {
+        Authorization: `Bearer ${getCookie('accessToken')}`,
+      },
+    });
+
+    dispatch(logout());
+    navigate(routes.home);
+  };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,6 +82,7 @@ function UserInfo() {
           label="비밀번호"
           value={password}
           onChange={onChangePassword}
+          maxLength={20}
           isValid={!passwordErrorMessage}
           message={password && passwordErrorMessage}
         />
@@ -68,22 +92,13 @@ function UserInfo() {
           label="비밀번호 확인"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
+          maxLength={20}
           isValid={!passwordConfirmErrorMessage}
           message={passwordConfirmErrorMessage}
         />
         <Button>확인</Button>
       </Form>
-      <Button
-        onClick={() => {
-          axios.delete('/api/customers/me', {
-            headers: {
-              Authorization: `Bearer ${getCookie('accessToken')}`,
-            },
-          });
-        }}
-      >
-        회원 탈퇴
-      </Button>
+      <LeaveButton onClick={onClickLeave}>회원 탈퇴</LeaveButton>
     </PageLayout>
   );
 }

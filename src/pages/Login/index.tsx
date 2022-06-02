@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import routes from '../../routes';
 
 import { useDispatch } from 'react-redux';
@@ -10,6 +10,7 @@ import useInput from '../../hooks/useInput';
 
 import { Button, Form, Input } from '../../components/@shared';
 import PageLayout from '../../components/PageLayout';
+import { SignupWrapper } from './styles';
 
 function Login() {
   const [id, onChangeId] = useInput();
@@ -44,12 +45,13 @@ function Login() {
           label="비밀번호"
           value={password}
           onChange={onChangePassword}
+          maxLength={20}
         />
         <Button>확인</Button>
       </Form>
-      <p>
-        아직 회원이 아니신가요? <Button onClick={() => navigate(routes.signup)}>회원가입</Button>
-      </p>
+      <SignupWrapper>
+        아직 회원이 아니신가요? <Link to={routes.signup}>회원가입</Link>
+      </SignupWrapper>
     </PageLayout>
   );
 }

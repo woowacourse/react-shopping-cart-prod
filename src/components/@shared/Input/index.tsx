@@ -6,24 +6,26 @@ interface InputProps {
   type?: string;
   value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  maxLength?: number;
   disabled?: boolean;
   isValid?: boolean;
   message?: string;
 }
 
-function Input({ htmlFor, label, type, value, onChange, disabled, isValid, message }: InputProps) {
+function Input({ ...props }: InputProps) {
   return (
     <InputContainer>
-      <label htmlFor={htmlFor}>{label}</label>
+      <label htmlFor={props.htmlFor}>{props.label}</label>
       <input
-        type={type}
-        id={htmlFor}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
+        type={props.type}
+        id={props.htmlFor}
+        value={props.value}
+        onChange={props.onChange}
+        maxLength={props.maxLength}
+        disabled={props.disabled}
         required
       />
-      {message && <Message isValid={isValid}>{message}</Message>}
+      {props.message && <Message isValid={props.isValid}>{props.message}</Message>}
     </InputContainer>
   );
 }

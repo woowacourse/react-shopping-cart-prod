@@ -8,15 +8,17 @@ const InputContainer = styled.div`
   }
 
   input {
+    font-size: 18px;
     width: 100%;
-    height: 36px;
-    padding: 0;
-    margin-bottom: 16px;
+    height: 40px;
+    padding: 10px;
+    margin-bottom: 15px;
   }
 `;
 
 const Message = styled.p<{ isValid?: boolean }>`
-  font-size: 10px;
+  font-size: 14px;
+  margin-bottom: 20px;
   color: ${({ isValid }) => (isValid ? 'green' : 'red')};
 `;
 
