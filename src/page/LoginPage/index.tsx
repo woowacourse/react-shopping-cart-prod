@@ -29,7 +29,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      renderSnackbar(MESSAGE.ALREADY_LOGINED, 'FAILED');
+      renderSnackbar(MESSAGE.ALREADY_LOGIN, 'FAILED');
       navigate('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -6,6 +6,7 @@ import store from 'store/store';
 import { deleteCookie, getCookie } from 'utils/cookie';
 import Styled from './index.style';
 import useSnackbar from 'hooks/useSnackbar';
+import { MESSAGE } from 'utils/constants';
 
 const UserMenu = ({ nickname }) => {
   const [renderSnackbar] = useSnackbar();
@@ -33,10 +34,10 @@ const UserMenu = ({ nickname }) => {
       setIsOpen(false);
       store.dispatch(doLogout());
       store.dispatch(doInitializeCartList({ shoppingCart: [] }));
-      renderSnackbar('로그아웃이 완료되었습니다.', 'SUCCESS');
+      renderSnackbar(MESSAGE.LOGOUT_SUCCESS, 'SUCCESS');
       navigate('/');
     } catch (error) {
-      renderSnackbar('로그아웃에 실패하였습니다', 'FAILED');
+      renderSnackbar(MESSAGE.LOGIN_FAILURE, 'FAILED');
     }
   };
 
