@@ -16,4 +16,7 @@ export const client = axios.create({
 
 export const authClient = axios.create({
   baseURL: AUTH_BASE_URL,
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+  },
 });
