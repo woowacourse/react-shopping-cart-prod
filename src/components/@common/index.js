@@ -7,3 +7,5 @@ export { default as StatusMessage } from './StatusMessage';
 export { default as TextUnderline } from './TextUnderline';
 export { default as Title } from './Title';
 export { default as ToolTip } from './ToolTip';
+export { default as InputField } from './InputField';
+export { default as FieldSet } from './FieldSet';
