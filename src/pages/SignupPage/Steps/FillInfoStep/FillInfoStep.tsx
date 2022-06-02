@@ -7,6 +7,7 @@ import ICONS from '../../../../constants/icons';
 import * as S from './FillInfoStep.styled';
 import { useOutletContext } from 'react-router-dom';
 import { SigninResponseBody } from '../../../../types';
+import { SERVER_URL } from '../../../../configs/api';
 
 function FillInfoStep() {
   const { goNextStep } = useOutletContext<{
@@ -93,13 +94,13 @@ function FillInfoStep() {
 
       await axios({
         method: 'post',
-        url: 'http://15.164.166.148:8080/api/customers',
+        url: `${SERVER_URL}/api/customers`,
         data: payload,
       });
 
       // 회원가입
       const response = await axios.post<SigninResponseBody>(
-        'http://15.164.166.148:8080/api/customer/authentication/sign-in',
+        `${SERVER_URL}/api/customer/authentication/sign-in`,
         {
           email: payload.email,
           password: payload.password,
@@ -127,7 +128,7 @@ function FillInfoStep() {
     try {
       await axios({
         method: 'get',
-        url: `http://15.164.166.148:8080/api/validation?email=${email}`,
+        url: `${SERVER_URL}/api/validation?email=${email}`,
       });
 
       setIsEmailUnique(true);

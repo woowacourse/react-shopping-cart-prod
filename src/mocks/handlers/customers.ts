@@ -1,4 +1,5 @@
 import { rest, RestRequest } from 'msw';
+import { SERVER_URL } from '../../configs/api';
 import {
   Customer,
   SigninRequestBody,
@@ -51,8 +52,6 @@ const customers: User[] = [
     accessToken: null,
   },
 ];
-
-const SERVER_URL = 'http://15.164.166.148:8080';
 
 const customerHandlers = [
   // 이메일 중복 검사

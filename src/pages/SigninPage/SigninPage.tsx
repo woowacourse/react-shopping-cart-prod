@@ -6,6 +6,7 @@ import * as S from './SigninPage.styled';
 import axios from 'axios';
 import PlainLink from '../../components/PlainLink/PlainLink';
 import { SigninResponseBody } from '../../types';
+import { SERVER_URL } from '../../configs/api';
 
 function SigninPage() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ function SigninPage() {
 
     try {
       const response = await axios.post<SigninResponseBody>(
-        'http://15.164.166.148:8080/api/customer/authentication/sign-in',
+        `${SERVER_URL}/api/customer/authentication/sign-in`,
         payload
       );
 

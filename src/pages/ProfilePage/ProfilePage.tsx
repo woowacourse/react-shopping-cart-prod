@@ -6,6 +6,7 @@ import Input from '../../components/Input/Input';
 import ICONS from '../../constants/icons';
 import * as S from './ProfilePage.styled';
 import { useNavigate } from 'react-router-dom';
+import { SERVER_URL } from '../../configs/api';
 
 // 이메일 생일 수정 x
 
@@ -66,7 +67,7 @@ function ProfilePage() {
         } = await axios({
           method: 'get',
           data: '',
-          url: `http://15.164.166.148:8080/api/customers/${customerId}`,
+          url: `${SERVER_URL}/api/customers/${customerId}`,
           headers: {
             Authorization: `Bearer ${accessToken}`,
           },
@@ -140,7 +141,7 @@ function ProfilePage() {
 
       await axios({
         method: 'put',
-        url: `http://15.164.166.148:8080/api/customers/${customerId}`,
+        url: `${SERVER_URL}/api/customers/${customerId}`,
         data: payload,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -164,7 +165,7 @@ function ProfilePage() {
     try {
       await axios({
         method: 'delete',
-        url: `http://15.164.166.148:8080/api/customers/${customerId}`,
+        url: `${SERVER_URL}/api/customers/${customerId}`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
