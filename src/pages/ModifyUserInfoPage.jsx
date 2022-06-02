@@ -8,7 +8,7 @@ import Loading from '../components/Loading';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
 import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
-import { isValidNickname } from '../utils/validations';
+import { validUserInfo } from '../utils/validations';
 
 function ModifyUserInfoPage() {
   const navigate = useNavigate();
@@ -16,15 +16,10 @@ function ModifyUserInfoPage() {
 
   const handleUserInfoSubmit = async (e) => {
     e.preventDefault();
-
     const { nickname } = userInfo;
 
-    if (!isValidNickname(nickname)) {
-      alert(MESSAGE.ERROR_NICKNAME);
-      return;
-    }
-
     try {
+      validUserInfo(userInfo);
       await axios.patch(SERVER_PATH.USER, { nickname });
       alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
       navigate(ROUTES_PATH.HOME);

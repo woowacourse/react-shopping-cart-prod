@@ -6,12 +6,7 @@ import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
-import {
-  isValidPassword,
-  isValidPasswordConfirm,
-  isValidEmail,
-  isValidNickname,
-} from '../utils/validations';
+import { validSignUpInfo } from '../utils/validations';
 
 import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
 
@@ -28,29 +23,13 @@ function SignUpPage() {
   const handleSignUpInfoSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isValidEmail(email)) {
-      alert(MESSAGE.ERROR_EMAIL);
-      return;
-    }
-    if (!isValidNickname(nickname)) {
-      alert(MESSAGE.ERROR_NICKNAME);
-      return;
-    }
-    if (!isValidPassword(password)) {
-      alert(MESSAGE.ERROR_PASSWORD);
-      return;
-    }
-    if (!isValidPasswordConfirm(password, passwordConfirm)) {
-      alert(MESSAGE.ERROR_PASSWORD_CONFIRM);
-      return;
-    }
-
     try {
+      validSignUpInfo(signUpInfo);
       await axios.post(SERVER_PATH.USER, { email, nickname, password });
       alert(MESSAGE.SIGN_UP_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
-      console.error(error);
+      alert(error.message);
     }
   };
 

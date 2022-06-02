@@ -67,7 +67,7 @@
 - [x] state별 초기값 상수화 -> 필요한 부분만
 - [x] `styled-component` 반복 코드 제거
 - [x] export, import 형식 통일
-- [ ] `validation` 로직 `form`별로 한층 더 추상화
+- [x] `validation` 로직 `form`별로 한층 더 추상화
 - [ ] 유저 관련 `inputChange` 반복 로직 `Custom Hook`으로 변경
 - [x] `handle~Change` 함수 인자값으로 넘겨주는 값들 상수화
 - [x] `alert` 메세지 상수화

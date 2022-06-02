@@ -7,7 +7,7 @@ import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
-import { isValidPassword, isValidPasswordConfirm } from '../utils/validations';
+import { validPasswordInfo } from '../utils/validations';
 import { MESSAGE, SERVER_PATH, USER, ROUTES_PATH, PASSWORD_INFO_KEY } from '../constants';
 import actionTypes from '../store/user/user.actions';
 
@@ -24,16 +24,8 @@ function ModifyPasswordPage() {
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isValidPassword(newPassword)) {
-      alert(MESSAGE.ERROR_PASSWORD);
-      return;
-    }
-    if (!isValidPasswordConfirm(newPassword, newPasswordConfirm)) {
-      alert(MESSAGE.ERROR_PASSWORD_CONFIRM);
-      return;
-    }
-
     try {
+      validPasswordInfo(password);
       await axios.patch(SERVER_PATH.PASSWORD, { prevPassword, newPassword });
       dispatch({ type: actionTypes.DELETE_TOKEN });
       alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);

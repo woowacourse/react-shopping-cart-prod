@@ -7,7 +7,7 @@ import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
-import { isValidEmail } from '../utils/validations';
+import { validLoginInfo } from '../utils/validations';
 import { MESSAGE, SERVER_PATH, ROUTES_PATH, USER_INFO_KEY } from '../constants';
 import actionTypes from '../store/user/user.actions';
 
@@ -25,12 +25,8 @@ function LoginPage() {
   const handleLoginInfoSubmit = async (e) => {
     e.preventDefault();
 
-    if (!isValidEmail(email)) {
-      alert(MESSAGE.ERROR_EMAIL);
-      return;
-    }
-
     try {
+      validLoginInfo(email);
       const { data } = await axios.post(SERVER_PATH.LOGIN, { email, password });
       const { accessToken } = data;
       dispatch({ type: actionTypes.ADD_TOKEN, accessToken });
