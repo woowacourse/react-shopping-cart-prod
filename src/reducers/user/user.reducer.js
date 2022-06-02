@@ -32,6 +32,12 @@ const userReducer = (state = initialState, { type, payload }) => {
       authenticated: payload.authenticated,
     };
   }
+  if (type === actionTypes.UPDATE_NAME) {
+    return {
+      ...state,
+      name: payload.name,
+    };
+  }
   return state;
 };
 

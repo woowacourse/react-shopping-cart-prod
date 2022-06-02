@@ -5,6 +5,7 @@ import { showSnackBar } from 'reducers/ui/ui.actions';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateNameApi } from 'api/auth';
+import { updateName } from 'reducers/user/user.actions';
 
 const CONVERT_MODE = 'CONVERT_MODE';
 const CONFIRM_MODE = 'CONFIRM_MODE';
@@ -26,6 +27,7 @@ const Profile = ({ name }) => {
     updateNameApi(newName)
       .then(() => {
         setMode(CONFIRM_MODE);
+        dispatch(updateName({ name: newName }));
         dispatch(
           showSnackBar({
             type: 'SUCCESS',
