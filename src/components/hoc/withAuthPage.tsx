@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from 'Routers';
 
-const withAuthPage = (Component, canAccessOnLogin) => {
+const withAuthPage = (Component, canAccessOnLogin: boolean) => {
   return function Wrapper({ ...props }) {
     const isLogin = useAppSelector(state => !!state.user.data);
     const navigate = useNavigate();
