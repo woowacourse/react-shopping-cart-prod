@@ -1,10 +1,13 @@
 import Button from 'components/common/Button';
 import LabeledInput from 'components/common/LabeledInput';
 import Modal from 'components/common/Modal';
+import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
+import useSnackBar from 'hooks/useSnackBar';
 import { useEffect } from 'react';
+import { resetError } from 'redux/user/action';
 import { editUserInfo } from 'redux/user/thunk';
 import styled from 'styled-components';
 
@@ -16,8 +19,9 @@ interface PasswordConfirmModalProps {
 const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) => {
   const [password, onChangePassword] = useInput();
   const loginId = useAppSelector(state => state.user.data.loginId);
-  const { data } = useAppSelector(state => state.user);
+  const { data, error } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
+  const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
   const onClickPasswordConfirmButton = () => {
     dispatch(editUserInfo({ loginId, name, password }));
@@ -28,6 +32,13 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
       closeModal();
     }
   }, [data.name]);
+
+  useEffect(() => {
+    if (error) {
+      openSnackbar();
+      dispatch(resetError());
+    }
+  }, [error]);
 
   return (
     <Modal closeModal={closeModal}>
@@ -53,6 +64,7 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
         >
           확인
         </Button>
+        {isOpenSnackbar && <Snackbar message={MESSAGE.password} />}
       </StyledPasswordConfirmContent>
     </Modal>
   );

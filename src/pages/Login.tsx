@@ -7,6 +7,7 @@ import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
 import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { resetError } from 'redux/user/action';
 import { login } from 'redux/user/thunk';
 import { PATH } from 'Routers';
 import styled from 'styled-components';
@@ -45,6 +46,7 @@ const Login = () => {
   useEffect(() => {
     if (error) {
       openSnackbar();
+      dispatch(resetError());
     }
   }, [error, openSnackbar]);
 

@@ -8,6 +8,7 @@ import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { resetError } from 'redux/user/action';
 import { signup } from 'redux/user/thunk';
 import { UserInfo } from 'types/domain';
 
@@ -53,6 +54,7 @@ const Signup = () => {
   useEffect(() => {
     if (error) {
       openSnackbar();
+      dispatch(resetError());
     }
   }, [error, openSnackbar]);
 
@@ -94,7 +96,7 @@ const Signup = () => {
         value={passwordConfirmation}
         onChange={onChangePasswordConfirmation}
       />
-      {isOpenSnackbar && <Snackbar message={MESSAGE.password} />}
+      {isOpenSnackbar && <Snackbar message={MESSAGE.passwordConfirm} />}
     </AuthPage>
   );
 };
