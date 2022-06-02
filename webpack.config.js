@@ -42,6 +42,17 @@ module.exports = {
         issuer: /\.[jt]sx?$/,
         use: ["@svgr/webpack"],
       },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "assets/fonts/[name].[ext]",
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [
