@@ -6,6 +6,9 @@ export const SNACKBAR_MESSAGE = {
   successLogin: () => '로그인!',
   successUpdateUser: () => '프로필 수정이 완료!',
   withdrawUser: () => '회원 탈퇴 ㅠㅠ',
+  noAuth: () => '권한이 없엉 ㅠㅠ',
+  allReadyLogin: () => '이미 로그인 했엉!',
+  signUpUser: () => '회원 가입!',
 };
 
 export const PAGING = {
