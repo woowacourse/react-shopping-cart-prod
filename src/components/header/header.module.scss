@@ -41,9 +41,13 @@
 
     li {
       padding: 0 25px;
-
       a {
         @include a-no-style;
+      }
+      button {
+        @include button-no-style;
+      }
+      a, button {
         display: block;
         padding: 10px 0;
         font-size: 20px;
