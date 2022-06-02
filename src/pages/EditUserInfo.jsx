@@ -10,7 +10,7 @@ import Input from 'components/@common/Input/styles';
 import ErrorMessage from 'components/@common/ErrorMessage';
 
 import { COLORS } from 'styles/theme';
-import { requestEditUserInfo } from 'api';
+import { requestEditUserInfo, requestWithDrawUser } from 'api';
 import { 비동기_요청 } from 'constants';
 
 import * as Validate from 'utils/validate';
@@ -52,6 +52,20 @@ const EditUserInfo = () => {
       return;
     }
     alert('회원정보 수정에 실패하였습니다!');
+  };
+
+  const handleWithDrawUser = async (e) => {
+    e.preventDefault();
+    const withDrawConfrim = confirm('정말로 탈퇴 하실 건가요?');
+    if (withDrawConfrim) {
+      const response = await requestWithDrawUser();
+      if (response.status === 비동기_요청.SUCCESS) {
+        alert('회원 탈퇴에 성공하였습니다!');
+        navigate('/');
+        return;
+      }
+      alert('회원 탈퇴에 실패하였습니다.');
+    }
   };
 
   return (
@@ -129,6 +143,7 @@ const EditUserInfo = () => {
               border={`1px solid ${COLORS.RED_100}`}
               backgroundColor={COLORS.WHITE}
               hoverColor={COLORS.RED_100}
+              onClick={handleWithDrawUser}
             >
               회원탈퇴
             </Button>
