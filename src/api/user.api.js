@@ -1,7 +1,7 @@
 import apiInstance from 'api/customInstance';
 import { API_ENDPOINT } from 'api/constants';
 
-export const checkEmailDuplicate = async (email) => {
+export const sendCheckEmailDuplicateRequest = async (email) => {
   const response = await apiInstance.get(API_ENDPOINT.USER, {
     params: {
       email,
@@ -13,11 +13,11 @@ export const checkEmailDuplicate = async (email) => {
   return success;
 };
 
-export const addUser = async (userData) => {
+export const sendAddUserRequest = async (userData) => {
   await apiInstance.post(API_ENDPOINT.USER, userData);
 };
 
-export const login = async (loginData) => {
+export const sendLoginRequest = async (loginData) => {
   const response = await apiInstance.post(API_ENDPOINT.LOGIN, loginData);
   const { nickname, token } = response.data;
 
@@ -28,13 +28,13 @@ export const login = async (loginData) => {
   return nickname;
 };
 
-export const getUser = async () => {
+export const sendGetUserRequest = async () => {
   const response = await apiInstance.get(API_ENDPOINT.AUTH.ME);
 
   return response.data;
 };
 
-export const checkPassword = async (password) => {
+export const sendCheckPasswordRequest = async (password) => {
   const response = await apiInstance.post(API_ENDPOINT.AUTH.PASSWORD_CHECK, {
     password,
   });
@@ -44,18 +44,18 @@ export const checkPassword = async (password) => {
   return success;
 };
 
-export const updateNickname = async (nickname) => {
+export const sendUpdateNicknameRequest = async (nickname) => {
   await apiInstance.patch(API_ENDPOINT.AUTH.ME, {
     nickname,
   });
 };
 
-export const updatePassword = async (password) => {
+export const sendUpdatePasswordRequest = async (password) => {
   await apiInstance.patch(API_ENDPOINT.AUTH.PASSWORD, {
     password,
   });
 };
 
-export const deleteUser = async () => {
+export const sendDeleteUserRequest = async () => {
   await apiInstance.delete(API_ENDPOINT.AUTH.ME);
 };

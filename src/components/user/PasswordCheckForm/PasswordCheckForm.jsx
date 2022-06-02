@@ -3,7 +3,7 @@ import React from 'react';
 import { Form, Input } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
-import { checkPassword } from 'api/user.api';
+import { sendCheckPasswordRequest } from 'api/user.api';
 import { ERROR_MESSAGES } from 'constants/messages';
 
 function PasswordCheckForm({ nextPath }) {
@@ -19,7 +19,7 @@ function PasswordCheckForm({ nextPath }) {
     e.preventDefault();
 
     try {
-      const success = await checkPassword(passwordValue);
+      const success = await sendCheckPasswordRequest(passwordValue);
 
       if (!success) {
         alert(ERROR_MESSAGES.INCORRECT_PASSWORD);

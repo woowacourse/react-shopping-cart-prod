@@ -1,8 +1,8 @@
 import {
-  addToCart,
-  deleteCartProduct,
-  getCart,
-  updateCartProductQuantity,
+  sendAddToCartRequest,
+  sendDeleteCartProductRequest,
+  sendGetCartRequest,
+  sendUpdateCartProductQuantityRequest,
 } from 'api/cart.api';
 import { cartActionType } from 'store/reducers/cart.reducer';
 
@@ -26,18 +26,26 @@ const handleCartDispatch = async ({
 };
 
 export const addToCartThunk = (productId, quantity) => async (dispatch) => {
-  await handleCartDispatch({ dispatch, func: addToCart, params: [productId, quantity] });
+  await handleCartDispatch({
+    dispatch,
+    func: sendAddToCartRequest,
+    params: [productId, quantity],
+  });
 };
 
 export const getCartThunk = () => async (dispatch) => {
-  await handleCartDispatch({ dispatch, actionType: cartActionType.FETCH, func: getCart });
+  await handleCartDispatch({
+    dispatch,
+    actionType: cartActionType.FETCH,
+    func: sendGetCartRequest,
+  });
 };
 
 export const updateCartProductQuantityThunk =
   (productId, quantity) => async (dispatch) => {
     await handleCartDispatch({
       dispatch,
-      func: updateCartProductQuantity,
+      func: sendUpdateCartProductQuantityRequest,
       params: [productId, quantity],
     });
   };
@@ -46,7 +54,7 @@ export const deleteCartProductThunk = (productIdArray) => async (dispatch) => {
   await handleCartDispatch({
     dispatch,
     actionType: cartActionType.DELETE,
-    func: deleteCartProduct,
+    func: sendDeleteCartProductRequest,
     params: [productIdArray],
   });
 };

@@ -1,4 +1,4 @@
-import { updatePassword } from 'api/user.api';
+import { sendUpdatePasswordRequest } from 'api/user.api';
 import { Form, Input } from 'components/common';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 import { ROUTE } from 'constants/route';
@@ -34,7 +34,7 @@ function UserPasswordUpdateForm() {
     }
 
     try {
-      await updatePassword(passwordValue);
+      await sendUpdatePasswordRequest(passwordValue);
 
       alert(ALERT_MESSAGES.USER_PASSWORD_UPDATE_SUCCESS);
       navigate(ROUTE.USER_INFO);

@@ -2,7 +2,7 @@ import { ALERT_MESSAGES } from 'constants/messages';
 import { API_ENDPOINT } from 'api/constants';
 import apiInstance from 'api/customInstance';
 
-export const addToCart = async (productId, quantity) => {
+export const sendAddToCartRequest = async (productId, quantity) => {
   const response = await apiInstance.post(API_ENDPOINT.SHOPPING_CART, {
     productId,
     quantity,
@@ -15,7 +15,7 @@ export const addToCart = async (productId, quantity) => {
   return { cart };
 };
 
-export const getCart = async () => {
+export const sendGetCartRequest = async () => {
   const response = await apiInstance.get(API_ENDPOINT.SHOPPING_CART);
 
   const cart = response.data;
@@ -23,7 +23,7 @@ export const getCart = async () => {
   return { cart };
 };
 
-export const updateCartProductQuantity = async (productId, quantity) => {
+export const sendUpdateCartProductQuantityRequest = async (productId, quantity) => {
   const response = await apiInstance.patch(API_ENDPOINT.SHOPPING_CART, {
     productId,
     quantity,
@@ -34,7 +34,7 @@ export const updateCartProductQuantity = async (productId, quantity) => {
   return { cart };
 };
 
-export const deleteCartProduct = async (productIdArray) => {
+export const sendDeleteCartProductRequest = async (productIdArray) => {
   const response = await productIdArray.reduce(sendCartProductDeleteRequest, null);
   const cart = response.data;
 

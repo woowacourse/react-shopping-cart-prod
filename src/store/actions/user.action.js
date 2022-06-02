@@ -1,4 +1,8 @@
-import { deleteUser, login, updateNickname } from 'api/user.api';
+import {
+  sendDeleteUserRequest,
+  sendLoginRequest,
+  sendUpdateNicknameRequest,
+} from 'api/user.api';
 import { ERROR_MESSAGES } from 'constants/messages';
 import { userActionType } from 'store/reducers/user.reducer';
 
@@ -6,7 +10,7 @@ export const loginUserThunk = (loginData) => async (dispatch) => {
   dispatch({ type: userActionType.START });
 
   try {
-    const nickname = await login(loginData);
+    const nickname = await sendLoginRequest(loginData);
 
     dispatch({ type: userActionType.UPDATE, payload: { nickname } });
   } catch (error) {
@@ -28,7 +32,7 @@ export const updateUserNicknameThunk = (newNickname) => async (dispatch) => {
   dispatch({ type: userActionType.START });
 
   try {
-    await updateNickname(newNickname);
+    await sendUpdateNicknameRequest(newNickname);
 
     dispatch({ type: userActionType.UPDATE, payload: { nickname: newNickname } });
   } catch (error) {
@@ -39,7 +43,7 @@ export const updateUserNicknameThunk = (newNickname) => async (dispatch) => {
 
 export const deleteUserThunk = () => async (dispatch) => {
   try {
-    await deleteUser();
+    await sendDeleteUserRequest();
 
     window.sessionStorage.removeItem('nickname');
     window.sessionStorage.removeItem('token');

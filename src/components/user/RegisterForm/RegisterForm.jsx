@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { addUser, checkEmailDuplicate } from 'api/user.api';
+import { sendAddUserRequest, sendCheckEmailDuplicateRequest } from 'api/user.api';
 import { Form, Input } from 'components/common';
 import useInputValue from 'hooks/useInputValue';
 import { useNavigate } from 'react-router-dom';
@@ -56,7 +56,7 @@ function RegisterForm() {
     }
 
     try {
-      const success = await checkEmailDuplicate(emailValue);
+      const success = await sendCheckEmailDuplicateRequest(emailValue);
 
       setIsUniqueEmail(success);
 
@@ -80,7 +80,7 @@ function RegisterForm() {
     }
 
     try {
-      await addUser({
+      await sendAddUserRequest({
         email: emailValue,
         nickname: nicknameValue,
         password: passwordValue,
