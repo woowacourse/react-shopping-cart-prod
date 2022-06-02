@@ -1,8 +1,9 @@
+const token = window.sessionStorage.getItem('token');
 const nickname = window.sessionStorage.getItem('nickname');
 
 const initialState = {
-  nickname: nickname || null,
-  isLoggedIn: !!nickname,
+  nickname: token && nickname ? nickname : null,
+  isLoggedIn: token && nickname,
   isLoading: false,
 };
 

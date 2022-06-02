@@ -7,7 +7,9 @@ const customInstance = axios.create({
 });
 
 const token = window.sessionStorage.getItem('token');
-if (token !== undefined) {
+const nickname = window.sessionStorage.getItem('nickname');
+
+if (token !== undefined && nickname !== undefined) {
   customInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
