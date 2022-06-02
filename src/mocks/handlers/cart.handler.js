@@ -14,6 +14,10 @@ const cartDB = () => {
 
 const { getCart, setCart } = cartDB();
 
+const findProductCartIndex = (currentShoppingCart, productId) => {
+  return currentShoppingCart.findIndex(({ productData }) => productData.id === productId);
+};
+
 export const handleGetShoppingCartRequest = (_, res, ctx) => {
   const cart = getCart();
   return res(ctx.json(cart));
@@ -25,19 +29,22 @@ export const handlePostShoppingCartRequest = (req, res, ctx) => {
   const currentShoppingCart = getCart();
   const { productId, quantity } = req.body;
 
-  const newCartProduct = {};
-  newCartProduct.productData = findProductData(productId);
-  newCartProduct.quantity = quantity;
+  const cartProductIndex = findProductCartIndex(currentShoppingCart, productId);
 
-  currentShoppingCart.push(newCartProduct);
+  if (cartProductIndex >= 0) {
+    const cartProduct = currentShoppingCart[cartProductIndex];
+    const newCartProduct = { ...cartProduct, quantity: cartProduct.quantity + quantity };
+    currentShoppingCart[cartProductIndex] = newCartProduct;
+  } else {
+    const newCartProduct = {};
+    newCartProduct.productData = findProductData(productId);
+    newCartProduct.quantity = quantity;
+    currentShoppingCart.push(newCartProduct);
+  }
 
   setCart(currentShoppingCart);
 
   return res(ctx.json(currentShoppingCart));
-};
-
-const findProductCartIndex = (currentShoppingCart, productId) => {
-  return currentShoppingCart.findIndex(({ productData }) => productData.id === productId);
 };
 
 export const handlePatchShoppingCartRequest = (req, res, ctx) => {
