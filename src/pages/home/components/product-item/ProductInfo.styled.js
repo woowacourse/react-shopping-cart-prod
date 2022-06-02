@@ -12,6 +12,14 @@ const StyledProductInfo = styled.div`
   color: ${({ theme }) => theme.colors.black1};
   .product-title {
     font-size: ${({ theme }) => theme.fontSize.m};
+    cursor: pointer;
+    margin-bottom: 10px;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-position: under;
+      text-decoration-color: ${({ theme }) => theme.colors.mint};
+    }
   }
   .product-price {
     font-size: ${({ theme }) => theme.fontSize.m};

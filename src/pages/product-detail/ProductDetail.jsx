@@ -43,7 +43,9 @@ function ProductDetail() {
       <hr />
       <div className="product__price__wrapper">
         <div className="product__price__label">금액</div>
-        <div className="product__price"> {productInfo.price}원</div>
+        <div className="product__price">
+          {productInfo.price?.toLocaleString("ko-KR")}원
+        </div>
       </div>
       <Button
         text="장바구니"
