@@ -1,6 +1,7 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
+import withAuthPage from 'components/hoc/withAuthPage';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
@@ -17,7 +18,6 @@ const UserWithDrawal = () => {
   const { data } = useAppSelector(state => state.user);
   const navigate = useNavigate();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
-  const isLogin = useAppSelector(state => !!state.user.data);
 
   useAuthError(openSnackbar);
 
@@ -31,15 +31,6 @@ const UserWithDrawal = () => {
       navigate(PATH.home);
     }
   }, [data]);
-
-  useEffect(() => {
-    if (!isLogin) {
-      alert('잘못된 접근입니다.');
-      navigate(PATH.home);
-    }
-  }, [isLogin]);
-
-  if (!isLogin) return null;
 
   return (
     <AuthPage title='회원 탈퇴' onSubmitAuthForm={onSubmitForm}>
@@ -56,4 +47,4 @@ const UserWithDrawal = () => {
   );
 };
 
-export default UserWithDrawal;
+export default withAuthPage(UserWithDrawal, true);

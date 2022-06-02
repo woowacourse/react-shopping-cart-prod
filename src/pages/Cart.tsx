@@ -3,6 +3,7 @@ import LayoutWithTitle from 'components/common/LayoutWithTitle';
 import Loading from 'components/common/Loading';
 import PaymentBox from 'components/common/PaymentBox';
 import RequestFail from 'components/common/RequestFail';
+import withAuthPage from 'components/hoc/withAuthPage';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useThunkFetch from 'hooks/useThunkFetch';
 import { useEffect } from 'react';
@@ -38,13 +39,6 @@ const Cart = () => {
   const selectedItem = itemListInCart.filter(item => item.isSelected);
   const totalPrice = selectedItem.reduce((acc, item) => item.price * item.quantity + acc, 0);
 
-  useEffect(() => {
-    if (!isLogin) {
-      alert('잘못된 접근입니다.');
-      navigate(PATH.home);
-    }
-  }, [isLogin]);
-
   if (loading_itemList || loading_cartList === 'getCartList') return <Loading />;
   if (error_getItemList || error_getCartList) return <RequestFail />;
 
@@ -64,7 +58,7 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default withAuthPage(Cart, true);
 
 const StyledMain = styled.main`
   display: flex;

@@ -20,7 +20,7 @@ const Login = () => {
   const name = useAppSelector(state => state.user.data?.name);
   const isLogin = useAppSelector(state => !!state.user.data);
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
-  const isLoginAuth = useRef(false);
+  const isLogining = useRef(false);
 
   useAuthError(openSnackbar);
 
@@ -34,18 +34,18 @@ const Login = () => {
       })
     );
 
-    isLoginAuth.current = true;
+    isLogining.current = true;
   };
 
   useEffect(() => {
-    if (isLogin && !isLoginAuth.current) {
+    if (isLogin && !isLogining.current) {
       alert('잘못된 접근입니다.');
       navigate(PATH.home);
     }
   }, [isLogin, navigate]);
 
   useEffect(() => {
-    if (name && isLoginAuth.current) {
+    if (name && isLogining.current) {
       alert(`${name}님 로그인 되었습니다.`);
       navigate(PATH.home);
     }

@@ -1,15 +1,14 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
+import withAuthPage from 'components/hoc/withAuthPage';
 import PasswordConfirmModal from 'components/UserEdit/PasswordConfirmModal';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
 import { useEffect, useReducer } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getUser } from 'redux/user/thunk';
-import { PATH } from 'Routers';
 
 const UserEdit = () => {
   const [name, onChangeName] = useInput();
@@ -17,8 +16,6 @@ const UserEdit = () => {
   const dispatch = useAppDispatch();
   const prevName = useAppSelector(state => state.user.data?.name);
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
-  const isLogin = useAppSelector(state => !!state.user.data);
-  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getUser());
@@ -34,15 +31,6 @@ const UserEdit = () => {
 
     toggleModal();
   };
-
-  useEffect(() => {
-    if (!isLogin) {
-      alert('잘못된 접근입니다.');
-      navigate(PATH.home);
-    }
-  }, [isLogin]);
-
-  if (!isLogin) return null;
 
   return (
     <AuthPage title='회원 정보 수정' onSubmitAuthForm={onSubmitAuthForm}>
@@ -60,4 +48,4 @@ const UserEdit = () => {
   );
 };
 
-export default UserEdit;
+export default withAuthPage(UserEdit, true);

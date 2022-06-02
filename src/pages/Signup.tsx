@@ -1,12 +1,11 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
+import withAuthPage from 'components/hoc/withAuthPage';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signup } from 'redux/user/thunk';
 
@@ -19,7 +18,6 @@ const Signup = () => {
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const isLogin = useAppSelector(state => !!state.user.data);
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
   useAuthError(openSnackbar);
@@ -42,15 +40,6 @@ const Signup = () => {
     }
     openSnackbar();
   };
-
-  useEffect(() => {
-    if (isLogin) {
-      alert('잘못된 접근입니다.');
-      navigate(PATH.home);
-    }
-  }, [isLogin, navigate]);
-
-  if (isLogin) return null;
 
   return (
     <AuthPage title='회원가입' onSubmitAuthForm={onSubmitAuthForm}>
@@ -93,4 +82,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default withAuthPage(Signup, false);
