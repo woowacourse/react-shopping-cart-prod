@@ -2,7 +2,7 @@ import React from 'react';
 
 import errorImage from 'components/common/Image/error.svg';
 
-import * as Styled from 'components/common/Image/Image.style';
+import * as S from 'components/common/Image/Image.style';
 
 function Image({ src, alt, width = '100%' }) {
   const handleError = (e) => {
@@ -10,9 +10,9 @@ function Image({ src, alt, width = '100%' }) {
   };
 
   return (
-    <Styled.ImageContainer width={width}>
-      <Styled.Image src={src} alt={alt} onError={handleError} />
-    </Styled.ImageContainer>
+    <S.ImageContainer width={width}>
+      <S.Image src={src} alt={alt} onError={handleError} />
+    </S.ImageContainer>
   );
 }
 

@@ -7,7 +7,7 @@ import { Image, Icon, Modal } from 'components/common';
 
 import { CartAddForm } from 'components/product';
 
-import * as Styled from 'components/product/ProductCard/ProductCard.style';
+import * as S from 'components/product/ProductCard/ProductCard.style';
 import { color } from 'styles/Theme';
 import * as GlobalStyled from 'styles/GlobalStyles';
 
@@ -26,40 +26,40 @@ function ProductCard({ product }) {
   };
 
   return (
-    <GlobalStyled.Position>
-      <Styled.Container onClick={onClickCard}>
+    <GlobalS.Position>
+      <S.Container onClick={onClickCard}>
         <Image src={imageURL} alt={name} />
-        <Styled.Content>
-          <Styled.Description>
-            <Styled.Name>{name}</Styled.Name>
-            <Styled.Price>{price}원</Styled.Price>
-          </Styled.Description>
-        </Styled.Content>
-      </Styled.Container>
+        <S.Content>
+          <S.Description>
+            <S.Name>{name}</S.Name>
+            <S.Price>{price}원</S.Price>
+          </S.Description>
+        </S.Content>
+      </S.Container>
 
-      <GlobalStyled.Position position="absolute" bottom="5px" right="5px">
-        <Styled.TransparentButton type="button" onClick={onClickCartButton}>
+      <GlobalS.Position position="absolute" bottom="5px" right="5px">
+        <S.TransparentButton type="button" onClick={onClickCartButton}>
           <Icon iconName="Cart" fill={color.DARK_GRAY} />
-        </Styled.TransparentButton>
-      </GlobalStyled.Position>
+        </S.TransparentButton>
+      </GlobalS.Position>
 
       {isModalOpen && (
         <Modal closeModal={closeModal}>
           <CartAddForm product={product} closeModal={closeModal} />
         </Modal>
       )}
-    </GlobalStyled.Position>
+    </GlobalS.Position>
   );
 }
 
 ProductCard.skeleton = () => {
   return (
-    <Styled.Container skeleton={true}>
-      <Styled.Placeholder shape="square" />
-      <Styled.Content>
-        <Styled.Placeholder shape="line" />
-      </Styled.Content>
-    </Styled.Container>
+    <S.Container skeleton={true}>
+      <S.Placeholder shape="square" />
+      <S.Content>
+        <S.Placeholder shape="line" />
+      </S.Content>
+    </S.Container>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import * as Styled from 'components/common/Modal/Modal.style';
+import * as S from 'components/common/Modal/Modal.style';
 
 function Modal({ children, closeModal }) {
   const handleModalClose = (e) => {
@@ -11,10 +11,10 @@ function Modal({ children, closeModal }) {
   };
 
   return ReactDOM.createPortal(
-    <Styled.Root>
-      <Styled.Container>{children}</Styled.Container>
-      <Styled.Backdrop onClick={handleModalClose} />
-    </Styled.Root>,
+    <S.Root>
+      <S.Container>{children}</S.Container>
+      <S.Backdrop onClick={handleModalClose} />
+    </S.Root>,
     document.querySelector('#root'),
   );
 }

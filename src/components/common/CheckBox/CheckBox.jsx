@@ -2,15 +2,15 @@ import React from 'react';
 
 import { Icon } from 'components/common';
 
-import * as Styled from 'components/common/CheckBox/CheckBox.style';
+import * as S from 'components/common/CheckBox/CheckBox.style';
 
 function CheckBox({ checked = false, onClick = () => {} }) {
   return (
-    <Styled.Container>
-      <Styled.CustomCheckBox checked={checked} onClick={onClick}>
+    <S.Container>
+      <S.CustomCheckBox checked={checked} onClick={onClick}>
         {checked && <Icon iconName="CheckBox" size="15px" stroke="white" />}
-      </Styled.CustomCheckBox>
-    </Styled.Container>
+      </S.CustomCheckBox>
+    </S.Container>
   );
 }
 

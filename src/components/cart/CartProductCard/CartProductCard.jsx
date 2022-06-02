@@ -4,7 +4,7 @@ import { CheckBox, Counter, Icon, Image } from 'components/common';
 
 import { Position } from 'styles/GlobalStyles';
 import { color } from 'styles/Theme.js';
-import * as Styled from 'components/cart/CartProductCard/CartProductCard.style';
+import * as S from 'components/cart/CartProductCard/CartProductCard.style';
 import useCart from 'hooks/useCart';
 
 function CartProductCard({
@@ -36,26 +36,26 @@ function CartProductCard({
   const handleCheckBoxClick = useCallback(() => toggleCheck(productId), []);
 
   return (
-    <Styled.Container>
+    <S.Container>
       <CheckBox checked={checked} onClick={handleCheckBoxClick} />
 
       <Image src={imageURL} width="150px" />
 
-      <Styled.Description>
+      <S.Description>
         <Position position="absolute" top="0" right="0">
-          <Styled.Button type="button" onClick={handleProductDelete}>
+          <S.Button type="button" onClick={handleProductDelete}>
             <Icon iconName="Trash" fill={color.DARK_GRAY} />
-          </Styled.Button>
+          </S.Button>
         </Position>
-        <Styled.Name>{name}</Styled.Name>
+        <S.Name>{name}</S.Name>
         <Counter
           count={quantity}
           onIncrement={handleQuantityIncrement}
           onDecrement={handleQuantityDecrement}
         />
-        <Styled.Price>{price * quantity}원</Styled.Price>
-      </Styled.Description>
-    </Styled.Container>
+        <S.Price>{price * quantity}원</S.Price>
+      </S.Description>
+    </S.Container>
   );
 }
 

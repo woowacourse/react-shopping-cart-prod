@@ -5,7 +5,7 @@ import useWindowsSize from 'hooks/useWindowSize';
 import { ROUTE } from 'constants/route';
 
 import { Icon } from 'components/common';
-import * as Styled from 'components/template/Header/Header.style';
+import * as S from 'components/template/Header/Header.style';
 
 import { deviceSizeStandard } from 'styles/Theme';
 
@@ -46,30 +46,28 @@ function Header({ isLoggedIn }) {
   };
 
   return (
-    <Styled.Container>
-      <Styled.Inner>
-        <Styled.NavLink to={ROUTE.HOME}>
-          <Styled.Logo>
+    <S.Container>
+      <S.Inner>
+        <S.NavLink to={ROUTE.HOME}>
+          <S.Logo>
             <Icon
               iconName="Tent"
               size={windowSize >= IconSizeBreakPoint ? '50' : '30'}
               stroke="white"
             />
             BLVIC&apos;S CAMPING
-          </Styled.Logo>
-        </Styled.NavLink>
-        <Styled.Nav>
+          </S.Logo>
+        </S.NavLink>
+        <S.Nav>
           {navLinkInfo.map(({ path, name, ...props }) => (
-            <Styled.NavLink key={name} to={path} {...props}>
+            <S.NavLink key={name} to={path} {...props}>
               {name}
-            </Styled.NavLink>
+            </S.NavLink>
           ))}
-          {isLoggedIn && (
-            <Styled.NavButton onClick={handleLogOut}>로그아웃</Styled.NavButton>
-          )}
-        </Styled.Nav>
-      </Styled.Inner>
-    </Styled.Container>
+          {isLoggedIn && <S.NavButton onClick={handleLogOut}>로그아웃</S.NavButton>}
+        </S.Nav>
+      </S.Inner>
+    </S.Container>
   );
 }
 

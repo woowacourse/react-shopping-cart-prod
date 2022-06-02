@@ -1,9 +1,9 @@
 import React from 'react';
 
-import * as Styled from 'components/common/ErrorContainer/ErrorContainer.style';
+import * as S from 'components/common/ErrorContainer/ErrorContainer.style';
 
 function ErrorContainer({ children }) {
-  return <Styled.Container>{children}</Styled.Container>;
+  return <S.Container>{children}</S.Container>;
 }
 
 export default ErrorContainer;

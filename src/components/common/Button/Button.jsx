@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Styled from 'components/common/Button/Button.style';
+import * as S from 'components/common/Button/Button.style';
 
 function Button({
   children,
@@ -9,9 +9,9 @@ function Button({
   ...props
 }) {
   return (
-    <Styled.Button type={type} isWithInput={isWithInput} variant={variant} {...props}>
+    <S.Button type={type} isWithInput={isWithInput} variant={variant} {...props}>
       {children}
-    </Styled.Button>
+    </S.Button>
   );
 }
 

@@ -1,9 +1,9 @@
 import React from 'react';
 
-import * as Styled from 'components/common/PageTitle/PageTitle.style';
+import * as S from 'components/common/PageTitle/PageTitle.style';
 
 function PageTitle({ children }) {
-  return <Styled.Title>{children}</Styled.Title>;
+  return <S.Title>{children}</S.Title>;
 }
 
 export default PageTitle;

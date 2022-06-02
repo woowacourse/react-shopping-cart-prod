@@ -5,7 +5,7 @@ import useCart from 'hooks/useCart';
 import { CheckBox, ErrorContainer } from 'components/common';
 
 import { CartProductCard } from 'components/cart';
-import * as Styled from 'components/cart/CartProductList/CartProductList.style';
+import * as S from 'components/cart/CartProductList/CartProductList.style';
 
 function CartProductList() {
   const {
@@ -23,22 +23,22 @@ function CartProductList() {
   }, []);
 
   return (
-    <Styled.Container>
-      <Styled.ListControlWrapper>
-        <Styled.AllCheckControl>
+    <S.Container>
+      <S.ListControlWrapper>
+        <S.AllCheckControl>
           <CheckBox checked={isAllChecked} onClick={toggleAllCheck} />
-          <Styled.CheckBoxLabel>
+          <S.CheckBoxLabel>
             {isAllChecked ? '전체 선택해제' : '전체 선택하기'}
-          </Styled.CheckBoxLabel>
-        </Styled.AllCheckControl>
+          </S.CheckBoxLabel>
+        </S.AllCheckControl>
         {checkedProductCount !== 0 && (
-          <Styled.Button type="button" onClick={deleteCheckedProducts}>
+          <S.Button type="button" onClick={deleteCheckedProducts}>
             선택 상품 삭제
-          </Styled.Button>
+          </S.Button>
         )}
-      </Styled.ListControlWrapper>
-      <Styled.Title>장바구니 상품 목록 ({cartLength}개)</Styled.Title>
-      <Styled.ListWrapper>
+      </S.ListControlWrapper>
+      <S.Title>장바구니 상품 목록 ({cartLength}개)</S.Title>
+      <S.ListWrapper>
         {cart &&
           cart.map(({ productData, quantity }) => (
             <CartProductCard
@@ -50,8 +50,8 @@ function CartProductList() {
         {cartLength === 0 && (
           <ErrorContainer>장바구니에 추가된 상품이 없어요 😥</ErrorContainer>
         )}
-      </Styled.ListWrapper>
-    </Styled.Container>
+      </S.ListWrapper>
+    </S.Container>
   );
 }
 

@@ -3,14 +3,14 @@ import React from 'react';
 import { Pagination } from 'components/common';
 import { ProductList } from 'components/product';
 
-import * as Styled from 'pages/Home/Home.style';
+import * as S from 'pages/Home/Home.style';
 
 function Home() {
   return (
-    <Styled.Container>
+    <S.Container>
       <ProductList />
       <Pagination />
-    </Styled.Container>
+    </S.Container>
   );
 }
 

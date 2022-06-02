@@ -1,14 +1,14 @@
 import React from 'react';
 
-import * as Styled from 'components/common/Counter/Counter.style';
+import * as S from 'components/common/Counter/Counter.style';
 
 function Counter({ count, onIncrement, onDecrement }) {
   return (
-    <Styled.CounterContainer>
-      <Styled.CounterButton onClick={onDecrement}>-</Styled.CounterButton>
-      <Styled.Count>{count}</Styled.Count>
-      <Styled.CounterButton onClick={onIncrement}>+</Styled.CounterButton>
-    </Styled.CounterContainer>
+    <S.CounterContainer>
+      <S.CounterButton onClick={onDecrement}>-</S.CounterButton>
+      <S.Count>{count}</S.Count>
+      <S.CounterButton onClick={onIncrement}>+</S.CounterButton>
+    </S.CounterContainer>
   );
 }
 

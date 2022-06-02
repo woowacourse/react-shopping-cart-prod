@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Styled from 'components/common/Input/Input.style';
+import * as S from 'components/common/Input/Input.style';
 import { Button } from 'components/common';
 
 function Input({
@@ -16,10 +16,10 @@ function Input({
   errorMessage,
 }) {
   return (
-    <Styled.Label>
+    <S.Label>
       {labelText}
-      <Styled.InputWrapper>
-        <Styled.Input
+      <S.InputWrapper>
+        <S.Input
           type={type}
           value={value}
           required={required}
@@ -33,9 +33,9 @@ function Input({
             {buttonText}
           </Button>
         )}
-      </Styled.InputWrapper>
-      <Styled.ErrorMessage>{errorMessage !== '' && errorMessage}</Styled.ErrorMessage>
-    </Styled.Label>
+      </S.InputWrapper>
+      <S.ErrorMessage>{errorMessage !== '' && errorMessage}</S.ErrorMessage>
+    </S.Label>
   );
 }
 

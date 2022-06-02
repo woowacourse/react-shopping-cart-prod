@@ -2,7 +2,7 @@ import React from 'react';
 
 import Header from 'components/template/Header/Header';
 
-import * as Styled from 'components/template/PageTemplate/PageTemplate.style';
+import * as S from 'components/template/PageTemplate/PageTemplate.style';
 import useReduxState from 'hooks/useReduxState';
 import { Outlet } from 'react-router-dom';
 import { isLoggedInSelector } from 'store/selector';
@@ -13,9 +13,9 @@ function PageTemplate() {
   return (
     <div className="app">
       <Header isLoggedIn={isLoggedIn} />
-      <Styled.Main>
+      <S.Main>
         <Outlet />
-      </Styled.Main>
+      </S.Main>
     </div>
   );
 }

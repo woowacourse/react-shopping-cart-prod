@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Button } from 'components/common';
 
-import * as Styled from 'components/user/DeleteUserForm/DeleteUserForm.style';
+import * as S from 'components/user/DeleteUserForm/DeleteUserForm.style';
 import { useDispatch } from 'react-redux';
 import { deleteUserThunk } from 'store/actions/user.action';
 import { useNavigate } from 'react-router-dom';
@@ -23,19 +23,19 @@ function DeleteUserForm({ closeModal }) {
   };
 
   return (
-    <Styled.Container>
-      <Styled.Title>정말 탈퇴하시겠습니까?</Styled.Title>
-      <Styled.Description>
+    <S.Container>
+      <S.Title>정말 탈퇴하시겠습니까?</S.Title>
+      <S.Description>
         회원 탈퇴 시 모든 사용 정보가 삭제되며 <br />
         삭제된 정보는 복구될 수 없습니다.
-      </Styled.Description>
-      <Styled.ButtonContainer>
+      </S.Description>
+      <S.ButtonContainer>
         <Button onClick={closeModal}>계속 함께하기</Button>
         <Button variant="warning" onClick={handleDeleteUser}>
           영영 떠나가기
         </Button>
-      </Styled.ButtonContainer>
-    </Styled.Container>
+      </S.ButtonContainer>
+    </S.Container>
   );
 }
 

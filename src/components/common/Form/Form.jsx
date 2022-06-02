@@ -1,13 +1,13 @@
 import React from 'react';
-import * as Styled from 'components/common/Form/Form.style';
+import * as S from 'components/common/Form/Form.style';
 import { Button } from 'components/common';
 
 function Form({ buttonText, onSubmit, children }) {
   return (
-    <Styled.Form onSubmit={onSubmit}>
+    <S.Form onSubmit={onSubmit}>
       {children}
       <Button type="submit">{buttonText}</Button>
-    </Styled.Form>
+    </S.Form>
   );
 }
 
