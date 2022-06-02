@@ -66,8 +66,9 @@ function EditUserInfoForm() {
       <label htmlFor="phoneNumber">핸드폰 번호</label>
       <input
         id="phoneNumber"
-        type="tel"
+        type="text"
         placeholder="핸드폰 번호를 입력해주세요"
+        pattern={'^010-?([0-9]{3,4})-?([0-9]{4})'}
         defaultValue={phoneNumber}
         required
       />
