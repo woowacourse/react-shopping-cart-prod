@@ -12,13 +12,15 @@ import ImageButton from "@/pages/home/components/image-button/ImageButton";
 import CartIcon from "@/assets/images/cart.svg";
 import StyledProductInfo from "./ProductInfo.styled";
 
+import { MESSAGE } from "@/constants";
+
 function ProductItem({ id, name, price, imgUrl }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCartClick = () => {
     dispatch(addProductToCart({ id, name, price, imgUrl }));
-    dispatch(toggleSnackbarOpen("장바구니에 상품이 담겼습니다"));
+    dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
   };
 
   const handleProductDetailClick = () => {

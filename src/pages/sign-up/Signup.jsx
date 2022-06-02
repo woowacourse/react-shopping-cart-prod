@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { BASE_URL } from "@/constants";
+import { BASE_URL, MESSAGE } from "@/constants";
 import StyledSignupContainer from "@/pages/sign-up/Signup.style";
 
 import { useDispatch } from "react-redux";
@@ -10,13 +10,15 @@ import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import Form from "@/components/form/Form";
 import Field from "@/components/field/Field";
 
+import { STATUS, ERROR_STATUS, NICKNAME, PASSWORD } from "@/constants";
+
 function Signup() {
-  const [email, setEmail] = useState({ value: "", status: "ready" });
-  const [nickname, setNickname] = useState({ value: "", status: "ready" });
-  const [password, setPassword] = useState({ value: "", status: "ready" });
+  const [email, setEmail] = useState({ value: "", status: STATUS.READY });
+  const [nickname, setNickname] = useState({ value: "", status: STATUS.READY });
+  const [password, setPassword] = useState({ value: "", status: STATUS.READY });
   const [passwordConfirm, setPasswordConfirm] = useState({
     value: "",
-    status: "ready",
+    status: STATUS.READY,
   });
 
   const dispatch = useDispatch();
@@ -25,10 +27,10 @@ function Signup() {
 
   useEffect(() => {
     if (
-      email.status === "fulfilled" &&
-      nickname.status === "fulfilled" &&
-      password.status === "fulfilled" &&
-      passwordConfirm.status === "fulfilled"
+      email.status === STATUS.FULFILLED &&
+      nickname.status === STATUS.FULFILLED &&
+      password.status === STATUS.FULFILLED &&
+      passwordConfirm.status === STATUS.FULFILLED
     ) {
       setPreventFormSubmit(false);
       return;
@@ -43,11 +45,11 @@ function Signup() {
       /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
     if (!value.match(regex)) {
-      setEmail((prev) => ({ ...prev, status: "이메일형식아님" }));
+      setEmail((prev) => ({ ...prev, status: ERROR_STATUS.EMAIL_RULE }));
       return;
     }
 
-    setEmail((prev) => ({ ...prev, status: "fulfilled" }));
+    setEmail((prev) => ({ ...prev, status: STATUS.FULFILLED }));
   };
 
   const validateNickname = (e) => {
@@ -56,11 +58,11 @@ function Signup() {
     const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,8}$/;
 
     if (!value.match(regex)) {
-      setNickname((prev) => ({ ...prev, status: "잘못된길이" }));
+      setNickname((prev) => ({ ...prev, status: ERROR_STATUS.WRONG_LENGTH }));
       return;
     }
 
-    setNickname((prev) => ({ ...prev, status: "fulfilled" }));
+    setNickname((prev) => ({ ...prev, status: STATUS.FULFILLED }));
   };
 
   const validatePassword = (e) => {
@@ -69,11 +71,11 @@ function Signup() {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
     if (!value.match(regex)) {
-      setPassword((prev) => ({ ...prev, status: "비밀번호규칙" }));
+      setPassword((prev) => ({ ...prev, status: ERROR_STATUS.PASSWORD_RULE }));
       return;
     }
 
-    setPassword((prev) => ({ ...prev, status: "fulfilled" }));
+    setPassword((prev) => ({ ...prev, status: STATUS.FULFILLED }));
   };
 
   const validatePasswordConfirm = (e) => {
@@ -83,12 +85,12 @@ function Signup() {
     if (value !== password.value) {
       setPasswordConfirm((prev) => ({
         ...prev,
-        status: "불일치",
+        status: ERROR_STATUS.MISMATHCH,
       }));
       return;
     }
 
-    setPasswordConfirm((prev) => ({ ...prev, status: "fulfilled" }));
+    setPasswordConfirm((prev) => ({ ...prev, status: STATUS.FULFILLED }));
   };
 
   const handleSignupSubmit = async (e) => {
@@ -103,10 +105,10 @@ function Signup() {
     } catch (error) {
       const { errorCode } = error.response.data;
       if (errorCode === "1000") {
-        dispatch(toggleSnackbarOpen("회원 정보 양식이 잘못되었습니다."));
+        dispatch(toggleSnackbarOpen(MESSAGE.INVALID_SIGNUP_INPUT));
       }
       if (errorCode === "1001") {
-        dispatch(toggleSnackbarOpen("이미 존재하는 이메일입니다."));
+        dispatch(toggleSnackbarOpen(MESSAGE.EXIST_EMAIL));
       }
       console.log(error);
     }
@@ -132,8 +134,8 @@ function Signup() {
         <Field
           labelName="닉네임"
           placeholder="2~8글자 사이의 이름을 입력해주세요"
-          minLength={2}
-          maxLength={8}
+          minLength={NICKNAME.MIN_LENGTH}
+          maxLength={NICKNAME.MAX_LENGTH}
           value={nickname.value}
           onChange={validateNickname}
           errorMessage={nickname.status}
@@ -143,8 +145,8 @@ function Signup() {
           labelName="비밀번호"
           type="password"
           placeholder="8자 이상(영문, 숫자 2개 조합으로) 20자 이하"
-          minLength={8}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           value={password.value}
           onChange={validatePassword}
           errorMessage={password.status}
@@ -154,8 +156,8 @@ function Signup() {
           labelName="비밀번호 확인"
           type="password"
           placeholder="8자 이상(영문, 숫자 2개 조합으로) 20자 이하"
-          minLength={8}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           value={passwordConfirm.value}
           onChange={validatePasswordConfirm}
           errorMessage={passwordConfirm.status}

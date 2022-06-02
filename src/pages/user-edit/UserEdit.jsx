@@ -1,26 +1,37 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 import StyledUserEditContainer from "@/pages/user-edit/UserEdit.style";
 
 import Form from "@/components/form/Form";
 import Field from "@/components/field/Field";
 
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { getCookie } from "@/utils/auth";
-import { BASE_URL } from "@/constants";
 import { deleteCookie } from "@/utils/auth";
 
-import { useDispatch } from "react-redux";
-import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import {
+  BASE_URL,
+  STATUS,
+  ERROR_STATUS,
+  MESSAGE,
+  NICKNAME,
+  PASSWORD,
+} from "@/constants";
 
 function UserEdit() {
-  const [email, setEmail] = useState({ value: "", status: "fulfilled" });
-  const [nickname, setNickname] = useState({ value: "", status: "fulfilled" });
-  const [password, setPassword] = useState({ value: "", status: "ready" });
+  const [email, setEmail] = useState({ value: "", status: STATUS.FULFILLED });
+  const [nickname, setNickname] = useState({
+    value: "",
+    status: STATUS.FULFILLED,
+  });
+  const [password, setPassword] = useState({ value: "", status: STATUS.READY });
   const [passwordConfirm, setPasswordConfirm] = useState({
     value: "",
-    status: "ready",
+    status: STATUS.READY,
   });
 
   const dispatch = useDispatch();
@@ -40,7 +51,7 @@ function UserEdit() {
       setEmail((prev) => ({ ...prev, value: data.email }));
       setNickname((prev) => ({ ...prev, value: data.nickname }));
     } catch (error) {
-      dispatch(toggleSnackbarOpen("접근할 수 없는 페이지입니다"));
+      dispatch(toggleSnackbarOpen(MESSAGE.NOT_AUTHORIZED));
       navigate("/");
     }
   };
@@ -51,11 +62,11 @@ function UserEdit() {
     const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,8}$/;
 
     if (!value.match(regex)) {
-      setNickname((prev) => ({ ...prev, status: "잘못된길이" }));
+      setNickname((prev) => ({ ...prev, status: ERROR_STATUS.WRONG_LENGTH }));
       return;
     }
 
-    setNickname((prev) => ({ ...prev, status: "fulfilled" }));
+    setNickname((prev) => ({ ...prev, status: STATUS.FULFILLED }));
   };
 
   const validatePassword = (e) => {
@@ -64,11 +75,11 @@ function UserEdit() {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
     if (!value.match(regex)) {
-      setPassword((prev) => ({ ...prev, status: "비밀번호규칙" }));
+      setPassword((prev) => ({ ...prev, status: ERROR_STATUS.PASSWORD_RULE }));
       return;
     }
 
-    setPassword((prev) => ({ ...prev, status: "fulfilled" }));
+    setPassword((prev) => ({ ...prev, status: STATUS.FULFILLED }));
   };
 
   const validatePasswordConfirm = (e) => {
@@ -78,12 +89,12 @@ function UserEdit() {
     if (value !== password.value) {
       setPasswordConfirm((prev) => ({
         ...prev,
-        status: "불일치",
+        status: ERROR_STATUS.MISMATCH,
       }));
       return;
     }
 
-    setPasswordConfirm((prev) => ({ ...prev, status: "fulfilled" }));
+    setPasswordConfirm((prev) => ({ ...prev, status: STATUS.FULFILLED }));
   };
 
   const handleEditSubmit = async (e) => {
@@ -111,7 +122,7 @@ function UserEdit() {
   };
 
   const handleWithdrawalClick = async (e) => {
-    if (confirm("정말로 탈퇴하시겠습니까??")) {
+    if (confirm(MESSAGE.WITHDRAWAL_CONFIRM)) {
       try {
         await axios.delete(`${BASE_URL}/users/me`, {
           headers: {
@@ -135,9 +146,9 @@ function UserEdit() {
 
   useEffect(() => {
     if (
-      nickname.status === "fulfilled" &&
-      password.status === "fulfilled" &&
-      passwordConfirm.status === "fulfilled"
+      nickname.status === STATUS.FULFILLED &&
+      password.status === STATUS.FULFILLED &&
+      passwordConfirm.status === STATUS.FULFILLED
     ) {
       setPreventFormSubmit(false);
       return;
@@ -163,24 +174,24 @@ function UserEdit() {
           labelName="닉네임"
           type="text"
           value={nickname.value}
-          minLength={2}
-          maxLength={8}
+          minLength={NICKNAME.MIN_LENGTH}
+          maxLength={NICKNAME.MAX_LENGTH}
           onChange={validateNickname}
           errorMessage={nickname.status}
         />
         <Field
           labelName="비밀번호"
           type="password"
-          minLength={8}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           onChange={validatePassword}
           errorMessage={password.status}
         />
         <Field
           labelName="비밀번호 확인"
           type="password"
-          minLength={8}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           onChange={validatePasswordConfirm}
           errorMessage={passwordConfirm.status}
         />

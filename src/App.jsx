@@ -3,16 +3,20 @@ import { ThemeProvider } from "@emotion/react";
 
 import ProductList from "@/pages/home/components/product-list/ProductList";
 import Cart from "@/pages/cart/components/cart/Cart";
-import Layout from "@/components/layout/Layout";
+
 import NotFound from "@/pages/not-found/NotFound";
 import Signin from "@/pages/sign-in/Signin";
 import Signup from "@/pages/sign-up/Signup";
 import UserEdit from "@/pages/user-edit/UserEdit";
+import ProductDetail from "@/pages/product-detail/ProductDetail";
+
+import Layout from "@/components/layout/Layout";
+import Snackbar from "@/components/snackbar/Snackbar";
 
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/reset";
-import ProductDetail from "@/pages/product-detail/ProductDetail";
-import Snackbar from "@/components/snackbar/Snackbar";
+
+import { PATH } from "@/constants";
 
 if (process.env.NODE_ENV === "development") {
   const { worker } = require("./mocks/browser");
@@ -25,13 +29,13 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route element={<Layout />}>
-          <Route path="/" element={<ProductList />} />
-          <Route path="/login" element={<Signin />} />
-          <Route path="/register" element={<Signup />} />
-          <Route path="/edit" element={<UserEdit />} />
-          <Route path="/detail/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path={PATH.MAIN} element={<ProductList />} />
+          <Route path={PATH.LOGIN} element={<Signin />} />
+          <Route path={PATH.REGISTER} element={<Signup />} />
+          <Route path={PATH.EDIT} element={<UserEdit />} />
+          <Route path={`${PATH.DETAIL}/:id`} element={<ProductDetail />} />
+          <Route path={PATH.CART} element={<Cart />} />
+          <Route path={PATH.NOT_FOUND} element={<NotFound />} />
         </Route>
       </Routes>
       <Snackbar timeout={3000} />
