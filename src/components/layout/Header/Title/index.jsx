@@ -10,7 +10,7 @@ function Title() {
     <Link to="/">
       <TitleContainer>
         <IconImg src={shoppingCartIconWhite} alt="장바구니 아이콘" />
-        <PageTitle>TAEPHIA SHOP</PageTitle>
+        <PageTitle>TAEDY SHOP</PageTitle>
       </TitleContainer>
     </Link>
   );
