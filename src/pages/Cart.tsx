@@ -4,13 +4,9 @@ import Loading from 'components/common/Loading';
 import PaymentBox from 'components/common/PaymentBox';
 import RequestFail from 'components/common/RequestFail';
 import withAuthPage from 'components/hoc/withAuthPage';
-import { useAppSelector } from 'hooks/useAppSelector';
 import useThunkFetch from 'hooks/useThunkFetch';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getCartListRequest } from 'redux/cartList/thunk';
 import { getItemList } from 'redux/itemList/thunk';
-import { PATH } from 'Routers';
 import styled from 'styled-components';
 
 const Cart = () => {
@@ -24,9 +20,6 @@ const Cart = () => {
     error: error_getCartList,
     loading: loading_cartList,
   } = useThunkFetch(state => state.cartList, getCartListRequest());
-  const isLogin = useAppSelector(state => !!state.user.data);
-  const navigate = useNavigate();
-
   const itemListInCart = cartList.map(cartItem => {
     const itemInfo = itemList.find(item => item.id === cartItem.id);
 
