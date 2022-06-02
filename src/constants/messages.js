@@ -3,6 +3,7 @@ export const ALERT_MESSAGES = {
   REGISTER_SUCCESS: '회원 가입에 성공했습니다.',
   USER_INFO_UPDATE_SUCCESS: '회원 정보 수정에 성공했습니다.',
   USER_PASSWORD_UPDATE_SUCCESS: '회원 비밀번호 수정에 성공했습니다.',
+  LOGOUT_CONFIRM: '로그아웃 하시겠습니까?',
 };
 
 export const WARNING_MESSAGES = {

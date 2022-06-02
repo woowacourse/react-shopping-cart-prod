@@ -12,6 +12,7 @@ import { deviceSizeStandard } from 'styles/Theme';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from 'store/actions/user.action';
 import { useNavigate } from 'react-router-dom';
+import { ALERT_MESSAGES } from 'constants/messages';
 
 const userHeaderLinks = [
   { path: ROUTE.SHOPPING_CART, name: '장바구니' },
@@ -37,7 +38,9 @@ function Header({ isLoggedIn }) {
   const navLinkInfo = isLoggedIn ? userHeaderLinks : nonUserHeaderLinks;
 
   const handleLogOut = () => {
-    dispatch(logoutUser());
+    if (window.confirm(ALERT_MESSAGES.LOGOUT_CONFIRM)) {
+      dispatch(logoutUser());
+    }
 
     navigate(ROUTE.HOME);
   };
