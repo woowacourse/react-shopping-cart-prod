@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,10 +11,11 @@ import Input from 'components/Common/Input/Input';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
 
-import { updatePasswordApi, unRegisterApi } from 'api/auth';
 import { showSnackBar } from 'reducers/ui/ui.actions';
 import useInputValidate from 'hooks/useInputValidate';
 import { PATH_NAME } from 'constants';
+
+import useModifyProfilePage from './hooks';
 import PropTypes from 'prop-types';
 import * as Styled from './style';
 
@@ -22,9 +23,17 @@ const ModifyProfile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { name } = useSelector((state) => state.user);
-  const [openChangePassworModal, setOpenChangePasswordModal] = useState(false);
+  const [openPasswordModal, setOpenChangePasswordModal] = useState(false);
   const [openWithdrawalModal, setOpenWithdrawalModal] = useState(false);
 
+  const {
+    updatePassword,
+    isUpdatePasswordSucceed,
+    isUpdatePasswordError,
+    unregister,
+    isUnregisterSucceed,
+    isUnregisterError,
+  } = useModifyProfilePage();
   const handleSubmitChangeSubmit = (isValid) => (e) => {
     e.preventDefault();
     if (!isValid) {
@@ -35,28 +44,7 @@ const ModifyProfile = () => {
       oldPassword: { value: oldPassword },
       password: { value: password },
     } = e.target.elements;
-
-    updatePasswordApi({
-      oldPassword,
-      newPassword: password,
-    })
-      .then(() => {
-        setOpenChangePasswordModal(false);
-        dispatch(
-          showSnackBar({
-            type: 'SUCCESS',
-            text: '비밀번호가 성공적으로 변경되었습니다.',
-          }),
-        );
-      })
-      .catch(() => {
-        dispatch(
-          showSnackBar({
-            type: 'ERROR',
-            text: '비밀번호를 올바르게 입력하세요.',
-          }),
-        );
-      });
+    updatePassword(oldPassword, password);
   };
 
   const handleSubmitWithdrawal = (e) => {
@@ -66,20 +54,47 @@ const ModifyProfile = () => {
       password: { value: password },
     } = e.target.elements;
 
-    unRegisterApi(password)
-      .then(() => {
-        setOpenWithdrawalModal(false);
-        navigate(PATH_NAME.HOME);
-      })
-      .catch(() => {
-        dispatch(
-          showSnackBar({
-            type: 'ERROR',
-            text: '비밀번호를 올바르게 입력하세요.',
-          }),
-        );
-      });
+    unregister(password);
   };
+
+  useEffect(() => {
+    if (isUpdatePasswordSucceed) {
+      setOpenChangePasswordModal(false);
+      dispatch(
+        showSnackBar({
+          type: 'SUCCESS',
+          text: '비밀번호가 성공적으로 변경되었습니다.',
+        }),
+      );
+      return;
+    }
+    if (isUpdatePasswordError) {
+      dispatch(
+        showSnackBar({
+          type: 'ERROR',
+          text: '비밀번호를 올바르게 입력하세요.',
+        }),
+      );
+      return;
+    }
+  }, [isUpdatePasswordSucceed, isUpdatePasswordError]);
+
+  useEffect(() => {
+    if (isUnregisterSucceed) {
+      setOpenWithdrawalModal(false);
+      navigate(PATH_NAME.HOME);
+      return;
+    }
+    if (isUnregisterError) {
+      dispatch(
+        showSnackBar({
+          type: 'ERROR',
+          text: '비밀번호를 올바르게 입력하세요.',
+        }),
+      );
+      return;
+    }
+  }, [isUnregisterSucceed, isUnregisterError]);
 
   return (
     <Styled.Wrapper>
@@ -102,7 +117,7 @@ const ModifyProfile = () => {
         </Styled.ButtonContainer>
       </Styled.Contents>
       <Modal
-        isModalOpened={openChangePassworModal}
+        isModalOpened={openPasswordModal}
         closeModal={() => setOpenChangePasswordModal(false)}
       >
         <ChangePassword onSubmit={handleSubmitChangeSubmit} />

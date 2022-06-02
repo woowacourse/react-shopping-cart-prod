@@ -1,9 +1,11 @@
 import useFetch from 'hooks/useFetch';
 import useCart from 'hooks/useCart';
+import useAuth from 'hooks/useAuth';
 import { METHOD } from 'constants';
 import { useEffect } from 'react';
 
 const useProductListPage = () => {
+  const { checkIsAuthenticated } = useAuth();
   const {
     isLoading,
     isError,
@@ -32,6 +34,7 @@ const useProductListPage = () => {
 
   useEffect(() => {
     fetchApi();
+    checkIsAuthenticated();
   }, []);
 
   return {

@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import MenuItem from 'components/Common/MenuItem/MenuItem';
@@ -6,9 +6,8 @@ import DropDownOption from 'components/Common/DropDownOption/DropDownOption';
 import DropDown from 'components/Common/DropDown/DropDown';
 import Avatar from 'components/User/Avatar/Avatar';
 
-import { initializeUserInfo } from 'reducers/user/user.actions';
+import useAuth from 'hooks/useAuth';
 import useCart from 'hooks/useCart';
-import { deleteCookie } from 'utils/cookie';
 import bigCart from 'assets/svg/bigCart.svg';
 import { PATH_NAME } from 'constants';
 import PropTypes from 'prop-types';
@@ -37,10 +36,10 @@ const Header = () => {
 };
 
 const AuthNav = ({ isAuthenticated, name }) => {
-  const dispatch = useDispatch();
+  const { logout } = useAuth();
+
   const handleClickLogout = () => {
-    deleteCookie('userToken');
-    dispatch(initializeUserInfo());
+    logout();
   };
   return (
     <>

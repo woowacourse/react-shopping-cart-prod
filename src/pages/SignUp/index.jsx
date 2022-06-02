@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Input from 'components/Common/Input/Input';
@@ -11,21 +11,24 @@ import Form from 'components/Common/Form/Form';
 import { showSnackBar } from 'reducers/ui/ui.actions';
 import useInputValidate from 'hooks/useInputValidate';
 import { useNavigate } from 'react-router-dom';
-import { signUpApi } from 'api/auth';
 import { PATH_NAME } from 'constants';
+import useAuth from 'hooks/useAuth';
 import * as Styled from './style';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const pwd = useRef(null);
+
+  const { isSignUpSucceed, isSignUpError, signUp, checkIsAuthenticated } =
+    useAuth();
   const [emailValidate, handleEmailBlur] = useInputValidate('email');
   const [nameValidate, handleNameBlur] = useInputValidate('name');
   const [passwordValidate, handlePasswordBlur] = useInputValidate('password');
   const [passwordCheckValidate, handlePasswordCheckBlur] =
     useInputValidate('passwordCheck');
 
-  const handlSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const isAllValid =
@@ -47,26 +50,35 @@ const SignUp = () => {
       password: { value: password },
     } = e.target.elements;
 
-    signUpApi({
+    signUp({
       email,
       name,
       password,
-    })
-      .then(() => {
-        navigate(PATH_NAME.LOGIN);
-        dispatch(showSnackBar({ type: 'SUCCESS', text: '회원가입 성공' }));
-      })
-      .catch(() => {
-        dispatch(
-          showSnackBar({ type: 'ERROR', text: '입력한 정보를 확인 하세요.' }),
-        );
-      });
+    });
   };
+
+  useEffect(() => {
+    checkIsAuthenticated();
+  }, []);
+
+  useEffect(() => {
+    if (isSignUpSucceed) {
+      navigate(PATH_NAME.LOGIN);
+      dispatch(showSnackBar({ type: 'SUCCESS', text: '회원가입 성공' }));
+      return;
+    }
+    if (isSignUpError) {
+      dispatch(
+        showSnackBar({ type: 'ERROR', text: '입력한 정보를 확인 하세요.' }),
+      );
+      return;
+    }
+  }, [isSignUpSucceed, isSignUpError]);
 
   return (
     <Styled.Wrapper>
       <Title contents="회원가입" />
-      <Form onSubmit={handlSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Fieldset>
           <Input
             description="이메일"

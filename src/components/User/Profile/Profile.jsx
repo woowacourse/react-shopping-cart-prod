@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import { showSnackBar } from 'reducers/ui/ui.actions';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateNameApi } from 'api/auth';
+import useProfile from './hooks';
 
 const CONVERT_MODE = 'CONVERT_MODE';
 const CONFIRM_MODE = 'CONFIRM_MODE';
 
 const Profile = ({ name }) => {
+  const { isUpdateNameSucceed, isUpdateNameError, updateName } = useProfile();
+
   const dispatch = useDispatch();
   const [mode, setMode] = useState(CONFIRM_MODE);
   const [newName, setNewName] = useState(name);
@@ -23,25 +25,32 @@ const Profile = ({ name }) => {
   };
 
   const handleClickConvertButton = () => {
-    updateNameApi(newName)
-      .then(() => {
-        setMode(CONFIRM_MODE);
-        dispatch(
-          showSnackBar({
-            type: 'SUCCESS',
-            text: '이름이 성공적으로 변경되었습니다!',
-          }),
-        );
-      })
-      .catch(() => {
-        dispatch(
-          showSnackBar({
-            type: 'ERROR',
-            text: '서버 에러가 발생했습니다',
-          }),
-        );
-      });
+    updateName(newName);
   };
+
+  useEffect(() => {
+    if (isUpdateNameSucceed) {
+      setMode(CONFIRM_MODE);
+      dispatch(
+        showSnackBar({
+          type: 'SUCCESS',
+          text: '이름이 성공적으로 변경되었습니다!',
+        }),
+      );
+
+      return;
+    }
+
+    if (isUpdateNameError) {
+      dispatch(
+        showSnackBar({
+          type: 'ERROR',
+          text: '서버 에러가 발생했습니다',
+        }),
+      );
+      return;
+    }
+  }, [isUpdateNameSucceed, isUpdateNameError]);
 
   useEffect(() => {
     setNewName(name);

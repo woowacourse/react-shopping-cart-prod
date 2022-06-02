@@ -7,18 +7,22 @@ import Input from 'components/Common/Input/Input';
 import Button from 'components/Common/Button/Button';
 import Title from 'components/Common/Title/Title';
 
-import { loginApi } from 'api/auth';
 import { showSnackBar } from 'reducers/ui/ui.actions';
-import { setAuthenticated } from 'reducers/user/user.actions';
 import { PATH_NAME } from 'constants';
+
+import useAuth from 'hooks/useAuth';
 import * as Styled from './style';
+import { useEffect } from 'react';
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handlSubmit = (e) => {
-    e.preventDefault();
 
+  const { isLoginSucceed, isLoginError, login, checkIsAuthenticated } =
+    useAuth();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const {
       email: { value: email },
       password: { value: password },
@@ -30,24 +34,29 @@ const Login = () => {
       );
       return;
     }
-
-    loginApi({
-      email,
-      password,
-    })
-      .then(() => {
-        dispatch(showSnackBar({ type: 'SUCCESS', text: '로그인 성공' }));
-        dispatch(setAuthenticated({ authenticated: true }));
-        navigate(PATH_NAME.HOME);
-      })
-      .catch(() => {
-        dispatch(showSnackBar({ type: 'ERROR', text: '로그인 실패' }));
-      });
+    login(email, password);
   };
+
+  useEffect(() => {
+    checkIsAuthenticated();
+  }, []);
+
+  useEffect(() => {
+    if (isLoginSucceed) {
+      dispatch(showSnackBar({ type: 'SUCCESS', text: '로그인 성공' }));
+      navigate(PATH_NAME.HOME);
+      return;
+    }
+
+    if (isLoginError) {
+      dispatch(showSnackBar({ type: 'ERROR', text: '로그인 실패' }));
+    }
+  }, [isLoginSucceed, isLoginError]);
+
   return (
     <Styled.Wrapper>
       <Title contents="로그인" />
-      <Form onSubmit={handlSubmit}>
+      <Form onSubmit={handleSubmit}>
         <Fieldset>
           <Input
             description="이메일"
