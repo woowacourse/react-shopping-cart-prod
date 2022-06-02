@@ -47,11 +47,21 @@ const SignupPage = () => {
   const signup = async () => {
     if (!isFulfilled) return;
 
-    await axios.post('/customers', {
-      email,
-      nickname,
-      password,
-    });
+    try {
+      const response = await axios.post('/customers', {
+        email,
+        nickname,
+        password,
+      });
+
+      renderSnackbar(
+        `${response.data.nickname}님 가입해주셔서 감사합니다 👋 로그인해주세요`,
+        'SUCCESS',
+      );
+      navigate('/login');
+    } catch (error) {
+      renderSnackbar(`이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.`, 'FAILED');
+    }
   };
 
   return (
