@@ -30,8 +30,8 @@
   - [x] 로그아웃 시 logout action 호출 (Redux 데이터 삭제)
   - [x] 회원 탈퇴 시 logout action 호출
 
-- [ ] 서버 요청이 실패하였을 때에, 서버에서 받아오는 error.message 활용하기
-- [ ] alert -> snackbar
+- [x] alert -> snackbar
 - [ ] confirm -> modal
 - [x] 서버 응답 대기시 스피너 애니메이션 띄워주기
   - [x] redux에서 isPending 상태로 관리하기
+- [ ] 잘못된 url로 접근시 home으로 이동시키기

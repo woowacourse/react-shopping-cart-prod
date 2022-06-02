@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import useInput from 'hooks/useInput';
 
 import Layout from 'components/Layout';
@@ -9,6 +10,7 @@ import Input from 'components/@common/Input/styles';
 import ErrorMessage from 'components/@common/ErrorMessage';
 
 import { requestCheckDuplicatedId, requestSignUp } from 'api';
+import { snackbar } from 'actions/snackbar';
 import { 비동기_요청 } from 'constants/';
 import * as Validate from 'utils/validate';
 import { COLORS } from 'styles/theme';
@@ -17,6 +19,7 @@ import * as Styled from './styles';
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { value: userId, setValue: setUserId, checkValue: checkUserId } = useInput(Validate.userId);
   const {
     value: userPassword,
@@ -74,12 +77,12 @@ const SignUp = () => {
         timer = null;
         const { content } = await requestCheckDuplicatedId(userId);
         if (!content.isUnique) {
-          alert('중복된 아이디입니다!');
+          dispatch(snackbar.pushMessageSnackbar('중복된 아이디입니다!'));
           setCheckDuplicatedId(content.isUnique);
           return;
         }
 
-        alert('중복되지 않는 아이디입니다');
+        dispatch(snackbar.pushMessageSnackbar('사용가능한 아이디입니다!'));
         setCheckDuplicatedId(content.isUnique);
       }, 1000);
     };
@@ -95,12 +98,12 @@ const SignUp = () => {
     });
 
     if (response.status === 비동기_요청.SUCCESS) {
-      alert('회원가입에 성공하였습니다!');
+      dispatch(snackbar.pushMessageSnackbar('회원가입에 성공하였습니다!'));
       navigate('/');
       return;
     }
 
-    alert('회원가입에 실패하였습니다!');
+    dispatch(snackbar.pushMessageSnackbar('회원가입에 실패하였습니다!'));
     navigate('/');
   };
 

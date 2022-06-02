@@ -11,6 +11,7 @@ import ErrorMessage from 'components/@common/ErrorMessage';
 
 import { COLORS } from 'styles/theme';
 import { requestEditUserInfo, requestWithDrawUser } from 'api';
+import { snackbar } from 'actions/snackbar';
 import { removeUserData } from 'actions/user';
 import { 비동기_요청 } from 'constants';
 
@@ -48,11 +49,12 @@ const EditUserInfo = () => {
     });
 
     if (response.status === 비동기_요청.SUCCESS) {
-      alert('회원정보를 수정하였습니다!');
+      dispatch(snackbar.pushMessageSnackbar('회원 정보가 수정되었습니다!'));
       navigate('/');
       return;
     }
-    alert('회원정보 수정에 실패하였습니다!');
+
+    dispatch(snackbar.pushMessageSnackbar('회원정보 수정에 실패하였습니다!'));
   };
 
   const handleWithDrawUser = async (e) => {
@@ -61,12 +63,13 @@ const EditUserInfo = () => {
     if (withDrawConfrim) {
       const response = await requestWithDrawUser();
       if (response.status === 비동기_요청.SUCCESS) {
-        alert('회원 탈퇴에 성공하였습니다!');
+        dispatch(snackbar.pushMessageSnackbar('회원 탈퇴에 성공하였습니다!'));
         dispatch(removeUserData());
         navigate('/');
         return;
       }
-      alert('회원 탈퇴에 실패하였습니다.');
+
+      dispatch(snackbar.pushMessageSnackbar('회원 탈퇴에 실패하였습니다.'));
     }
   };
 

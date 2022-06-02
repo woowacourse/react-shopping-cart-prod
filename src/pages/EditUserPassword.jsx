@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useInput from 'hooks/useInput';
 
@@ -9,6 +10,7 @@ import Input from 'components/@common/Input/styles';
 import ErrorMessage from 'components/@common/ErrorMessage';
 
 import { requestEditUserPassword } from 'api';
+import { snackbar } from 'actions/snackbar';
 import { userPassword } from 'utils/validate';
 import { COLORS } from 'styles/theme';
 import { 비동기_요청 } from 'constants';
@@ -17,6 +19,7 @@ import * as Styled from './styles';
 
 const EditUserPassword = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     value: oldPassword,
     setValue: setOldPassword,
@@ -50,12 +53,11 @@ const EditUserPassword = () => {
     });
 
     if (response.status === 비동기_요청.SUCCESS) {
-      alert('비밀번호를 수정 하였습니다!');
+      dispatch(snackbar.pushMessageSnackbar('비밀번호를 수정 하였습니다!'));
       navigate('/');
       return;
     }
-
-    alert('비밀번호를 수정이 실패하였습니다!');
+    dispatch(snackbar.pushMessageSnackbar('비밀번호를 수정이 실패하였습니다!'));
     navigate('/');
   };
 

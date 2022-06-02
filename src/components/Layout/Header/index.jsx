@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeUserData } from 'actions/user';
+import { snackbar } from 'actions/snackbar';
 
 import { 아이콘_코드 } from 'constants/';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -13,7 +14,7 @@ const Header = () => {
 
   const onLogOutClick = () => {
     dispatch(removeUserData());
-    alert('로그아웃 되었습니다');
+    dispatch(snackbar.pushMessageSnackbar('로그아웃 되었습니다'));
     navigate('/');
   };
 
