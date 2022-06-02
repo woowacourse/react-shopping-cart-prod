@@ -7,14 +7,14 @@ const Layout = styled.div`
   top: 0px;
   left: 0px;
   width: 100%;
-  height: 1000px;
+  height: 1140px;
   background-color: ${({theme}) => theme.GRAY_400};
 `;
 
 const SignupContainer = styled.div`
   margin: 200px auto 0;
   width: 600px;
-  height: 680px;
+  height: 820px;
   background-color: ${({theme}) => theme.WHITE};
 `;
 

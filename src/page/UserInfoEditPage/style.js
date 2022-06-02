@@ -5,14 +5,14 @@ import Button from 'component/common/Button';
 const Layout = styled.div`
   position: absolute;
   width: 100%;
-  height: 1000px;
+  height: 1060px;
   background-color: ${({theme}) => theme.GRAY_400};
 `;
 
 const SignupContainer = styled.div`
   margin: 200px auto 0;
   width: 600px;
-  height: 600px;
+  height: 660px;
   background-color: ${({theme}) => theme.WHITE};
 `;
 
