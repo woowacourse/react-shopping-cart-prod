@@ -31,7 +31,7 @@ function LoginPage() {
   useEffect(() => {
     if (isLoginSuccess) {
       alert(`${user.nickname}님, 환영합니다~~ :D`);
-      navigator(ROUTES.ROOT);
+      navigator(ROUTES.ROOT, { replace: true });
     }
   }, [isLoading]);
 
@@ -51,9 +51,9 @@ function LoginPage() {
           width="500px"
           placeholder="이메일을 입력해주세요"
           type="email"
-          autocomplete
           ref={emailRef}
           required
+          autoFocus
         />
         <UserInput
           width="500px"

@@ -127,7 +127,6 @@ function RegisterPage() {
             name="email"
             value={userInfo.email}
             onChange={handleChangeInput}
-            autoComplete
             required
             autoFocus
             errorMessage={errorMessage.email}
@@ -144,7 +143,6 @@ function RegisterPage() {
             name="nickname"
             value={userInfo.nickname}
             onChange={handleChangeInput}
-            autoComplete
             required
             errorMessage={errorMessage.nickname}
           />

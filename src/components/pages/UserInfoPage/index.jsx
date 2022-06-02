@@ -51,7 +51,12 @@ function UserInfoPage() {
 
   const changeNickname = (e) => {
     e.preventDefault();
-    requestUpdateUser();
+
+    if (user.nickname !== nickname) {
+      requestUpdateUser();
+      return;
+    }
+    setIsEditable(false);
   };
 
   const requestUpdateUser = async () => {
@@ -119,7 +124,7 @@ function UserInfoPage() {
 
   useEffect(() => {
     if (!user.accessToken) {
-      navigator(ROUTES.ROOT);
+      navigator(ROUTES.ROOT, { replace: true });
     }
   }, [user.accessToken]);
 
