@@ -24,6 +24,9 @@ const AccountDeleteModal = ({ handleModal }) => {
     const accessToken = getCookie('accessToken');
 
     const response = await axios.delete('/customers', {
+      data: {
+        password,
+      },
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
