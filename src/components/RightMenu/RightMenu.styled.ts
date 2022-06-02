@@ -6,6 +6,12 @@ type StyledUlProps = {
   theme: Theme;
 };
 
+export const RightMenuBox = styled.div`
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+`;
+
 export const Nav = styled.nav`
   font-size: 24px;
   font-weight: 500;

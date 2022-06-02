@@ -34,7 +34,7 @@ function RightMenu() {
 
   if (userId && accessToken) {
     return (
-      <>
+      <S.RightMenuBox>
         <S.Nav>
           <S.Button onClick={toggleDrawer}>{ICONS.MENU}</S.Button>
           <S.Ul isDrawerOpened={isDrawerOpened}>
@@ -58,7 +58,7 @@ function RightMenu() {
           profileImageUrl="http://gravatar.com/avatar/1654096752111?d=identicon"
           name="우"
         />
-      </>
+      </S.RightMenuBox>
     );
   }
 
