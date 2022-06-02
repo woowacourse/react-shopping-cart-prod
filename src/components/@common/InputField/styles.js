@@ -12,20 +12,26 @@ const Input = styled.input`
   outline: none;
   transition: border-color 0.3s ease;
 
+  &:focus {
+    border-color: ${COLORS.GRAY_50};
+  }
+
   width: ${({ width }) => width};
   ${({ status }) =>
     ({
       default: css`
-        border-color: ${COLORS.GRAY_150};
+        &,
+        &:focus {
+          border-color: ${COLORS.GRAY_150};
+        }
       `,
       danger: css`
-        border-color: ${BRAND_COLORS.DANGER};
+        &,
+        &:focus {
+          border-color: ${BRAND_COLORS.DANGER};
+        }
       `,
     }[status])}
-
-  &:focus {
-    border-color: ${COLORS.GRAY_50};
-  }
 `;
 
 const Message = styled.p`
