@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { API_URL } from 'constants';
+import { API_URL } from 'api/constants';
+
 import { ERROR_MESSAGES } from 'constants/messages';
 
 const customInstance = axios.create({
