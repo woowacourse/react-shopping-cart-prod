@@ -6,7 +6,7 @@ import axios from 'axios';
 import { ProductItem } from 'components';
 
 import store from 'store/store';
-import { doInitializeCart } from 'actions/actionCreator';
+import { doInitializeProductList } from 'actions/actionCreator';
 
 import Styled from 'page/ProductListPage/index.style';
 import { SERVER_URL } from 'utils/constants';
@@ -19,7 +19,7 @@ const ProductListPage = () => {
 
     const response = await axios.get(`${SERVER_URL}products`);
 
-    store.dispatch(doInitializeCart({ products: response.data }));
+    store.dispatch(doInitializeProductList({ products: response.data }));
   }, [products]);
 
   useEffect(() => {

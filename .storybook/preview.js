@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles, theme } from 'components';
 import store from 'store/store';
-import { doInitializeCart } from 'actions/actionCreator';
+import { doInitializeProductList } from 'actions/actionCreator';
 import { dummyProductList } from 'dummy_data';
 
 export const parameters = {
@@ -20,7 +20,7 @@ export const parameters = {
 
 export const decorators = [
   (Story, context) => {
-    store.dispatch(doInitializeCart({ products: dummyProductList }));
+    store.dispatch(doInitializeProductList({ products: dummyProductList }));
 
     return (
       <>

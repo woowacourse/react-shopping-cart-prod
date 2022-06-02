@@ -12,7 +12,15 @@ const doDeleteProductFromCart = ({ id }) => ({ type: CART_ACTIONS.DELETE, id });
 
 const doSelectiveDeleteFromCart = () => ({ type: CART_ACTIONS.SELECTIVE_DELETE });
 
-const doInitializeCart = ({ products }) => ({ type: PRODUCT_LIST_ACTIONS.INITIALIZE, products });
+const doInitializeProductList = ({ products }) => ({
+  type: PRODUCT_LIST_ACTIONS.INITIALIZE,
+  products,
+});
+
+const doInitializeCartList = ({ shoppingCart }) => ({
+  type: CART_ACTIONS.INITIALIZE,
+  shoppingCart,
+});
 
 const doAddProductToOrder = ({ id }) => ({ type: ORDER_ACTIONS.ADD, id });
 
@@ -32,7 +40,8 @@ export {
   doPutProductToCart,
   doDeleteProductFromCart,
   doSelectiveDeleteFromCart,
-  doInitializeCart,
+  doInitializeProductList,
+  doInitializeCartList,
   doAddProductToOrder,
   doDeleteProductFromOrder,
   doInitializeOrder,

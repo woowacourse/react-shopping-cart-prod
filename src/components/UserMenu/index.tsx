@@ -1,4 +1,4 @@
-import { doLogout } from 'actions/actionCreator';
+import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -32,6 +32,7 @@ const UserMenu = ({ nickname }) => {
       deleteCookie('accessToken');
       setIsOpen(false);
       store.dispatch(doLogout());
+      store.dispatch(doInitializeCartList({ shoppingCart: [] }));
       renderSnackbar('로그아웃이 완료되었습니다.', 'SUCCESS');
       navigate('/');
     } catch (error) {

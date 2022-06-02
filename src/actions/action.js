@@ -2,6 +2,7 @@ const CART_ACTIONS = {
   PUT: 'cart/PUT',
   DELETE: 'cart/DELETE',
   SELECTIVE_DELETE: 'cart/SELECTIVE_DELETE',
+  INITIALIZE: 'cart/INITIALIZE',
 };
 
 const PRODUCT_LIST_ACTIONS = {

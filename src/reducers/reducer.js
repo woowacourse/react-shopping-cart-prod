@@ -14,6 +14,12 @@ function reducer(state = initState, action) {
         products: [...action.products],
       };
 
+    case CART_ACTIONS.INITIALIZE:
+      return {
+        ...state,
+        shoppingCart: [...action.shoppingCart],
+      };
+
     case CART_ACTIONS.PUT:
       const isExist = state.shoppingCart.some(product => product.id === action.id);
 

@@ -41,6 +41,7 @@ const AccountDeleteModal = ({ handleModal }) => {
 
       deleteCookie('accessToken');
       store.dispatch(doLogout());
+      store.dispatch(doInitializeCartList({ shoppingCart: [] }));
       handleModal();
       renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
       navigate('/');
