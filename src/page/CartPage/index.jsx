@@ -6,7 +6,7 @@ import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 
 import store from 'store/store';
 import {
-  doAddProdcutToOrder,
+  doAddProductToOrder,
   doInitializeOrder,
   doSelectiveDeleteFromCart,
 } from 'actions/actionCreator';
@@ -58,7 +58,7 @@ const CartPage = () => {
 
     shoppingCart.forEach(product => {
       if (!order.some(productId => productId === product.id)) {
-        store.dispatch(doAddProdcutToOrder({ id: product.id }));
+        store.dispatch(doAddProductToOrder({ id: product.id }));
       }
     });
   };

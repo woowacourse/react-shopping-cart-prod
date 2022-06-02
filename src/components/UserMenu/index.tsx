@@ -41,7 +41,7 @@ const UserMenu = ({ nickname }) => {
 
   return (
     <Styled.Container>
-      <Styled.NicknameThumbail onClick={toggleMenu}>{nickname[0]}</Styled.NicknameThumbail>
+      <Styled.NicknameThumbnail onClick={toggleMenu}>{nickname[0]}</Styled.NicknameThumbnail>
       {isOpen && (
         <Styled.Menu>
           <Styled.Nickname>{nickname}님 👋</Styled.Nickname>

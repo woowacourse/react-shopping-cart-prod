@@ -37,10 +37,11 @@ const AccountDeleteModal = ({ handleModal }) => {
         },
       });
 
-      renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
       handleModal();
+
+      renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
     } catch (error) {
-      renderSnackbar(MESSAGE.DELETE_ACCOUT_FAILUER, 'FAILED');
+      renderSnackbar(MESSAGE.DELETE_ACCOUNT_FAILURE, 'FAILED');
     }
   };
 

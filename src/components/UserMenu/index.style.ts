@@ -5,7 +5,7 @@ const Styled = {
     position: relative;
   `,
 
-  NicknameThumbail: styled.div`
+  NicknameThumbnail: styled.div`
     width: 36px;
     height: 36px;
     border-radius: 100%;

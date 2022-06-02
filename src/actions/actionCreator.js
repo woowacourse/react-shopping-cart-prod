@@ -14,7 +14,7 @@ const doSelectiveDeleteFromCart = () => ({ type: CART_ACTIONS.SELECTIVE_DELETE }
 
 const doInitializeCart = ({ products }) => ({ type: PRODUCT_LIST_ACTIONS.INITIALIZE, products });
 
-const doAddProdcutToOrder = ({ id }) => ({ type: ORDER_ACTIONS.ADD, id });
+const doAddProductToOrder = ({ id }) => ({ type: ORDER_ACTIONS.ADD, id });
 
 const doDeleteProductFromOrder = ({ id }) => ({ type: ORDER_ACTIONS.DELETE, id });
 
@@ -33,7 +33,7 @@ export {
   doDeleteProductFromCart,
   doSelectiveDeleteFromCart,
   doInitializeCart,
-  doAddProdcutToOrder,
+  doAddProductToOrder,
   doDeleteProductFromOrder,
   doInitializeOrder,
   doLogin,
