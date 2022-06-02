@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import ICONS from '../../constants/icons';
 import Avatar from '../Avatar/Avatar';
 import PlainLink from '../PlainLink/PlainLink';
@@ -9,24 +8,14 @@ import * as S from './RightMenu.styled';
 function RightMenu() {
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
   const userId = localStorage.getItem('userId');
-
   const navigate = useNavigate();
+  const accessToken = localStorage.getItem('accessToken');
 
   const toggleDrawer = () => {
     setIsDrawerOpened((prev) => !prev);
   };
 
-  const accessToken = localStorage.getItem('accessToken');
-
   const handleLogoutButton = () => {
-    axios({
-      method: 'post',
-      url: `http://15.164.166.148:8080/api/customer/${userId}authentication/sign-out`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userId');
     navigate('/signin');
