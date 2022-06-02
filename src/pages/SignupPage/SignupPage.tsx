@@ -23,10 +23,6 @@ function SignupPage() {
     }
   }, [stepId, currentStepId, navigate]);
 
-  useEffect(() => {
-    console.log('update', currentStepId);
-  }, [currentStepId]);
-
   if (
     !stepId ||
     !SIGNUP_STEPS_LIST.map((step) => step.id).includes(Number(stepId))

@@ -48,7 +48,7 @@ export const Label = styled.label<T.LabelWithRequired>`
 
 export const Button = styled.button`
   width: 100%;
-  height: 100%;
+  height: 44px;
   font-weight: 700;
   border-radius: 4px;
   border: 1px solid ${({ theme: { colors } }) => colors.gray};
@@ -76,4 +76,11 @@ export const RadioButtonBox = styled.div`
 export const SubmitButtonBox = styled.div`
   width: 300px;
   margin: 24px auto 0;
+`;
+
+export const HintParagraph = styled.p`
+  align-self: flex-start;
+  color: green;
+  font-weight: bold;
+  font-size: 0.7rem;
 `;

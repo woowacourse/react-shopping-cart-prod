@@ -5,19 +5,43 @@ import Button from '../../../../components/Button/Button';
 import Input from '../../../../components/Input/Input';
 import ICONS from '../../../../constants/icons';
 import * as S from './FillInfoStep.styled';
+import { useOutletContext } from 'react-router-dom';
 
 function FillInfoStep() {
+  const { goNextStep } = useOutletContext<{
+    currentStepId: number;
+    goNextStep: () => void;
+  }>();
   const { postcode, addressData } = useDaumPostcode();
-  const [values, setValues] = useState<Record<string, any>>({
+  const [watchingValues, setWatchingValues] = useState({
     email: '',
+    password: '',
+    'confirm-password': '',
   });
+
+  const [isEmailUnique, setIsEmailUnique] = useState(false);
+  const [isConfirmPasswordSame, setIsConfirmPasswordSame] = useState(false);
 
   const handleChange: React.FormEventHandler<HTMLInputElement> = ({
     target,
   }) => {
     const { name, value } = target as HTMLInputElement;
 
-    setValues((prev) => ({
+    if (name === 'email') setIsEmailUnique(false);
+
+    if (name === 'password') {
+      setIsConfirmPasswordSame(
+        watchingValues['confirm-password'] === value && value !== ''
+      );
+    }
+
+    if (name === 'confirm-password') {
+      setIsConfirmPasswordSame(
+        watchingValues['password'] === value && value !== ''
+      );
+    }
+
+    setWatchingValues((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -54,16 +78,25 @@ function FillInfoStep() {
     };
   };
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
+
     const payload = extractPayloadWithForm(e.target as HTMLFormElement);
 
     try {
-      axios({
+      if (!isEmailUnique || !isConfirmPasswordSame || !addressData) {
+        throw new Error(
+          '이메일, 패스워드 확인, 주소 중 유효하지 않은 값이 있습니다.'
+        );
+      }
+
+      await axios({
         method: 'post',
         url: 'http://15.164.166.148:8080/api/customers',
         data: payload,
       });
+
+      goNextStep();
     } catch (e) {
       if (axios.isAxiosError(e)) {
         alert('유효하지 않은 이메일 형식입니다.');
@@ -73,14 +106,16 @@ function FillInfoStep() {
     }
   };
 
-  const handleClickIsEmailDuplicated = () => {
-    const email = values['email'];
+  const handleClickIsEmailDuplicated = async () => {
+    const email = watchingValues['email'];
 
     try {
-      axios({
+      await axios({
         method: 'get',
         url: `http://15.164.166.148:8080/api/validation?email=${email}`,
       });
+
+      setIsEmailUnique(true);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         alert('중복된 이메일입니다.');
@@ -105,6 +140,9 @@ function FillInfoStep() {
             required
             onChange={handleChange}
           />
+          {isEmailUnique && (
+            <S.HintParagraph>사용 가능한 이메일입니다.</S.HintParagraph>
+          )}
         </S.CenterFlexBox>
         <S.RightFlexBox>
           <S.Button type="button" onClick={handleClickIsEmailDuplicated}>
@@ -112,6 +150,7 @@ function FillInfoStep() {
           </S.Button>
         </S.RightFlexBox>
       </S.FormFieldBox>
+
       {/* ------------------------------------ */}
       <S.FormFieldBox>
         <S.LeftFlexBox>
@@ -124,7 +163,9 @@ function FillInfoStep() {
             placeholder="비밀번호를 입력해주세요."
             minLength={8}
             maxLength={20}
-            pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[!@#&()–\[{}\]:;',?/*~$^+=<>]).{8,20}"
+            pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[!@#&()-\[{}\]:;',?/*~$^+=<>]).{8,20}"
+            value={watchingValues['password']}
+            onChange={handleChange}
             required
           />
         </S.CenterFlexBox>
@@ -143,8 +184,12 @@ function FillInfoStep() {
             minLength={8}
             maxLength={20}
             pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[!@#&()-\[{}\]:;',?/*~$^+=<>]).{8,20}"
+            onChange={handleChange}
             required
           />
+          {isConfirmPasswordSame && (
+            <S.HintParagraph>비밀번호가 일치합니다.</S.HintParagraph>
+          )}
         </S.CenterFlexBox>
         <S.RightFlexBox />
       </S.FormFieldBox>
@@ -160,6 +205,7 @@ function FillInfoStep() {
             placeholder="이름을 입력해주세요."
             minLength={2}
             maxLength={5}
+            onChange={handleChange}
             required
           />
         </S.CenterFlexBox>
@@ -176,6 +222,7 @@ function FillInfoStep() {
             name="contact"
             placeholder="01012345678"
             pattern="[0-9]{8,11}"
+            onChange={handleChange}
             required
           />
         </S.CenterFlexBox>
@@ -234,7 +281,12 @@ function FillInfoStep() {
               여성
             </label>
             <label>
-              <input type="radio" value="undefined" name="gender" checked />
+              <input
+                type="radio"
+                value="undefined"
+                name="gender"
+                defaultChecked
+              />
               선택 안함
             </label>
           </S.RadioButtonBox>
