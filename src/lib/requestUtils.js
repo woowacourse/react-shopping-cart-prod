@@ -1,8 +1,15 @@
 import { REQUEST_STATUS, REQUEST_TIMEOUT } from 'constants/';
 
-const request = async (url, option) => {
+import { getCookie } from './cookieUtils';
+
+const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
   const fetchController = new AbortController();
   const newOption = { ...option, signal: fetchController.signal };
+
+  if (isAccessTokenUsed) {
+    newOption.headers = newOption.headers ? newOption.headers : {};
+    newOption.headers.Authorization = `Bearer ${getCookie('accessToken')}`;
+  }
 
   const timerID = setTimeout(() => fetchController.abort(), REQUEST_TIMEOUT);
 
