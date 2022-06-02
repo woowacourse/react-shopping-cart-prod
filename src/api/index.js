@@ -13,7 +13,8 @@ const requestSignUp = async (formData) => {
 
 const requestEditUserInfo = async (formData) => requestAsync.put('customers/me', formData, true);
 const requestWithDrawUser = async () => requestAsync.delete('customers/me', true);
-const requestEditUserPassword = async (formData) => requestAsync.put('customers/me/password', true);
+const requestEditUserPassword = async (formData) =>
+  requestAsync.put('customers/me/password', formData, true);
 
 export {
   requestGetProductList,

@@ -20,7 +20,7 @@ export const productHandler = [
 ];
 
 export const authHandler = [
-  // 로그인 -> {userName }
+  // 로그인
   rest.post(`${HOST_NAME}/login`, (req, res, ctx) =>
     res(ctx.status(200), ctx.json(loginSuccessData)),
   ),
