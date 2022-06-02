@@ -18,7 +18,7 @@ function LoadingSection() {
 }
 
 function ProductList() {
-  const { data, isLoading } = useFetch(`${process.env.REACT_APP_API_HOST}/product`);
+  const { data, isLoading } = useFetch({ url: `/product` });
 
   return (
     <>
