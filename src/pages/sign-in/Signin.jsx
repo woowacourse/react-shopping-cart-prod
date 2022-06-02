@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import axios from "axios";
 
 import StyledSigninContainer from "@/pages/sign-in/Signin.style";
@@ -7,7 +7,7 @@ import Form from "@/components/form/Form";
 import Input from "@/components/input/Input";
 import { Link, useNavigate } from "react-router-dom";
 
-import { setCookie } from "@/utils/auth";
+import { setCookie, getCookie } from "@/utils/auth";
 import { BASE_URL } from "@/constants";
 
 function Signin() {
@@ -15,6 +15,13 @@ function Signin() {
   const password = useRef(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (getCookie("accessToken")) {
+      alert("쿠키 있어요");
+      navigate("/");
+    }
+  }, []);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
