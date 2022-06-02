@@ -6,7 +6,7 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import { getUser } from 'redux/user/thunk';
 
 const UserEdit = () => {
@@ -16,6 +16,10 @@ const UserEdit = () => {
   const prevName = useAppSelector(state => state.user.data?.name);
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   const onSubmitAuthForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (name === prevName) {
@@ -24,7 +28,7 @@ const UserEdit = () => {
       return;
     }
 
-    dispatch(getUser());
+    // dispatch(getUser());
     toggleModal();
   };
 
