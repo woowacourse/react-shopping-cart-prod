@@ -7,7 +7,7 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import { useEffect } from 'react';
+import { KeyboardEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editUserInfo } from 'redux/user/thunk';
 import { PATH } from 'Routers';
@@ -39,6 +39,10 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
     dispatch(editUserInfo({ loginId, name, password }));
   };
 
+  const onKeydownEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') onSubmitPassword();
+  };
+
   return (
     <Modal closeModal={closeModal}>
       <StyledPasswordConfirmContent>
@@ -49,9 +53,7 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
           type='password'
           value={password}
           onChange={onChangePassword}
-          onKeyDown={e => {
-            if (e.key === 'Enter') onSubmitPassword();
-          }}
+          onKeyDown={onKeydownEnter}
         />
         <Button
           type='submit'
