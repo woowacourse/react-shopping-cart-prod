@@ -9,6 +9,7 @@ import { ThemeProvider } from 'styled-components';
 
 import ErrorPage from 'pages/ErrorPage/ErrorPage.page';
 import Login from 'pages/Login/Login.page';
+import ModifyUserInfo from 'pages/ModifyUserInfo/ModifyUserInfo';
 import ProductList from 'pages/ProductList/ProductList.page';
 import ShoppingCartList from 'pages/ShoppingCartList/ShoppingCartList.page';
 import SignUp from 'pages/SignUp/SignUp.page';
@@ -46,6 +47,7 @@ root.render(
                 <Route path="/cart" element={<ShoppingCartList />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
+                <Route path="/user/modify" element={<ModifyUserInfo />} />
                 <Route path="/*" element={<ErrorPage>존재하지 않는 페이지입니다</ErrorPage>} />
               </Routes>
             </ErrorBoundary>
