@@ -7,7 +7,7 @@ import Snackbar from 'components/Snackbar';
 
 import Body from 'styles/Body';
 
-import ProductsPage from './pages/ProductsPage';
+import ProductsPage from 'pages/ProductsPage';
 import ProductPage from 'pages/ProductPage';
 import CartsPage from 'pages/CartsPage';
 import NotFoundPage from 'pages/NotFoundPage';
@@ -15,6 +15,9 @@ import LoginPage from 'pages/LoginPage';
 import SignUpPage from 'pages/SignUpPage';
 import ProfilePage from 'pages/ProfilePage';
 import WithdrawalPage from 'pages/WithdrawalPage';
+
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
 
 import { PATH } from 'constants';
 
@@ -32,11 +35,46 @@ const Router = () => {
             path={`${PATH.PRODUCT}/:productId`}
             element={<ProductPage />}
           />
-          <Route path={PATH.CARTS} element={<CartsPage />} />
-          <Route path={PATH.LOGIN} element={<LoginPage />} />
-          <Route path={PATH.SIGNUP} element={<SignUpPage />} />
-          <Route path={PATH.PROFILE} element={<ProfilePage />} />
-          <Route path={PATH.WITHDRAWAL} element={<WithdrawalPage />} />
+          <Route
+            path={PATH.CARTS}
+            element={
+              <PrivateRoute>
+                <CartsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={PATH.LOGIN}
+            element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path={PATH.SIGNUP}
+            element={
+              <PublicRoute>
+                <SignUpPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path={PATH.PROFILE}
+            element={
+              <PrivateRoute>
+                <ProfilePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={PATH.WITHDRAWAL}
+            element={
+              <PrivateRoute path={PATH.HOME} showMessage={false}>
+                <WithdrawalPage />
+              </PrivateRoute>
+            }
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
         {show && <Snackbar key={Date.now()} message={message} />}

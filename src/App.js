@@ -2,9 +2,9 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import theme from './styles/theme';
-import GlobalStyle from 'styles/GlobalStyle';
+import GlobalStyle from './styles/GlobalStyle';
 
-import Router from './Router';
+import Router from './Routes';
 
 import * as API from './service';
 
