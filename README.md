@@ -1,11 +1,11 @@
 <p align="middle" >
   <img src="https://techcourse-storage.s3.ap-northeast-2.amazonaws.com/3e6c6f30b11d4b098b5a3e81be19ce3a" width="400">
 </p>
-<h2 align="middle">Level2 - 장바구니</h2>
+<h2 align="middle">Level2 - 장바구니 협업</h2>
 <p align="middle">React & Redux 데스크탑 장바구니 애플리케이션</p>
 </p>
 
-### local 실행 방법
+### local 실행 방법(msw)
 
 ```bash
 # 1. 레포지토리 클론
@@ -14,6 +14,10 @@
 # 3. 리액트 앱 실행
   npm run start
 ```
+
+## 데모 페이지
+
+[스토리북](https://6298637b965c7f004a192030-nclmfxwhyz.chromatic.com/?path=/story/component-common-checkbox--default)
 
 ## 🚀 Getting Started
 
@@ -32,4 +36,4 @@
 
 ## 🐞 Bug Report
 
-버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-cart/issues)에 등록해주세요.
+버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-cart-prod/issues)에 등록해주세요.
