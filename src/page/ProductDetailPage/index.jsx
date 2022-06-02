@@ -6,15 +6,18 @@ import { Image } from 'components';
 import store from 'store/store';
 import { doPutProductToCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
-import { LINK } from 'utils/constants';
+import { LINK, MESSAGE } from 'utils/constants';
 import Styled from 'page/ProductDetailPage/index.style';
 import useProduct from 'hooks/useProduct';
 import useCart from 'hooks/useCart';
-import { useSelector } from 'react-redux';
+
+import useSnackbar from 'hooks/useSnackbar';
+import { getCookie } from 'utils/cookie';
 
 const ProductDetailPage = () => {
+  const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const isAuthenticated = getCookie('accessToken');
   const params = useParams();
   const id = Number(params.id);
   const [{ image, name, price }] = useProduct(id);
@@ -22,6 +25,7 @@ const ProductDetailPage = () => {
 
   const putCart = () => {
     if (!isAuthenticated) {
+      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
       return;
     }

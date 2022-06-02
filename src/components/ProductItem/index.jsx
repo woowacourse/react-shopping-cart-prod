@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useClose from 'hooks/useClose';
 import useCart from 'hooks/useCart';
-import { useSelector } from 'react-redux';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
@@ -14,11 +13,15 @@ import { doDeleteProductFromCart, doPutProductToCart } from 'actions/actionCreat
 
 import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';
-import { LINK } from 'utils/constants';
+import { LINK, MESSAGE } from 'utils/constants';
+import useSnackbar from 'hooks/useSnackbar';
+import { getCookie } from 'utils/cookie';
 
 const ProductItem = ({ id, name, price, image }) => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const [renderSnackbar] = useSnackbar();
+  const isAuthenticated = getCookie('accessToken');
+
   const [isInCart, product] = useCart(id);
   const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);
 
@@ -34,10 +37,12 @@ const ProductItem = ({ id, name, price, image }) => {
 
     if (quantityRef.current > 0) {
       store.dispatch(doPutProductToCart({ id, quantity: quantityRef.current }));
+      renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
       return;
     }
 
     store.dispatch(doDeleteProductFromCart({ id }));
+    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
   const handleItemClick = () => {
@@ -48,12 +53,14 @@ const ProductItem = ({ id, name, price, image }) => {
     e.stopPropagation();
 
     if (!isAuthenticated) {
+      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
       return;
     }
 
     if (isControllerOpen) {
       updateCart();
+      renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
     } else {
       setIsControllerOpen(true);
       setAutoCloseTimer(updateCart);

@@ -9,26 +9,31 @@ import AuthButton from 'components/AuthButton';
 import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
 import axios from 'axios';
-import { setCookie } from 'utils/cookie';
+import { setCookie, getCookie } from 'utils/cookie';
 
 import { useNavigate } from 'react-router-dom';
 import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
-import { useSelector } from 'react-redux';
+import useSnackbar from 'hooks/useSnackbar';
+import { MESSAGE } from 'utils/constants';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const isAuthenticated = !!getCookie('accessToken');
 
   const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [renderSnackbar] = useSnackbar();
+
   useEffect(() => {
     if (isAuthenticated) {
+      renderSnackbar(MESSAGE.ALREADY_LOGINED, 'FAILED');
       navigate('/');
     }
-  }, [isAuthenticated, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (email.length >= 3 && password.length >= 10) {
@@ -49,8 +54,11 @@ const LoginPage = () => {
 
       setCookie('accessToken', response.data.accessToken);
       store.dispatch(doLogin({ nickname: response.data.nickname }));
+      renderSnackbar(`${response.data.nickname}님 환영합니다 👋`, 'SUCCESS');
       navigate('/');
-    } catch (error) {}
+    } catch (error) {
+      renderSnackbar(`아이디와 비밀번호를 다시 확인해주세요.`, 'FAILED');
+    }
   };
 
   return (

@@ -5,8 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import store from 'store/store';
 import { deleteCookie, getCookie } from 'utils/cookie';
 import Styled from './index.style';
+import useSnackbar from 'hooks/useSnackbar';
 
 const UserMenu = ({ nickname }) => {
+  const [renderSnackbar] = useSnackbar();
+
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,20 +18,25 @@ const UserMenu = ({ nickname }) => {
   };
 
   const logout = async () => {
-    const accessToken = getCookie('accessToken');
+    try {
+      const accessToken = getCookie('accessToken');
 
-    await axios.post(
-      '/auth/logout',
-      {},
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      },
-    );
+      await axios.post(
+        '/auth/logout',
+        {},
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        },
+      );
 
-    deleteCookie('accessToken');
-    setIsOpen(false);
-    store.dispatch(doLogout());
-    navigate('/');
+      deleteCookie('accessToken');
+      setIsOpen(false);
+      store.dispatch(doLogout());
+      renderSnackbar('로그아웃이 완료되었습니다.', 'SUCCESS');
+      navigate('/');
+    } catch (error) {
+      renderSnackbar('로그아웃에 실패하였습니다', 'FAILED');
+    }
   };
 
   return (

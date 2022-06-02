@@ -8,8 +8,12 @@ import Container from 'components/@shared/Container';
 import Styled from './index.style';
 import { getCookie } from 'utils/cookie';
 import axios from 'axios';
+import useSnackbar from 'hooks/useSnackbar';
+import { MESSAGE } from 'utils/constants';
 
 const AccountDeleteModal = ({ handleModal }) => {
+  const [renderSnackbar] = useSnackbar();
+
   const [password, setPassword] = useState('');
 
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
@@ -19,20 +23,25 @@ const AccountDeleteModal = ({ handleModal }) => {
   }, [password]);
 
   const deleteAccount = async () => {
-    if (!isCorrectPassword) return;
+    try {
+      if (!isCorrectPassword) return;
 
-    const accessToken = getCookie('accessToken');
+      const accessToken = getCookie('accessToken');
 
-    const response = await axios.delete('/customers', {
-      data: {
-        password,
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+      await axios.delete('/customers', {
+        data: {
+          password,
+        },
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-    console.log(response);
+      renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
+      handleModal();
+    } catch (error) {
+      renderSnackbar(MESSAGE.DELETE_ACCOUT_FAILUER, 'FAILED');
+    }
   };
 
   return (

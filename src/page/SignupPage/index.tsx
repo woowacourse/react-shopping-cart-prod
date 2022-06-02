@@ -12,11 +12,13 @@ import Container from 'components/@shared/Container';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import useSnackbar from 'hooks/useSnackbar';
+import { MESSAGE } from 'utils/constants';
 
 const SignupPage = () => {
+  const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const isAuthenticated = getCookie('accessToken');
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
@@ -29,9 +31,12 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      renderSnackbar(MESSAGE.ALREADY_LOGINED, 'FAILED');
       navigate('/');
     }
-  }, [isAuthenticated, navigate]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     setIsFulfilled(isEmailCorrect && isNicknameCorrect && isPasswordCorrect);
@@ -40,13 +45,11 @@ const SignupPage = () => {
   const signup = async () => {
     if (!isFulfilled) return;
 
-    const response = await axios.post('/customers', {
+    await axios.post('/customers', {
       email,
       nickname,
       password,
     });
-
-    console.log(response);
   };
 
   return (

@@ -8,32 +8,40 @@ import Container from 'components/@shared/Container';
 import { validatePassword } from 'utils/validator';
 import { getCookie } from 'utils/cookie';
 import axios from 'axios';
+import useSnackbar from 'hooks/useSnackbar';
+import { MESSAGE } from 'utils/constants';
 
 const PasswordEditModal = ({ handleModal }) => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
+  const [renderSnackbar] = useSnackbar();
 
   const editPassword = async () => {
-    if (!isCorrectPassword) return;
+    try {
+      if (!isCorrectPassword) return;
 
-    const accessToken = getCookie('accessToken');
+      const accessToken = getCookie('accessToken');
 
-    const response = await axios.patch(
-      '/customers',
-      {
-        password: currentPassword,
-        newPassword,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      await axios.patch(
+        '/customers',
+        {
+          password: currentPassword,
+          newPassword,
         },
-      },
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
 
-    console.log(response);
+      renderSnackbar(MESSAGE.UPDATE_PASSWORD_SUCCESS, 'SUCCESS');
+      handleModal();
+    } catch (error) {
+      renderSnackbar(MESSAGE.UPDATE_PASSWORD_FAILUER, 'FAILED');
+    }
   };
 
   return (

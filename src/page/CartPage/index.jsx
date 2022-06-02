@@ -13,10 +13,14 @@ import {
 import empty from 'assets/empty.jpeg';
 import Styled from 'page/CartPage/index.style';
 import { useNavigate } from 'react-router-dom';
+import useSnackbar from 'hooks/useSnackbar';
+import { MESSAGE } from 'utils/constants';
+import { getCookie } from 'utils/cookie';
 
 const CartPage = () => {
+  const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const isAuthenticated = getCookie('accessToken');
 
   const { products, shoppingCart, order } = useSelector(state => state.reducer);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -40,9 +44,11 @@ const CartPage = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
+      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
     }
-  }, [isAuthenticated, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
@@ -55,6 +61,11 @@ const CartPage = () => {
         store.dispatch(doAddProdcutToOrder({ id: product.id }));
       }
     });
+  };
+
+  const deleteItem = () => {
+    store.dispatch(doSelectiveDeleteFromCart());
+    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
   return (
@@ -74,9 +85,7 @@ const CartPage = () => {
                   />
                   선택해제
                 </Styled.CheckBoxContainer>
-                <Styled.ProductDeleteButton
-                  onClick={() => store.dispatch(doSelectiveDeleteFromCart())}
-                >
+                <Styled.ProductDeleteButton onClick={deleteItem}>
                   상품삭제
                 </Styled.ProductDeleteButton>
               </Styled.SelectController>

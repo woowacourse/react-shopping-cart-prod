@@ -16,11 +16,13 @@ import { getCookie } from 'utils/cookie';
 import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import useSnackbar from 'hooks/useSnackbar';
+import { MESSAGE } from 'utils/constants';
 
 const AccountPage = () => {
+  const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const isAuthenticated = getCookie('accessToken');
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
@@ -36,9 +38,11 @@ const AccountPage = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
+      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
     }
-  }, [isAuthenticated, navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getProfile = async () => {
     const accessToken = getCookie('accessToken');
@@ -53,22 +57,27 @@ const AccountPage = () => {
   };
 
   const updateProfile = async () => {
-    if (!isNicknameCorrect) return;
+    try {
+      if (!isNicknameCorrect) return;
 
-    const accessToken = getCookie('accessToken');
+      const accessToken = getCookie('accessToken');
 
-    const response = await axios.patch(
-      '/customers',
-      {
-        nickname,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const response = await axios.patch(
+        '/customers',
+        {
+          nickname,
         },
-      },
-    );
-    store.dispatch(doLogin({ nickname: response.data.nickname }));
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+      store.dispatch(doLogin({ nickname: response.data.nickname }));
+      renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
+    } catch (error) {
+      renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');
+    }
   };
 
   return (
@@ -102,7 +111,11 @@ const AccountPage = () => {
           <Styled.Line />
 
           <Styled.ButtonContainer>
-            <Styled.ChangePasswordButton onClick={() => setIsPasswordModalOpen(true)}>
+            <Styled.ChangePasswordButton
+              onClick={() => {
+                setIsPasswordModalOpen(true);
+              }}
+            >
               Change password
             </Styled.ChangePasswordButton>
 

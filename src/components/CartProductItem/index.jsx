@@ -8,10 +8,19 @@ import { doPutProductToCart, doDeleteProductFromCart } from 'actions/actionCreat
 import autoComma from 'utils/autoComma';
 import Styled from 'components/CartProductItem/index.style';
 import useOrder from 'hooks/useOrder';
+import useSnackbar from 'hooks/useSnackbar';
+import { MESSAGE } from 'utils/constants';
 
 const CartProductItem = ({ id, quantity }) => {
+  const [renderSnackbar] = useSnackbar();
+
   const [{ name, price, image }] = useProduct(id);
   const [isInOrder, updateOrder] = useOrder(id);
+
+  const deleteItem = () => {
+    store.dispatch(doDeleteProductFromCart({ id }));
+    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+  };
 
   return (
     <Styled.Container>
@@ -22,7 +31,7 @@ const CartProductItem = ({ id, quantity }) => {
       </Styled.LeftSide>
 
       <Styled.RightSide>
-        <Styled.DeleteButton onClick={() => store.dispatch(doDeleteProductFromCart({ id }))} />
+        <Styled.DeleteButton onClick={deleteItem} />
         <Counter
           quantity={quantity}
           increase={() => store.dispatch(doPutProductToCart({ id, quantity: quantity + 1 }))}
