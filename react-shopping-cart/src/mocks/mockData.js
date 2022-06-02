@@ -88,5 +88,8 @@ export const products = [
 export const customers = {
   'abc@abc.com': {
     password: 'abc',
+    name: '우연',
+    phone: '010-1234-5678',
+    address: '잠실',
   },
 };

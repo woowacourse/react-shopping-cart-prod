@@ -2,14 +2,18 @@ const { LOGIN_USER, LOGOUT_USER } = require('redux/actions/auth.action');
 
 const initialState = {
   accessToken: '',
+  name: '',
+  email: '',
+  address: '',
+  phone: '',
 };
 
 function auth(state = initialState, action) {
   switch (action.type) {
     case LOGIN_USER:
-      return { accessToken: action.payload };
+      return { ...action.payload };
     case LOGOUT_USER:
-      return { accessToken: '' };
+      return {};
     default:
       return state;
   }

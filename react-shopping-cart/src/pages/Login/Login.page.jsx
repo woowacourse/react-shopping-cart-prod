@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -38,6 +38,7 @@ function Login() {
     method: 'post',
     skip: true,
   });
+
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -61,7 +62,7 @@ function Login() {
 
   useEffect(() => {
     if (accessToken) {
-      dispatch(loginUser(accessToken));
+      dispatch(loginUser(data));
       navigate('/');
     }
   }, [accessToken]);

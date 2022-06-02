@@ -11,7 +11,8 @@ export const handlers = [
     const isExist = customers[email]?.password === password;
 
     if (isExist) {
-      return res(ctx.status(200), ctx.json({ accessToken: 1 }));
+      const { password, ...safefyUserInfo } = customers[email];
+      return res(ctx.status(200), ctx.json({ accessToken: 1, ...safefyUserInfo }));
     }
     return res(ctx.status(404), ctx.json({ message: '존재하지 않는 email/password입니다.' }));
   }),
