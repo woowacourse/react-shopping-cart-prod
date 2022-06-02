@@ -1,16 +1,19 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setUserData } from 'actions/user';
+
 import Layout from 'components/Layout';
 
 import Button from 'components/@common/Button/styles';
 import Input from 'components/@common/Input/styles';
 import { COLORS } from 'styles/theme';
-import { requestLogin } from 'api';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,9 +25,7 @@ const Login = () => {
       return;
     }
 
-    const response = await requestLogin(userId, userPassword);
-    const { accessToken } = response.content;
-    localStorage.setItem('accessToken', accessToken);
+    dispatch(setUserData(userId, userPassword));
     navigate('/');
   };
 
