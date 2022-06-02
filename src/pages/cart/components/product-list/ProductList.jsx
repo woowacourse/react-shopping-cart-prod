@@ -5,9 +5,10 @@ import {
   removeCheckedCartItem,
 } from "@/redux/modules/cartList";
 
-import StyledProductList from "@/pages/cart/components/product-list/ProductList.styled";
 import ProductItem from "@/pages/cart/components/product-item/ProductItem";
 import Checkbox from "@/components/checkbox/Checkbox";
+
+import StyledProductList from "@/pages/cart/components/product-list/ProductList.styled";
 
 function ProductList() {
   const cartList = useSelector((state) => state.cartListState);

@@ -1,8 +1,9 @@
 import React from "react";
-import StyledDropdownContainer from "@/components/dropdown/Dropdown.styled";
 import { Link } from "react-router-dom";
 
 import { deleteCookie } from "@/utils/auth";
+
+import StyledDropdownContainer from "@/components/dropdown/Dropdown.styled";
 
 export default function Dropdown() {
   const handleLogoutClick = () => {

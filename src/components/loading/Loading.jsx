@@ -1,5 +1,6 @@
-import StyledLoading from "@/components/loading/Loading.styled";
 import BaedaliImg from "@/assets/images/baedali.png";
+
+import StyledLoading from "@/components/loading/Loading.styled";
 
 function Loading() {
   return (

@@ -1,8 +1,8 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 
 import { css } from "@emotion/react";
 
-import { useDispatch } from "react-redux";
 import {
   toggleCartItemCheckButton,
   incrementCartItemQuantity,
@@ -11,10 +11,11 @@ import {
 } from "@/redux/modules/cartList";
 
 import TrashIcon from "@/assets/images/trash.svg";
-import StyledCartContainer from "@/pages/cart/components/product-item/ProductItem.styled";
-import StyledHr from "@/pages/cart/components/product-item/hr.styled";
 
 import Checkbox from "@/components/checkbox/Checkbox";
+
+import StyledCartContainer from "@/pages/cart/components/product-item/ProductItem.styled";
+import StyledHr from "@/pages/cart/components/product-item/hr.styled";
 
 function ProductItem({ item }) {
   const { id, name, price, imgUrl, quantity, checked } = item;

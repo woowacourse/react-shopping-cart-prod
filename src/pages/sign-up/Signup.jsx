@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
-import { BASE_URL, MESSAGE, REGULAR_EXPRESSION } from "@/constants";
-import StyledSignupContainer from "@/pages/sign-up/Signup.style";
-
 import { useDispatch } from "react-redux";
+
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 import Form from "@/components/form/Form";
 import Field from "@/components/field/Field";
 
-import { STATUS, ERROR_STATUS, NICKNAME, PASSWORD } from "@/constants";
+import {
+  BASE_URL,
+  MESSAGE,
+  STATUS,
+  ERROR_STATUS,
+  NICKNAME,
+  PASSWORD,
+  REGULAR_EXPRESSION,
+} from "@/constants";
+
+import StyledSignupContainer from "@/pages/sign-up/Signup.style";
 
 function Signup() {
   const [email, setEmail] = useState({ value: "", status: STATUS.READY });

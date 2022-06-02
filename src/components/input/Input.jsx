@@ -1,6 +1,6 @@
 import React, { forwardRef } from "react";
 
-import StyledInput from "./Input.styled";
+import StyledInput from "@/components/input/Input.styled";
 
 const Input = (
   {

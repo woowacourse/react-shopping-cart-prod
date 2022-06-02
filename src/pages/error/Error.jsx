@@ -1,6 +1,7 @@
 import ErrorImg from "@/assets/images/error.png";
-import StyledErrorContainer from "./ErrorContainer.styled";
-import StyledErrorMessage from "./ErrorMessage.styled";
+
+import StyledErrorContainer from "@/pages/error/ErrorContainer.styled";
+import StyledErrorMessage from "@/pages/error/ErrorMessage.styled";
 
 function Error() {
   return (

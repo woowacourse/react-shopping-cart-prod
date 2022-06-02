@@ -1,4 +1,4 @@
-import StyledImageButton from "./ImageButton.styled";
+import StyledImageButton from "@/pages/home/components/image-button/ImageButton.styled";
 
 function ImageButton({ children, onClick }) {
   return (

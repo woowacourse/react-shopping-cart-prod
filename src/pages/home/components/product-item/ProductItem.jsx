@@ -1,16 +1,17 @@
 import React from "react";
-
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { addProductToCart } from "@/redux/modules/cartList";
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
-import StyledProductItem from "@/pages/home/components/product-item/ProductItem.styled";
+import CartIcon from "@/assets/images/cart.svg";
+
 import Thumbnail from "@/pages/home/components/thumbnail/Thumbnail";
 import ImageButton from "@/pages/home/components/image-button/ImageButton";
-import CartIcon from "@/assets/images/cart.svg";
-import StyledProductInfo from "./ProductInfo.styled";
+
+import StyledProductInfo from "@/pages/home/components/product-item/ProductInfo.styled";
+import StyledProductItem from "@/pages/home/components/product-item/ProductItem.styled";
 
 import { MESSAGE } from "@/constants";
 

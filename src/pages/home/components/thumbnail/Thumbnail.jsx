@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-import StyledThumbnail from "@/pages/home/components/thumbnail/Thumbnail.styled";
 import Spinner from "@/components/spinner/Spinner";
+
+import StyledThumbnail from "@/pages/home/components/thumbnail/Thumbnail.styled";
 
 function Thumbnail({ src, name, onClick }) {
   const [isLoaded, setIsLoaded] = useState(false);

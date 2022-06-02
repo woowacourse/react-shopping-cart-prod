@@ -10,6 +10,7 @@ const theme = {
     gray5: "#eeeeee",
     mint: "#2ac1bc",
     pink: "#f60579",
+    blue: "#0969da",
   },
   fontSize: {
     xs: "14px",

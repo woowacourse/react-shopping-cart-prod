@@ -1,9 +1,10 @@
 import React from "react";
 
-import StyledField from "./Field.styled";
 import Input from "@/components/input/Input";
 
 import { ERROR_MESSAGE } from "@/constants";
+
+import StyledField from "@/components/field/Field.styled";
 
 function Field({
   labelName,

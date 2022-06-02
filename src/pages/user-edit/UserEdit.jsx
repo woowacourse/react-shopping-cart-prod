@@ -5,8 +5,6 @@ import axios from "axios";
 
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
-import StyledUserEditContainer from "@/pages/user-edit/UserEdit.style";
-
 import Form from "@/components/form/Form";
 import Field from "@/components/field/Field";
 
@@ -22,6 +20,8 @@ import {
   PASSWORD,
   REGULAR_EXPRESSION,
 } from "@/constants";
+
+import StyledUserEditContainer from "@/pages/user-edit/UserEdit.style";
 
 function UserEdit() {
   const [email, setEmail] = useState({ value: "", status: STATUS.FULFILLED });

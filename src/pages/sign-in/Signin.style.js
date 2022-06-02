@@ -15,11 +15,12 @@ const StyledSigninContainer = styled.div`
   }
 
   .please-signup {
-    margin-top: 15px;
+    margin-top: 30px;
     align-self: flex-start;
 
     a {
       margin-left: 5px;
+      color: ${({ theme }) => theme.colors.blue};
     }
   }
 `;

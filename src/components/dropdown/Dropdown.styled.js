@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+
 import BaedaliProfileImage from "@/assets/images/baedali-profile.png";
 import BaedaliProfileEyesImage from "@/assets/images/baedali-profile-eyes.png";
 
