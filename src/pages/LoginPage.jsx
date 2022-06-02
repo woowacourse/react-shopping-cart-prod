@@ -34,7 +34,7 @@ function LoginPage() {
       const { data } = await axios.post(SERVER_PATH.LOGIN, { email, password });
       const { accessToken } = data;
       dispatch({ type: actionTypes.ADD_TOKEN, accessToken });
-      alert('로그인 성공');
+      alert(MESSAGE.LOGIN_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
       setLoginInfo(initialState);

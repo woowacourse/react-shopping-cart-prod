@@ -26,6 +26,7 @@ function ModifyUserInfoPage() {
 
     try {
       await axios.patch(SERVER_PATH.USER, { nickname });
+      alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
       alert(error);

@@ -47,7 +47,7 @@ function SignUpPage() {
 
     try {
       await axios.post(SERVER_PATH.USER, { email, nickname, password });
-      alert('회원가입 성공');
+      alert(MESSAGE.SIGN_UP_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
       console.error(error);

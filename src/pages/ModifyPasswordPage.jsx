@@ -36,6 +36,7 @@ function ModifyPasswordPage() {
     try {
       await axios.patch(SERVER_PATH.PASSWORD, { prevPassword, newPassword });
       dispatch({ type: actionTypes.DELETE_TOKEN });
+      alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
       alert(error.messages);
