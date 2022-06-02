@@ -1,3 +1,4 @@
+import auth from './auth.reducer';
 import orderList from './orderList.reducer';
 import shoppingCart from './shoppingCart.reducer';
 import userInfo from './userInfo.reducer';
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   shoppingCart,
   orderList,
   userInfo,
+  auth,
 });
 
 const persistConfig = {
