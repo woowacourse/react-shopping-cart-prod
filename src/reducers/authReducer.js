@@ -11,6 +11,13 @@ function authReducer(state = initState, action) {
         isAuthenticated: true,
       };
 
+    case AUTH_ACTIONS.LOGOUT:
+      return {
+        ...state,
+        nickname: '',
+        isAuthenticated: false,
+      };
+
     default:
       return state;
   }

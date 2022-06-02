@@ -16,6 +16,8 @@ const doInitializeOrder = () => ({ type: ORDER_ACTIONS.INITIALIZE });
 
 const doLogin = ({ nickname }) => ({ type: AUTH_ACTIONS.LOGIN, nickname });
 
+const doLogout = () => ({ type: AUTH_ACTIONS.LOGOUT });
+
 export {
   doPutProductToCart,
   doDeleteProductFromCart,
@@ -25,4 +27,5 @@ export {
   doDeleteProductFromOrder,
   doInitializeOrder,
   doLogin,
+  doLogout,
 };
