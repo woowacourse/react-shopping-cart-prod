@@ -42,10 +42,15 @@ export const signIn = (signInInfo: SignInInfo) => async (dispatch: Dispatch<User
 export const editPassword =
   (editPasswordInfo: EditPasswordInfo) => async (dispatch: Dispatch<UserAction>) => {
     dispatch({ type: UserActionType.PATCH_NEW_PASSWORD_START });
+    const token = localStorage.getItem('token');
 
     try {
       const response = await axios({
         method: 'patch',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: token,
+        },
         url: `${LOCAL_BASE_URL}/users/me`,
         data: editPasswordInfo,
       });
@@ -59,10 +64,15 @@ export const editPassword =
 
 export const resign = (password: string) => async (dispatch: Dispatch<UserAction>) => {
   dispatch({ type: UserActionType.DELETE_USER_START });
+  const token = localStorage.getItem('token');
 
   try {
     const response = await axios({
       method: 'delete',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
       url: `${LOCAL_BASE_URL}/users/me`,
       data: password,
     });

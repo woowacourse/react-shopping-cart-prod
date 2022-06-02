@@ -2,6 +2,7 @@ import { LOCAL_BASE_URL } from 'apis';
 import { rest } from 'msw';
 import { mockItemList } from './mockDB';
 import { CartItem, EditPasswordInfo, SignInInfo, SignUpInfo, UserInfo } from 'types/domain';
+import { generateRandomCode } from 'utils';
 
 let mockCartList: CartItem[] = [];
 let mockUserList: UserInfo[] = [];
@@ -86,6 +87,7 @@ export const handlers = [
     const userInfo: UserInfo = mockUserList.find(
       user => user.email === signInInfo.email && user.password === signInInfo.password
     );
+    const tokenCode = `Bearer ${generateRandomCode(4)}`;
 
     if (!userInfo) {
       return res(
@@ -96,31 +98,54 @@ export const handlers = [
       );
     }
 
+    mockUserList.forEach(user => {
+      if (user.email === signInInfo.email) {
+        user.token = tokenCode;
+      }
+    });
+
     return res(
       ctx.status(200),
-      ctx.json({ email: userInfo.email, name: userInfo.name, token: 't1234' })
+      ctx.json({
+        email: userInfo.email,
+        name: userInfo.name,
+        token: tokenCode,
+      })
     );
   }),
 
-  //edit password
   rest.patch<EditPasswordInfo>(`${LOCAL_BASE_URL}/users/me`, (req, res, ctx) => {
+    const token = req.headers.get('Authorization');
     const editPasswordInfo: EditPasswordInfo = req.body;
+    const targetUser = mockUserList.find(user => user.token === token);
 
-    const targetUser = mockUserList.find(user => user.password === editPasswordInfo.password);
-    const newTargetUser = { ...targetUser, password: editPasswordInfo.newPassword };
+    if (targetUser.password === editPasswordInfo.password) {
+      mockUserList.forEach(user => {
+        if (user.token === token) {
+          user.password = editPasswordInfo.newPassword;
+        }
+      });
 
-    mockUserList = [...mockUserList, newTargetUser];
+      return res(ctx.status(200));
+    }
 
-    return res(ctx.status(200));
+    return res(ctx.status(401));
   }),
 
   rest.delete(`${LOCAL_BASE_URL}/users/me`, (req, res, ctx) => {
+    const token = req.headers.get('Authorization');
     const passwordInput = req.body;
-    const targetUser = mockUserList.find(user => user.password === passwordInput);
 
-    mockUserList = mockUserList.filter(user => user.email !== targetUser.email);
-    console.log(mockUserList);
+    const targetUser = mockUserList.find(user => user.token === token);
 
-    return res(ctx.status(200));
+    if (targetUser.password === passwordInput) {
+      mockUserList = mockUserList.filter(user => user.email !== targetUser.email);
+
+      console.log(mockUserList, 'delete');
+
+      return res(ctx.status(200));
+    }
+
+    return res(ctx.status(401));
   }),
 ];
