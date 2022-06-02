@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useInput from 'hooks/useInput';
 
 import Layout from 'components/Layout';
@@ -130,14 +130,16 @@ const EditUserInfo = () => {
             >
               수정하기
             </Button>
-            <Button
-              type="button"
-              margin="0.5rem 0"
-              backgroundColor={COLORS.MINT_200}
-              hoverColor={COLORS.MINT_100}
-            >
-              비밀번호 변경하기
-            </Button>
+            <Link to="/editUserPassword">
+              <Button
+                type="button"
+                margin="0.5rem 0"
+                backgroundColor={COLORS.MINT_200}
+                hoverColor={COLORS.MINT_100}
+              >
+                비밀번호 변경하기
+              </Button>
+            </Link>
             <Button
               type="button"
               margin="0.5rem 0"
