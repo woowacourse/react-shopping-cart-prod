@@ -18,14 +18,14 @@ const ERROR_STATUS = {
   WRONG_LENGTH: "WRONG_LENGTH",
   PASSWORD_RULE: "PASSWORD_RULE",
   EMAIL_RULE: "EMAIL_RULE",
-  MISMATHCH: "MISMATHCH",
+  MISMATCH: "MISMATCH",
 };
 
 const ERROR_MESSAGE = {
   EMAIL_RULE: "이메일 주소를 입력해주세요",
   WRONG_LENGTH: "올바르지 않은 길이입니다",
   PASSWORD_RULE: "영문, 숫자를 포함하여 8-20자로 입력하세요",
-  MISMATHCH: "비밀번호가 일치하지 않습니다",
+  MISMATCH: "비밀번호가 일치하지 않습니다",
 };
 
 const MESSAGE = {
@@ -47,6 +47,13 @@ const PASSWORD = {
   MAX_LENGTH: 20,
 };
 
+const REGULAR_EXPRESSION = {
+  EMAIL:
+    /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
+  NICKNAME: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,8}$/,
+  PASSWORD: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
+};
+
 export {
   BASE_URL,
   PATH,
@@ -56,4 +63,5 @@ export {
   MESSAGE,
   NICKNAME,
   PASSWORD,
+  REGULAR_EXPRESSION,
 };

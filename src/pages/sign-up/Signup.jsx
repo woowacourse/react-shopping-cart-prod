@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-import { BASE_URL, MESSAGE } from "@/constants";
+import { BASE_URL, MESSAGE, REGULAR_EXPRESSION } from "@/constants";
 import StyledSignupContainer from "@/pages/sign-up/Signup.style";
 
 import { useDispatch } from "react-redux";
@@ -41,10 +41,8 @@ function Signup() {
   const validateEmail = (e) => {
     const { value } = e.target;
     setEmail((prev) => ({ ...prev, value: value }));
-    const regex =
-      /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
 
-    if (!value.match(regex)) {
+    if (!value.match(REGULAR_EXPRESSION.EMAIL)) {
       setEmail((prev) => ({ ...prev, status: ERROR_STATUS.EMAIL_RULE }));
       return;
     }
@@ -55,9 +53,8 @@ function Signup() {
   const validateNickname = (e) => {
     const { value } = e.target;
     setNickname((prev) => ({ ...prev, value: value }));
-    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,8}$/;
 
-    if (!value.match(regex)) {
+    if (!value.match(REGULAR_EXPRESSION.NICKNAME)) {
       setNickname((prev) => ({ ...prev, status: ERROR_STATUS.WRONG_LENGTH }));
       return;
     }
@@ -68,9 +65,8 @@ function Signup() {
   const validatePassword = (e) => {
     const { value } = e.target;
     setPassword((prev) => ({ ...prev, value: value }));
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
-    if (!value.match(regex)) {
+    if (!value.match(REGULAR_EXPRESSION.PASSWORD)) {
       setPassword((prev) => ({ ...prev, status: ERROR_STATUS.PASSWORD_RULE }));
       return;
     }

@@ -20,6 +20,7 @@ import {
   MESSAGE,
   NICKNAME,
   PASSWORD,
+  REGULAR_EXPRESSION,
 } from "@/constants";
 
 function UserEdit() {
@@ -59,9 +60,8 @@ function UserEdit() {
   const validateNickname = (e) => {
     const { value } = e.target;
     setNickname((prev) => ({ ...prev, value: value }));
-    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,8}$/;
 
-    if (!value.match(regex)) {
+    if (!value.match(REGULAR_EXPRESSION.NICKNAME)) {
       setNickname((prev) => ({ ...prev, status: ERROR_STATUS.WRONG_LENGTH }));
       return;
     }
@@ -72,9 +72,8 @@ function UserEdit() {
   const validatePassword = (e) => {
     const { value } = e.target;
     setPassword((prev) => ({ ...prev, value: value }));
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/;
 
-    if (!value.match(regex)) {
+    if (!value.match(REGULAR_EXPRESSION.PASSWORD)) {
       setPassword((prev) => ({ ...prev, status: ERROR_STATUS.PASSWORD_RULE }));
       return;
     }
@@ -85,7 +84,7 @@ function UserEdit() {
   const validatePasswordConfirm = (e) => {
     const { value } = e.target;
     setPasswordConfirm((prev) => ({ ...prev, value: value }));
-
+    console.log(value, password.value, value === password.value);
     if (value !== password.value) {
       setPasswordConfirm((prev) => ({
         ...prev,
