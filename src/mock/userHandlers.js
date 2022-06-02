@@ -36,6 +36,7 @@ export default [
     }
 
     user.token = createToken();
+    console.log(users);
     return res(
       ctx.status(200),
       ctx.json({
@@ -60,5 +61,37 @@ export default [
     users.push({ name, email, password, token: '' });
 
     return res(ctx.status(201));
+  }),
+
+  rest.get('/api/customer', (req, res, ctx) => {
+    const token = Number(
+      req.headers._headers.authorization.replace('Bearer ', ''),
+    );
+    const user = users.find((user) => user.token === token);
+
+    if (!user) {
+      return res(ctx.status(403), ctx.json({ message: 'Invalid Token' }));
+    }
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        name: user.name,
+        email: user.email,
+      }),
+    );
+  }),
+
+  rest.put('/api/customer', (req, res, ctx) => {
+    const token = Number(req.headers.authorization.replace('Bearer ', ''));
+    const user = users.find((user) => user.token === token);
+
+    if (!user) {
+      return res(ctx.status(403), ctx.json({ message: 'Invalid Token' }));
+    }
+
+    user.name = req.body.data.name;
+
+    return res(ctx.status(200));
   }),
 ];

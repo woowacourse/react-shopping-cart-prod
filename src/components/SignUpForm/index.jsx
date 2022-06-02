@@ -64,7 +64,9 @@ const SignUpForm = () => {
 
     setLoading(true);
     try {
-      await postApi('api/customer', { name: userName, email, password });
+      await postApi('api/customer', {
+        data: { name: userName, email, password },
+      });
     } catch (e) {
       setError(e.message);
     } finally {

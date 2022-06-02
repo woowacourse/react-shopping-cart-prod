@@ -2,7 +2,15 @@ import { useId } from 'react';
 
 import * as S from './style';
 
-const Input = ({ label, type, value, placeholder, onChange, isError }) => {
+const Input = ({
+  label,
+  type,
+  value,
+  placeholder,
+  onChange,
+  disabled = false,
+  isError,
+}) => {
   const id = useId();
 
   return (
@@ -14,6 +22,7 @@ const Input = ({ label, type, value, placeholder, onChange, isError }) => {
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        disabled={disabled}
         isError={isError}
       />
     </>

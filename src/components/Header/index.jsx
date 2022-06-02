@@ -17,6 +17,9 @@ const Header = () => {
         <Link to={PATH.CARTS}>
           <button>장바구니</button>
         </Link>
+        <Link to={PATH.PROFILE}>
+          <button>프로필</button>
+        </Link>
         <button>주문목록</button>
       </div>
     </Wrapper>

@@ -50,7 +50,7 @@ export const deleteCarts = createAsyncThunk(
   'cudCart/deletes',
   async (productIds, { rejectWithValue }) => {
     try {
-      await deleteApi('deleteCarts', { productIds });
+      await deleteApi('deleteCarts', { data: productIds });
     } catch (error) {
       rejectWithValue(error);
     }

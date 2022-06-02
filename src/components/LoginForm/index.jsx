@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { Spinner, SpinnerWrapper } from 'styles/Spinner';
@@ -15,9 +15,11 @@ import { login } from 'reducers/user';
 import { onMessage } from 'reducers/snackbar';
 
 import { PATH, SNACKBAR_MESSAGE } from 'constants';
+import axios from 'axios';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const accessToken = useSelector((state) => state.user.accessToken);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [email, setEmail] = useState('');
@@ -34,8 +36,14 @@ const LoginForm = () => {
     setPassword(target.value);
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('accessToken', accessToken);
+    console.log('accessToken: ', accessToken);
+  }, [accessToken]);
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    console.log('object');
 
     let canSubmit = true;
 
@@ -58,10 +66,15 @@ const LoginForm = () => {
     if (!canSubmit) return;
 
     setLoading(true);
+
     dispatch(login({ email, password }))
       .unwrap()
       .then((result) => {
+        console.log('login', result.accessToken);
         localStorage.setItem('accessToken', result.accessToken);
+        axios.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${result.accessToken}`;
         navigate(PATH.HOME);
         dispatch(onMessage(SNACKBAR_MESSAGE.successLogin()));
       })
