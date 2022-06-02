@@ -34,13 +34,11 @@ export const authHandler = [
   ),
 
   rest.get<null, null, UserInfo>(`${AUTH_BASE_URL}/customers/me`, (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        loginId: 'hwangstar156@gmail.com',
-        name: '스밍',
-      })
-    );
+    if (users.length === 0) {
+      return res(ctx.status(404));
+    }
+
+    return res(ctx.status(200), ctx.json(users[0]));
   }),
 
   rest.put<UserInfoWithPassword, null, UserInfo | string>(
@@ -67,13 +65,17 @@ export const authHandler = [
   ),
 
   rest.delete<Pick<UserInfoWithPassword, 'password'>, null, null | string>(
-    `${AUTH_BASE_URL}/customer/me`,
+    `${AUTH_BASE_URL}/customers/me`,
     (req, res, ctx) => {
       const { password } = req.body;
+      const authenticatedUserIdx = users.findIndex(user => user.password === password);
 
-      const authenticatedUser = users.find(user => user.password === password);
+      if (authenticatedUserIdx !== -1) {
+        const newUsers = [...users];
 
-      if (authenticatedUser) {
+        newUsers.splice(authenticatedUserIdx, 1);
+        localStorage.setItem('mock-users', JSON.stringify(newUsers));
+
         return res(ctx.status(204));
       }
 
