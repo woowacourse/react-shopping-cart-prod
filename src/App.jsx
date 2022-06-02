@@ -13,6 +13,7 @@ import ProductDetail from "@product-detail/ProductDetail";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import MyPage from "./pages/my-page/MyPage";
+import AuthGuard from "./auth-guard/AuthGuard/AuthGuard";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -50,7 +51,14 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/my-page" element={<MyPage />} />
+          <Route
+            path="/my-page"
+            element={
+              <AuthGuard>
+                <MyPage />
+              </AuthGuard>
+            }
+          />
           <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </BrowserRouter>
