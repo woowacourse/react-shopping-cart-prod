@@ -7,7 +7,7 @@ import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplat
 import useForm from "../../hooks/useForm/useForm";
 
 function Signup({ className }) {
-  const { onSubmit, register, errors, formData } = useForm();
+  const { onSubmit, register } = useForm();
   const navigate = useNavigate();
 
   const handleSubmit = async (formData, errors) => {
@@ -50,7 +50,7 @@ function Signup({ className }) {
               defaultValue="woowacourse@gmail.com"
               {...register("email", {
                 pattern: {
-                  value: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+                  value: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
                   message: "정규식 실패할때 나올 메세지",
                 },
               })}

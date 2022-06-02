@@ -20,12 +20,12 @@ function MyPage({ className }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user, shallowEqual);
 
-  const handleUserNameFormSubmit = async ({ username }, errors) => {
+  const handleUserNameFormSubmit = async ({ username }) => {
     const newUserInfo = await updateUsername(username);
     dispatch(createAction(ACTION_TYPE.UPDATE_USER, newUserInfo));
   };
 
-  const handlePasswordFormSubmit = async (data, errors) => {
+  const handlePasswordFormSubmit = async (data) => {
     const [oldPW, newPW, newPWForConfirm] = [
       data["old-password"],
       data["new-password"],
@@ -52,8 +52,7 @@ function MyPage({ className }) {
     window.location.href = "/login";
   };
 
-  const handleSecessionFormSubmit = async (data, errors) => {
-    console.log("data : ", data);
+  const handleSecessionFormSubmit = async (data) => {
     const result = window.confirm("정말 탈퇴 하시겠습니까?");
     if (!result) return;
     const password = data["password-for-secession"];

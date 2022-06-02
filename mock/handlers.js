@@ -68,7 +68,7 @@ export const handlers = [
   }),
 
   // 로그인
-  rest.post("/api/auth/login", (req, res, ctx) => {
+  rest.post("/api/auth/login", (req, res) => {
     const { email, password } = req.body;
     if (!isValidUser({ email, password })) {
       return res((res) => {
@@ -91,7 +91,7 @@ export const handlers = [
   }),
 
   // 사용자 정보 가져오기
-  rest.post("/api/customers/me", (req, res, ctx) => {
+  rest.post("/api/customers/me", (req, res) => {
     const {
       headers: { _headers },
     } = req;
@@ -133,7 +133,7 @@ export const handlers = [
   }),
 
   // 사용자 이름을 수정한다
-  rest.patch("/api/customers/me", (req, res, ctx) => {
+  rest.patch("/api/customers/me", (req, res) => {
     const {
       url,
       headers: { _headers },
@@ -221,13 +221,12 @@ export const handlers = [
     }
   }),
 
-  rest.delete("/api/customers/me", (req, res, ctx) => {
+  rest.delete("/api/customers/me", (req, res) => {
     const {
       headers: { _headers },
       body: { password },
     } = req;
 
-    // accessToken 존재 여부 확인
     if (!_headers.authorization) {
       return res((res) => {
         res.status = 401;
