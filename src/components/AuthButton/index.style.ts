@@ -19,6 +19,4 @@ const Styled = {
   `,
 };
 
-// is
-
 export default Styled;

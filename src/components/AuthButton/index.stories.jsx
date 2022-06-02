@@ -10,8 +10,6 @@ const Template = args => <AuthButton {...args} />;
 export const AuthButtonTemplate = Template.bind({});
 AuthButtonTemplate.args = {
   actionType: 'Login',
-  action: () => {
-    console.log('hi');
-  },
+  action: () => {},
   isDisabled: true,
 };

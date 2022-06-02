@@ -14,7 +14,6 @@ export const EmailTemplate = Template.bind({});
 EmailTemplate.args = {
   label: 'Email Address',
   icon: <EmailIcon />,
-  // validator: emailValidator,
 };
 
 export const NicknameTemplate = Template.bind({});
