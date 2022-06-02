@@ -1,5 +1,6 @@
 import { userActionType } from 'store/reducers/user.reducer';
 
+import customInstance from 'api/customInstance';
 import {
   sendDeleteUserRequest,
   sendLoginRequest,
@@ -24,6 +25,8 @@ export const loginUserThunk = (loginData) => async (dispatch) => {
 export const logoutUser = () => {
   window.sessionStorage.removeItem('nickname');
   window.sessionStorage.removeItem('token');
+
+  delete customInstance.defaults.headers.common['Authorization'];
 
   return {
     type: userActionType.LOGOUT,
