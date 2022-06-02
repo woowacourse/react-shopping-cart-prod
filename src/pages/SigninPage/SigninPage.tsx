@@ -1,12 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button/Button';
 import Input from '../../components/Input/Input';
 import * as S from './SigninPage.styled';
 import axios from 'axios';
+import PlainLink from '../../components/PlainLink/PlainLink';
 
 type SigninResponseBody = { accessToken: string; userId: number };
 
 function SigninPage() {
+  const navigate = useNavigate();
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
@@ -20,6 +23,7 @@ function SigninPage() {
 
       const accessToken = response.data.accessToken;
       localStorage.setItem('accessToken', accessToken);
+      navigate('/');
     } catch (e) {
       if (axios.isAxiosError(e)) {
         alert('유효하지 않은 이메일 형식입니다.');
@@ -49,9 +53,11 @@ function SigninPage() {
         </S.Section>
         <S.Section>
           <Button type="submit">로그인</Button>
-          <Button type="button" color="white">
-            회원가입
-          </Button>
+          <PlainLink to="/signup/1">
+            <Button type="button" color="white">
+              회원가입
+            </Button>
+          </PlainLink>
         </S.Section>
       </S.Form>
     </S.PageBox>

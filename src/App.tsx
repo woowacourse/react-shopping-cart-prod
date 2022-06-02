@@ -9,6 +9,7 @@ import MainPage from './pages/MainPage/MainPage';
 import ProductPage from './pages/ProductPage/ProductPage';
 import CartPage from './pages/CartPage/CartPage';
 import SignupPage from './pages/SignupPage/SignupPage';
+import SigninPage from './pages/SigninPage/SigninPage';
 import SignupStep from './pages/SignupPage/SignupStep';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import { PATHS } from './constants/paths';
@@ -24,10 +25,11 @@ function App() {
             <Route path={PATHS.INDEX} element={<MainPage />} />
             <Route path={PATHS.PRODUCT} element={<ProductPage />} />
             <Route path={PATHS.CART} element={<CartPage />} />
-            <Route path={PATHS.DEFAULT} element={<NotFoundPage />} />
+            <Route path={PATHS.SIGNIN} element={<SigninPage />} />
             <Route path={PATHS.SIGNUP} element={<SignupPage />}>
               <Route path={':stepId'} element={<SignupStep />} />
             </Route>
+            <Route path={PATHS.DEFAULT} element={<NotFoundPage />} />
           </Routes>
         </StyledContent>
       </ThemeProvider>
