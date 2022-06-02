@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Container from 'components/@shared/Container';
 import Input from 'components/Input';
 import Title from 'components/Title';
@@ -6,14 +7,21 @@ import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 import AuthButton from 'components/AuthButton';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { validateNickname } from 'utils/validator';
 import PasswordEditModal from './PasswordEditModal';
 import AccountDeleteModal from './AccountDeleteModal';
 import axios from 'axios';
 import { getCookie } from 'utils/cookie';
+import store from 'store/store';
+import { doLogin } from 'actions/actionCreator';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AccountPage = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(state => state.authReducer);
+
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
 
@@ -21,6 +29,12 @@ const AccountPage = () => {
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isAccountDeleteModalOpen, setIsAccountDeleteModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
 
   const updateProfile = async () => {
     if (!isNicknameCorrect) return;
@@ -38,8 +52,7 @@ const AccountPage = () => {
         },
       },
     );
-
-    console.log(response);
+    store.dispatch(doLogin({ nickname: response.data.nickname }));
   };
 
   return (

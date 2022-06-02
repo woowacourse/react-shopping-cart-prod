@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -11,8 +12,12 @@ import {
 } from 'actions/actionCreator';
 import empty from 'assets/empty.jpeg';
 import Styled from 'page/CartPage/index.style';
+import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(state => state.authReducer);
+
   const { products, shoppingCart, order } = useSelector(state => state.reducer);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -32,6 +37,12 @@ const CartPage = () => {
   useEffect(() => {
     setTotalPrice(calculateTotalPrice());
   }, [calculateTotalPrice]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {

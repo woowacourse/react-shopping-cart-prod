@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Styled from './index.style';
 import Input from 'components/Input';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
@@ -10,10 +11,24 @@ import Container from 'components/@shared/Container';
 import axios from 'axios';
 import { setCookie } from 'utils/cookie';
 
+import { useNavigate } from 'react-router-dom';
+import store from 'store/store';
+import { doLogin } from 'actions/actionCreator';
+import { useSelector } from 'react-redux';
+
 const LoginPage = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(state => state.authReducer);
+
   const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     if (email.length >= 3 && password.length >= 10) {
@@ -33,6 +48,8 @@ const LoginPage = () => {
       });
 
       setCookie('accessToken', response.data.accessToken);
+      store.dispatch(doLogin({ nickname: response.data.nickname }));
+      navigate('/');
     } catch (error) {}
   };
 

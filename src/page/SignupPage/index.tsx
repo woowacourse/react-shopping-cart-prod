@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect } from 'react';
 import Styled from './index.style';
 import Input from 'components/Input';
@@ -10,8 +11,13 @@ import AuthButton from 'components/AuthButton';
 import Container from 'components/@shared/Container';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useSelector(state => state.authReducer);
+
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
@@ -20,6 +26,12 @@ const SignupPage = () => {
   const [isEmailCorrect, setIsEmailCorrect] = useState(false);
   const [isNicknameCorrect, setIsNicknameCorrect] = useState(false);
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/');
+    }
+  }, [isAuthenticated, navigate]);
 
   useEffect(() => {
     setIsFulfilled(isEmailCorrect && isNicknameCorrect && isPasswordCorrect);
