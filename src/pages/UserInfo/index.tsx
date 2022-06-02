@@ -1,6 +1,5 @@
+import { Button, Form, Input } from '../../components/@shared';
 import PageLayout from '../../components/PageLayout';
-import Form from '../../components/@shared/Form';
-import Input from '../../components/@shared/Input';
 
 function UserInfo() {
   return (

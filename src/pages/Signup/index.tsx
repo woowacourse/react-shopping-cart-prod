@@ -1,5 +1,4 @@
-import Form from '../../components/@shared/Form';
-import Input from '../../components/@shared/Input';
+import { Button, Form, Input } from '../../components/@shared';
 import PageLayout from '../../components/PageLayout';
 
 function Signup() {

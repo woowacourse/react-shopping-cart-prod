@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { CartItem, decrement, deleteItem, increment, selectItem } from '../../redux/modules/cart';
-import CheckBox from '../@shared/CheckBox/styles';
+import { CheckBox } from '../@shared';
 import { INFO_MESSAGES, PRODUCT } from '../../constants';
 import Delete from '../../assets/Delete.png';
 import {
