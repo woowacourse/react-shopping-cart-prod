@@ -1,9 +1,22 @@
 import { Link } from 'react-router-dom';
-import Logo from '../../assets/Logo.png';
 import routes from '../../routes';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { logout } from '../../redux/modules/customer';
+
 import { NavBarContainer, NavBarTitle, NavBarMenu } from './styles';
+import Logo from '../../assets/Logo.png';
 
 function NavBar() {
+  const { isLoggedIn } = useSelector((state: RootState) => state.customer);
+  const dispatch = useDispatch();
+
+  const onClickLogout = () => {
+    document.cookie = 'accessToken=';
+    dispatch(logout());
+  };
+
   return (
     <NavBarContainer>
       <NavBarTitle to={routes.home}>
@@ -13,7 +26,8 @@ function NavBar() {
       <NavBarMenu>
         <Link to={routes.cart}>장바구니</Link>
         <Link to={routes.orderList}>주문목록</Link>
-        <Link to={routes.login}>로그인</Link>
+        {!isLoggedIn && <Link to={routes.login}>로그인</Link>}
+        {isLoggedIn && <button onClick={onClickLogout}>로그아웃</button>}
       </NavBarMenu>
     </NavBarContainer>
   );
