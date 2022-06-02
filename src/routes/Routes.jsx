@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { ROUTES_PATH } from '../constants';
 import Loading from '../components/Loading';
+import RequireAuth from '../components/RequireAuth';
 
 const Loadable = (Component) => (props) =>
   (
@@ -41,15 +42,27 @@ const routes = [
   },
   {
     path: ROUTES_PATH.USER_INFO,
-    element: <UserInfoPage />,
+    element: (
+      <RequireAuth>
+        <UserInfoPage />
+      </RequireAuth>
+    ),
   },
   {
     path: ROUTES_PATH.MODIFY_PASSWORD,
-    element: <ModifyPasswordPage />,
+    element: (
+      <RequireAuth>
+        <ModifyPasswordPage />
+      </RequireAuth>
+    ),
   },
   {
     path: ROUTES_PATH.MODIFY_USER_INFO,
-    element: <ModifyUserInfoPage />,
+    element: (
+      <RequireAuth>
+        <ModifyUserInfoPage />
+      </RequireAuth>
+    ),
   },
 ];
 
