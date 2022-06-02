@@ -12,7 +12,7 @@ const useProfile = () => {
   });
 
   const updateName = (name) => {
-    updateNameApi('', name);
+    updateNameApi({ payload: { name } });
   };
 
   return { isUpdateNameSucceed, isUpdateNameError, updateName };

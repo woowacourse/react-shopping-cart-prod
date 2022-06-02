@@ -21,11 +21,11 @@ const useModifyProfilePage = () => {
   });
 
   const updatePassword = (oldPassword, newPassword) => {
-    updatePasswordApi('', { oldPassword, newPassword });
+    updatePasswordApi({ payload: { oldPassword, newPassword } });
   };
 
   const unregister = (password) => {
-    unregisterApi('', password);
+    unregisterApi({ payload: password });
   };
   return {
     isUpdatePasswordSucceed,

@@ -9,12 +9,12 @@ const useFetch = ({ method, url, handler }) => {
   const [isError, setIsError] = useState(false);
   const [data, setData] = useState(null);
 
-  const fetchApi = async (params = '', payload = {}) => {
+  const fetchApi = async ({ params = '', payload = {} } = {}) => {
     setIsLoading(true);
     setIsError(false);
     setIsSucceed(false);
     try {
-      const { data } = await apiClient[method](`${url}/${params}`,payload);
+      const { data } = await apiClient[method](`${url}/${params}`, payload);
       setData(data);
       setIsSucceed(true);
     } catch (error) {

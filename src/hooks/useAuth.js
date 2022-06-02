@@ -46,11 +46,11 @@ const useAuth = () => {
   };
 
   const login = (email, password) => {
-    loginApi('', { email, password });
+    loginApi({ payload: { email, password } });
   };
 
   const signUp = (data) => {
-    signUpApi('', data);
+    signUpApi({ payload: data });
   };
 
   const logout = () => {

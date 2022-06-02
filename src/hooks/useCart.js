@@ -31,7 +31,7 @@ const useCart = () => {
   };
 
   const deleteItem = (id) => {
-    deleteItemApi(id);
+    deleteItemApi({ params: id });
   };
 
   const deleteItems = (idList) => {
@@ -39,11 +39,11 @@ const useCart = () => {
   };
 
   const updateItemQuantity = (id, quantity) => {
-    updateItemApi(`${id}/${quantity}`);
+    updateItemApi({ params: `${id}/${quantity}` });
   };
 
   const addItem = (id) => {
-    addItemApi(id);
+    addItemApi({ params: id });
   };
 
   return {
