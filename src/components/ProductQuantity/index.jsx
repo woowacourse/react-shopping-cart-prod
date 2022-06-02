@@ -26,7 +26,7 @@ const ProductQuantity = ({
   const dispatch = useDispatch();
   const [showQuantity, setShowQuantity] = useState(false);
   const [quantity, setQuantity] = useState(cartQuantity);
-  const { isOpened } = useSelector((state) => state.productQuantity);
+  const { openCount } = useSelector((state) => state.productQuantity);
 
   const handleClickMinusButton = debounce(
     useCallback(async () => {
@@ -41,7 +41,7 @@ const ProductQuantity = ({
       setQuantity(quantity - 1);
       dispatch(onMessage(SNACKBAR_MESSAGE.deleteProduct(productTitle)));
     }, [dispatch, productId, quantity]),
-    150
+    150,
   );
 
   const handleClickAddButton = debounce(
@@ -55,7 +55,7 @@ const ProductQuantity = ({
       setQuantity(quantity + 1);
       dispatch(onMessage(SNACKBAR_MESSAGE.addProduct(productTitle)));
     }, [dispatch, productId, quantity]),
-    150
+    150,
   );
 
   const handleClickCartImage = useCallback(async () => {
@@ -72,13 +72,13 @@ const ProductQuantity = ({
     quantity === 0 &&
       !showQuantity &&
       dispatch(onMessage(SNACKBAR_MESSAGE.addProduct(productTitle)));
-  }, [showQuantity, quantity]);
+  }, [dispatch, showQuantity, quantity]);
 
   useEffect(() => {
-    if (isOpened) {
+    if (openCount) {
       setShowQuantity(false);
     }
-  }, [isOpened]);
+  }, [openCount]);
 
   return (
     <Wrapper showQuantity={showQuantity}>
