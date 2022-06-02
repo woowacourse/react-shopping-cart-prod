@@ -1,3 +1,4 @@
+import { ALERT_MESSAGE } from 'constants/index';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +13,7 @@ const withAuthPage = (Component, canAccessOnLogin: boolean) => {
     useEffect(() => {
       if (canAccess) {
         navigate(PATH.home);
-        alert('잘못된 접근입니다.');
+        alert(ALERT_MESSAGE.WRONG_ACCESS);
       }
     }, [isLogin]);
 

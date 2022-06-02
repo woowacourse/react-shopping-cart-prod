@@ -2,6 +2,7 @@ import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import withAuthPage from 'components/hoc/withAuthPage';
+import { ALERT_MESSAGE } from 'constants/index';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
@@ -33,7 +34,7 @@ const Signup = () => {
         })
       );
 
-      alert(`${name}님 회원가입 축하드립니다.`);
+      alert(ALERT_MESSAGE.SIGNUP_SUCCESS(name));
       navigate(PATH.home);
 
       return;

@@ -2,6 +2,11 @@ import { AUTH_BASE_URL } from 'apis';
 import { rest } from 'msw';
 import type { LoginResponse, UserInfo, UserInfoWithPassword } from 'types/domain';
 
+const MOCK_ERROR_MESSAGE = {
+  LOGIN_FAILURE: '로그인에 실패하였습니다.',
+  PASSWORD_FAILURE: '비밀번호를 다시 확인해주세요',
+};
+
 export const authHandler = [
   // 회원가입
   rest.post<UserInfoWithPassword, null, UserInfo>(`${AUTH_BASE_URL}/customers`, (req, res, ctx) => {
@@ -29,7 +34,7 @@ export const authHandler = [
         return res(ctx.status(200), ctx.json({ name: authenticatedUser.name, accessToken: 'fff' }));
       }
 
-      return res(ctx.status(401), ctx.body('로그인에 실패하였습니다.'));
+      return res(ctx.status(401), ctx.body(MOCK_ERROR_MESSAGE.LOGIN_FAILURE));
     }
   ),
 
@@ -60,7 +65,7 @@ export const authHandler = [
         );
       }
 
-      return res(ctx.status(400), ctx.body('비밀번호를 다시 확인해주세요'));
+      return res(ctx.status(400), ctx.body(MOCK_ERROR_MESSAGE.PASSWORD_FAILURE));
     }
   ),
 
@@ -79,7 +84,7 @@ export const authHandler = [
         return res(ctx.status(204));
       }
 
-      return res(ctx.status(400), ctx.body('비밀번호를 다시 확인해주세요'));
+      return res(ctx.status(400), ctx.body(MOCK_ERROR_MESSAGE.PASSWORD_FAILURE));
     }
   ),
 ];

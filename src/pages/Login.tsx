@@ -1,6 +1,7 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
+import { ALERT_MESSAGE } from 'constants/index';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
@@ -37,16 +38,17 @@ const Login = () => {
     isLogining.current = true;
   };
 
+  // @TODO: withAuthPage HOC로 분리
   useEffect(() => {
     if (isLogin && !isLogining.current) {
-      alert('잘못된 접근입니다.');
+      alert(ALERT_MESSAGE.WRONG_ACCESS);
       navigate(PATH.home);
     }
   }, [isLogin, navigate]);
 
   useEffect(() => {
     if (name && isLogining.current) {
-      alert(`${name}님 로그인 되었습니다.`);
+      alert(ALERT_MESSAGE.LOGIN_SUCCESS(name));
       navigate(PATH.home);
     }
   }, [name, navigate]);
