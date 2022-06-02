@@ -9,6 +9,7 @@ const GridContainer = styled.div`
   grid-template-columns: 1.5fr 1fr;
   gap: 50px;
   margin: 0 10px;
+  width: 100%;
 `;
 
 export { GridContainer, CartPageContainer };

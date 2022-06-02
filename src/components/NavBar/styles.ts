@@ -35,7 +35,7 @@ const NavBarTitle = styled(Link)`
 
 const NavBarMenu = styled.div`
   ${spaceBetween};
-  width: 160px;
+  gap: 20px;
   font-weight: 500;
   font-size: 20px;
   color: ${({ theme }) => theme.colors.GRAY_50};

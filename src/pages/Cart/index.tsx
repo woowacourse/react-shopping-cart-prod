@@ -1,19 +1,20 @@
 import { useNavigate } from 'react-router-dom';
+import routes from '../../routes';
+
 import { useCartAmount } from '../../hooks/useCartSelector';
 
-import PageTitle from '../../components/PageTitle/styles';
 import CartProductList from '../../components/CartProductList';
+import PageLayout from '../../components/PageLayout';
 import PaymentBox from '../../components/PaymentBox';
-import routes from '../../routes';
-import { GridContainer, CartPageContainer } from './styles';
+
+import { GridContainer } from './styles';
 
 function Cart() {
   const navigate = useNavigate();
   const totalAmount = useCartAmount();
 
   return (
-    <CartPageContainer>
-      <PageTitle>장바구니</PageTitle>
+    <PageLayout title="장바구니">
       <GridContainer>
         <CartProductList />
         <PaymentBox
@@ -24,7 +25,7 @@ function Cart() {
           buttonName="주문하기"
         />
       </GridContainer>
-    </CartPageContainer>
+    </PageLayout>
   );
 }
 

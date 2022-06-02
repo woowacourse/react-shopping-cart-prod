@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import routes from './routes';
+
 import { useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 
@@ -15,7 +17,6 @@ import {
   Signup,
   UserInfo,
 } from './pages';
-import routes from './routes';
 
 function App() {
   const { isShowSnackBar, message } = useSelector((state: RootState) => state.snackBar);
