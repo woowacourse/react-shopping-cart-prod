@@ -74,6 +74,15 @@ const reducer = (state, { type, payload }) => {
       localStorage.setItem("cart", JSON.stringify(newState.cart));
       return newState;
     }
+    case ACTION_TYPE.UPDATE_USER: {
+      const newState = structuredClone(state);
+      newState.user = {
+        ...state.user,
+        email: payload.email,
+        username: payload.username,
+      };
+      return newState;
+    }
     default: {
       return state;
     }
