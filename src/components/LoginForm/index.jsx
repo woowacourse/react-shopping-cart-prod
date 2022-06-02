@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { Spinner, SpinnerWrapper } from 'styles/Spinner';
 import Button from 'styles/Button';
-import Wrapper, { SignUpLink } from './styles';
+import Wrapper from './styles';
 import ErrorWrapper from 'styles/ErrorWrapper';
+import { TextLink } from 'styles/TextLink';
 
 import Input from 'components/Input';
 
@@ -115,7 +116,7 @@ const LoginForm = () => {
         </ErrorWrapper>
       )}
       <div className="link-wrapper">
-        <SignUpLink to="/signUp">회원가입</SignUpLink>
+        <TextLink to="/signUp">회원가입</TextLink>
       </div>
       {error && (
         <ErrorWrapper>

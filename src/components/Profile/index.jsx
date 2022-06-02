@@ -9,6 +9,7 @@ import Input from 'components/Input';
 import ErrorMessage from 'components/ErrorMessage';
 
 import Wrapper from './style';
+import { TextLink } from 'styles/TextLink';
 
 import { onMessage } from 'reducers/snackbar';
 
@@ -22,7 +23,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleNameChange = useCallback(({ target }) => {
@@ -80,12 +81,15 @@ const Profile = () => {
         />
         <ErrorMessage validation={() => isEmpty(name) && checkName(name)} />
       </div>
+      <div className="link-wrapper">
+        <TextLink to="/withdrawal">회원탈퇴</TextLink>
+      </div>
       {error && (
         <ErrorWrapper>
           <p>{error}</p>
         </ErrorWrapper>
       )}
-      <Button disabled={!name && isInvalidName(name)}>변경</Button>
+      <Button disabled={!name || isInvalidName(name)}>변경</Button>
     </Wrapper>
   );
 };

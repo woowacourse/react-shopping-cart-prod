@@ -22,4 +22,10 @@ export default styled.form`
   button {
     margin-top: 15px;
   }
+
+  .link-wrapper {
+    width: 100%;
+    text-align: right;
+    margin-bottom: 15px;
+  }
 `;
