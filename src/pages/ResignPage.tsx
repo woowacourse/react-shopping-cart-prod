@@ -22,9 +22,9 @@ const ResignPage = () => {
 
   useUpdateEffect(() => {
     if (!error) {
-      navigate(PATH.main);
+      navigate(PATH.default);
     }
-  }, [error]);
+  }, [loading, error]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

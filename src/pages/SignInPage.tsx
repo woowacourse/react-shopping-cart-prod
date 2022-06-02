@@ -24,9 +24,9 @@ const SignInPage = () => {
 
   useUpdateEffect(() => {
     if (!error) {
-      navigate(PATH.main);
+      navigate(PATH.default);
     }
-  }, [error]);
+  }, [data]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

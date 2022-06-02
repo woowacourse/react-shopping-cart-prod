@@ -10,6 +10,7 @@ import ResignPage from 'pages/ResignPage';
 
 export const PATH = {
   notFound: '*',
+  default: '/',
   main: '/main/:id',
   itemDetail: '/item_detail/:id',
   cart: '/cart',

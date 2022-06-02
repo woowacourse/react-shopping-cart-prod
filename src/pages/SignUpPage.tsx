@@ -1,7 +1,7 @@
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 import styled from 'styled-components';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
@@ -29,7 +29,7 @@ const SignUpPage = () => {
     if (!error) {
       navigate(PATH.signIn);
     }
-  }, [error]);
+  }, [loading, error]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

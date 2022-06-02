@@ -4,7 +4,7 @@ const useUpdateEffect = (callbackFunc: () => any, dependancy: any[]) => {
   const isFirstTime = useRef(true);
 
   useEffect(() => {
-    if (!isFirstTime) {
+    if (!isFirstTime.current) {
       return callbackFunc();
     }
     isFirstTime.current = false;
