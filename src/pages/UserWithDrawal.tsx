@@ -17,6 +17,7 @@ const UserWithDrawal = () => {
   const { data, error } = useAppSelector(state => state.user);
   const navigate = useNavigate();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const isLogin = useAppSelector(state => !!state.user.data);
 
   const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,6 +36,15 @@ const UserWithDrawal = () => {
       dispatch(resetError());
     }
   }, [error]);
+
+  useEffect(() => {
+    if (!isLogin) {
+      alert('잘못된 접근입니다.');
+      navigate(PATH.home);
+    }
+  }, [isLogin]);
+
+  if (!isLogin) return null;
 
   return (
     <AuthPage title='회원 탈퇴' onSubmitAuthForm={onSubmitForm}>
