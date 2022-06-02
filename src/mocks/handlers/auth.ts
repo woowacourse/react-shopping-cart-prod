@@ -65,6 +65,21 @@ export const authHandler = [
       return res(ctx.status(400), ctx.body('비밀번호를 다시 확인해주세요'));
     }
   ),
+
+  rest.delete<Pick<UserInfoWithPassword, 'password'>, null, null | string>(
+    `${AUTH_BASE_URL}/customer/me`,
+    (req, res, ctx) => {
+      const { password } = req.body;
+
+      const authenticatedUser = users.find(user => user.password === password);
+
+      if (authenticatedUser) {
+        return res(ctx.status(204));
+      }
+
+      return res(ctx.status(400), ctx.body('비밀번호를 다시 확인해주세요'));
+    }
+  ),
 ];
 
 // mock data
