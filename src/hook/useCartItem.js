@@ -1,3 +1,4 @@
+import {CONFIRM_MESSAGE} from 'constant';
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
@@ -20,7 +21,7 @@ export default function useCartItem(path = null) {
   const {fetch: patchCart} = useFetch('patch');
 
   const deleteCartItem = (payload) => {
-    const deleteConfirm = window.confirm('장바구니에서 삭제하시겠습니까?');
+    const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
 
     if (deleteConfirm) {
       dispatch({type: CART.DELETE, payload});
@@ -83,7 +84,7 @@ export default function useCartItem(path = null) {
   };
 
   const deleteSelectedCart = (payload) => {
-    const deleteConfirm = window.confirm('장바구니에서 삭제하시겠습니까?');
+    const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
 
     if (deleteConfirm) {
       dispatch({type: SELECTED_ITEM.DELETE_ALL});

@@ -5,7 +5,7 @@ import Input from 'component/common/Input';
 import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
-import {ERROR_MESSAGE, PATH} from 'constant';
+import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
 import {useNavigate} from 'react-router-dom';
 
 function UserInfoEditPage() {
@@ -16,31 +16,31 @@ function UserInfoEditPage() {
 
   const [onChangeNickname, restNickname] = useControlledInput({
     initialError: false,
-    message: '2~10자만 입력 가능합니다.',
+    message: VALIDATION_MESSAGE.NICKNAME,
     isError: (nickName) => nickName.length < 2 || nickName.length > 10,
   });
 
   const [onChangeAddress, restAddress] = useControlledInput({
     initialError: false,
-    message: '255자 이하로 작성해주세요.',
+    message: VALIDATION_MESSAGE.ADDRESS,
     isError: (address) => address.length > 255,
   });
 
   const [onChangeStartNumber, restStartNumber] = useControlledInput({
     initialError: false,
-    message: '3자리 숫자',
+    message: VALIDATION_MESSAGE.THREE_LENGTH_NUMBER,
     isError: (number) => number.length !== 3 || !Number.parseInt(number),
   });
 
   const [onChangeMiddleNumber, restMiddleNumber] = useControlledInput({
     initialError: false,
-    message: '4자리 숫자',
+    message: VALIDATION_MESSAGE.FOUR_LENGTH_NUMBER,
     isError: (number) => number.length !== 4 || !Number.parseInt(number),
   });
 
   const [onChangeLastNumber, restLastNumber] = useControlledInput({
     initialError: false,
-    message: '4자리 숫자',
+    message: VALIDATION_MESSAGE.FOUR_LENGTH_NUMBER,
     isError: (number) => number.length !== 4 || !Number.parseInt(number),
   });
 
