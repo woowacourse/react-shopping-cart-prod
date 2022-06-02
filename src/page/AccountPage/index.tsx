@@ -31,10 +31,26 @@ const AccountPage = () => {
   const [isAccountDeleteModalOpen, setIsAccountDeleteModalOpen] = useState(false);
 
   useEffect(() => {
+    getProfile();
+  }, []);
+
+  useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
     }
   }, [isAuthenticated, navigate]);
+
+  const getProfile = async () => {
+    const accessToken = getCookie('accessToken');
+
+    const response = await axios.get('/customers', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    setEmail(response.data.email);
+  };
 
   const updateProfile = async () => {
     if (!isNicknameCorrect) return;
