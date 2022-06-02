@@ -32,16 +32,18 @@ export default styled.section`
 
   .nav {
     height: 100%;
+    display: flex;
+    gap: 20px;
+    & button:last-of-type {
+      margin-right: 0;
+    }
   }
 
   .nav button {
+    margin-right: 40px;
     font-size: 2.4rem;
     font-weight: 500;
     color: white;
-
-    &:first-child {
-      margin-right: 43px;
-    }
   }
 
   @media screen and (max-width: 1000px) {
@@ -49,6 +51,10 @@ export default styled.section`
 
     .home button {
       font-size: 3rem;
+    }
+
+    .nav {
+      gap: 10px;
     }
 
     .nav button {
@@ -65,10 +71,6 @@ export default styled.section`
 
     .nav button {
       font-size: 1.8rem;
-
-      &:first-child {
-        margin-right: 20px;
-      }
     }
   }
 `;

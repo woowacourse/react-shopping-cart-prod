@@ -7,7 +7,7 @@ import Wrapper from './style';
 import { PATH } from 'constants';
 
 const Header = () => {
-  const { accessToken } = useSelector((state) => state.user);
+  const accessToken = useSelector((state) => state.user.accessToken);
 
   return (
     <Wrapper>
@@ -29,7 +29,7 @@ const Header = () => {
             </Link>
           </>
         )}
-        {accessToken || (
+        {!accessToken && (
           <>
             <Link to={PATH.LOGIN}>
               <button>로그인</button>
