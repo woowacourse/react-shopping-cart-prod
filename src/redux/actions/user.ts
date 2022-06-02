@@ -19,6 +19,10 @@ export enum UserActionType {
   PATCH_NEW_PASSWORD_SUCCESS = 'user/PATCH_NEW_PASSWORD_SUCCESS',
   PATCH_NEW_PASSWORD_FAILURE = 'user/PATCH_NEW_PASSWORD_FAILURE',
 
+  DELETE_USER_START = 'user/DELETE_USER_START',
+  DELETE_USER_SUCCESS = 'user/DELETE_USER_SUCCESS',
+  DELETE_USER_FAILURE = 'user/DELETE_USER_FAILURE',
+
   SIGN_OUT_ACTION = 'user/SIGN_OUT',
 }
 
@@ -75,6 +79,17 @@ interface PatchNewPasswordFailure {
   type: UserActionType.PATCH_NEW_PASSWORD_FAILURE;
 }
 
+interface DeleteUserStart {
+  type: UserActionType.DELETE_USER_START;
+}
+
+interface DeleteUserSuccess {
+  type: UserActionType.DELETE_USER_SUCCESS;
+}
+interface DeleteUserFailure {
+  type: UserActionType.DELETE_USER_FAILURE;
+}
+
 export type UserAction =
   | PostSignUpStart
   | PostSignUpSuccess
@@ -88,4 +103,7 @@ export type UserAction =
   | PatchUserInfoFailure
   | PatchNewPasswordStart
   | PatchNewPasswordSuccess
-  | PatchNewPasswordFailure;
+  | PatchNewPasswordFailure
+  | DeleteUserStart
+  | DeleteUserSuccess
+  | DeleteUserFailure;

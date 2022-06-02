@@ -57,6 +57,23 @@ export const editPassword =
     }
   };
 
+export const resign = (password: string) => async (dispatch: Dispatch<UserAction>) => {
+  dispatch({ type: UserActionType.DELETE_USER_START });
+
+  try {
+    const response = await axios({
+      method: 'delete',
+      url: `${LOCAL_BASE_URL}/users/me`,
+      data: password,
+    });
+
+    dispatch({ type: UserActionType.DELETE_USER_SUCCESS });
+  } catch (e) {
+    dispatch({ type: UserActionType.DELETE_USER_FAILURE, payload: e.message });
+    alert(e.response.data.errorMessage);
+  }
+};
+
 /*
 export const editProfile = (editInfo: UserInfo) => async (dispatch: Dispatch<UserAction>) => {
   dispatch({ type: UserActionType.PATCH_USER_INFO_START });

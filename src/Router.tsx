@@ -7,6 +7,7 @@ import SignInPage from 'pages/SignInPage';
 import SignUpPage from 'pages/SignUpPage';
 import EditProfilePage from 'pages/EditProfilePage';
 import EditPasswordPage from 'pages/EditPasswordPage';
+import ResignPage from 'pages/ResignPage';
 
 const PATH = {
   notFound: '*',
@@ -17,6 +18,7 @@ const PATH = {
   signUp: '/signUp',
   editProfile: '/editProfile',
   editPassword: '/editPassword',
+  resign: '/resign',
 };
 
 const Router = () => {
@@ -30,6 +32,7 @@ const Router = () => {
       <Route path={PATH.signUp} element={<SignUpPage />} />
       <Route path={PATH.editProfile} element={<EditProfilePage />} />
       <Route path={PATH.editPassword} element={<EditPasswordPage />} />
+      <Route path={PATH.resign} element={<ResignPage />} />
       <Route path={PATH.notFound} element={<NotFound />} />
     </Routes>
   );

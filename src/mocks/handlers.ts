@@ -113,4 +113,14 @@ export const handlers = [
 
     return res(ctx.status(200));
   }),
+
+  rest.delete(`${LOCAL_BASE_URL}/users/me`, (req, res, ctx) => {
+    const passwordInput = req.body;
+    const targetUser = mockUserList.find(user => user.password === passwordInput);
+
+    mockUserList = mockUserList.filter(user => user.email !== targetUser.email);
+    console.log(mockUserList);
+
+    return res(ctx.status(200));
+  }),
 ];

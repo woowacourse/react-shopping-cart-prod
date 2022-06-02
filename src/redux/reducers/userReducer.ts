@@ -35,6 +35,13 @@ export const userReducer = (state = initialState, action: UserAction) => {
     case UserActionType.PATCH_NEW_PASSWORD_FAILURE:
       return { loading: false, error: true, data: state.data };
 
+    case UserActionType.DELETE_USER_START:
+      return { loading: true, error: null, data: state.data };
+    case UserActionType.DELETE_USER_SUCCESS:
+      return { ...initialState };
+    case UserActionType.DELETE_USER_FAILURE:
+      return { loading: false, error: true, data: state.data };
+
     /*case UserActionType.PATCH_USER_INFO_START:
       return { loading: true, error: null, data: state };
     case UserActionType.PATCH_USER_INFO_SUCCESS:
