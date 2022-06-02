@@ -3,7 +3,8 @@ export const SNACKBAR_MESSAGE = {
   deleteProduct: (title) => `장바구니에 ${title} 상품 삭제!`,
   clearProduct: (title) => `장바구니에 ${title} 상품 완전 삭제!`,
   deletesProduct: () => `장바구니에 체크된 상품들 완전 삭제!`,
-  successLogin: () => '로그인 되었습니다!',
+  successLogin: () => '로그인!',
+  successUpdateUser: () => '프로필 수정이 완료!',
 };
 
 export const PAGING = {

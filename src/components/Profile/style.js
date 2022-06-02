@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export default styled.form`
   position: relative;
   width: 440px;
+  height: fit-content;
   padding: 80px 50px;
   border: 1px solid ${({ theme }) => theme.gray_100};
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Button from 'styles/Button';
 import ErrorWrapper from 'styles/ErrorWrapper';
@@ -9,11 +10,16 @@ import ErrorMessage from 'components/ErrorMessage';
 
 import Wrapper from './style';
 
+import { onMessage } from 'reducers/snackbar';
+
 import { checkName, isInvalidName, isEmpty } from 'utils/validation';
 
 import * as API from 'service';
 
+import { SNACKBAR_MESSAGE } from 'constants';
+
 const Profile = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(true);
@@ -29,6 +35,7 @@ const Profile = () => {
     setLoading(true);
     try {
       await API.updateUser({ email, name });
+      dispatch(onMessage(SNACKBAR_MESSAGE.successUpdateUser()));
     } catch (e) {
       setError(e.message);
     } finally {
@@ -78,7 +85,7 @@ const Profile = () => {
           <p>{error}</p>
         </ErrorWrapper>
       )}
-      <Button disabled={!name && isInvalidName(name)}>프로필</Button>
+      <Button disabled={!name && isInvalidName(name)}>변경</Button>
     </Wrapper>
   );
 };

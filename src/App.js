@@ -6,7 +6,11 @@ import GlobalStyle from 'styles/GlobalStyle';
 
 import Router from './Router';
 
+import * as API from './service';
+
 const App = () => {
+  API.initToken();
+
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />

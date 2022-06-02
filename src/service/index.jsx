@@ -48,3 +48,8 @@ export const setToken = (accessToken) => {
   localStorage.setItem('accessToken', accessToken);
   axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
 };
+
+export const initToken = () => {
+  const accessToken = localStorage.getItem('accessToken');
+  accessToken && setToken(accessToken);
+};

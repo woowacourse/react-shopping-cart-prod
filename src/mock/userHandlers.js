@@ -1,13 +1,11 @@
 import { rest } from 'msw';
 
-const createToken = () => Date.now();
-
 const users = [
   {
     name: 'test',
     email: 'test@gmail.com',
     password: 'test1234',
-    token: '',
+    token: 1234123412341234,
   },
 ];
 
@@ -35,7 +33,6 @@ export default [
       );
     }
 
-    user.token = createToken();
     return res(
       ctx.status(200),
       ctx.json({
@@ -82,7 +79,9 @@ export default [
   }),
 
   rest.put('/api/customer', (req, res, ctx) => {
-    const token = Number(req.headers.authorization.replace('Bearer ', ''));
+    const token = Number(
+      req.headers._headers.authorization.replace('Bearer ', ''),
+    );
     const user = users.find((user) => user.token === token);
 
     if (!user) {
