@@ -56,7 +56,7 @@ function SignupPage() {
     axios
       .post(PATH.REQUEST_CUSTOMER, user)
       .then(() => {
-        navigate(PATH.BASE);
+        navigate(PATH.LOGIN);
       })
       .catch(error => {
         console.error(error);
@@ -84,21 +84,25 @@ function SignupPage() {
           <label htmlFor="password">비밀번호</label>
           <input
             id="password"
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
+            type="text"
+            placeholder="8~16자의 비밀번호(영문 소문자, 숫자, 특수문자)를 입력해주세요"
             value={password}
             onChange={handlePasswordInput}
-            pattern={'^[a-z0-9._-]+@[a-z]+[.]+[a-z]{2,3}$'}
+            pattern={
+              '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
+            }
             required
           />
           <label htmlFor="passwordCheck">비밀번호 재확인</label>
           <input
             id="passwordCheck"
-            type="password"
+            type="text"
             placeholder="비밀번호를 재입력해주세요"
             value={passwordCheck}
             onChange={handlePasswordCheckInput}
-            pattern={'\\d{3}-\\d{4}-\\d{4}'}
+            pattern={
+              '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
+            }
             required
           />
           <label htmlFor="email">이메일</label>
@@ -108,9 +112,7 @@ function SignupPage() {
             placeholder="이메일을 입력해주세요"
             value={email}
             onChange={handleEmailInput}
-            pattern={
-              '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
-            }
+            pattern={'^[a-zA-Z0-9._-/s/g]+@[a-z]+[.]+[a-z]{2,3}$'}
             required
           />
           <label htmlFor="address">주소</label>
@@ -120,7 +122,7 @@ function SignupPage() {
             placeholder="주소를 입력해주세요"
             value={address}
             onChange={handleAddressInput}
-            pattern={'^[a-z0-9_-]{5,20}$'}
+            maxLength={255}
             required
           />
           <label htmlFor="phoneNumber">핸드폰 번호</label>
@@ -130,7 +132,7 @@ function SignupPage() {
             placeholder="핸드폰 번호를 입력해주세요"
             value={phoneNumber}
             onChange={handlerPhoneNumberInput}
-            pattern={'^[a-z0-9_-]{5,20}$'}
+            pattern={'\\d{3}-\\d{4}-\\d{4}'}
             required
           />
           <StyledSignupButton type="submit">회원가입</StyledSignupButton>
