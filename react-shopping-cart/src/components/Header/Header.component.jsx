@@ -11,36 +11,22 @@ import { logoutUser } from 'redux/actions/auth.action';
 
 import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
 
+const Relative = styled.div`
+  position: relative;
+`;
+
 const LogInLogoButton = styled.button.attrs({
   type: 'button',
-  for: 'select-box',
 })`
   display: block;
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  font-weight: bold;
   ${({ theme }) => `
     color: ${theme.colors['MINT_001']};
     background-color: ${theme.colors['WHITE_001']};
   `}
-`;
-
-const justFadein = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-`;
-
-const justFadeout = keyframes`
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
 `;
 
 const SelectList = styled.ul`
@@ -49,18 +35,6 @@ const SelectList = styled.ul`
   top: 50px;
   right: 10px;
   border-radius: 4px;
-  ${({ theme }) => `
-    background-color: ${theme.colors['WHITE_001']};
-    box-shadow: 2px 2px 3px ${theme.colors['GRAY_001']};
-  `}
-
-  &.fadeout-animation {
-    animation: ${justFadeout} 0.5s;
-  }
-
-  &.fadein-animation {
-    animation: ${justFadein} 0.5s;
-  }
 `;
 
 const SelectListItem = styled.li`
@@ -76,11 +50,11 @@ const SelectListItem = styled.li`
   `}
 `;
 
-const ModifyInfoLink = styled(SelectListItem)`
+const FirstListItem = styled(SelectListItem)`
   border-radius: 4px 4px 0 0;
 `;
 
-const LogoutButton = styled(SelectListItem)`
+const LastListItem = styled(SelectListItem)`
   margin-top: -1px;
   border-radius: 0 0 4px 4px;
 `;
@@ -88,7 +62,12 @@ const LogoutButton = styled(SelectListItem)`
 function Header() {
   const dispatch = useDispatch();
   const [showSelectBox, setShowSelectBox] = useState(false);
-  const { accessToken } = useSelector(state => state.auth);
+  const { accessToken, name } = useSelector(state => state.auth);
+
+  const handleSelectBox = () => {
+    setShowSelectBox(prev => !prev);
+  };
+
   const handleDeleteAccessToken = () => {
     dispatch(logoutUser());
   };
@@ -98,7 +77,7 @@ function Header() {
       <HeaderLink to="/" type="title">
         <FlexBox gap="15px">
           <ShoppingCart fill="#fff" width={50} height={44} />
-          {' WOOWA SHOP'}
+          WOOWA SHOP
         </FlexBox>
       </HeaderLink>
       <FlexBox as="nav" gap="43px">
@@ -109,30 +88,20 @@ function Header() {
           주문목록
         </HeaderLink>
         {accessToken ? (
-          <div style={{ position: 'relative' }}>
-            <LogInLogoButton
-              onClick={() => {
-                setShowSelectBox(prev => !prev);
-              }}
-            />
-            <SelectList
-              show={showSelectBox}
-              className={showSelectBox ? 'fadein-animation' : 'fadeout-animation'}
-            >
-              <ModifyInfoLink>
-                <Link to="/">정보수정</Link>
-              </ModifyInfoLink>
-              <LogoutButton>
+          <Relative>
+            <LogInLogoButton onClick={handleSelectBox}>{name[0]}</LogInLogoButton>
+            <SelectList show={showSelectBox}>
+              <FirstListItem>
+                <Link to="/user/modify">정보수정</Link>
+              </FirstListItem>
+              <LastListItem>
                 <button type="button" onClick={handleDeleteAccessToken}>
                   로그아웃
                 </button>
-              </LogoutButton>
+              </LastListItem>
             </SelectList>
-          </div>
+          </Relative>
         ) : (
-          // <HeaderLink to="/" type="nav" onClick={handleDeleteAccessToken}>
-          //   로그아웃
-          // </HeaderLink>
           <HeaderLink to="/login" type="nav">
             로그인
           </HeaderLink>
