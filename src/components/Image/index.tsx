@@ -1,7 +1,13 @@
 import PropTypes from 'prop-types';
 import Styled from 'components/Image/index.style';
 
-const Image = ({ src, alt, size, ...rest }) => {
+interface ImageProps {
+  src: string;
+  alt: string;
+  size: string;
+}
+
+const Image = ({ src, alt, size, ...rest }: ImageProps) => {
   return <Styled.Image src={src} alt={alt} size={size} {...rest} />;
 };
 
