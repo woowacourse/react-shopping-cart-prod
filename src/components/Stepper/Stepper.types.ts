@@ -1,5 +1,5 @@
 export type Step = {
-  id: string;
+  id: number;
   title: string;
 };
 
