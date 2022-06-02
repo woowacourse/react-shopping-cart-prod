@@ -37,6 +37,7 @@ function UserInfoPage() {
   const [nickname, setNickname] = useState(user.nickname);
   const [errorMessage, setErrorMessage] = useState("");
   const passwordRef = useRef(null);
+  const nicknameRef = useRef(null);
 
   const handleNicknameChange = ({ target: { value } }) => {
     try {
@@ -107,6 +108,12 @@ function UserInfoPage() {
   };
 
   useEffect(() => {
+    if (isEditable) {
+      nicknameRef.current.focus();
+    }
+  }, [isEditable]);
+
+  useEffect(() => {
     setNickname(user.nickname);
   }, [user.nickname]);
 
@@ -148,6 +155,7 @@ function UserInfoPage() {
             maxLength={RANGE.NICKNAME_MAX_LENGTH}
             errorMessage={errorMessage}
             autoFocus
+            ref={nicknameRef}
           />
         </UserInfoInputContainer>
         <UserInfoButtonContainer>
@@ -173,8 +181,8 @@ function UserInfoPage() {
                 width="500px"
                 type="button"
                 onClick={(e) => {
-                  setIsEditable(true);
                   e.stopPropagation();
+                  setIsEditable(true);
                 }}
               >
                 수정하기
