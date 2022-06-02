@@ -58,6 +58,7 @@ module.exports = {
     ],
     "dot-notation": "off",
     "jsx-a11y/label-has-associated-control": "off",
+    "no-alert": "off",
   },
 
   settings: {
