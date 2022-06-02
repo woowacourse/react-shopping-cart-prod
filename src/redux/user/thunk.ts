@@ -64,9 +64,17 @@ export const signup =
 
 export const editUserInfo =
   (userInfo: UserInfoWithPassword) => async (dispatch: Dispatch<UserAction>) => {
+    const accessToken = localStorage.getItem('access-token');
+
+    if (!accessToken) return;
+
     dispatch(userActions.editGroup.request());
     try {
-      const response = await authClient.put<UserInfo | string>('/customers/me', userInfo);
+      const response = await authClient.put<UserInfo | string>('/customers/me', userInfo, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
       if (typeof response.data === 'string') {
         throw new Error(response.data);
@@ -80,19 +88,28 @@ export const editUserInfo =
     }
   };
 
-export const deleteUser = () => async (dispatch: Dispatch<UserAction>) => {
-  dispatch(userActions.deleteGroup.request());
-  try {
-    const response = await authClient.delete('/customers/me');
+export const deleteUser =
+  (password: { password: string }) => async (dispatch: Dispatch<UserAction>) => {
+    const accessToken = localStorage.getItem('access-token');
 
-    if (typeof response.data === 'string') {
-      throw new Error(response.data);
-    }
+    if (!accessToken) return;
+    dispatch(userActions.deleteGroup.request());
+    try {
+      const response = await authClient.delete('/customers/me', {
+        data: password,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-    dispatch(userActions.deleteGroup.success(response.data));
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      dispatch(userActions.deleteGroup.failure(e));
+      if (response.status !== 204) {
+        throw new Error(response.data);
+      }
+
+      dispatch(userActions.deleteGroup.success(response.data));
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch(userActions.deleteGroup.failure(e));
+      }
     }
-  }
-};
+  };
