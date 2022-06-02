@@ -20,7 +20,7 @@ import {
   isEmpty,
 } from 'utils/validation';
 
-import { postApi } from 'service';
+import * as API from 'service';
 
 const SignUpForm = () => {
   const [userName, setUserName] = useState('');
@@ -64,11 +64,11 @@ const SignUpForm = () => {
 
     setLoading(true);
     try {
-      await postApi('api/customer', {
+      await API.signUp({
         data: { name: userName, email, password },
       });
-    } catch (e) {
-      setError(e.message);
+    } catch ({ message }) {
+      setError(message);
     } finally {
       setLoading(false);
     }

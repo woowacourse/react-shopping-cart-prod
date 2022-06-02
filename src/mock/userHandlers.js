@@ -36,7 +36,6 @@ export default [
     }
 
     user.token = createToken();
-    console.log(users);
     return res(
       ctx.status(200),
       ctx.json({

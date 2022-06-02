@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { postApi, putApi, deleteApi } from 'service';
+import * as API from 'service';
 
 export const addCart = createAsyncThunk(
   'cudCart/add',
   async (productId, { rejectWithValue }) => {
     try {
-      await postApi(`addCart/${productId}`);
+      await API.addCart(productId);
     } catch (error) {
       rejectWithValue(error);
     }
@@ -17,7 +17,7 @@ export const addMoreCart = createAsyncThunk(
   'cudCart/addMore',
   async (productId, { rejectWithValue }) => {
     try {
-      await putApi(`addMoreCart/${productId}`);
+      await API.addMoreCart(productId);
     } catch (error) {
       rejectWithValue(error);
     }
@@ -28,7 +28,7 @@ export const downCart = createAsyncThunk(
   'cudCart/downCart',
   async (productId, { rejectWithValue }) => {
     try {
-      await putApi(`downCart/${productId}`);
+      await API.downCart(productId);
     } catch (error) {
       rejectWithValue(error);
     }
@@ -39,7 +39,7 @@ export const deleteCart = createAsyncThunk(
   'cudCart/delete',
   async (productId, { rejectWithValue }) => {
     try {
-      await deleteApi(`deleteCart/${productId}`);
+      await API.deleteCart(productId);
     } catch (error) {
       rejectWithValue(error);
     }
@@ -50,7 +50,7 @@ export const deleteCarts = createAsyncThunk(
   'cudCart/deletes',
   async (productIds, { rejectWithValue }) => {
     try {
-      await deleteApi('deleteCarts', { data: productIds });
+      await API.deleteCarts(productIds);
     } catch (error) {
       rejectWithValue(error);
     }

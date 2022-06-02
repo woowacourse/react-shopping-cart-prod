@@ -11,12 +11,9 @@ import Wrapper from './style';
 
 import { checkName, isInvalidName, isEmpty } from 'utils/validation';
 
-import { getApi, putApi } from 'service';
-
-import { useSelector } from 'react-redux';
+import * as API from 'service';
 
 const Profile = () => {
-  const accessToken = useSelector((state) => state.user.accessToken);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(true);
@@ -31,9 +28,8 @@ const Profile = () => {
 
     setLoading(true);
     try {
-      await putApi('api/customer', { email, name });
+      await API.updateUser({ email, name });
     } catch (e) {
-      console.log(e);
       setError(e.message);
     } finally {
       setLoading(false);
@@ -43,17 +39,12 @@ const Profile = () => {
   useEffect(() => {
     const effect = async () => {
       try {
-        console.log(accessToken);
-        // axios.defaults.headers.common[
-        //   'Authorization'
-        // ] = `Bearer ${accessToken}`;
-        const data = await getApi('api/customer');
+        const data = await API.getUser();
 
         setName(data.name);
         setEmail(data.email);
-      } catch (e) {
-        console.log(e);
-        setError('effect', e);
+      } catch ({ message }) {
+        setError(message);
       } finally {
         setLoading(false);
       }

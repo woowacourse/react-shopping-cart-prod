@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getApi } from 'service';
+import * as API from 'service';
 
 export const getProducts = createAsyncThunk(
   'products/getProducts',
   async (page, { rejectWithValue }) => {
     try {
-      const data = await getApi(`products/${page}`);
+      const data = await API.getProducts(page);
 
       return data;
     } catch (error) {

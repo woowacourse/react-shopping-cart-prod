@@ -1,16 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { getApi } from 'service';
+import * as API from 'service';
 
-export const getCart = createAsyncThunk('carts/getCart', async (productId, { rejectWithValue }) => {
-  try {
-    const cart = await getApi(`cart/${productId}`);
+export const getCart = createAsyncThunk(
+  'carts/getCart',
+  async (productId, { rejectWithValue }) => {
+    try {
+      const cart = await API.getCart(productId);
 
-    return cart;
-  } catch (error) {
-    return rejectWithValue(error);
-  }
-});
+      return cart;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
 
 const cartSlice = createSlice({
   name: 'cart',

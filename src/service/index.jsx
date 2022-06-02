@@ -1,24 +1,50 @@
 import axios from 'axios';
 
-const getResult = async (execute) => {
+const getResult = async (url, method, option = {}) => {
   try {
-    const res = await execute();
+    const res = await axios[method](url, option);
 
     return res.data;
   } catch (error) {
-    console.log('getresult', error);
     throw new Error(error.response.data.message);
   }
 };
 
-export const getApi = async (endPoint, data = {}) =>
-  getResult(() => axios.get(`/${endPoint}`), data);
+export const getProducts = (page) => getResult(`/products/${page}`, 'get');
 
-export const postApi = async (endPoint, data = {}) =>
-  getResult(() => axios.post(`/${endPoint}`, data));
+export const getProduct = (productId) =>
+  getResult(`/product/${productId}`, 'get');
 
-export const putApi = async (endPoint, data = {}) =>
-  getResult(() => axios.put(`/${endPoint}`, data));
+export const getCart = (productId) => getResult(`/cart/${productId}`, 'get');
 
-export const deleteApi = async (endPoint, data = {}) =>
-  getResult(() => axios.delete(`/${endPoint}`, data));
+export const getCarts = () => getResult('/carts', 'get');
+
+export const addCart = (productId) =>
+  getResult(`/addCart/${productId}`, 'post');
+
+export const addMoreCart = (productId) =>
+  getResult(`/addMoreCart/${productId}`, 'put');
+
+export const downCart = (productId) =>
+  getResult(`/downCart/${productId}`, 'put');
+
+export const deleteCart = (productId) =>
+  getResult(`/delete/Cart/${productId}`, 'delete');
+
+export const deleteCarts = (productIds) =>
+  getResult('/deleteCarts', 'delete', { data: productIds });
+
+export const login = (user) => getResult('/api/login', 'post', { data: user });
+
+export const signUp = (user) =>
+  getResult('/api/customer', 'post', { data: user });
+
+export const getUser = () => getResult('/api/customer', 'get');
+
+export const updateUser = (user) =>
+  getResult('/api/customer', 'put', { data: user });
+
+export const setToken = (accessToken) => {
+  localStorage.setItem('accessToken', accessToken);
+  axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+};

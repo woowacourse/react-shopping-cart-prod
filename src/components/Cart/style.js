@@ -84,7 +84,7 @@ export default styled.div`
   .plus-minus-wrapper .plus div {
     width: 0;
     height: 0;
-    border-bottom: 6px solid black_50;
+    border-bottom: 6px solid ${({ theme }) => theme.black_50};
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
   }
@@ -107,7 +107,7 @@ export default styled.div`
   .plus-minus-wrapper .minus div {
     width: 0;
     height: 0;
-    border-top: 6px solid black_50;
+    border-top: 6px solid ${({ theme }) => theme.black_50};
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
   }
@@ -116,5 +116,19 @@ export default styled.div`
     font-size: 1.6rem;
     letter-spacing: 0.5px;
     color: ${({ theme }) => theme.black_50};
+  }
+
+  @media screen and (max-width: 1100px) {
+    .cart-product {
+      width: 100px;
+      height: 97px;
+    }
+  }
+
+  @media screen and (max-width: 1000px) {
+    .cart-product {
+      width: 90px;
+      height: 87px;
+    }
   }
 `;

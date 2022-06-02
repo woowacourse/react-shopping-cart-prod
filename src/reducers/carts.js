@@ -1,16 +1,19 @@
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 
-import { getApi } from 'service';
+import * as API from 'service';
 
-export const getCarts = createAsyncThunk('carts/getCarts', async (_, { rejectWithValue }) => {
-  try {
-    const carts = await getApi('carts');
+export const getCarts = createAsyncThunk(
+  'carts/getCarts',
+  async (_, { rejectWithValue }) => {
+    try {
+      const carts = await API.getCarts();
 
-    return carts;
-  } catch (error) {
-    return rejectWithValue(error);
-  }
-});
+      return carts;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  },
+);
 
 const cartsSlice = createSlice({
   name: 'carts',
@@ -33,31 +36,45 @@ const cartsSlice = createSlice({
     },
 
     selectAllCart(state) {
-      state.data = current(state).data.map((cart) => ({ ...cart, selected: true }));
+      state.data = current(state).data.map((cart) => ({
+        ...cart,
+        selected: true,
+      }));
     },
 
     clearAllCart(state) {
-      state.data = current(state).data.map((cart) => ({ ...cart, selected: false }));
+      state.data = current(state).data.map((cart) => ({
+        ...cart,
+        selected: false,
+      }));
     },
 
     addOneQuantity(state, action) {
       state.data = current(state).data.map((cart) =>
-        cart.id === action.payload ? { ...cart, quantity: cart.quantity + 1 } : cart,
+        cart.id === action.payload
+          ? { ...cart, quantity: cart.quantity + 1 }
+          : cart,
       );
     },
 
     downOneQuantity(state, action) {
       state.data = current(state).data.map((cart) =>
-        cart.id === action.payload ? { ...cart, quantity: cart.quantity - 1 } : cart,
+        cart.id === action.payload
+          ? { ...cart, quantity: cart.quantity - 1 }
+          : cart,
       );
     },
 
     deleteOneCart(state, action) {
-      state.data = current(state).data.filter(({ id }) => id !== action.payload);
+      state.data = current(state).data.filter(
+        ({ id }) => id !== action.payload,
+      );
     },
 
     deleteSeveralCarts(state, action) {
-      state.data = current(state).data.filter(({ id }) => !action.payload.includes(id));
+      state.data = current(state).data.filter(
+        ({ id }) => !action.payload.includes(id),
+      );
     },
   },
   extraReducers: {

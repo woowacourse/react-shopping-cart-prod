@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import { postApi } from 'service';
+import * as API from 'service';
 
 export const login = createAsyncThunk(
   'user/login',
   async (user, { rejectWithValue }) => {
     try {
-      const data = await postApi(`api/login`, { data: user });
+      const data = await API.login(user);
 
       return data;
     } catch (error) {
