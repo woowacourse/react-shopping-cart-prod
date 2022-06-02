@@ -8,8 +8,6 @@ import Input from 'components/@shared/Input/Input.component';
 import Logo from 'components/@shared/Logo/Logo.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
-import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
-
 const CopyrightBox = styled(FlexBox).attrs({
   justifyContent: 'center',
 })`
@@ -17,7 +15,7 @@ const CopyrightBox = styled(FlexBox).attrs({
 `;
 
 const SignupLink = styled(Link)`
-  color: #777777;
+  color: ${({ theme }) => theme.colors['GRAY_002']};
   font-size: 14px;
   margin: 12px 0;
 `;

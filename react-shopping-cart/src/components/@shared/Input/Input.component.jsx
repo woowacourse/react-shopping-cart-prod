@@ -1,27 +1,25 @@
 import styled, { css } from 'styled-components';
 
 const Input = styled.input`
-  ${({ error, width }) => `
-    ${
-      error
-        ? css`
-            border: 2px solid #c5032b;
-          `
-        : css`
-            border: 1px solid #d7dbe6;
-          `
-    } 
-    width: ${width ?? '100%'};
-  `}
+  ${({ error, theme }) =>
+    error
+      ? css`
+          border: 2px solid ${theme.colors['RED_002']};
+        `
+      : css`
+          border: 1px solid ${theme.colors['GRAY_001']};
+        `}
+  width: ${({ width }) => width ?? '100%'};
   font-size: 15px;
   border-radius: 10px;
   height: 50px;
   padding: 0 18px;
   &:focus {
-    outline-color: ${({ theme }) => theme.colors['MINT_001']};
+    outline-color: ${({ theme, error }) =>
+      error ? theme.colors['RED_001'] : theme.colors['MINT_001']};
   }
   &::placeholder {
-    color: #d7dbe6;
+    color: ${({ theme }) => theme.colors['GRAY_001']};
   }
 `;
 
