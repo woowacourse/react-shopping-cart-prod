@@ -1,5 +1,5 @@
 import { CartStoreState } from 'types/index';
-import isProductInCart from 'utils/validator';
+import { isProductInCart } from 'utils/validator';
 
 describe('util 함수 테스트', () => {
   test('해당 상품이 장바구니에 있는지 여부를 올바르게 판단하여 반환할 수 있다.', () => {

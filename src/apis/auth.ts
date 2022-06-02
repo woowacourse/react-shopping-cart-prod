@@ -37,6 +37,16 @@ const authAPI = {
       }
     }
   },
+
+  signup: async function (user: User) {
+    try {
+      await axios.post(PATH.REQUEST_CUSTOMER, user);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  },
 };
 
 export default authAPI;

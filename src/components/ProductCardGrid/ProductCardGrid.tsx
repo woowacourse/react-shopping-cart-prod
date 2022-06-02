@@ -1,7 +1,7 @@
 import { CartStoreState, Product } from 'types/index';
 
 import ProductCard from 'components/ProductCard/ProductCard';
-import isProductInCart from 'utils/validator';
+import { isProductInCart } from 'utils/validator';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 
@@ -11,13 +11,13 @@ type Props = {
 
 function ProductCardGrid({ productList }: Props) {
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart
+    (state: { cart: CartStoreState }) => state.cart.cart,
   );
 
   return (
     <StyledProductCardGrid>
       {productList.length > 0 ? (
-        productList.map((product) => (
+        productList.map(product => (
           <ProductCard
             product={product}
             isInCart={isProductInCart(product.id, cart)}
