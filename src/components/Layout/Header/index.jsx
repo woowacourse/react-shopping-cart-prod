@@ -1,12 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { 아이콘_코드 } from 'constants/';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
 const Header = () => {
+  const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   const isLogin = !!accessToken;
+
+  const onLogOutClick = () => {
+    localStorage.removeItem('accessToken');
+    alert('로그아웃 되었습니다');
+    navigate('/');
+  };
 
   return (
     <Styled.Container>
@@ -29,9 +36,9 @@ const Header = () => {
             <Link to="/identification">
               <Styled.RightMenuButton icon={아이콘_코드.USER}>회원정보</Styled.RightMenuButton>
             </Link>
-            <Link to="/logout">
-              <Styled.RightMenuButton icon={아이콘_코드.USER}>로그아웃</Styled.RightMenuButton>
-            </Link>
+            <Styled.RightMenuButton icon={아이콘_코드.USER} onClick={onLogOutClick}>
+              로그아웃
+            </Styled.RightMenuButton>
           </>
         ) : (
           <Link to="/login">
