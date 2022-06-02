@@ -20,11 +20,11 @@ const InfoDiv = styled(FlexBox).attrs({
 `;
 
 const SlideDiv = styled.div`
-  #loginInfo {
+  #userInfo {
     transition: 0.25s;
     transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(-100%)')};
   }
-  #userInfo {
+  #loginInfo {
     transition: 0.25s;
     transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(100%)')};
   }
@@ -35,7 +35,7 @@ const SlideTransition = ({ children, ...rest }) => (
 );
 
 function SignUp() {
-  const [showLoginInfo, setShowLoginInfo] = useState(true);
+  const [showLoginInfo, setShowLoginInfo] = useState(false);
 
   const handleShowComponent = () => {
     setShowLoginInfo(prev => !prev);
@@ -55,11 +55,7 @@ function SignUp() {
             mountOnEnter
           >
             {showLoginInfo ? (
-              <LoginInfoContainer
-                onClickPrev={handleShowComponent}
-                email={email}
-                password={password}
-              />
+              <LoginInfoContainer onClickPrev={handleShowComponent} />
             ) : (
               <UserInfoContainer onClickNext={handleShowComponent} />
             )}
