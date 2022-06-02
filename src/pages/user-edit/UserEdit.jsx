@@ -11,6 +11,9 @@ import { getCookie } from "@/utils/auth";
 import { BASE_URL } from "@/constants";
 import { deleteCookie } from "@/utils/auth";
 
+import { useDispatch } from "react-redux";
+import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+
 function UserEdit() {
   const [email, setEmail] = useState({ value: "", status: "fulfilled" });
   const [nickname, setNickname] = useState({ value: "", status: "fulfilled" });
@@ -19,6 +22,8 @@ function UserEdit() {
     value: "",
     status: "ready",
   });
+
+  const dispatch = useDispatch();
 
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
 
@@ -35,7 +40,7 @@ function UserEdit() {
       setEmail((prev) => ({ ...prev, value: data.email }));
       setNickname((prev) => ({ ...prev, value: data.nickname }));
     } catch (error) {
-      alert("로그인해주세요");
+      dispatch(toggleSnackbarOpen("접근할 수 없는 페이지입니다"));
       navigate("/");
     }
   };

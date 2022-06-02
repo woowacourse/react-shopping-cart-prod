@@ -10,6 +10,7 @@ import thunk from "redux-thunk";
 
 import { productListReducer } from "@/redux/modules/productList";
 import { cartListReducer } from "@/redux/modules/cartList";
+import { snackbarReducer } from "@/redux/modules/snackbar";
 
 const persistConfig = {
   key: "root",
@@ -20,6 +21,7 @@ const persistConfig = {
 export const rootReducer = combineReducers({
   productListState: productListReducer,
   cartListState: cartListReducer,
+  snackbarState: snackbarReducer,
 });
 
 export const persistedReducer = persistReducer(persistConfig, rootReducer);

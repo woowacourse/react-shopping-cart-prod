@@ -12,6 +12,7 @@ import UserEdit from "@/pages/user-edit/UserEdit";
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/reset";
 import ProductDetail from "@/pages/product-detail/ProductDetail";
+import Snackbar from "@/components/snackbar/Snackbar";
 
 if (process.env.NODE_ENV === "development") {
   const { worker } = require("./mocks/browser");
@@ -33,6 +34,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      <Snackbar timeout={3000} />
     </ThemeProvider>
   );
 }

@@ -4,6 +4,9 @@ import axios from "axios";
 import { BASE_URL } from "@/constants";
 import StyledSignupContainer from "@/pages/sign-up/Signup.style";
 
+import { useDispatch } from "react-redux";
+import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+
 import Form from "@/components/form/Form";
 import Field from "@/components/field/Field";
 
@@ -15,6 +18,8 @@ function Signup() {
     value: "",
     status: "ready",
   });
+
+  const dispatch = useDispatch();
 
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
 
@@ -98,10 +103,10 @@ function Signup() {
     } catch (error) {
       const { errorCode } = error.response.data;
       if (errorCode === "1000") {
-        alert("회원 정보 양식이 잘못되었습니다.");
+        dispatch(toggleSnackbarOpen("회원 정보 양식이 잘못되었습니다."));
       }
       if (errorCode === "1001") {
-        alert("이미 존재하는 이메일입니다.");
+        dispatch(toggleSnackbarOpen("이미 존재하는 이메일입니다."));
       }
       console.log(error);
     }
