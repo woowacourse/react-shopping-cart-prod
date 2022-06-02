@@ -1,12 +1,11 @@
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
-import { useReducer, useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from 'redux/user/action';
 import { PATH } from 'Routers';
 import styled from 'styled-components';
-import { flexCenter } from 'styles/mixin';
 
 import Avatar from './Avatar';
 import Dropdown from './Dropdown';
@@ -35,10 +34,10 @@ const Header = () => {
   return (
     <StyledRoot>
       <Link to={PATH.getMain(1)}>
-        <StyledLogo>
+        <div>
           <CartIcon fill='white' />
           <StyledBrandName>Woowa Shop</StyledBrandName>
-        </StyledLogo>
+        </div>
       </Link>
       <StyledNav>
         {isLogin ? (
@@ -84,9 +83,6 @@ const StyledRoot = styled.header`
   align-items: center;
   padding: 0 2rem;
 `;
-
-const StyledLogo = styled.div``;
-
 const StyledBrandName = styled.span`
   color: white;
   font-size: 4rem;
