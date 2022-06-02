@@ -1,6 +1,7 @@
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
 import UserEdit from 'pages/UserEdit';
+import UserWithDrawal from 'pages/UserWithDrawal';
 import { lazy, ReactElement } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ export const PATH = {
   signup: '/signup',
   login: '/login',
   editUser: '/edit',
+  withdrawal: '/withdrawal',
   notFound: '/*',
 } as const;
 
@@ -42,6 +44,7 @@ const ROUTES: RoutesType[] = [
   { path: PATH.signup, element: <Signup /> },
   { path: PATH.login, element: <Login /> },
   { path: PATH.editUser, element: <UserEdit /> },
+  { path: PATH.withdrawal, element: <UserWithDrawal /> },
   { path: PATH.notFound, element: <NotFound /> },
 ];
 
