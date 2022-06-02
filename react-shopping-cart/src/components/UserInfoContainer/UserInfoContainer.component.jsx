@@ -10,6 +10,15 @@ import { setAddress, setName, setPhoneNumber } from 'redux/actions/userInfo.acti
 function UserInfoContainer({ onClickNext }) {
   const dispatch = useDispatch();
   const { name, phoneNumber, address } = useSelector(state => state.userInfo);
+  const isAllValid = !!(
+    !name.error &&
+    !phoneNumber.error &&
+    !address.error &&
+    name.value.length &&
+    phoneNumber.first.length === 4 &&
+    phoneNumber.second.length === 4 &&
+    address.value.length
+  );
 
   return (
     <FlexBox id="userInfo" width="100%" direction="column" gap="17px" alignItems="flex-end">
@@ -62,10 +71,12 @@ function UserInfoContainer({ onClickNext }) {
         type="text"
         placeholder="주소"
       />
-      <FlexBox as="button" gap="5px" onClick={onClickNext}>
-        <TextBox fontSize="small">다음</TextBox>
-        <ArrowButton direction="right" />
-      </FlexBox>
+      {isAllValid && (
+        <FlexBox as="button" gap="5px" onClick={onClickNext}>
+          <TextBox fontSize="small">다음</TextBox>
+          <ArrowButton direction="right" />
+        </FlexBox>
+      )}
     </FlexBox>
   );
 }

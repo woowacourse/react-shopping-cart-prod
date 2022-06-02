@@ -5,6 +5,8 @@ export const SET_NAME = 'SET_NAME';
 export const SET_ADDRESS = 'SET_ADDRESS';
 export const SET_PHONE_NUMBER = 'SET_PHONE_NUMBER';
 export const SET_USER_INFO = 'SET_USER_INFO';
+export const RESET_USER_INFO = 'RESET_USER_INFO';
+export const SET_EMAIL_DISABLED = 'SET_EMAIL_DISABLED';
 
 export const setEmail = email => ({ type: SET_EMAIL, payload: { email } });
 export const setPassword = password => ({ type: SET_PASSWORD, payload: { password } });
@@ -19,3 +21,5 @@ export const setPhoneNumber = (numberPlace, phoneNumber) => ({
   payload: { numberPlace, phoneNumber },
 });
 export const setUserInfo = info => ({ type: SET_USER_INFO, payload: { info } });
+export const resetUserInfo = () => ({ type: RESET_USER_INFO, payload: {} });
+export const setEmailDisabled = disabled => ({ type: SET_EMAIL_DISABLED, payload: { disabled } });

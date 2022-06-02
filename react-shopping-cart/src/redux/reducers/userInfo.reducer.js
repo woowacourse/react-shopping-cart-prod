@@ -6,6 +6,8 @@ import {
   SET_NAME,
   SET_PHONE_NUMBER,
   SET_USER_INFO,
+  RESET_USER_INFO,
+  SET_EMAIL_DISABLED,
 } from 'redux/actions/userInfo.action';
 
 import {
@@ -67,6 +69,10 @@ function userInfo(state = initialUserInfoState, action) {
     }
     case SET_USER_INFO:
       return { ...action.payload.info };
+    case RESET_USER_INFO:
+      return { ...initialUserInfoState };
+    case SET_EMAIL_DISABLED:
+      return { ...state, email: { ...state.email, disabled: action.payload.disabled } };
     default:
       return state;
   }

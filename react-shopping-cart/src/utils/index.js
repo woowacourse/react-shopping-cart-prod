@@ -19,3 +19,12 @@ export function calculatePrice(data, shoppingCart, orderList) {
 
   return orderItemInfoList.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
 }
+
+export function processServerData(userInfo) {
+  return Object.entries(userInfo).reduce((acc, [key, value]) => {
+    if (key === 'phoneNumber') {
+      return { ...acc, phone: `010-${value.first}-${value.second}` };
+    }
+    return { ...acc, [key]: value.value };
+  }, {});
+}

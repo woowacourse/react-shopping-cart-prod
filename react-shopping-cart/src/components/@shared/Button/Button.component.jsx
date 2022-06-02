@@ -19,6 +19,12 @@ const Button = styled.button`
   &:hover {
     filter: brightness(0.8);
   }
+
+  &:disabled,
+  &:disabled:hover {
+    background: ${({ theme }) => theme.colors['GRAY_001']};
+    cursor: unset;
+  }
 `;
 
 export default Button;

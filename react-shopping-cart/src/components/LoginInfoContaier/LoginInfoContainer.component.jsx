@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ArrowButton from 'components/@shared/ArrowButton/ArrowButton.component';
@@ -6,11 +7,39 @@ import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 import InputBox from 'components/@shared/InputBox/InputBox.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
-import { setEmail, setPassword, setPasswordCheck } from 'redux/actions/userInfo.action';
+import {
+  setEmail,
+  setPassword,
+  setPasswordCheck,
+  setEmailDisabled,
+} from 'redux/actions/userInfo.action';
 
-function LoginInfoContainer({ onClickPrev }) {
+import useFetch from 'hooks/useFetch';
+
+function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
   const dispatch = useDispatch();
+  const { fetchData: checkDuplicatedEmail, data } = useFetch({
+    url: '/customers/email',
+    method: 'post',
+    skip: true,
+  });
   const { email, password, passwordCheck } = useSelector(state => state.userInfo);
+  const isDuplicatedEmail = data?.isValidEmail;
+
+  const handleCheckDuplicatedEmail = async () => {
+    await checkDuplicatedEmail(email.value);
+    dispatch(setEmailDisabled(true));
+  };
+
+  useEffect(() => {
+    if (isDuplicatedEmail) {
+      alert('중복된 이메일입니다.');
+      dispatch(setEmailDisabled(false));
+      return;
+    }
+  }, [data, isDuplicatedEmail]);
+
+  const handlePostUserInfo = () => {};
 
   return (
     <FlexBox id="loginInfo" width="100%" direction="column" gap="10px">
@@ -26,7 +55,14 @@ function LoginInfoContainer({ onClickPrev }) {
           errorMessage="이메일 형식을 지켜주세요."
         />
         {!email.disabled && (
-          <Button width="100px" height="50px" borderRadius="10px" padding="10px">
+          <Button
+            width="100px"
+            height="50px"
+            borderRadius="10px"
+            padding="10px"
+            onClick={handleCheckDuplicatedEmail}
+            disabled={email.disabled || email.error || email.value == ''}
+          >
             <TextBox fontSize="extraSmall" color="WHITE_001">
               중복 확인
             </TextBox>
@@ -57,8 +93,8 @@ function LoginInfoContainer({ onClickPrev }) {
         <ArrowButton direction="left" />
         <TextBox fontSize="small">이전</TextBox>
       </FlexBox>
-      <Button width="100%" borderRadius="10px">
-        <TextBox color="WHITE_001">회원가입</TextBox>
+      <Button onClick={onSubmit} width="100%" borderRadius="10px">
+        <TextBox color="WHITE_001">{userInfoButtonText}</TextBox>
       </Button>
     </FlexBox>
   );

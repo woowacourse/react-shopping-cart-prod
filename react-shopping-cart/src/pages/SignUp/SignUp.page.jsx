@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import { SwitchTransition, Transition } from 'react-transition-group';
 import styled from 'styled-components';
 
@@ -9,6 +10,12 @@ import Logo from 'components/@shared/Logo/Logo.component';
 
 import LoginInfoContainer from 'components/LoginInfoContaier/LoginInfoContainer.component';
 import UserInfoContainer from 'components/UserInfoContainer/UserInfoContainer.component';
+
+import { resetUserInfo } from 'redux/actions/userInfo.action';
+
+import useFetch from 'hooks/useFetch';
+
+import { processServerData } from 'utils';
 
 const InfoDiv = styled(FlexBox).attrs({
   height: '100%',
@@ -35,10 +42,27 @@ const SlideTransition = ({ children, ...rest }) => (
 );
 
 function SignUp() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const userInfo = useSelector(state => state.userInfo);
+  const postUserInfo = processServerData(userInfo);
+  const { fetchData: signUp } = useFetch({ method: 'post', url: '/customers' });
   const [showLoginInfo, setShowLoginInfo] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetUserInfo());
+    };
+  }, []);
 
   const handleShowComponent = () => {
     setShowLoginInfo(prev => !prev);
+  };
+
+  const handlePostUserInfo = async () => {
+    await signUp(postUserInfo);
+    alert('회원가입에 성공하셨습니다!');
+    navigate('/login');
   };
 
   return (
@@ -55,7 +79,11 @@ function SignUp() {
             mountOnEnter
           >
             {showLoginInfo ? (
-              <LoginInfoContainer onClickPrev={handleShowComponent} />
+              <LoginInfoContainer
+                onClickPrev={handleShowComponent}
+                onSubmit={handlePostUserInfo}
+                userInfoButtonText="회원가입"
+              />
             ) : (
               <UserInfoContainer onClickNext={handleShowComponent} />
             )}
