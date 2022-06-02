@@ -18,18 +18,17 @@ function CartItemManage({ isAllChecked }) {
     dispatch(cartAction.updateItemAllCheck(!isAllChecked));
   };
 
-  const handleRemoveItemList = () => {
+  const handleRemoveItemList = async () => {
     if (!confirm('정말 선택한 상품을 모두 제거하시겠습니까?')) {
       return;
     }
 
     const checkedIdList = checkedItemList.map(({ id }) => id);
 
-    dispatch(cartThunk.removeItemList(checkedIdList)).then(() => {
-      cartCurdAsyncState.isLoaded
-        ? alert('선택한 상품이 제거되었습니다.')
-        : alert('선택한 상품 제거에 실패하였습니다.');
-    });
+    await dispatch(cartThunk.removeItemList(checkedIdList));
+    cartCurdAsyncState.isLoaded
+      ? alert('선택한 상품이 제거되었습니다.')
+      : alert('선택한 상품 제거에 실패하였습니다.');
   };
 
   return (

@@ -8,12 +8,13 @@ const getList =
   async (dispatch) => {
     dispatch(productsAction.getList.pending());
 
-    const { status, content } = await requestGetProductList(page);
+    const response = await requestGetProductList(page);
+    const { status, content } = response;
 
     (status === REQUEST_STATUS.SUCCESS && dispatch(productsAction.getList.success(content))) ||
       (status === REQUEST_STATUS.FAIL && dispatch(productsAction.getList.error(content)));
 
-    return true;
+    return response;
   };
 
 export { getList };

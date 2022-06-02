@@ -19,12 +19,13 @@ const getList =
 
     dispatch(cartActions.getList.pending());
 
-    const { status, content } = await requestGetCartList();
+    const response = await requestGetCartList();
+    const { status, content } = response;
 
     (status === REQUEST_STATUS.SUCCESS && dispatch(cartActions.getList.success(content))) ||
       (status === REQUEST_STATUS.FAIL && dispatch(cartActions.getList.error(content)));
 
-    return true;
+    return response;
   };
 
 const addList =
@@ -32,51 +33,55 @@ const addList =
   async (dispatch) => {
     dispatch(cartActions.addList.pending());
 
-    const { status, content } = await requestAddCart({
+    const response = await requestAddCart({
       id,
       image,
       name,
       price,
       quantity,
     });
+    const { status, content } = response;
 
     (status === REQUEST_STATUS.SUCCESS && dispatch(cartActions.addList.success(content))) ||
       (status === REQUEST_STATUS.FAIL && dispatch(cartActions.addList.error(content)));
 
-    return true;
+    return response;
   };
 
 const updateItem = (id, changedContent) => async (dispatch) => {
-  const { status, content } = await requestUpdateCartItem(id, changedContent);
+  const response = await requestUpdateCartItem(id, changedContent);
+  const { status, content } = response;
 
   if (status === REQUEST_STATUS.FAIL) {
     return false;
   }
 
   dispatch(cartActions.updateItemSuccess(content));
-  return true;
+  return response;
 };
 
 const removeItem = (id) => async (dispatch) => {
-  const { status } = await requestRemoveCartItem(id);
+  const response = await requestRemoveCartItem(id);
+  const { status } = response;
 
   if (status === REQUEST_STATUS.FAIL) {
     return false;
   }
 
   dispatch(cartActions.removeItemSuccess(id));
-  return true;
+  return response;
 };
 
 const removeItemList = (idList) => async (dispatch) => {
-  const { status } = await requestRemoveCartItemList(idList);
+  const response = await requestRemoveCartItemList(idList);
+  const { status } = response;
 
   if (status === REQUEST_STATUS.FAIL) {
     return false;
   }
 
   dispatch(cartActions.removeItemListSuccess(idList));
-  return true;
+  return response;
 };
 
 export { getList, addList, updateItem, removeItem, removeItemList };

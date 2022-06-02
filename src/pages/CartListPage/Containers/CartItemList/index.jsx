@@ -17,23 +17,22 @@ function CartItemList() {
     dispatch(cartAction.updateItemCheck(id, isChecked));
   };
 
-  const handleChangeQuantity = (id, quantity) => {
-    dispatch(cartThunk.updateItem(id, { quantity })).then(() => {
-      cartCurdAsyncState.isLoaded === false &&
-        alert('서버 오류로 인해 상품 정보 갱신에 실패하였습니다.');
-    });
+  const handleChangeQuantity = async (id, quantity) => {
+    await dispatch(cartThunk.updateItem(id, { quantity }));
+
+    cartCurdAsyncState.isLoaded === false &&
+      alert('서버 오류로 인해 상품 정보 갱신에 실패하였습니다.');
   };
 
-  const handleRemoveItem = (id) => {
+  const handleRemoveItem = async (id) => {
     if (!confirm('정말 해당 상품을 장바구니에서 제거하시겠습니까?')) {
       return;
     }
 
-    dispatch(cartThunk.removeItem(id)).then(() => {
-      cartCurdAsyncState.isLoaded
-        ? alert('해당 상품을 제거하였습니다.')
-        : alert('해당 상품 제거에 실패하였습니다.');
-    });
+    await dispatch(cartThunk.removeItem(id));
+    cartCurdAsyncState.isLoaded
+      ? alert('해당 상품을 제거하였습니다.')
+      : alert('해당 상품 제거에 실패하였습니다.');
   };
 
   return (
