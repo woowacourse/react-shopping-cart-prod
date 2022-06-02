@@ -27,7 +27,7 @@ function ProductOrder() {
       </FlexContainer>
 
       <FlexContainer>
-        <Button state="primary">주문하기 ({checkedItemList.length}개)</Button>
+        <Button status="primary">주문하기 ({checkedItemList.length}개)</Button>
       </FlexContainer>
     </S.OrderContainer>
   );

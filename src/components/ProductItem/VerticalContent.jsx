@@ -27,7 +27,7 @@ function VerticalContent({ id, image, name, price, cartId, onClickCartButton }) 
             <Button
               className="cart"
               icon={ICON_CODE.CART}
-              state={cartId ? 'info' : 'default'}
+              status={cartId ? 'info' : 'default'}
               onClick={handleClickCartButton}
             />
           </ToolTip>
