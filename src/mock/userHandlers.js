@@ -17,7 +17,6 @@ export default [
   rest.post('/api/login', (req, res, ctx) => {
     const { email, password } = req.body.data;
     const user = users.find((user) => user.email === email);
-
     if (!user) {
       return res(
         ctx.status(403),
@@ -47,7 +46,6 @@ export default [
   rest.post('/api/customer', (req, res, ctx) => {
     const { name, email, password } = req.body.data;
     const user = users.find((user) => user.email === email);
-
     if (user) {
       return res(
         ctx.status(403),
@@ -56,8 +54,7 @@ export default [
         }),
       );
     }
-
-    users.push({ name, email, password, token: '' });
+    users.push({ name, email, password, token: '321321' });
 
     return res(ctx.status(201));
   }),
@@ -94,7 +91,6 @@ export default [
 
   rest.delete('/api/customer', (req, res, ctx) => {
     const token = parseToken(req);
-    console.log(req);
     const user = users.find((user) => user.token === token);
     const password = req.body.password;
 
@@ -104,7 +100,6 @@ export default [
         ctx.json({ message: '너 이미 회원 아닌데..?' }),
       );
     }
-    console.log(user, password);
 
     if (user.password !== password) {
       return res(ctx.status(403), ctx.json({ message: '비밀번호 확인해!' }));
