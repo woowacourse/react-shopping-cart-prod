@@ -10,12 +10,6 @@ interface DropdownProps {
 const Dropdown = ({ children, closeDropdown }: PropsWithChildren<DropdownProps>) => {
   const dropdownRef = useRef<HTMLUListElement>(null);
   const firstRenderRef = useRef(true);
-  const handleCloseDropdown = e => {
-    if (!firstRenderRef.current) {
-      closeDropdown();
-    }
-    firstRenderRef.current && (firstRenderRef.current = false);
-  };
 
   useEffect(() => {
     window.addEventListener('click', handleCloseDropdown);
@@ -24,6 +18,13 @@ const Dropdown = ({ children, closeDropdown }: PropsWithChildren<DropdownProps>)
       window.removeEventListener('click', handleCloseDropdown);
     };
   }, []);
+
+  const handleCloseDropdown = () => {
+    if (!firstRenderRef.current) {
+      closeDropdown();
+    }
+    firstRenderRef.current && (firstRenderRef.current = false);
+  };
 
   return <StyledDropdown ref={dropdownRef}>{children}</StyledDropdown>;
 };
