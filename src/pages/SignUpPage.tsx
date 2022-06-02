@@ -2,13 +2,13 @@ import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useSignInput from 'hooks/useSignInput';
-import { FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
-import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
+import styled from 'styled-components';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ const SignUpPage = () => {
     }
   };
 
-  const handlePasswordInput = ({ target: { value } }) => {
+  const handlePasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value)) {
       setpPasswordValid(prevState => ({ ...prevState, password: true }));
 
@@ -53,7 +53,7 @@ const SignUpPage = () => {
     setpPasswordValid(prevState => ({ ...prevState, password: false }));
   };
 
-  const handlePasswordConfirmInput = ({ target: { value } }) => {
+  const handlePasswordConfirmInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (passwordRef.current.value === value) {
       setpPasswordValid(prevState => ({ ...prevState, confirm: true }));
 

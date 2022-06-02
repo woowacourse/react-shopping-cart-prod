@@ -2,7 +2,7 @@ export const formatDecimal = (input: number) => {
   return input.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
 };
 
-export const generateRandomCode = n => {
+export const generateRandomCode = (n: number): string => {
   let code = '';
 
   for (let i = 0; i < n; i++) {

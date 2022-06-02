@@ -4,7 +4,7 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import { ItemListAction } from 'redux/actions/itemList';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { getItemList } from 'redux/action-creators/itemListThunk';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Loading from 'components/common/Loading';
 import RequestFail from 'components/common/RequestFail';
 

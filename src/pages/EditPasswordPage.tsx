@@ -1,10 +1,9 @@
 import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
-import useSignInput from 'hooks/useSignInput';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { editPassword, signUp } from 'redux/action-creators/userThunk';
+import { editPassword } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
@@ -49,7 +48,7 @@ const EditPasswordPage = () => {
     setpPasswordValid(prevState => ({ ...prevState, prev: false }));
   };
 
-  const handleNewPasswordInput = ({ target: { value } }) => {
+  const handleNewPasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value)) {
       setpPasswordValid(prevState => ({ ...prevState, new: true }));
 
@@ -59,7 +58,7 @@ const EditPasswordPage = () => {
     setpPasswordValid(prevState => ({ ...prevState, prev: false }));
   };
 
-  const handleNewPasswordConfirmInput = ({ target: { value } }) => {
+  const handleNewPasswordConfirmInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (newPasswordRef.current.value === value) {
       setpPasswordValid(prevState => ({ ...prevState, confirm: true }));
 

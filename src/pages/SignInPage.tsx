@@ -2,7 +2,7 @@ import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useSignInput from 'hooks/useSignInput';
-import { FormEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signIn } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
@@ -37,7 +37,7 @@ const SignInPage = () => {
     }
   };
 
-  const handlePasswordInput = ({ target: { value } }) => {
+  const handlePasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (value) {
       setpPasswordValid(true);
 

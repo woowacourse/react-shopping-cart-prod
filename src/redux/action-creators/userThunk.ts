@@ -2,7 +2,7 @@ import type { Dispatch } from 'redux';
 import { UserAction, UserActionType } from 'redux/actions/user';
 import axios from 'axios';
 import { LOCAL_BASE_URL } from 'apis';
-import { SignUpInfo, SignInInfo, UserInfo, EditPasswordInfo } from 'types/domain';
+import { SignUpInfo, SignInInfo, EditPasswordInfo } from 'types/domain';
 
 export const signUp = (signUpInfo: SignUpInfo) => async (dispatch: Dispatch<UserAction>) => {
   dispatch({ type: UserActionType.POST_SIGN_UP_START });

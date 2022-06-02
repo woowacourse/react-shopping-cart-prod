@@ -1,10 +1,10 @@
 import SignInput from 'components/common/SignInput';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useRef, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { resign, signUp } from 'redux/action-creators/userThunk';
-import { UserAction, UserActionType } from 'redux/actions/user';
+import { resign } from 'redux/action-creators/userThunk';
+import { UserAction } from 'redux/actions/user';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
@@ -36,7 +36,7 @@ const ResignPage = () => {
     }
   };
 
-  const handlePasswordInput = ({ target: { value } }) => {
+  const handlePasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (value) {
       setInputValid(prevState => ({ ...prevState, password: true }));
 
@@ -46,7 +46,7 @@ const ResignPage = () => {
     setInputValid(prevState => ({ ...prevState, password: false }));
   };
 
-  const handleMessageInput = ({ target: { value } }) => {
+  const handleMessageInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (value === '응') {
       setInputValid(prevState => ({ ...prevState, confirmMessage: true }));
 
