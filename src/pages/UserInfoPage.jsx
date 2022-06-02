@@ -5,7 +5,7 @@ import axios from 'axios';
 import Button from '../components/common/Button';
 import { StyledUserContainer } from '../components/common/Styled';
 
-import { ROUTES_PATH, SERVER_PATH } from '../constants';
+import { MESSAGE, ROUTES_PATH, SERVER_PATH } from '../constants';
 import actionTypes from '../store/user/user.actions';
 
 function UserInfoPage() {
@@ -17,14 +17,16 @@ function UserInfoPage() {
     try {
       await axios.delete(SERVER_PATH.USER, accessToken);
       dispatch({ type: actionTypes.DELETE_TOKEN });
+      alert(MESSAGE.WITHDRAW_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
       alert(error);
     }
   };
 
-  const handleLoginOutClick = () => {
+  const handleLogOutClick = () => {
     dispatch({ type: actionTypes.DELETE_TOKEN });
+    alert(MESSAGE.LOGOUT_SUCCESS);
     navigate(ROUTES_PATH.HOME);
   };
 
@@ -37,7 +39,7 @@ function UserInfoPage() {
       <Link to={ROUTES_PATH.MODIFY_USER_INFO}>
         <Button text="회원 정보 수정" />
       </Link>
-      <Button text="로그아웃" onClick={handleLoginOutClick} />
+      <Button text="로그아웃" onClick={handleLogOutClick} />
       <Button text="회원 탈퇴" onClick={handleWithdrawClick} />
     </StyledUserContainer>
   );

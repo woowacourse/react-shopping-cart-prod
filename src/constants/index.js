@@ -58,6 +58,8 @@ const MESSAGE = {
   SIGN_UP_SUCCESS: '회원가입 되었습니다.',
   MODIFY_PASSWORD_SUCCESS: '비밀번호가 변경 되었습니다.',
   MODIFY_NICKNAME_SUCCESS: '닉네임이 변경 되었습니다.',
+  LOGOUT_SUCCESS: '로그아웃 되었습니다.',
+  WITHDRAW_SUCCESS: '회원탈퇴 되었습니다.',
   ERROR_EMAIL: '올바르지 않은 이메일입니다.',
   ERROR_NICKNAME: '올바르지 않은 닉네임입니다.',
   ERROR_PASSWORD: '올바르지 않은 비밀번호입니다.',
