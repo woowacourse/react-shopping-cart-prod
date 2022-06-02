@@ -150,7 +150,7 @@ const loadDaumPostcode = () => {
 };
 
 const useDaumPostcode = () => {
-  const [addressData, setAddressData] = useState<Address | null>(null);
+  const [addressData, setAddressData] = useState<Partial<Address> | null>(null);
   const [postcode, setPostcode] = useState<Postcode | null>(null);
 
   useEffect(() => {
@@ -168,6 +168,7 @@ const useDaumPostcode = () => {
   return {
     postcode,
     addressData,
+    setAddressData,
   };
 };
 

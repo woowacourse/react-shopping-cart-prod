@@ -12,6 +12,7 @@ import SignupPage from './pages/SignupPage/SignupPage';
 import SigninPage from './pages/SigninPage/SigninPage';
 import SignupStep from './pages/SignupPage/SignupStep';
 import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 import { PATHS } from './constants/paths';
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
               <Route path={':stepId'} element={<SignupStep />} />
             </Route>
             <Route path={PATHS.DEFAULT} element={<NotFoundPage />} />
+            <Route path={PATHS.PROFILE} element={<ProfilePage />} />
           </Routes>
         </StyledContent>
       </ThemeProvider>

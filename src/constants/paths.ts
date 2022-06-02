@@ -6,6 +6,7 @@ const PATHS = {
   CART: '/cart',
   SIGNUP: '/signup',
   SIGNIN: '/signin',
+  PROFILE: '/profile',
   DEFAULT: '*',
 } as const;
 
