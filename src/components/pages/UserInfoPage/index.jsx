@@ -31,11 +31,11 @@ function UserInfoPage() {
     errorMessage: serverError,
     dispatch,
   } = useStore("user");
+  const navigator = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [nickname, setNickname] = useState(user.nickname);
   const [errorMessage, setErrorMessage] = useState("");
-  const navigator = useNavigate();
   const passwordRef = useRef(null);
 
   const handleNicknameChange = ({ target: { value } }) => {
@@ -62,11 +62,10 @@ function UserInfoPage() {
           Authorization: `Bearer ${user.accessToken}`,
         },
         url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${user.id}`,
-        body: JSON.stringify({ nickname }),
+        body: JSON.stringify({ username: nickname }),
       });
 
       const data = await response.json();
-
       if (data.message) {
         setErrorMessage(data.message);
         dispatch({
@@ -148,46 +147,49 @@ function UserInfoPage() {
             minLength={RANGE.NICKNAME_MIN_LENGTH}
             maxLength={RANGE.NICKNAME_MAX_LENGTH}
             errorMessage={errorMessage}
+            autoFocus
           />
         </UserInfoInputContainer>
-        {isEditable ? (
-          <UserInfoButtonContainer>
-            <DefaultButton key="confirmEdit" type="submit" width="500px">
-              수정확인
-            </DefaultButton>
-            <DefaultButton
-              type="button"
-              width="500px"
-              bgColor={theme.color.main}
-              textColor={theme.color.point}
-              onClick={handleCancleEdit}
-            >
-              수정취소
-            </DefaultButton>
-          </UserInfoButtonContainer>
-        ) : (
-          <UserInfoButtonContainer>
-            <DefaultButton
-              key="edit"
-              width="500px"
-              type="button"
-              onClick={(e) => {
-                setIsEditable(true);
-                e.stopPropagation();
-              }}
-            >
-              수정하기
-            </DefaultButton>
-            <DeleteAccountButton
-              type="button"
-              onClick={() => {
-                setIsOpenModal(true);
-              }}
-            >
-              탈퇴하기
-            </DeleteAccountButton>
-          </UserInfoButtonContainer>
-        )}
+        <UserInfoButtonContainer>
+          {isEditable ? (
+            <>
+              <DefaultButton key="confirmEdit" type="submit" width="500px">
+                수정확인
+              </DefaultButton>
+              <DefaultButton
+                type="button"
+                width="500px"
+                bgColor={theme.color.main}
+                textColor={theme.color.point}
+                onClick={handleCancleEdit}
+              >
+                수정취소
+              </DefaultButton>
+            </>
+          ) : (
+            <>
+              <DefaultButton
+                key="edit"
+                width="500px"
+                type="button"
+                onClick={(e) => {
+                  setIsEditable(true);
+                  e.stopPropagation();
+                }}
+              >
+                수정하기
+              </DefaultButton>
+              <DeleteAccountButton
+                type="button"
+                onClick={() => {
+                  setIsOpenModal(true);
+                }}
+              >
+                탈퇴하기
+              </DeleteAccountButton>
+            </>
+          )}
+        </UserInfoButtonContainer>
       </UserForm>
       {isOpenModal && (
         <DeleteAccountModal
