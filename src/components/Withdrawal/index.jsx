@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 import Input from 'components/Input';
 import Button from 'styles/Button';
@@ -14,11 +13,10 @@ import { onMessage } from 'reducers/snackbar';
 
 import * as API from 'service';
 
-import { PATH, SNACKBAR_MESSAGE } from 'constants';
+import { SNACKBAR_MESSAGE } from 'constants';
 
 const Withdrawal = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
