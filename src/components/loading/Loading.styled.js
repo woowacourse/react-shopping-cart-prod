@@ -9,7 +9,7 @@ const StyledLoading = styled.div`
   margin: 0 auto;
 
   img {
-    animation: loadingspin 1.5s linear infinite;
+    animation: loadingspin 0.2s linear infinite;
   }
 
   @keyframes loadingspin {

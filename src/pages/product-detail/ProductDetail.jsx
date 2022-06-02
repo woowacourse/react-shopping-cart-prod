@@ -1,15 +1,27 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 
-import StyledProductDetailContainer from "@/pages/product-detail/ProductDetail.style";
+import { addProductToCart } from "@/redux/modules/cartList";
+import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+
 import Button from "@/components/button/Button";
 
-import { BASE_URL } from "@/constants";
+import { BASE_URL, MESSAGE } from "@/constants";
+
+import StyledProductDetailContainer from "@/pages/product-detail/ProductDetail.style";
 
 function ProductDetail() {
   const [productInfo, setProductInfo] = useState({});
   const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const handleCartClick = () => {
+    const { name, price, imgUrl } = productInfo;
+    dispatch(addProductToCart({ id, name, price, imgUrl }));
+    dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
+  };
 
   const getProductDetail = async () => {
     try {
@@ -39,6 +51,7 @@ function ProductDetail() {
         height="50px"
         backgroundColor="#73675C"
         fontSize="20px"
+        onClick={handleCartClick}
       />
     </StyledProductDetailContainer>
   );
