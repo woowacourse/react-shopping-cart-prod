@@ -7,7 +7,7 @@ const useInput = (
 ): [string, (e: React.ChangeEvent<HTMLInputElement>) => void, string] => {
   const [value, setValue] = useState('');
   const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
+    setValue(e.target.value.replace(/ /, ''));
   };
 
   try {
