@@ -1,7 +1,7 @@
 import { 유저_액션 } from 'actions/types';
 
 const initialState = {
-  userId: '',
+  userId: sessionStorage.getItem('userId') || '',
 };
 
 export default (state = initialState, action) => {

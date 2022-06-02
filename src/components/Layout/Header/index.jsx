@@ -1,16 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeUserData } from 'actions/user';
 
 import { 아이콘_코드 } from 'constants/';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
 const Header = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
-  const isLogin = !!accessToken;
+  const { userId: isLogin } = useSelector((state) => state.user);
 
   const onLogOutClick = () => {
-    localStorage.removeItem('accessToken');
+    dispatch(removeUserData());
     alert('로그아웃 되었습니다');
     navigate('/');
   };

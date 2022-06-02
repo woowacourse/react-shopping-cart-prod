@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import jwt_decode from 'jwt-decode';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useInput from 'hooks/useInput';
 
@@ -11,6 +11,7 @@ import ErrorMessage from 'components/@common/ErrorMessage';
 
 import { COLORS } from 'styles/theme';
 import { requestEditUserInfo, requestWithDrawUser } from 'api';
+import { removeUserData } from 'actions/user';
 import { 비동기_요청 } from 'constants';
 
 import * as Validate from 'utils/validate';
@@ -19,8 +20,8 @@ import * as Styled from './styles';
 
 const EditUserInfo = () => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
-  const { name: id } = accessToken ? jwt_decode(accessToken) : { name: '유저' };
+  const dispatch = useDispatch();
+  const { userId } = useSelector((state) => state.user);
 
   const {
     value: userNickName,
@@ -41,7 +42,7 @@ const EditUserInfo = () => {
   const handleEditUserInfo = async (e) => {
     e.preventDefault();
     const response = await requestEditUserInfo({
-      userName: id,
+      userName: userId,
       nickName: userNickName,
       age: userAge,
     });
@@ -61,6 +62,7 @@ const EditUserInfo = () => {
       const response = await requestWithDrawUser();
       if (response.status === 비동기_요청.SUCCESS) {
         alert('회원 탈퇴에 성공하였습니다!');
+        dispatch(removeUserData());
         navigate('/');
         return;
       }
@@ -78,7 +80,7 @@ const EditUserInfo = () => {
               아이디
               <Input
                 id="input-user-name"
-                value={id}
+                value={userId}
                 type="text"
                 width="100%"
                 margin="1rem 0"

@@ -18,6 +18,7 @@
 - [x] 회원가입
 - [x] 회원 정보 수정
 - [x] 회원탈퇴
+- [ ] 비밀번호 수정
 
 ## 기능
 
@@ -25,8 +26,8 @@
 - [x] 로그아웃
 - [x] 로그인 시, 유저 아이디를 받아와서 redux에서 관리
 
-  - [ ] 로그아웃 시 logout action 호출 (Redux 데이터 삭제)
-  - [ ] 회원 탈퇴와 유효기간 만료 시 logout action 호출
+  - [x] 로그아웃 시 logout action 호출 (Redux 데이터 삭제)
+  - [x] 회원 탈퇴 시 logout action 호출
 
 - [ ] 서버 요청이 실패하였을 때에, 서버에서 받아오는 error.message 활용하기
 - [ ] alert -> snackbar

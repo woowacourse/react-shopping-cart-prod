@@ -7,8 +7,9 @@ const setUserData = (userId, userPassword) => async (dispatch) => {
   });
 
   const response = await requestLogin(userId, userPassword);
-  const { accessToken } = response.content;
-  localStorage.setItem('accessToken', accessToken);
+  const { accessToken, userName } = response.content;
+  sessionStorage.setItem('accessToken', accessToken);
+  sessionStorage.setItem('userId', userName);
 
   dispatch({
     type: 유저_액션.SET_USER_DATA,
@@ -20,7 +21,10 @@ const setUserData = (userId, userPassword) => async (dispatch) => {
   });
 };
 
-const removeUserData = () => async (dispatch) => {
+const removeUserData = () => (dispatch) => {
+  sessionStorage.removeItem('accessToken');
+  sessionStorage.removeItem('userId');
+
   dispatch({
     type: 유저_액션.REMOVE_USER_DATA,
   });

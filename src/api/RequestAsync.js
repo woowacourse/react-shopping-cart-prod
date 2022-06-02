@@ -7,7 +7,7 @@ const errorReturn = (error) => ({
 
 const authorizedHeader = (header) => ({
   ...header,
-  Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+  Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
 });
 
 class RequestAsync {

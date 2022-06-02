@@ -1,5 +1,5 @@
 import React from 'react';
-import jwt_decode from 'jwt-decode';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Layout from 'components/Layout';
@@ -15,13 +15,12 @@ import * as Styled from './styles';
 
 const Identification = () => {
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
-  const { name: id } = accessToken ? jwt_decode(accessToken) : { name: '유저' };
+  const { userId } = useSelector((state) => state.user);
 
   const handleCheckUserPassword = async (e) => {
     e.preventDefault();
     const password = e.target.elements['input-password'].value;
-    const response = await requestLogin(id, password);
+    const response = await requestLogin(userId, password);
 
     if (response.status === 비동기_요청.SUCCESS) {
       navigate('/editUserInfo');
