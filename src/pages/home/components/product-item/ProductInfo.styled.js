@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const StyledProductDetail = styled.div`
+const StyledProductInfo = styled.div`
   display: flex;
   padding: 10px 0px 10px 15px;
   margin-bottom: 30px;
@@ -18,4 +18,4 @@ const StyledProductDetail = styled.div`
   }
 `;
 
-export default StyledProductDetail;
+export default StyledProductInfo;

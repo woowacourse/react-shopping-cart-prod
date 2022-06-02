@@ -8,11 +8,15 @@ module.exports = {
   entry: join(__dirname, "/src/index.jsx"),
   devtool: "source-map",
   devServer: {
+    port: 9000,
+    hot: true,
+    open: true,
     historyApiFallback: true,
   },
   output: {
     filename: "main.js",
-    path: join(__dirname, "/dist"),
+    path: join(__dirname, "dist"),
+    publicPath: "/",
   },
   module: {
     rules: [

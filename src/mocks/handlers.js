@@ -8,8 +8,18 @@ let users = [
 ];
 
 export const handlers = [
+  // 상품 리스트 가져오기
   rest.get(`${BASE_URL}/products`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(JSON.stringify(productList)));
+  }),
+
+  // 상품 상세 정보 가져오기
+  rest.get(`${BASE_URL}/products/:id`, (req, res, ctx) => {
+    const { id } = req.params;
+    const product = productList.find(({ id: productId }) => productId === +id);
+
+    if (!product) return res(ctx.status(400));
+    return res(ctx.status(200), ctx.json(product));
   }),
 
   // 인증 인가 - 회원가입

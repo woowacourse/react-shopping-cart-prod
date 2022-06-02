@@ -11,6 +11,7 @@ import UserEdit from "@/pages/user-edit/UserEdit";
 
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/reset";
+import ProductDetail from "@/pages/product-detail/ProductDetail";
 
 if (process.env.NODE_ENV === "development") {
   const { worker } = require("./mocks/browser");
@@ -24,10 +25,11 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<ProductList />} />
-          <Route path="/cart" element={<Cart />} />
           <Route path="/login" element={<Signin />} />
           <Route path="/register" element={<Signup />} />
           <Route path="/edit" element={<UserEdit />} />
+          <Route path="/detail/:id" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
