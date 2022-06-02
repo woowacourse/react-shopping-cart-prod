@@ -26,7 +26,7 @@ function ProductCard({ product }) {
   };
 
   return (
-    <GlobalS.Position>
+    <GlobalStyled.Position>
       <S.Container onClick={onClickCard}>
         <Image src={imageURL} alt={name} />
         <S.Content>
@@ -37,18 +37,18 @@ function ProductCard({ product }) {
         </S.Content>
       </S.Container>
 
-      <GlobalS.Position position="absolute" bottom="5px" right="5px">
+      <GlobalStyled.Position position="absolute" bottom="5px" right="5px">
         <S.TransparentButton type="button" onClick={onClickCartButton}>
           <Icon iconName="Cart" fill={color.DARK_GRAY} />
         </S.TransparentButton>
-      </GlobalS.Position>
+      </GlobalStyled.Position>
 
       {isModalOpen && (
         <Modal closeModal={closeModal}>
           <CartAddForm product={product} closeModal={closeModal} />
         </Modal>
       )}
-    </GlobalS.Position>
+    </GlobalStyled.Position>
   );
 }
 

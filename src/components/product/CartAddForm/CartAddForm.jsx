@@ -22,19 +22,19 @@ function CartAddForm({ product: { id, name, price, quantity }, closeModal }) {
 
   return (
     <S.Container>
-      <GlobalS.Position>
+      <GlobalStyled.Position>
         <S.ProductInfoWrapper>
           <S.Name>{name}</S.Name>
           <S.Price>{price} 원</S.Price>
-          <GlobalS.Position position="absolute" right="0" bottom="0">
+          <GlobalStyled.Position position="absolute" right="0" bottom="0">
             <Counter
               count={count}
               onIncrement={handleIncrement}
               onDecrement={handleDecrement}
             />
-          </GlobalS.Position>
+          </GlobalStyled.Position>
         </S.ProductInfoWrapper>
-      </GlobalS.Position>
+      </GlobalStyled.Position>
 
       <S.TotalPriceWrapper>
         <S.Title>합계</S.Title>
