@@ -21,16 +21,16 @@ const UserWithDrawal = () => {
 
   useAuthError(openSnackbar);
 
-  const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    dispatch(deleteUser({ password }));
-  };
-
   useEffect(() => {
     if (data === null) {
       navigate(PATH.home);
     }
   }, [data]);
+
+  const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(deleteUser({ password }));
+  };
 
   return (
     <AuthPage title='회원 탈퇴' onSubmitAuthForm={onSubmitForm}>

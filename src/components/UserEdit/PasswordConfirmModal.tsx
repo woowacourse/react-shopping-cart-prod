@@ -28,16 +28,16 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
 
   useAuthError(openSnackbar);
 
-  const onSubmitPassword = () => {
-    dispatch(editUserInfo({ loginId, name, password }));
-  };
-
   useEffect(() => {
     if (name === data.name) {
       closeModal();
       navigate(PATH.home);
     }
   }, [data.name]);
+
+  const onSubmitPassword = () => {
+    dispatch(editUserInfo({ loginId, name, password }));
+  };
 
   return (
     <Modal closeModal={closeModal}>
