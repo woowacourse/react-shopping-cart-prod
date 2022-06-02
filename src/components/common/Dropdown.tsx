@@ -1,10 +1,31 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { layer } from '../../styles/layer';
 
-const Dropdown = ({ children }: PropsWithChildren<unknown>) => {
-  return <StyledDropdown>{children}</StyledDropdown>;
+interface DropdownProps {
+  closeDropdown: () => void;
+}
+
+const Dropdown = ({ children, closeDropdown }: PropsWithChildren<DropdownProps>) => {
+  const dropdownRef = useRef<HTMLUListElement>(null);
+  const firstRenderRef = useRef(true);
+  const handleCloseDropdown = e => {
+    if (!firstRenderRef.current) {
+      closeDropdown();
+    }
+    firstRenderRef.current && (firstRenderRef.current = false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('click', handleCloseDropdown);
+
+    return () => {
+      window.removeEventListener('click', handleCloseDropdown);
+    };
+  }, []);
+
+  return <StyledDropdown ref={dropdownRef}>{children}</StyledDropdown>;
 };
 
 export default Dropdown;

@@ -40,7 +40,7 @@ const Header = () => {
             <StyledAvatarWrapper>
               <Avatar name={name} onClick={toggleShowDropdown} />
               {isShowDropdown && (
-                <Dropdown>
+                <Dropdown closeDropdown={toggleShowDropdown}>
                   <li onClick={() => navigate('/edit')}>회원정보수정</li>
                   <li onClick={handleClickLogout}>로그아웃</li>
                 </Dropdown>
