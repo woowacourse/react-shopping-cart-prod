@@ -5,6 +5,7 @@ import {
   SET_ADDRESS,
   SET_NAME,
   SET_PHONE_NUMBER,
+  SET_USER_INFO,
 } from 'redux/actions/userInfo.action';
 
 import {
@@ -15,7 +16,7 @@ import {
   isInvalidPhoneNumber,
 } from 'utils/validators';
 
-const initialState = {
+export const initialUserInfoState = {
   email: { value: '', error: false },
   password: { value: '', error: false },
   passwordCheck: { value: '', error: false },
@@ -27,7 +28,7 @@ const initialState = {
   },
 };
 
-function userInfo(state = initialState, action) {
+function userInfo(state = initialUserInfoState, action) {
   switch (action.type) {
     case SET_EMAIL: {
       const { email } = action.payload;
@@ -64,6 +65,8 @@ function userInfo(state = initialState, action) {
 
       return { ...state, phoneNumber: { ...state.phoneNumber, [numberPlace]: phoneNumber } };
     }
+    case SET_USER_INFO:
+      return { ...action.payload.info };
     default:
       return state;
   }

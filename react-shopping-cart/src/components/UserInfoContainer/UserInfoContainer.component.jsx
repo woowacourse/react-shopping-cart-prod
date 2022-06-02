@@ -35,7 +35,7 @@ function UserInfoContainer({ onClickNext }) {
         >
           <span>010</span>-
           <InputBox
-            {...phoneNumber.first}
+            value={phoneNumber.first}
             onChange={e => dispatch(setPhoneNumber('first', e.target.value))}
             type="tel"
             maxLength="4"
@@ -43,7 +43,7 @@ function UserInfoContainer({ onClickNext }) {
           />
           -
           <InputBox
-            {...phoneNumber.second}
+            value={phoneNumber.second}
             onChange={e => {
               dispatch(setPhoneNumber('second', e.target.value));
             }}

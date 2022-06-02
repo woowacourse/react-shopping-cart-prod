@@ -25,11 +25,13 @@ function LoginInfoContainer({ onClickPrev }) {
           placeholder="이메일"
           errorMessage="이메일 형식을 지켜주세요."
         />
-        <Button width="100px" height="50px" borderRadius="10px" padding="10px">
-          <TextBox fontSize="extraSmall" color="WHITE_001">
-            중복 확인
-          </TextBox>
-        </Button>
+        {!email.disabled && (
+          <Button width="100px" height="50px" borderRadius="10px" padding="10px">
+            <TextBox fontSize="extraSmall" color="WHITE_001">
+              중복 확인
+            </TextBox>
+          </Button>
+        )}
       </FlexBox>
       <InputBox
         {...password}

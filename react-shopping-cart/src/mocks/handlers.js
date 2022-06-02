@@ -12,7 +12,7 @@ export const handlers = [
 
     if (isExist) {
       const { password, ...safefyUserInfo } = customers[email];
-      return res(ctx.status(200), ctx.json({ accessToken: 1, ...safefyUserInfo }));
+      return res(ctx.status(200), ctx.json({ accessToken: 1, email, ...safefyUserInfo }));
     }
     return res(ctx.status(404), ctx.json({ message: '존재하지 않는 email/password입니다.' }));
   }),

@@ -5,13 +5,22 @@ const initialState = {
   name: '',
   email: '',
   address: '',
-  phone: '',
+  phoneNumber: {
+    first: '',
+    second: '',
+  },
 };
 
 function auth(state = initialState, action) {
   switch (action.type) {
     case LOGIN_USER:
-      return { ...action.payload };
+      const { phone, ...rest } = action.payload;
+      const phoneNumbers = phone.split('-');
+      const phoneNumber = {
+        first: phoneNumbers[1],
+        second: phoneNumbers[2],
+      };
+      return { phoneNumber, ...rest };
     case LOGOUT_USER:
       return {};
     default:
