@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-import { memberValidate } from 'lib/validateUtils';
+import { isUserId, isUserPassword, isNickname } from 'lib/validateUtils';
 
 import { MOCK_DB } from 'mocks/db';
 
@@ -8,29 +8,29 @@ const membersDB = MOCK_DB.members;
 
 const membersHandlers = [
   // 회원가입 API - POST
-  rest.get('/customers/signUp', (req, res, ctx) => {
+  rest.post('./customers/signUp', (req, res, ctx) => {
     const { userId, password, nickname } = req.body;
 
-    if (!memberValidate.userId(userId)) {
+    if (!isUserId(userId)) {
       return res(ctx.status(400), ctx.json({ message: '이메일을 정확히 입력해주세요.' }));
     }
 
-    if (!memberValidate.password(password)) {
+    if (!isUserPassword(password)) {
       return res(ctx.status(400), ctx.json({ message: '비밀번호 정확히 입력해주세요.' }));
     }
 
-    if (!memberValidate.nickname(nickname)) {
+    if (!isNickname(nickname)) {
       return res(ctx.status(400), ctx.json({ message: '닉네임을 정확히 입력해주세요.' }));
     }
 
     const accessToken = membersDB.push({ userId, password, nickname }) - 1;
     membersDB[accessToken].accessToken = accessToken;
 
-    return res(ctx.status(201));
+    return res(ctx.status(201), ctx.json({}));
   }),
 
   // 로그인 API - POST
-  rest.get('/customers/login', (req, res, ctx) => {
+  rest.post('./customers/login', (req, res, ctx) => {
     const { userId, password } = req.body;
     const userInfo = membersDB.find((user) => user.userId === userId && user.password === password);
 
@@ -45,9 +45,9 @@ const membersHandlers = [
   }),
 
   // 회원정보 요청 - GET
-  rest.get('/customers/profile', (req, res, ctx) => {
+  rest.get('./auth/customers/profile', (req, res, ctx) => {
     // 액세스토큰을 통해 유저 아이디, 닉네임 반환
-    const accessToken = req.headers.get('accessToken');
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
     const userInfo = membersDB.find((user) => user.accessToken === accessToken);
     if (!userInfo) {
       return res(
@@ -61,14 +61,18 @@ const membersHandlers = [
   }),
 
   // 중복 아이디, 닉네임 체크 API - POST
-  rest.get('/customers/exist', (req, res, ctx) => {
-    const isExist = Object.entries(req.body).every(
-      ([key, value]) => !!membersDB.find((user) => user[key] !== value),
+  rest.get('./customers/check', (req, res, ctx) => {
+    const query = Object.fromEntries(req.url.searchParams.entries());
+    const isExist = Object.entries(query).every(
+      ([key, value]) => !!membersDB.find((user) => user[key] === value),
     );
 
-    return isExist
-      ? res(ctx.status(400), ctx.json({ message: '이미 존재하는 유저 정보입니다.' }))
-      : res(ctx.status(200));
+    const queryName = req.url.href.includes('nickname=') ? '닉네임' : '이메일';
+
+    return res(
+      ctx.status(isExist ? 400 : 200),
+      ctx.json({ message: `이미 존재하는 ${queryName}입니다.` }),
+    );
   }),
 
   // -- 이후
