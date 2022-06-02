@@ -10,8 +10,7 @@ function Signup({ className }) {
   const { onSubmit, register } = useForm();
   const navigate = useNavigate();
 
-  const handleSubmit = async (formData, errors) => {
-    if (Object.keys(errors).length > 0) return;
+  const handleSubmit = async (formData) => {
     const { email, password, username } = formData;
     // eslint-disable-next-line no-undef
     const response = await fetch(`${API_URL}/customers`, {
@@ -59,7 +58,6 @@ function Signup({ className }) {
               className="mb-16"
               id="username"
               placeholder="이름을 입력해주세요"
-              value="이름"
               {...register("username")}
             />
             <LabeledInput
@@ -67,7 +65,6 @@ function Signup({ className }) {
               className="mb-16"
               id="password"
               type="password"
-              value="my-password"
               placeholder="비밀번호를 입력해주세요"
               {...register("password", {
                 pattern: {
@@ -83,7 +80,6 @@ function Signup({ className }) {
               id="confirm-password"
               type="password"
               name="confirm-password"
-              value="my-password"
               placeholder="비밀번호를 입력해주세요"
               {...register("confirm-password")}
             />
