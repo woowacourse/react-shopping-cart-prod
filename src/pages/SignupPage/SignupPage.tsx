@@ -1,7 +1,8 @@
+import styled, { css } from 'styled-components';
+
 import PATH from 'constants/path';
 import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
 import { axios } from 'configs/api';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -14,6 +15,20 @@ function SignupPage() {
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [passwordLengthCorrect, setPasswordLengthCorrect] = useState(false);
+  const [passwordAllCharactersCorrect, setPasswordAllCharactersCorrect] =
+    useState(false);
+  const [passwordCheckCorrect, setPasswordCheckCorrect] = useState(false);
+
+  const isValidPasswordLength = (password: string) => {
+    return password.length >= 8 && password.length <= 16;
+  };
+
+  const isValidPasswordAllCharacters = (password: string) => {
+    return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]/.test(
+      password,
+    );
+  };
 
   const handleIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
@@ -21,10 +36,17 @@ function SignupPage() {
 
   const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+
+    setPasswordLengthCorrect(isValidPasswordLength(e.target.value));
+    setPasswordAllCharactersCorrect(
+      isValidPasswordAllCharacters(e.target.value),
+    );
   };
 
   const handlePasswordCheckInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordCheck(e.target.value);
+
+    setPasswordCheckCorrect(password === e.target.value);
   };
 
   const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,10 +103,23 @@ function SignupPage() {
             pattern={'^[a-z0-9_-]{5,20}$'}
             required
           />
-          <label htmlFor="password">비밀번호</label>
+          <label htmlFor="password">
+            비밀번호
+            <StyledErrorSign
+              isCorrect={passwordLengthCorrect && passwordAllCharactersCorrect}
+            >
+              ✓
+            </StyledErrorSign>
+            <StyledErrorMessage isCorrect={passwordLengthCorrect}>
+              ∙ 8~16자 입력
+            </StyledErrorMessage>
+            <StyledErrorMessage isCorrect={passwordAllCharactersCorrect}>
+              ∙ 영문, 숫자, 특수문자 모두 입력
+            </StyledErrorMessage>
+          </label>
           <input
             id="password"
-            type="text"
+            type="password"
             placeholder="8~16자의 비밀번호(영문 소문자, 숫자, 특수문자)를 입력해주세요"
             value={password}
             onChange={handlePasswordInput}
@@ -93,10 +128,15 @@ function SignupPage() {
             }
             required
           />
-          <label htmlFor="passwordCheck">비밀번호 재확인</label>
+          <label htmlFor="passwordCheck">
+            비밀번호 재확인
+            <StyledErrorSign isCorrect={passwordCheckCorrect}>
+              ✓
+            </StyledErrorSign>
+          </label>
           <input
             id="passwordCheck"
-            type="text"
+            type="password"
             placeholder="비밀번호를 재입력해주세요"
             value={passwordCheck}
             onChange={handlePasswordCheckInput}
@@ -187,6 +227,27 @@ const StyledForm = styled.form`
     border-radius: 2px;
     padding: 6px 8px;
   }
+`;
+
+const StyledErrorSign = styled.span`
+  margin: 0 24px 0 12px;
+  font-size: 16px;
+
+  ${({ isCorrect }: { isCorrect: boolean }) => css`
+    color: ${({ theme: { colors } }) =>
+      isCorrect ? colors.green : colors.black};
+  `}
+`;
+
+const StyledErrorMessage = styled.span`
+  margin-left: 30px;
+  font-size: 11px;
+
+  ${({ isCorrect }: { isCorrect: boolean }) => css`
+    color: ${({ theme: { colors } }) =>
+      isCorrect ? colors.green : colors.black};
+    font-weight: ${isCorrect ? 800 : 500};
+  `}
 `;
 
 const StyledSignupButton = styled.button`

@@ -49,6 +49,7 @@ const theme = {
     shadow: '#0000001a',
     black: '#161616',
     brown: '#73675C',
+    green: '#2ecc71',
   },
   zPriorities: {
     overEverything: 50,
