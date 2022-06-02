@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 const StyledCheckbox = styled.input`
   appearance: none;
-  border: 1px solid ${(props) => props.theme.colors.green};
+  border: 1px solid ${(props) => props.theme.colors.mint};
   border-radius: 2px;
   width: 1.75rem;
   height: 1.75rem;
@@ -14,7 +14,7 @@ const StyledCheckbox = styled.input`
   }
 
   &:checked {
-    background-color: ${(props) => props.theme.colors.green};
+    background-color: ${(props) => props.theme.colors.mint};
   }
 
   &:after {

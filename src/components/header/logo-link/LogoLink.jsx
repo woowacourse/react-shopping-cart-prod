@@ -6,7 +6,7 @@ function LogoLink() {
   return (
     <StyledLogoLink>
       <Link className="logo-link" to="/">
-        MINCHO SHOP
+        도민샵
       </Link>
     </StyledLogoLink>
   );

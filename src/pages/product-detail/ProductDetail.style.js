@@ -7,11 +7,11 @@ const StyledProductDetailContainer = styled.div`
   align-items: center;
   height: 100%;
   width: 375px;
-  margin: 0 auto;
+  margin: 30px auto;
 
   img {
-    width: 500px;
-    height: 500px;
+    width: 400px;
+    height: 400px;
     border: 2px solid #cccccc;
     margin-bottom: 30px;
   }

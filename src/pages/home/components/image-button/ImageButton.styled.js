@@ -9,7 +9,7 @@ const StyledImageButton = styled.button`
   &:hover {
     svg {
       path {
-        fill: ${(props) => props.theme.colors.green};
+        fill: ${(props) => props.theme.colors.mint};
       }
     }
   }

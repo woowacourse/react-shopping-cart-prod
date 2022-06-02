@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 const StyledHeader = styled.header`
-  background-color: ${(props) => props.theme.colors.green};
+  background-color: ${(props) => props.theme.colors.mint};
 
   position: sticky;
   z-index: 5;

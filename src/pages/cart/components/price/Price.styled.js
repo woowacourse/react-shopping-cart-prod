@@ -52,7 +52,7 @@ const StyledPrice = styled.section`
         bottom: 0;
         width: 100%;
         height: 8px;
-        background-color: ${(props) => props.theme.colors.green};
+        background-color: ${(props) => props.theme.colors.mint};
         opacity: 0.5;
         z-index: -1;
       }
@@ -68,7 +68,7 @@ const StyledPrice = styled.section`
         display: flex;
         justify-content: center;
         align-items: center;
-        background: ${(props) => props.theme.colors.green};
+        background: ${(props) => props.theme.colors.mint};
         font-size: 24px;
         color: ${(props) => props.theme.colors.white};
         width: 100%;

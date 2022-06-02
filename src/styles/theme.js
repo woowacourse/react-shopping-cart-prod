@@ -1,7 +1,6 @@
 const theme = {
   colors: {
     white: "#ffffff",
-    green: "#03cf5b",
     black1: "#000000",
     black2: "#333333",
     gray1: "#aaaaaa",
@@ -9,6 +8,7 @@ const theme = {
     gray3: "#cccccc",
     gray4: "#dddddd",
     gray5: "#eeeeee",
+    mint: "#2ac1bc",
   },
 };
 

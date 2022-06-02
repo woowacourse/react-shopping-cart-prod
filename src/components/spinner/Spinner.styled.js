@@ -9,7 +9,7 @@ const StyledSpinner = styled.div`
   height: 200px;
   border: 20px solid transparent;
   border-color: ${(props) => props.theme.colors.gray5};
-  border-top-color: ${(props) => props.theme.colors.green};
+  border-top-color: ${(props) => props.theme.colors.mint};
   border-radius: 50%;
   animation: loadingspin 1s linear infinite;
 
