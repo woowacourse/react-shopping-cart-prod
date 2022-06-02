@@ -39,13 +39,21 @@ const ResignPage = () => {
   const handlePasswordInput = ({ target: { value } }) => {
     if (value) {
       setInputValid(prevState => ({ ...prevState, password: true }));
+
+      return;
     }
+
+    setInputValid(prevState => ({ ...prevState, password: false }));
   };
 
   const handleMessageInput = ({ target: { value } }) => {
     if (value === '응') {
       setInputValid(prevState => ({ ...prevState, confirmMessage: true }));
+
+      return;
     }
+
+    setInputValid(prevState => ({ ...prevState, confirmMessage: false }));
   };
 
   return (

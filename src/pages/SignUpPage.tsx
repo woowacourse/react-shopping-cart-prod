@@ -47,13 +47,19 @@ const SignUpPage = () => {
   const handlePasswordInput = ({ target: { value } }) => {
     if (/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value)) {
       setpPasswordValid(prevState => ({ ...prevState, password: true }));
+
+      return;
     }
+    setpPasswordValid(prevState => ({ ...prevState, password: false }));
   };
 
   const handlePasswordConfirmInput = ({ target: { value } }) => {
     if (passwordRef.current.value === value) {
       setpPasswordValid(prevState => ({ ...prevState, confirm: true }));
+
+      return;
     }
+    setpPasswordValid(prevState => ({ ...prevState, confirm: false }));
   };
 
   return (
@@ -61,16 +67,25 @@ const SignUpPage = () => {
       <StyledForm onSubmit={handleSubmit}>
         <StyledTitle>회원가입</StyledTitle>
 
-        <SignInput type={'email'} onChange={handleEmailInput}>
+        <SignInput type={'email'} onChange={handleEmailInput} isValid={validState.email}>
           이메일
         </SignInput>
-        <SignInput type={'text'} onChange={handleNameInput}>
+        <SignInput type={'text'} onChange={handleNameInput} isValid={validState.name}>
           이름
         </SignInput>
-        <SignInput type={'password'} onChange={handlePasswordInput} ref={passwordRef}>
+        <SignInput
+          type={'password'}
+          onChange={handlePasswordInput}
+          ref={passwordRef}
+          isValid={passwordValid.password}
+        >
           비밀번호
         </SignInput>
-        <SignInput type={'password'} onChange={handlePasswordConfirmInput}>
+        <SignInput
+          type={'password'}
+          onChange={handlePasswordConfirmInput}
+          isValid={passwordValid.confirm}
+        >
           비밀번호 확인
         </SignInput>
 

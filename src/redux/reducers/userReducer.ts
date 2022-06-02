@@ -42,6 +42,13 @@ export const userReducer = (state = initialState, action: UserAction) => {
     case UserActionType.DELETE_USER_FAILURE:
       return { loading: false, error: true, data: state.data };
 
+    case UserActionType.AUTO_SIGN_IN_START:
+      return { loading: true, error: null, data: state.data };
+    case UserActionType.AUTO_SIGN_IN_SUCCESS:
+      return { loading: false, error: null, data: action.payload };
+    case UserActionType.AUTO_SIGN_IN_FAILURE:
+      return { loading: false, error: true, data: state.data };
+
     /*case UserActionType.PATCH_USER_INFO_START:
       return { loading: true, error: null, data: state };
     case UserActionType.PATCH_USER_INFO_SUCCESS:

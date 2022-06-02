@@ -28,14 +28,21 @@ const useSignInput = () => {
 
     if (value) {
       setValidState(prev => ({ ...prev, email: true }));
+
+      return;
     }
+
+    setValidState(prev => ({ ...prev, email: false }));
   };
 
   const handleNameInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setInputState(prev => ({ ...prev, name: value }));
     if (value) {
       setValidState(prev => ({ ...prev, name: true }));
+
+      return;
     }
+    setValidState(prev => ({ ...prev, name: false }));
   };
 
   return {

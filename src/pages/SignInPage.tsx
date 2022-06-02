@@ -40,7 +40,10 @@ const SignInPage = () => {
   const handlePasswordInput = ({ target: { value } }) => {
     if (value) {
       setpPasswordValid(true);
+
+      return;
     }
+    setpPasswordValid(false);
   };
 
   return (

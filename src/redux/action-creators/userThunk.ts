@@ -84,6 +84,29 @@ export const resign = (password: string) => async (dispatch: Dispatch<UserAction
   }
 };
 
+export const autoSignIn = () => async (dispatch: Dispatch<UserAction>) => {
+  dispatch({ type: UserActionType.AUTO_SIGN_IN_START });
+  const token = localStorage.getItem('token');
+
+  try {
+    const response = await axios({
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      url: `${LOCAL_BASE_URL}/login/auto`,
+    });
+
+    localStorage.setItem('token', response.data.token);
+
+    dispatch({ type: UserActionType.AUTO_SIGN_IN_SUCCESS, payload: response.data });
+  } catch (e) {
+    dispatch({ type: UserActionType.AUTO_SIGN_IN_FAILURE, payload: e.message });
+    alert(e.response.data.errorMessage);
+  }
+};
+
 /*
 export const editProfile = (editInfo: UserInfo) => async (dispatch: Dispatch<UserAction>) => {
   dispatch({ type: UserActionType.PATCH_USER_INFO_START });

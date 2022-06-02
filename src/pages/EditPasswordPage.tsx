@@ -43,19 +43,29 @@ const EditPasswordPage = () => {
   const handlePrevPasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (value) {
       setpPasswordValid(prevState => ({ ...prevState, prev: true }));
+
+      return;
     }
+    setpPasswordValid(prevState => ({ ...prevState, prev: false }));
   };
 
   const handleNewPasswordInput = ({ target: { value } }) => {
     if (/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value)) {
       setpPasswordValid(prevState => ({ ...prevState, new: true }));
+
+      return;
     }
+
+    setpPasswordValid(prevState => ({ ...prevState, prev: false }));
   };
 
   const handleNewPasswordConfirmInput = ({ target: { value } }) => {
     if (newPasswordRef.current.value === value) {
       setpPasswordValid(prevState => ({ ...prevState, confirm: true }));
+
+      return;
     }
+    setpPasswordValid(prevState => ({ ...prevState, prev: false }));
   };
 
   return (
@@ -69,13 +79,27 @@ const EditPasswordPage = () => {
         <SignInput placeholder={data.name} type={'text'} disable={true}>
           이름
         </SignInput>
-        <SignInput type={'password'} onChange={handlePrevPasswordInput} ref={prevPasswordRef}>
+        <SignInput
+          type={'password'}
+          onChange={handlePrevPasswordInput}
+          ref={prevPasswordRef}
+          isValid={passwordValid.prev}
+        >
           이전 비밀번호
         </SignInput>
-        <SignInput type={'password'} onChange={handleNewPasswordInput} ref={newPasswordRef}>
+        <SignInput
+          type={'password'}
+          onChange={handleNewPasswordInput}
+          ref={newPasswordRef}
+          isValid={passwordValid.new}
+        >
           새 비밀번호
         </SignInput>
-        <SignInput type={'password'} onChange={handleNewPasswordConfirmInput}>
+        <SignInput
+          type={'password'}
+          onChange={handleNewPasswordConfirmInput}
+          isValid={passwordValid.confirm}
+        >
           새 비밀번호 확인
         </SignInput>
 
@@ -96,7 +120,7 @@ const StyledForm = styled.form`
   flex-direction: column;
   width: 600px;
   gap: 50px;
-  height: 900px;
+  height: 1000px;
   border: 1px solid black;
 `;
 

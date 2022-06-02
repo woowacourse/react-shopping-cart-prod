@@ -4,8 +4,8 @@ import { mockItemList } from './mockDB';
 import { CartItem, EditPasswordInfo, SignInInfo, SignUpInfo, UserInfo } from 'types/domain';
 import { generateRandomCode } from 'utils';
 
-let mockCartList: CartItem[] = [];
-let mockUserList: UserInfo[] = [];
+let mockCartList: CartItem[] = JSON.parse(localStorage.getItem('mockCartList')) || [];
+let mockUserList: UserInfo[] = JSON.parse(localStorage.getItem('mockUserList')) || [];
 
 export const handlers = [
   rest.get(`${LOCAL_BASE_URL}/itemList`, (req, res, ctx) => {
@@ -43,6 +43,8 @@ export const handlers = [
       mockCartList.push(cartItem);
     }
 
+    localStorage.setItem('mockCartList', JSON.stringify(mockCartList));
+
     return res(ctx.status(200));
   }),
 
@@ -52,6 +54,7 @@ export const handlers = [
     const newCartList = mockCartList.filter(item => item.id !== deleteId);
 
     mockCartList = [...newCartList];
+    localStorage.setItem('mockCartList', JSON.stringify(mockCartList));
 
     return res(ctx.status(200));
   }),
@@ -68,6 +71,7 @@ export const handlers = [
     });
 
     mockCartList = [...newCartList];
+    localStorage.setItem('mockCartList', JSON.stringify(mockCartList));
 
     return res(ctx.status(200), ctx.json(cartItem));
   }),
@@ -77,6 +81,7 @@ export const handlers = [
     const signUpInfo: SignUpInfo = req.body;
 
     mockUserList = [...mockUserList, signUpInfo];
+    localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
 
     return res(ctx.status(200), ctx.json({ email: signUpInfo.email, name: signUpInfo.name }));
   }),
@@ -103,6 +108,7 @@ export const handlers = [
         user.token = tokenCode;
       }
     });
+    localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
 
     return res(
       ctx.status(200),
@@ -126,6 +132,8 @@ export const handlers = [
         }
       });
 
+      localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
+
       return res(ctx.status(200));
     }
 
@@ -141,9 +149,36 @@ export const handlers = [
     if (targetUser.password === passwordInput) {
       mockUserList = mockUserList.filter(user => user.email !== targetUser.email);
 
-      console.log(mockUserList, 'delete');
+      localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
 
       return res(ctx.status(200));
+    }
+
+    return res(ctx.status(401));
+  }),
+
+  rest.post(`${LOCAL_BASE_URL}/login/auto`, (req, res, ctx) => {
+    const token = req.headers.get('Authorization');
+
+    const targetUser = mockUserList.find(user => user.token === token);
+
+    if (targetUser) {
+      const newToken = `Bearer ${generateRandomCode(4)}`;
+
+      targetUser.token = newToken;
+
+      console.log(mockUserList);
+
+      localStorage.setItem('mockUserList', JSON.stringify(mockUserList));
+
+      return res(
+        ctx.status(200),
+        ctx.json({
+          email: targetUser.email,
+          name: targetUser.name,
+          token: targetUser.token,
+        })
+      );
     }
 
     return res(ctx.status(401));

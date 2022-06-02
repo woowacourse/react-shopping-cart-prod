@@ -23,6 +23,10 @@ export enum UserActionType {
   DELETE_USER_SUCCESS = 'user/DELETE_USER_SUCCESS',
   DELETE_USER_FAILURE = 'user/DELETE_USER_FAILURE',
 
+  AUTO_SIGN_IN_START = 'user/AUTO_SIGN_IN_START',
+  AUTO_SIGN_IN_SUCCESS = 'user/AUTO_SIGN_IN_SUCCESS',
+  AUTO_SIGN_IN_FAILURE = 'user/AUTO_SIGN_IN_FAILURE',
+
   SIGN_OUT_ACTION = 'user/SIGN_OUT',
 }
 
@@ -90,6 +94,18 @@ interface DeleteUserFailure {
   type: UserActionType.DELETE_USER_FAILURE;
 }
 
+interface AutoSignInStart {
+  type: UserActionType.AUTO_SIGN_IN_START;
+}
+
+interface AutoSignInSuccess {
+  type: UserActionType.AUTO_SIGN_IN_SUCCESS;
+  payload: UserInfo;
+}
+interface AutoSignInFailure {
+  type: UserActionType.AUTO_SIGN_IN_FAILURE;
+}
+
 export type UserAction =
   | PostSignUpStart
   | PostSignUpSuccess
@@ -106,4 +122,7 @@ export type UserAction =
   | PatchNewPasswordFailure
   | DeleteUserStart
   | DeleteUserSuccess
-  | DeleteUserFailure;
+  | DeleteUserFailure
+  | AutoSignInStart
+  | AutoSignInSuccess
+  | AutoSignInFailure;
