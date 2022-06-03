@@ -20,6 +20,19 @@ function MyPage({ className }) {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user, shallowEqual);
 
+  const validateConfirmNewPassword = (value) => {
+    if (passwordForm.formData.newPassword !== value) {
+      return {
+        isValid: false,
+        errorMessage: "비밀번호를 동일하게 입력해 주세요",
+      };
+    }
+    return {
+      isValid: true,
+      errorMessage: null,
+    };
+  };
+
   const handleUserNameFormSubmit = async ({ username }) => {
     const newUserInfo = await updateUsername(username);
     dispatch(createAction(ACTION_TYPE.UPDATE_USER, newUserInfo));
@@ -83,12 +96,18 @@ function MyPage({ className }) {
           <form onSubmit={userNameForm.onSubmit(handleUserNameFormSubmit)}>
             <LabeledInput
               label="이름"
-              className="mb-16"
+              className="mb-30"
               id="username"
               type="username"
               placeholder="이름을 입력해주세요"
+              feedback={userNameForm.errors.username}
               defaultValue={`${user.username}`}
-              {...userNameForm.register("username")}
+              {...userNameForm.register("username", {
+                pattern: {
+                  value: /^.{1,10}$/,
+                  message: "이름은 1 ~ 10자 이내로 입력해 주세요",
+                },
+              })}
             />
             <Button variant="primary" size="md" block type="submit">
               이름 수정
@@ -98,30 +117,40 @@ function MyPage({ className }) {
           <form onSubmit={passwordForm.onSubmit(handlePasswordFormSubmit)}>
             <LabeledInput
               label="기존 비밀번호"
-              className="mb-16"
+              className="mb-30"
               id="old-password"
               type="password"
               name="old-password"
+              feedback={passwordForm.errors.oldPassword}
               placeholder="기존 비밀번호를 입력해주세요"
-              {...passwordForm.register("old-password")}
+              {...passwordForm.register("oldPassword")}
             />
             <LabeledInput
               label="새 비밀번호"
-              className="mb-16"
+              className="mb-30"
               id="new-password"
               type="password"
-              name="new-password"
               placeholder="새 비밀번호를 입력해주세요"
-              {...passwordForm.register("new-password")}
+              feedback={passwordForm.errors.newPassword}
+              {...passwordForm.register("newPassword", {
+                pattern: {
+                  value:
+                    /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
+                  message:
+                    "영문,숫자,특수문자의 조합으로 8 ~ 12글자를 입력해 주세요",
+                },
+              })}
             />
             <LabeledInput
               label="새 비밀번호 확인"
-              className="mb-16"
+              className="mb-30"
               id="confirm-new-password"
               type="password"
-              name="confirm-new-password"
               placeholder="새 비밀번호를 입력해주세요"
-              {...passwordForm.register("confirm-new-password")}
+              feedback={passwordForm.errors.confirmNewPassword}
+              {...passwordForm.register("confirmNewPassword", {
+                customValidator: validateConfirmNewPassword,
+              })}
             />
             <Button variant="primary" size="md" block type="submit">
               비밀번호 수정
@@ -131,12 +160,11 @@ function MyPage({ className }) {
           <form onSubmit={secessionForm.onSubmit(handleSecessionFormSubmit)}>
             <LabeledInput
               label="회원탈퇴"
-              className="mb-16"
+              className="mb-30"
               id="password-for-secession"
               type="password"
-              name="password-for-secession"
               placeholder="비밀번호를 입력해주세요"
-              {...secessionForm.register("password-for-secession")}
+              {...secessionForm.register("passwordForSecession")}
             />
             <Button variant="primary" size="md" block type="submit">
               회원탈퇴
