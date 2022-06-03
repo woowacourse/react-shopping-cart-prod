@@ -1,13 +1,19 @@
 import { rest } from "msw";
 import products from "./products.json";
 
+const initialDB = {
+  customers: [],
+};
+
 const localStorageKey = "woo-shop-msw-localstorage-key";
 class LocalStorage {
   static db = null;
 
   static getInstance(key = localStorageKey) {
     if (this.db) return this.db;
-    return JSON.parse(window.localStorage.getItem(key) ?? "{}");
+    return JSON.parse(
+      window.localStorage.getItem(key) ?? JSON.stringify(initialDB)
+    );
   }
 
   static saveInstance(db, key = localStorageKey) {
