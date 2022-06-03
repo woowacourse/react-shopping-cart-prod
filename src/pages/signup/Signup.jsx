@@ -109,7 +109,7 @@ function Signup({ className }) {
             />
             <Button
               variant="primary"
-              size="sm"
+              size="md"
               block
               type="submit"
               disabled={hasError}
