@@ -1,0 +1,32 @@
+@import '@scss/colors';
+
+.input {
+  display: block;
+  width: 100%;
+  flex:1;
+  padding: 8px 8px 4px;
+  height: 36px;
+  border: 1px solid $gray800;
+  border-radius: 4px;
+  font-weight: normal;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+}
+
+.input.submitted {
+  background-color: $gray600;
+}
+
+.input:disabled {
+  background-color: $gray600;
+  cursor: not-allowed;
+}
+
+.input:focus {
+  background-color: white !important;
+}
+
+::placeholder {
+  color: $gray900;
+  opacity: 1; /* Firefox */
+}

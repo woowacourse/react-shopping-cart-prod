@@ -1,0 +1,15 @@
+@import "@scss/colors";
+
+.login {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.moreAction {
+  span {
+    margin-right: 10px;
+  }
+  a {
+    color: $blue900;
+  }
+}
