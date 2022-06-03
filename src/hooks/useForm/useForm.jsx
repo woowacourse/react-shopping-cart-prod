@@ -13,6 +13,21 @@ function useForm() {
       return acc;
     }, {});
 
+    const errors = Object.keys(_fields.current).reduce((acc, cur) => {
+      const field = _fields.current[cur];
+      const { ref: input, validation } = field;
+      if (validation) {
+        if (validation.pattern) {
+          const { value: regex, message } = validation.pattern;
+          const testResult = regex.test(input.value);
+          if (!testResult) {
+            acc[cur] = message;
+          }
+        }
+      }
+      return acc;
+    }, {});
+
     onSubmit(formData, errors);
   };
 
