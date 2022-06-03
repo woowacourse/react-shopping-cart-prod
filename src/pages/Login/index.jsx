@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import Form from 'components/Common/Form/Form';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
@@ -11,7 +12,6 @@ import { PATH_NAME } from 'constants';
 import useAuth from 'hooks/useAuth';
 import useSnackBar from 'hooks/useSnackBar';
 import * as Styled from './style';
-import { useEffect } from 'react';
 
 const Login = () => {
   const navigate = useNavigate();
