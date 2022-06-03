@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -16,6 +16,7 @@ import { PATH_NAME } from 'constants';
 
 import useModifyProfilePage from './hooks';
 import useSnackBar from 'hooks/useSnackBar';
+import useModal from 'hooks/useModal';
 import PropTypes from 'prop-types';
 import * as Styled from './style';
 
@@ -23,9 +24,13 @@ const ModifyProfile = () => {
   const navigate = useNavigate();
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
   const { name } = useSelector((state) => state.user);
-  const [openPasswordModal, setOpenChangePasswordModal] = useState(false);
-  const [openWithdrawalModal, setOpenWithdrawalModal] = useState(false);
-
+  const [
+    isModifyPasswordModalOpened,
+    openModifyPasswordModal,
+    closeModifyPasswordModal,
+  ] = useModal();
+  const [isWithdrawalModalOpened, openWithdrawalModal, closeWithdrawalModal] =
+    useModal();
   const {
     updatePassword,
     isUpdatePasswordSucceed,
@@ -59,7 +64,7 @@ const ModifyProfile = () => {
 
   useEffect(() => {
     if (isUpdatePasswordSucceed) {
-      setOpenChangePasswordModal(false);
+      closeModifyPasswordModal();
       showSuccessSnackBar('비밀번호가 성공적으로 변경되었습니다.');
       return;
     }
@@ -71,7 +76,7 @@ const ModifyProfile = () => {
 
   useEffect(() => {
     if (isUnregisterSucceed) {
-      setOpenWithdrawalModal(false);
+      closeWithdrawalModal();
       navigate(PATH_NAME.HOME);
       return;
     }
@@ -87,29 +92,23 @@ const ModifyProfile = () => {
       <Styled.Contents>
         <Profile name={name} />
         <Styled.ButtonContainer>
-          <Button
-            colorType="primary"
-            onClick={() => setOpenChangePasswordModal(true)}
-          >
+          <Button colorType="primary" onClick={openModifyPasswordModal}>
             비밀번호 수정
           </Button>
-          <Button
-            colorType="tertiary"
-            onClick={() => setOpenWithdrawalModal(true)}
-          >
+          <Button colorType="tertiary" onClick={openWithdrawalModal}>
             회원 탈퇴
           </Button>
         </Styled.ButtonContainer>
       </Styled.Contents>
       <Modal
-        isModalOpened={openPasswordModal}
-        closeModal={() => setOpenChangePasswordModal(false)}
+        isModalOpened={isModifyPasswordModalOpened}
+        closeModal={closeModifyPasswordModal}
       >
         <ChangePassword onSubmit={handleSubmitChangeSubmit} />
       </Modal>
       <Modal
-        isModalOpened={openWithdrawalModal}
-        closeModal={() => setOpenWithdrawalModal(false)}
+        isModalOpened={isWithdrawalModalOpened}
+        closeModal={closeWithdrawalModal}
       >
         <Withdrawal onSubmit={handleSubmitWithdrawal} />
       </Modal>
