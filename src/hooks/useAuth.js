@@ -42,7 +42,7 @@ const useAuth = () => {
     const headers = {
       Authorization: `Bearer ${getCookie('userToken')}`,
     };
-    getUserApi('', headers);
+    getUserApi({ payload: headers });
   };
 
   const login = (email, password) => {
