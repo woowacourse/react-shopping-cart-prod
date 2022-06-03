@@ -85,7 +85,6 @@ function UserEdit() {
   const validatePasswordConfirm = (e) => {
     const { value } = e.target;
     setPasswordConfirm((prev) => ({ ...prev, value: value }));
-    console.log(value, password.value, value === password.value);
     if (value !== password.value) {
       setPasswordConfirm((prev) => ({
         ...prev,
