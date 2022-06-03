@@ -1,23 +1,21 @@
 // @ts-nocheck
-import Container from 'components/@shared/Container';
-import Input from 'components/Input';
-import Title from 'components/Title';
-import Styled from './index.style';
-import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
-import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
-import AuthButton from 'components/AuthButton';
-
 import { useState, useEffect } from 'react';
-import { validateNickname } from 'utils/validator';
-import PasswordEditModal from './PasswordEditModal';
-import AccountDeleteModal from './AccountDeleteModal';
-import axios from 'axios';
-import { getCookie } from 'utils/cookie';
-import store from 'store/store';
-import { doLogin } from 'actions/actionCreator';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
+import axios from 'axios';
+
+import PasswordEditModal from './PasswordEditModal';
+import AccountDeleteModal from './AccountDeleteModal';
+import { Container, Input, Title, AuthButton } from 'components';
+import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
+import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
+
+import store from 'store/store';
+import { doLogin } from 'actions/actionCreator';
+import { validateNickname } from 'utils/validator';
+import { getCookie } from 'utils/cookie';
 import { MESSAGE } from 'utils/constants';
+import Styled from './index.style';
 
 const AccountPage = () => {
   const [renderSnackbar] = useSnackbar();

@@ -1,5 +1,6 @@
+// @ts-nocheck
 import PropTypes from 'prop-types';
-import Styled from 'components/Image/index.style';
+import Styled from './index.style';
 
 const Image = ({ src, alt, size, ...rest }) => {
   return <Styled.Image src={src} alt={alt} size={size} {...rest} />;

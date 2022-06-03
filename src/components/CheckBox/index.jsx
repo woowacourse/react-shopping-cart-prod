@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Styled from 'components/CheckBox/index.style';
+import Styled from './index.style';
 
 const CheckBox = ({ checked, handleChange }) => {
   return (

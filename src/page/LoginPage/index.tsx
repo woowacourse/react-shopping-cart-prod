@@ -1,21 +1,18 @@
 // @ts-nocheck
-import Styled from './index.style';
-import Input from 'components/Input';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import useSnackbar from 'hooks/useSnackbar';
+
+import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-import Title from 'components/Title';
-import GuideText from 'components/GuideText';
-import AuthButton from 'components/AuthButton';
-import { useState, useEffect } from 'react';
-import Container from 'components/@shared/Container';
-import axios from 'axios';
-import { setCookie, getCookie } from 'utils/cookie';
 
-import { useNavigate } from 'react-router-dom';
 import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
-import useSnackbar from 'hooks/useSnackbar';
+import { setCookie, getCookie } from 'utils/cookie';
 import { MESSAGE } from 'utils/constants';
+import Styled from './index.style';
 
 const LoginPage = () => {
   const navigate = useNavigate();

@@ -1,15 +1,13 @@
-import ModalOverlay from 'components/@shared/Modal';
-import Input from 'components/Input';
-import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-import Title from 'components/Title';
-import AuthButton from 'components/AuthButton';
 import { useState, useEffect } from 'react';
-import Container from 'components/@shared/Container';
-import Styled from './index.style';
-import { getCookie } from 'utils/cookie';
 import axios from 'axios';
 import useSnackbar from 'hooks/useSnackbar';
+
+import { Modal, Input, Title, AuthButton, Container } from 'components';
+import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
+
+import { getCookie } from 'utils/cookie';
 import { MESSAGE } from 'utils/constants';
+import Styled from './index.style';
 
 const AccountDeleteModal = ({ handleModal }) => {
   const [renderSnackbar] = useSnackbar();
@@ -45,7 +43,7 @@ const AccountDeleteModal = ({ handleModal }) => {
   };
 
   return (
-    <ModalOverlay onCloseModal={handleModal}>
+    <Modal onCloseModal={handleModal}>
       <Container width="505px" height="370px">
         <div>
           <Title mainTitle="회원탈퇴" />
@@ -68,7 +66,7 @@ const AccountDeleteModal = ({ handleModal }) => {
           />
         </div>
       </Container>
-    </ModalOverlay>
+    </Modal>
   );
 };
 

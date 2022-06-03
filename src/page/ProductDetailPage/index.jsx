@@ -1,5 +1,8 @@
 // @ts-nocheck
 import { useNavigate, useParams } from 'react-router-dom';
+import useProduct from 'hooks/useProduct';
+import useCart from 'hooks/useCart';
+import useSnackbar from 'hooks/useSnackbar';
 
 import { Image } from 'components';
 
@@ -7,12 +10,8 @@ import store from 'store/store';
 import { doPutProductToCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
 import { LINK, MESSAGE } from 'utils/constants';
-import Styled from 'page/ProductDetailPage/index.style';
-import useProduct from 'hooks/useProduct';
-import useCart from 'hooks/useCart';
-
-import useSnackbar from 'hooks/useSnackbar';
 import { getCookie } from 'utils/cookie';
+import Styled from './index.style';
 
 const ProductDetailPage = () => {
   const [renderSnackbar] = useSnackbar();

@@ -1,19 +1,17 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
-import Styled from './index.style';
-import Input from 'components/Input';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import useSnackbar from 'hooks/useSnackbar';
+
+import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
-import Title from 'components/Title';
-import GuideText from 'components/GuideText';
-import AuthButton from 'components/AuthButton';
-import Container from 'components/@shared/Container';
+
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import Styled from './index.style';
 
 const SignupPage = () => {
   const [renderSnackbar] = useSnackbar();

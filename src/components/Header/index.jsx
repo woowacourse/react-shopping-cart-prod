@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Styled from 'components/Header/index.style';
+import Styled from './index.style';
 
 const Header = ({ left, right, ...rest }) => {
   return (

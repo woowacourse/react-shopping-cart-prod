@@ -1,4 +1,4 @@
-import Styled from 'components/CloseButton/index.style';
+import Styled from './index.style';
 
 interface CloseButtonProps {
   handleClick: Function;

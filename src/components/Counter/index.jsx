@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Styled from 'components/Counter/index.style';
+import Styled from './index.style';
 
 const Counter = ({ quantity, increase, decrease }) => {
   return (

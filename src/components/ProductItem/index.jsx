@@ -1,21 +1,19 @@
 // @ts-nocheck
-
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useClose from 'hooks/useClose';
 import useCart from 'hooks/useCart';
+import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
 import store from 'store/store';
 import { doDeleteProductFromCart, doPutProductToCart } from 'actions/actionCreator';
-
 import autoComma from 'utils/autoComma';
-import Styled from 'components/ProductItem/index.style';
 import { LINK, MESSAGE } from 'utils/constants';
-import useSnackbar from 'hooks/useSnackbar';
 import { getCookie } from 'utils/cookie';
+import Styled from './index.style';
 
 const ProductItem = ({ id, name, price, image }) => {
   const navigate = useNavigate();

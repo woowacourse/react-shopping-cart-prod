@@ -7,9 +7,8 @@ import { ProductItem } from 'components';
 
 import store from 'store/store';
 import { doInitializeCart } from 'actions/actionCreator';
-
-import Styled from 'page/ProductListPage/index.style';
 import { SERVER_URL } from 'utils/constants';
+import Styled from './index.style';
 
 const ProductListPage = () => {
   const { products } = useSelector(state => state.reducer);

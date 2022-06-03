@@ -1,11 +1,12 @@
-import { doLogout } from 'actions/actionCreator';
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useSnackbar from 'hooks/useSnackbar';
+
 import store from 'store/store';
+import { doLogout } from 'actions/actionCreator';
 import { deleteCookie, getCookie } from 'utils/cookie';
 import Styled from './index.style';
-import useSnackbar from 'hooks/useSnackbar';
 
 const UserMenu = ({ nickname }) => {
   const [renderSnackbar] = useSnackbar();

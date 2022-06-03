@@ -1,7 +1,7 @@
 import { ReactNode, useState, useEffect } from 'react';
-import Styled from './index.style';
 import { ReactComponent as CorrectIcon } from 'assets/correct_icon.svg';
 import { ReactComponent as InCorrectIcon } from 'assets/incorrect_icon.svg';
+import Styled from './index.style';
 
 interface InputProps {
   icon: ReactNode;

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useSelector } from 'react-redux';
 
 const useCart = id => {

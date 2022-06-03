@@ -1,14 +1,13 @@
 // @ts-nocheck
-import { Outlet, useLocation } from 'react-router-dom';
-import Header from 'components/Header';
-import { ROUTES } from 'utils/constants';
-import CartIcon from 'components/CartIcon';
-import { useSelector } from 'react-redux';
-import UserMenu from 'components/UserMenu';
-
 import { useEffect, useState } from 'react';
-import Styled from './index.style';
+import { useSelector } from 'react-redux';
+import { Outlet, useLocation } from 'react-router-dom';
+
+import { Header, CartIcon, UserMenu } from 'components';
+
+import { ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
+import Styled from './index.style';
 
 const Layout = () => {
   const location = useLocation();

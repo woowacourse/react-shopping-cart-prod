@@ -1,4 +1,4 @@
-import Styled from 'components/@shared/Button/index.style';
+import Styled from './index.style';
 
 const Button = ({ children, ...rest }) => {
   return <Styled.Button {...rest}>{children}</Styled.Button>;

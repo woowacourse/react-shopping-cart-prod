@@ -1,6 +1,8 @@
 // @ts-nocheck
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 
@@ -10,12 +12,10 @@ import {
   doInitializeOrder,
   doSelectiveDeleteFromCart,
 } from 'actions/actionCreator';
-import empty from 'assets/empty.jpeg';
-import Styled from 'page/CartPage/index.style';
-import { useNavigate } from 'react-router-dom';
-import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
+import empty from 'assets/empty.jpeg';
+import Styled from './index.style';
 
 const CartPage = () => {
   const [renderSnackbar] = useSnackbar();

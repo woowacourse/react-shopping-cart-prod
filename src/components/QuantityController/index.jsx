@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import Styled from 'components/QuantityController/index.style';
+import Styled from './index.style';
 
 const QuantityController = ({ handleClick, quantity, increase, decrease }) => {
   return (

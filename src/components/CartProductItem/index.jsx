@@ -1,15 +1,15 @@
-import useProduct from 'hooks/useProduct';
 import PropTypes from 'prop-types';
+import useProduct from 'hooks/useProduct';
+import useOrder from 'hooks/useOrder';
+import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, Counter, CheckBox } from 'components';
 
 import store from 'store/store';
 import { doPutProductToCart, doDeleteProductFromCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
-import Styled from 'components/CartProductItem/index.style';
-import useOrder from 'hooks/useOrder';
-import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import Styled from './index.style';
 
 const CartProductItem = ({ id, quantity }) => {
   const [renderSnackbar] = useSnackbar();

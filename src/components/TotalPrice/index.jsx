@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import UnderlineText from 'components/UnderlineText';
+import { UnderlineText } from 'components';
 import autoComma from 'utils/autoComma';
-import Styled from 'components/TotalPrice/index.style';
+import Styled from './index.style';
 
 const TotalPrice = ({ title, price, action }) => {
   return (

@@ -1,22 +1,24 @@
 // @ts-nocheck
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-
-import { ProductListPage, ProductDetailPage, CartPage } from 'page';
-import { GlobalStyles, theme } from 'components';
-
-import { BASE_URL, ROUTES } from 'utils/constants';
-import LoginPage from 'page/LoginPage';
-import SignupPage from 'page/SignupPage';
-import AccountPage from 'page/AccountPage';
-import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
-import { getCookie } from 'utils/cookie';
+
+import {
+  ProductListPage,
+  ProductDetailPage,
+  CartPage,
+  LoginPage,
+  SignupPage,
+  AccountPage,
+} from 'page';
+import { Layout, Snackbar, GlobalStyles, theme } from 'components';
+
 import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
-import Layout from 'components/Layout';
-import { useSelector } from 'react-redux';
-import Snackbar from 'components/Snackbar';
+import { BASE_URL, ROUTES } from 'utils/constants';
+import { getCookie } from 'utils/cookie';
 
 function App() {
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);

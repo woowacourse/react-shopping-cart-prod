@@ -1,4 +1,4 @@
-import Button from 'components/@shared/Button';
+import { Button } from 'components';
 import styled from 'styled-components';
 
 const Styled = {
