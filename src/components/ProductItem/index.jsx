@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import useClose from 'hooks/useClose';
 import useCart from 'hooks/useCart';
@@ -8,7 +9,6 @@ import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
-import store from 'store/store';
 import { doDeleteProductFromCart, doPutProductToCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
 import { LINK, MESSAGE } from 'utils/constants';
@@ -16,6 +16,7 @@ import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
 const ProductItem = ({ id, name, price, image }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
   const isAuthenticated = getCookie('accessToken');
@@ -34,12 +35,12 @@ const ProductItem = ({ id, name, price, image }) => {
     clearTimer();
 
     if (quantityRef.current > 0) {
-      store.dispatch(doPutProductToCart({ id, quantity: quantityRef.current }));
+      dispatch(doPutProductToCart({ id, quantity: quantityRef.current }));
       renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
       return;
     }
 
-    store.dispatch(doDeleteProductFromCart({ id }));
+    dispatch(doDeleteProductFromCart({ id }));
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 

@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useSnackbar from 'hooks/useSnackbar';
@@ -8,13 +9,13 @@ import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
 import { setCookie, getCookie } from 'utils/cookie';
 import { MESSAGE } from 'utils/constants';
 import Styled from './index.style';
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const isAuthenticated = !!getCookie('accessToken');
 
@@ -50,7 +51,7 @@ const LoginPage = () => {
       });
 
       setCookie('accessToken', response.data.accessToken);
-      store.dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(doLogin({ nickname: response.data.nickname }));
       renderSnackbar(`${response.data.nickname}님 환영합니다 👋`, 'SUCCESS');
       navigate('/');
     } catch (error) {

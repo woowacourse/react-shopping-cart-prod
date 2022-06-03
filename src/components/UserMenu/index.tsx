@@ -1,14 +1,15 @@
 import axios from 'axios';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 
-import store from 'store/store';
 import { doInitializeCart, doLogout } from 'actions/actionCreator';
 import { deleteCookie, getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
 const UserMenu = ({ nickname }) => {
+  const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
 
   const navigate = useNavigate();
@@ -32,8 +33,8 @@ const UserMenu = ({ nickname }) => {
 
       deleteCookie('accessToken');
       setIsOpen(false);
-      store.dispatch(doInitializeCart());
-      store.dispatch(doLogout());
+      dispatch(doInitializeCart());
+      dispatch(doLogout());
       renderSnackbar('로그아웃이 완료되었습니다.', 'SUCCESS');
       navigate('/');
     } catch (error) {

@@ -1,12 +1,11 @@
 // @ts-nocheck
 import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 
-import store from 'store/store';
 import {
   doAddProdcutToOrder,
   doInitializeOrder,
@@ -18,8 +17,9 @@ import empty from 'assets/empty.jpeg';
 import Styled from './index.style';
 
 const CartPage = () => {
-  const [renderSnackbar] = useSnackbar();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [renderSnackbar] = useSnackbar();
   const isAuthenticated = getCookie('accessToken');
 
   const { products, shoppingCart, order } = useSelector(state => state.reducer);
@@ -52,19 +52,19 @@ const CartPage = () => {
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
-      store.dispatch(doInitializeOrder());
+      dispatch(doInitializeOrder());
       return;
     }
 
     shoppingCart.forEach(product => {
       if (!order.some(productId => productId === product.id)) {
-        store.dispatch(doAddProdcutToOrder({ id: product.id }));
+        dispatch(doAddProdcutToOrder({ id: product.id }));
       }
     });
   };
 
   const deleteItem = () => {
-    store.dispatch(doSelectiveDeleteFromCart());
+    dispatch(doSelectiveDeleteFromCart());
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 

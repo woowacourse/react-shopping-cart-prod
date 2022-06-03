@@ -1,11 +1,13 @@
-import store from 'store/store';
+import { useDispatch } from 'react-redux';
 import { doShowSnackbar, doHideSnackbar } from 'actions/actionCreator';
 
 const useSnackbar = () => {
-  const renderSnackbar = (message, status) => {
-    store.dispatch(doShowSnackbar({ message, status }));
+  const dispatch = useDispatch();
 
-    setTimeout(() => store.dispatch(doHideSnackbar()), 3000);
+  const renderSnackbar = (message, status) => {
+    dispatch(doShowSnackbar({ message, status }));
+
+    setTimeout(() => dispatch(doHideSnackbar()), 3000);
   };
 
   return [renderSnackbar];

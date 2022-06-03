@@ -1,16 +1,16 @@
 // @ts-nocheck
 import { useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { ProductItem } from 'components';
 
-import store from 'store/store';
 import { doInitializeProductList } from 'actions/actionCreator';
 import { SERVER_URL } from 'utils/constants';
 import Styled from './index.style';
 
 const ProductListPage = () => {
+  const dispatch = useDispatch();
   const { products } = useSelector(state => state.reducer);
 
   const getProducts = useCallback(async () => {
@@ -18,8 +18,8 @@ const ProductListPage = () => {
 
     const response = await axios.get(`${SERVER_URL}products`);
 
-    store.dispatch(doInitializeProductList({ products: response.data }));
-  }, [products]);
+    dispatch(doInitializeProductList({ products: response.data }));
+  }, [products, dispatch]);
 
   useEffect(() => {
     getProducts();

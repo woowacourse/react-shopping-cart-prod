@@ -1,24 +1,25 @@
 import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import useProduct from 'hooks/useProduct';
 import useOrder from 'hooks/useOrder';
 import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, Counter, CheckBox } from 'components';
 
-import store from 'store/store';
 import { doPutProductToCart, doDeleteProductFromCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
 import { MESSAGE } from 'utils/constants';
 import Styled from './index.style';
 
 const CartProductItem = ({ id, quantity }) => {
+  const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
 
   const [{ name, price, image }] = useProduct(id);
   const [isInOrder, updateOrder] = useOrder(id);
 
   const deleteItem = () => {
-    store.dispatch(doDeleteProductFromCart({ id }));
+    dispatch(doDeleteProductFromCart({ id }));
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
@@ -34,10 +35,10 @@ const CartProductItem = ({ id, quantity }) => {
         <Styled.DeleteButton onClick={deleteItem} />
         <Counter
           quantity={quantity}
-          increase={() => store.dispatch(doPutProductToCart({ id, quantity: quantity + 1 }))}
+          increase={() => dispatch(doPutProductToCart({ id, quantity: quantity + 1 }))}
           decrease={() => {
             if (quantity > 1) {
-              store.dispatch(doPutProductToCart({ id, quantity: quantity - 1 }));
+              dispatch(doPutProductToCart({ id, quantity: quantity - 1 }));
             }
           }}
         />

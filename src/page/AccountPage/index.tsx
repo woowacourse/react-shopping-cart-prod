@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import PasswordEditModal from './PasswordEditModal';
@@ -10,7 +11,6 @@ import { Container, Input, Title, AuthButton } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
-import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
 import { validateNickname } from 'utils/validator';
 import { getCookie } from 'utils/cookie';
@@ -18,6 +18,7 @@ import { MESSAGE } from 'utils/constants';
 import Styled from './index.style';
 
 const AccountPage = () => {
+  const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
   const isAuthenticated = getCookie('accessToken');
@@ -71,7 +72,7 @@ const AccountPage = () => {
           },
         },
       );
-      store.dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(doLogin({ nickname: response.data.nickname }));
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
     } catch (error) {
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');

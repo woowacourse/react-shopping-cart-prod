@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import {
@@ -15,12 +15,12 @@ import {
 } from 'page';
 import { Layout, Snackbar, GlobalStyles, theme } from 'components';
 
-import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
 import { BASE_URL, ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 
 function App() {
+  const dispatch = useDispatch();
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
 
   const getAccount = async () => {
@@ -35,12 +35,13 @@ function App() {
         },
       });
 
-      store.dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(doLogin({ nickname: response.data.nickname }));
     } catch (error) {}
   };
 
   useEffect(() => {
     getAccount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
