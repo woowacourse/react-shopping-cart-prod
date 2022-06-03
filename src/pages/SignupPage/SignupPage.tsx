@@ -41,9 +41,9 @@ function SignupPage() {
 
   return (
     <S.PageBox>
-      <Stepper stepList={SIGNUP_STEPS_LIST} currentStepId={Number(stepId)} />
+      <Stepper stepList={SIGNUP_STEPS_LIST} stepId={Number(stepId)} />
       <DivideLine color="gray" thickness="thin" />
-      <Outlet context={{ currentStepId, goNextStep }} />
+      <Outlet context={{ stepId, goNextStep }} />
     </S.PageBox>
   );
 }

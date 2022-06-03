@@ -7,7 +7,7 @@ import { useState } from 'react';
 
 function TermsStep() {
   const { goNextStep } = useOutletContext<{
-    currentStepId: number;
+    stepId: number;
     goNextStep: () => void;
   }>();
   const [checkedFlags, setCheckedFlags] = useState<Record<string, boolean>>({

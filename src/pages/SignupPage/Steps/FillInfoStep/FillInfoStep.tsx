@@ -11,7 +11,7 @@ import { SERVER_URL } from '../../../../configs/api';
 
 function FillInfoStep() {
   const { goNextStep } = useOutletContext<{
-    currentStepId: number;
+    stepId: number;
     goNextStep: () => void;
   }>();
   const { postcode, addressData } = useDaumPostcode();

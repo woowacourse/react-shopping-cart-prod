@@ -5,12 +5,12 @@ import { SIGNUP_STEPS } from '../../constants/paths';
 import { useOutletContext } from 'react-router-dom';
 
 function SignupStep() {
-  const { currentStepId } = useOutletContext<{
-    currentStepId: number;
+  const { stepId } = useOutletContext<{
+    stepId: string;
     goNextStep: () => void;
   }>();
 
-  switch (Number(currentStepId)) {
+  switch (Number(stepId)) {
     case SIGNUP_STEPS.TERMS.id:
       return <TermsStep />;
     case SIGNUP_STEPS.FILL_INFO.id:
