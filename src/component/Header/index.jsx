@@ -26,12 +26,13 @@ export default function Header() {
 
   const checkLogin = async () => {
     const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
 
-    if (!accessToken) {
+    if (!response) {
       dispatch({type: AUTH.LOGOUT});
       return;
     }
+
+    const accessToken = response.accessToken;
 
     userInfo.fetch({
       API_URL: process.env.REACT_APP_GET_INFO_API_URL,
