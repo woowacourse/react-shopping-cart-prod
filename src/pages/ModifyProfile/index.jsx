@@ -104,7 +104,7 @@ const ModifyProfile = () => {
         isModalOpened={isModifyPasswordModalOpened}
         closeModal={closeModifyPasswordModal}
       >
-        <ChangePassword onSubmit={handleSubmitChangeSubmit} />
+        <ModifyPassword onSubmit={handleSubmitChangeSubmit} />
       </Modal>
       <Modal
         isModalOpened={isWithdrawalModalOpened}
@@ -116,8 +116,8 @@ const ModifyProfile = () => {
   );
 };
 
-const ChangePassword = ({ onSubmit }) => {
-  const newPwd = useRef(null);
+const ModifyPassword = ({ onSubmit }) => {
+  const newPasswordRef = useRef(null);
   const [oldPasswordValidate, handleOldPasswordBlur] =
     useInputValidate('password');
   const [newPasswordValidate, handleNewPasswordBlur] =
@@ -149,7 +149,7 @@ const ChangePassword = ({ onSubmit }) => {
         </Fieldset>
         <Fieldset>
           <Input
-            ref={newPwd}
+            ref={newPasswordRef}
             description="새로운 비밀번호"
             placeholder="새로운 비밀번호를 입력하세요."
             onBlur={handleNewPasswordBlur()}
@@ -165,7 +165,7 @@ const ChangePassword = ({ onSubmit }) => {
           <Input
             description="새로운 비밀번호 확인"
             placeholder="새로운 비밀번호를 확인하세요."
-            onBlur={handleNewPasswordCheckBlur(newPwd.current?.value)}
+            onBlur={handleNewPasswordCheckBlur(newPasswordRef.current?.value)}
             name="passwordCheck"
             type="password"
           />
@@ -209,7 +209,7 @@ const Withdrawal = ({ onSubmit }) => {
   );
 };
 
-ChangePassword.propTypes = {
+ModifyPassword.propTypes = {
   onSubmit: PropTypes.func,
 };
 
