@@ -13,11 +13,21 @@
 
   background-color: white;
   color: #333333;
-}
 
-.primary {
-  background-color: #2AC1BC !important;
-  color: white;
+  &.primary {
+    background-color: #2AC1BC;
+    color: white;
+  
+    &:disabled {
+      background-color: $green800;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
 }
 
 .block {

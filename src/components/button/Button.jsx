@@ -10,6 +10,7 @@ function Button({
   block,
   outline,
   className,
+  ...rest
 }) {
   const classNames = cn(
     styles.button,
@@ -20,7 +21,7 @@ function Button({
     className
   );
   return (
-    <button className={classNames} type={type} onClick={onClick}>
+    <button className={classNames} type={type} onClick={onClick} {...rest}>
       {children}
     </button>
   );
