@@ -27,6 +27,10 @@ function TermsStep() {
     });
   };
 
+  const handleClickTermDetailButton = () => {
+    alert('현재 지원되지 않는 기능입니다.');
+  };
+
   const isAllChecked = Object.values(checkedFlags).every((checked) => checked);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -56,7 +60,12 @@ function TermsStep() {
             />
             (필수) 서비스 이용 약관
           </S.Label>
-          <S.TermDetailButton>상세보기</S.TermDetailButton>
+          <S.TermDetailButton
+            type="button"
+            onClick={handleClickTermDetailButton}
+          >
+            상세보기
+          </S.TermDetailButton>
         </S.FormItem>
         <S.FormItem>
           <S.Label>
@@ -68,7 +77,12 @@ function TermsStep() {
             />
             (필수) 개인 정보 취급 방침
           </S.Label>
-          <S.TermDetailButton>상세보기</S.TermDetailButton>
+          <S.TermDetailButton
+            type="button"
+            onClick={handleClickTermDetailButton}
+          >
+            상세보기
+          </S.TermDetailButton>
         </S.FormItem>
         <S.SubmitButtonBox>
           <Button type="submit" disabled={!isAllChecked}>
