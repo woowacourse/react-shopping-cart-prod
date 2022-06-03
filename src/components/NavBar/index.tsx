@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import routes from '../../routes';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,10 +11,12 @@ import Logo from '../../assets/Logo.png';
 function NavBar() {
   const { isLoggedIn } = useSelector((state: RootState) => state.customer);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onClickLogout = () => {
     document.cookie = 'accessToken=';
     dispatch(logout());
+    navigate(routes.home);
   };
 
   return (
