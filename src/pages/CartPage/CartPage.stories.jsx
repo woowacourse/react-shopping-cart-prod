@@ -1,3 +1,4 @@
+import cartHandlers from '../../mocks/handlers/cart';
 import CartPage from './CartPage';
 
 export default {
@@ -10,3 +11,10 @@ function Template(args) {
 }
 
 export const Default = Template.bind({});
+Default.parameters = {
+  msw: {
+    handlers: {
+      cart: cartHandlers,
+    },
+  },
+};
