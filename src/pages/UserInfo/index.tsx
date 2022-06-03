@@ -71,7 +71,7 @@ function UserInfo() {
     };
 
     getUser();
-  });
+  }, []);
 
   return (
     <PageLayout>
