@@ -1,7 +1,7 @@
 {
-  "name": "mincho-shop",
+  "name": "domin-shop",
   "version": "1.0.0",
-  "description": "민초 쇼핑몰",
+  "description": "도민샵",
   "main": "index.js",
   "scripts": {
     "build": "webpack --progress",
@@ -14,17 +14,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jswith/react-shopping-cart.git"
+    "url": "git+https://github.com/jswith/react-shopping-cart-prod.git"
   },
   "keywords": [
-    "starcraft"
+    "dory",
+    "mincho"
   ],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jswith/react-shopping-cart/issues"
+    "url": "https://github.com/jswith/react-shopping-cart-prod/issues"
   },
-  "homepage": "https://github.com/jswith/react-shopping-cart#readme",
+  "homepage": "https://github.com/jswith/react-shopping-cart-prod#readme",
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
