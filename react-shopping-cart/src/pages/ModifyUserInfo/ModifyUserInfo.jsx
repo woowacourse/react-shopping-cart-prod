@@ -47,13 +47,14 @@ function ModifyUserInfo() {
   const navigate = useNavigate();
   const [showLoginInfo, setShowLoginInfo] = useState(false);
   const { accessToken, ...currentUserInfo } = useSelector(state => state.auth);
+  console.log(accessToken);
 
   const userInfo = useSelector(state => state.userInfo);
   const putUserInfo = processServerData(userInfo);
   const { fetchData: modifyInfo } = useFetch({
     url: '/customers',
     method: 'put',
-    headers: accessToken,
+    headers: { accessToken: `Bearer ${accessToken}`, 'Access-Control-Allow-Origin': true },
     skip: true,
   });
 
@@ -81,9 +82,10 @@ function ModifyUserInfo() {
   };
 
   const handlePutUserInfo = async () => {
+    console.log(putUserInfo);
     await modifyInfo(putUserInfo);
     alert('정보 수정 완료했습니다!');
-    navigate('/');
+    // navigate('/');
   };
 
   return (
