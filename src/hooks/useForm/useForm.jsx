@@ -88,12 +88,16 @@ function useForm() {
   };
 
   useEffect(() => {
-    const initialState = Object.keys(_fields.current).reduce((acc, cur) => {
+    const initialFormData = Object.keys(_fields.current).reduce((acc, cur) => {
+      acc[cur] = _fields.current[cur].ref.defaultValue ?? null;
+      return acc;
+    }, {});
+    const initialErrors = Object.keys(_fields.current).reduce((acc, cur) => {
       acc[cur] = null;
       return acc;
     }, {});
-    setFormData(structuredClone(initialState));
-    setErrors(structuredClone(initialState));
+    setFormData(structuredClone(initialFormData));
+    setErrors(structuredClone(initialErrors));
   }, []);
 
   // 우리의 handleChange를 호출하면서, 사용자가 직접 넣은 handleChange도 실행 같이 해주고 싶다.
