@@ -41,6 +41,13 @@ function reducer(state = initState, action) {
         order: [],
       };
 
+    case CART_ACTIONS.INITIALIZE:
+      return {
+        ...state,
+        shoppingCart: [],
+        order: [],
+      };
+
     case ORDER_ACTIONS.ADD:
       return {
         ...state,

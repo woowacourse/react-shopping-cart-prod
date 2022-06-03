@@ -1,7 +1,7 @@
 import { legacy_createStore as createStore } from 'redux';
 import rootReducer from 'store/rootReducer';
 import {
-  doInitializeCart,
+  doInitializeProductList,
   doPutProductToCart,
   doDeleteProductFromCart,
   doAddProdcutToOrder,
@@ -18,13 +18,13 @@ describe('reducer 테스트', () => {
     store = createStore(rootReducer);
     store.subscribe(() => store.getState());
 
-    store.dispatch(doInitializeCart({ products: dummyProductList }));
+    store.dispatch(doInitializeProductList({ products: dummyProductList }));
 
     expect(store.getState().reducer.products).toHaveLength(dummyProductList.length);
   });
 
   test('상품 목록을 초기화할 수 있다.', () => {
-    store.dispatch(doInitializeCart({ products: dummyProductList }));
+    store.dispatch(doInitializeProductList({ products: dummyProductList }));
 
     expect(store.getState().reducer.products).toHaveLength(dummyProductList.length);
   });
