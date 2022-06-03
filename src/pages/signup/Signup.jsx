@@ -2,14 +2,17 @@ import cn from "classnames";
 import { Link, useNavigate } from "react-router-dom";
 import LabeledInput from "@shared/input/labeled-input/LabeledInput";
 import Button from "@shared/button/Button";
+import { useState } from "react";
 import styles from "./signup.module";
 import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
 import useForm from "../../hooks/useForm/useForm";
 
 function Signup({ className }) {
-  const { onSubmit, register, errors } = useForm();
+  const { onSubmit, register, formData, errors } = useForm();
   const navigate = useNavigate();
-  const hasError = Object.keys(errors).length > 0;
+  const disabled = Object.keys(errors).some(
+    (inputName) => !!errors[inputName] || !formData[inputName]
+  );
 
   const handleSubmit = async (formData, errors) => {
     const { email, password, username, confirmPassword } = formData;
@@ -46,6 +49,19 @@ function Signup({ className }) {
     navigate("/login", { replace: true });
   };
 
+  const validateConfirmNewPassword = (value) => {
+    if (formData.password !== value) {
+      return {
+        isValid: false,
+        errorMessage: "비밀번호를 동일하게 입력해 주세요",
+      };
+    }
+    return {
+      isValid: true,
+      errorMessage: null,
+    };
+  };
+
   return (
     <div className="wrapper">
       <AuthFormTemplate className={className}>
@@ -54,7 +70,7 @@ function Signup({ className }) {
           <form
             onSubmit={onSubmit(handleSubmit)}
             className={cn(styles.signupForm, "mb-20")}
-            disabled={hasError}
+            disabled={disabled}
           >
             <LabeledInput
               label="이메일"
@@ -105,14 +121,17 @@ function Signup({ className }) {
               id="confirm-password"
               type="password"
               placeholder="비밀번호를 입력해주세요"
-              {...register("confirmPassword")}
+              feedback={errors.confirmPassword}
+              {...register("confirmPassword", {
+                customValidator: validateConfirmNewPassword,
+              })}
             />
             <Button
               variant="primary"
               size="md"
               block
               type="submit"
-              disabled={hasError}
+              disabled={disabled}
             >
               가입하기
             </Button>
