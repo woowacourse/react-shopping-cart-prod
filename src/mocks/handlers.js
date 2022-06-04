@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { dummyProductList } from 'dummy_data';
 import { rest } from 'msw';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 
@@ -9,6 +10,12 @@ const users = [
 ];
 
 export const handlers = [
+  // 상품 정보 가져오기
+
+  rest.get('/products', (_, res, ctx) => {
+    return res(ctx.status(200), ctx.json(dummyProductList));
+  }),
+
   // 회원가입
   rest.post('/customers', (req, res, ctx) => {
     const { email, nickname, password } = req.body;

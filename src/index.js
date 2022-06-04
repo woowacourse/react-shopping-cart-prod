@@ -9,10 +9,7 @@ import store from 'store/store';
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('./mocks/worker');
   worker.start();
-} else {
-  console.log('hi');
 }
-// axios.defaults.baseURL = process.env.REACT_APP_AUTH_API_URL;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
