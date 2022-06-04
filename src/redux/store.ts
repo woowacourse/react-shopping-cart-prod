@@ -3,11 +3,10 @@ import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-
-import cartReducer from './modules/cart';
-import customerReducer from './modules/customer';
-import productsReducer from './modules/products';
-import snackBarReducer from './modules/snackBar';
+import cartReducer from 'redux/modules/cart';
+import customerReducer from 'redux/modules/customer';
+import productsReducer from 'redux/modules/products';
+import snackBarReducer from 'redux/modules/snackBar';
 
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

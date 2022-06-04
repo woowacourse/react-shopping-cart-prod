@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadProductsAPI, ProductState, selectProductState } from '../../redux/modules/products';
+import { loadProductsAPI, ProductState, selectProductState } from 'redux/modules/products';
 
-import { Loader } from '../../components/@shared';
-import Product from '../../components/Product';
+import { Loader } from 'components/@shared';
+import { Product } from 'components';
+
 import { ProductListContainer } from './styles';
 
 function ProductList() {

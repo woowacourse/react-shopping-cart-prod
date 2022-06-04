@@ -1,12 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import routes from '../../routes';
-
+import routes from 'routes';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { logout } from '../../redux/modules/customer';
+import { RootState } from 'redux/store';
+import { logout } from 'redux/modules/customer';
 
+import Logo from 'assets/Logo.png';
 import { NavBarContainer, NavBarTitle, NavBarMenu } from './styles';
-import Logo from '../../assets/Logo.png';
 
 function NavBar() {
   const { isLoggedIn } = useSelector((state: RootState) => state.customer);

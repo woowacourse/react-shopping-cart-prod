@@ -1,15 +1,13 @@
 import { Link, useNavigate } from 'react-router-dom';
-import routes from '../../routes';
-
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/modules/customer';
-
+import routes from 'routes';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { login } from 'redux/modules/customer';
 
-import useInput from '../../hooks/useInput';
+import useInput from 'hooks/useInput';
+import { Button, Form, Input } from 'components/@shared';
+import { PageLayout } from 'components';
 
-import { Button, Form, Input } from '../../components/@shared';
-import PageLayout from '../../components/PageLayout';
 import { SignupWrapper } from './styles';
 
 function Login() {

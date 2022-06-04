@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
-import { CartItem, deleteBySelectedItems, selectAllItems } from '../../redux/modules/cart';
-import { useCartListSelector } from '../../hooks/useCartSelector';
+import { CartItem, deleteBySelectedItems, selectAllItems } from 'redux/modules/cart';
 
-import { Button, CheckBox } from '../@shared';
-import CartProduct from '../CartProduct';
-import { INFO_MESSAGES } from '../../constants';
+import { useCartListSelector } from 'hooks/useCartSelector';
+import { Button, CheckBox } from 'components/@shared';
+import CartProduct from 'components/CartProduct';
+
+import { INFO_MESSAGES } from 'constants/index';
 import { CartListTitle, SelectAllContainer } from './styles';
 
 function CartProductList() {

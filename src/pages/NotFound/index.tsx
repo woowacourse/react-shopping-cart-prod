@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from 'routes';
+
 import { NotFoundContainer } from './styles';
 
 const NotFound = () => {

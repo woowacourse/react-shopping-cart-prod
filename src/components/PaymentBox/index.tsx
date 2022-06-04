@@ -1,4 +1,5 @@
-import { Button } from '../@shared';
+import { Button } from 'components/@shared';
+
 import { PaymentContainer, PaymentResultContainer, PaymentTitle } from './styles';
 
 interface PaymentBoxProps {
