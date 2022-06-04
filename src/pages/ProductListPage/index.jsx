@@ -24,7 +24,7 @@ export function ProductListPage() {
   const { cartItems, cartListAsyncState } = cartState;
 
   useEffect(() => {
-    dispatch(productThunk.getProductList());
+    dispatch(productThunk.updateList());
   }, []);
 
   const handleAddCart = ({ id, image, name, price }) => {

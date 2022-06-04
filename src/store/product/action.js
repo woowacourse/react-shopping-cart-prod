@@ -3,7 +3,7 @@ import { createAction } from 'lib/redux-template';
 import { reducer } from './reducer';
 
 const productActions = {
-  updateProductList: {
+  updateList: {
     success: ({ productList = [] }) => createAction(reducer.updateProductList, { productList }),
     pending: () => createAction(reducer.updateProductList_Pending),
     error: ({ errorMessage = '' }) =>
