@@ -11,11 +11,11 @@ import * as S from './styles';
 
 function CartItemManage({ isAllChecked }) {
   const dispatch = useDispatch();
-  const { cartAction, cartThunk, state } = useCart();
-  const { checkedItemList, cartCurdAsyncState } = state;
+  const { cartActions, cartThunk, cartState, computed } = useCart();
+  const { cartCurdAsyncState } = cartState;
 
   const handleAllCheckItem = () => {
-    dispatch(cartAction.updateItemAllCheck(!isAllChecked));
+    dispatch(cartActions.setAllItemCheck(!isAllChecked));
   };
 
   const handleRemoveItemList = async () => {
@@ -23,9 +23,9 @@ function CartItemManage({ isAllChecked }) {
       return;
     }
 
-    const checkedIdList = checkedItemList.map(({ id }) => id);
+    const checkedIdList = computed.checkedItemList.map(({ id }) => id);
 
-    await dispatch(cartThunk.removeItemList(checkedIdList));
+    await dispatch(cartThunk.removeItems(checkedIdList));
     cartCurdAsyncState.isLoaded
       ? alert('선택한 상품이 제거되었습니다.')
       : alert('선택한 상품 제거에 실패하였습니다.');

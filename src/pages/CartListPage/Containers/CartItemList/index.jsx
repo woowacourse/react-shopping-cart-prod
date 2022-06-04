@@ -10,11 +10,15 @@ import CartItem from 'components/CartItem';
 function CartItemList() {
   const dispatch = useDispatch();
 
-  const { cartAction, cartThunk, state } = useCart();
-  const { cartItems, cartListAsyncState, cartCurdAsyncState } = state;
+  const { cartActions, cartThunk, cartState } = useCart();
+  const {
+    items: cartItems,
+    listAsyncState: cartListAsyncState,
+    curdAsyncState: cartCurdAsyncState,
+  } = cartState;
 
   const handleCheckItem = (id, isChecked) => {
-    dispatch(cartAction.updateItemCheck(id, isChecked));
+    dispatch(cartActions.setItemCheck(id, isChecked));
   };
 
   const handleChangeQuantity = async (id, quantity) => {

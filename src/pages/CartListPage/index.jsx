@@ -10,10 +10,10 @@ import ProductOrder from './Containers/ProductOrder';
 import * as S from './styles';
 
 export function CartListPage() {
-  const { state } = useCart();
-  const { cartItems, isLoaded, checkedItemList } = state;
+  const { cartState, computed } = useCart();
+  const { cartItems, isLoaded } = cartState;
 
-  const isSelectAllChecked = checkedItemList.length > 0;
+  const isSelectAllChecked = computed.checkedItemList.length > 0;
 
   return (
     <>

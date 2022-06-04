@@ -20,8 +20,8 @@ export function ProductListPage() {
   const productState = useSelector(({ product }) => product);
   const { productList, listAsyncState: productsAsyncState } = productState;
 
-  const { state: cartState } = useCart();
-  const { cartItems, cartListAsyncState } = cartState;
+  const { cartState } = useCart();
+  const { items: cartItems, listAsyncState: cartListAsyncState } = cartState;
 
   useEffect(() => {
     dispatch(productThunk.updateList());
