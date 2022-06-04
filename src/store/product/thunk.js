@@ -13,8 +13,8 @@ const updateList =
 
     dispatch(
       status === REQUEST_STATUS.SUCCESS
-        ? productActions.updateList.success({ productList: content })
-        : dispatch(productActions.updateList.error({ errorMessage: content })),
+        ? productActions.updateList.success(content)
+        : dispatch(productActions.updateList.error(content)),
     );
 
     return response;
