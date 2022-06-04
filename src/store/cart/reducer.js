@@ -37,6 +37,7 @@ const reducer = {
     const targetIndex = findCartIdByIndex(updatedItem.id, state.items);
 
     state.items[targetIndex] = { ...state.items[targetIndex], ...updatedItem };
+    state.curdAsyncState = createAsyncState.success();
   },
 
   updateCartItem_Error(state, { errorMessage = '' }) {
@@ -57,6 +58,7 @@ const reducer = {
   // 장바구니 아이템 제거
   removeCartItem(state, { targetId = 0 }) {
     state.items = state.items.filter(({ id }) => id !== targetId);
+    state.curdAsyncState = createAsyncState.success();
   },
 
   removeCartItem_Error(state, { errorMessage = '' }) {
@@ -65,6 +67,7 @@ const reducer = {
 
   removeCartItems(state, { targetIdList = [] }) {
     state.items = state.items.filter(({ id }) => !targetIdList.includes(id));
+    state.curdAsyncState = createAsyncState.success();
   },
 
   removeCartItems_Error(state, { errorMessage = '' }) {
