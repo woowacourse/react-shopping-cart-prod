@@ -3,9 +3,7 @@ import productActions from 'store/product/action';
 import { requestGetProductList } from 'api/products';
 import { REQUEST_STATUS } from 'constants/';
 
-import * as productsAction from './action';
-
-const getList =
+const getProductList =
   (page = 1) =>
   async (dispatch) => {
     dispatch(productActions.updateProductList.pending());
@@ -22,4 +20,6 @@ const getList =
     return response;
   };
 
-export { getList };
+const productThunk = { getProductList };
+
+export default productThunk;

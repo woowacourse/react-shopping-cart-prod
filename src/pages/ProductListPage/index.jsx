@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import * as cartThunk from 'actions/cart/thunk';
-import * as productsThunk from 'actions/products/thunk';
+
+import productThunk from 'store/product/thunk';
 
 import useCart from 'hooks/useCart';
 
@@ -16,14 +17,14 @@ import * as S from './styles';
 export function ProductListPage() {
   const dispatch = useDispatch();
 
-  const productState = useSelector((state) => state.products);
+  const productState = useSelector(({ product }) => product);
   const { productList, listAsyncState: productsAsyncState } = productState;
 
   const { state: cartState } = useCart();
   const { cartItems, cartListAsyncState } = cartState;
 
   useEffect(() => {
-    dispatch(productsThunk.getList());
+    dispatch(productThunk.getProductList());
   }, []);
 
   const handleAddCart = ({ id, image, name, price }) => {
