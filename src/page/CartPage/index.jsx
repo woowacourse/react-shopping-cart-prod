@@ -28,6 +28,7 @@ const CartPage = () => {
 
     order.forEach(productId => {
       const { price } = products.find(product => product.id === productId);
+
       const { quantity } = shoppingCart.find(product => product.id === productId);
 
       total += quantity * price;
@@ -42,7 +43,7 @@ const CartPage = () => {
       navigate('/login');
     }
     setTotalPrice(calculateTotalPrice());
-  }, [isLoading]);
+  }, [calculateTotalPrice]);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
