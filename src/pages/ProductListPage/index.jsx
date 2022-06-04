@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import * as cartThunk from 'actions/cart/thunk';
-
+import cartThunk from 'store/cart/thunk';
 import productThunk from 'store/product/thunk';
 
 import useCart from 'hooks/useCart';
@@ -28,7 +27,7 @@ export function ProductListPage() {
   }, []);
 
   const handleAddCart = ({ id, image, name, price }) => {
-    dispatch(cartThunk.addList({ id, image, name, price })).then(() => {
+    dispatch(cartThunk.addItem({ id, image, name, price })).then(() => {
       cartListAsyncState.isLoaded === false &&
         alert(`장바구니 상품 추가에 실패하였습니다.\n오류 내용 : ${cartListAsyncState.error}`);
     });

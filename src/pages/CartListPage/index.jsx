@@ -11,7 +11,7 @@ import * as S from './styles';
 
 export function CartListPage() {
   const { cartState, computed } = useCart();
-  const { cartItems, isLoaded } = cartState;
+  const { items: cartItems } = cartState;
 
   const isSelectAllChecked = computed.checkedItemList.length > 0;
 
@@ -29,9 +29,7 @@ export function CartListPage() {
           <FlexContainer>
             <Title type="content" size={14}>
               장바구니 상품{'\u00A0'}
-              <TextUnderline>
-                {isLoaded === true ? `(${cartItems.length}개 담김)` : '(0개 담김)'}
-              </TextUnderline>
+              <TextUnderline>{`(${cartItems.length}개 담김)`}</TextUnderline>
             </Title>
 
             <CartItemList />
