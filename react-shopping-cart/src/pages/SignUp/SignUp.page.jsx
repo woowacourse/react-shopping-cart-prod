@@ -15,7 +15,12 @@ import { resetUserInfo } from 'redux/actions/userInfo.action';
 
 import useFetch from 'hooks/useFetch';
 
+import { API_URL_PATH } from 'constants/api';
 import { processServerData } from 'utils';
+
+const LogoBox = styled.div`
+  margin: 3rem 0;
+`;
 
 const InfoDiv = styled(FlexBox).attrs({
   height: '100%',
@@ -46,7 +51,7 @@ function SignUp() {
   const navigate = useNavigate();
   const userInfo = useSelector(state => state.userInfo);
   const postUserInfo = processServerData(userInfo);
-  const { fetchData: signUp } = useFetch({ method: 'post', url: '/customers' });
+  const { fetchData: signUp } = useFetch({ method: 'post', url: API_URL_PATH.CUSTOMERS });
   const [showLoginInfo, setShowLoginInfo] = useState(false);
 
   useEffect(() => {
@@ -67,10 +72,12 @@ function SignUp() {
 
   return (
     <AuthContainer>
-      <InfoDiv>
-        <Link to="/">
+      <Link to="/">
+        <LogoBox>
           <Logo color="MINT_001" />
-        </Link>
+        </LogoBox>
+      </Link>
+      <InfoDiv>
         <SwitchTransition>
           <SlideTransition
             key={showLoginInfo ? 'loginInfo' : 'userInfo'}
