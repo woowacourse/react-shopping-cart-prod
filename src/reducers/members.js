@@ -2,7 +2,7 @@ import produce from 'immer';
 
 import { MEMBERS_ACTIONS } from 'actions/types';
 
-import { createAsyncState } from 'lib/requestUtils';
+import { createAsyncState } from 'lib/redux-template';
 
 // logged in
 

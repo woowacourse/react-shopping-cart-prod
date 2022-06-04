@@ -1,4 +1,4 @@
-import { createAsyncState } from 'lib/requestUtils';
+import { createAsyncState } from 'lib/redux-template';
 
 import { MEMBERS_ACTIONS } from '../types';
 

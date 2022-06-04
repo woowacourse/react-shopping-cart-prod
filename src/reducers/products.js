@@ -3,7 +3,7 @@ import produce from 'immer';
 
 import { PRODUCTS_ACTIONS } from 'actions/types';
 
-import { createAsyncState } from 'lib/requestUtils';
+import { createAsyncState } from 'lib/redux-template';
 
 const initialState = {
   productList: [],

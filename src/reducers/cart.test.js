@@ -1,6 +1,6 @@
 import { CARTS_ACTIONS } from 'actions/types';
 
-import { createAsyncState } from 'lib/requestUtils';
+import { createAsyncState } from 'lib/redux-template';
 
 import cartReducer from './cart';
 

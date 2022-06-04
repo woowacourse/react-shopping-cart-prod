@@ -34,15 +34,4 @@ const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
   }
 };
 
-const createAsyncState = {
-  initial: () => ({
-    isLoading: false,
-    isLoaded: false,
-    error: null,
-  }),
-  pending: () => ({ isLoading: true, isLoaded: false, error: null }),
-  success: () => ({ isLoading: false, isLoaded: true, error: null }),
-  error: (error) => ({ isLoading: false, isLoaded: false, error }),
-};
-
-export { request, createAsyncState };
+export { request };

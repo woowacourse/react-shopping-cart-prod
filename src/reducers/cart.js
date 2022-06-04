@@ -3,7 +3,7 @@ import produce from 'immer';
 
 import { CARTS_ACTIONS } from 'actions/types';
 
-import { createAsyncState } from 'lib/requestUtils';
+import { createAsyncState } from 'lib/redux-template';
 
 const initialState = {
   items: [],
