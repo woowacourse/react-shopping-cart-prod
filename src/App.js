@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { ProductListPage, ProductDetailPage, CartPage } from 'page';
 import { GlobalStyles, theme } from 'components';
 
-import { BASE_URL, MESSAGE, ROUTES } from 'utils/constants';
+import { MESSAGE, ROUTES } from 'utils/constants';
 import LoginPage from 'page/LoginPage';
 import SignupPage from 'page/SignupPage';
 import AccountPage from 'page/AccountPage';
@@ -47,7 +47,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename={BASE_URL}>
+      <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
             <Route path={ROUTES.HOME} element={<ProductListPage />} />

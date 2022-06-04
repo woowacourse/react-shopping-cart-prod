@@ -9,7 +9,7 @@ import store from 'store/store';
 import { doInitializeProductList } from 'actions/actionCreator';
 
 import Styled from 'page/ProductListPage/index.style';
-import { SERVER_URL } from 'utils/constants';
+// import { SERVER_URL } from 'utils/constants';
 
 const ProductListPage = () => {
   const { products } = useSelector(state => state.reducer);
@@ -17,7 +17,7 @@ const ProductListPage = () => {
   const getProducts = useCallback(async () => {
     if (products.length > 0) return;
 
-    const response = await axios.get(`${SERVER_URL}products`);
+    const response = await axios.get(`${process.env.REACT_APP_PRODUCT_API_URL}/products`);
 
     store.dispatch(doInitializeProductList({ products: response.data }));
   }, [products]);

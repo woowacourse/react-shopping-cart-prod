@@ -1,5 +1,5 @@
-const SERVER_URL = 'https://shopping-cart-mh.herokuapp.com';
-const BASE_URL = '/react-shopping-cart/';
+// const SERVER_URL = 'https://shopping-cart-mh.herokuapp.com';
+// const BASE_URL = '/react-shopping-cart-prod/';
 
 const PRODUCT = {
   MIN_QUANTITY: 1,
@@ -40,4 +40,4 @@ const MESSAGE = {
   SIGNUP_FAILURE: '님 가입해주셔서 감사합니다 👋 로그인해주세요',
 };
 
-export { SERVER_URL, BASE_URL, PRODUCT, MODAL, ROUTES, LINK, MESSAGE };
+export { PRODUCT, MODAL, ROUTES, LINK, MESSAGE };

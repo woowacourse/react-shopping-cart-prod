@@ -10,16 +10,17 @@ async function main() {
   if (process.env.NODE_ENV === 'development') {
     const { worker } = require('./mocks/worker');
 
-    if (window.location.pathname === '/react-shopping-cart') {
-      window.location.pathname = '/react-shopping-cart/';
-      return;
-    }
+    // if (window.location.pathname === '/react-shopping-cart') {
+    //   window.location.pathname = '/react-shopping-cart/';
+    //   return;
+    // }
 
-    await worker.start({
-      serviceWorker: {
-        url: `/react-shopping-cart/mockServiceWorker.js`,
-      },
-    });
+    // await worker.start({
+    //   serviceWorker: {
+    //     url: `/react-shopping-cart/mockServiceWorker.js`,
+    //   },
+    // });
+    worker.start();
   } else {
     axios.defaults.baseURL = process.env.REACT_APP_AUTH_API_URL;
   }
