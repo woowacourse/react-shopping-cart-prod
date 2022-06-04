@@ -12,6 +12,7 @@ const MODAL = {
 const ROUTES = {
   HOME: '/',
   CART: 'cart',
+  ORDER: 'order',
   DETAILS: 'details/:id',
 };
 

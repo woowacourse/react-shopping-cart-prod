@@ -65,6 +65,12 @@ function reducer(state = initState, action) {
         order: [],
       };
 
+    case ORDER_ACTIONS.DECISION:
+      return {
+        ...state,
+        orderList: action.orderList,
+      };
+
     default:
       return state;
   }

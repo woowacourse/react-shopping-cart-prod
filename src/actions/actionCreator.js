@@ -28,6 +28,8 @@ const doDeleteProductFromOrder = ({ id }) => ({ type: ORDER_ACTIONS.DELETE, id }
 
 const doInitializeOrder = () => ({ type: ORDER_ACTIONS.INITIALIZE });
 
+const doDecideOrder = ({ orderList }) => ({ type: ORDER_ACTIONS.DECISION, orderList });
+
 const doLogin = ({ nickname }) => ({ type: AUTH_ACTIONS.LOGIN, nickname });
 
 const doLogout = () => ({ type: AUTH_ACTIONS.LOGOUT });
@@ -45,6 +47,7 @@ export {
   doAddProductToOrder,
   doDeleteProductFromOrder,
   doInitializeOrder,
+  doDecideOrder,
   doLogin,
   doLogout,
   doShowSnackbar,

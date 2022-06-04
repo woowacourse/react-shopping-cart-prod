@@ -13,6 +13,7 @@ const ORDER_ACTIONS = {
   ADD: 'order/ADD',
   DELETE: 'order/DELETE',
   INITIALIZE: 'order/INITIALIZE',
+  DECISION: 'order/DECISION',
 };
 
 const AUTH_ACTIONS = {

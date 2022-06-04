@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 import Snackbar from 'components/Snackbar';
 import useSnackbar from 'hooks/useSnackbar';
 import { authApiClient } from 'utils/apiClient';
+import OrderPage from 'page/OrderPage';
 
 function App() {
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
@@ -53,6 +54,7 @@ function App() {
             <Route path={ROUTES.HOME} element={<ProductListPage />} />
             <Route path={ROUTES.DETAILS} element={<ProductDetailPage />} />
             <Route path={ROUTES.CART} element={<CartPage />} />
+            <Route path={ROUTES.ORDER} element={<OrderPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/account" element={<AccountPage />} />

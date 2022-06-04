@@ -7,6 +7,7 @@ import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 import store from 'store/store';
 import {
   doAddProductToOrder,
+  doDecideOrder,
   doInitializeOrder,
   doSelectiveDeleteFromCart,
 } from 'actions/actionCreator';
@@ -63,6 +64,12 @@ const CartPage = () => {
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
+  const handleOrder = () => {
+    const orderList = shoppingCart.filter(product => order.includes(product.id));
+    store.dispatch(doDecideOrder({ orderList }));
+    navigate('/order');
+  };
+
   return (
     <Styled.Container>
       {shoppingCart.length > 0 ? (
@@ -99,7 +106,8 @@ const CartPage = () => {
               <TotalPrice
                 title="결제예상금액"
                 price={totalPrice}
-                action={`주문하기(${order.length}개)`}
+                actionType={`주문하기(${order.length}개)`}
+                action={handleOrder}
               />
             </Styled.RightSide>
           </Styled.OrderSheet>
