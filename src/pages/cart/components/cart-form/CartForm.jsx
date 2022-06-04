@@ -85,9 +85,6 @@ function CartForm({ className }) {
                     <CartItem
                       {...productObjs[id]}
                       id={id}
-                      name={productObjs[id].name}
-                      thumbnail_image={productObjs[id].thumbnail_image}
-                      price={productObjs[id].price}
                       checked={isSelected}
                       onChecked={handleCheck(id)}
                       onQuantityChange={handleQuantityChange(id)}
