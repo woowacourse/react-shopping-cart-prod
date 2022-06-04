@@ -37,7 +37,6 @@ const CartPage = () => {
   }, [products, shoppingCart, order]);
 
   useEffect(() => {
-    console.log('Cart', isLoading, isAuthenticated);
     if (!isLoading && !isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');

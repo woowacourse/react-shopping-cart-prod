@@ -38,8 +38,6 @@ const AccountPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log('account', isLoading, isAuthenticated);
-
     if (!isLoading && !isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');

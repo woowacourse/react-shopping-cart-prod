@@ -30,7 +30,6 @@ const LoginPage = () => {
   const [renderSnackbar] = useSnackbar();
 
   useEffect(() => {
-    console.log(isLoading, isAuthenticated);
     if (!isLoading && isAuthenticated) {
       renderSnackbar(MESSAGE.ALREADY_LOGIN, 'FAILED');
       navigate('/');
