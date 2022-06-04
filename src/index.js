@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import reportWebVitals from 'reportWebVitals';
 import App from 'App';
 import store from 'store/store';
+import axios from 'axios';
 
 async function main() {
   if (process.env.NODE_ENV === 'development') {
@@ -19,6 +20,8 @@ async function main() {
         url: `/react-shopping-cart/mockServiceWorker.js`,
       },
     });
+  } else {
+    axios.defaults.baseURL = process.env.REACT_APP_AUTH_API_URL;
   }
 
   const root = ReactDOM.createRoot(document.getElementById('root'));

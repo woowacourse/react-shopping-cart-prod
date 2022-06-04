@@ -1,4 +1,4 @@
-const SERVER_URL = 'https://shopping-cart-mh.herokuapp.com/';
+const SERVER_URL = 'https://shopping-cart-mh.herokuapp.com';
 const BASE_URL = '/react-shopping-cart/';
 
 const PRODUCT = {
