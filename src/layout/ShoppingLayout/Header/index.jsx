@@ -6,8 +6,8 @@ import { PAGE_LIST } from 'constants/';
 import * as S from './styles';
 
 function Header() {
-  const cartItems = useSelector((state) => state.cart.items);
-  const isLoggedIn = useSelector((state) => state.members.isLoggedIn);
+  const cartItems = useSelector(({ cart }) => cart.items);
+  const isLogin = useSelector(({ user }) => user.isLogin);
 
   return (
     <S.Container>
@@ -26,9 +26,9 @@ function Header() {
           </S.RightMenuList>
         </Link>
 
-        <Link to={!isLoggedIn ? PAGE_LIST.LOGIN : PAGE_LIST.LOGOUT}>
+        <Link to={!isLogin ? PAGE_LIST.LOGIN : PAGE_LIST.LOGOUT}>
           <S.RightMenuList className="order-list">
-            {!isLoggedIn ? '로그인' : '로그아웃'}
+            {!isLogin ? '로그인' : '로그아웃'}
           </S.RightMenuList>
         </Link>
       </S.RightMenu>

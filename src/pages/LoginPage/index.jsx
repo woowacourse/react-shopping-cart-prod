@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
-import * as membersThunk from 'actions/members/thunk';
+import userThunk from 'store/user/thunk';
 
 import { Button, FlexContainer } from 'components/@common';
 import FieldSet from 'components/@common/FieldSet';
@@ -14,22 +14,22 @@ import { getFormData } from 'lib/formUtils';
 import * as S from './styles';
 
 function LoginPage() {
-  const { userInfoAsyncState, isLoggedIn } = useSelector((state) => state.members);
+  const { userInfoAsyncState, isLogin } = useSelector(({ user }) => user);
   const { error: errorMessage } = userInfoAsyncState;
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    isLoggedIn && navigate('/');
-  }, [isLoggedIn]);
+    isLogin && navigate('/');
+  }, [isLogin]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const { userId, password } = getFormData(event.target);
 
-    dispatch(membersThunk.userLogin({ userId, password }));
+    dispatch(userThunk.userLogin(userId, password));
   };
 
   return (

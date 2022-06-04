@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import * as memberActions from 'actions/members/action';
+import userActions from 'store/user/action';
 
 import { removeCookie } from 'lib/cookieUtils';
 
@@ -14,7 +14,7 @@ export function LogoutPage() {
   useEffect(() => {
     removeCookie(ACCESS_TOKEN_COOKIE_NAME);
 
-    dispatch(memberActions.userLogout());
+    dispatch(userActions.removeInfo());
     navigate('/');
   }, []);
 

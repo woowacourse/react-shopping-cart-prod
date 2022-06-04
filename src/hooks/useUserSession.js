@@ -2,8 +2,8 @@ import { ACCESS_TOKEN_COOKIE_NAME } from 'constants';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import * as memberActions from 'actions/members/action';
-import * as membersThunk from 'actions/members/thunk';
+import userActions from 'store/user/action';
+import userThunk from 'store/user/thunk';
 
 import { getCookie } from 'lib/cookieUtils';
 
@@ -11,11 +11,11 @@ function useUserSession() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(membersThunk.userProfile());
+    dispatch(userThunk.getUserProfile());
   }, []);
 
   if (!getCookie(ACCESS_TOKEN_COOKIE_NAME)) {
-    dispatch(memberActions.userLogout());
+    dispatch(userActions.removeInfo());
   }
 }
 
