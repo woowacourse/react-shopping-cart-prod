@@ -6,9 +6,11 @@ const { REACT_APP_PRODUCT_API_URL } = process.env;
 export const authApiClient = axios.create({
   baseURL: REACT_APP_AUTH_API_URL,
   responseType: 'json',
+  withCredentials: true,
 });
 
 export const authProductClient = axios.create({
   baseURL: REACT_APP_PRODUCT_API_URL,
   responseType: 'json',
+  withCredentials: true,
 });
