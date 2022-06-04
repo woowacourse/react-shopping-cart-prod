@@ -7,12 +7,12 @@ import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
 import Styled from './index.style';
 import { deleteCookie, getCookie } from 'utils/cookie';
-import axios from 'axios';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import store from 'store/store';
 import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import { useNavigate } from 'react-router-dom';
+import { authApiClient } from 'utils/apiClient';
 
 const AccountDeleteModal = ({ handleModal }) => {
   const navigate = useNavigate();
@@ -30,7 +30,7 @@ const AccountDeleteModal = ({ handleModal }) => {
 
       const accessToken = getCookie('accessToken');
 
-      await axios.delete('/customers', {
+      await authApiClient.delete('/customers', {
         data: {
           password,
         },

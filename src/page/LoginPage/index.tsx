@@ -8,7 +8,6 @@ import GuideText from 'components/GuideText';
 import AuthButton from 'components/AuthButton';
 import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
-import axios from 'axios';
 import { setCookie } from 'utils/cookie';
 
 import { useNavigate } from 'react-router-dom';
@@ -18,6 +17,7 @@ import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import Logo from 'components/Logo';
 import { useSelector } from 'react-redux';
+import { authApiClient } from 'utils/apiClient';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const LoginPage = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await axios.post('/auth/login', {
+      const response = await authApiClient.post('/auth/login', {
         email,
         password,
       });

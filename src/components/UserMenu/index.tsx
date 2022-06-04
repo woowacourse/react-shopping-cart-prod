@@ -1,5 +1,4 @@
 import { doInitializeCartList, doLogout } from 'actions/actionCreator';
-import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import store from 'store/store';
@@ -7,6 +6,7 @@ import { deleteCookie, getCookie } from 'utils/cookie';
 import Styled from './index.style';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import { authApiClient } from 'utils/apiClient';
 
 const UserMenu = ({ nickname }) => {
   const [renderSnackbar] = useSnackbar();
@@ -22,7 +22,7 @@ const UserMenu = ({ nickname }) => {
     try {
       const accessToken = getCookie('accessToken');
 
-      await axios.post(
+      await authApiClient.post(
         '/auth/logout',
         {},
         {

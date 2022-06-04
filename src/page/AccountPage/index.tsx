@@ -11,7 +11,6 @@ import { useState, useEffect } from 'react';
 import { validateNickname } from 'utils/validator';
 import PasswordEditModal from './PasswordEditModal';
 import AccountDeleteModal from './AccountDeleteModal';
-import axios from 'axios';
 import { getCookie } from 'utils/cookie';
 import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
@@ -19,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import { useSelector } from 'react-redux';
+import { authApiClient } from 'utils/apiClient';
 
 const AccountPage = () => {
   const [renderSnackbar] = useSnackbar();
@@ -47,7 +47,7 @@ const AccountPage = () => {
   const getProfile = async () => {
     const accessToken = getCookie('accessToken');
 
-    const response = await axios.get('/customers', {
+    const response = await authApiClient.get('/customers', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -62,7 +62,7 @@ const AccountPage = () => {
 
       const accessToken = getCookie('accessToken');
 
-      const response = await axios.patch(
+      const response = await authApiClient.patch(
         '/customers',
         {
           nickname,

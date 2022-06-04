@@ -10,12 +10,12 @@ import GuideText from 'components/GuideText';
 import AuthButton from 'components/AuthButton';
 import Container from 'components/@shared/Container';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import Logo from 'components/Logo';
 import { useSelector } from 'react-redux';
+import { authApiClient } from 'utils/apiClient';
 
 const SignupPage = () => {
   const [renderSnackbar] = useSnackbar();
@@ -46,7 +46,7 @@ const SignupPage = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await axios.post('/customers', {
+      const response = await authApiClient.post('/customers', {
         email,
         nickname,
         password,

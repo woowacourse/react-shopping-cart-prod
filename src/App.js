@@ -10,7 +10,6 @@ import LoginPage from 'page/LoginPage';
 import SignupPage from 'page/SignupPage';
 import AccountPage from 'page/AccountPage';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { deleteCookie, getCookie } from 'utils/cookie';
 import store from 'store/store';
 import { doLogin, doLogout } from 'actions/actionCreator';
@@ -18,6 +17,7 @@ import Layout from 'components/Layout';
 import { useSelector } from 'react-redux';
 import Snackbar from 'components/Snackbar';
 import useSnackbar from 'hooks/useSnackbar';
+import { authApiClient } from 'utils/apiClient';
 
 function App() {
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
@@ -28,7 +28,7 @@ function App() {
       const accessToken = getCookie('accessToken');
       if (!accessToken) return;
 
-      const response = await axios.get('/customers', {
+      const response = await authApiClient.get('/customers', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

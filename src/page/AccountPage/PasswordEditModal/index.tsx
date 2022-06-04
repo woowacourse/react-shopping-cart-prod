@@ -7,9 +7,10 @@ import { useState } from 'react';
 import Container from 'components/@shared/Container';
 import { validatePassword } from 'utils/validator';
 import { getCookie } from 'utils/cookie';
-import axios from 'axios';
+
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import { authApiClient } from 'utils/apiClient';
 
 const PasswordEditModal = ({ handleModal }) => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -24,7 +25,7 @@ const PasswordEditModal = ({ handleModal }) => {
 
       const accessToken = getCookie('accessToken');
 
-      await axios.patch(
+      await authApiClient.patch(
         '/customers',
         {
           password: currentPassword,
