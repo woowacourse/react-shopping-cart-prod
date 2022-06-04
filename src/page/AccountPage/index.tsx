@@ -23,7 +23,7 @@ import { useSelector } from 'react-redux';
 const AccountPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
@@ -38,11 +38,13 @@ const AccountPage = () => {
   }, []);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    console.log('account', isLoading, isAuthenticated);
+
+    if (!isLoading && !isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
     }
-  }, []);
+  }, [isLoading]);
 
   const getProfile = async () => {
     const accessToken = getCookie('accessToken');

@@ -1,12 +1,13 @@
 import { AUTH_ACTIONS } from 'actions/action';
 
-const initState = { nickname: '', isAuthenticated: false };
+const initState = { isLoading: true, nickname: '', isAuthenticated: false };
 
 function authReducer(state = initState, action) {
   switch (action.type) {
     case AUTH_ACTIONS.LOGIN:
       return {
         ...state,
+        isLoading: false,
         nickname: action.nickname,
         isAuthenticated: true,
       };
@@ -14,6 +15,7 @@ function authReducer(state = initState, action) {
     case AUTH_ACTIONS.LOGOUT:
       return {
         ...state,
+        isLoading: false,
         nickname: '',
         isAuthenticated: false,
       };

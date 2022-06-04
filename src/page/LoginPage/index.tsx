@@ -21,7 +21,7 @@ import { useSelector } from 'react-redux';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
   const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');
@@ -30,11 +30,12 @@ const LoginPage = () => {
   const [renderSnackbar] = useSnackbar();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    console.log(isLoading, isAuthenticated);
+    if (!isLoading && isAuthenticated) {
       renderSnackbar(MESSAGE.ALREADY_LOGIN, 'FAILED');
       navigate('/');
     }
-  }, []);
+  }, [isLoading]);
 
   useEffect(() => {
     if (email.length >= 3 && password.length >= 10) {

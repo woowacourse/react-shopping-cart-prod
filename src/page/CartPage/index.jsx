@@ -19,7 +19,7 @@ import { MESSAGE } from 'utils/constants';
 const CartPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
   const { products, shoppingCart, order } = useSelector(state => state.reducer);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -37,12 +37,13 @@ const CartPage = () => {
   }, [products, shoppingCart, order]);
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    console.log('Cart', isLoading, isAuthenticated);
+    if (!isLoading && !isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
     }
     setTotalPrice(calculateTotalPrice());
-  }, []);
+  }, [isLoading]);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
