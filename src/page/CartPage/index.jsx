@@ -8,6 +8,7 @@ import store from 'store/store';
 import {
   doAddProductToOrder,
   doDecideOrder,
+  doInitializeCartList,
   doInitializeOrder,
   doSelectiveDeleteFromCart,
 } from 'actions/actionCreator';
@@ -16,11 +17,13 @@ import Styled from 'page/CartPage/index.style';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import { productApiClient } from 'utils/apiClient';
 
 const CartPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
+
   const { products, shoppingCart, order } = useSelector(state => state.reducer);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -37,6 +40,16 @@ const CartPage = () => {
 
     return total;
   }, [products, shoppingCart, order]);
+
+  // TODO [API] 장바구니 목록 가져오기(GET)
+  // const getCarts = async () => {
+  //   const response = await productApiClient.get('/carts');
+  //   store.dispatch(doInitializeCartList({ shoppingCart: response.data }));
+  // };
+
+  // useEffect(() => {
+  //   getCarts();
+  // }, []);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -58,6 +71,31 @@ const CartPage = () => {
       }
     });
   };
+
+  // TODO . 장바구니 내 선택된 상품들 삭제(DELETE)
+  // const deleteSelectedItems = async () => {
+  //   const accessToken = getCookie('accessToken');
+  //   const cartIdList = shoppingCart.map(product => product.id);
+  //   const targetIdList = cartIdList.filter(id => !order.includes(id));
+
+  //   try {
+  //     await productApiClient.delete(
+  //       `/carts`,
+  //       targetIdList, // targetIdList : [2, 4] 삭제할 상품 id 목록
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       },
+  //     );
+
+  //     store.dispatch(doSelectiveDeleteFromCart());
+  //     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+  //   } catch (error) {
+  //     renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
+  //     navigate('/login');
+  //   }
+  // };
 
   const deleteItem = () => {
     store.dispatch(doSelectiveDeleteFromCart());

@@ -8,16 +8,16 @@ import store from 'store/store';
 import { doInitializeProductList } from 'actions/actionCreator';
 
 import Styled from 'page/ProductListPage/index.style';
-import { authProductClient } from 'utils/apiClient';
-// import { SERVER_URL } from 'utils/constants';
+import { productApiClient } from 'utils/apiClient';
 
 const ProductListPage = () => {
   const { products } = useSelector(state => state.reducer);
 
+  // TODO  [API] 상품 목록 가져오기(GET)
   const getProducts = useCallback(async () => {
-    if (products.length > 0) return;
+    if (products.length > 0) return; // 서버에서 상품 목록 갱신될 수 있으므로 매번 상품 목록 가져오는 것이 적절할 것으로 생각됨. 따라서 이 라인의 코드는 삭제 검토 필요
 
-    const response = await authProductClient.get('/products');
+    const response = await productApiClient.get('/products');
 
     store.dispatch(doInitializeProductList({ products: response.data }));
   }, [products]);

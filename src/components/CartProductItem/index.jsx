@@ -1,3 +1,4 @@
+// @ts-nocheck
 import useProduct from 'hooks/useProduct';
 import PropTypes from 'prop-types';
 
@@ -10,6 +11,7 @@ import Styled from 'components/CartProductItem/index.style';
 import useOrder from 'hooks/useOrder';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
+import { productApiClient } from 'utils/apiClient';
 
 const CartProductItem = ({ id, quantity }) => {
   const [renderSnackbar] = useSnackbar();
@@ -17,10 +19,55 @@ const CartProductItem = ({ id, quantity }) => {
   const [{ name, price, image }] = useProduct(id);
   const [isInOrder, updateOrder] = useOrder(id);
 
+  // TODO . 장바구니 내 단일 상품 삭제(DELETE)
+  // const deleteItem = async () => {
+  //   const accessToken = getCookie('accessToken');
+
+  //   try {
+  //     await productApiClient.delete(
+  //       `/carts`,
+  //       [id],
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       },
+  //     );
+
+  //     store.dispatch(doDeleteProductFromCart({ id }));
+  //     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+  //   } catch (error) {
+  //     renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
+  //     navigate('/login');
+  //   }
+  // };
+
   const deleteItem = () => {
     store.dispatch(doDeleteProductFromCart({ id }));
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
+
+  // TODO [API] 장바구니 내 상품 수량 수정(PATCH)
+  // const patchCart = async (id, updatedQuantity) => {
+  //   const accessToken = getCookie('accessToken');
+
+  //   try {
+  //     const response = await productApiClient.patch(
+  //       `/carts/${id}`,
+  //       { quantity: updatedQuantity },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       },
+  //     );
+
+  //     store.dispatch(doPutProductToCart({ id: response.data.id, quantity: response.data.id }));
+  //   } catch (error) {
+  //     renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
+  //     navigate('/login');
+  //   }
+  // };
 
   return (
     <Styled.Container>
@@ -34,10 +81,14 @@ const CartProductItem = ({ id, quantity }) => {
         <Styled.DeleteButton onClick={deleteItem} />
         <Counter
           quantity={quantity}
-          increase={() => store.dispatch(doPutProductToCart({ id, quantity: quantity + 1 }))}
+          increase={() => {
+            store.dispatch(doPutProductToCart({ id, quantity: quantity + 1 }));
+            // patchCart(id, quantity + 1);
+          }}
           decrease={() => {
             if (quantity > 1) {
               store.dispatch(doPutProductToCart({ id, quantity: quantity - 1 }));
+              // patchCart(id, quantity + 1);
             }
           }}
         />
