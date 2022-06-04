@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -21,14 +22,19 @@ import rootReducer from 'redux/reducers';
 import GlobalStyle from 'styles/GlobalStyle';
 import theme from 'styles/theme';
 
+import { BASE_URL } from 'constants/api';
+
 const store = createStore(rootReducer);
 const persistor = persistStore(store);
+
+console.log(BASE_URL);
+axios.defaults.baseURL = BASE_URL;
 
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('./mocks/browser');
   worker.start({
     serviceWorker: {
-      url: '/react-shopping-cart/mockServiceWorker.js',
+      url: '/mockServiceWorker.js',
     },
   });
 }
@@ -39,7 +45,7 @@ root.render(
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <GlobalStyle />
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <BrowserRouter>
           <ThemeProvider theme={theme}>
             <ErrorBoundary fallback={<ErrorPage>오류가 발생했습니다</ErrorPage>}>
               <Routes>

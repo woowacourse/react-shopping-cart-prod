@@ -7,6 +7,8 @@ import SkeletonItem from 'components/SkeletonItem/SkeletonItem.component';
 
 import useFetch from 'hooks/useFetch';
 
+import { API_URL_PATH } from 'constants/api';
+
 function LoadingSection() {
   return (
     <ProductListBox>
@@ -18,7 +20,7 @@ function LoadingSection() {
 }
 
 function ProductList() {
-  const { data, isLoading } = useFetch({ url: `/product` });
+  const { data, isLoading } = useFetch({ url: API_URL_PATH.PRODUCTS });
 
   return (
     <>

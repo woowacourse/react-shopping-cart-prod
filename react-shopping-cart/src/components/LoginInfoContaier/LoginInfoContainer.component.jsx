@@ -16,10 +16,12 @@ import {
 
 import useFetch from 'hooks/useFetch';
 
+import { API_URL_PATH } from 'constants/api';
+
 function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
   const dispatch = useDispatch();
   const { fetchData: checkDuplicatedEmail, data } = useFetch({
-    url: '/customers/email',
+    url: API_URL_PATH.EMAIL,
     method: 'post',
     skip: true,
   });
@@ -38,8 +40,6 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
       return;
     }
   }, [data, isDuplicatedEmail]);
-
-  const handlePostUserInfo = () => {};
 
   return (
     <FlexBox id="loginInfo" width="100%" direction="column" gap="10px">

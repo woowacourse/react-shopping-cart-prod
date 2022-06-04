@@ -16,6 +16,7 @@ import { initialUserInfoState } from 'redux/reducers/userInfo.reducer';
 
 import useFetch from 'hooks/useFetch';
 
+import { API_URL_PATH } from 'constants/api';
 import { processServerData } from 'utils';
 
 const InfoDiv = styled(FlexBox).attrs({
@@ -47,12 +48,11 @@ function ModifyUserInfo() {
   const navigate = useNavigate();
   const [showLoginInfo, setShowLoginInfo] = useState(false);
   const { accessToken, ...currentUserInfo } = useSelector(state => state.auth);
-  console.log(accessToken);
 
   const userInfo = useSelector(state => state.userInfo);
   const putUserInfo = processServerData(userInfo);
   const { fetchData: modifyInfo } = useFetch({
-    url: '/customers',
+    url: API_URL_PATH.CUSTOMERS,
     method: 'put',
     headers: { accessToken: `Bearer ${accessToken}`, 'Access-Control-Allow-Origin': true },
     skip: true,
@@ -85,7 +85,7 @@ function ModifyUserInfo() {
     console.log(putUserInfo);
     await modifyInfo(putUserInfo);
     alert('정보 수정 완료했습니다!');
-    // navigate('/');
+    navigate('/');
   };
 
   return (

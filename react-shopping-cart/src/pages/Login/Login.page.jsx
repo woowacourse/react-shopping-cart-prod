@@ -14,6 +14,8 @@ import { loginUser } from 'redux/actions/auth.action';
 
 import useFetch from 'hooks/useFetch';
 
+import { API_URL_PATH } from 'constants/api';
+
 const CopyrightBox = styled(FlexBox).attrs({
   justifyContent: 'center',
 })`
@@ -34,7 +36,7 @@ function Login() {
     data,
     error,
   } = useFetch({
-    url: '/customers/login',
+    url: API_URL_PATH.LOGIN,
     method: 'post',
     skip: true,
   });

@@ -1,11 +1,11 @@
 import { products, customers } from 'mocks/mockData';
 import { rest } from 'msw';
 
+import { API_URL_PATH } from 'constants/api';
+
 export const handlers = [
-  rest.get(`${process.env.REACT_APP_API_HOST}/product`, (req, res, ctx) =>
-    res(ctx.status(200), ctx.json(products))
-  ),
-  rest.post(`${process.env.REACT_APP_API_HOST}/customers/login`, (req, res, ctx) => {
+  rest.get(`${API_URL_PATH.PRODUCTS}`, (req, res, ctx) => res(ctx.status(200), ctx.json(products))),
+  rest.post(`${API_URL_PATH.LOGIN}`, (req, res, ctx) => {
     const { email, password } = req.body;
 
     const isExist = customers[email]?.password === password;
@@ -16,14 +16,14 @@ export const handlers = [
     }
     return res(ctx.status(404), ctx.json({ message: '존재하지 않는 email/password입니다.' }));
   }),
-  rest.post(`${process.env.REACT_APP_API_HOST}/customers/email`, (req, res, ctx) => {
+  rest.post(`${API_URL_PATH.EMAIL}`, (req, res, ctx) => {
     const email = req.body;
 
     const isExist = !!customers[email];
 
     return res(ctx.status(200), ctx.json({ isValidEmail: isExist }));
   }),
-  rest.post(`${process.env.REACT_APP_API_HOST}/customers`, (req, res, ctx) => {
+  rest.post(`${API_URL_PATH.CUSTOMERS}`, (req, res, ctx) => {
     const { email, password, name, phone, address } = req.body;
 
     customers[email] = {
@@ -35,7 +35,7 @@ export const handlers = [
 
     return res(ctx.status(201), ctx.json({ email, name, phone, address }));
   }),
-  rest.put(`${process.env.REACT_APP_API_HOST}/customers`, (req, res, ctx) => {
+  rest.put(`${API_URL_PATH.CUSTOMERS}`, (req, res, ctx) => {
     const { email, password, name, phone, address } = req.body;
 
     customers[email] = {
