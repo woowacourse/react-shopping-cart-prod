@@ -9,8 +9,8 @@ import usePassword from 'hooks/usePassword';
 import { Button, Form, Input } from 'components/@shared';
 import { PageLayout } from 'components';
 
-import { LeaveButton } from './styles';
 import { getCookie } from 'utils';
+import { LeaveButton } from './styles';
 
 function UserInfo() {
   const [userName, setUserName] = useState('');
