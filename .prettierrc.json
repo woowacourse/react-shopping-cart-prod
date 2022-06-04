@@ -11,6 +11,7 @@
     "^(@|pages)(.*|$)",
     "^(@|actions/)(.*|$)",
     "^(@|reducers/)(.*|$)",
+    "^(@|store/)(.*|$)",
     "^(@|hooks)(.*|$)",
     "^(@|components/@common)(.*|$)",
     "^(@|components)(.*|$)",
