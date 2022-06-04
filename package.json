@@ -66,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "@redux-devtools/extension": "^3.2.2",
     "@storybook/addon-actions": "^6.5.3",
     "@storybook/addon-essentials": "^6.5.3",
     "@storybook/addon-interactions": "^6.5.3",
@@ -76,10 +77,12 @@
     "@storybook/preset-create-react-app": "^4.1.0",
     "@storybook/react": "^6.5.3",
     "@storybook/testing-library": "^0.0.11",
+    "@types/redux-logger": "^3.0.9",
     "babel-plugin-named-exports-order": "^0.0.2",
     "chromatic": "^6.5.4",
     "gh-pages": "^4.0.0",
     "msw": "^0.41.0",
+    "redux-logger": "^3.0.6",
     "webpack": "^5.72.1"
   },
   "msw": {
