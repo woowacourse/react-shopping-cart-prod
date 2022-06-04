@@ -47,11 +47,16 @@ const AccountPage = () => {
   const getProfile = async () => {
     const accessToken = getCookie('accessToken');
 
-    const response = await authApiClient.get('/customers', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
+    const response = await authApiClient.get(
+      '/customers',
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Access-Control-Allow-Origin': '*',
+        },
       },
-    });
+    );
 
     setEmail(response.data.email);
   };
@@ -70,6 +75,7 @@ const AccountPage = () => {
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
+            'Access-Control-Allow-Origin': '*',
           },
         },
       );

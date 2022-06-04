@@ -46,11 +46,15 @@ const SignupPage = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await authApiClient.post('/customers', {
-        email,
-        nickname,
-        password,
-      });
+      const response = await authApiClient.post(
+        '/customers',
+        {
+          email,
+          nickname,
+          password,
+        },
+        { headers: { 'Access-Control-Allow-Origin': '*' } },
+      );
 
       renderSnackbar(`${response.data.nickname}${MESSAGE.SIGNUP_SUCCESS}`, 'SUCCESS');
       navigate('/login');
