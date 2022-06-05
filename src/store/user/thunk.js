@@ -4,17 +4,17 @@ import { getCookie, removeCookie, setCookie } from 'lib/cookieUtils';
 
 import userActions from './action';
 
-const userLogin = (userId, password) => async (dispatch) => {
-  const response = await requestLogin({ userId, password });
-  const { status, content } = response;
+const userLogin = (loginId, password) => async (dispatch) => {
+  const response = await requestLogin({ loginId, password });
+  const { status, message, accessToken, userKey, userId, nickname } = response;
 
   if (status === REQUEST_STATUS.FAIL) {
-    dispatch(userActions.updateInfo.error(content.message));
+    dispatch(userActions.updateInfo.error(message));
     return response;
   }
 
-  setCookie(ACCESS_TOKEN_COOKIE_NAME, content.accessToken, ACCESS_TOKEN_EXPIRED_TIME);
-  dispatch(userActions.updateInfo.success(content));
+  setCookie(ACCESS_TOKEN_COOKIE_NAME, accessToken, ACCESS_TOKEN_EXPIRED_TIME);
+  dispatch(userActions.updateInfo.success({ userKey, userId, nickname }));
 
   return response;
 };
@@ -25,14 +25,14 @@ const getUserProfile = () => async (dispatch) => {
   if (!accessToken) return;
 
   const response = await requestProfile();
-  const { status, content } = response;
+  const { status, userKey, userId, nickname } = response;
 
   if (status === REQUEST_STATUS.FAIL) {
     removeCookie(ACCESS_TOKEN_COOKIE_NAME);
     return response;
   }
 
-  dispatch(userActions.updateInfo.success(content));
+  dispatch(userActions.updateInfo.success({ userKey, userId, nickname }));
   return response;
 };
 

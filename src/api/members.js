@@ -1,25 +1,33 @@
 import { request } from 'lib/requestUtils';
 
-const requestSignUp = ({ userId, password, nickname }) =>
-  request('/customers/signUp', {
+const requestSignUp = async ({ userId, password, nickname }) => {
+  const { status, body } = await request('/customers/signUp', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ userId, password, nickname }),
   });
+  const { message = '' } = body;
 
-const requestLogin = ({ userId, password }) =>
-  request('/customers/login', {
+  return { status, message };
+};
+
+const requestLogin = async ({ loginId, password }) => {
+  const { status, body } = await request('/customers/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ userId, password }),
+    body: JSON.stringify({ loginId, password }),
   });
+  const { message = '', accessToken = '', id: userKey = -1, userId = '', nickname = '' } = body;
 
-const requestProfile = () =>
-  request(
+  return { status, message, accessToken, userKey, userId, nickname };
+};
+
+const requestProfile = async () => {
+  const { status, body } = await request(
     '/auth/customers/profile',
     {
       method: 'GET',
@@ -28,9 +36,13 @@ const requestProfile = () =>
       isAccessTokenUsed: true,
     },
   );
+  const { message = '', id: userKey = -1, userId = '', nickname = '' } = body;
 
-const requestProfileUpdate = (editTarget = {}) =>
-  request(
+  return { status, message, userKey, userId, nickname };
+};
+
+const requestProfileUpdate = async (editTarget = {}) => {
+  const { status, body } = await request(
     '/auth/customers/profile',
     {
       method: 'PATCH',
@@ -43,9 +55,13 @@ const requestProfileUpdate = (editTarget = {}) =>
       isAccessTokenUsed: true,
     },
   );
+  const { message = '' } = body;
 
-const requestPasswordUpdate = ({ oldPassword, newPassword }) =>
-  request(
+  return { status, message };
+};
+
+const requestPasswordUpdate = async ({ oldPassword, newPassword }) => {
+  const { status, body } = await request(
     '/auth/customers/profile/password',
     {
       method: 'PATCH',
@@ -58,9 +74,13 @@ const requestPasswordUpdate = ({ oldPassword, newPassword }) =>
       isAccessTokenUsed: true,
     },
   );
+  const { message = '' } = body;
 
-const requestUserDropOut = (password) =>
-  request(
+  return { status, message };
+};
+
+const requestUserDropOut = async (password) => {
+  const { status, body } = await request(
     '/auth/customers/profile',
     {
       method: 'DELETE',
@@ -73,16 +93,31 @@ const requestUserDropOut = (password) =>
       isAccessTokenUsed: true,
     },
   );
+  const { message = '' } = body;
 
-const requestCheckUserId = (userId) =>
-  request(`/customers/check?userId=${encodeURIComponent(userId)}`, {
+  return { status, message };
+};
+
+const requestCheckUserId = async (userId) => {
+  const { status, body } = await request(`/customers/check?userId=${encodeURIComponent(userId)}`, {
     method: 'GET',
   });
+  const { message = '' } = body;
 
-const requestCheckUserNickname = (nickname) =>
-  request(`/customers/check?nickname=${encodeURIComponent(nickname)}`, {
-    method: 'GET',
-  });
+  return { status, message };
+};
+
+const requestCheckUserNickname = async (nickname) => {
+  const { status, body } = await request(
+    `/customers/check?nickname=${encodeURIComponent(nickname)}`,
+    {
+      method: 'GET',
+    },
+  );
+  const { message = '' } = body;
+
+  return { status, message };
+};
 
 export {
   requestSignUp,

@@ -36,11 +36,15 @@ function SignUpPage() {
 
   const handleSubmitSignUp = async (event) => {
     event.preventDefault();
+
     const formData = getFormData(event.target);
+    const { status, message } = await requestSignUp(formData);
 
-    const response = await requestSignUp(formData);
+    if (status === REQUEST_STATUS.FAIL) {
+      alert(message);
+      return;
+    }
 
-    if (response.status === REQUEST_STATUS.FAIL) return;
     navigate('/login');
   };
 
