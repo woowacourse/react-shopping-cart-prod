@@ -25,10 +25,10 @@ function UserInfo() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onClickLeave = () => {
+  const onClickLeave = async () => {
     if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) return;
 
-    axios.delete('/api/customers/me', {
+    await axios.delete('/api/customers/me', {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
       },
@@ -38,10 +38,10 @@ function UserInfo() {
     navigate(routes.home);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    axios.put(
+    await axios.put(
       '/api/customers/me',
       { password },
       {
