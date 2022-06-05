@@ -7,7 +7,7 @@ const productList = [
     id: "83kW9mUr",
     name: "Apple Watch Series 5",
     price: 120,
-    thumbnail_image: {
+    thumbnailImage: {
       url: "https://develoger.kr/wp-content/uploads/apple-watch-1.jpg",
       alt: "Apple Watch Series 5",
     },
@@ -16,7 +16,7 @@ const productList = [
     id: "jBR5pmE5",
     name: "Apple Watch Nike",
     price: 400,
-    thumbnail_image: {
+    thumbnailImage: {
       url: "https://develoger.kr/wp-content/uploads/apple-watch-nike.jpg",
       alt: "Apple Watch Nike",
     },
