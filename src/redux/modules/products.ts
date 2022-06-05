@@ -15,9 +15,9 @@ export type ProductState = {
 };
 
 export type Action =
-  | ReturnType<typeof loadProducts>
+  | ReturnType<typeof loadProductsRequest>
   | ReturnType<typeof loadProductsSuccess>
-  | ReturnType<typeof loadProductsFailed>;
+  | ReturnType<typeof loadProductsFailure>;
 
 const initialState: ProductState = {
   loading: false,
@@ -25,35 +25,35 @@ const initialState: ProductState = {
   error: null,
 };
 
-const LOAD_PRODUCTS = 'product/LOAD' as const;
+const LOAD_PRODUCTS_REQUEST = 'product/LOAD_REQUEST' as const;
 const LOAD_PRODUCTS_SUCCESS = 'product/LOAD_SUCCESS' as const;
-const LOAD_PRODUCTS_FAILED = 'product/LOAD_FAILED' as const;
+const LOAD_PRODUCTS_FAILURE = 'product/LOAD_FAILURE' as const;
 
-const loadProducts = () => ({ type: LOAD_PRODUCTS });
+const loadProductsRequest = () => ({ type: LOAD_PRODUCTS_REQUEST });
 const loadProductsSuccess = (productList: Product[]) => ({
   type: LOAD_PRODUCTS_SUCCESS,
   payload: { productList },
 });
-const loadProductsFailed = (error: Error) => ({
-  type: LOAD_PRODUCTS_FAILED,
+const loadProductsFailure = (error: Error) => ({
+  type: LOAD_PRODUCTS_FAILURE,
   payload: { error },
 });
 
 export const loadProductsAPI = (): any => async (dispatch: AppDispatch) => {
-  dispatch(loadProducts());
+  dispatch(loadProductsRequest());
   try {
     const { data: productList } = await axios.get(`${process.env.REACT_APP_API_URL}`);
     dispatch(loadProductsSuccess(productList));
   } catch (error: unknown) {
     if (error instanceof Error) {
-      dispatch(loadProductsFailed(error));
+      dispatch(loadProductsFailure(error));
     }
   }
 };
 
 const productsReducer = (state = initialState, action: Action) => {
   switch (action.type) {
-    case LOAD_PRODUCTS: {
+    case LOAD_PRODUCTS_REQUEST: {
       return { ...state, loading: true };
     }
     case LOAD_PRODUCTS_SUCCESS: {
@@ -61,7 +61,7 @@ const productsReducer = (state = initialState, action: Action) => {
 
       return { ...state, loading: false, productList };
     }
-    case LOAD_PRODUCTS_FAILED: {
+    case LOAD_PRODUCTS_FAILURE: {
       const { error } = action.payload;
 
       return { ...state, loading: false, error };
@@ -73,6 +73,6 @@ const productsReducer = (state = initialState, action: Action) => {
 
 export const selectProductState = (state: RootState) => state.products;
 
-export { loadProductsSuccess, loadProductsFailed };
+export { loadProductsSuccess, loadProductsFailure };
 
 export default productsReducer;

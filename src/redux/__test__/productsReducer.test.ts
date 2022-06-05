@@ -1,6 +1,6 @@
 import productList from '../../mocks/dummyData';
 import productsReducer, {
-  loadProductsFailed,
+  loadProductsFailure,
   loadProductsSuccess,
   ProductState,
 } from '../modules/products';
@@ -22,7 +22,7 @@ describe('상품 리듀서 테스트', () => {
 
   test('상품 목록 불러오기를 실패하면 에러 상태가 저장된다.', () => {
     const error = 'Network Error' as unknown as Error;
-    expect(productsReducer(initialState, loadProductsFailed(error))).toEqual({
+    expect(productsReducer(initialState, loadProductsFailure(error))).toEqual({
       loading: false,
       productList: [],
       error,
