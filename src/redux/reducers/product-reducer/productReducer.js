@@ -1,3 +1,4 @@
+/* eslint-disable default-param-last */
 import queryState from "@redux/utils/queryState";
 import ACTION_TYPE from "./productActions";
 
