@@ -37,9 +37,10 @@ const userValidator = {
       throw new Error('한글, 영문, 숫자로 최소 2자부터 최대 10자까지 입력할 수 있습니다.');
     }
 
-    const { status, content } = requestCheckUserNickname(nickname);
-    if (status === REQUEST_STATUS.FAIL) {
-      throw new Error(content.message);
+    const response = await requestCheckUserNickname(nickname);
+
+    if (response.status === REQUEST_STATUS.FAIL) {
+      throw new Error(response.content.message);
     }
   },
 };
