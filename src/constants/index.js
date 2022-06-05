@@ -65,6 +65,7 @@ const MESSAGE = {
   NOT_A_PASSWORD_FORMAT:
     '비밀번호는 8~20글자 이하 영문자(대,소), 숫자, 특수기호 조합을 입력해 주세요',
   PASSWORD_DOES_NOT_MATCH: '비밀번호가 일치하지 않습니다. 똑같은 비밀번호를 입력해 주세요.',
+  CAN_NOT_CONTAIN_SPACES: '공백이 포함되어 있습니다. 공백을 제거해 주세요.',
 };
 
 export { SERVER_PATH, ROUTES_PATH, SIZE, USER, USER_INFO_KEY, PASSWORD_INFO_KEY, MESSAGE };
