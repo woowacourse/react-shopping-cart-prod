@@ -1,4 +1,4 @@
-import { changePassword, editUser } from '@/api/customers';
+import { changePassword, checkAuthorization, editUser } from '@/api/customers';
 import { useSnackbar } from '@/hooks/useSnackbar';
 import { ROUTE } from '@/route';
 import { loginAsync, signUpAsync } from '@/store/customer/action';
@@ -137,7 +137,9 @@ export const useCustomerForm = (userInformation: UserInformation = {}) => {
     e.preventDefault();
 
     try {
-      await editUser({ phoneNumber: phoneNumber.value, address: address.value });
+      const userInformation = { phoneNumber: phoneNumber.value, address: address.value };
+      await checkAuthorization({ isLogged: true, data: userInformation, callback: editUser });
+
       triggerSucceededSnackbar('정보수정에 성공하였습니다.');
     } catch ({
       response: {
@@ -165,7 +167,9 @@ export const useCustomerForm = (userInformation: UserInformation = {}) => {
     e.preventDefault();
 
     try {
-      await changePassword({ password: password.value });
+      const userInformation = { password: password.value };
+      await checkAuthorization({ isLogged: true, data: userInformation, callback: changePassword });
+
       triggerSucceededSnackbar('비밀번호 변경에 성공하셨습니다.');
     } catch ({
       response: {

@@ -1,5 +1,5 @@
 import { deleteCookie, setCookie } from '@/api/cookie';
-import { deleteUser, getCustomer, login, signUp } from '@/api/customers';
+import { checkAuthorization, deleteUser, getCustomer, login, signUp } from '@/api/customers';
 import { Dispatch } from 'redux';
 
 export const enum CustomerActionType {
@@ -95,7 +95,10 @@ export const signUpAsync =
     dispatch({ type: CustomerActionType.SIGN_UP_START });
 
     try {
-      await signUp(userInformation);
+      await checkAuthorization({
+        data: userInformation,
+        callback: signUp,
+      });
 
       dispatch({ type: CustomerActionType.SIGN_UP_SUCCEEDED });
 
@@ -121,7 +124,7 @@ export const loginAsync =
     dispatch({ type: CustomerActionType.LOGIN_START });
 
     try {
-      const responseData = await login(userInformation);
+      const responseData = await checkAuthorization({ data: userInformation, callback: login });
 
       dispatch({ type: CustomerActionType.LOGIN_SUCCEEDED });
 
@@ -149,7 +152,7 @@ export const leaveUserAsync =
     dispatch({ type: CustomerActionType.DELETE_USER_START });
 
     try {
-      await deleteUser();
+      await checkAuthorization({ isLogged: true, isOnlyConfig: true, callback: deleteUser });
 
       dispatch({ type: CustomerActionType.DELETE_USER_SUCCEEDED });
 
@@ -179,7 +182,7 @@ export const getCustomerAsync =
     try {
       const {
         data: { customer },
-      } = await getCustomer();
+      } = await checkAuthorization({ isLogged: true, isOnlyConfig: true, callback: getCustomer });
 
       dispatch({
         type: CustomerActionType.GET_CUSTOMER_SUCCEEDED,
