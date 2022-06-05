@@ -17,6 +17,7 @@ import useInputValidate from 'hooks/useInputValidate';
 import { PATH_NAME } from 'constants';
 import PropTypes from 'prop-types';
 import * as Styled from './style';
+import { PASSWORD_REGEX } from 'constants';
 
 const ModifyProfile = () => {
   const dispatch = useDispatch();
@@ -119,17 +120,39 @@ const ModifyProfile = () => {
 
 const ChangePassword = ({ onSubmit }) => {
   const newPwd = useRef(null);
-  const [oldPasswordValidate, handleOldPasswordBlur] =
-    useInputValidate('password');
-  const [newPasswordValidate, handleNewPasswordBlur] =
-    useInputValidate('password');
-  const [newPasswordCheckValidate, handleNewPasswordCheckBlur] =
-    useInputValidate('passwordCheck');
+  const {
+    isValid: isOldPasswordValid,
+    handleBlur: handleOldPasswordBlur,
+    text: oldPasswordValidText,
+  } = useInputValidate({
+    validation: (args) => args.trim().length > 0,
+    successMsg: '',
+    errorMsg: '비밀번호를 입력해 주세요.',
+  });
+
+  const {
+    isValid: isNewPasswordValid,
+    handleBlur: handleNewPasswordBlur,
+    text: newPasswordValidText,
+  } = useInputValidate({
+    validation: (args) => PASSWORD_REGEX.test(args),
+    successMsg: '안전한 비밀번호입니다!',
+    errorMsg:
+      '영문 대소문자, 특수문자(!, @, ?, -) 를 포함한 6글자 이상 사용하세요.',
+  });
+
+  const {
+    isValid: isNewPasswordCheckValid,
+    handleBlur: handleNewPasswordCheckBlur,
+    text: newPasswordCheckValidText,
+  } = useInputValidate({
+    validation: (args1, args2) => args1 === args2,
+    successMsg: '비밀번호가 일치합니다!',
+    errorMsg: '비밀번호가 일치하지 않습니다.',
+  });
 
   const isAllValid =
-    oldPasswordValidate.isValid &&
-    newPasswordValidate.isValid &&
-    newPasswordCheckValidate.isValid;
+    isOldPasswordValid && isNewPasswordValid && isNewPasswordCheckValid;
 
   return (
     <>
@@ -144,8 +167,8 @@ const ChangePassword = ({ onSubmit }) => {
             type="password"
           />
           <ValidateText
-            text={oldPasswordValidate.text}
-            isValid={oldPasswordValidate.isValid}
+            text={oldPasswordValidText}
+            isValid={isOldPasswordValid}
           />
         </Fieldset>
         <Fieldset>
@@ -158,8 +181,8 @@ const ChangePassword = ({ onSubmit }) => {
             type="password"
           />
           <ValidateText
-            text={newPasswordValidate.text}
-            isValid={newPasswordValidate.isValid}
+            text={newPasswordValidText}
+            isValid={isNewPasswordValid}
           />
         </Fieldset>
         <Fieldset>
@@ -171,8 +194,8 @@ const ChangePassword = ({ onSubmit }) => {
             type="password"
           />
           <ValidateText
-            text={newPasswordCheckValidate.text}
-            isValid={newPasswordCheckValidate.isValid}
+            text={newPasswordCheckValidText}
+            isValid={isNewPasswordCheckValid}
           />
         </Fieldset>
         <Button colorType="primary" type="submit">
@@ -184,7 +207,15 @@ const ChangePassword = ({ onSubmit }) => {
 };
 
 const Withdrawal = ({ onSubmit }) => {
-  const [passwordValidate, handlePasswordBlur] = useInputValidate('password');
+  const {
+    isValid: isPasswordValid,
+    handleBlur: handlePasswordBlur,
+    text: passwordValidText,
+  } = useInputValidate({
+    validation: (args) => args.trim().length > 0,
+    successMsg: '',
+    errorMsg: '비밀번호를 입력해 주세요.',
+  });
   return (
     <>
       <Title contents="회원 탈퇴" />
@@ -197,10 +228,7 @@ const Withdrawal = ({ onSubmit }) => {
             name="password"
             type="password"
           />
-          <ValidateText
-            text={passwordValidate.text}
-            isValid={passwordValidate.isValid}
-          />
+          <ValidateText text={passwordValidText} isValid={isPasswordValid} />
         </Fieldset>
         <Button colorType="tertiary" type="submit">
           탈퇴
