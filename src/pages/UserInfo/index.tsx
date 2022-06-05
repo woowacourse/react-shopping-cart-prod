@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import routes from 'routes';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { logout } from 'redux/modules/customer';
+import { logout } from 'redux/modules/user';
 
 import usePassword from 'hooks/usePassword';
 import { Button, Form, Input } from 'components/@shared';

@@ -2,13 +2,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import routes from 'routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
-import { logout } from 'redux/modules/customer';
+import { logout } from 'redux/modules/user';
 
 import Logo from 'assets/Logo.png';
 import { NavBarContainer, NavBarTitle, NavBarMenu } from './styles';
 
 function NavBar() {
-  const { isLoggedIn } = useSelector((state: RootState) => state.customer);
+  const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
