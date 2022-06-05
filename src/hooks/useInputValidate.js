@@ -15,8 +15,8 @@ const validateEmail = (email) => {
   };
 };
 
-const validateEmailAsync = async (email) => {
-  return await duplicateEmailApi(email)
+const validateEmailAsync = (email) => {
+  return duplicateEmailApi(email)
     .then(() => {
       return { text: '멋진 이메일입니다!', isValid: true };
     })
