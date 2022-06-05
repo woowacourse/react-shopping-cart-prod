@@ -16,12 +16,13 @@ if (token !== undefined && nickname !== undefined) {
 }
 
 const handleAPIError = (error) => {
-  const { status } = error.response;
+  const { status, data } = error.response;
+
   if (status >= 500) {
     throw Error(ERROR_MESSAGES.SERVER_ERROR);
   }
   if (status >= 400) {
-    throw Error(ERROR_MESSAGES.INVALID_REQUEST);
+    throw Error(data.message);
   }
   throw Error(ERROR_MESSAGES.UNKNOWN);
 };
