@@ -76,7 +76,7 @@ function UserInfo() {
         <Input
           type="password"
           htmlFor="userinfo-password"
-          label="비밀번호"
+          label="새로운 비밀번호"
           value={password}
           onChange={onChangePassword}
           maxLength={20}
@@ -86,7 +86,7 @@ function UserInfo() {
         <Input
           type="password"
           htmlFor="userinfo-password-confirm"
-          label="비밀번호 확인"
+          label="새로운 비밀번호 확인"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
           maxLength={20}
