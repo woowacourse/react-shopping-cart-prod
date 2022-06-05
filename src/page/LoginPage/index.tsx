@@ -48,14 +48,10 @@ const LoginPage = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await authApiClient.post(
-        '/auth/login',
-        {
-          email,
-          password,
-        },
-        { headers: { withCredentials: true } },
-      );
+      const response = await authApiClient.post('/auth/login', {
+        email,
+        password,
+      });
 
       setCookie('accessToken', response.data.accessToken);
       store.dispatch(doLogin({ nickname: response.data.nickname }));

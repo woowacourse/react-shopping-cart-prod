@@ -2,7 +2,7 @@ import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import store from 'store/store';
-import { deleteCookie, getCookie } from 'utils/cookie';
+import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
@@ -20,15 +20,7 @@ const UserMenu = ({ nickname }) => {
 
   const logout = async () => {
     try {
-      const accessToken = getCookie('accessToken');
-
-      await authApiClient.post(
-        '/auth/logout',
-        {},
-        {
-          headers: { Authorization: `Bearer ${accessToken}`, withCredentials: true },
-        },
-      );
+      await authApiClient.post('/auth/logout');
 
       deleteCookie('accessToken');
       setIsOpen(false);

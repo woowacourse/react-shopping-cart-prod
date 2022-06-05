@@ -46,15 +46,11 @@ const SignupPage = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await authApiClient.post(
-        '/customers',
-        {
-          email,
-          nickname,
-          password,
-        },
-        { headers: { withCredentials: true } },
-      );
+      const response = await authApiClient.post('/customers', {
+        email,
+        nickname,
+        password,
+      });
 
       renderSnackbar(`${response.data.nickname}${MESSAGE.SIGNUP_SUCCESS}`, 'SUCCESS');
       navigate('/login');

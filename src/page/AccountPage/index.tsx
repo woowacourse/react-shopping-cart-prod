@@ -11,7 +11,6 @@ import { useState, useEffect } from 'react';
 import { validateNickname } from 'utils/validator';
 import PasswordEditModal from './PasswordEditModal';
 import AccountDeleteModal from './AccountDeleteModal';
-import { getCookie } from 'utils/cookie';
 import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
 import { useNavigate } from 'react-router-dom';
@@ -45,18 +44,7 @@ const AccountPage = () => {
   }, [isLoading]);
 
   const getProfile = async () => {
-    const accessToken = getCookie('accessToken');
-
-    const response = await authApiClient.get(
-      '/customers',
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          withCredentials: true,
-        },
-      },
-    );
+    const response = await authApiClient.get('/customers');
 
     setEmail(response.data.email);
   };
@@ -65,20 +53,9 @@ const AccountPage = () => {
     try {
       if (!isNicknameCorrect) return;
 
-      const accessToken = getCookie('accessToken');
-
-      const response = await authApiClient.patch(
-        '/customers',
-        {
-          nickname,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            withCredentials: true,
-          },
-        },
-      );
+      const response = await authApiClient.patch('/customers', {
+        nickname,
+      });
       store.dispatch(doLogin({ nickname: response.data.nickname }));
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
     } catch (error) {

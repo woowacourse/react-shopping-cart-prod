@@ -6,7 +6,7 @@ import AuthButton from 'components/AuthButton';
 import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
 import Styled from './index.style';
-import { deleteCookie, getCookie } from 'utils/cookie';
+import { deleteCookie } from 'utils/cookie';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import store from 'store/store';
@@ -28,15 +28,9 @@ const AccountDeleteModal = ({ handleModal }) => {
     try {
       if (!isCorrectPassword) return;
 
-      const accessToken = getCookie('accessToken');
-
       await authApiClient.delete('/customers', {
         data: {
           password,
-        },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          withCredentials: true,
         },
       });
 

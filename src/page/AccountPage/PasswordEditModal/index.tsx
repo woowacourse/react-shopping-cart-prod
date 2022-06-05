@@ -6,7 +6,6 @@ import AuthButton from 'components/AuthButton';
 import { useState } from 'react';
 import Container from 'components/@shared/Container';
 import { validatePassword } from 'utils/validator';
-import { getCookie } from 'utils/cookie';
 
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
@@ -23,21 +22,10 @@ const PasswordEditModal = ({ handleModal }) => {
     try {
       if (!isCorrectPassword) return;
 
-      const accessToken = getCookie('accessToken');
-
-      await authApiClient.patch(
-        '/customers',
-        {
-          password: currentPassword,
-          newPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            withCredentials: true,
-          },
-        },
-      );
+      await authApiClient.patch('/customers', {
+        password: currentPassword,
+        newPassword,
+      });
 
       renderSnackbar(MESSAGE.UPDATE_PASSWORD_SUCCESS, 'SUCCESS');
       handleModal();

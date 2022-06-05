@@ -29,12 +29,7 @@ function App() {
       const accessToken = getCookie('accessToken');
       if (!accessToken) return;
 
-      const response = await authApiClient.get('/customers', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          withCredentials: true,
-        },
-      });
+      const response = await authApiClient.get('/customers');
       store.dispatch(doLogin({ nickname: response.data.nickname }));
     } catch (error) {
       deleteCookie('accessToken');
