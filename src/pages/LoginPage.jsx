@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -16,11 +15,7 @@ import actionTypes from '../store/user/user.actions';
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loginInfo, setLoginInfo] = useState({
-    email: '',
-    password: '',
-  });
-  const handleUserInfoChange = useUserForm(setLoginInfo);
+  const { loginInfo, setLoginInfo, handleUserInfoChange } = useUserForm();
   const { email, password } = loginInfo;
 
   const handleLoginInfoSubmit = async (e) => {
@@ -29,6 +24,7 @@ function LoginPage() {
     try {
       validLoginInfo(email);
       const { data } = await axios.post(SERVER_PATH.LOGIN, { email, password });
+      console.log(data);
       dispatch({ type: actionTypes.ADD_TOKEN, data });
       alert(MESSAGE.LOGIN_SUCCESS);
       navigate(ROUTES_PATH.HOME);
@@ -46,14 +42,14 @@ function LoginPage() {
           type="email"
           placeholder="이메일 주소를 입력해주세요"
           value={email}
-          onChange={handleUserInfoChange(USER_INFO_KEY.EMAIL)}
+          onChange={handleUserInfoChange(setLoginInfo, USER_INFO_KEY.EMAIL)}
         />
         <Input
           labelText="비밀번호"
           type="password"
           value={password}
           placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
-          onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD)}
+          onChange={handleUserInfoChange(setLoginInfo, USER_INFO_KEY.PASSWORD)}
         />
         <Button text="로그인" />
       </StyledUserForm>

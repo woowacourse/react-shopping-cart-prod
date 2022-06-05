@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
@@ -15,12 +14,7 @@ import actionTypes from '../store/user/user.actions';
 function ModifyPasswordPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [passwords, setPasswords] = useState({
-    prevPassword: '',
-    newPassword: '',
-    newPasswordConfirm: '',
-  });
-  const handleUserInfoChange = useUserForm(setPasswords);
+  const { passwords, setPasswords, handleUserInfoChange } = useUserForm();
   const { prevPassword, newPassword, newPasswordConfirm } = passwords;
 
   const handlePasswordSubmit = async (e) => {
@@ -48,7 +42,7 @@ function ModifyPasswordPage() {
           maxLength={USER.PASSWORD.MAX}
           value={prevPassword}
           placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
-          onChange={handleUserInfoChange(PASSWORD_INFO_KEY.PREV_PASSWORD)}
+          onChange={handleUserInfoChange(setPasswords, PASSWORD_INFO_KEY.PREV_PASSWORD)}
         />
         <Input
           labelText="새로운 비밀번호"
@@ -57,7 +51,7 @@ function ModifyPasswordPage() {
           maxLength={USER.PASSWORD.MAX}
           value={newPassword}
           placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
-          onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD)}
+          onChange={handleUserInfoChange(setPasswords, PASSWORD_INFO_KEY.NEW_PASSWORD)}
         />
         <Input
           labelText="새로운 비밀번호 확인"
@@ -66,7 +60,7 @@ function ModifyPasswordPage() {
           maxLength={USER.PASSWORD.MAX}
           value={newPasswordConfirm}
           placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
-          onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD_CONFIRM)}
+          onChange={handleUserInfoChange(setPasswords, PASSWORD_INFO_KEY.NEW_PASSWORD_CONFIRM)}
         />
         <Button text="수정하기" />
       </StyledUserForm>

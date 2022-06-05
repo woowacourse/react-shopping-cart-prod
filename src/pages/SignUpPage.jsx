@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,15 +9,10 @@ import useUserForm from '../hooks/useUserForm';
 import { validSignUpInfo } from '../utils/validations';
 
 import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+
 function SignUpPage() {
   const navigate = useNavigate();
-  const [signUpInfo, setSignUpInfo] = useState({
-    email: '',
-    nickname: '',
-    password: '',
-    passwordConfirm: '',
-  });
-  const handleUserInfoChange = useUserForm(setSignUpInfo);
+  const { signUpInfo, setSignUpInfo, handleUserInfoChange } = useUserForm();
   const { email, nickname, password, passwordConfirm } = signUpInfo;
 
   const handleSignUpInfoSubmit = async (e) => {
@@ -43,7 +37,7 @@ function SignUpPage() {
           type="email"
           placeholder="이메일 주소를 입력해주세요"
           value={email}
-          onChange={handleUserInfoChange(USER_INFO_KEY.EMAIL)}
+          onChange={handleUserInfoChange(setSignUpInfo, USER_INFO_KEY.EMAIL)}
         />
         <Input
           labelText="닉네임"
@@ -51,7 +45,7 @@ function SignUpPage() {
           maxLength={USER.NICKNAME.MAX}
           placeholder="닉네임을 입력해주세요"
           value={nickname}
-          onChange={handleUserInfoChange(USER_INFO_KEY.NICKNAME)}
+          onChange={handleUserInfoChange(setSignUpInfo, USER_INFO_KEY.NICKNAME)}
         />
         <Input
           labelText="비밀번호"
@@ -60,7 +54,7 @@ function SignUpPage() {
           maxLength={USER.PASSWORD.MAX}
           value={password}
           placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
-          onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD)}
+          onChange={handleUserInfoChange(setSignUpInfo, USER_INFO_KEY.PASSWORD)}
         />
         <Input
           labelText="비밀번호 확인"
@@ -69,7 +63,7 @@ function SignUpPage() {
           maxLength={USER.PASSWORD.MAX}
           value={passwordConfirm}
           placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
-          onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD_CONFIRM)}
+          onChange={handleUserInfoChange(setSignUpInfo, USER_INFO_KEY.PASSWORD_CONFIRM)}
         />
         <Button text="가입하기" />
       </StyledUserForm>

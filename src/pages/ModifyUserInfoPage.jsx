@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,8 +14,7 @@ import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../const
 
 function ModifyUserInfoPage() {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({});
-  const handleUserInfoChange = useUserForm(setUserInfo);
+  const { userInfo, setUserInfo, handleUserInfoChange } = useUserForm();
 
   const handleUserInfoSubmit = async (e) => {
     e.preventDefault();
@@ -57,7 +56,7 @@ function ModifyUserInfoPage() {
           maxLength={USER.NICKNAME.MAX}
           value={userInfo.nickname}
           placeholder="닉네임을 입력해주세요"
-          onChange={handleUserInfoChange(USER_INFO_KEY.NICKNAME)}
+          onChange={handleUserInfoChange(setUserInfo, USER_INFO_KEY.NICKNAME)}
         />
         <Button text="수정하기" />
       </StyledUserForm>
