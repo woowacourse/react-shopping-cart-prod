@@ -35,7 +35,10 @@ const membersHandlers = [
     const userInfo = membersDB.find((user) => user.userId === userId && user.password === password);
 
     if (!userInfo) {
-      return res(ctx.status(400), ctx.json({ message: '로그인에 실패하였습니다.' }));
+      return res(
+        ctx.status(400),
+        ctx.json({ message: '이메일 또는 비밀번호를 정확히 입력해주세요.' }),
+      );
     }
 
     const responseUserInfo = { ...userInfo };
@@ -69,10 +72,11 @@ const membersHandlers = [
 
     const queryName = req.url.href.includes('nickname=') ? '닉네임' : '이메일';
 
-    return res(
-      ctx.status(isExist ? 400 : 200),
-      ctx.json({ message: `이미 존재하는 ${queryName}입니다.` }),
-    );
+    if (isExist) {
+      return res(ctx.status(400), ctx.json({ message: `이미 존재하는 ${queryName}입니다.` }));
+    }
+
+    return res(ctx.status(200));
   }),
 
   // -- 이후
