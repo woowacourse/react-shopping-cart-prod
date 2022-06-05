@@ -11,7 +11,7 @@ export const customerHanlders = [
 
     if (!customer) {
       return res(
-        ctx.status(400, 'unauthorized'),
+        ctx.status(401, 'unauthorized'),
         ctx.json({ error: { messages: ['토큰 정보가 잘 못 되었습니다.'] } }),
       );
     }
@@ -51,7 +51,7 @@ export const customerHanlders = [
     }
 
     return res(
-      ctx.status(400, 'unauthorized'),
+      ctx.status(401, 'unauthorized'),
       ctx.json({ error: { messages: ['login failed'] } }),
     );
   }),
