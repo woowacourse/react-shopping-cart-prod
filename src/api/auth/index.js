@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { setCookie, getCookie } from 'utils/cookie';
 
+const COOKIE_KEY = process.env.REACT_APP_AUTH_COOKIE_KEY;
+
 const getAuthorizationToken = () => {
-  const userToken = getCookie('userToken');
-  return `Bearer ${userToken}`;
+  const accessToken = getCookie(COOKIE_KEY);
+  return `Bearer ${accessToken}`;
 };
 
 export const loginApi = async (paylod) => {
@@ -18,7 +20,7 @@ export const loginApi = async (paylod) => {
       data: { accessToken },
     } = res;
 
-    setCookie('userToken', accessToken);
+    setCookie(COOKIE_KEY, accessToken);
   } catch (err) {
     console.log('err', err);
   }

@@ -39,7 +39,7 @@ const Header = () => {
 const AuthNav = ({ isAuthenticated, name }) => {
   const dispatch = useDispatch();
   const handleClickLogout = () => {
-    deleteCookie('userToken');
+    deleteCookie(process.env.REACT_APP_AUTH_COOKIE_KEY);
     dispatch(initializeUserInfo());
   };
   return (
