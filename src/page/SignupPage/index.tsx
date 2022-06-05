@@ -53,7 +53,7 @@ const SignupPage = () => {
           nickname,
           password,
         },
-        { headers: { 'Access-Control-Allow-Origin': '*' } },
+        { headers: { withCredentials: true } },
       );
 
       renderSnackbar(`${response.data.nickname}${MESSAGE.SIGNUP_SUCCESS}`, 'SUCCESS');

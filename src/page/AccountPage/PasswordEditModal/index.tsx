@@ -34,7 +34,7 @@ const PasswordEditModal = ({ handleModal }) => {
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            'Access-Control-Allow-Origin': '*',
+            withCredentials: true,
           },
         },
       );

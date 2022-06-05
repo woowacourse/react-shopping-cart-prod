@@ -53,7 +53,7 @@ const AccountPage = () => {
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          'Access-Control-Allow-Origin': '*',
+          withCredentials: true,
         },
       },
     );
@@ -75,7 +75,7 @@ const AccountPage = () => {
         {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-            'Access-Control-Allow-Origin': '*',
+            withCredentials: true,
           },
         },
       );

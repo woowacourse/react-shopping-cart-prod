@@ -32,6 +32,7 @@ function App() {
       const response = await authApiClient.get('/customers', {
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          withCredentials: true,
         },
       });
       store.dispatch(doLogin({ nickname: response.data.nickname }));

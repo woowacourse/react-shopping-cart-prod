@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import reportWebVitals from 'reportWebVitals';
 import App from 'App';
 import store from 'store/store';
-// import axios from 'axios';
 
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('./mocks/worker');

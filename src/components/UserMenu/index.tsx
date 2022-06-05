@@ -26,7 +26,7 @@ const UserMenu = ({ nickname }) => {
         '/auth/logout',
         {},
         {
-          headers: { Authorization: `Bearer ${accessToken}` },
+          headers: { Authorization: `Bearer ${accessToken}`, withCredentials: true },
         },
       );
 
