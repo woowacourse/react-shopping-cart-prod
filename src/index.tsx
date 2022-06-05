@@ -9,17 +9,20 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyle from 'styles/GlobalStyle';
 import theme from 'styles/theme';
 
-if (process.env.NODE_ENV === 'development') {
-  if (window.location.pathname === '/react-shopping-cart') {
-    window.location.pathname = '/react-shopping-cart/';
-  }
+const main = async () => {
+  if (process.env.NODE_ENV === 'development') {
+    if (window.location.pathname === '/react-shopping-cart') {
+      window.location.pathname = '/react-shopping-cart/';
+      return;
+    }
 
-  worker.start({
-    serviceWorker: {
-      url: '/react-shopping-cart/mockServiceWorker.js',
-    },
-  });
-}
+    await worker.start({
+      serviceWorker: {
+        url: '/react-shopping-cart/mockServiceWorker.js',
+      },
+    });
+  }
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
@@ -32,3 +35,5 @@ root.render(
     </Provider>
   </ThemeProvider>
 );
+
+main();
