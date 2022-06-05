@@ -57,17 +57,3 @@
 ### 회원 탈퇴
 
 - [x] `회원탈퇴`버튼을 눌러 회원 탈퇴를 할 수 있다.
-
-### 인가
-
-- [x] 비로그인 상태 - 회원정보, 비밀번호 수정, 회원정보 수정 페이지 접근 X
-
-### 리팩토링
-
-- [x] state별 초기값 상수화 -> 필요한 부분만
-- [x] `styled-component` 반복 코드 제거
-- [x] export, import 형식 통일
-- [x] `validation` 로직 `form`별로 한층 더 추상화
-- [x] 유저 관련 `inputChange` 반복 로직 `Custom Hook`으로 변경
-- [x] `handle~Change` 함수 인자값으로 넘겨주는 값들 상수화
-- [x] `alert` 메세지 상수화
