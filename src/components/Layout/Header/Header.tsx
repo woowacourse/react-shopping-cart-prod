@@ -8,7 +8,6 @@ import RightMenu from './RightMenu';
 import { isLogin } from 'utils/auth';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { userActions } from 'redux/actions';
 
 function Header() {
@@ -19,8 +18,6 @@ function Header() {
     (state: { cart: CartStoreState }) => state.cart.cart,
   );
   const userName = useSelector((state: { user: User }) => state.user.username);
-
-  const [showUserToggle, setShowUserToggle] = useState(false);
 
   const onClickLogoutButton = () => {
     dispatch(userActions.resetUser());
