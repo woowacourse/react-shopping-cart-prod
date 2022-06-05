@@ -33,7 +33,7 @@ function ModifyPasswordPage() {
       alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
-      alert(error.messages);
+      alert(error.response.data.message);
     }
   };
 

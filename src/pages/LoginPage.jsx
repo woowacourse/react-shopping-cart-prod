@@ -13,15 +13,13 @@ import { validLoginInfo } from '../utils/validations';
 import { MESSAGE, SERVER_PATH, ROUTES_PATH, USER_INFO_KEY } from '../constants';
 import actionTypes from '../store/user/user.actions';
 
-const initialState = {
-  email: '',
-  password: '',
-};
-
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [loginInfo, setLoginInfo] = useState(initialState);
+  const [loginInfo, setLoginInfo] = useState({
+    email: '',
+    password: '',
+  });
   const handleUserInfoChange = useUserForm(setLoginInfo);
   const { email, password } = loginInfo;
 
@@ -31,13 +29,11 @@ function LoginPage() {
     try {
       validLoginInfo(email);
       const { data } = await axios.post(SERVER_PATH.LOGIN, { email, password });
-      const { accessToken } = data;
-      dispatch({ type: actionTypes.ADD_TOKEN, accessToken });
+      dispatch({ type: actionTypes.ADD_TOKEN, data });
       alert(MESSAGE.LOGIN_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
-      setLoginInfo(initialState);
-      alert(error.message);
+      alert(error.response.data.message);
     }
   };
 
