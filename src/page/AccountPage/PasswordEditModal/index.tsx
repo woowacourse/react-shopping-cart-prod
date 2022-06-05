@@ -45,6 +45,7 @@ const PasswordEditModal = ({ handleModal }) => {
             label="Current Password"
             inputValue={currentPassword}
             setInputValue={setCurrentPassword}
+            autoFocus={true}
           />
           <Input
             type="password"

@@ -13,6 +13,7 @@ interface InputProps {
   isCorrect?: boolean;
   setIsCorrect?: Function;
   isDisabled?: boolean;
+  autoFocus?: boolean;
 }
 
 enum LabelKind {
@@ -32,6 +33,7 @@ const Input = ({
   isCorrect,
   setIsCorrect,
   isDisabled,
+  autoFocus,
 }: InputProps) => {
   const [message, setMessage] = useState('');
   const [isFocus, setIsFocus] = useState(false);
@@ -68,6 +70,7 @@ const Input = ({
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
           disabled={isDisabled}
+          autoFocus={autoFocus}
         />
       </Styled.InputContainer>
 

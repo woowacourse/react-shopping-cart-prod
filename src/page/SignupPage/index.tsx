@@ -75,6 +75,7 @@ const SignupPage = () => {
             validator={validateEmail}
             isCorrect={isEmailCorrect}
             setIsCorrect={setIsEmailCorrect}
+            autoFocus={true}
           />
           <Input
             icon={<NicknameIcon />}

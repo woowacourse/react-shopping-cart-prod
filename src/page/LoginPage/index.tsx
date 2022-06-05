@@ -73,6 +73,7 @@ const LoginPage = () => {
           label="Email Address"
           inputValue={email}
           setInputValue={setEmail}
+          autoFocus={true}
         />
         <Input
           type="password"

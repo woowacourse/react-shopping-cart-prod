@@ -60,6 +60,7 @@ const AccountDeleteModal = ({ handleModal }) => {
             label="Password"
             inputValue={password}
             setInputValue={setPassword}
+            autoFocus={true}
           />
           <AuthButton
             actionType="Delete your account"

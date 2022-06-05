@@ -75,6 +75,7 @@ const AccountPage = () => {
             inputValue={email}
             setInputValue={setEmail}
             isDisabled={true}
+            autoFocus={true}
           />
           <Input
             icon={<NicknameIcon />}
