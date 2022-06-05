@@ -8,6 +8,10 @@ export const Wrapper = styled.header`
   background: ${({ theme }) => theme.COLOR.CYAN_300};
   box-shadow: 0px 4px 4px rgb(0 0 0 / 30%);
   justify-content: space-around;
+
+  position: sticky;
+  top: 0;
+  z-index: 10001;
 `;
 
 export const Logo = styled(Link)`
