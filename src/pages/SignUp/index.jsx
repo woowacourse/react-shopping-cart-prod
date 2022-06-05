@@ -1,6 +1,5 @@
 import useSignUpPage from './hook';
 import Input from 'components/Common/Input/Input';
-import Title from 'components/Common/Title/Title';
 import Button from 'components/Common/Button/Button';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
@@ -24,8 +23,7 @@ const SignUp = () => {
 
   return (
     <Styled.Wrapper>
-      <Title contents="회원가입" />
-      <Form onSubmit={handleSignUp}>
+      <Form title="회원가입" onSubmit={handleSignUp}>
         <Fieldset>
           <Input
             description="이메일"
