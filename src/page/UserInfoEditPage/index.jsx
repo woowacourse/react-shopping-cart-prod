@@ -58,7 +58,6 @@ function UserInfoEditPage() {
 
     userInfo.fetch({
       API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
-      body: {test: 'test:'},
       headers: {Authorization: `Bearer ${accessToken}`},
     });
   };
