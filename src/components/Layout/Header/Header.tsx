@@ -20,8 +20,6 @@ function Header() {
   );
   const userName = useSelector((state: { user: User }) => state.user.username);
 
-  const [showUserToggle, setShowUserToggle] = useState(false);
-
   const onClickLogoutButton = () => {
     dispatch(userActions.resetUser());
 
