@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import {
   toggleCartItemCheckButton,
@@ -13,6 +14,8 @@ import TrashIcon from "@/assets/images/trash.svg";
 import Checkbox from "@/components/Checkbox";
 import Button from "@/components/Button";
 
+import { PATH } from "@/constants";
+
 import {
   StyledCartContainer,
   StyledHr,
@@ -21,6 +24,11 @@ import {
 function ProductItem({ item }) {
   const { id, name, price, imgUrl, quantity, checked } = item;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleDetailClick = () => {
+    navigate(`${PATH.DETAIL}/${id}`);
+  };
 
   const handleChange = () => {
     dispatch(toggleCartItemCheckButton(id));
@@ -43,8 +51,12 @@ function ProductItem({ item }) {
       <StyledCartContainer>
         <div className="product-item__left">
           <Checkbox onChange={handleChange} checked={checked} />
-          <img src={imgUrl} alt={`${name} 장바구니 이미지`} />
-          <p>{name}</p>
+          <img
+            src={imgUrl}
+            alt={`${name} 장바구니 이미지`}
+            onClick={handleDetailClick}
+          />
+          <a onClick={handleDetailClick}>{name}</a>
         </div>
         <div className="product-item__right">
           <Button onClick={handleRemoveIconClick}>

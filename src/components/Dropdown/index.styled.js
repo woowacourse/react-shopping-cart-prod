@@ -50,7 +50,6 @@ const StyledDropdownContainer = styled.div`
   .dropdown-content a {
     color: ${({ theme }) => theme.colors.black1};
     padding: 12px 16px;
-    text-decoration: none;
     display: block;
 
     &:hover {

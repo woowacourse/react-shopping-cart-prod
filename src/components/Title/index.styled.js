@@ -7,6 +7,7 @@ const StyledTitle = styled.div`
   align-items: center;
 
   margin-top: 30px;
+  width: 100%;
 
   .pageTitle {
     font-size: ${({ theme }) => theme.fontSize.xl};
@@ -26,6 +27,16 @@ const StyledTitle = styled.div`
       width: 100%;
       border: 1px solid ${({ theme }) => theme.colors.gray1};
       margin-top: 16px;
+    }
+  }
+
+  .detailTitle {
+    font-size: ${({ theme }) => theme.fontSize.m};
+
+    + hr {
+      width: 100%;
+      border: 1px solid ${({ theme }) => theme.colors.gray1};
+      margin-bottom: 20px;
     }
   }
 `;

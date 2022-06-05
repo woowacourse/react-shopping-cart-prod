@@ -12,11 +12,20 @@ const StyledCartContainer = styled.div`
     img {
       width: 144px;
       height: 144px;
+
+      cursor: pointer;
     }
 
-    p {
+    a {
       font-size: ${({ theme }) => theme.fontSize.xs};
       height: 120px;
+
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+        text-underline-position: under;
+      }
     }
   }
 

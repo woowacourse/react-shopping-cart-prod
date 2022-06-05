@@ -7,6 +7,7 @@ import { addProductToCart } from "@/redux/modules/cartList";
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 import Button from "@/components/Button";
+import Title from "@/components/Title";
 
 import { BASE_URL, MESSAGE } from "@/constants";
 
@@ -39,8 +40,7 @@ function ProductDetail() {
   return (
     <StyledProductDetailContainer>
       <img src={productInfo.imgUrl} alt={`${productInfo.name}상세 페이지`} />
-      <div className="product__name">{productInfo.name}</div>
-      <hr />
+      <Title titleType="detailTitle">{productInfo.name}</Title>
       <div className="product__price__wrapper">
         <div className="product__price__label">금액</div>
         <div className="product__price">

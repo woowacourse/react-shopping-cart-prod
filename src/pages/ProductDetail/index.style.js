@@ -16,17 +16,6 @@ const StyledProductDetailContainer = styled.div`
     margin-bottom: 30px;
   }
 
-  .product__name {
-    font-size: ${({ theme }) => theme.fontSize.xl};
-    font-weight: 700;
-  }
-
-  hr {
-    width: 100%;
-    margin: 15px 0;
-    border: 1.5px solid ${({ theme }) => theme.colors.gray1};
-  }
-
   .product__price__wrapper {
     display: flex;
     width: 90%;
