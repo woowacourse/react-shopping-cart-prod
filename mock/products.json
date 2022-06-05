@@ -1,6 +1,6 @@
 [
   {
-    "sku": "83kW9mUr",
+    "id": "83kW9mUr",
     "name": "Apple Watch Series 5",
     "price": 120,
     "thumbnail_image": {
@@ -9,7 +9,7 @@
     }
   },
   {
-    "sku": "jBR5pmE5",
+    "id": "jBR5pmE5",
     "name": "Apple Watch Nike",
     "price": 400,
     "thumbnail_image": {
@@ -18,7 +18,7 @@
     }
   },
   {
-    "sku": "mUtrhmnU",
+    "id": "mUtrhmnU",
     "name": "Apple watch Aluminum",
     "price": 79,
     "thumbnail_image": {
@@ -27,7 +27,7 @@
     }
   },
   {
-    "sku": "HNVjlRyB",
+    "id": "HNVjlRyB",
     "name": "Apple Smart Watch",
     "price": 35,
     "thumbnail_image": {
@@ -36,7 +36,7 @@
     }
   },
   {
-    "sku": "qcm199ks",
+    "id": "qcm199ks",
     "name": "Microsoft Surface Book",
     "price": 550,
     "thumbnail_image": {
@@ -45,7 +45,7 @@
     }
   },
   {
-    "sku": "kyLQwT8F",
+    "id": "kyLQwT8F",
     "name": "Mackbook Pro Letina",
     "price": 250,
     "thumbnail_image": {
@@ -54,7 +54,7 @@
     }
   },
   {
-    "sku": "rhkx3vzt",
+    "id": "rhkx3vzt",
     "name": "Apple iMac",
     "price": 300,
     "thumbnail_image": {
@@ -63,7 +63,7 @@
     }
   },
   {
-    "sku": "K9yK6Qzj",
+    "id": "K9yK6Qzj",
     "name": "XBox Wireless Controller",
     "price": 180,
     "thumbnail_image": {
@@ -72,7 +72,7 @@
     }
   },
   {
-    "sku": "J9iFajxs",
+    "id": "J9iFajxs",
     "name": "XBox One X 1TB",
     "price": 100,
     "thumbnail_image": {
@@ -81,7 +81,7 @@
     }
   },
   {
-    "sku": "w4VYDK-7",
+    "id": "w4VYDK-7",
     "name": "Playstation 4",
     "price": 100,
     "thumbnail_image": {
@@ -90,7 +90,7 @@
     }
   },
   {
-    "sku": "4VkdTBDc",
+    "id": "4VkdTBDc",
     "name": "Controller for PlayStation 4",
     "price": 200,
     "thumbnail_image": {
@@ -99,7 +99,7 @@
     }
   },
   {
-    "sku": "JLCBWz_1",
+    "id": "JLCBWz_1",
     "name": "Wireless Playstation",
     "price": 150,
     "thumbnail_image": {
@@ -108,7 +108,7 @@
     }
   },
   {
-    "sku": "sNE14x4i",
+    "id": "sNE14x4i",
     "name": "Sony Series Headphones",
     "price": 100,
     "thumbnail_image": {
@@ -117,16 +117,16 @@
     }
   },
   {
-    "sku": "_FhduwwB",
-    "name": "Skullcandy Crusher Headphones",
+    "id": "_FhduwwB",
+    "name": "idllcandy Crusher Headphones",
     "price": 60,
     "thumbnail_image": {
-      "url": "https://develoger.kr/wp-content/uploads/Skullcandy-Crusher-Headphones.jpg",
-      "alt": "Skullcandy Crusher Headphones"
+      "url": "https://develoger.kr/wp-content/uploads/idllcandy-Crusher-Headphones.jpg",
+      "alt": "idllcandy Crusher Headphones"
     }
   },
   {
-    "sku": "OLMHb3_F",
+    "id": "OLMHb3_F",
     "name": "Bluetooth Headphones",
     "price": 100,
     "thumbnail_image": {
@@ -135,7 +135,7 @@
     }
   },
   {
-    "sku": "QdFzLvAs",
+    "id": "QdFzLvAs",
     "name": "Jabra Wireless Stereo Headset",
     "price": 80,
     "thumbnail_image": {
@@ -144,7 +144,7 @@
     }
   },
   {
-    "sku": "JIAI6rkN",
+    "id": "JIAI6rkN",
     "name": "Beats On-Ear Headphone",
     "price": 100,
     "thumbnail_image": {
@@ -153,7 +153,7 @@
     }
   },
   {
-    "sku": "i2NUcPfb",
+    "id": "i2NUcPfb",
     "name": "Digital Alarm Clock",
     "price": 30,
     "thumbnail_image": {
@@ -162,7 +162,7 @@
     }
   },
   {
-    "sku": "59TLiEMg",
+    "id": "59TLiEMg",
     "name": "Mkay Bluetooth Headphones",
     "price": 150,
     "thumbnail_image": {
@@ -171,7 +171,7 @@
     }
   },
   {
-    "sku": "puf32AKr",
+    "id": "puf32AKr",
     "name": "Wireless Bluetooth Headphones",
     "price": 60,
     "thumbnail_image": {

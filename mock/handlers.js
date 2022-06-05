@@ -47,6 +47,20 @@ function isValidUser({ email, password }, _db) {
 }
 
 export const handlers = [
+  // 상품 목록 불러오기
+  rest.get("/api/products", (req, res, ctx) => {
+    return res(ctx.json(products));
+  }),
+
+  // 상품 단건 조회
+  // rest.get("/api/products/:id", (req, res, ctx) => {
+  //   const { id: productId } = req.params;
+  //   const product = products.find(())
+  // });
+
+  // 장바구니 추가
+  // rest.
+
   // 회원가입
   rest.post("/api/customers", (req, res, ctx) => {
     const { email, username, password } = req.body;
@@ -315,9 +329,6 @@ export const handlers = [
   }),
 
   // product list를 요청한다 (상품 리스트 페이지)
-  rest.get("/api/products", (req, res, ctx) => {
-    return res(ctx.json(products));
-  }),
   // product id를 요청한다(상품 상세 페이지)
   rest.get("/product/:id", (req, res, ctx) => {
     return res(ctx.status(200));

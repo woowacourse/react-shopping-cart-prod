@@ -4,7 +4,7 @@ import reducer from "../redux/reducer";
 
 const productList = [
   {
-    sku: "83kW9mUr",
+    id: "83kW9mUr",
     name: "Apple Watch Series 5",
     price: 120,
     thumbnail_image: {
@@ -13,7 +13,7 @@ const productList = [
     },
   },
   {
-    sku: "jBR5pmE5",
+    id: "jBR5pmE5",
     name: "Apple Watch Nike",
     price: 400,
     thumbnail_image: {
@@ -24,7 +24,7 @@ const productList = [
 ];
 
 const productObjs = productList.reduce((acc, cur) => {
-  acc[cur.sku] = cur;
+  acc[cur.id] = cur;
   return acc;
 }, {});
 

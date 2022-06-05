@@ -20,7 +20,7 @@ const reducer = (state, { type, payload }) => {
       const newState = structuredClone(state);
       newState.productList = payload;
       newState.productObjs = newState.productList.reduce((acc, cur) => {
-        acc[cur.sku] = cur;
+        acc[cur.id] = cur;
         return acc;
       }, {});
       return newState;

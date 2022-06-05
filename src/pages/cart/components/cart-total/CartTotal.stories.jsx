@@ -21,7 +21,7 @@ const productList = productsFromJSON.map((product) => {
 });
 
 const productObjs = productList.reduce((acc, cur) => {
-  acc[cur.sku] = cur;
+  acc[cur.id] = cur;
   return acc;
 }, {});
 
@@ -31,7 +31,7 @@ const initialState = {
   cart: productList
     .splice(0, Math.ceil(productList.length / 2))
     .reduce((acc, product) => {
-      acc[product.sku] = { quantity: 1, selected: false };
+      acc[product.id] = { quantity: 1, selected: false };
       return acc;
     }, {}),
 };

@@ -9,7 +9,7 @@ import styles from "@home/components/product-item/product-item.module";
 import LoadingThumbnail from "@shared/loading-thumbnail/LoadingThumbnail";
 
 function ProductItem({
-  sku: productId,
+  id: productId,
   name,
   price,
   thumbnail_image: { url: thumbnailUrl, alt },

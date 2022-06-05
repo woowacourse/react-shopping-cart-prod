@@ -29,5 +29,5 @@ Primary.args = {
   onChecked: () => undefined,
   onQuantityChange: () => undefined,
   ...product,
-  id: product.sku,
+  id: product.id,
 };
