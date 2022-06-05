@@ -27,13 +27,13 @@ const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
       status: response.ok ? REQUEST_STATUS.SUCCESS : REQUEST_STATUS.FAIL,
       statusCode: response.status,
       header: responseHeader,
-      content: jsonBody,
+      body: jsonBody,
     };
   } catch (error) {
     return {
       status: REQUEST_STATUS.FAIL,
       statusCode: 500,
-      content: `서버와의 통신에 실패하였습니다.\n(${error.message})`,
+      body: { message: `서버와의 통신에 실패하였습니다.\n(${error.message})` },
     };
   }
 };
