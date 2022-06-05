@@ -1,13 +1,8 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-<<<<<<< HEAD
 import cartThunk from 'store/cart/thunk';
 import productThunk from 'store/product/thunk';
-=======
-import * as cartThunk from 'actions/cart/thunk';
-import * as productsThunk from 'actions/products/thunk';
->>>>>>> 68aa226472f257aae4442d058ba944e087c68854
 
 import useCart from 'hooks/useCart';
 
@@ -21,7 +16,6 @@ import * as S from './styles';
 export function ProductListPage() {
   const dispatch = useDispatch();
 
-<<<<<<< HEAD
   const productState = useSelector(({ product }) => product);
   const { productList, listAsyncState: productsAsyncState } = productState;
 
@@ -34,20 +28,6 @@ export function ProductListPage() {
 
   const handleAddCart = ({ id, image, name, price }) => {
     dispatch(cartThunk.addItem({ id, image, name, price })).then(() => {
-=======
-  const productState = useSelector((state) => state.products);
-  const { productList, listAsyncState: productsAsyncState } = productState;
-
-  const { state: cartState } = useCart();
-  const { cartItems, cartListAsyncState } = cartState;
-
-  useEffect(() => {
-    dispatch(productsThunk.getList());
-  }, []);
-
-  const handleAddCart = ({ id, image, name, price }) => {
-    dispatch(cartThunk.addList({ id, image, name, price })).then(() => {
->>>>>>> 68aa226472f257aae4442d058ba944e087c68854
       cartListAsyncState.isLoaded === false &&
         alert(`장바구니 상품 추가에 실패하였습니다.\n오류 내용 : ${cartListAsyncState.error}`);
     });
