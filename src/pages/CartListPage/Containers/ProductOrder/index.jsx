@@ -7,8 +7,13 @@ import { getNumberFormatter } from 'lib/formatterUtils';
 import * as S from './styles';
 
 function ProductOrder() {
+<<<<<<< HEAD
   const { computed } = useCart();
   const { checkedItemList } = computed;
+=======
+  const { state } = useCart();
+  const { checkedItemList } = state;
+>>>>>>> 68aa226472f257aae4442d058ba944e087c68854
 
   const totalAmount = checkedItemList.reduce(
     (previous, { price, quantity }) => previous + price * quantity,

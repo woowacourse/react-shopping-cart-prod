@@ -10,10 +10,17 @@ import ProductOrder from './Containers/ProductOrder';
 import * as S from './styles';
 
 export function CartListPage() {
+<<<<<<< HEAD
   const { cartState, computed } = useCart();
   const { items: cartItems } = cartState;
 
   const isSelectAllChecked = computed.checkedItemList.length > 0;
+=======
+  const { state } = useCart();
+  const { cartItems, isLoaded, checkedItemList } = state;
+
+  const isSelectAllChecked = checkedItemList.length > 0;
+>>>>>>> 68aa226472f257aae4442d058ba944e087c68854
 
   return (
     <>
@@ -29,7 +36,13 @@ export function CartListPage() {
           <FlexContainer>
             <Title type="content" size={14}>
               장바구니 상품{'\u00A0'}
+<<<<<<< HEAD
               <TextUnderline>{`(${cartItems.length}개 담김)`}</TextUnderline>
+=======
+              <TextUnderline>
+                {isLoaded === true ? `(${cartItems.length}개 담김)` : '(0개 담김)'}
+              </TextUnderline>
+>>>>>>> 68aa226472f257aae4442d058ba944e087c68854
             </Title>
 
             <CartItemList />

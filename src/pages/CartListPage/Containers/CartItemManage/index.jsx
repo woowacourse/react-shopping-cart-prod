@@ -11,11 +11,19 @@ import * as S from './styles';
 
 function CartItemManage({ isAllChecked }) {
   const dispatch = useDispatch();
+<<<<<<< HEAD
   const { cartActions, cartThunk, cartState, computed } = useCart();
   const { cartCurdAsyncState } = cartState;
 
   const handleAllCheckItem = () => {
     dispatch(cartActions.setAllItemCheck(!isAllChecked));
+=======
+  const { cartAction, cartThunk, state } = useCart();
+  const { checkedItemList, cartCurdAsyncState } = state;
+
+  const handleAllCheckItem = () => {
+    dispatch(cartAction.updateItemAllCheck(!isAllChecked));
+>>>>>>> 68aa226472f257aae4442d058ba944e087c68854
   };
 
   const handleRemoveItemList = async () => {
@@ -23,9 +31,15 @@ function CartItemManage({ isAllChecked }) {
       return;
     }
 
+<<<<<<< HEAD
     const checkedIdList = computed.checkedItemList.map(({ id }) => id);
 
     await dispatch(cartThunk.removeItems(checkedIdList));
+=======
+    const checkedIdList = checkedItemList.map(({ id }) => id);
+
+    await dispatch(cartThunk.removeItemList(checkedIdList));
+>>>>>>> 68aa226472f257aae4442d058ba944e087c68854
     cartCurdAsyncState.isLoaded
       ? alert('선택한 상품이 제거되었습니다.')
       : alert('선택한 상품 제거에 실패하였습니다.');
