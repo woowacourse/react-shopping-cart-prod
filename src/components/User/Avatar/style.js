@@ -4,18 +4,12 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  background-color: ${({ theme }) => theme.COLOR.PINK_300};
+  width: 70px;
+  height: 70px;
   cursor: pointer;
-  &:hover {
-    background-color: ${({ theme }) => theme.COLOR.PINK_200};
-  }
 `;
 
-export const Thumbnail = styled.span`
-  font-size: 32px;
-  font-weight: bold;
-  color: ${({ theme }) => theme.COLOR.WHITE};
+export const Thumbnail = styled.img`
+  width: 100%;
+  height: 100%;
 `;

@@ -1,16 +1,12 @@
 import * as Styled from './style';
-import PropTypes from 'prop-types';
+import avatarImg from 'assets/png/avatarImg.png';
 
-const Avatar = ({ name = '코카콜라' }) => {
+const Avatar = () => {
   return (
     <Styled.Wrapper>
-      <Styled.Thumbnail>{name[0]}</Styled.Thumbnail>
+      <Styled.Thumbnail src={avatarImg} />
     </Styled.Wrapper>
   );
-};
-
-Avatar.propTypes = {
-  name: PropTypes.string,
 };
 
 export default Avatar;
