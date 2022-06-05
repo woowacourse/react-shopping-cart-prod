@@ -2,20 +2,23 @@ import { REQUEST_STATUS, REQUEST_TIMEOUT } from 'constants/';
 
 import { getCookie } from './cookieUtils';
 
+const addAccessTokenHeader = (headers = {}) => {
+  headers.Authorization = `Bearer ${getCookie('accessToken')}`;
+};
+
 const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
   const fetchController = new AbortController();
   const newOption = { ...option, signal: fetchController.signal };
 
-  if (isAccessTokenUsed) {
-    newOption.headers = newOption.headers ? newOption.headers : {};
-    newOption.headers.Authorization = `Bearer ${getCookie('accessToken')}`;
-  }
+  isAccessTokenUsed === true && addAccessTokenHeader(newOption.headers);
 
   const timerID = setTimeout(() => fetchController.abort(), REQUEST_TIMEOUT);
 
   try {
     const response = await fetch(process.env.REACT_APP_API_URL + url, newOption);
-    const jsonBody = await response.json();
+    const responseBody = await response.text();
+
+    const jsonBody = responseBody ? JSON.parse(responseBody) : {};
     const responseHeader = Object.fromEntries(response.headers.entries());
 
     clearTimeout(timerID);
@@ -29,6 +32,7 @@ const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
   } catch (error) {
     return {
       status: REQUEST_STATUS.FAIL,
+      statusCode: 500,
       content: `서버와의 통신에 실패하였습니다.\n(${error.message})`,
     };
   }
