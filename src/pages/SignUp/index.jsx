@@ -4,25 +4,33 @@ import { useDispatch } from "react-redux";
 
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
+import useInput from "@/hooks/useInput";
+
 import Form from "@/components/Form";
 import Field from "@/components/Field";
 
 import {
   BASE_URL,
   MESSAGE,
+  INPUT_TYPE,
   STATUS,
   ERROR_STATUS,
   NICKNAME,
   PASSWORD,
-  REGULAR_EXPRESSION,
 } from "@/constants";
 
 import StyledSignupContainer from "@/pages/SignUp/index.style";
 
 function Signup() {
-  const [email, setEmail] = useState({ value: "", status: STATUS.READY });
-  const [nickname, setNickname] = useState({ value: "", status: STATUS.READY });
-  const [password, setPassword] = useState({ value: "", status: STATUS.READY });
+  const [email, onChangeEmail] = useInput(INPUT_TYPE.EMAIL, STATUS.READY);
+  const [nickname, onChangeNickname] = useInput(
+    INPUT_TYPE.NICKNAME,
+    STATUS.READY
+  );
+  const [password, onChangesetPassword] = useInput(
+    INPUT_TYPE.PASSWORD,
+    STATUS.READY
+  );
   const [passwordConfirm, setPasswordConfirm] = useState({
     value: "",
     status: STATUS.READY,
@@ -44,42 +52,6 @@ function Signup() {
     }
     setPreventFormSubmit(true);
   }, [email, nickname, password, passwordConfirm]);
-
-  const validateEmail = (e) => {
-    const { value } = e.target;
-    setEmail((prev) => ({ ...prev, value: value }));
-
-    if (!value.match(REGULAR_EXPRESSION.EMAIL)) {
-      setEmail((prev) => ({ ...prev, status: ERROR_STATUS.EMAIL_RULE }));
-      return;
-    }
-
-    setEmail((prev) => ({ ...prev, status: STATUS.FULFILLED }));
-  };
-
-  const validateNickname = (e) => {
-    const { value } = e.target;
-    setNickname((prev) => ({ ...prev, value: value }));
-
-    if (!value.match(REGULAR_EXPRESSION.NICKNAME)) {
-      setNickname((prev) => ({ ...prev, status: ERROR_STATUS.WRONG_LENGTH }));
-      return;
-    }
-
-    setNickname((prev) => ({ ...prev, status: STATUS.FULFILLED }));
-  };
-
-  const validatePassword = (e) => {
-    const { value } = e.target;
-    setPassword((prev) => ({ ...prev, value: value }));
-
-    if (!value.match(REGULAR_EXPRESSION.PASSWORD)) {
-      setPassword((prev) => ({ ...prev, status: ERROR_STATUS.PASSWORD_RULE }));
-      return;
-    }
-
-    setPassword((prev) => ({ ...prev, status: STATUS.FULFILLED }));
-  };
 
   const validatePasswordConfirm = (e) => {
     const { value } = e.target;
@@ -130,7 +102,7 @@ function Signup() {
           type="email"
           placeholder="woowa@gmail.com"
           value={email.value}
-          onChange={validateEmail}
+          onChange={onChangeEmail}
           errorMessage={email.status}
           required
         />
@@ -140,7 +112,7 @@ function Signup() {
           minLength={NICKNAME.MIN_LENGTH}
           maxLength={NICKNAME.MAX_LENGTH}
           value={nickname.value}
-          onChange={validateNickname}
+          onChange={onChangeNickname}
           errorMessage={nickname.status}
           required
         />
@@ -151,7 +123,7 @@ function Signup() {
           minLength={PASSWORD.MIN_LENGTH}
           maxLength={PASSWORD.MAX_LENGTH}
           value={password.value}
-          onChange={validatePassword}
+          onChange={onChangesetPassword}
           errorMessage={password.status}
           required
         />

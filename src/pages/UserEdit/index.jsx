@@ -5,6 +5,8 @@ import axios from "axios";
 
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
+import useInput from "@/hooks/useInput";
+
 import Form from "@/components/Form";
 import Field from "@/components/Field";
 
@@ -15,22 +17,25 @@ import {
   BASE_URL,
   PATH,
   STATUS,
+  INPUT_TYPE,
   ERROR_STATUS,
   MESSAGE,
   NICKNAME,
   PASSWORD,
-  REGULAR_EXPRESSION,
 } from "@/constants";
 
 import StyledUserEditContainer from "@/pages/UserEdit/index.style";
 
 function UserEdit() {
   const [email, setEmail] = useState({ value: "", status: STATUS.FULFILLED });
-  const [nickname, setNickname] = useState({
-    value: "",
-    status: STATUS.FULFILLED,
-  });
-  const [password, setPassword] = useState({ value: "", status: STATUS.READY });
+  const [nickname, onChangeNickname, setNickname] = useInput(
+    INPUT_TYPE.NICKNAME,
+    STATUS.FULFILLED
+  );
+  const [password, onChangePassword] = useInput(
+    INPUT_TYPE.PASSWORD,
+    STATUS.READY
+  );
   const [passwordConfirm, setPasswordConfirm] = useState({
     value: "",
     status: STATUS.READY,
@@ -58,34 +63,9 @@ function UserEdit() {
     }
   };
 
-  const validateNickname = (e) => {
-    const { value } = e.target;
-    setNickname((prev) => ({ ...prev, value: value }));
-
-    if (!value.match(REGULAR_EXPRESSION.NICKNAME)) {
-      setNickname((prev) => ({ ...prev, status: ERROR_STATUS.WRONG_LENGTH }));
-      return;
-    }
-
-    setNickname((prev) => ({ ...prev, status: STATUS.FULFILLED }));
-  };
-
-  const validatePassword = (e) => {
-    const { value } = e.target;
-    setPassword((prev) => ({ ...prev, value: value }));
-
-    if (!value.match(REGULAR_EXPRESSION.PASSWORD)) {
-      setPassword((prev) => ({ ...prev, status: ERROR_STATUS.PASSWORD_RULE }));
-      return;
-    }
-
-    setPassword((prev) => ({ ...prev, status: STATUS.FULFILLED }));
-  };
-
   const validatePasswordConfirm = (e) => {
     const { value } = e.target;
     setPasswordConfirm((prev) => ({ ...prev, value: value }));
-    console.log(value, password.value, value === password.value);
     if (value !== password.value) {
       setPasswordConfirm((prev) => ({
         ...prev,
@@ -176,7 +156,7 @@ function UserEdit() {
           value={nickname.value}
           minLength={NICKNAME.MIN_LENGTH}
           maxLength={NICKNAME.MAX_LENGTH}
-          onChange={validateNickname}
+          onChange={onChangeNickname}
           errorMessage={nickname.status}
         />
         <Field
@@ -184,7 +164,7 @@ function UserEdit() {
           type="password"
           minLength={PASSWORD.MIN_LENGTH}
           maxLength={PASSWORD.MAX_LENGTH}
-          onChange={validatePassword}
+          onChange={onChangePassword}
           errorMessage={password.status}
         />
         <Field
