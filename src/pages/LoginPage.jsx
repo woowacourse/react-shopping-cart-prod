@@ -53,10 +53,10 @@ function LoginPage() {
           onChange={handleUserInfoChange(USER_INFO_KEY.EMAIL)}
         />
         <Input
-          labelText="비밀번호"
+          labelText="비밀번호 -  "
           type="password"
           value={password}
-          placeholder="비밀번호를 입력해주세요"
+          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
           onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD)}
         />
         <Button text="로그인" />
