@@ -12,17 +12,10 @@ function ProductItem({
   id: productId,
   name,
   price,
-  thumbnail_image: { url: thumbnailUrl, alt },
+  thumbnailImage: { url: thumbnailUrl, alt },
   className,
 }) {
   const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
-
-  const existInCart = (cart, id) => {
-    const isInclude = Object.keys(cart).includes(`${id}`);
-    return isInclude;
-  };
-
   const handleClick = () => {
     dispatch(createAction(ACTION_TYPE.ADD_PRODUCT_TO_CART, productId));
   };
@@ -46,7 +39,6 @@ function ProductItem({
           <div className="lRight">
             <ImageButton
               onClick={handleClick}
-              included={existInCart(cart, productId)}
               className={cn("addToCartBtn", styles.addToCartBtn)}
             >
               <Cart width="36px" height="36px" fill="#00cc00" />
