@@ -80,7 +80,7 @@ const useCart = () => {
     const { productData, quantity } = cart.find(
       ({ productData }) => productData.id === productId,
     );
-    return total + productData.price * quantity;
+    return total + productData.price * Math.min(quantity, productData.stock);
   }, 0);
 
   return {

@@ -6,11 +6,13 @@ import { CheckBox, Counter, Icon, Image } from 'components/common';
 
 import * as S from 'components/cart/CartProductCard/CartProductCard.style';
 
+import { ERROR_MESSAGES, WARNING_MESSAGES } from 'constants/messages';
+
 import { Position } from 'styles/GlobalStyles';
 import { color } from 'styles/Theme.js';
 
 function CartProductCard({
-  product: { id: productId, name, price, imageURL },
+  product: { id: productId, name, price, imageURL, stock },
   quantity,
 }) {
   const {
@@ -21,15 +23,38 @@ function CartProductCard({
     toggleCheck,
   } = useCart();
 
-  const handleQuantityIncrement = useCallback(
-    () => incrementCartProduct(productId, quantity),
-    [quantity],
-  );
+  const availableProductQuantity = Math.min(stock, quantity);
+  const errorMessage = useMemo(() => {
+    if (stock === 0) {
+      return ERROR_MESSAGES.OUT_OF_STOCK;
+    }
+    if (stock <= quantity) {
+      return WARNING_MESSAGES.MAX_QUANTITY;
+    }
+    return '';
+  }, [stock, quantity]);
 
-  const handleQuantityDecrement = useCallback(
-    () => decrementCartProduct(productId, quantity),
-    [quantity],
-  );
+  const handleQuantityIncrement = useCallback(() => {
+    if (availableProductQuantity === stock) {
+      alert(WARNING_MESSAGES.MAX_QUANTITY);
+      return;
+    }
+    incrementCartProduct(productId, availableProductQuantity);
+  }, [quantity]);
+
+  const handleQuantityDecrement = useCallback(() => {
+    if (
+      availableProductQuantity !== quantity &&
+      !window.confirm(
+        `기존에 장바구니에 추가된 수량은 ${quantity}개 입니다. 수량을 ${
+          availableProductQuantity - 1
+        }개로 조정하시겠습니까?`,
+      )
+    ) {
+      return;
+    }
+    decrementCartProduct(productId, availableProductQuantity);
+  }, [quantity]);
 
   const handleProductDelete = useCallback(() => deleteProduct([productId]), []);
 
@@ -51,11 +76,12 @@ function CartProductCard({
         </Position>
         <S.Name>{name}</S.Name>
         <Counter
-          count={quantity}
+          count={availableProductQuantity}
           onIncrement={handleQuantityIncrement}
           onDecrement={handleQuantityDecrement}
         />
-        <S.Price>{price * quantity}원</S.Price>
+        <S.ErrorMessage>{errorMessage}</S.ErrorMessage>
+        <S.Price>{price * availableProductQuantity}원</S.Price>
       </S.Description>
     </S.Container>
   );

@@ -17,7 +17,8 @@ export const Description = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
-  width: 100%;
+  gap: 10px;
+  width: 60%;
 `;
 
 export const Button = styled.button`
@@ -29,6 +30,12 @@ export const Button = styled.button`
 export const Name = styled.h1`
   font-size: 20px;
   align-self: flex-start;
+`;
+
+export const ErrorMessage = styled.p`
+  color: ${({ theme }) => theme.colorConfig.warning};
+  height: 20px;
+  font-weight: bold;
 `;
 
 export const Price = styled.p``;
