@@ -24,49 +24,66 @@ export const handleGetShoppingCartRequest = (_, res, ctx) => {
 };
 
 const findProductData = (productId) => data.products.find(({ id }) => id === productId);
+const EXCEED_QUANTITY = (stock, quantity) =>
+  `장바구니에 추가할 수 있는 최대 수량을 초과했습니다. 추가 가능한 최대 수량은 ${Math.max(
+    stock - quantity,
+    0,
+  )}개입니다.`;
+
+const updateCartProductQuantity = (productId, quantity) => {
+  const currentShoppingCart = getCart();
+  const productIndex = findProductCartIndex(currentShoppingCart, productId);
+  const { stock } = findProductData(productId);
+  if (quantity > stock) {
+    throw new Error(EXCEED_QUANTITY(stock, quantity));
+  }
+
+  if (productIndex < 0) {
+    throw new Error('존재하지 않는 상품입니다.');
+  }
+
+  const targetProduct = currentShoppingCart[productIndex];
+
+  targetProduct.quantity = quantity;
+  currentShoppingCart[productIndex] = targetProduct;
+
+  setCart(currentShoppingCart);
+  return currentShoppingCart;
+};
 
 export const handlePostShoppingCartRequest = (req, res, ctx) => {
   const currentShoppingCart = getCart();
   const { productId, quantity } = req.body;
-
   const cartProductIndex = findProductCartIndex(currentShoppingCart, productId);
 
-  if (cartProductIndex >= 0) {
-    const cartProduct = currentShoppingCart[cartProductIndex];
-    const newCartProduct = { ...cartProduct, quantity: cartProduct.quantity + quantity };
-    currentShoppingCart[cartProductIndex] = newCartProduct;
-  } else {
-    const newCartProduct = {};
-    newCartProduct.productData = findProductData(productId);
-    newCartProduct.quantity = quantity;
-    currentShoppingCart.push(newCartProduct);
+  const productData = findProductData(productId);
+
+  if (cartProductIndex < 0) {
+    const newProduct = { productData, quantity };
+    currentShoppingCart.push(newProduct);
+
+    setCart(currentShoppingCart);
+    return res(ctx.json(currentShoppingCart));
   }
 
-  setCart(currentShoppingCart);
+  const { quantity: prevQuantity } = currentShoppingCart[cartProductIndex];
 
-  return res(ctx.json(currentShoppingCart));
+  try {
+    const newCart = updateCartProductQuantity(productId, prevQuantity + quantity);
+    return res(ctx.json(newCart));
+  } catch ({ message }) {
+    return res(ctx.status(400), ctx.json({ message }));
+  }
 };
 
 export const handlePatchShoppingCartRequest = (req, res, ctx) => {
   const { productId, quantity } = req.body;
-  const currentShoppingCart = getCart();
-
-  const productIndex = findProductCartIndex(currentShoppingCart, productId);
-
-  if (!currentShoppingCart.length || productIndex < 0) {
-    return res(
-      ctx.status(404, '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.'),
-    );
+  try {
+    const newCart = updateCartProductQuantity(productId, quantity);
+    return res(ctx.json(newCart));
+  } catch ({ message }) {
+    ctx.status(400, ctx.json({ message }));
   }
-
-  const targetProduct = currentShoppingCart[productIndex];
-  targetProduct.quantity = quantity;
-
-  currentShoppingCart[productIndex] = targetProduct;
-
-  setCart(currentShoppingCart);
-
-  return res(ctx.json(currentShoppingCart));
 };
 
 export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
