@@ -15,19 +15,19 @@ import actionTypes from '../store/user/user.actions';
 function ModifyPasswordPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [password, setPassword] = useState({
+  const [passwords, setPasswords] = useState({
     prevPassword: '',
     newPassword: '',
     newPasswordConfirm: '',
   });
-  const handleUserInfoChange = useUserForm(setPassword);
-  const { prevPassword, newPassword, newPasswordConfirm } = password;
+  const handleUserInfoChange = useUserForm(setPasswords);
+  const { prevPassword, newPassword, newPasswordConfirm } = passwords;
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      validPasswordInfo(password);
+      validPasswordInfo(newPassword, newPasswordConfirm);
       await axios.patch(SERVER_PATH.PASSWORD, { prevPassword, newPassword });
       dispatch({ type: actionTypes.DELETE_TOKEN });
       alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);

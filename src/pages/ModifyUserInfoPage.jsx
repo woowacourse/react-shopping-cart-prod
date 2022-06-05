@@ -22,7 +22,7 @@ function ModifyUserInfoPage() {
     const { nickname } = userInfo;
 
     try {
-      validUserInfo(userInfo);
+      validUserInfo(nickname);
       await axios.patch(SERVER_PATH.USER, { nickname });
       alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
       navigate(ROUTES_PATH.HOME);
