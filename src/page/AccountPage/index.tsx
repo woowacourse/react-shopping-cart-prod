@@ -37,7 +37,7 @@ const AccountPage = () => {
   }, []);
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (isLoading && !isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
     }
