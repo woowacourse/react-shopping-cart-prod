@@ -20,28 +20,26 @@ const isValidPasswordConfirm = (password, passwordConfirm) => {
   return password === passwordConfirm;
 };
 
-// 각자 폼에 관련 validation
-
 const validSignUpInfo = (signUpInfo) => {
   const { email, nickname, password, passwordConfirm } = signUpInfo;
 
   if (!isValidEmail(email)) {
-    throw new Error(MESSAGE.ERROR_EMAIL);
+    throw new Error(MESSAGE.NOT_AN_EMAIL_FORMAT);
   }
   if (!isValidNickname(nickname)) {
-    throw new Error(MESSAGE.ERROR_NICKNAME);
+    throw new Error(MESSAGE.INCORRECT_NICKNAME);
   }
   if (!isValidPassword(password)) {
-    throw new Error(MESSAGE.ERROR_PASSWORD);
+    throw new Error(MESSAGE.NOT_A_PASSWORD_FORMAT);
   }
   if (!isValidPasswordConfirm(password, passwordConfirm)) {
-    throw new Error(MESSAGE.ERROR_PASSWORD_CONFIRM);
+    throw new Error(MESSAGE.PASSWORD_DOES_NOT_MATCH);
   }
 };
 
 const validLoginInfo = (email) => {
   if (!isValidEmail(email)) {
-    throw new Error(MESSAGE.ERROR_EMAIL);
+    throw new Error(MESSAGE.NOT_AN_EMAIL_FORMAT);
   }
 };
 
@@ -49,17 +47,17 @@ const validPasswordInfo = (passwordInfo) => {
   const { newPassword, newPasswordConfirm } = passwordInfo;
 
   if (!isValidPassword(newPassword)) {
-    throw new Error(MESSAGE.ERROR_PASSWORD);
+    throw new Error(MESSAGE.NOT_A_PASSWORD_FORMAT);
   }
   if (!isValidPasswordConfirm(newPassword, newPasswordConfirm)) {
-    throw new Error(MESSAGE.ERROR_PASSWORD_CONFIRM);
+    throw new Error(MESSAGE.PASSWORD_DOES_NOT_MATCH);
   }
 };
 
 const validUserInfo = (userInfo) => {
   const { nickname } = userInfo;
   if (!isValidNickname(nickname)) {
-    throw new Error(MESSAGE.ERROR_NICKNAME);
+    throw new Error(MESSAGE.INCORRECT_NICKNAME);
   }
 };
 
