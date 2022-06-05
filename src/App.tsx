@@ -11,9 +11,33 @@ import PATH from 'constants/path';
 import ProductPage from 'pages/ProductPage/ProductPage';
 import SignupPage from 'pages/SignupPage/SignupPage';
 import { ThemeProvider } from 'styled-components';
+import authAPI from 'apis/auth';
+import { isLogin } from 'utils/auth';
 import theme from 'styles/theme';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { userActions } from 'redux/actions';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (isLogin()) {
+      setUserInfo();
+    }
+  }, []);
+
+  const setUserInfo = async () => {
+    try {
+      const userInfo = await authAPI.getUserInfo();
+
+      dispatch(userActions.setUser(userInfo));
+    } catch (error) {
+      localStorage.removeItem('accessToken');
+      sessionStorage.removeItem('accessToken');
+    }
+  };
+
   return (
     <>
       <ThemeProvider theme={theme}>
