@@ -76,13 +76,9 @@ const SignUp = () => {
       timer = setTimeout(async () => {
         timer = null;
         const { content } = await requestCheckDuplicatedId(userId);
-        if (!content.isUnique) {
-          dispatch(snackbar.pushMessageSnackbar('중복된 아이디입니다!'));
-          setCheckDuplicatedId(content.isUnique);
-          return;
-        }
 
-        dispatch(snackbar.pushMessageSnackbar('사용가능한 아이디입니다!'));
+        const message = content.isUnique ? '사용가능한 아이디입니다!' : '중복된 아이디입니다!';
+        dispatch(snackbar.pushMessageSnackbar(message));
         setCheckDuplicatedId(content.isUnique);
       }, 1000);
     };
@@ -97,13 +93,11 @@ const SignUp = () => {
       age: userAge,
     });
 
-    if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(snackbar.pushMessageSnackbar('회원가입에 성공하였습니다!'));
-      navigate('/');
-      return;
-    }
-
-    dispatch(snackbar.pushMessageSnackbar('회원가입에 실패하였습니다!'));
+    const message =
+      response.status === 비동기_요청.SUCCESS
+        ? '회원가입에 성공하였습니다!'
+        : '회원가입에 실패하였습니다!';
+    dispatch(snackbar.pushMessageSnackbar(message));
     navigate('/');
   };
 

@@ -38,11 +38,14 @@ const Login = () => {
 
     if (response.status === 비동기_요청.SUCCESS) {
       dispatch(setUserData(response));
-      dispatch(snackbar.pushMessageSnackbar('로그인에 성공하였습니다'));
-      navigate('/');
-      return;
     }
-    dispatch(snackbar.pushMessageSnackbar('로그인에 실패하였습니다'));
+
+    const message =
+      response.status === 비동기_요청.SUCCESS
+        ? '로그인에 성공하였습니다'
+        : '로그인에 실패하였습니다';
+
+    dispatch(snackbar.pushMessageSnackbar(message));
     navigate('/');
   };
 
