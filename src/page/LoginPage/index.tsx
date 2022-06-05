@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 import Container from 'components/@shared/Container';
 import { setCookie } from 'utils/cookie';
 
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
 import useSnackbar from 'hooks/useSnackbar';
@@ -21,10 +21,11 @@ import { authApiClient } from 'utils/apiClient';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { state: userEmail } = useLocation();
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
   const [isFulfilled, setIsFulfilled] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(userEmail || '');
   const [password, setPassword] = useState('');
 
   const [renderSnackbar] = useSnackbar();

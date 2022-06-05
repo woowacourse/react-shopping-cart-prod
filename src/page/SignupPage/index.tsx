@@ -53,7 +53,7 @@ const SignupPage = () => {
       });
 
       renderSnackbar(`${response.data.nickname}${MESSAGE.SIGNUP_SUCCESS}`, 'SUCCESS');
-      navigate('/login');
+      navigate('/login', { state: response.data.email });
     } catch (error) {
       renderSnackbar(`${email}${MESSAGE.SIGNUP_FAILURE}`, 'FAILED');
     }
