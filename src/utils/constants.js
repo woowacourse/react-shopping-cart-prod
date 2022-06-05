@@ -38,7 +38,7 @@ const MESSAGE = {
   ADD_CART_SUCCESS: '상품을 장바구니에 추가하였습니다.',
   REMOVE_CART_SUCCESS: '상품을 장바구니에서 제거하였습니다.',
   SIGNUP_SUCCESS: '님 가입해주셔서 감사합니다 👋 로그인해주세요',
-  SIGNUP_FAILURE: '은 이미 존재하는 이메일입니다. 다른 이메일을 입력해주세요.',
+  SIGNUP_FAILURE: '회원가입에 실패하였습니다. 다시 시도해주세요.',
 };
 
 export { PRODUCT, MODAL, ROUTES, LINK, MESSAGE };
