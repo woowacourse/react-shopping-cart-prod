@@ -2,7 +2,7 @@ import { API_ENDPOINT } from 'api/constants';
 import customInstance from 'api/customInstance';
 
 export const sendCheckEmailDuplicateRequest = async (email) => {
-  const response = await customInstance.get(API_ENDPOINT.USER, {
+  const response = await customInstance.get(API_ENDPOINT.EMAIL_CHECK, {
     params: {
       email,
     },
@@ -14,7 +14,7 @@ export const sendCheckEmailDuplicateRequest = async (email) => {
 };
 
 export const sendAddUserRequest = async (userData) => {
-  await customInstance.post(API_ENDPOINT.USER, userData);
+  await customInstance.post(API_ENDPOINT.MEMBERS, userData);
 };
 
 export const sendLoginRequest = async (loginData) => {

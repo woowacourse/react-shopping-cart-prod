@@ -4,7 +4,7 @@ import customInstance from 'api/customInstance';
 import { ALERT_MESSAGES } from 'constants/messages';
 
 export const sendAddToCartRequest = async (productId, quantity) => {
-  const response = await customInstance.post(API_ENDPOINT.SHOPPING_CART, {
+  const response = await customInstance.post(API_ENDPOINT.CARTS_PRODUCTS, {
     productId,
     quantity,
   });
@@ -17,7 +17,7 @@ export const sendAddToCartRequest = async (productId, quantity) => {
 };
 
 export const sendGetCartRequest = async () => {
-  const response = await customInstance.get(API_ENDPOINT.SHOPPING_CART);
+  const response = await customInstance.get(API_ENDPOINT.CARTS);
 
   const cart = response.data;
 
@@ -25,7 +25,7 @@ export const sendGetCartRequest = async () => {
 };
 
 export const sendUpdateCartProductQuantityRequest = async (productId, quantity) => {
-  const response = await customInstance.patch(API_ENDPOINT.SHOPPING_CART, {
+  const response = await customInstance.patch(API_ENDPOINT.CARTS_PRODUCTS, {
     productId,
     quantity,
   });
@@ -43,7 +43,11 @@ export const sendDeleteCartProductRequest = async (productIdArray) => {
 };
 
 const sendCartProductDeleteRequest = async (res, productId) => {
-  res = await customInstance.delete(`${API_ENDPOINT.SHOPPING_CART}/${productId}`);
+  res = await customInstance.delete(`${API_ENDPOINT.CARTS_PRODUCTS}`, {
+    params: {
+      id: productId,
+    },
+  });
 
   return res;
 };

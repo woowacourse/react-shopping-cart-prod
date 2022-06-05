@@ -3,10 +3,12 @@ export const API_URL = process.env.REACT_APP_API_URL;
 export const PRODUCT_LIST_PAGE_LIMIT = 12;
 
 export const API_ENDPOINT = {
-  PRODUCTS: '/products',
-  SHOPPING_CART: '/shopping-cart',
-  USER: '/api/members',
+  PRODUCTS: '/api/products',
+  CARTS: '/api/carts',
+  CARTS_PRODUCTS: '/api/carts/products',
   LOGIN: '/api/login',
+  MEMBERS: '/api/members',
+  EMAIL_CHECK: '/api/members/email-check',
   AUTH: {
     ME: '/api/members/auth/me',
     PASSWORD: '/api/members/auth/password',
