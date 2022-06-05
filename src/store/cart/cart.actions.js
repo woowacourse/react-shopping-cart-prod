@@ -44,7 +44,7 @@ const deleteCartItemAsync = (id) => async (dispatch) => {
 const updateItemQuantityAsync = (id, quantity) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.UPDATE_ITEM_QUANTITY });
-    const { data } = await axios.put(`${SERVER_PATH.CART}/${id}`, { quantity });
+    const { data } = await axios.patch(`${SERVER_PATH.CART}/${id}`, { quantity });
     dispatch({
       type: actionTypes.UPDATE_ITEM_QUANTITY_SUCCESS,
       payload: data,

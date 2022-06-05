@@ -39,7 +39,7 @@ const handlers = [
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.put(`${SERVER_PATH.CART}/:id`, (req, res, ctx) => {
+  rest.patch(`${SERVER_PATH.CART}/:id`, (req, res, ctx) => {
     const id = +req.params.id;
     const quantity = +req.body.quantity;
     const cartItemIndex = cartList.findIndex((cartItem) => cartItem.id === id);
