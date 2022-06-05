@@ -8,18 +8,12 @@ const getProductList = () => async (dispatch) => {
   });
 
   const response = await requestGetProductList();
-
-  if (response.status === 비동기_요청.FAILURE) {
-    dispatch({
-      type: 상품리스트_불러오기_액션.FAILURE,
-      payload: response.content,
-    });
-
-    return;
-  }
-
+  const currentType =
+    response.status === 비동기_요청.SUCCESS
+      ? 상품리스트_불러오기_액션.SUCCESS
+      : 상품리스트_불러오기_액션.FAILURE;
   dispatch({
-    type: 상품리스트_불러오기_액션.SUCCESS,
+    type: currentType,
     payload: response.content,
   });
 };
@@ -30,18 +24,13 @@ const getProduct = (id) => async (dispatch) => {
   });
 
   const response = await requestGetProduct(id);
-
-  if (response.status === 비동기_요청.FAILURE) {
-    dispatch({
-      type: 상품_불러오기_액션.FAILURE,
-      payload: response.content,
-    });
-
-    return;
-  }
+  const currentType =
+    response.status === 비동기_요청.SUCCESS
+      ? 상품_불러오기_액션.SUCCESS
+      : 상품_불러오기_액션.FAILURE;
 
   dispatch({
-    type: 상품_불러오기_액션.SUCCESS,
+    type: currentType,
     payload: response.content,
   });
 };

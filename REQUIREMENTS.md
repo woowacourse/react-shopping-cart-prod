@@ -12,8 +12,8 @@
 - [ ] react-persist 사용해서 userId 새로고침해도 날아가지 않도록 하기
 - [ ] 로그인 성공 후 내 정보 조회 호출하여 userId 받아오기
 - [ ] 중첩 Route를 활용해서 Router 방법 바꿔보기 (Outlet)
-- [ ] actions/cart 에서의 foundExistProduct vs cartItem vs targetProduct 네이밍 수정하기
-- [ ] actions/products 에서의 삼항연산자 사용해보기
+- [x] actions/cart 에서의 foundExistProduct vs cartItem vs targetProduct 네이밍 수정하기
+- [x] actions/products 에서의 삼항연산자 사용해보기
 - [ ] pages/SignUp 에서 삼항연산자 사용해서 snackbar message 보여주기
 - [ ] -> if 문으로 된 곳들 삼항 연산자들 사용해보기
 - [ ] pages/Cart에서의 checkBox reduce 또는 map 사용해보기
