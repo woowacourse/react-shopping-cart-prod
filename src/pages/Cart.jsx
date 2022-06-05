@@ -27,14 +27,15 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let calculateTotalPrice = 0;
-
-    checkboxItems.forEach((productId) => {
-      const currentProduct = cartList.find((checkedProduct) => checkedProduct.id === productId);
-      calculateTotalPrice += currentProduct.price * currentProduct.count;
-    });
-
-    setTotalPrice(calculateTotalPrice);
+    setTotalPrice(
+      cartList.length > 0
+        ? cartList
+            .filter((item) => checkboxItems.includes(item.id))
+            .reduce((prev, cur) => {
+              return prev + cur.price * cur.count;
+            }, 0)
+        : 0,
+    );
   }, [cartList, checkboxItems]);
 
   const deleteSelectedItem = () => {

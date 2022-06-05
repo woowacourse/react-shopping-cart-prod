@@ -16,7 +16,7 @@
 - [x] actions/products 에서의 삼항연산자 사용해보기
 - [x] pages/SignUp 에서 삼항연산자 사용해서 snackbar message 보여주기
 - [x] -> if 문으로 된 곳들 삼항 연산자들 사용해보기
-- [ ] pages/Cart에서의 checkBox reduce 또는 map 사용해보기
+- [x] pages/Cart에서의 checkBox reduce 또는 map 사용해보기
 
 ## 추가 기능
 
