@@ -1,13 +1,8 @@
 import { InputContainer, Message } from './styles';
 
-interface InputProps {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
   label: string;
-  type?: string;
-  value: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  maxLength?: number;
-  disabled?: boolean;
   isValid?: boolean;
   message?: string;
 }
