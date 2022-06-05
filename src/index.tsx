@@ -6,14 +6,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { initMSW } from 'mocks/handlers/authHandlers';
 
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('./mocks/browser');
+
   worker.start({
     onUnhandledRequest: 'bypass',
   });
-  initMSW();
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
