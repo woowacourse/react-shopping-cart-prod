@@ -29,10 +29,14 @@ const cartReducer = (state = initialState, action) => {
         payload: { cart },
       } = action;
 
+      const checkedProductList = cart
+        .filter(({ productData }) => productData.stock > 0)
+        .map(({ productData }) => productData.id);
+
       return {
         ...state,
         cart,
-        checkedProductList: cart.map(({ productData }) => productData.id),
+        checkedProductList,
         isLoading: false,
       };
     }

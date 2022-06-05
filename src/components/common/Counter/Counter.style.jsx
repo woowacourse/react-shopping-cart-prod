@@ -4,19 +4,22 @@ export const CounterContainer = styled.div`
   display: flex;
   align-items: center;
   border-radius: 4px;
-  border: 1px solid ${({ theme }) => theme.colorConfig.primary};
+  border: 1px solid
+    ${({ theme, disabled }) =>
+      disabled ? theme.colorConfig.secondary : theme.colorConfig.primary};
+  color: ${({ theme, disabled }) => disabled && theme.colorConfig.secondary};
 `;
 
 export const CounterButton = styled.button`
   width: 30px;
   background-color: transparent;
   font-weight: bold;
-  cursor: pointer;
   padding: 10px;
   border: none;
+  cursor: ${({ disabled }) => !disabled && 'pointer'};
 
   &:hover {
-    opacity: 0.5;
+    opacity: ${({ disabled }) => !disabled && '0.5'};
   }
 `;
 

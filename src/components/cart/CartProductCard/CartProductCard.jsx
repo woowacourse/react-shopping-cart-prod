@@ -62,9 +62,11 @@ function CartProductCard({
 
   const handleCheckBoxClick = useCallback(() => toggleCheck(productId), []);
 
+  const isOutOfStock = availableProductQuantity === 0;
+
   return (
     <S.Container>
-      <CheckBox checked={checked} onClick={handleCheckBoxClick} />
+      <CheckBox checked={checked} onClick={handleCheckBoxClick} disabled={isOutOfStock} />
 
       <Image src={imageURL} width="150px" />
 
@@ -79,6 +81,7 @@ function CartProductCard({
           count={availableProductQuantity}
           onIncrement={handleQuantityIncrement}
           onDecrement={handleQuantityDecrement}
+          disabled={isOutOfStock}
         />
         <S.ErrorMessage>{errorMessage}</S.ErrorMessage>
         <S.Price>{price * availableProductQuantity}원</S.Price>

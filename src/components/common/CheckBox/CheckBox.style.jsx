@@ -10,9 +10,11 @@ export const CustomCheckBox = styled.div`
   justify-content: center;
   align-items: center;
 
-  border: 1px solid ${({ theme }) => theme.colorConfig.primary};
+  border: 1px solid
+    ${({ theme, disabled }) =>
+      disabled ? theme.colorConfig.secondary : theme.colorConfig.primary};
   border-radius: 3px;
 
-  background-color: ${({ checked, theme }) => checked && theme.colorConfig.primary};
-  cursor: pointer;
+  background-color: ${({ theme, checked }) => checked && theme.colorConfig.primary};
+  cursor: ${({ disabled }) => !disabled && 'pointer'};
 `;
