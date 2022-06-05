@@ -14,16 +14,26 @@ const cartDB = () => {
 
 const { getCart, setCart } = cartDB();
 
-const findProductCartIndex = (currentShoppingCart, productId) => {
-  return currentShoppingCart.findIndex(({ productData }) => productData.id === productId);
-};
-
-export const handleGetShoppingCartRequest = (_, res, ctx) => {
-  const cart = getCart();
-  return res(ctx.json(cart));
+const findProductCartIndex = (currentShoppingCart, targetId) => {
+  return currentShoppingCart.findIndex(({ productId }) => productId === targetId);
 };
 
 const findProductData = (productId) => data.products.find(({ id }) => id === productId);
+
+const createResponseCart = (cart) =>
+  cart.map(({ productId, quantity }) => {
+    const productData = findProductData(productId);
+    return { productData, quantity };
+  });
+
+export const handleGetShoppingCartRequest = (_, res, ctx) => {
+  const cart = getCart();
+
+  const responseCart = createResponseCart(cart);
+
+  return res(ctx.json(responseCart));
+};
+
 const EXCEED_QUANTITY = (stock, quantity) =>
   `장바구니에 추가할 수 있는 최대 수량을 초과했습니다. 추가 가능한 최대 수량은 ${Math.max(
     stock - quantity,
@@ -34,6 +44,7 @@ const updateCartProductQuantity = (productId, quantity) => {
   const currentShoppingCart = getCart();
   const productIndex = findProductCartIndex(currentShoppingCart, productId);
   const { stock } = findProductData(productId);
+
   if (quantity > stock) {
     throw new Error(EXCEED_QUANTITY(stock, quantity));
   }
@@ -56,14 +67,12 @@ export const handlePostShoppingCartRequest = (req, res, ctx) => {
   const { productId, quantity } = req.body;
   const cartProductIndex = findProductCartIndex(currentShoppingCart, productId);
 
-  const productData = findProductData(productId);
-
   if (cartProductIndex < 0) {
-    const newProduct = { productData, quantity };
+    const newProduct = { productId, quantity };
     currentShoppingCart.push(newProduct);
 
     setCart(currentShoppingCart);
-    return res(ctx.json(currentShoppingCart));
+    return res(ctx.status(201));
   }
 
   const { quantity: prevQuantity } = currentShoppingCart[cartProductIndex];
@@ -80,7 +89,7 @@ export const handlePatchShoppingCartRequest = (req, res, ctx) => {
   const { productId, quantity } = req.body;
   try {
     const newCart = updateCartProductQuantity(productId, quantity);
-    return res(ctx.json(newCart));
+    return res(ctx.json(createResponseCart(newCart)));
   } catch ({ message }) {
     ctx.status(400, ctx.json({ message }));
   }
@@ -107,5 +116,5 @@ export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
 
   setCart(newCart);
 
-  return res(ctx.json(newCart));
+  return res(ctx.json(createResponseCart(newCart)));
 };

@@ -4,16 +4,12 @@ import customInstance from 'api/customInstance';
 import { ALERT_MESSAGES } from 'constants/messages';
 
 export const sendAddToCartRequest = async (productId, quantity) => {
-  const response = await customInstance.post(API_ENDPOINT.CARTS_PRODUCTS, {
+  await customInstance.post(API_ENDPOINT.CARTS_PRODUCTS, {
     productId,
     quantity,
   });
 
-  const cart = response.data;
-
   alert(ALERT_MESSAGES.PRODUCT_ADDED(quantity));
-
-  return { cart };
 };
 
 export const sendGetCartRequest = async () => {

@@ -6,7 +6,7 @@ export default {
       price: 35000,
       imageURL:
         'https://thawing-fortress-83192.herokuapp.com/static/images/camping-chair.jpg',
-      stock: 10,
+      stock: 0,
     },
     {
       id: 2,

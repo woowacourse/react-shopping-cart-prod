@@ -7,6 +7,7 @@ const initialState = {
 export const cartActionType = {
   START: 'cart/ACTION_START',
   FAIL: 'cart/ACTION_FAIL',
+  ADDED: 'cart/ADDED',
   FETCH: 'cart/FETCH',
   UPDATE: 'cart/UPDATE',
   DELETE: 'cart/DELETE',
@@ -48,6 +49,7 @@ const cartReducer = (state = initialState, action) => {
       };
     }
 
+    case cartActionType.ADDED:
     case cartActionType.FAIL: {
       return {
         ...state,
