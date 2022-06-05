@@ -6,6 +6,7 @@ import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
+import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 import {useNavigate} from 'react-router-dom';
 
 function UserInfoEditPage() {
@@ -56,7 +57,7 @@ function UserInfoEditPage() {
     const accessToken = response.accessToken;
 
     userInfo.fetch({
-      API_URL: process.env.REACT_APP_GET_INFO_API_URL,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
       body: {test: 'test:'},
       headers: {Authorization: `Bearer ${accessToken}`},
     });
@@ -70,7 +71,7 @@ function UserInfoEditPage() {
     const accessToken = response.accessToken;
 
     editInfo.fetch({
-      API_URL: process.env.REACT_APP_EDIT_INFO_API_URL,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERES}`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {
         nickname: nickname.value || nickname.placeholder,

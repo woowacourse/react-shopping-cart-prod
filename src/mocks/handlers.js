@@ -2,6 +2,7 @@
 import {rest} from 'msw';
 import {MOCK_PRODUCT_LIST} from './mockData';
 import shortid from 'shortid';
+import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 
 let cart = [];
 
@@ -98,7 +99,7 @@ export const handlers = [
   }),
 
   // 로그인
-  rest.post(process.env.REACT_APP_LOGIN_API_URL, (req, res, ctx) => {
+  rest.post(`${BASE_SERVER_URL}${SERVER_PATH.SIGNIN}`, (req, res, ctx) => {
     const {account, password} = req.body;
     const accessToken = Object.keys(userDB).find(
       (token) => userDB[token].account === account && userDB[token].password === password,
@@ -112,7 +113,7 @@ export const handlers = [
   }),
 
   // 회원가입
-  rest.post(process.env.REACT_APP_SIGNUP_API_URL, (req, res, ctx) => {
+  rest.post(`${BASE_SERVER_URL}${SERVER_PATH.SIGNUP}`, (req, res, ctx) => {
     const accounts = Object.values(userDB).map(({account}) => account);
 
     const isDuplicated = accounts.some((account) => req.body.account === account);
@@ -132,7 +133,7 @@ export const handlers = [
   }),
 
   // 사용자 정보 조회
-  rest.get(process.env.REACT_APP_GET_INFO_API_URL, (req, res, ctx) => {
+  rest.get(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
 
     if (!Object.hasOwnProperty.call(userDB, accessToken)) {
@@ -143,7 +144,7 @@ export const handlers = [
   }),
 
   // 사용자 정보 수정
-  rest.put(process.env.REACT_APP_EDIT_INFO_API_URL, (req, res, ctx) => {
+  rest.put(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
 
     if (!Object.hasOwnProperty.call(userDB, accessToken)) {
@@ -159,9 +160,7 @@ export const handlers = [
   }),
 
   // 회원 탈퇴
-  rest.delete(process.env.REACT_APP_WITHDRAWAL_API_URL, (req, res, ctx) => {
-    // 클라이언트에서 요청한 accessToken에 해당하는 계정을 삭제한다
-
+  rest.delete(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
     if (req.body.password !== userDB[accessToken].password) {
       return res(ctx.status(404));

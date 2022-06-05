@@ -4,6 +4,7 @@ import * as S from './style';
 import theme from 'theme/theme';
 import {Link, useNavigate} from 'react-router-dom';
 import {ERROR_MESSAGE, PATH} from 'constant';
+import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 import useFetch from 'hook/useFetch';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
@@ -20,7 +21,7 @@ function LoginPage() {
 
   const onSubmit = (inputs) => {
     login.fetch({
-      API_URL: process.env.REACT_APP_LOGIN_API_URL,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.SIGNIN}`,
       body: {
         account: inputs[0].value,
         password: inputs[1].value,

@@ -7,6 +7,7 @@ import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
 import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
+import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 
 function SignupPage() {
   const navigation = useNavigate();
@@ -66,7 +67,7 @@ function SignupPage() {
   const onSubmit = (inputs) => {
     const [account, nickname, password, address, start, middle, last] = inputs;
     signup.fetch({
-      API_URL: process.env.REACT_APP_SIGNUP_API_URL,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.SIGNUP}`,
       body: {
         account: account.value,
         nickname: nickname.value,

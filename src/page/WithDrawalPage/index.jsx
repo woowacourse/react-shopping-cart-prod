@@ -11,6 +11,7 @@ import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
 import useControlledInput from 'hook/useControlledInput';
 import {ERROR_MESSAGE} from 'constant';
+import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 
 function WithDrawalPage() {
   const [isChecked, setIsChecked] = useState(false);
@@ -31,7 +32,7 @@ function WithDrawalPage() {
     const accessToken = response.accessToken;
 
     withDrawal.fetch({
-      API_URL: process.env.REACT_APP_WITHDRAWAL_API_URL,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
       body: {
         password: password.value,
       },
