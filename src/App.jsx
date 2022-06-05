@@ -1,17 +1,16 @@
 import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
 
-import ProductList from "@/pages/home/components/product-list/ProductList";
-import Cart from "@/pages/cart/components/cart/Cart";
+import Home from "@/pages/Home";
+import Cart from "@/pages/Cart";
+import NotFound from "@/pages/NotFound";
+import Signin from "@/pages/Signin";
+import Signup from "@/pages/Signup";
+import UserEdit from "@/pages/UserEdit";
+import ProductDetail from "@/pages/ProductDetail";
 
-import NotFound from "@/pages/not-found/NotFound";
-import Signin from "@/pages/sign-in/Signin";
-import Signup from "@/pages/sign-up/Signup";
-import UserEdit from "@/pages/user-edit/UserEdit";
-import ProductDetail from "@/pages/product-detail/ProductDetail";
-
-import Layout from "@/components/layout/Layout";
-import Snackbar from "@/components/snackbar/Snackbar";
+import Layout from "@/components/Layout";
+import Snackbar from "@/components/Snackbar";
 
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/reset";
@@ -29,7 +28,7 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route element={<Layout />}>
-          <Route path={PATH.MAIN} element={<ProductList />} />
+          <Route path={PATH.MAIN} element={<Home />} />
           <Route path={PATH.LOGIN} element={<Signin />} />
           <Route path={PATH.REGISTER} element={<Signup />} />
           <Route path={PATH.EDIT} element={<UserEdit />} />

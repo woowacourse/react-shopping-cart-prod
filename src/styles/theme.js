@@ -11,6 +11,7 @@ const theme = {
     mint: "#2ac1bc",
     pink: "#f60579",
     blue: "#0969da",
+    brown: "#73675C",
   },
   fontSize: {
     xs: "14px",
