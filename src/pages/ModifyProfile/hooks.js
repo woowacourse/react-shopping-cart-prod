@@ -11,29 +11,14 @@ const useModifyProfilePage = () => {
     url: '/api/members/me/password',
   });
 
-  const {
-    isSucceed: isUnregisterSucceed,
-    isError: isUnregisterError,
-    fetchApi: unregisterApi,
-  } = useFetch({
-    method: METHOD.DELETE,
-    url: '/api/members/me',
-  });
-
   const updatePassword = (oldPassword, newPassword) => {
     updatePasswordApi({ payload: { oldPassword, newPassword } });
   };
 
-  const unregister = (password) => {
-    unregisterApi({ payload: password });
-  };
   return {
     isUpdatePasswordSucceed,
     isUpdatePasswordError,
     updatePassword,
-    isUnregisterSucceed,
-    isUnregisterError,
-    unregister,
   };
 };
 

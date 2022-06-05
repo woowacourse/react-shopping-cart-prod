@@ -28,7 +28,7 @@ export const Contents = styled.div`
   width: 50%;
   min-width: 300px;
   max-width: 400px;
-  min-height: 300px;
+
   height: auto;
   padding: 30px 0;
   display: flex;
