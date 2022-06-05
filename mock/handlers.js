@@ -3,6 +3,8 @@ import products from "./products.json";
 
 const initialDB = {
   customers: [],
+  carts: [],
+  orders: [],
 };
 
 const localStorageKey = "woo-shop-msw-localstorage-key";
@@ -53,13 +55,88 @@ export const handlers = [
   }),
 
   // 상품 단건 조회
-  // rest.get("/api/products/:id", (req, res, ctx) => {
-  //   const { id: productId } = req.params;
-  //   const product = products.find(())
-  // });
+  rest.get("/api/products/:id", (req, res, ctx) => {
+    const { id: productId } = req.params;
+    const product = products.find(({ id }) => id === productId);
+    console.log("product : ", product);
+    return res(ctx.json(product));
+  }),
 
-  // 장바구니 추가
-  // rest.
+  // 장바구니에 처음 추가하는 경우
+  rest.post("/api/mycarts", (req, res, ctx) => {
+    const { productId, quantity } = req.body;
+    const db = LocalStorage.getInstance();
+    const aleadyExist = db.carts.some(
+      (cartItem) => cartItem.productId === productId
+    );
+    if (aleadyExist) {
+      return res(ctx.status(400));
+    }
+    db.carts.push({ id: productId, productId, quantity });
+    LocalStorage.saveInstance(db);
+
+    return res(ctx.status(201));
+  }),
+
+  // 장바구니 목록을 조회한다
+  rest.get("/api/mycarts", (req, res, ctx) => {
+    const carts = LocalStorage.getItem("carts");
+    return res(ctx.json(carts));
+  }),
+
+  // 장바구니에 있는 상품의 개수를 업데이트 한다
+  rest.patch("/api/mycarts", (req, res, ctx) => {
+    const { cartItemId, quantity } = req.body;
+    const db = LocalStorage.getInstance();
+    const index = db.carts.findIndex((cartItem) => cartItem.id === cartItemId);
+    db.carts[index].quantity = quantity;
+    LocalStorage.saveInstance(db);
+
+    return res(ctx.status(201));
+  }),
+
+  // 장바구니에 있는 상품을 삭제한다
+  rest.delete("/api/mycarts", (req, res, ctx) => {
+    const { cartItemIds } = req.body;
+    const db = LocalStorage.getInstance();
+    const newCart = db.carts.reduce((acc, cartItem) => {
+      const shouldBeDeleted = cartItemIds.some((id) => cartItem.id === id);
+      if (!shouldBeDeleted) {
+        acc.push(cartItem);
+      }
+      return acc;
+    }, []);
+    db.carts = newCart;
+    LocalStorage.saveInstance(db);
+    return res(ctx.status(204));
+  }),
+
+  // 주문을 한다
+  rest.post("/api/myorders", (req, res, ctx) => {
+    const { cartItemIds } = req.body;
+    const db = LocalStorage.getInstance();
+    const products = products.reduce((product, acc) => {
+      const isOrderedProduct = cartItemIds.some((id) => product.id === id);
+      if (isOrderedProduct) {
+        acc.push({ ...product, productId: product.id });
+      }
+      return acc;
+    }, []);
+
+    const order = {
+      id: db.orders.length,
+      orderedProducts: products,
+    };
+    db.orders.push(order);
+    LocalStorage.saveInstance(db);
+    return res(ctx.status(201));
+  }),
+
+  // 주문 목록을 조회한다
+  rest.get("/api/myorders", (req, res, ctx) => {
+    const orders = LocalStorage.getItem("orders");
+    return res(ctx.json(orders));
+  }),
 
   // 회원가입
   rest.post("/api/customers", (req, res, ctx) => {
