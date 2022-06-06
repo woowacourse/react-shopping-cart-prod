@@ -13,7 +13,10 @@ export const getProductList = () => async (dispatch) => {
     dispatch(createAction(ACTION_TYPES.GET_PRODUCT_LIST_START));
     const productList = await axios.get(`${BASE_URL}/products`);
     dispatch(
-      createAction(ACTION_TYPES.GET_PRODUCT_LIST_SUCCESS, productList.data)
+      createAction(
+        ACTION_TYPES.GET_PRODUCT_LIST_SUCCESS,
+        JSON.parse(productList.data)
+      )
     );
   } catch (error) {
     dispatch(createAction(ACTION_TYPES.GET_PRODUCT_LIST_ERROR, error));
@@ -45,7 +48,7 @@ export const productListReducer = (state = productListInitialState, action) => {
         ...state,
         productList: {
           loading: false,
-          data: JSON.parse(action.payload),
+          data: action.payload,
           error: null,
         },
       };

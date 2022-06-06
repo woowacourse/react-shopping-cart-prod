@@ -13,7 +13,10 @@ export const getProductDetail = (id) => async (dispatch) => {
     dispatch(createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_START));
     const productDetail = await axios.get(`${BASE_URL}/products/${id}`);
     dispatch(
-      createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_SUCCESS, productDetail.data)
+      createAction(
+        ACTION_TYPES.GET_PRODUCT_DETAIL_SUCCESS,
+        JSON.parse(productDetail.data)
+      )
     );
   } catch (error) {
     dispatch(createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_ERROR, error));

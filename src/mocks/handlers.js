@@ -19,7 +19,7 @@ export const handlers = [
     const product = productList.find(({ id: productId }) => productId === id);
 
     if (!product) return res(ctx.status(400));
-    return res(ctx.status(200), ctx.json(product));
+    return res(ctx.status(200), ctx.json(JSON.stringify(product)));
   }),
 
   // 인증 인가 - 회원가입
