@@ -2,7 +2,7 @@ import ProductCard from 'components/ProductCard/ProductCard';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { CartStoreState, Product } from 'types/index';
-import { isProductInCart } from 'utils/validator';
+import { getProductStockInCart } from 'utils/validator';
 
 type Props = {
   productList: Array<Product>;
@@ -19,7 +19,7 @@ function ProductCardGrid({ productList }: Props) {
         productList.map(product => (
           <ProductCard
             product={product}
-            isInCart={isProductInCart(product.id, cart)}
+            cartStock={getProductStockInCart(product.id, cart)}
             key={product.id}
           />
         ))

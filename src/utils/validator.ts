@@ -1,10 +1,14 @@
 import { CartStoreState, Product } from 'types/index';
 
-const isProductInCart = (
+const getProductStockInCart = (
   productId: Product['id'],
   cart: CartStoreState['cart']
 ) => {
-  return cart.some(product => product.id === productId);
+  const product = cart.find(product => product.id === productId);
+
+  if (!product) return 0;
+
+  return product.stock;
 };
 
 const isValidPasswordLength = (password: string) => {
@@ -17,4 +21,8 @@ const isValidPasswordAllCharacters = (password: string) => {
   );
 };
 
-export { isProductInCart, isValidPasswordLength, isValidPasswordAllCharacters };
+export {
+  getProductStockInCart,
+  isValidPasswordLength,
+  isValidPasswordAllCharacters,
+};

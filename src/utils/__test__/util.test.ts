@@ -1,8 +1,8 @@
 import { CartStoreState } from 'types/index';
-import { isProductInCart } from 'utils/validator';
+import { getProductStockInCart } from 'utils/validator';
 
 describe('util 함수 테스트', () => {
-  test('해당 상품이 장바구니에 있는지 여부를 올바르게 판단하여 반환할 수 있다.', () => {
+  test('해당 상품이 장바구니에 몇 개 있는지를 올바르게 반환할 수 있다.', () => {
     const cart: CartStoreState['cart'] = [
       {
         id: 1,
@@ -17,10 +17,10 @@ describe('util 함수 테스트', () => {
     ];
     const productId1 = 1;
 
-    expect(isProductInCart(productId1, cart)).toBeTruthy();
+    expect(getProductStockInCart(productId1, cart)).toEqual(2);
 
     const productId2 = 9999;
 
-    expect(isProductInCart(productId2, cart)).toBeFalsy();
+    expect(getProductStockInCart(productId2, cart)).toEqual(1);
   });
 });

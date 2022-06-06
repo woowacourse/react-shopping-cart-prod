@@ -10,10 +10,10 @@ import PATH from 'constants/path';
 
 type Props = {
   product: Product;
-  isInCart: boolean;
+  cartStock: number;
 };
 
-function ProductCard({ product, isInCart }: Props) {
+function ProductCard({ product, cartStock }: Props) {
   const { id, name, price, stock, description, image } = {
     ...product,
     stock: Number(product.stock),
@@ -49,8 +49,9 @@ function ProductCard({ product, isInCart }: Props) {
           <button onClick={onClickCartButton}>
             <ShoppingCart
               width="100%"
-              fill={isInCart ? '#ff9c9c' : 'currentColor'}
+              fill={cartStock > 0 ? '#ff9c9c' : 'currentColor'}
             />
+            {cartStock > 0 && <Badge>{cartStock}</Badge>}
           </button>
         </CardButtonContainer>
       </StyledProductCard>
@@ -210,6 +211,25 @@ const StyledProductCard = styled.div`
       text-decoration: underline;
     }
   }
+`;
+
+const Badge = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  bottom: 35px;
+  left: 25px;
+
+  width: 15px;
+  height: 15px;
+  border: 0.5px solid ${({ theme: { colors } }) => colors.white};
+  border-radius: 50%;
+
+  background: ${({ theme: { colors } }) => colors.pink};
+  color: ${({ theme: { colors } }) => colors.black};
+
+  font-size: 12px;
 `;
 
 export default ProductCard;

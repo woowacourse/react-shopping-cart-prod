@@ -1,6 +1,6 @@
 import { cartTypes } from 'redux/actions';
 import { CartAction, CartStoreState } from 'types/index';
-import { isProductInCart } from 'utils/validator';
+import { getProductStockInCart } from 'utils/validator';
 
 const initialState: CartStoreState = {
   cart: [],
@@ -9,7 +9,7 @@ const initialState: CartStoreState = {
 const cart = (state = initialState, action: CartAction) => {
   switch (action.type) {
     case cartTypes.ADD_PRODUCT: {
-      if (!isProductInCart(action.payload, state.cart)) {
+      if (getProductStockInCart(action.payload, state.cart) === 0) {
         return {
           ...state,
           cart: [
