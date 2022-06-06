@@ -5,26 +5,36 @@ import { LoginRequest, LoginResponse, UserInfo, UserInfoWithPassword } from 'typ
 
 import { UserAction, userActions } from './action';
 
-export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
-  const accessToken = localStorage.getItem('access-token');
+export const getUser =
+  ({ onSuccess, onFailure }: { onSuccess?: () => void; onFailure?: () => void } = {}) =>
+  async (dispatch: Dispatch<UserAction>) => {
+    const accessToken = localStorage.getItem('access-token');
 
-  if (!accessToken) return;
+    if (!accessToken) {
+      onFailure?.();
 
-  dispatch(userActions.getUserGroup.request());
-  try {
-    const response = await authClient.get<UserInfo>('/customers/me', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    dispatch(userActions.getUserGroup.success(response.data));
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      dispatch(userActions.getUserGroup.failure(e));
+      return;
     }
-  }
-};
+
+    dispatch(userActions.getUserGroup.request());
+    try {
+      const response = await authClient.get('/customers/me', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      if (response.status !== 200) throw new Error(response.data);
+
+      dispatch(userActions.getUserGroup.success(response.data));
+      onSuccess?.();
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        dispatch(userActions.getUserGroup.failure(e));
+        onFailure?.();
+      }
+    }
+  };
 
 export const login =
   (userInfo: LoginRequest, onSuccess?: (name: string) => void) =>
