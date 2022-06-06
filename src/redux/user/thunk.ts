@@ -21,7 +21,7 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
       },
     });
 
-    return Promise.resolve(dispatch(userActions.getUserGroup.success(response.data)));
+    dispatch(userActions.getUserGroup.success(response.data));
   } catch (e: unknown) {
     if (e instanceof AxiosError) {
       dispatch(userActions.getUserGroup.failure(e));
@@ -57,7 +57,7 @@ export const signup =
     try {
       await authClient.post<UserInfo>('/customers', userInfo);
 
-      return Promise.resolve(dispatch(userActions.signupGroup.success()));
+      dispatch(userActions.signupGroup.success());
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         dispatch(userActions.signupGroup.failure(e));
@@ -107,7 +107,7 @@ export const deleteUser =
 
       localStorage.removeItem('access-token');
 
-      return Promise.resolve(dispatch(userActions.deleteGroup.success(response.data)));
+      dispatch(userActions.deleteGroup.success(response.data));
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         dispatch(userActions.deleteGroup.failure(e));
