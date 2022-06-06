@@ -11,7 +11,7 @@ import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 import { getCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { ERROR, MESSAGE } from 'utils/constants';
 import Styled from './index.style';
 
 const SignupPage = () => {
@@ -39,16 +39,32 @@ const SignupPage = () => {
 
   useEffect(() => {
     setIsFulfilled(isEmailCorrect && isNicknameCorrect && isPasswordCorrect);
-  }, [email, nickname, password, isEmailCorrect, isNicknameCorrect, isPasswordCorrect]);
+  }, [isEmailCorrect, isNicknameCorrect, isPasswordCorrect]);
 
   const signup = async () => {
     if (!isFulfilled) return;
 
-    await axios.post('/customers', {
-      email,
-      nickname,
-      password,
-    });
+    try {
+      await axios.post('/customers', {
+        email,
+        nickname,
+        password,
+      });
+
+      renderSnackbar(`${nickname}님, 환영합니다 👋`, 'SUCCESS');
+      navigate('/login');
+    } catch (error) {
+      const { code } = error.response.data;
+
+      renderSnackbar(ERROR[code], 'FAILED');
+
+      /**
+       * 2101 : 이메일 형식이 옳지 않은 경우
+       * 2102 : 닉네임 형식이 옳지 않은 경우
+       * 2103 : 비밀번호 형식이 옳지 않은 경우
+       * 2001 : 이미 존재하는 이메일인 경우 *
+       */
+    }
   };
 
   return (

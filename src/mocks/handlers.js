@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { rest } from 'msw';
+import CustomError from 'utils/CustomError';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 
 const users = [
@@ -15,16 +16,16 @@ export const handlers = [
     const id = users.length + 1;
 
     try {
-      // 이메일 형식이 지켜지지 않은 경우
+      // [ERROR] 이메일 형식이 지켜지지 않은 경우
       validateEmail(email);
-      // 닉네임 형식이 지켜지지 않은 경우
+      // [ERROR] 닉네임 형식이 지켜지지 않은 경우
       validateNickname(nickname);
-      // 비밀번호 형식이 지켜지지 않은 경우
+      // [ERROR] 비밀번호 형식이 지켜지지 않은 경우
       validatePassword(password);
 
-      // 이메일 중복될 경우
+      // [ERROR] 이메일 중복될 경우
       if (users.some(user => user.email === email)) {
-        throw new Error('Duplicated email');
+        throw new CustomError(2001, 'Duplicated email');
       }
 
       // 회원가입 성공
@@ -42,6 +43,7 @@ export const handlers = [
       return res(
         ctx.status(400),
         ctx.json({
+          code: error.code,
           message: error.message,
         }),
       );
