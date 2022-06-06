@@ -54,9 +54,13 @@ const SignupPage = () => {
       renderSnackbar(`${nickname}님, 환영합니다 👋`, 'SUCCESS');
       navigate('/login');
     } catch (error) {
-      const { code } = error.response.data;
+      const { code, message } = error.response.data;
 
-      renderSnackbar(ERROR[code], 'FAILED');
+      if (code) {
+        renderSnackbar(ERROR[code], 'FAILED');
+      } else {
+        renderSnackbar(message, 'FAILED');
+      }
 
       /**
        * 2101 : 이메일 형식이 옳지 않은 경우

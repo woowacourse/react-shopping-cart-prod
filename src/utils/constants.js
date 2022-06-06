@@ -1,5 +1,5 @@
 const SERVER_URL = 'https://shopping-cart-mh.herokuapp.com/';
-const BASE_URL = '/react-shopping-cart/';
+const BASE_URL = '/react-shopping-cart-prod/';
 
 const PRODUCT = {
   MIN_QUANTITY: 1,
@@ -47,7 +47,7 @@ const ERROR = {
   2101: '이메일 형식이 옳지 않습니다.',
   2102: '닉네임 형식이 옳지 않습니다.',
   2103: '비밀번호 형식이 옳지 않습니다.',
-  2201: '이메일 혹은 비밀번호가 일치하지 않습니다.',
+  2201: '아이디와 비밀번호를 다시 확인해주세요.',
   2202: '입력된 비밀번호가 현재 비밀번호와 일치하지 않습니다.',
   3001: '상품 목록에서 요청하신 상품이 존재하지 않습니다.',
   4001: '해당 상품이 장바구니에 존재하지 않습니다.',
