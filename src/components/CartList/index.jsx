@@ -53,7 +53,7 @@ const CartList = ({
     <p>싱싱배송 상품 ({cartList.length}종)</p>
     <CommonStyled.HR />
     {cartList &&
-      cartList.map(({ id, name, thumbnail, price, count }) => (
+      cartList.map(({ product: { id, name, thumbnail, price }, quantity }) => (
         <>
           <CartProducItem
             key={id}
@@ -61,7 +61,7 @@ const CartList = ({
             name={name}
             thumbnail={thumbnail}
             price={price}
-            count={count}
+            quantity={quantity}
             isChecked={isChecked}
             handleChecked={handleChecked()}
             handleItemCount={handleItemCount}

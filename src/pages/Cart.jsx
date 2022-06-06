@@ -6,8 +6,9 @@ import Layout from 'components/Layout';
 import PageHeader from 'components/@common/PageHeader';
 import CartList from 'components/CartList';
 import CartReceipt from 'components/CartReceipt';
+
 import { snackbar } from 'actions/snackbar';
-import { deleteCartItem, modifyCartItemCount } from 'actions/cart';
+import { deleteCartItem, getCartList, modifyCartItemCount } from 'actions/cart';
 
 import { 알림_메시지 } from 'constants/';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -27,9 +28,13 @@ const Cart = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getCartList());
+  }, [dispatch]);
+
+  useEffect(() => {
     const calculatedTotalPrice = cartList
-      .filter((product) => checkboxItems.includes(product.id))
-      .reduce((prev, curr) => prev + curr.price * curr.count, 0);
+      .filter((item) => checkboxItems.includes(item.product.id))
+      .reduce((prev, curr) => prev + curr.product.price * curr.quantity, 0);
 
     setTotalPrice(calculatedTotalPrice);
   }, [cartList, checkboxItems]);

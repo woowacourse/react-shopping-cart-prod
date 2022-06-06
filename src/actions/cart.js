@@ -1,4 +1,6 @@
-import { 장바구니_액션 } from './types';
+import asyncDispatchAction from 'utils/asyncDispatchAction';
+import { requestGetCartList } from 'api/cart';
+import { 장바구니_액션, 장바구니_불러오기_액션 } from './types';
 
 const addCartList = (product, cartList) => {
   const targetProduct = cartList.find((item) => item.id === product.id);
@@ -23,4 +25,14 @@ const modifyCartItemCount = (productId, count) => ({
   payload: { productId, count },
 });
 
-export { addCartList, deleteCartItem, modifyCartItemCount };
+const getCartList = () => async (dispatch) => {
+  dispatch({
+    type: 장바구니_불러오기_액션.PENDING,
+  });
+
+  const response = await requestGetCartList();
+
+  asyncDispatchAction(dispatch, response, 장바구니_불러오기_액션);
+};
+
+export { addCartList, deleteCartItem, modifyCartItemCount, getCartList };

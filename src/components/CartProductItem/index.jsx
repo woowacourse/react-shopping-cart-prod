@@ -18,7 +18,7 @@ const CartProducItem = ({
   thumbnail,
   name,
   price,
-  count,
+  quantity,
   isChecked,
   handleChecked,
   handleItemCount,
@@ -54,7 +54,7 @@ const CartProducItem = ({
           <IconButton onClick={onClickDeleteButton} icon={아이콘_코드.DELETE} />
         </CommonStyled.Container>
         <CommonStyled.FlexWrapper margin="0" width="120px" justifyContent="flex-end">
-          <Counter id={id} count={count} handleItemCount={handleItemCount()} />
+          <Counter id={id} quantity={quantity} handleItemCount={handleItemCount()} />
         </CommonStyled.FlexWrapper>
         <Styled.Container margin="0" width="100%" justifyContent="flex-end">
           <CommonStyled.Text padding="0.5rem 0">
@@ -71,7 +71,7 @@ CartProducItem.propTypes = {
   thumbnail: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.number,
-  count: PropTypes.number,
+  quantity: PropTypes.number,
   isChecked: PropTypes.func,
   handleChecked: PropTypes.func,
   handleItemCount: PropTypes.func,
@@ -81,7 +81,7 @@ CartProducItem.defaultProps = {
   thumbnail: noImage,
   name: '이름이 지정되지 않았습니다.',
   price: -1,
-  count: 1,
+  quantity: 1,
   isChecked: () => true,
   handleChecked: () => {},
   handleItemCount: () => {},
