@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 
+import useFetch from 'hooks/useFetch';
 import useFormValidation from 'hooks/useFormValidation';
 
 import { Button, FlexContainer } from 'components/@common';
@@ -7,7 +8,6 @@ import FieldSet from 'components/@common/FieldSet';
 import InputField from 'components/@common/InputField';
 
 import { requestSignUp } from 'api/members';
-import { REQUEST_STATUS } from 'constants/';
 import { getFormData } from 'lib/formUtils';
 import { userValidator } from 'lib/validateUtils';
 
@@ -15,6 +15,7 @@ import * as S from './styles';
 
 function SignUpPage() {
   const navigate = useNavigate();
+  const { fetchControl: signUpFetchControl, isLoading } = useFetch(requestSignUp);
 
   const validationList = {
     userId: ({ userId }) => userValidator.userId(userId),
@@ -38,14 +39,11 @@ function SignUpPage() {
     event.preventDefault();
 
     const formData = getFormData(event.target);
-    const { status, message } = await requestSignUp(formData);
 
-    if (status === REQUEST_STATUS.FAIL) {
-      alert(message);
-      return;
-    }
-
-    navigate('/login');
+    signUpFetchControl.start(formData, {
+      success: () => navigate('/login'),
+      error: (errorMessage) => alert(errorMessage),
+    });
   };
 
   return (
@@ -67,6 +65,7 @@ function SignUpPage() {
           status={errorList.password ? 'danger' : 'default'}
           message={errorList.password}
           placeholder="영문, 숫자, 특수문자 조합 최소 8자 최대 16자"
+          autoComplete="new-password"
         />
 
         <InputField
@@ -75,6 +74,7 @@ function SignUpPage() {
           status={errorList.passwordConfirm ? 'danger' : 'default'}
           message={errorList.passwordConfirm}
           placeholder="비밀번호 재입력"
+          autoComplete="new-password"
         />
       </FieldSet>
 
@@ -89,7 +89,7 @@ function SignUpPage() {
       </FieldSet>
 
       <FlexContainer gap={20}>
-        <Button type="submit" status="primary" isDisabled={!isAllPassed}>
+        <Button type="submit" status="primary" isDisabled={!isAllPassed || isLoading}>
           회원가입
         </Button>
         <S.NonMemberText>
