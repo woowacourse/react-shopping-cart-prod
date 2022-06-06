@@ -11,7 +11,7 @@ function App() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getUser());
+    dispatch(getUser()).catch(() => {});
   }, []);
 
   return (
