@@ -21,8 +21,6 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
       },
     });
 
-    if (response.status !== 200) throw new Error(response.data);
-
     return Promise.resolve(dispatch(userActions.getUserGroup.success(response.data)));
   } catch (e: unknown) {
     if (e instanceof AxiosError) {
@@ -37,11 +35,7 @@ export const login =
   (userInfo: LoginRequest) => async (dispatch: Dispatch<UserAction>, getState: () => RootState) => {
     dispatch(userActions.loginGroup.request());
     try {
-      const response = await authClient.post<LoginResponse | string>('/login', userInfo);
-
-      if (typeof response.data === 'string') {
-        throw new Error(response.data);
-      }
+      const response = await authClient.post<LoginResponse>('/login', userInfo);
       const { accessToken } = response.data;
 
       localStorage.setItem('access-token', accessToken);
@@ -61,11 +55,7 @@ export const signup =
   (userInfo: UserInfoWithPassword) => async (dispatch: Dispatch<UserAction>) => {
     dispatch(userActions.signupGroup.request());
     try {
-      const response = await authClient.post<UserInfo | string>('/customers', userInfo);
-
-      if (typeof response.data === 'string') {
-        throw new Error(response.data);
-      }
+      const response = await authClient.post<UserInfo>('/customers', userInfo);
 
       return Promise.resolve(dispatch(userActions.signupGroup.success()));
     } catch (e: unknown) {
@@ -85,15 +75,11 @@ export const editUserInfo =
 
     dispatch(userActions.editGroup.request());
     try {
-      const response = await authClient.put<UserInfo | string>('/customers/me', userInfo, {
+      const response = await authClient.put<UserInfo>('/customers/me', userInfo, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      if (typeof response.data === 'string') {
-        throw new Error(response.data);
-      }
 
       dispatch(userActions.editGroup.success(response.data));
     } catch (e: unknown) {
@@ -116,10 +102,6 @@ export const deleteUser =
           Authorization: `Bearer ${accessToken}`,
         },
       });
-
-      if (response.status !== 204) {
-        throw new Error(response.data);
-      }
 
       dispatch(userActions.deleteGroup.success(response.data));
     } catch (e: unknown) {
