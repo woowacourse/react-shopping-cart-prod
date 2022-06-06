@@ -18,7 +18,6 @@ const Login = () => {
   const [password, onChangePassword] = useInput();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const name = useAppSelector(state => state.user.data?.name);
   const isLogin = useAppSelector(state => !!state.user.data);
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
   const isLogining = useRef(false);
@@ -28,7 +27,12 @@ const Login = () => {
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(login({ loginId: email, password }));
+    dispatch(
+      login({ loginId: email, password }, (name: string) => {
+        alert(ALERT_MESSAGE.LOGIN_SUCCESS(name));
+        navigate(PATH.home);
+      })
+    );
 
     isLogining.current = true;
   };
@@ -40,13 +44,6 @@ const Login = () => {
       navigate(PATH.home);
     }
   }, [isLogin, navigate]);
-
-  useEffect(() => {
-    if (name && isLogining.current) {
-      alert(ALERT_MESSAGE.LOGIN_SUCCESS(name));
-      navigate(PATH.home);
-    }
-  }, [name, navigate]);
 
   return (
     <AuthPage
