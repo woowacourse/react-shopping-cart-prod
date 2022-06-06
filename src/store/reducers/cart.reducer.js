@@ -33,7 +33,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart,
-        checkedProductList: cart.map(({ product }) => product.id),
+        checkedProductList: cart.filter(({ product }) => product.stock > 0).map(({ product }) => product.id),
         isLoading: false,
       };
     }
@@ -69,7 +69,6 @@ const cartReducer = (state = initialState, action) => {
     }
 
     case userActionType.LOGOUT: {
-      console.log('LOGOUT action Type 들어옴');
       return {
         ...state,
         cart: [],

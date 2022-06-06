@@ -1,10 +1,16 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const CounterContainer = styled.div`
   display: flex;
   align-items: center;
   border-radius: 4px;
   border: 1px solid ${({ theme }) => theme.colorConfig.primary};
+
+  ${({ disabled }) => disabled && css`
+    border: 1px solid ${({ theme }) => theme.colorConfig.secondary};
+    color: ${({ theme }) => theme.colorConfig.secondary};
+    cursor: default
+  `}
 `;
 
 export const CounterButton = styled.button`
@@ -17,6 +23,11 @@ export const CounterButton = styled.button`
 
   &:hover {
     opacity: 0.5;
+  };
+
+  &:disabled {
+    cursor: default;
+    opacity: 1;
   }
 `;
 

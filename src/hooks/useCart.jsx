@@ -17,6 +17,7 @@ const useCart = () => {
   const { cart, checkedProductList } = cartState;
 
   const cartLength = cart && Object.keys(cart).length;
+  const purchasableProductCount = cart.filter(({ product }) => product.stock > 0).length;
 
   const loadCart = () => {
     dispatch(getCartThunk());
@@ -54,7 +55,7 @@ const useCart = () => {
     dispatch(toggleProductCheckThunk(productId));
   };
 
-  const isAllChecked = cartLength === checkedProductList.length;
+  const isAllChecked = purchasableProductCount === checkedProductList.length;
 
   const toggleAllCheck = () => {
     if (isAllChecked) {
@@ -62,7 +63,7 @@ const useCart = () => {
       return;
     }
 
-    dispatch(updateCheckedList(cart.map(({ productData }) => productData.id)));
+    dispatch(updateCheckedList(cart.filter(({ product }) => product.stock > 0).map(({ product }) => product.id)));
   };
 
   const deleteCheckedProducts = () => {

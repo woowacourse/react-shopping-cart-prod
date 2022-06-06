@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Container = styled.div``;
 
@@ -15,4 +15,9 @@ export const CustomCheckBox = styled.div`
 
   background-color: ${({ checked, theme }) => checked && theme.colorConfig.primary};
   cursor: pointer;
+
+  ${({ disabled }) => disabled && css`
+    border: 1px solid ${({ theme }) => theme.colorConfig.secondary};
+    cursor: default;
+  `}
 `;

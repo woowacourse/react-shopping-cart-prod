@@ -27,8 +27,15 @@ export const Button = styled.button`
 `;
 
 export const Name = styled.h1`
+  margin-bottom: 13px;
   font-size: 20px;
   align-self: flex-start;
+`;
+
+export const StatusMessage = styled.p`
+  margin: 14px 0 8px;
+  font-size: 20px;
+  color: ${({ theme }) => theme.colorConfig.warning}
 `;
 
 export const Price = styled.p``;

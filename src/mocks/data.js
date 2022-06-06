@@ -13,14 +13,14 @@ export default {
       name: '그릴',
       price: 100000,
       imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/grill.jpg',
-      stock: 100,
+      stock: 0,
     },
     {
       id: 3,
       name: '아이스박스',
       price: 20000,
       imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/icebox.jpg',
-      stock: 100,
+      stock: 10,
     },
     {
       id: 4,
