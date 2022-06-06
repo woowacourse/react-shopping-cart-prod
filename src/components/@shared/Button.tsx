@@ -4,8 +4,8 @@ const getSizeDetail = (size: Props['size']) => {
   switch (size) {
     case 'small': {
       return {
-        width: '70%',
-        height: '40px',
+        width: '60%',
+        height: '35px',
       };
     }
     case 'medium': {

@@ -57,12 +57,7 @@ function ProductPage() {
               <dt>제품 설명</dt>
               <dd>{productDetail.description}</dd>
             </dl>
-            <Button
-              type="button"
-              onClick={onClickCartButton}
-              size="small"
-              marginTop="20px"
-            >
+            <Button type="button" onClick={onClickCartButton} marginTop="20px">
               장바구니
             </Button>
           </>
