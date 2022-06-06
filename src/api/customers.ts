@@ -10,13 +10,14 @@ const customersAPI = axios.create({
   withCredentials: true,
 });
 
-export const checkAuthorization = ({
+const checkAuthorization = ({
+  requestMethod,
+  endPoint,
+  data = {},
   isLogged = false,
   isOnlyConfig = false,
-  data = {},
-  callback,
 }) => {
-  if (!isLogged) return callback(data);
+  if (!isLogged) return requestMethod(endPoint, data);
 
   const accessToken = getCookie('access-token');
   const config = {
@@ -25,31 +26,59 @@ export const checkAuthorization = ({
     },
   };
 
-  if (isOnlyConfig) return callback(config);
+  if (isOnlyConfig) return requestMethod(endPoint, config);
 
-  return callback(data, config);
+  return requestMethod(endPoint, data, config);
 };
 
 export const signUp = userInformation => {
-  return customersAPI.post('/signup', userInformation);
+  return checkAuthorization({
+    requestMethod: customersAPI.post,
+    endPoint: '/signup',
+    data: userInformation,
+  });
 };
 
 export const login = userInformation => {
-  return customersAPI.post('/login', userInformation);
+  return checkAuthorization({
+    requestMethod: customersAPI.post,
+    endPoint: '/login',
+    data: userInformation,
+  });
 };
 
-export const editUser = (userInformation, config = {}) => {
-  return customersAPI.put('/', userInformation, config);
+export const editUser = userInformation => {
+  return checkAuthorization({
+    requestMethod: customersAPI.put,
+    endPoint: '/',
+    data: userInformation,
+    isLogged: true,
+  });
 };
 
-export const changePassword = (userInformation, config = {}) => {
-  return customersAPI.patch('/password', userInformation, config);
+export const changePassword = userInformation => {
+  return checkAuthorization({
+    requestMethod: customersAPI.patch,
+    endPoint: '/password',
+    data: userInformation,
+    isLogged: true,
+  });
 };
 
-export const deleteUser = (config = {}) => {
-  return customersAPI.delete('/', config);
+export const deleteUser = () => {
+  return checkAuthorization({
+    requestMethod: customersAPI.delete,
+    endPoint: '/',
+    isLogged: true,
+    isOnlyConfig: true,
+  });
 };
 
-export const getCustomer = (config = {}) => {
-  return customersAPI.get('/', config);
+export const getCustomer = () => {
+  return checkAuthorization({
+    requestMethod: customersAPI.get,
+    endPoint: '/',
+    isLogged: true,
+    isOnlyConfig: true,
+  });
 };
