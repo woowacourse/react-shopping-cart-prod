@@ -3,14 +3,18 @@ import { useEffect } from 'react';
 import useWithdrawal from './hooks';
 import useSnackBar from 'hooks/useSnackBar';
 import * as Styled from './style';
+import { useNavigate } from 'react-router-dom';
+import { PATH_NAME } from 'constants';
 
 const Withdrawal = () => {
+  const navigate = useNavigate();
   const { handleWithdrawal, isSucceed, isError } = useWithdrawal();
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
 
   useEffect(() => {
     if (isSucceed) {
       showSuccessSnackBar('회원 탈퇴가 되었습니다.');
+      navigate(PATH_NAME.HOME);
       return;
     }
 
