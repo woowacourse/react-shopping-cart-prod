@@ -4,7 +4,7 @@ export const PRODUCT_LIST_PAGE_LIMIT = 12;
 
 export const API_ENDPOINT = {
   PRODUCTS: '/api/products',
-  SHOPPING_CART: '/shopping-cart',
+  SHOPPING_CART: '/api/carts',
   USER: '/api/members',
   LOGIN: '/api/login',
   AUTH: {
