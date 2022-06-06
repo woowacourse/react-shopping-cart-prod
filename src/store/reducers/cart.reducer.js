@@ -1,3 +1,5 @@
+import { userActionType } from 'store/reducers/user.reducer';
+
 const initialState = {
   cart: [],
   checkedProductList: [],
@@ -64,6 +66,16 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         checkedProductList,
       };
+    }
+
+    case userActionType.LOGOUT: {
+      console.log('LOGOUT action Type 들어옴');
+      return {
+        ...state,
+        cart: [],
+        checkedProductList: [],
+        isLoading: false,
+      }
     }
 
     default: {

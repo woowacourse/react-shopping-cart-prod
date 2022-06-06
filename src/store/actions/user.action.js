@@ -27,7 +27,7 @@ export const logoutUser = () => {
   window.sessionStorage.removeItem('nickname');
   window.sessionStorage.removeItem('token');
   
-  delete customInstance.defaults.headers.common
+  delete customInstance.defaults.headers.common["Authorization"];
   return {
     type: userActionType.LOGOUT,
   };
