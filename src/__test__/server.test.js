@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { ProductListPage } from 'page';
 import { theme } from 'components';
-import store from 'store/store';
+import store from 'store';
 import { dummyProductList } from 'dummy_data';
 // import { BASE_URL } from 'utils/constants';
 
