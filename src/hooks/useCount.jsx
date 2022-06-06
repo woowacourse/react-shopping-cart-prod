@@ -7,7 +7,7 @@ export const useCount = ({ initialValue, min, max }) => {
 
   const handleIncrement = () => {
     setCount((prev) => {
-      if (prev === max) {
+      if (prev >= max) {
         alert(WARNING_MESSAGES.MAX_QUANTITY);
         return prev;
       }

@@ -37,6 +37,10 @@ export const Name = styled.h1`
 
 export const Price = styled.p``;
 
+export const SoldOut = styled.p`
+  color: ${({ theme }) => theme.colorConfig.black}
+`;
+
 export const TransparentButton = styled.button`
   background-color: transparent;
   border: none;
