@@ -1,23 +1,25 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import styled from 'styled-components';
 
-import { CART_MESSAGE } from 'constants/message';
-import CONDITION from 'constants/condition';
-import Loading from 'components/@shared/Loading';
-import { ProductStoreState } from 'types/index';
 import { cartActions } from 'redux/actions';
 import { getProduct } from 'redux/thunks';
-import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+
+import Loading from 'components/@shared/Loading';
+
+import CONDITION from 'constants/condition';
+import { CART_MESSAGE } from 'constants/message';
+import { ProductStoreState } from 'types/index';
 
 function ProductPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition,
+    (state: { product: ProductStoreState }) => state.product.condition
   );
   const productDetail = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productDetail,
+    (state: { product: ProductStoreState }) => state.product.productDetail
   );
 
   useEffect(() => {
@@ -32,7 +34,7 @@ function ProductPage() {
       dispatch(cartActions.addToCart(Number(id)));
       alert(CART_MESSAGE.SUCCESS_ADD);
     },
-    [dispatch, id],
+    [dispatch, id]
   );
 
   const renderSwitch = useCallback(() => {

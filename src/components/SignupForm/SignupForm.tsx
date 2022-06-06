@@ -1,16 +1,16 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+
+import authAPI from 'apis/auth';
+import { USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
+import { createInputValueGetter } from 'utils/dom';
+import { formatPhoneNumber } from 'utils/formats';
 import {
   isValidPasswordAllCharacters,
   isValidPasswordLength,
 } from 'utils/validator';
-import styled, { css } from 'styled-components';
-
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
-import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
-import { formatPhoneNumber } from 'utils/formats';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 function SignupForm() {
   const navigate = useNavigate();
@@ -35,11 +35,13 @@ function SignupForm() {
 
     setPasswordLengthCorrect(isValidPasswordLength(e.target.value));
     setPasswordAllCharactersCorrect(
-      isValidPasswordAllCharacters(e.target.value),
+      isValidPasswordAllCharacters(e.target.value)
     );
   };
 
-  const onChangePasswordCheckInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePasswordCheckInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPasswordCheck(e.target.value);
 
     setPasswordCheckCorrect(password === e.target.value);
@@ -53,7 +55,9 @@ function SignupForm() {
     setAddress(e.target.value);
   };
 
-  const onChangerPhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangerPhoneNumberInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (e.target.value.length <= 11) {
       setPhoneNumber(e.target.value);
     }

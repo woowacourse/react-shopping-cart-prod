@@ -1,14 +1,17 @@
-import CheckBox from 'components/@shared/CheckBox';
-import Link from 'components/@shared/Link';
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
-import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
-import styled from 'styled-components';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import styled from 'styled-components';
+
 import { userActions } from 'redux/actions';
+
+import CheckBox from 'components/@shared/CheckBox';
+import Link from 'components/@shared/Link';
+
+import authAPI from 'apis/auth';
+import { USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
+import { createInputValueGetter } from 'utils/dom';
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -17,11 +20,11 @@ function LoginForm() {
   const [checked, setChecked] = useState(false);
 
   const toggleChecked = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 
-    setChecked(prevState => !prevState);
+    setChecked((prevState) => !prevState);
   };
 
   const onSubmitLoginForm = async (e: React.FormEvent<HTMLFormElement>) => {

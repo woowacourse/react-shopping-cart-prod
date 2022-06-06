@@ -1,10 +1,13 @@
-import { CART_MESSAGE } from 'constants/message';
-import CartItem from 'components/CartItem/CartItem';
-import { CartProductState } from 'types';
-import CheckBox from 'components/@shared/CheckBox';
-import { cartActions } from 'redux/actions';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+
+import { cartActions } from 'redux/actions';
+
+import CheckBox from 'components/@shared/CheckBox';
+import CartItem from 'components/CartItem/CartItem';
+
+import { CART_MESSAGE } from 'constants/message';
+import { CartProductState } from 'types';
 
 type Props = {
   cartItems: Array<CartProductState>;
@@ -24,11 +27,11 @@ function CartContent({ cartItems }: Props) {
   };
 
   const isAllChecked = () => {
-    return cartItems.every(item => item.checked === true);
+    return cartItems.every((item) => item.checked === true);
   };
 
   const onChangeAllChecked = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 

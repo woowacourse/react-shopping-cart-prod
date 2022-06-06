@@ -1,6 +1,7 @@
+import { axios } from 'configs/api';
+
 import PATH from 'constants/path';
 import { User } from 'types/index';
-import { axios } from 'configs/api';
 import { getAccessToken } from 'utils/auth';
 
 const authAPI = {

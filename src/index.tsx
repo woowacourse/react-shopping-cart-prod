@@ -1,12 +1,12 @@
-import { persistor, store } from 'redux/store';
-
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
-import { PersistGate } from 'redux-persist/integration/react';
-import { Provider } from 'react-redux';
+import { initMSW } from 'mocks/handlers/authHandlers';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { initMSW } from 'mocks/handlers/authHandlers';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from 'redux/store';
 
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('./mocks/browser');
@@ -25,5 +25,5 @@ root.render(
         <App />
       </BrowserRouter>
     </PersistGate>
-  </Provider>,
+  </Provider>
 );

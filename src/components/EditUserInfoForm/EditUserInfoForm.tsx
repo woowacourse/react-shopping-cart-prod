@@ -1,19 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
-
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
-import { User } from 'types/index';
-import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
 import { userActions } from 'redux/actions';
+
+import authAPI from 'apis/auth';
+import { USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
+import { User } from 'types/index';
+import { createInputValueGetter } from 'utils/dom';
 
 function EditUserInfoForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { username, email, address, phoneNumber } = useSelector(
-    (state: { user: User }) => state.user,
+    (state: { user: User }) => state.user
   );
 
   const onClickWithdrawButton = async () => {

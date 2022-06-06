@@ -1,6 +1,8 @@
-import EditUserInfoForm from 'components/EditUserInfoForm/EditUserInfoForm';
-import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
 import styled from 'styled-components';
+
+import EditUserInfoForm from 'components/EditUserInfoForm/EditUserInfoForm';
+
+import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
 
 function EditUserInfoPage() {
   return (

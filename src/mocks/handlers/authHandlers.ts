@@ -1,6 +1,7 @@
+import { rest } from 'msw';
+
 import PATH from 'constants/path';
 import { User } from 'types/index';
-import { rest } from 'msw';
 
 const apiURL = 'http://localhost:8080/api';
 const KEY = 'mockUserList';
@@ -19,7 +20,7 @@ const initMSW = () => {
         phoneNumber: '010-0000-0000',
         accessToken: 'xxx.yyy.zzz',
       },
-    ]),
+    ])
   );
 };
 
@@ -38,15 +39,15 @@ const authHandlers = [
         };
       },
       res,
-      ctx,
+      ctx
     ) => {
       const mockUserList: Array<MockUser> = JSON.parse(
-        localStorage.getItem(KEY) || '[]',
+        localStorage.getItem(KEY) || '[]'
       );
       const { username, email } = req.body;
 
       const hasDuplicatedUser = mockUserList.some(
-        user => user.username === username || user.email === email,
+        (user) => user.username === username || user.email === email
       );
 
       if (hasDuplicatedUser) {
@@ -61,7 +62,7 @@ const authHandlers = [
       localStorage.setItem(KEY, JSON.stringify(newMockUserList));
 
       return res(ctx.status(201));
-    },
+    }
   ),
 
   // 회원 정보 조회
@@ -69,11 +70,11 @@ const authHandlers = [
     const accessToken = req.headers.get('authorization')?.split(' ')[1];
 
     const mockUserList: Array<MockUser> = JSON.parse(
-      localStorage.getItem(KEY) || '[]',
+      localStorage.getItem(KEY) || '[]'
     );
 
     const targetUser = mockUserList.find(
-      user => user.accessToken === accessToken,
+      (user) => user.accessToken === accessToken
     );
 
     if (!targetUser) {
@@ -87,7 +88,7 @@ const authHandlers = [
         email: targetUser.email,
         address: targetUser.address,
         phoneNumber: targetUser.phoneNumber,
-      }),
+      })
     );
   }),
 
@@ -103,17 +104,17 @@ const authHandlers = [
         };
       },
       res,
-      ctx,
+      ctx
     ) => {
       const { address, phoneNumber } = req.body;
       const accessToken = req.headers.get('authorization')?.split(' ')[1];
 
       const mockUserList: Array<MockUser> = JSON.parse(
-        localStorage.getItem(KEY) || '[]',
+        localStorage.getItem(KEY) || '[]'
       );
 
       const targetUserIndex = mockUserList.findIndex(
-        user => user.accessToken === accessToken,
+        (user) => user.accessToken === accessToken
       );
 
       if (targetUserIndex < 0) {
@@ -126,7 +127,7 @@ const authHandlers = [
       localStorage.setItem(KEY, JSON.stringify(mockUserList));
 
       return res(ctx.status(204));
-    },
+    }
   ),
 
   // 회원탈퇴
@@ -134,18 +135,18 @@ const authHandlers = [
     const accessToken = req.headers.get('authorization')?.split(' ')[1];
 
     const mockUserList: Array<MockUser> = JSON.parse(
-      localStorage.getItem(KEY) || '[]',
+      localStorage.getItem(KEY) || '[]'
     );
 
     const targetUser = mockUserList.find(
-      user => user.accessToken === accessToken,
+      (user) => user.accessToken === accessToken
     );
     if (!targetUser) {
       return res(ctx.status(401));
     }
 
     const newMockUserList = mockUserList.filter(
-      user => user.username !== targetUser.username,
+      (user) => user.username !== targetUser.username
     );
 
     localStorage.setItem(KEY, JSON.stringify(newMockUserList));
@@ -160,11 +161,11 @@ const authHandlers = [
       const { username, password } = req.body;
 
       const mockUserList: Array<MockUser> = JSON.parse(
-        localStorage.getItem(KEY) || '[]',
+        localStorage.getItem(KEY) || '[]'
       );
 
       const targetUser = mockUserList.find(
-        user => user.username === username && user.password === password,
+        (user) => user.username === username && user.password === password
       );
 
       if (!targetUser) {
@@ -173,9 +174,9 @@ const authHandlers = [
 
       return res(
         ctx.status(200),
-        ctx.json({ accessToken: targetUser.accessToken }),
+        ctx.json({ accessToken: targetUser.accessToken })
       );
-    },
+    }
   ),
 ];
 

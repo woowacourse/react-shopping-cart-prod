@@ -1,13 +1,16 @@
-import { CART_MESSAGE } from 'constants/message';
+import { useDispatch } from 'react-redux';
+import styled from 'styled-components';
+
+import { cartActions } from 'redux/actions';
+
 import CheckBox from 'components/@shared/CheckBox';
-import { ReactComponent as Delete } from 'assets/Delete.svg';
 import Link from 'components/@shared/Link';
 import NumberInput from 'components/@shared/NumberInput';
+
+import { ReactComponent as Delete } from 'assets/Delete.svg';
+import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 import { Product } from 'types/index';
-import { cartActions } from 'redux/actions';
-import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
 
 type Props = {
   product: Product;
@@ -28,7 +31,7 @@ function CartItem({ product, stock, checked }: Props) {
   };
 
   const onChangeCheckBox = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 

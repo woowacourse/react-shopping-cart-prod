@@ -1,8 +1,8 @@
-import { CartStoreState, Product } from 'types/index';
-
 import { cartActions } from '../actions';
 import cartReducer from '../reducers/cart';
 import db from 'db.json';
+
+import { CartStoreState, Product } from 'types/index';
 
 const product1: Product = db.products[0];
 const product2: Product = db.products[1];

@@ -1,4 +1,5 @@
 import { Product } from './product';
+
 import { cartTypes } from 'redux/actions';
 
 export type Cart = {

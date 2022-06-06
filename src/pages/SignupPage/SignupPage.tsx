@@ -1,6 +1,8 @@
-import SignupForm from 'components/SignupForm/SignupForm';
-import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
 import styled from 'styled-components';
+
+import SignupForm from 'components/SignupForm/SignupForm';
+
+import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
 
 function SignupPage() {
   return (

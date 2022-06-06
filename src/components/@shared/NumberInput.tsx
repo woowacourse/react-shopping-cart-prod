@@ -1,5 +1,6 @@
-import preventClickEvent from 'utils/event';
 import styled from 'styled-components';
+
+import preventClickEvent from 'utils/event';
 
 type Props = {
   min?: number;

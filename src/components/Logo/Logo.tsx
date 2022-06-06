@@ -1,5 +1,6 @@
-import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
 import styled from 'styled-components';
+
+import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
 
 function Logo() {
   return (

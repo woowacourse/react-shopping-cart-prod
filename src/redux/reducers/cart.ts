@@ -1,6 +1,6 @@
-import { CartAction, CartStoreState } from 'types/index';
-
 import { cartTypes } from 'redux/actions';
+
+import { CartAction, CartStoreState } from 'types/index';
 import { isProductInCart } from 'utils/validator';
 
 const initialState: CartStoreState = {
@@ -20,7 +20,7 @@ const cart = (state = initialState, action: CartAction) => {
         };
       }
 
-      const newCart = state.cart.map(product => {
+      const newCart = state.cart.map((product) => {
         if (product.id === action.payload) {
           return { ...product, stock: product.stock + 1 };
         }
@@ -31,18 +31,18 @@ const cart = (state = initialState, action: CartAction) => {
     }
     case cartTypes.DELETE_PRODUCT: {
       const newCart = state.cart.filter(
-        product => product.id !== action.payload,
+        (product) => product.id !== action.payload
       );
 
       return { ...state, cart: newCart };
     }
     case cartTypes.DELETE_CHECKED_PRODUCT: {
-      const newCart = state.cart.filter(product => product.checked === false);
+      const newCart = state.cart.filter((product) => product.checked === false);
 
       return { ...state, cart: newCart };
     }
     case cartTypes.TOGGLE_CHECK_ONE: {
-      const newCart = state.cart.map(product => {
+      const newCart = state.cart.map((product) => {
         if (product.id === action.payload) {
           return { ...product, checked: !product.checked };
         }
@@ -52,7 +52,7 @@ const cart = (state = initialState, action: CartAction) => {
       return { ...state, cart: newCart };
     }
     case cartTypes.TOGGLE_CHECK_ALL: {
-      const newCart = state.cart.map(product => ({
+      const newCart = state.cart.map((product) => ({
         ...product,
         checked: action.payload,
       }));
@@ -60,7 +60,7 @@ const cart = (state = initialState, action: CartAction) => {
       return { ...state, cart: newCart };
     }
     case cartTypes.CHANGE_PRODUCT_STOCK: {
-      const newCart = state.cart.map(product => {
+      const newCart = state.cart.map((product) => {
         if (product.id === action.payload.id) {
           return {
             ...product,

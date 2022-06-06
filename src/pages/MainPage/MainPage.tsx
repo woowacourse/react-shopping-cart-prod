@@ -1,19 +1,21 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import CONDITION from 'constants/condition';
+import { getProducts } from 'redux/thunks';
+
 import Loading from 'components/@shared/Loading';
 import ProductCardGrid from 'components/ProductCardGrid/ProductCardGrid';
+
+import CONDITION from 'constants/condition';
 import { ProductStoreState } from 'types/index';
-import { getProducts } from 'redux/thunks';
-import styled from 'styled-components';
 
 function MainPage() {
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition,
+    (state: { product: ProductStoreState }) => state.product.condition
   );
   const productList = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productList,
+    (state: { product: ProductStoreState }) => state.product.productList
   );
   const dispatch = useDispatch();
 

@@ -1,22 +1,23 @@
-import { CartStoreState, User } from 'types/index';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { userActions } from 'redux/actions';
 
 import Link from 'components/@shared/Link';
+import RightMenu from 'components/Layout/Header/RightMenu';
 import Logo from 'components/Logo/Logo';
+
 import PATH from 'constants/path';
-import RightMenu from './RightMenu';
+import { CartStoreState, User } from 'types/index';
 import { isLogin } from 'utils/auth';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { userActions } from 'redux/actions';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+    (state: { cart: CartStoreState }) => state.cart.cart
   );
   const userName = useSelector((state: { user: User }) => state.user.username);
 
