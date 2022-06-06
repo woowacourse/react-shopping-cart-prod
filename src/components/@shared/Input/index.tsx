@@ -16,8 +16,10 @@ function Input({ ...props }: InputProps) {
         id={props.htmlFor}
         value={props.value}
         onChange={props.onChange}
+        minLength={props.minLength}
         maxLength={props.maxLength}
         disabled={props.disabled}
+        onBlur={props.onBlur}
         required
       />
       {props.message && <Message isValid={props.isValid}>{props.message}</Message>}

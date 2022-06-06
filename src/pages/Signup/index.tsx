@@ -89,6 +89,7 @@ function Signup() {
           label="비밀번호"
           value={password}
           onChange={onChangePassword}
+          minLength={8}
           maxLength={20}
           isValid={!passwordErrorMessage}
           message={password && passwordErrorMessage}
@@ -99,6 +100,7 @@ function Signup() {
           label="비밀번호 확인"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
+          minLength={8}
           maxLength={20}
           isValid={!passwordConfirmErrorMessage}
           message={passwordConfirmErrorMessage}
