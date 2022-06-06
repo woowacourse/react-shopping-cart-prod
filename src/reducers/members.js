@@ -13,7 +13,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const { type, payload, async } = action;
+  const { type, payload } = action;
 
   switch (type) {
     case MEMBERS_ACTIONS.USER_LOGIN_SUCCESS:
@@ -21,13 +21,13 @@ export default (state = initialState, action) => {
       return produce(state, (draft) => {
         draft.userInfo = payload;
         draft.isLoggedIn = true;
-        draft.userInfoAsyncState = async;
+        draft.userInfoAsyncState = createAsyncState.success();
       });
 
     case MEMBERS_ACTIONS.USER_LOGIN_ERROR:
     case MEMBERS_ACTIONS.USER_INFO_REFRESH_ERROR:
       return produce(state, (draft) => {
-        draft.userInfoAsyncState = async;
+        draft.userInfoAsyncState = createAsyncState.error(payload);
       });
 
     case MEMBERS_ACTIONS.USER_LOGOUT:

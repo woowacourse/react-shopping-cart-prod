@@ -12,34 +12,40 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const { type, payload = {}, async = {} } = action;
+  const { type, payload = {} } = action;
 
   switch (type) {
     case CARTS_ACTIONS.UPDATE_CART_LIST_SUCCESS:
       return produce(state, (draft) => {
         draft.items = payload.map((item) => ({ ...item, isChecked: true }));
-        draft.listAsyncState = async;
+        draft.listAsyncState = createAsyncState.success();
       });
 
     case CARTS_ACTIONS.UPDATE_CART_LIST_PENDING:
-    case CARTS_ACTIONS.UPDATE_CART_LIST_ERROR:
+    case CARTS_ACTIONS.ADD_CART_LIST_PENDING:
       return produce(state, (draft) => {
-        draft.listAsyncState = async;
+        draft.listAsyncState = createAsyncState.pending();
+      });
+
+    case CARTS_ACTIONS.UPDATE_CART_LIST_ERROR:
+    case CARTS_ACTIONS.ADD_CART_LIST_ERROR:
+      return produce(state, (draft) => {
+        draft.listAsyncState = createAsyncState.error(payload);
       });
 
     case CARTS_ACTIONS.ADD_CART_LIST_SUCCESS:
       return produce(state, (draft) => {
         draft.items.push({ ...payload, isChecked: true });
-        draft.curdAsyncState = async;
+        draft.curdAsyncState = createAsyncState.success();
       });
 
     case CARTS_ACTIONS.UPDATE_CART_ITEM_SUCCESS:
       return produce(state, (draft) => {
-        const { id: updatedId } = payload;
+        const { id: updatedId, quantity: updateQuantity } = payload;
         const targetIndex = state.items.findIndex(({ id }) => id === updatedId);
 
-        draft.items[targetIndex] = { ...draft.items[targetIndex], ...payload };
-        draft.curdAsyncState = async;
+        draft.items[targetIndex].quantity = updateQuantity;
+        draft.curdAsyncState = createAsyncState.success();
       });
 
     case CARTS_ACTIONS.UPDATE_CART_ITEM_CHECKED:
@@ -60,12 +66,15 @@ export default (state = initialState, action) => {
       return produce(state, (draft) => {
         const { id: updatedId } = payload;
         draft.items = draft.items.filter(({ id }) => id !== updatedId);
+        console.log('REMOVE_CART_ITEM_SUCCESS');
+        draft.cartCurdAsyncState = createAsyncState.success();
       });
 
     case CARTS_ACTIONS.REMOVE_CART_ITEM_LIST_SUCCESS:
       return produce(state, (draft) => {
         const { idList } = payload;
         draft.items = draft.items.filter(({ id }) => !idList.includes(id));
+        draft.cartCurdAsyncState = createAsyncState.success();
       });
 
     default:
