@@ -14,15 +14,11 @@ const withPublicRoute = (Component: React.ComponentType<unknown>) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      dispatch(
-        getUser({
-          onSuccess: () => {
-            alert(ALERT_MESSAGE.WRONG_ACCESS);
-            navigate(PATH.home);
-            setIsLoading(false);
-          },
-        })
-      );
+      dispatch(getUser()).then(() => {
+        alert(ALERT_MESSAGE.WRONG_ACCESS);
+        navigate(PATH.home);
+        setIsLoading(false);
+      });
     }, []);
 
     if (isLogin || isLoading) return null;

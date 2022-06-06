@@ -14,14 +14,10 @@ const withPrivateRoute = (Component: React.ComponentType<unknown>) => {
 
     useEffect(() => {
       if (isLogin) return;
-      dispatch(
-        getUser({
-          onFailure: () => {
-            alert(ALERT_MESSAGE.WRONG_ACCESS);
-            navigate(PATH.login);
-          },
-        })
-      );
+      dispatch(getUser()).catch(() => {
+        alert(ALERT_MESSAGE.WRONG_ACCESS);
+        navigate(PATH.login);
+      });
     }, []);
 
     if (!isLogin) return null;
