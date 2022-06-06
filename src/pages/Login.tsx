@@ -1,7 +1,6 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
-import withPublicRoute from 'components/hoc/withPublicRoute';
 import { ALERT_MESSAGE } from 'constants/index';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import useAuthError from 'hooks/useAuthError';
@@ -61,7 +60,7 @@ const Login = () => {
   );
 };
 
-export default withPublicRoute(Login);
+export default Login;
 
 const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.BLUE_38d};

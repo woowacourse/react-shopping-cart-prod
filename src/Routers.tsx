@@ -1,8 +1,6 @@
-import Login from 'pages/Login';
-import Signup from 'pages/Signup';
-import UserEdit from 'pages/UserEdit';
-import UserWithDrawal from 'pages/UserWithDrawal';
-import { lazy, ReactElement } from 'react';
+import withPrivateRoute from 'components/hoc/withPrivateRoute';
+import withPublicRoute from 'components/hoc/withPublicRoute';
+import { lazy, LazyExoticComponent } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 export const PATH = {
@@ -28,31 +26,37 @@ type Path = typeof PATH[PathName];
 
 interface RoutesType {
   path: Path;
-  element: ReactElement;
+  Element: LazyExoticComponent<() => JSX.Element> | ((...args) => JSX.Element);
 }
 
 const ItemList = lazy(() => import('pages/ItemList'));
 const ItemDetail = lazy(() => import('pages/ItemDetail'));
 const Cart = lazy(() => import('pages/Cart'));
+const Signup = lazy(() => import('pages/Signup'));
+const Login = lazy(() => import('pages/Login'));
+const UserEdit = lazy(() => import('pages/UserEdit'));
+const UserWithDrawal = lazy(() => import('pages/UserWithDrawal'));
 const NotFound = lazy(() => import('pages/NotFound'));
 
 const ROUTES: RoutesType[] = [
-  { path: PATH.home, element: <Navigate replace to='/main/1' /> },
-  { path: PATH.main, element: <ItemList /> },
-  { path: PATH.itemDetail, element: <ItemDetail /> },
-  { path: PATH.cart, element: <Cart /> },
-  { path: PATH.signup, element: <Signup /> },
-  { path: PATH.login, element: <Login /> },
-  { path: PATH.editUser, element: <UserEdit /> },
-  { path: PATH.withdrawal, element: <UserWithDrawal /> },
-  { path: PATH.notFound, element: <NotFound /> },
+  { path: PATH.main, Element: ItemList },
+  { path: PATH.itemDetail, Element: ItemDetail },
+  { path: PATH.notFound, Element: NotFound },
+
+  { path: PATH.signup, Element: withPublicRoute(Signup) },
+  { path: PATH.login, Element: withPublicRoute(Login) },
+
+  { path: PATH.cart, Element: withPrivateRoute(Cart) },
+  { path: PATH.editUser, Element: withPrivateRoute(UserEdit) },
+  { path: PATH.withdrawal, Element: withPrivateRoute(UserWithDrawal) },
 ];
 
 const Routers = () => {
   return (
     <Routes>
-      {ROUTES.map(route => (
-        <Route key={route.path} {...route} />
+      <Route path={PATH.home} element={<Navigate replace to='/main/1' />} />
+      {ROUTES.map(({ Element, ...route }) => (
+        <Route key={route.path} element={<Element />} {...route} />
       ))}
     </Routes>
   );
