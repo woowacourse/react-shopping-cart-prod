@@ -6,8 +6,13 @@ import { CheckBox, Counter, Icon, Image } from 'components/common';
 
 import * as S from 'components/cart/CartProductCard/CartProductCard.style';
 
+import { WARNING_MESSAGES } from 'constants/messages';
+
 import { Position } from 'styles/GlobalStyles';
 import { color } from 'styles/Theme.js';
+
+
+const NotConfirmDecrement = (quantity, stock) => !window.confirm(WARNING_MESSAGES.DECREASE_TO_STOCK(quantity, stock));
 
 function CartProductCard({
   product: { id: productId, name, price, imageURL, stock },
@@ -21,24 +26,43 @@ function CartProductCard({
     toggleCheck,
   } = useCart();
 
+  const isSoldOut = stock === 0;
+  const isMoreThanStock = quantity >= stock;
+  const counterValue = Math.min(stock, quantity);
+  const checked = useMemo(() => isChecked(productId), [isChecked]);
+
   const handleQuantityIncrement = useCallback(
-    () => incrementCartProduct(productId, quantity),
+    () => {
+      if (isMoreThanStock) {
+        alert(WARNING_MESSAGES.MAX_QUANTITY);
+        return;
+      }
+
+      incrementCartProduct(productId, quantity)
+    },
     [quantity],
   );
 
   const handleQuantityDecrement = useCallback(
-    () => decrementCartProduct(productId, quantity),
+    () => {
+      let currentQuantity = quantity;
+
+      if (quantity > stock) {
+        if (NotConfirmDecrement(quantity, stock)) {
+          return;
+        }
+        currentQuantity = stock
+      }
+
+      decrementCartProduct(productId, currentQuantity)
+    },
     [quantity],
   );
 
   const handleProductDelete = useCallback(() => deleteProduct([productId]), []);
 
-  const checked = useMemo(() => isChecked(productId), [isChecked]);
-
   const handleCheckBoxClick = useCallback(() => toggleCheck(productId), []);
   
-  const isSoldOut = stock === 0;
-
   return (
     <S.Container>
       <CheckBox checked={checked} disabled={isSoldOut} onClick={handleCheckBoxClick} />
@@ -51,16 +75,16 @@ function CartProductCard({
         </Position>
         <S.Name>{name}</S.Name>
         <Counter
-          count={quantity}
+          count={counterValue}
           disabled={isSoldOut}
           onIncrement={handleQuantityIncrement}
           onDecrement={handleQuantityDecrement}
         />
         <S.StatusMessage>
           {
-            stock === 0 ?
+            isSoldOut ?
             '품절된 상품입니다.' : 
-            quantity >= stock ? 
+            isMoreThanStock ? 
             '구매 가능한 최대 수량입니다.' :
             ''
           }

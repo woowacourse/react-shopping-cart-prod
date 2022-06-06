@@ -81,7 +81,10 @@ const useCart = () => {
     const { product, quantity } = cart.find(
       ({ product }) => product.id === productId,
     );
-    return total + product.price * quantity;
+
+    const purchasableQuantity = Math.min(quantity, product.stock);
+    
+    return total + product.price * purchasableQuantity;
   }, 0);
 
   return {
