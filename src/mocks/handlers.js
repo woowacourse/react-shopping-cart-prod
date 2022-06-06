@@ -88,6 +88,7 @@ export const handlers = [
   }),
 
   rest.delete(`${BASE_URL}/users/me`, (req, res, ctx) => {
+    console.log(req);
     const accessToken = req.headers._headers.authorization;
 
     if (!accessToken) {

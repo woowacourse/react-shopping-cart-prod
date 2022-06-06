@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
-import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import { logoutUser } from "@/redux/modules/user";
 
 import useInput from "@/hooks/useInput";
 import usePasswordConfirm from "@/hooks/usePasswordConfirm";
+import useFetch from "@/hooks/useFetch";
 
 import Form from "@/components/Form";
 import Field from "@/components/Field";
 
 import { getCookie } from "@/utils/auth";
-import { deleteCookie } from "@/utils/auth";
 
 import {
-  BASE_URL,
   PATH,
   STATUS,
   INPUT_TYPE,
@@ -27,8 +25,7 @@ import {
 import StyledUserEditContainer from "@/pages/UserEdit/index.style";
 
 function UserEdit() {
-  const [email, setEmail] = useState({ value: "", status: STATUS.FULFILLED });
-  const [nickname, onChangeNickname, setNickname] = useInput(
+  const [nickname, onChangeNickname] = useInput(
     INPUT_TYPE.NICKNAME,
     STATUS.FULFILLED
   );
@@ -38,72 +35,61 @@ function UserEdit() {
   );
   const [passwordConfirm, onChangePasswordConfirm] = usePasswordConfirm();
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
+  const {
+    error: editError,
+    success: editSuccess,
+    getData: editUser,
+  } = useFetch("put", "users/me");
+  const {
+    error: withdrawError,
+    success: withdrawSuccess,
+    getData: withdrawUser,
+  } = useFetch("delete", "users/me");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const getUser = async () => {
-    try {
-      const { data } = await axios.get(`${BASE_URL}/users/me`, {
-        headers: {
-          Authorization:
-            getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
-        },
-      });
-      setEmail((prev) => ({ ...prev, value: data.email }));
-      setNickname((prev) => ({ ...prev, value: data.nickname }));
-    } catch (error) {
-      dispatch(toggleSnackbarOpen(MESSAGE.NOT_AUTHORIZED));
-      navigate(PATH.MAIN);
-    }
-  };
+  const { email: prevEmail } = useSelector((state) => state.userState);
+  const { nickname: prevNickname } = useSelector((state) => state.userState);
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      await axios.put(
-        `${BASE_URL}/users/me`,
-        {
-          nickname: nickname.value,
-          password: password.value,
-        },
-        {
-          headers: {
-            Authorization:
-              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
-          },
-        }
-      );
-      navigate(PATH.MAIN);
-      location.reload();
-    } catch (error) {
-      console.log(error);
-    }
+    const headers = {
+      Authorization:
+        getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+    };
+    editUser(
+      {
+        nickname: nickname.value,
+        password: password.value,
+      },
+      headers
+    );
   };
 
   const handleWithdrawalClick = async (e) => {
     if (confirm(MESSAGE.WITHDRAWAL_CONFIRM)) {
-      try {
-        await axios.delete(`${BASE_URL}/users/me`, {
-          headers: {
-            Authorization:
-              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
-          },
-        });
-
-        deleteCookie("accessToken");
-        navigate(PATH.MAIN);
-        location.reload();
-      } catch (error) {
-        console.log(error);
-      }
+      const headers = {
+        Authorization:
+          getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+      };
+      withdrawUser({}, headers);
     }
   };
 
   useEffect(() => {
-    getUser();
-  }, []);
+    if (!editError && editSuccess) {
+      navigate(PATH.MAIN);
+    }
+  }, [editError, editSuccess]);
+
+  useEffect(() => {
+    if (!withdrawError && withdrawSuccess) {
+      dispatch(logoutUser());
+      navigate(PATH.MAIN);
+    }
+  }, [withdrawError, withdrawSuccess]);
 
   useEffect(() => {
     if (
@@ -128,13 +114,13 @@ function UserEdit() {
         <Field
           labelName="아이디"
           type="email"
-          placeholder={email.value}
+          placeholder={prevEmail}
           disabled
         />
         <Field
           labelName="닉네임"
           type="text"
-          value={nickname.value}
+          value={prevNickname}
           minLength={NICKNAME.MIN_LENGTH}
           maxLength={NICKNAME.MAX_LENGTH}
           onChange={onChangeNickname}

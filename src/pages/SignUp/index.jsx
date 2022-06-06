@@ -7,11 +7,11 @@ import usePasswordConfirm from "@/hooks/usePasswordConfirm";
 
 import Form from "@/components/Form";
 import Field from "@/components/Field";
+import useFetch from "@/hooks/useFetch";
 
 import { INPUT_TYPE, STATUS, NICKNAME, PASSWORD, PATH } from "@/constants";
 
 import StyledSignupContainer from "@/pages/SignUp/index.style";
-import { useFetch } from "@/hooks/useFetch";
 
 function Signup() {
   const [email, onChangeEmail] = useInput(INPUT_TYPE.EMAIL, STATUS.READY);

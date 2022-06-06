@@ -10,6 +10,9 @@ const ACTION_TYPES = {
   GET_USER_FAILURE: "GET_USER_FAILURE",
 
   LOGOUT_USER: "LOGOUT_USER",
+
+  EDIT_USER_SUCCESS: "EDIT_USER_SUCCESS",
+  EDIT_USER_FAILURE: "EDIT_USER_FAILURE",
 };
 
 const initialState = {
@@ -33,6 +36,20 @@ export const getUser = (email, password) => async (dispatch) => {
 };
 
 export const logoutUser = () => ({ type: ACTION_TYPES.LOGOUT_USER });
+
+export const editUser = () => async () => {
+  try {
+    await appClient.put("/users/me");
+    dispatch({ type: ACTION_TYPES.EDIT_USER_SUCCESS });
+  } catch (error) {
+    const { errorCode } = error.response.data;
+    dispatch(toggleSnackbarOpen(MESSAGE[ERROR_CODE[errorCode]]));
+    dispatch({
+      type: ACTION_TYPES.EDIT_USER_FAILURE,
+      payload: errorCode,
+    });
+  }
+};
 
 export function userReducer(state = initialState, action) {
   switch (action.type) {

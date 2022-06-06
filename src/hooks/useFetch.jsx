@@ -5,7 +5,7 @@ import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import appClient from "@/utils/appClient";
 import { MESSAGE, ERROR_CODE } from "@/constants";
 
-export const useFetch = (method, url, initialData = {}) => {
+const useFetch = (method, url, initialData = {}, func) => {
   const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -13,9 +13,12 @@ export const useFetch = (method, url, initialData = {}) => {
 
   const dispatch = useDispatch();
 
-  const getData = async (payload = {}) => {
+  const getData = async (payload = {}, headers = {}) => {
     try {
-      const { data } = await appClient[method](url, payload);
+      const { data } = await appClient[method](url, {
+        data: payload,
+        headers,
+      });
       setData(data);
       setIsLoading(false);
       setSuccess(true);
@@ -30,3 +33,5 @@ export const useFetch = (method, url, initialData = {}) => {
 
   return { data, isLoading, error, success, getData };
 };
+
+export default useFetch;
