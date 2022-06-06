@@ -8,7 +8,7 @@ import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
 import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
 
-function SignupPage() {
+function SignUpPage() {
   const navigation = useNavigate();
 
   const [onChangeId, restId] = useControlledInput({
@@ -61,14 +61,14 @@ function SignupPage() {
     restMiddleNumber.isError ||
     restLastNumber.isError;
 
-  const signup = useFetch('post');
+  const signUp = useFetch('post');
 
   const onSubmit = (inputs) => {
     // eslint-disable-next-line no-unused-vars
     const [account, nickname, password, confirmPassword, address, start, middle, last] = inputs;
 
-    signup.fetch({
-      API_URL: process.env.REACT_APP_SIGNUP_API_URL,
+    signUp.fetch({
+      API_URL: process.env.REACT_APP_SIGN_UP_API_URL,
       body: {
         account: account.value,
         nickname: nickname.value,
@@ -87,12 +87,12 @@ function SignupPage() {
   };
 
   useEffect(() => {
-    signup.error && alert(ERROR_MESSAGE.SIGNUP);
-  }, [signup.error]);
+    signUp.error && alert(ERROR_MESSAGE.SIGN_UP);
+  }, [signUp.error]);
 
   return (
     <S.Layout>
-      <S.SignupContainer>
+      <S.SignUpContainer>
         <S.Header>회원가입</S.Header>
         <S.InputForm
           onSubmit={(e) => {
@@ -180,9 +180,9 @@ function SignupPage() {
             확인
           </S.ConfirmButton>
         </S.InputForm>
-      </S.SignupContainer>
+      </S.SignUpContainer>
     </S.Layout>
   );
 }
 
-export default SignupPage;
+export default SignUpPage;

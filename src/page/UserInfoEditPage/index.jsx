@@ -102,7 +102,7 @@ function UserInfoEditPage() {
 
   return (
     <S.Layout>
-      <S.SignupContainer>
+      <S.SignUpContainer>
         <S.Header>회원 정보 수정</S.Header>
 
         {userInfo.data && (
@@ -198,7 +198,7 @@ function UserInfoEditPage() {
             </S.ConfirmButton>
           </S.InputForm>
         )}
-      </S.SignupContainer>
+      </S.SignUpContainer>
     </S.Layout>
   );
 }

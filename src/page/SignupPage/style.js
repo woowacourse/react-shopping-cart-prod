@@ -11,7 +11,7 @@ const Layout = styled.div`
   background-color: ${({theme}) => theme.GRAY_400};
 `;
 
-const SignupContainer = styled.div`
+const SignUpContainer = styled.div`
   margin: 200px auto 0;
   width: 600px;
   height: 820px;
@@ -54,7 +54,7 @@ const Hyphen = styled.span`
 
 export {
   Layout,
-  SignupContainer,
+  SignUpContainer,
   Header,
   InputForm,
   ConfirmButton,

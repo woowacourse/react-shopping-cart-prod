@@ -9,7 +9,7 @@ const Layout = styled.div`
   background-color: ${({theme}) => theme.GRAY_400};
 `;
 
-const SignupContainer = styled.div`
+const SignUpContainer = styled.div`
   margin: 200px auto 0;
   width: 600px;
   height: 660px;
@@ -48,4 +48,4 @@ const Hyphen = styled.span`
   line-height: 83px;
 `;
 
-export {Layout, SignupContainer, Header, InputForm, ConfirmButton, PhoneNumberContainer, Hyphen};
+export {Layout, SignUpContainer, Header, InputForm, ConfirmButton, PhoneNumberContainer, Hyphen};

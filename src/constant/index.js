@@ -4,8 +4,8 @@ const PATH = {
   DETAIL: '/detail',
   ORDER: '/order',
   LOGIN: '/login',
-  SIGNUP: '/signup',
-  EDIT_USER_INFO: '/userinfo',
+  SIGN_UP: '/sign_up',
+  EDIT_USER_INFO: '/user_info',
   WITHDRAWAL: '/withdrawal',
 };
 

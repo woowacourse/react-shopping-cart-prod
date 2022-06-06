@@ -6,7 +6,7 @@ import Header from 'component/Header';
 import ProductListPage from 'page/ProductListPage';
 import ProductDetailPage from 'page/ProductDetailPage';
 import ProductCartPage from 'page/ProductCartPage';
-import SignupPage from 'page/SignupPage';
+import SignUpPage from 'page/SignupPage';
 
 import theme from 'theme/theme';
 import {GlobalStyles} from 'style/globalStyle';
@@ -39,7 +39,7 @@ export default function App() {
               element={<NotFoundPage> 아직 개발중인 페이지입니다🔨</NotFoundPage>}
             ></Route>
             <Route path={PATH.LOGIN} element={<LoginPage />}></Route>
-            <Route path={PATH.SIGNUP} element={<SignupPage />}></Route>
+            <Route path={PATH.SIGNUP} element={<SignUpPage />}></Route>
             <Route path={PATH.EDIT_USER_INFO} element={<UserInfoEditPage />}></Route>
             <Route path={PATH.WITHDRAWAL} element={<WithDrawalPage />}></Route>
             <Route path="*" element={<NotFoundPage> 잘못 들어왔어요😢</NotFoundPage>}></Route>

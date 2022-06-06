@@ -73,12 +73,12 @@ function LoginPage() {
           >
             확인
           </S.ConfirmButton>
-          <S.SignupText>
+          <S.SignUpText>
             <span>아직 회원이 아니신가요?</span>
             <S.LinkText>
-              <Link to={PATH.SIGNUP}>회원가입</Link>
+              <Link to={PATH.SIGN_UP}>회원가입</Link>
             </S.LinkText>
-          </S.SignupText>
+          </S.SignUpText>
         </S.InputForm>
       </S.LoginContainer>
     </S.Layout>
