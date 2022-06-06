@@ -7,9 +7,12 @@ import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
 import {useNavigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 function UserInfoEditPage() {
   const navigation = useNavigate();
+
+  const accessToken = useSelector((state) => state.authReducer.accessToken);
 
   const userInfo = useFetch('get');
   const editInfo = useFetch('put');
@@ -51,10 +54,7 @@ function UserInfoEditPage() {
     restMiddleNumber.isError ||
     restLastNumber.isError;
 
-  const getInfo = async () => {
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
-
+  const getInfo = () => {
     userInfo.fetch({
       API_URL: process.env.REACT_APP_GET_INFO_API_URL,
       headers: {
@@ -66,9 +66,6 @@ function UserInfoEditPage() {
   const onSubmit = async (inputs) => {
     // eslint-disable-next-line no-unused-vars
     const [account, nickname, password, address, start, middle, last] = inputs;
-
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
 
     editInfo.fetch({
       API_URL: process.env.REACT_APP_EDIT_INFO_API_URL,
@@ -89,8 +86,8 @@ function UserInfoEditPage() {
   };
 
   useEffect(() => {
-    getInfo();
-  }, []);
+    accessToken && getInfo();
+  }, [accessToken]);
 
   useEffect(() => {
     userInfo.error && alert(ERROR_MESSAGE.VIEW_USER_INFO);

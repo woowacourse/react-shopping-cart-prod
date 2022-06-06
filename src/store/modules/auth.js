@@ -4,7 +4,8 @@ export const AUTH = {
 };
 
 const INITIAL_STATE = {
-  isLogined: false,
+  isLogin: false,
+  accessToken: '',
 };
 
 Object.freeze(INITIAL_STATE);
@@ -12,11 +13,12 @@ Object.freeze(INITIAL_STATE);
 export default function authReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case AUTH.LOGIN: {
-      return {isLogined: true};
+      const accessToken = action.payload;
+      return {isLogin: true, accessToken};
     }
 
     case AUTH.LOGOUT: {
-      return {isLogined: false};
+      return {isLogin: false, accessToken: ''};
     }
 
     default:

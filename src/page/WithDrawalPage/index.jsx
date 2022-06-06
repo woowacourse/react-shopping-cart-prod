@@ -7,19 +7,21 @@ import CheckBox from 'component/common/CheckBox';
 import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
 import {PATH} from 'constant';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
 import useControlledInput from 'hook/useControlledInput';
 import {ERROR_MESSAGE} from 'constant';
 
-function WithDrawalPage() {
+function WithdrawalPage() {
   const [isChecked, setIsChecked] = useState(false);
-
-  const [onChangePassword, restPassword] = useControlledInput({});
 
   const navigation = useNavigate();
 
   const dispatch = useDispatch();
+
+  const accessToken = useSelector((state) => state.authReducer.accessToken);
+
+  const [onChangePassword, restPassword] = useControlledInput({});
 
   const withDrawal = useFetch('delete');
 
@@ -27,8 +29,6 @@ function WithDrawalPage() {
 
   const onSubmit = async (inputs) => {
     const [password] = inputs;
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
 
     withDrawal.fetch({
       API_URL: process.env.REACT_APP_WITHDRAWAL_API_URL,
@@ -100,4 +100,4 @@ function WithDrawalPage() {
   );
 }
 
-export default WithDrawalPage;
+export default WithdrawalPage;

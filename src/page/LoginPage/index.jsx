@@ -26,8 +26,10 @@ function LoginPage() {
         password: inputs[1].value,
       },
       onSuccess: (data) => {
-        localStorage.setItem('accessToken', JSON.stringify(data));
-        dispatch({type: AUTH.LOGIN});
+        const accessToken = JSON.stringify(data);
+        localStorage.setItem('accessToken', accessToken);
+
+        dispatch({type: AUTH.LOGIN, payload: data.accessToken});
         navigation(PATH.HOME);
       },
     });
