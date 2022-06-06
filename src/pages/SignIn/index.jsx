@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import { getUser } from "@/redux/modules/user";
 
 import Form from "@/components/Form";

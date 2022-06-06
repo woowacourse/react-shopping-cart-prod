@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useDispatch } from "react-redux";
 
-import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import { useNavigate } from "react-router-dom";
 
 import useInput from "@/hooks/useInput";
 import usePasswordConfirm from "@/hooks/usePasswordConfirm";
@@ -10,16 +8,10 @@ import usePasswordConfirm from "@/hooks/usePasswordConfirm";
 import Form from "@/components/Form";
 import Field from "@/components/Field";
 
-import {
-  BASE_URL,
-  MESSAGE,
-  INPUT_TYPE,
-  STATUS,
-  NICKNAME,
-  PASSWORD,
-} from "@/constants";
+import { INPUT_TYPE, STATUS, NICKNAME, PASSWORD, PATH } from "@/constants";
 
 import StyledSignupContainer from "@/pages/SignUp/index.style";
+import { useFetch } from "@/hooks/useFetch";
 
 function Signup() {
   const [email, onChangeEmail] = useInput(INPUT_TYPE.EMAIL, STATUS.READY);
@@ -33,8 +25,9 @@ function Signup() {
   );
   const [passwordConfirm, onChangePasswordConfirm] = usePasswordConfirm();
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
+  const { error, success, getData: registerUser } = useFetch("post", "users");
 
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (
@@ -49,25 +42,20 @@ function Signup() {
     setPreventFormSubmit(true);
   }, [email, nickname, password, passwordConfirm]);
 
+  useEffect(() => {
+    if (!error && success) {
+      navigate(PATH.LOGIN);
+    }
+  }, [success]);
+
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      await axios.post(`${BASE_URL}/users`, {
-        email: email.value,
-        password: password.value,
-        nickname: nickname.value,
-      });
-    } catch (error) {
-      const { errorCode } = error.response.data;
-      if (errorCode === "1000") {
-        dispatch(toggleSnackbarOpen(MESSAGE.INVALID_SIGNUP_INPUT));
-      }
-      if (errorCode === "1001") {
-        dispatch(toggleSnackbarOpen(MESSAGE.EXIST_EMAIL));
-      }
-      console.log(error);
-    }
+    registerUser({
+      email: email.value,
+      nickname: nickname.value,
+      password: password.value,
+    });
   };
 
   return (

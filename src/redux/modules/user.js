@@ -58,6 +58,16 @@ export function userReducer(state = initialState, action) {
         authorized: false,
       };
     }
+    case ACTION_TYPES.REGISTER_USER_SUCCESS: {
+      const { email, nickname } = action.payload;
+      return { email, nickname, authorized: false };
+    }
+    case ACTION_TYPES.REGISTER_USER_FAILURE: {
+      return {
+        ...state,
+        authorized: false,
+      };
+    }
     default: {
       return state;
     }
