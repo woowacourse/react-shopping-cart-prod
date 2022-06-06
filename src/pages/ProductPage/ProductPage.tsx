@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
+import Button from 'components/@shared/Button';
 import Loading from 'components/@shared/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -56,9 +57,14 @@ function ProductPage() {
               <dt>제품 설명</dt>
               <dd>{productDetail.description}</dd>
             </dl>
-            <StyledAddToCartButton onClick={onClickCartButton}>
+            <Button
+              type="button"
+              onClick={onClickCartButton}
+              size="small"
+              marginTop="20px"
+            >
               장바구니
-            </StyledAddToCartButton>
+            </Button>
           </>
         ) : null;
       case CONDITION.ERROR:
@@ -112,18 +118,6 @@ const StyledImageContainer = styled.div`
   img {
     width: 100%;
   }
-`;
-
-const StyledAddToCartButton = styled.button`
-  width: 170px;
-  height: 50px;
-  margin-top: 20px;
-
-  background: ${({ theme: { colors } }) => colors.redPink};
-  color: ${({ theme: { colors } }) => colors.white};
-
-  font-size: 15px;
-  font-weight: 600;
 `;
 
 const Message = styled.div`

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import authAPI from 'apis/auth';
+import Button from 'components/@shared/Button';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { createInputValueGetter } from 'utils/dom';
@@ -163,7 +164,9 @@ function SignupForm() {
         onChange={handlerPhoneNumberInput}
         required
       />
-      <StyledSignupButton type="submit">회원가입</StyledSignupButton>
+      <Button type="submit" marginTop="20px">
+        회원가입
+      </Button>
     </StyledForm>
   );
 }
@@ -206,18 +209,6 @@ const StyledErrorMessage = styled.span`
       isCorrect ? colors.green : colors.black};
     font-weight: ${isCorrect ? 800 : 500};
   `}
-`;
-
-const StyledSignupButton = styled.button`
-  background: ${({ theme: { colors } }) => colors.redPink};
-  color: ${({ theme: { colors } }) => colors.white};
-  border-radius: 5px;
-
-  height: 40px;
-  margin-top: 20px;
-
-  font-size: 17px;
-  font-weight: 900;
 `;
 
 export default SignupForm;

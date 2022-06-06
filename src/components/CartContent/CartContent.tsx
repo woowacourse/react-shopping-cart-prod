@@ -1,3 +1,4 @@
+import Button from 'components/@shared/Button';
 import CheckBox from 'components/@shared/CheckBox';
 import CartItem from 'components/CartItem/CartItem';
 import { useDispatch } from 'react-redux';
@@ -76,7 +77,9 @@ function CartContent({ cartItems }: Props) {
         <StyledTotalMoney>
           {calculateTotalMoney().toLocaleString('ko-KR')} 원
         </StyledTotalMoney>
-        <StyledOrderButton type="button">주문하기</StyledOrderButton>
+        <Button type="button" size="small">
+          주문하기
+        </Button>
       </StyledTotalContainer>
     </StyledContentBox>
   );
@@ -146,15 +149,6 @@ const StyledTotalMoney = styled.div`
   line-height: 5px;
   border-bottom: 10px solid ${({ theme: { colors } }) => colors.pink};
   margin: 30px 0;
-`;
-
-const StyledOrderButton = styled.button`
-  width: 80%;
-  height: 40px;
-  border-radius: 2px;
-
-  background: ${({ theme: { colors } }) => colors.redPink};
-  color: ${({ theme: { colors } }) => colors.white};
 `;
 
 export default CartContent;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import authAPI from 'apis/auth';
+import Button from 'components/@shared/Button';
 import CheckBox from 'components/@shared/CheckBox';
 import Link from 'components/@shared/Link';
 import { useDispatch } from 'react-redux';
@@ -75,7 +76,9 @@ function LoginForm() {
           <Link to="#">비밀번호 찾기</Link>
         </StyledFindLoginInfo>
       </StyledLoginHelper>
-      <StyledLoginButton type="submit">로그인</StyledLoginButton>
+      <Button type="submit" marginTop="20px">
+        로그인
+      </Button>
     </StyledForm>
   );
 }
@@ -128,18 +131,6 @@ const StyledFindLoginInfo = styled.div`
   a:hover {
     font-weight: 900;
   }
-`;
-
-const StyledLoginButton = styled.button`
-  background: ${({ theme: { colors } }) => colors.redPink};
-  color: ${({ theme: { colors } }) => colors.white};
-  border-radius: 5px;
-
-  height: 40px;
-  margin-top: 20px;
-
-  font-size: 17px;
-  font-weight: 900;
 `;
 
 export default LoginForm;

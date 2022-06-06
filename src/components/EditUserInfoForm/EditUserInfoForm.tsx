@@ -1,4 +1,5 @@
 import authAPI from 'apis/auth';
+import Button from 'components/@shared/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
@@ -73,10 +74,17 @@ function EditUserInfoForm() {
         required
       />
       <StyledButtons>
-        <StyledWithdrawButton type="button" onClick={onClickWithdrawButton}>
+        <Button
+          type="button"
+          onClick={onClickWithdrawButton}
+          marginTop="20px"
+          reverse={true}
+        >
           회원 탈퇴
-        </StyledWithdrawButton>
-        <StyledEditButton type="submit">회원 정보 수정</StyledEditButton>
+        </Button>
+        <Button type="submit" marginTop="20px">
+          회원 정보 수정
+        </Button>
       </StyledButtons>
     </StyledForm>
   );
@@ -105,31 +113,6 @@ const StyledButtons = styled.div`
   display: flex;
   gap: 10px;
   width: 100%;
-`;
-
-const StyledWithdrawButton = styled.button`
-  width: 50%;
-  height: 40px;
-  background: ${({ theme: { colors } }) => colors.white};
-  color: ${({ theme: { colors } }) => colors.redPink};
-  border: 1px solid ${({ theme: { colors } }) => colors.redPink};
-  border-radius: 5px;
-  margin-top: 20px;
-
-  font-size: 17px;
-  font-weight: 900;
-`;
-
-const StyledEditButton = styled.button`
-  width: 50%;
-  height: 40px;
-  background: ${({ theme: { colors } }) => colors.redPink};
-  color: ${({ theme: { colors } }) => colors.white};
-  border-radius: 5px;
-  margin-top: 20px;
-
-  font-size: 17px;
-  font-weight: 900;
 `;
 
 export default EditUserInfoForm;
