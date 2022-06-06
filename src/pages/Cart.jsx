@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useCheckBox, useCartItem } from 'hooks';
 
-import { requestAddCartItem, requestDeleteCartItem } from 'api';
+import { requestAddCartItem, requestDeleteCartItem, requestPurchaseCartItem } from 'api';
 import Layout from 'components/Layout';
 import PageHeader from 'components/@common/PageHeader';
 import CartList from 'components/CartList';
@@ -106,6 +106,20 @@ const Cart = () => {
     alert('상품 수량 조정에 실패하였습니다!');
   };
 
+  const onPurchaseButtonClick = async () => {
+    const response = await requestPurchaseCartItem({ productIds: checkboxItems });
+    if (response.status === 비동기_요청.SUCCESS) {
+      const purchaseResult = cartList.reduce((prev, cur) => {
+        if (checkboxItems.includes(cur.id)) {
+          return prev.concat(`상품: ${cur.name}, 수량: ${cur.quantity}     `);
+        }
+        return prev;
+      }, '');
+      alert(purchaseResult);
+      dispatch(deleteCartItem(checkboxItems));
+    }
+  };
+
   return (
     <Layout>
       <Styled.CartListContainer>
@@ -127,7 +141,11 @@ const Cart = () => {
               <div>상품이 텅 비었습니다</div>
             )}
           </CommonStyled.FlexWrapper>
-          <CartReceipt totalPrice={totalPrice} checkboxItemCount={checkboxItems.length} />
+          <CartReceipt
+            totalPrice={totalPrice}
+            checkboxItemCount={checkboxItems.length}
+            onPurchaseButtonClick={onPurchaseButtonClick}
+          />
         </CommonStyled.Container>
       </Styled.CartListContainer>
     </Layout>

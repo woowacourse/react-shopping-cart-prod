@@ -6,7 +6,7 @@ import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
-const CartReceipt = ({ totalPrice, checkboxItemCount }) => (
+const CartReceipt = ({ totalPrice, checkboxItemCount, onPurchaseButtonClick }) => (
   <Styled.CartListReceiptContainer>
     <CommonStyled.FlexWrapper padding="1.5rem">
       <CommonStyled.Text>결제예상금액</CommonStyled.Text>
@@ -35,7 +35,13 @@ const CartReceipt = ({ totalPrice, checkboxItemCount }) => (
           주문하기({checkboxItemCount || 0}종)
         </Button>
       ) : (
-        <Button height="60px" margin="3rem 0 0 0" size="1.2rem" weight="normal">
+        <Button
+          height="60px"
+          margin="3rem 0 0 0"
+          size="1.2rem"
+          weight="normal"
+          onClick={onPurchaseButtonClick}
+        >
           주문하기({checkboxItemCount || 0}종)
         </Button>
       )}
