@@ -35,7 +35,7 @@ export const ERROR_MESSAGES = {
     INVALID_EMAIL: '올바르지 않은 이메일 형식입니다.',
     DUPLICATE_EMAIL: '사용할 수 없는 이메일입니다.',
     INVALID_PASSWORD:
-      '비밀번호는 숫자, 영문자, 특수문자()의 조합으로 8 ~ 20자 입력해주세요.',
+      '비밀번호는 숫자, 영문자, 특수문자($@$!%*#?&)의 조합으로 8 ~ 20자 입력해주세요.',
     PASSWORD_NO_MATCH: '비밀번호가 일치하지 않습니다.',
     INVALID_NICKNAME: '닉네임은 1 ~ 5자의 한글로 입력해주세요.',
   },
