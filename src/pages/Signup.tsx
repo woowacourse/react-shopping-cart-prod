@@ -1,7 +1,7 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
-import withAuthPage from 'components/hoc/withAuthPage';
+import withPublicRoute from 'components/hoc/withPublicRoute';
 import { ALERT_MESSAGE } from 'constants/index';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import useAuthError from 'hooks/useAuthError';
@@ -77,4 +77,4 @@ const Signup = () => {
   );
 };
 
-export default withAuthPage(Signup, false);
+export default withPublicRoute(Signup);
