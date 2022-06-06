@@ -1,16 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routes from 'routes';
 import axios from 'axios';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUserState, signupAPI, UserState } from 'redux/modules/user';
+import { show } from 'redux/modules/snackBar';
+
 import useInput from 'hooks/useInput';
 import usePassword from 'hooks/usePassword';
-import { Button, Form, Input } from 'components/@shared';
+import { Button, Form, Input, Loader } from 'components/@shared';
 import { PageLayout } from 'components';
 
-import { DuplicateCheckButton, IdContainer } from './styles';
-
 function Signup() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { loading, error, signUpFinish }: UserState = useSelector(selectUserState);
   const [id, onChangeId] = useInput();
   const [idStatus, setIdStatus] = useState({
     isValid: false,
@@ -24,57 +29,60 @@ function Signup() {
     passwordConfirmErrorMessage,
     onChangePasswordConfirm,
   } = usePassword();
-  const navigate = useNavigate();
 
-  const onClickDuplicateCheck = async () => {
-    const response = await axios.post('/api/customers/duplication', { userName: id });
+  const onBlurDuplicateCheck = async () => {
+    const { data: isDuplicatedId } = await axios.post('/api/customers/duplication', {
+      userName: id,
+    });
 
-    if (!response.data) {
-      setIdStatus({ isValid: true, message: '사용 가능한 아이디입니다.' });
-
+    if (isDuplicatedId) {
+      setIdStatus({
+        isValid: false,
+        message: '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.',
+      });
       return;
     }
 
-    setIdStatus({
-      isValid: false,
-      message: '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.',
-    });
+    setIdStatus({ isValid: true, message: '사용 가능한 아이디입니다.' });
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!idStatus.isValid) {
-      alert('아이디 중복이 확인되지 않았습니다!');
-
-      return;
-    }
-
-    await axios.post('/api/customers', { userName: id, password });
-
-    navigate(routes.login);
+    dispatch(signupAPI(id, password));
   };
+
+  useEffect(() => {
+    if (signUpFinish) {
+      navigate(routes.login);
+      dispatch(show('회원가입 완료 ✅'));
+    }
+  }, [signUpFinish]);
+
+  useEffect(() => {
+    if (error) {
+      alert(error.message);
+    }
+  }, [error]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <PageLayout>
       <h1>회원가입</h1>
       <Form onSubmit={onSubmit}>
-        <IdContainer>
-          <Input
-            htmlFor="signup-id"
-            label="아이디"
-            value={id}
-            onChange={onChangeId}
-            maxLength={10}
-            isValid={idStatus.isValid}
-            message={idStatus.message}
-          />
-          {id && (
-            <DuplicateCheckButton type="button" onClick={onClickDuplicateCheck}>
-              중복 확인
-            </DuplicateCheckButton>
-          )}
-        </IdContainer>
+        <Input
+          htmlFor="signup-id"
+          label="아이디"
+          value={id}
+          onChange={onChangeId}
+          maxLength={10}
+          isValid={idStatus.isValid}
+          message={idStatus.message}
+          onBlur={onBlurDuplicateCheck}
+        />
         <Input
           type="password"
           htmlFor="signup-password"

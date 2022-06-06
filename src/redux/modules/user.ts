@@ -7,6 +7,7 @@ export type UserState = {
   error: Error | null;
   userName: string | null;
   isLoggedIn: boolean;
+  signUpFinish: boolean;
 };
 
 export type Action =
@@ -22,13 +23,17 @@ export type Action =
   | ReturnType<typeof deleteUserFailure>
   | ReturnType<typeof changePasswordRequest>
   | ReturnType<typeof changePasswordSuccess>
-  | ReturnType<typeof changePasswordFailure>;
+  | ReturnType<typeof changePasswordFailure>
+  | ReturnType<typeof signupRequest>
+  | ReturnType<typeof signupSuccess>
+  | ReturnType<typeof signupFailure>;
 
 const initialState: UserState = {
   loading: false,
   error: null,
   userName: null,
   isLoggedIn: !!getCookie('accessToken'),
+  signUpFinish: false,
 };
 
 const LOAD_USER_REQUEST = 'user/LOAD_REQUEST' as const;
@@ -44,6 +49,9 @@ const DELETE_USER_FAILURE = 'user/DELETE_FAILURE' as const;
 const CHANGE_PASSWORD_REQUEST = 'user/DELETE_PASSWORD_REQUEST' as const;
 const CHANGE_PASSWORD_SUCCESS = 'user/DELETE_PASSWORD_SUCCESS' as const;
 const CHANGE_PASSWORD_FAILURE = 'user/DELETE_PASSWORD_FAILURE' as const;
+const SIGNUP_REQUEST = 'user/SIGNUP_REQUEST' as const;
+const SIGNUP_SUCCESS = 'user/SIGNUP_SUCCESS' as const;
+const SIGNUP_FAILURE = 'user/SIGNUP_FAILURE' as const;
 
 const loadUserRequest = () => ({ type: LOAD_USER_REQUEST });
 const loadUserSuccess = (userName: string) => ({
@@ -71,6 +79,12 @@ const changePasswordRequest = () => ({ type: CHANGE_PASSWORD_REQUEST });
 const changePasswordSuccess = () => ({ type: CHANGE_PASSWORD_SUCCESS });
 const changePasswordFailure = (error: Error) => ({
   type: CHANGE_PASSWORD_FAILURE,
+  payload: { error },
+});
+const signupRequest = () => ({ type: SIGNUP_REQUEST });
+const signupSuccess = () => ({ type: SIGNUP_SUCCESS });
+const signupFailure = (error: Error) => ({
+  type: SIGNUP_FAILURE,
   payload: { error },
 });
 
@@ -152,6 +166,20 @@ const changePasswordAPI =
     }
   };
 
+const signupAPI =
+  (userName: string, password: string): any =>
+  async (dispatch: AppDispatch) => {
+    dispatch(signupRequest());
+    try {
+      await axios.post('/api/customers', { userName, password });
+      dispatch(signupSuccess());
+    } catch (error) {
+      if (error instanceof Error) {
+        dispatch(signupFailure(error));
+      }
+    }
+  };
+
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case LOAD_USER_REQUEST: {
@@ -203,6 +231,17 @@ const userReducer = (state = initialState, action: Action) => {
 
       return { ...state, loading: false, error };
     }
+    case SIGNUP_REQUEST: {
+      return { ...state, loading: true, error: null, signUpFinish: false };
+    }
+    case SIGNUP_SUCCESS: {
+      return { ...state, loading: false, signUpFinish: true };
+    }
+    case SIGNUP_FAILURE: {
+      const { error } = action.payload;
+
+      return { ...state, loading: false, error };
+    }
     default:
       return state;
   }
@@ -210,6 +249,6 @@ const userReducer = (state = initialState, action: Action) => {
 
 export const selectUserState = (state: RootState) => state.user;
 
-export { loginAPI, loadUserAPI, logout, deleteUserAPI, changePasswordAPI };
+export { loginAPI, loadUserAPI, logout, deleteUserAPI, changePasswordAPI, signupAPI };
 
 export default userReducer;
