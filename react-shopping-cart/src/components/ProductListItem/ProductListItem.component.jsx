@@ -1,15 +1,70 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import styled from 'styled-components';
+import React, { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import styled, { css } from 'styled-components';
 
+import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 import Image from 'components/@shared/Image/Image.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
-import { addItem, deleteItem } from 'redux/actions/shoppingCart.action';
+import ModifyQuantityBox from 'components/ModifyQuantityBox/ModifyQuantityBox.component';
+
+import useDebounce from 'hooks/useDebounce';
+import useFetch from 'hooks/useFetch';
 
 import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
+import { API_URL_PATH } from 'constants/api';
+
+function ProductListItem({ id, thumbnail, name, price }) {
+  const { accessToken } = useSelector(state => state.auth);
+  const { fetchData: storeProductToCart, data } = useFetch({
+    url: `${API_URL_PATH.CARTS}`,
+    method: 'post',
+    headers: { Authorization: `Bearer ${accessToken}` },
+    skip: true,
+  });
+
+  const debounce = useDebounce();
+  const [modifyQuantityShow, setModifyQuantityShow] = useState(false);
+  const handleShowModifyQuantityBox = () => {
+    setModifyQuantityShow(prev => !prev);
+  };
+  const handleChangeQuantity = async quantity => {
+    if (!accessToken) {
+      alert('로그인 해주세요!');
+      return;
+    }
+
+    debounce(async () => {
+      setModifyQuantityShow(false);
+      await storeProductToCart({ id, quantity });
+    }, 1000);
+  };
+
+  return (
+    <ItemContainer>
+      <ProductImageBox>
+        <ProductImage type="medium" src={thumbnail} />
+      </ProductImageBox>
+      <TextBox className="product-name" fontSize="small">
+        {name}
+      </TextBox>
+      <TextBox className="product-price" fontSize="medium">
+        {price.toLocaleString()}원
+      </TextBox>
+      <CartIconBox className="icon-box">
+        <ShoppingCart role="button" onClick={handleShowModifyQuantityBox} />
+      </CartIconBox>
+      <CartQuantityBox show={modifyQuantityShow}>
+        <ModifyQuantityBox onChange={handleChangeQuantity} quantity={data?.quantity ?? 0} />
+      </CartQuantityBox>
+    </ItemContainer>
+  );
+}
+
+export default React.memo(ProductListItem);
 
 const ItemContainer = styled.div`
+  position: relative;
   display: grid;
   gap: 5px;
   width: 282px;
@@ -31,10 +86,11 @@ const ItemContainer = styled.div`
     margin-left: 11px;
   }
 
-  svg {
+  .icon-box {
     grid-area: icon;
     place-self: center end;
     margin-right: 11px;
+    cursor: pointer;
   }
 
   path {
@@ -58,28 +114,28 @@ const ProductImage = styled(Image).attrs({ type: 'medium' })`
   }
 `;
 
-function ProductListItem({ id, thumbnail, name, price }) {
-  const dispatch = useDispatch();
-  const shoppingCart = useSelector(state => state.shoppingCart);
+const CartIconBox = styled.div`
+  &:active {
+    transform: scale(0.9);
+  }
+`;
 
-  const isContained = shoppingCart.find(itemInfo => itemInfo.id === id) !== undefined;
-
-  const onClick = () => dispatch(isContained ? deleteItem(id) : addItem(id));
-
-  return (
-    <ItemContainer isContained={isContained}>
-      <ProductImageBox>
-        <ProductImage type="medium" src={thumbnail} />
-      </ProductImageBox>
-      <TextBox className="product-name" fontSize="small">
-        {name}
-      </TextBox>
-      <TextBox className="product-price" fontSize="medium">
-        {price.toLocaleString()}원
-      </TextBox>
-      <ShoppingCart role="button" style={{ cursor: 'pointer' }} onClick={onClick} />
-    </ItemContainer>
-  );
-}
-
-export default React.memo(ProductListItem);
+const CartQuantityBox = styled(FlexBox).attrs({
+  justifyContent: 'space-around',
+  alignItems: 'center',
+})`
+  display: ${({ show }) => (show ? 'display' : 'none')};
+  position: absolute;
+  bottom: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 85%;
+  height: 40px;
+  font-size: 20px;
+  border-radius: 25px;
+  opacity: 0.9;
+  ${({ theme }) => css`
+    background-color: ${theme.colors['MINT_001']};
+    color: ${theme.colors['WHITE_001']};
+  `};
+`;

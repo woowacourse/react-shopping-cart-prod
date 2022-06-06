@@ -7,4 +7,5 @@ export const API_URL_PATH = {
   LOGIN: `/auth/login`,
   EMAIL: `/${CUSTOMERS}/email`,
   NAME: `/${CUSTOMERS}/name`,
+  CARTS: `/${CUSTOMERS}/carts`,
 };

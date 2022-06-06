@@ -63,4 +63,10 @@ export const handlers = [
     }
     return res(ctx.status(401));
   }),
+  rest.post(`${API_URL_PATH.CARTS}`, (req, res, ctx) => {
+    const { id, quantity } = req.body;
+    customers['abc@abc.com'].carts.push({ id, quantity });
+
+    return res(ctx.status(200), ctx.json({ quantity }));
+  }),
 ];
