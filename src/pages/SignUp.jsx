@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useInput from 'hooks/useInput';
@@ -42,23 +42,13 @@ const SignUp = () => {
 
   const [checkDuplicatedId, setCheckDuplicatedId] = useState(false);
 
-  const isValidForm = useMemo(
-    () =>
-      checkUserId &&
-      checkDuplicatedId &&
-      checkUserPassword &&
-      checkUserPasswordConfirm &&
-      checkUserAge &&
-      checkUserNickName,
-    [
-      checkUserId,
-      checkDuplicatedId,
-      checkUserPassword,
-      checkUserPasswordConfirm,
-      checkUserAge,
-      checkUserNickName,
-    ],
-  );
+  const isValidForm =
+    checkUserId &&
+    checkDuplicatedId &&
+    checkUserPassword &&
+    checkUserPasswordConfirm &&
+    checkUserAge &&
+    checkUserNickName;
 
   useEffect(() => {
     setCheckUserPasswordConfirm(userPassword === userPasswordConfirm);

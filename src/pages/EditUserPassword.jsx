@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useInput from 'hooks/useInput';
@@ -36,10 +36,7 @@ const EditUserPassword = () => {
     setCheckNewPasswordConfirm(newPassword === newPasswordConfirm);
   }, [newPassword, newPasswordConfirm]);
 
-  const isValidForm = useMemo(
-    () => checkOldPassword && checkNewPassword && checkNewPasswordConfirm,
-    [checkOldPassword, checkNewPassword, checkNewPasswordConfirm],
-  );
+  const isValidForm = checkOldPassword && checkNewPassword && checkNewPasswordConfirm;
 
   const handleEditPassword = async (e) => {
     e.preventDefault();

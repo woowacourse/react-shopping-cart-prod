@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import useInput from 'hooks/useInput';
@@ -32,10 +32,7 @@ const EditUserInfo = () => {
     checkValue: checkUserAge,
   } = useInput(Validate.userAge);
 
-  const isValidForm = useMemo(
-    () => checkUserAge && checkUserNickName,
-    [checkUserAge, checkUserNickName],
-  );
+  const isValidForm = checkUserAge && checkUserNickName;
 
   const handleEditUserInfo = async (e) => {
     e.preventDefault();
