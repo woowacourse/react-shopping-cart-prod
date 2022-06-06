@@ -2,6 +2,56 @@ import { API_URL } from '@/api/constants';
 import { rest } from 'msw';
 import { customerList } from '../data/customer';
 
+const checkAccessToken = ({
+  successStatusCode,
+  successStatusMessage,
+  callback,
+  payload = {},
+  headers,
+  res,
+  ctx,
+}) => {
+  const accessToken = headers['_headers'].authorization.split('Bearer ')[1];
+
+  if (customerList.current.every(customer => customer.username !== accessToken)) {
+    return res(
+      ctx.status(401, 'unauthorized'),
+      ctx.json({ error: { messages: ['잘못된 토큰 정보입니다.'] } }),
+    );
+  }
+
+  callback(accessToken, payload);
+
+  return res(ctx.status(successStatusCode, successStatusMessage));
+};
+
+const deleteCustomer = accessToken =>
+  (customerList.current = customerList.current.filter(
+    customer => customer.username !== accessToken,
+  ));
+
+const changePassword = (accessToken, payload) =>
+  (customerList.current = customerList.current.map(customer => {
+    if (customer.username === accessToken) {
+      return {
+        ...customer,
+        ...payload,
+      };
+    }
+    return customer;
+  }));
+
+const changeUserInformation = (accessToken, payload) =>
+  (customerList.current = customerList.current.map(customer => {
+    if (customer.username === accessToken) {
+      return {
+        ...customer,
+        ...payload,
+      };
+    }
+    return customer;
+  }));
+
 export const customerHanlders = [
   rest.get(`${API_URL}/customers`, (req, res, ctx) => {
     const { headers } = req;
@@ -12,7 +62,7 @@ export const customerHanlders = [
     if (!customer) {
       return res(
         ctx.status(401, 'unauthorized'),
-        ctx.json({ error: { messages: ['토큰 정보가 잘 못 되었습니다.'] } }),
+        ctx.json({ error: { messages: ['잘못된 토큰 정보입니다.'] } }),
       );
     }
 
@@ -33,7 +83,7 @@ export const customerHanlders = [
 
     customerList.current.push(customer);
 
-    return res(res => {
+    return res(ctx.delay(2000), res => {
       res.statusText = 'Created';
       return res;
     });
@@ -60,71 +110,42 @@ export const customerHanlders = [
     const { phoneNumber, address } = req.body;
     const { headers } = req;
 
-    const accessToken = headers['_headers'].authorization.split('Bearer ')[1];
-
-    if (customerList.current.every(customer => customer.username !== accessToken)) {
-      return res(
-        ctx.status(401, 'unauthorized'),
-        ctx.json({ error: { messages: ['잘못된 토큰 정보입니다.'] } }),
-      );
-    }
-
-    customerList.current = customerList.current.map(customer => {
-      if (customer.username === accessToken) {
-        return {
-          ...customer,
-          phoneNumber,
-          address,
-        };
-      }
-      return customer;
+    return checkAccessToken({
+      successStatusCode: 200,
+      successStatusMessage: 'ok',
+      callback: changeUserInformation,
+      headers,
+      payload: { phoneNumber, address },
+      res,
+      ctx,
     });
-
-    return res(ctx.status(200, 'ok'));
   }),
 
   rest.patch(`${API_URL}/customers/password`, (req, res, ctx) => {
     const { password } = req.body;
     const { headers } = req;
 
-    const accessToken = headers['_headers'].authorization.split('Bearer ')[1];
-
-    if (customerList.current.every(customer => customer.username !== accessToken)) {
-      return res(
-        ctx.status(401, 'unauthorized'),
-        ctx.json({ error: { messages: ['잘못된 토큰 정보입니다.'] } }),
-      );
-    }
-
-    customerList.current = customerList.current.map(customer => {
-      if (customer.username === accessToken) {
-        return {
-          ...customer,
-          password,
-        };
-      }
-      return customer;
+    return checkAccessToken({
+      successStatusCode: 204,
+      successStatusMessage: 'no-content',
+      callback: changePassword,
+      headers,
+      payload: { password },
+      res,
+      ctx,
     });
-
-    return res(ctx.status(204, 'no-content'));
   }),
 
   rest.delete(`${API_URL}/customers`, (req, res, ctx) => {
     const { headers } = req;
 
-    const accessToken = headers['_headers'].authorization.split('Bearer ')[1];
-
-    if (customerList.current.every(customer => customer.username !== accessToken)) {
-      return res(
-        ctx.status(401, 'unauthorized'),
-        ctx.json({ error: { messages: ['잘못된 토큰 정보입니다.'] } }),
-      );
-    }
-
-    customerList.current = customerList.current.filter(
-      customer => customer.username !== accessToken,
-    );
-
-    return res(ctx.status(204, 'no-content'));
+    return checkAccessToken({
+      successStatusCode: 204,
+      successStatusMessage: 'no-content',
+      callback: deleteCustomer,
+      headers,
+      res,
+      ctx,
+    });
   }),
 ];
