@@ -15,8 +15,8 @@ const ProductList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (productList?.length === 0) dispatch(getProductList());
-  }, [dispatch, productList?.length]);
+    if (productList.length === 0) dispatch(getProductList());
+  }, [dispatch, productList.length]);
 
   return (
     <Layout>
