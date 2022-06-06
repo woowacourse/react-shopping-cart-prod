@@ -8,22 +8,6 @@ const KEY = 'mockUserList';
 
 type MockUser = User & { accessToken: string };
 
-const initMSW = () => {
-  localStorage.setItem(
-    KEY,
-    JSON.stringify([
-      {
-        username: 'halee',
-        password: 'halee123!',
-        email: 'halee@naver.com',
-        address: '잠실 루터 회관',
-        phoneNumber: '010-0000-0000',
-        accessToken: 'xxx.yyy.zzz',
-      },
-    ])
-  );
-};
-
 const authHandlers = [
   // 회원가입
   rest.post(
@@ -181,4 +165,3 @@ const authHandlers = [
 ];
 
 export default authHandlers;
-export { initMSW };
