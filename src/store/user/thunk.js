@@ -6,7 +6,9 @@ import userActions from './action';
 
 const userLogin = (loginId, password) => async (dispatch) => {
   const response = await requestLogin({ loginId, password });
-  const { status, message, accessToken, userKey, userId, nickname } = response;
+
+  const { status, body } = response;
+  const { message = '', accessToken, userKey, userId, nickname } = body;
 
   if (status === REQUEST_STATUS.FAIL) {
     dispatch(userActions.updateInfo.error(message));
@@ -25,7 +27,9 @@ const getUserProfile = () => async (dispatch) => {
   if (!accessToken) return;
 
   const response = await requestProfile();
-  const { status, userKey, userId, nickname } = response;
+
+  const { status, body } = response;
+  const { userKey, userId, nickname } = body;
 
   if (status === REQUEST_STATUS.FAIL) {
     removeCookie(ACCESS_TOKEN_COOKIE_NAME);

@@ -21,8 +21,8 @@ const requestAddCart = ({ id, image, name, price, quantity, isChecked }) =>
     }),
   });
 
-const requestUpdateCartItem = async (id, content) => {
-  const response = await request(`/cart/${id}`, {
+const requestUpdateCartItem = (id, content) =>
+  request(`/cart/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -32,24 +32,15 @@ const requestUpdateCartItem = async (id, content) => {
     }),
   });
 
-  return response;
-};
-
-const requestRemoveCartItem = async (id) => {
-  const response = await request(`/cart/${id}`, {
+const requestRemoveCartItem = (id) =>
+  request(`/cart/${id}`, {
     method: 'DELETE',
   });
 
-  return response;
-};
-
-const requestRemoveCartItemList = async (idList) => {
-  const response = await request(`/cart/${idList.join(',')}`, {
+const requestRemoveCartItemList = (idList) =>
+  request(`/cart/${idList.join(',')}`, {
     method: 'DELETE',
   });
-
-  return response;
-};
 
 export {
   requestGetCartList,
