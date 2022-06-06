@@ -53,6 +53,7 @@ export const cartListReducer = (state = cartListInitialState, action) => {
       if (isExistInCart) {
         return state;
       }
+
       return [...state, { ...action.payload, quantity: 1, checked: true }];
 
     case ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON:
