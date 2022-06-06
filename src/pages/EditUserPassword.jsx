@@ -49,12 +49,12 @@ const EditUserPassword = () => {
       newPassword,
     });
 
-    if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(snackbar.pushMessageSnackbar('비밀번호를 수정 하였습니다!'));
-      navigate('/');
-      return;
-    }
-    dispatch(snackbar.pushMessageSnackbar('비밀번호를 수정이 실패하였습니다!'));
+    const message =
+      response.status === 비동기_요청.SUCCESS
+        ? '비밀번호를 수정 하였습니다!'
+        : '비밀번호 수정에 실패했습니다!';
+
+    dispatch(snackbar.pushMessageSnackbar(message));
     navigate('/');
   };
 
