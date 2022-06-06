@@ -1,7 +1,8 @@
 export default class CustomError extends Error {
   code: number;
+  statusCode: number;
 
-  constructor(code: number, message?: string, options?: ErrorOptions) {
+  constructor(code: number, message: string, statusCode?: number, options?: ErrorOptions) {
     super(message, options);
 
     if (Error.captureStackTrace) {
@@ -9,5 +10,6 @@ export default class CustomError extends Error {
     }
 
     this.code = code;
+    this.statusCode = statusCode;
   }
 }

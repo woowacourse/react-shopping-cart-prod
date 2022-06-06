@@ -17,6 +17,7 @@ export const validatePassword = (password: string) => {
     throw new CustomError(
       2103,
       '비밀번호는 10자리 이상이며 영문, 숫자, 특수문자가 조합되어야 합니다.',
+      400,
     );
   }
 };
