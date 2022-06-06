@@ -9,6 +9,7 @@ import useReduxState from 'hooks/useReduxState';
 
 import { Form, Input } from 'components/common';
 
+import { USER_INPUT_DEFAULT_ATTR } from 'constants';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 import { NICKNAME_PATTERN } from 'constants/pattern';
 import { ROUTE } from 'constants/route';
@@ -47,10 +48,7 @@ function UserInfoUpdateForm() {
 
   const inputAttributeList = [
     {
-      name: 'nickname',
-      type: 'text',
-      labelText: '닉네임',
-      placeholder: '블링',
+      ...USER_INPUT_DEFAULT_ATTR.NICKNAME,
       value: nicknameValue,
       onChange: handleNicknameInput,
       isValid: isNicknameValid,

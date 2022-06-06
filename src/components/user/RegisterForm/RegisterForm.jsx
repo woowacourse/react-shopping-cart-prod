@@ -7,6 +7,7 @@ import { sendAddUserRequest, sendCheckEmailDuplicateRequest } from 'api/user.api
 
 import { Form, Input } from 'components/common';
 
+import { USER_INPUT_DEFAULT_ATTR } from 'constants';
 import { ALERT_MESSAGES, ERROR_MESSAGES } from 'constants/messages';
 import { EMAIL_PATTERN, NICKNAME_PATTERN, PASSWORD_PATTERN } from 'constants/pattern';
 import { ROUTE } from 'constants/route';
@@ -98,10 +99,7 @@ function RegisterForm() {
 
   const inputAttributeList = [
     {
-      name: 'email',
-      type: 'email',
-      labelText: '이메일 주소',
-      placeholder: 'example@woowacourse.com',
+      ...USER_INPUT_DEFAULT_ATTR.EMAIL,
       value: emailValue,
       onChange: handleEmailInput,
       isValid: isEmailValid,
@@ -111,20 +109,14 @@ function RegisterForm() {
       errorMessage: emailErrorMessage,
     },
     {
-      name: 'password',
-      type: 'password',
-      labelText: '비밀번호',
-      placeholder: '비밀번호를 입력해주세요',
+      ...USER_INPUT_DEFAULT_ATTR.PASSWORD,
       value: passwordValue,
       onChange: handlePasswordInput,
       isValid: isPasswordValid,
       errorMessage: isPasswordValid ? '' : USER_INFO_RULE_ERROR.INVALID_PASSWORD,
     },
     {
-      name: 'password-confirm',
-      type: 'password',
-      labelText: '비밀번호 확인',
-      placeholder: '비밀번호를 다시 입력해주세요',
+      ...USER_INPUT_DEFAULT_ATTR.PASSWORD_CONFIRM,
       value: passwordConfirmValue,
       onChange: handlePasswordConfirmInput,
       isValid: isPasswordConfirmValid,
@@ -134,10 +126,7 @@ function RegisterForm() {
           : USER_INFO_RULE_ERROR.PASSWORD_NO_MATCH,
     },
     {
-      name: 'nickname',
-      type: 'text',
-      labelText: '닉네임',
-      placeholder: '블링',
+      ...USER_INPUT_DEFAULT_ATTR.NICKNAME,
       value: nicknameValue,
       onChange: handleNicknameInput,
       isValid: isNicknameValid,

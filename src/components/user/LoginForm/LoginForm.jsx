@@ -8,6 +8,7 @@ import useInputValue from 'hooks/useInputValue';
 
 import { Form, Input } from 'components/common';
 
+import { USER_INPUT_DEFAULT_ATTR } from 'constants';
 import { ROUTE } from 'constants/route';
 
 function LoginForm() {
@@ -44,18 +45,12 @@ function LoginForm() {
 
   const inputAttributeList = [
     {
-      name: 'email',
-      type: 'email',
-      labelText: '이메일 주소',
-      placeholder: 'example@woowacourse.com',
+      ...USER_INPUT_DEFAULT_ATTR.EMAIL,
       value: emailValue,
       onChange: handleEmailInput,
     },
     {
-      name: 'password',
-      type: 'password',
-      labelText: '비밀번호',
-      placeholder: '비밀번호를 입력해주세요',
+      ...USER_INPUT_DEFAULT_ATTR.PASSWORD,
       value: passwordValue,
       onChange: handlePasswordInput,
     },
