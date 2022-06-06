@@ -1,5 +1,4 @@
 import { forwardRef } from 'react';
-// import Input from '../Input/Input';
 import * as S from './FormField.styled';
 import * as T from './FormField.types';
 
@@ -17,10 +16,7 @@ function FormField({
       <S.LeftFlexBox>
         <S.Label required={required}>{label}</S.Label>
       </S.LeftFlexBox>
-      <S.CenterFlexBox>
-        {/* <Input ref={ref} {...props} /> */}
-        {children}
-      </S.CenterFlexBox>
+      <S.CenterFlexBox>{children}</S.CenterFlexBox>
       <S.RightFlexBox>
         {hasButton && (
           <S.Button onClick={onClickButton} disabled={disabled}>
