@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useSnackbar from 'hooks/useSnackbar';
 
 import { Modal, Input, Title, AuthButton, Container } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import { getCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { doInitializeCart, doLogout } from 'actions/actionCreator';
+import { getCookie, deleteCookie } from 'utils/cookie';
+import { MESSAGE, ERROR } from 'utils/constants';
 import Styled from './index.style';
 
 const AccountDeleteModal = ({ handleModal }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
 
   const [password, setPassword] = useState('');
@@ -36,9 +41,27 @@ const AccountDeleteModal = ({ handleModal }) => {
       });
 
       renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
+      deleteCookie('accessToken');
+      dispatch(doInitializeCart());
+      dispatch(doLogout());
       handleModal();
+      navigate('/');
     } catch (error) {
-      renderSnackbar(MESSAGE.DELETE_ACCOUT_FAILUER, 'FAILED');
+      const { code, message } = error.response.data;
+
+      if (code) {
+        renderSnackbar(ERROR[code], 'FAILED');
+      } else {
+        renderSnackbar(message || error.message, 'FAILED');
+      }
+
+      if (code === 1003) {
+        deleteCookie('accessToken');
+        dispatch(doInitializeCart());
+        dispatch(doLogout());
+        handleModal();
+        navigate('/');
+      }
     }
   };
 

@@ -1,30 +1,39 @@
 // @ts-nocheck
 import { rest } from 'msw';
 import { users } from 'mocks';
+import CustomError from 'utils/CustomError';
 
 const deleteAccountHandler = rest.delete('/customers', (req, res, ctx) => {
   try {
-    const accessToken = JSON.parse(req.headers.headers.authorization.replace('Bearer ', ''));
-    // 유효한 토큰이 아닌 경우
-    if (!users.some(user => user.id === accessToken.id)) throw new Error();
+    const { authorization } = req.headers.headers;
+
+    const accessToken = JSON.parse(
+      !authorization.includes('undefined') ? authorization.replace('Bearer ', '') : null,
+    );
+
+    // [ERROR] 유효한 토큰이 아닌 경우
+    if (!accessToken || !users.some(user => user.id === accessToken.id)) {
+      throw new CustomError(1003, '유효하지 않은 토큰입니다.', 401);
+    }
 
     const { password } = req.body;
-    const foundIndex = users.findIndex(user => user.id === accessToken.id);
+    const foundUserIndex = users.findIndex(user => user.id === accessToken.id);
 
-    // 탈퇴시 입력한 비밀번호가 현재 비밀번호와 맞지 않은 경우
-    if (users[foundIndex].password !== password) {
-      throw new Error();
+    // [ERROR] 입력된 비밀번호가 현재 비밀번호와 일치하지 않는 경우
+    if (users[foundUserIndex].password !== password) {
+      throw new CustomError(2202, '입력된 비밀번호가 현재 비밀번호와 일치하지 않습니다.', 401);
     }
 
     // 탈퇴 성공
-    delete users[foundIndex];
+    users.splice(foundUserIndex, 1);
     return res(ctx.status(204));
   } catch (error) {
     // 탈퇴 실패
     return res(
-      ctx.status(401),
+      ctx.status(error.statusCode),
       ctx.json({
-        message: 'No authorization',
+        code: error.code,
+        message: error.message,
       }),
     );
   }
