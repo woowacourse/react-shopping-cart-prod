@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 import useInput from "@/hooks/useInput";
+import usePasswordConfirm from "@/hooks/usePasswordConfirm";
 
 import Form from "@/components/Form";
 import Field from "@/components/Field";
@@ -14,7 +15,6 @@ import {
   MESSAGE,
   INPUT_TYPE,
   STATUS,
-  ERROR_STATUS,
   NICKNAME,
   PASSWORD,
 } from "@/constants";
@@ -31,14 +31,10 @@ function Signup() {
     INPUT_TYPE.PASSWORD,
     STATUS.READY
   );
-  const [passwordConfirm, setPasswordConfirm] = useState({
-    value: "",
-    status: STATUS.READY,
-  });
+  const [passwordConfirm, onChangePasswordConfirm] = usePasswordConfirm();
+  const [preventFormSubmit, setPreventFormSubmit] = useState(true);
 
   const dispatch = useDispatch();
-
-  const [preventFormSubmit, setPreventFormSubmit] = useState(true);
 
   useEffect(() => {
     if (
@@ -52,21 +48,6 @@ function Signup() {
     }
     setPreventFormSubmit(true);
   }, [email, nickname, password, passwordConfirm]);
-
-  const validatePasswordConfirm = (e) => {
-    const { value } = e.target;
-    setPasswordConfirm((prev) => ({ ...prev, value: value }));
-
-    if (value !== password.value) {
-      setPasswordConfirm((prev) => ({
-        ...prev,
-        status: ERROR_STATUS.MISMATCH,
-      }));
-      return;
-    }
-
-    setPasswordConfirm((prev) => ({ ...prev, status: STATUS.FULFILLED }));
-  };
 
   const handleSignupSubmit = async (e) => {
     e.preventDefault();
@@ -134,7 +115,7 @@ function Signup() {
           minLength={PASSWORD.MIN_LENGTH}
           maxLength={PASSWORD.MAX_LENGTH}
           value={passwordConfirm.value}
-          onChange={validatePasswordConfirm}
+          onChange={(e) => onChangePasswordConfirm(e, password.value)}
           errorMessage={passwordConfirm.status}
           required
         />

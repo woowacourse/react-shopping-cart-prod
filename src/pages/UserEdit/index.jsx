@@ -6,6 +6,7 @@ import axios from "axios";
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 import useInput from "@/hooks/useInput";
+import usePasswordConfirm from "@/hooks/usePasswordConfirm";
 
 import Form from "@/components/Form";
 import Field from "@/components/Field";
@@ -18,7 +19,6 @@ import {
   PATH,
   STATUS,
   INPUT_TYPE,
-  ERROR_STATUS,
   MESSAGE,
   NICKNAME,
   PASSWORD,
@@ -36,15 +36,10 @@ function UserEdit() {
     INPUT_TYPE.PASSWORD,
     STATUS.READY
   );
-  const [passwordConfirm, setPasswordConfirm] = useState({
-    value: "",
-    status: STATUS.READY,
-  });
-
-  const dispatch = useDispatch();
-
+  const [passwordConfirm, onChangePasswordConfirm] = usePasswordConfirm();
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const getUser = async () => {
@@ -61,20 +56,6 @@ function UserEdit() {
       dispatch(toggleSnackbarOpen(MESSAGE.NOT_AUTHORIZED));
       navigate(PATH.MAIN);
     }
-  };
-
-  const validatePasswordConfirm = (e) => {
-    const { value } = e.target;
-    setPasswordConfirm((prev) => ({ ...prev, value: value }));
-    if (value !== password.value) {
-      setPasswordConfirm((prev) => ({
-        ...prev,
-        status: ERROR_STATUS.MISMATCH,
-      }));
-      return;
-    }
-
-    setPasswordConfirm((prev) => ({ ...prev, status: STATUS.FULFILLED }));
   };
 
   const handleEditSubmit = async (e) => {
@@ -172,7 +153,9 @@ function UserEdit() {
           type="password"
           minLength={PASSWORD.MIN_LENGTH}
           maxLength={PASSWORD.MAX_LENGTH}
-          onChange={validatePasswordConfirm}
+          onChange={(e) => {
+            onChangePasswordConfirm(e, password);
+          }}
           errorMessage={passwordConfirm.status}
         />
       </Form>
