@@ -24,13 +24,10 @@ const Login = () => {
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(login({ loginId: email, password }))
-      .then(name => {
-        alert(ALERT_MESSAGE.LOGIN_SUCCESS(name));
-        navigate(PATH.home);
-      })
-      // @TODO: snackbar에 메시지 담아 에러처리
-      .catch(e => console.log(e));
+    dispatch(login({ loginId: email, password })).then(name => {
+      alert(ALERT_MESSAGE.LOGIN_SUCCESS(name));
+      navigate(PATH.home);
+    });
   };
 
   return (

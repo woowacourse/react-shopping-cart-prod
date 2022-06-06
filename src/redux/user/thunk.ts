@@ -26,7 +26,7 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
     if (e instanceof AxiosError) {
       dispatch(userActions.getUserGroup.failure(e));
 
-      return Promise.reject(e.response.data);
+      return Promise.reject();
     }
   }
 };
@@ -45,8 +45,6 @@ export const login =
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         dispatch(userActions.loginGroup.failure(e));
-
-        return Promise.reject(e.response.data);
       }
     }
   };
@@ -55,14 +53,12 @@ export const signup =
   (userInfo: UserInfoWithPassword) => async (dispatch: Dispatch<UserAction>) => {
     dispatch(userActions.signupGroup.request());
     try {
-      const response = await authClient.post<UserInfo>('/customers', userInfo);
+      await authClient.post<UserInfo>('/customers', userInfo);
 
       return Promise.resolve(dispatch(userActions.signupGroup.success()));
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         dispatch(userActions.signupGroup.failure(e));
-
-        return Promise.reject(e.response.data);
       }
     }
   };
