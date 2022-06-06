@@ -31,8 +31,7 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
 };
 
 export const login =
-  (userInfo: LoginRequest, onSuccess?: (name: string) => void) =>
-  async (dispatch: Dispatch<UserAction>, getState: () => RootState) => {
+  (userInfo: LoginRequest) => async (dispatch: Dispatch<UserAction>, getState: () => RootState) => {
     dispatch(userActions.loginGroup.request());
     try {
       const response = await authClient.post<LoginResponse | string>('/login', userInfo);
@@ -44,7 +43,8 @@ export const login =
 
       localStorage.setItem('access-token', accessToken);
       dispatch(userActions.loginGroup.success(response.data));
-      onSuccess(getState().user.data.name);
+
+      return getState().user.data.name;
     } catch (e: unknown) {
       if (e instanceof Error) {
         dispatch(userActions.loginGroup.failure(e));

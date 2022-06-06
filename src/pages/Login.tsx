@@ -24,12 +24,10 @@ const Login = () => {
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(
-      login({ loginId: email, password }, (name: string) => {
-        alert(ALERT_MESSAGE.LOGIN_SUCCESS(name));
-        navigate(PATH.home);
-      })
-    );
+    dispatch(login({ loginId: email, password })).then(name => {
+      alert(ALERT_MESSAGE.LOGIN_SUCCESS(name));
+      navigate(PATH.home);
+    });
   };
 
   return (
