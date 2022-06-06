@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import {rest} from 'msw';
 import {MOCK_PRODUCT_LIST} from './mockData';
 import shortid from 'shortid';

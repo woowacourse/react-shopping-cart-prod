@@ -48,8 +48,7 @@ export default function ProductCartPage() {
       alert('주문하실 상품을 선택해주세요.');
       return;
     }
-    console.log(selectedCartItem);
-    navigation(PATH.ORDER);
+    navigation(PATH.ORDER_PAY);
   };
 
   return (

@@ -60,7 +60,7 @@ export default function Header() {
       </Button>
       <S.HeaderNavBox>
         <S.NavText to={PATH.CART}>장바구니</S.NavText>
-        <S.NavText to={PATH.ORDER}>주문목록</S.NavText>
+        <S.NavText to={PATH.ORDER_LIST}>주문목록</S.NavText>
         {isLogin ? (
           <S.Profile>
             <S.ProfileImage src={baedaleHover} alt="프로필 이미지" />

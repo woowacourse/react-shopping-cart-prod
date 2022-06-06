@@ -17,6 +17,7 @@ import NotFoundPage from 'page/NotFoundPage';
 import LoginPage from 'page/LoginPage';
 import UserInfoEditPage from 'page/UserInfoEditPage';
 import WithdrawalPage from 'page/WithdrawalPage';
+import OrderPayPage from 'page/OrderPayPage';
 
 if (process.env.NODE_ENV === 'development') {
   const {worker} = require('./mocks/browsers');
@@ -35,9 +36,10 @@ export default function App() {
             <Route path={`${PATH.DETAIL}/:id`} element={<ProductDetailPage />}></Route>
             <Route path={PATH.CART} element={<ProductCartPage />}></Route>
             <Route
-              path={PATH.ORDER}
+              path={PATH.ORDER_LIST}
               element={<NotFoundPage> 아직 개발중인 페이지입니다🔨</NotFoundPage>}
             ></Route>
+            <Route path={PATH.ORDER_PAY} element={<OrderPayPage />}></Route>
             <Route path={PATH.LOGIN} element={<LoginPage />}></Route>
             <Route path={PATH.SIGN_UP} element={<SignUpPage />}></Route>
             <Route path={PATH.EDIT_USER_INFO} element={<UserInfoEditPage />}></Route>
