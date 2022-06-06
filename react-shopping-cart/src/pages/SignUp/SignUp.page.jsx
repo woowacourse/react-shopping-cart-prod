@@ -50,7 +50,11 @@ function SignUp() {
   const navigate = useNavigate();
   const userInfo = useSelector(state => state.userInfo);
   const postUserInfo = processServerData(userInfo);
-  const { fetchData: signUp } = useFetch({ method: 'post', url: API_URL_PATH.CUSTOMERS });
+  const { fetchData: signUp } = useFetch({
+    method: 'post',
+    url: API_URL_PATH.CUSTOMERS,
+    skip: true,
+  });
   const [showLoginInfo, setShowLoginInfo] = useState(false);
 
   useEffect(() => {
