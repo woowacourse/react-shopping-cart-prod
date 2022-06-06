@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useCheckBox, useCartItem } from 'hooks';
 
-import { requestAddCartItem } from 'api';
+import { requestAddCartItem, requestDeleteCartItem } from 'api';
 import Layout from 'components/Layout';
 import PageHeader from 'components/@common/PageHeader';
 import CartList from 'components/CartList';
@@ -83,14 +83,18 @@ const Cart = () => {
     setIsAllChecked(cartList && cartList.length === checkboxItems.length);
   }, [cartList, checkboxItems]);
 
-  const deleteSelectedItem = () => {
+  const deleteSelectedItem = async () => {
     if (checkboxItems.length <= 0) {
       return;
     }
-
-    dispatch(deleteCartItem(checkboxItems));
-    clearCheckBoxItems();
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
+    const response = await requestDeleteCartItem(checkboxItems);
+    if (response.status === 비동기_요청.SUCCESS) {
+      dispatch(deleteCartItem({ productIds: checkboxItems }));
+      clearCheckBoxItems();
+      dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
+      return;
+    }
+    alert('상품제거에 실패하였습니다');
   };
 
   const handleItemCount = async (productId, count) => {

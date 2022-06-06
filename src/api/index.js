@@ -22,6 +22,8 @@ const requestGetCartList = async () => requestAsync.get('cart', true);
 const requestPostCartItem = async (id) => requestAsync.post(`cart/${id}`, true);
 const requestAddCartItem = async (id, quantity) =>
   requestAsync.put(`cart/${id}/quantity`, quantity, true);
+const requestDeleteCartItem = async (productList) =>
+  requestAsync.delete('cart/products', productList, true);
 
 export {
   requestGetProductList,
@@ -36,4 +38,5 @@ export {
   requestGetCartList,
   requestPostCartItem,
   requestAddCartItem,
+  requestDeleteCartItem,
 };
