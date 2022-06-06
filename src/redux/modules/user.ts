@@ -17,9 +17,12 @@ export type Action =
   | ReturnType<typeof loginSuccess>
   | ReturnType<typeof loginFailure>
   | ReturnType<typeof logout>
-  | ReturnType<typeof leaveUserRequest>
-  | ReturnType<typeof leaveUserSuccess>
-  | ReturnType<typeof leaveUserFailure>;
+  | ReturnType<typeof deleteUserRequest>
+  | ReturnType<typeof deleteUserSuccess>
+  | ReturnType<typeof deleteUserFailure>
+  | ReturnType<typeof changePasswordRequest>
+  | ReturnType<typeof changePasswordSuccess>
+  | ReturnType<typeof changePasswordFailure>;
 
 const initialState: UserState = {
   loading: false,
@@ -35,9 +38,12 @@ const LOGIN_REQUEST = 'user/LOGIN_REQUEST' as const;
 const LOGIN_SUCCESS = 'user/LOGIN_SUCCESS' as const;
 const LOGIN_FAILURE = 'user/LOGIN_FAILURE' as const;
 const LOGOUT = 'user/LOGOUT' as const;
-const LEAVE_USER_REQUEST = 'user/LEAVE_REQUEST' as const;
-const LEAVE_USER_SUCCESS = 'user/LEAVE_SUCCESS' as const;
-const LEAVE_USER_FAILURE = 'user/LEAVE_FAILURE' as const;
+const DELETE_USER_REQUEST = 'user/DELETE_REQUEST' as const;
+const DELETE_USER_SUCCESS = 'user/DELETE_SUCCESS' as const;
+const DELETE_USER_FAILURE = 'user/DELETE_FAILURE' as const;
+const CHANGE_PASSWORD_REQUEST = 'user/DELETE_PASSWORD_REQUEST' as const;
+const CHANGE_PASSWORD_SUCCESS = 'user/DELETE_PASSWORD_SUCCESS' as const;
+const CHANGE_PASSWORD_FAILURE = 'user/DELETE_PASSWORD_FAILURE' as const;
 
 const loadUserRequest = () => ({ type: LOAD_USER_REQUEST });
 const loadUserSuccess = (userName: string) => ({
@@ -55,10 +61,16 @@ const loginFailure = (error: Error) => ({
   payload: { error },
 });
 const logout = () => ({ type: LOGOUT });
-const leaveUserRequest = () => ({ type: LEAVE_USER_REQUEST });
-const leaveUserSuccess = () => ({ type: LEAVE_USER_SUCCESS });
-const leaveUserFailure = (error: Error) => ({
-  type: LEAVE_USER_FAILURE,
+const deleteUserRequest = () => ({ type: DELETE_USER_REQUEST });
+const deleteUserSuccess = () => ({ type: DELETE_USER_SUCCESS });
+const deleteUserFailure = (error: Error) => ({
+  type: DELETE_USER_FAILURE,
+  payload: { error },
+});
+const changePasswordRequest = () => ({ type: CHANGE_PASSWORD_REQUEST });
+const changePasswordSuccess = () => ({ type: CHANGE_PASSWORD_SUCCESS });
+const changePasswordFailure = (error: Error) => ({
+  type: CHANGE_PASSWORD_FAILURE,
   payload: { error },
 });
 
@@ -99,8 +111,8 @@ const loginAPI =
     }
   };
 
-const leaveUserAPI = (): any => async (dispatch: AppDispatch) => {
-  dispatch(leaveUserRequest());
+const deleteUserAPI = (): any => async (dispatch: AppDispatch) => {
+  dispatch(deleteUserRequest());
   try {
     await axios.delete('/api/customers/me', {
       headers: {
@@ -109,13 +121,36 @@ const leaveUserAPI = (): any => async (dispatch: AppDispatch) => {
     });
 
     deleteCookie('accessToken');
-    dispatch(leaveUserSuccess());
+    dispatch(deleteUserSuccess());
   } catch (error) {
     if (error instanceof Error) {
-      dispatch(leaveUserFailure(error));
+      dispatch(deleteUserFailure(error));
     }
   }
 };
+
+const changePasswordAPI =
+  (password: string): any =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    dispatch(changePasswordRequest());
+    const { userName } = getState().user;
+    try {
+      await axios.put(
+        '/api/customers/me',
+        { userName, password },
+        {
+          headers: {
+            Authorization: `Bearer ${getCookie('accessToken')}`,
+          },
+        }
+      );
+      dispatch(changePasswordSuccess());
+    } catch (error) {
+      if (error instanceof Error) {
+        dispatch(changePasswordFailure(error));
+      }
+    }
+  };
 
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
@@ -146,13 +181,24 @@ const userReducer = (state = initialState, action: Action) => {
     case LOGOUT: {
       return { ...state, isLoggedIn: false, userName: null };
     }
-    case LEAVE_USER_REQUEST: {
+    case DELETE_USER_REQUEST: {
       return { ...state, loading: true, error: null };
     }
-    case LEAVE_USER_SUCCESS: {
+    case DELETE_USER_SUCCESS: {
       return { ...state, loading: false, isLoggedIn: false, userName: false };
     }
-    case LEAVE_USER_FAILURE: {
+    case DELETE_USER_FAILURE: {
+      const { error } = action.payload;
+
+      return { ...state, loading: false, error };
+    }
+    case CHANGE_PASSWORD_REQUEST: {
+      return { ...state, loading: true, error: null };
+    }
+    case CHANGE_PASSWORD_SUCCESS: {
+      return { ...state, loading: false };
+    }
+    case CHANGE_PASSWORD_FAILURE: {
       const { error } = action.payload;
 
       return { ...state, loading: false, error };
@@ -164,6 +210,6 @@ const userReducer = (state = initialState, action: Action) => {
 
 export const selectUserState = (state: RootState) => state.user;
 
-export { loginAPI, loadUserAPI, logout, leaveUserAPI };
+export { loginAPI, loadUserAPI, logout, deleteUserAPI, changePasswordAPI };
 
 export default userReducer;

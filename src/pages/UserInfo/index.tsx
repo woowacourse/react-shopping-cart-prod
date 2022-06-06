@@ -1,15 +1,19 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routes from 'routes';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { leaveUserAPI, loadUserAPI, selectUserState, UserState } from 'redux/modules/user';
+import {
+  changePasswordAPI,
+  deleteUserAPI,
+  loadUserAPI,
+  selectUserState,
+  UserState,
+} from 'redux/modules/user';
 
 import usePassword from 'hooks/usePassword';
 import { Button, Form, Input, Loader } from 'components/@shared';
 import { PageLayout } from 'components';
 
-import { getCookie } from 'utils';
 import { LeaveButton } from './styles';
 
 function UserInfo() {
@@ -30,23 +34,13 @@ function UserInfo() {
       return;
     }
 
-    dispatch(leaveUserAPI());
+    dispatch(deleteUserAPI());
   };
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmitEditForm = (e: React.FormEvent) => {
     e.preventDefault();
 
-    await axios.put(
-      '/api/customers/me',
-      { password },
-      {
-        headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-        },
-      }
-    );
-
-    navigate(routes.home);
+    dispatch(changePasswordAPI(password));
   };
 
   useEffect(() => {
@@ -72,7 +66,7 @@ function UserInfo() {
   return (
     <PageLayout>
       <h1>회원 정보 수정</h1>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmitEditForm}>
         <Input htmlFor="userinfo-id" label="아이디" value={userName ?? ''} disabled={true} />
         <Input
           type="password"

@@ -40,8 +40,15 @@ export const handlers = [
 
   rest.put('/api/customers/me', (req, res, ctx) => {
     const { authorization } = req.headers._headers;
+    const { password } = req.body;
 
     if (!authorization) return res(ctx.status(400));
+
+    const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
+    const user = customers.find((customer) => customer.accessToken === authorization.split(' ')[1]);
+
+    user.password = password;
+    localStorage.setItem('customers', JSON.stringify(customers));
 
     return res(ctx.status(200));
   }),
