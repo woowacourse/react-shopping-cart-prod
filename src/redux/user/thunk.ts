@@ -48,6 +48,8 @@ export const login =
     } catch (e: unknown) {
       if (e instanceof Error) {
         dispatch(userActions.loginGroup.failure(e));
+
+        return Promise.reject(e);
       }
     }
   };
@@ -62,10 +64,12 @@ export const signup =
         throw new Error(response.data);
       }
 
-      dispatch(userActions.signupGroup.success());
+      return Promise.resolve(dispatch(userActions.signupGroup.success()));
     } catch (e: unknown) {
       if (e instanceof Error) {
         dispatch(userActions.signupGroup.failure(e));
+
+        return Promise.reject(e);
       }
     }
   };

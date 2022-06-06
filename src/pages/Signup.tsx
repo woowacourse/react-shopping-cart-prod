@@ -26,10 +26,12 @@ const Signup = () => {
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password === passwordConfirmation) {
-      dispatch(signup({ loginId: email, name, password }));
-
-      alert(ALERT_MESSAGE.SIGNUP_SUCCESS(name));
-      navigate(PATH.home);
+      dispatch(signup({ loginId: email, name, password }))
+        .then(() => {
+          alert(ALERT_MESSAGE.SIGNUP_SUCCESS(name));
+          navigate(PATH.home);
+        })
+        .catch(e => console.log(e.response.data));
 
       return;
     }
