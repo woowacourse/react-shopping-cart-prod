@@ -4,8 +4,8 @@ import customInstance from 'api/customInstance';
 export const sendGetProductListRequest = async (page) => {
   const response = await customInstance.get(`${API_ENDPOINT.PRODUCTS}`, {
     params: {
-      _page: page,
-      _limit: PRODUCT_LIST_PAGE_LIMIT,
+      page: page,
+      limit: PRODUCT_LIST_PAGE_LIMIT,
     },
   });
 
