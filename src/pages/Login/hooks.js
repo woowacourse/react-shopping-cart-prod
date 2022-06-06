@@ -9,8 +9,7 @@ import useSnackBar from 'hooks/useSnackBar';
 const useLoginPage = () => {
   const navigate = useNavigate();
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
-  const { isLoginSucceed, isLoginError, login, checkIsAuthenticated } =
-    useAuth();
+  const { isLoginSucceed, isLoginError, login } = useAuth();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -24,10 +23,6 @@ const useLoginPage = () => {
     }
     login(email, password);
   };
-
-  useEffect(() => {
-    checkIsAuthenticated();
-  }, []);
 
   useEffect(() => {
     if (isLoginSucceed) {

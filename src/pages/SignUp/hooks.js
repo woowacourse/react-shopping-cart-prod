@@ -12,8 +12,7 @@ const useSignUpPage = () => {
 
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
 
-  const { isSignUpSucceed, isSignUpError, signUp, checkIsAuthenticated } =
-    useAuth();
+  const { isSignUpSucceed, isSignUpError, signUp } = useAuth();
 
   const [emailValidate, handleEmailBlur] = useInputValidate('email');
   const [nameValidate, handleNameBlur] = useInputValidate('name');
@@ -47,10 +46,6 @@ const useSignUpPage = () => {
       password,
     });
   };
-
-  useEffect(() => {
-    checkIsAuthenticated();
-  }, []);
 
   useEffect(() => {
     if (isSignUpSucceed) {

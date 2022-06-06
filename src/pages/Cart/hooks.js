@@ -1,11 +1,9 @@
 import useCart from 'hooks/useCart';
-import useAuth from 'hooks/useAuth';
 import { includes } from 'utils';
 import { useMemo, useState, useEffect } from 'react';
 
 const useCartPage = () => {
   const { isLoading, isError, cartItems, getItems, deleteItems } = useCart();
-  const { checkIsAuthenticated } = useAuth();
 
   const [selectedItemList, setSelectedItemList] = useState([]);
 
@@ -40,10 +38,6 @@ const useCartPage = () => {
     deleteItems(selectedItemList);
     setSelectedItemList([]);
   };
-
-  useEffect(() => {
-    checkIsAuthenticated();
-  }, []);
 
   useEffect(() => {
     setSelectedItemList(cartItems ? cartItems.map(({ id }) => id) : []);
