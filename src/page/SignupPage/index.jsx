@@ -124,7 +124,10 @@ function SignUpPage() {
               id="password"
               type="password"
               placeHolder="비밀번호를 입력해주세요"
-              onChange={(e) => onChangePassword(e.target.value)}
+              onChange={(e) => {
+                onChangePassword(e.target.value);
+                onChangeConfirmPassword('');
+              }}
             />
             <Input
               {...restConfirmPassword}
