@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import cartThunk from 'store/cart/thunk';
 import productThunk from 'store/product/thunk';
 
 import useCart from 'hooks/useCart';
+import useDispatchEvent from 'hooks/useDispatchEvent';
 
 import { StatusMessage } from 'components/@common';
 import { SwitchAsync, Case } from 'components/@common/SwitchAsync';
@@ -14,29 +15,37 @@ import ProductItem from 'components/ProductItem';
 import * as S from './styles';
 
 export function ProductListPage() {
-  const dispatch = useDispatch();
+  const { dispatch, dispatchEvent } = useDispatchEvent();
 
   const productState = useSelector(({ product }) => product);
   const { productList, listAsyncState: productsAsyncState } = productState;
 
   const { cartState } = useCart();
-  const { items: cartItems, listAsyncState: cartListAsyncState } = cartState;
+  const { items: cartItems } = cartState;
 
   useEffect(() => {
     dispatch(productThunk.updateList());
   }, []);
 
   const handleAddCart = ({ id, image, name, price }) => {
-    dispatch(cartThunk.addItem({ id, image, name, price })).then(() => {
-      cartListAsyncState.isLoaded === false &&
-        alert(`장바구니 상품 추가에 실패하였습니다.\n오류 내용 : ${cartListAsyncState.error}`);
+    dispatchEvent({
+      action: cartThunk.addItem({ id, image, name, price }),
+      onStateUpdated: ({ cart }) => {
+        const { curdAsyncState } = cart;
+        !curdAsyncState.isLoaded &&
+          alert(`장바구니 상품 추가에 실패하였습니다.\n오류 내용 : ${curdAsyncState.error}`);
+      },
     });
   };
 
   const handleRemoveCart = ({ id }) => {
-    dispatch(cartThunk.removeItem(id)).then(() => {
-      cartListAsyncState.isLoaded === false &&
-        alert(`장바구니 상품 제거에 실패하였습니다.\n오류 내용 : ${cartListAsyncState.error}`);
+    dispatchEvent({
+      action: cartThunk.removeItem(id),
+      onStateUpdated: ({ cart }) => {
+        const { curdAsyncState } = cart;
+        !curdAsyncState.isLoaded &&
+          alert(`장바구니 상품 제거에 실패하였습니다.\n오류 내용 : ${curdAsyncState.error}`);
+      },
     });
   };
 

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 
 import useCart from 'hooks/useCart';
+import useDispatchEvent from 'hooks/useDispatchEvent';
 
 import { Button, Checkbox, ToolTip } from 'components/@common';
 
@@ -10,9 +10,8 @@ import { ICON_CODE } from 'constants/';
 import * as S from './styles';
 
 function CartItemManage({ isAllChecked }) {
-  const dispatch = useDispatch();
-  const { cartActions, cartThunk, cartState, computed } = useCart();
-  const { curdAsyncState: cartCurdAsyncState } = cartState;
+  const { dispatch, dispatchEvent } = useDispatchEvent();
+  const { cartActions, cartThunk, computed } = useCart();
 
   const handleAllCheckItem = () => {
     dispatch(cartActions.setAllItemCheck(!isAllChecked));
@@ -25,10 +24,13 @@ function CartItemManage({ isAllChecked }) {
 
     const checkedIdList = computed.checkedItemList.map(({ id }) => id);
 
-    await dispatch(cartThunk.removeItems(checkedIdList));
-    cartCurdAsyncState.isLoaded
-      ? alert('선택한 상품이 제거되었습니다.')
-      : alert('선택한 상품 제거에 실패하였습니다.');
+    dispatchEvent({
+      action: cartThunk.removeItems(checkedIdList),
+      onStateUpdated: ({ cart }) => {
+        !cart.curdAsyncState &&
+          alert('서버와의 통신 오류로 인해 선택한 상품 제거에 실패하였습니다.');
+      },
+    });
   };
 
   return (
