@@ -4,7 +4,8 @@ import Snackbar from 'components/Snackbar';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from 'store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from 'store';
 
 import { Global } from '@emotion/react';
 import GlobalStyles from 'styles/GlobalStyles';
@@ -18,21 +19,23 @@ import EditUserPassword from 'pages/EditUserPassword';
 
 const ShoppingCartApp = () => (
   <Provider store={store}>
-    <Global styles={GlobalStyles} />
-    <Snackbar />
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<ProductList />} />
-        <Route path="/product" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signUp" element={<SignUp />} />
-        <Route path="/identification" element={<Identification />} />
-        <Route path="/editUserInfo" element={<EditUserInfo />} />
-        <Route path="/editUserPassword" element={<EditUserPassword />} />
-        <Route path="*" element={<ProductList />} />
-      </Routes>
-    </BrowserRouter>
+    <PersistGate persistor={persistor}>
+      <Global styles={GlobalStyles} />
+      <Snackbar />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ProductList />} />
+          <Route path="/product" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/identification" element={<Identification />} />
+          <Route path="/editUserInfo" element={<EditUserInfo />} />
+          <Route path="/editUserPassword" element={<EditUserPassword />} />
+          <Route path="*" element={<ProductList />} />
+        </Routes>
+      </BrowserRouter>
+    </PersistGate>
   </Provider>
 );
 

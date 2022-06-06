@@ -9,7 +9,7 @@
 ## 1단계 반영 사항들
 
 - [x] color Palette 색깔 사이트 참조하여 바꿔보기
-- [ ] react-persist 사용해서 userId 새로고침해도 날아가지 않도록 하기
+- [x] react-persist 사용해서 userId 새로고침해도 날아가지 않도록 하기
 - [ ] 로그인 성공 후 내 정보 조회 호출하여 userId 받아오기
 - [ ] 중첩 Route를 활용해서 Router 방법 바꿔보기 (Outlet)
 - [x] actions/cart 에서의 foundExistProduct vs cartItem vs targetProduct 네이밍 수정하기
