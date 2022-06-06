@@ -19,11 +19,10 @@ import { API_URL_PATH } from 'constants/api';
 import { processServerData } from 'utils';
 
 const LogoBox = styled.div`
-  margin: 3rem 0;
+  margin: 2rem 0;
 `;
 
 const InfoDiv = styled(FlexBox).attrs({
-  height: '100%',
   direction: 'column',
   justifyContent: 'center',
   gap: '25px',

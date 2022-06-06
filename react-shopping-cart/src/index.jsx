@@ -27,7 +27,6 @@ import { BASE_URL } from 'constants/api';
 const store = createStore(rootReducer);
 const persistor = persistStore(store);
 
-console.log(BASE_URL);
 axios.defaults.baseURL = BASE_URL;
 
 if (process.env.NODE_ENV === 'development') {

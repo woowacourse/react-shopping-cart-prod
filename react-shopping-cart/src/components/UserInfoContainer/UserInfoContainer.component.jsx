@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import ArrowButton from 'components/@shared/ArrowButton/ArrowButton.component';
 import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
@@ -6,6 +7,16 @@ import InputBox from 'components/@shared/InputBox/InputBox.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
 import { setAddress, setName, setPhoneNumber } from 'redux/actions/userInfo.action';
+
+const UserInfoWrapper = styled(FlexBox).attrs({
+  id: 'userInfo',
+  width: '100%',
+  direction: 'column',
+  gap: '30px',
+  alignItems: 'flex-end',
+})`
+  margin: 1rem 0;
+`;
 
 function UserInfoContainer({ onClickNext }) {
   const dispatch = useDispatch();
@@ -21,7 +32,7 @@ function UserInfoContainer({ onClickNext }) {
   );
 
   return (
-    <FlexBox id="userInfo" width="100%" direction="column" gap="17px" alignItems="flex-end">
+    <UserInfoWrapper>
       <InputBox
         {...name}
         onChange={e => {
@@ -71,13 +82,13 @@ function UserInfoContainer({ onClickNext }) {
         type="text"
         placeholder="주소"
       />
-      {isAllValid && (
-        <FlexBox as="button" gap="5px" onClick={onClickNext}>
-          <TextBox fontSize="small">다음</TextBox>
-          <ArrowButton direction="right" />
-        </FlexBox>
-      )}
-    </FlexBox>
+      <FlexBox as="button" gap="5px" onClick={onClickNext} disabled={!isAllValid}>
+        <TextBox color={isAllValid ? 'BLACK_001' : 'GRAY_001'} fontSize="small">
+          다음
+        </TextBox>
+        <ArrowButton direction="right" />
+      </FlexBox>
+    </UserInfoWrapper>
   );
 }
 
