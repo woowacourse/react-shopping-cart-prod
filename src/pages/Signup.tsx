@@ -31,7 +31,7 @@ const Signup = () => {
           alert(ALERT_MESSAGE.SIGNUP_SUCCESS(name));
           navigate(PATH.home);
         })
-        .catch(e => console.log(e.response.data));
+        .catch(e => console.log(e));
 
       return;
     }

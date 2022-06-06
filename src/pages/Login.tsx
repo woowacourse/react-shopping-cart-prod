@@ -30,7 +30,7 @@ const Login = () => {
         navigate(PATH.home);
       })
       // @TODO: snackbar에 메시지 담아 에러처리
-      .catch(e => console.log(e.response.data));
+      .catch(e => console.log(e));
   };
 
   return (

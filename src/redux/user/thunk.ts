@@ -1,4 +1,5 @@
 import { authClient } from 'apis';
+import { AxiosError } from 'axios';
 import type { Dispatch } from 'redux';
 import { RootState } from 'redux/rootReducer';
 import { LoginRequest, LoginResponse, UserInfo, UserInfoWithPassword } from 'types/domain';
@@ -24,8 +25,10 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
 
     return Promise.resolve(dispatch(userActions.getUserGroup.success(response.data)));
   } catch (e: unknown) {
-    if (e instanceof Error) {
-      return Promise.reject(dispatch(userActions.getUserGroup.failure(e)));
+    if (e instanceof AxiosError) {
+      dispatch(userActions.getUserGroup.failure(e));
+
+      return Promise.reject(e.response.data);
     }
   }
 };
@@ -46,10 +49,10 @@ export const login =
 
       return getState().user.data.name;
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (e instanceof AxiosError) {
         dispatch(userActions.loginGroup.failure(e));
 
-        return Promise.reject(e);
+        return Promise.reject(e.response.data);
       }
     }
   };
@@ -66,10 +69,10 @@ export const signup =
 
       return Promise.resolve(dispatch(userActions.signupGroup.success()));
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (e instanceof AxiosError) {
         dispatch(userActions.signupGroup.failure(e));
 
-        return Promise.reject(e);
+        return Promise.reject(e.response.data);
       }
     }
   };
@@ -94,7 +97,7 @@ export const editUserInfo =
 
       dispatch(userActions.editGroup.success(response.data));
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (e instanceof AxiosError) {
         dispatch(userActions.editGroup.failure(e));
       }
     }
@@ -120,7 +123,7 @@ export const deleteUser =
 
       dispatch(userActions.deleteGroup.success(response.data));
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (e instanceof AxiosError) {
         dispatch(userActions.deleteGroup.failure(e));
       }
     }
