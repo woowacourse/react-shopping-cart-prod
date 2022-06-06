@@ -1,5 +1,5 @@
 import { requestGetProductList, requestGetProduct } from 'api';
-import { 비동기_요청 } from 'constants/';
+import asyncDispatchAction from 'utils/asyncDispatchAction';
 import { 상품리스트_불러오기_액션, 상품_불러오기_액션 } from './types';
 
 const getProductList = () => async (dispatch) => {
@@ -9,19 +9,7 @@ const getProductList = () => async (dispatch) => {
 
   const response = await requestGetProductList();
 
-  if (response.status === 비동기_요청.FAILURE) {
-    dispatch({
-      type: 상품리스트_불러오기_액션.FAILURE,
-      payload: response.content,
-    });
-
-    return;
-  }
-
-  dispatch({
-    type: 상품리스트_불러오기_액션.SUCCESS,
-    payload: response.content,
-  });
+  asyncDispatchAction(dispatch, response, 상품리스트_불러오기_액션);
 };
 
 const getProduct = (id) => async (dispatch) => {
@@ -31,19 +19,7 @@ const getProduct = (id) => async (dispatch) => {
 
   const response = await requestGetProduct(id);
 
-  if (response.status === 비동기_요청.FAILURE) {
-    dispatch({
-      type: 상품_불러오기_액션.FAILURE,
-      payload: response.content,
-    });
-
-    return;
-  }
-
-  dispatch({
-    type: 상품_불러오기_액션.SUCCESS,
-    payload: response.content,
-  });
+  asyncDispatchAction(dispatch, response, 상품_불러오기_액션);
 };
 
 export { getProductList, getProduct };
