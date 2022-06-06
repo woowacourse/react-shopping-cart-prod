@@ -1,9 +1,9 @@
-import { API_URL } from '@/api/constants';
+import { CUSTOMERS_API_URL } from '@/api/constants';
 import { getCookie } from '@/api/cookie';
 import axios from 'axios';
 
 const customersAPI = axios.create({
-  baseURL: `${API_URL}/customers`,
+  baseURL: CUSTOMERS_API_URL.TO_CUSTOMERS,
   headers: {
     'Content-Type': 'application/json',
   },

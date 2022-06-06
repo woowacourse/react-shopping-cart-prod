@@ -1,12 +1,12 @@
 import { clearCache, caching } from '@/api/cache';
-import { API_URL } from '@/api/constants';
+import { CART_API_URL } from '@/api/constants';
 import axios from 'axios';
 
 const cartAPI = axios.create({
-  baseURL: `${API_URL}/carts`,
+  baseURL: CART_API_URL.TO_CARTS,
 });
 
-const cartListEndpoint = `${API_URL}/carts/`;
+const cartListEndpoint = `${CART_API_URL.TO_CARTS}/`;
 
 export const addCart = async (product): Promise<any> => {
   const response = await cartAPI.post('/', product);

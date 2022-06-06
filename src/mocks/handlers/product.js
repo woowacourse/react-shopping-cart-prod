@@ -1,9 +1,9 @@
-import { API_URL } from '@/api/constants';
+import { PRODUCT_API_URL } from '@/api/constants';
 import { productList } from '@/mocks/data/product';
 import { rest } from 'msw';
 
 export const productHanlders = [
-  rest.get(`${API_URL}/products`, (req, res, ctx) => {
+  rest.get(PRODUCT_API_URL.TO_PRODUCTS, (req, res, ctx) => {
     const {
       url: { searchParams },
     } = req;
@@ -22,7 +22,8 @@ export const productHanlders = [
       ctx.json(productList.slice(limit)),
     );
   }),
-  rest.get(`${API_URL}/products/:productId`, (req, res, ctx) => {
+
+  rest.get(PRODUCT_API_URL.TO_PRODUCT_ID, (req, res, ctx) => {
     const {
       params: { productId },
     } = req;

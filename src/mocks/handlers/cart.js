@@ -1,9 +1,9 @@
-import { API_URL } from '@/api/constants';
+import { CART_API_URL } from '@/api/constants';
 import { rest } from 'msw';
 import { cartList } from '../data/cart';
 
 export const cartHanlders = [
-  rest.post(`${API_URL}/carts`, (req, res, ctx) => {
+  rest.post(CART_API_URL.TO_CARTS, (req, res, ctx) => {
     const { body: product } = req;
 
     cartList.current.push(product);
@@ -14,11 +14,11 @@ export const cartHanlders = [
     });
   }),
 
-  rest.get(`${API_URL}/carts`, (req, res, ctx) => {
+  rest.get(CART_API_URL.TO_CARTS, (req, res, ctx) => {
     return res(ctx.json(cartList.current));
   }),
 
-  rest.delete(`${API_URL}/carts/:productId`, (req, res, ctx) => {
+  rest.delete(CART_API_URL.TO_PRODUCT_ID, (req, res, ctx) => {
     const {
       params: { productId },
     } = req;
@@ -28,7 +28,7 @@ export const cartHanlders = [
     return res(ctx.json());
   }),
 
-  rest.patch(`${API_URL}/carts/:productId`, (req, res, ctx) => {
+  rest.patch(CART_API_URL.TO_PRODUCT_ID, (req, res, ctx) => {
     const {
       params: { productId },
       body: newCartProduct,

@@ -1,4 +1,4 @@
-import { API_URL } from '@/api/constants';
+import { CUSTOMERS_API_URL } from '@/api/constants';
 import { rest } from 'msw';
 import { customerList } from '../data/customer';
 
@@ -53,7 +53,7 @@ const changeUserInformation = (accessToken, payload) =>
   }));
 
 export const customerHanlders = [
-  rest.get(`${API_URL}/customers`, (req, res, ctx) => {
+  rest.get(CUSTOMERS_API_URL.TO_CUSTOMERS, (req, res, ctx) => {
     const { headers } = req;
     const accessToken = headers['_headers'].authorization.split('Bearer ')[1];
 
@@ -78,7 +78,7 @@ export const customerHanlders = [
     );
   }),
 
-  rest.post(`${API_URL}/customers/signup`, (req, res, ctx) => {
+  rest.post(CUSTOMERS_API_URL.TO_SIGNUP, (req, res, ctx) => {
     const { body: customer } = req;
 
     customerList.current.push(customer);
@@ -89,7 +89,7 @@ export const customerHanlders = [
     });
   }),
 
-  rest.post(`${API_URL}/customers/login`, (req, res, ctx) => {
+  rest.post(CUSTOMERS_API_URL.TO_LOGIN, (req, res, ctx) => {
     const { username, password } = req.body;
 
     if (
@@ -106,7 +106,7 @@ export const customerHanlders = [
     );
   }),
 
-  rest.put(`${API_URL}/customers`, (req, res, ctx) => {
+  rest.put(CUSTOMERS_API_URL.TO_CUSTOMERS, (req, res, ctx) => {
     const { phoneNumber, address } = req.body;
     const { headers } = req;
 
@@ -121,7 +121,7 @@ export const customerHanlders = [
     });
   }),
 
-  rest.patch(`${API_URL}/customers/password`, (req, res, ctx) => {
+  rest.patch(CUSTOMERS_API_URL.TO_PASSWORD, (req, res, ctx) => {
     const { password } = req.body;
     const { headers } = req;
 
@@ -136,7 +136,7 @@ export const customerHanlders = [
     });
   }),
 
-  rest.delete(`${API_URL}/customers`, (req, res, ctx) => {
+  rest.delete(CUSTOMERS_API_URL.TO_CUSTOMERS, (req, res, ctx) => {
     const { headers } = req;
 
     return checkAccessToken({
