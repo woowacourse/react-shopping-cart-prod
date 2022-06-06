@@ -1,7 +1,6 @@
 import { rest } from 'msw';
-import { loginSuccessData } from './authHandlerData';
 import { cartListData } from './cartHandlerData';
-import { userInfomationData } from './customerHandlerData';
+import { userInformationData } from './customerHandlerData';
 import { productDetailData, productListData } from './productHandlerData';
 
 const HOST_NAME = process.env.REACT_APP_API_URL;
@@ -14,8 +13,8 @@ export const productHandler = [
 
   // 상품 상세정보 불러오기
   rest.get(`${HOST_NAME}/products/:id`, (req, res, ctx) => {
-    const productId = req.url.searchParams.get('id');
-
+    // const productId = req.url.searchParams.get('id');
+    const { id: productId } = req.params;
     return res(ctx.status(200), ctx.json(productDetailData(productId)));
   }),
 ];
@@ -27,7 +26,13 @@ export const cartHandler = [
   }),
 
   // 장바구니에 상품 추가
-  rest.post(`${HOST_NAME}/cart/:id`, (req, res, ctx) => res(ctx.status(200))),
+  rest.post(`${HOST_NAME}/cart/:id`, (req, res, ctx) => {
+    const { id: targetId } = req.params;
+    const productList = productListData;
+    const { id, name, price, thumbnail } = productList.find((item) => item.id === Number(targetId));
+    cartListData.push({ product: { id, name, price, thumbnail }, quantity: 1 });
+    return res(ctx.status(200));
+  }),
 
   // 장바구니에 상품 수량 변경
   rest.put(`${HOST_NAME}/:id/quantity`, (req, res, ctx) => res(ctx.status(200))),
@@ -74,7 +79,7 @@ export const customerHandler = [
 
   // 내정보 조회
   rest.get(`${HOST_NAME}/customers/me`, (req, res, ctx) =>
-    res(ctx.status(200), ctx.json(userInfomationData)),
+    res(ctx.status(200), ctx.json(userInformationData)),
   ),
 
   rest.get(`${HOST_NAME}/customers/me/fail`, (req, res, ctx) =>

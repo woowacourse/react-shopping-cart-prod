@@ -18,9 +18,13 @@ class RequestAsync {
 
   async #getRefinedResponse(response) {
     const responseString = await response.text();
-
+    console.log(response);
+    let responseStatus = response.ok ? 비동기_요청.SUCCESS : 비동기_요청.FAILURE;
+    if (response.status === 303) {
+      responseStatus = 비동기_요청.REDIRECT;
+    }
     return {
-      status: response.ok ? 비동기_요청.SUCCESS : 비동기_요청.FAILURE,
+      status: responseStatus,
       content: responseString ? JSON.parse(responseString) : {},
     };
   }

@@ -12,16 +12,16 @@ export default (state = initialState, action) => {
     case 장바구니_액션.ADD_NEW_PRODUCT:
       return { items: [...state.items, payload] };
 
-    case 장바구니_액션.ADD_EXIST_PRODUCT:
-      return {
-        items: [...state.items].map((item) => {
-          if (item.id === payload.id) {
-            return payload;
-          }
+    // case 장바구니_액션.ADD_EXIST_PRODUCT:
+    //   return {
+    //     items: [...state.items].map((item) => {
+    //       if (item.id === payload.id) {
+    //         return payload;
+    //       }
 
-          return item;
-        }),
-      };
+    //       return item;
+    //     }),
+    //   };
 
     case 장바구니_액션.DELETE_PRODUCT:
       return {

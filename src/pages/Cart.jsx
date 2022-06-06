@@ -44,19 +44,22 @@ const Cart = () => {
     })
       .then((response) => response.json())
       .then((cartdata) => {
-        const cartListInfo = cartdata.map((item) => {
-          const { id, name, price, thumbnail } = item.product;
-          const { quantity } = item;
-          return {
-            id,
-            name,
-            price,
-            thumbnail,
-            quantity,
-          };
-        });
-        dispatch(initCartList(cartListInfo));
-        setCheckboxItems(cartListInfo.map((item) => Number(item.id)));
+        if (cartdata.length > 0 && cartdata) {
+          console.log('cartdata', cartdata);
+          const cartListInfo = cartdata.map((item) => {
+            const { id, name, price, thumbnail } = item.product;
+            const { quantity } = item;
+            return {
+              id,
+              name,
+              price,
+              thumbnail,
+              quantity,
+            };
+          });
+          dispatch(initCartList(cartListInfo));
+          setCheckboxItems(cartListInfo.map((item) => Number(item.id)));
+        }
         dispatch(hideSpinner());
       });
   }, []);
