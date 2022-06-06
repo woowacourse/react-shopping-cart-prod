@@ -165,7 +165,7 @@ export const handlers = [
     if (req.body.password !== userDB[accessToken].password) {
       return res(ctx.status(404));
     }
-
+    localStorage.removeItem('accessToken');
     return res(ctx.status(204));
   }),
 ];
