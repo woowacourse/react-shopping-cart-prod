@@ -99,7 +99,9 @@ export const deleteUser =
         },
       });
 
-      dispatch(userActions.deleteGroup.success(response.data));
+      localStorage.removeItem('access-token');
+
+      return Promise.resolve(dispatch(userActions.deleteGroup.success(response.data)));
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         dispatch(userActions.deleteGroup.failure(e));
