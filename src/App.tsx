@@ -32,8 +32,8 @@ function App() {
             <Route path={PATHS.SIGNUP} element={<SignupPage />}>
               <Route path={':stepId'} element={<SignupStep />} />
             </Route>
-            <Route path={PATHS.DEFAULT} element={<NotFoundPage />} />
             <Route path={PATHS.PROFILE} element={<ProfilePage />} />
+            <Route path={PATHS.DEFAULT} element={<NotFoundPage />} />
           </Routes>
         </StyledContent>
       </ThemeProvider>
