@@ -62,7 +62,7 @@ const EditUserPassword = () => {
     <>
       <PageHeader color={COLORS.GRAY_300}>비밀번호 변경</PageHeader>
       <form style={{ width: '100%' }} onSubmit={handleEditPassword}>
-        <label html-for="input-user-oldpassword">
+        <label>
           현재 비밀번호
           <Input
             id="input-user-oldpassword"
@@ -77,7 +77,7 @@ const EditUserPassword = () => {
           />
         </label>
 
-        <label html-for="input-user-newpassword">
+        <label>
           새 비밀번호
           <Input
             id="input-user-newpassword"
@@ -95,7 +95,7 @@ const EditUserPassword = () => {
           <ErrorMessage>8~20 사이의 영문자, 특수문자, 숫자로 입력해주세요</ErrorMessage>
         )}
 
-        <label html-for="input-user-check-newpassword">
+        <label>
           새 비밀번호 확인
           <Input
             id="input-user-check-newpassword"
