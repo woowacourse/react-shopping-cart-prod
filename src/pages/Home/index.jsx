@@ -18,7 +18,7 @@ function ProductList() {
 
   useEffect(() => {
     dispatch(getProductList());
-  }, [dispatch]);
+  }, []);
 
   if (loading) return <Loading />;
   if (error) return <Error />;

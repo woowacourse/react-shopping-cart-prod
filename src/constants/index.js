@@ -28,6 +28,10 @@ const ERROR_MESSAGE = {
   MISMATCH: "비밀번호가 일치하지 않습니다",
 };
 
+const ERROR_CODE = {
+  1002: "CHECK_EMAIL_OR_PASSWORD",
+};
+
 const MESSAGE = {
   CART_ADDED: "장바구니에 상품이 담겼습니다",
   NOT_AUTHORIZED: "접근할 수 없는 페이지입니다",
@@ -65,6 +69,7 @@ export {
   PATH,
   STATUS,
   ERROR_STATUS,
+  ERROR_CODE,
   ERROR_MESSAGE,
   MESSAGE,
   INPUT_TYPE,

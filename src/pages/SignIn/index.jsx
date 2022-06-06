@@ -1,15 +1,14 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import { getUser } from "@/redux/modules/user";
 
 import Form from "@/components/Form";
 import Input from "@/components/Input";
 
-import { setCookie, getCookie } from "@/utils/auth";
-import { BASE_URL, PATH, MESSAGE } from "@/constants";
+import { PATH } from "@/constants";
 
 import StyledSigninContainer from "@/pages/SignIn/index.style";
 
@@ -17,35 +16,20 @@ function Signin() {
   const email = useRef(null);
   const password = useRef(null);
 
-  const dispatch = useDispatch();
+  const { authorized } = useSelector((state) => state.userState);
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (getCookie("accessToken")) {
-      dispatch(toggleSnackbarOpen(MESSAGE.NOT_AUTHORIZED));
+    if (authorized) {
       navigate(PATH.MAIN);
     }
-  }, []);
+  }, [authorized]);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-
-    try {
-      const { data } = await axios.post(`${BASE_URL}/login`, {
-        email: email.current.value,
-        password: password.current.value,
-      });
-      setCookie("accessToken", data.accessToken);
-      navigate(PATH.MAIN);
-      location.reload();
-    } catch (error) {
-      const { errorCode } = error.response.data;
-      if (errorCode === "1000" || errorCode === "1002") {
-        dispatch(toggleSnackbarOpen(MESSAGE.CHECK_EMAIL_OR_PASSWORD));
-      }
-      console.log(error);
-    }
+    dispatch(getUser(email.current.value, password.current.value));
   };
 
   return (
