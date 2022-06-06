@@ -2,6 +2,7 @@ import requestAsync from './RequestAsync';
 
 const requestGetProductList = async () => requestAsync.get('products');
 const requestGetProduct = async (id) => requestAsync.get(`product?id=${id}`);
+
 const requestLogin = async (id, password) => requestAsync.post('login', { username: id, password });
 const requestUserInfo = async () => requestAsync.get('customers/me', true);
 const requestCheckDuplicatedId = async (id) =>
@@ -17,6 +18,8 @@ const requestWithDrawUser = async () => requestAsync.delete('customers/me', true
 const requestEditUserPassword = async (formData) =>
   requestAsync.put('customers/me/password', formData, true);
 
+const requestGetCartList = async () => requestAsync.get('cart', true);
+
 export {
   requestGetProductList,
   requestGetProduct,
@@ -27,4 +30,5 @@ export {
   requestEditUserInfo,
   requestWithDrawUser,
   requestEditUserPassword,
+  requestGetCartList,
 };

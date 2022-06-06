@@ -13,16 +13,17 @@ import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import { 아이콘_코드, 알림_메시지 } from 'constants/';
 import * as Styled from './styles';
 
-const CartProducItem = ({
+const CartProductItem = ({
   id,
   thumbnail,
   name,
   price,
-  count,
+  quantity,
   isChecked,
   handleChecked,
   handleItemCount,
 }) => {
+  console.log('productItem', quantity);
   const dispatch = useDispatch();
 
   const onClickDeleteButton = () => {
@@ -54,7 +55,7 @@ const CartProducItem = ({
           <IconButton onClick={onClickDeleteButton} icon={아이콘_코드.DELETE} />
         </CommonStyled.Container>
         <CommonStyled.FlexWrapper margin="0" width="120px" justifyContent="flex-end">
-          <Counter id={id} count={count} handleItemCount={handleItemCount()} />
+          <Counter id={id} count={quantity} handleItemCount={handleItemCount()} />
         </CommonStyled.FlexWrapper>
         <Styled.Container margin="0" width="100%" justifyContent="flex-end">
           <CommonStyled.Text padding="0.5rem 0">
@@ -66,25 +67,25 @@ const CartProducItem = ({
   );
 };
 
-CartProducItem.propTypes = {
+CartProductItem.propTypes = {
   id: PropTypes.number.isRequired,
   thumbnail: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.number,
-  count: PropTypes.number,
+  quantity: PropTypes.number,
   isChecked: PropTypes.func,
   handleChecked: PropTypes.func,
   handleItemCount: PropTypes.func,
 };
 
-CartProducItem.defaultProps = {
+CartProductItem.defaultProps = {
   thumbnail: noImage,
   name: '이름이 지정되지 않았습니다.',
   price: -1,
-  count: 1,
+  quantity: 1,
   isChecked: () => true,
   handleChecked: () => {},
   handleItemCount: () => {},
 };
 
-export default CartProducItem;
+export default CartProductItem;

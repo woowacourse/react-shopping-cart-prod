@@ -6,8 +6,9 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const { type, payload } = action;
-
   switch (type) {
+    case 장바구니_액션.INIT_CART_LIST:
+      return { items: payload };
     case 장바구니_액션.ADD_NEW_PRODUCT:
       return { items: [...state.items, payload] };
 
