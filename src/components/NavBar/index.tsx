@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import { logout } from 'redux/modules/user';
 
+import { deleteCookie } from 'utils';
 import Logo from 'assets/Logo.png';
 import { NavBarContainer, NavBarTitle, NavBarMenu } from './styles';
 
@@ -13,7 +14,7 @@ function NavBar() {
   const navigate = useNavigate();
 
   const onClickLogout = () => {
-    document.cookie = 'accessToken=';
+    deleteCookie('accessToken');
     dispatch(logout());
     navigate(routes.home);
   };

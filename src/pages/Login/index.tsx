@@ -8,6 +8,7 @@ import useInput from 'hooks/useInput';
 import { Button, Form, Input } from 'components/@shared';
 import { PageLayout } from 'components';
 
+import { setCookie } from 'utils';
 import { SignupWrapper } from './styles';
 
 function Login() {
@@ -22,8 +23,7 @@ function Login() {
 
     try {
       const { data } = await axios.post('/api/login', { userName: id, password });
-
-      document.cookie = `accessToken=${data}`;
+      setCookie('accessToken', data);
 
       dispatch(login());
       navigate(routes.home);
