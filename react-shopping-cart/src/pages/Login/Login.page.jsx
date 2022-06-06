@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -31,11 +31,7 @@ const SignupLink = styled(Link)`
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    fetchData: login,
-    data,
-    error,
-  } = useFetch({
+  const { fetchData: login, error } = useFetch({
     url: API_URL_PATH.LOGIN,
     method: 'post',
     skip: true,
@@ -44,30 +40,18 @@ function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const accessToken = data?.accessToken && data.accessToken;
-
   const handleLogin = async e => {
     e.preventDefault();
 
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    await login({ email, password });
-  };
+    const { accessToken } = await login({ email, password });
 
-  const { accessToken: isLoggedIn } = useSelector(state => state.auth);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/');
-    }
-  }, []);
-
-  useEffect(() => {
     if (accessToken) {
-      dispatch(loginUser(data));
+      dispatch(loginUser(accessToken));
       navigate('/');
     }
-  }, [accessToken]);
+  };
 
   return (
     <AuthContainer>

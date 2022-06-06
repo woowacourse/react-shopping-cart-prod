@@ -21,6 +21,7 @@ function useFetch({ url, method = 'get', headers, skip = false }) {
       });
 
       setData(data);
+      return data;
     } catch (error) {
       setError(error.message);
     } finally {
