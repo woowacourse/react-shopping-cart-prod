@@ -2,22 +2,26 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
-import { ProductListPage, ProductDetailPage, CartPage } from 'page';
-import { GlobalStyles, theme } from 'components';
+import {
+  ProductListPage,
+  ProductDetailPage,
+  CartPage,
+  OrderPage,
+  LoginPage,
+  SignupPage,
+  AccountPage,
+} from 'page';
+import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 
 import { MESSAGE, ROUTES } from 'utils/constants';
-import LoginPage from 'page/LoginPage';
-import SignupPage from 'page/SignupPage';
-import AccountPage from 'page/AccountPage';
 import { useEffect } from 'react';
 import { deleteCookie, getCookie } from 'utils/cookie';
 import { doLogin, doLogout } from 'actions/actionCreator';
-import Layout from 'components/Layout';
+// import Layout from 'components/Layout';
 import { useSelector } from 'react-redux';
-import Snackbar from 'components/Snackbar';
+// import Snackbar from 'components/Snackbar';
 import useSnackbar from 'hooks/useSnackbar';
 import { authApiClient } from 'apis/apiClient';
-import OrderPage from 'page/OrderPage';
 import { useDispatch } from 'react-redux';
 
 function App() {
