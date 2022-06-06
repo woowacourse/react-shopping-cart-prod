@@ -45,7 +45,7 @@ function ProductList() {
           <Checkbox
             id="checkbox"
             onChange={handleChange}
-            checked={allCheckboxIsChecked() ? true : false}
+            checked={allCheckboxIsChecked()}
           />
           <label htmlFor="checkbox" className="checkbox-label">
             선택해제
