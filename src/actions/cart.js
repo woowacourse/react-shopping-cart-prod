@@ -1,12 +1,12 @@
 import { 장바구니_액션 } from './types';
 
 const addCartList = (product, cartList) => {
-  const foundExistProduct = cartList.find((item) => item.id === product.id);
+  const targetProduct = cartList.find((item) => item.id === product.id);
 
-  if (foundExistProduct) {
+  if (targetProduct) {
     return {
       type: 장바구니_액션.ADD_EXIST_PRODUCT,
-      payload: { ...product, count: Number(foundExistProduct.count) + 1, isChecked: true },
+      payload: { ...product, count: Number(targetProduct.count) + 1, isChecked: true },
     };
   }
 
