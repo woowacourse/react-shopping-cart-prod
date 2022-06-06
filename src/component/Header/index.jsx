@@ -25,8 +25,8 @@ export default function Header() {
   const navigation = useNavigate();
   const userInfo = useFetch('get');
 
-  const checkLogin = async () => {
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
+  const checkLogin = () => {
+    const response = JSON.parse(localStorage.getItem('accessToken'));
 
     if (!response) {
       dispatch({type: AUTH.LOGOUT});
