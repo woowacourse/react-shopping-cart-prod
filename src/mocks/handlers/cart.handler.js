@@ -48,10 +48,10 @@ export const handlePostShoppingCartRequest = (req, res, ctx) => {
 };
 
 export const handlePatchShoppingCartRequest = (req, res, ctx) => {
-  const { productId, quantity } = req.body;
+  const { id, quantity } = req.body;
   const currentShoppingCart = getCart();
 
-  const productIndex = findProductCartIndex(currentShoppingCart, productId);
+  const productIndex = findProductCartIndex(currentShoppingCart, id);
 
   if (!currentShoppingCart.length || productIndex < 0) {
     return res(

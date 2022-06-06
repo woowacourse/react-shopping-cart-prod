@@ -26,11 +26,11 @@ const handleCartDispatch = async ({
   }
 };
 
-export const addToCartThunk = (id, quantity) => async (dispatch) => {
+export const addToCartThunk = (productId, quantity) => async (dispatch) => {
   await handleCartDispatch({
     dispatch,
     func: sendAddToCartRequest,
-    params: [id, quantity],
+    params: [productId, quantity],
   });
 };
 

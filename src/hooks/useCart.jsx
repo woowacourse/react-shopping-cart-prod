@@ -22,8 +22,8 @@ const useCart = () => {
     dispatch(getCartThunk());
   };
 
-  const addProduct = ({ id, count }) => {
-    dispatch(addToCartThunk(id, count));
+  const addProduct = ({ productId, count }) => {
+    dispatch(addToCartThunk(productId, count));
   };
 
   const dispatchQuantityUpdate = (productId, quantity) => {

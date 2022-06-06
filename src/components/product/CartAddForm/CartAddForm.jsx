@@ -9,7 +9,7 @@ import * as S from 'components/product/CartAddForm/CartAddForm.style';
 
 import * as GlobalStyled from 'styles/GlobalStyles';
 
-function CartAddForm({ product: { id, name, price, stock }, closeModal }) {
+function CartAddForm({ product: { id: productId, name, price, stock }, closeModal }) {
   const [count, handleIncrement, handleDecrement] = useCount({
     initialValue: 1,
     min: 1,
@@ -18,7 +18,7 @@ function CartAddForm({ product: { id, name, price, stock }, closeModal }) {
   const { addProduct } = useCart();
 
   const onClickCartAdd = () => {
-    addProduct({ id, name, count });
+    addProduct({ productId, name, count });
     closeModal();
   };
 
