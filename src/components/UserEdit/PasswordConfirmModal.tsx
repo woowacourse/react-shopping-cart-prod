@@ -7,7 +7,7 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import { KeyboardEvent, useEffect } from 'react';
+import { KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editUserInfo } from 'redux/user/thunk';
 import { PATH } from 'Routers';
@@ -21,22 +21,17 @@ interface PasswordConfirmModalProps {
 const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) => {
   const [password, onChangePassword] = useInput();
   const loginId = useAppSelector(state => state.user.data.loginId);
-  const { data } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
   useAuthError(openSnackbar);
 
-  useEffect(() => {
-    if (name === data.name) {
+  const onSubmitPassword = () => {
+    dispatch(editUserInfo({ loginId, name, password })).then(() => {
       closeModal();
       navigate(PATH.home);
-    }
-  }, [data.name]);
-
-  const onSubmitPassword = () => {
-    dispatch(editUserInfo({ loginId, name, password }));
+    });
   };
 
   const onKeydownEnter = (e: KeyboardEvent<HTMLInputElement>) => {
