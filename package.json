@@ -24,7 +24,8 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "pretty": "prettier --write \"src/**/*.{js,jsx,json,ts,tsx}\""
   },
   "browserslist": {
     "production": [
@@ -60,6 +61,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "gh-pages": "^4.0.0",
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
     "msw": "^0.39.2",
     "prettier": "^2.6.2",
     "typescript": "^4.6.4",
