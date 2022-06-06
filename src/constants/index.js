@@ -15,36 +15,23 @@ const STATUS = {
 };
 
 const ERROR_STATUS = {
-<<<<<<< HEAD
-  WRONG_LENGTH: "WRONG_LENGTH",
-  PASSWORD_RULE: "PASSWORD_RULE",
-  EMAIL_RULE: "EMAIL_RULE",
-=======
   EMAIL_RULE: "EMAIL_RULE",
   NICKNAME_RULE: "NICKNAME_RULE",
   PASSWORD_RULE: "PASSWORD_RULE",
->>>>>>> ac0b09b49c7603f5a9d106d8f21d02ed060eed58
   MISMATCH: "MISMATCH",
 };
 
 const ERROR_MESSAGE = {
   EMAIL_RULE: "이메일 주소를 입력해주세요",
-<<<<<<< HEAD
-  WRONG_LENGTH: "올바르지 않은 길이입니다",
-=======
   NICKNAME_RULE: "2~8자 사이의 닉네임을 입력해주세요",
->>>>>>> ac0b09b49c7603f5a9d106d8f21d02ed060eed58
   PASSWORD_RULE: "영문, 숫자를 포함하여 8-20자로 입력하세요",
   MISMATCH: "비밀번호가 일치하지 않습니다",
 };
 
-<<<<<<< HEAD
-=======
 const ERROR_CODE = {
   1002: "CHECK_EMAIL_OR_PASSWORD",
 };
 
->>>>>>> ac0b09b49c7603f5a9d106d8f21d02ed060eed58
 const MESSAGE = {
   CART_ADDED: "장바구니에 상품이 담겼습니다",
   NOT_AUTHORIZED: "접근할 수 없는 페이지입니다",
@@ -54,15 +41,12 @@ const MESSAGE = {
   WITHDRAWAL_CONFIRM: "정말로 탈퇴하시겠습니까? 😭",
 };
 
-<<<<<<< HEAD
-=======
 const INPUT_TYPE = {
   EMAIL: "EMAIL",
   NICKNAME: "NICKNAME",
   PASSWORD: "PASSWORD",
 };
 
->>>>>>> ac0b09b49c7603f5a9d106d8f21d02ed060eed58
 const NICKNAME = {
   MIN_LENGTH: 2,
   MAX_LENGTH: 8,
@@ -85,15 +69,10 @@ export {
   PATH,
   STATUS,
   ERROR_STATUS,
-<<<<<<< HEAD
-  ERROR_MESSAGE,
-  MESSAGE,
-=======
   ERROR_CODE,
   ERROR_MESSAGE,
   MESSAGE,
   INPUT_TYPE,
->>>>>>> ac0b09b49c7603f5a9d106d8f21d02ed060eed58
   NICKNAME,
   PASSWORD,
   REGULAR_EXPRESSION,
