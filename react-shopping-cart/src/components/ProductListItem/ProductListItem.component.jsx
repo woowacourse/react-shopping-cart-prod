@@ -25,17 +25,28 @@ function ProductListItem({ id, thumbnail, name, price }) {
 
   const debounce = useDebounce();
   const [modifyQuantityShow, setModifyQuantityShow] = useState(false);
+  const isModified = useRef();
   const handleShowModifyQuantityBox = () => {
     setModifyQuantityShow(prev => !prev);
+    setTimeout(() => {
+      if (isModified.current) {
+        return;
+      }
+
+      isModified.current = false;
+      setModifyQuantityShow(false);
+    }, 1500);
   };
   const handleChangeQuantity = async quantity => {
     if (!accessToken) {
       alert('로그인 해주세요!');
       return;
     }
+    isModified.current = true;
 
     debounce(async () => {
       setModifyQuantityShow(false);
+      isModified.current = false;
       await storeProductToCart({ id, quantity });
     }, 1000);
   };
@@ -57,6 +68,7 @@ function ProductListItem({ id, thumbnail, name, price }) {
       <CartQuantityBox show={modifyQuantityShow}>
         <ModifyQuantityBox onChange={handleChangeQuantity} quantity={data?.quantity ?? 0} />
       </CartQuantityBox>
+      <StoredQuantityBox show={!!data?.quantity}>{data?.quantity}</StoredQuantityBox>
     </ItemContainer>
   );
 }
@@ -138,4 +150,22 @@ const CartQuantityBox = styled(FlexBox).attrs({
     background-color: ${theme.colors['MINT_001']};
     color: ${theme.colors['WHITE_001']};
   `};
+`;
+
+const StoredQuantityBox = styled(FlexBox).attrs({
+  justifyContent: 'center',
+  alignItems: 'center',
+})`
+  display: ${({ show }) => (show ? 'flex' : 'none')};
+  position: absolute;
+  right: 3%;
+  top: 3%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  opacity: 0.8;
+  background-color: ${({ theme }) => theme.colors['MINT_001']};
 `;
