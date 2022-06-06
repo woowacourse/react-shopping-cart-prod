@@ -65,6 +65,7 @@ export default function Header() {
           <S.Profile>
             <S.ProfileImage src={baedaleHover} alt="프로필 이미지" />
             <S.ProfileImage className="baedale" src={baedale} alt="프로필 이미지" />
+
             <div className="tooltip-container"></div>
             <div className="tooltip-content">
               <S.ProfileNavContainer>
@@ -78,6 +79,12 @@ export default function Header() {
           </S.Profile>
         ) : (
           <S.NavText to={PATH.LOGIN}>로그인</S.NavText>
+        )}
+        {isLogin && (
+          <S.UserName>
+            {userInfo.data && userInfo.data.nickname} 님 <br />
+            안녕하세요!
+          </S.UserName>
         )}
       </S.HeaderNavBox>
     </S.HeaderLayout>
