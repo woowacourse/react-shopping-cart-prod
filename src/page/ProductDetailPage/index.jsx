@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { Image } from 'components';
 
-import store from 'store/store';
 import { doPutProductToCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
 import { LINK, MESSAGE } from 'utils/constants';
@@ -12,9 +11,10 @@ import useProduct from 'hooks/useProduct';
 import useCart from 'hooks/useCart';
 
 import useSnackbar from 'hooks/useSnackbar';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const ProductDetailPage = () => {
+  const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector(state => state.authReducer);
@@ -31,7 +31,7 @@ const ProductDetailPage = () => {
       return;
     }
 
-    store.dispatch(doPutProductToCart({ id: id, quantity: isInCart ? product.quantity + 1 : 1 }));
+    dispatch(doPutProductToCart({ id: id, quantity: isInCart ? product.quantity + 1 : 1 }));
     navigate(LINK.TO_CART);
   };
 

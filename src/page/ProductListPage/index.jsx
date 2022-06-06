@@ -1,16 +1,16 @@
 // @ts-nocheck
 import { useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { ProductItem } from 'components';
 
-import store from 'store/store';
 import { doInitializeProductList } from 'actions/actionCreator';
 
 import Styled from 'page/ProductListPage/index.style';
 import { productApiClient } from 'apis/apiClient';
 
 const ProductListPage = () => {
+  const dispatch = useDispatch();
   const { products } = useSelector(state => state.reducer);
 
   // TODO  [API] 상품 목록 가져오기(GET)
@@ -19,7 +19,7 @@ const ProductListPage = () => {
 
     const response = await productApiClient.get('/products');
 
-    store.dispatch(doInitializeProductList({ products: response.data }));
+    dispatch(doInitializeProductList({ products: response.data }));
   }, [products]);
 
   useEffect(() => {

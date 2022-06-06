@@ -11,7 +11,6 @@ import SignupPage from 'page/SignupPage';
 import AccountPage from 'page/AccountPage';
 import { useEffect } from 'react';
 import { deleteCookie, getCookie } from 'utils/cookie';
-import store from 'store/store';
 import { doLogin, doLogout } from 'actions/actionCreator';
 import Layout from 'components/Layout';
 import { useSelector } from 'react-redux';
@@ -19,8 +18,10 @@ import Snackbar from 'components/Snackbar';
 import useSnackbar from 'hooks/useSnackbar';
 import { authApiClient } from 'apis/apiClient';
 import OrderPage from 'page/OrderPage';
+import { useDispatch } from 'react-redux';
 
 function App() {
+  const dispatch = useDispatch();
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
   const [renderSnackbar] = useSnackbar();
 
@@ -30,10 +31,10 @@ function App() {
       if (!accessToken) return;
 
       const response = await authApiClient.get('/customers');
-      store.dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(doLogin({ nickname: response.data.nickname }));
     } catch (error) {
       deleteCookie('accessToken');
-      store.dispatch(doLogout());
+      dispatch(doLogout());
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
     }
   };

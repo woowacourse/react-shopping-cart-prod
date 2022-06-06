@@ -8,16 +8,16 @@ import useCart from 'hooks/useCart';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
-import store from 'store/store';
 import { doDeleteProductFromCart, doPutProductToCart } from 'actions/actionCreator';
 
 import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';
 import { LINK, MESSAGE } from 'utils/constants';
 import useSnackbar from 'hooks/useSnackbar';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 const ProductItem = ({ id, name, price, image }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
   const { isAuthenticated } = useSelector(state => state.authReducer);
@@ -36,12 +36,12 @@ const ProductItem = ({ id, name, price, image }) => {
     clearTimer();
 
     if (quantityRef.current > 0) {
-      store.dispatch(doPutProductToCart({ id, quantity: quantityRef.current }));
+      dispatch(doPutProductToCart({ id, quantity: quantityRef.current }));
       renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
       return;
     }
 
-    store.dispatch(doDeleteProductFromCart({ id }));
+    dispatch(doDeleteProductFromCart({ id }));
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 

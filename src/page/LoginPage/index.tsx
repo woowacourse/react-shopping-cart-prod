@@ -11,15 +11,15 @@ import Container from 'components/@shared/Container';
 import { setCookie } from 'utils/cookie';
 
 import { useLocation, useNavigate } from 'react-router-dom';
-import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import Logo from 'components/Logo';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { authApiClient } from 'apis/apiClient';
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state: userEmail } = useLocation();
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
@@ -54,7 +54,7 @@ const LoginPage = () => {
       });
 
       setCookie('accessToken', response.data.accessToken);
-      store.dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(doLogin({ nickname: response.data.nickname }));
       renderSnackbar(`${response.data.nickname}${MESSAGE.LOGIN_SUCCESS}`, 'SUCCESS');
       navigate('/');
     } catch (error) {

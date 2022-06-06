@@ -1,10 +1,9 @@
 // @ts-nocheck
 import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 
-import store from 'store/store';
 import {
   doAddProductToOrder,
   doDecideOrder,
@@ -20,6 +19,7 @@ import { MESSAGE } from 'utils/constants';
 import { productApiClient } from 'apis/apiClient';
 
 const CartPage = () => {
+  const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
@@ -44,7 +44,7 @@ const CartPage = () => {
   // TODO [API] 장바구니 목록 가져오기(GET)
   // const getCarts = async () => {
   //   const response = await productApiClient.get('/carts');
-  //   store.dispatch(doInitializeCartList({ shoppingCart: response.data }));
+  //   dispatch(doInitializeCartList({ shoppingCart: response.data }));
   // };
 
   // useEffect(() => {
@@ -61,13 +61,13 @@ const CartPage = () => {
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
-      store.dispatch(doInitializeOrder());
+      dispatch(doInitializeOrder());
       return;
     }
 
     shoppingCart.forEach(product => {
       if (!order.some(productId => productId === product.id)) {
-        store.dispatch(doAddProductToOrder({ id: product.id }));
+        dispatch(doAddProductToOrder({ id: product.id }));
       }
     });
   };
@@ -89,7 +89,7 @@ const CartPage = () => {
   //       },
   //     );
 
-  //     store.dispatch(doSelectiveDeleteFromCart());
+  //     dispatch(doSelectiveDeleteFromCart());
   //     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   //   } catch (error) {
   //     renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
@@ -98,13 +98,13 @@ const CartPage = () => {
   // };
 
   const deleteItem = () => {
-    store.dispatch(doSelectiveDeleteFromCart());
+    dispatch(doSelectiveDeleteFromCart());
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
   const handleOrder = () => {
     const orderList = shoppingCart.filter(product => order.includes(product.id));
-    store.dispatch(doDecideOrder({ orderList }));
+    dispatch(doDecideOrder({ orderList }));
     navigate('/order');
   };
 

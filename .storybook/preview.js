@@ -6,6 +6,7 @@ import { GlobalStyles, theme } from 'components';
 import store from 'store/store';
 import { doInitializeProductList } from 'actions/actionCreator';
 import { dummyProductList } from 'dummy_data';
+import { useDispatch } from 'react-redux';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -17,10 +18,11 @@ export const parameters = {
     expanded: true,
   },
 };
+const dispatch = useDispatch();
 
 export const decorators = [
   (Story, context) => {
-    store.dispatch(doInitializeProductList({ products: dummyProductList }));
+    dispatch(doInitializeProductList({ products: dummyProductList }));
 
     return (
       <>

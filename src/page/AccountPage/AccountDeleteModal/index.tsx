@@ -9,12 +9,13 @@ import Styled from './index.style';
 import { deleteCookie } from 'utils/cookie';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import store from 'store/store';
 import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import { useNavigate } from 'react-router-dom';
 import { authApiClient } from 'apis/apiClient';
+import { useDispatch } from 'react-redux';
 
 const AccountDeleteModal = ({ handleModal }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
@@ -35,8 +36,8 @@ const AccountDeleteModal = ({ handleModal }) => {
       });
 
       deleteCookie('accessToken');
-      store.dispatch(doLogout());
-      store.dispatch(doInitializeCartList({ shoppingCart: [] }));
+      dispatch(doLogout());
+      dispatch(doInitializeCartList({ shoppingCart: [] }));
       handleModal();
       renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
       navigate('/');

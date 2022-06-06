@@ -11,15 +11,15 @@ import { useState, useEffect } from 'react';
 import { validateNickname } from 'utils/validator';
 import PasswordEditModal from './PasswordEditModal';
 import AccountDeleteModal from './AccountDeleteModal';
-import store from 'store/store';
 import { doLogin } from 'actions/actionCreator';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { authApiClient } from 'apis/apiClient';
 
 const AccountPage = () => {
+  const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
@@ -56,7 +56,7 @@ const AccountPage = () => {
       const response = await authApiClient.patch('/customers', {
         nickname,
       });
-      store.dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(doLogin({ nickname: response.data.nickname }));
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
     } catch (error) {
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');
