@@ -6,7 +6,7 @@ import DropDownOption from 'components/Common/DropDownOption/DropDownOption';
 import DropDown from 'components/Common/DropDown/DropDown';
 import Avatar from 'components/User/Avatar/Avatar';
 
-import useAuth from 'hooks/useAuth';
+import useAuthentication from 'hooks/useAuthentication';
 import useCart from 'hooks/useCart';
 import bigCart from 'assets/svg/bigCart.svg';
 import { PATH_NAME } from 'constants';
@@ -36,7 +36,7 @@ const Header = () => {
 };
 
 const AuthNav = ({ isAuthenticated, name }) => {
-  const { logout } = useAuth();
+  const { logout } = useAuthentication();
 
   const handleClickLogout = () => {
     logout();

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { PATH_NAME } from 'constants';
 
 import useInputValidate from 'hooks/useInputValidate';
-import useAuth from 'hooks/useAuth';
+import useAuthentication from 'hooks/useAuthentication';
 import useSnackBar from 'hooks/useSnackBar';
 
 const useSignUpPage = () => {
@@ -12,7 +12,7 @@ const useSignUpPage = () => {
 
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
 
-  const { isSignUpSucceed, isSignUpError, signUp } = useAuth();
+  const { isSignUpSucceed, isSignUpError, signUp } = useAuthentication();
 
   const [emailValidate, handleEmailBlur] = useInputValidate('email');
   const [nameValidate, handleNameBlur] = useInputValidate('name');

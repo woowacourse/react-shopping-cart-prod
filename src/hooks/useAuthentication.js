@@ -5,7 +5,7 @@ import { setCookie, getCookie, deleteCookie } from 'utils/cookie';
 import { setUserInfo, setAuthenticated } from 'reducers/user/user.actions';
 import { initializeUserInfo } from 'reducers/user/user.actions';
 
-const useAuth = () => {
+const useAuthentication = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
@@ -71,4 +71,4 @@ const useAuth = () => {
   };
 };
 
-export default useAuth;
+export default useAuthentication;

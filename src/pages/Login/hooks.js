@@ -3,13 +3,13 @@ import { useEffect } from 'react';
 
 import { PATH_NAME } from 'constants';
 
-import useAuth from 'hooks/useAuth';
+import useAuthentication from 'hooks/useAuthentication';
 import useSnackBar from 'hooks/useSnackBar';
 
 const useLoginPage = () => {
   const navigate = useNavigate();
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
-  const { isLoginSucceed, isLoginError, login } = useAuth();
+  const { isLoginSucceed, isLoginError, login } = useAuthentication();
 
   const handleLogin = (e) => {
     e.preventDefault();
