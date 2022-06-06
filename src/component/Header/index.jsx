@@ -38,6 +38,9 @@ export default function Header() {
     userInfo.fetch({
       API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
+      onSuccess: () => {
+        dispatch({type: AUTH.LOGIN});
+      },
     });
   };
 
@@ -51,10 +54,6 @@ export default function Header() {
   useEffect(() => {
     checkLogin();
   }, []);
-
-  useEffect(() => {
-    userInfo.data && dispatch({type: AUTH.LOGIN});
-  }, [userInfo.data]);
 
   return (
     <S.HeaderLayout>
