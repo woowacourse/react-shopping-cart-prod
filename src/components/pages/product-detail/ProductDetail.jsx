@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addProductToCart } from "@/redux/modules/cartList";
-import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 import Button from "@/components/common/button/Button";
 
@@ -31,7 +30,6 @@ function ProductDetail() {
   const handleCartClick = () => {
     const { name, price, imgUrl } = data;
     dispatch(addProductToCart({ id, name, price, imgUrl }));
-    dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
   };
 
   if (loading) return <Loading />;

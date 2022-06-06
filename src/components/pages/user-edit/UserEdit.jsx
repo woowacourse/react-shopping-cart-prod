@@ -116,7 +116,7 @@ function UserEdit() {
       navigate(PATH.MAIN);
       location.reload();
     } catch (error) {
-      console.log(error);
+      dispatch(toggleSnackbarOpen(error));
     }
   };
 
@@ -134,7 +134,7 @@ function UserEdit() {
         navigate(PATH.MAIN);
         location.reload();
       } catch (error) {
-        console.log(error);
+        dispatch(toggleSnackbarOpen(error));
       }
     }
   };

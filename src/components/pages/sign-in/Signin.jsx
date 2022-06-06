@@ -44,7 +44,7 @@ function Signin() {
       if (errorCode === "1000" || errorCode === "1002") {
         dispatch(toggleSnackbarOpen(MESSAGE.CHECK_EMAIL_OR_PASSWORD));
       }
-      console.log(error);
+      dispatch(toggleSnackbarOpen(error));
     }
   };
 

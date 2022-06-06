@@ -113,7 +113,7 @@ function Signup() {
       if (errorCode === "1001") {
         dispatch(toggleSnackbarOpen(MESSAGE.EXIST_EMAIL));
       }
-      console.log(error);
+      dispatch(toggleSnackbarOpen(error));
     }
   };
 
