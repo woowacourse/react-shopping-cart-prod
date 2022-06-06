@@ -45,6 +45,8 @@ export const login =
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         dispatch(userActions.loginGroup.failure(e));
+
+        return Promise.reject();
       }
     }
   };
@@ -59,6 +61,8 @@ export const signup =
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         dispatch(userActions.signupGroup.failure(e));
+
+        return Promise.reject();
       }
     }
   };
@@ -81,6 +85,8 @@ export const editUserInfo =
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         dispatch(userActions.editGroup.failure(e));
+
+        return Promise.reject();
       }
     }
   };
@@ -105,6 +111,8 @@ export const deleteUser =
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
         dispatch(userActions.deleteGroup.failure(e));
+
+        return Promise.reject();
       }
     }
   };
