@@ -21,3 +21,9 @@ export const ROUTE: {
   EditPassword: '/customers/edit/password',
   NotFound: '/*',
 };
+
+export const PAYMENTS_ROUTE = {
+  CardList: 'payments',
+  CardAdd: 'payments/cardlist/add',
+  CardSuccess: 'payments/cardlist/add/success',
+};

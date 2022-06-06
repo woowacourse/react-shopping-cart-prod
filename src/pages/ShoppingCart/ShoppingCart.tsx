@@ -7,6 +7,7 @@ import ErrorContainer from '@/components/common/ErrorContainer/ErrorContainer';
 import Loading from '@/components/common/Loading/Loading';
 import { useThunkFetch } from '@/hooks/useFecth';
 import { useCartList } from '@/hooks/useCartList';
+import { Outlet } from 'react-router-dom';
 
 function ShoppingCart() {
   const { isLoading, cartList } = useThunkFetch({
@@ -47,6 +48,7 @@ function ShoppingCart() {
           <OrderForm amount={amount} />
         </Styled.Wrapper>
       </Styled.Container>
+      <Outlet />
     </PageTemplate>
   );
 }

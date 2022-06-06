@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
+  padding: 50px;
   min-width: 450px;
 
   display: flex;
