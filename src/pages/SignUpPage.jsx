@@ -65,7 +65,7 @@ function SignUpPage() {
           placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
           onChange={handleUserInfoChange(setSignUpInfo, USER_INFO_KEY.PASSWORD_CONFIRM)}
         />
-        <Button text="가입하기" />
+        <Button>가입하기</Button>
       </StyledUserForm>
     </StyledUserContainer>
   );

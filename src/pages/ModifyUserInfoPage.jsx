@@ -58,7 +58,7 @@ function ModifyUserInfoPage() {
           placeholder="닉네임을 입력해주세요"
           onChange={handleUserInfoChange(setUserInfo, USER_INFO_KEY.NICKNAME)}
         />
-        <Button text="수정하기" />
+        <Button>수정하기</Button>
       </StyledUserForm>
     </StyledUserContainer>
   );

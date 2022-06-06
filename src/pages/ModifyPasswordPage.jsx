@@ -62,7 +62,7 @@ function ModifyPasswordPage() {
           placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
           onChange={handleUserInfoChange(setPasswords, PASSWORD_INFO_KEY.NEW_PASSWORD_CONFIRM)}
         />
-        <Button text="수정하기" />
+        <Button>수정하기</Button>
       </StyledUserForm>
     </StyledUserContainer>
   );

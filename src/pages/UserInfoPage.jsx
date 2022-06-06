@@ -34,13 +34,13 @@ function UserInfoPage() {
     <StyledUserContainer>
       <h1>회원 정보 수정</h1>
       <Link to={ROUTES_PATH.MODIFY_PASSWORD}>
-        <Button text="비밀번호 수정" />
+        <Button>비밀번호 수정</Button>
       </Link>
       <Link to={ROUTES_PATH.MODIFY_USER_INFO}>
-        <Button text="회원 정보 수정" />
+        <Button>회원 정보 수정</Button>
       </Link>
-      <Button text="로그아웃" onClick={handleLogOutClick} />
-      <Button text="회원 탈퇴" onClick={handleWithdrawClick} />
+      <Button onClick={handleLogOutClick}>로그아웃</Button>
+      <Button onClick={handleWithdrawClick}>회원 탈퇴</Button>
     </StyledUserContainer>
   );
 }

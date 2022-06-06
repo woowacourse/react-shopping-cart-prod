@@ -51,7 +51,7 @@ function LoginPage() {
           placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
           onChange={handleUserInfoChange(setLoginInfo, USER_INFO_KEY.PASSWORD)}
         />
-        <Button text="로그인" />
+        <Button>로그인</Button>
       </StyledUserForm>
     </StyledUserContainer>
   );

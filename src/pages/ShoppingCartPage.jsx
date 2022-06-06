@@ -7,6 +7,7 @@ import { StyledCheckbox } from '../components/common/Styled';
 import { MESSAGE } from '../constants';
 import useCart from '../hooks/useCart';
 import Loading from '../components/Loading';
+import Button from '../components/common/Button';
 
 function ShoppingCartPage() {
   const { deleteItem } = useCart();
@@ -106,7 +107,7 @@ function ShoppingCartPage() {
               <StyledHighlight>{Number(totalPrice).toLocaleString()}원</StyledHighlight>
             </StyledAmount>
             <StyledOrderButtonWrapper>
-              <StyledOrderButton>주문하기({selectedItems.length}개)</StyledOrderButton>
+              <Button order>주문하기({selectedItems.length}개)</Button>
             </StyledOrderButtonWrapper>
           </div>
         </StyledRightSection>
@@ -225,17 +226,7 @@ const StyledOrderButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 30px 0 20px;
-`;
-
-const StyledOrderButton = styled.button`
-  background: ${COLORS.PRIMARY};
-  font-size: 20px;
-  color: ${COLORS.WHITE};
-  width: 90%;
-  padding: 15px;
-  border: none;
-  border-radius: 4px;
+  margin: 20px 0 20px;
 `;
 
 export default ShoppingCartPage;
