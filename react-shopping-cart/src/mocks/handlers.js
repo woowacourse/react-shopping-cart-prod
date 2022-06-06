@@ -59,6 +59,11 @@ export const handlers = [
     return res(ctx.status(200));
   }),
   rest.get(`${API_URL_PATH.NAME}`, (req, res, ctx) => {
-    return res(ctx.json(customers['abc@abc.com'].name));
+    const { authorization: raw } = req.headers._headers;
+    const authorization = raw.replace('Bearer', '');
+    if (authorization) {
+      return res(ctx.status(200), ctx.json(customers['abc@abc.com'].name));
+    }
+    return res(ctx.status(401));
   }),
 ];
