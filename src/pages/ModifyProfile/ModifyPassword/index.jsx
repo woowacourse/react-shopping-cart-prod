@@ -15,17 +15,13 @@ const ModifyPassword = ({ closeModal }) => {
   const { modifyPassword, isSucceed, isError } = useModifyPassword();
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
   const newPasswordRef = useRef(null);
-  const [oldPasswordValidate, handleOldPasswordBlur] =
-    useInputValidate('password');
   const [newPasswordValidate, handleNewPasswordBlur] =
     useInputValidate('password');
   const [newPasswordCheckValidate, handleNewPasswordCheckBlur] =
     useInputValidate('passwordCheck');
 
   const isAllValid =
-    oldPasswordValidate.isValid &&
-    newPasswordValidate.isValid &&
-    newPasswordCheckValidate.isValid;
+    newPasswordValidate.isValid && newPasswordCheckValidate.isValid;
 
   const handleModifyPassword = (e) => {
     e.preventDefault();
@@ -56,13 +52,8 @@ const ModifyPassword = ({ closeModal }) => {
           <Input
             description="비밀번호"
             placeholder="기존 비밀번호를 입력하세요."
-            onBlur={handleOldPasswordBlur()}
             name="oldPassword"
             type="password"
-          />
-          <ValidateText
-            text={oldPasswordValidate.text}
-            isValid={oldPasswordValidate.isValid}
           />
         </Fieldset>
         <Fieldset>
