@@ -20,7 +20,11 @@ function ProductDetail() {
     deps: [],
   });
 
-  const { isLoading: isProductLoading, data: product } = useFetch({
+  const {
+    isLoading: isProductLoading,
+    isError,
+    data,
+  } = useFetch({
     action: () => getProduct(productId),
     deps: [],
   });
@@ -33,7 +37,7 @@ function ProductDetail() {
     );
   }
 
-  if (product === null) {
+  if (isError) {
     return (
       <PageTemplate>
         <Styled.Title>상품 상세</Styled.Title>
@@ -41,6 +45,8 @@ function ProductDetail() {
       </PageTemplate>
     );
   }
+
+  const { product } = data as any;
 
   return (
     <PageTemplate>

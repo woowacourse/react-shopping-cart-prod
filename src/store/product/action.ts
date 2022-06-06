@@ -21,9 +21,6 @@ interface GetProductListSucceeded {
 
 interface GetProductListFailed {
   type: ProductActionType.GET_PRODUCT_LIST_FAILED;
-  payload: {
-    message: string | unknown;
-  };
 }
 
 export type ProductListAction =
@@ -32,25 +29,27 @@ export type ProductListAction =
   | GetProductListFailed;
 
 export const fetchProductListAsync =
-  (page: number) => async (dispatch: Dispatch<ProductListAction>) => {
+  triggerFailedSnackbar => async (dispatch: Dispatch<ProductListAction>) => {
     dispatch({ type: ProductActionType.GET_PRODUCT_LIST_START });
     try {
-      const {
-        data: { productList, totalProductCount },
-      } = await getProductList(page);
+      const response = await getProductList();
+
       dispatch({
         type: ProductActionType.GET_PRODUCT_LIST_SUCCEEDED,
         payload: {
-          productList,
-          totalProductCount,
+          productList: response.data.products,
+          totalProductCount: response.data.products.length,
         },
       });
-    } catch ({ message }) {
+    } catch ({
+      response: {
+        data: { error },
+      },
+    }) {
       dispatch({
         type: ProductActionType.GET_PRODUCT_LIST_FAILED,
-        payload: {
-          message,
-        },
       });
+
+      triggerFailedSnackbar(error?.messages[0]);
     }
   };

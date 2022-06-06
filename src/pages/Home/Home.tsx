@@ -1,17 +1,20 @@
 import PageTemplate from '../../components/common/PageTemplate/PageTemplate';
 import ProductList from '../../components/product/ProductList/ProductList';
 import Pagination from '../../components/common/Pagination/Pagination';
-import { useSearchParams } from 'react-router-dom';
 import ErrorContainer from '../../components/common/ErrorContainer/ErrorContainer';
 import * as Styled from './Home.style';
 import { fetchProductListAsync } from '@/store/product/action';
 import { useThunkFetch } from '@/hooks/useFecth';
 import { fetchGetCartAsync } from '@/store/cart/action';
 import Loading from '@/components/common/Loading/Loading';
+import { useSnackbar } from '@/hooks/useSnackbar';
+import { PRODUCT_LIST_PAGE_LIMIT } from '@/api/constants';
+import { usePage } from '@/hooks/usePage';
 
 function Home() {
-  const [searchParams] = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) ?? 1;
+  const { triggerFailedSnackbar } = useSnackbar();
+
+  const currentPage = usePage();
 
   const {
     isLoading: isProductLoading,
@@ -19,8 +22,8 @@ function Home() {
     productList,
   } = useThunkFetch({
     selector: state => state.product,
-    thunkAction: () => fetchProductListAsync(currentPage),
-    deps: [currentPage],
+    thunkAction: () => fetchProductListAsync(triggerFailedSnackbar),
+    deps: [],
   });
 
   const { isLoading: isCartLoading } = useThunkFetch({
@@ -54,7 +57,13 @@ function Home() {
   return (
     <PageTemplate>
       <Styled.Container>
-        <ProductList productList={productList} />
+        <ProductList
+          productList={productList.slice(
+            (currentPage - 1) * PRODUCT_LIST_PAGE_LIMIT,
+            PRODUCT_LIST_PAGE_LIMIT * currentPage,
+          )}
+        />
+
         <Pagination />
 
         {isCartLoading && <Loading type="page">👻</Loading>}

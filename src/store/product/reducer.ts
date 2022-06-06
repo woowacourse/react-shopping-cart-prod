@@ -38,12 +38,6 @@ const productReducer = (state = initialState, action): ProductState => {
     }
 
     case ProductActionType.GET_PRODUCT_LIST_FAILED: {
-      const {
-        payload: { message },
-      } = action;
-
-      alert(message);
-
       return {
         ...state,
         isLoading: false,
