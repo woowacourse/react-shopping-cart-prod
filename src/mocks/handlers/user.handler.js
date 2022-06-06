@@ -1,16 +1,7 @@
-const userDB = () => {
-  let user = JSON.parse(window.localStorage.getItem('server-user')) || [];
+import { DB_KEYS } from 'mocks/handlers/constants';
+import handleDB from 'mocks/handlers/handleDB';
 
-  const getUser = () => user;
-  const setUser = (newUser) => {
-    user = newUser;
-    window.localStorage.setItem('server-user', JSON.stringify(newUser));
-  };
-
-  return { getUser, setUser };
-};
-
-const { getUser, setUser } = userDB();
+const [getUser, setUser] = handleDB(DB_KEYS.USER);
 
 const findUserData = (requestEmail) => {
   const currentUserList = getUser();

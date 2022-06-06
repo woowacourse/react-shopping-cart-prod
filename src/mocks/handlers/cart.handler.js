@@ -1,25 +1,13 @@
 import data from 'mocks/data';
+import { DB_KEYS, ERROR_MESSAGES } from 'mocks/handlers/constants';
+import handleDB from 'mocks/handlers/handleDB';
 
-const cartDB = () => {
-  let cart = JSON.parse(window.localStorage.getItem('server-shopping-cart')) || [];
+const [getCart, setCart] = handleDB(DB_KEYS.CART);
 
-  const getCart = () => cart;
-  const setCart = (newCart) => {
-    cart = newCart;
-    window.localStorage.setItem('server-shopping-cart', JSON.stringify(newCart));
-  };
-
-  return { getCart, setCart };
-};
-
-const { getCart, setCart } = cartDB();
-
+const findProductData = (productId) => data.products.find(({ id }) => id === productId);
 const findProductCartIndex = (currentShoppingCart, targetId) => {
   return currentShoppingCart.findIndex(({ productId }) => productId === targetId);
 };
-
-const findProductData = (productId) => data.products.find(({ id }) => id === productId);
-
 const createResponseCart = (cart) =>
   cart.map(({ productId, quantity }) => {
     const productData = findProductData(productId);
@@ -34,23 +22,16 @@ export const handleGetShoppingCartRequest = (_, res, ctx) => {
   return res(ctx.json(responseCart));
 };
 
-const EXCEED_QUANTITY = (stock, quantity) =>
-  `장바구니에 추가할 수 있는 최대 수량을 초과했습니다. 추가 가능한 최대 수량은 ${Math.max(
-    stock - quantity,
-    0,
-  )}개입니다.`;
-
 const updateCartProductQuantity = (productId, quantity) => {
   const currentShoppingCart = getCart();
   const productIndex = findProductCartIndex(currentShoppingCart, productId);
   const { stock } = findProductData(productId);
 
   if (quantity > stock) {
-    throw new Error(EXCEED_QUANTITY(stock, quantity));
+    throw new Error(ERROR_MESSAGES.EXCEED_QUANTITY(stock, quantity));
   }
-
   if (productIndex < 0) {
-    throw new Error('존재하지 않는 상품입니다.');
+    throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
   }
 
   const targetProduct = currentShoppingCart[productIndex];
@@ -75,11 +56,10 @@ export const handlePostShoppingCartRequest = (req, res, ctx) => {
     return res(ctx.status(201));
   }
 
-  const { quantity: prevQuantity } = currentShoppingCart[cartProductIndex];
-
   try {
-    const newCart = updateCartProductQuantity(productId, prevQuantity + quantity);
-    return res(ctx.json(newCart));
+    const { quantity: prevQuantity } = currentShoppingCart[cartProductIndex];
+    updateCartProductQuantity(productId, prevQuantity + quantity);
+    return res(ctx.status(201));
   } catch ({ message }) {
     return res(ctx.status(400), ctx.json({ message }));
   }
@@ -104,9 +84,7 @@ export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
   const productIndex = findProductCartIndex(currentShoppingCart, productId);
 
   if (currentShoppingCart.length === 0 || productIndex < 0) {
-    return res(
-      ctx.status(404, '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.'),
-    );
+    return res(ctx.status(400, ERROR_MESSAGES.CART_PRODUCT_NOT_FOUNT));
   }
 
   const newCart = [
