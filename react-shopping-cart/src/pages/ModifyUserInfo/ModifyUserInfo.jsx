@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { SwitchTransition, Transition } from 'react-transition-group';
 import styled from 'styled-components';
 
@@ -47,31 +47,41 @@ function ModifyUserInfo() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showLoginInfo, setShowLoginInfo] = useState(false);
-  const { accessToken, ...currentUserInfo } = useSelector(state => state.auth);
+  const { accessToken } = useSelector(state => state.auth);
 
   const userInfo = useSelector(state => state.userInfo);
   const putUserInfo = processServerData(userInfo);
+  const { fetchData: getUserInfo } = useFetch({
+    url: API_URL_PATH.CUSTOMERS,
+    method: 'get',
+    headers: { Authorization: `Bearer ${accessToken}`, 'Access-Control-Allow-Origin': '*' },
+  });
   const { fetchData: modifyInfo } = useFetch({
     url: API_URL_PATH.CUSTOMERS,
     method: 'put',
-    headers: { accessToken: `Bearer ${accessToken}`, 'Access-Control-Allow-Origin': true },
+    headers: { Authorization: `Bearer ${accessToken}`, 'Access-Control-Allow-Origin': '*' },
     skip: true,
   });
 
   useEffect(() => {
-    const userInfo = Object.entries(currentUserInfo).reduce(
-      (acc, [key, value]) => {
-        if (key === 'email') {
-          return { ...acc, [key]: { value, error: false, disabled: true } };
-        }
-        if (key === 'phoneNumber') {
-          return { ...acc, [key]: { ...value } };
-        }
-        return { ...acc, [key]: { value, error: false } };
-      },
-      { ...initialUserInfoState }
-    );
-    dispatch(setUserInfo(userInfo));
+    (async () => {
+      const currentUserInfo = await getUserInfo();
+      const userInfo = Object.entries(currentUserInfo).reduce(
+        (acc, [key, value]) => {
+          if (key === 'email') {
+            return { ...acc, [key]: { value, error: false, disabled: true } };
+          }
+          if (key === 'phone') {
+            const [_, first, second] = value.split('-');
+            return { ...acc, [key]: { first, second } };
+          }
+          return { ...acc, [key]: { value, error: false } };
+        },
+        { ...initialUserInfoState }
+      );
+      dispatch(setUserInfo(userInfo));
+    })();
+
     return () => {
       dispatch(resetUserInfo());
     };
@@ -82,7 +92,6 @@ function ModifyUserInfo() {
   };
 
   const handlePutUserInfo = async () => {
-    console.log(putUserInfo);
     await modifyInfo(putUserInfo);
     alert('정보 수정 완료했습니다!');
     navigate('/');
