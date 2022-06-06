@@ -87,9 +87,9 @@ const Cart = () => {
     if (checkboxItems.length <= 0) {
       return;
     }
-    const response = await requestDeleteCartItem(checkboxItems);
+    const response = await requestDeleteCartItem({ productIds: checkboxItems });
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(deleteCartItem({ productIds: checkboxItems }));
+      dispatch(deleteCartItem(checkboxItems));
       clearCheckBoxItems();
       dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
       return;
