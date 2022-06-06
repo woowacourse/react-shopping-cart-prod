@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
@@ -35,22 +34,17 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
     skip: true,
   });
   const { email, password, passwordCheck } = useSelector(state => state.userInfo);
-  const isDuplicatedEmail = data?.isValidEmail;
 
   const handleCheckDuplicatedEmail = async e => {
     e.preventDefault();
 
-    await checkDuplicatedEmail(email.value);
-    dispatch(setEmailDisabled(true));
-  };
-
-  useEffect(() => {
-    if (isDuplicatedEmail) {
-      alert('중복된 이메일입니다.');
-      dispatch(setEmailDisabled(false));
-      return;
+    try {
+      await checkDuplicatedEmail(email.value);
+      dispatch(setEmailDisabled(true));
+    } catch (error) {
+      alert('중복인 이메일입니다.');
     }
-  }, [data, isDuplicatedEmail]);
+  };
 
   return (
     <FlexBox id="loginInfo" width="100%" direction="column" gap="10px">

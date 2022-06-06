@@ -21,12 +21,9 @@ export const handlers = [
     const isExist = !!customers[email];
 
     if (isExist) {
-      return res(ctx.status(200), ctx.json({ isValidEmail: true }));
+      return res(ctx.status(404));
     }
-    return res(
-      ctx.status(200),
-      ctx.json({ isValidEmail: false, message: '중복인 이메일 입니다.' })
-    );
+    return res(ctx.status(200));
   }),
   rest.get(`${API_URL_PATH.CUSTOMERS}`, (req, res, ctx) => {
     const email = 'abc@abc.com';
