@@ -17,7 +17,7 @@ const useProductPage = () => {
   });
   const { addItem } = useCart();
 
-  const handleClickCartButton = () => {
+  const handleAddCartItem = () => {
     addItem(id);
   };
 
@@ -25,7 +25,7 @@ const useProductPage = () => {
     fetchApi();
   }, []);
 
-  return { isLoading, isError, product, handleClickCartButton };
+  return { isLoading, isError, product, handleAddCartItem };
 };
 
 export default useProductPage;

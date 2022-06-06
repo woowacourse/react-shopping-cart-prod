@@ -7,8 +7,7 @@ import ImgWrapper from 'components/Common/ImgWrapper/ImgWrapper';
 import itemAltImg from 'assets/png/itemAltImg.png';
 
 const Product = () => {
-  const { isLoading, isError, product, handleClickCartButton } =
-    useProductPage();
+  const { isLoading, isError, product, handleAddCartItem } = useProductPage();
   if (isLoading)
     return (
       <Styled.Wrapper>
@@ -31,7 +30,7 @@ const Product = () => {
           imgUrl={product.imgUrl || itemAltImg}
           name={product.name}
           price={product.price}
-          onClickCartButton={handleClickCartButton}
+          onClickCartButton={handleAddCartItem}
         />
       )}
     </Styled.Wrapper>
