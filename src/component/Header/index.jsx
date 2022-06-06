@@ -60,7 +60,7 @@ export default function Header() {
       </Button>
       <S.HeaderNavBox>
         <S.NavText to={PATH.CART}>장바구니</S.NavText>
-        <S.NavText to={PATH.ORDER}>구매목록</S.NavText>
+        <S.NavText to={PATH.ORDER}>주문목록</S.NavText>
         {isLogin ? (
           <S.Profile>
             <S.ProfileImage src={baedaleHover} alt="프로필 이미지" />
@@ -80,9 +80,9 @@ export default function Header() {
         ) : (
           <S.NavText to={PATH.LOGIN}>로그인</S.NavText>
         )}
-        {isLogin && (
+        {isLogin && userInfo.data && (
           <S.UserName>
-            {userInfo.data && userInfo.data.nickname} 님 <br />
+            {userInfo.data.nickname} 님 <br />
             안녕하세요!
           </S.UserName>
         )}

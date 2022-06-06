@@ -65,7 +65,7 @@ export default function useCartItem() {
     const {quantity, id} = payload;
 
     patchCart({
-      params: `/${id}`,
+      API_URL: `${process.env.REACT_APP_CART_API_URL}/${id}`,
       body: {
         quantity: Math.max(quantity - 1, 1),
       },

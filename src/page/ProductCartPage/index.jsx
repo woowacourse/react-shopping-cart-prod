@@ -12,8 +12,12 @@ import * as S from 'page/ProductCartPage/style';
 
 import useCartItem from 'hook/useCartItem';
 import useSelectedItem from 'hook/useSelectedItem';
+import {useNavigate} from 'react-router-dom';
+import {PATH} from 'constant';
 
 export default function ProductCartPage() {
+  const navigation = useNavigate();
+
   const cartItem = useSelector((state) => state.cartReducer.cart);
   const error = useSelector((state) => state.cartReducer.error);
   const pending = useSelector((state) => state.cartReducer.pending);
@@ -38,6 +42,15 @@ export default function ProductCartPage() {
   );
 
   const isAllChecked = cartItem.length === selectedItem.length && selectedItem.length > 0;
+
+  const onClickOrderButton = () => {
+    if (totalQuantity <= 0) {
+      alert('주문하실 상품을 선택해주세요.');
+      return;
+    }
+    console.log(selectedCartItem);
+    navigation(PATH.ORDER);
+  };
 
   return (
     <S.ProductCartPageLayout>
@@ -83,6 +96,7 @@ export default function ProductCartPage() {
           leftContent="결제예상금액"
           rightContent={`${totalPrice.toLocaleString()}원`}
           buttonText={`주문하기 (${totalQuantity}개)`}
+          onClickButton={onClickOrderButton}
         />
       </S.CartInfoBox>
     </S.ProductCartPageLayout>
