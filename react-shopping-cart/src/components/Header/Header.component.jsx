@@ -10,7 +10,6 @@ import HeaderLink from 'components/@shared/HeaderLink/HeaderLink.component';
 import { logoutUser } from 'redux/actions/auth.action';
 
 import useFetch from 'hooks/useFetch';
-import useUserName from 'hooks/useUserName';
 
 import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
 import { API_URL_PATH } from 'constants/api';
@@ -66,7 +65,11 @@ const LastListItem = styled(SelectListItem)`
 function Header() {
   const dispatch = useDispatch();
   const [showSelectBox, setShowSelectBox] = useState(false);
-  const name = useUserName();
+  const { accessToken } = useSelector(state => state.auth);
+  const { data: name } = useFetch({
+    url: `${API_URL_PATH.NAME}`,
+    headers: { Authorization: accessToken },
+  });
 
   const handleSelectBox = () => {
     setShowSelectBox(prev => !prev);
@@ -91,9 +94,9 @@ function Header() {
         <HeaderLink to="/" type="nav">
           주문목록
         </HeaderLink>
-        {name ? (
+        {accessToken ? (
           <Relative>
-            <LogInLogoButton onClick={handleSelectBox}>{name[0]}</LogInLogoButton>
+            <LogInLogoButton onClick={handleSelectBox}>{name && name[0]}</LogInLogoButton>
             <SelectList show={showSelectBox}>
               <FirstListItem>
                 <Link to="/user/modify">정보수정</Link>
