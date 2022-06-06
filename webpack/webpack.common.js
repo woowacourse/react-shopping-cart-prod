@@ -82,6 +82,7 @@ module.exports = {
       "@assets": resolve(__dirname, "../src/assets"),
       "@mock": resolve(__dirname, "../mock"),
       "@utils": resolve(__dirname, "../src/utils"),
+      "@storage": resolve(__dirname, "../src/storage"),
     },
     extensions: [".js", ".jsx", ".scss"],
   },

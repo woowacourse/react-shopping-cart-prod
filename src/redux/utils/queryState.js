@@ -1,27 +1,27 @@
 const queryState = {
-  init: (initialData) => ({
+  init: () => ({
     isLoading: false,
     isError: false,
     error: null,
-    data: structuredClone(initialData),
+    isSuccess: false,
   }),
-  pending: (queryState) => ({
+  pending: () => ({
     isLoading: true,
     isError: false,
     error: null,
-    data: queryState.data,
+    isSuccess: false,
   }),
-  fullfilled: (data) => ({
+  fullfilled: () => ({
     isLoading: false,
     isError: false,
     error: null,
-    data,
+    isSuccess: true,
   }),
-  rejected: (queryState, error) => ({
+  rejected: (error) => ({
     isLoading: false,
     isError: true,
     error,
-    data: queryState.data,
+    isSuccess: false,
   }),
 };
 
