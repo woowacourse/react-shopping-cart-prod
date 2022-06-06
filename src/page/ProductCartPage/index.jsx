@@ -30,12 +30,10 @@ export default function ProductCartPage() {
   const selectedCartItem = cartItem.filter(({id}) => selectedItem.includes(id));
 
   const {totalQuantity, totalPrice} = selectedCartItem.reduce(
-    (prev, cur) => {
-      return {
-        totalQuantity: cur.quantity + prev.totalQuantity,
-        totalPrice: cur.price * cur.quantity + prev.totalPrice,
-      };
-    },
+    (prev, cur) => ({
+      totalQuantity: cur.quantity + prev.totalQuantity,
+      totalPrice: cur.price * cur.quantity + prev.totalPrice,
+    }),
     {totalQuantity: 0, totalPrice: 0},
   );
 
