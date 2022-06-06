@@ -5,7 +5,7 @@ import Input from 'component/common/Input';
 import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
-import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
+import {PATH, VALIDATION_MESSAGE} from 'constant';
 import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 import {useNavigate} from 'react-router-dom';
 
@@ -92,11 +92,11 @@ function UserInfoEditPage() {
   }, []);
 
   useEffect(() => {
-    userInfo.error && alert(ERROR_MESSAGE.VIEW_USER_INFO);
+    userInfo.error && alert(userInfo.error);
   }, [userInfo.error]);
 
   useEffect(() => {
-    editInfo.error && alert(ERROR_MESSAGE.EDIT_USER_INFO);
+    editInfo.error && alert(editInfo.error);
   }, [editInfo.error]);
 
   return (

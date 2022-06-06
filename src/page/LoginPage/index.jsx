@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import * as S from './style';
 import theme from 'theme/theme';
 import {Link, useNavigate} from 'react-router-dom';
-import {ERROR_MESSAGE, PATH} from 'constant';
+import {PATH} from 'constant';
 import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 import useFetch from 'hook/useFetch';
 import {useDispatch} from 'react-redux';
@@ -35,7 +35,7 @@ function LoginPage() {
   };
 
   useEffect(() => {
-    login.error && alert(ERROR_MESSAGE.LOGIN);
+    login.error && alert(login.error);
   }, [login.error]);
 
   return (

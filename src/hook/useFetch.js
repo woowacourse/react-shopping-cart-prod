@@ -25,7 +25,7 @@ export default function useFetch(method = 'get') {
         })
         .catch((error) => {
           setPending(false);
-          setError(error.message);
+          setError(error.response.data.message);
         });
     },
     [method],

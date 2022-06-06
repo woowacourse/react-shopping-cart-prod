@@ -10,7 +10,6 @@ import {PATH} from 'constant';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
 import useControlledInput from 'hook/useControlledInput';
-import {ERROR_MESSAGE} from 'constant';
 import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 
 function WithDrawalPage() {
@@ -45,7 +44,7 @@ function WithDrawalPage() {
   };
 
   useEffect(() => {
-    withDrawal.error && alert(ERROR_MESSAGE.WITHDRAWAL);
+    withDrawal.error && alert(withDrawal.error);
   }, [withDrawal.error]);
 
   return (

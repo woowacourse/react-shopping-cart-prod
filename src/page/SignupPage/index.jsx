@@ -6,7 +6,7 @@ import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
-import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
+import {PATH, VALIDATION_MESSAGE} from 'constant';
 import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 
 function SignupPage() {
@@ -65,7 +65,8 @@ function SignupPage() {
   const signup = useFetch('post');
 
   const onSubmit = (inputs) => {
-    const [account, nickname, password, address, start, middle, last] = inputs;
+    // eslint-disable-next-line no-unused-vars
+    const [account, nickname, password, passwordConfirm, address, start, middle, last] = inputs;
     signup.fetch({
       API_URL: `${BASE_SERVER_URL}${SERVER_PATH.SIGNUP}`,
       body: {
@@ -79,14 +80,14 @@ function SignupPage() {
           last: last.value,
         },
       },
-      onSuccess: (location) => {
+      onSuccess: () => {
         navigation(PATH.LOGIN);
       },
     });
   };
 
   useEffect(() => {
-    signup.error && alert(ERROR_MESSAGE.SIGNUP);
+    signup.error && alert(signup.error);
   }, [signup.error]);
 
   return (
