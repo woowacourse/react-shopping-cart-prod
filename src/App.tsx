@@ -10,6 +10,7 @@ import ProductPage from 'pages/ProductPage/ProductPage';
 import SignupPage from 'pages/SignupPage/SignupPage';
 
 import HeaderLayout from 'components/Layout/HeaderLayout/HeaderLayout';
+import PrivateLayout from 'components/Layout/PrivateLayout/PrivateLayout';
 
 import GlobalStyle from 'styles/GlobalStyle';
 import theme from 'styles/theme';
@@ -22,10 +23,12 @@ function App() {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Routes>
-          <Route path={PATH.BASE} element={<HeaderLayout />}>
+          <Route element={<HeaderLayout />}>
             <Route path={PATH.BASE} element={<MainPage />} />
             <Route path={`${PATH.PRODUCT}/:id`} element={<ProductPage />} />
             <Route path={PATH.CART} element={<CartPage />} />
+          </Route>
+          <Route element={<PrivateLayout />}>
             <Route path={PATH.EDIT_USER_INFO} element={<EditUserInfoPage />} />
           </Route>
           <Route path={PATH.LOGIN} element={<LoginPage />} />
