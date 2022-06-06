@@ -10,6 +10,7 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
+import { getCookie } from 'utils/cookie';
 import { MESSAGE } from 'utils/constants';
 import Styled from './index.style';
 
