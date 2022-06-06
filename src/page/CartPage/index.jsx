@@ -17,7 +17,7 @@ import Styled from 'page/CartPage/index.style';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import { productApiClient } from 'utils/apiClient';
+import { productApiClient } from 'apis/apiClient';
 
 const CartPage = () => {
   const [renderSnackbar] = useSnackbar();

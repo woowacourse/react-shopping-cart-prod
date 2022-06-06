@@ -12,7 +12,7 @@ import { MESSAGE } from 'utils/constants';
 import store from 'store/store';
 import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import { useNavigate } from 'react-router-dom';
-import { authApiClient } from 'utils/apiClient';
+import { authApiClient } from 'apis/apiClient';
 
 const AccountDeleteModal = ({ handleModal }) => {
   const navigate = useNavigate();

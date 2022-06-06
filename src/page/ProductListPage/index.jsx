@@ -8,7 +8,7 @@ import store from 'store/store';
 import { doInitializeProductList } from 'actions/actionCreator';
 
 import Styled from 'page/ProductListPage/index.style';
-import { productApiClient } from 'utils/apiClient';
+import { productApiClient } from 'apis/apiClient';
 
 const ProductListPage = () => {
   const { products } = useSelector(state => state.reducer);

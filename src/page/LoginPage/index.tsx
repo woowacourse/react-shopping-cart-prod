@@ -17,7 +17,7 @@ import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import Logo from 'components/Logo';
 import { useSelector } from 'react-redux';
-import { authApiClient } from 'utils/apiClient';
+import { authApiClient } from 'apis/apiClient';
 
 const LoginPage = () => {
   const navigate = useNavigate();

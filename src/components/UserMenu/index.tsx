@@ -6,7 +6,7 @@ import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import { authApiClient } from 'utils/apiClient';
+import { authApiClient } from 'apis/apiClient';
 
 const UserMenu = ({ nickname }) => {
   const [renderSnackbar] = useSnackbar();

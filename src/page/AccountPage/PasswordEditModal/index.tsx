@@ -9,7 +9,7 @@ import { validatePassword } from 'utils/validator';
 
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import { authApiClient } from 'utils/apiClient';
+import { authApiClient } from 'apis/apiClient';
 
 const PasswordEditModal = ({ handleModal }) => {
   const [currentPassword, setCurrentPassword] = useState('');

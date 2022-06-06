@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import { useSelector } from 'react-redux';
-import { authApiClient } from 'utils/apiClient';
+import { authApiClient } from 'apis/apiClient';
 
 const AccountPage = () => {
   const [renderSnackbar] = useSnackbar();

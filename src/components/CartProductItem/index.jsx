@@ -11,7 +11,7 @@ import Styled from 'components/CartProductItem/index.style';
 import useOrder from 'hooks/useOrder';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import { productApiClient } from 'utils/apiClient';
+import { productApiClient } from 'apis/apiClient';
 
 const CartProductItem = ({ id, quantity }) => {
   const [renderSnackbar] = useSnackbar();

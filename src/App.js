@@ -17,7 +17,7 @@ import Layout from 'components/Layout';
 import { useSelector } from 'react-redux';
 import Snackbar from 'components/Snackbar';
 import useSnackbar from 'hooks/useSnackbar';
-import { authApiClient } from 'utils/apiClient';
+import { authApiClient } from 'apis/apiClient';
 import OrderPage from 'page/OrderPage';
 
 function App() {
