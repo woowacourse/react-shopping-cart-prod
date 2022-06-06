@@ -9,7 +9,7 @@ const userReducer = (state = initialState, action) => {
     case actionTypes.ADD_TOKEN:
       return {
         ...state,
-        accessToken: action.accessToken,
+        accessToken: action.data,
       };
     case actionTypes.DELETE_TOKEN:
       return {
