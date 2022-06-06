@@ -40,10 +40,10 @@ function CartProductList() {
       <S.Title>장바구니 상품 목록 ({cartLength}개)</S.Title>
       <S.ListWrapper>
         {cart &&
-          cart.map(({ productData, quantity }) => (
+          cart.map(({ product, quantity }) => (
             <CartProductCard
-              key={productData.id}
-              product={productData}
+              key={product.id}
+              product={product}
               quantity={quantity}
             />
           ))}

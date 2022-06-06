@@ -77,10 +77,10 @@ const useCart = () => {
   };
 
   const checkedProductsTotalPrice = checkedProductList.reduce((total, productId) => {
-    const { productData, quantity } = cart.find(
-      ({ productData }) => productData.id === productId,
+    const { product, quantity } = cart.find(
+      ({ product }) => product.id === productId,
     );
-    return total + productData.price * quantity;
+    return total + product.price * quantity;
   }, 0);
 
   return {

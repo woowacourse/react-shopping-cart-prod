@@ -3,9 +3,9 @@ import customInstance from 'api/customInstance';
 
 import { ALERT_MESSAGES } from 'constants/messages';
 
-export const sendAddToCartRequest = async (productId, quantity) => {
+export const sendAddToCartRequest = async (id, quantity) => {
   const response = await customInstance.post(API_ENDPOINT.SHOPPING_CART, {
-    productId,
+    id,
     quantity,
   });
 

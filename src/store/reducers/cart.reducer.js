@@ -31,7 +31,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart,
-        checkedProductList: cart.map(({ productData }) => productData.id),
+        checkedProductList: cart.map(({ product }) => product.id),
         isLoading: false,
       };
     }
