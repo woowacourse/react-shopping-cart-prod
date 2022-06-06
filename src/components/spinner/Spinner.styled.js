@@ -8,8 +8,8 @@ const StyledSpinner = styled.div`
   width: 200px;
   height: 200px;
   border: 20px solid transparent;
-  border-color: ${({ theme }) => theme.colors.gray5};
-  border-top-color: ${({ theme }) => theme.colors.mint};
+  border-color: ${({ theme: {colors} }) => colors.gray5};
+  border-top-color: ${({ theme: {colors} }) => colors.mint};
   border-radius: 50%;
   animation: loadingspin 1s linear infinite;
 

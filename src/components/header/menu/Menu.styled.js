@@ -14,8 +14,8 @@ const StyledMenu = styled.div`
         position: relative;
         display: block;
         padding: 10px 0;
-        font-size: ${({ theme }) => theme.fontSize.m};
-        color: ${({ theme }) => theme.colors.white};
+        font-size: ${({ theme: {fontSize} }) => fontSize.m};
+        color: ${({ theme: {colors} }) => colors.white};
       }
     }
   }

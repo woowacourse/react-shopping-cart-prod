@@ -11,7 +11,7 @@ const StyledSigninContainer = styled.div`
 
   h2 {
     margin-bottom: 20px;
-    font-size: ${({ theme }) => theme.fontSize.xl};
+    font-size: ${({ theme: {fontSize}}) => fontSize.xl};
   }
 
   .please-signup {
@@ -20,7 +20,7 @@ const StyledSigninContainer = styled.div`
 
     a {
       margin-left: 5px;
-      color: ${({ theme }) => theme.colors.blue};
+      color: ${({ theme: {colors} }) => colors.blue};
     }
   }
 `;

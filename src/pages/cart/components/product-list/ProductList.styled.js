@@ -19,7 +19,7 @@ const StyledProductList = styled.section`
 
     .delete-button {
       padding: 12px 22px;
-      border: 1px solid ${({ theme }) => theme.colors.gray2};
+      border: 1px solid ${({ theme: {colors} }) => colors.gray2};
       cursor: pointer;
     }
   }
@@ -28,11 +28,11 @@ const StyledProductList = styled.section`
     display: flex;
     align-items: center;
     margin-top: 50px;
-    font-size: ${({ theme }) => theme.fontSize.m};
+    font-size: ${({ theme: {fontSize}}) => fontSize.m};
   }
 
   .cart-title-border {
-    border: 2px solid ${({ theme }) => theme.colors.gray1};
+    border: 2px solid ${({ theme: {colors} }) => colors.gray1};
   }
 `;
 

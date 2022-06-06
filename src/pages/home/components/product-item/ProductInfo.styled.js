@@ -9,20 +9,20 @@ const StyledProductInfo = styled.div`
     width: 100%;
   }
 
-  color: ${({ theme }) => theme.colors.black1};
+  color: ${({ theme: {colors} }) => colors.black1};
   .product-title {
-    font-size: ${({ theme }) => theme.fontSize.m};
+    font-size: ${({ theme: {fontSize}}) => fontSize.m};
     cursor: pointer;
     margin-bottom: 10px;
 
     &:hover {
       text-decoration: underline;
       text-underline-position: under;
-      text-decoration-color: ${({ theme }) => theme.colors.mint};
+      text-decoration-color: ${({ theme: {colors} }) => colors.mint};
     }
   }
   .product-price {
-    font-size: ${({ theme }) => theme.fontSize.m};
+    font-size: ${({ theme: {fontSize}}) => fontSize.m};
   }
 `;
 

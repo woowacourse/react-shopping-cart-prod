@@ -7,7 +7,7 @@ const StyledImageButton = styled.button`
   &:hover {
     svg {
       path {
-        fill: ${({ theme }) => theme.colors.mint};
+        fill: ${({ theme: {colors} }) => colors.mint};
       }
     }
   }

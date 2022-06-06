@@ -11,14 +11,14 @@ const StyledUserEditContainer = styled.div`
 
   h2 {
     margin-bottom: 20px;
-    font-size: ${({ theme }) => theme.fontSize.xl};
+    font-size: ${({ theme: {fontSize}}) => fontSize.xl};
   }
 
   .withdrawal {
     margin-top: 15px;
     align-self: flex-end;
     cursor: pointer;
-    color: ${({ theme }) => theme.colors.pink};
+    color: ${({ theme: {colors} }) => colors.pink};
   }
 `;
 

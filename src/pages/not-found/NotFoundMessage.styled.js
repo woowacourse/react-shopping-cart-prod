@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 const StyledNotFoundMessage = styled.div`
-  font-size: ${({ theme }) => theme.fontSize.l};
+  font-size: ${({ theme: {fontSize}}) => fontSize.l};
 `;
 
 export default StyledNotFoundMessage;

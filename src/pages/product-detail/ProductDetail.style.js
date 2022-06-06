@@ -12,19 +12,19 @@ const StyledProductDetailContainer = styled.div`
   img {
     width: 400px;
     height: 400px;
-    border: 2px solid ${({ theme }) => theme.colors.gray3};
+    border: 2px solid ${({ theme: {colors} }) => colors.gray3};
     margin-bottom: 30px;
   }
 
   .product__name {
-    font-size: ${({ theme }) => theme.fontSize.xl};
+    font-size: ${({ theme: {fontSize}}) => fontSize.xl};
     font-weight: 700;
   }
 
   hr {
     width: 100%;
     margin: 15px 0;
-    border: 1.5px solid ${({ theme }) => theme.colors.gray1};
+    border: 1.5px solid ${({ theme: {colors} }) => colors.gray1};
   }
 
   .product__price__wrapper {
@@ -34,10 +34,10 @@ const StyledProductDetailContainer = styled.div`
     margin-bottom: 25px;
 
     .product__price__label {
-      font-size: ${({ theme }) => theme.fontSize.ss};
+      font-size: ${({ theme: {fontSize}}) => fontSize.ss};
     }
     .product__price {
-      font-size: ${({ theme }) => theme.fontSize.m};
+      font-size: ${({ theme: {fontSize}}) => fontSize.m};
     }
   }
 `;

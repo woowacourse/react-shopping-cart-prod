@@ -15,7 +15,7 @@ const StyledCartContainer = styled.div`
     }
 
     .cart-name {
-      font-size: ${({ theme }) => theme.fontSize.m};
+      font-size: ${({ theme: {fontSize}}) => fontSize.m};
     }
   }
 
@@ -40,9 +40,9 @@ const StyledCartContainer = styled.div`
       .number-input {
         width: 72px;
         height: 58px;
-        border: 1px solid ${({ theme }) => theme.colors.gray4};
+        border: 1px solid ${({ theme: {colors} }) => colors.gray4};
         text-align: center;
-        font-size: ${({ theme }) => theme.fontSize.l};
+        font-size: ${({ theme: {fontSize}}) => fontSize.l};
       }
 
       div {
@@ -54,7 +54,7 @@ const StyledCartContainer = styled.div`
           justify-content: center;
           align-items: center;
           padding: 4px 12px;
-          border: 1px solid ${({ theme }) => theme.colors.gray4};
+          border: 1px solid ${({ theme: {colors} }) => colors.gray4};
           font-size: 100%;
           cursor: pointer;
         }
@@ -65,7 +65,7 @@ const StyledCartContainer = styled.div`
       }
 
       .cart-price {
-        color: ${({ theme }) => theme.colors.black2};
+        color: ${({ theme: {colors} }) => colors.black2};
         align-self: flex-end;
       }
     }

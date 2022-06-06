@@ -4,8 +4,8 @@ const StyledBadge = styled.div`
   position: absolute;
   top: -5px;
   right: -18px;
-  background-color: ${({ theme }) => theme.colors.pink};
-  font-size: ${({ theme }) => theme.fontSize.xs};
+  background-color: ${({ theme: {colors} }) => colors.pink};
+  font-size: ${({ theme: {fontSize} }) => fontSize.xs};
   border-radius: 50%;
   width: 24px;
   height: 24px;

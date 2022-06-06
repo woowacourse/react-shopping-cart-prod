@@ -11,7 +11,7 @@ const StyledSignupContainer = styled.div`
 
   h2 {
     margin-bottom: 20px;
-    font-size: ${({ theme }) => theme.fontSize.xl};
+    font-size: ${({ theme: {fontSize}}) => fontSize.xl};
   }
 `;
 

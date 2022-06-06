@@ -10,7 +10,7 @@ const StyledButton = styled.button`
   border: none;
 
   &:disabled {
-    background-color: ${({ theme }) => theme.colors.gray3};
+    background-color: ${({ theme: {colors} }) => colors.gray3};
     cursor: initial;
   }
 `;
