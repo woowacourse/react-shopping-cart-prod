@@ -14,7 +14,8 @@
 
 ## API
 
-- [x] MSW를 활용한 API mocking
+- [x] MSW를 활용한 유저 API mocking
+- [x] MSW를 활용한 장바구니 API mocking
 - [x] Token기반의 로그인
 - [x] 회원가입
 - [x] 회원 정보 수정
