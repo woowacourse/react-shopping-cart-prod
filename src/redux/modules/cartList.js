@@ -1,4 +1,6 @@
 import createAction from "@/redux/createAction";
+import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import { MESSAGE } from "@/constants";
 
 export const ACTION_TYPES = {
   ADD_PRODUCT_TO_CART: "ADD_PRODUCT_TO_CART",
@@ -13,9 +15,19 @@ export const ACTION_TYPES = {
 
 export const addProductToCart = (args) => async (dispatch) => {
   const { id, name, price, imgUrl } = args;
-  dispatch(
-    createAction(ACTION_TYPES.ADD_PRODUCT_TO_CART, { id, name, price, imgUrl })
-  );
+  try {
+    dispatch(
+      createAction(ACTION_TYPES.ADD_PRODUCT_TO_CART, {
+        id,
+        name,
+        price,
+        imgUrl,
+      })
+    );
+    dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
+  } catch (error) {
+    dispatch(toggleSnackbarOpen(error));
+  }
 };
 export const toggleCartItemCheckButton = (id) => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON, id));
