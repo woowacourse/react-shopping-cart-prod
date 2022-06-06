@@ -47,19 +47,21 @@ function RegisterForm() {
   const handleNicknameInput = ({ target: { value } }) => {
     setNicknameValue(value);
   };
-  const handleEmailDuplicateCheck = async () => {
+  const handleEmailDuplicateCheck = async ({ target }) => {
     if (emailValue.length === 0 || !isEmailValid) {
       setEmailErrorMessage(USER_INFO_RULE_ERROR.INVALID_EMAIL);
       return;
     }
 
     try {
+      target.disabled = true;
       const success = await sendCheckEmailDuplicateRequest(emailValue);
 
       setIsUniqueEmail(success);
 
       if (!success) {
         setEmailErrorMessage(USER_INFO_RULE_ERROR.DUPLICATE_EMAIL);
+        target.disabled = false;
       }
     } catch ({ message }) {
       setIsUniqueEmail(false);
@@ -138,6 +140,7 @@ function RegisterForm() {
       errorMessage: isNicknameValid ? '' : USER_INFO_RULE_ERROR.INVALID_NICKNAME,
     },
   ];
+
   return (
     <Form buttonText="회원 가입" onSubmit={onSubmit}>
       {inputAttributeList.map((inputDescription) => (
