@@ -94,7 +94,7 @@
     "prettier": "^2.6.2",
     "webpack": "^5.72.0"
   },
-  "homepage": "https://KangYunHo1221.github.com/react-shopping-cart/",
+  "homepage": "https://kamwoo.github.io/react-shopping-cart-prod/",
   "msw": {
     "workerDirectory": "public"
   }
