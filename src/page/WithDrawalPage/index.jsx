@@ -37,10 +37,9 @@ function WithDrawalPage() {
         password: password.value,
       },
       headers: {Authorization: `Bearer ${accessToken}`},
-      onSuccess: (location) => {
+      onSuccess: () => {
         navigation(PATH.HOME);
         dispatch({type: AUTH.LOGOUT});
-        localStorage.removeItem('accessToken');
       },
     });
   };

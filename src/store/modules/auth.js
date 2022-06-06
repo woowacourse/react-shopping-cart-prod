@@ -16,6 +16,7 @@ export default function authReducer(state = INITIAL_STATE, action) {
     }
 
     case AUTH.LOGOUT: {
+      localStorage.removeItem('accessToken');
       return {isLogin: false};
     }
 

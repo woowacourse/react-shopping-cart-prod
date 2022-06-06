@@ -47,7 +47,6 @@ export default function Header() {
   const handleLogoClick = () => navigation(PATH.HOME);
 
   const handleClickLogout = () => {
-    localStorage.removeItem('accessToken');
     dispatch({type: AUTH.LOGOUT});
   };
 
