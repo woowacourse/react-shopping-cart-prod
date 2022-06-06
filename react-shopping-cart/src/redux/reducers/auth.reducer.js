@@ -10,7 +10,7 @@ function auth(state = initialState, action) {
       return { accessToken: action.payload.toString() };
     }
     case LOGOUT_USER:
-      return {};
+      return { accessToken: '' };
     default:
       return state;
   }
