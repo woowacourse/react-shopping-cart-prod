@@ -20,6 +20,8 @@ const requestEditUserPassword = async (formData) =>
 
 const requestGetCartList = async () => requestAsync.get('cart', true);
 const requestPostCartItem = async (id) => requestAsync.post(`cart/${id}`, true);
+const requestAddCartItem = async (id, quantity) =>
+  requestAsync.put(`cart/${id}/quantity`, quantity, true);
 
 export {
   requestGetProductList,
@@ -33,4 +35,5 @@ export {
   requestEditUserPassword,
   requestGetCartList,
   requestPostCartItem,
+  requestAddCartItem,
 };

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useCheckBox, useCartItem } from 'hooks';
 
+import { requestAddCartItem } from 'api';
 import Layout from 'components/Layout';
 import PageHeader from 'components/@common/PageHeader';
 import CartList from 'components/CartList';
@@ -10,7 +11,7 @@ import { snackbar } from 'actions/snackbar';
 import { deleteCartItem, initCartList, modifyCartItemQuantity } from 'actions/cart';
 import { hideSpinner, showSpinner } from 'actions/spinner';
 
-import { 알림_메시지 } from 'constants/';
+import { 비동기_요청, 알림_메시지 } from 'constants/';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
@@ -61,6 +62,10 @@ const Cart = () => {
           setCheckboxItems(cartListInfo.map((item) => Number(item.id)));
         }
         dispatch(hideSpinner());
+      })
+      .catch(() => {
+        alert('서버로 부터 장바구니 정보를 받아오는데 실패하였습니다!');
+        navigator('/');
       });
   }, []);
 
@@ -88,8 +93,13 @@ const Cart = () => {
     dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
   };
 
-  const handleItemCount = (productId, count) => {
-    dispatch(modifyCartItemQuantity(productId, count));
+  const handleItemCount = async (productId, count) => {
+    const response = await requestAddCartItem(productId, count);
+    if (response.status === 비동기_요청.SUCCESS) {
+      dispatch(modifyCartItemQuantity(productId, count));
+      return;
+    }
+    alert('상품 수량 조정에 실패하였습니다!');
   };
 
   return (

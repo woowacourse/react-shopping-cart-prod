@@ -35,7 +35,7 @@ export const cartHandler = [
   }),
 
   // 장바구니에 상품 수량 변경
-  rest.put(`${HOST_NAME}/:id/quantity`, (req, res, ctx) => res(ctx.status(200))),
+  rest.put(`${HOST_NAME}/cart/:id/quantity`, (req, res, ctx) => res(ctx.status(200))),
 
   // 장바구니 상품 제거
   rest.delete(`${HOST_NAME}/cart/products`, (req, res, ctx) => res(ctx.status(204))),

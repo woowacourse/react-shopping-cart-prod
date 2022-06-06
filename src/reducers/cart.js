@@ -30,12 +30,12 @@ export default (state = initialState, action) => {
         ),
       };
 
-    case 장바구니_액션.MODIFY_PRODUCT_COUNT:
+    case 장바구니_액션.MODIFY_PRODUCT_QUANTITY:
       return {
         items: [...state.items].map((item) => {
           if (item.id === payload.productId) {
             const modifiedItem = item;
-            modifiedItem.count = payload.count;
+            modifiedItem.quantity = payload.quantity;
             return modifiedItem;
           }
 
