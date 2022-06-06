@@ -147,6 +147,4 @@ const AccountPage = () => {
   );
 };
 
-// AccountDeleteModal
-
 export default AccountPage;
