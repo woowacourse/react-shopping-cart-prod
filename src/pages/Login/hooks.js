@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import { PATH_NAME } from 'constants';
+import { PATH_NAME, AUTHORIZATION_TYPE } from 'constants';
 
 import useAuthentication from 'hooks/useAuthentication';
+import useAuthorization from 'hooks/useAuthorization';
 import useSnackBar from 'hooks/useSnackBar';
 
 const useLoginPage = () => {
+  useAuthorization(AUTHORIZATION_TYPE.PUBLIC_ONLY);
   const navigate = useNavigate();
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
   const { isLoginSucceed, isLoginError, login } = useAuthentication();

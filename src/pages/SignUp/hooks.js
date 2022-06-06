@@ -1,12 +1,14 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PATH_NAME } from 'constants';
+import { PATH_NAME, AUTHORIZATION_TYPE } from 'constants';
 
 import useInputValidate from 'hooks/useInputValidate';
 import useAuthentication from 'hooks/useAuthentication';
+import useAuthorization from 'hooks/useAuthorization';
 import useSnackBar from 'hooks/useSnackBar';
 
 const useSignUpPage = () => {
+  useAuthorization(AUTHORIZATION_TYPE.PUBLIC_ONLY);
   const navigate = useNavigate();
   const passwordRef = useRef(null);
 

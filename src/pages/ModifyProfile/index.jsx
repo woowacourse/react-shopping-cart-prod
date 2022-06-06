@@ -7,10 +7,13 @@ import Modal from 'components/Common/Modal/Modal';
 import Withdrawal from './Withdrawal';
 import ModifyPassword from './ModifyPassword';
 
+import useAuthorization from 'hooks/useAuthorization';
 import useModal from 'hooks/useModal';
 import * as Styled from './style';
+import { AUTHORIZATION_TYPE } from 'constants';
 
 const ModifyProfile = () => {
+  useAuthorization(AUTHORIZATION_TYPE.PRIVATE_ONLY);
   const { name } = useSelector((state) => state.user);
   const [
     isModifyPasswordModalOpened,
