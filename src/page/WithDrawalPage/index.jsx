@@ -82,13 +82,13 @@ function WithDrawalPage() {
             }}
           >
             <S.WithDrawalInput
+              {...restPassword}
               type="password"
               id="password"
               size="large"
               label="비밀번호"
               placeHolder="비밀번호를 입력해주세요."
               onChange={(e) => onChangePassword(e.target.value)}
-              {...restPassword}
             />
             <S.WithDrawalButton isDisabled={!isChecked || !restPassword.value} type="submit">
               회원탈퇴

@@ -120,12 +120,12 @@ function UserInfoEditPage() {
               value={userInfo.data.account}
             />
             <Input
+              {...restNickname}
               label="닉네임"
               size="medium"
               id="nickname"
               onChange={(e) => onChangeNickname(e.target.value)}
               placeHolder={userInfo.data.nickname}
-              {...restNickname}
               value={restNickname.isChanged ? restNickname.value : userInfo.data.nickname}
             />
             <Input
@@ -136,23 +136,23 @@ function UserInfoEditPage() {
               isDisabled={true}
             />
             <Input
+              {...restAddress}
               label="주소"
               size="medium"
               id="address"
               onChange={(e) => onChangeAddress(e.target.value)}
               placeHolder={userInfo.data.address}
-              {...restAddress}
               value={restAddress.isChanged ? restAddress.value : userInfo.data.address}
             />
             <S.PhoneNumberContainer>
               <Input
+                {...restStartNumber}
                 label="휴대폰"
                 size="small"
                 id="start-number"
                 onChange={(e) => onChangeStartNumber(e.target.value)}
                 maxLength="3"
                 placeHolder={userInfo.data.phoneNumber.start}
-                {...restStartNumber}
                 value={
                   restStartNumber.isChanged
                     ? restStartNumber.value
@@ -161,12 +161,12 @@ function UserInfoEditPage() {
               />
               <S.Hyphen>-</S.Hyphen>
               <Input
+                {...restMiddleNumber}
                 size="small"
                 id="middle-number"
                 onChange={(e) => onChangeMiddleNumber(e.target.value)}
                 maxLength="4"
                 placeHolder={userInfo.data.phoneNumber.middle}
-                {...restMiddleNumber}
                 value={
                   restMiddleNumber.isChanged
                     ? restMiddleNumber.value
@@ -175,12 +175,12 @@ function UserInfoEditPage() {
               />
               <S.Hyphen>-</S.Hyphen>
               <Input
+                {...restLastNumber}
                 size="small"
                 id="last-number"
                 onChange={(e) => onChangeLastNumber(e.target.value)}
                 maxLength="4"
                 placeHolder={userInfo.data.phoneNumber.last}
-                {...restLastNumber}
                 value={
                   restLastNumber.isChanged ? restLastNumber.value : userInfo.data.phoneNumber.last
                 }

@@ -48,21 +48,21 @@ function LoginPage() {
           }}
         >
           <Input
+            {...restId}
             label="아이디"
             size="medium"
             id="id"
             placeHolder="아이디를 입력해주세요"
             onChange={(e) => onChangeId(e.target.value)}
-            {...restId}
           />
           <Input
+            {...restPassword}
             label="비밀번호"
             size="medium"
             id="password"
             type="password"
             placeHolder="비밀번호를 입력해주세요"
             onChange={(e) => onChangePassword(e.target.value)}
-            {...restPassword}
           />
           <S.ConfirmButton
             fontSize="14px"

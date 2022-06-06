@@ -101,72 +101,72 @@ function SignupPage() {
           }}
         >
           <Input
+            {...restId}
             label="아이디"
             size="medium"
             id="id"
             placeHolder="아이디를 입력해주세요"
             onChange={(e) => onChangeId(e.target.value)}
-            {...restId}
           />
           <Input
+            {...restNickname}
             label="닉네임"
             size="medium"
             id="nickname"
             placeHolder="닉네임을 입력해주세요"
             onChange={(e) => onChangeNickname(e.target.value)}
-            {...restNickname}
           />
           <S.PasswordContainer>
             <Input
+              {...restPassword}
               label="비밀번호"
               size="medium"
               id="password"
               type="password"
               placeHolder="비밀번호를 입력해주세요"
               onChange={(e) => onChangePassword(e.target.value)}
-              {...restPassword}
             />
             <Input
+              {...restConfirmPassword}
               size="medium"
               id="password-confirm"
               type="password"
               placeHolder="비밀번호 확인"
               onChange={(e) => onChangeConfirmPassword(e.target.value)}
-              {...restConfirmPassword}
             />
           </S.PasswordContainer>
           <Input
+            {...restAddress}
             label="주소"
             size="medium"
             id="address"
             placeHolder="주소를 입력해주세요"
             onChange={(e) => onChangeAddress(e.target.value)}
-            {...restAddress}
           />
           <S.PhoneNumberContainer>
             <Input
+              {...restStartNumber}
               label="휴대폰"
               size="small"
               id="start-number"
               onChange={(e) => onChangeStartNumber(e.target.value)}
               maxLength="3"
-              {...restStartNumber}
             />
             <S.Hyphen>-</S.Hyphen>
             <Input
+              {...restMiddleNumber}
               size="small"
               id="middle-number"
               onChange={(e) => onChangeMiddleNumber(e.target.value)}
               maxLength="4"
-              {...restMiddleNumber}
             />
             <S.Hyphen>-</S.Hyphen>
             <Input
+              {...restLastNumber}
               size="small"
               id="last-number"
               onChange={(e) => onChangeLastNumber(e.target.value)}
               maxLength="4"
-              {...restLastNumber}
             />
           </S.PhoneNumberContainer>
           <S.ConfirmButton
