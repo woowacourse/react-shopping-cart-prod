@@ -2,11 +2,10 @@ import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import React, { FormEvent, useEffect } from 'react';
+import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser } from 'redux/user/thunk';
 import { PATH } from 'Routers';
@@ -14,21 +13,14 @@ import { PATH } from 'Routers';
 const UserWithDrawal = () => {
   const dispatch = useAppDispatch();
   const [password, setPassword] = useInput();
-  const { data } = useAppSelector(state => state.user);
   const navigate = useNavigate();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
   useAuthError(openSnackbar);
 
-  useEffect(() => {
-    if (data === null) {
-      navigate(PATH.home);
-    }
-  }, [data]);
-
   const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    dispatch(deleteUser({ password }));
+    dispatch(deleteUser({ password })).then(() => navigate(PATH.home));
   };
 
   return (
