@@ -30,13 +30,16 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
   const dispatch = useDispatch();
   const { fetchData: checkDuplicatedEmail, data } = useFetch({
     url: API_URL_PATH.EMAIL,
+    headers: { 'Access-Control-Allow-Origin': '*' },
     method: 'post',
     skip: true,
   });
   const { email, password, passwordCheck } = useSelector(state => state.userInfo);
   const isDuplicatedEmail = data?.isValidEmail;
 
-  const handleCheckDuplicatedEmail = async () => {
+  const handleCheckDuplicatedEmail = async e => {
+    e.preventDefault();
+
     await checkDuplicatedEmail(email.value);
     dispatch(setEmailDisabled(true));
   };
