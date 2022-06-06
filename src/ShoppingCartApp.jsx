@@ -12,6 +12,7 @@ import ProductDetail from 'pages/ProductDetail';
 import Cart from 'pages/Cart';
 import Login from 'pages/Login';
 import SignUp from 'pages/SignUp';
+import EditUserData from 'pages/EditUserData';
 import EditUserInfo from 'pages/EditUserInfo';
 import Identification from 'pages/Identification';
 import EditUserPassword from 'pages/EditUserPassword';
@@ -27,9 +28,11 @@ const ShoppingCartApp = () => (
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />
-        <Route path="/identification" element={<Identification />} />
-        <Route path="/editUserInfo" element={<EditUserInfo />} />
-        <Route path="/editUserPassword" element={<EditUserPassword />} />
+        <Route path="/edit/*" element={<EditUserData />}>
+          <Route path="identification" element={<Identification />} />
+          <Route path="userInfo" element={<EditUserInfo />} />
+          <Route path="userPassword" element={<EditUserPassword />} />
+        </Route>
         <Route path="*" element={<ProductList />} />
       </Routes>
     </BrowserRouter>

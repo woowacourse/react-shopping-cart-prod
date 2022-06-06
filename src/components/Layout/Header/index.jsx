@@ -36,7 +36,7 @@ const Header = () => {
         {isLogin ? (
           <>
             <Styled.RightMenuButton icon={아이콘_코드.RECEIPT}>주문 목록</Styled.RightMenuButton>
-            <Link to="/identification">
+            <Link to="/edit/identification">
               <Styled.RightMenuButton icon={아이콘_코드.USER}>회원정보</Styled.RightMenuButton>
             </Link>
             <Styled.RightMenuButton icon={아이콘_코드.USER} onClick={onLogOutClick}>
