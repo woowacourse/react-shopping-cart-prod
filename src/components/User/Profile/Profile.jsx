@@ -24,6 +24,10 @@ const Profile = ({ name }) => {
   };
 
   const handleClickConvertButton = () => {
+    if (name === newName) {
+      setMode(CONFIRM_MODE);
+      return;
+    }
     updateName(newName);
   };
 
