@@ -19,10 +19,10 @@ import UserInfoEditPage from 'page/UserInfoEditPage';
 import WithdrawalPage from 'page/WithdrawalPage';
 import OrderPayPage from 'page/OrderPayPage';
 
-if (process.env.NODE_ENV === 'development') {
-  const {worker} = require('./mocks/browsers');
-  worker.start();
-}
+// if (process.env.NODE_ENV === 'development') {
+//   const {worker} = require('./mocks/browsers');
+//   worker.start();
+// }
 
 export default function App() {
   return (

@@ -18,4 +18,10 @@ export const GlobalStyles = createGlobalStyle`
   font-family: 'BMDOHYEON';
   font-size: 16px;
   }
+
+  #sming-modal {
+    margin-top:200px;
+    z-index: 10;
+  }
+
 `;

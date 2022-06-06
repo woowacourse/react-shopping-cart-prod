@@ -10,7 +10,15 @@ import OrderItem from 'component/OrderItem';
 import NotFoundPage from 'page/NotFoundPage';
 import * as S from 'page/OrderPayPage/style';
 
+import {SmingPayment, useSmingPayment} from 'sming-payments';
+import {PATH} from 'constant';
+import {useNavigate} from 'react-router-dom';
+
 export default function OrderPayPage() {
+  const {isShowModal, toggleModal} = useSmingPayment();
+
+  const navigation = useNavigate();
+
   const cartItem = useSelector((state) => state.cartReducer.cart);
   const error = useSelector((state) => state.cartReducer.error);
   const pending = useSelector((state) => state.cartReducer.pending);
@@ -25,7 +33,9 @@ export default function OrderPayPage() {
     {totalPrice: 0},
   );
 
-  const onClickPayButton = () => {};
+  const onClickOrderButton = () => toggleModal();
+
+  const onClickPayButton = () => navigation(PATH.ORDER_LIST);
 
   return (
     <S.Layout>
@@ -56,9 +66,16 @@ export default function OrderPayPage() {
           leftContent="총 결제금액"
           rightContent={`${totalPrice.toLocaleString()}원`}
           buttonText={`${totalPrice.toLocaleString()}원 결제하기`}
-          onClickButton={onClickPayButton}
+          onClickButton={onClickOrderButton}
         />
       </S.ProductTable>
+
+      <SmingPayment
+        price={totalPrice}
+        isShowModal={isShowModal}
+        toggleModal={toggleModal}
+        payButtonHandler={onClickPayButton}
+      />
     </S.Layout>
   );
 }
