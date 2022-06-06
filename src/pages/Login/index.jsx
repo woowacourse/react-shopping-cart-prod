@@ -2,7 +2,7 @@ import Form from 'components/Common/Form/Form';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import Input from 'components/Common/Input/Input';
 import Button from 'components/Common/Button/Button';
-import useLoginPage from './hook';
+import useLoginPage from './hooks';
 import * as Styled from './style';
 
 const Login = () => {

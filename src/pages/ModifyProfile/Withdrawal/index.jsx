@@ -1,6 +1,6 @@
 import Button from 'components/Common/Button/Button';
 import { useEffect } from 'react';
-import useWithdrawal from './hook';
+import useWithdrawal from './hooks';
 import useSnackBar from 'hooks/useSnackBar';
 import * as Styled from './style';
 

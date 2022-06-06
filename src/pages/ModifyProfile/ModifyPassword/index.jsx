@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import * as Styled from './style';
 import useInputValidate from 'hooks/useInputValidate';
-import useModifyPassword from './hook';
+import useModifyPassword from './hooks';
 import useSnackBar from 'hooks/useSnackBar';
 
 import Title from 'components/Common/Title/Title';

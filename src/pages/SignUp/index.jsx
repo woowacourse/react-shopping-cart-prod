@@ -1,4 +1,4 @@
-import useSignUpPage from './hook';
+import useSignUpPage from './hooks';
 import Input from 'components/Common/Input/Input';
 import Button from 'components/Common/Button/Button';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
