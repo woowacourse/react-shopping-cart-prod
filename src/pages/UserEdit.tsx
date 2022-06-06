@@ -2,23 +2,16 @@ import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import PasswordConfirmModal from 'components/UserEdit/PasswordConfirmModal';
-import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import { useEffect, useReducer } from 'react';
-import { getUser } from 'redux/user/thunk';
+import { useReducer } from 'react';
 
 const UserEdit = () => {
   const [name, onChangeName] = useInput();
   const [isShowModal, toggleModal] = useReducer(prev => !prev, false);
-  const dispatch = useAppDispatch();
   const prevName = useAppSelector(state => state.user.data?.name);
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
 
   const onSubmitAuthForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
