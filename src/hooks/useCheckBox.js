@@ -22,7 +22,7 @@ export const useCheckBox = (boxItems) => {
     });
   };
 
-  const isChecked = (productId) => checkboxItems.findIndex((id) => id === productId) !== -1;
+  const isChecked = (productId) => checkboxItems.some((id) => id === productId);
 
   const checkAllSelectButton = () => {
     if (boxItems.length <= 0) {
