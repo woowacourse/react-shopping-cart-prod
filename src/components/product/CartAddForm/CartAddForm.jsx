@@ -9,11 +9,11 @@ import * as S from 'components/product/CartAddForm/CartAddForm.style';
 
 import * as GlobalStyled from 'styles/GlobalStyles';
 
-function CartAddForm({ product: { id, name, price, quantity }, closeModal }) {
+function CartAddForm({ product: { id, name, price, stock }, closeModal }) {
   const [count, handleIncrement, handleDecrement] = useCount({
     initialValue: 1,
     min: 1,
-    max: quantity,
+    max: stock,
   });
   const { addProduct } = useCart();
 
