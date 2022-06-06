@@ -1,16 +1,14 @@
 import {CONFIRM_MESSAGE} from 'constant';
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
-import {useNavigate} from 'react-router-dom';
 
 import {CART} from 'store/modules/cart';
 import {SELECTED_ITEM} from 'store/modules/selectedItem';
 
 import useFetch from './useFetch';
 
-export default function useCartItem(path = null) {
+export default function useCartItem() {
   const dispatch = useDispatch();
-  const navigation = useNavigate();
 
   const {fetch: fetchCart} = useFetch('get');
 
@@ -29,13 +27,7 @@ export default function useCartItem(path = null) {
       deleteCart({
         API_URL: `${process.env.REACT_APP_CART_API_URL}/${payload}`,
       });
-      return;
     }
-
-    if (!path) {
-      return;
-    }
-    navigation(path);
   };
 
   const initializeCart = useCallback(() => {
@@ -53,10 +45,6 @@ export default function useCartItem(path = null) {
       API_URL: process.env.REACT_APP_CART_API_URL,
       body: payload,
     });
-    if (!path) {
-      return;
-    }
-    navigation(path);
   };
 
   const increaseQuantity = (payload) => {
