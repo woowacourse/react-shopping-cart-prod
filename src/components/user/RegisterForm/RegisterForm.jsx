@@ -74,7 +74,11 @@ function RegisterForm() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!isAllValid || !isUniqueEmail || passwordValue !== passwordConfirmValue) {
+    if (!isUniqueEmail) {
+      alert(ERROR_MESSAGES.NO_DUPLICATE_CHECK);
+      return;
+    }
+    if (!isAllValid || passwordValue !== passwordConfirmValue) {
       alert(ERROR_MESSAGES.INVALID_FORM);
       return;
     }

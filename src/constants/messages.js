@@ -25,6 +25,7 @@ export const ERROR_MESSAGES = {
 
   INCORRECT_PASSWORD: '비밀번호가 올바르지 않습니다.',
   INVALID_EMAIL: '올바르지 않은 이메일 형식입니다.',
+  NO_DUPLICATE_CHECK: '이메일 중복 확인을 진행해주세요.',
   DUPLICATE_EMAIL: '사용할 수 없는 이메일입니다.',
   INVALID_FORM: '올바르지 않은 입력 값이 있습니다. 다시 한번 확인해주세요.',
   LOGIN_FAIL: '로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.',
