@@ -1,19 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routes from 'routes';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
-import { logout } from 'redux/modules/user';
+import { useDispatch, useSelector } from 'react-redux';
+import { leaveUserAPI, loadUserAPI, selectUserState, UserState } from 'redux/modules/user';
 
 import usePassword from 'hooks/usePassword';
-import { Button, Form, Input } from 'components/@shared';
+import { Button, Form, Input, Loader } from 'components/@shared';
 import { PageLayout } from 'components';
 
 import { getCookie } from 'utils';
 import { LeaveButton } from './styles';
 
 function UserInfo() {
-  const [userName, setUserName] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoggedIn, userName, loading, error }: UserState = useSelector(selectUserState);
   const {
     password,
     onChangePassword,
@@ -22,20 +24,13 @@ function UserInfo() {
     passwordConfirmErrorMessage,
     onChangePasswordConfirm,
   } = usePassword();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const onClickLeave = async () => {
-    if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) return;
+    if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) {
+      return;
+    }
 
-    await axios.delete('/api/customers/me', {
-      headers: {
-        Authorization: `Bearer ${getCookie('accessToken')}`,
-      },
-    });
-
-    dispatch(logout());
-    navigate(routes.home);
+    dispatch(leaveUserAPI());
   };
 
   const onSubmit = async (e: React.FormEvent) => {
@@ -55,24 +50,30 @@ function UserInfo() {
   };
 
   useEffect(() => {
-    const getUser = async () => {
-      const response = await axios.get('/api/customers/me', {
-        headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-        },
-      });
-
-      setUserName(response.data);
-    };
-
-    getUser();
+    dispatch(loadUserAPI());
   }, []);
+
+  useEffect(() => {
+    if (error) {
+      alert(error.message);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate(routes.home);
+    }
+  }, [isLoggedIn]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <PageLayout>
       <h1>회원 정보 수정</h1>
       <Form onSubmit={onSubmit}>
-        <Input htmlFor="userinfo-id" label="아이디" value={userName} disabled={true} />
+        <Input htmlFor="userinfo-id" label="아이디" value={userName ?? ''} disabled={true} />
         <Input
           type="password"
           htmlFor="userinfo-password"

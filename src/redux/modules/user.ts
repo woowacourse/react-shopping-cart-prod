@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AppDispatch, RootState } from 'redux/store';
-import { getCookie, setCookie } from 'utils';
+import { deleteCookie, getCookie, setCookie } from 'utils';
 
 export type UserState = {
   loading: boolean;
@@ -15,7 +15,11 @@ export type Action =
   | ReturnType<typeof loadUserFailure>
   | ReturnType<typeof loginRequest>
   | ReturnType<typeof loginSuccess>
-  | ReturnType<typeof loginFailure>;
+  | ReturnType<typeof loginFailure>
+  | ReturnType<typeof logout>
+  | ReturnType<typeof leaveUserRequest>
+  | ReturnType<typeof leaveUserSuccess>
+  | ReturnType<typeof leaveUserFailure>;
 
 const initialState: UserState = {
   loading: false,
@@ -30,6 +34,10 @@ const LOAD_USER_FAILURE = 'user/LOAD_FAILURE' as const;
 const LOGIN_REQUEST = 'user/LOGIN_REQUEST' as const;
 const LOGIN_SUCCESS = 'user/LOGIN_SUCCESS' as const;
 const LOGIN_FAILURE = 'user/LOGIN_FAILURE' as const;
+const LOGOUT = 'user/LOGOUT' as const;
+const LEAVE_USER_REQUEST = 'user/LEAVE_REQUEST' as const;
+const LEAVE_USER_SUCCESS = 'user/LEAVE_SUCCESS' as const;
+const LEAVE_USER_FAILURE = 'user/LEAVE_FAILURE' as const;
 
 const loadUserRequest = () => ({ type: LOAD_USER_REQUEST });
 const loadUserSuccess = (userName: string) => ({
@@ -46,8 +54,15 @@ const loginFailure = (error: Error) => ({
   type: LOGIN_FAILURE,
   payload: { error },
 });
+const logout = () => ({ type: LOGOUT });
+const leaveUserRequest = () => ({ type: LEAVE_USER_REQUEST });
+const leaveUserSuccess = () => ({ type: LEAVE_USER_SUCCESS });
+const leaveUserFailure = (error: Error) => ({
+  type: LEAVE_USER_FAILURE,
+  payload: { error },
+});
 
-export const loadUserAPI = (): any => async (dispatch: AppDispatch) => {
+const loadUserAPI = (): any => async (dispatch: AppDispatch) => {
   const token = getCookie('accessToken');
   if (!token) {
     return;
@@ -68,12 +83,13 @@ export const loadUserAPI = (): any => async (dispatch: AppDispatch) => {
   }
 };
 
-export const loginAPI =
+const loginAPI =
   (userName: string, password: string): any =>
   async (dispatch: AppDispatch) => {
     dispatch(loginRequest());
     try {
       const { data } = await axios.post('/api/login', { userName, password });
+
       setCookie('accessToken', data);
       dispatch(loginSuccess());
     } catch (error: unknown) {
@@ -82,6 +98,24 @@ export const loginAPI =
       }
     }
   };
+
+const leaveUserAPI = (): any => async (dispatch: AppDispatch) => {
+  dispatch(leaveUserRequest());
+  try {
+    await axios.delete('/api/customers/me', {
+      headers: {
+        Authorization: `Bearer ${getCookie('accessToken')}`,
+      },
+    });
+
+    deleteCookie('accessToken');
+    dispatch(leaveUserSuccess());
+  } catch (error) {
+    if (error instanceof Error) {
+      dispatch(leaveUserFailure(error));
+    }
+  }
+};
 
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
@@ -109,11 +143,27 @@ const userReducer = (state = initialState, action: Action) => {
 
       return { ...state, loading: false, error, isLoggedIn: false };
     }
+    case LOGOUT: {
+      return { ...state, isLoggedIn: false, userName: null };
+    }
+    case LEAVE_USER_REQUEST: {
+      return { ...state, loading: true, error: null };
+    }
+    case LEAVE_USER_SUCCESS: {
+      return { ...state, loading: false, isLoggedIn: false, userName: false };
+    }
+    case LEAVE_USER_FAILURE: {
+      const { error } = action.payload;
+
+      return { ...state, loading: false, error };
+    }
     default:
       return state;
   }
 };
 
 export const selectUserState = (state: RootState) => state.user;
+
+export { loginAPI, loadUserAPI, logout, leaveUserAPI };
 
 export default userReducer;

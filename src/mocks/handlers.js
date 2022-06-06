@@ -30,9 +30,12 @@ export const handlers = [
 
     if (!authorization) return res(ctx.status(400));
 
-    const userName = authorization.replace(/^Bearer\saccessToken_+/, '');
+    const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
+    const user = customers.find((customer) => customer.accessToken === authorization.split(' ')[1]);
 
-    return res(ctx.status(200), ctx.json(userName));
+    if (!user) return res(ctx.status(400));
+
+    return res(ctx.status(200), ctx.json(user.userName));
   }),
 
   rest.put('/api/customers/me', (req, res, ctx) => {
@@ -47,6 +50,14 @@ export const handlers = [
     const { authorization } = req.headers._headers;
 
     if (!authorization) return res(ctx.status(400));
+
+    const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
+    const userIndex = customers.findIndex(
+      (customer) => customer.accessToken === authorization.split(' ')[1]
+    );
+
+    customers.splice(userIndex, 1);
+    localStorage.setItem('customers', JSON.stringify(customers));
 
     return res(ctx.status(204));
   }),
