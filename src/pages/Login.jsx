@@ -10,7 +10,7 @@ import Input from 'components/@common/Input/styles';
 
 import { hideSpinner, showSpinner } from 'actions/spinner';
 import { 비동기_요청 } from 'constants';
-import { requestLogin } from 'api';
+import { requestLogin, requestUserInfo } from 'api';
 import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
@@ -37,7 +37,12 @@ const Login = () => {
     dispatch(hideSpinner());
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(setUserData(response));
+      const { accessToken } = response.content;
+      sessionStorage.setItem('accessToken', accessToken);
+      const userResponse = await requestUserInfo();
+      if (userResponse.status === 비동기_요청.SUCCESS) {
+        dispatch(setUserData(userResponse));
+      }
     }
 
     const message =

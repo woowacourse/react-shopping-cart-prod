@@ -3,6 +3,7 @@ import requestAsync from './RequestAsync';
 const requestGetProductList = async () => requestAsync.get('products');
 const requestGetProduct = async (id) => requestAsync.get(`product?id=${id}`);
 const requestLogin = async (id, password) => requestAsync.post('login', { username: id, password });
+const requestUserInfo = async () => requestAsync.get('customers/me', true);
 const requestCheckDuplicatedId = async (id) =>
   requestAsync.get('customers/username/duplication', { username: id });
 
@@ -20,6 +21,7 @@ export {
   requestGetProductList,
   requestGetProduct,
   requestLogin,
+  requestUserInfo,
   requestCheckDuplicatedId,
   requestSignUp,
   requestEditUserInfo,

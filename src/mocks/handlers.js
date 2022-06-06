@@ -21,9 +21,7 @@ export const productHandler = [
 
 export const authHandler = [
   // 로그인
-  rest.post(`${HOST_NAME}/login`, (req, res, ctx) =>
-    res(ctx.status(200), ctx.json(loginSuccessData)),
-  ),
+  rest.post(`${HOST_NAME}/login`, (req, res, ctx) => res(ctx.status(200))),
 
   rest.post(`${HOST_NAME}/login/fail`, (req, res, ctx) =>
     res(ctx.status(400), ctx.json({ message: '로그인 실패!' })),
@@ -31,6 +29,10 @@ export const authHandler = [
 ];
 
 export const customerHandler = [
+  // 유저 정보 불러오기
+  rest.get(`${HOST_NAME}/customers/me`, (req, res, ctx) =>
+    res(ctx.status(200), ctx.json({ username: 'sally' })),
+  ),
   // 아이디 유효성 검증
   rest.get(`${HOST_NAME}/customers/username/duplication`, (req, res, ctx) =>
     res(ctx.status(200), ctx.json({ isUnique: true })),

@@ -1,9 +1,6 @@
 import { 유저_액션 } from './types';
 
 const setUserData = (response) => async (dispatch) => {
-  const { accessToken, userName } = response.content;
-  sessionStorage.setItem('accessToken', accessToken);
-
   dispatch({
     type: 유저_액션.SET_USER_DATA,
     payload: response.content,
