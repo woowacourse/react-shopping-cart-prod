@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 
 import App from "@/App";
 
-import Loading from "@/components/loading/Loading";
+import Loading from "@/components/common/loading/Loading";
 import configureStore from "@/redux/index";
 
 const { store, persistor } = configureStore();
