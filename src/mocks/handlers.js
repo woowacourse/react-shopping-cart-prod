@@ -160,12 +160,12 @@ export const handlers = [
 
   // 회원 탈퇴
   rest.delete(process.env.REACT_APP_WITHDRAWAL_API_URL, (req, res, ctx) => {
-    // 클라이언트에서 요청한 accessToken에 해당하는 계정을 삭제한다
-
     const accessToken = req.headers._headers.authorization.split(' ')[1];
     if (req.body.password !== userDB[accessToken].password) {
       return res(ctx.status(404));
     }
+
+    delete userDB[accessToken];
 
     return res(ctx.status(204));
   }),
