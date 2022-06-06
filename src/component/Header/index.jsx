@@ -20,7 +20,7 @@ import useFetch from 'hook/useFetch';
 export default function Header() {
   const dispatch = useDispatch();
 
-  const isLogined = useSelector((state) => state.authReducer.isLogined);
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   const navigation = useNavigate();
   const userInfo = useFetch('get');
@@ -64,7 +64,7 @@ export default function Header() {
       <S.HeaderNavBox>
         <S.NavText to={PATH.CART}>장바구니</S.NavText>
         <S.NavText to={PATH.ORDER}>구매목록</S.NavText>
-        {isLogined ? (
+        {isLogin ? (
           <S.Profile>
             <S.ProfileImage src={baedaleHover} alt="프로필 이미지" />
             <S.ProfileImage className="baedale" src={baedale} alt="프로필 이미지" />
