@@ -112,7 +112,7 @@ export const handlers = [
   }),
 
   // 회원가입
-  rest.post(process.env.REACT_APP_SIGNUP_API_URL, (req, res, ctx) => {
+  rest.post(process.env.REACT_APP_SIGN_UP_API_URL, (req, res, ctx) => {
     const accounts = Object.values(userDB).map(({account}) => account);
 
     const isDuplicated = accounts.some((account) => req.body.account === account);

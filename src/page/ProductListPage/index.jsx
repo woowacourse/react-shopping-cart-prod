@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {PRODUCT_LIST} from 'store/modules/productList';
@@ -67,7 +66,3 @@ export default function ProductListPage() {
     </S.ProductListPageLayout>
   );
 }
-
-ProductListPage.propTypes = {
-  itemList: PropTypes.array,
-};
