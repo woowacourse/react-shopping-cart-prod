@@ -9,12 +9,12 @@ const updateList =
     dispatch(productActions.updateList.pending());
 
     const response = await requestGetProductList(page);
-    const { status, content } = response;
+    const { status, body } = response;
 
     dispatch(
       status === REQUEST_STATUS.SUCCESS
-        ? productActions.updateList.success(content)
-        : dispatch(productActions.updateList.error(content)),
+        ? productActions.updateList.success(body)
+        : dispatch(productActions.updateList.error(body.message)),
     );
 
     return response;

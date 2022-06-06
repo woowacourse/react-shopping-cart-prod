@@ -20,12 +20,12 @@ const updateList =
     dispatch(cartActions.updateList.pending());
 
     const response = await requestGetCartList();
-    const { status, content } = response;
+    const { status, body } = response;
 
     dispatch(
       status === REQUEST_STATUS.SUCCESS
-        ? cartActions.updateList.success(content)
-        : cartActions.updateList.error(content),
+        ? cartActions.updateList.success(body)
+        : cartActions.updateList.error(body.message),
     );
 
     return response;
@@ -41,12 +41,12 @@ const addItem =
       price,
       quantity,
     });
-    const { status, content } = response;
+    const { status, body } = response;
 
     dispatch(
       status === REQUEST_STATUS.SUCCESS
-        ? cartActions.addItem.success(content)
-        : cartActions.addItem.error(content),
+        ? cartActions.addItem.success(body)
+        : cartActions.addItem.error(body.message),
     );
 
     return response;
@@ -54,12 +54,12 @@ const addItem =
 
 const updateItem = (id, updatedItem) => async (dispatch) => {
   const response = await requestUpdateCartItem(id, updatedItem);
-  const { status, content } = response;
+  const { status, body } = response;
 
   dispatch(
     status === REQUEST_STATUS.SUCCESS
-      ? cartActions.updateItem.success(content)
-      : cartActions.updateItem.error(content),
+      ? cartActions.updateItem.success(body)
+      : cartActions.updateItem.error(body.message),
   );
 
   return response;
@@ -67,12 +67,12 @@ const updateItem = (id, updatedItem) => async (dispatch) => {
 
 const removeItem = (targetId) => async (dispatch) => {
   const response = await requestRemoveCartItem(targetId);
-  const { status, content } = response;
+  const { status, body } = response;
 
   dispatch(
     status === REQUEST_STATUS.SUCCESS
       ? cartActions.removeItem.success(targetId)
-      : cartActions.removeItem.error(content),
+      : cartActions.removeItem.error(body.message),
   );
 
   return response;
@@ -80,12 +80,12 @@ const removeItem = (targetId) => async (dispatch) => {
 
 const removeItems = (targetIdList) => async (dispatch) => {
   const response = await requestRemoveCartItemList(targetIdList);
-  const { status, content } = response;
+  const { status, body } = response;
 
   dispatch(
     status === REQUEST_STATUS.SUCCESS
       ? cartActions.removeItems.success(targetIdList)
-      : cartActions.removeItems.error(content),
+      : cartActions.removeItems.error(body.message),
   );
 
   return response;
