@@ -22,7 +22,7 @@ export function calculatePrice(data, shoppingCart, orderList) {
 
 export function processServerData(userInfo) {
   return Object.entries(userInfo).reduce((acc, [key, value]) => {
-    if (key === 'phoneNumber') {
+    if (key === 'phone') {
       return { ...acc, phone: `010-${value.first}-${value.second}` };
     }
     return { ...acc, [key]: value.value };

@@ -11,8 +11,7 @@ export const handlers = [
     const isExist = customers[email]?.password === password;
 
     if (isExist) {
-      const { password, ...safefyUserInfo } = customers[email];
-      return res(ctx.status(200), ctx.json({ accessToken: 1, email, ...safefyUserInfo }));
+      return res(ctx.status(200), ctx.json({ accessToken: 1 }));
     }
     return res(ctx.status(404), ctx.json({ message: '존재하지 않는 email/password입니다.' }));
   }),
@@ -21,7 +20,19 @@ export const handlers = [
 
     const isExist = !!customers[email];
 
-    return res(ctx.status(200), ctx.json({ isValidEmail: isExist }));
+    if (isExist) {
+      return res(ctx.status(200), ctx.json({ isValidEmail: true }));
+    }
+    return res(
+      ctx.status(200),
+      ctx.json({ isValidEmail: false, message: '중복인 이메일 입니다.' })
+    );
+  }),
+  rest.get(`${API_URL_PATH.CUSTOMERS}`, (req, res, ctx) => {
+    const email = 'abc@abc.com';
+    const { password, ...rest } = customers[email];
+
+    return res(ctx.status(200), ctx.json({ email, ...rest }));
   }),
   rest.post(`${API_URL_PATH.CUSTOMERS}`, (req, res, ctx) => {
     const { email, password, name, phone, address } = req.body;
@@ -46,5 +57,8 @@ export const handlers = [
     };
 
     return res(ctx.status(200));
+  }),
+  rest.get(`${API_URL_PATH.NAME}`, (req, res, ctx) => {
+    return res(ctx.json(customers['abc@abc.com'].name));
   }),
 ];

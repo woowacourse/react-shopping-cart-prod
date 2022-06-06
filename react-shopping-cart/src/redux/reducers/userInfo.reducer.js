@@ -15,7 +15,7 @@ import {
   isInvalidEmail,
   isInvalidName,
   isInvalidPassword,
-  isInvalidPhoneNumber,
+  isInvalidPhone,
 } from 'utils/validators';
 
 export const initialUserInfoState = {
@@ -24,7 +24,7 @@ export const initialUserInfoState = {
   passwordCheck: { value: '', error: false },
   name: { value: '', error: false },
   address: { value: '', error: false },
-  phoneNumber: {
+  phone: {
     first: '',
     second: '',
   },
@@ -63,9 +63,10 @@ function userInfo(state = initialUserInfoState, action) {
       return { ...state, name: { value: name, error } };
     }
     case SET_PHONE_NUMBER: {
-      const { numberPlace, phoneNumber } = action.payload;
+      const { numberPlace, phone } = action.payload;
 
-      return { ...state, phoneNumber: { ...state.phoneNumber, [numberPlace]: phoneNumber } };
+      const error = phone ? isInvalidPhone(phone) : false;
+      return { ...state, phone: { ...state.phone, [numberPlace]: phone, error } };
     }
     case SET_USER_INFO:
       return { ...action.payload.info };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import styled, { css, keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 import HeaderContainer from 'components/@shared/HeaderContainer/HeaderContainer.component';
@@ -9,7 +9,11 @@ import HeaderLink from 'components/@shared/HeaderLink/HeaderLink.component';
 
 import { logoutUser } from 'redux/actions/auth.action';
 
+import useFetch from 'hooks/useFetch';
+import useUserName from 'hooks/useUserName';
+
 import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
+import { API_URL_PATH } from 'constants/api';
 
 const Relative = styled.div`
   position: relative;
@@ -62,7 +66,7 @@ const LastListItem = styled(SelectListItem)`
 function Header() {
   const dispatch = useDispatch();
   const [showSelectBox, setShowSelectBox] = useState(false);
-  const { accessToken, name } = useSelector(state => state.auth);
+  const name = useUserName();
 
   const handleSelectBox = () => {
     setShowSelectBox(prev => !prev);
@@ -87,7 +91,7 @@ function Header() {
         <HeaderLink to="/" type="nav">
           주문목록
         </HeaderLink>
-        {accessToken ? (
+        {name ? (
           <Relative>
             <LogInLogoButton onClick={handleSelectBox}>{name[0]}</LogInLogoButton>
             <SelectList show={showSelectBox}>
