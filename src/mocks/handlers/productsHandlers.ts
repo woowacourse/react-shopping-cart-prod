@@ -1,7 +1,8 @@
-import PATH from 'constants/path';
-import db from 'db.json';
 import { productAxios } from 'configs/api';
+import db from 'db.json';
 import { rest } from 'msw';
+
+import PATH from 'constants/path';
 
 const { baseURL } = productAxios.defaults;
 

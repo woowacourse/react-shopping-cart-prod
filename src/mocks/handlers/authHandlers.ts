@@ -1,6 +1,7 @@
-import PATH from 'constants/path';
-import { User } from 'types/index';
 import { rest } from 'msw';
+import { User } from 'types/index';
+
+import PATH from 'constants/path';
 
 const apiURL = 'http://localhost:8080/api';
 const KEY = 'mockUserList';

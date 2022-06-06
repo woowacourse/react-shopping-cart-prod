@@ -1,14 +1,16 @@
+import { useState } from 'react';
+
+import authAPI from 'apis/auth';
 import CheckBox from 'components/@shared/CheckBox';
 import Link from 'components/@shared/Link';
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
-import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
-import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { userActions } from 'redux/actions';
+import styled from 'styled-components';
+import { createInputValueGetter } from 'utils/dom';
+
+import { USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
 
 function LoginForm() {
   const dispatch = useDispatch();

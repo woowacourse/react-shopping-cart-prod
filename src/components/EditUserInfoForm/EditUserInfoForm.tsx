@@ -1,13 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
-
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
-import { User } from 'types/index';
 import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
-import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
+import styled from 'styled-components';
+import { User } from 'types/index';
+import { createInputValueGetter } from 'utils/dom';
+
+import { USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
 
 function EditUserInfoForm() {
   const navigate = useNavigate();

@@ -1,12 +1,13 @@
 import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
-import CONDITION from 'constants/condition';
 import Loading from 'components/@shared/Loading';
 import ProductCardGrid from 'components/ProductCardGrid/ProductCardGrid';
-import { ProductStoreState } from 'types/index';
+import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from 'redux/thunks';
 import styled from 'styled-components';
+import { ProductStoreState } from 'types/index';
+
+import CONDITION from 'constants/condition';
 
 function MainPage() {
   const condition = useSelector(

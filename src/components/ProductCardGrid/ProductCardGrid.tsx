@@ -1,9 +1,8 @@
-import { CartStoreState, Product } from 'types/index';
-
 import ProductCard from 'components/ProductCard/ProductCard';
-import { isProductInCart } from 'utils/validator';
-import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { CartStoreState, Product } from 'types/index';
+import { isProductInCart } from 'utils/validator';
 
 type Props = {
   productList: Array<Product>;

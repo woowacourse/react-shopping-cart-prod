@@ -1,16 +1,17 @@
+import { useState } from 'react';
+
+import authAPI from 'apis/auth';
+import { useNavigate } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+import { createInputValueGetter } from 'utils/dom';
+import { formatPhoneNumber } from 'utils/formats';
 import {
   isValidPasswordAllCharacters,
   isValidPasswordLength,
 } from 'utils/validator';
-import styled, { css } from 'styled-components';
 
-import PATH from 'constants/path';
 import { USER_MESSAGE } from 'constants/message';
-import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
-import { formatPhoneNumber } from 'utils/formats';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import PATH from 'constants/path';
 
 function SignupForm() {
   const navigate = useNavigate();

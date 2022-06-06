@@ -1,11 +1,12 @@
-import { CART_MESSAGE } from 'constants/message';
 import Link from 'components/@shared/Link';
-import PATH from 'constants/path';
-import { Product } from 'types/index';
 import ShoppingCart from 'components/@shared/ShoppingCart';
+import { useDispatch } from 'react-redux';
 import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { Product } from 'types/index';
+
+import { CART_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
 
 type Props = {
   product: Product;

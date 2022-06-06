@@ -1,7 +1,8 @@
-import PATH from 'constants/path';
-import { User } from 'types/index';
 import { axios } from 'configs/api';
+import { User } from 'types/index';
 import { getAccessToken } from 'utils/auth';
+
+import PATH from 'constants/path';
 
 const authAPI = {
   login: async function (user: User, isKeepLogin: boolean) {

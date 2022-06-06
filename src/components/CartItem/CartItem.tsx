@@ -1,13 +1,14 @@
-import { CART_MESSAGE } from 'constants/message';
-import CheckBox from 'components/@shared/CheckBox';
 import { ReactComponent as Delete } from 'assets/Delete.svg';
+import CheckBox from 'components/@shared/CheckBox';
 import Link from 'components/@shared/Link';
 import NumberInput from 'components/@shared/NumberInput';
-import PATH from 'constants/path';
-import { Product } from 'types/index';
+import { useDispatch } from 'react-redux';
 import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { Product } from 'types/index';
+
+import { CART_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
 
 type Props = {
   product: Product;

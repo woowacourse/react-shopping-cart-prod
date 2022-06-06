@@ -1,8 +1,9 @@
-import { Dispatch } from 'redux';
-import PATH from 'constants/path';
-import { Product } from 'types/index';
-import { productActions } from 'redux/actions';
 import { productAxios } from 'configs/api';
+import { Dispatch } from 'redux';
+import { productActions } from 'redux/actions';
+import { Product } from 'types/index';
+
+import PATH from 'constants/path';
 
 const getProducts = (dispatch: Dispatch) => {
   dispatch(productActions.getProductList());

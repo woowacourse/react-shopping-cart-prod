@@ -1,17 +1,18 @@
+import { useEffect, useState } from 'react';
+
+import Loading from 'components/@shared/Loading';
+import CartContent from 'components/CartContent/CartContent';
+import { useDispatch, useSelector } from 'react-redux';
+import { getProducts } from 'redux/thunks';
+import styled from 'styled-components';
 import {
   CartProductState,
   CartStoreState,
   Product,
   ProductStoreState,
 } from 'types/index';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
 
 import CONDITION from 'constants/condition';
-import CartContent from 'components/CartContent/CartContent';
-import Loading from 'components/@shared/Loading';
-import { getProducts } from 'redux/thunks';
-import styled from 'styled-components';
 
 function CartPage() {
   const condition = useSelector(
