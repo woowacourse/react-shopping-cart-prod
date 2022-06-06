@@ -13,7 +13,7 @@ export default (state = initialState, action) => {
 
     case 장바구니_액션.ADD_EXIST_PRODUCT:
       return {
-        items: [...state.items].map((item) => {
+        items: state.items.map((item) => {
           if (item.id === payload.id) {
             return payload;
           }
@@ -24,14 +24,14 @@ export default (state = initialState, action) => {
 
     case 장바구니_액션.DELETE_PRODUCT:
       return {
-        items: [...state.items].filter((item) =>
+        items: state.items.filter((item) =>
           payload.every((willDeleteItem) => item.id !== willDeleteItem),
         ),
       };
 
     case 장바구니_액션.MODIFY_PRODUCT_COUNT:
       return {
-        items: [...state.items].map((item) => {
+        items: state.items.map((item) => {
           if (item.id === payload.productId) {
             const modifiedItem = item;
             modifiedItem.count = payload.count;
