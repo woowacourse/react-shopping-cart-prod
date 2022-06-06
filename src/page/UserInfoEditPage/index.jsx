@@ -57,8 +57,9 @@ function UserInfoEditPage() {
 
     userInfo.fetch({
       API_URL: process.env.REACT_APP_GET_INFO_API_URL,
-      body: {test: 'test:'},
-      headers: {Authorization: `Bearer ${accessToken}`},
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
   };
 

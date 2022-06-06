@@ -64,7 +64,9 @@ function SignupPage() {
   const signup = useFetch('post');
 
   const onSubmit = (inputs) => {
-    const [account, nickname, password, address, start, middle, last] = inputs;
+    // eslint-disable-next-line no-unused-vars
+    const [account, nickname, password, confirmPassword, address, start, middle, last] = inputs;
+
     signup.fetch({
       API_URL: process.env.REACT_APP_SIGNUP_API_URL,
       body: {

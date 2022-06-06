@@ -18,7 +18,6 @@ import useFetch from 'hook/useFetch';
 
 export default function Header() {
   const dispatch = useDispatch();
-
   const isLogined = useSelector((state) => state.authReducer.isLogined);
 
   const navigation = useNavigate();
@@ -35,7 +34,10 @@ export default function Header() {
 
     userInfo.fetch({
       API_URL: process.env.REACT_APP_GET_INFO_API_URL,
-      headers: {Authorization: `Bearer ${accessToken}`},
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      onSuccess: () => dispatch({type: AUTH.LOGIN}),
     });
   };
 
