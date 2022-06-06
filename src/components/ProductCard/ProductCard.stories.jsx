@@ -1,4 +1,4 @@
-import ProductCard from './ProductCard';
+import ProductCard from 'components/ProductCard/ProductCard';
 
 export default {
   title: 'Component/ProductCard',

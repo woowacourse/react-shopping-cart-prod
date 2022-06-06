@@ -1,8 +1,10 @@
-import TermsStep from './Steps/TermsStep/TermsStep';
-import FillInfoStep from './Steps/FillInfoStep/FillInfoStep';
-import ResultStep from './Steps/ResultStep/ResultStep';
-import { SIGNUP_STEPS } from '../../constants/paths';
 import { useOutletContext } from 'react-router-dom';
+
+import FillInfoStep from 'pages/SignupPage/Steps/FillInfoStep/FillInfoStep';
+import ResultStep from 'pages/SignupPage/Steps/ResultStep/ResultStep';
+import TermsStep from 'pages/SignupPage/Steps/TermsStep/TermsStep';
+
+import { SIGNUP_STEPS } from 'constants/paths';
 
 function SignupStep() {
   const { currentStepId } = useOutletContext<{

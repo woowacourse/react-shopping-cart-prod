@@ -1,7 +1,9 @@
-import PlainLink from '../PlainLink/PlainLink';
-import { Product } from '../../types';
-import ICONS from '../../constants/icons';
-import * as S from './ProductCard.styled';
+import { Product } from 'types';
+
+import PlainLink from 'components/PlainLink/PlainLink';
+import * as S from 'components/ProductCard/ProductCard.styled';
+
+import ICONS from 'constants/icons';
 
 type Props = {
   product: Product;

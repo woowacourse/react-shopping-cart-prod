@@ -1,6 +1,7 @@
-import ProductCard from '../ProductCard/ProductCard';
-import { Product } from '../../types';
-import * as S from './ProductCardGrid.styled';
+import { Product } from 'types';
+
+import ProductCard from 'components/ProductCard/ProductCard';
+import * as S from 'components/ProductCardGrid/ProductCardGrid.styled';
 
 type Props = {
   productList: Array<Product>;

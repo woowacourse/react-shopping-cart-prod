@@ -1,5 +1,5 @@
-import * as S from './Stepper.styled';
-import * as T from './Stepper.types';
+import * as S from 'components/Stepper/Stepper.styled';
+import * as T from 'components/Stepper/Stepper.types';
 
 function Stepper({ stepList, currentStepId }: T.Props) {
   const isCurrentStep = (id: T.Step['id']) => id === currentStepId;

@@ -1,11 +1,6 @@
+import { SERVER_URL } from 'configs/api';
 import { rest, RestRequest } from 'msw';
-import { SERVER_URL } from '../../configs/api';
-import {
-  Customer,
-  SigninRequestBody,
-  SignupRequestBody,
-  User,
-} from '../../types';
+import { Customer, SigninRequestBody, SignupRequestBody, User } from 'types';
 
 const TOKEN_PREFIX = 'lokbawoody';
 const generateToken = (id: number) => `${TOKEN_PREFIX}${id}`;

@@ -1,10 +1,11 @@
-import CartItem from '../../components/CartItem/CartItem';
-import Checkbox from '../../components/Checkbox/Checkbox';
-import Spinner from '../../components/Spinner/Spinner';
-import DivideLine from '../../components/DivideLine/DivideLine';
-import Button from '../../components/Button/Button';
-import useCart from './useCart';
-import * as S from './CartPage.styled';
+import * as S from 'pages/CartPage/CartPage.styled';
+import useCart from 'pages/CartPage/useCart';
+
+import Button from 'components/Button/Button';
+import CartItem from 'components/CartItem/CartItem';
+import Checkbox from 'components/Checkbox/Checkbox';
+import DivideLine from 'components/DivideLine/DivideLine';
+import Spinner from 'components/Spinner/Spinner';
 
 function CartPage() {
   const {

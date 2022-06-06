@@ -1,5 +1,5 @@
 import axios from 'axios';
-import API from '../configs/api';
+import API from 'configs/api';
 
 const TYPES = {
   GET_PRODUCT_LIST: 'GET_PRODUCT_LIST',

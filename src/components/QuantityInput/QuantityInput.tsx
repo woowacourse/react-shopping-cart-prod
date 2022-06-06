@@ -1,6 +1,8 @@
 import React, { useRef } from 'react';
-import ICONS from '../../constants/icons';
-import * as S from './QuantityInput.styled';
+
+import * as S from 'components/QuantityInput/QuantityInput.styled';
+
+import ICONS from 'constants/icons';
 
 type Props = React.HTMLProps<HTMLInputElement>;
 

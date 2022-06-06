@@ -1,13 +1,17 @@
 import axios from 'axios';
+import { SERVER_URL } from 'configs/api';
 import React, { useState } from 'react';
-import useDaumPostcode from '../../../../hooks/useDaumPostcode';
-import Button from '../../../../components/Button/Button';
-import Input from '../../../../components/Input/Input';
-import ICONS from '../../../../constants/icons';
-import * as S from './FillInfoStep.styled';
 import { useOutletContext } from 'react-router-dom';
-import { SigninResponseBody } from '../../../../types';
-import { SERVER_URL } from '../../../../configs/api';
+import { SigninResponseBody } from 'types';
+
+import * as S from 'pages/SignupPage//Steps/FillInfoStep/FillInfoStep.styled';
+
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
+
+import useDaumPostcode from 'hooks/useDaumPostcode';
+
+import ICONS from 'constants/icons';
 
 function FillInfoStep() {
   const { goNextStep } = useOutletContext<{

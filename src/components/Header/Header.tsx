@@ -1,7 +1,7 @@
-import PlainLink from '../PlainLink/PlainLink';
-import Logo from '../Logo/Logo';
-import RightMenu from '../RightMenu/RightMenu';
-import * as S from './Header.styled';
+import * as S from 'components/Header/Header.styled';
+import Logo from 'components/Logo/Logo';
+import PlainLink from 'components/PlainLink/PlainLink';
+import RightMenu from 'components/RightMenu/RightMenu';
 
 function Header() {
   return (

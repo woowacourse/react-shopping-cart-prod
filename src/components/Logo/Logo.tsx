@@ -1,5 +1,6 @@
-import ICONS from '../../constants/icons';
-import * as S from './Logo.styled';
+import * as S from 'components/Logo/Logo.styled';
+
+import ICONS from 'constants/icons';
 
 function Logo() {
   return (

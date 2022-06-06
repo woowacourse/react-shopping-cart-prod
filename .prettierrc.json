@@ -3,5 +3,14 @@
   "printWidth": 80,
   "endOfLine": "auto",
   "arrowParens": "always",
-  "bracketSameLine": false
+  "bracketSameLine": false,
+  "importOrder": [
+    "^(@|pages)(.*|$)",
+    "^(@|components)(.*|$)",
+    "^(@|redux/)(.*|$)",
+    "^(@|hooks)(.*|$)",
+    "^(@|styles)(.*|$)",
+    "^(@|(constants|api))(.*|$)"
+  ],
+  "importOrderSeparation": true
 }

@@ -1,4 +1,4 @@
-import CartPage from './CartPage';
+import CartPage from 'pages/CartPage';
 
 export default {
   title: 'Page/CartPage',

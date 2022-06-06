@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import DivideLine from '../../components/DivideLine/DivideLine';
-import Stepper from '../../components/Stepper/Stepper';
-import { SIGNUP_STEPS_LIST, SIGNUP_STEPS } from '../../constants/paths';
-import * as S from './SignupPage.styled';
+
+import * as S from 'pages/SignupPage/SignupPage.styled';
+
+import DivideLine from 'components/DivideLine/DivideLine';
+import Stepper from 'components/Stepper/Stepper';
+
+import { SIGNUP_STEPS_LIST, SIGNUP_STEPS } from 'constants/paths';
 
 function SignupPage() {
   const { stepId } = useParams();

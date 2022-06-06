@@ -1,4 +1,4 @@
-import ResultStep from './ResultStep';
+import ResultStep from 'pages/SignupPage//Steps/ResultStep/ResultStep';
 
 export default {
   title: 'Signup Step/ResultStep',

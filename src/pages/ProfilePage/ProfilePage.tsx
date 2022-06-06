@@ -1,12 +1,16 @@
 import axios from 'axios';
+import { SERVER_URL } from 'configs/api';
 import React, { useState, useEffect } from 'react';
-import useDaumPostcode from '../../hooks/useDaumPostcode';
-import Button from '../../components/Button/Button';
-import Input from '../../components/Input/Input';
-import ICONS from '../../constants/icons';
-import * as S from './ProfilePage.styled';
 import { useNavigate } from 'react-router-dom';
-import { SERVER_URL } from '../../configs/api';
+
+import * as S from 'pages/ProfilePage/ProfilePage.styled';
+
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
+
+import useDaumPostcode from 'hooks/useDaumPostcode';
+
+import ICONS from 'constants/icons';
 
 // 이메일 생일 수정 x
 
