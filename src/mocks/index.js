@@ -1,7 +1,7 @@
 // @ts-nocheck
 import signupHandler from 'page/SignupPage/mock';
 import loginHandler from 'page/LoginPage/mock';
-import updateAccountHandler from 'page/AccountPage/mock';
+import changeNicknameHandler from 'page/AccountPage/mock';
 import deleteAccountHandler from 'page/AccountPage/AccountDeleteModal/mock';
 import userInquiryHandler from './handlers/userInquiryHandler';
 import logoutHandler from './handlers/logoutHandler';
@@ -19,8 +19,8 @@ const handlers = [
   // 로그인
   loginHandler,
 
-  // 회원정보수정
-  updateAccountHandler,
+  // 회원정보수정 / 닉네임
+  changeNicknameHandler,
 
   // 회원탈퇴
   deleteAccountHandler,

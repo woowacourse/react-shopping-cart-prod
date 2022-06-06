@@ -55,14 +55,14 @@ const AccountPage = () => {
     setEmail(response.data.email);
   };
 
-  const updateProfile = async () => {
+  const updateNickname = async () => {
     try {
       if (!isNicknameCorrect) return;
 
       const accessToken = getCookie('accessToken');
 
       const response = await axios.patch(
-        '/customers',
+        '/customers/profile',
         {
           nickname,
         },
@@ -72,10 +72,22 @@ const AccountPage = () => {
           },
         },
       );
+
       dispatch(doLogin({ nickname: response.data.nickname }));
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
+      navigate('/');
     } catch (error) {
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');
+      const { code, message } = error.response.data;
+
+      if (code) {
+        renderSnackbar(ERROR[code], 'FAILED');
+      } else {
+        renderSnackbar(message || error.message, 'FAILED');
+      }
+
+      /**
+       * 2102 : 닉네임 형식이 옳지 않은 경우
+       */
     }
   };
 
@@ -103,7 +115,7 @@ const AccountPage = () => {
           />
           <AuthButton
             actionType="Update Profile"
-            action={updateProfile}
+            action={updateNickname}
             isDisabled={!isNicknameCorrect}
           />
 
