@@ -1,4 +1,4 @@
-import AuthPage from 'components/common/AuthPage';
+import AuthForm from 'components/common/AuthForm';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { ALERT_MESSAGE } from 'constants/index';
@@ -7,7 +7,7 @@ import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from 'redux/user/thunk';
 import { PATH } from 'Routers';
@@ -25,7 +25,7 @@ const Login = () => {
 
   useAuthError(openSnackbar);
 
-  const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitAuthForm = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     dispatch(
@@ -54,7 +54,7 @@ const Login = () => {
   }, [name, navigate]);
 
   return (
-    <AuthPage
+    <AuthForm
       title='로그인'
       onSubmitAuthForm={onSubmitAuthForm}
       bottom={
@@ -80,7 +80,7 @@ const Login = () => {
         onChange={onChangePassword}
       />
       {isOpenSnackbar && <Snackbar message={MESSAGE.login} />}
-    </AuthPage>
+    </AuthForm>
   );
 };
 
