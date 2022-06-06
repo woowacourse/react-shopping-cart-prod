@@ -1,7 +1,6 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
-import withAuthPage from 'components/hoc/withAuthPage';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
@@ -47,4 +46,4 @@ const UserWithDrawal = () => {
   );
 };
 
-export default withAuthPage(UserWithDrawal, true);
+export default UserWithDrawal;

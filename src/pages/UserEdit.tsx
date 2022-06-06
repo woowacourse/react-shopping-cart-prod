@@ -1,7 +1,6 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
-import withAuthPage from 'components/hoc/withAuthPage';
 import PasswordConfirmModal from 'components/UserEdit/PasswordConfirmModal';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
@@ -48,4 +47,4 @@ const UserEdit = () => {
   );
 };
 
-export default withAuthPage(UserEdit, true);
+export default UserEdit;

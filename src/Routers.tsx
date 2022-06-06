@@ -1,9 +1,12 @@
+import { lazy, ReactElement } from 'react';
+import { Navigate, Route, Routes, Outlet } from 'react-router-dom';
+
 import Login from 'pages/Login';
 import Signup from 'pages/Signup';
 import UserEdit from 'pages/UserEdit';
 import UserWithDrawal from 'pages/UserWithDrawal';
-import { lazy, ReactElement } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+
+import { useAppSelector } from 'hooks/useAppSelector';
 
 export const PATH = {
   home: '/',
@@ -36,23 +39,37 @@ const ItemDetail = lazy(() => import('pages/ItemDetail'));
 const Cart = lazy(() => import('pages/Cart'));
 const NotFound = lazy(() => import('pages/NotFound'));
 
+const PrivateWrapper = ({ isAuthenticated }) => {
+  return isAuthenticated ? <Outlet /> : <Navigate to='/' />;
+};
+
+const PublicWrapper = ({ isAuthenticated, restricted }) => {
+  return isAuthenticated && restricted ? <Navigate to='/' /> : <Outlet />;
+};
+
 const ROUTES: RoutesType[] = [
   { path: PATH.home, element: <Navigate replace to='/main/1' /> },
   { path: PATH.main, element: <ItemList /> },
   { path: PATH.itemDetail, element: <ItemDetail /> },
-  { path: PATH.cart, element: <Cart /> },
-  { path: PATH.signup, element: <Signup /> },
-  { path: PATH.login, element: <Login /> },
-  { path: PATH.editUser, element: <UserEdit /> },
-  { path: PATH.withdrawal, element: <UserWithDrawal /> },
   { path: PATH.notFound, element: <NotFound /> },
 ];
 
 const Routers = () => {
+  const isLogin = useAppSelector(state => !!state.user.data);
+
   return (
     <Routes>
-      {ROUTES.map(route => (
-        <Route key={route.path} {...route} />
+      <Route element={<PrivateWrapper isAuthenticated={isLogin} />}>
+        <Route path={PATH.cart} element={<Cart />} />
+        <Route path={PATH.editUser} element={<UserEdit />} />
+        <Route path={PATH.withdrawal} element={<UserWithDrawal />} />
+      </Route>
+      <Route element={<PublicWrapper isAuthenticated={isLogin} restricted={true} />}>
+        <Route path={PATH.login} element={<Login />} />
+        <Route path={PATH.signup} element={<Signup />} />
+      </Route>
+      {ROUTES.map((ROUTE, idx) => (
+        <Route {...ROUTE} key={idx} />
       ))}
     </Routes>
   );

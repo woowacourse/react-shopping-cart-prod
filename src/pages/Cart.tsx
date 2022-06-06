@@ -3,7 +3,6 @@ import LayoutWithTitle from 'components/common/LayoutWithTitle';
 import Loading from 'components/common/Loading';
 import PaymentBox from 'components/common/PaymentBox';
 import RequestFail from 'components/common/RequestFail';
-import withAuthPage from 'components/hoc/withAuthPage';
 import useThunkFetch from 'hooks/useThunkFetch';
 import { getCartListRequest } from 'redux/cartList/thunk';
 import { getItemList } from 'redux/itemList/thunk';
@@ -51,7 +50,7 @@ const Cart = () => {
   );
 };
 
-export default withAuthPage(Cart, true);
+export default Cart;
 
 const StyledMain = styled.main`
   display: flex;
