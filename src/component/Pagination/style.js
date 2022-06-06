@@ -5,7 +5,6 @@ const PaginationStyled = styled.div`
   justify-content: center;
 
   button {
-    color: ${({theme}) => theme.WHITE};
     font-size: 18px;
     background: none;
     border: none;
@@ -22,6 +21,7 @@ const PaginationStyled = styled.div`
 
   button.active {
     background: ${({theme}) => theme.MINT_500};
+    color: ${({theme}) => theme.WHITE};
   }
 
   .control-button {
