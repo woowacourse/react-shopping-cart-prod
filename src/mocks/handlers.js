@@ -1,22 +1,45 @@
 import { rest } from 'msw';
 import { loginSuccessData } from './authHandlerData';
+import { cartListData } from './cartHandlerData';
 import { userInfomationData } from './customerHandlerData';
 import { productDetailData, productListData } from './productHandlerData';
 
 const HOST_NAME = process.env.REACT_APP_API_URL;
 
 export const productHandler = [
-  // 상품 리스트 불러오기
+  // 상품 목록 조회
   rest.get(`${HOST_NAME}/products`, (req, res, ctx) =>
     res(ctx.status(200), ctx.json(productListData)),
   ),
 
   // 상품 상세정보 불러오기
-  rest.get(`${HOST_NAME}/product`, (req, res, ctx) => {
+  rest.get(`${HOST_NAME}/products/:id`, (req, res, ctx) => {
     const productId = req.url.searchParams.get('id');
 
     return res(ctx.status(200), ctx.json(productDetailData(productId)));
   }),
+];
+
+export const cartHandler = [
+  // 장바구니 상품 목록 조회
+  rest.get(`${HOST_NAME}/cart`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(cartListData));
+  }),
+
+  // 장바구니에 상품 추가
+  rest.post(`${HOST_NAME}/cart/:id`, (req, res, ctx) => res(ctx.status(200))),
+
+  // 장바구니에 상품 수량 변경
+  rest.put(`${HOST_NAME}/:id/quantity`, (req, res, ctx) => res(ctx.status(200))),
+
+  // 장바구니 상품 제거
+  rest.delete(`${HOST_NAME}/cart/products`, (req, res, ctx) => res(ctx.status(204))),
+
+  // 장바구니 비우기
+  rest.delete(`${HOST_NAME}/cart`, (req, res, ctx) => res(ctx.status(204))),
+
+  // 장바구니 상품 구매
+  rest.post(`${HOST_NAME}/orders`, (req, res, ctx) => res(ctx.status(200))),
 ];
 
 export const authHandler = [
