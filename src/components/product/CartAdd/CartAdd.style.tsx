@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const Container = styled.div`
-  padding: 50px;
+  padding: 30px;
   min-width: 450px;
 
   display: flex;
@@ -10,7 +10,10 @@ export const Container = styled.div`
   gap: 40px;
 
   ${({ theme }) => theme.tablet} {
+    padding: 20px;
     min-width: 250px;
+
+    font-size: 0.8rem;
   }
 `;
 
