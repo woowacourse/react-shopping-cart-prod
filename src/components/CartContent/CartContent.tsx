@@ -28,7 +28,7 @@ function CartContent({ cartItems }: Props) {
   };
 
   const onChangeAllChecked = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 

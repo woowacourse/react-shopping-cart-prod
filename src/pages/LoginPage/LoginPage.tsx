@@ -14,7 +14,7 @@ function LoginPage() {
     if (isLogin()) {
       navigate(-1);
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <StyledPage>

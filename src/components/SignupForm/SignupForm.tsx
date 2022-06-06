@@ -35,7 +35,7 @@ function SignupForm() {
 
     setPasswordLengthCorrect(isValidPasswordLength(e.target.value));
     setPasswordAllCharactersCorrect(
-      isValidPasswordAllCharacters(e.target.value),
+      isValidPasswordAllCharacters(e.target.value)
     );
   };
 

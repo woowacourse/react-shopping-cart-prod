@@ -13,11 +13,11 @@ function EditUserInfoForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { username, email, address, phoneNumber } = useSelector(
-    (state: { user: User }) => state.user,
+    (state: { user: User }) => state.user
   );
 
   const onClickWithdrawButton = async () => {
-    if (!confirm(USER_MESSAGE.ASK_WITH_DRAW)) return;
+    if (!window.confirm(USER_MESSAGE.ASK_WITH_DRAW)) return;
 
     try {
       await authAPI.deleteUser();

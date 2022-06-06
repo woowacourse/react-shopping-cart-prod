@@ -15,13 +15,13 @@ import styled from 'styled-components';
 
 function CartPage() {
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition,
+    (state: { product: ProductStoreState }) => state.product.condition
   );
   const productList = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productList,
+    (state: { product: ProductStoreState }) => state.product.productList
   );
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+    (state: { cart: CartStoreState }) => state.cart.cart
   );
   const [cartItems, setCartItems] = useState<Array<CartProductState>>([]);
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ function CartPage() {
         const item = productList.find(product => product.id === id) as Product;
 
         return { product: item, stock, checked };
-      }),
+      })
     );
   }, [cart, productList]);
 

@@ -23,20 +23,17 @@ function App() {
 
   useEffect(() => {
     if (isLogin()) {
-      setUserInfo();
+      authAPI
+        .getUserInfo()
+        .then(res => {
+          dispatch(userActions.setUser(res));
+        })
+        .catch(error => {
+          localStorage.removeItem('accessToken');
+          sessionStorage.removeItem('accessToken');
+        });
     }
-  }, []);
-
-  const setUserInfo = async () => {
-    try {
-      const userInfo = await authAPI.getUserInfo();
-
-      dispatch(userActions.setUser(userInfo));
-    } catch (error) {
-      localStorage.removeItem('accessToken');
-      sessionStorage.removeItem('accessToken');
-    }
-  };
+  }, [dispatch]);
 
   return (
     <>

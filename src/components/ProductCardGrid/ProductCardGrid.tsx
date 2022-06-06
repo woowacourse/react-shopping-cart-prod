@@ -11,7 +11,7 @@ type Props = {
 
 function ProductCardGrid({ productList }: Props) {
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+    (state: { cart: CartStoreState }) => state.cart.cart
   );
 
   return (

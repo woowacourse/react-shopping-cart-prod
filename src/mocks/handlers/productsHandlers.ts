@@ -12,7 +12,7 @@ const productsHandlers = [
 
   rest.get(`${baseURL}${PATH.REQUEST_PRODUCT}/:id`, (req, res, ctx) => {
     const product = db.products.find(
-      productInfo => productInfo.id === Number(req.params.id),
+      productInfo => productInfo.id === Number(req.params.id)
     );
 
     return res(ctx.status(200), ctx.json(product));

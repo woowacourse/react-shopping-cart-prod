@@ -15,7 +15,7 @@ function Header() {
   const dispatch = useDispatch();
 
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+    (state: { cart: CartStoreState }) => state.cart.cart
   );
   const userName = useSelector((state: { user: User }) => state.user.username);
 

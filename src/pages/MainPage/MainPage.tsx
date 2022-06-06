@@ -10,10 +10,10 @@ import styled from 'styled-components';
 
 function MainPage() {
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition,
+    (state: { product: ProductStoreState }) => state.product.condition
   );
   const productList = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productList,
+    (state: { product: ProductStoreState }) => state.product.productList
   );
   const dispatch = useDispatch();
 

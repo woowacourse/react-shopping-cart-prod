@@ -5,7 +5,7 @@ type Props = {
   checked: boolean;
   marginBottom?: string;
   onChange: (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => void;
 };
 

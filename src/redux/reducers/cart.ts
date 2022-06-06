@@ -31,7 +31,7 @@ const cart = (state = initialState, action: CartAction) => {
     }
     case cartTypes.DELETE_PRODUCT: {
       const newCart = state.cart.filter(
-        product => product.id !== action.payload,
+        product => product.id !== action.payload
       );
 
       return { ...state, cart: newCart };

@@ -17,7 +17,7 @@ function LoginForm() {
   const [checked, setChecked] = useState(false);
 
   const toggleChecked = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 

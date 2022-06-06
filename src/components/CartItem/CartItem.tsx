@@ -28,7 +28,7 @@ function CartItem({ product, stock, checked }: Props) {
   };
 
   const onChangeCheckBox = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 
