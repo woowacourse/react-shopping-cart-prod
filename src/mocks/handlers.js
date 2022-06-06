@@ -55,6 +55,7 @@ export const handlers = [
     const { email, password } = req.body;
 
     const foundUser = users.find(user => user.email === email);
+
     if (foundUser && foundUser.password === password) {
       const accessToken = JSON.stringify({ id: foundUser.id });
 
@@ -69,9 +70,11 @@ export const handlers = [
     }
 
     // 로그인 실패
+    // [ERROR] 이메일 혹은 비밀번호가 일치하지 않은 경우
     return res(
       ctx.status(401),
       ctx.json({
+        code: 2201,
         message: 'Login Failed',
       }),
     );

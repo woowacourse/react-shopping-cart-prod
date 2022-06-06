@@ -11,7 +11,7 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
 import { doLogin } from 'actions/actionCreator';
 import { setCookie, getCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { MESSAGE, ERROR } from 'utils/constants';
 import Styled from './index.style';
 
 const LoginPage = () => {
@@ -50,12 +50,25 @@ const LoginPage = () => {
         password,
       });
 
-      setCookie('accessToken', response.data.accessToken);
-      dispatch(doLogin({ nickname: response.data.nickname }));
-      renderSnackbar(`${response.data.nickname}님 환영합니다 👋`, 'SUCCESS');
+      const { accessToken, nickname } = response.data;
+
+      setCookie('accessToken', accessToken);
+      dispatch(doLogin({ nickname }));
+
+      renderSnackbar(`${nickname}님, 안녕하세요 🙇🏻‍♀️`, 'SUCCESS');
       navigate('/');
     } catch (error) {
-      renderSnackbar(`아이디와 비밀번호를 다시 확인해주세요.`, 'FAILED');
+      const { code, message } = error.response.data;
+
+      if (code) {
+        renderSnackbar(ERROR[code], 'FAILED');
+      } else {
+        renderSnackbar(message || error.message, 'FAILED');
+      }
+
+      /**
+       * 2201 : 이메일 혹은 비밀번호가 일치하지 않은 경우
+       */
     }
   };
 
