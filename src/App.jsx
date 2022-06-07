@@ -12,22 +12,20 @@ import PageTemplate from 'components/template/PageTemplate/PageTemplate';
 function App() {
   const [isLoggedIn] = useReduxState(isLoggedInSelector);
 
+  const routeComponentMapper = ({ path, element }) => (
+    <Route key={path} path={path} element={element} />
+  );
+
   return (
     <Routes>
       <Route element={<PageTemplate />}>
-        {COMMON_PAGES.map(({ path, element }) => (
-          <Route key={path} path={path} element={element} />
-        ))}
+        {COMMON_PAGES.map(routeComponentMapper)}
 
         <Route element={<ProtectedRoute condition={isLoggedIn} />}>
-          {USER_PAGES.map(({ path, element }) => (
-            <Route key={path} path={path} element={element} />
-          ))}
+          {USER_PAGES.map(routeComponentMapper)}
         </Route>
         <Route element={<ProtectedRoute condition={!isLoggedIn} />}>
-          {NON_USER_PAGES.map(({ path, element }) => (
-            <Route key={path} path={path} element={element} />
-          ))}
+          {NON_USER_PAGES.map(routeComponentMapper)}
         </Route>
       </Route>
     </Routes>
