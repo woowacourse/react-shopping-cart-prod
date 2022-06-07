@@ -67,7 +67,12 @@ export const userHandlers = [
       return res(ctx.status(200));
     }
 
-    return res(ctx.status(401));
+    return res(
+      ctx.status(401),
+      ctx.json({
+        errorMessage: '에러임',
+      })
+    );
   }),
 
   rest.delete(`${LOCAL_BASE_URL}/users/me`, (req, res, ctx) => {
@@ -84,7 +89,12 @@ export const userHandlers = [
       return res(ctx.status(200));
     }
 
-    return res(ctx.status(401));
+    return res(
+      ctx.status(401),
+      ctx.json({
+        errorMessage: '에러임',
+      })
+    );
   }),
 
   rest.post(`${LOCAL_BASE_URL}/login/auto`, (req, res, ctx) => {
@@ -109,6 +119,11 @@ export const userHandlers = [
       );
     }
 
-    return res(ctx.status(401));
+    return res(
+      ctx.status(401),
+      ctx.json({
+        errorMessage: '에러임',
+      })
+    );
   }),
 ];
