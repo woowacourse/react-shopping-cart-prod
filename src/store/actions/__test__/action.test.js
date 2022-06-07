@@ -22,7 +22,7 @@ const sampleProduct = productList[0];
 const sampleQuantity = 1;
 
 const expectedCart = {
-  [sampleProduct.id]: { productData: sampleProduct, quantity: sampleQuantity },
+  [sampleProduct.id]: { product: sampleProduct, quantity: sampleQuantity },
 };
 
 const server = setupServer(

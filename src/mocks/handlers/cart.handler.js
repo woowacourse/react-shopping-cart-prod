@@ -10,8 +10,8 @@ const findProductCartIndex = (currentShoppingCart, targetId) => {
 };
 const createResponseCart = (cart) =>
   cart.map(({ productId, quantity }) => {
-    const productData = findProductData(productId);
-    return { productData, quantity };
+    const product = findProductData(productId);
+    return { product, quantity };
   });
 
 export const handleGetShoppingCartRequest = (_, res, ctx) => {

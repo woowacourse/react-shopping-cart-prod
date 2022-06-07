@@ -30,8 +30,8 @@ const cartReducer = (state = initialState, action) => {
       } = action;
 
       const checkedProductList = cart
-        .filter(({ productData }) => productData.stock > 0)
-        .map(({ productData }) => productData.id);
+        .filter(({ product }) => product.stock > 0)
+        .map(({ product }) => product.id);
 
       return {
         ...state,
