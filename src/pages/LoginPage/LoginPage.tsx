@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { isLogin } from 'utils/auth';
 
+import { USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 
 function LoginPage() {
@@ -14,7 +15,9 @@ function LoginPage() {
 
   useEffect(() => {
     if (isLogin()) {
-      navigate(-1);
+      alert(USER_MESSAGE.ALREADY_LOGGED_IN);
+
+      navigate(PATH.BASE);
     }
   }, [navigate]);
 

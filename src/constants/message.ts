@@ -12,9 +12,10 @@ const USER_MESSAGE = {
   FAIL_LOGIN: '아이디 혹은 비밀번호를 확인해주세요.',
   FAIL_SIGNUP: '기입하신 정보를 확인해주세요.',
   FAIL_EDIT: '주소 혹은 핸드폰 번호를 확인해주세요.',
-  FAIL_WITH_DRAW: '들어올 땐 마음대로였지만 나갈 땐 아닐걸?',
+  FAIL_WITH_DRAW: '회원 탈퇴에 실패하였습니다. 다시 시도해주세요.',
   ASK_WITH_DRAW: '탈퇴하시겠습니까?',
   NEED_LOGIN: '로그인이 필요한 기능입니다.',
+  ALREADY_LOGGED_IN: '이미 로그인 되어 있으므로 메인 페이지로 이동합니다.',
 };
 
 export { CART_MESSAGE, USER_MESSAGE };
