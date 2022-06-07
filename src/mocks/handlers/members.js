@@ -75,9 +75,26 @@ const membersHandlers = [
     );
   }),
 
-  // -- 이후
   // 회원정보 수정
-  // 회원 탈퇴
+  rest.patch('./auth/customers/profile', (req, res, ctx) => {
+    // 액세스토큰을 통해 유저 아이디, 닉네임 반환
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
+    const userInfo = membersDB.find((user) => user.accessToken === accessToken);
+    if (!userInfo) {
+      return res(
+        ctx.status(400),
+        ctx.json({ message: '권한이 없거나, 존재하지 않는 정보입니다.' }),
+      );
+    }
+
+    if (userInfo.password !== req.body.password) {
+      return res(ctx.status(400), ctx.json({ message: '비밀번호가 틀렸습니다.' }));
+    }
+
+    userInfo.nickname = req.body.newNickname;
+
+    return res(ctx.status(200), ctx.json(userInfo));
+  }),
 ];
 
 export default membersHandlers;

@@ -26,16 +26,15 @@ const userInfoRefresh = {
   }),
 };
 
-const profileEdit = {
+const userProfileEdit = {
   success: (payload) => ({
     type: MEMBERS_ACTIONS.USER_PROFILE_EDIT_SUCCESS,
     payload,
-    async: createAsyncState.success(),
   }),
 
   error: (payload) => ({
     type: MEMBERS_ACTIONS.USER_PROFILE_EDIT_ERROR,
-    async: createAsyncState.error(payload),
+    payload,
   }),
 };
 
@@ -53,4 +52,4 @@ const userDropOut = {
 
 const userLogout = () => ({ type: MEMBERS_ACTIONS.USER_LOGOUT });
 
-export { login, userInfoRefresh, profileEdit, userLogout, userDropOut };
+export { login, userInfoRefresh, userProfileEdit, userLogout, userDropOut };

@@ -12,7 +12,7 @@ function PasswordConfirm() {
           <InputField name="password" placeholder="비밀번호 확인" width="100%" />
         </FieldSet>
 
-        <Button status="primary">회원정보 편집</Button>
+        <Button status="primary">다음</Button>
       </S.Container>
     </FlexContainer>
   );

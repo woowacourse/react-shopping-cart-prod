@@ -29,7 +29,7 @@ const requestProfile = () =>
     },
   );
 
-const requestProfileUpdate = (editTarget = {}) =>
+const requestProfileUpdate = ({ newNickname, password }) =>
   request(
     '/auth/customers/profile',
     {
@@ -37,7 +37,7 @@ const requestProfileUpdate = (editTarget = {}) =>
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(editTarget),
+      body: JSON.stringify({ newNickname, password }),
     },
     {
       isAccessTokenUsed: true,

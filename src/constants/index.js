@@ -17,7 +17,8 @@ export const PAGE_LIST = {
   SIGN_UP: '/signup',
   LOGIN: '/login',
   LOGOUT: '/logout',
-  PROFILE: '/profile',
+  PROFILE_EDIT: '/profileEdit',
+  PROFILE_CONFIRM: '/profileConfirm',
 };
 
 export const REQUEST_STATUS = {

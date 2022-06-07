@@ -1,4 +1,4 @@
-import { requestLogin, requestProfile } from 'api/members';
+import { requestLogin, requestProfile, requestProfileUpdate } from 'api/members';
 import { ACCESS_TOKEN_COOKIE_NAME, ACCESS_TOKEN_EXPIRED_TIME, REQUEST_STATUS } from 'constants/';
 import { getCookie, setCookie } from 'lib/cookieUtils';
 
@@ -37,4 +37,23 @@ const userProfile = () => async (dispatch) => {
   return response;
 };
 
-export { userLogin, userProfile };
+const userEditNickname =
+  ({ newNickname, password }) =>
+  async (dispatch) => {
+    const accessToken = getCookie(ACCESS_TOKEN_COOKIE_NAME);
+
+    if (!accessToken) return;
+
+    const response = await requestProfileUpdate({ newNickname, password });
+    const { status, content } = response;
+
+    if (status === REQUEST_STATUS.FAIL) {
+      dispatch(memberActions.userProfileEdit.error(content.message));
+      return response;
+    }
+
+    dispatch(memberActions.userProfileEdit.success(content));
+    return response;
+  };
+
+export { userLogin, userProfile, userEditNickname };

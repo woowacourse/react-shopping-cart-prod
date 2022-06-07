@@ -2,12 +2,19 @@ import styled from '@emotion/styled/macro';
 
 import { COLORS } from 'styles/theme';
 
-const Container = styled.form`
+const PasswordContainer = styled.form`
   display: flex;
   width: 60%;
   flex-direction: column;
   justify-content: space-between;
-  padding: 7rem 0;
+  padding: 0 0 7rem 0;
 `;
 
-export { Container };
+const NicknameContainer = styled.form`
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  padding: 3rem 0;
+`;
+
+export { PasswordContainer, NicknameContainer };
