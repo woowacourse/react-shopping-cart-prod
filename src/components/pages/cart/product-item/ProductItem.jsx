@@ -18,7 +18,7 @@ import StyledCartContainer from "@/components/pages/cart/product-item/ProductIte
 import StyledHr from "@/components/pages/cart/product-item/hr.styled";
 
 function ProductItem({ item }) {
-  const { id, name, price, imgUrl, quantity, checked } = item;
+  const { id, name, price, imageUrl, quantity, checked } = item;
   const dispatch = useDispatch();
 
   const handleChange = () => {
@@ -42,7 +42,7 @@ function ProductItem({ item }) {
       <StyledCartContainer>
         <div className="product-item__left">
           <Checkbox onChange={handleChange} checked={checked} />
-          <img src={imgUrl} alt={name} />
+          <img src={imageUrl} alt={name} />
           <span className="cart-name">{name}</span>
         </div>
         <div className="product-item__right">

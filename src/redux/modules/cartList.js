@@ -17,7 +17,7 @@ export const ACTION_TYPES = {
 };
 
 export const addProductToCart = (args) => async (dispatch) => {
-  const { id, name, price, imgUrl } = args;
+  const { id, name, price, imageUrl } = args;
   try {
     if (!getCookie("accessToken")) {
       throw new Error("장바구니에 상품을 추가하려면 로그인해주세요.");
@@ -40,7 +40,7 @@ export const addProductToCart = (args) => async (dispatch) => {
         id,
         name,
         price,
-        imgUrl,
+        imageUrl,
       })
     );
     dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
@@ -95,14 +95,6 @@ export const cartListReducer = (state = cartListInitialState, action) => {
 
   switch (action.type) {
     case ACTION_TYPES.ADD_PRODUCT_TO_CART:
-      const isExistInCart = state.some((item) => {
-        return item.id === action.payload.id;
-      });
-
-      if (isExistInCart) {
-        return state;
-      }
-
       return [...state, { ...action.payload, quantity: 1, checked: true }];
 
     case ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON:
