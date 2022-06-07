@@ -11,3 +11,7 @@ export const generateRandomCode = (n: number): string => {
 
   return code;
 };
+
+export const isEmptyObject = (object: unknown) => {
+  return Object.keys(object).length === 0;
+};
