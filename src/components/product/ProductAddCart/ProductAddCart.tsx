@@ -1,4 +1,4 @@
-import * as Styled from './CartAdd.style';
+import * as Styled from './ProductAddCart.style';
 import * as GlobalStyled from '../../../styles/GlobalStyles';
 import Counter from '../../common/Counter/Counter';
 import { useCount } from '../../../hooks/useCount';
