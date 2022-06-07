@@ -4,12 +4,13 @@ import { useCheckBox, useCartItem } from 'hooks';
 
 import { 비동기_요청, 알림_메시지 } from 'constants/';
 
-import { requestChangeItemQuantity, requestDeleteCartItem, requestPurchaseCartItem } from 'api';
+import { requestChangeItemQuantity, requestPurchaseCartItem } from 'api';
 import Layout from 'components/Layout';
 import PageHeader from 'components/@common/PageHeader';
 import CartList from 'components/CartList';
 import CartReceipt from 'components/CartReceipt';
 
+import { handleRequestDeleteCartItem } from 'utils/deleteCartItem';
 import { snackbar } from 'actions/snackbar';
 import { deleteCartItem, setCartList, modifyCartItemQuantity } from 'actions/cart';
 
@@ -61,14 +62,11 @@ const Cart = () => {
     if (checkboxItems.length <= 0) {
       return;
     }
-    const response = await requestDeleteCartItem({ productIds: checkboxItems });
-    if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(deleteCartItem(checkboxItems));
+    const requestResult = await handleRequestDeleteCartItem(checkboxItems, dispatch);
+    if (requestResult) {
       clearCheckBoxItems();
       dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
-      return;
     }
-    alert('상품제거에 실패하였습니다');
   };
 
   const handleItemCount = async (productId, count) => {

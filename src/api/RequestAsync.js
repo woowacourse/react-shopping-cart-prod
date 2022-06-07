@@ -69,11 +69,12 @@ class RequestAsync {
     }
   }
 
-  async delete(path, authorize = false) {
+  async delete(path, bodyData = '', authorize = false) {
     try {
       const response = await fetch(`${this.HOST_NAME}/${path}`, {
         method: 'DELETE',
         headers: authorize ? authorizedHeader(this.header) : this.header,
+        body: bodyData ? JSON.stringify(bodyData) : '',
       });
 
       return this.#getRefinedResponse(response);

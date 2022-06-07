@@ -1,15 +1,14 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
-import { 비동기_요청, 아이콘_코드, 알림_메시지 } from 'constants/';
+import { 아이콘_코드, 알림_메시지 } from 'constants/';
 
 import IconButton from 'components/@common/IconButton';
 import CheckBox from 'components/@common/CheckBox';
 import Counter from 'components/@common/Counter';
 
-import { requestDeleteCartItem } from 'api';
-import { deleteCartItem } from 'actions/cart';
 import { snackbar } from 'actions/snackbar';
+import { handleRequestDeleteCartItem } from 'utils/deleteCartItem';
 
 import noImage from 'assets/no_image.png';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -31,13 +30,10 @@ const CartProductItem = ({
     if (isChecked(id)) {
       handleChecked(id);
     }
-    const response = await requestDeleteCartItem({ productIds: [id] });
-    if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(deleteCartItem([id]));
+    const requestResult = await handleRequestDeleteCartItem([id], dispatch);
+    if (requestResult) {
       dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_개별_삭제(name)));
-      return;
     }
-    alert('상품 제거에 실패하였습니다');
   };
 
   return (
