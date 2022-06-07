@@ -41,18 +41,15 @@ function RegisterPage() {
     setErrorMessage,
   } = useInputHandler(registerValidator, initialUserInfo);
 
+  const isErrorExist = Object.values(errorMessage).some((error) => error);
   const registerUserInfo = (e) => {
     e.preventDefault();
 
-    if (isErrorExist()) {
+    if (isErrorExist) {
       alert("유효하지 않은 입력이 있습니다. 수정하고 가입해주세요");
       return;
     }
     requestRegister();
-  };
-
-  const isErrorExist = () => {
-    return Object.values(errorMessage).some((error) => error);
   };
 
   const requestRegister = async () => {

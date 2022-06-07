@@ -1,8 +1,8 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import { theme } from "style";
 
-import { BASE_SERVER_URL, SERVER_PATH, USER_ID_KEY } from "constants";
+import { ROUTES, BASE_SERVER_URL, SERVER_PATH, USER_ID_KEY } from "constants";
 import { postBaseServerCartItem } from "util/fetch";
 
 import DefaultButton from "components/common/Button/DefaultButton";
@@ -14,9 +14,19 @@ import {
   ProductPriceTitle,
   Top,
 } from "./styled";
+import { useSelector } from "react-redux";
 
 function ProductDetail({ selectedProduct: { id, thumbnailUrl, name, price } }) {
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const navigate = useNavigate();
+
   const handleClickCartButton = async () => {
+    if (!isLogin) {
+      alert("로그인이 필요합니다.");
+      navigate(ROUTES.LOGIN);
+      return;
+    }
+
     try {
       const response = await postBaseServerCartItem({
         url: `${BASE_SERVER_URL}${

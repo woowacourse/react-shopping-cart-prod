@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import shoppingCartIconBlack from "asset/shopping-cart-icon-black.svg";
 
@@ -18,6 +19,7 @@ import {
 } from "./styled";
 
 function ProductCard({ product: { id, thumbnailUrl, name, price } }) {
+  const isLogin = useSelector((state) => state.user.isLogin);
   const navigate = useNavigate();
 
   const handleClickCardItem = () => {
@@ -26,6 +28,13 @@ function ProductCard({ product: { id, thumbnailUrl, name, price } }) {
 
   const handleClickCartIconButton = async (e) => {
     e.stopPropagation();
+
+    if (!isLogin) {
+      alert("로그인이 필요합니다.");
+      navigate(ROUTES.LOGIN);
+      return;
+    }
+
     try {
       const response = await postBaseServerCartItem({
         url: `${BASE_SERVER_URL}${

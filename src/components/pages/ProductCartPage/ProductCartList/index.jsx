@@ -1,5 +1,3 @@
-import React from "react";
-
 import { useStore } from "hooks/useStore";
 import { deleteCartList, updateCartCount } from "reducers/cartList";
 
