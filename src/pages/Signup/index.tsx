@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routes from 'routes';
 import axios from 'axios';
@@ -15,7 +15,7 @@ import { PageLayout } from 'components';
 function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, signUpFinish }: UserState = useSelector(selectUserState);
+  const { loading, error }: UserState = useSelector(selectUserState);
   const [id, onChangeId] = useInput();
   const [idStatus, setIdStatus] = useState({
     isValid: false,
@@ -31,48 +31,46 @@ function Signup() {
   } = usePassword();
 
   const onBlurDuplicateCheck = async () => {
-    const { data: isDuplicatedId } = await axios.post('/api/customers/duplication', {
-      userName: id,
-    });
+    try {
+      const { data: isDuplicatedId } = await axios.get(`/api/customers/exists?userName=${id}`);
 
-    if (isDuplicatedId) {
+      const isValid = isDuplicatedId ? false : true;
+      const message = isDuplicatedId
+        ? '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.'
+        : '사용 가능한 아이디입니다.';
+
+      setIdStatus({ isValid, message });
+    } catch {
       setIdStatus({
         isValid: false,
-        message: '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.',
+        message: '중복 체크 중 에러가 발생했습니다. 나중에 다시 시도하세요.',
       });
-      return;
     }
-
-    setIdStatus({ isValid: true, message: '사용 가능한 아이디입니다.' });
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmitSignupForm = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(signupAPI(id, password));
+    dispatch(
+      signupAPI(id, password, () => {
+        dispatch(show('회원가입 완료 ✅'));
+        navigate(routes.login);
+      })
+    );
   };
-
-  useEffect(() => {
-    if (signUpFinish) {
-      navigate(routes.login);
-      dispatch(show('회원가입 완료 ✅'));
-    }
-  }, [signUpFinish]);
-
-  useEffect(() => {
-    if (error) {
-      alert(error.message);
-    }
-  }, [error]);
 
   if (loading) {
     return <Loader />;
   }
 
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
   return (
     <PageLayout>
       <h1>회원가입</h1>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmitSignupForm}>
         <Input
           htmlFor="signup-id"
           label="아이디"

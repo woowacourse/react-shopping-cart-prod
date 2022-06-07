@@ -16,8 +16,8 @@ export const handlers = [
     return res(ctx.status(201));
   }),
 
-  rest.post('/api/customers/duplication', (req, res, ctx) => {
-    const { userName } = req.body;
+  rest.get(`/api/customers/exists`, (req, res, ctx) => {
+    const userName = req.url.searchParams.get('userName');
     const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
     const isDuplicateUserName =
       customers.find((customer) => customer.userName === userName) !== undefined;
