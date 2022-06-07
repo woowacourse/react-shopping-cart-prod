@@ -15,7 +15,7 @@ function SignupPage() {
       !stepId ||
       !SIGNUP_STEPS_LIST.map((step) => step.id).includes(Number(stepId))
     ) {
-      navigate('/not-found');
+      navigate('/signin/1');
     }
 
     if (currentStepId < Number(stepId)) {
@@ -23,21 +23,21 @@ function SignupPage() {
     }
   }, [stepId, currentStepId, navigate]);
 
+  const goNextStep = () => {
+    if (currentStepId === Object.keys(SIGNUP_STEPS).length) {
+      navigate('/');
+    }
+
+    navigate(`/signup/${Number(stepId) + 1}`);
+    setCurrentStepId((prev) => Number(stepId) + 1);
+  };
+
   if (
     !stepId ||
     !SIGNUP_STEPS_LIST.map((step) => step.id).includes(Number(stepId))
   ) {
     return null;
   }
-
-  const goNextStep = () => {
-    if (currentStepId === Object.keys(SIGNUP_STEPS).length) {
-      navigate('/');
-    }
-
-    setCurrentStepId((prev) => prev + 1);
-    navigate(`/signup/${currentStepId + 1}`);
-  };
 
   return (
     <S.PageBox>
