@@ -11,8 +11,6 @@ import Error from "@/components/pages/error/Error";
 
 import Loading from "@/components/common/loading/Loading";
 
-import { MESSAGE } from "@/constants";
-
 import StyledProductDetailContainer from "@/components/pages/product-detail/ProductDetail.styled";
 
 function ProductDetail() {
@@ -28,8 +26,8 @@ function ProductDetail() {
   }, [dispatch]);
 
   const handleCartClick = () => {
-    const { name, price, imgUrl } = data;
-    dispatch(addProductToCart({ id, name, price, imgUrl }));
+    const { name, price, imageUrl } = data;
+    dispatch(addProductToCart({ id, name, price, imageUrl }));
   };
 
   if (loading) return <Loading />;
@@ -38,7 +36,7 @@ function ProductDetail() {
   return (
     data && (
       <StyledProductDetailContainer>
-        <img src={data.imgUrl} alt={`${data.name}상세 페이지`} />
+        <img src={data.imageUrl} alt={`${data.name}상세 페이지`} />
         <div className="product__name">{data.name}</div>
         <hr />
         <div className="product__price__wrapper">
