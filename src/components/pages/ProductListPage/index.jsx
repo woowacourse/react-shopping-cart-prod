@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { useStore } from "hooks/useStore";
 import { getProductList } from "reducers/productList";

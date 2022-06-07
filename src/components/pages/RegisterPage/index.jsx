@@ -30,8 +30,7 @@ const initialUserInfo = {
   passwordConfirm: "",
 };
 
-function RegisterPage() {
-  const userId = useSelector((state) => state.user.data.id);
+function RegisterPage({ isLogin }) {
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -103,7 +102,8 @@ function RegisterPage() {
   };
 
   useEffect(() => {
-    if (userId) {
+    if (isLogin) {
+      // TODO: 선언형으로 변경
       navigator(ROUTES.LOGIN);
     }
     return () => {

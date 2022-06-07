@@ -29,5 +29,6 @@ export const patchBaseServerCartItem = fetchServer({ method: "PATCH" });
 
 export const registerBaseServer = fetchServer({ method: "POST" });
 export const loginBaseServer = fetchServer({ method: "POST" });
+export const getUserBaseServer = fetchServer({ method: "GET" });
 export const deleteUserBaseServer = fetchServer({ method: "POST" });
 export const updateUserBaseServer = fetchServer({ method: "PUT" });

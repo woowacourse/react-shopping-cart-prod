@@ -5,13 +5,12 @@ import { theme } from "style";
 
 import { BASE_SERVER_URL, SERVER_PATH, ROUTES, RANGE } from "constants";
 
-import { JWT_COOKIE_KEY } from "constants";
+import { USER_ID_KEY } from "constants";
 
 import { useStore } from "hooks/useStore";
 import { checkUsername } from "validator";
 import { deleteUser, USER_ACTION } from "reducers/user";
 import { updateUserBaseServer } from "util/fetch";
-import { getCookie } from "util/cookie";
 
 import DefaultButton from "components/common/Button/DefaultButton";
 import PageHeader from "components/common/PageHeader";
@@ -27,7 +26,7 @@ import {
 } from "./styled";
 import DeleteAccountModal from "./DeleteAccountModal";
 
-function UserInfoPage() {
+function UserInfoPage({ isLogin }) {
   const {
     data: user,
     isLoading,
@@ -66,7 +65,9 @@ function UserInfoPage() {
     dispatch({ type: USER_ACTION.UPDATE_USER_INFO });
     try {
       const response = await updateUserBaseServer({
-        url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${user.id}`,
+        url: `${BASE_SERVER_URL}${
+          SERVER_PATH.CUSTOMER_LIST
+        }/${localStorage.getItem(USER_ID_KEY)}`,
         body: JSON.stringify({ username }),
       });
 
@@ -101,7 +102,7 @@ function UserInfoPage() {
   };
 
   const deleteAccount = () => {
-    dispatch(deleteUser(user.id, passwordRef.current.value));
+    dispatch(deleteUser(passwordRef.current.value));
   };
 
   const closeModal = () => {
@@ -112,6 +113,12 @@ function UserInfoPage() {
   };
 
   useEffect(() => {
+    if (!isLogin) {
+      navigator(ROUTES.ROOT, { replace: true });
+    }
+  }, [isLogin]);
+
+  useEffect(() => {
     if (isEditable) {
       usernameRef.current.focus();
     }
@@ -120,12 +127,6 @@ function UserInfoPage() {
   useEffect(() => {
     setUsername(user.username);
   }, [user.username]);
-
-  useEffect(() => {
-    if (!getCookie(JWT_COOKIE_KEY)) {
-      navigator(ROUTES.ROOT, { replace: true });
-    }
-  }, [user.id]);
 
   useEffect(() => {
     return () => {

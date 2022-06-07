@@ -1,14 +1,13 @@
-import { Provider } from "react-redux";
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "@redux-devtools/extension";
-import ReduxThunk from "redux-thunk";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
 import { theme } from "style";
+
 import { ROUTES } from "constants";
 
-import rootReducer from "reducers/index";
+import { getUser } from "reducers/user";
 
 import Header from "components/layout/Header";
 import {
@@ -24,39 +23,50 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import UserInfoPage from "./pages/UserInfoPage";
 
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(ReduxThunk))
-);
-
 function App() {
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.isLogin);
+
+  useEffect(() => {
+    if (isLogin) {
+      dispatch(getUser());
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <Header />
-        <Main>
-          <Routes>
-            <Route path={ROUTES.ROOT} element={<ProductListPage />} />
-            <Route path={ROUTES.PRODUCT_LIST} element={<ProductListPage />} />
-            <Route
-              path={`${ROUTES.PRODUCT_DETAIL}/:id`}
-              element={<ProductDetailPage />}
-            />
-            <Route path={ROUTES.PRODUCT_CART} element={<ProductCartPage />} />
-            <Route
-              path={ROUTES.PRODUCT_ORDER_LIST}
-              element={<OrderListPage />}
-            />
-            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
-            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-            <Route path={ROUTES.USER_INFO} element={<UserInfoPage />} />
-            <Route
-              path="*"
-              element={<ErrorPage>잘못된 접근입니다.</ErrorPage>}
-            />
-          </Routes>
-        </Main>
-      </Provider>
+      <Header isLogin={isLogin} />
+      <Main>
+        <Routes>
+          <Route path={ROUTES.ROOT} element={<ProductListPage />} />
+          <Route path={ROUTES.PRODUCT_LIST} element={<ProductListPage />} />
+          <Route
+            path={`${ROUTES.PRODUCT_DETAIL}/:id`}
+            element={<ProductDetailPage />}
+          />
+          <Route
+            path={ROUTES.PRODUCT_CART}
+            element={<ProductCartPage isLogin={isLogin} />}
+          />
+          <Route
+            path={ROUTES.PRODUCT_ORDER_LIST}
+            element={<OrderListPage isLogin={isLogin} />}
+          />
+          <Route
+            path={ROUTES.REGISTER}
+            element={<RegisterPage isLogin={isLogin} />}
+          />
+          <Route
+            path={ROUTES.LOGIN}
+            element={<LoginPage isLogin={isLogin} />}
+          />
+          <Route
+            path={ROUTES.USER_INFO}
+            element={<UserInfoPage isLogin={isLogin} />}
+          />
+          <Route path="*" element={<ErrorPage>잘못된 접근입니다.</ErrorPage>} />
+        </Routes>
+      </Main>
     </ThemeProvider>
   );
 }
