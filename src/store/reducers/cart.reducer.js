@@ -1,3 +1,5 @@
+import { userActionType } from './user.reducer';
+
 const initialState = {
   cart: [],
   checkedProductList: [],
@@ -16,6 +18,10 @@ export const cartActionType = {
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
+    case userActionType.LOGOUT: {
+      return initialState;
+    }
+
     case cartActionType.START: {
       return {
         ...state,
