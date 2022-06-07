@@ -6,7 +6,6 @@ const GlobalStyle = createGlobalStyle<{ theme: typeof theme }>`
   ${reset}
 
   body {
-    font-family: 'Gowun Dodum', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 16px;

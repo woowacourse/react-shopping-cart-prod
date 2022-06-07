@@ -4,6 +4,7 @@ import PATH from 'constants/path';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
+import { snackBarActions } from 'redux/reducers/snackBar';
 import { createInputValueGetter } from 'utils/dom';
 
 const useLoginForm = () => {
@@ -24,6 +25,7 @@ const useLoginForm = () => {
     try {
       const userInfo = await authAPI.login(user);
 
+      dispatch(snackBarActions.show('로그인에 성공했습니다 😀'));
       dispatch(userActions.setUser(userInfo));
       navigate(PATH.BASE);
     } catch (error) {

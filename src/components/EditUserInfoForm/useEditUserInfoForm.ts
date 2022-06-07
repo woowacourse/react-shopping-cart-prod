@@ -4,6 +4,7 @@ import PATH from 'constants/path';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
+import { snackBarActions } from 'redux/reducers/snackBar';
 import { createInputValueGetter } from 'utils/dom';
 
 const useEditUserInfoForm = () => {
@@ -36,6 +37,7 @@ const useEditUserInfoForm = () => {
     try {
       const userInfo = await authAPI.editUserInfo(userInputInfo);
 
+      dispatch(snackBarActions.show('회원정보 수정에 성공했습니다 😀'));
       dispatch(userActions.setUser(userInfo));
       navigate(PATH.BASE);
     } catch (error) {

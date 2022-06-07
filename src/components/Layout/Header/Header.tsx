@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { userActions } from 'redux/actions';
+import { snackBarActions } from 'redux/reducers/snackBar';
 
 function Header() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function Header() {
   const userName = useSelector((state: { user: User }) => state.user.username);
 
   const onClickLogoutButton = () => {
+    dispatch(snackBarActions.show('로그아웃 되었습니다.'));
     dispatch(userActions.resetUser());
 
     sessionStorage.removeItem('accessToken');
