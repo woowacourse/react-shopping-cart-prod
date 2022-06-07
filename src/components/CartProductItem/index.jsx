@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
+import { 비동기_요청, 아이콘_코드, 알림_메시지 } from 'constants/';
+
 import IconButton from 'components/@common/IconButton';
 import CheckBox from 'components/@common/CheckBox';
 import Counter from 'components/@common/Counter';
@@ -11,7 +13,6 @@ import { snackbar } from 'actions/snackbar';
 
 import noImage from 'assets/no_image.png';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
-import { 비동기_요청, 아이콘_코드, 알림_메시지 } from 'constants/';
 import * as Styled from './styles';
 
 const CartProductItem = ({
@@ -24,7 +25,6 @@ const CartProductItem = ({
   handleChecked,
   handleItemCount,
 }) => {
-  console.log('productItem', quantity);
   const dispatch = useDispatch();
 
   const onClickDeleteButton = async () => {

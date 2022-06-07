@@ -5,9 +5,9 @@ const requestGetProduct = async (id) => requestAsync.get(`products/${id}`);
 
 const requestLogin = async (id, password) => requestAsync.post('login', { username: id, password });
 const requestUserInfo = async () => requestAsync.get('customers/me', true);
+
 const requestCheckDuplicatedId = async (id) =>
   requestAsync.get('customers/username/duplication', { username: id });
-
 const requestSignUp = async (formData) => {
   const res = await requestAsync.post('customers', formData);
   return res;

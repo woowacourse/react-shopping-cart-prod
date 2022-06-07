@@ -1,7 +1,8 @@
-import cart from 'reducers/cart';
 import { requestGetCartList } from 'api';
-import { 비동기_요청, 알림_메시지 } from 'constants/';
+
+import { 비동기_요청 } from 'constants/';
 import { 장바구니_불러오기_액션, 장바구니_액션 } from './types';
+
 import { hideSpinner, showSpinner } from './spinner';
 
 const setCartList = () => async (dispatch) => {

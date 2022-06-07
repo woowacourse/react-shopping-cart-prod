@@ -1,21 +1,19 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useCartItem } from 'hooks';
+
+import { 비동기_요청, 알림_메시지 } from 'constants/';
+import Button from 'components/@common/Button/styles';
 
 import { requestPostCartItem } from 'api';
 import { addCartList } from 'actions/cart';
 import { snackbar } from 'actions/snackbar';
 
-import { 비동기_요청, 알림_메시지 } from 'constants/';
 import noImage from 'assets/no_image.png';
-
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
-import Button from 'components/@common/Button/styles';
 import * as Styled from './styles';
 
 const DetailProductItem = ({ id, thumbnail, name, price }) => {
   const dispatch = useDispatch();
-  const cartList = useCartItem();
 
   const onClickAddCartButton = async () => {
     const accessToken = sessionStorage.getItem('accessToken');
