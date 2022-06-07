@@ -41,6 +41,7 @@ function Header({ isLoggedIn }) {
   const handleLogOut = () => {
     if (window.confirm(ALERT_MESSAGES.LOGOUT_CONFIRM)) {
       dispatch(logoutUser());
+      return;
     }
 
     navigate(ROUTE.HOME);
