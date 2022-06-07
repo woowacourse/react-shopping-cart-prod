@@ -5,21 +5,31 @@ import {
   DELETE_SPECIFIC_ITEM,
 } from 'redux/actions/orderList.action';
 
-const initialState = [];
+const initialState = {
+  total: 0,
+  items: [],
+};
 
 function orderList(state = initialState, action) {
   switch (action.type) {
-    case ADD_ALL_ITEM:
-      return action.payload.itemList.map(item => item.id);
-
+    case ADD_ALL_ITEM: {
+      console.log(action.payload);
+      return {
+        items: action.payload.itemList.map(item => item.id),
+        total: action.payload.itemList.reduce((acc, cur) => (acc += cur.price * cur.quantity), 0),
+      };
+    }
     case DELETE_ALL_ITEM:
-      return [];
+      return { items: [], total: 0 };
 
     case ADD_SPECIFIC_ITEM:
-      return [...state, action.payload.id];
+      return {
+        items: state.items.concat(action.payload.id),
+        total: action.payload.price * action.payload.quantity,
+      };
 
     case DELETE_SPECIFIC_ITEM:
-      return state.filter(id => id !== action.payload.id);
+      return { ...state, items: state.items.filter(id => id !== action.payload.id) };
 
     default:
       return state;

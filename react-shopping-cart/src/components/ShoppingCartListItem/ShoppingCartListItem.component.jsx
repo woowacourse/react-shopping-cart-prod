@@ -28,13 +28,17 @@ const CartItemContainer = styled(FlexBox).attrs({
 
 function ShoppingCartListItem({ id, name, thumbnail, price, quantity }) {
   const dispatch = useDispatch();
-  const orderList = useSelector(state => state.orderList);
-  const checked = useMemo(() => orderList.some(productId => productId === id), [orderList, id]);
+  const { items: storedProducts } = useSelector(state => state.orderList);
+  const checked = useMemo(
+    () => storedProducts.some(productId => productId === id),
+    [storedProducts, id]
+  );
 
   const handleChangeCheckBox = id => {
     const toggleItemAction = checked ? deleteSpecificItem : addSpecificItem;
+    const toggleActionData = checked ? id : { id, price, quantity };
 
-    dispatch(toggleItemAction(id));
+    dispatch(toggleItemAction(toggleActionData));
   };
 
   const itemDeleteConfirm = id => {

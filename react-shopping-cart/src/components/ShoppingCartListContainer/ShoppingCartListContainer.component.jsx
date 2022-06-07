@@ -22,9 +22,7 @@ const CartListBox = styled(FlexBox).attrs({
   width: 736px;
 `;
 
-function ShoppingCartListContainer({ data }) {
-  const carts = data.map(item => ({ quantity: item.quantity, ...item.product }));
-
+function ShoppingCartListContainer({ carts }) {
   return (
     <CartListBox>
       {Array.isArray(carts) && carts.length === 0 ? (

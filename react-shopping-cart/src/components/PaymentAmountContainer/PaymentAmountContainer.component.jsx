@@ -14,11 +14,8 @@ const PaymentAmountBox = styled(FlexBox).attrs({
   width: 448px;
 `;
 
-function PaymentAmountContainer({ count, data }) {
-  const shoppingCart = useSelector(state => state.shoppingCart);
-  const orderList = useSelector(state => state.orderList);
-
-  const price = calculatePrice(data, shoppingCart, orderList);
+function PaymentAmountContainer({ count }) {
+  const { total } = useSelector(state => state.orderList);
 
   return (
     <PaymentAmountBox as="article">
@@ -28,7 +25,7 @@ function PaymentAmountContainer({ count, data }) {
       <BorderBox padding="30px">
         <FlexBox justifyContent="space-between">
           <HighlightText>결제예상금액</HighlightText>
-          <HighlightText>{price.toLocaleString()}원</HighlightText>
+          <HighlightText>{total.toLocaleString()}원</HighlightText>
         </FlexBox>
         <Button width="100%" height="74px" mt="68px">
           주문하기({count}개)
