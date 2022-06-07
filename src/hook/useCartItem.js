@@ -18,8 +18,8 @@ export default function useCartItem() {
 
   const {fetch: deleteCart} = useFetch('delete');
 
-  const deleteCartItem = (payload) => {
-    const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
+  const deleteCartItem = (payload, confirmMessage = true) => {
+    const deleteConfirm = confirmMessage ? window.confirm(CONFIRM_MESSAGE.DELETE_CART) : true;
 
     if (deleteConfirm) {
       deleteCart({
@@ -70,8 +70,8 @@ export default function useCartItem() {
           headers: {Authorization: `Bearer ${accessToken}`},
           body: {productId: Number.parseInt(id)},
           onSuccess: () => {
-            dispatch({type: SELECTED_ITEM.DELETE, payload: id});
             dispatch({type: CART.DELETE_SELECTED_CART, payload});
+            dispatch({type: SELECTED_ITEM.DELETE, payload: id});
           },
         }),
       );
