@@ -54,18 +54,6 @@ export const addProductToCart = (args) => async (dispatch) => {
   }
 };
 
-export const getProductDetail = (id) => async (dispatch) => {
-  try {
-    dispatch(createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_START));
-    const productDetail = await axios.get(`${BASE_URL}/products/${id}`);
-    dispatch(
-      createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_SUCCESS, productDetail.data)
-    );
-  } catch (error) {
-    dispatch(createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_ERROR, error));
-  }
-};
-
 export const toggleCartItemCheckButton = (id) => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON, id));
 };
