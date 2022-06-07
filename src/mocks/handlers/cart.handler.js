@@ -47,6 +47,14 @@ export const handlePostShoppingCartRequest = (req, res, ctx) => {
   const currentShoppingCart = getCart();
   const { productId, quantity } = req.body;
   const cartProductIndex = findProductCartIndex(currentShoppingCart, productId);
+  const { stock } = findProductData(productId);
+
+  if (quantity > stock) {
+    return res(
+      ctx.status(400),
+      ctx.json({ message: ERROR_MESSAGES.EXCEED_QUANTITY(stock, quantity) }),
+    );
+  }
 
   if (cartProductIndex < 0) {
     const newProduct = { productId, quantity };
