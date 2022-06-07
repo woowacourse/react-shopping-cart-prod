@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import LabeledInput from 'components/@shared/LabeledInput';
 import useSignupForm from './useSignupForm';
+import REG_EXP from 'constants/regExp';
 
 function SignupForm() {
   const {
@@ -20,7 +21,7 @@ function SignupForm() {
         id="id"
         type="text"
         placeholder="아이디를 입력해주세요"
-        pattern={'^[a-z0-9_-]{5,20}$'}
+        pattern={REG_EXP.ID}
         required
       >
         아이디
@@ -31,9 +32,7 @@ function SignupForm() {
         placeholder="8~16자의 비밀번호(영문 소문자, 숫자, 특수문자)를 입력해주세요"
         value={password}
         onChange={handlePasswordInput}
-        pattern={
-          '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
-        }
+        pattern={REG_EXP.PASSWORD}
         required
       >
         비밀번호
@@ -55,9 +54,7 @@ function SignupForm() {
         placeholder="비밀번호를 재입력해주세요"
         value={passwordCheck}
         onChange={handlePasswordCheckInput}
-        pattern={
-          '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
-        }
+        pattern={REG_EXP.PASSWORD}
         required
       >
         비밀번호 재확인
@@ -67,7 +64,7 @@ function SignupForm() {
         id="email"
         type="email"
         placeholder="이메일을 입력해주세요"
-        pattern={'^[a-z0-9._-]+@[a-z]+[.]+[a-z]{2,3}$'}
+        pattern={REG_EXP.EMAIL}
         required
       >
         이메일
