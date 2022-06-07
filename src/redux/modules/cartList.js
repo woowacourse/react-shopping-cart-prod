@@ -47,11 +47,11 @@ export const addProductToCart = (args) => async (dispatch) => {
     );
     dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
   } catch (error) {
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
       return;
     }
-    if (error.response.status === 400) {
+    if (error.response?.status === 400) {
       dispatch(toggleSnackbarOpen("장바구니에 이미 추가된 상품입니다."));
       return;
     }
@@ -70,7 +70,7 @@ export const getCartList = () => async (dispatch) => {
     dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.products));
     console.log(response.data);
   } catch (error) {
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
       return;
     }
@@ -110,7 +110,7 @@ export const removeRowCartItem = (id) => async (dispatch) => {
     });
     dispatch(createAction(ACTION_TYPES.REMOVE_ROW_CART_ITEM, id));
   } catch (error) {
-    if (error.response.status === 401) {
+    if (error.response?.status === 401) {
       dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
       return;
     }
