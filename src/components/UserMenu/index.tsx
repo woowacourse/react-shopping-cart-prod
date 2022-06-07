@@ -1,12 +1,13 @@
-import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import useSnackbar from 'hooks/useSnackbar';
+
+import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
-import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import { authApiClient } from 'apis/apiClient';
-import { useDispatch } from 'react-redux';
 
 const UserMenu = ({ nickname }) => {
   const dispatch = useDispatch();

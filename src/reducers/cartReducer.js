@@ -6,7 +6,7 @@ const initState = {
   order: [],
 };
 
-function reducer(state = initState, action) {
+function cartReducer(state = initState, action) {
   switch (action.type) {
     case PRODUCT_LIST_ACTIONS.INITIALIZE:
       return {
@@ -76,4 +76,4 @@ function reducer(state = initState, action) {
   }
 }
 
-export default reducer;
+export default cartReducer;

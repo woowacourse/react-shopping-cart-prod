@@ -1,8 +1,10 @@
+import { useState } from 'react';
+import useSnackbar from 'hooks/useSnackbar';
+
 import { Modal, Input, Title, AuthButton, Container } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-import { useState } from 'react';
+
 import { validatePassword } from 'utils/validator';
-import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import { authApiClient } from 'apis/apiClient';
 

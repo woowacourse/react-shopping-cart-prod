@@ -1,5 +1,5 @@
-import Styled from './index.style';
 import { ReactNode } from 'react';
+import Styled from './index.style';
 
 interface ContainerProps {
   children: ReactNode;

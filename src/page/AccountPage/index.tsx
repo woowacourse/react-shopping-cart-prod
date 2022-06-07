@@ -1,18 +1,18 @@
 // @ts-nocheck
-import Styled from './index.style';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import useSnackbar from 'hooks/useSnackbar';
+
+import { PasswordEditModal, AccountDeleteModal } from 'page';
+import { Container, Input, Title, AuthButton } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
-import { Container, Input, Title, AuthButton } from 'components';
+import Styled from './index.style';
 
-import { useState, useEffect } from 'react';
 import { validateNickname } from 'utils/validator';
-import PasswordEditModal from './PasswordEditModal';
-import AccountDeleteModal from './AccountDeleteModal';
-import { doLogin } from 'actions/actionCreator';
-import { useNavigate } from 'react-router-dom';
-import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import { useSelector, useDispatch } from 'react-redux';
+import { doLogin } from 'actions/actionCreator';
 import { authApiClient } from 'apis/apiClient';
 
 const AccountPage = () => {

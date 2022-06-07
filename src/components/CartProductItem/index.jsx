@@ -1,17 +1,16 @@
 // @ts-nocheck
+import { useDispatch } from 'react-redux';
 import useProduct from 'hooks/useProduct';
+import useOrder from 'hooks/useOrder';
+import useSnackbar from 'hooks/useSnackbar';
 import PropTypes from 'prop-types';
 
 import { Image, Counter, CheckBox } from 'components';
+import Styled from 'components/CartProductItem/index.style';
 
 import { doPutProductToCart, doDeleteProductFromCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
-import Styled from 'components/CartProductItem/index.style';
-import useOrder from 'hooks/useOrder';
-import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import { productApiClient } from 'apis/apiClient';
-import { useDispatch } from 'react-redux';
 
 const CartProductItem = ({ id, quantity }) => {
   const dispatch = useDispatch();

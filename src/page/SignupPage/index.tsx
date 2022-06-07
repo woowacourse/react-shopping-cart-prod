@@ -1,16 +1,17 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
-import Styled from './index.style';
+import { useNavigate } from 'react-router-dom';
+import useSnackbar from 'hooks/useSnackbar';
+import { useSelector } from 'react-redux';
+
 import { Input, Title, GuideText, AuthButton, Container, Logo } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
-import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
-import { useNavigate } from 'react-router-dom';
-import useSnackbar from 'hooks/useSnackbar';
-import { MESSAGE } from 'utils/constants';
+import Styled from './index.style';
 
-import { useSelector } from 'react-redux';
+import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
+import { MESSAGE } from 'utils/constants';
 import { authApiClient } from 'apis/apiClient';
 
 const SignupPage = () => {

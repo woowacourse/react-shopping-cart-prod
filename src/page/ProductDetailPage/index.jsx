@@ -1,17 +1,16 @@
 // @ts-nocheck
 import { useNavigate, useParams } from 'react-router-dom';
-
-import { Image } from 'components';
-
-import { doPutProductToCart } from 'actions/actionCreator';
-import autoComma from 'utils/autoComma';
-import { LINK, MESSAGE } from 'utils/constants';
-import Styled from 'page/ProductDetailPage/index.style';
+import { useSelector, useDispatch } from 'react-redux';
 import useProduct from 'hooks/useProduct';
 import useCart from 'hooks/useCart';
-
 import useSnackbar from 'hooks/useSnackbar';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { Image } from 'components';
+import Styled from 'page/ProductDetailPage/index.style';
+
+import autoComma from 'utils/autoComma';
+import { LINK, MESSAGE } from 'utils/constants';
+import { doPutProductToCart } from 'actions/actionCreator';
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();

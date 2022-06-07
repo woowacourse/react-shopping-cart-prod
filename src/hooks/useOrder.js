@@ -4,7 +4,7 @@ import { doDeleteProductFromOrder, doAddProductToOrder } from 'actions/actionCre
 
 const useOrder = id => {
   const dispatch = useDispatch();
-  const { order } = useSelector(state => state.reducer);
+  const { order } = useSelector(state => state.cartReducer);
   const [isInOrder, setIsInOrder] = useState(order.some(productId => productId === id));
 
   useEffect(() => {

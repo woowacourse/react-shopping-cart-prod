@@ -1,6 +1,7 @@
-import CloseButton from 'components/CloseButton';
 import { PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
+
+import { CloseButton } from 'components';
 import Styled from './index.style';
 
 interface Props {

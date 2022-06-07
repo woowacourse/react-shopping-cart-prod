@@ -1,8 +1,12 @@
 // @ts-nocheck
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
+import empty from 'assets/empty.jpeg';
+import Styled from 'page/CartPage/index.style';
 
 import {
   doAddProductToOrder,
@@ -11,10 +15,6 @@ import {
   doInitializeOrder,
   doSelectiveDeleteFromCart,
 } from 'actions/actionCreator';
-import empty from 'assets/empty.jpeg';
-import Styled from 'page/CartPage/index.style';
-import { useNavigate } from 'react-router-dom';
-import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import { productApiClient } from 'apis/apiClient';
 
@@ -24,7 +24,7 @@ const CartPage = () => {
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
-  const { products, shoppingCart, order } = useSelector(state => state.reducer);
+  const { products, shoppingCart, order } = useSelector(state => state.cartReducer);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const calculateTotalPrice = useCallback(() => {

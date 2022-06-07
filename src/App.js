@@ -1,6 +1,9 @@
 // @ts-nocheck
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
+import useSnackbar from 'hooks/useSnackbar';
 
 import {
   ProductListPage,
@@ -13,14 +16,10 @@ import {
 } from 'page';
 import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 
-import { MESSAGE, ROUTES } from 'utils/constants';
-import { useEffect } from 'react';
-import { deleteCookie, getCookie } from 'utils/cookie';
 import { doLogin, doLogout } from 'actions/actionCreator';
-import { useSelector } from 'react-redux';
-import useSnackbar from 'hooks/useSnackbar';
+import { MESSAGE, ROUTES } from 'utils/constants';
+import { deleteCookie, getCookie } from 'utils/cookie';
 import { authApiClient } from 'apis/apiClient';
-import { useDispatch } from 'react-redux';
 
 function App() {
   const dispatch = useDispatch();

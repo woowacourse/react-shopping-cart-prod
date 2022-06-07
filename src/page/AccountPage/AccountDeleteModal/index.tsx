@@ -1,17 +1,16 @@
-import { Modal, Container, Input, Title, AuthButton } from 'components';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import useSnackbar from 'hooks/useSnackbar';
 
+import { Modal, Container, Input, Title, AuthButton } from 'components';
+import Styled from './index.style';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import { useState, useEffect } from 'react';
-
-import Styled from './index.style';
-import { deleteCookie } from 'utils/cookie';
-import useSnackbar from 'hooks/useSnackbar';
-import { MESSAGE } from 'utils/constants';
 import { doInitializeCartList, doLogout } from 'actions/actionCreator';
-import { useNavigate } from 'react-router-dom';
+import { deleteCookie } from 'utils/cookie';
+import { MESSAGE } from 'utils/constants';
 import { authApiClient } from 'apis/apiClient';
-import { useDispatch } from 'react-redux';
 
 const AccountDeleteModal = ({ handleModal }) => {
   const dispatch = useDispatch();

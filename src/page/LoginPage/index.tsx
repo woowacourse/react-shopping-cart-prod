@@ -1,19 +1,17 @@
 // @ts-nocheck
-import Styled from './index.style';
+import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import useSnackbar from 'hooks/useSnackbar';
+
 import { Container, Input, Title, GuideText, AuthButton, Logo } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-
-import { useState, useEffect } from 'react';
+import Styled from './index.style';
 
 import { setCookie } from 'utils/cookie';
-
-import { useLocation, useNavigate } from 'react-router-dom';
 import { doLogin } from 'actions/actionCreator';
-import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-
-import { useSelector, useDispatch } from 'react-redux';
 import { authApiClient } from 'apis/apiClient';
 
 const LoginPage = () => {

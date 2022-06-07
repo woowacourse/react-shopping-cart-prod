@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
 const useProduct = id => {
-  const { products } = useSelector(state => state.reducer);
+  const { products } = useSelector(state => state.cartReducer);
 
   const product = products.find(product => product.id === id);
 

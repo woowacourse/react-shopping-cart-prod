@@ -3,16 +3,14 @@ import { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { ProductItem } from 'components';
+import Styled from './index.style';
 
 import { doInitializeProductList } from 'actions/actionCreator';
-
-import Styled from 'page/ProductListPage/index.style';
 import { productApiClient } from 'apis/apiClient';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector(state => state.reducer);
-
+  const { products } = useSelector(state => state.cartReducer);
   // TODO  [API] 상품 목록 가져오기(GET)
   const getProducts = useCallback(async () => {
     if (products.length > 0) return; // 서버에서 상품 목록 갱신될 수 있으므로 매번 상품 목록 가져오는 것이 적절할 것으로 생각됨. 따라서 이 라인의 코드는 삭제 검토 필요
@@ -20,7 +18,7 @@ const ProductListPage = () => {
     const response = await productApiClient.get('/products');
 
     dispatch(doInitializeProductList({ products: response.data }));
-  }, [products]);
+  }, [dispatch, products.length]);
 
   useEffect(() => {
     getProducts();

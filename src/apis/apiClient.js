@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCookie } from '../utils/cookie';
+import { getCookie } from 'utils/cookie';
 
 const { REACT_APP_AUTH_API_URL } = process.env;
 const { REACT_APP_PRODUCT_API_URL } = process.env;

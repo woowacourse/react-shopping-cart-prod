@@ -5,9 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
+import store from 'store';
 import { ProductListPage } from 'page';
 import { theme } from 'components';
-import store from 'store';
+
 import { dummyProductList } from 'dummy_data';
 
 const render = ui => {

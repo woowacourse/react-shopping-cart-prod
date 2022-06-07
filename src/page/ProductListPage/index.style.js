@@ -9,7 +9,6 @@ const Styled = {
     height: 100%;
     display: flex;
     justify-content: center;
-
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
       display: none;
