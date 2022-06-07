@@ -1,24 +1,15 @@
 import { Outlet } from 'react-router-dom';
 import Header from 'components/Common/Header/Header';
-import { getUserApi } from 'api/auth';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserInfo } from 'reducers/user/user.actions';
+import { useAuth } from 'hooks/useAuth';
 
 const Layout = () => {
-  const dispatch = useDispatch();
-  const { authenticated } = useSelector((state) => state.user);
+  const { getUserApi } = useAuth();
 
   useEffect(() => {
-    if (!authenticated) return;
-
-    async function getUserInfo() {
-      const userInfo = await getUserApi();
-      dispatch(setUserInfo({ ...userInfo }));
-    }
-
-    getUserInfo();
-  }, [authenticated]);
+    // TODO 새로고침 시, 인증인가 로직 수정 할 것
+    getUserApi();
+  }, []);
 
   return (
     <div>

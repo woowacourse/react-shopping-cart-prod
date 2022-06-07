@@ -10,18 +10,16 @@ import Form from 'components/Common/Form/Form';
 
 import { showSnackBar } from 'reducers/ui/ui.actions';
 import useInputValidate from 'hooks/useInputValidate';
-import { useNavigate } from 'react-router-dom';
-import { duplicateEmailApi, signUpApi } from 'api/auth';
 
-import { PATH_NAME } from 'constants';
 import * as Styled from './style';
 import { EMAIL_REGEX } from 'constants';
 import { NAME_REGEX } from 'constants';
 import { PASSWORD_REGEX } from 'constants';
+import { useAuth } from 'hooks/useAuth';
 
 const SignUp = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { signUpApi, duplicateEmailApi } = useAuth();
   const pwd = useRef(null);
 
   const {
@@ -85,20 +83,7 @@ const SignUp = () => {
       password: { value: password },
     } = e.target.elements;
 
-    signUpApi({
-      email,
-      name,
-      password,
-    })
-      .then(() => {
-        navigate(PATH_NAME.LOGIN);
-        dispatch(showSnackBar({ type: 'SUCCESS', text: '회원가입 성공' }));
-      })
-      .catch(() => {
-        dispatch(
-          showSnackBar({ type: 'ERROR', text: '입력한 정보를 확인 하세요.' }),
-        );
-      });
+    signUpApi({ email, name, password });
   };
 
   return (

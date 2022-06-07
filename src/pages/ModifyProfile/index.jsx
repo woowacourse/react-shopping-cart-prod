@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Profile from 'components/User/Profile/Profile';
 import Title from 'components/Common/Title/Title';
@@ -11,17 +10,14 @@ import Input from 'components/Common/Input/Input';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
 
-import { updatePasswordApi, unRegisterApi } from 'api/auth';
-import { showSnackBar } from 'reducers/ui/ui.actions';
 import useInputValidate from 'hooks/useInputValidate';
-import { PATH_NAME } from 'constants';
 import PropTypes from 'prop-types';
 import * as Styled from './style';
 import { PASSWORD_REGEX } from 'constants';
+import { useAuth } from 'hooks/useAuth';
 
 const ModifyProfile = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { updatePasswordApi, unRegisterApi } = useAuth();
   const { name } = useSelector((state) => state.user);
   const [openChangePassworModal, setOpenChangePasswordModal] = useState(false);
   const [openWithdrawalModal, setOpenWithdrawalModal] = useState(false);
@@ -40,46 +36,22 @@ const ModifyProfile = () => {
     updatePasswordApi({
       oldPassword,
       newPassword: password,
-    })
-      .then(() => {
-        setOpenChangePasswordModal(false);
-        dispatch(
-          showSnackBar({
-            type: 'SUCCESS',
-            text: '비밀번호가 성공적으로 변경되었습니다.',
-          }),
-        );
-      })
-      .catch(() => {
-        dispatch(
-          showSnackBar({
-            type: 'ERROR',
-            text: '비밀번호를 올바르게 입력하세요.',
-          }),
-        );
-      });
+    }).then(() => {
+      setOpenChangePasswordModal(false);
+    });
   };
 
   const handleSubmitWithdrawal = (e) => {
     e.preventDefault();
 
-    const {
-      password: { value: password },
-    } = e.target.elements;
+    // TODO 비밀번호 타이핑 하는 거 말고 다른 방식으로 바꿀 것!
+    // const {
+    //   password: { value: password },
+    // } = e.target.elements;
 
-    unRegisterApi(password)
-      .then(() => {
-        setOpenWithdrawalModal(false);
-        navigate(PATH_NAME.HOME);
-      })
-      .catch(() => {
-        dispatch(
-          showSnackBar({
-            type: 'ERROR',
-            text: '비밀번호를 올바르게 입력하세요.',
-          }),
-        );
-      });
+    unRegisterApi().then(() => {
+      setOpenWithdrawalModal(false);
+    });
   };
 
   return (
