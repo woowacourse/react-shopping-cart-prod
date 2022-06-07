@@ -1,9 +1,9 @@
 export type CartItem = {
+  id: number;
+  imageUrl: string;
   name: string;
   price: number;
-  img: string;
-  id: number;
-  amount: number;
+  quantity: number;
   isSelected: boolean;
 };
 export type CartState = { items: CartItem[] };
@@ -18,12 +18,10 @@ type Action =
   | ReturnType<typeof decrement>
   | ReturnType<typeof incrementByNumber>;
 
-// initialState
 const initialState: CartState = {
   items: [],
 };
 
-// 액션
 const ADD = 'cart/ADD' as const;
 const DELETE = 'cart/DELETE' as const;
 const DELETE_BY_SELECTED = 'cart/DELETE_BY_SELECTED' as const;
@@ -33,7 +31,6 @@ const INCREMENT = 'cart/INCREMENT' as const;
 const DECREMENT = 'cart/DECREMENT' as const;
 const INCREMENT_BY_NUMBER = 'cart/INCREMENT_BY_NUMBER' as const;
 
-// 액션 크리에터
 const addItem = (item: CartItem) => ({
   type: ADD,
   payload: { item },
@@ -66,7 +63,6 @@ const incrementByNumber = (id: number, number: number) => ({
   payload: { id, number },
 });
 
-// 리듀서
 const cartReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ADD: {
@@ -107,7 +103,7 @@ const cartReducer = (state = initialState, action: Action) => {
       const { id } = action.payload;
       const targetIndex = state.items.findIndex((item) => item.id === id);
       const newItems = [...state.items];
-      newItems[targetIndex].amount++;
+      newItems[targetIndex].quantity++;
 
       return { ...state, items: newItems };
     }
@@ -115,7 +111,7 @@ const cartReducer = (state = initialState, action: Action) => {
       const { id } = action.payload;
       const targetIndex = state.items.findIndex((item) => item.id === id);
       const newItems = [...state.items];
-      newItems[targetIndex].amount--;
+      newItems[targetIndex].quantity--;
 
       return { ...state, items: newItems };
     }
@@ -123,7 +119,7 @@ const cartReducer = (state = initialState, action: Action) => {
       const { id, number } = action.payload;
       const targetIndex = state.items.findIndex((item) => item.id === id);
       const newItems = [...state.items];
-      newItems[targetIndex].amount += number;
+      newItems[targetIndex].quantity += number;
 
       return { ...state, items: newItems };
     }

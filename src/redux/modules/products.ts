@@ -2,10 +2,10 @@ import { AppDispatch, RootState } from '@/redux/store';
 import axios from 'axios';
 
 type Product = {
+  id: number;
+  imageUrl: string;
   name: string;
   price: number;
-  img: string;
-  id: number;
 };
 
 export type ProductState = {
@@ -19,19 +19,16 @@ export type Action =
   | ReturnType<typeof loadProductsSuccess>
   | ReturnType<typeof loadProductsFailed>;
 
-// initialState
 const initialState: ProductState = {
   loading: false,
   productList: [],
   error: null,
 };
 
-// 액션
 const LOAD_PRODUCTS = 'product/LOAD' as const;
 const LOAD_PRODUCTS_SUCCESS = 'product/LOAD_SUCCESS' as const;
 const LOAD_PRODUCTS_FAILED = 'product/LOAD_FAILED' as const;
 
-// 액션 크리에터
 const loadProducts = () => ({ type: LOAD_PRODUCTS });
 const loadProductsSuccess = (productList: Product[]) => ({
   type: LOAD_PRODUCTS_SUCCESS,
@@ -42,7 +39,6 @@ const loadProductsFailed = (error: Error) => ({
   payload: { error },
 });
 
-// thunk
 export const loadProductsAPI = (): any => async (dispatch: AppDispatch) => {
   dispatch(loadProducts());
   try {
@@ -55,7 +51,6 @@ export const loadProductsAPI = (): any => async (dispatch: AppDispatch) => {
   }
 };
 
-// 리듀서
 const productsReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case LOAD_PRODUCTS: {

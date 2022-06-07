@@ -23,16 +23,16 @@ import { INFO_MESSAGES, CART, PRODUCT } from '@/constants';
 import cart from '@/assets/cart.svg';
 
 export type ProductType = {
+  id: number;
+  imageUrl: string;
   name: string;
   price: number;
-  img: string;
-  id: number;
 };
 interface ProductProps {
   productInfo: ProductType;
 }
 
-function Product({ productInfo: { name, price, img, id } }: ProductProps) {
+function Product({ productInfo: { id, imageUrl, name, price } }: ProductProps) {
   const [isShowCartCounter, setIsShowCartCounter] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,8 +42,9 @@ function Product({ productInfo: { name, price, img, id } }: ProductProps) {
 
   const onClickCartImage = () => {
     setIsShowCartCounter((prev) => !prev);
+
     if (!cartItemList.some((item) => item.id === id)) {
-      const newItem = { name, price, img, id, amount: 1, isSelected: false };
+      const newItem = { id, imageUrl, name, price, quantity: 1, isSelected: false };
 
       dispatch(addItem(newItem));
       dispatch(show(INFO_MESSAGES.ADDED_TO_CART));
@@ -55,12 +56,14 @@ function Product({ productInfo: { name, price, img, id } }: ProductProps) {
       clearTimeout(timeout.current);
     }
 
-    if (cartItem?.amount === PRODUCT.MIN_COUNT) {
+    if (cartItem?.quantity === PRODUCT.MIN_COUNT) {
       dispatch(deleteItem(id));
       setIsShowCartCounter(false);
       dispatch(show(INFO_MESSAGES.DELETED_FROM_CART));
+
       return;
     }
+
     dispatch(decrement(id));
   };
 
@@ -71,9 +74,11 @@ function Product({ productInfo: { name, price, img, id } }: ProductProps) {
 
     if (cartItem) {
       dispatch(increment(id));
+
       return;
     }
-    dispatch(addItem({ name, price, img, id, amount: 1, isSelected: false }));
+
+    dispatch(addItem({ name, price, imageUrl, id, quantity: 1, isSelected: false }));
   };
 
   useEffect(() => {
@@ -82,12 +87,12 @@ function Product({ productInfo: { name, price, img, id } }: ProductProps) {
         setIsShowCartCounter(false);
       }, CART.COUNTER_DISPLAY_TIME);
     }
-  }, [isShowCartCounter, cartItem?.amount]);
+  }, [isShowCartCounter, cartItem?.quantity]);
 
   return (
     <ProductContainer>
       <ProductImageWrapper>
-        <img onClick={() => navigate(routes.productDetail(id))} src={img} alt={name} />
+        <img onClick={() => navigate(routes.productDetail(id))} src={imageUrl} alt={name} />
       </ProductImageWrapper>
       <ProductInfoContainer>
         <ProductInfo onClick={() => navigate(routes.productDetail(id))}>
@@ -95,12 +100,12 @@ function Product({ productInfo: { name, price, img, id } }: ProductProps) {
           <span>{price.toLocaleString()}원</span>
         </ProductInfo>
         <CartImageWrapper>
-          {cartItem?.amount && <CartImageBadge />}
+          {cartItem?.quantity && <CartImageBadge />}
           <img onClick={onClickCartImage} src={cart} alt="장바구니" />
         </CartImageWrapper>
         <CartCounter isShowCartCounter={isShowCartCounter}>
           <button onClick={onClickDecreaseCounter}>-</button>
-          <span>{cartItem?.amount ?? 0}</span>
+          <span>{cartItem?.quantity ?? 0}</span>
           <button onClick={onClickIncreaseCounter}>+</button>
         </CartCounter>
       </ProductInfoContainer>
