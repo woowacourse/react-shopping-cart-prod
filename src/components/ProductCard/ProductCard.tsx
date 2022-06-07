@@ -28,17 +28,13 @@ function ProductCard({ product, isInCart }: Props) {
   };
 
   return (
-    <Link to={`${PATH.PRODUCT}/${id}`} disabled={stock <= 0}>
+    <Link to={`${PATH.PRODUCT}/${id}`}>
       <StyledProductCard>
         <CardImageContainer>
-          {stock > 0 ? (
-            <CardImageOverlay>
-              <p>{description}</p>
-              <div onClick={onClickCartButton}>구매하기</div>
-            </CardImageOverlay>
-          ) : (
-            <OutOfStockOverlay>품절</OutOfStockOverlay>
-          )}
+          <CardImageOverlay>
+            <p>{description}</p>
+            <div onClick={onClickCartButton}>구매하기</div>
+          </CardImageOverlay>
           <img src={image} alt={name} />
         </CardImageContainer>
         <CardDescriptionContainer>
