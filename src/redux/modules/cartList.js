@@ -1,6 +1,9 @@
 import createAction from "@/redux/createAction";
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import { MESSAGE } from "@/constants";
+import { getCookie } from "@/utils/cookie";
+import axios from "axios";
+import { BASE_URL } from "@/constants";
 
 export const ACTION_TYPES = {
   ADD_PRODUCT_TO_CART: "ADD_PRODUCT_TO_CART",
@@ -16,6 +19,22 @@ export const ACTION_TYPES = {
 export const addProductToCart = (args) => async (dispatch) => {
   const { id, name, price, imgUrl } = args;
   try {
+    if (!getCookie("accessToken")) {
+      throw new Error("장바구니에 상품을 추가하려면 로그인해주세요.");
+    }
+
+    await axios.post(
+      `${BASE_URL}/users/me/carts`,
+      {
+        productId: id,
+      },
+      {
+        headers: {
+          Authorization:
+            getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+        },
+      }
+    );
     dispatch(
       createAction(ACTION_TYPES.ADD_PRODUCT_TO_CART, {
         id,
@@ -26,9 +45,27 @@ export const addProductToCart = (args) => async (dispatch) => {
     );
     dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
   } catch (error) {
-    dispatch(toggleSnackbarOpen(error));
+    const { errorCode } = error.response.data;
+    if (errorCode === "1101") {
+      dispatch(toggleSnackbarOpen("장바구니에 이미 추가된 물품입니다."));
+      return;
+    }
+    dispatch(toggleSnackbarOpen(error.message));
   }
 };
+
+export const getProductDetail = (id) => async (dispatch) => {
+  try {
+    dispatch(createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_START));
+    const productDetail = await axios.get(`${BASE_URL}/products/${id}`);
+    dispatch(
+      createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_SUCCESS, productDetail.data)
+    );
+  } catch (error) {
+    dispatch(createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_ERROR, error));
+  }
+};
+
 export const toggleCartItemCheckButton = (id) => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON, id));
 };
