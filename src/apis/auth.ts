@@ -1,9 +1,9 @@
 import PATH from 'constants/path';
 import { User } from 'types/index';
-import { axios } from 'configs/api';
-import { getAccessToken } from 'utils/auth';
+import { axios, axiosWithToken } from 'configs/api';
 
 const authAPI = {
+<<<<<<< HEAD
   login: async function (user: User, isKeepLogin: boolean) {
     try {
       const {
@@ -15,58 +15,38 @@ const authAPI = {
       } else {
         sessionStorage.setItem('accessToken', accessToken);
       }
+=======
+  login: async function (user: User) {
+    const {
+      data: { accessToken },
+    } = await axios.post(PATH.REQUEST_AUTH_TOKEN, user);
 
-      return this.getUserInfo(accessToken);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+    sessionStorage.setItem('accessToken', accessToken);
+>>>>>>> 83ec576 (refactor: axios interceptors 적용)
+
+    return this.getUserInfo();
   },
 
-  getUserInfo: async function (accessToken = getAccessToken()) {
-    try {
-      const { data } = await axios.get(PATH.REQUEST_CUSTOMER_ME, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+  getUserInfo: async function () {
+    const { data } = await axiosWithToken.get(PATH.REQUEST_CUSTOMER_ME);
 
-      return data;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+    return data;
   },
 
   signup: async function (user: User) {
-    try {
-      await axios.post(PATH.REQUEST_CUSTOMER, user);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+    await axios.post(PATH.REQUEST_CUSTOMER, user);
   },
 
   editUserInfo: async function (user: User) {
-    const accessToken = getAccessToken();
+    await axiosWithToken.put(PATH.REQUEST_CUSTOMER_ME, user);
 
-    try {
-      await axios.put(PATH.REQUEST_CUSTOMER_ME, user, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-
-      return this.getUserInfo(accessToken);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+    return this.getUserInfo();
   },
 
   deleteUser: async function () {
-    const accessToken = getAccessToken();
+    await axiosWithToken.delete(PATH.REQUEST_CUSTOMER_ME);
 
+<<<<<<< HEAD
     try {
       await axios.delete(PATH.REQUEST_CUSTOMER_ME, {
         headers: { Authorization: `Bearer ${accessToken}` },
@@ -79,6 +59,9 @@ const authAPI = {
         throw error;
       }
     }
+=======
+    sessionStorage.removeItem('accessToken');
+>>>>>>> 83ec576 (refactor: axios interceptors 적용)
   },
 };
 
