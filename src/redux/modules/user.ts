@@ -1,4 +1,4 @@
-import axios from 'axios';
+import apiClient from 'api';
 import { AppDispatch, RootState } from 'redux/store';
 import { deleteCookie, getCookie, setCookie } from 'utils';
 
@@ -94,12 +94,14 @@ const loadUserAPI = (): any => async (dispatch: AppDispatch) => {
 
   dispatch(loadUserRequest());
   try {
-    const { data: userName } = await axios.get('/api/customers/me', {
+    const {
+      data: { name },
+    } = await apiClient.get('/api/customers/me', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    dispatch(loadUserSuccess(userName));
+    dispatch(loadUserSuccess(name));
   } catch (error: unknown) {
     if (error instanceof Error) {
       dispatch(loadUserFailure(error));
@@ -112,9 +114,11 @@ const loginAPI =
   async (dispatch: AppDispatch) => {
     dispatch(loginRequest());
     try {
-      const { data } = await axios.post('/api/login', { userName, password });
+      const {
+        data: { accessToken },
+      } = await apiClient.post('/api/login', { userName, password });
 
-      setCookie('accessToken', data);
+      setCookie('accessToken', accessToken);
       dispatch(loginSuccess());
       onSuccess?.();
     } catch (error: unknown) {
@@ -127,7 +131,7 @@ const loginAPI =
 const deleteUserAPI = (): any => async (dispatch: AppDispatch) => {
   dispatch(deleteUserRequest());
   try {
-    await axios.delete('/api/customers/me', {
+    await apiClient.delete('/api/customers/me', {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
       },
@@ -148,9 +152,9 @@ const changePasswordAPI =
     dispatch(changePasswordRequest());
     const { userName } = getState().user;
     try {
-      await axios.put(
+      await apiClient.put(
         '/api/customers/me',
-        { userName, password },
+        { name: userName, password },
         {
           headers: {
             Authorization: `Bearer ${getCookie('accessToken')}`,
@@ -171,7 +175,7 @@ const signupAPI =
   async (dispatch: AppDispatch) => {
     dispatch(signupRequest());
     try {
-      await axios.post('/api/customers', { userName, password });
+      await apiClient.post('/api/customers', { name: userName, password });
       dispatch(signupSuccess());
       onSuccess?.();
     } catch (error) {

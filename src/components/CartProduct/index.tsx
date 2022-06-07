@@ -18,7 +18,9 @@ interface CartProductProps {
   item: CartItem;
 }
 
-function CartProduct({ item: { id, img, name, price, amount, isSelected } }: CartProductProps) {
+function CartProduct({
+  item: { id, imageUrl, name, price, amount, isSelected },
+}: CartProductProps) {
   const dispatch = useDispatch();
 
   const onToggleSelect = () => {
@@ -44,7 +46,7 @@ function CartProduct({ item: { id, img, name, price, amount, isSelected } }: Car
     <CartProductContainer>
       <CheckBox checked={isSelected} onChange={onToggleSelect} />
       <ProductImageContainer>
-        <img src={img} alt={name} />
+        <img src={imageUrl} alt={name} />
         <span>{name}</span>
       </ProductImageContainer>
       <ProductOptionContainer>

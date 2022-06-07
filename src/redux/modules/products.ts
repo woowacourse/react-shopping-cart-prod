@@ -1,10 +1,10 @@
-import axios from 'axios';
+import apiClient from 'api';
 import { AppDispatch, RootState } from '../store';
 
 type Product = {
   name: string;
   price: number;
-  img: string;
+  imageUrl: string;
   id: number;
 };
 
@@ -42,7 +42,7 @@ const loadProductsFailure = (error: Error) => ({
 export const loadProductsAPI = (): any => async (dispatch: AppDispatch) => {
   dispatch(loadProductsRequest());
   try {
-    const { data: productList } = await axios.get(`${process.env.REACT_APP_API_URL}`);
+    const { data: productList } = await apiClient.get('/api/products');
     dispatch(loadProductsSuccess(productList));
   } catch (error: unknown) {
     if (error instanceof Error) {

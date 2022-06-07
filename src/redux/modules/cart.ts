@@ -1,7 +1,7 @@
 export type CartItem = {
   name: string;
   price: number;
-  img: string;
+  imageUrl: string;
   id: number;
   amount: number;
   isSelected: boolean;

@@ -22,14 +22,14 @@ import {
 export type ProductType = {
   name: string;
   price: number;
-  img: string;
+  imageUrl: string;
   id: number;
 };
 interface ProductProps {
   productInfo: ProductType;
 }
 
-function Product({ productInfo: { name, price, img, id } }: ProductProps) {
+function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
   const [isShowCartCounter, setIsShowCartCounter] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ function Product({ productInfo: { name, price, img, id } }: ProductProps) {
   const onClickCartImage = () => {
     setIsShowCartCounter((prev) => !prev);
     if (!cartItemList.some((item) => item.id === id)) {
-      const newItem = { name, price, img, id, amount: 1, isSelected: false };
+      const newItem = { name, price, imageUrl, id, amount: 1, isSelected: false };
 
       dispatch(addItem(newItem));
       dispatch(show(INFO_MESSAGES.ADDED_TO_CART));
@@ -70,7 +70,7 @@ function Product({ productInfo: { name, price, img, id } }: ProductProps) {
       dispatch(increment(id));
       return;
     }
-    dispatch(addItem({ name, price, img, id, amount: 1, isSelected: false }));
+    dispatch(addItem({ name, price, imageUrl, id, amount: 1, isSelected: false }));
   };
 
   useEffect(() => {
@@ -84,7 +84,7 @@ function Product({ productInfo: { name, price, img, id } }: ProductProps) {
   return (
     <ProductContainer>
       <ProductImageWrapper>
-        <img onClick={() => navigate(routes.productDetail(id))} src={img} alt={name} />
+        <img onClick={() => navigate(routes.productDetail(id))} src={imageUrl} alt={name} />
       </ProductImageWrapper>
       <ProductInfoContainer>
         <ProductInfo onClick={() => navigate(routes.productDetail(id))}>

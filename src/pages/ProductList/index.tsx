@@ -13,7 +13,7 @@ function ProductList() {
 
   useEffect(() => {
     dispatch(loadProductsAPI());
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
     if (error) {

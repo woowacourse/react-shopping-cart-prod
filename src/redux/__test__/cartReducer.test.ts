@@ -16,7 +16,8 @@ describe('장바구니 리듀서 테스트', () => {
     {
       name: '올인원 세트-물티수저',
       price: 50000,
-      img: 'https://user-images.githubusercontent.com/48676844/167996022-3b18c5ac-bedd-46ae-8356-aab0981a017d.jpeg',
+      imageUrl:
+        'https://user-images.githubusercontent.com/48676844/167996022-3b18c5ac-bedd-46ae-8356-aab0981a017d.jpeg',
       id: 0,
       amount: 1,
       isSelected: false,
@@ -24,7 +25,8 @@ describe('장바구니 리듀서 테스트', () => {
     {
       name: '수저젓가락 세트(딱!편해)',
       price: 50000,
-      img: 'https://cdn-mart.baemin.com/sellergoods/main/3d08d94f-2c0a-42f0-b517-6a0af7703b0b.jpg',
+      imageUrl:
+        'https://cdn-mart.baemin.com/sellergoods/main/3d08d94f-2c0a-42f0-b517-6a0af7703b0b.jpg',
       id: 1,
       amount: 2,
       isSelected: true,
