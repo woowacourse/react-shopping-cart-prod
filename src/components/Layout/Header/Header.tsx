@@ -16,16 +16,13 @@ function Header() {
   const dispatch = useDispatch();
 
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+    (state: { cart: CartStoreState }) => state.cart.cart
   );
   const userName = useSelector((state: { user: User }) => state.user.username);
-
-  const [showUserToggle, setShowUserToggle] = useState(false);
 
   const onClickLogoutButton = () => {
     dispatch(userActions.resetUser());
 
-    localStorage.removeItem('accessToken');
     sessionStorage.removeItem('accessToken');
 
     navigate(PATH.BASE);
