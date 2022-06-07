@@ -23,10 +23,10 @@ function Header() {
     <HeaderContainer>
       <Title />
       <NavButtonContainer>
-        <NavButton linkTo={ROUTES.PRODUCT_CART}>장바구니</NavButton>
-        <NavButton linkTo={ROUTES.PRODUCT_ORDER_LIST}>주문목록</NavButton>
         {accessToken ? (
           <>
+            <NavButton linkTo={ROUTES.PRODUCT_CART}>장바구니</NavButton>
+            <NavButton linkTo={ROUTES.PRODUCT_ORDER_LIST}>주문목록</NavButton>
             <NavButton linkTo={ROUTES.USER_INFO}>
               <UserInfoButton>me</UserInfoButton>
             </NavButton>

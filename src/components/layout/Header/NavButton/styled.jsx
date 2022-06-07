@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const UnderlinedButton = styled.button`
-  padding: 0 4px 4px;
+  padding: 0 12px 12px;
 
   background-color: transparent;
   border: none;
