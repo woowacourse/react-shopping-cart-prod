@@ -103,7 +103,7 @@ function ShoppingCartPage() {
               <StyledHighlight>{Number(totalPrice).toLocaleString()}원</StyledHighlight>
             </StyledAmount>
             <StyledOrderButtonWrapper>
-              <Button order>주문하기({selectedItems.length}개)</Button>
+              <Button orderButton>주문하기({selectedItems.length}개)</Button>
             </StyledOrderButtonWrapper>
           </div>
         </StyledRightSection>

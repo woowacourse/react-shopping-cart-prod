@@ -17,7 +17,7 @@ const Button = styled.button`
   }
 
   ${(props) =>
-    props.order &&
+    props.orderButton &&
     css`
       width: 90%;
       height: 54px;
