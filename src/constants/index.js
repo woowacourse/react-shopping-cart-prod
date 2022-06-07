@@ -1,4 +1,6 @@
-const BASE_URL = "https://woo-shopping-cart-api.herokuapp.com";
+const BASE_URL =
+  "http://ec2-3-39-194-30.ap-northeast-2.compute.amazonaws.com:8080";
+
 const PATH = {
   MAIN: "/",
   LOGIN: "/login",
