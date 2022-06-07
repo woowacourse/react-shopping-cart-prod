@@ -12,7 +12,7 @@ function ProductDetailCard({ product }: { product: ProductType }) {
   const responsive = useResponsive();
 
   const { isShowModal, openModal, closeModal } = useModal();
-  const isShowCartButton = useExcludeCart(product.id);
+  const { isShowCartButton } = useExcludeCart(product.id);
 
   const onClickCartAddButton = () => {
     openModal();

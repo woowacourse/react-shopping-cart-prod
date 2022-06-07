@@ -10,7 +10,7 @@ export const Container = styled.div`
   gap: 40px;
 
   ${({ theme }) => theme.tablet} {
-    padding: 20px;
+    padding: 40px 30px;
     min-width: 250px;
 
     font-size: 0.8rem;

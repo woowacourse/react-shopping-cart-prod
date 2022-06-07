@@ -8,6 +8,7 @@ import Loading from '@/components/common/Loading/Loading';
 import { useThunkFetch } from '@/hooks/useFecth';
 import { useCartList } from '@/hooks/useCartList';
 import { Outlet } from 'react-router-dom';
+import { withLogin } from '@/components/helper/withLogin';
 
 function ShoppingCart() {
   const { isLoading, cartList } = useThunkFetch({
@@ -53,4 +54,4 @@ function ShoppingCart() {
   );
 }
 
-export default ShoppingCart;
+export default withLogin(ShoppingCart, true);

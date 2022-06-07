@@ -18,7 +18,7 @@ function ProductCard({ product }: ProductCardType) {
   const navigate = useNavigate();
 
   const { isShowModal, openModal, closeModal } = useModal();
-  const isShowCartButton = useExcludeCart(id);
+  const { isShowCartButton } = useExcludeCart(id);
 
   const onClickCard = () => {
     navigate(`/products/${id}`);
