@@ -42,7 +42,6 @@ export default function cartReducer(state = INITIAL_STATE, action) {
       const newState = state.cart.map((item) =>
         item.id === id ? {...item, quantity: item.quantity + 1} : item,
       );
-      console.log(newState);
 
       return {
         cart: newState,

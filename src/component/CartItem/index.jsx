@@ -15,7 +15,7 @@ import {PATH} from 'constant';
 export default function CartItem({cartInfo, initialChecked = false}) {
   const {addSelectedItem, deleteSelectedItem} = useSelectedItem();
 
-  const {deleteCartItem, increaseQuantity, decreaseQuantity} = useCartItem();
+  const {deleteCartItem} = useCartItem();
 
   const {imageUrl, name, price, quantity, id} = cartInfo;
 
@@ -33,11 +33,7 @@ export default function CartItem({cartInfo, initialChecked = false}) {
       <S.ItemNameParagraph>{name}</S.ItemNameParagraph>
       <S.EditQuantityBox>
         <S.StyledDeleteIcon onClick={() => deleteCartItem(id)} />
-        <QuantityBox
-          quantity={quantity}
-          handleIncrease={() => increaseQuantity({quantity, id})}
-          handleDecrease={() => decreaseQuantity({quantity, id})}
-        />
+        <QuantityBox quantity={quantity} productId={id} />
         <S.PriceSpan>{price.toLocaleString()}원</S.PriceSpan>
       </S.EditQuantityBox>
     </S.CartItemLayout>

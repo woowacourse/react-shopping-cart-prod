@@ -19,8 +19,6 @@ export default function useCartItem(path = null) {
 
   const {fetch: deleteCart} = useFetch('delete');
 
-  const {fetch: patchCart} = useFetch('patch');
-
   const deleteCartItem = (payload) => {
     const response = JSON.parse(localStorage.getItem('accessToken'));
 
@@ -87,7 +85,7 @@ export default function useCartItem(path = null) {
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {productId: payload.id},
       onSuccess: () => {
-        dispatch({type: CART.ADD, payload});
+        dispatch({type: CART.ADD, payload: {...payload, test: 'test', quantity: 1}});
       },
     });
     if (!path) {
@@ -96,36 +94,7 @@ export default function useCartItem(path = null) {
     navigation(path);
   };
 
-  const increaseQuantity = (payload) => {
-    const {quantity, id} = payload;
-
-    patchCart({
-      API_URL: `${process.env.REACT_APP_CART_API_URL}/${id}`,
-      body: {
-        quantity: quantity + 1,
-      },
-      onSuccess: () => {
-        dispatch({type: CART.INCREASE_QUANTITY, payload: id});
-      },
-    });
-  };
-
-  const decreaseQuantity = (payload) => {
-    const {quantity, id} = payload;
-
-    patchCart({
-      params: `/${id}`,
-      body: {
-        quantity: Math.max(quantity - 1, 1),
-      },
-      onSuccess: () => {
-        dispatch({type: CART.DECREASE_QUANTITY, payload: id});
-      },
-    });
-  };
-
   const deleteSelectedCart = (payload) => {
-    console.log(payload);
     const response = JSON.parse(localStorage.getItem('accessToken'));
 
     if (!response) {
@@ -156,8 +125,6 @@ export default function useCartItem(path = null) {
   return {
     deleteCartItem,
     addCartItem,
-    increaseQuantity,
-    decreaseQuantity,
     deleteSelectedCart,
     initializeCart,
   };

@@ -106,25 +106,6 @@ export const handlers = [
     return res(ctx.status(204));
   }),
 
-  // 장바구니 상품 수량 변경하기
-  rest.patch(`${process.env.REACT_APP_CART_API_URL}/:id`, (req, res, ctx) => {
-    const productId = Number.parseInt(req.params.id);
-    const {quantity} = req.body;
-    const isInCart = cart.some(({id}) => id === productId);
-
-    if (!isInCart) {
-      return res(ctx.status(404));
-    }
-
-    const newCart = cart.map((item) => {
-      return item.id === productId ? {...item, quantity} : item;
-    });
-
-    cart = newCart;
-
-    return res(ctx.status(200));
-  }),
-
   // 로그인
   rest.post(`${BASE_SERVER_URL}${SERVER_PATH.SIGNIN}`, (req, res, ctx) => {
     const {account, password} = req.body;
