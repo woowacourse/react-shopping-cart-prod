@@ -107,11 +107,15 @@ function Signup() {
       });
     } catch (error) {
       const { errorCode } = error.response.data;
-      if (errorCode === "1000") {
-        dispatch(toggleSnackbarOpen(MESSAGE.INVALID_SIGNUP_INPUT));
-      }
+
+      console.log(error.response.data);
       if (errorCode === "1001") {
         dispatch(toggleSnackbarOpen(MESSAGE.EXIST_EMAIL));
+        return;
+      }
+      if (errorCode === "1000") {
+        dispatch(toggleSnackbarOpen(MESSAGE.INVALID_SIGNUP_INPUT));
+        return;
       }
       dispatch(toggleSnackbarOpen(error));
     }

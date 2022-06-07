@@ -16,9 +16,7 @@ import StyledSigninContainer from "@/components/pages/sign-in/Signin.styled";
 function Signin() {
   const email = useRef(null);
   const password = useRef(null);
-
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,6 +41,7 @@ function Signin() {
       const { errorCode } = error.response.data;
       if (errorCode === "1000" || errorCode === "1002") {
         dispatch(toggleSnackbarOpen(MESSAGE.CHECK_EMAIL_OR_PASSWORD));
+        return;
       }
       dispatch(toggleSnackbarOpen(error));
     }
