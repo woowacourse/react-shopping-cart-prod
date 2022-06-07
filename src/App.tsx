@@ -26,7 +26,9 @@ function App() {
           <Route element={<HeaderLayout />}>
             <Route path={PATH.BASE} element={<MainPage />} />
             <Route path={`${PATH.PRODUCT}/:id`} element={<ProductPage />} />
-            <Route path={PATH.CART} element={<CartPage />} />
+            <Route element={<PrivateLayout />}>
+              <Route path={PATH.CART} element={<CartPage />} />
+            </Route>
           </Route>
           <Route element={<PrivateLayout />}>
             <Route path={PATH.EDIT_USER_INFO} element={<EditUserInfoPage />} />

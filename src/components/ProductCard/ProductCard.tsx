@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { cartActions } from 'redux/actions';
@@ -9,6 +10,7 @@ import ShoppingCart from 'components/@shared/ShoppingCart';
 import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 import { Product } from 'types/index';
+import { isLogin } from 'utils/auth';
 
 type Props = {
   product: Product;
@@ -22,9 +24,17 @@ function ProductCard({ product, isInCart }: Props) {
     price: Number(product.price),
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+
+    if (!isLogin()) {
+      navigate(PATH.LOGIN);
+
+      return;
+    }
+
     dispatch(cartActions.addToCart(id));
     alert(CART_MESSAGE.SUCCESS_ADD);
   };

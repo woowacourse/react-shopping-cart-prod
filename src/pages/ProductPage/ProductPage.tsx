@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { cartActions } from 'redux/actions';
@@ -10,11 +10,14 @@ import Loading from 'components/@shared/Loading';
 
 import CONDITION from 'constants/condition';
 import { CART_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
 import { ProductStoreState } from 'types/index';
+import { isLogin } from 'utils/auth';
 
 function ProductPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const condition = useSelector(
     (state: { product: ProductStoreState }) => state.product.condition
   );
@@ -31,6 +34,13 @@ function ProductPage() {
   const onClickCartButton = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
+
+      if (!isLogin()) {
+        navigate(PATH.LOGIN);
+
+        return;
+      }
+
       dispatch(cartActions.addToCart(Number(id)));
       alert(CART_MESSAGE.SUCCESS_ADD);
     },
