@@ -7,7 +7,7 @@ const PageContainer = styled(FlexBox).attrs(props => ({
   alignItems: props.alignItems,
 }))`
   margin: 60px 0;
-  min-width: 1350px;
+  padding: 0 120px;
 `;
 
 export default PageContainer;

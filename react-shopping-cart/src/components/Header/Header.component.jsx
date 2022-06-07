@@ -81,41 +81,50 @@ function Header() {
 
   return (
     <HeaderContainer as="header">
-      <HeaderLink to="/" type="title">
-        <FlexBox gap="15px">
-          <ShoppingCart fill="#fff" width={50} height={44} />
-          WOOWA SHOP
-        </FlexBox>
-      </HeaderLink>
-      <FlexBox as="nav" gap="43px">
-        <HeaderLink to="/cart" type="nav">
-          장바구니
+      <HeaderWrapper>
+        <HeaderLink to="/" type="title">
+          <FlexBox gap="15px">
+            <ShoppingCart fill="#fff" width={50} height={44} />
+            WOOWA SHOP
+          </FlexBox>
         </HeaderLink>
-        <HeaderLink to="/" type="nav">
-          주문목록
-        </HeaderLink>
-        {accessToken ? (
-          <Relative>
-            <LogInLogoButton onClick={handleSelectBox}>{name && name[0]}</LogInLogoButton>
-            <SelectList show={showSelectBox}>
-              <FirstListItem>
-                <Link to="/user/modify">정보수정</Link>
-              </FirstListItem>
-              <LastListItem>
-                <button type="button" onClick={handleDeleteAccessToken}>
-                  로그아웃
-                </button>
-              </LastListItem>
-            </SelectList>
-          </Relative>
-        ) : (
-          <HeaderLink to="/login" type="nav">
-            로그인
+        <FlexBox as="nav" gap="43px">
+          <HeaderLink to="/cart" type="nav">
+            장바구니
           </HeaderLink>
-        )}
-      </FlexBox>
+          <HeaderLink to="/" type="nav">
+            주문목록
+          </HeaderLink>
+          {accessToken ? (
+            <Relative>
+              <LogInLogoButton onClick={handleSelectBox}>{name && name[0]}</LogInLogoButton>
+              <SelectList show={showSelectBox}>
+                <FirstListItem>
+                  <Link to="/user/modify">정보수정</Link>
+                </FirstListItem>
+                <LastListItem>
+                  <button type="button" onClick={handleDeleteAccessToken}>
+                    로그아웃
+                  </button>
+                </LastListItem>
+              </SelectList>
+            </Relative>
+          ) : (
+            <HeaderLink to="/login" type="nav">
+              로그인
+            </HeaderLink>
+          )}
+        </FlexBox>
+      </HeaderWrapper>
     </HeaderContainer>
   );
 }
 
 export default React.memo(Header);
+
+const HeaderWrapper = styled(FlexBox).attrs({
+  justifyContent: 'space-between',
+  width: '100%',
+})`
+  min-width: 630px;
+`;
