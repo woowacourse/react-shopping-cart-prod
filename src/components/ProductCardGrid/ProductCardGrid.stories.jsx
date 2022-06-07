@@ -1,4 +1,4 @@
-import ProductCardGrid from './ProductCardGrid';
+import ProductCardGrid from 'components/ProductCardGrid/ProductCardGrid';
 
 export default {
   title: 'Component/ProductCardGrid',

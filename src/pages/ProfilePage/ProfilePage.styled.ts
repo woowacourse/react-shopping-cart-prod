@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import * as T from './ProfilePage.types';
+import * as T from 'pages/ProfilePage/ProfilePage.types';
 
 export const PageBox = styled.div`
   width: 600px;

@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
-import * as S from './FormField.styled';
-import * as T from './FormField.types';
+import * as S from 'components/FormField/FormField.styled';
+import * as T from 'components/FormField/FormField.types';
 
 function FormField({
   label,

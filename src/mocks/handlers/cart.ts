@@ -1,6 +1,6 @@
 import { rest } from 'msw';
-import API from '../../configs/api';
-import * as db from '../db.json';
+import API from 'configs/api';
+import * as db from 'mocks/db.json';
 
 const { cart, products } = db;
 const userId = '1';

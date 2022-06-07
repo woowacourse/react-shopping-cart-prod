@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import * as T from './FormField.types';
+import * as T from 'components/FormField/FormField.types';
 
 export const FormFieldBox = styled.div`
   display: flex;

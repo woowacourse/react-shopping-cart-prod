@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Theme } from '../../types';
+import { Theme } from 'types';
 
 type Props = {
   color?: keyof Theme['colors'];

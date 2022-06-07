@@ -1,5 +1,5 @@
-import cartHandlers from '../../mocks/handlers/cart';
-import CartPage from './CartPage';
+import cartHandlers from 'mocks/handlers/cart';
+import CartPage from 'pages/CartPage/CartPage';
 
 export default {
   title: 'Page/CartPage',

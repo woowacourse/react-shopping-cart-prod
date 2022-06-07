@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ICONS from '../../constants/icons';
-import Avatar from '../Avatar/Avatar';
-import PlainLink from '../PlainLink/PlainLink';
-import * as S from './RightMenu.styled';
+import ICONS from 'constants/icons';
+import Avatar from 'components/Avatar/Avatar';
+import PlainLink from 'components/PlainLink/PlainLink';
+import * as S from 'components/RightMenu/RightMenu.styled';
 
 function RightMenu() {
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);

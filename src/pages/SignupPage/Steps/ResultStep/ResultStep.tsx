@@ -1,6 +1,6 @@
-import Button from '../../../../components/Button/Button';
-import PlainLink from '../../../../components/PlainLink/PlainLink';
-import * as S from './ResultStep.styled';
+import Button from 'components/Button/Button';
+import PlainLink from 'components/PlainLink/PlainLink';
+import * as S from 'pages/SignupPage/Steps/ResultStep/ResultStep.styled';
 
 function ResultStep() {
   return (

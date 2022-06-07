@@ -1,5 +1,5 @@
 import { rest, RestRequest } from 'msw';
-import { SERVER_URL } from '../../configs/api';
+import { SERVER_URL } from 'configs/api';
 import {
   Customer,
   SigninRequestBody,

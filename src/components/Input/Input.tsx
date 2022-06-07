@@ -5,7 +5,7 @@ import {
   useImperativeHandle,
   useRef,
 } from 'react';
-import * as S from './Input.styles';
+import * as S from 'components/Input/Input.styles';
 
 function Input(
   props: ComponentProps<any>,

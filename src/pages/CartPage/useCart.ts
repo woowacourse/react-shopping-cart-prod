@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../redux/actions';
-import { StoreState } from '../../types';
+import { actions } from 'redux/actions';
+import { StoreState } from 'types';
 
 type SelectedState = StoreState['cartState'];
 

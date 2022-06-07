@@ -1,4 +1,4 @@
-import { Routes } from '../types';
+import { Routes } from 'types';
 
 const BE_PAIR_SERVER_URL = {
   SKULL_SUDAL:

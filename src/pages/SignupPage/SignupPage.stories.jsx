@@ -1,5 +1,5 @@
-import customerHandlers from '../../mocks/handlers/customers';
-import SignupPage from './SignupPage';
+import customerHandlers from 'mocks/handlers/customers';
+import SignupPage from 'pages/SignupPage/SignupPage';
 
 export default {
   title: 'Page/SignupPage',

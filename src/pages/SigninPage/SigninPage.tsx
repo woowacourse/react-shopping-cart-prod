@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import useForm from '../../hooks/useForm';
-import Button from '../../components/Button/Button';
-import Input from '../../components/Input/Input';
-import PlainLink from '../../components/PlainLink/PlainLink';
-import { SERVER_URL } from '../../configs/api';
-import { SigninResponseBody } from '../../types';
-import * as S from './SigninPage.styled';
+import useForm from 'hooks/useForm';
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
+import PlainLink from 'components/PlainLink/PlainLink';
+import { SERVER_URL } from 'configs/api';
+import { SigninResponseBody } from 'types';
+import * as S from 'pages/SigninPage/SigninPage.styled';
 
 function SigninPage() {
   const navigate = useNavigate();

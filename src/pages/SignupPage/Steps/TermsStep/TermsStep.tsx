@@ -1,10 +1,10 @@
-import Checkbox from '../../../../components/Checkbox/Checkbox';
-import DivideLine from '../../../../components/DivideLine/DivideLine';
-import Button from '../../../../components/Button/Button';
-import * as S from './TermsStep.styled';
 import { useOutletContext } from 'react-router-dom';
 import { useState } from 'react';
-import useForm from '../../../../hooks/useForm';
+import Checkbox from 'components/Checkbox/Checkbox';
+import DivideLine from 'components/DivideLine/DivideLine';
+import Button from 'components/Button/Button';
+import useForm from 'hooks/useForm';
+import * as S from 'pages/SignupPage/Steps/TermsStep/TermsStep.styled';
 
 function TermsStep() {
   const { goNextStep } = useOutletContext<{

@@ -1,14 +1,14 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import useDaumPostcode from '../../hooks/useDaumPostcode';
-import Button from '../../components/Button/Button';
-import Input from '../../components/Input/Input';
-import ICONS from '../../constants/icons';
-import * as S from './ProfilePage.styled';
 import { useNavigate } from 'react-router-dom';
-import { SERVER_URL } from '../../configs/api';
-import useForm from '../../hooks/useForm';
-import Spinner from '../../components/Spinner/Spinner';
+import useDaumPostcode from 'hooks/useDaumPostcode';
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
+import ICONS from 'constants/icons';
+import * as S from 'pages/ProfilePage/ProfilePage.styled';
+import { SERVER_URL } from 'configs/api';
+import useForm from 'hooks/useForm';
+import Spinner from 'components/Spinner/Spinner';
 
 function ProfilePage() {
   const navigate = useNavigate();

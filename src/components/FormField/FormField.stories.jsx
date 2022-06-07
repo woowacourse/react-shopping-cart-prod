@@ -1,4 +1,4 @@
-import FormField from './FormField';
+import FormField from 'components/FormField/FormField';
 
 export default {
   title: 'Component/FormField',

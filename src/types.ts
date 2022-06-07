@@ -1,5 +1,5 @@
-import { TYPES } from './redux/actions';
-import theme from './styles/theme';
+import { TYPES } from 'redux/actions';
+import theme from 'styles/theme';
 
 export type Customer = {
   email: string;

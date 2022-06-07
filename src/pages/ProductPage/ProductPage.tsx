@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
-import Button from '../../components/Button/Button';
-import DivideLine from '../../components/DivideLine/DivideLine';
-import Spinner from '../../components/Spinner/Spinner';
-import useProductDetail from './useProductDetail';
-import * as S from './ProductPage.styled';
+import Button from 'components/Button/Button';
+import DivideLine from 'components/DivideLine/DivideLine';
+import Spinner from 'components/Spinner/Spinner';
+import useProductDetail from 'pages/ProductPage/useProductDetail';
+import * as S from 'pages/ProductPage/ProductPage.styled';
 
 function ProductPage() {
   const { id } = useParams();

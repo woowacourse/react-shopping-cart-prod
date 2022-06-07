@@ -1,6 +1,6 @@
-import cartHandlers from './cart';
-import productsHandlers from './products';
-import customerHandlers from './customers';
+import cartHandlers from 'mocks/handlers/cart';
+import productsHandlers from 'mocks/handlers/products';
+import customerHandlers from 'mocks/handlers/customers';
 
 const handlers = [...customerHandlers, ...productsHandlers, ...cartHandlers];
 

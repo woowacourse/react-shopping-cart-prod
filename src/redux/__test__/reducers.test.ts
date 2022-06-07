@@ -1,6 +1,6 @@
-import rootReducer from '../reducers';
-import { TYPES } from '../actions';
-import { products } from '../../mocks/db.json';
+import rootReducer from 'redux/reducers';
+import { TYPES } from 'redux/actions';
+import { products } from 'mocks/db.json';
 
 const initialState = {
   productsState: {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Product } from '../../types';
-import Input from '../QuantityInput/QuantityInput';
-import Checkbox from '../Checkbox/Checkbox';
-import ICONS from '../../constants/icons';
-import * as S from './CartItem.styled';
+import { Product } from 'types';
+import Input from 'components/QuantityInput/QuantityInput';
+import Checkbox from 'components/Checkbox/Checkbox';
+import ICONS from 'constants/icons';
+import * as S from 'components/CartItem/CartItem.styled';
 
 type Props = {
   product: Product;

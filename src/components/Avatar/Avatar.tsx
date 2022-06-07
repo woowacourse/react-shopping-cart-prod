@@ -1,5 +1,5 @@
-import { Customer } from '../../types';
-import * as S from './Avatar.styled';
+import { Customer } from 'types';
+import * as S from 'components/Avatar/Avatar.styled';
 
 function Avatar({
   name,
