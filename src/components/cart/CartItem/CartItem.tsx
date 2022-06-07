@@ -18,14 +18,14 @@ function CartItem({
   onClickDeleteButton,
   onClickCheckBox,
 }) {
-  const { id, imageURL, name, price, quantity } = cart;
+  const { productId, imageURL, name, price, quantity } = cart;
 
   const navigate = useNavigate();
 
   const responsive = useResponsive();
 
   const navigateToProduct = () => {
-    navigate(`/products/${id}`);
+    navigate(`/products/${productId}`);
   };
 
   return (
