@@ -8,8 +8,7 @@ import PageHeader from 'components/@common/PageHeader';
 import CartList from 'components/CartList';
 import CartReceipt from 'components/CartReceipt';
 import { snackbar } from 'actions/snackbar';
-import { deleteCartItem, initCartList, modifyCartItemQuantity } from 'actions/cart';
-import { hideSpinner, showSpinner } from 'actions/spinner';
+import { deleteCartItem, setCartList, modifyCartItemQuantity } from 'actions/cart';
 
 import { 비동기_요청, 알림_메시지 } from 'constants/';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -35,39 +34,12 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    dispatch(showSpinner());
-    fetch(`${process.env.REACT_APP_API_URL}/cart`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${sessionStorage.getItem('accessToken')}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((cartdata) => {
-        if (cartdata.length > 0 && cartdata) {
-          console.log('cartdata', cartdata);
-          const cartListInfo = cartdata.map((item) => {
-            const { id, name, price, thumbnail } = item.product;
-            const { quantity } = item;
-            return {
-              id,
-              name,
-              price,
-              thumbnail,
-              quantity,
-            };
-          });
-          dispatch(initCartList(cartListInfo));
-          setCheckboxItems(cartListInfo.map((item) => Number(item.id)));
-        }
-        dispatch(hideSpinner());
-      })
-      .catch(() => {
-        alert('서버로 부터 장바구니 정보를 받아오는데 실패하였습니다!');
-        navigator('/');
-      });
-  }, []);
+    dispatch(setCartList());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setCheckboxItems(cartList.map((item) => Number(item.id)));
+  }, [cartList]);
 
   useEffect(() => {
     setTotalPrice(

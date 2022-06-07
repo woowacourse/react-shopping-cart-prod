@@ -1,24 +1,39 @@
+import cart from 'reducers/cart';
 import { requestGetCartList } from 'api';
-import { 비동기_요청 } from 'constants';
-import { 장바구니_액션 } from './types';
+import { 비동기_요청, 알림_메시지 } from 'constants/';
+import { 장바구니_불러오기_액션, 장바구니_액션 } from './types';
+import { hideSpinner, showSpinner } from './spinner';
 
-const initCartList = (cartList) => {
-  return {
-    type: 장바구니_액션.INIT_CART_LIST,
-    payload: cartList,
-  };
+const setCartList = () => async (dispatch) => {
+  dispatch(showSpinner());
+  dispatch({
+    type: 장바구니_불러오기_액션.PENDING,
+  });
+  const response = await requestGetCartList();
+  if (response.status === 비동기_요청.SUCCESS) {
+    const cartListInfo = response.content.map((item) => {
+      const { id, name, price, thumbnail } = item.product;
+      const { quantity } = item;
+      return {
+        id,
+        name,
+        price,
+        thumbnail,
+        quantity,
+      };
+    });
+    dispatch({ type: 장바구니_불러오기_액션.SUCCESS, payload: cartListInfo });
+  }
+  if (response.status === 비동기_요청.FAILURE) {
+    dispatch({
+      type: 장바구니_불러오기_액션.FAILURE,
+      payload: { message: '장바구니 정보를 불러오는 데 실패하였습니다' },
+    });
+  }
+  dispatch(hideSpinner());
 };
 
 const addCartList = (product) => {
-  // const targetProduct = cartList.find((item) => item.id === product.id);
-
-  // if (targetProduct) {
-  //   return {
-  //     type: 장바구니_액션.ADD_EXIST_PRODUCT,
-  //     payload: { ...product, quantity: Number(targetProduct.quantity) + 1, isChecked: true },
-  //   };
-  // }
-
   return {
     type: 장바구니_액션.ADD_NEW_PRODUCT,
     payload: { ...product, quantity: 1, isChecked: true },
@@ -32,4 +47,4 @@ const modifyCartItemQuantity = (productId, quantity) => ({
   payload: { productId, quantity },
 });
 
-export { initCartList, addCartList, deleteCartItem, modifyCartItemQuantity };
+export { setCartList, addCartList, deleteCartItem, modifyCartItemQuantity };
