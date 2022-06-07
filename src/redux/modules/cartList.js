@@ -4,7 +4,6 @@ import { MESSAGE } from "@/constants";
 import { getCookie } from "@/utils/cookie";
 import axios from "axios";
 import { BASE_URL } from "@/constants";
-import { response } from "msw";
 
 export const ACTION_TYPES = {
   ADD_PRODUCT_TO_CART: "ADD_PRODUCT_TO_CART",
@@ -68,6 +67,7 @@ export const getCartList = () => async (dispatch) => {
       },
     });
     dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.products));
+    console.log(response.data);
   } catch (error) {
     if (error.response.status === 401) {
       dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
@@ -96,7 +96,21 @@ export const removeCheckedCartItem = () => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.REMOVE_CHECKED_CART_ITEM));
 };
 export const removeRowCartItem = (id) => async (dispatch) => {
-  dispatch(createAction(ACTION_TYPES.REMOVE_ROW_CART_ITEM, id));
+  try {
+    await axios.delete(`${BASE_URL}/users/me/carts/${id}`, {
+      headers: {
+        Authorization:
+          getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+      },
+    });
+    dispatch(createAction(ACTION_TYPES.REMOVE_ROW_CART_ITEM, id));
+  } catch (error) {
+    if (error.response.status === 401) {
+      dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
+      return;
+    }
+    dispatch(toggleSnackbarOpen(error));
+  }
 };
 
 const cartListInitialState = [];
