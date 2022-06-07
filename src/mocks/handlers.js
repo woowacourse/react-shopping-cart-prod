@@ -35,7 +35,7 @@ let userDB = {
 export const handlers = [
   // 상품 리스트 가져오기
   rest.get(process.env.REACT_APP_PRODUCT, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(MOCK_PRODUCT_LIST));
+    return res(ctx.status(200), ctx.json({products: MOCK_PRODUCT_LIST}));
   }),
 
   // 선택된 상품 정보 가져오기
