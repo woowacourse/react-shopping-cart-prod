@@ -67,7 +67,7 @@ export const handlePatchShoppingCartRequest = (req, res, ctx) => {
   if (!currentShoppingCart.length || productIndex < 0) {
     return res(
       ctx.status(404),
-      ctx.json({ message: '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.' })
+      ctx.json({ message: MOCK_ERROR_MESSAGE.NOT_EXIST_IN_SHOPPING_CART })
     );
   }
 
@@ -90,7 +90,7 @@ export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
   if (currentShoppingCart.length === 0 || productIndex < 0) {
     return res(
       ctx.status(404),
-      ctx.json({ message: '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.' })
+      ctx.json({ message: MOCK_ERROR_MESSAGE.NOT_EXIST_IN_SHOPPING_CART })
     );
   }
 
