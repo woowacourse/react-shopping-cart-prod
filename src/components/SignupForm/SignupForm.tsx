@@ -2,77 +2,48 @@ import { useState } from 'react';
 
 import authAPI from 'apis/auth';
 import Button from 'components/@shared/Button';
+import { useInput, usePasswordInput, usePhoneNumberInput } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { createInputValueGetter } from 'utils/dom';
 import { formatPhoneNumber } from 'utils/formats';
-import {
-  isValidPasswordAllCharacters,
-  isValidPasswordLength,
-} from 'utils/validator';
 
 import { USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 
 function SignupForm() {
-  const navigate = useNavigate();
+  const { value: username, setValue: setUsername } = useInput('');
+  const {
+    password,
+    setPassword,
+    isPasswordLengthCorrect,
+    isPasswordAllCharactersCorrect,
+  } = usePasswordInput('');
+  const { value: passwordCheck, setValue: setPasswordCheck } = useInput('');
+  const { value: email, setValue: setEmail } = useInput('');
+  const { value: address, setValue: setAddress } = useInput('');
+  const { phoneNumber, setPhoneNumber } = usePhoneNumberInput('');
 
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [passwordLengthCorrect, setPasswordLengthCorrect] = useState(false);
-  const [passwordAllCharactersCorrect, setPasswordAllCharactersCorrect] =
-    useState(false);
   const [passwordCheckCorrect, setPasswordCheckCorrect] = useState(false);
 
-  const handleIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
-  };
+  const navigate = useNavigate();
 
-  const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-
-    setPasswordLengthCorrect(isValidPasswordLength(e.target.value));
-    setPasswordAllCharactersCorrect(
-      isValidPasswordAllCharacters(e.target.value)
-    );
-  };
-
-  const handlePasswordCheckInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordCheck(e.target.value);
+  const onChangePasswordCheckInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setPasswordCheck(e);
 
     setPasswordCheckCorrect(password === e.target.value);
   };
 
-  const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handleAddressInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
-  };
-
-  const handlerPhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 11) {
-      setPhoneNumber(e.target.value);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!(e.target instanceof HTMLFormElement)) return;
 
-    const formElements = e.target.elements;
-    const getInputValue = createInputValueGetter(formElements);
     const user = {
-      username: getInputValue('id'),
-      password: getInputValue('password'),
-      email: getInputValue('email'),
-      address: getInputValue('address'),
-      phoneNumber: formatPhoneNumber(getInputValue('phoneNumber')),
+      username,
+      password,
+      email,
+      address,
+      phoneNumber: formatPhoneNumber(phoneNumber),
     };
 
     try {
@@ -85,27 +56,27 @@ function SignupForm() {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <label htmlFor="id">아이디</label>
+      <label htmlFor="id">사용자 이름</label>
       <input
-        id="id"
+        id="username"
         type="text"
-        placeholder="아이디를 입력해주세요"
-        value={id}
-        onChange={handleIdInput}
+        placeholder="사용자 이름을 입력해주세요"
+        value={username}
+        onChange={setUsername}
         pattern={'^[a-z0-9_-]{5,20}$'}
         required
       />
       <label htmlFor="password">
         비밀번호
         <StyledErrorSign
-          isCorrect={passwordLengthCorrect && passwordAllCharactersCorrect}
+          isCorrect={isPasswordLengthCorrect && isPasswordAllCharactersCorrect}
         >
           ✓
         </StyledErrorSign>
-        <StyledErrorMessage isCorrect={passwordLengthCorrect}>
+        <StyledErrorMessage isCorrect={isPasswordLengthCorrect}>
           ∙ 8~16자 입력
         </StyledErrorMessage>
-        <StyledErrorMessage isCorrect={passwordAllCharactersCorrect}>
+        <StyledErrorMessage isCorrect={isPasswordAllCharactersCorrect}>
           ∙ 영문, 숫자, 특수문자 모두 입력
         </StyledErrorMessage>
       </label>
@@ -114,7 +85,7 @@ function SignupForm() {
         type="password"
         placeholder="8~16자의 비밀번호(영문 소문자, 숫자, 특수문자)를 입력해주세요"
         value={password}
-        onChange={handlePasswordInput}
+        onChange={setPassword}
         pattern={
           '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
         }
@@ -129,7 +100,7 @@ function SignupForm() {
         type="password"
         placeholder="비밀번호를 재입력해주세요"
         value={passwordCheck}
-        onChange={handlePasswordCheckInput}
+        onChange={onChangePasswordCheckInput}
         pattern={
           '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
         }
@@ -141,7 +112,7 @@ function SignupForm() {
         type="email"
         placeholder="이메일을 입력해주세요"
         value={email}
-        onChange={handleEmailInput}
+        onChange={setEmail}
         pattern={'^[a-z0-9._-]+@[a-z]+[.]+[a-z]{2,3}$'}
         required
       />
@@ -151,7 +122,7 @@ function SignupForm() {
         type="address"
         placeholder="주소를 입력해주세요"
         value={address}
-        onChange={handleAddressInput}
+        onChange={setAddress}
         maxLength={255}
         required
       />
@@ -161,7 +132,7 @@ function SignupForm() {
         type="number"
         placeholder="핸드폰 번호를 입력해주세요"
         value={phoneNumber}
-        onChange={handlerPhoneNumberInput}
+        onChange={setPhoneNumber}
         required
       />
       <Button type="submit" marginTop="20px">
