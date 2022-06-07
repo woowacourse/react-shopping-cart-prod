@@ -46,7 +46,7 @@ function ProductCard({ product, isLoggedIn }) {
       <GlobalStyled.Position position="absolute" bottom="5px" right="5px">
         {
           stock === 0 ?
-          <S.SoldOut>품절</S.SoldOut> :
+          <S.SoldOut>일시 품절</S.SoldOut> :
           <S.TransparentButton type="button" onClick={onClickCartButton}>
             <Icon iconName="Cart" fill={color.DARK_GRAY} />
           </S.TransparentButton>
