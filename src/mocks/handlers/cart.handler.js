@@ -28,10 +28,10 @@ const findProductData = (targetId) => data.products.find(({ id }) => id === targ
 
 export const handlePostShoppingCartRequest = (req, res, ctx) => {
   const currentShoppingCart = getCart();
-  const { id, quantity } = req.body;
+  const { productId, quantity } = req.body;
 
-  const cartProductIndex = findProductCartIndex(currentShoppingCart, id);
-  const productData = findProductData(id);
+  const cartProductIndex = findProductCartIndex(currentShoppingCart, productId);
+  const productData = findProductData(productId);
 
   if (productData === undefined) {
     return res(ctx.status(400), ctx.json({ message: MOCK_ERROR_MESSAGE.NOT_EXIST_PRODUCT}));
@@ -48,7 +48,7 @@ export const handlePostShoppingCartRequest = (req, res, ctx) => {
     currentShoppingCart[cartProductIndex] = newCartProduct;
   } else {
     const newCartProduct = {};
-    newCartProduct.product = findProductData(id);
+    newCartProduct.product = findProductData(productId);
     newCartProduct.quantity = quantity;
     currentShoppingCart.push(newCartProduct);
   }
@@ -59,10 +59,10 @@ export const handlePostShoppingCartRequest = (req, res, ctx) => {
 };
 
 export const handlePatchShoppingCartRequest = (req, res, ctx) => {
-  const { id, quantity } = req.body;
+  const { productId, quantity } = req.body;
   const currentShoppingCart = getCart();
 
-  const productIndex = findProductCartIndex(currentShoppingCart, id);
+  const productIndex = findProductCartIndex(currentShoppingCart, productId);
 
   if (!currentShoppingCart.length || productIndex < 0) {
     return res(
