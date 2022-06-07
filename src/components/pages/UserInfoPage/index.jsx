@@ -1,9 +1,8 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { theme } from "style";
 
-import { BASE_SERVER_URL, SERVER_PATH, ROUTES, RANGE } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, RANGE } from "constants";
 
 import { USER_ID_KEY } from "constants";
 
@@ -26,14 +25,13 @@ import {
 } from "./styled";
 import DeleteAccountModal from "./DeleteAccountModal";
 
-function UserInfoPage({ isLogin }) {
+function UserInfoPage() {
   const {
     data: user,
     isLoading,
     errorMessage: serverError,
     dispatch,
   } = useStore("user");
-  const navigator = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [username, setUsername] = useState(user.username);
@@ -111,12 +109,6 @@ function UserInfoPage({ isLogin }) {
     setErrorMessage("");
     setIsEditable(false);
   };
-
-  useEffect(() => {
-    if (!isLogin) {
-      navigator(ROUTES.ROOT, { replace: true });
-    }
-  }, [isLogin]);
 
   useEffect(() => {
     if (isEditable) {

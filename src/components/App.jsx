@@ -9,6 +9,7 @@ import { ROUTES } from "constants";
 
 import { getUser } from "reducers/user";
 
+import Redirect from "./hoc/Redirect";
 import Header from "components/layout/Header";
 import {
   OrderListPage,
@@ -45,25 +46,31 @@ function App() {
             element={<ProductDetailPage />}
           />
           <Route
-            path={ROUTES.PRODUCT_CART}
-            element={<ProductCartPage isLogin={isLogin} />}
-          />
+            element={
+              <Redirect
+                redirectCondition={!isLogin}
+                redirectPath={ROUTES.LOGIN}
+              />
+            }
+          >
+            <Route path={ROUTES.PRODUCT_CART} element={<ProductCartPage />} />
+            <Route
+              path={ROUTES.PRODUCT_ORDER_LIST}
+              element={<OrderListPage />}
+            />
+            <Route path={ROUTES.USER_INFO} element={<UserInfoPage />} />
+          </Route>
           <Route
-            path={ROUTES.PRODUCT_ORDER_LIST}
-            element={<OrderListPage isLogin={isLogin} />}
-          />
-          <Route
-            path={ROUTES.REGISTER}
-            element={<RegisterPage isLogin={isLogin} />}
-          />
-          <Route
-            path={ROUTES.LOGIN}
-            element={<LoginPage isLogin={isLogin} />}
-          />
-          <Route
-            path={ROUTES.USER_INFO}
-            element={<UserInfoPage isLogin={isLogin} />}
-          />
+            element={
+              <Redirect
+                redirectCondition={isLogin}
+                redirectPath={ROUTES.ROOT}
+              />
+            }
+          >
+            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
+            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          </Route>
           <Route path="*" element={<ErrorPage>잘못된 접근입니다.</ErrorPage>} />
         </Routes>
       </Main>

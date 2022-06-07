@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import { theme } from "style";
@@ -30,7 +30,7 @@ const initialUserInfo = {
   passwordConfirm: "",
 };
 
-function RegisterPage({ isLogin }) {
+function RegisterPage() {
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -102,10 +102,6 @@ function RegisterPage({ isLogin }) {
   };
 
   useEffect(() => {
-    if (isLogin) {
-      // TODO: 선언형으로 변경
-      navigator(ROUTES.LOGIN);
-    }
     return () => {
       dispatch({ type: USER_ACTION.CLEAN_ERROR });
     };
