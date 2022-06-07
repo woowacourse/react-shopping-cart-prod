@@ -30,11 +30,9 @@ const CartPage = () => {
   const calculateTotalPrice = useCallback(() => {
     let total = 0;
 
-    order.forEach(productId => {
-      const { price } = products.find(product => product.id === productId);
-
-      const { quantity } = shoppingCart.find(product => product.id === productId);
-
+    order.forEach(id => {
+      const { price } = products.find(product => product.id === id);
+      const { quantity } = shoppingCart.find(product => product.id === id);
       total += quantity * price;
     });
 
@@ -42,14 +40,14 @@ const CartPage = () => {
   }, [products, shoppingCart, order]);
 
   // TODO 3. get 장바구니 목록 가져오기
-  // const getCarts = async () => {
-  //   const response = await apiClient.get('/carts');
-  //   dispatch(doInitializeCartList({ shoppingCart: response.data }));
-  // };
+  const getCart = async () => {
+    const response = await apiClient.get('/cart');
+    dispatch(doInitializeCartList({ shoppingCart: response.data }));
+  };
 
-  // useEffect(() => {
-  //   getCarts();
-  // }, []);
+  useEffect(() => {
+    getCart();
+  }, []);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -66,7 +64,7 @@ const CartPage = () => {
     }
 
     shoppingCart.forEach(product => {
-      if (!order.some(productId => productId === product.id)) {
+      if (!order.some(id => id === product.id)) {
         dispatch(doAddProductToOrder({ id: product.id }));
       }
     });

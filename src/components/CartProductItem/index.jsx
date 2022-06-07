@@ -11,13 +11,18 @@ import Styled from 'components/CartProductItem/index.style';
 import { doPutProductToCart, doDeleteProductFromCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
 import { MESSAGE } from 'utils/constants';
+import apiClient from 'apis/apiClient';
+import useLogout from 'hooks/useLogout';
+import { useNavigate } from 'react-router-dom';
 
 const CartProductItem = ({ id, quantity }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
 
   const [{ name, price, image }] = useProduct(id);
   const [isInOrder, updateOrder] = useOrder(id);
+  const { logoutByError } = useLogout();
 
   // TODO 5. delete 장바구니 내 선택된 상품 삭제
   // const deleteItem = async () => {
@@ -41,33 +46,23 @@ const CartProductItem = ({ id, quantity }) => {
   //     navigate('/login');
   //   }
   // };
-
   const deleteItem = () => {
     dispatch(doDeleteProductFromCart({ id }));
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
   // TODO 4. put 장바구니 내 상품 수량 수정
-  // const putCart = async (id, updatedQuantity) => {
-  //   const accessToken = getCookie('accessToken');
-
-  //   try {
-  //     const response = await apiClient.put(
-  //       `/carts/${id}`,
-  //       { quantity: updatedQuantity },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       },
-  //     );
-
-  //     dispatch(doPutProductToCart({ id: response.data.id, quantity: response.data.id }));
-  //   } catch (error) {
-  //     renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-  //     navigate('/login');
-  //   }
-  // };
+  const putCart = async (id, updatedQuantity) => {
+    try {
+      const response = await apiClient.put(`/cart/products/${id}`, { quantity: updatedQuantity });
+      dispatch(doPutProductToCart({ id: response.data.id, quantity: response.data.quantity }));
+    } catch (error) {
+      const customError = error.response.data;
+      renderSnackbar(customError.message, 'FAILED');
+      logoutByError(customError);
+      navigate('/login');
+    }
+  };
 
   return (
     <Styled.Container>
@@ -82,13 +77,11 @@ const CartProductItem = ({ id, quantity }) => {
         <Counter
           quantity={quantity}
           increase={() => {
-            dispatch(doPutProductToCart({ id, quantity: quantity + 1 }));
-            // patchCart(id, quantity + 1);
+            putCart(id, quantity + 1);
           }}
           decrease={() => {
             if (quantity > 1) {
-              dispatch(doPutProductToCart({ id, quantity: quantity - 1 }));
-              // patchCart(id, quantity + 1);
+              putCart(id, quantity - 1);
             }
           }}
         />

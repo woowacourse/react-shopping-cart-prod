@@ -8,8 +8,10 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import { validatePassword } from 'utils/validator';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
+import { useNavigate } from 'react-router-dom';
 
 const PasswordEditModal = ({ handleModal }) => {
+  const navigate = useNavigate();
   const { logoutByError } = useLogout();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -31,6 +33,7 @@ const PasswordEditModal = ({ handleModal }) => {
     } catch (error) {
       const customError = error.response.data;
       logoutByError(customError);
+      navigate('/login');
       renderSnackbar(customError.message, 'FAILED');
     }
   };

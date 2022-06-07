@@ -52,8 +52,9 @@ const AccountPage = () => {
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
     } catch (error) {
       const customError = error.response.data;
-      logoutByError(customError);
       renderSnackbar(customError.message, 'FAILED');
+      logoutByError(customError);
+      navigate('/login');
     }
   };
 

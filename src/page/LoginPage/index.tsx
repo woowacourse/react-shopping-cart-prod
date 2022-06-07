@@ -58,6 +58,7 @@ const LoginPage = () => {
     } catch (error) {
       const customError = error.response.data;
       logoutByError(customError);
+      navigate('/login');
       renderSnackbar(customError.message, 'FAILED');
     }
   };

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { dummyProductList } from 'dummy_data';
+import { dummyProductList, dummyShoppingCart } from 'dummy_data';
 import { rest } from 'msw';
 import {
   checkDuplicatedEmail,
@@ -18,6 +18,8 @@ const dummyUsers = [
   { id: 3, email: '3@gmail.com', nickname: 'ghi', password: '123456@adssd' },
 ];
 
+const dummyCart = [];
+
 const decodeReqAccessToken = req => {
   return JSON.parse(decodeURIComponent(req.headers.headers.authorization).replace('Bearer ', ''));
 };
@@ -33,6 +35,26 @@ export const handlers = [
     const { id } = req.params;
     const product = dummyProductList.find(product => product.id === +id);
     return res(ctx.status(200), ctx.json(product));
+  }),
+
+  // 3. 장바구니 목록 가져오기
+  rest.get('/cart', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(dummyCart));
+  }),
+
+  // 4. 장바구니 목록에 상품 추가 및 수량 수정하기(PUT)
+  rest.put('/cart/products/:id', (req, res, ctx) => {
+    const id = +req.params.id;
+    const { quantity } = req.body;
+    const product = dummyCart.find(item => item.id === id);
+
+    if (product) {
+      product.quantity = quantity;
+      return res(ctx.status(200), ctx.json(product));
+    } else {
+      dummyCart.push({ id, quantity });
+      return res(ctx.status(200), ctx.json({ id, quantity }));
+    }
   }),
 
   // 회원가입
@@ -94,7 +116,6 @@ export const handlers = [
       );
     } catch (error) {
       // 로그인 실패
-      console.log(error);
       return res(
         ctx.status(401),
         ctx.json({
