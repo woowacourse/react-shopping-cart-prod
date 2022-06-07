@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import Button from '../components/common/Button';
@@ -9,12 +8,10 @@ import { StyledUserContainer, StyledUserForm } from '../components/common/Styled
 import useUserForm from '../hooks/useUserForm';
 import { validLoginInfo } from '../utils/validations';
 
-import { MESSAGE, SERVER_PATH, ROUTES_PATH, USER_INFO_KEY } from '../constants';
-import actionTypes from '../store/user/user.actions';
+import { MESSAGE, SERVER_PATH, ROUTES_PATH, USER_INFO_KEY, STORAGE_KEY } from '../constants';
 
 function LoginPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { loginInfo, setLoginInfo, handleUserInfoChange } = useUserForm();
   const { email, password } = loginInfo;
 
@@ -24,7 +21,7 @@ function LoginPage() {
     try {
       validLoginInfo(email);
       const { data } = await axios.post(SERVER_PATH.LOGIN, { email, password });
-      dispatch({ type: actionTypes.ADD_TOKEN, data });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data.accessToken));
       alert(MESSAGE.LOGIN_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {

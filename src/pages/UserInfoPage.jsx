@@ -1,22 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 import Button from '../components/common/Button';
 import { StyledUserContainer } from '../components/common/Styled';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH } from '../constants';
-import actionTypes from '../store/user/user.actions';
+import { MESSAGE, ROUTES_PATH, SERVER_PATH, STORAGE_KEY } from '../constants';
 
 function UserInfoPage() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const accessToken = useSelector(({ user }) => user.accessToken);
+  const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
   const handleWithdrawClick = async () => {
     try {
       await axios.delete(SERVER_PATH.USER, accessToken);
-      dispatch({ type: actionTypes.DELETE_TOKEN });
+      localStorage.removeItem(STORAGE_KEY);
       alert(MESSAGE.WITHDRAW_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
@@ -25,7 +22,7 @@ function UserInfoPage() {
   };
 
   const handleLogOutClick = () => {
-    dispatch({ type: actionTypes.DELETE_TOKEN });
+    localStorage.removeItem(STORAGE_KEY);
     alert(MESSAGE.LOGOUT_SUCCESS);
     navigate(ROUTES_PATH.HOME);
   };

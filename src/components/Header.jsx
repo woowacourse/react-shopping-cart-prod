@@ -2,12 +2,11 @@ import styled from 'styled-components';
 import { GiShoppingCart } from 'react-icons/gi';
 import { COLORS } from '../styles/theme';
 import { Link } from 'react-router-dom';
-import { ROUTES_PATH } from '../constants';
-import { useSelector } from 'react-redux';
+import { ROUTES_PATH, STORAGE_KEY } from '../constants';
 import { FaUserCircle } from 'react-icons/fa';
 
 function Header() {
-  const accessToken = useSelector(({ user }) => user.accessToken);
+  const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
   return (
     <StyledHeader>

@@ -22,6 +22,8 @@ const ROUTES_PATH = {
   MODIFY_USER_INFO: '/modify-user-info',
 };
 
+const STORAGE_KEY = 'accessToken';
+
 const SIZE = {
   LARGE: 'large',
   MIDDLE: 'middle',
@@ -57,7 +59,7 @@ const MESSAGE = {
   CHECK_DELETE: '🗑 정말로 삭제하시겠습니까? 🗑',
   LOGIN_SUCCESS: '로그인 되었습니다.',
   SIGN_UP_SUCCESS: '회원가입 되었습니다.',
-  MODIFY_PASSWORD_SUCCESS: '비밀번호가 변경 되었습니다.',
+  MODIFY_PASSWORD_SUCCESS: '비밀번호가 변경 되었습니다. 다시 로그인 하세요.',
   MODIFY_NICKNAME_SUCCESS: '닉네임이 변경 되었습니다.',
   LOGOUT_SUCCESS: '로그아웃 되었습니다.',
   WITHDRAW_SUCCESS: '회원탈퇴 되었습니다.',
@@ -69,4 +71,13 @@ const MESSAGE = {
   CAN_NOT_CONTAIN_SPACES: '공백이 포함되어 있습니다. 공백을 제거해 주세요.',
 };
 
-export { SERVER_PATH, ROUTES_PATH, SIZE, USER, USER_INFO_KEY, PASSWORD_INFO_KEY, MESSAGE };
+export {
+  SERVER_PATH,
+  ROUTES_PATH,
+  STORAGE_KEY,
+  SIZE,
+  USER,
+  USER_INFO_KEY,
+  PASSWORD_INFO_KEY,
+  MESSAGE,
+};

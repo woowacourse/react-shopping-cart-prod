@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import Input from '../components/common/Input';
@@ -8,12 +7,17 @@ import { StyledUserContainer, StyledUserForm } from '../components/common/Styled
 
 import useUserForm from '../hooks/useUserForm';
 import { validPasswordInfo } from '../utils/validations';
-import { MESSAGE, SERVER_PATH, USER, ROUTES_PATH, PASSWORD_INFO_KEY } from '../constants';
-import actionTypes from '../store/user/user.actions';
+import {
+  MESSAGE,
+  SERVER_PATH,
+  USER,
+  ROUTES_PATH,
+  PASSWORD_INFO_KEY,
+  STORAGE_KEY,
+} from '../constants';
 
 function ModifyPasswordPage() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { passwords, setPasswords, handleUserInfoChange } = useUserForm();
   const { prevPassword, newPassword, newPasswordConfirm } = passwords;
 
@@ -23,7 +27,7 @@ function ModifyPasswordPage() {
     try {
       validPasswordInfo(newPassword, newPasswordConfirm);
       await axios.patch(SERVER_PATH.PASSWORD, { prevPassword, newPassword });
-      dispatch({ type: actionTypes.DELETE_TOKEN });
+      localStorage.removeItem(STORAGE_KEY);
       alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
