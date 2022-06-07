@@ -4,6 +4,7 @@ import { MESSAGE } from "@/constants";
 import { getCookie } from "@/utils/cookie";
 import axios from "axios";
 import { BASE_URL } from "@/constants";
+import { response } from "msw";
 
 export const ACTION_TYPES = {
   ADD_PRODUCT_TO_CART: "ADD_PRODUCT_TO_CART",
@@ -46,9 +47,12 @@ export const addProductToCart = (args) => async (dispatch) => {
     );
     dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
   } catch (error) {
-    const { errorCode } = error.response.data;
-    if (errorCode === "1101") {
-      dispatch(toggleSnackbarOpen("장바구니에 이미 추가된 물품입니다."));
+    if (error.response.status === 401) {
+      dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
+      return;
+    }
+    if (error.response.status === 400) {
+      dispatch(toggleSnackbarOpen("장바구니에 이미 추가된 상품입니다."));
       return;
     }
     dispatch(toggleSnackbarOpen(error.message));
@@ -56,14 +60,21 @@ export const addProductToCart = (args) => async (dispatch) => {
 };
 
 export const getCartList = () => async (dispatch) => {
-  const response = await axios.get(`${BASE_URL}/users/me/carts`, {
-    headers: {
-      Authorization:
-        getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
-    },
-  });
-  console.log(response);
-  dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.products));
+  try {
+    const response = await axios.get(`${BASE_URL}/users/me/carts`, {
+      headers: {
+        Authorization:
+          getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+      },
+    });
+    dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.products));
+  } catch (error) {
+    if (error.response.status === 401) {
+      dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
+      return;
+    }
+    dispatch(toggleSnackbarOpen(error));
+  }
 };
 
 export const toggleCartItemCheckButton = (id) => async (dispatch) => {
