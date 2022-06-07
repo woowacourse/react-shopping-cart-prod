@@ -23,9 +23,16 @@ const decodeReqAccessToken = req => {
 };
 
 export const handlers = [
-  // 상품 정보 가져오기
+  // 1. 상품 목록 가져오기
   rest.get('/products', (_, res, ctx) => {
     return res(ctx.status(200), ctx.json(dummyProductList));
+  }),
+
+  // 2. 특정 상품 가져오기
+  rest.get('/products/:id', (req, res, ctx) => {
+    const { id } = req.params;
+    const product = dummyProductList.find(product => product.id === +id);
+    return res(ctx.status(200), ctx.json(product));
   }),
 
   // 회원가입
