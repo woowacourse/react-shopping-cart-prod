@@ -18,30 +18,18 @@ const useProductList = () => {
     productList: productsState.productList,
     error: productsState.error,
   }));
+  const avaliableList = productList.filter((product) => product.stock > 0);
+  const outOfStockList = productList.filter((product) => product.stock <= 0);
 
   useEffect(() => {
     dispatch(actions.getProductList());
   }, [dispatch]);
 
-  const sortedProductList = useMemo(() => {
-    const { availableList, outOfStockList } = productList.reduce(
-      (next, product) => {
-        const isAvailable = product.stock > 0;
-
-        (isAvailable ? next.availableList : next.outOfStockList).push(product);
-
-        return next;
-      },
-      {
-        availableList: [] as Array<Product>,
-        outOfStockList: [] as Array<Product>,
-      }
-    );
-
-    return [...availableList, ...outOfStockList];
-  }, [productList]);
-
-  return { isLoading, productList: sortedProductList, error };
+  return {
+    isLoading,
+    productList: [...avaliableList, ...outOfStockList],
+    error,
+  };
 };
 
 export default useProductList;
