@@ -89,12 +89,12 @@ const SignUp = () => {
 
     if (response.status === 비동기_요청.SUCCESS) {
       dispatch(snackbar.pushMessageSnackbar('회원가입에 성공하였습니다!'));
-      navigate('/');
+      navigate('/login');
       return;
     }
 
     dispatch(snackbar.pushMessageSnackbar('회원가입에 실패하였습니다!'));
-    navigate('/');
+    navigate('/signUp');
   };
 
   return (
