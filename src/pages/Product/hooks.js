@@ -1,8 +1,10 @@
 import useFetch from 'hooks/useFetch';
 import useCart from 'hooks/useCart';
 import { useParams } from 'react-router-dom';
-import { METHOD } from 'constants';
+import { METHOD, PATH_NAME } from 'constants';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const useProductPage = () => {
   const { id } = useParams();
@@ -16,8 +18,14 @@ const useProductPage = () => {
     url: `/api/products/${id}`,
   });
   const { addItem } = useCart();
+  const navigate = useNavigate();
+  const { authenticated } = useSelector((state) => state.user);
 
   const handleAddCartItem = () => {
+    if (!authenticated) {
+      navigate(PATH_NAME.LOGIN);
+      return;
+    }
     addItem(id);
   };
 

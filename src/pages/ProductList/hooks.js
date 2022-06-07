@@ -1,7 +1,9 @@
 import useFetch from 'hooks/useFetch';
 import useCart from 'hooks/useCart';
-import { METHOD } from 'constants';
+import { METHOD, PATH_NAME } from 'constants';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const useProductListPage = () => {
   const {
@@ -14,6 +16,8 @@ const useProductListPage = () => {
     url: '/api/products',
   });
 
+  const navigate = useNavigate();
+  const { authenticated } = useSelector((state) => state.user);
   const { cartItems, deleteItem, addItem } = useCart();
 
   const isEmpty = products && !isLoading && products.length === 0;
@@ -23,6 +27,10 @@ const useProductListPage = () => {
 
   const handleClickCartButton = (id) => (e) => {
     e.stopPropagation();
+    if (!authenticated) {
+      navigate(PATH_NAME.LOGIN);
+      return;
+    }
     if (includedInCart(id)) {
       deleteItem(id);
       return;
