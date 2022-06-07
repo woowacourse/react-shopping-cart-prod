@@ -11,7 +11,7 @@ const useProductListPage = () => {
     fetchApi,
   } = useFetch({
     method: METHOD.GET,
-    url: '/products',
+    url: '/api/products',
   });
 
   const { cartItems, deleteItem, addItem } = useCart();

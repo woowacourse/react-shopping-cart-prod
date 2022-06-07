@@ -19,7 +19,7 @@ const ProductList = () => {
   } = useProductListPage();
 
   if (isError) return <ImgWrapper src={errorApiImg} />;
-  if (isEmpty) return <ImgWrapper src={emptyImg} />;
+  if (isEmpty) return <ImgWrapper src={emptyImg} size="400" />;
   if (isLoading)
     return (
       <ProductContainer>

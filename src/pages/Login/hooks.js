@@ -11,7 +11,8 @@ const useLoginPage = () => {
   useAuthorization(AUTHORIZATION_TYPE.PUBLIC_ONLY);
   const navigate = useNavigate();
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
-  const { isLoginSucceed, isLoginError, login } = useAuthentication();
+  const { isLoginSucceed, isLoginError, loginErrorMessage, login } =
+    useAuthentication();
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -28,15 +29,14 @@ const useLoginPage = () => {
 
   useEffect(() => {
     if (isLoginSucceed) {
-      showSuccessSnackBar('로그인 성공');
+      showSuccessSnackBar('로그인에 성공하였습니다!');
       navigate(PATH_NAME.HOME);
       return;
     }
-
     if (isLoginError) {
-      showErrorSnackBar('로그인 실패');
+      showErrorSnackBar(loginErrorMessage);
     }
-  }, [isLoginSucceed, isLoginError]);
+  }, [isLoginSucceed, isLoginError, loginErrorMessage]);
 
   return { handleLogin };
 };

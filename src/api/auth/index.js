@@ -1,13 +1,18 @@
-import axios from 'axios';
+import apiClient from 'api';
+import { getCookie } from 'utils/cookie';
 
-export const duplicateEmailApi = async (payload) => {
+export const duplicateEmailApi = async (email) => {
   try {
-    await axios({
-      method: 'POST',
-      url: '/api/members/duplicate-email',
-      payload,
+    await apiClient.get(`/api/members/duplicate-email?email=${email}`, {
+      email,
     });
   } catch (err) {
     console.log('err', err);
   }
+};
+
+export const getAuthorizedHeaders = () => {
+  return {
+    Authorization: `Bearer ${getCookie('userToken')}`,
+  };
 };

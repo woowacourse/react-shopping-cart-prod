@@ -1,6 +1,6 @@
 import useFetch from 'hooks/useFetch';
 import { METHOD } from 'constants';
-import { getCookie } from 'utils/cookie';
+import { getAuthorizedHeaders } from 'api/auth';
 
 const useWithdrawal = () => {
   const { isSucceed, isError, fetchApi } = useFetch({
@@ -9,9 +9,7 @@ const useWithdrawal = () => {
   });
 
   const handleWithdrawal = () => {
-    const headers = {
-      Authorization: `Bearer ${getCookie('userToken')}`,
-    };
+    const headers = getAuthorizedHeaders();
     fetchApi({ payload: headers });
   };
 

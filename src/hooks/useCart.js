@@ -1,29 +1,26 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { getCartItemAsync } from 'reducers/cart/cart.thunk';
-import { setCart } from 'reducers/cart/cart.actions';
 import { METHOD } from 'constants';
 import useFetch from 'hooks/useFetch';
+import { useEffect } from 'react';
 
 const useCart = () => {
   const dispatch = useDispatch();
   const { isLoading, isError, data } = useSelector((state) => state.cart);
 
-  const { fetchApi: deleteItemApi } = useFetch({
+  const { isSucceed: isDeleteItemSucceed, fetchApi: deleteItemApi } = useFetch({
     method: METHOD.DELETE,
     url: '/cart',
-    handler: (data) => dispatch(setCart(data)),
   });
 
-  const { fetchApi: updateItemApi } = useFetch({
+  const { isSucceed: isUpdateItemSucceed, fetchApi: updateItemApi } = useFetch({
     method: METHOD.PUT,
     url: '/cart',
-    handler: (data) => dispatch(setCart(data)),
   });
 
-  const { fetchApi: addItemApi } = useFetch({
+  const { isSucceed: isAddItemSucceed, fetchApi: addItemApi } = useFetch({
     method: METHOD.POST,
     url: '/cart',
-    handler: (data) => dispatch(setCart(data)),
   });
 
   const getItems = () => {
@@ -45,6 +42,18 @@ const useCart = () => {
   const addItem = (id) => {
     addItemApi({ params: id });
   };
+
+  useEffect(() => {
+    if (isAddItemSucceed) getItems();
+  }, [isAddItemSucceed]);
+
+  useEffect(() => {
+    if (isUpdateItemSucceed) getItems();
+  }, [isUpdateItemSucceed]);
+
+  useEffect(() => {
+    if (isDeleteItemSucceed) getItems();
+  }, [isDeleteItemSucceed]);
 
   return {
     isLoading,

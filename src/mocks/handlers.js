@@ -4,7 +4,7 @@ import { productList } from 'assets/mock';
 let cartStorage = [];
 
 export const handlers = [
-  rest.get('/products/:id', (req, res, ctx) => {
+  rest.get('/api/products/:id', (req, res, ctx) => {
     const id = +req.params.id;
 
     const product = productList.find(({ id: productId }) => productId === +id);
@@ -12,7 +12,7 @@ export const handlers = [
     return res(ctx.json(product));
   }),
 
-  rest.get('/products', (req, res, ctx) => {
+  rest.get('/api/products', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(productList));
   }),
 

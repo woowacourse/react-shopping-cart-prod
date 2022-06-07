@@ -13,7 +13,7 @@ const useProductPage = () => {
     fetchApi,
   } = useFetch({
     method: METHOD.GET,
-    url: `/products/${id}`,
+    url: `/api/products/${id}`,
   });
   const { addItem } = useCart();
 
