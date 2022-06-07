@@ -1,6 +1,5 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import PropTypes from 'prop-types';
 
 import ContentBox from 'component/common/ContentBox';
 import ErrorPendingBoundary from 'component/common/ErrorPendingBoundary';
@@ -13,9 +12,12 @@ import * as S from 'page/OrderPayPage/style';
 import {SmingPayment, useSmingPayment} from 'sming-payments';
 import {PATH} from 'constant';
 import {useNavigate} from 'react-router-dom';
+import useCartItem from 'hook/useCartItem';
 
 export default function OrderPayPage() {
   const {isShowModal, toggleModal} = useSmingPayment();
+
+  const {deleteCartItem} = useCartItem();
 
   const navigation = useNavigate();
 
@@ -35,7 +37,13 @@ export default function OrderPayPage() {
 
   const onClickOrderButton = () => toggleModal();
 
-  const onClickPayButton = () => navigation(PATH.ORDER_LIST);
+  const onClickPayButton = () => {
+    navigation(PATH.ORDER_LIST);
+    selectedCartItem.forEach(({id}) => {
+      deleteCartItem(id, false);
+    });
+    // todo: 주문 목록에 상품 추가
+  };
 
   return (
     <S.Layout>
@@ -79,9 +87,3 @@ export default function OrderPayPage() {
     </S.Layout>
   );
 }
-
-OrderPayPage.propTypes = {
-  image: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.string,
-};
