@@ -18,11 +18,12 @@ const handlers = [
     return res(ctx.status(200), ctx.json(product));
   }),
 
-  rest.get(SERVER_PATH.CART, (req, res, ctx) => {
+  rest.get(SERVER_PATH.CARTS, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.post(`${SERVER_PATH.CART}/:id`, (req, res, ctx) => {
+  rest.post(`${SERVER_PATH.CARTS}/products/:id`, (req, res, ctx) => {
+    console.log('request', req);
     const id = +req.params.id;
     const index = cartList.findIndex(({ id: productId }) => productId === id);
     const product = productList.find(({ id: productId }) => productId === id);
@@ -33,13 +34,13 @@ const handlers = [
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.delete(`${SERVER_PATH.CART}/:id`, (req, res, ctx) => {
+  rest.delete(`${SERVER_PATH.CARTS}/:id`, (req, res, ctx) => {
     const id = +req.params.id;
     cartList = cartList.filter((item) => item.id !== id);
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.patch(`${SERVER_PATH.CART}/:id`, (req, res, ctx) => {
+  rest.patch(`${SERVER_PATH.CARTS}/:id`, (req, res, ctx) => {
     const id = +req.params.id;
     const quantity = +req.body.quantity;
     const cartItemIndex = cartList.findIndex((cartItem) => cartItem.id === id);

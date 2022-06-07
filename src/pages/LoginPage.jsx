@@ -24,7 +24,6 @@ function LoginPage() {
     try {
       validLoginInfo(email);
       const { data } = await axios.post(SERVER_PATH.LOGIN, { email, password });
-      console.log(data);
       dispatch({ type: actionTypes.ADD_TOKEN, data });
       alert(MESSAGE.LOGIN_SUCCESS);
       navigate(ROUTES_PATH.HOME);

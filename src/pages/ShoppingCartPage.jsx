@@ -6,7 +6,6 @@ import { COLORS } from '../styles/theme';
 import { StyledCheckbox } from '../components/common/Styled';
 import { MESSAGE } from '../constants';
 import useCart from '../hooks/useCart';
-import Loading from '../components/Loading';
 import Button from '../components/common/Button';
 
 function ShoppingCartPage() {
@@ -14,7 +13,7 @@ function ShoppingCartPage() {
   const [totalPrice, setTotalPrice] = useState();
   const [selectedItems, setSelectedItems] = useState([]);
   const [isCheckedAll, setCheckedAll] = useReducer((checked) => !checked, true);
-  const { data: cartList, isLoading, isError } = useSelector(({ cart }) => cart);
+  const { data: cartList } = useSelector(({ cart }) => cart);
 
   const toggleCheckedAll = () => {
     if (!isCheckedAll) {
@@ -58,9 +57,6 @@ function ShoppingCartPage() {
     );
     setTotalPrice(totalAmount);
   }, [cartList, selectedItems]);
-
-  if (isError) return <h1>error</h1>;
-  if (isLoading) return <Loading />;
 
   return (
     <StyledSection>

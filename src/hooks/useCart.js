@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addCartItemAsync,
   deleteCartItemAsync,
@@ -7,9 +7,10 @@ import {
 
 const useCart = () => {
   const dispatch = useDispatch();
+  const accessToken = useSelector(({ user }) => user.accessToken);
 
   const addItem = (id) => {
-    dispatch(addCartItemAsync(id));
+    dispatch(addCartItemAsync(id, accessToken));
   };
 
   const deleteItem = (id) => {

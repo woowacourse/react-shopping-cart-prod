@@ -15,10 +15,18 @@ const actionTypes = {
   UPDATE_ITEM_QUANTITY_ERROR: 'UPDATE_ITEM_QUANTITY_ERROR',
 };
 
-const addCartItemAsync = (id) => async (dispatch) => {
+const addCartItemAsync = (id, accessToken) => async (dispatch) => {
+  console.log('accessToken', accessToken);
   try {
     dispatch({ type: actionTypes.ADD_CART });
-    const { data } = await axios.post(`${SERVER_PATH.CART}/${id}`);
+    await axios.post(`${SERVER_PATH.CARTS}/products/${id}`, null, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log('post 완료');
+    const { data } = await axios.get(SERVER_PATH.CARTS);
+    console.log('data', data);
     dispatch({
       type: actionTypes.ADD_CART_SUCCESS,
       payload: data,
@@ -31,7 +39,7 @@ const addCartItemAsync = (id) => async (dispatch) => {
 const deleteCartItemAsync = (id) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.DELETE_CART });
-    const { data } = await axios.delete(`${SERVER_PATH.CART}/${id}`);
+    const { data } = await axios.delete(`${SERVER_PATH.CARTS}/${id}`);
     dispatch({
       type: actionTypes.DELETE_CART_SUCCESS,
       payload: data,
@@ -44,7 +52,7 @@ const deleteCartItemAsync = (id) => async (dispatch) => {
 const updateItemQuantityAsync = (id, quantity) => async (dispatch) => {
   try {
     dispatch({ type: actionTypes.UPDATE_ITEM_QUANTITY });
-    const { data } = await axios.patch(`${SERVER_PATH.CART}/${id}`, { quantity });
+    const { data } = await axios.patch(`${SERVER_PATH.CARTS}/${id}`, { quantity });
     dispatch({
       type: actionTypes.UPDATE_ITEM_QUANTITY_SUCCESS,
       payload: data,

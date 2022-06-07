@@ -24,7 +24,7 @@ function SignUpPage() {
       alert(MESSAGE.SIGN_UP_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
-      alert(error.message);
+      alert(error.response.data);
     }
   };
 

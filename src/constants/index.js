@@ -1,8 +1,9 @@
-const API = '/api';
+const API = 'http://ec2-13-124-88-137.ap-northeast-2.compute.amazonaws.com:8080/api';
+// const API = 'api';
 
 const SERVER_PATH = {
-  PRODUCTS: '/products',
-  CART: '/cart',
+  PRODUCTS: `${API}/products`,
+  CARTS: `${API}/carts`,
   USER: `${API}/customers`,
   LOGIN: `${API}/login`,
   PASSWORD: `${API}/customers/password`,
