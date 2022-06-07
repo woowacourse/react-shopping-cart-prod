@@ -1,13 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { deleteCookie } from "@/utils/cookie";
 
 import StyledDropdownContainer from "@/components/common/dropdown/Dropdown.styled";
 
 export default function Dropdown() {
+  const navigate = useNavigate();
+
   const handleLogoutClick = () => {
     deleteCookie("accessToken");
+    navigate("/");
     location.reload();
   };
   return (
