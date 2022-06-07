@@ -1,12 +1,20 @@
 // @ts-nocheck
 import { rest } from 'msw';
 import { users } from 'mocks';
+import CustomError from 'utils/CustomError';
 
 const userInquiryHandler = rest.get('/customers', (req, res, ctx) => {
   try {
-    const accessToken = JSON.parse(req.headers.headers.authorization.replace('Bearer ', ''));
-    // 유효한 토큰이 아닌 경우
-    if (!users.some(user => user.id === accessToken.id)) throw new Error();
+    const { authorization } = req.headers.headers;
+
+    const accessToken = JSON.parse(
+      !authorization.includes('undefined') ? authorization.replace('Bearer ', '') : null,
+    );
+
+    // [ERROR] 유효한 토큰이 아닌 경우
+    if (!accessToken || !users.some(user => user.id === accessToken.id)) {
+      throw new CustomError(1003, '유효하지 않은 토큰입니다.', 401);
+    }
 
     const { nickname, email } = users.find(user => user.id === accessToken.id);
 
@@ -21,9 +29,10 @@ const userInquiryHandler = rest.get('/customers', (req, res, ctx) => {
   } catch (error) {
     // 회원 조회 실패
     return res(
-      ctx.status(401),
+      ctx.status(error.statusCode),
       ctx.json({
-        message: 'No authorization',
+        error: error.code,
+        message: error.message,
       }),
     );
   }

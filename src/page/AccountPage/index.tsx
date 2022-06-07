@@ -32,7 +32,7 @@ const AccountPage = () => {
   const [isAccountDeleteModalOpen, setIsAccountDeleteModalOpen] = useState(false);
 
   useEffect(() => {
-    getProfile();
+    getEmail();
   }, []);
 
   useEffect(() => {
@@ -43,16 +43,18 @@ const AccountPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getProfile = async () => {
-    const accessToken = getCookie('accessToken');
+  const getEmail = async () => {
+    try {
+      const accessToken = getCookie('accessToken');
 
-    const response = await axios.get('/customers', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+      const response = await axios.get('/customers', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
 
-    setEmail(response.data.email);
+      setEmail(response.data.email);
+    } catch (error) {}
   };
 
   const updateNickname = async () => {
