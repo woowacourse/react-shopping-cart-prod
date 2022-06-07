@@ -1,8 +1,28 @@
+import { useEffect } from 'react';
+
 import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
 import EditUserInfoForm from 'components/EditUserInfoForm/EditUserInfoForm';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { isLogin } from 'utils/auth';
+
+import { USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
 
 function EditUserInfoPage() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLogin()) {
+      alert(USER_MESSAGE.NEED_LOGIN);
+      navigate(PATH.LOGIN, { replace: true });
+
+      return;
+    }
+  }, [dispatch, navigate]);
+
   return (
     <StyledPage>
       <StyledEditContainer>
