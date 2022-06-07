@@ -34,7 +34,7 @@ export default function CartItem({cartInfo, initialChecked = false}) {
       <S.EditQuantityBox>
         <S.StyledDeleteIcon onClick={() => deleteCartItem(id)} />
         <QuantityBox quantity={quantity} productId={id} />
-        <S.PriceSpan>{price.toLocaleString()}원</S.PriceSpan>
+        <S.PriceSpan>{price * quantity}원</S.PriceSpan>
       </S.EditQuantityBox>
     </S.CartItemLayout>
   );
