@@ -8,7 +8,7 @@ const deleteAccountHandler = rest.delete('/customers', (req, res, ctx) => {
     const { authorization } = req.headers.headers;
 
     const token = authorization.replace('Bearer ', '');
-    const accessToken = JSON.parse(!token && !token.includes('undefined') ? token : null);
+    const accessToken = JSON.parse(!!token && !token.includes('undefined') ? token : null);
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {
