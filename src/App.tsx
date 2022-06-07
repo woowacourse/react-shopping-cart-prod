@@ -15,6 +15,7 @@ import theme from 'styles/theme';
 import { useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import SnackBar from 'components/@shared/SnackBar';
+import axios from 'axios';
 
 function App() {
   const { isShowSnackBar, message } = useSelector(

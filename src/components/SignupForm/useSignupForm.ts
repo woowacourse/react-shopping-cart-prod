@@ -44,7 +44,7 @@ const useSignupForm = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!(e.target instanceof HTMLFormElement)) return;
 
@@ -59,8 +59,8 @@ const useSignupForm = () => {
     };
 
     try {
+      await authAPI.signup(user);
       dispatch(snackBarActions.show('회원가입 되었습니다 😆'));
-      authAPI.signup(user);
       navigate(PATH.LOGIN);
     } catch (error) {
       alert(USER_MESSAGE.FAIL_SIGNUP);
