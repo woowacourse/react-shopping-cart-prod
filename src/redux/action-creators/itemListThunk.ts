@@ -10,6 +10,6 @@ export const getItemList = () => async (dispatch: Dispatch<ItemListAction>) => {
 
     dispatch(itemListAction.getItemList.success(response.data));
   } catch (error) {
-    dispatch(itemListAction.getItemList.failure(error.message));
+    dispatch(itemListAction.getItemList.failure(error.response.data.errorMessage));
   }
 };

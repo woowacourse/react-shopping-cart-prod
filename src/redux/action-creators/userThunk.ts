@@ -17,7 +17,8 @@ export const signUp = (signUpInfo: SignUpInfo) => async (dispatch: Dispatch<User
 
     dispatch(userAction.postSignUp.success());
   } catch (error) {
-    dispatch(userAction.postSignUp.failure(error.message));
+    dispatch(userAction.postSignUp.failure(error.response.data.errorMessage));
+    alert(error.response.data.errorMessage);
   }
 };
 
@@ -34,7 +35,7 @@ export const signIn = (signInInfo: SignInInfo) => async (dispatch: Dispatch<User
     setLocalStorageToken(response.data.token);
     dispatch(userAction.postSignIn.success(response.data));
   } catch (error) {
-    dispatch(userAction.postSignIn.failure(error.message));
+    dispatch(userAction.postSignIn.failure(error.response.data.errorMessage));
     alert(error.response.data.errorMessage);
   }
 };
@@ -57,8 +58,7 @@ export const editPassword =
 
       dispatch(userAction.patchNewPassword.success());
     } catch (error) {
-      dispatch(userAction.patchNewPassword.failure(error.message));
-      console.log(error);
+      dispatch(userAction.patchNewPassword.failure(error.response.data.errorMessage));
       alert(error.response.data.errorMessage);
     }
   };
@@ -79,8 +79,9 @@ export const resign = (password: string) => async (dispatch: Dispatch<UserAction
     });
 
     dispatch(userAction.deleteUser.success());
+    localStorage.removeItem('token');
   } catch (error) {
-    dispatch(userAction.deleteUser.failure(error.message));
+    dispatch(userAction.deleteUser.failure(error.response.data.errorMessage));
     alert(error.response.data.errorMessage);
   }
 };
@@ -102,7 +103,7 @@ export const autoSignIn = () => async (dispatch: Dispatch<UserAction>) => {
     setLocalStorageToken(response.data.token);
     dispatch(userAction.autoSignIn.success(response.data));
   } catch (error) {
-    dispatch(userAction.autoSignIn.failure(error.message));
+    dispatch(userAction.autoSignIn.failure(error.response.data.errorMessage));
     alert(error.response.data.errorMessage);
   }
 };

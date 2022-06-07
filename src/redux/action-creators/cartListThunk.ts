@@ -12,7 +12,7 @@ export const getCartList = () => async (dispatch: Dispatch<CartListAction>) => {
 
     dispatch(cartListAction.getCartList.success(response.data));
   } catch (error) {
-    dispatch(cartListAction.getCartList.failure(error.message));
+    dispatch(cartListAction.getCartList.failure(error.response.data.errorMessage));
   }
 };
 
@@ -23,7 +23,7 @@ export const putCartItem = (cartItem: CartItem) => async (dispatch: Dispatch<Car
 
     dispatch(cartListAction.putCartItem.success(response.data));
   } catch (error) {
-    dispatch(cartListAction.putCartItem.failure(error.message));
+    dispatch(cartListAction.putCartItem.failure(error.response.data.errorMessage));
   }
 };
 
@@ -34,7 +34,7 @@ export const postCartItem = (cartItem: CartItem) => async (dispatch: Dispatch<Ca
 
     dispatch(cartListAction.postCartItem.success(response.data));
   } catch (error) {
-    dispatch(cartListAction.postCartItem.failure(error.message));
+    dispatch(cartListAction.postCartItem.failure(error.response.data.errorMessage));
   }
 };
 
@@ -47,6 +47,6 @@ export const deleteCartItem =
 
       dispatch(cartListAction.deleteCartItem.success(response.data));
     } catch (error) {
-      dispatch(cartListAction.deleteCartItem.failure(error.message));
+      dispatch(cartListAction.deleteCartItem.failure(error.response.data.errorMessage));
     }
   };
