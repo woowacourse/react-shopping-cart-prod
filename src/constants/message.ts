@@ -10,6 +10,7 @@ const CART_MESSAGE = {
 };
 
 const USER_MESSAGE = {
+  WRONG_PHONE_NUMBER: '핸드폰 번호는 010으로 시작해야 하며 총 11자여야 합니다.',
   FAIL_LOGIN: '아이디 혹은 비밀번호를 확인해주세요.',
   FAIL_SIGNUP: '기입하신 정보를 확인해주세요.',
   FAIL_EDIT: '주소 혹은 핸드폰 번호를 확인해주세요.',

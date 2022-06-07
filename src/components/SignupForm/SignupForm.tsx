@@ -38,6 +38,12 @@ function SignupForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (!phoneNumber.startsWith('010') || phoneNumber.length < 11) {
+      alert(USER_MESSAGE.WRONG_PHONE_NUMBER);
+
+      return;
+    }
+
     const user = {
       username,
       password,
@@ -60,7 +66,7 @@ function SignupForm() {
       <input
         id="username"
         type="text"
-        placeholder="사용자 이름을 입력해주세요"
+        placeholder="사용자 이름(영문 소문자, 숫자, _, -)을 입력해주세요"
         value={username}
         onChange={setUsername}
         pattern={'^[a-z0-9_-]{5,20}$'}
@@ -149,15 +155,23 @@ const StyledForm = styled.form`
 
   width: 100%;
 
-  > label {
+  label {
     margin-top: 4px;
     font-size: 14px;
   }
 
-  > input {
+  input {
     border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
     border-radius: 2px;
     padding: 6px 8px;
+  }
+
+  input[type='number'] {
+    ::-webkit-inner-spin-button,
+    ::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   }
 `;
 
