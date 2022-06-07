@@ -25,7 +25,7 @@ const Template = (args) => (
 export const Defaults = Template.bind({});
 Defaults.args = {
   cartInfo: {
-    image: MOCK_PRODUCT_LIST[0].image,
+    imageUrl: MOCK_PRODUCT_LIST[0].imageUrl,
     name: MOCK_PRODUCT_LIST[0].name,
     price: MOCK_PRODUCT_LIST[0].price,
     quantity: 1,

@@ -26,6 +26,50 @@ let userDB = {
       last: '2222',
     },
     cart: [],
+    orders: [
+      {
+        orderId: 1,
+        order: [
+          {
+            id: 1,
+            name: '이름',
+            totalPrice: 2300,
+            quantity: 1,
+            imageUrl:
+              'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
+          },
+          {
+            id: 2,
+            name: '이름2',
+            totalPrice: 4600,
+            quantity: 2,
+            imageUrl:
+              'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
+          },
+        ],
+      },
+      {
+        orderId: 2,
+        order: [
+          {
+            id: 1,
+            name: '이름',
+            totalPrice: 2300,
+            quantity: 1,
+            imageUrl:
+              'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
+          },
+          {
+            id: 2,
+            name: '이름2',
+            totalPrice: 2300,
+            quantity: 1,
+            imageUrl:
+              'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
+          },
+        ],
+      },
+    ],
   },
 };
 
@@ -159,5 +203,16 @@ export const handlers = [
     delete userDB[accessToken];
 
     return res(ctx.status(204));
+  }),
+
+  // 사용자 정보 조회
+  rest.get(process.env.REACT_APP_GET_INFO_API_URL, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    if (!Object.hasOwnProperty.call(userDB, accessToken)) {
+      return res(ctx.status(404));
+    }
+
+    return res(ctx.status(200), ctx.json(userDB[accessToken].orders));
   }),
 ];
