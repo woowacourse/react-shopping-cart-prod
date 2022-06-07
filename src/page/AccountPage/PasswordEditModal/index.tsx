@@ -1,12 +1,7 @@
-import ModalOverlay from 'components/@shared/Modal';
-import Input from 'components/Input';
+import { Modal, Input, Title, AuthButton, Container } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-import Title from 'components/Title';
-import AuthButton from 'components/AuthButton';
 import { useState } from 'react';
-import Container from 'components/@shared/Container';
 import { validatePassword } from 'utils/validator';
-
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
 import { authApiClient } from 'apis/apiClient';
@@ -35,7 +30,7 @@ const PasswordEditModal = ({ handleModal }) => {
   };
 
   return (
-    <ModalOverlay onCloseModal={handleModal}>
+    <Modal onCloseModal={handleModal}>
       <Container width="505px" height="400px">
         <div>
           <Title mainTitle="비밀번호 변경" />
@@ -64,7 +59,7 @@ const PasswordEditModal = ({ handleModal }) => {
           />
         </div>
       </Container>
-    </ModalOverlay>
+    </Modal>
   );
 };
 

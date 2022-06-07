@@ -1,20 +1,18 @@
 // @ts-nocheck
 import Styled from './index.style';
-import Input from 'components/Input';
+import { Container, Input, Title, GuideText, AuthButton, Logo } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-import Title from 'components/Title';
-import GuideText from 'components/GuideText';
-import AuthButton from 'components/AuthButton';
+
 import { useState, useEffect } from 'react';
-import Container from 'components/@shared/Container';
+
 import { setCookie } from 'utils/cookie';
 
 import { useLocation, useNavigate } from 'react-router-dom';
 import { doLogin } from 'actions/actionCreator';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE } from 'utils/constants';
-import Logo from 'components/Logo';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { authApiClient } from 'apis/apiClient';
 

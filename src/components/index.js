@@ -1,4 +1,6 @@
 export { default as Button } from 'components/@shared/Button';
+export { default as Container } from 'components/@shared/Container';
+export { default as Modal } from 'components/@shared/Modal';
 
 export { default as AuthButton } from 'components/AuthButton';
 export { default as CartIcon } from 'components/CartIcon';

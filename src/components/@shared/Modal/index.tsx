@@ -7,7 +7,7 @@ interface Props {
   onCloseModal(): void;
 }
 
-const ModalOverlay = ({ children, onCloseModal }: PropsWithChildren<Props>) => {
+const Modal = ({ children, onCloseModal }: PropsWithChildren<Props>) => {
   return (
     <>
       {ReactDOM.createPortal(
@@ -27,4 +27,4 @@ const ModalOverlay = ({ children, onCloseModal }: PropsWithChildren<Props>) => {
   );
 };
 
-export default ModalOverlay;
+export default Modal;
