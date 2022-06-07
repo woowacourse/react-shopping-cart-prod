@@ -203,4 +203,36 @@ export const handlers = [
 
     return res(ctx.status(201));
   }),
+
+  // 선택한 구매 정보 상세 가져오기
+  rest.get(`${process.env.REACT_APP_ORDER_API_URL}/:id`, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+    const id = Number.parseInt(req.params.id);
+
+    if (!Object.hasOwnProperty.call(userDB, accessToken)) {
+      return res(ctx.status(404));
+    }
+
+    const detailOrderInfo = userDB[accessToken].orders
+      .find(({orderId}) => orderId === id)
+      .order.map(({id, name, totalPrice, quantity, imageUrl}) => {
+        return {
+          id,
+          name,
+          price: totalPrice / quantity,
+          imageUrl,
+          quantity,
+        };
+      });
+
+    const totalPrice = detailOrderInfo.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        order: detailOrderInfo,
+        totalPrice,
+      }),
+    );
+  }),
 ];

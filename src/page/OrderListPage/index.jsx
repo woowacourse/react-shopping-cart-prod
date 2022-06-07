@@ -53,7 +53,7 @@ export default function OrderListPage() {
                     <S.OrderTable key={orderId}>
                       <S.OrderTableHeader>
                         <S.OrderNumber>주문번호: {orderId}</S.OrderNumber>
-                        <Link to={PATH.ORDER_DETAIL}>
+                        <Link to={`${PATH.ORDER_DETAIL}/${orderId}`}>
                           <S.OrderNumber>상세보기 &gt;</S.OrderNumber>
                         </Link>
                       </S.OrderTableHeader>

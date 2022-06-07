@@ -19,6 +19,7 @@ import UserInfoEditPage from 'page/UserInfoEditPage';
 import WithdrawalPage from 'page/WithdrawalPage';
 import OrderPayPage from 'page/OrderPayPage';
 import OrderListPage from 'page/OrderListPage';
+import OrderDetailPage from 'page/OrderDetailPage';
 
 if (process.env.NODE_ENV === 'development') {
   const {worker} = require('./mocks/browsers');
@@ -38,10 +39,7 @@ export default function App() {
             <Route path={PATH.CART} element={<ProductCartPage />}></Route>
             <Route path={PATH.ORDER_LIST} element={<OrderListPage />}></Route>
             <Route path={PATH.ORDER_PAY} element={<OrderPayPage />}></Route>
-            <Route
-              path={PATH.ORDER_DETAIL}
-              element={<NotFoundPage> 주문 상세 페이지 구현중😢</NotFoundPage>}
-            ></Route>
+            <Route path={`${PATH.ORDER_DETAIL}/:id`} element={<OrderDetailPage />}></Route>
             <Route path={PATH.LOGIN} element={<LoginPage />}></Route>
             <Route path={PATH.SIGN_UP} element={<SignUpPage />}></Route>
             <Route path={PATH.EDIT_USER_INFO} element={<UserInfoEditPage />}></Route>

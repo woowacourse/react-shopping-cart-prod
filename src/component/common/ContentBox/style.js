@@ -28,8 +28,9 @@ const PriceInfoFont = styled(Font)`
   font-size: 20px;
   font-weight: 700;
   font-family: 'Lato';
+
   background-size: 0% 50%;
-  background: ${({theme}) => `linear-gradient(to top, ${theme.MINT} 50%, transparent 50%)`};
+  background: ${({theme}) => `linear-gradient(to top, ${theme.MINT_500} 50%, transparent 50%)`};
 `;
 
 export {ContentBoxLayout, ContentBoxHeader, PriceInfoBox, PriceInfoFont};
