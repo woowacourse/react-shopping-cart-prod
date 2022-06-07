@@ -18,6 +18,7 @@ import {
 } from "@/constants";
 
 import StyledSignupContainer from "@/components/pages/sign-up/Signup.style";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
   const [email, setEmail] = useState({ value: "", status: STATUS.READY });
@@ -29,6 +30,7 @@ function Signup() {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
 
@@ -105,10 +107,10 @@ function Signup() {
         password: password.value,
         nickname: nickname.value,
       });
+      navigate("/login");
     } catch (error) {
       const { errorCode } = error.response.data;
 
-      console.log(error.response.data);
       if (errorCode === "1001") {
         dispatch(toggleSnackbarOpen(MESSAGE.EXIST_EMAIL));
         return;
