@@ -22,11 +22,22 @@ export default function useCartItem(path = null) {
   const {fetch: patchCart} = useFetch('patch');
 
   const deleteCartItem = (payload) => {
-    const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
+    const response = JSON.parse(localStorage.getItem('accessToken'));
 
+    if (!response) {
+      alert('로그인을 한 후, 이용해주세요.');
+      return;
+    }
+
+    const accessToken = response.accessToken;
+
+    const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
     if (deleteConfirm) {
       deleteCart({
-        API_URL: `${process.env.REACT_APP_CART_API_URL}/${payload}`,
+        API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+        headers: {Authorization: `Bearer ${accessToken}`},
+        body: {productId: payload},
+
         onSuccess: () => {
           dispatch({type: CART.DELETE, payload});
           dispatch({type: SELECTED_ITEM.DELETE, payload});
@@ -114,14 +125,26 @@ export default function useCartItem(path = null) {
   };
 
   const deleteSelectedCart = (payload) => {
+    console.log(payload);
+    const response = JSON.parse(localStorage.getItem('accessToken'));
+
+    if (!response) {
+      alert('로그인을 한 후, 이용해주세요.');
+      return;
+    }
+
+    const accessToken = response.accessToken;
+
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
 
     if (deleteConfirm) {
       payload.forEach((id) =>
         deleteCart({
-          API_URL: `${process.env.REACT_APP_CART_API_URL}/${id}`,
+          API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+          headers: {Authorization: `Bearer ${accessToken}`},
+          body: {productId: id},
           onSuccess: () => {
-            dispatch({type: CART.DELETE_SELECTED_CART, payload});
+            dispatch({type: CART.DELETE, payload: id});
             dispatch({type: SELECTED_ITEM.DELETE, payload: id});
           },
         }),

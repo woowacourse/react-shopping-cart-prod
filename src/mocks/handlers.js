@@ -93,18 +93,17 @@ export const handlers = [
   }),
 
   // 장바구니 상품 삭제
-  rest.delete(`${process.env.REACT_APP_CART_API_URL}/:id`, (req, res, ctx) => {
-    const productId = Number.parseInt(req.params.id);
-    const isInCart = cart.some(({id}) => id === productId);
-
+  rest.delete(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+    const {productId} = req.body;
+    const isInCart = cart[accessToken].cart.some(({id}) => id === productId);
     if (!isInCart) {
       return res(ctx.status(404));
     }
 
-    const newCart = cart.filter(({id}) => id !== productId);
-    cart = newCart;
-
-    return res(ctx.status(200));
+    const newCart = cart[accessToken].cart.filter(({id}) => id !== productId);
+    cart[accessToken].cart = newCart;
+    return res(ctx.status(204));
   }),
 
   // 장바구니 상품 수량 변경하기
