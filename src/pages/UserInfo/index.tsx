@@ -1,6 +1,4 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import routes from 'routes';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   changePasswordAPI,
@@ -15,12 +13,12 @@ import usePassword from 'hooks/usePassword';
 import { Button, Form, Input, Loader } from 'components/@shared';
 import { PageLayout } from 'components';
 
+import { MESSAGES } from 'constants/index';
 import { LeaveButton } from './styles';
 
 function UserInfo() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isLoggedIn, userName, loading, error }: UserState = useSelector(selectUserState);
+  const { userName, loading, error }: UserState = useSelector(selectUserState);
   const {
     password,
     onChangePassword,
@@ -31,7 +29,7 @@ function UserInfo() {
   } = usePassword();
 
   const onClickLeave = async () => {
-    if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) {
+    if (!window.confirm(MESSAGES.ASK_LEAVE)) {
       return;
     }
 
@@ -43,7 +41,7 @@ function UserInfo() {
 
     dispatch(
       changePasswordAPI(password, () => {
-        dispatch(show('✅ 비밀번호가 변경되었습니다.'));
+        dispatch(show(MESSAGES.COMPLETE_CHANGE_PASSWORD));
       })
     );
   };

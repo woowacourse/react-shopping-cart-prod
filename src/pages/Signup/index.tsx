@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routes from 'routes';
-import axios from 'axios';
+import apiClient from 'api';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserState, signupAPI, UserState } from 'redux/modules/user';
@@ -12,15 +12,13 @@ import usePassword from 'hooks/usePassword';
 import { Button, Form, Input, Loader } from 'components/@shared';
 import { PageLayout } from 'components';
 
+import { MESSAGES } from 'constants/index';
+
 function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error }: UserState = useSelector(selectUserState);
   const [id, onChangeId] = useInput();
-  const [idStatus, setIdStatus] = useState({
-    isValid: false,
-    message: '',
-  });
   const {
     password,
     onChangePassword,
@@ -29,24 +27,20 @@ function Signup() {
     passwordConfirmErrorMessage,
     onChangePasswordConfirm,
   } = usePassword();
+  const [idStatus, setIdStatus] = useState({
+    isValid: false,
+    message: '',
+  });
 
   const onBlurDuplicateCheck = async () => {
     try {
-      const {
-        data: { isDuplicate },
-      } = await axios.get(`/api/customers/exists?userName=${id}`);
-
+      const { data: isDuplicate } = await apiClient.get(`/api/customers/exist?userName=${id}`);
       const isValid = isDuplicate ? false : true;
-      const message = isDuplicate
-        ? '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.'
-        : '사용 가능한 아이디입니다.';
+      const message = isDuplicate ? MESSAGES.EXIST_ID : MESSAGES.AVAILABLE_ID;
 
       setIdStatus({ isValid, message });
     } catch {
-      setIdStatus({
-        isValid: false,
-        message: '중복 체크 중 에러가 발생했습니다. 나중에 다시 시도하세요.',
-      });
+      setIdStatus({ isValid: false, message: MESSAGES.CHECK_DUPLICATE_ID_ERROR });
     }
   };
 
@@ -55,7 +49,7 @@ function Signup() {
 
     dispatch(
       signupAPI(id, password, () => {
-        dispatch(show('✅ 회원가입이 완료되었습니다.'));
+        dispatch(show(MESSAGES.COMPLETE_SIGNUP));
         navigate(routes.login);
       })
     );

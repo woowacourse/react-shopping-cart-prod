@@ -5,20 +5,20 @@ import { useCartListSelector } from 'hooks/useCartSelector';
 import { Button, CheckBox } from 'components/@shared';
 import CartProduct from 'components/CartProduct';
 
-import { INFO_MESSAGES } from 'constants/index';
+import { MESSAGES } from 'constants/index';
 import { CartListTitle, SelectAllContainer } from './styles';
 
 function CartProductList() {
   const dispatch = useDispatch();
   const cartItemList = useCartListSelector();
-  const isAllSelected = cartItemList.every((item) => item.isSelected);
+  const isAllSelected = cartItemList.every((item) => item.isSelected) && cartItemList.length > 0;
 
   const onToggleAllSelect = () => {
     dispatch(selectAllItems(isAllSelected));
   };
 
   const onClickDeleteItems = () => {
-    confirm(INFO_MESSAGES.ASK_DELETE_SELECTED_PRODUCT) && dispatch(deleteBySelectedItems());
+    confirm(MESSAGES.ASK_DELETE_SELECTED_PRODUCT) && dispatch(deleteBySelectedItems());
   };
 
   return (

@@ -9,6 +9,7 @@ import useInput from 'hooks/useInput';
 import { Button, Form, Input, Loader } from 'components/@shared';
 import { PageLayout } from 'components';
 
+import { MESSAGES } from 'constants/index';
 import { SignupWrapper } from './styles';
 
 function Login() {
@@ -24,14 +25,14 @@ function Login() {
 
     dispatch(
       loginAPI(id, password, () => {
-        dispatch(show('✅ 로그인 되었습니다.'));
+        dispatch(show(MESSAGES.COMPLETE_LOGIN));
       })
     );
   };
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate(routes.home);
+      navigate(routes.home, { replace: true });
     }
   }, [isLoggedIn]);
 

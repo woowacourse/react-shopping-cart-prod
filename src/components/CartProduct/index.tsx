@@ -3,7 +3,7 @@ import { CartItem, decrement, deleteItem, increment, selectItem } from 'redux/mo
 
 import { CheckBox } from 'components/@shared';
 
-import { INFO_MESSAGES, PRODUCT } from 'constants/index';
+import { MESSAGES, PRODUCT } from 'constants/index';
 import Delete from 'assets/Delete.png';
 import {
   CartProductContainer,
@@ -28,7 +28,7 @@ function CartProduct({
   };
 
   const onClickDeleteItem = () => {
-    confirm(INFO_MESSAGES.ASK_DELETE_PRODUCT) && dispatch(deleteItem(id));
+    confirm(MESSAGES.ASK_DELETE_PRODUCT) && dispatch(deleteItem(id));
   };
 
   const onClickIncreaseCounter = () => {

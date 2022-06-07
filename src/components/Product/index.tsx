@@ -8,8 +8,8 @@ import { selectUserState, UserState } from 'redux/modules/user';
 
 import { useCartItemSelector, useCartListSelector } from 'hooks/useCartSelector';
 
-import { INFO_MESSAGES, CART, PRODUCT } from 'constants/index';
 import cart from 'assets/cart.svg';
+import { MESSAGES, CART, PRODUCT } from 'constants/index';
 import {
   CartCounter,
   CartImageBadge,
@@ -49,7 +49,7 @@ function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
       const newItem = { name, price, imageUrl, id, amount: 1, isSelected: false };
 
       dispatch(addItem(newItem));
-      dispatch(show(INFO_MESSAGES.ADDED_TO_CART));
+      dispatch(show(MESSAGES.ADDED_TO_CART));
     }
     setIsShowCartCounter((prev) => !prev);
   };
@@ -61,8 +61,8 @@ function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
 
     if (cartItem?.amount === PRODUCT.MIN_COUNT) {
       dispatch(deleteItem(id));
+      dispatch(show(MESSAGES.DELETED_FROM_CART));
       setIsShowCartCounter(false);
-      dispatch(show(INFO_MESSAGES.DELETED_FROM_CART));
       return;
     }
     dispatch(decrement(id));

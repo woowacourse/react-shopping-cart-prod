@@ -6,6 +6,7 @@ import { show } from 'redux/modules/snackBar';
 
 import { deleteCookie } from 'utils';
 import Logo from 'assets/Logo.png';
+import { MESSAGES } from 'constants/index';
 import { NavBarContainer, NavBarTitle, NavBarMenu } from './styles';
 
 function NavBar() {
@@ -15,7 +16,7 @@ function NavBar() {
   const onClickLogout = () => {
     deleteCookie('accessToken');
     dispatch(logout());
-    dispatch(show('✅ 로그아웃 되었습니다.'));
+    dispatch(show(MESSAGES.COMPLETE_LOGOUT));
   };
 
   return (
