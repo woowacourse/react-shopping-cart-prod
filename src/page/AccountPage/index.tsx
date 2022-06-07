@@ -102,7 +102,7 @@ const AccountPage = () => {
             type="email"
             icon={<EmailIcon />}
             label="Email Address"
-            inputValue={email}
+            inputValue={email || ''}
             setInputValue={setEmail}
             isDisabled={true}
           />

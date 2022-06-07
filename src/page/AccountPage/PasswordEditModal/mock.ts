@@ -8,9 +8,8 @@ const changePasswordHandler = rest.patch('/customers/password', (req, res, ctx) 
   try {
     const { authorization } = req.headers.headers;
 
-    const accessToken = JSON.parse(
-      !authorization.includes('undefined') ? authorization.replace('Bearer ', '') : null,
-    );
+    const token = authorization.replace('Bearer ', '');
+    const accessToken = JSON.parse(!token && !token.includes('undefined') ? token : null);
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {

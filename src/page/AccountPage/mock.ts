@@ -5,16 +5,14 @@ import { validateNickname } from 'utils/validator';
 
 const changeNicknameHandler = rest.patch('/customers/profile', (req, res, ctx) => {
   try {
-    const accessToken = JSON.parse(req.headers.headers.authorization.replace('Bearer ', ''));
+    const { authorization } = req.headers.headers;
+
+    const token = authorization.replace('Bearer ', '');
+    const accessToken = JSON.parse(!token && !token.includes('undefined') ? token : null);
+
     // [ERROR] 유효한 토큰이 아닌 경우
-    if (!users.some(user => user.id === accessToken.id)) {
-      return res(
-        ctx.status(401),
-        ctx.json({
-          code: 1003,
-          message: '유효하지 않은 토큰입니다.',
-        }),
-      );
+    if (!accessToken || !users.some(user => user.id === accessToken.id)) {
+      throw new CustomError(1003, '유효하지 않은 토큰입니다.', 401);
     }
 
     const { nickname } = req.body;
@@ -32,7 +30,7 @@ const changeNicknameHandler = rest.patch('/customers/profile', (req, res, ctx) =
   } catch (error) {
     // 닉네임 변경 실패
     return res(
-      ctx.status(400),
+      ctx.status(error.statusCode),
       ctx.json({
         code: error.code,
         message: error.message,
