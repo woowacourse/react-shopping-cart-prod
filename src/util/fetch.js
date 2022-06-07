@@ -1,8 +1,12 @@
+import { JWT_COOKIE_KEY } from "constants";
+import { getCookie } from "./cookie";
+
 const fetchServer =
   ({ method }) =>
   async ({
     headers = {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${getCookie(JWT_COOKIE_KEY)}`,
     },
     url,
     body,

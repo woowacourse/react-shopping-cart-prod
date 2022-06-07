@@ -1,4 +1,5 @@
-import { BASE_SERVER_URL, SERVER_PATH } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, JWT_COOKIE_KEY } from "constants";
+import { deleteCookie, setCookie } from "util/cookie";
 import { loginBaseServer, deleteUserBaseServer } from "util/fetch";
 
 export const USER_ACTION = {
@@ -34,13 +35,12 @@ export const login = (email, password) => async (dispatch) => {
     if (data.message) {
       throw new Error(data.message);
     }
-
+    setCookie(JWT_COOKIE_KEY, data.accessToken, data.expirationDate);
     dispatch({
       type: USER_ACTION.LOGIN_SUCCESS,
       user: {
         ...data.customer,
         username: data.customer.username,
-        accessToken: data.accessToken,
       },
     });
   } catch (error) {
@@ -51,36 +51,31 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const deleteUser =
-  (customerId, accessToken, password) => async (dispatch) => {
-    dispatch({ type: USER_ACTION.DELETE_ACCOUNT });
-    try {
-      const response = await deleteUserBaseServer({
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${customerId}`,
-        body: JSON.stringify({ password }),
-      });
+export const deleteUser = (customerId, password) => async (dispatch) => {
+  dispatch({ type: USER_ACTION.DELETE_ACCOUNT });
+  try {
+    const response = await deleteUserBaseServer({
+      url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${customerId}`,
+      body: JSON.stringify({ password }),
+    });
 
-      if (!response.ok) {
-        const data = await response.json();
-        if (data.message) {
-          throw new Error(data.message);
-        }
+    if (!response.ok) {
+      const data = await response.json();
+      if (data.message) {
+        throw new Error(data.message);
       }
-
-      dispatch({
-        type: USER_ACTION.DELETE_ACCOUNT_SUCCESS,
-      });
-    } catch (error) {
-      dispatch({
-        type: USER_ACTION.DELETE_ACCOUNT_ERROR,
-        errorMessage: error.message,
-      });
     }
-  };
+    deleteCookie(JWT_COOKIE_KEY);
+    dispatch({
+      type: USER_ACTION.DELETE_ACCOUNT_SUCCESS,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_ACTION.DELETE_ACCOUNT_ERROR,
+      errorMessage: error.message,
+    });
+  }
+};
 
 const initialState = {
   isLoading: false,
@@ -88,7 +83,6 @@ const initialState = {
     id: 0,
     email: "",
     username: "",
-    accessToken: "",
   },
   errorMessage: "",
 };

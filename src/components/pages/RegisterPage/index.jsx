@@ -31,7 +31,7 @@ const initialUserInfo = {
 };
 
 function RegisterPage() {
-  const accessToken = useSelector((state) => state.user.data.accessToken);
+  const userId = useSelector((state) => state.user.data.id);
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -103,7 +103,7 @@ function RegisterPage() {
   };
 
   useEffect(() => {
-    if (accessToken) {
+    if (userId) {
       navigator(ROUTES.LOGIN);
     }
     return () => {

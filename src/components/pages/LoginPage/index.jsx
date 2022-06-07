@@ -27,7 +27,7 @@ function LoginPage() {
     dispatch(login(emailRef.current.value, passwordRef.current.value));
   };
 
-  const isLoginSuccess = !isLoading && !errorMessage && user.accessToken;
+  const isLoginSuccess = !isLoading && !errorMessage && user.id;
   useEffect(() => {
     if (isLoginSuccess) {
       alert(`${user.username}님, 환영합니다~~ :D`);
