@@ -21,6 +21,7 @@ class RequestAsync {
 
     return {
       status: response.ok ? 비동기_요청.SUCCESS : 비동기_요청.FAILURE,
+      statusCode: response.status,
       content: responseString ? JSON.parse(responseString) : {},
     };
   }

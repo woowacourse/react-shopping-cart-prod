@@ -23,25 +23,14 @@ export default (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case 장바구니_액션.SUCCESS:
-      return { ...state, items: payload.cartItems, isLoading: false };
+      return { ...state, isLoading: false };
 
     case 장바구니_액션.FAILURE:
       return { ...state, errorMessage: payload, isLoading: false };
 
     case 장바구니_액션.ADD_NEW_PRODUCT:
+      console.log('???');
       return { ...state, items: [...state.items, payload] };
-
-    case 장바구니_액션.ADD_EXIST_PRODUCT:
-      return {
-        ...state,
-        items: state.items.map((item) => {
-          if (item.id === payload.id) {
-            return payload;
-          }
-
-          return item;
-        }),
-      };
 
     case 장바구니_액션.DELETE_PRODUCT:
       return {
@@ -51,14 +40,15 @@ export default (state = initialState, action) => {
         ),
       };
 
-    case 장바구니_액션.MODIFY_PRODUCT_QUANTITY:
+    case 장바구니_액션.SET_PRODUCT_QUANTITY:
+      console.log(' vs ');
       return {
         ...state,
         items: state.items.map((item) => {
           if (item.product.id === payload.productId) {
-            const modifiedItem = item;
-            modifiedItem.quantity = payload.quantity;
-            return modifiedItem;
+            const targetItem = item;
+            targetItem.quantity = payload.quantity;
+            return targetItem;
           }
 
           return item;
