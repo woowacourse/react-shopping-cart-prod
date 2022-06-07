@@ -6,6 +6,8 @@ import changePasswordHandler from 'page/AccountPage/PasswordEditModal/mock';
 import deleteAccountHandler from 'page/AccountPage/AccountDeleteModal/mock';
 import userInquiryHandler from './handlers/userInquiryHandler';
 
+import getProductsHandler from 'page/ProductListPage/mock';
+
 export const users = [
   { id: 1, email: '1@gmail.com', nickname: 'abc', password: 'qwer1234!!' },
   { id: 2, email: '2@gmail.com', nickname: 'def', password: '123456@adssd' },
@@ -30,6 +32,9 @@ const handlers = [
 
   // 회원조회
   userInquiryHandler,
+
+  // 상품목록조회
+  getProductsHandler,
 ];
 
 export default handlers;

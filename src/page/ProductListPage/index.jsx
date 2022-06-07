@@ -6,7 +6,6 @@ import axios from 'axios';
 import { ProductItem } from 'components';
 
 import { doInitializeProductList } from 'actions/actionCreator';
-import { SERVER_URL } from 'utils/constants';
 import Styled from './index.style';
 
 const ProductListPage = () => {
@@ -16,7 +15,7 @@ const ProductListPage = () => {
   const getProducts = useCallback(async () => {
     if (products.length > 0) return;
 
-    const response = await axios.get(`${SERVER_URL}products`);
+    const response = await axios.get('/products');
 
     dispatch(doInitializeProductList({ products: response.data }));
   }, [products, dispatch]);
