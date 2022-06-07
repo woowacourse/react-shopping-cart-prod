@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import { ProductItem } from 'components';
@@ -10,23 +10,28 @@ import Styled from './index.style';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
-  const { products } = useSelector(state => state.reducer);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const getProducts = useCallback(async () => {
-    if (products.length > 0) return;
+  const getProducts = async () => {
+    try {
+      const response = await axios.get('/products');
+      setIsLoading(false);
 
-    const response = await axios.get('/products');
-
-    dispatch(doInitializeProductList({ products: response.data }));
-  }, [products, dispatch]);
+      setProducts(response.data);
+      dispatch(doInitializeProductList({ products: response.data })); // legacy
+    } catch (error) {}
+  };
 
   useEffect(() => {
     getProducts();
-  }, [getProducts]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Styled.ProductListPage>
-      {products.length > 0 ? (
+      {!isLoading ? (
         <Styled.ProductList>
           {products.map(({ id, name, price, image }) => {
             return id && <ProductItem key={id} id={id} name={name} price={price} image={image} />;
