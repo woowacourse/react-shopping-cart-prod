@@ -7,14 +7,12 @@ import Title from 'components/Common/Title/Title';
 import PaymentBox from 'components/Cart/PaymentBox/PaymentBox';
 
 import ImgWrapper from 'components/Common/ImgWrapper/ImgWrapper';
-import spinner from 'assets/svg/spinner.svg';
 import errorApiImg from 'assets/png/errorApiImg.png';
 import itemAltImg from 'assets/png/itemAltImg.png';
 import { includes } from 'utils';
 
 const Cart = () => {
   const {
-    isLoading,
     isError,
     cartItems,
     totalPrice,
@@ -23,14 +21,6 @@ const Cart = () => {
     handleToggleSelect,
     handleDeleteSelectedItem,
   } = useCartPage();
-
-  if (isLoading)
-    return (
-      <Styled.Wrapper>
-        <Title contents="장바구니" />
-        <ImgWrapper src={spinner} />
-      </Styled.Wrapper>
-    );
 
   if (isError) {
     <Styled.Wrapper>
