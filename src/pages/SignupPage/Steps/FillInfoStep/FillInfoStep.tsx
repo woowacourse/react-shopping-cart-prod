@@ -1,113 +1,21 @@
-import axios from 'axios';
-import { SERVER_URL } from 'configs/api';
-import React, { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
-import { Customer } from 'types';
+import useFillInfoForm from './useFillInfoForm';
 
 import * as S from 'pages/SignupPage//Steps/FillInfoStep/FillInfoStep.styled';
 
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 
-import useDaumPostcode from 'hooks/useDaumPostcode';
-
 import ICONS from 'constants/icons';
 
 function FillInfoStep() {
-  const { goNextStep } = useOutletContext<{
-    currentStepId: number;
-    goNextStep: () => void;
-  }>();
-  const { postcode, addressData } = useDaumPostcode();
-  const [watchingValues, setWatchingValues] = useState({
-    email: '',
-    password: '',
-    'confirm-password': '',
-  });
-
-  const [isEmailUnique, setIsEmailUnique] = useState(false);
-  const [isConfirmPasswordSame, setIsConfirmPasswordSame] = useState(false);
-
-  const handleChange: React.FormEventHandler<HTMLInputElement> = ({
-    target,
-  }) => {
-    const { name, value } = target as HTMLInputElement;
-
-    if (name === 'email') setIsEmailUnique(false);
-
-    if (name === 'password') {
-      setIsConfirmPasswordSame(
-        watchingValues['confirm-password'] === value && value !== ''
-      );
-    }
-
-    if (name === 'confirm-password') {
-      setIsConfirmPasswordSame(
-        watchingValues['password'] === value && value !== ''
-      );
-    }
-
-    setWatchingValues((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleClickAddressButton = () => {
-    postcode?.open();
-  };
-
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(e.target as HTMLFormElement);
-
-    const payload = {
-      ...Object.fromEntries(formData.entries()),
-      profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
-    } as Customer;
-
-    try {
-      if (!isEmailUnique || !isConfirmPasswordSame || !addressData) {
-        throw new Error(
-          '이메일, 패스워드 확인, 주소 중 유효하지 않은 값이 있습니다.'
-        );
-      }
-
-      await axios({
-        method: 'post',
-        url: `${SERVER_URL}/api/customers`,
-        data: payload,
-      });
-
-      goNextStep();
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        alert('유효하지 않은 이메일 형식입니다.');
-      } else {
-        alert(e);
-      }
-    }
-  };
-
-  const handleClickIsEmailDuplicated = async () => {
-    const email = watchingValues['email'];
-
-    try {
-      await axios({
-        method: 'get',
-        url: `${SERVER_URL}/api/validation?email=${email}`,
-      });
-
-      setIsEmailUnique(true);
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        alert('중복된 이메일입니다.');
-      } else {
-        alert(e);
-      }
-    }
-  };
+  const {
+    addressData,
+    errors,
+    handleChange,
+    handleClickIsEmailDuplicated,
+    handleClickAddressButton,
+    handleSubmit,
+  } = useFillInfoForm();
 
   return (
     <S.Form onSubmit={handleSubmit}>
@@ -124,8 +32,12 @@ function FillInfoStep() {
             required
             onChange={handleChange}
           />
-          {isEmailUnique && (
-            <S.HintParagraph>사용 가능한 이메일입니다.</S.HintParagraph>
+          {errors?.email ? (
+            <S.HintRedParagraph>{errors.email}</S.HintRedParagraph>
+          ) : (
+            <S.HintGreenParagraph>
+              이메일 중복 확인되었습니다.
+            </S.HintGreenParagraph>
           )}
         </S.CenterFlexBox>
         <S.RightFlexBox>
@@ -134,8 +46,6 @@ function FillInfoStep() {
           </S.Button>
         </S.RightFlexBox>
       </S.FormFieldBox>
-
-      {/* ------------------------------------ */}
       <S.FormFieldBox>
         <S.LeftFlexBox>
           <S.Label required>비밀번호</S.Label>
@@ -148,14 +58,12 @@ function FillInfoStep() {
             minLength={8}
             maxLength={20}
             pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[!@#&()-\[{}\]:;',?/*~$^+=<>]).{8,20}"
-            value={watchingValues['password']}
             onChange={handleChange}
             required
           />
         </S.CenterFlexBox>
         <S.RightFlexBox />
       </S.FormFieldBox>
-      {/* ------------------------------------ */}
       <S.FormFieldBox>
         <S.LeftFlexBox>
           <S.Label required>비밀번호 확인</S.Label>
@@ -171,13 +79,14 @@ function FillInfoStep() {
             onChange={handleChange}
             required
           />
-          {isConfirmPasswordSame && (
-            <S.HintParagraph>비밀번호가 일치합니다.</S.HintParagraph>
+          {errors?.password ? (
+            <S.HintRedParagraph>{errors.password}</S.HintRedParagraph>
+          ) : (
+            <S.HintGreenParagraph>비밀번호가 일치합니다.</S.HintGreenParagraph>
           )}
         </S.CenterFlexBox>
         <S.RightFlexBox />
       </S.FormFieldBox>
-      {/* ------------------------------------ */}
       <S.FormFieldBox>
         <S.LeftFlexBox>
           <S.Label required>이름</S.Label>
@@ -192,10 +101,14 @@ function FillInfoStep() {
             onChange={handleChange}
             required
           />
+          {errors?.name ? (
+            <S.HintRedParagraph>{errors.name}</S.HintRedParagraph>
+          ) : (
+            <S.HintGreenParagraph>이름이 입력되었습니다.</S.HintGreenParagraph>
+          )}
         </S.CenterFlexBox>
         <S.RightFlexBox />
       </S.FormFieldBox>
-      {/* ------------------------------------ */}
       <S.FormFieldBox>
         <S.LeftFlexBox>
           <S.Label required>전화번호</S.Label>
@@ -209,12 +122,18 @@ function FillInfoStep() {
             onChange={handleChange}
             required
           />
+          {errors?.contact ? (
+            <S.HintRedParagraph>{errors.contact}</S.HintRedParagraph>
+          ) : (
+            <S.HintGreenParagraph>
+              전화번호가 입력되었습니다.
+            </S.HintGreenParagraph>
+          )}
         </S.CenterFlexBox>
         <S.RightFlexBox>
           <S.Button disabled>인증번호 받기</S.Button>
         </S.RightFlexBox>
       </S.FormFieldBox>
-      {/* ------------------------------------ */}
       <S.FormFieldBox>
         <S.LeftFlexBox>
           <S.Label required>주소</S.Label>
@@ -244,12 +163,19 @@ function FillInfoStep() {
             name="detailAddress"
             maxLength={20}
             placeholder="상세 주소"
+            onChange={handleChange}
             disabled={!addressData}
           />
+          {errors?.address ? (
+            <S.HintRedParagraph>{errors.address}</S.HintRedParagraph>
+          ) : (
+            <S.HintGreenParagraph>
+              주소가 정상적으로 입력되었습니다.
+            </S.HintGreenParagraph>
+          )}
         </S.CenterFlexBox>
         <S.RightFlexBox />
       </S.FormFieldBox>
-      {/* ------------------------------------ */}
       <S.FormFieldBox>
         <S.LeftFlexBox>
           <S.Label>성별</S.Label>
@@ -277,7 +203,6 @@ function FillInfoStep() {
         </S.CenterFlexBox>
         <S.RightFlexBox />
       </S.FormFieldBox>
-      {/* ------------------------------------ */}
       <S.FormFieldBox>
         <S.LeftFlexBox>
           <S.Label>생년월일</S.Label>
@@ -292,7 +217,6 @@ function FillInfoStep() {
         </S.CenterFlexBox>
         <S.RightFlexBox />
       </S.FormFieldBox>
-      {/* ------------------------------------ */}
       <S.SubmitButtonBox>
         <Button type="submit">다음으로</Button>
       </S.SubmitButtonBox>

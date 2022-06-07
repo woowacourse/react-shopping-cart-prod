@@ -79,9 +79,16 @@ export const SubmitButtonBox = styled.div`
   margin: 24px auto 0;
 `;
 
-export const HintParagraph = styled.p`
+const HintParagraph = styled.p`
   align-self: flex-start;
-  color: green;
   font-weight: bold;
   font-size: 0.7rem;
+`;
+
+export const HintGreenParagraph = styled(HintParagraph)`
+  color: green;
+`;
+
+export const HintRedParagraph = styled(HintParagraph)`
+  color: red;
 `;
