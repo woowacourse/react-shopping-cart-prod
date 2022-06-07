@@ -1,4 +1,6 @@
-const BASE_URL = "https://woo-shopping-cart-api.herokuapp.com";
+const BASE_URL =
+  "https://ec2-52-79-228-178.ap-northeast-2.compute.amazonaws.com:8080";
+
 const PATH = {
   MAIN: "/",
   LOGIN: "/login",
@@ -32,6 +34,7 @@ const ERROR_CODE = {
   1000: "INVALID_SIGNUP_INPUT",
   1001: "EXIST_EMAIL",
   1002: "CHECK_EMAIL_OR_PASSWORD",
+  1101: "EXIST_PRODUCT_IN_CART",
 };
 
 const MESSAGE = {
@@ -41,6 +44,7 @@ const MESSAGE = {
   INVALID_SIGNUP_INPUT: "회원 정보 양식이 잘못되었습니다.",
   EXIST_EMAIL: "이미 존재하는 이메일입니다.",
   WITHDRAWAL_CONFIRM: "정말로 탈퇴하시겠습니까? 😭",
+  EXIST_PRODUCT_IN_CART: "장바구니에 이미 존재하는 물품입니다.",
 };
 
 const INPUT_TYPE = {

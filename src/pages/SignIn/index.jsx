@@ -9,8 +9,6 @@ import Input from "@/components/Input";
 
 import { PATH } from "@/constants";
 
-import { getCookie } from "@/utils/auth";
-
 import StyledSigninContainer from "@/pages/SignIn/index.style";
 
 function Signin() {

@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import { STATUS, REGULAR_EXPRESSION, ERROR_STATUS } from "@/constants";
 
-const useInput = (type, initialState) => {
+const useInput = (type, initialState, initialValue = "") => {
   const [inputState, setInputState] = useState({
-    value: "",
+    value: initialValue,
     status: initialState,
   });
 

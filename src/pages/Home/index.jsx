@@ -1,31 +1,27 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { getProductList } from "@/redux/modules/productList";
 
 import Error from "@/pages/Error";
 
 import Loading from "@/components/Loading";
-import ProductItem from "@/components/Item";
+import Item from "@/components/Item";
 
 import StyledProductList from "@/pages/Home/index.styled";
+import useFetch from "@/hooks/useFetch";
 
 function ProductList() {
-  const { data, loading, error } = useSelector(
-    (state) => state.productListState.productList
-  );
-  const dispatch = useDispatch();
+  const { data, error, success, getData } = useFetch("get", "products");
 
   useEffect(() => {
-    dispatch(getProductList());
+    getData();
   }, []);
 
-  if (loading) return <Loading />;
+  if (!success && !error) return <Loading />;
   if (error) return <Error />;
 
   return (
     <StyledProductList>
-      {data && data.map((item) => <ProductItem key={item.id} {...item} />)}
+      {data.productList &&
+        data.productList.map((item) => <Item key={item.id} {...item} />)}
     </StyledProductList>
   );
 }

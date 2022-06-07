@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const StyledProductList = styled.section`
+const StyledCartList = styled.section`
   width: 60%;
   margin-top: 50px;
 
@@ -27,4 +27,4 @@ const StyledProductList = styled.section`
   }
 `;
 
-export default StyledProductList;
+export default StyledCartList;

@@ -12,9 +12,8 @@ import { logoutUser } from "@/redux/modules/user";
 import { getCookie } from "@/utils/auth";
 
 function Menu() {
-  const cartList = useSelector((state) => state.cartListState);
+  const { cart } = useSelector((state) => state.cartState);
   const { authorized } = useSelector((state) => state.userState);
-  const count = cartList.length;
 
   const dispatch = useDispatch();
 
@@ -37,7 +36,7 @@ function Menu() {
         <li>
           <Link to="/cart">
             장바구니
-            {count > 0 && <Badge count={count} />}
+            {cart.length > 0 && <Badge count={cart.length} />}
           </Link>
         </li>
         <li>

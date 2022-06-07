@@ -2,6 +2,7 @@ import appClient from "@/utils/appClient";
 import { setCookie, deleteCookie } from "@/utils/auth";
 
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import { getCart } from "@/redux/modules/cart";
 
 import { MESSAGE, ERROR_CODE } from "@/constants";
 
@@ -27,6 +28,7 @@ const initialState = {
 export const getUserInfo = (headers) => async (dispatch) => {
   try {
     const { data } = await appClient.get("/users/me", { headers });
+    dispatch(getCart(headers));
     dispatch({ type: ACTION_TYPES.GET_USER_INFO_SUCCESS, payload: data });
   } catch (error) {
     const { errorCode } = error.response.data;

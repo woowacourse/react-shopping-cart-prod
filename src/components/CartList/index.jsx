@@ -1,69 +1,79 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-import {
-  uncheckAllCheckButton,
-  checkAllCheckButton,
-  removeCheckedCartItem,
-} from "@/redux/modules/cartList";
+import { getCart } from "@/redux/modules/cart";
+
+import useCheckBox from "@/hooks/useCheckbox";
 
 import Button from "@/components/Button";
 import CartItem from "@/components/CartItem";
 import Checkbox from "@/components/Checkbox";
 import Title from "@/components/Title";
 
-import StyledProductList from "@/components/CartList/index.styled";
+import StyledCartList from "@/components/CartList/index.styled";
 
-function ProductList() {
-  const cartList = useSelector((state) => state.cartListState);
+import { getCookie } from "@/utils/auth";
+import { PATH } from "@/constants";
+
+function CartList() {
+  const { cart } = useSelector((state) => state.cartState);
+  const {
+    checkedItemList,
+    changeCheckedList,
+    allChecked,
+    deleteSelectedItems,
+  } = useCheckBox(cart);
+
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const allCheckboxIsChecked = () => {
-    const isAllChecked = cartList.every((item) => item.checked === true);
-    return isAllChecked;
-  };
+  let isAllChecked =
+    cart.length !== 0 && cart.length === checkedItemList.length;
 
-  const handleChange = (e) => {
-    const { checked } = e.target;
-
-    if (checked) {
-      dispatch(checkAllCheckButton());
-      return;
+  useEffect(() => {
+    const accessToken = getCookie("accessToken");
+    if (!accessToken) {
+      navigate(PATH.LOGIN);
     }
-    dispatch(uncheckAllCheckButton());
-  };
 
-  const handleClick = () => {
-    const isNonExistCheckedItem = cartList.every(
-      (item) => item.checked === false
-    );
-    if (isNonExistCheckedItem) return;
-
-    dispatch(removeCheckedCartItem());
-  };
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+    dispatch(getCart(headers));
+  }, []);
 
   return (
-    <StyledProductList>
+    <StyledCartList>
       <div>
         <div className="checkbox-container">
           <Checkbox
             id="checkbox"
-            onChange={handleChange}
-            checked={allCheckboxIsChecked() ? true : false}
+            onChange={allChecked}
+            checked={isAllChecked}
           />
           <label htmlFor="checkbox" className="checkbox-label">
             선택해제
           </label>
         </div>
-        <Button onClick={handleClick} color="black1">
+        <Button onClick={deleteSelectedItems} color="black1">
           상품삭제
         </Button>
       </div>
-      <Title titleType="listTitle">든든배송 상품({cartList.length}개)</Title>
-      {cartList.map((item) => {
-        return <CartItem key={item.id} item={item} />;
+      <Title titleType="listTitle">든든배송 상품({cart.length}개)</Title>
+      {cart.map((item) => {
+        return (
+          <CartItem
+            key={item.id}
+            item={item}
+            onChange={() => {
+              changeCheckedList(id);
+            }}
+          />
+        );
       })}
-    </StyledProductList>
+    </StyledCartList>
   );
 }
 
-export default ProductList;
+export default CartList;

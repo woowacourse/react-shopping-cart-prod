@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { addProductToCart } from "@/redux/modules/cartList";
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 import CartIcon from "@/assets/images/cart.svg";
@@ -10,20 +9,45 @@ import CartIcon from "@/assets/images/cart.svg";
 import Thumbnail from "@/components/Thumbnail";
 import Button from "@/components/Button";
 
+import { getCookie } from "@/utils/auth";
+
 import {
   StyledProductInfo,
   StyledProductItem,
 } from "@/components/Item/index.styled";
 
 import { PATH, MESSAGE } from "@/constants";
+import useFetch from "@/hooks/useFetch";
 
-function Home({ id, name, price, imgUrl }) {
-  const dispatch = useDispatch();
+function Item({ id, name, price, imageUrl }) {
+  const {
+    data,
+    error,
+    success,
+    getData: addCart,
+  } = useFetch("post", "users/me/carts");
+
   const navigate = useNavigate();
 
   const handleCartClick = () => {
-    dispatch(addProductToCart({ id, name, price, imgUrl }));
-    dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
+    const accessToken = getCookie("accessToken");
+
+    if (!accessToken) {
+      navigate(PATH.LOGIN);
+      return;
+    }
+
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
+    addCart(
+      {
+        productId: id,
+      },
+      headers,
+      MESSAGE.CART_ADDED
+    );
   };
 
   const handleProductDetailClick = () => {
@@ -34,7 +58,7 @@ function Home({ id, name, price, imgUrl }) {
     <>
       <StyledProductItem>
         <Thumbnail
-          src={`${imgUrl}`}
+          src={`${imageUrl}`}
           name={name}
           onClick={handleProductDetailClick}
         />
@@ -60,4 +84,4 @@ function Home({ id, name, price, imgUrl }) {
   );
 }
 
-export default Home;
+export default Item;

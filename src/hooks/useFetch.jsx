@@ -5,7 +5,7 @@ import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import appClient from "@/utils/appClient";
 import { MESSAGE, ERROR_CODE } from "@/constants";
 
-const useFetch = (method, url, initialData = {}, func) => {
+const useFetch = (method, url, initialData = {}) => {
   const [data, setData] = useState(initialData);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -13,15 +13,21 @@ const useFetch = (method, url, initialData = {}, func) => {
 
   const dispatch = useDispatch();
 
-  const getData = async (payload = {}, headers = {}) => {
+  const getData = async (payload = {}, headers = {}, successMessage = "") => {
     try {
-      const { data } = await appClient[method](url, {
-        ...payload,
-        headers,
-      });
+      const { data } = await appClient[method](
+        url,
+        {
+          ...payload,
+        },
+        { headers }
+      );
       setData(data);
       setIsLoading(false);
       setSuccess(true);
+      if (successMessage) {
+        dispatch(toggleSnackbarOpen(successMessage));
+      }
     } catch (error) {
       const { errorCode } = error.response.data;
       dispatch(toggleSnackbarOpen(MESSAGE[ERROR_CODE[errorCode]]));

@@ -25,9 +25,12 @@ import {
 import StyledUserEditContainer from "@/pages/UserEdit/index.style";
 
 function UserEdit() {
+  const { email: prevEmail } = useSelector((state) => state.userState);
+  const { nickname: prevNickname } = useSelector((state) => state.userState);
   const [nickname, onChangeNickname] = useInput(
     INPUT_TYPE.NICKNAME,
-    STATUS.FULFILLED
+    STATUS.FULFILLED,
+    prevNickname
   );
   const [password, onChangePassword] = useInput(
     INPUT_TYPE.PASSWORD,
@@ -45,8 +48,7 @@ function UserEdit() {
     success: withdrawSuccess,
     getData: withdrawUser,
   } = useFetch("delete", "users/me");
-  const { email: prevEmail } = useSelector((state) => state.userState);
-  const { nickname: prevNickname } = useSelector((state) => state.userState);
+
   const { authorized } = useSelector((state) => state.userState);
 
   const navigate = useNavigate();
@@ -106,7 +108,13 @@ function UserEdit() {
   useEffect(() => {
     if (!authorized) {
       navigate(PATH.MAIN);
+      return;
     }
+    const headers = {
+      Authorization:
+        getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+    };
+    dispatch(getUserInfo(headers));
   }, [authorized]);
 
   return (
@@ -126,7 +134,7 @@ function UserEdit() {
         <Field
           labelName="닉네임"
           type="text"
-          value={prevNickname}
+          value={nickname.value}
           minLength={NICKNAME.MIN_LENGTH}
           maxLength={NICKNAME.MAX_LENGTH}
           onChange={onChangeNickname}

@@ -1,13 +1,8 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import {
-  toggleCartItemCheckButton,
-  incrementCartItemQuantity,
-  decrementCartItemQuantity,
-  removeRowCartItem,
-} from "@/redux/modules/cartList";
+import { updateCartQuantity, deleteCartItem } from "@/redux/modules/cart";
 
 import TrashIcon from "@/assets/images/trash.svg";
 
@@ -20,50 +15,99 @@ import {
   StyledCartContainer,
   StyledHr,
 } from "@/components/CartItem/index.styled";
+import useFetch from "@/hooks/useFetch";
+import { getCookie } from "@/utils/auth";
 
-function ProductItem({ item }) {
-  const { id, name, price, imgUrl, quantity, checked } = item;
-  const dispatch = useDispatch();
+function CartItem({ onChange, checked, item }) {
+  const {
+    data: updateData,
+    success: updateSuccess,
+    getData: updateQuantity,
+  } = useFetch("put", `users/me/carts/${item.id}`);
+  const {
+    data: deleteData,
+    success: deleteSuccess,
+    getData: deleteItem,
+  } = useFetch("delete", `users/me/carts/${item.id}`);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleDetailClick = () => {
     navigate(`${PATH.DETAIL}/${id}`);
   };
 
-  const handleChange = () => {
-    dispatch(toggleCartItemCheckButton(id));
-  };
-
   const handleIncrementClick = () => {
-    dispatch(incrementCartItemQuantity(id));
+    const accessToken = getCookie("accessToken");
+
+    if (!accessToken) {
+      navigate(PATH.LOGIN);
+    }
+
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
+    updateQuantity({ quantity: item.quantity + 1 }, headers);
   };
 
   const handleDecrementClick = () => {
-    dispatch(decrementCartItemQuantity(id));
+    const accessToken = getCookie("accessToken");
+
+    if (!accessToken) {
+      navigate(PATH.LOGIN);
+    }
+
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
+    updateQuantity({ quantity: item.quantity - 1 }, headers);
   };
 
   const handleRemoveIconClick = () => {
-    dispatch(removeRowCartItem(id));
+    const accessToken = getCookie("accessToken");
+
+    if (!accessToken) {
+      navigate(PATH.LOGIN);
+    }
+
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
+    deleteItem({}, headers);
   };
+
+  useEffect(() => {
+    if (updateSuccess) {
+      dispatch(updateCartQuantity(updateData.id, updateData.quantity));
+    }
+  }, [updateData, updateSuccess]);
+
+  useEffect(() => {
+    if (deleteSuccess) {
+      dispatch(deleteCartItem(item.id));
+    }
+  }, [deleteData, deleteSuccess]);
 
   return (
     <>
       <StyledCartContainer>
         <div className="product-item__left">
-          <Checkbox onChange={handleChange} checked={checked} />
+          <Checkbox onChange={onChange} checked={checked} />
           <img
-            src={imgUrl}
-            alt={`${name} 장바구니 이미지`}
+            src={item.imageUrl}
+            alt={`${item.name} 장바구니 이미지`}
             onClick={handleDetailClick}
           />
-          <a onClick={handleDetailClick}>{name}</a>
+          <a onClick={handleDetailClick}>{item.name}</a>
         </div>
         <div className="product-item__right">
           <Button onClick={handleRemoveIconClick}>
             <TrashIcon />
           </Button>
           <div className="quantity__container">
-            <div className="quantity">{quantity}</div>
+            <div className="quantity">{item.quantity}</div>
             <div className="quantity__buttons">
               <Button onClick={handleIncrementClick} color="black1">
                 ▲
@@ -74,7 +118,7 @@ function ProductItem({ item }) {
             </div>
           </div>
           <span className="cart-price">
-            {(price * quantity).toLocaleString("ko-KR")}원
+            {(item.price * item.quantity).toLocaleString("ko-KR")}원
           </span>
         </div>
       </StyledCartContainer>
@@ -83,4 +127,4 @@ function ProductItem({ item }) {
   );
 }
 
-export default ProductItem;
+export default CartItem;
