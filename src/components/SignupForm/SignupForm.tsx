@@ -2,16 +2,16 @@ import { useState } from 'react';
 
 import authAPI from 'apis/auth';
 import Button from 'components/@shared/Button';
-import { useInput, usePasswordInput, usePhoneNumberInput } from 'hooks';
+import { useInput, usePasswordInput } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { createInputValueGetter } from 'utils/dom';
 import { formatPhoneNumber } from 'utils/formats';
 
 import { USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 
 function SignupForm() {
-  const { value: username, setValue: setUsername } = useInput('');
   const {
     password,
     setPassword,
@@ -19,9 +19,6 @@ function SignupForm() {
     isPasswordAllCharactersCorrect,
   } = usePasswordInput('');
   const { value: passwordCheck, setValue: setPasswordCheck } = useInput('');
-  const { value: email, setValue: setEmail } = useInput('');
-  const { value: address, setValue: setAddress } = useInput('');
-  const { phoneNumber, setPhoneNumber } = usePhoneNumberInput('');
 
   const [passwordCheckCorrect, setPasswordCheckCorrect] = useState(false);
 
@@ -35,8 +32,13 @@ function SignupForm() {
     setPasswordCheckCorrect(password === e.target.value);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!(e.target instanceof HTMLFormElement)) return;
+
+    const formElement = e.target.elements;
+    const getInputValue = createInputValueGetter(formElement);
+    const phoneNumber = getInputValue('phoneNumber');
 
     if (!phoneNumber.startsWith('010') || phoneNumber.length < 11) {
       alert(USER_MESSAGE.WRONG_PHONE_NUMBER);
@@ -45,10 +47,10 @@ function SignupForm() {
     }
 
     const user = {
-      username,
+      username: getInputValue('username'),
       password,
-      email,
-      address,
+      email: getInputValue('email'),
+      address: getInputValue('address'),
       phoneNumber: formatPhoneNumber(phoneNumber),
     };
 
@@ -61,14 +63,12 @@ function SignupForm() {
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <label htmlFor="id">사용자 이름</label>
+    <StyledForm onSubmit={onSubmitForm}>
+      <label htmlFor="username">사용자 이름</label>
       <input
         id="username"
         type="text"
         placeholder="사용자 이름(영문 소문자, 숫자, _, -)을 입력해주세요"
-        value={username}
-        onChange={setUsername}
         pattern={'^[a-z0-9_-]{5,20}$'}
         required
       />
@@ -117,8 +117,6 @@ function SignupForm() {
         id="email"
         type="email"
         placeholder="이메일을 입력해주세요"
-        value={email}
-        onChange={setEmail}
         pattern={'^[a-z0-9._-]+@[a-z]+[.]+[a-z]{2,3}$'}
         required
       />
@@ -127,8 +125,6 @@ function SignupForm() {
         id="address"
         type="address"
         placeholder="주소를 입력해주세요"
-        value={address}
-        onChange={setAddress}
         maxLength={255}
         required
       />
@@ -137,8 +133,6 @@ function SignupForm() {
         id="phoneNumber"
         type="number"
         placeholder="핸드폰 번호를 입력해주세요"
-        value={phoneNumber}
-        onChange={setPhoneNumber}
         required
       />
       <Button type="submit" marginTop="20px">

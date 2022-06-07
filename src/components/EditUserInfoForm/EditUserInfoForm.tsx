@@ -32,7 +32,7 @@ function EditUserInfoForm() {
     }
   };
 
-  const onSubmitEditUserInfoForm = async (e: React.FormEvent) => {
+  const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!(e.target instanceof HTMLFormElement)) return;
 
@@ -61,7 +61,7 @@ function EditUserInfoForm() {
   };
 
   return (
-    <StyledForm onSubmit={onSubmitEditUserInfoForm}>
+    <StyledForm onSubmit={onSubmitForm}>
       <label htmlFor="id">아이디</label>
       <input id="id" type="text" value={username} disabled />
       <label htmlFor="email">이메일</label>

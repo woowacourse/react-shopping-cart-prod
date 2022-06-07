@@ -27,14 +27,14 @@ function LoginForm() {
     setChecked(prevState => !prevState);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(e.target instanceof HTMLFormElement)) return;
 
     const formElement = e.target.elements;
     const getInputValue = createInputValueGetter(formElement);
     const user = {
-      username: getInputValue('id'),
+      username: getInputValue('username'),
       password: getInputValue('password'),
     };
 
@@ -51,9 +51,14 @@ function LoginForm() {
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
-      <label htmlFor="id">아이디</label>
-      <input id="id" type="text" placeholder="아이디를 입력해주세요" required />
+    <StyledForm onSubmit={onSubmitForm}>
+      <label htmlFor="username">아이디</label>
+      <input
+        id="username"
+        type="text"
+        placeholder="아이디를 입력해주세요"
+        required
+      />
       <label htmlFor="password">비밀번호</label>
       <input
         id="password"
