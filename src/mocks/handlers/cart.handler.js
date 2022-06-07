@@ -47,7 +47,7 @@ const updateCartProductQuantity = (productId, quantity) => {
 
 export const handlePostShoppingCartRequest = (req, res, ctx) => {
   const currentShoppingCart = getCart();
-  const { productId, quantity } = req.body;
+  const { id: productId, quantity } = req.body;
   const cartProductIndex = findProductCartIndex(currentShoppingCart, productId);
   const { stock } = findProductData(productId);
 
@@ -76,7 +76,7 @@ export const handlePostShoppingCartRequest = (req, res, ctx) => {
 };
 
 export const handlePatchShoppingCartRequest = (req, res, ctx) => {
-  const { productId, quantity } = req.body;
+  const { id: productId, quantity } = req.body;
   try {
     const newCart = updateCartProductQuantity(productId, quantity);
     return res(ctx.json(createResponseCart(newCart)));
