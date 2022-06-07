@@ -14,6 +14,14 @@ const withPublicRoute = (Component: React.ComponentType<unknown>) => {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+      const accessToken = localStorage.getItem('access-token');
+
+      if (!accessToken) {
+        setIsLoading(false);
+
+        return;
+      }
+
       dispatch(getUser())
         .then(() => {
           alert(ALERT_MESSAGE.WRONG_ACCESS);

@@ -9,10 +9,6 @@ import { UserAction, userActions } from './action';
 export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
   const accessToken = localStorage.getItem('access-token');
 
-  if (!accessToken) {
-    return Promise.reject();
-  }
-
   dispatch(userActions.getUserGroup.request());
   try {
     const response = await authClient.get('/customers/me', {
