@@ -101,7 +101,7 @@ function Signup() {
           isValid={!passwordConfirmErrorMessage}
           message={passwordConfirmErrorMessage}
         />
-        <Button>확인</Button>
+        <Button borderRaius="15px">확인</Button>
       </Form>
     </PageLayout>
   );

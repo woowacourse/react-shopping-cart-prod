@@ -53,7 +53,7 @@ function Login() {
           minLength={8}
           maxLength={20}
         />
-        <Button>확인</Button>
+        <Button borderRaius="15px">확인</Button>
       </Form>
       <SignupWrapper>
         아직 회원이 아니신가요? <Link to={routes.signup}>회원가입</Link>

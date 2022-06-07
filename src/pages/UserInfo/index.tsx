@@ -89,9 +89,11 @@ function UserInfo() {
           isValid={!passwordConfirmErrorMessage}
           message={passwordConfirmErrorMessage}
         />
-        <Button>확인</Button>
+        <Button borderRaius="15px">확인</Button>
       </Form>
-      <LeaveButton onClick={onClickLeave}>회원 탈퇴</LeaveButton>
+      <LeaveButton onClick={onClickLeave} borderRaius="15px">
+        회원 탈퇴
+      </LeaveButton>
     </PageLayout>
   );
 }
