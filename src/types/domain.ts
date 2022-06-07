@@ -6,6 +6,7 @@ export interface Item {
 }
 
 export interface CartItem {
+  type?: 'CartItem';
   id: number;
   quantity: number;
   willPurchase: boolean;
