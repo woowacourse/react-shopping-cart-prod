@@ -55,3 +55,9 @@ export const checkUserPassword = (user, password) => {
     throw new CustomError(2201, ERROR[2201]);
   }
 };
+
+export const checkEmailExist = (users, email) => {
+  if (!users.find(user => user.email === email)) {
+    throw new CustomError(2201, ERROR[2201]);
+  }
+};

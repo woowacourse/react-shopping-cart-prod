@@ -3,6 +3,7 @@ import { dummyProductList } from 'dummy_data';
 import { rest } from 'msw';
 import {
   checkDuplicatedEmail,
+  checkEmailExist,
   checkPasswordSame,
   checkUserPassword,
   validateEmail,
@@ -39,7 +40,6 @@ export const handlers = [
       validateNickname(nickname);
       // 비밀번호 형식 준수 여부 확인
       validatePassword(password);
-
       // 이메일 중복 여부 확인
       checkDuplicatedEmail(users, email);
 
@@ -69,9 +69,10 @@ export const handlers = [
   rest.post('/auth/login', (req, res, ctx) => {
     const { email, password } = req.body;
 
-    const foundUser = users.find(user => user.email === email);
-
     try {
+      // 이메일 존재 여부 확인
+      checkEmailExist(users, email);
+      const foundUser = users.find(user => user.email === email);
       const accessToken = JSON.stringify({ id: foundUser.id });
 
       // 비밀번호 일치 여부 확인
@@ -86,6 +87,7 @@ export const handlers = [
       );
     } catch (error) {
       // 로그인 실패
+      console.log(error);
       return res(
         ctx.status(401),
         ctx.json({
@@ -111,6 +113,9 @@ export const handlers = [
         validateNickname(nickname);
 
         // 닉네임 변경 성공
+        const foundUser = users.find(user => user.id === accessToken.id);
+        foundUser.nickname = nickname;
+
         return res(
           ctx.status(200),
           ctx.json({
@@ -129,8 +134,8 @@ export const handlers = [
       checkPasswordSame(users, accessToken.id, password);
 
       // 비밀번호 변경 성공
-      const foundUserIndex = users.findIndex(user => user.id === accessToken.id);
-      users[foundUserIndex].password = newPassword;
+      const foundUser = users.find(user => user.id === accessToken.id);
+      foundUser.password = newPassword;
 
       return res(ctx.status(204));
     } catch (error) {
