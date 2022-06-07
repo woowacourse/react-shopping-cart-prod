@@ -22,13 +22,15 @@ export default function ProductCartPage() {
   const pending = useSelector((state) => state.cartReducer.pending);
   const selectedItem = useSelector((state) => state.selectedItemReducer.selectedItem);
 
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
+
   const {initializeCart, deleteSelectedCart} = useCartItem();
 
   const {selectAllItem, unselectAllItem} = useSelectedItem();
 
   useEffect(() => {
-    initializeCart();
-  }, [initializeCart]);
+    isLogin && initializeCart();
+  }, [isLogin, initializeCart]);
 
   const selectedCartItem = cartItem.filter(({id}) => selectedItem.includes(id));
 
