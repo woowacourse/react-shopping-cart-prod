@@ -1,5 +1,5 @@
 import { addCart, deleteCart, getCart, patchCart } from '@/api/cart';
-import { ProductType } from '@/domain/product';
+import { CartType } from '@/domain/product';
 import { Dispatch } from 'redux';
 export const enum CartActionType {
   GET_CART_START = 'cart/GET_CART_START',
@@ -33,7 +33,7 @@ interface GetCartStart {
 interface GetCartSucceeded {
   type: CartActionType.GET_CART_SUCCEEDED;
   payload: {
-    cartList: ProductType[];
+    cartList: CartType[];
   };
 }
 
@@ -48,7 +48,7 @@ interface AddCartStart {
 interface AddCartSucceeded {
   type: CartActionType.ADD_CART_SUCCEEDED;
   payload: {
-    product: ProductType;
+    cartItem: CartType;
   };
 }
 
@@ -125,7 +125,9 @@ export const fetchGetCartAsync = () => async (dispatch: Dispatch<CartAction>) =>
   dispatch({ type: CartActionType.GET_CART_START });
 
   try {
-    const { data: cartList } = await getCart();
+    const {
+      data: { cartItems: cartList },
+    } = await getCart();
 
     dispatch({ type: CartActionType.GET_CART_SUCCEEDED, payload: { cartList } });
   } catch ({ message }) {
@@ -133,17 +135,25 @@ export const fetchGetCartAsync = () => async (dispatch: Dispatch<CartAction>) =>
   }
 };
 
-export const fetchAddCartAsync = product => async (dispatch: Dispatch<CartAction>) => {
-  dispatch({ type: CartActionType.ADD_CART_START });
+export const fetchAddCartAsync =
+  ({ productId, quantity }) =>
+  async (dispatch: Dispatch<CartAction>) => {
+    dispatch({ type: CartActionType.ADD_CART_START });
 
-  try {
-    await addCart(product);
+    try {
+      const {
+        data: { cartItem },
+      } = await addCart({ productId, quantity: quantity });
 
-    dispatch({ type: CartActionType.ADD_CART_SUCCEEDED, payload: { product } });
-  } catch ({ message }) {
-    dispatch({ type: CartActionType.ADD_CART_FAILED });
-  }
-};
+      dispatch({ type: CartActionType.ADD_CART_SUCCEEDED, payload: { cartItem } });
+    } catch ({
+      response: {
+        data: { error },
+      },
+    }) {
+      dispatch({ type: CartActionType.ADD_CART_FAILED });
+    }
+  };
 
 export const fetchDeleteCartAsync = id => async (dispatch: Dispatch<CartAction>) => {
   dispatch({ type: CartActionType.DELETE_CART_START });
@@ -175,13 +185,12 @@ export const fetchDeleteSelectedCartItemAsync =
     }
   };
 
-export const fetchPatchCartAsync =
-  (id, newCartProduct) => async (dispatch: Dispatch<CartAction>) => {
-    dispatch({ type: CartActionType.PATCH_CART_START, payload: { id } });
-    try {
-      await patchCart(id, newCartProduct);
-      dispatch({ type: CartActionType.PATCH_CART_SUCCEEDED, payload: { id, newCartProduct } });
-    } catch ({ message }) {
-      dispatch({ type: CartActionType.PATCH_CART_FAILED });
-    }
-  };
+export const fetchPatchCartAsync = (id, quantity) => async (dispatch: Dispatch<CartAction>) => {
+  dispatch({ type: CartActionType.PATCH_CART_START, payload: { id } });
+  try {
+    await patchCart(id, quantity);
+    dispatch({ type: CartActionType.PATCH_CART_SUCCEEDED, payload: { id, quantity } });
+  } catch ({ message }) {
+    dispatch({ type: CartActionType.PATCH_CART_FAILED });
+  }
+};
