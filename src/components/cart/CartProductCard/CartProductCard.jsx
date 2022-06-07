@@ -84,7 +84,7 @@ function CartProductCard({
           disabled={isOutOfStock}
         />
         <S.ErrorMessage>{errorMessage}</S.ErrorMessage>
-        <S.Price>{price * availableProductQuantity}원</S.Price>
+        <S.Price>{(price * availableProductQuantity).toLocaleString()}원</S.Price>
       </S.Description>
     </S.Container>
   );
