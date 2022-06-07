@@ -20,15 +20,13 @@ export default function DetailItem({productInfo}) {
   const isInCart = cartItem.some((item) => item.id === Number.parseInt(id));
 
   const handleCartButtonClick = () => {
-    const cartInfo = {
+    addCartItem({
       image,
       name,
       price,
       id: Number.parseInt(id),
       quantity: 1,
-    };
-
-    addCartItem(cartInfo);
+    });
   };
 
   return (

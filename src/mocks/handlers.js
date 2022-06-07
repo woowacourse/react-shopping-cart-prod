@@ -2,8 +2,6 @@ import {rest} from 'msw';
 import {MOCK_PRODUCT_LIST} from './mockData';
 import shortid from 'shortid';
 
-let cart = [];
-
 let userDB = {
   winnieToken: {
     account: 'winnie0512',
@@ -15,10 +13,11 @@ let userDB = {
       middle: '1234',
       last: '5678',
     },
+    cart: [],
   },
   nineToken: {
     account: 'jhy979',
-    password: 'Abc12345!',
+    password: 'Abc1234!',
     nickname: '나인',
     address: '하남',
     phoneNumber: {
@@ -26,6 +25,7 @@ let userDB = {
       middle: '1111',
       last: '2222',
     },
+    cart: [],
   },
 };
 
@@ -45,53 +45,45 @@ export const handlers = [
 
   // 장바구니 상품 리스트 가져오기
   rest.get(process.env.REACT_APP_CART_API_URL, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(cart));
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    return res(ctx.status(200), ctx.json(userDB[accessToken].cart));
   }),
 
   // 장바구니 상품 추가
   rest.post(process.env.REACT_APP_CART_API_URL, (req, res, ctx) => {
-    const {id: productId} = req.body;
-    const isInCart = cart.some(({id}) => id === Number.parseInt(productId));
+    const {productId} = req.body;
+
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    const isInCart = userDB[accessToken].cart.some(({id}) => id === Number.parseInt(productId));
 
     if (isInCart) {
       return res(ctx.status(404));
     }
 
-    cart.push(req.body);
+    const selectedItem = MOCK_PRODUCT_LIST.find(({id}) => id === productId);
+
+    userDB[accessToken].cart.push({...selectedItem, quantity: 1});
 
     return res(ctx.status(200));
   }),
 
   // 장바구니 상품 삭제
-  rest.delete(`${process.env.REACT_APP_CART_API_URL}/:id`, (req, res, ctx) => {
-    const productId = Number.parseInt(req.params.id);
-    const isInCart = cart.some(({id}) => id === productId);
+  rest.delete(process.env.REACT_APP_CART_API_URL, (req, res, ctx) => {
+    const {productId} = req.body;
+
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    const isInCart = userDB[accessToken].cart.some(({id}) => id === productId);
 
     if (!isInCart) {
       return res(ctx.status(404));
     }
 
-    const newCart = cart.filter(({id}) => id !== productId);
-    cart = newCart;
+    const newCart = userDB[accessToken].cart.filter(({id}) => id !== productId);
 
-    return res(ctx.status(200));
-  }),
-
-  // 장바구니 상품 수량 변경하기
-  rest.patch(`${process.env.REACT_APP_CART_API_URL}/:id`, (req, res, ctx) => {
-    const productId = Number.parseInt(req.params.id);
-    const {quantity} = req.body;
-    const isInCart = cart.some(({id}) => id === productId);
-
-    if (!isInCart) {
-      return res(ctx.status(404));
-    }
-
-    const newCart = cart.map((item) => {
-      return item.id === productId ? {...item, quantity} : item;
-    });
-
-    cart = newCart;
+    userDB[accessToken].cart = newCart;
 
     return res(ctx.status(200));
   }),

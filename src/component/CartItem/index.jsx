@@ -35,8 +35,8 @@ export default function CartItem({cartInfo, initialChecked = false}) {
         <S.StyledDeleteIcon onClick={() => deleteCartItem(id)} />
         <QuantityBox
           quantity={quantity}
-          handleIncrease={() => increaseQuantity({quantity, id})}
-          handleDecrease={() => decreaseQuantity({quantity, id})}
+          handleIncrease={() => increaseQuantity(id)}
+          handleDecrease={() => decreaseQuantity(id)}
         />
         <S.PriceSpan>{price.toLocaleString()}원</S.PriceSpan>
       </S.EditQuantityBox>
