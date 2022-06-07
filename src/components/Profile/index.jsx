@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import Button from 'styles/Button';
@@ -12,12 +13,13 @@ import Wrapper from './style';
 import { TextLink } from 'styles/TextLink';
 
 import { onMessage } from 'reducers/snackbar';
+import { withdraw } from 'reducers/user';
 
 import { checkName, isInvalidName, isEmpty } from 'utils/validation';
 
 import * as API from 'service';
 
-import { SNACKBAR_MESSAGE } from 'constants';
+import { SNACKBAR_MESSAGE, PATH } from 'constants';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -25,6 +27,7 @@ const Profile = () => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleNameChange = useCallback(({ target }) => {
     setName(target.value);
@@ -52,6 +55,11 @@ const Profile = () => {
         setName(data.name);
         setEmail(data.email);
       } catch ({ message }) {
+        if (message === 'Invalid Token') {
+          dispatch(withdraw());
+          API.clearToken();
+          navigate(PATH.LOGIN);
+        }
         setError(message);
       } finally {
         setLoading(false);
