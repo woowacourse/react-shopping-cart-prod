@@ -10,7 +10,6 @@ const NavBarContainer = styled.div`
   height: 60px;
   background: ${({ theme }) => theme.colors.TEAL_400};
   box-shadow: 0px 4px 4px ${({ theme }) => theme.colors.GRAY_300};
-  margin-bottom: 60px;
 `;
 
 const NavBarTitle = styled(Link)`

@@ -4,7 +4,7 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 240px;
+  margin: 60px 240px;
 `;
 
 const Title = styled.h1`
