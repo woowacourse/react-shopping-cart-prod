@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { User } from 'types';
 import useEditUserInfoForm from './useEditUserInfoForm';
 import LabeledInput from 'components/@shared/LabeledInput';
+import REG_EXP from 'constants/regExp';
 
 function EditUserInfoForm() {
   const { handleClickWithdrawButton, handleSubmit } = useEditUserInfoForm();
@@ -22,6 +23,7 @@ function EditUserInfoForm() {
         id="address"
         type="address"
         placeholder="주소를 입력해주세요"
+        maxLength={255}
         defaultValue={address}
         required
       >
@@ -31,7 +33,7 @@ function EditUserInfoForm() {
         id="phoneNumber"
         type="text"
         placeholder="핸드폰 번호를 입력해주세요"
-        pattern={'^010-?([0-9]{3,4})-?([0-9]{4})'}
+        pattern={REG_EXP.PHONE_NUMBER}
         defaultValue={phoneNumber}
         required
       >
