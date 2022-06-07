@@ -8,7 +8,7 @@ const changeNicknameHandler = rest.patch('/customers/profile', (req, res, ctx) =
     const { authorization } = req.headers.headers;
 
     const token = authorization.replace('Bearer ', '');
-    const accessToken = JSON.parse(!token && !token.includes('undefined') ? token : null);
+    const accessToken = JSON.parse(!!token && !token.includes('undefined') ? token : null);
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {
@@ -20,7 +20,10 @@ const changeNicknameHandler = rest.patch('/customers/profile', (req, res, ctx) =
     // [ERROR] 닉네임 형식이 옳지 않은 경우
     validateNickname(nickname);
 
+    const foundUser = users.find(user => user.id === accessToken.id);
+
     // 닉네임 변경 성공
+    foundUser.nickname = nickname;
     return res(
       ctx.status(200),
       ctx.json({
