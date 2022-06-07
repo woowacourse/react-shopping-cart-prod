@@ -6,6 +6,7 @@ import ShoppingCart from 'components/@shared/ShoppingCart';
 import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { snackBarActions } from 'redux/reducers/snackBar';
 
 type Props = {
   product: Product;
@@ -23,7 +24,7 @@ function ProductCard({ product, isInCart }: Props) {
   const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(cartActions.addToCart(id));
-    alert(CART_MESSAGE.SUCCESS_ADD);
+    dispatch(snackBarActions.show(CART_MESSAGE.SUCCESS_ADD));
   };
 
   return (

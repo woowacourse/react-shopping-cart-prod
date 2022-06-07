@@ -9,9 +9,12 @@ import { createInputValueGetter } from 'utils/dom';
 import { formatPhoneNumber } from 'utils/formats';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { snackBarActions } from 'redux/reducers/snackBar';
 
 const useSignupForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -56,6 +59,7 @@ const useSignupForm = () => {
     };
 
     try {
+      dispatch(snackBarActions.show('회원가입 되었습니다 😆'));
       authAPI.signup(user);
       navigate(PATH.LOGIN);
     } catch (error) {
