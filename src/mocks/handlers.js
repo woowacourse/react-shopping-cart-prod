@@ -18,10 +18,6 @@ const users = [
 ];
 
 const decodeReqAccessToken = req => {
-  console.log(req.headers.headers.authorization);
-  console.log(
-    typeof JSON.parse(decodeURIComponent(req.headers.headers.authorization).replace('Bearer ', '')),
-  );
   return JSON.parse(decodeURIComponent(req.headers.headers.authorization).replace('Bearer ', ''));
 };
 

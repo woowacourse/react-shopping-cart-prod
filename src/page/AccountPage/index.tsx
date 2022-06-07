@@ -35,13 +35,6 @@ const AccountPage = () => {
     getProfile();
   }, []);
 
-  useEffect(() => {
-    if (isLoading && !isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
-    }
-  }, [isLoading]);
-
   const getProfile = async () => {
     const response = await apiClient.get('/customers');
 
