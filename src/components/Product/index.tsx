@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routes from 'routes';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItem, decrement, deleteItem, increment } from 'redux/modules/cart';
 import { show } from 'redux/modules/snackBar';
+import { selectUserState, UserState } from 'redux/modules/user';
 
 import { useCartItemSelector, useCartListSelector } from 'hooks/useCartSelector';
 
@@ -30,6 +31,7 @@ interface ProductProps {
 }
 
 function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
+  const { isLoggedIn }: UserState = useSelector(selectUserState);
   const [isShowCartCounter, setIsShowCartCounter] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -38,13 +40,18 @@ function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
   const timeout = useRef<NodeJS.Timeout>();
 
   const onClickCartImage = () => {
-    setIsShowCartCounter((prev) => !prev);
+    if (!isLoggedIn) {
+      navigate(routes.login);
+      return;
+    }
+
     if (!cartItemList.some((item) => item.id === id)) {
       const newItem = { name, price, imageUrl, id, amount: 1, isSelected: false };
 
       dispatch(addItem(newItem));
       dispatch(show(INFO_MESSAGES.ADDED_TO_CART));
     }
+    setIsShowCartCounter((prev) => !prev);
   };
 
   const onClickDecreaseCounter = () => {

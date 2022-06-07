@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { alignCenter, flexCenter, spaceBetween } from '../../styles/mixin';
+import { alignCenter } from '../../styles/mixin';
 
 const NavBarContainer = styled.div`
   ${alignCenter};
-  justify-content: space-around;
+  padding: 0 10%;
   width: 100%;
   height: 60px;
   background: ${({ theme }) => theme.colors.TEAL_400};
@@ -13,7 +13,8 @@ const NavBarContainer = styled.div`
 `;
 
 const NavBarTitle = styled(Link)`
-  ${flexCenter};
+  ${alignCenter}
+  flex: 1;
   width: 300px;
   height: 40px;
   text-decoration: none;
@@ -34,7 +35,7 @@ const NavBarTitle = styled(Link)`
 `;
 
 const NavBarMenu = styled.div`
-  ${spaceBetween};
+  display: flex;
   gap: 20px;
   align-items: center;
   font-weight: 500;

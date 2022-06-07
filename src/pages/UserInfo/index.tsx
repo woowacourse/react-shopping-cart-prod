@@ -52,12 +52,6 @@ function UserInfo() {
     dispatch(loadUserAPI());
   }, []);
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      navigate(routes.home);
-    }
-  }, [isLoggedIn]);
-
   if (loading) {
     return <Loader />;
   }

@@ -139,7 +139,7 @@ const deleteUserAPI = (): any => async (dispatch: AppDispatch) => {
 
     deleteCookie('accessToken');
     dispatch(deleteUserSuccess());
-  } catch (error) {
+  } catch (error: unknown) {
     if (error instanceof Error) {
       dispatch(deleteUserFailure(error));
     }
@@ -163,7 +163,7 @@ const changePasswordAPI =
       );
       dispatch(changePasswordSuccess());
       onSuccess?.();
-    } catch (error) {
+    } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch(changePasswordFailure(error));
       }
@@ -178,7 +178,7 @@ const signupAPI =
       await apiClient.post('/api/customers', { name: userName, password });
       dispatch(signupSuccess());
       onSuccess?.();
-    } catch (error) {
+    } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch(signupFailure(error));
       }
