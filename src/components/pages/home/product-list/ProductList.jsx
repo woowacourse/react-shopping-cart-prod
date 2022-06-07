@@ -10,6 +10,8 @@ import ProductItem from "@/components/pages/home/product-item/ProductItem";
 
 import StyledProductList from "@/components/pages/home/product-list/ProductList.styled";
 import { getCartList } from "@/redux/modules/cartList";
+import { getCookie } from "@/utils/cookie";
+import { clearCartList } from "@/redux/modules/cartList";
 
 function ProductList() {
   const { data, loading, error } = useSelector(
@@ -19,7 +21,11 @@ function ProductList() {
 
   useEffect(() => {
     dispatch(getProductList());
-    dispatch(getCartList());
+    if (getCookie("accessToken")) {
+      dispatch(getCartList());
+      return;
+    }
+    dispatch(clearCartList());
   }, [dispatch]);
 
   if (loading) return <Loading />;

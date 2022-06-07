@@ -15,6 +15,7 @@ export const ACTION_TYPES = {
   REMOVE_CHECKED_CART_ITEM: "REMOVE_CHECKED_CART_ITEM",
   REMOVE_ROW_CART_ITEM: "REMOVE_ROW_CART_ITEM",
   GET_CART_LIST: "GET_CART_LIST",
+  CLEAR_CART_LIST: "CLEAR_CART_LIST",
 };
 
 export const addProductToCart = (args) => async (dispatch) => {
@@ -77,6 +78,10 @@ export const getCartList = () => async (dispatch) => {
   }
 };
 
+export const clearCartList = () => {
+  return createAction(ACTION_TYPES.CLEAR_CART_LIST);
+};
+
 export const toggleCartItemCheckButton = (id) => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON, id));
 };
@@ -121,6 +126,9 @@ export const cartListReducer = (state = cartListInitialState, action) => {
   switch (action.type) {
     case ACTION_TYPES.GET_CART_LIST:
       return action.payload;
+
+    case ACTION_TYPES.CLEAR_CART_LIST:
+      return cartListInitialState;
 
     case ACTION_TYPES.ADD_PRODUCT_TO_CART:
       return [...state, { ...action.payload, quantity: 1, checked: true }];
