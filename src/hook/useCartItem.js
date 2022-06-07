@@ -42,10 +42,21 @@ export default function useCartItem(path = null) {
   };
 
   const initializeCart = useCallback(() => {
+    const response = JSON.parse(localStorage.getItem('accessToken'));
+
+    if (!response) {
+      alert('로그인을 한 후, 이용해주세요.');
+      return;
+    }
+
+    const accessToken = response.accessToken;
+
     fetchCart({
-      API_URL: process.env.REACT_APP_CART_API_URL,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+      headers: {Authorization: `Bearer ${accessToken}`},
+
       onSuccess: (fetchedData) => {
-        dispatch({type: CART.INITIALIZE, payload: fetchedData});
+        dispatch({type: CART.INITIALIZE, payload: fetchedData.cart});
       },
     });
   }, [dispatch, fetchCart]);

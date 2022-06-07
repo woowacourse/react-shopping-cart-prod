@@ -87,7 +87,9 @@ export const handlers = [
 
   // 장바구니 상품 리스트 가져오기
   rest.get(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(cart));
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    return res(ctx.status(200), ctx.json(cart[accessToken]));
   }),
 
   // 장바구니 상품 삭제
