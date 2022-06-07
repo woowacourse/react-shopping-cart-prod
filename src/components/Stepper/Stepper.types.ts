@@ -1,9 +1,9 @@
 export type Step = {
-  id: number;
   title: string;
+  id: number;
 };
 
-export type Props = { stepList: Step[]; currentStepId: Step['id'] };
+export type Props = { steps: Step[]; currentStepId: Step['id'] };
 
 export interface CircleProps extends React.HTMLProps<HTMLDivElement> {
   selected?: boolean;

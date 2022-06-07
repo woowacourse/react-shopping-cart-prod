@@ -1,16 +1,14 @@
 import axios from 'axios';
 import { SERVER_URL } from 'configs/api';
 import React, { useState, useEffect } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Customer } from 'types';
 
 import useDaumPostcode, { Address } from 'hooks/useDaumPostcode';
 
 const useFillInfoForm = () => {
-  const { goNextStep } = useOutletContext<{
-    currentStepId: number;
-    goNextStep: () => void;
-  }>();
+  const navigate = useNavigate();
+
   const { postcode, addressData } = useDaumPostcode();
   const [values, setValues] = useState<Record<string, string>>({
     name: '',
@@ -75,7 +73,7 @@ const useFillInfoForm = () => {
         data: payload,
       });
 
-      goNextStep();
+      navigate('/signup/3');
     } catch (e) {
       if (axios.isAxiosError(e)) {
         alert('유효하지 않은 이메일 형식입니다.');

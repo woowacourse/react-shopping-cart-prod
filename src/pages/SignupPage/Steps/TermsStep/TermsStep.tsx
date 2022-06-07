@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import * as S from 'pages/SignupPage/Steps/TermsStep/TermsStep.styled';
 
@@ -8,10 +8,7 @@ import Checkbox from 'components/Checkbox/Checkbox';
 import DivideLine from 'components/DivideLine/DivideLine';
 
 function TermsStep() {
-  const { goNextStep } = useOutletContext<{
-    currentStepId: number;
-    goNextStep: () => void;
-  }>();
+  const navigate = useNavigate();
 
   const [checkedFlags, setCheckedFlags] = useState<Record<string, boolean>>({
     'term-of-service': false,
@@ -34,7 +31,7 @@ function TermsStep() {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    goNextStep();
+    navigate('/signup/2');
   };
 
   return (
