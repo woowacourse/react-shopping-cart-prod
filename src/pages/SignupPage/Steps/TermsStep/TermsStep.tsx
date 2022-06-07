@@ -1,38 +1,18 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
 import * as S from 'pages/SignupPage/Steps/TermsStep/TermsStep.styled';
+import useTermsStep from 'pages/SignupPage/Steps/TermsStep/useTermsStep';
 
 import Button from 'components/Button/Button';
 import Checkbox from 'components/Checkbox/Checkbox';
 import DivideLine from 'components/DivideLine/DivideLine';
 
 function TermsStep() {
-  const navigate = useNavigate();
-
-  const [checkedFlags, setCheckedFlags] = useState<Record<string, boolean>>({
-    'term-of-service': false,
-    'term-of-personal-info': false,
-  });
-
-  const handleCheck =
-    (name: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCheckedFlags((prev) => ({ ...prev, [name]: e.target.checked }));
-    };
-
-  const handleCheckAll = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckedFlags({
-      'term-of-service': e.target.checked,
-      'term-of-personal-info': e.target.checked,
-    });
-  };
-
-  const isAllChecked = Object.values(checkedFlags).every((checked) => checked);
-
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    navigate('/signup/2');
-  };
+  const {
+    checkedFlags,
+    isAllChecked,
+    handleCheck,
+    handleCheckAll,
+    handleSubmit,
+  } = useTermsStep();
 
   return (
     <S.TermsBox>
