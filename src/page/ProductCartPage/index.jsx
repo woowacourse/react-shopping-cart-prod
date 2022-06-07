@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import PropTypes from 'prop-types';
 
 import CheckBox from 'component/common/CheckBox';
 import ContentBox from 'component/common/ContentBox';
@@ -101,9 +100,3 @@ export default function ProductCartPage() {
     </S.ProductCartPageLayout>
   );
 }
-
-ProductCartPage.propTypes = {
-  image: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.string,
-};

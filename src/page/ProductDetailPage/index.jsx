@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
 import {useParams} from 'react-router-dom';
 
 import ErrorPendingBoundary from 'component/common/ErrorPendingBoundary';
@@ -42,9 +41,3 @@ export default function ProductDetailPage() {
     </S.DetailItemPageLayout>
   );
 }
-
-ProductDetailPage.propTypes = {
-  image: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.string,
-};
