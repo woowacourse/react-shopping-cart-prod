@@ -1,17 +1,18 @@
 import CheckBox from 'components/@shared/CheckBox';
 import Link from 'components/@shared/Link';
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
-import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
 import styled from 'styled-components';
+<<<<<<< HEAD
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { userActions } from 'redux/actions';
+=======
+>>>>>>> 888b077 (refactor: LoginForm 비지니스로직 훅으로 이동)
 import LabeledInput from 'components/@shared/LabeledInput';
+import useLoginForm from './useLoginForm';
 
 function LoginForm() {
+<<<<<<< HEAD
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -47,6 +48,9 @@ function LoginForm() {
       }
     }
   };
+=======
+  const { handleSubmit } = useLoginForm();
+>>>>>>> 888b077 (refactor: LoginForm 비지니스로직 훅으로 이동)
 
   return (
     <StyledForm onSubmit={handleSubmit}>
