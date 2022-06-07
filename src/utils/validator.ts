@@ -24,6 +24,6 @@ export const validatePassword = (password: string) => {
 
 export const validateNickname = (nickname: string) => {
   if (nickname.length < 2 || nickname.length > 10) {
-    throw new CustomError(2102, '닉네임은 2자리 이상 10자리 이하여야 합니다.');
+    throw new CustomError(2102, '닉네임은 2자리 이상 10자리 이하여야 합니다.', 400);
   }
 };
