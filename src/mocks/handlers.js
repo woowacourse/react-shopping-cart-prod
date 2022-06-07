@@ -17,6 +17,14 @@ const users = [
   { id: 3, email: '3@gmail.com', nickname: 'ghi', password: '123456@adssd' },
 ];
 
+const decodeReqAccessToken = req => {
+  console.log(req.headers.headers.authorization);
+  console.log(
+    typeof JSON.parse(decodeURIComponent(req.headers.headers.authorization).replace('Bearer ', '')),
+  );
+  return JSON.parse(decodeURIComponent(req.headers.headers.authorization).replace('Bearer ', ''));
+};
+
 export const handlers = [
   // 상품 정보 가져오기
   rest.get('/products', (_, res, ctx) => {
@@ -68,7 +76,7 @@ export const handlers = [
     const foundUser = users.find(user => user.email === email);
 
     try {
-      const accessToken = encodeURIComponent({ id: foundUser.id });
+      const accessToken = JSON.stringify({ id: foundUser.id });
 
       // 비밀번호 일치 여부 확인
       checkPasswordSame(users, foundUser.id, password);
@@ -95,9 +103,7 @@ export const handlers = [
   // 회원정보수정
   rest.patch('/customers', (req, res, ctx) => {
     try {
-      const accessToken = decodeURIComponent(
-        req.headers.headers.authorization.replace('Bearer ', ''),
-      );
+      const accessToken = decodeReqAccessToken(req);
       // 유효한 토큰 여부 확인
       validateToken(users, accessToken);
 
@@ -127,6 +133,9 @@ export const handlers = [
       checkPasswordSame(users, accessToken.id, password);
 
       // 비밀번호 변경 성공
+      const foundUserIndex = users.findIndex(user => user.id === accessToken.id);
+      users[foundUserIndex].password = newPassword;
+
       return res(ctx.status(204));
     } catch (error) {
       // 회원정보 수정 실패(입력된 형식 문제면 400, 인가 문제면 401)
@@ -143,22 +152,22 @@ export const handlers = [
   //회원탈퇴
   rest.delete('/customers', (req, res, ctx) => {
     try {
-      const accessToken = JSON.parse(req.headers.headers.authorization.replace('Bearer ', ''));
-      // 유효한 토큰이 아닌 경우
-      if (!users.some(user => user.id === accessToken.id)) throw new Error();
+      const accessToken = decodeReqAccessToken(req);
+      // 유효한 토큰 여부 확인
+      validateToken(users, accessToken);
 
       const { password } = req.body;
-      const foundIndex = users.findIndex(user => user.id === accessToken.id);
+      const foundUserIndex = users.findIndex(user => user.id === accessToken.id);
 
       // 비밀번호 일치 여부 확인
-      checkUserPassword(users[foundIndex], password);
+      checkUserPassword(users[foundUserIndex], password);
 
       // 탈퇴 성공
-      // TODO splice로 대체
-      delete users[foundIndex];
+      users.splice(foundUserIndex, 1);
       return res(ctx.status(204));
     } catch (error) {
       // 탈퇴 실패
+      alert(error);
       return res(
         ctx.status(401),
         ctx.json({
@@ -172,7 +181,8 @@ export const handlers = [
   // 회원조회
   rest.get('/customers', (req, res, ctx) => {
     try {
-      const accessToken = JSON.parse(req.headers.headers.authorization.replace('Bearer ', ''));
+      const accessToken = decodeReqAccessToken(req);
+
       // 유효한 토큰 여부 확인
       validateToken(users, accessToken);
 
@@ -201,7 +211,8 @@ export const handlers = [
   // 로그아웃
   rest.post('/auth/logout', (req, res, ctx) => {
     try {
-      const accessToken = JSON.parse(req.headers.headers.authorization.replace('Bearer ', ''));
+      const accessToken = decodeReqAccessToken(req);
+
       // 유효한 토큰 여부 확인
       validateToken(users, accessToken);
 
