@@ -32,7 +32,7 @@ let userDB = {
         order: [
           {
             id: 1,
-            name: '이름',
+            name: '첫번째 상품',
             totalPrice: 2300,
             quantity: 1,
             imageUrl:
@@ -40,7 +40,7 @@ let userDB = {
           },
           {
             id: 2,
-            name: '이름2',
+            name: '두번째 상품',
             totalPrice: 4600,
             quantity: 2,
             imageUrl:
@@ -53,17 +53,17 @@ let userDB = {
         order: [
           {
             id: 1,
-            name: '이름',
+            name: '세번째 상품',
             totalPrice: 2300,
-            quantity: 1,
+            quantity: 5,
             imageUrl:
               'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
           },
           {
             id: 2,
-            name: '이름2',
+            name: '네번째 상품',
             totalPrice: 2300,
-            quantity: 1,
+            quantity: 10,
             imageUrl:
               'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
           },
@@ -205,8 +205,8 @@ export const handlers = [
     return res(ctx.status(204));
   }),
 
-  // 사용자 정보 조회
-  rest.get(process.env.REACT_APP_GET_INFO_API_URL, (req, res, ctx) => {
+  // 사용자 구매 목록 조회
+  rest.get(process.env.REACT_APP_ORDER_LIST_API_URL, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
 
     if (!Object.hasOwnProperty.call(userDB, accessToken)) {

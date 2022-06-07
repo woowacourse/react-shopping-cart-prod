@@ -8,6 +8,7 @@ const PATH = {
   SIGN_UP: '/sign_up',
   EDIT_USER_INFO: '/user_info',
   WITHDRAWAL: '/withdrawal',
+  ORDER_DETAIL: '/order_detail',
 };
 
 const ERROR_MESSAGE = {
