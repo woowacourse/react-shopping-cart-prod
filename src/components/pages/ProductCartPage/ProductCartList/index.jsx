@@ -36,7 +36,12 @@ function ProductCartList({ checkList, setCheckList }) {
     setCheckList([]);
   };
 
-  const handleClickIncreaseButton = (id, count) => () => {
+  const handleClickIncreaseButton = (id, count, quantity) => () => {
+    if (count >= quantity) {
+      alert("재고가 부족합니다.");
+      return;
+    }
+
     if (!checkList.includes(id)) setCheckList((prev) => [...prev, id]);
     dispatch(updateCartCount(id, count + 1));
   };
