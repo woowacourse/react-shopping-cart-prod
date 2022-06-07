@@ -3,6 +3,7 @@ import { useState } from 'react';
 import authAPI from 'apis/auth';
 import Button from 'components/@shared/Button';
 import CheckBox from 'components/@shared/CheckBox';
+import Input from 'components/@shared/Input';
 import Link from 'components/@shared/Link';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -52,20 +53,22 @@ function LoginForm() {
 
   return (
     <StyledForm onSubmit={onSubmitForm}>
-      <label htmlFor="username">아이디</label>
-      <input
+      <Input
         id="username"
         type="text"
         placeholder="아이디를 입력해주세요"
         required
-      />
-      <label htmlFor="password">비밀번호</label>
-      <input
+      >
+        아이디
+      </Input>
+      <Input
         id="password"
         type="password"
         placeholder="비밀번호를 입력해주세요"
         required
-      />
+      >
+        비밀번호
+      </Input>
       <StyledLoginHelper>
         <StyledKeepLogin>
           <CheckBox
@@ -94,17 +97,6 @@ const StyledForm = styled.form`
   gap: 12px;
 
   width: 100%;
-
-  > label {
-    margin-top: 10px;
-    font-size: 14px;
-  }
-
-  > input {
-    border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-    border-radius: 2px;
-    padding: 6px 8px;
-  }
 `;
 
 const StyledLoginHelper = styled.div`

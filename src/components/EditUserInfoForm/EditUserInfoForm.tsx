@@ -1,5 +1,6 @@
 import authAPI from 'apis/auth';
 import Button from 'components/@shared/Button';
+import Input from 'components/@shared/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
@@ -62,27 +63,31 @@ function EditUserInfoForm() {
 
   return (
     <StyledForm onSubmit={onSubmitForm}>
-      <label htmlFor="id">아이디</label>
-      <input id="id" type="text" value={username} disabled />
-      <label htmlFor="email">이메일</label>
-      <input id="email" type="email" value={email} disabled />
-      <label htmlFor="address">주소</label>
-      <input
+      <Input id="id" type="text" value={username} disabled>
+        아이디
+      </Input>
+      <Input id="email" type="email" value={email} disabled>
+        이메일
+      </Input>
+      <Input
         id="address"
         type="address"
         placeholder="주소를 입력해주세요"
         defaultValue={address}
         required
-      />
-      <label htmlFor="phoneNumber">핸드폰 번호</label>
-      <input
+      >
+        주소
+      </Input>
+      <Input
         id="phoneNumber"
         type="number"
         maxLength={11}
         placeholder="핸드폰 번호를 입력해주세요"
         defaultValue={phoneNumber?.replaceAll('-', '')}
         required
-      />
+      >
+        핸드폰 번호
+      </Input>
       <StyledButtons>
         <Button
           type="button"
@@ -106,25 +111,6 @@ const StyledForm = styled.form`
   gap: 12px;
 
   width: 100%;
-
-  label {
-    margin-top: 4px;
-    font-size: 14px;
-  }
-
-  input {
-    border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-    border-radius: 2px;
-    padding: 6px 8px;
-  }
-
-  input[type='number'] {
-    ::-webkit-inner-spin-button,
-    ::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  }
 `;
 
 const StyledButtons = styled.div`
