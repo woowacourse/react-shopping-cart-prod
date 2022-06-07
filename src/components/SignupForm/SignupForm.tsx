@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import authAPI from 'apis/auth';
-import { Button, Input } from 'components/@shared';
+import { Button, Form, Input } from 'components/@shared';
 import { useInput, usePasswordInput } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';
@@ -63,7 +63,7 @@ function SignupForm() {
   };
 
   return (
-    <StyledForm onSubmit={onSubmitForm}>
+    <Form onSubmit={onSubmitForm}>
       <Input
         id="username"
         type="text"
@@ -140,28 +140,9 @@ function SignupForm() {
       <Button type="submit" marginTop="20px">
         회원가입
       </Button>
-    </StyledForm>
+    </Form>
   );
 }
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  width: 100%;
-
-  label {
-    margin-top: 4px;
-    font-size: 14px;
-  }
-
-  input {
-    border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-    border-radius: 2px;
-    padding: 6px 8px;
-  }
-`;
 
 const StyledErrorSign = styled.span`
   margin: 0 24px 0 12px;

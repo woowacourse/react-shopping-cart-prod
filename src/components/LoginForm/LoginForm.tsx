@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import authAPI from 'apis/auth';
-import { Button, CheckBox, Input, Link } from 'components/@shared';
+import { Button, CheckBox, Form, Input, Link } from 'components/@shared';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
@@ -49,7 +49,7 @@ function LoginForm() {
   };
 
   return (
-    <StyledForm onSubmit={onSubmitForm}>
+    <Form onSubmit={onSubmitForm}>
       <Input
         id="username"
         type="text"
@@ -84,17 +84,9 @@ function LoginForm() {
       <Button type="submit" marginTop="20px">
         로그인
       </Button>
-    </StyledForm>
+    </Form>
   );
 }
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  width: 100%;
-`;
 
 const StyledLoginHelper = styled.div`
   display: flex;

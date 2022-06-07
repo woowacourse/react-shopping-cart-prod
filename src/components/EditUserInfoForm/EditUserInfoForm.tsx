@@ -1,5 +1,5 @@
 import authAPI from 'apis/auth';
-import { Button, Input } from 'components/@shared';
+import { Button, Form, Input } from 'components/@shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
@@ -61,7 +61,7 @@ function EditUserInfoForm() {
   };
 
   return (
-    <StyledForm onSubmit={onSubmitForm}>
+    <Form onSubmit={onSubmitForm}>
       <Input id="id" type="text" value={username} disabled>
         아이디
       </Input>
@@ -100,17 +100,9 @@ function EditUserInfoForm() {
           회원 정보 수정
         </Button>
       </StyledButtons>
-    </StyledForm>
+    </Form>
   );
 }
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  width: 100%;
-`;
 
 const StyledButtons = styled.div`
   display: flex;
