@@ -41,6 +41,14 @@ const authAPI = {
 
   signup: async function (user: User) {
     try {
+      await axios.post(PATH.REQUEST_SIGNUP_DUPLICATION_USERNAME, {
+        username: user.username,
+      });
+
+      await axios.post(PATH.REQUEST_SIGNUP_DUPLICATION_EMAIL, {
+        email: user.email,
+      });
+
       await axios.post(PATH.REQUEST_SIGNUP, user);
     } catch (error) {
       if (error instanceof Error) {

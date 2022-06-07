@@ -61,7 +61,7 @@ function SignupForm() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!(e.target instanceof HTMLFormElement)) return;
 
@@ -76,8 +76,8 @@ function SignupForm() {
     };
 
     try {
-      authAPI.signup(user);
-      navigate(PATH.LOGIN);
+      await authAPI.signup(user);
+      await navigate(PATH.LOGIN);
     } catch (error) {
       alert(USER_MESSAGE.FAIL_SIGNUP);
     }

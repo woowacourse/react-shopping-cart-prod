@@ -1,9 +1,10 @@
+import { axios } from 'configs/api';
 import { rest } from 'msw';
 import { User } from 'types/index';
 
 import PATH from 'constants/path';
 
-const apiURL = 'http://localhost:8080/api';
+const { baseURL } = axios.defaults;
 const KEY = 'mockUserList';
 
 type MockUser = User & { accessToken: string };
@@ -25,16 +26,10 @@ localStorage.setItem(
 const authHandlers = [
   // 회원가입
   rest.post(
-    `${apiURL}${PATH.REQUEST_SIGNUP}`,
+    `${baseURL}${PATH.REQUEST_SIGNUP}`,
     (
       req: {
-        body: {
-          username: string;
-          password: string;
-          email: string;
-          address: string;
-          phoneNumber: string;
-        };
+        body: User;
       },
       res,
       ctx
@@ -42,15 +37,6 @@ const authHandlers = [
       const mockUserList: Array<MockUser> = JSON.parse(
         localStorage.getItem(KEY) || '[]'
       );
-      const { username, email } = req.body;
-
-      const hasDuplicatedUser = mockUserList.some(
-        user => user.username === username || user.email === email
-      );
-
-      if (hasDuplicatedUser) {
-        return res(ctx.status(400));
-      }
 
       const newMockUserList = [
         ...mockUserList,
@@ -63,8 +49,50 @@ const authHandlers = [
     }
   ),
 
+  // username 중복 확인
+  rest.post(
+    `${baseURL}${PATH.REQUEST_SIGNUP_DUPLICATION_USERNAME}`,
+    (req: { body: { username: User['username'] } }, res, ctx) => {
+      const { username } = req.body;
+
+      const mockUserList: Array<MockUser> = JSON.parse(
+        localStorage.getItem(KEY) || '[]'
+      );
+      const hasDuplicatedUsername = mockUserList.some(
+        user => user.username === username
+      );
+
+      if (hasDuplicatedUsername) {
+        return res(ctx.status(400));
+      }
+
+      return res(ctx.status(201));
+    }
+  ),
+
+  // email 중복 확인
+  rest.post(
+    `${baseURL}${PATH.REQUEST_SIGNUP_DUPLICATION_EMAIL}`,
+    (req: { body: { email: User['email'] } }, res, ctx) => {
+      const { email } = req.body;
+
+      const mockUserList: Array<MockUser> = JSON.parse(
+        localStorage.getItem(KEY) || '[]'
+      );
+      const hasDuplicatedEmail = mockUserList.some(
+        user => user.email === email
+      );
+
+      if (hasDuplicatedEmail) {
+        return res(ctx.status(400));
+      }
+
+      return res(ctx.status(201));
+    }
+  ),
+
   // 회원 정보 조회
-  rest.get(`${apiURL}${PATH.REQUEST_USER_INFO}`, (req, res, ctx) => {
+  rest.get(`${baseURL}${PATH.REQUEST_USER_INFO}`, (req, res, ctx) => {
     const accessToken = req.headers.get('authorization')?.split(' ')[1];
 
     const mockUserList: Array<MockUser> = JSON.parse(
@@ -92,14 +120,11 @@ const authHandlers = [
 
   // 회원 정보 수정
   rest.put(
-    `${apiURL}${PATH.REQUEST_USER_INFO}`,
+    `${baseURL}${PATH.REQUEST_USER_INFO}`,
     (
       req: {
         headers: Headers;
-        body: {
-          address: string;
-          phoneNumber: string;
-        };
+        body: Pick<User, 'address' | 'phoneNumber'>;
       },
       res,
       ctx
@@ -129,7 +154,7 @@ const authHandlers = [
   ),
 
   // 회원탈퇴
-  rest.delete(`${apiURL}${PATH.REQUEST_USER_INFO}`, (req, res, ctx) => {
+  rest.delete(`${baseURL}${PATH.REQUEST_USER_INFO}`, (req, res, ctx) => {
     const accessToken = req.headers.get('authorization')?.split(' ')[1];
 
     const mockUserList: Array<MockUser> = JSON.parse(
@@ -154,8 +179,8 @@ const authHandlers = [
 
   // 로그인
   rest.post(
-    `${apiURL}${PATH.REQUEST_LOGIN}`,
-    (req: { body: { username: string; password: string } }, res, ctx) => {
+    `${baseURL}${PATH.REQUEST_LOGIN}`,
+    (req: { body: Pick<User, 'username' | 'password'> }, res, ctx) => {
       const { username, password } = req.body;
 
       const mockUserList: Array<MockUser> = JSON.parse(
