@@ -7,6 +7,7 @@ const colors = {
   white: '#f5f5f5',
   hewvyWhite: '#e3e3e3',
   black: '#000000',
+  lightMint: '#30ded8',
 };
 
 //1rem = 10px
