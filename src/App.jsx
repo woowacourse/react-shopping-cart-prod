@@ -19,11 +19,8 @@ import UserInfoEditPage from 'page/UserInfoEditPage';
 import WithDrawalPage from 'page/WithDrawalPage';
 
 if (process.env.NODE_ENV === 'development') {
-  console.log('개발중');
   const {worker} = require('./mocks/browsers');
   worker.start();
-} else {
-  console.log('배포');
 }
 
 export default function App() {

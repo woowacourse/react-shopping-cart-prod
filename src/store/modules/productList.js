@@ -12,7 +12,7 @@ Object.freeze(INITIAL_STATE.productList);
 export default function productListReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case PRODUCT_LIST.INITIALIZE: {
-      const productList = action.payload;
+      const productList = action.payload.products;
 
       return {
         productList,

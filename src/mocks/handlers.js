@@ -33,7 +33,7 @@ let userDB = {
 
 export const handlers = [
   // 상품 리스트 가져오기
-  rest.get(process.env.REACT_APP_PRODUCT_API_URL, (req, res, ctx) => {
+  rest.get(`${BASE_SERVER_URL}${SERVER_PATH.PRODUCT}`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(MOCK_PRODUCT_LIST));
   }),
 

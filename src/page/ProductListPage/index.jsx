@@ -12,6 +12,7 @@ import Empty from 'assets/empty.png';
 import useCartItem from 'hook/useCartItem';
 import useFetch from 'hook/useFetch';
 import {PAGINATION_LIMIT} from 'constant';
+import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 import Pagination from 'component/Pagination';
 
 export default function ProductListPage() {
@@ -29,7 +30,7 @@ export default function ProductListPage() {
 
   useEffect(() => {
     fetchProduct({
-      API_URL: process.env.REACT_APP_PRODUCT_API_URL,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT}`,
       onSuccess: (fetchedData) => {
         dispatch({type: PRODUCT_LIST.INITIALIZE, payload: fetchedData});
       },

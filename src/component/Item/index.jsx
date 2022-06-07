@@ -18,20 +18,20 @@ export default function Item({productInfo}) {
 
   const {addCartItem, deleteCartItem} = useCartItem();
 
-  const {image, name, price, id} = productInfo;
+  const {imageUrl, name, price, id} = productInfo;
 
   const isInCart = cart.some((cartItem) => cartItem.id === id);
 
   const handleImageClick = ({id}) => navigation(`${PATH.DETAIL}/${id}`);
 
-  const handleIconClick = ({image, name, price, id}, isInCart) => {
+  const handleIconClick = ({imageUrl, name, price, id}, isInCart) => {
     if (isInCart) {
       deleteCartItem(Number.parseInt(id));
       return;
     }
 
     addCartItem({
-      image,
+      imageUrl,
       name,
       price,
       id: Number.parseInt(id),
@@ -42,7 +42,7 @@ export default function Item({productInfo}) {
   return (
     <S.ItemLayout>
       <S.ItemImage
-        src={image}
+        src={imageUrl}
         alt="상품 이미지"
         width="282px"
         height="282px"
