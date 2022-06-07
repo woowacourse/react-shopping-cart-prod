@@ -24,7 +24,7 @@ const ShoppingCartApp = () => (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ProductList />} />
-        <Route path="/product" element={<ProductDetail />} />
+        <Route path="/products/:productId" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signUp" element={<SignUp />} />

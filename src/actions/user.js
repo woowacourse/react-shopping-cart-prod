@@ -1,9 +1,15 @@
 import { 유저_액션 } from './types';
 
-const setUserData = (response) => async (dispatch) => {
-  const { accessToken, userName } = response.content;
+const setAccessToken = (response) => async () => {
+  const { accessToken } = response.content;
   sessionStorage.setItem('accessToken', accessToken);
-  sessionStorage.setItem('userId', userName);
+};
+
+const setUserData = (response) => async (dispatch) => {
+  const {
+    content: { username },
+  } = response;
+  sessionStorage.setItem('userId', username);
 
   dispatch({
     type: 유저_액션.SET_USER_DATA,
@@ -20,4 +26,4 @@ const removeUserData = () => (dispatch) => {
   });
 };
 
-export { setUserData, removeUserData };
+export { setAccessToken, setUserData, removeUserData };

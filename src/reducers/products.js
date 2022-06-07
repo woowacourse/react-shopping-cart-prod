@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case 상품리스트_불러오기_액션.SUCCESS:
-      return { ...state, items: [...state.items, ...payload], isLoading: false };
+      return { ...state, items: [...state.items, ...payload.products], isLoading: false };
 
     case 상품리스트_불러오기_액션.FAILURE:
       return { ...state, isLoading: false };

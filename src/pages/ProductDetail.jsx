@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -10,15 +10,13 @@ import SkeletonProductItem from 'components/SkeletonProductItem';
 import * as Styled from './styles';
 
 const ProductDetail = () => {
-  const [searchParams] = useSearchParams();
+  const { productId } = useParams();
   const dispatch = useDispatch();
   const { item: product, isLoading, errorMessage } = useSelector((state) => state.product);
 
-  const id = searchParams.get('id');
-
   useEffect(() => {
-    dispatch(getProduct(id));
-  }, [dispatch, id]);
+    dispatch(getProduct(productId));
+  }, [dispatch, productId]);
 
   return (
     <Layout>

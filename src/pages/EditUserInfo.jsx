@@ -37,8 +37,8 @@ const EditUserInfo = () => {
   const handleEditUserInfo = async (e) => {
     e.preventDefault();
     const response = await requestEditUserInfo({
-      userName: userId,
-      nickName: userNickName,
+      username: userId,
+      nickname: userNickName,
       age: userAge,
     });
 

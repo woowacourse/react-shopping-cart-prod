@@ -81,8 +81,8 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     const response = await requestSignUp({
-      userName: userId,
-      nickName: userNickName,
+      username: userId,
+      nickname: userNickName,
       password: userPassword,
       age: userAge,
     });

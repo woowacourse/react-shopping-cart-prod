@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUserData } from 'actions/user';
+import { setAccessToken, setUserData } from 'actions/user';
 import { snackbar } from 'actions/snackbar';
 
 import Layout from 'components/Layout';
@@ -10,7 +10,7 @@ import Input from 'components/@common/Input/styles';
 
 import { hideSpinner, showSpinner } from 'actions/spinner';
 import { 비동기_요청 } from 'constants';
-import { requestLogin } from 'api';
+import { requestLogin, requestUserInfo } from 'api';
 import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
@@ -37,11 +37,15 @@ const Login = () => {
     dispatch(hideSpinner());
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(setUserData(response));
+      dispatch(setAccessToken(response));
       dispatch(snackbar.pushMessageSnackbar('로그인에 성공하였습니다'));
+      const infoResponse = await requestUserInfo();
+      dispatch(setUserData(infoResponse));
+
       navigate('/');
       return;
     }
+
     dispatch(snackbar.pushMessageSnackbar('로그인에 실패하였습니다'));
     navigate('/');
   };

@@ -1,6 +1,6 @@
 import requestAsync from './RequestAsync';
 
-export const requestGetCartList = async () => requestAsync.get('cart');
+export const requestGetCartList = async () => requestAsync.get('cart', true);
 export const requestAddCartItem = async (productId) =>
   requestAsync.post(`cart/${productId}`, null, true);
 export const requestSetCartItemQuantity = async (productId, quantity) =>

@@ -21,7 +21,7 @@ const ProductItem = ({ id, thumbnail, name, price }) => {
   };
 
   const onClickProduct = () => {
-    navigator(`/product?id=${id}`);
+    navigator(`/products/${id}`);
   };
 
   return (

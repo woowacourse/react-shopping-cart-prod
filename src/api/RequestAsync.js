@@ -13,7 +13,7 @@ const authorizedHeader = (header) => ({
 class RequestAsync {
   constructor() {
     this.HOST_NAME = process.env.REACT_APP_API_URL;
-    this.header = { 'Content-Type': 'application/json' };
+    this.header = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   }
 
   async #getRefinedResponse(response) {
