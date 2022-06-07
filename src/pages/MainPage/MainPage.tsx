@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 
-import Loading from 'components/@shared/Loading';
+import { Loading } from 'components/@shared';
 import ProductCardGrid from 'components/ProductCardGrid/ProductCardGrid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from 'redux/thunks';

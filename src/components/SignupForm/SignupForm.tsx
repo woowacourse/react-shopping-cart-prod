@@ -1,8 +1,7 @@
 import { useState } from 'react';
 
 import authAPI from 'apis/auth';
-import Button from 'components/@shared/Button';
-import Input from 'components/@shared/Input';
+import { Button, Input } from 'components/@shared';
 import { useInput, usePasswordInput } from 'hooks';
 import { useNavigate } from 'react-router-dom';
 import styled, { css } from 'styled-components';

@@ -1,8 +1,7 @@
 import { useCallback, useEffect } from 'react';
 
 import cartAPI from 'apis/cart';
-import Button from 'components/@shared/Button';
-import Loading from 'components/@shared/Loading';
+import { Button, Loading } from 'components/@shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getProduct } from 'redux/thunks';

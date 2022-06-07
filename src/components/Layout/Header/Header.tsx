@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import cartAPI from 'apis/cart';
-import Link from 'components/@shared/Link';
+import { Link } from 'components/@shared';
 import Logo from 'components/Logo/Logo';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

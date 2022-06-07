@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { ReactComponent as ZzangguLogo } from 'assets/Zzanggu.svg';
-import Link from 'components/@shared/Link';
+import { Link } from 'components/@shared';
 import LoginForm from 'components/LoginForm/LoginForm';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';

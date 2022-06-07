@@ -1,8 +1,6 @@
 import cartAPI from 'apis/cart';
 import { ReactComponent as Delete } from 'assets/Delete.svg';
-import CheckBox from 'components/@shared/CheckBox';
-import Link from 'components/@shared/Link';
-import NumberInput from 'components/@shared/NumberInput';
+import { CheckBox, Link, NumberInput } from 'components/@shared';
 import styled from 'styled-components';
 import { Product } from 'types/index';
 import { getAccessToken } from 'utils/auth';

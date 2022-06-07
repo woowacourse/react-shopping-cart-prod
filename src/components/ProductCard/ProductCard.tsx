@@ -1,6 +1,5 @@
 import cartAPI from 'apis/cart';
-import Link from 'components/@shared/Link';
-import ShoppingCart from 'components/@shared/ShoppingCart';
+import { Link, ShoppingCart } from 'components/@shared';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Product } from 'types/index';

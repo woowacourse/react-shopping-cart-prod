@@ -1,6 +1,5 @@
 import authAPI from 'apis/auth';
-import Button from 'components/@shared/Button';
-import Input from 'components/@shared/Input';
+import { Button, Input } from 'components/@shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';

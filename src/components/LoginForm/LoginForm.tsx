@@ -1,10 +1,7 @@
 import { useState } from 'react';
 
 import authAPI from 'apis/auth';
-import Button from 'components/@shared/Button';
-import CheckBox from 'components/@shared/CheckBox';
-import Input from 'components/@shared/Input';
-import Link from 'components/@shared/Link';
+import { Button, CheckBox, Input, Link } from 'components/@shared';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';

@@ -2,8 +2,7 @@ import { useState } from 'react';
 
 import cartAPI from 'apis/cart';
 import { PayModal } from 'awesome-pay';
-import Button from 'components/@shared/Button';
-import CheckBox from 'components/@shared/CheckBox';
+import { Button, CheckBox } from 'components/@shared';
 import CartItem from 'components/CartItem/CartItem';
 import styled from 'styled-components';
 import { Cart } from 'types/index';
