@@ -28,7 +28,7 @@ const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => 
 
   const handleClickCartIcon = () => {
     if (cartItem) {
-      dispatch(putCartItemRequest(id, cartItem.quantity + 1));
+      dispatch(putCartItemRequest(cartItem.id, cartItem.quantity + 1));
     } else {
       dispatch(postCartItemRequest(id));
     }

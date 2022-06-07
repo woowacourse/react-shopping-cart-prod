@@ -38,7 +38,7 @@ const ItemList = () => {
         <ItemContainer
           key={item.id}
           item={item}
-          cartItem={cartList.find(cartItem => cartItem.id === item.id)}
+          cartItem={cartList.find(cartItem => cartItem.productId === item.id)}
           openSnackbar={openSnackbar}
         />
       ))}
