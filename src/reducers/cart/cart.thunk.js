@@ -7,6 +7,7 @@ export const getCartItemAsync = async (dispatch) => {
   try {
     const headers = getAuthorizedHeaders();
     const { data } = await apiClient.get('/api/members/me/carts', headers);
+    console.log(data);
     dispatch(actions.getCartSuccess(data));
   } catch (error) {
     dispatch(actions.getCartError());
