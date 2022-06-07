@@ -1,14 +1,13 @@
 import { ActionGroupType, ActionsType } from 'redux/types';
 import { buildThunkActionGroup } from 'redux/utils';
 import { CartItem } from 'types/domain';
-import { Valueof } from 'types/utilities';
 
 export const CartListActionType = {
   GET_CART_LIST: 'cart/GET_CART_LIST',
   PUT_CART_ITEM: 'cart/PUT_CART_ITEM',
   POST_CART_ITEM: 'cart/POST_CART_ITEM',
-  PATCH_CART_SELECTED: 'cart/PATCH_CART_SELECTED',
-  PATCH_ALL_CART_SELECTED: 'cart/PATCH_ALL_CART_SELECTED',
+  CHECK_CART_ITEM: 'cart/CHECK_CART_ITEM',
+  CHECK_ALL_CART_ITEM: 'cart/CHECK_ALL_CART_ITEM',
   DELETE_CART_ITEM: 'cart/DELETE_CART_ITEM',
   DELETE_ALL_CART_ITEM: 'cart/DELETE_ALL_CART_ITEM',
 } as const;
@@ -28,16 +27,6 @@ const postCartItemActionGroup = buildThunkActionGroup<
   typeof CartListActionType.POST_CART_ITEM
 >(CartListActionType.POST_CART_ITEM);
 
-const patchCartSelectedActionGroup = buildThunkActionGroup<
-  CartItem,
-  typeof CartListActionType.PATCH_CART_SELECTED
->(CartListActionType.PATCH_CART_SELECTED);
-
-const patchAllCartSelectedActionGroup = buildThunkActionGroup<
-  boolean,
-  typeof CartListActionType.PATCH_ALL_CART_SELECTED
->(CartListActionType.PATCH_ALL_CART_SELECTED);
-
 const deleteCartItemActionGroup = buildThunkActionGroup<
   number,
   typeof CartListActionType.DELETE_CART_ITEM
@@ -45,14 +34,25 @@ const deleteCartItemActionGroup = buildThunkActionGroup<
 
 const deleteAllCartItemActionGroup = buildThunkActionGroup(CartListActionType.DELETE_ALL_CART_ITEM);
 
+export const checkCartItem = (id: number) => ({
+  type: CartListActionType.CHECK_CART_ITEM,
+  payload: id,
+});
+
+export const checkAllCartItem = (isAllChecked: boolean) => ({
+  type: CartListActionType.CHECK_ALL_CART_ITEM,
+  payload: isAllChecked,
+});
+
 export const cartListActions = {
   getCartListActionGroup,
   putCartItemActionGroup,
   postCartItemActionGroup,
-  patchCartSelectedActionGroup,
-  patchAllCartSelectedActionGroup,
   deleteCartItemActionGroup,
   deleteAllCartItemActionGroup,
 };
 
-export type CartListAction = ActionsType<ActionGroupType<typeof cartListActions>>;
+export type CartListAction =
+  | ActionsType<ActionGroupType<typeof cartListActions>>
+  | ReturnType<typeof checkCartItem>
+  | ReturnType<typeof checkAllCartItem>;

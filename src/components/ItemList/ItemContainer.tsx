@@ -18,7 +18,7 @@ interface ItemContainerProps {
 }
 
 const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => {
-  const { id, thumbnailUrl, price, title } = item;
+  const { id, imageUrl, price, name } = item;
   const dispatch = useAppDispatch<CartListAction>();
   const handleClickItemContainer = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
     if (e.target instanceof SVGElement) {
@@ -28,14 +28,9 @@ const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => 
 
   const handleClickCartIcon = () => {
     if (cartItem) {
-      dispatch(
-        putCartItemRequest({
-          ...cartItem,
-          quantity: cartItem.quantity + 1,
-        })
-      );
+      dispatch(putCartItemRequest(id, cartItem.quantity + 1));
     } else {
-      dispatch(postCartItemRequest({ id: Number(id), quantity: 1, isSelected: true }));
+      dispatch(postCartItemRequest(id));
     }
     openSnackbar();
   };
@@ -43,10 +38,10 @@ const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => 
   return (
     <Link to={PATH.getItemDetail(id)} onClick={handleClickItemContainer} replace>
       <StyledRoot>
-        <CroppedImage src={thumbnailUrl} width='270px' height='270px' alt={title} />
+        <CroppedImage src={imageUrl} width='270px' height='270px' alt={name} />
         <StyledBottom>
           <StyledDescription>
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle>{name}</StyledTitle>
             <StyledPrice>{price.toLocaleString()}</StyledPrice>
           </StyledDescription>
           <StyledCartIcon width='31px' fill={theme.colors.GRAY_333} onClick={handleClickCartIcon} />

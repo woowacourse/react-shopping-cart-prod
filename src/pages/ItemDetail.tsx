@@ -31,26 +31,26 @@ const ItemDetail = () => {
   const isInCart = cartList?.some(cartItem => cartItem.id === item?.id);
 
   const postCart = () => {
-    dispatch(postCartItemRequest({ id: Number(id), quantity: 1, isSelected: true }));
+    dispatch(postCartItemRequest(Number(id)));
     openSnackbar();
   };
 
   const updateCart = () => {
     const targetItem = cartList.find(cartItem => cartItem.id === Number(id));
 
-    dispatch(putCartItemRequest({ ...targetItem, quantity: targetItem.quantity + 1 }));
+    dispatch(putCartItemRequest(Number(id), targetItem.quantity));
     openSnackbar();
   };
 
   if (loading) return <Loading />;
   if (error_itemList || error_cartList) return <RequestFail />;
 
-  const { thumbnailUrl, title, price } = item;
+  const { imageUrl, name, price } = item;
 
   return (
     <StyledRoot>
-      <CroppedImage src={thumbnailUrl} width='570px' height='570px' alt='상품' />
-      <StyledTitle>{title}</StyledTitle>
+      <CroppedImage src={imageUrl} width='570px' height='570px' alt='상품' />
+      <StyledTitle>{name}</StyledTitle>
       <StyledPrice>
         <StyledPriceDescription>금액</StyledPriceDescription>
         <StyledPriceValue>{price.toLocaleString()}</StyledPriceValue>

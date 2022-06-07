@@ -2,12 +2,8 @@ import { ReactComponent as DeleteIcon } from 'assets/deleteIcon.svg';
 import CheckBox from 'components/common/CheckBox';
 import CroppedImage from 'components/common/CroppedImage';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { CartListAction } from 'redux/cartList/action';
-import {
-  deleteCartItemRequest,
-  patchCartSelectedRequest,
-  putCartItemRequest,
-} from 'redux/cartList/thunk';
+import { CartListAction, checkCartItem } from 'redux/cartList/action';
+import { deleteCartItemRequest } from 'redux/cartList/thunk';
 import styled from 'styled-components';
 import { ItemInCart } from 'types/domain';
 
@@ -19,22 +15,19 @@ interface CartItemContainerProps {
 
 const CartItemContainer = ({ item }: CartItemContainerProps) => {
   const dispatch = useAppDispatch<CartListAction>();
-  const { id, thumbnailUrl, price, title, isSelected } = item;
+  const { id, imageUrl, price, name, isChecked } = item;
 
   const handleClickDeleteButton = () => {
-    if (window.confirm(`<${title}> 상품을 삭제하시겠습니까?`)) {
+    if (window.confirm(`<${name}> 상품을 삭제하시겠습니까?`)) {
       dispatch(deleteCartItemRequest(Number(id)));
     }
   };
 
   return (
     <StyledCartItem>
-      <CheckBox
-        checked={isSelected}
-        onChange={() => dispatch(patchCartSelectedRequest(Number(id)))}
-      />
-      <CroppedImage src={thumbnailUrl} width='144px' height='144px' alt={title} />
-      <p>{title}</p>
+      <CheckBox checked={isChecked} onChange={() => dispatch(checkCartItem(id))} />
+      <CroppedImage src={imageUrl} width='144px' height='144px' alt={name} />
+      <p>{name}</p>
       <StyledRight>
         <StyledDeleteIcon onClick={handleClickDeleteButton} />
         <QuantityBox item={item} />

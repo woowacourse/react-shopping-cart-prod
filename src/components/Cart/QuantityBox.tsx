@@ -12,7 +12,7 @@ interface QuantityBoxProps {
 }
 
 const QuantityBox = ({ item }: QuantityBoxProps) => {
-  const { quantity } = item;
+  const { id, quantity } = item;
   const dispatch = useAppDispatch<CartListAction>();
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -21,7 +21,7 @@ const QuantityBox = ({ item }: QuantityBoxProps) => {
       ? inputRef.current.valueAsNumber - quantity
       : 1 - quantity;
 
-    dispatch(putCartItemRequest({ ...item, quantity: quantity + diff }));
+    dispatch(putCartItemRequest(id, quantity + diff));
   }, 300);
 
   return (
@@ -37,7 +37,7 @@ const QuantityBox = ({ item }: QuantityBoxProps) => {
         <StyledArrowBox
           onClick={() => {
             inputRef.current.valueAsNumber = quantity + 1;
-            dispatch(putCartItemRequest({ ...item, quantity: quantity + 1 }));
+            dispatch(putCartItemRequest(id, quantity + 1));
           }}
         >
           <StyledArrowUp />
@@ -45,7 +45,7 @@ const QuantityBox = ({ item }: QuantityBoxProps) => {
         <StyledArrowBox
           onClick={() => {
             inputRef.current.valueAsNumber = quantity - 1;
-            dispatch(putCartItemRequest({ ...item, quantity: quantity - 1 }));
+            dispatch(putCartItemRequest(id, quantity - 1));
           }}
           disabled={quantity <= 1}
         >
