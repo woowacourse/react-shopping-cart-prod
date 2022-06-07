@@ -2,6 +2,8 @@ import {rest} from 'msw';
 import {MOCK_PRODUCT_LIST} from './mockData';
 import shortid from 'shortid';
 
+let orderId = 1;
+
 let userDB = {
   winnieToken: {
     account: 'winnie0512',
@@ -26,50 +28,7 @@ let userDB = {
       last: '2222',
     },
     cart: [],
-    orders: [
-      {
-        orderId: 1,
-        order: [
-          {
-            id: 1,
-            name: '첫번째 상품',
-            totalPrice: 2300,
-            quantity: 1,
-            imageUrl:
-              'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
-          },
-          {
-            id: 2,
-            name: '두번째 상품',
-            totalPrice: 4600,
-            quantity: 2,
-            imageUrl:
-              'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
-          },
-        ],
-      },
-      {
-        orderId: 2,
-        order: [
-          {
-            id: 1,
-            name: '세번째 상품',
-            totalPrice: 2300,
-            quantity: 5,
-            imageUrl:
-              'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
-          },
-          {
-            id: 2,
-            name: '네번째 상품',
-            totalPrice: 2300,
-            quantity: 10,
-            imageUrl:
-              'https://cdn-mart.baemin.com/sellergoods/main/f7e7bed1-69d0-45b2-9e39-1399c1329211.jpg',
-          },
-        ],
-      },
-    ],
+    orders: [],
   },
 };
 
@@ -206,7 +165,7 @@ export const handlers = [
   }),
 
   // 사용자 구매 목록 조회
-  rest.get(process.env.REACT_APP_ORDER_LIST_API_URL, (req, res, ctx) => {
+  rest.get(process.env.REACT_APP_ORDER_API_URL, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
 
     if (!Object.hasOwnProperty.call(userDB, accessToken)) {
@@ -214,5 +173,34 @@ export const handlers = [
     }
 
     return res(ctx.status(200), ctx.json(userDB[accessToken].orders));
+  }),
+
+  // 구매 목록 추가
+  rest.post(process.env.REACT_APP_ORDER_API_URL, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    if (!Object.hasOwnProperty.call(userDB, accessToken)) {
+      return res(ctx.status(404));
+    }
+
+    const {order} = req.body;
+
+    const orderedList = order.map(({id: orderedId, quantity}) => {
+      const orderedItem = MOCK_PRODUCT_LIST.find(({id}) => id === orderedId);
+      return {
+        id: orderedItem.id,
+        name: orderedItem.name,
+        totalPrice: orderedItem.price * quantity,
+        quantity,
+        imageUrl: orderedItem.imageUrl,
+      };
+    });
+
+    userDB[accessToken].orders.push({
+      orderId: orderId++,
+      order: orderedList,
+    });
+
+    return res(ctx.status(201));
   }),
 ];

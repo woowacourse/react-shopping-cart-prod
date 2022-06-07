@@ -13,13 +13,18 @@ import {SmingPayment, useSmingPayment} from 'sming-payments';
 import {PATH} from 'constant';
 import {useNavigate} from 'react-router-dom';
 import useCartItem from 'hook/useCartItem';
+import useFetch from 'hook/useFetch';
 
 export default function OrderPayPage() {
   const {isShowModal, toggleModal} = useSmingPayment();
 
+  const accessToken = useSelector((state) => state.authReducer.accessToken);
+
   const {deleteCartItem} = useCartItem();
 
   const navigation = useNavigate();
+
+  const postOrderList = useFetch('post');
 
   const cartItem = useSelector((state) => state.cartReducer.cart);
   const error = useSelector((state) => state.cartReducer.error);
@@ -38,11 +43,24 @@ export default function OrderPayPage() {
   const onClickOrderButton = () => toggleModal();
 
   const onClickPayButton = () => {
-    navigation(PATH.ORDER_LIST);
-    selectedCartItem.forEach(({id}) => {
-      deleteCartItem(id, false);
+    const order = selectedCartItem.map(({id, quantity}) => ({
+      id,
+      quantity,
+    }));
+
+    postOrderList.fetch({
+      API_URL: process.env.REACT_APP_ORDER_API_URL,
+      headers: {Authorization: `Bearer ${accessToken}`},
+      body: {
+        order,
+      },
+      onSuccess: () => {
+        navigation(PATH.ORDER_LIST);
+        selectedCartItem.forEach(({id}) => {
+          deleteCartItem(id, false);
+        });
+      },
     });
-    // todo: 주문 목록에 상품 추가
   };
 
   return (
