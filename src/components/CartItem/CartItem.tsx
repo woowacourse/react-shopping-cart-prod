@@ -25,15 +25,15 @@ function CartItem({ product, quantity, checked, setChecked }: Props) {
   const onClickDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      const accessToken = getAccessToken();
+    if (!window.confirm(CART_MESSAGE.ASK_DELETE)) return;
 
-      if (!accessToken) return;
+    const accessToken = getAccessToken();
 
-      cartAPI.delete(accessToken, String(id)).catch(error => {
-        alert(CART_MESSAGE.FAIL_DELETE);
-      });
-    }
+    if (!accessToken) return;
+
+    cartAPI.delete(accessToken, String(id)).catch(error => {
+      alert(CART_MESSAGE.FAIL_DELETE);
+    });
   };
 
   const onChangeCartQuantity = (value: number) => {

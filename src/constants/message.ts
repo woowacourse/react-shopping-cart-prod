@@ -6,6 +6,7 @@ const CART_MESSAGE = {
   FAIL_CHANGE_QUANTITY:
     '장바구니 수량을 조절하는 데 실패하였습니다. 다시 시도해주세요.',
   ASK_DELETE: '삭제하시겠습니까?',
+  NEED_CHECKED_ITEM: '먼저 상품을 선택해주세요.',
 };
 
 const USER_MESSAGE = {

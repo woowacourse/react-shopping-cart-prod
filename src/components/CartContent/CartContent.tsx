@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import cartAPI from 'apis/cart';
+import { PayModal } from 'awesome-pay';
 import Button from 'components/@shared/Button';
 import CheckBox from 'components/@shared/CheckBox';
 import CartItem from 'components/CartItem/CartItem';
@@ -16,6 +17,11 @@ type Props = {
 
 function CartContent({ cartItems }: Props) {
   const [checkedItems, setCheckedItems] = useState<Array<Cart['id']>>([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleShowModal = () => {
+    setShowModal(prevState => !prevState);
+  };
 
   const calculateTotalMoney = () => {
     return cartItems.reduce((prevMoney, item) => {
@@ -64,17 +70,39 @@ function CartContent({ cartItems }: Props) {
   };
 
   const onClickCheckedDeleteButton = () => {
-    if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      checkedItems.forEach(cartId => {
-        const accessToken = getAccessToken();
+    if (checkedItems.length === 0) {
+      alert(CART_MESSAGE.NEED_CHECKED_ITEM);
 
-        if (!accessToken) return;
-
-        cartAPI.delete(accessToken, String(cartId)).catch(error => {
-          alert(CART_MESSAGE.FAIL_DELETE);
-        });
-      });
+      return;
     }
+
+    if (!window.confirm(CART_MESSAGE.ASK_DELETE)) return;
+
+    checkedItems.forEach(cartId => {
+      const accessToken = getAccessToken();
+
+      if (!accessToken) return;
+
+      cartAPI.delete(accessToken, String(cartId)).catch(error => {
+        alert(CART_MESSAGE.FAIL_DELETE);
+      });
+    });
+  };
+
+  const onClickOrderButton = () => {
+    if (checkedItems.length === 0) {
+      alert(CART_MESSAGE.NEED_CHECKED_ITEM);
+
+      return;
+    }
+
+    toggleShowModal();
+  };
+
+  const paymentFunc = () => {
+    alert('아직 실제 주문은 구현하지 않았습니다 😅');
+
+    toggleShowModal();
   };
 
   return (
@@ -112,10 +140,17 @@ function CartContent({ cartItems }: Props) {
         <StyledTotalMoney>
           {calculateTotalMoney().toLocaleString('ko-KR')} 원
         </StyledTotalMoney>
-        <Button type="button" size="small">
+        <Button type="button" size="small" onClick={onClickOrderButton}>
           주문하기
         </Button>
       </StyledTotalContainer>
+      <PayModal
+        showModal={showModal}
+        toggleShowModal={toggleShowModal}
+        companyName="나만 알고 싶은 짱구 스토어"
+        totalPrice={calculateTotalMoney()}
+        paymentFunc={paymentFunc}
+      />
     </StyledContentBox>
   );
 }
