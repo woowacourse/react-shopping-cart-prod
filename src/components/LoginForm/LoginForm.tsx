@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
+import LabeledInput from 'components/@shared/LabeledInput';
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -37,15 +38,22 @@ function LoginForm() {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <label htmlFor="id">아이디</label>
-      <input id="id" type="text" placeholder="아이디를 입력해주세요" required />
-      <label htmlFor="password">비밀번호</label>
-      <input
+      <LabeledInput
+        id="id"
+        type="text"
+        placeholder="아이디를 입력해주세요"
+        required
+      >
+        아이디
+      </LabeledInput>
+      <LabeledInput
         id="password"
         type="password"
         placeholder="비밀번호를 입력해주세요"
         required
-      />
+      >
+        비밀번호
+      </LabeledInput>
       <StyledLoginHelper>
         <StyledFindLoginInfo>
           <Link to="#">아이디 찾기</Link>
