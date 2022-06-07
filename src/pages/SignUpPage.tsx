@@ -1,7 +1,7 @@
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 import styled from 'styled-components';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
@@ -12,11 +12,12 @@ import usePasswordInput from 'hooks/usePasswordInput';
 import useUpdateEffect from 'hooks/useUpdateEffect';
 import SignInput from 'components/common/SignInput';
 import { PATH } from 'Router';
+import { isEmptyObject } from 'utils';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
-  const { loading, error } = useAppSelector(state => state.userReducer);
+  const { loading, error, data: userData } = useAppSelector(state => state.userReducer);
   const { inputState, validState, handleEmailInput, handleNameInput } = useSignInput();
   const {
     currentPasswordRef,
@@ -26,10 +27,10 @@ const SignUpPage = () => {
   } = usePasswordInput();
 
   useUpdateEffect(() => {
-    if (!error) {
+    if (!error && !loading) {
       navigate(PATH.signIn);
     }
-  }, [loading, error]);
+  }, [loading]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -93,7 +94,8 @@ const StyledForm = styled.form`
   width: 60rem;
   gap: 5rem;
   height: 90rem;
-  border: 1px solid ${theme.colors.black};
+  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border-radius: 5px;
 `;
 
 const StyledTitle = styled.h1`
@@ -112,6 +114,10 @@ const StyledSignUpButton = styled.button`
   font-weight: bold;
   color: ${theme.colors.white};
   border-radius: 6px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightMint};
+  }
 `;
 
 export default SignUpPage;

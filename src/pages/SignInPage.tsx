@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signIn } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
@@ -9,22 +9,22 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
 import useSignInput from 'hooks/useSignInput';
-import useUpdateEffect from 'hooks/useUpdateEffect';
 import SignInput from 'components/common/SignInput';
 import { PATH } from 'Router';
+import { isEmptyObject } from 'utils';
 
 const SignInPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
-  const { error, data } = useAppSelector(state => state.userReducer);
+  const { loading, data: userData } = useAppSelector(state => state.userReducer);
   const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
   const { inputState, validState, handleEmailInput } = useSignInput();
 
-  useUpdateEffect(() => {
-    if (!error) {
+  useEffect(() => {
+    if (!isEmptyObject(userData) && !loading) {
       navigate(PATH.default);
     }
-  }, [data]);
+  }, [loading]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -50,7 +50,7 @@ const SignInPage = () => {
           비밀번호
         </SignInput>
 
-        <StyledSigninButton>로그인</StyledSigninButton>
+        <StyledSignInButton>로그인</StyledSignInButton>
 
         <StyledFooter>
           <Link to='/signUp'>회원가입</Link>
@@ -72,7 +72,8 @@ const StyledForm = styled.form`
   width: 60rem;
   gap: 5rem;
   height: 70rem;
-  border: 1px solid ${theme.colors.black};
+  border: 1px solid ${theme.colors.grey};
+  border-radius: 5px;
 `;
 
 const StyledTitle = styled.h1`
@@ -83,7 +84,7 @@ const StyledTitle = styled.h1`
   text-align: center;
 `;
 
-const StyledSigninButton = styled.button`
+const StyledSignInButton = styled.button`
   width: 80%;
   height: 6.5rem;
   background-color: ${theme.colors.primary};
@@ -91,6 +92,10 @@ const StyledSigninButton = styled.button`
   font-weight: bold;
   color: ${theme.colors.white};
   border-radius: 6px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightMint};
+  }
 `;
 
 const StyledFooter = styled.div`

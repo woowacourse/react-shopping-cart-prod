@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
-import theme from 'styles/theme';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editPassword } from 'redux/action-creators/userThunk';
@@ -26,10 +25,10 @@ const EditPasswordPage = () => {
   } = usePasswordInput();
 
   useUpdateEffect(() => {
-    if (!error) {
+    if (!error && !loading) {
       navigate(PATH.default);
     }
-  }, [loading, error]);
+  }, [loading]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -97,7 +96,8 @@ const StyledForm = styled.form`
   width: 60rem;
   gap: 5rem;
   height: 100rem;
-  border: 1px solid ${theme.colors.black};
+  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border-radius: 5px;
 `;
 
 const StyledTitle = styled.h1`
@@ -111,10 +111,10 @@ const StyledTitle = styled.h1`
 const StyledSignUpButton = styled.button`
   width: 80%;
   height: 6.5rem;
-  background-color: ${theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.primary};
   font-size: 2.3rem;
   font-weight: bold;
-  color: ${theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
   border-radius: 6px;
 `;
 

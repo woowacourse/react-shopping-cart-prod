@@ -4,27 +4,27 @@ import theme from 'styles/theme';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
-import useUpdateEffect from 'hooks/useUpdateEffect';
-import { FormEvent, useRef, useState, ChangeEvent } from 'react';
+import { FormEvent, useRef, useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { resign } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
 import SignInput from 'components/common/SignInput';
 import { PATH } from 'Router';
+import { isEmptyObject } from 'utils';
 
 const ResignPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
-  const { loading, error, data } = useAppSelector(state => state.userReducer);
+  const { loading, data: userData } = useAppSelector(state => state.userReducer);
+  const [confirmMessageValid, setConfirmMessageValid] = useState(false);
   const confirmMessageRef = useRef<HTMLInputElement | null>(null);
   const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
-  const [confirmMessageValid, setConfirmMessageValid] = useState(false);
 
-  useUpdateEffect(() => {
-    if (!error) {
+  useEffect(() => {
+    if (isEmptyObject(userData) && !loading) {
       navigate(PATH.default);
     }
-  }, [loading, error]);
+  }, [loading]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,48 +33,54 @@ const ResignPage = () => {
 
     if (passwordValid.current && confirmMessageValid) {
       dispatch(resign(inputInfo));
-
-      localStorage.removeItem('token');
     }
   };
 
   const handleMessageInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (value === '응') {
-      setConfirmMessageValid(true);
-
-      return;
-    }
-
-    setConfirmMessageValid(false);
+    setConfirmMessageValid(value === '응');
   };
 
   return (
-    <StyledRoot onSubmit={handleSubmit}>
-      <StyledTitle>회원 탈퇴</StyledTitle>
+    <StyledRoot>
+      <StyledForm onSubmit={handleSubmit}>
+        <StyledTitle>회원 탈퇴</StyledTitle>
 
-      <SignInput placeholder={data.email} type={'email'} disable={true}>
-        이메일
-      </SignInput>
-      <SignInput type={'password'} onChange={handleCurrentPasswordInput} ref={currentPasswordRef}>
-        비밀번호 확인
-      </SignInput>
-      <SignInput type={'text'} onChange={handleMessageInput} ref={confirmMessageRef}>
-        {'탈퇴하시려면 "응"을 입력해 주세요'}
-      </SignInput>
+        <SignInput placeholder={userData.email} type={'email'} disable={true}>
+          이메일
+        </SignInput>
+        <SignInput type={'password'} onChange={handleCurrentPasswordInput} ref={currentPasswordRef}>
+          비밀번호 확인
+        </SignInput>
+        <SignInput
+          type={'text'}
+          placeholder='응'
+          onChange={handleMessageInput}
+          ref={confirmMessageRef}
+          isValid={confirmMessageValid}
+        >
+          {'탈퇴하시려면 "응"을 입력해 주세요'}
+        </SignInput>
 
-      <StyledSignUpButton>확인</StyledSignUpButton>
+        <StyledSignUpButton>확인</StyledSignUpButton>
+      </StyledForm>
     </StyledRoot>
   );
 };
 
-const StyledRoot = styled.form`
+const StyledRoot = styled.div`
+  ${flexCenter}
+  height: 90rem;
+`;
+
+const StyledForm = styled.form`
   ${flexCenter}
   display: flex;
   flex-direction: column;
   width: 60rem;
   gap: 5rem;
   height: 90rem;
-  border: 1px solid ${theme.colors.black};
+  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border-radius: 5px;
 `;
 
 const StyledTitle = styled.h1`
@@ -88,11 +94,15 @@ const StyledTitle = styled.h1`
 const StyledSignUpButton = styled.button`
   width: 80%;
   height: 6.5rem;
-  background-color: ${theme.colors.primary};
+  background-color: ${({ theme }) => theme.colors.primary};
   font-size: 2.3rem;
   font-weight: bold;
   color: ${theme.colors.white};
   border-radius: 6px;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.lightMint};
+  }
 `;
 
 export default ResignPage;
