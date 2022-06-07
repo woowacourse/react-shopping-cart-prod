@@ -1,7 +1,8 @@
 // @ts-nocheck
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import useProduct from 'hooks/useProduct';
 import useCart from 'hooks/useCart';
 import useSnackbar from 'hooks/useSnackbar';
 
@@ -9,7 +10,7 @@ import { Image } from 'components';
 
 import { doPutProductToCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
-import { LINK, MESSAGE } from 'utils/constants';
+import { LINK, MESSAGE, ERROR } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
@@ -18,10 +19,40 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
   const isAuthenticated = getCookie('accessToken');
+
   const params = useParams();
   const id = Number(params.id);
-  const [{ image, name, price }] = useProduct(id);
-  const [isInCart, product] = useCart(id);
+  const [product, setProduct] = useState(null);
+  const [isInCart, productInCart] = useCart(id);
+
+  const getProduct = async () => {
+    try {
+      const response = await axios.get(`/products/${id}`);
+
+      const { image, name, price } = response.data;
+
+      setProduct({
+        id,
+        image,
+        name,
+        price,
+      });
+    } catch (error) {
+      const { code, message } = error.response.data;
+
+      if (code) {
+        renderSnackbar(ERROR[code], 'FAILED');
+      } else {
+        renderSnackbar(message, 'FAILED');
+      }
+    }
+  };
+
+  useEffect(() => {
+    getProduct();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const putCart = () => {
     if (!isAuthenticated) {
@@ -30,23 +61,27 @@ const ProductDetailPage = () => {
       return;
     }
 
-    dispatch(doPutProductToCart({ id: id, quantity: isInCart ? product.quantity + 1 : 1 }));
+    dispatch(doPutProductToCart({ id: id, quantity: isInCart ? productInCart.quantity + 1 : 1 }));
     navigate(LINK.TO_CART);
   };
 
   return (
-    <Styled.Container>
-      <Styled.ProductContainer>
-        <Image src={image} alt={name} size="350px" />
-        <Styled.ProductName>{name}</Styled.ProductName>
-        <Styled.Division />
-        <Styled.PriceContainer>
-          <Styled.PriceTag>금액</Styled.PriceTag>
-          <Styled.ProductPrice>{autoComma(price)}원</Styled.ProductPrice>
-        </Styled.PriceContainer>
-        <Styled.PutCartButton onClick={putCart}>장바구니</Styled.PutCartButton>
-      </Styled.ProductContainer>
-    </Styled.Container>
+    <>
+      {product && (
+        <Styled.Container>
+          <Styled.ProductContainer>
+            <Image src={product.image} alt={product.name} size="350px" />
+            <Styled.ProductName>{product.name}</Styled.ProductName>
+            <Styled.Division />
+            <Styled.PriceContainer>
+              <Styled.PriceTag>금액</Styled.PriceTag>
+              <Styled.ProductPrice>{autoComma(product.price)}원</Styled.ProductPrice>
+            </Styled.PriceContainer>
+            <Styled.PutCartButton onClick={putCart}>장바구니</Styled.PutCartButton>
+          </Styled.ProductContainer>
+        </Styled.Container>
+      )}
+    </>
   );
 };
 
