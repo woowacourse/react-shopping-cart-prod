@@ -45,7 +45,7 @@ export default function ProductDetailPage() {
 }
 
 ProductDetailPage.propTypes = {
-  image: PropTypes.string,
+  imageUrl: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.string,
 };

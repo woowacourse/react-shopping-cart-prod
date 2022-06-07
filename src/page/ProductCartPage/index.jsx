@@ -92,7 +92,7 @@ export default function ProductCartPage() {
 }
 
 ProductCartPage.propTypes = {
-  image: PropTypes.string,
+  imageUrl: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.string,
 };

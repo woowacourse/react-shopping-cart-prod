@@ -17,7 +17,7 @@ export default function CartItem({cartInfo, initialChecked = false}) {
 
   const {deleteCartItem, increaseQuantity, decreaseQuantity} = useCartItem();
 
-  const {image, name, price, quantity, id} = cartInfo;
+  const {imageUrl, name, price, quantity, id} = cartInfo;
 
   return (
     <S.CartItemLayout>
@@ -28,7 +28,7 @@ export default function CartItem({cartInfo, initialChecked = false}) {
         handleCheckedFalse={deleteSelectedItem}
       />
       <Link to={`${PATH.DETAIL}/${id}`}>
-        <img src={image} alt="장바구니 상품 이미지" width="144px" height="144px" />
+        <img src={imageUrl} alt="장바구니 상품 이미지" width="144px" height="144px" />
       </Link>
       <S.ItemNameParagraph>{name}</S.ItemNameParagraph>
       <S.EditQuantityBox>
