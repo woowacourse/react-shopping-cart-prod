@@ -24,7 +24,6 @@ function Header() {
   const onClickLogoutButton = () => {
     dispatch(userActions.resetUser());
 
-    localStorage.removeItem('accessToken');
     sessionStorage.removeItem('accessToken');
 
     navigate(PATH.BASE);
