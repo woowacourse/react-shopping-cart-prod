@@ -1,4 +1,5 @@
 import data from 'mocks/data';
+import { MOCK_ERROR_MESSAGE } from 'mocks/constant';
 
 const cartDB = () => {
   let cart = JSON.parse(window.localStorage.getItem('server-shopping-cart')) || [];
@@ -30,9 +31,19 @@ export const handlePostShoppingCartRequest = (req, res, ctx) => {
   const { id, quantity } = req.body;
 
   const cartProductIndex = findProductCartIndex(currentShoppingCart, id);
+  const productData = findProductData(id);
+
+  if (productData === undefined) {
+    return res(ctx.status(400), ctx.json({ message: MOCK_ERROR_MESSAGE.NOT_EXIST_PRODUCT}));
+  }
 
   if (cartProductIndex >= 0) {
     const cartProduct = currentShoppingCart[cartProductIndex];
+
+    if (productData.stock < quantity + cartProduct.quantity) {
+      return res(ctx.status(400), ctx.json({ message: MOCK_ERROR_MESSAGE.EXCEED_STORABLE_QUANTITY(productData.stock, cartProduct.quantity), }));
+    }
+    
     const newCartProduct = { ...cartProduct, quantity: cartProduct.quantity + quantity };
     currentShoppingCart[cartProductIndex] = newCartProduct;
   } else {

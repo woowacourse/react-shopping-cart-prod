@@ -20,7 +20,7 @@ export default {
       name: '아이스박스',
       price: 20000,
       imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/icebox.jpg',
-      stock: 10,
+      stock: 5,
     },
     {
       id: 4,
