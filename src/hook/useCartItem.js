@@ -1,6 +1,7 @@
-import {CONFIRM_MESSAGE} from 'constant';
+import {CONFIRM_MESSAGE, PATH} from 'constant';
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
 
 import {CART} from 'store/modules/cart';
 import {SELECTED_ITEM} from 'store/modules/selectedItem';
@@ -9,6 +10,9 @@ import useFetch from './useFetch';
 
 export default function useCartItem() {
   const accessToken = useSelector((state) => state.authReducer.accessToken);
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
+
+  const navigation = useNavigate();
 
   const dispatch = useDispatch();
 
@@ -20,6 +24,12 @@ export default function useCartItem() {
 
   const deleteCartItem = (payload, confirmMessage = true) => {
     const deleteConfirm = confirmMessage ? window.confirm(CONFIRM_MESSAGE.DELETE_CART) : true;
+
+    if (!isLogin) {
+      alert('먼저 로그인해주세요.');
+      navigation(PATH.LOGIN);
+      return;
+    }
 
     if (deleteConfirm) {
       deleteCart({
@@ -37,6 +47,12 @@ export default function useCartItem() {
   };
 
   const initializeCart = useCallback(() => {
+    if (!isLogin) {
+      alert('먼저 로그인해주세요.');
+      navigation(PATH.LOGIN);
+      return;
+    }
+
     getCart({
       API_URL: process.env.REACT_APP_CART_API_URL,
       headers: {Authorization: `Bearer ${accessToken}`},
@@ -47,6 +63,12 @@ export default function useCartItem() {
   }, [dispatch, getCart, accessToken]);
 
   const addCartItem = (payload) => {
+    if (!isLogin) {
+      alert('먼저 로그인해주세요.');
+      navigation(PATH.LOGIN);
+      return;
+    }
+
     const {id} = payload;
     postCart({
       API_URL: process.env.REACT_APP_CART_API_URL,

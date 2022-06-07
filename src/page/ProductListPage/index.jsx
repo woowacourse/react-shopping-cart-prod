@@ -21,6 +21,7 @@ export default function ProductListPage() {
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productListReducer.productList);
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   const {pending: productPending, error: productError, fetch: fetchProduct} = useFetch('get');
 
@@ -36,8 +37,8 @@ export default function ProductListPage() {
   }, [dispatch, fetchProduct]);
 
   useEffect(() => {
-    initializeCart();
-  }, [initializeCart]);
+    isLogin && initializeCart();
+  }, [isLogin, initializeCart]);
 
   return (
     <S.ProductListPageLayout>
