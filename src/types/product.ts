@@ -6,9 +6,8 @@ export type Product = {
   id: number;
   name: string;
   price: number;
-  image: string;
+  imageUrl: string;
   description: string;
-  stock: number;
 };
 
 export type ProductAction = {

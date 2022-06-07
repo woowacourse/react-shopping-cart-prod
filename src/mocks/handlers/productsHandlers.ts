@@ -1,10 +1,10 @@
-import { productAxios } from 'configs/api';
+import axios from 'configs/api';
 import db from 'db.json';
 import { rest } from 'msw';
 
 import PATH from 'constants/path';
 
-const { baseURL } = productAxios.defaults;
+const { baseURL } = axios.defaults;
 
 const productsHandlers = [
   rest.get(`${baseURL}${PATH.REQUEST_PRODUCT}`, (req, res, ctx) => {
@@ -15,6 +15,10 @@ const productsHandlers = [
     const product = db.products.find(
       productInfo => productInfo.id === Number(req.params.id)
     );
+
+    if (!product) {
+      return res(ctx.status(404));
+    }
 
     return res(ctx.status(200), ctx.json(product));
   }),

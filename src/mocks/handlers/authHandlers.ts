@@ -1,4 +1,4 @@
-import { axios } from 'configs/api';
+import axios from 'configs/api';
 import { rest } from 'msw';
 import { User } from 'types/index';
 

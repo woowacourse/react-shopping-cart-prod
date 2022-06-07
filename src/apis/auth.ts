@@ -1,4 +1,4 @@
-import { axios } from 'configs/api';
+import axios from 'configs/api';
 import { User } from 'types/index';
 import { getAccessToken } from 'utils/auth';
 

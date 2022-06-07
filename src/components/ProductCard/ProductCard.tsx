@@ -14,32 +14,29 @@ type Props = {
 };
 
 function ProductCard({ product, cartStock }: Props) {
-  const { id, name, price, stock, description, image } = {
+  const { id, name, price, description, imageUrl } = {
     ...product,
-    stock: Number(product.stock),
     price: Number(product.price),
   };
   const dispatch = useDispatch();
 
   const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
+
     dispatch(cartActions.addToCart(id));
+
     alert(CART_MESSAGE.SUCCESS_ADD);
   };
 
   return (
-    <Link to={`${PATH.PRODUCT}/${id}`} disabled={stock <= 0}>
+    <Link to={`${PATH.PRODUCT}/${id}`}>
       <StyledProductCard>
         <CardImageContainer>
-          {stock > 0 ? (
-            <CardImageOverlay>
-              <p>{description}</p>
-              <div onClick={onClickCartButton}>구매하기</div>
-            </CardImageOverlay>
-          ) : (
-            <OutOfStockOverlay>품절</OutOfStockOverlay>
-          )}
-          <img src={image} alt={name} />
+          <CardImageOverlay>
+            <p>{description}</p>
+            <div onClick={onClickCartButton}>구매하기</div>
+          </CardImageOverlay>
+          <img src={imageUrl} alt={name} />
         </CardImageContainer>
         <CardDescriptionContainer>
           <h3>{name}</h3>
@@ -58,24 +55,6 @@ function ProductCard({ product, cartStock }: Props) {
     </Link>
   );
 }
-
-const OutOfStockOverlay = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  box-sizing: border-box;
-
-  width: 100%;
-  height: 100%;
-  z-index: ${({ theme: { zPriorities } }) => zPriorities.front};
-
-  background: rgba(0, 0, 0, 0.3);
-  color: ${({ theme: { colors } }) => colors.white};
-
-  font-size: 25px;
-  font-weight: 700;
-`;
 
 const CardImageOverlay = styled.div`
   position: absolute;
