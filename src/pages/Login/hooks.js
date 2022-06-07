@@ -6,10 +6,12 @@ import { PATH_NAME, AUTHORIZATION_TYPE } from 'constants';
 import useAuthentication from 'hooks/useAuthentication';
 import useAuthorization from 'hooks/useAuthorization';
 import useSnackBar from 'hooks/useSnackBar';
+import useCart from 'hooks/useCart';
 
 const useLoginPage = () => {
   useAuthorization(AUTHORIZATION_TYPE.PUBLIC_ONLY);
   const navigate = useNavigate();
+  const { getItems } = useCart();
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
   const { isLoginSucceed, isLoginError, loginErrorMessage, login } =
     useAuthentication();
@@ -30,6 +32,7 @@ const useLoginPage = () => {
   useEffect(() => {
     if (isLoginSucceed) {
       showSuccessSnackBar('로그인에 성공하였습니다!');
+      getItems();
       navigate(PATH_NAME.HOME);
       return;
     }
