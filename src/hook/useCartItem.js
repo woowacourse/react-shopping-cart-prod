@@ -24,10 +24,12 @@ export default function useCartItem(path = null) {
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
 
     if (deleteConfirm) {
-      dispatch({type: CART.DELETE, payload});
-      dispatch({type: SELECTED_ITEM.DELETE, payload});
       deleteCart({
         API_URL: `${process.env.REACT_APP_CART_API_URL}/${payload}`,
+        onSuccess: () => {
+          dispatch({type: CART.DELETE, payload});
+          dispatch({type: SELECTED_ITEM.DELETE, payload});
+        },
       });
       return;
     }
@@ -48,10 +50,12 @@ export default function useCartItem(path = null) {
   }, [dispatch, fetchCart]);
 
   const addCartItem = (payload) => {
-    dispatch({type: CART.ADD, payload});
     postCart({
       API_URL: process.env.REACT_APP_CART_API_URL,
       body: payload,
+      onSuccess: () => {
+        dispatch({type: CART.ADD, payload});
+      },
     });
     if (!path) {
       return;
@@ -62,11 +66,13 @@ export default function useCartItem(path = null) {
   const increaseQuantity = (payload) => {
     const {quantity, id} = payload;
 
-    dispatch({type: CART.INCREASE_QUANTITY, payload: id});
     patchCart({
       API_URL: `${process.env.REACT_APP_CART_API_URL}/${id}`,
       body: {
         quantity: quantity + 1,
+      },
+      onSuccess: () => {
+        dispatch({type: CART.INCREASE_QUANTITY, payload: id});
       },
     });
   };
@@ -74,11 +80,13 @@ export default function useCartItem(path = null) {
   const decreaseQuantity = (payload) => {
     const {quantity, id} = payload;
 
-    dispatch({type: CART.DECREASE_QUANTITY, payload: id});
     patchCart({
       params: `/${id}`,
       body: {
         quantity: Math.max(quantity - 1, 1),
+      },
+      onSuccess: () => {
+        dispatch({type: CART.DECREASE_QUANTITY, payload: id});
       },
     });
   };
@@ -87,11 +95,13 @@ export default function useCartItem(path = null) {
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
 
     if (deleteConfirm) {
-      dispatch({type: SELECTED_ITEM.DELETE_ALL});
-      dispatch({type: CART.DELETE_SELECTED_CART, payload});
       payload.forEach((id) =>
         deleteCart({
           API_URL: `${process.env.REACT_APP_CART_API_URL}/${id}`,
+          onSuccess: () => {
+            dispatch({type: CART.DELETE_SELECTED_CART, payload});
+            dispatch({type: SELECTED_ITEM.DELETE, payload: id});
+          },
         }),
       );
       return;
