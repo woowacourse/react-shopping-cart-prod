@@ -1,5 +1,5 @@
 import * as S from 'pages/SignupPage/Steps/TermsStep/TermsStep.styled';
-import useTermsStep from 'pages/SignupPage/Steps/TermsStep/useTermsStep';
+import useTermsForm from 'pages/SignupPage/Steps/TermsStep/useTermsForm';
 
 import Button from 'components/Button/Button';
 import Checkbox from 'components/Checkbox/Checkbox';
@@ -12,7 +12,7 @@ function TermsStep() {
     handleCheck,
     handleCheckAll,
     handleSubmit,
-  } = useTermsStep();
+  } = useTermsForm();
 
   return (
     <S.TermsBox>

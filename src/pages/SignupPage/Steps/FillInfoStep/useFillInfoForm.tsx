@@ -61,7 +61,7 @@ const useFillInfoForm = () => {
     if (Object.entries(errors as Record<string, string>).length !== 0) return;
 
     const formData = new FormData(e.target as HTMLFormElement);
-    const payload = {
+    const requestBody = {
       ...(Object.fromEntries(formData.entries()) as Partial<Customer>),
       profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
     };
@@ -70,7 +70,7 @@ const useFillInfoForm = () => {
       await axios({
         method: 'post',
         url: `${SERVER_URL}/api/customers`,
-        data: payload,
+        data: requestBody,
       });
 
       navigate('/signup/3');

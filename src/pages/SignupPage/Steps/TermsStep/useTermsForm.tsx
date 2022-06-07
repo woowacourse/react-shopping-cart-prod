@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const useTermsStep = () => {
+const useTermsForm = () => {
   const navigate = useNavigate();
 
   const [checkedFlags, setCheckedFlags] = useState<Record<string, boolean>>({
@@ -37,4 +37,4 @@ const useTermsStep = () => {
   };
 };
 
-export default useTermsStep;
+export default useTermsForm;
