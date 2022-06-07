@@ -11,11 +11,11 @@ export const USER_ACTION_TYPE = {
 };
 
 const postSignUp = generateAsyncActionGroup(USER_ACTION_TYPE.POST_SIGN_UP);
-const postSignIn = generateAsyncActionGroup(USER_ACTION_TYPE.POST_SIGN_UP);
-const patchUserInfo = generateAsyncActionGroup(USER_ACTION_TYPE.POST_SIGN_UP);
-const patchNewPassword = generateAsyncActionGroup(USER_ACTION_TYPE.POST_SIGN_UP);
-const deleteUser = generateAsyncActionGroup(USER_ACTION_TYPE.POST_SIGN_UP);
-const autoSignIn = generateAsyncActionGroup(USER_ACTION_TYPE.POST_SIGN_UP);
+const postSignIn = generateAsyncActionGroup(USER_ACTION_TYPE.POST_SIGN_IN);
+const patchUserInfo = generateAsyncActionGroup(USER_ACTION_TYPE.PATCH_USER_INFO);
+const patchNewPassword = generateAsyncActionGroup(USER_ACTION_TYPE.PATCH_NEW_PASSWORD);
+const deleteUser = generateAsyncActionGroup(USER_ACTION_TYPE.DELETE_USER);
+const autoSignIn = generateAsyncActionGroup(USER_ACTION_TYPE.AUTO_SIGN_IN);
 const signOut = generateAsyncActionGroup(USER_ACTION_TYPE.SIGN_OUT);
 
 export const userAction = {
