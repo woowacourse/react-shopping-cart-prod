@@ -41,9 +41,12 @@ function ProfilePage() {
             name,
             contact,
             email,
-            fullAddress: { zoneCode, address, detailAddress },
+            zonecode,
+            address,
+            detailAddress,
             gender,
             birthday,
+            profileImageUrl,
           },
         } = await axios({
           method: 'get',
@@ -62,12 +65,10 @@ function ProfilePage() {
           gender,
           detailAddress,
           birthday,
+          profileImageUrl,
         }));
 
-        setAddressData({
-          zonecode: zoneCode,
-          address,
-        });
+        setAddressData({ zonecode, address });
       };
 
       loadUserInfo();
@@ -82,28 +83,11 @@ function ProfilePage() {
 
   const extractPayloadWithForm = (formElement: HTMLFormElement) => {
     const formData = new FormData(formElement);
-    const {
-      email,
-      password,
-      name,
-      gender,
-      birthday,
-      contact,
-      address,
-      detailAddress,
-      zoneCode,
-    } = Object.fromEntries(formData.entries());
+    const customerInfo = Object.fromEntries(formData.entries());
 
     return {
-      email,
-      password,
-      profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
-      name,
-      gender,
-      birthday,
-      contact,
-      fullAddress: { address, detailAddress, zoneCode },
-      terms: true,
+      ...customerInfo,
+      profileImageUrl: defaultValues?.profileImageUrl,
     };
   };
 

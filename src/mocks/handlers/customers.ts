@@ -43,11 +43,9 @@ const customers: User[] = [
     gender: 'male',
     birthday: '1999-03-23',
     contact: '01012345678',
-    fullAddress: {
-      address: '서울특별시 동작구 상도동',
-      detailAddress: '',
-      zoneCode: '50413',
-    },
+    address: '서울특별시 동작구 상도동',
+    detailAddress: '',
+    zonecode: '50413',
     terms: true,
     accessToken: null,
   },
@@ -169,20 +167,9 @@ const customerHandlers = [
       );
     }
 
-    const customerInfo = {
-      userId: customer.userId,
-      email: customer.email,
-      password: customer.password,
-      profileImageUrl: customer.profileImageUrl,
-      name: customer.name,
-      gender: customer.gender,
-      birthday: customer.birthday,
-      contact: customer.contact,
-      fullAddress: customer.fullAddress,
-      terms: customer.terms,
-    };
+    const { password, ...rest } = customer;
 
-    return res(ctx.status(200), ctx.json(customerInfo));
+    return res(ctx.status(200), ctx.json(rest));
   }),
   //사용자 정보 수정
   rest.put<Customer>(

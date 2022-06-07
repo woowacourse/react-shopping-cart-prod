@@ -9,11 +9,9 @@ export type Customer = {
   gender: 'male' | 'female' | 'undefined';
   birthday: string;
   contact: string;
-  fullAddress: {
-    address: string;
-    detailAddress: string;
-    zoneCode: string;
-  };
+  address: string;
+  detailAddress: string;
+  zonecode: string;
   terms: boolean;
 };
 export type User = Customer & { userId: number; accessToken: string | null };
@@ -51,6 +49,7 @@ export type Action = {
 };
 
 export type StoreState = {
+  customerState: User;
   productsState: {
     isLoading: boolean;
     error: any;

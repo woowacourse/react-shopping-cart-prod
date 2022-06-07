@@ -6,7 +6,7 @@ import Input from 'components/Input/Input';
 import ICONS from 'constants/icons';
 import * as S from './FillInfoStep.styled';
 import { useOutletContext } from 'react-router-dom';
-import { SigninResponseBody } from 'types';
+import { Customer, SigninResponseBody } from 'types';
 import { SERVER_URL } from 'configs/api';
 import useForm from 'hooks/useForm';
 import { formatDate } from 'utils/utils';
@@ -35,33 +35,19 @@ function FillInfoStep() {
 
   const extractPayloadWithForm = (formElement: HTMLFormElement) => {
     const formData = new FormData(formElement);
-    const {
-      email,
-      password,
-      name,
-      gender,
-      birthday,
-      contact,
-      address,
-      detailAddress,
-      zoneCode,
-    } = Object.fromEntries(formData.entries());
+    const customerInfo = Object.fromEntries(formData.entries());
 
     return {
-      email,
-      password,
+      ...customerInfo,
       profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
-      name,
-      gender,
-      birthday,
-      contact,
-      fullAddress: { address, detailAddress, zoneCode },
       terms: true,
     };
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    const payload = extractPayloadWithForm(e.target as HTMLFormElement);
+    const payload = extractPayloadWithForm(
+      e.target as HTMLFormElement
+    ) as Customer;
 
     try {
       if (!isEmailUnique || !isValidConfirmPassword || !addressData) {
