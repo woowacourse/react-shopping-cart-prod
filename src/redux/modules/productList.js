@@ -15,7 +15,7 @@ export const getProductList = () => async (dispatch) => {
     dispatch(
       createAction(
         ACTION_TYPES.GET_PRODUCT_LIST_SUCCESS,
-        JSON.parse(productList.data)
+        productList.data.products
       )
     );
   } catch (error) {

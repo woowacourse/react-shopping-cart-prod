@@ -14,12 +14,12 @@ import StyledProductItem from "@/components/pages/home/product-item/ProductItem.
 
 import { PATH, MESSAGE } from "@/constants";
 
-function ProductItem({ id, name, price, imgUrl }) {
+function ProductItem({ id, name, price, imageUrl }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCartClick = () => {
-    dispatch(addProductToCart({ id, name, price, imgUrl }));
+    dispatch(addProductToCart({ id, name, price, imageUrl }));
   };
 
   const handleProductDetailClick = () => {
@@ -30,7 +30,7 @@ function ProductItem({ id, name, price, imgUrl }) {
     <>
       <StyledProductItem>
         <Thumbnail
-          src={`${imgUrl}`}
+          src={`${imageUrl}`}
           name={name}
           onClick={handleProductDetailClick}
         />
