@@ -55,6 +55,8 @@ function UserInfo() {
         },
       }
     );
+
+    navigate(routes.home);
   };
 
   useEffect(() => {
