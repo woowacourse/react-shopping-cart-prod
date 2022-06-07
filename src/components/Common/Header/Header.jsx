@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 import * as Styled from './style';
 
 const Header = () => {
-  const { cartItems } = useCart();
   const { authenticated, name } = useSelector((state) => state.user);
 
   return (
@@ -24,11 +23,6 @@ const Header = () => {
         <Styled.LogoText>우아한 상회</Styled.LogoText>
       </Styled.Logo>
       <Styled.MenuContainer>
-        <MenuItem>
-          <Link to={PATH_NAME.CART}>장바구니</Link>
-          <Styled.Badge>{cartItems?.length ?? 0}</Styled.Badge>
-        </MenuItem>
-        <MenuItem>주문목록</MenuItem>
         <AuthNav isAuthenticated={authenticated} name={name} />
       </Styled.MenuContainer>
     </Styled.Wrapper>
@@ -36,6 +30,7 @@ const Header = () => {
 };
 
 const AuthNav = ({ isAuthenticated, name }) => {
+  const { cartItems } = useCart();
   const { logout } = useAuthentication();
 
   const handleClickLogout = () => {
@@ -45,6 +40,10 @@ const AuthNav = ({ isAuthenticated, name }) => {
     <>
       {isAuthenticated ? (
         <Styled.AuthNavWrapper>
+          <MenuItem>
+            <Link to={PATH_NAME.CART}>장바구니</Link>
+            <Styled.Badge>{cartItems?.length ?? 0}</Styled.Badge>
+          </MenuItem>
           <Avatar name={name} />
           <Styled.DropDownWrapper>
             <DropDown>

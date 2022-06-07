@@ -1,8 +1,11 @@
 import useCart from 'hooks/useCart';
 import { includes } from 'utils';
 import { useMemo, useState, useEffect } from 'react';
+import useAuthorization from 'hooks/useAuthorization';
+import { AUTHORIZATION_TYPE } from 'constants';
 
 const useCartPage = () => {
+  useAuthorization(AUTHORIZATION_TYPE.PRIVATE_ONLY);
   const { isLoading, isError, cartItems, getItems, deleteItems } = useCart();
 
   const [selectedItemList, setSelectedItemList] = useState([]);
