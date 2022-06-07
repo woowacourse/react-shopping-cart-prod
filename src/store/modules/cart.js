@@ -23,8 +23,10 @@ export default function cartReducer(state = INITIAL_STATE, action) {
     }
 
     case CART.ADD: {
+      console.log(state);
+
       return {
-        cart: [...state.cart, action.payload],
+        cart: [...state.cart, {...action.payload, quantity: 1}],
       };
     }
     case CART.DELETE: {

@@ -25,7 +25,6 @@ export default function DetailItem({productInfo}) {
       name,
       price,
       id: Number.parseInt(id),
-      quantity: 1,
     };
 
     addCartItem(cartInfo);

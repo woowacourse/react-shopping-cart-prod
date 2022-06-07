@@ -38,7 +38,7 @@ export default function Header() {
     userInfo.fetch({
       API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
-      onSuccess: () => {
+      onSuccess: (res) => {
         dispatch({type: AUTH.LOGIN});
       },
     });

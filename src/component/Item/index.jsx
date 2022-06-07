@@ -35,7 +35,6 @@ export default function Item({productInfo}) {
       name,
       price,
       id: Number.parseInt(id),
-      quantity: 1,
     });
   };
 

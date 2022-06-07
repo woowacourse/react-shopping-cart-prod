@@ -1,4 +1,5 @@
 import {CONFIRM_MESSAGE} from 'constant';
+import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
@@ -50,9 +51,19 @@ export default function useCartItem(path = null) {
   }, [dispatch, fetchCart]);
 
   const addCartItem = (payload) => {
+    const response = JSON.parse(localStorage.getItem('accessToken'));
+
+    if (!response) {
+      alert('로그인을 한 후, 이용해주세요.');
+      return;
+    }
+
+    const accessToken = response.accessToken;
+
     postCart({
-      API_URL: process.env.REACT_APP_CART_API_URL,
-      body: payload,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+      headers: {Authorization: `Bearer ${accessToken}`},
+      body: {productId: payload.id},
       onSuccess: () => {
         dispatch({type: CART.ADD, payload});
       },
