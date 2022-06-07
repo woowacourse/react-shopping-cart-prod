@@ -89,7 +89,7 @@ function CartProductCard({
             ''
           }
         </S.StatusMessage>
-        <S.Price>{price * quantity}원</S.Price>
+        <S.Price>{isSoldOut ? 0 : price * quantity}원</S.Price>
       </S.Description>
     </S.Container>
   );
