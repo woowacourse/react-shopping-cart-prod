@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useCheckBox, useCartItem } from 'hooks';
 
@@ -16,6 +16,7 @@ import * as Styled from './styles';
 
 const Cart = () => {
   const cartList = useCartItem();
+  const dispatch = useDispatch();
   const {
     checkboxItems,
     isAllChecked,
@@ -24,20 +25,10 @@ const Cart = () => {
     checkAllSelectButton,
     clearCheckBoxItems,
   } = useCheckBox(cartList);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getCartList());
   }, [dispatch]);
-
-  useEffect(() => {
-    const calculatedTotalPrice = cartList
-      .filter((item) => checkboxItems.includes(item.product.id))
-      .reduce((prev, curr) => prev + curr.product.price * curr.quantity, 0);
-
-    setTotalPrice(calculatedTotalPrice);
-  }, [cartList, checkboxItems]);
 
   const deleteSelectedItem = () => {
     if (checkboxItems.length <= 0) {
@@ -70,7 +61,7 @@ const Cart = () => {
               handleItemQuantity={() => handleItemQuantity}
             />
           </CommonStyled.FlexWrapper>
-          <CartReceipt totalPrice={totalPrice} checkboxItemCount={checkboxItems.length} />
+          <CartReceipt cartList={cartList} checkboxItems={checkboxItems} />
         </CommonStyled.Container>
       </Styled.CartListContainer>
     </Layout>

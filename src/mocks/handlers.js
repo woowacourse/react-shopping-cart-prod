@@ -115,7 +115,7 @@ export const cartHandler = [
   rest.delete(`${HOST_NAME}/cart/products`, (req, res, ctx) => res(ctx.status(204))),
 
   // 장바구니 상품 구매
-  rest.post(`${HOST_NAME}/order`, (req, res, ctx) => {
+  rest.post(`${HOST_NAME}/orders`, (req, res, ctx) => {
     const { productIds } = req.body;
 
     console.log('productIds : ', productIds);
