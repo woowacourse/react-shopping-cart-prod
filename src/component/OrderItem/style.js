@@ -1,3 +1,4 @@
+import Button from 'component/common/Button';
 import {FlexColumn, FlexRow} from 'style/common';
 import styled from 'styled-components';
 
@@ -24,9 +25,34 @@ const ContentRow = styled(FlexColumn)`
   justify-content: space-around;
 `;
 
-const Layout = styled(FlexRow)`
-  align-items: center;
+const CartButton = styled(Button)`
+  width: 138px;
+  height: 50px;
+
+  border-radius: 4px;
+  background-color: ${({theme}) => theme.MINT_500};
+
+  font-size: 20px;
+  line-height: 20px;
+
+  visibility: ${(props) => (props.showButton ? 'visible' : 'hidden')};
+`;
+
+const FlexRowContainer = styled(FlexRow)`
   gap: 18px;
 `;
 
-export {ProductImage, ProductName, ProductQuantity, ContentRow, Layout};
+const Layout = styled(FlexRow)`
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export {
+  ProductImage,
+  ProductName,
+  ProductQuantity,
+  ContentRow,
+  Layout,
+  CartButton,
+  FlexRowContainer,
+};
