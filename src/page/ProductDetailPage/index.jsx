@@ -26,7 +26,7 @@ export default function ProductDetailPage() {
   }, [initializeCart]);
 
   useEffect(() => {
-    fetchProductDetail({API_URL: `${process.env.REACT_APP_PRODUCT_API_URL}/${id}`});
+    fetchProductDetail({API_URL: `${process.env.REACT_APP_PRODUCT}/${id}`});
   }, [fetchProductDetail, id]);
 
   return (

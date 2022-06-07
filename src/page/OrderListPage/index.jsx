@@ -29,7 +29,7 @@ export default function OrderListPage() {
     }
 
     orderList.fetch({
-      API_URL: process.env.REACT_APP_ORDER_API_URL,
+      API_URL: process.env.REACT_APP_ORDER,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

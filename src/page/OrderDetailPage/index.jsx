@@ -31,7 +31,7 @@ export default function OrderDetailPage() {
     }
 
     orderList.fetch({
-      API_URL: `${process.env.REACT_APP_ORDER_API_URL}/${id}`,
+      API_URL: `${process.env.REACT_APP_ORDER}/${id}`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

@@ -31,7 +31,7 @@ function WithdrawalPage() {
     const [password] = inputs;
 
     withDrawal.fetch({
-      API_URL: process.env.REACT_APP_WITHDRAWAL_API_URL,
+      API_URL: process.env.REACT_APP_CUSTOMER,
       body: {
         password: password.value,
       },

@@ -33,7 +33,7 @@ export default function useCartItem() {
 
     if (deleteConfirm) {
       deleteCart({
-        API_URL: process.env.REACT_APP_CART_API_URL,
+        API_URL: process.env.REACT_APP_CART,
         headers: {Authorization: `Bearer ${accessToken}`},
         body: {
           productId: Number.parseInt(payload),
@@ -54,7 +54,7 @@ export default function useCartItem() {
     }
 
     getCart({
-      API_URL: process.env.REACT_APP_CART_API_URL,
+      API_URL: process.env.REACT_APP_CART,
       headers: {Authorization: `Bearer ${accessToken}`},
       onSuccess: (fetchedData) => {
         dispatch({type: CART.INITIALIZE, payload: fetchedData});
@@ -71,7 +71,7 @@ export default function useCartItem() {
 
     const {id} = payload;
     postCart({
-      API_URL: process.env.REACT_APP_CART_API_URL,
+      API_URL: process.env.REACT_APP_CART,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {productId: Number.parseInt(id)},
       onSuccess: () => dispatch({type: CART.ADD, payload: {...payload, quantity: 1}}),
@@ -88,7 +88,7 @@ export default function useCartItem() {
     if (deleteConfirm) {
       payload.forEach((id) =>
         deleteCart({
-          API_URL: process.env.REACT_APP_CART_API_URL,
+          API_URL: process.env.REACT_APP_CART,
           headers: {Authorization: `Bearer ${accessToken}`},
           body: {productId: Number.parseInt(id)},
           onSuccess: () => {

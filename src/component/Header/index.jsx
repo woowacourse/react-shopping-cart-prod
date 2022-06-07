@@ -34,7 +34,7 @@ export default function Header() {
     }
 
     userInfo.fetch({
-      API_URL: process.env.REACT_APP_GET_INFO_API_URL,
+      API_URL: process.env.REACT_APP_CUSTOMER_API_URL,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

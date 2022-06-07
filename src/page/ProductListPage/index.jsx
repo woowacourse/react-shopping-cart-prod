@@ -29,7 +29,7 @@ export default function ProductListPage() {
 
   useEffect(() => {
     fetchProduct({
-      API_URL: process.env.REACT_APP_PRODUCT_API_URL,
+      API_URL: process.env.REACT_APP_PRODUCT,
       onSuccess: (fetchedData) => {
         dispatch({type: PRODUCT_LIST.INITIALIZE, payload: fetchedData});
       },

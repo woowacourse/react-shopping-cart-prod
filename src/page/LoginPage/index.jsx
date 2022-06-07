@@ -20,7 +20,7 @@ function LoginPage() {
 
   const onSubmit = (inputs) => {
     login.fetch({
-      API_URL: process.env.REACT_APP_LOGIN_API_URL,
+      API_URL: process.env.REACT_APP_SIGN_IN,
       body: {
         account: inputs[0].value,
         password: inputs[1].value,

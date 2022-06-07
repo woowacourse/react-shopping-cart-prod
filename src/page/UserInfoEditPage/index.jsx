@@ -56,7 +56,7 @@ function UserInfoEditPage() {
 
   const getInfo = () => {
     userInfo.fetch({
-      API_URL: process.env.REACT_APP_GET_INFO_API_URL,
+      API_URL: process.env.REACT_APP_CUSTOMER,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -68,7 +68,7 @@ function UserInfoEditPage() {
     const [account, nickname, password, address, start, middle, last] = inputs;
 
     editInfo.fetch({
-      API_URL: process.env.REACT_APP_EDIT_INFO_API_URL,
+      API_URL: process.env.REACT_APP_CUSTOMER,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {
         nickname: nickname.value || nickname.placeholder,
