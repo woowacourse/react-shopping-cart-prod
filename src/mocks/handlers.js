@@ -72,7 +72,15 @@ export const cartsHandler = [
   }),
 ];
 
-let users = [];
+let users = [
+  {
+    id: 1,
+    email: "a@naaver.com",
+    password: "12341234",
+    username: "hihi",
+    accessToken: "ddfsdfadsfdsafsad",
+  },
+];
 export const userHandler = [
   rest.get(
     `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
