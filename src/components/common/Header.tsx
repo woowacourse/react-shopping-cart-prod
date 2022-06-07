@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { flexCenter } from 'styles/mixin';
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
+import nayongIcon from 'assets/nyIcon.png';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useState } from 'react';
 import { useAppDispatch } from 'hooks/useAppDispatch';
@@ -28,8 +29,8 @@ const Header = () => {
       <div>
         <Link to='/main/1'>
           <StyledLogo>
-            <CartIcon fill='white' />
-            <StyledBrandName>RoyStin Shop</StyledBrandName>
+            <NyaongIcon src={nayongIcon} />
+            <StyledBrandName>PokeMon 직판장</StyledBrandName>
           </StyledLogo>
         </Link>
         <StyledNav>
@@ -59,9 +60,12 @@ export default Header;
 
 const StyledRoot = styled.header`
   width: 100%;
-  height: 8rem;
-  background-color: ${({ theme }) => theme.colors.primary};
-  margin-bottom: 6rem;
+  height: 10rem;
+
+  background: linear-gradient(${theme.colors.red} 55%, ${theme.colors.grey} 45%);
+
+  margin-bottom: 4rem;
+
   ${flexCenter}
 
   & > div {
@@ -72,18 +76,26 @@ const StyledRoot = styled.header`
   }
 `;
 
-const StyledLogo = styled.div``;
+const StyledLogo = styled.div`
+  ${flexCenter}
+`;
+
+const NyaongIcon = styled.img`
+  width: 80px;
+  height: 80px;
+`;
 
 const StyledBrandName = styled.span`
-  color: ${theme.colors.white};
-  font-size: 4rem;
+  color: ${theme.colors.yellow};
+  -webkit-text-stroke: 2.5px blue;
+  font-size: 5rem;
   font-weight: 900;
   margin-left: 1rem;
 `;
 
 const StyledNav = styled.nav`
   & > button {
-    color: ${theme.colors.white};
+    color: ${theme.colors.yellow};
     font-size: 2.4rem;
     background-color: inherit;
   }
@@ -100,7 +112,7 @@ const MyPageHambergurList = styled.div<Hambergur>`
   position: absolute;
   top: 8rem;
   background-color: ${theme.colors.white};
-  color: ${theme.colors.black};
+  color: ${theme.colors.yellow};
   display: ${props => (props.isShow ? 'flex' : 'none')};
   flex-wrap: wrap;
   z-index: 10000;

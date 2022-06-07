@@ -70,7 +70,7 @@ const StyledPageIndicator = styled.button<{ active?: boolean }>`
   ${({ active, theme }) =>
     active &&
     css`
-      color: ${theme.colors.primary};
+      color: ${theme.colors.red};
       font-weight: 700;
     `}
 
