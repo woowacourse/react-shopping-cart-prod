@@ -7,6 +7,7 @@ import { getAuthorizedHeaders } from 'api/auth';
 import {
   updateCartItemQuantityAction,
   deleteCartItemAction,
+  deleteCartItemsAction,
 } from 'reducers/cart/cart.actions';
 
 const useCart = () => {
@@ -44,7 +45,7 @@ const useCart = () => {
     Promise.all(
       idList.map((id) => deleteItemApi({ params: id, payload: { headers } })),
     ).then(() => {
-      idList.forEach((id) => dispatch(deleteCartItemAction(id)));
+      dispatch(deleteCartItemsAction(idList));
     });
   };
 

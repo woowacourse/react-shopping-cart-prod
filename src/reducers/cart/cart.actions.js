@@ -3,6 +3,7 @@ export const actionTypes = {
   GET_CART_SUCCESS: 'GET_CART_SUCCESS',
   GET_CART_ERROR: 'GET_CART_ERROR',
   DELETE_CART_ITEM: 'DELETE_CART_ITEM',
+  DELETE_CART_ITEMS: 'DELETE_CART_ITEMS',
   UPDATE_CART_ITEM_QUANTITY: 'UPDATE_CART_ITEM_QUANTITY',
 };
 
@@ -24,6 +25,10 @@ export const deleteCartItemAction = (id) => ({
   id,
 });
 
+export const deleteCartItemsAction = (idList) => ({
+  type: actionTypes.DELETE_CART_ITEMS,
+  idList,
+});
 export const updateCartItemQuantityAction = (id, quantity) => ({
   type: actionTypes.UPDATE_CART_ITEM_QUANTITY,
   data: { id, quantity },
