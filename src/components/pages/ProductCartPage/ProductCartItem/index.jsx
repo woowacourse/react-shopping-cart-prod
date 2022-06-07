@@ -14,7 +14,7 @@ import {
 } from "./styled";
 
 function ProductCartItem({
-  product: { id, thumbnailUrl, name, price, count },
+  product: { id, thumbnailUrl, name, price, count, quantity },
   checkList,
   handleClickIncreaseButton,
   handleClickDecreaseButton,
@@ -40,7 +40,11 @@ function ProductCartItem({
         <Counter
           count={count}
           handleClickDecreaseButton={handleClickDecreaseButton(id, count)}
-          handleClickIncreaseButton={handleClickIncreaseButton(id, count)}
+          handleClickIncreaseButton={handleClickIncreaseButton(
+            id,
+            count,
+            quantity
+          )}
         />
         <ProductCartPrice>
           {totalPrice?.toLocaleString() || "%ERROR%"}원

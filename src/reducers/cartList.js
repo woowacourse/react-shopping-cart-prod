@@ -1,4 +1,4 @@
-import { BASE_SERVER_URL, SERVER_PATH } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, USER_ID_KEY } from "constants";
 import {
   deleteBaseServerCartItem,
   getBaseServerCartList,
@@ -23,7 +23,9 @@ export const getCartList = () => async (dispatch) => {
   dispatch({ type: CART_LIST_ACTION.GET_LIST });
   try {
     const response = await getBaseServerCartList({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`,
+      url: `${BASE_SERVER_URL}${
+        SERVER_PATH.CUSTOMER_LIST
+      }/${localStorage.getItem(USER_ID_KEY)}/carts`,
     });
 
     if (!response.ok) {
@@ -51,10 +53,14 @@ export const deleteCartList = (id) => async (dispatch) => {
   dispatch({ type: CART_LIST_ACTION.DELETE_LIST });
   try {
     const response = await deleteBaseServerCartItem({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}?productId=${id}`,
+      url: `${BASE_SERVER_URL}${
+        SERVER_PATH.CUSTOMER_LIST
+      }/${localStorage.getItem(USER_ID_KEY)}/carts?productId=${id}`,
     });
 
     if (!response.ok) {
+      const data = await response.json();
+      if (data.message) throw new Error(data.message);
       throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
     }
 
@@ -74,11 +80,15 @@ export const updateCartCount = (id, count) => async (dispatch) => {
   dispatch({ type: CART_LIST_ACTION.UPDATE_ITEM_COUNT });
   try {
     const response = await patchBaseServerCartItem({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}?productId=${id}`,
+      url: `${BASE_SERVER_URL}${
+        SERVER_PATH.CUSTOMER_LIST
+      }/${localStorage.getItem(USER_ID_KEY)}/carts?productId=${id}`,
       body: JSON.stringify({ count }),
     });
 
     if (!response.ok) {
+      const data = await response.json();
+      if (data.message) throw new Error(data.message);
       throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
     }
 

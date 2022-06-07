@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import shoppingCartIconBlack from "asset/shopping-cart-icon-black.svg";
 
-import { BASE_SERVER_URL, SERVER_PATH, ROUTES } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, ROUTES, USER_ID_KEY } from "constants";
 import { postBaseServerCartItem } from "util/fetch";
 
 import IconButton from "components/common/Button/IconButton";
@@ -28,21 +28,19 @@ function ProductCard({ product: { id, thumbnailUrl, name, price } }) {
     e.stopPropagation();
     try {
       const response = await postBaseServerCartItem({
-        url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`,
-        body: JSON.stringify({ id, count: 1 }),
+        url: `${BASE_SERVER_URL}${
+          SERVER_PATH.CUSTOMER_LIST
+        }/${localStorage.getItem(USER_ID_KEY)}/carts`,
+        body: JSON.stringify({ productId: id, count: 1 }),
       });
 
       if (!response.ok) {
+        const data = await response.json();
+        if (data.message) throw new Error(data.message);
         throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
       }
-
-      const { isAlreadyExists } = await response.json();
-      if (isAlreadyExists) {
-        alert("이미 장바구니에 담은 상품입니다.");
-        return;
-      }
     } catch (error) {
-      alert(`장바구니 담기에 실패했습니다.`);
+      alert(error.message);
       return;
     }
     alert("장바구니에 담았습니다.");
