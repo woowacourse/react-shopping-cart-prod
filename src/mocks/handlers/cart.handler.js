@@ -66,7 +66,8 @@ export const handlePatchShoppingCartRequest = (req, res, ctx) => {
 
   if (!currentShoppingCart.length || productIndex < 0) {
     return res(
-      ctx.status(404, '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.'),
+      ctx.status(404),
+      ctx.json({ message: '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.' })
     );
   }
 
@@ -81,16 +82,15 @@ export const handlePatchShoppingCartRequest = (req, res, ctx) => {
 };
 
 export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
-  const { productId: idString } = req.params;
-  const productId = Number(idString);
-
+  const productId = Number(req.url.searchParams.get('productId'));
   const currentShoppingCart = getCart();
 
   const productIndex = findProductCartIndex(currentShoppingCart, productId);
 
   if (currentShoppingCart.length === 0 || productIndex < 0) {
     return res(
-      ctx.status(404, '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.'),
+      ctx.status(404),
+      ctx.json({ message: '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.' })
     );
   }
 

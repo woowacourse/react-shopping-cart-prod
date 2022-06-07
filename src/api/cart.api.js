@@ -43,7 +43,11 @@ export const sendDeleteCartProductRequest = async (productIdArray) => {
 };
 
 const sendCartProductDeleteRequest = async (res, productId) => {
-  res = await customInstance.delete(`${API_ENDPOINT.SHOPPING_CART}/${productId}`);
+  res = await customInstance.delete(`${API_ENDPOINT.SHOPPING_CART}`, {
+    params: {
+      productId
+    }
+  });
 
   return res;
 };

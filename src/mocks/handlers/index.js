@@ -28,7 +28,7 @@ export default [
   rest.post(`${API_URL}${API_ENDPOINT.SHOPPING_CART}`, handlePostShoppingCartRequest),
   rest.patch(`${API_URL}${API_ENDPOINT.SHOPPING_CART}`, handlePatchShoppingCartRequest),
   rest.delete(
-    `${API_URL}${API_ENDPOINT.SHOPPING_CART}/:productId`,
+    `${API_URL}${API_ENDPOINT.SHOPPING_CART}`,
     handleDeleteShoppingCartRequest,
   ),
   rest.get(`${API_URL}${API_ENDPOINT.USER}`, handleCheckUniqueEmailRequest),
