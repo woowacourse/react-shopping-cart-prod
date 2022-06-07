@@ -5,7 +5,7 @@ import { ALERT_MESSAGES } from 'constants/messages';
 
 export const sendAddToCartRequest = async (productId, quantity) => {
   await customInstance.post(API_ENDPOINT.CARTS_PRODUCTS, {
-    id: productId,
+    productId,
     quantity,
   });
 
@@ -22,7 +22,7 @@ export const sendGetCartRequest = async () => {
 
 export const sendUpdateCartProductQuantityRequest = async (productId, quantity) => {
   const response = await customInstance.patch(API_ENDPOINT.CARTS_PRODUCTS, {
-    id: productId,
+    productId,
     quantity,
   });
 
