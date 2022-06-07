@@ -30,7 +30,7 @@ function LoginPage() {
   const isLoginSuccess = !isLoading && !errorMessage && user.accessToken;
   useEffect(() => {
     if (isLoginSuccess) {
-      alert(`${user.nickname}님, 환영합니다~~ :D`);
+      alert(`${user.username}님, 환영합니다~~ :D`);
       navigator(ROUTES.ROOT, { replace: true });
     }
   }, [isLoading]);

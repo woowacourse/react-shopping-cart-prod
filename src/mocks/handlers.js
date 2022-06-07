@@ -101,7 +101,7 @@ export const userHandler = [
         return res(
           ctx.status(400),
           ctx.json({
-            field: "nickname",
+            field: "username",
             message: "닉네임이 존재하지 않습니다.",
           })
         );
