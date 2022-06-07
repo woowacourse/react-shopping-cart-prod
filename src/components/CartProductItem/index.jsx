@@ -19,7 +19,7 @@ const CartProductItem = ({ id, quantity }) => {
   const [{ name, price, image }] = useProduct(id);
   const [isInOrder, updateOrder] = useOrder(id);
 
-  // TODO . 장바구니 내 단일 상품 삭제(DELETE)
+  // TODO 5. delete 장바구니 내 선택된 상품 삭제
   // const deleteItem = async () => {
   //   const accessToken = getCookie('accessToken');
 
@@ -47,12 +47,12 @@ const CartProductItem = ({ id, quantity }) => {
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
-  // TODO [API] 장바구니 내 상품 수량 수정(PATCH)
-  // const patchCart = async (id, updatedQuantity) => {
+  // TODO 4. put 장바구니 내 상품 수량 수정
+  // const putCart = async (id, updatedQuantity) => {
   //   const accessToken = getCookie('accessToken');
 
   //   try {
-  //     const response = await apiClient.patch(
+  //     const response = await apiClient.put(
   //       `/carts/${id}`,
   //       { quantity: updatedQuantity },
   //       {

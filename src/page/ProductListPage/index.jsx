@@ -11,7 +11,7 @@ import apiClient from 'apis/apiClient';
 const ProductListPage = () => {
   const dispatch = useDispatch();
   const { products } = useSelector(state => state.cartReducer);
-  // TODO  [API] 상품 목록 가져오기(GET)
+  // TODO  1. get 상품 목록 가져오기
   const getProducts = useCallback(async () => {
     if (products.length > 0) return; // 서버에서 상품 목록 갱신될 수 있으므로 매번 상품 목록 가져오는 것이 적절할 것으로 생각됨. 따라서 이 라인의 코드는 삭제 검토 필요
 

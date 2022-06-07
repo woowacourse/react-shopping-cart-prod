@@ -41,7 +41,7 @@ const CartPage = () => {
     return total;
   }, [products, shoppingCart, order]);
 
-  // TODO [API] 장바구니 목록 가져오기(GET)
+  // TODO 3. get 장바구니 목록 가져오기
   // const getCarts = async () => {
   //   const response = await apiClient.get('/carts');
   //   dispatch(doInitializeCartList({ shoppingCart: response.data }));
@@ -72,7 +72,7 @@ const CartPage = () => {
     });
   };
 
-  // TODO . 장바구니 내 선택된 상품들 삭제(DELETE)
+  // TODO 5. delete 장바구니 내 선택된 상품 삭제
   // const deleteSelectedItems = async () => {
   //   const accessToken = getCookie('accessToken');
   //   const cartIdList = shoppingCart.map(product => product.id);
