@@ -1,3 +1,4 @@
+import { passwordReg } from 'constants/RegExp';
 import { ChangeEvent, useRef, useState } from 'react';
 
 const usePasswordInput = () => {
@@ -10,33 +11,20 @@ const usePasswordInput = () => {
   });
 
   const handlePrevPasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (value) {
-      setPasswordValid(prevState => ({ ...prevState, prev: true }));
-
-      return;
-    }
-    setPasswordValid(prevState => ({ ...prevState, prev: false }));
+    setPasswordValid(prevState => ({ ...prevState, prev: value ? true : false }));
   };
 
   const handleCurrentPasswordInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (/^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/.test(value)) {
-      setPasswordValid(prevState => ({ ...prevState, current: true }));
-
-      return;
-    }
-
-    setPasswordValid(prevState => ({ ...prevState, current: false }));
+    setPasswordValid(prevState => ({ ...prevState, current: passwordReg.test(value) }));
   };
 
   const handleCurrentPasswordConfirmInput = ({
     target: { value },
   }: ChangeEvent<HTMLInputElement>) => {
-    if (currentPasswordRef.current.value === value) {
-      setPasswordValid(prevState => ({ ...prevState, confirm: true }));
-
-      return;
-    }
-    setPasswordValid(prevState => ({ ...prevState, confirm: false }));
+    setPasswordValid(prevState => ({
+      ...prevState,
+      confirm: currentPasswordRef.current.value === value,
+    }));
   };
 
   return {
