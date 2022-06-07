@@ -3,18 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductItem from "@home/components/product-item/ProductItem";
 import styles from "@home/components/product-list/product-list.module";
 import { useEffect } from "react";
-import { updateProductList } from "@redux/reducers/product-reducer/productThunks";
+import { getProductList } from "@redux/reducers/product-list-reducer/productListThunks";
 
 function ProductList({ className }) {
   const dispatch = useDispatch();
-  const {
-    isLoading,
-    isError,
-    data: productList,
-  } = useSelector((state) => state.product.productList);
+  const { isLoading, isError, productList } = useSelector((state) => ({
+    productList: state.productList.data,
+    ...state.productList.query.getProductList,
+  }));
 
   useEffect(() => {
-    dispatch(updateProductList());
+    dispatch(getProductList());
   }, [dispatch]);
 
   if (isLoading) return <div>is loading ...</div>;
@@ -22,9 +21,8 @@ function ProductList({ className }) {
 
   return (
     <div className={cn(styles.productList, className)}>
-      {productList.map((item) => (
-        <ProductItem key={item.id} {...item} />
-      ))}
+      {productList &&
+        productList.map((item) => <ProductItem key={item.id} {...item} />)}
     </div>
   );
 }

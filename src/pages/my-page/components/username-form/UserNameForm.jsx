@@ -1,24 +1,25 @@
 import useForm from "@hooks/useForm/useForm";
 import LabeledInput from "@shared/input/labeled-input/LabeledInput";
-import createAction from "@redux/createAction";
 import { useDispatch, useSelector } from "react-redux";
-import ACTION_TYPE from "@redux/actions";
 import Button from "@shared/button/Button";
-import updateUsername from "../../../../remote/userName";
+import { updateUserGeneralInfo } from "@redux/reducers/user-reducer/userThunks";
 
 function UserNameForm() {
-  const { onSubmit, register, formData, errors } = useForm();
-  const username = useSelector((state) => state.user.username);
   const dispatch = useDispatch();
+  const { onSubmit, register, formData, errors } = useForm();
+  const { isLoading, username } = useSelector((state) => ({
+    ...state.user.query.updateUserGeneralInfo,
+    username: state.user.data.username,
+  }));
 
-  const disabled = Object.keys(errors).some(
-    (inputName) => !!errors[inputName] || !formData[inputName]
-  );
+  const disabled =
+    Object.keys(errors).some(
+      (inputName) => !!errors[inputName] || !formData[inputName]
+    ) || isLoading;
 
   const handleSubmit = async (formData) => {
     const { username } = formData;
-    const newUserInfo = await updateUsername(username);
-    dispatch(createAction(ACTION_TYPE.UPDATE_USER, newUserInfo));
+    dispatch(updateUserGeneralInfo({ username }));
   };
 
   return (

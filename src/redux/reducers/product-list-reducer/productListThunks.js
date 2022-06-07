@@ -26,7 +26,10 @@ export const getProductList =
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.GET_PRODUCT_LIST_REJECTED, {
-          error: e.toPlainObj(),
+          error: {
+            message: errorMessages[e.errorCode] ?? e.message,
+            errorCode: e.errorCode,
+          },
         })
       );
     }

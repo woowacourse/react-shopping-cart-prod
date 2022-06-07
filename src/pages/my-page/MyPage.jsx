@@ -7,7 +7,7 @@ import PasswordForm from "./components/password-form/PasswordForm";
 import SecessionForm from "./components/secession-form/SecessionForm";
 
 function MyPage({ className }) {
-  const user = useSelector((state) => state.user, shallowEqual);
+  const user = useSelector((state) => state.user.data, shallowEqual);
 
   return (
     <div className="wrapper">

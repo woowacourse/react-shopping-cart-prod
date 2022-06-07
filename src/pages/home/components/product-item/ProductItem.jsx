@@ -1,10 +1,9 @@
 import cn from "classnames";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import priceToDollar from "@utils/priceToDollar";
 import Cart from "@assets/images/cart.svg";
 import ImageButton from "@home/components/image-button/ImageButton";
-import createAction from "@redux/createAction";
-import ACTION_TYPE from "@redux/actions";
+import { addProductToCart } from "@redux/reducers/cart-reducer/cartThunks";
 import styles from "@home/components/product-item/product-item.module";
 import LoadingThumbnail from "@shared/loading-thumbnail/LoadingThumbnail";
 
@@ -17,7 +16,7 @@ function ProductItem({
 }) {
   const dispatch = useDispatch();
   const handleClick = () => {
-    dispatch(createAction(ACTION_TYPE.ADD_PRODUCT_TO_CART, productId));
+    dispatch(addProductToCart({ productId, quantity: 1 }));
   };
 
   return (

@@ -1,66 +1,77 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import createAction from "@redux/createAction";
-import ACTION_TYPE from "@redux/actions";
+import createAction from "@redux/utils/createAction";
+import CART_ACTION_TYPE from "@redux/reducers/cart-reducer/cartActions";
 import Button from "@shared/button/Button";
 import LabeledCheckbox from "@shared/checkbox/labeled-checkbox/LabeledCheckbox";
 import getSelectedProductIds from "@cart/utils/getSelectedProductIds";
+import {
+  updateCartItemQuantity,
+  deleteCartItems,
+  getCart,
+} from "@redux/reducers/cart-reducer/cartThunks";
 import CartItem from "../cart-item/CartItem";
 import styles from "./cart-form.module";
 
 function CartForm({ className }) {
   const dispatch = useDispatch();
-  const productObjs = useSelector((state) => state.productObjs);
-  const cart = useSelector((state) => state.cart);
-  const productIdsInCart = Object.keys(cart);
-  const selectedProductIds = getSelectedProductIds(cart);
+  const { isLoading, cart } = useSelector((state) => ({
+    cart: state.cart.data,
+    ...state.cart.query.getCart,
+  }));
+
+  const selectedCartItemIds = getSelectedProductIds(cart);
   const isAllSelected =
-    selectedProductIds.length > 0 &&
-    selectedProductIds.length === productIdsInCart.length;
+    selectedCartItemIds.length > 0 &&
+    selectedCartItemIds.length === cart.length;
 
   const handleAllSelectToggle = useCallback(() => {
     if (isAllSelected) {
-      dispatch(createAction(ACTION_TYPE.DESELECT_ALL_PRODUCTS_IN_CART));
+      dispatch(createAction(CART_ACTION_TYPE.DESELECT_ALL_CART_ITEMS));
       return;
     }
-    dispatch(createAction(ACTION_TYPE.SELECT_ALL_PRODUCTS_IN_CART));
+    dispatch(createAction(CART_ACTION_TYPE.SELECT_ALL_CART_ITEMS));
   }, [isAllSelected, dispatch]);
+
   const handleCheck = useCallback(
-    (productId) => (e) => {
+    (cartItemId) => (e) => {
       const { checked } = e.target;
       if (checked) {
-        dispatch(createAction(ACTION_TYPE.SELECT_PRODUCT_IN_CART, productId));
+        dispatch(
+          createAction(CART_ACTION_TYPE.SELECT_CART_ITEM, { cartItemId })
+        );
         return;
       }
-      dispatch(createAction(ACTION_TYPE.DESELECT_PRODUCT_IN_CART, productId));
-    },
-    [dispatch]
-  );
-  const handleQuantityChange = useCallback(
-    (productId) => (val) => {
       dispatch(
-        createAction(ACTION_TYPE.UPDATE_PRODUCT_QUANTITY_IN_CART, {
-          productId,
-          quantity: val,
-        })
+        createAction(CART_ACTION_TYPE.DESELECT_CART_ITEM, { cartItemId })
       );
     },
     [dispatch]
   );
-  const handleDeleteProduct = useCallback(
-    (productId) => () => {
-      dispatch(createAction(ACTION_TYPE.DELETE_PRODUCT_IN_CART, productId));
+
+  const handleQuantityChange = useCallback(
+    (cartItemId) => (quantity) => {
+      dispatch(updateCartItemQuantity({ cartItemId, quantity }));
     },
     [dispatch]
   );
+
+  const handleDeleteProduct = useCallback(
+    (cartItemId) => () => {
+      dispatch(deleteCartItems({ cartItemIds: [cartItemId] }));
+    },
+    [dispatch]
+  );
+
   const handleDeleteSelectedProducts = useCallback(() => {
-    dispatch(
-      createAction(
-        ACTION_TYPE.DELETE_MULTIPLE_PRODUCTS_IN_CART,
-        selectedProductIds
-      )
-    );
-  }, [dispatch, selectedProductIds]);
+    dispatch(deleteCartItems({ cartItemIds: selectedCartItemIds }));
+  }, [dispatch, selectedCartItemIds]);
+
+  useEffect(() => {
+    dispatch(getCart());
+  }, [dispatch]);
+
+  if (isLoading) return <div>...loading</div>;
 
   return (
     <div className={className}>
@@ -74,22 +85,21 @@ function CartForm({ className }) {
         <Button onClick={handleDeleteSelectedProducts}>상품삭제</Button>
       </div>
       <div>
-        <div className="mb-16">{`상품 리스트 (${productIdsInCart.length}개)`}</div>
+        <div className="mb-16">{`상품 리스트 (${cart.length}개)`}</div>
         <table className={styles.table}>
           <tbody>
-            {productIdsInCart.map((id) => {
-              const isSelected = selectedProductIds.indexOf(id) > -1;
+            {cart.map((cartItem) => {
+              const isSelected = selectedCartItemIds.indexOf(cartItem.id) > -1;
               return (
-                <tr key={id}>
+                <tr key={cartItem.id}>
                   <td>
                     <CartItem
-                      {...productObjs[id]}
-                      id={id}
+                      {...cartItem}
                       checked={isSelected}
-                      onChecked={handleCheck(id)}
-                      onQuantityChange={handleQuantityChange(id)}
-                      onDelete={handleDeleteProduct(id)}
-                      quantity={cart[id].quantity}
+                      onChecked={handleCheck(cartItem.id)}
+                      onQuantityChange={handleQuantityChange(cartItem.id)}
+                      onDelete={handleDeleteProduct(cartItem.id)}
+                      quantity={cartItem.quantity}
                     />
                   </td>
                 </tr>

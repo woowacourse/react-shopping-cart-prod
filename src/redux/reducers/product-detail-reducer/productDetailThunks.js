@@ -4,7 +4,9 @@ import Fetcher from "../../../utils/fetcher";
 import createAction from "../../utils/createAction";
 import ACTION_TYPE from "./productDetailActions";
 
-export const defaultGetProductDetailThunkErrorMessages = {};
+export const defaultGetProductDetailThunkErrorMessages = {
+  6001: "상품 목록에 존재하지 않는 상품입니다.",
+};
 
 export const getProductDetail =
   (data, errorMessages = defaultGetProductDetailThunkErrorMessages) =>
@@ -29,7 +31,10 @@ export const getProductDetail =
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.GET_PRODUCT_DETAIL_REJECTED, {
-          error: e.toPlainObj(),
+          error: {
+            message: errorMessages[e.errorCode] ?? e.message,
+            errorCode: e.errorCode,
+          },
         })
       );
     }

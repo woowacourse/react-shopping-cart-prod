@@ -7,7 +7,7 @@ import ProductDetail from "@product-detail/ProductDetail";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import MyPage from "./pages/my-page/MyPage";
-// import AuthGuard from "./auth-guard/AuthGuard/AuthGuard";
+import AuthGuard from "./auth-guard/AuthGuard/AuthGuard";
 
 function App() {
   return (
@@ -16,10 +16,24 @@ function App() {
         <Header className={styles.header} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
+          <Route
+            path="/cart"
+            element={
+              <AuthGuard>
+                <Cart />
+              </AuthGuard>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/my-page" element={<MyPage />} />
+          <Route
+            path="/my-page"
+            element={
+              <AuthGuard>
+                <MyPage />
+              </AuthGuard>
+            }
+          />
           <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </BrowserRouter>

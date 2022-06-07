@@ -22,6 +22,7 @@ const productListReducer = (state, { type, payload }, totalState) => {
       const newState = structuredClone(state);
       const { error } = payload;
       newState.query.getProductList = queryState.rejected(error);
+      alert(error.message);
       return newState;
     }
 

@@ -1,6 +1,6 @@
 function getSelectedProductIds(cart) {
-  return Object.keys(cart).reduce((acc, id) => {
-    cart[id].selected && acc.push(id);
+  return cart.reduce((acc, cartItem) => {
+    cartItem.selected && acc.push(cartItem.id);
     return acc;
   }, []);
 }

@@ -19,6 +19,7 @@ const cartReducer = (state, { type, payload }, totalState) => {
     case ACTION_TYPE.GET_CART_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
+      alert(error.message);
       newState.query.getCart = queryState.rejected(error);
       return newState;
     }
@@ -31,14 +32,18 @@ const cartReducer = (state, { type, payload }, totalState) => {
     case ACTION_TYPE.ADD_PRODUCT_TO_CART_FULLFILLED: {
       const newState = structuredClone(state);
       const { cartItem } = payload;
+
       newState.query.addProductToCart = queryState.fullfilled();
       newState.data.push(cartItem);
+      alert("상품이 성공적으로 추가되었습니다");
+
       return newState;
     }
     case ACTION_TYPE.ADD_PRODUCT_TO_CART_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
       newState.query.addProductToCart = queryState.rejected(error);
+      alert(error.message);
       return newState;
     }
 
@@ -61,6 +66,7 @@ const cartReducer = (state, { type, payload }, totalState) => {
       const newState = structuredClone(state);
       const { error } = payload;
       newState.query.updateCartItemQuantity = queryState.rejected(error);
+      alert(error.message);
       return newState;
     }
 
@@ -73,13 +79,15 @@ const cartReducer = (state, { type, payload }, totalState) => {
       const newState = structuredClone(state);
       const { cartItemIds } = payload;
       const newCart = newState.data.filter(
-        (cartItem) => !cartItemIds.include(cartItem.id)
+        (cartItem) => !cartItemIds.includes(cartItem.id)
       );
       newState.data = newCart;
       newState.query.deleteCartItems = queryState.fullfilled();
       return newState;
     }
     case ACTION_TYPE.DELETE_CART_ITEMS_REJECTED: {
+      const { error } = payload;
+      alert(error.message);
       return queryState.rejected(state, payload);
     }
 

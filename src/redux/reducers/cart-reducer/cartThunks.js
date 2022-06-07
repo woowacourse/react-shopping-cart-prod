@@ -4,10 +4,29 @@ import Fetcher from "../../../utils/fetcher";
 import createAction from "../../utils/createAction";
 import ACTION_TYPE from "./cartActions";
 
-export const defaultGetCartThunkErrorMessages = {};
-export const defaultAddProductToCartThunkErrorMessages = {};
-export const defaultUpdateCartItemQuantityThunkErrorMessages = {};
-export const defaultDeleteCartItemsThunkErrorMessages = {};
+export const defaultGetCartThunkErrorMessages = {
+  3002: "토큰이 만료되었거나 존재하지 않습니다.",
+};
+
+export const defaultAddProductToCartThunkErrorMessages = {
+  3002: "토큰이 만료되었거나 존재하지 않습니다.",
+  5001: "이미 장바구니에 존재하는 상품입니다.",
+  5002: "상품 수량이 잘못되었습니다.",
+  6001: "상품 목록에 존재하지 않는 상품입니다.",
+};
+
+export const defaultUpdateCartItemQuantityThunkErrorMessages = {
+  3002: "토큰이 만료되었거나 존재하지 않습니다.",
+  5002: "상품 수량이 잘못되었습니다.",
+  5003: "내가 담은 장바구니 item이 아닌 경우 ???", // 얘 무슨 상황이지?
+  6001: "상품 목록에 존재하지 않는 상품입니다.",
+  6002: "장바구니에 존재하지 않는 아이템입니다.",
+};
+
+export const defaultDeleteCartItemsThunkErrorMessages = {
+  3002: "토큰이 만료되었거나 존재하지 않습니다.",
+  6002: "장바구니에 존재하지 않는 아이템입니다.",
+};
 
 export const getCart =
   (errorMessages = defaultGetCartThunkErrorMessages) =>
@@ -27,7 +46,10 @@ export const getCart =
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.GET_CART_REJECTED, {
-          error: e.toPlainObj(),
+          error: {
+            message: errorMessages[e.errorCode] ?? e.message,
+            errorCode: e.errorCode,
+          },
         })
       );
     }
@@ -54,7 +76,10 @@ export const addProductToCart =
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.ADD_PRODUCT_TO_CART_REJECTED, {
-          error: e.toPlainObj(),
+          error: {
+            message: errorMessages[e.errorCode] ?? e.message,
+            errorCode: e.errorCode,
+          },
         })
       );
     }
@@ -83,7 +108,10 @@ export const updateCartItemQuantity =
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_REJECTED, {
-          error: e.toPlainObj(),
+          error: {
+            message: errorMessages[e.errorCode] ?? e.message,
+            errorCode: e.errorCode,
+          },
         })
       );
     }
@@ -109,7 +137,10 @@ export const deleteCartItems =
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.DELETE_CART_ITEMS_REJECTED, {
-          error: e.toPlainObj(),
+          error: {
+            message: errorMessages[e.errorCode] ?? e.message,
+            errorCode: e.errorCode,
+          },
         })
       );
     }

@@ -8,9 +8,8 @@ import TitleBox from "@shared/title-box/TitleBox";
 import styles from "./cart-total.module";
 
 function CartTotal({ className }) {
-  const { productObjs } = useStore().getState();
-  const cart = useSelector((state) => state.cart);
-  const total = getTotal(productObjs, cart);
+  const cart = useSelector((state) => state.cart.data);
+  const total = getTotal(cart);
   const selectedProductIds = getSelectedProductIds(cart);
   const selectedProductCount = selectedProductIds.length;
   const handleOrderBtnClick = useCallback(() => {
@@ -39,10 +38,10 @@ function CartTotal({ className }) {
   );
 }
 
-function getTotal(productObjs, cart) {
-  return Object.keys(cart).reduce((acc, id) => {
-    const quantity = cart[id].selected ? cart[id].quantity : 0;
-    return acc + productObjs[id].price * quantity;
+function getTotal(cart) {
+  return cart.reduce((acc, cartItem) => {
+    const quantity = cartItem.selected ? cartItem.quantity : 0;
+    return acc + cartItem.price * quantity;
   }, 0);
 }
 

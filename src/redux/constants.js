@@ -5,13 +5,13 @@ export const initialState = {
     query: {
       getProductList: queryState.init(),
     },
-    data: null,
+    data: [],
   },
   productDetail: {
     query: {
       getProductDetail: queryState.init(),
     },
-    data: null,
+    data: {},
   },
   cart: {
     query: {
@@ -20,7 +20,7 @@ export const initialState = {
       updateCartItemQuantity: queryState.init(),
       deleteCartItems: queryState.init(),
     },
-    data: null,
+    data: [],
   },
   user: {
     query: {

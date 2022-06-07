@@ -1,10 +1,11 @@
 import useForm from "@hooks/useForm/useForm";
 import LabeledInput from "@shared/input/labeled-input/LabeledInput";
 import Button from "@shared/button/Button";
-import LocalStorage from "../../../../storage/localStorage";
-import requestDeleteUser from "../../../../remote/userSecession";
+import { useDispatch } from "react-redux";
+import { secession } from "@redux/reducers/user-reducer/userThunks";
 
 function SecessionForm() {
+  const dispatch = useDispatch();
   const { onSubmit, register, formData, errors } = useForm();
 
   const disabled = Object.keys(errors).some(
@@ -16,14 +17,7 @@ function SecessionForm() {
     const result = window.confirm("정말 탈퇴 하시겠습니까?");
     if (!result) return;
 
-    const isOK = await requestDeleteUser(password);
-    if (!isOK) {
-      alert("비밀번호가 일치하지 않습니다");
-      return;
-    }
-    alert("Good Bye!");
-    LocalStorage.removeItem("accessToken");
-    window.location.href = "/";
+    dispatch(secession({ password }));
   };
 
   return (
