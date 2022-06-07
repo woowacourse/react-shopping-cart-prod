@@ -2,7 +2,7 @@ import axios from 'axios';
 import { SERVER_URL } from 'configs/api';
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { SigninResponseBody } from 'types';
+import { Customer } from 'types';
 
 import * as S from 'pages/SignupPage//Steps/FillInfoStep/FillInfoStep.styled';
 
@@ -57,37 +57,15 @@ function FillInfoStep() {
     postcode?.open();
   };
 
-  const extractPayloadWithForm = (formElement: HTMLFormElement) => {
-    const formData = new FormData(formElement);
-    const {
-      email,
-      password,
-      name,
-      gender,
-      birthday,
-      contact,
-      address,
-      detailAddress,
-      zoneCode,
-    } = Object.fromEntries(formData.entries());
-
-    return {
-      email,
-      password,
-      profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
-      name,
-      gender,
-      birthday,
-      contact,
-      fullAddress: { address, detailAddress, zoneCode },
-      terms: true,
-    };
-  };
-
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    const payload = extractPayloadWithForm(e.target as HTMLFormElement);
+    const formData = new FormData(e.target as HTMLFormElement);
+
+    const payload = {
+      ...Object.fromEntries(formData.entries()),
+      profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
+    } as Customer;
 
     try {
       if (!isEmailUnique || !isConfirmPasswordSame || !addressData) {
@@ -101,20 +79,6 @@ function FillInfoStep() {
         url: `${SERVER_URL}/api/customers`,
         data: payload,
       });
-
-      // 회원가입
-      const response = await axios.post<SigninResponseBody>(
-        `${SERVER_URL}/api/customer/authentication/sign-in`,
-        {
-          email: payload.email,
-          password: payload.password,
-        }
-      );
-
-      const { accessToken, userId } = response.data;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('userId', String(userId));
 
       goNextStep();
     } catch (e) {

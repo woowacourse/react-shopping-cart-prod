@@ -38,11 +38,9 @@ const customers: User[] = [
     gender: 'male',
     birthday: '1999-03-23',
     contact: '01012345678',
-    fullAddress: {
-      address: '서울특별시 동작구 상도동',
-      detailAddress: '',
-      zoneCode: '50413',
-    },
+    address: '서울특별시 동작구 상도동',
+    detailAddress: '',
+    zoneCode: '50413',
     terms: true,
     accessToken: null,
   },
@@ -173,7 +171,9 @@ const customerHandlers = [
       gender: customer.gender,
       birthday: customer.birthday,
       contact: customer.contact,
-      fullAddress: customer.fullAddress,
+      address: customer.address,
+      detailAddress: customer.detailAddress,
+      zoneCode: customer.zoneCode,
       terms: customer.terms,
     };
 

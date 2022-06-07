@@ -10,11 +10,9 @@ export type Customer = {
   gender: 'male' | 'female' | 'undefined';
   birthday: string;
   contact: string;
-  fullAddress: {
-    address: string;
-    detailAddress: string;
-    zoneCode: string;
-  };
+  address: string;
+  detailAddress: string;
+  zoneCode: string;
   terms: boolean;
 };
 export type User = Customer & { userId: number; accessToken: string | null };

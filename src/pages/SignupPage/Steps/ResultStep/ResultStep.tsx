@@ -14,8 +14,8 @@ function ResultStep() {
         </S.Paragraph>
       </S.ResultBox>
       <S.ButtonBox>
-        <PlainLink to="/">
-          <Button>주문하러 가기</Button>
+        <PlainLink to="/signin">
+          <Button>로그인하러 가기</Button>
         </PlainLink>
       </S.ButtonBox>
     </>

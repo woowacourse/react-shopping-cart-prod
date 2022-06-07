@@ -12,6 +12,7 @@ function TermsStep() {
     currentStepId: number;
     goNextStep: () => void;
   }>();
+
   const [checkedFlags, setCheckedFlags] = useState<Record<string, boolean>>({
     'term-of-service': false,
     'term-of-personal-info': false,

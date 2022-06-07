@@ -12,6 +12,7 @@ import PlainLink from 'components/PlainLink/PlainLink';
 
 function SigninPage() {
   const navigate = useNavigate();
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
