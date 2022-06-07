@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import { useDispatch } from 'react-redux';
 
 import Input from 'components/Common/Input/Input';
 import Title from 'components/Common/Title/Title';
@@ -8,7 +7,6 @@ import Fieldset from 'components/Common/Fieldset/Fieldset';
 import ValidateText from 'components/Common/ValidateText/ValidateText';
 import Form from 'components/Common/Form/Form';
 
-import { showSnackBar } from 'reducers/ui/ui.actions';
 import useInputValidate from 'hooks/useInputValidate';
 
 import * as Styled from './style';
@@ -16,10 +14,11 @@ import { EMAIL_REGEX } from 'constants';
 import { NAME_REGEX } from 'constants';
 import { PASSWORD_REGEX } from 'constants';
 import { useAuth } from 'hooks/useAuth';
+import useSnackBar from 'hooks/useSnackBar';
 
 const SignUp = () => {
-  const dispatch = useDispatch();
   const { signUpApi, duplicateEmailApi } = useAuth();
+  const { showErrorSnackBar } = useSnackBar();
   const pwd = useRef(null);
 
   const {
@@ -71,9 +70,8 @@ const SignUp = () => {
       isEmailValid && isNameValid && isPasswordValid && isPasswordCheckValid;
 
     if (!isAllValid) {
-      dispatch(
-        showSnackBar({ type: 'ERROR', text: '정보를 올바르게 입력하세요.' }),
-      );
+      showErrorSnackBar({ text: '정보를 올바르게 입력하세요.' });
+
       return;
     }
 

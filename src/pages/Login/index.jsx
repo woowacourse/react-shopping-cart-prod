@@ -1,18 +1,16 @@
-import { useDispatch } from 'react-redux';
-
 import Form from 'components/Common/Form/Form';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import Input from 'components/Common/Input/Input';
 import Button from 'components/Common/Button/Button';
 import Title from 'components/Common/Title/Title';
 
-import { showSnackBar } from 'reducers/ui/ui.actions';
 import * as Styled from './style';
 import { useAuth } from 'hooks/useAuth';
+import useSnackBar from 'hooks/useSnackBar';
 
 const Login = () => {
-  const dispatch = useDispatch();
   const { loginApi, getUserApi } = useAuth();
+  const { showErrorSnackBar } = useSnackBar();
 
   const handlSubmit = (e) => {
     e.preventDefault();
@@ -23,9 +21,8 @@ const Login = () => {
     } = e.target.elements;
 
     if (email.length === 0 || password.length === 0) {
-      dispatch(
-        showSnackBar({ type: 'ERROR', text: '정보를 올바르게 입력하세요.' }),
-      );
+      showErrorSnackBar({ text: '정보를 올바르게 입력하세요.' });
+
       return;
     }
 

@@ -2,7 +2,7 @@ import apiClient from 'api';
 import { PATH_NAME } from 'constants';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { showSnackBar } from 'reducers/ui/ui.actions';
+
 import {
   setAuthenticated,
   setUserInfo,
@@ -10,6 +10,7 @@ import {
 } from 'reducers/user/user.actions';
 
 import { setCookie, getCookie } from 'utils/cookie';
+import useSnackBar from './useSnackBar';
 
 const COOKIE_KEY = process.env.REACT_APP_AUTH_COOKIE_KEY;
 
@@ -21,6 +22,7 @@ const getAuthorizationToken = () => {
 export const useAuth = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
 
   // 로그인
   const loginApi = async (payload) => {
@@ -35,7 +37,7 @@ export const useAuth = () => {
         const { accessToken } = data;
 
         setCookie(COOKIE_KEY, accessToken);
-        dispatch(showSnackBar({ type: 'SUCCESS', text: '로그인 성공' }));
+        showSuccessSnackBar({ text: '로그인 성공' });
         dispatch(setAuthenticated({ authenticated: true }));
         navigate(PATH_NAME.HOME);
       })
@@ -45,7 +47,7 @@ export const useAuth = () => {
             data: { message },
           },
         } = err;
-        dispatch(showSnackBar({ type: 'ERROR', text: message }));
+        showErrorSnackBar({ text: message });
       });
   };
 
@@ -67,9 +69,7 @@ export const useAuth = () => {
       .catch(() => {
         // TODO 새로고침 시, 로그인 화면으로 이동, 주석 풀 것
         // navigate(PATH_NAME.LOGIN);
-        dispatch(
-          showSnackBar({ type: 'ERROR', text: '다시 로그인 해주세요.' }),
-        );
+        showErrorSnackBar({ text: '다시 로그인 해주세요.' });
       });
   };
 
@@ -81,12 +81,10 @@ export const useAuth = () => {
       .post(`members`, { email, password, name })
       .then(() => {
         navigate(PATH_NAME.LOGIN);
-        dispatch(showSnackBar({ type: 'SUCCESS', text: '회원가입 성공' }));
+        showSuccessSnackBar({ text: '회원가입 성공' });
       })
       .catch(() => {
-        dispatch(
-          showSnackBar({ type: 'ERROR', text: '입력한 정보를 확인 하세요.' }),
-        );
+        showErrorSnackBar({ text: '입력한 정보를 확인 하세요.' });
       });
   };
 
@@ -123,12 +121,7 @@ export const useAuth = () => {
       )
       .then(() => {
         dispatch(updateName({ name }));
-        dispatch(
-          showSnackBar({
-            type: 'SUCCESS',
-            text: '이름이 성공적으로 변경되었습니다!',
-          }),
-        );
+        showSuccessSnackBar({ text: '이름이 성공적으로 변경되었습니다!' });
       })
       .catch((err) => {
         const {
@@ -136,7 +129,7 @@ export const useAuth = () => {
             data: { message },
           },
         } = err;
-        dispatch(showSnackBar({ type: 'ERROR', text: message }));
+        showErrorSnackBar({ text: message });
       });
   };
 
@@ -155,20 +148,10 @@ export const useAuth = () => {
         },
       )
       .then(() => {
-        dispatch(
-          showSnackBar({
-            type: 'SUCCESS',
-            text: '비밀번호가 성공적으로 변경되었습니다.',
-          }),
-        );
+        showSuccessSnackBar({ text: '비밀번호가 성공적으로 변경되었습니다.' });
       })
       .catch(() => {
-        dispatch(
-          showSnackBar({
-            type: 'ERROR',
-            text: '비밀번호를 올바르게 입력하세요.',
-          }),
-        );
+        showErrorSnackBar({ text: '비밀번호를 올바르게 입력하세요.' });
       });
   };
 
@@ -184,12 +167,7 @@ export const useAuth = () => {
         navigate(PATH_NAME.HOME);
       })
       .catch(() => {
-        dispatch(
-          showSnackBar({
-            type: 'ERROR',
-            text: '비밀번호를 올바르게 입력하세요.',
-          }),
-        );
+        showErrorSnackBar({ text: '비밀번호를 올바르게 입력하세요.' });
       });
   };
 
