@@ -2,7 +2,7 @@ import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import CroppedImage from 'components/common/CroppedImage';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { memo, MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CartListAction } from 'redux/cartList/action';
 import { postCartItemRequest, putCartItemRequest } from 'redux/cartList/thunk';
 import { PATH } from 'Routers';
@@ -19,6 +19,7 @@ interface ItemContainerProps {
 
 const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => {
   const { id, imageUrl, price, name } = item;
+  const navigate = useNavigate();
   const dispatch = useAppDispatch<CartListAction>();
   const handleClickItemContainer = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
     if (e.target instanceof SVGElement) {
@@ -27,6 +28,16 @@ const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => 
   };
 
   const handleClickCartIcon = () => {
+    const accessToken = localStorage.getItem('access-token');
+
+    if (!accessToken) {
+      if (window.confirm('로그인이 필요한 서비스입니다. 로그인 창으로 가시겠어요?')) {
+        navigate(PATH.login);
+      }
+
+      return;
+    }
+
     if (cartItem) {
       dispatch(putCartItemRequest(cartItem.id, cartItem.quantity + 1));
     } else {
