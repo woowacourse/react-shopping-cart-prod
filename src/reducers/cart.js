@@ -66,7 +66,6 @@ export default (state = initialState, action) => {
       return produce(state, (draft) => {
         const { id: updatedId } = payload;
         draft.items = draft.items.filter(({ id }) => id !== updatedId);
-        console.log('REMOVE_CART_ITEM_SUCCESS');
         draft.cartCurdAsyncState = createAsyncState.success();
       });
 

@@ -78,10 +78,12 @@ const requestCheckUserId = (userId) =>
   request(`/customers/check?userId=${encodeURIComponent(userId)}`, {
     method: 'GET',
   });
+
 const requestCheckUserNickname = (nickname) =>
   request(`/customers/check?nickname=${encodeURIComponent(nickname)}`, {
     method: 'GET',
   });
+
 export {
   requestSignUp,
   requestLogin,

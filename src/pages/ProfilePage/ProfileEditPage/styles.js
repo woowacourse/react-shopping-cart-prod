@@ -1,9 +1,18 @@
-import styled from '@emotion/styled';
+import styled from '@emotion/styled/macro';
 
-import { FlexContainer } from 'components/@common';
+const PasswordContainer = styled.form`
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 0 7rem 0;
+`;
 
-import { COLORS, BRAND_COLORS } from 'styles/theme';
+const NicknameContainer = styled.form`
+  display: flex;
+  width: 60%;
+  flex-direction: column;
+  padding: 3rem 0;
+`;
 
-const Container = styled.div``;
-
-export { Container };
+export { PasswordContainer, NicknameContainer };

@@ -95,6 +95,26 @@ const membersHandlers = [
 
     return res(ctx.status(200), ctx.json(userInfo));
   }),
+
+  rest.patch('./auth/customers/profile/password', (req, res, ctx) => {
+    // 액세스토큰을 통해 유저 아이디, 비밀번호 반환
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
+    const userInfo = membersDB.find((user) => user.accessToken === accessToken);
+    if (!userInfo) {
+      return res(
+        ctx.status(400),
+        ctx.json({ message: '권한이 없거나, 존재하지 않는 정보입니다.' }),
+      );
+    }
+
+    if (userInfo.password !== req.body.oldPassword) {
+      return res(ctx.status(400), ctx.json({ message: '비밀번호가 틀렸습니다.' }));
+    }
+
+    userInfo.password = req.body.newPassword;
+
+    return res(ctx.status(200), ctx.json(userInfo));
+  }),
 ];
 
 export default membersHandlers;

@@ -38,6 +38,18 @@ const userProfileEdit = {
   }),
 };
 
+const userPasswordEdit = {
+  success: (payload) => ({
+    type: MEMBERS_ACTIONS.USER_PASSWORD_EDIT_SUCCESS,
+    payload,
+  }),
+
+  error: (payload) => ({
+    type: MEMBERS_ACTIONS.USER_PASSWORD_EDIT_ERROR,
+    payload,
+  }),
+};
+
 const userDropOut = {
   success: (payload) => ({
     type: MEMBERS_ACTIONS.USER_DROP_OUT_SUCCESS,
@@ -52,4 +64,4 @@ const userDropOut = {
 
 const userLogout = () => ({ type: MEMBERS_ACTIONS.USER_LOGOUT });
 
-export { login, userInfoRefresh, userProfileEdit, userLogout, userDropOut };
+export { login, userInfoRefresh, userProfileEdit, userPasswordEdit, userLogout, userDropOut };

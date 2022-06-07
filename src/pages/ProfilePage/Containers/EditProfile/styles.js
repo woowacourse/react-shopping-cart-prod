@@ -1,7 +1,5 @@
 import styled from '@emotion/styled/macro';
 
-import { COLORS } from 'styles/theme';
-
 const PasswordContainer = styled.form`
   display: flex;
   width: 60%;
