@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/modules/customer';
+import { logout } from '@/redux/modules/customer';
 
-import axios from 'axios';
-
-import usePassword from '../../hooks/usePassword';
+import usePassword from '@/hooks/usePassword';
 
 import { LeaveButton } from './styles';
 
-import { Button, Form, Input } from '../../components/@shared';
-import PageLayout from '../../components/PageLayout';
+import { Button, Form, Input } from '@/components/@shared';
+import PageLayout from '@/components/PageLayout';
 
-import { getCookie } from '../../utils';
+import { getCookie } from '@/utils';
+
+import axios from 'axios';
 
 function UserInfo() {
   const [userName, setUserName] = useState('');

@@ -1,9 +1,9 @@
-import productList from '../../mocks/dummyData';
 import productsReducer, {
   loadProductsFailed,
   loadProductsSuccess,
   ProductState,
-} from '../modules/products';
+} from '@/redux/modules/products';
+import productList from '@/mocks/dummyData';
 
 describe('상품 리듀서 테스트', () => {
   const initialState: ProductState = {

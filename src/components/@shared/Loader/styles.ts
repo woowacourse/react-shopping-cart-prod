@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { flexColumnCenter } from '../../../styles/mixin';
+import { flexColumnCenter } from '@/styles/mixin';
 
 const Spin = keyframes`
 0% { 

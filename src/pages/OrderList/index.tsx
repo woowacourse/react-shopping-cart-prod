@@ -1,4 +1,4 @@
-import { Empty } from '../../components/@shared';
+import { Empty } from '@/components/@shared';
 
 function OrderList() {
   return <Empty />;

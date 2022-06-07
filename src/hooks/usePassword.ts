@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import useInput from './useInput';
-import { validatePassword } from '../validations';
+import { validatePassword } from '@/validations';
 
 const usePassword = () => {
   const [password, onChangePassword, passwordErrorMessage] = useInput(validatePassword);

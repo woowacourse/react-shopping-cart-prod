@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { directionColumn } from '../../../styles/mixin';
+import { directionColumn } from '@/styles/mixin';
 
 const FormContainer = styled.form`
   ${directionColumn}

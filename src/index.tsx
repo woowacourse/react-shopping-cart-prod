@@ -1,12 +1,15 @@
 import ReactDOM from 'react-dom/client';
-import { store, persistor } from './redux/store';
+
 import { Provider } from 'react-redux';
+import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import { ThemeProvider } from 'styled-components';
-import GlobalStyle from './styles/GlobalStyle';
 import theme from './styles/theme';
+import GlobalStyle from './styles/GlobalStyle';
+
 import App from './App';
+
 import { worker } from './mocks/browser';
 
 if (process.env.NODE_ENV === 'development') {

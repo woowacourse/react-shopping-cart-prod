@@ -1,5 +1,5 @@
+import { AppDispatch, RootState } from '@/redux/store';
 import axios from 'axios';
-import { AppDispatch, RootState } from '../store';
 
 type Product = {
   name: string;

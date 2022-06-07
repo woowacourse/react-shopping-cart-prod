@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
+
 import styled from 'styled-components';
-import { alignCenter, flexCenter, spaceBetween } from '../../styles/mixin';
+import { alignCenter, flexCenter, spaceBetween } from '@/styles/mixin';
 
 const NavBarContainer = styled.div`
   ${alignCenter};

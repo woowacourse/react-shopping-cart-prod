@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import { CartItem } from '../redux/modules/cart';
-import { RootState } from '../redux/store';
+import { RootState } from '@/redux/store';
+import { CartItem } from '@/redux/modules/cart';
 
 const selectCartItemById = (state: RootState, targetId: number) => {
   return state.cart.items.find((item) => item.id === targetId);

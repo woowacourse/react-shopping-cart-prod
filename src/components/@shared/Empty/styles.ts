@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { flexColumnCenter } from '../../../styles/mixin';
+import { flexColumnCenter } from '@/styles/mixin';
 
 const EmptyImageWrapper = styled.div`
   ${flexColumnCenter};

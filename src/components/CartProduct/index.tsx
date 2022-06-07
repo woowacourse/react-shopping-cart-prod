@@ -1,8 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { CartItem, decrement, deleteItem, increment, selectItem } from '../../redux/modules/cart';
-import { CheckBox } from '../@shared';
-import { INFO_MESSAGES, PRODUCT } from '../../constants';
-import Delete from '../../assets/Delete.png';
+import { CartItem, decrement, deleteItem, increment, selectItem } from '@/redux/modules/cart';
+
 import {
   CartProductContainer,
   ProductAmountContainer,
@@ -11,6 +9,11 @@ import {
   ProductImageContainer,
   ProductOptionContainer,
 } from './styles';
+
+import { CheckBox } from '@/components/@shared';
+
+import { INFO_MESSAGES, PRODUCT } from '@/constants';
+import Delete from '@/assets/Delete.png';
 
 interface CartProductProps {
   item: CartItem;

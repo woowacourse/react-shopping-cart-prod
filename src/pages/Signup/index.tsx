@@ -1,16 +1,17 @@
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from '@/routes';
 
-import axios from 'axios';
-
-import useInput from '../../hooks/useInput';
-import usePassword from '../../hooks/usePassword';
+import useInput from '@/hooks/useInput';
+import usePassword from '@/hooks/usePassword';
 
 import { DuplicateCheckButton, IdContainer } from './styles';
 
-import { Button, Form, Input } from '../../components/@shared';
-import PageLayout from '../../components/PageLayout';
+import { Button, Form, Input } from '@/components/@shared';
+import PageLayout from '@/components/PageLayout';
+
+import axios from 'axios';
 
 function Signup() {
   const [id, onChangeId] = useInput();

@@ -1,16 +1,17 @@
 import { Link, useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
-import { login } from '../../redux/modules/customer';
+import { login } from '@/redux/modules/customer';
+
+import useInput from '@/hooks/useInput';
+
+import { SignupWrapper } from './styles';
+
+import { Button, Form, Input } from '@/components/@shared';
+import { PageLayout } from '@/components';
 
 import axios from 'axios';
-
-import useInput from '../../hooks/useInput';
-
-import { Button, Form, Input } from '../../components/@shared';
-import PageLayout from '../../components/PageLayout';
-import { SignupWrapper } from './styles';
 
 function Login() {
   const [id, onChangeId] = useInput();

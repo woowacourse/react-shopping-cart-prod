@@ -5,7 +5,7 @@ import cartReducer, {
   deleteItem,
   increment,
   selectItem,
-} from '../modules/cart';
+} from '@/redux/modules/cart';
 
 describe('장바구니 리듀서 테스트', () => {
   const initialState: CartState = {
