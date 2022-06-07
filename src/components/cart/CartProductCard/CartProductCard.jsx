@@ -46,9 +46,7 @@ function CartProductCard({
     if (
       availableProductQuantity !== quantity &&
       !window.confirm(
-        `기존에 장바구니에 추가된 수량은 ${quantity}개 입니다. 수량을 ${
-          availableProductQuantity - 1
-        }개로 조정하시겠습니까?`,
+        WARNING_MESSAGES.ORIGINAL_AMOUNT_DISCARD(quantity, availableProductQuantity),
       )
     ) {
       return;
