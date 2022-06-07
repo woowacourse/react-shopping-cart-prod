@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useSnackbar from 'hooks/useSnackbar';
+import useLogout from 'hooks/useLogout';
 
 import { Modal, Input, Title, AuthButton, Container } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
@@ -9,6 +10,7 @@ import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 
 const PasswordEditModal = ({ handleModal }) => {
+  const { logoutByError } = useLogout();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
@@ -27,7 +29,9 @@ const PasswordEditModal = ({ handleModal }) => {
       renderSnackbar(MESSAGE.UPDATE_PASSWORD_SUCCESS, 'SUCCESS');
       handleModal();
     } catch (error) {
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');
+      const customError = error.response.data;
+      logoutByError(customError);
+      renderSnackbar(customError.message, 'FAILED');
     }
   };
 

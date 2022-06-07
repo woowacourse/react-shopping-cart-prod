@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
+import useLogout from 'hooks/useLogout';
 
 import { Modal, Container, Input, Title, AuthButton } from 'components';
 import Styled from './index.style';
@@ -13,6 +14,7 @@ import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 
 const AccountDeleteModal = ({ handleModal }) => {
+  const { logoutByError } = useLogout();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [password, setPassword] = useState('');
@@ -40,7 +42,9 @@ const AccountDeleteModal = ({ handleModal }) => {
       renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
       navigate('/');
     } catch (error) {
-      renderSnackbar(MESSAGE.DELETE_ACCOUNT_FAILURE, 'FAILED');
+      const customError = error.response.data;
+      logoutByError(customError);
+      renderSnackbar(customError.message, 'FAILED');
     }
   };
 

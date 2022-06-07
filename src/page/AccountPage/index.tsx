@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
+import useLogout from 'hooks/useLogout';
 
 import { PasswordEditModal, AccountDeleteModal } from 'page';
 import { Container, Input, Title, AuthButton } from 'components';
@@ -16,6 +17,7 @@ import { doLogin } from 'actions/actionCreator';
 import apiClient from 'apis/apiClient';
 
 const AccountPage = () => {
+  const { logoutByError } = useLogout();
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
@@ -56,7 +58,9 @@ const AccountPage = () => {
       dispatch(doLogin({ nickname: response.data.nickname }));
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
     } catch (error) {
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');
+      const customError = error.response.data;
+      logoutByError(customError);
+      renderSnackbar(customError.message, 'FAILED');
     }
   };
 

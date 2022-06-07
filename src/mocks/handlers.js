@@ -1,8 +1,15 @@
 // @ts-nocheck
-import { AUTH_API_URL } from 'apis/apiClient';
 import { dummyProductList } from 'dummy_data';
 import { rest } from 'msw';
-import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
+import {
+  checkDuplicatedEmail,
+  checkPasswordSame,
+  checkUserPassword,
+  validateEmail,
+  validateNickname,
+  validatePassword,
+  validateToken,
+} from 'utils/validator';
 
 const users = [
   { id: 1, email: '1@gmail.com', nickname: 'abc', password: 'akfmzh123!' },
@@ -12,7 +19,6 @@ const users = [
 
 export const handlers = [
   // 상품 정보 가져오기
-
   rest.get('/products', (_, res, ctx) => {
     return res(ctx.status(200), ctx.json(dummyProductList));
   }),
@@ -23,17 +29,15 @@ export const handlers = [
     const id = users.length + 1;
 
     try {
-      // 이메일 형식이 지켜지지 않은 경우
+      // 이메일 형식 준수 여부 확인
       validateEmail(email);
-      // 닉네임 형식이 지켜지지 않은 경우
+      // 닉네임 형식 준수 여부 확인
       validateNickname(nickname);
-      // 비밀번호 형식이 지켜지지 않은 경우
+      // 비밀번호 형식 준수 여부 확인
       validatePassword(password);
 
-      // 이메일 중복될 경우
-      if (users.some(user => user.email === email)) {
-        throw new Error('Duplicated email');
-      }
+      // 이메일 중복 여부 확인
+      checkDuplicatedEmail(users, email);
 
       // 회원가입 성공
       users.push({ id, email, nickname, password });
@@ -50,6 +54,7 @@ export const handlers = [
       return res(
         ctx.status(400),
         ctx.json({
+          code: error.code,
           message: error.message,
         }),
       );
@@ -61,9 +66,12 @@ export const handlers = [
     const { email, password } = req.body;
 
     const foundUser = users.find(user => user.email === email);
-    if (foundUser && foundUser.password === password) {
-      const accessToken = JSON.stringify({ id: foundUser.id });
 
+    try {
+      const accessToken = encodeURIComponent({ id: foundUser.id });
+
+      // 비밀번호 일치 여부 확인
+      checkPasswordSame(users, foundUser.id, password);
       // 로그인 성공
       return res(
         ctx.status(200),
@@ -72,29 +80,32 @@ export const handlers = [
           accessToken,
         }),
       );
+    } catch (error) {
+      // 로그인 실패
+      return res(
+        ctx.status(401),
+        ctx.json({
+          code: error.code,
+          message: error.message,
+        }),
+      );
     }
-
-    // 로그인 실패
-    return res(
-      ctx.status(401),
-      ctx.json({
-        message: 'Login Failed',
-      }),
-    );
   }),
 
   // 회원정보수정
   rest.patch('/customers', (req, res, ctx) => {
     try {
-      const accessToken = JSON.parse(req.headers.headers.authorization.replace('Bearer ', ''));
-      // 유효한 토큰이 아닌 경우
-      if (!users.some(user => user.id === accessToken.id)) throw new Error('No authorization');
+      const accessToken = decodeURIComponent(
+        req.headers.headers.authorization.replace('Bearer ', ''),
+      );
+      // 유효한 토큰 여부 확인
+      validateToken(users, accessToken);
 
       // [1] 닉네임을 수정하는 경우
       const { nickname } = req.body;
 
       if (nickname) {
-        // 닉네임 형식이 옳지 않은 경우
+        // 닉네임 형식 확인
         validateNickname(nickname);
 
         // 닉네임 변경 성공
@@ -109,21 +120,20 @@ export const handlers = [
       // [2] 비밀번호를 수정하는 경우
       const { password, newPassword } = req.body;
 
-      // 비밀번호 형식이 옳지 않은 경우
+      // 비밀번호 형식 확인
       validatePassword(newPassword);
 
-      // 이전 비밀번호와 현재 비밀번호가 일치하지 않을 경우
-      if (users.find(user => user.id === accessToken.id).password !== password) {
-        throw new Error('No authorization');
-      }
+      // 비밀번호 일치 여부 확인
+      checkPasswordSame(users, accessToken.id, password);
 
       // 비밀번호 변경 성공
       return res(ctx.status(204));
     } catch (error) {
-      // 회원정보 수정 실패
+      // 회원정보 수정 실패(입력된 형식 문제면 400, 인가 문제면 401)
       return res(
-        ctx.status(error.message === 'No authorization' ? 401 : 400),
+        ctx.status(error.code === 2103 ? 400 : 401),
         ctx.json({
+          code: error.code,
           message: error.message,
         }),
       );
@@ -140,10 +150,8 @@ export const handlers = [
       const { password } = req.body;
       const foundIndex = users.findIndex(user => user.id === accessToken.id);
 
-      // 탈퇴시 입력한 비밀번호가 현재 비밀번호와 맞지 않은 경우
-      if (users[foundIndex].password !== password) {
-        throw new Error();
-      }
+      // 비밀번호 일치 여부 확인
+      checkUserPassword(users[foundIndex], password);
 
       // 탈퇴 성공
       // TODO splice로 대체
@@ -154,7 +162,8 @@ export const handlers = [
       return res(
         ctx.status(401),
         ctx.json({
-          message: 'No authorization',
+          error: error.code,
+          message: error.message,
         }),
       );
     }
@@ -164,8 +173,8 @@ export const handlers = [
   rest.get('/customers', (req, res, ctx) => {
     try {
       const accessToken = JSON.parse(req.headers.headers.authorization.replace('Bearer ', ''));
-      // 유효한 토큰이 아닌 경우
-      if (!users.some(user => user.id === accessToken.id)) throw new Error();
+      // 유효한 토큰 여부 확인
+      validateToken(users, accessToken);
 
       const { nickname, email } = users.find(user => user.id === accessToken.id);
 
@@ -182,7 +191,8 @@ export const handlers = [
       return res(
         ctx.status(401),
         ctx.json({
-          message: 'No authorization',
+          code: error.code,
+          message: error.message,
         }),
       );
     }
@@ -192,8 +202,8 @@ export const handlers = [
   rest.post('/auth/logout', (req, res, ctx) => {
     try {
       const accessToken = JSON.parse(req.headers.headers.authorization.replace('Bearer ', ''));
-      // 유효한 토큰이 아닌 경우
-      if (!users.some(user => user.id === accessToken.id)) throw new Error();
+      // 유효한 토큰 여부 확인
+      validateToken(users, accessToken);
 
       // 로그아웃 성공
       return res(ctx.status(204));
@@ -202,7 +212,8 @@ export const handlers = [
       return res(
         ctx.status(401),
         ctx.json({
-          message: 'No authorization',
+          code: error.code,
+          message: error.message,
         }),
       );
     }

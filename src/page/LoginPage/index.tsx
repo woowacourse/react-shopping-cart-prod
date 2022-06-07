@@ -13,8 +13,10 @@ import { setCookie } from 'utils/cookie';
 import { doLogin } from 'actions/actionCreator';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
+import useLogout from 'hooks/useLogout';
 
 const LoginPage = () => {
+  const { logoutByError } = useLogout();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state: userEmail } = useLocation();
@@ -54,7 +56,9 @@ const LoginPage = () => {
       renderSnackbar(`${response.data.nickname}${MESSAGE.LOGIN_SUCCESS}`, 'SUCCESS');
       navigate('/');
     } catch (error) {
-      renderSnackbar(MESSAGE.LOGIN_FAILURE, 'FAILED');
+      const customError = error.response.data;
+      logoutByError(customError);
+      renderSnackbar(customError.message, 'FAILED');
     }
   };
 
