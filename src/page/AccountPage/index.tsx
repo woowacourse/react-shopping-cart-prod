@@ -41,11 +41,11 @@ const AccountPage = () => {
     setEmail(response.data.email);
   };
 
-  const updateProfile = async () => {
+  const editNickname = async () => {
     try {
       if (!isNicknameCorrect) return;
 
-      const response = await apiClient.patch('/customers', {
+      const response = await apiClient.patch('/customers/profile', {
         nickname,
       });
       dispatch(doLogin({ nickname: response.data.nickname }));
@@ -82,7 +82,7 @@ const AccountPage = () => {
           />
           <AuthButton
             actionType="Update Profile"
-            action={updateProfile}
+            action={editNickname}
             isDisabled={!isNicknameCorrect}
           />
 

@@ -21,7 +21,7 @@ const PasswordEditModal = ({ handleModal }) => {
     try {
       if (!isCorrectPassword) return;
 
-      await apiClient.patch('/customers', {
+      await apiClient.patch('/customers/password', {
         password: currentPassword,
         newPassword,
       });
