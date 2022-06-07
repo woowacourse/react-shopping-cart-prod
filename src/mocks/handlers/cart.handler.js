@@ -27,14 +27,16 @@ const updateCartProductQuantity = (productId, quantity) => {
   const productIndex = findProductCartIndex(currentShoppingCart, productId);
   const { stock } = findProductData(productId);
 
-  if (quantity > stock) {
-    throw new Error(ERROR_MESSAGES.EXCEED_QUANTITY(stock, quantity));
-  }
   if (productIndex < 0) {
     throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
   }
 
   const targetProduct = currentShoppingCart[productIndex];
+  const { quantity: prevQuantity } = targetProduct;
+
+  if (quantity > stock) {
+    throw new Error(ERROR_MESSAGES.EXCEED_QUANTITY(stock, prevQuantity));
+  }
 
   targetProduct.quantity = quantity;
   currentShoppingCart[productIndex] = targetProduct;
