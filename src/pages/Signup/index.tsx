@@ -12,7 +12,7 @@ import usePassword from 'hooks/usePassword';
 import { Button, Form, Input, Loader } from 'components/@shared';
 import { PageLayout } from 'components';
 
-import { MESSAGES } from 'constants/index';
+import { MESSAGES, PASSWORD, ID } from 'constants/index';
 
 function Signup() {
   const dispatch = useDispatch();
@@ -68,7 +68,8 @@ function Signup() {
           label="아이디"
           value={id}
           onChange={onChangeId}
-          maxLength={10}
+          minLength={ID.MIN_LENGTH}
+          maxLength={ID.MAX_LENGTH}
           isValid={idStatus.isValid}
           message={idStatus.message}
           onBlur={onBlurDuplicateCheck}
@@ -79,8 +80,8 @@ function Signup() {
           label="비밀번호"
           value={password}
           onChange={onChangePassword}
-          minLength={8}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           isValid={!passwordErrorMessage}
           message={password && passwordErrorMessage}
         />
@@ -90,8 +91,8 @@ function Signup() {
           label="비밀번호 확인"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
-          minLength={8}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           isValid={!passwordConfirmErrorMessage}
           message={passwordConfirmErrorMessage}
         />

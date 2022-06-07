@@ -9,7 +9,7 @@ import useInput from 'hooks/useInput';
 import { Button, Form, Input, Loader } from 'components/@shared';
 import { PageLayout } from 'components';
 
-import { MESSAGES } from 'constants/index';
+import { ID, MESSAGES, PASSWORD } from 'constants/index';
 import { SignupWrapper } from './styles';
 
 function Login() {
@@ -44,15 +44,22 @@ function Login() {
     <PageLayout>
       <h1>로그인</h1>
       <Form onSubmit={onSubmitLoginForm}>
-        <Input htmlFor="login-id" label="아이디" value={id} onChange={onChangeId} />
+        <Input
+          htmlFor="login-id"
+          label="아이디"
+          value={id}
+          onChange={onChangeId}
+          minLength={ID.MIN_LENGTH}
+          maxLength={ID.MAX_LENGTH}
+        />
         <Input
           type="password"
           htmlFor="login-password"
           label="비밀번호"
           value={password}
           onChange={onChangePassword}
-          minLength={8}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
         />
         <Button borderRaius="15px">확인</Button>
       </Form>

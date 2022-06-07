@@ -13,7 +13,7 @@ import usePassword from 'hooks/usePassword';
 import { Button, Form, Input, Loader } from 'components/@shared';
 import { PageLayout } from 'components';
 
-import { MESSAGES } from 'constants/index';
+import { MESSAGES, PASSWORD } from 'constants/index';
 import { LeaveButton } from './styles';
 
 function UserInfo() {
@@ -65,8 +65,8 @@ function UserInfo() {
           label="새로운 비밀번호"
           value={password}
           onChange={onChangePassword}
-          minLength={8}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           isValid={!passwordErrorMessage}
           message={password && passwordErrorMessage}
         />
@@ -76,8 +76,8 @@ function UserInfo() {
           label="새로운 비밀번호 확인"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
-          minLength={8}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           isValid={!passwordConfirmErrorMessage}
           message={passwordConfirmErrorMessage}
         />

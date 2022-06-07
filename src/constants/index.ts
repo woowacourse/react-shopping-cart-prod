@@ -22,4 +22,14 @@ const CART = {
   COUNTER_DISPLAY_TIME: 3000,
 };
 
-export { MESSAGES, PRODUCT, CART };
+const PASSWORD = {
+  MIN_LENGTH: 8,
+  MAX_LENGTH: 16,
+};
+
+const ID = {
+  MIN_LENGTH: 5,
+  MAX_LENGTH: 20,
+};
+
+export { MESSAGES, PRODUCT, CART, PASSWORD, ID };
