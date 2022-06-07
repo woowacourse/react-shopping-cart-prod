@@ -1,10 +1,11 @@
 // @ts-nocheck
+import { AUTH_API_URL } from 'apis/apiClient';
 import { dummyProductList } from 'dummy_data';
 import { rest } from 'msw';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 
 const users = [
-  { id: 1, email: '1@gmail.com', nickname: 'abc', password: '123456@adssd' },
+  { id: 1, email: '1@gmail.com', nickname: 'abc', password: 'akfmzh123!' },
   { id: 2, email: '2@gmail.com', nickname: 'def', password: '123456@adssd' },
   { id: 3, email: '3@gmail.com', nickname: 'ghi', password: '123456@adssd' },
 ];
@@ -145,6 +146,7 @@ export const handlers = [
       }
 
       // 탈퇴 성공
+      // TODO splice로 대체
       delete users[foundIndex];
       return res(ctx.status(204));
     } catch (error) {

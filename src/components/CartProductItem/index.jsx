@@ -24,7 +24,7 @@ const CartProductItem = ({ id, quantity }) => {
   //   const accessToken = getCookie('accessToken');
 
   //   try {
-  //     await productApiClient.delete(
+  //     await apiClient.delete(
   //       `/carts`,
   //       [id],
   //       {
@@ -52,7 +52,7 @@ const CartProductItem = ({ id, quantity }) => {
   //   const accessToken = getCookie('accessToken');
 
   //   try {
-  //     const response = await productApiClient.patch(
+  //     const response = await apiClient.patch(
   //       `/carts/${id}`,
   //       { quantity: updatedQuantity },
   //       {

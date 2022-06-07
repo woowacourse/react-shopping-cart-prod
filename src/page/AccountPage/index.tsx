@@ -13,7 +13,7 @@ import Styled from './index.style';
 import { validateNickname } from 'utils/validator';
 import { MESSAGE } from 'utils/constants';
 import { doLogin } from 'actions/actionCreator';
-import { authApiClient } from 'apis/apiClient';
+import apiClient from 'apis/apiClient';
 
 const AccountPage = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const AccountPage = () => {
   }, [isLoading]);
 
   const getProfile = async () => {
-    const response = await authApiClient.get('/customers');
+    const response = await apiClient.get('/customers');
 
     setEmail(response.data.email);
   };
@@ -50,7 +50,7 @@ const AccountPage = () => {
     try {
       if (!isNicknameCorrect) return;
 
-      const response = await authApiClient.patch('/customers', {
+      const response = await apiClient.patch('/customers', {
         nickname,
       });
       dispatch(doLogin({ nickname: response.data.nickname }));

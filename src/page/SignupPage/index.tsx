@@ -12,7 +12,7 @@ import Styled from './index.style';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 import { MESSAGE } from 'utils/constants';
-import { authApiClient } from 'apis/apiClient';
+import apiClient from 'apis/apiClient';
 
 const SignupPage = () => {
   const [renderSnackbar] = useSnackbar();
@@ -43,7 +43,7 @@ const SignupPage = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await authApiClient.post('/customers', {
+      const response = await apiClient.post('/customers', {
         email,
         nickname,
         password,

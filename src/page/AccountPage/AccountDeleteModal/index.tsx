@@ -10,7 +10,7 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import { deleteCookie } from 'utils/cookie';
 import { MESSAGE } from 'utils/constants';
-import { authApiClient } from 'apis/apiClient';
+import apiClient from 'apis/apiClient';
 
 const AccountDeleteModal = ({ handleModal }) => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const AccountDeleteModal = ({ handleModal }) => {
     try {
       if (!isCorrectPassword) return;
 
-      await authApiClient.delete('/customers', {
+      await apiClient.delete('/customers', {
         data: {
           password,
         },

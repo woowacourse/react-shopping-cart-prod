@@ -16,7 +16,7 @@ import {
   doSelectiveDeleteFromCart,
 } from 'actions/actionCreator';
 import { MESSAGE } from 'utils/constants';
-import { productApiClient } from 'apis/apiClient';
+import apiClient from 'apis/apiClient';
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ const CartPage = () => {
 
   // TODO [API] 장바구니 목록 가져오기(GET)
   // const getCarts = async () => {
-  //   const response = await productApiClient.get('/carts');
+  //   const response = await apiClient.get('/carts');
   //   dispatch(doInitializeCartList({ shoppingCart: response.data }));
   // };
 
@@ -79,7 +79,7 @@ const CartPage = () => {
   //   const targetIdList = cartIdList.filter(id => !order.includes(id));
 
   //   try {
-  //     await productApiClient.delete(
+  //     await auth.delete(
   //       `/carts`,
   //       targetIdList, // targetIdList : [2, 4] 삭제할 상품 id 목록
   //       {

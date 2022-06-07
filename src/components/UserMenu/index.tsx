@@ -7,7 +7,7 @@ import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
 import { MESSAGE } from 'utils/constants';
-import { authApiClient } from 'apis/apiClient';
+import apiClient from 'apis/apiClient';
 
 const UserMenu = ({ nickname }) => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const UserMenu = ({ nickname }) => {
 
   const logout = async () => {
     try {
-      await authApiClient.post('/auth/logout');
+      await apiClient.post('/auth/logout');
 
       deleteCookie('accessToken');
       setIsOpen(false);

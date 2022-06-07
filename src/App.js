@@ -19,7 +19,7 @@ import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 import { doLogin, doLogout } from 'actions/actionCreator';
 import { MESSAGE, ROUTES } from 'utils/constants';
 import { deleteCookie, getCookie } from 'utils/cookie';
-import { authApiClient } from 'apis/apiClient';
+import apiClient from 'apis/apiClient';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ function App() {
       const accessToken = getCookie('accessToken');
       if (!accessToken) return;
 
-      const response = await authApiClient.get('/customers');
+      const response = await apiClient.get('/customers');
       dispatch(doLogin({ nickname: response.data.nickname }));
     } catch (error) {
       deleteCookie('accessToken');

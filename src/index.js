@@ -5,8 +5,10 @@ import reportWebVitals from 'reportWebVitals';
 
 import App from 'App';
 import store from 'store';
+import apiClient, { AUTH_API_URL } from 'apis/apiClient';
+import { ENV } from 'utils/constants';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === ENV.DEVELOPMENT) {
   const { worker } = require('./mocks/worker');
   worker.start();
 }

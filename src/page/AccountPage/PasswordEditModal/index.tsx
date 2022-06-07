@@ -6,7 +6,7 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
 import { validatePassword } from 'utils/validator';
 import { MESSAGE } from 'utils/constants';
-import { authApiClient } from 'apis/apiClient';
+import apiClient from 'apis/apiClient';
 
 const PasswordEditModal = ({ handleModal }) => {
   const [currentPassword, setCurrentPassword] = useState('');
@@ -19,7 +19,7 @@ const PasswordEditModal = ({ handleModal }) => {
     try {
       if (!isCorrectPassword) return;
 
-      await authApiClient.patch('/customers', {
+      await apiClient.patch('/customers', {
         password: currentPassword,
         newPassword,
       });

@@ -6,7 +6,7 @@ import { ProductItem } from 'components';
 import Styled from './index.style';
 
 import { doInitializeProductList } from 'actions/actionCreator';
-import { productApiClient } from 'apis/apiClient';
+import apiClient from 'apis/apiClient';
 
 const ProductListPage = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const ProductListPage = () => {
   const getProducts = useCallback(async () => {
     if (products.length > 0) return; // 서버에서 상품 목록 갱신될 수 있으므로 매번 상품 목록 가져오는 것이 적절할 것으로 생각됨. 따라서 이 라인의 코드는 삭제 검토 필요
 
-    const response = await productApiClient.get('/products');
+    const response = await apiClient.get('/products');
 
     dispatch(doInitializeProductList({ products: response.data }));
   }, [dispatch, products.length]);

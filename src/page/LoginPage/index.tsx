@@ -12,7 +12,7 @@ import Styled from './index.style';
 import { setCookie } from 'utils/cookie';
 import { doLogin } from 'actions/actionCreator';
 import { MESSAGE } from 'utils/constants';
-import { authApiClient } from 'apis/apiClient';
+import apiClient from 'apis/apiClient';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const LoginPage = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await authApiClient.post('/auth/login', {
+      const response = await apiClient.post('/auth/login', {
         email,
         password,
       });
