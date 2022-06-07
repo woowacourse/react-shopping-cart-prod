@@ -20,6 +20,7 @@ import { checkName, isInvalidName, isEmpty } from 'utils/validation';
 import * as API from 'service';
 
 import { SNACKBAR_MESSAGE, PATH } from 'constants';
+import { ERROR_MESSAGE } from 'constants';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -54,19 +55,21 @@ const Profile = () => {
 
         setName(data.name);
         setEmail(data.email);
-      } catch ({ message }) {
-        if (message === 'Invalid Token') {
+      } catch (e) {
+        if (e.message === ERROR_MESSAGE.INVALID_TOKEN) {
           dispatch(withdraw());
           API.clearToken();
           navigate(PATH.LOGIN);
+          dispatch(onMessage(ERROR_MESSAGE.INVALID_TOKEN));
         }
-        setError(message);
+        setError(e.message);
       } finally {
         setLoading(false);
       }
     };
 
     effect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

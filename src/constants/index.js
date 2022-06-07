@@ -27,3 +27,7 @@ export const PATH = {
   PASSWORD: '/password',
   WITHDRAWAL: '/withdrawal',
 };
+
+export const ERROR_MESSAGE = {
+  INVALID_TOKEN: '로그인 기간이 만료되었습니다.',
+};
