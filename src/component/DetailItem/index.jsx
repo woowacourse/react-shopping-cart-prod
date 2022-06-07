@@ -15,13 +15,13 @@ export default function DetailItem({productInfo}) {
 
   const cartItem = useSelector((state) => state.cartReducer.cart);
 
-  const {image, name, price, id} = productInfo;
+  const {imageUrl, name, price, id} = productInfo;
 
   const isInCart = cartItem.some((item) => item.id === Number.parseInt(id));
 
   const handleCartButtonClick = () => {
     const cartInfo = {
-      image,
+      imageUrl,
       name,
       price,
       id: Number.parseInt(id),
@@ -33,7 +33,7 @@ export default function DetailItem({productInfo}) {
 
   return (
     <S.DetailItemLayout>
-      <img src={image} alt="상품 이미지" width="570px" height="570px" />
+      <img src={imageUrl} alt="상품 이미지" width="570px" height="570px" />
       <S.ItemNameSpan>{name}</S.ItemNameSpan>
       <S.ItemPriceBox>
         <span>금액</span>

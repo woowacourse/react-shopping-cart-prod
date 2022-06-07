@@ -38,9 +38,9 @@ export const handlers = [
   }),
 
   // 선택된 상품 정보 가져오기
-  rest.get(`${process.env.REACT_APP_PRODUCT_API_URL}/:id`, (req, res, ctx) => {
+  rest.get(`${BASE_SERVER_URL}${SERVER_PATH.PRODUCT}/:id`, (req, res, ctx) => {
     const productId = Number.parseInt(req.params.id);
-    const detailItem = MOCK_PRODUCT_LIST.find(({id}) => id === productId);
+    const detailItem = MOCK_PRODUCT_LIST.products.find(({id}) => id === productId);
 
     return res(ctx.status(200), ctx.json(detailItem));
   }),

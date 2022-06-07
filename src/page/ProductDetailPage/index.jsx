@@ -9,6 +9,7 @@ import * as S from 'page/ProductDetailPage/style';
 
 import useFetch from 'hook/useFetch';
 import useCartItem from 'hook/useCartItem';
+import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 
 export default function ProductDetailPage() {
   const {id} = useParams();
@@ -27,7 +28,7 @@ export default function ProductDetailPage() {
   }, [initializeCart]);
 
   useEffect(() => {
-    fetchProductDetail({API_URL: `${process.env.REACT_APP_PRODUCT_API_URL}/${id}`});
+    fetchProductDetail({API_URL: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT}/${id}`});
   }, [fetchProductDetail, id]);
 
   return (
