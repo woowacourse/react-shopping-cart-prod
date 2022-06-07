@@ -5,22 +5,22 @@ import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useState } from 'react';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { UserAction, UserActionType } from 'redux/actions/user';
+import { UserAction, userAction } from 'redux/actions/user';
 import theme from 'styles/theme';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { loading, error, data } = useAppSelector(state => state.userReducer);
-  const [isShowHambergur, setIsShowHambergur] = useState(false);
+  const { data } = useAppSelector(state => state.userReducer);
+  const [isShowHamburger, setIsShowHamburger] = useState(false);
   const dispatch = useAppDispatch<UserAction>();
 
-  const toggleHambergur = () => {
-    setIsShowHambergur(!isShowHambergur);
+  const toggleHamburger = () => {
+    setIsShowHamburger(!isShowHamburger);
   };
 
   const handleSignOut = () => {
     localStorage.clear();
-    dispatch({ type: UserActionType.SIGN_OUT_ACTION });
+    dispatch(userAction.signOut.success());
   };
 
   return (
@@ -36,9 +36,9 @@ const Header = () => {
           <button onClick={() => navigate('/cart')}>장바구니</button>
           <button>주문목록</button>
           {Object.keys(data).length ? (
-            <button onClick={toggleHambergur}>
+            <button onClick={toggleHamburger}>
               마이페이지
-              <MyPageHambergurList isShow={isShowHambergur}>
+              <MyPageHambergurList isShow={isShowHamburger}>
                 <Link to='/editPassword'>비밀번호 변경</Link>
                 <Link to='/resign'>회원 탈퇴</Link>
                 <Link onClick={handleSignOut} to=''>

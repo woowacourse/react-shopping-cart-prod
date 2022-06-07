@@ -16,7 +16,7 @@ import { PATH } from 'Router';
 const SignUpPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
-  const { loading, error, data } = useAppSelector(state => state.userReducer);
+  const { loading, error } = useAppSelector(state => state.userReducer);
   const { inputState, validState, handleEmailInput, handleNameInput } = useSignInput();
   const {
     currentPasswordRef,

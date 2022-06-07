@@ -21,7 +21,7 @@ const CartPage = () => {
   } = useAppSelector(state => state.cartListReducer);
   const dispatch = useAppDispatch<CartListAction>();
 
-  const [paymentsAmount, setpaymentsAmount] = useState(0);
+  const [paymentsAmount, setPaymentsAmount] = useState(0);
 
   const cartListString =
     `${LOCAL_BASE_URL}/itemList?` +
@@ -57,7 +57,7 @@ const CartPage = () => {
           cartList={cartList}
           cartDetail={cartDetail}
           cartListWithDetail={cartListWithDetail}
-          setPaymentsAmount={setpaymentsAmount}
+          setPaymentsAmount={setPaymentsAmount}
         >
           {loadingGetCartList && <Loading></Loading>}
         </CartList>

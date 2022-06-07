@@ -1,8 +1,4 @@
-import {
-  postCartItem,
-  putCartItem,
-  removeCartItem as deleteCartItem,
-} from 'redux/action-creators/cartListThunk';
+import { postCartItem, putCartItem, deleteCartItem } from 'redux/action-creators/cartListThunk';
 import { useAppDispatch } from './useAppDispatch';
 import { CartItem } from 'types/domain';
 import { CartListAction } from 'redux/actions/cartList';

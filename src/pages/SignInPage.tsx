@@ -16,10 +16,8 @@ import { PATH } from 'Router';
 const SignInPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
-  const { loading, error, data } = useAppSelector(state => state.userReducer);
-
+  const { error, data } = useAppSelector(state => state.userReducer);
   const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
-
   const { inputState, validState, handleEmailInput } = useSignInput();
 
   useUpdateEffect(() => {
