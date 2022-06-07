@@ -50,7 +50,7 @@ export const handlers = [
   rest.get(process.env.REACT_APP_CART, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
 
-    return res(ctx.status(200), ctx.json(userDB[accessToken].cart));
+    return res(ctx.status(200), ctx.json({cart: userDB[accessToken].cart}));
   }),
 
   // 장바구니 상품 추가
