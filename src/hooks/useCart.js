@@ -4,17 +4,21 @@ import { METHOD } from 'constants';
 import useFetch from 'hooks/useFetch';
 import { useEffect } from 'react';
 import { getAuthorizedHeaders } from 'api/auth';
+import {
+  updateCartItemQuantityAction,
+  deleteCartItemAction,
+} from 'reducers/cart/cart.actions';
 
 const useCart = () => {
   const dispatch = useDispatch();
   const { isLoading, isError, data } = useSelector((state) => state.cart);
 
-  const { isSucceed: isDeleteItemSucceed, fetchApi: deleteItemApi } = useFetch({
+  const { fetchApi: deleteItemApi } = useFetch({
     method: METHOD.DELETE,
     url: '/api/members/me/carts',
   });
 
-  const { isSucceed: isUpdateItemSucceed, fetchApi: updateItemApi } = useFetch({
+  const { fetchApi: updateItemApi } = useFetch({
     method: METHOD.PUT,
     url: '/api/members/me/carts',
   });
@@ -30,7 +34,9 @@ const useCart = () => {
 
   const deleteItem = (id) => {
     const headers = getAuthorizedHeaders();
-    deleteItemApi({ params: id, payload: { headers } });
+    deleteItemApi({ params: id, payload: { headers } }).then(() => {
+      dispatch(deleteCartItemAction(id));
+    });
   };
 
   const deleteItems = (idList) => {
@@ -42,7 +48,9 @@ const useCart = () => {
 
   const updateItemQuantity = (id, quantity) => {
     const headers = getAuthorizedHeaders();
-    updateItemApi({ params: id, payload: { quantity, headers } });
+    updateItemApi({ params: id, payload: { quantity, headers } }).then(() => {
+      dispatch(updateCartItemQuantityAction(id, quantity));
+    });
   };
 
   const addItem = (product_id) => {
@@ -53,14 +61,6 @@ const useCart = () => {
   useEffect(() => {
     if (isAddItemSucceed) getItems();
   }, [isAddItemSucceed]);
-
-  useEffect(() => {
-    if (isUpdateItemSucceed) getItems();
-  }, [isUpdateItemSucceed]);
-
-  useEffect(() => {
-    if (isDeleteItemSucceed) getItems();
-  }, [isDeleteItemSucceed]);
 
   return {
     isLoading,
