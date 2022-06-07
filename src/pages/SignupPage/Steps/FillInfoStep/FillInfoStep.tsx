@@ -325,26 +325,24 @@ function FillInfoStep() {
               <input
                 type="radio"
                 value="male"
-                {...registerInput('gender', { defaultValue: 'male' })}
+                {...registerInput('gender', {})}
               />
               남성
             </label>
             <label>
               <input
                 type="radio"
-                value="male"
-                {...registerInput('gender', { defaultValue: 'female' })}
+                value="female"
+                {...registerInput('gender', {})}
               />
               여성
             </label>
             <label>
               <input
                 type="radio"
-                value="male"
-                {...registerInput('gender', {
-                  defaultValue: 'undefined',
-                  defaultChecked: true,
-                })}
+                value="undefined"
+                defaultChecked={true}
+                {...registerInput('gender', {})}
               />
               선택 안함
             </label>

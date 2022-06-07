@@ -19,7 +19,7 @@ type Touched = Record<Name, boolean>;
 
 type RegisterProps = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
-  'name' | 'value'
+  'name' | 'value' | 'defaultValue' | 'defaultChecked'
 > &
   Partial<{
     patternMessage: Error;
@@ -75,17 +75,25 @@ const useForm = ({
     }));
   };
 
-  const bindElementToInputControl =
+  const bindElementToInputControlAndWatchingValues =
     ({
+      watch,
       customValidations,
       patternMessage,
     }: Partial<RegisterProps>): RefCallback<HTMLInputElement> =>
     (element) => {
-      if (!element) return;
+      if (!element || inputController.current[element.name]) return;
 
-      const { name } = element;
+      const { name, defaultValue } = element;
+      const shouldWatch =
+        watch && !Object.prototype.hasOwnProperty.call(watchingValues, name);
 
-      if (inputController.current[name]) return;
+      if (shouldWatch) {
+        setWatchingValues((prev) => ({
+          ...prev,
+          [name]: defaultValue?.toString() ?? '',
+        }));
+      }
 
       inputElementList.current.push(element);
 
@@ -276,8 +284,6 @@ const useForm = ({
     ref: RefCallback<HTMLInputElement>;
   } => {
     const {
-      defaultValue,
-      className,
       watch,
       customValidations,
       patternMessage,
@@ -286,16 +292,14 @@ const useForm = ({
       onKeyDown,
       ...rest
     } = attributes;
-    if (watch && !Object.prototype.hasOwnProperty.call(watchingValues, name)) {
-      setWatchingValues((prev) => ({
-        ...prev,
-        [name]: defaultValue?.toString() ?? '',
-      }));
-    }
 
     return {
       name,
-      ref: bindElementToInputControl({ customValidations, patternMessage }),
+      ref: bindElementToInputControlAndWatchingValues({
+        watch,
+        customValidations,
+        patternMessage,
+      }),
       onChange: handleChange(onChange),
       onBlur: handleBlur(onBlur),
       onKeyDown: handleKeyDown(onKeyDown),
