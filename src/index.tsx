@@ -12,24 +12,32 @@ import thunk from 'redux-thunk';
 import rootReducer from 'redux/reducers';
 import { Provider } from 'react-redux';
 
-const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(thunk)));
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+async function main() {
+  if (window.location.pathname === '/react-shopping-cart-prod') {
+    window.location.pathname = '/react-shopping-cart-prod/';
 
-if (process.env.NODE_ENV === 'development') {
-  const { worker } = require('./mocks/browser');
+    return;
+  }
 
-  worker.start({
+  const { worker } = await import('./mocks/browser');
+
+  await worker.start({
     serviceWorker: {
-      url: '/react-shopping-cart/mockServiceWorker.js',
+      url: '/react-shopping-cart-prod/mockServiceWorker.js',
     },
   });
+
+  const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(thunk)));
+  const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+  root.render(
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
+    </Provider>
+  );
 }
 
-root.render(
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <App />
-    </ThemeProvider>
-  </Provider>
-);
+main();
