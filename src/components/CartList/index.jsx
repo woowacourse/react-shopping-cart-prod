@@ -4,7 +4,6 @@ import Button from 'components/@common/Button/styles';
 import CheckBox from 'components/@common/CheckBox';
 import CartProducItem from 'components/CartProductItem';
 
-import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 
 const CartList = ({
@@ -23,18 +22,7 @@ const CartList = ({
         {isAllChecked ? '선택해제' : '전체선택'}
       </CheckBox>
       {checkboxItemCount === 0 ? (
-        <Button
-          width="7rem"
-          height="40px"
-          margin="0"
-          size="1rem"
-          weight="normal"
-          cursor="not-allowed"
-          backgroundColor={COLORS.GRAY_100}
-          color={COLORS.GRAY_300}
-          hoverColor={COLORS.GRAY_100}
-          onClick={() => {}}
-        >
+        <Button width="7rem" height="40px" margin="0" size="1rem" weight="normal" disabled>
           상품삭제
         </Button>
       ) : (

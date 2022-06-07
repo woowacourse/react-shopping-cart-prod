@@ -19,8 +19,8 @@ const Button = styled.button`
 
   &:disabled {
     cursor: not-allowed;
-    background-color: ${COLORS.GRAY_300};
-    color: ${COLORS.WHITE};
+    background-color: ${COLORS.GRAY_100};
+    color: ${COLORS.GRAY_300};
   }
 `;
 

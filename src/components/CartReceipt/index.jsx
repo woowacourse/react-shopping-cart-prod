@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 
 import Button from 'components/@common/Button/styles';
 
-import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
@@ -22,16 +21,7 @@ const CartReceipt = ({ totalPrice, checkboxItemCount }) => (
         </CommonStyled.Text>
       </CommonStyled.FlexWrapper>
       {checkboxItemCount === 0 ? (
-        <Button
-          height="60px"
-          margin="3rem 0 0 0"
-          size="1.2rem"
-          weight="normal"
-          cursor="not-allowed"
-          backgroundColor={COLORS.GRAY_100}
-          color={COLORS.GRAY_300}
-          hoverColor={COLORS.GRAY_100}
-        >
+        <Button height="60px" margin="3rem 0 0 0" size="1.2rem" weight="normal" disabled>
           주문하기({checkboxItemCount || 0}종)
         </Button>
       ) : (
