@@ -12,7 +12,7 @@ import {
   validateToken,
 } from 'utils/validator';
 
-const users = [
+const dummyUsers = [
   { id: 1, email: '1@gmail.com', nickname: 'abc', password: 'akfmzh123!' },
   { id: 2, email: '2@gmail.com', nickname: 'def', password: '123456@adssd' },
   { id: 3, email: '3@gmail.com', nickname: 'ghi', password: '123456@adssd' },
@@ -38,7 +38,7 @@ export const handlers = [
   // 회원가입
   rest.post('/customers', (req, res, ctx) => {
     const { email, nickname, password } = req.body;
-    const id = users.length + 1;
+    const id = dummyUsers.length + 1;
 
     try {
       // 이메일 형식 준수 여부 확인
@@ -48,10 +48,10 @@ export const handlers = [
       // 비밀번호 형식 준수 여부 확인
       validatePassword(password);
       // 이메일 중복 여부 확인
-      checkDuplicatedEmail(users, email);
+      checkDuplicatedEmail(dummyUsers, email);
 
       // 회원가입 성공
-      users.push({ id, email, nickname, password });
+      dummyUsers.push({ id, email, nickname, password });
       return res(
         ctx.status(201),
         ctx.set('Location', `/customers/${id}`),
@@ -78,12 +78,12 @@ export const handlers = [
 
     try {
       // 이메일 존재 여부 확인
-      checkEmailExist(users, email);
-      const foundUser = users.find(user => user.email === email);
+      checkEmailExist(dummyUsers, email);
+      const foundUser = dummyUsers.find(user => user.email === email);
       const accessToken = JSON.stringify({ id: foundUser.id });
 
       // 비밀번호 일치 여부 확인
-      checkPasswordSame(users, foundUser.id, password);
+      checkPasswordSame(dummyUsers, foundUser.id, password);
       // 로그인 성공
       return res(
         ctx.status(200),
@@ -105,22 +105,18 @@ export const handlers = [
     }
   }),
 
-  // 회원정보수정
-  rest.patch('/customers', (req, res, ctx) => {
+  // 닉네임 수정
+  rest.patch('/customers/profile', (req, res, ctx) => {
     try {
       const accessToken = decodeReqAccessToken(req);
       // 유효한 토큰 여부 확인
-      validateToken(users, accessToken);
-
-      // [1] 닉네임을 수정하는 경우
+      validateToken(dummyUsers, accessToken);
       const { nickname } = req.body;
-
       if (nickname) {
         // 닉네임 형식 확인
         validateNickname(nickname);
-
         // 닉네임 변경 성공
-        const foundUser = users.find(user => user.id === accessToken.id);
+        const foundUser = dummyUsers.find(user => user.id === accessToken.id);
         foundUser.nickname = nickname;
 
         return res(
@@ -130,18 +126,31 @@ export const handlers = [
           }),
         );
       }
+    } catch (error) {
+      // 회원정보 수정 실패(입력된 형식 문제면 400, 인가 문제면 401)
+      return res(
+        ctx.status(error.code === 2103 ? 400 : 401),
+        ctx.json({
+          code: error.code,
+          message: error.message,
+        }),
+      );
+    }
+  }),
 
-      // [2] 비밀번호를 수정하는 경우
+  // 비밀번호 수정
+  rest.patch('/customers/password', (req, res, ctx) => {
+    try {
+      const accessToken = decodeReqAccessToken(req);
+      // 유효한 토큰 여부 확인
+      validateToken(dummyUsers, accessToken);
       const { password, newPassword } = req.body;
-
       // 비밀번호 형식 확인
       validatePassword(newPassword);
-
       // 비밀번호 일치 여부 확인
-      checkPasswordSame(users, accessToken.id, password);
-
+      checkPasswordSame(dummyUsers, accessToken.id, password);
       // 비밀번호 변경 성공
-      const foundUser = users.find(user => user.id === accessToken.id);
+      const foundUser = dummyUsers.find(user => user.id === accessToken.id);
       foundUser.password = newPassword;
 
       return res(ctx.status(204));
@@ -162,16 +171,16 @@ export const handlers = [
     try {
       const accessToken = decodeReqAccessToken(req);
       // 유효한 토큰 여부 확인
-      validateToken(users, accessToken);
+      validateToken(dummyUsers, accessToken);
 
       const { password } = req.body;
-      const foundUserIndex = users.findIndex(user => user.id === accessToken.id);
+      const foundUserIndex = dummyUsers.findIndex(user => user.id === accessToken.id);
 
       // 비밀번호 일치 여부 확인
-      checkUserPassword(users[foundUserIndex], password);
+      checkUserPassword(dummyUsers[foundUserIndex], password);
 
       // 탈퇴 성공
-      users.splice(foundUserIndex, 1);
+      dummyUsers.splice(foundUserIndex, 1);
       return res(ctx.status(204));
     } catch (error) {
       // 탈퇴 실패
@@ -192,9 +201,9 @@ export const handlers = [
       const accessToken = decodeReqAccessToken(req);
 
       // 유효한 토큰 여부 확인
-      validateToken(users, accessToken);
+      validateToken(dummyUsers, accessToken);
 
-      const { nickname, email } = users.find(user => user.id === accessToken.id);
+      const { nickname, email } = dummyUsers.find(user => user.id === accessToken.id);
 
       // 회원 조회 성공
       return res(
@@ -222,7 +231,7 @@ export const handlers = [
       const accessToken = decodeReqAccessToken(req);
 
       // 유효한 토큰 여부 확인
-      validateToken(users, accessToken);
+      validateToken(dummyUsers, accessToken);
 
       // 로그아웃 성공
       return res(ctx.status(204));
