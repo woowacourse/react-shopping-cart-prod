@@ -4,41 +4,50 @@ import Loading from 'components/common/Loading';
 import RequestFail from 'components/common/RequestFail';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
+import { useAppSelector } from 'hooks/useAppSelector';
 import useSnackBar from 'hooks/useSnackBar';
 import useThunkFetch from 'hooks/useThunkFetch';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CartListAction } from 'redux/cartList/action';
 import { getCartListRequest, postCartItemRequest, putCartItemRequest } from 'redux/cartList/thunk';
 import { getItemRequest } from 'redux/item/thunk';
+import { PATH } from 'Routers';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 const ItemDetail = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch<CartListAction>();
-
+  const navigate = useNavigate();
+  const { isOpenSnackbar, openSnackbar } = useSnackBar();
   const {
     data: item,
     loading,
     error: error_itemList,
   } = useThunkFetch(state => state.item, getItemRequest(id));
-  const { data: cartList, error: error_cartList } = useThunkFetch(
-    state => state.cartList,
-    getCartListRequest()
-  );
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const { data: cartList, error: error_cartList } = useAppSelector(state => state.cartList);
 
-  const isInCart = cartList?.some(cartItem => cartItem.id === item?.id);
+  const isInCart = cartList?.some(cartItem => cartItem.productId === item?.id);
 
   const postCart = () => {
+    const accessToken = localStorage.getItem('access-token');
+
+    if (!accessToken) {
+      navigate(PATH.login);
+
+      return;
+    }
+    if (cartList.length === 0) {
+      dispatch(getCartListRequest());
+    }
     dispatch(postCartItemRequest(Number(id)));
     openSnackbar();
   };
 
   const updateCart = () => {
-    const targetItem = cartList.find(cartItem => cartItem.id === Number(id));
+    const targetItem = cartList.find(cartItem => cartItem.productId === Number(id));
 
-    dispatch(putCartItemRequest(Number(id), targetItem.quantity));
+    dispatch(putCartItemRequest(targetItem.id, targetItem.quantity + 1));
     openSnackbar();
   };
 
