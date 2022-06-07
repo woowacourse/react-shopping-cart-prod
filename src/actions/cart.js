@@ -20,9 +20,9 @@ const addCartList = (product, cartList) => {
 
 const deleteCartItem = (productId) => ({ type: 장바구니_액션.DELETE_PRODUCT, payload: productId });
 
-const modifyCartItemCount = (productId, count) => ({
-  type: 장바구니_액션.MODIFY_PRODUCT_COUNT,
-  payload: { productId, count },
+const modifyCartItemQuantity = (productId, quantity) => ({
+  type: 장바구니_액션.MODIFY_PRODUCT_QUANTITY,
+  payload: { productId, quantity },
 });
 
 const getCartList = () => async (dispatch) => {
@@ -35,4 +35,4 @@ const getCartList = () => async (dispatch) => {
   asyncDispatchAction(dispatch, response, 장바구니_불러오기_액션);
 };
 
-export { addCartList, deleteCartItem, modifyCartItemCount, getCartList };
+export { addCartList, deleteCartItem, modifyCartItemQuantity, getCartList };

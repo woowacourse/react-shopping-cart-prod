@@ -8,7 +8,7 @@ import CartList from 'components/CartList';
 import CartReceipt from 'components/CartReceipt';
 
 import { snackbar } from 'actions/snackbar';
-import { deleteCartItem, getCartList, modifyCartItemCount } from 'actions/cart';
+import { deleteCartItem, getCartList, modifyCartItemQuantity } from 'actions/cart';
 
 import { 알림_메시지 } from 'constants/';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -49,8 +49,8 @@ const Cart = () => {
     dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
   };
 
-  const handleItemCount = (productId, count) => {
-    dispatch(modifyCartItemCount(productId, count));
+  const handleItemCount = (productId, quantity) => {
+    dispatch(modifyCartItemQuantity(productId, quantity));
   };
 
   return (

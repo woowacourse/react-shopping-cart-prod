@@ -42,13 +42,13 @@ export default (state = initialState, action) => {
         ),
       };
 
-    case 장바구니_액션.MODIFY_PRODUCT_COUNT:
+    case 장바구니_액션.MODIFY_PRODUCT_QUANTITY:
       return {
         ...state,
         items: state.items.map((item) => {
-          if (item.id === payload.productId) {
+          if (item.product.id === payload.productId) {
             const modifiedItem = item;
-            modifiedItem.count = payload.count;
+            modifiedItem.quantity = payload.quantity;
             return modifiedItem;
           }
 
