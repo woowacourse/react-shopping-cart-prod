@@ -16,17 +16,19 @@ Object.freeze(INITIAL_STATE.cart);
 export default function cartReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CART.INITIALIZE: {
-      const cart = action.payload;
+      const fetchedData = action.payload;
+      const newState = fetchedData.map((item) => ({
+        ...item,
+        quantity: 1,
+      }));
       return {
-        cart,
+        cart: [...newState],
       };
     }
 
     case CART.ADD: {
-      console.log(state);
-
       return {
-        cart: [...state.cart, {...action.payload, quantity: 1}],
+        cart: [...state.cart, action.payload],
       };
     }
     case CART.DELETE: {
@@ -40,6 +42,7 @@ export default function cartReducer(state = INITIAL_STATE, action) {
       const newState = state.cart.map((item) =>
         item.id === id ? {...item, quantity: item.quantity + 1} : item,
       );
+      console.log(newState);
 
       return {
         cart: newState,
