@@ -1,11 +1,10 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 
 import { doInitializeCart, doLogout } from 'actions/actionCreator';
-import { deleteCookie, getCookie } from 'utils/cookie';
+import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
 
 const UserMenu = ({ nickname }) => {
@@ -19,27 +18,13 @@ const UserMenu = ({ nickname }) => {
     setIsOpen(prev => !prev);
   };
 
-  const logout = async () => {
-    try {
-      const accessToken = getCookie('accessToken');
-
-      await axios.post(
-        '/auth/logout',
-        {},
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        },
-      );
-
-      deleteCookie('accessToken');
-      setIsOpen(false);
-      dispatch(doInitializeCart());
-      dispatch(doLogout());
-      renderSnackbar('로그아웃이 완료되었습니다.', 'SUCCESS');
-      navigate('/');
-    } catch (error) {
-      renderSnackbar('로그아웃에 실패하였습니다', 'FAILED');
-    }
+  const logout = () => {
+    deleteCookie('accessToken');
+    dispatch(doInitializeCart());
+    dispatch(doLogout());
+    setIsOpen(false);
+    renderSnackbar('로그아웃이 완료되었습니다.', 'SUCCESS');
+    navigate('/');
   };
 
   return (

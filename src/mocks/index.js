@@ -5,7 +5,6 @@ import changeNicknameHandler from 'page/AccountPage/mock';
 import changePasswordHandler from 'page/AccountPage/PasswordEditModal/mock';
 import deleteAccountHandler from 'page/AccountPage/AccountDeleteModal/mock';
 import userInquiryHandler from './handlers/userInquiryHandler';
-import logoutHandler from './handlers/logoutHandler';
 
 export const users = [
   { id: 1, email: '1@gmail.com', nickname: 'abc', password: 'qwer1234!!' },
@@ -31,9 +30,6 @@ const handlers = [
 
   // 회원조회
   userInquiryHandler,
-
-  // 로그아웃
-  logoutHandler,
 ];
 
 export default handlers;
