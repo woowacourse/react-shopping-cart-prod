@@ -9,7 +9,7 @@ import worker from './mock/worker';
 import App from './App';
 import 'index.css';
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.REACT_APP_MODE === 'LOCAL') {
   worker.start();
 }
 
