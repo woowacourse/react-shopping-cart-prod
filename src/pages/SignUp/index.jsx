@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import useInput from "@/hooks/useInput";
 import usePasswordConfirm from "@/hooks/usePasswordConfirm";
@@ -26,8 +26,15 @@ function Signup() {
   const [passwordConfirm, onChangePasswordConfirm] = usePasswordConfirm();
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
   const { error, success, getData: registerUser } = useFetch("post", "users");
+  const { authorized } = useSelector((state) => state.userState);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authorized) {
+      navigate(PATH.MAIN);
+    }
+  }, [authorized]);
 
   useEffect(() => {
     if (
@@ -43,7 +50,7 @@ function Signup() {
   }, [email, nickname, password, passwordConfirm]);
 
   useEffect(() => {
-    if (!error && success) {
+    if (success && !error) {
       navigate(PATH.LOGIN);
     }
   }, [success]);

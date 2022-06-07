@@ -24,6 +24,7 @@ export const handlers = [
 
   // 인증 인가 - 회원가입
   rest.post(`${BASE_URL}/users`, (req, res, ctx) => {
+    console.log(req);
     // 이메일이 이미 존재하는 경우
     if (users.find((user) => user.email === req.body.email)) {
       return res(
@@ -41,6 +42,7 @@ export const handlers = [
 
   // 인증 인가 - 로그인
   rest.post(`${BASE_URL}/login`, (req, res, ctx) => {
+    console.log(req);
     if (
       users.find(
         (user) =>
@@ -78,6 +80,7 @@ export const handlers = [
   }),
 
   rest.put(`${BASE_URL}/users/me`, (req, res, ctx) => {
+    console.log(req);
     const accessToken = req.headers._headers.authorization;
 
     if (!accessToken) {

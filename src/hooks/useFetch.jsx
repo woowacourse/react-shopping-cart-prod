@@ -16,7 +16,7 @@ const useFetch = (method, url, initialData = {}, func) => {
   const getData = async (payload = {}, headers = {}) => {
     try {
       const { data } = await appClient[method](url, {
-        data: payload,
+        ...payload,
         headers,
       });
       setData(data);

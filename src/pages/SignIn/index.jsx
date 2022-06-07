@@ -2,12 +2,14 @@ import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getUser } from "@/redux/modules/user";
+import { loginUser } from "@/redux/modules/user";
 
 import Form from "@/components/Form";
 import Input from "@/components/Input";
 
 import { PATH } from "@/constants";
+
+import { getCookie } from "@/utils/auth";
 
 import StyledSigninContainer from "@/pages/SignIn/index.style";
 
@@ -28,7 +30,7 @@ function Signin() {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    dispatch(getUser(email.current.value, password.current.value));
+    dispatch(loginUser(email.current.value, password.current.value));
   };
 
   return (

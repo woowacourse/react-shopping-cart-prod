@@ -6,13 +6,16 @@ import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import { MESSAGE, ERROR_CODE } from "@/constants";
 
 const ACTION_TYPES = {
-  GET_USER_SUCCESS: "GET_USER_SUCCESS",
-  GET_USER_FAILURE: "GET_USER_FAILURE",
+  LOGIN_SUCCESS: "LOGIN_SUCCESS",
+  LOGIN_FAILURE: "LOGIN_FAILURE",
 
   LOGOUT_USER: "LOGOUT_USER",
 
   EDIT_USER_SUCCESS: "EDIT_USER_SUCCESS",
   EDIT_USER_FAILURE: "EDIT_USER_FAILURE",
+
+  GET_USER_INFO_SUCCESS: "GET_USER_INFO_SUCCESS",
+  GET_USER_INFO_FAILURE: "GET_USER_INFO_FAILURE",
 };
 
 const initialState = {
@@ -21,15 +24,35 @@ const initialState = {
   authorized: false,
 };
 
-export const getUser = (email, password) => async (dispatch) => {
+export const getUserInfo = (headers) => async (dispatch) => {
   try {
-    const { data } = await appClient.post("/login", { email, password });
-    dispatch({ type: ACTION_TYPES.GET_USER_SUCCESS, payload: data });
+    const { data } = await appClient.get("/users/me", { headers });
+    dispatch({ type: ACTION_TYPES.GET_USER_INFO_SUCCESS, payload: data });
   } catch (error) {
     const { errorCode } = error.response.data;
     dispatch(toggleSnackbarOpen(MESSAGE[ERROR_CODE[errorCode]]));
     dispatch({
-      type: ACTION_TYPES.GET_USER_FAILURE,
+      type: ACTION_TYPES.GET_USER_INFO_FAILURE,
+      payload: errorCode,
+    });
+  }
+};
+
+export const loginUser = (email, password) => async (dispatch) => {
+  try {
+    const { data } = await appClient.post("/login", {
+      email,
+      password,
+    });
+    dispatch({
+      type: ACTION_TYPES.LOGIN_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    const { errorCode } = error.response.data;
+    dispatch(toggleSnackbarOpen(MESSAGE[ERROR_CODE[errorCode]]));
+    dispatch({
+      type: ACTION_TYPES.LOGIN_FAILURE,
       payload: errorCode,
     });
   }
@@ -53,16 +76,15 @@ export const editUser = () => async () => {
 
 export function userReducer(state = initialState, action) {
   switch (action.type) {
-    case ACTION_TYPES.GET_USER_SUCCESS: {
-      const { email, nickname, accessToken } = action.payload;
+    case ACTION_TYPES.LOGIN_SUCCESS: {
+      const { accessToken } = action.payload;
       setCookie("accessToken", accessToken);
       return {
-        email,
-        nickname,
+        ...state,
         authorized: true,
       };
     }
-    case ACTION_TYPES.GET_USER_FAILURE: {
+    case ACTION_TYPES.LOGIN_FAILURE: {
       return {
         ...state,
         authorized: false,
@@ -75,11 +97,15 @@ export function userReducer(state = initialState, action) {
         authorized: false,
       };
     }
-    case ACTION_TYPES.REGISTER_USER_SUCCESS: {
+    case ACTION_TYPES.GET_USER_INFO_SUCCESS: {
       const { email, nickname } = action.payload;
-      return { email, nickname, authorized: false };
+      return {
+        email,
+        nickname,
+        authorized: true,
+      };
     }
-    case ACTION_TYPES.REGISTER_USER_FAILURE: {
+    case ACTION_TYPES.GET_USER_INFO_FAILURE: {
       return {
         ...state,
         authorized: false,

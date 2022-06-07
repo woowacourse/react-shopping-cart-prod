@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { logoutUser } from "@/redux/modules/user";
+import { logoutUser, getUserInfo } from "@/redux/modules/user";
 
 import useInput from "@/hooks/useInput";
 import usePasswordConfirm from "@/hooks/usePasswordConfirm";
@@ -45,12 +45,12 @@ function UserEdit() {
     success: withdrawSuccess,
     getData: withdrawUser,
   } = useFetch("delete", "users/me");
+  const { email: prevEmail } = useSelector((state) => state.userState);
+  const { nickname: prevNickname } = useSelector((state) => state.userState);
+  const { authorized } = useSelector((state) => state.userState);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { email: prevEmail } = useSelector((state) => state.userState);
-  const { nickname: prevNickname } = useSelector((state) => state.userState);
 
   const handleEditSubmit = async (e) => {
     e.preventDefault();
@@ -68,7 +68,7 @@ function UserEdit() {
     );
   };
 
-  const handleWithdrawalClick = async (e) => {
+  const handleWithdrawalClick = async () => {
     if (confirm(MESSAGE.WITHDRAWAL_CONFIRM)) {
       const headers = {
         Authorization:
@@ -102,6 +102,12 @@ function UserEdit() {
     }
     setPreventFormSubmit(true);
   }, [nickname, password, passwordConfirm]);
+
+  useEffect(() => {
+    if (!authorized) {
+      navigate(PATH.MAIN);
+    }
+  }, [authorized]);
 
   return (
     <StyledUserEditContainer>
@@ -140,7 +146,7 @@ function UserEdit() {
           minLength={PASSWORD.MIN_LENGTH}
           maxLength={PASSWORD.MAX_LENGTH}
           onChange={(e) => {
-            onChangePasswordConfirm(e, password);
+            onChangePasswordConfirm(e, password.value);
           }}
           errorMessage={passwordConfirm.status}
         />

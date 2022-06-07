@@ -6,7 +6,8 @@ import {
   legacy_createStore as createStore,
   applyMiddleware,
 } from "redux";
-import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import reduxThunk from "redux-thunk";
 
 import { productListReducer } from "@/redux/modules/productList";
 import { cartListReducer } from "@/redux/modules/cartList";
@@ -29,7 +30,10 @@ export const rootReducer = combineReducers({
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default function configureStore() {
-  const store = createStore(persistedReducer, applyMiddleware(thunk));
+  const store = createStore(
+    persistedReducer,
+    composeWithDevTools(applyMiddleware(reduxThunk))
+  );
   const persistor = persistStore(store);
   return { store, persistor };
 }
