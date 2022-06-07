@@ -21,9 +21,13 @@ import { API_URL_PATH } from 'constants/api';
 
 function ShoppingCartList() {
   const dispatch = useDispatch();
-  const { data, isLoading } = useFetch({ url: API_URL_PATH.PRODUCTS });
+  const { accessToken } = useSelector(state => state.auth);
   const orderList = useSelector(state => state.orderList);
   const shoppingCart = useSelector(state => state.shoppingCart);
+  const { data, isLoading } = useFetch({
+    url: API_URL_PATH.CARTS,
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
 
   const disabled = shoppingCart.length === 0;
   const checked = shoppingCart.length !== 0 && orderList.length === shoppingCart.length;
@@ -84,9 +88,9 @@ function ShoppingCartList() {
                     상품삭제
                   </BorderBox>
                 </FlexBox>
-                <ShoppingCartListContainer data={data} />
+                <ShoppingCartListContainer data={data.carts} />
               </article>
-              <PaymentAmountContainer count={orderList.length} data={data} />
+              <PaymentAmountContainer count={orderList.length} data={data.carts} />
             </FlexBox>
           )}
         </PageContainer>

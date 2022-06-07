@@ -35,7 +35,7 @@ function ProductListItem({ id, thumbnail, name, price }) {
 
       isModified.current = false;
       setModifyQuantityShow(false);
-    }, 1500);
+    }, 2500);
   };
   const handleChangeQuantity = async quantity => {
     if (!accessToken) {

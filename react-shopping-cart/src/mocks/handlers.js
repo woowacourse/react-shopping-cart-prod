@@ -3,6 +3,8 @@ import { rest } from 'msw';
 
 import { API_URL_PATH } from 'constants/api';
 
+const findById = (id, array) => array.find(item => item.id === id);
+
 export const handlers = [
   rest.get(`${API_URL_PATH.PRODUCTS}`, (req, res, ctx) => res(ctx.status(200), ctx.json(products))),
   rest.post(`${API_URL_PATH.LOGIN}`, (req, res, ctx) => {
@@ -63,10 +65,51 @@ export const handlers = [
     }
     return res(ctx.status(401));
   }),
+  rest.get(`${API_URL_PATH.CARTS}`, (req, res, ctx) => {
+    const { authorization: raw } = req.headers._headers;
+    const authorization = raw.replace('Bearer', '');
+    const carts = customers['abc@abc.com'].carts;
+
+    const cartIds = carts.map(cart => cart.id);
+    const cartList = cartIds.map(productId => {
+      return {
+        product: { ...findById(productId, products) },
+        quantity: findById(productId, carts).quantity,
+      };
+    });
+
+    console.log(cartList);
+
+    if (authorization) {
+      return res(ctx.status(200), ctx.json({ carts: cartList }));
+    } else {
+      return res(ctx.status(400), ctx.json({ message: '존재하지 않는 이메일입니다.' }));
+    }
+  }),
+
   rest.post(`${API_URL_PATH.CARTS}`, (req, res, ctx) => {
     const { id, quantity } = req.body;
     customers['abc@abc.com'].carts.push({ id, quantity });
-
     return res(ctx.status(200), ctx.json({ quantity }));
+  }),
+  rest.patch(`${API_URL_PATH.CARTS}`, (req, res, ctx) => {
+    const { authorization: raw } = req.headers._headers;
+    const authorization = raw.replace('Bearer', '');
+
+    const { id, quantity } = req.body;
+    if (authorization) {
+      return res(ctx.status(200));
+    }
+    return res(ctx.status(401), ctx.json({ message: '에러메세지' }));
+  }),
+  rest.delete(`${API_URL_PATH.CARTS}`, (req, res, ctx) => {
+    const { authorization: raw } = req.headers._headers;
+    const authorization = raw.replace('Bearer', '');
+
+    const { id } = req.body;
+    if (authorization) {
+      return res(ctx.status(204));
+    }
+    return res(ctx.status(401), ctx.json({ message: '에러메세지' }));
   }),
 ];
