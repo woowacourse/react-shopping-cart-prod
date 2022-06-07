@@ -9,6 +9,7 @@ import Loading from "@/components/common/loading/Loading";
 import ProductItem from "@/components/pages/home/product-item/ProductItem";
 
 import StyledProductList from "@/components/pages/home/product-list/ProductList.styled";
+import { getCartList } from "@/redux/modules/cartList";
 
 function ProductList() {
   const { data, loading, error } = useSelector(
@@ -18,6 +19,7 @@ function ProductList() {
 
   useEffect(() => {
     dispatch(getProductList());
+    dispatch(getCartList());
   }, [dispatch]);
 
   if (loading) return <Loading />;

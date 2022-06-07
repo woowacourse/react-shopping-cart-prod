@@ -14,6 +14,7 @@ export const ACTION_TYPES = {
   DECREMENT_CART_ITEM_QUANTITY: "DECREMENT_CART_ITEM_QUANTITY",
   REMOVE_CHECKED_CART_ITEM: "REMOVE_CHECKED_CART_ITEM",
   REMOVE_ROW_CART_ITEM: "REMOVE_ROW_CART_ITEM",
+  GET_CART_LIST: "GET_CART_LIST",
 };
 
 export const addProductToCart = (args) => async (dispatch) => {
@@ -54,6 +55,17 @@ export const addProductToCart = (args) => async (dispatch) => {
   }
 };
 
+export const getCartList = () => async (dispatch) => {
+  const response = await axios.get(`${BASE_URL}/users/me/carts`, {
+    headers: {
+      Authorization:
+        getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+    },
+  });
+  console.log(response);
+  dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.products));
+};
+
 export const toggleCartItemCheckButton = (id) => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON, id));
 };
@@ -82,6 +94,9 @@ export const cartListReducer = (state = cartListInitialState, action) => {
   const newState = [...state];
 
   switch (action.type) {
+    case ACTION_TYPES.GET_CART_LIST:
+      return action.payload;
+
     case ACTION_TYPES.ADD_PRODUCT_TO_CART:
       return [...state, { ...action.payload, quantity: 1, checked: true }];
 
