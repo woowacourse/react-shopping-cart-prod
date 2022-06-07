@@ -43,7 +43,9 @@ const useCart = () => {
     const headers = getAuthorizedHeaders();
     Promise.all(
       idList.map((id) => deleteItemApi({ params: id, payload: { headers } })),
-    );
+    ).then(() => {
+      idList.forEach((id) => dispatch(deleteCartItemAction(id)));
+    });
   };
 
   const updateItemQuantity = (id, quantity) => {
