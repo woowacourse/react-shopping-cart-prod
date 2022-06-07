@@ -1,26 +1,29 @@
 import { useCallback, useEffect } from 'react';
 
+import cartAPI from 'apis/cart';
 import Button from 'components/@shared/Button';
 import Loading from 'components/@shared/Loading';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { cartActions } from 'redux/actions';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getProduct } from 'redux/thunks';
 import styled from 'styled-components';
 import { ProductStoreState } from 'types/index';
+import { getAccessToken } from 'utils/auth';
 
 import CONDITION from 'constants/condition';
-import { CART_MESSAGE } from 'constants/message';
+import { CART_MESSAGE, USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
 
 function ProductPage() {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const condition = useSelector(
     (state: { product: ProductStoreState }) => state.product.condition
   );
   const productDetail = useSelector(
     (state: { product: ProductStoreState }) => state.product.productDetail
   );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -31,10 +34,26 @@ function ProductPage() {
   const onClickCartButton = useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
-      dispatch(cartActions.addToCart(Number(id)));
-      alert(CART_MESSAGE.SUCCESS_ADD);
+
+      const accessToken = getAccessToken();
+
+      if (!accessToken) {
+        alert(USER_MESSAGE.NEED_LOGIN);
+        navigate(PATH.LOGIN, { replace: true });
+
+        return;
+      }
+
+      cartAPI
+        .add(accessToken, Number(id), 1)
+        .then(res => {
+          alert(CART_MESSAGE.SUCCESS_ADD);
+        })
+        .catch(error => {
+          alert(CART_MESSAGE.FAIL_ADD);
+        });
     },
-    [dispatch, id]
+    [id, navigate]
   );
 
   const renderSwitch = useCallback(() => {

@@ -1,12 +1,16 @@
+import { useEffect } from 'react';
+
+import cartAPI from 'apis/cart';
 import Link from 'components/@shared/Link';
 import Logo from 'components/Logo/Logo';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { userActions } from 'redux/actions';
+import { cartActions, userActions } from 'redux/actions';
 import styled from 'styled-components';
 import { CartStoreState, User } from 'types/index';
-import { isLogin } from 'utils/auth';
+import { getAccessToken, isLogin } from 'utils/auth';
 
+import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 
 import RightMenu from './RightMenu';
@@ -19,6 +23,21 @@ function Header() {
     (state: { cart: CartStoreState }) => state.cart.cart
   );
   const userName = useSelector((state: { user: User }) => state.user.username);
+
+  useEffect(() => {
+    const accessToken = getAccessToken();
+
+    if (!accessToken) return;
+
+    cartAPI
+      .load(accessToken)
+      .then(res => {
+        dispatch(cartActions.setToCart(res));
+      })
+      .catch(error => {
+        alert(CART_MESSAGE.FAIL_LOAD);
+      });
+  }, [dispatch]);
 
   const onClickLogoutButton = () => {
     dispatch(userActions.resetUser());

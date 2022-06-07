@@ -8,7 +8,7 @@ const getProductStockInCart = (
 
   if (!product) return 0;
 
-  return product.stock;
+  return product.quantity;
 };
 
 const isValidPasswordLength = (password: string) => {

@@ -1,57 +1,63 @@
+import cartAPI from 'apis/cart';
 import { ReactComponent as Delete } from 'assets/Delete.svg';
 import CheckBox from 'components/@shared/CheckBox';
 import Link from 'components/@shared/Link';
 import NumberInput from 'components/@shared/NumberInput';
-import { useDispatch } from 'react-redux';
-import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { Product } from 'types/index';
+import { getAccessToken } from 'utils/auth';
 
 import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 
 type Props = {
   product: Product;
-  stock: number;
+  quantity: number;
   checked: boolean;
+  setChecked: (
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
+  ) => void;
 };
 
-function CartItem({ product, stock, checked }: Props) {
+function CartItem({ product, quantity, checked, setChecked }: Props) {
   const { id, name, imageUrl } = product;
-  const dispatch = useDispatch();
 
   const onClickDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteToCart(id));
+      const accessToken = getAccessToken();
+
+      if (!accessToken) return;
+
+      cartAPI.delete(accessToken, String(id)).catch(error => {
+        alert(CART_MESSAGE.FAIL_DELETE);
+      });
     }
   };
 
-  const onChangeCheckBox = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
-  ) => {
-    e.preventDefault();
+  const onChangeCartQuantity = (value: number) => {
+    const accessToken = getAccessToken();
 
-    dispatch(cartActions.toggleCheckAProduct(id));
-  };
+    if (!accessToken) return;
 
-  const onChangeCartStock = (value: number) => {
-    dispatch(cartActions.changeProductStock({ id, stock: value }));
+    cartAPI.changeQuantity(accessToken, String(id), value).catch(error => {
+      alert(CART_MESSAGE.FAIL_CHANGE_QUANTITY);
+    });
   };
 
   return (
     <Link to={`${PATH.PRODUCT}/${id}`}>
       <StyledCartItem>
-        <CheckBox id={id + ''} checked={checked} onChange={onChangeCheckBox} />
+        <CheckBox id={String(id)} checked={checked} onChange={setChecked} />
         <img src={imageUrl} alt={name} />
         <StyledProductName>{name}</StyledProductName>
         <StyledDeleteButton type="button" onClick={onClickDeleteButton}>
           <Delete />
         </StyledDeleteButton>
-        <NumberInput value={stock} setValue={onChangeCartStock} />
+        <NumberInput value={quantity} setValue={onChangeCartQuantity} />
         <StyledPrice>
-          {(product.price * stock).toLocaleString('ko-KR')} 원
+          {(product.price * quantity).toLocaleString('ko-KR')} 원
         </StyledPrice>
       </StyledCartItem>
     </Link>

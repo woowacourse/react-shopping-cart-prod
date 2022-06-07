@@ -1,32 +1,34 @@
+import { useState } from 'react';
+
+import cartAPI from 'apis/cart';
 import Button from 'components/@shared/Button';
 import CheckBox from 'components/@shared/CheckBox';
 import CartItem from 'components/CartItem/CartItem';
-import { useDispatch } from 'react-redux';
-import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
-import { CartProductState } from 'types';
+import { Cart } from 'types/index';
+import { getAccessToken } from 'utils/auth';
 
 import { CART_MESSAGE } from 'constants/message';
 
 type Props = {
-  cartItems: Array<CartProductState>;
+  cartItems: Array<Cart>;
 };
 
 function CartContent({ cartItems }: Props) {
-  const dispatch = useDispatch();
+  const [checkedItems, setCheckedItems] = useState<Array<Cart['id']>>([]);
 
   const calculateTotalMoney = () => {
     return cartItems.reduce((prevMoney, item) => {
-      const { product, stock, checked } = item;
+      if (!checkedItems.includes(item.id)) return prevMoney;
 
-      if (!checked) return prevMoney;
+      const { product, quantity } = item;
 
-      return prevMoney + product.price * stock;
+      return prevMoney + product.price * quantity;
     }, 0);
   };
 
   const isAllChecked = () => {
-    return cartItems.every(item => item.checked === true);
+    return cartItems.length === checkedItems.length;
   };
 
   const onChangeAllChecked = (
@@ -34,12 +36,44 @@ function CartContent({ cartItems }: Props) {
   ) => {
     e.preventDefault();
 
-    dispatch(cartActions.toggleCheckAllProduct(!isAllChecked()));
+    if (isAllChecked()) {
+      setCheckedItems([]);
+
+      return;
+    }
+
+    setCheckedItems(cartItems.map(item => item.id));
+  };
+
+  const onChangeChecked = (
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
+  ) => {
+    e.preventDefault();
+
+    const id = Number(
+      (e.currentTarget as HTMLLabelElement).getAttribute('for')
+    );
+
+    if (checkedItems.includes(id)) {
+      setCheckedItems(prevState => prevState.filter(cartId => cartId !== id));
+
+      return;
+    }
+
+    setCheckedItems(prevState => [...prevState, id]);
   };
 
   const onClickCheckedDeleteButton = () => {
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteCheckedToCart());
+      checkedItems.forEach(cartId => {
+        const accessToken = getAccessToken();
+
+        if (!accessToken) return;
+
+        cartAPI.delete(accessToken, String(cartId)).catch(error => {
+          alert(CART_MESSAGE.FAIL_DELETE);
+        });
+      });
     }
   };
 
@@ -62,11 +96,12 @@ function CartContent({ cartItems }: Props) {
             선택 상품 삭제
           </StyledDeleteButton>
         </StyledProductOptions>
-        {cartItems.map(({ product, stock, checked }) => (
+        {cartItems.map(({ product, quantity }) => (
           <CartItem
             product={product}
-            stock={stock}
-            checked={checked}
+            quantity={quantity}
+            checked={checkedItems.includes(product.id)}
+            setChecked={onChangeChecked}
             key={product.id}
           />
         ))}

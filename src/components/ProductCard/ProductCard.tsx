@@ -1,11 +1,12 @@
+import cartAPI from 'apis/cart';
 import Link from 'components/@shared/Link';
 import ShoppingCart from 'components/@shared/ShoppingCart';
-import { useDispatch } from 'react-redux';
-import { cartActions } from 'redux/actions';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Product } from 'types/index';
+import { getAccessToken } from 'utils/auth';
 
-import { CART_MESSAGE } from 'constants/message';
+import { CART_MESSAGE, USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 
 type Props = {
@@ -18,14 +19,28 @@ function ProductCard({ product, cartStock }: Props) {
     ...product,
     price: Number(product.price),
   };
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    dispatch(cartActions.addToCart(id));
+    const accessToken = getAccessToken();
 
-    alert(CART_MESSAGE.SUCCESS_ADD);
+    if (!accessToken) {
+      alert(USER_MESSAGE.NEED_LOGIN);
+      navigate(PATH.LOGIN, { replace: true });
+
+      return;
+    }
+
+    cartAPI
+      .add(accessToken, id, 1)
+      .then(res => {
+        alert(CART_MESSAGE.SUCCESS_ADD);
+      })
+      .catch(error => {
+        alert(CART_MESSAGE.FAIL_ADD);
+      });
   };
 
   return (
