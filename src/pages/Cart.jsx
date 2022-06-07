@@ -4,7 +4,7 @@ import { useCheckBox, useCartItem } from 'hooks';
 
 import { 비동기_요청, 알림_메시지 } from 'constants/';
 
-import { requestAddCartItem, requestDeleteCartItem, requestPurchaseCartItem } from 'api';
+import { requestChangeItemQuantity, requestDeleteCartItem, requestPurchaseCartItem } from 'api';
 import Layout from 'components/Layout';
 import PageHeader from 'components/@common/PageHeader';
 import CartList from 'components/CartList';
@@ -20,7 +20,7 @@ const Cart = () => {
   const cartList = useCartItem();
   const dispatch = useDispatch();
   const { checkboxItems, setCheckboxItems, handleChecked, isChecked, clearCheckBoxItems } =
-    useCheckBox(cartList);
+    useCheckBox();
   const [totalPrice, setTotalPrice] = useState(0);
   const [isAllChecked, setIsAllChecked] = useState(false);
 
@@ -72,7 +72,7 @@ const Cart = () => {
   };
 
   const handleItemCount = async (productId, count) => {
-    const response = await requestAddCartItem(productId, count);
+    const response = await requestChangeItemQuantity(productId, count);
     if (response.status === 비동기_요청.SUCCESS) {
       dispatch(modifyCartItemQuantity(productId, count));
       return;

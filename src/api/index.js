@@ -19,8 +19,8 @@ const requestEditUserPassword = async (formData) =>
   requestAsync.put('customers/me/password', formData, true);
 
 const requestGetCartList = async () => requestAsync.get('cart', true);
-const requestPostCartItem = async (id) => requestAsync.post(`cart/${id}`, true);
-const requestAddCartItem = async (id, quantity) =>
+const requestAddCartItem = async (id) => requestAsync.post(`cart/${id}`, true);
+const requestChangeItemQuantity = async (id, quantity) =>
   requestAsync.put(`cart/${id}/quantity`, quantity, true);
 const requestDeleteCartItem = async (productList) =>
   requestAsync.delete('cart/products', productList, true);
@@ -38,7 +38,7 @@ export {
   requestWithDrawUser,
   requestEditUserPassword,
   requestGetCartList,
-  requestPostCartItem,
+  requestChangeItemQuantity,
   requestAddCartItem,
   requestDeleteCartItem,
   requestPurchaseCartItem,
