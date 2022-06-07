@@ -33,7 +33,9 @@ const ItemDetail = () => {
     const accessToken = localStorage.getItem('access-token');
 
     if (!accessToken) {
-      navigate(PATH.login);
+      if (window.confirm('로그인이 필요한 서비스입니다. 로그인 창으로 가시겠어요?')) {
+        navigate(PATH.login);
+      }
 
       return;
     }
