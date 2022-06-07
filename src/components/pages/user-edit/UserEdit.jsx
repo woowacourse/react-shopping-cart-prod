@@ -8,8 +8,8 @@ import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import Form from "@/components/common/form/Form";
 import Field from "@/components/common/field/Field";
 
-import { getCookie } from "@/utils/auth";
-import { deleteCookie } from "@/utils/auth";
+import { getCookie } from "@/utils/cookie";
+import { deleteCookie } from "@/utils/cookie";
 
 import {
   BASE_URL,

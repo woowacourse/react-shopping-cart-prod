@@ -6,7 +6,7 @@ import StyledMenu from "@/components/common/header/menu/Menu.styled";
 import Badge from "@/components/common/badge/Badge";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 
-import { getCookie } from "@/utils/auth";
+import { getCookie } from "@/utils/cookie";
 
 function Menu() {
   const cartList = useSelector((state) => state.cartListState);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { deleteCookie } from "@/utils/auth";
+import { deleteCookie } from "@/utils/cookie";
 
 import StyledDropdownContainer from "@/components/common/dropdown/Dropdown.styled";
 
