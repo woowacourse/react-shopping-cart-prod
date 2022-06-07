@@ -6,9 +6,13 @@ const PATH = {
   SIGNUP: '/signup',
   EDIT_USER_INFO: '/editUserInfo',
   REQUEST_PRODUCT: '/products',
-  REQUEST_CUSTOMER: '/customers',
-  REQUEST_CUSTOMER_ME: '/customers/me',
-  REQUEST_AUTH_TOKEN: '/auth/token',
+  REQUEST_SIGNUP: '/customers',
+  REQUEST_SIGNUP_DUPLICATION_USERNAME: '/customers/duplication/username',
+  REQUEST_SIGNUP_DUPLICATION_EMAIL: '/customers/duplication/email',
+  REQUEST_USER_INFO: '/customers/me',
+  REQUEST_LOGIN: '/auth/token',
+  REQUEST_CART: '/customers/me/cart-items',
+  REQUEST_ORDER: '/customers/me/orders',
 };
 
 export default PATH;

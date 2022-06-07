@@ -25,7 +25,7 @@ localStorage.setItem(
 const authHandlers = [
   // 회원가입
   rest.post(
-    `${apiURL}${PATH.REQUEST_CUSTOMER}`,
+    `${apiURL}${PATH.REQUEST_SIGNUP}`,
     (
       req: {
         body: {
@@ -64,7 +64,7 @@ const authHandlers = [
   ),
 
   // 회원 정보 조회
-  rest.get(`${apiURL}${PATH.REQUEST_CUSTOMER_ME}`, (req, res, ctx) => {
+  rest.get(`${apiURL}${PATH.REQUEST_USER_INFO}`, (req, res, ctx) => {
     const accessToken = req.headers.get('authorization')?.split(' ')[1];
 
     const mockUserList: Array<MockUser> = JSON.parse(
@@ -92,7 +92,7 @@ const authHandlers = [
 
   // 회원 정보 수정
   rest.put(
-    `${apiURL}${PATH.REQUEST_CUSTOMER_ME}`,
+    `${apiURL}${PATH.REQUEST_USER_INFO}`,
     (
       req: {
         headers: Headers;
@@ -129,7 +129,7 @@ const authHandlers = [
   ),
 
   // 회원탈퇴
-  rest.delete(`${apiURL}${PATH.REQUEST_CUSTOMER_ME}`, (req, res, ctx) => {
+  rest.delete(`${apiURL}${PATH.REQUEST_USER_INFO}`, (req, res, ctx) => {
     const accessToken = req.headers.get('authorization')?.split(' ')[1];
 
     const mockUserList: Array<MockUser> = JSON.parse(
@@ -154,7 +154,7 @@ const authHandlers = [
 
   // 로그인
   rest.post(
-    `${apiURL}${PATH.REQUEST_AUTH_TOKEN}`,
+    `${apiURL}${PATH.REQUEST_LOGIN}`,
     (req: { body: { username: string; password: string } }, res, ctx) => {
       const { username, password } = req.body;
 

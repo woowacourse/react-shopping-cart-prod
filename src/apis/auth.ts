@@ -9,7 +9,7 @@ const authAPI = {
     try {
       const {
         data: { accessToken },
-      } = await axios.post(PATH.REQUEST_AUTH_TOKEN, user);
+      } = await axios.post(PATH.REQUEST_LOGIN, user);
 
       if (isKeepLogin) {
         localStorage.setItem('accessToken', accessToken);
@@ -27,7 +27,7 @@ const authAPI = {
 
   getUserInfo: async function (accessToken = getAccessToken()) {
     try {
-      const { data } = await axios.get(PATH.REQUEST_CUSTOMER_ME, {
+      const { data } = await axios.get(PATH.REQUEST_USER_INFO, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
@@ -41,7 +41,7 @@ const authAPI = {
 
   signup: async function (user: User) {
     try {
-      await axios.post(PATH.REQUEST_CUSTOMER, user);
+      await axios.post(PATH.REQUEST_SIGNUP, user);
     } catch (error) {
       if (error instanceof Error) {
         throw error;
@@ -53,7 +53,7 @@ const authAPI = {
     const accessToken = getAccessToken();
 
     try {
-      await axios.put(PATH.REQUEST_CUSTOMER_ME, user, {
+      await axios.put(PATH.REQUEST_USER_INFO, user, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
@@ -69,7 +69,7 @@ const authAPI = {
     const accessToken = getAccessToken();
 
     try {
-      await axios.delete(PATH.REQUEST_CUSTOMER_ME, {
+      await axios.delete(PATH.REQUEST_USER_INFO, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
