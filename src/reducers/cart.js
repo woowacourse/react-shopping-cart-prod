@@ -19,6 +19,15 @@ export default (state = initialState, action) => {
     case 장바구니_불러오기_액션.FAILURE:
       return { ...state, errorMessage: payload, isLoading: false };
 
+    case 장바구니_액션.PENDING:
+      return { ...state, isLoading: true };
+
+    case 장바구니_액션.SUCCESS:
+      return { ...state, items: payload.cartItems, isLoading: false };
+
+    case 장바구니_액션.FAILURE:
+      return { ...state, errorMessage: payload, isLoading: false };
+
     case 장바구니_액션.ADD_NEW_PRODUCT:
       return { ...state, items: [...state.items, payload] };
 

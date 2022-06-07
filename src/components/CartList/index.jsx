@@ -15,7 +15,7 @@ const CartList = ({
   deleteSelectedItem,
   isChecked,
   handleChecked,
-  handleItemCount,
+  handleItemQuantity,
 }) => (
   <>
     <CommonStyled.FlexWrapper justifyContent="space-between" margin="1rem 0 2rem 0">
@@ -64,7 +64,7 @@ const CartList = ({
             quantity={quantity}
             isChecked={isChecked}
             handleChecked={handleChecked()}
-            handleItemCount={handleItemCount}
+            handleItemQuantity={handleItemQuantity}
           />
           <CommonStyled.HR size="1px" />
         </>
@@ -79,7 +79,7 @@ CartList.propTypes = {
   deleteSelectedItem: PropTypes.func,
   isChecked: PropTypes.func,
   handleChecked: PropTypes.func,
-  handleItemCount: PropTypes.func,
+  handleItemQuantity: PropTypes.func,
 };
 
 CartList.defaultProps = {
@@ -89,7 +89,7 @@ CartList.defaultProps = {
   deleteSelectedItem: () => {},
   isChecked: () => {},
   handleChecked: () => {},
-  handleItemCount: () => {},
+  handleItemQuantity: () => {},
 };
 
 export default CartList;

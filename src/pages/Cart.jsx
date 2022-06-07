@@ -49,7 +49,7 @@ const Cart = () => {
     dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
   };
 
-  const handleItemCount = (productId, quantity) => {
+  const handleItemQuantity = (productId, quantity) => {
     dispatch(modifyCartItemQuantity(productId, quantity));
   };
 
@@ -67,7 +67,7 @@ const Cart = () => {
               deleteSelectedItem={() => deleteSelectedItem}
               isChecked={isChecked}
               handleChecked={() => handleChecked}
-              handleItemCount={() => handleItemCount}
+              handleItemQuantity={() => handleItemQuantity}
             />
           </CommonStyled.FlexWrapper>
           <CartReceipt totalPrice={totalPrice} checkboxItemCount={checkboxItems.length} />

@@ -14,6 +14,7 @@ const 유저_액션 = {
 };
 
 const 장바구니_액션 = {
+  ...createAsyncAction('장바구니'),
   ADD_NEW_PRODUCT: '장바구니에 새로운 상품을 추가합니다.',
   ADD_EXIST_PRODUCT: '장바구니에 존재하는 상품을 추가합니다.',
   DELETE_PRODUCT: '장바구니에 존재하는 상품을 삭제합니다.',

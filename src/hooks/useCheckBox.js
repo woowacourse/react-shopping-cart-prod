@@ -34,7 +34,7 @@ export const useCheckBox = (boxItems) => {
       return;
     }
 
-    setCheckboxItems(boxItems.map((item) => item.id));
+    setCheckboxItems(boxItems.map((item) => item.product.id));
   };
 
   const clearCheckBoxItems = () => {

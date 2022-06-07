@@ -21,7 +21,7 @@ const CartProducItem = ({
   quantity,
   isChecked,
   handleChecked,
-  handleItemCount,
+  handleItemQuantity,
 }) => {
   const dispatch = useDispatch();
   const onClickDeleteButton = () => {
@@ -53,7 +53,7 @@ const CartProducItem = ({
           <IconButton onClick={onClickDeleteButton} icon={아이콘_코드.DELETE} />
         </CommonStyled.Container>
         <CommonStyled.FlexWrapper margin="0" width="120px" justifyContent="flex-end">
-          <Counter id={id} quantity={quantity} handleItemQuantity={handleItemCount()} />
+          <Counter id={id} quantity={quantity} handleItemQuantity={handleItemQuantity()} />
         </CommonStyled.FlexWrapper>
         <Styled.Container margin="0" width="100%" justifyContent="flex-end">
           <CommonStyled.Text padding="0.5rem 0">
@@ -73,7 +73,7 @@ CartProducItem.propTypes = {
   quantity: PropTypes.number,
   isChecked: PropTypes.func,
   handleChecked: PropTypes.func,
-  handleItemCount: PropTypes.func,
+  handleItemQuantity: PropTypes.func,
 };
 
 CartProducItem.defaultProps = {
@@ -83,7 +83,7 @@ CartProducItem.defaultProps = {
   quantity: 1,
   isChecked: () => true,
   handleChecked: () => {},
-  handleItemCount: () => {},
+  handleItemQuantity: () => {},
 };
 
 export default CartProducItem;
