@@ -7,7 +7,6 @@ export type UserState = {
   error: Error | null;
   userName: string | null;
   isLoggedIn: boolean;
-  signUpFinish: boolean;
 };
 
 export type Action =
@@ -33,7 +32,6 @@ const initialState: UserState = {
   error: null,
   userName: null,
   isLoggedIn: !!getCookie('accessToken'),
-  signUpFinish: false,
 };
 
 const LOAD_USER_REQUEST = 'user/LOAD_REQUEST' as const;
@@ -46,9 +44,9 @@ const LOGOUT = 'user/LOGOUT' as const;
 const DELETE_USER_REQUEST = 'user/DELETE_REQUEST' as const;
 const DELETE_USER_SUCCESS = 'user/DELETE_SUCCESS' as const;
 const DELETE_USER_FAILURE = 'user/DELETE_FAILURE' as const;
-const CHANGE_PASSWORD_REQUEST = 'user/DELETE_PASSWORD_REQUEST' as const;
-const CHANGE_PASSWORD_SUCCESS = 'user/DELETE_PASSWORD_SUCCESS' as const;
-const CHANGE_PASSWORD_FAILURE = 'user/DELETE_PASSWORD_FAILURE' as const;
+const CHANGE_PASSWORD_REQUEST = 'user/CHANGE_PASSWORD_REQUEST' as const;
+const CHANGE_PASSWORD_SUCCESS = 'user/CHANGE_PASSWORD_SUCCESS' as const;
+const CHANGE_PASSWORD_FAILURE = 'user/CHANGE_PASSWORD_FAILURE' as const;
 const SIGNUP_REQUEST = 'user/SIGNUP_REQUEST' as const;
 const SIGNUP_SUCCESS = 'user/SIGNUP_SUCCESS' as const;
 const SIGNUP_FAILURE = 'user/SIGNUP_FAILURE' as const;
@@ -110,7 +108,7 @@ const loadUserAPI = (): any => async (dispatch: AppDispatch) => {
 };
 
 const loginAPI =
-  (userName: string, password: string): any =>
+  (userName: string, password: string, onSuccess?: () => void): any =>
   async (dispatch: AppDispatch) => {
     dispatch(loginRequest());
     try {
@@ -118,6 +116,7 @@ const loginAPI =
 
       setCookie('accessToken', data);
       dispatch(loginSuccess());
+      onSuccess?.();
     } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch(loginFailure(error));
@@ -144,7 +143,7 @@ const deleteUserAPI = (): any => async (dispatch: AppDispatch) => {
 };
 
 const changePasswordAPI =
-  (password: string): any =>
+  (password: string, onSuccess?: () => void): any =>
   async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(changePasswordRequest());
     const { userName } = getState().user;
@@ -159,6 +158,7 @@ const changePasswordAPI =
         }
       );
       dispatch(changePasswordSuccess());
+      onSuccess?.();
     } catch (error) {
       if (error instanceof Error) {
         dispatch(changePasswordFailure(error));
@@ -167,12 +167,13 @@ const changePasswordAPI =
   };
 
 const signupAPI =
-  (userName: string, password: string): any =>
+  (userName: string, password: string, onSuccess?: () => void): any =>
   async (dispatch: AppDispatch) => {
     dispatch(signupRequest());
     try {
       await axios.post('/api/customers', { userName, password });
       dispatch(signupSuccess());
+      onSuccess?.();
     } catch (error) {
       if (error instanceof Error) {
         dispatch(signupFailure(error));
@@ -232,10 +233,10 @@ const userReducer = (state = initialState, action: Action) => {
       return { ...state, loading: false, error };
     }
     case SIGNUP_REQUEST: {
-      return { ...state, loading: true, error: null, signUpFinish: false };
+      return { ...state, loading: true, error: null };
     }
     case SIGNUP_SUCCESS: {
-      return { ...state, loading: false, signUpFinish: true };
+      return { ...state, loading: false };
     }
     case SIGNUP_FAILURE: {
       const { error } = action.payload;

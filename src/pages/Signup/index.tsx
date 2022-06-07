@@ -32,10 +32,12 @@ function Signup() {
 
   const onBlurDuplicateCheck = async () => {
     try {
-      const { data: isDuplicatedId } = await axios.get(`/api/customers/exists?userName=${id}`);
+      const {
+        data: { isDuplicate },
+      } = await axios.get(`/api/customers/exists?userName=${id}`);
 
-      const isValid = isDuplicatedId ? false : true;
-      const message = isDuplicatedId
+      const isValid = isDuplicate ? false : true;
+      const message = isDuplicate
         ? '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.'
         : '사용 가능한 아이디입니다.';
 
@@ -53,7 +55,7 @@ function Signup() {
 
     dispatch(
       signupAPI(id, password, () => {
-        dispatch(show('회원가입 완료 ✅'));
+        dispatch(show('✅ 회원가입이 완료되었습니다.'));
         navigate(routes.login);
       })
     );
@@ -61,10 +63,6 @@ function Signup() {
 
   if (loading) {
     return <Loader />;
-  }
-
-  if (error) {
-    return <div>{error.message}</div>;
   }
 
   return (

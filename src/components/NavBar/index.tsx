@@ -1,22 +1,21 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import routes from 'routes';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from 'redux/store';
-import { logout } from 'redux/modules/user';
+import { logout, selectUserState, UserState } from 'redux/modules/user';
+import { show } from 'redux/modules/snackBar';
 
 import { deleteCookie } from 'utils';
 import Logo from 'assets/Logo.png';
 import { NavBarContainer, NavBarTitle, NavBarMenu } from './styles';
 
 function NavBar() {
-  const { isLoggedIn } = useSelector((state: RootState) => state.user);
+  const { isLoggedIn }: UserState = useSelector(selectUserState);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const onClickLogout = () => {
     deleteCookie('accessToken');
     dispatch(logout());
-    navigate(routes.home);
+    dispatch(show('✅ 로그아웃 되었습니다.'));
   };
 
   return (

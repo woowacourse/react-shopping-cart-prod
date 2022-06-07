@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import routes from 'routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginAPI, selectUserState, UserState } from 'redux/modules/user';
-// import { show } from 'redux/modules/snackBar';
+import { show } from 'redux/modules/snackBar';
 
 import useInput from 'hooks/useInput';
 import { Button, Form, Input, Loader } from 'components/@shared';
@@ -19,10 +19,14 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmitLoginForm = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(loginAPI(id, password));
+    dispatch(
+      loginAPI(id, password, () => {
+        dispatch(show('✅ 로그인 되었습니다.'));
+      })
+    );
   };
 
   useEffect(() => {
@@ -31,12 +35,6 @@ function Login() {
     }
   }, [isLoggedIn]);
 
-  useEffect(() => {
-    if (error) {
-      alert(error.message);
-    }
-  }, [error]);
-
   if (loading) {
     return <Loader />;
   }
@@ -44,7 +42,7 @@ function Login() {
   return (
     <PageLayout>
       <h1>로그인</h1>
-      <Form onSubmit={onSubmit}>
+      <Form onSubmit={onSubmitLoginForm}>
         <Input htmlFor="login-id" label="아이디" value={id} onChange={onChangeId} />
         <Input
           type="password"

@@ -9,6 +9,7 @@ import {
   selectUserState,
   UserState,
 } from 'redux/modules/user';
+import { show } from 'redux/modules/snackBar';
 
 import usePassword from 'hooks/usePassword';
 import { Button, Form, Input, Loader } from 'components/@shared';
@@ -40,18 +41,16 @@ function UserInfo() {
   const onSubmitEditForm = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(changePasswordAPI(password));
+    dispatch(
+      changePasswordAPI(password, () => {
+        dispatch(show('✅ 비밀번호가 변경되었습니다.'));
+      })
+    );
   };
 
   useEffect(() => {
     dispatch(loadUserAPI());
   }, []);
-
-  useEffect(() => {
-    if (error) {
-      alert(error.message);
-    }
-  }, [error]);
 
   useEffect(() => {
     if (!isLoggedIn) {
