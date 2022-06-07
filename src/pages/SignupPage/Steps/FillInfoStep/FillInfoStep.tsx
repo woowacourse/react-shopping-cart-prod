@@ -218,7 +218,7 @@ function FillInfoStep() {
         <S.RightFlexBox />
       </S.FormFieldBox>
       <S.SubmitButtonBox>
-        <Button type="submit">다음으로</Button>
+        <Button type="submit">다음</Button>
       </S.SubmitButtonBox>
     </S.Form>
   );

@@ -52,7 +52,7 @@ function TermsStep() {
         </S.FormItem>
         <S.SubmitButtonBox>
           <Button type="submit" disabled={!isAllChecked}>
-            다음으로
+            다음
           </Button>
         </S.SubmitButtonBox>
       </S.Form>
