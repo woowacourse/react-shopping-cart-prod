@@ -47,7 +47,6 @@ const Login = () => {
     }
 
     dispatch(snackbar.pushMessageSnackbar('로그인에 실패하였습니다'));
-    navigate('/');
   };
 
   return (
