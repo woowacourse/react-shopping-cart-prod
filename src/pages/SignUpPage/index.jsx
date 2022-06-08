@@ -8,7 +8,6 @@ import FieldSet from 'components/@common/FieldSet';
 import InputField from 'components/@common/InputField';
 
 import { requestSignUp } from 'api/members';
-import { getFormData } from 'lib/formUtils';
 import { userValidator } from 'lib/validateUtils';
 
 import * as S from './styles';
@@ -25,21 +24,10 @@ function SignUpPage() {
     nickname: ({ nickname }) => userValidator.nickname(nickname),
   };
 
-  const { errorList, isAllPassed, validationForm } = useFormValidation(validationList);
+  const { errorList, isAllPassed, onBlurTextField, onSubmitForm } =
+    useFormValidation(validationList);
 
-  const handleInputValidate = ({ target }) => {
-    if (target.tagName !== 'INPUT') return;
-
-    const formData = getFormData(target.form);
-
-    validationForm({ name: target.name, formData });
-  };
-
-  const handleSubmitSignUp = async (event) => {
-    event.preventDefault();
-
-    const formData = getFormData(event.target);
-
+  const fetchSignUp = (formData) => {
     signUpFetchControl.start(formData, {
       success: () => navigate('/login'),
       error: (errorMessage) => alert(errorMessage),
@@ -47,7 +35,7 @@ function SignUpPage() {
   };
 
   return (
-    <S.Container onBlur={handleInputValidate} onSubmit={handleSubmitSignUp}>
+    <S.Container onBlur={onBlurTextField} onSubmit={onSubmitForm(fetchSignUp)}>
       <FieldSet labelText="이메일">
         <InputField
           name="userId"
