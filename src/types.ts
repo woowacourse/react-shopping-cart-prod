@@ -26,15 +26,12 @@ export type SigninRequestBody = {
 export type SigninResponseBody = { accessToken: string; userId: number };
 
 export type Product = {
-  id: string;
+  id: number;
   name: string;
   price: number;
-  image: string;
+  imageUrl: string;
   description: string;
   stock: number;
-  brandId: string;
-  categoryId: string;
-  createdAt: number;
   isAddedToCart?: boolean;
 };
 
