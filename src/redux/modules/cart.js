@@ -5,6 +5,7 @@ export const ACTION = {
   GET_CART_SUCCESS: "GET_CART_SUCCESS",
   GET_CART_FAILURE: "GET_CART_FAILURE",
 
+  ADD_CART_ITEM: "ADD_CART_ITEM",
   UPDATE_ITEM_QUANTITY: "UPDATE_ITEM_QUANTITY",
   DELETE_CART_ITEM: "DELETE_CART_ITEM",
 };
@@ -25,6 +26,11 @@ export const getCart = (headers) => async (dispatch) => {
     });
   }
 };
+
+export const addCartItem = (id) => ({
+  type: ACTION.ADD_CART_ITEM,
+  payload: { id },
+});
 
 export const updateCartQuantity = (id, quantity) => ({
   type: ACTION.UPDATE_ITEM_QUANTITY,
@@ -64,6 +70,13 @@ export function cartReducer(state = initialState, action) {
         ...state,
         pending: false,
         error: true,
+      };
+    }
+    case ACTION.ADD_CART_ITEM: {
+      const { id } = action.payload;
+      return {
+        ...state,
+        cart: [...state.cart, { id: id, quantity: 1 }],
       };
     }
     case ACTION.UPDATE_ITEM_QUANTITY: {

@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import { getCart } from "@/redux/modules/cart";
 
-import useCheckBox from "@/hooks/useCheckbox";
-
 import Button from "@/components/Button";
 import CartItem from "@/components/CartItem";
 import Checkbox from "@/components/Checkbox";
@@ -16,14 +14,13 @@ import StyledCartList from "@/components/CartList/index.styled";
 import { getCookie } from "@/utils/auth";
 import { PATH } from "@/constants";
 
-function CartList() {
+function CartList({
+  checkedItemList,
+  changeCheckedList,
+  allChecked,
+  deleteSelectedItems,
+}) {
   const { cart } = useSelector((state) => state.cartState);
-  const {
-    checkedItemList,
-    changeCheckedList,
-    allChecked,
-    deleteSelectedItems,
-  } = useCheckBox(cart);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -67,8 +64,9 @@ function CartList() {
             key={item.id}
             item={item}
             onChange={() => {
-              changeCheckedList(id);
+              changeCheckedList(item.id);
             }}
+            checked={checkedItemList.includes(item.id)}
           />
         );
       })}

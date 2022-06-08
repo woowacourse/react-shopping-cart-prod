@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import useFetch from "@/hooks/useFetch";
+
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import appClient from "utils/appClient";
 
 const useCheckBox = (compareList = []) => {
   const [checkedItemList, setCheckedItemList] = useState([]);
-  // const { deleteItem } = useCart();
+
   const dispatch = useDispatch();
 
   const changeCheckedList = (id) => {
@@ -29,10 +32,11 @@ const useCheckBox = (compareList = []) => {
   const deleteSelectedItems = () => {
     if (checkedItemList.length === 0) {
       dispatch(toggleSnackbarOpen("상품을 선택해주세요"));
+      return;
     }
     if (confirm("정말로 삭제하시겠습니까?")) {
       checkedItemList.forEach((id) => {
-        // deleteItem(id);
+        appClient.delete(`/users/me/carts/${id}`);
         changeCheckedList(id);
       });
     }

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import { addCartItem } from "@/redux/modules/cart";
 
 import CartIcon from "@/assets/images/cart.svg";
 
@@ -22,12 +22,14 @@ import useFetch from "@/hooks/useFetch";
 function Item({ id, name, price, imageUrl }) {
   const {
     data,
-    error,
     success,
     getData: addCart,
   } = useFetch("post", "users/me/carts");
 
+  useEffect(() => {}, [data, success]);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleCartClick = () => {
     const accessToken = getCookie("accessToken");
@@ -49,6 +51,12 @@ function Item({ id, name, price, imageUrl }) {
       MESSAGE.CART_ADDED
     );
   };
+
+  useEffect(() => {
+    if (success) {
+      dispatch(addCartItem(id));
+    }
+  }, [data, success]);
 
   const handleProductDetailClick = () => {
     navigate(`${PATH.DETAIL}/${id}`);

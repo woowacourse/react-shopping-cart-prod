@@ -9,7 +9,6 @@ import {
 import { composeWithDevTools } from "redux-devtools-extension";
 import reduxThunk from "redux-thunk";
 
-import { cartListReducer } from "@/redux/modules/cartList";
 import { snackbarReducer } from "@/redux/modules/snackbar";
 import { userReducer } from "@/redux/modules/user";
 import { cartReducer } from "@/redux/modules/cart";
@@ -21,7 +20,6 @@ const persistConfig = {
 };
 
 export const rootReducer = combineReducers({
-  cartListState: cartListReducer,
   snackbarState: snackbarReducer,
   userState: userReducer,
   cartState: cartReducer,
