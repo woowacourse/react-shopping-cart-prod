@@ -12,7 +12,11 @@ const generateAPIURL = () => {
   }
 
   if (nickname === '써머') {
-    return 'http://13.125.134.114:8080';
+    return 'http://13.125.134.114:8080/api';
+  }
+
+  if (nickname === '애쉬') {
+    return 'http://15.164.222.103:8080/api';
   }
 
   alert('🐥 당첨 !');
