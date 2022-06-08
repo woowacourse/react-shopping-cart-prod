@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import ShoppingItem from '../components/ShoppingItem';
 import { COLORS } from '../styles/theme';
 import { StyledCheckbox } from '../components/common/Styled';
-import { MESSAGE, SERVER_PATH, STORAGE_KEY } from '../constants';
+import { MESSAGE } from '../constants';
 import useCart from '../hooks/useCart';
 import Button from '../components/common/Button';
-import axios from 'axios';
 
 function ShoppingCartPage() {
   const { deleteItem } = useCart();
@@ -15,7 +14,7 @@ function ShoppingCartPage() {
   const [selectedItems, setSelectedItems] = useState([]);
   const [isCheckedAll, setCheckedAll] = useReducer((checked) => !checked, true);
 
-  const { data: cartList } = useSelector(({ cart }) => cart);
+  const cartList = useSelector(({ cart }) => cart.data);
 
   const toggleCheckedAll = () => {
     if (!isCheckedAll) {
@@ -80,7 +79,7 @@ function ShoppingCartPage() {
             </StyledCheckboxContainer>
             <StyledDeleteButton onClick={deleteSelectedItems}>상품삭제</StyledDeleteButton>
           </StyledLeftDiv>
-          {/* <StyledTitle>든든배송 상품({cartList.length}개)</StyledTitle> */}
+          <StyledTitle>든든배송 상품({cartList.length}개)</StyledTitle>
           <StyledDivideLine margin={10} size={2} color={COLORS.GRAY} />
           {cartList.map((item) => (
             <React.Fragment key={item.id}>

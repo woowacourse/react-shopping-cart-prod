@@ -3,10 +3,9 @@ import { useDispatch } from 'react-redux';
 import { MESSAGE, SERVER_PATH, STORAGE_KEY } from '../constants';
 import { getCartItemAsync } from '../store/cart/cart.actions';
 
-const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
 const useCart = () => {
   const dispatch = useDispatch();
+  const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
   const addItem = async (id) => {
     try {
