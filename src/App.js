@@ -4,6 +4,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import useAxiosInterceptor from 'hooks/useAxiosInterceptor';
+import useCart from 'hooks/db/useCart';
 
 import {
   ProductListPage,
@@ -20,9 +22,9 @@ import { doGetCart } from 'modules/cart';
 import { doLogin } from 'modules/auth';
 import { BASE_URL, ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
-import useAxiosInterceptor from 'hooks/useAxiosInterceptor';
 
 function App() {
+  const { getCartAPI } = useCart();
   const { isAuthenticated } = useSelector(state => state.authReducer);
   const dispatch = useDispatch();
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
@@ -46,17 +48,9 @@ function App() {
 
   const getCart = async () => {
     try {
-      const accessToken = getCookie('accessToken');
+      const cart = await getCartAPI();
 
-      if (!accessToken) return;
-
-      const response = await axios.get('/cart', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      dispatch(doGetCart({ cart: response.data }));
+      dispatch(doGetCart({ cart }));
     } catch (error) {}
   };
 
