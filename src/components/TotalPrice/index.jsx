@@ -3,7 +3,7 @@ import { UnderlineText } from 'components';
 import autoComma from 'utils/autoComma';
 import Styled from './index.style';
 
-const TotalPrice = ({ title, price, action }) => {
+const TotalPrice = ({ title, price, actionType, action }) => {
   return (
     <Styled.Container>
       <Styled.Header>{title}</Styled.Header>
@@ -15,7 +15,7 @@ const TotalPrice = ({ title, price, action }) => {
         </Styled.PriceContainer>
 
         <Styled.ButtonContainer>
-          <Styled.Action>{action}</Styled.Action>
+          <Styled.Action onClick={action}>{actionType}</Styled.Action>
         </Styled.ButtonContainer>
       </Styled.Body>
     </Styled.Container>
@@ -34,7 +34,7 @@ TotalPrice.propTypes = {
   /**
    * 버튼에 쓰일 텍스트
    */
-  action: PropTypes.string.isRequired,
+  actionType: PropTypes.string.isRequired,
 };
 
 export default TotalPrice;
