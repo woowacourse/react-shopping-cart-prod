@@ -6,6 +6,7 @@ import {
   SignupRequestBody,
   User,
 } from '../../types';
+import * as db from 'mocks/db.json';
 
 const TOKEN_PREFIX = 'lokbawoody';
 const generateToken = (id: number) => `${TOKEN_PREFIX}${id}`;
@@ -33,23 +34,7 @@ const extractIdFromHeader = <T>(
   };
 };
 
-const customers: User[] = [
-  {
-    userId: 0,
-    email: 'woowacourse@gmail.com',
-    password: 'test1234!',
-    profileImageUrl: 'http://gravatar.com/avatar/1654096752111?d=identicon',
-    name: 'wooteco',
-    gender: 'male',
-    birthday: '1999-03-23',
-    contact: '01012345678',
-    address: '서울특별시 동작구 상도동',
-    detailAddress: '',
-    zonecode: '50413',
-    terms: true,
-    accessToken: null,
-  },
-];
+let customers: User[] = [...(db.customers as User[])];
 
 const customerHandlers = [
   // 이메일 중복 검사
@@ -169,7 +154,7 @@ const customerHandlers = [
 
     const { password, ...restCustomerProperties } = customer;
 
-    return res(ctx.status(403), ctx.json(restCustomerProperties));
+    return res(ctx.status(200), ctx.json(restCustomerProperties));
   }),
   //사용자 정보 수정
   rest.put<Customer>(
