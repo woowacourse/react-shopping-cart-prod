@@ -8,9 +8,9 @@ export const sendCheckEmailDuplicateRequest = async (email) => {
     },
   });
 
-  const { success } = response.data;
+  const { unique } = response.data;
 
-  return success;
+  return unique;
 };
 
 export const sendAddUserRequest = async (userData) => {
