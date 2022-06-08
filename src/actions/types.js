@@ -18,6 +18,7 @@ const 장바구니_액션 = {
   ADD_NEW_PRODUCT: '장바구니에 새로운 상품을 추가합니다.',
   DELETE_PRODUCT: '장바구니에 존재하는 상품을 삭제합니다.',
   SET_PRODUCT_QUANTITY: '장바구니 상품의 구매 수량을 변경합니다',
+  ORDER_PRODUCT: '장바구니에서 선택한 상품을 주문합니다.',
 };
 
 const 스낵바_액션 = {

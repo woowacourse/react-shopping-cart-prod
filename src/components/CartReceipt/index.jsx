@@ -2,16 +2,14 @@ import { useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { requestOrderCartItem } from 'api';
-import { snackbar } from 'actions/snackbar';
-import { 알림_메시지 } from 'constants/';
+import { orderCartItem } from 'actions/cart';
 
 import Button from 'components/@common/Button/styles';
 
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
-const CartReceipt = ({ cartList, checkboxItems }) => {
+const CartReceipt = ({ cartList, checkboxItems, clearCheckBoxItems }) => {
   const dispatch = useDispatch();
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -26,8 +24,12 @@ const CartReceipt = ({ cartList, checkboxItems }) => {
   }, [cartList, checkboxItems]);
 
   const orderSelectedItem = async () => {
-    await requestOrderCartItem(checkboxItems);
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.상품_주문_성공));
+    if (checkboxItems.length <= 0) {
+      return;
+    }
+
+    dispatch(orderCartItem(checkboxItems));
+    clearCheckBoxItems();
   };
 
   return (

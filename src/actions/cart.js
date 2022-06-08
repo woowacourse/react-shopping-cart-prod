@@ -4,6 +4,7 @@ import {
   requestAddCartItem,
   requestDeleteCartItems,
   requestSetCartItemQuantity,
+  requestOrderCartItem,
 } from 'api/cart';
 import { snackbar } from 'actions/snackbar';
 import { 비동기_요청, 알림_메시지 } from 'constants/';
@@ -85,4 +86,25 @@ const getCartList = () => async (dispatch) => {
   asyncDispatchAction(dispatch, response, 장바구니_불러오기_액션);
 };
 
-export { addCartList, deleteCartItem, modifyCartItemQuantity, getCartList };
+const orderCartItem = (productId) => async (dispatch) => {
+  dispatch({
+    type: 장바구니_액션.PENDING,
+  });
+
+  const response = await requestOrderCartItem(productId);
+
+  if (response.status === 비동기_요청.FAILURE) {
+    dispatch(snackbar.pushMessageSnackbar(알림_메시지.상품_주문_실패));
+    dispatch({
+      type: 장바구니_액션.FAILURE,
+      payload: response.content,
+    });
+    return;
+  }
+
+  dispatch({ type: 장바구니_액션.SUCCESS });
+  dispatch(snackbar.pushMessageSnackbar(알림_메시지.상품_주문_성공));
+  dispatch({ type: 장바구니_액션.ORDER_PRODUCT, payload: productId });
+};
+
+export { addCartList, deleteCartItem, modifyCartItemQuantity, getCartList, orderCartItem };

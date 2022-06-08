@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         items: state.items.filter((item) =>
-          payload.every((willDeleteItem) => item.id !== willDeleteItem),
+          payload.every((targetId) => item.product.id !== targetId),
         ),
       };
 
@@ -48,6 +48,14 @@ export default (state = initialState, action) => {
 
           return item;
         }),
+      };
+
+    case 장바구니_액션.ORDER_PRODUCT:
+      return {
+        ...state,
+        items: state.items.filter((item) =>
+          payload.every((targetId) => item.product.id !== targetId),
+        ),
       };
 
     default:

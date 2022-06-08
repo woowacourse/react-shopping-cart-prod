@@ -7,10 +7,8 @@ import PageHeader from 'components/@common/PageHeader';
 import CartList from 'components/CartList';
 import CartReceipt from 'components/CartReceipt';
 
-import { snackbar } from 'actions/snackbar';
 import { deleteCartItem, getCartList, modifyCartItemQuantity } from 'actions/cart';
 
-import { 알림_메시지 } from 'constants/';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
@@ -37,7 +35,6 @@ const Cart = () => {
 
     dispatch(deleteCartItem(checkboxItems));
     clearCheckBoxItems();
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
   };
 
   const handleItemQuantity = (productId, quantity) => {
@@ -61,7 +58,11 @@ const Cart = () => {
               handleItemQuantity={() => handleItemQuantity}
             />
           </CommonStyled.FlexWrapper>
-          <CartReceipt cartList={cartList} checkboxItems={checkboxItems} />
+          <CartReceipt
+            cartList={cartList}
+            checkboxItems={checkboxItems}
+            clearCheckBoxItems={clearCheckBoxItems}
+          />
         </CommonStyled.Container>
       </Styled.CartListContainer>
     </Layout>
