@@ -1,7 +1,23 @@
-export const BASE_SERVER_URL =
-  process.env.NODE_ENV === "production"
-    ? "http://ec2-13-125-205-115.ap-northeast-2.compute.amazonaws.com:8080"
-    : "dev";
+// export const BASE_SERVER_URL =
+//   process.env.NODE_ENV === "production"
+//     ? "http://ec2-13-125-205-115.ap-northeast-2.compute.amazonaws.com:8080"
+//     : "dev";
+
+/* 열음 서버 */
+export const BASE_SERVER_URL = "http://54.180.100.165:8080";
+
+/* 로마 서버 */
+// export const BASE_SERVER_URL =
+//   "http://ec2-13-125-205-115.ap-northeast-2.compute.amazonaws.com:8080";
+
+/* 소주캉 서버 */
+// export const BASE_SERVER_URL = "http://13.209.50.192:8080";
+
+/* 알렉스 서버 */
+// export const BASE_SERVER_URL = "http://15.164.212.121:8080";
+
+/* 필즈 서버 */
+// export const BASE_SERVER_URL = "http://15.165.204.174:8080";
 
 export const SERVER_PATH = {
   PRODUCT_LIST: "/api/products",
