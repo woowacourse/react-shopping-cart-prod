@@ -4,8 +4,6 @@ import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles, theme } from 'components';
 import store from 'store';
-import { doInitializeProductList } from 'modules/cart';
-import { dummyProductList } from 'dummy_data';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -20,8 +18,6 @@ export const parameters = {
 
 export const decorators = [
   (Story, context) => {
-    store.dispatch(doInitializeProductList({ products: dummyProductList }));
-
     return (
       <>
         <BrowserRouter>

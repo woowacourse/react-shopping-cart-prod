@@ -1,15 +1,10 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
-
 import { ProductItem } from 'components';
-
-import { doInitializeProductList } from 'modules/cart';
 import Styled from './index.style';
 
 const ProductListPage = () => {
-  const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -19,7 +14,6 @@ const ProductListPage = () => {
       setIsLoading(false);
 
       setProducts(response.data);
-      dispatch(doInitializeProductList({ products: response.data })); // legacy
     } catch (error) {}
   };
 

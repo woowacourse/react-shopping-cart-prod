@@ -10,10 +10,6 @@ const CART_ACTIONS = {
   ORDER: 'cart/ORDER',
 };
 
-const PRODUCT_LIST_ACTIONS = {
-  INITIALIZE: 'productList/INITIALIZE',
-};
-
 const ORDER_ACTIONS = {
   ADD: 'order/ADD',
   DELETE: 'order/DELETE',
@@ -21,11 +17,6 @@ const ORDER_ACTIONS = {
 };
 
 // action creator
-const doInitializeProductList = ({ products }) => ({
-  type: PRODUCT_LIST_ACTIONS.INITIALIZE,
-  products,
-});
-
 const doPutProductToCart = ({ productId, name, price, image, quantity }) => ({
   type: CART_ACTIONS.PUT,
   productId,
@@ -46,19 +37,12 @@ const doInitializeOrder = () => ({ type: ORDER_ACTIONS.INITIALIZE });
 
 // reducer
 const initState = {
-  products: [],
   shoppingCart: [],
   order: [],
 };
 
 const cartReducer = (state = initState, action) => {
   switch (action.type) {
-    case PRODUCT_LIST_ACTIONS.INITIALIZE:
-      return {
-        ...state,
-        products: [...action.products],
-      };
-
     case CART_ACTIONS.PUT:
       const isExist = state.shoppingCart.some(product => product.productId === action.productId);
 
@@ -148,7 +132,6 @@ export {
   doDeleteProductFromCart,
   doSelectiveDeleteFromCart,
   doInitializeCart,
-  doInitializeProductList,
   doAddProdcutToOrder,
   doDeleteProductFromOrder,
   doInitializeOrder,
