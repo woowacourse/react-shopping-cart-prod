@@ -1,6 +1,5 @@
 import useFetch from 'hooks/useFetch';
 import { METHOD } from 'constants';
-import { getAuthorizedHeaders } from 'api/auth';
 
 const useModifyPassword = () => {
   const { isSucceed, isError, fetchApi } = useFetch({
@@ -9,10 +8,9 @@ const useModifyPassword = () => {
   });
 
   const modifyPassword = (oldPassword, newPassword) => {
-    const headers = getAuthorizedHeaders();
     const data = { oldPassword, newPassword };
 
-    fetchApi({ payload: { data, headers } });
+    fetchApi({ payload: { ...data } });
   };
 
   return {

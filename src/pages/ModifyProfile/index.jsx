@@ -12,11 +12,13 @@ import * as Styled from './style';
 import { AUTHORIZATION_TYPE } from 'constants';
 import { useEffect } from 'react';
 import useCart from 'hooks/useCart';
+import useAuthentication from 'hooks/useAuthentication';
 
 const ModifyProfile = () => {
   useAuthorization(AUTHORIZATION_TYPE.PRIVATE_ONLY);
   const { cartItems, getItems } = useCart();
   const { name } = useSelector((state) => state.user);
+  const { checkIsAuthenticated } = useAuthentication();
 
   const [
     isModifyPasswordModalOpened,
@@ -30,6 +32,7 @@ const ModifyProfile = () => {
     if (!cartItems) {
       getItems();
     }
+    checkIsAuthenticated();
   }, []);
 
   return (
