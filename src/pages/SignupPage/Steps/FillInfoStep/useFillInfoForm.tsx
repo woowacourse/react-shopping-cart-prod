@@ -61,9 +61,14 @@ const useFillInfoForm = () => {
     if (Object.entries(errors as Record<string, string>).length !== 0) return;
 
     const formData = new FormData(e.target as HTMLFormElement);
+
+    const data = Object.fromEntries(formData.entries());
+    delete data['confirm-password'];
+
     const requestBody = {
-      ...(Object.fromEntries(formData.entries()) as Partial<Customer>),
+      ...data,
       profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
+      terms: true,
     };
 
     try {
