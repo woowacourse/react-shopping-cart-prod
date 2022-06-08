@@ -73,7 +73,7 @@ function UserInfoEditPage() {
     const accessToken = response.accessToken;
 
     editInfo.fetch({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERES}`,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {
         nickname: nickname.value || nickname.placeholder,
