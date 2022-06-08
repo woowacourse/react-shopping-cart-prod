@@ -1,27 +1,37 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { StyledImageBox, StyledImg } from '../components/common/Styled';
-import { MESSAGE, SERVER_PATH, SIZE } from '../constants';
-import { COLORS } from '../styles/theme';
+
 import Loading from '../components/Loading';
 import useFetch from '../hooks/useFetch';
 import useCart from '../hooks/useCart';
 
+import { StyledImageBox, StyledImg } from '../components/common/Styled';
+
+import { MESSAGE, SERVER_PATH, SIZE } from '../constants';
+import { COLORS } from '../styles/theme';
+
 function ProductDetailPage() {
   const { id } = useParams();
   const { addItem, deleteItem } = useCart();
+  const accessToken = useSelector(({ user }) => user.accessToken);
+
   const cartList = useSelector(({ cart }) => cart.data);
   const { data: product, isLoading, isError } = useFetch(`${SERVER_PATH.PRODUCTS}/${id}`);
-  const isCart = cartList.some(({ id: productId }) => productId === +id);
+  const isCart = cartList.some((cartItem) => {
+    if (cartItem !== null && product !== null) {
+      return cartItem.name === product.name;
+    }
+    return false;
+  });
 
   const onClickCartButton = () => {
     if (isCart) {
-      deleteItem(id);
+      deleteItem(id, accessToken);
       alert(MESSAGE.REMOVE);
       return;
     }
-    addItem(id);
+    addItem(id, accessToken);
     alert(MESSAGE.ADD);
   };
 

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -15,6 +16,7 @@ import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../const
 function ModifyUserInfoPage() {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
+  const accessToken = useSelector(({ user }) => user.accessToken);
   const handleUserInfoChange = useUserForm(setUserInfo);
 
   const handleUserInfoSubmit = async (e) => {
@@ -23,21 +25,31 @@ function ModifyUserInfoPage() {
 
     try {
       validUserInfo(userInfo);
-      await axios.patch(SERVER_PATH.USER, { nickname });
+      await axios.patch(
+        SERVER_PATH.USER,
+        { nickname },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
       alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
-      alert(error);
+      console.log(error);
+      alert(error.message);
     }
   };
 
   useEffect(() => {
     async function getUserInfo() {
       try {
-        const { data } = await axios.get(SERVER_PATH.ME);
+        const { data } = await axios.get(SERVER_PATH.ME, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
         setUserInfo(data);
       } catch (error) {
-        alert(error);
+        console.log(error);
+        alert(error.message);
       }
     }
     getUserInfo();

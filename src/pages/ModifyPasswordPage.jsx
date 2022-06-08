@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 
 import Input from '../components/common/Input';
@@ -15,6 +15,7 @@ import actionTypes from '../store/user/user.actions';
 function ModifyPasswordPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const accessToken = useSelector(({ user }) => user.accessToken);
   const [password, setPassword] = useState({
     prevPassword: '',
     newPassword: '',
@@ -28,11 +29,18 @@ function ModifyPasswordPage() {
 
     try {
       validPasswordInfo(password);
-      await axios.patch(SERVER_PATH.PASSWORD, { prevPassword, newPassword });
+      await axios.patch(
+        SERVER_PATH.PASSWORD,
+        { prevPassword, newPassword },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
       dispatch({ type: actionTypes.DELETE_TOKEN });
       alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
+      console.log(error);
       alert(error.messages);
     }
   };

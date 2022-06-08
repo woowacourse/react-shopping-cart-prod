@@ -23,7 +23,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "r deact-scripts start",
     "node-server": "node server.js",
     "json-server": "json-server db.json",
     "build": "react-scripts build",

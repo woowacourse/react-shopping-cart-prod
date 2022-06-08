@@ -13,11 +13,14 @@ async function main() {
       window.location.pathname = '/react-shopping-cart/';
       return;
     }
+
+    /*
     await worker.start({
       serviceWorker: {
         url: '/react-shopping-cart/mockServiceWorker.js',
       },
     });
+    */
   }
 
   const root = ReactDOM.createRoot(document.getElementById('root'));

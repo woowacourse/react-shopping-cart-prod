@@ -6,14 +6,14 @@ import { COLORS } from '../styles/theme';
 import { StyledCheckbox } from '../components/common/Styled';
 import { MESSAGE } from '../constants';
 import useCart from '../hooks/useCart';
-import Loading from '../components/Loading';
 
 function ShoppingCartPage() {
   const { deleteItem } = useCart();
+  const accessToken = useSelector(({ user }) => user.accessToken);
   const [totalPrice, setTotalPrice] = useState();
   const [selectedItems, setSelectedItems] = useState([]);
   const [isCheckedAll, setCheckedAll] = useReducer((checked) => !checked, true);
-  const { data: cartList, isLoading, isError } = useSelector(({ cart }) => cart);
+  const { data: cartList } = useSelector(({ cart }) => cart);
 
   const toggleCheckedAll = () => {
     if (!isCheckedAll) {
@@ -28,7 +28,7 @@ function ShoppingCartPage() {
     if (selectedItems.length === 0) return;
 
     if (window.confirm(MESSAGE.CHECK_DELETE)) {
-      selectedItems.forEach((id) => deleteItem(id));
+      selectedItems.forEach((id) => deleteItem(id, accessToken));
       setSelectedItems([]);
     }
   };
@@ -47,7 +47,7 @@ function ShoppingCartPage() {
 
   useEffect(() => {
     setSelectedItems(cartList.map(({ id }) => id));
-  }, []);
+  }, [cartList]);
 
   useEffect(() => {
     const selectedCarts = cartList.filter((item) => selectedItems.includes(item.id));
@@ -57,9 +57,6 @@ function ShoppingCartPage() {
     );
     setTotalPrice(totalAmount);
   }, [cartList, selectedItems]);
-
-  if (isError) return <h1>error</h1>;
-  if (isLoading) return <Loading />;
 
   return (
     <StyledSection>

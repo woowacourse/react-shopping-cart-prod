@@ -1,12 +1,16 @@
-const API = '/api';
+const API_ZERO = 'http://ec2-13-124-88-137.ap-northeast-2.compute.amazonaws.com:8080/api';
+const API_KILLER_WHALE = `http://13.124.30.129:8080/api`;
+const API_AWESOME_O = `http://ec2-15-164-104-189.ap-northeast-2.compute.amazonaws.com:8080/api`;
+const API_ROOKIE = `http://ec2-15-164-103-26.ap-northeast-2.compute.amazonaws.com:8080/api`;
 
 const SERVER_PATH = {
-  PRODUCTS: '/products',
-  CART: '/cart',
-  USER: `${API}/customers`,
-  LOGIN: `${API}/login`,
-  PASSWORD: `${API}/customers/password`,
-  ME: `${API}/customers/me`,
+  PRODUCTS: `${API_ZERO}/products`,
+  CART: `${API_ZERO}/carts`,
+  CART_PRODUCT: `${API_ZERO}/carts/products`,
+  USER: `${API_ZERO}/customers`,
+  LOGIN: `${API_ZERO}/login`,
+  PASSWORD: `${API_ZERO}/customers/password`,
+  ME: `${API_ZERO}/customers/me`,
 };
 
 const ROUTES_PATH = {

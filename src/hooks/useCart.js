@@ -8,16 +8,16 @@ import {
 const useCart = () => {
   const dispatch = useDispatch();
 
-  const addItem = (id) => {
-    dispatch(addCartItemAsync(id));
+  const addItem = (id, accessToken) => {
+    dispatch(addCartItemAsync(id, accessToken));
   };
 
-  const deleteItem = (id) => {
-    dispatch(deleteCartItemAsync(id));
+  const deleteItem = (id, accessToken) => {
+    dispatch(deleteCartItemAsync(id, accessToken));
   };
 
-  const updateItemQuantity = (id, quantity) => {
-    dispatch(updateItemQuantityAsync(id, quantity));
+  const updateItemQuantity = (id, quantity, accessToken) => {
+    dispatch(updateItemQuantityAsync(id, quantity, accessToken));
   };
 
   return { addItem, deleteItem, updateItemQuantity };

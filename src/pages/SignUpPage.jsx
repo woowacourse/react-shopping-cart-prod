@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -10,8 +11,10 @@ import useUserForm from '../hooks/useUserForm';
 import { validSignUpInfo } from '../utils/validations';
 
 import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+
 function SignUpPage() {
   const navigate = useNavigate();
+  const accessToken = useSelector(({ user }) => user.accessToken);
   const [signUpInfo, setSignUpInfo] = useState({
     email: '',
     nickname: '',
@@ -26,10 +29,17 @@ function SignUpPage() {
 
     try {
       validSignUpInfo(signUpInfo);
-      await axios.post(SERVER_PATH.USER, { email, nickname, password });
+      await axios.post(
+        SERVER_PATH.USER,
+        { email, nickname, password },
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
       alert(MESSAGE.SIGN_UP_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
+      console.log(error);
       alert(error.message);
     }
   };

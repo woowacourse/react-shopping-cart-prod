@@ -5,19 +5,21 @@ import { BsTrash } from 'react-icons/bs';
 import { COLORS } from '../styles/theme';
 import { MESSAGE } from '../constants';
 import useCart from '../hooks/useCart';
+import { useSelector } from 'react-redux';
 
 function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedItem }) {
+  const accessToken = useSelector(({ user }) => user.accessToken);
   const { deleteItem, updateItemQuantity } = useCart();
   const [isChecked, setChecked] = useState(isCheckedAll);
   const { id, name, price, imageUrl, quantity } = item;
 
   const incrementQuantity = () => {
-    updateItemQuantity(id, quantity + 1);
+    updateItemQuantity(id, quantity + 1, accessToken);
   };
 
   const decrementQuantity = () => {
     if (quantity === 1) return;
-    updateItemQuantity(id, quantity - 1);
+    updateItemQuantity(id, quantity - 1, accessToken);
   };
 
   const toggleChecked = () => {
@@ -27,7 +29,7 @@ function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedIt
 
   const onClickDeleteIcon = () => {
     if (window.confirm(MESSAGE.CHECK_DELETE)) {
-      deleteItem(id);
+      deleteItem(id, accessToken);
       removeSelectedItem(id);
     }
   };

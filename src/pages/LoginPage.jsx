@@ -37,6 +37,7 @@ function LoginPage() {
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
       setLoginInfo(initialState);
+      console.log(error);
       alert(error.message);
     }
   };
