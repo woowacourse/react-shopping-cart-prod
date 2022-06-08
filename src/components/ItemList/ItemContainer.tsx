@@ -86,12 +86,20 @@ const StyledRoot = styled.div`
 const StyledBottom = styled.div`
   width: 100%;
   display: flex;
+  flex: 1;
   justify-content: space-between;
   padding: 0 2rem;
   align-items: center;
+  gap: 10px;
 `;
 
-const StyledDescription = styled.div``;
+const StyledDescription = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 const StyledTitle = styled.p`
   font-size: 1.6rem;
