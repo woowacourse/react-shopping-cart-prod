@@ -67,8 +67,7 @@ export const getCartList = () => async (dispatch) => {
           getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
       },
     });
-    dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.products));
-    console.log(response.data);
+    dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.cartList));
   } catch (error) {
     if (error.response?.status === 401) {
       dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
@@ -91,12 +90,47 @@ export const uncheckAllCheckButton = () => async (dispatch) => {
 export const checkAllCheckButton = () => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.CHECK_ALL_CHECK_BUTTON));
 };
-export const incrementCartItemQuantity = (id) => async (dispatch) => {
-  dispatch(createAction(ACTION_TYPES.INCREMENT_CART_ITEM_QUANTITY, id));
-};
-export const decrementCartItemQuantity = (id) => async (dispatch) => {
-  dispatch(createAction(ACTION_TYPES.DECREMENT_CART_ITEM_QUANTITY, id));
-};
+export const incrementCartItemQuantity =
+  (id, incrementedQuantity) => async (dispatch) => {
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/users/me/carts/${id}`,
+        {
+          quantity: incrementedQuantity,
+        },
+        {
+          headers: {
+            Authorization:
+              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+          },
+        }
+      );
+      dispatch(createAction(ACTION_TYPES.INCREMENT_CART_ITEM_QUANTITY, id));
+    } catch (error) {
+      dispatch(toggleSnackbarOpen(error));
+    }
+  };
+export const decrementCartItemQuantity =
+  (id, decrementedQuantity) => async (dispatch) => {
+    if (decrementedQuantity < 1) return;
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/users/me/carts/${id}`,
+        {
+          quantity: decrementedQuantity,
+        },
+        {
+          headers: {
+            Authorization:
+              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+          },
+        }
+      );
+      dispatch(createAction(ACTION_TYPES.DECREMENT_CART_ITEM_QUANTITY, id));
+    } catch (error) {
+      dispatch(toggleSnackbarOpen(error));
+    }
+  };
 export const removeCheckedCartItem = () => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.REMOVE_CHECKED_CART_ITEM));
 };
@@ -131,7 +165,7 @@ export const cartListReducer = (state = cartListInitialState, action) => {
       return cartListInitialState;
 
     case ACTION_TYPES.ADD_PRODUCT_TO_CART:
-      return [...state, { ...action.payload, quantity: 1, checked: true }];
+      return [...state, { ...action.payload, quantity: 1 }];
 
     case ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON:
       const selectedItem = newState.find((item) => item.id === action.payload);

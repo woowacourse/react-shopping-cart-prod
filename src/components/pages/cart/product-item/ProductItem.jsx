@@ -26,11 +26,11 @@ function ProductItem({ item }) {
   };
 
   const handleIncrementClick = () => {
-    dispatch(incrementCartItemQuantity(id));
+    dispatch(incrementCartItemQuantity(id, quantity + 1));
   };
 
   const handleDecrementClick = () => {
-    dispatch(decrementCartItemQuantity(id));
+    dispatch(decrementCartItemQuantity(id, quantity - 1));
   };
 
   const handleRemoveIconClick = () => {
