@@ -6,7 +6,7 @@ import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
-import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
+import {API_URL, ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
 
 function SignUpPage() {
   const navigation = useNavigate();
@@ -68,7 +68,7 @@ function SignUpPage() {
     const [account, nickname, password, confirmPassword, address, start, middle, last] = inputs;
 
     signUp.fetch({
-      API_URL: process.env.REACT_APP_SIGN_UP,
+      API_URL: `${API_URL}/signup`,
       body: {
         account: account.value,
         nickname: nickname.value,

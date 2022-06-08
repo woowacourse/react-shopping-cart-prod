@@ -1,4 +1,4 @@
-import {CONFIRM_MESSAGE, PATH} from 'constant';
+import {API_URL, CONFIRM_MESSAGE, PATH} from 'constant';
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
@@ -33,7 +33,7 @@ export default function useCartItem() {
 
     if (deleteConfirm) {
       deleteCart({
-        API_URL: process.env.REACT_APP_CART,
+        API_URL: `${API_URL}/customers/cart`,
         headers: {Authorization: `Bearer ${accessToken}`},
         body: {
           productId: Number.parseInt(payload),
@@ -54,7 +54,7 @@ export default function useCartItem() {
     }
 
     getCart({
-      API_URL: process.env.REACT_APP_CART,
+      API_URL: `${API_URL}/customers/cart`,
       headers: {Authorization: `Bearer ${accessToken}`},
       onSuccess: (fetchedData) => {
         dispatch({type: CART.INITIALIZE, payload: fetchedData});
@@ -71,7 +71,7 @@ export default function useCartItem() {
 
     const {id} = payload;
     postCart({
-      API_URL: process.env.REACT_APP_CART,
+      API_URL: `${API_URL}/customers/cart`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {productId: Number.parseInt(id)},
       onSuccess: () => dispatch({type: CART.ADD, payload: {...payload, quantity: 1}}),
@@ -88,7 +88,7 @@ export default function useCartItem() {
     if (deleteConfirm) {
       payload.forEach((id) =>
         deleteCart({
-          API_URL: process.env.REACT_APP_CART,
+          API_URL: `${API_URL}/customers/cart`,
           headers: {Authorization: `Bearer ${accessToken}`},
           body: {productId: Number.parseInt(id)},
           onSuccess: () => {

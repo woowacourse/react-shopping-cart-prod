@@ -5,7 +5,7 @@ import Input from 'component/common/Input';
 import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
-import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
+import {API_URL, ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
 import {useNavigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 
@@ -56,7 +56,7 @@ function UserInfoEditPage() {
 
   const getInfo = () => {
     userInfo.fetch({
-      API_URL: process.env.REACT_APP_CUSTOMER,
+      API_URL: `${API_URL}/customers`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -68,7 +68,7 @@ function UserInfoEditPage() {
     const [account, nickname, password, address, start, middle, last] = inputs;
 
     editInfo.fetch({
-      API_URL: process.env.REACT_APP_CUSTOMER,
+      API_URL: `${API_URL}/customers`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {
         nickname: nickname.value || nickname.placeholder,

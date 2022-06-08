@@ -7,7 +7,7 @@ import {ReactComponent as LogoIcon} from 'assets/logoIcon.svg';
 
 import * as S from 'component/Header/style';
 
-import {PATH} from 'constant';
+import {API_URL, PATH} from 'constant';
 
 import baedale from 'assets/baedale.png';
 import baedaleHover from 'assets/baedale_hover.png';
@@ -34,7 +34,7 @@ export default function Header() {
     }
 
     userInfo.fetch({
-      API_URL: process.env.REACT_APP_CUSTOMER,
+      API_URL: `${API_URL}/customers`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

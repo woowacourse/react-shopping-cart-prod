@@ -6,7 +6,7 @@ import baedaleTear from 'assets/baedale_tear.png';
 import CheckBox from 'component/common/CheckBox';
 import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
-import {PATH} from 'constant';
+import {API_URL, PATH} from 'constant';
 import {useDispatch, useSelector} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
 import useControlledInput from 'hook/useControlledInput';
@@ -31,7 +31,7 @@ function WithdrawalPage() {
     const [password] = inputs;
 
     withDrawal.fetch({
-      API_URL: process.env.REACT_APP_CUSTOMER,
+      API_URL: `${API_URL}/customers`,
       body: {
         password: password.value,
       },

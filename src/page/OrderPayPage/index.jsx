@@ -10,7 +10,7 @@ import NotFoundPage from 'page/NotFoundPage';
 import * as S from 'page/OrderPayPage/style';
 
 import {SmingPayment, useSmingPayment} from 'sming-payments';
-import {PATH} from 'constant';
+import {API_URL, PATH} from 'constant';
 import {useNavigate} from 'react-router-dom';
 import useCartItem from 'hook/useCartItem';
 import useFetch from 'hook/useFetch';
@@ -49,7 +49,7 @@ export default function OrderPayPage() {
     }));
 
     postOrderList.fetch({
-      API_URL: process.env.REACT_APP_ORDER,
+      API_URL: `${API_URL}/customers/orders`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {
         order,

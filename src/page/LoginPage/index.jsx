@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import * as S from './style';
 import theme from 'theme/theme';
 import {Link, useNavigate} from 'react-router-dom';
-import {ERROR_MESSAGE, PATH} from 'constant';
+import {API_URL, ERROR_MESSAGE, PATH} from 'constant';
 import useFetch from 'hook/useFetch';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
@@ -20,7 +20,7 @@ function LoginPage() {
 
   const onSubmit = (inputs) => {
     login.fetch({
-      API_URL: process.env.REACT_APP_SIGN_IN,
+      API_URL: `${API_URL}/signin`,
       body: {
         account: inputs[0].value,
         password: inputs[1].value,

@@ -11,7 +11,7 @@ import useFetch from 'hook/useFetch';
 import {useSelector} from 'react-redux';
 
 import {useNavigate, useParams} from 'react-router-dom';
-import {PATH} from 'constant';
+import {API_URL, PATH} from 'constant';
 
 export default function OrderDetailPage() {
   const orderList = useFetch('get');
@@ -32,7 +32,7 @@ export default function OrderDetailPage() {
 
     isLogin &&
       orderList.fetch({
-        API_URL: `${process.env.REACT_APP_ORDER}/${id}`,
+        API_URL: `${API_URL}/customers/orders/${id}`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
