@@ -20,15 +20,19 @@ function Header() {
       </Link>
 
       <S.RightMenu>
+        <Link to={PAGE_LIST.PROFILE_EDIT}>
+          <S.RightMenuList className="order-list">Edit</S.RightMenuList>
+        </Link>
+
         <Link to={PAGE_LIST.CART_LIST}>
           <S.RightMenuList className="cart" count={cartItems.length}>
-            장바구니
+            Cart
           </S.RightMenuList>
         </Link>
 
         <Link to={!isLoggedIn ? PAGE_LIST.LOGIN : PAGE_LIST.LOGOUT}>
-          <S.RightMenuList className="order-list">
-            {!isLoggedIn ? '로그인' : '로그아웃'}
+          <S.RightMenuList className={!isLoggedIn ? 'login' : 'logout'}>
+            {!isLoggedIn ? 'Login' : 'Logout'}
           </S.RightMenuList>
         </Link>
       </S.RightMenu>
