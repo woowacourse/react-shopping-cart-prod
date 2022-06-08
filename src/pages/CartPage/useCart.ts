@@ -15,7 +15,7 @@ const useCart = () => {
     })
   );
   const [checkedFlags, setCheckedFlags] = useState<Record<string, boolean>>({});
-  console.log('cart', cart);
+
   const totalPrice = useMemo(
     () =>
       cart
@@ -31,7 +31,11 @@ const useCart = () => {
   const handleChangeQuantity =
     ({ cartItemId, product }: CartItem) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(actions.updateQuantity(cartItemId, product.id, e.target.value));
+      const quantity = e.target.valueAsNumber;
+
+      if (!Number.isNaN(quantity)) {
+        dispatch(actions.updateQuantity(cartItemId, product.id, quantity));
+      }
     };
 
   const handleCheck =

@@ -150,9 +150,9 @@ const actions = {
 
     return { type: TYPES.REMOVE_CART_ITEM, payload: request };
   },
-  updateQuantity: (cartItemId: number, productId: number, quantity: string) => {
+  updateQuantity: (cartItemId: number, productId: number, quantity: number) => {
     const request = axios
-      .patch(`${SERVER_URL}/api/customers/cart/${cartItemId}`, {
+      .put(`${SERVER_URL}/api/customers/cart/${cartItemId}`, {
         productId,
         quantity,
       })

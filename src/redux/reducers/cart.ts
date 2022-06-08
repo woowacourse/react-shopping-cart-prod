@@ -32,19 +32,19 @@ const cart = (state = initialState, action: Action) => {
       return { ...state, isLoading: false, error: action.payload };
     }
     case `${TYPES.UPDATE_QUANTITY}_PENDING`: {
-      return { ...state, isLoading: true, error: null };
+      return { ...state, error: null };
     }
     case `${TYPES.UPDATE_QUANTITY}_FULFILLED`: {
-      return { ...state, isLoading: false, cart: action.payload };
+      return { ...state };
     }
     case `${TYPES.UPDATE_QUANTITY}_REJECTED`: {
-      return { ...state, isLoading: false, error: action.payload };
+      return { ...state, error: action.payload };
     }
     case `${TYPES.REMOVE_CART_ITEM}_PENDING`: {
       return { ...state, isLoading: true, error: null };
     }
     case `${TYPES.REMOVE_CART_ITEM}_FULFILLED`: {
-      return { ...state, isLoading: false, cart: action.payload };
+      return { ...state, isLoading: false };
     }
     case `${TYPES.REMOVE_CART_ITEM}_REJECTED`: {
       return { ...state, isLoading: true, error: action.payload };
