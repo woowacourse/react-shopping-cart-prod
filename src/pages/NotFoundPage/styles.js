@@ -10,6 +10,10 @@ const Container = styled.div`
 
 const ButtonContainer = styled.div`
   text-align: center;
+
+  a {
+    color: unset;
+  }
 `;
 
 export { Container, ButtonContainer };
