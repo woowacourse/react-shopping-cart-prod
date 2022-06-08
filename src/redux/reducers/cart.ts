@@ -17,7 +17,7 @@ const cart = (state = initialState, action: Action) => {
       return { ...state, isLoading: true, error: null };
     }
     case `${TYPES.ADD_ITEM_TO_CART}_FULFILLED`: {
-      return { ...state, isLoading: false, cart: action.payload };
+      return { ...state, isLoading: false };
     }
     case `${TYPES.ADD_ITEM_TO_CART}_REJECTED`: {
       return { ...state, isLoading: false, error: action.payload };
