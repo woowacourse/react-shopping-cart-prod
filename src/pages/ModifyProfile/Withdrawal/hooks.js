@@ -1,6 +1,5 @@
 import useFetch from 'hooks/useFetch';
 import { METHOD } from 'constants';
-import { getAuthorizedHeaders } from 'api/auth';
 import { deleteCookie } from 'utils/cookie';
 import { useEffect } from 'react';
 import { setAuthenticated } from 'reducers/user/user.actions';
@@ -14,13 +13,14 @@ const useWithdrawal = () => {
   });
 
   const handleWithdrawal = () => {
-    const headers = getAuthorizedHeaders();
-    fetchApi({ payload: headers });
+    fetchApi();
   };
 
   useEffect(() => {
-    deleteCookie();
-    dispatch(setAuthenticated({ authenticated: false }));
+    if (isSucceed) {
+      deleteCookie();
+      dispatch(setAuthenticated({ authenticated: false }));
+    }
   }, [isSucceed]);
 
   return {
