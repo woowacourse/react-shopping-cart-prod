@@ -1,7 +1,7 @@
 import { 비동기_요청 } from 'constants/';
 
 const errorReturn = (error) => ({
-  status: 비동기_요청.FAIL,
+  status: 비동기_요청.FAILURE,
   content: `서버와의 통신에 실패하였습니다. (${error.message})`,
 });
 
@@ -18,7 +18,6 @@ class RequestAsync {
 
   async #getRefinedResponse(response) {
     const responseString = await response.text();
-
     return {
       status: response.ok ? 비동기_요청.SUCCESS : 비동기_요청.FAILURE,
       statusCode: response.status,

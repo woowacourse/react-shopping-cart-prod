@@ -17,26 +17,29 @@ import EditUserInfo from 'pages/EditUserInfo';
 import Identification from 'pages/Identification';
 import EditUserPassword from 'pages/EditUserPassword';
 import Auth from 'utils/Auth';
+import ErrorBoundary from 'components/ErrorBoundary';
 
 const ShoppingCartApp = () => (
   <Provider store={store}>
     <Global styles={GlobalStyles} />
     <Snackbar />
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<ProductList />} />
-        <Route path="/products/:productId" element={<ProductDetail />} />
-        <Route path="/cart" element={<Auth element={<Cart />} />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signUp" element={<SignUp />} />
-        <Route path="/edit/*" element={<Auth element={<EditUserData />} />}>
-          <Route path="identification" element={<Identification />} />
-          <Route path="userInfo" element={<EditUserInfo />} />
-          <Route path="userPassword" element={<EditUserPassword />} />
-        </Route>
-        <Route path="*" element={<ProductList />} />
-      </Routes>
-    </BrowserRouter>
+    <ErrorBoundary>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ProductList />} />
+          <Route path="/products/:productId" element={<ProductDetail />} />
+          <Route path="/cart" element={<Auth element={<Cart />} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/edit/*" element={<Auth element={<EditUserData />} />}>
+            <Route path="identification" element={<Identification />} />
+            <Route path="userInfo" element={<EditUserInfo />} />
+            <Route path="userPassword" element={<EditUserPassword />} />
+          </Route>
+          <Route path="*" element={<ProductList />} />
+        </Routes>
+      </BrowserRouter>
+    </ErrorBoundary>
   </Provider>
 );
 
