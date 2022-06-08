@@ -41,6 +41,16 @@ const NavText = styled(NavLink)`
   color: ${({theme}) => theme.WHITE};
 `;
 
+const NicknameText = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 10vw;
+  font-size: 24px;
+  color: ${({theme}) => theme.WHITE};
+`;
+
 const ProfileNavContainer = styled(FlexColumn)`
   justify-content: center;
 
@@ -145,4 +155,5 @@ export {
   ProfileNavContainer,
   ProfileImage,
   ProfileLinkText,
+  NicknameText,
 };

@@ -23,8 +23,8 @@ export default function Header() {
   const navigation = useNavigate();
 
   const isLogin = useSelector((state) => state.authReducer.isLogin);
-
-  const {data: user, fetch: userInfo} = useFetch('get');
+  const nickname = useSelector((state) => state.authReducer.nickname);
+  const {fetch: userInfo} = useFetch('get');
 
   const checkLogin = () => {
     const response = JSON.parse(localStorage.getItem('accessToken'));
@@ -39,8 +39,8 @@ export default function Header() {
     userInfo({
       API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
-      onSuccess: () => {
-        console.log(user);
+      onSuccess: (res) => {
+        dispatch({type: AUTH.SET_USER_INFO, payload: res});
         dispatch({type: AUTH.LOGIN});
       },
       onFail: (error) => {
@@ -85,6 +85,7 @@ export default function Header() {
                 </S.ProfileNavContainer>
               </div>
             </S.Profile>
+            <S.NicknameText>{nickname}</S.NicknameText>
           </>
         ) : (
           <S.NavText to={PATH.LOGIN}>로그인</S.NavText>

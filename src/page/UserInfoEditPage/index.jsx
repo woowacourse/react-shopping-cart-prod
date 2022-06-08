@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 import * as S from './style';
 import Input from 'component/common/Input';
@@ -7,10 +9,11 @@ import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {PATH, VALIDATION_MESSAGE} from 'constant';
 import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
-import {useNavigate} from 'react-router-dom';
+import {AUTH} from 'store/modules/auth';
 
 function UserInfoEditPage() {
   const navigation = useNavigate();
+  const dispatch = useDispatch();
 
   const userInfo = useFetch('get');
   const editInfo = useFetch('put');
@@ -85,6 +88,16 @@ function UserInfoEditPage() {
         },
       },
       onSuccess: () => {
+        dispatch({
+          type: AUTH.EDIT_USER_INFO,
+          payload: {
+            nickname: nickname.value,
+            address: address.value,
+            start: start.value,
+            middle: middle.value,
+            last: last.value,
+          },
+        });
         navigation(PATH.HOME);
       },
       onFail: (error) => {

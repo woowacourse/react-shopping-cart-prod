@@ -7,9 +7,7 @@ import ContentBox from 'component/common/ContentBox';
 export default function OrderPage() {
   const cartItem = useSelector((state) => state.cartReducer.cart);
 
-  const handleClickOrderButton = () => {
-    console.log('결제 버튼');
-  };
+  const handleClickOrderButton = () => {};
 
   return (
     <S.OrderPageLayout>
