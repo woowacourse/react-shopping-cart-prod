@@ -12,6 +12,7 @@ import getProductHandler from 'page/ProductDetailPage/mock';
 import { getCartHandler, postOrderHandler } from 'page/CartPage/mock';
 import putCartHandler from './handlers/putCartHandler';
 import deleteCartProductHandler from './handlers/deleteCartProductHandler';
+import getOrderHandler from 'page/PaymentPage/mock';
 
 export const users = [
   { id: 1, email: '1@gmail.com', nickname: 'abc', password: 'qwer1234!!' },
@@ -55,6 +56,9 @@ const handlers = [
 
   // 주문하기
   postOrderHandler,
+
+  // 주문단건조회
+  getOrderHandler,
 ];
 
 export default handlers;
