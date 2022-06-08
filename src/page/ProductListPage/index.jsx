@@ -16,7 +16,7 @@ const ProductListPage = () => {
     if (products.length > 0) return; // 서버에서 상품 목록 갱신될 수 있으므로 매번 상품 목록 가져오는 것이 적절할 것으로 생각됨. 따라서 이 라인의 코드는 삭제 검토 필요
 
     const response = await apiClient.get('/products');
-
+    console.log(response.data);
     dispatch(doInitializeProductList({ products: response.data }));
   }, [dispatch, products.length]);
 
@@ -28,8 +28,18 @@ const ProductListPage = () => {
     <Styled.ProductListPage>
       {products.length > 0 ? (
         <Styled.ProductList>
-          {products.map(({ id, name, price, image }) => {
-            return id && <ProductItem key={id} id={id} name={name} price={price} image={image} />;
+          {products.map(({ productId, name, price, image }) => {
+            return (
+              productId && (
+                <ProductItem
+                  key={productId}
+                  productId={productId}
+                  name={name}
+                  price={price}
+                  image={image}
+                />
+              )
+            );
           })}
         </Styled.ProductList>
       ) : (

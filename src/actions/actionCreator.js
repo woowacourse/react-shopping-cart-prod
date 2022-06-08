@@ -6,9 +6,16 @@ import {
   SNACKBAR_ACTIONS,
 } from 'actions/action';
 
-const doPutProductToCart = ({ id, quantity }) => ({ type: CART_ACTIONS.PUT, id, quantity });
+const doPutProductToCart = ({ productId, name, price, image, quantity }) => ({
+  type: CART_ACTIONS.PUT,
+  productId,
+  name,
+  price,
+  image,
+  quantity,
+});
 
-const doDeleteProductFromCart = ({ id }) => ({ type: CART_ACTIONS.DELETE, id });
+const doDeleteProductFromCart = ({ productId }) => ({ type: CART_ACTIONS.DELETE, productId });
 
 const doSelectiveDeleteFromCart = () => ({ type: CART_ACTIONS.SELECTIVE_DELETE });
 

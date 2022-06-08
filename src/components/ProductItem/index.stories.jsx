@@ -5,7 +5,7 @@ export default {
   title: 'Components/ProductItem',
   component: ProductItem,
   argTypes: {
-    id: { control: 'select', options: dummyProductList.map(product => product.id) },
+    id: { control: 'select', options: dummyProductList.map(product => product.productId) },
     name: { control: 'select', options: dummyProductList.map(product => product.name) },
     price: { control: 'select', options: dummyProductList.map(product => product.price) },
     image: { control: 'select', options: dummyProductList.map(product => product.image) },

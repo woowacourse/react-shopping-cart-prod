@@ -15,21 +15,22 @@ import apiClient from 'apis/apiClient';
 import useLogout from 'hooks/useLogout';
 import { useNavigate } from 'react-router-dom';
 
-const CartProductItem = ({ id, quantity }) => {
+const CartProductItem = ({ productId, name, price, image, quantity }) => {
+  // console.log(productId, name, price, image, quantity);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
 
-  const [{ name, price, image }] = useProduct(id);
-  const [isInOrder, updateOrder] = useOrder(id);
+  // const [{ name, price, image }] = useProduct(productId);
+  const [isInOrder, updateOrder] = useOrder(productId);
   const { logoutByError } = useLogout();
 
   // TODO 5. delete 장바구니 내 선택된 상품 삭제
   const deleteItem = async () => {
     try {
-      await apiClient.delete('/cart', { data: { productIds: [id] } });
+      await apiClient.delete('/cart', { data: { productIds: [productId] } });
 
-      dispatch(doDeleteProductFromCart({ id }));
+      dispatch(doDeleteProductFromCart({ productId: productId }));
       renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
     } catch (error) {
       const customError = error.response.data;
@@ -39,10 +40,20 @@ const CartProductItem = ({ id, quantity }) => {
   };
 
   // TODO 4. put 장바구니 내 상품 수량 수정
-  const putCart = async (id, updatedQuantity) => {
+  const putCart = async (productId, updatedQuantity) => {
     try {
-      const response = await apiClient.put(`/cart/products/${id}`, { quantity: updatedQuantity });
-      dispatch(doPutProductToCart({ id: response.data.id, quantity: response.data.quantity }));
+      const response = await apiClient.put(`/cart/products/${productId}`, {
+        quantity: updatedQuantity,
+      });
+      dispatch(
+        doPutProductToCart({
+          productId: response.data.productId,
+          name: response.data.name,
+          image: response.data.image,
+          price: response.data.price,
+          quantity: response.data.quantity,
+        }),
+      );
     } catch (error) {
       const customError = error.response.data;
       renderSnackbar(customError.message, 'FAILED');
@@ -64,11 +75,11 @@ const CartProductItem = ({ id, quantity }) => {
         <Counter
           quantity={quantity}
           increase={() => {
-            putCart(id, quantity + 1);
+            putCart(productId, quantity + 1);
           }}
           decrease={() => {
             if (quantity > 1) {
-              putCart(id, quantity - 1);
+              putCart(productId, quantity - 1);
             }
           }}
         />
@@ -82,7 +93,7 @@ CartProductItem.propTypes = {
   /**
    * 해당 상품의 id
    */
-  id: PropTypes.number.isRequired,
+  productId: PropTypes.number.isRequired,
   /**
    * 해당 상품이 장바구니에 담긴 수량
    */

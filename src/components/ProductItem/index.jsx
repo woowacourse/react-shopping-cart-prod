@@ -18,13 +18,13 @@ import { useSelector, useDispatch } from 'react-redux';
 import apiClient from 'apis/apiClient';
 import useLogout from 'hooks/useLogout';
 
-const ProductItem = ({ id, name, price, image }) => {
+const ProductItem = ({ productId, name, price, image }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
   const { isAuthenticated } = useSelector(state => state.authReducer);
 
-  const [isInCart, product] = useCart(id);
+  const [isInCart, product] = useCart(productId);
   const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);
 
   const [isControllerOpen, setIsControllerOpen] = useState(false);
@@ -35,10 +35,20 @@ const ProductItem = ({ id, name, price, image }) => {
   quantityRef.current = quantity;
 
   // TODO 4. put 장바구니 내 상품 수량 수정
-  const putCart = async (id, updatedQuantity) => {
+  const putCart = async (productId, updatedQuantity) => {
     try {
-      const response = await apiClient.put(`/cart/products/${id}`, { quantity: updatedQuantity });
-      dispatch(doPutProductToCart({ id: response.data.id, quantity: response.data.quantity }));
+      const response = await apiClient.put(`/cart/products/${productId}`, {
+        quantity: updatedQuantity,
+      });
+      dispatch(
+        doPutProductToCart({
+          productId: response.data.productId,
+          name: response.data.name,
+          image: response.data.image,
+          price: response.data.price,
+          quantity: response.data.quantity,
+        }),
+      );
     } catch (error) {
       const customError = error.response.data;
       renderSnackbar(customError.message, 'FAILED');
@@ -52,18 +62,18 @@ const ProductItem = ({ id, name, price, image }) => {
     clearTimer();
 
     if (quantityRef.current > 0) {
-      putCart(id, quantityRef.current);
-      // dispatch(doPutProductToCart({ id, quantity: quantityRef.current }));
+      putCart(productId, quantityRef.current);
+      // dispatch(doPutProductToCart({ productId, quantity: quantityRef.current }));
       renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
       return;
     }
 
-    dispatch(doDeleteProductFromCart({ id }));
+    dispatch(doDeleteProductFromCart({ productId }));
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
   const handleItemClick = () => {
-    navigate(`${LINK.TO_DETAILS}/${id}`);
+    navigate(`${LINK.TO_DETAILS}/${productId}`);
   };
 
   const handleCartClick = e => {
@@ -119,7 +129,7 @@ ProductItem.propTypes = {
   /**
    * 해당 상품의 id
    */
-  id: PropTypes.number.isRequired,
+  productId: PropTypes.number.isRequired,
   /**
    * 상품의 이름
    */

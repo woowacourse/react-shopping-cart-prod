@@ -33,8 +33,8 @@ const CartPage = () => {
     let total = 0;
 
     order.forEach(id => {
-      const { price } = products.find(product => product.id === id);
-      const { quantity } = shoppingCart.find(product => product.id === id);
+      const { price } = products.find(product => product.productId === id);
+      const { quantity } = shoppingCart.find(product => product.productId === id);
       total += quantity * price;
     });
 
@@ -44,6 +44,7 @@ const CartPage = () => {
   // TODO 3. get 장바구니 목록 가져오기
   const getCart = async () => {
     const response = await apiClient.get('/cart');
+    console.log('장바구니', response.data);
     dispatch(doInitializeCartList({ shoppingCart: response.data }));
   };
 
@@ -66,15 +67,15 @@ const CartPage = () => {
     }
 
     shoppingCart.forEach(product => {
-      if (!order.some(id => id === product.id)) {
-        dispatch(doAddProductToOrder({ id: product.id }));
+      if (!order.some(id => id === product.productId)) {
+        dispatch(doAddProductToOrder({ id: product.productId }));
       }
     });
   };
 
   // TODO 5. delete 장바구니 내 선택된 상품 삭제
   const deleteSelectedItems = async () => {
-    const productIdsInCart = shoppingCart.map(product => product.id);
+    const productIdsInCart = shoppingCart.map(product => product.productId);
     const productIds = productIdsInCart.filter(id => !order.includes(id));
 
     try {
@@ -90,7 +91,7 @@ const CartPage = () => {
   };
 
   const handleOrder = () => {
-    const orderList = shoppingCart.filter(product => order.includes(product.id));
+    const orderList = shoppingCart.filter(product => order.includes(product.productId));
     dispatch(doDecideOrder({ orderList }));
     navigate('/order');
   };
@@ -121,9 +122,20 @@ const CartPage = () => {
                 든든배송 상품 ({shoppingCart.length}개)
               </Styled.ProductListTitle>
               <Styled.ProductList>
-                {shoppingCart.map(({ id, quantity }) => (
-                  <CartProductItem key={id} id={id} quantity={quantity} />
-                ))}
+                {shoppingCart.map(({ productId, name, price, image, quantity }) => {
+                  // console.log(productId, name, price, image, quantity);
+
+                  return (
+                    <CartProductItem
+                      key={productId}
+                      productId={productId}
+                      name={name}
+                      price={price}
+                      image={image}
+                      quantity={quantity}
+                    />
+                  );
+                })}
               </Styled.ProductList>
             </Styled.LeftSide>
 

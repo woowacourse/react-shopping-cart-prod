@@ -18,14 +18,14 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector(state => state.authReducer);
-  const [product, setProduct] = useState({ id: '', image: '', name: '', price: '' });
+  const [product, setProduct] = useState({ productId: '', image: '', name: '', price: '' });
   const [renderSnackbar] = useSnackbar();
   const { logoutByError } = useLogout();
 
   const params = useParams();
   const id = Number(params.id);
 
-  // TODO  1. get 상품 목록 가져오기
+  // TODO  2. get 특정 상품 가져오기
   const getProduct = async () => {
     const response = await apiClient.get(`/products/${id}`);
     setProduct(response.data);
@@ -41,7 +41,15 @@ const ProductDetailPage = () => {
   const putCartAPI = async (id, updatedQuantity) => {
     try {
       const response = await apiClient.put(`/cart/products/${id}`, { quantity: updatedQuantity });
-      dispatch(doPutProductToCart({ id: response.data.id, quantity: response.data.quantity }));
+      dispatch(
+        doPutProductToCart({
+          productId: response.data.productId,
+          name: response.data.name,
+          image: response.data.image,
+          price: response.data.price,
+          quantity: response.data.quantity,
+        }),
+      );
     } catch (error) {
       const customError = error.response.data;
       logoutByError(customError);
@@ -58,7 +66,6 @@ const ProductDetailPage = () => {
     }
     const updatedQuantity = isInCart ? productInCart.quantity + 1 : 1;
     putCartAPI(id, updatedQuantity);
-    // dispatch(doPutProductToCart({ id: id, quantity: isInCart ? productInCart.quantity + 1 : 1 }));
     navigate(LINK.TO_CART);
   };
 
