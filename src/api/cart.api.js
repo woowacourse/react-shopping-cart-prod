@@ -32,18 +32,17 @@ export const sendUpdateCartProductQuantityRequest = async (productId, quantity) 
 };
 
 export const sendDeleteCartProductRequest = async (productIdArray) => {
-  const response = await productIdArray.reduce(sendCartProductDeleteRequest, null);
-  const cart = response.data;
+  await Promise.allSettled(productIdArray.map(sendCartProductDeleteRequest));
 
-  return { cart };
+  const cart = await sendGetCartRequest();
+
+  return cart;
 };
 
-const sendCartProductDeleteRequest = async (res, productId) => {
-  res = await customInstance.delete(`${API_ENDPOINT.CARTS_PRODUCTS}`, {
+const sendCartProductDeleteRequest = async (productId) => {
+  return await customInstance.delete(`${API_ENDPOINT.CARTS_PRODUCTS}`, {
     params: {
       productId,
     },
   });
-
-  return res;
 };
