@@ -14,9 +14,8 @@ type Props = {
 };
 
 function ProductCard({ product, isInCart }: Props) {
-  const { id, name, price, stock, description, image } = {
+  const { id, name, price, description, imageUrl } = {
     ...product,
-    stock: Number(product.stock),
     price: Number(product.price),
   };
   const dispatch = useDispatch();
@@ -35,7 +34,7 @@ function ProductCard({ product, isInCart }: Props) {
             <p>{description}</p>
             <div onClick={onClickCartButton}>구매하기</div>
           </CardImageOverlay>
-          <img src={image} alt={name} />
+          <img src={imageUrl} alt={name} />
         </CardImageContainer>
         <CardDescriptionContainer>
           <h3>{name}</h3>
@@ -148,6 +147,7 @@ const CardDescriptionContainer = styled.div`
 
   p {
     font-size: 16px;
+    font-weight: bold;
   }
 `;
 
