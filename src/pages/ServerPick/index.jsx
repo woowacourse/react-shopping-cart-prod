@@ -137,7 +137,7 @@ const MarqueeText = styled.p`
   line-height: 50px;
   text-align: center;
   color: #fff;
-  font-weight: bold;
+  font-weight: 500;
   font-size: 2rem;
   text-shadow: 1px 1px 0px #000000;
   filter: dropshadow(color=#000000, offx=1, offy=1);
