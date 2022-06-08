@@ -1,4 +1,4 @@
-import CartItem from 'components/CartItem/CartItem';
+import CartItemCard from 'components/CartItemCard/CartItemCard';
 import Checkbox from 'components/Checkbox/Checkbox';
 import Spinner from 'components/Spinner/Spinner';
 import DivideLine from 'components/DivideLine/DivideLine';
@@ -55,7 +55,7 @@ function CartPage() {
           <ul>
             {cart.map(({ product, quantity }) => (
               <li key={product.id}>
-                <CartItem
+                <CartItemCard
                   product={product}
                   quantity={quantity}
                   checked={checkedFlags[product.id] ?? true}

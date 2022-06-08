@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const CartItemBox = styled.div`
+export const CartItemCardBox = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-export const CartItemInformationBox = styled.div`
+export const CartItemCardInformationBox = styled.div`
   display: flex;
   gap: 1rem;
 `;
@@ -21,7 +21,7 @@ export const ImageBox = styled.div`
   }
 `;
 
-export const CartItemControlBox = styled.div`
+export const CartItemCardControlBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
