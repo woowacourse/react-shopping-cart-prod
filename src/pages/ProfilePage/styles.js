@@ -1,15 +1,21 @@
 import styled from '@emotion/styled/macro';
 
-import FlexContainer from 'components/@common/FlexContainer';
-
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 58% 40%;
-  gap: 2%;
-
-  & > ${FlexContainer} {
-    padding: 1rem 1.5rem;
-  }
+const PageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  margin: 5rem auto;
 `;
 
-export { Container };
+const Container = styled.form`
+  width: 100%;
+`;
+
+const InlineField = styled.div`
+  display: grid;
+  width: 100%;
+  grid-template-columns: 75% 22%;
+  gap: 3%;
+`;
+
+export { PageContent, Container, InlineField };
