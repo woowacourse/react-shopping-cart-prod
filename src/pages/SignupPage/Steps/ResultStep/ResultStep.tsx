@@ -9,7 +9,7 @@ function ResultStep() {
       <S.ResultBox>
         <S.Title>반갑습니다.</S.Title>
         <S.Paragraph>
-          Woowa Shop의 멤버가 되신 것을
+          WOOWA SHOP의 멤버가 되신 것을
           <br /> 진심으로 축하드립니다!
         </S.Paragraph>
       </S.ResultBox>

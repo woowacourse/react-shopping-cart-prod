@@ -33,10 +33,9 @@ const TYPES = {
 } as const;
 
 const actions = {
-  getProductList: (ids?: Array<String>) => {
-    const query = ids ? `?${ids.map((id) => `id=${id}`).join('&')}` : '';
+  getProductList: () => {
     const request = axios
-      .get(`${API.PRODUCTS}${query}`)
+      .get(`${SERVER_URL}/api/products`)
       .then((res) => res.data);
 
     return { type: TYPES.GET_PRODUCT_LIST, payload: request };
@@ -96,7 +95,8 @@ const actions = {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-    });
+    }).then((res) => res.data);
+
     return { type: TYPES.GET_USER_INFO, payload: request };
   },
 };

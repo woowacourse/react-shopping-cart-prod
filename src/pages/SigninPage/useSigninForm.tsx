@@ -28,7 +28,7 @@ const useSigninForm = () => {
       navigate('/');
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        alert('유효하지 않은 이메일 형식입니다.');
+        alert('이메일 혹은 패스워드가 잘못되어 로그인에 실패하였습니다.');
       } else {
         alert(e);
       }

@@ -21,7 +21,7 @@ function user(state = initialState, action: Action) {
       return { ...state, isLoading: true, error: null };
     }
     case `${TYPES.GET_USER_INFO}_FULFILLED`: {
-      const { name, profileImageUrl } = action.payload.data;
+      const { name, profileImageUrl } = action.payload;
       return { ...state, isLoading: false, info: { name, profileImageUrl } };
     }
     case `${TYPES.GET_USER_INFO}_REJECTED`: {
