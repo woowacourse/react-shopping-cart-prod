@@ -17,7 +17,7 @@ const useProductPage = () => {
     method: METHOD.GET,
     url: `/api/products/${id}`,
   });
-  const { addItem } = useCart();
+  const { addItem, cartItems, getItems } = useCart();
   const navigate = useNavigate();
   const { authenticated } = useSelector((state) => state.user);
 
@@ -31,6 +31,9 @@ const useProductPage = () => {
 
   useEffect(() => {
     fetchApi();
+    if (!cartItems) {
+      getItems();
+    }
   }, []);
 
   return { isLoading, isError, product, handleAddCartItem };

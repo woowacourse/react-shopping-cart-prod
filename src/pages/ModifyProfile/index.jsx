@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-
 import Profile from 'components/User/Profile/Profile';
 import Title from 'components/Common/Title/Title';
 import Button from 'components/Common/Button/Button';
@@ -11,10 +10,14 @@ import useAuthorization from 'hooks/useAuthorization';
 import useModal from 'hooks/useModal';
 import * as Styled from './style';
 import { AUTHORIZATION_TYPE } from 'constants';
+import { useEffect } from 'react';
+import useCart from 'hooks/useCart';
 
 const ModifyProfile = () => {
   useAuthorization(AUTHORIZATION_TYPE.PRIVATE_ONLY);
+  const { cartItems, getItems } = useCart();
   const { name } = useSelector((state) => state.user);
+
   const [
     isModifyPasswordModalOpened,
     openModifyPasswordModal,
@@ -22,6 +25,12 @@ const ModifyProfile = () => {
   ] = useModal();
   const [isWithdrawalModalOpened, openWithdrawalModal, closeWithdrawalModal] =
     useModal();
+
+  useEffect(() => {
+    if (!cartItems) {
+      getItems();
+    }
+  }, []);
 
   return (
     <Styled.Wrapper>

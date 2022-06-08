@@ -18,12 +18,12 @@ const useProductListPage = () => {
 
   const navigate = useNavigate();
   const { authenticated } = useSelector((state) => state.user);
-  const { cartItems, deleteItem, addItem } = useCart();
+  const { cartItems, addItem, getItems } = useCart();
 
   const isEmpty = products && !isLoading && products.length === 0;
 
   const includedInCart = (id) =>
-    cartItems && cartItems?.findIndex((item) => item.id === id) !== -1;
+    cartItems && cartItems?.findIndex((item) => item.productId === id) !== -1;
 
   const handleClickCartButton = (id) => (e) => {
     e.stopPropagation();
@@ -31,15 +31,14 @@ const useProductListPage = () => {
       navigate(PATH_NAME.LOGIN);
       return;
     }
-    if (includedInCart(id)) {
-      deleteItem(id);
-      return;
-    }
     addItem(id);
   };
 
   useEffect(() => {
     fetchApi();
+    if (!cartItems) {
+      getItems();
+    }
   }, []);
 
   return {
