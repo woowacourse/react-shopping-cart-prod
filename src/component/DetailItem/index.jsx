@@ -11,7 +11,7 @@ import * as S from 'component/DetailItem/style';
 import theme from 'theme/theme';
 
 export default function DetailItem({productInfo}) {
-  const {addCartItem} = useCartItem();
+  const {addCartItem, deleteCartItem} = useCartItem();
 
   const cartItem = useSelector((state) => state.cartReducer.cart);
 
@@ -20,6 +20,11 @@ export default function DetailItem({productInfo}) {
   const isInCart = cartItem.some((item) => item.id === Number.parseInt(id));
 
   const handleCartButtonClick = () => {
+    if (isInCart) {
+      deleteCartItem(Number.parseInt(id));
+      return;
+    }
+
     addCartItem({
       imageUrl,
       name,
@@ -38,13 +43,14 @@ export default function DetailItem({productInfo}) {
         <S.PriceFont fontSize="32px">{price.toLocaleString()}원</S.PriceFont>
       </S.ItemPriceBox>
       <Button
-        backgroundColor={theme.GRAY_BROWN}
+        backgroundColor={theme.MINT_500}
         width="640px"
         height="100px"
         onClick={handleCartButtonClick}
-        isDisabled={isInCart}
+        selected={isInCart}
+        selectedChildren="장바구니 삭제"
       >
-        장바구니
+        장바구니 추가
       </Button>
     </S.DetailItemLayout>
   );
