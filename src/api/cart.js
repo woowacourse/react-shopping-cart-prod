@@ -1,11 +1,17 @@
 import { request } from 'lib/requestUtils';
 
 const requestGetCartList = () =>
-  request('/cart', {
-    method: 'GET',
-  });
+  request(
+    '/auth/customer/cartItems',
+    {
+      method: 'GET',
+    },
+    {
+      isAccessTokenUsed: true,
+    },
+  );
 
-const requestAddCart = ({ id, image, name, price, quantity, isChecked }) =>
+const requestAddCartItems = (itemList) =>
   request(
     '/auth/customer/cartItems',
     {
@@ -13,14 +19,7 @@ const requestAddCart = ({ id, image, name, price, quantity, isChecked }) =>
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        product: id,
-        image,
-        name,
-        price,
-        quantity,
-        isChecked,
-      }),
+      body: JSON.stringify(itemList),
     },
     {
       isAccessTokenUsed: true,
@@ -28,29 +27,62 @@ const requestAddCart = ({ id, image, name, price, quantity, isChecked }) =>
   );
 
 const requestUpdateCartItem = (id, content) =>
-  request(`/cart/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
+  request(
+    '/auth/customer/cartItems',
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id,
+        ...content,
+      }),
     },
-    body: JSON.stringify({
-      ...content,
-    }),
-  });
+    {
+      isAccessTokenUsed: true,
+    },
+  );
 
 const requestRemoveCartItem = (id) =>
-  request(`/cart/${id}`, {
-    method: 'DELETE',
-  });
+  request(
+    '/auth/customer/cartItems',
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify([
+        {
+          id,
+        },
+      ]),
+    },
+    {
+      isAccessTokenUsed: true,
+    },
+  );
 
-const requestRemoveCartItemList = (idList) =>
-  request(`/cart/${idList.join(',')}`, {
-    method: 'DELETE',
-  });
+const requestRemoveCartItemList = (idList) => {
+  const requestBody = idList.map((id) => ({ id }));
+  request(
+    '/auth/customer/cartItems',
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    },
+    {
+      isAccessTokenUsed: true,
+    },
+  );
+};
 
 export {
   requestGetCartList,
-  requestAddCart,
+  requestAddCartItems,
   requestUpdateCartItem,
   requestRemoveCartItem,
   requestRemoveCartItemList,
