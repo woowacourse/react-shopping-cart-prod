@@ -7,7 +7,7 @@ import { ItemListAction, itemListActions } from './action';
 export const getItemList = () => async (dispatch: Dispatch<ItemListAction>) => {
   dispatch(itemListActions.getItemListActionGroup.request());
   try {
-    const response = await axios.get(`${BASE_URL}/itemList`);
+    const response = await axios.get(`${BASE_URL}/products`);
 
     dispatch(itemListActions.getItemListActionGroup.success(response.data));
   } catch (e: unknown) {

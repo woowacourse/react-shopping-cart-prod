@@ -4,7 +4,7 @@ import { rest } from 'msw';
 import { CartItemResponse, Item } from 'types/domain';
 
 export const cartHandler = [
-  rest.get<null, null, Item[]>(`${BASE_URL}/itemList`, (req, res, ctx) => {
+  rest.get<null, null, Item[]>(`${BASE_URL}/products`, (req, res, ctx) => {
     const page = req.url.searchParams.get('_page');
     const limit = req.url.searchParams.get('_limit');
 
@@ -15,7 +15,7 @@ export const cartHandler = [
     return res(ctx.status(200), ctx.json(itemList));
   }),
 
-  rest.get<null, PathParams, Item>(`${BASE_URL}/itemList/:id`, (req, res, ctx) => {
+  rest.get<null, PathParams, Item>(`${BASE_URL}/products/:id`, (req, res, ctx) => {
     const { id } = req.params;
 
     return res(ctx.status(200), ctx.json(itemList[Number(id) - 1]));
