@@ -44,10 +44,10 @@ const cartHandlers = [
       (cartItem) => cartItem['customer_id'] === userId
     );
 
-    const joinedCart = cartItems.map(({ product_id, quantity }) => {
+    const joinedCart = cartItems.map(({ id, product_id, quantity }) => {
       const product = db.products.find((product) => product.id === product_id);
 
-      return { product, quantity };
+      return { cartItemId: id, product, quantity };
     });
 
     return res(ctx.delay(2000), ctx.status(200), ctx.json(joinedCart));
