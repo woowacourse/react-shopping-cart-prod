@@ -17,6 +17,8 @@ import {
 
 import useValidateEmail from 'hooks/api/auth/useValidateEmail';
 
+import { enterSubmit } from 'utils';
+
 function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
   const dispatch = useDispatch();
   const { checkValidEmail } = useValidateEmail();
@@ -35,7 +37,6 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
     e.preventDefault();
 
     try {
-      console.log({ email: email.value });
       await checkValidEmail({ email: email.value });
       dispatch(setEmailDisabled(true));
     } catch (error) {
@@ -44,8 +45,25 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
   };
 
   return (
-    <FlexBox id="loginInfo" width="100%" direction="column" gap="10px">
-      <FlexBox alignItems="flex-start" gap="10px" height="90px">
+    <FlexBox
+      onKeyDown={e => {
+        enterSubmit(e, submitDisabled, onSubmit);
+      }}
+      id="loginInfo"
+      width="100%"
+      direction="column"
+      gap="10px"
+    >
+      <FlexBox
+        onKeyDown={e => {
+          enterSubmit(e, email.disabled || email.error || email.value == '', () =>
+            handleCheckDuplicatedEmail(e)
+          );
+        }}
+        alignItems="flex-start"
+        gap="10px"
+        height="90px"
+      >
         <InputBox
           {...email}
           onChange={e => {

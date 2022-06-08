@@ -25,3 +25,13 @@ export function processServerData(userInfo) {
     return { ...acc, [key]: value.value };
   }, {});
 }
+
+export const enterSubmit = (e, condition, cb) => {
+  if (condition) {
+    return;
+  }
+
+  if (e.nativeEvent.key === 'Enter') {
+    cb();
+  }
+};
