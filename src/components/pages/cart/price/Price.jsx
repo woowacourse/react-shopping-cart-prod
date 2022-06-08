@@ -5,17 +5,15 @@ import StyledPrice from "@/components/pages/cart/price/Price.styled";
 function Price() {
   const cartList = useSelector((state) => state.cartListState);
 
-  const getTotalCount =
-    cartList.reduce((prev, current) => {
-      return current.checked === true ? prev + current.quantity : prev;
-    }, 0) || 0;
+  const getTotalCount = cartList.reduce((prev, current) => {
+    return current.checked === true ? prev + current.quantity : prev;
+  }, 0);
 
-  const getTotalPrice =
-    cartList.reduce((prev, current) => {
-      return current.checked === true
-        ? prev + current.quantity * current.price
-        : prev;
-    }, 0) || 0;
+  const getTotalPrice = cartList.reduce((prev, current) => {
+    return current.checked === true
+      ? prev + current.quantity * current.price
+      : prev;
+  }, 0);
 
   return (
     <StyledPrice>
