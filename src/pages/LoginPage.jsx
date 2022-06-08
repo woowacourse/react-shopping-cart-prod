@@ -12,7 +12,14 @@ import { MESSAGE, SERVER_PATH, ROUTES_PATH, USER_INFO_KEY, STORAGE_KEY } from '.
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { loginInfo, setLoginInfo, handleUserInfoChange } = useUserForm();
+  const {
+    state: loginInfo,
+    setState: setLoginInfo,
+    handleUserInfoChange,
+  } = useUserForm({
+    email: '',
+    password: '',
+  });
   const { email, password } = loginInfo;
 
   const handleLoginInfoSubmit = async (e) => {

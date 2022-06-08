@@ -14,7 +14,7 @@ import { MESSAGE, ROUTES_PATH, SERVER_PATH, STORAGE_KEY, USER, USER_INFO_KEY } f
 
 function ModifyUserInfoPage() {
   const navigate = useNavigate();
-  const { userInfo, setUserInfo, handleUserInfoChange } = useUserForm();
+  const { state: userInfo, setState: setUserInfo, handleUserInfoChange } = useUserForm({});
   const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
   const handleUserInfoSubmit = async (e) => {

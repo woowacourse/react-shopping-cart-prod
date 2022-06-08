@@ -20,7 +20,15 @@ const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
 function ModifyPasswordPage() {
   const navigate = useNavigate();
-  const { passwords, setPasswords, handleUserInfoChange } = useUserForm();
+  const {
+    state: passwords,
+    setState: setPasswords,
+    handleUserInfoChange,
+  } = useUserForm({
+    prevPassword: '',
+    newPassword: '',
+    newPasswordConfirm: '',
+  });
   const { prevPassword, newPassword, newPasswordConfirm } = passwords;
 
   const handlePasswordSubmit = async (e) => {

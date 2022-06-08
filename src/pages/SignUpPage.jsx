@@ -12,7 +12,16 @@ import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../const
 
 function SignUpPage() {
   const navigate = useNavigate();
-  const { signUpInfo, setSignUpInfo, handleUserInfoChange } = useUserForm();
+  const {
+    state: signUpInfo,
+    setState: setSignUpInfo,
+    handleUserInfoChange,
+  } = useUserForm({
+    email: '',
+    nickname: '',
+    password: '',
+    passwordConfirm: '',
+  });
   const { email, nickname, password, passwordConfirm } = signUpInfo;
 
   const handleSignUpInfoSubmit = async (e) => {
