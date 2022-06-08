@@ -19,6 +19,12 @@ const initialState = {
     error: null,
     cart: [],
   },
+  userState: {
+    isLoading: false,
+    error: null,
+    info: [],
+    id: null,
+  },
 };
 
 describe('전체 상품 목록을 불러올 수 있다.', () => {

@@ -65,6 +65,12 @@ export type StoreState = {
     error: any;
     cart: { product: Product; quantity: number; checked: boolean }[];
   };
+  userState: {
+    isLoading: boolean;
+    error: any;
+    info: Record<string, any>;
+    id: number | null;
+  };
 };
 
 export type Theme = typeof theme;
