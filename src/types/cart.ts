@@ -2,9 +2,9 @@ import { Product } from './product';
 import { cartTypes } from 'redux/actions';
 
 export type Cart = {
-  id: Product['id'];
-  stock: number;
-  checked: boolean;
+  id: number;
+  quantity: number;
+  product: Product;
 };
 
 export type CartAction = {
@@ -14,10 +14,4 @@ export type CartAction = {
 
 export type CartStoreState = {
   cart: Array<Cart>;
-};
-
-export type CartProductState = {
-  product: Product;
-  stock: number;
-  checked: boolean;
 };

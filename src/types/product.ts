@@ -7,7 +7,6 @@ export type Product = {
   price: number;
   imageUrl: string;
   description: string;
-  stock: number;
 };
 
 export type ProductAction = {
