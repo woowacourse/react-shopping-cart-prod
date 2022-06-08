@@ -14,32 +14,18 @@ import ShoppingCartListContainer from 'components/ShoppingCartListContainer/Shop
 
 import { addAllItem, deleteAllItem } from 'redux/actions/orderList.action';
 
-import useFetch from 'hooks/useFetch';
+import useDeleteCart from 'hooks/useDeleteCarts';
+import useLoadCarts from 'hooks/useLoadCarts';
 
-import { API_URL_PATH } from 'constants/api';
 import { calculatePrice } from 'utils';
 
 function ShoppingCartList() {
   const dispatch = useDispatch();
-  const { accessToken } = useSelector(state => state.auth);
-  const { items: orderList } = useSelector(state => state.orderList);
-  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
-  const {
-    data,
-    isLoading,
-    fetchData: loadCarts,
-  } = useFetch({
-    url: API_URL_PATH.CARTS,
-    headers,
-  });
-  const { fetchData: deleteSelectedCarts } = useFetch({
-    url: API_URL_PATH.CARTS,
-    method: 'delete',
-    headers,
-    skip: true,
-  });
 
-  const carts = data?.carts;
+  const { carts, isLoading, loadCarts } = useLoadCarts();
+  const { items: orderList } = useSelector(state => state.orderList);
+  const { deleteCarts } = useDeleteCart(true);
+
   const total = calculatePrice(carts, orderList);
 
   const disabled = carts?.length === 0;
@@ -59,7 +45,7 @@ function ShoppingCartList() {
       return;
     }
     if (window.confirm(`${orderList.length}개의 상품을 장바구니에서 삭제하시겠습니까?`)) {
-      await deleteSelectedCarts({ productIds: orderList });
+      await deleteCarts({ productIds: orderList });
       dispatch(deleteAllItem());
       await loadCarts();
     }
