@@ -32,12 +32,12 @@ const Layout = () => {
             right={
               isAuthenticated ? (
                 <Styled.RightSide>
-                  <Styled.CartLink to={ROUTES.CART}>장바구니</Styled.CartLink>
-                  <Styled.OrderLink to={ROUTES.HOME}>주문목록</Styled.OrderLink>
+                  <Styled.CartLink to={ROUTES.CART}>Cart</Styled.CartLink>
+                  <Styled.OrderLink to={ROUTES.HOME}>Order</Styled.OrderLink>
                   <UserMenu nickname={nickname} />
                 </Styled.RightSide>
               ) : (
-                <Styled.LoginLink to="/login">로그인</Styled.LoginLink>
+                <Styled.LoginLink to="/login">Login</Styled.LoginLink>
               )
             }
           />
