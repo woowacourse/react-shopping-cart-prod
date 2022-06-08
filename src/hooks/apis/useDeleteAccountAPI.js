@@ -1,14 +1,15 @@
 // @ts-nocheck
-import apiClient from 'apis/apiClient';
-import useLogout from 'hooks/useLogout';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import useSnackbar from '../useSnackbar';
+
+import apiClient from 'apis/apiClient';
 import { doLogout } from 'reducers/auth.reducer';
 import { doInitializeCartList } from 'reducers/cart.reducer';
+
 import { MESSAGE } from 'utils/constants';
 import { deleteCookie } from 'utils/cookie';
-import useSnackbar from '../useSnackbar';
 
 // 회원탈퇴
 const useDeleteAccountAPI = (handleModal, password, isCorrectPassword) => {
@@ -17,7 +18,6 @@ const useDeleteAccountAPI = (handleModal, password, isCorrectPassword) => {
 
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
-  const { logoutByError } = useLogout();
   const navigate = useNavigate();
 
   const deleteAccount = useCallback(async () => {
