@@ -1,5 +1,5 @@
 import { productTypes } from 'redux/actions';
-import { ProductAction, ProductStoreState } from 'types/index';
+import { ProductAction, ProductStoreState } from 'types';
 
 import CONDITION from 'constants/condition';
 

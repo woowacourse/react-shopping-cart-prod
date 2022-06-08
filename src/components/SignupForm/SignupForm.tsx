@@ -4,12 +4,13 @@ import authAPI from 'apis/auth';
 import { Button, Form, Input } from 'components/@shared';
 import { useInput, usePasswordInput } from 'hooks';
 import { useNavigate } from 'react-router-dom';
-import styled, { css } from 'styled-components';
 import { createInputValueGetter } from 'utils/dom';
 import { formatPhoneNumber } from 'utils/formats';
 
 import { USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
+
+import * as S from './SignupForm.styled';
 
 function SignupForm() {
   const {
@@ -85,17 +86,17 @@ function SignupForm() {
         required
       >
         비밀번호
-        <StyledErrorSign
+        <S.ErrorSign
           isCorrect={isPasswordLengthCorrect && isPasswordAllCharactersCorrect}
         >
           ✓
-        </StyledErrorSign>
-        <StyledErrorMessage isCorrect={isPasswordLengthCorrect}>
+        </S.ErrorSign>
+        <S.ErrorMessage isCorrect={isPasswordLengthCorrect}>
           ∙ 8~16자 입력
-        </StyledErrorMessage>
-        <StyledErrorMessage isCorrect={isPasswordAllCharactersCorrect}>
+        </S.ErrorMessage>
+        <S.ErrorMessage isCorrect={isPasswordAllCharactersCorrect}>
           ∙ 영문, 숫자, 특수문자 모두 입력
-        </StyledErrorMessage>
+        </S.ErrorMessage>
       </Input>
       <Input
         id="passwordCheck"
@@ -109,7 +110,7 @@ function SignupForm() {
         required
       >
         비밀번호 재확인
-        <StyledErrorSign isCorrect={passwordCheckCorrect}>✓</StyledErrorSign>
+        <S.ErrorSign isCorrect={passwordCheckCorrect}>✓</S.ErrorSign>
       </Input>
       <Input
         id="email"
@@ -143,26 +144,5 @@ function SignupForm() {
     </Form>
   );
 }
-
-const StyledErrorSign = styled.span`
-  margin: 0 24px 0 12px;
-  font-size: 16px;
-
-  ${({ isCorrect }: { isCorrect: boolean }) => css`
-    color: ${({ theme: { colors } }) =>
-      isCorrect ? colors.green : colors.black};
-  `}
-`;
-
-const StyledErrorMessage = styled.span`
-  margin-left: 30px;
-  font-size: 11px;
-
-  ${({ isCorrect }: { isCorrect: boolean }) => css`
-    color: ${({ theme: { colors } }) =>
-      isCorrect ? colors.green : colors.black};
-    font-weight: ${isCorrect ? 800 : 500};
-  `}
-`;
 
 export default SignupForm;

@@ -1,7 +1,7 @@
 import axios from 'configs/api';
 import db from 'db.json';
 import { rest } from 'msw';
-import { User, Cart } from 'types/index';
+import { User, Cart } from 'types';
 
 import PATH from 'constants/path';
 

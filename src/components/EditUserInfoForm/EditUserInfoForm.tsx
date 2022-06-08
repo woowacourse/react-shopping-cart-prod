@@ -3,13 +3,14 @@ import { Button, Form, Input } from 'components/@shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
-import styled from 'styled-components';
-import { User } from 'types/index';
+import { User } from 'types';
 import { createInputValueGetter } from 'utils/dom';
 import { formatPhoneNumber } from 'utils/formats';
 
 import { USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
+
+import * as S from './EditUserInfoForm.styled';
 
 function EditUserInfoForm() {
   const { username, email, address, phoneNumber } = useSelector(
@@ -87,7 +88,7 @@ function EditUserInfoForm() {
       >
         핸드폰 번호
       </Input>
-      <StyledButtons>
+      <S.Buttons>
         <Button
           type="button"
           onClick={onClickWithdrawButton}
@@ -99,15 +100,9 @@ function EditUserInfoForm() {
         <Button type="submit" marginTop="20px">
           회원 정보 수정
         </Button>
-      </StyledButtons>
+      </S.Buttons>
     </Form>
   );
 }
-
-const StyledButtons = styled.div`
-  display: flex;
-  gap: 10px;
-  width: 100%;
-`;
 
 export default EditUserInfoForm;

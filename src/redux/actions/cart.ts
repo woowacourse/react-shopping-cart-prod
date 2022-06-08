@@ -1,4 +1,4 @@
-import { Cart } from 'types/index';
+import { Cart } from 'types';
 
 const cartTypes = {
   SET_CART: 'SET_CART_ITEMS',

@@ -1,4 +1,4 @@
-import { CartStoreState, Product } from 'types/index';
+import { CartStoreState, Product } from 'types';
 
 const getProductQuantityInCart = (
   productId: Product['id'],

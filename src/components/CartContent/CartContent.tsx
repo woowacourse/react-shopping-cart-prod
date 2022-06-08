@@ -6,15 +6,13 @@ import { Button, CheckBox } from 'components/@shared';
 import CartItem from 'components/CartItem/CartItem';
 import { useDispatch } from 'react-redux';
 import { cartActions } from 'redux/actions';
-import styled from 'styled-components';
-import { Cart } from 'types/index';
+import { Cart } from 'types';
 import { getAccessToken } from 'utils/auth';
 
 import { CART_MESSAGE } from 'constants/message';
 
-type Props = {
-  cartItems: Array<Cart>;
-};
+import * as S from './CartContent.styled';
+import { Props } from './CartContent.type';
 
 function CartContent({ cartItems }: Props) {
   const [checkedItems, setCheckedItems] = useState<Array<Cart['id']>>([]);
@@ -116,24 +114,21 @@ function CartContent({ cartItems }: Props) {
   };
 
   return (
-    <StyledContentBox>
-      <StyledProductContainer>
-        <StyledProductOptions>
-          <StyledAllCheckOption>
+    <S.ContentBox>
+      <S.ProductContainer>
+        <S.ProductOptions>
+          <S.AllCheckOption>
             <CheckBox
               id="all-check"
               checked={isAllChecked()}
               onChange={onChangeAllChecked}
             />
             <p>전체 선택/해제</p>
-          </StyledAllCheckOption>
-          <StyledDeleteButton
-            type="button"
-            onClick={onClickCheckedDeleteButton}
-          >
+          </S.AllCheckOption>
+          <S.DeleteButton type="button" onClick={onClickCheckedDeleteButton}>
             선택 상품 삭제
-          </StyledDeleteButton>
-        </StyledProductOptions>
+          </S.DeleteButton>
+        </S.ProductOptions>
         {cartItems.length > 0 ? (
           cartItems.map(({ id, product, quantity }) => (
             <CartItem
@@ -146,19 +141,19 @@ function CartContent({ cartItems }: Props) {
             />
           ))
         ) : (
-          <StyledMessage>장바구니에 상품이 없습니다 😅</StyledMessage>
+          <S.Message>장바구니에 상품이 없습니다 😅</S.Message>
         )}
-      </StyledProductContainer>
-      <StyledTotalContainer>
+      </S.ProductContainer>
+      <S.TotalContainer>
         <h3>결제예상금액</h3>
         <hr />
-        <StyledTotalMoney>
+        <S.TotalMoney>
           {calculateTotalMoney().toLocaleString('ko-KR')} 원
-        </StyledTotalMoney>
+        </S.TotalMoney>
         <Button type="button" size="small" onClick={onClickOrderButton}>
           주문하기
         </Button>
-      </StyledTotalContainer>
+      </S.TotalContainer>
       <PayModal
         showModal={showModal}
         toggleShowModal={toggleShowModal}
@@ -166,78 +161,8 @@ function CartContent({ cartItems }: Props) {
         totalPrice={calculateTotalMoney()}
         paymentFunc={paymentFunc}
       />
-    </StyledContentBox>
+    </S.ContentBox>
   );
 }
-
-const StyledContentBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 80px;
-
-  width: 100%;
-  margin-top: 30px;
-`;
-
-const StyledProductContainer = styled.div`
-  grid-column: 1 / 5;
-`;
-
-const StyledProductOptions = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  height: 30px;
-  margin-bottom: 20px;
-`;
-
-const StyledAllCheckOption = styled.div`
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-
-  font-size: 15px;
-`;
-
-const StyledDeleteButton = styled.button`
-  width: 100px;
-  border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-
-  background: ${({ theme: { colors } }) => colors.white};
-`;
-
-const StyledMessage = styled.div`
-  text-align: center;
-`;
-
-const StyledTotalContainer = styled.div`
-  grid-column: 5 / 7;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: sticky;
-  top: 100px;
-
-  height: fit-content;
-  padding: 0 20px 20px;
-  border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-
-  background: ${({ theme: { colors } }) => colors.white};
-
-  h3 {
-    line-height: 50px;
-  }
-
-  hr {
-    width: calc(100% + 40px);
-    margin: 0 -20px;
-  }
-`;
-
-const StyledTotalMoney = styled.div`
-  line-height: 5px;
-  border-bottom: 10px solid ${({ theme: { colors } }) => colors.pink};
-  margin: 30px 0;
-`;
 
 export default CartContent;

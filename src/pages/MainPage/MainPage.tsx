@@ -4,10 +4,11 @@ import { Loading } from 'components/@shared';
 import ProductCardGrid from 'components/ProductCardGrid/ProductCardGrid';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from 'redux/thunks';
-import styled from 'styled-components';
-import { ProductStoreState } from 'types/index';
+import { ProductStoreState } from 'types';
 
 import CONDITION from 'constants/condition';
+
+import * as S from './MainPage.styled';
 
 function MainPage() {
   const condition = useSelector(
@@ -24,7 +25,7 @@ function MainPage() {
     }
   }, [dispatch, productList]);
 
-  const renderSwitch = useCallback(() => {
+  const switchRender = useCallback(() => {
     switch (condition) {
       case CONDITION.LOADING:
         return <Loading />;
@@ -32,24 +33,12 @@ function MainPage() {
         return <ProductCardGrid productList={productList} />;
       case CONDITION.ERROR:
         return (
-          <Message>상품 정보를 가져오는데 오류가 발생하였습니다 😱</Message>
+          <S.Message>상품 정보를 가져오는데 오류가 발생하였습니다 😱</S.Message>
         );
     }
   }, [condition, productList]);
 
-  return <StyledPage>{renderSwitch()}</StyledPage>;
+  return <S.Page>{switchRender()}</S.Page>;
 }
-
-const StyledPage = styled.div`
-  margin: 60px 0;
-  display: flex;
-  width: 100%;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Message = styled.div`
-  font-size: 25px;
-`;
 
 export default MainPage;

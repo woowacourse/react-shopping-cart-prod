@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import * as S from './Input.styled';
 
 function Input({
   children,
@@ -15,8 +15,8 @@ function Input({
 }: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <>
-      {children && <StyledLabel htmlFor={id}>{children}</StyledLabel>}
-      <StyledInput
+      {children && <S.Label htmlFor={id}>{children}</S.Label>}
+      <S.Input
         id={id}
         type={type}
         placeholder={placeholder}
@@ -31,24 +31,5 @@ function Input({
     </>
   );
 }
-
-const StyledLabel = styled.label`
-  margin-top: 4px;
-  font-size: 14px;
-`;
-
-const StyledInput = styled.input`
-  border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-  border-radius: 2px;
-  padding: 6px 8px;
-
-  &[type='number'] {
-    ::-webkit-inner-spin-button,
-    ::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  }
-`;
 
 export default Input;

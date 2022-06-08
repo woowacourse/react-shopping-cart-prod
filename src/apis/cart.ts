@@ -1,5 +1,5 @@
 import axios from 'configs/api';
-import { Product } from 'types/index';
+import { Product } from 'types';
 
 import PATH from 'constants/path';
 

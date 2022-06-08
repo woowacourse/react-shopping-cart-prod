@@ -1,5 +1,5 @@
 import axios from 'configs/api';
-import { User } from 'types/index';
+import { User } from 'types';
 import { getAccessToken } from 'utils/auth';
 
 import PATH from 'constants/path';

@@ -1,36 +1,8 @@
 import styled from 'styled-components';
 
-type Props = {
-  id: string;
-  checked: boolean;
-  marginBottom?: string;
-  onChange: (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
-  ) => void;
-};
+import { Props } from './CheckBox.type';
 
-function CheckBox({
-  id,
-  checked = false,
-  marginBottom = '95px',
-  onChange,
-}: Props) {
-  return (
-    <>
-      <StyledInput
-        type="checkbox"
-        id={id}
-        checked={checked}
-        onChange={onChange}
-      />
-      <StyledLabel htmlFor={id} onClick={onChange} marginBottom={marginBottom}>
-        <div />
-      </StyledLabel>
-    </>
-  );
-}
-
-const StyledInput = styled.input`
+const Input = styled.input`
   display: none;
 
   :checked + label {
@@ -38,7 +10,7 @@ const StyledInput = styled.input`
   }
 `;
 
-const StyledLabel = styled.label<{ marginBottom?: Props['marginBottom'] }>`
+const Label = styled.label<{ marginBottom?: Props['marginBottom'] }>`
   display: inline-block;
   box-sizing: border-box;
 
@@ -64,4 +36,4 @@ const StyledLabel = styled.label<{ marginBottom?: Props['marginBottom'] }>`
   }
 `;
 
-export default CheckBox;
+export { Input, Label };

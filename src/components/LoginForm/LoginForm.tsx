@@ -3,11 +3,12 @@ import { Button, Form, Input, Link } from 'components/@shared';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
-import styled from 'styled-components';
 import { createInputValueGetter } from 'utils/dom';
 
 import { USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
+
+import * as S from './LoginForm.styled';
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -54,38 +55,17 @@ function LoginForm() {
       >
         비밀번호
       </Input>
-      <StyledLoginHelper>
-        <StyledFindLoginInfo>
+      <S.LoginHelper>
+        <S.FindLoginInfo>
           <Link to="#">아이디 찾기</Link>
           <Link to="#">비밀번호 찾기</Link>
-        </StyledFindLoginInfo>
-      </StyledLoginHelper>
+        </S.FindLoginInfo>
+      </S.LoginHelper>
       <Button type="submit" marginTop="20px">
         로그인
       </Button>
     </Form>
   );
 }
-
-const StyledLoginHelper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 4px;
-  width: 100%;
-`;
-
-const StyledFindLoginInfo = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  color: ${({ theme: { colors } }) => colors.gray};
-
-  font-size: 10px;
-
-  a:hover {
-    font-weight: 900;
-  }
-`;
 
 export default LoginForm;

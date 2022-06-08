@@ -1,6 +1,6 @@
 import axios from 'configs/api';
 import { rest } from 'msw';
-import { User } from 'types/index';
+import { User } from 'types';
 
 import PATH from 'constants/path';
 

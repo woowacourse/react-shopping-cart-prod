@@ -1,5 +1,5 @@
 import { cartTypes } from 'redux/actions';
-import { CartAction, CartStoreState } from 'types/index';
+import { CartAction, CartStoreState } from 'types';
 
 const initialState: CartStoreState = {
   cart: [],

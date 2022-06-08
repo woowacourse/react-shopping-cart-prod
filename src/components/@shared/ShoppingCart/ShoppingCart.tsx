@@ -1,8 +1,4 @@
-type Props = {
-  width: string;
-  height?: string;
-  fill: string;
-};
+import { Props } from './ShoppingCart.type';
 
 function ShoppingCart({ width, height, fill }: Props) {
   return (
