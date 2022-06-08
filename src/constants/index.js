@@ -37,6 +37,9 @@ const MESSAGE = {
   INVALID_SIGNUP_INPUT: "회원 정보 양식이 잘못되었습니다.",
   EXIST_EMAIL: "이미 존재하는 이메일입니다.",
   WITHDRAWAL_CONFIRM: "정말로 탈퇴하시겠습니까? 😭",
+  EXIST_ITEM_IN_CART: "장바구니에 이미 추가된 상품입니다.",
+  INVALID_ACCESS: "잘못된 접근입니다.",
+  LOGIN_REQUEST_FOR_ADD_CART: "장바구니에 상품을 추가하려면 로그인해주세요.",
 };
 
 const NICKNAME = {

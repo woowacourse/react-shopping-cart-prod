@@ -22,7 +22,7 @@ export const addProductToCart = (args) => async (dispatch) => {
   const { id, name, price, imageUrl } = args;
   try {
     if (!getCookie("accessToken")) {
-      throw new Error("장바구니에 상품을 추가하려면 로그인해주세요.");
+      throw new Error(MESSAGE.LOGIN_REQUEST_FOR_ADD_CART);
     }
 
     await axios.post(
@@ -48,11 +48,11 @@ export const addProductToCart = (args) => async (dispatch) => {
     dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
   } catch (error) {
     if (error.response?.status === 401) {
-      dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
+      dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
       return;
     }
     if (error.response?.status === 400) {
-      dispatch(toggleSnackbarOpen("장바구니에 이미 추가된 상품입니다."));
+      dispatch(toggleSnackbarOpen(MESSAGE.EXIST_ITEM_IN_CART));
       return;
     }
     dispatch(toggleSnackbarOpen(error.message));
@@ -67,10 +67,11 @@ export const getCartList = () => async (dispatch) => {
           getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
       },
     });
+    console.log(response);
     dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.cartList));
   } catch (error) {
     if (error.response?.status === 401) {
-      dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
+      dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
       return;
     }
     dispatch(toggleSnackbarOpen(error));
@@ -151,7 +152,7 @@ export const removeCheckedCartItem = (cartList) => async (dispatch) => {
     dispatch(createAction(ACTION_TYPES.REMOVE_CHECKED_CART_ITEM));
   } catch (error) {
     if (error.response?.status === 401) {
-      dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
+      dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
       return;
     }
     dispatch(toggleSnackbarOpen(error));
@@ -168,7 +169,7 @@ export const removeRowCartItem = (id) => async (dispatch) => {
     dispatch(createAction(ACTION_TYPES.REMOVE_ROW_CART_ITEM, id));
   } catch (error) {
     if (error.response?.status === 401) {
-      dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
+      dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
       return;
     }
     dispatch(toggleSnackbarOpen(error));
