@@ -12,6 +12,8 @@ import Title from "@/components/Title";
 import { MESSAGE } from "@/constants";
 import { getCookie } from "@/utils/auth";
 
+import { PATH } from "@/constants";
+
 import StyledProductDetailContainer from "@/pages/ProductDetail/index.style";
 
 function ProductDetail() {

@@ -5,7 +5,7 @@ const URL = {
   토닉: "http://ec2-3-39-11-100.ap-northeast-2.compute.amazonaws.com:8080",
 };
 
-const BASE_URL = URL.베루스;
+const BASE_URL = URL.봄;
 
 const PATH = {
   MAIN: "/",

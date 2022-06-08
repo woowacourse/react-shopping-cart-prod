@@ -37,10 +37,13 @@ function Signin() {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    getData({
-      email: email.current.value,
-      password: password.current.value,
-    });
+    getData(
+      {
+        email: email.current.value,
+        password: password.current.value,
+      },
+      "로그인 성공"
+    );
   };
 
   return (
