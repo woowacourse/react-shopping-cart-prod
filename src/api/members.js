@@ -59,7 +59,7 @@ const requestPasswordUpdate = ({ oldPassword, newPassword }) =>
     },
   );
 
-const requestUserDropOut = (password) =>
+const requestUserDropOut = ({ password }) =>
   request(
     '/auth/customers/profile',
     {

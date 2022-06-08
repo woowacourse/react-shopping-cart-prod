@@ -54,11 +54,11 @@ const userDropOut = {
   success: (payload) => ({
     type: MEMBERS_ACTIONS.USER_DROP_OUT_SUCCESS,
     payload,
-    async: createAsyncState.success(),
   }),
+
   error: (payload) => ({
     type: MEMBERS_ACTIONS.USER_DROP_OUT_ERROR,
-    async: createAsyncState.error(payload),
+    payload,
   }),
 };
 

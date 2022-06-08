@@ -115,6 +115,28 @@ const membersHandlers = [
 
     return res(ctx.status(200), ctx.json(userInfo));
   }),
+
+  rest.delete('./auth/customers/profile', (req, res, ctx) => {
+    // 액세스토큰을 통해 회원탈퇴 반환
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
+    const userInfo = membersDB.find((user) => user.accessToken === accessToken);
+    if (!userInfo) {
+      return res(
+        ctx.status(400),
+        ctx.json({ message: '권한이 없거나, 존재하지 않는 정보입니다.' }),
+      );
+    }
+
+    if (userInfo.password !== req.body.password) {
+      return res(ctx.status(400), ctx.json({ message: '비밀번호가 틀렸습니다.' }));
+    }
+
+    const dropOutUserIndex = membersDB.findIndex((user) => user.accessToken === accessToken);
+
+    membersDB.splice(dropOutUserIndex, 1);
+
+    return res(ctx.status(200), ctx.json(membersDB));
+  }),
 ];
 
 export default membersHandlers;

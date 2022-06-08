@@ -3,9 +3,10 @@ import {
   requestPasswordUpdate,
   requestProfile,
   requestProfileUpdate,
+  requestUserDropOut,
 } from 'api/members';
 import { ACCESS_TOKEN_COOKIE_NAME, ACCESS_TOKEN_EXPIRED_TIME, REQUEST_STATUS } from 'constants/';
-import { getCookie, setCookie } from 'lib/cookieUtils';
+import { getCookie, removeCookie, setCookie } from 'lib/cookieUtils';
 
 import * as memberActions from './action';
 
@@ -80,4 +81,26 @@ const userPasswordEdit =
     return response;
   };
 
-export { userLogin, userProfile, userNicknameEdit, userPasswordEdit };
+const userDropOut =
+  ({ password }) =>
+  async (dispatch) => {
+    const accessToken = getCookie(ACCESS_TOKEN_COOKIE_NAME);
+
+    if (!accessToken) return;
+
+    const response = await requestUserDropOut({ password });
+    const { status, content } = response;
+
+    if (status === REQUEST_STATUS.FAIL) {
+      dispatch(memberActions.userDropOut.error(content.message));
+      return response;
+    }
+
+    removeCookie(ACCESS_TOKEN_COOKIE_NAME);
+    dispatch(memberActions.userDropOut.success());
+    dispatch(memberActions.userLogout());
+
+    return response;
+  };
+
+export { userLogin, userProfile, userNicknameEdit, userPasswordEdit, userDropOut };
