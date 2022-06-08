@@ -5,6 +5,7 @@ const Styled = {
   Container: styled.div`
     display: flex;
     flex-direction: column;
+    height: 100%;
   `,
 
   RightSide: styled.div`
@@ -50,6 +51,7 @@ const Styled = {
   OutletContainer: styled.div`
     display: flex;
     justify-content: center;
+    height: 100%;
   `,
 };
 

@@ -10,7 +10,6 @@ const Styled = {
     background-color: ${({ theme }) => theme.colors.white};
     padding: 40px;
     overflow: scroll;
-    height: 100%;
 
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
