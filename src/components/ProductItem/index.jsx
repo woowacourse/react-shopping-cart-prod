@@ -1,6 +1,6 @@
 // @ts-nocheck
 import axios from 'axios';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -24,13 +24,17 @@ const ProductItem = ({ id, name, price, image }) => {
 
   const [isInCart, product] = useCart(id);
 
-  const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);
+  const [quantity, setQuantity] = useState(1);
 
   const [isControllerOpen, setIsControllerOpen] = useState(false);
   const [clearTimer, setAutoCloseTimer, extendTimer] = useClose();
 
   const quantityRef = useRef(quantity);
   quantityRef.current = quantity;
+
+  useEffect(() => {
+    if (isInCart) setQuantity(product.quantity);
+  }, [isInCart, product]);
 
   const putCart = async quantity => {
     const accessToken = getCookie('accessToken');
