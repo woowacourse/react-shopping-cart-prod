@@ -28,7 +28,15 @@ function Menu() {
             주문목록
           </Link>
         </li>
-        <li>{authorized ? <Dropdown /> : <Link to="/login">로그인</Link>}</li>
+        <li>
+          {authorized ? (
+            <Dropdown />
+          ) : (
+            <Link className="menu" to="/login">
+              로그인
+            </Link>
+          )}
+        </li>
       </ul>
     </StyledMenu>
   );
