@@ -77,10 +77,21 @@ const customer = (state = initialState, action: Action) => {
       return { ...state, isLoading: true, error: null };
     }
     case `${TYPES.GET_CUSTOMER}_FULFILLED`: {
-      return { ...state, isLoading: false, customer: action.payload };
+      return { ...state, isLoading: false, customer: action.payload.data };
     }
     case `${TYPES.GET_CUSTOMER}_REJECTED`: {
-      return { ...state, isLoading: false, error: action.payload };
+      if (action.payload.response.status === 403) {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('accessToken');
+      }
+
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload.data,
+        userId: null,
+        accessToken: null,
+      };
     }
     case `${TYPES.UPDATE_PROFILE}_PENDING`: {
       return {
@@ -113,10 +124,8 @@ const customer = (state = initialState, action: Action) => {
     case `${TYPES.UNREGISTER}_REJECTED`: {
       return { ...state, isLoading: false, error: action.payload };
     }
-    default: {
-      console.log('state', state);
+    default:
       return state;
-    }
   }
 };
 

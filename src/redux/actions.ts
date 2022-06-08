@@ -54,9 +54,7 @@ const actions = {
     return { type: TYPES.INITIALIZE_CUSTOMER };
   },
   getCustomer: (customerId: number) => {
-    const request = axios
-      .get(`${SERVER_URL}/api/customers/${customerId}`)
-      .then((res) => res.data);
+    const request = axios.get(`${SERVER_URL}/api/customers/${customerId}`);
 
     return { type: TYPES.GET_CUSTOMER, payload: request };
   },

@@ -169,9 +169,7 @@ const customerHandlers = [
 
     const { password, ...restCustomerProperties } = customer;
 
-    console.log('restCustomerProperties', restCustomerProperties);
-
-    return res(ctx.status(200), ctx.json(restCustomerProperties));
+    return res(ctx.status(403), ctx.json(restCustomerProperties));
   }),
   //사용자 정보 수정
   rest.put<Customer>(
