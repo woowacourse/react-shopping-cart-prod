@@ -65,6 +65,15 @@ function reducer(state = initState, action) {
         order: action.cart.map(product => product.productId),
       };
 
+    case CART_ACTIONS.ORDER:
+      return {
+        ...state,
+        shoppingCart: state.shoppingCart.filter(
+          product => !state.order.includes(product.productId),
+        ),
+        order: [],
+      };
+
     case ORDER_ACTIONS.ADD:
       return {
         ...state,

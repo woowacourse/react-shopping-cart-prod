@@ -4,6 +4,7 @@ const CART_ACTIONS = {
   SELECTIVE_DELETE: 'cart/SELECTIVE_DELETE',
   INITIALIZE: 'cart/INITIALIZE',
   GET: 'cart/GET',
+  ORDER: 'cart/ORDER',
 };
 
 const PRODUCT_LIST_ACTIONS = {

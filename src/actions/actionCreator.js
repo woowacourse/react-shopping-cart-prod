@@ -42,6 +42,8 @@ const doHideSnackbar = () => ({ type: SNACKBAR_ACTIONS.HIDE });
 
 const doGetCart = ({ cart }) => ({ type: CART_ACTIONS.GET, cart });
 
+const doOrderFromCart = () => ({ type: CART_ACTIONS.ORDER });
+
 export {
   doPutProductToCart,
   doDeleteProductFromCart,
@@ -56,4 +58,5 @@ export {
   doShowSnackbar,
   doHideSnackbar,
   doGetCart,
+  doOrderFromCart,
 };
