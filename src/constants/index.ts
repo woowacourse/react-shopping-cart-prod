@@ -8,6 +8,7 @@ const MESSAGES = {
   COMPLETE_SIGNUP: '✅ 회원가입이 완료되었습니다.',
   COMPLETE_LOGIN: '✅ 로그인 되었습니다.',
   COMPLETE_LOGOUT: '✅ 로그아웃 되었습니다.',
+  COMPLETE_LEAVE: '✅ 회원탈퇴 되었습니다.',
   MISMATCH_PASSWORD: '비밀번호가 일치하지 않습니다.',
   CHECK_DUPLICATE_ID_ERROR: '중복 체크 중 에러가 발생했습니다. 나중에 다시 시도하세요.',
   EXIST_ID: '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.',

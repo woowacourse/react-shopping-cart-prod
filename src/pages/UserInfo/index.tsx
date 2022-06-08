@@ -33,7 +33,11 @@ function UserInfo() {
       return;
     }
 
-    dispatch(deleteUserAPI());
+    dispatch(
+      deleteUserAPI(() => {
+        dispatch(show(MESSAGES.COMPLETE_LEAVE));
+      })
+    );
   };
 
   const onSubmitEditForm = (e: React.FormEvent) => {

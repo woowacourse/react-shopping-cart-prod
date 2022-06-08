@@ -128,23 +128,26 @@ const loginAPI =
     }
   };
 
-const deleteUserAPI = (): any => async (dispatch: AppDispatch) => {
-  dispatch(deleteUserRequest());
-  try {
-    await apiClient.delete('/api/customers/me', {
-      headers: {
-        Authorization: `Bearer ${getCookie('accessToken')}`,
-      },
-    });
+const deleteUserAPI =
+  (onSuccess?: () => void): any =>
+  async (dispatch: AppDispatch) => {
+    dispatch(deleteUserRequest());
+    try {
+      await apiClient.delete('/api/customers/me', {
+        headers: {
+          Authorization: `Bearer ${getCookie('accessToken')}`,
+        },
+      });
 
-    deleteCookie('accessToken');
-    dispatch(deleteUserSuccess());
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      dispatch(deleteUserFailure(error));
+      deleteCookie('accessToken');
+      dispatch(deleteUserSuccess());
+      onSuccess?.();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(deleteUserFailure(error));
+      }
     }
-  }
-};
+  };
 
 const changePasswordAPI =
   (password: string, onSuccess?: () => void): any =>
@@ -154,7 +157,7 @@ const changePasswordAPI =
     try {
       await apiClient.put(
         '/api/customers/me',
-        { name: userName, password },
+        { userName, password },
         {
           headers: {
             Authorization: `Bearer ${getCookie('accessToken')}`,
