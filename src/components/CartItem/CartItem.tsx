@@ -10,15 +10,15 @@ import NumberInput from 'components/@shared/NumberInput';
 import { ReactComponent as Delete } from 'assets/Delete.svg';
 import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
-import { Product } from 'types/index';
+import { Product } from 'types/product';
 
 type Props = {
   product: Product;
-  stock: number;
+  quantity: number;
   checked: boolean;
 };
 
-function CartItem({ product, stock, checked }: Props) {
+function CartItem({ product, quantity, checked }: Props) {
   const { id, name, image } = product;
   const dispatch = useDispatch();
 
@@ -38,8 +38,8 @@ function CartItem({ product, stock, checked }: Props) {
     dispatch(cartActions.toggleCheckAProduct(id));
   };
 
-  const onChangeCartStock = (value: number) => {
-    dispatch(cartActions.changeProductStock({ id, stock: value }));
+  const onChangeCartQuantity = (value: number) => {
+    dispatch(cartActions.changeProductQuantity({ id, quantity: value }));
   };
 
   return (
@@ -51,13 +51,9 @@ function CartItem({ product, stock, checked }: Props) {
         <StyledDeleteButton type="button" onClick={onClickDeleteButton}>
           <Delete />
         </StyledDeleteButton>
-        <NumberInput
-          max={product.stock}
-          value={stock}
-          setValue={onChangeCartStock}
-        />
+        <NumberInput value={quantity} setValue={onChangeCartQuantity} />
         <StyledPrice>
-          {(product.price * stock).toLocaleString('ko-KR')} 원
+          {(product.price * quantity).toLocaleString('ko-KR')} 원
         </StyledPrice>
       </StyledCartItem>
     </Link>

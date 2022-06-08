@@ -6,7 +6,7 @@ const cartTypes = {
   DELETE_CHECKED_PRODUCT: 'DELETE_CHECKED_PRODUCT_TO_CART',
   TOGGLE_CHECK_ONE: 'TOGGLE_CHECK_A_PRODUCT',
   TOGGLE_CHECK_ALL: 'TOGGLE_CHECK_ALL_PRODUCT',
-  CHANGE_PRODUCT_STOCK: 'CHANGE_PRODUCT_STOCK',
+  CHANGE_PRODUCT_QUANTITY: 'CHANGE_PRODUCT_QUANTITY',
 } as const;
 
 const cartActions = {
@@ -25,8 +25,8 @@ const cartActions = {
   toggleCheckAllProduct: (checked: boolean) => {
     return { type: cartTypes.TOGGLE_CHECK_ALL, payload: checked };
   },
-  changeProductStock: (data: Pick<Cart, 'id' | 'stock'>) => {
-    return { type: cartTypes.CHANGE_PRODUCT_STOCK, payload: data };
+  changeProductQuantity: (data: Pick<Cart, 'id' | 'quantity'>) => {
+    return { type: cartTypes.CHANGE_PRODUCT_QUANTITY, payload: data };
   },
 };
 

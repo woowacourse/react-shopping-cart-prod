@@ -4,7 +4,7 @@ import { cartTypes } from 'redux/actions';
 
 export type Cart = {
   id: Product['id'];
-  stock: number;
+  quantity: number;
   checked: boolean;
 };
 
@@ -19,6 +19,6 @@ export type CartStoreState = {
 
 export type CartProductState = {
   product: Product;
-  stock: number;
+  quantity: number;
   checked: boolean;
 };

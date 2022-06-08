@@ -7,6 +7,7 @@ const initialState: CartStoreState = {
   cart: [],
 };
 
+// TODO: SET_CART만 남겨두고 하기
 const cart = (state = initialState, action: CartAction) => {
   switch (action.type) {
     case cartTypes.ADD_PRODUCT: {
@@ -15,14 +16,14 @@ const cart = (state = initialState, action: CartAction) => {
           ...state,
           cart: [
             ...state.cart,
-            { id: action.payload, stock: 1, checked: true },
+            { id: action.payload, quantity: 1, checked: true },
           ],
         };
       }
 
       const newCart = state.cart.map((product) => {
         if (product.id === action.payload) {
-          return { ...product, stock: product.stock + 1 };
+          return { ...product, quantity: product.quantity + 1 };
         }
         return product;
       });
@@ -59,12 +60,12 @@ const cart = (state = initialState, action: CartAction) => {
 
       return { ...state, cart: newCart };
     }
-    case cartTypes.CHANGE_PRODUCT_STOCK: {
+    case cartTypes.CHANGE_PRODUCT_QUANTITY: {
       const newCart = state.cart.map((product) => {
         if (product.id === action.payload.id) {
           return {
             ...product,
-            stock: action.payload.stock,
+            quantity: action.payload.quantity,
           };
         }
         return product;

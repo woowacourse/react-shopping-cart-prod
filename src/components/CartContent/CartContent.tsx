@@ -18,11 +18,11 @@ function CartContent({ cartItems }: Props) {
 
   const calculateTotalMoney = () => {
     return cartItems.reduce((prevMoney, item) => {
-      const { product, stock, checked } = item;
+      const { product, quantity, checked } = item;
 
       if (!checked) return prevMoney;
 
-      return prevMoney + product.price * stock;
+      return prevMoney + product.price * quantity;
     }, 0);
   };
 
@@ -63,10 +63,10 @@ function CartContent({ cartItems }: Props) {
             선택 상품 삭제
           </StyledDeleteButton>
         </StyledProductOptions>
-        {cartItems.map(({ product, stock, checked }) => (
+        {cartItems.map(({ product, quantity, checked }) => (
           <CartItem
             product={product}
-            stock={stock}
+            quantity={quantity}
             checked={checked}
             key={product.id}
           />

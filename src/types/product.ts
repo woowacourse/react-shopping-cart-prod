@@ -8,7 +8,6 @@ export type Product = {
   price: number;
   image: string;
   description: string;
-  stock: number;
 };
 
 export type ProductAction = {

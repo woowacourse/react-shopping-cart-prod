@@ -18,7 +18,6 @@ Default.args = {
     image:
       'https://user-images.githubusercontent.com/44823900/167772500-dff4dfb5-6ad2-48fe-937d-81bc6800d0e2.jpg',
     description: '전처리 양파 다이스',
-    stock: 76,
     brandId: 1,
     categoryId: 1,
     createdAt: 1652193534410,

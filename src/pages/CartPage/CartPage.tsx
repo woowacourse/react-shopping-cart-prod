@@ -38,12 +38,12 @@ function CartPage() {
     if (productList.length < 1) return;
 
     setCartItems(
-      cart.map(({ id, stock, checked }) => {
+      cart.map(({ id, quantity, checked }) => {
         const item = productList.find(
           (product) => product.id === id
         ) as Product;
 
-        return { product: item, stock, checked };
+        return { product: item, quantity, checked };
       })
     );
   }, [cart, productList]);

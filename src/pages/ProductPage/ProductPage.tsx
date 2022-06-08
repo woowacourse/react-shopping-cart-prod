@@ -35,6 +35,7 @@ function ProductPage() {
     (e: React.MouseEvent<HTMLElement>) => {
       e.preventDefault();
 
+      // TODO: 반복되는 로직이므로 함수로 추출해야할듯
       if (!isLogin()) {
         navigate(PATH.LOGIN);
 

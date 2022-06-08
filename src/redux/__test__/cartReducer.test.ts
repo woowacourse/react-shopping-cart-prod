@@ -13,7 +13,7 @@ const initialState: CartStoreState = {
 
 describe('장바구니 reducer 테스트', () => {
   test('새로운 상품의 추가 요청이 들어오면 해당 상품을 장바구니에 추가해야 한다.', () => {
-    const expectedCart = [{ id: product1.id, stock: 1, checked: true }];
+    const expectedCart = [{ id: product1.id, quantity: 1, checked: true }];
 
     expect(
       cartReducer(initialState, cartActions.addToCart(product1.id))
@@ -26,7 +26,7 @@ describe('장바구니 reducer 테스트', () => {
       initialState,
       cartActions.addToCart(product1.id)
     );
-    const expectedCart = [{ id: product1.id, stock: 2, checked: true }];
+    const expectedCart = [{ id: product1.id, quantity: 2, checked: true }];
 
     expect(cartReducer(newState, cartActions.addToCart(product1.id))).toEqual({
       cart: expectedCart,
@@ -64,7 +64,7 @@ describe('장바구니 reducer 테스트', () => {
       initialState,
       cartActions.addToCart(product1.id)
     );
-    const expectedCart = [{ id: product1.id, stock: 1, checked: false }];
+    const expectedCart = [{ id: product1.id, quantity: 1, checked: false }];
 
     expect(
       cartReducer(newState, cartActions.toggleCheckAProduct(product1.id))
@@ -82,12 +82,12 @@ describe('장바구니 reducer 테스트', () => {
     newState = cartReducer(newState, cartActions.addToCart(product2.id));
 
     const expectedAllFalseCart = [
-      { id: product1.id, stock: 1, checked: false },
-      { id: product2.id, stock: 1, checked: false },
+      { id: product1.id, quantity: 1, checked: false },
+      { id: product2.id, quantity: 1, checked: false },
     ];
     const expectedAllTrueCart = [
-      { id: product1.id, stock: 1, checked: true },
-      { id: product2.id, stock: 1, checked: true },
+      { id: product1.id, quantity: 1, checked: true },
+      { id: product2.id, quantity: 1, checked: true },
     ];
 
     expect(
@@ -108,15 +108,18 @@ describe('장바구니 reducer 테스트', () => {
       initialState,
       cartActions.addToCart(product1.id)
     );
-    const changeStock = 10;
+    const changequantity = 10;
     const expectedCart = [
-      { id: product1.id, stock: changeStock, checked: true },
+      { id: product1.id, quantity: changequantity, checked: true },
     ];
 
     expect(
       cartReducer(
         newState,
-        cartActions.changeProductStock({ id: product1.id, stock: changeStock })
+        cartActions.changeProductQuantity({
+          id: product1.id,
+          quantity: changequantity,
+        })
       )
     ).toEqual({
       cart: expectedCart,

@@ -6,12 +6,12 @@ describe('util 함수 테스트', () => {
     const cart: CartStoreState['cart'] = [
       {
         id: 1,
-        stock: 2,
+        quantity: 2,
         checked: true,
       },
       {
         id: 2,
-        stock: 1,
+        quantity: 1,
         checked: false,
       },
     ];
