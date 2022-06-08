@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { rest } from 'msw';
-import { users, cart } from 'mocks';
+import { users } from 'mocks';
 import CustomError from 'utils/CustomError';
 
 const getCartHandler = rest.get('/cart', (req, res, ctx) => {
@@ -16,6 +16,7 @@ const getCartHandler = rest.get('/cart', (req, res, ctx) => {
     }
 
     // 전체카트조회 성공
+    const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
     return res(ctx.status(200), ctx.json(cart));
   } catch (error) {
     return res(

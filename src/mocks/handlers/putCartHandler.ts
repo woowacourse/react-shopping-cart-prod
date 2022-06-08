@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { rest } from 'msw';
-import { users, cart } from 'mocks';
+import { users } from 'mocks';
 import CustomError from 'utils/CustomError';
 import { dummyProductList } from 'dummy_data';
 
@@ -31,12 +31,14 @@ const putCartHandler = rest.put('/cart/products/:id', (req, res, ctx) => {
       throw new CustomError(4101, '수량 형식이 맞지 않습니다.', 400);
     }
 
-    const foundProductInCart = cart.find(product => product.id === id);
+    const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+    const foundProductInCart = cart.find(product => product.productId === id);
 
     if (foundProductInCart) {
       foundProductInCart.quantity = quantity;
 
       // 카트에 있는 상품수정 완료
+      localStorage.setItem('cart', JSON.stringify(cart));
       return res(
         ctx.status(200),
         ctx.json({
@@ -57,6 +59,7 @@ const putCartHandler = rest.put('/cart/products/:id', (req, res, ctx) => {
       });
 
       // 카트에 상품추가 성공
+      localStorage.setItem('cart', JSON.stringify(cart));
       return res(
         ctx.status(201),
         ctx.json({
