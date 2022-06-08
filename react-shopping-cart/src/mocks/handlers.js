@@ -4,23 +4,23 @@ import { rest } from 'msw';
 import { API_URL_PATH } from 'constants/api';
 
 const findById = (id, array) => array.find(item => item.id === id);
+const findByProuctID = (id, array) => array.find(item => item.productId === id);
 
 export const handlers = [
   rest.get(`${API_URL_PATH.PRODUCTS}`, (req, res, ctx) => {
     const { authorization: raw } = req.headers._headers;
     const authorization = raw?.replace('Bearer', '');
 
-    const storedProductsId = customers['abc@abc.com'].carts.map(cart => cart.id);
+    const storedProductsId = customers['abc@abc.com'].carts.map(cart => cart.productId);
     const storedProducts = products.map(product => {
       if (authorization) {
         if (storedProductsId.includes(product.id)) {
-          const cart = findById(product.id, customers['abc@abc.com'].carts);
+          const cart = findByProuctID(product.id, customers['abc@abc.com'].carts);
           return { ...product, quantity: cart.quantity };
         }
       }
       return { ...product, quantity: 0 };
     });
-
     return res(ctx.status(200), ctx.json({ products: storedProducts }));
   }),
   rest.post(`${API_URL_PATH.LOGIN}`, (req, res, ctx) => {
@@ -77,23 +77,25 @@ export const handlers = [
     const { authorization: raw } = req.headers._headers;
     const authorization = raw.replace('Bearer', '');
     if (authorization) {
-      return res(ctx.status(200), ctx.json(customers['abc@abc.com'].name));
+      return res(ctx.status(200), ctx.json({ name: customers['abc@abc.com'].name }));
     }
     return res(ctx.status(401));
   }),
   rest.get(`${API_URL_PATH.CARTS}`, (req, res, ctx) => {
     const { authorization: raw } = req.headers._headers;
     const authorization = raw.replace('Bearer', '');
+    console.log(authorization);
     const carts = customers['abc@abc.com'].carts;
 
-    const cartIds = carts.map(cart => cart.id);
+    const cartIds = carts.map(cart => cart.productId);
     const cartList = cartIds.map(productId => {
+      const { id, ...rest } = findById(productId, products);
       return {
-        product: { ...findById(productId, products) },
-        quantity: findById(productId, carts).quantity,
+        productId: id,
+        ...rest,
+        quantity: findByProuctID(productId, carts).quantity,
       };
     });
-
     if (authorization) {
       return res(ctx.status(200), ctx.json({ carts: cartList }));
     } else {
@@ -102,15 +104,18 @@ export const handlers = [
   }),
 
   rest.post(`${API_URL_PATH.CARTS}`, (req, res, ctx) => {
-    const { id, quantity } = req.body;
-    customers['abc@abc.com'].carts.push({ id, quantity });
+    const { productId, quantity } = req.body;
+    customers['abc@abc.com'].carts.push({ productId, quantity });
     return res(ctx.status(200), ctx.json({ quantity }));
   }),
+
   rest.patch(`${API_URL_PATH.CARTS}`, (req, res, ctx) => {
     const { authorization: raw } = req.headers._headers;
     const authorization = raw.replace('Bearer', '');
 
-    const { id, quantity } = req.body;
+    const { productId, quantity } = req.body;
+    const product = findByProuctID(productId, customers['abc@abc.com'].carts);
+    product.quantity = quantity;
     if (authorization) {
       return res(ctx.status(200));
     }
@@ -120,7 +125,10 @@ export const handlers = [
     const { authorization: raw } = req.headers._headers;
     const authorization = raw.replace('Bearer', '');
 
-    const { id } = req.body;
+    const { productIds } = req.body;
+    customers['abc@abc.com'].carts = customers['abc@abc.com'].carts.filter(
+      cart => !productIds.includes(cart.productId)
+    );
     if (authorization) {
       return res(ctx.status(204));
     }
