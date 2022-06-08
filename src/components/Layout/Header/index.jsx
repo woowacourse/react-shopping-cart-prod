@@ -10,7 +10,7 @@ import * as Styled from './styles';
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userId: isLogin } = useSelector((state) => state.user);
+  const userId = sessionStorage.getItem('userId');
   const accessToken = sessionStorage.getItem('accessToken');
 
   const onLogOutClick = () => {
@@ -42,7 +42,7 @@ const Header = () => {
           장바구니
         </Styled.RightMenuButton>
 
-        {isLogin ? (
+        {userId && userId.length > 0 ? (
           <>
             <Styled.RightMenuButton icon={아이콘_코드.RECEIPT}>주문 목록</Styled.RightMenuButton>
             <Link to="/identification">
