@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button/Button';
 import Image from '@/components/common/Image/Image';
 import Modal from '@/components/common/Modal/Modal';
-import CartAdd from '@/components/product/CartAdd/CartAdd';
+import ProductAddCart from '@/components/product/ProductAddCart/ProductAddCart';
 import { ProductType } from '@/domain/product';
 import { useExcludeCart } from '@/hooks/useExcludeCart';
 import { useModal } from '@/hooks/useModal';
@@ -11,6 +11,7 @@ import * as Styled from './ProductDetailCard.style';
 function ProductDetailCard({ product }: { product: ProductType }) {
   const responsive = useResponsive();
   const { isShowModal, openModal, closeModal } = useModal();
+
   const isShowCartButton = useExcludeCart(product.id);
 
   const onClickCartAddButton = () => {
@@ -42,7 +43,7 @@ function ProductDetailCard({ product }: { product: ProductType }) {
 
       {isShowModal && (
         <Modal closeModal={closeModal}>
-          <CartAdd product={product} closeModal={closeModal} />
+          <ProductAddCart product={product} closeModal={closeModal} />
         </Modal>
       )}
     </>

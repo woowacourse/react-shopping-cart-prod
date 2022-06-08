@@ -5,7 +5,7 @@ import Icon from '../../common/Icon/Icon';
 import Modal from '../../common/Modal/Modal';
 import { useModal } from '../../../hooks/useModal';
 import { useNavigate } from 'react-router-dom';
-import CartAdd from '../CartAdd/CartAdd';
+import ProductAddCart from '../ProductAddCart/ProductAddCart';
 import Placeholder from '../../common/Placeholder/Placeholder';
 import { ProductType } from '@/domain/product';
 import { useExcludeCart } from '@/hooks/useExcludeCart';
@@ -50,7 +50,7 @@ function ProductCard({ product }: ProductCardType) {
 
       {isShowModal && (
         <Modal closeModal={closeModal}>
-          <CartAdd product={product} closeModal={closeModal} />
+          <ProductAddCart product={product} closeModal={closeModal} />
         </Modal>
       )}
     </GlobalStyled.Position>
