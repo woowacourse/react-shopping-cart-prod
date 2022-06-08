@@ -14,7 +14,7 @@ const ProductListPage = () => {
   useEffect(() => {
     getProducts();
     getCart();
-  }, []);
+  }, [getCart, getProducts]);
 
   return (
     <Styled.ProductListPage>
