@@ -5,25 +5,42 @@ import CheckBox from 'components/@shared/CheckBox';
 import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import cartAPI from 'apis/cart';
 
 type Props = {
   cartItems: Cart[];
 };
 
 function CartContent({ cartItems }: Props) {
+  const [checkedItems, setCheckedItems] = useState<Array<number>>([]);
   const dispatch = useDispatch();
 
-  const calculateTotalMoney = () => {
-    return cartItems.reduce((prevMoney, item) => {
-      const { quantity, product } = item;
+  const checkCartItem = (targetId: number) => {
+    if (checkedItems.includes(targetId)) {
+      const newCheckedItems = checkedItems.filter(
+        (checkedId) => checkedId !== targetId
+      );
+      setCheckedItems(newCheckedItems);
+      return;
+    }
+    setCheckedItems((prev) => [...prev, targetId]);
+  };
 
-      return prevMoney + product.price * quantity;
-    }, 0);
+  const calculateTotalMoney = () => {
+    return cartItems
+      .filter((item) => checkedItems.includes(item.id))
+      .reduce((prevMoney, item) => {
+        const { quantity, product } = item;
+
+        return prevMoney + product.price * quantity;
+      }, 0);
   };
 
   const isAllChecked = () => {
-    // return cartItems.every((item) => item.checked === true);
-    return true;
+    return (
+      checkedItems.length !== 0 && cartItems.length === checkedItems.length
+    );
   };
 
   const onChangeAllChecked = (
@@ -31,14 +48,20 @@ function CartContent({ cartItems }: Props) {
   ) => {
     e.preventDefault();
 
-    // ToDo: 모든 체크 해제
-    // dispatch(cartActions.toggleCheckAllProduct(!isAllChecked()));
+    if (isAllChecked()) {
+      setCheckedItems([]);
+      return;
+    }
+    setCheckedItems(cartItems.map((item) => item.id));
   };
 
   const onClickCheckedDeleteButton = () => {
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      // ToDo: 체크된 상품 삭제
-      // dispatch(cartActions.deleteCheckedToCart());
+      checkedItems.forEach(async (id) => {
+        const cartList = await cartAPI.deleteCartItem(id);
+        dispatch(cartActions.setCartItemList(cartList));
+        setCheckedItems([]);
+      });
     }
   };
 
@@ -65,7 +88,8 @@ function CartContent({ cartItems }: Props) {
           <CartItem
             product={product}
             stock={quantity}
-            checked={true}
+            checked={checkedItems.includes(id)}
+            checkCartItem={checkCartItem}
             cartId={id}
             key={product.id}
           />
