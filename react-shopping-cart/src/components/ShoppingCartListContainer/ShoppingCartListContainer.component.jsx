@@ -5,23 +5,6 @@ import TextBox from 'components/@shared/TextBox/TextBox.component';
 
 import ShoppingCartListItem from 'components/ShoppingCartListItem/ShoppingCartListItem.component';
 
-const CartListCountTextBox = styled(TextBox).attrs({
-  fontSize: 'medium',
-})`
-  border-bottom: 1px solid ${({ theme }) => theme.colors['GRAY_001']};
-  padding: 20px 0;
-  ${({ mb }) =>
-    css`
-      margin-bottom: ${mb};
-    `}
-`;
-
-const CartListBox = styled(FlexBox).attrs({
-  direction: 'column',
-})`
-  width: 736px;
-`;
-
 function ShoppingCartListContainer({ carts, loadCarts }) {
   return (
     <CartListBox>
@@ -46,3 +29,20 @@ function ShoppingCartListContainer({ carts, loadCarts }) {
 }
 
 export default ShoppingCartListContainer;
+
+const CartListCountTextBox = styled(TextBox).attrs({
+  fontSize: 'medium',
+})`
+  border-bottom: 1px solid ${({ theme }) => theme.colors['GRAY_001']};
+  padding: 20px 0;
+  ${({ mb }) =>
+    css`
+      margin-bottom: ${mb};
+    `}
+`;
+
+const CartListBox = styled(FlexBox).attrs({
+  direction: 'column',
+})`
+  width: 736px;
+`;

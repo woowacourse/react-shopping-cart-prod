@@ -19,9 +19,9 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
   const isStored = quantity !== 0;
   const { accessToken } = useSelector(state => state.auth);
 
-  const { storeCart } = useStoreCart(true);
-  const { modifyCartQuantity } = useModifyCartQuantity(true);
-  const { deleteCarts } = useDeleteCarts(true);
+  const { storeCart } = useStoreCart();
+  const { modifyCartQuantity } = useModifyCartQuantity();
+  const { deleteCarts } = useDeleteCarts();
 
   const debounce = useDebounce();
   const [modifyQuantityShow, setModifyQuantityShow] = useState(false);

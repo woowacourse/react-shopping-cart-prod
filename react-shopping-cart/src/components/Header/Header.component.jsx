@@ -20,7 +20,7 @@ function Header() {
   const { accessToken } = useSelector(state => state.auth);
 
   const { name } = useUserName();
-  const { deleteUser } = useDeleteUser(true);
+  const { deleteUser } = useDeleteUser();
 
   const handleSelectBox = () => {
     setShowSelectBox(prev => !prev);

@@ -2,11 +2,11 @@ import useAuthFetch from '../../useAuthFetch';
 
 import { API_URL_PATH } from 'constants/api';
 
-function useModifyCartQuantity(skip) {
+function useModifyCartQuantity() {
   const { fetchData: modifyCartQuantity } = useAuthFetch({
     url: `${API_URL_PATH.CARTS}`,
     method: 'patch',
-    skip,
+    skip: true,
   });
 
   return { modifyCartQuantity };
