@@ -3,8 +3,8 @@ import { COLORS } from 'styles/theme';
 
 const Wrapper = styled.div`
   position: fixed;
-  left: 10px;
-  bottom: 10px;
+  left: 50%;
+  bottom: 200px;
   z-index: 1;
   min-width: 360px;
   padding: 1.5rem;
@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   color: ${COLORS.WHITE};
   text-align: center;
   font-size: 0.8rem;
+  transform: translate(-50%, 0);
 `;
 
 export { Wrapper };
