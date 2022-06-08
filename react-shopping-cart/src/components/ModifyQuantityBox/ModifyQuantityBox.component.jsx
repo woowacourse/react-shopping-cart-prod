@@ -2,8 +2,12 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { css } from 'styled-components';
 
+import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
+
+import { ReactComponent as TrashCan } from 'assets/images/trash.svg';
+
 function ModifyQuantityBox({ onChange, quantity }) {
-  const [count, setCount] = useState(quantity ?? 0);
+  const [count, setCount] = useState(quantity);
   const handleDecrement = () => {
     if (count <= 0) {
       return;
@@ -19,7 +23,9 @@ function ModifyQuantityBox({ onChange, quantity }) {
 
   return (
     <>
-      <ModifyQuantityButton onClick={handleDecrement}>-</ModifyQuantityButton>
+      <ModifyQuantityButton onClick={handleDecrement}>
+        {count === 1 ? <DeleteCartButton fill="white" /> : '-'}
+      </ModifyQuantityButton>
       <span>{count}</span>
       <ModifyQuantityButton onClick={handleIncrement}>+</ModifyQuantityButton>
     </>
@@ -28,7 +34,17 @@ function ModifyQuantityBox({ onChange, quantity }) {
 
 export default ModifyQuantityBox;
 
-const ModifyQuantityButton = styled.button`
+const DeleteCartButton = styled(TrashCan)`
+  path {
+    fill: white !important;
+  }
+`;
+
+const ModifyQuantityButton = styled(FlexBox).attrs({
+  as: 'button',
+  justifyContent: 'center',
+  alignItems: 'center',
+})`
   width: 20%;
   height: 100%;
   border-radius: 20px;

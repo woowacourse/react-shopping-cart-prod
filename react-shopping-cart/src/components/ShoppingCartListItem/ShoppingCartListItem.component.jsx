@@ -12,7 +12,7 @@ import ChangeQuantityButton from 'components/ChangeQuantityButton/ChangeQuantity
 import { addSpecificItem, deleteSpecificItem } from 'redux/actions/orderList.action';
 import { deleteItem, increaseQuantity, decreaseQuantity } from 'redux/actions/shoppingCart.action';
 
-import { ReactComponent as TrashCan } from 'assets/images/trashCan.svg';
+import { ReactComponent as TrashCan } from 'assets/images/trash.svg';
 
 const CartItemContainer = styled(FlexBox).attrs({
   gap: '15px',
