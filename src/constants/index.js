@@ -1,5 +1,5 @@
 export const BASE_SERVER_URL =
-  process.env.NODE_ENV === "production"
+  process.env.NODE_ENV === "development"
     ? "http://ec2-13-125-205-115.ap-northeast-2.compute.amazonaws.com:8080"
     : "dev";
 
@@ -24,8 +24,8 @@ export const ROUTES = {
 export const RANGE = {
   EMAIL_MAX_LENGTH: 50,
   EMAIL_MIN_LENGTH: 8,
-  NICKNAME_MAX_LENGTH: 10,
-  NICKNAME_MIN_LENGTH: 1,
+  USERNAME_MAX_LENGTH: 10,
+  USERNAME_MIN_LENGTH: 1,
   PW_MAX_LENGTH: 20,
   PW_MIN_LENGTH: 8,
 };

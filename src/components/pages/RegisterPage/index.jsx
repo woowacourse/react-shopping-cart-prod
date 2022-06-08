@@ -25,7 +25,7 @@ import {
 
 const initialUserInfo = {
   email: "",
-  nickname: "",
+  username: "",
   password: "",
   passwordConfirm: "",
 };
@@ -63,7 +63,7 @@ function RegisterPage() {
         url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}`,
         body: JSON.stringify({
           email: userInfo.email,
-          username: userInfo.nickname,
+          username: userInfo.username,
           password: userInfo.password,
         }),
       });
@@ -136,15 +136,15 @@ function RegisterPage() {
           <RegisterLabel>닉네임</RegisterLabel>
           <UserInput
             type="text"
-            minLength={RANGE.NICKNAME_MIN_LENGTH}
-            maxLength={RANGE.NICKNAME_MAX_LENGTH}
+            minLength={RANGE.USERNAME_MIN_LENGTH}
+            maxLength={RANGE.USERNAME_MAX_LENGTH}
             width="500px"
             placeholder="닉네임을 입력해주세요"
-            name="nickname"
-            value={userInfo.nickname}
+            name="username"
+            value={userInfo.username}
             onChange={handleChangeInput}
             required
-            errorMessage={errorMessage.nickname}
+            errorMessage={errorMessage.username}
           />
         </RegisterInputContainer>
         <RegisterInputContainer>

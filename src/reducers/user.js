@@ -39,7 +39,7 @@ export const login = (email, password) => async (dispatch) => {
       type: USER_ACTION.LOGIN_SUCCESS,
       user: {
         ...data.customer,
-        nickname: data.customer.username,
+        username: data.customer.username,
         accessToken: data.accessToken,
       },
     });
@@ -87,7 +87,7 @@ const initialState = {
   data: {
     id: 0,
     email: "",
-    nickname: "",
+    username: "",
     accessToken: "",
   },
   errorMessage: "",
@@ -111,7 +111,7 @@ const reducer = (state = initialState, action) => {
         isLoading: false,
         data: {
           ...state.data,
-          nickname: action.nickname,
+          username: action.username,
         },
         errorMessage: "",
       };
