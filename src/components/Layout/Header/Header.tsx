@@ -63,7 +63,7 @@ function Header() {
         <RightMenu>
           <Link to={PATH.CART}>
             장바구니
-            <Badge>{cart.length}</Badge>
+            {cart.length > 0 && <Badge>{cart.length}</Badge>}
           </Link>
           <Link to={PATH.BASE}>주문목록</Link>
         </RightMenu>
