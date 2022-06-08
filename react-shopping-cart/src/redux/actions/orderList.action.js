@@ -4,7 +4,7 @@ export const ADD_SPECIFIC_ITEM = 'ADD_SPECIFIC_ITEM';
 export const DELETE_SPECIFIC_ITEM = 'DELETE_SPECIFIC_ITEM';
 
 export const addAllItem = itemList => ({ type: ADD_ALL_ITEM, payload: { itemList } });
-export const deleteAllItem = () => ({ type: DELETE_ALL_ITEM, payload: {} });
+export const deleteAllItem = () => ({ type: DELETE_ALL_ITEM });
 export const addSpecificItem = ({ id, quantity, price }) => ({
   type: ADD_SPECIFIC_ITEM,
   payload: { id, quantity, price },

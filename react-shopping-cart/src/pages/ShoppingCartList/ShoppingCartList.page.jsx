@@ -17,20 +17,33 @@ import { addAllItem, deleteAllItem } from 'redux/actions/orderList.action';
 import useFetch from 'hooks/useFetch';
 
 import { API_URL_PATH } from 'constants/api';
+import { calculatePrice } from 'utils';
 
 function ShoppingCartList() {
   const dispatch = useDispatch();
   const { accessToken } = useSelector(state => state.auth);
-  const { items } = useSelector(state => state.orderList);
-  const { data, isLoading } = useFetch({
+  const { items: orderList } = useSelector(state => state.orderList);
+  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
+  const {
+    data,
+    isLoading,
+    fetchData: loadCarts,
+  } = useFetch({
     url: API_URL_PATH.CARTS,
-    headers: { Authorization: `Bearer ${accessToken}` },
+    headers,
+  });
+  const { fetchData: deleteSelectedCarts } = useFetch({
+    url: API_URL_PATH.CARTS,
+    method: 'delete',
+    headers,
+    skip: true,
   });
 
-  const carts = data?.carts.map(item => ({ quantity: item?.quantity, ...item?.product }));
+  const carts = data?.carts;
+  const total = calculatePrice(carts, orderList);
 
   const disabled = carts?.length === 0;
-  const checked = carts?.length !== 0 && items.length === carts?.length;
+  const checked = carts?.length !== 0 && orderList.length === carts?.length;
 
   const handleChangeCheckBox = () => {
     if (checked) {
@@ -40,13 +53,15 @@ function ShoppingCartList() {
     }
   };
 
-  const handleClickDeleteBox = () => {
-    if (items.length === 0) {
+  const handleClickDeleteBox = async () => {
+    if (orderList.length === 0) {
       alert('삭제할 상품이 존재하지 않습니다');
       return;
     }
-    if (window.confirm(`${items.length}개의 상품을 장바구니에서 삭제하시겠습니까?`)) {
+    if (window.confirm(`${orderList.length}개의 상품을 장바구니에서 삭제하시겠습니까?`)) {
+      await deleteSelectedCarts({ productIds: orderList });
       dispatch(deleteAllItem());
+      await loadCarts();
     }
   };
 
@@ -87,9 +102,9 @@ function ShoppingCartList() {
                     상품삭제
                   </BorderBox>
                 </FlexBox>
-                <ShoppingCartListContainer carts={carts} />
+                <ShoppingCartListContainer carts={carts} loadCarts={loadCarts} />
               </article>
-              <PaymentAmountContainer count={items.length} data={data.carts} />
+              <PaymentAmountContainer count={orderList.length} total={total} />
             </FlexBox>
           )}
         </PageContainer>

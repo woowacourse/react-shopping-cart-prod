@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import BorderBox from 'components/@shared/BorderBox/BorderBox.component';
@@ -6,17 +5,13 @@ import Button from 'components/@shared/Button/Button.component';
 import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 import HighlightText from 'components/@shared/HighlightText/HighlightText.component';
 
-import { calculatePrice } from 'utils';
-
 const PaymentAmountBox = styled(FlexBox).attrs({
   direction: 'column',
 })`
   width: 448px;
 `;
 
-function PaymentAmountContainer({ count }) {
-  const { total } = useSelector(state => state.orderList);
-
+function PaymentAmountContainer({ count, total }) {
   return (
     <PaymentAmountBox as="article">
       <BorderBox as="h2" fontSize="24px" padding="30px">
