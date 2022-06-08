@@ -19,7 +19,7 @@ const Layout = () => {
 
   return (
     <div>
-      {showHeader ? <Header /> : <h1>서버를 골라주세요.</h1>}
+      {showHeader && <Header />}
       <main>
         <Outlet />
       </main>
