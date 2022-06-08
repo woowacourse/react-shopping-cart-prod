@@ -42,7 +42,7 @@ const Styled = {
 
   ProductList: styled.div`
     overflow: scroll;
-    height: 430px;
+    height: 522px;
     border-top: 1px solid ${({ theme }) => theme.colors.gray};
 
     -ms-overflow-style: none;
