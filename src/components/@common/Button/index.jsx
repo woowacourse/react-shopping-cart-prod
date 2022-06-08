@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import * as S from './styles';
 
-function Button({ className, type, status, icon, isDisabled, onClick, children }) {
+function Button({ className, type, status, icon, width, isDisabled, onClick, children }) {
   const containerType = children ? 'BUTTON' : 'ICON';
 
   return (
@@ -11,6 +11,7 @@ function Button({ className, type, status, icon, isDisabled, onClick, children }
       type={type}
       status={status}
       icon={icon}
+      width={width}
       disabled={isDisabled}
       containerType={containerType}
       onClick={onClick}
@@ -25,6 +26,7 @@ Button.defaultProps = {
   type: 'button',
   status: 'default',
   icon: '',
+  width: '100%',
   isDisabled: false,
   onClick: () => {},
 };
@@ -34,6 +36,7 @@ Button.propTypes = {
   type: PropTypes.string,
   status: PropTypes.oneOf(['default', 'primary', 'success', 'danger', 'info']),
   icon: PropTypes.string,
+  width: PropTypes.string,
   isDisabled: PropTypes.bool,
   onClick: PropTypes.func,
 };
