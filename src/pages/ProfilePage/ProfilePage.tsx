@@ -262,8 +262,8 @@ function ProfilePage() {
                 placeholder: '01012345678',
                 minLength: 8,
                 maxLength: 11,
-                pattern: '[0-9]{8,11}',
-                patternMessage: '전화번호는 8~11 자리 사이의 숫자여야 합니다.',
+                pattern: '[0-9]{11}',
+                patternMessage: '전화번호는 11 자리 숫자여야 합니다.',
                 required: true,
               })}
             />
@@ -367,7 +367,7 @@ function ProfilePage() {
 
         <S.ButtonBox>
           <Button type="submit" disabled={isSubmitting}>
-            다음으로
+            수정하기
           </Button>
           <Button
             color="red"
