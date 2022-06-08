@@ -20,7 +20,6 @@ const getDetailCart = () =>
 export const handlers = [
   // 상품 리스트 가져오기
   rest.get(`${BASE_URL}/products`, (req, res, ctx) => {
-    console.log(req);
     return res(ctx.status(200), ctx.json({ productList }));
   }),
 
@@ -89,7 +88,6 @@ export const handlers = [
   }),
 
   rest.put(`${BASE_URL}/users/me`, (req, res, ctx) => {
-    console.log(req);
     const accessToken = req.headers._headers.authorization;
 
     if (!accessToken) {
@@ -121,7 +119,6 @@ export const handlers = [
 
   // 장바구니에 담기
   rest.post(`${BASE_URL}/users/me/carts`, (req, res, ctx) => {
-    console.log(req);
     const { productId } = req.body;
     const accessToken = req.headers._headers.authorization;
 

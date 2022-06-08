@@ -64,7 +64,7 @@ function UserEdit() {
 
   const handleWithdrawalClick = async () => {
     if (confirm(MESSAGE.WITHDRAWAL_CONFIRM)) {
-      withdrawUser({});
+      withdrawUser();
     }
   };
 
@@ -99,11 +99,8 @@ function UserEdit() {
       navigate(PATH.MAIN);
       return;
     }
-    const headers = {
-      Authorization:
-        getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
-    };
-    dispatch(getUserInfo(headers));
+
+    dispatch(getUserInfo());
   }, [authorized]);
 
   return (

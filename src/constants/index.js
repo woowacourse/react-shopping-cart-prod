@@ -1,9 +1,11 @@
 const URL = {
   릭: "http://ec2-3-39-194-30.ap-northeast-2.compute.amazonaws.com:8080",
   봄: "http://ec2-54-180-119-11.ap-northeast-2.compute.amazonaws.com:8080",
+  베루스: "http://ec2-52-79-228-178.ap-northeast-2.compute.amazonaws.com:8080",
+  토닉: "http://ec2-3-39-11-100.ap-northeast-2.compute.amazonaws.com:8080",
 };
 
-const BASE_URL = URL.봄;
+const BASE_URL = URL.베루스;
 
 const PATH = {
   MAIN: "/",
