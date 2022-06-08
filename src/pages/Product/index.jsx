@@ -27,7 +27,7 @@ const Product = () => {
       {product && (
         <ProductDetail
           id={product.id}
-          imgUrl={product.imgUrl || itemAltImg}
+          imageUrl={product.imageUrl || itemAltImg}
           name={product.name}
           price={product.price}
           onClickCartButton={handleAddCartItem}

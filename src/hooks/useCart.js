@@ -3,7 +3,6 @@ import { getCartItemAsync } from 'reducers/cart/cart.thunk';
 import { METHOD } from 'constants';
 import useFetch from 'hooks/useFetch';
 import { useEffect } from 'react';
-import { getAuthorizedHeaders } from 'api/auth';
 import {
   updateCartItemQuantityAction,
   deleteCartItemAction,
@@ -34,31 +33,25 @@ const useCart = () => {
   };
 
   const deleteItem = (id) => {
-    const headers = getAuthorizedHeaders();
-    deleteItemApi({ params: id, payload: { headers } }).then(() => {
+    deleteItemApi({ params: id }).then(() => {
       dispatch(deleteCartItemAction(id));
     });
   };
 
   const deleteItems = (idList) => {
-    const headers = getAuthorizedHeaders();
-    Promise.all(
-      idList.map((id) => deleteItemApi({ params: id, payload: { headers } })),
-    ).then(() => {
+    Promise.all(idList.map((id) => deleteItemApi({ params: id }))).then(() => {
       dispatch(deleteCartItemsAction(idList));
     });
   };
 
   const updateItemQuantity = (id, quantity) => {
-    const headers = getAuthorizedHeaders();
-    updateItemApi({ params: id, payload: { quantity, headers } }).then(() => {
+    updateItemApi({ params: id, payload: { quantity } }).then(() => {
       dispatch(updateCartItemQuantityAction(id, quantity));
     });
   };
 
-  const addItem = (product_id) => {
-    const headers = getAuthorizedHeaders();
-    addItemApi({ payload: { product_id, headers } });
+  const addItem = (productId) => {
+    addItemApi({ payload: { productId } });
   };
 
   useEffect(() => {

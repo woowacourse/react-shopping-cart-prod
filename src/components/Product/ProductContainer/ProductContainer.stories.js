@@ -16,7 +16,7 @@ const productItems = productList.map((product, index) => (
     key={index}
     name={product.name}
     price={product.price}
-    imgUrl={product.imgUrl}
+    imageUrl={product.imageUrl}
   />
 ));
 

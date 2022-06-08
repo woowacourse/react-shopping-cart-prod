@@ -8,7 +8,7 @@ import { hideSnackBar } from 'reducers/ui/ui.actions';
 
 const SnackBar = () => {
   const dispatch = useDispatch();
-  const { isSnackBarVisibile, snackBarText, snackBarType } = useSelector(
+  const { isSnackBarVisible, snackBarText, snackBarType } = useSelector(
     (state) => state.ui,
   );
 
@@ -16,7 +16,7 @@ const SnackBar = () => {
     typeof window !== 'undefined' && document.querySelector('#snackbar-portal');
 
   useEffect(() => {
-    if (!isSnackBarVisibile) return;
+    if (!isSnackBarVisible) return;
     const timer = setTimeout(() => {
       dispatch(hideSnackBar());
     }, 3000);
@@ -24,9 +24,9 @@ const SnackBar = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [isSnackBarVisibile]);
+  }, [isSnackBarVisible]);
 
-  return isSnackBarVisibile && element
+  return isSnackBarVisible && element
     ? ReactDOM.createPortal(
         <Styled.Wrapper snackBarType={snackBarType}>
           {snackBarType === 'SUCCESS' ? (

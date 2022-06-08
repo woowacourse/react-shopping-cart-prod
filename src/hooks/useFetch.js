@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { METHOD } from 'constants/index';
 import apiClient from 'api';
 import PropTypes from 'prop-types';
+import { getAuthorizedHeaders } from 'api/auth';
 
-const useFetch = ({ method, url }) => {
+const useFetch = ({ method, url, handler }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSucceed, setIsSucceed] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -16,8 +17,21 @@ const useFetch = ({ method, url }) => {
     setIsSucceed(false);
     setErrorMessage('');
     try {
-      const { data } = await apiClient[method](`${url}/${params}`, payload);
-      setData(data);
+      const headers = getAuthorizedHeaders();
+      let response = { data: [] };
+      if (method === METHOD.GET || method === METHOD.DELETE) {
+        console.log('/...??');
+        response = await apiClient[method](`${url}/${params}`, { headers });
+      } else {
+        response = await apiClient[method](
+          `${url}/${params}`,
+          { ...payload },
+          {
+            headers,
+          },
+        );
+      }
+      setData(response.data);
       setIsSucceed(true);
     } catch (error) {
       setIsError(true);
@@ -28,6 +42,12 @@ const useFetch = ({ method, url }) => {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (data && handler) {
+      handler(data);
+    }
+  }, [data]);
 
   return { isLoading, isSucceed, isError, errorMessage, data, fetchApi };
 };

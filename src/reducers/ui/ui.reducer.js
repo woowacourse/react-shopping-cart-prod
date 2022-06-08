@@ -1,7 +1,7 @@
 import { actionTypes } from 'reducers/ui/ui.actions';
 
 export const initialState = {
-  isSnackBarVisibile: false,
+  isSnackBarVisible: false,
   snackBarText: '',
   snackBarType: '',
 };
@@ -10,7 +10,7 @@ const uiReducer = (state = initialState, { type, payload }) => {
   if (type === actionTypes.SHOW_SNACKBAR) {
     return {
       ...state,
-      isSnackBarVisibile: true,
+      isSnackBarVisible: true,
       snackBarText: payload.text,
       snackBarType: payload.type,
     };
@@ -18,7 +18,7 @@ const uiReducer = (state = initialState, { type, payload }) => {
   if (type === actionTypes.HIDE_SNACKBAR) {
     return {
       ...state,
-      isSnackBarVisibile: false,
+      isSnackBarVisible: false,
       snackBarText: '',
       snackBarType: '',
     };

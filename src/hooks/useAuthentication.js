@@ -4,7 +4,6 @@ import { METHOD } from 'constants';
 import { setCookie, deleteCookie } from 'utils/cookie';
 import { setUserInfo, setAuthenticated } from 'reducers/user/user.actions';
 import { initializeUserInfo } from 'reducers/user/user.actions';
-import { getAuthorizedHeaders } from 'api/auth';
 
 const useAuthentication = () => {
   const dispatch = useDispatch();
@@ -42,8 +41,7 @@ const useAuthentication = () => {
   });
 
   const checkIsAuthenticated = () => {
-    const headers = getAuthorizedHeaders();
-    getUserApi({ payload: { headers } });
+    getUserApi();
   };
 
   const login = (email, password) => {

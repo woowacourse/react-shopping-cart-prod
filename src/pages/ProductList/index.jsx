@@ -32,12 +32,12 @@ const ProductList = () => {
   return (
     <ProductContainer>
       {products &&
-        products.map(({ name, price, imgUrl, id }) => (
+        products.map(({ name, price, imageUrl, id }) => (
           <ProductItem
             id={id}
             name={name}
             price={price}
-            imgUrl={imgUrl || itemAltImg}
+            imageUrl={imageUrl || itemAltImg}
             key={id}
             isInCart={includedInCart(id)}
             onClickCartButton={handleClickCartButton(id)}

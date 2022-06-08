@@ -18,7 +18,7 @@ export const Example = Template.bind({});
 
 Example.args = {
   id: 1,
-  imgUrl:
+  imageUrl:
     'https://woowacourse.github.io/shopping-cart-css/assets/images/product.png',
   name: 'PET보틀-정사각(420ml)',
   price: '48000',

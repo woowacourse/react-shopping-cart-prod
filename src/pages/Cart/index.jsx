@@ -57,12 +57,12 @@ const Cart = () => {
 
           <CartContainer>
             {cartItems &&
-              cartItems.map(({ id, name, imgUrl, price, quantity }) => (
+              cartItems.map(({ id, name, imageUrl, price, quantity }) => (
                 <CartItem
                   key={id}
                   id={id}
                   name={name}
-                  imgUrl={imgUrl || itemAltImg}
+                  imageUrl={imageUrl || itemAltImg}
                   price={price}
                   quantity={quantity}
                   isSelected={includes(selectedItemList, id)}
