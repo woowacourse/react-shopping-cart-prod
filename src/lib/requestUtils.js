@@ -1,16 +1,20 @@
-import { REQUEST_STATUS, REQUEST_TIMEOUT } from 'constants/';
+import { ACCESS_TOKEN_COOKIE_NAME, REQUEST_STATUS, REQUEST_TIMEOUT } from 'constants/';
 
 import { getCookie } from './cookieUtils';
 
-const addAccessTokenHeader = (headers = {}) => {
-  headers.Authorization = `Bearer ${getCookie('accessToken')}`;
+const addAccessTokenHeader = (requestOptions = {}) => {
+  requestOptions.headers.Authorization = `Bearer ${getCookie(ACCESS_TOKEN_COOKIE_NAME)}`;
 };
 
 const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
   const fetchController = new AbortController();
   const newOption = { ...option, signal: fetchController.signal };
 
-  isAccessTokenUsed === true && addAccessTokenHeader(newOption.headers);
+  if (!newOption.headers) {
+    newOption.headers = {};
+  }
+
+  isAccessTokenUsed === true && addAccessTokenHeader(newOption);
 
   const timerID = setTimeout(() => fetchController.abort(), REQUEST_TIMEOUT);
 
