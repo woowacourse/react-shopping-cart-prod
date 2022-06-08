@@ -10,19 +10,20 @@ import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 import empty from 'assets/empty.jpeg';
 import Styled from 'page/CartPage/index.style';
 
-import { doAddProductToOrder, doDecideOrder, doInitializeOrder } from 'reducers/cart.reducer';
+import { doAddProductToOrder, doInitializeOrder } from 'reducers/cart.reducer';
 import { MESSAGE } from 'utils/constants';
-import apiClient from 'apis/apiClient';
+import useOrderAPI from 'hooks/useOrdersAPI';
 
 const CartPage = () => {
-  const dispatch = useDispatch();
-  const [renderSnackbar] = useSnackbar();
-  const navigate = useNavigate();
-
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
   const { shoppingCart, order } = useSelector(state => state.cartReducer);
   const productIdsInCart = shoppingCart.map(product => product.productId);
   const productIdsToDelete = productIdsInCart.filter(id => order.includes(id));
+  const dispatch = useDispatch();
+  const [renderSnackbar] = useSnackbar();
+  const navigate = useNavigate();
+
+  const { orderCart } = useOrderAPI();
 
   const { deleteCheckedProducts } = useDeleteCheckedProductsAPI(productIdsToDelete);
 
@@ -63,20 +64,6 @@ const CartPage = () => {
         dispatch(doAddProductToOrder({ id: product.productId }));
       }
     });
-  };
-
-  // TODO 6. POST 주문 추가하기
-  const orderSelectedCart = async () => {
-    try {
-      const response = await apiClient.post('/orders', { productIds: order });
-      dispatch(doDecideOrder({ orderList: response.data }));
-      console.log(response.data);
-      navigate('/order');
-      renderSnackbar(MESSAGE.ORDER_PASS_SUCCESS, 'SUCCESS');
-    } catch (error) {
-      const customError = error.response.data;
-      renderSnackbar(customError.message, 'FAILED');
-    }
   };
 
   return (
@@ -125,7 +112,7 @@ const CartPage = () => {
                 title="결제예상금액"
                 price={totalPrice}
                 actionType={`주문하기(${order.length}개)`}
-                action={orderSelectedCart}
+                action={() => orderCart(order)}
               />
             </Styled.RightSide>
           </Styled.OrderSheet>
