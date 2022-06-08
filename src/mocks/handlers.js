@@ -44,27 +44,40 @@ export const handlers = [
 
   // 4. 장바구니 목록에 상품 추가 및 수량 수정하기(PUT)
   rest.put('/cart/products/:id', (req, res, ctx) => {
-    const id = +req.params.id;
-    const { quantity } = req.body;
-    const product = dummyCart.find(item => item.id === id);
+    const productId = +req.params.id;
+    const { quantity: reqQuantity } = req.body;
+    const productInCart = dummyCart.find(product => product.productId === productId);
+    const { image, name, price } = dummyProductList.find(product => product.id === productId);
+    const resProduct = { productId, image, name, price, quantity: reqQuantity };
 
-    if (product) {
-      product.quantity = quantity;
-      return res(ctx.status(200), ctx.json(product));
+    if (productInCart) {
+      productInCart.quantity = reqQuantity;
+      return res(ctx.status(200), ctx.json(resProduct));
     } else {
-      dummyCart.push({ id, quantity });
-      return res(ctx.status(200), ctx.json({ id, quantity }));
+      dummyCart.push(resProduct);
+      return res(ctx.status(200), ctx.json(resProduct));
     }
   }),
 
   // 5. 장바구니 목록에서 상품 삭제하기(DELETE)
   rest.delete('/cart', (req, res, ctx) => {
-    console.log(req);
-
     const { productIds } = req.body;
-    dummyCart = dummyCart.filter(item => !productIds.includes(item.id));
-    console.log('dummyCart', dummyCart);
+    dummyCart = dummyCart.filter(product => !productIds.includes(product.productId));
     return res(ctx.status(204));
+  }),
+
+  // 6. 주문 추가하기(POST)
+  rest.post('/orders', (req, res, ctx) => {
+    const { productIds } = req.body;
+    const orderDetails = dummyCart.filter(product => productIds.includes(product.productId));
+    const dummyOrder = {
+      id: 5,
+      orderDetails,
+      totalPrice: 53200,
+      orderDate: '2022-03-20 12:23:33',
+    };
+
+    return res(ctx.status(201), ctx.json(dummyOrder));
   }),
 
   // 회원가입

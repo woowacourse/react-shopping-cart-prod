@@ -72,27 +72,3 @@ export const dummyProductList = [
     price: 90000,
   },
 ];
-
-export const dummyShoppingCart = [
-  {
-    id: 6,
-    image: 'https://cdn-mart.baemin.com/sellergoods/main/7a48f6bc-761e-4a51-8337-7677097aec09.jpg',
-    name: '냉동육(2kg)',
-    price: 100000,
-    quantity: 5,
-  },
-  {
-    id: 7,
-    image: 'https://cdn-mart.baemin.com/sellergoods/main/0fd75127-a964-4bd8-b620-125b0b721ae0.jpg',
-    name: '생연어(300g)',
-    price: 70000,
-    quantity: 2,
-  },
-  {
-    id: 8,
-    image: 'https://cdn-mart.baemin.com/sellergoods/main/154bd485-c0c6-4ccb-9c2b-f9ec232b18d0.jpg',
-    name: '새우(300g)',
-    price: 90000,
-    quantity: 3,
-  },
-];
