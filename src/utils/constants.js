@@ -40,6 +40,7 @@ const MESSAGE = {
   INVALID_EMAIL_BLANK: '공백없이 이메일을 적어주세요.',
   INVALID_PASSWORD_FORMAT: '비밀번호는 10자리 이상이며 영문, 숫자, 특수문자가 조합되어야 합니다.',
   INVALID_NICKNAME_FORMAT: '닉네임은 2자리 이상 10자리 이하여야 합니다.',
+  ORDER_PASS_SUCCESS: '장바구니에 담긴 상품이 주문목록으로 이동되었습니다.',
 };
 
 const ERROR = {

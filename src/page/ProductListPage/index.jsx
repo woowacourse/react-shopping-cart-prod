@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ProductItem } from 'components';
 import Styled from './index.style';
 
-import { doInitializeProductList } from 'actions/actionCreator';
+import { doInitializeCartList, doInitializeProductList } from 'actions/actionCreator';
 import apiClient from 'apis/apiClient';
 
 const ProductListPage = () => {
@@ -23,6 +23,17 @@ const ProductListPage = () => {
   useEffect(() => {
     getProducts();
   }, [getProducts]);
+
+  // TODO 3. get 장바구니 목록 가져오기
+  const getCart = useCallback(async () => {
+    const response = await apiClient.get('/cart');
+    console.log('장바구니', response.data);
+    dispatch(doInitializeCartList({ shoppingCart: response.data }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    getCart();
+  }, [getCart]);
 
   return (
     <Styled.ProductListPage>

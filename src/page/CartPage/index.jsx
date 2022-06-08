@@ -17,40 +17,28 @@ import {
 } from 'actions/actionCreator';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
-import useLogout from 'hooks/useLogout';
 
 const CartPage = () => {
-  const { logoutByError } = useLogout();
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
-  const { products, shoppingCart, order } = useSelector(state => state.cartReducer);
+  const { shoppingCart, order } = useSelector(state => state.cartReducer);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const calculateTotalPrice = useCallback(() => {
     let total = 0;
 
     order.forEach(id => {
-      const { price } = products.find(product => product.productId === id);
-      const { quantity } = shoppingCart.find(product => product.productId === id);
-      total += quantity * price;
+      const product = shoppingCart.find(product => product.productId === id);
+      if (product) {
+        const { price, quantity } = product;
+        total += price * quantity;
+      }
     });
-
     return total;
-  }, [products, shoppingCart, order]);
-
-  // TODO 3. get 장바구니 목록 가져오기
-  const getCart = async () => {
-    const response = await apiClient.get('/cart');
-    console.log('장바구니', response.data);
-    dispatch(doInitializeCartList({ shoppingCart: response.data }));
-  };
-
-  useEffect(() => {
-    getCart();
-  }, []);
+  }, [shoppingCart, order]);
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
@@ -59,6 +47,17 @@ const CartPage = () => {
     }
     setTotalPrice(calculateTotalPrice());
   }, [calculateTotalPrice]);
+
+  // TODO 3. get 장바구니 목록 가져오기
+  const getCart = useCallback(async () => {
+    const response = await apiClient.get('/cart');
+    console.log('장바구니', response.data);
+    dispatch(doInitializeCartList({ shoppingCart: response.data }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    getCart();
+  }, [getCart]);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
@@ -86,15 +85,31 @@ const CartPage = () => {
     } catch (error) {
       const customError = error.response.data;
       renderSnackbar(customError.message, 'FAILED');
-      logoutByError(customError);
     }
   };
 
-  const handleOrder = () => {
-    const orderList = shoppingCart.filter(product => order.includes(product.productId));
-    dispatch(doDecideOrder({ orderList }));
-    navigate('/order');
+  // TODO 6. POST 주문 추가하기
+  const orderSelectedCart = async () => {
+    // console.log('order', order);
+    // const response = await apiClient.post('/orders', { productIds: order });
+    // console.log('@@', response);
+    try {
+      const response = await apiClient.post('/orders', { productIds: order });
+      dispatch(doDecideOrder({ orderList: response.data }));
+      console.log(response.data);
+      navigate('/order');
+      renderSnackbar(MESSAGE.ORDER_PASS_SUCCESS, 'SUCCESS');
+    } catch (error) {
+      const customError = error.response.data;
+      renderSnackbar(customError.message, 'FAILED');
+    }
   };
+
+  // const handleOrder = () => {
+  //   const orderList = shoppingCart.filter(product => order.includes(product.productId));
+  //   dispatch(doDecideOrder({ orderList }));
+  //   navigate('/order');
+  // };
 
   return (
     <Styled.Container>
@@ -123,8 +138,6 @@ const CartPage = () => {
               </Styled.ProductListTitle>
               <Styled.ProductList>
                 {shoppingCart.map(({ productId, name, price, image, quantity }) => {
-                  // console.log(productId, name, price, image, quantity);
-
                   return (
                     <CartProductItem
                       key={productId}
@@ -144,7 +157,7 @@ const CartPage = () => {
                 title="결제예상금액"
                 price={totalPrice}
                 actionType={`주문하기(${order.length}개)`}
-                action={handleOrder}
+                action={orderSelectedCart}
               />
             </Styled.RightSide>
           </Styled.OrderSheet>

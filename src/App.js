@@ -16,14 +16,14 @@ import {
 } from 'page';
 import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 
-import { doLogin } from 'actions/actionCreator';
+import { doInitializeCartList, doLogin } from 'actions/actionCreator';
 import { ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import apiClient from 'apis/apiClient';
 
 function App() {
   const dispatch = useDispatch();
-  const { logoutByError } = useLogout();
+  // const { logoutByError } = useLogout();
 
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
 
@@ -36,7 +36,7 @@ function App() {
       dispatch(doLogin({ nickname: response.data.nickname }));
     } catch (error) {
       const customError = error.response.data;
-      logoutByError(customError);
+      // logoutByError(customError);
     }
   };
 
