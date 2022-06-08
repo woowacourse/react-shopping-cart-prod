@@ -1,11 +1,5 @@
-import axios from 'axios';
-import { SERVER_URL } from 'configs/api';
-import {
-  Customer,
-  Product,
-  SigninResponseBody,
-  SignupRequestBody,
-} from 'types';
+import { Customer, Product } from 'types';
+import api from 'api';
 
 const TYPES = {
   INITIALIZE_CUSTOMER: 'INITIALIZE_CUSTOMER',
@@ -66,17 +60,12 @@ const actions = {
     return { type: TYPES.INITIALIZE_CUSTOMER };
   },
   getCustomer: (customerId: number) => {
-    const request = axios.get(`${SERVER_URL}/api/customers/${customerId}`);
+    const request = api.customer.get(customerId);
 
     return { type: TYPES.GET_CUSTOMER, payload: request };
   },
   signIn: (signinPayload: { email: string; password: string }) => {
-    const request = axios
-      .post<SigninResponseBody>(
-        `${SERVER_URL}/api/customer/authentication/sign-in`,
-        signinPayload
-      )
-      .then((res) => res.data);
+    const request = api.customer.signin(signinPayload).then((res) => res.data);
 
     return { type: TYPES.SIGN_IN, payload: request };
   },
@@ -84,78 +73,61 @@ const actions = {
     return { type: TYPES.SIGN_OUT };
   },
   signUp: (signupPayload: Customer) => {
-    const request = axios
-      .post<SignupRequestBody>(`${SERVER_URL}/api/customers`, signupPayload)
-      .then((res) => res.data);
+    const request = api.customer.signup(signupPayload).then((res) => res.data);
 
     return { type: TYPES.SIGN_UP, payload: request };
   },
-  updateProfile: (updatedCustomer: Customer, customerId: number) => {
-    const request = axios
-      .put(`${SERVER_URL}/api/customers/${customerId}`, updatedCustomer)
+  updateProfile: (customerId: number, updatedCustomer: Customer) => {
+    const request = api.customer
+      .update(customerId, updatedCustomer)
       .then((res) => res.data);
 
     return { type: TYPES.UPDATE_PROFILE, payload: request };
   },
   unregister: (customerId: number) => {
-    const request = axios
-      .delete(`${SERVER_URL}/api/customers/${customerId}`)
-      .then((res) => res.data);
+    const request = api.customer.remove(customerId).then((res) => res.data);
 
     return { type: TYPES.UNREGISTER, payload: request };
   },
-  getProductList: (ids?: Array<number>) => {
-    const query = ids ? `?${ids.map((id) => `id=${id}`).join('&')}` : '';
-    const request = axios
-      .get(`${SERVER_URL}/api/products${query}`)
-      .then((res) => res.data);
+  getProductList: () => {
+    const request = api.products.getAll().then((res) => res.data);
 
     return { type: TYPES.GET_PRODUCT_LIST, payload: request };
   },
   getProductDetail: (id: number) => {
-    const request = axios
-      .get(`${SERVER_URL}/api/products/${id}`)
-      .then((res) => res.data);
+    const request = api.products.get(id).then((res) => res.data);
 
     return { type: TYPES.GET_PRODUCT_DETAIL, payload: request };
   },
   getCart: () => {
-    const request = axios
-      .get(`${SERVER_URL}/api/customers/cart`)
-      .then((res) => res.data);
+    const request = api.cart.get().then((res) => res.data);
 
     return { type: TYPES.GET_CART, payload: request };
   },
   checkIsProductAddedToCart: (productId: Product['id']) => {
-    const request = axios
-      .get(`${SERVER_URL}/api/customers/cart/${productId}`)
+    const request = api.products
+      .checkIsAddedToCart(productId)
       .then((res) => res.data);
 
     return { type: TYPES.CHECK_IS_PRODUCT_ADDED_TO_CART, payload: request };
   },
   addItemToCart: (productId: number, quantity: number) => {
-    const request = axios
-      .post(`${SERVER_URL}/api/customers/cart`, {
-        productId,
-        quantity,
-      })
+    const request = api.cart
+      .addItemToCart(productId, quantity)
       .then((res) => res.data);
 
     return { type: TYPES.ADD_ITEM_TO_CART, payload: request };
   },
   removeCartItem: (cartItemId: number) => {
-    const request = axios
-      .delete(`${SERVER_URL}/api/customers/cart/${cartItemId}`)
+    const request = api.cart
+      .removeItemFromCart(cartItemId)
       .then((res) => res.data);
 
     return { type: TYPES.REMOVE_CART_ITEM, payload: request };
   },
   updateQuantity: (cartItemId: number, productId: number, quantity: number) => {
-    const request = axios
-      .put(`${SERVER_URL}/api/customers/cart/${cartItemId}`, {
-        productId,
-        quantity,
-      })
+    const request = api.cart
+      .updateQuantity(cartItemId, productId, quantity)
       .then((res) => res.data);
 
     return { type: TYPES.UPDATE_QUANTITY, payload: request };

@@ -88,7 +88,7 @@ function ProfilePage() {
       }
 
       if (userId) {
-        dispatch(actions.updateProfile(payload as Customer, userId));
+        dispatch(actions.updateProfile(userId, payload as Customer));
       }
     } catch (e) {
       if (axios.isAxiosError(e)) {

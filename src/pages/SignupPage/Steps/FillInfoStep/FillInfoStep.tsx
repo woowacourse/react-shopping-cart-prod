@@ -7,11 +7,11 @@ import ICONS from 'constants/icons';
 import * as S from './FillInfoStep.styled';
 import { useOutletContext } from 'react-router-dom';
 import { Customer, StoreState } from 'types';
-import { SERVER_URL } from 'configs/api';
 import useForm from 'hooks/useForm';
 import { formatDate } from 'utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from 'redux/actions';
+import api from 'api';
 
 function FillInfoStep() {
   const dispatch = useDispatch();
@@ -89,13 +89,14 @@ function FillInfoStep() {
   };
 
   const handleClickIsEmailDuplicated = async () => {
-    const email = watchingValues['email'];
+    const email = watchingValues['email'] as string | undefined;
 
     try {
-      const { isDuplicated } = await axios({
-        method: 'get',
-        url: `${SERVER_URL}/api/validation?email=${email}`,
-      }).then((res) => res.data);
+      if (!email) return;
+
+      const { isDuplicated } = await api.customer
+        .checkIsEmailDuplicated(email)
+        .then((res) => res.data);
 
       setIsEmailUnique(!isDuplicated);
 
