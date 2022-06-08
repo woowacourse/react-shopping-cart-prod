@@ -75,11 +75,7 @@ const postOrderHandler = rest.post('/orders', (req, res, ctx) => {
 
     localStorage.setItem('orders', JSON.stringify(orders));
     localStorage.setItem('cart', JSON.stringify(cart));
-    return res(
-      ctx.status(201),
-      ctx.set('Location', `/orders/${orders.length + 1}`),
-      ctx.json(order),
-    );
+    return res(ctx.status(201), ctx.set('Location', `/orders/${orders.length}`), ctx.json(order));
   } catch (error) {
     // 주문 실패
     return res(

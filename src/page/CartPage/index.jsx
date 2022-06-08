@@ -85,23 +85,30 @@ const CartPage = () => {
   };
 
   const postOrder = async () => {
-    if (order.length <= 0) return;
+    try {
+      if (order.length <= 0) return;
 
-    const accessToken = getCookie('accessToken');
+      const accessToken = getCookie('accessToken');
 
-    await axios.post(
-      `/orders`,
-      {
-        productIds: order,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const response = await axios.post(
+        `/orders`,
+        {
+          productIds: order,
         },
-      },
-    );
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
 
-    dispatch(doOrderFromCart());
+      const location = response.headers.location.split('/');
+
+      dispatch(doOrderFromCart());
+      navigate(`/pay/${location[location.length - 1]}`);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
