@@ -143,6 +143,30 @@ const cartReducer = (state = initialState, action): CartState => {
       };
     }
 
+    case CartActionType.ADD_ORDER_ITEM_START:
+      return { ...state, isLoading: true };
+
+    case CartActionType.ADD_ORDER_ITEM_SUCCEEDED: {
+      const {
+        payload: { orderList },
+      } = action;
+      const orderIdList = orderList.map(order => order.cartItemId);
+      const newCartList = [...state.cartList];
+
+      orderIdList.forEach(id => {
+        newCartList.forEach((cart, index) => {
+          if (id === cart.id) {
+            newCartList.splice(index, 1);
+          }
+        });
+      });
+
+      return { ...state, selectedCartItem: [], cartList: newCartList, isLoading: false };
+    }
+
+    case CartActionType.ADD_ORDER_ITEM_FAILED:
+      return { ...state, isLoading: false };
+
     default: {
       return state;
     }

@@ -1,4 +1,5 @@
 import { addCart, deleteCart, getCart, patchCart } from '@/api/cart';
+import { addOrderList } from '@/api/orderList';
 import { CartType } from '@/domain/product';
 import { Dispatch } from 'redux';
 export const enum CartActionType {
@@ -24,6 +25,10 @@ export const enum CartActionType {
 
   SELECT_CART_ITEM = 'cart/SELECT_CART_ITEM',
   SELECT_EVERY_CART_ITEM = 'cart/SELECT_EVERY_CART_ITEM',
+
+  ADD_ORDER_ITEM_START = 'cart/ADD_ORDER_ITEM_START',
+  ADD_ORDER_ITEM_SUCCEEDED = 'cart/ADD_ORDER_ITEM_SUCCEEDED',
+  ADD_ORDER_ITEM_FAILED = 'cart/ADD_ORDER_ITEM_FAILED',
 }
 
 interface GetCartStart {
@@ -102,6 +107,18 @@ interface SelectEveryCartItem {
   type: CartActionType.SELECT_EVERY_CART_ITEM;
 }
 
+interface AddOrderItemStart {
+  type: CartActionType.ADD_ORDER_ITEM_START;
+}
+
+interface AddOrderItemSucceeded {
+  type: CartActionType.ADD_ORDER_ITEM_SUCCEEDED;
+}
+
+interface AddOrderItemFailed {
+  type: CartActionType.ADD_ORDER_ITEM_FAILED;
+}
+
 export type CartAction =
   | GetCartStart
   | GetCartSucceeded
@@ -119,7 +136,10 @@ export type CartAction =
   | PatchCartSucceeded
   | PatchCartFailed
   | SelectCartItem
-  | SelectEveryCartItem;
+  | SelectEveryCartItem
+  | AddOrderItemStart
+  | AddOrderItemSucceeded
+  | AddOrderItemFailed;
 
 export const fetchGetCartAsync = () => async (dispatch: Dispatch<CartAction>) => {
   dispatch({ type: CartActionType.GET_CART_START });
@@ -194,5 +214,17 @@ export const fetchPatchCartAsync = (id, quantity) => async (dispatch: Dispatch<C
     dispatch({ type: CartActionType.PATCH_CART_SUCCEEDED, payload: { id, quantity } });
   } catch ({ message }) {
     dispatch({ type: CartActionType.PATCH_CART_FAILED });
+  }
+};
+
+export const postOrderListAsync = orderList => async (dispatch: Dispatch<CartAction>) => {
+  dispatch({ type: CartActionType.ADD_ORDER_ITEM_START });
+
+  try {
+    await addOrderList(orderList);
+
+    dispatch({ type: CartActionType.ADD_ORDER_ITEM_SUCCEEDED, payload: { orderList } });
+  } catch ({ message }) {
+    dispatch({ type: CartActionType.ADD_ORDER_ITEM_FAILED });
   }
 };
