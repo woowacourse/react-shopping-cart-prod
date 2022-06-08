@@ -182,17 +182,16 @@ export const handlers = [
   rest.post("/api/myorders", (req, res, ctx) => {
     const { cartItemIds } = req.body;
     const db = LocalStorage.getInstance();
-    const products = products.reduce((product, acc) => {
-      const isOrderedProduct = cartItemIds.some((id) => product.id === id);
-      if (isOrderedProduct) {
-        acc.push({ ...product, productId: product.id });
+    const orderedCartItemList = db.carts.reduce((acc, cartItem) => {
+      const isOrderedCartItem = cartItemIds.some((id) => cartItem.id === id);
+      if (isOrderedCartItem) {
+        acc.push(cartItem);
       }
       return acc;
     }, []);
-
     const order = {
       id: db.orders.length,
-      orderedProducts: products,
+      orderedProducts: orderedCartItemList,
     };
     db.orders.push(order);
     LocalStorage.saveInstance(db);

@@ -6,6 +6,7 @@ import ImageButton from "@home/components/image-button/ImageButton";
 import { addProductToCart } from "@redux/reducers/cart-reducer/cartThunks";
 import styles from "@home/components/product-item/product-item.module";
 import LoadingThumbnail from "@shared/loading-thumbnail/LoadingThumbnail";
+import { Link } from "react-router-dom";
 
 function ProductItem({
   id: productId,
@@ -21,19 +22,23 @@ function ProductItem({
 
   return (
     <div className={cn(styles.productItem, className)}>
-      <LoadingThumbnail
-        src={`${thumbnailUrl}`}
-        className={styles.thumbnail}
-        alt={alt}
-        minHeight="295"
-      />
+      <Link to={`/product/${productId}`}>
+        <LoadingThumbnail
+          src={`${thumbnailUrl}`}
+          className={styles.thumbnail}
+          alt={alt}
+          minHeight="295"
+        />
+      </Link>
       <div className={cn(styles.content)}>
         <div className={cn(styles.productDetail)}>
           <div className={cn(styles.lLeft)}>
-            <div className={cn(styles.productTitle)}>{name}</div>
-            <div className={cn(styles.productPrice)}>
-              {priceToDollar(price)}
-            </div>
+            <Link to={`/product/${productId}`}>
+              <div className={cn(styles.productTitle)}>{name}</div>
+              <div className={cn(styles.productPrice)}>
+                {priceToDollar(price)}
+              </div>
+            </Link>
           </div>
           <div className="lRight">
             <ImageButton
