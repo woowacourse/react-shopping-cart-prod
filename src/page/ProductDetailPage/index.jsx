@@ -76,11 +76,16 @@ const ProductDetailPage = () => {
       navigate('/login');
       return;
     }
-
-    putCartAPI(isInCart ? productInCart.quantity + 1 : 1);
     dispatch(
-      doPutProductToCart({ productId: id, quantity: isInCart ? productInCart.quantity + 1 : 1 }),
+      doPutProductToCart({
+        productId: id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        quantity: isInCart ? productInCart.quantity + 1 : 1,
+      }),
     );
+    putCartAPI(isInCart ? productInCart.quantity + 1 : 1);
     navigate(LINK.TO_CART);
   };
 
