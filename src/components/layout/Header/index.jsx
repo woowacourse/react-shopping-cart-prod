@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { ROUTES } from "constants";
+import { ROUTES, COOKIE_KEY } from "constants";
+import { deleteCookie } from "util/cookie";
 import { USER_ACTION } from "reducers/user";
 
 import NavButton from "./NavButton";
@@ -10,20 +11,22 @@ import { UnderlinedButton } from "./NavButton/styled";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
-  const accessToken = useSelector((state) => state.user.data.accessToken);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
   const navigator = useNavigate();
 
   const logout = () => {
     dispatch({ type: USER_ACTION.LOGOUT });
-    navigator(ROUTES.ROOT);
+    deleteCookie(COOKIE_KEY.TOKEN);
+    deleteCookie(COOKIE_KEY.USER_ID);
+    navigator(ROUTES.ROOT, { replace: true });
   };
 
   return (
     <HeaderContainer>
       <Title />
       <NavButtonContainer>
-        {accessToken ? (
+        {isLoggedIn ? (
           <>
             <NavButton linkTo={ROUTES.PRODUCT_CART}>장바구니</NavButton>
             <NavButton linkTo={ROUTES.PRODUCT_ORDER_LIST}>주문목록</NavButton>
