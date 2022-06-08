@@ -2,7 +2,7 @@ import { rest, RestRequest } from 'msw';
 import { SERVER_URL } from 'configs/api';
 import * as db from 'mocks/db.js';
 
-const cart = [...db.cart];
+let cart = [...db.cart];
 
 const TOKEN_PREFIX = 'lokbawoody';
 const extractIdFromToken = (token: string) =>
@@ -83,7 +83,7 @@ const cartHandlers = [
   rest.put<{ productId: number; quantity: number }>(
     `${SERVER_URL}/api/customers/cart/:cartItemId`,
     (req, res, ctx) => {
-      // const cartItemId = req.params;
+      const { cartItemId } = req.params;
 
       if (!req.body) {
         return res(ctx.status(400), ctx.json(new Error('body is required')));
@@ -98,18 +98,18 @@ const cartHandlers = [
         );
       }
 
-      // const updatedCartItem = req.body;
+      const updatedCartItem = req.body;
 
-      // cart = cart.map((cartItem) => {
-      //   if (cartItem.id === Number(cartItemId)) {
-      //     return {
-      //       ...cartItem,
-      //       quantity: updatedCartItem.quantity,
-      //     };
-      //   }
+      cart = cart.map((cartItem) => {
+        if (cartItem.id === Number(cartItemId)) {
+          return {
+            ...cartItem,
+            quantity: updatedCartItem.quantity,
+          };
+        }
 
-      //   return cartItem;
-      // });
+        return cartItem;
+      });
 
       return res(ctx.status(200));
     }
@@ -117,7 +117,7 @@ const cartHandlers = [
   rest.delete(
     `${SERVER_URL}/api/customers/cart/:cartItemId`,
     (req, res, ctx) => {
-      // const cartItemId = req.params;
+      const { cartItemId } = req.params;
       const { isValidToken } = extractIdFromHeader(req);
 
       if (!isValidToken) {
@@ -127,7 +127,7 @@ const cartHandlers = [
         );
       }
 
-      // cart = cart.filter(({ id }) => id !== Number(cartItemId));
+      cart = cart.filter(({ id }) => id !== Number(cartItemId));
 
       return res(ctx.status(200));
     }
