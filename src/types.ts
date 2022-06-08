@@ -74,7 +74,3 @@ export type StoreState = {
 };
 
 export type Theme = typeof theme;
-
-export type Routes<T> = {
-  [property in keyof T]: string;
-};
