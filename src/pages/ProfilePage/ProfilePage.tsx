@@ -6,12 +6,24 @@ import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 import ICONS from 'constants/icons';
 import * as S from 'pages/ProfilePage/ProfilePage.styled';
-import { SERVER_URL } from 'configs/api';
 import useForm from 'hooks/useForm';
 import Spinner from 'components/Spinner/Spinner';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from 'redux/actions';
+import { Customer, StoreState } from 'types';
 
 function ProfilePage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    isLoading,
+    userId,
+    customer,
+    isUpdateProfileSuccessful,
+    isUnregisterSuccessful,
+  } = useSelector<StoreState, StoreState['customerState']>(
+    ({ customerState }) => customerState
+  );
   const { postcode, addressData, setAddressData } = useDaumPostcode();
   const {
     isSubmitting,
@@ -32,50 +44,26 @@ function ProfilePage() {
 
   useEffect(() => {
     try {
-      const accessToken = localStorage.getItem('accessToken');
-      const customerId = localStorage.getItem('userId');
-
-      const loadUserInfo = async () => {
-        const {
-          data: {
-            name,
-            contact,
-            email,
-            zonecode,
-            address,
-            detailAddress,
-            gender,
-            birthday,
-            profileImageUrl,
-          },
-        } = await axios({
-          method: 'get',
-          data: '',
-          url: `${SERVER_URL}/api/customers/${customerId}`,
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        setDefaultValues((prev) => ({
-          ...prev,
-          name,
-          contact,
-          email,
-          gender,
-          detailAddress,
-          birthday,
-          profileImageUrl,
-        }));
-
-        setAddressData({ zonecode, address });
-      };
-
-      loadUserInfo();
+      if (userId) {
+        dispatch(actions.getCustomer(userId));
+      }
     } catch (e) {
       console.error('error');
     }
-  }, [setAddressData]);
+  }, [dispatch, userId]);
+
+  useEffect(() => {
+    if (customer) {
+      const { zonecode, address, terms, accessToken, ...rest } = customer;
+
+      setDefaultValues((prev) => ({
+        ...prev,
+        ...rest,
+      }));
+
+      setAddressData({ zonecode, address });
+    }
+  }, [customer, setAddressData]);
 
   const handleClickAddressButton = () => {
     postcode?.open();
@@ -99,19 +87,9 @@ function ProfilePage() {
         throw new Error('패스워드 확인, 주소 중 유효하지 않은 값이 있습니다.');
       }
 
-      const accessToken = localStorage.getItem('accessToken');
-      const customerId = localStorage.getItem('userId');
-
-      await axios({
-        method: 'put',
-        url: `${SERVER_URL}/api/customers/${customerId}`,
-        data: payload,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      alert('회원 정보가 수정되었습니다.');
+      if (userId) {
+        dispatch(actions.updateProfile(payload as Customer, userId));
+      }
     } catch (e) {
       if (axios.isAxiosError(e)) {
         alert('유효하지 않은 이메일 형식입니다.');
@@ -122,24 +100,10 @@ function ProfilePage() {
   };
 
   const handleClickUnregisterButton = async () => {
-    const accessToken = localStorage.getItem('accessToken');
-    const customerId = localStorage.getItem('userId');
-
     try {
-      await axios({
-        method: 'delete',
-        url: `${SERVER_URL}/api/customers/${customerId}`,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('userId');
-
-      alert('계정이 삭제되었습니다.');
-
-      navigate('/');
+      if (userId) {
+        dispatch(actions.unregister(userId));
+      }
     } catch (e) {
       if (axios.isAxiosError(e)) {
         alert('요청을 실패했습니다.');
@@ -161,7 +125,21 @@ function ProfilePage() {
     firstInvalidInput.focus();
   };
 
-  if (!defaultValues) return <Spinner />;
+  useEffect(() => {
+    if (isUpdateProfileSuccessful) {
+      alert('회원정보가 수정되었습니다.');
+    }
+  }, [isUpdateProfileSuccessful]);
+
+  useEffect(() => {
+    if (isUnregisterSuccessful) {
+      alert('계정이 삭제되었습니다.');
+
+      navigate('/');
+    }
+  }, [navigate, isUnregisterSuccessful]);
+
+  if (isLoading || !defaultValues) return <Spinner />;
 
   return (
     <S.PageBox>

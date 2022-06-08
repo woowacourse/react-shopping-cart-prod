@@ -3,6 +3,16 @@ import { TYPES } from 'redux/actions';
 import { products } from 'mocks/db.json';
 
 const initialState = {
+  customerState: {
+    isLoading: false,
+    error: null,
+    userId: null,
+    isSignupSuccessful: false,
+    isUpdateProfileSuccessful: false,
+    isUnregisterSuccessful: false,
+    accessToken: null,
+    customer: null,
+  },
   productsState: {
     isLoading: false,
     error: null,

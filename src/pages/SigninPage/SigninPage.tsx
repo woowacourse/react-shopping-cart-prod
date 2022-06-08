@@ -5,29 +5,28 @@ import useForm from 'hooks/useForm';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 import PlainLink from 'components/PlainLink/PlainLink';
-import { SERVER_URL } from 'configs/api';
-import { SigninResponseBody } from 'types';
 import * as S from 'pages/SigninPage/SigninPage.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from 'redux/actions';
+import { StoreState } from 'types';
 
 function SigninPage() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { accessToken } = useSelector<StoreState, StoreState['customerState']>(
+    ({ customerState }) => customerState
+  );
   const { isSubmitting, registerForm, registerInput } = useForm();
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     const formData = new FormData(e.target as HTMLFormElement);
-    const payload = Object.fromEntries(formData.entries());
+    const payload = Object.fromEntries(formData.entries()) as {
+      email: string;
+      password: string;
+    };
 
     try {
-      const response = await axios.post<SigninResponseBody>(
-        `${SERVER_URL}/api/customer/authentication/sign-in`,
-        payload
-      );
-
-      const { accessToken, userId } = response.data;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('userId', String(userId));
-      navigate('/');
+      dispatch(actions.signIn(payload));
     } catch (e) {
       if (axios.isAxiosError(e)) {
         alert('아이디, 비밀번호를 다시 확인해주세요.');
@@ -36,6 +35,10 @@ function SigninPage() {
       }
     }
   };
+
+  if (accessToken) {
+    navigate('/');
+  }
 
   return (
     <S.PageBox>

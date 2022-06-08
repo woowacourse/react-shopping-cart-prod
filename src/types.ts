@@ -49,7 +49,16 @@ export type Action = {
 };
 
 export type StoreState = {
-  customerState: User;
+  customerState: {
+    isLoading: boolean;
+    error: any;
+    isSignupSuccessful: boolean;
+    isUpdateProfileSuccessful: boolean;
+    isUnregisterSuccessful: boolean;
+    userId: number | null;
+    accessToken: string | null;
+    customer: User | null;
+  };
   productsState: {
     isLoading: boolean;
     error: any;

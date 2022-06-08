@@ -91,7 +91,7 @@ const customerHandlers = [
       };
 
       customers.push(validCustomer);
-      return res(ctx.status(201), ctx.json(validCustomer));
+      return res(ctx.status(201));
     }
   ),
   // 로그인
@@ -167,9 +167,11 @@ const customerHandlers = [
       );
     }
 
-    const { password, ...rest } = customer;
+    const { password, ...restCustomerProperties } = customer;
 
-    return res(ctx.status(200), ctx.json(rest));
+    console.log('restCustomerProperties', restCustomerProperties);
+
+    return res(ctx.status(200), ctx.json(restCustomerProperties));
   }),
   //사용자 정보 수정
   rest.put<Customer>(

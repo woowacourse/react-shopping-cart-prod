@@ -1,17 +1,24 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useDaumPostcode from 'hooks/useDaumPostcode';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 import ICONS from 'constants/icons';
 import * as S from './FillInfoStep.styled';
 import { useOutletContext } from 'react-router-dom';
-import { Customer, SigninResponseBody } from 'types';
+import { Customer, StoreState } from 'types';
 import { SERVER_URL } from 'configs/api';
 import useForm from 'hooks/useForm';
 import { formatDate } from 'utils/utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from 'redux/actions';
 
 function FillInfoStep() {
+  const dispatch = useDispatch();
+  const { isSignupSuccessful } = useSelector<
+    StoreState,
+    StoreState['customerState']
+  >(({ customerState }) => customerState);
   const { goNextStep } = useOutletContext<{
     stepId: number;
     goNextStep: () => void;
@@ -56,28 +63,7 @@ function FillInfoStep() {
         );
       }
 
-      // 회원가입
-      await axios({
-        method: 'post',
-        url: `${SERVER_URL}/api/customers`,
-        data: payload,
-      });
-
-      // 로그인
-      const response = await axios.post<SigninResponseBody>(
-        `${SERVER_URL}/api/customer/authentication/sign-in`,
-        {
-          email: payload.email,
-          password: payload.password,
-        }
-      );
-
-      const { accessToken, userId } = response.data;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('userId', String(userId));
-
-      goNextStep();
+      dispatch(actions.signUp(payload));
     } catch (e) {
       if (axios.isAxiosError(e)) {
         alert('유효하지 않은 이메일 형식입니다.');
@@ -117,6 +103,25 @@ function FillInfoStep() {
       }
     }
   };
+
+  useEffect(() => {
+    if (isSignupSuccessful) {
+      const payload = {
+        email: watchingValues.email,
+        password: watchingValues.password,
+      } as { email: string; password: string };
+
+      dispatch(actions.signIn(payload));
+
+      goNextStep();
+    }
+  }, [
+    isSignupSuccessful,
+    dispatch,
+    goNextStep,
+    watchingValues.email,
+    watchingValues.password,
+  ]);
 
   return (
     <S.Form {...registerForm({ onSubmit: handleSubmit, onError: handleError })}>
