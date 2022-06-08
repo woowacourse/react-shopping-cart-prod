@@ -80,7 +80,49 @@ const membersHandlers = [
   }),
 
   // -- 이후
+  // 회원정보 수정 전 패스워드 확인
+  rest.post('./auth/customers/match/password', (req, res, ctx) => {
+    const { password } = req.body;
+
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
+    const userInfo = membersDB.find((user) => user.accessToken === accessToken);
+
+    if (!userInfo || userInfo.password !== password) {
+      return res(ctx.status(400), ctx.json({ message: '비밀번호가 올바르지 않습니다.' }));
+    }
+
+    return res(ctx.status(200));
+  }),
+
   // 회원정보 수정
+  rest.patch('./auth/customers/profile', (req, res, ctx) => {
+    const { nickname, password } = req.body;
+
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
+    const userInfo = membersDB.find((user) => user.accessToken === accessToken);
+
+    if (!userInfo || userInfo.password !== password) {
+      return res(ctx.status(400), ctx.json({ message: '비밀번호가 올바르지 않습니다.' }));
+    }
+
+    userInfo.nickname = nickname;
+    return res(ctx.status(200));
+  }),
+
+  // 패스워드 변경
+  rest.patch('./auth/customers/profile/password', (req, res, ctx) => {
+    const { oldPassword, newPassword } = req.body;
+
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
+    const userInfo = membersDB.find((user) => user.accessToken === accessToken);
+
+    if (!userInfo || userInfo.password !== oldPassword) {
+      return res(ctx.status(400), ctx.json({ message: '비밀번호가 올바르지 않습니다.' }));
+    }
+
+    userInfo.password = newPassword;
+    return res(ctx.status(200));
+  }),
   // 회원 탈퇴
 ];
 
