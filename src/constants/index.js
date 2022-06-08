@@ -1,12 +1,12 @@
 const URL = {
   봄: "http://ec2-54-180-119-11.ap-northeast-2.compute.amazonaws.com:8080", // ok
   릭: "http://ec2-3-39-194-30.ap-northeast-2.compute.amazonaws.com:8080", // ok
-  쿤: "http://ec2-15-164-96-161.ap-northeast-2.compute.amazonaws.com:8080",
-  토닉: "http://ec2-3-39-11-100.ap-northeast-2.compute.amazonaws.com:8080",
+  쿤: "http://ec2-15-164-96-161.ap-northeast-2.compute.amazonaws.com:8080", // ok
+  토닉: "http://ec2-3-39-11-100.ap-northeast-2.compute.amazonaws.com:8080", // ok
   베루스: "http://ec2-52-79-228-178.ap-northeast-2.compute.amazonaws.com:8080", // ok
 };
 
-const BASE_URL = URL.베루스;
+const BASE_URL = URL.토닉;
 
 const PATH = {
   MAIN: "/",
@@ -68,6 +68,7 @@ const REGULAR_EXPRESSION = {
 };
 
 export {
+  URL,
   BASE_URL,
   PATH,
   STATUS,

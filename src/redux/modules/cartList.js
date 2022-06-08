@@ -26,7 +26,7 @@ export const addProductToCart = (args) => async (dispatch) => {
     }
 
     await axios.post(
-      `${BASE_URL}/users/me/carts`,
+      `/users/me/carts`,
       {
         productId: id,
       },
@@ -65,7 +65,7 @@ export const addProductToCart = (args) => async (dispatch) => {
 
 export const getCartList = () => async (dispatch) => {
   try {
-    const response = await axios.get(`${BASE_URL}/users/me/carts`, {
+    const response = await axios.get(`/users/me/carts`, {
       headers: {
         Authorization:
           getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
@@ -74,7 +74,7 @@ export const getCartList = () => async (dispatch) => {
     dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.cartList));
   } catch (error) {
     if (error.response?.status === 401) {
-      dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
+      dispatch(toggleSnackbarOpen("장바구니는 로그인 후 이용해주세요!"));
       return;
     }
     if (error.response?.status === 500) {
@@ -102,7 +102,7 @@ export const incrementCartItemQuantity =
   (id, incrementedQuantity) => async (dispatch) => {
     try {
       const response = await axios.put(
-        `${BASE_URL}/users/me/carts/${id}`,
+        `/users/me/carts/${id}`,
         {
           quantity: incrementedQuantity,
         },
@@ -123,7 +123,7 @@ export const decrementCartItemQuantity =
     if (decrementedQuantity < 1) return;
     try {
       const response = await axios.put(
-        `${BASE_URL}/users/me/carts/${id}`,
+        `/users/me/carts/${id}`,
         {
           quantity: decrementedQuantity,
         },
@@ -148,7 +148,7 @@ export const removeCheckedCartItem = (cartList) => async (dispatch) => {
       (cartItem) => cartItem.id
     );
     checkedCartItemIds.forEach(async (id) => {
-      return await axios.delete(`${BASE_URL}/users/me/carts/${id}`, {
+      return await axios.delete(`/users/me/carts/${id}`, {
         headers: {
           Authorization:
             getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
@@ -166,7 +166,7 @@ export const removeCheckedCartItem = (cartList) => async (dispatch) => {
 };
 export const removeRowCartItem = (id) => async (dispatch) => {
   try {
-    await axios.delete(`${BASE_URL}/users/me/carts/${id}`, {
+    await axios.delete(`/users/me/carts/${id}`, {
       headers: {
         Authorization:
           getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,

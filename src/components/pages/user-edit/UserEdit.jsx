@@ -44,7 +44,7 @@ function UserEdit() {
 
   const getUser = async () => {
     try {
-      const { data } = await axios.get(`${BASE_URL}/users/me`, {
+      const { data } = await axios.get(`/users/me`, {
         headers: {
           Authorization:
             getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
@@ -101,7 +101,7 @@ function UserEdit() {
 
     try {
       await axios.put(
-        `${BASE_URL}/users/me`,
+        `/users/me`,
         {
           nickname: nickname.value,
           password: password.value,
@@ -123,7 +123,7 @@ function UserEdit() {
   const handleWithdrawalClick = async (e) => {
     if (confirm(MESSAGE.WITHDRAWAL_CONFIRM)) {
       try {
-        await axios.delete(`${BASE_URL}/users/me`, {
+        await axios.delete(`/users/me`, {
           headers: {
             Authorization:
               getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,

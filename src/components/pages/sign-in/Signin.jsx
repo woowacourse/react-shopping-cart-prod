@@ -30,7 +30,7 @@ function Signin() {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(`${BASE_URL}/login`, {
+      const { data } = await axios.post(`/login`, {
         email: email.current.value,
         password: password.current.value,
       });

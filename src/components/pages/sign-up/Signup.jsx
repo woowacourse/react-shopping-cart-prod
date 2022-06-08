@@ -102,7 +102,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      await axios.post(`${BASE_URL}/users`, {
+      await axios.post(`/users`, {
         email: email.value,
         password: password.value,
         nickname: nickname.value,

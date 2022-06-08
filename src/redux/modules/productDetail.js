@@ -11,7 +11,7 @@ export const ACTION_TYPES = {
 export const getProductDetail = (id) => async (dispatch) => {
   try {
     dispatch(createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_START));
-    const productDetail = await axios.get(`${BASE_URL}/products/${id}`);
+    const productDetail = await axios.get(`/products/${id}`);
     dispatch(
       createAction(ACTION_TYPES.GET_PRODUCT_DETAIL_SUCCESS, productDetail.data)
     );
