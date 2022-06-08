@@ -61,7 +61,7 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
 
       await modifyStoredProductQuantity({ productId: id, quantity });
       await loadProducts();
-    }, 500);
+    }, 1500);
   };
 
   const handleStoreProductToCart = async () => {
