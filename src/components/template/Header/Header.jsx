@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,29 +32,36 @@ const nonUserHeaderLinks = [
 ];
 
 function Header({ isLoggedIn }) {
+  const savedServerNumber = window.sessionStorage.getItem('server');
+  const [serverNumber, setServerNumber] = useState(savedServerNumber);
   const windowSize = useWindowsSize();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const IconSizeBreakPoint = deviceSizeStandard.desktop;
-  const serverNumber = window.sessionStorage.getItem('server');
 
   const navLinkInfo = isLoggedIn ? userHeaderLinks : nonUserHeaderLinks;
 
   const handleLogOut = () => {
-    if (window.confirm(ALERT_MESSAGES.LOGOUT_CONFIRM)) {
-      dispatch(logoutUser());
-      navigate(ROUTE.HOME);
+    if (!window.confirm(ALERT_MESSAGES.LOGOUT_CONFIRM)) {
       return;
     }
+    dispatch(logoutUser());
+    navigate(ROUTE.HOME);
   };
 
-  const handleServerChange = ({ target: { value } }) => {
-    setServerUrl(value);
-    if (isLoggedIn) {
-      handleLogOut();
+  const handleServerChange = (e) => {
+    const {
+      target: { value },
+    } = e;
+
+    if (isLoggedIn && !window.confirm(ALERT_MESSAGES.SERVER_CHANGE)) {
       return;
     }
+
+    dispatch(logoutUser());
+    setServerUrl(value);
+    setServerNumber(value);
     navigate(ROUTE.HOME);
   };
 
@@ -71,10 +78,11 @@ function Header({ isLoggedIn }) {
             BLVIC&apos;S CAMPING
           </S.Logo>
         </S.NavLink>
-        <select name="server" onChange={handleServerChange} defaultValue={serverNumber}>
-          <option value="0">1</option>
-          <option value="1">2</option>
-          <option value="2">3</option>
+        <select name="server" onChange={handleServerChange} value={serverNumber}>
+          <option value="0">크리스 서버</option>
+          <option value="1">오찌 서버</option>
+          <option value="2">쿼리치 서버</option>
+          <option value="3">파랑 서버</option>
         </select>
         <S.Nav>
           {navLinkInfo.map(({ path, name, ...props }) => (

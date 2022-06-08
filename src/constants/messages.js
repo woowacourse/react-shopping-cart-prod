@@ -4,6 +4,7 @@ export const ALERT_MESSAGES = {
   USER_INFO_UPDATE_SUCCESS: '회원 정보 수정에 성공했습니다.',
   USER_PASSWORD_UPDATE_SUCCESS: '회원 비밀번호 수정에 성공했습니다.',
   LOGOUT_CONFIRM: '로그아웃 하시겠습니까?',
+  SERVER_CHANGE: '서버를 변경하면 로그아웃 됩니다. 계속 진행하시겠습니까?',
 };
 
 export const WARNING_MESSAGES = {
