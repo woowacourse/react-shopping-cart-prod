@@ -26,7 +26,7 @@ type Path = typeof PATH[PathName];
 
 interface RoutesType {
   path: Path;
-  Element: LazyExoticComponent<() => JSX.Element> | ((...args) => JSX.Element);
+  element: LazyExoticComponent<() => JSX.Element> | ((...args) => JSX.Element);
 }
 
 const ItemList = lazy(() => import('pages/ItemList'));
@@ -39,23 +39,23 @@ const UserWithDrawal = lazy(() => import('pages/UserWithDrawal'));
 const NotFound = lazy(() => import('pages/NotFound'));
 
 const ROUTES: RoutesType[] = [
-  { path: PATH.main, Element: ItemList },
-  { path: PATH.itemDetail, Element: ItemDetail },
-  { path: PATH.notFound, Element: NotFound },
+  { path: PATH.main, element: ItemList },
+  { path: PATH.itemDetail, element: ItemDetail },
+  { path: PATH.notFound, element: NotFound },
 
-  { path: PATH.signup, Element: withPublicRoute(Signup) },
-  { path: PATH.login, Element: withPublicRoute(Login) },
+  { path: PATH.signup, element: withPublicRoute(Signup) },
+  { path: PATH.login, element: withPublicRoute(Login) },
 
-  { path: PATH.cart, Element: withPrivateRoute(Cart) },
-  { path: PATH.editUser, Element: withPrivateRoute(UserEdit) },
-  { path: PATH.withdrawal, Element: withPrivateRoute(UserWithDrawal) },
+  { path: PATH.cart, element: withPrivateRoute(Cart) },
+  { path: PATH.editUser, element: withPrivateRoute(UserEdit) },
+  { path: PATH.withdrawal, element: withPrivateRoute(UserWithDrawal) },
 ];
 
 const Routers = () => {
   return (
     <Routes>
       <Route path={PATH.home} element={<Navigate replace to='/main/1' />} />
-      {ROUTES.map(({ Element, ...route }) => (
+      {ROUTES.map(({ element: Element, ...route }) => (
         <Route key={route.path} element={<Element />} {...route} />
       ))}
     </Routes>
