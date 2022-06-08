@@ -9,19 +9,15 @@ export const sendAddToCartRequest = async (productId, quantity) => {
     quantity,
   });
 
-  const cart = response.data;
-
   alert(ALERT_MESSAGES.PRODUCT_ADDED(quantity));
 
-  return { cart };
+  return { cart: response.data };
 };
 
 export const sendGetCartRequest = async () => {
   const response = await customInstance.get(API_ENDPOINT.SHOPPING_CART);
 
-  const cart = response.data;
-
-  return { cart };
+  return { cart: response.data };
 };
 
 export const sendUpdateCartProductQuantityRequest = async (productId, quantity) => {
@@ -30,16 +26,13 @@ export const sendUpdateCartProductQuantityRequest = async (productId, quantity) 
     quantity,
   });
 
-  const cart = response.data;
-
-  return { cart };
+  return { cart: response.data };
 };
 
 export const sendDeleteCartProductRequest = async (productIdArray) => {
   const response = await productIdArray.reduce(sendCartProductDeleteRequest, null);
-  const cart = response.data;
 
-  return { cart };
+  return { cart: response.data };
 };
 
 const sendCartProductDeleteRequest = async (_, productId) => {
