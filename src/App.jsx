@@ -19,10 +19,10 @@ import LoginPage from 'page/LoginPage';
 import UserInfoEditPage from 'page/UserInfoEditPage';
 import WithDrawalPage from 'page/WithDrawalPage';
 
-if (process.env.NODE_ENV === 'development') {
-  const {worker} = require('./mocks/browsers');
-  worker.start();
-}
+// if (process.env.NODE_ENV === 'development') {
+//   const {worker} = require('./mocks/browsers');
+//   worker.start();
+// }
 
 export default function App() {
   return (
