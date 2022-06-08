@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 
 import Loader from 'component/Loader';
 
-export default function ErrorPendingBoundary({children, fallback, error, pending = false}) {
+export default function ErrorPendingBoundary({children, fallback, error, pending = false, data}) {
+  if (!data) return;
+
+  if (data.products.length === 0) return fallback;
+
   if (pending) return <Loader />;
 
   if (error) return fallback;
@@ -16,4 +20,5 @@ ErrorPendingBoundary.propTypes = {
   fallback: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   error: PropTypes.bool,
   pending: PropTypes.bool,
+  data: PropTypes.object,
 };

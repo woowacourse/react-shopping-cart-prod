@@ -47,7 +47,6 @@ export default function useCartItem(path = null) {
 
   const initializeCart = useCallback(() => {
     const response = JSON.parse(localStorage.getItem('accessToken'));
-
     if (!response) {
       return;
     }
