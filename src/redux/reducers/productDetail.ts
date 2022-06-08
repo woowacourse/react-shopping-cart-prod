@@ -5,10 +5,12 @@ const initialState: {
   isLoading: boolean;
   error: any;
   productDetail: Product | null;
+  isAddedToCart: boolean;
 } = {
   isLoading: false,
   error: null,
   productDetail: null,
+  isAddedToCart: false,
 };
 
 const productDetail = (state = initialState, action: Action) => {
@@ -17,19 +19,34 @@ const productDetail = (state = initialState, action: Action) => {
       return { ...state, isLoading: true, error: null };
     }
     case `${TYPES.GET_PRODUCT_DETAIL}_FULFILLED`: {
-      return { ...state, isLoading: false, productDetail: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        productDetail: action.payload as Product,
+      };
     }
     case `${TYPES.GET_PRODUCT_DETAIL}_REJECTED`: {
       return { ...state, isLoading: false, error: action.payload };
     }
-    case `${TYPES.ADD_ITEM_TO_CART}_FULFILLED`: {
-      const isAddedToCart = action.payload
-        .map(({ product }: { product: Product }) => product.id)
-        .includes(state.productDetail?.id);
+    case `${TYPES.CHECK_IS_PRODUCT_ADDED_TO_CART}_PENDING`: {
+      return { ...state, isLoading: true, error: null };
+    }
+    case `${TYPES.CHECK_IS_PRODUCT_ADDED_TO_CART}_FULFILLED`: {
+      const { exists } = action.payload;
 
       return {
         ...state,
-        productDetail: { ...state.productDetail, isAddedToCart },
+        isLoading: false,
+        isAddedToCart: exists,
+      };
+    }
+    case `${TYPES.CHECK_IS_PRODUCT_ADDED_TO_CART}_REJECTED`: {
+      return { ...state, isLoading: false, error: action.payload };
+    }
+    case `${TYPES.ADD_ITEM_TO_CART}_FULFILLED`: {
+      return {
+        ...state,
+        isAddedToCart: true,
       };
     }
     default:
@@ -38,4 +55,3 @@ const productDetail = (state = initialState, action: Action) => {
 };
 
 export default productDetail;
-export { initialState };

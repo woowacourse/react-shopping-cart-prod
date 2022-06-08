@@ -17,7 +17,11 @@ const products = (state = initialState, action: Action) => {
       return { ...state, isLoading: true, error: null };
     }
     case `${TYPES.GET_PRODUCT_LIST}_FULFILLED`: {
-      return { ...state, isLoading: false, productList: action.payload };
+      return {
+        ...state,
+        isLoading: false,
+        productList: action.payload as Product[],
+      };
     }
     case `${TYPES.GET_PRODUCT_LIST}_REJECTED`: {
       return { ...state, isLoading: false, error: action.payload };

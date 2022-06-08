@@ -6,8 +6,7 @@ import ICONS from 'constants/icons';
 import * as S from 'components/CartItemCard/CartItemCard.styled';
 
 type Props = {
-  product: Product;
-  quantity: CartItem['quantity'];
+  cart: CartItem;
   checked: boolean;
   onChangeQuantity: React.ChangeEventHandler<HTMLInputElement>;
   onCheck: React.ChangeEventHandler<HTMLInputElement>;
@@ -15,8 +14,7 @@ type Props = {
 };
 
 function CartItemCard({
-  product,
-  quantity,
+  cart: { product, quantity },
   checked,
   onChangeQuantity,
   onCheck,

@@ -1,7 +1,11 @@
-import { Action } from 'types';
+import { Action, CartItem } from 'types';
 import { TYPES } from 'redux/actions';
 
-const initialState = {
+const initialState: {
+  isLoading: boolean;
+  error: any;
+  cart: CartItem[];
+} = {
   isLoading: false,
   error: null,
   cart: [],

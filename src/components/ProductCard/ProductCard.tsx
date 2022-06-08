@@ -8,7 +8,7 @@ type Props = {
 };
 
 function ProductCard({
-  product: { id, name, price, stock, description, image },
+  product: { id, name, price, stock, description, imageUrl },
 }: Props) {
   return (
     <PlainLink to={`/product/${id}`} disabled={stock <= 0}>
@@ -22,7 +22,7 @@ function ProductCard({
           ) : (
             <S.OutOfStockOverlay>품절</S.OutOfStockOverlay>
           )}
-          <img src={image} alt={name} />
+          <img src={imageUrl} alt={name} />
         </S.CardImageBox>
         <S.CardDescriptionBox>
           <h3>{name}</h3>

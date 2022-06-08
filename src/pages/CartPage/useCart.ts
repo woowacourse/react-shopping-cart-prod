@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions } from 'redux/actions';
-import { StoreState } from 'types';
+import { CartItem, StoreState } from 'types';
 
 type SelectedState = StoreState['cartState'];
 
@@ -15,49 +15,55 @@ const useCart = () => {
     })
   );
   const [checkedFlags, setCheckedFlags] = useState<Record<string, boolean>>({});
+  console.log('cart', cart);
   const totalPrice = useMemo(
     () =>
       cart
-        .filter(({ product }) => checkedFlags[product.id] ?? true)
+        .filter(({ cartItemId }) => checkedFlags[cartItemId] ?? true)
         .reduce(
           (totalPrice, { product, quantity }) =>
-            totalPrice + product.price * Number(quantity),
+            totalPrice + product.price * quantity,
           0
         ),
     [cart, checkedFlags]
   );
 
   const handleChangeQuantity =
-    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(actions.updateQuantity(id, e.target.value));
+    ({ cartItemId, product }: CartItem) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(actions.updateQuantity(cartItemId, product.id, e.target.value));
     };
 
   const handleCheck =
-    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCheckedFlags((prev) => ({ ...prev, [id]: e.target.checked }));
+    ({ cartItemId }: CartItem) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCheckedFlags((prev) => ({ ...prev, [cartItemId]: e.target.checked }));
     };
 
   const handleCheckAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckedFlags((prev) => {
       const updated = {} as Record<string, boolean>;
 
-      cart.forEach(({ product }) => {
-        updated[product.id] = e.target.checked;
+      cart.forEach(({ cartItemId }) => {
+        updated[cartItemId] = e.target.checked;
       });
 
       return updated;
     });
   };
 
-  const removeCartItem = (id: string | Array<string>) => () => {
-    dispatch(actions.removeCartItem(id));
-  };
+  const removeCartItem =
+    ({ cartItemId }: CartItem) =>
+    () => {
+      dispatch(actions.removeCartItem(cartItemId));
+    };
 
   const removeAllCartItem = () => {
-    const productIdList = cart
-      .filter(({ checked }) => checked)
-      .map(({ product }) => product.id);
-    dispatch(actions.removeCartItem(productIdList));
+    cart
+      .filter(({ cartItemId }) => checkedFlags[cartItemId])
+      .forEach(({ cartItemId }) => {
+        dispatch(actions.removeCartItem(cartItemId));
+      });
   };
 
   useEffect(() => {

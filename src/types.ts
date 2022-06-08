@@ -66,6 +66,7 @@ export type StoreState = {
     isLoading: boolean;
     error: any;
     productDetail: Product | null;
+    isAddedToCart: boolean;
   };
   cartState: {
     isLoading: boolean;
