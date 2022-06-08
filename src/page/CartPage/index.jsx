@@ -90,9 +90,6 @@ const CartPage = () => {
 
   // TODO 6. POST 주문 추가하기
   const orderSelectedCart = async () => {
-    // console.log('order', order);
-    // const response = await apiClient.post('/orders', { productIds: order });
-    // console.log('@@', response);
     try {
       const response = await apiClient.post('/orders', { productIds: order });
       dispatch(doDecideOrder({ orderList: response.data }));
@@ -104,12 +101,6 @@ const CartPage = () => {
       renderSnackbar(customError.message, 'FAILED');
     }
   };
-
-  // const handleOrder = () => {
-  //   const orderList = shoppingCart.filter(product => order.includes(product.productId));
-  //   dispatch(doDecideOrder({ orderList }));
-  //   navigate('/order');
-  // };
 
   return (
     <Styled.Container>

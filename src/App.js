@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import useLogout from 'hooks/useLogout';
 
 import {
   ProductListPage,
@@ -16,14 +15,13 @@ import {
 } from 'page';
 import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 
-import { doInitializeCartList, doLogin } from 'actions/actionCreator';
+import { doLogin } from 'actions/actionCreator';
 import { ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import apiClient from 'apis/apiClient';
 
 function App() {
   const dispatch = useDispatch();
-  // const { logoutByError } = useLogout();
 
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
 
@@ -34,10 +32,7 @@ function App() {
 
       const response = await apiClient.get('/customers');
       dispatch(doLogin({ nickname: response.data.nickname }));
-    } catch (error) {
-      const customError = error.response.data;
-      // logoutByError(customError);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
