@@ -5,12 +5,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useCart from 'hooks/useCart';
 import useSnackbar from 'hooks/useSnackbar';
+import useProduct from 'hooks/db/useProduct';
 
 import { Image } from 'components';
 
 import { doPutProductToCart } from 'modules/cart';
 import autoComma from 'utils/autoComma';
-import { LINK, MESSAGE, ERROR } from 'utils/constants';
+import { LINK, MESSAGE } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
@@ -18,6 +19,7 @@ const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
+  const { getProductAPI } = useProduct();
   const isAuthenticated = getCookie('accessToken');
 
   const params = useParams();
@@ -27,9 +29,7 @@ const ProductDetailPage = () => {
 
   const getProduct = async () => {
     try {
-      const response = await axios.get(`/products/${id}`);
-
-      const { image, name, price } = response.data;
+      const { image, name, price } = await getProductAPI(id);
 
       setProduct({
         id,
@@ -38,14 +38,6 @@ const ProductDetailPage = () => {
         price,
       });
     } catch (error) {
-      const { code, message } = error.response.data;
-
-      if (code) {
-        renderSnackbar(ERROR[code], 'FAILED');
-      } else {
-        renderSnackbar(message, 'FAILED');
-      }
-
       navigate('/');
     }
   };

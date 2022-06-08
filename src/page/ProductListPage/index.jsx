@@ -1,20 +1,17 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import useProduct from 'hooks/db/useProduct';
 import { ProductItem } from 'components';
 import Styled from './index.style';
 
 const ProductListPage = () => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [products, setProducts] = useState(null);
+  const { getProductsAPI } = useProduct();
 
   const getProducts = async () => {
-    try {
-      const response = await axios.get('/products');
-      setIsLoading(false);
+    const products = await getProductsAPI();
 
-      setProducts(response.data);
-    } catch (error) {}
+    setProducts(products);
   };
 
   useEffect(() => {
@@ -25,7 +22,7 @@ const ProductListPage = () => {
 
   return (
     <Styled.ProductListPage>
-      {!isLoading ? (
+      {products ? (
         <Styled.ProductList>
           {products.map(({ id, name, price, image }) => {
             return id && <ProductItem key={id} id={id} name={name} price={price} image={image} />;
