@@ -11,11 +11,11 @@ export const ACTION_TYPES = {
 export const getProductList = () => async (dispatch) => {
   try {
     dispatch(createAction(ACTION_TYPES.GET_PRODUCT_LIST_START));
-    const productList = await axios.get(`${BASE_URL}/products`);
+    const response = await axios.get(`${BASE_URL}/products`);
     dispatch(
       createAction(
         ACTION_TYPES.GET_PRODUCT_LIST_SUCCESS,
-        productList.data.products
+        response.data.productList
       )
     );
   } catch (error) {
