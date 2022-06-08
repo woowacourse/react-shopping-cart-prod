@@ -51,7 +51,7 @@ const useCart = () => {
   };
 
   const addItem = (productId) => {
-    addItemApi({ payload: { productId } });
+    addItemApi({ payload: { productId, quantity: 1 } });
   };
 
   useEffect(() => {

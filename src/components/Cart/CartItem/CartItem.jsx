@@ -11,7 +11,7 @@ const CartItem = ({
   id,
   imageUrl,
   name,
-  price,
+  totalPrice,
   quantity,
   isSelected,
   onToggleSelect,
@@ -62,7 +62,7 @@ const CartItem = ({
             -
           </Styled.QuantityButton>
         </Styled.QuantityControlBox>
-        <Styled.Price>{parsePrice(itemQuantity * price)}원</Styled.Price>
+        <Styled.Price>{parsePrice(totalPrice)}원</Styled.Price>
       </Styled.RightBox>
     </Styled.Wrapper>
   );
@@ -72,6 +72,7 @@ CartItem.propTypes = {
   id: PropTypes.number,
   imageUrl: PropTypes.string,
   name: PropTypes.string,
+  totalPrice: PropTypes.number,
   price: PropTypes.number,
   quantity: PropTypes.number,
   isSelected: PropTypes.bool,
