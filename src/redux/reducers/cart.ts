@@ -10,6 +10,9 @@ const cart = (state = initialState, action: CartAction) => {
     case cartTypes.SET_CART: {
       return { cart: action.payload };
     }
+    case cartTypes.RESET_CART: {
+      return initialState;
+    }
     default:
       return state;
   }

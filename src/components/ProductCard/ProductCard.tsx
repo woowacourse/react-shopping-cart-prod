@@ -1,6 +1,8 @@
 import cartAPI from 'apis/cart';
 import { Link, ShoppingCart } from 'components/@shared';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { Product } from 'types/index';
 import { getAccessToken } from 'utils/auth';
@@ -10,14 +12,15 @@ import PATH from 'constants/path';
 
 type Props = {
   product: Product;
-  cartStock: number;
+  cartQuantity: number;
 };
 
-function ProductCard({ product, cartStock }: Props) {
+function ProductCard({ product, cartQuantity }: Props) {
   const { id, name, price, description, imageUrl } = {
     ...product,
     price: Number(product.price),
   };
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
@@ -36,6 +39,7 @@ function ProductCard({ product, cartStock }: Props) {
       .add(accessToken, id, 1)
       .then(res => {
         alert(CART_MESSAGE.SUCCESS_ADD);
+        dispatch(cartActions.setCart(res));
       })
       .catch(error => {
         alert(CART_MESSAGE.FAIL_ADD);
@@ -60,9 +64,9 @@ function ProductCard({ product, cartStock }: Props) {
           <button onClick={onClickCartButton}>
             <ShoppingCart
               width="100%"
-              fill={cartStock > 0 ? '#ff9c9c' : 'currentColor'}
+              fill={cartQuantity > 0 ? '#ff9c9c' : 'currentColor'}
             />
-            {cartStock > 0 && <Badge>{cartStock}</Badge>}
+            {cartQuantity > 0 && <Badge>{cartQuantity}</Badge>}
           </button>
         </CardButtonContainer>
       </StyledProductCard>

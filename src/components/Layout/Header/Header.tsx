@@ -32,7 +32,7 @@ function Header() {
     cartAPI
       .load(accessToken)
       .then(res => {
-        dispatch(cartActions.setToCart(res));
+        dispatch(cartActions.setCart(res));
       })
       .catch(error => {
         alert(CART_MESSAGE.FAIL_LOAD);
@@ -41,6 +41,7 @@ function Header() {
 
   const onClickLogoutButton = () => {
     dispatch(userActions.resetUser());
+    dispatch(cartActions.resetCart());
 
     localStorage.removeItem('accessToken');
     sessionStorage.removeItem('accessToken');

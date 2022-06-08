@@ -4,6 +4,7 @@ import cartAPI from 'apis/cart';
 import { Button, Loading } from 'components/@shared';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import { cartActions } from 'redux/actions';
 import { getProduct } from 'redux/thunks';
 import styled from 'styled-components';
 import { ProductStoreState } from 'types/index';
@@ -26,7 +27,7 @@ function ProductPage() {
 
   useEffect(() => {
     if (id) {
-      getProduct(dispatch, Number(id));
+      getProduct(dispatch, id);
     }
   }, [dispatch, id]);
 
@@ -44,15 +45,16 @@ function ProductPage() {
       }
 
       cartAPI
-        .add(accessToken, Number(id), 1)
+        .add(accessToken, id as string, 1)
         .then(res => {
           alert(CART_MESSAGE.SUCCESS_ADD);
+          dispatch(cartActions.setCart(res));
         })
         .catch(error => {
           alert(CART_MESSAGE.FAIL_ADD);
         });
     },
-    [id, navigate]
+    [id, navigate, dispatch]
   );
 
   const renderSwitch = useCallback(() => {

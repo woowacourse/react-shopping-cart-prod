@@ -3,7 +3,7 @@ import { cartTypes } from 'redux/actions';
 import { Product } from './product';
 
 export type Cart = {
-  id: Product['id'];
+  id: string;
   quantity: number;
   product: Product;
 };

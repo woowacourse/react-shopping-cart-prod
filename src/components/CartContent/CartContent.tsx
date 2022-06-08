@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import cartAPI from 'apis/cart';
 import { PayModal } from 'awesome-pay';
 import { Button, CheckBox } from 'components/@shared';
 import CartItem from 'components/CartItem/CartItem';
+import { useDispatch } from 'react-redux';
+import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { Cart } from 'types/index';
 import { getAccessToken } from 'utils/auth';
@@ -17,19 +19,26 @@ type Props = {
 function CartContent({ cartItems }: Props) {
   const [checkedItems, setCheckedItems] = useState<Array<Cart['id']>>([]);
   const [showModal, setShowModal] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCheckedItems([]);
+  }, [cartItems.length]);
 
   const toggleShowModal = () => {
     setShowModal(prevState => !prevState);
   };
 
   const calculateTotalMoney = () => {
-    return cartItems.reduce((prevMoney, item) => {
-      if (!checkedItems.includes(item.id)) return prevMoney;
+    const totalMoney = cartItems.reduce((prevMoney, item) => {
+      if (!checkedItems.includes(String(item.id))) return prevMoney;
 
       const { product, quantity } = item;
 
       return prevMoney + product.price * quantity;
     }, 0);
+
+    return totalMoney;
   };
 
   const isAllChecked = () => {
@@ -47,7 +56,7 @@ function CartContent({ cartItems }: Props) {
       return;
     }
 
-    setCheckedItems(cartItems.map(item => item.id));
+    setCheckedItems(() => cartItems.map(item => String(item.id)));
   };
 
   const onChangeChecked = (
@@ -55,17 +64,16 @@ function CartContent({ cartItems }: Props) {
   ) => {
     e.preventDefault();
 
-    const id = Number(
-      (e.currentTarget as HTMLLabelElement).getAttribute('for')
-    );
+    if (!(e.currentTarget instanceof HTMLLabelElement)) return;
 
-    if (checkedItems.includes(id)) {
-      setCheckedItems(prevState => prevState.filter(cartId => cartId !== id));
+    const id = e.currentTarget.getAttribute('for') as string;
 
-      return;
-    }
-
-    setCheckedItems(prevState => [...prevState, id]);
+    setCheckedItems(prevState => {
+      if (prevState.includes(id)) {
+        return prevState.filter(cartId => cartId !== id);
+      }
+      return [...prevState, id];
+    });
   };
 
   const onClickCheckedDeleteButton = () => {
@@ -82,9 +90,14 @@ function CartContent({ cartItems }: Props) {
 
       if (!accessToken) return;
 
-      cartAPI.delete(accessToken, String(cartId)).catch(error => {
-        alert(CART_MESSAGE.FAIL_DELETE);
-      });
+      cartAPI
+        .delete(accessToken, cartId)
+        .catch(error => {
+          alert(CART_MESSAGE.FAIL_DELETE);
+        })
+        .then(res => {
+          dispatch(cartActions.setCart(res));
+        });
     });
   };
 
@@ -123,11 +136,12 @@ function CartContent({ cartItems }: Props) {
             선택 상품 삭제
           </StyledDeleteButton>
         </StyledProductOptions>
-        {cartItems.map(({ product, quantity }) => (
+        {cartItems.map(({ id, product, quantity }) => (
           <CartItem
+            cartItemId={id}
             product={product}
             quantity={quantity}
-            checked={checkedItems.includes(product.id)}
+            checked={checkedItems.includes(String(id))}
             setChecked={onChangeChecked}
             key={product.id}
           />

@@ -30,6 +30,7 @@ const cartAPI = {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
+      return this.load(accessToken);
     } catch (error) {
       if (error instanceof Error) {
         throw error;
@@ -41,6 +42,7 @@ const cartAPI = {
       await axios.delete(`${PATH.REQUEST_CART}/${cartItemId}`, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
+      return this.load(accessToken);
     } catch (error) {
       if (error instanceof Error) {
         throw error;
@@ -60,6 +62,7 @@ const cartAPI = {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
       );
+      return this.load(accessToken);
     } catch (error) {
       if (error instanceof Error) {
         throw error;

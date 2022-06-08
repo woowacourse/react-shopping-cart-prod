@@ -90,7 +90,9 @@ const cartHandlers = [
         return res(ctx.status(400));
       }
 
-      if (!db.products.find(productInfo => productInfo.id === productId)) {
+      if (
+        !db.products.find(productInfo => String(productInfo.id) === productId)
+      ) {
         return res(ctx.status(404));
       }
 
