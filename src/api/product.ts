@@ -1,7 +1,6 @@
 import { caching } from '@/api/cache';
 import { API_URL } from '@/api/constants';
 import { ProductType } from '@/domain/product';
-import https from 'https';
 import axios from 'axios';
 export const cache = {};
 const productAPI = axios.create({

@@ -1,29 +1,13 @@
-// eslint-disable-next-line no-undef
+export const { API_URL, setAPIURL } = (() => {
+  const url = { current: localStorage.getItem('API_URL') ?? 'http://54.180.159.79:8080/api' };
 
-const generateAPIURL = () => {
-  const nickname = prompt('닉네임입력해줘');
-
-  if (nickname === '오리') {
-    return 'http://54.180.159.79:8080/api';
-  }
-
-  if (nickname === '짱구') {
-    return 'http://3.34.183.107:8080/api';
-  }
-
-  if (nickname === '써머') {
-    return 'http://13.125.134.114:8080/api';
-  }
-
-  if (nickname === '애쉬') {
-    return 'http://15.164.222.103:8080/api';
-  }
-
-  alert('🐥 당첨 !');
-
-  return 'http://54.180.159.79:8080/api';
-};
-// export const API_URL = process.env.REACT_APP_API_URL;
-export const API_URL = generateAPIURL();
+  return {
+    API_URL: url.current,
+    setAPIURL(API_URL) {
+      localStorage.setItem('API_URL', API_URL);
+      url.current = API_URL;
+    },
+  };
+})();
 
 export const PRODUCT_LIST_PAGE_LIMIT = 12;
