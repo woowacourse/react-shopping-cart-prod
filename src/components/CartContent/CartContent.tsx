@@ -136,16 +136,20 @@ function CartContent({ cartItems }: Props) {
             선택 상품 삭제
           </StyledDeleteButton>
         </StyledProductOptions>
-        {cartItems.map(({ id, product, quantity }) => (
-          <CartItem
-            cartItemId={id}
-            product={product}
-            quantity={quantity}
-            checked={checkedItems.includes(String(id))}
-            setChecked={onChangeChecked}
-            key={product.id}
-          />
-        ))}
+        {cartItems.length > 0 ? (
+          cartItems.map(({ id, product, quantity }) => (
+            <CartItem
+              cartItemId={id}
+              product={product}
+              quantity={quantity}
+              checked={checkedItems.includes(String(id))}
+              setChecked={onChangeChecked}
+              key={product.id}
+            />
+          ))
+        ) : (
+          <StyledMessage>장바구니에 상품이 없습니다 😅</StyledMessage>
+        )}
       </StyledProductContainer>
       <StyledTotalContainer>
         <h3>결제예상금액</h3>
@@ -202,6 +206,10 @@ const StyledDeleteButton = styled.button`
   border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
 
   background: ${({ theme: { colors } }) => colors.white};
+`;
+
+const StyledMessage = styled.div`
+  text-align: center;
 `;
 
 const StyledTotalContainer = styled.div`
