@@ -40,7 +40,7 @@ function ProductListPage() {
           payload: data,
         });
       } catch (error) {
-        console.log(error);
+        alert(error.response.data.message);
       }
     };
     if (!accessToken) {

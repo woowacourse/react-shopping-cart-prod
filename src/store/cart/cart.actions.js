@@ -29,14 +29,13 @@ const addCartItemAsync = (id, accessToken) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    alert(error.response.data.message);
     dispatch({ type: actionTypes.ADD_CART_ERROR });
   }
 };
 
 const deleteCartItemAsync = (id, accessToken) => async (dispatch) => {
   try {
-    console.log(id);
     dispatch({ type: actionTypes.DELETE_CART });
     await axios.delete(`${SERVER_PATH.CART_PRODUCT}/${id}`, {
       headers: { Authorization: `Bearer ${accessToken}` },
@@ -44,13 +43,12 @@ const deleteCartItemAsync = (id, accessToken) => async (dispatch) => {
     const { data } = await axios.get(SERVER_PATH.CART, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-    console.log(data);
     dispatch({
       type: actionTypes.DELETE_CART_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    alert(error.response.data.message);
     dispatch({ type: actionTypes.DELETE_CART_ERROR });
   }
 };
@@ -68,13 +66,12 @@ const updateItemQuantityAsync = (id, quantity, accessToken) => async (dispatch) 
     const { data } = await axios.get(SERVER_PATH.CART, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
-    console.log(data);
     dispatch({
       type: actionTypes.UPDATE_ITEM_QUANTITY_SUCCESS,
       payload: data,
     });
   } catch (error) {
-    console.log(error);
+    alert(error.response.data.message);
     dispatch({ type: actionTypes.UPDATE_ITEM_QUANTITY_ERROR });
   }
 };

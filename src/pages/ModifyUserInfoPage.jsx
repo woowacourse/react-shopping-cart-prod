@@ -35,8 +35,7 @@ function ModifyUserInfoPage() {
       alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
-      console.log(error);
-      alert(error.message);
+      alert(error.response.data.message);
     }
   };
 
@@ -48,8 +47,7 @@ function ModifyUserInfoPage() {
         });
         setUserInfo(data);
       } catch (error) {
-        console.log(error);
-        alert(error.message);
+        alert(error.response.data.message);
       }
     }
     getUserInfo();
