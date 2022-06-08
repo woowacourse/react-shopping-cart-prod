@@ -83,6 +83,13 @@ const SignUpPage = () => {
 
 const StyledRoot = styled.div`
   ${flexCenter}
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(121, 121, 121, 0.568) 5px 5px 5px 0.5px;
+
   height: 100rem;
 `;
 
@@ -94,6 +101,7 @@ const StyledForm = styled.form`
   gap: 5rem;
   height: 90rem;
   border: 1px solid ${theme.colors.black};
+  border-radius: 8px;
 `;
 
 const StyledTitle = styled.h1`

@@ -69,12 +69,20 @@ const ResignPage = () => {
 
 const StyledRoot = styled.form`
   ${flexCenter}
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(121, 121, 121, 0.568) 5px 5px 5px 0.5px;
+
   display: flex;
   flex-direction: column;
   width: 60rem;
   gap: 5rem;
   height: 90rem;
   border: 1px solid ${theme.colors.black};
+  border-radius: 8px;
 `;
 
 const StyledTitle = styled.h1`
