@@ -3,6 +3,7 @@ const CART_ACTIONS = {
   DELETE: 'cart/DELETE',
   SELECTIVE_DELETE: 'cart/SELECTIVE_DELETE',
   INITIALIZE: 'cart/INITIALIZE',
+  GET: 'cart/GET',
 };
 
 const PRODUCT_LIST_ACTIONS = {

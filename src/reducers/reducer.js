@@ -15,29 +15,39 @@ function reducer(state = initState, action) {
       };
 
     case CART_ACTIONS.PUT:
-      const isExist = state.shoppingCart.some(product => product.id === action.id);
+      const isExist = state.shoppingCart.some(product => product.productId === action.productId);
 
       return {
         ...state,
         shoppingCart: isExist
           ? state.shoppingCart.map(product =>
-              product.id === action.id ? { ...product, quantity: action.quantity } : product,
+              product.productId === action.productId
+                ? { ...product, quantity: action.quantity }
+                : product,
             )
-          : state.shoppingCart.concat({ id: action.id, quantity: action.quantity }),
-        order: isExist ? state.order : [...state.order, action.id],
+          : state.shoppingCart.concat({
+              productId: action.productId,
+              name: action.name,
+              price: action.price,
+              image: action.image,
+              quantity: action.quantity,
+            }),
+        order: isExist ? state.order : [...state.order, action.productId],
       };
 
     case CART_ACTIONS.DELETE:
       return {
         ...state,
-        shoppingCart: state.shoppingCart.filter(product => product.id !== action.id),
+        shoppingCart: state.shoppingCart.filter(product => product.productId !== action.id),
         order: state.order.filter(productId => productId !== action.id),
       };
 
     case CART_ACTIONS.SELECTIVE_DELETE:
       return {
         ...state,
-        shoppingCart: state.shoppingCart.filter(product => !state.order.includes(product.id)),
+        shoppingCart: state.shoppingCart.filter(
+          product => !state.order.includes(product.productId),
+        ),
         order: [],
       };
 
@@ -46,6 +56,13 @@ function reducer(state = initState, action) {
         ...state,
         shoppingCart: [],
         order: [],
+      };
+
+    case CART_ACTIONS.GET:
+      return {
+        ...state,
+        shoppingCart: [...action.cart],
+        order: action.cart.map(product => product.productId),
       };
 
     case ORDER_ACTIONS.ADD:

@@ -22,21 +22,20 @@ const CartPage = () => {
   const [renderSnackbar] = useSnackbar();
   const isAuthenticated = getCookie('accessToken');
 
-  const { products, shoppingCart, order } = useSelector(state => state.reducer);
+  const { shoppingCart, order } = useSelector(state => state.reducer);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const calculateTotalPrice = useCallback(() => {
     let total = 0;
 
     order.forEach(productId => {
-      const { price } = products.find(product => product.id === productId);
-      const { quantity } = shoppingCart.find(product => product.id === productId);
+      const { price, quantity } = shoppingCart.find(product => product.productId === productId);
 
       total += quantity * price;
     });
 
     return total;
-  }, [products, shoppingCart, order]);
+  }, [order, shoppingCart]);
 
   useEffect(() => {
     setTotalPrice(calculateTotalPrice());
@@ -47,6 +46,7 @@ const CartPage = () => {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -57,8 +57,8 @@ const CartPage = () => {
     }
 
     shoppingCart.forEach(product => {
-      if (!order.some(productId => productId === product.id)) {
-        dispatch(doAddProdcutToOrder({ id: product.id }));
+      if (!order.some(productId => productId === product.productId)) {
+        dispatch(doAddProdcutToOrder({ id: product.productId }));
       }
     });
   };
@@ -94,8 +94,15 @@ const CartPage = () => {
                 든든배송 상품 ({shoppingCart.length}개)
               </Styled.ProductListTitle>
               <Styled.ProductList>
-                {shoppingCart.map(({ id, quantity }) => (
-                  <CartProductItem key={id} id={id} quantity={quantity} />
+                {shoppingCart.map(({ productId, name, price, image, quantity }) => (
+                  <CartProductItem
+                    key={productId}
+                    id={productId}
+                    name={name}
+                    price={price}
+                    image={image}
+                    quantity={quantity}
+                  />
                 ))}
               </Styled.ProductList>
             </Styled.LeftSide>

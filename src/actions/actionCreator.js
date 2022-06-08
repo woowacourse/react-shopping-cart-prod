@@ -6,7 +6,14 @@ import {
   SNACKBAR_ACTIONS,
 } from 'actions/action';
 
-const doPutProductToCart = ({ id, quantity }) => ({ type: CART_ACTIONS.PUT, id, quantity });
+const doPutProductToCart = ({ productId, name, price, image, quantity }) => ({
+  type: CART_ACTIONS.PUT,
+  productId,
+  name,
+  price,
+  image,
+  quantity,
+});
 
 const doDeleteProductFromCart = ({ id }) => ({ type: CART_ACTIONS.DELETE, id });
 
@@ -33,6 +40,8 @@ const doShowSnackbar = ({ message, status }) => ({ type: SNACKBAR_ACTIONS.SHOW, 
 
 const doHideSnackbar = () => ({ type: SNACKBAR_ACTIONS.HIDE });
 
+const doGetCart = ({ cart }) => ({ type: CART_ACTIONS.GET, cart });
+
 export {
   doPutProductToCart,
   doDeleteProductFromCart,
@@ -46,4 +55,5 @@ export {
   doLogout,
   doShowSnackbar,
   doHideSnackbar,
+  doGetCart,
 };

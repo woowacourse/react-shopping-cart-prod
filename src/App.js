@@ -15,7 +15,7 @@ import {
 } from 'page';
 import { Layout, Snackbar, GlobalStyles, theme } from 'components';
 
-import { doLogin } from 'actions/actionCreator';
+import { doLogin, doGetCart } from 'actions/actionCreator';
 import { BASE_URL, ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 
@@ -39,8 +39,26 @@ function App() {
     } catch (error) {}
   };
 
+  const getCart = async () => {
+    try {
+      const accessToken = getCookie('accessToken');
+
+      if (!accessToken) return;
+
+      const response = await axios.get('/cart', {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+      dispatch(doGetCart({ cart: response.data }));
+    } catch (error) {}
+  };
+
   useEffect(() => {
     getAccount();
+    getCart();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
