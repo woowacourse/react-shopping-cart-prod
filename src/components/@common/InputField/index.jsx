@@ -2,7 +2,18 @@ import PropTypes from 'prop-types';
 
 import * as S from './styles';
 
-function InputField({ name, status, type, width, message, placeholder, value, onChange }) {
+function InputField({
+  name,
+  status,
+  type,
+  width,
+  message,
+  placeholder,
+  defaultValue,
+  value,
+  isDisabled,
+  onChange,
+}) {
   return (
     <S.Container>
       <S.Input
@@ -11,7 +22,9 @@ function InputField({ name, status, type, width, message, placeholder, value, on
         type={type}
         width={width}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         value={value}
+        disabled={isDisabled}
         onChange={onChange}
       />
 
@@ -22,12 +35,13 @@ function InputField({ name, status, type, width, message, placeholder, value, on
 
 InputField.propTypes = {
   name: PropTypes.string.isRequired,
-  status: PropTypes.oneOf(['default', 'success', 'danger']),
+  status: PropTypes.oneOf(['', 'default', 'success', 'danger']),
   type: PropTypes.oneOf(['text', 'password', 'email']).isRequired,
   width: PropTypes.string,
+  isDisabled: PropTypes.bool,
   message: PropTypes.string,
 };
 
-InputField.defaultProps = { width: '100%', status: 'default', message: '' };
+InputField.defaultProps = { width: '100%', status: 'default', message: '', isDisabled: false };
 
 export default InputField;
