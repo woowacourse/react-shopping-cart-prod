@@ -1,12 +1,12 @@
 // @ts-nocheck
-import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import useClose from 'hooks/useClose';
-import useCart from 'hooks/useCart';
+import useCartStore from 'hooks/useCartStore';
 import useSnackbar from 'hooks/useSnackbar';
+import useCart from 'hooks/db/useCart';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
@@ -19,10 +19,11 @@ import Styled from './index.style';
 const ProductItem = ({ id, name, price, image }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { putCartAPI, deleteCartAPI } = useCart();
   const [renderSnackbar] = useSnackbar();
   const isAuthenticated = getCookie('accessToken');
 
-  const [isInCart, product] = useCart(id);
+  const [isInCart, product] = useCartStore(id);
 
   const [quantity, setQuantity] = useState(1);
 
@@ -36,36 +37,7 @@ const ProductItem = ({ id, name, price, image }) => {
     if (isInCart) setQuantity(product.quantity);
   }, [isInCart, product]);
 
-  const putCart = async quantity => {
-    const accessToken = getCookie('accessToken');
-
-    await axios.put(
-      `/cart/products/${id}`,
-      {
-        quantity,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-  };
-
-  const deleteCartProduct = async () => {
-    const accessToken = getCookie('accessToken');
-
-    await axios.delete(`/cart`, {
-      data: {
-        productIds: [id],
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  };
-
-  const updateCart = () => {
+  const updateCart = async () => {
     setIsControllerOpen(false);
     clearTimer();
 
@@ -74,12 +46,12 @@ const ProductItem = ({ id, name, price, image }) => {
         doPutProductToCart({ productId: id, name, price, image, quantity: quantityRef.current }),
       );
       renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
-      putCart(quantityRef.current);
+      await putCartAPI(id, quantityRef.current);
       return;
     }
 
     dispatch(doDeleteProductFromCart({ id }));
-    deleteCartProduct();
+    await deleteCartAPI([id]);
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 

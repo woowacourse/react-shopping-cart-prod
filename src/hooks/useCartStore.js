@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useSelector } from 'react-redux';
 
-const useCart = id => {
+const useCartStore = id => {
   const { shoppingCart } = useSelector(state => state.cartReducer);
 
   const isInCart = shoppingCart.some(product => product.productId === id);
@@ -10,4 +10,4 @@ const useCart = id => {
   return [isInCart, product];
 };
 
-export default useCart;
+export default useCartStore;

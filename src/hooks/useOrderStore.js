@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { doDeleteProductFromOrder, doAddProdcutToOrder } from 'modules/cart';
 
-const useOrder = id => {
+const useOrderStore = id => {
   const dispatch = useDispatch();
   const { order } = useSelector(state => state.cartReducer);
   const [isInOrder, setIsInOrder] = useState(order.some(productId => productId === id));
@@ -23,4 +23,4 @@ const useOrder = id => {
   return [isInOrder, updateOrder];
 };
 
-export default useOrder;
+export default useOrderStore;

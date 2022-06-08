@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import useAuth from 'hooks/db/useAuth';
 
 import PasswordEditModal from './PasswordEditModal';
 import AccountDeleteModal from './AccountDeleteModal';
@@ -19,8 +19,9 @@ import Styled from './index.style';
 
 const AccountPage = () => {
   const dispatch = useDispatch();
-  const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
+  const [renderSnackbar] = useSnackbar();
+  const { updateNicknameAPI, getAccountAPI } = useAuth();
   const isAuthenticated = getCookie('accessToken');
 
   const [email, setEmail] = useState('');
@@ -33,6 +34,8 @@ const AccountPage = () => {
 
   useEffect(() => {
     getEmail();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -45,51 +48,25 @@ const AccountPage = () => {
 
   const getEmail = async () => {
     try {
-      const accessToken = getCookie('accessToken');
+      const { email } = await getAccountAPI();
 
-      const response = await axios.get('/customers', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      setEmail(response.data.email);
+      setEmail(email);
     } catch (error) {}
   };
 
   const updateNickname = async () => {
+    if (!isNicknameCorrect) return;
+
     try {
-      if (!isNicknameCorrect) return;
+      const response = await updateNicknameAPI(nickname);
 
-      const accessToken = getCookie('accessToken');
-
-      const response = await axios.patch(
-        '/customers/profile',
-        {
-          nickname,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-
-      dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(doLogin({ nickname: response.nickname }));
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
       navigate('/');
     } catch (error) {
-      const { code, message } = error.response.data;
+      const { code } = error.response.data;
 
-      if (code) {
-        renderSnackbar(ERROR[code], 'FAILED');
-      } else {
-        renderSnackbar(message || error.message, 'FAILED');
-      }
-
-      /**
-       * 2102 : 닉네임 형식이 옳지 않은 경우
-       */
+      if (code === 1003) navigate('/login');
     }
   };
 

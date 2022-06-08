@@ -1,28 +1,22 @@
 // @ts-nocheck
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useOrder from 'hooks/db/useOrder';
 
 import { TotalPrice, PaymentProductItem } from 'components';
 
-import { getCookie } from 'utils/cookie';
 import autoComma from 'utils/autoComma';
 import Styled from './index.style';
 
 const PaymentPage = () => {
   const { id } = useParams();
+  const { getOrderAPI } = useOrder();
   const [order, setOrder] = useState(null);
 
   const getOrder = async () => {
-    const accessToken = getCookie('accessToken');
+    const response = await getOrderAPI(id);
 
-    const response = await axios.get(`/orders/${id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    setOrder({ ...response.data });
+    setOrder({ ...response });
   };
 
   useEffect(() => {

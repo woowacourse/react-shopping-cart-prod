@@ -1,8 +1,8 @@
 // @ts-nocheck
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import useOrder from 'hooks/useOrder';
+import useOrderStore from 'hooks/useOrderStore';
+import useCart from 'hooks/db/useCart';
 import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, Counter, CheckBox } from 'components';
@@ -10,14 +10,14 @@ import { Image, Counter, CheckBox } from 'components';
 import { doDeleteProductFromCart, doPutProductToCart } from 'modules/cart';
 import autoComma from 'utils/autoComma';
 import { MESSAGE } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
 const CartProductItem = ({ id, name, price, image, quantity }) => {
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
+  const { putCartAPI, deleteCartAPI } = useCart();
 
-  const [isInOrder, updateOrder] = useOrder(id);
+  const [isInOrder, updateOrder] = useOrderStore(id);
 
   const deleteItem = () => {
     dispatch(doDeleteProductFromCart({ id }));
@@ -26,32 +26,11 @@ const CartProductItem = ({ id, name, price, image, quantity }) => {
   };
 
   const putCart = async quantity => {
-    const accessToken = getCookie('accessToken');
-
-    await axios.put(
-      `/cart/products/${id}`,
-      {
-        quantity,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    await putCartAPI(id, quantity);
   };
 
   const deleteCartProduct = async () => {
-    const accessToken = getCookie('accessToken');
-
-    await axios.delete(`/cart`, {
-      data: {
-        productIds: [id],
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    await deleteCartAPI([id]);
   };
 
   return (

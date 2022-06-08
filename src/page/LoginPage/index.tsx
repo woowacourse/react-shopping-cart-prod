@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import useSnackbar from 'hooks/useSnackbar';
+import useAuth from 'hooks/db/useAuth';
 
 import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
@@ -11,12 +11,13 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
 import { doLogin } from 'modules/auth';
 import { setCookie, getCookie } from 'utils/cookie';
-import { MESSAGE, ERROR } from 'utils/constants';
+import { MESSAGE } from 'utils/constants';
 import Styled from './index.style';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { loginAPI } = useAuth();
   const isAuthenticated = !!getCookie('accessToken');
 
   const [isFulfilled, setIsFulfilled] = useState(false);
@@ -45,31 +46,13 @@ const LoginPage = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await axios.post('/auth/login', {
-        email,
-        password,
-      });
-
-      const { accessToken, nickname } = response.data;
+      const { accessToken, nickname } = await loginAPI(email, password);
 
       setCookie('accessToken', accessToken);
       dispatch(doLogin({ nickname }));
-
       renderSnackbar(`${nickname}님, 안녕하세요 🙇🏻‍♀️`, 'SUCCESS');
       navigate('/');
-    } catch (error) {
-      const { code, message } = error.response.data;
-
-      if (code) {
-        renderSnackbar(ERROR[code], 'FAILED');
-      } else {
-        renderSnackbar(message || error.message, 'FAILED');
-      }
-
-      /**
-       * 2201 : 이메일 혹은 비밀번호가 일치하지 않은 경우
-       */
-    }
+    } catch (error) {}
   };
 
   return (

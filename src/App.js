@@ -3,9 +3,9 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from 'axios';
 import useAxiosInterceptor from 'hooks/useAxiosInterceptor';
 import useCart from 'hooks/db/useCart';
+import useAuth from 'hooks/db/useAuth';
 
 import {
   ProductListPage,
@@ -21,9 +21,9 @@ import { Layout, Snackbar, GlobalStyles, theme } from 'components';
 import { doGetCart } from 'modules/cart';
 import { doLogin } from 'modules/auth';
 import { BASE_URL, ROUTES } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
 
 function App() {
+  const { getAccountAPI } = useAuth();
   const { getCartAPI } = useCart();
   const { isAuthenticated } = useSelector(state => state.authReducer);
   const dispatch = useDispatch();
@@ -32,17 +32,9 @@ function App() {
 
   const getAccount = async () => {
     try {
-      const accessToken = getCookie('accessToken');
+      const { nickname } = await getAccountAPI();
 
-      if (!accessToken) return;
-
-      const response = await axios.get('/customers', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(doLogin({ nickname }));
     } catch (error) {}
   };
 

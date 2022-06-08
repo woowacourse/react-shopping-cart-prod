@@ -2,6 +2,7 @@
 import { rest } from 'msw';
 import { users } from 'mocks';
 import { validateNickname } from 'utils/validator';
+import CustomError from 'utils/CustomError';
 
 const changeNicknameHandler = rest.patch('/customers/profile', (req, res, ctx) => {
   try {

@@ -1,9 +1,10 @@
 // @ts-nocheck
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import useCart from 'hooks/useCart';
+import useCartStore from 'hooks/useCartStore';
+import useCart from 'hooks/db/useCart';
+
 import useSnackbar from 'hooks/useSnackbar';
 import useProduct from 'hooks/db/useProduct';
 
@@ -20,12 +21,13 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
   const { getProductAPI } = useProduct();
+  const { putCartAPI } = useCart();
   const isAuthenticated = getCookie('accessToken');
 
   const params = useParams();
   const id = Number(params.id);
   const [product, setProduct] = useState(null);
-  const [isInCart, productInCart] = useCart(id);
+  const [isInCart, productInCart] = useCartStore(id);
 
   const getProduct = async () => {
     try {
@@ -48,39 +50,27 @@ const ProductDetailPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const putCartAPI = async quantity => {
-    const accessToken = getCookie('accessToken');
-
-    await axios.put(
-      `/cart/products/${id}`,
-      {
-        quantity,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
-  };
-
-  const putCart = () => {
+  const putCart = async () => {
     if (!isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
       navigate('/login');
       return;
     }
-    dispatch(
-      doPutProductToCart({
-        productId: id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        quantity: isInCart ? productInCart.quantity + 1 : 1,
-      }),
-    );
-    putCartAPI(isInCart ? productInCart.quantity + 1 : 1);
-    navigate(LINK.TO_CART);
+
+    try {
+      await putCartAPI(id, isInCart ? productInCart.quantity + 1 : 1);
+
+      dispatch(
+        doPutProductToCart({
+          productId: id,
+          name: product.name,
+          price: product.price,
+          image: product.image,
+          quantity: isInCart ? productInCart.quantity + 1 : 1,
+        }),
+      );
+      navigate(LINK.TO_CART);
+    } catch (error) {}
   };
 
   return (

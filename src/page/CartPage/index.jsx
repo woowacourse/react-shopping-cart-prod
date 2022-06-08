@@ -1,9 +1,10 @@
 // @ts-nocheck
-import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
+import useCart from 'hooks/db/useCart';
+import useOrder from 'hooks/db/useOrder';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 
@@ -21,6 +22,8 @@ import Styled from './index.style';
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { deleteCartAPI } = useCart();
+  const { postOrderAPI } = useOrder();
   const [renderSnackbar] = useSnackbar();
   const isAuthenticated = getCookie('accessToken');
 
@@ -65,50 +68,22 @@ const CartPage = () => {
     });
   };
 
-  const deleteItem = () => {
+  const deleteItem = async () => {
     dispatch(doSelectiveDeleteFromCart());
-    deleteCartProduct();
+    await deleteCartAPI(order);
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
-  const deleteCartProduct = async () => {
-    const accessToken = getCookie('accessToken');
-
-    await axios.delete(`/cart`, {
-      data: {
-        productIds: order,
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  };
-
   const postOrder = async () => {
+    if (order.length <= 0) return;
+
     try {
-      if (order.length <= 0) return;
-
-      const accessToken = getCookie('accessToken');
-
-      const response = await axios.post(
-        `/orders`,
-        {
-          productIds: order,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-
+      const response = await postOrderAPI(order);
       const location = response.headers.location.split('/');
 
       dispatch(doOrderFromCart());
       navigate(`/pay/${location[location.length - 1]}`);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

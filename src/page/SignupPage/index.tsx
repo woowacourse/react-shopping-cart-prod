@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import useSnackbar from 'hooks/useSnackbar';
+import useAuth from 'hooks/db/useAuth';
 
 import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
@@ -11,12 +11,13 @@ import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 import { getCookie } from 'utils/cookie';
-import { ERROR, MESSAGE } from 'utils/constants';
+import { MESSAGE } from 'utils/constants';
 import Styled from './index.style';
 
 const SignupPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
+  const { signupAPI } = useAuth();
   const isAuthenticated = getCookie('accessToken');
 
   const [email, setEmail] = useState('');
@@ -45,30 +46,11 @@ const SignupPage = () => {
     if (!isFulfilled) return;
 
     try {
-      await axios.post('/customers', {
-        email,
-        nickname,
-        password,
-      });
+      await signupAPI(email, nickname, password);
 
       renderSnackbar(`${nickname}님, 환영합니다 👋`, 'SUCCESS');
       navigate('/login');
-    } catch (error) {
-      const { code, message } = error.response.data;
-
-      if (code) {
-        renderSnackbar(ERROR[code], 'FAILED');
-      } else {
-        renderSnackbar(message, 'FAILED');
-      }
-
-      /**
-       * 2101 : 이메일 형식이 옳지 않은 경우
-       * 2102 : 닉네임 형식이 옳지 않은 경우
-       * 2103 : 비밀번호 형식이 옳지 않은 경우
-       * 2001 : 이미 존재하는 이메일인 경우 *
-       */
-    }
+    } catch (error) {}
   };
 
   return (
