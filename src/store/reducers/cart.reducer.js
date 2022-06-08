@@ -11,6 +11,7 @@ export const cartActionType = {
   FAIL: 'cart/ACTION_FAIL',
   FETCH: 'cart/FETCH',
   UPDATE: 'cart/UPDATE',
+  ADD: 'cart/ADD',
   DELETE: 'cart/DELETE',
   UPDATE_CHECKED_LIST: 'cart/UPDATE_CHECKED_LIST',
 };
@@ -33,7 +34,16 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart,
-        checkedProductList: cart.filter(({ product }) => product.stock > 0).map(({ product }) => product.id),
+        checkedProductList: cart
+          .filter(({ product }) => product.stock > 0)
+          .map(({ product }) => product.id),
+        isLoading: false,
+      };
+    }
+
+    case cartActionType.ADD: {
+      return {
+        ...state,
         isLoading: false,
       };
     }
@@ -74,7 +84,7 @@ const cartReducer = (state = initialState, action) => {
         cart: [],
         checkedProductList: [],
         isLoading: false,
-      }
+      };
     }
 
     default: {

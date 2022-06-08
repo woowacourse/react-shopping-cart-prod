@@ -29,7 +29,6 @@ export const sendLoginRequest = async (loginData) => {
 export const sendGetUserRequest = async () => {
   const response = await customInstance.get(API_ENDPOINT.USER.ME);
 
-  console.log('회원 정보 가져오기?');
   return response.data;
 };
 

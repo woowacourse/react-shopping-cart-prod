@@ -16,9 +16,9 @@ const handleCartDispatch = async ({
   dispatch({ type: cartActionType.START });
 
   try {
-    const { cart } = await func(...params);
+    const data = await func(...params);
 
-    dispatch({ type: actionType, payload: { cart } });
+    dispatch({ type: actionType, payload: data && { cart: data.cart } });
   } catch ({ message }) {
     alert(message);
 
@@ -29,6 +29,7 @@ const handleCartDispatch = async ({
 export const addToCartThunk = (productId, quantity) => async (dispatch) => {
   await handleCartDispatch({
     dispatch,
+    actionType: cartActionType.ADD,
     func: sendAddToCartRequest,
     params: [productId, quantity],
   });
