@@ -1,12 +1,11 @@
 import Button from 'components/common/Button';
 import LabeledInput from 'components/common/LabeledInput';
 import Modal from 'components/common/Modal';
-import Snackbar from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
-import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
+import useSnackBar from 'hooks/useSnackBar';
 import { KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editUserInfo } from 'redux/user/thunk';
@@ -23,9 +22,12 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
   const loginId = useAppSelector(state => state.user.data.loginId);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const { openSnackbar, setMessage, SnackbarComponent } = useSnackBar();
 
-  useAuthError(openSnackbar);
+  useAuthError((message: string) => {
+    openSnackbar();
+    setMessage(message);
+  });
 
   const onSubmitPassword = () => {
     dispatch(editUserInfo({ loginId, name, password })).then(() => {
@@ -63,8 +65,8 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
         >
           확인
         </Button>
-        {isOpenSnackbar && <Snackbar message={MESSAGE.password} />}
       </StyledPasswordConfirmContent>
+      {SnackbarComponent}
     </Modal>
   );
 };

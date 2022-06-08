@@ -14,9 +14,12 @@ const UserWithDrawal = () => {
   const dispatch = useAppDispatch();
   const [password, setPassword] = useInput();
   const navigate = useNavigate();
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const { openSnackbar, setMessage, SnackbarComponent } = useSnackBar();
 
-  useAuthError(openSnackbar);
+  useAuthError((message: string) => {
+    openSnackbar();
+    setMessage(message);
+  });
 
   const onSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,7 +36,7 @@ const UserWithDrawal = () => {
         value={password}
         onChange={setPassword}
       />
-      {isOpenSnackbar && <Snackbar message={MESSAGE.password} />}
+      {SnackbarComponent}
     </AuthPage>
   );
 };

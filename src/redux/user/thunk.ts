@@ -56,7 +56,6 @@ export const signup =
       dispatch(userActions.signupGroup.success());
     } catch (e: unknown) {
       if (e instanceof AxiosError) {
-        console.log('e', e);
         if ('response' in AxiosError) return;
 
         dispatch(userActions.signupGroup.failure(e));

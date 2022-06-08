@@ -1,6 +1,5 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
-import Snackbar from 'components/common/Snackbar';
 import { ALERT_MESSAGE } from 'constants/index';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import useAuthError from 'hooks/useAuthError';
@@ -18,7 +17,7 @@ const Signup = () => {
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isOpenSnackbar, openSnackbar, setMessage, SnackbarComponent } = useSnackBar();
+  const { openSnackbar, setMessage, SnackbarComponent } = useSnackBar();
 
   useAuthError((message: string) => {
     openSnackbar();
@@ -75,7 +74,7 @@ const Signup = () => {
         value={passwordConfirmation}
         onChange={onChangePasswordConfirmation}
       />
-      {isOpenSnackbar && <Snackbar message={MESSAGE.passwordConfirm} />}
+      {SnackbarComponent}
     </AuthPage>
   );
 };

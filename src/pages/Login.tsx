@@ -16,9 +16,12 @@ const Login = () => {
   const [password, onChangePassword] = useInput();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const { openSnackbar, setMessage, SnackbarComponent } = useSnackBar();
 
-  useAuthError(openSnackbar);
+  useAuthError((message: string) => {
+    openSnackbar();
+    setMessage(message);
+  });
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -55,7 +58,7 @@ const Login = () => {
         value={password}
         onChange={onChangePassword}
       />
-      {isOpenSnackbar && <Snackbar message={MESSAGE.login} />}
+      {SnackbarComponent}
     </AuthPage>
   );
 };
