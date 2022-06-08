@@ -7,9 +7,11 @@ import Title from 'components/Common/Title/Title';
 import * as Styled from './style';
 import { useAuth } from 'hooks/useAuth';
 import useSnackBar from 'hooks/useSnackBar';
+import useCart from 'hooks/useCart';
 
 const Login = () => {
   const { loginApi, getUserApi } = useAuth();
+  const { getUserCartsApi } = useCart();
   const { showErrorSnackBar } = useSnackBar();
 
   const handlSubmit = (e) => {
@@ -26,9 +28,14 @@ const Login = () => {
       return;
     }
 
-    loginApi({ email, password }).then(() => {
-      getUserApi();
-    });
+    // TODO 수정 할 것!
+    loginApi({ email, password })
+      .then(() => {
+        getUserApi();
+      })
+      .then(() => {
+        getUserCartsApi();
+      });
   };
   return (
     <Styled.Wrapper>
