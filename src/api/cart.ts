@@ -58,5 +58,5 @@ export const patchCart = async (id, quantity): Promise<any> => {
 
   clearCache(`${CART_API_URL.TO_CART_ITEMS}_${accessToken}`);
 
-  return cartAPI.patch(`/${id}`, config);
+  return cartAPI.patch(`/${id}`, {}, config);
 };
