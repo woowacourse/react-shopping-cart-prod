@@ -1,8 +1,9 @@
-import { setAPIURL } from '@/api/constants';
+import { API_URL, setAPIURL } from '@/api/constants';
 import { deleteCookie } from '@/api/cookie';
 import Modal from '@/components/common/Modal/Modal';
 import { useModal } from '@/hooks/useModal';
 import { Position } from '@/styles/GlobalStyles';
+import { useState } from 'react';
 import * as Styled from './SelectServer.style';
 
 const serverList = [
@@ -12,18 +13,26 @@ const serverList = [
   { name: '애쉬 🌪', API_URL: 'http://15.164.222.103:8080/api', backgroundColor: 'red' },
 ];
 
+const serverName = (
+  serverList.find(({ API_URL: server_API_URL }) => server_API_URL === API_URL) as any
+).name;
+
 function SelectServer() {
+  const [currentServerName, setCurrentServerName] = useState(serverName);
+
   const { isShowModal, closeModal, openModal } = useModal();
+
   const onClickServerSelectBox = () => {
     openModal();
   };
 
-  const onClickOption = API_URL => {
+  const onClickOption = (name, API_URL) => {
     closeModal();
 
     deleteCookie('access-token');
 
     setAPIURL(API_URL);
+    setCurrentServerName(name);
 
     alert('인증 정보가 사라집니다. 로그인 다시 하세요 👻');
 
@@ -33,7 +42,9 @@ function SelectServer() {
   return (
     <Position position="fixed" right="10px" bottom="10px">
       <Styled.Container>
-        {!isShowModal && <Styled.Box onClick={onClickServerSelectBox}>🖥</Styled.Box>}
+        {!isShowModal && (
+          <Styled.Box onClick={onClickServerSelectBox}>{currentServerName}</Styled.Box>
+        )}
 
         {isShowModal && (
           <Modal closeModal={closeModal}>
@@ -41,7 +52,7 @@ function SelectServer() {
               {serverList.map(({ name, API_URL, backgroundColor }) => (
                 <Styled.Option
                   key={name}
-                  onClick={() => onClickOption(API_URL)}
+                  onClick={() => onClickOption(name, API_URL)}
                   backgroundColor={backgroundColor}
                 >
                   {name}
