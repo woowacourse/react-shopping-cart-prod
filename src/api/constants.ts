@@ -9,13 +9,13 @@ export const CUSTOMERS_API_URL = {
 };
 
 export const CART_API_URL = {
-  TO_CARTS: `${API_URL}/carts`,
-  TO_PRODUCT_ID: `${API_URL}/carts/:productId`,
+  TO_CART_ITEMS: `${API_URL}/cartItems`,
+  TO_CART_ITEM_ID: `${API_URL}/cartItems/:id`,
 };
 
 export const PRODUCT_API_URL = {
   TO_PRODUCTS: `${API_URL}/products`,
-  TO_PRODUCT_ID: `${API_URL}/products/:productId`,
+  TO_PRODUCT_ID: `${API_URL}/products/:id`,
 };
 
 export const PRODUCT_LIST_PAGE_LIMIT = 12;

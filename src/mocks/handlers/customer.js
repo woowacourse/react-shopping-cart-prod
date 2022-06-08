@@ -52,7 +52,7 @@ const changeUserInformation = (accessToken, payload) =>
     return customer;
   }));
 
-export const customerHanlders = [
+export const customerHandlers = [
   rest.get(CUSTOMERS_API_URL.TO_CUSTOMERS, (req, res, ctx) => {
     const { headers } = req;
     const accessToken = headers['_headers'].authorization.split('Bearer ')[1];
