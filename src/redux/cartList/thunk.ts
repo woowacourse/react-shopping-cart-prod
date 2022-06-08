@@ -5,6 +5,8 @@ import { CartListAction, cartListActions } from 'redux/cartList/action';
 export const getCartListRequest = () => async (dispatch: Dispatch<CartListAction>) => {
   const accessToken = localStorage.getItem('access-token');
 
+  if (!accessToken) return;
+
   dispatch(cartListActions.getCartListActionGroup.request());
   try {
     const response = await client.get('/customers/carts', {
