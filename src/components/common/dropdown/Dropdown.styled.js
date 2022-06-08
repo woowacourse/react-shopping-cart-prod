@@ -39,7 +39,7 @@ const StyledDropdownContainer = styled.div`
     border-color: ${({ theme: { colors } }) =>
       `transparent transparent ${colors.gray5} transparent`};
     border-style: solid;
-    border-width: 0 10px 16px 10px;
+    border-width: 0 20px 32px 20px;
     height: 0px;
     width: 0px;
     top: 50px;
