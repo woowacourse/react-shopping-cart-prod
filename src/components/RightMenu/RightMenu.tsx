@@ -36,7 +36,6 @@ function RightMenu() {
   }, [dispatch, userId]);
 
   if (customer) {
-    console.log(customer);
     return (
       <S.RightMenuBox>
         <S.Nav>
