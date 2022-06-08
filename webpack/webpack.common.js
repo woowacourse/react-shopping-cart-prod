@@ -7,12 +7,10 @@ module.exports = {
   mode: "development",
   entry: join(__dirname, "../src/index.jsx"),
   devtool: "source-map",
-  devServer: {
-    historyApiFallback: true,
-  },
   output: {
     filename: "main.js",
     path: join(__dirname, "../dist"),
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -82,6 +80,7 @@ module.exports = {
       "@assets": resolve(__dirname, "../src/assets"),
       "@mock": resolve(__dirname, "../mock"),
       "@utils": resolve(__dirname, "../src/utils"),
+      "@storage": resolve(__dirname, "../src/storage"),
     },
     extensions: [".js", ".jsx", ".scss"],
   },

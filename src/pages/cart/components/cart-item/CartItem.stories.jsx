@@ -19,7 +19,7 @@ export const Primary = Template.bind({});
 
 const product = {
   ...productsFromJSON[0],
-  thumbnail_image: {
+  thumbnailImage: {
     url: "https://place-hold.it/150x150",
     alt: "Product Image Alt",
   },
@@ -29,5 +29,5 @@ Primary.args = {
   onChecked: () => undefined,
   onQuantityChange: () => undefined,
   ...product,
-  id: product.sku,
+  id: product.id,
 };

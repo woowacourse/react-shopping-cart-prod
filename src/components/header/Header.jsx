@@ -1,13 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import cn from "classnames";
 import Logo from "@assets/images/logo.svg";
 import { Link } from "react-router-dom";
-import { shallowEqual, useSelector } from "react-redux";
 import styles from "./header.module";
 import LocalStorage from "../../storage/localStorage";
 
 function Header({ className }) {
-  const user = useSelector((state) => state.user, shallowEqual);
+  const user = useSelector((state) => state.user.data);
+
   const handleLogoutBtnClick = () => {
     LocalStorage.removeItem("accessToken");
     window.location.href = "/";

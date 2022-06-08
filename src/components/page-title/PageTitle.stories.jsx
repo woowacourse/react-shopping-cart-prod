@@ -16,8 +16,6 @@ export default {
 };
 
 function Template({ children, ...rest }) {
-  console.log("rest : ", rest);
-  console.log("title : ", children);
   return <PageTitle {...rest}>{children}</PageTitle>;
 }
 

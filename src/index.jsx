@@ -6,8 +6,8 @@ import App from "@/App";
 import reducer from "@redux/reducer";
 import "./index.css";
 import "@scss/style";
+import { getUser } from "@redux/reducers/user-reducer/userThunks";
 import LocalStorage from "./storage/localStorage";
-import requestUserInfo from "./remote/userInfo";
 
 function prepareMSW() {
   if (process.env.NODE_ENV === "development") {
@@ -18,40 +18,10 @@ function prepareMSW() {
   return Promise.resolve();
 }
 
-async function setupStore() {
-  const cartFromLocalStorage = JSON.parse(localStorage.getItem("cart") || "{}");
-
-  let user = {
-    isLoggedIn: false,
-    email: null,
-    username: null,
-  };
-
-  const accesstoken = LocalStorage.getItem("accessToken");
-  if (accesstoken) {
-    const _user = await requestUserInfo(accesstoken);
-    if (_user) {
-      user = {
-        isLoggedIn: true,
-        ..._user,
-      };
-    }
-  }
-
-  const initialState = {
-    user,
-    productList: [], // 화면에 그리는 용도
-    productObjs: {}, // 상품 정보 검색용
-    cart: cartFromLocalStorage, // 장바구니에 담긴 상품 리스트
-  };
-
-  const store = createStore(reducer, initialState, applyMiddleware(thunk));
-  return store;
-}
-
 prepareMSW().then(async () => {
-  const store = await setupStore();
-
+  const store = createStore(reducer, applyMiddleware(thunk));
+  const accessToken = LocalStorage.getItem("accessToken");
+  accessToken && (await getUser()(store.dispatch));
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(
     <Provider store={store}>

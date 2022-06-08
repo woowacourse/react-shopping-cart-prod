@@ -1,5 +1,4 @@
 import cn from "classnames";
-import { useEffect, useState } from "react";
 import CaretUp from "@assets/images/caret-up.svg";
 import CaretDown from "@assets/images/caret-down.svg";
 import styles from "./number-input.module";
@@ -12,14 +11,6 @@ function NumberInput({
   maxLength = 3,
   className,
 }) {
-  const [localValue, setLocalValue] = useState(value);
-
-  useEffect(() => {
-    if (onChange && localValue !== value) {
-      onChange(localValue);
-    }
-  }, [localValue, value, onChange]);
-
   const handleChange = (e) => {
     const { target } = e;
     const { selectionStart } = target;
@@ -33,17 +24,18 @@ function NumberInput({
       target.setSelectionRange(cursor, cursor);
     });
 
-    setLocalValue(newValue);
+    onChange(newValue);
   };
 
   const handleIncrease = () => {
-    setLocalValue((prev) => Number(prev) + step);
+    onChange(value + step);
   };
 
   const handleDecrease = () => {
-    setLocalValue((prev) =>
-      positive ? Math.max(0, Number(prev) - step) : Number(prev) - step
-    );
+    const newValue = positive
+      ? Math.max(0, Number(value) - step)
+      : Number(value) - step;
+    onChange(newValue);
   };
 
   return (
@@ -51,7 +43,7 @@ function NumberInput({
       <input
         type="text"
         onChange={handleChange}
-        value={localValue}
+        value={value}
         maxLength={maxLength}
       />
       <div className={styles.steps}>

@@ -7,7 +7,7 @@ function productListEquality(arrA, arrB) {
     const keys = Object.keys(arrA[i]);
     for (let j = 0; j < keys.length; j += 1) {
       const key = keys[j];
-      if (key === "thumbnail_image") {
+      if (key === "thumbnailImage") {
         if (!shallowEqual(arrA[i][key], arrB[i][key])) {
           return false;
         }

@@ -1,92 +1,65 @@
-import ACTION_TYPE from "./actions";
+/* eslint-disable default-param-last */
+import cartReducer from "./reducers/cart-reducer/cartReducer";
+import productListReducer from "./reducers/product-list-reducer/productListReducer";
+import productDetailReducer from "./reducers/product-detail-reducer/productDetailReducer";
+import userReducer from "./reducers/user-reducer/userReducer";
+import orderReducer from "./reducers/order-reducer/orderReducer";
+import orderListReducer from "./reducers/order-list-reducer/orderListReducer";
+import { initialState } from "./constants";
 
-const reducer = (state, { type, payload }) => {
-  switch (type) {
-    case ACTION_TYPE.ADD_PRODUCT_TO_CART: {
-      const newState = structuredClone(state);
-      const id = payload;
-      if (newState.cart[id]) {
-        delete newState.cart[id];
-      } else {
-        newState.cart[id] = {
-          quantity: 1,
-          selected: false,
-        };
-      }
-      localStorage.setItem("cart", JSON.stringify(newState.cart));
-      return newState;
-    }
-    case ACTION_TYPE.UPDATE_PRODUCT_LIST: {
-      const newState = structuredClone(state);
-      newState.productList = payload;
-      newState.productObjs = newState.productList.reduce((acc, cur) => {
-        acc[cur.sku] = cur;
-        return acc;
-      }, {});
-      return newState;
-    }
-    case ACTION_TYPE.SELECT_PRODUCT_IN_CART: {
-      const newState = structuredClone(state);
-      const productId = payload;
-      newState.cart[productId].selected = true;
-      return newState;
-    }
-    case ACTION_TYPE.DESELECT_PRODUCT_IN_CART: {
-      const newState = structuredClone(state);
-      const productId = payload;
-      newState.cart[productId].selected = false;
-      return newState;
-    }
-    case ACTION_TYPE.SELECT_ALL_PRODUCTS_IN_CART: {
-      const newState = structuredClone(state);
-      Object.keys(newState.cart).forEach((productId) => {
-        newState.cart[productId].selected = true;
-      });
-      return newState;
-    }
-    case ACTION_TYPE.DESELECT_ALL_PRODUCTS_IN_CART: {
-      const newState = structuredClone(state);
-      Object.keys(newState.cart).forEach((productId) => {
-        newState.cart[productId].selected = false;
-      });
-      return newState;
-    }
-    case ACTION_TYPE.UPDATE_PRODUCT_QUANTITY_IN_CART: {
-      const newState = structuredClone(state);
-      const { productId, quantity } = payload;
-      newState.cart[productId].quantity = quantity;
-      localStorage.setItem("cart", JSON.stringify(newState.cart));
-      return newState;
-    }
-    case ACTION_TYPE.DELETE_PRODUCT_IN_CART: {
-      const newState = structuredClone(state);
-      const productId = payload;
-      delete newState.cart[productId];
-      localStorage.setItem("cart", JSON.stringify(newState.cart));
-      return newState;
-    }
-    case ACTION_TYPE.DELETE_MULTIPLE_PRODUCTS_IN_CART: {
-      const newState = structuredClone(state);
-      const productIds = payload;
-      productIds.forEach((id) => {
-        delete newState.cart[id];
-      });
-      localStorage.setItem("cart", JSON.stringify(newState.cart));
-      return newState;
-    }
-    case ACTION_TYPE.UPDATE_USER: {
-      const newState = structuredClone(state);
-      newState.user = {
-        ...state.user,
-        email: payload.email,
-        username: payload.username,
+function reducer(state = initialState, action) {
+  const category = action.type.split("/")[0];
+  if (!category) {
+    throw new Error("action에 category가 없습니다");
+  }
+
+  switch (category) {
+    case "productList": {
+      return {
+        ...state,
+        productList: productListReducer(state.productList, action, state),
       };
-      return newState;
     }
+
+    case "productDetail": {
+      return {
+        ...state,
+        productDetail: productDetailReducer(state.productDetail, action, state),
+      };
+    }
+
+    case "cart": {
+      return {
+        ...state,
+        cart: cartReducer(state.cart, action, state),
+      };
+    }
+
+    case "user": {
+      return {
+        ...state,
+        user: userReducer(state.user, action, state),
+      };
+    }
+
+    case "order": {
+      return {
+        ...state,
+        order: orderReducer(state.order, action, state),
+      };
+    }
+
+    case "orderList": {
+      return {
+        ...state,
+        orderList: orderListReducer(state.orderList, action, state),
+      };
+    }
+
     default: {
       return state;
     }
   }
-};
+}
 
 export default reducer;

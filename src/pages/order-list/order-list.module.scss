@@ -1,0 +1,8 @@
+@import "@scss/responsive";
+
+.container {
+}
+
+@include media("<=lg") {}
+
+@include media("<=md") {}

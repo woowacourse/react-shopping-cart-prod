@@ -1,29 +1,21 @@
 import cn from "classnames";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import LabeledInput from "@shared/input/labeled-input/LabeledInput";
 import Button from "@shared/button/Button";
+import { login } from "@redux/reducers/user-reducer/userThunks";
 import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
 import useForm from "../../hooks/useForm/useForm";
-import LocalStorage from "../../storage/localStorage";
 import styles from "./login.module";
-import requestAccessToken from "../../remote/accessToken";
 
 function Login({ className }) {
   const { onSubmit, register } = useForm();
-
-  const login = async (email, password) => {
-    const accessToken = await requestAccessToken(email, password);
-    if (!accessToken) {
-      alert("로그인에 실패했습니다");
-      return;
-    }
-    LocalStorage.setItem("accessToken", accessToken);
-    window.location.href = "/";
-  };
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.user.query.login);
 
   const handleSubmit = (data) => {
     const { email, password } = data;
-    login(email, password);
+    dispatch(login({ email, password }));
   };
 
   return (
@@ -55,7 +47,13 @@ function Login({ className }) {
               placeholder="비밀번호를 입력해주세요"
               {...register("password")}
             />
-            <Button variant="primary" size="md" block type="submit">
+            <Button
+              variant="primary"
+              size="md"
+              block
+              type="submit"
+              disabled={isLoading}
+            >
               로그인
             </Button>
           </form>

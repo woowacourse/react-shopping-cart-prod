@@ -10,7 +10,7 @@ import styles from "./cart-item.module";
 function CartItem({
   id: productId,
   name,
-  thumbnail_image: { url, alt },
+  thumbnailImage: { url, alt },
   quantity = 1,
   price,
   checked,
