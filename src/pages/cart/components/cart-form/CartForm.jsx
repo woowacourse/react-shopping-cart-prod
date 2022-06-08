@@ -4,7 +4,7 @@ import createAction from "@redux/utils/createAction";
 import CART_ACTION_TYPE from "@redux/reducers/cart-reducer/cartActions";
 import Button from "@shared/button/Button";
 import LabeledCheckbox from "@shared/checkbox/labeled-checkbox/LabeledCheckbox";
-import getSelectedProductIds from "@cart/utils/getSelectedProductIds";
+import getSelectedCartItemIds from "@cart/utils/getSelectedCartItemIds";
 import {
   updateCartItemQuantity,
   deleteCartItems,
@@ -20,7 +20,7 @@ function CartForm({ className }) {
     ...state.cart.query.getCart,
   }));
 
-  const selectedCartItemIds = getSelectedProductIds(cart);
+  const selectedCartItemIds = getSelectedCartItemIds(cart);
   const isAllSelected =
     selectedCartItemIds.length > 0 &&
     selectedCartItemIds.length === cart.length;

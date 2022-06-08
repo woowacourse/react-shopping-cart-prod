@@ -1,20 +1,24 @@
 import { useCallback } from "react";
-import { useSelector, useStore } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import priceToDollar from "@utils/priceToDollar";
-import getSelectedProductIds from "@cart/utils/getSelectedProductIds";
+import getSelectedCartItemIds from "@cart/utils/getSelectedCartItemIds";
 import Button from "@shared/button/Button";
 import Highlighter from "@shared/highlighter/Highlighter";
 import TitleBox from "@shared/title-box/TitleBox";
+import { createOrder } from "@redux/reducers/order-reducer/orderThunks";
 import styles from "./cart-total.module";
 
 function CartTotal({ className }) {
+  const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart.data);
+
   const total = getTotal(cart);
-  const selectedProductIds = getSelectedProductIds(cart);
-  const selectedProductCount = selectedProductIds.length;
+  const selectedCartItemIds = getSelectedCartItemIds(cart);
+  const selectedCartItemCount = selectedCartItemIds.length;
+
   const handleOrderBtnClick = useCallback(() => {
-    alert("주문기능은 준비중입니다");
-  }, []);
+    dispatch(createOrder({ cartItemIds: selectedCartItemIds }));
+  }, [dispatch, selectedCartItemIds]);
 
   return (
     <TitleBox className={className}>
@@ -31,7 +35,7 @@ function CartTotal({ className }) {
             variant="primary"
             block
             onClick={handleOrderBtnClick}
-          >{`주문하기(${selectedProductCount}개)`}</Button>
+          >{`주문하기(${selectedCartItemCount}개)`}</Button>
         </div>
       </TitleBox.Content>
     </TitleBox>
