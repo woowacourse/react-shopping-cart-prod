@@ -36,7 +36,8 @@ export type Product = {
 };
 
 export type CartItem = {
-  userId: string;
+  cartItemId: number;
+  product: Product;
   quantity: number;
 };
 
@@ -69,7 +70,7 @@ export type StoreState = {
   cartState: {
     isLoading: boolean;
     error: any;
-    cart: { product: Product; quantity: number; checked: boolean }[];
+    cart: CartItem[];
   };
 };
 
