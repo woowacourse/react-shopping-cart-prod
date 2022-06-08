@@ -9,9 +9,9 @@ const cartActions = {
     error: (errorMessage = '') => createAction(reducer.updateCartList_Error, { errorMessage }),
   },
 
-  addItem: {
-    success: (item = {}) => createAction(reducer.addCartItem, { item }),
-    error: (errorMessage = '') => createAction(reducer.addCartItem_Error(errorMessage)),
+  addItems: {
+    success: (items = []) => createAction(reducer.addCartItems, { items }),
+    error: (errorMessage = '') => createAction(reducer.addCartItems_Error(errorMessage)),
   },
 
   updateItem: {

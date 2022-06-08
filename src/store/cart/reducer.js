@@ -23,17 +23,26 @@ const reducer = {
   },
 
   // 장바구니 상품 추가
-  addCartItem(state, { item = {} }) {
-    state.items.push({ ...item, isChecked: true });
+  addCartItems(state, { items = [] }) {
     state.curdAsyncState = createAsyncState.success();
+
+    items.forEach((item) => {
+      const targetIndex = findCartIdByIndex(item.id, state.items);
+      if (targetIndex > 0) {
+        state.items[targetIndex] = { ...item, isChecked: true };
+        return;
+      }
+
+      state.items.push({ ...item, isChecked: true });
+    });
   },
 
-  addCartItem_Error(state, { errorMessage }) {
+  addCartItems_Error(state, { errorMessage }) {
     state.curdAsyncState = createAsyncState.error(errorMessage);
   },
 
   // 장바구니 아이템 정보(수량 등) 업데이트
-  updateCartItem(state, { updatedItem }) {
+  updateCartItems(state, { updatedItem }) {
     const targetIndex = findCartIdByIndex(updatedItem.id, state.items);
 
     state.items[targetIndex] = { ...state.items[targetIndex], ...updatedItem };

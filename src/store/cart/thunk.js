@@ -1,5 +1,5 @@
 import {
-  requestAddCart,
+  requestAddCartItems,
   requestGetCartList,
   requestRemoveCartItem,
   requestRemoveCartItemList,
@@ -31,26 +31,24 @@ const updateList =
     return response;
   };
 
-const addItem =
-  ({ id, image, name, price, quantity = 1 }) =>
-  async (dispatch) => {
-    const response = await requestAddCart({
-      id,
-      image,
-      name,
-      price,
-      quantity,
-    });
-    const { status, body } = response;
+const addItems = (itemList) => async (dispatch) => {
+  const response = await requestAddCartItems(itemList);
+  const { status, body } = response;
 
-    dispatch(
-      status === REQUEST_STATUS.SUCCESS
-        ? cartActions.addItem.success(body)
-        : cartActions.addItem.error(body.message),
-    );
+  if (status === REQUEST_STATUS.FAIL) {
+    dispatch(cartActions.addItems.error(body.message));
+    return;
+  }
 
-    return response;
-  };
+  const updatedItems = itemList.map((item, index) => {
+    const { id, name, image, price } = item;
+    return { productId: id, name, imageUrl: image, price, ...body[index] };
+  });
+
+  dispatch(cartActions.addItems.success(updatedItems));
+
+  return response;
+};
 
 const updateItem = (id, updatedItem) => async (dispatch) => {
   const response = await requestUpdateCartItem(id, updatedItem);
@@ -91,6 +89,6 @@ const removeItems = (targetIdList) => async (dispatch) => {
   return response;
 };
 
-const cartThunk = { updateList, addItem, updateItem, removeItem, removeItems };
+const cartThunk = { updateList, addItems, updateItem, removeItem, removeItems };
 
 export default cartThunk;
