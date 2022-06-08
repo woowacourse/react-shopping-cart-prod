@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import useFetch from "@/hooks/useFetch";
-
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
-import appClient from "utils/appClient";
+import appClient from "@/utils/appClient";
 
 const useCheckBox = (compareList = []) => {
   const [checkedItemList, setCheckedItemList] = useState([]);

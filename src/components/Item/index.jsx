@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 import { addCartItem } from "@/redux/modules/cart";
 
+import useFetch from "@/hooks/useFetch";
+
 import CartIcon from "@/assets/images/cart.svg";
 
 import Thumbnail from "@/components/Thumbnail";
@@ -17,7 +19,6 @@ import {
 } from "@/components/Item/index.styled";
 
 import { PATH, MESSAGE } from "@/constants";
-import useFetch from "@/hooks/useFetch";
 
 function Item({ id, name, price, imageUrl }) {
   const {
@@ -25,8 +26,6 @@ function Item({ id, name, price, imageUrl }) {
     success,
     getData: addCart,
   } = useFetch("post", "users/me/carts");
-
-  useEffect(() => {}, [data, success]);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -39,22 +38,17 @@ function Item({ id, name, price, imageUrl }) {
       return;
     }
 
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
-
     addCart(
       {
         productId: id,
       },
-      headers,
       MESSAGE.CART_ADDED
     );
   };
 
   useEffect(() => {
     if (success) {
-      dispatch(addCartItem(id));
+      dispatch(addCartItem({ id, name, price, imageUrl }));
     }
   }, [data, success]);
 

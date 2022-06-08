@@ -57,26 +57,15 @@ function UserEdit() {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
 
-    const headers = {
-      Authorization:
-        getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
-    };
-    editUser(
-      {
-        nickname: nickname.value,
-        password: password.value,
-      },
-      headers
-    );
+    editUser({
+      nickname: nickname.value,
+      password: password.value,
+    });
   };
 
   const handleWithdrawalClick = async () => {
     if (confirm(MESSAGE.WITHDRAWAL_CONFIRM)) {
-      const headers = {
-        Authorization:
-          getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
-      };
-      withdrawUser({}, headers);
+      withdrawUser({});
     }
   };
 

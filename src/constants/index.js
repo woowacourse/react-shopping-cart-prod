@@ -1,5 +1,8 @@
-const BASE_URL =
-  "https://ec2-52-79-228-178.ap-northeast-2.compute.amazonaws.com:8080";
+const URL = {
+  릭: "http://ec2-3-39-194-30.ap-northeast-2.compute.amazonaws.com:8080/",
+};
+
+const BASE_URL = URL.릭;
 
 const PATH = {
   MAIN: "/",

@@ -16,7 +16,6 @@ import {
   StyledHr,
 } from "@/components/CartItem/index.styled";
 import useFetch from "@/hooks/useFetch";
-import { getCookie } from "@/utils/auth";
 
 function CartItem({ onChange, checked, item }) {
   const {
@@ -37,45 +36,15 @@ function CartItem({ onChange, checked, item }) {
   };
 
   const handleIncrementClick = () => {
-    const accessToken = getCookie("accessToken");
-
-    if (!accessToken) {
-      navigate(PATH.LOGIN);
-    }
-
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
-
-    updateQuantity({ quantity: item.quantity + 1 }, headers);
+    updateQuantity({ quantity: item.quantity + 1 });
   };
 
   const handleDecrementClick = () => {
-    const accessToken = getCookie("accessToken");
-
-    if (!accessToken) {
-      navigate(PATH.LOGIN);
-    }
-
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
-
-    updateQuantity({ quantity: item.quantity - 1 }, headers);
+    updateQuantity({ quantity: item.quantity - 1 });
   };
 
   const handleRemoveIconClick = () => {
-    const accessToken = getCookie("accessToken");
-
-    if (!accessToken) {
-      navigate(PATH.LOGIN);
-    }
-
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
-
-    deleteItem({}, headers);
+    deleteItem();
   };
 
   useEffect(() => {

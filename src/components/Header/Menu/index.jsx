@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { getUserInfo } from "@/redux/modules/user";
+import { getCart } from "@/redux/modules/cart";
 
 import StyledMenu from "@/components/Header/Menu/index.styled";
 import Badge from "@/components/Badge";
@@ -10,24 +11,26 @@ import Dropdown from "@/components/Dropdown";
 import { logoutUser } from "@/redux/modules/user";
 
 import { getCookie } from "@/utils/auth";
+import { PATH } from "@/constants";
 
 function Menu() {
   const { cart } = useSelector((state) => state.cartState);
   const { authorized } = useSelector((state) => state.userState);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (getCookie("accessToken")) {
-      const headers = {
-        Authorization: `Bearer ${getCookie("accessToken")}`,
-      };
-      dispatch(getUserInfo(headers));
+    const accessToken = getCookie("accessToken");
+    if (accessToken) {
+      dispatch(getUserInfo());
+      dispatch(getCart());
     }
   }, []);
 
   const handleLogoutClick = () => {
     dispatch(logoutUser());
+    navigate(PATH.MAIN);
   };
 
   return (
@@ -36,7 +39,7 @@ function Menu() {
         <li>
           <Link to="/cart">
             장바구니
-            {cart.length > 0 && <Badge count={cart.length} />}
+            {authorized && cart.length > 0 && <Badge count={cart.length} />}
           </Link>
         </li>
         <li>

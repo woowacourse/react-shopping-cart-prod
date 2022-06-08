@@ -115,7 +115,7 @@ export const handlers = [
       return res(ctx.status(401));
     }
 
-    return res(ctx.status(200), ctx.json(getDetailCart()));
+    return res(ctx.status(200), ctx.json({ cartList: getDetailCart() }));
   }),
 
   // 장바구니에 담기

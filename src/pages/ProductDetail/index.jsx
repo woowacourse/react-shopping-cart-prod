@@ -37,15 +37,10 @@ function ProductDetail() {
       return;
     }
 
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
-
     addCart(
       {
         productId: id,
       },
-      headers,
       MESSAGE.CART_ADDED
     );
   };
@@ -56,7 +51,7 @@ function ProductDetail() {
 
   useEffect(() => {
     if (cartSuccess) {
-      dispatch(addCartItem());
+      dispatch(addCartItem(detailData));
     }
   }, [cartSuccess]);
 

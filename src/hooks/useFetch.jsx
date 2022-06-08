@@ -4,6 +4,7 @@ import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 import appClient from "@/utils/appClient";
 import { MESSAGE, ERROR_CODE } from "@/constants";
+import { getCookie } from "@/utils/auth";
 
 const useFetch = (method, url, initialData = {}) => {
   const [data, setData] = useState(initialData);
@@ -13,16 +14,27 @@ const useFetch = (method, url, initialData = {}) => {
 
   const dispatch = useDispatch();
 
-  const getData = async (payload = {}, headers = {}, successMessage = "") => {
+  const getData = async (payload = {}, successMessage = "") => {
+    const accessToken = getCookie("accessToken");
+    const headers = { Authorization: `Bearer ${accessToken}` };
     try {
-      const { data } = await appClient[method](
-        url,
-        {
-          ...payload,
-        },
-        { headers }
-      );
-      setData(data);
+      let response = "";
+      if (method === "delete" || method === "get") {
+        const { data } = await appClient[method](url, {
+          headers,
+        });
+        response = data;
+      } else {
+        const { data } = await appClient[method](
+          url,
+          {
+            ...payload,
+          },
+          { headers }
+        );
+        response = data;
+      }
+      setData(response);
       setIsLoading(false);
       setSuccess(true);
       if (successMessage) {

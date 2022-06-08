@@ -34,10 +34,7 @@ function CartList({
       navigate(PATH.LOGIN);
     }
 
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
-    dispatch(getCart(headers));
+    dispatch(getCart());
   }, []);
 
   return (

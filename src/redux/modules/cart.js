@@ -1,4 +1,5 @@
 import appClient from "@/utils/appClient";
+import { getCookie } from "@/utils/auth";
 
 export const ACTION = {
   GET_CART_PENDING: "GET_CART_PENDING",
@@ -10,9 +11,12 @@ export const ACTION = {
   DELETE_CART_ITEM: "DELETE_CART_ITEM",
 };
 
-export const getCart = (headers) => async (dispatch) => {
+export const getCart = () => async (dispatch) => {
   dispatch({ type: ACTION.GET_CART_PENDING });
   try {
+    const headers = {
+      Authorization: `Bearer ${getCookie("accessToken")}`,
+    };
     const { data } = await appClient.get("/users/me/carts", { headers });
     dispatch({
       type: ACTION.GET_CART_SUCCESS,
@@ -27,9 +31,9 @@ export const getCart = (headers) => async (dispatch) => {
   }
 };
 
-export const addCartItem = (id) => ({
+export const addCartItem = (data) => ({
   type: ACTION.ADD_CART_ITEM,
-  payload: { id },
+  payload: data,
 });
 
 export const updateCartQuantity = (id, quantity) => ({
@@ -58,11 +62,11 @@ export function cartReducer(state = initialState, action) {
       };
     }
     case ACTION.GET_CART_SUCCESS: {
-      const products = action.payload;
+      const { cartList } = action.payload;
       return {
         ...state,
         pending: false,
-        cart: products,
+        cart: cartList,
       };
     }
     case ACTION.GET_CART_FAILURE: {
@@ -73,10 +77,10 @@ export function cartReducer(state = initialState, action) {
       };
     }
     case ACTION.ADD_CART_ITEM: {
-      const { id } = action.payload;
+      const data = action.payload;
       return {
         ...state,
-        cart: [...state.cart, { id: id, quantity: 1 }],
+        cart: [...state.cart, { ...data, quantity: 1 }],
       };
     }
     case ACTION.UPDATE_ITEM_QUANTITY: {
