@@ -3,15 +3,13 @@ import { useSelector } from 'react-redux';
 
 import { API_URL_PATH } from 'constants/api';
 
-function useUserName() {
+function useDeleteUser(skip) {
   const { accessToken } = useSelector(state => state.auth);
   const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
-  const { data } = useFetch({
-    url: `${API_URL_PATH.NAME}`,
-    headers,
-  });
 
-  return { name: data?.name };
+  const { fetchData: deleteUser } = useFetch({ url: API_URL_PATH.CUSTOMERS, headers, skip });
+
+  return { deleteUser };
 }
 
-export default useUserName;
+export default useDeleteUser;
