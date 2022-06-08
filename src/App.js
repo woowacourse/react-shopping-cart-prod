@@ -12,6 +12,7 @@ import {
   LoginPage,
   SignupPage,
   AccountPage,
+  PaymentPage,
 } from 'page';
 import { Layout, Snackbar, GlobalStyles, theme } from 'components';
 
@@ -81,6 +82,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/account" element={<AccountPage />} />
+            <Route path="/pay/:id" element={<PaymentPage />} />
           </Route>
         </Routes>
         <GlobalStyles />
