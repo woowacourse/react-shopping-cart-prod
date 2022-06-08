@@ -23,6 +23,7 @@ const HeaderLayout = styled(FlexRow)`
   .active {
     transform: scale(1.1);
     font-weight: bold;
+    text-shadow: ${({theme}) => theme.MINT_700} 1px 0 10px;
   }
 `;
 
