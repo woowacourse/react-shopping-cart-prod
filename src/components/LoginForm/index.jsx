@@ -6,7 +6,7 @@ import { Spinner, SpinnerWrapper } from 'styles/Spinner';
 import Button from 'styles/Button';
 import Wrapper from './styles';
 import ErrorWrapper from 'styles/ErrorWrapper';
-import { TextLink } from 'styles/TextLink';
+import TextLink from 'styles/TextLink';
 
 import Input from 'components/Input';
 
