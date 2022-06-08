@@ -31,7 +31,7 @@ function NavBar() {
         {!isLoggedIn && <Link to={routes.login}>로그인</Link>}
         {isLoggedIn && (
           <>
-            <Link to={routes.userInfo}>회원 정보 수정</Link>
+            <Link to={routes.userInfo}>회원정보 수정</Link>
             <button onClick={onClickLogout}>로그아웃</button>
           </>
         )}

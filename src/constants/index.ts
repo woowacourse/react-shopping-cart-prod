@@ -19,6 +19,8 @@ const PRODUCT = {
 };
 
 const CART = {
+  MIN_COUNT: 1,
+  MAX_COUNT: 99,
   COUNTER_DISPLAY_TIME: 3000,
 };
 

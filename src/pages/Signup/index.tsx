@@ -34,7 +34,9 @@ function Signup() {
 
   const onBlurDuplicateCheck = async () => {
     try {
-      const { data: isDuplicate } = await apiClient.get(`/api/customers/exist?userName=${id}`);
+      const {
+        data: { isDuplicate },
+      } = await apiClient.get(`/api/customers/exists?userName=${id}`);
       const isValid = isDuplicate ? false : true;
       const message = isDuplicate ? MESSAGES.EXIST_ID : MESSAGES.AVAILABLE_ID;
 

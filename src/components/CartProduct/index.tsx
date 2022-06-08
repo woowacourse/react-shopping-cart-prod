@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { CartItem, decrement, deleteItem, increment, selectItem } from 'redux/modules/cart';
+import { CartItem, deleteCartAPI, selectItem, updateCartAPI } from 'redux/modules/cart';
 
 import { CheckBox } from 'components/@shared';
 
@@ -28,18 +28,20 @@ function CartProduct({
   };
 
   const onClickDeleteItem = () => {
-    confirm(MESSAGES.ASK_DELETE_PRODUCT) && dispatch(deleteItem(id));
+    if (confirm(MESSAGES.ASK_DELETE_PRODUCT)) {
+      dispatch(deleteCartAPI(id));
+    }
   };
 
   const onClickIncreaseCounter = () => {
-    dispatch(increment(id));
+    dispatch(updateCartAPI(id, quantity + 1));
   };
 
   const onClickDecreaseCounter = () => {
     if (quantity === PRODUCT.MIN_COUNT) {
       return;
     }
-    dispatch(decrement(id));
+    dispatch(updateCartAPI(id, quantity - 1));
   };
 
   return (

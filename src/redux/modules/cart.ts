@@ -17,19 +17,21 @@ export type CartState = {
 };
 
 type Action =
-  | ReturnType<typeof deleteItem>
   | ReturnType<typeof deleteBySelectedItems>
   | ReturnType<typeof selectItem>
   | ReturnType<typeof selectAllItems>
-  | ReturnType<typeof increment>
-  | ReturnType<typeof decrement>
-  | ReturnType<typeof incrementByNumber>
   | ReturnType<typeof loadCartsRequest>
   | ReturnType<typeof loadCartsSuccess>
   | ReturnType<typeof loadCartsFailure>
-  | ReturnType<typeof addCartItemRequest>
-  | ReturnType<typeof addCartItemSuccess>
-  | ReturnType<typeof addCartItemFailure>;
+  | ReturnType<typeof addCartRequest>
+  | ReturnType<typeof addCartSuccess>
+  | ReturnType<typeof addCartFailure>
+  | ReturnType<typeof deleteCartRequest>
+  | ReturnType<typeof deleteCartSuccess>
+  | ReturnType<typeof deleteCartFailure>
+  | ReturnType<typeof updateCartRequest>
+  | ReturnType<typeof updateCartSuccess>
+  | ReturnType<typeof updateCartFailure>;
 
 const initialState: CartState = {
   loading: false,
@@ -41,33 +43,43 @@ const LOAD_CARTS_REQUEST = 'cart/LOAD_REQUEST' as const;
 const LOAD_CARTS_SUCCESS = 'cart/LOAD_SUCCESS' as const;
 const LOAD_CARTS_FAILURE = 'cart/LOAD_FAILURE' as const;
 
-const ADD_CART_ITEM_REQUEST = 'cart/ADD_ITEM_REQUEST' as const;
-const ADD_CART_ITEM_SUCCESS = 'cart/ADD_ITEM_SUCCESS' as const;
-const ADD_CART_ITEM_FAILURE = 'cart/ADD_ITEM_FAILURE' as const;
+const ADD_CART_REQUEST = 'cart/ADD_REQUEST' as const;
+const ADD_CART_SUCCESS = 'cart/ADD_SUCCESS' as const;
+const ADD_CART_FAILURE = 'cart/ADD_FAILURE' as const;
 
-// const ADD = 'cart/ADD' as const;
-const DELETE = 'cart/DELETE' as const;
+const DELETE_CART_REQUEST = 'cart/DELETE_REQUEST' as const;
+const DELETE_CART_SUCCESS = 'cart/DELETE_SUCCESS' as const;
+const DELETE_CART_FAILURE = 'cart/DELETE_FAILURE' as const;
+
+const UPDATE_CART_REQUEST = 'cart/UPDATE_REQUEST' as const;
+const UPDATE_CART_SUCCESS = 'cart/UPDATE_SUCCESS' as const;
+const UPDATE_CART_FAILURE = 'cart/UPDATE_FAILURE' as const;
+
 const DELETE_BY_SELECTED = 'cart/DELETE_BY_SELECTED' as const;
 const SELECT = 'cart/SELECT' as const;
 const SELECT_ALL = 'cart/SELECT_ALL' as const;
-const INCREMENT = 'cart/INCREMENT' as const;
-const DECREMENT = 'cart/DECREMENT' as const;
-const INCREMENT_BY_NUMBER = 'cart/INCREMENT_BY_NUMBER' as const;
-
 const loadCartsRequest = () => ({ type: LOAD_CARTS_REQUEST });
 const loadCartsSuccess = (cartList: CartItem[]) => ({
   type: LOAD_CARTS_SUCCESS,
   payload: { cartList },
 });
 const loadCartsFailure = (error: Error) => ({ type: LOAD_CARTS_FAILURE, payload: { error } });
-const addCartItemRequest = () => ({ type: ADD_CART_ITEM_REQUEST });
-const addCartItemSuccess = () => ({ type: ADD_CART_ITEM_SUCCESS });
-const addCartItemFailure = (error: Error) => ({ type: ADD_CART_ITEM_FAILURE, payload: { error } });
 
-const deleteItem = (id: number) => ({
-  type: DELETE,
-  payload: { id },
+const addCartRequest = () => ({ type: ADD_CART_REQUEST });
+const addCartSuccess = () => ({ type: ADD_CART_SUCCESS });
+const addCartFailure = (error: Error) => ({ type: ADD_CART_FAILURE, payload: { error } });
+
+const deleteCartRequest = () => ({ type: DELETE_CART_REQUEST });
+const deleteCartSuccess = (cartId: number) => ({ type: DELETE_CART_SUCCESS, payload: { cartId } });
+const deleteCartFailure = (error: Error) => ({ type: DELETE_CART_FAILURE, payload: { error } });
+
+const updateCartRequest = () => ({ type: UPDATE_CART_REQUEST });
+const updateCartSuccess = (cartId: number, quantity: number) => ({
+  type: UPDATE_CART_SUCCESS,
+  payload: { cartId, quantity },
 });
+const updateCartFailure = (error: Error) => ({ type: UPDATE_CART_FAILURE, payload: { error } });
+
 const deleteBySelectedItems = () => ({
   type: DELETE_BY_SELECTED,
 });
@@ -78,18 +90,6 @@ const selectItem = (id: number) => ({
 const selectAllItems = (isAllSelected: boolean) => ({
   type: SELECT_ALL,
   payload: { isAllSelected },
-});
-const increment = (id: number) => ({
-  type: INCREMENT,
-  payload: { id },
-});
-const decrement = (id: number) => ({
-  type: DECREMENT,
-  payload: { id },
-});
-const incrementByNumber = (id: number, number: number) => ({
-  type: INCREMENT_BY_NUMBER,
-  payload: { id, number },
 });
 
 const loadCartsAPI = (): any => async (dispatch: AppDispatch) => {
@@ -106,7 +106,6 @@ const loadCartsAPI = (): any => async (dispatch: AppDispatch) => {
       },
     });
     dispatch(loadCartsSuccess(cartList));
-    console.log('cartList', cartList);
   } catch (error: unknown) {
     if (error instanceof Error) {
       dispatch(loadCartsFailure(error));
@@ -120,19 +119,60 @@ const addCartAPI =
     onSuccess?: () => void
   ): any =>
   async (dispatch: AppDispatch) => {
-    dispatch(addCartItemRequest());
+    dispatch(addCartRequest());
     try {
       await apiClient.post('/api/customers/me/carts', item, {
         headers: {
           Authorization: `Bearer ${getCookie('accessToken')}`,
         },
       });
-      dispatch(addCartItemSuccess());
+      dispatch(addCartSuccess());
       onSuccess?.();
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.log(error);
-        dispatch(addCartItemFailure(error));
+        dispatch(addCartFailure(error));
+      }
+    }
+  };
+
+const deleteCartAPI =
+  (cartId: number, onSuccess?: () => void): any =>
+  async (dispatch: AppDispatch) => {
+    dispatch(deleteCartRequest());
+    try {
+      await apiClient.delete(`/api/customers/me/carts/${cartId}`, {
+        headers: {
+          Authorization: `Bearer ${getCookie('accessToken')}`,
+        },
+      });
+      dispatch(deleteCartSuccess(cartId));
+      onSuccess?.();
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(deleteCartFailure(error));
+      }
+    }
+  };
+
+const updateCartAPI =
+  (cartId: number, quantity: number): any =>
+  async (dispatch: AppDispatch) => {
+    dispatch(updateCartRequest());
+    try {
+      await apiClient.patch(
+        `/api/customers/me/carts/${cartId}`,
+        { quantity },
+        {
+          headers: {
+            Authorization: `Bearer ${getCookie('accessToken')}`,
+          },
+        }
+      );
+      dispatch(updateCartSuccess(cartId, quantity));
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(updateCartFailure(error));
       }
     }
   };
@@ -155,29 +195,47 @@ const cartReducer = (state = initialState, action: Action) => {
 
       return { ...state, loading: false, error };
     }
-    case ADD_CART_ITEM_REQUEST: {
+    case ADD_CART_REQUEST: {
       return { ...state, loading: true, error: null };
     }
-    case ADD_CART_ITEM_SUCCESS: {
+    case ADD_CART_SUCCESS: {
       return { ...state, loading: false };
     }
-    case ADD_CART_ITEM_FAILURE: {
+    case ADD_CART_FAILURE: {
       const { error } = action.payload;
 
       return { ...state, loading: false, error };
     }
+    case DELETE_CART_REQUEST: {
+      return { ...state, loading: true, error: null };
+    }
+    case DELETE_CART_SUCCESS: {
+      const { cartId } = action.payload;
+      const newItems = state.items.filter((item) => item.id !== cartId);
 
-    // case DELETE: {
-    //   const { id } = action.payload;
-    //   const newItems = state.items.filter((item) => item.id !== id);
+      return { ...state, loading: false, items: newItems };
+    }
+    case DELETE_CART_FAILURE: {
+      const { error } = action.payload;
 
-    //   return { ...state, items: newItems };
-    // }
-    // case DELETE_BY_SELECTED: {
-    //   const newItems = state.items.filter((item) => !item.isSelected);
+      return { ...state, loading: false, error };
+    }
+    case UPDATE_CART_REQUEST: {
+      return { ...state, loading: true, error: null };
+    }
+    case UPDATE_CART_SUCCESS: {
+      const { cartId, quantity } = action.payload;
+      const targetIndex = state.items.findIndex((item) => item.id === cartId);
+      const newItems = [...state.items];
+      newItems[targetIndex].quantity = quantity;
 
-    //   return { ...state, items: newItems };
-    // }
+      return { ...state, loading: false, items: newItems };
+    }
+    case UPDATE_CART_FAILURE: {
+      const { error } = action.payload;
+
+      return { ...state, loading: false, error };
+    }
     case SELECT: {
       const { id } = action.payload;
       const targetIndex = state.items.findIndex((item) => item.id === id);
@@ -195,27 +253,8 @@ const cartReducer = (state = initialState, action: Action) => {
 
       return { ...state, items: newItems };
     }
-    // case INCREMENT: {
-    //   const { id } = action.payload;
-    //   const targetIndex = state.items.findIndex((item) => item.id === id);
-    //   const newItems = [...state.items];
-    //   newItems[targetIndex].quantity++;
-
-    //   return { ...state, items: newItems };
-    // }
-    // case DECREMENT: {
-    //   const { id } = action.payload;
-    //   const targetIndex = state.items.findIndex((item) => item.id === id);
-    //   const newItems = [...state.items];
-    //   newItems[targetIndex].quantity--;
-
-    //   return { ...state, items: newItems };
-    // }
-    // case INCREMENT_BY_NUMBER: {
-    //   const { id, number } = action.payload;
-    //   const targetIndex = state.items.findIndex((item) => item.id === id);
-    //   const newItems = [...state.items];
-    //   newItems[targetIndex].quantity += number;
+    // case DELETE_BY_SELECTED: {
+    //   const newItems = state.items.filter((item) => !item.isSelected);
 
     //   return { ...state, items: newItems };
     // }
@@ -227,15 +266,13 @@ const cartReducer = (state = initialState, action: Action) => {
 export const selectCartState = (state: RootState) => state.cart;
 
 export {
-  deleteItem,
   deleteBySelectedItems,
   selectItem,
   selectAllItems,
-  increment,
-  decrement,
-  incrementByNumber,
   loadCartsAPI,
   addCartAPI,
+  deleteCartAPI,
+  updateCartAPI,
 };
 
 export default cartReducer;

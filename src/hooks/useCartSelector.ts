@@ -12,11 +12,9 @@ const getSelectedItemAmount = (state: RootState) => {
     .reduce((acc: number, cur: CartItem) => acc + cur.quantity * cur.price, 0);
 };
 
-const useCartListSelector = () => useSelector((state: RootState) => state.cart.items);
-
 const useCartItemSelector = (id: number) =>
   useSelector((state: RootState) => selectCartItemById(state, id));
 
 const useCartAmount = () => useSelector((state: RootState) => getSelectedItemAmount(state));
 
-export { useCartItemSelector, useCartListSelector, useCartAmount };
+export { useCartItemSelector, useCartAmount };

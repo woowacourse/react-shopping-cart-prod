@@ -56,7 +56,7 @@ function UserInfo() {
 
   return (
     <PageLayout>
-      <h1>회원 정보 수정</h1>
+      <h1>회원정보 수정</h1>
       <Form onSubmit={onSubmitEditForm}>
         <Input htmlFor="userinfo-id" label="아이디" value={userName ?? ''} disabled={true} />
         <Input
