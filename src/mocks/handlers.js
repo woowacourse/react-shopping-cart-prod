@@ -8,12 +8,12 @@ export const prouctsHandler = [
     return res(ctx.status(200), ctx.json(db.products));
   }),
   rest.get(
-    `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}/:id`,
+    `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}/:productId`,
     (req, res, ctx) => {
-      const { id } = req.params;
+      const { productId } = req.params;
       const productList = db.products;
       const selectedProduct = productList.find(
-        (product) => product.id === Number(id)
+        (product) => product.productId === Number(productId)
       );
 
       if (!selectedProduct) return res(ctx.status(404), ctx.json({}));
@@ -23,53 +23,79 @@ export const prouctsHandler = [
 ];
 
 export const cartsHandler = [
-  rest.get(`${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`, (req, res, ctx) => {
-    const cartList = db.carts;
-    const productList = db.products;
+  rest.get(
+    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId${SERVER_PATH.CART_LIST}`,
+    (req, res, ctx) => {
+      const cartList = db.carts;
+      const productList = db.products;
 
-    const result = cartList.map(({ id, count }) => {
-      const selectedProduct = productList.find((product) => product.id === id);
-      return { ...selectedProduct, count };
-    });
+      const result = cartList.map(({ productId, count }) => {
+        const selectedProduct = productList.find(
+          (product) => product.productId === productId
+        );
+        return { ...selectedProduct, count };
+      });
 
-    return res(ctx.status(200), ctx.json(result));
-  }),
-  rest.post(`${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`, (req, res, ctx) => {
-    const { id, count } = req.body;
-    if (!id || !count) return res(ctx.status(400));
-
-    const cartList = db.carts;
-    if (cartList.some((cart) => cart.id === id)) {
-      return res(ctx.status(200), ctx.json({ isAlreadyExists: true }));
+      return res(ctx.status(200), ctx.json(result));
     }
+  ),
+  rest.post(
+    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId${SERVER_PATH.CART_LIST}`,
+    (req, res, ctx) => {
+      const { productId, count } = req.body;
+      if (!productId || !count) {
+        return res(
+          ctx.status(400),
+          ctx.json({ message: "존재하지 않는 상품 ID입니다." })
+        );
+      }
 
-    db.carts = [...cartList, { id, count }];
-    return res(ctx.status(200), ctx.json({ isAlreadyExists: false }));
-  }),
-  rest.delete(`${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`, (req, res, ctx) => {
-    const id = req.url.searchParams.get("productId");
-    const cartList = db.carts;
-    const selectedCartList = cartList.filter(
-      (cartItem) => cartItem.id !== Number(id)
-    );
+      const cartList = db.carts;
+      if (cartList.some((cart) => cart.productId === productId)) {
+        return res(
+          ctx.status(400),
+          ctx.json({ message: "이미 담겨있는 상품입니다." })
+        );
+      }
 
-    db.carts = selectedCartList;
-    return res(ctx.status(200));
-  }),
-  rest.patch(`${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`, (req, res, ctx) => {
-    const id = req.url.searchParams.get("productId");
+      db.carts = [...cartList, { productId, count }];
+      return res(ctx.status(204));
+    }
+  ),
+  rest.delete(
+    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId${SERVER_PATH.CART_LIST}`,
+    (req, res, ctx) => {
+      const id = req.url.searchParams.get("productId");
+      const cartList = db.carts;
+      const selectedCartList = cartList.filter(
+        (cartItem) => cartItem.productId !== Number(id)
+      );
 
-    const { count } = req.body;
-    const cartList = db.carts;
-    const cartItemIndex = cartList.findIndex(
-      (cartItem) => cartItem.id === Number(id)
-    );
+      db.carts = selectedCartList;
+      return res(ctx.status(204));
+    }
+  ),
+  rest.patch(
+    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId${SERVER_PATH.CART_LIST}`,
+    (req, res, ctx) => {
+      const id = req.url.searchParams.get("productId");
 
-    if (cartItemIndex < 0) return res(ctx.status(404));
+      const { count } = req.body;
+      const cartList = db.carts;
+      const cartItemIndex = cartList.findIndex(
+        (cartItem) => cartItem.productId === Number(id)
+      );
 
-    db.carts[cartItemIndex].count = count;
-    return res(ctx.status(200));
-  }),
+      if (cartItemIndex < 0)
+        return res(
+          ctx.status(404),
+          ctx.json({ message: "존재하지 않는 상품 ID입니다." })
+        );
+
+      db.carts[cartItemIndex].count = count;
+      return res(ctx.status(200));
+    }
+  ),
 ];
 
 export const userHandler = [

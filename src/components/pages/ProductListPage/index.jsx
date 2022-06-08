@@ -32,7 +32,7 @@ function ProductListPage() {
   return (
     <GridContainer colNo={4}>
       {productList.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.productId} product={product} />
       ))}
     </GridContainer>
   );

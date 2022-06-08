@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 
 import shoppingCartIconBlack from "asset/shopping-cart-icon-black.svg";
 
-import { BASE_SERVER_URL, SERVER_PATH, ROUTES } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, ROUTES, COOKIE_KEY } from "constants";
 import { postBaseServerCartItem } from "util/fetch";
+import { getCookie } from "util/cookie";
 
 import IconButton from "components/common/Button/IconButton";
 import {
@@ -17,32 +18,33 @@ import {
   ProductThumbnail,
 } from "./styled";
 
-function ProductCard({ product: { id, thumbnailUrl, name, price } }) {
+function ProductCard({ product: { productId, thumbnailUrl, name, price } }) {
   const navigate = useNavigate();
 
   const handleClickCardItem = () => {
-    navigate(`${ROUTES.PRODUCT_DETAIL}/${id}`);
+    navigate(`${ROUTES.PRODUCT_DETAIL}/${productId}`);
   };
 
   const handleClickCartIconButton = async (e) => {
     e.stopPropagation();
     try {
       const response = await postBaseServerCartItem({
-        url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`,
-        body: JSON.stringify({ id, count: 1 }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie(COOKIE_KEY.TOKEN)}`,
+        },
+        url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${getCookie(
+          COOKIE_KEY.USER_ID
+        )}${SERVER_PATH.CART_LIST}`,
+        body: JSON.stringify({ productId, count: 1 }),
       });
 
       if (!response.ok) {
-        throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
-      }
-
-      const { isAlreadyExists } = await response.json();
-      if (isAlreadyExists) {
-        alert("이미 장바구니에 담은 상품입니다.");
-        return;
+        const data = await response.json();
+        throw new Error(data.message);
       }
     } catch (error) {
-      alert(`장바구니 담기에 실패했습니다.`);
+      alert(error.message);
       return;
     }
     alert("장바구니에 담았습니다.");

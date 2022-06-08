@@ -7,11 +7,19 @@ import App from "./components/App";
 
 import GlobalStyle from "./GlobalStyle";
 
-worker.start({
-  serviceWorker: {
-    url: "/react-shopping-cart/mockServiceWorker.js",
-  },
-});
+const main = () => {
+  if (process.env.NODE_ENV === "development") {
+    if (window.location.pathname === "/react-shopping-cart") {
+      window.location.pathname = "/react-shopping-cart/";
+      return;
+    }
+    worker.start({
+      serviceWorker: {
+        url: "/react-shopping-cart/mockServiceWorker.js",
+      },
+    });
+  }
+};
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,3 +30,5 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
+
+main();

@@ -1,10 +1,10 @@
 export const BASE_SERVER_URL =
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV === "production"
     ? "http://ec2-13-125-205-115.ap-northeast-2.compute.amazonaws.com:8080"
     : "dev";
 
 export const SERVER_PATH = {
-  PRODUCT_LIST: "/products",
+  PRODUCT_LIST: "/api/products",
   CART_LIST: "/carts",
   CUSTOMER_LIST: "/api/customers",
   LOGIN: "/api/auth/login",

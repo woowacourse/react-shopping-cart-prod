@@ -1,4 +1,5 @@
-import { BASE_SERVER_URL, SERVER_PATH } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, COOKIE_KEY } from "constants";
+import { getCookie } from "util/cookie";
 import {
   deleteBaseServerCartItem,
   getBaseServerCartList,
@@ -23,7 +24,13 @@ export const getCartList = () => async (dispatch) => {
   dispatch({ type: CART_LIST_ACTION.GET_LIST });
   try {
     const response = await getBaseServerCartList({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getCookie(COOKIE_KEY.TOKEN)}`,
+      },
+      url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${getCookie(
+        COOKIE_KEY.USER_ID
+      )}${SERVER_PATH.CART_LIST}`,
     });
 
     if (!response.ok) {
@@ -47,11 +54,17 @@ export const getCartList = () => async (dispatch) => {
   }
 };
 
-export const deleteCartList = (id) => async (dispatch) => {
+export const deleteCartList = (productId) => async (dispatch) => {
   dispatch({ type: CART_LIST_ACTION.DELETE_LIST });
   try {
     const response = await deleteBaseServerCartItem({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}?productId=${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getCookie(COOKIE_KEY.TOKEN)}`,
+      },
+      url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${getCookie(
+        COOKIE_KEY.USER_ID
+      )}${SERVER_PATH.CART_LIST}?productId=${productId}`,
     });
 
     if (!response.ok) {
@@ -60,7 +73,7 @@ export const deleteCartList = (id) => async (dispatch) => {
 
     dispatch({
       type: CART_LIST_ACTION.DELETE_LIST_SUCCESS,
-      deletedCartId: id,
+      deletedCartId: productId,
     });
   } catch (err) {
     dispatch({
@@ -70,11 +83,17 @@ export const deleteCartList = (id) => async (dispatch) => {
   }
 };
 
-export const updateCartCount = (id, count) => async (dispatch) => {
+export const updateCartCount = (productId, count) => async (dispatch) => {
   dispatch({ type: CART_LIST_ACTION.UPDATE_ITEM_COUNT });
   try {
     const response = await patchBaseServerCartItem({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}?productId=${id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getCookie(COOKIE_KEY.TOKEN)}`,
+      },
+      url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${getCookie(
+        COOKIE_KEY.USER_ID
+      )}${SERVER_PATH.CART_LIST}?productId=${productId}`,
       body: JSON.stringify({ count }),
     });
 
@@ -84,7 +103,7 @@ export const updateCartCount = (id, count) => async (dispatch) => {
 
     dispatch({
       type: CART_LIST_ACTION.UPDATE_ITEM_COUNT_SUCCESS,
-      modifiedCartItem: { id, count },
+      modifiedCartItem: { productId, count },
     });
   } catch (err) {
     dispatch({
@@ -119,7 +138,7 @@ const reducer = (state = initialState, action) => {
       return {
         isLoading: false,
         data: state.data.map((cart) => {
-          if (cart.id === action.modifiedCartItem.id) {
+          if (cart.productId === action.modifiedCartItem.productId) {
             cart.count = action.modifiedCartItem.count;
           }
           return cart;
@@ -129,7 +148,9 @@ const reducer = (state = initialState, action) => {
     case CART_LIST_ACTION.DELETE_LIST_SUCCESS:
       return {
         isLoading: false,
-        data: state.data.filter((cart) => cart.id !== action.deletedCartId),
+        data: state.data.filter(
+          (cart) => cart.productId !== action.deletedCartId
+        ),
         errorMessage: "",
       };
     case CART_LIST_ACTION.GET_LIST_SUCCESS:
