@@ -70,7 +70,6 @@ const modifyCartItemQuantity = (productId, quantity) => async (dispatch) => {
   }
 
   dispatch({ type: 장바구니_액션.SUCCESS });
-  console.log(response);
   dispatch({
     type: 장바구니_액션.SET_PRODUCT_QUANTITY,
     payload: { productId, quantity },

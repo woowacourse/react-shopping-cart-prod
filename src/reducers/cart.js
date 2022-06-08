@@ -29,7 +29,6 @@ export default (state = initialState, action) => {
       return { ...state, errorMessage: payload, isLoading: false };
 
     case 장바구니_액션.ADD_NEW_PRODUCT:
-      console.log('???');
       return { ...state, items: [...state.items, payload] };
 
     case 장바구니_액션.DELETE_PRODUCT:
@@ -41,7 +40,6 @@ export default (state = initialState, action) => {
       };
 
     case 장바구니_액션.SET_PRODUCT_QUANTITY:
-      console.log(' vs ');
       return {
         ...state,
         items: state.items.map((item) => {

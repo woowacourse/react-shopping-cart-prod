@@ -94,22 +94,13 @@ export const cartHandler = [
   // 장바구니 상품 수량 변경
   rest.put(`${HOST_NAME}/cart/:productId/quantity`, (req, res, ctx) => {
     const { productId } = req.params;
-    const { quantity } = req.body;
-
-    console.log('quantity : ', quantity);
 
     if (!productId) return res(ctx.status(400));
     return res(ctx.status(200));
   }),
 
   // 장바구니 상품 제거
-  rest.delete(`${HOST_NAME}/cart/products`, (req, res, ctx) => {
-    const { productIds } = req.body;
-
-    console.log('productIds : ', productIds);
-
-    return res(ctx.status(204));
-  }),
+  rest.delete(`${HOST_NAME}/cart/products`, (req, res, ctx) => res(ctx.status(204))),
 
   // 장바구니 비우기
   rest.delete(`${HOST_NAME}/cart/products`, (req, res, ctx) => res(ctx.status(204))),
@@ -117,8 +108,6 @@ export const cartHandler = [
   // 장바구니 상품 구매
   rest.post(`${HOST_NAME}/orders`, (req, res, ctx) => {
     const { productIds } = req.body;
-
-    console.log('productIds : ', productIds);
 
     if (!productIds) return res(ctx.status(400));
     return res(ctx.status(200));
