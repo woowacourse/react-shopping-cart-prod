@@ -1,17 +1,15 @@
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUser from '../hooks/useUser';
 import useUserForm from '../hooks/useUserForm';
 import { validLoginInfo } from '../utils/validations';
 
-import { MESSAGE, SERVER_PATH, ROUTES_PATH, USER_INFO_KEY, STORAGE_KEY } from '../constants';
+import { USER_INFO_KEY } from '../constants';
 
 function LoginPage() {
-  const navigate = useNavigate();
+  const { signIn } = useUser();
   const {
     state: loginInfo,
     setState: setLoginInfo,
@@ -22,17 +20,14 @@ function LoginPage() {
   });
   const { email, password } = loginInfo;
 
-  const handleLoginInfoSubmit = async (e) => {
+  const handleLoginInfoSubmit = (e) => {
     e.preventDefault();
 
     try {
       validLoginInfo(email);
-      const { data } = await axios.post(SERVER_PATH.LOGIN, { email, password });
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data.accessToken));
-      alert(MESSAGE.LOGIN_SUCCESS);
-      navigate(ROUTES_PATH.HOME);
+      signIn(email, password);
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error.message);
     }
   };
 

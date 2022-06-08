@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Input from '../components/common/Input';
@@ -7,35 +6,26 @@ import Button from '../components/common/Button';
 import Loading from '../components/Loading';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUser from '../hooks/useUser';
 import useUserForm from '../hooks/useUserForm';
 import { validUserInfo } from '../utils/validations';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, STORAGE_KEY, USER, USER_INFO_KEY } from '../constants';
+import { SERVER_PATH, STORAGE_KEY, USER, USER_INFO_KEY } from '../constants';
 
 function ModifyUserInfoPage() {
-  const navigate = useNavigate();
+  const { modifyUserInfo } = useUser();
   const { state: userInfo, setState: setUserInfo, handleUserInfoChange } = useUserForm({});
   const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-  const handleUserInfoSubmit = async (e) => {
+  const handleUserInfoSubmit = (e) => {
     e.preventDefault();
-    const { nickname } = userInfo;
 
+    const { nickname } = userInfo;
     try {
       validUserInfo(nickname);
-      await axios.patch(
-        SERVER_PATH.USER,
-        { nickname },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
-      navigate(ROUTES_PATH.HOME);
+      modifyUserInfo(nickname);
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error.message);
     }
   };
 

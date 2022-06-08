@@ -1,35 +1,13 @@
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 
+import useUser from '../hooks/useUser';
 import Button from '../components/common/Button';
 import { StyledUserContainer } from '../components/common/Styled';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, STORAGE_KEY } from '../constants';
+import { MESSAGE, ROUTES_PATH } from '../constants';
 
 function UserInfoPage() {
-  const navigate = useNavigate();
-  const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
-
-  const handleWithdrawClick = async () => {
-    try {
-      await axios.delete(SERVER_PATH.USER, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      localStorage.removeItem(STORAGE_KEY);
-      alert(MESSAGE.WITHDRAW_SUCCESS);
-      navigate(ROUTES_PATH.HOME);
-    } catch (error) {
-      alert(error.response.data.message);
-    }
-  };
-
-  const handleLogOutClick = () => {
-    localStorage.removeItem(STORAGE_KEY);
-    alert(MESSAGE.LOGOUT_SUCCESS);
-    navigate(ROUTES_PATH.HOME);
-  };
+  const { withdrawMembership, removeToken } = useUser();
 
   return (
     <StyledUserContainer>
@@ -40,8 +18,8 @@ function UserInfoPage() {
       <Link to={ROUTES_PATH.MODIFY_USER_INFO}>
         <Button>회원 정보 수정</Button>
       </Link>
-      <Button onClick={handleLogOutClick}>로그아웃</Button>
-      <Button onClick={handleWithdrawClick}>회원 탈퇴</Button>
+      <Button onClick={() => removeToken(MESSAGE.LOGOUT_SUCCESS)}>로그아웃</Button>
+      <Button onClick={() => withdrawMembership()}>회원 탈퇴</Button>
     </StyledUserContainer>
   );
 }

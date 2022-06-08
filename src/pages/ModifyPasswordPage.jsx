@@ -1,25 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUser from '../hooks/useUser';
 import useUserForm from '../hooks/useUserForm';
 import { validPasswordInfo } from '../utils/validations';
-import {
-  MESSAGE,
-  SERVER_PATH,
-  USER,
-  ROUTES_PATH,
-  PASSWORD_INFO_KEY,
-  STORAGE_KEY,
-} from '../constants';
-
-const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
+import { USER, PASSWORD_INFO_KEY } from '../constants';
 
 function ModifyPasswordPage() {
-  const navigate = useNavigate();
+  const { modifyPassword } = useUser();
   const {
     state: passwords,
     setState: setPasswords,
@@ -31,25 +20,14 @@ function ModifyPasswordPage() {
   });
   const { prevPassword, newPassword, newPasswordConfirm } = passwords;
 
-  const handlePasswordSubmit = async (e) => {
+  const handlePasswordSubmit = (e) => {
     e.preventDefault();
 
     try {
       validPasswordInfo(newPassword, newPasswordConfirm);
-      await axios.patch(
-        SERVER_PATH.PASSWORD,
-        { prevPassword, newPassword },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      localStorage.removeItem(STORAGE_KEY);
-      alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);
-      navigate(ROUTES_PATH.LOGIN);
+      modifyPassword(prevPassword, newPassword);
     } catch (error) {
-      alert(error.response.data.message);
+      alert(error.message);
     }
   };
 
