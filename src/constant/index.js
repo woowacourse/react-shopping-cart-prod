@@ -15,6 +15,7 @@ const ERROR_MESSAGE = {
   VIEW_USER_INFO: '사용자 정보 조회에 실패하셨습니다.',
   EDIT_USER_INFO: '사용자 정보 수정에 실패하셨습니다.',
   WITHDRAWAL: '비밀번호를 잘못 입력하셨습니다.',
+  IS_LOGOUT: '로그아웃 상태입니다. 로그인을 한 후, 이용해주세요.',
 };
 
 const CONFIRM_MESSAGE = {

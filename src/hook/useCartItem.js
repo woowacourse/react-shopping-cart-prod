@@ -6,6 +6,7 @@ import {useNavigate} from 'react-router-dom';
 
 import {CART} from 'store/modules/cart';
 import {SELECTED_ITEM} from 'store/modules/selectedItem';
+import {ERROR_MESSAGE} from 'constant';
 
 import useFetch from './useFetch';
 
@@ -21,12 +22,6 @@ export default function useCartItem(path = null) {
 
   const deleteCartItem = (payload) => {
     const response = JSON.parse(localStorage.getItem('accessToken'));
-
-    if (!response) {
-      alert('로그인을 한 후, 이용해주세요.');
-      return;
-    }
-
     const accessToken = response.accessToken;
 
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
@@ -54,7 +49,6 @@ export default function useCartItem(path = null) {
     const response = JSON.parse(localStorage.getItem('accessToken'));
 
     if (!response) {
-      alert('로그인을 한 후, 이용해주세요.');
       return;
     }
 
@@ -74,7 +68,7 @@ export default function useCartItem(path = null) {
     const response = JSON.parse(localStorage.getItem('accessToken'));
 
     if (!response) {
-      alert('로그인을 한 후, 이용해주세요.');
+      alert(ERROR_MESSAGE.IS_LOGOUT);
       return;
     }
 
@@ -96,12 +90,6 @@ export default function useCartItem(path = null) {
 
   const deleteSelectedCart = (payload) => {
     const response = JSON.parse(localStorage.getItem('accessToken'));
-
-    if (!response) {
-      alert('로그인을 한 후, 이용해주세요.');
-      return;
-    }
-
     const accessToken = response.accessToken;
 
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
