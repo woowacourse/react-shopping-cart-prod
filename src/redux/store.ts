@@ -4,7 +4,7 @@ import logger from 'redux-logger';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import cartReducer from './modules/cart';
+import cartReducer from './modules/cart/cartReducer';
 import customerReducer from './modules/customer';
 import productsReducer from './modules/product/productReducer';
 import snackBarReducer from './modules/snackBar';

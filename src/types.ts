@@ -1,3 +1,16 @@
+interface CartItem {
+  id: number;
+  imageUrl: string;
+  name: string;
+  price: number;
+  quantity: number;
+  isSelected: boolean;
+}
+
+interface CartState {
+  items: CartItem[];
+}
+
 interface ProductType {
   id: number;
   imageUrl: string;
@@ -11,4 +24,4 @@ interface ProductState {
   productList: ProductType[];
 }
 
-export type { ProductType, ProductState };
+export type { CartItem, CartState, ProductType, ProductState };

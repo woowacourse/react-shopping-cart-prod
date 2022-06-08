@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { CartItem, decrement, deleteItem, increment, selectItem } from '@/redux/modules/cart';
+import { decrement, deleteItem, increment, selectItem } from '@/redux/modules/cart/cartAction';
 
 import {
   CartProductContainer,
@@ -9,6 +9,8 @@ import {
   ProductImageContainer,
   ProductOptionContainer,
 } from './styles';
+
+import { CartItem } from '@/types';
 
 import { CheckBox } from '@/components/@shared';
 

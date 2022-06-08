@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
-import { addItem, decrement, deleteItem, increment } from '@/redux/modules/cart';
+import { addItem, decrement, deleteItem, increment } from '@/redux/modules/cart/cartAction';
 import { show } from '@/redux/modules/snackBar';
 
 import { useCartItemSelector, useCartListSelector } from '@/hooks/useCartSelector';

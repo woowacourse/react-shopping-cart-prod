@@ -1,12 +1,27 @@
-export type CartItem = {
-  id: number;
-  imageUrl: string;
-  name: string;
-  price: number;
-  quantity: number;
-  isSelected: boolean;
+import { CartState } from '@/types';
+
+import {
+  ADD,
+  addItem,
+  decrement,
+  DECREMENT,
+  DELETE,
+  deleteBySelectedItems,
+  deleteItem,
+  DELETE_BY_SELECTED,
+  increment,
+  INCREMENT,
+  incrementByNumber,
+  INCREMENT_BY_NUMBER,
+  SELECT,
+  selectAllItems,
+  selectItem,
+  SELECT_ALL,
+} from './cartAction';
+
+const initialState: CartState = {
+  items: [],
 };
-export type CartState = { items: CartItem[] };
 
 type Action =
   | ReturnType<typeof addItem>
@@ -17,51 +32,6 @@ type Action =
   | ReturnType<typeof increment>
   | ReturnType<typeof decrement>
   | ReturnType<typeof incrementByNumber>;
-
-const initialState: CartState = {
-  items: [],
-};
-
-const ADD = 'cart/ADD' as const;
-const DELETE = 'cart/DELETE' as const;
-const DELETE_BY_SELECTED = 'cart/DELETE_BY_SELECTED' as const;
-const SELECT = 'cart/SELECT' as const;
-const SELECT_ALL = 'cart/SELECT_ALL' as const;
-const INCREMENT = 'cart/INCREMENT' as const;
-const DECREMENT = 'cart/DECREMENT' as const;
-const INCREMENT_BY_NUMBER = 'cart/INCREMENT_BY_NUMBER' as const;
-
-const addItem = (item: CartItem) => ({
-  type: ADD,
-  payload: { item },
-});
-const deleteItem = (id: number) => ({
-  type: DELETE,
-  payload: { id },
-});
-const deleteBySelectedItems = () => ({
-  type: DELETE_BY_SELECTED,
-});
-const selectItem = (id: number) => ({
-  type: SELECT,
-  payload: { id },
-});
-const selectAllItems = (isAllSelected: boolean) => ({
-  type: SELECT_ALL,
-  payload: { isAllSelected },
-});
-const increment = (id: number) => ({
-  type: INCREMENT,
-  payload: { id },
-});
-const decrement = (id: number) => ({
-  type: DECREMENT,
-  payload: { id },
-});
-const incrementByNumber = (id: number, number: number) => ({
-  type: INCREMENT_BY_NUMBER,
-  payload: { id, number },
-});
 
 const cartReducer = (state = initialState, action: Action) => {
   switch (action.type) {
@@ -86,6 +56,7 @@ const cartReducer = (state = initialState, action: Action) => {
       const { id } = action.payload;
       const targetIndex = state.items.findIndex((item) => item.id === id);
       const newItems = [...state.items];
+
       newItems[targetIndex].isSelected = !newItems[targetIndex].isSelected;
 
       return { ...state, items: newItems };
@@ -103,6 +74,7 @@ const cartReducer = (state = initialState, action: Action) => {
       const { id } = action.payload;
       const targetIndex = state.items.findIndex((item) => item.id === id);
       const newItems = [...state.items];
+
       newItems[targetIndex].quantity++;
 
       return { ...state, items: newItems };
@@ -111,6 +83,7 @@ const cartReducer = (state = initialState, action: Action) => {
       const { id } = action.payload;
       const targetIndex = state.items.findIndex((item) => item.id === id);
       const newItems = [...state.items];
+
       newItems[targetIndex].quantity--;
 
       return { ...state, items: newItems };
@@ -119,6 +92,7 @@ const cartReducer = (state = initialState, action: Action) => {
       const { id, number } = action.payload;
       const targetIndex = state.items.findIndex((item) => item.id === id);
       const newItems = [...state.items];
+
       newItems[targetIndex].quantity += number;
 
       return { ...state, items: newItems };
@@ -126,17 +100,6 @@ const cartReducer = (state = initialState, action: Action) => {
     default:
       return state;
   }
-};
-
-export {
-  addItem,
-  deleteItem,
-  deleteBySelectedItems,
-  selectItem,
-  selectAllItems,
-  increment,
-  decrement,
-  incrementByNumber,
 };
 
 export default cartReducer;
