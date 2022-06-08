@@ -43,6 +43,4 @@ const CartListCountTextBox = styled(TextBox).attrs({
 
 const CartListBox = styled(FlexBox).attrs({
   direction: 'column',
-})`
-  width: 736px;
-`;
+})``;

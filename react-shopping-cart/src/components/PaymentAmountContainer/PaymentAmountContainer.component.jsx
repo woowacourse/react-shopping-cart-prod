@@ -8,7 +8,8 @@ import HighlightText from 'components/@shared/HighlightText/HighlightText.compon
 const PaymentAmountBox = styled(FlexBox).attrs({
   direction: 'column',
 })`
-  width: 448px;
+  width: 35%;
+  min-width: 300px;
 `;
 
 function PaymentAmountContainer({ count, total }) {

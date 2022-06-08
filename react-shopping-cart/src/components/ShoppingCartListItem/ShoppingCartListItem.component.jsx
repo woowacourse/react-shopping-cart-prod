@@ -17,18 +17,6 @@ import useDebounce from 'hooks/useDebounce';
 
 import { ReactComponent as TrashCan } from 'assets/images/trash.svg';
 
-const CartItemContainer = styled(FlexBox).attrs({
-  gap: '15px',
-})`
-  width: 736px;
-  padding: 20px 0;
-  border-top: 1px solid ${({ theme }) => theme.colors['GRAY_001']};
-
-  ${TextBox} {
-    flex-grow: 1;
-  }
-`;
-
 function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity, loadCarts }) {
   const dispatch = useDispatch();
   const debounce = useDebounce();
@@ -83,3 +71,14 @@ function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity,
 }
 
 export default React.memo(ShoppingCartListItem);
+
+const CartItemContainer = styled(FlexBox).attrs({
+  gap: '15px',
+})`
+  padding: 20px 0;
+  border-top: 1px solid ${({ theme }) => theme.colors['GRAY_001']};
+
+  ${TextBox} {
+    flex-grow: 1;
+  }
+`;

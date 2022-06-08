@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import BorderBox from 'components/@shared/BorderBox/BorderBox.component';
 import CheckBox from 'components/@shared/CheckBox/CheckBox.component';
@@ -56,20 +57,15 @@ function ShoppingCartList() {
     <>
       <Header />
       <FlexBox as="main" justifyContent="center">
-        <PageContainer width="1320px" direction="column" alignItems="center">
+        <PageContainer direction="column" alignItems="center">
           <TitleBox as="h1">장바구니</TitleBox>
           {isLoading ? (
             <Loading />
           ) : (
-            <FlexBox width="1320px" justifyContent="space-between">
-              <article>
+            <FlexBox width="100%" gap="30px" justifyContent="space-between">
+              <CartList>
                 <h2 hidden>장바구니 상품들 리스트</h2>
-                <FlexBox
-                  width="736px"
-                  height="80px"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
+                <FlexBox height="80px" justifyContent="space-between" alignItems="center">
                   <FlexBox gap="10px" alignItems="center">
                     <CheckBox
                       disabled={disabled}
@@ -78,8 +74,7 @@ function ShoppingCartList() {
                     />
                     <TextBox fontSize="small">{checked ? '선택해제' : '전체선택'}</TextBox>
                   </FlexBox>
-                  <BorderBox
-                    width="117px"
+                  <SelectedCartDeleteButton
                     height="50px"
                     lineHeight="50px"
                     textAlign="center"
@@ -87,10 +82,10 @@ function ShoppingCartList() {
                     onClick={() => handleClickDeleteBox()}
                   >
                     상품삭제
-                  </BorderBox>
+                  </SelectedCartDeleteButton>
                 </FlexBox>
                 <ShoppingCartListContainer carts={carts} loadCarts={loadCarts} />
-              </article>
+              </CartList>
               <PaymentAmountContainer count={orderList.length} total={total} />
             </FlexBox>
           )}
@@ -101,3 +96,19 @@ function ShoppingCartList() {
 }
 
 export default ShoppingCartList;
+
+const CartList = styled.article`
+  width: 60%;
+  min-width: 450px;
+`;
+
+const SelectedCartDeleteButton = styled(BorderBox).attrs({
+  padding: '1rem',
+  height: '50px',
+  lineHeight: '50px',
+  textAlign: 'center',
+  cursor: 'pointer',
+})`
+  display: flex;
+  align-items: center;
+`;

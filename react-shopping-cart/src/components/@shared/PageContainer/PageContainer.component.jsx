@@ -8,6 +8,7 @@ const PageContainer = styled(FlexBox).attrs(props => ({
 }))`
   margin: 60px 0;
   padding: 0 120px;
+  width: 100%;
 `;
 
 export default PageContainer;
