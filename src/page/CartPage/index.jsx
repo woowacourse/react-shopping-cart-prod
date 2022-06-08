@@ -17,8 +17,10 @@ import {
 } from 'actions/actionCreator';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
+import useLogout from 'hooks/useLogout';
 
 const CartPage = () => {
+  const { logoutByError } = useLogout();
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
@@ -71,33 +73,20 @@ const CartPage = () => {
   };
 
   // TODO 5. delete 장바구니 내 선택된 상품 삭제
-  // const deleteSelectedItems = async () => {
-  //   const accessToken = getCookie('accessToken');
-  //   const cartIdList = shoppingCart.map(product => product.id);
-  //   const targetIdList = cartIdList.filter(id => !order.includes(id));
+  const deleteSelectedItems = async () => {
+    const productIdsInCart = shoppingCart.map(product => product.id);
+    const productIds = productIdsInCart.filter(id => !order.includes(id));
 
-  //   try {
-  //     await auth.delete(
-  //       `/carts`,
-  //       targetIdList, // targetIdList : [2, 4] 삭제할 상품 id 목록
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       },
-  //     );
+    try {
+      await apiClient.delete('/cart', { data: { productIds } });
 
-  //     dispatch(doSelectiveDeleteFromCart());
-  //     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
-  //   } catch (error) {
-  //     renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-  //     navigate('/login');
-  //   }
-  // };
-
-  const deleteItem = () => {
-    dispatch(doSelectiveDeleteFromCart());
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+      dispatch(doSelectiveDeleteFromCart());
+      renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+    } catch (error) {
+      const customError = error.response.data;
+      renderSnackbar(customError.message, 'FAILED');
+      logoutByError(customError);
+    }
   };
 
   const handleOrder = () => {
@@ -123,7 +112,7 @@ const CartPage = () => {
                   />
                   선택해제
                 </Styled.CheckBoxContainer>
-                <Styled.ProductDeleteButton onClick={deleteItem}>
+                <Styled.ProductDeleteButton onClick={deleteSelectedItems}>
                   상품삭제
                 </Styled.ProductDeleteButton>
               </Styled.SelectController>

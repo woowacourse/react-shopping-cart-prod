@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { dummyProductList, dummyShoppingCart } from 'dummy_data';
+import { dummyProductList } from 'dummy_data';
 import { rest } from 'msw';
 import {
   checkDuplicatedEmail,
@@ -18,7 +18,7 @@ const dummyUsers = [
   { id: 3, email: '3@gmail.com', nickname: 'ghi', password: '123456@adssd' },
 ];
 
-const dummyCart = [];
+let dummyCart = [];
 
 const decodeReqAccessToken = req => {
   return JSON.parse(decodeURIComponent(req.headers.headers.authorization).replace('Bearer ', ''));
@@ -55,6 +55,16 @@ export const handlers = [
       dummyCart.push({ id, quantity });
       return res(ctx.status(200), ctx.json({ id, quantity }));
     }
+  }),
+
+  // 5. 장바구니 목록에서 상품 삭제하기(DELETE)
+  rest.delete('/cart', (req, res, ctx) => {
+    console.log(req);
+
+    const { productIds } = req.body;
+    dummyCart = dummyCart.filter(item => !productIds.includes(item.id));
+    console.log('dummyCart', dummyCart);
+    return res(ctx.status(204));
   }),
 
   // 회원가입

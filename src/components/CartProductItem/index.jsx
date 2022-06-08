@@ -25,30 +25,17 @@ const CartProductItem = ({ id, quantity }) => {
   const { logoutByError } = useLogout();
 
   // TODO 5. delete 장바구니 내 선택된 상품 삭제
-  // const deleteItem = async () => {
-  //   const accessToken = getCookie('accessToken');
+  const deleteItem = async () => {
+    try {
+      await apiClient.delete('/cart', { data: { productIds: [id] } });
 
-  //   try {
-  //     await apiClient.delete(
-  //       `/carts`,
-  //       [id],
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       },
-  //     );
-
-  //     dispatch(doDeleteProductFromCart({ id }));
-  //     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
-  //   } catch (error) {
-  //     renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-  //     navigate('/login');
-  //   }
-  // };
-  const deleteItem = () => {
-    dispatch(doDeleteProductFromCart({ id }));
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+      dispatch(doDeleteProductFromCart({ id }));
+      renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+    } catch (error) {
+      const customError = error.response.data;
+      renderSnackbar(customError.message, 'FAILED');
+      logoutByError(customError);
+    }
   };
 
   // TODO 4. put 장바구니 내 상품 수량 수정
