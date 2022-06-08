@@ -1,4 +1,5 @@
 // @ts-nocheck
+import axios from 'axios';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -22,6 +23,7 @@ const ProductItem = ({ id, name, price, image }) => {
   const isAuthenticated = getCookie('accessToken');
 
   const [isInCart, product] = useCart(id);
+
   const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);
 
   const [isControllerOpen, setIsControllerOpen] = useState(false);
@@ -30,13 +32,32 @@ const ProductItem = ({ id, name, price, image }) => {
   const quantityRef = useRef(quantity);
   quantityRef.current = quantity;
 
+  const putCart = async quantity => {
+    const accessToken = getCookie('accessToken');
+
+    await axios.put(
+      `/cart/products/${id}`,
+      {
+        quantity,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+  };
+
   const updateCart = () => {
     setIsControllerOpen(false);
     clearTimer();
 
     if (quantityRef.current > 0) {
-      dispatch(doPutProductToCart({ id, quantity: quantityRef.current }));
+      dispatch(
+        doPutProductToCart({ productId: id, name, price, image, quantity: quantityRef.current }),
+      );
       renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
+      putCart(quantityRef.current);
       return;
     }
 

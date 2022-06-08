@@ -54,6 +54,22 @@ const ProductDetailPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const putCartAPI = async quantity => {
+    const accessToken = getCookie('accessToken');
+
+    await axios.put(
+      `/cart/products/${id}`,
+      {
+        quantity,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+  };
+
   const putCart = () => {
     if (!isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
@@ -61,7 +77,10 @@ const ProductDetailPage = () => {
       return;
     }
 
-    dispatch(doPutProductToCart({ id: id, quantity: isInCart ? productInCart.quantity + 1 : 1 }));
+    putCartAPI(isInCart ? productInCart.quantity + 1 : 1);
+    dispatch(
+      doPutProductToCart({ productId: id, quantity: isInCart ? productInCart.quantity + 1 : 1 }),
+    );
     navigate(LINK.TO_CART);
   };
 

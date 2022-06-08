@@ -1,6 +1,7 @@
+// @ts-nocheck
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import useProduct from 'hooks/useProduct';
 import useOrder from 'hooks/useOrder';
 import useSnackbar from 'hooks/useSnackbar';
 
@@ -9,18 +10,34 @@ import { Image, Counter, CheckBox } from 'components';
 import { doPutProductToCart, doDeleteProductFromCart } from 'actions/actionCreator';
 import autoComma from 'utils/autoComma';
 import { MESSAGE } from 'utils/constants';
+import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
-const CartProductItem = ({ id, quantity }) => {
+const CartProductItem = ({ id, name, price, image, quantity }) => {
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
 
-  const [{ name, price, image }] = useProduct(id);
   const [isInOrder, updateOrder] = useOrder(id);
 
   const deleteItem = () => {
     dispatch(doDeleteProductFromCart({ id }));
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+  };
+
+  const putCart = async quantity => {
+    const accessToken = getCookie('accessToken');
+
+    await axios.put(
+      `/cart/products/${id}`,
+      {
+        quantity,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
   };
 
   return (
@@ -35,10 +52,14 @@ const CartProductItem = ({ id, quantity }) => {
         <Styled.DeleteButton onClick={deleteItem} />
         <Counter
           quantity={quantity}
-          increase={() => dispatch(doPutProductToCart({ id, quantity: quantity + 1 }))}
+          increase={() => {
+            dispatch(doPutProductToCart({ productId: id, quantity: quantity + 1 }));
+            putCart(quantity + 1);
+          }}
           decrease={() => {
             if (quantity > 1) {
-              dispatch(doPutProductToCart({ id, quantity: quantity - 1 }));
+              dispatch(doPutProductToCart({ productId: id, quantity: quantity - 1 }));
+              putCart(quantity - 1);
             }
           }}
         />
