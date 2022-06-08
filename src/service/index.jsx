@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://hitalittle.ga';
+axios.defaults.baseURL = 'http://13.124.14.130:8080';
 
 const getServerResult = async (url, method, option = {}) => {
   try {
@@ -47,7 +47,10 @@ export const getUser = () => getServerResult('/customer', 'get');
 export const updateUser = (user) => getServerResult('/customer', 'put', user);
 
 export const deleteUser = (password) =>
-  getServerResult('/customer', 'delete', { password });
+  getServerResult('/customer', 'delete', { data: { password } });
+
+export const updatePassword = (oldPassword, newPassword) =>
+  getServerResult('/customer/password', { oldPassword, newPassword });
 
 export const setToken = (accessToken) => {
   localStorage.setItem('accessToken', accessToken);
