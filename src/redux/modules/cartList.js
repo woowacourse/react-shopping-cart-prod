@@ -159,7 +159,7 @@ export const cartListReducer = (state = cartListInitialState, action) => {
 
   switch (action.type) {
     case ACTION_TYPES.GET_CART_LIST:
-      return action.payload;
+      return action.payload.map((item) => ({ ...item, checked: true }));
 
     case ACTION_TYPES.CLEAR_CART_LIST:
       return cartListInitialState;

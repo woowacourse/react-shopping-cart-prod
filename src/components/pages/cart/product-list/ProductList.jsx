@@ -12,6 +12,7 @@ import StyledProductList from "@/components/pages/cart/product-list/ProductList.
 
 function ProductList() {
   const cartList = useSelector((state) => state.cartListState);
+  console.log(cartList);
   const dispatch = useDispatch();
 
   const allCheckboxIsChecked = () => {
