@@ -1,4 +1,5 @@
-import { BASE_SERVER_URL, SERVER_PATH } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, COOKIE_KEY } from "constants";
+import { getCookie } from "util/cookie";
 import { loginBaseServer, deleteUserBaseServer } from "util/fetch";
 
 export const USER_ACTION = {
@@ -40,9 +41,10 @@ export const login = (email, password) => async (dispatch) => {
       user: {
         ...data.customer,
         username: data.customer.username,
-        accessToken: data.accessToken,
       },
     });
+    document.cookie = `${COOKIE_KEY.TOKEN}=${data.accessToken}; path=/; max-age=${data.expirationTime}`;
+    document.cookie = `${COOKIE_KEY.USER_ID}=${data.customer.id}; path=/; max-age=${data.expirationTime}`;
   } catch (error) {
     dispatch({
       type: USER_ACTION.LOGIN_ERROR,
@@ -83,12 +85,12 @@ export const deleteUser =
   };
 
 const initialState = {
+  isLoggedIn: !!getCookie(COOKIE_KEY.TOKEN),
   isLoading: false,
   data: {
     id: 0,
     email: "",
     username: "",
-    accessToken: "",
   },
   errorMessage: "",
 };
@@ -99,15 +101,17 @@ const reducer = (state = initialState, action) => {
     case USER_ACTION.UPDATE_USER_INFO:
     case USER_ACTION.LOGIN:
       return {
+        isLoggedIn: state.isLoggedIn,
         isLoading: true,
         data: state.data,
         errorMessage: "",
       };
     case USER_ACTION.DELETE_ACCOUNT_SUCCESS:
     case USER_ACTION.LOGOUT:
-      return initialState;
+      return { ...initialState, isLoggedIn: false };
     case USER_ACTION.UPDATE_USER_INFO_SUCCESS:
       return {
+        isLoggedIn: state.isLoggedIn,
         isLoading: false,
         data: {
           ...state.data,
@@ -117,6 +121,7 @@ const reducer = (state = initialState, action) => {
       };
     case USER_ACTION.LOGIN_SUCCESS:
       return {
+        isLoggedIn: true,
         isLoading: false,
         data: action.user,
         errorMessage: "",
@@ -125,12 +130,14 @@ const reducer = (state = initialState, action) => {
     case USER_ACTION.UPDATE_USER_INFO_ERROR:
     case USER_ACTION.LOGIN_ERROR:
       return {
+        isLoggedIn: state.isLoggedIn,
         isLoading: false,
         data: state.data,
         errorMessage: action.errorMessage,
       };
     case USER_ACTION.CLEAN_ERROR:
       return {
+        isLoggedIn: state.isLoggedIn,
         isLoading: false,
         data: state.data,
         errorMessage: "",

@@ -29,3 +29,8 @@ export const RANGE = {
   PW_MAX_LENGTH: 20,
   PW_MIN_LENGTH: 8,
 };
+
+export const COOKIE_KEY = {
+  TOKEN: "token",
+  USER_ID: "userid",
+};
