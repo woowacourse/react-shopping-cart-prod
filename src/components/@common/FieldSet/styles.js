@@ -1,9 +1,15 @@
 import styled from '@emotion/styled';
 
+import { FlexContainer } from 'components/@common';
+
 import { COLORS } from 'styles/theme';
 
 const Container = styled.section`
   margin-bottom: 1.8rem;
+
+  ${FlexContainer} {
+    margin-bottom: 0.6rem;
+  }
 `;
 
 const Label = styled.label`
