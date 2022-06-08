@@ -15,7 +15,7 @@ export const Default = Template.bind({});
 
 Default.args = {
   product: {
-    id: 1,
+    productId: 1,
     thumbnailUrl: "https://cdn-mart.baemin.com/goods/85/1537405626217m0.jpg",
     name: "PET보틀-정사각(420ml)",
     price: 43400,

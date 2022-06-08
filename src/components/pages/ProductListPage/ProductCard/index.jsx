@@ -18,12 +18,12 @@ import {
   ProductThumbnail,
 } from "./styled";
 
-function ProductCard({ product: { id, thumbnailUrl, name, price } }) {
+function ProductCard({ product: { productId, thumbnailUrl, name, price } }) {
   const isLogin = useSelector((state) => state.user.isLogin);
   const navigate = useNavigate();
 
   const handleClickCardItem = () => {
-    navigate(`${ROUTES.PRODUCT_DETAIL}/${id}`);
+    navigate(`${ROUTES.PRODUCT_DETAIL}/${productId}`);
   };
 
   const handleClickCartIconButton = async (e) => {
@@ -40,7 +40,7 @@ function ProductCard({ product: { id, thumbnailUrl, name, price } }) {
         url: `${BASE_SERVER_URL}${
           SERVER_PATH.CUSTOMER_LIST
         }/${localStorage.getItem(USER_ID_KEY)}/carts`,
-        body: JSON.stringify({ productId: id, count: 1 }),
+        body: JSON.stringify({ productId, count: 1 }),
       });
 
       if (!response.ok) {

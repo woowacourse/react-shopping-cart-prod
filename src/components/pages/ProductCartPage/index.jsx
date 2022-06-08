@@ -14,8 +14,8 @@ function ProductCartPage() {
   const [checkList, setCheckList] = useState([]);
 
   const [totalPrice, totalCount] = cartList.reduce(
-    (acc, { id, price, count }) => {
-      if (checkList.includes(id)) {
+    (acc, { productId, price, count }) => {
+      if (checkList.includes(productId)) {
         acc[0] += price * count;
         acc[1] += count;
       }
@@ -29,7 +29,8 @@ function ProductCartPage() {
   }, []);
 
   useEffect(() => {
-    if (!isLoading) setCheckList(cartList.map((cartItem) => cartItem.id));
+    if (!isLoading)
+      setCheckList(cartList.map((cartItem) => cartItem.productId));
   }, [isLoading]);
 
   return (

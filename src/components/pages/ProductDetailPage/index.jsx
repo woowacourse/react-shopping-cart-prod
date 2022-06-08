@@ -11,7 +11,7 @@ import ProductDetail from "./ProductDetail";
 import { DetailContainer } from "./styled";
 
 function ProductDetailPage() {
-  const { id: productId } = useParams();
+  const { productId } = useParams();
   const {
     data: selectedProduct,
     isLoading,

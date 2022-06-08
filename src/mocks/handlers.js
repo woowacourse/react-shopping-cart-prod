@@ -13,7 +13,7 @@ export const prouctsHandler = [
       const { productId } = req.params;
       const productList = db.products;
       const selectedProduct = productList.find(
-        (product) => product.id === Number(productId)
+        (product) => product.productId === Number(productId)
       );
 
       if (!selectedProduct) return res(ctx.status(404), ctx.json({}));
@@ -29,9 +29,9 @@ export const cartsHandler = [
       const cartList = db.carts;
       const productList = db.products;
 
-      const result = cartList.map(({ id, count }) => {
+      const result = cartList.map(({ productId, count }) => {
         const selectedProduct = productList.find(
-          (product) => product.id === id
+          (product) => product.productId === productId
         );
         return { ...selectedProduct, count };
       });
@@ -51,14 +51,14 @@ export const cartsHandler = [
 
       const productList = db.products;
       const cartList = db.carts;
-      if (productList.every((product) => product.id !== productId)) {
+      if (productList.every((product) => product.productId !== productId)) {
         return res(
           ctx.status(404),
           ctx.json({ message: "존재하지 않는 상품 ID입니다." })
         );
       }
 
-      if (cartList.some((cart) => cart.id === productId)) {
+      if (cartList.some((cart) => cart.productId === productId)) {
         return res(
           ctx.status(400),
           ctx.json({ message: "이미 담은 상품입니다." })
@@ -66,7 +66,7 @@ export const cartsHandler = [
       }
 
       const selectedProduct = productList.find(
-        (product) => product.id === productId
+        (product) => product.productId === productId
       );
       if (selectedProduct.quantity < count) {
         return res(
@@ -75,24 +75,26 @@ export const cartsHandler = [
         );
       }
 
-      db.carts = [...cartList, { id: productId, count }];
+      db.carts = [...cartList, { productId, count }];
       return res(ctx.status(204));
     }
   ),
   rest.delete(
     `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
     (req, res, ctx) => {
-      const id = req.url.searchParams.get("productId");
+      const productId = req.url.searchParams.get("productId");
       const cartList = db.carts;
       const productList = db.products;
-      if (productList.every((product) => product.id !== Number(id))) {
+      if (
+        productList.every((product) => product.productId !== Number(productId))
+      ) {
         return res(
           ctx.status(404),
           ctx.json({ message: "존재하지 않는 상품 ID입니다." })
         );
       }
       const selectedCartList = cartList.filter(
-        (cartItem) => cartItem.id !== Number(id)
+        (cartItem) => cartItem.productId !== Number(productId)
       );
 
       db.carts = selectedCartList;
@@ -102,16 +104,18 @@ export const cartsHandler = [
   rest.patch(
     `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
     (req, res, ctx) => {
-      const id = req.url.searchParams.get("productId");
+      const productId = req.url.searchParams.get("productId");
 
       const { count } = req.body;
       const cartList = db.carts;
       const productList = db.products;
       const cartItemIndex = cartList.findIndex(
-        (cartItem) => cartItem.id === Number(id)
+        (cartItem) => cartItem.productId === Number(productId)
       );
 
-      if (productList.every((product) => product.id !== Number(id))) {
+      if (
+        productList.every((product) => product.productId !== Number(productId))
+      ) {
         return res(
           ctx.status(404),
           ctx.json({ message: "존재하지 않는 상품 ID입니다." })
@@ -119,7 +123,7 @@ export const cartsHandler = [
       }
 
       const selectedProduct = productList.find(
-        (product) => product.id === Number(id)
+        (product) => product.productId === Number(productId)
       );
       if (selectedProduct.quantity < count) {
         return res(

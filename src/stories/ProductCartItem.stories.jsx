@@ -11,18 +11,20 @@ export default {
 
 const Template = (args) => {
   const [checkList, setCheckList] = useState([]);
-  const handleClickIncreaseButton = (id) => () => {};
+  const handleClickIncreaseButton = (productId) => () => {};
 
-  const handleClickDecreaseButton = (id, count) => () => {};
+  const handleClickDecreaseButton = (productId, count) => () => {};
 
-  const handleClickDeleteItemButton = (id) => () => {};
+  const handleClickDeleteItemButton = (productId) => () => {};
 
-  const handleChangeCheckbox = (id) => () => {
-    if (checkList.includes(id)) {
-      setCheckList((prev) => prev.filter((cartItemId) => cartItemId !== id));
+  const handleChangeCheckbox = (productId) => () => {
+    if (checkList.includes(productId)) {
+      setCheckList((prev) =>
+        prev.filter((cartItemId) => cartItemId !== productId)
+      );
       return;
     }
-    setCheckList((prev) => [...prev, id]);
+    setCheckList((prev) => [...prev, productId]);
   };
 
   return (
@@ -41,7 +43,7 @@ export const Default = Template.bind({});
 
 Default.args = {
   product: {
-    id: 1,
+    productId: 1,
     thumbnailUrl: "https://cdn-mart.baemin.com/goods/85/1537405626217m0.jpg",
     name: "PET보틀-정사각(420ml)",
     price: 43400,

@@ -21,7 +21,7 @@ function ProductCartList({ checkList, setCheckList }) {
 
   const handleChangeAllCheckbox = () => {
     if (checkList.length === 0) {
-      setCheckList(cartList.map((cartItem) => cartItem.id));
+      setCheckList(cartList.map((cartItem) => cartItem.productId));
       return;
     }
     setCheckList([]);
@@ -34,33 +34,39 @@ function ProductCartList({ checkList, setCheckList }) {
     setCheckList([]);
   };
 
-  const handleClickIncreaseButton = (id, count, quantity) => () => {
+  const handleClickIncreaseButton = (productId, count, quantity) => () => {
     if (count >= quantity) {
       alert("재고가 부족합니다.");
       return;
     }
 
-    if (!checkList.includes(id)) setCheckList((prev) => [...prev, id]);
-    dispatch(updateCartCount(id, count + 1));
+    if (!checkList.includes(productId))
+      setCheckList((prev) => [...prev, productId]);
+    dispatch(updateCartCount(productId, count + 1));
   };
 
-  const handleClickDecreaseButton = (id, count) => () => {
+  const handleClickDecreaseButton = (productId, count) => () => {
     if (count <= 1) return;
-    if (!checkList.includes(id)) setCheckList((prev) => [...prev, id]);
-    dispatch(updateCartCount(id, count - 1));
+    if (!checkList.includes(productId))
+      setCheckList((prev) => [...prev, productId]);
+    dispatch(updateCartCount(productId, count - 1));
   };
 
-  const handleClickDeleteItemButton = (id) => () => {
-    dispatch(deleteCartList(id));
-    setCheckList((prev) => prev.filter((cartItemId) => cartItemId !== id));
+  const handleClickDeleteItemButton = (productId) => () => {
+    dispatch(deleteCartList(productId));
+    setCheckList((prev) =>
+      prev.filter((cartItemId) => cartItemId !== productId)
+    );
   };
 
-  const handleChangeCheckbox = (id) => () => {
-    if (checkList.includes(id)) {
-      setCheckList((prev) => prev.filter((cartItemId) => cartItemId !== id));
+  const handleChangeCheckbox = (productId) => () => {
+    if (checkList.includes(productId)) {
+      setCheckList((prev) =>
+        prev.filter((cartItemId) => cartItemId !== productId)
+      );
       return;
     }
-    setCheckList((prev) => [...prev, id]);
+    setCheckList((prev) => [...prev, productId]);
   };
 
   const renderListContent = () => {
@@ -76,7 +82,7 @@ function ProductCartList({ checkList, setCheckList }) {
             handleClickDecreaseButton={handleClickDecreaseButton}
             handleClickDeleteItemButton={handleClickDeleteItemButton}
             handleChangeCheckbox={handleChangeCheckbox}
-            key={cartItem.id}
+            key={cartItem.productId}
           />
         ))}
       </>

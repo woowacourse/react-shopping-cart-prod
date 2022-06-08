@@ -42,7 +42,7 @@ function App() {
           <Route path={ROUTES.ROOT} element={<ProductListPage />} />
           <Route path={ROUTES.PRODUCT_LIST} element={<ProductListPage />} />
           <Route
-            path={`${ROUTES.PRODUCT_DETAIL}/:id`}
+            path={`${ROUTES.PRODUCT_DETAIL}/:productId`}
             element={<ProductDetailPage />}
           />
           <Route
