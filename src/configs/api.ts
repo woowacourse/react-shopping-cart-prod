@@ -8,6 +8,9 @@ const axios = Axios.create({
   // 매트
   baseURL:
     'http://ec2-15-164-94-21.ap-northeast-2.compute.amazonaws.com:8080/api',
+  // 야호
+  // baseURL:
+  //   'http://ec2-13-125-121-5.ap-northeast-2.compute.amazonaws.com:8080/api',
 });
 
 const axiosWithToken = Axios.create({
@@ -17,6 +20,9 @@ const axiosWithToken = Axios.create({
   // 매트
   baseURL:
     'http://ec2-15-164-94-21.ap-northeast-2.compute.amazonaws.com:8080/api',
+  // 야호
+  // baseURL:
+  //   'http://ec2-13-125-121-5.ap-northeast-2.compute.amazonaws.com:8080/api',
 });
 
 axiosWithToken.interceptors.request.use(
