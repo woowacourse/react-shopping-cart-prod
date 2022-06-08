@@ -15,6 +15,7 @@ import * as Styled from './style';
 
 const Header = () => {
   const { authenticated, name } = useSelector((state) => state.user);
+  const { cartItems } = useCart();
 
   return (
     <Styled.Wrapper>
@@ -23,6 +24,12 @@ const Header = () => {
         <Styled.LogoText>우아한 상회</Styled.LogoText>
       </Styled.Logo>
       <Styled.MenuContainer>
+        {authenticated && (
+          <MenuItem>
+            <Link to={PATH_NAME.CART}>장바구니</Link>
+            <Styled.Badge>{cartItems?.length ?? 0}</Styled.Badge>
+          </MenuItem>
+        )}
         <AuthNav isAuthenticated={authenticated} name={name} />
       </Styled.MenuContainer>
     </Styled.Wrapper>
@@ -30,7 +37,6 @@ const Header = () => {
 };
 
 const AuthNav = ({ isAuthenticated, name }) => {
-  const { cartItems } = useCart();
   const { logout } = useAuthentication();
 
   const handleClickLogout = () => {
@@ -40,10 +46,6 @@ const AuthNav = ({ isAuthenticated, name }) => {
     <>
       {isAuthenticated ? (
         <Styled.AuthNavWrapper>
-          <MenuItem>
-            <Link to={PATH_NAME.CART}>장바구니</Link>
-            <Styled.Badge>{cartItems?.length ?? 0}</Styled.Badge>
-          </MenuItem>
           <Avatar name={name} />
           <Styled.DropDownWrapper>
             <DropDown>
