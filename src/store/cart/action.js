@@ -11,7 +11,7 @@ const cartActions = {
 
   addItems: {
     success: (items = []) => createAction(reducer.addCartItems, { items }),
-    error: (errorMessage = '') => createAction(reducer.addCartItems_Error(errorMessage)),
+    error: (errorMessage = '') => createAction(reducer.addCartItems_Error, { errorMessage }),
   },
 
   updateItem: {
