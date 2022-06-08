@@ -1,7 +1,7 @@
 export const BASE_SERVER_URL = (index = 0) => {
   const serverUrls = [
     "dev", // msw
-    "http://ec2-13-125-205-115.ap-northeast-2.compute.amazonaws.com:8080",
+    "server1",
     "server2",
     "server3",
     "server4",
