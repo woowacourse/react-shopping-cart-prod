@@ -1,12 +1,12 @@
 export const isInvalidEmail = (email) =>
-  !/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(
+  !/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i.test(
     email,
   );
 
 export const isInvalidPassword = (password) =>
   !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
 
-export const isInvalidName = (name) => /\d+/.test(name);
+export const isInvalidName = (name) => /\d+|\s+/.test(name);
 
 export const isEmpty = (value) => !value;
 
