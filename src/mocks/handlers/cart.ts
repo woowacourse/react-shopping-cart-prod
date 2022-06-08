@@ -1,8 +1,6 @@
 import { rest, RestRequest } from 'msw';
 import { SERVER_URL } from 'configs/api';
-import * as db from 'mocks/db.json';
-
-const { products } = db;
+import * as db from 'mocks/db.js';
 
 const cart = [...db.cart];
 
@@ -47,7 +45,7 @@ const cartHandlers = [
     );
 
     const joinedCart = cartItems.map(({ product_id, quantity }) => {
-      const product = products.find((product) => product.id === product_id);
+      const product = db.products.find((product) => product.id === product_id);
 
       return { product, quantity };
     });
@@ -141,7 +139,9 @@ const cartHandlers = [
     if (!isValidToken) {
       return res(
         ctx.status(401),
-        ctx.json({ message: '유효하지 않은 토큰입니다.' })
+        ctx.json({
+          message: '유효하지 않은 토큰입니다.',
+        })
       );
     }
 

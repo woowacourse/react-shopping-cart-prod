@@ -6,7 +6,7 @@ import {
   SignupRequestBody,
   User,
 } from '../../types';
-import * as db from 'mocks/db.json';
+import * as db from 'mocks/db.js';
 
 const TOKEN_PREFIX = 'lokbawoody';
 const generateToken = (id: number) => `${TOKEN_PREFIX}${id}`;
