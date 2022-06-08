@@ -32,7 +32,6 @@ function App() {
           dispatch(userActions.setUser(res));
         })
         .catch(error => {
-          localStorage.removeItem('accessToken');
           sessionStorage.removeItem('accessToken');
         });
     }

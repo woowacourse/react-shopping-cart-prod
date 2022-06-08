@@ -5,17 +5,13 @@ import { getAccessToken } from 'utils/auth';
 import PATH from 'constants/path';
 
 const authAPI = {
-  login: async function (user: User, isKeepLogin: boolean) {
+  login: async function (user: User) {
     try {
       const {
         data: { accessToken },
       } = await axios.post(PATH.REQUEST_LOGIN, user);
 
-      if (isKeepLogin) {
-        localStorage.setItem('accessToken', accessToken);
-      } else {
-        sessionStorage.setItem('accessToken', accessToken);
-      }
+      sessionStorage.setItem('accessToken', accessToken);
 
       return this.getUserInfo(accessToken);
     } catch (error) {
@@ -81,7 +77,6 @@ const authAPI = {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
-      localStorage.removeItem('accessToken');
       sessionStorage.removeItem('accessToken');
     } catch (error) {
       if (error instanceof Error) {

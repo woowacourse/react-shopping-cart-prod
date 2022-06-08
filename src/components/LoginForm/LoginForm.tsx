@@ -1,7 +1,5 @@
-import { useState } from 'react';
-
 import authAPI from 'apis/auth';
-import { Button, CheckBox, Form, Input, Link } from 'components/@shared';
+import { Button, Form, Input, Link } from 'components/@shared';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
@@ -15,16 +13,6 @@ function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [checked, setChecked] = useState(false);
-
-  const toggleChecked = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
-  ) => {
-    e.preventDefault();
-
-    setChecked(prevState => !prevState);
-  };
-
   const onSubmitForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(e.target instanceof HTMLFormElement)) return;
@@ -37,7 +25,7 @@ function LoginForm() {
     };
 
     try {
-      const userInfo = await authAPI.login(user, checked);
+      const userInfo = await authAPI.login(user);
 
       dispatch(userActions.setUser(userInfo));
       navigate(PATH.BASE);
@@ -67,15 +55,6 @@ function LoginForm() {
         비밀번호
       </Input>
       <StyledLoginHelper>
-        <StyledKeepLogin>
-          <CheckBox
-            id="keep-login"
-            checked={checked}
-            onChange={toggleChecked}
-            marginBottom="0px"
-          />
-          <label htmlFor="keep-login">로그인 상태 유지</label>
-        </StyledKeepLogin>
         <StyledFindLoginInfo>
           <Link to="#">아이디 찾기</Link>
           <Link to="#">비밀번호 찾기</Link>
@@ -90,19 +69,9 @@ function LoginForm() {
 
 const StyledLoginHelper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 4px;
   width: 100%;
-`;
-
-const StyledKeepLogin = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  > label {
-    font-size: 10px;
-  }
 `;
 
 const StyledFindLoginInfo = styled.div`

@@ -43,7 +43,6 @@ function Header() {
     dispatch(userActions.resetUser());
     dispatch(cartActions.resetCart());
 
-    localStorage.removeItem('accessToken');
     sessionStorage.removeItem('accessToken');
 
     navigate(PATH.BASE);
