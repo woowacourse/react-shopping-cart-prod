@@ -13,11 +13,13 @@ const Styled = {
   `,
 
   HomeLink: styled(Link)`
+    display: flex;
     font-weight: 900;
     font-size: 30px;
     line-height: 58px;
     text-decoration: none;
     color: white;
+    align-items: center;
   `,
 
   CartLink: styled(Link)`

@@ -3,6 +3,8 @@ import { ReactComponent as ShoppingCart } from 'assets/shopping_cart_icon.svg';
 
 const Styled = {
   CartIcon: styled(ShoppingCart)`
+    display: block;
+
     ${({ category, theme }) => {
       switch (category) {
         case 'header':
@@ -10,7 +12,8 @@ const Styled = {
             path {
               fill: ${theme.colors.white};
             }
-            height: 30px;
+            height: 36px;
+            margin-right: 10px;
           `;
 
         default:
@@ -18,7 +21,7 @@ const Styled = {
             path {
               fill: ${theme.colors.black};
             }
-            height: 20px;
+            height: 25px;
           `;
       }
     }}
