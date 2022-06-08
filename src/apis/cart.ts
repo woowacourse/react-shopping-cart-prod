@@ -49,6 +49,21 @@ const cartAPI = {
       }
     }
   },
+  deleteItems: async function (accessToken: string, cartItems: Array<string>) {
+    try {
+      for (const cartItemId of cartItems) {
+        await axios.delete(`${PATH.REQUEST_CART}/${cartItemId}`, {
+          headers: { Authorization: `Bearer ${accessToken}}` },
+        });
+      }
+
+      return this.load(accessToken);
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  },
   changeQuantity: async function (
     accessToken: string,
     cartItemId: string,

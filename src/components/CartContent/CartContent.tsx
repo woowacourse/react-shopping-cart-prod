@@ -85,20 +85,18 @@ function CartContent({ cartItems }: Props) {
 
     if (!window.confirm(CART_MESSAGE.ASK_DELETE)) return;
 
-    checkedItems.forEach(cartId => {
-      const accessToken = getAccessToken();
+    const accessToken = getAccessToken();
 
-      if (!accessToken) return;
+    if (!accessToken) return;
 
-      cartAPI
-        .delete(accessToken, cartId)
-        .catch(error => {
-          alert(CART_MESSAGE.FAIL_DELETE);
-        })
-        .then(res => {
-          dispatch(cartActions.setCart(res));
-        });
-    });
+    cartAPI
+      .deleteItems(accessToken, checkedItems)
+      .then(res => {
+        dispatch(cartActions.setCart(res));
+      })
+      .catch(error => {
+        alert(CART_MESSAGE.FAIL_DELETE);
+      });
   };
 
   const onClickOrderButton = () => {
