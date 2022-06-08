@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 import HeaderContainer from 'components/@shared/HeaderContainer/HeaderContainer.component';
 import HeaderLink from 'components/@shared/HeaderLink/HeaderLink.component';
+import Logo from 'components/@shared/Logo/Logo.component';
 
 import { logoutUser } from 'redux/actions/auth.action';
 
@@ -14,7 +15,9 @@ import useFetch from 'hooks/useFetch';
 import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
 import { API_URL_PATH } from 'constants/api';
 
-const Relative = styled.div`
+const ProfileThumbnailBox = styled(FlexBox).attrs({
+  alignItems: 'center',
+})`
   position: relative;
 `;
 
@@ -50,7 +53,12 @@ const SelectListItem = styled.li`
   ${({ theme }) => `
     background-color: ${theme.colors['WHITE_001']};
     border: 1px solid ${theme.colors['GRAY_001']};
-  `}
+  `};
+
+  button {
+    color: ${({ color }) => color};
+    font-weight: bold;
+  }
 `;
 
 const FirstListItem = styled(SelectListItem)`
@@ -70,9 +78,20 @@ function Header() {
     url: `${API_URL_PATH.NAME}`,
     headers: { Authorization: `Bearer ${accessToken}` },
   });
+  const { fetchData: deleteAcount } = useFetch({
+    url: API_URL_PATH.CUSTOMERS,
+    method: 'delete',
+    headers: { Authorization: `Bearer ${accessToken}` },
+    skip: true,
+  });
 
   const handleSelectBox = () => {
     setShowSelectBox(prev => !prev);
+  };
+
+  const handleDeleteAccount = async () => {
+    await deleteAcount();
+    dispatch(logoutUser());
   };
 
   const handleDeleteAccessToken = () => {
@@ -83,10 +102,7 @@ function Header() {
     <HeaderContainer as="header">
       <HeaderWrapper>
         <HeaderLink to="/" type="title">
-          <FlexBox gap="15px">
-            <ShoppingCart fill="#fff" width={50} height={44} />
-            WOOWA SHOP
-          </FlexBox>
+          <Logo width={50} height={44} fontSize="extraLarge" color={'WHITE_001'} />
         </HeaderLink>
         <FlexBox as="nav" gap="43px">
           <HeaderLink to="/cart" type="nav">
@@ -96,19 +112,24 @@ function Header() {
             주문목록
           </HeaderLink>
           {accessToken ? (
-            <Relative>
+            <ProfileThumbnailBox>
               <LogInLogoButton onClick={handleSelectBox}>{name && name[0]}</LogInLogoButton>
               <SelectList show={showSelectBox}>
                 <FirstListItem>
                   <Link to="/user/modify">정보수정</Link>
                 </FirstListItem>
+                <SelectListItem color="red">
+                  <button type="button" onClick={handleDeleteAccount}>
+                    회원탈퇴
+                  </button>
+                </SelectListItem>
                 <LastListItem>
                   <button type="button" onClick={handleDeleteAccessToken}>
                     로그아웃
                   </button>
                 </LastListItem>
               </SelectList>
-            </Relative>
+            </ProfileThumbnailBox>
           ) : (
             <HeaderLink to="/login" type="nav">
               로그인
