@@ -15,11 +15,18 @@ import {
   ProductPriceTitle,
   Top,
 } from "./styled";
+import { useSelector } from "react-redux";
 
 function ProductDetail({
   selectedProduct: { productId, thumbnailUrl, name, price },
 }) {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   const handleClickCartButton = async () => {
+    if (!isLoggedIn) {
+      alert("장바구니에 담으려면 로그인이 필요합니다.");
+      return;
+    }
     try {
       const response = await postBaseServerCartItem({
         headers: {

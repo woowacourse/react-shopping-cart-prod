@@ -17,9 +17,11 @@ import {
   ProductPrice,
   ProductThumbnail,
 } from "./styled";
+import { useSelector } from "react-redux";
 
 function ProductCard({ product: { productId, thumbnailUrl, name, price } }) {
   const navigate = useNavigate();
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const handleClickCardItem = () => {
     navigate(`${ROUTES.PRODUCT_DETAIL}/${productId}`);
@@ -27,6 +29,10 @@ function ProductCard({ product: { productId, thumbnailUrl, name, price } }) {
 
   const handleClickCartIconButton = async (e) => {
     e.stopPropagation();
+    if (!isLoggedIn) {
+      alert("장바구니에 담으려면 로그인이 필요합니다.");
+      return;
+    }
     try {
       const response = await postBaseServerCartItem({
         headers: {
