@@ -69,7 +69,7 @@ function Login() {
         >
           <Input ref={emailRef} type="email" placeholder="이메일" />
           <Input ref={passwordRef} type="password" placeholder="비밀번호" />
-          {error && error}
+          {error && '이메일이나 비밀번호를 확인해 주세요.'}
           <SignupLink to="/signup">회원가입</SignupLink>
           <Button width="100%" borderRadius="10px" onClick={handleLogin}>
             <TextBox color="WHITE_001">로그인</TextBox>
