@@ -9,10 +9,15 @@ import ProductItem from "@/components/pages/cart/product-item/ProductItem";
 import Checkbox from "@/components/common/checkbox/Checkbox";
 
 import StyledProductList from "@/components/pages/cart/product-list/ProductList.styled";
+import { useEffect } from "react";
+import { getCartList } from "@/redux/modules/cartList";
 
 function ProductList() {
-  const cartList = useSelector((state) => state.cartListState);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCartList());
+  }, [dispatch]);
+  const cartList = useSelector((state) => state.cartListState);
 
   const allCheckboxIsChecked = () => {
     const isAllChecked = cartList.every((item) => item.checked === true);
