@@ -26,7 +26,7 @@ const CartItemContainer = styled(FlexBox).attrs({
   }
 `;
 
-function ShoppingCartListItem({ id, name, thumbnail, price, quantity }) {
+function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity }) {
   const dispatch = useDispatch();
   const { items: storedProducts } = useSelector(state => state.orderList);
   const checked = useMemo(

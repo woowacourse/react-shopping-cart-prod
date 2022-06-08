@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
+import { BASE_URL } from 'constants/api';
 import { LIMIT_SERVER_CONNECTION_TIME } from 'constants/index';
 
 function useFetch({ url, method = 'get', headers, skip = false }) {
@@ -15,7 +16,10 @@ function useFetch({ url, method = 'get', headers, skip = false }) {
       const { data } = await axios({
         url,
         method,
-        headers,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          ...headers,
+        },
         data: body,
         signal: controller.signal,
       });

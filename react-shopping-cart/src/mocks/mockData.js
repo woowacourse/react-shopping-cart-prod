@@ -91,6 +91,6 @@ export const customers = {
     name: '우연',
     phone: '010-1234-5678',
     address: '잠실',
-    carts: [{ id: 3, quantity: 5 }],
+    carts: [{ productId: 3, quantity: 5 }],
   },
 };

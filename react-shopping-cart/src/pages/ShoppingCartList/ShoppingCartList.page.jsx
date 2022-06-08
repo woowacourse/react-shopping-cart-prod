@@ -36,7 +36,6 @@ function ShoppingCartList() {
     if (checked) {
       dispatch(deleteAllItem());
     } else {
-      console.log(carts);
       dispatch(addAllItem(carts));
     }
   };

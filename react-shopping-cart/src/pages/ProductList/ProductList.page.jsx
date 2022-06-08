@@ -1,3 +1,5 @@
+import { useSelector } from 'react-redux';
+
 import PageContainer from 'components/@shared/PageContainer/PageContainer.component';
 
 import Header from 'components/Header/Header.component';
@@ -20,13 +22,25 @@ function LoadingSection() {
 }
 
 function ProductList() {
-  const { data, isLoading } = useFetch({ url: API_URL_PATH.PRODUCTS });
+  const { accessToken } = useSelector(state => state.auth);
+  const {
+    data,
+    isLoading,
+    fetchData: loadProducts,
+  } = useFetch({
+    url: API_URL_PATH.PRODUCTS,
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
 
   return (
     <>
       <Header />
       <PageContainer>
-        {isLoading ? <LoadingSection /> : <ProductListContainer data={data} />}
+        {isLoading ? (
+          <LoadingSection />
+        ) : (
+          <ProductListContainer data={data.products} loadProducts={loadProducts} />
+        )}
       </PageContainer>
     </>
   );

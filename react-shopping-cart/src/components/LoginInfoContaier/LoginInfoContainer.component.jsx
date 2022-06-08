@@ -27,9 +27,8 @@ const PasswordInputBox = styled(FlexBox).attrs({
 
 function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
   const dispatch = useDispatch();
-  const { fetchData: checkDuplicatedEmail, data } = useFetch({
-    url: API_URL_PATH.EMAIL,
-    headers: { 'Access-Control-Allow-Origin': '*' },
+  const { fetchData: checkDuplicatedEmail } = useFetch({
+    url: API_URL_PATH.EMAIL_VALIDATE,
     method: 'post',
     skip: true,
   });
@@ -39,7 +38,7 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
     e.preventDefault();
 
     try {
-      await checkDuplicatedEmail(email.value);
+      await checkDuplicatedEmail({ email: email.value });
       dispatch(setEmailDisabled(true));
     } catch (error) {
       alert('중복인 이메일입니다.');

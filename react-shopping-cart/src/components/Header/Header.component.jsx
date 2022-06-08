@@ -68,7 +68,7 @@ function Header() {
   const { accessToken } = useSelector(state => state.auth);
   const { data: name } = useFetch({
     url: `${API_URL_PATH.NAME}`,
-    headers: { Authorization: accessToken },
+    headers: { Authorization: `Bearer ${accessToken}` },
   });
 
   const handleSelectBox = () => {

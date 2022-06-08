@@ -34,7 +34,7 @@ function ShoppingCartListContainer({ carts }) {
           <CartListCountTextBox as="h3">배송 상품 ({carts.length}개)</CartListCountTextBox>
           <ul>
             {carts.map(itemInfo => (
-              <li key={itemInfo.id}>
+              <li key={itemInfo.productId}>
                 <ShoppingCartListItem {...itemInfo} />
               </li>
             ))}

@@ -8,4 +8,5 @@ export const API_URL_PATH = {
   EMAIL: `/${CUSTOMERS}/email`,
   NAME: `/${CUSTOMERS}/name`,
   CARTS: `/${CUSTOMERS}/carts`,
+  EMAIL_VALIDATE: `/${CUSTOMERS}/email/validate`,
 };

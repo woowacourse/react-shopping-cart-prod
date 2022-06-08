@@ -8,20 +8,20 @@ const findById = (id, array) => array.find(item => item.id === id);
 export const handlers = [
   rest.get(`${API_URL_PATH.PRODUCTS}`, (req, res, ctx) => {
     const { authorization: raw } = req.headers._headers;
-    console.log(req);
     const authorization = raw?.replace('Bearer', '');
 
     const storedProductsId = customers['abc@abc.com'].carts.map(cart => cart.id);
     const storedProducts = products.map(product => {
       if (authorization) {
         if (storedProductsId.includes(product.id)) {
-          return { ...product, isStored: true };
+          const cart = findById(product.id, customers['abc@abc.com'].carts);
+          return { ...product, quantity: cart.quantity };
         }
       }
-      return { ...product, isStored: false };
+      return { ...product, quantity: 0 };
     });
 
-    return res(ctx.status(200), ctx.json(storedProducts));
+    return res(ctx.status(200), ctx.json({ products: storedProducts }));
   }),
   rest.post(`${API_URL_PATH.LOGIN}`, (req, res, ctx) => {
     const { email, password } = req.body;
