@@ -13,10 +13,13 @@ const withPrivateRoute = (Component: React.ComponentType<unknown>) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-      if (isLogin) return;
+      const accessToken = localStorage.getItem('access-token');
+
+      if (!accessToken) return;
 
       dispatch(getUser()).catch(() => {
         alert(ALERT_MESSAGE.WRONG_ACCESS);
+        localStorage.removeItem('access-token');
         navigate(PATH.login);
       });
     }, []);

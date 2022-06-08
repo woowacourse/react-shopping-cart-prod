@@ -17,10 +17,14 @@ const withPublicRoute = (Component: React.ComponentType<unknown>) => {
 
       if (!accessToken) return;
 
-      dispatch(getUser()).then(() => {
-        alert(ALERT_MESSAGE.WRONG_ACCESS);
-        navigate(PATH.home);
-      });
+      dispatch(getUser())
+        .then(() => {
+          alert(ALERT_MESSAGE.WRONG_ACCESS);
+          navigate(PATH.home);
+        })
+        .catch(() => {
+          localStorage.removeItem('access-token');
+        });
     }, []);
 
     if (isLogin) return null;

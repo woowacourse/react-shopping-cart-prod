@@ -15,7 +15,9 @@ function App() {
 
     if (!accessToken) return;
 
-    dispatch(getUser()).catch(() => {});
+    dispatch(getUser()).catch(() => {
+      localStorage.removeItem('access-token');
+    });
   }, []);
 
   return (
