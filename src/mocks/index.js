@@ -9,7 +9,7 @@ import userInquiryHandler from './handlers/userInquiryHandler';
 import getProductsHandler from 'page/ProductListPage/mock';
 import getProductHandler from 'page/ProductDetailPage/mock';
 
-import getCartHandler from 'page/CartPage/mock';
+import { getCartHandler, postOrderHandler } from 'page/CartPage/mock';
 import putCartHandler from './handlers/putCartHandler';
 import deleteCartProductHandler from './handlers/deleteCartProductHandler';
 
@@ -52,6 +52,9 @@ const handlers = [
 
   // 장바구니에서 특정 상품 삭제
   deleteCartProductHandler,
+
+  // 주문하기
+  postOrderHandler,
 ];
 
 export default handlers;

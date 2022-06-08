@@ -10,6 +10,7 @@ import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 import {
   doAddProdcutToOrder,
   doInitializeOrder,
+  doOrderFromCart,
   doSelectiveDeleteFromCart,
 } from 'actions/actionCreator';
 import { MESSAGE } from 'utils/constants';
@@ -83,6 +84,26 @@ const CartPage = () => {
     });
   };
 
+  const postOrder = async () => {
+    if (order.length <= 0) return;
+
+    const accessToken = getCookie('accessToken');
+
+    await axios.post(
+      `/orders`,
+      {
+        productIds: order,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      },
+    );
+
+    dispatch(doOrderFromCart());
+  };
+
   return (
     <Styled.Container>
       {shoppingCart.length > 0 ? (
@@ -126,7 +147,8 @@ const CartPage = () => {
               <TotalPrice
                 title="결제예상금액"
                 price={totalPrice}
-                action={`주문하기(${order.length}개)`}
+                actionType={`주문하기(${order.length}개)`}
+                action={postOrder}
               />
             </Styled.RightSide>
           </Styled.OrderSheet>
