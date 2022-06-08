@@ -18,13 +18,15 @@ function Menu() {
     <StyledMenu>
       <ul>
         <li>
-          <Link to="/cart">
+          <Link className="menu" to="/cart">
             장바구니
             {count > 0 && <Badge count={count} />}
           </Link>
         </li>
         <li>
-          <Link to="/not-found">주문목록</Link>
+          <Link className="menu" to="/not-found">
+            주문목록
+          </Link>
         </li>
         <li>{authorized ? <Dropdown /> : <Link to="/login">로그인</Link>}</li>
       </ul>

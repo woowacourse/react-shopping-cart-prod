@@ -14,8 +14,12 @@ const StyledMenu = styled.div`
         position: relative;
         display: block;
         padding: 10px 0;
-        font-size: ${({ theme: {fontSize} }) => fontSize.m};
-        color: ${({ theme: {colors} }) => colors.white};
+        font-size: ${({ theme: { fontSize } }) => fontSize.m};
+        color: ${({ theme: { colors } }) => colors.white};
+      }
+      .menu:hover {
+        font-size: ${({ theme: { fontSize } }) => fontSize.l};
+        transition: linear 0.2s;
       }
     }
   }
