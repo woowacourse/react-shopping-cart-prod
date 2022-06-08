@@ -37,21 +37,25 @@ function Header({ isLoggedIn }) {
   const navigate = useNavigate();
 
   const IconSizeBreakPoint = deviceSizeStandard.desktop;
+  const serverNumber = window.sessionStorage.getItem('server');
 
   const navLinkInfo = isLoggedIn ? userHeaderLinks : nonUserHeaderLinks;
 
   const handleLogOut = () => {
     if (window.confirm(ALERT_MESSAGES.LOGOUT_CONFIRM)) {
       dispatch(logoutUser());
+      navigate(ROUTE.HOME);
       return;
     }
-
-    navigate(ROUTE.HOME);
   };
 
   const handleServerChange = ({ target: { value } }) => {
     setServerUrl(value);
-    handleLogOut();
+    if (isLoggedIn) {
+      handleLogOut();
+      return;
+    }
+    navigate(ROUTE.HOME);
   };
 
   return (
@@ -67,9 +71,10 @@ function Header({ isLoggedIn }) {
             BLVIC&apos;S CAMPING
           </S.Logo>
         </S.NavLink>
-        <select name="server" onChange={handleServerChange}>
+        <select name="server" onChange={handleServerChange} defaultValue={serverNumber}>
           <option value="0">1</option>
           <option value="1">2</option>
+          <option value="2">3</option>
         </select>
         <S.Nav>
           {navLinkInfo.map(({ path, name, ...props }) => (
