@@ -94,7 +94,7 @@ const ProductDetailPage = () => {
       {product && (
         <Styled.Container>
           <Styled.ProductContainer>
-            <Image src={product.image} alt={product.name} size="350px" />
+            <Image src={product.image} alt={product.name} size="400px" />
             <Styled.ProductName>{product.name}</Styled.ProductName>
             <Styled.Division />
             <Styled.PriceContainer>
