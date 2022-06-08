@@ -27,3 +27,4 @@ export const registerBaseServer = fetchServer({ method: "POST" });
 export const loginBaseServer = fetchServer({ method: "POST" });
 export const deleteUserBaseServer = fetchServer({ method: "POST" });
 export const updateUserBaseServer = fetchServer({ method: "PUT" });
+export const getUserBaseServer = fetchServer({ method: "GET" });
