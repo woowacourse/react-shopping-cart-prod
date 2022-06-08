@@ -1,6 +1,6 @@
 const PATH = {
   BASE: '/',
-  PRODUCT: '/product',
+  PRODUCT: '/products',
   CART: '/cart',
   LOGIN: '/login',
   SIGNUP: '/signup',

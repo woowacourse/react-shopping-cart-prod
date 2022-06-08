@@ -2,15 +2,15 @@ import Axios from 'axios';
 import { getAccessToken } from 'utils/auth';
 
 const axios = Axios.create({
-  baseURL: 'http://localhost:8080/api',
+  // 차리
+  baseURL:
+    'http://ec2-13-125-246-80.ap-northeast-2.compute.amazonaws.com:8080/api',
 });
 
 const axiosWithToken = Axios.create({
-  baseURL: 'http://localhost:8080/api',
-});
-
-const productAxios = Axios.create({
-  baseURL: 'https://heroku-shopping-cart-lv2.herokuapp.com',
+  // 차리
+  baseURL:
+    'http://ec2-13-125-246-80.ap-northeast-2.compute.amazonaws.com:8080/api',
 });
 
 axiosWithToken.interceptors.request.use(
@@ -30,4 +30,4 @@ axiosWithToken.interceptors.request.use(
   }
 );
 
-export { axios, axiosWithToken, productAxios };
+export { axios, axiosWithToken };
