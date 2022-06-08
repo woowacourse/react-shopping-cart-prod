@@ -92,15 +92,23 @@ function FillInfoStep() {
     const email = watchingValues['email'];
 
     try {
-      await axios({
+      const { isDuplicated } = await axios({
         method: 'get',
         url: `${SERVER_URL}/api/validation?email=${email}`,
-      });
+      }).then((res) => res.data);
 
-      setIsEmailUnique(true);
+      setIsEmailUnique(!isDuplicated);
+
+      if (isDuplicated) {
+        alert('중복된 이메일입니다.');
+
+        return;
+      }
+
+      alert('사용할 수 있는 이메일입니다.');
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        alert('중복된 이메일입니다.');
+        alert(e);
       } else {
         alert(e);
       }
@@ -156,7 +164,11 @@ function FillInfoStep() {
             ))}
         </S.CenterFlexBox>
         <S.RightFlexBox>
-          <S.Button type="button" onClick={handleClickIsEmailDuplicated}>
+          <S.Button
+            type="button"
+            onClick={handleClickIsEmailDuplicated}
+            disabled={!touched['email'] || errors['email']?.length > 0}
+          >
             중복 확인
           </S.Button>
         </S.RightFlexBox>
@@ -260,8 +272,8 @@ function FillInfoStep() {
               placeholder: '01012345678',
               minLength: 8,
               maxLength: 11,
-              pattern: '[0-9]{8,11}',
-              patternMessage: '전화번호는 8~11 자리 사이의 숫자여야 합니다.',
+              pattern: '[0-9]{11}',
+              patternMessage: '전화번호는 11 자리 숫자여야 합니다.',
               required: true,
             })}
           />
