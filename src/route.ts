@@ -9,10 +9,12 @@ export const ROUTE: {
   Edit: string;
   Leave: string;
   EditPassword: string;
+  OrderDetail: string;
 } = {
   Home: '/',
   ShoppingCart: '/shopping-cart',
   OrderList: '/order-list',
+  OrderDetail: '/order-list/:orderId',
   ProductDetail: '/products/:productId',
   SignUp: '/customers/signup',
   Login: '/customers/login',
