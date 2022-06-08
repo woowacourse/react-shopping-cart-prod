@@ -371,7 +371,7 @@ export default [
   }),
 
   rest.delete('/deleteCarts', (req, res, ctx) => {
-    const { productIds } = req.body;
+    const productIds = req.body;
 
     carts = carts.filter(({ productId }) => !productIds.includes(productId));
 
