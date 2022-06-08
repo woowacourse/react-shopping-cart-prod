@@ -3,17 +3,7 @@ import { flexCenter } from 'styles/mixin';
 
 import Portal from './Portal';
 
-export const MESSAGE = {
-  cart: '장바구니에 담았습니다.',
-  passwordConfirm: '비밀번호와 비밀번호 확인이 일치하지 않습니다.',
-  password: '비밀번호가 일치하지 않습니다.',
-  login: '이메일 또는 비밀번호가 일치하지 않습니다.',
-  editUser: '수정된 사항이 없습니다.',
-} as const;
-
-type Message = typeof MESSAGE[keyof typeof MESSAGE];
-
-const Snackbar = ({ message }: { message: Message }) => {
+const Snackbar = ({ message }: { message: string }) => {
   return (
     <Portal id='snackbar'>
       <StyledSnackbarContents key={Date.now()}>{message}</StyledSnackbarContents>

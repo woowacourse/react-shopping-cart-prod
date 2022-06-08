@@ -1,12 +1,12 @@
 import Button from 'components/common/Button';
 import LabeledInput from 'components/common/LabeledInput';
 import Modal from 'components/common/Modal';
-import Snackbar, { MESSAGE } from 'components/common/Snackbar';
+import Snackbar from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
-import useSnackBar from 'hooks/useSnackBar';
+import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
 import { KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editUserInfo } from 'redux/user/thunk';
