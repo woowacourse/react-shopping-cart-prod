@@ -7,10 +7,9 @@ const Styled = {
     background-color: ${({ theme }) => theme.colors.white};
     padding: 0 100px;
     overflow: scroll;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 26px;
 
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
@@ -30,24 +29,23 @@ const Styled = {
     width: inherit;
     height: 2px;
     background-color: black;
-    margin: 10px 0;
+    margin: 10px 0 0 0;
   `,
 
   SelectController: styled.div`
     display: flex;
     justify-content: space-between;
-    margin: 28px 0;
+    margin: 20px 0;
   `,
 
   CheckBoxContainer: styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100px;
+    width: 78px;
 
     font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 13px;
     letter-spacing: 0.5px;
   `,
 
@@ -56,13 +54,13 @@ const Styled = {
     font-size: 18px;
     line-height: 28px;
     letter-spacing: 0.5px;
-    border-bottom: 2px solid #aaaaaa;
     padding: 16px 0;
   `,
 
   ProductList: styled.div`
     overflow: scroll;
     height: 430px;
+    border-top: 1px solid ${({ theme }) => theme.colors.gray};
 
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
@@ -73,7 +71,7 @@ const Styled = {
   OrderSheet: styled.div`
     display: flex;
     justify-content: space-between;
-    padding: 20px;
+    padding: 10px;
   `,
 
   LeftSide: styled.div``,
@@ -92,7 +90,8 @@ const Styled = {
   ProductDeleteButton: styled(Button)`
     color: ${({ theme }) => theme.colors.black};
     border: 1px solid #bbbbbb;
-    padding: 12px 22px;
+    padding: 10px 16px;
+    font-size: 12px;
   `,
 };
 

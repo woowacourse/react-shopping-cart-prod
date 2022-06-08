@@ -12,11 +12,15 @@ const Styled = {
       'count decrease';
   `,
 
-  Count: styled.div`
+  CountContainer: styled.div`
     grid-row: 1 / 3;
     display: flex;
     align-items: center;
     justify-content: center;
+  `,
+
+  Count: styled.span`
+    width: 10px;
   `,
 
   CountButton: styled.div`
@@ -25,7 +29,9 @@ const Styled = {
     display: flex;
     align-items: center;
     justify-content: center;
-    outline: 1px solid ${({ theme }) => theme.colors.gray};
+    margin-top: -1px;
+    border-top: 1px solid ${({ theme }) => theme.colors.gray};
+    border-left: 1px solid ${({ theme }) => theme.colors.gray};
     cursor: pointer;
   `,
 };

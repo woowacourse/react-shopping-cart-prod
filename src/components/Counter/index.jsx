@@ -4,7 +4,9 @@ import Styled from './index.style';
 const Counter = ({ quantity, increase, decrease }) => {
   return (
     <Styled.Container>
-      <Styled.Count>{quantity}</Styled.Count>
+      <Styled.CountContainer>
+        <Styled.Count>{quantity}</Styled.Count>
+      </Styled.CountContainer>
       <Styled.CountButton onClick={increase}>▲</Styled.CountButton>
       <Styled.CountButton onClick={decrease}>▼</Styled.CountButton>
     </Styled.Container>

@@ -10,6 +10,7 @@ const Styled = {
     display: flex;
     padding: 20px;
     justify-content: space-between;
+    margin-top: -1px;
   `,
 
   LeftSide: styled.div`
@@ -22,7 +23,7 @@ const Styled = {
     flex-direction: column;
     justify-content: space-around;
     align-items: end;
-    font-size: 15px;
+    font-size: 13px;
   `,
 
   DeleteButton: styled(DeleteIcon)`
@@ -31,8 +32,7 @@ const Styled = {
 
   ProductName: styled.p`
     font-weight: 400;
-    font-size: 15px;
-    line-height: 15px;
+    font-size: 13px;
     letter-spacing: 0.5px;
   `,
 };
