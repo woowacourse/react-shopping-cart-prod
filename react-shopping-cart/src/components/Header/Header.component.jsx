@@ -9,6 +9,7 @@ import HeaderLink from 'components/@shared/HeaderLink/HeaderLink.component';
 import Logo from 'components/@shared/Logo/Logo.component';
 
 import { logoutUser } from 'redux/actions/auth.action';
+import { deleteAllItem } from 'redux/actions/orderList.action';
 
 import useFetch from 'hooks/useFetch';
 
@@ -74,14 +75,15 @@ function Header() {
   const dispatch = useDispatch();
   const [showSelectBox, setShowSelectBox] = useState(false);
   const { accessToken } = useSelector(state => state.auth);
-  const { data: name } = useFetch({
-    url: `${API_URL_PATH.NAME}`,
-    headers: { Authorization: `Bearer ${accessToken}` },
+  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
+  const { data } = useFetch({
+    url: API_URL_PATH.NAME,
+    headers,
   });
   const { fetchData: deleteAcount } = useFetch({
     url: API_URL_PATH.CUSTOMERS,
     method: 'delete',
-    headers: { Authorization: `Bearer ${accessToken}` },
+    headers,
     skip: true,
   });
 
@@ -92,12 +94,14 @@ function Header() {
   const handleDeleteAccount = async () => {
     if (window.confirm(`회원 탈퇴하시겠습니까?`) && window.confirm('정말?')) {
       await deleteAcount();
-      dispatch(logoutUser());
+      handleDeleteAccessToken();
     }
   };
 
-  const handleDeleteAccessToken = () => {
-    dispatch(logoutUser());
+  const handleDeleteAccessToken = async () => {
+    await dispatch(deleteAllItem());
+    await dispatch(logoutUser());
+    window.location.reload();
   };
 
   return (
@@ -115,7 +119,9 @@ function Header() {
           </HeaderLink>
           {accessToken ? (
             <ProfileThumbnailBox>
-              <LogInLogoButton onClick={handleSelectBox}>{name && name[0]}</LogInLogoButton>
+              <LogInLogoButton onClick={handleSelectBox}>
+                {data?.name && data?.name[0]}
+              </LogInLogoButton>
               <SelectList show={showSelectBox}>
                 <FirstListItem>
                   <Link to="/user/modify">정보수정</Link>
