@@ -76,9 +76,13 @@ const useProfileForm = () => {
     if (Object.entries(errors as Record<string, string>).length !== 0) return;
 
     const formData = new FormData(e.target as HTMLFormElement);
+    const data = Object.fromEntries(formData.entries());
+    delete data['confirm-password'];
+
     const requestBody = {
-      ...(Object.fromEntries(formData.entries()) as Partial<Customer>),
+      ...data,
       profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
+      terms: true,
     };
     const accessToken = localStorage.getItem('accessToken');
 
@@ -92,10 +96,11 @@ const useProfileForm = () => {
         },
       });
 
+      dispatch(actions.getUserInfo(accessToken as string, userId as number));
       alert('회원 정보가 수정되었습니다.');
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        alert('유효하지 않은 이메일 형식입니다.');
+        alert('회원 정보를 수정하는데 오류가 발생했습니다.');
       } else {
         alert(e);
       }
