@@ -9,11 +9,10 @@ import useCart from '../hooks/useCart';
 import Button from '../components/common/Button';
 
 function ShoppingCartPage() {
-  const { deleteItem } = useCart();
   const [totalPrice, setTotalPrice] = useState();
   const [selectedItems, setSelectedItems] = useState([]);
   const [isCheckedAll, setCheckedAll] = useReducer((checked) => !checked, true);
-
+  const { deleteItem } = useCart();
   const cartList = useSelector(({ cart }) => cart.data);
 
   const toggleCheckedAll = () => {

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { MESSAGE, SERVER_PATH, STORAGE_KEY } from '../constants';
 import { getCartItemAsync } from '../store/cart/cart.actions';
@@ -60,6 +61,13 @@ const useCart = () => {
     }
     addItem(id);
   };
+
+  useEffect(() => {
+    if (accessToken) {
+      console.log('useCart');
+      dispatch(getCartItemAsync(accessToken));
+    }
+  }, []);
 
   return { deleteItem, updateItemQuantity, handleCartItem };
 };
