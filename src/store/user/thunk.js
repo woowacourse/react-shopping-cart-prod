@@ -1,10 +1,12 @@
 import { requestLogin, requestProfile } from 'api/members';
 import { REQUEST_STATUS, ACCESS_TOKEN_COOKIE_NAME, ACCESS_TOKEN_EXPIRED_TIME } from 'constants/';
-import { getCookie, removeCookie, setCookie } from 'lib/cookieUtils';
+import { getCookie, setCookie } from 'lib/cookieUtils';
 
 import userActions from './action';
 
 const userLogin = (loginId, password) => async (dispatch) => {
+  dispatch(userActions.updateInfo.pending());
+
   const response = await requestLogin({ loginId, password });
 
   const { status, body } = response;
@@ -22,9 +24,14 @@ const userLogin = (loginId, password) => async (dispatch) => {
 };
 
 const getUserProfile = () => async (dispatch) => {
+  dispatch(userActions.updateInfo.pending());
+
   const accessToken = getCookie(ACCESS_TOKEN_COOKIE_NAME);
 
-  if (!accessToken) return;
+  if (!accessToken) {
+    dispatch(userActions.removeInfo());
+    return;
+  }
 
   const response = await requestProfile();
 
@@ -32,7 +39,7 @@ const getUserProfile = () => async (dispatch) => {
   const { userKey, userId, nickname } = body;
 
   if (status === REQUEST_STATUS.FAIL) {
-    removeCookie(ACCESS_TOKEN_COOKIE_NAME);
+    dispatch(userActions.removeInfo());
     return response;
   }
 

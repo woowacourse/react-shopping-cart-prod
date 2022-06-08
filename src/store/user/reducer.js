@@ -13,6 +13,10 @@ const reducer = {
     state.userInfoAsyncState = createAsyncState.success();
   },
 
+  updateUserInfo_Pending(state) {
+    state.userInfoAsyncState = createAsyncState.pending();
+  },
+
   updateUserInfo_Error(state, { errorMessage = '' }) {
     state.isLogin = false;
     state.userInfoAsyncState = createAsyncState.error(errorMessage);
@@ -21,7 +25,7 @@ const reducer = {
   removeUserInfo(state) {
     state.isLogin = false;
     state.userInfo = { ...initialState.userInfo };
-    state.userInfoAsyncState = createAsyncState.initial();
+    state.userInfoAsyncState = createAsyncState.success();
   },
 };
 
