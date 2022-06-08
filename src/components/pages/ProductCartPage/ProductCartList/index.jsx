@@ -65,7 +65,6 @@ function ProductCartList({ checkList, setCheckList }) {
 
   const renderListContent = () => {
     if (isLoading) return <Spinner />;
-    if (errorMessage) return <ErrorPage>에러: ${errorMessage} </ErrorPage>;
     if (cartList.length === 0) return <div>담은 상품이 없습니다.</div>;
     return (
       <>
@@ -104,6 +103,7 @@ function ProductCartList({ checkList, setCheckList }) {
       <CartListCount>
         든든배송 상품 ({cartList?.length ?? "%ERROR%"}개)
       </CartListCount>
+      {errorMessage && <ErrorPage>에러: ${errorMessage} </ErrorPage>}
       {renderListContent()}
     </>
   );

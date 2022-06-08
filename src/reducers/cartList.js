@@ -153,7 +153,7 @@ const reducer = (state = initialState, action) => {
     case CART_LIST_ACTION.GET_LIST_ERROR:
       return {
         isLoading: false,
-        data: [],
+        data: state.data,
         errorMessage: action.errorMessage,
       };
     default:
