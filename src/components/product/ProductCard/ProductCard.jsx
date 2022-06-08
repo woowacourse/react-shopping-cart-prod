@@ -14,7 +14,7 @@ import * as GlobalStyled from 'styles/GlobalStyles';
 import { color } from 'styles/Theme';
 
 function ProductCard({ product, isLoggedIn }) {
-  const { id, imageURL, name, price, stock } = product;
+  const { id, imageUrl, name, price, stock } = product;
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ function ProductCard({ product, isLoggedIn }) {
   return (
     <GlobalStyled.Position>
       <S.Container onClick={onClickCard}>
-        <Image src={imageURL} alt={name} />
+        <Image src={imageUrl} alt={name} />
         <S.Content>
           <S.Description>
             <S.Name>{name}</S.Name>

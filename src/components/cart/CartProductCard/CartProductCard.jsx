@@ -12,7 +12,7 @@ import { Position } from 'styles/GlobalStyles';
 import { color } from 'styles/Theme.js';
 
 function CartProductCard({
-  product: { id: productId, name, price, imageURL, stock },
+  product: { id: productId, name, price, imageUrl, stock },
   quantity,
 }) {
   const {
@@ -66,7 +66,7 @@ function CartProductCard({
     <S.Container>
       <CheckBox checked={checked} onClick={handleCheckBoxClick} disabled={isOutOfStock} />
 
-      <Image src={imageURL} width="150px" />
+      <Image src={imageUrl} width="150px" />
 
       <S.Description>
         <Position position="absolute" top="0" right="0">
