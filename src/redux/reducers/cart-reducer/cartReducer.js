@@ -13,6 +13,9 @@ const cartReducer = (state, { type, payload }, totalState) => {
       const newState = structuredClone(state);
       const { cart } = payload;
       newState.query.getCart = queryState.fullfilled();
+      cart.forEach((_, index) => {
+        cart[index].selected = true;
+      });
       newState.data = cart;
       return newState;
     }
@@ -32,6 +35,7 @@ const cartReducer = (state, { type, payload }, totalState) => {
     case ACTION_TYPE.ADD_PRODUCT_TO_CART_FULLFILLED: {
       const newState = structuredClone(state);
       const { cartItem } = payload;
+      cartItem.selected = true;
 
       newState.query.addProductToCart = queryState.fullfilled();
       newState.data.push(cartItem);
