@@ -30,7 +30,7 @@ function CartPage() {
 
   useEffect(() => {
     if (productList.length < 1) {
-      getProducts(dispatch);
+      getProducts();
     }
   }, [dispatch, productList.length]);
 

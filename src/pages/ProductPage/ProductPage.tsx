@@ -27,7 +27,7 @@ function ProductPage() {
 
   useEffect(() => {
     if (id) {
-      getProduct(dispatch, Number(id));
+      dispatch(getProduct(Number(id)));
     }
   }, [dispatch, id]);
 

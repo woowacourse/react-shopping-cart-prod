@@ -21,7 +21,7 @@ function MainPage() {
 
   useEffect(() => {
     if (productList.length < 1) {
-      getProducts(dispatch);
+      dispatch(getProducts());
     }
   }, [dispatch, productList]);
 
