@@ -17,14 +17,12 @@ const useFetch = (url) => {
       setIsLoading(true);
       try {
         const { data } = await axios.get(url);
-        console.log('productList', data);
         if (accessToken) {
           const { data } = await axios.get(SERVER_PATH.CARTS, {
             headers: {
               Authorization: `Bearer ${accessToken}`,
             },
           });
-          console.log('useFetch get carts', data);
           dispatch({
             type: actionTypes.GET_CART_SUCCESS,
             payload: data,

@@ -15,8 +15,6 @@ const getCartItemAsync = (accessToken) => async (dispatch) => {
         Authorization: `Bearer ${accessToken}`,
       },
     });
-    console.log('data', data);
-
     dispatch({
       type: actionTypes.GET_CART_SUCCESS,
       payload: data,

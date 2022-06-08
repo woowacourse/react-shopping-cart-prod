@@ -8,10 +8,6 @@ import { COLORS } from '../styles/theme';
 function Product({ productData, handleCartItem, isCart }) {
   const { id, name, price, imageUrl } = productData;
 
-  const onClickCartIcon = () => {
-    handleCartItem(id, isCart);
-  };
-
   return (
     <StyledItem>
       <Link to={`${ROUTES_PATH.DETAIL_LINK}${id}`}>
@@ -29,7 +25,7 @@ function Product({ productData, handleCartItem, isCart }) {
         <GiShoppingCart
           className="cart"
           size={28}
-          onClick={onClickCartIcon}
+          onClick={() => handleCartItem(id, isCart)}
           color={isCart ? COLORS.PRIMARY : ''}
         />
       </StyledItemInfoBox>

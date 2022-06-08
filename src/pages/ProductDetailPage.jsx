@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { StyledImageBox, StyledImg } from '../components/common/Styled';
-import { MESSAGE, SERVER_PATH, SIZE } from '../constants';
+import { SERVER_PATH, SIZE } from '../constants';
 import { COLORS } from '../styles/theme';
 import Loading from '../components/Loading';
 import useFetch from '../hooks/useFetch';
@@ -10,20 +10,11 @@ import useCart from '../hooks/useCart';
 
 function ProductDetailPage() {
   const { id } = useParams();
-  const { addItem, deleteItem } = useCart();
   const cartList = useSelector(({ cart }) => cart.data);
+  const { handleCartItem } = useCart();
   const { data: product, isLoading, isError } = useFetch(`${SERVER_PATH.PRODUCTS}/${id}`);
-  const isCart = cartList.some(({ id: productId }) => productId === +id);
 
-  const onClickCartButton = () => {
-    if (isCart) {
-      deleteItem(id);
-      alert(MESSAGE.REMOVE);
-      return;
-    }
-    addItem(id);
-    alert(MESSAGE.ADD);
-  };
+  const isCart = cartList.some(({ id: productId }) => productId === +id);
 
   if (isError) return <h1>error</h1>;
   if (isLoading) return <Loading />;
@@ -44,7 +35,7 @@ function ProductDetailPage() {
         </StyledProductDetailPrice>
       </StyledProductDetailInfo>
       <StyledCartButton
-        onClick={onClickCartButton}
+        onClick={() => handleCartItem(id, isCart)}
         bgColor={isCart ? COLORS.LIGHT_BROWN : COLORS.BROWN}
       >
         {isCart ? '장바구니 제거' : '장바구니'}

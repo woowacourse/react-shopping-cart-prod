@@ -53,7 +53,15 @@ const useCart = () => {
     }
   };
 
-  return { addItem, deleteItem, updateItemQuantity };
+  const handleCartItem = (id, isCart) => {
+    if (isCart) {
+      deleteItem(id);
+      return;
+    }
+    addItem(id);
+  };
+
+  return { deleteItem, updateItemQuantity, handleCartItem };
 };
 
 export default useCart;

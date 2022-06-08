@@ -10,17 +10,9 @@ import useCart from '../hooks/useCart';
 function ProductListPage() {
   const { data: productList, isLoading, isError } = useFetch(SERVER_PATH.PRODUCTS);
   const cartList = useSelector(({ cart }) => cart.data);
-  const { addItem, deleteItem } = useCart();
+  const { handleCartItem } = useCart();
 
   const idSetInCart = useMemo(() => new Set(cartList.map((cart) => cart.id)), [cartList]);
-
-  const handleCartItem = (id, isCart) => {
-    if (isCart) {
-      deleteItem(id);
-      return;
-    }
-    addItem(id);
-  };
 
   if (isError) return <h1>error</h1>;
   if (isLoading) return <Loading />;

@@ -47,7 +47,6 @@ function ModifyUserInfoPage() {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        console.log('userInfo', data);
         setUserInfo(data);
       } catch (error) {
         alert(error);
