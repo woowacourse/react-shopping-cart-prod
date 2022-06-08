@@ -26,6 +26,7 @@ const AccountDeleteModal = ({ handleModal }) => {
     setIsCorrectPassword(password.length >= 10);
   }, [password]);
 
+  // 회원탈퇴
   const deleteAccount = async () => {
     try {
       if (!isCorrectPassword) return;

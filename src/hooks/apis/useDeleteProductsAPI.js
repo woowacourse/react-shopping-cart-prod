@@ -4,9 +4,9 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { doSelectiveDeleteFromCart } from 'reducers/cart.reducer';
 import { MESSAGE } from 'utils/constants';
-import useSnackbar from './useSnackbar';
+import useSnackbar from '../useSnackbar';
 
-// TODO 5-2. delete 장바구니 내 선택된 상품들 삭제
+// DONE 5-2. delete 장바구니 내 선택된 상품들 삭제
 const useDeleteCheckedProductsAPI = productIds => {
   const [isDeleteLoading, setIsDeleteLoading] = useState(true);
   const [error, setError] = useState(null);

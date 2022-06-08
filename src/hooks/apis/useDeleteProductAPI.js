@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { doDeleteProductFromCart } from 'reducers/cart.reducer';
 import { MESSAGE } from 'utils/constants';
-import useSnackbar from './useSnackbar';
+import useSnackbar from '../useSnackbar';
 
 // DONE 5. delete 장바구니 내 선택된 상품 삭제
 const useDeleteProductAPI = productId => {

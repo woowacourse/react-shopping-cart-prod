@@ -3,8 +3,8 @@ import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { doPutProductToCart } from 'reducers/cart.reducer';
-import useLogout from './useLogout';
-import useSnackbar from './useSnackbar';
+import useLogout from '../useLogout';
+import useSnackbar from '../useSnackbar';
 
 // DONE 4. put 장바구니 내 상품 수량 수정
 const usePutCartAPI = () => {

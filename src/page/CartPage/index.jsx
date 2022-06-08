@@ -1,9 +1,9 @@
 // @ts-nocheck
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import useGetCartAPI from 'hooks/useGetCartAPI';
-import useDeleteCheckedProductsAPI from 'hooks/useDeleteProductsAPI';
-import useOrderAPI from 'hooks/useOrdersAPI';
+import useGetCartAPI from 'hooks/apis/useGetCartAPI';
+import useDeleteCheckedProductsAPI from 'hooks/apis/useDeleteProductsAPI';
+import useOrderAPI from 'hooks/apis/useOrdersAPI';
 import useTotalPrice from 'hooks/useTotalPrice';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';

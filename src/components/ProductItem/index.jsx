@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useClose from 'hooks/useClose';
 import useCart from 'hooks/useCart';
-import usePutCartAPI from 'hooks/usePutCartAPI';
+import usePutCartAPI from 'hooks/apis/usePutCartAPI';
 import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartIcon, QuantityController } from 'components';

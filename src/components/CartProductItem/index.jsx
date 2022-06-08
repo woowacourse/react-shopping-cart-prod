@@ -1,8 +1,8 @@
 // @ts-nocheck
 import PropTypes from 'prop-types';
 import useOrder from 'hooks/useOrder';
-import usePutCartAPI from 'hooks/usePutCartAPI';
-import useDeleteProductAPI from 'hooks/useDeleteProductAPI';
+import usePutCartAPI from 'hooks/apis/usePutCartAPI';
+import useDeleteProductAPI from 'hooks/apis/useDeleteProductAPI';
 
 import { Image, Counter, CheckBox } from 'components';
 import Styled from 'components/CartProductItem/index.style';

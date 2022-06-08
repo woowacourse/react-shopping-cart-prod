@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { doDecideOrder } from 'reducers/cart.reducer';
 import { MESSAGE } from 'utils/constants';
-import useSnackbar from './useSnackbar';
+import useSnackbar from '../useSnackbar';
 
 // DONE  6. POST 주문 추가하기
 const useOrderAPI = () => {
