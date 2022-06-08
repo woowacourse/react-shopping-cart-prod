@@ -12,15 +12,15 @@ const Input = styled.input`
 
 const Label = styled.label<{ marginBottom?: Props['marginBottom'] }>`
   display: inline-block;
-  box-sizing: border-box;
 
   width: 15px;
   height: 15px;
-  margin-bottom: ${({ marginBottom }) => marginBottom};
-
-  padding: 1px;
+  box-sizing: border-box;
   border: 1px solid ${({ theme: { colors } }) => colors.redPink};
   border-radius: 3px;
+
+  margin-bottom: ${({ marginBottom }) => marginBottom};
+  padding: 1px;
 
   background: ${({ theme: { colors } }) => colors.white};
   color: ${({ theme: { colors } }) => colors.white};
@@ -30,9 +30,9 @@ const Label = styled.label<{ marginBottom?: Props['marginBottom'] }>`
   div {
     width: 8px;
     height: 5px;
-    transform: rotate(-45deg);
     border-bottom: 2px solid ${({ theme: { colors } }) => colors.white};
     border-left: 2px solid ${({ theme: { colors } }) => colors.white};
+    transform: rotate(-45deg);
   }
 `;
 

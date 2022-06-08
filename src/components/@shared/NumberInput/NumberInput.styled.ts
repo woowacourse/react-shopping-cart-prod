@@ -9,6 +9,7 @@ const NumberInput = styled.div`
 
   width: 90px;
   height: 40px;
+
   margin: 0;
 
   background: ${({ theme: { colors } }) => colors.white};
@@ -16,17 +17,19 @@ const NumberInput = styled.div`
 
 const Input = styled.input`
   -moz-appearance: textfield;
-  box-sizing: border-box;
 
   width: 70%;
   height: 100%;
+  box-sizing: border-box;
   border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-  padding: 10px;
   outline: none;
+
+  padding: 10px;
 
   ::-webkit-inner-spin-button,
   ::-webkit-outer-spin-button {
     -webkit-appearance: none;
+
     margin: 0;
   }
 `;

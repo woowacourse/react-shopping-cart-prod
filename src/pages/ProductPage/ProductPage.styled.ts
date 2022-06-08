@@ -4,10 +4,11 @@ const Page = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
 
   width: 400px;
+
   margin: 40px auto;
-  gap: 20px;
 
   h2 {
     line-height: 30px;
@@ -35,8 +36,9 @@ const Page = styled.div`
 `;
 
 const ImageContainer = styled.div`
-  aspect-ratio: 1 / 1;
   overflow: hidden;
+
+  aspect-ratio: 1 / 1;
 
   img {
     width: 100%;

@@ -3,8 +3,10 @@ import styled from 'styled-components';
 const LoginHelper = styled.div`
   display: flex;
   justify-content: flex-end;
-  margin-top: 4px;
+
   width: 100%;
+
+  margin-top: 4px;
 `;
 
 const FindLoginInfo = styled.div`

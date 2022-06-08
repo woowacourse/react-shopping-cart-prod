@@ -10,14 +10,15 @@ const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
 
   width: 480px;
+  box-sizing: border-box;
+  border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
+
   margin: 60px 0;
+  padding: 50px;
 
   background: ${({ theme: { colors } }) => colors.white};
-  border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-  padding: 50px;
 `;
 
 const Title = styled.h1`
@@ -35,6 +36,7 @@ const SignupLinkGuide = styled.div`
   gap: 5px;
 
   width: 100%;
+
   margin-top: 18px;
 
   font-size: 14px;

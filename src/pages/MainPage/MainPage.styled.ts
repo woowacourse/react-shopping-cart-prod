@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
 const Page = styled.div`
-  margin: 60px 0;
   display: flex;
-  width: 100%;
   justify-content: center;
   align-items: center;
+
+  width: 100%;
+
+  margin: 60px 0;
 `;
 
 const Message = styled.div`

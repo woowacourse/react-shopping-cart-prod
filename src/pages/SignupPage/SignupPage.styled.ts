@@ -10,13 +10,15 @@ const SignupContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
 
   width: 480px;
-  margin: 60px 0;
-  background: ${({ theme: { colors } }) => colors.white};
+  box-sizing: border-box;
   border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
+
+  margin: 60px 0;
   padding: 50px;
+
+  background: ${({ theme: { colors } }) => colors.white};
 `;
 
 const Title = styled.h1`

@@ -2,25 +2,27 @@ import styled from 'styled-components';
 
 const CardImageOverlay = styled.div`
   position: absolute;
-  box-sizing: border-box;
+  z-index: ${({ theme: { zPriorities } }) => zPriorities.front};
 
   width: 100%;
   height: 100%;
-  z-index: ${({ theme: { zPriorities } }) => zPriorities.front};
+  box-sizing: border-box;
 
   background: rgba(0, 0, 0, 0.3);
 
   p {
-    inset: 30px 30px 60px;
+    display: -webkit-box;
     position: absolute;
+
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
-    display: -webkit-box;
     -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;
 
     line-height: 1.4rem;
+
+    inset: 30px 30px 60px;
 
     color: white;
 
@@ -30,9 +32,9 @@ const CardImageOverlay = styled.div`
 
   div {
     position: absolute;
+    right: 0;
+    bottom: 0;
 
-    bottom: 0px;
-    right: 0px;
     padding: 10px;
 
     background: ${({ theme: { colors } }) => colors.black};
@@ -45,11 +47,13 @@ const CardImageOverlay = styled.div`
 const CardImageContainer = styled.div`
   grid-column: 1 / 5;
   grid-row: 1 / 5;
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
   position: relative;
-  border-radius: 5px;
+
+  overflow: hidden;
+
+  aspect-ratio: 1 / 1;
   box-shadow: ${({ theme: { colors } }) => colors.shadow} 0px 2px 2px;
+  border-radius: 5px;
 
   img {
     width: 100%;
@@ -59,18 +63,21 @@ const CardImageContainer = styled.div`
 const CardDescriptionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
   grid-column: 1 / 4;
   grid-row: 5;
+  gap: 5px;
+
   font-weight: 400;
 
   h3 {
+    display: -webkit-box;
+
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
-    display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
+
     font-size: 13px;
   }
 
@@ -85,13 +92,15 @@ const CardButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
   color: inherit;
 
   button {
-    color: inherit;
-    background: none;
     width: 30px;
     height: 27px;
+
+    background: none;
+    color: inherit;
   }
 `;
 
@@ -100,14 +109,16 @@ const ProductCard = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: repeat(5, 1fr);
   grid-gap: 10px;
+
   width: 200px;
+
   color: ${({ theme: { colors } }) => colors.black};
 
   :not(:hover) {
     ${CardImageContainer} {
       ${CardImageOverlay} {
-        opacity: 0;
         transition-duration: 0.3s;
+        opacity: 0;
       }
 
       img {
@@ -120,8 +131,8 @@ const ProductCard = styled.div`
   :hover {
     ${CardImageContainer} {
       ${CardImageOverlay} {
-        opacity: 1;
         transition-duration: 0.3s;
+        opacity: 1;
       }
 
       img {

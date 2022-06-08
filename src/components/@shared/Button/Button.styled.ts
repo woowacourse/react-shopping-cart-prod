@@ -21,12 +21,14 @@ const Button = styled.button`
   }) => css`
     width: ${width};
     height: ${height};
+
     margin-top: ${marginTop};
     ${reverse
       ? css`
+          border: 1px solid ${({ theme: { colors } }) => colors.redPink};
+
           background: ${({ theme: { colors } }) => colors.white};
           color: ${({ theme: { colors } }) => colors.redPink};
-          border: 1px solid ${({ theme: { colors } }) => colors.redPink};
         `
       : css`
           background: ${({ theme: { colors } }) => colors.redPink};

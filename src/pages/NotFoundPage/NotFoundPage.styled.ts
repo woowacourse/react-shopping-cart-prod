@@ -9,6 +9,7 @@ const Page = styled.div`
 
   height: 90vh;
   line-height: 30px;
+
   margin: auto;
 
   color: ${({ theme: { colors } }) => colors.red};

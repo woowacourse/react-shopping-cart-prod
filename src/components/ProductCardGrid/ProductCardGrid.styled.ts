@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const ProductCardGrid = styled.div`
   display: grid;
   grid-gap: 40px;
+
   width: max-content;
 
   ${({ theme: { media } }) => media.sm`
@@ -23,8 +24,9 @@ const ProductCardGrid = styled.div`
 `;
 
 const Message = styled.div`
-  font-size: 25px;
   position: absolute;
+
+  font-size: 25px;
 `;
 
 export { ProductCardGrid, Message };

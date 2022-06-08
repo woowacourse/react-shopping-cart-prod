@@ -19,15 +19,17 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   position: sticky;
-
-  font-size: 20px;
-  height: 60px;
-  padding: 0 10%;
   top: 0px;
   z-index: ${({ theme: { zPriorities } }) => zPriorities.overEverything};
 
+  height: 60px;
+
+  padding: 0 10%;
+
   background: ${({ theme: { colors } }) => colors.redPink};
   color: ${({ theme: { colors } }) => colors.white};
+
+  font-size: 20px;
 
   ${RightMenu} {
     text-shadow: -0.5px 0 ${({ theme: { colors } }) => colors.gray},
@@ -61,19 +63,22 @@ const SubHeader = styled.div`
   justify-content: flex-end;
   align-items: center;
   position: sticky;
-
-  font-size: 16px;
-  height: 24px;
-  padding: 0 10%;
   top: 60px;
   z-index: ${({ theme: { zPriorities } }) => zPriorities.overEverything};
 
+  height: 24px;
+
+  padding: 0 10%;
+
   background: ${({ theme: { colors } }) => colors.white};
   color: ${({ theme: { colors } }) => colors.black};
+
+  font-size: 16px;
 `;
 
 const ControlUserButton = styled.button`
   border-radius: 12px;
+
   padding: 0 12px;
 
   background-color: ${({ theme: { colors } }) => colors.pink};

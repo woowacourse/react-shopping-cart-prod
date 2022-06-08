@@ -6,6 +6,7 @@ const ContentBox = styled.div`
   gap: 80px;
 
   width: 100%;
+
   margin-top: 30px;
 `;
 
@@ -18,6 +19,7 @@ const ProductOptions = styled.div`
   justify-content: space-between;
 
   height: 30px;
+
   margin-bottom: 20px;
 `;
 
@@ -49,8 +51,9 @@ const TotalContainer = styled.div`
   top: 100px;
 
   height: fit-content;
-  padding: 0 20px 20px;
   border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
+
+  padding: 0 20px 20px;
 
   background: ${({ theme: { colors } }) => colors.white};
 
@@ -60,6 +63,7 @@ const TotalContainer = styled.div`
 
   hr {
     width: calc(100% + 40px);
+
     margin: 0 -20px;
   }
 `;
@@ -67,6 +71,7 @@ const TotalContainer = styled.div`
 const TotalMoney = styled.div`
   line-height: 5px;
   border-bottom: 10px solid ${({ theme: { colors } }) => colors.pink};
+
   margin: 30px 0;
 `;
 

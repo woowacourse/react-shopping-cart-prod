@@ -6,6 +6,7 @@ const Page = styled.div`
   align-items: center;
 
   width: 800px;
+
   margin: 50px auto;
 
   h2 {
