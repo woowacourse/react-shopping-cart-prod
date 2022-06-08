@@ -13,15 +13,12 @@ const authorizedHeader = (header) => ({
 class RequestAsync {
   constructor() {
     this.HOST_NAME = process.env.REACT_APP_API_URL;
-    this.header = { 'Content-Type': 'application/json' };
+    this.header = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   }
 
   async #getRefinedResponse(response) {
     const responseString = await response.text();
-    let responseStatus = response.ok ? 비동기_요청.SUCCESS : 비동기_요청.FAILURE;
-    if (response.status === 303) {
-      responseStatus = 비동기_요청.REDIRECT;
-    }
+    const responseStatus = response.ok ? 비동기_요청.SUCCESS : 비동기_요청.FAILURE;
     return {
       status: responseStatus,
       content: responseString ? JSON.parse(responseString) : {},
@@ -34,7 +31,6 @@ class RequestAsync {
         method: 'GET',
         headers: authorize ? authorizedHeader(this.header) : this.header,
       });
-
       return this.#getRefinedResponse(response);
     } catch (error) {
       return errorReturn(error);
@@ -48,7 +44,6 @@ class RequestAsync {
         headers: authorize ? authorizedHeader(this.header) : this.header,
         body: JSON.stringify(bodyData),
       });
-
       return this.#getRefinedResponse(response);
     } catch (error) {
       return errorReturn(error);
