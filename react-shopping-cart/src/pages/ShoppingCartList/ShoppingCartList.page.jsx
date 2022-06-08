@@ -14,8 +14,8 @@ import ShoppingCartListContainer from 'components/ShoppingCartListContainer/Shop
 
 import { addAllItem, deleteAllItem } from 'redux/actions/orderList.action';
 
-import useDeleteCart from 'hooks/useDeleteCarts';
-import useLoadCarts from 'hooks/useLoadCarts';
+import useDeleteCart from 'hooks/api/carts/useDeleteCarts';
+import useLoadCarts from 'hooks/api/carts/useLoadCarts';
 
 import { calculatePrice } from 'utils';
 

@@ -14,25 +14,13 @@ import {
   setEmailDisabled,
 } from 'redux/actions/userInfo.action';
 
-import useFetch from 'hooks/useFetch';
-
-import { API_URL_PATH } from 'constants/api';
-
-const PasswordInputBox = styled(FlexBox).attrs({
-  direction: 'column',
-  gap: '10px',
-})`
-  height: 220px;
-`;
+import useValidateEmail from 'hooks/api/auth/useValidateEmail';
 
 function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
   const dispatch = useDispatch();
-  const { fetchData: checkDuplicatedEmail } = useFetch({
-    url: API_URL_PATH.EMAIL_VALIDATE,
-    method: 'post',
-    skip: true,
-  });
+  const { checkValidEmail } = useValidateEmail();
   const { email, password, passwordCheck } = useSelector(state => state.userInfo);
+
   const submitDisabled =
     !email.value.length ||
     email.error ||
@@ -46,7 +34,8 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
     e.preventDefault();
 
     try {
-      await checkDuplicatedEmail({ email: email.value });
+      console.log({ email: email.value });
+      await checkValidEmail({ email: email.value });
       dispatch(setEmailDisabled(true));
     } catch (error) {
       alert('중복인 이메일입니다.');
@@ -118,3 +107,10 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
 }
 
 export default LoginInfoContainer;
+
+const PasswordInputBox = styled(FlexBox).attrs({
+  direction: 'column',
+  gap: '10px',
+})`
+  height: 220px;
+`;

@@ -8,10 +8,10 @@ import TextBox from 'components/@shared/TextBox/TextBox.component';
 
 import ModifyQuantityBox from 'components/ModifyQuantityBox/ModifyQuantityBox.component';
 
+import useDeleteCarts from 'hooks/api/carts/useDeleteCarts';
+import useModifyCartQuantity from 'hooks/api/carts/useModifyCartQuantity';
+import useStoreCart from 'hooks/api/carts/useStoreCart';
 import useDebounce from 'hooks/useDebounce';
-import useDeleteCarts from 'hooks/useDeleteCarts';
-import useModifyCartQuantity from 'hooks/useModifyCartQuantity';
-import useStoreCart from 'hooks/useStoreCart';
 
 import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
 

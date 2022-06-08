@@ -11,9 +11,9 @@ import ChangeQuantityButton from 'components/ChangeQuantityButton/ChangeQuantity
 
 import { addSpecificItem, deleteSpecificItem } from 'redux/actions/orderList.action';
 
+import useDeleteCarts from 'hooks/api/carts/useDeleteCarts';
+import useModifyCartQuantity from 'hooks/api/carts/useModifyCartQuantity';
 import useDebounce from 'hooks/useDebounce';
-import useDeleteCarts from 'hooks/useDeleteCarts';
-import useModifyCartQuantity from 'hooks/useModifyCartQuantity';
 
 import { ReactComponent as TrashCan } from 'assets/images/trash.svg';
 

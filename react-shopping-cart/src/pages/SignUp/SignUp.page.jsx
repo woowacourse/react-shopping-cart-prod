@@ -13,48 +13,16 @@ import UserInfoContainer from 'components/UserInfoContainer/UserInfoContainer.co
 
 import { resetUserInfo } from 'redux/actions/userInfo.action';
 
-import useFetch from 'hooks/useFetch';
+import useSignUp from 'hooks/api/auth/useSignUp';
 
-import { API_URL_PATH } from 'constants/api';
 import { processServerData } from 'utils';
-
-const LogoBox = styled.div`
-  margin: 2rem 0;
-`;
-
-const InfoDiv = styled(FlexBox).attrs({
-  direction: 'column',
-  justifyContent: 'center',
-  gap: '25px',
-})`
-  overflow-x: hidden;
-`;
-
-const SlideDiv = styled.div`
-  #userInfo {
-    transition: 0.25s;
-    transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(-100%)')};
-  }
-  #loginInfo {
-    transition: 0.25s;
-    transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(100%)')};
-  }
-`;
-
-const SlideTransition = ({ children, ...rest }) => (
-  <Transition {...rest}>{state => <SlideDiv state={state}>{children}</SlideDiv>}</Transition>
-);
 
 function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userInfo = useSelector(state => state.userInfo);
   const postUserInfo = processServerData(userInfo);
-  const { fetchData: signUp } = useFetch({
-    method: 'post',
-    url: API_URL_PATH.CUSTOMERS,
-    skip: true,
-  });
+  const { signUp } = useSignUp();
   const [showLoginInfo, setShowLoginInfo] = useState(false);
 
   useEffect(() => {
@@ -105,3 +73,30 @@ function SignUp() {
 }
 
 export default SignUp;
+
+const LogoBox = styled.div`
+  margin: 2rem 0;
+`;
+
+const InfoDiv = styled(FlexBox).attrs({
+  direction: 'column',
+  justifyContent: 'center',
+  gap: '25px',
+})`
+  overflow-x: hidden;
+`;
+
+const SlideDiv = styled.div`
+  #userInfo {
+    transition: 0.25s;
+    transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(-100%)')};
+  }
+  #loginInfo {
+    transition: 0.25s;
+    transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(100%)')};
+  }
+`;
+
+const SlideTransition = ({ children, ...rest }) => (
+  <Transition {...rest}>{state => <SlideDiv state={state}>{children}</SlideDiv>}</Transition>
+);

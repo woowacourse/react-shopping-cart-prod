@@ -11,8 +11,8 @@ import Logo from 'components/@shared/Logo/Logo.component';
 import { logoutUser } from 'redux/actions/auth.action';
 import { deleteAllItem } from 'redux/actions/orderList.action';
 
-import useDeleteUser from 'hooks/useDeleteUser';
-import useUserName from 'hooks/useUserName';
+import useDeleteUser from 'hooks/api/auth/useDeleteUser';
+import useUserName from 'hooks/api/auth/useUserName';
 
 function Header() {
   const dispatch = useDispatch();

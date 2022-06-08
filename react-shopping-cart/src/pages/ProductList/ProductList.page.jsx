@@ -5,9 +5,7 @@ import ProductListBox from 'components/ProductListBox/ProductListBox.component';
 import ProductListContainer from 'components/ProductListContainer/ProductListContainer.component';
 import SkeletonItem from 'components/SkeletonItem/SkeletonItem.component';
 
-import useLoadProducts from 'hooks/useLoadProducts';
-
-import { API_URL_PATH } from 'constants/api';
+import useLoadProducts from 'hooks/api/products/useLoadProducts';
 
 function LoadingSection() {
   return (

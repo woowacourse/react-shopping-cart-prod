@@ -12,30 +12,12 @@ import TextBox from 'components/@shared/TextBox/TextBox.component';
 
 import { loginUser } from 'redux/actions/auth.action';
 
-import useFetch from 'hooks/useFetch';
-
-import { API_URL_PATH } from 'constants/api';
-
-const CopyrightBox = styled(FlexBox).attrs({
-  justifyContent: 'center',
-})`
-  margin: 30px 0;
-`;
-
-const SignupLink = styled(Link)`
-  color: ${({ theme }) => theme.colors['GRAY_002']};
-  font-size: 14px;
-  margin: 12px 0;
-`;
+import useLogin from 'hooks/api/auth/useLogin';
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { fetchData: login, error } = useFetch({
-    url: API_URL_PATH.LOGIN,
-    method: 'post',
-    skip: true,
-  });
+  const { login, error } = useLogin();
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -84,3 +66,15 @@ function Login() {
 }
 
 export default Login;
+
+const CopyrightBox = styled(FlexBox).attrs({
+  justifyContent: 'center',
+})`
+  margin: 30px 0;
+`;
+
+const SignupLink = styled(Link)`
+  color: ${({ theme }) => theme.colors['GRAY_002']};
+  font-size: 14px;
+  margin: 12px 0;
+`;
