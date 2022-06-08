@@ -8,9 +8,7 @@ export const sendCheckEmailDuplicateRequest = async (email) => {
     },
   });
 
-  const { success } = response.data;
-
-  return success;
+  return response.data.success;
 };
 
 export const sendAddUserRequest = async (userData) => {
@@ -39,9 +37,7 @@ export const sendCheckPasswordRequest = async (password) => {
     password,
   });
 
-  const { success } = response.data;
-
-  return success;
+  return response.data.success;
 };
 
 export const sendUpdateNicknameRequest = async (nickname) => {
