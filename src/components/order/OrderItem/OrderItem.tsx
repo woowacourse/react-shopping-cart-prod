@@ -52,6 +52,7 @@ function OrderItem({
         <span>주문번호 : {id}</span>
         {isClickableHeader && <span>상세보기 &gt;</span>}
       </Styled.Header>
+
       {orderDetails.map(cart => (
         <OrderCartItem
           key={cart.id}

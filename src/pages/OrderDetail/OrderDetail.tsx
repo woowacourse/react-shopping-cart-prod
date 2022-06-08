@@ -3,6 +3,7 @@ import ErrorContainer from '@/components/common/ErrorContainer/ErrorContainer';
 import Loading from '@/components/common/Loading/Loading';
 import PageTemplate from '@/components/common/PageTemplate/PageTemplate';
 import { withLogin } from '@/components/helper/withLogin';
+import Receipt from '@/components/order/ Receipt/Receipt';
 import OrderItem from '@/components/order/OrderItem/OrderItem';
 import { useFetch } from '@/hooks/useFecth';
 import { useParams } from 'react-router-dom';
@@ -38,12 +39,18 @@ function OrderDetail() {
 
   const { order } = data as any;
 
+  const orderPayAmount = order.orderDetails.reduce(
+    (prev, cart) => prev + cart.price * cart.quantity,
+    0,
+  );
+
   return (
     <PageTemplate>
       <Styled.Container>
         <Styled.Title>주문 상세</Styled.Title>
         <Styled.Wrapper>
           <OrderItem key={order.id} order={order} />
+          <Receipt payAmount={orderPayAmount} />
         </Styled.Wrapper>
       </Styled.Container>
     </PageTemplate>
