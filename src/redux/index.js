@@ -29,7 +29,7 @@ export const rootReducer = combineReducers({
 export const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export default function configureStore() {
-  const store = createStore(persistedReducer, applyMiddleware(thunk));
+  const store = createStore(rootReducer, applyMiddleware(thunk));
   const persistor = persistStore(store);
   return { store, persistor };
 }
