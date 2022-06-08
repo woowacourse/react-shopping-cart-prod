@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { theme } from "style";
 
@@ -31,7 +31,7 @@ const initialUserInfo = {
 };
 
 function RegisterPage() {
-  const accessToken = useSelector((state) => state.user.data.accessToken);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -103,15 +103,14 @@ function RegisterPage() {
   };
 
   useEffect(() => {
-    if (accessToken) {
-      navigator(ROUTES.LOGIN);
-    }
     return () => {
       dispatch({ type: USER_ACTION.CLEAN_ERROR });
     };
   }, []);
 
-  return (
+  return isLoggedIn ? (
+    <Navigate to={ROUTES.ROOT} replace />
+  ) : (
     <RegisterPageContainer>
       <PageHeader>회원가입</PageHeader>
       {isLoading && <Spinner />}
