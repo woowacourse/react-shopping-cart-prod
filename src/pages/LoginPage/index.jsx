@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import userThunk from 'store/user/thunk';
 
@@ -19,9 +19,10 @@ function LoginPage() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { state: pageState = {} } = useLocation();
 
   useEffect(() => {
-    isLogin && navigate('/');
+    isLogin && navigate(pageState ? pageState.targetUrl : '/');
   }, [isLogin]);
 
   const handleSubmit = (event) => {
