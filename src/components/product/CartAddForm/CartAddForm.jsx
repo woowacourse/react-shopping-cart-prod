@@ -27,7 +27,7 @@ function CartAddForm({ product: { id: productId, name, price, stock }, closeModa
       <GlobalStyled.Position>
         <S.ProductInfoWrapper>
           <S.Name>{name}</S.Name>
-          <S.Price>{price} 원</S.Price>
+          <S.Price>{price.toLocaleString('ko-KR')} 원</S.Price>
           <GlobalStyled.Position position="absolute" right="0" bottom="0">
             <Counter
               count={count}
@@ -40,7 +40,7 @@ function CartAddForm({ product: { id: productId, name, price, stock }, closeModa
 
       <S.TotalPriceWrapper>
         <S.Title>합계</S.Title>
-        <S.TotalPrice>{price * count} 원</S.TotalPrice>
+        <S.TotalPrice>{(price * count).toLocaleString('ko-KR')} 원</S.TotalPrice>
       </S.TotalPriceWrapper>
 
       <S.Button onClick={onClickCartAdd}>장바구니에 담기</S.Button>

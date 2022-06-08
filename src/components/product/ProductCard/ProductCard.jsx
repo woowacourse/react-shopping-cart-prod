@@ -38,7 +38,7 @@ function ProductCard({ product, isLoggedIn }) {
         <S.Content>
           <S.Description>
             <S.Name>{name}</S.Name>
-            <S.Price>{price}원</S.Price>
+            <S.Price>{price.toLocaleString('ko-KR')} 원</S.Price>
           </S.Description>
         </S.Content>
       </S.Container>

@@ -81,7 +81,7 @@ function CartProductCard({
             ? '구매 가능한 최대 수량입니다.'
             : ''}
         </S.StatusMessage>
-        <S.Price>{isSoldOut ? 0 : price * quantity}원</S.Price>
+        <S.Price>{isSoldOut ? 0 : (price * quantity).toLocaleString('ko-KR')} 원</S.Price>
       </S.Description>
     </S.Container>
   );
