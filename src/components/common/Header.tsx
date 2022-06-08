@@ -35,7 +35,6 @@ const Header = () => {
         </Link>
         <StyledNav>
           <button onClick={() => navigate('/cart')}>장바구니</button>
-          <button>주문목록</button>
           {Object.keys(data).length ? (
             <button onClick={toggleHambergur}>
               마이페이지
@@ -81,22 +80,23 @@ const StyledLogo = styled.div`
 `;
 
 const NyaongIcon = styled.img`
-  width: 80px;
-  height: 80px;
+  width: 77px;
+  height: 77px;
 `;
 
 const StyledBrandName = styled.span`
   color: ${theme.colors.yellow};
   -webkit-text-stroke: 2.5px blue;
   font-size: 5rem;
-  font-weight: 900;
+  font-weight: 1000;
   margin-left: 1rem;
 `;
 
 const StyledNav = styled.nav`
   & > button {
     color: ${theme.colors.yellow};
-    font-size: 2.4rem;
+    font-size: 2.6rem;
+    font-weight: 600;
     background-color: inherit;
   }
 
