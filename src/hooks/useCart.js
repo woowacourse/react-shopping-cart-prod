@@ -8,9 +8,11 @@ import {
   deleteCartItemAction,
   deleteCartItemsAction,
 } from 'reducers/cart/cart.actions';
+import useSnackBar from './useSnackBar';
 
 const useCart = () => {
   const dispatch = useDispatch();
+  const { showSuccessSnackBar } = useSnackBar();
   const { isLoading, isError, data } = useSelector((state) => state.cart);
 
   const { fetchApi: deleteItemApi } = useFetch({
@@ -56,6 +58,12 @@ const useCart = () => {
 
   useEffect(() => {
     if (isAddItemSucceed) getItems();
+  }, [isAddItemSucceed]);
+
+  useEffect(() => {
+    if (isAddItemSucceed) {
+      showSuccessSnackBar('장바구니에 아이템이 추가되었습니다!');
+    }
   }, [isAddItemSucceed]);
 
   return {

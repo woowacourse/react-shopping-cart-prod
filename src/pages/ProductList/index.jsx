@@ -9,14 +9,8 @@ import itemAltImg from 'assets/png/itemAltImg.png';
 import { INITIAL_SKELETON_NUMBER } from 'constants';
 
 const ProductList = () => {
-  const {
-    isLoading,
-    isError,
-    products,
-    includedInCart,
-    isEmpty,
-    handleClickCartButton,
-  } = useProductListPage();
+  const { isLoading, isError, products, isEmpty, handleClickCartButton } =
+    useProductListPage();
 
   if (isError) return <ImgWrapper src={errorApiImg} />;
   if (isEmpty) return <ImgWrapper src={emptyImg} size="400" />;
@@ -39,7 +33,6 @@ const ProductList = () => {
             price={price}
             imageUrl={imageUrl || itemAltImg}
             key={id}
-            isInCart={includedInCart(id)}
             onClickCartButton={handleClickCartButton(id)}
           />
         ))}
