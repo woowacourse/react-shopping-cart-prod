@@ -25,8 +25,8 @@ const Cart = () => {
       <StyledMain>
         <CartList cartList={cartList} />
         <PaymentBox
-          title='결제예샹금액'
-          priceDescription='결제예샹금액'
+          title='결제예상금액'
+          priceDescription='결제예상금액'
           price={totalPrice}
           buttonText={`주문하기 (${selectedCarts.length}개)`}
           style={{ position: 'sticky', top: '50%' }}
