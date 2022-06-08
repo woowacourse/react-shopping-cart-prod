@@ -20,11 +20,13 @@ import { doGetCart } from 'modules/cart';
 import { doLogin } from 'modules/auth';
 import { BASE_URL, ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
+import useAxiosInterceptor from 'hooks/useAxiosInterceptor';
 
 function App() {
   const { isAuthenticated } = useSelector(state => state.authReducer);
   const dispatch = useDispatch();
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
+  useAxiosInterceptor();
 
   const getAccount = async () => {
     try {
