@@ -12,6 +12,7 @@ export type CartItem = {
 };
 export type CartState = {
   loading: boolean;
+  updateCartLoading: boolean;
   error: Error | null;
   items: CartItem[];
 };
@@ -35,6 +36,7 @@ type Action =
 
 const initialState: CartState = {
   loading: false,
+  updateCartLoading: false,
   error: null,
   items: [],
 };
@@ -221,7 +223,7 @@ const cartReducer = (state = initialState, action: Action) => {
       return { ...state, loading: false, error };
     }
     case UPDATE_CART_REQUEST: {
-      return { ...state, loading: true, error: null };
+      return { ...state, updateCartLoading: true, error: null };
     }
     case UPDATE_CART_SUCCESS: {
       const { cartId, quantity } = action.payload;
@@ -229,12 +231,12 @@ const cartReducer = (state = initialState, action: Action) => {
       const newItems = [...state.items];
       newItems[targetIndex].quantity = quantity;
 
-      return { ...state, loading: false, items: newItems };
+      return { ...state, updateCartLoading: false, items: newItems };
     }
     case UPDATE_CART_FAILURE: {
       const { error } = action.payload;
 
-      return { ...state, loading: false, error };
+      return { ...state, updateCartLoading: false, error };
     }
     case SELECT: {
       const { id } = action.payload;

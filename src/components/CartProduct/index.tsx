@@ -1,7 +1,15 @@
-import { useDispatch } from 'react-redux';
-import { CartItem, deleteCartAPI, selectItem, updateCartAPI } from 'redux/modules/cart';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  CartItem,
+  CartState,
+  deleteCartAPI,
+  selectCartState,
+  selectItem,
+  updateCartAPI,
+} from 'redux/modules/cart';
 
 import { CheckBox } from 'components/@shared';
+import { Spinner } from 'components/@shared/Loader/styles';
 
 import { MESSAGES, PRODUCT } from 'constants/index';
 import Delete from 'assets/Delete.png';
@@ -22,6 +30,7 @@ function CartProduct({
   item: { id, imageUrl, name, price, quantity, isSelected },
 }: CartProductProps) {
   const dispatch = useDispatch();
+  const { updateCartLoading }: CartState = useSelector(selectCartState);
 
   const onToggleSelect = () => {
     dispatch(selectItem(id));
@@ -54,7 +63,9 @@ function CartProduct({
       <ProductOptionContainer>
         <img src={Delete} alt="상품 삭제" onClick={onClickDeleteItem} />
         <ProductAmountContainer>
-          <ProductAmountWrapper>{quantity}</ProductAmountWrapper>
+          <ProductAmountWrapper>
+            {updateCartLoading ? <Spinner size="10px" /> : quantity}
+          </ProductAmountWrapper>
           <ProductCounterContainer>
             <button onClick={onClickIncreaseCounter}>▲</button>
             <button onClick={onClickDecreaseCounter}>▼</button>
