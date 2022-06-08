@@ -1,4 +1,5 @@
 import { addCart, deleteCart, getCart, patchCart } from '@/api/cart';
+import { addOrder } from '@/api/order';
 import { CartType } from '@/domain/product';
 import { Dispatch } from 'redux';
 export const enum CartActionType {
@@ -21,6 +22,10 @@ export const enum CartActionType {
   PATCH_CART_START = 'cart/PATCH_CART_START',
   PATCH_CART_SUCCEEDED = 'cart/PATCH_CART_SUCCEEDED',
   PATCH_CART_FAILED = 'cart/PATCH_CART_FAILED',
+
+  ADD_ORDER_START = 'cart/ADD_ORDER_START',
+  ADD_ORDER_SUCCEEDED = 'cart/ADD_ORDER_SUCCEEDED',
+  ADD_ORDER_FAILED = 'cart/ADD_ORDER_FAILED',
 
   SELECT_CART_ITEM = 'cart/SELECT_CART_ITEM',
   SELECT_EVERY_CART_ITEM = 'cart/SELECT_EVERY_CART_ITEM',
@@ -93,6 +98,19 @@ interface PatchCartFailed {
   type: CartActionType.PATCH_CART_FAILED;
 }
 
+interface AddOrderStart {
+  type: CartActionType.ADD_ORDER_START;
+}
+
+interface AddOrderSucceeded {
+  type: CartActionType.ADD_ORDER_SUCCEEDED;
+  payload: { cartIdList: number[] };
+}
+
+interface AddOrderFailed {
+  type: CartActionType.ADD_ORDER_FAILED;
+}
+
 interface SelectCartItem {
   type: CartActionType.SELECT_CART_ITEM;
   payalod: { id: number };
@@ -118,6 +136,9 @@ export type CartAction =
   | PatchCartStart
   | PatchCartSucceeded
   | PatchCartFailed
+  | AddOrderStart
+  | AddOrderSucceeded
+  | AddOrderFailed
   | SelectCartItem
   | SelectEveryCartItem;
 
@@ -192,5 +213,15 @@ export const fetchPatchCartAsync = (id, quantity) => async (dispatch: Dispatch<C
     dispatch({ type: CartActionType.PATCH_CART_SUCCEEDED, payload: { id, quantity } });
   } catch ({ message }) {
     dispatch({ type: CartActionType.PATCH_CART_FAILED });
+  }
+};
+
+export const addOrderAsync = (cartIdList: number[]) => async (dispatch: Dispatch<CartAction>) => {
+  dispatch({ type: CartActionType.ADD_ORDER_START });
+  try {
+    await addOrder(cartIdList.map(cartId => ({ cartItemId: cartId })));
+    dispatch({ type: CartActionType.ADD_ORDER_SUCCEEDED, payload: { cartIdList } });
+  } catch ({ message }) {
+    dispatch({ type: CartActionType.ADD_ORDER_FAILED });
   }
 };

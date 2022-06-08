@@ -1,30 +1,43 @@
+import { getOrder } from '@/api/order';
+import ErrorContainer from '@/components/common/ErrorContainer/ErrorContainer';
+import Loading from '@/components/common/Loading/Loading';
 import PageTemplate from '@/components/common/PageTemplate/PageTemplate';
 import { withLogin } from '@/components/helper/withLogin';
 import OrderItem from '@/components/order/OrderItem/OrderItem';
+import { useFetch } from '@/hooks/useFecth';
+import { useParams } from 'react-router-dom';
 import * as Styled from './OrderDetail.style';
 
-const order = {
-  id: 1,
-  orderDetails: [
-    {
-      id: 1,
-      productId: 6,
-      name: '음식1',
-      price: 1000,
-      quantity: 2,
-      imageURL: 'http:...',
-    },
-    {
-      id: 2,
-      productId: 7,
-      name: '음식2',
-      price: 1000,
-      quantity: 3,
-      imageURL: 'http:...',
-    },
-  ],
-};
 function OrderDetail() {
+  const { orderId } = useParams();
+
+  const { isLoading, isError, data } = useFetch({ action: () => getOrder(orderId), deps: [] });
+
+  if (isLoading) {
+    return (
+      <PageTemplate>
+        <Styled.Container>
+          <Styled.Title>주문 상세</Styled.Title>
+          <Styled.Wrapper />
+        </Styled.Container>
+        <Loading type="page">👻</Loading>
+      </PageTemplate>
+    );
+  }
+
+  if (isError) {
+    return (
+      <PageTemplate>
+        <Styled.Container>
+          <Styled.Title>주문 상세</Styled.Title>
+          <ErrorContainer>주문 상세 정보를 가져오지 못했습니다.</ErrorContainer>
+        </Styled.Container>
+      </PageTemplate>
+    );
+  }
+
+  const { order } = data as any;
+
   return (
     <PageTemplate>
       <Styled.Container>

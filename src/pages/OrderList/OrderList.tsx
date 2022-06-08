@@ -17,8 +17,6 @@ function OrderList() {
     navigate(`./${id}`);
   };
 
-  console.log(data);
-
   if (isLoading) {
     return (
       <PageTemplate>

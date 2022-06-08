@@ -11,11 +11,13 @@ import Edit from '@/pages/Customers/Edit/Edit';
 import Leave from '@/pages/Customers/Leave/Leave';
 import EditPassword from '@/pages/Customers/EditPassword/EditPassword';
 import SnackBar from '@/components/common/Snackbar/Snackbar';
-import { CardAdd, CardList, CardSuccess, useCardList } from 'juunzzi-payments';
+import OrderDetail from '@/pages/OrderDetail/OrderDetail';
 import Payments from '@/components/common/Payments';
+import { CardAdd, CardList, CardSuccess } from 'juunzzi-payments';
+import { usePayments } from '@/hooks/usePayments';
 
 function App() {
-  const [cardList, cardListDispatch, getCard] = useCardList();
+  const { cardList, cardListDispatch, getCard, payCart } = usePayments();
 
   return (
     <BrowserRouter>
@@ -26,7 +28,11 @@ function App() {
             path={PAYMENTS_ROUTE.CardList}
             element={
               <Payments>
-                <CardList cardList={cardList} submitNavigatePath={ROUTE.ShoppingCart} />
+                <CardList
+                  cardList={cardList}
+                  submitNavigatePath={ROUTE.ShoppingCart}
+                  submitAction={payCart}
+                />
               </Payments>
             }
           />
@@ -48,6 +54,7 @@ function App() {
           />
         </Route>
         <Route path={ROUTE.OrderList} element={<OrderList />} />
+        <Route path={ROUTE.OrderDetail} element={<OrderDetail />} />
         <Route path={ROUTE.ProductDetail} element={<ProductDetail />} />
         <Route path={ROUTE.SignUp} element={<SignUp />} />
         <Route path={ROUTE.Login} element={<Login />} />

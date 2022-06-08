@@ -142,6 +142,29 @@ const cartReducer = (state = initialState, action): CartState => {
       };
     }
 
+    case CartActionType.ADD_ORDER_START: {
+      return { ...state, isLoading: true };
+    }
+
+    case CartActionType.ADD_ORDER_SUCCEEDED: {
+      const {
+        payload: { cartIdList },
+      } = action;
+
+      return {
+        ...state,
+        isLoading: false,
+        selectedCartItem: state.selectedCartItem.filter(
+          selectedCartItemId => !cartIdList.includes(selectedCartItemId),
+        ),
+        cartList: state.cartList.filter(({ id }) => !cartIdList.includes(id)),
+      };
+    }
+
+    case CartActionType.ADD_ORDER_FAILED: {
+      return { ...state, isLoading: false };
+    }
+
     default: {
       return state;
     }
