@@ -1,11 +1,26 @@
-import { SNACKBAR_ACTIONS } from 'actions/action';
+// Action Types
+const SNACKBAR_ACTIONS = {
+  SHOW: 'snackbar/SHOW',
+  HIDE: 'snackbar/HIDE',
+};
 
+// Initial State
 const initState = {
   isVisible: false,
   message: '',
   status: '',
 };
 
+// Action Creators
+export const doShowSnackbar = ({ message, status }) => ({
+  type: SNACKBAR_ACTIONS.SHOW,
+  message,
+  status,
+});
+
+export const doHideSnackbar = () => ({ type: SNACKBAR_ACTIONS.HIDE });
+
+// Reducers
 function snackbarReducer(state = initState, action) {
   switch (action.type) {
     case SNACKBAR_ACTIONS.SHOW:

@@ -3,11 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
 
-import { doInitializeCartList, doLogout } from 'actions/actionCreator';
 import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
+import { doLogout } from 'reducers/auth.reducer';
+import { doInitializeCartList } from 'reducers/cart.reducer';
 
 const UserMenu = ({ nickname }) => {
   const dispatch = useDispatch();

@@ -14,7 +14,7 @@ import {
   doInitializeCartList,
   doInitializeOrder,
   doSelectiveDeleteFromCart,
-} from 'actions/actionCreator';
+} from 'reducers/cart.reducer';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 

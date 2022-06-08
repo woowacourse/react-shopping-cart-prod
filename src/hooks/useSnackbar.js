@@ -1,5 +1,5 @@
-import { doShowSnackbar, doHideSnackbar } from 'actions/actionCreator';
 import { useDispatch } from 'react-redux';
+import { doHideSnackbar, doShowSnackbar } from 'reducers/snackbar.reducer';
 
 const useSnackbar = () => {
   const dispatch = useDispatch();

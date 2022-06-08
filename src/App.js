@@ -15,10 +15,10 @@ import {
 } from 'page';
 import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 
-import { doLogin } from 'actions/actionCreator';
 import { ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import apiClient from 'apis/apiClient';
+import { doLogin } from 'reducers/auth.reducer';
 
 function App() {
   const dispatch = useDispatch();

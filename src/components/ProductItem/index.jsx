@@ -8,7 +8,7 @@ import useCart from 'hooks/useCart';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
-import { doDeleteProductFromCart, doPutProductToCart } from 'actions/actionCreator';
+import { doDeleteProductFromCart, doPutProductToCart } from 'reducers/cart.reducer';
 
 import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';

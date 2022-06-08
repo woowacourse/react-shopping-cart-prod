@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ProductItem } from 'components';
 import Styled from './index.style';
 
-import { doInitializeCartList, doInitializeProductList } from 'actions/actionCreator';
+import { doInitializeCartList, doInitializeProductList } from 'reducers/cart.reducer';
 import apiClient from 'apis/apiClient';
 
 const ProductListPage = () => {

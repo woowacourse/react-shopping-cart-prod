@@ -13,7 +13,7 @@ import Styled from './index.style';
 
 import { validateNickname } from 'utils/validator';
 import { MESSAGE } from 'utils/constants';
-import { doLogin } from 'actions/actionCreator';
+import { doLogin } from 'reducers/auth.reducer';
 import apiClient from 'apis/apiClient';
 
 const AccountPage = () => {

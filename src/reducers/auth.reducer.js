@@ -1,7 +1,17 @@
-import { AUTH_ACTIONS } from 'actions/action';
+// Action Types
+const AUTH_ACTIONS = {
+  LOGIN: 'auth/LOGIN',
+  LOGOUT: 'auth/LOGOUT',
+};
 
+// Initial State
 const initState = { isLoading: true, nickname: '', isAuthenticated: false };
 
+// Action Creators
+export const doLogin = ({ nickname }) => ({ type: AUTH_ACTIONS.LOGIN, nickname });
+export const doLogout = () => ({ type: AUTH_ACTIONS.LOGOUT });
+
+// Reducers
 function authReducer(state = initState, action) {
   switch (action.type) {
     case AUTH_ACTIONS.LOGIN:

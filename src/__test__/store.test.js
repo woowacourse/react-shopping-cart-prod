@@ -1,14 +1,8 @@
 import { legacy_createStore as createStore } from 'redux';
 import rootReducer from 'store/rootReducer';
-import {
-  doInitializeProductList,
-  doPutProductToCart,
-  doDeleteProductFromCart,
-  doAddProductToOrder,
-  doDeleteProductFromOrder,
-  doInitializeOrder,
-} from 'actions/actionCreator';
+
 import { dummyProductList } from 'dummy_data';
+import { doAddProductToOrder, doDeleteProductFromCart, doDeleteProductFromOrder, doInitializeOrder, doInitializeProductList, doPutProductToCart } from 'reducers/cart.reducer';
 
 describe('reducer 테스트', () => {
   let store;
@@ -57,7 +51,7 @@ describe('reducer 테스트', () => {
 
   test('특정 상품을 주문 목록에서 제거할 수 있다.', () => {
     store.dispatch(doAddProductToOrder({ id: targetProduct.id }));
-    store.dispatch(doDeleteProductFromOrder({ id: targetProduct.id }));
+    store.dispatch(doDeleteProductFromOrder{ id: targetProduct.id }));
 
     expect(store.getState().reducer.order).toHaveLength(0);
   });

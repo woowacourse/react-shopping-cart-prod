@@ -1,12 +1,11 @@
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles, theme } from 'components';
 import store from 'store/store';
-import { doInitializeProductList } from 'actions/actionCreator';
 import { dummyProductList } from 'dummy_data';
-import { useDispatch } from 'react-redux';
+import { doInitializeProductList } from 'reducers/cart.reducer';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },

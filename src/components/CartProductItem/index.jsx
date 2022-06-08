@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Image, Counter, CheckBox } from 'components';
 import Styled from 'components/CartProductItem/index.style';
 
-import { doPutProductToCart, doDeleteProductFromCart } from 'actions/actionCreator';
+import { doPutProductToCart, doDeleteProductFromCart } from 'reducers/cart.reducer';
 import autoComma from 'utils/autoComma';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';

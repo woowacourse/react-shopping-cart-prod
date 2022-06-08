@@ -1,6 +1,6 @@
-import { doLogout } from 'actions/actionCreator';
 import useSnackbar from 'hooks/useSnackbar';
 import { useDispatch } from 'react-redux';
+import { doLogout } from 'reducers/auth.reducer';
 import { deleteCookie } from 'utils/cookie';
 
 const useLogout = () => {

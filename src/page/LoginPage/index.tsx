@@ -10,10 +10,9 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import Styled from './index.style';
 
 import { setCookie } from 'utils/cookie';
-import { doLogin } from 'actions/actionCreator';
+import { doLogin } from 'reducers/auth.reducer';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
-import useLogout from 'hooks/useLogout';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
