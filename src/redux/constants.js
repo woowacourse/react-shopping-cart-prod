@@ -11,7 +11,15 @@ export const initialState = {
     query: {
       getProductDetail: queryState.init(),
     },
-    data: {},
+    data: {
+      id: "product id",
+      name: "product name",
+      price: 0,
+      thumbnailImage: {
+        url: "https://via.placeholder.com/300",
+        alt: "Empty Image",
+      },
+    },
   },
   cart: {
     query: {
@@ -35,6 +43,17 @@ export const initialState = {
       isLoggedIn: false,
       email: null,
       username: null,
+    },
+  },
+  orderList: {
+    query: {
+      getOrderList: queryState.init(),
+    },
+    data: [],
+  },
+  order: {
+    query: {
+      createOrder: queryState.init(),
     },
   },
 };
