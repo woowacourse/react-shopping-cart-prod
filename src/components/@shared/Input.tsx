@@ -7,6 +7,7 @@ function Input({
   placeholder,
   pattern,
   maxLength,
+  defaultValue,
   value,
   onChange,
   required,
@@ -21,6 +22,7 @@ function Input({
         placeholder={placeholder}
         pattern={pattern}
         maxLength={maxLength}
+        defaultValue={defaultValue}
         value={value}
         onChange={onChange}
         required={required}
