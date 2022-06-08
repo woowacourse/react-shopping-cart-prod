@@ -9,7 +9,7 @@ import Button from 'components/@common/Button/styles';
 import Input from 'components/@common/Input/styles';
 
 import { hideSpinner, showSpinner } from 'actions/spinner';
-import { 비동기_요청 } from 'constants';
+import { 비동기_요청, 알림_메시지 } from 'constants/';
 import { requestLogin, requestUserInfo } from 'api';
 import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -26,7 +26,7 @@ const Login = () => {
     const userPassword = formData.elements['input-password'].value;
 
     if (userId.length === 0 || userPassword.length === 0) {
-      dispatch(snackbar.pushMessageSnackbar('아이디와 비밀번호를 모두 입력해주세요'));
+      dispatch(snackbar.pushMessageSnackbar(알림_메시지.불완전한_로그인_입력));
       return;
     }
 
@@ -38,7 +38,7 @@ const Login = () => {
 
     if (response.status === 비동기_요청.SUCCESS) {
       dispatch(setAccessToken(response));
-      dispatch(snackbar.pushMessageSnackbar('로그인에 성공하였습니다'));
+      dispatch(snackbar.pushMessageSnackbar(알림_메시지.로그인_성공));
       const infoResponse = await requestUserInfo();
       dispatch(setUserData(infoResponse));
 
@@ -46,7 +46,7 @@ const Login = () => {
       return;
     }
 
-    dispatch(snackbar.pushMessageSnackbar('로그인에 실패하였습니다'));
+    dispatch(snackbar.pushMessageSnackbar(알림_메시지.로그인_실패));
   };
 
   return (

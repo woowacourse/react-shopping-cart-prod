@@ -12,7 +12,7 @@ import { COLORS } from 'styles/theme';
 import { requestEditUserInfo, requestWithDrawUser } from 'api';
 import { snackbar } from 'actions/snackbar';
 import { removeUserData } from 'actions/user';
-import { 비동기_요청 } from 'constants';
+import { 비동기_요청, 알림_메시지 } from 'constants/';
 
 import * as Validate from 'utils/validate';
 
@@ -43,27 +43,27 @@ const EditUserInfo = () => {
     });
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(snackbar.pushMessageSnackbar('회원 정보가 수정되었습니다!'));
+      dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원_정보_수정_성공));
       navigate('/');
       return;
     }
 
-    dispatch(snackbar.pushMessageSnackbar('회원정보 수정에 실패하였습니다!'));
+    dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원_정보_수정_실패));
   };
 
   const handleWithDrawUser = async (e) => {
     e.preventDefault();
-    const withDrawConfrim = confirm('정말로 탈퇴 하실 건가요?');
+    const withDrawConfrim = confirm(알림_메시지.회원_탈퇴_확인);
     if (withDrawConfrim) {
       const response = await requestWithDrawUser();
       if (response.status === 비동기_요청.SUCCESS) {
-        dispatch(snackbar.pushMessageSnackbar('회원 탈퇴에 성공하였습니다!'));
+        dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원_탈퇴_성공));
         dispatch(removeUserData());
         navigate('/');
         return;
       }
 
-      dispatch(snackbar.pushMessageSnackbar('회원 탈퇴에 실패하였습니다.'));
+      dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원_탈퇴_실패));
     }
   };
 

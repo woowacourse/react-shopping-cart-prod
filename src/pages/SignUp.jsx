@@ -12,7 +12,7 @@ import ErrorMessage from 'components/@common/ErrorMessage';
 import { requestCheckDuplicatedId, requestSignUp } from 'api';
 import { snackbar } from 'actions/snackbar';
 import { hideSpinner, showSpinner } from 'actions/spinner';
-import { 비동기_요청 } from 'constants/';
+import { 비동기_요청, 알림_메시지 } from 'constants/';
 import * as Validate from 'utils/validate';
 import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -72,12 +72,12 @@ const SignUp = () => {
         dispatch(hideSpinner());
 
         if (!content.isUnique) {
-          dispatch(snackbar.pushMessageSnackbar('중복된 아이디입니다!'));
+          dispatch(snackbar.pushMessageSnackbar(알림_메시지.아이디_중복_확인_실패));
           setCheckDuplicatedId(content.isUnique);
           return;
         }
 
-        dispatch(snackbar.pushMessageSnackbar('사용가능한 아이디입니다!'));
+        dispatch(snackbar.pushMessageSnackbar(알림_메시지.아이디_중복_확인_성공));
         setCheckDuplicatedId(content.isUnique);
       }, 1000);
     };
@@ -93,13 +93,12 @@ const SignUp = () => {
     });
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(snackbar.pushMessageSnackbar('회원가입에 성공하였습니다!'));
+      dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원가입_성공));
       navigate('/login');
       return;
     }
 
-    dispatch(snackbar.pushMessageSnackbar('회원가입에 실패하였습니다!'));
-    navigate('/signUp');
+    dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원가입_실패));
   };
 
   return (

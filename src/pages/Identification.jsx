@@ -9,7 +9,7 @@ import PageHeader from 'components/@common/PageHeader';
 import { requestLogin } from 'api';
 import { snackbar } from 'actions/snackbar';
 import { COLORS } from 'styles/theme';
-import { 비동기_요청 } from 'constants/';
+import { 비동기_요청, 알림_메시지 } from 'constants/';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 
 const Identification = () => {
@@ -27,7 +27,7 @@ const Identification = () => {
       return;
     }
 
-    dispatch(snackbar.pushMessageSnackbar('비밀번호가 올바르지 않습니다. 다시 시도해주세요!'));
+    dispatch(snackbar.pushMessageSnackbar(알림_메시지.잘못된_비밀번호));
   };
 
   return (
