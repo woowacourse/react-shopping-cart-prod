@@ -1,23 +1,23 @@
 // @ts-nocheck
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 import useOrder from 'hooks/useOrder';
 import useSnackbar from 'hooks/useSnackbar';
-import PropTypes from 'prop-types';
+import usePutCartAPI from 'hooks/usePutCartAPI';
 
 import { Image, Counter, CheckBox } from 'components';
 import Styled from 'components/CartProductItem/index.style';
 
-import { doPutProductToCart, doDeleteProductFromCart } from 'reducers/cart.reducer';
+import { doDeleteProductFromCart } from 'reducers/cart.reducer';
 import autoComma from 'utils/autoComma';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
-import { useNavigate } from 'react-router-dom';
 
 const CartProductItem = ({ productId, name, price, image, quantity }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const [isInOrder, updateOrder] = useOrder(productId);
+  const { putCart } = usePutCartAPI();
 
   // TODO 5. delete 장바구니 내 선택된 상품 삭제
   const deleteItem = async () => {
@@ -29,28 +29,6 @@ const CartProductItem = ({ productId, name, price, image, quantity }) => {
     } catch (error) {
       const customError = error.response.data;
       renderSnackbar(customError.message, 'FAILED');
-    }
-  };
-
-  // TODO 4. put 장바구니 내 상품 수량 수정
-  const putCart = async (productId, updatedQuantity) => {
-    try {
-      const response = await apiClient.put(`/cart/products/${productId}`, {
-        quantity: updatedQuantity,
-      });
-      dispatch(
-        doPutProductToCart({
-          productId: response.data.productId,
-          name: response.data.name,
-          image: response.data.image,
-          price: response.data.price,
-          quantity: response.data.quantity,
-        }),
-      );
-    } catch (error) {
-      const customError = error.response.data;
-      renderSnackbar(customError.message, 'FAILED');
-      navigate('/login');
     }
   };
 

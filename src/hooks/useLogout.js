@@ -1,11 +1,13 @@
 import useSnackbar from 'hooks/useSnackbar';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { doLogout } from 'reducers/auth.reducer';
 import { deleteCookie } from 'utils/cookie';
 
 const useLogout = () => {
   const [renderSnackbar] = useSnackbar();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const logoutByError = customError => {
     const { code, message } = customError;
@@ -14,6 +16,7 @@ const useLogout = () => {
     if ([1002, 1003, 1004].includes(code)) {
       deleteCookie('accessToken');
       dispatch(doLogout());
+      navigate('/login');
       renderSnackbar(message || customError.message, 'FAILED');
     }
   };

@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { doInitializeCartList } from 'reducers/cart.reducer';
 
-// TODO 3. get 장바구니 목록 가져오기
+// DONE 3. get 장바구니 목록 가져오기
 const useGetCartAPI = () => {
   const [isCartLoading, setIsCartLoading] = useState(false);
   const [error, setError] = useState(null);

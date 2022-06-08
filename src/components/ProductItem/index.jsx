@@ -1,21 +1,21 @@
 // @ts-nocheck
 
 import { useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useClose from 'hooks/useClose';
 import useCart from 'hooks/useCart';
+import usePutCartAPI from 'hooks/usePutCartAPI';
+import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
-import { doDeleteProductFromCart, doPutProductToCart } from 'reducers/cart.reducer';
+import { doDeleteProductFromCart } from 'reducers/cart.reducer';
 
 import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';
 import { LINK, MESSAGE } from 'utils/constants';
-import useSnackbar from 'hooks/useSnackbar';
-import { useSelector, useDispatch } from 'react-redux';
-import apiClient from 'apis/apiClient';
 
 const ProductItem = ({ productId, name, price, image }) => {
   const dispatch = useDispatch();
@@ -29,30 +29,10 @@ const ProductItem = ({ productId, name, price, image }) => {
   const [isControllerOpen, setIsControllerOpen] = useState(false);
   const [clearTimer, setAutoCloseTimer, extendTimer] = useClose();
 
+  const { putCart } = usePutCartAPI();
+
   const quantityRef = useRef(quantity);
   quantityRef.current = quantity;
-
-  // TODO 4. put 장바구니 내 상품 수량 수정
-  const putCart = async (productId, updatedQuantity) => {
-    try {
-      const response = await apiClient.put(`/cart/products/${productId}`, {
-        quantity: updatedQuantity,
-      });
-      dispatch(
-        doPutProductToCart({
-          productId: response.data.productId,
-          name: response.data.name,
-          image: response.data.image,
-          price: response.data.price,
-          quantity: response.data.quantity,
-        }),
-      );
-    } catch (error) {
-      const customError = error.response.data;
-      renderSnackbar(customError.message, 'FAILED');
-      navigate('/login');
-    }
-  };
 
   const updateCart = () => {
     setIsControllerOpen(false);
