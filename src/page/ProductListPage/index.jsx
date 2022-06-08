@@ -24,12 +24,7 @@ export default function ProductListPage() {
 
   const productList = useSelector((state) => state.productListReducer.productList);
 
-  const {
-    pending: productPending,
-    data: fetchData,
-    error: productError,
-    fetch: fetchProduct,
-  } = useFetch('get');
+  const {pending: productPending, error: productError, fetch: fetchProduct} = useFetch('get');
 
   const {initializeCart} = useCartItem();
 
@@ -56,7 +51,6 @@ export default function ProductListPage() {
         fallback={<img src={Empty} alt="비어있음" height="600px" />}
         pending={productPending}
         error={productError}
-        data={fetchData}
       >
         <S.ProductSection>
           <S.ProductListBox>
