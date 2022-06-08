@@ -67,7 +67,7 @@ const ServerPick = () => {
 const HeaderTitleWrapper = styled.div`
   width: 500px;
   font-family: Cantata One, Arial, sans-serif;
-  color: #0f0e0e;
+  color: ${({ theme }) => theme.COLOR.CYAN_300};
 `;
 
 const MarqueeWrapper = styled.div`
@@ -76,15 +76,12 @@ const MarqueeWrapper = styled.div`
   margin: 25px auto;
   overflow: hidden;
   position: relative;
-  border: 1px solid #000;
+  border: 1px solid #bbbbbb;
   margin: 25px auto;
-
-  border-radius: 5px;
-  box-shadow: inset 0px 3px 3px rgba(0, 0, 0, 0.5),
-    0px 2px 0px rgba(250, 250, 250, 0.2);
-
-  background-color: #ff333390;
-
+  border-radius: 10px;
+  box-shadow: inset 0px 3px 3px rgba(0, 0, 0, 0.2),
+    0px 2px 0px rgba(255, 255, 255, 0.2);
+  background-color: #2ac1bc90;
   & > p:nth-child(1) {
     animation: left-one 15s ease infinite;
   }
@@ -209,7 +206,6 @@ const PickButton = styled.button`
   font-size: 1em;
   border: none;
   color: white;
-
   color: #9a3ffb;
   box-shadow: ${({ boxShadowColor }) => `0px 9px 0px ${boxShadowColor}`};
   border: 0.3px solid #5e04be;
