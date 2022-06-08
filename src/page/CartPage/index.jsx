@@ -1,57 +1,30 @@
 // @ts-nocheck
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import useSnackbar from 'hooks/useSnackbar';
 import useGetCartAPI from 'hooks/useGetCartAPI';
 import useDeleteCheckedProductsAPI from 'hooks/useDeleteProductsAPI';
+import useOrderAPI from 'hooks/useOrdersAPI';
+import useTotalPrice from 'hooks/useTotalPrice';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 import empty from 'assets/empty.jpeg';
 import Styled from 'page/CartPage/index.style';
-
 import { doAddProductToOrder, doInitializeOrder } from 'reducers/cart.reducer';
-import { MESSAGE } from 'utils/constants';
-import useOrderAPI from 'hooks/useOrdersAPI';
 
 const CartPage = () => {
-  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
   const { shoppingCart, order } = useSelector(state => state.cartReducer);
   const productIdsInCart = shoppingCart.map(product => product.productId);
   const productIdsToDelete = productIdsInCart.filter(id => order.includes(id));
+
   const dispatch = useDispatch();
-  const [renderSnackbar] = useSnackbar();
-  const navigate = useNavigate();
-
   const { orderCart } = useOrderAPI();
-
   const { deleteCheckedProducts } = useDeleteCheckedProductsAPI(productIdsToDelete);
-
+  const { totalPrice } = useTotalPrice();
   const { getCart, isCartLoading } = useGetCartAPI();
+
   useEffect(() => {
     getCart();
   }, [getCart]);
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const calculateTotalPrice = useCallback(() => {
-    let total = 0;
-    order.forEach(id => {
-      const product = shoppingCart.find(product => product.productId === id);
-      if (product) {
-        const { price, quantity } = product;
-        total += price * quantity;
-      }
-    });
-    return total;
-  }, [shoppingCart, order]);
-
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
-    }
-    setTotalPrice(calculateTotalPrice());
-  }, [calculateTotalPrice]);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
