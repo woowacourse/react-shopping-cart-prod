@@ -114,7 +114,7 @@ function CartContent({ cartItems }: Props) {
   };
 
   return (
-    <S.ContentBox>
+    <S.CartContent>
       <S.ProductContainer>
         <S.ProductOptions>
           <S.AllCheckOption>
@@ -125,9 +125,12 @@ function CartContent({ cartItems }: Props) {
             />
             <p>전체 선택/해제</p>
           </S.AllCheckOption>
-          <S.DeleteButton type="button" onClick={onClickCheckedDeleteButton}>
+          <S.DeleteButtonOption
+            type="button"
+            onClick={onClickCheckedDeleteButton}
+          >
             선택 상품 삭제
-          </S.DeleteButton>
+          </S.DeleteButtonOption>
         </S.ProductOptions>
         {cartItems.length > 0 ? (
           cartItems.map(({ id, product, quantity }) => (
@@ -161,7 +164,7 @@ function CartContent({ cartItems }: Props) {
         totalPrice={calculateTotalMoney()}
         paymentFunc={paymentFunc}
       />
-    </S.ContentBox>
+    </S.CartContent>
   );
 }
 

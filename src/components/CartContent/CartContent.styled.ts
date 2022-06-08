@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ContentBox = styled.div`
+const CartContent = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 80px;
@@ -31,7 +31,7 @@ const AllCheckOption = styled.div`
   font-size: 15px;
 `;
 
-const DeleteButton = styled.button`
+const DeleteButtonOption = styled.button`
   width: 100px;
   border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
 
@@ -76,11 +76,11 @@ const TotalMoney = styled.div`
 `;
 
 export {
-  ContentBox,
+  CartContent,
   ProductContainer,
   ProductOptions,
   AllCheckOption,
-  DeleteButton,
+  DeleteButtonOption,
   Message,
   TotalContainer,
   TotalMoney,

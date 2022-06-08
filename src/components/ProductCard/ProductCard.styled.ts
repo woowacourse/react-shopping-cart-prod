@@ -104,7 +104,7 @@ const CardButtonContainer = styled.div`
   }
 `;
 
-const ProductCard = styled.div`
+const Card = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: repeat(5, 1fr);
@@ -171,6 +171,6 @@ export {
   CardImageContainer,
   CardDescriptionContainer,
   CardButtonContainer,
-  ProductCard,
+  Card,
   Badge,
 };

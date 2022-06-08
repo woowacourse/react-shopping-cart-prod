@@ -88,7 +88,7 @@ function EditUserInfoForm() {
       >
         핸드폰 번호
       </Input>
-      <S.Buttons>
+      <S.OptionContainer>
         <Button
           type="button"
           onClick={onClickWithdrawButton}
@@ -100,7 +100,7 @@ function EditUserInfoForm() {
         <Button type="submit" marginTop="20px">
           회원 정보 수정
         </Button>
-      </S.Buttons>
+      </S.OptionContainer>
     </Form>
   );
 }

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const LoadingContainer = styled.div`
+const Loading = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,4 +13,4 @@ const LoadingContainer = styled.div`
   }
 `;
 
-export { LoadingContainer };
+export { Loading };

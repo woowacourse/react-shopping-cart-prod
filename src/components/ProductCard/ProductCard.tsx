@@ -44,7 +44,7 @@ function ProductCard({ product, cartQuantity }: Props) {
 
   return (
     <Link to={`${PATH.PRODUCT}/${id}`}>
-      <S.ProductCard>
+      <S.Card>
         <S.CardImageContainer>
           <S.CardImageOverlay>
             <p>{description}</p>
@@ -65,7 +65,7 @@ function ProductCard({ product, cartQuantity }: Props) {
             {cartQuantity > 0 && <S.Badge>{cartQuantity}</S.Badge>}
           </button>
         </S.CardButtonContainer>
-      </S.ProductCard>
+      </S.Card>
     </Link>
   );
 }

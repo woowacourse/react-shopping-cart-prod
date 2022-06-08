@@ -65,9 +65,9 @@ function CartItem({
           <Delete />
         </S.DeleteButton>
         <NumberInput value={quantity} setValue={onChangeCartQuantity} />
-        <S.Price>
+        <S.TotalPrice>
           {(product.price * quantity).toLocaleString('ko-KR')} 원
-        </S.Price>
+        </S.TotalPrice>
       </S.CartItem>
     </Link>
   );

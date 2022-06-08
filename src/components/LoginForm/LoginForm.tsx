@@ -55,12 +55,12 @@ function LoginForm() {
       >
         비밀번호
       </Input>
-      <S.LoginHelper>
-        <S.FindLoginInfo>
+      <S.OptionContainer>
+        <S.FindUserInfoOption>
           <Link to="#">아이디 찾기</Link>
           <Link to="#">비밀번호 찾기</Link>
-        </S.FindLoginInfo>
-      </S.LoginHelper>
+        </S.FindUserInfoOption>
+      </S.OptionContainer>
       <Button type="submit" marginTop="20px">
         로그인
       </Button>

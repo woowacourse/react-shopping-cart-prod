@@ -44,7 +44,7 @@ function NumberInput({ min = 1, max = 99, value, setValue }: Props) {
   };
 
   return (
-    <S.NumberInput onClick={preventClickEvent}>
+    <S.NumberInputContainer onClick={preventClickEvent}>
       <S.Input
         type="number"
         min={min}
@@ -61,7 +61,7 @@ function NumberInput({ min = 1, max = 99, value, setValue }: Props) {
           ▼
         </button>
       </S.ControlButton>
-    </S.NumberInput>
+    </S.NumberInputContainer>
   );
 }
 

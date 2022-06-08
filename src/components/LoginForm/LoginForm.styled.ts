@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const LoginHelper = styled.div`
+const OptionContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 
@@ -9,7 +9,7 @@ const LoginHelper = styled.div`
   margin-top: 4px;
 `;
 
-const FindLoginInfo = styled.div`
+const FindUserInfoOption = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -23,4 +23,4 @@ const FindLoginInfo = styled.div`
   }
 `;
 
-export { LoginHelper, FindLoginInfo };
+export { OptionContainer, FindUserInfoOption };

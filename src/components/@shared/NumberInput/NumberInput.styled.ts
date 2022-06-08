@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const NumberInput = styled.div`
+const NumberInputContainer = styled.div`
   display: flex;
   position: relative;
   top: -90px;
@@ -54,4 +54,4 @@ const ControlButton = styled.div`
   }
 `;
 
-export { NumberInput, Input, ControlButton };
+export { NumberInputContainer, Input, ControlButton };

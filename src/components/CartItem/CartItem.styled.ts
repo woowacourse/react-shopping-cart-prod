@@ -37,7 +37,7 @@ const DeleteButton = styled.button`
   background: none;
 `;
 
-const Price = styled.div`
+const TotalPrice = styled.div`
   position: relative;
   top: -35px;
   left: 105px;
@@ -46,4 +46,4 @@ const Price = styled.div`
   font-size: 14px;
 `;
 
-export { CartItem, ProductName, DeleteButton, Price };
+export { CartItem, ProductName, DeleteButton, TotalPrice };
