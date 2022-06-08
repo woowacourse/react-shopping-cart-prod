@@ -10,7 +10,7 @@ export const changeServerUrl = (index) => {
 };
 
 const initialState = {
-  serverUrlIndex: 0,
+  serverUrlIndex: Number(localStorage.getItem("server-index")) || 0,
 };
 
 const reducer = (state = initialState, action) => {

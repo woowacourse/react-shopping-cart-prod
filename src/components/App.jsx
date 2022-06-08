@@ -37,7 +37,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header isLogin={isLogin} />
+      <Header isLogin={isLogin} serverUrlIndex={serverUrlIndex} />
       <Main>
         <Routes>
           <Route path={ROUTES.ROOT} element={<ProductListPage />} />

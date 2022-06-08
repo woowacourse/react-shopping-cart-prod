@@ -12,7 +12,7 @@ import Title from "./Title";
 import { HeaderContainer, NavButtonContainer, UserInfoButton } from "./styled";
 import { UnderlinedButton } from "./NavButton/styled";
 
-function Header({ isLogin }) {
+function Header({ isLogin, serverUrlIndex }) {
   const dispatch = useDispatch();
   const navigator = useNavigate();
 
@@ -28,9 +28,11 @@ function Header({ isLogin }) {
       <Title />
       <select
         onChange={({ target: { value } }) => {
+          localStorage.setItem("server-index", Number(value));
           dispatch(changeServerUrl(Number(value)));
           logout();
         }}
+        value={serverUrlIndex}
       >
         <option value={0}>msw</option>
         <option value={1}>서버1</option>
