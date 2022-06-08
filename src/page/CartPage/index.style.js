@@ -6,16 +6,12 @@ const Styled = {
     width: 1000px;
     background-color: ${({ theme }) => theme.colors.white};
     padding: 0 100px;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: auto;
     height: 100%;
     display: flex;
     flex-direction: column;
     margin-top: 50px;
-
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
   `,
 
   Title: styled.p`
@@ -60,15 +56,7 @@ const Styled = {
     padding: 16px 0;
   `,
 
-  ProductList: styled.div`
-    overflow: scroll;
-    height: 430px;
-
-    -ms-overflow-style: none;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  `,
+  ProductList: styled.div``,
 
   OrderSheet: styled.div`
     display: flex;
@@ -76,10 +64,15 @@ const Styled = {
     padding: 20px;
   `,
 
-  LeftSide: styled.div``,
+  LeftSide: styled.div`
+    height: 700px;
+  `,
 
   RightSide: styled.div`
-    padding-top: 100px;
+    width: 348px;
+    height: 230px;
+    position: sticky;
+    top: 0;
   `,
 
   Empty: styled.div`
