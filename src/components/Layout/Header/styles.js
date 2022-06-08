@@ -43,13 +43,13 @@ const RightMenu = styled.ul`
   display: flex;
   justify-content: right;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.1rem;
 `;
 
 const RightMenuButton = styled.li`
   cursor: pointer;
-  font-size: 0.9rem;
-  padding: 1rem;
+  font-size: 0.8rem;
+  padding: 1rem 0.5rem;
   color: ${COLORS.GRAY_500};
 
   &::before {
