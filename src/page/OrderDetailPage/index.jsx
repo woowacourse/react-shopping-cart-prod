@@ -41,7 +41,7 @@ export default function OrderDetailPage() {
 
   return (
     <S.Layout>
-      <S.HeaderSpan>주문/결제</S.HeaderSpan>
+      <S.HeaderSpan>주문내역상세</S.HeaderSpan>
       <S.ProductTable>
         <S.ProductInfoContainer>
           <S.ProductListContainer>

@@ -39,7 +39,7 @@ export default function OrderListPage() {
 
   return (
     <S.Layout>
-      <S.HeaderSpan>주문/결제</S.HeaderSpan>
+      <S.HeaderSpan>주문목록</S.HeaderSpan>
       <S.ProductTable>
         <S.ProductInfoContainer>
           <S.ProductListContainer>
