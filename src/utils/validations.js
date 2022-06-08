@@ -34,11 +34,11 @@ const validPasswordInfo = (password, passwordConfirm) => {
   if (isSpaces(password)) {
     throw new Error(MESSAGE.CAN_NOT_CONTAIN_SPACES);
   }
-  if (!isValidPassword(password)) {
-    throw new Error(MESSAGE.NOT_A_PASSWORD_FORMAT);
-  }
   if (!isValidPasswordConfirm(password, passwordConfirm)) {
     throw new Error(MESSAGE.PASSWORD_DOES_NOT_MATCH);
+  }
+  if (!isValidPassword(password)) {
+    throw new Error(MESSAGE.NOT_A_PASSWORD_FORMAT);
   }
 };
 
