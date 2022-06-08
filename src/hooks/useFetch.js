@@ -25,7 +25,7 @@ function useFetch(url) {
           });
           console.log('useFetch get carts', data);
           dispatch({
-            type: actionTypes.ADD_CART_SUCCESS,
+            type: actionTypes.GET_CART_SUCCESS,
             payload: data,
           });
         }
