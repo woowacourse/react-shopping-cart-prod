@@ -39,7 +39,9 @@ const Login = () => {
     if (response.status === 비동기_요청.SUCCESS) {
       dispatch(setAccessToken(response));
       dispatch(snackbar.pushMessageSnackbar(알림_메시지.로그인_성공));
+
       const infoResponse = await requestUserInfo();
+
       dispatch(setUserData(infoResponse));
 
       navigate('/');

@@ -40,10 +40,12 @@ const PageTitle = styled.h1`
 `;
 
 const Text = styled.p`
+  display: ${(props) => props.display || 'block'};
   margin: ${(props) => props.margin || '0'};
   padding: ${(props) => props.padding || '0'};
   font-size: ${(props) => props.size || '1rem'};
   font-weight: ${(props) => props.weight || 'normal'};
+  word-break: ${(props) => props.wordBreak || 'normal'};
 `;
 
 export { FlexWrapper, Container, HR, PageTitle, Text };

@@ -5,6 +5,7 @@ export const 아이콘_코드 = {
   DELETE: 'f2ed',
   ALERT: 'f06a',
   RECEIPT: 'f543',
+  LOGOUT: 'f2f5',
 };
 
 export const 비동기_요청 = {

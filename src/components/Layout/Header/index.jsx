@@ -30,22 +30,35 @@ const Header = () => {
 
       <Styled.RightMenu>
         <Link to="/cart">
-          <Styled.RightMenuButton icon={아이콘_코드.CART}>장바구니</Styled.RightMenuButton>
+          <Styled.RightMenuButton icon={아이콘_코드.CART}>
+            <CommonStyled.Text display="inline-block" wordBreak="keep-all" size="0.8rem">
+              장바구니
+            </CommonStyled.Text>
+          </Styled.RightMenuButton>
         </Link>
 
         {isLogin ? (
           <>
-            <Styled.RightMenuButton icon={아이콘_코드.RECEIPT}>주문 목록</Styled.RightMenuButton>
             <Link to="/edit/identification">
-              <Styled.RightMenuButton icon={아이콘_코드.USER}>회원정보</Styled.RightMenuButton>
+              <Styled.RightMenuButton icon={아이콘_코드.USER}>
+                <CommonStyled.Text display="inline-block" wordBreak="keep-all" size="0.8rem">
+                  회원정보
+                </CommonStyled.Text>
+              </Styled.RightMenuButton>
             </Link>
-            <Styled.RightMenuButton icon={아이콘_코드.USER} onClick={onLogOutClick}>
-              로그아웃
+            <Styled.RightMenuButton icon={아이콘_코드.LOGOUT} onClick={onLogOutClick}>
+              <CommonStyled.Text display="inline-block" wordBreak="keep-all" size="0.8rem">
+                로그아웃
+              </CommonStyled.Text>
             </Styled.RightMenuButton>
           </>
         ) : (
           <Link to="/login">
-            <Styled.RightMenuButton icon={아이콘_코드.USER}>로그인</Styled.RightMenuButton>
+            <Styled.RightMenuButton icon={아이콘_코드.USER}>
+              <CommonStyled.Text display="inline-block" wordBreak="keep-all" size="0.8rem">
+                로그인
+              </CommonStyled.Text>
+            </Styled.RightMenuButton>
           </Link>
         )}
       </Styled.RightMenu>
