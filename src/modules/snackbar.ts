@@ -1,12 +1,23 @@
-import { SNACKBAR_ACTIONS } from 'actions/action';
+// @ts-nocheck
 
+// actions
+const SNACKBAR_ACTIONS = {
+  SHOW: 'snackbar/SHOW',
+  HIDE: 'snackbar/HIDE',
+};
+
+// action creator
+const doShowSnackbar = ({ message, status }) => ({ type: SNACKBAR_ACTIONS.SHOW, message, status });
+const doHideSnackbar = () => ({ type: SNACKBAR_ACTIONS.HIDE });
+
+// reducer
 const initState = {
   isVisible: false,
   message: '',
   status: '',
 };
 
-function snackbarReducer(state = initState, action) {
+const snackbarReducer = (state = initState, action) => {
   switch (action.type) {
     case SNACKBAR_ACTIONS.SHOW:
       return {
@@ -27,6 +38,7 @@ function snackbarReducer(state = initState, action) {
     default:
       return state;
   }
-}
+};
 
 export default snackbarReducer;
+export { doShowSnackbar, doHideSnackbar };

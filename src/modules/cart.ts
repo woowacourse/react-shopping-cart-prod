@@ -1,12 +1,57 @@
-import { CART_ACTIONS, PRODUCT_LIST_ACTIONS, ORDER_ACTIONS } from 'actions/action';
+// @ts-nocheck
 
+// actions
+const CART_ACTIONS = {
+  PUT: 'cart/PUT',
+  DELETE: 'cart/DELETE',
+  SELECTIVE_DELETE: 'cart/SELECTIVE_DELETE',
+  INITIALIZE: 'cart/INITIALIZE',
+  GET: 'cart/GET',
+  ORDER: 'cart/ORDER',
+};
+
+const PRODUCT_LIST_ACTIONS = {
+  INITIALIZE: 'productList/INITIALIZE',
+};
+
+const ORDER_ACTIONS = {
+  ADD: 'order/ADD',
+  DELETE: 'order/DELETE',
+  INITIALIZE: 'order/INITIALIZE',
+};
+
+// action creator
+const doInitializeProductList = ({ products }) => ({
+  type: PRODUCT_LIST_ACTIONS.INITIALIZE,
+  products,
+});
+
+const doPutProductToCart = ({ productId, name, price, image, quantity }) => ({
+  type: CART_ACTIONS.PUT,
+  productId,
+  name,
+  price,
+  image,
+  quantity,
+});
+const doDeleteProductFromCart = ({ id }) => ({ type: CART_ACTIONS.DELETE, id });
+const doSelectiveDeleteFromCart = () => ({ type: CART_ACTIONS.SELECTIVE_DELETE });
+const doInitializeCart = () => ({ type: CART_ACTIONS.INITIALIZE });
+const doGetCart = ({ cart }) => ({ type: CART_ACTIONS.GET, cart });
+const doOrderFromCart = () => ({ type: CART_ACTIONS.ORDER });
+
+const doAddProdcutToOrder = ({ id }) => ({ type: ORDER_ACTIONS.ADD, id });
+const doDeleteProductFromOrder = ({ id }) => ({ type: ORDER_ACTIONS.DELETE, id });
+const doInitializeOrder = () => ({ type: ORDER_ACTIONS.INITIALIZE });
+
+// reducer
 const initState = {
   products: [],
   shoppingCart: [],
   order: [],
 };
 
-function reducer(state = initState, action) {
+const cartReducer = (state = initState, action) => {
   switch (action.type) {
     case PRODUCT_LIST_ACTIONS.INITIALIZE:
       return {
@@ -95,6 +140,18 @@ function reducer(state = initState, action) {
     default:
       return state;
   }
-}
+};
 
-export default reducer;
+export default cartReducer;
+export {
+  doPutProductToCart,
+  doDeleteProductFromCart,
+  doSelectiveDeleteFromCart,
+  doInitializeCart,
+  doInitializeProductList,
+  doAddProdcutToOrder,
+  doDeleteProductFromOrder,
+  doInitializeOrder,
+  doGetCart,
+  doOrderFromCart,
+};

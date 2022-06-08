@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import reducer from 'reducers/reducer';
-import authReducer from 'reducers/authReducer';
-import snackbarReducer from 'reducers/snackbarReducer';
+import authReducer from 'modules/auth';
+import cartReducer from 'modules/cart';
+import snackbarReducer from 'modules/snackbar';
 
 const rootReducer = combineReducers({
-  reducer,
+  cartReducer,
   authReducer,
   snackbarReducer,
 });

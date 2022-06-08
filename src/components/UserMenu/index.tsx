@@ -3,7 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 
-import { doInitializeCart, doLogout } from 'actions/actionCreator';
+import { doInitializeCart } from 'modules/cart';
+import { doLogout } from 'modules/auth';
 import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
 

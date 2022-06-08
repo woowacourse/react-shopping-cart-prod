@@ -11,7 +11,7 @@ import { Container, Input, Title, AuthButton } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
-import { doLogin } from 'actions/actionCreator';
+import { doLogin } from 'modules/auth';
 import { validateNickname } from 'utils/validator';
 import { getCookie } from 'utils/cookie';
 import { MESSAGE } from 'utils/constants';

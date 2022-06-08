@@ -10,7 +10,7 @@ import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
-import { doDeleteProductFromCart, doPutProductToCart } from 'actions/actionCreator';
+import { doDeleteProductFromCart, doPutProductToCart } from 'modules/cart';
 import autoComma from 'utils/autoComma';
 import { LINK, MESSAGE } from 'utils/constants';
 import { getCookie } from 'utils/cookie';

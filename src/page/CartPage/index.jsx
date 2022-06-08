@@ -12,7 +12,7 @@ import {
   doInitializeOrder,
   doOrderFromCart,
   doSelectiveDeleteFromCart,
-} from 'actions/actionCreator';
+} from 'modules/cart';
 import { MESSAGE } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import empty from 'assets/empty.jpeg';
@@ -24,7 +24,7 @@ const CartPage = () => {
   const [renderSnackbar] = useSnackbar();
   const isAuthenticated = getCookie('accessToken');
 
-  const { shoppingCart, order } = useSelector(state => state.reducer);
+  const { shoppingCart, order } = useSelector(state => state.cartReducer);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const calculateTotalPrice = useCallback(() => {

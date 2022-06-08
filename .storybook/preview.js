@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles, theme } from 'components';
 import store from 'store';
-import { doInitializeProductList } from 'actions/actionCreator';
+import { doInitializeProductList } from 'modules/cart';
 import { dummyProductList } from 'dummy_data';
 
 export const parameters = {

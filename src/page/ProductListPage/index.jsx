@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { ProductItem } from 'components';
 
-import { doInitializeProductList } from 'actions/actionCreator';
+import { doInitializeProductList } from 'modules/cart';
 import Styled from './index.style';
 
 const ProductListPage = () => {

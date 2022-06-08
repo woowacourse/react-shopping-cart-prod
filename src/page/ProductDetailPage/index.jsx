@@ -8,7 +8,7 @@ import useSnackbar from 'hooks/useSnackbar';
 
 import { Image } from 'components';
 
-import { doPutProductToCart } from 'actions/actionCreator';
+import { doPutProductToCart } from 'modules/cart';
 import autoComma from 'utils/autoComma';
 import { LINK, MESSAGE, ERROR } from 'utils/constants';
 import { getCookie } from 'utils/cookie';

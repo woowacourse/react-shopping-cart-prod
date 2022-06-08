@@ -7,7 +7,7 @@ import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, Counter, CheckBox } from 'components';
 
-import { doPutProductToCart, doDeleteProductFromCart } from 'actions/actionCreator';
+import { doDeleteProductFromCart, doPutProductToCart } from 'modules/cart';
 import autoComma from 'utils/autoComma';
 import { MESSAGE } from 'utils/constants';
 import { getCookie } from 'utils/cookie';

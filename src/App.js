@@ -16,7 +16,8 @@ import {
 } from 'page';
 import { Layout, Snackbar, GlobalStyles, theme } from 'components';
 
-import { doLogin, doGetCart } from 'actions/actionCreator';
+import { doGetCart } from 'modules/cart';
+import { doLogin } from 'modules/auth';
 import { BASE_URL, ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 

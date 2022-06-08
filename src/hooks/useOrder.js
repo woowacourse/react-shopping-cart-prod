@@ -1,11 +1,11 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { doDeleteProductFromOrder, doAddProdcutToOrder } from 'actions/actionCreator';
+import { doDeleteProductFromOrder, doAddProdcutToOrder } from 'modules/cart';
 
 const useOrder = id => {
   const dispatch = useDispatch();
-  const { order } = useSelector(state => state.reducer);
+  const { order } = useSelector(state => state.cartReducer);
   const [isInOrder, setIsInOrder] = useState(order.some(productId => productId === id));
 
   useEffect(() => {

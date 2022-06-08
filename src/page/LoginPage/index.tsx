@@ -9,7 +9,7 @@ import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import { doLogin } from 'actions/actionCreator';
+import { doLogin } from 'modules/auth';
 import { setCookie, getCookie } from 'utils/cookie';
 import { MESSAGE, ERROR } from 'utils/constants';
 import Styled from './index.style';

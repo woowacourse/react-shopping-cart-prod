@@ -7,7 +7,8 @@ import useSnackbar from 'hooks/useSnackbar';
 import { Input, Title, AuthButton, Container, Modal } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import { doLogout, doInitializeCart } from 'actions/actionCreator';
+import { doInitializeCart } from 'modules/cart';
+import { doLogout } from 'modules/auth';
 import { validatePassword } from 'utils/validator';
 import { getCookie, deleteCookie } from 'utils/cookie';
 import { MESSAGE, ERROR } from 'utils/constants';
