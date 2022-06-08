@@ -10,6 +10,9 @@ const theme = {
   gray_100: '#dddddd',
   gray_200: '#aaaaaa',
   gray_300: '#8E929F',
+  gray_400: '#888888',
+  white_50: '#f6f6f6',
+  white_100: '#e5e5e5',
   font: 'BMJUA_ttf',
 };
 

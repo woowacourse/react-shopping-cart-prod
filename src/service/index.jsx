@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+axios.defaults.baseURL = 'https://hitalittle.ga';
+
 const getServerResult = async (url, method, option = {}) => {
   try {
     const res = await axios[method](url, option);
@@ -34,21 +36,18 @@ export const deleteCart = (productId) =>
   getServerResult(`/delete/Cart/${productId}`, 'delete');
 
 export const deleteCarts = (productIds) =>
-  getServerResult('/deleteCarts', 'delete', { data: productIds });
+  getServerResult('/deleteCarts', 'delete', productIds);
 
-export const login = (user) =>
-  getServerResult('/api/login', 'post', { data: user });
+export const login = (user) => getServerResult('/login', 'post', user);
 
-export const signUp = (user) =>
-  getServerResult('/api/customer', 'post', { data: user });
+export const signUp = (user) => getServerResult('/customer', 'post', user);
 
-export const getUser = () => getServerResult('/api/customer', 'get');
+export const getUser = () => getServerResult('/customer', 'get');
 
-export const updateUser = (user) =>
-  getServerResult('/api/customer', 'put', { data: user });
+export const updateUser = (user) => getServerResult('/customer', 'put', user);
 
 export const deleteUser = (password) =>
-  getServerResult('/api/customer', 'delete', { data: { password } });
+  getServerResult('/customer', 'delete', { password });
 
 export const setToken = (accessToken) => {
   localStorage.setItem('accessToken', accessToken);
