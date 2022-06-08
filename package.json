@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@compy-ryu/payments": "^0.2.28",
     "@types/path-browserify": "^1.0.0",
     "@types/react-redux": "^7.1.24",
     "axios": "^0.27.2",

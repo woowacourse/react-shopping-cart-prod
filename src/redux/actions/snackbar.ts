@@ -7,7 +7,7 @@ export enum SnackbarActionType {
 
 interface OpenSnackbarAction {
   type: SnackbarActionType.OPEN_SNACKBAR;
-  payload: keyof typeof Contents;
+  payload: { type: keyof typeof Contents; value: any };
 }
 
 interface CloseSnackbarAction {

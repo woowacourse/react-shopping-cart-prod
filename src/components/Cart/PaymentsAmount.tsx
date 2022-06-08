@@ -1,9 +1,21 @@
+import { useAppSelector } from 'hooks/useAppSelector';
+import useSnackBar from 'hooks/useSnackBar';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 const PaymentsAmount = ({ children }) => {
+  const { openModal, closeModal } = useSnackBar();
+  const { isSnackbarOpen } = useAppSelector(state => state.snackbarReducer);
+
+  useEffect(() => {
+    closeModal();
+  }, []);
+
   const onClick = () => {
-    alert('주문하였습니다!!');
+    const totalAmount = children[0];
+
+    openModal({ type: 'payments', value: totalAmount });
   };
 
   return (
@@ -14,10 +26,11 @@ const PaymentsAmount = ({ children }) => {
           <UnderLineBox>
             <div>총 결제액</div>
           </UnderLineBox>
-          <UnderLineBox> {children}</UnderLineBox>
+          <UnderLineBox>{children}</UnderLineBox>
         </TotalPrice>
         <OrderButton onClick={onClick}>주문하기</OrderButton>
       </Bottom>
+      <Dimmed isSnackbarOpen={isSnackbarOpen} onClick={closeModal} />
     </StyledRoot>
   );
 };
@@ -71,15 +84,26 @@ const TotalPrice = styled.div`
 `;
 
 const UnderLineBox = styled.div`
-  background: linear-gradient(${theme.colors.white} 70%, ${theme.colors.primary} 30%);
+  background: linear-gradient(${theme.colors.white} 70%, ${theme.colors.red} 30%);
 `;
 
 const OrderButton = styled.button`
   width: 38.8rem;
   height: 7.3rem;
   font-size: 2.4rem;
+  border-radius: 7px;
   color: ${theme.colors.white};
   background-color: ${theme.colors.primary};
+`;
+
+const Dimmed = styled.div<{ isSnackbarOpen: boolean }>`
+  display: ${props => (props.isSnackbarOpen ? 'block' : 'none')};
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
 `;
 
 export default PaymentsAmount;

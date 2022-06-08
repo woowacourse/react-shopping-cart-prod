@@ -10,16 +10,16 @@ import { formatDecimal } from 'utils';
 interface ItemContainerProps {
   id: number;
   thumbnailUrl: string;
-  title: string;
+  name: string;
   price: number;
   updateCartItemQuantity?: (id: number) => void;
-  openSnackbar?: (type: string) => void;
+  openSnackbar?: ({ type: string, value: any }) => void;
 }
 
 const ItemContainer = ({
   id,
   thumbnailUrl,
-  title,
+  name,
   price,
   updateCartItemQuantity,
   openSnackbar,
@@ -32,7 +32,7 @@ const ItemContainer = ({
 
   const handleClickCartIcon = () => {
     updateCartItemQuantity?.(id);
-    openSnackbar('cart');
+    openSnackbar({ type: 'cart', value: null });
   };
 
   return (
@@ -49,7 +49,7 @@ const ItemContainer = ({
         </CroppedImageWrapper>
         <StyledBottom>
           <StyledDescription>
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle>{name}</StyledTitle>
             <StyledPrice>{formatDecimal(price)}원</StyledPrice>
           </StyledDescription>
           <StyledMonsterBallIcon onClick={handleClickCartIcon} />
