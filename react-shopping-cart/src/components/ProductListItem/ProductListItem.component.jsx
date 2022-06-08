@@ -9,33 +9,19 @@ import TextBox from 'components/@shared/TextBox/TextBox.component';
 import ModifyQuantityBox from 'components/ModifyQuantityBox/ModifyQuantityBox.component';
 
 import useDebounce from 'hooks/useDebounce';
-import useFetch from 'hooks/useFetch';
+import useDeleteCarts from 'hooks/useDeleteCarts';
+import useModifyCartQuantity from 'hooks/useModifyCartQuantity';
+import useStoreCart from 'hooks/useStoreCart';
 
 import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
-import { API_URL_PATH } from 'constants/api';
 
 function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts }) {
   const isStored = quantity !== 0;
   const { accessToken } = useSelector(state => state.auth);
-  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
-  const { fetchData: storeProductToCart } = useFetch({
-    url: `${API_URL_PATH.CARTS}`,
-    method: 'post',
-    headers,
-    skip: true,
-  });
-  const { fetchData: modifyStoredProductQuantity } = useFetch({
-    url: `${API_URL_PATH.CARTS}`,
-    method: 'patch',
-    headers,
-    skip: true,
-  });
-  const { fetchData: deleteStroedProduct } = useFetch({
-    url: API_URL_PATH.CARTS,
-    method: 'delete',
-    headers,
-    skip: true,
-  });
+
+  const { storeCart } = useStoreCart(true);
+  const { modifyCartQuantity } = useModifyCartQuantity(true);
+  const { deleteCarts } = useDeleteCarts(true);
 
   const debounce = useDebounce();
   const [modifyQuantityShow, setModifyQuantityShow] = useState(false);
@@ -59,7 +45,7 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
 
       isModified.current = false;
 
-      await modifyStoredProductQuantity({ productId: id, quantity });
+      await modifyCartQuantity({ productId: id, quantity });
       await loadProducts();
     }, 1500);
   };
@@ -71,12 +57,12 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
     }
     handleShowModifyQuantityBox();
 
-    await storeProductToCart({ productId: id, quantity: 1 });
+    await storeCart({ productId: id, quantity: 1 });
     await loadProducts();
   };
 
   const handleDeleteProduct = async () => {
-    await deleteStroedProduct({ productIds: [id] });
+    await deleteCarts({ productIds: [id] });
     await loadProducts();
 
     setModifyQuantityShow(false);

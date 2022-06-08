@@ -12,10 +12,10 @@ import ChangeQuantityButton from 'components/ChangeQuantityButton/ChangeQuantity
 import { addSpecificItem, deleteSpecificItem } from 'redux/actions/orderList.action';
 
 import useDebounce from 'hooks/useDebounce';
-import useFetch from 'hooks/useFetch';
+import useDeleteCarts from 'hooks/useDeleteCarts';
+import useModifyCartQuantity from 'hooks/useModifyCartQuantity';
 
 import { ReactComponent as TrashCan } from 'assets/images/trash.svg';
-import { API_URL_PATH } from 'constants/api';
 
 const CartItemContainer = styled(FlexBox).attrs({
   gap: '15px',
@@ -31,26 +31,16 @@ const CartItemContainer = styled(FlexBox).attrs({
 
 function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity, loadCarts }) {
   const dispatch = useDispatch();
-  const { accessToken } = useSelector(state => state.auth);
-  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
+  const debounce = useDebounce();
   const { items: storedProducts } = useSelector(state => state.orderList);
-  const { fetchData: modifyStoredProductQuantity } = useFetch({
-    url: API_URL_PATH.CARTS,
-    method: 'patch',
-    headers,
-    skip: true,
-  });
-  const { fetchData: deleteStoredProduct } = useFetch({
-    url: API_URL_PATH.CARTS,
-    method: 'delete',
-    headers,
-    skip: true,
-  });
+
+  const { modifyCartQuantity } = useModifyCartQuantity(true);
+  const { deleteCarts } = useDeleteCarts(true);
+
   const checked = useMemo(
     () => storedProducts.some(productId => productId === id),
     [storedProducts, id]
   );
-  const debounce = useDebounce();
 
   const handleChangeCheckBox = id => {
     const toggleItemAction = checked ? deleteSpecificItem : addSpecificItem;
@@ -61,7 +51,7 @@ function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity,
 
   const itemDeleteConfirm = async id => {
     if (window.confirm(`${name}을(를) 장바구니에서 삭제하시겠습니까?`)) {
-      await deleteStoredProduct({ productIds: [id] });
+      await deleteCarts({ productIds: [id] });
       dispatch(deleteSpecificItem(id));
       await loadCarts();
     }
@@ -69,7 +59,7 @@ function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity,
 
   const onChangeQuantity = async newQuantity => {
     debounce(async () => {
-      await modifyStoredProductQuantity({ productId: id, quantity: newQuantity });
+      await modifyCartQuantity({ productId: id, quantity: newQuantity });
       await loadCarts();
     }, 1000);
   };
