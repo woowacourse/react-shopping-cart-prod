@@ -8,6 +8,7 @@ export const ICON_CODE = {
   TRASH: 'f1f8',
   TRASH_CAN: 'f2ed',
   USER: 'f007',
+  EXIT: 'f52b',
 };
 
 export const PAGE_LIST = {
@@ -18,6 +19,8 @@ export const PAGE_LIST = {
   LOGIN: '/login',
   LOGOUT: '/logout',
   PROFILE: '/profile',
+  WITHDRAWAL: '/withdrawal',
+  ACCESS_DENIED: '/access_denied',
 };
 
 export const REQUEST_STATUS = {
