@@ -58,16 +58,16 @@ export function ProductListPage() {
       <Case.Success>
         <S.Container>
           {productList &&
-            productList.map(({ id, name, goodsPrice, listImage }) => {
+            productList.map(({ id, name, price, imageUrl }) => {
               const cartItem = cartItems.find(({ product }) => product === id);
 
               return (
                 <ProductItem
                   key={id}
                   id={id}
-                  image={listImage}
+                  image={imageUrl}
                   name={name}
-                  price={goodsPrice}
+                  price={price}
                   cartId={cartItem ? cartItem.id : null}
                   onClickCartButton={
                     cartItem ? () => handleRemoveCart({ id: cartItem.id }) : handleAddCart
