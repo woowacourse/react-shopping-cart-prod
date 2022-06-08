@@ -9,6 +9,7 @@ import { useThunkFetch } from '@/hooks/useFecth';
 import { fetchGetCartAsync } from '@/store/cart/action';
 import Loading from '@/components/common/Loading/Loading';
 import { PRODUCT_LIST_PAGE_LIMIT } from '@/api/constants';
+import { withLogin } from '@/components/helper/withLogin';
 
 function Home() {
   const [searchParams] = useSearchParams();
@@ -69,4 +70,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default withLogin(Home, false);

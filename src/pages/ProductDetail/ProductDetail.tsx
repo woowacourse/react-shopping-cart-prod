@@ -1,6 +1,7 @@
 import { getProduct } from '@/api/product';
 
 import Loading from '@/components/common/Loading/Loading';
+import { withLogin } from '@/components/helper/withLogin';
 import ProductDetailCard from '@/components/product/ProductDetailCard/ProductDetailCard';
 import { useFetch, useThunkFetch } from '@/hooks/useFecth';
 
@@ -53,4 +54,4 @@ function ProductDetail() {
   );
 }
 
-export default ProductDetail;
+export default withLogin(ProductDetail, false);

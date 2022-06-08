@@ -10,6 +10,7 @@ import { useCartList } from '@/hooks/useCartList';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE } from '@/route';
 import { useDispatch } from 'react-redux';
+import { withLogin } from '@/components/helper/withLogin';
 
 function ShoppingCart() {
   const navigate = useNavigate();
@@ -65,4 +66,4 @@ function ShoppingCart() {
   );
 }
 
-export default ShoppingCart;
+export default withLogin(ShoppingCart, true);
