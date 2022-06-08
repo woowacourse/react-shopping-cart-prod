@@ -3,12 +3,7 @@ import { UserAction, UserActionType } from 'redux/actions/user';
 import axios from 'axios';
 import { LOCAL_BASE_URL } from 'apis';
 import { SignUpInfo, SignInInfo, EditPasswordInfo } from 'types/domain';
-import {
-  getLocalStorageToken,
-  KEYS,
-  setLocalStorageCartList,
-  setLocalStorageToken,
-} from 'utils/localStorage';
+import { getLocalStorageToken, setLocalStorageToken } from 'utils/localStorage';
 
 export const signUp = (signUpInfo: SignUpInfo) => async (dispatch: Dispatch<UserAction>) => {
   dispatch({ type: UserActionType.POST_SIGN_UP_START });
@@ -108,6 +103,7 @@ export const autoSignIn = () => async (dispatch: Dispatch<UserAction>) => {
 
     dispatch({ type: UserActionType.AUTO_SIGN_IN_SUCCESS, payload: response.data });
   } catch (e) {
+    console.log(e);
     dispatch({ type: UserActionType.AUTO_SIGN_IN_FAILURE, payload: e.message });
     alert(e.response.data.errorMessage);
   }

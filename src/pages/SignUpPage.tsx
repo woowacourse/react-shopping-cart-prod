@@ -36,7 +36,7 @@ const SignUpPage = () => {
 
     const inputInfo = {
       email: inputState.email,
-      name: inputState.name,
+      username: inputState.name,
       password: currentPasswordRef.current.value,
     };
 

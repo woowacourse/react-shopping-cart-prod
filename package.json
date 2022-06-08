@@ -1,5 +1,5 @@
 {
-  "name": "react-shopping-cart",
+  "name": "react-shopping-cart-prod",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -94,7 +94,7 @@
     "prettier": "^2.6.2",
     "webpack": "^5.72.0"
   },
-  "homepage": "https://KangYunHo1221.github.com/react-shopping-cart/",
+  "homepage": "https://KangYunHo1221.github.com/react-shopping-cart-prod/",
   "msw": {
     "workerDirectory": "public"
   }
