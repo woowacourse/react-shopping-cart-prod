@@ -12,11 +12,7 @@ export const getProductList = () => {
   const cacheKey = `${API_URL}/products`;
 
   return caching((): Promise<any> => {
-    return productAPI.get('', {
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false, //허가되지 않은 인증을 reject하지 않겠다!
-      }),
-    });
+    return productAPI.get('');
   }, cacheKey);
 };
 
