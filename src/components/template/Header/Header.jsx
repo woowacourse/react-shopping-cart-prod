@@ -6,6 +6,8 @@ import { logoutUser } from 'store/actions/user.action';
 
 import useWindowsSize from 'hooks/useWindowSize';
 
+import { setServerUrl } from 'api/customInstance';
+
 import { Icon } from 'components/common';
 
 import * as S from 'components/template/Header/Header.style';
@@ -47,6 +49,11 @@ function Header({ isLoggedIn }) {
     navigate(ROUTE.HOME);
   };
 
+  const handleServerChange = ({ target: { value } }) => {
+    setServerUrl(value);
+    handleLogOut();
+  };
+
   return (
     <S.Container>
       <S.Inner>
@@ -60,6 +67,10 @@ function Header({ isLoggedIn }) {
             BLVIC&apos;S CAMPING
           </S.Logo>
         </S.NavLink>
+        <select name="server" onChange={handleServerChange}>
+          <option value="0">1</option>
+          <option value="1">2</option>
+        </select>
         <S.Nav>
           {navLinkInfo.map(({ path, name, ...props }) => (
             <S.NavLink key={name} to={path} {...props}>

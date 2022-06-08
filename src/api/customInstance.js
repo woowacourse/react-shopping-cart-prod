@@ -5,13 +5,17 @@ import { API_URL } from 'api/constants';
 import { ERROR_MESSAGES } from 'constants/messages';
 
 const customInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: API_URL[0],
 });
 
 const token = window.sessionStorage.getItem('token');
 const nickname = window.sessionStorage.getItem('nickname');
 
-if (token !== undefined && nickname !== undefined) {
+export const setServerUrl = (index) => {
+  customInstance.defaults.baseURL = API_URL[index];
+};
+
+if (token !== null && nickname !== null) {
   customInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
