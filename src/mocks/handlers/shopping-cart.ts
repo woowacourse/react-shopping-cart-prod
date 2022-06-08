@@ -1,10 +1,10 @@
 import { BASE_URL } from 'apis';
 import type { PathParams } from 'msw';
 import { rest } from 'msw';
-import { CartItem, Item } from 'types/domain';
+import { CartItemResponse, Item } from 'types/domain';
 
 export const cartHandler = [
-  rest.get<null, null, Item[]>(`${BASE_URL}/itemList`, (req, res, ctx) => {
+  rest.get<null, null, Item[]>(`${BASE_URL}/products`, (req, res, ctx) => {
     const page = req.url.searchParams.get('_page');
     const limit = req.url.searchParams.get('_limit');
 
@@ -15,53 +15,58 @@ export const cartHandler = [
     return res(ctx.status(200), ctx.json(itemList));
   }),
 
-  rest.get<null, PathParams, Item>(`${BASE_URL}/itemList/:id`, (req, res, ctx) => {
+  rest.get<null, PathParams, Item>(`${BASE_URL}/products/:id`, (req, res, ctx) => {
     const { id } = req.params;
 
     return res(ctx.status(200), ctx.json(itemList[Number(id) - 1]));
   }),
 
-  rest.get<null, null, CartItem[]>(`${BASE_URL}/cartList`, (req, res, ctx) => {
+  rest.get<null, null, CartItemResponse[]>(`${BASE_URL}/customers/carts`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.post<CartItem, null, CartItem>(`${BASE_URL}/cartList`, (req, res, ctx) => {
-    const item = req.body;
-
-    cartList = [...cartList, item];
-
-    return res(ctx.status(200), ctx.json(item));
-  }),
-
-  rest.put<CartItem, PathParams, CartItem>(`${BASE_URL}/cartList/:id`, (req, res, ctx) => {
-    const { id } = req.params;
-    const item = req.body;
-
-    cartList = cartList.map(cart => (cart.id === Number(id) ? item : cart));
-
-    return res(ctx.status(200), ctx.json(item));
-  }),
-
-  rest.patch<{ isSelected: boolean }, PathParams, CartItem>(
-    `${BASE_URL}/cartList/:id`,
+  rest.post<{ productId: number }, null, CartItemResponse>(
+    `${BASE_URL}/customers/carts`,
     (req, res, ctx) => {
-      const { id } = req.params;
-      const body = req.body;
-      const item = cartList.find(cart => cart.id === Number(id));
-      const newCartItem = { ...item, ...body };
+      const { productId } = req.body;
+      const item = itemList.find(item => item.id === productId);
+      const cart = { ...item, productId, quantity: 1, id: cartList.length + 1 };
 
-      cartList = cartList.map(cart => (cart.id === Number(id) ? newCartItem : cart));
+      cartList = [...cartList, cart];
 
-      return res(ctx.status(200), ctx.json(newCartItem));
+      return res(ctx.status(200), ctx.json(cart));
     }
   ),
 
-  rest.delete<null, PathParams, null>(`${BASE_URL}/cartList/:id`, (req, res, ctx) => {
+  rest.put<{ quantity: number }, PathParams, any>(
+    `${BASE_URL}/customers/carts/:id`,
+    (req, res, ctx) => {
+      const { id } = req.params;
+      const { quantity } = req.body;
+
+      const savedCartList = [...cartList];
+      const savedCartItem = savedCartList.find(cart => cart.id === Number(id));
+
+      savedCartItem.quantity = quantity;
+
+      cartList = savedCartList;
+
+      return res(ctx.status(200), ctx.json(savedCartItem));
+    }
+  ),
+
+  rest.delete<null, PathParams, null>(`${BASE_URL}/customers/carts/:id`, (req, res, ctx) => {
     const { id } = req.params;
 
     cartList = cartList.filter(cart => cart.id !== Number(id));
 
     return res(ctx.status(200));
+  }),
+
+  rest.delete<null, null, null>(`${BASE_URL}/customers/carts`, (req, res, ctx) => {
+    cartList = [];
+
+    return res(ctx.status(204));
   }),
 ];
 
@@ -69,486 +74,460 @@ export const cartHandler = [
 export const itemList = [
   {
     id: 1,
-    thumbnailUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
-    title: 'mocking',
+    imageUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 2,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?cs=srgb&dl=pexels-ella-olsson-1640777.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 3,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?cs=srgb&dl=pexels-lisa-fotios-1279330.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 4,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 5,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1660030/pexels-photo-1660030.jpeg?cs=srgb&dl=pexels-elle-hughes-1660030.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 6,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1109197/pexels-photo-1109197.jpeg?cs=srgb&dl=pexels-dapurmelodi-1109197.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 7,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/239581/pexels-photo-239581.jpeg?cs=srgb&dl=pexels-brigitte-tohm-239581.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 8,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?cs=srgb&dl=pexels-dzenina-lukac-1583884.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 9,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 10,
-    thumbnailUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
-    title: 'mocking',
+    imageUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 11,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?cs=srgb&dl=pexels-ella-olsson-1640777.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 12,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?cs=srgb&dl=pexels-lisa-fotios-1279330.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 13,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 14,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1660030/pexels-photo-1660030.jpeg?cs=srgb&dl=pexels-elle-hughes-1660030.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 15,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1109197/pexels-photo-1109197.jpeg?cs=srgb&dl=pexels-dapurmelodi-1109197.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 16,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/239581/pexels-photo-239581.jpeg?cs=srgb&dl=pexels-brigitte-tohm-239581.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 17,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?cs=srgb&dl=pexels-dzenina-lukac-1583884.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 18,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 19,
-    thumbnailUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
-    title: 'mocking',
+    imageUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 20,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?cs=srgb&dl=pexels-ella-olsson-1640777.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 21,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?cs=srgb&dl=pexels-lisa-fotios-1279330.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 22,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 23,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1660030/pexels-photo-1660030.jpeg?cs=srgb&dl=pexels-elle-hughes-1660030.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 24,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1109197/pexels-photo-1109197.jpeg?cs=srgb&dl=pexels-dapurmelodi-1109197.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 25,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/239581/pexels-photo-239581.jpeg?cs=srgb&dl=pexels-brigitte-tohm-239581.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 26,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?cs=srgb&dl=pexels-dzenina-lukac-1583884.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 27,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 28,
-    thumbnailUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
-    title: 'mocking',
+    imageUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 29,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?cs=srgb&dl=pexels-ella-olsson-1640777.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 30,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?cs=srgb&dl=pexels-lisa-fotios-1279330.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 31,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 32,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1660030/pexels-photo-1660030.jpeg?cs=srgb&dl=pexels-elle-hughes-1660030.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 33,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1109197/pexels-photo-1109197.jpeg?cs=srgb&dl=pexels-dapurmelodi-1109197.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 34,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/239581/pexels-photo-239581.jpeg?cs=srgb&dl=pexels-brigitte-tohm-239581.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 35,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?cs=srgb&dl=pexels-dzenina-lukac-1583884.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 36,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 37,
-    thumbnailUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
-    title: 'mocking',
+    imageUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 38,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?cs=srgb&dl=pexels-ella-olsson-1640777.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 39,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?cs=srgb&dl=pexels-lisa-fotios-1279330.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 40,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 41,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1660030/pexels-photo-1660030.jpeg?cs=srgb&dl=pexels-elle-hughes-1660030.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 42,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1109197/pexels-photo-1109197.jpeg?cs=srgb&dl=pexels-dapurmelodi-1109197.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 43,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/239581/pexels-photo-239581.jpeg?cs=srgb&dl=pexels-brigitte-tohm-239581.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 44,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?cs=srgb&dl=pexels-dzenina-lukac-1583884.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 45,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 46,
-    thumbnailUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
-    title: 'mocking',
+    imageUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 47,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?cs=srgb&dl=pexels-ella-olsson-1640777.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 48,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?cs=srgb&dl=pexels-lisa-fotios-1279330.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 49,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 50,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1660030/pexels-photo-1660030.jpeg?cs=srgb&dl=pexels-elle-hughes-1660030.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 51,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1109197/pexels-photo-1109197.jpeg?cs=srgb&dl=pexels-dapurmelodi-1109197.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 52,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/239581/pexels-photo-239581.jpeg?cs=srgb&dl=pexels-brigitte-tohm-239581.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 53,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?cs=srgb&dl=pexels-dzenina-lukac-1583884.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 54,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 55,
-    thumbnailUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
-    title: 'mocking',
+    imageUrl: 'https://www.withbuyer.com/news/photo/202103/21124_11952_428.jpg',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 56,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?cs=srgb&dl=pexels-ella-olsson-1640777.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 57,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg?cs=srgb&dl=pexels-lisa-fotios-1279330.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 58,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/357573/pexels-photo-357573.jpeg?cs=srgb&dl=pexels-pixabay-357573.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 59,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1660030/pexels-photo-1660030.jpeg?cs=srgb&dl=pexels-elle-hughes-1660030.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 60,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1109197/pexels-photo-1109197.jpeg?cs=srgb&dl=pexels-dapurmelodi-1109197.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 61,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/239581/pexels-photo-239581.jpeg?cs=srgb&dl=pexels-brigitte-tohm-239581.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 62,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1583884/pexels-photo-1583884.jpeg?cs=srgb&dl=pexels-dzenina-lukac-1583884.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 63,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 64,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 65,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
   {
     id: 66,
-    thumbnailUrl:
+    imageUrl:
       'https://images.pexels.com/photos/1775043/pexels-photo-1775043.jpeg?cs=srgb&dl=pexels-mariana-kurnyk-1775043.jpg&fm=jpg',
-    title: 'mocking',
+    name: 'mocking',
     price: 43000,
   },
 ];
 
 // eslint-disable-next-line prefer-const
-export let cartList = [
-  {
-    id: 1,
-    quantity: 1,
-    isSelected: true,
-  },
-  {
-    id: 2,
-    quantity: 1,
-    isSelected: true,
-  },
-  {
-    id: 15,
-    quantity: 1,
-    isSelected: false,
-  },
-  {
-    id: 12,
-    quantity: 1,
-    isSelected: false,
-  },
-  {
-    id: 10,
-    quantity: 1,
-    isSelected: false,
-  },
-];
+export let cartList = [];
