@@ -48,6 +48,19 @@ const ProductItem = ({ id, name, price, image }) => {
     );
   };
 
+  const deleteCartProduct = async () => {
+    const accessToken = getCookie('accessToken');
+
+    await axios.delete(`/cart`, {
+      data: {
+        productIds: [id],
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  };
+
   const updateCart = () => {
     setIsControllerOpen(false);
     clearTimer();
@@ -62,6 +75,7 @@ const ProductItem = ({ id, name, price, image }) => {
     }
 
     dispatch(doDeleteProductFromCart({ id }));
+    deleteCartProduct();
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 

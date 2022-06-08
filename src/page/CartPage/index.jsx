@@ -1,4 +1,5 @@
 // @ts-nocheck
+import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -65,7 +66,21 @@ const CartPage = () => {
 
   const deleteItem = () => {
     dispatch(doSelectiveDeleteFromCart());
+    deleteCartProduct();
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+  };
+
+  const deleteCartProduct = async () => {
+    const accessToken = getCookie('accessToken');
+
+    await axios.delete(`/cart`, {
+      data: {
+        productIds: order,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   };
 
   return (

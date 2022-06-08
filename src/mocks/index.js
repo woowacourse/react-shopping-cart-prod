@@ -11,6 +11,7 @@ import getProductHandler from 'page/ProductDetailPage/mock';
 
 import getCartHandler from 'page/CartPage/mock';
 import putCartHandler from './handlers/putCartHandler';
+import deleteCartProductHandler from './handlers/deleteCartProductHandler';
 
 export const users = [
   { id: 1, email: '1@gmail.com', nickname: 'abc', password: 'qwer1234!!' },
@@ -48,6 +49,9 @@ const handlers = [
 
   // 장바구니담기, 상품수정
   putCartHandler,
+
+  // 장바구니에서 특정 상품 삭제
+  deleteCartProductHandler,
 ];
 
 export default handlers;
