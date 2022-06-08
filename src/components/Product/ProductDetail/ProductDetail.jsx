@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Button from 'components/Common/Button/Button';
 import { parsePrice } from 'utils';
 
-const ProductDetail = ({ imgUrl, name, price, onClickCartButton }) => {
+const ProductDetail = ({ imageUrl, name, price, onClickCartButton }) => {
   return (
     <>
-      <Styled.Image src={imgUrl} alt={name} />
+      <Styled.Image src={imageUrl} alt={name} />
       <Styled.InfoBox>
         <Styled.Name>{name}</Styled.Name>
         <Styled.Line />
@@ -23,7 +23,7 @@ const ProductDetail = ({ imgUrl, name, price, onClickCartButton }) => {
 };
 
 ProductDetail.propTypes = {
-  imgUrl: PropTypes.string,
+  imageUrl: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.number,
   onClickCartButton: PropTypes.func,

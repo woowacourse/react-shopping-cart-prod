@@ -9,7 +9,7 @@ const ProductItem = ({
   id,
   name,
   price,
-  imgUrl,
+  imageUrl,
   onClickCartButton,
   isInCart,
 }) => {
@@ -24,7 +24,7 @@ const ProductItem = ({
       <Styled.Overlay>
         <Styled.ThumbnailText>{name}</Styled.ThumbnailText>
       </Styled.Overlay>
-      <Styled.Image src={imgUrl} alt={name} loading="lazy" />
+      <Styled.Image src={imageUrl} alt={name} loading="lazy" />
       <Styled.Detail>
         <Styled.TopBox>
           <Styled.Name>{name}</Styled.Name>
@@ -42,7 +42,7 @@ ProductItem.propTypes = {
   id: PropTypes.number,
   name: PropTypes.string,
   price: PropTypes.number,
-  imgUrl: PropTypes.string,
+  imageUrl: PropTypes.string,
   onClickCartButton: PropTypes.func,
   isInCart: PropTypes.bool,
 };
