@@ -1,10 +1,10 @@
 export const BASE_SERVER_URL = (index = 0) => {
   const serverUrls = [
     "dev", // msw
-    "server1",
-    "server2",
-    "server3",
-    "server4",
+    process.env.REACT_APP_SERVER1,
+    process.env.REACT_APP_SERVER2,
+    process.env.REACT_APP_SERVER3,
+    process.env.REACT_APP_SERVER4,
   ];
   return serverUrls[index];
 };
