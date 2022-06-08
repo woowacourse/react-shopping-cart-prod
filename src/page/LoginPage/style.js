@@ -16,6 +16,7 @@ const LoginContainer = styled.div`
   width: 600px;
   height: 442px;
   background-color: ${({theme}) => theme.WHITE};
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 `;
 
 const Header = styled.header`

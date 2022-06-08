@@ -21,6 +21,7 @@ const WithDrawalContainer = styled.div`
   height: 675px;
 
   background-color: ${({theme}) => theme.WHITE};
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 `;
 
 const HeaderRow = styled(FlexRow)`

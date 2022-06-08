@@ -9,6 +9,8 @@ const ContentBoxLayout = styled.div`
 
   border: ${({theme}) => `1px solid ${theme.GRAY_500}`};
   padding: 30px;
+
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 `;
 
 const ContentBoxHeader = styled.div`

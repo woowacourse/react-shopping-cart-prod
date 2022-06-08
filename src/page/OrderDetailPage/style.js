@@ -56,6 +56,7 @@ const OrderTable = styled.div`
   margin-bottom: 74px;
 
   padding: 20px;
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 `;
 
 const OrderNumber = styled.div`
@@ -86,6 +87,9 @@ const PayBox = styled(FlexColumn)`
   font-size: 28px;
   line-height: 28px;
   letter-spacing: 0.5px;
+
+  padding: 20px;
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 
   .pay-box-hr {
     width: 100%;

@@ -53,8 +53,9 @@ const OrderTable = styled.div`
   box-sizing: border-box;
 
   margin-bottom: 74px;
-
   padding: 20px;
+
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 `;
 
 const OrderNumber = styled.div`
