@@ -10,7 +10,7 @@ const useCart = () => {
 
   const addItem = async (id) => {
     try {
-      await axios.post(`${SERVER_PATH.CARTS}/products/${id}`, null, {
+      await axios.post(`${SERVER_PATH.CARTS_PRODUCTS}/${id}`, null, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -24,7 +24,7 @@ const useCart = () => {
 
   const deleteItem = async (id, isAlert) => {
     try {
-      await axios.delete(`${SERVER_PATH.CARTS}/products/${id}`, {
+      await axios.delete(`${SERVER_PATH.CARTS_PRODUCTS}/${id}`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -39,7 +39,7 @@ const useCart = () => {
   const updateItemQuantity = async (id, quantity) => {
     try {
       await axios.patch(
-        `${SERVER_PATH.CARTS}/products/${id}`,
+        `${SERVER_PATH.CARTS_PRODUCTS}/${id}`,
         { quantity },
         {
           headers: {
@@ -64,7 +64,6 @@ const useCart = () => {
 
   useEffect(() => {
     if (accessToken) {
-      console.log('useCart');
       dispatch(getCartItemAsync(accessToken));
     }
   }, []);

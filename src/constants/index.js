@@ -6,6 +6,7 @@ const API = 'http://13.124.30.129:8080/api';
 const SERVER_PATH = {
   PRODUCTS: `${API}/products`,
   CARTS: `${API}/carts`,
+  CARTS_PRODUCTS: `${API}/carts/products`,
   USER: `${API}/customers`,
   LOGIN: `${API}/login`,
   PASSWORD: `${API}/customers/password`,
