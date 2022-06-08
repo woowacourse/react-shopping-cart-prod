@@ -23,7 +23,6 @@ const handlers = [
   }),
 
   rest.post(`${SERVER_PATH.CARTS}/products/:id`, (req, res, ctx) => {
-    console.log('request', req);
     const id = +req.params.id;
     const index = cartList.findIndex(({ id: productId }) => productId === id);
     const product = productList.find(({ id: productId }) => productId === id);

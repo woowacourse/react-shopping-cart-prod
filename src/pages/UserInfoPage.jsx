@@ -12,12 +12,16 @@ function UserInfoPage() {
 
   const handleWithdrawClick = async () => {
     try {
-      await axios.delete(SERVER_PATH.USER, accessToken);
+      await axios.delete(SERVER_PATH.USER, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       localStorage.removeItem(STORAGE_KEY);
       alert(MESSAGE.WITHDRAW_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
-      alert(error);
+      alert(error.response.data);
     }
   };
 

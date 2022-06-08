@@ -10,6 +10,7 @@ import useCart from '../hooks/useCart';
 function ProductListPage() {
   const { data: productList, isLoading, isError } = useFetch(SERVER_PATH.PRODUCTS);
   const cartList = useSelector(({ cart }) => cart.data);
+  console.log('cartList', cartList);
   const { addItem, deleteItem } = useCart();
 
   const idSetInCart = useMemo(() => new Set(cartList.map((cart) => cart.id)), [cartList]);

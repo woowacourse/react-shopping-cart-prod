@@ -10,11 +10,12 @@ import { StyledUserContainer, StyledUserForm } from '../components/common/Styled
 import useUserForm from '../hooks/useUserForm';
 import { validUserInfo } from '../utils/validations';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+import { MESSAGE, ROUTES_PATH, SERVER_PATH, STORAGE_KEY, USER, USER_INFO_KEY } from '../constants';
 
 function ModifyUserInfoPage() {
   const navigate = useNavigate();
   const { userInfo, setUserInfo, handleUserInfoChange } = useUserForm();
+  const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
   const handleUserInfoSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +34,12 @@ function ModifyUserInfoPage() {
   useEffect(() => {
     async function getUserInfo() {
       try {
-        const { data } = await axios.get(SERVER_PATH.ME);
+        const { data } = await axios.get(SERVER_PATH.ME, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        console.log('userInfo', data);
         setUserInfo(data);
       } catch (error) {
         alert(error);

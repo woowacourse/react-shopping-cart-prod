@@ -1,5 +1,4 @@
 import { useDispatch } from 'react-redux';
-import { STORAGE_KEY } from '../constants';
 import {
   addCartItemAsync,
   deleteCartItemAsync,
@@ -8,10 +7,9 @@ import {
 
 const useCart = () => {
   const dispatch = useDispatch();
-  const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
   const addItem = (id) => {
-    dispatch(addCartItemAsync(id, accessToken));
+    dispatch(addCartItemAsync(id));
   };
 
   const deleteItem = (id) => {
