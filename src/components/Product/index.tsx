@@ -19,15 +19,11 @@ import {
   ProductInfoContainer,
 } from './styles';
 
+import { ProductType } from '@/types';
+
 import { INFO_MESSAGES, CART, PRODUCT } from '@/constants';
 import cart from '@/assets/cart.svg';
 
-export type ProductType = {
-  id: number;
-  imageUrl: string;
-  name: string;
-  price: number;
-};
 interface ProductProps {
   productInfo: ProductType;
 }
