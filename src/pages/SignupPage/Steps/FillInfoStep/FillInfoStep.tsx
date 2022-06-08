@@ -42,6 +42,9 @@ function FillInfoStep() {
 
   const extractPayloadWithForm = (formElement: HTMLFormElement) => {
     const formData = new FormData(formElement);
+
+    formData.delete('confirm-password');
+
     const customerInfo = Object.fromEntries(formData.entries());
 
     return {

@@ -1,21 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import useForm from 'hooks/useForm';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 import PlainLink from 'components/PlainLink/PlainLink';
 import * as S from 'pages/SigninPage/SigninPage.styled';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { actions } from 'redux/actions';
-import { StoreState } from 'types';
 
 function SigninPage() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { accessToken } = useSelector<StoreState, StoreState['customerState']>(
-    ({ customerState }) => customerState
-  );
   const { isSubmitting, registerForm, registerInput } = useForm();
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -35,10 +29,6 @@ function SigninPage() {
       }
     }
   };
-
-  if (accessToken) {
-    navigate('/');
-  }
 
   return (
     <S.PageBox>
