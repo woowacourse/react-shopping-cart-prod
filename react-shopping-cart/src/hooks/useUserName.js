@@ -5,9 +5,10 @@ import { API_URL_PATH } from 'constants/api';
 
 function useUserName() {
   const { accessToken } = useSelector(state => state.auth);
+  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
   const { data: name } = useFetch({
     url: `${API_URL_PATH.NAME}`,
-    headers: { Authorization: `Bearer ${accessToken}` },
+    headers,
   });
 
   return name;
