@@ -14,7 +14,11 @@ const Dimmer = styled.div`
 `;
 
 const SpinnerImg = styled.img`
+  position: absolute;
+  top: 30%;
+  left: 30%;
   width: 500px;
+  transform: translate(-50%, -50%);
   animation: 1s linear infinite ${rotate};
 `;
 

@@ -11,7 +11,8 @@ const Layout = ({ children }) => {
   return (
     <Styled.Container>
       <Header />
-      {isPending ? <Spinner /> : <main>{children}</main>}
+      {isPending && <Spinner />}
+      <main>{children}</main>
       <Footer />
     </Styled.Container>
   );

@@ -9,6 +9,7 @@ import {
 import { snackbar } from 'actions/snackbar';
 import { 비동기_요청, 알림_메시지 } from 'constants/';
 import { 장바구니_액션, 장바구니_불러오기_액션 } from './types';
+import { hideSpinner, showSpinner } from './spinner';
 
 const addCartList = (product) => async (dispatch) => {
   dispatch({ type: 장바구니_액션.PENDING });
@@ -91,7 +92,11 @@ const orderCartItem = (productId) => async (dispatch) => {
     type: 장바구니_액션.PENDING,
   });
 
+  dispatch(showSpinner());
+
   const response = await requestOrderCartItem(productId);
+
+  dispatch(hideSpinner());
 
   if (response.status === 비동기_요청.FAILURE) {
     dispatch(snackbar.pushMessageSnackbar(알림_메시지.상품_주문_실패));

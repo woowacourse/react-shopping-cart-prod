@@ -11,6 +11,7 @@ import ErrorMessage from 'components/@common/ErrorMessage';
 
 import { requestCheckDuplicatedId, requestSignUp } from 'api';
 import { snackbar } from 'actions/snackbar';
+import { hideSpinner, showSpinner } from 'actions/spinner';
 import { 비동기_요청 } from 'constants/';
 import * as Validate from 'utils/validate';
 import { COLORS } from 'styles/theme';
@@ -60,12 +61,16 @@ const SignUp = () => {
 
   const handleRequestDuplicatedId = () => {
     let timer;
+    dispatch(showSpinner());
 
     return () => {
       if (timer) return;
       timer = setTimeout(async () => {
         timer = null;
         const { content } = await requestCheckDuplicatedId(userId);
+
+        dispatch(hideSpinner());
+
         if (!content.isUnique) {
           dispatch(snackbar.pushMessageSnackbar('중복된 아이디입니다!'));
           setCheckDuplicatedId(content.isUnique);
