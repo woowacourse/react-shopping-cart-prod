@@ -3,39 +3,37 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
+import useGetCartAPI from 'hooks/useGetCartAPI';
+import useDeleteCheckedProductsAPI from 'hooks/useDeleteProductsAPI';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 import empty from 'assets/empty.jpeg';
 import Styled from 'page/CartPage/index.style';
 
-import {
-  doAddProductToOrder,
-  doDecideOrder,
-  doInitializeOrder,
-  doSelectiveDeleteFromCart,
-} from 'reducers/cart.reducer';
+import { doAddProductToOrder, doDecideOrder, doInitializeOrder } from 'reducers/cart.reducer';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
-import useGetCartAPI from 'hooks/useGetCartAPI';
 
 const CartPage = () => {
-  const { getCart, isCartLoading } = useGetCartAPI();
-
-  useEffect(() => {
-    getCart();
-  }, [getCart]);
-
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
+  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
   const { shoppingCart, order } = useSelector(state => state.cartReducer);
+  const productIdsInCart = shoppingCart.map(product => product.productId);
+  const productIdsToDelete = productIdsInCart.filter(id => order.includes(id));
+
+  const { deleteCheckedProducts } = useDeleteCheckedProductsAPI(productIdsToDelete);
+
+  const { getCart, isCartLoading } = useGetCartAPI();
+  useEffect(() => {
+    getCart();
+  }, [getCart]);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const calculateTotalPrice = useCallback(() => {
     let total = 0;
-
     order.forEach(id => {
       const product = shoppingCart.find(product => product.productId === id);
       if (product) {
@@ -65,22 +63,6 @@ const CartPage = () => {
         dispatch(doAddProductToOrder({ id: product.productId }));
       }
     });
-  };
-
-  // TODO 5. delete 장바구니 내 선택된 상품 삭제
-  const deleteSelectedItems = async () => {
-    const productIdsInCart = shoppingCart.map(product => product.productId);
-    const productIds = productIdsInCart.filter(id => !order.includes(id));
-
-    try {
-      await apiClient.delete('/cart', { data: { productIds } });
-
-      dispatch(doSelectiveDeleteFromCart());
-      renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
-    } catch (error) {
-      const customError = error.response.data;
-      renderSnackbar(customError.message, 'FAILED');
-    }
   };
 
   // TODO 6. POST 주문 추가하기
@@ -114,7 +96,7 @@ const CartPage = () => {
                   />
                   선택해제
                 </Styled.CheckBoxContainer>
-                <Styled.ProductDeleteButton onClick={deleteSelectedItems}>
+                <Styled.ProductDeleteButton onClick={deleteCheckedProducts}>
                   상품삭제
                 </Styled.ProductDeleteButton>
               </Styled.SelectController>

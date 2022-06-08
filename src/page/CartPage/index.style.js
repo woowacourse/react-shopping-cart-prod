@@ -52,8 +52,9 @@ const Styled = {
     font-size: 18px;
     line-height: 28px;
     letter-spacing: 0.5px;
-    border-bottom: 2px solid #aaaaaa;
-    padding: 16px 0;
+    border-bottom: 3px solid #aaaaaa;
+    width: 570px;
+    padding: 20px 0;
   `,
 
   ProductList: styled.div``,
@@ -66,6 +67,7 @@ const Styled = {
 
   LeftSide: styled.div`
     height: 700px;
+    width: 550px;
   `,
 
   RightSide: styled.div`
