@@ -9,6 +9,7 @@ export const SNACKBAR_MESSAGE = {
   noAuth: () => '권한이 없엉 ㅠㅠ',
   allReadyLogin: () => '이미 로그인 했엉!',
   signUpUser: () => '회원 가입!',
+  updatePassword: () => '비밀번호 변경!',
 };
 
 export const PAGING = {
