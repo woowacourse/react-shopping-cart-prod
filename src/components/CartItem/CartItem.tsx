@@ -19,7 +19,7 @@ type Props = {
 };
 
 function CartItem({ product, quantity, checked }: Props) {
-  const { id, name, image } = product;
+  const { id, name, imageUrl } = product;
   const dispatch = useDispatch();
 
   const onClickDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
@@ -46,7 +46,7 @@ function CartItem({ product, quantity, checked }: Props) {
     <Link to={`${PATH.PRODUCT}/${id}`}>
       <StyledCartItem>
         <CheckBox id={id + ''} checked={checked} onChange={onChangeCheckBox} />
-        <img src={image} alt={name} />
+        <img src={imageUrl} alt={name} />
         <StyledProductName>{name}</StyledProductName>
         <StyledDeleteButton type="button" onClick={onClickDeleteButton}>
           <Delete />

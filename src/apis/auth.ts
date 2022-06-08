@@ -1,4 +1,4 @@
-import { axios } from 'configs/api';
+import axios from 'configs/api';
 
 import PATH from 'constants/path';
 import { User } from 'types/index';

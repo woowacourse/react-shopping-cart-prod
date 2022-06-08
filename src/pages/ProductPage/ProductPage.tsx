@@ -56,7 +56,7 @@ function ProductPage() {
         return productDetail ? (
           <>
             <StyledImageContainer>
-              <img src={productDetail.image} alt={productDetail.name} />
+              <img src={productDetail.imageUrl} alt={productDetail.name} />
             </StyledImageContainer>
             <h2>{productDetail.name}</h2>
             <hr />

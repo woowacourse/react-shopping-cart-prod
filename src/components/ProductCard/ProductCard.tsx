@@ -18,7 +18,7 @@ type Props = {
 };
 
 function ProductCard({ product, isInCart }: Props) {
-  const { id, name, price, description, image } = {
+  const { id, name, price, description, imageUrl } = {
     ...product,
     price: Number(product.price),
   };
@@ -46,7 +46,7 @@ function ProductCard({ product, isInCart }: Props) {
             <p>{description}</p>
             <div onClick={onClickCartButton}>구매하기</div>
           </CardImageOverlay>
-          <img src={image} alt={name} />
+          <img src={imageUrl} alt={name} />
         </CardImageContainer>
         <CardDescriptionContainer>
           <h3>{name}</h3>
