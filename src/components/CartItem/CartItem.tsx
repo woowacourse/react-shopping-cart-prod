@@ -8,22 +8,25 @@ import { Product } from 'types/index';
 import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import cartAPI from 'apis/cart';
 
 type Props = {
   product: Product;
   stock: number;
   checked: boolean;
+  cartId: number;
 };
 
-function CartItem({ product, stock, checked }: Props) {
+function CartItem({ cartId, product, stock, checked }: Props) {
   const { id, name, imageUrl } = product;
   const dispatch = useDispatch();
 
-  const onClickDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
+  const onClickDeleteButton = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      // 삭제
+      const cartList = await cartAPI.deleteCartItem(cartId);
+      dispatch(cartActions.setCartItemList(cartList));
     }
   };
 

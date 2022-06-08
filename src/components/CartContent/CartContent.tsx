@@ -61,11 +61,12 @@ function CartContent({ cartItems }: Props) {
             선택 상품 삭제
           </StyledDeleteButton>
         </StyledProductOptions>
-        {cartItems.map(({ quantity, product }) => (
+        {cartItems.map(({ id, quantity, product }) => (
           <CartItem
             product={product}
             stock={quantity}
             checked={true}
+            cartId={id}
             key={product.id}
           />
         ))}
