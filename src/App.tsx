@@ -8,14 +8,17 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import { autoSignIn } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
 import { KEYS } from 'utils/localStorage';
+import { useEffect } from 'react';
 
 function App() {
   const { isSnackbarOpen } = useAppSelector(state => state.snackbarReducer);
   const dispatch = useAppDispatch<UserAction>();
 
-  if (localStorage.getItem(KEYS.TOKEN)) {
-    dispatch(autoSignIn());
-  }
+  useEffect(() => {
+    if (localStorage.getItem(KEYS.TOKEN)) {
+      dispatch(autoSignIn());
+    }
+  }, []);
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
