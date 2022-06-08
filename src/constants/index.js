@@ -64,10 +64,11 @@ const MESSAGE = {
   MODIFY_NICKNAME_SUCCESS: '닉네임이 변경 되었습니다.',
   LOGOUT_SUCCESS: '로그아웃 되었습니다.',
   WITHDRAW_SUCCESS: '회원탈퇴 되었습니다.',
-  ERROR_EMAIL: '올바르지 않은 이메일입니다.',
-  ERROR_NICKNAME: '올바르지 않은 닉네임입니다.',
-  ERROR_PASSWORD: '올바르지 않은 비밀번호입니다.',
-  ERROR_PASSWORD_CONFIRM: '비밀번호가 일치하지 않습니다.',
+  NOT_AN_EMAIL_FORMAT: '올바른 이메일을 입력해 주세요.',
+  INCORRECT_NICKNAME: '올바른 닉네임을 입력해 주세요.',
+  NOT_A_PASSWORD_FORMAT:
+    '비밀번호는 8~20글자 이하 영문자(대,소), 숫자, 특수기호 조합을 입력해 주세요',
+  PASSWORD_DOES_NOT_MATCH: '비밀번호가 일치하지 않습니다. 똑같은 비밀번호를 입력해 주세요.',
 };
 
 export { SERVER_PATH, ROUTES_PATH, SIZE, USER, USER_INFO_KEY, PASSWORD_INFO_KEY, MESSAGE };

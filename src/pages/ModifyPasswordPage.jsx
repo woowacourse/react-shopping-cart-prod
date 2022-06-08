@@ -55,7 +55,7 @@ function ModifyPasswordPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={prevPassword}
-          placeholder="비밀번호를 입력해주세요"
+          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
           onChange={handleUserInfoChange(PASSWORD_INFO_KEY.PREV_PASSWORD)}
         />
         <Input
@@ -64,7 +64,7 @@ function ModifyPasswordPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={newPassword}
-          placeholder="새로운 비밀번호를 입력해주세요"
+          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
           onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD)}
         />
         <Input
@@ -73,7 +73,7 @@ function ModifyPasswordPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={newPasswordConfirm}
-          placeholder="새로운 비밀번호를 입력해주세요"
+          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
           onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD_CONFIRM)}
         />
         <Button text="수정하기" />
