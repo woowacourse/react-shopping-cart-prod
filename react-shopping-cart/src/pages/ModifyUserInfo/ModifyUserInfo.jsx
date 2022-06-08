@@ -48,18 +48,19 @@ function ModifyUserInfo() {
   const navigate = useNavigate();
   const [showLoginInfo, setShowLoginInfo] = useState(false);
   const { accessToken } = useSelector(state => state.auth);
+  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
 
   const userInfo = useSelector(state => state.userInfo);
   const putUserInfo = processServerData(userInfo);
   const { fetchData: getUserInfo } = useFetch({
     url: API_URL_PATH.CUSTOMERS,
     method: 'get',
-    headers: { Authorization: `Bearer ${accessToken}`, 'Access-Control-Allow-Origin': '*' },
+    headers: { ...headers, 'Access-Control-Allow-Origin': '*' },
   });
   const { fetchData: modifyInfo } = useFetch({
     url: API_URL_PATH.CUSTOMERS,
     method: 'put',
-    headers: { Authorization: `Bearer ${accessToken}`, 'Access-Control-Allow-Origin': '*' },
+    headers: { ...headers, 'Access-Control-Allow-Origin': '*' },
     skip: true,
   });
 
