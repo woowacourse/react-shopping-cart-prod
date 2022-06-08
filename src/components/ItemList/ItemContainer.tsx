@@ -53,7 +53,7 @@ const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => 
         <StyledBottom>
           <StyledDescription>
             <StyledTitle>{name}</StyledTitle>
-            <StyledPrice>{price.toLocaleString()}</StyledPrice>
+            <StyledPrice>{price.toLocaleString()} 원</StyledPrice>
           </StyledDescription>
           <StyledCartIcon width='31px' fill={theme.colors.GRAY_333} onClick={handleClickCartIcon} />
         </StyledBottom>
