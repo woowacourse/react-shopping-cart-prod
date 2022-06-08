@@ -9,9 +9,12 @@ import * as S from 'page/ProductDetailPage/style';
 import useFetch from 'hook/useFetch';
 import useCartItem from 'hook/useCartItem';
 import {API_URL} from 'constant';
+import {useSelector} from 'react-redux';
 
 export default function ProductDetailPage() {
   const {id} = useParams();
+
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   const {initializeCart} = useCartItem();
 
@@ -23,8 +26,8 @@ export default function ProductDetailPage() {
   } = useFetch('get');
 
   useEffect(() => {
-    initializeCart();
-  }, [initializeCart]);
+    isLogin && initializeCart();
+  }, [isLogin, initializeCart]);
 
   useEffect(() => {
     fetchProductDetail({API_URL: `${API_URL}/products/${id}`});
