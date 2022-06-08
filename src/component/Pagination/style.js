@@ -6,17 +6,24 @@ const PaginationStyled = styled.div`
 
   button {
     color: ${({theme}) => theme.WHITE};
+
     font-size: 18px;
-    background: none;
+    font-weight: 700;
+
+    background: ${({theme}) => theme.GRAY_500};
     border: none;
+
     cursor: pointer;
+
     width: 50px;
     height: 50px;
+
     border-radius: 5px;
+    margin: 5px;
   }
 
   button:hover {
-    background: ${({theme}) => theme.GRAY_500};
+    background: ${({theme}) => theme.GRAY_700};
     border-radius: 5px;
   }
 
@@ -25,7 +32,8 @@ const PaginationStyled = styled.div`
   }
 
   .control-button {
-    color: ${({theme}) => theme.BLACK};
+    color: ${({theme}) => theme.WHITE};
+    background: ${({theme}) => theme.GRAY_BROWN};
   }
 `;
 

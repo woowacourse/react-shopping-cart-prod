@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 
-import Button from 'component/common/Button';
-
 import useCartItem from 'hook/useCartItem';
 
 import * as S from 'component/DetailItem/style';
@@ -42,7 +40,7 @@ export default function DetailItem({productInfo}) {
         <span>금액</span>
         <S.PriceFont fontSize="32px">{price.toLocaleString()}원</S.PriceFont>
       </S.ItemPriceBox>
-      <Button
+      <S.CartButton
         backgroundColor={theme.MINT_500}
         width="640px"
         height="100px"
@@ -51,7 +49,7 @@ export default function DetailItem({productInfo}) {
         selectedChildren="장바구니 삭제"
       >
         장바구니 추가
-      </Button>
+      </S.CartButton>
     </S.DetailItemLayout>
   );
 }
