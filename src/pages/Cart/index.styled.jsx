@@ -7,10 +7,9 @@ const mq = breakpoints.map((bp) => `@media (min-width: ${bp}px)`);
 const CartWrapper = styled.div`
   display: flex;
   flex-direction: column;
-
   gap: 80px;
 
-  margin-top: 50px;
+  margin-top: 20px;
 
   @media (min-width: 800px) {
     flex-direction: row;

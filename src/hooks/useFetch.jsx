@@ -20,9 +20,7 @@ const useFetch = (method, url, initialData = {}) => {
     try {
       let response = "";
       if (method === "delete" || method === "get") {
-        const { data } = await appClient[method](url, {
-          headers,
-        });
+        const { data } = await appClient[method](url, { headers });
         response = data;
       } else {
         const { data } = await appClient[method](

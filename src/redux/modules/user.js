@@ -1,8 +1,6 @@
 import appClient from "@/utils/appClient";
 import { setCookie, deleteCookie } from "@/utils/auth";
 
-import { getCart } from "@/redux/modules/cart";
-
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 import { MESSAGE, ERROR_CODE } from "@/constants";
@@ -10,12 +8,8 @@ import { getCookie } from "@/utils/auth";
 
 const ACTION_TYPES = {
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
-  LOGIN_FAILURE: "LOGIN_FAILURE",
-
   LOGOUT_USER: "LOGOUT_USER",
-
   EDIT_USER_SUCCESS: "EDIT_USER_SUCCESS",
-  EDIT_USER_FAILURE: "EDIT_USER_FAILURE",
 
   GET_USER_INFO_SUCCESS: "GET_USER_INFO_SUCCESS",
   GET_USER_INFO_FAILURE: "GET_USER_INFO_FAILURE",
@@ -42,42 +36,17 @@ export const getUserInfo = () => async (dispatch) => {
   }
 };
 
-export const loginUser = (email, password) => async (dispatch) => {
-  try {
-    const { data } = await appClient.post("/login", {
-      email,
-      password,
-    });
-    dispatch({
-      type: ACTION_TYPES.LOGIN_SUCCESS,
-      payload: data,
-    });
-    dispatch(getCart());
-  } catch (error) {
-    const { errorCode } = error.response.data;
-    dispatch(toggleSnackbarOpen(MESSAGE[ERROR_CODE[errorCode]]));
-    dispatch({
-      type: ACTION_TYPES.LOGIN_FAILURE,
-      payload: errorCode,
-    });
-  }
-};
+export const loginUser = (accessToken) => ({
+  type: ACTION_TYPES.LOGIN_SUCCESS,
+  payload: accessToken,
+});
 
 export const logoutUser = () => ({ type: ACTION_TYPES.LOGOUT_USER });
 
-export const editUser = () => async () => {
-  try {
-    await appClient.put("/users/me");
-    dispatch({ type: ACTION_TYPES.EDIT_USER_SUCCESS });
-  } catch (error) {
-    const { errorCode } = error.response.data;
-    dispatch(toggleSnackbarOpen(MESSAGE[ERROR_CODE[errorCode]]));
-    dispatch({
-      type: ACTION_TYPES.EDIT_USER_FAILURE,
-      payload: errorCode,
-    });
-  }
-};
+export const editUser = (nickname) => ({
+  type: ACTION_TYPES.EDIT_USER_SUCCESS,
+  payload: nickname,
+});
 
 export function userReducer(state = initialState, action) {
   switch (action.type) {
@@ -87,12 +56,6 @@ export function userReducer(state = initialState, action) {
       return {
         ...state,
         authorized: true,
-      };
-    }
-    case ACTION_TYPES.LOGIN_FAILURE: {
-      return {
-        ...state,
-        authorized: false,
       };
     }
     case ACTION_TYPES.LOGOUT_USER: {
@@ -114,6 +77,12 @@ export function userReducer(state = initialState, action) {
       return {
         ...state,
         authorized: false,
+      };
+    }
+    case ACTION_TYPES.EDIT_USER_SUCCESS: {
+      return {
+        ...state,
+        nickname: action.payload,
       };
     }
     default: {

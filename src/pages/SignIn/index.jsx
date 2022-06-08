@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { loginUser } from "@/redux/modules/user";
 
+import useFetch from "@/hooks/useFetch";
+
 import Form from "@/components/Form";
 import Input from "@/components/Input";
 
@@ -16,6 +18,7 @@ function Signin() {
   const password = useRef(null);
 
   const { authorized } = useSelector((state) => state.userState);
+  const { data, success, getData } = useFetch("post", "login");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -26,9 +29,18 @@ function Signin() {
     }
   }, [authorized]);
 
+  useEffect(() => {
+    if (success) {
+      dispatch(loginUser(data));
+    }
+  }, [data, success]);
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    dispatch(loginUser(email.current.value, password.current.value));
+    getData({
+      email: email.current.value,
+      password: password.current.value,
+    });
   };
 
   return (

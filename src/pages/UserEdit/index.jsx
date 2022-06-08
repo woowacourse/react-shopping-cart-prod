@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { logoutUser, getUserInfo } from "@/redux/modules/user";
+import { logoutUser, getUserInfo, editUser } from "@/redux/modules/user";
 
 import useInput from "@/hooks/useInput";
 import usePasswordConfirm from "@/hooks/usePasswordConfirm";
@@ -38,11 +38,10 @@ function UserEdit() {
   );
   const [passwordConfirm, onChangePasswordConfirm] = usePasswordConfirm();
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
-  const {
-    error: editError,
-    success: editSuccess,
-    getData: editUser,
-  } = useFetch("put", "users/me");
+  const { success: editSuccess, getData: editUserData } = useFetch(
+    "put",
+    "users/me"
+  );
   const {
     error: withdrawError,
     success: withdrawSuccess,
@@ -57,7 +56,7 @@ function UserEdit() {
   const handleEditSubmit = async (e) => {
     e.preventDefault();
 
-    editUser({
+    editUserData({
       nickname: nickname.value,
       password: password.value,
     });
@@ -70,10 +69,11 @@ function UserEdit() {
   };
 
   useEffect(() => {
-    if (!editError && editSuccess) {
+    if (editSuccess) {
       navigate(PATH.MAIN);
+      dispatch(editUser(nickname.value));
     }
-  }, [editError, editSuccess]);
+  }, [editSuccess]);
 
   useEffect(() => {
     if (!withdrawError && withdrawSuccess) {

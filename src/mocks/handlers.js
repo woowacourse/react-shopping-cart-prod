@@ -20,6 +20,7 @@ const getDetailCart = () =>
 export const handlers = [
   // 상품 리스트 가져오기
   rest.get(`${BASE_URL}/products`, (req, res, ctx) => {
+    console.log(req);
     return res(ctx.status(200), ctx.json({ productList }));
   }),
 
