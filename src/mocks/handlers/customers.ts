@@ -40,7 +40,7 @@ const customers: User[] = [
     contact: '01012345678',
     address: '서울특별시 동작구 상도동',
     detailAddress: '',
-    zoneCode: '50413',
+    zonecode: '50413',
     terms: true,
     accessToken: null,
   },
@@ -173,7 +173,7 @@ const customerHandlers = [
       contact: customer.contact,
       address: customer.address,
       detailAddress: customer.detailAddress,
-      zoneCode: customer.zoneCode,
+      zonecode: customer.zonecode,
       terms: customer.terms,
     };
 

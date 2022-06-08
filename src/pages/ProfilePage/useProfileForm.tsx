@@ -108,7 +108,7 @@ const useProfileForm = () => {
         name,
         contact,
         email,
-        zoneCode,
+        zonecode,
         address,
         detailAddress,
         gender,
@@ -134,7 +134,7 @@ const useProfileForm = () => {
     }));
 
     setAddressData({
-      zonecode: zoneCode,
+      zonecode,
       address,
     });
   };

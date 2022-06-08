@@ -12,7 +12,7 @@ export type Customer = {
   contact: string;
   address: string;
   detailAddress: string;
-  zoneCode: string;
+  zonecode: string;
   terms: boolean;
 };
 export type User = Customer & { userId: number; accessToken: string | null };
