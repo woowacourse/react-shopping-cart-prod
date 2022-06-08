@@ -6,8 +6,10 @@ import reportWebVitals from 'reportWebVitals';
 import App from 'App';
 import store from 'store';
 import { ENV } from 'utils/constants';
+import { isApiTest } from 'apis/apiClient';
+// if (process.env.NODE_ENV === ENV.DEVELOPMENT) {
 
-if (process.env.NODE_ENV === ENV.DEVELOPMENT) {
+if (!isApiTest) {
   const { worker } = require('./mocks/worker');
   worker.start();
 }
