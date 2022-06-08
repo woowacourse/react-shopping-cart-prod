@@ -40,7 +40,7 @@ export default function cartReducer(state = INITIAL_STATE, action) {
     case CART.INCREASE_QUANTITY: {
       const id = action.payload;
       const newState = state.cart.map((item) =>
-        item.id === id ? {...item, quantity: item.quantity + 1} : item,
+        item.id === id ? {...item, quantity: Math.min(item.quantity + 1, 99)} : item,
       );
 
       return {
