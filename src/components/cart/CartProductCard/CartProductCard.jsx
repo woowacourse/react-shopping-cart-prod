@@ -15,7 +15,7 @@ const NotConfirmDecrement = (quantity, stock) =>
   !window.confirm(WARNING_MESSAGES.DECREASE_TO_STOCK(quantity, stock));
 
 function CartProductCard({
-  product: { id: productId, name, price, imageURL, stock },
+  product: { id: productId, name, price, imageUrl, stock },
   quantity,
 }) {
   const {
@@ -60,7 +60,7 @@ function CartProductCard({
   return (
     <S.Container>
       <CheckBox checked={checked} disabled={isSoldOut} onClick={handleCheckBoxClick} />
-      <Image src={imageURL} width="150px" backgroundColor={color.WHITE} />
+      <Image src={imageUrl} width="150px" backgroundColor={color.WHITE} />
       <S.Description>
         <Position position="absolute" top="0" right="0">
           <S.Button type="button" onClick={handleProductDelete}>
