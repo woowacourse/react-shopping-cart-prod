@@ -6,7 +6,7 @@ import { actionTypes } from '../store/cart/cart.actions';
 
 const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-function useFetch(url) {
+const useFetch = (url) => {
   const dispatch = useDispatch();
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -17,6 +17,7 @@ function useFetch(url) {
       setIsLoading(true);
       try {
         const { data } = await axios.get(url);
+        console.log('productList', data);
         if (accessToken) {
           const { data } = await axios.get(SERVER_PATH.CARTS, {
             headers: {
@@ -40,6 +41,6 @@ function useFetch(url) {
   }, []);
 
   return { data, isLoading, isError };
-}
+};
 
 export default useFetch;

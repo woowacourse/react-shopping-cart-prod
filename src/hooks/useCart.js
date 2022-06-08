@@ -17,7 +17,7 @@ const useCart = () => {
       });
       dispatch(getCartItemAsync(accessToken));
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response.data.message);
     }
   };
 
@@ -30,7 +30,7 @@ const useCart = () => {
       });
       dispatch(getCartItemAsync(accessToken));
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response.data.message);
     }
   };
 
@@ -47,7 +47,7 @@ const useCart = () => {
       );
       dispatch(getCartItemAsync(accessToken));
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response.data.message);
     }
   };
 

@@ -16,6 +16,8 @@ import {
   STORAGE_KEY,
 } from '../constants';
 
+const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
 function ModifyPasswordPage() {
   const navigate = useNavigate();
   const { passwords, setPasswords, handleUserInfoChange } = useUserForm();
@@ -26,12 +28,20 @@ function ModifyPasswordPage() {
 
     try {
       validPasswordInfo(newPassword, newPasswordConfirm);
-      await axios.patch(SERVER_PATH.PASSWORD, { prevPassword, newPassword });
+      await axios.patch(
+        SERVER_PATH.PASSWORD,
+        { prevPassword, newPassword },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       localStorage.removeItem(STORAGE_KEY);
       alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response.data.message);
     }
   };
 

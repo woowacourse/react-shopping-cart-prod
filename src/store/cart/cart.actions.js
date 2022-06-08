@@ -23,7 +23,7 @@ const getCartItemAsync = (accessToken) => async (dispatch) => {
     });
   } catch (error) {
     dispatch({ type: actionTypes.GET_CART_ERROR });
-    alert(error.response.data);
+    alert(error.response.data.message);
   }
 };
 

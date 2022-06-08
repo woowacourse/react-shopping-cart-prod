@@ -23,7 +23,15 @@ function ModifyUserInfoPage() {
 
     try {
       validUserInfo(nickname);
-      await axios.patch(SERVER_PATH.USER, { nickname });
+      await axios.patch(
+        SERVER_PATH.USER,
+        { nickname },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
       alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {

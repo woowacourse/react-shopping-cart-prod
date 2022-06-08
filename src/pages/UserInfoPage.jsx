@@ -21,7 +21,7 @@ function UserInfoPage() {
       alert(MESSAGE.WITHDRAW_SUCCESS);
       navigate(ROUTES_PATH.HOME);
     } catch (error) {
-      alert(error.response.data);
+      alert(error.response.data.message);
     }
   };
 

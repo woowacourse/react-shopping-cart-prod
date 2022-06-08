@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function useUserForm() {
+const useUserForm = () => {
   const [loginInfo, setLoginInfo] = useState({
     email: '',
     password: '',
@@ -35,6 +35,6 @@ function useUserForm() {
     setSignUpInfo,
     handleUserInfoChange,
   };
-}
+};
 
 export default useUserForm;

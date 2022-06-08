@@ -1,5 +1,7 @@
-const API = 'http://ec2-13-124-88-137.ap-northeast-2.compute.amazonaws.com:8080/api';
-// const API = 'api';
+// const API = 'http://ec2-13-124-88-137.ap-northeast-2.compute.amazonaws.com:8080/api';
+const API = 'http://13.124.30.129:8080/api';
+// const API = 'http://ec2-15-164-104-189.ap-northeast-2.compute.amazonaws.com:8080/api';
+// const API = 'http://ec2-15-164-103-26.ap-northeast-2.compute.amazonaws.com:8080/api';
 
 const SERVER_PATH = {
   PRODUCTS: `${API}/products`,
