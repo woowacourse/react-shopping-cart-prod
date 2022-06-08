@@ -14,11 +14,18 @@ import useFetch from 'hooks/useFetch';
 import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
 import { API_URL_PATH } from 'constants/api';
 
-function ProductListItem({ id, thumbnail, name, price }) {
+function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts }) {
+  const isStored = quantity !== 0;
   const { accessToken } = useSelector(state => state.auth);
-  const { fetchData: storeProductToCart, data } = useFetch({
+  const { fetchData: storeProductToCart } = useFetch({
     url: `${API_URL_PATH.CARTS}`,
     method: 'post',
+    headers: { Authorization: `Bearer ${accessToken}` },
+    skip: true,
+  });
+  const { fetchData: modifyStoredProductQuantity } = useFetch({
+    url: `${API_URL_PATH.CARTS}`,
+    method: 'patch',
     headers: { Authorization: `Bearer ${accessToken}` },
     skip: true,
   });
@@ -47,8 +54,14 @@ function ProductListItem({ id, thumbnail, name, price }) {
     debounce(async () => {
       setModifyQuantityShow(false);
       isModified.current = false;
-      await storeProductToCart({ id, quantity });
+      await modifyStoredProductQuantity({ productId: id, quantity });
+      await loadProducts();
     }, 1000);
+  };
+
+  const handleStoreProductToCart = async () => {
+    await storeProductToCart({ productId: id, quantity: 1 });
+    await loadProducts();
   };
 
   return (
@@ -62,13 +75,19 @@ function ProductListItem({ id, thumbnail, name, price }) {
       <TextBox className="product-price" fontSize="medium">
         {price.toLocaleString()}원
       </TextBox>
-      <CartIconBox className="icon-box">
-        <ShoppingCart role="button" onClick={handleShowModifyQuantityBox} />
+      <CartIconBox onClick={handleShowModifyQuantityBox} className="icon-box">
+        {isStored ? (
+          <StoredQuantityBox onClick={handleShowModifyQuantityBox}>{quantity}</StoredQuantityBox>
+        ) : (
+          <ShoppingCart role="button" onClick={handleStoreProductToCart} />
+        )}
       </CartIconBox>
       <CartQuantityBox show={modifyQuantityShow}>
-        <ModifyQuantityBox onChange={handleChangeQuantity} quantity={data?.quantity ?? 0} />
+        <ModifyQuantityBox
+          onChange={handleChangeQuantity}
+          quantity={quantity !== 0 ? quantity : 1}
+        />
       </CartQuantityBox>
-      <StoredQuantityBox show={!!data?.quantity}>{data?.quantity}</StoredQuantityBox>
     </ItemContainer>
   );
 }
@@ -99,9 +118,11 @@ const ItemContainer = styled.div`
   }
 
   .icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
     grid-area: icon;
     place-self: center end;
-    margin-right: 11px;
     cursor: pointer;
   }
 
@@ -127,6 +148,8 @@ const ProductImage = styled(Image).attrs({ type: 'medium' })`
 `;
 
 const CartIconBox = styled.div`
+  width: 50px;
+  height: 50px;
   &:active {
     transform: scale(0.9);
   }
@@ -156,16 +179,11 @@ const StoredQuantityBox = styled(FlexBox).attrs({
   justifyContent: 'center',
   alignItems: 'center',
 })`
-  display: ${({ show }) => (show ? 'flex' : 'none')};
-  position: absolute;
-  right: 3%;
-  top: 3%;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   color: white;
   font-weight: bold;
-  font-size: 15px;
-  opacity: 0.8;
+  font-size: 18px;
   background-color: ${({ theme }) => theme.colors['MINT_001']};
 `;

@@ -3,7 +3,7 @@ import Error from 'components/@shared/Error/Error.component';
 import ProductListBox from 'components/ProductListBox/ProductListBox.component';
 import ProductListItem from 'components/ProductListItem/ProductListItem.component';
 
-function ProductListContainer({ data }) {
+function ProductListContainer({ data, loadProducts }) {
   return (
     <main>
       <h1 hidden>상품 리스트</h1>
@@ -13,7 +13,7 @@ function ProductListContainer({ data }) {
         <ProductListBox as="ul">
           {data.map(itemInfo => (
             <li key={itemInfo.id}>
-              <ProductListItem {...itemInfo} />
+              <ProductListItem {...itemInfo} loadProducts={loadProducts} />
             </li>
           ))}
         </ProductListBox>

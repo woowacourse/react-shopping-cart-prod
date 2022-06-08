@@ -13,7 +13,6 @@ const initialState = {
 function orderList(state = initialState, action) {
   switch (action.type) {
     case ADD_ALL_ITEM: {
-      console.log(action.payload);
       return {
         items: action.payload.itemList.map(item => item.id),
         total: action.payload.itemList.reduce((acc, cur) => (acc += cur.price * cur.quantity), 0),
