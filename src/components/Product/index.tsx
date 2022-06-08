@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routes from 'routes';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, decrement, deleteItem, increment } from 'redux/modules/cart';
+import { addCartAPI, decrement, deleteItem, increment } from 'redux/modules/cart';
 import { show } from 'redux/modules/snackBar';
 import { selectUserState, UserState } from 'redux/modules/user';
 
@@ -19,24 +19,25 @@ import {
   ProductInfo,
   ProductInfoContainer,
 } from './styles';
+import { addProductToCart } from 'redux/modules/products';
 
 export type ProductType = {
   name: string;
   price: number;
   imageUrl: string;
   id: number;
+  cartId: null | number;
+  quantity: number;
 };
 interface ProductProps {
   productInfo: ProductType;
 }
 
-function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
+function Product({ productInfo: { name, price, imageUrl, id, cartId, quantity } }: ProductProps) {
   const { isLoggedIn }: UserState = useSelector(selectUserState);
   const [isShowCartCounter, setIsShowCartCounter] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const cartItemList = useCartListSelector();
-  const cartItem = useCartItemSelector(id);
   const timeout = useRef<NodeJS.Timeout>();
 
   const onClickCartImage = () => {
@@ -45,12 +46,17 @@ function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
       return;
     }
 
-    if (!cartItemList.some((item) => item.id === id)) {
-      const newItem = { name, price, imageUrl, id, amount: 1, isSelected: false };
+    if (cartId === null) {
+      const item = { name, price, imageUrl, id };
 
-      dispatch(addItem(newItem));
-      dispatch(show(MESSAGES.ADDED_TO_CART));
+      dispatch(
+        addCartAPI(item, () => {
+          dispatch(addProductToCart(id));
+          dispatch(show(MESSAGES.ADDED_TO_CART));
+        })
+      );
     }
+
     setIsShowCartCounter((prev) => !prev);
   };
 
@@ -59,7 +65,7 @@ function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
       clearTimeout(timeout.current);
     }
 
-    if (cartItem?.amount === PRODUCT.MIN_COUNT) {
+    if (quantity === PRODUCT.MIN_COUNT) {
       dispatch(deleteItem(id));
       dispatch(show(MESSAGES.DELETED_FROM_CART));
       setIsShowCartCounter(false);
@@ -73,11 +79,11 @@ function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
       clearTimeout(timeout.current);
     }
 
-    if (cartItem) {
-      dispatch(increment(id));
-      return;
-    }
-    dispatch(addItem({ name, price, imageUrl, id, amount: 1, isSelected: false }));
+    // if (cartItem) {
+    //   dispatch(increment(id));
+    //   return;
+    // }
+    // dispatch(addItem({ name, price, imageUrl, id, quantity: 1, isSelected: false }));
   };
 
   useEffect(() => {
@@ -86,7 +92,7 @@ function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
         setIsShowCartCounter(false);
       }, CART.COUNTER_DISPLAY_TIME);
     }
-  }, [isShowCartCounter, cartItem?.amount]);
+  }, [isShowCartCounter, quantity]);
 
   return (
     <ProductContainer>
@@ -99,12 +105,12 @@ function Product({ productInfo: { name, price, imageUrl, id } }: ProductProps) {
           <span>{price.toLocaleString()}원</span>
         </ProductInfo>
         <CartImageWrapper>
-          {cartItem?.amount && <CartImageBadge />}
+          {quantity > 0 && <CartImageBadge />}
           <img onClick={onClickCartImage} src={cart} alt="장바구니" />
         </CartImageWrapper>
         <CartCounter isShowCartCounter={isShowCartCounter}>
           <button onClick={onClickDecreaseCounter}>-</button>
-          <span>{cartItem?.amount ?? 0}</span>
+          <span>{quantity}</span>
           <button onClick={onClickIncreaseCounter}>+</button>
         </CartCounter>
       </ProductInfoContainer>

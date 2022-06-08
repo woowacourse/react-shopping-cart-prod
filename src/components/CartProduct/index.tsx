@@ -19,7 +19,7 @@ interface CartProductProps {
 }
 
 function CartProduct({
-  item: { id, imageUrl, name, price, amount, isSelected },
+  item: { id, imageUrl, name, price, quantity, isSelected },
 }: CartProductProps) {
   const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ function CartProduct({
   };
 
   const onClickDecreaseCounter = () => {
-    if (amount === PRODUCT.MIN_COUNT) {
+    if (quantity === PRODUCT.MIN_COUNT) {
       return;
     }
     dispatch(decrement(id));
@@ -52,7 +52,7 @@ function CartProduct({
       <ProductOptionContainer>
         <img src={Delete} alt="상품 삭제" onClick={onClickDeleteItem} />
         <ProductAmountContainer>
-          <ProductAmountWrapper>{amount}</ProductAmountWrapper>
+          <ProductAmountWrapper>{quantity}</ProductAmountWrapper>
           <ProductCounterContainer>
             <button onClick={onClickIncreaseCounter}>▲</button>
             <button onClick={onClickDecreaseCounter}>▼</button>

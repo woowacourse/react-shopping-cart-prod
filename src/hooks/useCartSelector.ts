@@ -9,7 +9,7 @@ const selectCartItemById = (state: RootState, targetId: number) => {
 const getSelectedItemAmount = (state: RootState) => {
   return state.cart.items
     .filter((item) => item.isSelected)
-    .reduce((acc: number, cur: CartItem) => acc + cur.amount * cur.price, 0);
+    .reduce((acc: number, cur: CartItem) => acc + cur.quantity * cur.price, 0);
 };
 
 const useCartListSelector = () => useSelector((state: RootState) => state.cart.items);
