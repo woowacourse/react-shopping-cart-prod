@@ -218,6 +218,7 @@ export const userHandler = [
       ctx.status(200),
       ctx.json({
         accessToken: "ddfsdfadsfdsafsad",
+        expirationTime: 3 * 60 * 60 * 1000,
         customer: {
           id: selectedUser.id,
           email: selectedUser.email,

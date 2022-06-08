@@ -1,6 +1,6 @@
 export const setCookie = (key, value, period) => {
   const expiredDate = new Date();
-  expiredDate.setDate(expiredDate.getDate() + period);
+  expiredDate.setTime(expiredDate.getTime() + period);
 
   const newCookie = `${key}=${value};expires=${expiredDate.toUTCString()}`;
 
