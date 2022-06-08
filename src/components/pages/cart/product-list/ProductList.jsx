@@ -36,7 +36,7 @@ function ProductList() {
     );
     if (isNonExistCheckedItem) return;
 
-    dispatch(removeCheckedCartItem());
+    dispatch(removeCheckedCartItem(cartList));
   };
 
   return (

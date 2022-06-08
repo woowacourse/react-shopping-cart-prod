@@ -131,8 +131,31 @@ export const decrementCartItemQuantity =
       dispatch(toggleSnackbarOpen(error));
     }
   };
-export const removeCheckedCartItem = () => async (dispatch) => {
-  dispatch(createAction(ACTION_TYPES.REMOVE_CHECKED_CART_ITEM));
+export const removeCheckedCartItem = (cartList) => async (dispatch) => {
+  try {
+    const filterCheckedCartItem = cartList.filter(
+      (cartItem) => cartItem.checked === true
+    );
+    const checkedCartItemIds = filterCheckedCartItem.map(
+      (cartItem) => cartItem.id
+    );
+    console.log(checkedCartItemIds);
+    checkedCartItemIds.forEach(async (id) => {
+      return await axios.delete(`${BASE_URL}/users/me/carts/${id}`, {
+        headers: {
+          Authorization:
+            getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+        },
+      });
+    });
+    dispatch(createAction(ACTION_TYPES.REMOVE_CHECKED_CART_ITEM));
+  } catch (error) {
+    if (error.response?.status === 401) {
+      dispatch(toggleSnackbarOpen("잘못된 접근입니다."));
+      return;
+    }
+    dispatch(toggleSnackbarOpen(error));
+  }
 };
 export const removeRowCartItem = (id) => async (dispatch) => {
   try {
