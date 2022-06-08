@@ -52,8 +52,6 @@ function Button({
 }
 
 const StyledButton = styled.button`
-  /* background: ${({ theme: { colors } }) => colors.redPink};
-  color: ${({ theme: { colors } }) => colors.white}; */
   border-radius: 5px;
 
   font-size: 17px;
