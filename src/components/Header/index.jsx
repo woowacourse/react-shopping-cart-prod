@@ -13,7 +13,10 @@ const Header = () => {
     <Wrapper>
       <Link to={PATH.HOME}>
         <div className="home flex-row">
-          <img src="/img/shopping-cart-white.png" alt="home-button" />
+          <img
+            src={`${process.env.PUBLIC_URL}/img/shopping-cart-white.png`}
+            alt="home-button"
+          />
           <button>WOOWA SHOP</button>
         </div>
       </Link>

@@ -12,10 +12,8 @@ const PrivateRoute = ({ children, path = PATH.LOGIN, showMessage = true }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const showRealMessage = async () => {
-      await dispatch(onMessage(SNACKBAR_MESSAGE.noAuth()));
-    };
-    accessToken || (showMessage && showRealMessage());
+    accessToken ||
+      (showMessage && dispatch(onMessage(SNACKBAR_MESSAGE.noAuth())));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
