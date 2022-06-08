@@ -10,7 +10,7 @@ import styled from 'styled-components';
 import { CartStoreState, User } from 'types/index';
 import { getAccessToken, isLogin } from 'utils/auth';
 
-import { CART_MESSAGE } from 'constants/message';
+import { CART_MESSAGE, USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 
 import RightMenu from './RightMenu';
@@ -40,6 +40,8 @@ function Header() {
   }, [dispatch]);
 
   const onClickLogoutButton = () => {
+    if (!window.confirm(USER_MESSAGE.ASK_LOGOUT)) return;
+
     dispatch(userActions.resetUser());
     dispatch(cartActions.resetCart());
 
