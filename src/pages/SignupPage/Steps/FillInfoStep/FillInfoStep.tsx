@@ -279,7 +279,7 @@ function FillInfoStep() {
           <div style={{ display: 'flex', gap: '12px', width: '100%' }}>
             <Input
               type="text"
-              name="zoneCode"
+              name="zonecode"
               placeholder="우편번호"
               value={addressData?.zonecode}
               readOnly
