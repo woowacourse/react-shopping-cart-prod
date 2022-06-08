@@ -33,6 +33,14 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
     skip: true,
   });
   const { email, password, passwordCheck } = useSelector(state => state.userInfo);
+  const submitDisabled =
+    !email.value.length ||
+    email.error ||
+    !email.disabled ||
+    !password.value.length ||
+    password.error ||
+    !passwordCheck.value.length ||
+    passwordCheck.error;
 
   const handleCheckDuplicatedEmail = async e => {
     e.preventDefault();
@@ -102,7 +110,7 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
         <ArrowButton direction="left" />
         <TextBox fontSize="small">이전</TextBox>
       </FlexBox>
-      <Button onClick={onSubmit} width="100%" borderRadius="10px">
+      <Button disabled={submitDisabled} onClick={onSubmit} width="100%" borderRadius="10px">
         <TextBox color="WHITE_001">{userInfoButtonText}</TextBox>
       </Button>
     </FlexBox>
