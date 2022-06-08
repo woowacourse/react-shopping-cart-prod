@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Product from '../components/Product';
 import useFetch from '../hooks/useFetch';
 import Loading from '../components/Loading';
-import { MESSAGE, SERVER_PATH } from '../constants';
+import { SERVER_PATH } from '../constants';
 import useCart from '../hooks/useCart';
 
 function ProductListPage() {
@@ -13,16 +13,13 @@ function ProductListPage() {
   const { addItem, deleteItem } = useCart();
 
   const idSetInCart = useMemo(() => new Set(cartList.map((cart) => cart.id)), [cartList]);
-  console.log('idSetInCart', idSetInCart);
 
   const handleCartItem = (id, isCart) => {
     if (isCart) {
       deleteItem(id);
-      alert(MESSAGE.REMOVE);
       return;
     }
     addItem(id);
-    alert(MESSAGE.ADD);
   };
 
   if (isError) return <h1>error</h1>;

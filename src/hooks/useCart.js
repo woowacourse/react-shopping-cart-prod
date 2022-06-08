@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
-import { SERVER_PATH, STORAGE_KEY } from '../constants';
+import { MESSAGE, SERVER_PATH, STORAGE_KEY } from '../constants';
 import { getCartItemAsync } from '../store/cart/cart.actions';
 
 const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -16,6 +16,7 @@ const useCart = () => {
         },
       });
       dispatch(getCartItemAsync(accessToken));
+      alert(MESSAGE.ADD);
     } catch (error) {
       alert(error.response.data.message);
     }
@@ -29,6 +30,7 @@ const useCart = () => {
         },
       });
       dispatch(getCartItemAsync(accessToken));
+      alert(MESSAGE.REMOVE);
     } catch (error) {
       alert(error.response.data.message);
     }
