@@ -1,6 +1,7 @@
 import { getOrderById } from '@/api/orderList';
-import Image from '@/components/common/Image/Image';
 import PageTemplate from '@/components/common/PageTemplate/PageTemplate';
+import { withLogin } from '@/components/helper/withLogin';
+import OrderInformation from '@/components/order/OrderInformation/OrderInformation';
 import useResponsive from '@/hooks/useResponsive';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -26,29 +27,10 @@ function OrderDetail() {
     <PageTemplate>
       <Styled.Container>
         <Styled.Title>주문내역상세</Styled.Title>
-        <Styled.OrderNumber>주문번호: {orderId}</Styled.OrderNumber>
-        <Styled.OrderDetailsContainer>
-          {orderList.map((order: any) => (
-            <>
-              <Styled.OrderItemContainer>
-                <Image
-                  src={order.imageURL}
-                  alt="대체 이미지"
-                  width={responsive === 'desktop' ? '200px' : '150px'}
-                />
-                <Styled.OrderDescriptionContainer>
-                  <h2>{order.name}</h2>
-                  <p>
-                    {order.quantity * order.price}원 / 수량: {order.quantity}개
-                  </p>
-                </Styled.OrderDescriptionContainer>
-              </Styled.OrderItemContainer>
-            </>
-          ))}
-        </Styled.OrderDetailsContainer>
+        <OrderInformation orderList={orderList} responsive={responsive} orderId={orderId} />
       </Styled.Container>
     </PageTemplate>
   );
 }
 
-export default OrderDetail;
+export default withLogin(OrderDetail, true);
