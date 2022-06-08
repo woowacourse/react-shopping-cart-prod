@@ -1,55 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import useSnackbar from 'hooks/useSnackbar';
-import useLogout from 'hooks/useLogout';
-
 import { Modal, Container, Input, Title, AuthButton } from 'components';
 import Styled from './index.style';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-
-import { deleteCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
-import apiClient from 'apis/apiClient';
-import { doLogout } from 'reducers/auth.reducer';
-import { doInitializeCartList } from 'reducers/cart.reducer';
+import useDeleteAccountAPI from 'hooks/apis/useDeleteAccountAPI';
 
 const AccountDeleteModal = ({ handleModal }) => {
-  const { logoutByError } = useLogout();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
-  const [renderSnackbar] = useSnackbar();
+  const { deleteAccount } = useDeleteAccountAPI(handleModal, password, isCorrectPassword);
 
   useEffect(() => {
     setIsCorrectPassword(password.length >= 10);
-  }, [password]);
-
-  // 회원탈퇴
-  const deleteAccount = async () => {
-    try {
-      if (!isCorrectPassword) return;
-
-      await apiClient.delete('/customers', {
-        data: {
-          password,
-        },
-      });
-
-      deleteCookie('accessToken');
-      dispatch(doLogout());
-      dispatch(doInitializeCartList({ shoppingCart: [] }));
-      handleModal();
-      renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
-      navigate('/');
-    } catch (error) {
-      const customError = error.response.data;
-      logoutByError(customError);
-      navigate('/login');
-      renderSnackbar(customError.message, 'FAILED');
-    }
-  };
+  }, [password.length]);
 
   return (
     <Modal onCloseModal={handleModal}>
