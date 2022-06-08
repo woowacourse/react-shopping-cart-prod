@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
+import userThunk from 'store/user/thunk';
 
 import useFetch from 'hooks/useFetch';
 import useFormValidation from 'hooks/useFormValidation';
@@ -13,6 +15,7 @@ import { userValidator } from 'lib/validateUtils';
 import * as S from '../../styles';
 
 function ProfileEdit({ confirmPassword }) {
+  const dispatch = useDispatch();
   const currentNickname = useSelector(({ user }) => user.userInfo.nickname);
 
   const validationList = {
@@ -77,6 +80,8 @@ function ProfileEdit({ confirmPassword }) {
     fetchControl.start(requestBody, {
       success: () => {
         alert('변경이 완료되었습니다.');
+
+        targetName !== 'password' && dispatch(userThunk.getUserProfile());
         setEditStatus({ ...editStatus, [targetName]: false });
       },
       error: (errorMessage) => alert(errorMessage),
