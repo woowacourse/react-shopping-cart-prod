@@ -1,13 +1,23 @@
 import axios from 'axios';
 import { SERVER_URL } from 'configs/api';
 import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Customer } from 'types';
+import { Customer, StoreState } from 'types';
+
+import { actions } from 'redux/actions';
 
 import useDaumPostcode, { Address } from 'hooks/useDaumPostcode';
 
+type SelectedState = StoreState['userState'];
+
 const useProfileForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { id: userId } = useSelector<StoreState, SelectedState>(
+    ({ userState }) => userState
+  );
+
   const { postcode, addressData, setAddressData } = useDaumPostcode();
   const [values, setValues] = useState<Record<string, string>>({
     email: '',
@@ -38,21 +48,18 @@ const useProfileForm = () => {
 
   const handleClickUnregisterButton = async () => {
     const accessToken = localStorage.getItem('accessToken');
-    const customerId = localStorage.getItem('userId');
 
     try {
       await axios({
         method: 'delete',
-        url: `${SERVER_URL}/api/customers/${customerId}`,
+        url: `${SERVER_URL}/api/customers/${userId}`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
 
       localStorage.removeItem('accessToken');
-      localStorage.removeItem('userId');
-
-      alert('계정이 삭제되었습니다.');
+      dispatch(actions.initUserState());
       navigate('/');
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -68,19 +75,17 @@ const useProfileForm = () => {
 
     if (Object.entries(errors as Record<string, string>).length !== 0) return;
 
-    const accessToken = localStorage.getItem('accessToken');
-    const customerId = localStorage.getItem('userId');
-
     const formData = new FormData(e.target as HTMLFormElement);
     const requestBody = {
       ...(Object.fromEntries(formData.entries()) as Partial<Customer>),
       profileImageUrl: `http://gravatar.com/avatar/${Date.now()}?d=identicon`,
     };
+    const accessToken = localStorage.getItem('accessToken');
 
     try {
       await axios({
         method: 'put',
-        url: `${SERVER_URL}/api/customers/${customerId}`,
+        url: `${SERVER_URL}/api/customers/${userId}`,
         data: requestBody,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -97,7 +102,7 @@ const useProfileForm = () => {
     }
   };
 
-  const loadUserInfo = async (accessToken: string, customerId: string) => {
+  const loadUserInfo = async (accessToken: string, userId: number) => {
     const {
       data: {
         name,
@@ -112,7 +117,7 @@ const useProfileForm = () => {
     } = await axios({
       method: 'get',
       data: '',
-      url: `${SERVER_URL}/api/customers/${customerId}`,
+      url: `${SERVER_URL}/api/customers/${userId}`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -140,16 +145,15 @@ const useProfileForm = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
-    const customerId = localStorage.getItem('userId');
 
-    if (!accessToken || !customerId) {
+    if (!accessToken || userId === null) {
       navigate('/signin');
     }
 
     try {
-      loadUserInfo(accessToken as string, customerId as string);
+      loadUserInfo(accessToken as string, userId as number);
     } catch (e) {
-      console.error('error');
+      alert('error');
     }
   }, [setAddressData]);
 

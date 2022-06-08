@@ -1,9 +1,13 @@
 import axios from 'axios';
 import { SERVER_URL } from 'configs/api';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { SigninResponseBody } from 'types';
 
+import { actions } from 'redux/actions';
+
 const useSigninForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -16,11 +20,11 @@ const useSigninForm = () => {
         `${SERVER_URL}/api/customer/authentication/sign-in`,
         requestBody
       );
-
       const { accessToken, userId } = response.data;
 
       localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('userId', String(userId));
+      dispatch(actions.getUserId(userId));
+      dispatch(actions.getUserInfo(accessToken, userId));
       navigate('/');
     } catch (e) {
       if (axios.isAxiosError(e)) {
