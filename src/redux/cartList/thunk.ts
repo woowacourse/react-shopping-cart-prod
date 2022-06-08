@@ -1,5 +1,4 @@
-import { BASE_URL } from 'apis';
-import axios from 'axios';
+import { client } from 'apis';
 import type { Dispatch } from 'redux';
 import { CartListAction, cartListActions } from 'redux/cartList/action';
 
@@ -8,7 +7,7 @@ export const getCartListRequest = () => async (dispatch: Dispatch<CartListAction
 
   dispatch(cartListActions.getCartListActionGroup.request());
   try {
-    const response = await axios.get(`${BASE_URL}/customers/carts`, {
+    const response = await client.get('/customers/carts', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -28,8 +27,8 @@ export const putCartItemRequest =
 
     dispatch(cartListActions.putCartItemActionGroup.request());
     try {
-      const response = await axios.put(
-        `${BASE_URL}/customers/carts/${id}`,
+      const response = await client.put(
+        `/customers/carts/${id}`,
         {
           quantity,
         },
@@ -54,8 +53,8 @@ export const postCartItemRequest =
 
     dispatch(cartListActions.postCartItemActionGroup.request());
     try {
-      const response = await axios.post(
-        `${BASE_URL}/customers/carts`,
+      const response = await client.post(
+        '/customers/carts',
         { productId },
         {
           headers: {
@@ -77,7 +76,7 @@ export const deleteCartItemRequest = (id: number) => async (dispatch: Dispatch<C
 
   dispatch(cartListActions.deleteCartItemActionGroup.request());
   try {
-    await axios.delete(`${BASE_URL}/customers/carts/${id}`, {
+    await client.delete(`/customers/carts/${id}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -96,7 +95,7 @@ export const deleteAllCartItemRequest = () => async (dispatch: Dispatch<CartList
 
   dispatch(cartListActions.deleteAllCartItemActionGroup.request());
   try {
-    await axios.delete(`${BASE_URL}/customers/carts`, {
+    await client.delete('/customers/carts', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

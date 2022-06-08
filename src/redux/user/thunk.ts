@@ -1,4 +1,4 @@
-import { authClient } from 'apis';
+import { client } from 'apis';
 import { AxiosError } from 'axios';
 import type { Dispatch } from 'redux';
 import { RootState } from 'redux/rootReducer';
@@ -11,7 +11,7 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
 
   dispatch(userActions.getUserGroup.request());
   try {
-    const response = await authClient.get('/customers/me', {
+    const response = await client.get('/customers/me', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -31,7 +31,7 @@ export const login =
   (userInfo: LoginRequest) => async (dispatch: Dispatch<UserAction>, getState: () => RootState) => {
     dispatch(userActions.loginGroup.request());
     try {
-      const response = await authClient.post<LoginResponse>('/login', userInfo);
+      const response = await client.post<LoginResponse>('/login', userInfo);
       const { accessToken } = response.data;
 
       localStorage.setItem('access-token', accessToken);
@@ -51,7 +51,7 @@ export const signup =
   (userInfo: UserInfoWithPassword) => async (dispatch: Dispatch<UserAction>) => {
     dispatch(userActions.signupGroup.request());
     try {
-      await authClient.post<UserInfo>('/customers', userInfo);
+      await client.post<UserInfo>('/customers', userInfo);
 
       dispatch(userActions.signupGroup.success());
     } catch (e: unknown) {
@@ -71,7 +71,7 @@ export const editUserInfo =
 
     dispatch(userActions.editGroup.request());
     try {
-      const response = await authClient.put<UserInfo>('/customers/me', userInfo, {
+      const response = await client.put<UserInfo>('/customers/me', userInfo, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -94,7 +94,7 @@ export const deleteUser =
     if (!accessToken) return;
     dispatch(userActions.deleteGroup.request());
     try {
-      const response = await authClient.delete('/customers/me', {
+      const response = await client.delete('/customers/me', {
         data: password,
         headers: {
           Authorization: `Bearer ${accessToken}`,
