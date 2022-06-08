@@ -11,6 +11,7 @@ export const ImageContainer = styled.div`
 `;
 
 export const Image = styled.img`
+  display: ${({ isLoaded }: { isLoaded: boolean }) => (isLoaded ? 'block' : 'none')};
   width: 100%;
   height: 100%;
   object-fit: cover;
