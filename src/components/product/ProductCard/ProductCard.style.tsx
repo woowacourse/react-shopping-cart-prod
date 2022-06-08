@@ -5,6 +5,8 @@ export const Container = styled.div`
   flex-direction: column;
   gap: 10px;
 
+  padding: 15px;
+
   cursor: pointer;
 
   &:hover {
@@ -17,6 +19,11 @@ export const Container = styled.div`
       transition: transform 0.5s;
     }
   }
+
+  box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 2px 2px 8px 1px rgba(0, 0, 0, 0.4);
+
+  box-sizing: border-box;
 `;
 
 export const Content = styled.div`

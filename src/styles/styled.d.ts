@@ -3,6 +3,7 @@ import 'styled-components';
 declare module 'styled-components' {
   export interface DefaultTheme {
     brandColor_1: string;
+    brandColor_2: string;
 
     mobile: string;
     tablet: string;

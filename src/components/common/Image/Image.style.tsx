@@ -8,6 +8,13 @@ export const ImageContainer = styled.div`
   aspect-ratio: 1 / 1;
 
   overflow: hidden;
+
+  &:hover {
+    img {
+      transform: scale(1.07);
+      transition: transform 0.5s;
+    }
+  }
 `;
 
 export const Image = styled.img<{ isLoad: boolean }>`

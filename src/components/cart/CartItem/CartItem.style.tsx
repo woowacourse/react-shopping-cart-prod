@@ -8,7 +8,12 @@ export const Container = styled.div`
   padding: 10px 0;
   gap: 20px;
 
-  border-bottom: 1px solid ${({ theme }) => theme.greyColor_1};
+  box-shadow: 5px 3px 8px -2px rgba(0, 0, 0, 0.43);
+  -webkit-box-shadow: 5px 3px 8px -2px rgba(0, 0, 0, 0.43);
+
+  box-sizing: border-box;
+
+  padding: 10px;
 `;
 export const ImageWrapper = styled.div`
   cursor: pointer;
@@ -32,6 +37,10 @@ export const NameWrapper = styled.div`
 
   display: flex;
   align-items: center;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 export const PriceWrapper = styled.div`

@@ -42,19 +42,21 @@ function CartList({
         </Button>
       </Styled.SelectWrapper>
       <Styled.Amount>배송 상품 ({cartList.length}개)</Styled.Amount>
-      {cartList.map(cart => (
-        <CartItem
-          key={cart.id}
-          cart={cart}
-          isLoading={checkCartItemLoading(cart.id)}
-          isChecked={checkCartItemChecked(cart.id)}
-          onClickDecreaseButton={() => decreaseCartItemCount(cart)}
-          onClickIncreaseButton={() => increaseCartItemCount(cart)}
-          onChangeCount={count => changeCartItemCount(cart, count)}
-          onClickDeleteButton={() => deleteCartItem(cart)}
-          onClickCheckBox={() => selectCartItem(cart)}
-        />
-      ))}
+      <Styled.CartItemWrapper>
+        {cartList.map(cart => (
+          <CartItem
+            key={cart.id}
+            cart={cart}
+            isLoading={checkCartItemLoading(cart.id)}
+            isChecked={checkCartItemChecked(cart.id)}
+            onClickDecreaseButton={() => decreaseCartItemCount(cart)}
+            onClickIncreaseButton={() => increaseCartItemCount(cart)}
+            onChangeCount={count => changeCartItemCount(cart, count)}
+            onClickDeleteButton={() => deleteCartItem(cart)}
+            onClickCheckBox={() => selectCartItem(cart)}
+          />
+        ))}
+      </Styled.CartItemWrapper>
     </Styled.Container>
   );
 }
