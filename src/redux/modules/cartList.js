@@ -178,7 +178,7 @@ export const removeRowCartItem = (id) => async (dispatch) => {
       dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
       return;
     }
-    l - dispatch(toggleSnackbarOpen(error));
+    dispatch(toggleSnackbarOpen(error));
   }
 };
 
