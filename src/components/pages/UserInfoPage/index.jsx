@@ -1,9 +1,15 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { theme } from "style";
-
-import { BASE_SERVER_URL, SERVER_PATH, ROUTES, RANGE } from "constants";
+import {
+  BASE_SERVER_URL,
+  SERVER_PATH,
+  ROUTES,
+  RANGE,
+  COOKIE_KEY,
+} from "constants";
+import { getCookie } from "util/cookie";
 
 import { useStore } from "hooks/useStore";
 import { checkUserName } from "validator";
@@ -28,10 +34,10 @@ function UserInfoPage() {
   const {
     data: user,
     isLoading,
+    isLoggedIn,
     errorMessage: serverError,
     dispatch,
   } = useStore("user");
-  const navigator = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [username, setUsername] = useState(user.username);
@@ -65,7 +71,7 @@ function UserInfoPage() {
       const response = await updateUserBaseServer({
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.accessToken}`,
+          Authorization: `Bearer ${getCookie(COOKIE_KEY.TOKEN)}`,
         },
         url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${user.id}`,
         body: JSON.stringify({ username: username }),
@@ -102,7 +108,13 @@ function UserInfoPage() {
   };
 
   const deleteAccount = () => {
-    dispatch(deleteUser(user.id, user.accessToken, passwordRef.current.value));
+    dispatch(
+      deleteUser(
+        user.id,
+        getCookie(COOKIE_KEY.TOKEN),
+        passwordRef.current.value
+      )
+    );
   };
 
   const closeModal = () => {
@@ -123,18 +135,14 @@ function UserInfoPage() {
   }, [user.username]);
 
   useEffect(() => {
-    if (!user.accessToken) {
-      navigator(ROUTES.ROOT, { replace: true });
-    }
-  }, [user.accessToken]);
-
-  useEffect(() => {
     return () => {
       dispatch({ type: USER_ACTION.CLEAN_ERROR });
     };
   }, []);
 
-  return (
+  return !isLoggedIn ? (
+    <Navigate to={ROUTES.ROOT} replace />
+  ) : (
     <UserInfoPageContainer>
       <PageHeader>{isEditable ? "회원정보 수정" : "회원정보"}</PageHeader>
       {isLoading && <Spinner />}

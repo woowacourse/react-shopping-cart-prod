@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { theme } from "style";
 
@@ -18,7 +18,13 @@ import ErrorPage from "../ErrorPage";
 
 function LoginPage() {
   const navigator = useNavigate();
-  const { data: user, isLoading, errorMessage, dispatch } = useStore("user");
+  const {
+    data: user,
+    isLoading,
+    isLoggedIn,
+    errorMessage,
+    dispatch,
+  } = useStore("user");
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
@@ -27,13 +33,13 @@ function LoginPage() {
     dispatch(login(emailRef.current.value, passwordRef.current.value));
   };
 
-  const isLoginSuccess = !isLoading && !errorMessage && user.accessToken;
+  const isLoginSuccess = !isLoading && !errorMessage && user.id;
   useEffect(() => {
     if (isLoginSuccess) {
       alert(`${user.username}님, 환영합니다~~ :D`);
       navigator(ROUTES.ROOT, { replace: true });
     }
-  }, [isLoading]);
+  }, [isLoginSuccess]);
 
   useEffect(() => {
     return () => {
@@ -41,7 +47,9 @@ function LoginPage() {
     };
   }, []);
 
-  return (
+  return isLoggedIn ? (
+    <Navigate to={ROUTES.ROOT} replace />
+  ) : (
     <LoginPageContainer>
       <PageHeader>로그인</PageHeader>
       {isLoading && <Spinner />}
