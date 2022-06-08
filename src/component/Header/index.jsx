@@ -14,6 +14,7 @@ import baedale from 'assets/baedale.png';
 import baedaleHover from 'assets/baedale_hover.png';
 
 import {AUTH} from 'store/modules/auth';
+import {CART} from 'store/modules/cart';
 
 import useFetch from 'hook/useFetch';
 
@@ -23,7 +24,7 @@ export default function Header() {
 
   const isLogin = useSelector((state) => state.authReducer.isLogin);
 
-  const userInfo = useFetch('get');
+  const {data: user, fetch: userInfo} = useFetch('get');
 
   const checkLogin = () => {
     const response = JSON.parse(localStorage.getItem('accessToken'));
@@ -35,10 +36,11 @@ export default function Header() {
 
     const accessToken = response.accessToken;
 
-    userInfo.fetch({
+    userInfo({
       API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
       onSuccess: () => {
+        console.log(user);
         dispatch({type: AUTH.LOGIN});
       },
       onFail: (error) => {
@@ -54,6 +56,7 @@ export default function Header() {
   const handleLogoClick = () => navigation(PATH.HOME);
 
   const handleClickLogout = () => {
+    dispatch({type: CART.DELETE_ALL});
     dispatch({type: AUTH.LOGOUT});
   };
 
@@ -78,6 +81,7 @@ export default function Header() {
                   </S.ProfileLinkText>
                   <S.ProfileNavText to={PATH.EDIT_USER_INFO}>회원 정보 수정</S.ProfileNavText>
                   <S.ProfileNavText to={PATH.WITHDRAWAL}>회원탈퇴</S.ProfileNavText>
+                  <div></div>
                 </S.ProfileNavContainer>
               </div>
             </S.Profile>

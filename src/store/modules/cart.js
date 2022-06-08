@@ -2,6 +2,7 @@ export const CART = {
   INITIALIZE: 'INITIALIZE_CART',
   ADD: 'ADD_CART',
   DELETE: 'DELETE_CART',
+  DELETE_ALL: 'DELETE_ALL',
   INCREASE_QUANTITY: 'INCREASE_QUANTITY',
   DECREASE_QUANTITY: 'DECREASE_QUANTITY',
   DELETE_SELECTED_CART: 'DELETE_SELECTED_CART',
@@ -36,6 +37,9 @@ export default function cartReducer(state = INITIAL_STATE, action) {
       const newState = state.cart.filter((item) => item.id !== id);
 
       return {cart: newState};
+    }
+    case CART.DELETE_ALL: {
+      return {cart: []};
     }
     case CART.INCREASE_QUANTITY: {
       const id = action.payload;
