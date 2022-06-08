@@ -27,3 +27,14 @@ export const getOrderById = id => {
 
   return ordersAPI.get(`/${id}`, config);
 };
+
+export const getAllOrderList = () => {
+  const accessToken = getCookie('access-token');
+  const config = {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  return ordersAPI.get('/', config);
+};
