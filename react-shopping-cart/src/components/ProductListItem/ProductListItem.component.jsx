@@ -17,16 +17,23 @@ import { API_URL_PATH } from 'constants/api';
 function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts }) {
   const isStored = quantity !== 0;
   const { accessToken } = useSelector(state => state.auth);
+  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
   const { fetchData: storeProductToCart } = useFetch({
     url: `${API_URL_PATH.CARTS}`,
     method: 'post',
-    headers: { Authorization: `Bearer ${accessToken}` },
+    headers,
     skip: true,
   });
   const { fetchData: modifyStoredProductQuantity } = useFetch({
     url: `${API_URL_PATH.CARTS}`,
     method: 'patch',
-    headers: { Authorization: `Bearer ${accessToken}` },
+    headers,
+    skip: true,
+  });
+  const { fetchData: deleteStroedProduct } = useFetch({
+    url: API_URL_PATH.CARTS,
+    method: 'delete',
+    headers,
     skip: true,
   });
 
@@ -42,26 +49,37 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
 
       isModified.current = false;
       setModifyQuantityShow(false);
-    }, 2500);
+    }, 2000);
   };
   const handleChangeQuantity = async quantity => {
-    if (!accessToken) {
-      alert('로그인 해주세요!');
-      return;
-    }
     isModified.current = true;
 
     debounce(async () => {
       setModifyQuantityShow(false);
+
       isModified.current = false;
+
       await modifyStoredProductQuantity({ productId: id, quantity });
       await loadProducts();
-    }, 1000);
+    }, 500);
   };
 
   const handleStoreProductToCart = async () => {
+    if (!accessToken) {
+      alert('로그인 해주세요!');
+      return;
+    }
+    handleShowModifyQuantityBox();
+
     await storeProductToCart({ productId: id, quantity: 1 });
     await loadProducts();
+  };
+
+  const handleDeleteProduct = async () => {
+    await deleteStroedProduct({ productIds: [id] });
+    await loadProducts();
+
+    setModifyQuantityShow(false);
   };
 
   return (
@@ -75,7 +93,7 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
       <TextBox className="product-price" fontSize="medium">
         {price.toLocaleString()}원
       </TextBox>
-      <CartIconBox onClick={handleShowModifyQuantityBox} className="icon-box">
+      <CartIconBox className="icon-box">
         {isStored ? (
           <StoredQuantityBox onClick={handleShowModifyQuantityBox}>{quantity}</StoredQuantityBox>
         ) : (
@@ -85,6 +103,7 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
       <CartQuantityBox show={modifyQuantityShow}>
         <ModifyQuantityBox
           onChange={handleChangeQuantity}
+          onDelete={handleDeleteProduct}
           quantity={quantity !== 0 ? quantity : 1}
         />
       </CartQuantityBox>

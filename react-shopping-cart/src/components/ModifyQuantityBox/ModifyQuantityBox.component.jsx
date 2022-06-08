@@ -6,10 +6,10 @@ import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 
 import { ReactComponent as TrashCan } from 'assets/images/trash.svg';
 
-function ModifyQuantityBox({ onChange, quantity }) {
+function ModifyQuantityBox({ onChange, quantity, onDelete }) {
   const [count, setCount] = useState(quantity);
   const handleDecrement = () => {
-    if (count <= 0) {
+    if (count <= 1) {
       return;
     }
     setCount(count - 1);
@@ -24,7 +24,7 @@ function ModifyQuantityBox({ onChange, quantity }) {
   return (
     <>
       <ModifyQuantityButton onClick={handleDecrement}>
-        {count === 1 ? <DeleteCartButton fill="white" /> : '-'}
+        {count === 1 ? <DeleteCartButton onClick={onDelete} fill="white" /> : '-'}
       </ModifyQuantityButton>
       <span>{count}</span>
       <ModifyQuantityButton onClick={handleIncrement}>+</ModifyQuantityButton>
