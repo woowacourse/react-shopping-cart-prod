@@ -16,7 +16,7 @@ import type { Item } from 'types/domain';
 const ItemDetail = () => {
   const params = useParams();
   const id = Number(params.id);
-  const { data: item, loading, error } = useFetch<Item>(`${LOCAL_BASE_URL}/itemList/${id}`);
+  const { data: item, loading, error } = useFetch<Item>(`${LOCAL_BASE_URL}/products/${id}`);
   const { data: cartList } = useThunkFetch<CartListAction>(
     state => state.cartListReducer,
     getCartList
@@ -26,18 +26,18 @@ const ItemDetail = () => {
 
   const onClick = () => {
     updateCartItemQuantity(id);
-    openSnackbar('cart');
+    openSnackbar({ type: 'cart', value: null });
   };
 
   if (loading) return <Loading />;
   if (error) return <RequestFail />;
 
-  const { thumbnailUrl, title, price } = item;
+  const { imageUrl, name, price } = item;
 
   return (
     <StyledRoot>
-      <CroppedImage src={thumbnailUrl} width='57rem' height='57rem' alt='상품' />
-      <StyledTitle>{title}</StyledTitle>
+      <CroppedImage src={imageUrl} width='57rem' height='57rem' alt='상품' />
+      <StyledTitle>{name}</StyledTitle>
       <StyldPrice>
         <StyledPriceDescription>금액</StyledPriceDescription>
         <StyledPriceValue>{price}</StyledPriceValue>

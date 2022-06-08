@@ -7,13 +7,13 @@ export interface ItemListState {
   data: Item[];
 }
 
-export const initialState: ItemListState = {
+export const initialItemListState: ItemListState = {
   loading: false,
   error: null,
   data: [],
 };
 
-export const itemListReducer = (state = initialState, action: ItemListAction) => {
+export const itemListReducer = (state = initialItemListState, action: ItemListAction) => {
   switch (action.type) {
     case ItemListActionType.GET_ITEM_LIST_START:
       return { loading: true, error: null, data: [] };
