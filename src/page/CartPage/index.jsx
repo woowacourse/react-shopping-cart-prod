@@ -11,7 +11,6 @@ import Styled from 'page/CartPage/index.style';
 import {
   doAddProductToOrder,
   doDecideOrder,
-  doInitializeCartList,
   doInitializeOrder,
   doSelectiveDeleteFromCart,
 } from 'reducers/cart.reducer';

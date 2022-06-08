@@ -23,8 +23,8 @@ const ProductItem = ({ productId, name, price, image }) => {
   const [renderSnackbar] = useSnackbar();
   const { isAuthenticated } = useSelector(state => state.authReducer);
 
-  const [isInCart, product] = useCart(productId);
-  const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);
+  const [isInCart, productInCart] = useCart(productId);
+  const [quantity, setQuantity] = useState(isInCart ? productInCart.quantity : 1);
 
   const [isControllerOpen, setIsControllerOpen] = useState(false);
   const [clearTimer, setAutoCloseTimer, extendTimer] = useClose();
