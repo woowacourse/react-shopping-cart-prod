@@ -1,3 +1,4 @@
+import { BASE_URL_LIST, members } from 'apis';
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
@@ -6,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { logout } from 'redux/user/action';
 import { PATH } from 'Routers';
 import styled from 'styled-components';
+import { flexCenter } from 'styles/mixin';
 
 import Avatar from './Avatar';
 import Dropdown from './Dropdown';
@@ -16,6 +18,7 @@ const Header = () => {
   const isLogin = useAppSelector(state => !!state.user.data);
   const name = useAppSelector(state => state.user.data?.name);
   const [isShowDropdown, setIsShowDropdown] = useState(false);
+  const [isShowAPIDropdown, setIsShowAPIDropdown] = useState(false);
 
   const closeDropdown = () => {
     setIsShowDropdown(false);
@@ -31,6 +34,13 @@ const Header = () => {
     localStorage.removeItem('access-token');
   };
 
+  const handleClickMember = (member: string) => {
+    dispatch(logout());
+    localStorage.removeItem('access-token');
+    localStorage.setItem('baseUrl', JSON.stringify(BASE_URL_LIST[member]));
+    window.location.reload();
+  };
+
   return (
     <StyledRoot>
       <Link to={PATH.getMain(1)}>
@@ -40,11 +50,23 @@ const Header = () => {
         </div>
       </Link>
       <StyledNav>
+        <StyledDropdownWrapper>
+          <button onClick={() => setIsShowAPIDropdown(true)}>API 교체하기</button>
+          {isShowAPIDropdown && (
+            <Dropdown closeDropdown={() => setIsShowAPIDropdown(false)}>
+              {members.map(member => (
+                <li key={member} onClick={() => handleClickMember(member)}>
+                  {member}
+                </li>
+              ))}
+            </Dropdown>
+          )}
+        </StyledDropdownWrapper>
         {isLogin ? (
           <>
             <button onClick={() => navigate(PATH.cart)}>장바구니</button>
             <button>주문목록</button>
-            <StyledAvatarWrapper>
+            <StyledDropdownWrapper>
               <Avatar name={name} onClick={openDropdown} />
               {isShowDropdown && (
                 <Dropdown closeDropdown={closeDropdown}>
@@ -60,7 +82,7 @@ const Header = () => {
                   <li onClick={() => navigate(PATH.withdrawal)}>회원탈퇴</li>
                 </Dropdown>
               )}
-            </StyledAvatarWrapper>
+            </StyledDropdownWrapper>
           </>
         ) : (
           <button onClick={() => navigate(PATH.login)}>로그인</button>
@@ -93,13 +115,14 @@ const StyledBrandName = styled.span`
 const StyledNav = styled.nav`
   display: flex;
   gap: 4.4rem;
-  & > button {
+  & button {
     color: white;
     font-size: 2.4rem;
     background-color: inherit;
   }
 `;
 
-const StyledAvatarWrapper = styled.div`
+const StyledDropdownWrapper = styled.div`
   position: relative;
+  ${flexCenter};
 `;
