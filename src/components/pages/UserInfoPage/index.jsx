@@ -25,7 +25,7 @@ import {
 } from "./styled";
 import DeleteAccountModal from "./DeleteAccountModal";
 
-function UserInfoPage() {
+function UserInfoPage({ serverUrlIndex }) {
   const {
     data: user,
     isLoading,
@@ -63,7 +63,7 @@ function UserInfoPage() {
     dispatch({ type: USER_ACTION.UPDATE_USER_INFO });
     try {
       const response = await updateUserBaseServer({
-        url: `${BASE_SERVER_URL}${
+        url: `${BASE_SERVER_URL(serverUrlIndex)}${
           SERVER_PATH.CUSTOMER_LIST
         }/${localStorage.getItem(USER_ID_KEY)}`,
         body: JSON.stringify({ username }),
@@ -100,7 +100,7 @@ function UserInfoPage() {
   };
 
   const deleteAccount = () => {
-    dispatch(deleteUser(passwordRef.current.value));
+    dispatch(deleteUser(passwordRef.current.value, serverUrlIndex));
   };
 
   const closeModal = () => {

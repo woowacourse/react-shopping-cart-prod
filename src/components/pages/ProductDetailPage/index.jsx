@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-
 import { BASE_SERVER_URL, SERVER_PATH } from "constants";
 import { useFetch } from "hooks/useFetch";
 import { getBaseServerProductItem } from "util/fetch";
@@ -10,7 +9,7 @@ import ErrorPage from "components/pages/ErrorPage";
 import ProductDetail from "./ProductDetail";
 import { DetailContainer } from "./styled";
 
-function ProductDetailPage() {
+function ProductDetailPage({ serverUrlIndex }) {
   const { productId } = useParams();
   const {
     data: selectedProduct,
@@ -18,7 +17,9 @@ function ProductDetailPage() {
     errorMessage,
   } = useFetch(() =>
     getBaseServerProductItem({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}/${productId}`,
+      url: `${BASE_SERVER_URL(serverUrlIndex)}${
+        SERVER_PATH.PRODUCT_LIST
+      }/${productId}`,
     })
   );
 

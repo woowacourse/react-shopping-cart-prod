@@ -8,7 +8,7 @@ import ProductCard from "./ProductCard";
 import GridContainer from "components/common/GridContainer";
 import ErrorPage from "components/pages/ErrorPage";
 
-function ProductListPage() {
+function ProductListPage({ serverUrlIndex }) {
   const {
     data: productList,
     isLoading,
@@ -17,7 +17,7 @@ function ProductListPage() {
   } = useStore("productList");
 
   useEffect(() => {
-    dispatch(getProductList());
+    dispatch(getProductList(serverUrlIndex));
   }, []);
 
   if (isLoading) return <Spinner />;

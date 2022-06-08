@@ -19,11 +19,11 @@ export const CART_LIST_ACTION = {
   UPDATE_ITEM_COUNT_ERROR: "cartList/UPDATE_ITEM_COUNT_ERROR",
 };
 
-export const getCartList = () => async (dispatch) => {
+export const getCartList = (serverUrlIndex) => async (dispatch) => {
   dispatch({ type: CART_LIST_ACTION.GET_LIST });
   try {
     const response = await getBaseServerCartList({
-      url: `${BASE_SERVER_URL}${
+      url: `${BASE_SERVER_URL(serverUrlIndex)}${
         SERVER_PATH.CUSTOMER_LIST
       }/${localStorage.getItem(USER_ID_KEY)}/carts`,
     });
@@ -49,60 +49,62 @@ export const getCartList = () => async (dispatch) => {
   }
 };
 
-export const deleteCartList = (productId) => async (dispatch) => {
-  dispatch({ type: CART_LIST_ACTION.DELETE_LIST });
-  try {
-    const response = await deleteBaseServerCartItem({
-      url: `${BASE_SERVER_URL}${
-        SERVER_PATH.CUSTOMER_LIST
-      }/${localStorage.getItem(USER_ID_KEY)}/carts?productId=${productId}`,
-    });
+export const deleteCartList =
+  (productId, serverUrlIndex) => async (dispatch) => {
+    dispatch({ type: CART_LIST_ACTION.DELETE_LIST });
+    try {
+      const response = await deleteBaseServerCartItem({
+        url: `${BASE_SERVER_URL(serverUrlIndex)}${
+          SERVER_PATH.CUSTOMER_LIST
+        }/${localStorage.getItem(USER_ID_KEY)}/carts?productId=${productId}`,
+      });
 
-    if (!response.ok) {
-      const data = await response.json();
-      if (data.message) throw new Error(data.message);
-      throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      if (!response.ok) {
+        const data = await response.json();
+        if (data.message) throw new Error(data.message);
+        throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      }
+
+      dispatch({
+        type: CART_LIST_ACTION.DELETE_LIST_SUCCESS,
+        deletedCartId: productId,
+      });
+    } catch (err) {
+      dispatch({
+        type: CART_LIST_ACTION.DELETE_LIST_ERROR,
+        errorMessage: err.message,
+      });
     }
+  };
 
-    dispatch({
-      type: CART_LIST_ACTION.DELETE_LIST_SUCCESS,
-      deletedCartId: productId,
-    });
-  } catch (err) {
-    dispatch({
-      type: CART_LIST_ACTION.DELETE_LIST_ERROR,
-      errorMessage: err.message,
-    });
-  }
-};
+export const updateCartCount =
+  (productId, count, serverUrlIndex) => async (dispatch) => {
+    dispatch({ type: CART_LIST_ACTION.UPDATE_ITEM_COUNT });
+    try {
+      const response = await patchBaseServerCartItem({
+        url: `${BASE_SERVER_URL(serverUrlIndex)}${
+          SERVER_PATH.CUSTOMER_LIST
+        }/${localStorage.getItem(USER_ID_KEY)}/carts?productId=${productId}`,
+        body: JSON.stringify({ count }),
+      });
 
-export const updateCartCount = (productId, count) => async (dispatch) => {
-  dispatch({ type: CART_LIST_ACTION.UPDATE_ITEM_COUNT });
-  try {
-    const response = await patchBaseServerCartItem({
-      url: `${BASE_SERVER_URL}${
-        SERVER_PATH.CUSTOMER_LIST
-      }/${localStorage.getItem(USER_ID_KEY)}/carts?productId=${productId}`,
-      body: JSON.stringify({ count }),
-    });
+      if (!response.ok) {
+        const data = await response.json();
+        if (data.message) throw new Error(data.message);
+        throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      }
 
-    if (!response.ok) {
-      const data = await response.json();
-      if (data.message) throw new Error(data.message);
-      throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      dispatch({
+        type: CART_LIST_ACTION.UPDATE_ITEM_COUNT_SUCCESS,
+        modifiedCartItem: { productId, count },
+      });
+    } catch (err) {
+      dispatch({
+        type: CART_LIST_ACTION.UPDATE_ITEM_COUNT_ERROR,
+        errorMessage: err.message,
+      });
     }
-
-    dispatch({
-      type: CART_LIST_ACTION.UPDATE_ITEM_COUNT_SUCCESS,
-      modifiedCartItem: { productId, count },
-    });
-  } catch (err) {
-    dispatch({
-      type: CART_LIST_ACTION.UPDATE_ITEM_COUNT_ERROR,
-      errorMessage: err.message,
-    });
-  }
-};
+  };
 
 const initialState = {
   isLoading: false,

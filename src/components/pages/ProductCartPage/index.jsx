@@ -8,7 +8,7 @@ import PaymentAmount from "./PaymentAmount";
 import ProductCartList from "./ProductCartList";
 import { CartPageContainer, CartPageList, CartPagePayment } from "./styled";
 
-function ProductCartPage() {
+function ProductCartPage({ serverUrlIndex }) {
   const { data: cartList, isLoading, dispatch } = useStore("cartList");
 
   const [checkList, setCheckList] = useState([]);
@@ -25,7 +25,7 @@ function ProductCartPage() {
   );
 
   useEffect(() => {
-    dispatch(getCartList());
+    dispatch(getCartList(serverUrlIndex));
   }, []);
 
   useEffect(() => {

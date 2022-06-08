@@ -30,7 +30,7 @@ const initialUserInfo = {
   passwordConfirm: "",
 };
 
-function RegisterPage() {
+function RegisterPage({ serverUrlIndex }) {
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -56,7 +56,7 @@ function RegisterPage() {
     try {
       setIsLoading(true);
       const response = await registerBaseServer({
-        url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}`,
+        url: `${BASE_SERVER_URL(serverUrlIndex)}${SERVER_PATH.CUSTOMER_LIST}`,
         body: JSON.stringify({
           email: userInfo.email,
           username: userInfo.username,

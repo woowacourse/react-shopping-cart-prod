@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 import { useStore } from "hooks/useStore";
 import { deleteCartList, updateCartCount } from "reducers/cartList";
 
@@ -12,6 +14,7 @@ import Spinner from "components/common/Spinner";
 import ErrorPage from "components/pages/ErrorPage";
 
 function ProductCartList({ checkList, setCheckList }) {
+  const serverUrlIndex = useSelector((state) => state.server.serverUrlIndex);
   const {
     data: cartList,
     isLoading,
@@ -29,7 +32,7 @@ function ProductCartList({ checkList, setCheckList }) {
 
   const handleDeleteAllItem = () => {
     checkList.forEach((carItemId) => {
-      dispatch(deleteCartList(carItemId));
+      dispatch(deleteCartList(carItemId, serverUrlIndex));
     });
     setCheckList([]);
   };
@@ -42,18 +45,18 @@ function ProductCartList({ checkList, setCheckList }) {
 
     if (!checkList.includes(productId))
       setCheckList((prev) => [...prev, productId]);
-    dispatch(updateCartCount(productId, count + 1));
+    dispatch(updateCartCount(productId, count + 1, serverUrlIndex));
   };
 
   const handleClickDecreaseButton = (productId, count) => () => {
     if (count <= 1) return;
     if (!checkList.includes(productId))
       setCheckList((prev) => [...prev, productId]);
-    dispatch(updateCartCount(productId, count - 1));
+    dispatch(updateCartCount(productId, count - 1, serverUrlIndex));
   };
 
   const handleClickDeleteItemButton = (productId) => () => {
-    dispatch(deleteCartList(productId));
+    dispatch(deleteCartList(productId, serverUrlIndex));
     setCheckList((prev) =>
       prev.filter((cartItemId) => cartItemId !== productId)
     );

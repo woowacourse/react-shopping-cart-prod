@@ -29,11 +29,11 @@ export const USER_ACTION = {
   LOGOUT: "user/LOGOUT",
 };
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (email, password, serverUrlIndex) => async (dispatch) => {
   dispatch({ type: USER_ACTION.LOGIN });
   try {
     const response = await loginBaseServer({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.LOGIN}`,
+      url: `${BASE_SERVER_URL(serverUrlIndex)}${SERVER_PATH.LOGIN}`,
       body: JSON.stringify({
         email,
         password,
@@ -62,11 +62,11 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const getUser = () => async (dispatch) => {
+export const getUser = (serverUrlIndex) => async (dispatch) => {
   dispatch({ type: USER_ACTION.GET_USER_INFO });
   try {
     const response = await getUserBaseServer({
-      url: `${BASE_SERVER_URL}${
+      url: `${BASE_SERVER_URL(serverUrlIndex)}${
         SERVER_PATH.CUSTOMER_LIST
       }/${localStorage.getItem(USER_ID_KEY)}`,
     });
@@ -89,11 +89,11 @@ export const getUser = () => async (dispatch) => {
   }
 };
 
-export const deleteUser = (password) => async (dispatch) => {
+export const deleteUser = (password, serverUrlIndex) => async (dispatch) => {
   dispatch({ type: USER_ACTION.DELETE_ACCOUNT });
   try {
     const response = await deleteUserBaseServer({
-      url: `${BASE_SERVER_URL}${
+      url: `${BASE_SERVER_URL(serverUrlIndex)}${
         SERVER_PATH.CUSTOMER_LIST
       }/${localStorage.getItem(USER_ID_KEY)}`,
       body: JSON.stringify({ password }),

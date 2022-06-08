@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 function ProductDetail({
   selectedProduct: { productId, thumbnailUrl, name, price },
 }) {
+  const serverUrlIndex = useSelector((state) => state.server.serverUrlIndex);
   const isLogin = useSelector((state) => state.user.isLogin);
   const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ function ProductDetail({
 
     try {
       const response = await postBaseServerCartItem({
-        url: `${BASE_SERVER_URL}${
+        url: `${BASE_SERVER_URL(serverUrlIndex)}${
           SERVER_PATH.CUSTOMER_LIST
         }/${localStorage.getItem(USER_ID_KEY)}/carts`,
         body: JSON.stringify({ productId, count: 1 }),

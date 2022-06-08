@@ -27,10 +27,11 @@ import UserInfoPage from "./pages/UserInfoPage";
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector((state) => state.user.isLogin);
+  const serverUrlIndex = useSelector((state) => state.server.serverUrlIndex);
 
   useEffect(() => {
     if (isLogin) {
-      dispatch(getUser());
+      dispatch(getUser(serverUrlIndex));
     }
   }, []);
 
@@ -40,10 +41,13 @@ function App() {
       <Main>
         <Routes>
           <Route path={ROUTES.ROOT} element={<ProductListPage />} />
-          <Route path={ROUTES.PRODUCT_LIST} element={<ProductListPage />} />
+          <Route
+            path={ROUTES.PRODUCT_LIST}
+            element={<ProductListPage serverUrlIndex={serverUrlIndex} />}
+          />
           <Route
             path={`${ROUTES.PRODUCT_DETAIL}/:productId`}
-            element={<ProductDetailPage />}
+            element={<ProductDetailPage serverUrlIndex={serverUrlIndex} />}
           />
           <Route
             element={
@@ -53,12 +57,18 @@ function App() {
               />
             }
           >
-            <Route path={ROUTES.PRODUCT_CART} element={<ProductCartPage />} />
+            <Route
+              path={ROUTES.PRODUCT_CART}
+              element={<ProductCartPage serverUrlIndex={serverUrlIndex} />}
+            />
             <Route
               path={ROUTES.PRODUCT_ORDER_LIST}
               element={<OrderListPage />}
             />
-            <Route path={ROUTES.USER_INFO} element={<UserInfoPage />} />
+            <Route
+              path={ROUTES.USER_INFO}
+              element={<UserInfoPage serverUrlIndex={serverUrlIndex} />}
+            />
           </Route>
           <Route
             element={
@@ -68,8 +78,14 @@ function App() {
               />
             }
           >
-            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
-            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+            <Route
+              path={ROUTES.REGISTER}
+              element={<RegisterPage serverUrlIndex={serverUrlIndex} />}
+            />
+            <Route
+              path={ROUTES.LOGIN}
+              element={<LoginPage serverUrlIndex={serverUrlIndex} />}
+            />
           </Route>
           <Route path="*" element={<ErrorPage>잘못된 접근입니다.</ErrorPage>} />
         </Routes>

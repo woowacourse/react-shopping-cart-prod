@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ROUTES, JWT_COOKIE_KEY, USER_ID_KEY } from "constants";
 
 import { USER_ACTION } from "reducers/user";
+import { changeServerUrl } from "reducers/server";
 import { deleteCookie } from "util/cookie";
 
 import NavButton from "./NavButton";
@@ -25,6 +26,19 @@ function Header({ isLogin }) {
   return (
     <HeaderContainer>
       <Title />
+      <select
+        onChange={({ target: { value } }) => {
+          console.log(value, typeof value);
+          dispatch(changeServerUrl(Number(value)));
+          logout();
+        }}
+      >
+        <option value={0}>msw</option>
+        <option value={1}>서버1</option>
+        <option value={2}>서버2</option>
+        <option value={3}>서버3</option>
+        <option value={4}>서버4</option>
+      </select>
       <NavButtonContainer>
         <NavButton linkTo={ROUTES.PRODUCT_CART}>장바구니</NavButton>
         <NavButton linkTo={ROUTES.PRODUCT_ORDER_LIST}>주문목록</NavButton>

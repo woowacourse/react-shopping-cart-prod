@@ -4,11 +4,14 @@ import db from "./db.json";
 import { BASE_SERVER_URL, SERVER_PATH } from "../constants";
 
 export const prouctsHandler = [
-  rest.get(`${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}`, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(db.products));
-  }),
   rest.get(
-    `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}/:productId`,
+    `${BASE_SERVER_URL()}${SERVER_PATH.PRODUCT_LIST}`,
+    (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json(db.products));
+    }
+  ),
+  rest.get(
+    `${BASE_SERVER_URL()}${SERVER_PATH.PRODUCT_LIST}/:productId`,
     (req, res, ctx) => {
       const { productId } = req.params;
       const productList = db.products;
@@ -24,7 +27,7 @@ export const prouctsHandler = [
 
 export const cartsHandler = [
   rest.get(
-    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
+    `${BASE_SERVER_URL()}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
     (req, res, ctx) => {
       const cartList = db.carts;
       const productList = db.products;
@@ -40,7 +43,7 @@ export const cartsHandler = [
     }
   ),
   rest.post(
-    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
+    `${BASE_SERVER_URL()}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
     (req, res, ctx) => {
       const { productId, count } = req.body;
       if (!productId || !count)
@@ -80,7 +83,7 @@ export const cartsHandler = [
     }
   ),
   rest.delete(
-    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
+    `${BASE_SERVER_URL()}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
     (req, res, ctx) => {
       const productId = req.url.searchParams.get("productId");
       const cartList = db.carts;
@@ -102,7 +105,7 @@ export const cartsHandler = [
     }
   ),
   rest.patch(
-    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
+    `${BASE_SERVER_URL()}${SERVER_PATH.CUSTOMER_LIST}/:customerId/carts`,
     (req, res, ctx) => {
       const productId = req.url.searchParams.get("productId");
 
@@ -149,7 +152,7 @@ let users = [
 ];
 export const userHandler = [
   rest.get(
-    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
+    `${BASE_SERVER_URL()}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
     (req, res, ctx) => {
       const { customerId } = req.params;
       const selectedUser = users.find((user) => user.id === Number(customerId));
@@ -163,7 +166,7 @@ export const userHandler = [
     }
   ),
   rest.post(
-    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}`,
+    `${BASE_SERVER_URL()}${SERVER_PATH.CUSTOMER_LIST}`,
     (req, res, ctx) => {
       const { email, username, password } = req.body;
       if (!email)
@@ -204,7 +207,7 @@ export const userHandler = [
       return res(ctx.status(201));
     }
   ),
-  rest.post(`${BASE_SERVER_URL}${SERVER_PATH.LOGIN}`, (req, res, ctx) => {
+  rest.post(`${BASE_SERVER_URL()}${SERVER_PATH.LOGIN}`, (req, res, ctx) => {
     const { email: emailInfo, password } = req.body;
     if (!emailInfo || !password)
       return res(
@@ -232,7 +235,7 @@ export const userHandler = [
     );
   }),
   rest.post(
-    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
+    `${BASE_SERVER_URL()}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
     (req, res, ctx) => {
       const { customerId } = req.params;
       const { password } = req.body;
@@ -247,7 +250,7 @@ export const userHandler = [
     }
   ),
   rest.put(
-    `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
+    `${BASE_SERVER_URL()}${SERVER_PATH.CUSTOMER_LIST}/:customerId`,
     (req, res, ctx) => {
       const { customerId } = req.params;
       const { username } = req.body;

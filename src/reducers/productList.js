@@ -7,11 +7,11 @@ const PRODUCT_LIST_ACTION = {
   GET_LIST_ERROR: "productList/GET_ERROR",
 };
 
-export const getProductList = () => async (dispatch) => {
+export const getProductList = (serverUrlIndex) => async (dispatch) => {
   dispatch({ type: PRODUCT_LIST_ACTION.GET_LIST });
   try {
     const response = await getBaseServerProductList({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}`,
+      url: `${BASE_SERVER_URL(serverUrlIndex)}${SERVER_PATH.PRODUCT_LIST}`,
     });
 
     if (!response.ok) {
