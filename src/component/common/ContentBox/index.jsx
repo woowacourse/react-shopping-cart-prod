@@ -12,7 +12,7 @@ export default function ContentBox({
   leftContent = 'left content',
   rightContent = 'right content',
   buttonText = 'button',
-  onClickButton = () => void 0,
+  onClickButton,
 }) {
   return (
     <S.ContentBoxLayout>

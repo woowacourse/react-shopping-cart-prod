@@ -7,6 +7,7 @@ import ProductListPage from 'page/ProductListPage';
 import ProductDetailPage from 'page/ProductDetailPage';
 import ProductCartPage from 'page/ProductCartPage';
 import SignupPage from 'page/SignupPage';
+import OrderPage from 'page/OrderPage';
 
 import theme from 'theme/theme';
 import {GlobalStyles} from 'style/globalStyle';
@@ -34,10 +35,7 @@ export default function App() {
             <Route path={PATH.HOME} element={<ProductListPage />}></Route>
             <Route path={`${PATH.DETAIL}/:id`} element={<ProductDetailPage />}></Route>
             <Route path={PATH.CART} element={<ProductCartPage />}></Route>
-            <Route
-              path={PATH.ORDER}
-              element={<NotFoundPage> 아직 개발중인 페이지입니다🔨</NotFoundPage>}
-            ></Route>
+            <Route path={PATH.ORDER} element={<OrderPage />}></Route>
             <Route path={PATH.LOGIN} element={<LoginPage />}></Route>
             <Route path={PATH.SIGNUP} element={<SignupPage />}></Route>
             <Route path={PATH.EDIT_USER_INFO} element={<UserInfoEditPage />}></Route>
