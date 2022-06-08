@@ -12,12 +12,21 @@ import ProductPage from 'pages/ProductPage/ProductPage';
 import SignupPage from 'pages/SignupPage/SignupPage';
 import { ThemeProvider } from 'styled-components';
 import theme from 'styles/theme';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from 'redux/store';
 import SnackBar from 'components/@shared/SnackBar';
 import axios from 'axios';
+import cartAPI from 'apis/cart';
+import { cartActions } from 'redux/actions';
 
 function App() {
+  // const dispatch = useDispatch();
+  // const test = async () => {
+  //   const data = await cartAPI.addCartItem();
+  //   dispatch(cartActions.setCartItemList(data));
+  // };
+  // test();
+
   const { isShowSnackBar, message } = useSelector(
     (state: RootState) => state.snackBar
   );

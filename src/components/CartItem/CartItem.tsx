@@ -23,7 +23,7 @@ function CartItem({ product, stock, checked }: Props) {
     e.preventDefault();
 
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteToCart(id));
+      // 삭제
     }
   };
 
@@ -32,11 +32,11 @@ function CartItem({ product, stock, checked }: Props) {
   ) => {
     e.preventDefault();
 
-    dispatch(cartActions.toggleCheckAProduct(id));
+    //dispatch(cartActions.toggleCheckAProduct(id));
   };
 
   const onChangeCartStock = (value: number) => {
-    dispatch(cartActions.changeProductStock({ id, stock: value }));
+    // dispatch(cartActions.changeProductStock({ id, stock: value }));
   };
 
   return (
@@ -48,11 +48,7 @@ function CartItem({ product, stock, checked }: Props) {
         <StyledDeleteButton type="button" onClick={onClickDeleteButton}>
           <Delete />
         </StyledDeleteButton>
-        <NumberInput
-          max={product.stock}
-          value={stock}
-          setValue={onChangeCartStock}
-        />
+        <NumberInput value={stock} setValue={onChangeCartStock} />
         <StyledPrice>
           {(product.price * stock).toLocaleString('ko-KR')} 원
         </StyledPrice>
