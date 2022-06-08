@@ -1,28 +1,35 @@
 import { ACCESS_TOKEN_COOKIE_NAME } from 'constants';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import userActions from 'store/user/action';
 import userThunk from 'store/user/thunk';
 
+import { PAGE_LIST } from 'constants/';
 import { getCookie } from 'lib/cookieUtils';
 
-function useUserSession() {
+function useAuth() {
   const isLogin = useSelector(({ user }) => user.isLogin);
+  const { pathname } = useLocation();
+
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(userThunk.getUserProfile());
   }, []);
 
-  const { pathname } = useLocation();
-
   useEffect(() => {
-    if (isLogin === true && !getCookie(ACCESS_TOKEN_COOKIE_NAME)) {
-      dispatch(userActions.removeInfo());
+    if (isLogin === false) {
+      return;
     }
+
+    const accessToken = getCookie(ACCESS_TOKEN_COOKIE_NAME);
+
+    !accessToken && navigate(PAGE_LIST.LOGOUT);
   }, [isLogin, pathname]);
+
+  return { isLogin };
 }
 
-export default useUserSession;
+export default useAuth;
