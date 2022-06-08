@@ -11,7 +11,8 @@ import ResignPage from 'pages/ResignPage';
 export const PATH = {
   notFound: '*',
   default: '/',
-  main: '/main/:id',
+  main: '/main',
+  itemList: '/main/:id',
   itemDetail: '/item_detail/:id',
   cart: '/cart',
   signIn: '/signIn',
@@ -24,7 +25,8 @@ const Router = () => {
   return (
     <Routes>
       <Route path='/' element={<Navigate replace to='/main/1' />} />
-      <Route path={PATH.main} element={<ItemListPage />} />
+      <Route path={PATH.main} element={<Navigate replace to='/main/1' />} />
+      <Route path={PATH.itemList} element={<ItemListPage />} />
       <Route path={PATH.itemDetail} element={<ItemDetail />} />
       <Route path={PATH.cart} element={<CartPage />} />
       <Route path={PATH.signIn} element={<SignInPage />} />
