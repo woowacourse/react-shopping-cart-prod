@@ -52,7 +52,10 @@ const EditUserPassword = () => {
         : '비밀번호 수정에 실패했습니다!';
 
     dispatch(snackbar.pushMessageSnackbar(message));
-    navigate('/');
+
+    if (response.status === 비동기_요청.SUCCESS) {
+      navigate('/');
+    }
   };
 
   return (

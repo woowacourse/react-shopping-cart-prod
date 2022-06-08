@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { addCartList } from 'actions/cart';
-import { snackbar } from 'actions/snackbar';
 
 import IconButton from 'components/@common/IconButton';
 import { 아이콘_코드 } from 'constants/';
