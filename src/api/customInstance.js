@@ -16,13 +16,13 @@ if (token !== undefined && nickname !== undefined) {
 }
 
 const handleAPIError = (error) => {
-  const { data: { message } } = error.response;
+  const { data, status } = error.response;
 
-  if (message !== undefined) {
-    throw new Error(message);
+  if (data === undefined || status >= 500) {
+    throw new Error(ERROR_MESSAGES.UNKNOWN);
   }
 
-  throw new Error(ERROR_MESSAGES.UNKNOWN);
+  throw new Error(data.message);
 };
 
 customInstance.interceptors.response.use((response) => response, handleAPIError);
