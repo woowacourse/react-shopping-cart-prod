@@ -10,9 +10,12 @@ import TextBox from 'components/@shared/TextBox/TextBox.component';
 import ChangeQuantityButton from 'components/ChangeQuantityButton/ChangeQuantityButton.component';
 
 import { addSpecificItem, deleteSpecificItem } from 'redux/actions/orderList.action';
-import { deleteItem, increaseQuantity, decreaseQuantity } from 'redux/actions/shoppingCart.action';
+
+import useDebounce from 'hooks/useDebounce';
+import useFetch from 'hooks/useFetch';
 
 import { ReactComponent as TrashCan } from 'assets/images/trash.svg';
+import { API_URL_PATH } from 'constants/api';
 
 const CartItemContainer = styled(FlexBox).attrs({
   gap: '15px',
@@ -26,13 +29,28 @@ const CartItemContainer = styled(FlexBox).attrs({
   }
 `;
 
-function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity }) {
+function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity, loadCarts }) {
   const dispatch = useDispatch();
+  const { accessToken } = useSelector(state => state.auth);
+  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
   const { items: storedProducts } = useSelector(state => state.orderList);
+  const { fetchData: modifyStoredProductQuantity } = useFetch({
+    url: API_URL_PATH.CARTS,
+    method: 'patch',
+    headers,
+    skip: true,
+  });
+  const { fetchData: deleteStoredProduct } = useFetch({
+    url: API_URL_PATH.CARTS,
+    method: 'delete',
+    headers,
+    skip: true,
+  });
   const checked = useMemo(
     () => storedProducts.some(productId => productId === id),
     [storedProducts, id]
   );
+  const debounce = useDebounce();
 
   const handleChangeCheckBox = id => {
     const toggleItemAction = checked ? deleteSpecificItem : addSpecificItem;
@@ -41,11 +59,19 @@ function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity 
     dispatch(toggleItemAction(toggleActionData));
   };
 
-  const itemDeleteConfirm = id => {
+  const itemDeleteConfirm = async id => {
     if (window.confirm(`${name}을(를) 장바구니에서 삭제하시겠습니까?`)) {
-      dispatch(deleteItem(id));
+      await deleteStoredProduct({ productIds: [id] });
       dispatch(deleteSpecificItem(id));
+      await loadCarts();
     }
+  };
+
+  const onChangeQuantity = async newQuantity => {
+    debounce(async () => {
+      await modifyStoredProductQuantity({ productId: id, quantity: newQuantity });
+      await loadCarts();
+    }, 1000);
   };
 
   return (
@@ -57,11 +83,7 @@ function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity 
       </TextBox>
       <FlexBox direction="column" gap="20px" alignItems="flex-end">
         <TrashCan cursor="pointer" onClick={() => itemDeleteConfirm(id)} />
-        <ChangeQuantityButton
-          quantity={quantity}
-          onClickAddProduct={() => dispatch(increaseQuantity(id))}
-          onClickReduceProduct={() => dispatch(decreaseQuantity(id))}
-        />
+        <ChangeQuantityButton quantity={quantity} onChangeQuantity={onChangeQuantity} />
         <TextBox className="product-price" fontSize="medium">
           {price.toLocaleString()}원
         </TextBox>

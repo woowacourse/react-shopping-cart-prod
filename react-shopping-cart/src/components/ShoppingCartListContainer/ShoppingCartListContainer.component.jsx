@@ -22,7 +22,7 @@ const CartListBox = styled(FlexBox).attrs({
   width: 736px;
 `;
 
-function ShoppingCartListContainer({ carts }) {
+function ShoppingCartListContainer({ carts, loadCarts }) {
   return (
     <CartListBox>
       {Array.isArray(carts) && carts.length === 0 ? (
@@ -35,7 +35,7 @@ function ShoppingCartListContainer({ carts }) {
           <ul>
             {carts.map(itemInfo => (
               <li key={itemInfo.productId}>
-                <ShoppingCartListItem {...itemInfo} />
+                <ShoppingCartListItem {...itemInfo} loadCarts={loadCarts} />
               </li>
             ))}
           </ul>

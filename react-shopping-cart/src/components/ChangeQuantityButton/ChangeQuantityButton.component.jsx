@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import BorderBox from 'components/@shared/BorderBox/BorderBox.component';
@@ -12,16 +13,31 @@ const ChangeQuantityButtonContainer = styled.div`
   }
 `;
 
-function ChangeQuantityButton({ quantity, onClickAddProduct, onClickReduceProduct }) {
+function ChangeQuantityButton({ quantity, onChangeQuantity }) {
+  const [count, setCount] = useState(quantity);
+
+  const handleIncrementProduct = () => {
+    setCount(prev => prev + 1);
+    onChangeQuantity(count + 1);
+  };
+
+  const handleDecrementProduct = () => {
+    if (count === 1) {
+      return;
+    }
+    setCount(prev => prev - 1);
+    onChangeQuantity(count - 1);
+  };
+
   return (
     <ChangeQuantityButtonContainer>
       <BorderBox textAlign="center" lineHeight="30px" fontSize="24px" padding="10px">
-        {quantity}
+        {count}
       </BorderBox>
       <BorderBox
         textAlign="center"
         lineHeight="8px"
-        onClick={onClickAddProduct}
+        onClick={handleIncrementProduct}
         cursor="pointer"
         padding="10px"
       >
@@ -30,7 +46,7 @@ function ChangeQuantityButton({ quantity, onClickAddProduct, onClickReduceProduc
       <BorderBox
         textAlign="center"
         lineHeight="8px"
-        onClick={onClickReduceProduct}
+        onClick={handleDecrementProduct}
         cursor="pointer"
         padding="10px"
       >
