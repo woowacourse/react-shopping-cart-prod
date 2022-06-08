@@ -31,4 +31,4 @@ root.render(
   </React.StrictMode>
 );
 
-main();
+// main();
