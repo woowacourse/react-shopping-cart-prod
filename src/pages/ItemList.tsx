@@ -9,20 +9,15 @@ import useThunkFetch from 'hooks/useThunkFetch';
 import { useParams } from 'react-router-dom';
 import { getCartListRequest } from 'redux/cartList/thunk';
 import { getItemList } from 'redux/itemList/thunk';
-import { getPageItemListRequest } from 'redux/pageItemList/thunk';
 import styled from 'styled-components';
 
 const ItemList = () => {
   const { id } = useParams();
   const {
-    data: itemList,
-    error: error_getItemList,
     loading,
-  } = useThunkFetch(state => state.pageItemList, getPageItemListRequest(id));
-  const { data: allItemList, error: error_getAllItemList } = useThunkFetch(
-    state => state.itemList,
-    getItemList()
-  );
+    data: allItemList,
+    error: error_getAllItemList,
+  } = useThunkFetch(state => state.itemList, getItemList());
   const { data: cartList, error: error_getCartList } = useThunkFetch(
     state => state.cartList,
     getCartListRequest()
@@ -30,18 +25,21 @@ const ItemList = () => {
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
   if (loading) return <Loading />;
-  if (error_getItemList || error_getAllItemList || error_getCartList) return <RequestFail />;
+  if (error_getAllItemList || error_getCartList) return <RequestFail />;
 
   return (
     <StyledRoot>
-      {itemList?.map(item => (
-        <ItemContainer
-          key={item.id}
-          item={item}
-          cartItem={cartList.find(cartItem => cartItem.productId === item.id)}
-          openSnackbar={openSnackbar}
-        />
-      ))}
+      {allItemList.length > 0 &&
+        allItemList
+          .slice(MAX_RESULT_ITEM_LIST * (Number(id) - 1), MAX_RESULT_ITEM_LIST * Number(id))
+          .map(item => (
+            <ItemContainer
+              key={item.id}
+              item={item}
+              cartItem={cartList.find(cartItem => cartItem.productId === item.id)}
+              openSnackbar={openSnackbar}
+            />
+          ))}
       <Pagination
         endpoint='main'
         count={10}
