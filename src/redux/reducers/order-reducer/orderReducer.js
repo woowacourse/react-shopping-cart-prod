@@ -13,7 +13,8 @@ const orderReducer = (state, { type, payload }, totalState) => {
       const newState = structuredClone(state);
       newState.query.createOrder = queryState.fullfilled();
       alert("주문이 성공적으로 들어갔습니다.");
-      return newState;
+      window.location.href = "/order-list";
+      return state;
     }
     case ACTION_TYPE.CREATE_ORDER_REJECTED: {
       const newState = structuredClone(state);

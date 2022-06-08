@@ -14,7 +14,8 @@ function userReducer(state, { type, payload }, totalState) {
     case ACTION_TYPE.SIGNUP_FULLFILLED: {
       const newState = structuredClone(state);
       newState.query.signup = queryState.fullfilled();
-      return newState;
+      window.location.href = "/login";
+      return state;
     }
     case ACTION_TYPE.SIGNUP_REJECTED: {
       const newState = structuredClone(state);
@@ -39,7 +40,7 @@ function userReducer(state, { type, payload }, totalState) {
       newState.data.isLoggedIn = true;
 
       window.location.href = "/";
-      return newState;
+      return state;
     }
     case ACTION_TYPE.LOGIN_REJECTED: {
       const newState = structuredClone(state);
