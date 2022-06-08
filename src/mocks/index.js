@@ -9,6 +9,9 @@ import userInquiryHandler from './handlers/userInquiryHandler';
 import getProductsHandler from 'page/ProductListPage/mock';
 import getProductHandler from 'page/ProductDetailPage/mock';
 
+import getCartHandler from 'page/CartPage/mock';
+import putCartHandler from './handlers/putCartHandler';
+
 export const users = [
   { id: 1, email: '1@gmail.com', nickname: 'abc', password: 'qwer1234!!' },
   { id: 2, email: '2@gmail.com', nickname: 'def', password: '123456@adssd' },
@@ -39,6 +42,12 @@ const handlers = [
 
   // 단건상품조회
   getProductHandler,
+
+  // 장바구니목록조회
+  getCartHandler,
+
+  // 장바구니담기, 상품수정
+  putCartHandler,
 ];
 
 export default handlers;
