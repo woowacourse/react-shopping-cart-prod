@@ -1,5 +1,5 @@
 import axios from 'axios';
-import API from 'configs/api';
+import API, { SERVER_URL } from 'configs/api';
 
 const TYPES = {
   GET_PRODUCT_LIST: 'GET_PRODUCT_LIST',
@@ -24,6 +24,12 @@ const TYPES = {
   UPDATE_QUANTITY_REJECTED: 'UPDATE_QUANTITY_REJECTED',
   HANDLE_CHECK: 'HANDLE_CHECK',
   REMOVE_CART_ITEM: 'REMOVE_CART_ITEM',
+  GET_USER_ID: 'GET_USER_ID',
+  INIT_USER_STATE: 'INIT_USER_STATE',
+  GET_USER_INFO: 'GET_USER_INFO',
+  GET_USER_INFO_PENDING: 'GET_USER_INFO_PENDING',
+  GET_USER_INFO_FULFILLED: 'GET_USER_INFO_FULFILLED',
+  GET_USER_INFO_REJECTED: 'GET_USER_INFO_REJECTED',
 } as const;
 
 const actions = {
@@ -76,6 +82,22 @@ const actions = {
   },
   handleCheck: (id: string, checked: boolean) => {
     return { type: TYPES.HANDLE_CHECK, payload: { id, checked } };
+  },
+  initUserState: () => {
+    return { type: TYPES.INIT_USER_STATE };
+  },
+  getUserId: (id: number) => {
+    return { type: TYPES.GET_USER_ID, payload: id };
+  },
+  getUserInfo: (accessToken: string, customerId: number) => {
+    const request = axios({
+      method: 'get',
+      url: `${SERVER_URL}/api/customers/${customerId}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return { type: TYPES.GET_USER_INFO, payload: request };
   },
 };
 
