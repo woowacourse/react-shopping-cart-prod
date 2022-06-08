@@ -4,6 +4,8 @@ import Button from 'component/common/Button';
 
 const Layout = styled.div`
   position: absolute;
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 1060px;
   background-color: ${({theme}) => theme.GRAY_400};

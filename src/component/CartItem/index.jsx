@@ -38,7 +38,9 @@ export default function CartItem({cartInfo, initialChecked = false}) {
           handleIncrease={() => increaseQuantity(id)}
           handleDecrease={() => decreaseQuantity(id)}
         />
-        <S.PriceSpan>{price.toLocaleString()}원</S.PriceSpan>
+        <S.PriceSpan>
+          {price.toLocaleString()}원 x {quantity} 개
+        </S.PriceSpan>
       </S.EditQuantityBox>
     </S.CartItemLayout>
   );

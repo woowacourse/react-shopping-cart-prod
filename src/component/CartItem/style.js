@@ -24,6 +24,8 @@ const EditQuantityBox = styled(FlexColumn)`
 const PriceSpan = styled.span`
   font-family: 'Lato';
   font-style: normal;
+
+  width: 130px;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;

@@ -21,7 +21,7 @@ const HeaderLayout = styled(FlexRow)`
   z-index: 1;
 
   .active {
-    transform: scale(1.1);
+    transform: scale(1.3);
     font-weight: bold;
   }
 `;
