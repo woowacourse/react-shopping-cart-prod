@@ -1,5 +1,12 @@
-const BASE_URL =
-  "http://ec2-3-39-194-30.ap-northeast-2.compute.amazonaws.com:8080";
+const URL = {
+  봄: "http://ec2-54-180-119-11.ap-northeast-2.compute.amazonaws.com:8080", // ok
+  릭: "http://ec2-3-39-194-30.ap-northeast-2.compute.amazonaws.com:8080", // ok
+  쿤: "http://ec2-15-164-96-161.ap-northeast-2.compute.amazonaws.com:8080",
+  토닉: "http://ec2-3-39-11-100.ap-northeast-2.compute.amazonaws.com:8080",
+  베루스: "http://ec2-52-79-228-178.ap-northeast-2.compute.amazonaws.com:8080", // ok
+};
+
+const BASE_URL = URL.베루스;
 
 const PATH = {
   MAIN: "/",
@@ -40,6 +47,7 @@ const MESSAGE = {
   EXIST_ITEM_IN_CART: "장바구니에 이미 추가된 상품입니다.",
   INVALID_ACCESS: "잘못된 접근입니다.",
   LOGIN_REQUEST_FOR_ADD_CART: "장바구니에 상품을 추가하려면 로그인해주세요.",
+  SERVER_REQUEST_FAIL: "서버와의 연결에 문제가 있습니다.",
 };
 
 const NICKNAME = {
