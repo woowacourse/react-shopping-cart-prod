@@ -11,6 +11,7 @@ import Edit from '@/pages/Customers/Edit/Edit';
 import Leave from '@/pages/Customers/Leave/Leave';
 import EditPassword from '@/pages/Customers/EditPassword/EditPassword';
 import SnackBar from '@/components/common/Snackbar/Snackbar';
+import OrderDetail from '@/pages/OrderDetail/OrderDetail';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path={ROUTE.Home} element={<Home />} />
         <Route path={ROUTE.ShoppingCart} element={<ShoppingCart />} />
         <Route path={ROUTE.OrderList} element={<OrderList />} />
+        <Route path={ROUTE.OrderDetail} element={<OrderDetail />} />
         <Route path={ROUTE.ProductDetail} element={<ProductDetail />} />
 
         <Route path={ROUTE.SignUp} element={<SignUp />} />
