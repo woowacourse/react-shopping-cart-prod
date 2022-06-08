@@ -1,10 +1,11 @@
+import { AxiosError } from 'axios';
 import { Item } from 'types/domain';
 
 import { PageItemListAction } from './action';
 
 export interface PageItemListState {
   readonly loading: boolean;
-  readonly error: Error | null;
+  readonly error: AxiosError | null;
   readonly data: Item[];
 }
 

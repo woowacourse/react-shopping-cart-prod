@@ -1,10 +1,10 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
-import Snackbar, { MESSAGE } from 'components/common/Snackbar';
+import Snackbar from 'components/common/Snackbar';
 import PasswordConfirmModal from 'components/UserEdit/PasswordConfirmModal';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useInput from 'hooks/useInput';
-import useSnackBar from 'hooks/useSnackBar';
+import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
 import { useReducer } from 'react';
 
 const UserEdit = () => {

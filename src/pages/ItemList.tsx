@@ -1,10 +1,10 @@
 import Loading from 'components/common/Loading';
 import Pagination from 'components/common/Pagination';
 import RequestFail from 'components/common/RequestFail';
-import Snackbar, { MESSAGE } from 'components/common/Snackbar';
+import Snackbar from 'components/common/Snackbar';
 import ItemContainer from 'components/ItemList/ItemContainer';
 import { MAX_RESULT_ITEM_LIST } from 'constants/index';
-import useSnackBar from 'hooks/useSnackBar';
+import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
 import useThunkFetch from 'hooks/useThunkFetch';
 import { useParams } from 'react-router-dom';
 import { getCartListRequest } from 'redux/cartList/thunk';

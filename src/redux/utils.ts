@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { CartListActionType } from 'redux/cartList/action';
 import { Valueof } from 'types/utilities';
 
@@ -16,7 +17,7 @@ type AllThunkAction =
 export const buildThunkActionGroup = <T, A extends AllThunkAction>(actionType: A) => ({
   request: () => ({ type: `${actionType}_REQUEST` as const }),
   success: (data?: T) => ({ type: `${actionType}_SUCCESS` as const, payload: data }),
-  failure: (e: Error) => ({
+  failure: (e: AxiosError) => ({
     type: `${actionType}_FAILURE` as const,
     payload: e,
   }),

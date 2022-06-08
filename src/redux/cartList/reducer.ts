@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { CartListAction } from 'redux/cartList/action';
 import { CartItem } from 'types/domain';
 
@@ -11,7 +12,7 @@ export interface CartListState {
     | 'deleteCartItem'
     | 'deleteAllCartItem'
     | null;
-  readonly error: Error | null;
+  readonly error: AxiosError | null;
   readonly data: CartItem[];
 }
 

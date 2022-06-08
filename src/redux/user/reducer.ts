@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { UserInfo } from 'types/domain';
 
 import { UserAction } from './action';
@@ -5,7 +6,7 @@ import { UserAction } from './action';
 export interface UserState {
   loading: 'getUser' | 'login' | 'signup' | 'edit' | 'delete' | null;
   data: UserInfo | null;
-  error: Error | null;
+  error: AxiosError | null;
 }
 
 export const initialState: UserState = {

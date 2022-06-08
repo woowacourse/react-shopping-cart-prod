@@ -1,4 +1,5 @@
 import { client } from 'apis';
+import { AxiosError } from 'axios';
 import type { Dispatch } from 'redux';
 import { Item } from 'types/domain';
 
@@ -11,7 +12,7 @@ export const getItemRequest = (id: string) => async (dispatch: Dispatch<ItemActi
 
     dispatch(itemActions.getItemActionGroup.success(response.data));
   } catch (e: unknown) {
-    if (e instanceof Error) {
+    if (e instanceof AxiosError) {
       dispatch(itemActions.getItemActionGroup.failure(e));
     }
   }

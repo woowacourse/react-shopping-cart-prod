@@ -1,10 +1,10 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
-import Snackbar, { MESSAGE } from 'components/common/Snackbar';
+import Snackbar from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
-import useSnackBar from 'hooks/useSnackBar';
+import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { deleteUser } from 'redux/user/thunk';
