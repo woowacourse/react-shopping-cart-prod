@@ -18,4 +18,9 @@ export const PRODUCT_API_URL = {
   TO_PRODUCT_ID: `${API_URL}/products/:id`,
 };
 
+export const ORDERS_API_URL = {
+  TO_ORDERS: `${API_URL}/orders`,
+  TO_ORDERS_DETAIL: `${API_URL}/orders/:id`,
+};
+
 export const PRODUCT_LIST_PAGE_LIMIT = 12;

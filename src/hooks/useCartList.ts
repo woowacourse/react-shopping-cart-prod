@@ -90,6 +90,8 @@ export const useCartList = () => {
   return {
     amount,
     dispatch,
+    selectedCartItem,
+    orderLength: selectedCartItem.length,
     cartItemStatusUtil: {
       checkCartItemLoading,
       checkCartItemChecked,
