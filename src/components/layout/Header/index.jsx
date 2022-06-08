@@ -28,7 +28,6 @@ function Header({ isLogin }) {
       <Title />
       <select
         onChange={({ target: { value } }) => {
-          console.log(value, typeof value);
           dispatch(changeServerUrl(Number(value)));
           logout();
         }}
