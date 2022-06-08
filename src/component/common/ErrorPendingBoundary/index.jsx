@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Loader from 'component/Loader';
 
 export default function ErrorPendingBoundary({children, fallback, error, pending = false, data}) {
-  if (!data) return;
+  if (!data) return <>{children}</>;
 
   if (data.products.length === 0) return fallback;
 
