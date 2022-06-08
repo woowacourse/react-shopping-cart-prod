@@ -32,9 +32,9 @@ const ItemList = ({ fullItemList }: { fullItemList: Item[] }) => {
         <ItemContainer
           key={item.id}
           id={item.id}
-          thumbnailUrl={item.thumbnailUrl}
+          thumbnailUrl={item.imageUrl}
           price={item.price}
-          title={item.title}
+          name={item.name}
           updateCartItemQuantity={updateCartItemQuantity}
           openSnackbar={openSnackbar}
         />

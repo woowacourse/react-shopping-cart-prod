@@ -5,9 +5,9 @@ export enum CartListActionType {
   GET_CART_LIST_SUCCESS = 'cart/GET_CART_LIST_SUCCESS',
   GET_CART_LIST_FAILURE = 'cart/GET_CART_LIST_FAILURE',
 
-  PUT_CART_ITEM_START = 'cart/PUT_CART_ITEM_START',
-  PUT_CART_ITEM_SUCCESS = 'cart/PUT_CART_ITEM_SUCCESS',
-  PUT_CART_ITEM_FAILURE = 'cart/PUT_CART_ITEM_FAILURE',
+  PATCH_CART_ITEM_START = 'cart/PATCH_CART_ITEM_START',
+  PATCH_CART_ITEM_SUCCESS = 'cart/PATCH_CART_ITEM_SUCCESS',
+  PATCH_CART_ITEM_FAILURE = 'cart/PATCH_CART_ITEM_FAILURE',
 
   POST_CART_ITEM_START = 'cart/POST_CART_ITEM_START',
   POST_CART_ITEM_SUCCESS = 'cart/POST_CART_ITEM_SUCCESS',
@@ -32,17 +32,17 @@ interface GetCartListFailure {
   payload: string;
 }
 
-interface PutCartItemStart {
-  type: CartListActionType.PUT_CART_ITEM_START;
+interface PatchCartItemStart {
+  type: CartListActionType.PATCH_CART_ITEM_START;
 }
 
-interface PutCartItemSuccess {
-  type: CartListActionType.PUT_CART_ITEM_SUCCESS;
-  payload: CartItem;
+interface PatchCartItemSuccess {
+  type: CartListActionType.PATCH_CART_ITEM_SUCCESS;
+  payload: { cartItems: CartItem[] };
 }
 
-interface PutCartItemFailure {
-  type: CartListActionType.PUT_CART_ITEM_FAILURE;
+interface PatchCartItemFailure {
+  type: CartListActionType.PATCH_CART_ITEM_FAILURE;
   payload: string;
 }
 
@@ -66,7 +66,7 @@ interface RemoveCartItemStart {
 
 interface RemoveCartItemSuccess {
   type: CartListActionType.REMOVE_CART_ITEM_SUCCESS;
-  payload: CartItem;
+  payload: any;
 }
 
 interface RemoveCartItemFailure {
@@ -78,9 +78,9 @@ export type CartListAction =
   | GetCartListStart
   | GetCartListSuccess
   | GetCartListFailure
-  | PutCartItemStart
-  | PutCartItemSuccess
-  | PutCartItemFailure
+  | PatchCartItemStart
+  | PatchCartItemSuccess
+  | PatchCartItemFailure
   | PostCartItemStart
   | PostCartItemSuccess
   | PostCartItemFailure

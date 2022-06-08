@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { flexCenter } from 'styles/mixin';
-import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import nayongIcon from 'assets/nyIcon.png';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useState } from 'react';
@@ -36,7 +35,7 @@ const Header = () => {
         <StyledNav>
           <button onClick={() => navigate('/cart')}>장바구니</button>
           {Object.keys(data).length ? (
-            <button onClick={toggleHambergur}>
+            <StyledDropDownBtn onClick={toggleHambergur}>
               마이페이지
               <MyPageHambergurList isShow={isShowHambergur}>
                 <Link to='/editPassword'>비밀번호 변경</Link>
@@ -45,7 +44,7 @@ const Header = () => {
                   로그아웃
                 </Link>
               </MyPageHambergurList>
-            </button>
+            </StyledDropDownBtn>
           ) : (
             <button onClick={() => navigate('/signIn')}>로그인</button>
           )}
@@ -54,6 +53,8 @@ const Header = () => {
     </StyledRoot>
   );
 };
+
+/**/
 
 export default Header;
 
@@ -107,7 +108,7 @@ const StyledNav = styled.nav`
 
 type Hambergur = { isShow: boolean };
 const MyPageHambergurList = styled.div<Hambergur>`
-  width: 17rem;
+  width: 13rem;
   flex-direction: column;
   position: absolute;
   top: 8rem;
@@ -124,4 +125,13 @@ const MyPageHambergurList = styled.div<Hambergur>`
   a:hover {
     background-color: ${theme.colors.hewvyWhite};
   }
+`;
+
+const StyledDropDownBtn = styled.button`
+  background-color: #4caf50;
+  color: white;
+  padding: 16px;
+  font-size: 10px;
+  border: none;
+  cursor: pointer;
 `;

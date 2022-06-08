@@ -31,7 +31,7 @@ export const signIn = (signInInfo: SignInInfo) => async (dispatch: Dispatch<User
       data: signInInfo,
     });
 
-    setLocalStorageToken(response.data.token);
+    setLocalStorageToken(`Bearer ${response.data.token}`);
 
     dispatch({ type: UserActionType.POST_SIGN_IN_SUCCESS, payload: response.data });
   } catch (e) {
@@ -96,14 +96,13 @@ export const autoSignIn = () => async (dispatch: Dispatch<UserAction>) => {
         'Content-Type': 'application/json',
         Authorization: token,
       },
-      url: `${LOCAL_BASE_URL}/login/auto`,
+      url: `${LOCAL_BASE_URL}/token/refresh`,
     });
 
-    setLocalStorageToken(response.data.token);
+    setLocalStorageToken(`Bearer ${response.data.token}`);
 
     dispatch({ type: UserActionType.AUTO_SIGN_IN_SUCCESS, payload: response.data });
   } catch (e) {
-    console.log(e);
     dispatch({ type: UserActionType.AUTO_SIGN_IN_FAILURE, payload: e.message });
     alert(e.response.data.errorMessage);
   }
