@@ -6,8 +6,8 @@ const Styled = {
   `,
 
   NicknameThumbail: styled.div`
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 100%;
     background-color: white;
     display: flex;
@@ -15,7 +15,7 @@ const Styled = {
     justify-content: center;
     color: ${({ theme }) => theme.colors.mint_001};
     font-weight: bold;
-    font-size: 16px;
+    font-size: 12px;
     margin-left: 15px;
     cursor: pointer;
   `,

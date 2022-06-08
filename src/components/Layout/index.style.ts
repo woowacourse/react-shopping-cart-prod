@@ -23,8 +23,7 @@ const Styled = {
   `,
 
   CartLink: styled(Link)`
-    font-weight: 500;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 12px;
     text-decoration: none;
     color: white;
@@ -32,8 +31,7 @@ const Styled = {
   `,
 
   OrderLink: styled(Link)`
-    font-weight: 500;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 12px;
     text-decoration: none;
     color: white;
