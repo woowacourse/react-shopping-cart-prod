@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
 const StyledCartList = styled.section`
-  width: 60%;
-  margin-top: 50px;
+  width: 90%;
+  margin: 40px auto 0;
 
   div {
     display: flex;
@@ -24,6 +24,10 @@ const StyledCartList = styled.section`
 
       border: 1px solid ${({ theme }) => theme.colors.gray4};
     }
+  }
+
+  @media (min-width: 800px) {
+    width: 80%;
   }
 `;
 

@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 
 const AmountBoxWrapper = styled.div`
-  box-sizing: border-box;
-  width: 400px;
+  width: 90%;
   height: 300px;
   border: ${({ theme }) => `1px solid ${theme.colors.gray4}`};
   padding: 30px;
+  margin: 0 auto;
 
   button {
     background-color: ${({ theme }) => theme.colors.mint};
@@ -13,6 +13,11 @@ const AmountBoxWrapper = styled.div`
     font-size: ${({ theme }) => theme.fontSize.l};
     width: 350px;
     height: 80px;
+  }
+
+  @media (min-width: 800px) {
+    width: 400px;
+    height: 300px;
   }
 `;
 
