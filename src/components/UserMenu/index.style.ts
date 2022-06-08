@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
 const Styled = {
+  Dimmer: styled.div`
+    position: absolute;
+    width: 100vw;
+    height: 100vw;
+    z-index: 100;
+    left: -882px;
+    top: -13px;
+  `,
+
   Container: styled.div`
     position: relative;
   `,
@@ -56,29 +65,28 @@ const Styled = {
     }
   `,
 
-  Nickname: styled.div`
-    width: 60px;
-    padding: 10px;
-    color: ${({ theme }) => theme.colors.gray_005};
+  NicknameContainer: styled.div`
+    width: 150px;
+    padding: 17px 12px;
+    color: ${({ theme }) => theme.colors.black};
+    font-size: 15px;
+  `,
+
+  Nickname: styled.span`
+    font-weight: bold;
   `,
 
   MenuItem: styled.div`
-    width: 60px;
+    width: 150px;
     cursor: pointer;
-    padding: 10px;
+    padding: 12px;
+    color: ${({ theme }) => theme.colors.gray_005};
+    font-size: 13px;
 
     &:hover {
       background-color: ${({ theme }) => theme.colors.mint_001};
       color: ${({ theme }) => theme.colors.white};
     }
-  `,
-
-  Line: styled.hr`
-    width: 100%;
-    height: 1px;
-    margin: 0;
-    border: none;
-    background-color: ${({ theme }) => theme.colors.gray};
   `,
 };
 

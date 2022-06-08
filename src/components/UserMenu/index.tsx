@@ -32,8 +32,10 @@ const UserMenu = ({ nickname }) => {
       <Styled.NicknameThumbail onClick={toggleMenu}>{nickname[0]}</Styled.NicknameThumbail>
       {isOpen && (
         <Styled.Menu>
-          <Styled.Nickname>{nickname}님 👋</Styled.Nickname>
-          <Styled.Line />
+          <Styled.NicknameContainer>
+            <Styled.Nickname>{nickname}</Styled.Nickname>님, 안녕하세요 👋
+          </Styled.NicknameContainer>
+
           <Styled.MenuItem
             onClick={() => {
               navigate('/account');
@@ -42,10 +44,10 @@ const UserMenu = ({ nickname }) => {
           >
             회원수정
           </Styled.MenuItem>
-          <Styled.Line />
           <Styled.MenuItem onClick={logout}>로그아웃</Styled.MenuItem>
         </Styled.Menu>
       )}
+      {isOpen && <Styled.Dimmer onClick={toggleMenu} />}
     </Styled.Container>
   );
 };
