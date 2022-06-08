@@ -39,7 +39,7 @@ const Profile = () => {
 
     setLoading(true);
     try {
-      await API.updateUser({ email, name });
+      await API.updateUser({ name });
       dispatch(onMessage(SNACKBAR_MESSAGE.successUpdateUser()));
     } catch (e) {
       setError(e.message);
@@ -55,6 +55,7 @@ const Profile = () => {
 
         setName(data.name);
         setEmail(data.email);
+        setError('');
       } catch (e) {
         if (e.message === ERROR_MESSAGE.INVALID_TOKEN) {
           dispatch(withdraw());
