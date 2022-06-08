@@ -5,7 +5,6 @@ import styled from 'styled-components';
 const ProductImage = styled.img`
   width: 120px;
   height: 120px;
-  background-color: red;
 `;
 
 const ProductName = styled.div`
