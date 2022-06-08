@@ -3,12 +3,11 @@ import styled from 'styled-components';
 const Styled = {
   Container: styled.label`
     display: block;
-    height: 15px;
-    width: 15px;
+    height: 17px;
+    width: 17px;
     border-radius: 2px;
     position: relative;
     border: 1px solid ${({ theme }) => theme.colors.mint_002};
-    box-sizing: border-box;
     cursor: pointer;
 
     input {
@@ -18,9 +17,8 @@ const Styled = {
 
   CheckMark: styled.span`
     position: absolute;
-    height: 15px;
-    width: 15px;
-    border-radius: 2px;
+    height: 17px;
+    width: 17px;
 
     input:checked ~ & {
       background-color: ${({ theme }) => theme.colors.mint_002};
@@ -29,8 +27,8 @@ const Styled = {
     &:after {
       content: '';
       position: absolute;
-      left: 4px;
-      top: 0px;
+      left: 5px;
+      top: 2px;
       width: 5px;
       height: 8px;
       border: solid ${({ theme }) => theme.colors.white};
