@@ -15,6 +15,23 @@ const cartAPI = {
 
     return this.getCartItemList();
   },
-};
+  deleteCartItem: async function (cartItemId: number) {
+    await axiosWithToken.delete(`/customers/me/cart-items/${cartItemId}`);
 
+    return this.getCartItemList();
+  },
+  updateCartItemQuantity: async function (
+    cartItemId: number,
+    quantity: number
+  ) {
+    const requestBody = { quantity };
+
+    await axiosWithToken.patch(
+      `/customers/me/cart-items/${cartItemId}`,
+      requestBody
+    );
+
+    return this.getCartItemList();
+  },
+};
 export default cartAPI;

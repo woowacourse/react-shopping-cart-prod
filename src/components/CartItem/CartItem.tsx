@@ -38,8 +38,9 @@ function CartItem({ cartId, product, stock, checked }: Props) {
     //dispatch(cartActions.toggleCheckAProduct(id));
   };
 
-  const onChangeCartStock = (value: number) => {
-    // dispatch(cartActions.changeProductStock({ id, stock: value }));
+  const onChangeCartStock = async (value: number) => {
+    const cartList = await cartAPI.updateCartItemQuantity(cartId, value);
+    dispatch(cartActions.setCartItemList(cartList));
   };
 
   return (
