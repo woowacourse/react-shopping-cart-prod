@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles, theme } from 'components';
-import store from 'store/store';
+import store from 'store';
 import { doInitializeProductList } from 'actions/actionCreator';
 import { dummyProductList } from 'dummy_data';
 
