@@ -16,7 +16,7 @@ import apiClient from 'apis/apiClient';
 import useLogout from 'hooks/useLogout';
 
 const LoginPage = () => {
-  const { logoutByError } = useLogout();
+  // const { logoutByError } = useLogout();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state: userEmail } = useLocation();
@@ -57,7 +57,7 @@ const LoginPage = () => {
       navigate('/');
     } catch (error) {
       const customError = error.response.data;
-      logoutByError(customError);
+      // logoutByError(customError);
       navigate('/login');
       renderSnackbar(customError.message, 'FAILED');
     }

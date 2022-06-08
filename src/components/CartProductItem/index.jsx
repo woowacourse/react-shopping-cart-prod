@@ -1,6 +1,5 @@
 // @ts-nocheck
 import { useDispatch } from 'react-redux';
-import useProduct from 'hooks/useProduct';
 import useOrder from 'hooks/useOrder';
 import useSnackbar from 'hooks/useSnackbar';
 import PropTypes from 'prop-types';
@@ -12,18 +11,13 @@ import { doPutProductToCart, doDeleteProductFromCart } from 'actions/actionCreat
 import autoComma from 'utils/autoComma';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
-import useLogout from 'hooks/useLogout';
 import { useNavigate } from 'react-router-dom';
 
 const CartProductItem = ({ productId, name, price, image, quantity }) => {
-  // console.log(productId, name, price, image, quantity);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
-
-  // const [{ name, price, image }] = useProduct(productId);
   const [isInOrder, updateOrder] = useOrder(productId);
-  const { logoutByError } = useLogout();
 
   // TODO 5. delete 장바구니 내 선택된 상품 삭제
   const deleteItem = async () => {
@@ -35,7 +29,6 @@ const CartProductItem = ({ productId, name, price, image, quantity }) => {
     } catch (error) {
       const customError = error.response.data;
       renderSnackbar(customError.message, 'FAILED');
-      logoutByError(customError);
     }
   };
 
@@ -57,7 +50,6 @@ const CartProductItem = ({ productId, name, price, image, quantity }) => {
     } catch (error) {
       const customError = error.response.data;
       renderSnackbar(customError.message, 'FAILED');
-      logoutByError(customError);
       navigate('/login');
     }
   };

@@ -13,10 +13,8 @@ import Styled from './index.style';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
-import useLogout from 'hooks/useLogout';
 
 const SignupPage = () => {
-  const { logoutByError } = useLogout();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
@@ -55,7 +53,6 @@ const SignupPage = () => {
       navigate('/login', { state: response.data.email });
     } catch (error) {
       const customError = error.response.data;
-      logoutByError(customError);
       navigate('/login');
       renderSnackbar(customError.message, 'FAILED');
     }

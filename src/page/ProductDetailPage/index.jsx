@@ -12,7 +12,6 @@ import autoComma from 'utils/autoComma';
 import { LINK, MESSAGE } from 'utils/constants';
 import { doPutProductToCart } from 'actions/actionCreator';
 import apiClient from 'apis/apiClient';
-import useLogout from 'hooks/useLogout';
 
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
@@ -20,7 +19,6 @@ const ProductDetailPage = () => {
   const { isAuthenticated } = useSelector(state => state.authReducer);
   const [product, setProduct] = useState({ productId: '', image: '', name: '', price: '' });
   const [renderSnackbar] = useSnackbar();
-  const { logoutByError } = useLogout();
 
   const params = useParams();
   const id = Number(params.id);
@@ -52,9 +50,8 @@ const ProductDetailPage = () => {
       );
     } catch (error) {
       const customError = error.response.data;
-      logoutByError(customError);
-      navigate('/login');
       renderSnackbar(customError.message, 'FAILED');
+      navigate('/login');
     }
   };
 

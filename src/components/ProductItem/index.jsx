@@ -16,7 +16,6 @@ import { LINK, MESSAGE } from 'utils/constants';
 import useSnackbar from 'hooks/useSnackbar';
 import { useSelector, useDispatch } from 'react-redux';
 import apiClient from 'apis/apiClient';
-import useLogout from 'hooks/useLogout';
 
 const ProductItem = ({ productId, name, price, image }) => {
   const dispatch = useDispatch();
@@ -28,7 +27,6 @@ const ProductItem = ({ productId, name, price, image }) => {
   const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);
 
   const [isControllerOpen, setIsControllerOpen] = useState(false);
-  const { logoutByError } = useLogout();
   const [clearTimer, setAutoCloseTimer, extendTimer] = useClose();
 
   const quantityRef = useRef(quantity);
@@ -52,7 +50,6 @@ const ProductItem = ({ productId, name, price, image }) => {
     } catch (error) {
       const customError = error.response.data;
       renderSnackbar(customError.message, 'FAILED');
-      logoutByError(customError);
       navigate('/login');
     }
   };
@@ -63,7 +60,6 @@ const ProductItem = ({ productId, name, price, image }) => {
 
     if (quantityRef.current > 0) {
       putCart(productId, quantityRef.current);
-      // dispatch(doPutProductToCart({ productId, quantity: quantityRef.current }));
       renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
       return;
     }
