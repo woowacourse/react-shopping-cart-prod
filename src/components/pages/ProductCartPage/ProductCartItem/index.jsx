@@ -14,7 +14,7 @@ import {
 } from "./styled";
 
 function ProductCartItem({
-  product: { productId, thumbnailUrl, name, price, count },
+  product: { productId, thumbnailUrl, name, price, quantity, count },
   checkList,
   handleClickIncreaseButton,
   handleClickDecreaseButton,
@@ -45,7 +45,8 @@ function ProductCartItem({
           )}
           handleClickIncreaseButton={handleClickIncreaseButton(
             productId,
-            count
+            count,
+            quantity
           )}
         />
         <ProductCartPrice>

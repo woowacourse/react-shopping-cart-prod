@@ -36,7 +36,11 @@ function ProductCartList({ checkList, setCheckList }) {
     setCheckList([]);
   };
 
-  const handleClickIncreaseButton = (productId, count) => () => {
+  const handleClickIncreaseButton = (productId, count, quantity) => () => {
+    if (quantity <= count) {
+      alert("재고가 부족합니다 :(");
+      return;
+    }
     if (!checkList.includes(productId))
       setCheckList((prev) => [...prev, productId]);
     dispatch(updateCartCount(productId, count + 1));
@@ -64,10 +68,10 @@ function ProductCartList({ checkList, setCheckList }) {
 
   const renderListContent = () => {
     if (isLoading) return <Spinner />;
-    if (errorMessage) return <ErrorPage>에러: ${errorMessage} </ErrorPage>;
     if (cartList.length === 0) return <div>담은 상품이 없습니다.</div>;
     return (
       <>
+        {errorMessage && <ErrorPage>에러: ${errorMessage} </ErrorPage>}
         {cartList.map((cartItem) => (
           <ProductCartItem
             product={cartItem}
