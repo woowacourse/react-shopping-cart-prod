@@ -17,8 +17,15 @@ import {
 } from 'reducers/cart.reducer';
 import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
+import useGetCartAPI from 'hooks/useGetCartAPI';
 
 const CartPage = () => {
+  const { getCart, isCartLoading } = useGetCartAPI();
+
+  useEffect(() => {
+    getCart();
+  }, [getCart]);
+
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
@@ -47,17 +54,6 @@ const CartPage = () => {
     }
     setTotalPrice(calculateTotalPrice());
   }, [calculateTotalPrice]);
-
-  // TODO 3. get 장바구니 목록 가져오기
-  const getCart = useCallback(async () => {
-    const response = await apiClient.get('/cart');
-    console.log('장바구니', response.data);
-    dispatch(doInitializeCartList({ shoppingCart: response.data }));
-  }, [dispatch]);
-
-  useEffect(() => {
-    getCart();
-  }, [getCart]);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
@@ -104,7 +100,7 @@ const CartPage = () => {
 
   return (
     <Styled.Container>
-      {shoppingCart.length > 0 ? (
+      {!isCartLoading ? (
         <>
           <Styled.Title>장바구니</Styled.Title>
           <Styled.Division />
