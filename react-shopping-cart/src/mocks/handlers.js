@@ -126,4 +126,14 @@ export const handlers = [
     }
     return res(ctx.status(401), ctx.json({ message: '에러메세지' }));
   }),
+  rest.delete(`${API_URL_PATH.CUSTOMERS}`, (req, res, ctx) => {
+    const { authorization: raw } = req.headers._headers;
+    const authorization = raw.replace('Bearer', '');
+
+    if (authorization) {
+      delete customers['abc@abc.com'];
+      return res(ctx.status(204));
+    }
+    return res(ctx.status(401), ctx.json({ message: '에러메세지' }));
+  }),
 ];

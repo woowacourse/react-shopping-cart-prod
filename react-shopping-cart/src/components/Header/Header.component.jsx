@@ -90,8 +90,10 @@ function Header() {
   };
 
   const handleDeleteAccount = async () => {
-    await deleteAcount();
-    dispatch(logoutUser());
+    if (window.confirm(`회원 탈퇴하시겠습니까?`) && window.confirm('정말?')) {
+      await deleteAcount();
+      dispatch(logoutUser());
+    }
   };
 
   const handleDeleteAccessToken = () => {
