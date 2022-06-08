@@ -1,4 +1,4 @@
-import * as Styled from './CartAdd.style';
+import * as Styled from './ProductAddCart.style';
 import * as GlobalStyled from '../../../styles/GlobalStyles';
 import Counter from '../../common/Counter/Counter';
 import { useCount } from '../../../hooks/useCount';
@@ -8,12 +8,12 @@ import { ROUTE } from '@/route';
 import { useDispatch } from 'react-redux';
 import { fetchAddCartAsync } from '@/store/cart/action';
 interface CartAddPropsType {
-  product: Pick<ProductType, 'name' | 'price' | 'quantity'>;
+  product: ProductType;
   closeModal: () => void;
 }
 
 function CartAdd({ product, closeModal }: CartAddPropsType) {
-  const { name, price, quantity } = product;
+  const { id, name, price, stock } = product;
 
   const dispatch = useDispatch();
 
@@ -22,11 +22,11 @@ function CartAdd({ product, closeModal }: CartAddPropsType) {
   const { count, increaseCount, decreaseCount } = useCount({
     initialValue: 1,
     min: 1,
-    max: quantity,
+    max: stock,
   });
 
   const onClickCartAdd = () => {
-    dispatch(fetchAddCartAsync({ ...product, quantity: count }) as any);
+    dispatch(fetchAddCartAsync({ productId: id, quantity: count }) as any);
 
     if (confirm('장바구니로 이동하시겠습니까?')) {
       navigate(ROUTE.ShoppingCart);
