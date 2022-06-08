@@ -84,6 +84,21 @@ const requestCheckUserNickname = (nickname) =>
     method: 'GET',
   });
 
+const requestPasswordConfirm = (password) =>
+  request(
+    '/auth/customers/match/password',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password }),
+    },
+    {
+      isAccessTokenUsed: true,
+    },
+  );
+
 export {
   requestSignUp,
   requestLogin,
@@ -93,4 +108,5 @@ export {
   requestPasswordUpdate,
   requestCheckUserId,
   requestCheckUserNickname,
+  requestPasswordConfirm,
 };

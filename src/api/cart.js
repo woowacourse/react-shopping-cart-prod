@@ -6,20 +6,26 @@ const requestGetCartList = () =>
   });
 
 const requestAddCart = ({ id, image, name, price, quantity, isChecked }) =>
-  request('/cart', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  request(
+    '/auth/customer/cartItems',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        product: id,
+        image,
+        name,
+        price,
+        quantity,
+        isChecked,
+      }),
     },
-    body: JSON.stringify({
-      product: id,
-      image,
-      name,
-      price,
-      quantity,
-      isChecked,
-    }),
-  });
+    {
+      isAccessTokenUsed: true,
+    },
+  );
 
 const requestUpdateCartItem = (id, content) =>
   request(`/cart/${id}`, {
