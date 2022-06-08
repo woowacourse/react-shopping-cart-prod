@@ -64,8 +64,10 @@ const requestRemoveCartItem = (id) =>
   );
 
 const requestRemoveCartItemList = (idList) => {
+  // API 스펙 변경 협의 필요.
   const requestBody = idList.map((id) => ({ id }));
-  request(
+
+  return request(
     '/auth/customer/cartItems',
     {
       method: 'DELETE',

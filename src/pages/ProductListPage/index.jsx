@@ -29,7 +29,7 @@ export function ProductListPage() {
 
   const handleAddCart = ({ id, image, name, price }) => {
     dispatchEvent({
-      action: cartThunk.addItem({ id, image, name, price }),
+      action: cartThunk.addItems([{ id, image, name, price }]),
       onStateUpdated: ({ cart }) => {
         const { curdAsyncState } = cart;
         !curdAsyncState.isLoaded &&
@@ -59,7 +59,7 @@ export function ProductListPage() {
         <S.Container>
           {productList &&
             productList.map(({ id, name, price, imageUrl }) => {
-              const cartItem = cartItems.find(({ product }) => product === id);
+              const cartItem = cartItems.find(({ productId }) => productId === id);
 
               return (
                 <ProductItem

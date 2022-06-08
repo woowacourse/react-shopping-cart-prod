@@ -47,11 +47,11 @@ function CartItemList() {
       >
         <Case.Success>
           {(cartItems.length > 0 &&
-            cartItems.map(({ id, image, name, price, quantity, isChecked }) => (
+            cartItems.map(({ id, imageUrl, name, price, quantity, isChecked }) => (
               <CartItem
                 key={id}
                 id={id}
-                image={image}
+                image={imageUrl}
                 name={name}
                 price={price}
                 quantity={quantity}

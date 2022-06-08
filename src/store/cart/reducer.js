@@ -42,7 +42,7 @@ const reducer = {
   },
 
   // 장바구니 아이템 정보(수량 등) 업데이트
-  updateCartItems(state, { updatedItem }) {
+  updateCartItem(state, { updatedItem }) {
     const targetIndex = findCartIdByIndex(updatedItem.id, state.items);
 
     state.items[targetIndex] = { ...state.items[targetIndex], ...updatedItem };
