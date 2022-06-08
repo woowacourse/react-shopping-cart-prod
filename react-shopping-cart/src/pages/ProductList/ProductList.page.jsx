@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-
 import PageContainer from 'components/@shared/PageContainer/PageContainer.component';
 
 import Header from 'components/Header/Header.component';
@@ -7,7 +5,7 @@ import ProductListBox from 'components/ProductListBox/ProductListBox.component';
 import ProductListContainer from 'components/ProductListContainer/ProductListContainer.component';
 import SkeletonItem from 'components/SkeletonItem/SkeletonItem.component';
 
-import useFetch from 'hooks/useFetch';
+import useLoadProducts from 'hooks/useLoadProducts';
 
 import { API_URL_PATH } from 'constants/api';
 
@@ -22,16 +20,7 @@ function LoadingSection() {
 }
 
 function ProductList() {
-  const { accessToken } = useSelector(state => state.auth);
-  const headers = accessToken && { Authorization: `Bearer ${accessToken}` };
-  const {
-    data,
-    isLoading,
-    fetchData: loadProducts,
-  } = useFetch({
-    url: API_URL_PATH.PRODUCTS,
-    headers,
-  });
+  const { products, isLoading, loadProducts } = useLoadProducts();
 
   return (
     <>
@@ -40,7 +29,7 @@ function ProductList() {
         {isLoading ? (
           <LoadingSection />
         ) : (
-          <ProductListContainer data={data.products} loadProducts={loadProducts} />
+          <ProductListContainer products={products} loadProducts={loadProducts} />
         )}
       </PageContainer>
     </>
