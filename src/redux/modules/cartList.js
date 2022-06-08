@@ -165,7 +165,7 @@ export const cartListReducer = (state = cartListInitialState, action) => {
       return cartListInitialState;
 
     case ACTION_TYPES.ADD_PRODUCT_TO_CART:
-      return [...state, { ...action.payload, quantity: 1 }];
+      return [...state, { ...action.payload, quantity: 1, checked: true }];
 
     case ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON:
       const selectedItem = newState.find((item) => item.id === action.payload);
