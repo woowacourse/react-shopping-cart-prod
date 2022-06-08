@@ -35,6 +35,10 @@ export default function useCartItem(path = null) {
           dispatch({type: CART.DELETE, payload});
           dispatch({type: SELECTED_ITEM.DELETE, payload});
         },
+
+        onFail: (error) => {
+          alert(error);
+        },
       });
       return;
     }
@@ -60,6 +64,10 @@ export default function useCartItem(path = null) {
       onSuccess: (fetchedData) => {
         dispatch({type: CART.INITIALIZE, payload: fetchedData.cart});
       },
+
+      onFail: (error) => {
+        alert(error);
+      },
     });
   }, [dispatch, fetchCart]);
 
@@ -77,8 +85,13 @@ export default function useCartItem(path = null) {
       API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {productId: payload.id},
+
       onSuccess: () => {
         dispatch({type: CART.ADD, payload: {...payload, test: 'test', quantity: 1}});
+      },
+
+      onFail: (error) => {
+        alert(error);
       },
     });
     if (!path) {
@@ -99,9 +112,14 @@ export default function useCartItem(path = null) {
           API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
           headers: {Authorization: `Bearer ${accessToken}`},
           body: {productId: id},
+
           onSuccess: () => {
             dispatch({type: CART.DELETE, payload: id});
             dispatch({type: SELECTED_ITEM.DELETE, payload: id});
+          },
+
+          onFail: (error) => {
+            alert(error);
           },
         }),
       );

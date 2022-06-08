@@ -28,7 +28,12 @@ export default function ProductDetailPage() {
   }, [initializeCart]);
 
   useEffect(() => {
-    fetchProductDetail({API_URL: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT}/${id}`});
+    fetchProductDetail({
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT}/${id}`,
+      onFail: (error) => {
+        alert(error);
+      },
+    });
   }, [fetchProductDetail, id]);
 
   return (

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import * as S from './style';
 import baedaleTear from 'assets/baedale_tear.png';
@@ -40,12 +40,11 @@ function WithDrawalPage() {
         navigation(PATH.HOME);
         dispatch({type: AUTH.LOGOUT});
       },
+      onFail: (error) => {
+        alert(error);
+      },
     });
   };
-
-  useEffect(() => {
-    withDrawal.error && alert(withDrawal.error);
-  }, [withDrawal.error]);
 
   return (
     <S.Layout>

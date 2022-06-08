@@ -59,6 +59,9 @@ function UserInfoEditPage() {
     userInfo.fetch({
       API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
+      onFail: (error) => {
+        alert(error);
+      },
     });
   };
 
@@ -70,7 +73,7 @@ function UserInfoEditPage() {
     const accessToken = response.accessToken;
 
     editInfo.fetch({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERES}`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {
         nickname: nickname.value || nickname.placeholder,
@@ -84,20 +87,15 @@ function UserInfoEditPage() {
       onSuccess: () => {
         navigation(PATH.HOME);
       },
+      onFail: (error) => {
+        alert(error);
+      },
     });
   };
 
   useEffect(() => {
     getInfo();
   }, []);
-
-  useEffect(() => {
-    userInfo.error && alert(userInfo.error);
-  }, [userInfo.error]);
-
-  useEffect(() => {
-    editInfo.error && alert(editInfo.error);
-  }, [editInfo.error]);
 
   return (
     <S.Layout>

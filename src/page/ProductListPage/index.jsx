@@ -34,12 +34,11 @@ export default function ProductListPage() {
       onSuccess: (fetchedData) => {
         dispatch({type: PRODUCT_LIST.INITIALIZE, payload: fetchedData});
       },
+      onFail: (error) => {
+        alert(error);
+      },
     });
   }, [dispatch, fetchProduct]);
-
-  useEffect(() => {
-    productError && alert(productError);
-  }, [productError]);
 
   useEffect(() => {
     initializeCart();

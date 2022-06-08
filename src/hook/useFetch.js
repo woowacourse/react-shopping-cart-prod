@@ -7,7 +7,13 @@ export default function useFetch(method = 'get') {
   const [error, setError] = useState(null);
 
   const fetch = useCallback(
-    ({API_URL = '', headers = null, body = null, onSuccess = () => void 0}) => {
+    ({
+      API_URL = '',
+      headers = null,
+      body = null,
+      onSuccess = () => void 0,
+      onFail = () => void 0,
+    }) => {
       setPending(true);
       setData(null);
       setError(null);
@@ -26,6 +32,7 @@ export default function useFetch(method = 'get') {
         .catch((error) => {
           setPending(false);
           setError(error.response.data.message);
+          onFail(error.response.data.message);
         });
     },
     [method],
