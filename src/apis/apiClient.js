@@ -1,16 +1,16 @@
 import axios from 'axios';
-import { ENV } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 
 const AUTH_API_URL = {
   이프: 'http://ec2-3-39-234-109.ap-northeast-2.compute.amazonaws.com:8080',
   찬: 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.com:8080',
-  더즈: 'http://ec2-15-164-211-129.ap-northeast-2.compute.amazonaws.com:8080',
+  더즈: 'http://15.164.211.129:8080',
   토르: 'http://ec2-15-164-232-166.ap-northeast-2.compute.amazonaws.com:8080',
 };
 
-export const isApiTest = true;
+export const isApiTest = false;
 const selectedApiName = '이프';
+
 if (isApiTest) {
   console.log(`${selectedApiName}의 API로 연결하였습니다.`);
 } else {

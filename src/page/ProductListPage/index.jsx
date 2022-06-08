@@ -39,17 +39,9 @@ const ProductListPage = () => {
     <Styled.ProductListPage>
       {products.length > 0 ? (
         <Styled.ProductList>
-          {products.map(({ productId, name, price, image }) => {
+          {products.map(({ id, name, price, image }) => {
             return (
-              productId && (
-                <ProductItem
-                  key={productId}
-                  productId={productId}
-                  name={name}
-                  price={price}
-                  image={image}
-                />
-              )
+              id && <ProductItem key={id} productId={id} name={name} price={price} image={image} />
             );
           })}
         </Styled.ProductList>
