@@ -24,10 +24,11 @@ function ShoppingCart() {
 
   const onClickOrderButton = async () => {
     const orderList = selectedCartItem.map(cartId => ({ cartItemId: cartId }));
-
-    dispatch(postOrderListAsync(orderList) as any);
-
-    navigate(ROUTE.OrderDetail);
+    await dispatch(
+      postOrderListAsync(orderList, orderId => {
+        navigate(`${ROUTE.OrderDetail}/${orderId}`, { replace: true });
+      }) as any,
+    );
   };
 
   if (isLoading) {

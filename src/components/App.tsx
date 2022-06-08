@@ -20,7 +20,7 @@ function App() {
         <Route path={ROUTE.Home} element={<Home />} />
         <Route path={ROUTE.ShoppingCart} element={<ShoppingCart />} />
         <Route path={ROUTE.OrderList} element={<OrderList />} />
-        <Route path={ROUTE.OrderDetail} element={<OrderDetail />} />
+        <Route path={`${ROUTE.OrderDetail}/:id`} element={<OrderDetail />} />
         <Route path={ROUTE.ProductDetail} element={<ProductDetail />} />
 
         <Route path={ROUTE.SignUp} element={<SignUp />} />

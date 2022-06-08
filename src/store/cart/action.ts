@@ -217,14 +217,21 @@ export const fetchPatchCartAsync = (id, quantity) => async (dispatch: Dispatch<C
   }
 };
 
-export const postOrderListAsync = orderList => async (dispatch: Dispatch<CartAction>) => {
-  dispatch({ type: CartActionType.ADD_ORDER_ITEM_START });
+export const postOrderListAsync =
+  (orderList, navigate) => async (dispatch: Dispatch<CartAction>) => {
+    dispatch({ type: CartActionType.ADD_ORDER_ITEM_START });
 
-  try {
-    await addOrderList(orderList);
+    try {
+      const {
+        headers: { location },
+      } = await addOrderList(orderList);
 
-    dispatch({ type: CartActionType.ADD_ORDER_ITEM_SUCCEEDED, payload: { orderList } });
-  } catch ({ message }) {
-    dispatch({ type: CartActionType.ADD_ORDER_ITEM_FAILED });
-  }
-};
+      const orderId = location.split('/')[location.split('/').length - 1];
+
+      dispatch({ type: CartActionType.ADD_ORDER_ITEM_SUCCEEDED, payload: { orderList } });
+
+      navigate(orderId);
+    } catch ({ message }) {
+      dispatch({ type: CartActionType.ADD_ORDER_ITEM_FAILED });
+    }
+  };

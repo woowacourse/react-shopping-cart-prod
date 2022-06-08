@@ -17,6 +17,7 @@ export const OrderDetailsContainer = styled.ul`
   flex-direction: column;
   gap: 30px;
   margin-top: 30px;
+  padding: 36px;
 `;
 
 export const OrderNumber = styled.p`
@@ -29,8 +30,12 @@ export const OrderNumber = styled.p`
 
 export const OrderItemContainer = styled.li`
   display: flex;
-  gap: 15px;
+  gap: 40px;
   width: 100%;
+  padding: 20px;
+
+  -webkit-box-shadow: 1px 1.5px 3px 0px rgba(20, 24, 82, 0.27);
+  box-shadow: 2px 3px 6px 0px rgba(20, 24, 82, 0.27);
 `;
 
 export const OrderDescriptionContainer = styled.div`
