@@ -33,8 +33,8 @@ export const handlers = [
     }
     return res(ctx.status(404), ctx.json({ message: '존재하지 않는 email/password입니다.' }));
   }),
-  rest.post(`${API_URL_PATH.EMAIL}`, (req, res, ctx) => {
-    const email = req.body;
+  rest.post(`${API_URL_PATH.EMAIL_VALIDATE}`, (req, res, ctx) => {
+    const { email } = req.body;
 
     const isExist = !!customers[email];
 
@@ -84,7 +84,6 @@ export const handlers = [
   rest.get(`${API_URL_PATH.CARTS}`, (req, res, ctx) => {
     const { authorization: raw } = req.headers._headers;
     const authorization = raw.replace('Bearer', '');
-    console.log(authorization);
     const carts = customers['abc@abc.com'].carts;
 
     const cartIds = carts.map(cart => cart.productId);
