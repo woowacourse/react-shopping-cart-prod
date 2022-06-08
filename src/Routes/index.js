@@ -25,7 +25,7 @@ const Router = () => {
   const { show, message } = useSelector((state) => state.snackbar);
 
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Header />
       <Body>
         <Routes>
