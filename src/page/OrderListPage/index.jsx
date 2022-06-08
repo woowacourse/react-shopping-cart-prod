@@ -22,19 +22,20 @@ export default function OrderListPage() {
   const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   useEffect(() => {
-    if (!isLogin) {
+    if (isLogin === false) {
       alert('먼저 로그인을 해주세요.');
       navigation(PATH.LOGIN);
       return;
     }
 
-    orderList.fetch({
-      API_URL: process.env.REACT_APP_ORDER,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  }, []);
+    isLogin &&
+      orderList.fetch({
+        API_URL: process.env.REACT_APP_ORDER,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+  }, [isLogin]);
 
   return (
     <S.Layout>
@@ -48,7 +49,7 @@ export default function OrderListPage() {
               fallback={<NotFoundPage>에러가 발생했어요.</NotFoundPage>}
             >
               {orderList.data &&
-                orderList.data.map(({orderId, order}) => {
+                orderList.data.orders.map(({orderId, order}) => {
                   return (
                     <S.OrderTable key={orderId}>
                       <S.OrderTableHeader>

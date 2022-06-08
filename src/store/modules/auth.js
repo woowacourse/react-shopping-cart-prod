@@ -4,7 +4,7 @@ export const AUTH = {
 };
 
 const INITIAL_STATE = {
-  isLogin: false,
+  isLogin: null,
   accessToken: '',
 };
 

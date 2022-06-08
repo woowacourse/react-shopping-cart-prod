@@ -172,7 +172,7 @@ export const handlers = [
       return res(ctx.status(404));
     }
 
-    return res(ctx.status(200), ctx.json(userDB[accessToken].orders));
+    return res(ctx.status(200), ctx.json({orders: userDB[accessToken].orders}));
   }),
 
   // 구매 목록 추가
@@ -187,18 +187,22 @@ export const handlers = [
 
     const orderedList = order.map(({id: orderedId, quantity}) => {
       const orderedItem = MOCK_PRODUCT_LIST.find(({id}) => id === orderedId);
+
       return {
         id: orderedItem.id,
         name: orderedItem.name,
-        totalPrice: orderedItem.price * quantity,
+        cost: orderedItem.price * quantity,
         quantity,
         imageUrl: orderedItem.imageUrl,
       };
     });
 
+    const totalCost = orderedList.reduce((acc, cur) => acc + cur.cost, 0);
+
     userDB[accessToken].orders.push({
       orderId: orderId++,
       order: orderedList,
+      totalCost,
     });
 
     return res(ctx.status(201));
@@ -215,23 +219,23 @@ export const handlers = [
 
     const detailOrderInfo = userDB[accessToken].orders
       .find(({orderId}) => orderId === id)
-      .order.map(({id, name, totalPrice, quantity, imageUrl}) => {
+      .order.map(({id, name, cost, quantity, imageUrl}) => {
         return {
           id,
           name,
-          price: totalPrice / quantity,
+          cost,
           imageUrl,
           quantity,
         };
       });
 
-    const totalPrice = detailOrderInfo.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
+    const totalCost = detailOrderInfo.reduce((acc, cur) => acc + cur.cost, 0);
 
     return res(
       ctx.status(200),
       ctx.json({
         order: detailOrderInfo,
-        totalPrice,
+        totalCost,
       }),
     );
   }),

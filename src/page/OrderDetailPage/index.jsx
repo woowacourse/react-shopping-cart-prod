@@ -24,19 +24,20 @@ export default function OrderDetailPage() {
   const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   useEffect(() => {
-    if (!isLogin) {
+    if (isLogin === false) {
       alert('먼저 로그인을 해주세요.');
       navigation(PATH.LOGIN);
       return;
     }
 
-    orderList.fetch({
-      API_URL: `${process.env.REACT_APP_ORDER}/${id}`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-  }, []);
+    isLogin &&
+      orderList.fetch({
+        API_URL: `${process.env.REACT_APP_ORDER}/${id}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+  }, [isLogin]);
 
   return (
     <S.Layout>
@@ -69,7 +70,7 @@ export default function OrderDetailPage() {
                     <S.PayAmount>
                       <S.PayBoxFont>총 결제금액</S.PayBoxFont>
                       <S.PayBoxFont>
-                        {Number(orderList.data.totalPrice).toLocaleString()}원
+                        {Number(orderList.data.totalCost).toLocaleString()}원
                       </S.PayBoxFont>
                     </S.PayAmount>
                   </S.PayBox>

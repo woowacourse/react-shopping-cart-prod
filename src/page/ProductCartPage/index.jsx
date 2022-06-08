@@ -29,6 +29,12 @@ export default function ProductCartPage() {
   const {selectAllItem, unselectAllItem} = useSelectedItem();
 
   useEffect(() => {
+    if (isLogin === false) {
+      alert('먼저 로그인을 해주세요.');
+      navigation(PATH.LOGIN);
+      return;
+    }
+
     isLogin && initializeCart();
   }, [isLogin, initializeCart]);
 
