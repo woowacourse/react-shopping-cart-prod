@@ -21,7 +21,7 @@ const useCart = () => {
     }
   };
 
-  const deleteItem = async (id) => {
+  const deleteItem = async (id, isAlert) => {
     try {
       await axios.delete(`${SERVER_PATH.CARTS}/products/${id}`, {
         headers: {
@@ -29,7 +29,7 @@ const useCart = () => {
         },
       });
       dispatch(getCartItemAsync(accessToken));
-      alert(MESSAGE.REMOVE);
+      isAlert && alert(MESSAGE.REMOVE);
     } catch (error) {
       alert(error.response.data.message);
     }
@@ -54,7 +54,8 @@ const useCart = () => {
 
   const handleCartItem = (id, isCart) => {
     if (isCart) {
-      deleteItem(id);
+      const isAlert = true;
+      deleteItem(id, isAlert);
       return;
     }
     addItem(id);
