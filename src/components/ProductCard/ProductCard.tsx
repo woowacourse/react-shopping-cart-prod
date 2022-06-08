@@ -7,6 +7,7 @@ import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { snackBarActions } from 'redux/reducers/snackBar';
+import cartAPI from 'apis/cart';
 
 type Props = {
   product: Product;
@@ -20,9 +21,10 @@ function ProductCard({ product, isInCart }: Props) {
   };
   const dispatch = useDispatch();
 
-  const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
+  const onClickCartButton = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(cartActions.addToCart(id));
+    const data = await cartAPI.addCartItem(Number(id));
+    dispatch(cartActions.setCartItemList(data));
     dispatch(snackBarActions.show(CART_MESSAGE.SUCCESS_ADD));
   };
 

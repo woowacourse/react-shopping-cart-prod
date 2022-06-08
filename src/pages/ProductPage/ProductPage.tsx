@@ -9,6 +9,8 @@ import { cartActions } from 'redux/actions';
 import { getProduct } from 'redux/thunks';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import cartAPI from 'apis/cart';
+import { snackBarActions } from 'redux/reducers/snackBar';
 
 function ProductPage() {
   const { id } = useParams();
@@ -26,14 +28,11 @@ function ProductPage() {
     }
   }, [dispatch, id]);
 
-  const onClickCartButton = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      e.preventDefault();
-      dispatch(cartActions.addToCart(Number(id)));
-      alert(CART_MESSAGE.SUCCESS_ADD);
-    },
-    [dispatch, id]
-  );
+  const onClickCartButton = async (e: React.MouseEvent<HTMLElement>) => {
+    const data = await cartAPI.addCartItem(Number(id));
+    dispatch(cartActions.setCartItemList(data));
+    dispatch(snackBarActions.show(CART_MESSAGE.SUCCESS_ADD));
+  };
 
   const renderSwitch = useCallback(() => {
     switch (condition) {

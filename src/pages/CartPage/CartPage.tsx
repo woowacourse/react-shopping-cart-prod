@@ -1,9 +1,4 @@
-import {
-  CartProductState,
-  CartStoreState,
-  Product,
-  ProductStoreState,
-} from 'types/index';
+import { CartStoreState, Product, ProductStoreState } from 'types/index';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
@@ -15,15 +10,15 @@ import styled from 'styled-components';
 
 function CartPage() {
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition,
+    (state: { product: ProductStoreState }) => state.product.condition
   );
   const productList = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productList,
+    (state: { product: ProductStoreState }) => state.product.productList
   );
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+    (state: { cart: CartStoreState }) => state.cart.cart
   );
-  const [cartItems, setCartItems] = useState<Array<CartProductState>>([]);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,24 +27,12 @@ function CartPage() {
     }
   }, [dispatch, productList.length]);
 
-  useEffect(() => {
-    if (productList.length < 1) return;
-
-    setCartItems(
-      cart.map(({ id, stock, checked }) => {
-        const item = productList.find(product => product.id === id) as Product;
-
-        return { product: item, stock, checked };
-      }),
-    );
-  }, [cart, productList]);
-
   const renderSwitch = () => {
     switch (condition) {
       case CONDITION.LOADING:
         return <Loading />;
       case CONDITION.COMPLETE:
-        return <CartContent cartItems={cartItems} />;
+        return <CartContent cartItems={cart} />;
       case CONDITION.ERROR:
         return (
           <Message>상품 정보를 가져오는데 오류가 발생하였습니다 😱</Message>

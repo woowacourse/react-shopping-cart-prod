@@ -1,13 +1,13 @@
 import { CART_MESSAGE } from 'constants/message';
 import CartItem from 'components/CartItem/CartItem';
-import { CartProductState } from 'types';
+import { Cart } from 'types';
 import CheckBox from 'components/@shared/CheckBox';
 import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 type Props = {
-  cartItems: Array<CartProductState>;
+  cartItems: Cart[];
 };
 
 function CartContent({ cartItems }: Props) {
@@ -15,29 +15,30 @@ function CartContent({ cartItems }: Props) {
 
   const calculateTotalMoney = () => {
     return cartItems.reduce((prevMoney, item) => {
-      const { product, stock, checked } = item;
+      const { quantity, product } = item;
 
-      if (!checked) return prevMoney;
-
-      return prevMoney + product.price * stock;
+      return prevMoney + product.price * quantity;
     }, 0);
   };
 
   const isAllChecked = () => {
-    return cartItems.every(item => item.checked === true);
+    // return cartItems.every((item) => item.checked === true);
+    return true;
   };
 
   const onChangeAllChecked = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 
-    dispatch(cartActions.toggleCheckAllProduct(!isAllChecked()));
+    // ToDo: 모든 체크 해제
+    // dispatch(cartActions.toggleCheckAllProduct(!isAllChecked()));
   };
 
   const onClickCheckedDeleteButton = () => {
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteCheckedToCart());
+      // ToDo: 체크된 상품 삭제
+      // dispatch(cartActions.deleteCheckedToCart());
     }
   };
 
@@ -60,11 +61,11 @@ function CartContent({ cartItems }: Props) {
             선택 상품 삭제
           </StyledDeleteButton>
         </StyledProductOptions>
-        {cartItems.map(({ product, stock, checked }) => (
+        {cartItems.map(({ quantity, product }) => (
           <CartItem
             product={product}
-            stock={stock}
-            checked={checked}
+            stock={quantity}
+            checked={true}
             key={product.id}
           />
         ))}
