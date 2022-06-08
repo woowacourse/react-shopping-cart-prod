@@ -42,20 +42,17 @@ const CartList = ({
     <CommonStyled.HR />
     {cartList &&
       cartList.map(({ product: { id, name, thumbnail, price }, quantity }) => (
-        <>
-          <CartProducItem
-            key={id}
-            id={id}
-            name={name}
-            thumbnail={thumbnail}
-            price={price}
-            quantity={quantity}
-            isChecked={isChecked}
-            handleChecked={handleChecked()}
-            handleItemQuantity={handleItemQuantity}
-          />
-          <CommonStyled.HR size="1px" />
-        </>
+        <CartProducItem
+          key={id}
+          id={id}
+          name={name}
+          thumbnail={thumbnail}
+          price={price}
+          quantity={quantity}
+          isChecked={isChecked}
+          handleChecked={handleChecked()}
+          handleItemQuantity={handleItemQuantity}
+        />
       ))}
   </>
 );

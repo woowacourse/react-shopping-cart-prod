@@ -25,7 +25,6 @@ const ProductList = () => {
   return (
     <Layout>
       <Styled.ProductListContainer>
-        {/* {errorMessage && throw new Error(errorMessage)} */}
         {isLoading && <SkeletonProductItems />}
         {isLoading || productList ? (
           productList.map(({ id, name, price, thumbnail }) => (

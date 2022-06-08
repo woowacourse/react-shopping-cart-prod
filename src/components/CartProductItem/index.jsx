@@ -34,34 +34,37 @@ const CartProducItem = ({
   };
 
   return (
-    <CommonStyled.Container width="100%" margin="0">
-      <CheckBox checkState={isChecked(id)} handleChecked={() => handleChecked(id)} />
-      <Styled.ImageWrapper>
-        <img src={thumbnail} alt="product thumbnail" />
-      </Styled.ImageWrapper>
-      <CommonStyled.Container
-        width="100%"
-        height="100px"
-        justifyContent="flex-end"
-        alignItems="flex-end"
-        flexDirection="column"
-        margin="0"
-        padding="0 1rem"
-      >
-        <CommonStyled.Container width="100%" margin="0" justifyContent="space-between">
-          <Styled.Title>{name}</Styled.Title>
-          <IconButton onClick={onClickDeleteButton} icon={아이콘_코드.DELETE} />
+    <>
+      <CommonStyled.Container width="100%" margin="0">
+        <CheckBox checkState={isChecked(id)} handleChecked={() => handleChecked(id)} />
+        <Styled.ImageWrapper>
+          <img src={thumbnail} alt="product thumbnail" />
+        </Styled.ImageWrapper>
+        <CommonStyled.Container
+          width="100%"
+          height="100px"
+          justifyContent="flex-end"
+          alignItems="flex-end"
+          flexDirection="column"
+          margin="0"
+          padding="0 1rem"
+        >
+          <CommonStyled.Container width="100%" margin="0" justifyContent="space-between">
+            <Styled.Title>{name}</Styled.Title>
+            <IconButton onClick={onClickDeleteButton} icon={아이콘_코드.DELETE} />
+          </CommonStyled.Container>
+          <CommonStyled.FlexWrapper margin="0" width="120px" justifyContent="flex-end">
+            <Counter id={id} quantity={quantity} handleItemQuantity={handleItemQuantity()} />
+          </CommonStyled.FlexWrapper>
+          <Styled.Container margin="0" width="100%" justifyContent="flex-end">
+            <CommonStyled.Text padding="0.5rem 0">
+              {price.toLocaleString('ko-KR')}원
+            </CommonStyled.Text>
+          </Styled.Container>
         </CommonStyled.Container>
-        <CommonStyled.FlexWrapper margin="0" width="120px" justifyContent="flex-end">
-          <Counter id={id} quantity={quantity} handleItemQuantity={handleItemQuantity()} />
-        </CommonStyled.FlexWrapper>
-        <Styled.Container margin="0" width="100%" justifyContent="flex-end">
-          <CommonStyled.Text padding="0.5rem 0">
-            {price.toLocaleString('ko-KR')}원
-          </CommonStyled.Text>
-        </Styled.Container>
       </CommonStyled.Container>
-    </CommonStyled.Container>
+      <CommonStyled.HR size="1px" />
+    </>
   );
 };
 

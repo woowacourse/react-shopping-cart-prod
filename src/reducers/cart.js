@@ -28,9 +28,6 @@ export default (state = initialState, action) => {
     case 장바구니_액션.FAILURE:
       return { ...state, errorMessage: payload, isLoading: false };
 
-    case 장바구니_액션.ADD_NEW_PRODUCT:
-      return { ...state, items: [...state.items, payload] };
-
     case 장바구니_액션.DELETE_PRODUCT:
       return {
         ...state,

@@ -14,12 +14,13 @@ const addCartList = (product) => async (dispatch) => {
 
   const response = await requestAddCartItem(product.id);
 
-  if (response.statusCode === 303) {
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_추가_실패));
+  if (response.content.redirect) {
+    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_추가_중복));
     dispatch({
       type: 장바구니_액션.FAILURE,
       payload: response.content,
     });
+    return;
   }
 
   if (response.status === 비동기_요청.FAILURE) {
@@ -28,13 +29,11 @@ const addCartList = (product) => async (dispatch) => {
       type: 장바구니_액션.FAILURE,
       payload: response.content,
     });
+    return;
   }
 
   dispatch({ type: 장바구니_액션.SUCCESS });
-  dispatch({
-    type: 장바구니_액션.ADD_NEW_PRODUCT,
-    payload: { product, quantity: 1 },
-  });
+  dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_추가(product.name)));
 };
 
 const deleteCartItem = (productId) => async (dispatch) => {
