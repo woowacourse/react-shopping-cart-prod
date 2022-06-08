@@ -39,7 +39,7 @@ export const useAuth = () => {
         setCookie(COOKIE_KEY, accessToken);
         showSuccessSnackBar({ text: '로그인 성공' });
         dispatch(setAuthenticated({ authenticated: true }));
-        navigate(PATH_NAME.HOME);
+        navigate(PATH_NAME.PRODUCT);
       })
       .catch((err) => {
         const {
@@ -164,7 +164,7 @@ export const useAuth = () => {
         },
       })
       .then(() => {
-        navigate(PATH_NAME.HOME);
+        navigate(PATH_NAME.PRODUCT);
       })
       .catch(() => {
         showErrorSnackBar({ text: '비밀번호를 올바르게 입력하세요.' });

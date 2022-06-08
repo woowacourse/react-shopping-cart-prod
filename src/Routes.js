@@ -6,6 +6,7 @@ import {
   Login,
   ModifyProfile,
   SignUp,
+  ServerPick,
 } from 'pages';
 import { PATH_NAME } from 'constants';
 import Layout from 'components/Common/Layout/Layout';
@@ -17,6 +18,10 @@ const routes = [
     children: [
       {
         path: '',
+        element: <ServerPick />,
+      },
+      {
+        path: PATH_NAME.PRODUCT,
         element: <ProductList />,
       },
       {

@@ -19,3 +19,4 @@ export const SignUp = Loadable(lazy(() => import('pages/SignUp')));
 export const ModifyProfile = Loadable(
   lazy(() => import('pages/ModifyProfile')),
 );
+export const ServerPick = Loadable(lazy(() => import('pages/ServerPick')));
