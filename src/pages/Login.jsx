@@ -35,7 +35,6 @@ const Login = () => {
     dispatch(showSpinner());
 
     const response = await requestLogin(userId, userPassword);
-
     dispatch(hideSpinner());
 
     if (response.status === 비동기_요청.SUCCESS) {
@@ -43,7 +42,9 @@ const Login = () => {
       sessionStorage.setItem('accessToken', accessToken);
       const userResponse = await requestUserInfo();
       if (userResponse.status === 비동기_요청.SUCCESS) {
-        dispatch(setUserData(userResponse));
+        const { username } = userResponse.content;
+        dispatch(setUserData(username));
+        navigate('/');
       }
     }
 
@@ -53,7 +54,6 @@ const Login = () => {
         : '로그인에 실패하였습니다';
 
     dispatch(snackbar.pushMessageSnackbar(message));
-    navigate('/');
   };
 
   return (

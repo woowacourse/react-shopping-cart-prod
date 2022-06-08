@@ -7,19 +7,19 @@ const requestLogin = async (id, password) => requestAsync.post('login', { userna
 const requestUserInfo = async () => requestAsync.get('customers/me', true);
 
 const requestCheckDuplicatedId = async (id) =>
-  requestAsync.get('customers/username/duplication', { username: id });
+  requestAsync.get(`customers/username/uniqueness?username=${id}`);
 const requestSignUp = async (formData) => {
   const res = await requestAsync.post('customers', formData);
   return res;
 };
 
 const requestEditUserInfo = async (formData) => requestAsync.put('customers/me', formData, true);
-const requestWithDrawUser = async () => requestAsync.delete('customers/me', true);
+const requestWithDrawUser = async () => requestAsync.delete('customers/me', '', true);
 const requestEditUserPassword = async (formData) =>
   requestAsync.put('customers/me/password', formData, true);
 
 const requestGetCartList = async () => requestAsync.get('cart', true);
-const requestAddCartItem = async (id) => requestAsync.post(`cart/${id}`, true);
+const requestAddCartItem = async (id) => requestAsync.post(`cart/${id}`, '', true);
 const requestChangeItemQuantity = async (id, quantity) =>
   requestAsync.put(`cart/${id}/quantity`, quantity, true);
 const requestDeleteCartItem = async (productList) =>

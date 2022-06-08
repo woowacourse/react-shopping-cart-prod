@@ -11,8 +11,9 @@ const setCartList = () => async (dispatch) => {
     type: 장바구니_불러오기_액션.PENDING,
   });
   const response = await requestGetCartList();
+  dispatch(hideSpinner());
   if (response.status === 비동기_요청.SUCCESS) {
-    const cartListInfo = response.content.map((item) => {
+    const cartListInfo = response.content.cartItems.map((item) => {
       const { id, name, price, thumbnail } = item.product;
       const { quantity } = item;
       return {
@@ -31,7 +32,6 @@ const setCartList = () => async (dispatch) => {
       payload: { message: '장바구니 정보를 불러오는 데 실패하였습니다' },
     });
   }
-  dispatch(hideSpinner());
 };
 
 const addCartList = (product) => {

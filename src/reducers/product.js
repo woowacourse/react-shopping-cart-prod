@@ -14,6 +14,9 @@ export default (state = initialState, action) => {
       return { ...state, isLoading: true };
 
     case 상품_불러오기_액션.SUCCESS:
+      if (payload.length === 0) {
+        return { ...state, item: { ...state.item }, isLoading: false };
+      }
       return { ...state, item: { ...state.item, ...payload }, isLoading: false };
 
     case 상품_불러오기_액션.FAILURE:
