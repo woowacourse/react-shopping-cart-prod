@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
 
 import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
@@ -7,6 +7,8 @@ import Image from 'components/@shared/Image/Image.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
 import ModifyQuantityBox from 'components/ModifyQuantityBox/ModifyQuantityBox.component';
+
+import { setSnackBarMessage } from 'redux/actions/snackbar.action';
 
 import useDeleteCarts from 'hooks/api/carts/useDeleteCarts';
 import useModifyCartQuantity from 'hooks/api/carts/useModifyCartQuantity';
@@ -17,6 +19,7 @@ import { ReactComponent as ShoppingCart } from 'assets/images/shoppingCart.svg';
 
 function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts }) {
   const isStored = quantity !== 0;
+  const dispatch = useDispatch();
   const { accessToken } = useSelector(state => state.auth);
 
   const { storeCart } = useStoreCart();
@@ -35,7 +38,7 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
 
       isModified.current = false;
       setModifyQuantityShow(false);
-    }, 2000);
+    }, 200000);
   };
   const handleChangeQuantity = async quantity => {
     isModified.current = true;
@@ -45,6 +48,9 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
 
       isModified.current = false;
 
+      if (quantity !== 1) {
+        dispatch(setSnackBarMessage(`🛒 ${name} ${quantity}개가 장바구니에 담겼습니다!`));
+      }
       await modifyCartQuantity({ productId: id, quantity });
       await loadProducts();
     }, 1500);
@@ -52,7 +58,7 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
 
   const handleStoreProductToCart = async () => {
     if (!accessToken) {
-      alert('로그인 해주세요!');
+      dispatch(setSnackBarMessage('로그인 해주세요!'));
       return;
     }
     handleShowModifyQuantityBox();
@@ -62,6 +68,8 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
   };
 
   const handleDeleteProduct = async () => {
+    dispatch(setSnackBarMessage(`🛒 ${name}가 장바구니에서 삭제됐습니다!`));
+
     await deleteCarts({ productIds: [id] });
     await loadProducts();
 

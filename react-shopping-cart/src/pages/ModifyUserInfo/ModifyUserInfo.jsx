@@ -11,6 +11,7 @@ import Logo from 'components/@shared/Logo/Logo.component';
 import LoginInfoContainer from 'components/LoginInfoContaier/LoginInfoContainer.component';
 import UserInfoContainer from 'components/UserInfoContainer/UserInfoContainer.component';
 
+import { setSnackBarMessage } from 'redux/actions/snackbar.action';
 import { resetUserInfo, setUserInfo } from 'redux/actions/userInfo.action';
 import { initialUserInfoState } from 'redux/reducers/userInfo.reducer';
 
@@ -60,7 +61,7 @@ function ModifyUserInfo() {
 
   const handlePutUserInfo = async () => {
     await modifyUserInfo(putUserInfo);
-    alert('정보 수정 완료했습니다!');
+    dispatch(setSnackBarMessage('🎉 성공적으로 정보를 수정 했습니다!'));
     navigate('/');
   };
 

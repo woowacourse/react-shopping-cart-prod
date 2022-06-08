@@ -10,6 +10,8 @@ import ProductList from 'pages/ProductList/ProductList.page';
 import ShoppingCartList from 'pages/ShoppingCartList/ShoppingCartList.page';
 import SignUp from 'pages/SignUp/SignUp.page';
 
+import SnackBar from 'components/@shared/SnakBar/SnackBar.component';
+
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
 
 import GlobalStyle from 'styles/GlobalStyle';
@@ -46,6 +48,7 @@ function App() {
             </Route>
             <Route path="/*" element={<ErrorPage>존재하지 않는 페이지입니다</ErrorPage>} />
           </Routes>
+          <SnackBar />
         </ErrorBoundary>
       </ThemeProvider>
     </BrowserRouter>

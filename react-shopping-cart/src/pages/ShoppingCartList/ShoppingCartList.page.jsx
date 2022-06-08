@@ -13,6 +13,7 @@ import PaymentAmountContainer from 'components/PaymentAmountContainer/PaymentAmo
 import ShoppingCartListContainer from 'components/ShoppingCartListContainer/ShoppingCartListContainer.component';
 
 import { addAllItem, deleteAllItem } from 'redux/actions/orderList.action';
+import { setSnackBarMessage } from 'redux/actions/snackbar.action';
 
 import useDeleteCart from 'hooks/api/carts/useDeleteCarts';
 import useLoadCarts from 'hooks/api/carts/useLoadCarts';
@@ -41,7 +42,7 @@ function ShoppingCartList() {
 
   const handleClickDeleteBox = async () => {
     if (orderList.length === 0) {
-      alert('삭제할 상품이 존재하지 않습니다');
+      dispatch(setSnackBarMessage('삭제할 상품이 존재하지 않습니다'));
       return;
     }
     if (window.confirm(`${orderList.length}개의 상품을 장바구니에서 삭제하시겠습니까?`)) {
@@ -69,7 +70,7 @@ function ShoppingCartList() {
                   justifyContent="space-between"
                   alignItems="center"
                 >
-                  <FlexBox gap="10px">
+                  <FlexBox gap="10px" alignItems="center">
                     <CheckBox
                       disabled={disabled}
                       checked={checked}

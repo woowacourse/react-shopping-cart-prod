@@ -11,6 +11,7 @@ import Logo from 'components/@shared/Logo/Logo.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
 import { loginUser } from 'redux/actions/auth.action';
+import { setSnackBarMessage } from 'redux/actions/snackbar.action';
 
 import useLogin from 'hooks/api/auth/useLogin';
 
@@ -31,6 +32,7 @@ function Login() {
 
     if (accessToken) {
       dispatch(loginUser(accessToken));
+      dispatch(setSnackBarMessage('🎉 환영합니다!'));
       navigate('/');
     }
   };

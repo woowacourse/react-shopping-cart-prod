@@ -7,6 +7,7 @@ import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 import InputBox from 'components/@shared/InputBox/InputBox.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
+import { setSnackBarMessage } from 'redux/actions/snackbar.action';
 import {
   setEmail,
   setPassword,
@@ -38,7 +39,7 @@ function LoginInfoContainer({ onClickPrev, onSubmit, userInfoButtonText }) {
       await checkValidEmail({ email: email.value });
       dispatch(setEmailDisabled(true));
     } catch (error) {
-      alert('중복인 이메일입니다.');
+      dispatch(setSnackBarMessage('중복인 이메일입니다.'));
     }
   };
 

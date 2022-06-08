@@ -11,6 +11,7 @@ import Logo from 'components/@shared/Logo/Logo.component';
 import LoginInfoContainer from 'components/LoginInfoContaier/LoginInfoContainer.component';
 import UserInfoContainer from 'components/UserInfoContainer/UserInfoContainer.component';
 
+import { setSnackBarMessage } from 'redux/actions/snackbar.action';
 import { resetUserInfo } from 'redux/actions/userInfo.action';
 
 import useSignUp from 'hooks/api/auth/useSignUp';
@@ -37,7 +38,7 @@ function SignUp() {
 
   const handlePostUserInfo = async () => {
     await signUp(postUserInfo);
-    alert('회원가입에 성공하셨습니다!');
+    dispatch(setSnackBarMessage('🎉 회원가입에 성공하셨습니다!'));
     navigate('/login');
   };
 
