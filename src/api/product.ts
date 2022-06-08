@@ -1,5 +1,5 @@
 import { caching } from '@/api/cache';
-import { PRODUCT_API_URL, PRODUCT_LIST_PAGE_LIMIT } from '@/api/constants';
+import { PRODUCT_API_URL } from '@/api/constants';
 import { ProductType } from '@/domain/product';
 import axios from 'axios';
 export const cache = {};
@@ -7,20 +7,17 @@ const productAPI = axios.create({
   baseURL: PRODUCT_API_URL.TO_PRODUCTS,
 });
 
-export const getProductList = page => {
-  const cacheKey = `${PRODUCT_API_URL.TO_PRODUCTS}?_page=${page}&_limit=${PRODUCT_LIST_PAGE_LIMIT}`;
+export const getProductList = () => {
+  const cacheKey = `${PRODUCT_API_URL.TO_PRODUCTS}`;
 
   return caching(async (): Promise<any> => {
-    const response = await productAPI.get('', {
-      params: { _page: page, _limit: PRODUCT_LIST_PAGE_LIMIT },
-    });
-
-    if (response.statusText !== 'OK') {
-      throw Error('서버 오류!');
-    }
+    const response = await productAPI.get('');
 
     return {
-      data: { productList: response.data, totalProductCount: response.headers['x-total-count'] },
+      data: {
+        productList: response.data.products,
+        totalProductCount: response.data.products.length,
+      },
     };
   }, cacheKey);
 };
@@ -30,10 +27,7 @@ export const getProduct = id => {
 
   return caching(async (): Promise<{ data: ProductType }> => {
     const response = await productAPI.get(`/${id}`, {});
-    if (response.statusText !== 'OK') {
-      throw Error('서버 오류!');
-    }
 
-    return { data: response.data };
+    return { data: response.data.product };
   }, cacheKey);
 };
