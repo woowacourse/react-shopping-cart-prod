@@ -55,6 +55,10 @@ export const addProductToCart = (args) => async (dispatch) => {
       dispatch(toggleSnackbarOpen(MESSAGE.EXIST_ITEM_IN_CART));
       return;
     }
+    if (error.response?.status === 500) {
+      dispatch(toggleSnackbarOpen(MESSAGE.SERVER_REQUEST_FAIL));
+      return;
+    }
     dispatch(toggleSnackbarOpen(error.message));
   }
 };
@@ -67,11 +71,14 @@ export const getCartList = () => async (dispatch) => {
           getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
       },
     });
-    console.log(response);
     dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.cartList));
   } catch (error) {
     if (error.response?.status === 401) {
       dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
+      return;
+    }
+    if (error.response?.status === 500) {
+      dispatch(toggleSnackbarOpen(MESSAGE.SERVER_REQUEST_FAIL));
       return;
     }
     dispatch(toggleSnackbarOpen(error));
@@ -140,7 +147,6 @@ export const removeCheckedCartItem = (cartList) => async (dispatch) => {
     const checkedCartItemIds = filterCheckedCartItem.map(
       (cartItem) => cartItem.id
     );
-    console.log(checkedCartItemIds);
     checkedCartItemIds.forEach(async (id) => {
       return await axios.delete(`${BASE_URL}/users/me/carts/${id}`, {
         headers: {
@@ -172,7 +178,7 @@ export const removeRowCartItem = (id) => async (dispatch) => {
       dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
       return;
     }
-    dispatch(toggleSnackbarOpen(error));
+    l - dispatch(toggleSnackbarOpen(error));
   }
 };
 

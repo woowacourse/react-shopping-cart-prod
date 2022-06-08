@@ -38,9 +38,12 @@ function Signin() {
       navigate(PATH.MAIN);
       location.reload();
     } catch (error) {
-      const { errorCode } = error.response.data;
-      if (errorCode === "1000" || errorCode === "1002") {
+      if (error.response?.status === 400) {
         dispatch(toggleSnackbarOpen(MESSAGE.CHECK_EMAIL_OR_PASSWORD));
+        return;
+      }
+      if (error.response?.status === 500) {
+        dispatch(toggleSnackbarOpen(MESSAGE.SERVER_REQUEST_FAIL));
         return;
       }
       dispatch(toggleSnackbarOpen(error));
