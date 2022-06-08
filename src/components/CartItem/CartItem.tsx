@@ -9,15 +9,17 @@ import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import cartAPI from 'apis/cart';
+import { useState } from 'react';
 
 type Props = {
   product: Product;
   stock: number;
   checked: boolean;
   cartId: number;
+  checkCartItem: (targetId: number) => void;
 };
 
-function CartItem({ cartId, product, stock, checked }: Props) {
+function CartItem({ cartId, product, stock, checked, checkCartItem }: Props) {
   const { id, name, imageUrl } = product;
   const dispatch = useDispatch();
 
@@ -34,8 +36,7 @@ function CartItem({ cartId, product, stock, checked }: Props) {
     e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
-
-    //dispatch(cartActions.toggleCheckAProduct(id));
+    checkCartItem(cartId);
   };
 
   const onChangeCartStock = async (value: number) => {
