@@ -20,6 +20,7 @@ import { BASE_URL, ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 
 function App() {
+  const { isAuthenticated } = useSelector(state => state.authReducer);
   const dispatch = useDispatch();
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
 
@@ -54,6 +55,13 @@ function App() {
       dispatch(doGetCart({ cart: response.data }));
     } catch (error) {}
   };
+
+  useEffect(() => {
+    getAccount();
+    getCart();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
 
   useEffect(() => {
     getAccount();
