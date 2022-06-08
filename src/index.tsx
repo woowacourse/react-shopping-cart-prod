@@ -14,7 +14,7 @@ import { Provider } from 'react-redux';
 
 const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(thunk)));
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-
+/*
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('./mocks/browser');
 
@@ -24,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
     },
   });
 }
+*/
 
 root.render(
   <Provider store={store}>
