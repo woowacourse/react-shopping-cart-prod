@@ -98,7 +98,8 @@ export const updateCartCount = (productId, count) => async (dispatch) => {
     });
 
     if (!response.ok) {
-      throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      const data = await response.json();
+      throw new Error(data.message);
     }
 
     dispatch({
@@ -164,7 +165,7 @@ const reducer = (state = initialState, action) => {
     case CART_LIST_ACTION.GET_LIST_ERROR:
       return {
         isLoading: false,
-        data: [],
+        data: state.data,
         errorMessage: action.errorMessage,
       };
     default:
