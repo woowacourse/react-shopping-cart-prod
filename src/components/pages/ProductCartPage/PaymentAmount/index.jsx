@@ -13,7 +13,7 @@ function PaymentAmount({ totalPrice, totalCount, position }) {
       </PaymentAmountPrice>
       <DefaultButton
         onClick={() => {
-          alert("아직 준비중입니다~~");
+          alert("결제되었습니다 :D");
         }}
       >
         주문하기({totalCount ?? "%ERROR%"}개)
