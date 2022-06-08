@@ -95,13 +95,13 @@ const loadUserAPI = (): any => async (dispatch: AppDispatch) => {
   dispatch(loadUserRequest());
   try {
     const {
-      data: { name },
+      data: { userName },
     } = await apiClient.get('/api/customers/me', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    dispatch(loadUserSuccess(name));
+    dispatch(loadUserSuccess(userName));
   } catch (error: unknown) {
     if (error instanceof Error) {
       dispatch(loadUserFailure(error));
@@ -175,7 +175,7 @@ const signupAPI =
   async (dispatch: AppDispatch) => {
     dispatch(signupRequest());
     try {
-      await apiClient.post('/api/customers', { name: userName, password });
+      await apiClient.post('/api/customers', { userName, password });
       dispatch(signupSuccess());
       onSuccess?.();
     } catch (error: unknown) {
