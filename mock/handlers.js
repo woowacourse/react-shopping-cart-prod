@@ -444,7 +444,6 @@ export const handlers = [
   rest.get("/product/:id", (req, res, ctx) => {
     return res(ctx.status(200));
   }),
-
   // cart에 담긴 product-list를 요청한다 (장바구니 페이지)
   rest.post("cart/add/:id", (req, res, ctx) => {
     return res(ctx.status(200));
