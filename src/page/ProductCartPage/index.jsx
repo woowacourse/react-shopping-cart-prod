@@ -12,7 +12,8 @@ import * as S from 'page/ProductCartPage/style';
 import useCartItem from 'hook/useCartItem';
 import useSelectedItem from 'hook/useSelectedItem';
 import {useNavigate} from 'react-router-dom';
-import {PATH} from 'constant';
+import {CONFIRM_MESSAGE, PATH} from 'constant';
+import useAuth from 'hook/useAuth';
 
 export default function ProductCartPage() {
   const navigation = useNavigate();
@@ -28,15 +29,13 @@ export default function ProductCartPage() {
 
   const {selectAllItem, unselectAllItem} = useSelectedItem();
 
+  const {navigateLoginPage} = useAuth();
+
   useEffect(() => {
-    if (isLogin === false) {
-      alert('먼저 로그인을 해주세요.');
-      navigation(PATH.LOGIN);
-      return;
-    }
+    navigateLoginPage();
 
     isLogin && initializeCart();
-  }, [isLogin, initializeCart]);
+  }, [isLogin]);
 
   const selectedCartItem = cartItem.filter(({id}) => selectedItem.includes(id));
 
@@ -52,7 +51,7 @@ export default function ProductCartPage() {
 
   const onClickOrderButton = () => {
     if (totalQuantity <= 0) {
-      alert('주문하실 상품을 선택해주세요.');
+      alert(CONFIRM_MESSAGE.PLEASE_CHOOSE_PRODUCT);
       return;
     }
     navigation(PATH.ORDER_PAY);

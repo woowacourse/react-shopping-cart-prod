@@ -21,6 +21,8 @@ const ERROR_MESSAGE = {
 
 const CONFIRM_MESSAGE = {
   DELETE_CART: '장바구니에서 삭제하시겠습니까?',
+  PLEASE_LOGIN: '먼저 로그인해주세요.',
+  PLEASE_CHOOSE_PRODUCT: '주문하실 상품을 선택해주세요.',
 };
 
 const VALIDATION_MESSAGE = {

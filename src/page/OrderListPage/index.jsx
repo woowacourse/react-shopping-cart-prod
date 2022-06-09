@@ -1,4 +1,6 @@
 import React, {useEffect} from 'react';
+import {useSelector} from 'react-redux';
+import {Link} from 'react-router-dom';
 
 import ErrorPendingBoundary from 'component/common/ErrorPendingBoundary';
 
@@ -7,26 +9,21 @@ import OrderItem from 'component/OrderItem';
 import NotFoundPage from 'page/NotFoundPage';
 import * as S from 'page/OrderListPage/style';
 
+import useAuth from 'hook/useAuth';
 import useFetch from 'hook/useFetch';
-import {useSelector} from 'react-redux';
 
-import {Link, useNavigate} from 'react-router-dom';
 import {API_URL, PATH} from 'constant';
 
 export default function OrderListPage() {
   const orderList = useFetch('get');
 
-  const navigation = useNavigate();
-
   const accessToken = useSelector((state) => state.authReducer.accessToken);
   const isLogin = useSelector((state) => state.authReducer.isLogin);
 
+  const {navigateLoginPage} = useAuth();
+
   useEffect(() => {
-    if (isLogin === false) {
-      alert('먼저 로그인을 해주세요.');
-      navigation(PATH.LOGIN);
-      return;
-    }
+    navigateLoginPage();
 
     isLogin &&
       orderList.fetch({

@@ -10,25 +10,22 @@ import * as S from 'page/OrderDetailPage/style';
 import useFetch from 'hook/useFetch';
 import {useSelector} from 'react-redux';
 
-import {useNavigate, useParams} from 'react-router-dom';
-import {API_URL, PATH} from 'constant';
+import {useParams} from 'react-router-dom';
+import {API_URL} from 'constant';
+import useAuth from 'hook/useAuth';
 
 export default function OrderDetailPage() {
   const orderList = useFetch('get');
-
-  const navigation = useNavigate();
 
   const {id} = useParams();
 
   const accessToken = useSelector((state) => state.authReducer.accessToken);
   const isLogin = useSelector((state) => state.authReducer.isLogin);
 
+  const {navigateLoginPage} = useAuth();
+
   useEffect(() => {
-    if (isLogin === false) {
-      alert('먼저 로그인을 해주세요.');
-      navigation(PATH.LOGIN);
-      return;
-    }
+    navigateLoginPage();
 
     isLogin &&
       orderList.fetch({
