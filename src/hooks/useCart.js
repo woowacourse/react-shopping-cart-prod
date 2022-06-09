@@ -22,6 +22,7 @@ const useCart = () => {
   // TODO 테스트 해볼 것!
   const deleteItemApi = async (payload) => {
     const { cartId } = payload;
+    console.log('???', cartId);
 
     await apiClient
       .delete(`members/me/carts/${cartId}`, {
@@ -118,11 +119,13 @@ const useCart = () => {
   };
 
   const deleteItem = (id) => {
+    // console.log('deleteItem id', id);
     deleteItemApi({ cartId: id });
   };
 
   const deleteItems = (idList) => {
-    Promise.all(idList.map((id) => deleteItemApi(id)));
+    // console.log('idList', idList);
+    Promise.all(idList.map((id) => deleteItemApi({ cartId: id })));
   };
 
   const updateItemQuantity = (id, quantity) => {
