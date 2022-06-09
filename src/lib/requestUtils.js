@@ -1,4 +1,5 @@
 import { ACCESS_TOKEN_COOKIE_NAME, REQUEST_STATUS, REQUEST_TIMEOUT } from 'constants/';
+import ApiServer from 'lib/backendSelectUtils';
 
 import { getCookie } from './cookieUtils';
 
@@ -19,7 +20,7 @@ const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
   const timerID = setTimeout(() => fetchController.abort(), REQUEST_TIMEOUT);
 
   try {
-    const response = await fetch(process.env.REACT_APP_API_URL + url, newOption);
+    const response = await fetch(ApiServer.currentApiServer + url, newOption);
     const responseBody = await response.text();
 
     const jsonBody = responseBody ? JSON.parse(responseBody) : {};
