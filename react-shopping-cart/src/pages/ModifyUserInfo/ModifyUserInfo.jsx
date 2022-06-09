@@ -60,9 +60,13 @@ function ModifyUserInfo() {
   };
 
   const handlePutUserInfo = async () => {
-    await modifyUserInfo(putUserInfo);
-    dispatch(setSnackBarMessage('🎉 성공적으로 정보를 수정 했습니다!'));
-    navigate('/');
+    try {
+      await modifyUserInfo(putUserInfo);
+      dispatch(setSnackBarMessage('🎉 성공적으로 정보를 수정 했습니다!'));
+      navigate('/');
+    } catch {
+      dispatch(setSnackBarMessage('정보 수정에 실패했습니다...😥'));
+    }
   };
 
   return (
