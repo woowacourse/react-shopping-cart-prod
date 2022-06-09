@@ -11,7 +11,7 @@ import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 import Styled from './index.style';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
-import { MESSAGE } from 'utils/constants';
+import { MESSAGE, ROUTES } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 
 const SignupPage = () => {
@@ -31,7 +31,7 @@ const SignupPage = () => {
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
       renderSnackbar(MESSAGE.ALREADY_LOGIN, 'FAILED');
-      navigate('/');
+      navigate(ROUTES.HOME);
     }
   }, [isLoading]);
 
@@ -50,10 +50,10 @@ const SignupPage = () => {
       });
 
       renderSnackbar(`${response.data.nickname}${MESSAGE.SIGNUP_SUCCESS}`, 'SUCCESS');
-      navigate('/login', { state: response.data.email });
+      navigate(ROUTES.LOGIN, { state: response.data.email });
     } catch (error) {
       const customError = error.response.data;
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
       renderSnackbar(customError.message, 'FAILED');
     }
   };

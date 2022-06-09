@@ -6,7 +6,7 @@ import { Modal, Input, Title, AuthButton, Container } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
 import { validatePassword } from 'utils/validator';
-import { MESSAGE } from 'utils/constants';
+import { MESSAGE, ROUTES } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const PasswordEditModal = ({ handleModal }) => {
     } catch (error) {
       const customError = error.response.data;
       logoutByError(customError);
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
       renderSnackbar(customError.message, 'FAILED');
     }
   };

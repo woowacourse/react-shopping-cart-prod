@@ -9,7 +9,7 @@ import { Image } from 'components';
 import Styled from 'page/ProductDetailPage/index.style';
 
 import autoComma from 'utils/autoComma';
-import { LINK } from 'utils/constants';
+import { ROUTES } from 'utils/constants';
 
 const ProductDetailPage = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const ProductDetailPage = () => {
   const handlePutCart = () => {
     const updatedQuantity = isInCart ? productInCart.quantity + 1 : 1;
     putCart(id, updatedQuantity);
-    navigate(LINK.TO_CART);
+    navigate(ROUTES.CART);
   };
 
   return (

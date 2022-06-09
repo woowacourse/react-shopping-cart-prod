@@ -11,7 +11,7 @@ import Styled from './index.style';
 
 import { setCookie } from 'utils/cookie';
 import { doLogin } from 'reducers/auth.reducer';
-import { MESSAGE } from 'utils/constants';
+import { MESSAGE, ROUTES } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 
 const LoginPage = () => {
@@ -28,7 +28,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (!isLoading && isAuthenticated) {
-      navigate('/');
+      navigate(ROUTES.HOME);
     }
   }, [isLoading]);
 
@@ -52,10 +52,10 @@ const LoginPage = () => {
       setCookie('accessToken', response.data.accessToken);
       dispatch(doLogin({ nickname: response.data.nickname }));
       renderSnackbar(`${response.data.nickname}${MESSAGE.LOGIN_SUCCESS}`, 'SUCCESS');
-      navigate('/');
+      navigate(ROUTES.HOME);
     } catch (error) {
       const customError = error.response.data;
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
       renderSnackbar(customError.message, 'FAILED');
     }
   };

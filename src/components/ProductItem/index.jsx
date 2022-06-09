@@ -15,7 +15,7 @@ import { doDeleteProductFromCart } from 'reducers/cart.reducer';
 
 import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';
-import { LINK, MESSAGE } from 'utils/constants';
+import { LINK, MESSAGE, ROUTES } from 'utils/constants';
 
 const ProductItem = ({ productId, name, price, image }) => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const ProductItem = ({ productId, name, price, image }) => {
   };
 
   const handleItemClick = () => {
-    navigate(`${LINK.TO_DETAILS}/${productId}`);
+    navigate(`${ROUTES.DETAILS}/${productId}`);
   };
 
   const handleCartClick = e => {
@@ -57,7 +57,7 @@ const ProductItem = ({ productId, name, price, image }) => {
 
     if (!isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
       return;
     }
 

@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { doDecideOrder } from 'reducers/cart.reducer';
-import { MESSAGE } from 'utils/constants';
+import { MESSAGE, ROUTES } from 'utils/constants';
 import useSnackbar from '../useSnackbar';
 
 // DONE  6. POST 주문 추가하기
@@ -21,7 +21,7 @@ const useOrderAPI = () => {
       try {
         const response = await apiClient.post('/orders', { productIds: order });
         dispatch(doDecideOrder({ orderList: response.data }));
-        navigate('/order');
+        navigate(ROUTES.ORDER);
         renderSnackbar(MESSAGE.ORDER_PASS_SUCCESS, 'SUCCESS');
       } catch (error) {
         const customError = error.response.data;

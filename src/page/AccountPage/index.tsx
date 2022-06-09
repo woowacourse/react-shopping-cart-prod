@@ -12,7 +12,7 @@ import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 import Styled from './index.style';
 
 import { validateNickname } from 'utils/validator';
-import { MESSAGE } from 'utils/constants';
+import { MESSAGE, ROUTES } from 'utils/constants';
 import { doLogin } from 'reducers/auth.reducer';
 import apiClient from 'apis/apiClient';
 
@@ -21,7 +21,6 @@ const AccountPage = () => {
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
@@ -54,7 +53,7 @@ const AccountPage = () => {
       const customError = error.response.data;
       renderSnackbar(customError.message, 'FAILED');
       logoutByError(customError);
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
     }
   };
 

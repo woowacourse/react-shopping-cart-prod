@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
-import { MESSAGE } from 'utils/constants';
+import { MESSAGE, ROUTES } from 'utils/constants';
 
 const useTotalPrice = () => {
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
@@ -27,7 +27,7 @@ const useTotalPrice = () => {
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
     }
     setTotalPrice(calculateTotalPrice());
   }, [calculateTotalPrice, isAuthenticated, isLoading, navigate, renderSnackbar]);

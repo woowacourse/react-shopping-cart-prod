@@ -5,11 +5,9 @@ import useSnackbar from 'hooks/useSnackbar';
 
 import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
-import { MESSAGE } from 'utils/constants';
-import apiClient from 'apis/apiClient';
+import { MESSAGE, ROUTES } from 'utils/constants';
 import { doLogout } from 'reducers/auth.reducer';
 import { doInitializeCartList } from 'reducers/cart.reducer';
-
 const UserMenu = ({ nickname }) => {
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
@@ -28,7 +26,7 @@ const UserMenu = ({ nickname }) => {
       dispatch(doInitializeCartList({ shoppingCart: [] }));
       renderSnackbar(MESSAGE.LOGOUT_SUCCESS, 'SUCCESS');
       deleteCookie('accessToken');
-      navigate('/');
+      navigate(ROUTES.HOME);
     } catch (error) {
       console.log(error);
       renderSnackbar(MESSAGE.LOGIN_FAILURE, 'FAILED');
@@ -44,7 +42,7 @@ const UserMenu = ({ nickname }) => {
           <Styled.Line />
           <Styled.MenuItem
             onClick={() => {
-              navigate('/account');
+              navigate(ROUTES.ACCOUNT);
               setIsOpen(false);
             }}
           >

@@ -1,6 +1,7 @@
 import apiClient from 'apis/apiClient';
 import Styled from 'page/CartPage/index.style';
 import { useNavigate } from 'react-router-dom';
+import { ROUTES } from 'utils/constants';
 
 const SeverSelectPage = () => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ const SeverSelectPage = () => {
   const handleClick = name => {
     apiClient.defaults.baseURL = AUTH_API_URL[name];
     document.title = `${name}의 API가 작동 중인 마르코 장바구니 사이트`;
-    navigate('/');
+    navigate(ROUTES.HOME);
   };
 
   return (

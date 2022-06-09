@@ -8,15 +8,14 @@ const MODAL = {
 
 const ROUTES = {
   HOME: '/',
-  CART: 'cart',
-  ORDER: 'order',
-  DETAILS: 'details/:id',
-};
-
-const LINK = {
-  TO_HOME: '/',
-  TO_CART: '/cart',
-  TO_DETAILS: '/details',
+  CART: '/cart',
+  ORDER: '/order',
+  DETAILS: '/details',
+  DETAILS_ID: '/details/:id',
+  LOGIN: '/login',
+  SIGNUP: '/signup',
+  ACCOUNT: '/account',
+  SERVER: '/server',
 };
 
 const MESSAGE = {
@@ -65,4 +64,4 @@ const ENV = {
   DEVELOPMENT: 'development',
 };
 
-export { PRODUCT, MODAL, ROUTES, LINK, ENV, MESSAGE, ERROR };
+export { PRODUCT, MODAL, ROUTES, ENV, MESSAGE, ERROR };
