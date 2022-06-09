@@ -16,6 +16,7 @@ function Signup({ className }) {
   const { isLoading, isSuccess } = useSelector(
     (state) => state.user.query.signup
   );
+
   const disabled =
     Object.keys(errors).some(
       (inputName) => !!errors[inputName] || !formData[inputName]

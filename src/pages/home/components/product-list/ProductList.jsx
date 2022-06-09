@@ -17,6 +17,7 @@ function ProductList({ className }) {
   }, [dispatch]);
 
   if (isLoading) return <div>is loading ...</div>;
+
   if (isError) return <div>is error...</div>;
 
   return (

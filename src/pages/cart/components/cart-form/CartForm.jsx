@@ -30,6 +30,7 @@ function CartForm({ className }) {
       dispatch(createAction(CART_ACTION_TYPE.DESELECT_ALL_CART_ITEMS));
       return;
     }
+
     dispatch(createAction(CART_ACTION_TYPE.SELECT_ALL_CART_ITEMS));
   }, [isAllSelected, dispatch]);
 
@@ -42,6 +43,7 @@ function CartForm({ className }) {
         );
         return;
       }
+
       dispatch(
         createAction(CART_ACTION_TYPE.DESELECT_CART_ITEM, { cartItemId })
       );

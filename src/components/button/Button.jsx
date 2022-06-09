@@ -20,6 +20,7 @@ function Button({
     { [styles.outline]: outline },
     className
   );
+
   return (
     <button className={classNames} type={type} onClick={onClick} {...rest}>
       {children}

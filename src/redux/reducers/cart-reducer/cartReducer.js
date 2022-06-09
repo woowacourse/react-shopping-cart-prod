@@ -124,7 +124,6 @@ const cartReducer = (state, { type, payload }, totalState) => {
       });
       return newState;
     }
-
     case ACTION_TYPE.DESELECT_ALL_CART_ITEMS: {
       const newState = structuredClone(state);
       newState.data.forEach((_, index) => {
