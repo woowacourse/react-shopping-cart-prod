@@ -21,22 +21,39 @@ import { rest } from 'msw';
 
 import { API_ENDPOINT, API_URL } from 'api/constants';
 
+const MOCK_SERVER_URL = API_URL[4];
+
 export default [
-  rest.get(`${API_URL}${API_ENDPOINT.PRODUCTS}`, handleGetProductsRequest),
-  rest.get(`${API_URL}/static/images/:imageFileName`, handleGetImageRequest),
-  rest.get(`${API_URL}${API_ENDPOINT.CARTS}`, handleGetShoppingCartRequest),
-  rest.post(`${API_URL}${API_ENDPOINT.CARTS_PRODUCTS}`, handlePostShoppingCartRequest),
-  rest.patch(`${API_URL}${API_ENDPOINT.CARTS_PRODUCTS}`, handlePatchShoppingCartRequest),
+  rest.get(`${MOCK_SERVER_URL}${API_ENDPOINT.PRODUCTS}`, handleGetProductsRequest),
+  rest.get(`${MOCK_SERVER_URL}/static/images/:imageFileName`, handleGetImageRequest),
+  rest.get(`${MOCK_SERVER_URL}${API_ENDPOINT.CARTS}`, handleGetShoppingCartRequest),
+  rest.post(
+    `${MOCK_SERVER_URL}${API_ENDPOINT.CARTS_PRODUCTS}`,
+    handlePostShoppingCartRequest,
+  ),
+  rest.patch(
+    `${MOCK_SERVER_URL}${API_ENDPOINT.CARTS_PRODUCTS}`,
+    handlePatchShoppingCartRequest,
+  ),
   rest.delete(
-    `${API_URL}${API_ENDPOINT.CARTS_PRODUCTS}`,
+    `${MOCK_SERVER_URL}${API_ENDPOINT.CARTS_PRODUCTS}`,
     handleDeleteShoppingCartRequest,
   ),
-  rest.get(`${API_URL}${API_ENDPOINT.EMAIL_CHECK}`, handleCheckUniqueEmailRequest),
-  rest.post(`${API_URL}${API_ENDPOINT.MEMBERS}`, handlePostUserRequest),
-  rest.post(`${API_URL}${API_ENDPOINT.LOGIN}`, handleLoginRequest),
-  rest.get(`${API_URL}${API_ENDPOINT.AUTH.ME}`, handleUserGetRequest),
-  rest.post(`${API_URL}${API_ENDPOINT.AUTH.PASSWORD_CHECK}`, handlePasswordCheckRequest),
-  rest.patch(`${API_URL}${API_ENDPOINT.AUTH.ME}`, handleUserDataUpdateRequest),
-  rest.patch(`${API_URL}${API_ENDPOINT.AUTH.PASSWORD}`, handleUserDataUpdateRequest),
-  rest.delete(`${API_URL}${API_ENDPOINT.AUTH.ME}`, handleUserDeleteRequest),
+  rest.get(
+    `${MOCK_SERVER_URL}${API_ENDPOINT.EMAIL_CHECK}`,
+    handleCheckUniqueEmailRequest,
+  ),
+  rest.post(`${MOCK_SERVER_URL}${API_ENDPOINT.MEMBERS}`, handlePostUserRequest),
+  rest.post(`${MOCK_SERVER_URL}${API_ENDPOINT.LOGIN}`, handleLoginRequest),
+  rest.get(`${MOCK_SERVER_URL}${API_ENDPOINT.AUTH.ME}`, handleUserGetRequest),
+  rest.post(
+    `${MOCK_SERVER_URL}${API_ENDPOINT.AUTH.PASSWORD_CHECK}`,
+    handlePasswordCheckRequest,
+  ),
+  rest.patch(`${MOCK_SERVER_URL}${API_ENDPOINT.AUTH.ME}`, handleUserDataUpdateRequest),
+  rest.patch(
+    `${MOCK_SERVER_URL}${API_ENDPOINT.AUTH.PASSWORD}`,
+    handleUserDataUpdateRequest,
+  ),
+  rest.delete(`${MOCK_SERVER_URL}${API_ENDPOINT.AUTH.ME}`, handleUserDeleteRequest),
 ];

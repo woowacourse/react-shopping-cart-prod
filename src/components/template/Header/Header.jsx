@@ -83,6 +83,7 @@ function Header({ isLoggedIn }) {
           <option value="1">오찌 서버</option>
           <option value="2">쿼리치 서버</option>
           <option value="3">파랑 서버</option>
+          <option value="4">모킹 서버</option>
         </select>
         <S.Nav>
           {navLinkInfo.map(({ path, name, ...props }) => (

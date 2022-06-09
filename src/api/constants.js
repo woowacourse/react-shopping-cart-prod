@@ -3,6 +3,7 @@ export const API_URL = [
   'http://43.200.3.154:8080',
   'http://ec2-13-125-173-161.ap-northeast-2.compute.amazonaws.com:8080',
   'http://13.124.20.12:8080',
+  'https://thawing-fortress-83192.herokuapp.com',
 ];
 
 export const PRODUCT_LIST_PAGE_LIMIT = 12;
