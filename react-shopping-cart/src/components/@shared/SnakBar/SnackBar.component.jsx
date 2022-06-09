@@ -40,6 +40,7 @@ function SnackBar() {
             ...defaultStyle,
             ...transitionStyles[state],
           }}
+          role="alert"
         >
           {message}
         </SnackBarContainer>
