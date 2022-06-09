@@ -1,4 +1,6 @@
 import { getAllOrderList } from '@/api/orderList';
+import ErrorContainer from '@/components/common/ErrorContainer/ErrorContainer';
+import Loading from '@/components/common/Loading/Loading';
 import { withLogin } from '@/components/helper/withLogin';
 import OrderInformation from '@/components/order/OrderInformation/OrderInformation';
 import useResponsive from '@/hooks/useResponsive';
@@ -7,20 +9,37 @@ import PageTemplate from '../../components/common/PageTemplate/PageTemplate';
 import * as Styled from './OrderList.style';
 
 function OrderList() {
-  const [orderList, setOrderList] = useState<any>([]);
   const responsive = useResponsive();
+  const [orderList, setOrderList] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   useEffect(() => {
     const apiCall = async () => {
-      const {
-        data: { orders },
-      } = await getAllOrderList();
+      try {
+        const {
+          data: { orders },
+        } = await getAllOrderList();
 
-      setOrderList(orders);
+        setOrderList(orders);
+        setIsLoading(false);
+      } catch (e) {
+        setIsError(true);
+      }
     };
 
     apiCall();
   }, []);
+
+  if (isLoading) {
+    return (
+      <Loading type="page" fontSize="2rem">
+        👻
+      </Loading>
+    );
+  }
+
+  if (isError) return <ErrorContainer>써버 에러</ErrorContainer>;
 
   return (
     <PageTemplate>
