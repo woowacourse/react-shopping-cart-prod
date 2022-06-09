@@ -3,26 +3,12 @@ import { User } from 'types/index';
 import { axios, axiosWithToken } from 'configs/api';
 
 const authAPI = {
-<<<<<<< HEAD
-  login: async function (user: User, isKeepLogin: boolean) {
-    try {
-      const {
-        data: { accessToken },
-      } = await axios.post(PATH.REQUEST_AUTH_TOKEN, user);
-
-      if (isKeepLogin) {
-        localStorage.setItem('accessToken', accessToken);
-      } else {
-        sessionStorage.setItem('accessToken', accessToken);
-      }
-=======
   login: async function (user: User) {
     const {
       data: { accessToken },
     } = await axios.post(PATH.REQUEST_AUTH_TOKEN, user);
 
     sessionStorage.setItem('accessToken', accessToken);
->>>>>>> 83ec576 (refactor: axios interceptors 적용)
 
     return this.getUserInfo();
   },
@@ -46,44 +32,7 @@ const authAPI = {
   deleteUser: async function () {
     await axiosWithToken.delete(PATH.REQUEST_CUSTOMER_ME);
 
-<<<<<<< HEAD
-    try {
-      await axios.delete(PATH.REQUEST_CUSTOMER_ME, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-
-      localStorage.removeItem('accessToken');
-      sessionStorage.removeItem('accessToken');
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
-=======
     sessionStorage.removeItem('accessToken');
->>>>>>> 83ec576 (refactor: axios interceptors 적용)
-  },
-
-  checkIdDuplicated: async function (id: string) {
-    const requestBody = { username: id };
-
-    const { data } = await axios.post(
-      '/customers/duplication/username',
-      requestBody
-    );
-
-    return data;
-  },
-
-  checkEmailDuplicated: async function (email: string) {
-    const requestBody = { email };
-
-    const { data } = await axios.post(
-      '/customers/duplication/email',
-      requestBody
-    );
-
-    return data;
   },
 };
 
