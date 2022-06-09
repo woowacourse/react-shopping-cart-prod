@@ -1,16 +1,15 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setAccessToken, setUserData } from 'actions/user';
-import { snackbar } from 'actions/snackbar';
+import { userLoginFailure, userLoginSuccess, userUnfilledLoginForm } from 'actions/user';
 
 import Layout from 'components/Layout';
 import Button from 'components/@common/Button/styles';
 import Input from 'components/@common/Input/styles';
 
 import { hideSpinner, showSpinner } from 'actions/spinner';
-import { 비동기_요청, 알림_메시지 } from 'constants/';
-import { requestLogin, requestUserInfo } from 'api';
+import { 비동기_요청 } from 'constants/';
+import { requestLogin } from 'api';
 import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
@@ -26,29 +25,20 @@ const Login = () => {
     const userPassword = formData.elements['input-password'].value;
 
     if (userId.length === 0 || userPassword.length === 0) {
-      dispatch(snackbar.pushMessageSnackbar(알림_메시지.불완전한_로그인_입력));
+      dispatch(userUnfilledLoginForm());
       return;
     }
 
     dispatch(showSpinner());
-
     const response = await requestLogin(userId, userPassword);
-
     dispatch(hideSpinner());
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(setAccessToken(response));
-      dispatch(snackbar.pushMessageSnackbar(알림_메시지.로그인_성공));
-
-      const infoResponse = await requestUserInfo();
-
-      dispatch(setUserData(infoResponse));
-
-      navigate('/');
+      dispatch(userLoginSuccess(response)(navigate));
       return;
     }
 
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.로그인_실패));
+    dispatch(userLoginFailure());
   };
 
   return (

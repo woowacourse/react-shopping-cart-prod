@@ -10,10 +10,13 @@ import ErrorMessage from 'components/@common/ErrorMessage';
 
 import { COLORS } from 'styles/theme';
 import { requestEditUserInfo, requestWithDrawUser } from 'api';
-import { snackbar } from 'actions/snackbar';
-import { removeUserData } from 'actions/user';
+import {
+  editUserInfoFailure,
+  editUserInfoSuccess,
+  withDrawUserFailure,
+  withDrawUserSuccess,
+} from 'actions/user';
 import { 비동기_요청, 알림_메시지 } from 'constants/';
-
 import * as Validate from 'utils/validate';
 
 const EditUserInfo = () => {
@@ -43,12 +46,11 @@ const EditUserInfo = () => {
     });
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원_정보_수정_성공));
-      navigate('/');
+      dispatch(editUserInfoSuccess()(navigate));
       return;
     }
 
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원_정보_수정_실패));
+    dispatch(editUserInfoFailure());
   };
 
   const handleWithDrawUser = async (e) => {
@@ -57,13 +59,11 @@ const EditUserInfo = () => {
     if (withDrawConfrim) {
       const response = await requestWithDrawUser();
       if (response.status === 비동기_요청.SUCCESS) {
-        dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원_탈퇴_성공));
-        dispatch(removeUserData());
-        navigate('/');
+        dispatch(withDrawUserSuccess()(navigate));
         return;
       }
 
-      dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원_탈퇴_실패));
+      dispatch(withDrawUserFailure());
     }
   };
 

@@ -9,10 +9,10 @@ import Input from 'components/@common/Input/styles';
 import ErrorMessage from 'components/@common/ErrorMessage';
 
 import { requestEditUserPassword } from 'api';
-import { snackbar } from 'actions/snackbar';
 import { userPassword } from 'utils/validate';
 import { COLORS } from 'styles/theme';
-import { 비동기_요청 } from 'constants';
+import { 비동기_요청 } from 'constants/';
+import { editUserPasswordSuccess } from 'actions/user';
 
 const EditUserPassword = () => {
   const navigate = useNavigate();
@@ -46,15 +46,8 @@ const EditUserPassword = () => {
       newPassword,
     });
 
-    const message =
-      response.status === 비동기_요청.SUCCESS
-        ? '비밀번호를 수정 하였습니다!'
-        : '비밀번호 수정에 실패했습니다!';
-
-    dispatch(snackbar.pushMessageSnackbar(message));
-
     if (response.status === 비동기_요청.SUCCESS) {
-      navigate('/');
+      dispatch(editUserPasswordSuccess()(navigate));
     }
   };
 
