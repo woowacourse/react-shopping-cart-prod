@@ -1,12 +1,18 @@
+import apiClient from 'apis/apiClient';
 import Styled from 'page/CartPage/index.style';
 import { useNavigate } from 'react-router-dom';
 
-export let selectedApiName = '이프';
-
 const SeverSelectPage = () => {
   const navigate = useNavigate();
+  const AUTH_API_URL = {
+    이프: 'http://ec2-3-39-234-109.ap-northeast-2.compute.amazonaws.com:8080',
+    찬: 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.com:8080',
+    더즈: 'http://15.164.211.129:8080',
+    토르: 'http://ec2-15-164-232-166.ap-northeast-2.compute.amazonaws.com:8080',
+  };
+
   const handleClick = name => {
-    selectedApiName = name;
+    apiClient.defaults.baseURL = AUTH_API_URL[name];
     navigate('/');
   };
 
