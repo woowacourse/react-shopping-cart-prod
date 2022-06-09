@@ -2,6 +2,7 @@ export { default as Button } from './Button';
 export { default as Checkbox } from './Checkbox';
 export { default as Counter } from './Counter';
 export { default as FlexContainer } from './FlexContainer';
+export { default as PopupContainer } from './PopupContainer';
 export { default as Icon } from './Icon';
 export { default as StatusMessage } from './StatusMessage';
 export { default as TextUnderline } from './TextUnderline';
