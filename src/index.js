@@ -24,7 +24,7 @@ const SERVER_URL4 = 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.co
 //   axios.defaults.baseURL = SERVER_URL1;
 // }
 
-axios.defaults.baseURL = SERVER_URL3;
+axios.defaults.baseURL = SERVER_URL1;
 
 async function main() {
   // if (process.env.NODE_ENV === 'development') {
