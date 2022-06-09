@@ -12,6 +12,7 @@ import { Loader } from '@/components/@shared';
 import Product from '@/components/Product';
 
 function ProductList() {
+  const { isLoggedIn } = useSelector((state: RootState) => state.customer);
   const { productList, loading, error }: ProductState = useSelector(
     (state: RootState) => state.products
   );
@@ -19,7 +20,7 @@ function ProductList() {
 
   useEffect(() => {
     dispatch(loadProductsAPI());
-  }, [dispatch]);
+  }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
     if (error) {
