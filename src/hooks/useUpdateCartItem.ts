@@ -13,9 +13,6 @@ const useUpdateCartItem = (cartList: CartItem[]) => {
   const increaseQuantity = (id: number, updateQuantity = 1) => {
     const targetItem = cartList.find(cartItem => cartItem.id === id);
 
-    console.log(cartList);
-    console.log(targetItem);
-
     targetItem
       ? dispatch(
           patchCartItem([
