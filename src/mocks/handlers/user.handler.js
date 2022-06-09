@@ -1,5 +1,6 @@
-import { DB_KEYS } from 'mocks/handlers/constants';
+import { DB_KEYS, END_POINT } from 'mocks/handlers/constants';
 import handleDB from 'mocks/handlers/handleDB';
+import { rest } from 'msw';
 
 const [getUser, setUser] = handleDB(DB_KEYS.USER);
 
@@ -101,3 +102,16 @@ export const handleUserDeleteRequest = (req, res, ctx) => {
 
   return res(ctx.status(204));
 };
+
+const userHandlers = [
+  rest.get(`${END_POINT('MEMBERS_EMAIL_CHECK')}`, handleCheckUniqueEmailRequest),
+  rest.post(`${END_POINT('MEMBERS_DEFAULT')}`, handlePostUserRequest),
+  rest.post(`${END_POINT('LOGIN')}`, handleLoginRequest),
+  rest.get(`${END_POINT('MEMBERS_ME')}`, handleUserGetRequest),
+  rest.post(`${END_POINT('MEMBERS_PASSWORD_CHECK')}`, handlePasswordCheckRequest),
+  rest.patch(`${END_POINT('MEMBERS_ME')}`, handleUserDataUpdateRequest),
+  rest.patch(`${END_POINT('MEMBERS_PASSWORD')}`, handleUserDataUpdateRequest),
+  rest.delete(`${END_POINT('MEMBERS_ME')}`, handleUserDeleteRequest),
+];
+
+export default userHandlers;

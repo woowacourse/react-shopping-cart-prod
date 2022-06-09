@@ -1,6 +1,7 @@
 import data from 'mocks/data';
-import { DB_KEYS, ERROR_MESSAGES } from 'mocks/handlers/constants';
+import { DB_KEYS, END_POINT, ERROR_MESSAGES } from 'mocks/handlers/constants';
 import handleDB from 'mocks/handlers/handleDB';
+import { rest } from 'msw';
 
 const [getCart, setCart] = handleDB(DB_KEYS.CART);
 
@@ -106,3 +107,12 @@ export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
 
   return res(ctx.json(createResponseCart(newCart)));
 };
+
+const cartHandlers = [
+  rest.get(`${END_POINT('CARTS')}`, handleGetShoppingCartRequest),
+  rest.post(`${END_POINT('CARTS_PRODUCTS')}`, handlePostShoppingCartRequest),
+  rest.patch(`${END_POINT('CARTS_PRODUCTS')}`, handlePatchShoppingCartRequest),
+  rest.delete(`${END_POINT('CARTS_PRODUCTS')}`, handleDeleteShoppingCartRequest),
+];
+
+export default cartHandlers;

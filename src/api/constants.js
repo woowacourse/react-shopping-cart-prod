@@ -14,10 +14,8 @@ export const API_ENDPOINT = {
   CARTS_PRODUCTS: '/api/carts/products',
   LOGIN: '/api/login',
   MEMBERS: '/api/members',
-  EMAIL_CHECK: '/api/members/email-check',
-  AUTH: {
-    ME: '/api/members/me',
-    PASSWORD: '/api/members/password',
-    PASSWORD_CHECK: '/api/members/password-check',
-  },
+  MEMBERS_ME: '/api/members/me',
+  MEMBERS_EMAIL_CHECK: '/api/members/email-check',
+  MEMBERS_PASSWORD: '/api/members/password',
+  MEMBERS_PASSWORD_CHECK: '/api/members/password-check',
 };
