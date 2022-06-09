@@ -40,7 +40,10 @@ function App() {
       <Header isLogin={isLogin} serverUrlIndex={serverUrlIndex} />
       <Main>
         <Routes>
-          <Route path={ROUTES.ROOT} element={<ProductListPage />} />
+          <Route
+            path={ROUTES.ROOT}
+            element={<ProductListPage serverUrlIndex={serverUrlIndex} />}
+          />
           <Route
             path={ROUTES.PRODUCT_LIST}
             element={<ProductListPage serverUrlIndex={serverUrlIndex} />}

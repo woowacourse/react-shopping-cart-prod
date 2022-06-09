@@ -7,10 +7,8 @@ import Spinner from "components/common/Spinner";
 import ProductCard from "./ProductCard";
 import GridContainer from "components/common/GridContainer";
 import ErrorPage from "components/pages/ErrorPage";
-import { useSelector } from "react-redux";
 
-function ProductListPage() {
-  const serverUrlIndex = useSelector((state) => state.server.serverUrlIndex);
+function ProductListPage({ serverUrlIndex }) {
   const {
     data: productList,
     isLoading,
