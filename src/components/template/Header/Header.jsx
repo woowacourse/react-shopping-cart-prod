@@ -63,6 +63,7 @@ function Header({ isLoggedIn }) {
     setServerUrl(value);
     setServerNumber(value);
     navigate(ROUTE.HOME);
+    window.location.reload();
   };
 
   return (
