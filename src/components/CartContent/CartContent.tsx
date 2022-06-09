@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { cartActions } from 'redux/actions';
+import { getCarts } from 'redux/thunks/cart';
 
 import CheckBox from 'components/@shared/CheckBox';
 import CartItem from 'components/CartItem/CartItem';
 
+import cartAPI from 'apis/cart';
 import { CART_MESSAGE } from 'constants/message';
 import { Cart, CartStoreState } from 'types/cart';
 
@@ -61,16 +63,18 @@ function CartContent({ cartItems }: Props) {
     });
   };
 
-  const onClickCheckedDeleteButton = () => {
+  const onClickCheckedDeleteButton = async () => {
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      //TODO: 선택된 항목들 제거
+      try {
+        await cartAPI.deleteCartItems(checkedCartItems);
+        await dispatch(getCarts());
+      } catch (error) {
+        alert(error);
+      }
     }
   };
 
   useEffect(() => {
-    console.log(checkedCartItems, 'checkedItems');
-    console.log(cartItems, 'cartItems');
-    console.log(checkedCartItems.length === cartItems.length, '동일?');
     setIsAllChecked(checkedCartItems.length === cartItems.length);
   }, [checkedCartItems, cartItems]);
 

@@ -47,6 +47,22 @@ const cartAPI = {
     }
   },
 
+  deleteCartItems: function (cartItemIds: number[]) {
+    try {
+      let response;
+
+      for (const cartItemId of cartItemIds) {
+        response = this.deleteCartItem(cartItemId);
+      }
+
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  },
+
   //TODO: API 생성기 추상화
   changeCartItemQuantity: async function (
     cartItemId: number,
