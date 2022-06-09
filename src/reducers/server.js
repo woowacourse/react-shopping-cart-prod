@@ -1,3 +1,5 @@
+import { SERVER_INDEX_KEY } from "constants";
+
 const SERVER_ACTION = {
   CHANGE_PATH: "server/CHANGE_PATH",
 };
@@ -10,7 +12,7 @@ export const changeServerUrl = (index) => {
 };
 
 const initialState = {
-  serverUrlIndex: Number(localStorage.getItem("server-index")) || 0,
+  serverUrlIndex: Number(localStorage.getItem(SERVER_INDEX_KEY)) || 0,
 };
 
 const reducer = (state = initialState, action) => {

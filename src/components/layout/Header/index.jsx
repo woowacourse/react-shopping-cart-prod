@@ -1,7 +1,12 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { ROUTES, JWT_COOKIE_KEY, USER_ID_KEY } from "constants";
+import {
+  ROUTES,
+  JWT_COOKIE_KEY,
+  USER_ID_KEY,
+  SERVER_INDEX_KEY,
+} from "constants";
 
 import { USER_ACTION } from "reducers/user";
 import { changeServerUrl } from "reducers/server";
@@ -28,7 +33,7 @@ function Header({ isLogin, serverUrlIndex }) {
       <Title />
       <select
         onChange={({ target: { value } }) => {
-          localStorage.setItem("server-index", Number(value));
+          localStorage.setItem(SERVER_INDEX_KEY, Number(value));
           dispatch(changeServerUrl(Number(value)));
           logout();
         }}

@@ -38,3 +38,4 @@ export const RANGE = {
 
 export const JWT_COOKIE_KEY = "token";
 export const USER_ID_KEY = "userId";
+export const SERVER_INDEX_KEY = "server-index";
