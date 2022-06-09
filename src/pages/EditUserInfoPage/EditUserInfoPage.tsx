@@ -17,8 +17,9 @@ function EditUserInfoPage() {
 
   useEffect(() => {
     if (!isLogin()) {
-      alert(USER_MESSAGE.NEED_LOGIN);
-      navigate(PATH.LOGIN, { replace: true });
+      if (window.confirm(USER_MESSAGE.NEED_LOGIN)) {
+        navigate(PATH.LOGIN, { replace: true });
+      }
 
       return;
     }

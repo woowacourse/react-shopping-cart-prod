@@ -23,7 +23,7 @@ const USER_MESSAGE = {
   ASK_WITH_DRAW: '탈퇴하시겠습니까?',
   ASK_LOGOUT: '로그아웃하시겠습니까?',
   NEED_CHECK_DUPLICATION: '사용자 이름과 이메일의 중복 체크 검사를 해주세요.',
-  NEED_LOGIN: '로그인이 필요한 기능입니다.',
+  NEED_LOGIN: '로그인이 필요한 기능입니다. 로그인 페이지로 이동하시겠습니까?',
   ALREADY_LOGGED_IN: '이미 로그인 되어 있으므로 메인 페이지로 이동합니다.',
 };
 

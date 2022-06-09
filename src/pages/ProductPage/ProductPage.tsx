@@ -39,8 +39,9 @@ function ProductPage() {
       const accessToken = getAccessToken();
 
       if (!accessToken) {
-        alert(USER_MESSAGE.NEED_LOGIN);
-        navigate(PATH.LOGIN, { replace: true });
+        if (window.confirm(USER_MESSAGE.NEED_LOGIN)) {
+          navigate(PATH.LOGIN, { replace: true });
+        }
 
         return;
       }
