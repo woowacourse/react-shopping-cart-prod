@@ -13,6 +13,9 @@ const cart = (state = initialState, action: CartAction) => {
 
       return { cart: payload };
     }
+    case cartTypes.RESET: {
+      return initialState;
+    }
     default:
       return state;
   }
