@@ -9,7 +9,6 @@ function OrderTable({ orderId, orderedProducts }) {
         <table>
           <tbody>
             {orderedProducts.map((product) => {
-              console.log("product :", product);
               return (
                 <tr key={product.id}>
                   <td>
