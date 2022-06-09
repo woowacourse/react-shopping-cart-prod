@@ -1,11 +1,14 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+
 import ShoppingItem from '../components/ShoppingItem';
-import { COLORS } from '../styles/colorPalette';
 import { StyledCheckbox } from '../components/common/Styled';
-import { MESSAGE } from '../constants';
+
 import useCart from '../hooks/useCart';
+
+import { COLORS } from '../styles/colorPalette';
+import { MESSAGE } from '../constants';
 
 function ShoppingCartPage() {
   const { deleteItem } = useCart();

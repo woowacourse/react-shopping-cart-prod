@@ -1,14 +1,16 @@
 import { useMemo, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import styled from 'styled-components';
+
 import Product from '../components/Product';
-import useFetch from '../hooks/useFetch';
 import Loading from '../components/Loading';
-import { MESSAGE, SERVER_PATH } from '../constants';
+
+import useFetch from '../hooks/useFetch';
 import useCart from '../hooks/useCart';
 
-import axios from 'axios';
 import { actionTypes } from '../store/cart/cart.actions';
+import { MESSAGE, SERVER_PATH } from '../constants';
 
 function ProductListPage() {
   const dispatch = useDispatch();

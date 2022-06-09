@@ -1,8 +1,10 @@
 import { useRoutes } from 'react-router-dom';
+
+import Header from './components/Header';
+
+import GlobalStyles from './styles/GlobalStyles';
 import routes from './routes/Routes';
 import './store/index';
-import Header from './components/Header';
-import GlobalStyles from './styles/GlobalStyles';
 
 function App() {
   const content = useRoutes(routes);

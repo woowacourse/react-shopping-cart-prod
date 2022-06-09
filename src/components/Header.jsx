@@ -1,10 +1,11 @@
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+
+import { FaUserCircle } from 'react-icons/fa';
 import { GiShoppingCart } from 'react-icons/gi';
 import { COLORS } from '../styles/colorPalette';
-import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from '../constants';
-import { useSelector } from 'react-redux';
-import { FaUserCircle } from 'react-icons/fa';
 
 function Header() {
   const accessToken = useSelector(({ user }) => user.accessToken);

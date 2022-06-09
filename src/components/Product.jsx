@@ -1,7 +1,9 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { GiShoppingCart } from 'react-icons/gi';
+import { Link } from 'react-router-dom';
+
 import { StyledImageBox, StyledImg } from './common/Styled';
+
+import { GiShoppingCart } from 'react-icons/gi';
 import { ROUTES_PATH, SIZE } from '../constants/index';
 import { COLORS } from '../styles/colorPalette';
 

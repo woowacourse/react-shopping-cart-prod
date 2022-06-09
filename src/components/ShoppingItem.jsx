@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+
 import { StyledCheckbox } from './common/Styled';
+
+import useCart from '../hooks/useCart';
+
 import { BsTrash } from 'react-icons/bs';
 import { COLORS } from '../styles/colorPalette';
 import { MESSAGE } from '../constants';
-import useCart from '../hooks/useCart';
-import { useSelector } from 'react-redux';
 
 function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedItem }) {
   const accessToken = useSelector(({ user }) => user.accessToken);

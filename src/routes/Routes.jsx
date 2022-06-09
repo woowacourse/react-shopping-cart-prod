@@ -1,7 +1,9 @@
 import { Suspense, lazy } from 'react';
-import { ROUTES_PATH } from '../constants';
+
 import Loading from '../components/Loading';
 import RequireAuth from '../components/RequireAuth';
+
+import { ROUTES_PATH } from '../constants';
 
 const Loadable = (Component) => (props) =>
   (

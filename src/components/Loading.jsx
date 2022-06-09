@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+
 import { COLORS } from '../styles/colorPalette';
 
 function Loading() {
