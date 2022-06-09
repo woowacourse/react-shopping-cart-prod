@@ -29,14 +29,16 @@ function ProductCard({ product, isInCart }: Props) {
   };
 
   return (
-    <Link to={`${PATH.PRODUCT}/${id}`}>
+    <>
       <StyledProductCard>
         <CardImageContainer>
-          <CardImageOverlay>
-            <p>{description}</p>
-            <div onClick={onClickCartButton}>구매하기</div>
-          </CardImageOverlay>
-          <img src={imageUrl} alt={name} />
+          <Link to={`${PATH.PRODUCT}/${id}`}>
+            <CardImageOverlay>
+              <p>{description}</p>
+              <div onClick={onClickCartButton}>구매하기</div>
+            </CardImageOverlay>
+            <img src={imageUrl} alt={name} />
+          </Link>
         </CardImageContainer>
         <CardDescriptionContainer>
           <h3>{name}</h3>
@@ -51,7 +53,7 @@ function ProductCard({ product, isInCart }: Props) {
           </button>
         </CardButtonContainer>
       </StyledProductCard>
-    </Link>
+    </>
   );
 }
 
