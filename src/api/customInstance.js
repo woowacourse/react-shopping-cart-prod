@@ -11,9 +11,10 @@ const customInstance = axios.create({
 const token = window.sessionStorage.getItem('token');
 const nickname = window.sessionStorage.getItem('nickname');
 
-export const setServerUrl = (index) => {
+export const changeServerUrl = (index) => {
   customInstance.defaults.baseURL = API_URL[index];
   window.sessionStorage.setItem('server', index);
+  window.location.reload();
 };
 
 if (token !== null && nickname !== null) {

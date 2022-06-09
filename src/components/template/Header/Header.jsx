@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
-import { logoutUser } from 'store/actions/user.action';
-
+import useLogout from 'hooks/useLogout';
 import useWindowsSize from 'hooks/useWindowSize';
 
-import { setServerUrl } from 'api/customInstance';
+import { changeServerUrl } from 'api/customInstance';
 
 import { Icon } from 'components/common';
 
@@ -35,35 +32,27 @@ function Header({ isLoggedIn }) {
   const savedServerNumber = window.sessionStorage.getItem('server');
   const [serverNumber, setServerNumber] = useState(savedServerNumber);
   const windowSize = useWindowsSize();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const handleLogout = useLogout();
 
   const IconSizeBreakPoint = deviceSizeStandard.desktop;
 
   const navLinkInfo = isLoggedIn ? userHeaderLinks : nonUserHeaderLinks;
 
-  const handleLogOut = () => {
+  const handleLogOutButtonClick = () => {
     if (!window.confirm(ALERT_MESSAGES.LOGOUT_CONFIRM)) {
       return;
     }
-    dispatch(logoutUser());
-    navigate(ROUTE.HOME);
+    handleLogout();
   };
 
-  const handleServerChange = (e) => {
-    const {
-      target: { value },
-    } = e;
-
+  const handleServerChange = ({ target: { value } }) => {
     if (isLoggedIn && !window.confirm(ALERT_MESSAGES.SERVER_CHANGE)) {
       return;
     }
 
-    dispatch(logoutUser());
-    setServerUrl(value);
+    handleLogout();
     setServerNumber(value);
-    navigate(ROUTE.HOME);
-    window.location.reload();
+    changeServerUrl(value);
   };
 
   return (
@@ -92,7 +81,9 @@ function Header({ isLoggedIn }) {
               {name}
             </S.NavLink>
           ))}
-          {isLoggedIn && <S.NavButton onClick={handleLogOut}>로그아웃</S.NavButton>}
+          {isLoggedIn && (
+            <S.NavButton onClick={handleLogOutButtonClick}>로그아웃</S.NavButton>
+          )}
         </S.Nav>
       </S.Inner>
     </S.Container>
