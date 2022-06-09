@@ -32,6 +32,9 @@ export const addMoreCart = (productId) =>
 export const downCart = (productId) =>
   getServerResult(`/downCart/${productId}`, 'put');
 
+export const modifyCartQuantity = (productId, quantity) =>
+  getServerResult(`/api/customer/carts`, 'put', { productId, quantity });
+
 export const deleteCart = (productId) =>
   getServerResult(`/delete/Cart/${productId}`, 'delete');
 

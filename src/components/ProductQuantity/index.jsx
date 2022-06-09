@@ -6,8 +6,7 @@ import Wrapper from './style';
 
 import {
   addCart,
-  addMoreCart,
-  deleteCart,
+  modifyCartQuantity,
   downCart,
 } from 'reducers/addUpdateDeleteCart';
 import { onMessage } from 'reducers/snackbar';
@@ -36,7 +35,7 @@ const ProductQuantity = ({
       if (quantity > 1) {
         await dispatch(downCart(productId)).unwrap();
       } else {
-        await dispatch(deleteCart(productId)).unwrap();
+        await dispatch(modifyCartQuantity(productId, quantity - 1)).unwrap();
       }
 
       setQuantity(quantity - 1);
@@ -48,7 +47,7 @@ const ProductQuantity = ({
   const handleClickAddButton = debounce(
     useCallback(async () => {
       if (quantity) {
-        await dispatch(addMoreCart(productId)).unwrap();
+        await dispatch(modifyCartQuantity(productId, quantity + 1)).unwrap();
       } else {
         await dispatch(addCart(productId)).unwrap();
       }

@@ -7,20 +7,20 @@ import Wrapper from './style';
 
 import { PATH } from 'constants';
 
-const Product = ({ id, imgSrc, title, price, cartQuantity }) => {
+const Product = ({ id, imageUrl, name, price, cartQuantity }) => {
   return (
     <Wrapper>
       <Link to={`${PATH.PRODUCT}/${id}`}>
-        <img className="thumbnail" src={imgSrc} alt={`${title} 상품`} />
+        <img className="thumbnail" src={imageUrl} alt={`${name} 상품`} />
       </Link>
       <ProductQuantity
         productId={id}
-        productTitle={title}
+        productTitle={name}
         cartQuantity={cartQuantity}
       >
         <div className="product-rest-info">
           <Link to={`/product/${id}`}>
-            <p className="title">{title}</p>
+            <p className="title">{name}</p>
           </Link>
           <p className="price">{price.toLocaleString()}</p>
         </div>

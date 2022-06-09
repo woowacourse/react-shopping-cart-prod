@@ -13,33 +13,11 @@ export const addCart = createAsyncThunk(
   },
 );
 
-export const addMoreCart = createAsyncThunk(
-  'cudCart/addMore',
-  async (productId, { rejectWithValue }) => {
+export const modifyCartQuantity = createAsyncThunk(
+  'cudCart/modifyCartQuantity',
+  async ({ productId, quantity }, { rejectWithValue }) => {
     try {
-      await API.addMoreCart(productId);
-    } catch (error) {
-      rejectWithValue(error);
-    }
-  },
-);
-
-export const downCart = createAsyncThunk(
-  'cudCart/downCart',
-  async (productId, { rejectWithValue }) => {
-    try {
-      await API.downCart(productId);
-    } catch (error) {
-      rejectWithValue(error);
-    }
-  },
-);
-
-export const deleteCart = createAsyncThunk(
-  'cudCart/delete',
-  async (productId, { rejectWithValue }) => {
-    try {
-      await API.deleteCart(productId);
+      await API.modifyCartQuantity(productId, quantity);
     } catch (error) {
       rejectWithValue(error);
     }
@@ -82,17 +60,11 @@ const cudCartSlice = createSlice({
 
     [addCart.rejected]: rejected,
 
-    [addMoreCart.pending]: pending,
+    [modifyCartQuantity.pending]: pending,
 
-    [addMoreCart.fulfilled]: fulfilled,
+    [modifyCartQuantity.fulfilled]: fulfilled,
 
-    [addMoreCart.rejected]: rejected,
-
-    [deleteCart.pending]: pending,
-
-    [deleteCart.fulfilled]: fulfilled,
-
-    [deleteCart.rejected]: rejected,
+    [modifyCartQuantity.rejected]: rejected,
 
     [deleteCarts.pending]: pending,
 
