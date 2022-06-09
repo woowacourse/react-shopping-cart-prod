@@ -21,10 +21,6 @@ const usePutCartAPI = () => {
       setIsPutCartLoading(true);
 
       try {
-        apiClient.defaults.headers = {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-          withCredentials: true,
-        };
         const response = await apiClient.put(`/cart/products/${productId}`, {
           quantity: updatedQuantity,
         });

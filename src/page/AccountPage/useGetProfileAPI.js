@@ -11,10 +11,6 @@ const useGetProfileAPI = (setEmail, setNickname) => {
 
   const getProfile = useCallback(async () => {
     try {
-      apiClient.defaults.headers = {
-        Authorization: `Bearer ${getCookie('accessToken')}`,
-        withCredentials: true,
-      };
       const response = await apiClient.get('/customers');
       setEmail(response.data.email);
       setNickname(response.data.nickname);
