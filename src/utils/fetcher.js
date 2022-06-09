@@ -1,4 +1,4 @@
-import LocalStorage from "@storage/localStorage";
+import LocalStorage from "@utils/LocalStorage";
 
 class Fetcher {
   // eslint-disable-next-line no-undef

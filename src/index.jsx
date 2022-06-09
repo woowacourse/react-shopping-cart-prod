@@ -1,13 +1,16 @@
-import ReactDOM from "react-dom/client";
+import { legacy_createStore as createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
-import { legacy_createStore as createStore, applyMiddleware } from "redux";
-import App from "@/App";
+import ReactDOM from "react-dom/client";
+
 import reducer from "@redux/reducer";
+import { getUser } from "@redux/reducers/user-reducer/userThunks";
+import LocalStorage from "@utils/LocalStorage";
+
 import "./index.css";
 import "@scss/style";
-import { getUser } from "@redux/reducers/user-reducer/userThunks";
-import LocalStorage from "./storage/localStorage";
+
+import App from "./App";
 
 function prepareMSW() {
   if (process.env.NODE_ENV === "development") {

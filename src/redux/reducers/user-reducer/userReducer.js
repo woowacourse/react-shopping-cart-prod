@@ -1,8 +1,9 @@
-import queryState from "@redux/utils/queryState";
-import LocalStorage from "@storage/localStorage";
 import { initialState } from "@redux/constants";
+import queryState from "@redux/utils/queryState";
+import Fetcher from "@utils/fetcher";
+import LocalStorage from "@utils/LocalStorage";
+
 import ACTION_TYPE from "./userActions";
-import Fetcher from "../../../utils/fetcher";
 
 function userReducer(state, { type, payload }, totalState) {
   switch (type) {

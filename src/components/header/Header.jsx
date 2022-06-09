@@ -1,10 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import cn from "classnames";
-import Logo from "@assets/images/logo.svg";
 import { Link } from "react-router-dom";
+import cn from "classnames";
+
+import LocalStorage from "@utils/LocalStorage";
+import Logo from "@assets/images/logo.svg";
 import styles from "./header.module";
-import LocalStorage from "../../storage/localStorage";
 
 function Header({ className }) {
   const user = useSelector((state) => state.user.data);
