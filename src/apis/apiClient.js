@@ -8,7 +8,7 @@ const AUTH_API_URL = {
   토르: 'http://ec2-15-164-232-166.ap-northeast-2.compute.amazonaws.com:8080',
 };
 
-export const isApiTest = false;
+export const isApiTest = true;
 const selectedApiName = '이프';
 
 if (isApiTest) {
