@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import * as S from './style';
 import baedaleTear from 'assets/baedale_tear.png';
@@ -41,12 +41,9 @@ function WithdrawalPage() {
         dispatch({type: AUTH.LOGOUT});
         localStorage.removeItem('accessToken');
       },
+      onFail: () => alert(ERROR_MESSAGE.WITHDRAWAL),
     });
   };
-
-  useEffect(() => {
-    withDrawal.error && alert(ERROR_MESSAGE.WITHDRAWAL);
-  }, [withDrawal.error]);
 
   return (
     <S.Layout>

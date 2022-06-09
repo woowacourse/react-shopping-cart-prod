@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import * as S from './style';
 import Input from 'component/common/Input';
@@ -83,12 +83,9 @@ function SignUpPage() {
       onSuccess: (location) => {
         navigation(PATH.LOGIN);
       },
+      onFail: () => alert(ERROR_MESSAGE.SIGN_UP),
     });
   };
-
-  useEffect(() => {
-    signUp.error && alert(ERROR_MESSAGE.SIGN_UP);
-  }, [signUp.error]);
 
   return (
     <S.Layout>

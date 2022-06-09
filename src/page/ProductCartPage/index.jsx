@@ -4,9 +4,7 @@ import {useSelector} from 'react-redux';
 import CheckBox from 'component/common/CheckBox';
 import ContentBox from 'component/common/ContentBox';
 import CartItem from 'component/CartItem';
-import ErrorPendingBoundary from 'component/common/ErrorPendingBoundary';
 
-import NotFoundPage from 'page/NotFoundPage';
 import * as S from 'page/ProductCartPage/style';
 
 import useCartItem from 'hook/useCartItem';
@@ -18,9 +16,8 @@ import useAuth from 'hook/useAuth';
 export default function ProductCartPage() {
   const navigation = useNavigate();
 
-  const cartItem = useSelector((state) => state.cartReducer.cart);
-  const error = useSelector((state) => state.cartReducer.error);
-  const pending = useSelector((state) => state.cartReducer.pending);
+  const cart = useSelector((state) => state.cartReducer.cart);
+
   const selectedItem = useSelector((state) => state.selectedItemReducer.selectedItem);
 
   const isLogin = useSelector((state) => state.authReducer.isLogin);
@@ -37,7 +34,7 @@ export default function ProductCartPage() {
     isLogin && initializeCart();
   }, [isLogin]);
 
-  const selectedCartItem = cartItem.filter(({id}) => selectedItem.includes(id));
+  const selectedCartItem = cart.filter(({id}) => selectedItem.includes(id));
 
   const {totalQuantity, totalPrice} = selectedCartItem.reduce(
     (prev, cur) => ({
@@ -47,7 +44,7 @@ export default function ProductCartPage() {
     {totalQuantity: 0, totalPrice: 0},
   );
 
-  const isAllChecked = cartItem.length === selectedItem.length && selectedItem.length > 0;
+  const isAllChecked = cart.length === selectedItem.length && selectedItem.length > 0;
 
   const onClickOrderButton = () => {
     if (totalQuantity <= 0) {
@@ -66,7 +63,7 @@ export default function ProductCartPage() {
             <S.CheckBoxRow>
               <CheckBox
                 initialChecked={isAllChecked}
-                handleCheckedTrue={() => selectAllItem(cartItem)}
+                handleCheckedTrue={() => selectAllItem(cart)}
                 handleCheckedFalse={unselectAllItem}
               />
               {isAllChecked ? '선택해제' : '전체선택'}
@@ -76,23 +73,17 @@ export default function ProductCartPage() {
             </S.DeleteButton>
           </S.SelectDeleteRow>
 
-          <S.ListHeaderSpan>장바구니 상품 ({cartItem.length}개)</S.ListHeaderSpan>
+          <S.ListHeaderSpan>장바구니 상품 ({cart.length}개)</S.ListHeaderSpan>
           <S.CartListBox>
-            <ErrorPendingBoundary
-              error={error}
-              pending={pending}
-              fallback={<NotFoundPage>에러가 발생했어요.</NotFoundPage>}
-            >
-              {cartItem.map((cartInfo) => {
-                const initialChecked = selectedItem.includes(cartInfo.id);
-                return (
-                  <React.Fragment key={cartInfo.id}>
-                    <CartItem cartInfo={cartInfo} initialChecked={initialChecked} />
-                    <hr />
-                  </React.Fragment>
-                );
-              })}
-            </ErrorPendingBoundary>
+            {cart.map((cartInfo) => {
+              const initialChecked = selectedItem.includes(cartInfo.id);
+              return (
+                <React.Fragment key={cartInfo.id}>
+                  <CartItem cartInfo={cartInfo} initialChecked={initialChecked} />
+                  <hr />
+                </React.Fragment>
+              );
+            })}
           </S.CartListBox>
         </S.SelectCartBox>
 

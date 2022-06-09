@@ -2,11 +2,9 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 
 import ContentBox from 'component/common/ContentBox';
-import ErrorPendingBoundary from 'component/common/ErrorPendingBoundary';
 
 import OrderItem from 'component/OrderItem';
 
-import NotFoundPage from 'page/NotFoundPage';
 import * as S from 'page/OrderPayPage/style';
 
 import {SmingPayment, useSmingPayment} from 'sming-payments';
@@ -27,8 +25,6 @@ export default function OrderPayPage() {
   const postOrderList = useFetch('post');
 
   const cartItem = useSelector((state) => state.cartReducer.cart);
-  const error = useSelector((state) => state.cartReducer.error);
-  const pending = useSelector((state) => state.cartReducer.pending);
   const selectedItem = useSelector((state) => state.selectedItemReducer.selectedItem);
 
   const selectedCartItem = cartItem.filter(({id}) => selectedItem.includes(id));
@@ -70,20 +66,14 @@ export default function OrderPayPage() {
         <S.ProductInfoContainer>
           <S.ListHeaderSpan>주문 상품 ({selectedCartItem.length}건)</S.ListHeaderSpan>
           <S.ProductListContainer>
-            <ErrorPendingBoundary
-              error={error}
-              pending={pending}
-              fallback={<NotFoundPage>에러가 발생했어요.</NotFoundPage>}
-            >
-              {selectedCartItem.map((productInfo) => {
-                return (
-                  <React.Fragment key={productInfo.id}>
-                    <OrderItem productInfo={productInfo} />
-                    <hr />
-                  </React.Fragment>
-                );
-              })}
-            </ErrorPendingBoundary>
+            {selectedCartItem.map((productInfo) => {
+              return (
+                <React.Fragment key={productInfo.id}>
+                  <OrderItem productInfo={productInfo} />
+                  <hr />
+                </React.Fragment>
+              );
+            })}
           </S.ProductListContainer>
         </S.ProductInfoContainer>
 

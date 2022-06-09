@@ -1,5 +1,5 @@
 import Input from 'component/common/Input';
-import React, {useEffect} from 'react';
+import React from 'react';
 import * as S from './style';
 import theme from 'theme/theme';
 import {Link, useNavigate} from 'react-router-dom';
@@ -32,12 +32,9 @@ function LoginPage() {
         dispatch({type: AUTH.LOGIN, payload: data.accessToken});
         navigation(PATH.HOME);
       },
+      onFail: () => alert(ERROR_MESSAGE.LOGIN),
     });
   };
-
-  useEffect(() => {
-    login.error && alert(ERROR_MESSAGE.LOGIN);
-  }, [login.error]);
 
   return (
     <S.Layout>

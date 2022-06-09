@@ -60,6 +60,7 @@ function UserInfoEditPage() {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
+      onFail: () => alert(ERROR_MESSAGE.VIEW_USER_INFO),
     });
   };
 
@@ -82,20 +83,13 @@ function UserInfoEditPage() {
       onSuccess: () => {
         navigation(PATH.HOME);
       },
+      onFail: () => alert(ERROR_MESSAGE.VIEW_USER_INFO),
     });
   };
 
   useEffect(() => {
     accessToken && getInfo();
   }, [accessToken]);
-
-  useEffect(() => {
-    userInfo.error && alert(ERROR_MESSAGE.VIEW_USER_INFO);
-  }, [userInfo.error]);
-
-  useEffect(() => {
-    editInfo.error && alert(ERROR_MESSAGE.EDIT_USER_INFO);
-  }, [editInfo.error]);
 
   return (
     <S.Layout>
