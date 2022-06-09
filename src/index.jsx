@@ -20,8 +20,10 @@ function prepareMSW() {
 
 prepareMSW().then(async () => {
   const store = createStore(reducer, applyMiddleware(thunk));
+
   const accessToken = LocalStorage.getItem("accessToken");
   accessToken && (await getUser()(store.dispatch));
+
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(
     <Provider store={store}>
