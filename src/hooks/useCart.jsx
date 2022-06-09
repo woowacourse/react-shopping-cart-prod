@@ -63,7 +63,11 @@ const useCart = () => {
       return;
     }
 
-    dispatch(updateCheckedList(cart.filter(({ product }) => product.stock > 0).map(({ product }) => product.id)));
+    dispatch(
+      updateCheckedList(
+        cart.filter(({ product }) => product.stock > 0).map(({ product }) => product.id),
+      ),
+    );
   };
 
   const deleteCheckedProducts = () => {
@@ -78,12 +82,15 @@ const useCart = () => {
   };
 
   const checkedProductsTotalPrice = checkedProductList.reduce((total, productId) => {
-    const { product, quantity } = cart.find(
-      ({ product }) => product.id === productId,
-    );
+    const targetCartedProductData = cart.find(({ product }) => product.id === productId);
 
+    if (targetCartedProductData === undefined) {
+      return total;
+    }
+
+    const { product, quantity } = targetCartedProductData;
     const purchasableQuantity = Math.min(quantity, product.stock);
-    
+
     return total + product.price * purchasableQuantity;
   }, 0);
 
