@@ -27,15 +27,19 @@ const getCartList = (state: CartItemState, action: CartListAction) => {
   }
 };
 
-const putCartItem = (state: CartItemState, action: CartListAction) => {
+const patchCartItem = (state: CartItemState, action: CartListAction) => {
   switch (action.status) {
     case AsyncStatus.PENDING:
       return { loading: true, error: null, data: state.data };
 
     case AsyncStatus.SUCCESS: {
-      const newCartList = state.data.map(cartItem =>
-        cartItem.id === action.payload.id ? action.payload : cartItem
+      const newCartList = state.data.map(
+        cartItem =>
+          action.payload.find(editedCartItem => editedCartItem.productId === cartItem.id) ||
+          cartItem
       );
+
+      console.log(newCartList);
 
       return { loading: false, error: null, data: newCartList };
     }
@@ -62,13 +66,14 @@ const postCartItem = (state: CartItemState, action: CartListAction) => {
   }
 };
 
-const deleteCartItem = (state: CartItemState, action: CartListAction) => {
+const deleteSelectedCartItem = (state: CartItemState, action: CartListAction) => {
   switch (action.status) {
     case AsyncStatus.PENDING:
       return { loading: true, error: null, data: state.data };
 
     case AsyncStatus.SUCCESS: {
-      const newCartItemList = state.data.filter(item => item.id !== action.payload.id);
+      const targetIdList = action.payload.map(idData => idData.id);
+      const newCartItemList = state.data.filter(item => !targetIdList.includes(item.id));
 
       return {
         loading: false,
@@ -82,9 +87,27 @@ const deleteCartItem = (state: CartItemState, action: CartListAction) => {
   }
 };
 
+const deleteAllCartItem = (state: CartItemState, action: CartListAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
+      return { loading: true, error: null, data: state.data };
+
+    case AsyncStatus.SUCCESS:
+      return {
+        loading: false,
+        error: null,
+        data: {},
+      };
+
+    case AsyncStatus.FAILURE:
+      return { loading: true, error: action.payload, data: state.data };
+  }
+};
+
 export const cartListReducer = createReducer(initialState, {
   [CART_LIST_ACTION_TYPE.GET_CART_LIST]: getCartList,
-  [CART_LIST_ACTION_TYPE.PUT_CART_ITEM]: putCartItem,
+  [CART_LIST_ACTION_TYPE.PATCH_CART_ITEM]: patchCartItem,
   [CART_LIST_ACTION_TYPE.POST_CART_ITEM]: postCartItem,
-  [CART_LIST_ACTION_TYPE.DELETE_CART_ITEM]: deleteCartItem,
+  [CART_LIST_ACTION_TYPE.DELETE_SELECTED_CART_ITEM]: deleteSelectedCartItem,
+  [CART_LIST_ACTION_TYPE.DELETE_ALL_CART_ITEM]: deleteAllCartItem,
 });

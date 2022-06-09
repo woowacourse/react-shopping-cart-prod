@@ -21,6 +21,7 @@ const CheckBox = ({
 
 const StyledInput = styled.input`
   display: none;
+  cursor: pointer;
 
   &:checked + label::after {
     ${flexCenter}
@@ -46,6 +47,7 @@ const StyledLabel = styled.label`
   height: 3rem;
   border: 3px solid ${theme.colors.darkgrey};
   position: relative;
+  cursor: pointer;
 `;
 
 export default CheckBox;

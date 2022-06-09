@@ -1,16 +1,14 @@
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
 import Header from 'components/common/Header';
-import Modal from 'components/common/Snackbar';
-import { useAppSelector } from 'hooks/useAppSelector';
 import Router from 'Router';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { autoSignIn } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
 import { KEYS } from 'utils/localStorage';
+import SnackBar from 'components/common/snackBar';
 
 function App() {
-  const { isSnackbarOpen } = useAppSelector(state => state.snackbarReducer);
   const dispatch = useAppDispatch<UserAction>();
 
   if (localStorage.getItem(KEYS.TOKEN)) {
@@ -24,8 +22,8 @@ function App() {
         <StyledMain>
           <Router />
         </StyledMain>
+        <SnackBar />
       </StyledRoot>
-      {isSnackbarOpen && <Modal />}
     </BrowserRouter>
   );
 }

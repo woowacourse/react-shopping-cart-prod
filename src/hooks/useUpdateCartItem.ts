@@ -1,4 +1,8 @@
-import { postCartItem, putCartItem, deleteCartItem } from 'redux/action-creators/cartListThunk';
+import {
+  postCartItem,
+  patchCartItem,
+  deleteSelectedCartItem,
+} from 'redux/action-creators/cartListThunk';
 import { useAppDispatch } from './useAppDispatch';
 import { CartItem } from 'types/domain';
 import { CartListAction } from 'redux/actions/cartList';
@@ -11,16 +15,19 @@ const useUpdateCartItem = (cartList: CartItem[]) => {
 
     if (type === 'Increase') {
       if (!targetItem) {
-        dispatch(postCartItem({ id, quantity: 1, willPurchase: true }));
+        dispatch(postCartItem({ id, quantity: 1, checked: true }));
 
         return;
       }
+
       dispatch(
-        putCartItem({
-          ...targetItem,
-          quantity: targetItem.quantity + updateQuantity,
-          willPurchase: true,
-        })
+        patchCartItem([
+          {
+            productId: targetItem.id,
+            quantity: targetItem.quantity + updateQuantity,
+            checked: true,
+          },
+        ])
       );
 
       return;
@@ -28,15 +35,17 @@ const useUpdateCartItem = (cartList: CartItem[]) => {
     if (type === 'Decrease') {
       if (targetItem.quantity - updateQuantity > 0) {
         dispatch(
-          putCartItem({
-            ...targetItem,
-            quantity: targetItem.quantity - updateQuantity,
-            willPurchase: true,
-          })
+          patchCartItem([
+            {
+              id: targetItem.id,
+              quantity: targetItem.quantity - updateQuantity,
+              checked: true,
+            },
+          ])
         );
       }
       if (targetItem.quantity - updateQuantity <= 0) {
-        dispatch(deleteCartItem(targetItem));
+        dispatch(deleteSelectedCartItem([targetItem]));
       }
     }
   };
@@ -44,17 +53,41 @@ const useUpdateCartItem = (cartList: CartItem[]) => {
   const removeCartItem = (id: number) => {
     const targetItem = cartList.find(cartItem => cartItem.id === id);
 
-    dispatch(deleteCartItem(targetItem));
+    dispatch(deleteSelectedCartItem([targetItem]));
   };
 
-  const toggleCartItemWillPurchase = (id: number) => {
+  const removeSelectedCartItem = () => {
+    const targetItemList = cartList.filter(cartItem => cartItem.checked);
+
+    dispatch(deleteSelectedCartItem(targetItemList));
+  };
+
+  const toggleCartItemChecked = (id: number) => {
     const targetItem = cartList.find(cartItem => cartItem.id === id);
-    const prevWillPurchase = targetItem.willPurchase;
 
-    dispatch(putCartItem({ id, quantity: targetItem.quantity, willPurchase: !prevWillPurchase }));
+    dispatch(
+      patchCartItem([
+        { ...targetItem, id, quantity: targetItem.quantity, checked: !targetItem.checked },
+      ])
+    );
   };
 
-  return { updateCartItemQuantity, toggleCartItemWillPurchase, removeCartItem };
+  const toggleCartItemAllChecked = (cartList: CartItem[]) => {
+    const changedCheckItemList = cartList.map(cartItem => ({
+      ...cartItem,
+      checked: !cartItem.checked,
+    }));
+
+    dispatch(patchCartItem(changedCheckItemList));
+  };
+
+  return {
+    updateCartItemQuantity,
+    toggleCartItemChecked,
+    toggleCartItemAllChecked,
+    removeCartItem,
+    removeSelectedCartItem,
+  };
 };
 
 export default useUpdateCartItem;

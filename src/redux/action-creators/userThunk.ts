@@ -1,9 +1,9 @@
 import type { Dispatch } from 'redux';
 import { userAction, UserAction } from 'redux/actions/user';
 import axios from 'axios';
-import { LOCAL_BASE_URL } from 'apis';
 import { SignUpInfo, SignInInfo, EditPasswordInfo } from 'types/domain';
 import { getLocalStorageToken, setLocalStorageToken } from 'utils/localStorage';
+import { BASE_URL } from 'apis';
 
 export const signUp = (signUpInfo: SignUpInfo) => async (dispatch: Dispatch<UserAction>) => {
   dispatch(userAction.postSignUp.pending());
@@ -11,8 +11,13 @@ export const signUp = (signUpInfo: SignUpInfo) => async (dispatch: Dispatch<User
   try {
     await axios({
       method: 'post',
-      url: `${LOCAL_BASE_URL}/users`,
-      data: signUpInfo,
+      url: `${BASE_URL}/users`,
+      headers: { 'Content-Type': 'application/json' },
+      data: {
+        username: signUpInfo.name,
+        email: signUpInfo.email,
+        password: signUpInfo.password,
+      },
     });
 
     dispatch(userAction.postSignUp.success());
@@ -28,8 +33,12 @@ export const signIn = (signInInfo: SignInInfo) => async (dispatch: Dispatch<User
   try {
     const response = await axios({
       method: 'post',
-      url: `${LOCAL_BASE_URL}/login`,
-      data: signInInfo,
+      url: `${BASE_URL}/login`,
+      headers: { 'Content-Type': 'application/json' },
+      data: {
+        email: signInInfo.email,
+        password: signInInfo.password,
+      },
     });
 
     setLocalStorageToken(response.data.token);
@@ -45,20 +54,23 @@ export const editPassword =
     dispatch(userAction.patchNewPassword.pending());
     const token = getLocalStorageToken();
 
+    console.log(editPasswordInfo);
+
     try {
       await axios({
         method: 'patch',
+        url: `${BASE_URL}/users/me`,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: token,
+          Authorization: `Bearer ${token}`,
         },
-        url: `${LOCAL_BASE_URL}/users/me`,
         data: editPasswordInfo,
       });
 
       dispatch(userAction.patchNewPassword.success());
     } catch (error) {
       dispatch(userAction.patchNewPassword.failure(error.response.data.errorMessage));
+      console.log(error);
       alert(error.response.data.errorMessage);
     }
   };
@@ -70,11 +82,11 @@ export const resign = (password: string) => async (dispatch: Dispatch<UserAction
   try {
     await axios({
       method: 'delete',
+      url: `${BASE_URL}/users/me`,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
-      url: `${LOCAL_BASE_URL}/users/me`,
       data: password,
     });
 
@@ -82,6 +94,7 @@ export const resign = (password: string) => async (dispatch: Dispatch<UserAction
     localStorage.removeItem('token');
   } catch (error) {
     dispatch(userAction.deleteUser.failure(error.response.data.errorMessage));
+    console.log(error);
     alert(error.response.data.errorMessage);
   }
 };
@@ -93,11 +106,11 @@ export const autoSignIn = () => async (dispatch: Dispatch<UserAction>) => {
   try {
     const response = await axios({
       method: 'post',
+      url: `${BASE_URL}/token/refresh`,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token,
+        Authorization: `Bearer ${token}`,
       },
-      url: `${LOCAL_BASE_URL}/login/auto`,
     });
 
     setLocalStorageToken(response.data.token);

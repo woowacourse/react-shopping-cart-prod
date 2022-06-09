@@ -5,39 +5,40 @@ import { CartListAction } from 'redux/actions/cartList';
 import useUpdateCartItem from 'hooks/useUpdateCartItem';
 import { useFetch } from 'hooks/useFetch';
 import useThunkFetch from 'hooks/useThunkFetch';
-import useSnackBar from 'hooks/useSnackBar';
 import CroppedImage from 'components/common/CroppedImage';
 import Button from 'components/common/Button';
 import RequestFail from 'components/common/RequestFail';
 import Loading from 'components/common/Loading';
-import { LOCAL_BASE_URL } from 'apis';
+import { BASE_URL } from 'apis';
 import type { Item } from 'types/domain';
+import { useDispatch } from 'react-redux';
+import { updateSnackBar } from 'redux/actions/snackBar';
 
 const ItemDetail = () => {
+  const dispatch = useDispatch();
   const params = useParams();
   const id = Number(params.id);
-  const { data: item, loading, error } = useFetch<Item>(`${LOCAL_BASE_URL}/itemList/${id}`);
+  const { data: item, loading, error } = useFetch<Item>(`${BASE_URL}/products/${id}`);
   const { data: cartList } = useThunkFetch<CartListAction>(
     state => state.cartListReducer,
     getCartList
   );
   const { updateCartItemQuantity } = useUpdateCartItem(cartList);
-  const { openSnackbar } = useSnackBar();
 
   const onClick = () => {
     updateCartItemQuantity(id);
-    openSnackbar('cart');
+    dispatch(updateSnackBar('추가'));
   };
 
   if (loading) return <Loading />;
   if (error) return <RequestFail />;
 
-  const { thumbnailUrl, title, price } = item;
+  const { imageUrl, name, price } = item;
 
   return (
     <StyledRoot>
-      <CroppedImage src={thumbnailUrl} width='57rem' height='57rem' alt='상품' />
-      <StyledTitle>{title}</StyledTitle>
+      <CroppedImage src={imageUrl} width='57rem' height='57rem' alt='상품' />
+      <StyledTitle>{name}</StyledTitle>
       <StyldPrice>
         <StyledPriceDescription>금액</StyledPriceDescription>
         <StyledPriceValue>{price}</StyledPriceValue>

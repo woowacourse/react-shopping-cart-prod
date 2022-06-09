@@ -12,12 +12,11 @@ import usePasswordInput from 'hooks/usePasswordInput';
 import useUpdateEffect from 'hooks/useUpdateEffect';
 import SignInput from 'components/common/SignInput';
 import { PATH } from 'Router';
-import { isEmptyObject } from 'utils';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch<UserAction>();
-  const { loading, error, data: userData } = useAppSelector(state => state.userReducer);
+  const { loading, error } = useAppSelector(state => state.userReducer);
   const { inputState, validState, handleEmailInput, handleNameInput } = useSignInput();
   const {
     currentPasswordRef,

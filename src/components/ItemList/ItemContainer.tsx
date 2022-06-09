@@ -6,24 +6,26 @@ import { memo, MouseEvent } from 'react';
 import { flexCenter } from 'styles/mixin';
 import { Link } from 'react-router-dom';
 import { formatDecimal } from 'utils';
+import { useDispatch } from 'react-redux';
+import { updateSnackBar } from 'redux/actions/snackBar';
 
 interface ItemContainerProps {
   id: number;
-  thumbnailUrl: string;
-  title: string;
+  imageUrl: string;
+  name: string;
   price: number;
   updateCartItemQuantity?: (id: number) => void;
-  openSnackbar?: (type: string) => void;
 }
 
 const ItemContainer = ({
   id,
-  thumbnailUrl,
-  title,
+  imageUrl,
+  name,
   price,
   updateCartItemQuantity,
-  openSnackbar,
 }: ItemContainerProps) => {
+  const dispatch = useDispatch();
+
   const handleClickItemContainer = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
     if (e.target instanceof SVGElement) {
       e.preventDefault();
@@ -32,16 +34,16 @@ const ItemContainer = ({
 
   const handleClickCartIcon = () => {
     updateCartItemQuantity?.(id);
-    openSnackbar('cart');
+    dispatch(updateSnackBar('추가'));
   };
 
   return (
     <Link to={`/item_detail/${id}`} onClick={handleClickItemContainer} replace>
       <StyledRoot>
-        <CroppedImage src={thumbnailUrl} width='270px' height='270px' alt='상품' />
+        <CroppedImage src={imageUrl} width='270px' height='270px' alt='상품' />
         <StyledBottom>
           <StyledDescription>
-            <StyledTitle>{title}</StyledTitle>
+            <StyledTitle>{name}</StyledTitle>
             <StyledPrice>{formatDecimal(price)}원</StyledPrice>
           </StyledDescription>
           <StyledCartIcon

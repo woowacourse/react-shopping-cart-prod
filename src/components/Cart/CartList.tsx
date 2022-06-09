@@ -9,55 +9,34 @@ import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import Controller from './Controller';
 import { formatDecimal } from 'utils';
 
-const CartList = ({
-  cartList,
-  cartDetail,
-  cartListWithDetail,
-  setPaymentsAmount,
-  children,
-}: {
+interface CartListProps {
   cartList: CartItem[];
-  cartDetail: Item[];
-  cartListWithDetail: any[];
   setPaymentsAmount: Dispatch<SetStateAction<number>>;
   children: React.ReactNode;
-}) => {
-  const { toggleCartItemWillPurchase } = useUpdateCartItem(cartList);
+}
+
+const CartList = ({ cartList, setPaymentsAmount, children }: CartListProps) => {
+  const { toggleCartItemChecked, toggleCartItemAllChecked, removeSelectedCartItem } =
+    useUpdateCartItem(cartList);
   const { updateCartItemQuantity, removeCartItem } = useUpdateCartItem(cartList);
 
   useEffect(() => {
     setPaymentsAmount(totalPaymentsPrice);
   });
 
-  const isAllItemWillPurchase = cartList.every(cartItem => cartItem.willPurchase);
-  const totalPaymentsPrice = cartListWithDetail.reduce((prev, after) => {
-    if (after.willPurchase) {
-      return prev + after.price * after.quantity;
-    }
-
-    return prev;
+  const isAllItemChecked = cartList.every(cartItem => cartItem.checked);
+  const totalPaymentsPrice = cartList.reduce((prev, after) => {
+    return after.checked ? prev + after.price * after.quantity : prev;
   }, 0);
 
   const toggleCheckedAll = () => {
-    if (isAllItemWillPurchase) {
-      toggleAll(true);
+    const targetItemList = cartList.filter(cartItem => cartItem.checked === isAllItemChecked);
 
-      return;
-    }
-
-    toggleAll(false);
-  };
-
-  const toggleAll = (check: boolean) => {
-    cartList.forEach(cartItem => {
-      if (cartItem.willPurchase === check) {
-        toggleCartItemWillPurchase(cartItem.id);
-      }
-    });
+    toggleCartItemAllChecked(targetItemList);
   };
 
   const toggleChecked = (targetId: number) => {
-    toggleCartItemWillPurchase(targetId);
+    toggleCartItemChecked(targetId);
   };
 
   const modifyQuantity = (targetId: number, type: 'Increase' | 'Decrease') => {
@@ -68,36 +47,39 @@ const CartList = ({
     removeCartItem(targetId);
   };
 
+  const deleteSelectedItem = () => {
+    removeSelectedCartItem();
+  };
+
   return (
     <StyledRoot>
       <ButtonSet>
         <SelectItemAll>
           <CheckBox
             id='전체 선택'
-            checked={isAllItemWillPurchase}
+            checked={isAllItemChecked}
             onChange={toggleCheckedAll}
           ></CheckBox>
           <p>선택 해제</p>
         </SelectItemAll>
-        <DeleteSelectedButton>상품 삭제</DeleteSelectedButton>
+        <DeleteSelectedButton onClick={deleteSelectedItem}>상품 삭제</DeleteSelectedButton>
       </ButtonSet>
       <CartItemListHeader>든든상품배송 {`( ${cartList.length} )`}개</CartItemListHeader>
       <CartItemList>
         {children}
         {cartList.map(cartItem => {
           const id = cartItem.id;
-          const detail = cartDetail.filter(item => item.id === id)[0];
-          const totalPrice = cartItem.quantity * detail.price;
+          const totalPrice = cartItem.quantity * cartItem.price;
 
           return (
             <CartItemContainer key={cartItem.id}>
               <CheckBox
                 id={`${cartItem.id}`}
-                checked={cartItem.willPurchase}
+                checked={cartItem.checked}
                 onChange={() => toggleChecked(id)}
               />
-              <CroppedImage src={detail.thumbnailUrl} width='150px' height='144px' alt='상품' />
-              <ItemName>{detail.title}</ItemName>
+              <CroppedImage src={cartItem.imageUrl} width='150px' height='144px' alt='상품' />
+              <ItemName>{cartItem.name}</ItemName>
               <StyledRight>
                 <TrashCan id={cartItem.id} onClick={() => deleteItem(id)} />
                 <Controller

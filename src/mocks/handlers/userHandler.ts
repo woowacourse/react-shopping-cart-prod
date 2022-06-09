@@ -22,7 +22,7 @@ export const userHandlers = [
     const userInfo: UserInfo = mockUserList.find(
       user => user.email === signInInfo.email && user.password === signInInfo.password
     );
-    const tokenCode = `Bearer ${generateRandomCode(4)}`;
+    const tokenCode = `${generateRandomCode(4)}`;
 
     if (!userInfo) {
       return res(
@@ -98,12 +98,12 @@ export const userHandlers = [
   }),
 
   rest.post(`${LOCAL_BASE_URL}/login/auto`, (req, res, ctx) => {
-    const token = req.headers.get('Authorization');
+    const token = req.headers.get('Authorization').split(' ')[1];
 
     const targetUser = mockUserList.find(user => user.token === token);
 
     if (targetUser) {
-      const newToken = `Bearer ${generateRandomCode(4)}`;
+      const newToken = `${generateRandomCode(4)}`;
 
       targetUser.token = newToken;
 
@@ -122,7 +122,7 @@ export const userHandlers = [
     return res(
       ctx.status(401),
       ctx.json({
-        errorMessage: '에러임',
+        errorMessage: '일치하는 토큰 없음',
       })
     );
   }),

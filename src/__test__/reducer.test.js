@@ -20,19 +20,19 @@ describe('ItemList Reducer', () => {
 const fakeItemList = [
   {
     id: 1,
-    thumbnailUrl: 'https://data1.pokemonkorea.co.kr/newdata/pokedex/full/000101.png',
+    imageUrl: 'https://data1.pokemonkorea.co.kr/newdata/pokedex/full/000101.png',
     title: '이상해씨씨',
     price: 16000,
   },
   {
     id: 2,
-    thumbnailUrl: 'https://data1.pokemonkorea.co.kr/newdata/pokedex/full/000201.png',
+    imageUrl: 'https://data1.pokemonkorea.co.kr/newdata/pokedex/full/000201.png',
     title: '이상해풀',
     price: 2000,
   },
   {
     id: 3,
-    thumbnailUrl: 'https://data1.pokemonkorea.co.kr/newdata/pokedex/full/000301.png',
+    imageUrl: 'https://data1.pokemonkorea.co.kr/newdata/pokedex/full/000301.png',
     title: '이상해꽃',
     price: 3000,
   },
@@ -42,13 +42,13 @@ describe('CartList Reducer', () => {
   const newItem = {
     id: 1,
     quantity: 1,
-    willPurchase: true,
+    checked: true,
   };
 
   const newItem2 = {
     id: 2,
     quantity: 1,
-    willPurchase: false,
+    checked: false,
   };
 
   test('장바구니 추가 가능', () => {
@@ -103,5 +103,5 @@ const addItem = item => {
 };
 
 const toggleCheckItem = item => {
-  return { ...item, willPurchase: !item.willPurchase };
+  return { ...item, checked: !item.checked };
 };
