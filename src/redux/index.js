@@ -1,6 +1,3 @@
-import { persistReducer, persistStore } from "redux-persist";
-import localStorage from "redux-persist/lib/storage";
-
 import {
   combineReducers,
   legacy_createStore as createStore,
@@ -13,12 +10,6 @@ import { cartListReducer } from "@/redux/modules/cartList";
 import { snackbarReducer } from "@/redux/modules/snackbar";
 import { productDetailReducer } from "@/redux/modules/productDetail";
 
-const persistConfig = {
-  key: "root",
-  storage: localStorage,
-  whitelist: ["cartListState"],
-};
-
 export const rootReducer = combineReducers({
   productListState: productListReducer,
   cartListState: cartListReducer,
@@ -26,10 +17,7 @@ export const rootReducer = combineReducers({
   productDetailState: productDetailReducer,
 });
 
-export const persistedReducer = persistReducer(persistConfig, rootReducer);
-
 export default function configureStore() {
   const store = createStore(rootReducer, applyMiddleware(thunk));
-  const persistor = persistStore(store);
-  return { store, persistor };
+  return { store };
 }
