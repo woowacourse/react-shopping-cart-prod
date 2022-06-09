@@ -33,11 +33,13 @@ function UserInfo() {
   const onClickLeave = () => {
     if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) return;
 
-    axios.delete('/api/customers/me', {
+    axios.delete(`${process.env.REACT_APP_API_URL}/api/customers/me`, {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
       },
     });
+
+    document.cookie = 'accessToken=';
 
     dispatch(logout());
     navigate(routes.home);
@@ -47,8 +49,8 @@ function UserInfo() {
     e.preventDefault();
 
     axios.put(
-      '/api/customers/me',
-      { password },
+      `${process.env.REACT_APP_API_URL}/api/customers/me`,
+      { password, userName },
       {
         headers: {
           Authorization: `Bearer ${getCookie('accessToken')}`,
@@ -61,17 +63,17 @@ function UserInfo() {
 
   useEffect(() => {
     const getUser = async () => {
-      const response = await axios.get('/api/customers/me', {
+      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/customers/me`, {
         headers: {
           Authorization: `Bearer ${getCookie('accessToken')}`,
         },
       });
 
-      setUserName(response.data);
+      setUserName(data.userName);
     };
 
     getUser();
-  });
+  }, []);
 
   return (
     <PageLayout>
