@@ -28,13 +28,14 @@ const requestAddCart = (itemList = []) =>
 
 const requestUpdateCartItem = async (id, content) => {
   const response = await request(
-    `/auth/customer/cartItems/${id}`,
+    '/auth/customer/cartItems',
     {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        id,
         ...content,
       }),
     },
