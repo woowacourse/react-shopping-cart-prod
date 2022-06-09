@@ -67,37 +67,4 @@ function CartItem({
   );
 }
 
-CartItem.skeleton = function Component({ cart }) {
-  const { productId, imageURL, name, price, quantity } = cart;
-
-  const navigate = useNavigate();
-
-  const responsive = useResponsive();
-
-  const navigateToProduct = () => {
-    navigate(`/products/${productId}`);
-  };
-
-  return (
-    <Styled.Container>
-      <Styled.ImageWrapper onClick={navigateToProduct}>
-        <Image
-          src={imageURL}
-          alt=""
-          width={responsive === 'desktop' ? '200px' : '150px'}
-          height={responsive === 'desktop' ? '200px' : '150px'}
-        />
-      </Styled.ImageWrapper>
-
-      <Styled.NameWrapper onClick={navigateToProduct}>{name}</Styled.NameWrapper>
-
-      <Styled.PriceWrapper>
-        <Styled.Text>
-          {price}원 / {quantity}개
-        </Styled.Text>
-      </Styled.PriceWrapper>
-    </Styled.Container>
-  );
-};
-
 export default CartItem;

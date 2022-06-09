@@ -9,32 +9,25 @@ import * as Styled from './ProductDetailCard.style';
 import ProductAddCart from '../ProductAddCart/ProductAddCart';
 
 function ProductDetailCard({ product }: { product: ProductType }) {
+  const { imageURL, name, price } = product;
   const responsive = useResponsive();
 
   const { isShowModal, openModal, closeModal } = useModal();
   const { isShowCartButton } = useExcludeCart(product.id);
 
-  const onClickCartAddButton = () => {
-    openModal();
-  };
-
   return (
     <>
       <Styled.InformationWrapper>
-        <Image
-          src={(product as any).imageURL}
-          alt=""
-          width={responsive === 'desktop' ? '400px' : '250px'}
-        />
-        <Styled.Name>{(product as any).name}</Styled.Name>
+        <Image src={imageURL} alt="" width={responsive === 'desktop' ? '400px' : '250px'} />
+        <Styled.Name>{name}</Styled.Name>
         <Styled.Price>
           <span>금액 </span>
-          <span>{(product as any).price}원</span>
+          <span>{price}원</span>
         </Styled.Price>
       </Styled.InformationWrapper>
 
       {isShowCartButton && (
-        <Styled.ButtonWrapper onClick={onClickCartAddButton}>
+        <Styled.ButtonWrapper onClick={openModal}>
           <Button width="100%" padding="20px">
             장바구니
           </Button>
@@ -43,7 +36,7 @@ function ProductDetailCard({ product }: { product: ProductType }) {
 
       {isShowModal && (
         <Modal closeModal={closeModal}>
-          <ProductAddCart product={product} closeModal={closeModal} />
+          <ProductAddCart product={product} onClickAddCartButton={closeModal} />
         </Modal>
       )}
     </>
