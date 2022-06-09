@@ -19,6 +19,7 @@ import { ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import apiClient from 'apis/apiClient';
 import { doLogin } from 'reducers/auth.reducer';
+import SeverSelectPage from 'page/SeverSelectPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/account" element={<AccountPage />} />
+            <Route path="/server" element={<SeverSelectPage />} />
           </Route>
         </Routes>
         <GlobalStyles />

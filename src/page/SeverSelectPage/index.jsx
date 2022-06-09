@@ -1,10 +1,13 @@
 import Styled from 'page/CartPage/index.style';
+import { useNavigate } from 'react-router-dom';
 
 export let selectedApiName = '찬';
 
 const SeverSelectPage = () => {
+  const navigate = useNavigate();
   const handleClick = name => {
     selectedApiName = name;
+    navigate('/');
   };
 
   return (
