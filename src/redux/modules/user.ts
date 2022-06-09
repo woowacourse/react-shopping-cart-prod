@@ -1,4 +1,5 @@
 import apiClient from 'api';
+import { AxiosError } from 'axios';
 import { AppDispatch, RootState } from 'redux/store';
 import { deleteCookie, getCookie, setCookie } from 'utils';
 
@@ -25,7 +26,8 @@ export type Action =
   | ReturnType<typeof changePasswordFailure>
   | ReturnType<typeof signupRequest>
   | ReturnType<typeof signupSuccess>
-  | ReturnType<typeof signupFailure>;
+  | ReturnType<typeof signupFailure>
+  | ReturnType<typeof resetUserError>;
 
 const initialState: UserState = {
   loading: false,
@@ -50,6 +52,7 @@ const CHANGE_PASSWORD_FAILURE = 'user/CHANGE_PASSWORD_FAILURE' as const;
 const SIGNUP_REQUEST = 'user/SIGNUP_REQUEST' as const;
 const SIGNUP_SUCCESS = 'user/SIGNUP_SUCCESS' as const;
 const SIGNUP_FAILURE = 'user/SIGNUP_FAILURE' as const;
+const RESET_USER_ERROR = 'user/RESET_ERROR' as const;
 
 const loadUserRequest = () => ({ type: LOAD_USER_REQUEST });
 const loadUserSuccess = (userName: string) => ({
@@ -85,6 +88,7 @@ const signupFailure = (error: Error) => ({
   type: SIGNUP_FAILURE,
   payload: { error },
 });
+const resetUserError = () => ({ type: RESET_USER_ERROR });
 
 const loadUserAPI = (): any => async (dispatch: AppDispatch) => {
   const token = getCookie('accessToken');
@@ -103,8 +107,8 @@ const loadUserAPI = (): any => async (dispatch: AppDispatch) => {
     });
     dispatch(loadUserSuccess(userName));
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      dispatch(loadUserFailure(error));
+    if (error instanceof AxiosError) {
+      dispatch(loadUserFailure(error.response?.data));
     }
   }
 };
@@ -122,8 +126,8 @@ const loginAPI =
       dispatch(loginSuccess());
       onSuccess?.();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(loginFailure(error));
+      if (error instanceof AxiosError) {
+        dispatch(loginFailure(error.response?.data));
       }
     }
   };
@@ -143,8 +147,8 @@ const deleteUserAPI =
       dispatch(deleteUserSuccess());
       onSuccess?.();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(deleteUserFailure(error));
+      if (error instanceof AxiosError) {
+        dispatch(deleteUserFailure(error.response?.data));
       }
     }
   };
@@ -167,8 +171,8 @@ const changePasswordAPI =
       dispatch(changePasswordSuccess());
       onSuccess?.();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(changePasswordFailure(error));
+      if (error instanceof AxiosError) {
+        dispatch(changePasswordFailure(error.response?.data));
       }
     }
   };
@@ -182,8 +186,8 @@ const signupAPI =
       dispatch(signupSuccess());
       onSuccess?.();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(signupFailure(error));
+      if (error instanceof AxiosError) {
+        dispatch(signupFailure(error.response?.data));
       }
     }
   };
@@ -250,6 +254,9 @@ const userReducer = (state = initialState, action: Action) => {
 
       return { ...state, loading: false, error };
     }
+    case RESET_USER_ERROR: {
+      return { ...state, error: null };
+    }
     default:
       return state;
   }
@@ -257,6 +264,14 @@ const userReducer = (state = initialState, action: Action) => {
 
 export const selectUserState = (state: RootState) => state.user;
 
-export { loginAPI, loadUserAPI, logout, deleteUserAPI, changePasswordAPI, signupAPI };
+export {
+  loginAPI,
+  loadUserAPI,
+  logout,
+  deleteUserAPI,
+  changePasswordAPI,
+  signupAPI,
+  resetUserError,
+};
 
 export default userReducer;

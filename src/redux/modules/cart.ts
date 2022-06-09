@@ -1,4 +1,5 @@
 import apiClient from 'api';
+import { AxiosError } from 'axios';
 import { AppDispatch, RootState } from 'redux/store';
 import { getCookie } from 'utils';
 
@@ -32,7 +33,8 @@ type Action =
   | ReturnType<typeof deleteCartFailure>
   | ReturnType<typeof updateCartRequest>
   | ReturnType<typeof updateCartSuccess>
-  | ReturnType<typeof updateCartFailure>;
+  | ReturnType<typeof updateCartFailure>
+  | ReturnType<typeof resetCartError>;
 
 const initialState: CartState = {
   loading: false,
@@ -60,6 +62,8 @@ const UPDATE_CART_FAILURE = 'cart/UPDATE_FAILURE' as const;
 const DELETE_BY_SELECTED = 'cart/DELETE_BY_SELECTED' as const;
 const SELECT = 'cart/SELECT' as const;
 const SELECT_ALL = 'cart/SELECT_ALL' as const;
+const RESET_CART_ERROR = 'cart/RESET_ERROR' as const;
+
 const loadCartsRequest = () => ({ type: LOAD_CARTS_REQUEST });
 const loadCartsSuccess = (cartList: CartItem[]) => ({
   type: LOAD_CARTS_SUCCESS,
@@ -93,6 +97,7 @@ const selectAllItems = (isAllSelected: boolean) => ({
   type: SELECT_ALL,
   payload: { isAllSelected },
 });
+const resetCartError = () => ({ type: RESET_CART_ERROR });
 
 const loadCartsAPI = (): any => async (dispatch: AppDispatch) => {
   const token = getCookie('accessToken');
@@ -109,8 +114,8 @@ const loadCartsAPI = (): any => async (dispatch: AppDispatch) => {
     });
     dispatch(loadCartsSuccess(cartList));
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      dispatch(loadCartsFailure(error));
+    if (error instanceof AxiosError) {
+      dispatch(loadCartsFailure(error.response?.data));
     }
   }
 };
@@ -131,9 +136,8 @@ const addCartAPI =
       dispatch(addCartSuccess());
       onSuccess?.();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log(error);
-        dispatch(addCartFailure(error));
+      if (error instanceof AxiosError) {
+        dispatch(addCartFailure(error.response?.data));
       }
     }
   };
@@ -151,8 +155,8 @@ const deleteCartAPI =
       dispatch(deleteCartSuccess(cartId));
       onSuccess?.();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(deleteCartFailure(error));
+      if (error instanceof AxiosError) {
+        dispatch(deleteCartFailure(error.response?.data));
       }
     }
   };
@@ -173,8 +177,8 @@ const updateCartAPI =
       );
       dispatch(updateCartSuccess(cartId, quantity));
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(updateCartFailure(error));
+      if (error instanceof AxiosError) {
+        dispatch(updateCartFailure(error.response?.data));
       }
     }
   };
@@ -255,6 +259,9 @@ const cartReducer = (state = initialState, action: Action) => {
 
       return { ...state, items: newItems };
     }
+    case RESET_CART_ERROR: {
+      return { ...state, error: null };
+    }
     // case DELETE_BY_SELECTED: {
     //   const newItems = state.items.filter((item) => !item.isSelected);
 
@@ -275,6 +282,7 @@ export {
   addCartAPI,
   deleteCartAPI,
   updateCartAPI,
+  resetCartError,
 };
 
 export default cartReducer;

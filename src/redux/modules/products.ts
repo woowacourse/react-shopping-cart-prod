@@ -1,4 +1,5 @@
 import apiClient from 'api';
+import { AxiosError } from 'axios';
 import { getCookie } from 'utils';
 import { AppDispatch, RootState } from '../store';
 
@@ -66,9 +67,8 @@ export const loadProductsAPI = (): any => async (dispatch: AppDispatch) => {
       dispatch(loadProductsSuccess(productList));
     }
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      dispatch(loadProductsFailure(error));
-      console.log(error);
+    if (error instanceof AxiosError) {
+      dispatch(loadProductsFailure(error.response?.data));
     }
   }
 };
