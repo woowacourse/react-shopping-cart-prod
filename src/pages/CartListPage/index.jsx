@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import useCart from 'hooks/useCart';
 
 import { FlexContainer, Title, TextUnderline, Icon } from 'components/@common';
@@ -10,10 +14,19 @@ import ProductOrder from './Containers/ProductOrder';
 import * as S from './styles';
 
 export function CartListPage() {
+  const navigate = useNavigate();
+  const { isLoggedIn, userInfoAsyncState } = useSelector((state) => state.members);
   const { state } = useCart();
   const { cartItems, isLoaded, checkedItemList } = state;
 
   const isSelectAllChecked = checkedItemList.length > 0;
+
+  useEffect(() => {
+    if (userInfoAsyncState.isLoaded && !isLoggedIn) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+    }
+  }, [userInfoAsyncState.isLoaded, isLoggedIn]);
 
   return (
     <>

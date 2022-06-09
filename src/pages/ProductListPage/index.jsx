@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import * as cartThunk from 'actions/cart/thunk';
 import * as productsThunk from 'actions/products/thunk';
@@ -15,7 +16,9 @@ import ProductItem from 'components/ProductItem';
 import * as S from './styles';
 
 export function ProductListPage() {
+  const navigate = useNavigate();
   const { dispatch, getRecentState } = useDispatchEvent();
+  const { isLoggedIn } = useSelector((state) => state.members);
 
   const productState = useSelector((state) => state.products);
   const { productList, listAsyncState: productsAsyncState } = productState;
@@ -27,8 +30,13 @@ export function ProductListPage() {
     dispatch(productsThunk.getList());
   }, []);
 
-  const handleAddCart = async ({ id, image, name, price }) => {
-    await dispatch(cartThunk.addList({ id, image, name, price }));
+  const handleAddCart = async ({ id, imageUrl, name, price }) => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+      return;
+    }
+    await dispatch(cartThunk.addList([{ id, imageUrl, name, price }]));
     const newCurdAsyncState = getRecentState('cart', 'curdAsyncState');
     newCurdAsyncState.isLoaded === false &&
       alert(`장바구니 상품 추가에 실패하였습니다.\n오류 내용 : ${newCurdAsyncState.error}`);
@@ -51,13 +59,13 @@ export function ProductListPage() {
         <S.Container>
           {productList &&
             productList.map(({ id, name, price, imageUrl }) => {
-              const cartItem = cartItems.find(({ product }) => product === id);
+              const cartItem = cartItems.find(({ productId }) => productId === id);
 
               return (
                 <ProductItem
                   key={id}
                   id={id}
-                  image={imageUrl}
+                  imageUrl={imageUrl}
                   name={name}
                   price={price}
                   cartId={cartItem ? cartItem.id : null}
