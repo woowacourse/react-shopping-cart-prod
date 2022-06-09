@@ -42,10 +42,7 @@ export const cartHandlers = [
 
   rest.patch(`${CART_API_URL.TO_CART_ITEM_ID}`, (req, res, ctx) => {
     const {
-      params: { id },
-      body: {
-        params: { quantity },
-      },
+      params: { id, quantity },
     } = req;
 
     cartList.current = cartList.current.map(cart => {
