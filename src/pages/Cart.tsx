@@ -1,5 +1,4 @@
 import CartList from 'components/Cart/CartList';
-import ErrorFallback from 'components/common/ErrorFallback';
 import LayoutWithTitle from 'components/common/LayoutWithTitle';
 import Loading from 'components/common/Loading';
 import PaymentBox from 'components/common/PaymentBox';
@@ -8,17 +7,13 @@ import { getCartListRequest } from 'redux/cartList/thunk';
 import styled from 'styled-components';
 
 const Cart = () => {
-  const {
-    data: cartList,
-    error: error_getCartList,
-    loading: loading_cartList,
-  } = useThunkFetch(state => state.cartList, getCartListRequest());
+  const { data: cartList, loading: loading_cartList } =
+    useThunkFetch(state => state.cartList, getCartListRequest(), { useErrorBoundary: true }) || {};
 
   const selectedCarts = cartList.filter(cart => cart.isChecked);
   const totalPrice = selectedCarts.reduce((acc, item) => item.price * item.quantity + acc, 0);
 
   if (loading_cartList === 'getCartList') return <Loading />;
-  if (error_getCartList) return <ErrorFallback />;
 
   return (
     <LayoutWithTitle title='장바구니'>

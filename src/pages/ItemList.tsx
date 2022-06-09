@@ -1,4 +1,3 @@
-import ErrorFallback from 'components/common/ErrorFallback';
 import Loading from 'components/common/Loading';
 import Pagination from 'components/common/Pagination';
 import Snackbar from 'components/common/Snackbar';
@@ -13,23 +12,19 @@ import styled from 'styled-components';
 
 const ItemList = () => {
   const { id } = useParams();
-  const {
-    loading,
-    data: allItemList,
-    error: error_getAllItemList,
-  } = useThunkFetch(state => state.itemList, getItemList());
-  const { data: cartList, error: error_getCartList } = useThunkFetch(
-    state => state.cartList,
-    getCartListRequest()
-  );
+  const { loading, data: allItemList } =
+    useThunkFetch(state => state.itemList, getItemList(), { useErrorBoundary: true }) || {};
+  const { data: cartList } =
+    useThunkFetch(state => state.cartList, getCartListRequest(), {
+      useErrorBoundary: true,
+    }) || {};
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
   if (loading) return <Loading />;
-  if (error_getAllItemList || error_getCartList) return <ErrorFallback />;
 
   return (
     <StyledRoot>
-      {allItemList.length > 0 &&
+      {allItemList?.length > 0 &&
         allItemList
           .slice(MAX_RESULT_ITEM_LIST * (Number(id) - 1), MAX_RESULT_ITEM_LIST * Number(id))
           .map(item => (
@@ -43,7 +38,7 @@ const ItemList = () => {
       <Pagination
         endpoint='main'
         count={10}
-        lastIndex={Math.floor(allItemList.length / MAX_RESULT_ITEM_LIST) + 1}
+        lastIndex={Math.floor(allItemList?.length / MAX_RESULT_ITEM_LIST) + 1}
       />
       {isOpenSnackbar && <Snackbar message={MESSAGE.cart} />}
     </StyledRoot>

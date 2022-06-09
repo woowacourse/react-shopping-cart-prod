@@ -1,10 +1,8 @@
 import Button from 'components/common/Button';
 import CroppedImage from 'components/common/CroppedImage';
-import ErrorFallback from 'components/common/ErrorFallback';
 import Loading from 'components/common/Loading';
 import Snackbar from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
 import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
 import useThunkFetch from 'hooks/useThunkFetch';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,12 +18,12 @@ const ItemDetail = () => {
   const dispatch = useAppDispatch<CartListAction>();
   const navigate = useNavigate();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
-  const {
-    data: item,
-    loading,
-    error: error_itemList,
-  } = useThunkFetch(state => state.item, getItemRequest(id));
-  const { data: cartList, error: error_cartList } = useAppSelector(state => state.cartList);
+  const { data: item, loading } =
+    useThunkFetch(state => state.item, getItemRequest(id), { useErrorBoundary: true }) || {};
+  const { data: cartList } =
+    useThunkFetch(state => state.cartList, getCartListRequest(), {
+      useErrorBoundary: true,
+    }) || {};
 
   const isInCart = cartList?.some(cartItem => cartItem.productId === item?.id);
 
@@ -54,9 +52,8 @@ const ItemDetail = () => {
   };
 
   if (loading) return <Loading />;
-  if (error_itemList || error_cartList) return <ErrorFallback />;
 
-  const { imageUrl, name, price } = item;
+  const { imageUrl, name, price } = item || {};
 
   return (
     <StyledRoot>
@@ -64,7 +61,7 @@ const ItemDetail = () => {
       <StyledTitle>{name}</StyledTitle>
       <StyledPrice>
         <StyledPriceDescription>금액</StyledPriceDescription>
-        <StyledPriceValue>{price.toLocaleString()} 원</StyledPriceValue>
+        <StyledPriceValue>{price?.toLocaleString()} 원</StyledPriceValue>
       </StyledPrice>
       <Button
         width='63.8rem'
