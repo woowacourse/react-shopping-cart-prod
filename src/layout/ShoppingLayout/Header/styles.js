@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { BRAND_COLORS, COLORS } from 'styles/theme';
 
 import logo from 'assets/image/logo.png';
+import { ICON_CODE } from 'constants/';
 
 const LeftMenu = styled.div`
   display: flex;
@@ -50,60 +51,90 @@ const RightMenu = styled.ul`
   & > a {
     text-decoration: none;
   }
-`;
 
-const RightMenuList = styled.li`
-  cursor: pointer;
+  & li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 3rem;
+    margin-left: 1rem;
+    font-size: 0.85rem;
+    letter-spacing: 1.5px;
+    color: ${COLORS.GRAY_50};
 
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    &::before {
+      font-family: 'Font Awesome 6 Free';
+      font-style: normal;
+      font-size: 1rem;
+      font-weight: 900;
 
-  font-size: 0.9rem;
-  padding: 1rem;
-  color: ${COLORS.GRAY_50};
+      margin-right: 0.625rem;
+    }
 
-  &:hover {
-    color: ${COLORS.MINT_400};
+    &.cart::before {
+      content: '\\${ICON_CODE.CART}';
+    }
+
+    &.login::before {
+      content: '\\${ICON_CODE.USER}';
+    }
   }
 
-  &::before {
-    font-family: 'Font Awesome 6 Free';
-    font-style: normal;
-    font-weight: 900;
+  & temp {
+    cursor: pointer;
 
-    padding-right: 0.625rem;
-  }
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  &.cart::before {
-    content: '\\f07a';
-  }
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    padding: 1rem;
+    color: ${COLORS.GRAY_50};
 
-  &.order-list::before {
-    content: '\\f007';
-  }
+    &:hover {
+      color: ${COLORS.MINT_400};
+    }
 
-  &::after {
-    ${({ count }) =>
-      count &&
-      css`
-        content: '${count}';
-        color: ${BRAND_COLORS.PRIMARY_FONT};
-        background-color: ${BRAND_COLORS.PRIMARY};
+    &::before {
+      font-family: 'Font Awesome 6 Free';
+      font-style: normal;
+      font-size: 1rem;
+      font-weight: 900;
 
-        width: 1.3rem;
-        height: 1.3rem;
-        font-size: 0.7rem;
-        font-weight: bold;
-        border-radius: 50%;
+      margin-right: 0.625rem;
+    }
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    &.cart::before {
+      content: '\\f07a';
+    }
 
-        margin-left: 0.5rem;
-      `}
+    &.login::before {
+      content: '\\f007';
+    }
+
+    &::after {
+      ${({ count }) =>
+        count &&
+        css`
+          content: '${count}';
+          color: ${BRAND_COLORS.PRIMARY_FONT};
+          background-color: ${BRAND_COLORS.PRIMARY};
+
+          width: 1.3rem;
+          height: 1.3rem;
+          font-size: 0.7rem;
+          font-weight: bold;
+          border-radius: 50%;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+
+          margin-left: 0.5rem;
+        `}
+    }
   }
 `;
 
@@ -115,4 +146,4 @@ const Container = styled.header`
   border-bottom: 1px solid ${COLORS.GRAY_150};
 `;
 
-export { Container, Logo, LeftMenu, MenuButton, RightMenu, RightMenuList };
+export { Container, Logo, LeftMenu, MenuButton, RightMenu };

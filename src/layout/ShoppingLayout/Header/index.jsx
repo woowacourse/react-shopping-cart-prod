@@ -1,18 +1,26 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import { PopupContainer } from 'components/@common';
+
+import BackendSelect from 'components/BackendSelect';
+import ProfileMenu from 'components/ProfileMenu';
+
 import { PAGE_LIST } from 'constants/';
 
 import * as S from './styles';
 
 function Header() {
-  const cartItems = useSelector(({ cart }) => cart.items);
-  const isLogin = useSelector(({ user }) => user.isLogin);
-
   return (
     <S.Container>
       <S.LeftMenu>
-        <S.MenuButton type="button">전체 카테고리</S.MenuButton>
+        <PopupContainer
+          width={380}
+          padding={10}
+          target={<S.MenuButton type="button">API 서버 선택</S.MenuButton>}
+        >
+          <BackendSelect />
+        </PopupContainer>
       </S.LeftMenu>
 
       <Link to={PAGE_LIST.HOME}>
@@ -21,16 +29,10 @@ function Header() {
 
       <S.RightMenu>
         <Link to={PAGE_LIST.CART_LIST}>
-          <S.RightMenuList className="cart" count={cartItems.length}>
-            장바구니
-          </S.RightMenuList>
+          <li className="cart">CART</li>
         </Link>
 
-        <Link to={!isLogin ? PAGE_LIST.LOGIN : PAGE_LIST.LOGOUT}>
-          <S.RightMenuList className="order-list">
-            {!isLogin ? '로그인' : '로그아웃'}
-          </S.RightMenuList>
-        </Link>
+        <ProfileMenu />
       </S.RightMenu>
     </S.Container>
   );
