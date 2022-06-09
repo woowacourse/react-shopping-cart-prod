@@ -8,7 +8,7 @@ import authAPI from 'apis/auth';
 import { createInputValueGetter } from 'utils/dom';
 import { formatPhoneNumber } from 'utils/formats';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { snackBarActions } from 'redux/reducers/snackBar';
 
@@ -16,31 +16,44 @@ const useSignupForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [password, setPassword] = useState('');
-  const [passwordCheck, setPasswordCheck] = useState('');
+  const [inputs, setInputs] = useState({
+    id: '',
+    email: '',
+    password: '',
+    passwordCheck: '',
+  });
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, id } = e.target;
+    setInputs({
+      ...inputs,
+      [id]: value,
+    });
+  };
+
   const [isPasswordLengthCorrect, setIsPasswordLengthCorrect] = useState(false);
   const [isPasswordAllCharactersCorrect, setIsPasswordAllCharactersCorrect] =
     useState(false);
   const [isPasswordCheckCorrect, setIsPasswordCheckCorrect] = useState(false);
 
   const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
+    onChange(e);
 
     setIsPasswordLengthCorrect(isValidPasswordLength(e.target.value));
     setIsPasswordAllCharactersCorrect(
       isValidPasswordAllCharacters(e.target.value)
     );
 
-    if (!!passwordCheck) {
-      setIsPasswordCheckCorrect(passwordCheck === e.target.value);
+    if (!!inputs.passwordCheck) {
+      setIsPasswordCheckCorrect(inputs.passwordCheck === e.target.value);
     }
   };
 
   const handlePasswordCheckInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordCheck(e.target.value);
+    onChange(e);
 
-    if (!!password) {
-      setIsPasswordCheckCorrect(password === e.target.value);
+    if (!!inputs.password) {
+      setIsPasswordCheckCorrect(inputs.password === e.target.value);
     }
   };
 
@@ -68,8 +81,8 @@ const useSignupForm = () => {
   };
 
   return {
-    password,
-    passwordCheck,
+    inputs,
+    onChange,
     isPasswordLengthCorrect,
     isPasswordAllCharactersCorrect,
     isPasswordCheckCorrect,
