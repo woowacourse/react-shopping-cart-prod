@@ -228,7 +228,6 @@ export const handlers = [
       return res(ctx.status(204));
     } catch (error) {
       // 탈퇴 실패
-      alert(error);
       return res(
         ctx.status(401),
         ctx.json({

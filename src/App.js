@@ -19,7 +19,7 @@ import { ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import apiClient from 'apis/apiClient';
 import { doLogin } from 'reducers/auth.reducer';
-import SeverSelectPage from 'page/SeverSelectPage';
+import SeverSelectPage from 'page/ServerSelectPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,7 +33,10 @@ function App() {
 
       const response = await apiClient.get('/customers');
       dispatch(doLogin({ nickname: response.data.nickname }));
-    } catch (error) {}
+      console.log('hi');
+    } catch (error) {
+      alert(error);
+    }
   };
 
   useEffect(() => {
