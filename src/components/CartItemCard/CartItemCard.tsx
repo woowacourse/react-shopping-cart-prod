@@ -1,5 +1,5 @@
 import React from 'react';
-import { CartItem, Product } from 'types';
+import { CartItem } from 'types';
 import Input from 'components/QuantityInput/QuantityInput';
 import Checkbox from 'components/Checkbox/Checkbox';
 import ICONS from 'constants/icons';

@@ -1,6 +1,5 @@
 import PlainLink from 'components/PlainLink/PlainLink';
 import { Product } from 'types';
-import ICONS from 'constants/icons';
 import * as S from 'components/ProductCard/ProductCard.styled';
 
 type Props = {
@@ -28,9 +27,7 @@ function ProductCard({
           <h3>{name}</h3>
           <p>{price.toLocaleString('ko-KR')} 원</p>
         </S.CardDescriptionBox>
-        <S.CardButtonBox>
-          <button>{ICONS.SHOPPING_CART}</button>
-        </S.CardButtonBox>
+        <S.CardButtonBox></S.CardButtonBox>
       </S.ProductCardBox>
     </PlainLink>
   );
