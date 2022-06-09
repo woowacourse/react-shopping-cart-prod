@@ -11,8 +11,8 @@ export const MOCK_DB = {
 
   cart: [
     {
-      product: 7,
-      image:
+      productId: 7,
+      imageUrl:
         'https://cdn-mart.baemin.com/sellergoods/main/6b95c66a-c13d-4ccd-9df5-b1af1428a225.jpg',
       name: '생새우살 (71/90) 500g 4개',
       price: 32000,
@@ -20,16 +20,16 @@ export const MOCK_DB = {
       id: 1,
     },
     {
-      product: 10,
-      image: 'https://cdn-mart.baemin.com/sellergoods/bulk/20201102-231612/15839-main-01.jpg',
+      productId: 10,
+      imageUrl: 'https://cdn-mart.baemin.com/sellergoods/bulk/20201102-231612/15839-main-01.jpg',
       name: '리치스 스위트콘 대 2.95kg',
       price: 5290,
       quantity: 1,
       id: 2,
     },
     {
-      product: 18,
-      image:
+      productId: 18,
+      imageUrl:
         'https://cdn-mart.baemin.com/sellergoods/list/11cff359-a53d-485c-911b-8ce1b72b77d5.png',
       name: '동원참치 라이트스탠다드 1880g',
       price: 14190,
@@ -37,8 +37,8 @@ export const MOCK_DB = {
       id: 3,
     },
     {
-      product: 36,
-      image:
+      productId: 36,
+      imageUrl:
         'https://cdn-mart.baemin.com/sellergoods/main/e6f64600-0f86-495f-b28f-2d7f2c148bee.jpg',
       name: '해마로 브래디드 쉬림프(새우함량 40%) 600g',
       price: 8960,
@@ -46,8 +46,8 @@ export const MOCK_DB = {
       id: 4,
     },
     {
-      product: 1,
-      image:
+      productId: 1,
+      imageUrl:
         'https://cdn-mart.baemin.com/sellergoods/main/678bd8ec-e5fa-4ae2-be55-2cd290b3f10f.jpg',
       name: 'SPC삼립 뉴욕샌드위치식빵 (990g×4ea) BOX',
       price: 12090,
@@ -55,16 +55,16 @@ export const MOCK_DB = {
       id: 5,
     },
     {
-      product: 15,
-      image: 'https://cdn-mart.baemin.com/sellergoods/bulk/20201119-140757/16126-main-01.jpg',
+      productId: 15,
+      imageUrl: 'https://cdn-mart.baemin.com/sellergoods/bulk/20201119-140757/16126-main-01.jpg',
       name: '정스팜 베스트코 와사비맛쌈무 3kg',
       price: 5870,
       quantity: 1,
       id: 6,
     },
     {
-      product: 19,
-      image:
+      productId: 19,
+      imageUrl:
         'https://cdn-mart.baemin.com/sellergoods/main/fc15dd1f-b30e-4bed-b046-60338930fc1d.png',
       name: '[햇양파] 국내산 피양파 1망(15kg내외)',
       price: 13900,
@@ -72,16 +72,16 @@ export const MOCK_DB = {
       id: 7,
     },
     {
-      product: 24,
-      image: 'https://cdn-mart.baemin.com/sellergoods/bulk/20220203-195555/23358-main-01.jpg',
+      productId: 24,
+      imageUrl: 'https://cdn-mart.baemin.com/sellergoods/bulk/20220203-195555/23358-main-01.jpg',
       name: '옥구농협 못잊어 신동진(신동진/보통/21년)20KG',
       price: 54300,
       quantity: 1,
       id: 8,
     },
     {
-      product: 27,
-      image:
+      productId: 27,
+      imageUrl:
         'https://cdn-mart.baemin.com/sellergoods/main/154bd485-c0c6-4ccb-9c2b-f9ec232b18d0.jpg',
       name: '생새우살 (31/50) 500g 4개',
       price: 38000,
@@ -89,8 +89,8 @@ export const MOCK_DB = {
       id: 9,
     },
     {
-      product: 26,
-      image:
+      productId: 26,
+      imageUrl:
         'https://cdn-mart.baemin.com/sellergoods/main/e4540ba7-710b-4287-87c0-ba531f6ce069.jpg',
       name: '경성 고춧가루 김치용(중국산) 2.5kg',
       price: 21990,
@@ -98,16 +98,16 @@ export const MOCK_DB = {
       id: 10,
     },
     {
-      product: 30,
-      image: 'https://cdn-mart.baemin.com/goods/27/159004_1_I.png',
+      productId: 30,
+      imageUrl: 'https://cdn-mart.baemin.com/goods/27/159004_1_I.png',
       name: '쉐프솔루션 통바삭김말이 (35g*40ea) 1.4kg',
       price: 9030,
       quantity: 1,
       id: 11,
     },
     {
-      product: 4,
-      image:
+      productId: 4,
+      imageUrl:
         'https://cdn-mart.baemin.com/sellergoods/list/0cdf9ee5-095b-42f8-8715-29500ee17e01.jpg',
       name: '생칵테일새우 두절탈각 21/25 IQF 900g 2개',
       price: 36400,
@@ -115,8 +115,8 @@ export const MOCK_DB = {
       id: 12,
     },
     {
-      product: 22,
-      image:
+      productId: 22,
+      imageUrl:
         'https://cdn-mart.baemin.com/sellergoods/main/bc07ab97-897b-4140-832f-221af0f36537.jpg',
       name: '칵테일새우 (71/90) 500g 4개',
       price: 35000,

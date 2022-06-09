@@ -1,5 +1,5 @@
 class ApiServer {
-  #connectApi = 'https://jojogreen.compy.life';
+  #connectApi = '.';
 
   setApiServer(hostName) {
     this.#connectApi = `https://${hostName}`;
