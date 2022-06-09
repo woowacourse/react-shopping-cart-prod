@@ -13,9 +13,7 @@ import { LeaveButton } from './styles';
 import { Button, Form, Input } from '@/components/@shared';
 import PageLayout from '@/components/PageLayout';
 
-import { getCookie } from '@/utils';
-
-import axios from 'axios';
+import { getUserName, removeUserInfo, updateUserInfo } from '@/apis/customer';
 
 function UserInfo() {
   const [userName, setUserName] = useState('');
@@ -30,50 +28,34 @@ function UserInfo() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const updateUserName = async () => {
+      const userName = await getUserName();
+
+      setUserName(userName);
+    };
+
+    updateUserName();
+  }, []);
+
   const onClickLeave = () => {
     if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) return;
 
-    axios.delete(`${process.env.REACT_APP_API_URL}/api/customers/me`, {
-      headers: {
-        Authorization: `Bearer ${getCookie('accessToken')}`,
-      },
-    });
+    removeUserInfo();
 
     document.cookie = 'accessToken=';
-
     dispatch(logout());
+
     navigate(routes.home);
   };
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    axios.put(
-      `${process.env.REACT_APP_API_URL}/api/customers/me`,
-      { password, userName },
-      {
-        headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-        },
-      }
-    );
+    updateUserInfo(password, userName);
 
     navigate(routes.home);
   };
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/customers/me`, {
-        headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-        },
-      });
-
-      setUserName(data.userName);
-    };
-
-    getUser();
-  }, []);
 
   return (
     <PageLayout>
