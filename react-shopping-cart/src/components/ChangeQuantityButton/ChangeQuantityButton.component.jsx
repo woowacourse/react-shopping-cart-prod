@@ -3,16 +3,6 @@ import styled from 'styled-components';
 
 import BorderBox from 'components/@shared/BorderBox/BorderBox.component';
 
-const ChangeQuantityButtonContainer = styled.div`
-  display: grid;
-  grid-template-rows: 30px 30px;
-  grid-template-columns: 73px 42px;
-
-  ${BorderBox}:nth-child(1) {
-    grid-row: 1 / span 2;
-  }
-`;
-
 function ChangeQuantityButton({ quantity, onChangeQuantity }) {
   const [count, setCount] = useState(quantity);
 
@@ -57,3 +47,13 @@ function ChangeQuantityButton({ quantity, onChangeQuantity }) {
 }
 
 export default ChangeQuantityButton;
+
+const ChangeQuantityButtonContainer = styled.div`
+  display: grid;
+  grid-template-rows: 30px 30px;
+  grid-template-columns: 73px 42px;
+
+  ${BorderBox}:nth-child(1) {
+    grid-row: 1 / span 2;
+  }
+`;

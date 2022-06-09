@@ -5,13 +5,6 @@ import Button from 'components/@shared/Button/Button.component';
 import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 import HighlightText from 'components/@shared/HighlightText/HighlightText.component';
 
-const PaymentAmountBox = styled(FlexBox).attrs({
-  direction: 'column',
-})`
-  width: 35%;
-  min-width: 300px;
-`;
-
 function PaymentAmountContainer({ count, total }) {
   return (
     <PaymentAmountBox as="article">
@@ -32,3 +25,10 @@ function PaymentAmountContainer({ count, total }) {
 }
 
 export default PaymentAmountContainer;
+
+const PaymentAmountBox = styled(FlexBox).attrs({
+  direction: 'column',
+})`
+  width: 35%;
+  min-width: 300px;
+`;

@@ -8,24 +8,6 @@ import TextBox from 'components/@shared/TextBox/TextBox.component';
 
 import { setAddress, setName, setPhone } from 'redux/actions/userInfo.action';
 
-const UserInfoWrapper = styled(FlexBox).attrs({
-  as: 'form',
-  id: 'userInfo',
-  width: '100%',
-  direction: 'column',
-  gap: '30px',
-  alignItems: 'flex-end',
-})`
-  margin: 1rem 0;
-`;
-
-const PhoneInputBox = styled.div`
-  display: grid;
-  grid-template-columns: 4fr 1fr 7fr 1fr 7fr;
-  text-align: center;
-  align-items: center;
-`;
-
 function UserInfoContainer({ onClickNext }) {
   const dispatch = useDispatch();
   const { name, phone, address } = useSelector(state => state.userInfo);
@@ -110,3 +92,21 @@ function UserInfoContainer({ onClickNext }) {
 }
 
 export default UserInfoContainer;
+
+const UserInfoWrapper = styled(FlexBox).attrs({
+  as: 'form',
+  id: 'userInfo',
+  width: '100%',
+  direction: 'column',
+  gap: '30px',
+  alignItems: 'flex-end',
+})`
+  margin: 1rem 0;
+`;
+
+const PhoneInputBox = styled.div`
+  display: grid;
+  grid-template-columns: 4fr 1fr 7fr 1fr 7fr;
+  text-align: center;
+  align-items: center;
+`;
