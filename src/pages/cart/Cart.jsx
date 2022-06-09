@@ -1,8 +1,10 @@
 import cn from "classnames";
-import PageTitle from "@shared/page-title/PageTitle";
-import styles from "@cart/cart.module";
+
+import PageTitle from "@components/page-title/PageTitle";
 import CartForm from "./components/cart-form/CartForm";
 import CartTotal from "./components/cart-total/CartTotal";
+
+import styles from "./cart.module";
 
 function Cart() {
   return (

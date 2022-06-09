@@ -1,15 +1,17 @@
-import Header from "@shared/header/Header";
-import styles from "@/app.module";
-import Home from "@home/Home";
-import Cart from "@cart/Cart";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ProductDetail from "@product-detail/ProductDetail";
-import OrderList from "@order-list/OrderList";
+
+import Home from "./pages/home/Home";
+import Cart from "./pages/cart/Cart";
+import ProductDetail from "./pages/product-detail/ProductDetail";
+import OrderList from "./pages/order-list/OrderList";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import MyPage from "./pages/my-page/MyPage";
-import AuthGuard from "@shared/auth-guard/AuthGuard";
-import { USER_ACCESS_POLICY } from "./constants/index";
+import AuthGuard from "./components/auth-guard/AuthGuard";
+import Header from "./components/header/Header";
+
+import styles from "./app.module";
+import { USER_ACCESS_POLICY } from "./constants";
 
 function App() {
   return (

@@ -1,12 +1,14 @@
-import cn from "classnames";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import cn from "classnames";
+
+import { addProductToCart } from "@redux/reducers/cart-reducer/cartThunks";
+import ImageButton from "@home/components/image-button/ImageButton";
+import styles from "@home/components/product-item/product-item.module";
+import LoadingThumbnail from "@components/loading-thumbnail/LoadingThumbnail";
+
 import priceToDollar from "@utils/priceToDollar";
 import Cart from "@assets/images/cart.svg";
-import ImageButton from "@home/components/image-button/ImageButton";
-import { addProductToCart } from "@redux/reducers/cart-reducer/cartThunks";
-import styles from "@home/components/product-item/product-item.module";
-import LoadingThumbnail from "@shared/loading-thumbnail/LoadingThumbnail";
-import { Link } from "react-router-dom";
 
 function ProductItem({
   id: productId,

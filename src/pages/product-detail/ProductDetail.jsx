@@ -1,11 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+
 import { getProductDetail } from "@redux/reducers/product-detail-reducer/productDetailThunks";
 import { addProductToCart } from "@redux/reducers/cart-reducer/cartThunks";
-import LoadingThumbnail from "@shared/loading-thumbnail/LoadingThumbnail";
-import Button from "@shared/button/Button";
-import Divider from "@shared/divider/Divider";
+
+import LoadingThumbnail from "@components/loading-thumbnail/LoadingThumbnail";
+import Button from "@components/button/Button";
+import Divider from "@components/divider/Divider";
+
 import styles from "./product-detail.module";
 
 function ProductDetail() {

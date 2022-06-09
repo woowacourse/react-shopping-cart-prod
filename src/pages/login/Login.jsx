@@ -4,8 +4,8 @@ import cn from "classnames";
 
 import { login } from "@redux/reducers/user-reducer/userThunks";
 import useForm from "@hooks/useForm";
-import LabeledInput from "@shared/input/labeled-input/LabeledInput";
-import Button from "@shared/button/Button";
+import LabeledInput from "@components/input/labeled-input/LabeledInput";
+import Button from "@components/button/Button";
 
 import styles from "./login.module";
 import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";

@@ -1,4 +1,4 @@
-import LabeledCheckbox from "@shared/checkbox/labeled-checkbox/LabeledCheckbox";
+import LabeledCheckbox from "@components/checkbox/labeled-checkbox/LabeledCheckbox";
 
 export default {
   title: "Checkbox/LabeledCheckbox",

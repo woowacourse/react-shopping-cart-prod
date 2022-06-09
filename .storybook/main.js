@@ -35,7 +35,7 @@ module.exports = {
     const alias = {
       "@": resolve(__dirname, "../src"),
       "@hooks": resolve(__dirname, "../src/hooks"),
-      "@shared": resolve(__dirname, "../src/components"),
+      "@components": resolve(__dirname, "../src/components"),
       "@scss": resolve(__dirname, "../src/scss"),
       "@home": resolve(__dirname, "../src/pages/home"),
       "@cart": resolve(__dirname, "../src/pages/cart"),

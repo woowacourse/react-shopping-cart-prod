@@ -1,10 +1,12 @@
 import cn from "classnames";
-import priceToDollar from "@utils/priceToDollar";
-import Checkbox from "@shared/checkbox/single/Checkbox";
-import LoadingThumbnail from "@shared/loading-thumbnail/LoadingThumbnail";
-import NumberInput from "@shared/number-input/NumberInput";
-import FontawesomeIconButton from "@shared/fontawesome-icon-button/FontawesomeIconButton";
+
+import Checkbox from "@components/checkbox/single/Checkbox";
+import LoadingThumbnail from "@components/loading-thumbnail/LoadingThumbnail";
+import NumberInput from "@components/number-input/NumberInput";
+import FontawesomeIconButton from "@components/fontawesome-icon-button/FontawesomeIconButton";
 import { faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import priceToDollar from "@utils/priceToDollar";
+
 import styles from "./cart-item.module";
 
 function CartItem({

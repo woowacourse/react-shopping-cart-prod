@@ -1,16 +1,19 @@
 import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import createAction from "@redux/utils/createAction";
 import CART_ACTION_TYPE from "@redux/reducers/cart-reducer/cartActions";
-import Button from "@shared/button/Button";
-import LabeledCheckbox from "@shared/checkbox/labeled-checkbox/LabeledCheckbox";
-import getSelectedCartItemIds from "@cart/utils/getSelectedCartItemIds";
 import {
   updateCartItemQuantity,
   deleteCartItems,
   getCart,
 } from "@redux/reducers/cart-reducer/cartThunks";
+import getSelectedCartItemIds from "@cart/utils/getSelectedCartItemIds";
+
+import Button from "@components/button/Button";
+import LabeledCheckbox from "@components/checkbox/labeled-checkbox/LabeledCheckbox";
 import CartItem from "../cart-item/CartItem";
+
 import styles from "./cart-form.module";
 
 function CartForm({ className }) {

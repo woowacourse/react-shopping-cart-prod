@@ -1,11 +1,14 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import { createOrder } from "@redux/reducers/order-reducer/orderThunks";
+
+import Button from "@components/button/Button";
+import Highlighter from "@components/highlighter/Highlighter";
+import TitleBox from "@components/title-box/TitleBox";
+
 import priceToDollar from "@utils/priceToDollar";
 import getSelectedCartItemIds from "@cart/utils/getSelectedCartItemIds";
-import Button from "@shared/button/Button";
-import Highlighter from "@shared/highlighter/Highlighter";
-import TitleBox from "@shared/title-box/TitleBox";
-import { createOrder } from "@redux/reducers/order-reducer/orderThunks";
 import styles from "./cart-total.module";
 
 function CartTotal({ className }) {

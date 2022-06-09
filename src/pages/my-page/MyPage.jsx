@@ -1,10 +1,12 @@
 import { shallowEqual, useSelector } from "react-redux";
 import cn from "classnames";
-import Divider from "@shared/divider/Divider";
-import styles from "./my-page.module";
+
+import Divider from "@components/divider/Divider";
 import UserNameForm from "./components/username-form/UserNameForm";
 import PasswordForm from "./components/password-form/PasswordForm";
 import SecessionForm from "./components/secession-form/SecessionForm";
+
+import styles from "./my-page.module";
 
 function MyPage({ className }) {
   const user = useSelector((state) => state.user.data, shallowEqual);

@@ -1,6 +1,8 @@
 import cn from "classnames";
-import LoadingThumbnail from "@shared/loading-thumbnail/LoadingThumbnail";
-import Button from "@shared/button/Button";
+
+import LoadingThumbnail from "@components/loading-thumbnail/LoadingThumbnail";
+import Button from "@components/button/Button";
+
 import priceToDollar from "@utils/priceToDollar";
 import styles from "./order-table-item.module";
 

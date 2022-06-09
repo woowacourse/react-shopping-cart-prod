@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
-import PageTitle from "@shared/page-title/PageTitle";
-import styles from "@order-list/order-list.module";
+
 import { getOrderList } from "@redux/reducers/order-list-reducer/orderListThunks";
+
+import PageTitle from "@components/page-title/PageTitle";
 import OrderTable from "./components/order-table/OrderTable";
+
+import styles from "./order-list.module";
 
 function OrderList() {
   const dispatch = useDispatch();
