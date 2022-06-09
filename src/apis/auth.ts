@@ -34,6 +34,28 @@ const authAPI = {
 
     sessionStorage.removeItem('accessToken');
   },
+
+  checkIdDuplicated: async function (id: string) {
+    const requestBody = { username: id };
+
+    const { data } = await axios.post(
+      '/customers/duplication/username',
+      requestBody
+    );
+
+    return data;
+  },
+
+  checkEmailDuplicated: async function (email: string) {
+    const requestBody = { email };
+
+    const { data } = await axios.post(
+      '/customers/duplication/email',
+      requestBody
+    );
+
+    return data;
+  },
 };
 
 export default authAPI;

@@ -2,11 +2,16 @@ import styled, { css } from 'styled-components';
 import LabeledInput from 'components/@shared/LabeledInput';
 import useSignupForm from './useSignupForm';
 import REG_EXP from 'constants/regExp';
+import authAPI from 'apis/auth';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { snackBarActions } from 'redux/reducers/snackBar';
 
 function SignupForm() {
+  const dispatch = useDispatch();
   const {
-    password,
-    passwordCheck,
+    inputs,
+    onChange,
     isPasswordLengthCorrect,
     isPasswordAllCharactersCorrect,
     isPasswordCheckCorrect,
@@ -14,6 +19,24 @@ function SignupForm() {
     handlePasswordInput,
     handlePasswordCheckInput,
   } = useSignupForm();
+
+  const handleIdCheck = async () => {
+    const data = await authAPI.checkIdDuplicated(inputs.id);
+    if (!data.duplicated) {
+      dispatch(snackBarActions.show('사용 가능한 아이디 입니다.'));
+      return;
+    }
+    alert('중복된 아이디입니다.');
+  };
+
+  const handleEmailCheck = async () => {
+    const data = await authAPI.checkEmailDuplicated(inputs.email);
+    if (!data.duplicated) {
+      dispatch(snackBarActions.show('사용 가능한 이메일 입니다.'));
+      return;
+    }
+    alert('중복된 이메일입니다.');
+  };
 
   return (
     <StyledForm onSubmit={handleSubmit}>
@@ -23,14 +46,31 @@ function SignupForm() {
         placeholder="아이디를 입력해주세요"
         pattern={REG_EXP.ID}
         required
+        onChange={onChange}
       >
         아이디
+        <StyledCheckButton type="button" onClick={handleIdCheck}>
+          중복 체크
+        </StyledCheckButton>
+      </LabeledInput>
+      <LabeledInput
+        id="email"
+        type="email"
+        placeholder="이메일을 입력해주세요"
+        pattern={REG_EXP.EMAIL}
+        required
+        onChange={onChange}
+      >
+        이메일
+        <StyledCheckButton type="button" onClick={handleEmailCheck}>
+          중복 체크
+        </StyledCheckButton>
       </LabeledInput>
       <LabeledInput
         id="password"
         type="password"
         placeholder="8~16자의 비밀번호(영문 소문자, 숫자, 특수문자)를 입력해주세요"
-        value={password}
+        value={inputs.password}
         onChange={handlePasswordInput}
         pattern={REG_EXP.PASSWORD}
         required
@@ -52,22 +92,13 @@ function SignupForm() {
         id="passwordCheck"
         type="password"
         placeholder="비밀번호를 재입력해주세요"
-        value={passwordCheck}
+        value={inputs.passwordCheck}
         onChange={handlePasswordCheckInput}
         pattern={REG_EXP.PASSWORD}
         required
       >
         비밀번호 재확인
         <StyledErrorSign isCorrect={isPasswordCheckCorrect}>✓</StyledErrorSign>
-      </LabeledInput>
-      <LabeledInput
-        id="email"
-        type="email"
-        placeholder="이메일을 입력해주세요"
-        pattern={REG_EXP.EMAIL}
-        required
-      >
-        이메일
       </LabeledInput>
       <LabeledInput
         id="address"
@@ -144,4 +175,10 @@ const StyledSignupButton = styled.button`
   font-weight: 900;
 `;
 
+const StyledCheckButton = styled.button`
+  margin-left: 20px;
+  padding: 0 4px;
+  border-radius: 5px;
+  background-color: ${({ theme: { colors } }) => colors.pink};
+`;
 export default SignupForm;
