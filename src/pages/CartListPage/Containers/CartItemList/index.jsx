@@ -46,12 +46,12 @@ function CartItemList() {
         isContentLoaded={cartListAsyncState.isLoaded}
       >
         <Case.Success>
-          {(cartItems.length > 0 &&
+          {cartItems.length > 0 &&
             cartItems.map(({ id, imageUrl, name, price, quantity, isChecked }) => (
               <CartItem
                 key={id}
                 id={id}
-                image={imageUrl}
+                imageUrl={imageUrl}
                 name={name}
                 price={price}
                 quantity={quantity}
@@ -60,7 +60,8 @@ function CartItemList() {
                 onChangeCounter={handleChangeQuantity}
                 onClickRemove={handleRemoveItem}
               />
-            ))) || <StatusMessage status="empty">텅! 장바구니에 담은 상품이 없어요!</StatusMessage>}
+            ))}
+          {/* || <StatusMessage status="empty">텅! 장바구니에 담은 상품이 없어요!</StatusMessage>} */}
         </Case.Success>
 
         <Case.Loading>

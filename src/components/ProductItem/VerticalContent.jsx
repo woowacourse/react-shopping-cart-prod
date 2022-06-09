@@ -5,15 +5,15 @@ import { getNumberFormatter } from 'lib/formatterUtils';
 
 import * as S from './styles';
 
-function VerticalContent({ id, image, name, price, cartId, onClickCartButton }) {
+function VerticalContent({ id, imageUrl, name, price, cartId, onClickCartButton }) {
   const handleClickCartButton = () => {
-    onClickCartButton({ id, image, name, price });
+    onClickCartButton({ id, imageUrl, name, price });
   };
 
   return (
     <S.Container direction="vertical">
       <S.ImageContainer fill="true">
-        <S.Image src={image} alt="product thumbnail" />
+        <S.Image src={imageUrl} alt="product thumbnail" />
       </S.ImageContainer>
 
       <S.Description>
