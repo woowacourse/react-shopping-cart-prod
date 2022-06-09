@@ -18,7 +18,7 @@ import { initialUserInfoState } from 'redux/reducers/userInfo.reducer';
 import useLoadUserInfo from 'hooks/api/auth/useLoadUserInfo';
 import useModifyUserInfo from 'hooks/api/auth/useModifyUserInfo';
 
-import { processServerData } from 'utils';
+import { processClientData, processServerData } from 'utils';
 
 function ModifyUserInfo() {
   const dispatch = useDispatch();
@@ -34,19 +34,7 @@ function ModifyUserInfo() {
   useEffect(() => {
     (async () => {
       const currentUserInfo = await loadUserInfo();
-      const userInfo = Object.entries(currentUserInfo).reduce(
-        (acc, [key, value]) => {
-          if (key === 'email') {
-            return { ...acc, [key]: { value, error: false, disabled: true } };
-          }
-          if (key === 'phone') {
-            const [_, first, second] = value.split('-');
-            return { ...acc, [key]: { first, second } };
-          }
-          return { ...acc, [key]: { value, error: false } };
-        },
-        { ...initialUserInfoState }
-      );
+      const userInfo = processClientData(currentUserInfo, initialUserInfoState);
       dispatch(setUserInfo(userInfo));
     })();
 

@@ -26,6 +26,22 @@ export function processServerData(userInfo) {
   }, {});
 }
 
+export function processClientData(serverUserInfo, initialUserInfoState) {
+  return Object.entries(serverUserInfo).reduce(
+    (acc, [key, value]) => {
+      if (key === 'email') {
+        return { ...acc, [key]: { value, error: false, disabled: true } };
+      }
+      if (key === 'phone') {
+        const [_, first, second] = value.split('-');
+        return { ...acc, [key]: { first, second } };
+      }
+      return { ...acc, [key]: { value, error: false } };
+    },
+    { ...initialUserInfoState }
+  );
+}
+
 export const enterSubmit = (e, condition, cb) => {
   if (condition) {
     return;
