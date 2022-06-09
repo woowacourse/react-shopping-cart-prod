@@ -207,18 +207,14 @@ export const cartListReducer = (state = cartListInitialState, action) => {
 
     case ACTION_TYPES.UNCHECK_ALL_CHECK_BUTTON:
       const allUnCheckedState = newState.map((item) => {
-        return item.checked === true
-          ? { ...item, checked: false }
-          : { ...item };
+        return { ...item, checked: !item.checked };
       });
 
       return allUnCheckedState;
 
     case ACTION_TYPES.CHECK_ALL_CHECK_BUTTON:
       const allCheckedState = newState.map((item) => {
-        return item.checked === false
-          ? { ...item, checked: true }
-          : { ...item };
+        return { ...item, checked: true };
       });
 
       return allCheckedState;
