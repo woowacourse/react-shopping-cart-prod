@@ -2,15 +2,13 @@ import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
 
-const CheckBox = ({
-  id,
-  checked,
-  onChange,
-}: {
+interface checkBoxProps {
   id: string;
   checked: boolean;
   onChange: () => void;
-}) => {
+}
+
+const CheckBox = ({ id, checked, onChange }: checkBoxProps) => {
   return (
     <>
       <StyledInput id={id} type='checkbox' checked={checked} onChange={onChange}></StyledInput>
@@ -45,7 +43,7 @@ const StyledLabel = styled.label`
   display: inline-block;
   width: 3rem;
   height: 3rem;
-  border: 3px solid ${theme.colors.darkgrey};
+  border: 3px solid ${theme.colors.darkGrey};
   position: relative;
   cursor: pointer;
 `;

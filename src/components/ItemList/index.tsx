@@ -18,7 +18,7 @@ const ItemList = ({ fullItemList }: { fullItemList: Item[] }) => {
     getCartList
   );
 
-  const { updateCartItemQuantity } = useUpdateCartItem(cartList);
+  const { increaseQuantity } = useUpdateCartItem(cartList);
 
   if (fullItemList.length === 0) return null;
 
@@ -27,14 +27,7 @@ const ItemList = ({ fullItemList }: { fullItemList: Item[] }) => {
   return (
     <StyledRoot>
       {itemList.map(item => (
-        <ItemContainer
-          key={item.id}
-          id={item.id}
-          imageUrl={item.imageUrl}
-          price={item.price}
-          name={item.name}
-          updateCartItemQuantity={updateCartItemQuantity}
-        />
+        <ItemContainer key={item.id} item={item} increaseQuantity={increaseQuantity} />
       ))}
     </StyledRoot>
   );

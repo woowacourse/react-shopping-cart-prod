@@ -10,43 +10,38 @@ import { CartListAction } from 'redux/actions/cartList';
 const useUpdateCartItem = (cartList: CartItem[]) => {
   const dispatch = useAppDispatch<CartListAction>();
 
-  const updateCartItemQuantity = (id: number, type = 'Increase', updateQuantity = 1) => {
+  const increaseQuantity = (id: number, updateQuantity = 1) => {
     const targetItem = cartList.find(cartItem => cartItem.id === id);
 
-    if (type === 'Increase') {
-      if (!targetItem) {
-        dispatch(postCartItem({ id, quantity: 1, checked: true }));
+    console.log(cartList);
+    console.log(targetItem);
 
-        return;
-      }
+    targetItem
+      ? dispatch(
+          patchCartItem([
+            {
+              id,
+              quantity: targetItem.quantity + updateQuantity,
+              checked: true,
+            },
+          ])
+        )
+      : dispatch(postCartItem({ id, quantity: 1, checked: true }));
+  };
 
+  const decreaseQuantity = (id: number, updateQuantity = 1) => {
+    const targetItem = cartList.find(cartItem => cartItem.id === id);
+
+    if (targetItem.quantity > 0) {
       dispatch(
         patchCartItem([
           {
             productId: targetItem.id,
-            quantity: targetItem.quantity + updateQuantity,
+            quantity: targetItem.quantity - updateQuantity,
             checked: true,
           },
         ])
       );
-
-      return;
-    }
-    if (type === 'Decrease') {
-      if (targetItem.quantity - updateQuantity > 0) {
-        dispatch(
-          patchCartItem([
-            {
-              id: targetItem.id,
-              quantity: targetItem.quantity - updateQuantity,
-              checked: true,
-            },
-          ])
-        );
-      }
-      if (targetItem.quantity - updateQuantity <= 0) {
-        dispatch(deleteSelectedCartItem([targetItem]));
-      }
     }
   };
 
@@ -82,7 +77,8 @@ const useUpdateCartItem = (cartList: CartItem[]) => {
   };
 
   return {
-    updateCartItemQuantity,
+    increaseQuantity,
+    decreaseQuantity,
     toggleCartItemChecked,
     toggleCartItemAllChecked,
     removeCartItem,

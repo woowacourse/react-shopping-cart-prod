@@ -5,8 +5,8 @@ const Loading = () => {
   return (
     <StyledLoader>
       <Spinner>
-        <Dbounce1 />
-        <Dbounce2 />
+        <Debounce1 />
+        <Debounce2 />
       </Spinner>
     </StyledLoader>
   );
@@ -51,11 +51,11 @@ const Spinner = styled.div`
   margin: 10rem auto;
 `;
 
-const Dbounce1 = styled.div`
+const Debounce1 = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: ${theme.colors.darkgrey};
+  background-color: ${theme.colors.darkGrey};
   opacity: 0.6;
   position: absolute;
   top: 0;
@@ -65,11 +65,11 @@ const Dbounce1 = styled.div`
   animation: sk-bounce 2s infinite ease-in-out;
 `;
 
-const Dbounce2 = styled.div`
+const Debounce2 = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background-color: ${theme.colors.darkgrey};
+  background-color: ${theme.colors.darkGrey};
   opacity: 0.6;
   position: absolute;
   top: 0;

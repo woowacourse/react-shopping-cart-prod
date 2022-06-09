@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from 'components/common/Header';
+import Header from 'components/Header';
 import Router from 'Router';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { autoSignIn } from 'redux/action-creators/userThunk';

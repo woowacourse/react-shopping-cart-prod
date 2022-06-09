@@ -38,13 +38,13 @@ const Header = () => {
           {Object.keys(data).length ? (
             <button onClick={toggleHamburger}>
               마이페이지
-              <MyPageHambergurList isShow={isShowHamburger}>
+              <HamburgerList isShow={isShowHamburger}>
                 <Link to='/editPassword'>비밀번호 변경</Link>
                 <Link to='/resign'>회원 탈퇴</Link>
                 <Link onClick={handleSignOut} to=''>
                   로그아웃
                 </Link>
-              </MyPageHambergurList>
+              </HamburgerList>
             </button>
           ) : (
             <button onClick={() => navigate('/signIn')}>로그인</button>
@@ -93,8 +93,8 @@ const StyledNav = styled.nav`
   }
 `;
 
-type Hambergur = { isShow: boolean };
-const MyPageHambergurList = styled.div<Hambergur>`
+type Hamburger = { isShow: boolean };
+const HamburgerList = styled.div<Hamburger>`
   width: 17rem;
   flex-direction: column;
   position: absolute;
@@ -110,6 +110,6 @@ const MyPageHambergurList = styled.div<Hambergur>`
     height: 6rem;
   }
   a:hover {
-    background-color: ${theme.colors.hewvyWhite};
+    background-color: ${theme.colors.heavyWhite};
   }
 `;

@@ -8,22 +8,15 @@ import { Link } from 'react-router-dom';
 import { formatDecimal } from 'utils';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
+import { Item } from 'types/domain';
 
 interface ItemContainerProps {
-  id: number;
-  imageUrl: string;
-  name: string;
-  price: number;
-  updateCartItemQuantity?: (id: number) => void;
+  item: Item;
+  increaseQuantity: (id: number) => void;
 }
 
-const ItemContainer = ({
-  id,
-  imageUrl,
-  name,
-  price,
-  updateCartItemQuantity,
-}: ItemContainerProps) => {
+const ItemContainer = ({ item, increaseQuantity }: ItemContainerProps) => {
+  const { id, imageUrl, name, price } = item;
   const dispatch = useDispatch();
 
   const handleClickItemContainer = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
@@ -33,8 +26,8 @@ const ItemContainer = ({
   };
 
   const handleClickCartIcon = () => {
-    updateCartItemQuantity?.(id);
-    dispatch(updateSnackBar('추가'));
+    increaseQuantity(id);
+    dispatch(updateSnackBar(`${name} 1개를 장바구니에 추가했습니다.`));
   };
 
   return (

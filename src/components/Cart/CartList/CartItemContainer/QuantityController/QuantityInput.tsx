@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
+import { ReactNode } from 'react';
 
-const QuantityInput = ({ quantity, onChange }: { quantity: number; onChange: () => void }) => {
-  return <StyledRoot onChange={onChange}>{quantity}</StyledRoot>;
+const QuantityInput = ({ children }: { children: ReactNode }) => {
+  return <StyledRoot>{children}</StyledRoot>;
 };
 
 const StyledRoot = styled.div`

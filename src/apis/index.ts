@@ -1,6 +1,3 @@
-//export const LOCAL_BASE_URL = 'http://localhost:4000';
-//export const SERVER_URL = 'https://sisyphe-shopping-cart-server.herokuapp.com/';
-
 export const LOCAL_BASE_URL =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
@@ -15,4 +12,4 @@ export const BACK_URL = {
   COOKIE: 'https://ec2-3-35-210-168.ap-northeast-2.compute.amazonaws.com:8080',
 };
 
-export const BASE_URL = BACK_URL.ALPHA;
+export const BASE_URL = BACK_URL.COOKIE;

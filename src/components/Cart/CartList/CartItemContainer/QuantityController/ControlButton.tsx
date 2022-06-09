@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 
-const ControllButton = ({ onClick, children }) => {
+const ControlButton = ({ onClick, children }) => {
   return <StyledRoot onClick={onClick}>{children}</StyledRoot>;
 };
 
@@ -14,4 +14,4 @@ const StyledRoot = styled.button`
   cursor: pointer;
 `;
 
-export default ControllButton;
+export default ControlButton;
