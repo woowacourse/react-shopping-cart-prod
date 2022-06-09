@@ -7,17 +7,41 @@ const cartAPI = axios.create({
   baseURL: CART_API_URL.TO_CART_ITEMS,
 });
 
-export const addCart = async (body): Promise<any> => {
+const authorizedFetcher = ({
+  apiCallback,
+  path,
+  body = null,
+  cachePath,
+  options = {},
+}: {
+  apiCallback: any;
+  path: string;
+  body?: any;
+  cachePath: string;
+  options?: any;
+}) => {
   const accessToken = getCookie('access-token');
   const config = {
+    ...options,
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },
   };
 
-  clearCache(`${CART_API_URL.TO_CART_ITEMS}_${accessToken}`);
+  clearCache(`${cachePath}_${accessToken}`);
 
-  return cartAPI.post('/', body, config);
+  if (body) return apiCallback(path, body, config);
+
+  return apiCallback(path, config);
+};
+
+export const addCart = async (body): Promise<any> => {
+  return authorizedFetcher({
+    apiCallback: cartAPI.post,
+    path: '/',
+    body,
+    cachePath: CART_API_URL.TO_CART_ITEMS,
+  });
 };
 
 export const getCart = () => {
@@ -34,29 +58,19 @@ export const getCart = () => {
 };
 
 export const deleteCart = async (id): Promise<any> => {
-  const accessToken = getCookie('access-token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  clearCache(`${CART_API_URL.TO_CART_ITEMS}_${accessToken}`);
-  return cartAPI.delete(`/${id}`, config);
+  return authorizedFetcher({
+    apiCallback: cartAPI.delete,
+    path: `/${id}`,
+    cachePath: CART_API_URL.TO_CART_ITEMS,
+  });
 };
 
 export const patchCart = async (id, quantity): Promise<any> => {
-  const accessToken = getCookie('access-token');
-  const config = {
-    params: {
-      quantity,
-    },
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  clearCache(`${CART_API_URL.TO_CART_ITEMS}_${accessToken}`);
-
-  return cartAPI.patch(`/${id}`, {}, config);
+  return authorizedFetcher({
+    apiCallback: cartAPI.patch,
+    path: `/${id}`,
+    body: {},
+    cachePath: CART_API_URL.TO_CART_ITEMS,
+    options: { params: { quantity } },
+  });
 };
