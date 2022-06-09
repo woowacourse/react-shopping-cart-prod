@@ -262,11 +262,11 @@ const cartReducer = (state = initialState, action: Action) => {
     case RESET_CART_ERROR: {
       return { ...state, error: null };
     }
-    // case DELETE_BY_SELECTED: {
-    //   const newItems = state.items.filter((item) => !item.isSelected);
+    case DELETE_BY_SELECTED: {
+      const newItems = state.items.filter((item) => !item.isSelected);
 
-    //   return { ...state, items: newItems };
-    // }
+      return { ...state, items: newItems };
+    }
     default:
       return state;
   }
