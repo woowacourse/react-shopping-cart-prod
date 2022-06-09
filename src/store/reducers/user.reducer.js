@@ -15,8 +15,8 @@ export const userActionType = {
   LOGOUT: 'user/LOGOUT',
 };
 
-const userReducer = (state = initialState, action) => {
-  switch (action.type) {
+const userReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
     case userActionType.START:
       return {
         ...state,
@@ -26,7 +26,7 @@ const userReducer = (state = initialState, action) => {
     case userActionType.UPDATE:
       return {
         ...state,
-        nickname: action.payload.nickname,
+        nickname: payload.nickname,
         isLoggedIn: true,
         isLoading: false,
       };
