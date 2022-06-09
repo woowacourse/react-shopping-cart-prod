@@ -25,13 +25,14 @@ const UserMenu = ({ nickname }) => {
     try {
       await apiClient.post('/auth/logout');
 
-      deleteCookie('accessToken');
       setIsOpen(false);
       dispatch(doLogout());
       dispatch(doInitializeCartList({ shoppingCart: [] }));
       renderSnackbar(MESSAGE.LOGOUT_SUCCESS, 'SUCCESS');
+      deleteCookie('accessToken');
       navigate('/');
     } catch (error) {
+      console.log(error);
       renderSnackbar(MESSAGE.LOGIN_FAILURE, 'FAILED');
     }
   };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { getCookie } from 'utils/cookie';
 
-export const isApiTest = true;
+export const isApiTest = false;
 
 if (isApiTest) {
   console.log('백엔드 크루의 API로 연결하였습니다.');

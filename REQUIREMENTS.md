@@ -46,7 +46,7 @@
   - `npm install` 후 `npm run start` 하여 로컬 서버 구동
   - [x] development 모드에서 msw가 동작하여 API를 모킹한다.
 - Production
-  - 배포한 주소 : https://dapper-cendol-564223.netlify.app/
+  - 배포한 주소 : http://react-shopping-cart-heroku.herokuapp.com/login
   - [x] 백엔드 크루가 제공한 API를 사용한다.
 
 ### 트러블 슈팅
