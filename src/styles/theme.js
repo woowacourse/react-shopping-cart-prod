@@ -5,6 +5,7 @@ const LAYOUT = {
 
 const COLORS = {
   BLACK: '#000000',
+  BLACK_005: 'rgba(0,0,0, 0.05)',
   BLACK_015: 'rgba(0,0,0, 0.15)',
 
   WHITE: '#FFFFFF',

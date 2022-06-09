@@ -9,6 +9,7 @@ export const ICON_CODE = {
   TRASH_CAN: 'f2ed',
   USER: 'f007',
   EXIT: 'f52b',
+  LOGOUT: 'f2f5',
 };
 
 export const PAGE_LIST = {
