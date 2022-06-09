@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import routes from 'routes';
 import { useDispatch, useSelector } from 'react-redux';
-import { loginAPI, selectUserState, UserState } from 'redux/modules/user';
+import { loginAPI, resetUserError, selectUserState, UserState } from 'redux/modules/user';
 import { show } from 'redux/modules/snackBar';
 
 import useInput from 'hooks/useInput';
@@ -35,6 +35,16 @@ function Login() {
       navigate(routes.home, { replace: true });
     }
   }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (error) {
+      alert(error.message);
+    }
+
+    return () => {
+      dispatch(resetUserError());
+    };
+  }, [error]);
 
   if (loading) {
     return <Loader />;
