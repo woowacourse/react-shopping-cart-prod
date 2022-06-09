@@ -54,8 +54,6 @@ export const editPassword =
     dispatch(userAction.patchNewPassword.pending());
     const token = getLocalStorageToken();
 
-    console.log(editPasswordInfo);
-
     try {
       await axios({
         method: 'patch',
@@ -70,7 +68,6 @@ export const editPassword =
       dispatch(userAction.patchNewPassword.success());
     } catch (error) {
       dispatch(userAction.patchNewPassword.failure(error.response.data.errorMessage));
-      console.log(error);
       alert(error.response.data.errorMessage);
     }
   };
@@ -94,7 +91,6 @@ export const resign = (password: string) => async (dispatch: Dispatch<UserAction
     localStorage.removeItem('token');
   } catch (error) {
     dispatch(userAction.deleteUser.failure(error.response.data.errorMessage));
-    console.log(error);
     alert(error.response.data.errorMessage);
   }
 };

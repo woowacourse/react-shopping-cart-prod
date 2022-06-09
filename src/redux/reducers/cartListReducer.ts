@@ -39,8 +39,6 @@ const patchCartItem = (state: CartItemState, action: CartListAction) => {
           cartItem
       );
 
-      console.log(newCartList);
-
       return { loading: false, error: null, data: newCartList };
     }
 

@@ -30,8 +30,6 @@ export const patchCartItem =
     dispatch(cartListAction.patchCartItem.pending());
     const token = getLocalStorageToken();
 
-    console.log(cartItemList);
-
     try {
       const response = await axios({
         method: 'patch',
