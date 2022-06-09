@@ -1,17 +1,21 @@
-import { Contents } from 'components/common/Snackbar';
+const SNACKBAR_ACTION_TYPE = {
+  NEW_MESSAGE: 'NEW_MESSAGE',
+  CLEAR_MESSAGE: 'CLEAR_MESSAGE',
+};
 
-export enum SnackbarActionType {
-  OPEN_SNACKBAR = 'OPEN_SNACKBAR',
-  CLOSE_SNACKBAR = 'CLOSE_SNACKBAR',
-}
+const updateSnackBar = message => {
+  return {
+    type: SNACKBAR_ACTION_TYPE.NEW_MESSAGE,
+    payload: {
+      message,
+    },
+  };
+};
 
-interface OpenSnackbarAction {
-  type: SnackbarActionType.OPEN_SNACKBAR;
-  payload: keyof typeof Contents;
-}
+const clearSnackBar = () => {
+  return {
+    type: SNACKBAR_ACTION_TYPE.CLEAR_MESSAGE,
+  };
+};
 
-interface CloseSnackbarAction {
-  type: SnackbarActionType.CLOSE_SNACKBAR;
-}
-
-export type SnackbarAction = OpenSnackbarAction | CloseSnackbarAction;
+export { updateSnackBar, clearSnackBar, SNACKBAR_ACTION_TYPE };

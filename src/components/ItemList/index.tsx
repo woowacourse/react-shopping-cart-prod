@@ -1,7 +1,6 @@
 import ItemContainer from 'components/ItemList/ItemContainer';
 import styled from 'styled-components';
 import useUpdateCartItem from 'hooks/useUpdateCartItem';
-import useSnackBar from 'hooks/useSnackBar';
 import { useParams } from 'react-router-dom';
 import { Item } from 'types/domain';
 import useThunkFetch from 'hooks/useThunkFetch';
@@ -20,7 +19,6 @@ const ItemList = ({ fullItemList }: { fullItemList: Item[] }) => {
   );
 
   const { updateCartItemQuantity } = useUpdateCartItem(cartList);
-  const { openSnackbar } = useSnackBar();
 
   if (fullItemList.length === 0) return null;
 
@@ -32,11 +30,10 @@ const ItemList = ({ fullItemList }: { fullItemList: Item[] }) => {
         <ItemContainer
           key={item.id}
           id={item.id}
-          thumbnailUrl={item.thumbnailUrl}
+          imageUrl={item.imageUrl}
           price={item.price}
-          title={item.title}
+          name={item.name}
           updateCartItemQuantity={updateCartItemQuantity}
-          openSnackbar={openSnackbar}
         />
       ))}
     </StyledRoot>

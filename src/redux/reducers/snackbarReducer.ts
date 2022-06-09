@@ -1,22 +1,16 @@
-import { SnackbarAction, SnackbarActionType } from 'redux/actions/snackbar';
+import { SNACKBAR_ACTION_TYPE } from 'redux/actions/snackBar';
 
-interface SnackbarState {
-  isSnackbarOpen: boolean;
-  contentsType: string;
-}
+const initialMessage = { text: '' };
 
-const initialState: SnackbarState = {
-  isSnackbarOpen: false,
-  contentsType: null,
-};
-
-export const snackbarReducer = (state = initialState, action: SnackbarAction) => {
+const snackBarReducer = (state = initialMessage, action) => {
   switch (action.type) {
-    case SnackbarActionType.OPEN_SNACKBAR:
-      return { ...state, isSnackbarOpen: true, contentsType: action.payload };
-    case SnackbarActionType.CLOSE_SNACKBAR:
-      return { ...state, isSnackbarOpen: false };
+    case SNACKBAR_ACTION_TYPE.NEW_MESSAGE:
+      return { text: action.payload.message };
+    case SNACKBAR_ACTION_TYPE.CLEAR_MESSAGE:
+      return { text: '' };
     default:
       return state;
   }
 };
+
+export { snackBarReducer };
