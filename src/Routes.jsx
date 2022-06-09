@@ -27,9 +27,9 @@ function PageRoutes() {
       <Route element={<ShoppingLayout />}>
         <Route index element={<ProductListPage />} />
         <Route path={PAGE_LIST.PRODUCT_LIST} element={<ProductListPage />} />
-        <Route path={PAGE_LIST.CART_LIST} element={<CartListPage />} />
 
         <Route element={<RequireAuth isAllow={isLogin} isDeniedPageEnabled />}>
+          <Route path={PAGE_LIST.CART_LIST} element={<CartListPage />} />
           <Route path={PAGE_LIST.PROFILE} element={<ProfilePage />} />
           <Route path={PAGE_LIST.WITHDRAWAL} element={<WithdrawalPage />} />
         </Route>
