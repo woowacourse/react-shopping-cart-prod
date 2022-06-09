@@ -9,7 +9,7 @@ import Form from "@/components/common/form/Form";
 import Input from "@/components/common/input/Input";
 
 import { setCookie, getCookie } from "@/utils/cookie";
-import { BASE_URL, PATH, MESSAGE } from "@/constants";
+import { PATH, MESSAGE } from "@/constants";
 
 import StyledSigninContainer from "@/components/pages/sign-in/Signin.styled";
 

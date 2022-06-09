@@ -3,7 +3,6 @@ import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import { MESSAGE } from "@/constants";
 import { getCookie } from "@/utils/cookie";
 import axios from "axios";
-import { BASE_URL } from "@/constants";
 
 export const ACTION_TYPES = {
   ADD_PRODUCT_TO_CART: "ADD_PRODUCT_TO_CART",
