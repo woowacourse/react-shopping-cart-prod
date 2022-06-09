@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import cartAPI from 'apis/cart';
+import { PayModal } from 'awesome-pay';
 
 type Props = {
   cartItems: Cart[];
@@ -65,45 +66,69 @@ function CartContent({ cartItems }: Props) {
     }
   };
 
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleShowModal = () => {
+    setShowModal((prevState) => !prevState);
+  };
+
+  const paymentFunc = () => {
+    toggleShowModal();
+    alert(
+      '결제기능 결제기능 결제기능 결제기능 결제기능 결제기능 결제기능 결제기능'
+    );
+  };
+
   return (
-    <StyledContentBox>
-      <StyledProductContainer>
-        <StyledProductOptions>
-          <StyledAllCheckOption>
-            <CheckBox
-              id="all-check"
-              checked={isAllChecked()}
-              onChange={onChangeAllChecked}
+    <>
+      <StyledContentBox>
+        <StyledProductContainer>
+          <StyledProductOptions>
+            <StyledAllCheckOption>
+              <CheckBox
+                id="all-check"
+                checked={isAllChecked()}
+                onChange={onChangeAllChecked}
+              />
+              <p>전체 선택/해제</p>
+            </StyledAllCheckOption>
+            <StyledDeleteButton
+              type="button"
+              onClick={onClickCheckedDeleteButton}
+            >
+              선택 상품 삭제
+            </StyledDeleteButton>
+          </StyledProductOptions>
+          {cartItems.map(({ id, quantity, product }) => (
+            <CartItem
+              product={product}
+              stock={quantity}
+              checked={checkedItems.includes(id)}
+              checkCartItem={checkCartItem}
+              cartId={id}
+              key={product.id}
             />
-            <p>전체 선택/해제</p>
-          </StyledAllCheckOption>
-          <StyledDeleteButton
-            type="button"
-            onClick={onClickCheckedDeleteButton}
-          >
-            선택 상품 삭제
-          </StyledDeleteButton>
-        </StyledProductOptions>
-        {cartItems.map(({ id, quantity, product }) => (
-          <CartItem
-            product={product}
-            stock={quantity}
-            checked={checkedItems.includes(id)}
-            checkCartItem={checkCartItem}
-            cartId={id}
-            key={product.id}
-          />
-        ))}
-      </StyledProductContainer>
-      <StyledTotalContainer>
-        <h3>결제예상금액</h3>
-        <hr />
-        <StyledTotalMoney>
-          {calculateTotalMoney().toLocaleString('ko-KR')} 원
-        </StyledTotalMoney>
-        <StyledOrderButton type="button">주문하기</StyledOrderButton>
-      </StyledTotalContainer>
-    </StyledContentBox>
+          ))}
+        </StyledProductContainer>
+        <StyledTotalContainer>
+          <h3>결제예상금액</h3>
+          <hr />
+          <StyledTotalMoney>
+            {calculateTotalMoney().toLocaleString('ko-KR')} 원
+          </StyledTotalMoney>
+          <StyledOrderButton onClick={toggleShowModal} type="button">
+            주문하기
+          </StyledOrderButton>
+        </StyledTotalContainer>
+      </StyledContentBox>
+      <PayModal
+        showModal={showModal}
+        toggleShowModal={toggleShowModal}
+        companyName="짱바구니"
+        totalPrice={calculateTotalMoney()}
+        paymentFunc={paymentFunc}
+      />
+    </>
   );
 }
 
