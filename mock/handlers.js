@@ -194,6 +194,12 @@ export const handlers = [
       orderedProducts: orderedCartItemList,
     };
     db.orders.push(order);
+
+    // 주문에 성공했으니 DB에서 삭제한다
+    db.carts = db.carts.filter((cartItem, _) => {
+      const isOrderedCartItem = cartItemIds.some((id) => cartItem.id === id);
+      return !isOrderedCartItem;
+    }, []);
     LocalStorage.saveInstance(db);
     return res(ctx.status(201));
   }),
@@ -438,6 +444,7 @@ export const handlers = [
   rest.get("/product/:id", (req, res, ctx) => {
     return res(ctx.status(200));
   }),
+
   // cart에 담긴 product-list를 요청한다 (장바구니 페이지)
   rest.post("cart/add/:id", (req, res, ctx) => {
     return res(ctx.status(200));
