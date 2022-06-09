@@ -64,4 +64,11 @@ const ENV = {
   DEVELOPMENT: 'development',
 };
 
-export { PRODUCT, MODAL, ROUTES, ENV, MESSAGE, ERROR };
+const AUTH_API_URL = {
+  이프: 'http://ec2-3-39-234-109.ap-northeast-2.compute.amazonaws.com:8080',
+  찬: 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.com:8080',
+  더즈: 'http://15.164.211.129:8080',
+  토르: 'http://ec2-15-164-232-166.ap-northeast-2.compute.amazonaws.com:8080',
+};
+
+export { PRODUCT, MODAL, ROUTES, ENV, MESSAGE, ERROR, AUTH_API_URL };

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { AUTH_API_URL } from 'page/ServerSelectPage';
-import { ENV } from 'utils/constants';
+
+import { AUTH_API_URL, ENV } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 
 const accessToken = getCookie('accessToken');

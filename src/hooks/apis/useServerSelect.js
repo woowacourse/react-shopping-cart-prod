@@ -1,10 +1,10 @@
 import apiClient from 'apis/apiClient';
-import { AUTH_API_URL } from 'page/ServerSelectPage';
+
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { doLogout } from 'reducers/auth.reducer';
 import { doInitializeCartList } from 'reducers/cart.reducer';
-import { ROUTES } from 'utils/constants';
+import { AUTH_API_URL, ROUTES } from 'utils/constants';
 import { deleteCookie } from 'utils/cookie';
 
 const useServerSelect = () => {
