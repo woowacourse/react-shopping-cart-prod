@@ -13,11 +13,34 @@ import useControlledInput from 'hook/useControlledInput';
 function LoginPage() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
+  const {fetch: userInfo} = useFetch('get');
 
   const [onChangeId, restId] = useControlledInput({});
   const [onChangePassword, restPassword] = useControlledInput({});
 
   const login = useFetch('post');
+
+  const setUserInfo = () => {
+    const response = JSON.parse(localStorage.getItem('accessToken'));
+
+    if (!response) {
+      dispatch({type: AUTH.LOGOUT});
+      return;
+    }
+
+    const accessToken = response.accessToken;
+
+    userInfo({
+      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
+      headers: {Authorization: `Bearer ${accessToken}`},
+      onSuccess: (res) => {
+        dispatch({type: AUTH.SET_USER_INFO, payload: res});
+      },
+      onFail: (error) => {
+        alert(error);
+      },
+    });
+  };
 
   const onSubmit = (inputs) => {
     login.fetch({
@@ -28,6 +51,7 @@ function LoginPage() {
       },
       onSuccess: (data) => {
         localStorage.setItem('accessToken', JSON.stringify(data));
+        setUserInfo();
         dispatch({type: AUTH.LOGIN});
         navigation(PATH.HOME);
       },
