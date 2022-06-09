@@ -5,6 +5,7 @@ export const BASE_SERVER_URL = (index = 0) => {
     process.env.REACT_APP_SERVER2,
     process.env.REACT_APP_SERVER3,
     process.env.REACT_APP_SERVER4,
+    process.env.REACT_APP_SERVER5,
   ];
   return serverUrls[index];
 };

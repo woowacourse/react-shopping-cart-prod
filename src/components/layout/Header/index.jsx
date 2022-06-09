@@ -35,10 +35,11 @@ function Header({ isLogin, serverUrlIndex }) {
         value={serverUrlIndex}
       >
         <option value={0}>msw</option>
-        <option value={1}>서버1</option>
-        <option value={2}>서버2</option>
-        <option value={3}>서버3</option>
-        <option value={4}>서버4</option>
+        <option value={1}>열음서버</option>
+        <option value={2}>로마서버</option>
+        <option value={3}>소주캉서버</option>
+        <option value={4}>알렉스서버</option>
+        <option value={5}>필즈서버</option>
       </select>
       <NavButtonContainer>
         <NavButton linkTo={ROUTES.PRODUCT_CART}>장바구니</NavButton>
