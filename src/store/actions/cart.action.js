@@ -7,12 +7,7 @@ import {
   sendUpdateCartProductQuantityRequest,
 } from 'api/cart.api';
 
-const handleCartDispatch = async ({
-  dispatch,
-  actionType = cartActionType.UPDATE,
-  func,
-  params = [],
-}) => {
+const handleCartDispatch = async ({ dispatch, actionType, func, params = [] }) => {
   dispatch({ type: cartActionType.START });
 
   try {
@@ -47,6 +42,7 @@ export const updateCartProductQuantityThunk =
   (productId, quantity) => async (dispatch) => {
     await handleCartDispatch({
       dispatch,
+      actionType: cartActionType.UPDATE,
       func: sendUpdateCartProductQuantityRequest,
       params: [productId, quantity],
     });
