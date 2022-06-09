@@ -38,25 +38,33 @@ const addCartList = (product) => async (dispatch) => {
   dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_추가(product.name)));
 };
 
-const deleteCartItem = (productId) => async (dispatch) => {
-  dispatch({
-    type: 장바구니_액션.PENDING,
-  });
-
-  const response = await requestDeleteCartItems(productId);
-
-  if (response.status === 비동기_요청.FAILURE) {
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_삭제_실패));
+const deleteCartItem =
+  (productId, productName = null) =>
+  async (dispatch) => {
     dispatch({
-      type: 장바구니_액션.FAILURE,
-      payload: response.content,
+      type: 장바구니_액션.PENDING,
     });
-  }
 
-  dispatch({ type: 장바구니_액션.SUCCESS });
-  dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
-  dispatch({ type: 장바구니_액션.DELETE_PRODUCT, payload: productId });
-};
+    const response = await requestDeleteCartItems(productId);
+
+    if (response.status === 비동기_요청.FAILURE) {
+      dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_삭제_실패));
+      dispatch({
+        type: 장바구니_액션.FAILURE,
+        payload: response.content,
+      });
+    }
+
+    dispatch({ type: 장바구니_액션.SUCCESS });
+    dispatch({ type: 장바구니_액션.DELETE_PRODUCT, payload: productId });
+
+    if (productName) {
+      dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_개별_삭제(productName)));
+      return;
+    }
+
+    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
+  };
 
 const modifyCartItemQuantity = (productId, quantity) => async (dispatch) => {
   dispatch({ type: 장바구니_액션.PENDING });

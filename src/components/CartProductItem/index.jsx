@@ -6,11 +6,10 @@ import CheckBox from 'components/@common/CheckBox';
 import Counter from 'components/@common/Counter';
 
 import { deleteCartItem } from 'actions/cart';
-import { snackbar } from 'actions/snackbar';
 
 import noImage from 'assets/no_image.png';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
-import { 아이콘_코드, 알림_메시지 } from 'constants/';
+import { 아이콘_코드 } from 'constants/';
 import * as Styled from './styles';
 
 const CartProducItem = ({
@@ -29,8 +28,7 @@ const CartProducItem = ({
       handleChecked(id);
     }
 
-    dispatch(deleteCartItem([id]));
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_개별_삭제(name)));
+    dispatch(deleteCartItem([id], name));
   };
 
   return (
