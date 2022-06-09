@@ -5,7 +5,7 @@ import App from 'App';
 import store from 'store';
 import { ENV } from 'utils/constants';
 
-const name = localStorage.getItem('api_name');
+const name = localStorage.getItem('api_name') || '이프';
 
 if (process.env.NODE_ENV === ENV.DEVELOPMENT) {
   const { worker } = require('./mocks/worker');
