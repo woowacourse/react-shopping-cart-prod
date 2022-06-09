@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routes from 'routes';
 import apiClient from 'api';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { selectUserState, signupAPI, UserState } from 'redux/modules/user';
+import { resetUserError, selectUserState, signupAPI, UserState } from 'redux/modules/user';
 import { show } from 'redux/modules/snackBar';
 
 import useInput from 'hooks/useInput';
@@ -42,12 +42,16 @@ function Signup() {
 
       setIdStatus({ isValid, message });
     } catch {
-      setIdStatus({ isValid: false, message: MESSAGES.CHECK_DUPLICATE_ID_ERROR });
+      setIdStatus({ isValid: false, message: MESSAGES.INVALID_ID });
     }
   };
 
   const onSubmitSignupForm = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (passwordConfirmErrorMessage) {
+      return;
+    }
 
     dispatch(
       signupAPI(id, password, () => {
@@ -56,6 +60,16 @@ function Signup() {
       })
     );
   };
+
+  useEffect(() => {
+    if (error) {
+      alert(error.message);
+    }
+
+    return () => {
+      dispatch(resetUserError());
+    };
+  }, [error]);
 
   if (loading) {
     return <Loader />;

@@ -43,6 +43,10 @@ function UserInfo() {
   const onSubmitEditForm = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (passwordConfirmErrorMessage) {
+      return;
+    }
+
     dispatch(
       changePasswordAPI(password, () => {
         dispatch(show(MESSAGES.COMPLETE_CHANGE_PASSWORD));
