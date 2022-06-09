@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Modal, Container, Input, Title, AuthButton } from 'components';
 import Styled from './index.style';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-import useDeleteAccountAPI from 'hooks/apis/useDeleteAccountAPI';
+import useDeleteAccountAPI from 'page/AccountPage/AccountDeleteModal/useDeleteAccountAPI';
 
 const AccountDeleteModal = ({ handleModal }) => {
   const [password, setPassword] = useState('');
