@@ -18,29 +18,28 @@ const SERVER_URL3 = 'http://ec2-15-164-232-166.ap-northeast-2.compute.amazonaws.
 // 찬
 const SERVER_URL4 = 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.com:8080/';
 
-// if (process.env.NODE_ENV === 'development') {
-//   axios.defaults.baseURL = 'http://localhost:3000';
-// } else if (process.env.NODE_ENV === 'production') {
-//   axios.defaults.baseURL = SERVER_URL1;
-// }
-
-axios.defaults.baseURL = SERVER_URL1;
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3000';
+} else if (process.env.NODE_ENV === 'production') {
+  window.location.pathname = '/react-shopping-cart-prod/';
+  axios.defaults.baseURL = SERVER_URL1;
+}
 
 async function main() {
-  // if (process.env.NODE_ENV === 'development') {
-  //   const { worker } = require('./mocks/worker');
+  if (process.env.NODE_ENV === 'development') {
+    const { worker } = require('./mocks/worker');
 
-  //   if (window.location.pathname === '/react-shopping-cart-prod') {
-  //     window.location.pathname = '/react-shopping-cart-prod/';
-  //     return;
-  //   }
+    if (window.location.pathname === '/react-shopping-cart-prod') {
+      window.location.pathname = '/react-shopping-cart-prod/';
+      return;
+    }
 
-  //   await worker.start({
-  //     serviceWorker: {
-  //       url: `/react-shopping-cart-prod/mockServiceWorker.js`,
-  //     },
-  //   });
-  // }
+    await worker.start({
+      serviceWorker: {
+        url: `/react-shopping-cart-prod/mockServiceWorker.js`,
+      },
+    });
+  }
 
   const root = ReactDOM.createRoot(document.getElementById('root'));
   root.render(
