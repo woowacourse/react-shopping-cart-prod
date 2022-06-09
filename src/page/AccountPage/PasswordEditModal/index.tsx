@@ -1,42 +1,20 @@
 import { useState } from 'react';
-import useSnackbar from 'hooks/useSnackbar';
-import useLogout from 'hooks/useLogout';
-
 import { Modal, Input, Title, AuthButton, Container } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-
 import { validatePassword } from 'utils/validator';
-import { MESSAGE, ROUTES } from 'utils/constants';
-import apiClient from 'apis/apiClient';
-import { useNavigate } from 'react-router-dom';
+import usePasswordEditAPI from './usePasswordEditAPI';
 
 const PasswordEditModal = ({ handleModal }) => {
-  const navigate = useNavigate();
-  const { logoutByError } = useLogout();
-  const [renderSnackbar] = useSnackbar();
-
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
 
-  const editPassword = async () => {
-    try {
-      if (!isCorrectPassword) return;
-
-      await apiClient.patch('/customers/password', {
-        password: currentPassword,
-        newPassword,
-      });
-
-      renderSnackbar(MESSAGE.UPDATE_PASSWORD_SUCCESS, 'SUCCESS');
-      handleModal();
-    } catch (error) {
-      const customError = error.response.data;
-      logoutByError(customError);
-      navigate(ROUTES.LOGIN);
-      renderSnackbar(customError.message, 'FAILED');
-    }
-  };
+  const { editPassword } = usePasswordEditAPI(
+    handleModal,
+    currentPassword,
+    newPassword,
+    isCorrectPassword,
+  );
 
   return (
     <Modal onCloseModal={handleModal}>
