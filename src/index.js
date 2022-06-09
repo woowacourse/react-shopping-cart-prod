@@ -21,7 +21,10 @@ const SERVER_URL4 = 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.co
 if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = 'http://localhost:3000';
 } else if (process.env.NODE_ENV === 'production') {
-  window.location.pathname = '/react-shopping-cart-prod/';
+  if (window.location.pathname === '/') {
+    window.location.pathname = '/react-shopping-cart-prod/';
+  }
+
   axios.defaults.baseURL = SERVER_URL1;
 }
 
