@@ -1,56 +1,27 @@
 import CheckBox from 'components/@shared/CheckBox';
 import Link from 'components/@shared/Link';
 import styled from 'styled-components';
-<<<<<<< HEAD
-import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redx';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { userActions } from 'redux/actions';
-=======
->>>>>>> 888b077 (refactor: LoginForm 비지니스로직 훅으로 이동)
+import Link from 'components/@shared/Link';
+import styled from 'styled-components';
 import LabeledInput from 'components/@shared/LabeledInput';
 import useLoginForm from './useLoginForm';
 
 function LoginForm() {
-<<<<<<< HEAD
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   const [checked, setChecked] = useState(false);
 
   const toggleChecked = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 
-    setChecked(prevState => !prevState);
+    setChecked((prevState) => !prevState);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!(e.target instanceof HTMLFormElement)) return;
-
-    const formElement = e.target.elements;
-    const getInputValue = createInputValueGetter(formElement);
-    const user = {
-      username: getInputValue('id'),
-      password: getInputValue('password'),
-    };
-
-    try {
-      const userInfo = await authAPI.login(user, checked);
-
-      dispatch(userActions.setUser(userInfo));
-      navigate(PATH.BASE);
-    } catch (error) {
-      if (error instanceof Error) {
-        alert(USER_MESSAGE.FAIL_LOGIN);
-      }
-    }
-  };
-=======
   const { handleSubmit } = useLoginForm();
->>>>>>> 888b077 (refactor: LoginForm 비지니스로직 훅으로 이동)
 
   return (
     <StyledForm onSubmit={handleSubmit}>
@@ -111,19 +82,9 @@ const StyledForm = styled.form`
 
 const StyledLoginHelper = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-top: 4px;
   width: 100%;
-`;
-
-const StyledKeepLogin = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  > label {
-    font-size: 10px;
-  }
 `;
 
 const StyledFindLoginInfo = styled.div`
