@@ -6,6 +6,8 @@ import ShoppingCart from 'components/@shared/ShoppingCart';
 import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { snackBarActions } from 'redux/reducers/snackBar';
+import cartAPI from 'apis/cart';
 
 type Props = {
   product: Product;
@@ -13,32 +15,30 @@ type Props = {
 };
 
 function ProductCard({ product, isInCart }: Props) {
-  const { id, name, price, stock, description, image } = {
+  const { id, name, price, description, imageUrl } = {
     ...product,
-    stock: Number(product.stock),
     price: Number(product.price),
   };
   const dispatch = useDispatch();
 
-  const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
+  const onClickCartButton = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(cartActions.addToCart(id));
-    alert(CART_MESSAGE.SUCCESS_ADD);
+    const data = await cartAPI.addCartItem(Number(id));
+    dispatch(cartActions.setCartItemList(data));
+    dispatch(snackBarActions.show(CART_MESSAGE.SUCCESS_ADD));
   };
 
   return (
-    <Link to={`${PATH.PRODUCT}/${id}`} disabled={stock <= 0}>
+    <>
       <StyledProductCard>
         <CardImageContainer>
-          {stock > 0 ? (
+          <Link to={`${PATH.PRODUCT}/${id}`}>
             <CardImageOverlay>
               <p>{description}</p>
               <div onClick={onClickCartButton}>구매하기</div>
             </CardImageOverlay>
-          ) : (
-            <OutOfStockOverlay>품절</OutOfStockOverlay>
-          )}
-          <img src={image} alt={name} />
+            <img src={imageUrl} alt={name} />
+          </Link>
         </CardImageContainer>
         <CardDescriptionContainer>
           <h3>{name}</h3>
@@ -53,7 +53,7 @@ function ProductCard({ product, isInCart }: Props) {
           </button>
         </CardButtonContainer>
       </StyledProductCard>
-    </Link>
+    </>
   );
 }
 
@@ -151,6 +151,7 @@ const CardDescriptionContainer = styled.div`
 
   p {
     font-size: 16px;
+    font-weight: bold;
   }
 `;
 

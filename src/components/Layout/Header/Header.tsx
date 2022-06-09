@@ -9,23 +9,23 @@ import { isLogin } from 'utils/auth';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { userActions } from 'redux/actions';
+import { cartActions, userActions } from 'redux/actions';
+import { snackBarActions } from 'redux/reducers/snackBar';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+    (state: { cart: CartStoreState }) => state.cart.cart
   );
   const userName = useSelector((state: { user: User }) => state.user.username);
 
-  const [showUserToggle, setShowUserToggle] = useState(false);
-
   const onClickLogoutButton = () => {
+    dispatch(snackBarActions.show('로그아웃 되었습니다.'));
     dispatch(userActions.resetUser());
+    dispatch(cartActions.reset());
 
-    localStorage.removeItem('accessToken');
     sessionStorage.removeItem('accessToken');
 
     navigate(PATH.BASE);

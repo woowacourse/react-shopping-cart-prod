@@ -1,4 +1,4 @@
-import { Cart, CartAction, CartProductState, CartStoreState } from './cart';
+import { Cart, CartAction, CartStoreState } from './cart';
 import { Product, ProductAction, ProductStoreState } from './product';
 import { User, UserAction } from './user';
 
@@ -7,7 +7,6 @@ export type {
   ProductAction,
   ProductStoreState,
   CartAction,
-  CartProductState,
   Cart,
   CartStoreState,
   User,

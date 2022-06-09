@@ -1,83 +1,134 @@
 import { CART_MESSAGE } from 'constants/message';
 import CartItem from 'components/CartItem/CartItem';
-import { CartProductState } from 'types';
+import { Cart } from 'types';
 import CheckBox from 'components/@shared/CheckBox';
 import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import cartAPI from 'apis/cart';
+import { PayModal } from 'awesome-pay';
 
 type Props = {
-  cartItems: Array<CartProductState>;
+  cartItems: Cart[];
 };
 
 function CartContent({ cartItems }: Props) {
+  const [checkedItems, setCheckedItems] = useState<Array<number>>([]);
   const dispatch = useDispatch();
 
+  const checkCartItem = (targetId: number) => {
+    if (checkedItems.includes(targetId)) {
+      const newCheckedItems = checkedItems.filter(
+        (checkedId) => checkedId !== targetId
+      );
+      setCheckedItems(newCheckedItems);
+      return;
+    }
+    setCheckedItems((prev) => [...prev, targetId]);
+  };
+
   const calculateTotalMoney = () => {
-    return cartItems.reduce((prevMoney, item) => {
-      const { product, stock, checked } = item;
+    return cartItems
+      .filter((item) => checkedItems.includes(item.id))
+      .reduce((prevMoney, item) => {
+        const { quantity, product } = item;
 
-      if (!checked) return prevMoney;
-
-      return prevMoney + product.price * stock;
-    }, 0);
+        return prevMoney + product.price * quantity;
+      }, 0);
   };
 
   const isAllChecked = () => {
-    return cartItems.every(item => item.checked === true);
+    return (
+      checkedItems.length !== 0 && cartItems.length === checkedItems.length
+    );
   };
 
   const onChangeAllChecked = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 
-    dispatch(cartActions.toggleCheckAllProduct(!isAllChecked()));
+    if (isAllChecked()) {
+      setCheckedItems([]);
+      return;
+    }
+    setCheckedItems(cartItems.map((item) => item.id));
   };
 
   const onClickCheckedDeleteButton = () => {
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteCheckedToCart());
+      checkedItems.forEach(async (id) => {
+        const cartList = await cartAPI.deleteCartItem(id);
+        dispatch(cartActions.setCartItemList(cartList));
+        setCheckedItems([]);
+      });
     }
   };
 
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleShowModal = () => {
+    setShowModal((prevState) => !prevState);
+  };
+
+  const paymentFunc = () => {
+    toggleShowModal();
+    alert(
+      '결제기능 결제기능 결제기능 결제기능 결제기능 결제기능 결제기능 결제기능'
+    );
+  };
+
   return (
-    <StyledContentBox>
-      <StyledProductContainer>
-        <StyledProductOptions>
-          <StyledAllCheckOption>
-            <CheckBox
-              id="all-check"
-              checked={isAllChecked()}
-              onChange={onChangeAllChecked}
+    <>
+      <StyledContentBox>
+        <StyledProductContainer>
+          <StyledProductOptions>
+            <StyledAllCheckOption>
+              <CheckBox
+                id="all-check"
+                checked={isAllChecked()}
+                onChange={onChangeAllChecked}
+              />
+              <p>전체 선택/해제</p>
+            </StyledAllCheckOption>
+            <StyledDeleteButton
+              type="button"
+              onClick={onClickCheckedDeleteButton}
+            >
+              선택 상품 삭제
+            </StyledDeleteButton>
+          </StyledProductOptions>
+          {cartItems.map(({ id, quantity, product }) => (
+            <CartItem
+              product={product}
+              stock={quantity}
+              checked={checkedItems.includes(id)}
+              checkCartItem={checkCartItem}
+              cartId={id}
+              key={product.id}
             />
-            <p>전체 선택/해제</p>
-          </StyledAllCheckOption>
-          <StyledDeleteButton
-            type="button"
-            onClick={onClickCheckedDeleteButton}
-          >
-            선택 상품 삭제
-          </StyledDeleteButton>
-        </StyledProductOptions>
-        {cartItems.map(({ product, stock, checked }) => (
-          <CartItem
-            product={product}
-            stock={stock}
-            checked={checked}
-            key={product.id}
-          />
-        ))}
-      </StyledProductContainer>
-      <StyledTotalContainer>
-        <h3>결제예상금액</h3>
-        <hr />
-        <StyledTotalMoney>
-          {calculateTotalMoney().toLocaleString('ko-KR')} 원
-        </StyledTotalMoney>
-        <StyledOrderButton type="button">주문하기</StyledOrderButton>
-      </StyledTotalContainer>
-    </StyledContentBox>
+          ))}
+        </StyledProductContainer>
+        <StyledTotalContainer>
+          <h3>결제예상금액</h3>
+          <hr />
+          <StyledTotalMoney>
+            {calculateTotalMoney().toLocaleString('ko-KR')} 원
+          </StyledTotalMoney>
+          <StyledOrderButton onClick={toggleShowModal} type="button">
+            주문하기
+          </StyledOrderButton>
+        </StyledTotalContainer>
+      </StyledContentBox>
+      <PayModal
+        showModal={showModal}
+        toggleShowModal={toggleShowModal}
+        companyName="짱바구니"
+        totalPrice={calculateTotalMoney()}
+        paymentFunc={paymentFunc}
+      />
+    </>
   );
 }
 
