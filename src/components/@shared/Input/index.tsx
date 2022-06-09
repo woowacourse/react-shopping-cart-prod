@@ -6,6 +6,7 @@ interface InputProps {
   type?: string;
   value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   maxLength?: number;
   disabled?: boolean;
   isValid?: boolean;
@@ -21,6 +22,7 @@ function Input({ ...props }: InputProps) {
         id={props.htmlFor}
         value={props.value}
         onChange={props.onChange}
+        onBlur={props.onBlur}
         maxLength={props.maxLength}
         disabled={props.disabled}
         required
