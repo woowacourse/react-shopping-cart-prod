@@ -33,9 +33,8 @@ function App() {
 
       const response = await apiClient.get('/customers');
       dispatch(doLogin({ nickname: response.data.nickname }));
-      console.log('hi');
     } catch (error) {
-      alert(error);
+      console.error(error);
     }
   };
 
