@@ -9,6 +9,12 @@
 
 ```bash
 # 1. 레포지토리 클론
+# 2. .env 파일 루트 경로에 생성 후 아래 내용 작성
+  REACT_APP_SERVER1=<YOUR_SERVER1_LINK>
+  REACT_APP_SERVER2=<YOUR_SERVER2_LINK>
+  REACT_APP_SERVER3=<YOUR_SERVER3_LINK>
+  REACT_APP_SERVER4=<YOUR_SERVER4_LINK>
+  REACT_APP_SERVER5=<YOUR_SERVER5_LINK>
 # 2. 모듈 설치
   npm install
 # 3. 리액트 앱 실행
