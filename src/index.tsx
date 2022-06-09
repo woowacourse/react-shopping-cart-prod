@@ -17,9 +17,9 @@ const store = createStore(
   composeWithDevTools(applyMiddleware(promiseMiddleware, ReduxThunk))
 );
 
-if (process.env.NODE_ENV === 'development') {
-  worker.start().catch((err) => console.error(err));
-}
+// if (process.env.NODE_ENV === 'development') {
+// worker.start().catch((err) => console.error(err));
+// }
 
 root.render(
   <React.StrictMode>
