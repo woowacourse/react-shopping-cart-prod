@@ -1,24 +1,13 @@
 import Header from 'components/common/Header';
 import Loading from 'components/common/Loading';
-import { useAppDispatch } from 'hooks/useAppDispatch';
-import { Suspense, useEffect } from 'react';
+import useUser from 'hooks/useUser';
+import { Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { getUser } from 'redux/user/thunk';
 import Routers from 'Routers';
 import styled from 'styled-components';
 
 function App() {
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const accessToken = localStorage.getItem('access-token');
-
-    if (!accessToken) return;
-
-    dispatch(getUser()).catch(() => {
-      localStorage.removeItem('access-token');
-    });
-  }, []);
+  useUser();
 
   return (
     <Suspense fallback={<Loading />}>
