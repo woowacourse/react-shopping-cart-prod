@@ -28,11 +28,15 @@ function NavBar() {
         <h1>WOOWA SHOP</h1>
       </NavBarTitle>
       <NavBarMenu>
-        <Link to={routes.cart}>장바구니</Link>
-        <Link to={routes.orderList}>주문목록</Link>
-        {!isLoggedIn && <Link to={routes.login}>로그인</Link>}
+        {!isLoggedIn && (
+          <>
+            <Link to={routes.login}>로그인</Link>
+            <Link to={routes.signup}>회원가입</Link>
+          </>
+        )}
         {isLoggedIn && (
           <>
+            <Link to={routes.cart}>장바구니</Link>
             <Link to={routes.userInfo}>회원 정보 수정</Link>
             <button onClick={onClickLogout}>로그아웃</button>
           </>
