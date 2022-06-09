@@ -35,16 +35,32 @@ const authAPI = {
     }
   },
 
+  duplicateUsername: async function (username: User['username']) {
+    try {
+      return await axios.post(PATH.REQUEST_SIGNUP_DUPLICATION_USERNAME, {
+        username,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  },
+
+  duplicateEmail: async function (email: User['email']) {
+    try {
+      return await axios.post(PATH.REQUEST_SIGNUP_DUPLICATION_EMAIL, {
+        email,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  },
+
   signup: async function (user: User) {
     try {
-      await axios.post(PATH.REQUEST_SIGNUP_DUPLICATION_USERNAME, {
-        username: user.username,
-      });
-
-      await axios.post(PATH.REQUEST_SIGNUP_DUPLICATION_EMAIL, {
-        email: user.email,
-      });
-
       await axios.post(PATH.REQUEST_SIGNUP, user);
     } catch (error) {
       if (error instanceof Error) {

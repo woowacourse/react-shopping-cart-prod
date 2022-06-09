@@ -1,5 +1,18 @@
 import styled, { css } from 'styled-components';
 
+const CheckDuplicateButton = styled.button`
+  float: right;
+
+  border-radius: 5px;
+
+  margin-right: 10px;
+  padding: 2px 10px;
+
+  background: ${({ theme: { colors } }) => colors.pink};
+
+  font-size: 11px;
+`;
+
 const ErrorSign = styled.span`
   margin: 0 24px 0 12px;
 
@@ -24,4 +37,4 @@ const ErrorMessage = styled.span`
   `}
 `;
 
-export { ErrorSign, ErrorMessage };
+export { CheckDuplicateButton, ErrorSign, ErrorMessage };
