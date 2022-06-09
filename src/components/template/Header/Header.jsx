@@ -6,6 +6,9 @@ import { logoutUser } from 'store/actions/user.action';
 
 import useWindowsSize from 'hooks/useWindowSize';
 
+import { API_URLS } from 'api/constants';
+import { SERVER_NAME } from 'api/customInstance';
+
 import { Icon } from 'components/common';
 
 import * as S from 'components/template/Header/Header.style';
@@ -45,6 +48,13 @@ function Header({ isLoggedIn }) {
     }
   };
 
+  const handleServerChange = ({ target: { selectedIndex } }) => {
+    window.sessionStorage.setItem('serverNumber', selectedIndex);
+    dispatch(logoutUser());
+    navigate(ROUTE.HOME);
+    window.location.reload();
+  };
+
   return (
     <S.Container>
       <S.Inner>
@@ -58,6 +68,13 @@ function Header({ isLoggedIn }) {
             BLVIC&apos;S CAMPING
           </S.Logo>
         </S.NavLink>
+        <select name="server-select" onChange={handleServerChange} value={SERVER_NAME}>
+          {API_URLS.map(({ name }) => (
+            <option key={name} value={name}>
+              {name}
+            </option>
+          ))}
+        </select>
         <S.Nav>
           {navLinkInfo.map(({ path, name, ...props }) => (
             <S.NavLink key={name} to={path} {...props}>
