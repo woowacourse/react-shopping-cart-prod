@@ -45,6 +45,7 @@ const MESSAGE = {
   EXIST_ITEM_IN_CART: "장바구니에 이미 추가된 상품입니다.",
   INVALID_ACCESS: "잘못된 접근입니다.",
   LOGIN_REQUEST_FOR_ADD_CART: "장바구니에 상품을 추가하려면 로그인해주세요.",
+  LOGIN_REQUEST_FOR_USE_CART: "장바구니는 로그인 후 이용해주세요!",
   SERVER_REQUEST_FAIL: "서버와의 연결에 문제가 있습니다.",
 };
 

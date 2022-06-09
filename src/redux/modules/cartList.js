@@ -73,7 +73,7 @@ export const getCartList = () => async (dispatch) => {
     dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.cartList));
   } catch (error) {
     if (error.response?.status === 401) {
-      dispatch(toggleSnackbarOpen("장바구니는 로그인 후 이용해주세요!"));
+      dispatch(toggleSnackbarOpen(MESSAGE.LOGIN_REQUEST_FOR_USE_CART));
       return;
     }
     if (error.response?.status === 500) {
