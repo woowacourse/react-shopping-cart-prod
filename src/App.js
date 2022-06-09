@@ -55,8 +55,8 @@ function App() {
             <Route path={ROUTES.LOGIN} element={<LoginPage />} />
             <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
             <Route path={ROUTES.ACCOUNT} element={<AccountPage />} />
-            <Route path={ROUTES.SERVER} element={<SeverSelectPage />} />
           </Route>
+          <Route path={ROUTES.SERVER} element={<SeverSelectPage />} />
         </Routes>
         <GlobalStyles />
       </BrowserRouter>
