@@ -59,7 +59,14 @@ const cartReducer = (state = initialState, action): CartState => {
       } = action;
 
       const newCartList = state.cartList.filter(cart => cart.id !== deletedCartId);
-      return { ...state, isLoading: false, cartList: newCartList };
+      return {
+        ...state,
+        isLoading: false,
+        cartList: newCartList,
+        selectedCartItem: state.selectedCartItem.filter(
+          selectedCartId => selectedCartId !== deletedCartId,
+        ),
+      };
     }
 
     case CartActionType.DELETE_CART_FAILED: {
