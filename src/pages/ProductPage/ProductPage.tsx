@@ -9,9 +9,8 @@ import Spinner from 'components/Spinner/Spinner';
 
 function ProductPage() {
   const { id } = useParams();
-  const { isLoading, productDetail, error, addItemToCart } = useProductDetail(
-    id as string
-  );
+  const { isLoading, productDetail, isAddedToCart, error, addItemToCart } =
+    useProductDetail(id as string);
 
   if (error) {
     alert(error);
@@ -25,7 +24,7 @@ function ProductPage() {
     return (
       <S.PageBox>
         <S.ImageBox>
-          <img src={productDetail.image} alt={productDetail.name} />
+          <img src={productDetail.imageUrl} alt={productDetail.name} />
         </S.ImageBox>
         <S.Title>{productDetail.name}</S.Title>
         <DivideLine color="gray" thickness="thin" />
@@ -37,7 +36,7 @@ function ProductPage() {
           <dt>제품 설명</dt>
           <dd>{productDetail.description}</dd>
         </S.DescriptionList>
-        {productDetail.isAddedToCart ? (
+        {isAddedToCart ? (
           <Button disabled>이미 추가됨</Button>
         ) : (
           <Button onClick={addItemToCart}>장바구니</Button>

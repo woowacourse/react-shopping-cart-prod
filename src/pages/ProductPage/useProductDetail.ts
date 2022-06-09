@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import axios from 'axios';
+import { SERVER_URL } from 'configs/api';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreState } from 'types';
 
@@ -16,9 +18,12 @@ const useProductDetail = (id: string) => {
     productDetail: productDetailState.productDetail,
     error: productDetailState.error,
   }));
+  const accessToken = localStorage.getItem('accessToken');
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   const addItemToCart = () => {
-    dispatch(actions.addItemToCart(id, 1));
+    dispatch(actions.addItemToCart(accessToken as string, Number(id), 1));
+    setIsAddedToCart(true);
   };
 
   useEffect(() => {
@@ -27,9 +32,22 @@ const useProductDetail = (id: string) => {
     }
   }, [id, dispatch]);
 
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: `${SERVER_URL}/api/customers/cart/${id}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((res) => {
+      setIsAddedToCart(res.data.exists);
+    });
+  }, [accessToken, id]);
+
   return {
     isLoading,
     productDetail,
+    isAddedToCart,
     error,
     addItemToCart,
   };

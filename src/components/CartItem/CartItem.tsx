@@ -3,7 +3,7 @@ import { Product } from 'types';
 
 import * as S from 'components/CartItem/CartItem.styled';
 import Checkbox from 'components/Checkbox/Checkbox';
-import Input from 'components/QuantityInput/QuantityInput';
+import QuantityInput from 'components/QuantityInput/QuantityInput';
 
 import ICONS from 'constants/icons';
 
@@ -29,13 +29,13 @@ function CartItem({
       <S.CartItemInformationBox>
         <Checkbox checked={checked} onChange={onCheck} />
         <S.ImageBox>
-          <img src={product.image} alt={product.name} />
+          <img src={product.imageUrl} alt={product.name} />
         </S.ImageBox>
         <p>{product.name}</p>
       </S.CartItemInformationBox>
       <S.CartItemControlBox>
         <S.Button onClick={onClickRemove}>{ICONS.REMOVE}</S.Button>
-        <Input
+        <QuantityInput
           type="number"
           min="1"
           max="200"

@@ -41,43 +41,49 @@ const actions = {
     return { type: TYPES.GET_PRODUCT_LIST, payload: request };
   },
   getProductDetail: (id: string) => {
-    const request = axios.get(`${API.PRODUCTS}/${id}`).then((res) => res.data);
+    const request = axios
+      .get(`${SERVER_URL}/api/products/${id}`)
+      .then((res) => res.data);
 
     return { type: TYPES.GET_PRODUCT_DETAIL, payload: request };
   },
-  getCart: () => {
-    const request = axios.get(API.CART).then((res) => res.data);
+  getCart: (accessToken: string) => {
+    const request = axios({
+      method: 'get',
+      url: `${SERVER_URL}/api/customers/cart`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((res) => res.data);
 
     return { type: TYPES.GET_CART, payload: request };
   },
-  addItemToCart: (productId: string, quantity: number) => {
-    const request = axios
-      .post(API.CART, {
-        productId,
-        quantity,
-      })
-      .then((res) => res.data);
+  addItemToCart: (accessToken: string, productId: number, quantity: number) => {
+    axios({
+      method: 'post',
+      url: `${SERVER_URL}/api/customers/cart`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      data: { productId, quantity },
+    }).then((res) => res.data);
 
-    return { type: TYPES.ADD_ITEM_TO_CART, payload: request };
+    return { type: TYPES.ADD_ITEM_TO_CART };
   },
-  removeCartItem: (productId: string | string[]) => {
-    const productIdList = Array.isArray(productId) ? productId : [productId];
-    const query = productIdList.map((productId) => `id=${productId}`).join('&');
-    const request = axios
-      .delete(`${API.CART}?${query}`)
-      .then((res) => res.data);
 
-    return { type: TYPES.REMOVE_CART_ITEM, payload: request };
+  removeCartItem: (accessToken: string, cartItemId: number) => {
+    axios({
+      method: 'delete',
+      url: `${SERVER_URL}/api/customers/cart/${cartItemId}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((res) => res.data);
+
+    return { type: TYPES.REMOVE_CART_ITEM };
   },
   updateQuantity: (productId: string, quantity: string) => {
-    const request = axios
-      .patch(API.CART, {
-        productId,
-        quantity,
-      })
-      .then((res) => res.data);
-
-    return { type: TYPES.UPDATE_QUANTITY, payload: request };
+    return { type: TYPES.UPDATE_QUANTITY };
   },
   handleCheck: (id: string, checked: boolean) => {
     return { type: TYPES.HANDLE_CHECK, payload: { id, checked } };

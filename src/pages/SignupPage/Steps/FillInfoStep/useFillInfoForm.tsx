@@ -15,6 +15,7 @@ const useFillInfoForm = () => {
     contact: '',
     password: '',
     'confirm-password': '',
+    email: '',
   });
   const [isEmailUnique, setIsEmailUnique] = useState(false);
   const [errors, setErrors] = useState<Record<string, string> | undefined>();
@@ -36,11 +37,14 @@ const useFillInfoForm = () => {
     const email = values['email'];
 
     try {
-      await axios({
+      const { isDuplicated } = await axios({
         method: 'get',
         url: `${SERVER_URL}/api/validation?email=${email}`,
-      });
+      }).then((res) => res.data);
 
+      if (isDuplicated) {
+        throw Error('중복된 이메일입니다.');
+      }
       setIsEmailUnique(true);
     } catch (e) {
       if (axios.isAxiosError(e)) {
