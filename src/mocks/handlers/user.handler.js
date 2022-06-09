@@ -1,3 +1,8 @@
+import { rest } from 'msw';
+
+import { API_ENDPOINT } from 'api/constants';
+import { BASE_URL } from 'api/customInstance';
+
 const userDB = () => {
   let user = JSON.parse(window.localStorage.getItem('server-user')) || [];
 
@@ -18,7 +23,7 @@ const findUserData = (requestEmail) => {
   return currentUserList.find(({ email }) => email === requestEmail);
 };
 
-export const handleCheckUniqueEmailRequest = (req, res, ctx) => {
+const handleCheckUniqueEmailRequest = (req, res, ctx) => {
   const currentUserList = getUser();
   const email = req.url.searchParams.get('email');
 
@@ -27,7 +32,7 @@ export const handleCheckUniqueEmailRequest = (req, res, ctx) => {
   return res(ctx.status(200), ctx.json({ unique: isUnique }));
 };
 
-export const handlePostUserRequest = (req, res, ctx) => {
+const handlePostUserRequest = (req, res, ctx) => {
   const currentUserList = getUser();
   const userData = req.body;
 
@@ -38,7 +43,7 @@ export const handlePostUserRequest = (req, res, ctx) => {
   return res(ctx.status(201));
 };
 
-export const handleLoginRequest = (req, res, ctx) => {
+const handleLoginRequest = (req, res, ctx) => {
   const { email: requestEmail, password: requestPassword } = req.body;
 
   const userData = findUserData(requestEmail);
@@ -52,7 +57,7 @@ export const handleLoginRequest = (req, res, ctx) => {
   return res(ctx.status(400));
 };
 
-export const handleUserGetRequest = (req, res, ctx) => {
+const handleUserGetRequest = (req, res, ctx) => {
   const token = req.headers.get('Authorization').split(' ')[1];
 
   const userData = findUserData(token);
@@ -66,7 +71,7 @@ export const handleUserGetRequest = (req, res, ctx) => {
   return res(ctx.status(404));
 };
 
-export const handlePasswordCheckRequest = (req, res, ctx) => {
+const handlePasswordCheckRequest = (req, res, ctx) => {
   const token = req.headers.get('Authorization').split(' ')[1];
   const { password } = req.body;
 
@@ -80,7 +85,7 @@ export const handlePasswordCheckRequest = (req, res, ctx) => {
   return res(ctx.status(200), ctx.json({ success }));
 };
 
-export const handleUserDataUpdateRequest = (req, res, ctx) => {
+const handleUserDataUpdateRequest = (req, res, ctx) => {
   const currentUserList = getUser();
 
   const token = req.headers.get('Authorization').split(' ')[1];
@@ -99,7 +104,7 @@ export const handleUserDataUpdateRequest = (req, res, ctx) => {
   return res(ctx.status(204));
 };
 
-export const handleUserDeleteRequest = (req, res, ctx) => {
+const handleUserDeleteRequest = (req, res, ctx) => {
   const currentUserList = getUser();
 
   const token = req.headers.get('Authorization').split(' ')[1];
@@ -110,3 +115,14 @@ export const handleUserDeleteRequest = (req, res, ctx) => {
 
   return res(ctx.status(204));
 };
+
+export default [
+  rest.get(`${BASE_URL}${API_ENDPOINT.USER.EMAIL_CHECK}`, handleCheckUniqueEmailRequest),
+  rest.post(`${BASE_URL}${API_ENDPOINT.USER.BASE}`, handlePostUserRequest),
+  rest.post(`${BASE_URL}${API_ENDPOINT.LOGIN}`, handleLoginRequest),
+  rest.get(`${BASE_URL}${API_ENDPOINT.USER.ME}`, handleUserGetRequest),
+  rest.post(`${BASE_URL}${API_ENDPOINT.USER.PASSWORD_CHECK}`, handlePasswordCheckRequest),
+  rest.patch(`${BASE_URL}${API_ENDPOINT.USER.ME}`, handleUserDataUpdateRequest),
+  rest.patch(`${BASE_URL}${API_ENDPOINT.USER.PASSWORD}`, handleUserDataUpdateRequest),
+  rest.delete(`${BASE_URL}${API_ENDPOINT.USER.ME}`, handleUserDeleteRequest),
+];

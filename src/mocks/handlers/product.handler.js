@@ -1,7 +1,12 @@
+import { rest } from 'msw';
+
+import { API_ENDPOINT } from 'api/constants';
+import { BASE_URL } from 'api/customInstance';
+
 import data from 'mocks/data';
 import images from 'mocks/images';
 
-export const handleGetProductsRequest = (req, res, ctx) => {
+const handleGetProductsRequest = (req, res, ctx) => {
   const page = req.url.searchParams.get('page');
   const limit = req.url.searchParams.get('limit');
 
@@ -18,7 +23,7 @@ export const handleGetProductsRequest = (req, res, ctx) => {
   );
 };
 
-export const handleGetImageRequest = async (req, res, ctx) => {
+const handleGetImageRequest = async (req, res, ctx) => {
   const { imageFileName } = req.params;
   const imageName = imageFileName.split('.')[0];
 
@@ -32,3 +37,8 @@ export const handleGetImageRequest = async (req, res, ctx) => {
     ctx.body(imageBuffer),
   );
 };
+
+export default [
+  rest.get(`${BASE_URL}${API_ENDPOINT.PRODUCTS}`, handleGetProductsRequest),
+  rest.get(`${BASE_URL}/static/images/:imageFileName`, handleGetImageRequest),
+];
