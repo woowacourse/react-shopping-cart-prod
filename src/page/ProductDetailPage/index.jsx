@@ -2,8 +2,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import useCart from 'hooks/useCart';
-import useGetProductAPI from 'hooks/apis/useGetProductApi';
-import usePutCartAPI from 'hooks/apis/usePutCartAPI';
+import useGetProductAPI from 'page/ProductDetailPage/useGetProductApi';
+import usePutCartAPI from 'hooks/usePutCartAPI';
 
 import { Image } from 'components';
 import Styled from 'page/ProductDetailPage/index.style';

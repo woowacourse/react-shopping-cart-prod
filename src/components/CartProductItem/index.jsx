@@ -1,8 +1,8 @@
 // @ts-nocheck
 import PropTypes from 'prop-types';
 import useOrder from 'hooks/useOrder';
-import usePutCartAPI from 'hooks/apis/usePutCartAPI';
-import useDeleteProductAPI from 'hooks/apis/useDeleteProductAPI';
+import usePutCartAPI from 'hooks/usePutCartAPI';
+import useDeleteProductAPI from 'components/CartProductItem/useDeleteProductAPI';
 
 import { Image, Counter, CheckBox } from 'components';
 import Styled from 'components/CartProductItem/index.style';
@@ -12,7 +12,6 @@ import autoComma from 'utils/autoComma';
 const CartProductItem = ({ productId, name, price, image, quantity }) => {
   const [isInOrder, updateOrder] = useOrder(productId);
   const { putCart } = usePutCartAPI();
-
   const { deleteProduct } = useDeleteProductAPI(productId);
 
   return (

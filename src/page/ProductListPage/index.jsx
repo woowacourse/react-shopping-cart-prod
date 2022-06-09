@@ -4,8 +4,8 @@ import { useEffect } from 'react';
 import { ProductItem } from 'components';
 import Styled from './index.style';
 
-import useGetProductsAPI from 'hooks/apis/useGetProductsAPI';
-import useGetCartAPI from 'hooks/apis/useGetCartAPI';
+import useGetProductsAPI from 'page/ProductListPage/useGetProductsAPI';
+import useGetCartAPI from 'hooks/useGetCartAPI';
 
 const ProductListPage = () => {
   const { getProducts, products, isProductsLoading } = useGetProductsAPI();

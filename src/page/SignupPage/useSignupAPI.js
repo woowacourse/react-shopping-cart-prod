@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useSnackbar from '../useSnackbar';
+import useSnackbar from '../../hooks/useSnackbar';
 import apiClient from 'apis/apiClient';
 import { MESSAGE, ROUTES } from 'utils/constants';
 

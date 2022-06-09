@@ -7,7 +7,7 @@ import Styled from './index.style';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 import useCheckAuth from 'hooks/useCheckAuth';
-import useSignupAPI from 'hooks/apis/useSignupAPI';
+import useSignupAPI from 'page/SignupPage/useSignupAPI';
 
 const SignupPage = () => {
   useCheckAuth();

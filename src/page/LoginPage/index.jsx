@@ -5,7 +5,7 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import Styled from './index.style';
 
 import useCheckAuth from 'hooks/useCheckAuth';
-import useLoginAPI from 'hooks/apis/useLoginAPI';
+import useLoginAPI from 'page/LoginPage/useLoginAPI';
 
 const LoginPage = () => {
   const { email, setEmail, password, setPassword, login, isFulfilled } = useLoginAPI();
