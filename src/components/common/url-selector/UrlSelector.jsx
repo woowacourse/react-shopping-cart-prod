@@ -12,6 +12,7 @@ function UrlSelector(props) {
     localStorage.setItem("url", URL[crewName]);
     localStorage.setItem("crewName", crewName);
     axios.defaults.baseURL = url;
+    location.reload("/");
   };
 
   return (
