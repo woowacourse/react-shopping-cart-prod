@@ -12,18 +12,18 @@ const axios = Axios.create({
   // 차리
   // baseURL: 차리_URL,
   // 매트
-  // baseURL: 매트_URL,
+  baseURL: 매트_URL,
   // 야호
-  baseURL: 야호_URL,
+  // baseURL: 야호_URL,
 });
 
 const axiosWithToken = Axios.create({
   // 차리
   // baseURL: 차리_URL,
   // 매트
-  // baseURL: 매트_URL,
+  baseURL: 매트_URL,
   // 야호
-  baseURL: 야호_URL,
+  // baseURL: 야호_URL,
 });
 
 axiosWithToken.interceptors.request.use(
