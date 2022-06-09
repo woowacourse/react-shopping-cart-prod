@@ -110,9 +110,9 @@ function SignupForm() {
     }
 
     const user = {
-      username: getInputValue('username'),
+      username,
       password,
-      email: getInputValue('email'),
+      email,
       address: getInputValue('address'),
       phoneNumber: formatPhoneNumber(phoneNumber),
     };
