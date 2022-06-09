@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "/",
   "dependencies": {
+    "awesome-pay": "^1.1.3",
     "axios": "^0.27.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
