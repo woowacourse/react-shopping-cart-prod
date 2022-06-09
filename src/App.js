@@ -16,6 +16,7 @@ import {
   AccountPage,
   PaymentPage,
 } from 'page';
+import ServerSelectPage from 'page/ServerSelectPage';
 import { Layout, Snackbar, GlobalStyles, theme } from 'components';
 
 import { doGetCart } from 'modules/cart';
@@ -65,6 +66,7 @@ function App() {
       <BrowserRouter basename={BASE_URL}>
         <Routes>
           <Route element={<Layout />}>
+            <Route path="/server" element={<ServerSelectPage />} />
             <Route path={ROUTES.HOME} element={<ProductListPage />} />
             <Route path={ROUTES.DETAILS} element={<ProductDetailPage />} />
             <Route path={ROUTES.CART} element={<CartPage />} />

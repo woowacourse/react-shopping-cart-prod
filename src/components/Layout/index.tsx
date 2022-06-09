@@ -16,7 +16,11 @@ const Layout = () => {
   const isAuthenticated = getCookie('accessToken');
 
   useEffect(() => {
-    setIsHeaderShow(location.pathname !== '/login' && location.pathname !== '/signup');
+    setIsHeaderShow(
+      location.pathname !== '/login' &&
+        location.pathname !== '/signup' &&
+        location.pathname !== '/server',
+    );
   }, [location]);
 
   return (
