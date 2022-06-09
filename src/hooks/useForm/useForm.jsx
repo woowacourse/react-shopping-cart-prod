@@ -100,8 +100,6 @@ function useForm() {
     setErrors(structuredClone(initialErrors));
   }, []);
 
-  // 우리의 handleChange를 호출하면서, 사용자가 직접 넣은 handleChange도 실행 같이 해주고 싶다.
-
   const register = (name, options) => {
     if (
       options?.customValidator &&
