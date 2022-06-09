@@ -6,8 +6,6 @@ const URL = {
   베루스: "http://ec2-52-79-228-178.ap-northeast-2.compute.amazonaws.com:8080",
 };
 
-const BASE_URL = URL.토닉;
-
 const PATH = {
   MAIN: "/",
   LOGIN: "/login",
@@ -69,7 +67,6 @@ const REGULAR_EXPRESSION = {
 
 export {
   URL,
-  BASE_URL,
   PATH,
   STATUS,
   ERROR_STATUS,

@@ -12,7 +12,6 @@ import { getCookie } from "@/utils/cookie";
 import { deleteCookie } from "@/utils/cookie";
 
 import {
-  BASE_URL,
   PATH,
   STATUS,
   ERROR_STATUS,

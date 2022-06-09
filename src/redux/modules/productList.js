@@ -1,6 +1,5 @@
 import axios from "axios";
 import createAction from "@/redux/createAction";
-import { BASE_URL } from "@/constants";
 
 export const ACTION_TYPES = {
   GET_PRODUCT_LIST_START: "GET_PRODUCT_LIST_START",

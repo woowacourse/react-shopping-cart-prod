@@ -8,7 +8,6 @@ import Form from "@/components/common/form/Form";
 import Field from "@/components/common/field/Field";
 
 import {
-  BASE_URL,
   MESSAGE,
   STATUS,
   ERROR_STATUS,
