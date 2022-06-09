@@ -9,6 +9,12 @@ const initialState = {
 };
 
 const reducer = {
+  // 장바구니 목록 초기화
+  initCartList(state) {
+    state.item = [];
+    state.listAsyncState = createAsyncState.initial();
+  },
+
   // 장바구니 전체 목록 갱신
   updateCartList(state, { itemList = [] }) {
     state.items = itemList.map((item) => ({ ...item, isChecked: true }));

@@ -3,6 +3,8 @@ import { createAction } from 'lib/redux-template';
 import { reducer } from './reducer';
 
 const cartActions = {
+  initList: () => createAction(reducer.initCartList),
+
   updateList: {
     success: (itemList = []) => createAction(reducer.updateCartList, { itemList }),
     pending: () => createAction(reducer.updateCartList_Pending),
