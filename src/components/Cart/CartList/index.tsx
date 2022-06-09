@@ -35,7 +35,6 @@ const CartList = ({ cartList }: CartListProps) => {
           <CheckBox
             id='check'
             checked={isAllSelected}
-            disabled={!totalItemCount}
             onChange={() => dispatch(checkAllCartItem(isAllSelected))}
           />
           <label htmlFor='check'>선택해제</label>
