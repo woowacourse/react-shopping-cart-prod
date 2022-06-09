@@ -1,3 +1,5 @@
+import { getCookie } from '@/utils';
+
 export type CustomerState = {
   isLoggedIn: boolean;
 };
@@ -5,7 +7,7 @@ export type CustomerState = {
 export type Action = ReturnType<typeof login> | ReturnType<typeof logout>;
 
 const initialState: CustomerState = {
-  isLoggedIn: false,
+  isLoggedIn: !!getCookie('accessToken'),
 };
 
 const LOGIN = 'customer/LOGIN' as const;
