@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { selectedApiName } from 'page/SeverSelectPage';
 import { getCookie } from 'utils/cookie';
 
 const AUTH_API_URL = {
@@ -9,7 +10,7 @@ const AUTH_API_URL = {
 };
 
 export const isApiTest = true;
-const selectedApiName = '이프';
+// export let selectedApiName = '찬';
 
 if (isApiTest) {
   console.log(`${selectedApiName}의 API로 연결하였습니다.`);
