@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './redux/store';
 
 import { SnackBar } from './components/@shared';
-import { NavBar } from './components';
+import { NavBar, ProtectRoute } from './components';
 import {
   Cart,
   Login,
@@ -24,13 +24,15 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <NavBar />
       <Routes>
+        <Route element={<ProtectRoute />}>
+          <Route path={routes.cart} element={<Cart />} />
+          <Route path={routes.orderList} element={<OrderList />} />
+          <Route path={routes.userInfo} element={<UserInfo />} />
+        </Route>
         <Route path={routes.home} element={<ProductList />} />
         <Route path={routes.productDetail()} element={<ProductDetail />} />
-        <Route path={routes.cart} element={<Cart />} />
-        <Route path={routes.orderList} element={<OrderList />} />
         <Route path={routes.login} element={<Login />} />
         <Route path={routes.signup} element={<Signup />} />
-        <Route path={routes.userInfo} element={<UserInfo />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
       {isShowSnackBar && <SnackBar key={Date.now()} message={message} />}
