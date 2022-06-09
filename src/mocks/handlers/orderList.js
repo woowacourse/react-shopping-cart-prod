@@ -15,7 +15,7 @@ export const orderListHandlers = [
     orderIdList.forEach(id => {
       newCartList.forEach((cart, index) => {
         if (id === cart.id) {
-          const orderItem = newCartList.splice(index, 1);
+          const orderItem = newCartList.splice(index, 1)[0];
           orderDetailList.push(orderItem);
         }
       });
@@ -34,10 +34,30 @@ export const orderListHandlers = [
       ],
     };
 
-    return res(ctx.status(201));
+    return res(res => {
+      res.status = 201;
+      res.headers.set('location', `api/kkojji/${orderId}`);
+
+      return res;
+    });
   }),
 
   rest.get(ORDERS_API_URL.TO_ORDERS_DETAIL, (req, res, ctx) => {
-    console.log(req);
+    const {
+      params: { id },
+    } = req;
+
+    const targetOrder = orderList.current.orders.find(order => order.id === Number(id));
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        order: targetOrder,
+      }),
+    );
+  }),
+
+  rest.get(ORDERS_API_URL.TO_ORDERS, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(orderList.current));
   }),
 ];
