@@ -24,9 +24,12 @@ function Login() {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post('/api/login', { userName: id, password });
+      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/login`, {
+        userName: id,
+        password,
+      });
 
-      document.cookie = `accessToken=${data}`;
+      document.cookie = `accessToken=${data.accessToken}`;
 
       dispatch(login());
       navigate(routes.home);
