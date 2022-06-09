@@ -68,6 +68,7 @@ const useUser = () => {
     localStorage.removeItem(STORAGE_KEY);
     alert(message);
     navigate(ROUTES_PATH.HOME);
+    window.location.reload();
   };
 
   const withdrawMembership = async () => {
