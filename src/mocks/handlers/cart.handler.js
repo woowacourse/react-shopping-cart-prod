@@ -86,7 +86,7 @@ export const handlePatchShoppingCartRequest = (req, res, ctx) => {
 };
 
 export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
-  const idString = req.url.searchParams.get('id');
+  const idString = req.url.searchParams.get('productId');
   const productId = Number(idString);
 
   const currentShoppingCart = getCart();
