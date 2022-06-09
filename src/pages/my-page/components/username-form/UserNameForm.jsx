@@ -1,8 +1,9 @@
-import useForm from "@hooks/useForm/useForm";
-import LabeledInput from "@shared/input/labeled-input/LabeledInput";
 import { useDispatch, useSelector } from "react-redux";
-import Button from "@shared/button/Button";
+
 import { updateUserGeneralInfo } from "@redux/reducers/user-reducer/userThunks";
+import useForm from "@hooks/useForm";
+import LabeledInput from "@shared/input/labeled-input/LabeledInput";
+import Button from "@shared/button/Button";
 
 function UserNameForm() {
   const dispatch = useDispatch();

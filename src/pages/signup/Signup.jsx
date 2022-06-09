@@ -1,13 +1,15 @@
-import cn from "classnames";
-import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import cn from "classnames";
+
+import { signup } from "@redux/reducers/user-reducer/userThunks";
+import useForm from "@hooks/useForm";
 import LabeledInput from "@shared/input/labeled-input/LabeledInput";
 import Button from "@shared/button/Button";
-import { signup } from "@redux/reducers/user-reducer/userThunks";
-import { useEffect } from "react";
+
 import styles from "./signup.module";
 import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
-import useForm from "../../hooks/useForm/useForm";
 
 function Signup({ className }) {
   const dispatch = useDispatch();

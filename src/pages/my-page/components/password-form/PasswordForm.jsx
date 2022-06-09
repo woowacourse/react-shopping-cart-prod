@@ -1,8 +1,9 @@
-import useForm from "@hooks/useForm/useForm";
+import { useDispatch } from "react-redux";
+
+import { updateUserPassword } from "@redux/reducers/user-reducer/userThunks";
+import useForm from "@hooks/useForm";
 import LabeledInput from "@shared/input/labeled-input/LabeledInput";
 import Button from "@shared/button/Button";
-import { useDispatch } from "react-redux";
-import { updateUserPassword } from "@redux/reducers/user-reducer/userThunks";
 
 function PasswordForm() {
   const dispatch = useDispatch();

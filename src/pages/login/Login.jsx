@@ -1,12 +1,14 @@
-import cn from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import cn from "classnames";
+
+import { login } from "@redux/reducers/user-reducer/userThunks";
+import useForm from "@hooks/useForm";
 import LabeledInput from "@shared/input/labeled-input/LabeledInput";
 import Button from "@shared/button/Button";
-import { login } from "@redux/reducers/user-reducer/userThunks";
-import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
-import useForm from "../../hooks/useForm/useForm";
+
 import styles from "./login.module";
+import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
 
 function Login({ className }) {
   const { onSubmit, register } = useForm();
