@@ -5,17 +5,17 @@ import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 import { MESSAGE, ROUTES } from 'utils/constants';
 
-const useCheckAuth = () => {
+const useCheckAuth = isFulfilled => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
   const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated) {
+    if (!isFulfilled && !isLoading && isAuthenticated) {
       renderSnackbar(MESSAGE.ALREADY_LOGIN, 'FAILED');
       navigate(ROUTES.HOME);
     }
-  }, [isLoading]);
+  }, [isAuthenticated, isFulfilled, isLoading, navigate, renderSnackbar]);
 };
 
 export default useCheckAuth;

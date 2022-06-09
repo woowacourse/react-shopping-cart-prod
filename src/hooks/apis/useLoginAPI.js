@@ -1,36 +1,23 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
-
-import { Container, Input, Title, GuideText, AuthButton, Logo } from 'components';
-import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
-import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-import Styled from './index.style';
 
 import { setCookie } from 'utils/cookie';
 import { doLogin } from 'reducers/auth.reducer';
 import { MESSAGE, ROUTES } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 
-const LoginPage = () => {
+const useLoginAPI = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { state: userEmail } = useLocation();
-  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
   const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState(userEmail || '');
   const [password, setPassword] = useState('');
-
   const [renderSnackbar] = useSnackbar();
-
-  useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      navigate(ROUTES.HOME);
-    }
-  }, [isLoading]);
 
   useEffect(() => {
     if (email.length >= 3 && password.length >= 10) {
@@ -60,32 +47,7 @@ const LoginPage = () => {
     }
   };
 
-  return (
-    <Styled.Container>
-      <Logo />
-      <br />
-      <Container width="505px" height="440px">
-        <Title mainTitle="로그인" subTitle="환영합니다 👋" />
-        <Input
-          type="email"
-          icon={<EmailIcon />}
-          label="Email Address"
-          inputValue={email}
-          setInputValue={setEmail}
-          autoFocus={true}
-        />
-        <Input
-          type="password"
-          icon={<PasswordIcon />}
-          label="Password"
-          inputValue={password}
-          setInputValue={setPassword}
-        />
-        <AuthButton actionType="Login" action={login} isDisabled={!isFulfilled} />
-        <GuideText guide="Don’t have an account?" destination="Sign up" path="/signup" />
-      </Container>
-    </Styled.Container>
-  );
+  return { email, setEmail, password, setPassword, login, isFulfilled };
 };
 
-export default LoginPage;
+export default useLoginAPI;
