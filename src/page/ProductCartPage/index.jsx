@@ -8,7 +8,7 @@ import CartItem from 'component/CartItem';
 import * as S from 'page/ProductCartPage/style';
 
 import useCartItem from 'hook/useCartItem';
-import useSelectedItem from 'hook/useSelectedItem';
+import useSelectItem from 'hook/useSelectItem';
 import {useNavigate} from 'react-router-dom';
 import {CONFIRM_MESSAGE, PATH} from 'constant';
 import useAuth from 'hook/useAuth';
@@ -24,7 +24,7 @@ export default function ProductCartPage() {
 
   const {initializeCart, deleteSelectedCart} = useCartItem();
 
-  const {selectAllItem, unselectAllItem} = useSelectedItem();
+  const {selectAllItem, deselectAllItem} = useSelectItem();
 
   const {navigateLoginPage} = useAuth();
 
@@ -64,7 +64,7 @@ export default function ProductCartPage() {
               <CheckBox
                 initialChecked={isAllChecked}
                 handleCheckedTrue={() => selectAllItem(cart)}
-                handleCheckedFalse={unselectAllItem}
+                handleCheckedFalse={deselectAllItem}
               />
               {isAllChecked ? '선택해제' : '전체선택'}
             </S.CheckBoxRow>

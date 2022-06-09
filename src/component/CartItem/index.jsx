@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import CheckBox from 'component/common/CheckBox';
 import QuantityBox from 'component/common/QuantityBox';
 
-import useSelectedItem from 'hook/useSelectedItem';
+import useSelectItem from 'hook/useSelectItem';
 import useCartItem from 'hook/useCartItem';
 
 import * as S from 'component/CartItem/style';
@@ -13,7 +13,7 @@ import * as S from 'component/CartItem/style';
 import {PATH} from 'constant';
 
 export default function CartItem({cartInfo, initialChecked = false}) {
-  const {addSelectedItem, deleteSelectedItem} = useSelectedItem();
+  const {selectItem, deselectItem} = useSelectItem();
 
   const {deleteCartItem, increaseQuantity, decreaseQuantity} = useCartItem();
 
@@ -24,8 +24,8 @@ export default function CartItem({cartInfo, initialChecked = false}) {
       <CheckBox
         initialChecked={initialChecked}
         productId={Number.parseInt(id)}
-        handleCheckedTrue={addSelectedItem}
-        handleCheckedFalse={deleteSelectedItem}
+        handleCheckedTrue={selectItem}
+        handleCheckedFalse={deselectItem}
       />
       <Link to={`${PATH.DETAIL}/${id}`}>
         <img src={imageUrl} alt="장바구니 상품 이미지" width="144px" height="144px" />
