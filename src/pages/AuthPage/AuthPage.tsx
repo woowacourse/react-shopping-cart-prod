@@ -1,16 +1,22 @@
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
+import { StoreState } from 'types';
+
+type SelectedState = StoreState['userState'];
 
 function AuthPage({ element }: { element: any }) {
-  const accessToken = localStorage.getItem('accessToken');
+  const { id: userId } = useSelector<StoreState, SelectedState>(
+    ({ userState }) => userState
+  );
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!userId) {
       alert('로그인이 필요합니다.');
     }
-  }, [accessToken]);
+  }, [userId]);
 
-  if (accessToken) {
+  if (userId) {
     return element;
   }
 
