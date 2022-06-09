@@ -1,3 +1,5 @@
+import ErrorBoundary from 'components/common/ErrorBoundary';
+import ErrorFallback from 'components/common/ErrorFallback';
 import Header from 'components/common/Header';
 import Loading from 'components/common/Loading';
 import useUser from 'hooks/useUser';
@@ -10,16 +12,18 @@ function App() {
   useUser();
 
   return (
-    <Suspense fallback={<Loading />}>
-      <BrowserRouter basename='/react-shopping-cart'>
-        <StyledRoot>
-          <Header />
-          <StyledMain>
-            <Routers />
-          </StyledMain>
-        </StyledRoot>
-      </BrowserRouter>
-    </Suspense>
+    <BrowserRouter basename='/react-shopping-cart'>
+      <StyledRoot>
+        <Header />
+        <ErrorBoundary Fallback={ErrorFallback}>
+          <Suspense fallback={<Loading />}>
+            <StyledMain>
+              <Routers />
+            </StyledMain>
+          </Suspense>
+        </ErrorBoundary>
+      </StyledRoot>
+    </BrowserRouter>
   );
 }
 
