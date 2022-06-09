@@ -22,11 +22,11 @@ const productDetail = (state = initialState, action: Action) => {
       return {
         ...state,
         isLoading: false,
-        productDetail: action.payload as Product,
+        productDetail: action.payload.data as Product,
       };
     }
     case `${TYPES.GET_PRODUCT_DETAIL}_REJECTED`: {
-      return { ...state, isLoading: false, error: action.payload };
+      return { ...state, isLoading: false, error: action.payload.data };
     }
     case `${TYPES.CHECK_IS_PRODUCT_ADDED_TO_CART}_PENDING`: {
       return { ...state, isLoading: true, error: null };

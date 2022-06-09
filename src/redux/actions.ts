@@ -65,7 +65,7 @@ const actions = {
     return { type: TYPES.GET_CUSTOMER, payload: request };
   },
   signIn: (signinPayload: { email: string; password: string }) => {
-    const request = api.customer.signin(signinPayload).then((res) => res.data);
+    const request = api.customer.signin(signinPayload);
 
     return { type: TYPES.SIGN_IN, payload: request };
   },
@@ -73,62 +73,52 @@ const actions = {
     return { type: TYPES.SIGN_OUT };
   },
   signUp: (signupPayload: Customer) => {
-    const request = api.customer.signup(signupPayload).then((res) => res.data);
+    const request = api.customer.signup(signupPayload);
 
     return { type: TYPES.SIGN_UP, payload: request };
   },
   updateProfile: (customerId: number, updatedCustomer: Customer) => {
-    const request = api.customer
-      .update(customerId, updatedCustomer)
-      .then((res) => res.data);
+    const request = api.customer.update(customerId, updatedCustomer);
 
     return { type: TYPES.UPDATE_PROFILE, payload: request };
   },
   unregister: (customerId: number) => {
-    const request = api.customer.remove(customerId).then((res) => res.data);
+    const request = api.customer.remove(customerId);
 
     return { type: TYPES.UNREGISTER, payload: request };
   },
   getProductList: () => {
-    const request = api.products.getAll().then((res) => res.data);
+    const request = api.products.getAll();
 
     return { type: TYPES.GET_PRODUCT_LIST, payload: request };
   },
   getProductDetail: (id: number) => {
-    const request = api.products.get(id).then((res) => res.data);
+    const request = api.products.get(id);
 
     return { type: TYPES.GET_PRODUCT_DETAIL, payload: request };
   },
   getCart: () => {
-    const request = api.cart.get().then((res) => res.data);
+    const request = api.cart.get();
 
     return { type: TYPES.GET_CART, payload: request };
   },
   checkIsProductAddedToCart: (productId: Product['id']) => {
-    const request = api.products
-      .checkIsAddedToCart(productId)
-      .then((res) => res.data);
+    const request = api.products.checkIsAddedToCart(productId);
 
     return { type: TYPES.CHECK_IS_PRODUCT_ADDED_TO_CART, payload: request };
   },
   addItemToCart: (productId: number, quantity: number) => {
-    const request = api.cart
-      .addItemToCart(productId, quantity)
-      .then((res) => res.data);
+    const request = api.cart.addItemToCart(productId, quantity);
 
     return { type: TYPES.ADD_ITEM_TO_CART, payload: request };
   },
   removeCartItem: (cartItemId: number) => {
-    const request = api.cart
-      .removeItemFromCart(cartItemId)
-      .then((res) => res.data);
+    const request = api.cart.removeItemFromCart(cartItemId);
 
     return { type: TYPES.REMOVE_CART_ITEM, payload: request };
   },
   updateQuantity: (cartItemId: number, productId: number, quantity: number) => {
-    const request = api.cart
-      .updateQuantity(cartItemId, productId, quantity)
-      .then((res) => res.data);
+    const request = api.cart.updateQuantity(cartItemId, productId, quantity);
 
     return { type: TYPES.UPDATE_QUANTITY, payload: request };
   },

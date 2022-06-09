@@ -34,7 +34,7 @@ const customer = (state = initialState, action: Action) => {
       };
     }
     case `${TYPES.SIGN_IN}_FULFILLED`: {
-      const { userId, accessToken } = action.payload;
+      const { userId, accessToken } = action.payload.data;
 
       localStorage.setItem('userId', userId);
       localStorage.setItem('accessToken', accessToken);
@@ -46,7 +46,7 @@ const customer = (state = initialState, action: Action) => {
       return { ...state, isLoading: false, userId, accessToken };
     }
     case `${TYPES.SIGN_IN}_REJECTED`: {
-      return { ...state, isLoading: false, error: action.payload };
+      return { ...state, isLoading: false, error: action.payload.data };
     }
     case TYPES.SIGN_OUT: {
       localStorage.removeItem('userId');
@@ -69,7 +69,7 @@ const customer = (state = initialState, action: Action) => {
       return {
         ...state,
         isLoading: false,
-        error: action.payload,
+        error: action.payload.data,
         isSignupSuccessful: false,
       };
     }
@@ -80,7 +80,7 @@ const customer = (state = initialState, action: Action) => {
       return { ...state, isLoading: false, customer: action.payload.data };
     }
     case `${TYPES.GET_CUSTOMER}_REJECTED`: {
-      if (action.payload.response.status === 403) {
+      if ([401, 403, 404].includes(action.payload.response.status)) {
         localStorage.removeItem('userId');
         localStorage.removeItem('accessToken');
       }
@@ -105,7 +105,7 @@ const customer = (state = initialState, action: Action) => {
       return { ...state, isLoading: false, isUpdateProfileSuccessful: true };
     }
     case `${TYPES.UPDATE_PROFILE}_REJECTED`: {
-      return { ...state, isLoading: false, error: action.payload };
+      return { ...state, isLoading: false, error: action.payload.data };
     }
     case `${TYPES.UNREGISTER}_PENDING`: {
       return {
@@ -119,10 +119,16 @@ const customer = (state = initialState, action: Action) => {
       localStorage.removeItem('accessToken');
       localStorage.removeItem('userId');
 
-      return { ...state, isLoading: false, isUnregisterSuccessful: true };
+      return {
+        ...state,
+        isLoading: false,
+        isUnregisterSuccessful: true,
+        accessToken: null,
+        userId: null,
+      };
     }
     case `${TYPES.UNREGISTER}_REJECTED`: {
-      return { ...state, isLoading: false, error: action.payload };
+      return { ...state, isLoading: false, error: action.payload.data };
     }
     default:
       return state;

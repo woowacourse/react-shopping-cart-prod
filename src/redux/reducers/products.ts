@@ -20,11 +20,16 @@ const products = (state = initialState, action: Action) => {
       return {
         ...state,
         isLoading: false,
-        productList: action.payload as Product[],
+        productList: action.payload.data as Product[],
       };
     }
     case `${TYPES.GET_PRODUCT_LIST}_REJECTED`: {
-      return { ...state, isLoading: false, error: action.payload };
+      if ([401, 403].includes(action.payload.response.status)) {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('accessToken');
+      }
+
+      return { ...state, isLoading: false, error: action.payload.data };
     }
     default:
       return state;
