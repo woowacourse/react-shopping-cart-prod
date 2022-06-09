@@ -16,14 +16,6 @@ const persistor = persistStore(store);
 
 axios.defaults.baseURL = BASE_URL;
 
-if (process.env.NODE_ENV === 'development') {
-  const { worker } = require('./mocks/browser');
-  worker.start({
-    serviceWorker: {
-      url: '/mockServiceWorker.js',
-    },
-  });
-}
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
