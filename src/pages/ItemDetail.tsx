@@ -64,7 +64,7 @@ const ItemDetail = () => {
       <StyledTitle>{name}</StyledTitle>
       <StyledPrice>
         <StyledPriceDescription>금액</StyledPriceDescription>
-        <StyledPriceValue>{price.toLocaleString()}</StyledPriceValue>
+        <StyledPriceValue>{price.toLocaleString()} 원</StyledPriceValue>
       </StyledPrice>
       <Button
         width='63.8rem'
