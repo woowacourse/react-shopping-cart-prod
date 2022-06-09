@@ -8,7 +8,9 @@ export const OrderDetailsContainer = styled.ul`
   padding: 36px;
 `;
 
-export const OrderNumber = styled.p`
+export const OrderNumber = styled.div`
+  display: flex;
+  justify-content: space-between;
   margin-top: 60px;
   font-size: 20px;
   line-height: 24px;
