@@ -11,7 +11,7 @@ const requestGetCartList = () =>
     },
   );
 
-const requestAddCart = ({ id, image, name, price, quantity, isChecked }) =>
+const requestAddCart = (itemList = []) =>
   request(
     '/auth/customer/cartItems',
     {
@@ -19,14 +19,7 @@ const requestAddCart = ({ id, image, name, price, quantity, isChecked }) =>
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        product: id,
-        image,
-        name,
-        price,
-        quantity,
-        isChecked,
-      }),
+      body: JSON.stringify(itemList),
     },
     {
       isAccessTokenUsed: true,
@@ -53,32 +46,42 @@ const requestUpdateCartItem = async (id, content) => {
   return response;
 };
 
-const requestRemoveCartItem = async (id) => {
-  const response = await request(
-    `/auth/customer/cartItems/${id}`,
+const requestRemoveCartItem = async (id) =>
+  request(
+    '/auth/customer/cartItems',
     {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify([
+        {
+          id,
+        },
+      ]),
     },
     {
       isAccessTokenUsed: true,
     },
   );
-
-  return response;
-};
 
 const requestRemoveCartItemList = async (idList) => {
-  const response = await request(
-    `/auth/customer/cartItems/${idList.join(',')}`,
+  // API 스펙 변경 협의 필요.
+  const requestBody = idList.map((id) => ({ id }));
+
+  return request(
+    '/auth/customer/cartItems',
     {
       method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
     },
     {
       isAccessTokenUsed: true,
     },
   );
-
-  return response;
 };
 
 export {

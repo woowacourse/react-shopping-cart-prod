@@ -35,7 +35,17 @@ export default (state = initialState, action) => {
 
     case CARTS_ACTIONS.ADD_CART_LIST_SUCCESS:
       return produce(state, (draft) => {
-        draft.items.push({ ...payload, isChecked: true });
+        const updatedItems = payload;
+        updatedItems.forEach((item) => {
+          const targetIndex = state.items.findIndex(({ id }) => id === item.id);
+          if (targetIndex > 0) {
+            draft[targetIndex] = { ...item, isChecked: true };
+            return;
+          }
+
+          draft.items.push({ ...item, isChecked: true });
+        });
+
         draft.curdAsyncState = createAsyncState.success();
       });
 
@@ -62,18 +72,23 @@ export default (state = initialState, action) => {
         draft.items = draft.items.map((item) => ({ ...item, isChecked }));
       });
 
+    case CARTS_ACTIONS.REMOVE_CART_ITEM_PENDING:
+      return produce(state, (draft) => {
+        draft.curdAsyncState = createAsyncState.pending();
+      });
+
     case CARTS_ACTIONS.REMOVE_CART_ITEM_SUCCESS:
       return produce(state, (draft) => {
         const { id: updatedId } = payload;
         draft.items = draft.items.filter(({ id }) => id !== updatedId);
-        draft.cartCurdAsyncState = createAsyncState.success();
+        draft.curdAsyncState = createAsyncState.success();
       });
 
     case CARTS_ACTIONS.REMOVE_CART_ITEM_LIST_SUCCESS:
       return produce(state, (draft) => {
         const { idList } = payload;
         draft.items = draft.items.filter(({ id }) => !idList.includes(id));
-        draft.cartCurdAsyncState = createAsyncState.success();
+        draft.curdAsyncState = createAsyncState.success();
       });
 
     default:
