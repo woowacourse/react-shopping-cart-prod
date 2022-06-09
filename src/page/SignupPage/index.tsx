@@ -1,9 +1,4 @@
 // @ts-nocheck
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useSnackbar from 'hooks/useSnackbar';
-import { useSelector } from 'react-redux';
-
 import { Input, Title, GuideText, AuthButton, Container, Logo } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
@@ -11,52 +6,28 @@ import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 import Styled from './index.style';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
-import { MESSAGE, ROUTES } from 'utils/constants';
-import apiClient from 'apis/apiClient';
+import useCheckAuth from 'hooks/apis/useCheckAuth';
+import useSignupAPI from 'hooks/apis/useSignupAPI';
 
 const SignupPage = () => {
-  const [renderSnackbar] = useSnackbar();
-  const navigate = useNavigate();
-  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
+  useCheckAuth();
 
-  const [email, setEmail] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [isFulfilled, setIsFulfilled] = useState(false);
-  const [isEmailCorrect, setIsEmailCorrect] = useState(false);
-  const [isNicknameCorrect, setIsNicknameCorrect] = useState(false);
-  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
-
-  useEffect(() => {
-    if (!isLoading && isAuthenticated) {
-      renderSnackbar(MESSAGE.ALREADY_LOGIN, 'FAILED');
-      navigate(ROUTES.HOME);
-    }
-  }, [isLoading]);
-
-  useEffect(() => {
-    setIsFulfilled(isEmailCorrect && isNicknameCorrect && isPasswordCorrect);
-  }, [email, nickname, password, isEmailCorrect, isNicknameCorrect, isPasswordCorrect]);
-
-  const signup = async () => {
-    if (!isFulfilled) return;
-
-    try {
-      const response = await apiClient.post('/customers', {
-        email,
-        nickname,
-        password,
-      });
-
-      renderSnackbar(`${response.data.nickname}${MESSAGE.SIGNUP_SUCCESS}`, 'SUCCESS');
-      navigate(ROUTES.LOGIN, { state: response.data.email });
-    } catch (error) {
-      const customError = error.response.data;
-      navigate(ROUTES.LOGIN);
-      renderSnackbar(customError.message, 'FAILED');
-    }
-  };
+  const {
+    signup,
+    email,
+    setEmail,
+    nickname,
+    setNickname,
+    password,
+    setPassword,
+    isEmailCorrect,
+    setIsEmailCorrect,
+    isNicknameCorrect,
+    setIsNicknameCorrect,
+    isPasswordCorrect,
+    setIsPasswordCorrect,
+    isFulfilled,
+  } = useSignupAPI();
 
   return (
     <Styled.Container>
