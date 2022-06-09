@@ -32,8 +32,8 @@ const useCart = () => {
   );
 
   const handleChangeQuantity =
-    (cartItemId: number, productId: number) => (quantity: number) => {
-      axios({
+    (cartItemId: number, productId: number) => async (quantity: number) => {
+      await axios({
         method: 'put',
         url: `${SERVER_URL}/api/customers/cart/${cartItemId}`,
         headers: {
@@ -44,6 +44,8 @@ const useCart = () => {
           quantity,
         },
       });
+
+      dispatch(actions.getCart(accessToken as string));
     };
 
   const handleCheck =
