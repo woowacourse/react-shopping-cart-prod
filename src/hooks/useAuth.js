@@ -53,7 +53,6 @@ export const useAuth = () => {
 
   // 회원 정보 조회
   const getUserApi = async () => {
-    // TODO getCookie(COOKIE_KEY) 쿠키 없을때 api call 막기
     if (getCookie(COOKIE_KEY).length === 0) return;
 
     await apiClient
@@ -67,8 +66,6 @@ export const useAuth = () => {
         dispatch(setUserInfo({ id, name, email }));
       })
       .catch(() => {
-        // TODO 새로고침 시, 로그인 화면으로 이동, 주석 풀 것
-        // navigate(PATH_NAME.LOGIN);
         showErrorSnackBar({ text: '다시 로그인 해주세요.' });
       });
   };

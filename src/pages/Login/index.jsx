@@ -28,7 +28,6 @@ const Login = () => {
       return;
     }
 
-    // TODO 수정 할 것!
     loginApi({ email, password })
       .then(() => {
         getUserApi();

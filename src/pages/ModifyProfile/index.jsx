@@ -44,11 +44,6 @@ const ModifyProfile = () => {
   const handleSubmitWithdrawal = (e) => {
     e.preventDefault();
 
-    // TODO 비밀번호 타이핑 하는 거 말고 다른 방식으로 바꿀 것!
-    // const {
-    //   password: { value: password },
-    // } = e.target.elements;
-
     unRegisterApi().then(() => {
       setOpenWithdrawalModal(false);
     });

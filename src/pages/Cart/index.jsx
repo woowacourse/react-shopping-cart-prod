@@ -24,8 +24,6 @@ const Cart = () => {
     handleDeleteSelectedItem,
   } = useCartPage();
 
-  console.log('totalPrice', totalPrice);
-  console.log('cartItems,m', cartItems);
   if (isLoading)
     return (
       <Styled.Wrapper>

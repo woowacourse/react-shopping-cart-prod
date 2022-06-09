@@ -19,10 +19,8 @@ const useCart = () => {
   const { isLoading, isError, data } = useSelector((state) => state.cart);
 
   // 장바구니 아이템 삭제
-  // TODO 테스트 해볼 것!
   const deleteItemApi = async (payload) => {
     const { cartId } = payload;
-    console.log('???', cartId);
 
     await apiClient
       .delete(`members/me/carts/${cartId}`, {
@@ -31,12 +29,10 @@ const useCart = () => {
         },
       })
       .then(() => {
-        // 하..이렇게 만들면 안되는데
         getUserCartsApi();
         showSuccessSnackBar({ text: '상품이 장바구니에서 제거 되었습니다.' });
       })
       .catch((err) => {
-        console.log('err deleteItemApi', err);
         showErrorSnackBar({ text: err.message });
       });
   };
@@ -69,7 +65,6 @@ const useCart = () => {
   // 장바구니 물품 추가
   const addItemApi = async (payload) => {
     const { productId } = payload;
-    console.log('productId', productId);
 
     await apiClient
       .post(
@@ -84,19 +79,15 @@ const useCart = () => {
         },
       )
       .then(() => {
-        // ㅠㅠ 이렇게 만들면 안되는데 젠장 어쩔수 없나?
         getUserCartsApi();
         showSuccessSnackBar({ text: '상품이 장바구니에서 추가 되었습니다.' });
       })
       .catch((err) => {
-        // TODO 이미 장바구니에 들어있는 상품 추가 시, error 반환 됨, 해당 이슈 처리 할 것
-        console.log('err addItemApi', err);
         showErrorSnackBar({ text: err.message });
       });
   };
 
   // 내 장바구니 조회
-  // TODO 테스트 해볼 것
   const getUserCartsApi = async () => {
     await apiClient
       .get(`members/me/carts`, {
@@ -106,11 +97,6 @@ const useCart = () => {
       })
       .then(({ data }) => {
         dispatch(setCart(data));
-        // TODO 지울 것
-        // showSuccessSnackBar({ text: '내 장바구니 조회' });
-      })
-      .catch((err) => {
-        console.log('err', err);
       });
   };
 
@@ -119,12 +105,10 @@ const useCart = () => {
   };
 
   const deleteItem = (id) => {
-    // console.log('deleteItem id', id);
     deleteItemApi({ cartId: id });
   };
 
   const deleteItems = (idList) => {
-    // console.log('idList', idList);
     Promise.all(idList.map((id) => deleteItemApi({ cartId: id })));
   };
 
