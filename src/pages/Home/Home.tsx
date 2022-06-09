@@ -70,4 +70,4 @@ function Home() {
   );
 }
 
-export default withLogin(Home, false);
+export default Home;

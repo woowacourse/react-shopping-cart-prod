@@ -54,4 +54,4 @@ function ProductDetail() {
   );
 }
 
-export default withLogin(ProductDetail, false);
+export default ProductDetail;
