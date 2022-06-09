@@ -9,14 +9,14 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import rootReducer from 'redux/reducers';
 
-import { BASE_URL } from 'constants/api';
+import { BASE_URL, test } from 'constants/api';
 
 const store = createStore(rootReducer);
 const persistor = persistStore(store);
 
 axios.defaults.baseURL = BASE_URL;
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' && !test) {
   const { worker } = require('./mocks/browser');
   worker.start({
     serviceWorker: {
