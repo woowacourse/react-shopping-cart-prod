@@ -1,6 +1,6 @@
+import ErrorFallback from 'components/common/ErrorFallback';
 import Loading from 'components/common/Loading';
 import Pagination from 'components/common/Pagination';
-import RequestFail from 'components/common/RequestFail';
 import Snackbar from 'components/common/Snackbar';
 import ItemContainer from 'components/ItemList/ItemContainer';
 import { MAX_RESULT_ITEM_LIST } from 'constants/index';
@@ -25,7 +25,7 @@ const ItemList = () => {
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
   if (loading) return <Loading />;
-  if (error_getAllItemList || error_getCartList) return <RequestFail />;
+  if (error_getAllItemList || error_getCartList) return <ErrorFallback />;
 
   return (
     <StyledRoot>

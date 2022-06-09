@@ -1,7 +1,7 @@
 import Button from 'components/common/Button';
 import CroppedImage from 'components/common/CroppedImage';
+import ErrorFallback from 'components/common/ErrorFallback';
 import Loading from 'components/common/Loading';
-import RequestFail from 'components/common/RequestFail';
 import Snackbar from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
@@ -54,7 +54,7 @@ const ItemDetail = () => {
   };
 
   if (loading) return <Loading />;
-  if (error_itemList || error_cartList) return <RequestFail />;
+  if (error_itemList || error_cartList) return <ErrorFallback />;
 
   const { imageUrl, name, price } = item;
 
