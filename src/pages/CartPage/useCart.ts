@@ -32,8 +32,18 @@ const useCart = () => {
   );
 
   const handleChangeQuantity =
-    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(actions.updateQuantity(id, e.target.value));
+    (cartItemId: number, productId: number) => (quantity: number) => {
+      axios({
+        method: 'put',
+        url: `${SERVER_URL}/api/customers/cart/${cartItemId}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        data: {
+          productId,
+          quantity,
+        },
+      });
     };
 
   const handleCheck =

@@ -62,7 +62,10 @@ function CartPage() {
                   product={product}
                   quantity={quantity}
                   checked={checkedFlags[cartItemId]}
-                  onChangeQuantity={handleChangeQuantity(product.id)}
+                  onChangeQuantity={handleChangeQuantity(
+                    cartItemId,
+                    Number(product.id)
+                  )}
                   onCheck={handleCheck(cartItemId)}
                   onClickRemove={removeCartItem(cartItemId)}
                 />

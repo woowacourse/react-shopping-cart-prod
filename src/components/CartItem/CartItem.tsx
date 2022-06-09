@@ -11,7 +11,7 @@ type Props = {
   product: Product;
   quantity: number;
   checked: boolean;
-  onChangeQuantity: React.ChangeEventHandler<HTMLInputElement>;
+  onChangeQuantity: (value: number) => void;
   onCheck: React.ChangeEventHandler<HTMLInputElement>;
   onClickRemove: React.MouseEventHandler<HTMLButtonElement>;
 };
@@ -40,7 +40,7 @@ function CartItem({
           min="1"
           max="200"
           step="1"
-          onChange={onChangeQuantity}
+          onClickButton={onChangeQuantity}
           value={quantity}
         />
         <p style={{ alignSelf: 'flex-end' }}>

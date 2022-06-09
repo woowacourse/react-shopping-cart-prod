@@ -6,7 +6,7 @@ import ICONS from 'constants/icons';
 
 type Props = React.HTMLProps<HTMLInputElement>;
 
-function QuantityInput(props: Props) {
+function QuantityInput({ onClickButton, ...props }: any) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -17,6 +17,7 @@ function QuantityInput(props: Props) {
           onClick={() => {
             if (inputRef.current) {
               inputRef.current.stepUp();
+              onClickButton(inputRef.current.value);
             }
           }}
         >
@@ -26,6 +27,7 @@ function QuantityInput(props: Props) {
           onClick={() => {
             if (inputRef.current) {
               inputRef.current.stepDown();
+              onClickButton(inputRef.current.value);
             }
           }}
         >
