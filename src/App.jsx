@@ -28,7 +28,7 @@ function App() {
       <GlobalStyle />
       <Routes>
         <Route element={<Layout />}>
-          <Route path={PATH.MAIN} element={<Home />} />
+          <Route path={PATH.HOME} element={<Home />} />
           <Route path={PATH.LOGIN} element={<Signin />} />
           <Route path={PATH.REGISTER} element={<Signup />} />
           <Route path={PATH.EDIT} element={<UserEdit />} />

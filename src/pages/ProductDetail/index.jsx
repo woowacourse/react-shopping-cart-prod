@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import { addCartItem } from "@/redux/modules/cart";
 
@@ -22,12 +21,8 @@ function ProductDetail() {
     "get",
     `products/${id}`
   );
-  const { success: cartSuccess, getData: addCart } = useFetch(
-    "post",
-    "users/me/carts"
-  );
+  const { getData: addCart } = useFetch("post", "users/me/carts", addCartItem);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleCartClick = () => {
@@ -51,20 +46,14 @@ function ProductDetail() {
     getDetailData();
   }, []);
 
-  useEffect(() => {
-    if (cartSuccess) {
-      dispatch(addCartItem(detailData));
-    }
-  }, [cartSuccess]);
-
   return (
     <StyledProductDetailContainer>
-      <img src={detailData.imageUrl} alt={`${detailData.name}상세 페이지`} />
-      <Title titleType="detailTitle">{detailData.name}</Title>
+      <img src={detailData?.imageUrl} alt={`${detailData?.name}상세 페이지`} />
+      <Title titleType="detailTitle">{detailData?.name}</Title>
       <div className="product__price__wrapper">
         <div className="product__price__label">금액</div>
         <div className="product__price">
-          {detailData.price?.toLocaleString("ko-KR")}원
+          {detailData?.price?.toLocaleString("ko-KR")}원
         </div>
       </div>
       <Button onClick={handleCartClick}>장바구니</Button>

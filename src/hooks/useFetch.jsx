@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
@@ -6,9 +6,8 @@ import appClient from "@/utils/appClient";
 import { MESSAGE, ERROR_CODE } from "@/constants";
 import { getCookie } from "@/utils/auth";
 
-const useFetch = (method, url, initialData = {}) => {
-  const [data, setData] = useState(initialData);
-  const [isLoading, setIsLoading] = useState(true);
+const useFetch = (method, url, func, rest) => {
+  const [data, setData] = useState();
   const [error, setError] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -33,7 +32,6 @@ const useFetch = (method, url, initialData = {}) => {
         response = data;
       }
       setData(response);
-      setIsLoading(false);
       setSuccess(true);
       if (successMessage) {
         dispatch(toggleSnackbarOpen(successMessage));
@@ -41,13 +39,22 @@ const useFetch = (method, url, initialData = {}) => {
     } catch (error) {
       const { errorCode } = error.response.data;
       dispatch(toggleSnackbarOpen(MESSAGE[ERROR_CODE[errorCode]]));
-      setIsLoading(false);
       setError(true);
       setSuccess(false);
     }
   };
 
-  return { data, isLoading, error, success, getData };
+  useEffect(() => {
+    if (success && func) {
+      if (!data) {
+        dispatch(func(rest));
+      } else {
+        dispatch(func(data));
+      }
+    }
+  }, [data, success]);
+
+  return { data, error, success, getData };
 };
 
 export default useFetch;

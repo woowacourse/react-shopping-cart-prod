@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { addCartItem } from "@/redux/modules/cart";
@@ -21,14 +20,9 @@ import {
 import { PATH, MESSAGE } from "@/constants";
 
 function Item({ id, name, price, imageUrl }) {
-  const {
-    data,
-    success,
-    getData: addCart,
-  } = useFetch("post", "users/me/carts");
+  const { getData: addCart } = useFetch("post", "users/me/carts", addCartItem);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleCartClick = () => {
     const accessToken = getCookie("accessToken");
@@ -45,12 +39,6 @@ function Item({ id, name, price, imageUrl }) {
       MESSAGE.CART_ADDED
     );
   };
-
-  useEffect(() => {
-    if (success) {
-      dispatch(addCartItem({ id, name, price, imageUrl }));
-    }
-  }, [data, success]);
 
   const handleProductDetailClick = () => {
     navigate(`${PATH.DETAIL}/${id}`);

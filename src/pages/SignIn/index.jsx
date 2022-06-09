@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { loginUser } from "@/redux/modules/user";
 
@@ -9,7 +9,7 @@ import useFetch from "@/hooks/useFetch";
 import Form from "@/components/Form";
 import Input from "@/components/Input";
 
-import { PATH } from "@/constants";
+import { PATH, MESSAGE } from "@/constants";
 
 import StyledSigninContainer from "@/pages/SignIn/index.style";
 
@@ -18,22 +18,15 @@ function Signin() {
   const password = useRef(null);
 
   const { authorized } = useSelector((state) => state.userState);
-  const { data, success, getData } = useFetch("post", "login");
+  const { getData } = useFetch("post", "login", loginUser);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (authorized) {
-      navigate(PATH.MAIN);
+      navigate(PATH.HOME);
     }
   }, [authorized]);
-
-  useEffect(() => {
-    if (success) {
-      dispatch(loginUser(data));
-    }
-  }, [data, success]);
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +35,7 @@ function Signin() {
         email: email.current.value,
         password: password.current.value,
       },
-      "로그인 성공"
+      MESSAGE.LOGIN_SUCCESS
     );
   };
 

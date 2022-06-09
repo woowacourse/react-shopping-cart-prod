@@ -1,8 +1,4 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-import { getCart } from "@/redux/modules/cart";
+import { useSelector } from "react-redux";
 
 import Title from "@/components/Title";
 import CartList from "@/components/CartList";

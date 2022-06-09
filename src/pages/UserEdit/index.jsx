@@ -11,8 +11,6 @@ import useFetch from "@/hooks/useFetch";
 import Form from "@/components/Form";
 import Field from "@/components/Field";
 
-import { getCookie } from "@/utils/auth";
-
 import {
   PATH,
   STATUS,
@@ -40,13 +38,14 @@ function UserEdit() {
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
   const { success: editSuccess, getData: editUserData } = useFetch(
     "put",
-    "users/me"
+    "users/me",
+    editUser
   );
-  const {
-    error: withdrawError,
-    success: withdrawSuccess,
-    getData: withdrawUser,
-  } = useFetch("delete", "users/me");
+  const { success: withdrawSuccess, getData: withdrawUser } = useFetch(
+    "delete",
+    "users/me",
+    logoutUser
+  );
 
   const { authorized } = useSelector((state) => state.userState);
 
@@ -69,20 +68,6 @@ function UserEdit() {
   };
 
   useEffect(() => {
-    if (editSuccess) {
-      navigate(PATH.MAIN);
-      dispatch(editUser(nickname.value));
-    }
-  }, [editSuccess]);
-
-  useEffect(() => {
-    if (!withdrawError && withdrawSuccess) {
-      dispatch(logoutUser());
-      navigate(PATH.MAIN);
-    }
-  }, [withdrawError, withdrawSuccess]);
-
-  useEffect(() => {
     if (
       nickname.status === STATUS.FULFILLED &&
       password.status === STATUS.FULFILLED &&
@@ -96,12 +81,18 @@ function UserEdit() {
 
   useEffect(() => {
     if (!authorized) {
-      navigate(PATH.MAIN);
+      navigate(PATH.HOME);
       return;
     }
 
     dispatch(getUserInfo());
   }, [authorized]);
+
+  useEffect(() => {
+    if (editSuccess || withdrawSuccess) {
+      navigate(PATH.HOME);
+    }
+  }, [editSuccess, withdrawSuccess]);
 
   return (
     <StyledUserEditContainer>

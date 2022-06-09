@@ -36,15 +36,17 @@ export const addCartItem = (data) => ({
   payload: data,
 });
 
-export const updateCartQuantity = (id, quantity) => ({
+export const updateCartQuantity = (data) => ({
   type: ACTION.UPDATE_ITEM_QUANTITY,
-  payload: { id, quantity },
+  payload: { id: data.id, quantity: data.quantity },
 });
 
-export const deleteCartItem = (id) => ({
-  type: ACTION.DELETE_CART_ITEM,
-  payload: { id },
-});
+export const deleteCartItem = (data) => {
+  return {
+    type: ACTION.DELETE_CART_ITEM,
+    payload: { id: data },
+  };
+};
 
 const initialState = {
   pending: false,

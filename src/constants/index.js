@@ -3,12 +3,13 @@ const URL = {
   봄: "http://ec2-54-180-119-11.ap-northeast-2.compute.amazonaws.com:8080",
   베루스: "http://ec2-52-79-228-178.ap-northeast-2.compute.amazonaws.com:8080",
   토닉: "http://ec2-3-39-11-100.ap-northeast-2.compute.amazonaws.com:8080",
+  쿤: "http://ec2-15-164-96-161.ap-northeast-2.compute.amazonaws.com:8080",
 };
 
-const BASE_URL = URL.봄;
+const BASE_URL = URL.베루스;
 
 const PATH = {
-  MAIN: "/",
+  HOME: "/",
   LOGIN: "/login",
   REGISTER: "/register",
   EDIT: "/edit",
@@ -53,6 +54,7 @@ const MESSAGE = {
   EXIST_EMAIL: "이미 존재하는 이메일입니다.",
   WITHDRAWAL_CONFIRM: "정말로 탈퇴하시겠습니까? 😭",
   EXIST_PRODUCT_IN_CART: "장바구니에 이미 존재하는 물품입니다.",
+  LOGIN_SUCCESS: "로그인 성공",
 };
 
 const INPUT_TYPE = {

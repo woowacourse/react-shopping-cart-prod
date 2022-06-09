@@ -32,7 +32,7 @@ function Signup() {
 
   useEffect(() => {
     if (authorized) {
-      navigate(PATH.MAIN);
+      navigate(PATH.HOME);
     }
   }, [authorized]);
 

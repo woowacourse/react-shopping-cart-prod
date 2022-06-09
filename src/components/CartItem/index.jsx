@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import { updateCartQuantity, deleteCartItem } from "@/redux/modules/cart";
 
@@ -18,18 +17,18 @@ import {
 import useFetch from "@/hooks/useFetch";
 
 function CartItem({ onChange, checked, item }) {
-  const {
-    data: updateData,
-    success: updateSuccess,
-    getData: updateQuantity,
-  } = useFetch("put", `users/me/carts/${item.id}`);
-  const {
-    data: deleteData,
-    success: deleteSuccess,
-    getData: deleteItem,
-  } = useFetch("delete", `users/me/carts/${item.id}`);
+  const { getData: updateQuantity } = useFetch(
+    "put",
+    `users/me/carts/${item.id}`,
+    updateCartQuantity
+  );
+  const { getData: deleteItem } = useFetch(
+    "delete",
+    `users/me/carts/${item.id}`,
+    deleteCartItem,
+    item.id
+  );
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleDetailClick = () => {
     navigate(`${PATH.DETAIL}/${id}`);
@@ -46,18 +45,6 @@ function CartItem({ onChange, checked, item }) {
   const handleRemoveIconClick = () => {
     deleteItem();
   };
-
-  useEffect(() => {
-    if (updateSuccess) {
-      dispatch(updateCartQuantity(updateData.id, updateData.quantity));
-    }
-  }, [updateData, updateSuccess]);
-
-  useEffect(() => {
-    if (deleteSuccess) {
-      dispatch(deleteCartItem(item.id));
-    }
-  }, [deleteData, deleteSuccess]);
 
   return (
     <>

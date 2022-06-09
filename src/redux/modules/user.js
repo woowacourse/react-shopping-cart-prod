@@ -36,22 +36,24 @@ export const getUserInfo = () => async (dispatch) => {
   }
 };
 
-export const loginUser = (accessToken) => ({
-  type: ACTION_TYPES.LOGIN_SUCCESS,
-  payload: accessToken,
-});
+export const loginUser = (data) => {
+  return {
+    type: ACTION_TYPES.LOGIN_SUCCESS,
+    payload: data.accessToken,
+  };
+};
 
 export const logoutUser = () => ({ type: ACTION_TYPES.LOGOUT_USER });
 
-export const editUser = (nickname) => ({
+export const editUser = (data) => ({
   type: ACTION_TYPES.EDIT_USER_SUCCESS,
-  payload: nickname,
+  payload: data.nickname,
 });
 
 export function userReducer(state = initialState, action) {
   switch (action.type) {
     case ACTION_TYPES.LOGIN_SUCCESS: {
-      const { accessToken } = action.payload;
+      const accessToken = action.payload;
       setCookie("accessToken", accessToken);
       return {
         ...state,

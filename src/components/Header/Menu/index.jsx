@@ -30,7 +30,7 @@ function Menu() {
 
   const handleLogoutClick = () => {
     dispatch(logoutUser());
-    navigate(PATH.MAIN);
+    navigate(PATH.HOME);
   };
 
   return (
