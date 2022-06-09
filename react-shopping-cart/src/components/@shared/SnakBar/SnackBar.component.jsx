@@ -35,6 +35,7 @@ function SnackBar() {
     <Transition in={show} timeout={duration}>
       {state => (
         <SnackBarContainer
+          show={show}
           style={{
             ...defaultStyle,
             ...transitionStyles[state],
@@ -56,7 +57,7 @@ const SnackBarContainer = styled.div`
   height: 3%;
   height: 50px;
   border-radius: 5px;
-  padding: 1rem 3rem;
+  padding: ${({ show }) => (show ? `1rem 3rem` : '0')};
   text-align: center;
   opacity: 0.1;
   ${({ theme }) => css`
