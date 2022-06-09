@@ -125,6 +125,7 @@ function userReducer(state, { type, payload }, totalState) {
       const { userData } = payload;
       newState.query.updateUserGeneralInfo = queryState.fullfilled();
       newState.data = { ...newState.data, ...userData };
+      alert("이름을 성공적으로 변경했습니다");
       return newState;
     }
     case ACTION_TYPE.UPDATE_USER_GENERAL_INFO_REJECTED: {
