@@ -12,12 +12,10 @@ import styles from "./product-detail.module";
 function ProductDetail() {
   const dispatch = useDispatch();
   const { id: productId } = useParams();
-  const { isLoading, isError, isSuccess, error, productDetail } = useSelector(
-    (state) => ({
-      ...state.productDetail.query,
-      productDetail: state.productDetail.data,
-    })
-  );
+  const { isLoading, productDetail } = useSelector((state) => ({
+    ...state.productDetail.query,
+    productDetail: state.productDetail.data,
+  }));
 
   const handleAddToCartBtnClick = () =>
     dispatch(addProductToCart({ productId, quantity: 1 }));
