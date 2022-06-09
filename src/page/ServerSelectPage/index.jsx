@@ -1,4 +1,4 @@
-import useServerSelect from 'hooks/apis/useServerSelect';
+import useServerSelect from 'hooks/useServerSelect';
 import Styled from 'page/CartPage/index.style';
 
 const ServerSelectPage = () => {

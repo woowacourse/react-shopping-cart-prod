@@ -15,7 +15,7 @@ import { doDeleteProductFromCart } from 'reducers/cart.reducer';
 
 import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';
-import { LINK, MESSAGE, ROUTES } from 'utils/constants';
+import { MESSAGE, ROUTES } from 'utils/constants';
 
 const ProductItem = ({ productId, name, price, image }) => {
   const dispatch = useDispatch();
