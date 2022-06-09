@@ -23,8 +23,6 @@ const UserMenu = ({ nickname }) => {
 
   const logout = async () => {
     try {
-      await apiClient.post('/auth/logout');
-
       setIsOpen(false);
       dispatch(doLogout());
       dispatch(doInitializeCartList({ shoppingCart: [] }));
