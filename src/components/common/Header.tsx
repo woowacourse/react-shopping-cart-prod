@@ -65,7 +65,6 @@ const Header = () => {
         {isLogin ? (
           <>
             <button onClick={() => navigate(PATH.cart)}>장바구니</button>
-            <button>주문목록</button>
             <StyledDropdownWrapper>
               <Avatar name={name} onClick={openDropdown} />
               {isShowDropdown && (
