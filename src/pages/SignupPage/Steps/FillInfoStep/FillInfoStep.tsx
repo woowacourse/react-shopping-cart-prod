@@ -205,7 +205,7 @@ function FillInfoStep() {
       </S.FormFieldBox>
       <S.FormFieldBox>
         <S.LeftFlexBox>
-          <S.Label>생년월일</S.Label>
+          <S.Label required>생년월일</S.Label>
         </S.LeftFlexBox>
         <S.CenterFlexBox>
           <Input

@@ -34,7 +34,7 @@ function App() {
             <Route path={PATHS.SIGNIN} element={<SigninPage />} />
             <Route path={PATHS.SIGNUP} element={<SignupPage />} />
             <Route
-              path={PATHS.CART}
+              path={PATHS.PROFILE}
               element={<AuthPage element={<ProfilePage />} />}
             />
             <Route path={PATHS.DEFAULT} element={<NotFoundPage />} />
