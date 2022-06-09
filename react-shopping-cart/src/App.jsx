@@ -13,6 +13,7 @@ import SignUp from 'pages/SignUp/SignUp.page';
 import SnackBar from 'components/@shared/SnakBar/SnackBar.component';
 
 import ErrorBoundary from 'components/ErrorBoundary/ErrorBoundary';
+import Header from 'components/Header/Header.component';
 
 import GlobalStyle from 'styles/GlobalStyle';
 import theme from 'styles/theme';
@@ -36,15 +37,11 @@ function App() {
             <Route path="/" element={<ProductList />} />
             <Route element={<AuthOnly />}>
               <Route path="/cart" element={<ShoppingCartList />} />
+              <Route path="/user/modify" element={<ModifyUserInfo />} />
             </Route>
             <Route element={<UnAuthOnly />}>
               <Route path="/login" element={<Login />} />
-            </Route>
-            <Route element={<UnAuthOnly />}>
               <Route path="/signup" element={<SignUp />} />
-            </Route>
-            <Route element={<AuthOnly />}>
-              <Route path="/user/modify" element={<ModifyUserInfo />} />
             </Route>
             <Route path="/*" element={<ErrorPage>존재하지 않는 페이지입니다</ErrorPage>} />
           </Routes>
