@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -11,61 +11,31 @@ import Logo from 'components/@shared/Logo/Logo.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
 import { loginUser } from 'redux/actions/auth.action';
+import { setSnackBarMessage } from 'redux/actions/snackbar.action';
 
-import useFetch from 'hooks/useFetch';
-
-const CopyrightBox = styled(FlexBox).attrs({
-  justifyContent: 'center',
-})`
-  margin: 30px 0;
-`;
-
-const SignupLink = styled(Link)`
-  color: ${({ theme }) => theme.colors['GRAY_002']};
-  font-size: 14px;
-  margin: 12px 0;
-`;
+import useLogin from 'hooks/api/auth/useLogin';
 
 function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    fetchData: login,
-    data,
-    error,
-  } = useFetch({
-    url: '/customers/login',
-    method: 'post',
-    skip: true,
-  });
+  const { login, error } = useLogin();
 
   const emailRef = useRef();
   const passwordRef = useRef();
-
-  const accessToken = data?.accessToken && data.accessToken;
 
   const handleLogin = async e => {
     e.preventDefault();
 
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
-    await login({ email, password });
-  };
+    const { accessToken } = await login({ email, password });
 
-  const { accessToken: isLoggedIn } = useSelector(state => state.auth);
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/');
-    }
-  }, []);
-
-  useEffect(() => {
     if (accessToken) {
-      dispatch(loginUser(data));
+      dispatch(loginUser(accessToken));
+      dispatch(setSnackBarMessage('🎉 환영합니다!'));
       navigate('/');
     }
-  }, [accessToken]);
+  };
 
   return (
     <AuthContainer>
@@ -83,7 +53,7 @@ function Login() {
         >
           <Input ref={emailRef} type="email" placeholder="이메일" />
           <Input ref={passwordRef} type="password" placeholder="비밀번호" />
-          {error && error}
+          {error && '이메일이나 비밀번호를 확인해 주세요.'}
           <SignupLink to="/signup">회원가입</SignupLink>
           <Button width="100%" borderRadius="10px" onClick={handleLogin}>
             <TextBox color="WHITE_001">로그인</TextBox>
@@ -98,3 +68,15 @@ function Login() {
 }
 
 export default Login;
+
+const CopyrightBox = styled(FlexBox).attrs({
+  justifyContent: 'center',
+})`
+  margin: 30px 0;
+`;
+
+const SignupLink = styled(Link)`
+  color: ${({ theme }) => theme.colors['GRAY_002']};
+  font-size: 14px;
+  margin: 12px 0;
+`;

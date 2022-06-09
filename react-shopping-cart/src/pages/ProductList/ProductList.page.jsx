@@ -5,7 +5,7 @@ import ProductListBox from 'components/ProductListBox/ProductListBox.component';
 import ProductListContainer from 'components/ProductListContainer/ProductListContainer.component';
 import SkeletonItem from 'components/SkeletonItem/SkeletonItem.component';
 
-import useFetch from 'hooks/useFetch';
+import useLoadProducts from 'hooks/api/products/useLoadProducts';
 
 function LoadingSection() {
   return (
@@ -18,13 +18,18 @@ function LoadingSection() {
 }
 
 function ProductList() {
-  const { data, isLoading } = useFetch({ url: `/product` });
+  const { products, isLoading, loadProducts } = useLoadProducts();
+  console.log(products);
 
   return (
     <>
       <Header />
       <PageContainer>
-        {isLoading ? <LoadingSection /> : <ProductListContainer data={data} />}
+        {isLoading ? (
+          <LoadingSection />
+        ) : (
+          <ProductListContainer products={products} loadProducts={loadProducts} />
+        )}
       </PageContainer>
     </>
   );

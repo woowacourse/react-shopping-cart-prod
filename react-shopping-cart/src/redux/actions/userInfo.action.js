@@ -16,9 +16,9 @@ export const setPasswordCheck = passwordCheck => ({
 });
 export const setName = name => ({ type: SET_NAME, payload: { name } });
 export const setAddress = address => ({ type: SET_ADDRESS, payload: { address } });
-export const setPhoneNumber = (numberPlace, phoneNumber) => ({
+export const setPhone = (numberPlace, phone) => ({
   type: SET_PHONE_NUMBER,
-  payload: { numberPlace, phoneNumber },
+  payload: { numberPlace, phone },
 });
 export const setUserInfo = info => ({ type: SET_USER_INFO, payload: { info } });
 export const resetUserInfo = () => ({ type: RESET_USER_INFO, payload: {} });

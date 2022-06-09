@@ -1,27 +1,62 @@
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import ArrowButton from 'components/@shared/ArrowButton/ArrowButton.component';
 import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 import InputBox from 'components/@shared/InputBox/InputBox.component';
 import TextBox from 'components/@shared/TextBox/TextBox.component';
 
-import { setAddress, setName, setPhoneNumber } from 'redux/actions/userInfo.action';
+import { setAddress, setName, setPhone } from 'redux/actions/userInfo.action';
+
+const UserInfoWrapper = styled(FlexBox).attrs({
+  as: 'form',
+  id: 'userInfo',
+  width: '100%',
+  direction: 'column',
+  gap: '30px',
+  alignItems: 'flex-end',
+})`
+  margin: 1rem 0;
+`;
+
+const PhoneInputBox = styled.div`
+  display: grid;
+  grid-template-columns: 4fr 1fr 7fr 1fr 7fr;
+  text-align: center;
+  align-items: center;
+`;
 
 function UserInfoContainer({ onClickNext }) {
   const dispatch = useDispatch();
-  const { name, phoneNumber, address } = useSelector(state => state.userInfo);
+  const { name, phone, address } = useSelector(state => state.userInfo);
   const isAllValid = !!(
     !name.error &&
-    !phoneNumber.error &&
+    !phone.error &&
     !address.error &&
     name.value.length &&
-    phoneNumber.first.length === 4 &&
-    phoneNumber.second.length === 4 &&
+    phone.first.length === 4 &&
+    phone.second.length === 4 &&
     address.value.length
   );
 
+  const handlePhoneInput = (e, place) => {
+    if (e.target.value.length > 4) {
+      return;
+    }
+    if (isNaN(e.nativeEvent.data)) {
+      return;
+    }
+
+    dispatch(setPhone(place, e.target.value));
+  };
+
+  const handleShowNextForm = e => {
+    e.preventDefault();
+    onClickNext();
+  };
+
   return (
-    <FlexBox id="userInfo" width="100%" direction="column" gap="17px" alignItems="flex-end">
+    <UserInfoWrapper onSubmit={handleShowNextForm}>
       <InputBox
         {...name}
         onChange={e => {
@@ -34,33 +69,26 @@ function UserInfoContainer({ onClickNext }) {
       />
       <FlexBox width="100%" direction="column" gap="5px">
         <label>전화번호</label>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '4fr 1fr 7fr 1fr 7fr',
-            textAlign: 'center',
-            alignItems: 'center',
-          }}
-        >
+        <PhoneInputBox>
           <span>010</span>-
           <InputBox
-            value={phoneNumber.first}
-            onChange={e => dispatch(setPhoneNumber('first', e.target.value))}
+            value={phone.first}
+            onChange={e => {
+              handlePhoneInput(e, 'first');
+            }}
             type="tel"
-            maxLength="4"
             placeholder="0000"
           />
           -
           <InputBox
-            value={phoneNumber.second}
+            value={phone.second}
             onChange={e => {
-              dispatch(setPhoneNumber('second', e.target.value));
+              handlePhoneInput(e, 'second');
             }}
             type="tel"
-            maxLength="4"
             placeholder="0000"
           />
-        </div>
+        </PhoneInputBox>
       </FlexBox>
       <InputBox
         {...address}
@@ -71,13 +99,13 @@ function UserInfoContainer({ onClickNext }) {
         type="text"
         placeholder="주소"
       />
-      {isAllValid && (
-        <FlexBox as="button" gap="5px" onClick={onClickNext}>
-          <TextBox fontSize="small">다음</TextBox>
-          <ArrowButton direction="right" />
-        </FlexBox>
-      )}
-    </FlexBox>
+      <FlexBox as="button" gap="5px" onClick={handleShowNextForm} disabled={!isAllValid}>
+        <TextBox color={isAllValid ? 'BLACK_001' : 'GRAY_001'} fontSize="small">
+          다음
+        </TextBox>
+        <ArrowButton direction="right" />
+      </FlexBox>
+    </UserInfoWrapper>
   );
 }
 

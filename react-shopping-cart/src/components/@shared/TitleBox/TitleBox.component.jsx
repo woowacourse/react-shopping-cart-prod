@@ -5,7 +5,7 @@ const TitleBox = styled(TextBox).attrs({
   fontSize: 'extraLarge',
   bold: true,
 })`
-  width: 1320px;
+  width: 100%;
   border-bottom: 4px solid ${({ theme }) => theme.colors['BLACK_001']};
   padding: 30px;
   text-align: center;
