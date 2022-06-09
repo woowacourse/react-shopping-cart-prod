@@ -12,13 +12,11 @@ import { Button, Form, Input } from '@/components/@shared';
 import PageLayout from '@/components/PageLayout';
 
 import axios from 'axios';
+import { validateId } from '@/validations';
 
 function Signup() {
-  const [id, onChangeId] = useInput();
-  const [idStatus, setIdStatus] = useState({
-    isValid: false,
-    message: '',
-  });
+  const [id, onChangeId, idErrorMessage] = useInput(validateId);
+  const [canSubmit, setCanSubmit] = useState(false);
   const {
     password,
     onChangePassword,
@@ -30,30 +28,38 @@ function Signup() {
   const navigate = useNavigate();
 
   const onClickDuplicateCheck = async () => {
-    const response = await axios.post('/api/customers/duplication', { userName: id });
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/customers/exists?userName=${id}`
+    );
 
-    if (!response.data) {
-      setIdStatus({ isValid: true, message: '사용 가능한 아이디입니다.' });
+    setCanSubmit(true);
+
+    if (!data.isDuplicate) {
+      alert('사용 가능한 아이디입니다.');
 
       return;
     }
 
-    setIdStatus({
-      isValid: false,
-      message: '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.',
-    });
+    alert('이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.');
   };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!idStatus.isValid) {
+    if (!canSubmit) {
       alert('아이디 중복이 확인되지 않았습니다!');
 
       return;
     }
 
-    await axios.post('/api/customers', { userName: id, password });
+    try {
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/customers`, {
+        userName: id,
+        password,
+      });
+    } catch (error) {
+      alert(error);
+    }
 
     navigate(routes.login);
   };
@@ -69,8 +75,8 @@ function Signup() {
             value={id}
             onChange={onChangeId}
             maxLength={10}
-            isValid={idStatus.isValid}
-            message={idStatus.message}
+            isValid={!idErrorMessage}
+            message={id && idErrorMessage}
           />
           {id && (
             <DuplicateCheckButton type="button" onClick={onClickDuplicateCheck}>
