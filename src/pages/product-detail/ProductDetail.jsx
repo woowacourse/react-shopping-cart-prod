@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import priceToDollar from "@utils/priceToDollar";
 import { getProductDetail } from "@redux/reducers/product-detail-reducer/productDetailThunks";
 import { addProductToCart } from "@redux/reducers/cart-reducer/cartThunks";
 import LoadingThumbnail from "@shared/loading-thumbnail/LoadingThumbnail";
@@ -42,7 +43,7 @@ function ProductDetail() {
       <Divider />
       <div className={styles.bottom}>
         <span className={styles.productPriceText}>금액</span>
-        <p className={styles.productPrice}>{price.toLocaleString()}원</p>
+        <p className={styles.productPrice}>{priceToDollar(price)}</p>
       </div>
       <Button variant="primary" block onClick={handleAddToCartBtnClick}>
         장바구니 담기
