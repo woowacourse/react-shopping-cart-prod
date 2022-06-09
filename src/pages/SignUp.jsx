@@ -9,10 +9,9 @@ import Button from 'components/@common/Button/styles';
 import Input from 'components/@common/Input/styles';
 import ErrorMessage from 'components/@common/ErrorMessage';
 
-import { requestCheckDuplicatedId, requestSignUp } from 'api';
-import { snackbar } from 'actions/snackbar';
-import { hideSpinner, showSpinner } from 'actions/spinner';
-import { 비동기_요청, 알림_메시지 } from 'constants/';
+import { requestSignUp } from 'api';
+import { userDuplicatedIdCheck, userSignUpFailure, userSignUpSuccess } from 'actions/user';
+import { 비동기_요청 } from 'constants/';
 import * as Validate from 'utils/validate';
 import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -59,28 +58,8 @@ const SignUp = () => {
     setCheckDuplicatedId(false);
   }, [userId]);
 
-  const handleRequestDuplicatedId = () => {
-    let timer;
-    dispatch(showSpinner());
-
-    return () => {
-      if (timer) return;
-      timer = setTimeout(async () => {
-        timer = null;
-        const { content } = await requestCheckDuplicatedId(userId);
-
-        dispatch(hideSpinner());
-
-        if (!content.isUnique) {
-          dispatch(snackbar.pushMessageSnackbar(알림_메시지.아이디_중복_확인_실패));
-          setCheckDuplicatedId(content.isUnique);
-          return;
-        }
-
-        dispatch(snackbar.pushMessageSnackbar(알림_메시지.아이디_중복_확인_성공));
-        setCheckDuplicatedId(content.isUnique);
-      }, 1000);
-    };
+  const handleRequestDuplicatedId = async () => {
+    dispatch(userDuplicatedIdCheck(userId, setCheckDuplicatedId));
   };
 
   const handleSignUp = async (e) => {
@@ -93,12 +72,11 @@ const SignUp = () => {
     });
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원가입_성공));
-      navigate('/login');
+      dispatch(userSignUpSuccess()(navigate));
       return;
     }
 
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원가입_실패));
+    dispatch(userSignUpFailure());
   };
 
   return (

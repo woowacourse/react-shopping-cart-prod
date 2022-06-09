@@ -1,6 +1,7 @@
-import { requestUserInfo } from 'api';
+import { requestCheckDuplicatedId, requestUserInfo } from 'api';
 import { 알림_메시지 } from 'constants/';
 import { snackbar } from './snackbar';
+import { hideSpinner, showSpinner } from './spinner';
 import { 유저_액션 } from './types';
 
 const setAccessToken = (response) => async () => {
@@ -24,9 +25,31 @@ const removeUserData = () => (dispatch) => {
   sessionStorage.removeItem('accessToken');
   sessionStorage.removeItem('userId');
 
-  dispatch({
-    type: 유저_액션.REMOVE_USER_DATA,
-  });
+  dispatch({ type: 유저_액션.REMOVE_USER_DATA });
+};
+
+const userDuplicatedIdCheck = (userId, setCheckDuplicatedId) => async (dispatch) => {
+  dispatch(showSpinner());
+  const { content } = await requestCheckDuplicatedId(userId);
+  dispatch(hideSpinner());
+
+  if (!content.isUnique) {
+    dispatch(snackbar.pushMessageSnackbar(알림_메시지.아이디_중복_확인_실패));
+    setCheckDuplicatedId(content.isUnique);
+    return;
+  }
+
+  dispatch(snackbar.pushMessageSnackbar(알림_메시지.아이디_중복_확인_성공));
+  setCheckDuplicatedId(content.isUnique);
+};
+
+const userSignUpSuccess = () => (navigate) => async (dispatch) => {
+  dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원가입_성공));
+  navigate('/login');
+};
+
+const userSignUpFailure = () => async (dispatch) => {
+  dispatch(snackbar.pushMessageSnackbar(알림_메시지.회원가입_실패));
 };
 
 const withDrawUserSuccess = () => (navigate) => (dispatch) => {
@@ -80,6 +103,9 @@ export {
   setAccessToken,
   setUserData,
   removeUserData,
+  userDuplicatedIdCheck,
+  userSignUpSuccess,
+  userSignUpFailure,
   withDrawUserSuccess,
   withDrawUserFailure,
   userUnfilledLoginForm,
