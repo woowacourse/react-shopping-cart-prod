@@ -8,8 +8,8 @@ import OrderList from "@order-list/OrderList";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import MyPage from "./pages/my-page/MyPage";
-import AuthGuard from "./auth-guard/AuthGuard";
-import { accessPolicy } from "./auth-guard/constants";
+import AuthGuard from "@shared/auth-guard/AuthGuard";
+import { USER_ACCESS_POLICY } from "./constants/index";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
           <Route
             path="/cart"
             element={
-              <AuthGuard policy={accessPolicy.onlyLoggedInUser}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_IN_USER}>
                 <Cart />
               </AuthGuard>
             }
@@ -29,7 +29,7 @@ function App() {
           <Route
             path="/login"
             element={
-              <AuthGuard policy={accessPolicy.onlyLoggedOutUser}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_OUT_USER}>
                 <Login />
               </AuthGuard>
             }
@@ -37,7 +37,7 @@ function App() {
           <Route
             path="/signup"
             element={
-              <AuthGuard policy={accessPolicy.onlyLoggedOutUser}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_OUT_USER}>
                 <Signup />
               </AuthGuard>
             }
@@ -45,7 +45,7 @@ function App() {
           <Route
             path="/my-page"
             element={
-              <AuthGuard policy={accessPolicy.onlyLoggedInUser}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_IN_USER}>
                 <MyPage />
               </AuthGuard>
             }
@@ -54,7 +54,7 @@ function App() {
           <Route
             path="/order-list"
             element={
-              <AuthGuard policy={accessPolicy.onlyLoggedInUser}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_IN_USER}>
                 <OrderList />
               </AuthGuard>
             }
