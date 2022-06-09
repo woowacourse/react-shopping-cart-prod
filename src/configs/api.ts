@@ -7,6 +7,8 @@ const 야호_URL =
   'http://ec2-13-125-121-5.ap-northeast-2.compute.amazonaws.com:8080/api';
 const 매트_URL =
   'http://ec2-15-164-94-21.ap-northeast-2.compute.amazonaws.com:8080/api';
+const 슬로_URL =
+  'http://ec2-15-164-49-241.ap-northeast-2.compute.amazonaws.com:8080/api';
 
 const axios = Axios.create({
   // 차리
@@ -15,6 +17,8 @@ const axios = Axios.create({
   baseURL: 매트_URL,
   // 야호
   // baseURL: 야호_URL,
+  // 슬로
+  // baseURL: 슬로_URL,
 });
 
 const axiosWithToken = Axios.create({
@@ -24,6 +28,8 @@ const axiosWithToken = Axios.create({
   baseURL: 매트_URL,
   // 야호
   // baseURL: 야호_URL,
+  // 슬로
+  // baseURL: 슬로_URL,
 });
 
 axiosWithToken.interceptors.request.use(
