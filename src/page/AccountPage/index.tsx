@@ -22,7 +22,7 @@ const AccountPage = () => {
 
   useEffect(() => {
     getProfile();
-  }, []);
+  }, [getProfile]);
 
   return (
     <Styled.Container>
