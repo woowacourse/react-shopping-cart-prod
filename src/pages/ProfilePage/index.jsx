@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Title, Icon } from 'components/@common';
 
-import { ICON_CODE } from 'constants/';
+import { ICON_CODE, PAGE_LIST } from 'constants/';
 
 import ConfirmPassword from './Containers/ConfirmPassword';
 import ProfileEdit from './Containers/ProfileEdit';
@@ -27,6 +28,10 @@ export function ProfilePage() {
       <S.PageContent>
         {pageStep === 1 && <ConfirmPassword setAuthPassed={setAuthPassed} />}
         {pageStep === 2 && <ProfileEdit confirmPassword={password} />}
+
+        <S.Link>
+          <Link to={PAGE_LIST.WITHDRAWAL}>회원 탈퇴 요청</Link>
+        </S.Link>
       </S.PageContent>
     </>
   );
