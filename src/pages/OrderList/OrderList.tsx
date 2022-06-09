@@ -39,7 +39,23 @@ function OrderList() {
     );
   }
 
-  if (isError) return <ErrorContainer>써버 에러</ErrorContainer>;
+  if (isError) {
+    return (
+      <PageTemplate>
+        <Styled.Title>주문목록</Styled.Title>
+        <ErrorContainer>써버 에러</ErrorContainer>
+      </PageTemplate>
+    );
+  }
+
+  if (!orderList) {
+    return (
+      <PageTemplate>
+        <Styled.Title>주문목록</Styled.Title>
+        <ErrorContainer>준비된 상품이 없엉!!</ErrorContainer>
+      </PageTemplate>
+    );
+  }
 
   return (
     <PageTemplate>

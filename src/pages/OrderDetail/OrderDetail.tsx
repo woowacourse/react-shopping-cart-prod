@@ -41,7 +41,13 @@ function OrderDetail() {
     );
   }
 
-  if (isError) return <ErrorContainer>써버 에러</ErrorContainer>;
+  if (isError)
+    return (
+      <PageTemplate>
+        <Styled.Title>주문내역상세</Styled.Title>
+        <ErrorContainer>써버 에러</ErrorContainer>
+      </PageTemplate>
+    );
 
   return (
     <PageTemplate>
