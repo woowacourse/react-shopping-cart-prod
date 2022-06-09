@@ -6,10 +6,7 @@ const BE_PAIR_SERVER_URL = {
   HUDI: 'http://ec2-3-37-87-144.ap-northeast-2.compute.amazonaws.com:8080',
 };
 
-// export const SERVER_URL = BE_PAIR_SERVER_URL.HUDI;
-
-export const SERVER_URL =
-  'http://ec2-3-38-41-169.ap-northeast-2.compute.amazonaws.com:8080';
+export const SERVER_URL = BE_PAIR_SERVER_URL.HUDI;
 
 const JSON_SERVER_URL = 'https://json-server-shopping-cart.herokuapp.com';
 
