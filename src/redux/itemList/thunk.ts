@@ -1,5 +1,4 @@
-import { BASE_URL } from 'apis';
-import axios from 'axios';
+import { client } from 'apis';
 import type { Dispatch } from 'redux';
 
 import { ItemListAction, itemListActions } from './action';
@@ -7,7 +6,7 @@ import { ItemListAction, itemListActions } from './action';
 export const getItemList = () => async (dispatch: Dispatch<ItemListAction>) => {
   dispatch(itemListActions.getItemListActionGroup.request());
   try {
-    const response = await axios.get(`${BASE_URL}/itemList`);
+    const response = await client.get('/products');
 
     dispatch(itemListActions.getItemListActionGroup.success(response.data));
   } catch (e: unknown) {

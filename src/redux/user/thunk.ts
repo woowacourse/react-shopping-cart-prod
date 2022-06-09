@@ -1,4 +1,4 @@
-import { authClient } from 'apis';
+import { client } from 'apis';
 import type { Dispatch } from 'redux';
 import { RootState } from 'redux/rootReducer';
 import { LoginRequest, LoginResponse, UserInfo, UserInfoWithPassword } from 'types/domain';
@@ -12,7 +12,7 @@ export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
 
   dispatch(userActions.getUserGroup.request());
   try {
-    const response = await authClient.get<UserInfo>('/customers/me', {
+    const response = await client.get<UserInfo>('/customers/me', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -30,7 +30,7 @@ export const login =
   (userInfo: LoginRequest) => async (dispatch: Dispatch<UserAction>, getState: () => RootState) => {
     dispatch(userActions.loginGroup.request());
     try {
-      const response = await authClient.post<LoginResponse | string>('/login', userInfo);
+      const response = await client.post<LoginResponse | string>('/login', userInfo);
 
       if (typeof response.data === 'string') {
         throw new Error(response.data);
@@ -52,7 +52,7 @@ export const signup =
   (userInfo: UserInfoWithPassword) => async (dispatch: Dispatch<UserAction>) => {
     dispatch(userActions.signupGroup.request());
     try {
-      const response = await authClient.post<UserInfo | string>('/customers', userInfo);
+      const response = await client.post<UserInfo | string>('/customers', userInfo);
 
       if (typeof response.data === 'string') {
         throw new Error(response.data);
@@ -74,7 +74,7 @@ export const editUserInfo =
 
     dispatch(userActions.editGroup.request());
     try {
-      const response = await authClient.put<UserInfo | string>('/customers/me', userInfo, {
+      const response = await client.put<UserInfo | string>('/customers/me', userInfo, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -99,7 +99,7 @@ export const deleteUser =
     if (!accessToken) return;
     dispatch(userActions.deleteGroup.request());
     try {
-      const response = await authClient.delete('/customers/me', {
+      const response = await client.delete('/customers/me', {
         data: password,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -110,6 +110,7 @@ export const deleteUser =
         throw new Error(response.data);
       }
 
+      localStorage.removeItem('access-token');
       dispatch(userActions.deleteGroup.success(response.data));
     } catch (e: unknown) {
       if (e instanceof Error) {

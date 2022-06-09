@@ -36,7 +36,7 @@ const ItemDetail = () => {
   };
 
   const updateCart = () => {
-    const targetItem = cartList.find(cartItem => cartItem.productId === Number(id));
+    const targetItem = cartList.find(cartItem => cartItem.id === Number(id));
 
     dispatch(putCartItemRequest({ id: targetItem.id, quantity: targetItem.quantity + 1 }));
     openSnackbar();

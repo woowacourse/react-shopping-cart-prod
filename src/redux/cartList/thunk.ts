@@ -1,12 +1,19 @@
-import { BASE_URL } from 'apis';
-import axios from 'axios';
 import type { Dispatch } from 'redux';
 import { CartListAction, cartListActions } from 'redux/cartList/action';
+import { client } from 'apis';
 
 export const getCartListRequest = () => async (dispatch: Dispatch<CartListAction>) => {
+  const accessToken = localStorage.getItem('access-token');
+
+  if (!accessToken) return;
+
   dispatch(cartListActions.getCartListActionGroup.request());
   try {
-    const response = await axios.get(`${BASE_URL}/customers/carts`);
+    const response = await client.get('/customers/carts', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     dispatch(cartListActions.getCartListActionGroup.success(response.data));
   } catch (e: unknown) {
@@ -19,9 +26,21 @@ export const getCartListRequest = () => async (dispatch: Dispatch<CartListAction
 export const putCartItemRequest =
   ({ id, quantity }: { id: number; quantity: number }) =>
   async (dispatch: Dispatch<CartListAction>) => {
+    const accessToken = localStorage.getItem('access-token');
+
+    if (!accessToken) return;
+
     dispatch(cartListActions.putCartItemActionGroup.request());
     try {
-      const response = await axios.put(`${BASE_URL}/customers/carts/${id}`, { quantity });
+      const response = await client.put(
+        `customers/carts/${id}`,
+        { quantity },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       dispatch(cartListActions.putCartItemActionGroup.success(response.data));
     } catch (e: unknown) {
@@ -33,9 +52,21 @@ export const putCartItemRequest =
 
 export const postCartItemRequest =
   (productId: number) => async (dispatch: Dispatch<CartListAction>) => {
+    const accessToken = localStorage.getItem('access-token');
+
+    if (!accessToken) return;
+
     dispatch(cartListActions.postCartItemActionGroup.request());
     try {
-      const response = await axios.post(`${BASE_URL}/customers/carts`, { productId });
+      const response = await client.post(
+        '/customers/carts',
+        { productId },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
 
       dispatch(cartListActions.postCartItemActionGroup.success(response.data));
     } catch (e: unknown) {
@@ -46,9 +77,17 @@ export const postCartItemRequest =
   };
 
 export const deleteCartItemRequest = (id: number) => async (dispatch: Dispatch<CartListAction>) => {
+  const accessToken = localStorage.getItem('access-token');
+
+  if (!accessToken) return;
+
   dispatch(cartListActions.deleteCartItemActionGroup.request());
   try {
-    await axios.delete(`${BASE_URL}/customers/carts/${id}`);
+    await client.delete(`/customers/carts/${id}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     dispatch(cartListActions.deleteCartItemActionGroup.success(id));
   } catch (e: unknown) {
@@ -59,9 +98,17 @@ export const deleteCartItemRequest = (id: number) => async (dispatch: Dispatch<C
 };
 
 export const deleteAllCartItemRequest = () => async (dispatch: Dispatch<CartListAction>) => {
+  const accessToken = localStorage.getItem('access-token');
+
+  if (!accessToken) return;
+
   dispatch(cartListActions.deleteAllCartItemActionGroup.request());
   try {
-    await axios.delete(`${BASE_URL}/customers/carts`);
+    await client.delete('/customers/carts', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
     dispatch(cartListActions.deleteAllCartItemActionGroup.success());
   } catch (e: unknown) {
