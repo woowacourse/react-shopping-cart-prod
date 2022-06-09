@@ -12,8 +12,8 @@ import * as cartActions from './action';
 const getList =
   (force = false) =>
   async (dispatch, getState) => {
-    const { isLoading, isLoaded } = getState().cart.listAsyncState;
-    if (force === false && (isLoading === true || isLoaded === true)) {
+    const { isLoaded } = getState().cart.listAsyncState;
+    if (force === false && isLoaded === true) {
       return;
     }
 
@@ -22,45 +22,53 @@ const getList =
     const response = await requestGetCartList();
     const { status, content } = response;
 
-    (status === REQUEST_STATUS.SUCCESS && dispatch(cartActions.getList.success(content))) ||
-      (status === REQUEST_STATUS.FAIL && dispatch(cartActions.getList.error(content)));
+    if (status === REQUEST_STATUS.SUCCESS) {
+      dispatch(cartActions.getList.success(content));
+    } else if (status === REQUEST_STATUS.FAIL) {
+      dispatch(cartActions.getList.error(content));
+    }
 
     return response;
   };
 
 const addList =
-  ({ id, image, name, price, quantity = 1 }) =>
+  (itemList = []) =>
   async (dispatch) => {
     dispatch(cartActions.addList.pending());
 
-    const response = await requestAddCart({
-      id,
-      image,
-      name,
-      price,
-      quantity,
-    });
+    const response = await requestAddCart(itemList);
     const { status, content } = response;
 
-    (status === REQUEST_STATUS.SUCCESS && dispatch(cartActions.addList.success(content))) ||
-      (status === REQUEST_STATUS.FAIL && dispatch(cartActions.addList.error(content)));
+    const updatedItems = itemList.map((item, index) => {
+      const { id, name, imageUrl, price } = item;
+      return { productId: id, name, imageUrl, price, ...content[index] };
+    });
+
+    if (status === REQUEST_STATUS.SUCCESS) {
+      dispatch(cartActions.addList.success(updatedItems));
+    } else if (status === REQUEST_STATUS.FAIL) {
+      dispatch(cartActions.addList.error(content));
+    }
 
     return response;
   };
 
 const updateItem = (id, changedContent) => async (dispatch) => {
   const response = await requestUpdateCartItem(id, changedContent);
-  const { status, content } = response;
+  const { status } = response;
+  const { quantity } = changedContent;
 
   if (status === REQUEST_STATUS.FAIL) {
     return false;
   }
 
-  dispatch(cartActions.updateItemSuccess(content));
+  dispatch(cartActions.updateItemSuccess({ id, quantity }));
   return response;
 };
 
 const removeItem = (id) => async (dispatch) => {
+  dispatch(cartActions.removeItemPending());
+
   const response = await requestRemoveCartItem(id);
   const { status } = response;
 
@@ -73,6 +81,8 @@ const removeItem = (id) => async (dispatch) => {
 };
 
 const removeItemList = (idList) => async (dispatch) => {
+  dispatch(cartActions.removeItemPending());
+
   const response = await requestRemoveCartItemList(idList);
   const { status } = response;
 

@@ -47,6 +47,11 @@ const updateItemAllCheck = (isChecked) => ({
   payload: { isChecked },
 });
 
+const removeItemPending = () => ({
+  type: CARTS_ACTIONS.REMOVE_CART_ITEM_PENDING,
+  payload: {},
+});
+
 const removeItemSuccess = (id) => ({
   type: CARTS_ACTIONS.REMOVE_CART_ITEM_SUCCESS,
   payload: { id },
@@ -63,6 +68,7 @@ export {
   updateItemSuccess,
   updateItemCheck,
   updateItemAllCheck,
+  removeItemPending,
   removeItemSuccess,
   removeItemListSuccess,
 };
