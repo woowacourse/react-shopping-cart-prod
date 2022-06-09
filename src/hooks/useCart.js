@@ -57,6 +57,7 @@ const useCart = () => {
         },
       )
       .then(() => {
+        getUserCartsApi();
         showSuccessSnackBar({ text: '수량이 변경 되었습니다.' });
       })
       .catch((err) => {
@@ -105,7 +106,7 @@ const useCart = () => {
       .then(({ data }) => {
         dispatch(setCart(data));
         // TODO 지울 것
-        showSuccessSnackBar({ text: '내 장바구니 조회' });
+        // showSuccessSnackBar({ text: '내 장바구니 조회' });
       })
       .catch((err) => {
         console.log('err', err);
