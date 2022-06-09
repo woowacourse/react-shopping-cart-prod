@@ -5,8 +5,8 @@ const Loading = () => {
   return (
     <StyledLoader>
       <Spinner>
-        <Dbounce1></Dbounce1>
-        <Dbounce2></Dbounce2>
+        <Dbounce1 />
+        <Dbounce2 />
       </Spinner>
     </StyledLoader>
   );
