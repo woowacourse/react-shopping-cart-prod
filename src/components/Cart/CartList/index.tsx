@@ -37,7 +37,7 @@ const CartList = ({ cartList }: CartListProps) => {
             checked={isAllSelected}
             onChange={() => dispatch(checkAllCartItem(isAllSelected))}
           />
-          <label htmlFor='check'>선택해제</label>
+          <label htmlFor='check'>전체 선택/해제</label>
         </StyledRight>
         <Button
           width='117px'
