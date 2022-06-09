@@ -2,13 +2,15 @@ import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { getProducts } from 'redux/thunks';
+import { getCarts } from 'redux/thunks/cart';
+import { getProducts } from 'redux/thunks/product';
 
 import Loading from 'components/@shared/Loading';
 import ProductCardGrid from 'components/ProductCardGrid/ProductCardGrid';
 
 import CONDITION from 'constants/condition';
 import { ProductStoreState } from 'types/index';
+import { isLogin } from 'utils/auth';
 
 function MainPage() {
   const condition = useSelector(
@@ -23,6 +25,9 @@ function MainPage() {
     if (productList.length < 1) {
       dispatch(getProducts());
     }
+
+    //TODO: 코드가 더럽다.
+    isLogin() && dispatch(getCarts());
   }, [dispatch, productList]);
 
   const renderSwitch = useCallback(() => {

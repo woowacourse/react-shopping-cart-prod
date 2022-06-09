@@ -1,32 +1,32 @@
-import { Cart, Product } from 'types/index';
+import { Cart } from 'types/index';
 
 const cartTypes = {
-  ADD_PRODUCT: 'ADD_PRODUCT_TO_CART',
-  DELETE_PRODUCT: 'DELETE_PRODUCT_TO_CART',
-  DELETE_CHECKED_PRODUCT: 'DELETE_CHECKED_PRODUCT_TO_CART',
-  TOGGLE_CHECK_ONE: 'TOGGLE_CHECK_A_PRODUCT',
-  TOGGLE_CHECK_ALL: 'TOGGLE_CHECK_ALL_PRODUCT',
-  CHANGE_PRODUCT_QUANTITY: 'CHANGE_PRODUCT_QUANTITY',
+  CHECK_CART_ITEM: 'CHECK_CART_ITEM',
+  UNCHECK_CART_ITEM: 'UNCHECK_CART_ITEM',
+  GET_CART_ITEMS: 'GET_CART_ITEMS',
+  GET_CART_ITEMS_SUCCESS: 'GET_CART_ITEMS_SUECCESS',
+  GET_CART_ITEMS_ERROR: 'GET_CART_ITEMS_ERROR',
+  RESET_CART_ITEMS: 'RESET_CART_ITEMS',
 } as const;
 
 const cartActions = {
-  addToCart: (data: Product['id']) => {
-    return { type: cartTypes.ADD_PRODUCT, payload: data };
+  checkCartItem: (cartItemId: number) => {
+    return { type: cartTypes.CHECK_CART_ITEM, payload: cartItemId };
   },
-  deleteToCart: (data: Product['id']) => {
-    return { type: cartTypes.DELETE_PRODUCT, payload: data };
+  uncheckCartItem: (cartItemId: number) => {
+    return { type: cartTypes.UNCHECK_CART_ITEM, payload: cartItemId };
   },
-  deleteCheckedToCart: () => {
-    return { type: cartTypes.DELETE_CHECKED_PRODUCT };
+  getCartItems: () => {
+    return { type: cartTypes.GET_CART_ITEMS };
   },
-  toggleCheckAProduct: (data: Product['id']) => {
-    return { type: cartTypes.TOGGLE_CHECK_ONE, payload: data };
+  getCartItemsSuccess: (data: Array<Cart>) => {
+    return { type: cartTypes.GET_CART_ITEMS_SUCCESS, payload: data };
   },
-  toggleCheckAllProduct: (checked: boolean) => {
-    return { type: cartTypes.TOGGLE_CHECK_ALL, payload: checked };
+  getCartItemsError: () => {
+    return { type: cartTypes.GET_CART_ITEMS_ERROR };
   },
-  changeProductQuantity: (data: Pick<Cart, 'id' | 'quantity'>) => {
-    return { type: cartTypes.CHANGE_PRODUCT_QUANTITY, payload: data };
+  resetCartItems: () => {
+    return { type: cartTypes.RESET_CART_ITEMS };
   },
 };
 

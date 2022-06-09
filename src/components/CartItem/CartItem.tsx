@@ -1,32 +1,45 @@
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { cartActions } from 'redux/actions';
+import { getCarts } from 'redux/thunks/cart';
 
 import CheckBox from 'components/@shared/CheckBox';
 import Link from 'components/@shared/Link';
 import NumberInput from 'components/@shared/NumberInput';
 
+import cartAPI from 'apis/cart';
 import { ReactComponent as Delete } from 'assets/Delete.svg';
 import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
+import { CartStoreState } from 'types';
 import { Product } from 'types/product';
 
 type Props = {
+  cartItemId: number;
   product: Product;
   quantity: number;
   checked: boolean;
 };
 
-function CartItem({ product, quantity, checked }: Props) {
+// TODO: 선택 구현
+function CartItem({ cartItemId, product, quantity }: Props) {
   const { id, name, imageUrl } = product;
   const dispatch = useDispatch();
+  const { checkedCartItems } = useSelector(
+    (state: { cart: CartStoreState }) => state.cart
+  );
+
+  const isChecked = checkedCartItems.includes(cartItemId);
 
   const onClickDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteToCart(id));
+      cartAPI.deleteCartItem(cartItemId).then((res) => {
+        res?.status === 204 && dispatch(getCarts());
+      });
     }
   };
 
@@ -35,23 +48,39 @@ function CartItem({ product, quantity, checked }: Props) {
   ) => {
     e.preventDefault();
 
-    dispatch(cartActions.toggleCheckAProduct(id));
+    if (!isChecked) {
+      dispatch(cartActions.checkCartItem(cartItemId));
+
+      return;
+    }
+
+    dispatch(cartActions.uncheckCartItem(cartItemId));
   };
 
-  const onChangeCartQuantity = (value: number) => {
-    dispatch(cartActions.changeProductQuantity({ id, quantity: value }));
-  };
+  const onChangeCartItemQuantity =
+    (cartItemId: number) => (quantity: number) => {
+      cartAPI.changeCartItemQuantity(cartItemId, quantity).then((res) => {
+        dispatch(getCarts());
+      });
+    };
 
   return (
     <Link to={`${PATH.PRODUCT}/${id}`}>
       <StyledCartItem>
-        <CheckBox id={id + ''} checked={checked} onChange={onChangeCheckBox} />
+        <CheckBox
+          id={id + ''}
+          checked={isChecked}
+          onChange={onChangeCheckBox}
+        />
         <img src={imageUrl} alt={name} />
         <StyledProductName>{name}</StyledProductName>
         <StyledDeleteButton type="button" onClick={onClickDeleteButton}>
           <Delete />
         </StyledDeleteButton>
-        <NumberInput value={quantity} setValue={onChangeCartQuantity} />
+        <NumberInput
+          value={quantity}
+          setValue={onChangeCartItemQuantity(cartItemId)}
+        />
         <StyledPrice>
           {(product.price * quantity).toLocaleString('ko-KR')} 원
         </StyledPrice>

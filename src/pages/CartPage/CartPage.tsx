@@ -2,18 +2,14 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { getProducts } from 'redux/thunks';
+import { getCarts } from 'redux/thunks/cart';
+import { getProducts } from 'redux/thunks/product';
 
 import Loading from 'components/@shared/Loading';
 import CartContent from 'components/CartContent/CartContent';
 
 import CONDITION from 'constants/condition';
-import {
-  CartProductState,
-  CartStoreState,
-  Product,
-  ProductStoreState,
-} from 'types/index';
+import { CartStoreState, Product, ProductStoreState } from 'types/index';
 
 function CartPage() {
   const condition = useSelector(
@@ -22,31 +18,20 @@ function CartPage() {
   const productList = useSelector(
     (state: { product: ProductStoreState }) => state.product.productList
   );
-  const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart
+  const cartItems = useSelector(
+    (state: { cart: CartStoreState }) => state.cart.cartItems
   );
-  const [cartItems, setCartItems] = useState<Array<CartProductState>>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (productList.length < 1) {
-      getProducts();
+      dispatch(getProducts());
     }
   }, [dispatch, productList.length]);
 
   useEffect(() => {
-    if (productList.length < 1) return;
-
-    setCartItems(
-      cart.map(({ id, quantity, checked }) => {
-        const item = productList.find(
-          (product) => product.id === id
-        ) as Product;
-
-        return { product: item, quantity, checked };
-      })
-    );
-  }, [cart, productList]);
+    dispatch(getCarts());
+  }, [dispatch]);
 
   const renderSwitch = () => {
     switch (condition) {

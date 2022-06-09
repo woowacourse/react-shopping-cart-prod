@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { userActions } from 'redux/actions';
+import { cartActions, userActions } from 'redux/actions';
 
 import Link from 'components/@shared/Link';
 import RightMenu from 'components/Layout/Header/RightMenu';
@@ -17,12 +17,13 @@ function Header() {
   const dispatch = useDispatch();
 
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart
+    (state: { cart: CartStoreState }) => state.cart.cartItems
   );
   const userName = useSelector((state: { user: User }) => state.user.username);
 
   const onClickLogoutButton = () => {
     dispatch(userActions.resetUser());
+    dispatch(cartActions.resetCartItems());
 
     sessionStorage.removeItem('accessToken');
 
@@ -42,7 +43,7 @@ function Header() {
         <RightMenu>
           <Link to={PATH.CART}>
             장바구니
-            <Badge>{cart.length}</Badge>
+            <Badge>{cart?.length || 0}</Badge>
           </Link>
           <Link to={PATH.BASE}>주문목록</Link>
         </RightMenu>

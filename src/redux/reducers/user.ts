@@ -14,9 +14,11 @@ const user = (state = initialState, action: UserAction) => {
     case userTypes.SET_USER: {
       return { ...state, ...action.payload };
     }
+
     case userTypes.RESET_USER: {
       return initialState;
     }
+
     default:
       return state;
   }

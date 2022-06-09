@@ -1,4 +1,5 @@
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { cartActions } from 'redux/actions';
@@ -7,27 +8,35 @@ import CheckBox from 'components/@shared/CheckBox';
 import CartItem from 'components/CartItem/CartItem';
 
 import { CART_MESSAGE } from 'constants/message';
-import { CartProductState } from 'types';
+import { Cart, CartStoreState } from 'types/cart';
 
 type Props = {
-  cartItems: Array<CartProductState>;
+  cartItems: Array<Cart>;
 };
 
 function CartContent({ cartItems }: Props) {
   const dispatch = useDispatch();
+  const [isAllChecked, setIsAllChecked] = useState(false);
+  const { checkedCartItems } = useSelector(
+    (state: { cart: CartStoreState }) => state.cart
+  );
 
-  const calculateTotalMoney = () => {
-    return cartItems.reduce((prevMoney, item) => {
-      const { product, quantity, checked } = item;
+  const getTotalMoney = () => {
+    return checkedCartItems.reduce((prevMoney, checkedCartItemId) => {
+      const cartItem = cartItems.find(
+        (cartItem) => cartItem.id === checkedCartItemId
+      );
 
-      if (!checked) return prevMoney;
+      if (cartItem) {
+        const {
+          product: { price },
+        } = cartItem;
 
-      return prevMoney + product.price * quantity;
+        return prevMoney + price * cartItem.quantity;
+      }
+
+      return prevMoney;
     }, 0);
-  };
-
-  const isAllChecked = () => {
-    return cartItems.every((item) => item.checked === true);
   };
 
   const onChangeAllChecked = (
@@ -35,14 +44,28 @@ function CartContent({ cartItems }: Props) {
   ) => {
     e.preventDefault();
 
-    dispatch(cartActions.toggleCheckAllProduct(!isAllChecked()));
+    setIsAllChecked((isAllChecked) => {
+      if (isAllChecked) {
+        cartItems.forEach(({ id }) =>
+          dispatch(cartActions.uncheckCartItem(id))
+        );
+      } else {
+        cartItems.forEach(({ id }) => dispatch(cartActions.checkCartItem(id)));
+      }
+
+      return !isAllChecked;
+    });
   };
 
   const onClickCheckedDeleteButton = () => {
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteCheckedToCart());
+      //TODO: 선택된 항목들 제거
     }
   };
+
+  useEffect(() => {
+    setIsAllChecked(checkedCartItems.length === cartItems.length);
+  }, [checkedCartItems, cartItems]);
 
   return (
     <StyledContentBox>
@@ -51,7 +74,7 @@ function CartContent({ cartItems }: Props) {
           <StyledAllCheckOption>
             <CheckBox
               id="all-check"
-              checked={isAllChecked()}
+              checked={isAllChecked}
               onChange={onChangeAllChecked}
             />
             <p>전체 선택/해제</p>
@@ -63,12 +86,13 @@ function CartContent({ cartItems }: Props) {
             선택 상품 삭제
           </StyledDeleteButton>
         </StyledProductOptions>
-        {cartItems.map(({ product, quantity, checked }) => (
+        {cartItems.map(({ id, product, quantity }) => (
           <CartItem
+            key={product.id}
+            cartItemId={id}
             product={product}
             quantity={quantity}
-            checked={checked}
-            key={product.id}
+            checked={isAllChecked}
           />
         ))}
       </StyledProductContainer>
@@ -76,7 +100,7 @@ function CartContent({ cartItems }: Props) {
         <h3>결제예상금액</h3>
         <hr />
         <StyledTotalMoney>
-          {calculateTotalMoney().toLocaleString('ko-KR')} 원
+          {getTotalMoney().toLocaleString('ko-KR')} 원
         </StyledTotalMoney>
         <StyledOrderButton type="button">주문하기</StyledOrderButton>
       </StyledTotalContainer>

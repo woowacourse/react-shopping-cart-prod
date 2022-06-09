@@ -14,6 +14,7 @@ function product(state = initialState, action: ProductAction) {
     case productTypes.GET_PRODUCT_LIST: {
       return { ...state, condition: CONDITION.LOADING };
     }
+
     case productTypes.GET_PRODUCT_LIST_SUCCESS: {
       return {
         ...state,
@@ -21,12 +22,15 @@ function product(state = initialState, action: ProductAction) {
         productList: action.payload,
       };
     }
+
     case productTypes.GET_PRODUCT_LIST_ERROR: {
       return { ...state, condition: CONDITION.ERROR, productList: [] };
     }
+
     case productTypes.GET_PRODUCT_DETAIL: {
       return { ...state, condition: CONDITION.LOADING };
     }
+
     case productTypes.GET_PRODUCT_DETAIL_SUCCESS: {
       return {
         ...state,
@@ -34,9 +38,11 @@ function product(state = initialState, action: ProductAction) {
         productDetail: action.payload,
       };
     }
+
     case productTypes.GET_PRODUCT_DETAIL_ERROR: {
       return { ...state, condition: CONDITION.ERROR, productDetail: null };
     }
+
     default:
       return state;
   }

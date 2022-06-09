@@ -11,8 +11,8 @@ type Props = {
 };
 
 function ProductCardGrid({ productList }: Props) {
-  const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart
+  const cartItems = useSelector(
+    (state: { cart: CartStoreState }) => state.cart.cartItems
   );
 
   return (
@@ -21,7 +21,7 @@ function ProductCardGrid({ productList }: Props) {
         productList.map((product) => (
           <ProductCard
             product={product}
-            isInCart={isProductInCart(product.id, cart)}
+            isInCart={isProductInCart(product.id, cartItems)}
             key={product.id}
           />
         ))

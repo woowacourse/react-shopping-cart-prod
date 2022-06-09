@@ -1,78 +1,63 @@
 import { cartTypes } from 'redux/actions';
 
+import CONDITION from 'constants/condition';
 import { CartAction, CartStoreState } from 'types/index';
-import { isProductInCart } from 'utils/validator';
 
 const initialState: CartStoreState = {
-  cart: [],
+  condition: CONDITION.NONE,
+  cartItems: [],
+  checkedCartItems: [],
 };
 
-// TODO: SET_CART만 남겨두고 하기
 const cart = (state = initialState, action: CartAction) => {
   switch (action.type) {
-    case cartTypes.ADD_PRODUCT: {
-      if (!isProductInCart(action.payload, state.cart)) {
-        return {
-          ...state,
-          cart: [
-            ...state.cart,
-            { id: action.payload, quantity: 1, checked: true },
-          ],
-        };
-      }
-
-      const newCart = state.cart.map((product) => {
-        if (product.id === action.payload) {
-          return { ...product, quantity: product.quantity + 1 };
-        }
-        return product;
-      });
-
-      return { ...state, cart: newCart };
+    case cartTypes.GET_CART_ITEMS: {
+      return { ...state, condition: CONDITION.LOADING };
     }
-    case cartTypes.DELETE_PRODUCT: {
-      const newCart = state.cart.filter(
-        (product) => product.id !== action.payload
+
+    case cartTypes.GET_CART_ITEMS_SUCCESS: {
+      return {
+        ...state,
+        condition: CONDITION.COMPLETE,
+        cartItems: action.payload,
+      };
+    }
+
+    case cartTypes.GET_CART_ITEMS_ERROR: {
+      return {
+        ...state,
+        condition: CONDITION.ERROR,
+        cartItems: [],
+      };
+    }
+
+    case cartTypes.RESET_CART_ITEMS: {
+      return {
+        ...state,
+        cartItems: [],
+      };
+    }
+
+    case cartTypes.CHECK_CART_ITEM: {
+      const newCheckedCartItems = [...state.checkedCartItems, action.payload];
+
+      return {
+        ...state,
+        checkedCartItems: newCheckedCartItems,
+      };
+    }
+
+    case cartTypes.UNCHECK_CART_ITEM: {
+      const newCheckedCartItems = state.checkedCartItems.filter(
+        (cartItemId) => cartItemId !== action.payload
       );
 
-      return { ...state, cart: newCart };
+      return {
+        ...state,
+        checkedCartItems: newCheckedCartItems,
+      };
     }
-    case cartTypes.DELETE_CHECKED_PRODUCT: {
-      const newCart = state.cart.filter((product) => product.checked === false);
 
-      return { ...state, cart: newCart };
-    }
-    case cartTypes.TOGGLE_CHECK_ONE: {
-      const newCart = state.cart.map((product) => {
-        if (product.id === action.payload) {
-          return { ...product, checked: !product.checked };
-        }
-        return product;
-      });
-
-      return { ...state, cart: newCart };
-    }
-    case cartTypes.TOGGLE_CHECK_ALL: {
-      const newCart = state.cart.map((product) => ({
-        ...product,
-        checked: action.payload,
-      }));
-
-      return { ...state, cart: newCart };
-    }
-    case cartTypes.CHANGE_PRODUCT_QUANTITY: {
-      const newCart = state.cart.map((product) => {
-        if (product.id === action.payload.id) {
-          return {
-            ...product,
-            quantity: action.payload.quantity,
-          };
-        }
-        return product;
-      });
-
-      return { ...state, cart: newCart };
-    }
     default:
       return state;
   }

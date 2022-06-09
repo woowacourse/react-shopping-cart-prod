@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { cartActions } from 'redux/actions';
+import { getCarts } from 'redux/thunks/cart';
 
 import Link from 'components/@shared/Link';
 import ShoppingCart from 'components/@shared/ShoppingCart';
 
+import cartAPI from 'apis/cart';
 import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 import { Product } from 'types/index';
@@ -28,13 +30,18 @@ function ProductCard({ product, isInCart }: Props) {
   const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
+    //TODO: 추상화
     if (!isLogin()) {
       navigate(PATH.LOGIN);
 
       return;
     }
 
-    dispatch(cartActions.addToCart(id));
+    //NOTE: 이렇게 비동기처리 해줘도 되는 걸까?
+    cartAPI.addCartItem({ productId: id, quantity: 1 }).then((res) => {
+      res?.status === 201 && dispatch(getCarts());
+    });
+
     alert(CART_MESSAGE.SUCCESS_ADD);
   };
 

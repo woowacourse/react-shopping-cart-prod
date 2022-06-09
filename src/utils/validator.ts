@@ -2,9 +2,9 @@ import { CartStoreState, Product } from 'types/index';
 
 const isProductInCart = (
   productId: Product['id'],
-  cart: CartStoreState['cart']
+  cartItems: CartStoreState['cartItems']
 ) => {
-  return cart.some((product) => product.id === productId);
+  return cartItems.some((cartItem) => cartItem.product.id === productId);
 };
 
 const isValidPasswordLength = (password: string) => {

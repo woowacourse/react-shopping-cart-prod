@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { cartActions } from 'redux/actions';
-import { getProduct } from 'redux/thunks';
+import { getProduct } from 'redux/thunks/product';
 
 import Loading from 'components/@shared/Loading';
 
+import cartAPI from 'apis/cart';
 import CONDITION from 'constants/condition';
 import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
@@ -29,26 +29,25 @@ function ProductPage() {
     if (id) {
       dispatch(getProduct(Number(id)));
     }
-  }, [dispatch, id]);
+  }, []);
 
-  const onClickCartButton = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      e.preventDefault();
+  const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
 
-      // TODO: 반복되는 로직이므로 함수로 추출해야할듯
-      if (!isLogin()) {
-        navigate(PATH.LOGIN);
+    // TODO: 반복되는 로직이므로 함수로 추출해야할듯
+    if (!isLogin()) {
+      navigate(PATH.LOGIN);
 
-        return;
-      }
+      return;
+    }
 
-      dispatch(cartActions.addToCart(Number(id)));
+    if (id) {
+      cartAPI.addCartItem({ productId: Number(id), quantity: 1 });
       alert(CART_MESSAGE.SUCCESS_ADD);
-    },
-    [dispatch, id]
-  );
+    }
+  };
 
-  const renderSwitch = useCallback(() => {
+  const renderSwitch = () => {
     switch (condition) {
       case CONDITION.LOADING:
         return <Loading />;
@@ -78,7 +77,7 @@ function ProductPage() {
           <Message>상품 정보를 가져오는데 오류가 발생하였습니다 😱</Message>
         );
     }
-  }, [condition, productDetail, onClickCartButton]);
+  };
 
   return <StyledPage>{renderSwitch()}</StyledPage>;
 }
