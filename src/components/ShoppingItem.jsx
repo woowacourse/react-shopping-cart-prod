@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { StyledCheckbox } from './common/Styled';
 import { BsTrash } from 'react-icons/bs';
-import { COLORS } from '../styles/theme';
+import { COLORS } from '../styles/colorPalette';
 import { MESSAGE } from '../constants';
 import useCart from '../hooks/useCart';
 import { useSelector } from 'react-redux';

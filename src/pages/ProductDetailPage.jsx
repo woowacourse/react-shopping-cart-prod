@@ -9,7 +9,7 @@ import useCart from '../hooks/useCart';
 import { StyledImageBox, StyledImg } from '../components/common/Styled';
 
 import { MESSAGE, SERVER_PATH, SIZE } from '../constants';
-import { COLORS } from '../styles/theme';
+import { COLORS } from '../styles/colorPalette';
 
 function ProductDetailPage() {
   const { id } = useParams();

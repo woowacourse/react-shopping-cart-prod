@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { GiShoppingCart } from 'react-icons/gi';
-import { COLORS } from '../styles/theme';
+import { COLORS } from '../styles/colorPalette';
 import { Link } from 'react-router-dom';
 import { ROUTES_PATH } from '../constants';
 import { useSelector } from 'react-redux';

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { COLORS } from '../../styles/theme';
+import { COLORS } from '../../styles/colorPalette';
 
 function Input({ labelText, ...rest }) {
   return (

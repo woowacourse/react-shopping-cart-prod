@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { GiShoppingCart } from 'react-icons/gi';
 import { StyledImageBox, StyledImg } from './common/Styled';
 import { ROUTES_PATH, SIZE } from '../constants/index';
-import { COLORS } from '../styles/theme';
+import { COLORS } from '../styles/colorPalette';
 
 function Product({ productData, handleCartItem, isCart }) {
   const { id, name, price, imageUrl } = productData;

@@ -51,7 +51,7 @@ function ModifyUserInfoPage() {
       }
     }
     getUserInfo();
-  }, []);
+  }, [accessToken]);
 
   if (!userInfo) return <Loading />;
 
