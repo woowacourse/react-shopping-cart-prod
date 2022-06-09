@@ -4,7 +4,7 @@ import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import Styled from './index.style';
 
-import useCheckAuth from 'hooks/apis/useCheckAuth';
+import useCheckAuth from 'hooks/useCheckAuth';
 import useLoginAPI from 'hooks/apis/useLoginAPI';
 
 const LoginPage = () => {

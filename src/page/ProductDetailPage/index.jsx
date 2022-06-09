@@ -15,6 +15,7 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const params = useParams();
   const id = Number(params.id);
+
   const [isInCart, productInCart] = useCart(id);
   const { getProduct, product, isProductLoading } = useGetProductAPI();
   const { putCart } = usePutCartAPI();

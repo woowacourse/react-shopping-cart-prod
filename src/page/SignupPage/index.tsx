@@ -6,7 +6,7 @@ import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 import Styled from './index.style';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
-import useCheckAuth from 'hooks/apis/useCheckAuth';
+import useCheckAuth from 'hooks/useCheckAuth';
 import useSignupAPI from 'hooks/apis/useSignupAPI';
 
 const SignupPage = () => {

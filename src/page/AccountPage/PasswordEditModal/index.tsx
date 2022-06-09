@@ -13,11 +13,11 @@ import { useNavigate } from 'react-router-dom';
 const PasswordEditModal = ({ handleModal }) => {
   const navigate = useNavigate();
   const { logoutByError } = useLogout();
+  const [renderSnackbar] = useSnackbar();
+
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
-  const [renderSnackbar] = useSnackbar();
 
   const editPassword = async () => {
     try {

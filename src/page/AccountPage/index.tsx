@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
 import useLogout from 'hooks/useLogout';
 
@@ -24,9 +24,7 @@ const AccountPage = () => {
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
-
   const [isNicknameCorrect, setIsNicknameCorrect] = useState(false);
-
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isAccountDeleteModalOpen, setIsAccountDeleteModalOpen] = useState(false);
 
