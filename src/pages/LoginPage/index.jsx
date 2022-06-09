@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import userThunk from 'store/user/thunk';
+
+import useDispatchEvent from 'hooks/useDispatchEvent';
 
 import { Button, FlexContainer } from 'components/@common';
 import FieldSet from 'components/@common/FieldSet';
@@ -14,23 +16,23 @@ import { getFormData } from 'lib/formUtils';
 import * as S from './styles';
 
 function LoginPage() {
-  const { userInfoAsyncState, isLogin } = useSelector(({ user }) => user);
-  const { error: errorMessage } = userInfoAsyncState;
+  const { error: errorMessage } = useSelector(({ user }) => user.userInfoAsyncState);
 
-  const dispatch = useDispatch();
+  const { dispatchEvent } = useDispatchEvent();
   const navigate = useNavigate();
   const { state: pageState = {} } = useLocation();
-
-  useEffect(() => {
-    isLogin && navigate(pageState ? pageState.targetUrl : '/');
-  }, [isLogin]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     const { userId, password } = getFormData(event.target);
 
-    dispatch(userThunk.userLogin(userId, password));
+    dispatchEvent({
+      action: userThunk.userLogin(userId, password),
+      onStateUpdated: ({ user }) => {
+        user.isLogin && navigate(pageState ? pageState.targetUrl : '/');
+      },
+    });
   };
 
   return (
