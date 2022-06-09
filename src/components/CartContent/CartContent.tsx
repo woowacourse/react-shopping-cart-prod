@@ -50,7 +50,11 @@ function CartContent({ cartItems }: Props) {
           dispatch(cartActions.uncheckCartItem(id))
         );
       } else {
-        cartItems.forEach(({ id }) => dispatch(cartActions.checkCartItem(id)));
+        cartItems.forEach(
+          ({ id }) =>
+            !checkedCartItems.includes(id) &&
+            dispatch(cartActions.checkCartItem(id))
+        );
       }
 
       return !isAllChecked;
@@ -64,6 +68,9 @@ function CartContent({ cartItems }: Props) {
   };
 
   useEffect(() => {
+    console.log(checkedCartItems, 'checkedItems');
+    console.log(cartItems, 'cartItems');
+    console.log(checkedCartItems.length === cartItems.length, '동일?');
     setIsAllChecked(checkedCartItems.length === cartItems.length);
   }, [checkedCartItems, cartItems]);
 
