@@ -57,13 +57,13 @@ const Cart = () => {
 
           <CartContainer>
             {cartItems &&
-              cartItems.map(({ id, name, imageUrl, price, quantity }) => (
+              cartItems.map(({ id, name, imageUrl, totalPrice, quantity }) => (
                 <CartItem
                   key={id}
                   id={id}
                   name={name}
                   imageUrl={imageUrl || itemAltImg}
-                  price={price}
+                  price={totalPrice}
                   quantity={quantity}
                   isSelected={includes(selectedItemList, id)}
                   onToggleSelect={handleToggleSelect(id)}
