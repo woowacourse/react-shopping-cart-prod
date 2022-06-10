@@ -39,19 +39,24 @@ const initialState: UserState = {
 const LOAD_USER_REQUEST = 'user/LOAD_REQUEST' as const;
 const LOAD_USER_SUCCESS = 'user/LOAD_SUCCESS' as const;
 const LOAD_USER_FAILURE = 'user/LOAD_FAILURE' as const;
+
 const LOGIN_REQUEST = 'user/LOGIN_REQUEST' as const;
 const LOGIN_SUCCESS = 'user/LOGIN_SUCCESS' as const;
 const LOGIN_FAILURE = 'user/LOGIN_FAILURE' as const;
-const LOGOUT = 'user/LOGOUT' as const;
+
 const DELETE_USER_REQUEST = 'user/DELETE_REQUEST' as const;
 const DELETE_USER_SUCCESS = 'user/DELETE_SUCCESS' as const;
 const DELETE_USER_FAILURE = 'user/DELETE_FAILURE' as const;
+
 const CHANGE_PASSWORD_REQUEST = 'user/CHANGE_PASSWORD_REQUEST' as const;
 const CHANGE_PASSWORD_SUCCESS = 'user/CHANGE_PASSWORD_SUCCESS' as const;
 const CHANGE_PASSWORD_FAILURE = 'user/CHANGE_PASSWORD_FAILURE' as const;
+
 const SIGNUP_REQUEST = 'user/SIGNUP_REQUEST' as const;
 const SIGNUP_SUCCESS = 'user/SIGNUP_SUCCESS' as const;
 const SIGNUP_FAILURE = 'user/SIGNUP_FAILURE' as const;
+
+const LOGOUT = 'user/LOGOUT' as const;
 const RESET_USER_ERROR = 'user/RESET_ERROR' as const;
 
 const loadUserRequest = () => ({ type: LOAD_USER_REQUEST });
@@ -69,7 +74,6 @@ const loginFailure = (error: Error) => ({
   type: LOGIN_FAILURE,
   payload: { error },
 });
-const logout = () => ({ type: LOGOUT });
 const deleteUserRequest = () => ({ type: DELETE_USER_REQUEST });
 const deleteUserSuccess = () => ({ type: DELETE_USER_SUCCESS });
 const deleteUserFailure = (error: Error) => ({
@@ -88,6 +92,7 @@ const signupFailure = (error: Error) => ({
   type: SIGNUP_FAILURE,
   payload: { error },
 });
+const logout = () => ({ type: LOGOUT });
 const resetUserError = () => ({ type: RESET_USER_ERROR });
 
 const loadUserAPI = (): any => async (dispatch: AppDispatch) => {
