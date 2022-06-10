@@ -19,7 +19,6 @@ function LoadingSection() {
 
 function ProductList() {
   const { products, isLoading, loadProducts } = useLoadProducts();
-  console.log(products);
 
   return (
     <>
