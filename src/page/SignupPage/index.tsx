@@ -11,7 +11,7 @@ import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 import { getCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const SignupPage = () => {
@@ -31,8 +31,8 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      renderSnackbar(MESSAGE.ALREADY_LOGINED, 'FAILED');
-      navigate('/');
+      renderSnackbar(MESSAGE.ALREADY_LOGINED, SNACKBAR.FAILED);
+      navigate(PATHNAME.TO_HOME);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,8 +48,8 @@ const SignupPage = () => {
     try {
       await signupAPI(email, nickname, password);
 
-      renderSnackbar(`${nickname}님, 환영합니다 👋`, 'SUCCESS');
-      navigate('/login');
+      renderSnackbar(`${nickname}님, 환영합니다 👋`, SNACKBAR.SUCCESS);
+      navigate(PATHNAME.TO_LOGIN);
     } catch (error) {}
   };
 
@@ -90,7 +90,11 @@ const SignupPage = () => {
             />
           </Styled.InputContainer>
           <AuthButton actionType="Sign Up" action={signup} isDisabled={!isFulfilled} />
-          <GuideText guide="Already have an account?" destination="Login" path="/login" />
+          <GuideText
+            guide="Already have an account?"
+            destination="Login"
+            path={PATHNAME.TO_LOGIN}
+          />
         </div>
       </Container>
     </Styled.Container>

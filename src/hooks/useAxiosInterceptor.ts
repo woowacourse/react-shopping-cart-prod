@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 import useSnackbar from 'hooks/useSnackbar';
-import { ERROR } from 'utils/constants';
+import { ERROR, SNACKBAR } from 'utils/constants';
 
 const useAxiosInterceptor = () => {
   const [renderSnackbar] = useSnackbar();
@@ -30,9 +30,9 @@ const useAxiosInterceptor = () => {
     const { code, message } = error.response.data;
 
     if (code) {
-      renderSnackbar(ERROR[code], 'FAILED');
+      renderSnackbar(ERROR[code], SNACKBAR.FAILED);
     } else {
-      renderSnackbar(message, 'FAILED');
+      renderSnackbar(message, SNACKBAR.FAILED);
     }
 
     return Promise.reject(error);

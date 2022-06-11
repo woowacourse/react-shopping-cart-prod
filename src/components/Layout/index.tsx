@@ -5,7 +5,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 import { Header, CartIcon, UserMenu } from 'components';
 
-import { ROUTES } from 'utils/constants';
+import { ROUTES, PATHNAME } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
@@ -17,9 +17,9 @@ const Layout = () => {
 
   useEffect(() => {
     setIsHeaderShow(
-      location.pathname !== '/login' &&
-        location.pathname !== '/signup' &&
-        location.pathname !== '/server',
+      location.pathname !== PATHNAME.TO_LOGIN &&
+        location.pathname !== PATHNAME.TO_SIGNUP &&
+        location.pathname !== PATHNAME.TO_SERVER,
     );
   }, [location]);
 
@@ -41,7 +41,7 @@ const Layout = () => {
                   <UserMenu nickname={nickname} />
                 </Styled.RightSide>
               ) : (
-                <Styled.LoginLink to="/login">Login</Styled.LoginLink>
+                <Styled.LoginLink to={PATHNAME.TO_LOGIN}>Login</Styled.LoginLink>
               )
             }
           />

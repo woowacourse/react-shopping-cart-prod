@@ -9,7 +9,7 @@ import { Image, Counter, CheckBox } from 'components';
 
 import { doDeleteProductFromCart, doPutProductToCart } from 'modules/cart';
 import autoComma from 'utils/autoComma';
-import { MESSAGE } from 'utils/constants';
+import { MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const CartProductItem = ({ id, name, price, image, quantity }) => {
@@ -22,7 +22,7 @@ const CartProductItem = ({ id, name, price, image, quantity }) => {
   const deleteItem = () => {
     dispatch(doDeleteProductFromCart({ id }));
     deleteCartProduct();
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, SNACKBAR.SUCCESS);
   };
 
   const putCart = async quantity => {

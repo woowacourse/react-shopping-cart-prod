@@ -12,7 +12,7 @@ import { Image, CartIcon, QuantityController } from 'components';
 
 import { doDeleteProductFromCart, doPutProductToCart } from 'modules/cart';
 import autoComma from 'utils/autoComma';
-import { LINK, MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
@@ -45,32 +45,32 @@ const ProductItem = ({ id, name, price, image }) => {
       dispatch(
         doPutProductToCart({ productId: id, name, price, image, quantity: quantityRef.current }),
       );
-      renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
+      renderSnackbar(MESSAGE.ADD_CART_SUCCESS, SNACKBAR.SUCCESS);
       await putCartAPI(id, quantityRef.current);
       return;
     }
 
     dispatch(doDeleteProductFromCart({ id }));
     await deleteCartAPI([id]);
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, SNACKBAR.SUCCESS);
   };
 
   const handleItemClick = () => {
-    navigate(`${LINK.TO_DETAILS}/${id}`);
+    navigate(`${PATHNAME.TO_DETAILS}/${id}`);
   };
 
   const handleCartClick = e => {
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
+      renderSnackbar(MESSAGE.NO_AUTHORIZATION, SNACKBAR.FAILED);
+      navigate(PATHNAME.TO_LOGIN);
       return;
     }
 
     if (isControllerOpen) {
       updateCart();
-      renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
+      renderSnackbar(MESSAGE.ADD_CART_SUCCESS, SNACKBAR.SUCCESS);
     } else {
       setIsControllerOpen(true);
       setAutoCloseTimer(updateCart);

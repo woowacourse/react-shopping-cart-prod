@@ -2,8 +2,9 @@ const PRODUCT = {
   MIN_QUANTITY: 1,
 };
 
-const MODAL = {
-  CLOSE_TIME: 1500,
+const TIMER = {
+  QUANTITY_CONTROLLER_CLOSE_TIME: 1500,
+  SNACKBAR_CLOSE_TIME: 3000,
 };
 
 const ROUTES = {
@@ -17,10 +18,15 @@ const ROUTES = {
   PAY: 'pay/:id',
 };
 
-const LINK = {
+const PATHNAME = {
+  TO_SERVER: '/server',
   TO_HOME: '/',
-  TO_CART: '/cart',
   TO_DETAILS: '/details',
+  TO_CART: '/cart',
+  TO_LOGIN: '/login',
+  TO_SIGNUP: '/signup',
+  TO_ACCOUNT: '/account',
+  TO_PAY: '/pay',
 };
 
 const MESSAGE = {
@@ -28,7 +34,7 @@ const MESSAGE = {
   LOGIN_FAILURE: '로그인에 실패하였습니다.',
   ALREADY_LOGINED: '이미 로그인되어있습니다.',
   NO_AUTHORIZATION: '접근 권한이 없습니다.',
-  LOGOUT_SUCCESS: '로그아웃에 성공하였습니다.',
+  LOGOUT_SUCCESS: '로그아웃이 완료되었습니다.',
   LOGOUT_FAILURE: '로그아웃에 실패하였습니다.',
   UPDATE_NICKNAME_SUCCESS: '닉네임 변경에 성공하였습니다.',
   UPDATE_NICKNAME_FAILURE: '닉네임 변경에 실패하였습니다.',
@@ -38,6 +44,11 @@ const MESSAGE = {
   DELETE_ACCOUT_FAILUER: '계정 삭제에 실패하였습니다.',
   ADD_CART_SUCCESS: '상품을 장바구니에 추가하였습니다.',
   REMOVE_CART_SUCCESS: '상품을 장바구니에서 제거하였습니다.',
+};
+
+const SNACKBAR = {
+  SUCCESS: 'SUCCESS',
+  FAILED: 'FAILED',
 };
 
 const ERROR = {
@@ -82,4 +93,14 @@ const URL = {
   찬_서버: 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.com:8080/',
 };
 
-export { PRODUCT, MODAL, ROUTES, LINK, MESSAGE, ERROR, ERROR_MESSAGE_FROM_SERVER, URL };
+export {
+  PRODUCT,
+  TIMER,
+  ROUTES,
+  PATHNAME,
+  MESSAGE,
+  SNACKBAR,
+  ERROR,
+  ERROR_MESSAGE_FROM_SERVER,
+  URL,
+};

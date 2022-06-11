@@ -10,7 +10,7 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import { doInitializeCart } from 'modules/cart';
 import { doLogout } from 'modules/auth';
 import { deleteCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const AccountDeleteModal = ({ handleModal }) => {
@@ -31,12 +31,12 @@ const AccountDeleteModal = ({ handleModal }) => {
     try {
       await deleteAccountAPI(password);
 
-      renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
+      renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, SNACKBAR.SUCCESS);
       deleteCookie('accessToken');
       dispatch(doInitializeCart());
       dispatch(doLogout());
       handleModal();
-      navigate('/');
+      navigate(PATHNAME.TO_HOME);
     } catch (error) {
       const { code } = error.response.data;
 
@@ -45,7 +45,7 @@ const AccountDeleteModal = ({ handleModal }) => {
         dispatch(doInitializeCart());
         dispatch(doLogout());
         handleModal();
-        navigate('/');
+        navigate(PATHNAME.TO_HOME);
       }
     }
   };

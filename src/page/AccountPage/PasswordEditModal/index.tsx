@@ -10,7 +10,7 @@ import { doInitializeCart } from 'modules/cart';
 import { doLogout } from 'modules/auth';
 import { validatePassword } from 'utils/validator';
 import { deleteCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import useAuth from 'hooks/db/useAuth';
 
 const PasswordEditModal = ({ handleModal }) => {
@@ -33,8 +33,8 @@ const PasswordEditModal = ({ handleModal }) => {
       dispatch(doInitializeCart());
       dispatch(doLogout());
       handleModal();
-      renderSnackbar(MESSAGE.UPDATE_PASSWORD_SUCCESS, 'SUCCESS');
-      navigate('/');
+      renderSnackbar(MESSAGE.UPDATE_PASSWORD_SUCCESS, SNACKBAR.SUCCESS);
+      navigate(PATHNAME.TO_HOME);
     } catch (error) {
       const { code } = error.response.data;
 
@@ -43,7 +43,7 @@ const PasswordEditModal = ({ handleModal }) => {
         dispatch(doInitializeCart());
         dispatch(doLogout());
         handleModal();
-        navigate('/');
+        navigate(PATHNAME.TO_HOME);
       }
     }
   };

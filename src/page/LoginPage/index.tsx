@@ -11,7 +11,7 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
 import { doLogin } from 'modules/auth';
 import { setCookie, getCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const LoginPage = () => {
@@ -28,8 +28,8 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      renderSnackbar(MESSAGE.ALREADY_LOGINED, 'FAILED');
-      navigate('/');
+      renderSnackbar(MESSAGE.ALREADY_LOGINED, SNACKBAR.FAILED);
+      navigate(PATHNAME.TO_HOME);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -50,8 +50,8 @@ const LoginPage = () => {
 
       setCookie('accessToken', accessToken);
       dispatch(doLogin({ nickname }));
-      renderSnackbar(`${nickname}님, 안녕하세요 🙇🏻‍♀️`, 'SUCCESS');
-      navigate('/');
+      renderSnackbar(`${nickname}님, 안녕하세요 🙇🏻‍♀️`, SNACKBAR.SUCCESS);
+      navigate(PATHNAME.TO_HOME);
     } catch (error) {}
   };
 
@@ -75,7 +75,11 @@ const LoginPage = () => {
             setInputValue={setPassword}
           />
           <AuthButton actionType="Login" action={login} isDisabled={!isFulfilled} />
-          <GuideText guide="Don’t have an account?" destination="Sign up" path="/signup" />
+          <GuideText
+            guide="Don’t have an account?"
+            destination="Sign up"
+            path={PATHNAME.TO_SIGNUP}
+          />
         </div>
       </Container>
     </Styled.Container>

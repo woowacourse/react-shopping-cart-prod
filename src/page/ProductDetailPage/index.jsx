@@ -12,7 +12,7 @@ import { Image } from 'components';
 
 import { doPutProductToCart } from 'modules/cart';
 import autoComma from 'utils/autoComma';
-import { LINK, MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
@@ -40,7 +40,7 @@ const ProductDetailPage = () => {
         price,
       });
     } catch (error) {
-      navigate('/');
+      navigate(PATHNAME.TO_HOME);
     }
   };
 
@@ -52,8 +52,8 @@ const ProductDetailPage = () => {
 
   const putCart = async () => {
     if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
+      renderSnackbar(MESSAGE.NO_AUTHORIZATION, SNACKBAR.FAILED);
+      navigate(PATHNAME.TO_LOGIN);
       return;
     }
 
@@ -69,7 +69,7 @@ const ProductDetailPage = () => {
           quantity: isInCart ? productInCart.quantity + 1 : 1,
         }),
       );
-      navigate(LINK.TO_CART);
+      navigate(PATHNAME.TO_CART);
     } catch (error) {}
   };
 

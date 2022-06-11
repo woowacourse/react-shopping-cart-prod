@@ -6,6 +6,7 @@ import useSnackbar from 'hooks/useSnackbar';
 import { doInitializeCart } from 'modules/cart';
 import { doLogout } from 'modules/auth';
 import { deleteCookie } from 'utils/cookie';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const UserMenu = ({ nickname }) => {
@@ -24,8 +25,8 @@ const UserMenu = ({ nickname }) => {
     dispatch(doInitializeCart());
     dispatch(doLogout());
     setIsOpen(false);
-    renderSnackbar('로그아웃이 완료되었습니다.', 'SUCCESS');
-    navigate('/');
+    renderSnackbar(MESSAGE.LOGOUT_SUCCESS, SNACKBAR.SUCCESS);
+    navigate(PATHNAME.TO_HOME);
   };
 
   return (
@@ -39,7 +40,7 @@ const UserMenu = ({ nickname }) => {
 
           <Styled.MenuItem
             onClick={() => {
-              navigate('/account');
+              navigate(PATHNAME.TO_ACCOUNT);
               setIsOpen(false);
             }}
           >

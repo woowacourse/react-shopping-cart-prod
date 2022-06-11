@@ -14,7 +14,7 @@ import {
   doOrderFromCart,
   doSelectiveDeleteFromCart,
 } from 'modules/cart';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import empty from 'assets/empty.jpeg';
 import Styled from './index.style';
@@ -48,8 +48,8 @@ const CartPage = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
+      renderSnackbar(MESSAGE.NO_AUTHORIZATION, SNACKBAR.FAILED);
+      navigate(PATHNAME.TO_LOGIN);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,7 +71,7 @@ const CartPage = () => {
   const deleteItem = async () => {
     dispatch(doSelectiveDeleteFromCart());
     await deleteCartAPI(order);
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, SNACKBAR.SUCCESS);
   };
 
   const postOrder = async () => {
@@ -82,7 +82,7 @@ const CartPage = () => {
       const location = response.headers.location.split('/');
 
       dispatch(doOrderFromCart());
-      navigate(`/pay/${location[location.length - 1]}`);
+      navigate(`${PATHNAME.TO_PAY}/${location[location.length - 1]}`);
     } catch (error) {}
   };
 

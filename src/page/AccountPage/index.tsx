@@ -14,7 +14,7 @@ import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 import { doLogin } from 'modules/auth';
 import { validateNickname } from 'utils/validator';
 import { getCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const AccountPage = () => {
@@ -40,8 +40,8 @@ const AccountPage = () => {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
+      renderSnackbar(MESSAGE.NO_AUTHORIZATION, SNACKBAR.FAILED);
+      navigate(PATHNAME.TO_LOGIN);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -61,12 +61,12 @@ const AccountPage = () => {
       const response = await updateNicknameAPI(nickname);
 
       dispatch(doLogin({ nickname: response.nickname }));
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
-      navigate('/');
+      renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, SNACKBAR.SUCCESS);
+      navigate(PATHNAME.TO_HOME);
     } catch (error) {
       const { code } = error.response.data;
 
-      if (code === 1003) navigate('/login');
+      if (code === 1003) navigate(PATHNAME.TO_LOGIN);
     }
   };
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MODAL } from 'utils/constants';
+import { TIMER } from 'utils/constants';
 
 const useClose = () => {
   const [debounce, setDebounce] = useState(null);
@@ -11,7 +11,7 @@ const useClose = () => {
   };
 
   const setAutoCloseTimer = callback => {
-    setDebounce(setTimeout(() => callback(), MODAL.CLOSE_TIME));
+    setDebounce(setTimeout(() => callback(), TIMER.QUANTITY_CONTROLLER_CLOSE_TIME));
   };
 
   const extendTimer = callback => {
