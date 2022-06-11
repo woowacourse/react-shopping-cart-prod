@@ -5,47 +5,30 @@ import { Provider } from 'react-redux';
 import reportWebVitals from 'reportWebVitals';
 import App from 'App';
 import store from 'store';
-
-// 이프
-const SERVER_URL1 = 'http://ec2-3-39-234-109.ap-northeast-2.compute.amazonaws.com:8080/';
-
-// 더즈
-const SERVER_URL2 = 'http://15.164.211.129:8080/';
-
-// 토르
-const SERVER_URL3 = 'http://ec2-15-164-232-166.ap-northeast-2.compute.amazonaws.com:8080/';
-
-// 찬
-const SERVER_URL4 = 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.com:8080/';
+import { URL } from 'utils/constants';
 
 if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = 'http://localhost:3000';
+  axios.defaults.baseURL = URL.DEV_SERVER;
+
+  const { worker } = require('./mocks/worker');
+
+  worker.start({
+    serviceWorker: {
+      url: `/mockServiceWorker.js`,
+    },
+  });
 } else if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = SERVER_URL1;
+  axios.defaults.baseURL = URL.이프_서버;
 }
 
-async function main() {
-  if (process.env.NODE_ENV === 'development') {
-    const { worker } = require('./mocks/worker');
-
-    await worker.start({
-      serviceWorker: {
-        url: `/mockServiceWorker.js`,
-      },
-    });
-  }
-
-  const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(
-    <Provider store={store}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </Provider>,
-  );
-}
-
-main();
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

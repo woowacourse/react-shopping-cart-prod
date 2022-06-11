@@ -1,5 +1,3 @@
-const SERVER_URL = 'https://shopping-cart-mh.herokuapp.com/';
-
 const PRODUCT = {
   MIN_QUANTITY: 1,
 };
@@ -54,4 +52,12 @@ const ERROR = {
   5001: '존재하지 않는 주문입니다.',
 };
 
-export { SERVER_URL, PRODUCT, MODAL, ROUTES, LINK, MESSAGE, ERROR };
+const URL = {
+  DEV_SERVER: 'http://localhost:3000/',
+  이프_서버: 'http://ec2-3-39-234-109.ap-northeast-2.compute.amazonaws.com:8080/',
+  더즈_서버: 'http://15.164.211.129:8080/',
+  토르_서버: 'http://ec2-15-164-232-166.ap-northeast-2.compute.amazonaws.com:8080/',
+  찬_서버: 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.com:8080/',
+};
+
+export { PRODUCT, MODAL, ROUTES, LINK, MESSAGE, ERROR, URL };
