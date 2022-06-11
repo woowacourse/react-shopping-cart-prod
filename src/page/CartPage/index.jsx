@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
@@ -30,22 +30,6 @@ const CartPage = () => {
   const { shoppingCart, order } = useSelector(state => state.cartReducer);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const calculateTotalPrice = useCallback(() => {
-    let total = 0;
-
-    order.forEach(productId => {
-      const { price, quantity } = shoppingCart.find(product => product.productId === productId);
-
-      total += quantity * price;
-    });
-
-    return total;
-  }, [order, shoppingCart]);
-
-  useEffect(() => {
-    setTotalPrice(calculateTotalPrice());
-  }, [calculateTotalPrice]);
-
   useEffect(() => {
     if (!isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, SNACKBAR.FAILED);
@@ -54,6 +38,16 @@ const CartPage = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    setTotalPrice(
+      shoppingCart.reduce((acc, cur) => {
+        if (!order.includes(cur.productId)) return acc;
+
+        return acc + cur.price * cur.quantity;
+      }, 0),
+    );
+  }, [order, shoppingCart]);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
