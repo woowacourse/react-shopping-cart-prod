@@ -1,3 +1,7 @@
+const findElementIndex = (array: any[], key: string, value: any) => {
+  return array.findIndex((elem) => elem[key] === value);
+};
+
 const getCookie = (key: string) => {
   const matches = document.cookie.match(
     new RegExp(`(?:^|; )${key.replace('/([.$?*|{}()[]\\/+^])/g', '\\$1')}=([^;]*)`)
@@ -6,4 +10,4 @@ const getCookie = (key: string) => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export { getCookie };
+export { findElementIndex, getCookie };

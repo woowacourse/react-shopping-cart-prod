@@ -1,56 +1,119 @@
 import { CartState } from '@/types';
+import { findElementIndex } from '@/utils';
 
 import {
-  ADD,
   addItem,
-  decrement,
-  DECREMENT,
-  DELETE,
+  addItemFailure,
+  addItemSuccess,
+  ADD_ITEM,
+  ADD_ITEM_FAILURE,
+  ADD_ITEM_SUCCESS,
   deleteBySelectedItems,
+  deleteBySelectedItemsFailure,
+  deleteBySelectedItemsSuccess,
   deleteItem,
+  deleteItemFailure,
+  deleteItemSuccess,
   DELETE_BY_SELECTED,
-  increment,
-  INCREMENT,
-  incrementByNumber,
-  INCREMENT_BY_NUMBER,
+  DELETE_BY_SELECTED_FAILURE,
+  DELETE_BY_SELECTED_SUCCESS,
+  DELETE_ITEM,
+  DELETE_ITEM_FAILURE,
+  DELETE_ITEM_SUCCESS,
+  loadCart,
+  loadCartFailure,
+  loadCartSuccess,
+  LOAD_CART,
+  LOAD_CART_FAILURE,
+  LOAD_CART_SUCCESS,
   SELECT,
   selectAllItems,
   selectItem,
   SELECT_ALL,
+  updateQuantity,
+  updateQuantityFailure,
+  updateQuantitySuccess,
+  UPDATE_QUANTITY,
+  UPDATE_QUANTITY_FAILURE,
+  UPDATE_QUANTITY_SUCCESS,
 } from './cartAction';
 
 const initialState: CartState = {
+  loading: false,
   items: [],
+  error: null,
 };
 
 type Action =
+  | ReturnType<typeof loadCart>
+  | ReturnType<typeof loadCartSuccess>
+  | ReturnType<typeof loadCartFailure>
   | ReturnType<typeof addItem>
+  | ReturnType<typeof addItemSuccess>
+  | ReturnType<typeof addItemFailure>
   | ReturnType<typeof deleteItem>
-  | ReturnType<typeof deleteBySelectedItems>
+  | ReturnType<typeof deleteItemSuccess>
+  | ReturnType<typeof deleteItemFailure>
+  | ReturnType<typeof updateQuantity>
+  | ReturnType<typeof updateQuantitySuccess>
+  | ReturnType<typeof updateQuantityFailure>
   | ReturnType<typeof selectItem>
   | ReturnType<typeof selectAllItems>
-  | ReturnType<typeof increment>
-  | ReturnType<typeof decrement>
-  | ReturnType<typeof incrementByNumber>;
+  | ReturnType<typeof deleteBySelectedItems>
+  | ReturnType<typeof deleteBySelectedItemsSuccess>
+  | ReturnType<typeof deleteBySelectedItemsFailure>;
 
 const cartReducer = (state = initialState, action: Action) => {
   switch (action.type) {
-    case ADD: {
-      const { item } = action.payload;
-      const newItems = [...state.items, item];
+    case LOAD_CART:
+      return { ...state, loading: true };
+    case LOAD_CART_SUCCESS: {
+      const { items } = action.payload;
 
-      return { ...state, items: newItems };
+      return { ...state, loading: false, items };
     }
-    case DELETE: {
-      const { id } = action.payload;
-      const newItems = state.items.filter((item) => item.id !== id);
+    case LOAD_CART_FAILURE: {
+      const { error } = action.payload;
 
-      return { ...state, items: newItems };
+      return { ...state, loading: false, error };
     }
-    case DELETE_BY_SELECTED: {
-      const newItems = state.items.filter((item) => !item.isSelected);
+    case ADD_ITEM:
+      return { ...state, loading: true };
+    case ADD_ITEM_SUCCESS:
+      return { ...state, loading: false };
+    case ADD_ITEM_FAILURE: {
+      const { error } = action.payload;
 
-      return { ...state, items: newItems };
+      return { ...state, loading: false, error };
+    }
+    case DELETE_ITEM:
+      return { ...state, loading: true };
+    case DELETE_ITEM_SUCCESS: {
+      const { cartId } = action.payload;
+      const newItems = state.items.filter((item) => item.id !== cartId);
+
+      return { ...state, loading: false, items: newItems };
+    }
+    case DELETE_ITEM_FAILURE: {
+      const { error } = action.payload;
+
+      return { ...state, loading: false, error };
+    }
+    case UPDATE_QUANTITY:
+      return { ...state, loading: true };
+    case UPDATE_QUANTITY_SUCCESS: {
+      const { cartId, quantity } = action.payload;
+      const targetIdx = findElementIndex(state.items, 'id', cartId);
+      const newItems = [...state.items];
+
+      newItems[targetIdx].quantity = quantity;
+
+      return { ...state, loading: false, items: newItems };
+    }
+    case UPDATE_QUANTITY_FAILURE: {
+      const { error } = action.payload;
+
+      return { ...state, loading: false, error };
     }
     case SELECT: {
       const { id } = action.payload;
@@ -70,32 +133,18 @@ const cartReducer = (state = initialState, action: Action) => {
 
       return { ...state, items: newItems };
     }
-    case INCREMENT: {
-      const { id } = action.payload;
-      const targetIndex = state.items.findIndex((item) => item.id === id);
-      const newItems = [...state.items];
-
-      newItems[targetIndex].quantity++;
-
-      return { ...state, items: newItems };
+    case DELETE_BY_SELECTED: {
+      return { ...state, loading: true };
     }
-    case DECREMENT: {
-      const { id } = action.payload;
-      const targetIndex = state.items.findIndex((item) => item.id === id);
-      const newItems = [...state.items];
+    case DELETE_BY_SELECTED_SUCCESS: {
+      const newItems = state.items.filter((item) => !item.isSelected);
 
-      newItems[targetIndex].quantity--;
-
-      return { ...state, items: newItems };
+      return { ...state, loading: false, items: newItems };
     }
-    case INCREMENT_BY_NUMBER: {
-      const { id, number } = action.payload;
-      const targetIndex = state.items.findIndex((item) => item.id === id);
-      const newItems = [...state.items];
+    case DELETE_BY_SELECTED_FAILURE: {
+      const { error } = action.payload;
 
-      newItems[targetIndex].quantity += number;
-
-      return { ...state, items: newItems };
+      return { ...state, loading: false, error };
     }
     default:
       return state;
