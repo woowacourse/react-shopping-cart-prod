@@ -61,7 +61,7 @@ function CartProduct({
             <button onClick={onClickDecreaseCounter}>▼</button>
           </ProductCounterContainer>
         </ProductAmountContainer>
-        <span>{price.toLocaleString()}원</span>
+        <span>{(price * quantity).toLocaleString()}원</span>
       </ProductOptionContainer>
     </CartProductContainer>
   );
