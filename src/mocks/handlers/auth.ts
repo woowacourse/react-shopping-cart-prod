@@ -1,4 +1,4 @@
-import { AUTH_BASE_URL } from 'apis';
+import { BASE_URL } from 'apis';
 import { rest } from 'msw';
 import type { LoginResponse, UserInfo, UserInfoWithPassword } from 'types/domain';
 
@@ -9,7 +9,7 @@ const MOCK_ERROR_MESSAGE = {
 
 export const authHandler = [
   // 회원가입
-  rest.post<UserInfoWithPassword, null, UserInfo>(`${AUTH_BASE_URL}/customers`, (req, res, ctx) => {
+  rest.post<UserInfoWithPassword, null, UserInfo>(`${BASE_URL}/customers`, (req, res, ctx) => {
     const userInfo = req.body;
 
     users.push(userInfo);
@@ -23,7 +23,7 @@ export const authHandler = [
   }),
 
   rest.post<Omit<UserInfoWithPassword, 'name'>, null, LoginResponse | string>(
-    `${AUTH_BASE_URL}/login`,
+    `${BASE_URL}/login`,
     (req, res, ctx) => {
       const loginInfo = req.body;
       const authenticatedUser = users.find(
@@ -38,7 +38,7 @@ export const authHandler = [
     }
   ),
 
-  rest.get<null, null, UserInfo>(`${AUTH_BASE_URL}/customers/me`, (req, res, ctx) => {
+  rest.get<null, null, UserInfo>(`${BASE_URL}/customers/me`, (req, res, ctx) => {
     if (users.length === 0) {
       return res(ctx.status(404));
     }
@@ -47,7 +47,7 @@ export const authHandler = [
   }),
 
   rest.put<UserInfoWithPassword, null, UserInfo | string>(
-    `${AUTH_BASE_URL}/customers/me`,
+    `${BASE_URL}/customers/me`,
     (req, res, ctx) => {
       const { name, loginId, password } = req.body;
 
@@ -70,7 +70,7 @@ export const authHandler = [
   ),
 
   rest.delete<Pick<UserInfoWithPassword, 'password'>, null, null | string>(
-    `${AUTH_BASE_URL}/customers/me`,
+    `${BASE_URL}/customers/me`,
     (req, res, ctx) => {
       const { password } = req.body;
       const authenticatedUserIdx = users.findIndex(user => user.password === password);

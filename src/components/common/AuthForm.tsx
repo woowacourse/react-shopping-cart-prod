@@ -9,7 +9,7 @@ interface AuthPageProps {
   bottom?: ReactNode;
 }
 
-const AuthPage = ({
+const AuthForm = ({
   title,
   onSubmitAuthForm,
   bottom,
@@ -38,7 +38,7 @@ const AuthPage = ({
   );
 };
 
-export default AuthPage;
+export default AuthForm;
 
 const StyledRoot = styled.div`
   display: flex;

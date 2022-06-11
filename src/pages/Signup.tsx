@@ -1,7 +1,7 @@
-import AuthPage from 'components/common/AuthPage';
+import React from 'react';
+import AuthForm from 'components/common/AuthForm';
 import LabeledInput from 'components/common/LabeledInput';
 import Snackbar, { MESSAGE } from 'components/common/Snackbar';
-import withAuthPage from 'components/hoc/withAuthPage';
 import { ALERT_MESSAGE } from 'constants/index';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import useAuthError from 'hooks/useAuthError';
@@ -37,7 +37,7 @@ const Signup = () => {
   };
 
   return (
-    <AuthPage title='회원가입' onSubmitAuthForm={onSubmitAuthForm}>
+    <AuthForm title='회원가입' onSubmitAuthForm={onSubmitAuthForm}>
       <LabeledInput
         label='이메일'
         id='email'
@@ -73,8 +73,8 @@ const Signup = () => {
         onChange={onChangePasswordConfirmation}
       />
       {isOpenSnackbar && <Snackbar message={MESSAGE.passwordConfirm} />}
-    </AuthPage>
+    </AuthForm>
   );
 };
 
-export default withAuthPage(Signup, false);
+export default Signup;

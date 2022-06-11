@@ -1,7 +1,6 @@
 import { ActionGroupType, ActionsType } from 'redux/types';
 import { buildThunkActionGroup } from 'redux/utils';
 import { CartItem } from 'types/domain';
-import { Valueof } from 'types/utilities';
 
 export const CartListActionType = {
   GET_CART_LIST: 'cart/GET_CART_LIST',
@@ -11,6 +10,8 @@ export const CartListActionType = {
   PATCH_ALL_CART_SELECTED: 'cart/PATCH_ALL_CART_SELECTED',
   DELETE_CART_ITEM: 'cart/DELETE_CART_ITEM',
   DELETE_ALL_CART_ITEM: 'cart/DELETE_ALL_CART_ITEM',
+  CHECK_CART_ITEM: 'cart/CHECK_CART_ITEM',
+  CHECK_ALL_CART_ITEM: 'cart/CHECK_ALL_CART_ITEM',
 } as const;
 
 const getCartListActionGroup = buildThunkActionGroup<
@@ -45,6 +46,16 @@ const deleteCartItemActionGroup = buildThunkActionGroup<
 
 const deleteAllCartItemActionGroup = buildThunkActionGroup(CartListActionType.DELETE_ALL_CART_ITEM);
 
+export const checkCartItem = ({ id }: { id: number }) => ({
+  type: CartListActionType.CHECK_CART_ITEM,
+  payload: id,
+});
+
+export const checkAllCartItem = ({ isAllChecked }: { isAllChecked: boolean }) => ({
+  type: CartListActionType.CHECK_ALL_CART_ITEM,
+  payload: isAllChecked,
+});
+
 export const cartListActions = {
   getCartListActionGroup,
   putCartItemActionGroup,
@@ -55,4 +66,7 @@ export const cartListActions = {
   deleteAllCartItemActionGroup,
 };
 
-export type CartListAction = ActionsType<ActionGroupType<typeof cartListActions>>;
+export type CartListAction =
+  | ActionsType<ActionGroupType<typeof cartListActions>>
+  | ReturnType<typeof checkCartItem>
+  | ReturnType<typeof checkAllCartItem>;

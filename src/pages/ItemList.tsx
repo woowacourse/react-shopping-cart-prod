@@ -6,19 +6,17 @@ import ItemContainer from 'components/ItemList/ItemContainer';
 import { MAX_RESULT_ITEM_LIST } from 'constants/index';
 import useSnackBar from 'hooks/useSnackBar';
 import useThunkFetch from 'hooks/useThunkFetch';
-import { useParams } from 'react-router-dom';
 import { getCartListRequest } from 'redux/cartList/thunk';
 import { getItemList } from 'redux/itemList/thunk';
 import { getPageItemListRequest } from 'redux/pageItemList/thunk';
 import styled from 'styled-components';
 
 const ItemList = () => {
-  const { id } = useParams();
   const {
     data: itemList,
     error: error_getItemList,
     loading,
-  } = useThunkFetch(state => state.pageItemList, getPageItemListRequest(id));
+  } = useThunkFetch(state => state.pageItemList, getPageItemListRequest());
   const { data: allItemList, error: error_getAllItemList } = useThunkFetch(
     state => state.itemList,
     getItemList()
