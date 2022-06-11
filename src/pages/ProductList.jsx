@@ -15,13 +15,16 @@ const ProductList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (productList?.length === 0) dispatch(getProductList());
-  }, [dispatch, productList?.length]);
+    if (productList.length === 0) dispatch(getProductList());
+  }, [dispatch, productList.length]);
+
+  if (errorMessage) {
+    throw new Error(errorMessage);
+  }
 
   return (
     <Layout>
       <Styled.ProductListContainer>
-        {errorMessage && <h1>{errorMessage}</h1>}
         {isLoading && <SkeletonProductItems />}
         {isLoading || productList ? (
           productList.map(({ id, name, price, thumbnail }) => (

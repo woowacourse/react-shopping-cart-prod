@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useCheckBox, useCartItem } from 'hooks';
 
@@ -6,15 +6,15 @@ import Layout from 'components/Layout';
 import PageHeader from 'components/@common/PageHeader';
 import CartList from 'components/CartList';
 import CartReceipt from 'components/CartReceipt';
-import { snackbar } from 'actions/snackbar';
-import { deleteCartItem, modifyCartItemCount } from 'actions/cart';
 
-import { 알림_메시지 } from 'constants/';
+import { deleteCartItem, getCartList, modifyCartItemQuantity } from 'actions/cart';
+
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
 const Cart = () => {
   const cartList = useCartItem();
+  const dispatch = useDispatch();
   const {
     checkboxItems,
     isAllChecked,
@@ -23,19 +23,10 @@ const Cart = () => {
     checkAllSelectButton,
     clearCheckBoxItems,
   } = useCheckBox(cartList);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    let calculateTotalPrice = 0;
-
-    checkboxItems.forEach((productId) => {
-      const currentProduct = cartList.find((checkedProduct) => checkedProduct.id === productId);
-      calculateTotalPrice += currentProduct.price * currentProduct.count;
-    });
-
-    setTotalPrice(calculateTotalPrice);
-  }, [cartList, checkboxItems]);
+    dispatch(getCartList());
+  }, [dispatch]);
 
   const deleteSelectedItem = () => {
     if (checkboxItems.length <= 0) {
@@ -44,11 +35,10 @@ const Cart = () => {
 
     dispatch(deleteCartItem(checkboxItems));
     clearCheckBoxItems();
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_다중_삭제));
   };
 
-  const handleItemCount = (productId, count) => {
-    dispatch(modifyCartItemCount(productId, count));
+  const handleItemQuantity = (productId, quantity) => {
+    dispatch(modifyCartItemQuantity(productId, quantity));
   };
 
   return (
@@ -65,10 +55,14 @@ const Cart = () => {
               deleteSelectedItem={() => deleteSelectedItem}
               isChecked={isChecked}
               handleChecked={() => handleChecked}
-              handleItemCount={() => handleItemCount}
+              handleItemQuantity={() => handleItemQuantity}
             />
           </CommonStyled.FlexWrapper>
-          <CartReceipt totalPrice={totalPrice} checkboxItemCount={checkboxItems.length} />
+          <CartReceipt
+            cartList={cartList}
+            checkboxItems={checkboxItems}
+            clearCheckBoxItems={clearCheckBoxItems}
+          />
         </CommonStyled.Container>
       </Styled.CartListContainer>
     </Layout>

@@ -48,6 +48,7 @@ const RightMenu = styled.ul`
 
 const RightMenuButton = styled.li`
   cursor: pointer;
+  text-align: center;
   font-size: 0.9rem;
   padding: 1rem;
   color: ${COLORS.GRAY_500};
@@ -57,7 +58,7 @@ const RightMenuButton = styled.li`
     font-style: normal;
     font-weight: 900;
 
-    padding-right: 0.625rem;
+    padding: 0 0.3rem;
     content: '\\${(props) => props.icon}';
   }
 

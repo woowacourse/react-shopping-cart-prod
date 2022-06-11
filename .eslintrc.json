@@ -38,6 +38,8 @@
     "default-param-last": "off",
     "react/forbid-prop-types": "off",
     "function-paren-newline": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/destructuring-assignment": "off"
   }
 }

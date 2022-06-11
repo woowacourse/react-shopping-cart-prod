@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useInput from 'hooks/useInput';
@@ -9,8 +9,8 @@ import Button from 'components/@common/Button/styles';
 import Input from 'components/@common/Input/styles';
 import ErrorMessage from 'components/@common/ErrorMessage';
 
-import { requestCheckDuplicatedId, requestSignUp } from 'api';
-import { snackbar } from 'actions/snackbar';
+import { requestSignUp } from 'api';
+import { userDuplicatedIdCheck, userSignUpFailure, userSignUpSuccess } from 'actions/user';
 import { 비동기_요청 } from 'constants/';
 import * as Validate from 'utils/validate';
 import { COLORS } from 'styles/theme';
@@ -42,23 +42,13 @@ const SignUp = () => {
 
   const [checkDuplicatedId, setCheckDuplicatedId] = useState(false);
 
-  const isValidForm = useMemo(
-    () =>
-      checkUserId &&
-      checkDuplicatedId &&
-      checkUserPassword &&
-      checkUserPasswordConfirm &&
-      checkUserAge &&
-      checkUserNickName,
-    [
-      checkUserId,
-      checkDuplicatedId,
-      checkUserPassword,
-      checkUserPasswordConfirm,
-      checkUserAge,
-      checkUserNickName,
-    ],
-  );
+  const isValidForm =
+    checkUserId &&
+    checkDuplicatedId &&
+    checkUserPassword &&
+    checkUserPasswordConfirm &&
+    checkUserAge &&
+    checkUserNickName;
 
   useEffect(() => {
     setCheckUserPasswordConfirm(userPassword === userPasswordConfirm);
@@ -68,43 +58,25 @@ const SignUp = () => {
     setCheckDuplicatedId(false);
   }, [userId]);
 
-  const handleRequestDuplicatedId = () => {
-    let timer;
-
-    return () => {
-      if (timer) return;
-      timer = setTimeout(async () => {
-        timer = null;
-        const { content } = await requestCheckDuplicatedId(userId);
-        if (!content.isUnique) {
-          dispatch(snackbar.pushMessageSnackbar('중복된 아이디입니다!'));
-          setCheckDuplicatedId(content.isUnique);
-          return;
-        }
-
-        dispatch(snackbar.pushMessageSnackbar('사용가능한 아이디입니다!'));
-        setCheckDuplicatedId(content.isUnique);
-      }, 1000);
-    };
+  const handleRequestDuplicatedId = async () => {
+    dispatch(userDuplicatedIdCheck(userId, setCheckDuplicatedId));
   };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     const response = await requestSignUp({
-      userName: userId,
-      nickName: userNickName,
+      username: userId,
+      nickname: userNickName,
       password: userPassword,
       age: userAge,
     });
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(snackbar.pushMessageSnackbar('회원가입에 성공하였습니다!'));
-      navigate('/');
+      dispatch(userSignUpSuccess()(navigate));
       return;
     }
 
-    dispatch(snackbar.pushMessageSnackbar('회원가입에 실패하였습니다!'));
-    navigate('/');
+    dispatch(userSignUpFailure());
   };
 
   return (

@@ -1,7 +1,7 @@
 import { 비동기_요청 } from 'constants/';
 
 const errorReturn = (error) => ({
-  status: 비동기_요청.FAIL,
+  status: 비동기_요청.FAILURE,
   content: `서버와의 통신에 실패하였습니다. (${error.message})`,
 });
 
@@ -13,14 +13,14 @@ const authorizedHeader = (header) => ({
 class RequestAsync {
   constructor() {
     this.HOST_NAME = process.env.REACT_APP_API_URL;
-    this.header = { 'Content-Type': 'application/json' };
+    this.header = { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' };
   }
 
   async #getRefinedResponse(response) {
     const responseString = await response.text();
-
     return {
       status: response.ok ? 비동기_요청.SUCCESS : 비동기_요청.FAILURE,
+      statusCode: response.status,
       content: responseString ? JSON.parse(responseString) : {},
     };
   }
@@ -66,11 +66,12 @@ class RequestAsync {
     }
   }
 
-  async delete(path, authorize = false) {
+  async delete(path, bodyData, authorize = false) {
     try {
       const response = await fetch(`${this.HOST_NAME}/${path}`, {
         method: 'DELETE',
         headers: authorize ? authorizedHeader(this.header) : this.header,
+        body: JSON.stringify(bodyData),
       });
 
       return this.#getRefinedResponse(response);

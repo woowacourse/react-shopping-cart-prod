@@ -7,14 +7,14 @@ import * as CommonStyle from '../CommonStyle/styles';
 
 const isValidOrder = (value) => value > 숫자.최대_주문수량 || value < 숫자.최소_주문수량;
 
-const Counter = ({ id, count, handleItemCount }) => {
+const Counter = ({ id, quantity, handleItemQuantity }) => {
   const onClickButton = (amount) => {
-    const totalAmount = count + amount;
+    const totalAmount = quantity + amount;
     if (isValidOrder(totalAmount)) {
       return;
     }
 
-    handleItemCount(id, totalAmount);
+    handleItemQuantity(id, totalAmount);
   };
 
   const onInputCounter = (e) => {
@@ -24,7 +24,7 @@ const Counter = ({ id, count, handleItemCount }) => {
       return;
     }
 
-    handleItemCount(id, inputNumber);
+    handleItemQuantity(id, inputNumber);
   };
 
   return (
@@ -37,7 +37,7 @@ const Counter = ({ id, count, handleItemCount }) => {
         textAlign="center"
         border={`1px solid ${COLORS.GRAY_500}`}
         margin="0"
-        value={count}
+        value={quantity}
         onChange={(e) => onInputCounter(e)}
       />
       <CommonStyle.FlexWrapper
@@ -71,13 +71,13 @@ const Counter = ({ id, count, handleItemCount }) => {
 
 Counter.propTypes = {
   id: PropTypes.number.isRequired,
-  count: PropTypes.number,
-  handleItemCount: PropTypes.func,
+  quantity: PropTypes.number,
+  handleItemQuantity: PropTypes.func,
 };
 
 Counter.defaultProps = {
-  count: 1,
-  handleItemCount: () => {},
+  quantity: 1,
+  handleItemQuantity: () => {},
 };
 
 export default Counter;

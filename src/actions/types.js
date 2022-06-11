@@ -6,6 +6,7 @@ const createAsyncAction = (actionName) => ({
 
 const 상품리스트_불러오기_액션 = createAsyncAction('상품리스트_불러오기');
 const 상품_불러오기_액션 = createAsyncAction('상품_불러오기');
+const 장바구니_불러오기_액션 = createAsyncAction('장바구니_불러오기');
 
 const 유저_액션 = {
   SET_USER_DATA: '유저 데이터를 저장합니다.',
@@ -13,10 +14,11 @@ const 유저_액션 = {
 };
 
 const 장바구니_액션 = {
+  ...createAsyncAction('장바구니'),
   ADD_NEW_PRODUCT: '장바구니에 새로운 상품을 추가합니다.',
-  ADD_EXIST_PRODUCT: '장바구니에 존재하는 상품을 추가합니다.',
   DELETE_PRODUCT: '장바구니에 존재하는 상품을 삭제합니다.',
-  MODIFY_PRODUCT_COUNT: '장바구니 상품의 구매 수량을 변경합니다',
+  SET_PRODUCT_QUANTITY: '장바구니 상품의 구매 수량을 변경합니다',
+  ORDER_PRODUCT: '장바구니에서 선택한 상품을 주문합니다.',
 };
 
 const 스낵바_액션 = {
@@ -32,6 +34,7 @@ const 스피너_액션 = {
 export {
   상품리스트_불러오기_액션,
   상품_불러오기_액션,
+  장바구니_불러오기_액션,
   유저_액션,
   장바구니_액션,
   스낵바_액션,

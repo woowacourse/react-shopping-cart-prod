@@ -22,7 +22,7 @@ export const useCheckBox = (boxItems) => {
     });
   };
 
-  const isChecked = (productId) => checkboxItems.findIndex((id) => id === productId) !== -1;
+  const isChecked = (productId) => checkboxItems.some((id) => id === productId);
 
   const checkAllSelectButton = () => {
     if (boxItems.length <= 0) {
@@ -34,7 +34,7 @@ export const useCheckBox = (boxItems) => {
       return;
     }
 
-    setCheckboxItems(boxItems.map((item) => item.id));
+    setCheckboxItems(boxItems.map((item) => item.product.id));
   };
 
   const clearCheckBoxItems = () => {

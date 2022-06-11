@@ -11,13 +11,13 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case 상품리스트_불러오기_액션.PENDING:
-      return { ...state, isLoading: true };
+      return { ...state, isLoading: true, errorMessage: null };
 
     case 상품리스트_불러오기_액션.SUCCESS:
-      return { ...state, items: [...state.items, ...payload], isLoading: false };
+      return { ...state, items: [...state.items, ...payload.products], isLoading: false };
 
     case 상품리스트_불러오기_액션.FAILURE:
-      return { ...state, isLoading: false };
+      return { ...state, isLoading: false, errorMessage: payload };
 
     default:
       return state;

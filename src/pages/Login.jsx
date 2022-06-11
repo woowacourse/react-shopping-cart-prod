@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUserData } from 'actions/user';
-import { snackbar } from 'actions/snackbar';
+import { userLoginFailure, userLoginSuccess, userUnfilledLoginForm } from 'actions/user';
 
 import Layout from 'components/Layout';
 import Button from 'components/@common/Button/styles';
 import Input from 'components/@common/Input/styles';
 
 import { hideSpinner, showSpinner } from 'actions/spinner';
-import { 비동기_요청 } from 'constants';
+import { 비동기_요청 } from 'constants/';
 import { requestLogin } from 'api';
 import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -26,24 +25,20 @@ const Login = () => {
     const userPassword = formData.elements['input-password'].value;
 
     if (userId.length === 0 || userPassword.length === 0) {
-      dispatch(snackbar.pushMessageSnackbar('아이디와 비밀번호를 모두 입력해주세요'));
+      dispatch(userUnfilledLoginForm());
       return;
     }
 
     dispatch(showSpinner());
-
     const response = await requestLogin(userId, userPassword);
-
     dispatch(hideSpinner());
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(setUserData(response));
-      dispatch(snackbar.pushMessageSnackbar('로그인에 성공하였습니다'));
-      navigate('/');
+      dispatch(userLoginSuccess(response)(navigate));
       return;
     }
-    dispatch(snackbar.pushMessageSnackbar('로그인에 실패하였습니다'));
-    navigate('/');
+
+    dispatch(userLoginFailure());
   };
 
   return (

@@ -1,11 +1,7 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { useCartItem } from 'hooks';
 
 import { addCartList } from 'actions/cart';
-import { snackbar } from 'actions/snackbar';
-
-import { 알림_메시지 } from 'constants/';
 import noImage from 'assets/no_image.png';
 
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
@@ -14,11 +10,9 @@ import * as Styled from './styles';
 
 const DetailProductItem = ({ id, thumbnail, name, price }) => {
   const dispatch = useDispatch();
-  const cartList = useCartItem();
 
   const onClickAddCartButton = () => {
-    dispatch(addCartList({ id, thumbnail, name, price }, cartList));
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_추가(name)));
+    dispatch(addCartList({ id, thumbnail, name, price }));
   };
 
   return (
