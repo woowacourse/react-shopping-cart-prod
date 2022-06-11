@@ -15,7 +15,7 @@ import { CartItem } from '@/types';
 
 import { CheckBox } from '@/components/@shared';
 
-import { INFO_MESSAGES, PRODUCT } from '@/constants';
+import { CART, INFO_MESSAGES } from '@/constants';
 import Delete from '@/assets/Delete.png';
 
 interface CartProductProps {
@@ -36,11 +36,15 @@ function CartProduct({
   };
 
   const onClickIncreaseCounter = () => {
+    if (quantity === CART.MAX_QUANTITY) {
+      return;
+    }
+
     dispatch(updateQuantityAPI(id, quantity + 1));
   };
 
   const onClickDecreaseCounter = () => {
-    if (quantity === PRODUCT.MIN_COUNT) {
+    if (quantity === CART.MIN_QUANTITY) {
       return;
     }
 
