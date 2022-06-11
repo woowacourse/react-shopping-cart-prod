@@ -43,7 +43,7 @@ function Product({ productInfo: { cartId, id, imageUrl, name, price } }: Product
 
     const newItem = { id, imageUrl, name, price };
 
-    dispatch(addItemAPI({ ...newItem, isSelected: true }));
+    dispatch(addItemAPI({ ...newItem, isSelected: false }));
     dispatch(show(INFO_MESSAGES.ADDED_TO_CART));
 
     setInCart(true);

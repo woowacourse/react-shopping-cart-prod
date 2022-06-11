@@ -18,7 +18,7 @@ import { INFO_MESSAGES } from '@/constants';
 function CartProductList() {
   const { items, loading }: CartState = useCartSelector();
   const selectedItems = items.filter((item) => item.isSelected);
-  const isAllSelected = items.length === selectedItems.length;
+  const isAllSelected = selectedItems.length !== 0 && items.length === selectedItems.length;
   const dispatch = useDispatch();
 
   useEffect(() => {
