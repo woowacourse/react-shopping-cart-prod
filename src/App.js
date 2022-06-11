@@ -21,7 +21,7 @@ import { Layout, Snackbar, GlobalStyles, theme } from 'components';
 
 import { doGetCart } from 'modules/cart';
 import { doLogin } from 'modules/auth';
-import { BASE_URL, ROUTES } from 'utils/constants';
+import { ROUTES } from 'utils/constants';
 
 function App() {
   const { getAccountAPI } = useAuth();
@@ -63,7 +63,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename={BASE_URL}>
+      <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
             <Route path="/server" element={<ServerSelectPage />} />

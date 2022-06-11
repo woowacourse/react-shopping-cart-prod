@@ -21,10 +21,6 @@ const SERVER_URL4 = 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.co
 if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = 'http://localhost:3000';
 } else if (process.env.NODE_ENV === 'production') {
-  if (window.location.pathname === '/') {
-    window.location.pathname = '/react-shopping-cart-prod/';
-  }
-
   axios.defaults.baseURL = SERVER_URL1;
 }
 
@@ -32,14 +28,9 @@ async function main() {
   if (process.env.NODE_ENV === 'development') {
     const { worker } = require('./mocks/worker');
 
-    if (window.location.pathname === '/react-shopping-cart-prod') {
-      window.location.pathname = '/react-shopping-cart-prod/';
-      return;
-    }
-
     await worker.start({
       serviceWorker: {
-        url: `/react-shopping-cart-prod/mockServiceWorker.js`,
+        url: `/mockServiceWorker.js`,
       },
     });
   }

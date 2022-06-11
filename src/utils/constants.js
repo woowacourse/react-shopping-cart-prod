@@ -1,5 +1,4 @@
 const SERVER_URL = 'https://shopping-cart-mh.herokuapp.com/';
-const BASE_URL = '/react-shopping-cart-prod/';
 
 const PRODUCT = {
   MIN_QUANTITY: 1,
@@ -55,4 +54,4 @@ const ERROR = {
   5001: '존재하지 않는 주문입니다.',
 };
 
-export { SERVER_URL, BASE_URL, PRODUCT, MODAL, ROUTES, LINK, MESSAGE, ERROR };
+export { SERVER_URL, PRODUCT, MODAL, ROUTES, LINK, MESSAGE, ERROR };
