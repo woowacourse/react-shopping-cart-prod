@@ -5,7 +5,7 @@ import useOrder from 'hooks/db/useOrder';
 
 import { TotalPrice, PaymentProductItem } from 'components';
 
-import autoComma from 'utils/autoComma';
+import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import Styled from './index.style';
 
 const PaymentPage = () => {
@@ -47,7 +47,7 @@ const PaymentPage = () => {
             <TotalPrice
               title="결제금액"
               price={order.totalPrice}
-              actionType={`${autoComma(order.totalPrice)}원 결제하기`}
+              actionType={`${transformToLocalPriceFormat(order.totalPrice)}원 결제하기`}
               action={() => {}}
             />
           </Styled.RightSide>

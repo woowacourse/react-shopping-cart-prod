@@ -8,7 +8,7 @@ import useSnackbar from 'hooks/useSnackbar';
 import { Image, Counter, CheckBox } from 'components';
 
 import { doDeleteProductFromCart, doPutProductToCart } from 'modules/cart';
-import autoComma from 'utils/autoComma';
+import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import { MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
@@ -56,7 +56,7 @@ const CartProductItem = ({ id, name, price, image, quantity }) => {
             }
           }}
         />
-        {autoComma(price)}원
+        {transformToLocalPriceFormat(price)}원
       </Styled.RightSide>
     </Styled.Container>
   );

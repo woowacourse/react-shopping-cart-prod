@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { UnderlineText } from 'components';
-import autoComma from 'utils/autoComma';
+import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import Styled from './index.style';
 
 const TotalPrice = ({ title, price, actionType, action }) => {
@@ -11,7 +11,7 @@ const TotalPrice = ({ title, price, actionType, action }) => {
       <Styled.Body>
         <Styled.PriceContainer>
           <UnderlineText text={title} />
-          <UnderlineText text={`${autoComma(price)}원`} />
+          <UnderlineText text={`${transformToLocalPriceFormat(price)}원`} />
         </Styled.PriceContainer>
 
         <Styled.ButtonContainer>

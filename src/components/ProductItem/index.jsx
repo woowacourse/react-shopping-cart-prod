@@ -11,7 +11,7 @@ import useCart from 'hooks/db/useCart';
 import { Image, CartIcon, QuantityController } from 'components';
 
 import { doDeleteProductFromCart, doPutProductToCart } from 'modules/cart';
-import autoComma from 'utils/autoComma';
+import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
@@ -89,7 +89,7 @@ const ProductItem = ({ id, name, price, image }) => {
       <Styled.ProductController>
         <div>
           <Styled.ProductName>{name}</Styled.ProductName>
-          <Styled.ProductPrice>{autoComma(price)}원</Styled.ProductPrice>
+          <Styled.ProductPrice>{transformToLocalPriceFormat(price)}원</Styled.ProductPrice>
         </div>
         <Styled.CartController onClick={handleCartClick}>
           {isInCart ? <Styled.Quantity>{quantity}</Styled.Quantity> : <CartIcon />}

@@ -11,7 +11,7 @@ import useProduct from 'hooks/db/useProduct';
 import { Image } from 'components';
 
 import { doPutProductToCart } from 'modules/cart';
-import autoComma from 'utils/autoComma';
+import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
@@ -83,7 +83,9 @@ const ProductDetailPage = () => {
             <Styled.Division />
             <Styled.PriceContainer>
               <Styled.PriceTag>금액</Styled.PriceTag>
-              <Styled.ProductPrice>{autoComma(product.price)}원</Styled.ProductPrice>
+              <Styled.ProductPrice>
+                {transformToLocalPriceFormat(product.price)}원
+              </Styled.ProductPrice>
             </Styled.PriceContainer>
             <Styled.PutCartButton onClick={putCart}>장바구니</Styled.PutCartButton>
           </Styled.ProductContainer>
