@@ -1,22 +1,22 @@
 import { getCookie } from '@/utils';
 
-export type CustomerState = {
+export type userState = {
   isLoggedIn: boolean;
 };
 
 export type Action = ReturnType<typeof login> | ReturnType<typeof logout>;
 
-const initialState: CustomerState = {
+const initialState: userState = {
   isLoggedIn: !!getCookie('accessToken'),
 };
 
-const LOGIN = 'customer/LOGIN' as const;
-const LOGOUT = 'customer/LOGOUT' as const;
+const LOGIN = 'user/LOGIN' as const;
+const LOGOUT = 'user/LOGOUT' as const;
 
 const login = () => ({ type: LOGIN });
 const logout = () => ({ type: LOGOUT });
 
-const customerReducer = (state = initialState, action: Action) => {
+const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case LOGIN: {
       return { ...state, isLoggedIn: true };
@@ -31,4 +31,4 @@ const customerReducer = (state = initialState, action: Action) => {
 
 export { login, logout };
 
-export default customerReducer;
+export default userReducer;

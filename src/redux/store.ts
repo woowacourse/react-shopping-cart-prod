@@ -3,7 +3,7 @@ import ReduxThunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 import cartReducer from './modules/cart/cartReducer';
-import customerReducer from './modules/customer';
+import userReducer from './modules/user';
 import productsReducer from './modules/product/productReducer';
 import snackBarReducer from './modules/snackBar';
 
@@ -12,7 +12,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 const rootReducer = combineReducers({
   cart: cartReducer,
-  customer: customerReducer,
+  user: userReducer,
   products: productsReducer,
   snackBar: snackBarReducer,
 });

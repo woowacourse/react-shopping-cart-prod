@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 
 function ProtectRoute() {
-  const { isLoggedIn } = useSelector((state: RootState) => state.customer);
+  const { isLoggedIn } = useSelector((state: RootState) => state.user);
 
   if (!isLoggedIn) {
     return <Navigate to={routes.login} replace />;

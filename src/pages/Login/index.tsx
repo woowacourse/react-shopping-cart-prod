@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
-import { login } from '@/redux/modules/customer';
+import { login } from '@/redux/modules/user';
 
 import useInput from '@/hooks/useInput';
 

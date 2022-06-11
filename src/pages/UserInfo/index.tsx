@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
-import { logout } from '@/redux/modules/customer';
+import { logout } from '@/redux/modules/user';
 
 import usePassword from '@/hooks/usePassword';
 
@@ -13,7 +13,7 @@ import { LeaveButton } from './styles';
 import { Button, Form, Input } from '@/components/@shared';
 import PageLayout from '@/components/PageLayout';
 
-import { getUserName, removeUserInfo, updateUserInfo } from '@/apis/customer';
+import { getUserName, removeUserInfo, updateUserInfo } from '@/apis/user';
 
 function UserInfo() {
   const [userName, setUserName] = useState('');

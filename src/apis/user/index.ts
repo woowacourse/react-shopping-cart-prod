@@ -1,5 +1,5 @@
-import { getCookie } from '@/utils';
 import axios from 'axios';
+import { getCookie } from '@/utils';
 
 const getUserName = async () => {
   try {

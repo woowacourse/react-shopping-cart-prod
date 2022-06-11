@@ -12,7 +12,7 @@ import { Loader } from '@/components/@shared';
 import Product from '@/components/Product';
 
 function ProductList() {
-  const { isLoggedIn } = useSelector((state: RootState) => state.customer);
+  const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const { productList, loading, error }: ProductState = useSelector(
     (state: RootState) => state.products
   );

@@ -3,14 +3,14 @@ import routes from '@/routes';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-import { logout } from '@/redux/modules/customer';
+import { logout } from '@/redux/modules/user';
 
 import { NavBarContainer, NavBarTitle, NavBarMenu } from './styles';
 
 import Logo from '@/assets/Logo.png';
 
 function NavBar() {
-  const { isLoggedIn } = useSelector((state: RootState) => state.customer);
+  const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

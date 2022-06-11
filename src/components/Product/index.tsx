@@ -27,7 +27,7 @@ interface ProductProps {
 }
 
 function Product({ productInfo: { cartId, id, imageUrl, name, price } }: ProductProps) {
-  const { isLoggedIn } = useSelector((state: RootState) => state.customer);
+  const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const [isInCart, setInCart] = useState(cartId !== null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
