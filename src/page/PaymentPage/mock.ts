@@ -2,6 +2,7 @@
 import { rest } from 'msw';
 import { users } from 'mocks';
 import CustomError from 'utils/CustomError';
+import { ERROR_MESSAGE_FROM_SERVER } from 'utils/constants';
 
 const getOrderHandler = rest.get('/orders/:id', (req, res, ctx) => {
   try {
@@ -12,7 +13,7 @@ const getOrderHandler = rest.get('/orders/:id', (req, res, ctx) => {
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {
-      throw new CustomError(1003, '유효하지 않은 토큰입니다.', 401);
+      throw new CustomError(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
     const id = Number(req.params.id);
@@ -23,7 +24,7 @@ const getOrderHandler = rest.get('/orders/:id', (req, res, ctx) => {
 
     // [ERROR] id에 맞는 주문이 없을 경우
     if (!orders.some(order => order.id === id)) {
-      throw new CustomError(5001, '존재하지 않는 주문입니다.', 404);
+      throw new CustomError(5001, ERROR_MESSAGE_FROM_SERVER[5001], 404);
     }
 
     // 단건주문조회 성공

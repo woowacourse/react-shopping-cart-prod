@@ -7,9 +7,14 @@ const MODAL = {
 };
 
 const ROUTES = {
+  SERVER: 'server',
   HOME: '',
-  CART: 'cart',
   DETAILS: 'details/:id',
+  CART: 'cart',
+  LOGIN: 'login',
+  SIGNUP: 'signup',
+  ACCOUNT: 'account',
+  PAY: 'pay/:id',
 };
 
 const LINK = {
@@ -52,6 +57,23 @@ const ERROR = {
   5001: '존재하지 않는 주문입니다.',
 };
 
+const ERROR_MESSAGE_FROM_SERVER = {
+  1001: '존재하지 않은 URL입니다.',
+  1002: '토큰의 유효 기간이 만료되었습니다.',
+  1003: '토큰이 유효하지 않습니다.',
+  1004: '인증이 필요한 접근입니다.',
+  2001: '이미 존재하는 이메일입니다.',
+  2101: '이메일 형식이 맞지 않습니다.',
+  2102: '닉네임 형식이 맞지 않습니다.',
+  2103: '비밀번호 형식이 맞지 않습니다.',
+  2201: '이메일 혹은 비밀번호가 일치하지 않습니다.',
+  2202: '입력된 비밀번호가 현재 비밀번호와 일치하지 않습니다.',
+  3001: '상품 목록에서 요청하신 상품이 존재하지 않습니다.',
+  4001: '해당 상품이 장바구니에 존재하지 않습니다.',
+  4101: '수량 형식이 맞지 않습니다.',
+  5001: '존재하지 않는 주문입니다.',
+};
+
 const URL = {
   DEV_SERVER: 'http://localhost:3000/',
   이프_서버: 'http://ec2-3-39-234-109.ap-northeast-2.compute.amazonaws.com:8080/',
@@ -60,4 +82,4 @@ const URL = {
   찬_서버: 'http://ec2-3-34-130-116.ap-northeast-2.compute.amazonaws.com:8080/',
 };
 
-export { PRODUCT, MODAL, ROUTES, LINK, MESSAGE, ERROR, URL };
+export { PRODUCT, MODAL, ROUTES, LINK, MESSAGE, ERROR, ERROR_MESSAGE_FROM_SERVER, URL };

@@ -2,6 +2,7 @@
 import { rest } from 'msw';
 import { users } from 'mocks';
 import CustomError from 'utils/CustomError';
+import { ERROR_MESSAGE_FROM_SERVER } from 'utils/constants';
 
 const getCartHandler = rest.get('/cart', (req, res, ctx) => {
   try {
@@ -12,7 +13,7 @@ const getCartHandler = rest.get('/cart', (req, res, ctx) => {
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {
-      throw new CustomError(1003, '유효하지 않은 토큰입니다.', 401);
+      throw new CustomError(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
     // 전체카트조회 성공
@@ -39,7 +40,7 @@ const postOrderHandler = rest.post('/orders', (req, res, ctx) => {
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {
-      throw new CustomError(1003, '유효하지 않은 토큰입니다.', 401);
+      throw new CustomError(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
     const { productIds } = req.body;
@@ -49,7 +50,7 @@ const postOrderHandler = rest.post('/orders', (req, res, ctx) => {
     // [ERROR] 장바구니에 해당 상품이 존재하지 않을 경우
     productIds.forEach(productId => {
       if (!cart.some(product => product.productId === productId)) {
-        throw new CustomError(4001, '해당 상품이 장바구니에 존재하지 않습니다.', 400);
+        throw new CustomError(4001, ERROR_MESSAGE_FROM_SERVER[4001], 400);
       }
     });
 

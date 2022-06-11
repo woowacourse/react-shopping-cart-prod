@@ -3,6 +3,7 @@ import { rest } from 'msw';
 import { users } from 'mocks';
 import { validateNickname } from 'utils/validator';
 import CustomError from 'utils/CustomError';
+import { ERROR_MESSAGE_FROM_SERVER } from 'utils/constants';
 
 const changeNicknameHandler = rest.patch('/customers/profile', (req, res, ctx) => {
   try {
@@ -13,7 +14,7 @@ const changeNicknameHandler = rest.patch('/customers/profile', (req, res, ctx) =
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {
-      throw new CustomError(1003, '유효하지 않은 토큰입니다.', 401);
+      throw new CustomError(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
     const { nickname } = req.body;

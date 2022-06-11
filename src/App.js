@@ -66,14 +66,14 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/server" element={<ServerSelectPage />} />
+            <Route path={ROUTES.SERVER} element={<ServerSelectPage />} />
             <Route path={ROUTES.HOME} element={<ProductListPage />} />
             <Route path={ROUTES.DETAILS} element={<ProductDetailPage />} />
             <Route path={ROUTES.CART} element={<CartPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/account" element={<AccountPage />} />
-            <Route path="/pay/:id" element={<PaymentPage />} />
+            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+            <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+            <Route path={ROUTES.ACCOUNT} element={<AccountPage />} />
+            <Route path={ROUTES.PAY} element={<PaymentPage />} />
           </Route>
         </Routes>
         <GlobalStyles />

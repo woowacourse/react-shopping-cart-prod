@@ -26,7 +26,7 @@ const loginHandler = rest.post('/auth/login', (req, res, ctx) => {
     ctx.status(401),
     ctx.json({
       code: 2201,
-      message: 'Login Failed',
+      message: ERROR_MESSAGE_FROM_SERVER[2201],
     }),
   );
 });
