@@ -1,29 +1,46 @@
-import { useDispatch } from 'react-redux';
-import { deleteBySelectedItems, selectAllItems } from '@/redux/modules/cart/cartAction';
+import { useEffect } from 'react';
 
-import { useCartListSelector } from '@/hooks/useCartSelector';
+import { useDispatch } from 'react-redux';
+import { selectAllItems } from '@/redux/modules/cart/cartAction';
+import { deleteBySelectedItemsAPI, loadCartAPI } from '@/redux/modules/cart/cartThunk';
+
+import { useCartSelector } from '@/hooks/useCartSelector';
 
 import { CartListTitle, SelectAllContainer } from './styles';
 
-import { CartItem } from '@/types';
+import { CartItem, CartState } from '@/types';
 
-import { Button, CheckBox } from '@/components/@shared';
+import { Button, CheckBox, Loader } from '@/components/@shared';
 import { CartProduct } from '@/components';
 
 import { INFO_MESSAGES } from '@/constants';
 
 function CartProductList() {
+  const { items, loading }: CartState = useCartSelector();
+  const selectedItems = items.filter((item) => item.isSelected);
+  const isAllSelected = items.length === selectedItems.length;
   const dispatch = useDispatch();
-  const cartItemList = useCartListSelector();
-  const isAllSelected = cartItemList.every((item) => item.isSelected);
+
+  useEffect(() => {
+    dispatch(loadCartAPI());
+  }, [dispatch]);
 
   const onToggleAllSelect = () => {
     dispatch(selectAllItems(isAllSelected));
   };
 
   const onClickDeleteItems = () => {
-    confirm(INFO_MESSAGES.ASK_DELETE_SELECTED_PRODUCT) && dispatch(deleteBySelectedItems());
+    if (!selectedItems.length) return;
+
+    const selectedItemsId = selectedItems.map((item) => item.id);
+
+    confirm(INFO_MESSAGES.ASK_DELETE_SELECTED_PRODUCT) &&
+      dispatch(deleteBySelectedItemsAPI(selectedItemsId));
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div>
@@ -35,7 +52,7 @@ function CartProductList() {
         <Button onClick={onClickDeleteItems}>상품삭제</Button>
       </SelectAllContainer>
       <CartListTitle>든든배송 상품</CartListTitle>
-      {cartItemList.map((item: CartItem) => (
+      {items.map((item: CartItem) => (
         <CartProduct key={item.id} {...{ item }} />
       ))}
     </div>
