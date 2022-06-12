@@ -28,7 +28,7 @@ function ProductDetailCard({ product }: { product: ProductType }) {
         <Styled.Name>{(product as any).name}</Styled.Name>
         <Styled.Price>
           <span>금액 </span>
-          <span>{(product as any).price}원</span>
+          <span>{(product as any).price.toLocaleString('ko-KR')}원</span>
         </Styled.Price>
       </Styled.InformationWrapper>
 

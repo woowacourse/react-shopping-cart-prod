@@ -59,7 +59,10 @@ function ShoppingCart() {
         <Styled.Title>장바구니</Styled.Title>
         <Styled.Wrapper>
           <CartList cartList={cartList} {...cartItemEvent} {...cartItemStatusUtil} />
-          <OrderForm amount={amount} onClickOrderButton={onClickOrderButton} />
+          <OrderForm
+            amount={amount.toLocaleString('ko-KR')}
+            onClickOrderButton={onClickOrderButton}
+          />
         </Styled.Wrapper>
       </Styled.Container>
     </PageTemplate>

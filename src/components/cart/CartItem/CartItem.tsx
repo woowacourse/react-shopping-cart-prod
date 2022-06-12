@@ -61,7 +61,7 @@ function CartItem({
           )}
         </Styled.CounterWrapper>
 
-        <Styled.Text>{price}원</Styled.Text>
+        <Styled.Text>{price.toLocaleString('ko-KR')}원</Styled.Text>
       </Styled.PriceWrapper>
     </Styled.Container>
   );

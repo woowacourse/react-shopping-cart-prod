@@ -13,6 +13,7 @@ function OrderInformation({ orderId, orderList, responsive }) {
         <p>주문번호: {orderId}</p>
         {id === undefined ? <Link to={`${ROUTE.OrderDetail}/${orderId}`}>상세 보기</Link> : null}
       </Styled.OrderNumber>
+
       <Styled.OrderDetailsContainer>
         {orderList.map((order: any, index) => (
           <Fragment key={index}>
@@ -22,10 +23,12 @@ function OrderInformation({ orderId, orderList, responsive }) {
                 alt="대체 이미지"
                 width={responsive === 'desktop' ? '200px' : '150px'}
               />
+
               <Styled.OrderDescriptionContainer>
                 <h2>{order.name}</h2>
                 <p>
-                  {order.quantity * order.price}원 / 수량: {order.quantity}개
+                  {(order.quantity * order.price).toLocaleString('ko-KR')}원 / 수량:{' '}
+                  {order.quantity}개
                 </p>
               </Styled.OrderDescriptionContainer>
             </Styled.OrderItemContainer>

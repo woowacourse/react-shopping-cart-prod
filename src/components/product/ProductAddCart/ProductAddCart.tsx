@@ -40,7 +40,7 @@ function CartAdd({ product, closeModal }: CartAddPropsType) {
       <GlobalStyled.Position>
         <Styled.ProductInfoWrapper>
           <Styled.Name>{name}</Styled.Name>
-          <Styled.Price>{price} 원</Styled.Price>
+          <Styled.Price>{price.toLocaleString('ko-KR')}원</Styled.Price>
           <GlobalStyled.Position position="absolute" right="0" bottom="0">
             <Counter count={count} increaseCount={increaseCount} decreaseCount={decreaseCount} />
           </GlobalStyled.Position>
@@ -49,7 +49,7 @@ function CartAdd({ product, closeModal }: CartAddPropsType) {
 
       <Styled.TotalPriceWrapper>
         <Styled.Title>합계</Styled.Title>
-        <Styled.TotalPrice>{price * count} 원</Styled.TotalPrice>
+        <Styled.TotalPrice>{(price * count).toLocaleString('ko-KR')} 원</Styled.TotalPrice>
       </Styled.TotalPriceWrapper>
 
       <Styled.Button onClick={onClickCartAdd}>장바구니에 담기</Styled.Button>

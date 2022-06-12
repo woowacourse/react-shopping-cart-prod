@@ -35,7 +35,7 @@ function ProductCard({ product }: ProductCardType) {
         <Styled.Content>
           <Styled.Description>
             <Styled.Name>{name}</Styled.Name>
-            <Styled.Price>{price}원</Styled.Price>
+            <Styled.Price>{price.toLocaleString('ko-KR')}원</Styled.Price>
           </Styled.Description>
         </Styled.Content>
       </Styled.Container>
