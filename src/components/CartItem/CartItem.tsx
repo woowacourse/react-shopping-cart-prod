@@ -23,7 +23,6 @@ type Props = {
   checked: boolean;
 };
 
-// TODO: 선택 구현
 function CartItem({ cartItemId, product, quantity }: Props) {
   const { id, name, imageUrl } = product;
   const dispatch = useDispatch();
@@ -33,13 +32,17 @@ function CartItem({ cartItemId, product, quantity }: Props) {
 
   const isChecked = checkedCartItems.includes(cartItemId);
 
-  const onClickDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
+  const onClickDeleteButton = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      cartAPI.deleteCartItem(cartItemId).then((res) => {
-        res?.status === 204 && dispatch(getCarts());
-      });
+      try {
+        const response = await cartAPI.deleteCartItem(cartItemId);
+
+        response?.status === 204 && dispatch(getCarts());
+      } catch (error) {
+        alert(error);
+      }
     }
   };
 

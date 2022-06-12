@@ -18,10 +18,10 @@ type Props = {
 
 function CartContent({ cartItems }: Props) {
   const dispatch = useDispatch();
-  const [isAllChecked, setIsAllChecked] = useState(false);
   const { checkedCartItems } = useSelector(
     (state: { cart: CartStoreState }) => state.cart
   );
+  const [isAllChecked, setIsAllChecked] = useState(false);
 
   const getTotalMoney = () => {
     return checkedCartItems.reduce((prevMoney, checkedCartItemId) => {
@@ -46,21 +46,18 @@ function CartContent({ cartItems }: Props) {
   ) => {
     e.preventDefault();
 
-    setIsAllChecked((isAllChecked) => {
-      if (isAllChecked) {
-        cartItems.forEach(({ id }) =>
-          dispatch(cartActions.uncheckCartItem(id))
-        );
-      } else {
-        cartItems.forEach(
-          ({ id }) =>
-            !checkedCartItems.includes(id) &&
-            dispatch(cartActions.checkCartItem(id))
-        );
-      }
+    //TODO: 이 코드 생각해보기
+    if (isAllChecked) {
+      cartItems.forEach(({ id }) => dispatch(cartActions.uncheckCartItem(id)));
+    } else {
+      cartItems.forEach(
+        ({ id }) =>
+          !checkedCartItems.includes(id) &&
+          dispatch(cartActions.checkCartItem(id))
+      );
+    }
 
-      return !isAllChecked;
-    });
+    setIsAllChecked((isAllChecked) => !isAllChecked);
   };
 
   const onClickCheckedDeleteButton = async () => {
@@ -73,10 +70,6 @@ function CartContent({ cartItems }: Props) {
       }
     }
   };
-
-  useEffect(() => {
-    setIsAllChecked(checkedCartItems.length === cartItems.length);
-  }, [checkedCartItems, cartItems]);
 
   return (
     <StyledContentBox>
