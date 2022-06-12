@@ -53,6 +53,16 @@ const removeUserInfoAPI = () => {
   }
 };
 
+const signupAPI = async (userName: string, password: string) => {
+  try {
+    await axios.post(`${process.env.REACT_APP_API_URL}/api/customers`, { userName, password });
+
+    return true;
+  } catch {
+    alert(ERROR_MESSAGES.REQUEST.SIGNUP);
+  }
+};
+
 const updateUserInfoAPI = (password: string, userName: string) => {
   try {
     axios.put(
@@ -74,5 +84,6 @@ export {
   getUserNameAPI,
   loginAPI,
   removeUserInfoAPI,
+  signupAPI,
   updateUserInfoAPI,
 };

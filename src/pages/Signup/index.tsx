@@ -60,11 +60,9 @@ function Signup() {
       return;
     }
 
-    try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/customers`, { userName, password });
-    } catch {
-      alert(ERROR_MESSAGES.REQUEST.SIGNUP);
-    }
+    const result = await signupAPI(userName, password);
+
+    if (!result) return;
 
     navigate(routes.login);
   };
