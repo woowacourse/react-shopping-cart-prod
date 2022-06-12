@@ -43,6 +43,10 @@ export const TransparentButton = styled.button`
   cursor: pointer;
 `;
 
+export const SoldOutText = styled.p`
+  color: ${({ theme }) => theme.colorConfig.warning};
+`;
+
 export const Placeholder = styled.div`
   width: 100%;
   aspect-ratio: ${({ shape }) => (shape === 'square' ? '1 / 1' : '10 / 1')};

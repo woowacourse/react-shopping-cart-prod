@@ -17,7 +17,9 @@ function ProductList() {
   const [isLoggedIn] = useReduxState(isLoggedInSelector);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (isLoading) {
+      window.scrollTo(0, 0);
+    }
   }, [isLoading]);
 
   return pageCount && currentPage > pageCount ? (

@@ -27,11 +27,17 @@ const handleCartDispatch = async ({
 };
 
 export const addToCartThunk = (productId, quantity) => async (dispatch) => {
-  await handleCartDispatch({
-    dispatch,
-    func: sendAddToCartRequest,
-    params: [productId, quantity],
-  });
+  dispatch({ type: cartActionType.START });
+
+  try {
+    await sendAddToCartRequest(productId, quantity);
+
+    dispatch({ type: cartActionType.ADDED });
+  } catch ({ message }) {
+    alert(message);
+
+    dispatch({ type: cartActionType.FAIL });
+  }
 };
 
 export const getCartThunk = () => async (dispatch) => {

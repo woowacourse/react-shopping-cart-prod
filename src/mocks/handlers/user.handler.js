@@ -1,16 +1,8 @@
-const userDB = () => {
-  let user = JSON.parse(window.localStorage.getItem('server-user')) || [];
+import { DB_KEYS, END_POINT } from 'mocks/handlers/constants';
+import handleDB from 'mocks/handlers/handleDB';
+import { rest } from 'msw';
 
-  const getUser = () => user;
-  const setUser = (newUser) => {
-    user = newUser;
-    window.localStorage.setItem('server-user', JSON.stringify(newUser));
-  };
-
-  return { getUser, setUser };
-};
-
-const { getUser, setUser } = userDB();
+const [getUser, setUser] = handleDB(DB_KEYS.USER);
 
 const findUserData = (requestEmail) => {
   const currentUserList = getUser();
@@ -24,7 +16,7 @@ export const handleCheckUniqueEmailRequest = (req, res, ctx) => {
 
   const isUnique = currentUserList.every((user) => user.email !== email);
 
-  return res(ctx.status(200), ctx.json({ success: isUnique }));
+  return res(ctx.status(200), ctx.json({ unique: isUnique }), ctx.delay());
 };
 
 export const handlePostUserRequest = (req, res, ctx) => {
@@ -35,7 +27,7 @@ export const handlePostUserRequest = (req, res, ctx) => {
 
   setUser(currentUserList);
 
-  return res(ctx.status(201));
+  return res(ctx.status(201), ctx.delay());
 };
 
 export const handleLoginRequest = (req, res, ctx) => {
@@ -110,3 +102,16 @@ export const handleUserDeleteRequest = (req, res, ctx) => {
 
   return res(ctx.status(204));
 };
+
+const userHandlers = [
+  rest.get(`${END_POINT('MEMBERS_EMAIL_CHECK')}`, handleCheckUniqueEmailRequest),
+  rest.post(`${END_POINT('MEMBERS_DEFAULT')}`, handlePostUserRequest),
+  rest.post(`${END_POINT('LOGIN')}`, handleLoginRequest),
+  rest.get(`${END_POINT('MEMBERS_ME')}`, handleUserGetRequest),
+  rest.post(`${END_POINT('MEMBERS_PASSWORD_CHECK')}`, handlePasswordCheckRequest),
+  rest.patch(`${END_POINT('MEMBERS_ME')}`, handleUserDataUpdateRequest),
+  rest.patch(`${END_POINT('MEMBERS_PASSWORD')}`, handleUserDataUpdateRequest),
+  rest.delete(`${END_POINT('MEMBERS_ME')}`, handleUserDeleteRequest),
+];
+
+export default userHandlers;

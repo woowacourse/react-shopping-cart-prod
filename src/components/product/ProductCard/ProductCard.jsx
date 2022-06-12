@@ -9,12 +9,13 @@ import { CartAddForm } from 'components/product';
 import * as S from 'components/product/ProductCard/ProductCard.style';
 
 import { WARNING_MESSAGES } from 'constants/messages';
+import { ROUTE } from 'constants/route';
 
 import * as GlobalStyled from 'styles/GlobalStyles';
 import { color } from 'styles/Theme';
 
 function ProductCard({ product, isLoggedIn }) {
-  const { id, imageURL, name, price } = product;
+  const { id, imageUrl, name, price, stock } = product;
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ function ProductCard({ product, isLoggedIn }) {
   const onClickCartButton = () => {
     if (!isLoggedIn) {
       alert(WARNING_MESSAGES.LOGIN_REQUIRED);
+      navigate(ROUTE.LOGIN);
       return;
     }
     openModal();
@@ -34,19 +36,23 @@ function ProductCard({ product, isLoggedIn }) {
   return (
     <GlobalStyled.Position>
       <S.Container onClick={onClickCard}>
-        <Image src={imageURL} alt={name} />
+        <Image src={imageUrl} alt={name} />
         <S.Content>
           <S.Description>
             <S.Name>{name}</S.Name>
-            <S.Price>{price}원</S.Price>
+            <S.Price>{price.toLocaleString()}원</S.Price>
           </S.Description>
         </S.Content>
       </S.Container>
 
       <GlobalStyled.Position position="absolute" bottom="5px" right="5px">
-        <S.TransparentButton type="button" onClick={onClickCartButton}>
-          <Icon iconName="Cart" fill={color.DARK_GRAY} />
-        </S.TransparentButton>
+        {stock !== 0 ? (
+          <S.TransparentButton type="button" onClick={onClickCartButton}>
+            <Icon iconName="Cart" fill={color.DARK_GRAY} />
+          </S.TransparentButton>
+        ) : (
+          <S.SoldOutText>일시품절</S.SoldOutText>
+        )}
       </GlobalStyled.Position>
 
       {isModalOpen && (

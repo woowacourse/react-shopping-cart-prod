@@ -1,3 +1,5 @@
+import { userActionType } from './user.reducer';
+
 const initialState = {
   cart: [],
   checkedProductList: [],
@@ -7,6 +9,7 @@ const initialState = {
 export const cartActionType = {
   START: 'cart/ACTION_START',
   FAIL: 'cart/ACTION_FAIL',
+  ADDED: 'cart/ADDED',
   FETCH: 'cart/FETCH',
   UPDATE: 'cart/UPDATE',
   DELETE: 'cart/DELETE',
@@ -15,6 +18,10 @@ export const cartActionType = {
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
+    case userActionType.LOGOUT: {
+      return initialState;
+    }
+
     case cartActionType.START: {
       return {
         ...state,
@@ -28,10 +35,14 @@ const cartReducer = (state = initialState, action) => {
         payload: { cart },
       } = action;
 
+      const checkedProductList = cart
+        .filter(({ product }) => product.stock > 0)
+        .map(({ product }) => product.id);
+
       return {
         ...state,
         cart,
-        checkedProductList: cart.map(({ productData }) => productData.id),
+        checkedProductList,
         isLoading: false,
       };
     }
@@ -48,6 +59,7 @@ const cartReducer = (state = initialState, action) => {
       };
     }
 
+    case cartActionType.ADDED:
     case cartActionType.FAIL: {
       return {
         ...state,

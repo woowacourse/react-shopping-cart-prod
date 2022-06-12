@@ -1,9 +1,11 @@
+import { END_POINT, MOCK_SERVER_URL } from './constants';
 import data from 'mocks/data';
 import images from 'mocks/images';
+import { rest } from 'msw';
 
 export const handleGetProductsRequest = (req, res, ctx) => {
-  const page = req.url.searchParams.get('_page');
-  const limit = req.url.searchParams.get('_limit');
+  const page = req.url.searchParams.get('page');
+  const limit = req.url.searchParams.get('limit');
 
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
@@ -32,3 +34,10 @@ export const handleGetImageRequest = async (req, res, ctx) => {
     ctx.body(imageBuffer),
   );
 };
+
+const productHandlers = [
+  rest.get(`${END_POINT('PRODUCTS')}`, handleGetProductsRequest),
+  rest.get(`${MOCK_SERVER_URL}/static/images/:imageFileName`, handleGetImageRequest),
+];
+
+export default productHandlers;

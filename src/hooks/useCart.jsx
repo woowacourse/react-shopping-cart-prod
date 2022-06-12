@@ -16,7 +16,7 @@ const useCart = () => {
   const [cartState, dispatch] = useReduxState(cartStoreSelector);
   const { cart, checkedProductList } = cartState;
 
-  const cartLength = cart && Object.keys(cart).length;
+  const cartLength = cart && cart.length;
 
   const loadCart = () => {
     dispatch(getCartThunk());
@@ -54,7 +54,8 @@ const useCart = () => {
     dispatch(toggleProductCheckThunk(productId));
   };
 
-  const isAllChecked = cartLength === checkedProductList.length;
+  const availableProductCount = cart.filter(({ product }) => product.stock > 0).length;
+  const isAllChecked = availableProductCount === checkedProductList.length;
 
   const toggleAllCheck = () => {
     if (isAllChecked) {
@@ -62,7 +63,11 @@ const useCart = () => {
       return;
     }
 
-    dispatch(updateCheckedList(cart.map(({ productData }) => productData.id)));
+    dispatch(
+      updateCheckedList(
+        cart.filter(({ product }) => product.stock > 0).map(({ product }) => product.id),
+      ),
+    );
   };
 
   const deleteCheckedProducts = () => {
@@ -77,10 +82,8 @@ const useCart = () => {
   };
 
   const checkedProductsTotalPrice = checkedProductList.reduce((total, productId) => {
-    const { productData, quantity } = cart.find(
-      ({ productData }) => productData.id === productId,
-    );
-    return total + productData.price * quantity;
+    const { product, quantity } = cart.find(({ product }) => product.id === productId);
+    return total + product.price * Math.min(quantity, product.stock);
   }, 0);
 
   return {

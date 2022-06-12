@@ -17,7 +17,7 @@ describe('상품 리듀서 테스트', () => {
       id: 1,
       name: '캠핑 의자',
       price: 35000,
-      imageURL:
+      imageUrl:
         'https://thawing-fortress-83192.herokuapp.com/static/images/camping-chair.jpg',
       quantity: 100,
     },
@@ -25,14 +25,14 @@ describe('상품 리듀서 테스트', () => {
       id: 2,
       name: '그릴',
       price: 100000,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/grill.jpg',
+      imageUrl: 'https://thawing-fortress-83192.herokuapp.com/static/images/grill.jpg',
       quantity: 100,
     },
     {
       id: 3,
       name: '아이스박스',
       price: 20000,
-      imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/icebox.jpg',
+      imageUrl: 'https://thawing-fortress-83192.herokuapp.com/static/images/icebox.jpg',
       quantity: 100,
     },
   ];
@@ -66,9 +66,9 @@ describe('장바구니 리듀서 테스트', () => {
     isLoading: false,
   };
 
-  const productData = {
+  const product = {
     id: 2,
-    imageURL: 'https://thawing-fortress-83192.herokuapp.com/static/images/grill.jpg',
+    imageUrl: 'https://thawing-fortress-83192.herokuapp.com/static/images/grill.jpg',
     name: '그릴',
     price: 100000,
     quantity: 100,
@@ -77,7 +77,7 @@ describe('장바구니 리듀서 테스트', () => {
 
   const reducer = (action) => cartReducer(initialState, action);
   test('장바구니 상태 변경 요청이 발생하면 정상적으로 장바구니 상태가 변경되어야 한다.', () => {
-    const newCartData = { [productData.id]: { productData, quantity } };
+    const newCartData = { [product.id]: { product, quantity } };
 
     expect(
       reducer({
@@ -90,7 +90,7 @@ describe('장바구니 리듀서 테스트', () => {
   });
 
   test('장바구니 정보를 새로 불러오는 요청이 발생하면 체크된 상품 목록에 전체 상품이 추가된다.', () => {
-    const newCartData = { [productData.id]: { productData, quantity } };
+    const newCartData = { [product.id]: { product, quantity } };
     const cartLength = Object.keys(newCartData).length;
 
     const { checkedProductList } = reducer({
@@ -104,7 +104,7 @@ describe('장바구니 리듀서 테스트', () => {
   });
 
   test('체크된 상품이 제거되면 목록의 길이가 감소해야 한다.', () => {
-    const newCartData = { [productData.id]: { productData, quantity } };
+    const newCartData = { [product.id]: { product, quantity } };
 
     const { checkedProductList: previousList } = reducer({
       type: cartActionType.FETCH,

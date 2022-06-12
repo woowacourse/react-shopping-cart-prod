@@ -1,76 +1,93 @@
 import data from 'mocks/data';
+import { DB_KEYS, END_POINT, ERROR_MESSAGES } from 'mocks/handlers/constants';
+import handleDB from 'mocks/handlers/handleDB';
+import { rest } from 'msw';
 
-const cartDB = () => {
-  let cart = JSON.parse(window.localStorage.getItem('server-shopping-cart')) || [];
+const [getCart, setCart] = handleDB(DB_KEYS.CART);
 
-  const getCart = () => cart;
-  const setCart = (newCart) => {
-    cart = newCart;
-    window.localStorage.setItem('server-shopping-cart', JSON.stringify(newCart));
-  };
-
-  return { getCart, setCart };
+const findProductData = (productId) => data.products.find(({ id }) => id === productId);
+const findProductCartIndex = (currentShoppingCart, targetId) => {
+  return currentShoppingCart.findIndex(({ productId }) => productId === targetId);
 };
-
-const { getCart, setCart } = cartDB();
-
-const findProductCartIndex = (currentShoppingCart, productId) => {
-  return currentShoppingCart.findIndex(({ productData }) => productData.id === productId);
-};
+const createResponseCart = (cart) =>
+  cart.map(({ productId, quantity }) => {
+    const product = findProductData(productId);
+    return { product, quantity };
+  });
 
 export const handleGetShoppingCartRequest = (_, res, ctx) => {
   const cart = getCart();
-  return res(ctx.json(cart));
+
+  const responseCart = createResponseCart(cart);
+
+  return res(ctx.json(responseCart));
 };
 
-const findProductData = (productId) => data.products.find(({ id }) => id === productId);
+const updateCartProductQuantity = (productId, quantity) => {
+  const currentShoppingCart = getCart();
+  const productIndex = findProductCartIndex(currentShoppingCart, productId);
+  const { stock } = findProductData(productId);
+
+  if (productIndex < 0) {
+    throw new Error(ERROR_MESSAGES.PRODUCT_NOT_FOUND);
+  }
+
+  const targetProduct = currentShoppingCart[productIndex];
+  const { quantity: prevQuantity } = targetProduct;
+
+  if (quantity > stock) {
+    throw new Error(ERROR_MESSAGES.EXCEED_QUANTITY(stock, prevQuantity));
+  }
+
+  targetProduct.quantity = quantity;
+  currentShoppingCart[productIndex] = targetProduct;
+
+  setCart(currentShoppingCart);
+  return currentShoppingCart;
+};
 
 export const handlePostShoppingCartRequest = (req, res, ctx) => {
   const currentShoppingCart = getCart();
   const { productId, quantity } = req.body;
-
   const cartProductIndex = findProductCartIndex(currentShoppingCart, productId);
+  const { stock } = findProductData(productId);
 
-  if (cartProductIndex >= 0) {
-    const cartProduct = currentShoppingCart[cartProductIndex];
-    const newCartProduct = { ...cartProduct, quantity: cartProduct.quantity + quantity };
-    currentShoppingCart[cartProductIndex] = newCartProduct;
-  } else {
-    const newCartProduct = {};
-    newCartProduct.productData = findProductData(productId);
-    newCartProduct.quantity = quantity;
-    currentShoppingCart.push(newCartProduct);
+  if (quantity > stock) {
+    return res(
+      ctx.status(400),
+      ctx.json({ message: ERROR_MESSAGES.EXCEED_QUANTITY(stock, quantity) }),
+    );
   }
 
-  setCart(currentShoppingCart);
+  if (cartProductIndex < 0) {
+    const newProduct = { productId, quantity };
+    currentShoppingCart.push(newProduct);
 
-  return res(ctx.json(currentShoppingCart));
+    setCart(currentShoppingCart);
+    return res(ctx.status(201));
+  }
+
+  try {
+    const { quantity: prevQuantity } = currentShoppingCart[cartProductIndex];
+    updateCartProductQuantity(productId, prevQuantity + quantity);
+    return res(ctx.status(201));
+  } catch ({ message }) {
+    return res(ctx.status(400), ctx.json({ message }));
+  }
 };
 
 export const handlePatchShoppingCartRequest = (req, res, ctx) => {
   const { productId, quantity } = req.body;
-  const currentShoppingCart = getCart();
-
-  const productIndex = findProductCartIndex(currentShoppingCart, productId);
-
-  if (!currentShoppingCart.length || productIndex < 0) {
-    return res(
-      ctx.status(404, '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.'),
-    );
+  try {
+    const newCart = updateCartProductQuantity(productId, quantity);
+    return res(ctx.json(createResponseCart(newCart)));
+  } catch ({ message }) {
+    ctx.status(400, ctx.json({ message }));
   }
-
-  const targetProduct = currentShoppingCart[productIndex];
-  targetProduct.quantity = quantity;
-
-  currentShoppingCart[productIndex] = targetProduct;
-
-  setCart(currentShoppingCart);
-
-  return res(ctx.json(currentShoppingCart));
 };
 
 export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
-  const { productId: idString } = req.params;
+  const idString = req.url.searchParams.get('productId');
   const productId = Number(idString);
 
   const currentShoppingCart = getCart();
@@ -78,9 +95,7 @@ export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
   const productIndex = findProductCartIndex(currentShoppingCart, productId);
 
   if (currentShoppingCart.length === 0 || productIndex < 0) {
-    return res(
-      ctx.status(404, '장바구니가 비었거나 장바구니에 존재하지 않는 상품입니다.'),
-    );
+    return res(ctx.status(400, ERROR_MESSAGES.CART_PRODUCT_NOT_FOUNT));
   }
 
   const newCart = [
@@ -90,5 +105,14 @@ export const handleDeleteShoppingCartRequest = (req, res, ctx) => {
 
   setCart(newCart);
 
-  return res(ctx.json(newCart));
+  return res(ctx.json(createResponseCart(newCart)));
 };
+
+const cartHandlers = [
+  rest.get(`${END_POINT('CARTS')}`, handleGetShoppingCartRequest),
+  rest.post(`${END_POINT('CARTS_PRODUCTS')}`, handlePostShoppingCartRequest),
+  rest.patch(`${END_POINT('CARTS_PRODUCTS')}`, handlePatchShoppingCartRequest),
+  rest.delete(`${END_POINT('CARTS_PRODUCTS')}`, handleDeleteShoppingCartRequest),
+];
+
+export default cartHandlers;

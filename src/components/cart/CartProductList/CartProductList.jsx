@@ -26,7 +26,7 @@ function CartProductList() {
     <S.Container>
       <S.ListControlWrapper>
         <S.AllCheckControl>
-          <CheckBox checked={isAllChecked} onClick={toggleAllCheck} />
+          <CheckBox checked={isAllChecked} onChange={toggleAllCheck} />
           <S.CheckBoxLabel>
             {isAllChecked ? '전체 선택해제' : '전체 선택하기'}
           </S.CheckBoxLabel>
@@ -40,12 +40,8 @@ function CartProductList() {
       <S.Title>장바구니 상품 목록 ({cartLength}개)</S.Title>
       <S.ListWrapper>
         {cart &&
-          cart.map(({ productData, quantity }) => (
-            <CartProductCard
-              key={productData.id}
-              product={productData}
-              quantity={quantity}
-            />
+          cart.map(({ product, quantity }) => (
+            <CartProductCard key={product.id} product={product} quantity={quantity} />
           ))}
         {cartLength === 0 && (
           <ErrorContainer>장바구니에 추가된 상품이 없어요 😥</ErrorContainer>

@@ -1,14 +1,16 @@
 import React from 'react';
 
-import { Icon } from 'components/common';
 import * as S from 'components/common/CheckBox/CheckBox.style';
 
-function CheckBox({ checked = false, onClick = () => {} }) {
+function CheckBox({ checked = false, onChange = () => {}, disabled }) {
   return (
     <S.Container>
-      <S.CustomCheckBox checked={checked} onClick={onClick}>
-        {checked && <Icon iconName="CheckBox" size="15px" stroke="white" />}
-      </S.CustomCheckBox>
+      <S.CustomCheckBox
+        type={'checkbox'}
+        checked={checked}
+        onChange={onChange}
+        disabled={disabled}
+      />
     </S.Container>
   );
 }

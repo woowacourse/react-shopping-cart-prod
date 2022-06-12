@@ -5,23 +5,30 @@ import { API_URL } from 'api/constants';
 import { ERROR_MESSAGES } from 'constants/messages';
 
 const customInstance = axios.create({
-  baseURL: API_URL,
+  baseURL: API_URL[window.sessionStorage.getItem('server') || 4],
 });
 
 const token = window.sessionStorage.getItem('token');
 const nickname = window.sessionStorage.getItem('nickname');
 
-if (token !== undefined && nickname !== undefined) {
+export const changeServerUrl = (index) => {
+  customInstance.defaults.baseURL = API_URL[index];
+  window.sessionStorage.setItem('server', index);
+  window.location.reload();
+};
+
+if (token !== null && nickname !== null) {
   customInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
 const handleAPIError = (error) => {
-  const { status } = error.response;
+  const { status, data } = error.response;
+
   if (status >= 500) {
     throw Error(ERROR_MESSAGES.SERVER_ERROR);
   }
   if (status >= 400) {
-    throw Error(ERROR_MESSAGES.INVALID_REQUEST);
+    throw Error(data.message);
   }
   throw Error(ERROR_MESSAGES.UNKNOWN);
 };

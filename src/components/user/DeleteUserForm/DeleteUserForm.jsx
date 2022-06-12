@@ -14,9 +14,9 @@ function DeleteUserForm({ closeModal }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleDeleteUser = () => {
+  const handleDeleteUser = async () => {
     try {
-      dispatch(deleteUserThunk());
+      await dispatch(deleteUserThunk());
 
       navigate(ROUTE.HOME);
     } catch ({ message }) {

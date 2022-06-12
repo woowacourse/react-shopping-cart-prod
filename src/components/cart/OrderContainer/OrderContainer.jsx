@@ -15,7 +15,7 @@ function OrderContainer() {
       <S.Content>
         <S.ExpectedPriceWrapper>
           <S.Label>결제예상금액</S.Label>
-          <S.Price>{totalPrice}원</S.Price>
+          <S.Price>{totalPrice.toLocaleString()}원</S.Price>
         </S.ExpectedPriceWrapper>
         <Button disabled={checkedProductCount === 0}>
           주문하기 ({checkedProductCount}개)
