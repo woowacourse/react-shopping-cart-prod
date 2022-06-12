@@ -1,3 +1,5 @@
+import { useCartSelector } from '@/hooks/useCartSelector';
+import { CartState } from '@/types';
 import { PaymentContainer, PaymentResultContainer, PaymentTitle } from './styles';
 import { Button } from '@/components/@shared';
 
@@ -10,8 +12,10 @@ interface PaymentBoxProps {
 }
 
 function PaymentBox({ title, subTitle, amount, onClick, buttonName }: PaymentBoxProps) {
+  const { loading }: CartState = useCartSelector();
+
   return (
-    <PaymentContainer>
+    <PaymentContainer loading={loading}>
       <PaymentTitle>{title}</PaymentTitle>
       <PaymentResultContainer>
         <div>

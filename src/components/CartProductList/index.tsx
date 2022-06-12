@@ -44,14 +44,14 @@ function CartProductList() {
 
   return (
     <div>
-      <SelectAllContainer>
+      <SelectAllContainer loading={loading}>
         <div>
           <CheckBox checked={isAllSelected} onChange={onToggleAllSelect} />
           <span>{isAllSelected ? '선택해제' : '전체선택'}</span>
         </div>
         <Button onClick={onClickDeleteItems}>상품삭제</Button>
       </SelectAllContainer>
-      <CartListTitle>든든배송 상품</CartListTitle>
+      <CartListTitle loading={loading}>든든배송 상품</CartListTitle>
       {items.map((item: CartItem) => (
         <CartProduct key={item.id} {...{ item }} />
       ))}
