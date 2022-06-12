@@ -28,7 +28,7 @@ function CartAdd({ product, closeModal }: CartAddPropsType) {
   const onClickCartAdd = () => {
     dispatch(fetchAddCartAsync({ productId: id, quantity: count }) as any);
 
-    if (confirm('장바구니로 이동하시겠습니까?')) {
+    if (confirm('장바구니에 상품이 담겼습니다. 장바구니로 이동하시겠습니까?')) {
       navigate(ROUTE.ShoppingCart);
     }
 
