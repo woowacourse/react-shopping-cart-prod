@@ -7,7 +7,7 @@ const validateUserName = (id: string) => {
 };
 
 const validatePassword = (password: string) => {
-  const reg = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-_])[A-Za-z0-9!@#$%^&*-_]{8,20}';
+  const reg = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#$%^&*\\-_])[A-Za-z\\d!@#$%^&*\\-_]{8,20}';
 
   if (!password.match(reg)) {
     throw new Error(
