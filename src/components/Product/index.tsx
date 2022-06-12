@@ -6,7 +6,6 @@ import routes from '@/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { addItemAPI } from '@/redux/modules/cart/cartThunk';
-import { show } from '@/redux/modules/snackBar';
 
 import {
   CartImageBadge,
@@ -19,7 +18,6 @@ import {
 
 import { ProductType } from '@/types';
 
-import { INFO_MESSAGES } from '@/constants';
 import cart from '@/assets/cart.svg';
 
 interface ProductProps {
@@ -28,6 +26,7 @@ interface ProductProps {
 
 function Product({ productInfo: { cartId, id, imageUrl, name, price } }: ProductProps) {
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
+
   const [isInCart, setInCart] = useState(cartId !== null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -42,9 +41,9 @@ function Product({ productInfo: { cartId, id, imageUrl, name, price } }: Product
     }
 
     const newItem = { id, imageUrl, name, price };
+    const result = dispatch(addItemAPI({ ...newItem, isSelected: false }));
 
-    dispatch(addItemAPI({ ...newItem, isSelected: false }));
-    dispatch(show(INFO_MESSAGES.ADDED_TO_CART));
+    if (!result) return;
 
     setInCart(true);
   };

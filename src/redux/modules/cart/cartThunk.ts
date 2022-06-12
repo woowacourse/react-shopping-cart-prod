@@ -2,25 +2,16 @@ import { AppDispatch } from '@/redux/store';
 import { show } from '@/redux/modules/snackBar';
 import {
   addItem,
-  addItemFailure,
-  addItemSuccess,
   deleteBySelectedItems,
-  deleteBySelectedItemsFailure,
-  deleteBySelectedItemsSuccess,
   deleteItem,
-  deleteItemFailure,
-  deleteItemSuccess,
   loadCart,
-  loadCartFailure,
   loadCartSuccess,
   updateQuantity,
-  updateQuantityFailure,
-  updateQuantitySuccess,
 } from './cartAction';
 
 import axios, { AxiosError } from 'axios';
 import { getCookie } from '@/utils';
-import { INFO_MESSAGES } from '@/constants';
+import { ERROR_MESSAGES, INFO_MESSAGES } from '@/constants';
 
 const loadCartAPI = (): any => async (dispatch: AppDispatch) => {
   dispatch(loadCart());
@@ -38,7 +29,7 @@ const loadCartAPI = (): any => async (dispatch: AppDispatch) => {
     dispatch(loadCartSuccess(cart));
   } catch (error: unknown) {
     if (error instanceof AxiosError) {
-      dispatch(loadCartFailure(error.response?.data));
+      alert(ERROR_MESSAGES.REQUEST.GET_CART);
     }
   }
 };
@@ -46,8 +37,6 @@ const loadCartAPI = (): any => async (dispatch: AppDispatch) => {
 const addItemAPI =
   (item: { id: number; imageUrl: string; name: string; price: number; isSelected: boolean }): any =>
   async (dispatch: AppDispatch) => {
-    dispatch(addItem());
-
     try {
       await axios.post(`${process.env.REACT_APP_API_URL}/api/customers/me/carts`, item, {
         headers: {
@@ -55,10 +44,13 @@ const addItemAPI =
         },
       });
 
-      dispatch(addItemSuccess());
+      dispatch(addItem());
+      dispatch(show(INFO_MESSAGES.ADDED_TO_CART));
+
+      return true;
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        dispatch(addItemFailure(error.response?.data));
+        alert(ERROR_MESSAGES.REQUEST.ADD_ITEM_TO_CART);
       }
     }
   };
@@ -66,8 +58,6 @@ const addItemAPI =
 const deleteItemAPI =
   (cartId: number): any =>
   async (dispatch: AppDispatch) => {
-    dispatch(deleteItem());
-
     try {
       await axios.delete(`${process.env.REACT_APP_API_URL}/api/customers/me/carts/${cartId}`, {
         headers: {
@@ -75,11 +65,11 @@ const deleteItemAPI =
         },
       });
 
-      dispatch(deleteItemSuccess(cartId));
+      dispatch(deleteItem(cartId));
       dispatch(show(INFO_MESSAGES.DELETED_FROM_CART));
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        dispatch(deleteItemFailure(error.response?.data));
+        alert(ERROR_MESSAGES.REQUEST.DELETE_ITEM_FROM_CART);
       }
     }
   };
@@ -87,8 +77,6 @@ const deleteItemAPI =
 const updateQuantityAPI =
   (cartId: number, quantity: number): any =>
   async (dispatch: AppDispatch) => {
-    dispatch(updateQuantity());
-
     try {
       await axios.patch(
         `${process.env.REACT_APP_API_URL}/api/customers/me/carts/${cartId}`,
@@ -100,10 +88,10 @@ const updateQuantityAPI =
         }
       );
 
-      dispatch(updateQuantitySuccess(cartId, quantity));
+      dispatch(updateQuantity(cartId, quantity));
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        dispatch(updateQuantityFailure(error.response?.data));
+        alert(ERROR_MESSAGES.REQUEST.UPDATE_CART_ITEM_QUANTITY);
       }
     }
   };
@@ -111,8 +99,6 @@ const updateQuantityAPI =
 const deleteBySelectedItemsAPI =
   (selectedItemsId: number[]): any =>
   async (dispatch: AppDispatch) => {
-    dispatch(deleteBySelectedItems());
-
     try {
       await selectedItemsId.forEach((id) => {
         axios.delete(`${process.env.REACT_APP_API_URL}/api/customers/me/carts/${id}`, {
@@ -122,11 +108,11 @@ const deleteBySelectedItemsAPI =
         });
       });
 
-      dispatch(deleteBySelectedItemsSuccess());
+      dispatch(deleteBySelectedItems());
       dispatch(show(INFO_MESSAGES.DELETED_FROM_CART));
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
-        dispatch(deleteBySelectedItemsFailure(error.response?.data));
+        alert(ERROR_MESSAGES.REQUEST.DELETE_ITEM_FROM_CART);
       }
     }
   };
