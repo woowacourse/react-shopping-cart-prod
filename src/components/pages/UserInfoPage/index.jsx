@@ -24,6 +24,7 @@ import {
   UserInfoPageContainer,
 } from "./styled";
 import DeleteAccountModal from "./DeleteAccountModal";
+import ErrorPage from "../ErrorPage";
 
 function UserInfoPage({ serverUrlIndex }) {
   const {
@@ -173,6 +174,7 @@ function UserInfoPage({ serverUrlIndex }) {
             </>
           ) : (
             <>
+              {serverError && <ErrorPage>{serverError}</ErrorPage>}
               <DefaultButton
                 key="edit"
                 width="500px"
