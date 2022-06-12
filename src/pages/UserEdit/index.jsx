@@ -25,10 +25,11 @@ import StyledUserEditContainer from "@/pages/UserEdit/index.style";
 function UserEdit() {
   const { email: prevEmail } = useSelector((state) => state.userState);
   const { nickname: prevNickname } = useSelector((state) => state.userState);
-  const [nickname, onChangeNickname] = useInput(
+  const { authorized } = useSelector((state) => state.userState);
+
+  const [nickname, onChangeNickname, setNickname] = useInput(
     INPUT_TYPE.NICKNAME,
-    STATUS.FULFILLED,
-    prevNickname
+    STATUS.FULFILLED
   );
   const [password, onChangePassword] = useInput(
     INPUT_TYPE.PASSWORD,
@@ -46,8 +47,6 @@ function UserEdit() {
     "users/me",
     logoutUser
   );
-
-  const { authorized } = useSelector((state) => state.userState);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -68,6 +67,19 @@ function UserEdit() {
   };
 
   useEffect(() => {
+    if (!authorized) {
+      navigate(PATH.HOME);
+      return;
+    }
+
+    dispatch(getUserInfo());
+  }, [authorized]);
+
+  useEffect(() => {
+    setNickname((prev) => ({ ...prev, value: prevNickname }));
+  }, [prevNickname]);
+
+  useEffect(() => {
     if (
       nickname.status === STATUS.FULFILLED &&
       password.status === STATUS.FULFILLED &&
@@ -78,15 +90,6 @@ function UserEdit() {
     }
     setPreventFormSubmit(true);
   }, [nickname, password, passwordConfirm]);
-
-  useEffect(() => {
-    if (!authorized) {
-      navigate(PATH.HOME);
-      return;
-    }
-
-    dispatch(getUserInfo());
-  }, [authorized]);
 
   useEffect(() => {
     if (editSuccess || withdrawSuccess) {
