@@ -4,7 +4,7 @@ export type userState = {
   isLoggedIn: boolean;
 };
 
-export type Action = ReturnType<typeof login> | ReturnType<typeof logout>;
+export type Action = ReturnType<typeof loginUser> | ReturnType<typeof logoutUser>;
 
 const initialState: userState = {
   isLoggedIn: !!getCookie('accessToken'),
@@ -13,8 +13,8 @@ const initialState: userState = {
 const LOGIN = 'user/LOGIN' as const;
 const LOGOUT = 'user/LOGOUT' as const;
 
-const login = () => ({ type: LOGIN });
-const logout = () => ({ type: LOGOUT });
+const loginUser = () => ({ type: LOGIN });
+const logoutUser = () => ({ type: LOGOUT });
 
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
@@ -29,6 +29,6 @@ const userReducer = (state = initialState, action: Action) => {
   }
 };
 
-export { login, logout };
+export { loginUser, logoutUser };
 
 export default userReducer;

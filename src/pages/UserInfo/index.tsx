@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
-import { logout } from '@/redux/modules/user';
+import { logoutUser } from '@/redux/modules/user';
 
 import usePassword from '@/hooks/usePassword';
 
@@ -49,7 +49,7 @@ function UserInfo() {
 
     if (!result) return;
 
-    dispatch(logout());
+    dispatch(logoutUser());
     removeCookie('accessToken');
     navigate(routes.home);
   };

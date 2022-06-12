@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
-import { login } from '@/redux/modules/user';
+import { loginUser } from '@/redux/modules/user';
 
 import useInput from '@/hooks/useInput';
 
@@ -28,7 +28,7 @@ function Login() {
 
     if (!accessToken) return;
 
-    dispatch(login());
+    dispatch(loginUser());
     setCookie('accessToken', accessToken);
     navigate(routes.home);
   };
