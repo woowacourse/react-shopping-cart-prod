@@ -14,6 +14,7 @@ import { Button, Form, Input } from '@/components/@shared';
 import PageLayout from '@/components/PageLayout';
 
 import { getUserName, removeUserInfo, updateUserInfo } from '@/apis/user';
+import { INFO_MESSAGES } from '@/constants';
 
 function UserInfo() {
   const [userName, setUserName] = useState('');
@@ -39,7 +40,7 @@ function UserInfo() {
   }, []);
 
   const onClickLeave = () => {
-    if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) return;
+    if (!confirm(INFO_MESSAGES.ASK_LEAVE)) return;
 
     removeUserInfo();
 

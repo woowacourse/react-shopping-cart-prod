@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { getCookie } from '@/utils';
+import { ERROR_MESSAGES } from '@/constants';
 
 const getUserName = async () => {
   try {
@@ -10,8 +11,8 @@ const getUserName = async () => {
     });
 
     return data.userName;
-  } catch (error) {
-    alert(error);
+  } catch {
+    alert(ERROR_MESSAGES.REQUEST.GET_USER_NAME);
   }
 };
 
@@ -22,8 +23,8 @@ const removeUserInfo = () => {
         Authorization: `Bearer ${getCookie('accessToken')}`,
       },
     });
-  } catch (error) {
-    alert(error);
+  } catch {
+    alert(ERROR_MESSAGES.REQUEST.LEAVE);
   }
 };
 
@@ -38,8 +39,8 @@ const updateUserInfo = (password: string, userName: string) => {
         },
       }
     );
-  } catch (error) {
-    alert(error);
+  } catch {
+    alert(ERROR_MESSAGES.REQUEST.UPDATE_USER_INFO);
   }
 };
 

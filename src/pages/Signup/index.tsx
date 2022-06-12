@@ -13,6 +13,7 @@ import PageLayout from '@/components/PageLayout';
 
 import axios from 'axios';
 import { validateId } from '@/validations';
+import { ERROR_MESSAGES, INFO_MESSAGES } from '@/constants';
 
 function Signup() {
   const [id, onChangeId, idErrorMessage] = useInput(validateId);
@@ -34,20 +35,26 @@ function Signup() {
 
     setCanSubmit(true);
 
-    if (!data.isDuplicate) {
-      alert('사용 가능한 아이디입니다.');
+    if (idErrorMessage) {
+      alert(ERROR_MESSAGES.SIGNUP.USER_NAME_RULE);
 
       return;
     }
 
-    alert('이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.');
+    if (!data.isDuplicate) {
+      alert(INFO_MESSAGES.VALID_USER_NAME);
+
+      return;
+    }
+
+    alert(ERROR_MESSAGES.SIGNUP.EXIST_USER_NAME);
   };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!canSubmit) {
-      alert('아이디 중복이 확인되지 않았습니다!');
+      alert(ERROR_MESSAGES.SIGNUP.NOT_USER_NAME_DUPLICATE_CHECK);
 
       return;
     }
@@ -57,8 +64,8 @@ function Signup() {
         userName: id,
         password,
       });
-    } catch (error) {
-      alert(error);
+    } catch {
+      alert(ERROR_MESSAGES.REQUEST.SIGNUP);
     }
 
     navigate(routes.login);

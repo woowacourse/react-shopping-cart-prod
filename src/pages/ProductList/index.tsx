@@ -11,6 +11,8 @@ import { ProductState } from '@/types';
 import { Loader } from '@/components/@shared';
 import Product from '@/components/Product';
 
+import { ERROR_MESSAGES } from '@/constants';
+
 function ProductList() {
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const { productList, loading, error }: ProductState = useSelector(
@@ -24,7 +26,7 @@ function ProductList() {
 
   useEffect(() => {
     if (error) {
-      alert(error.message);
+      alert(ERROR_MESSAGES.REQUEST.GET_PRODUCTS);
     }
   }, [error]);
 

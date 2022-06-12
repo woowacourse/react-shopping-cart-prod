@@ -12,6 +12,7 @@ import { Button, Form, Input } from '@/components/@shared';
 import { PageLayout } from '@/components';
 
 import axios from 'axios';
+import { ERROR_MESSAGES } from '@/constants';
 
 function Login() {
   const [id, onChangeId] = useInput();
@@ -33,8 +34,8 @@ function Login() {
 
       dispatch(login());
       navigate(routes.home);
-    } catch (error) {
-      alert('아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다!');
+    } catch {
+      alert(ERROR_MESSAGES.REQUEST.LOGIN);
     }
   };
 
