@@ -16,7 +16,6 @@ const getCarts = (): any => (dispatch: Dispatch) => {
       headers: { Authorization: `Bearer ${accessToken}` },
     })
     .then((res) => {
-      console.log(res, '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
       dispatch(cartActions.getCartItemsSuccess(res.data));
     })
     .catch((err) => {
