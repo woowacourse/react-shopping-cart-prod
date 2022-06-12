@@ -11,24 +11,14 @@ import { ProductState } from '@/types';
 import { Loader } from '@/components/@shared';
 import Product from '@/components/Product';
 
-import { ERROR_MESSAGES } from '@/constants';
-
 function ProductList() {
+  const { productList, loading }: ProductState = useSelector((state: RootState) => state.products);
   const { isLoggedIn } = useSelector((state: RootState) => state.user);
-  const { productList, loading, error }: ProductState = useSelector(
-    (state: RootState) => state.products
-  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadProductsAPI());
   }, [dispatch, isLoggedIn]);
-
-  useEffect(() => {
-    if (error) {
-      alert(ERROR_MESSAGES.REQUEST.GET_PRODUCTS);
-    }
-  }, [error]);
 
   if (loading) {
     return <Loader />;

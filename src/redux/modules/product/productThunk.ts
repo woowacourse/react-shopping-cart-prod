@@ -1,8 +1,9 @@
 import { AppDispatch } from '@/redux/store';
-import { loadProducts, loadProductsFailure, loadProductsSuccess } from './productAction';
+import { loadProducts, loadProductsSuccess } from './productAction';
 
 import axios from 'axios';
 import { getCookie } from '@/utils';
+import { ERROR_MESSAGES } from '@/constants';
 
 const loadProductsAPI = (): any => async (dispatch: AppDispatch) => {
   dispatch(loadProducts());
@@ -20,7 +21,7 @@ const loadProductsAPI = (): any => async (dispatch: AppDispatch) => {
     dispatch(loadProductsSuccess(productList));
   } catch (error: unknown) {
     if (error instanceof Error) {
-      dispatch(loadProductsFailure(error));
+      alert(ERROR_MESSAGES.REQUEST.GET_PRODUCTS);
     }
   }
 };
