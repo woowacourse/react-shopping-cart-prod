@@ -15,7 +15,7 @@ import axios from 'axios';
 import { ERROR_MESSAGES } from '@/constants';
 
 function Login() {
-  const [id, onChangeId] = useInput();
+  const [userName, onChangeUserName] = useInput();
   const [password, onChangePassword] = useInput();
 
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function Login() {
 
     try {
       const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/login`, {
-        userName: id,
+        userName: userName,
         password,
       });
 
@@ -43,7 +43,12 @@ function Login() {
     <PageLayout>
       <h1>로그인</h1>
       <Form onSubmit={onSubmit}>
-        <Input htmlFor="login-id" label="아이디" value={id} onChange={onChangeId} />
+        <Input
+          htmlFor="login-user-name"
+          label="아이디"
+          value={userName}
+          onChange={onChangeUserName}
+        />
         <Input
           type="password"
           htmlFor="login-password"

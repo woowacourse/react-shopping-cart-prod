@@ -6,17 +6,17 @@ import routes from '@/routes';
 import useInput from '@/hooks/useInput';
 import usePassword from '@/hooks/usePassword';
 
-import { DuplicateCheckButton, IdContainer } from './styles';
+import { DuplicateCheckButton, UserNameContainer } from './styles';
 
 import { Button, Form, Input } from '@/components/@shared';
 import PageLayout from '@/components/PageLayout';
 
 import axios from 'axios';
-import { validateId } from '@/validations';
+import { validateUserName } from '@/validations';
 import { ERROR_MESSAGES, INFO_MESSAGES } from '@/constants';
 
 function Signup() {
-  const [id, onChangeId, idErrorMessage] = useInput(validateId);
+  const [userName, onChangeUserName, userNameErrorMessage] = useInput(validateUserName);
   const [canSubmit, setCanSubmit] = useState(false);
   const {
     password,
@@ -30,12 +30,12 @@ function Signup() {
 
   const onClickDuplicateCheck = async () => {
     const { data } = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/customers/exists?userName=${id}`
+      `${process.env.REACT_APP_API_URL}/api/customers/exists?userName=${userName}`
     );
 
     setCanSubmit(true);
 
-    if (idErrorMessage) {
+    if (userNameErrorMessage) {
       alert(ERROR_MESSAGES.SIGNUP.USER_NAME_RULE);
 
       return;
@@ -60,10 +60,7 @@ function Signup() {
     }
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/customers`, {
-        userName: id,
-        password,
-      });
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/customers`, { userName, password });
     } catch {
       alert(ERROR_MESSAGES.REQUEST.SIGNUP);
     }
@@ -75,22 +72,22 @@ function Signup() {
     <PageLayout>
       <h1>회원가입</h1>
       <Form onSubmit={onSubmit}>
-        <IdContainer>
+        <UserNameContainer>
           <Input
-            htmlFor="signup-id"
+            htmlFor="signup-user-name"
             label="아이디"
-            value={id}
-            onChange={onChangeId}
+            value={userName}
+            onChange={onChangeUserName}
             maxLength={10}
-            isValid={!idErrorMessage}
-            message={id && idErrorMessage}
+            isValid={!userNameErrorMessage}
+            message={userName && userNameErrorMessage}
           />
-          {id && (
+          {userName && (
             <DuplicateCheckButton type="button" onClick={onClickDuplicateCheck}>
               중복 확인
             </DuplicateCheckButton>
           )}
-        </IdContainer>
+        </UserNameContainer>
         <Input
           type="password"
           htmlFor="signup-password"

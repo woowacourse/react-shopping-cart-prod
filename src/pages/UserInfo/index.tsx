@@ -62,7 +62,7 @@ function UserInfo() {
     <PageLayout>
       <h1>회원 정보 수정</h1>
       <Form onSubmit={onSubmit}>
-        <Input htmlFor="userinfo-id" label="아이디" value={userName} disabled={true} />
+        <Input htmlFor="userinfo-user-name" label="아이디" value={userName} disabled={true} />
         <Input
           type="password"
           htmlFor="userinfo-password"

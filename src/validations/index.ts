@@ -1,4 +1,4 @@
-const validateId = (id: string) => {
+const validateUserName = (id: string) => {
   const reg = /^[a-z0-9\_]{5,20}$/;
 
   if (!id.match(reg)) {
@@ -16,4 +16,4 @@ const validatePassword = (password: string) => {
   }
 };
 
-export { validateId, validatePassword };
+export { validateUserName, validatePassword };
