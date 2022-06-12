@@ -2,7 +2,7 @@ import axios from 'axios';
 import { getCookie } from '@/utils';
 import { ERROR_MESSAGES } from '@/constants';
 
-const getUserName = async () => {
+const getUserNameAPI = async () => {
   try {
     const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/customers/me`, {
       headers: {
@@ -16,7 +16,20 @@ const getUserName = async () => {
   }
 };
 
-const removeUserInfo = () => {
+const loginAPI = async (userName: string, password: string) => {
+  try {
+    const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/login`, {
+      userName,
+      password,
+    });
+
+    return data.accessToken;
+  } catch {
+    alert(ERROR_MESSAGES.REQUEST.LOGIN);
+  }
+};
+
+const removeUserInfoAPI = () => {
   try {
     axios.delete(`${process.env.REACT_APP_API_URL}/api/customers/me`, {
       headers: {
@@ -28,7 +41,7 @@ const removeUserInfo = () => {
   }
 };
 
-const updateUserInfo = (password: string, userName: string) => {
+const updateUserInfoAPI = (password: string, userName: string) => {
   try {
     axios.put(
       `${process.env.REACT_APP_API_URL}/api/customers/me`,
@@ -44,4 +57,4 @@ const updateUserInfo = (password: string, userName: string) => {
   }
 };
 
-export { getUserName, removeUserInfo, updateUserInfo };
+export { getUserNameAPI, loginAPI, removeUserInfoAPI, updateUserInfoAPI };

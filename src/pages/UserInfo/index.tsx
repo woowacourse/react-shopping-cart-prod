@@ -13,7 +13,7 @@ import { LeaveButton } from './styles';
 import { Button, Form, Input } from '@/components/@shared';
 import PageLayout from '@/components/PageLayout';
 
-import { getUserName, removeUserInfo, updateUserInfo } from '@/apis/user';
+import { getUserNameAPI, removeUserInfoAPI, updateUserInfoAPI } from '@/apis/user';
 import { INFO_MESSAGES } from '@/constants';
 
 function UserInfo() {
@@ -31,7 +31,7 @@ function UserInfo() {
 
   useEffect(() => {
     const updateUserName = async () => {
-      const userName = await getUserName();
+      const userName = await getUserNameAPI();
 
       setUserName(userName);
     };
@@ -42,7 +42,7 @@ function UserInfo() {
   const onClickLeave = () => {
     if (!confirm(INFO_MESSAGES.ASK_LEAVE)) return;
 
-    removeUserInfo();
+    removeUserInfoAPI();
 
     document.cookie = 'accessToken=';
     dispatch(logout());
@@ -53,7 +53,7 @@ function UserInfo() {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    updateUserInfo(password, userName);
+    updateUserInfoAPI(password, userName);
 
     navigate(routes.home);
   };

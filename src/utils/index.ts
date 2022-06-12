@@ -10,4 +10,8 @@ const getCookie = (key: string) => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export { findElementIndex, getCookie };
+const setCookie = (key: string, value: string) => {
+  document.cookie = `${key}=${value}`;
+};
+
+export { findElementIndex, getCookie, setCookie };

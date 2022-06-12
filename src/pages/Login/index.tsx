@@ -11,8 +11,8 @@ import { SignupWrapper } from './styles';
 import { Button, Form, Input } from '@/components/@shared';
 import { PageLayout } from '@/components';
 
-import axios from 'axios';
-import { ERROR_MESSAGES } from '@/constants';
+import { loginAPI } from '@/apis/user';
+import { setCookie } from '@/utils';
 
 function Login() {
   const [userName, onChangeUserName] = useInput();
@@ -24,19 +24,13 @@ function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      const { data } = await axios.post(`${process.env.REACT_APP_API_URL}/api/login`, {
-        userName: userName,
-        password,
-      });
+    const accessToken = await loginAPI(userName, password);
 
-      document.cookie = `accessToken=${data.accessToken}`;
+    if (!accessToken) return;
 
-      dispatch(login());
-      navigate(routes.home);
-    } catch {
-      alert(ERROR_MESSAGES.REQUEST.LOGIN);
-    }
+    dispatch(login());
+    setCookie('accessToken', accessToken);
+    navigate(routes.home);
   };
 
   return (
