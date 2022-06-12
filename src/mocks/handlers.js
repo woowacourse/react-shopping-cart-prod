@@ -2,11 +2,11 @@ import { rest } from 'msw';
 import productList from './dummyData';
 
 export const handlers = [
-  rest.get(`${process.env.REACT_APP_API_URL}`, (req, res, ctx) => {
+  rest.get(`${process.env.REACT_APP_API_URL}/api/products`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(productList));
   }),
 
-  rest.post('/api/customers', (req, res, ctx) => {
+  rest.post(`${process.env.REACT_APP_API_URL}/api/customers`, (req, res, ctx) => {
     const { userName, password } = req.body;
     const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
 
@@ -16,42 +16,59 @@ export const handlers = [
     return res(ctx.status(201));
   }),
 
-  rest.post('/api/customers/duplication', (req, res, ctx) => {
-    const { userName } = req.body;
+  rest.get(`${process.env.REACT_APP_API_URL}/api/customers/exists`, (req, res, ctx) => {
+    const userName = req.url.searchParams.get('userName');
     const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
-    const isDuplicateUserName =
-      customers.find((customer) => customer.userName === userName) !== undefined;
+    const isDuplicate = customers.find((customer) => customer.userName === userName) !== undefined;
 
-    return res(ctx.json(isDuplicateUserName));
+    return res(ctx.json({ isDuplicate }));
   }),
 
-  rest.get('/api/customers/me', (req, res, ctx) => {
+  rest.get(`${process.env.REACT_APP_API_URL}/api/customers/me`, (req, res, ctx) => {
     const { authorization } = req.headers._headers;
 
     if (!authorization) return res(ctx.status(400));
 
-    const userName = authorization.replace(/^Bearer\saccessToken_+/, '');
+    const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
+    const user = customers.find((customer) => customer.accessToken === authorization.split(' ')[1]);
 
-    return res(ctx.status(200), ctx.json(userName));
+    if (!user) return res(ctx.status(400));
+
+    return res(ctx.status(200), ctx.json(user.userName));
   }),
 
-  rest.put('/api/customers/me', (req, res, ctx) => {
+  rest.put(`${process.env.REACT_APP_API_URL}/api/customers/me`, (req, res, ctx) => {
     const { authorization } = req.headers._headers;
+    const { password } = req.body;
 
     if (!authorization) return res(ctx.status(400));
+
+    const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
+    const user = customers.find((customer) => customer.accessToken === authorization.split(' ')[1]);
+
+    user.password = password;
+    localStorage.setItem('customers', JSON.stringify(customers));
 
     return res(ctx.status(200));
   }),
 
-  rest.delete('/api/customers/me', (req, res, ctx) => {
+  rest.delete(`${process.env.REACT_APP_API_URL}/api/customers/me`, (req, res, ctx) => {
     const { authorization } = req.headers._headers;
 
     if (!authorization) return res(ctx.status(400));
 
+    const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
+    const userIndex = customers.findIndex(
+      (customer) => customer.accessToken === authorization.split(' ')[1]
+    );
+
+    customers.splice(userIndex, 1);
+    localStorage.setItem('customers', JSON.stringify(customers));
+
     return res(ctx.status(204));
   }),
 
-  rest.post('/api/login', (req, res, ctx) => {
+  rest.post(`${process.env.REACT_APP_API_URL}/api/login`, (req, res, ctx) => {
     const { userName, password } = req.body;
     const customers = JSON.parse(localStorage.getItem('customers')) ?? [];
     const loginUser = customers.find(

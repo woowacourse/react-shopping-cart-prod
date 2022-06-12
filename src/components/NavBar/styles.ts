@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { alignCenter, flexCenter, spaceBetween } from '../../styles/mixin';
+import { alignCenter } from '../../styles/mixin';
 
 const NavBarContainer = styled.div`
   ${alignCenter};
-  justify-content: space-around;
+  padding: 0 10%;
   width: 100%;
   height: 60px;
   background: ${({ theme }) => theme.colors.TEAL_400};
   box-shadow: 0px 4px 4px ${({ theme }) => theme.colors.GRAY_300};
-  margin-bottom: 60px;
 `;
 
 const NavBarTitle = styled(Link)`
-  ${flexCenter};
+  ${alignCenter}
+  flex: 1;
   width: 300px;
   height: 40px;
   text-decoration: none;
@@ -34,9 +34,9 @@ const NavBarTitle = styled(Link)`
 `;
 
 const NavBarMenu = styled.div`
-  ${spaceBetween};
-  gap: 20px;
+  display: flex;
   align-items: center;
+  gap: 20px;
   font-weight: 500;
   font-size: 20px;
   color: ${({ theme }) => theme.colors.GRAY_50};
@@ -57,4 +57,30 @@ const NavBarMenu = styled.div`
   }
 `;
 
-export { NavBarContainer, NavBarTitle, NavBarMenu };
+const SubBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 40px;
+  background-color: ${({ theme }) => theme.colors.GRAY_400};
+  box-shadow: 0px 4px 4px ${({ theme }) => theme.colors.GRAY_300};
+  height: 20px;
+  gap: 10px;
+
+  a {
+    font-size: 12px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  button {
+    font-size: 12px;
+    background: none;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+`;
+
+export { NavBarContainer, NavBarTitle, NavBarMenu, SubBar };

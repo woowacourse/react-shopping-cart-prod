@@ -1,9 +1,9 @@
-import { LoaderWrapper } from './styles';
+import { LoaderWrapper, Spinner } from './styles';
 
 function Loader() {
   return (
     <LoaderWrapper>
-      <div />
+      <Spinner />
     </LoaderWrapper>
   );
 }

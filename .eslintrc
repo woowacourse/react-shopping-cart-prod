@@ -13,8 +13,11 @@
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"],
         "moduleDirectory": ["node_modules", "@types"]
-      }
+      },
+      "typescript": {}
     }
   },
-  "rules": { "react/react-in-jsx-scope": "off" }
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
 }

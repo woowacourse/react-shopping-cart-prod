@@ -1,16 +1,40 @@
-const INFO_MESSAGES = {
-  ADDED_TO_CART: '장바구니에 추가되었습니다. 😍',
-  DELETED_FROM_CART: '장바구니에서 삭제되었습니다. 🥲',
-  ASK_DELETE_SELECTED_PRODUCT: '선택된 상품을 삭제 하시겠습니까?',
-  ASK_DELETE_PRODUCT: '해당 상품을 삭제하시겠습니까?',
-};
-
 const PRODUCT = {
   MIN_COUNT: 1,
 };
 
 const CART = {
+  MIN_COUNT: 1,
+  MAX_COUNT: 99,
   COUNTER_DISPLAY_TIME: 3000,
 };
 
-export { INFO_MESSAGES, PRODUCT, CART };
+const PASSWORD = {
+  MIN_LENGTH: 8,
+  MAX_LENGTH: 16,
+};
+
+const ID = {
+  MIN_LENGTH: 5,
+  MAX_LENGTH: 20,
+};
+
+const MESSAGES = {
+  ADDED_TO_CART: '장바구니에 추가되었습니다. 😍',
+  DELETED_FROM_CART: '장바구니에서 삭제되었습니다. 🥲',
+  ASK_DELETE_SELECTED_PRODUCT: '선택된 상품을 삭제 하시겠습니까?',
+  ASK_DELETE_PRODUCT: '해당 상품을 삭제하시겠습니까?',
+  ASK_LEAVE: '정말 탈퇴하시겠습니까? 🥲',
+  COMPLETE_CHANGE_PASSWORD: '✅ 비밀번호가 변경되었습니다.',
+  COMPLETE_SIGNUP: '✅ 회원가입이 완료되었습니다.',
+  COMPLETE_LOGIN: '✅ 로그인 되었습니다.',
+  COMPLETE_LOGOUT: '✅ 로그아웃 되었습니다.',
+  COMPLETE_LEAVE: '✅ 회원탈퇴 되었습니다.',
+  MISMATCH_PASSWORD: '비밀번호가 일치하지 않습니다.',
+  INVALID_ID: `이름은 ${ID.MIN_LENGTH}~${ID.MAX_LENGTH}자에 소문자, 숫자, 언더바(_)만 사용가능합니다.`,
+  INVALID_PASSWORD: `대문자/소문자/숫자/특수문자(!, @, #, $, %, ^, &, *, -, _)를 각 1자 이상 포함하여 입력해주세요. 
+    (${PASSWORD.MIN_LENGTH}~${PASSWORD.MAX_LENGTH}자)`,
+  EXIST_ID: '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.',
+  AVAILABLE_ID: '사용 가능한 아이디입니다.',
+};
+
+export { MESSAGES, PRODUCT, CART, PASSWORD, ID };

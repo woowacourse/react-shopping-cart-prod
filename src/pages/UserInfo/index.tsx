@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  changePasswordAPI,
+  deleteUserAPI,
+  loadUserAPI,
+  selectUserState,
+  UserState,
+} from 'redux/modules/user';
+import { show } from 'redux/modules/snackBar';
 
-import { useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import usePassword from 'hooks/usePassword';
+import { Button, Form, Input, Loader } from 'components/@shared';
+import { PageLayout } from 'components';
 
-import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/modules/customer';
-
-import axios from 'axios';
-
-import usePassword from '../../hooks/usePassword';
-
+import { MESSAGES, PASSWORD } from 'constants/index';
 import { LeaveButton } from './styles';
 
-import { Button, Form, Input } from '../../components/@shared';
-import PageLayout from '../../components/PageLayout';
-
-import { getCookie } from '../../utils';
-
 function UserInfo() {
-  const [userName, setUserName] = useState('');
+  const dispatch = useDispatch();
+  const { userName, loading, error }: UserState = useSelector(selectUserState);
   const {
     password,
     onChangePassword,
@@ -27,80 +27,73 @@ function UserInfo() {
     passwordConfirmErrorMessage,
     onChangePasswordConfirm,
   } = usePassword();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const onClickLeave = () => {
-    if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) return;
+  const onClickLeave = async () => {
+    if (!window.confirm(MESSAGES.ASK_LEAVE)) {
+      return;
+    }
 
-    axios.delete('/api/customers/me', {
-      headers: {
-        Authorization: `Bearer ${getCookie('accessToken')}`,
-      },
-    });
-
-    dispatch(logout());
-    navigate(routes.home);
+    dispatch(
+      deleteUserAPI(() => {
+        dispatch(show(MESSAGES.COMPLETE_LEAVE));
+      })
+    );
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmitEditForm = (e: React.FormEvent) => {
     e.preventDefault();
 
-    axios.put(
-      '/api/customers/me',
-      { password },
-      {
-        headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-        },
-      }
-    );
+    if (passwordConfirmErrorMessage) {
+      return;
+    }
 
-    navigate(routes.home);
+    dispatch(
+      changePasswordAPI(password, () => {
+        dispatch(show(MESSAGES.COMPLETE_CHANGE_PASSWORD));
+      })
+    );
   };
 
   useEffect(() => {
-    const getUser = async () => {
-      const response = await axios.get('/api/customers/me', {
-        headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-        },
-      });
-
-      setUserName(response.data);
-    };
-
-    getUser();
+    dispatch(loadUserAPI());
   }, []);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <PageLayout>
-      <h1>회원 정보 수정</h1>
-      <Form onSubmit={onSubmit}>
-        <Input htmlFor="userinfo-id" label="아이디" value={userName} disabled={true} />
+      <h1>회원정보 수정</h1>
+      <Form onSubmit={onSubmitEditForm}>
+        <Input htmlFor="userinfo-id" label="아이디" value={userName ?? ''} disabled={true} />
         <Input
           type="password"
           htmlFor="userinfo-password"
-          label="비밀번호"
+          label="새로운 비밀번호"
           value={password}
           onChange={onChangePassword}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           isValid={!passwordErrorMessage}
           message={password && passwordErrorMessage}
         />
         <Input
           type="password"
           htmlFor="userinfo-password-confirm"
-          label="비밀번호 확인"
+          label="새로운 비밀번호 확인"
           value={passwordConfirm}
           onChange={onChangePasswordConfirm}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
           isValid={!passwordConfirmErrorMessage}
           message={passwordConfirmErrorMessage}
         />
-        <Button>확인</Button>
+        <Button borderRaius="15px">확인</Button>
       </Form>
-      <LeaveButton onClick={onClickLeave}>회원 탈퇴</LeaveButton>
+      <LeaveButton onClick={onClickLeave} borderRaius="15px">
+        회원 탈퇴
+      </LeaveButton>
     </PageLayout>
   );
 }

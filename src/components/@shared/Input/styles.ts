@@ -13,6 +13,8 @@ const InputContainer = styled.div`
     height: 40px;
     padding: 10px;
     margin-bottom: 15px;
+    border: 2px solid ${({ theme }) => theme.colors.GRAY_400};
+    border-radius: 15px;
   }
 `;
 

@@ -1,7 +1,6 @@
 import { FormContainer } from './styles';
 
-interface FormProps {
-  onSubmit: (e: React.FormEvent) => void;
+interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {
   children: JSX.Element | JSX.Element[];
 }
 

@@ -1,11 +1,15 @@
-import axios from 'axios';
+import apiClient from 'api';
+import { AxiosError } from 'axios';
+import { getCookie } from 'utils';
 import { AppDispatch, RootState } from '../store';
 
 type Product = {
   name: string;
   price: number;
-  img: string;
+  imageUrl: string;
   id: number;
+  cartId: number | null;
+  quantity: number;
 };
 
 export type ProductState = {
@@ -15,61 +19,82 @@ export type ProductState = {
 };
 
 export type Action =
-  | ReturnType<typeof loadProducts>
+  | ReturnType<typeof loadProductsRequest>
   | ReturnType<typeof loadProductsSuccess>
-  | ReturnType<typeof loadProductsFailed>;
+  | ReturnType<typeof loadProductsFailure>
+  | ReturnType<typeof addProductToCart>;
 
-// initialState
 const initialState: ProductState = {
   loading: false,
   productList: [],
   error: null,
 };
 
-// 액션
-const LOAD_PRODUCTS = 'product/LOAD' as const;
+const LOAD_PRODUCTS_REQUEST = 'product/LOAD_REQUEST' as const;
 const LOAD_PRODUCTS_SUCCESS = 'product/LOAD_SUCCESS' as const;
-const LOAD_PRODUCTS_FAILED = 'product/LOAD_FAILED' as const;
+const LOAD_PRODUCTS_FAILURE = 'product/LOAD_FAILURE' as const;
 
-// 액션 크리에터
-const loadProducts = () => ({ type: LOAD_PRODUCTS });
+const ADD_PRODUCT_TO_CART = 'product/ADD_TO_CART' as const;
+
+const loadProductsRequest = () => ({ type: LOAD_PRODUCTS_REQUEST });
 const loadProductsSuccess = (productList: Product[]) => ({
   type: LOAD_PRODUCTS_SUCCESS,
   payload: { productList },
 });
-const loadProductsFailed = (error: Error) => ({
-  type: LOAD_PRODUCTS_FAILED,
+const loadProductsFailure = (error: Error) => ({
+  type: LOAD_PRODUCTS_FAILURE,
   payload: { error },
 });
+const addProductToCart = (id: number) => ({
+  type: ADD_PRODUCT_TO_CART,
+  payload: { id },
+});
 
-// thunk
 export const loadProductsAPI = (): any => async (dispatch: AppDispatch) => {
-  dispatch(loadProducts());
+  dispatch(loadProductsRequest());
+  const token = getCookie('accessToken');
+
   try {
-    const { data: productList } = await axios.get(`${process.env.REACT_APP_API_URL}`);
-    dispatch(loadProductsSuccess(productList));
+    if (token === '') {
+      const { data: productList } = await apiClient.get('/api/products');
+      dispatch(loadProductsSuccess(productList));
+    } else {
+      const { data: productList } = await apiClient.get('/api/products', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      dispatch(loadProductsSuccess(productList));
+    }
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      dispatch(loadProductsFailed(error));
+    if (error instanceof AxiosError) {
+      dispatch(loadProductsFailure(error.response?.data));
     }
   }
 };
 
-// 리듀서
 const productsReducer = (state = initialState, action: Action) => {
   switch (action.type) {
-    case LOAD_PRODUCTS: {
-      return { ...state, loading: true };
+    case LOAD_PRODUCTS_REQUEST: {
+      return { ...state, loading: true, error: null };
     }
     case LOAD_PRODUCTS_SUCCESS: {
       const { productList } = action.payload;
 
       return { ...state, loading: false, productList };
     }
-    case LOAD_PRODUCTS_FAILED: {
+    case LOAD_PRODUCTS_FAILURE: {
       const { error } = action.payload;
 
       return { ...state, loading: false, error };
+    }
+    case ADD_PRODUCT_TO_CART: {
+      const { id } = action.payload;
+      const targetIndex = state.productList.findIndex((product) => product.id === id);
+      const newItems = [...state.productList];
+      newItems[targetIndex].quantity = 1;
+
+      return { ...state, productList: newItems };
     }
     default:
       return state;
@@ -78,6 +103,6 @@ const productsReducer = (state = initialState, action: Action) => {
 
 export const selectProductState = (state: RootState) => state.products;
 
-export { loadProductsSuccess, loadProductsFailed };
+export { loadProductsSuccess, loadProductsFailure, addProductToCart };
 
 export default productsReducer;

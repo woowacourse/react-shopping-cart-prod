@@ -1,53 +1,77 @@
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from 'routes';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginAPI, resetUserError, selectUserState, UserState } from 'redux/modules/user';
+import { show } from 'redux/modules/snackBar';
 
-import { useDispatch } from 'react-redux';
-import { login } from '../../redux/modules/customer';
+import useInput from 'hooks/useInput';
+import { Button, Form, Input, Loader } from 'components/@shared';
+import { PageLayout } from 'components';
 
-import axios from 'axios';
-
-import useInput from '../../hooks/useInput';
-
-import { Button, Form, Input } from '../../components/@shared';
-import PageLayout from '../../components/PageLayout';
+import { ID, MESSAGES, PASSWORD } from 'constants/index';
 import { SignupWrapper } from './styles';
 
 function Login() {
+  const { isLoggedIn, loading, error }: UserState = useSelector(selectUserState);
   const [id, onChangeId] = useInput();
   const [password, onChangePassword] = useInput();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onSubmit = async (e: React.FormEvent) => {
+  const onSubmitLoginForm = (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      const { data } = await axios.post('/api/login', { userName: id, password });
-
-      document.cookie = `accessToken=${data}`;
-
-      dispatch(login());
-      navigate(routes.home);
-    } catch (error) {
-      alert('아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다!');
-    }
+    dispatch(
+      loginAPI(id, password, () => {
+        dispatch(show(MESSAGES.COMPLETE_LOGIN));
+      })
+    );
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(routes.home, { replace: true });
+    }
+  }, [isLoggedIn]);
+
+  useEffect(() => {
+    if (error) {
+      alert(error.message);
+    }
+
+    return () => {
+      dispatch(resetUserError());
+    };
+  }, [error]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <PageLayout>
       <h1>로그인</h1>
-      <Form onSubmit={onSubmit}>
-        <Input htmlFor="login-id" label="아이디" value={id} onChange={onChangeId} />
+      <Form onSubmit={onSubmitLoginForm}>
+        <Input
+          htmlFor="login-id"
+          label="아이디"
+          value={id}
+          onChange={onChangeId}
+          minLength={ID.MIN_LENGTH}
+          maxLength={ID.MAX_LENGTH}
+        />
         <Input
           type="password"
           htmlFor="login-password"
           label="비밀번호"
           value={password}
           onChange={onChangePassword}
-          maxLength={20}
+          minLength={PASSWORD.MIN_LENGTH}
+          maxLength={PASSWORD.MAX_LENGTH}
         />
-        <Button>확인</Button>
+        <Button borderRaius="15px">확인</Button>
       </Form>
       <SignupWrapper>
         아직 회원이 아니신가요? <Link to={routes.signup}>회원가입</Link>

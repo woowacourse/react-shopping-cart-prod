@@ -1,6 +1,10 @@
+import { MESSAGES } from 'constants/index';
+
 const validatePassword = (password: string) => {
-  if (password.length < 8 || password.length > 20) {
-    throw new Error('비밀번호는 8~20자로 입력해주세요.');
+  const reg = '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*-_])[A-Za-z0-9!@#$%^&*-_]{8,16}';
+
+  if (!password.match(reg)) {
+    throw new Error(MESSAGES.INVALID_PASSWORD);
   }
 };
 

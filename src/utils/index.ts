@@ -6,4 +6,12 @@ const getCookie = (key: string) => {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 };
 
-export { getCookie };
+const setCookie = (key: string, value: string) => {
+  document.cookie = `${key}=${value};`;
+};
+
+const deleteCookie = (key: string) => {
+  document.cookie = `${key}=`;
+};
+
+export { getCookie, setCookie, deleteCookie };

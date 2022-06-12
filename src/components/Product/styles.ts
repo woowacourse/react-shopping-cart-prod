@@ -1,5 +1,6 @@
 import styled, { keyframes, css } from 'styled-components';
-import { alignCenter, directionColumn, spaceBetween } from '../../styles/mixin';
+import { CART } from 'constants/index';
+import { alignCenter, directionColumn, spaceBetween } from 'styles/mixin';
 
 const CartShake = keyframes`
   0%, 50%{
@@ -43,17 +44,26 @@ const CartCounter = styled.div<{ isShowCartCounter: boolean }>`
       ${CartCounterMoveUp} 0.5s
     `};
   animation-fill-mode: forwards;
+`;
 
-  button {
-    background-color: ${({ theme }) => theme.colors.TEAL_400};
-    border: none;
-    font-size: 16px;
-    color: ${({ theme }) => theme.colors.GRAY_50};
-    cursor: pointer;
-    width: 25px;
-    height: 20px;
-    border-radius: 15px;
-  }
+const CounterButton = styled.button`
+  border: none;
+  font-size: 16px;
+  color: ${({ theme }) => theme.colors.GRAY_50};
+  cursor: pointer;
+  width: 25px;
+  height: 20px;
+  border-radius: 15px;
+`;
+
+const DecreaseButton = styled(CounterButton)<{ quantity: number }>`
+  background-color: ${({ quantity, theme }) =>
+    quantity === CART.MIN_COUNT ? theme.colors.GRAY_400 : theme.colors.TEAL_400};
+`;
+
+const IncreaseButton = styled(CounterButton)<{ quantity: number }>`
+  background-color: ${({ quantity, theme }) =>
+    quantity === CART.MAX_COUNT ? theme.colors.GRAY_400 : theme.colors.TEAL_400};
 `;
 
 const CartImageBadge = styled.div`
@@ -135,4 +145,6 @@ export {
   CartCounter,
   CartImageWrapper,
   CartImageBadge,
+  DecreaseButton,
+  IncreaseButton,
 };

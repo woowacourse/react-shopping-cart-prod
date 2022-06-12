@@ -1,13 +1,8 @@
 import { InputContainer, Message } from './styles';
 
-interface InputProps {
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   htmlFor: string;
   label: string;
-  type?: string;
-  value: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  maxLength?: number;
-  disabled?: boolean;
   isValid?: boolean;
   message?: string;
 }
@@ -21,8 +16,10 @@ function Input({ ...props }: InputProps) {
         id={props.htmlFor}
         value={props.value}
         onChange={props.onChange}
+        minLength={props.minLength}
         maxLength={props.maxLength}
         disabled={props.disabled}
+        onBlur={props.onBlur}
         required
       />
       {props.message && <Message isValid={props.isValid}>{props.message}</Message>}
