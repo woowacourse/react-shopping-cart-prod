@@ -16,6 +16,7 @@ function Input({
   onButtonClick,
   errorMessage,
 }) {
+  const hasButton = buttonText && onButtonClick;
   return (
     <S.Label>
       {labelText}
@@ -27,9 +28,9 @@ function Input({
           onChange={onChange}
           isValid={isValid}
           placeholder={placeholder}
-          hasButton={buttonText && onButtonClick}
+          hasButton={hasButton}
         />
-        {buttonText && onButtonClick && (
+        {hasButton && (
           <Button onClick={onButtonClick} isWithInput={true} disabled={isButtonDisabled}>
             {buttonText}
           </Button>
