@@ -29,7 +29,7 @@ const nonUserHeaderLinks = [
 ];
 
 function Header({ isLoggedIn }) {
-  const savedServerNumber = window.sessionStorage.getItem('server');
+  const savedServerNumber = window.sessionStorage.getItem('server') || 4;
   const [serverNumber, setServerNumber] = useState(savedServerNumber);
   const windowSize = useWindowsSize();
   const handleLogout = useLogout();

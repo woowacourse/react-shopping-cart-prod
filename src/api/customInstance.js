@@ -5,7 +5,7 @@ import { API_URL } from 'api/constants';
 import { ERROR_MESSAGES } from 'constants/messages';
 
 const customInstance = axios.create({
-  baseURL: API_URL[window.sessionStorage.getItem('server')],
+  baseURL: API_URL[window.sessionStorage.getItem('server') || 4],
 });
 
 const token = window.sessionStorage.getItem('token');
