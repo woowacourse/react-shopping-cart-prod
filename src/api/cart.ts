@@ -1,44 +1,17 @@
-import { clearCache, caching } from '@/api/cache';
+import { caching } from '@/api/cache';
 import { CART_API_URL } from '@/api/constants';
 import axios from 'axios';
+import { authorizedFetcher } from './authorizedFetcher';
 import { getCookie } from './cookie';
 
 const cartAPI = axios.create({
   baseURL: CART_API_URL.TO_CART_ITEMS,
 });
 
-const authorizedFetcher = ({
-  apiCallback,
-  path,
-  body = null,
-  cachePath,
-  options = {},
-}: {
-  apiCallback: any;
-  path: string;
-  body?: any;
-  cachePath: string;
-  options?: any;
-}) => {
-  const accessToken = getCookie('access-token');
-  const config = {
-    ...options,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  clearCache(`${cachePath}_${accessToken}`);
-
-  if (body) return apiCallback(path, body, config);
-
-  return apiCallback(path, config);
-};
-
 export const addCart = async (body): Promise<any> => {
   return authorizedFetcher({
-    apiCallback: cartAPI.post,
-    path: '/',
+    requestMethod: cartAPI.post,
+    endPoint: '/',
     body,
     cachePath: CART_API_URL.TO_CART_ITEMS,
   });
@@ -46,29 +19,29 @@ export const addCart = async (body): Promise<any> => {
 
 export const getCart = () => {
   const accessToken = getCookie('access-token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
 
   return caching(async (): Promise<any> => {
-    return cartAPI.get('/', config);
+    return authorizedFetcher({
+      requestMethod: cartAPI.get,
+      endPoint: '/',
+      isOnlyConfig: true,
+    });
   }, `${CART_API_URL.TO_CART_ITEMS}_${accessToken}`);
 };
 
 export const deleteCart = async (id): Promise<any> => {
   return authorizedFetcher({
-    apiCallback: cartAPI.delete,
-    path: `/${id}`,
+    requestMethod: cartAPI.delete,
+    endPoint: `/${id}`,
     cachePath: CART_API_URL.TO_CART_ITEMS,
+    isOnlyConfig: true,
   });
 };
 
 export const patchCart = async (id, quantity): Promise<any> => {
   return authorizedFetcher({
-    apiCallback: cartAPI.patch,
-    path: `/${id}`,
+    requestMethod: cartAPI.patch,
+    endPoint: `/${id}`,
     body: {},
     cachePath: CART_API_URL.TO_CART_ITEMS,
     options: { params: { quantity } },

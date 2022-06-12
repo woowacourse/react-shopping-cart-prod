@@ -1,40 +1,31 @@
 import axios from 'axios';
+import { authorizedFetcher } from './authorizedFetcher';
 import { ORDERS_API_URL } from './constants';
-import { getCookie } from './cookie';
 
 const ordersAPI = axios.create({
   baseURL: ORDERS_API_URL.TO_ORDERS,
 });
 
 export const addOrderList = body => {
-  const accessToken = getCookie('access-token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  return ordersAPI.post('/', body, config);
+  return authorizedFetcher({
+    requestMethod: ordersAPI.post,
+    endPoint: '/',
+    body,
+  });
 };
 
 export const getOrderById = id => {
-  const accessToken = getCookie('access-token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  return ordersAPI.get(`/${id}`, config);
+  return authorizedFetcher({
+    requestMethod: ordersAPI.get,
+    endPoint: `/${id}`,
+    isOnlyConfig: true,
+  });
 };
 
 export const getAllOrderList = () => {
-  const accessToken = getCookie('access-token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  return ordersAPI.get('/', config);
+  return authorizedFetcher({
+    requestMethod: ordersAPI.get,
+    endPoint: '/',
+    isOnlyConfig: true,
+  });
 };

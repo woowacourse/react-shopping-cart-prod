@@ -1,6 +1,7 @@
 import { CUSTOMERS_API_URL } from '@/api/constants';
 import { getCookie } from '@/api/cookie';
 import axios from 'axios';
+import { authorizedFetcher } from './authorizedFetcher';
 
 const customersAPI = axios.create({
   baseURL: CUSTOMERS_API_URL.TO_CUSTOMERS,
@@ -9,63 +10,42 @@ const customersAPI = axios.create({
   },
 });
 
-const checkAuthorization = ({
-  requestMethod,
-  endPoint,
-  data = {},
-  isLogged = false,
-  isOnlyConfig = false,
-}) => {
-  if (!isLogged) return requestMethod(endPoint, data);
-
-  const accessToken = getCookie('access-token');
-  const config = {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  };
-
-  if (isOnlyConfig) return requestMethod(endPoint, config);
-
-  return requestMethod(endPoint, data, config);
-};
-
 export const signUp = userInformation => {
-  return checkAuthorization({
+  return authorizedFetcher({
     requestMethod: customersAPI.post,
     endPoint: '/signup',
-    data: userInformation,
+    body: userInformation,
   });
 };
 
 export const login = userInformation => {
-  return checkAuthorization({
+  return authorizedFetcher({
     requestMethod: customersAPI.post,
     endPoint: '/login',
-    data: userInformation,
+    body: userInformation,
   });
 };
 
 export const editUser = userInformation => {
-  return checkAuthorization({
+  return authorizedFetcher({
     requestMethod: customersAPI.put,
     endPoint: '/',
-    data: userInformation,
+    body: userInformation,
     isLogged: true,
   });
 };
 
 export const changePassword = userInformation => {
-  return checkAuthorization({
+  return authorizedFetcher({
     requestMethod: customersAPI.patch,
     endPoint: '/password',
-    data: userInformation,
+    body: userInformation,
     isLogged: true,
   });
 };
 
 export const deleteUser = () => {
-  return checkAuthorization({
+  return authorizedFetcher({
     requestMethod: customersAPI.delete,
     endPoint: '/',
     isLogged: true,
@@ -74,7 +54,7 @@ export const deleteUser = () => {
 };
 
 export const getCustomer = () => {
-  return checkAuthorization({
+  return authorizedFetcher({
     requestMethod: customersAPI.get,
     endPoint: '/',
     isLogged: true,
