@@ -14,10 +14,11 @@ import { Button, Form, Input } from '@/components/@shared';
 import PageLayout from '@/components/PageLayout';
 
 import { getUserNameAPI, removeUserInfoAPI, updateUserInfoAPI } from '@/apis/user';
+import { removeCookie } from '@/utils';
 import { INFO_MESSAGES } from '@/constants';
 
 function UserInfo() {
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState('LOADING...');
   const {
     password,
     onChangePassword,
@@ -33,27 +34,32 @@ function UserInfo() {
     const updateUserName = async () => {
       const userName = await getUserNameAPI();
 
+      if (!userName) return;
+
       setUserName(userName);
     };
 
     updateUserName();
   }, []);
 
-  const onClickLeave = () => {
+  const onClickLeave = async () => {
     if (!confirm(INFO_MESSAGES.ASK_LEAVE)) return;
 
-    removeUserInfoAPI();
+    const result = await removeUserInfoAPI();
 
-    document.cookie = 'accessToken=';
+    if (!result) return;
+
     dispatch(logout());
-
+    removeCookie('accessToken');
     navigate(routes.home);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    updateUserInfoAPI(password, userName);
+    const result = await updateUserInfoAPI(password, userName);
+
+    if (!result) return;
 
     navigate(routes.home);
   };

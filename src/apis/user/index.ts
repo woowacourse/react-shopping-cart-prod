@@ -41,13 +41,15 @@ const loginAPI = async (userName: string, password: string) => {
   }
 };
 
-const removeUserInfoAPI = () => {
+const removeUserInfoAPI = async () => {
   try {
-    axios.delete(`${process.env.REACT_APP_API_URL}/api/customers/me`, {
+    await axios.delete(`${process.env.REACT_APP_API_URL}/api/customers/me`, {
       headers: {
         Authorization: `Bearer ${getCookie('accessToken')}`,
       },
     });
+
+    return true;
   } catch {
     alert(ERROR_MESSAGES.REQUEST.LEAVE);
   }
@@ -63,9 +65,9 @@ const signupAPI = async (userName: string, password: string) => {
   }
 };
 
-const updateUserInfoAPI = (password: string, userName: string) => {
+const updateUserInfoAPI = async (password: string, userName: string) => {
   try {
-    axios.put(
+    await axios.put(
       `${process.env.REACT_APP_API_URL}/api/customers/me`,
       { password, userName },
       {
@@ -74,6 +76,8 @@ const updateUserInfoAPI = (password: string, userName: string) => {
         },
       }
     );
+
+    return true;
   } catch {
     alert(ERROR_MESSAGES.REQUEST.UPDATE_USER_INFO);
   }
