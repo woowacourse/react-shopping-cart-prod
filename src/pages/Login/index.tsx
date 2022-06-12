@@ -15,8 +15,8 @@ import { loginAPI } from '@/apis/user';
 import { setCookie } from '@/utils';
 
 function Login() {
-  const [userName, onChangeUserName] = useInput();
-  const [password, onChangePassword] = useInput();
+  const { value: userName, onChangeValue: onChangeUserName } = useInput();
+  const { value: password, onChangeValue: onChangePassword } = useInput();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

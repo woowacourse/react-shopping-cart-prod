@@ -4,29 +4,33 @@ import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
 
 import useInput from '@/hooks/useInput';
-import usePassword from '@/hooks/usePassword';
+import usePasswordConfirm from '@/hooks/usePasswordConfirm';
 
 import { DuplicateCheckButton, UserNameContainer } from './styles';
 
 import { Button, Form, Input } from '@/components/@shared';
 import PageLayout from '@/components/PageLayout';
 
-import axios from 'axios';
-import { checkUserNameDuplicateAPI } from '@/apis/user';
-import { validateUserName } from '@/validations';
+import { checkUserNameDuplicateAPI, signupAPI } from '@/apis/user';
+import { validatePassword, validateUserName } from '@/validations';
 import { ERROR_MESSAGES, INFO_MESSAGES } from '@/constants';
 
 function Signup() {
-  const [userName, onChangeUserName, userNameErrorMessage] = useInput(validateUserName);
-  const [canSubmit, setCanSubmit] = useState(false);
   const {
-    password,
-    onChangePassword,
-    passwordErrorMessage,
-    passwordConfirm,
-    passwordConfirmErrorMessage,
-    onChangePasswordConfirm,
-  } = usePassword();
+    value: userName,
+    onChangeValue: onChangeUserName,
+    errorMessage: userNameErrorMessage,
+  } = useInput(validateUserName);
+  const {
+    value: password,
+    onChangeValue: onChangePassword,
+    errorMessage: passwordErrorMessage,
+  } = useInput(validatePassword);
+
+  const { passwordConfirm, passwordConfirmErrorMessage, onChangePasswordConfirm } =
+    usePasswordConfirm(password);
+
+  const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
 
   const onClickDuplicateCheck = async () => {

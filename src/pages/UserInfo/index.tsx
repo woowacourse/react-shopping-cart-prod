@@ -6,7 +6,8 @@ import routes from '@/routes';
 import { useDispatch } from 'react-redux';
 import { logoutUser } from '@/redux/modules/user';
 
-import usePassword from '@/hooks/usePassword';
+import useInput from '@/hooks/useInput';
+import usePasswordConfirm from '@/hooks/usePasswordConfirm';
 
 import { LeaveButton } from './styles';
 
@@ -15,18 +16,20 @@ import PageLayout from '@/components/PageLayout';
 
 import { getUserNameAPI, removeUserInfoAPI, updateUserInfoAPI } from '@/apis/user';
 import { removeCookie } from '@/utils';
+import { validatePassword } from '@/validations';
 import { INFO_MESSAGES } from '@/constants';
 
 function UserInfo() {
-  const [userName, setUserName] = useState('LOADING...');
   const {
-    password,
-    onChangePassword,
-    passwordErrorMessage,
-    passwordConfirm,
-    passwordConfirmErrorMessage,
-    onChangePasswordConfirm,
-  } = usePassword();
+    value: password,
+    onChangeValue: onChangePassword,
+    errorMessage: passwordErrorMessage,
+  } = useInput(validatePassword);
+
+  const { passwordConfirm, passwordConfirmErrorMessage, onChangePasswordConfirm } =
+    usePasswordConfirm(password);
+
+  const [userName, setUserName] = useState('LOADING...');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
