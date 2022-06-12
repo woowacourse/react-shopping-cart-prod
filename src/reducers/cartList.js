@@ -28,13 +28,9 @@ export const getCartList = (serverUrlIndex) => async (dispatch) => {
       }/${localStorage.getItem(USER_ID_KEY)}/carts`,
     });
 
-    if (!response.ok) {
-      throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
-    }
-
     const data = await response.json();
-    if (!data) {
-      throw new Error(`저장된 정보가 없습니다. 다시 시도해 주세요 :(`);
+    if (data.message) {
+      throw new Error(data.message);
     }
 
     dispatch({
