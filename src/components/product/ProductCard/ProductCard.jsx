@@ -9,6 +9,7 @@ import { CartAddForm } from 'components/product';
 import * as S from 'components/product/ProductCard/ProductCard.style';
 
 import { WARNING_MESSAGES } from 'constants/messages';
+import { ROUTE } from 'constants/route';
 
 import * as GlobalStyled from 'styles/GlobalStyles';
 import { color } from 'styles/Theme';
@@ -26,6 +27,7 @@ function ProductCard({ product, isLoggedIn }) {
   const onClickCartButton = () => {
     if (!isLoggedIn) {
       alert(WARNING_MESSAGES.LOGIN_REQUIRED);
+      navigate(ROUTE.LOGIN);
       return;
     }
     openModal();
