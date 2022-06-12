@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div``;
 
-export const CustomCheckBox = styled.div`
+export const CustomCheckBox = styled.input`
   width: 20px;
   height: 20px;
 

@@ -26,7 +26,7 @@ function CartProductList() {
     <S.Container>
       <S.ListControlWrapper>
         <S.AllCheckControl>
-          <CheckBox checked={isAllChecked} onClick={toggleAllCheck} />
+          <CheckBox checked={isAllChecked} onChange={toggleAllCheck} />
           <S.CheckBoxLabel>
             {isAllChecked ? '전체 선택해제' : '전체 선택하기'}
           </S.CheckBoxLabel>

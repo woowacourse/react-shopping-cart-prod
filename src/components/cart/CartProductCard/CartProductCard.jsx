@@ -64,7 +64,11 @@ function CartProductCard({
 
   return (
     <S.Container>
-      <CheckBox checked={checked} onClick={handleCheckBoxClick} disabled={isOutOfStock} />
+      <CheckBox
+        checked={checked}
+        onChange={handleCheckBoxClick}
+        disabled={isOutOfStock}
+      />
 
       <Image src={imageUrl} width="150px" />
 
