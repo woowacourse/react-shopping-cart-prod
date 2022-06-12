@@ -6,6 +6,7 @@ const CART = {
 
 const ERROR_MESSAGES = {
   REQUEST: {
+    CHECK_USER_NAME_DUPLICATE: '중복 확인에 실패하였습니다. 잠시 후 다시 시도해주세요.',
     SIGNUP: '회원가입에 실패하였습니다. 잠시 후 다시 시도해주세요.',
     LOGIN: '로그인에 실패하였습니다. 잠시 후 다시 시도해주세요.',
     GET_USER_NAME: '아이디를 불러오지 못하였습니다. 잠시 후 다시 시도해주세요.',

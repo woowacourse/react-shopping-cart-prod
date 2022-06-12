@@ -2,6 +2,18 @@ import axios from 'axios';
 import { getCookie } from '@/utils';
 import { ERROR_MESSAGES } from '@/constants';
 
+const checkUserNameDuplicateAPI = async (userName: string) => {
+  try {
+    const { data } = await axios.get(
+      `${process.env.REACT_APP_API_URL}/api/customers/exists?userName=${userName}`
+    );
+
+    return data.isDuplicate;
+  } catch {
+    alert(ERROR_MESSAGES.REQUEST.CHECK_USER_NAME_DUPLICATE);
+  }
+};
+
 const getUserNameAPI = async () => {
   try {
     const { data } = await axios.get(`${process.env.REACT_APP_API_URL}/api/customers/me`, {
@@ -57,4 +69,10 @@ const updateUserInfoAPI = (password: string, userName: string) => {
   }
 };
 
-export { getUserNameAPI, loginAPI, removeUserInfoAPI, updateUserInfoAPI };
+export {
+  checkUserNameDuplicateAPI,
+  getUserNameAPI,
+  loginAPI,
+  removeUserInfoAPI,
+  updateUserInfoAPI,
+};

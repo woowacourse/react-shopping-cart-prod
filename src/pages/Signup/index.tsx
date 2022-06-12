@@ -12,6 +12,7 @@ import { Button, Form, Input } from '@/components/@shared';
 import PageLayout from '@/components/PageLayout';
 
 import axios from 'axios';
+import { checkUserNameDuplicateAPI } from '@/apis/user';
 import { validateUserName } from '@/validations';
 import { ERROR_MESSAGES, INFO_MESSAGES } from '@/constants';
 
@@ -29,19 +30,19 @@ function Signup() {
   const navigate = useNavigate();
 
   const onClickDuplicateCheck = async () => {
-    const { data } = await axios.get(
-      `${process.env.REACT_APP_API_URL}/api/customers/exists?userName=${userName}`
-    );
-
-    setCanSubmit(true);
-
     if (userNameErrorMessage) {
       alert(ERROR_MESSAGES.SIGNUP.USER_NAME_RULE);
 
       return;
     }
 
-    if (!data.isDuplicate) {
+    const isDuplicate = await checkUserNameDuplicateAPI(userName);
+
+    if (isDuplicate === undefined) return;
+
+    setCanSubmit(true);
+
+    if (isDuplicate === false) {
       alert(INFO_MESSAGES.VALID_USER_NAME);
 
       return;
