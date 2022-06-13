@@ -12,10 +12,12 @@ const isPasswordConfirm = (password, passwordConfirm) => password === passwordCo
 const isNickname = (value) => /^[a-zA-Z가-힣0-9]{2,10}$/g.test(value);
 
 const userValidator = {
-  userId: async (userId) => {
+  userId: async (userId, isDuplicateCheckEnabled = true) => {
     if (!isUserId(userId)) {
       throw new Error('이메일 주소를 정확히 입력해주세요.');
     }
+
+    if (isDuplicateCheckEnabled === false) return;
 
     const { status, body } = await requestCheckUserId(userId);
     if (status === REQUEST_STATUS.FAIL) {
