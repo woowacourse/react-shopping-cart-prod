@@ -4,17 +4,25 @@
 const AUTH_ACTIONS = {
   LOGIN: 'auth/LOGIN',
   LOGOUT: 'auth/LOGOUT',
+  FINISHED: 'auth/FINISHED',
 };
 
 // action creator
 const doLogin = ({ nickname }) => ({ type: AUTH_ACTIONS.LOGIN, nickname });
 const doLogout = () => ({ type: AUTH_ACTIONS.LOGOUT });
+const doFinish = () => ({ type: AUTH_ACTIONS.FINISHED });
 
 // reducer
-const initState = { nickname: '', isAuthenticated: false };
+const initState = { nickname: '', isAuthenticated: false, isLoading: true };
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
+    case AUTH_ACTIONS.FINISHED:
+      return {
+        ...state,
+        isLoading: false,
+      };
+
     case AUTH_ACTIONS.LOGIN:
       return {
         ...state,
@@ -35,4 +43,4 @@ const authReducer = (state = initState, action) => {
 };
 
 export default authReducer;
-export { doLogin, doLogout };
+export { doLogin, doLogout, doFinish };
