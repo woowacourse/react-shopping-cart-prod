@@ -7,6 +7,7 @@ import useAxiosInterceptor from 'hooks/useAxiosInterceptor';
 import useCart from 'hooks/db/useCart';
 import useAuth from 'hooks/db/useAuth';
 import useSnackbar from 'hooks/useSnackbar';
+import useSpinner from 'hooks/useSpinner';
 
 import {
   ProductListPage,
@@ -24,13 +25,15 @@ import { doGetCart } from 'modules/cart';
 import { doLogin, doFinish } from 'modules/auth';
 import { ROUTES, MESSAGE, PATHNAME } from 'utils/constants';
 import RequireAuth from 'components/RequireAuth';
+import Spinner from 'components/Spinner';
 
 function App() {
   const { getAccountAPI, isAuthenticated, isLoading } = useAuth();
   const { getCartAPI } = useCart();
   const [renderSnackbar] = useSnackbar();
+  const { isSpinnerVisible } = useSpinner();
   const dispatch = useDispatch();
-  const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
+  const { isSnackbarVisible, message, status } = useSelector(state => state.snackbarReducer);
   useAxiosInterceptor();
 
   const getAccount = async () => {
@@ -107,7 +110,8 @@ function App() {
         <GlobalStyles />
       </BrowserRouter>
 
-      {isVisible && <Snackbar message={message} status={status} />}
+      {isSnackbarVisible && <Snackbar message={message} status={status} />}
+      {isSpinnerVisible && <Spinner />}
     </ThemeProvider>
   );
 }

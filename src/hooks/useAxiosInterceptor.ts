@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
+import useSpinner from 'hooks/useSpinner';
 import { doLogout } from 'modules/auth';
 import { doInitializeCart } from 'modules/cart';
 import { deleteCookie } from 'utils/cookie';
@@ -10,14 +11,19 @@ import { ERROR, SNACKBAR } from 'utils/constants';
 
 const useAxiosInterceptor = () => {
   const [renderSnackbar] = useSnackbar();
+  const { showSpinner, hideSpinner } = useSpinner();
   const dispatch = useDispatch();
 
   // before request
   const requestSuccessHandler = config => {
+    showSpinner();
+
     return config;
   };
 
   const requestErrorHandler = error => {
+    showSpinner();
+
     return Promise.reject(error);
   };
 
@@ -28,10 +34,14 @@ const useAxiosInterceptor = () => {
 
   // before response
   const responseSuccessHandler = config => {
+    hideSpinner();
+
     return config;
   };
 
   const responseErrorHandler = error => {
+    hideSpinner();
+
     const { code, message } = error.response.data;
 
     if (code) {

@@ -12,7 +12,7 @@ const doHideSnackbar = () => ({ type: SNACKBAR_ACTIONS.HIDE });
 
 // reducer
 const initState = {
-  isVisible: false,
+  isSnackbarVisible: false,
   message: '',
   status: '',
 };
@@ -22,7 +22,7 @@ const snackbarReducer = (state = initState, action) => {
     case SNACKBAR_ACTIONS.SHOW:
       return {
         ...state,
-        isVisible: true,
+        isSnackbarVisible: true,
         message: action.message,
         status: action.status,
       };
@@ -30,7 +30,7 @@ const snackbarReducer = (state = initState, action) => {
     case SNACKBAR_ACTIONS.HIDE:
       return {
         ...state,
-        isVisible: false,
+        isSnackbarVisible: false,
         message: '',
         status: action.status,
       };
