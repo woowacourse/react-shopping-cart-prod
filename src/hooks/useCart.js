@@ -54,6 +54,11 @@ const useCart = () => {
   };
 
   const handleCartItem = (id, isCart) => {
+    if (!accessToken) {
+      alert(MESSAGE.UNABLE_TO_REGISTER);
+      return;
+    }
+
     if (isCart) {
       const isAlert = true;
       deleteItem(id, isAlert);

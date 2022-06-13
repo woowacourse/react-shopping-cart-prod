@@ -57,6 +57,7 @@ const PASSWORD_INFO_KEY = {
 };
 
 const MESSAGE = {
+  UNABLE_TO_REGISTER: '로그인이 필요한 기능입니다.',
   ADD: '🧺 장바구니에 추가 되었습니다. 🧺',
   REMOVE: '장바구니에서 제거 되었습니다.',
   CHECK_DELETE: '🗑 정말로 삭제하시겠습니까? 🗑',
