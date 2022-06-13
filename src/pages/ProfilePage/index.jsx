@@ -27,7 +27,7 @@ export function ProfilePage() {
 
       <S.PageContent>
         {pageStep === 1 && <ConfirmPassword setAuthPassed={setAuthPassed} />}
-        {pageStep === 2 && <ProfileEdit confirmPassword={password} />}
+        {pageStep === 2 && <ProfileEdit setAuthPassed={setAuthPassed} confirmPassword={password} />}
 
         <S.Link>
           <Link to={PAGE_LIST.WITHDRAWAL}>회원 탈퇴 요청</Link>

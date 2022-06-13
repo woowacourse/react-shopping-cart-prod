@@ -14,7 +14,7 @@ import { userValidator } from 'lib/validateUtils';
 
 import * as S from '../../styles';
 
-function ProfileEdit({ confirmPassword }) {
+function ProfileEdit({ setAuthPassed, confirmPassword }) {
   const dispatch = useDispatch();
   const currentNickname = useSelector(({ user }) => user.userInfo.nickname);
 
@@ -81,7 +81,9 @@ function ProfileEdit({ confirmPassword }) {
       success: () => {
         alert('변경이 완료되었습니다.');
 
-        targetName !== 'password' && dispatch(userThunk.getUserProfile());
+        targetName === 'nickname' && dispatch(userThunk.getUserProfile());
+        targetName === 'password' && setAuthPassed(formData.password);
+
         setEditStatus({ ...editStatus, [targetName]: false });
       },
       error: (errorMessage) => alert(errorMessage),

@@ -1,9 +1,10 @@
 import useFetch from 'hooks/useFetch';
-import useFormValidation from 'hooks/useFormValidation';
+import useForm from 'hooks/useForm';
 
 import { Button, FieldSet, InputField } from 'components/@common';
 
 import { requestPasswordConfirm } from 'api/members';
+import { getFormData } from 'lib/formUtils';
 import { userValidator } from 'lib/validateUtils';
 
 import * as S from '../../styles';
@@ -13,28 +14,37 @@ function ConfirmPassword({ setAuthPassed }) {
     password: ({ password }) => userValidator.password(password),
   };
 
-  const { errorList, onBlurTextField, onSubmitForm } = useFormValidation(validationList);
-  const { fetchControl, isLoading } = useFetch(requestPasswordConfirm);
+  const { errorList, onBlurInput, onChangeInput, onSubmitForm } = useForm(validationList);
+  const { fetchControl, isLoading, error: fetchError } = useFetch(requestPasswordConfirm);
 
-  const fetchConfirmPassword = (formData) => {
-    if (errorList.password) {
-      alert('비밀번호가 올바르지 않습니다.');
-      return;
-    }
+  const isError = errorList.password || fetchError;
+
+  const handleConfirmSubmit = (event) => {
+    const formData = getFormData(event.target);
 
     fetchControl.start(formData.password, {
       success: () => setAuthPassed(formData.password),
-      error: (errorMessage) => alert(errorMessage),
     });
   };
 
   return (
-    <S.Container onBlur={onBlurTextField} onSubmit={onSubmitForm(fetchConfirmPassword)}>
+    <S.Container
+      onChange={onChangeInput}
+      onBlur={onBlurInput}
+      onSubmit={onSubmitForm(handleConfirmSubmit)}
+    >
       <FieldSet
         labelText="비밀번호 확인"
         description="로그인 시 사용한 비밀번호를 다시 한번 입력해주세요."
       >
-        <InputField name="password" type="password" placeholder="비밀번호 확인" width="100%" />
+        <InputField
+          name="password"
+          type="password"
+          status={isError && 'danger'}
+          message={isError && '비밀번호가 올바르지 않습니다.'}
+          placeholder="비밀번호 확인"
+          width="100%"
+        />
       </FieldSet>
 
       <Button type="submit" status="primary" width="100%" isDisabled={isLoading}>
