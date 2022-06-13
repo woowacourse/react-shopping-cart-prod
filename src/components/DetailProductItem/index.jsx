@@ -15,7 +15,8 @@ import * as Styled from './styles';
 const DetailProductItem = ({ id, thumbnail, name, price }) => {
   const dispatch = useDispatch();
   const onClickAddCartButton = async () => {
-    if (!checkIsLogin(dispatch)) {
+    if (!checkIsLogin()) {
+      dispatch(snackbar.pushMessageSnackbar('로그인 후에 사용해주세요!'));
       return;
     }
     const requestStatus = await handleRequestAddCartItem(id, dispatch);

@@ -17,7 +17,8 @@ const ProductItem = ({ id, thumbnail, name, price }) => {
   const navigator = useNavigate();
 
   const onClickAddCartButton = async () => {
-    if (!checkIsLogin(dispatch)) {
+    if (!checkIsLogin()) {
+      dispatch(snackbar.pushMessageSnackbar('로그인 후에 사용해주세요!'));
       return;
     }
     const requestStatus = await handleRequestAddCartItem(id, dispatch);

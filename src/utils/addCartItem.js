@@ -2,13 +2,9 @@ import { requestAddCartItem } from 'api';
 import { 비동기_요청 } from 'constants';
 import { snackbar } from 'actions/snackbar';
 
-export const checkIsLogin = (dispatch) => {
+export const checkIsLogin = () => {
   const accessToken = sessionStorage.getItem('accessToken');
-  if (!accessToken) {
-    dispatch(snackbar.pushMessageSnackbar('로그인 후에 사용해주세요!'));
-    return false;
-  }
-  return true;
+  return accessToken;
 };
 
 export const handleRequestAddCartItem = async (id, dispatch) => {
