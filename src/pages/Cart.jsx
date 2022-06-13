@@ -81,12 +81,11 @@ const Cart = () => {
   const onPurchaseButtonClick = async () => {
     const response = await requestPurchaseCartItem({ productIds: checkboxItems });
     if (response.status === 비동기_요청.SUCCESS) {
-      const purchaseResult = cartList.reduce((prev, cur) => {
-        if (checkboxItems.includes(cur.id)) {
-          return prev.concat(`상품: ${cur.name}, 수량: ${cur.quantity}     `);
-        }
-        return prev;
+      const checkItemList = cartList.filter((item) => checkboxItems.includes(item.id));
+      const purchaseResult = checkItemList.reduce((prev, cur) => {
+        return prev.concat(`상품: ${cur.name}, 수량: ${cur.quantity}     `);
       }, '');
+
       alert(purchaseResult);
       dispatch(deleteCartItem(checkboxItems));
     }
