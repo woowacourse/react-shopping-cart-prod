@@ -9,7 +9,7 @@ function RequireAuth({ isAllow, isDeniedPageEnabled = false }) {
   const { pathname, search } = useLocation();
   const { isLoaded, error: errorMessage } = useSelector(({ user }) => user.userInfoAsyncState);
 
-  if (isLoaded === false && !errorMessage) {
+  if (isDeniedPageEnabled && isLoaded === false && !errorMessage) {
     return <StatusMessage status="loading">회원 정보를 불러오고 있습니다.</StatusMessage>;
   }
 
