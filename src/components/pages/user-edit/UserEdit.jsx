@@ -8,8 +8,7 @@ import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import Form from "@/components/common/form/Form";
 import Field from "@/components/common/field/Field";
 
-import { getCookie } from "@/utils/cookie";
-import { deleteCookie } from "@/utils/cookie";
+import useToken from "@/hooks/useToken";
 
 import {
   PATH,
@@ -36,17 +35,15 @@ function UserEdit() {
   });
 
   const dispatch = useDispatch();
-
   const [preventFormSubmit, setPreventFormSubmit] = useState(true);
-
+  const [token, deleteToken] = useToken();
   const navigate = useNavigate();
 
   const getUser = async () => {
     try {
       const { data } = await axios.get(`/users/me`, {
         headers: {
-          Authorization:
-            getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+          Authorization: token && `Bearer ${token}`,
         },
       });
       setEmail((prev) => ({ ...prev, value: data.email }));
@@ -107,8 +104,7 @@ function UserEdit() {
         },
         {
           headers: {
-            Authorization:
-              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+            Authorization: token && `Bearer ${token}`,
           },
         }
       );
@@ -124,12 +120,11 @@ function UserEdit() {
       try {
         await axios.delete(`/users/me`, {
           headers: {
-            Authorization:
-              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+            Authorization: token && `Bearer ${token}`,
           },
         });
 
-        deleteCookie("accessToken");
+        deleteToken();
         navigate(PATH.MAIN);
         location.reload();
       } catch (error) {

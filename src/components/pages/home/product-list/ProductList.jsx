@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useToken from "@/hooks/useToken";
 
 import { getProductList } from "@/redux/modules/productList";
 
@@ -10,7 +11,6 @@ import ProductItem from "@/components/pages/home/product-item/ProductItem";
 
 import StyledProductList from "@/components/pages/home/product-list/ProductList.styled";
 import { getCartList } from "@/redux/modules/cartList";
-import { getCookie } from "@/utils/cookie";
 import { clearCartList } from "@/redux/modules/cartList";
 
 function ProductList() {
@@ -18,10 +18,11 @@ function ProductList() {
     (state) => state.productListState.productList
   );
   const dispatch = useDispatch();
+  const [token] = useToken();
 
   useEffect(() => {
     dispatch(getProductList());
-    if (getCookie("accessToken")) {
+    if (token) {
       dispatch(getCartList());
       return;
     }

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -6,13 +5,12 @@ import StyledMenu from "@/components/common/header/menu/Menu.styled";
 import Badge from "@/components/common/badge/Badge";
 import Dropdown from "@/components/common/dropdown/Dropdown";
 
-import { getCookie } from "@/utils/cookie";
+import useToken from "@/hooks/useToken";
 
 function Menu() {
   const cartList = useSelector((state) => state.cartListState);
   const count = cartList.length;
-
-  const [authorized, setAuthorized] = useState(getCookie("accessToken"));
+  const [token] = useToken();
 
   return (
     <StyledMenu>
@@ -29,7 +27,7 @@ function Menu() {
           </Link>
         </li>
         <li>
-          {authorized ? (
+          {token ? (
             <Dropdown />
           ) : (
             <Link className="menu" to="/login">

@@ -8,7 +8,7 @@ import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 import Form from "@/components/common/form/Form";
 import Input from "@/components/common/input/Input";
 
-import { setCookie, getCookie } from "@/utils/cookie";
+import useToken from "@/hooks/useToken";
 import { PATH, MESSAGE } from "@/constants";
 
 import StyledSigninContainer from "@/components/pages/sign-in/Signin.styled";
@@ -18,9 +18,10 @@ function Signin() {
   const password = useRef(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [token, _, saveToken] = useToken();
 
   useEffect(() => {
-    if (getCookie("accessToken")) {
+    if (token) {
       dispatch(toggleSnackbarOpen(MESSAGE.NOT_AUTHORIZED));
       navigate(PATH.MAIN);
     }
@@ -34,7 +35,7 @@ function Signin() {
         email: email.current.value,
         password: password.current.value,
       });
-      setCookie("accessToken", data.accessToken);
+      saveToken(data.accessToken);
       navigate(PATH.MAIN);
       location.reload();
     } catch (error) {
