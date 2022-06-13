@@ -1,13 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom';
 
 import useFetch from 'hooks/useFetch';
-import useFormValidation from 'hooks/useFormValidation';
+import useForm from 'hooks/useForm';
 
 import { Button, FlexContainer } from 'components/@common';
 import FieldSet from 'components/@common/FieldSet';
 import InputField from 'components/@common/InputField';
 
 import { requestSignUp } from 'api/members';
+import { getFormData } from 'lib/formUtils';
 import { userValidator } from 'lib/validateUtils';
 
 import * as S from './styles';
@@ -24,10 +25,12 @@ function SignUpPage() {
     nickname: ({ nickname }) => userValidator.nickname(nickname),
   };
 
-  const { errorList, isAllPassed, onBlurTextField, onSubmitForm } =
-    useFormValidation(validationList);
+  const { errorList, isAllPassed, onBlurInput, onChangeInput, onSubmitForm } =
+    useForm(validationList);
 
-  const fetchSignUp = (formData) => {
+  const handleSignUpSubmit = (event) => {
+    const formData = getFormData(event.target);
+
     signUpFetchControl.start(formData, {
       success: () => navigate('/login'),
       error: (errorMessage) => alert(errorMessage),
@@ -35,7 +38,11 @@ function SignUpPage() {
   };
 
   return (
-    <S.Container onBlur={onBlurTextField} onSubmit={onSubmitForm(fetchSignUp)}>
+    <S.Container
+      onChange={onChangeInput}
+      onBlur={onBlurInput}
+      onSubmit={onSubmitForm(handleSignUpSubmit)}
+    >
       <FieldSet labelText="이메일">
         <InputField
           name="userId"
