@@ -8,7 +8,7 @@ import { doInitializeCart } from 'modules/cart';
 import { deleteCookie } from 'utils/cookie';
 import { ERROR, SNACKBAR } from 'utils/constants';
 
-const useAxiosInterceptor = isLoading => {
+const useAxiosInterceptor = () => {
   const [renderSnackbar] = useSnackbar();
   const dispatch = useDispatch();
 
@@ -32,18 +32,16 @@ const useAxiosInterceptor = isLoading => {
   };
 
   const responseErrorHandler = error => {
-    if (!isLoading) {
-      const { code, message } = error.response.data;
+    const { code, message } = error.response.data;
 
-      if (code) {
-        renderSnackbar(ERROR[code], SNACKBAR.FAILED);
-      } else {
-        renderSnackbar(message, SNACKBAR.FAILED);
-      }
+    if (code) {
+      renderSnackbar(ERROR[code], SNACKBAR.FAILED);
+    } else {
+      renderSnackbar(message, SNACKBAR.FAILED);
+    }
 
-      if (code === 1003) {
-        initializeAccount();
-      }
+    if (code === 1003) {
+      initializeAccount();
     }
 
     return Promise.reject(error);

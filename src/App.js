@@ -31,7 +31,7 @@ function App() {
   const [renderSnackbar] = useSnackbar();
   const dispatch = useDispatch();
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
-  useAxiosInterceptor(isLoading);
+  useAxiosInterceptor();
 
   const getAccount = async () => {
     try {
