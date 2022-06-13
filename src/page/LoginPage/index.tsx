@@ -23,7 +23,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (isAuthenticated) {

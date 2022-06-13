@@ -19,7 +19,7 @@ import Styled from './index.style';
 const AccountPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
   const { updateNicknameAPI, getAccountAPI } = useAuth();
 
   const [email, setEmail] = useState('');

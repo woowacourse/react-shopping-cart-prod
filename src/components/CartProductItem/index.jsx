@@ -14,7 +14,7 @@ import Styled from './index.style';
 
 const CartProductItem = ({ id, name, price, image, quantity }) => {
   const dispatch = useDispatch();
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
   const { putCartAPI, deleteCartAPI } = useCart();
 
   const [isInOrder, updateOrder] = useOrderStore(id);

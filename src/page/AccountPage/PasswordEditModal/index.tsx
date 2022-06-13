@@ -21,7 +21,7 @@ const PasswordEditModal = ({ handleModal }) => {
   const [newPassword, setNewPassword] = useState('');
 
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
 
   const updatePassword = async () => {
     if (!isCorrectPassword) return;

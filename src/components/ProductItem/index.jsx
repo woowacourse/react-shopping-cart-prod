@@ -20,7 +20,7 @@ const ProductItem = ({ id, name, price, image }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { putCartAPI, deleteCartAPI } = useCart();
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
   const { isAuthenticated } = useAuth();
 
   const [isInCart, product] = useCartStore(id);

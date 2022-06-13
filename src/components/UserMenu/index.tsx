@@ -11,7 +11,7 @@ import Styled from './index.style';
 
 const UserMenu = ({ nickname }) => {
   const dispatch = useDispatch();
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
 
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);

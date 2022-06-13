@@ -23,7 +23,7 @@ const CartPage = () => {
   const navigate = useNavigate();
   const { deleteCartAPI } = useCart();
   const { postOrderAPI } = useOrder();
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
 
   const { shoppingCart, order } = useSelector(state => state.cartReducer);
   const [totalPrice, setTotalPrice] = useState(0);

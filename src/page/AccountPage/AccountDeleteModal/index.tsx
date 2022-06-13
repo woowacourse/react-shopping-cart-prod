@@ -16,7 +16,7 @@ import Styled from './index.style';
 const AccountDeleteModal = ({ handleModal }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
   const { deleteAccountAPI } = useAuth();
 
   const [password, setPassword] = useState('');

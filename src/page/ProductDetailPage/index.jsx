@@ -18,7 +18,7 @@ import Styled from './index.style';
 const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
   const { getProductAPI } = useProduct();
   const { putCartAPI } = useCart();
   const { isAuthenticated } = useAuth();

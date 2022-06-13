@@ -14,7 +14,7 @@ import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const SignupPage = () => {
-  const [renderSnackbar] = useSnackbar();
+  const { renderSnackbar } = useSnackbar();
   const navigate = useNavigate();
   const { signupAPI, isAuthenticated } = useAuth();
 

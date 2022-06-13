@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import useCart from 'hooks/db/useCart';
 import useAuth from 'hooks/db/useAuth';
 import useSnackbar from 'hooks/useSnackbar';
@@ -30,12 +30,11 @@ import axiosInterceptors from 'utils/axiosInterceptors';
 axiosInterceptors();
 
 function App() {
-  const { getAccountAPI, isAuthenticated, isLoading } = useAuth();
-  const { getCartAPI } = useCart();
-  const [renderSnackbar] = useSnackbar();
-  const { isSpinnerVisible } = useSpinner();
   const dispatch = useDispatch();
-  const { isSnackbarVisible, message, status } = useSelector(state => state.snackbarReducer);
+  const { getCartAPI } = useCart();
+  const { isSpinnerVisible } = useSpinner();
+  const { getAccountAPI, isAuthenticated, isLoading } = useAuth();
+  const { renderSnackbar, isSnackbarVisible, message, status } = useSnackbar();
 
   const getAccount = async () => {
     try {
