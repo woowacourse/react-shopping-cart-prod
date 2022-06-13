@@ -139,6 +139,7 @@ const SignUp = () => {
                 margin="0.5rem 0 0 0"
                 border={`1px solid ${COLORS.MINT_200}`}
                 hoverColor={COLORS.MINT_100}
+                disabled={!checkUserId}
                 onClick={() => handleRequestDuplicatedId()()}
               >
                 중복확인
@@ -214,7 +215,7 @@ const SignUp = () => {
               />
             </label>
 
-            {checkUserAge || <ErrorMessage>0살 이상의 숫자를 입력해주세요</ErrorMessage>}
+            {checkUserAge || <ErrorMessage>0이상 200 이하의 숫자를 입력해주세요</ErrorMessage>}
             <Button
               margin="0.5rem 0"
               backgroundColor={COLORS.MINT_200}
