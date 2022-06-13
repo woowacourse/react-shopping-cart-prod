@@ -10,15 +10,13 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
-import { getCookie } from 'utils/cookie';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const SignupPage = () => {
   const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { signupAPI } = useAuth();
-  const isAuthenticated = getCookie('accessToken');
+  const { signupAPI, isAuthenticated } = useAuth();
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');

@@ -1,8 +1,11 @@
 // @ts-nocheck
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 import { getCookie } from 'utils/cookie';
 
 const useAuth = () => {
+  const { nickname, isAuthenticated, isLoading } = useSelector(state => state.authReducer);
+
   const signupAPI = async (email, nickname, password) => {
     const response = await axios.post('/customers', {
       email,
@@ -87,6 +90,9 @@ const useAuth = () => {
   };
 
   return {
+    nickname,
+    isAuthenticated,
+    isLoading,
     signupAPI,
     loginAPI,
     getAccountAPI,

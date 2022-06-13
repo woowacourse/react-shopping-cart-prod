@@ -10,15 +10,14 @@ import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
 import { doLogin } from 'modules/auth';
-import { setCookie, getCookie } from 'utils/cookie';
+import { setCookie } from 'utils/cookie';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loginAPI } = useAuth();
-  const isAuthenticated = !!getCookie('accessToken');
+  const { loginAPI, isAuthenticated } = useAuth();
 
   const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');

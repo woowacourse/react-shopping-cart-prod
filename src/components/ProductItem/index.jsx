@@ -7,13 +7,13 @@ import useClose from 'hooks/useClose';
 import useCartStore from 'hooks/useCartStore';
 import useSnackbar from 'hooks/useSnackbar';
 import useCart from 'hooks/db/useCart';
+import useAuth from 'hooks/db/useAuth';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
 import { doDeleteProductFromCart, doPutProductToCart } from 'modules/cart';
 import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
 const ProductItem = ({ id, name, price, image }) => {
@@ -21,7 +21,7 @@ const ProductItem = ({ id, name, price, image }) => {
   const navigate = useNavigate();
   const { putCartAPI, deleteCartAPI } = useCart();
   const [renderSnackbar] = useSnackbar();
-  const isAuthenticated = getCookie('accessToken');
+  const { isAuthenticated } = useAuth();
 
   const [isInCart, product] = useCartStore(id);
 

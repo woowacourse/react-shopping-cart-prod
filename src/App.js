@@ -26,11 +26,10 @@ import { ROUTES, MESSAGE, PATHNAME } from 'utils/constants';
 import RequireAuth from 'components/RequireAuth';
 
 function App() {
-  const { getAccountAPI } = useAuth();
+  const { getAccountAPI, isAuthenticated, isLoading } = useAuth();
   const { getCartAPI } = useCart();
   const [renderSnackbar] = useSnackbar();
   const dispatch = useDispatch();
-  const { isAuthenticated, isLoading } = useSelector(state => state.authReducer);
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
   useAxiosInterceptor(isLoading);
 

@@ -1,10 +1,10 @@
 // @ts-nocheck
-import { useSelector } from 'react-redux';
+import useAuth from 'hooks/db/useAuth';
 import { Navigate, useLocation } from 'react-router-dom';
 import { PATHNAME } from 'utils/constants';
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const { isAuthenticated } = useAuth();
   const location = useLocation();
 
   if (!isAuthenticated) {

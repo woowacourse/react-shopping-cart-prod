@@ -1,19 +1,17 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Outlet, useLocation } from 'react-router-dom';
+import useAuth from 'hooks/db/useAuth';
 
 import { Header, CartIcon, UserMenu } from 'components';
 
 import { ROUTES, PATHNAME } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
 const Layout = () => {
   const location = useLocation();
-  const { nickname } = useSelector(state => state.authReducer);
+  const { nickname, isAuthenticated } = useAuth();
   const [isHeaderShow, setIsHeaderShow] = useState(true);
-  const isAuthenticated = getCookie('accessToken');
 
   useEffect(() => {
     setIsHeaderShow(

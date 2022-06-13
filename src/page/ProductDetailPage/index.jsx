@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useCartStore from 'hooks/useCartStore';
 import useCart from 'hooks/db/useCart';
-
+import useAuth from 'hooks/db/useAuth';
 import useSnackbar from 'hooks/useSnackbar';
 import useProduct from 'hooks/db/useProduct';
 
@@ -13,7 +13,6 @@ import { Image } from 'components';
 import { doPutProductToCart } from 'modules/cart';
 import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
 import Styled from './index.style';
 
 const ProductDetailPage = () => {
@@ -22,7 +21,7 @@ const ProductDetailPage = () => {
   const [renderSnackbar] = useSnackbar();
   const { getProductAPI } = useProduct();
   const { putCartAPI } = useCart();
-  const isAuthenticated = getCookie('accessToken');
+  const { isAuthenticated } = useAuth();
 
   const params = useParams();
   const id = Number(params.id);
