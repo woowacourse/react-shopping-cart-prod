@@ -140,12 +140,10 @@ export const decrementCartItemQuantity =
   };
 export const removeCheckedCartItem = (cartList) => async (dispatch) => {
   try {
-    const filterCheckedCartItem = cartList.filter(
-      (cartItem) => cartItem.checked === true
-    );
-    const checkedCartItemIds = filterCheckedCartItem.map(
-      (cartItem) => cartItem.id
-    );
+    const checkedCartItemIds = cartList
+      .filter((cartItem) => cartItem.checked)
+      .map((cartItem) => cartItem.id);
+
     checkedCartItemIds.forEach(async (id) => {
       return await axios.delete(`/users/me/carts/${id}`, {
         headers: {
