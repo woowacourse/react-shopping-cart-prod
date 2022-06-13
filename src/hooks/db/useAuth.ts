@@ -28,6 +28,8 @@ const useAuth = () => {
   const getAccountAPI = async () => {
     const accessToken = getCookie('accessToken');
 
+    if (!accessToken) return;
+
     const response = await axios.get('/customers', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
