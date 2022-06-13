@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import useSnackbar from 'hooks/useSnackbar';
 import { ERROR, SNACKBAR } from 'utils/constants';
 
-const useAxiosInterceptor = () => {
+const useAxiosInterceptor = isLoading => {
   const [renderSnackbar] = useSnackbar();
 
   // before request
@@ -27,12 +27,14 @@ const useAxiosInterceptor = () => {
   };
 
   const responseErrorHandler = error => {
-    const { code, message } = error.response.data;
+    if (!isLoading) {
+      const { code, message } = error.response.data;
 
-    if (code) {
-      renderSnackbar(ERROR[code], SNACKBAR.FAILED);
-    } else {
-      renderSnackbar(message, SNACKBAR.FAILED);
+      if (code) {
+        renderSnackbar(ERROR[code], SNACKBAR.FAILED);
+      } else {
+        renderSnackbar(message, SNACKBAR.FAILED);
+      }
     }
 
     return Promise.reject(error);
