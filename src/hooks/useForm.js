@@ -32,13 +32,6 @@ function useForm(validationList = {}) {
     }
   };
 
-  const setInputValue = ({ name, value, isState = VALIDATION.INITIAL }) => {
-    formValuesRef.current = { ...formValuesRef.current, [name]: value };
-    validationTriggerRef.current = { ...validationTriggerRef.current, [name]: isState };
-
-    isState === VALIDATION.TRIED && inputValidation(name);
-  };
-
   const onSubmitForm = (submitHandler) => (event) => {
     event.preventDefault();
 
@@ -60,6 +53,13 @@ function useForm(validationList = {}) {
     });
   };
 
+  const setInputValue = ({ name, value, isState = VALIDATION.INITIAL }) => {
+    formValuesRef.current = { ...formValuesRef.current, [name]: value };
+    validationTriggerRef.current = { ...validationTriggerRef.current, [name]: isState };
+
+    isState === VALIDATION.TRIED && inputValidation(name);
+  };
+
   const onChangeInput = ({ target }) => {
     setInputValue(target);
   };
@@ -68,7 +68,8 @@ function useForm(validationList = {}) {
     if (!target.name) return;
 
     const { name, value } = target;
-    setInputValue({ name, value, isValidationEnable: VALIDATION.TRIED });
+
+    setInputValue({ name, value, isState: VALIDATION.TRIED });
   };
 
   const isAllPassed = validationTargets.every((name) => errorList[name] === null);
