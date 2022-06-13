@@ -6,8 +6,6 @@ const useOrder = () => {
   const postOrderAPI = async productIds => {
     const accessToken = getCookie('accessToken');
 
-    if (!accessToken) return;
-
     const response = await axios.post(
       `/orders`,
       {
@@ -25,8 +23,6 @@ const useOrder = () => {
 
   const getOrderAPI = async id => {
     const accessToken = getCookie('accessToken');
-
-    if (!accessToken) return;
 
     const response = await axios.get(`/orders/${id}`, {
       headers: {

@@ -6,8 +6,6 @@ const useCart = () => {
   const getCartAPI = async () => {
     const accessToken = getCookie('accessToken');
 
-    if (!accessToken) return;
-
     const response = await axios.get('/cart', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -19,8 +17,6 @@ const useCart = () => {
 
   const putCartAPI = async (id, quantity) => {
     const accessToken = getCookie('accessToken');
-
-    if (!accessToken) return;
 
     const response = await axios.put(
       `/cart/products/${id}`,
@@ -39,8 +35,6 @@ const useCart = () => {
 
   const deleteCartAPI = async productIds => {
     const accessToken = getCookie('accessToken');
-
-    if (!accessToken) return;
 
     const response = await axios.delete('/cart', {
       data: {
