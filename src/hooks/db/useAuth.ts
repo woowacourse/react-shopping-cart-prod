@@ -25,8 +25,6 @@ const useAuth = () => {
   const getAccountAPI = async () => {
     const accessToken = getCookie('accessToken');
 
-    if (!accessToken) return;
-
     const response = await axios.get('/customers', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -38,8 +36,6 @@ const useAuth = () => {
 
   const deleteAccountAPI = async password => {
     const accessToken = getCookie('accessToken');
-
-    if (!accessToken) return;
 
     const response = await axios.delete('/customers', {
       data: {
@@ -55,8 +51,6 @@ const useAuth = () => {
 
   const updateNicknameAPI = async nickname => {
     const accessToken = getCookie('accessToken');
-
-    if (!accessToken) return;
 
     const response = await axios.patch(
       '/customers/profile',
@@ -75,8 +69,6 @@ const useAuth = () => {
 
   const updatePasswordAPI = async (password, newPassword) => {
     const accessToken = getCookie('accessToken');
-
-    if (!accessToken) return;
 
     const response = await axios.patch(
       '/customers/password',
