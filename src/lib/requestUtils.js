@@ -1,5 +1,5 @@
 import { ACCESS_TOKEN_COOKIE_NAME, REQUEST_STATUS, REQUEST_TIMEOUT } from 'constants/';
-import ApiServer from 'lib/backendSelectUtils';
+import ApiServer from 'lib/backendUrlInstance';
 
 import { getCookie } from './cookieUtils';
 

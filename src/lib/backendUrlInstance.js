@@ -1,5 +1,5 @@
 class ApiServer {
-  #connectApi = '.';
+  #connectApi = process.env.REACT_APP_API_URL;
 
   setApiServer(hostName) {
     this.#connectApi = `https://${hostName}`;

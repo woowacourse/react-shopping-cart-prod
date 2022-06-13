@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import userThunk from 'store/user/thunk';
 
 import { PAGE_LIST } from 'constants/';
-import ApiServer from 'lib/backendSelectUtils';
+import ApiServer from 'lib/backendUrlInstance';
 
 import * as S from './styles';
 
