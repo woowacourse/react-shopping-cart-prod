@@ -11,7 +11,7 @@ import { Container, Input, Title, AuthButton } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
-import { doLogin } from 'modules/auth';
+import { doChangeNickname } from 'modules/auth';
 import { validateNickname } from 'utils/validator';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
@@ -50,7 +50,7 @@ const AccountPage = () => {
     try {
       const response = await updateNicknameAPI(nickname);
 
-      dispatch(doLogin({ nickname: response.nickname }));
+      dispatch(doChangeNickname({ nickname: response.nickname }));
       renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, SNACKBAR.SUCCESS);
       navigate(PATHNAME.TO_HOME);
     } catch (error) {
