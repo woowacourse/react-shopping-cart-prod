@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import userThunk from 'store/user/thunk';
 
 import useFetch from 'hooks/useFetch';
-import useFormValidation from 'hooks/useFormValidation';
+import useForm from 'hooks/useForm';
 
 import { Button, FieldSet, InputField } from 'components/@common';
 
@@ -19,10 +19,10 @@ function ProfileEdit({ confirmPassword }) {
   const currentNickname = useSelector(({ user }) => user.userInfo.nickname);
 
   const validationList = {
-    password: ({ password }) => userValidator.password(password),
     nickname: ({ nickname }) => userValidator.nickname(nickname, currentNickname),
+    password: ({ password }) => userValidator.password(password),
   };
-  const { errorList, onBlurTextField } = useFormValidation(validationList);
+  const { errorList, onBlurInput, onChangeInput } = useForm(validationList);
 
   const { fetchControl: fetchNicknameControl, isLoading: isNicknameCheckLoading } =
     useFetch(requestProfileUpdate);
@@ -89,7 +89,7 @@ function ProfileEdit({ confirmPassword }) {
   };
 
   return (
-    <S.Container onBlur={onBlurTextField}>
+    <S.Container onChange={onChangeInput} onBlur={onBlurInput}>
       <FieldSet
         labelText="닉네임 변경"
         description="닉네임은 한글, 영문, 숫자를 사용하여 최소 2자부터 최대 10자까지 입력할 수 있습니다."
