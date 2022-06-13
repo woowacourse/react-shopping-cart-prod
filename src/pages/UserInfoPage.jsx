@@ -9,6 +9,12 @@ import { MESSAGE, ROUTES_PATH } from '../constants';
 function UserInfoPage() {
   const { withdrawMembership, removeToken } = useUser();
 
+  const onClickWithdrawButton = () => {
+    if (window.confirm(MESSAGE.CHECK_WITHDRAW)) {
+      withdrawMembership();
+    }
+  };
+
   return (
     <StyledUserContainer>
       <h1>회원 정보 수정</h1>
@@ -19,7 +25,7 @@ function UserInfoPage() {
         <Button>회원 정보 수정</Button>
       </Link>
       <Button onClick={() => removeToken(MESSAGE.LOGOUT_SUCCESS)}>로그아웃</Button>
-      <Button onClick={() => withdrawMembership()}>회원 탈퇴</Button>
+      <Button onClick={onClickWithdrawButton}>회원 탈퇴</Button>
     </StyledUserContainer>
   );
 }

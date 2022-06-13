@@ -67,6 +67,8 @@ const MESSAGE = {
   MODIFY_NICKNAME_SUCCESS: '닉네임이 변경 되었습니다.',
   LOGOUT_SUCCESS: '로그아웃 되었습니다.',
   WITHDRAW_SUCCESS: '회원탈퇴 되었습니다.',
+  CHECK_WITHDRAW: '정말로 회원탈퇴 하시겠습니까?',
+
   NOT_AN_EMAIL_FORMAT: '올바른 이메일을 입력해 주세요.',
   INCORRECT_NICKNAME: '올바른 닉네임을 입력해 주세요.',
   NOT_A_PASSWORD_FORMAT:
