@@ -41,9 +41,6 @@ const AccountDeleteModal = ({ handleModal }) => {
       const { code } = error.response.data;
 
       if (code === 1003) {
-        deleteCookie('accessToken');
-        dispatch(doInitializeCart());
-        dispatch(doLogout());
         handleModal();
         navigate(PATHNAME.TO_HOME);
       }
