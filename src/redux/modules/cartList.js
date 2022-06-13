@@ -144,14 +144,16 @@ export const removeCheckedCartItem = (cartList) => async (dispatch) => {
       .filter((cartItem) => cartItem.checked)
       .map((cartItem) => cartItem.id);
 
-    checkedCartItemIds.forEach(async (id) => {
-      return await axios.delete(`/users/me/carts/${id}`, {
-        headers: {
-          Authorization:
-            getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
-        },
-      });
-    });
+    await Promise.all(
+      checkedCartItemIds.map((id) => {
+        return axios.delete(`/users/me/carts/${id}`, {
+          headers: {
+            Authorization:
+              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+          },
+        });
+      })
+    );
     dispatch(createAction(ACTION_TYPES.REMOVE_CHECKED_CART_ITEM));
   } catch (error) {
     if (error.response?.status === 401) {
