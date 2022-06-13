@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import useAxiosInterceptor from 'hooks/useAxiosInterceptor';
 import useCart from 'hooks/db/useCart';
 import useAuth from 'hooks/db/useAuth';
+import useSnackbar from 'hooks/useSnackbar';
 
 import {
   ProductListPage,
@@ -20,23 +21,35 @@ import ServerSelectPage from 'page/ServerSelectPage';
 import { Layout, Snackbar, GlobalStyles, theme } from 'components';
 
 import { doGetCart } from 'modules/cart';
-import { doLogin } from 'modules/auth';
-import { ROUTES } from 'utils/constants';
+import { doLogin, doFinish } from 'modules/auth';
+import { ROUTES, MESSAGE, PATHNAME } from 'utils/constants';
+import RequireAuth from 'components/RequireAuth';
 
 function App() {
   const { getAccountAPI } = useAuth();
   const { getCartAPI } = useCart();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
+  const [renderSnackbar] = useSnackbar();
   const dispatch = useDispatch();
+  const { isAuthenticated, isLoading } = useSelector(state => state.authReducer);
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
-  useAxiosInterceptor();
+  useAxiosInterceptor(isLoading);
 
   const getAccount = async () => {
     try {
       const { nickname } = await getAccountAPI();
 
       dispatch(doLogin({ nickname }));
-    } catch (error) {}
+      getCart();
+    } catch (error) {
+      if (
+        window.location.pathname === PATHNAME.TO_CART ||
+        window.location.pathname === PATHNAME.TO_ACCOUNT
+      ) {
+        renderSnackbar(MESSAGE.NO_AUTHORIZATION);
+      }
+    } finally {
+      dispatch(doFinish());
+    }
   };
 
   const getCart = async () => {
@@ -49,33 +62,49 @@ function App() {
 
   useEffect(() => {
     getAccount();
-    getCart();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    getAccount();
-    getCart();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path={ROUTES.SERVER} element={<ServerSelectPage />} />
-            <Route path={ROUTES.HOME} element={<ProductListPage />} />
-            <Route path={ROUTES.DETAILS} element={<ProductDetailPage />} />
-            <Route path={ROUTES.CART} element={<CartPage />} />
-            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-            <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
-            <Route path={ROUTES.ACCOUNT} element={<AccountPage />} />
-            <Route path={ROUTES.PAY} element={<PaymentPage />} />
-          </Route>
-        </Routes>
+        {!isLoading && (
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path={ROUTES.SERVER} element={<ServerSelectPage />} />
+              <Route path={ROUTES.HOME} element={<ProductListPage />} />
+              <Route path={ROUTES.DETAILS} element={<ProductDetailPage />} />
+              <Route
+                path={ROUTES.CART}
+                element={
+                  <RequireAuth>
+                    <CartPage />
+                  </RequireAuth>
+                }
+              />
+              <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+              <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
+              <Route
+                path={ROUTES.ACCOUNT}
+                element={
+                  <RequireAuth>
+                    <AccountPage />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path={ROUTES.PAY}
+                element={
+                  <RequireAuth>
+                    <PaymentPage />
+                  </RequireAuth>
+                }
+              />
+            </Route>
+          </Routes>
+        )}
+
         <GlobalStyles />
       </BrowserRouter>
 
