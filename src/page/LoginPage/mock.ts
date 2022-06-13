@@ -1,6 +1,7 @@
 // @ts-nocheck
 import { rest } from 'msw';
 import { users } from 'mocks';
+import { ERROR_MESSAGE_FROM_SERVER } from 'utils/constants';
 
 const loginHandler = rest.post('/auth/login', (req, res, ctx) => {
   const { email, password } = req.body;
