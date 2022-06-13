@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useCheckBox, useCartItem } from 'hooks';
 
 import { 비동기_요청, 알림_메시지 } from 'constants/';
@@ -11,6 +12,7 @@ import CartList from 'components/CartList';
 import CartReceipt from 'components/CartReceipt';
 
 import { handleRequestDeleteCartItem } from 'utils/deleteCartItem';
+import { checkIsLogin } from 'utils/addCartItem';
 import { snackbar } from 'actions/snackbar';
 import { deleteCartItem, setCartList, modifyCartItemQuantity } from 'actions/cart';
 
@@ -20,6 +22,8 @@ import * as Styled from './styles';
 const Cart = () => {
   const cartList = useCartItem();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { checkboxItems, setCheckboxItems, handleChecked, isChecked, clearCheckBoxItems } =
     useCheckBox();
   const [totalPrice, setTotalPrice] = useState(0);
@@ -38,6 +42,10 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(setCartList());
+    if (!checkIsLogin()) {
+      navigate('/login');
+      dispatch(snackbar.pushMessageSnackbar('로그인 후에 사용해주세요!'));
+    }
   }, [dispatch]);
 
   useEffect(() => {
