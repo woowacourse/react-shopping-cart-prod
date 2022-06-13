@@ -57,7 +57,7 @@ function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedIt
             <button onClick={decrementQuantity}>▼</button>
           </div>
         </StyledAmountContainer>
-        <StyledPrice>{Number(price).toLocaleString()} 원</StyledPrice>
+        <StyledPrice>{Number(price * quantity).toLocaleString()} 원</StyledPrice>
       </StyledProductRight>
     </StyledContainer>
   );
