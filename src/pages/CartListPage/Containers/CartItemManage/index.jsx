@@ -27,8 +27,7 @@ function CartItemManage({ isAllChecked }) {
     dispatchEvent({
       action: cartThunk.removeItems(checkedIdList),
       onStateUpdated: ({ cart }) => {
-        !cart.curdAsyncState &&
-          alert('서버와의 통신 오류로 인해 선택한 상품 제거에 실패하였습니다.');
+        cart.curdAsyncState.error && alert(cart.curdAsyncState.error);
       },
     });
   };

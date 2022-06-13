@@ -7,9 +7,9 @@ import { PAGE_LIST } from 'constants/';
 
 function RequireAuth({ isAllow, isDeniedPageEnabled = false }) {
   const { pathname, search } = useLocation();
-  const { isLoaded } = useSelector(({ user }) => user.userInfoAsyncState);
+  const { isLoaded, error: errorMessage } = useSelector(({ user }) => user.userInfoAsyncState);
 
-  if (!isLoaded) {
+  if (isLoaded === false && !errorMessage) {
     return <StatusMessage status="loading">회원 정보를 불러오고 있습니다.</StatusMessage>;
   }
 

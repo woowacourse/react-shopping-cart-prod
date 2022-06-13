@@ -17,7 +17,7 @@ const createAsyncState = {
   }),
   pending: () => ({ isLoading: true, isLoaded: false, error: null }),
   success: () => ({ isLoading: false, isLoaded: true, error: null }),
-  error: (error) => ({ isLoading: false, isLoaded: true, error }),
+  error: (error) => ({ isLoading: false, isLoaded: false, error }),
 };
 
 export { createReducer, createAction, createAsyncState };

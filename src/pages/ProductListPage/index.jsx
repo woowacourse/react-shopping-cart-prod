@@ -32,8 +32,7 @@ export function ProductListPage() {
       action: cartThunk.addItems([{ id, image, name, price }]),
       onStateUpdated: ({ cart }) => {
         const { curdAsyncState } = cart;
-        !curdAsyncState.isLoaded &&
-          alert(`장바구니 상품 추가에 실패하였습니다.\n오류 내용 : ${curdAsyncState.error}`);
+        curdAsyncState.error && alert(curdAsyncState.error);
       },
     });
   };
@@ -43,8 +42,7 @@ export function ProductListPage() {
       action: cartThunk.removeItem(id),
       onStateUpdated: ({ cart }) => {
         const { curdAsyncState } = cart;
-        !curdAsyncState.isLoaded &&
-          alert(`장바구니 상품 제거에 실패하였습니다.\n오류 내용 : ${curdAsyncState.error}`);
+        curdAsyncState.error && alert(curdAsyncState.error);
       },
     });
   };

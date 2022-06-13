@@ -20,7 +20,7 @@ function CartItemList() {
     dispatchEvent({
       action: cartThunk.updateItem(id, { quantity }),
       onStateUpdated: ({ cart }) => {
-        !cart.curdAsyncState.isLoaded && alert('서버 오류로 인해 상품 정보 갱신에 실패하였습니다.');
+        cart.curdAsyncState.error && alert(cart.curdAsyncState.error);
       },
     });
   };
@@ -33,7 +33,7 @@ function CartItemList() {
     dispatchEvent({
       action: cartThunk.removeItem(id),
       onStateUpdated: ({ cart }) => {
-        !cart.curdAsyncState.isLoaded && alert('서버 오류로 인해 상품 제거에 실패하였습니다.');
+        cart.curdAsyncState.error && alert(cart.curdAsyncState.error);
       },
     });
   };
