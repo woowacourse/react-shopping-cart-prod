@@ -1,11 +1,16 @@
 // @ts-nocheck
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
+import { doLogout } from 'modules/auth';
+import { doInitializeCart } from 'modules/cart';
+import { deleteCookie } from 'utils/cookie';
 import { ERROR, SNACKBAR } from 'utils/constants';
 
 const useAxiosInterceptor = isLoading => {
   const [renderSnackbar] = useSnackbar();
+  const dispatch = useDispatch();
 
   // before request
   const requestSuccessHandler = config => {
@@ -35,6 +40,10 @@ const useAxiosInterceptor = isLoading => {
       } else {
         renderSnackbar(message, SNACKBAR.FAILED);
       }
+
+      if (code === 1003) {
+        initializeAccount();
+      }
     }
 
     return Promise.reject(error);
@@ -44,6 +53,12 @@ const useAxiosInterceptor = isLoading => {
     config => responseSuccessHandler(config),
     error => responseErrorHandler(error),
   );
+
+  const initializeAccount = () => {
+    dispatch(doLogout());
+    deleteCookie('accessToken');
+    dispatch(doInitializeCart());
+  };
 
   useEffect(() => {
     return () => {
