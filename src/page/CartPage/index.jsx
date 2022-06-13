@@ -15,7 +15,6 @@ import {
   doSelectiveDeleteFromCart,
 } from 'modules/cart';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
 import empty from 'assets/empty.jpeg';
 import Styled from './index.style';
 
@@ -25,19 +24,9 @@ const CartPage = () => {
   const { deleteCartAPI } = useCart();
   const { postOrderAPI } = useOrder();
   const [renderSnackbar] = useSnackbar();
-  const isAuthenticated = getCookie('accessToken');
 
   const { shoppingCart, order } = useSelector(state => state.cartReducer);
   const [totalPrice, setTotalPrice] = useState(0);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, SNACKBAR.FAILED);
-      navigate(PATHNAME.TO_LOGIN);
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     setTotalPrice(

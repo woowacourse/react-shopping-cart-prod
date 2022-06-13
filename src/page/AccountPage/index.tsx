@@ -13,7 +13,6 @@ import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
 import { doLogin } from 'modules/auth';
 import { validateNickname } from 'utils/validator';
-import { getCookie } from 'utils/cookie';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
@@ -22,7 +21,6 @@ const AccountPage = () => {
   const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
   const { updateNicknameAPI, getAccountAPI } = useAuth();
-  const isAuthenticated = getCookie('accessToken');
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
@@ -35,14 +33,6 @@ const AccountPage = () => {
   useEffect(() => {
     getEmail();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, SNACKBAR.FAILED);
-      navigate(PATHNAME.TO_LOGIN);
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
