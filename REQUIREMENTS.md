@@ -39,8 +39,8 @@
 - [x] Cart.jsx에서의 filter, reduce 분기처리 하기
 - [x] checkIsLogin에서 snackBar을 띄워주는게 맞을지
 - [x] 비로그인한 유저가 장바구니에 접근했을 때에 로그인화면 등으로 리다이렉트 시켜주기
-- [ ] check 관련 함수들 custom hook으로 뺄 것인지
-- [ ] Cart 내의 checkboxItemCount 부분 수정하기
+- [x] check 관련 함수들 custom hook으로 뺄 것인지
+- [x] Cart 내의 checkboxItemCount 부분 수정하기
 - [ ] 서버 관련처리하는 class과 매번 동일하게 에러 핸들링을 하는게 맞는 것인지
 
 # 🚩 step1 기능 요구사항

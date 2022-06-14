@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useCheckBox, useCartItem } from 'hooks';
+import { useTotalPrice } from 'hooks/useTotalPrice';
 
 import { 비동기_요청, 알림_메시지 } from 'constants/';
 
@@ -24,21 +25,15 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { checkboxItems, setCheckboxItems, handleChecked, isChecked, clearCheckBoxItems } =
-    useCheckBox();
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [isAllChecked, setIsAllChecked] = useState(false);
-
-  const checkAllSelectButton = () => {
-    if (cartList.length < 0) {
-      return;
-    }
-    if (checkboxItems.length >= cartList.length) {
-      setCheckboxItems([]);
-      return;
-    }
-    setCheckboxItems(cartList.map((item) => Number(item.id)));
-  };
+  const {
+    checkboxItems,
+    handleChecked,
+    isChecked,
+    isAllChecked,
+    clearCheckBoxItems,
+    checkAllSelectButton,
+  } = useCheckBox(cartList);
+  const { totalPrice } = useTotalPrice(cartList, checkboxItems);
 
   useEffect(() => {
     dispatch(setCartList());
@@ -47,24 +42,6 @@ const Cart = () => {
       dispatch(snackbar.pushMessageSnackbar('로그인 후에 사용해주세요!'));
     }
   }, [dispatch]);
-
-  useEffect(() => {
-    setCheckboxItems(cartList.map((item) => Number(item.id)));
-  }, [cartList]);
-
-  useEffect(() => {
-    setTotalPrice(
-      cartList && cartList.length > 0
-        ? cartList.reduce((prev, cur) => {
-            if (checkboxItems.includes(Number(cur.id))) {
-              return prev + cur.price * cur.quantity;
-            }
-            return prev;
-          }, 0)
-        : 0,
-    );
-    setIsAllChecked(cartList && cartList.length === checkboxItems.length);
-  }, [cartList, checkboxItems]);
 
   const deleteSelectedItem = async () => {
     if (checkboxItems.length <= 0) {
@@ -109,7 +86,7 @@ const Cart = () => {
               <CartList
                 cartList={cartList}
                 isAllChecked={isAllChecked}
-                checkboxItemCount={checkboxItems !== [] ? checkboxItems.length : 0}
+                checkboxItemCount={checkboxItems.length}
                 checkAllSelectButton={() => checkAllSelectButton}
                 deleteSelectedItem={() => deleteSelectedItem}
                 isChecked={isChecked}
