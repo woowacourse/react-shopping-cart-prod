@@ -7,7 +7,7 @@ import { productList } from '../data/product';
 export const cartHanlders = [
   rest.post(`${API_URL}/cartItems`, (req, res, ctx) => {
     const {
-      body: { productId, quantity: quantity },
+      body: { productId, quantity },
     } = req;
 
     const product = productList.find(product => product.id === productId);
