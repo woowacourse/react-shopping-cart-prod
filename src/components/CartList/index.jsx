@@ -57,7 +57,7 @@ const CartList = ({
       cartList.map(({ id, name, thumbnail, price, quantity }) => (
         <>
           <CartProductItem
-            key={`${id}-product-key`}
+            key={id}
             id={id}
             name={name}
             thumbnail={thumbnail}
