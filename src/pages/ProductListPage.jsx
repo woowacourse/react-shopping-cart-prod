@@ -13,9 +13,7 @@ import { MESSAGE, SERVER_PATH } from '../constants';
 
 function ProductListPage() {
   const { data: productList, isLoading, isError } = useFetch(SERVER_PATH.PRODUCTS);
-  const { getItemList, addItem, deleteItem } = useCart();
-  const cartList = useSelector(({ cart }) => cart.data);
-
+  const { cartList, addItem, deleteItem } = useCart();
   const idSetInCart = useMemo(() => new Set(cartList.map((cart) => cart.name)), [cartList]);
 
   const handleCartItem = (id, isCart) => {
@@ -27,10 +25,6 @@ function ProductListPage() {
     addItem(id);
     alert(MESSAGE.ADD);
   };
-
-  useEffect(() => {
-    getItemList();
-  }, []);
 
   if (isError) return <h1>error</h1>;
   if (isLoading) return <Loading />;

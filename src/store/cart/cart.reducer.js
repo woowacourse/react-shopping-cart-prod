@@ -7,7 +7,9 @@ const initialState = {
 };
 
 const cartReducer = (state = initialState, action) => {
+  console.log(action.type, action.payload);
   switch (action.type) {
+    case actionTypes.GET_CART:
     case actionTypes.ADD_CART:
     case actionTypes.DELETE_CART:
     case actionTypes.UPDATE_ITEM_QUANTITY:
@@ -16,6 +18,7 @@ const cartReducer = (state = initialState, action) => {
         isLoading: true,
         isError: false,
       };
+    case actionTypes.GET_CART_SUCCESS:
     case actionTypes.ADD_CART_SUCCESS:
     case actionTypes.DELETE_CART_SUCCESS:
     case actionTypes.UPDATE_ITEM_QUANTITY_SUCCESS:
@@ -24,6 +27,7 @@ const cartReducer = (state = initialState, action) => {
         data: action.payload,
         isLoading: false,
       };
+    case actionTypes.GET_CART_ERROR:
     case actionTypes.ADD_CART_ERROR:
     case actionTypes.DELETE_CART_ERROR:
     case actionTypes.UPDATE_ITEM_QUANTITY_ERROR:

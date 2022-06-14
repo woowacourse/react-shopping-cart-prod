@@ -1,20 +1,30 @@
 import { useDispatch, useSelector } from 'react-redux';
 
+import useUser from './useUser';
+
 import {
+  actionTypes,
   addCartItemAsync,
   deleteCartItemAsync,
   getCartItemListAsync,
   updateItemQuantityAsync,
 } from '../store/cart/cart.actions';
+import { useEffect } from 'react';
 
 const useCart = () => {
   const dispatch = useDispatch();
-  const accessToken = useSelector(({ user }) => user.accessToken);
+  const { accessToken } = useUser();
+  const cartList = useSelector(({ cart }) => cart.data);
 
   const getItemList = () => {
-    if (accessToken) {
-      dispatch(getCartItemListAsync(accessToken));
+    if (!accessToken) {
+      dispatch({
+        type: actionTypes.ADD_CART_SUCCESS,
+        payload: [],
+      });
+      return;
     }
+    dispatch(getCartItemListAsync(accessToken));
   };
 
   const addItem = (id) => {
@@ -29,7 +39,11 @@ const useCart = () => {
     dispatch(updateItemQuantityAsync(id, quantity, accessToken));
   };
 
-  return { getItemList, addItem, deleteItem, updateItemQuantity };
+  useEffect(() => {
+    getItemList();
+  }, [accessToken]);
+
+  return { cartList, getItemList, addItem, deleteItem, updateItemQuantity };
 };
 
 export default useCart;

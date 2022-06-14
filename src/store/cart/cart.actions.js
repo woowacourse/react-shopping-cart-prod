@@ -22,7 +22,6 @@ const actionTypes = {
 
 const getCartItemListAsync = (accessToken) => async (dispatch) => {
   try {
-    dispatch({ type: actionTypes.GET_CART });
     const { data } = await axios.get(SERVER_PATH.CART, {
       headers: { Authorization: `Bearer ${accessToken}` },
     });
