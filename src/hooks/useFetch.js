@@ -20,7 +20,7 @@ function useFetch(fetchApi = () => {}) {
         asyncAction.success && asyncAction.success(responseBody);
       },
       error: (errorMessage) => {
-        setAsyncState({ isLoading: false, isLoaded: true, error: errorMessage });
+        setAsyncState({ isLoading: false, isLoaded: false, error: errorMessage });
         asyncAction.error && asyncAction.error(errorMessage);
       },
     };
