@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 
 import useFetch from 'hooks/useFetch';
-import useFormValidation from 'hooks/useFormValidation';
+import useForm from 'hooks/useForm';
 
 import { Title, Icon, FieldSet, InputField, Button, Checkbox } from 'components/@common';
 
 import { requestUserDropOut } from 'api/members';
 import { ICON_CODE, PAGE_LIST } from 'constants/';
+import { getFormData } from 'lib/formUtils';
 import { userValidator } from 'lib/validateUtils';
 
 import * as S from './styles';
@@ -16,15 +17,14 @@ export function WithdrawalPage() {
   const validationList = {
     password: ({ password }) => userValidator.password(password),
   };
-  const {
-    errorList,
-    onBlurTextField: onChangeFormInput,
-    onSubmitForm,
-  } = useFormValidation(validationList);
+  const { errorList, onChangeInput, onBlurInput, createFormSubmitEvent } = useForm(validationList);
+  const { fetchControl, error: errorMessage } = useFetch(requestUserDropOut);
 
-  const { fetchControl } = useFetch(requestUserDropOut);
+  const isError = errorList.password || errorMessage;
 
-  const fetchWithDrawal = (formData) => {
+  const onSubmitForm = createFormSubmitEvent((event) => {
+    const formData = getFormData(event.target);
+
     if (formData.accept !== 'on') {
       alert('회원 탈퇴 전 동의사항에 체크해주세요.');
       return;
@@ -39,9 +39,8 @@ export function WithdrawalPage() {
         alert('회원 탈퇴가 완료되었습니다.\n싱싱청과물을 이용해주셔서 감사합니다.');
         navigate(PAGE_LIST.LOGOUT);
       },
-      error: (errorMessage) => alert(errorMessage),
     });
-  };
+  });
 
   return (
     <>
@@ -50,7 +49,7 @@ export function WithdrawalPage() {
         회원 탈퇴
       </Title>
 
-      <S.Container onBlur={onChangeFormInput} onSubmit={onSubmitForm(fetchWithDrawal)}>
+      <S.Container onChange={onChangeInput} onSubmit={onSubmitForm}>
         <FieldSet
           labelText="비밀번호 확인"
           description="로그인 시 사용한 비밀번호를 다시 한번 입력해주세요."
@@ -58,14 +57,14 @@ export function WithdrawalPage() {
           <InputField
             name="password"
             type="password"
-            status={errorList.password ? 'danger' : 'default'}
+            status={isError && 'danger'}
             placeholder="비밀번호 확인"
-            message={errorList.password}
+            message={isError && '비밀번호가 올바르지 않습니다.'}
             width="100%"
           />
         </FieldSet>
 
-        <Checkbox name="accept" onChange={onChangeFormInput}>
+        <Checkbox name="accept">
           회원 탈퇴 시 즉시 계정 정보가 삭제되며, 삭제된 정보는 복구할 수 없습니다.
         </Checkbox>
 
