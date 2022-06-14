@@ -20,14 +20,14 @@ function Product({ productData, handleCartItem, isCart }) {
           <StyledImg width={SIZE.MIDDLE} src={imageUrl} alt={name} />
         </StyledImageBox>
       </Link>
-      <StyledItemInfoBox>
+      <StyledItemInfoBox iscart={isCart.toString()}>
         <Link to={`${ROUTES_PATH.DETAIL_LINK}${id}`}>
           <StyledItemInfo>
             <StyledItemName>{name}</StyledItemName>
             <StyledItemPrice>{Number(price).toLocaleString()} 원</StyledItemPrice>
           </StyledItemInfo>
         </Link>
-        <GiShoppingCart className="cart" size={28} onClick={onClickCartIcon} color={isCart} />
+        <GiShoppingCart className="cart" size={28} onClick={onClickCartIcon} />
       </StyledItemInfoBox>
     </StyledItem>
   );
@@ -46,8 +46,8 @@ const StyledItemInfoBox = styled.div`
   margin: 16px 8px 0px 8px;
 
   .cart {
-    color: ${(props) => (props.isCart ? props.theme.main.PRIMARY : props.theme.main.BLACK)};
-  }
+    color: ${(props) =>
+      props.iscart === 'true' ? props.theme.main.PRIMARY : props.theme.main.BLACK};
   .cart:hover {
     transform: scale(1.2);
     color: ${(props) => props.theme.main.PRIMARY};

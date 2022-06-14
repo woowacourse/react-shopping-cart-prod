@@ -52,7 +52,7 @@ function ProductDetailPage() {
           <StyledPriceBox>{Number(price).toLocaleString()}원</StyledPriceBox>
         </StyledProductDetailPrice>
       </StyledProductDetailInfo>
-      <StyledCartButton onClick={onClickCartButton} bgColor={isCart}>
+      <StyledCartButton onClick={onClickCartButton} iscart={isCart.toString()}>
         {isCart ? '장바구니 제거' : '장바구니'}
       </StyledCartButton>
     </StyledProductDetailContainer>
@@ -95,7 +95,8 @@ const StyledCartButton = styled.button`
   height: 60px;
   left: 641px;
   bottom: 60px;
-  background: ${(props) => (props.isCart ? props.theme.main.PRIMARY : props.theme.main.BLACK)};
+  background: ${(props) =>
+    props.iscart === 'true' ? props.theme.main.PRIMARY : props.theme.main.BROWN};
   color: ${(props) => props.theme.main.WHITE};
   font-size: 24px;
   font-weight: 700;
