@@ -1,9 +1,8 @@
 import Loading from 'components/common/Loading';
 import Pagination from 'components/common/Pagination';
-import Snackbar from 'components/common/Snackbar';
 import ItemContainer from 'components/ItemList/ItemContainer';
 import { MAX_RESULT_ITEM_LIST } from 'constants/index';
-import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
+import useSnackBar from 'hooks/useSnackBar';
 import useThunkFetch from 'hooks/useThunkFetch';
 import { useParams } from 'react-router-dom';
 import { getCartListRequest } from 'redux/cartList/thunk';
@@ -18,7 +17,7 @@ const ItemList = () => {
   const { data: cartList } = useThunkFetch(state => state.cartList, getCartListRequest(), {
     useErrorBoundary: true,
   });
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const { openSnackbar, SnackbarComponent } = useSnackBar();
 
   if (loading) return <Loading />;
 
@@ -40,7 +39,7 @@ const ItemList = () => {
         count={10}
         lastIndex={Math.floor(allItemList?.length / MAX_RESULT_ITEM_LIST) + 1}
       />
-      {isOpenSnackbar && <Snackbar message={MESSAGE.cart} />}
+      <SnackbarComponent />
     </StyledRoot>
   );
 };

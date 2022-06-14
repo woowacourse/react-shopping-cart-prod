@@ -1,6 +1,7 @@
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import CroppedImage from 'components/common/CroppedImage';
 import { useAppDispatch } from 'hooks/useAppDispatch';
+import { MESSAGE } from 'hooks/useSnackBar';
 import { memo, MouseEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CartListAction } from 'redux/cartList/action';
@@ -13,7 +14,7 @@ import { CartItem, Item } from 'types/domain';
 
 interface ItemContainerProps {
   item: Item;
-  openSnackbar: () => void;
+  openSnackbar: (message: string) => void;
   cartItem: CartItem | undefined;
 }
 
@@ -43,7 +44,7 @@ const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => 
     } else {
       dispatch(postCartItemRequest(id));
     }
-    openSnackbar();
+    openSnackbar(MESSAGE.cart);
   };
 
   return (

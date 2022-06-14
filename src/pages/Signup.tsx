@@ -17,11 +17,10 @@ const Signup = () => {
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { openSnackbar, setMessage, SnackbarComponent } = useSnackBar();
+  const { openSnackbar, SnackbarComponent } = useSnackBar();
 
   useAuthError((message: string) => {
-    openSnackbar();
-    setMessage(message);
+    openSnackbar(message);
   });
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -34,8 +33,7 @@ const Signup = () => {
 
       return;
     }
-    setMessage(MESSAGE.passwordConfirm);
-    openSnackbar();
+    openSnackbar(MESSAGE.passwordConfirm);
   };
 
   return (
@@ -74,7 +72,7 @@ const Signup = () => {
         value={passwordConfirmation}
         onChange={onChangePasswordConfirmation}
       />
-      {SnackbarComponent}
+      <SnackbarComponent />
     </AuthPage>
   );
 };

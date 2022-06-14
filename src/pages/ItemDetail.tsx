@@ -1,7 +1,6 @@
 import Button from 'components/common/Button';
 import CroppedImage from 'components/common/CroppedImage';
 import Loading from 'components/common/Loading';
-import Snackbar from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
 import useThunkFetch from 'hooks/useThunkFetch';
@@ -17,7 +16,7 @@ const ItemDetail = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch<CartListAction>();
   const navigate = useNavigate();
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const { openSnackbar, SnackbarComponent } = useSnackBar();
   const { data: item, loading } = useThunkFetch(state => state.item, getItemRequest(id), {
     useErrorBoundary: true,
   });
@@ -41,14 +40,14 @@ const ItemDetail = () => {
       dispatch(getCartListRequest());
     }
     dispatch(postCartItemRequest(Number(id)));
-    openSnackbar();
+    openSnackbar(MESSAGE.cart);
   };
 
   const updateCart = () => {
     const targetItem = cartList.find(cartItem => cartItem.productId === Number(id));
 
     dispatch(putCartItemRequest(targetItem.id, targetItem.quantity + 1));
-    openSnackbar();
+    openSnackbar(MESSAGE.cart);
   };
 
   if (loading) return <Loading />;
@@ -73,7 +72,7 @@ const ItemDetail = () => {
       >
         장바구니
       </Button>
-      {isOpenSnackbar && <Snackbar message={MESSAGE.cart} />}
+      <SnackbarComponent />
     </StyledRoot>
   );
 };

@@ -22,11 +22,10 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
   const loginId = useAppSelector(state => state.user.data.loginId);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { openSnackbar, setMessage, SnackbarComponent } = useSnackBar();
+  const { openSnackbar, SnackbarComponent } = useSnackBar();
 
   useAuthError((message: string) => {
-    openSnackbar();
-    setMessage(message);
+    openSnackbar(message);
   });
 
   const onSubmitPassword = () => {
@@ -66,7 +65,7 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
           확인
         </Button>
       </StyledPasswordConfirmContent>
-      {SnackbarComponent}
+      <SnackbarComponent />
     </Modal>
   );
 };

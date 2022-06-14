@@ -15,20 +15,23 @@ const useSnackBar = () => {
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
   const [message, setMessage] = useState('');
   const timerRef = useRef(null);
-  const openSnackbar = useCallback(() => {
+  const openSnackbar = useCallback((message: string) => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
       timerRef.current = null;
     }
+    setMessage(message);
     setIsOpenSnackbar(true);
     timerRef.current = setTimeout(() => {
       setIsOpenSnackbar(false);
     }, 3000);
   }, []);
 
-  const SnackbarComponent = isOpenSnackbar && <Snackbar message={message} />;
+  const SnackbarComponent = () => {
+    return isOpenSnackbar && <Snackbar message={message} />;
+  };
 
-  return { isOpenSnackbar, openSnackbar, setMessage, SnackbarComponent };
+  return { openSnackbar, SnackbarComponent };
 };
 
 export default useSnackBar;
