@@ -53,6 +53,8 @@ function useForm(validationList = {}) {
     });
   };
 
+  const createFormSubmitEvent = onSubmitForm; // 리뷰용!
+
   const setInputValue = ({ name, value, isState = VALIDATION.INITIAL }) => {
     formValuesRef.current = { ...formValuesRef.current, [name]: value };
     validationTriggerRef.current = { ...validationTriggerRef.current, [name]: isState };
@@ -74,7 +76,14 @@ function useForm(validationList = {}) {
 
   const isAllPassed = validationTargets.every((name) => errorList[name] === null);
 
-  return { onChangeInput, onBlurInput, onSubmitForm, errorList, isAllPassed };
+  return {
+    onChangeInput,
+    onBlurInput,
+    onSubmitForm,
+    createFormSubmitEvent,
+    errorList,
+    isAllPassed,
+  };
 }
 
 export default useForm;

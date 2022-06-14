@@ -28,10 +28,10 @@ function LoginPage() {
     password: ({ password }) => userValidator.password(password),
   };
 
-  const { onChangeInput, onSubmitForm, errorList } = useForm(validationList);
+  const { onChangeInput, createFormSubmitEvent, errorList } = useForm(validationList);
   const isError = errorList.userId || errorList.password || serverErrorMessage;
 
-  const handleSubmitLogin = (event) => {
+  const onSubmitLogin = createFormSubmitEvent((event) => {
     const { userId, password } = getFormData(event.target);
 
     dispatchEvent({
@@ -40,10 +40,10 @@ function LoginPage() {
         user.isLogin && navigate(pageState ? pageState.targetUrl : '/');
       },
     });
-  };
+  });
 
   return (
-    <S.Container onChange={onChangeInput} onSubmit={onSubmitForm(handleSubmitLogin)}>
+    <S.Container onChange={onChangeInput} onSubmit={onSubmitLogin}>
       <FieldSet labelText="이메일">
         <InputField
           name="userId"
