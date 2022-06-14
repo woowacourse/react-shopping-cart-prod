@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { rest } from 'msw';
 import { users } from 'mocks';
-import CustomError from 'utils/CustomError';
+import ErrorResponse from 'utils/ErrorResponse';
 import { dummyProductList } from 'dummy_data';
 import { ERROR_MESSAGE_FROM_SERVER } from 'utils/constants';
 
@@ -9,12 +9,12 @@ const putCartHandler = rest.put('/cart/products/:id', (req, res, ctx) => {
   try {
     const { authorization } = req.headers.headers;
 
-    const token = authorization.replace('Bearer ', '');
+    const token = authorization.replace('Bearer', '');
     const accessToken = JSON.parse(!!token && !token.includes('undefined') ? token : null);
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {
-      throw new CustomError(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
+      throw new ErrorResponse(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
     const id = Number(req.params.id);
@@ -24,12 +24,12 @@ const putCartHandler = rest.put('/cart/products/:id', (req, res, ctx) => {
 
     // [ERROR] 상품 목록에 해당 id의 상품이 존재하지 않을 경우
     if (!foundProduct) {
-      throw new CustomError(3001, ERROR_MESSAGE_FROM_SERVER[3001], 400);
+      throw new ErrorResponse(3001, ERROR_MESSAGE_FROM_SERVER[3001], 400);
     }
 
     // [ERROR] 수량이 양수가 아닌 경우
     if (quantity < 0) {
-      throw new CustomError(4101, ERROR_MESSAGE_FROM_SERVER[4101], 400);
+      throw new ErrorResponse(4101, ERROR_MESSAGE_FROM_SERVER[4101], 400);
     }
 
     const cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];

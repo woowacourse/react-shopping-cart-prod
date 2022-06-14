@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { rest } from 'msw';
 import { users } from 'mocks';
-import CustomError from 'utils/CustomError';
+import ErrorResponse from 'utils/ErrorResponse';
 import { ERROR_MESSAGE_FROM_SERVER } from 'utils/constants';
 
 const deleteCartProductHandler = rest.delete('/cart', (req, res, ctx) => {
@@ -13,7 +13,7 @@ const deleteCartProductHandler = rest.delete('/cart', (req, res, ctx) => {
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {
-      throw new CustomError(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
+      throw new ErrorResponse(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
     const { productIds } = req.body;
@@ -22,7 +22,7 @@ const deleteCartProductHandler = rest.delete('/cart', (req, res, ctx) => {
     // [ERROR] 장바구니에 해당 상품이 존재하지 않을 경우
     productIds.forEach(productId => {
       if (!cart.some(product => product.productId === productId)) {
-        throw new CustomError(4001, ERROR_MESSAGE_FROM_SERVER[4001], 400);
+        throw new ErrorResponse(4001, ERROR_MESSAGE_FROM_SERVER[4001], 400);
       }
     });
 

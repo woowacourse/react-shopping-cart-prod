@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { rest } from 'msw';
 import { users } from 'mocks';
-import CustomError from 'utils/CustomError';
+import ErrorResponse from 'utils/ErrorResponse';
 import { validatePassword } from 'utils/validator';
 import { ERROR_MESSAGE_FROM_SERVER } from 'utils/constants';
 
@@ -14,7 +14,7 @@ const changePasswordHandler = rest.patch('/customers/password', (req, res, ctx) 
 
     // [ERROR] 유효한 토큰이 아닌 경우
     if (!accessToken || !users.some(user => user.id === accessToken.id)) {
-      throw new CustomError(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
+      throw new ErrorResponse(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
     const { password, newPassword } = req.body;
@@ -26,7 +26,7 @@ const changePasswordHandler = rest.patch('/customers/password', (req, res, ctx) 
 
     // [ERROR] 입력된 비밀번호와 현재 비밀번호가 일치하지 않은 경우
     if (foundUser.password !== password) {
-      throw new CustomError(2202, ERROR_MESSAGE_FROM_SERVER[2202], 401);
+      throw new ErrorResponse(2202, ERROR_MESSAGE_FROM_SERVER[2202], 401);
     }
 
     // 비밀번호 변경 성공

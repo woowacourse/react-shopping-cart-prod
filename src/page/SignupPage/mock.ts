@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { rest } from 'msw';
 import { users } from 'mocks';
-import CustomError from 'utils/CustomError';
+import ErrorResponse from 'utils/ErrorResponse';
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
 import { ERROR_MESSAGE_FROM_SERVER } from 'utils/constants';
 
@@ -19,7 +19,7 @@ const signupHandler = rest.post('/customers', (req, res, ctx) => {
 
     // [ERROR] 이메일 중복될 경우
     if (users.some(user => user.email === email)) {
-      throw new CustomError(2001, ERROR_MESSAGE_FROM_SERVER[2001], 400);
+      throw new ErrorResponse(2001, ERROR_MESSAGE_FROM_SERVER[2001], 400);
     }
 
     // 회원가입 성공

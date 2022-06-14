@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { rest } from 'msw';
 import { dummyProductList } from 'dummy_data';
-import CustomError from 'utils/CustomError';
+import ErrorResponse from 'utils/ErrorResponse';
 import { ERROR_MESSAGE_FROM_SERVER } from 'utils/constants';
 
 const getProductHandler = rest.get('/products/:id', (req, res, ctx) => {
@@ -12,7 +12,7 @@ const getProductHandler = rest.get('/products/:id', (req, res, ctx) => {
 
     // [ERROR] 상품 목록에 해당 id의 상품이 존재하지 않을 경우
     if (!foundProduct) {
-      throw new CustomError(3001, ERROR_MESSAGE_FROM_SERVER[3001], 400);
+      throw new ErrorResponse(3001, ERROR_MESSAGE_FROM_SERVER[3001], 400);
     }
 
     // 단건상품조회 성공

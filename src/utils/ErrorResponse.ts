@@ -1,4 +1,4 @@
-export default class CustomError extends Error {
+export default class ErrorResponse extends Error {
   code: number;
   statusCode: number;
 
@@ -6,7 +6,7 @@ export default class CustomError extends Error {
     super(message, options);
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, CustomError);
+      Error.captureStackTrace(this, ErrorResponse);
     }
 
     this.code = code;
