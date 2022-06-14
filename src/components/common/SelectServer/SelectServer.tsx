@@ -1,4 +1,4 @@
-import { API_URL, setAPIURL } from '@/api/constants';
+import { API_URL, setApiUrl } from '@/api/constants';
 import { deleteCookie } from '@/api/cookie';
 import Modal from '@/components/common/Modal/Modal';
 import { useModal } from '@/hooks/useModal';
@@ -31,7 +31,7 @@ function SelectServer() {
 
     deleteCookie('access-token');
 
-    setAPIURL(API_URL);
+    setApiUrl(API_URL);
     setCurrentServerName(name);
 
     alert('인증 정보가 사라집니다. 로그인 다시 하세요 👻');

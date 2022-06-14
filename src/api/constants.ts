@@ -1,9 +1,9 @@
-export const { API_URL, setAPIURL } = (() => {
+export const { API_URL, setApiUrl } = (() => {
   const url = { current: localStorage.getItem('API_URL') ?? 'http://54.180.159.79:8080/api' };
 
   return {
     API_URL: url.current,
-    setAPIURL(API_URL) {
+    setApiUrl: API_URL => {
       localStorage.setItem('API_URL', API_URL);
       url.current = API_URL;
     },
