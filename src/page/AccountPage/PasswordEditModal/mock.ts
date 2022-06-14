@@ -13,7 +13,7 @@ const changePasswordHandler = rest.patch('/customers/password', (req, res, ctx) 
     const accessToken = JSON.parse(!!token && !token.includes('undefined') ? token : null);
 
     // [ERROR] 유효한 토큰이 아닌 경우
-    if (!accessToken || !users.some(user => user.id === accessToken.id)) {
+    if (!accessToken || !users.some(user => user.id === accessToken.sub)) {
       throw new ErrorResponse(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
@@ -22,7 +22,7 @@ const changePasswordHandler = rest.patch('/customers/password', (req, res, ctx) 
     // [ERROR] 비밀번호 형식이 옳지 않은 경우
     validatePassword(newPassword);
 
-    const foundUser = users.find(user => user.id === accessToken.id);
+    const foundUser = users.find(user => user.id === accessToken.sub);
 
     // [ERROR] 입력된 비밀번호와 현재 비밀번호가 일치하지 않은 경우
     if (foundUser.password !== password) {

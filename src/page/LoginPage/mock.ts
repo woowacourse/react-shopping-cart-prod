@@ -9,7 +9,7 @@ const loginHandler = rest.post('/auth/login', (req, res, ctx) => {
   const foundUser = users.find(user => user.email === email);
 
   if (foundUser && foundUser.password === password) {
-    const accessToken = JSON.stringify({ id: foundUser.id });
+    const accessToken = JSON.stringify({ sub: foundUser.id });
 
     // 로그인 성공
     return res(

@@ -12,7 +12,7 @@ const getOrderHandler = rest.get('/orders/:id', (req, res, ctx) => {
     const accessToken = JSON.parse(!!token && !token.includes('undefined') ? token : null);
 
     // [ERROR] 유효한 토큰이 아닌 경우
-    if (!accessToken || !users.some(user => user.id === accessToken.id)) {
+    if (!accessToken || !users.some(user => user.id === accessToken.sub)) {
       throw new ErrorResponse(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 

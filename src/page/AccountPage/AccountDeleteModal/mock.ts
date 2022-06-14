@@ -12,12 +12,12 @@ const deleteAccountHandler = rest.delete('/customers', (req, res, ctx) => {
     const accessToken = JSON.parse(!!token && !token.includes('undefined') ? token : null);
 
     // [ERROR] 유효한 토큰이 아닌 경우
-    if (!accessToken || !users.some(user => user.id === accessToken.id)) {
+    if (!accessToken || !users.some(user => user.id === accessToken.sub)) {
       throw new ErrorResponse(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
     const { password } = req.body;
-    const foundUserIndex = users.findIndex(user => user.id === accessToken.id);
+    const foundUserIndex = users.findIndex(user => user.id === accessToken.sub);
 
     // [ERROR] 입력된 비밀번호가 현재 비밀번호와 일치하지 않는 경우
     if (users[foundUserIndex].password !== password) {

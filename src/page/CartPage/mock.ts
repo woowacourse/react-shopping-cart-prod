@@ -12,7 +12,7 @@ const getCartHandler = rest.get('/cart', (req, res, ctx) => {
     const accessToken = JSON.parse(!!token && !token.includes('undefined') ? token : null);
 
     // [ERROR] 유효한 토큰이 아닌 경우
-    if (!accessToken || !users.some(user => user.id === accessToken.id)) {
+    if (!accessToken || !users.some(user => user.id === accessToken.sub)) {
       throw new ErrorResponse(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
@@ -39,7 +39,7 @@ const postOrderHandler = rest.post('/orders', (req, res, ctx) => {
     const accessToken = JSON.parse(!!token && !token.includes('undefined') ? token : null);
 
     // [ERROR] 유효한 토큰이 아닌 경우
-    if (!accessToken || !users.some(user => user.id === accessToken.id)) {
+    if (!accessToken || !users.some(user => user.id === accessToken.sub)) {
       throw new ErrorResponse(1003, ERROR_MESSAGE_FROM_SERVER[1003], 401);
     }
 
