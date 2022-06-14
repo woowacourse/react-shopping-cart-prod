@@ -10,7 +10,7 @@ import Loading from 'components/@shared/Loading';
 import cartAPI from 'apis/cart';
 import noImage from 'assets/noImage.png';
 import CONDITION from 'constants/condition';
-import { CART_MESSAGE } from 'constants/message';
+import { CART_MESSAGE, USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 import { ProductStoreState } from 'types/index';
 import { isLogin } from 'utils/auth';
@@ -31,7 +31,7 @@ function ProductPage() {
 
     // TODO: 반복되는 로직이므로 함수로 추출해야할듯
     if (!isLogin()) {
-      navigate(PATH.LOGIN);
+      confirm(USER_MESSAGE.ASK_LOGIN_FOR_CART) && navigate(PATH.LOGIN);
 
       return;
     }

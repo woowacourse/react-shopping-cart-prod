@@ -9,7 +9,7 @@ import ShoppingCart from 'components/@shared/ShoppingCart';
 
 import cartAPI from 'apis/cart';
 import noImage from 'assets/noImage.png';
-import { CART_MESSAGE } from 'constants/message';
+import { CART_MESSAGE, USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 import { Product } from 'types/index';
 import { isLogin } from 'utils/auth';
@@ -32,7 +32,7 @@ function ProductCard({ product, isInCart }: Props) {
 
     //TODO: 추상화
     if (!isLogin()) {
-      navigate(PATH.LOGIN);
+      confirm(USER_MESSAGE.ASK_LOGIN_FOR_CART) && navigate(PATH.LOGIN);
 
       return;
     }
