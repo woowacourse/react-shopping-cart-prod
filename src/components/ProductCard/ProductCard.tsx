@@ -7,6 +7,8 @@ import { getCarts } from 'redux/thunks/cart';
 import Link from 'components/@shared/Link';
 import ShoppingCart from 'components/@shared/ShoppingCart';
 
+import theme from 'styles/theme';
+
 import cartAPI from 'apis/cart';
 import noImage from 'assets/noImage.png';
 import { CART_MESSAGE, USER_MESSAGE } from 'constants/message';
@@ -77,7 +79,7 @@ function ProductCard({ product, isInCart }: Props) {
           <button onClick={onClickCartButton}>
             <ShoppingCart
               width="100%"
-              fill={isInCart ? '#ff9c9c' : 'currentColor'}
+              fill={isInCart ? `${theme.colors.redPink}` : 'currentColor'}
             />
           </button>
         </CardButtonContainer>
