@@ -2,13 +2,13 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { cartActions } from 'redux/actions';
 import { getCarts } from 'redux/thunks/cart';
 
 import Link from 'components/@shared/Link';
 import ShoppingCart from 'components/@shared/ShoppingCart';
 
 import cartAPI from 'apis/cart';
+import noImage from 'assets/noImage.png';
 import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 import { Product } from 'types/index';
@@ -45,6 +45,12 @@ function ProductCard({ product, isInCart }: Props) {
     alert(CART_MESSAGE.SUCCESS_ADD);
   };
 
+  const onProductImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    e.currentTarget.src = noImage;
+  };
+
   return (
     <Link to={`${PATH.PRODUCT}/${id}`}>
       <StyledProductCard>
@@ -53,7 +59,7 @@ function ProductCard({ product, isInCart }: Props) {
             <p>{description}</p>
             <div onClick={onClickCartButton}>구매하기</div>
           </CardImageOverlay>
-          <img src={imageUrl} alt={name} />
+          <img src={imageUrl} alt={name} onError={onProductImageError} />
         </CardImageContainer>
         <CardDescriptionContainer>
           <h3>{name}</h3>

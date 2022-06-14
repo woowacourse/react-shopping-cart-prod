@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,6 +8,7 @@ import { getProduct } from 'redux/thunks/product';
 import Loading from 'components/@shared/Loading';
 
 import cartAPI from 'apis/cart';
+import noImage from 'assets/noImage.png';
 import CONDITION from 'constants/condition';
 import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
@@ -25,12 +26,6 @@ function ProductPage() {
     (state: { product: ProductStoreState }) => state.product.productDetail
   );
 
-  useEffect(() => {
-    if (id) {
-      dispatch(getProduct(Number(id)));
-    }
-  }, []);
-
   const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
@@ -47,6 +42,12 @@ function ProductPage() {
     }
   };
 
+  const onProductImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    e.currentTarget.src = noImage;
+  };
+
   const renderSwitch = () => {
     switch (condition) {
       case CONDITION.LOADING:
@@ -55,7 +56,11 @@ function ProductPage() {
         return productDetail ? (
           <>
             <StyledImageContainer>
-              <img src={productDetail.imageUrl} alt={productDetail.name} />
+              <img
+                src={productDetail.imageUrl}
+                alt={productDetail.name}
+                onError={onProductImageError}
+              />
             </StyledImageContainer>
             <h2>{productDetail.name}</h2>
             <hr />
@@ -78,6 +83,12 @@ function ProductPage() {
         );
     }
   };
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getProduct(Number(id)));
+    }
+  }, []);
 
   return <StyledPage>{renderSwitch()}</StyledPage>;
 }
