@@ -27,7 +27,7 @@ function ProductCard({ product, isInCart }: Props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
+  const onClickCartButton = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     //TODO: 추상화
@@ -37,12 +37,20 @@ function ProductCard({ product, isInCart }: Props) {
       return;
     }
 
-    //NOTE: 이렇게 비동기처리 해줘도 되는 걸까?
-    cartAPI.addCartItem({ productId: id, quantity: 1 }).then((res) => {
-      res?.status === 201 && dispatch(getCarts());
-    });
+    try {
+      const response = await cartAPI.addCartItem({
+        productId: id,
+        quantity: 1,
+      });
 
-    alert(CART_MESSAGE.SUCCESS_ADD);
+      if (response?.status === 201) {
+        dispatch(getCarts());
+
+        alert(CART_MESSAGE.SUCCESS_ADD);
+      }
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const onProductImageError = (
