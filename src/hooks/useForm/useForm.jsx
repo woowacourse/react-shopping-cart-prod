@@ -16,6 +16,7 @@ function useForm() {
     const errors = Object.keys(_fields.current).reduce((acc, cur) => {
       const field = _fields.current[cur];
       const { ref: input, validation } = field;
+
       if (validation) {
         if (validation.pattern) {
           const { value: regex, message } = validation.pattern;
@@ -24,6 +25,7 @@ function useForm() {
             acc[cur] = message;
           }
         }
+
         if (validation.customValidator) {
           const { isValid, errorMessage } = validation.customValidator(
             input.value
@@ -54,8 +56,10 @@ function useForm() {
     const {
       validation: { pattern, customValidator },
     } = field;
+
     if (pattern) {
       const { value: regex, message } = pattern;
+
       if (value && !regex.test(value)) {
         setErrors((prev) => {
           const newState = structuredClone(prev);
@@ -67,6 +71,7 @@ function useForm() {
     }
     if (customValidator) {
       const { isValid, errorMessage } = customValidator(value);
+
       if (!isValid) {
         setErrors((prev) => {
           const newState = structuredClone(prev);
@@ -93,6 +98,7 @@ function useForm() {
       acc[cur] = null;
       return acc;
     }, {});
+
     setFormData(structuredClone(initialFormData));
     setErrors(structuredClone(initialErrors));
   }, []);
@@ -104,6 +110,7 @@ function useForm() {
     ) {
       throw new Error("customValidator는 함수여야합니다!");
     }
+
     return {
       ref: (ref) => {
         if (!ref) return;

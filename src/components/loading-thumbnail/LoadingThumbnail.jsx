@@ -4,6 +4,7 @@ import styles from "./loading-thumbnail.module";
 
 function LoadingThumbnail({ className, src, alt, minHeight }) {
   const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <div
       className={cn(styles.thumbnail, className)}

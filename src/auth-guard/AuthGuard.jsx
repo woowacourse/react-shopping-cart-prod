@@ -11,6 +11,7 @@ function AuthGuard({ policy = accessPolicy.onlyLoggedInUser, children }) {
       alert("접근할 수 없습니다!");
       window.location.href = "/login";
     }
+
     if (policy === accessPolicy.onlyLoggedOutUser && isLoggedIn) {
       alert("접근할 수 없습니다!");
       window.location.href = "/";

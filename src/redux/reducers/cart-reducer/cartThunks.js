@@ -63,6 +63,7 @@ export const addProductToCart =
     try {
       const { productId, quantity } = data;
       const response = await Fetcher.post("mycarts", { productId, quantity });
+
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
         const message = errorMessages[errorCode] ?? originalMessage;
@@ -93,6 +94,7 @@ export const updateCartItemQuantity =
     try {
       const { cartItemId, quantity } = data;
       const response = await Fetcher.patch("mycarts", { cartItemId, quantity });
+
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
         const message = errorMessages[errorCode] ?? originalMessage;
@@ -125,6 +127,7 @@ export const deleteCartItems =
     try {
       const { cartItemIds } = data;
       const response = await Fetcher.delete("mycarts", { cartItemIds });
+
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
         const message = errorMessages[errorCode] ?? originalMessage;
