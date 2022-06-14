@@ -9,7 +9,6 @@ import useCart from '../hooks/useCart';
 import { StyledImageBox, StyledImg } from '../components/common/Styled';
 
 import { MESSAGE, SERVER_PATH, SIZE } from '../constants';
-import { COLORS } from '../styles/colorPalette';
 
 function ProductDetailPage() {
   const { id } = useParams();
@@ -53,10 +52,7 @@ function ProductDetailPage() {
           <StyledPriceBox>{Number(price).toLocaleString()}원</StyledPriceBox>
         </StyledProductDetailPrice>
       </StyledProductDetailInfo>
-      <StyledCartButton
-        onClick={onClickCartButton}
-        bgColor={isCart ? COLORS.LIGHT_BROWN : COLORS.BROWN}
-      >
+      <StyledCartButton onClick={onClickCartButton} bgColor={isCart}>
         {isCart ? '장바구니 제거' : '장바구니'}
       </StyledCartButton>
     </StyledProductDetailContainer>
@@ -99,14 +95,14 @@ const StyledCartButton = styled.button`
   height: 60px;
   left: 641px;
   bottom: 60px;
-  background: ${(props) => props.bgColor};
-  color: ${COLORS.WHITE};
+  background: ${(props) => (props.isCart ? props.theme.main.PRIMARY : props.theme.main.BLACK)};
+  color: ${(props) => props.theme.main.WHITE};
   font-size: 24px;
   font-weight: 700;
   border-radius: 4px;
   border: none;
   &:hover {
-    background-color: ${COLORS.LIGHT_BROWN};
+    background-color: ${(props) => props.theme.main.LIGHT_BROWN};
   }
 `;
 

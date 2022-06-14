@@ -5,7 +5,6 @@ import { StyledImageBox, StyledImg } from './common/Styled';
 
 import { GiShoppingCart } from 'react-icons/gi';
 import { ROUTES_PATH, SIZE } from '../constants/index';
-import { COLORS } from '../styles/colorPalette';
 
 function Product({ productData, handleCartItem, isCart }) {
   const { id, name, price, imageUrl } = productData;
@@ -28,12 +27,7 @@ function Product({ productData, handleCartItem, isCart }) {
             <StyledItemPrice>{Number(price).toLocaleString()} 원</StyledItemPrice>
           </StyledItemInfo>
         </Link>
-        <GiShoppingCart
-          className="cart"
-          size={28}
-          onClick={onClickCartIcon}
-          color={isCart ? COLORS.PRIMARY : ''}
-        />
+        <GiShoppingCart className="cart" size={28} onClick={onClickCartIcon} color={isCart} />
       </StyledItemInfoBox>
     </StyledItem>
   );
@@ -52,11 +46,11 @@ const StyledItemInfoBox = styled.div`
   margin: 16px 8px 0px 8px;
 
   .cart {
-    color: ${(props) => props.color};
+    color: ${(props) => (props.isCart ? props.theme.main.PRIMARY : props.theme.main.BLACK)};
   }
   .cart:hover {
     transform: scale(1.2);
-    color: ${COLORS.PRIMARY};
+    color: ${(props) => props.theme.main.PRIMARY};
   }
 `;
 

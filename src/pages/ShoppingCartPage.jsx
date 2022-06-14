@@ -7,7 +7,6 @@ import { StyledCheckbox } from '../components/common/Styled';
 
 import useCart from '../hooks/useCart';
 
-import { COLORS } from '../styles/colorPalette';
 import { MESSAGE } from '../constants';
 
 function ShoppingCartPage() {
@@ -65,7 +64,7 @@ function ShoppingCartPage() {
     <StyledSection>
       <StyledHeader>
         <h1>장바구니</h1>
-        <StyledDivideLine margin={20} size={2} color={COLORS.BLACK} />
+        <StyledDivideLine margin={20} size={2} />
       </StyledHeader>
       <StyledContainer>
         <StyledLeftSection>
@@ -82,7 +81,7 @@ function ShoppingCartPage() {
             <StyledDeleteButton onClick={deleteSelectedItems}>상품삭제</StyledDeleteButton>
           </StyledLeftDiv>
           <StyledTitle>든든배송 상품({cartList.length}개)</StyledTitle>
-          <StyledDivideLine margin={10} size={2} color={COLORS.GRAY} />
+          <StyledDivideLine margin={10} size={2} />
           {cartList.map((item) => (
             <React.Fragment key={item.id}>
               <ShoppingItem
@@ -91,7 +90,7 @@ function ShoppingCartPage() {
                 handleSelectedItem={handleSelectedItem}
                 removeSelectedItem={removeSelectedItem}
               />
-              <StyledDivideLine margin={10} size={1} color={COLORS.GRAY} />
+              <StyledDivideLine margin={10} size={1} />
             </React.Fragment>
           ))}
         </StyledLeftSection>
@@ -99,7 +98,7 @@ function ShoppingCartPage() {
           <StyledRightSectionTop>
             <StyledTitle>결제예상금액</StyledTitle>
           </StyledRightSectionTop>
-          <StyledDivideLine margin={10} size={1} color={COLORS.GRAY} />
+          <StyledDivideLine margin={10} size={1} />
           <div>
             <StyledAmount>
               <StyledHighlight>결제예상금액</StyledHighlight>
@@ -118,7 +117,7 @@ function ShoppingCartPage() {
 const StyledDivideLine = styled.hr`
   width: 100%;
   margin: ${(props) => props.size};
-  border: ${(props) => `${props.size}px solid ${props.color}`};
+  border: ${(props) => `${props.size}px solid ${props.theme.main.LIGHT_GRAY}`};
 `;
 
 const StyledSection = styled.section`
@@ -145,11 +144,11 @@ const StyledContainer = styled.div`
 
 const StyledDeleteButton = styled.button`
   padding: 12px 22px;
-  background-color: ${COLORS.WHITE};
-  border: 1px solid ${COLORS.LIGHT_GRAY};
+  background-color: ${(props) => props.theme.main.WHITE};
+  border: 1px solid ${(props) => props.theme.main.LIGHT_GRAY};
   border-radius: 4px;
   &:hover {
-    background-color: ${COLORS.LIGHT_GRAY};
+    background-color: ${(props) => props.theme.main.LIGHT_GRAY};
   }
 `;
 
@@ -169,7 +168,7 @@ const StyledRightSection = styled.section`
   height: 260px;
   margin-left: 5%;
   margin-top: 80px;
-  border: 1px solid #dddddd;
+  border: 1px solid ${(props) => props.theme.main.LIGHT_GRAY};
 `;
 
 const StyledTitle = styled.h3`
@@ -215,7 +214,7 @@ const StyledHighlight = styled.span`
     bottom: 0;
     width: 100%;
     height: 8px;
-    background-color: ${COLORS.PRIMARY};
+    background-color: ${(props) => props.theme.main.PRIMARY};
     opacity: 0.5;
     z-index: -1;
   }
@@ -229,9 +228,9 @@ const StyledOrderButtonWrapper = styled.div`
 `;
 
 const StyledOrderButton = styled.button`
-  background: ${COLORS.PRIMARY};
+  background: ${(props) => props.theme.main.PRIMARY};
   font-size: 20px;
-  color: ${COLORS.WHITE};
+  color: ${(props) => props.theme.main.WHITE};
   width: 90%;
   padding: 15px;
   border: none;

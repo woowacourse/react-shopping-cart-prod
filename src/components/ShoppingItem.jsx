@@ -7,7 +7,6 @@ import { StyledCheckbox } from './common/Styled';
 import useCart from '../hooks/useCart';
 
 import { BsTrash } from 'react-icons/bs';
-import { COLORS } from '../styles/colorPalette';
 import { MESSAGE } from '../constants';
 
 function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedItem }) {
@@ -111,7 +110,7 @@ const StyledAmountContainer = styled.div`
   span {
     width: 66px;
     height: 55px;
-    border: 1px solid ${COLORS.LIGHT_GRAY};
+    border: 1px solid ${(props) => props.theme.main.LIGHT_GRAY};
     text-align: center;
     line-height: 55px;
     font-size: 24px;
@@ -122,7 +121,7 @@ const StyledAmountContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 4px 12px;
-    border: 1px solid ${COLORS.LIGHT_GRAY};
+    border: 1px solid ${(props) => props.theme.main.LIGHT_GRAY};
     font-size: 100%;
     cursor: pointer;
   }
