@@ -1,38 +1,30 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
 import useUserForm from '../hooks/useUserForm';
-import { validSignUpInfo } from '../utils/validations';
+import useUser from '../hooks/useUser';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+import { USER, USER_INFO_KEY } from '../constants';
+
+const initialState = {
+  email: '',
+  nickname: '',
+  password: '',
+  passwordConfirm: '',
+};
 
 function SignUpPage() {
-  const navigate = useNavigate();
-  const [signUpInfo, setSignUpInfo] = useState({
-    email: '',
-    nickname: '',
-    password: '',
-    passwordConfirm: '',
-  });
+  const [signUpInfo, setSignUpInfo] = useState(initialState);
   const handleUserInfoChange = useUserForm(setSignUpInfo);
+  const { userSignUp } = useUser();
   const { email, nickname, password, passwordConfirm } = signUpInfo;
 
-  const handleSignUpInfoSubmit = async (e) => {
+  const handleSignUpInfoSubmit = (e) => {
     e.preventDefault();
-    try {
-      validSignUpInfo(signUpInfo);
-      await axios.post(SERVER_PATH.USER, { email, nickname, password });
-      alert(MESSAGE.SIGN_UP_SUCCESS);
-      navigate(ROUTES_PATH.LOGIN);
-    } catch (error) {
-      alert(error.response.data.message);
-    }
+    userSignUp(signUpInfo);
   };
 
   return (

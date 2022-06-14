@@ -1,6 +1,6 @@
 import { useMemo, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
+
 import styled from 'styled-components';
 
 import Product from '../components/Product';
@@ -9,51 +9,28 @@ import Loading from '../components/Loading';
 import useFetch from '../hooks/useFetch';
 import useCart from '../hooks/useCart';
 
-import { actionTypes } from '../store/cart/cart.actions';
 import { MESSAGE, SERVER_PATH } from '../constants';
 
 function ProductListPage() {
-  const dispatch = useDispatch();
-  const accessToken = useSelector(({ user }) => user.accessToken);
   const { data: productList, isLoading, isError } = useFetch(SERVER_PATH.PRODUCTS);
+  const { getItemList, addItem, deleteItem } = useCart();
   const cartList = useSelector(({ cart }) => cart.data);
-  const { addItem, deleteItem } = useCart();
 
   const idSetInCart = useMemo(() => new Set(cartList.map((cart) => cart.name)), [cartList]);
 
-  const handleCartItem = (id, isCart, accessToken) => {
+  const handleCartItem = (id, isCart) => {
     if (isCart) {
-      deleteItem(id, accessToken);
+      deleteItem(id);
       alert(MESSAGE.REMOVE);
       return;
     }
-    addItem(id, accessToken);
+    addItem(id);
     alert(MESSAGE.ADD);
   };
 
   useEffect(() => {
-    const requestData = async () => {
-      try {
-        const { data } = await axios.get(SERVER_PATH.CART, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        dispatch({
-          type: actionTypes.ADD_CART_SUCCESS,
-          payload: data,
-        });
-      } catch (error) {
-        alert(error.response.data.message);
-      }
-    };
-    if (!accessToken) {
-      dispatch({
-        type: actionTypes.ADD_CART_SUCCESS,
-        payload: [],
-      });
-      return;
-    }
-    requestData();
-  }, [accessToken]);
+    getItemList();
+  }, []);
 
   if (isError) return <h1>error</h1>;
   if (isLoading) return <Loading />;
@@ -65,9 +42,7 @@ function ProductListPage() {
           <Product
             key={product.id}
             productData={product}
-            handleCartItem={() =>
-              handleCartItem(product.id, idSetInCart.has(product.name), accessToken)
-            }
+            handleCartItem={() => handleCartItem(product.id, idSetInCart.has(product.name))}
             isCart={idSetInCart.has(product.name)}
           />
         ))}

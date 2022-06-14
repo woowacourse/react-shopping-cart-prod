@@ -11,7 +11,6 @@ import { MESSAGE } from '../constants';
 
 function ShoppingCartPage() {
   const { deleteItem } = useCart();
-  const accessToken = useSelector(({ user }) => user.accessToken);
   const [totalPrice, setTotalPrice] = useState();
   const [selectedItems, setSelectedItems] = useState([]);
   const [isCheckedAll, setCheckedAll] = useReducer((checked) => !checked, true);
@@ -30,7 +29,7 @@ function ShoppingCartPage() {
     if (selectedItems.length === 0) return;
 
     if (window.confirm(MESSAGE.CHECK_DELETE)) {
-      selectedItems.forEach((id) => deleteItem(id, accessToken));
+      selectedItems.forEach((id) => deleteItem(id));
       setSelectedItems([]);
     }
   };

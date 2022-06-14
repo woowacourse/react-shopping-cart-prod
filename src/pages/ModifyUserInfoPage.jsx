@@ -1,57 +1,30 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import Loading from '../components/Loading';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUser from '../hooks/useUser';
+import useFetch from '../hooks/useFetch';
 import useUserForm from '../hooks/useUserForm';
-import { validUserInfo } from '../utils/validations';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+import { SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
 
 function ModifyUserInfoPage() {
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
-  const accessToken = useSelector(({ user }) => user.accessToken);
+  const { data } = useFetch(SERVER_PATH.ME);
+  const { userModifyUserInfo } = useUser();
   const handleUserInfoChange = useUserForm(setUserInfo);
 
   const handleUserInfoSubmit = async (e) => {
     e.preventDefault();
-    const { nickname } = userInfo;
-
-    try {
-      validUserInfo(userInfo);
-      await axios.patch(
-        SERVER_PATH.USER,
-        { nickname },
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
-      alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
-      navigate(ROUTES_PATH.HOME);
-    } catch (error) {
-      alert(error.response.data.message);
-    }
+    userModifyUserInfo(userInfo);
   };
 
   useEffect(() => {
-    async function getUserInfo() {
-      try {
-        const { data } = await axios.get(SERVER_PATH.ME, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        setUserInfo(data);
-      } catch (error) {
-        alert(error.response.data.message);
-      }
-    }
-    getUserInfo();
-  }, [accessToken]);
+    setUserInfo(data);
+  }, [data]);
 
   if (!userInfo) return <Loading />;
 

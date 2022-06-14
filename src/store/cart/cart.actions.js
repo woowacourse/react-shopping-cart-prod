@@ -3,6 +3,10 @@ import axios from 'axios';
 import { SERVER_PATH } from '../../constants';
 
 const actionTypes = {
+  GET_CART: 'GET_CART',
+  GET_CART_SUCCESS: 'GET_CART_SUCCESS',
+  GET_CART_ERROR: 'GET_CART_ERROR',
+
   ADD_CART: 'ADD_CART',
   ADD_CART_SUCCESS: 'ADD_CART_SUCCESS',
   ADD_CART_ERROR: 'ADD_CART_ERROR',
@@ -14,6 +18,22 @@ const actionTypes = {
   UPDATE_ITEM_QUANTITY: 'UPDATE_ITEM_QUANTITY',
   UPDATE_ITEM_QUANTITY_SUCCESS: 'UPDATE_ITEM_QUANTITY_SUCCESS',
   UPDATE_ITEM_QUANTITY_ERROR: 'UPDATE_ITEM_QUANTITY_ERROR',
+};
+
+const getCartItemListAsync = (accessToken) => async (dispatch) => {
+  try {
+    dispatch({ type: actionTypes.GET_CART });
+    const { data } = await axios.get(SERVER_PATH.CART, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    dispatch({
+      type: actionTypes.GET_CART_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({ type: actionTypes.GET_CART_ERROR });
+    alert(error.response.data.message);
+  }
 };
 
 const addCartItemAsync = (id, accessToken) => async (dispatch) => {
@@ -77,4 +97,10 @@ const updateItemQuantityAsync = (id, quantity, accessToken) => async (dispatch) 
   }
 };
 
-export { addCartItemAsync, deleteCartItemAsync, updateItemQuantityAsync, actionTypes };
+export {
+  getCartItemListAsync,
+  addCartItemAsync,
+  deleteCartItemAsync,
+  updateItemQuantityAsync,
+  actionTypes,
+};

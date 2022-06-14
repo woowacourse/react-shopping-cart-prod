@@ -1,47 +1,29 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUser from '../hooks/useUser';
 import useUserForm from '../hooks/useUserForm';
-import { validPasswordInfo } from '../utils/validations';
-import { MESSAGE, SERVER_PATH, USER, ROUTES_PATH, PASSWORD_INFO_KEY } from '../constants';
-import actionTypes from '../store/user/user.actions';
+
+import { USER, PASSWORD_INFO_KEY } from '../constants';
+
+const initialState = {
+  prevPassword: '',
+  newPassword: '',
+  newPasswordConfirm: '',
+};
 
 function ModifyPasswordPage() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const accessToken = useSelector(({ user }) => user.accessToken);
-  const [password, setPassword] = useState({
-    prevPassword: '',
-    newPassword: '',
-    newPasswordConfirm: '',
-  });
+  const [password, setPassword] = useState(initialState);
   const handleUserInfoChange = useUserForm(setPassword);
+  const { userModifyPassword } = useUser();
   const { prevPassword, newPassword, newPasswordConfirm } = password;
 
-  const handlePasswordSubmit = async (e) => {
+  const handlePasswordSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      validPasswordInfo(password);
-      await axios.patch(
-        SERVER_PATH.PASSWORD,
-        { prevPassword, newPassword },
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
-      dispatch({ type: actionTypes.DELETE_TOKEN });
-      alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);
-      navigate(ROUTES_PATH.LOGIN);
-    } catch (error) {
-      alert(error.response.data.message);
-    }
+    userModifyPassword(password);
   };
 
   return (

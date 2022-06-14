@@ -13,7 +13,6 @@ import { MESSAGE, SERVER_PATH, SIZE } from '../constants';
 function ProductDetailPage() {
   const { id } = useParams();
   const { addItem, deleteItem } = useCart();
-  const accessToken = useSelector(({ user }) => user.accessToken);
 
   const cartList = useSelector(({ cart }) => cart.data);
   const { data: product, isLoading, isError } = useFetch(`${SERVER_PATH.PRODUCTS}/${id}`);
@@ -26,11 +25,11 @@ function ProductDetailPage() {
 
   const onClickCartButton = () => {
     if (isCart) {
-      deleteItem(id, accessToken);
+      deleteItem(id);
       alert(MESSAGE.REMOVE);
       return;
     }
-    addItem(id, accessToken);
+    addItem(id);
     alert(MESSAGE.ADD);
   };
 
