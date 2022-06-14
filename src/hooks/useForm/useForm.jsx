@@ -51,32 +51,29 @@ function useForm() {
     });
 
     const field = _fields.current[name];
-    const { validation } = field;
-    if (validation) {
-      if (validation.pattern) {
-        const {
-          pattern: { value: regex, message },
-        } = validation;
-        if (!regex) throw new Error("정규식을 넣어주세요!");
-        if (value && !regex.test(value)) {
-          setErrors((prev) => {
-            const newState = structuredClone(prev);
-            newState[name] = message;
-            return newState;
-          });
-          return;
-        }
+    const {
+      validation: { pattern, customValidator },
+    } = field;
+    if (pattern) {
+      const { value: regex, message } = pattern;
+      if (value && !regex.test(value)) {
+        setErrors((prev) => {
+          const newState = structuredClone(prev);
+          newState[name] = message;
+          return newState;
+        });
+        return;
       }
-      if (validation.customValidator) {
-        const { isValid, errorMessage } = validation.customValidator(value);
-        if (!isValid) {
-          setErrors((prev) => {
-            const newState = structuredClone(prev);
-            newState[name] = errorMessage;
-            return newState;
-          });
-          return;
-        }
+    }
+    if (customValidator) {
+      const { isValid, errorMessage } = customValidator(value);
+      if (!isValid) {
+        setErrors((prev) => {
+          const newState = structuredClone(prev);
+          newState[name] = errorMessage;
+          return newState;
+        });
+        return;
       }
     }
 
