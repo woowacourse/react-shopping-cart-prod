@@ -25,7 +25,7 @@ import { doLogin, doFinish } from 'modules/auth';
 import { ROUTES, MESSAGE, PATHNAME } from 'utils/constants';
 import RequireAuth from 'components/RequireAuth';
 import Spinner from 'components/Spinner';
-import axiosInterceptors from 'utils/axiosInterceptors';
+import axiosInterceptors from 'axiosInterceptors';
 
 axiosInterceptors();
 
