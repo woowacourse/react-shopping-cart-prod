@@ -77,7 +77,7 @@ const SignUpForm = () => {
         email,
         password,
       });
-      navigate(PATH.HOME);
+      navigate(PATH.LOGIN);
       dispatch(onMessage(SNACKBAR_MESSAGE.signUpUser()));
     } catch ({ message }) {
       setError(message);

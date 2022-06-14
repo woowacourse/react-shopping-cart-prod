@@ -13,14 +13,14 @@ import {
   downOneQuantity,
   deleteOneCart,
 } from 'reducers/carts';
-import { addMoreCart, downCart, deleteCart } from 'reducers/addUpdateDeleteCart';
+import { modifyCartQuantity, deleteCarts } from 'reducers/addUpdateDeleteCart';
 import { onMessage } from 'reducers/snackbar';
 
 import debounce from 'utils';
 
 import { SNACKBAR_MESSAGE } from 'constants';
 
-const Cart = ({ id, imgSrc, title, quantity, price, selected }) => {
+const Cart = ({ id, imageUrl, name, quantity, price, selected }) => {
   const dispatch = useDispatch();
 
   const handleChangeCheckBox = useCallback(() => {
@@ -31,9 +31,9 @@ const Cart = ({ id, imgSrc, title, quantity, price, selected }) => {
     useCallback(async () => {
       if (quantity === 1) return;
 
-      await dispatch(downCart(id)).unwrap();
+      await dispatch(modifyCartQuantity(id)).unwrap();
       dispatch(downOneQuantity(id));
-      dispatch(onMessage(SNACKBAR_MESSAGE.deleteProduct(title)));
+      dispatch(onMessage(SNACKBAR_MESSAGE.deleteProduct(name)));
     }, [dispatch, id, quantity]),
     150,
   );
@@ -42,7 +42,7 @@ const Cart = ({ id, imgSrc, title, quantity, price, selected }) => {
     useCallback(async () => {
       await dispatch(addMoreCart(id)).unwrap();
       dispatch(addOneQuantity(id));
-      dispatch(onMessage(SNACKBAR_MESSAGE.addProduct(title)));
+      dispatch(onMessage(SNACKBAR_MESSAGE.addProduct(name)));
     }, [dispatch, id]),
     150,
   );
@@ -50,20 +50,32 @@ const Cart = ({ id, imgSrc, title, quantity, price, selected }) => {
   const handleClickDeleteButton = useCallback(async () => {
     await dispatch(deleteCart(id)).unwrap();
     dispatch(deleteOneCart(id));
-    dispatch(onMessage(SNACKBAR_MESSAGE.clearProduct(title)));
+    dispatch(onMessage(SNACKBAR_MESSAGE.clearProduct(name)));
   }, [dispatch, id]);
 
   return (
     <Wrapper>
       <div className="left">
-        <CheckBox id={`cart${id}`} checked={selected} onChange={handleChangeCheckBox} />
+        <CheckBox
+          id={`cart${id}`}
+          checked={selected}
+          onChange={handleChangeCheckBox}
+        />
         <Link to={`/product/${id}`}>
-          <img className="cart-product" src={imgSrc} alt="장바구니에 담긴 상품" />
+          <img
+            className="cart-product"
+            src={imageUrl}
+            alt="장바구니에 담긴 상품"
+          />
         </Link>
-        <p className="title">{title}</p>
+        <p className="title">{name}</p>
       </div>
       <div className="right">
-        <img src="img/Recycle_Bin.png" alt="휴지통" onClick={handleClickDeleteButton} />
+        <img
+          src="img/Recycle_Bin.png"
+          alt="휴지통"
+          onClick={handleClickDeleteButton}
+        />
         <div className="quantity-wrapper">
           <div className="quantity">
             <p>{quantity}</p>

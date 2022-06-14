@@ -10,8 +10,11 @@ const PublicRoute = ({ children }) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    accessToken && dispatch(onMessage(SNACKBAR_MESSAGE.allReadyLogin()));
+  }, []);
+
   if (accessToken) {
-    dispatch(onMessage(SNACKBAR_MESSAGE.allReadyLogin()));
     return <Navigate to={PATH.HOME} state={{ from: location }} replace />;
   }
 

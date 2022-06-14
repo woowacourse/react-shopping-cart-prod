@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const getResult = async (url, method, option = {}) => {
+axios.defaults.baseURL = 'http://13.124.14.130:8080';
+
+const getServerResult = async (url, method, option = {}) => {
   try {
     const res = await axios[method](url, option);
 
@@ -10,42 +12,48 @@ const getResult = async (url, method, option = {}) => {
   }
 };
 
-export const getProducts = (page) => getResult(`/products/${page}`, 'get');
+export const getProducts = (page) =>
+  getServerResult(`/products/${page}`, 'get');
 
 export const getProduct = (productId) =>
-  getResult(`/product/${productId}`, 'get');
+  getServerResult(`/product/${productId}`, 'get');
 
-export const getCart = (productId) => getResult(`/cart/${productId}`, 'get');
+export const getCart = (productId) =>
+  getServerResult(`/cart/${productId}`, 'get');
 
-export const getCarts = () => getResult('/carts', 'get');
+export const getCarts = () => getServerResult('/carts', 'get');
 
 export const addCart = (productId) =>
-  getResult(`/addCart/${productId}`, 'post');
+  getServerResult(`/addCart/${productId}`, 'post');
 
 export const addMoreCart = (productId) =>
-  getResult(`/addMoreCart/${productId}`, 'put');
+  getServerResult(`/addMoreCart/${productId}`, 'put');
 
 export const downCart = (productId) =>
-  getResult(`/downCart/${productId}`, 'put');
+  getServerResult(`/downCart/${productId}`, 'put');
+
+export const modifyCartQuantity = (productId, quantity) =>
+  getServerResult(`/api/customer/carts`, 'put', { productId, quantity });
 
 export const deleteCart = (productId) =>
-  getResult(`/delete/Cart/${productId}`, 'delete');
+  getServerResult(`/delete/Cart/${productId}`, 'delete');
 
 export const deleteCarts = (productIds) =>
-  getResult('/deleteCarts', 'delete', { data: productIds });
+  getServerResult('/deleteCarts', 'delete', productIds);
 
-export const login = (user) => getResult('/api/login', 'post', { data: user });
+export const login = (user) => getServerResult('/login', 'post', user);
 
-export const signUp = (user) =>
-  getResult('/api/customer', 'post', { data: user });
+export const signUp = (user) => getServerResult('/customer', 'post', user);
 
-export const getUser = () => getResult('/api/customer', 'get');
+export const getUser = () => getServerResult('/customer', 'get');
 
-export const updateUser = (user) =>
-  getResult('/api/customer', 'put', { data: user });
+export const updateUser = (user) => getServerResult('/customer', 'put', user);
 
 export const deleteUser = (password) =>
-  getResult('/api/customer', 'delete', { data: { password } });
+  getServerResult('/customer', 'delete', { data: { password } });
+
+export const updatePassword = (oldPassword, newPassword) =>
+  getServerResult('/customer/password', { oldPassword, newPassword });
 
 export const setToken = (accessToken) => {
   localStorage.setItem('accessToken', accessToken);

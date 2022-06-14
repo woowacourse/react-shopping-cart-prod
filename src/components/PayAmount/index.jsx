@@ -4,15 +4,15 @@ import Button from 'styles/Button';
 
 import Wrapper from './style';
 
-const PayAmount = ({ title, amount, buttonText }) => {
+const PayAmount = ({ name, amount, buttonText }) => {
   return (
     <Wrapper>
       <div className="title">
-        <h3>{title}</h3>
+        <h3>{name}</h3>
       </div>
       <div className="amount">
         <div className="flex-row-space-between">
-          <p>{title}</p>
+          <p>{name}</p>
           <p>{amount.toLocaleString()}원</p>
         </div>
         <Button>{buttonText}</Button>

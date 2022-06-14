@@ -9,7 +9,7 @@ import Input from 'components/Input';
 import ErrorMessage from 'components/ErrorMessage';
 
 import Wrapper from './style';
-import { TextLink } from 'styles/TextLink';
+import TextLink from 'styles/TextLink';
 
 import { onMessage } from 'reducers/snackbar';
 

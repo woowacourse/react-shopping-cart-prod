@@ -13,8 +13,12 @@ import { getCart } from 'reducers/cart';
 
 const ProductPage = () => {
   const dispatch = useDispatch();
-  const { loading: productLoading, data: product } = useSelector((state) => state.product);
-  const { loading: cartLoading, data: cart } = useSelector((state) => state.cart);
+  const { loading: productLoading, data: product } = useSelector(
+    (state) => state.product,
+  );
+  const { loading: cartLoading, data: cart } = useSelector(
+    (state) => state.cart,
+  );
   const { productId } = useParams();
 
   useEffect(() => {
@@ -27,14 +31,14 @@ const ProductPage = () => {
   return (
     <Wrapper>
       <div className="product-wrapper">
-        <img src={product.imgSrc} alt={`${product.title}상품`} />
+        <img src={product.imageUrl} alt={`${product.name}상품`} />
         <div className="top">
           <ProductQuantity
             productId={productId}
-            productTitle={product.title}
+            productTitle={product.name}
             cartQuantity={cart ? cart.quantity : 0}
           >
-            <p className="title">{product.title}</p>
+            <p className="title">{product.name}</p>
           </ProductQuantity>
         </div>
         <div className="bottom flex-row-space-between">

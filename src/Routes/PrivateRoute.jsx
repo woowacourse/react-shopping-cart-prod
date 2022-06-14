@@ -10,11 +10,17 @@ const PrivateRoute = ({ children, path = PATH.LOGIN, showMessage = true }) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    const showRealMessage = () => {
+      dispatch(onMessage(SNACKBAR_MESSAGE.noAuth()));
+    };
+    accessToken || (showMessage && showRealMessage());
+  }, []);
+
   if (accessToken) {
     return children;
   }
 
-  showMessage && dispatch(onMessage(SNACKBAR_MESSAGE.noAuth()));
   return <Navigate to={path} state={{ from: location }} replace />;
 };
 
