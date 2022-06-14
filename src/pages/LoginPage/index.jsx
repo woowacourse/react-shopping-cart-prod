@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+import userActions from 'store/user/action';
 import userThunk from 'store/user/thunk';
 
 import useDispatchEvent from 'hooks/useDispatchEvent';
@@ -17,11 +19,19 @@ import { userValidator } from 'lib/validateUtils';
 import * as S from './styles';
 
 function LoginPage() {
-  const { dispatchEvent } = useDispatchEvent();
+  const { dispatch, dispatchEvent } = useDispatchEvent();
   const { error: serverErrorMessage } = useSelector(({ user }) => user.userInfoAsyncState);
 
   const navigate = useNavigate();
   const { state: pageState = {} } = useLocation();
+
+  useEffect(
+    () =>
+      function cleanup() {
+        dispatch(userActions.updateInfo.initial());
+      },
+    [],
+  );
 
   const validationList = {
     userId: ({ userId }) => userValidator.userId(userId, false),

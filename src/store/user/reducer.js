@@ -13,6 +13,10 @@ const reducer = {
     state.userInfoAsyncState = createAsyncState.success();
   },
 
+  updateUserInfo_Initial(state) {
+    state.userInfoAsyncState = createAsyncState.initial();
+  },
+
   updateUserInfo_Pending(state) {
     state.userInfoAsyncState = createAsyncState.pending();
   },
