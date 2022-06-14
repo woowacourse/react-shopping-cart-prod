@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { useDispatch } from 'react-redux';
-import useCart from 'hooks/db/useCart';
-import useAuth from 'hooks/db/useAuth';
+import useCart from 'hooks/domain/useCart';
+import useAuth from 'hooks/domain/useAuth';
 import useSnackbar from 'hooks/useSnackbar';
 import useSpinner from 'hooks/useSpinner';
 

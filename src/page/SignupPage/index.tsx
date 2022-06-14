@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
-import useAuth from 'hooks/db/useAuth';
+import useAuth from 'hooks/domain/useAuth';
 
 import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
@@ -14,8 +14,8 @@ import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const SignupPage = () => {
-  const { renderSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const { renderSnackbar } = useSnackbar();
   const { signupAPI, isAuthenticated } = useAuth();
 
   const [email, setEmail] = useState('');

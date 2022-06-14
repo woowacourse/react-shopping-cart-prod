@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useOrder from 'hooks/db/useOrder';
+import useOrder from 'hooks/domain/useOrder';
 
 import { TotalPrice, PaymentProductItem } from 'components';
 

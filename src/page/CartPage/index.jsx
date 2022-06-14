@@ -1,19 +1,13 @@
 // @ts-nocheck
-import { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
-import useCart from 'hooks/db/useCart';
-import useOrder from 'hooks/db/useOrder';
+import useCart from 'hooks/domain/useCart';
+import useOrder from 'hooks/domain/useOrder';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 
-import {
-  doAddProdcutToOrder,
-  doInitializeOrder,
-  doOrderFromCart,
-  doSelectiveDeleteFromCart,
-} from 'modules/cart';
+import { doAddProdcutToOrder, doInitializeOrder } from 'modules/cart';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import empty from 'assets/empty.jpeg';
 import Styled from './index.style';
@@ -21,22 +15,9 @@ import Styled from './index.style';
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { deleteCartAPI } = useCart();
-  const { postOrderAPI } = useOrder();
+  const { shoppingCart, deleteProductsInOrder } = useCart();
+  const { order, totalPrice, postOrder } = useOrder();
   const { renderSnackbar } = useSnackbar();
-
-  const { shoppingCart, order } = useSelector(state => state.cartReducer);
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  useEffect(() => {
-    setTotalPrice(
-      shoppingCart.reduce((acc, cur) => {
-        if (!order.includes(cur.productId)) return acc;
-
-        return acc + cur.price * cur.quantity;
-      }, 0),
-    );
-  }, [order, shoppingCart]);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
@@ -45,28 +26,23 @@ const CartPage = () => {
     }
 
     shoppingCart.forEach(product => {
+      // TODO: reducer로 빼도 될 듯. cart랑 order동기화 시키면 됨
       if (!order.some(productId => productId === product.productId)) {
         dispatch(doAddProdcutToOrder({ id: product.productId }));
       }
     });
   };
 
-  const deleteItem = async () => {
-    dispatch(doSelectiveDeleteFromCart());
-    await deleteCartAPI(order);
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, SNACKBAR.SUCCESS);
+  const deleteSelectedItems = () => {
+    deleteProductsInOrder(renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, SNACKBAR.SUCCESS));
   };
 
-  const postOrder = async () => {
+  const handleOrderButtonClick = () => {
     if (order.length <= 0) return;
 
-    try {
-      const response = await postOrderAPI(order);
-      const location = response.headers.location.split('/');
-
-      dispatch(doOrderFromCart());
-      navigate(`${PATHNAME.TO_PAY}/${location[location.length - 1]}`);
-    } catch (error) {}
+    postOrder(id => {
+      navigate(`${PATHNAME.TO_PAY}/${id}`);
+    });
   };
 
   return (
@@ -86,7 +62,7 @@ const CartPage = () => {
                   />
                   선택해제
                 </Styled.CheckBoxContainer>
-                <Styled.ProductDeleteButton onClick={deleteItem}>
+                <Styled.ProductDeleteButton onClick={deleteSelectedItems}>
                   상품삭제
                 </Styled.ProductDeleteButton>
               </Styled.SelectController>
@@ -113,7 +89,7 @@ const CartPage = () => {
                 title="결제예상금액"
                 price={totalPrice}
                 actionType={`주문하기(${order.length}개)`}
-                action={postOrder}
+                action={handleOrderButtonClick}
               />
             </Styled.RightSide>
           </Styled.OrderSheet>

@@ -1,59 +1,40 @@
 // @ts-nocheck
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import useOrderStore from 'hooks/useOrderStore';
-import useCart from 'hooks/db/useCart';
+import useCart from 'hooks/domain/useCart';
 import useSnackbar from 'hooks/useSnackbar';
+import useOrder from 'hooks/domain/useOrder';
 
 import { Image, Counter, CheckBox } from 'components';
 
-import { doDeleteProductFromCart, doPutProductToCart } from 'modules/cart';
 import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import { MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const CartProductItem = ({ id, name, price, image, quantity }) => {
-  const dispatch = useDispatch();
   const { renderSnackbar } = useSnackbar();
-  const { putCartAPI, deleteCartAPI } = useCart();
-
-  const [isInOrder, updateOrder] = useOrderStore(id);
-
-  const deleteItem = () => {
-    dispatch(doDeleteProductFromCart({ id }));
-    deleteCartProduct();
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, SNACKBAR.SUCCESS);
-  };
-
-  const putCart = async quantity => {
-    await putCartAPI(id, quantity);
-  };
-
-  const deleteCartProduct = async () => {
-    await deleteCartAPI([id]);
-  };
+  const { deleteProductInCart, putProductInCart } = useCart();
+  const { isInOrder, updateOrder } = useOrder();
 
   return (
     <Styled.Container>
       <Styled.LeftSide>
-        <CheckBox checked={isInOrder} handleChange={updateOrder} />
+        <CheckBox checked={isInOrder(id)} handleChange={() => updateOrder(id)} />
         <Image src={image} alt={name} size="130px" />
         <Styled.ProductName>{name}</Styled.ProductName>
       </Styled.LeftSide>
 
       <Styled.RightSide>
-        <Styled.DeleteButton onClick={deleteItem} />
+        <Styled.DeleteButton
+          onClick={() =>
+            deleteProductInCart(id, renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, SNACKBAR.SUCCESS))
+          }
+        />
         <Counter
           quantity={quantity}
-          increase={() => {
-            dispatch(doPutProductToCart({ productId: id, quantity: quantity + 1 }));
-            putCart(quantity + 1);
-          }}
+          increase={() => putProductInCart(id, name, price, image, quantity + 1)}
           decrease={() => {
-            if (quantity > 1) {
-              dispatch(doPutProductToCart({ productId: id, quantity: quantity - 1 }));
-              putCart(quantity - 1);
-            }
+            if (quantity <= 1) return;
+            putProductInCart(id, name, price, image, quantity - 1);
           }}
         />
         {transformToLocalPriceFormat(price)}원

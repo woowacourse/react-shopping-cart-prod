@@ -1,48 +1,31 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
 
 import { Input, Title, AuthButton, Container, Modal } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import { doInitializeCart } from 'modules/cart';
-import { doLogout } from 'modules/auth';
 import { validatePassword } from 'utils/validator';
-import { deleteCookie } from 'utils/cookie';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
-import useAuth from 'hooks/db/useAuth';
+import useAuth from 'hooks/domain/useAuth';
 
 const PasswordEditModal = ({ handleModal }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { updatePasswordAPI } = useAuth();
+  const { renderSnackbar } = useSnackbar();
+  const { updatePassword } = useAuth();
+
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
-  const { renderSnackbar } = useSnackbar();
 
-  const updatePassword = async () => {
+  const handleUpdateButtonClick = () => {
     if (!isCorrectPassword) return;
 
-    try {
-      await updatePasswordAPI(currentPassword, newPassword);
-
-      deleteCookie('accessToken');
-      dispatch(doInitializeCart());
-      dispatch(doLogout());
-      handleModal();
+    updatePassword(currentPassword, newPassword, () => {
       renderSnackbar(MESSAGE.UPDATE_PASSWORD_SUCCESS, SNACKBAR.SUCCESS);
+      handleModal();
       navigate(PATHNAME.TO_HOME);
-    } catch (error) {
-      const { code } = error.response.data;
-
-      if (code === 1003) {
-        handleModal();
-        navigate(PATHNAME.TO_HOME);
-      }
-    }
+    });
   };
 
   return (
@@ -69,7 +52,7 @@ const PasswordEditModal = ({ handleModal }) => {
           />
           <AuthButton
             actionType="Change Password"
-            action={updatePassword}
+            action={handleUpdateButtonClick}
             isDisabled={!isCorrectPassword}
           />
         </div>

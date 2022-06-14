@@ -1,32 +1,25 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import useCartStore from 'hooks/useCartStore';
-import useCart from 'hooks/db/useCart';
-import useAuth from 'hooks/db/useAuth';
+import useCart from 'hooks/domain/useCart';
 import useSnackbar from 'hooks/useSnackbar';
-import useProduct from 'hooks/db/useProduct';
+import useProduct from 'hooks/domain/useProduct';
 
 import { Image } from 'components';
 
-import { doPutProductToCart } from 'modules/cart';
 import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const ProductDetailPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { renderSnackbar } = useSnackbar();
   const { getProductAPI } = useProduct();
-  const { putCartAPI } = useCart();
-  const { isAuthenticated } = useAuth();
+  const { isInCart, getProductQuantity, putProductInCart } = useCart();
 
   const params = useParams();
   const id = Number(params.id);
   const [product, setProduct] = useState(null);
-  const [isInCart, productInCart] = useCartStore(id);
 
   const getProduct = async () => {
     try {
@@ -49,27 +42,25 @@ const ProductDetailPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const putCart = async () => {
-    if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, SNACKBAR.FAILED);
-      navigate(PATHNAME.TO_LOGIN);
-      return;
-    }
+  const handleCartButtonClick = () => {
+    putProductInCart(
+      id,
+      product.name,
+      product.price,
+      product.image,
+      isInCart(id) ? getProductQuantity(id) + 1 : 1,
+      () => {
+        renderSnackbar(MESSAGE.ADD_CART_SUCCESS, SNACKBAR.SUCCESS);
+        navigate(PATHNAME.TO_CART);
+      },
+      error => {
+        const { code } = error.response.data;
 
-    try {
-      await putCartAPI(id, isInCart ? productInCart.quantity + 1 : 1);
-
-      dispatch(
-        doPutProductToCart({
-          productId: id,
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          quantity: isInCart ? productInCart.quantity + 1 : 1,
-        }),
-      );
-      navigate(PATHNAME.TO_CART);
-    } catch (error) {}
+        if (code === 1003) {
+          navigate(PATHNAME.TO_LOGIN);
+        }
+      },
+    );
   };
 
   return (
@@ -86,7 +77,7 @@ const ProductDetailPage = () => {
                 {transformToLocalPriceFormat(product.price)}원
               </Styled.ProductPrice>
             </Styled.PriceContainer>
-            <Styled.PutCartButton onClick={putCart}>장바구니</Styled.PutCartButton>
+            <Styled.PutCartButton onClick={handleCartButtonClick}>장바구니</Styled.PutCartButton>
           </Styled.ProductContainer>
         </Styled.Container>
       )}

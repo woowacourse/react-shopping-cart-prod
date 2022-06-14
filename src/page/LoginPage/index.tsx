@@ -1,31 +1,27 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
-import useAuth from 'hooks/db/useAuth';
+import useAuth from 'hooks/domain/useAuth';
 
 import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import { doLogin } from 'modules/auth';
-import { setCookie } from 'utils/cookie';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loginAPI, isAuthenticated } = useAuth();
+  const { renderSnackbar } = useSnackbar();
+  const { isAuthenticated, login } = useAuth();
 
-  const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const { renderSnackbar } = useSnackbar();
+  const [isFulfilled, setIsFulfilled] = useState(false);
 
   useEffect(() => {
+    // TODO : page에서 분리하기
     if (isAuthenticated) {
       renderSnackbar(MESSAGE.ALREADY_LOGINED, SNACKBAR.FAILED);
       navigate(PATHNAME.TO_HOME);
@@ -41,17 +37,13 @@ const LoginPage = () => {
     setIsFulfilled(false);
   }, [email, password]);
 
-  const login = async () => {
+  const handleLoginButtonClick = () => {
     if (!isFulfilled) return;
 
-    try {
-      const { accessToken, nickname } = await loginAPI(email, password);
-
-      setCookie('accessToken', accessToken);
-      dispatch(doLogin({ nickname }));
+    login(email, password, nickname => {
       renderSnackbar(`${nickname}님, 안녕하세요 🙇🏻‍♀️`, SNACKBAR.SUCCESS);
       navigate(PATHNAME.TO_HOME);
-    } catch (error) {}
+    });
   };
 
   return (
@@ -73,7 +65,11 @@ const LoginPage = () => {
             inputValue={password}
             setInputValue={setPassword}
           />
-          <AuthButton actionType="Login" action={login} isDisabled={!isFulfilled} />
+          <AuthButton
+            actionType="Login"
+            action={handleLoginButtonClick}
+            isDisabled={!isFulfilled}
+          />
           <GuideText
             guide="Don’t have an account?"
             destination="Sign up"

@@ -2,8 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
-import { useDispatch } from 'react-redux';
-import useAuth from 'hooks/db/useAuth';
+import useAuth from 'hooks/domain/useAuth';
 
 import PasswordEditModal from './PasswordEditModal';
 import AccountDeleteModal from './AccountDeleteModal';
@@ -11,20 +10,17 @@ import { Container, Input, Title, AuthButton } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
-import { doChangeNickname } from 'modules/auth';
 import { validateNickname } from 'utils/validator';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const AccountPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { renderSnackbar } = useSnackbar();
-  const { updateNicknameAPI, getAccountAPI } = useAuth();
+  const { getAccountAPI, updateNickname } = useAuth();
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
-
   const [isNicknameCorrect, setIsNicknameCorrect] = useState(false);
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
@@ -44,20 +40,21 @@ const AccountPage = () => {
     } catch (error) {}
   };
 
-  const updateNickname = async () => {
+  const handelUpdateButtonClick = () => {
     if (!isNicknameCorrect) return;
 
-    try {
-      const response = await updateNicknameAPI(nickname);
+    updateNickname(
+      nickname,
+      () => {
+        renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, SNACKBAR.SUCCESS);
+        navigate(PATHNAME.TO_HOME);
+      },
+      error => {
+        const { code } = error.response.data;
 
-      dispatch(doChangeNickname({ nickname: response.nickname }));
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, SNACKBAR.SUCCESS);
-      navigate(PATHNAME.TO_HOME);
-    } catch (error) {
-      const { code } = error.response.data;
-
-      if (code === 1003) navigate(PATHNAME.TO_LOGIN);
-    }
+        if (code === 1003) navigate(PATHNAME.TO_LOGIN);
+      },
+    );
   };
 
   return (
@@ -84,7 +81,7 @@ const AccountPage = () => {
           />
           <AuthButton
             actionType="Update Profile"
-            action={updateNickname}
+            action={handelUpdateButtonClick}
             isDisabled={!isNicknameCorrect}
           />
 

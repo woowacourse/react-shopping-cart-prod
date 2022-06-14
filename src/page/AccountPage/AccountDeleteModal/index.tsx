@@ -1,50 +1,32 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
-import useAuth from 'hooks/db/useAuth';
+import useAuth from 'hooks/domain/useAuth';
 
 import { Modal, Input, Title, AuthButton, Container } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import { doInitializeCart } from 'modules/cart';
-import { doLogout } from 'modules/auth';
-import { deleteCookie } from 'utils/cookie';
 import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const AccountDeleteModal = ({ handleModal }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { renderSnackbar } = useSnackbar();
-  const { deleteAccountAPI } = useAuth();
+  const { deleteAccount } = useAuth();
 
   const [password, setPassword] = useState('');
-
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
 
   useEffect(() => {
     setIsCorrectPassword(password.length >= 10);
   }, [password]);
 
-  const deleteAccount = async () => {
-    try {
-      await deleteAccountAPI(password);
-
+  const handleDeleteButtonClick = () => {
+    deleteAccount(password, () => {
       renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, SNACKBAR.SUCCESS);
-      deleteCookie('accessToken');
-      dispatch(doInitializeCart());
-      dispatch(doLogout());
       handleModal();
       navigate(PATHNAME.TO_HOME);
-    } catch (error) {
-      const { code } = error.response.data;
-
-      if (code === 1003) {
-        handleModal();
-        navigate(PATHNAME.TO_HOME);
-      }
-    }
+    });
   };
 
   return (
@@ -65,7 +47,7 @@ const AccountDeleteModal = ({ handleModal }) => {
           />
           <AuthButton
             actionType="Delete your account"
-            action={deleteAccount}
+            action={handleDeleteButtonClick}
             isDisabled={!isCorrectPassword}
             color="red"
           />

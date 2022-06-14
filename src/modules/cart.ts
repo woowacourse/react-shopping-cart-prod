@@ -94,7 +94,7 @@ const cartReducer = (state = initState, action) => {
         order: action.cart.map(product => product.productId),
       };
 
-    case CART_ACTIONS.ORDER:
+    case CART_ACTIONS.ORDER: // TODO : selective delete와 겹침
       return {
         ...state,
         shoppingCart: state.shoppingCart.filter(

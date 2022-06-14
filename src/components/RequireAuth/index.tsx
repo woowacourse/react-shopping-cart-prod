@@ -1,5 +1,5 @@
 // @ts-nocheck
-import useAuth from 'hooks/db/useAuth';
+import useAuth from 'hooks/domain/useAuth';
 import { Navigate, useLocation } from 'react-router-dom';
 import { PATHNAME } from 'utils/constants';
 

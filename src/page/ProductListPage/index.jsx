@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
-import useProduct from 'hooks/db/useProduct';
+import useProduct from 'hooks/domain/useProduct';
 import { ProductItem } from 'components';
 import Styled from './index.style';
 

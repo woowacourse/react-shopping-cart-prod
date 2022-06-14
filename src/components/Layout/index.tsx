@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import useAuth from 'hooks/db/useAuth';
+import useAuth from 'hooks/domain/useAuth';
 
 import { Header, CartIcon, UserMenu } from 'components';
 
