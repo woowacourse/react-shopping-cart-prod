@@ -7,20 +7,16 @@ const PRODUCT_LIST_ACTION = {
   GET_LIST_ERROR: "productList/GET_ERROR",
 };
 
-export const getProductList = () => async (dispatch) => {
+export const getProductList = (serverUrlIndex) => async (dispatch) => {
   dispatch({ type: PRODUCT_LIST_ACTION.GET_LIST });
   try {
     const response = await getBaseServerProductList({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}`,
+      url: `${BASE_SERVER_URL(serverUrlIndex)}${SERVER_PATH.PRODUCT_LIST}`,
     });
 
-    if (!response.ok) {
-      throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
-    }
-
     const data = await response.json();
-    if (!data) {
-      throw new Error(`저장된 정보가 없습니다. 다시 시도해 주세요 :(`);
+    if (data.message) {
+      throw new Error(data.message);
     }
 
     dispatch({

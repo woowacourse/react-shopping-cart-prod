@@ -1,4 +1,4 @@
-import { BASE_SERVER_URL, SERVER_PATH } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, USER_ID_KEY } from "constants";
 import {
   deleteBaseServerCartItem,
   getBaseServerCartList,
@@ -19,20 +19,18 @@ export const CART_LIST_ACTION = {
   UPDATE_ITEM_COUNT_ERROR: "cartList/UPDATE_ITEM_COUNT_ERROR",
 };
 
-export const getCartList = () => async (dispatch) => {
+export const getCartList = (serverUrlIndex) => async (dispatch) => {
   dispatch({ type: CART_LIST_ACTION.GET_LIST });
   try {
     const response = await getBaseServerCartList({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`,
+      url: `${BASE_SERVER_URL(serverUrlIndex)}${
+        SERVER_PATH.CUSTOMER_LIST
+      }/${localStorage.getItem(USER_ID_KEY)}/carts`,
     });
 
-    if (!response.ok) {
-      throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
-    }
-
     const data = await response.json();
-    if (!data) {
-      throw new Error(`저장된 정보가 없습니다. 다시 시도해 주세요 :(`);
+    if (data.message) {
+      throw new Error(data.message);
     }
 
     dispatch({
@@ -47,52 +45,62 @@ export const getCartList = () => async (dispatch) => {
   }
 };
 
-export const deleteCartList = (id) => async (dispatch) => {
-  dispatch({ type: CART_LIST_ACTION.DELETE_LIST });
-  try {
-    const response = await deleteBaseServerCartItem({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}?productId=${id}`,
-    });
+export const deleteCartList =
+  (productId, serverUrlIndex) => async (dispatch) => {
+    dispatch({ type: CART_LIST_ACTION.DELETE_LIST });
+    try {
+      const response = await deleteBaseServerCartItem({
+        url: `${BASE_SERVER_URL(serverUrlIndex)}${
+          SERVER_PATH.CUSTOMER_LIST
+        }/${localStorage.getItem(USER_ID_KEY)}/carts?productId=${productId}`,
+      });
 
-    if (!response.ok) {
-      throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      if (!response.ok) {
+        const data = await response.json();
+        if (data.message) throw new Error(data.message);
+        throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      }
+
+      dispatch({
+        type: CART_LIST_ACTION.DELETE_LIST_SUCCESS,
+        deletedCartId: productId,
+      });
+    } catch (err) {
+      dispatch({
+        type: CART_LIST_ACTION.DELETE_LIST_ERROR,
+        errorMessage: err.message,
+      });
     }
+  };
 
-    dispatch({
-      type: CART_LIST_ACTION.DELETE_LIST_SUCCESS,
-      deletedCartId: id,
-    });
-  } catch (err) {
-    dispatch({
-      type: CART_LIST_ACTION.DELETE_LIST_ERROR,
-      errorMessage: err.message,
-    });
-  }
-};
+export const updateCartCount =
+  (productId, count, serverUrlIndex) => async (dispatch) => {
+    dispatch({ type: CART_LIST_ACTION.UPDATE_ITEM_COUNT });
+    try {
+      const response = await patchBaseServerCartItem({
+        url: `${BASE_SERVER_URL(serverUrlIndex)}${
+          SERVER_PATH.CUSTOMER_LIST
+        }/${localStorage.getItem(USER_ID_KEY)}/carts?productId=${productId}`,
+        body: JSON.stringify({ count }),
+      });
 
-export const updateCartCount = (id, count) => async (dispatch) => {
-  dispatch({ type: CART_LIST_ACTION.UPDATE_ITEM_COUNT });
-  try {
-    const response = await patchBaseServerCartItem({
-      url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}?productId=${id}`,
-      body: JSON.stringify({ count }),
-    });
+      if (!response.ok) {
+        const data = await response.json();
+        if (data.message) throw new Error(data.message);
+        throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      }
 
-    if (!response.ok) {
-      throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
+      dispatch({
+        type: CART_LIST_ACTION.UPDATE_ITEM_COUNT_SUCCESS,
+        modifiedCartItem: { productId, count },
+      });
+    } catch (err) {
+      dispatch({
+        type: CART_LIST_ACTION.UPDATE_ITEM_COUNT_ERROR,
+        errorMessage: err.message,
+      });
     }
-
-    dispatch({
-      type: CART_LIST_ACTION.UPDATE_ITEM_COUNT_SUCCESS,
-      modifiedCartItem: { id, count },
-    });
-  } catch (err) {
-    dispatch({
-      type: CART_LIST_ACTION.UPDATE_ITEM_COUNT_ERROR,
-      errorMessage: err.message,
-    });
-  }
-};
+  };
 
 const initialState = {
   isLoading: false,
@@ -119,7 +127,7 @@ const reducer = (state = initialState, action) => {
       return {
         isLoading: false,
         data: state.data.map((cart) => {
-          if (cart.id === action.modifiedCartItem.id) {
+          if (cart.productId === action.modifiedCartItem.productId) {
             cart.count = action.modifiedCartItem.count;
           }
           return cart;
@@ -129,7 +137,9 @@ const reducer = (state = initialState, action) => {
     case CART_LIST_ACTION.DELETE_LIST_SUCCESS:
       return {
         isLoading: false,
-        data: state.data.filter((cart) => cart.id !== action.deletedCartId),
+        data: state.data.filter(
+          (cart) => cart.productId !== action.deletedCartId
+        ),
         errorMessage: "",
       };
     case CART_LIST_ACTION.GET_LIST_SUCCESS:
@@ -143,7 +153,7 @@ const reducer = (state = initialState, action) => {
     case CART_LIST_ACTION.GET_LIST_ERROR:
       return {
         isLoading: false,
-        data: [],
+        data: state.data,
         errorMessage: action.errorMessage,
       };
     default:

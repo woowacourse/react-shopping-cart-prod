@@ -9,13 +9,9 @@ export const useFetch = (getFunc, initialData = {}, isEffect = true) => {
     try {
       const response = await getFunc();
 
-      if (!response.ok) {
-        throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
-      }
-
       const data = await response.json();
-      if (!data) {
-        throw new Error(`저장된 정보가 없습니다. 다시 시도해 주세요 :(`);
+      if (data.message) {
+        throw new Error(data.message);
       }
 
       setData(data);

@@ -1,8 +1,12 @@
+import { JWT_COOKIE_KEY } from "constants";
+import { getCookie } from "./cookie";
+
 const fetchServer =
   ({ method }) =>
   async ({
     headers = {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${getCookie(JWT_COOKIE_KEY)}`,
     },
     url,
     body,
@@ -25,5 +29,6 @@ export const patchBaseServerCartItem = fetchServer({ method: "PATCH" });
 
 export const registerBaseServer = fetchServer({ method: "POST" });
 export const loginBaseServer = fetchServer({ method: "POST" });
+export const getUserBaseServer = fetchServer({ method: "GET" });
 export const deleteUserBaseServer = fetchServer({ method: "POST" });
 export const updateUserBaseServer = fetchServer({ method: "PUT" });

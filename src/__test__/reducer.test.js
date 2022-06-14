@@ -14,7 +14,7 @@ describe("cartList 리듀서가 action에 맞춰서 상태를 의도한대로 �
       errorMessage: "",
     };
     const product = {
-      id: 1,
+      productId: 1,
       thumbnailUrl: "test-url",
       name: "ditto",
       price: 1000,

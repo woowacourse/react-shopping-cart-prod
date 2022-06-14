@@ -8,14 +8,14 @@ import PaymentAmount from "./PaymentAmount";
 import ProductCartList from "./ProductCartList";
 import { CartPageContainer, CartPageList, CartPagePayment } from "./styled";
 
-function ProductCartPage() {
+function ProductCartPage({ serverUrlIndex }) {
   const { data: cartList, isLoading, dispatch } = useStore("cartList");
 
   const [checkList, setCheckList] = useState([]);
 
   const [totalPrice, totalCount] = cartList.reduce(
-    (acc, { id, price, count }) => {
-      if (checkList.includes(id)) {
+    (acc, { productId, price, count }) => {
+      if (checkList.includes(productId)) {
         acc[0] += price * count;
         acc[1] += count;
       }
@@ -25,11 +25,12 @@ function ProductCartPage() {
   );
 
   useEffect(() => {
-    dispatch(getCartList());
+    dispatch(getCartList(serverUrlIndex));
   }, []);
 
   useEffect(() => {
-    if (!isLoading) setCheckList(cartList.map((cartItem) => cartItem.id));
+    if (!isLoading)
+      setCheckList(cartList.map((cartItem) => cartItem.productId));
   }, [isLoading]);
 
   return (

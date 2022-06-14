@@ -1,15 +1,15 @@
-import { Provider } from "react-redux";
-import { applyMiddleware, createStore } from "redux";
-import { composeWithDevTools } from "@redux-devtools/extension";
-import ReduxThunk from "redux-thunk";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "styled-components";
 
 import { theme } from "style";
+
 import { ROUTES } from "constants";
 
-import rootReducer from "reducers/index";
+import { getUser } from "reducers/user";
 
+import Redirect from "./hoc/Redirect";
 import Header from "components/layout/Header";
 import {
   OrderListPage,
@@ -24,39 +24,75 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import UserInfoPage from "./pages/UserInfoPage";
 
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(ReduxThunk))
-);
-
 function App() {
+  const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.isLogin);
+  const serverUrlIndex = useSelector((state) => state.server.serverUrlIndex);
+
+  useEffect(() => {
+    if (isLogin) {
+      dispatch(getUser(serverUrlIndex));
+    }
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      <Provider store={store}>
-        <Header />
-        <Main>
-          <Routes>
-            <Route path={ROUTES.ROOT} element={<ProductListPage />} />
-            <Route path={ROUTES.PRODUCT_LIST} element={<ProductListPage />} />
+      <Header isLogin={isLogin} serverUrlIndex={serverUrlIndex} />
+      <Main>
+        <Routes>
+          <Route
+            path={ROUTES.ROOT}
+            element={<ProductListPage serverUrlIndex={serverUrlIndex} />}
+          />
+          <Route
+            path={ROUTES.PRODUCT_LIST}
+            element={<ProductListPage serverUrlIndex={serverUrlIndex} />}
+          />
+          <Route
+            path={`${ROUTES.PRODUCT_DETAIL}/:productId`}
+            element={<ProductDetailPage serverUrlIndex={serverUrlIndex} />}
+          />
+          <Route
+            element={
+              <Redirect
+                redirectCondition={!isLogin}
+                redirectPath={ROUTES.LOGIN}
+              />
+            }
+          >
             <Route
-              path={`${ROUTES.PRODUCT_DETAIL}/:id`}
-              element={<ProductDetailPage />}
+              path={ROUTES.PRODUCT_CART}
+              element={<ProductCartPage serverUrlIndex={serverUrlIndex} />}
             />
-            <Route path={ROUTES.PRODUCT_CART} element={<ProductCartPage />} />
             <Route
               path={ROUTES.PRODUCT_ORDER_LIST}
               element={<OrderListPage />}
             />
-            <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
-            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-            <Route path={ROUTES.USER_INFO} element={<UserInfoPage />} />
             <Route
-              path="*"
-              element={<ErrorPage>잘못된 접근입니다.</ErrorPage>}
+              path={ROUTES.USER_INFO}
+              element={<UserInfoPage serverUrlIndex={serverUrlIndex} />}
             />
-          </Routes>
-        </Main>
-      </Provider>
+          </Route>
+          <Route
+            element={
+              <Redirect
+                redirectCondition={isLogin}
+                redirectPath={ROUTES.ROOT}
+              />
+            }
+          >
+            <Route
+              path={ROUTES.REGISTER}
+              element={<RegisterPage serverUrlIndex={serverUrlIndex} />}
+            />
+            <Route
+              path={ROUTES.LOGIN}
+              element={<LoginPage serverUrlIndex={serverUrlIndex} />}
+            />
+          </Route>
+          <Route path="*" element={<ErrorPage>잘못된 접근입니다.</ErrorPage>} />
+        </Routes>
+      </Main>
     </ThemeProvider>
   );
 }

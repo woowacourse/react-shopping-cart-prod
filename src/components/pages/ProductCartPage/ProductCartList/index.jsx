@@ -1,4 +1,4 @@
-import React from "react";
+import { useSelector } from "react-redux";
 
 import { useStore } from "hooks/useStore";
 import { deleteCartList, updateCartCount } from "reducers/cartList";
@@ -14,6 +14,7 @@ import Spinner from "components/common/Spinner";
 import ErrorPage from "components/pages/ErrorPage";
 
 function ProductCartList({ checkList, setCheckList }) {
+  const serverUrlIndex = useSelector((state) => state.server.serverUrlIndex);
   const {
     data: cartList,
     isLoading,
@@ -23,7 +24,7 @@ function ProductCartList({ checkList, setCheckList }) {
 
   const handleChangeAllCheckbox = () => {
     if (checkList.length === 0) {
-      setCheckList(cartList.map((cartItem) => cartItem.id));
+      setCheckList(cartList.map((cartItem) => cartItem.productId));
       return;
     }
     setCheckList([]);
@@ -31,38 +32,48 @@ function ProductCartList({ checkList, setCheckList }) {
 
   const handleDeleteAllItem = () => {
     checkList.forEach((carItemId) => {
-      dispatch(deleteCartList(carItemId));
+      dispatch(deleteCartList(carItemId, serverUrlIndex));
     });
     setCheckList([]);
   };
 
-  const handleClickIncreaseButton = (id, count) => () => {
-    if (!checkList.includes(id)) setCheckList((prev) => [...prev, id]);
-    dispatch(updateCartCount(id, count + 1));
-  };
-
-  const handleClickDecreaseButton = (id, count) => () => {
-    if (count <= 1) return;
-    if (!checkList.includes(id)) setCheckList((prev) => [...prev, id]);
-    dispatch(updateCartCount(id, count - 1));
-  };
-
-  const handleClickDeleteItemButton = (id) => () => {
-    dispatch(deleteCartList(id));
-    setCheckList((prev) => prev.filter((cartItemId) => cartItemId !== id));
-  };
-
-  const handleChangeCheckbox = (id) => () => {
-    if (checkList.includes(id)) {
-      setCheckList((prev) => prev.filter((cartItemId) => cartItemId !== id));
+  const handleClickIncreaseButton = (productId, count, quantity) => () => {
+    if (count >= quantity) {
+      alert("재고가 부족합니다.");
       return;
     }
-    setCheckList((prev) => [...prev, id]);
+
+    if (!checkList.includes(productId))
+      setCheckList((prev) => [...prev, productId]);
+    dispatch(updateCartCount(productId, count + 1, serverUrlIndex));
+  };
+
+  const handleClickDecreaseButton = (productId, count) => () => {
+    if (count <= 1) return;
+    if (!checkList.includes(productId))
+      setCheckList((prev) => [...prev, productId]);
+    dispatch(updateCartCount(productId, count - 1, serverUrlIndex));
+  };
+
+  const handleClickDeleteItemButton = (productId) => () => {
+    dispatch(deleteCartList(productId, serverUrlIndex));
+    setCheckList((prev) =>
+      prev.filter((cartItemId) => cartItemId !== productId)
+    );
+  };
+
+  const handleChangeCheckbox = (productId) => () => {
+    if (checkList.includes(productId)) {
+      setCheckList((prev) =>
+        prev.filter((cartItemId) => cartItemId !== productId)
+      );
+      return;
+    }
+    setCheckList((prev) => [...prev, productId]);
   };
 
   const renderListContent = () => {
     if (isLoading) return <Spinner />;
-    if (errorMessage) return <ErrorPage>에러: ${errorMessage} </ErrorPage>;
     if (cartList.length === 0) return <div>담은 상품이 없습니다.</div>;
     return (
       <>
@@ -74,7 +85,7 @@ function ProductCartList({ checkList, setCheckList }) {
             handleClickDecreaseButton={handleClickDecreaseButton}
             handleClickDeleteItemButton={handleClickDeleteItemButton}
             handleChangeCheckbox={handleChangeCheckbox}
-            key={cartItem.id}
+            key={cartItem.productId}
           />
         ))}
       </>
@@ -101,6 +112,7 @@ function ProductCartList({ checkList, setCheckList }) {
       <CartListCount>
         든든배송 상품 ({cartList?.length ?? "%ERROR%"}개)
       </CartListCount>
+      {errorMessage && <ErrorPage>에러: ${errorMessage} </ErrorPage>}
       {renderListContent()}
     </>
   );

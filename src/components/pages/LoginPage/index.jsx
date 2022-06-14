@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { theme } from "style";
 
@@ -16,24 +16,17 @@ import DefaultButton from "components/common/Button/DefaultButton";
 import { LoginPageContainer, LoginButtonContainer } from "./styled";
 import ErrorPage from "../ErrorPage";
 
-function LoginPage() {
-  const navigator = useNavigate();
-  const { data: user, isLoading, errorMessage, dispatch } = useStore("user");
+function LoginPage({ serverUrlIndex }) {
+  const { isLoading, errorMessage, dispatch } = useStore("user");
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
 
   const requestLogin = (e) => {
     e.preventDefault();
-    dispatch(login(emailRef.current.value, passwordRef.current.value));
+    dispatch(
+      login(emailRef.current.value, passwordRef.current.value, serverUrlIndex)
+    );
   };
-
-  const isLoginSuccess = !isLoading && !errorMessage && user.accessToken;
-  useEffect(() => {
-    if (isLoginSuccess) {
-      alert(`${user.nickname}님, 환영합니다~~ :D`);
-      navigator(ROUTES.ROOT, { replace: true });
-    }
-  }, [isLoading]);
 
   useEffect(() => {
     return () => {

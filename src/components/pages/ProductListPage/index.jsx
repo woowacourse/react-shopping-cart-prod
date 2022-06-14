@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 import { useStore } from "hooks/useStore";
 import { getProductList } from "reducers/productList";
@@ -8,7 +8,7 @@ import ProductCard from "./ProductCard";
 import GridContainer from "components/common/GridContainer";
 import ErrorPage from "components/pages/ErrorPage";
 
-function ProductListPage() {
+function ProductListPage({ serverUrlIndex }) {
   const {
     data: productList,
     isLoading,
@@ -17,8 +17,8 @@ function ProductListPage() {
   } = useStore("productList");
 
   useEffect(() => {
-    dispatch(getProductList());
-  }, []);
+    dispatch(getProductList(serverUrlIndex));
+  }, [serverUrlIndex]);
 
   if (isLoading) return <Spinner />;
   if (errorMessage)
@@ -32,7 +32,7 @@ function ProductListPage() {
   return (
     <GridContainer colNo={4}>
       {productList.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.productId} product={product} />
       ))}
     </GridContainer>
   );

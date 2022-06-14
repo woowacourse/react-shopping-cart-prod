@@ -10,7 +10,7 @@ const GridList = styled.ul`
 
   width: 100%;
   height: 100%;
-  padding: 0 16px;
+  padding: 16px;
 
   overflow-y: hidden;
 
