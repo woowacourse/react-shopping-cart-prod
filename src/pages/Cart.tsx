@@ -7,8 +7,11 @@ import { getCartListRequest } from 'redux/cartList/thunk';
 import styled from 'styled-components';
 
 const Cart = () => {
-  const { data: cartList, loading: loading_cartList } =
-    useThunkFetch(state => state.cartList, getCartListRequest(), { useErrorBoundary: true }) || {};
+  const { data: cartList, loading: loading_cartList } = useThunkFetch(
+    state => state.cartList,
+    getCartListRequest(),
+    { useErrorBoundary: true }
+  );
 
   const selectedCarts = cartList.filter(cart => cart.isChecked);
   const totalPrice = selectedCarts.reduce((acc, item) => item.price * item.quantity + acc, 0);

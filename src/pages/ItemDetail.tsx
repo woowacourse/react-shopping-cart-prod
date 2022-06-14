@@ -18,12 +18,12 @@ const ItemDetail = () => {
   const dispatch = useAppDispatch<CartListAction>();
   const navigate = useNavigate();
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
-  const { data: item, loading } =
-    useThunkFetch(state => state.item, getItemRequest(id), { useErrorBoundary: true }) || {};
-  const { data: cartList } =
-    useThunkFetch(state => state.cartList, getCartListRequest(), {
-      useErrorBoundary: true,
-    }) || {};
+  const { data: item, loading } = useThunkFetch(state => state.item, getItemRequest(id), {
+    useErrorBoundary: true,
+  });
+  const { data: cartList } = useThunkFetch(state => state.cartList, getCartListRequest(), {
+    useErrorBoundary: true,
+  });
 
   const isInCart = cartList?.some(cartItem => cartItem.productId === item?.id);
 

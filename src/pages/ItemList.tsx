@@ -12,12 +12,12 @@ import styled from 'styled-components';
 
 const ItemList = () => {
   const { id } = useParams();
-  const { loading, data: allItemList } =
-    useThunkFetch(state => state.itemList, getItemList(), { useErrorBoundary: true }) || {};
-  const { data: cartList } =
-    useThunkFetch(state => state.cartList, getCartListRequest(), {
-      useErrorBoundary: true,
-    }) || {};
+  const { loading, data: allItemList } = useThunkFetch(state => state.itemList, getItemList(), {
+    useErrorBoundary: true,
+  });
+  const { data: cartList } = useThunkFetch(state => state.cartList, getCartListRequest(), {
+    useErrorBoundary: true,
+  });
   const { isOpenSnackbar, openSnackbar } = useSnackBar();
 
   if (loading) return <Loading />;

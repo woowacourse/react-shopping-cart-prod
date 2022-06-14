@@ -26,6 +26,7 @@ const useThunkFetch = <StateType extends State, ActionType extends Action, Param
   useEffect(() => {
     dispatch(thunkActionCreator);
   }, []);
+
   if (useErrorBoundary) {
     if (state.error) {
       throw state.error;
