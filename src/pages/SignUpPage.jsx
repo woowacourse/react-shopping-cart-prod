@@ -14,7 +14,6 @@ import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../const
 
 function SignUpPage() {
   const navigate = useNavigate();
-  const accessToken = useSelector(({ user }) => user.accessToken);
   const [signUpInfo, setSignUpInfo] = useState({
     email: '',
     nickname: '',
@@ -26,16 +25,9 @@ function SignUpPage() {
 
   const handleSignUpInfoSubmit = async (e) => {
     e.preventDefault();
-
     try {
       validSignUpInfo(signUpInfo);
-      await axios.post(
-        SERVER_PATH.USER,
-        { email, nickname, password },
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
+      await axios.post(SERVER_PATH.USER, { email, nickname, password });
       alert(MESSAGE.SIGN_UP_SUCCESS);
       navigate(ROUTES_PATH.LOGIN);
     } catch (error) {
