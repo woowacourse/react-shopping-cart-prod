@@ -10,11 +10,7 @@ export const getCartListRequest = () => async (dispatch: Dispatch<CartListAction
 
   dispatch(cartListActions.getCartListActionGroup.request());
   try {
-    const response = await client.get('/customers/carts', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await client.get('/customers/carts');
 
     dispatch(cartListActions.getCartListActionGroup.success(response.data));
   } catch (e: unknown) {
@@ -26,21 +22,11 @@ export const getCartListRequest = () => async (dispatch: Dispatch<CartListAction
 
 export const putCartItemRequest =
   (id: number, quantity: number) => async (dispatch: Dispatch<CartListAction>) => {
-    const accessToken = localStorage.getItem('access-token');
-
     dispatch(cartListActions.putCartItemActionGroup.request());
     try {
-      const response = await client.put(
-        `/customers/carts/${id}`,
-        {
-          quantity,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await client.put(`/customers/carts/${id}`, {
+        quantity,
+      });
 
       dispatch(cartListActions.putCartItemActionGroup.success(response.data));
     } catch (e: unknown) {
@@ -52,19 +38,9 @@ export const putCartItemRequest =
 
 export const postCartItemRequest =
   (productId: number) => async (dispatch: Dispatch<CartListAction>) => {
-    const accessToken = localStorage.getItem('access-token');
-
     dispatch(cartListActions.postCartItemActionGroup.request());
     try {
-      const response = await client.post(
-        '/customers/carts',
-        { productId },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await client.post('/customers/carts', { productId });
 
       dispatch(cartListActions.postCartItemActionGroup.success(response.data));
     } catch (e: unknown) {
@@ -75,15 +51,9 @@ export const postCartItemRequest =
   };
 
 export const deleteCartItemRequest = (id: number) => async (dispatch: Dispatch<CartListAction>) => {
-  const accessToken = localStorage.getItem('access-token');
-
   dispatch(cartListActions.deleteCartItemActionGroup.request());
   try {
-    await client.delete(`/customers/carts/${id}`, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    await client.delete(`/customers/carts/${id}`);
 
     dispatch(cartListActions.deleteCartItemActionGroup.success(id));
   } catch (e: unknown) {
@@ -94,15 +64,9 @@ export const deleteCartItemRequest = (id: number) => async (dispatch: Dispatch<C
 };
 
 export const deleteAllCartItemRequest = () => async (dispatch: Dispatch<CartListAction>) => {
-  const accessToken = localStorage.getItem('access-token');
-
   dispatch(cartListActions.deleteAllCartItemActionGroup.request());
   try {
-    await client.delete('/customers/carts', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    await client.delete('/customers/carts');
 
     dispatch(cartListActions.deleteAllCartItemActionGroup.success());
   } catch (e: unknown) {

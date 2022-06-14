@@ -9,13 +9,11 @@ import { UserAction, userActions } from './action';
 export const getUser = () => async (dispatch: Dispatch<UserAction>) => {
   const accessToken = localStorage.getItem('access-token');
 
+  client.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
   dispatch(userActions.getUserGroup.request());
   try {
-    const response = await client.get('/customers/me', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    const response = await client.get('/customers/me');
 
     dispatch(userActions.getUserGroup.success(response.data));
   } catch (e: unknown) {
@@ -35,6 +33,8 @@ export const login =
       const { accessToken } = response.data;
 
       localStorage.setItem('access-token', accessToken);
+      client.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
       dispatch(userActions.loginGroup.success(response.data));
 
       return getState().user.data.name;
@@ -73,11 +73,7 @@ export const editUserInfo =
 
     dispatch(userActions.editGroup.request());
     try {
-      const response = await client.put<UserInfo>('/customers/me', userInfo, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      const response = await client.put<UserInfo>('/customers/me', userInfo);
 
       dispatch(userActions.editGroup.success(response.data));
     } catch (e: unknown) {
@@ -98,9 +94,6 @@ export const deleteUser =
     try {
       const response = await client.delete('/customers/me', {
         data: password,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
       });
 
       localStorage.removeItem('access-token');
