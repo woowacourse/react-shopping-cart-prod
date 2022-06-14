@@ -1,26 +1,31 @@
-import { useDispatch, useSelector } from 'react-redux';
-
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
-import { User } from 'types/index';
 import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
-import styled from 'styled-components';
+import { Button, Form, Input } from 'components/@shared';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { userActions } from 'redux/actions';
+import { User } from 'types';
+import { createInputValueGetter } from 'utils/dom';
+import { formatPhoneNumber } from 'utils/formats';
+
+import { USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
+
+import * as S from './EditUserInfoForm.styled';
 
 function EditUserInfoForm() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { username, email, address, phoneNumber } = useSelector(
-    (state: { user: User }) => state.user,
+    (state: { user: User }) => state.user
   );
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const onClickWithdrawButton = async () => {
-    if (!confirm(USER_MESSAGE.ASK_WITH_DRAW)) return;
+    if (!window.confirm(USER_MESSAGE.ASK_WITH_DRAW)) return;
 
     try {
       await authAPI.deleteUser();
+
       dispatch(userActions.resetUser());
       navigate(PATH.BASE);
     } catch (error) {
@@ -28,16 +33,23 @@ function EditUserInfoForm() {
     }
   };
 
-  const onSubmitEditUserInfoForm = async (e: React.FormEvent) => {
+  const onSubmitForm = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!(e.target instanceof HTMLFormElement)) return;
 
     const formElement = e.target.elements;
     const getInputValue = createInputValueGetter(formElement);
+    const phoneNumber = getInputValue('phoneNumber');
     const userInputInfo = {
       address: getInputValue('address'),
-      phoneNumber: getInputValue('phoneNumber'),
+      phoneNumber: formatPhoneNumber(phoneNumber),
     };
+
+    if (!phoneNumber.startsWith('010') || phoneNumber.length !== 11) {
+      alert(USER_MESSAGE.WRONG_PHONE_NUMBER);
+
+      return;
+    }
 
     try {
       const userInfo = await authAPI.editUserInfo(userInputInfo);
@@ -50,86 +62,47 @@ function EditUserInfoForm() {
   };
 
   return (
-    <StyledForm onSubmit={onSubmitEditUserInfoForm}>
-      <label htmlFor="id">아이디</label>
-      <input id="id" type="text" value={username} disabled />
-      <label htmlFor="email">이메일</label>
-      <input id="email" type="email" value={email} disabled />
-      <label htmlFor="address">주소</label>
-      <input
+    <Form onSubmit={onSubmitForm}>
+      <Input id="id" type="text" value={username} disabled>
+        아이디
+      </Input>
+      <Input id="email" type="email" value={email} disabled>
+        이메일
+      </Input>
+      <Input
         id="address"
         type="address"
         placeholder="주소를 입력해주세요"
         defaultValue={address}
         required
-      />
-      <label htmlFor="phoneNumber">핸드폰 번호</label>
-      <input
+      >
+        주소
+      </Input>
+      <Input
         id="phoneNumber"
-        type="text"
+        type="number"
+        maxLength={11}
         placeholder="핸드폰 번호를 입력해주세요"
-        pattern={'^010-?([0-9]{3,4})-?([0-9]{4})'}
-        defaultValue={phoneNumber}
+        defaultValue={phoneNumber?.replaceAll('-', '')}
         required
-      />
-      <StyledButtons>
-        <StyledWithdrawButton type="button" onClick={onClickWithdrawButton}>
+      >
+        핸드폰 번호
+      </Input>
+      <S.OptionContainer>
+        <Button
+          type="button"
+          onClick={onClickWithdrawButton}
+          marginTop="20px"
+          reverse={true}
+        >
           회원 탈퇴
-        </StyledWithdrawButton>
-        <StyledEditButton type="submit">회원 정보 수정</StyledEditButton>
-      </StyledButtons>
-    </StyledForm>
+        </Button>
+        <Button type="submit" marginTop="20px">
+          회원 정보 수정
+        </Button>
+      </S.OptionContainer>
+    </Form>
   );
 }
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-
-  width: 100%;
-
-  > label {
-    margin-top: 4px;
-    font-size: 14px;
-  }
-
-  > input {
-    border: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-    border-radius: 2px;
-    padding: 6px 8px;
-  }
-`;
-
-const StyledButtons = styled.div`
-  display: flex;
-  gap: 10px;
-  width: 100%;
-`;
-
-const StyledWithdrawButton = styled.button`
-  width: 50%;
-  height: 40px;
-  background: ${({ theme: { colors } }) => colors.white};
-  color: ${({ theme: { colors } }) => colors.redPink};
-  border: 1px solid ${({ theme: { colors } }) => colors.redPink};
-  border-radius: 5px;
-  margin-top: 20px;
-
-  font-size: 17px;
-  font-weight: 900;
-`;
-
-const StyledEditButton = styled.button`
-  width: 50%;
-  height: 40px;
-  background: ${({ theme: { colors } }) => colors.redPink};
-  color: ${({ theme: { colors } }) => colors.white};
-  border-radius: 5px;
-  margin-top: 20px;
-
-  font-size: 17px;
-  font-weight: 900;
-`;
 
 export default EditUserInfoForm;

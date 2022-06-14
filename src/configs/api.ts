@@ -1,11 +1,18 @@
 import Axios from 'axios';
 
 const axios = Axios.create({
-  baseURL: 'http://localhost:8080/api',
+  // 매트
+  baseURL:
+    'http://ec2-15-164-94-21.ap-northeast-2.compute.amazonaws.com:8080/api',
+  // 야호
+  // baseURL:
+  //   'http://ec2-13-125-121-5.ap-northeast-2.compute.amazonaws.com:8080/api',
+  // 차리
+  // baseURL:
+  //   'http://ec2-13-125-246-80.ap-northeast-2.compute.amazonaws.com:8080/api',
+  // 슬로
+  // baseURL:
+  //   'http://ec2-15-164-49-241.ap-northeast-2.compute.amazonaws.com:8080/api',
 });
 
-const productAxios = Axios.create({
-  baseURL: 'https://heroku-shopping-cart-lv2.herokuapp.com',
-});
-
-export { axios, productAxios };
+export default axios;

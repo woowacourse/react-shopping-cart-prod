@@ -1,20 +1,17 @@
-import PATH from 'constants/path';
-import { User } from 'types/index';
-import { axios } from 'configs/api';
+import axios from 'configs/api';
+import { User } from 'types';
 import { getAccessToken } from 'utils/auth';
 
+import PATH from 'constants/path';
+
 const authAPI = {
-  login: async function (user: User, isKeepLogin: boolean) {
+  login: async function (user: User) {
     try {
       const {
         data: { accessToken },
-      } = await axios.post(PATH.REQUEST_AUTH_TOKEN, user);
+      } = await axios.post(PATH.REQUEST_LOGIN, user);
 
-      if (isKeepLogin) {
-        localStorage.setItem('accessToken', accessToken);
-      } else {
-        sessionStorage.setItem('accessToken', accessToken);
-      }
+      sessionStorage.setItem('accessToken', accessToken);
 
       return this.getUserInfo(accessToken);
     } catch (error) {
@@ -26,7 +23,7 @@ const authAPI = {
 
   getUserInfo: async function (accessToken = getAccessToken()) {
     try {
-      const { data } = await axios.get(PATH.REQUEST_CUSTOMER_ME, {
+      const { data } = await axios.get(PATH.REQUEST_USER_INFO, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
@@ -38,9 +35,33 @@ const authAPI = {
     }
   },
 
+  duplicateUsername: async function (username: User['username']) {
+    try {
+      return await axios.post(PATH.REQUEST_SIGNUP_DUPLICATION_USERNAME, {
+        username,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  },
+
+  duplicateEmail: async function (email: User['email']) {
+    try {
+      return await axios.post(PATH.REQUEST_SIGNUP_DUPLICATION_EMAIL, {
+        email,
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
+  },
+
   signup: async function (user: User) {
     try {
-      await axios.post(PATH.REQUEST_CUSTOMER, user);
+      await axios.post(PATH.REQUEST_SIGNUP, user);
     } catch (error) {
       if (error instanceof Error) {
         throw error;
@@ -52,7 +73,7 @@ const authAPI = {
     const accessToken = getAccessToken();
 
     try {
-      await axios.put(PATH.REQUEST_CUSTOMER_ME, user, {
+      await axios.put(PATH.REQUEST_USER_INFO, user, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
@@ -68,11 +89,10 @@ const authAPI = {
     const accessToken = getAccessToken();
 
     try {
-      await axios.delete(PATH.REQUEST_CUSTOMER_ME, {
+      await axios.delete(PATH.REQUEST_USER_INFO, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
 
-      localStorage.removeItem('accessToken');
       sessionStorage.removeItem('accessToken');
     } catch (error) {
       if (error instanceof Error) {

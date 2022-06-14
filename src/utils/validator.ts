@@ -1,10 +1,14 @@
-import { CartStoreState, Product } from 'types/index';
+import { CartStoreState, Product } from 'types';
 
-const isProductInCart = (
+const getProductQuantityInCart = (
   productId: Product['id'],
-  cart: CartStoreState['cart'],
+  cart: CartStoreState['cart']
 ) => {
-  return cart.some(product => product.id === productId);
+  const product = cart.find(item => item.product.id === productId);
+
+  if (!product) return 0;
+
+  return product.quantity;
 };
 
 const isValidPasswordLength = (password: string) => {
@@ -13,8 +17,12 @@ const isValidPasswordLength = (password: string) => {
 
 const isValidPasswordAllCharacters = (password: string) => {
   return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]/.test(
-    password,
+    password
   );
 };
 
-export { isProductInCart, isValidPasswordLength, isValidPasswordAllCharacters };
+export {
+  getProductQuantityInCart,
+  isValidPasswordLength,
+  isValidPasswordAllCharacters,
+};

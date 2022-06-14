@@ -1,101 +1,76 @@
-import { CART_MESSAGE } from 'constants/message';
-import CheckBox from 'components/@shared/CheckBox';
+import cartAPI from 'apis/cart';
 import { ReactComponent as Delete } from 'assets/Delete.svg';
-import Link from 'components/@shared/Link';
-import NumberInput from 'components/@shared/NumberInput';
-import PATH from 'constants/path';
-import { Product } from 'types/index';
-import { cartActions } from 'redux/actions';
-import styled from 'styled-components';
+import { CheckBox, Link, NumberInput } from 'components/@shared';
 import { useDispatch } from 'react-redux';
+import { cartActions } from 'redux/actions';
+import { getAccessToken } from 'utils/auth';
 
-type Props = {
-  product: Product;
-  stock: number;
-  checked: boolean;
-};
+import { CART_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
 
-function CartItem({ product, stock, checked }: Props) {
-  const { id, name, image } = product;
+import * as S from './CartItem.styled';
+import { Props } from './CartItem.type';
+
+function CartItem({
+  cartItemId,
+  product,
+  quantity,
+  checked,
+  setChecked,
+}: Props) {
+  const { id, name, imageUrl } = product;
   const dispatch = useDispatch();
 
   const onClickDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
-    if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteToCart(id));
-    }
+    if (!window.confirm(CART_MESSAGE.ASK_DELETE)) return;
+
+    const accessToken = getAccessToken();
+
+    if (!accessToken) return;
+
+    cartAPI
+      .delete(accessToken, cartItemId)
+      .then(res => {
+        dispatch(cartActions.setCart(res));
+      })
+      .catch(error => {
+        alert(CART_MESSAGE.FAIL_DELETE);
+      });
   };
 
-  const onChangeCheckBox = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
-  ) => {
-    e.preventDefault();
+  const onChangeCartQuantity = (value: number) => {
+    const accessToken = getAccessToken();
 
-    dispatch(cartActions.toggleCheckAProduct(id));
-  };
+    if (!accessToken) return;
 
-  const onChangeCartStock = (value: number) => {
-    dispatch(cartActions.changeProductStock({ id, stock: value }));
+    cartAPI
+      .changeQuantity(accessToken, cartItemId, value)
+      .then(res => {
+        dispatch(cartActions.setCart(res));
+      })
+      .catch(error => {
+        alert(CART_MESSAGE.FAIL_CHANGE_QUANTITY);
+      });
   };
 
   return (
     <Link to={`${PATH.PRODUCT}/${id}`}>
-      <StyledCartItem>
-        <CheckBox id={id + ''} checked={checked} onChange={onChangeCheckBox} />
-        <img src={image} alt={name} />
-        <StyledProductName>{name}</StyledProductName>
-        <StyledDeleteButton type="button" onClick={onClickDeleteButton}>
+      <S.CartItem>
+        <CheckBox id={cartItemId} checked={checked} onChange={setChecked} />
+        <img src={imageUrl} alt={name} />
+        <S.ProductName>{name}</S.ProductName>
+        <S.DeleteButton type="button" onClick={onClickDeleteButton}>
           <Delete />
-        </StyledDeleteButton>
-        <NumberInput
-          max={product.stock}
-          value={stock}
-          setValue={onChangeCartStock}
-        />
-        <StyledPrice>
-          {(product.price * stock).toLocaleString('ko-KR')} 원
-        </StyledPrice>
-      </StyledCartItem>
+        </S.DeleteButton>
+        <NumberInput value={quantity} setValue={onChangeCartQuantity} />
+        <S.TotalPrice>
+          {(product.price * quantity).toLocaleString('ko-KR')} 원
+        </S.TotalPrice>
+      </S.CartItem>
     </Link>
   );
 }
-
-const StyledCartItem = styled.div`
-  width: 100%;
-  padding-top: 20px;
-  border-top: 1px solid ${({ theme: { colors } }) => colors.lightGray};
-
-  img {
-    aspect-ratio: 1 / 1;
-    height: 110px;
-    margin: 0 10px;
-  }
-`;
-
-const StyledProductName = styled.div`
-  position: relative;
-  top: -105px;
-  left: 150px;
-
-  width: fit-content;
-`;
-
-const StyledDeleteButton = styled.button`
-  position: relative;
-  top: -125px;
-  float: right;
-
-  background: none;
-`;
-
-const StyledPrice = styled.div`
-  position: relative;
-  top: -35px;
-  left: 105px;
-  float: right;
-
-  font-size: 14px;
-`;
 
 export default CartItem;

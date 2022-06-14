@@ -1,95 +1,40 @@
-import {
-  CartProductState,
-  CartStoreState,
-  Product,
-  ProductStoreState,
-} from 'types/index';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
-import CONDITION from 'constants/condition';
 import CartContent from 'components/CartContent/CartContent';
-import Loading from 'components/@shared/Loading';
-import { getProducts } from 'redux/thunks';
-import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { CartStoreState } from 'types';
+import { isLogin } from 'utils/auth';
+
+import { USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
+
+import * as S from './CartPage.styled';
 
 function CartPage() {
-  const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition,
-  );
-  const productList = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productList,
-  );
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+    (state: { cart: CartStoreState }) => state.cart.cart
   );
-  const [cartItems, setCartItems] = useState<Array<CartProductState>>([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if (productList.length < 1) {
-      getProducts(dispatch);
+    if (!isLogin()) {
+      if (window.confirm(USER_MESSAGE.NEED_LOGIN)) {
+        navigate(PATH.LOGIN, { replace: true });
+      }
+
+      return;
     }
-  }, [dispatch, productList.length]);
-
-  useEffect(() => {
-    if (productList.length < 1) return;
-
-    setCartItems(
-      cart.map(({ id, stock, checked }) => {
-        const item = productList.find(product => product.id === id) as Product;
-
-        return { product: item, stock, checked };
-      }),
-    );
-  }, [cart, productList]);
-
-  const renderSwitch = () => {
-    switch (condition) {
-      case CONDITION.LOADING:
-        return <Loading />;
-      case CONDITION.COMPLETE:
-        return <CartContent cartItems={cartItems} />;
-      case CONDITION.ERROR:
-        return (
-          <Message>상품 정보를 가져오는데 오류가 발생하였습니다 😱</Message>
-        );
-    }
-  };
+  }, [dispatch, navigate]);
 
   return (
-    <StyledPage>
+    <S.Page>
       <h2>장바구니</h2>
       <hr />
-      {renderSwitch()}
-    </StyledPage>
+      <CartContent cartItems={cart} />
+    </S.Page>
   );
 }
-
-const StyledPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  width: 800px;
-  margin: 50px auto;
-
-  h2 {
-    margin-bottom: 20px;
-
-    font-size: 20px;
-    font-weight: 900;
-  }
-
-  hr {
-    width: 100%;
-  }
-`;
-
-const Message = styled.div`
-  margin-top: 20px;
-
-  font-size: 25px;
-`;
 
 export default CartPage;

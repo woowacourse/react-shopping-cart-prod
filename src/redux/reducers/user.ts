@@ -1,6 +1,5 @@
-import { User, UserAction } from 'types/index';
-
 import { userTypes } from 'redux/actions';
+import { User, UserAction } from 'types';
 
 const initialState: User = {
   username: '',

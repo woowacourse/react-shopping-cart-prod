@@ -1,4 +1,4 @@
-import { User } from 'types/index';
+import { User } from 'types';
 
 const userTypes = {
   SET_USER: 'SET_USER',
