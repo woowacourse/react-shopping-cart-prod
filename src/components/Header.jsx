@@ -2,12 +2,13 @@ import styled from 'styled-components';
 import { GiShoppingCart } from 'react-icons/gi';
 import { COLORS } from '../styles/theme';
 import { Link } from 'react-router-dom';
-import { ROUTES_PATH } from '../constants';
-import { useSelector } from 'react-redux';
+import { ROUTES_PATH, STORAGE_KEY } from '../constants';
 import { FaUserCircle } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 function Header() {
-  const accessToken = useSelector(({ user }) => user.accessToken);
+  const cartList = useSelector(({ cart }) => cart.data);
+  const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
   return (
     <StyledHeader>
@@ -22,9 +23,11 @@ function Header() {
           <Link to={ROUTES_PATH.CART}>
             <StyledNavButton>장바구니</StyledNavButton>
           </Link>
+          <StyledNavButton>주문목록</StyledNavButton>
           {accessToken ? (
             <Link to={ROUTES_PATH.USER_INFO}>
               <FaUserCircle className="userIcon" />
+              <StyledCartCount>{cartList.length}</StyledCartCount>
             </Link>
           ) : (
             <>
@@ -90,6 +93,20 @@ const StyledNavButton = styled.button`
   font-weight: 500;
   font-size: 18px;
   color: ${COLORS.WHITE};
+`;
+
+const StyledCartCount = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 16px;
+  right: 9.3%;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  color: ${COLORS.WHITE};
+  background-color: ${COLORS.ORANGE};
 `;
 
 export default Header;

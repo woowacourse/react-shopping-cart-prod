@@ -8,25 +8,19 @@ const initialState = {
 
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_CART:
-    case actionTypes.DELETE_CART:
-    case actionTypes.UPDATE_ITEM_QUANTITY:
+    case actionTypes.GET_CART:
       return {
         ...state,
         isLoading: true,
         isError: false,
       };
-    case actionTypes.ADD_CART_SUCCESS:
-    case actionTypes.DELETE_CART_SUCCESS:
-    case actionTypes.UPDATE_ITEM_QUANTITY_SUCCESS:
+    case actionTypes.GET_CART_SUCCESS:
       return {
         ...state,
         data: action.payload,
         isLoading: false,
       };
-    case actionTypes.ADD_CART_ERROR:
-    case actionTypes.DELETE_CART_ERROR:
-    case actionTypes.UPDATE_ITEM_QUANTITY_ERROR:
+    case actionTypes.GET_CART_ERROR:
       return {
         ...state,
         isLoading: false,

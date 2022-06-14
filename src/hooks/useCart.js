@@ -1,26 +1,79 @@
+import axios from 'axios';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import {
-  addCartItemAsync,
-  deleteCartItemAsync,
-  updateItemQuantityAsync,
-} from '../store/cart/cart.actions';
+import { MESSAGE, SERVER_PATH, STORAGE_KEY } from '../constants';
+import { getCartItemAsync } from '../store/cart/cart.actions';
 
 const useCart = () => {
   const dispatch = useDispatch();
+  const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-  const addItem = (id) => {
-    dispatch(addCartItemAsync(id));
+  const addItem = async (id) => {
+    try {
+      await axios.post(`${SERVER_PATH.CARTS_PRODUCTS}/${id}`, null, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      dispatch(getCartItemAsync(accessToken));
+      alert(MESSAGE.ADD);
+    } catch (error) {
+      alert(error.response.data.message);
+    }
   };
 
-  const deleteItem = (id) => {
-    dispatch(deleteCartItemAsync(id));
+  const deleteItem = async (id, isAlert) => {
+    try {
+      await axios.delete(`${SERVER_PATH.CARTS_PRODUCTS}/${id}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      dispatch(getCartItemAsync(accessToken));
+      isAlert && alert(MESSAGE.REMOVE);
+    } catch (error) {
+      alert(error.response.data.message);
+    }
   };
 
-  const updateItemQuantity = (id, quantity) => {
-    dispatch(updateItemQuantityAsync(id, quantity));
+  const updateItemQuantity = async (id, quantity) => {
+    try {
+      await axios.patch(
+        `${SERVER_PATH.CARTS_PRODUCTS}/${id}`,
+        { quantity },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      dispatch(getCartItemAsync(accessToken));
+    } catch (error) {
+      alert(error.response.data.message);
+    }
   };
 
-  return { addItem, deleteItem, updateItemQuantity };
+  const handleCartItem = (id, isCart) => {
+    if (!accessToken) {
+      alert(MESSAGE.UNABLE_TO_REGISTER);
+      return;
+    }
+
+    if (isCart) {
+      const isAlert = true;
+      deleteItem(id, isAlert);
+      return;
+    }
+    addItem(id);
+  };
+
+  useEffect(() => {
+    if (accessToken) {
+      dispatch(getCartItemAsync(accessToken));
+    }
+  }, []);
+
+  return { deleteItem, updateItemQuantity, handleCartItem };
 };
 
 export default useCart;

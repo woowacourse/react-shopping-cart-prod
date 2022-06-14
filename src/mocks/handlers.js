@@ -18,11 +18,11 @@ const handlers = [
     return res(ctx.status(200), ctx.json(product));
   }),
 
-  rest.get(SERVER_PATH.CART, (req, res, ctx) => {
+  rest.get(SERVER_PATH.CARTS, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.post(`${SERVER_PATH.CART}/:id`, (req, res, ctx) => {
+  rest.post(`${SERVER_PATH.CARTS}/products/:id`, (req, res, ctx) => {
     const id = +req.params.id;
     const index = cartList.findIndex(({ id: productId }) => productId === id);
     const product = productList.find(({ id: productId }) => productId === id);
@@ -33,13 +33,13 @@ const handlers = [
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.delete(`${SERVER_PATH.CART}/:id`, (req, res, ctx) => {
+  rest.delete(`${SERVER_PATH.CARTS}/:id`, (req, res, ctx) => {
     const id = +req.params.id;
     cartList = cartList.filter((item) => item.id !== id);
     return res(ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.put(`${SERVER_PATH.CART}/:id`, (req, res, ctx) => {
+  rest.patch(`${SERVER_PATH.CARTS}/:id`, (req, res, ctx) => {
     const id = +req.params.id;
     const quantity = +req.body.quantity;
     const cartItemIndex = cartList.findIndex((cartItem) => cartItem.id === id);
@@ -66,7 +66,7 @@ const handlers = [
     return res(
       ctx.status(404),
       ctx.json({
-        message: '아이디나 비밀번호가 잘못되었습니다.',
+        message: '아이디 또는 비밀번호를 잘못 입력하였습니다.',
       })
     );
   }),

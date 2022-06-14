@@ -1,5 +1,9 @@
 import { MESSAGE } from '../constants';
 
+const isSpaces = (value) => {
+  return value.replace(/ /g, '').length !== value.length;
+};
+
 const isValidNickname = (inputValue) => {
   const nameReg = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{1,10}$/;
   return nameReg.test(inputValue);
@@ -20,47 +24,36 @@ const isValidPasswordConfirm = (password, passwordConfirm) => {
   return password === passwordConfirm;
 };
 
-// 각자 폼에 관련 validation
+const validLoginInfo = (email) => {
+  if (!isValidEmail(email)) {
+    throw new Error(MESSAGE.NOT_AN_EMAIL_FORMAT);
+  }
+};
+
+const validPasswordInfo = (password, passwordConfirm) => {
+  if (isSpaces(password)) {
+    throw new Error(MESSAGE.CAN_NOT_CONTAIN_SPACES);
+  }
+  if (!isValidPasswordConfirm(password, passwordConfirm)) {
+    throw new Error(MESSAGE.PASSWORD_DOES_NOT_MATCH);
+  }
+  if (!isValidPassword(password)) {
+    throw new Error(MESSAGE.NOT_A_PASSWORD_FORMAT);
+  }
+};
+
+const validUserInfo = (nickname) => {
+  if (!isValidNickname(nickname)) {
+    throw new Error(MESSAGE.INCORRECT_NICKNAME);
+  }
+};
 
 const validSignUpInfo = (signUpInfo) => {
   const { email, nickname, password, passwordConfirm } = signUpInfo;
 
-  if (!isValidEmail(email)) {
-    throw new Error(MESSAGE.ERROR_EMAIL);
-  }
-  if (!isValidNickname(nickname)) {
-    throw new Error(MESSAGE.ERROR_NICKNAME);
-  }
-  if (!isValidPassword(password)) {
-    throw new Error(MESSAGE.ERROR_PASSWORD);
-  }
-  if (!isValidPasswordConfirm(password, passwordConfirm)) {
-    throw new Error(MESSAGE.ERROR_PASSWORD_CONFIRM);
-  }
-};
-
-const validLoginInfo = (email) => {
-  if (!isValidEmail(email)) {
-    throw new Error(MESSAGE.ERROR_EMAIL);
-  }
-};
-
-const validPasswordInfo = (passwordInfo) => {
-  const { newPassword, newPasswordConfirm } = passwordInfo;
-
-  if (!isValidPassword(newPassword)) {
-    throw new Error(MESSAGE.ERROR_PASSWORD);
-  }
-  if (!isValidPasswordConfirm(newPassword, newPasswordConfirm)) {
-    throw new Error(MESSAGE.ERROR_PASSWORD_CONFIRM);
-  }
-};
-
-const validUserInfo = (userInfo) => {
-  const { nickname } = userInfo;
-  if (!isValidNickname(nickname)) {
-    throw new Error(MESSAGE.ERROR_NICKNAME);
-  }
+  validLoginInfo(email);
+  validUserInfo(nickname);
+  validPasswordInfo(password, passwordConfirm);
 };
 
 export { validLoginInfo, validSignUpInfo, validPasswordInfo, validUserInfo };

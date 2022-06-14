@@ -1,11 +1,15 @@
-function useUserForm(setForm) {
-  const handleUserInfoChange = (key) => (e) => {
-    setForm((prevState) => {
+import { useState } from 'react';
+
+const useUserForm = (initForm) => {
+  const [state, setState] = useState(initForm);
+
+  const handleUserInfoChange = (setState, key) => (e) => {
+    setState((prevState) => {
       return { ...prevState, [key]: e.target.value };
     });
   };
 
-  return handleUserInfoChange;
-}
+  return { state, setState, handleUserInfoChange };
+};
 
 export default useUserForm;

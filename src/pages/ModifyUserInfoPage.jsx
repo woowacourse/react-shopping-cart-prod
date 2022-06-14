@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import axios from 'axios';
 
 import Input from '../components/common/Input';
@@ -7,37 +6,40 @@ import Button from '../components/common/Button';
 import Loading from '../components/Loading';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUser from '../hooks/useUser';
 import useUserForm from '../hooks/useUserForm';
 import { validUserInfo } from '../utils/validations';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+import { SERVER_PATH, STORAGE_KEY, USER, USER_INFO_KEY } from '../constants';
 
 function ModifyUserInfoPage() {
-  const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState({});
-  const handleUserInfoChange = useUserForm(setUserInfo);
+  const { modifyUserInfo } = useUser();
+  const { state: userInfo, setState: setUserInfo, handleUserInfoChange } = useUserForm({});
+  const accessToken = JSON.parse(localStorage.getItem(STORAGE_KEY));
 
-  const handleUserInfoSubmit = async (e) => {
+  const handleUserInfoSubmit = (e) => {
     e.preventDefault();
-    const { nickname } = userInfo;
 
+    const { nickname } = userInfo;
     try {
-      validUserInfo(userInfo);
-      await axios.patch(SERVER_PATH.USER, { nickname });
-      alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
-      navigate(ROUTES_PATH.HOME);
+      validUserInfo(nickname);
+      modifyUserInfo(nickname);
     } catch (error) {
-      alert(error);
+      alert(error.message);
     }
   };
 
   useEffect(() => {
     async function getUserInfo() {
       try {
-        const { data } = await axios.get(SERVER_PATH.ME);
+        const { data } = await axios.get(SERVER_PATH.ME, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         setUserInfo(data);
       } catch (error) {
-        alert(error);
+        alert(error.response.data.message);
       }
     }
     getUserInfo();
@@ -57,9 +59,9 @@ function ModifyUserInfoPage() {
           maxLength={USER.NICKNAME.MAX}
           value={userInfo.nickname}
           placeholder="닉네임을 입력해주세요"
-          onChange={handleUserInfoChange(USER_INFO_KEY.NICKNAME)}
+          onChange={handleUserInfoChange(setUserInfo, USER_INFO_KEY.NICKNAME)}
         />
-        <Button text="수정하기" />
+        <Button>수정하기</Button>
       </StyledUserForm>
     </StyledUserContainer>
   );

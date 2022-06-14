@@ -1,14 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { COLORS } from '../../styles/theme';
 
-function Button({ text, ...rest }) {
-  return <StyledButton {...rest}>{text}</StyledButton>;
-}
-
-const StyledButton = styled.button`
-  height: 48px;
+const Button = styled.button`
   width: 462px;
+  height: 48px;
   margin: 14px 0;
   border-radius: 4px;
   border: none;
@@ -20,6 +15,13 @@ const StyledButton = styled.button`
   &:hover {
     background-color: ${COLORS.LIGHT_PRIMARY};
   }
+
+  ${(props) =>
+    props.orderButton &&
+    css`
+      width: 90%;
+      height: 54px;
+    `}
 `;
 
 export default Button;
