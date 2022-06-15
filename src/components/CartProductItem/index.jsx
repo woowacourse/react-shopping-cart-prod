@@ -11,7 +11,7 @@ import autoComma from 'utils/autoComma';
 
 const CartProductItem = ({ productId, name, price, image, quantity }) => {
   const [isInOrder, updateOrder] = useOrder(productId);
-  const { putCart } = usePutCartAPI();
+  const { increaseQuantity, decreaseQuantity } = usePutCartAPI();
   const { deleteProduct } = useDeleteProductAPI(productId);
 
   return (
@@ -26,14 +26,8 @@ const CartProductItem = ({ productId, name, price, image, quantity }) => {
         <Styled.DeleteButton onClick={deleteProduct} />
         <Counter
           quantity={quantity}
-          increase={() => {
-            putCart(productId, quantity + 1);
-          }}
-          decrease={() => {
-            if (quantity > 1) {
-              putCart(productId, quantity - 1);
-            }
-          }}
+          increase={() => increaseQuantity(productId, quantity)}
+          decrease={() => decreaseQuantity(productId, quantity)}
         />
         {autoComma(price)}원
       </Styled.RightSide>

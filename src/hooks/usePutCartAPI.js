@@ -45,7 +45,17 @@ const usePutCartAPI = () => {
     [dispatch, logoutByError, renderSnackbar],
   );
 
-  return { putCart, isPutCartLoading, error };
+  const increaseQuantity = (productId, quantity) => {
+    putCart(productId, quantity + 1);
+  };
+
+  const decreaseQuantity = (productId, quantity) => {
+    if (quantity > 1) {
+      putCart(productId, quantity - 1);
+    }
+  };
+
+  return { increaseQuantity, decreaseQuantity, putCart, isPutCartLoading, error };
 };
 
 export default usePutCartAPI;

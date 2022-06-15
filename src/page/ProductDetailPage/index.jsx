@@ -18,15 +18,19 @@ const ProductDetailPage = () => {
 
   const [isInCart, productInCart] = useCart(id);
   const { getProduct, product, isProductLoading } = useGetProductAPI();
-  const { putCart } = usePutCartAPI();
+  const { increaseQuantity, putCart } = usePutCartAPI();
 
   useEffect(() => {
     getProduct(id);
   }, [getProduct, id]);
 
   const handlePutCart = () => {
-    const updatedQuantity = isInCart ? productInCart.quantity + 1 : 1;
-    putCart(id, updatedQuantity);
+    if (isInCart) {
+      increaseQuantity(id, productInCart.quantity);
+    } else {
+      putCart(id, 1);
+    }
+
     navigate(ROUTES.CART);
   };
 
