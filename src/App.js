@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
@@ -16,31 +16,23 @@ import {
 import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 
 import { ROUTES } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
 import apiClient from 'apis/apiClient';
 import { loginComplete } from 'reducers/authReducer';
-import SeverSelectPage from 'page/ServerSelectPage';
+import ServerSelectPage from 'page/ServerSelectPage';
 
 function App() {
   const dispatch = useDispatch();
 
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
 
-  const getAccount = async () => {
-    try {
-      const accessToken = getCookie('accessToken');
-      if (!accessToken) return;
-
-      const response = await apiClient.get('/customers');
-      dispatch(loginComplete({ nickname: response.data.nickname }));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const getAccount = useCallback(async () => {
+    const response = await apiClient.get('/customers');
+    dispatch(loginComplete({ nickname: response.data.nickname }));
+  }, [dispatch]);
 
   useEffect(() => {
     getAccount();
-  }, []);
+  }, [getAccount]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -55,7 +47,7 @@ function App() {
             <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
             <Route path={ROUTES.ACCOUNT} element={<AccountPage />} />
           </Route>
-          <Route path={ROUTES.SERVER} element={<SeverSelectPage />} />
+          <Route path={ROUTES.SERVER} element={<ServerSelectPage />} />
         </Routes>
         <GlobalStyles />
       </BrowserRouter>
