@@ -8,7 +8,7 @@ import {
   PriceInfoContainer,
 } from "@/components/AmountBox/index.styled";
 
-const amountBoxType = {
+const amountBoxInterface = {
   cart: {
     header: "결제예상금액",
     priceInfo: "결제예상금액",
@@ -32,13 +32,13 @@ export default function AmountBox({
 }) {
   return (
     <AmountBoxWrapper>
-      <AmountBoxHeaderBox>{amountBoxType[type].header}</AmountBoxHeaderBox>
+      <AmountBoxHeaderBox>{amountBoxInterface[type].header}</AmountBoxHeaderBox>
       <PriceInfoContainer>
-        <p>{amountBoxType[type].priceInfo}</p>
+        <p>{amountBoxInterface[type].priceInfo}</p>
         <p>{totalPrice.toLocaleString()}원</p>
       </PriceInfoContainer>
       <Button>
-        {amountBoxType[type].buttonText(totalQuantity, totalPrice)}
+        {amountBoxInterface[type].buttonText(totalQuantity, totalPrice)}
       </Button>
     </AmountBoxWrapper>
   );

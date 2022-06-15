@@ -73,6 +73,11 @@ const PASSWORD = {
   MAX_LENGTH: 20,
 };
 
+const AMOUNTBOX_TYPE = {
+  CART: "cart",
+  PAY: "pay",
+};
+
 const REGULAR_EXPRESSION = {
   EMAIL:
     /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
@@ -91,5 +96,6 @@ export {
   INPUT_TYPE,
   NICKNAME,
   PASSWORD,
+  AMOUNTBOX_TYPE,
   REGULAR_EXPRESSION,
 };

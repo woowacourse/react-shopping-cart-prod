@@ -7,6 +7,7 @@ import AmountBox from "@/components/AmountBox";
 import useCheckBox from "@/hooks/useCheckBox";
 
 import { checkedQuantityPrice } from "@/utils";
+import { AMOUNTBOX_TYPE } from "@/constants";
 
 import CartWrapper from "@/pages/Cart/index.styled";
 import StyledWrapper from "@/components/Wrapper/index.styled";
@@ -34,7 +35,7 @@ function Cart() {
           deleteSelectedItems={deleteSelectedItems}
         />
         <AmountBox
-          type="cart"
+          type={AMOUNTBOX_TYPE.CART}
           totalQuantity={totalQuantity}
           totalPrice={totalPrice}
         />
