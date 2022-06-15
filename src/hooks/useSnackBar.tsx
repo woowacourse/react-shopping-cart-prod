@@ -9,8 +9,6 @@ export const MESSAGE = {
   editUser: '수정된 사항이 없습니다.',
 } as const;
 
-type Message = typeof MESSAGE[keyof typeof MESSAGE];
-
 const useSnackBar = () => {
   const [isOpenSnackbar, setIsOpenSnackbar] = useState(false);
   const [message, setMessage] = useState('');

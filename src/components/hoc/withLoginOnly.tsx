@@ -1,10 +1,7 @@
 import { ALERT_MESSAGE } from 'constants/index';
-import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
 import useUser from 'hooks/useUser';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getUser } from 'redux/user/thunk';
 import { PATH } from 'Routers';
 
 const withLoginOnly = (Component: React.ComponentType<unknown>) => {
