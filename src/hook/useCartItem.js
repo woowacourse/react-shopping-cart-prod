@@ -21,8 +21,8 @@ export default function useCartItem() {
 
   const {navigateLoginPage} = useAuth();
 
-  const deleteCartItem = (payload, confirmMessage = true) => {
-    const deleteConfirm = confirmMessage ? window.confirm(CONFIRM_MESSAGE.DELETE_CART) : true;
+  const deleteCartItem = (payload, showAlert = true) => {
+    const deleteConfirm = showAlert ? window.confirm(CONFIRM_MESSAGE.DELETE_CART) : true;
 
     if (deleteConfirm) {
       deleteCart({
