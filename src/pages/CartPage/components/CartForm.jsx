@@ -115,17 +115,18 @@ function CartForm({ className }) {
         <table className={styles.table}>
           <tbody>
             {cart.map((cartItem) => {
-              const isSelected = selectedCartItemIds.indexOf(cartItem.id) > -1;
+              const { id, quantity } = cartItem;
+              const isSelected = selectedCartItemIds.includes(cartItem.id);
               return (
-                <tr key={cartItem.id}>
+                <tr key={id}>
                   <td>
                     <CartItem
                       {...cartItem}
                       checked={isSelected}
-                      onChecked={handleCheck(cartItem.id)}
-                      onQuantityChange={handleQuantityChange(cartItem.id)}
-                      onDelete={handleDeleteProduct(cartItem.id)}
-                      quantity={cartItem.quantity}
+                      onChecked={handleCheck(id)}
+                      onQuantityChange={handleQuantityChange(id)}
+                      onDelete={handleDeleteProduct(id)}
+                      quantity={quantity}
                     />
                   </td>
                 </tr>
