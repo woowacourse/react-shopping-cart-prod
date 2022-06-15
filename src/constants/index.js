@@ -6,13 +6,13 @@ const API_URL = Object.freeze({
 });
 
 const SERVER_PATH = Object.freeze({
-  PRODUCTS: `${API_URL.KILLER_WHALE}/products`,
-  CART: `${API_URL.KILLER_WHALE}/carts`,
-  CART_PRODUCT: `${API_URL.KILLER_WHALE}/carts/products`,
-  USER: `${API_URL.KILLER_WHALE}/customers`,
-  LOGIN: `${API_URL.KILLER_WHALE}/login`,
-  PASSWORD: `${API_URL.KILLER_WHALE}/customers/password`,
-  ME: `${API_URL.KILLER_WHALE}/customers/me`,
+  PRODUCTS: `${API_URL.API_ZERO}/products`,
+  CART: `${API_URL.API_ZERO}/carts`,
+  CART_PRODUCT: `${API_URL.API_ZERO}/carts/products`,
+  USER: `${API_URL.API_ZERO}/customers`,
+  LOGIN: `${API_URL.API_ZERO}/login`,
+  PASSWORD: `${API_URL.API_ZERO}/customers/password`,
+  ME: `${API_URL.API_ZERO}/customers/me`,
 });
 
 const ROUTES_PATH = Object.freeze({
