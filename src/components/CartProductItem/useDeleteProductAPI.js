@@ -8,7 +8,7 @@ import useSnackbar from '../../hooks/useSnackbar';
 
 // DONE 5. delete 장바구니 내 선택된 상품 삭제
 const useDeleteProductAPI = productId => {
-  const [isDeleteLoading, setIsDeleteLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
@@ -24,11 +24,11 @@ const useDeleteProductAPI = productId => {
       renderSnackbar(customError.message || error.message, 'FAILED');
       setError(customError || error);
     } finally {
-      setIsDeleteLoading(false);
+      setIsLoading(false);
     }
   }, [dispatch, productId, renderSnackbar]);
 
-  return { deleteProduct, isDeleteLoading, error };
+  return { deleteProduct, isLoading, error };
 };
 
 export default useDeleteProductAPI;

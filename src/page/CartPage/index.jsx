@@ -20,7 +20,7 @@ const CartPage = () => {
   const { orderCart } = useOrderAPI();
   const { deleteCheckedProducts } = useDeleteCheckedProductsAPI(productIdsToDelete);
   const { totalPrice } = useTotalPrice();
-  const { getCart, isCartLoading } = useGetCartAPI();
+  const { getCart, isLoading: isCartLoading } = useGetCartAPI();
 
   useEffect(() => {
     getCart();

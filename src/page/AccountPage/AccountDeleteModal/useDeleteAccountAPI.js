@@ -13,7 +13,7 @@ import { deleteCookie } from 'utils/cookie';
 
 // 회원탈퇴
 const useDeleteAccountAPI = (handleModal, password, isCorrectPassword) => {
-  const [isDeleteLoading, setIsDeleteLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
@@ -42,11 +42,11 @@ const useDeleteAccountAPI = (handleModal, password, isCorrectPassword) => {
       renderSnackbar(customError.message || error.message, 'FAILED');
       setError(customError || error);
     } finally {
-      setIsDeleteLoading(false);
+      setIsLoading(false);
     }
   }, [dispatch, handleModal, isCorrectPassword, navigate, password, renderSnackbar]);
 
-  return { deleteAccount, isDeleteLoading, error };
+  return { deleteAccount, isLoading, error };
 };
 
 export default useDeleteAccountAPI;

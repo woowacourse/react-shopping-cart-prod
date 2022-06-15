@@ -8,8 +8,8 @@ import useGetProductsAPI from 'page/ProductListPage/useGetProductsAPI';
 import useGetCartAPI from 'hooks/useGetCartAPI';
 
 const ProductListPage = () => {
-  const { getProducts, products, isProductsLoading } = useGetProductsAPI();
-  const { getCart, isCartLoading } = useGetCartAPI();
+  const { getProducts, products, isLoading: isProductsLoading } = useGetProductsAPI();
+  const { getCart, isLoading: isCartLoading } = useGetCartAPI();
 
   useEffect(() => {
     getProducts();

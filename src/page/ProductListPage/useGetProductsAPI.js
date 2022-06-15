@@ -6,7 +6,8 @@ import { initializeProductList } from 'reducers/cartReducer';
 
 // DONE  1. get 상품 목록 가져오기
 const useGetProductsAPI = () => {
-  const [isProductsLoading, setIsProductsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [error, setError] = useState(null);
 
   const dispatch = useDispatch();
@@ -15,19 +16,17 @@ const useGetProductsAPI = () => {
   const getProducts = useCallback(async () => {
     if (products.length > 0) return;
 
-    setIsProductsLoading(true);
-
     try {
       const response = await apiClient.get('/products');
       dispatch(initializeProductList({ products: response.data }));
-      setIsProductsLoading(false);
     } catch (error) {
       setError(error);
-      setIsProductsLoading(false);
+    } finally {
+      setIsLoading(false);
     }
   }, [dispatch, products.length]);
 
-  return { getProducts, products, isProductsLoading, error };
+  return { getProducts, products, isLoading, error };
 };
 
 export default useGetProductsAPI;

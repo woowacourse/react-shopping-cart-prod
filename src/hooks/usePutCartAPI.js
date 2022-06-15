@@ -9,7 +9,8 @@ import useSnackbar from './useSnackbar';
 
 // DONE 4. put 장바구니 내 상품 수량 수정
 const usePutCartAPI = () => {
-  const [isPutCartLoading, setIsPutCartLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
   const [error, setError] = useState(null);
   const { logoutByError } = useLogout();
 
@@ -18,8 +19,6 @@ const usePutCartAPI = () => {
 
   const putCart = useCallback(
     async (productId, updatedQuantity) => {
-      setIsPutCartLoading(true);
-
       try {
         const response = await apiClient.put(`/cart/products/${productId}`, {
           quantity: updatedQuantity,
@@ -33,13 +32,13 @@ const usePutCartAPI = () => {
             quantity: response.data.quantity,
           }),
         );
-        setIsPutCartLoading(true);
       } catch (error) {
         const customError = error.response.data;
         setError(customError || error);
         logoutByError(customError);
         renderSnackbar(customError.message || error.message, 'FAILED');
-        setIsPutCartLoading(true);
+      } finally {
+        setIsLoading(false);
       }
     },
     [dispatch, logoutByError, renderSnackbar],
@@ -55,7 +54,7 @@ const usePutCartAPI = () => {
     }
   };
 
-  return { increaseQuantity, decreaseQuantity, putCart, isPutCartLoading, error };
+  return { increaseQuantity, decreaseQuantity, putCart, isLoading, error };
 };
 
 export default usePutCartAPI;
