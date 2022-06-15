@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import handleErrorLog from '../../utils/error';
+
 import { SERVER_PATH } from '../../constants';
 
 const actionTypes = {
@@ -30,6 +32,7 @@ const getCartItemListAsync = (accessToken) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
+    handleErrorLog(error);
     dispatch({ type: actionTypes.GET_CART_ERROR });
     alert(error.response.data.message);
   }
@@ -49,6 +52,7 @@ const addCartItemAsync = (id, accessToken) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
+    handleErrorLog(error);
     alert(error.response.data.message);
     dispatch({ type: actionTypes.ADD_CART_ERROR });
   }
@@ -68,6 +72,7 @@ const deleteCartItemAsync = (id, accessToken) => async (dispatch) => {
       payload: data,
     });
   } catch (error) {
+    handleErrorLog(error);
     alert(error.response.data.message);
     dispatch({ type: actionTypes.DELETE_CART_ERROR });
   }

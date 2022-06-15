@@ -6,6 +6,7 @@ import {
   validSignUpInfo,
   validUserInfo,
 } from '../../utils/validations';
+import handleErrorLog from '../../utils/error';
 
 import { MESSAGE, SERVER_PATH } from '../../constants';
 
@@ -33,6 +34,7 @@ const userLoginAsync = (loginInfo) => async (dispatch) => {
     dispatch({ type: actionTypes.ADD_TOKEN_SUCCESS, accessToken });
     alert(MESSAGE.LOGIN_SUCCESS);
   } catch (error) {
+    handleErrorLog(error);
     dispatch({ type: actionTypes.ADD_TOKEN_ERROR });
     alert(error.response.data.message);
   }
@@ -47,6 +49,7 @@ const userSignUpAsync = (signUpInfo) => async (dispatch) => {
     dispatch({ type: actionTypes.KEEP_TOKEN_SUCCESS });
     alert(MESSAGE.SIGN_UP_SUCCESS);
   } catch (error) {
+    handleErrorLog(error);
     dispatch({ type: actionTypes.KEEP_TOKEN_ERROR });
     alert(error.response.data.message);
   }
@@ -67,6 +70,7 @@ const userModifyPasswordAsync = (password, accessToken) => async (dispatch) => {
     dispatch({ type: actionTypes.DELETE_TOKEN_SUCCESS });
     alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);
   } catch (error) {
+    handleErrorLog(error);
     dispatch({ type: actionTypes.DELETE_TOKEN_ERROR });
     alert(error.response.data.message);
   }
@@ -87,6 +91,7 @@ const userModifyUserInfoAsync = (userInfo, accessToken) => async (dispatch) => {
     dispatch({ type: actionTypes.KEEP_TOKEN_SUCCESS });
     alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
   } catch (error) {
+    handleErrorLog(error);
     dispatch({ type: actionTypes.KEEP_TOKEN_ERROR });
     alert(error.response.data.message);
   }

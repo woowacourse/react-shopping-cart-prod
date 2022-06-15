@@ -28,11 +28,15 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         accessToken: action.accessToken,
+        isLoading: false,
+        isError: false,
       };
     case actionTypes.DELETE_TOKEN_SUCCESS:
       return {
         ...state,
         accessToken: null,
+        isLoading: false,
+        isError: false,
       };
     default:
       return state;

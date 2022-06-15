@@ -25,6 +25,7 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         data: action.payload,
         isLoading: false,
+        isError: false,
       };
     case actionTypes.GET_CART_ERROR:
     case actionTypes.ADD_CART_ERROR:
