@@ -14,7 +14,9 @@ const useLogout = () => {
     const { code, message } = customError;
 
     // 토큰 유효기간 만료, 유효하지 않은 토큰, 인증이 필요한 접근
-    if ([1002, 1003, 1004].includes(code)) {
+    const isInvalidAccessToken = [1002, 1003, 1004].includes(code);
+
+    if (isInvalidAccessToken) {
       deleteCookie('accessToken');
       dispatch(loginComplete());
       navigate(ROUTES.LOGIN);
