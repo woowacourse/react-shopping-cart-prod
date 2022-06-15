@@ -1,13 +1,15 @@
 import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
 
-import Home from "@/pages/Home";
-import Cart from "@/pages/Cart";
-import NotFound from "@/pages/NotFound";
-import Signin from "@/pages/Signin";
-import Signup from "@/pages/Signup";
-import UserEdit from "@/pages/UserEdit";
-import ProductDetail from "@/pages/ProductDetail";
+import {
+  Home,
+  Cart,
+  NotFound,
+  Signin,
+  Signup,
+  UserEdit,
+  ProductDetail,
+} from "@/pages";
 
 import Layout from "@/components/Layout";
 import Snackbar from "@/components/Snackbar";
