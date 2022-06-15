@@ -38,7 +38,7 @@ export const Name = styled.h1`
 export const Price = styled.p``;
 
 export const SoldOut = styled.p`
-  color: ${({ theme }) => theme.colorConfig.warning}
+  color: ${({ theme }) => theme.colorConfig.warning};
 `;
 
 export const TransparentButton = styled.button`
