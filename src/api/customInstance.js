@@ -33,8 +33,4 @@ const handleAPIError = (error) => {
 
 customInstance.interceptors.response.use((response) => response, handleAPIError);
 
-export const setBaseUrl = (index) => {
-  customInstance.defaults.baseURL = API_URLS[index].url;
-};
-
 export default customInstance;
