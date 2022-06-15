@@ -36,6 +36,10 @@ function LoginPage() {
       onSuccess: (res) => {
         dispatch({type: AUTH.SET_USER_INFO, payload: res});
       },
+      onFail: (error) => {
+        alert(error);
+        dispatch({type: AUTH.LOGOUT});
+      },
     });
   };
 
