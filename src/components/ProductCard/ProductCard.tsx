@@ -16,7 +16,7 @@ function ProductCard({
           {stock > 0 ? (
             <S.CardImageOverlay>
               <p>{description}</p>
-              <div>구매하기</div>
+              <div>상세보기</div>
             </S.CardImageOverlay>
           ) : (
             <S.OutOfStockOverlay>품절</S.OutOfStockOverlay>
