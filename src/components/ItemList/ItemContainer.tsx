@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CroppedImage from 'components/common/CroppedImage';
+import CroppedImage from 'components/@common/CroppedImage';
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import theme from 'styles/theme';
 import { memo, MouseEvent } from 'react';
@@ -8,16 +8,19 @@ import { Link } from 'react-router-dom';
 import { formatDecimal } from 'utils';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
+import useUpdateCartItem from 'hooks/useUpdateCartItem';
 import { Item } from 'types/domain';
+import { useAppSelector } from 'hooks/useAppSelector';
 
 interface ItemContainerProps {
   item: Item;
-  increaseQuantity: (id: number) => void;
 }
 
-const ItemContainer = ({ item, increaseQuantity }: ItemContainerProps) => {
+const ItemContainer = ({ item }: ItemContainerProps) => {
   const { id, imageUrl, name, price } = item;
   const dispatch = useDispatch();
+  const { data: cartList } = useAppSelector(state => state.cartListReducer);
+  const { increaseQuantity } = useUpdateCartItem(cartList);
 
   const handleClickItemContainer = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
     if (e.target instanceof SVGElement) {
