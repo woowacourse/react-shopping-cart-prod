@@ -368,6 +368,13 @@ function FillInfoStep() {
             {...registerInput('birthday', {
               min: '1900-01-01',
               max: formatDate(new Date(), 'yyyy-mm-dd'),
+              onClick: (e: React.MouseEvent<HTMLInputElement>) => {
+                const target = e.target as HTMLInputElement & {
+                  showPicker: () => void;
+                };
+
+                target.showPicker();
+              },
             })}
           />
           {touched['birthday'] && errors['birthday']?.length > 0 && (
