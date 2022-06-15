@@ -1,8 +1,7 @@
 function getSelectedCartItemIds(cart) {
-  return cart.reduce((acc, cartItem) => {
-    cartItem.selected && acc.push(cartItem.id);
-    return acc;
-  }, []);
+  return cart
+    .filter((cartItem) => cartItem.selected)
+    .map((cartItem) => cartItem.id);
 }
 
 export default getSelectedCartItemIds;
