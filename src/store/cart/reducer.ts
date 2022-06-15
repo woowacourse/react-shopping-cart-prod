@@ -39,10 +39,10 @@ const cartReducer = (state = initialState, action): CartState => {
 
     case CartActionType.ADD_CART_SUCCEEDED: {
       const {
-        payload: { product },
+        payload: { cartItem },
       } = action;
 
-      return { ...state, cartList: [...state.cartList, product], isLoading: false };
+      return { ...state, cartList: [...state.cartList, cartItem], isLoading: false };
     }
 
     case CartActionType.ADD_CART_FAILED: {
@@ -59,7 +59,14 @@ const cartReducer = (state = initialState, action): CartState => {
       } = action;
 
       const newCartList = state.cartList.filter(cart => cart.id !== deletedCartId);
-      return { ...state, isLoading: false, cartList: newCartList };
+      return {
+        ...state,
+        isLoading: false,
+        cartList: newCartList,
+        selectedCartItem: state.selectedCartItem.filter(
+          selectedCartId => selectedCartId !== deletedCartId,
+        ),
+      };
     }
 
     case CartActionType.DELETE_CART_FAILED: {
@@ -97,12 +104,12 @@ const cartReducer = (state = initialState, action): CartState => {
 
     case CartActionType.PATCH_CART_SUCCEEDED: {
       const {
-        payload: { id, newCartProduct },
+        payload: { id, quantity },
       } = action;
 
       const newCartList = state.cartList.map(cart => {
         if (cart.id === id) {
-          return newCartProduct;
+          return { ...cart, quantity };
         }
         return cart;
       });
@@ -140,6 +147,29 @@ const cartReducer = (state = initialState, action): CartState => {
         ...state,
         selectedCartItem: state.cartList.map(cart => cart.id),
       };
+    }
+
+    case CartActionType.ADD_ORDER_START: {
+      return { ...state, isLoading: true };
+    }
+
+    case CartActionType.ADD_ORDER_SUCCEEDED: {
+      const {
+        payload: { cartIdList },
+      } = action;
+
+      return {
+        ...state,
+        isLoading: false,
+        selectedCartItem: state.selectedCartItem.filter(
+          selectedCartItemId => !cartIdList.includes(selectedCartItemId),
+        ),
+        cartList: state.cartList.filter(({ id }) => !cartIdList.includes(id)),
+      };
+    }
+
+    case CartActionType.ADD_ORDER_FAILED: {
+      return { ...state, isLoading: false };
     }
 
     default: {

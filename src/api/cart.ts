@@ -1,51 +1,63 @@
 import { clearCache, caching } from '@/api/cache';
 import { API_URL } from '@/api/constants';
+import { getCookie } from '@/api/cookie';
 import axios from 'axios';
 
 const cartAPI = axios.create({
-  baseURL: `${API_URL}/carts`,
+  baseURL: `${API_URL}/cartItems`,
 });
 
-const cartListEndpoint = `${API_URL}/carts/`;
+export const addCart = (body): Promise<any> => {
+  const accessToken = getCookie('access-token');
 
-export const addCart = async (product): Promise<any> => {
-  const response = await cartAPI.post('/', product);
+  clearCache(`${API_URL}/cartItems_${accessToken}`);
 
-  if (response.statusText !== 'Created') {
-    throw Error('서버 오류!');
-  }
-
-  clearCache(cartListEndpoint);
+  return cartAPI.post('/', body, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
 
 export const getCart = () => {
-  return caching(async (): Promise<any> => {
-    const response = await cartAPI.get('/');
+  const accessToken = getCookie('access-token');
 
-    if (response.statusText !== 'OK') {
-      throw Error('서버 오류!');
-    }
-
-    return {
-      data: response.data,
-    };
-  }, cartListEndpoint);
+  return caching(() => {
+    return cartAPI.get('/', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  }, `${API_URL}/cartItems_${accessToken}`);
 };
 
-export const deleteCart = async (id): Promise<any> => {
-  const response = await cartAPI.delete(`/${id}`);
-  if (response.statusText !== 'OK') {
-    throw Error('서버 오류!');
-  }
+export const deleteCart = (id): Promise<any> => {
+  const accessToken = getCookie('access-token');
 
-  clearCache(cartListEndpoint);
+  clearCache(`${API_URL}/cartItems_${accessToken}`);
+
+  return cartAPI.delete(`/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
 
-export const patchCart = async (id, newCartProduct): Promise<any> => {
-  const response = await cartAPI.patch(`/${id}`, newCartProduct);
-  if (response.statusText !== 'OK') {
-    throw Error('서버 오류!');
-  }
+export const patchCart = async (id, quantity): Promise<any> => {
+  const accessToken = getCookie('access-token');
 
-  clearCache(cartListEndpoint);
+  clearCache(`${API_URL}/cartItems_${accessToken}`);
+
+  return cartAPI.patch(
+    `/${id}`,
+    {},
+    {
+      params: {
+        quantity,
+      },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
 };

@@ -9,10 +9,12 @@ export const ROUTE: {
   Edit: string;
   Leave: string;
   EditPassword: string;
+  OrderDetail: string;
 } = {
   Home: '/',
   ShoppingCart: '/shopping-cart',
   OrderList: '/order-list',
+  OrderDetail: '/order-list/:orderId',
   ProductDetail: '/products/:productId',
   SignUp: '/customers/signup',
   Login: '/customers/login',
@@ -20,4 +22,10 @@ export const ROUTE: {
   Leave: '/customers/leave',
   EditPassword: '/customers/edit/password',
   NotFound: '/*',
+};
+
+export const PAYMENTS_ROUTE = {
+  CardList: 'payments',
+  CardAdd: 'payments/cardlist/add',
+  CardSuccess: 'payments/cardlist/add/success',
 };

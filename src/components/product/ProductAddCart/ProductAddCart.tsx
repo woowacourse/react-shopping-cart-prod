@@ -1,39 +1,21 @@
-import * as Styled from './CartAdd.style';
+import * as Styled from './ProductAddCart.style';
 import * as GlobalStyled from '../../../styles/GlobalStyles';
 import Counter from '../../common/Counter/Counter';
 import { useCount } from '../../../hooks/useCount';
 import { ProductType } from '@/domain/product';
-import { useNavigate } from 'react-router-dom';
-import { ROUTE } from '@/route';
-import { useDispatch } from 'react-redux';
-import { fetchAddCartAsync } from '@/store/cart/action';
-interface CartAddPropsType {
-  product: Pick<ProductType, 'name' | 'price' | 'quantity'>;
-  closeModal: () => void;
+interface ProductAddCartPropsType {
+  product: ProductType;
+  onClickAddCartButton: (id?: number, count?: number) => void;
 }
 
-function CartAdd({ product, closeModal }: CartAddPropsType) {
-  const { name, price, quantity } = product;
-
-  const dispatch = useDispatch();
-
-  const navigate = useNavigate();
+function ProductAddCart({ product, onClickAddCartButton }: ProductAddCartPropsType) {
+  const { id, name, price, stock } = product;
 
   const { count, increaseCount, decreaseCount } = useCount({
     initialValue: 1,
     min: 1,
-    max: quantity,
+    max: stock,
   });
-
-  const onClickCartAdd = () => {
-    dispatch(fetchAddCartAsync({ ...product, quantity: count }) as any);
-
-    if (confirm('장바구니로 이동하시겠습니까?')) {
-      navigate(ROUTE.ShoppingCart);
-    }
-
-    closeModal();
-  };
 
   return (
     <Styled.Container>
@@ -52,9 +34,9 @@ function CartAdd({ product, closeModal }: CartAddPropsType) {
         <Styled.TotalPrice>{price * count} 원</Styled.TotalPrice>
       </Styled.TotalPriceWrapper>
 
-      <Styled.Button onClick={onClickCartAdd}>장바구니에 담기</Styled.Button>
+      <Styled.Button onClick={() => onClickAddCartButton(id, count)}>장바구니에 담기</Styled.Button>
     </Styled.Container>
   );
 }
 
-export default CartAdd;
+export default ProductAddCart;

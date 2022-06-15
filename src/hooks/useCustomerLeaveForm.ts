@@ -31,7 +31,7 @@ export const useCustomerLeaveForm = () => {
   const onSubmitLeaveForm = e => {
     e.preventDefault();
 
-    if (leaveReason.length === 0 || resignUpAgreement === false || pointRuleAgreement === false) {
+    if (leaveReason.length === 0 || !resignUpAgreement || !pointRuleAgreement) {
       triggerFailedSnackbar('형식에 맞게 입력란을 작성해주세요.');
       return;
     }

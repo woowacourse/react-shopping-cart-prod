@@ -6,6 +6,7 @@ import Theme from '@/styles/Theme';
 import { GlobalStyle } from '@/styles/GlobalStyles';
 import { store } from '@/store/store';
 import App from '@/components/App';
+import SelectServer from '@/components/common/SelectServer/SelectServer';
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('./mocks/browser');
   worker.start();
@@ -19,6 +20,7 @@ root.render(
     <ThemeProvider theme={Theme}>
       <Provider store={store}>
         <App />
+        <SelectServer />
       </Provider>
     </ThemeProvider>
   </React.StrictMode>,

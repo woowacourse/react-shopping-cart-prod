@@ -8,6 +8,7 @@ export const enum size {
 
 const theme: DefaultTheme = {
   brandColor_1: '#141852',
+  brandColor_2: '#035397',
 
   mobile: `@media (max-width: ${size.mobile}px)`,
   tablet: `@media (max-width: ${size.tablet}px)`,

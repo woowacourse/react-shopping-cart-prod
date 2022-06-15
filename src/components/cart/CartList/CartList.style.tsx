@@ -10,7 +10,6 @@ export const Container = styled.div`
 export const Amount = styled.div`
   font-size: 1.3rem;
   padding: 20px 0;
-  border-bottom: 2px solid ${({ theme }) => theme.greyColor_1};
 `;
 
 export const SelectWrapper = styled.div`
@@ -25,4 +24,13 @@ export const ButtonForm = styled.div`
 
   gap: 20px;
   line-height: 0;
+`;
+
+export const CartItemWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
 `;
