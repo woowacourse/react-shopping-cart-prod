@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const AmountBoxWrapper = styled.div`
+const StyledAmountBox = styled.div`
   width: 90%;
   height: 300px;
   border: ${({ theme }) => `1px solid ${theme.colors.gray_400}`};
@@ -43,4 +43,4 @@ const PriceInfoContainer = styled.div`
   }
 `;
 
-export { AmountBoxHeaderBox, AmountBoxWrapper, PriceInfoContainer };
+export { AmountBoxHeaderBox, PriceInfoContainer, StyledAmountBox };

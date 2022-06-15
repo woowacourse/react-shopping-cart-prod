@@ -1,7 +1,7 @@
 import {
   AmountBoxHeaderBox,
-  AmountBoxWrapper,
   PriceInfoContainer,
+  StyledAmountBox,
 } from "@/components/AmountBox/index.styled";
 import Button from "@/components/Button";
 
@@ -28,7 +28,7 @@ export default function AmountBox({
   totalPrice,
 }) {
   return (
-    <AmountBoxWrapper>
+    <StyledAmountBox>
       <AmountBoxHeaderBox>{amountBoxInterface[type].header}</AmountBoxHeaderBox>
       <PriceInfoContainer>
         <p>{amountBoxInterface[type].priceInfo}</p>
@@ -37,6 +37,6 @@ export default function AmountBox({
       <Button>
         {amountBoxInterface[type].buttonText(totalQuantity, totalPrice)}
       </Button>
-    </AmountBoxWrapper>
+    </StyledAmountBox>
   );
 }

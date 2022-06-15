@@ -23,7 +23,7 @@ const fadeout = keyframes`
     }
 `;
 
-const SnackbarContainer = styled.div`
+const StyledSnackbar = styled.div`
   position: fixed;
   z-index: 1000;
   bottom: 1rem;
@@ -44,4 +44,4 @@ const SnackbarContainer = styled.div`
   animation: ${fadein} 0.5s, ${fadeout} 0.5s ${(props) => props.time};
 `;
 
-export default SnackbarContainer;
+export default StyledSnackbar;

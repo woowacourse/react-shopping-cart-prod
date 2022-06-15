@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import SnackbarContainer from "@/components/Snackbar/index.styled";
+import StyledSnackbar from "@/components/Snackbar/index.styled";
 import { toggleSnackbarClose } from "@/redux/modules/snackbar";
 
 function Snackbar({ timeout }) {
@@ -30,9 +30,9 @@ function Snackbar({ timeout }) {
 
   return (
     SHOW && (
-      <SnackbarContainer time={TIME}>
+      <StyledSnackbar time={TIME}>
         <p>{MESSAGE}</p>
-      </SnackbarContainer>
+      </StyledSnackbar>
     )
   );
 }
