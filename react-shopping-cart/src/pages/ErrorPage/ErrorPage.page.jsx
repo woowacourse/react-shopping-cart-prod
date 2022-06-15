@@ -10,7 +10,9 @@ function ErrorPage({ children }) {
     <PageContainer>
       <FlexBox direction="column" gap="50px" justifyContent="center">
         <Error>{children}</Error>
-        <HomeLink to="/">홈으로</HomeLink>
+        <HomeLink reloadDocument to="/">
+          홈으로
+        </HomeLink>
       </FlexBox>
     </PageContainer>
   );
