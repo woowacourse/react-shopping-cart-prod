@@ -1,4 +1,4 @@
-import appClient from "@/utils/appClient";
+import appClient from "@/api/appClient";
 import { getCookie } from "@/utils/auth";
 
 export const ACTION = {
@@ -89,7 +89,7 @@ export function cartReducer(state = initialState, action) {
       const { id, quantity } = action.payload;
       const updatedCart = state.cart.map((item) => {
         if (item.id === id) {
-          return { ...item, quantity: quantity };
+          return { ...item, quantity };
         }
         return item;
       });

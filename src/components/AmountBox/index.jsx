@@ -1,10 +1,9 @@
-import Button from "@/components/Button";
-
 import {
-  AmountBoxWrapper,
   AmountBoxHeaderBox,
+  AmountBoxWrapper,
   PriceInfoContainer,
 } from "@/components/AmountBox/index.styled";
+import Button from "@/components/Button";
 
 const amountBoxInterface = {
   cart: {

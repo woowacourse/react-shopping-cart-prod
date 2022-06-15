@@ -1,22 +1,16 @@
 import { useNavigate } from "react-router-dom";
 
-import { addCartItem } from "@/redux/modules/cart";
-
-import useFetch from "@/hooks/useFetch";
-
 import CartIcon from "@/assets/images/cart.svg";
-
-import Thumbnail from "@/components/Thumbnail";
 import Button from "@/components/Button";
-
-import { getCookie } from "@/utils/auth";
-
 import {
   StyledProductInfo,
   StyledProductItem,
 } from "@/components/Item/index.styled";
-
-import { PATH, MESSAGE } from "@/constants";
+import Thumbnail from "@/components/Thumbnail";
+import { MESSAGE, PATH } from "@/constants";
+import useFetch from "@/hooks/useFetch";
+import { addCartItem } from "@/redux/modules/cart";
+import { getCookie } from "@/utils/auth";
 
 function Item({ id, name, price, imageUrl }) {
   const { getData: addCart } = useFetch("post", "users/me/carts", addCartItem);

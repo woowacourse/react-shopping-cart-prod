@@ -1,9 +1,9 @@
 import { rest } from "msw";
-import { productList } from "@/mocks/data";
 
 import { BASE_URL } from "@/constants";
+import { productList } from "@/mocks/data";
 
-let users = [
+const users = [
   { email: "woowa@gmail.com", password: "password11", nickname: "dory" },
 ];
 

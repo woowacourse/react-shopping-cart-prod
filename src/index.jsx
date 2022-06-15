@@ -1,11 +1,9 @@
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
-
-import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
+import { PersistGate } from "redux-persist/integration/react";
 
 import App from "@/App";
-
 import Loading from "@/components/Loading";
 import configureStore from "@/redux/index";
 

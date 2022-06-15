@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 
 import StyledInput from "@/components/Input/index.styled";
 
-const Input = (
+function Input(
   {
     type = "text",
     placeholder,
@@ -14,7 +14,7 @@ const Input = (
     onChange,
   },
   ref
-) => {
+) {
   return (
     <StyledInput
       type={type}
@@ -28,6 +28,6 @@ const Input = (
       ref={ref}
     />
   );
-};
+}
 
 export default forwardRef(Input);

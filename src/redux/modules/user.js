@@ -1,10 +1,7 @@
-import appClient from "@/utils/appClient";
-import { setCookie, deleteCookie } from "@/utils/auth";
-
+import appClient from "@/api/appClient";
+import { ERROR_CODE, MESSAGE } from "@/constants";
 import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
-
-import { MESSAGE, ERROR_CODE } from "@/constants";
-import { getCookie } from "@/utils/auth";
+import { deleteCookie, setCookie } from "@/utils/auth";
 
 const ACTION_TYPES = {
   LOGIN_SUCCESS: "LOGIN_SUCCESS",
@@ -22,9 +19,8 @@ const initialState = {
 };
 
 export const getUserInfo = () => async (dispatch) => {
-  const headers = { Authorization: `Bearer ${getCookie("accessToken")}` };
   try {
-    const { data } = await appClient.get("/users/me", { headers });
+    const { data } = await appClient.get("/users/me");
     dispatch({ type: ACTION_TYPES.GET_USER_INFO_SUCCESS, payload: data });
   } catch (error) {
     const { errorCode } = error.response.data;

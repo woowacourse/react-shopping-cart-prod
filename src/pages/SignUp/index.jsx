@@ -1,16 +1,13 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
+import Field from "@/components/Field";
+import Form from "@/components/Form";
+import { INPUT_TYPE, NICKNAME, PASSWORD, PATH, STATUS } from "@/constants";
+import useFetch from "@/hooks/useFetch";
 import useInput from "@/hooks/useInput";
 import usePasswordConfirm from "@/hooks/usePasswordConfirm";
-
-import Form from "@/components/Form";
-import Field from "@/components/Field";
-import useFetch from "@/hooks/useFetch";
-
-import { INPUT_TYPE, STATUS, NICKNAME, PASSWORD, PATH } from "@/constants";
-
 import StyledSignupContainer from "@/pages/SignUp/index.style";
 
 function Signup() {

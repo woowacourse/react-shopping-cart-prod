@@ -1,23 +1,20 @@
-import { Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@emotion/react";
-
-import {
-  Home,
-  Cart,
-  NotFound,
-  Signin,
-  Signup,
-  UserEdit,
-  ProductDetail,
-} from "@/pages";
+import { Route, Routes } from "react-router-dom";
 
 import Layout from "@/components/Layout";
 import Snackbar from "@/components/Snackbar";
-
-import theme from "@/styles/theme";
-import GlobalStyle from "@/styles/reset";
-
 import { PATH } from "@/constants";
+import {
+  Cart,
+  Home,
+  NotFound,
+  ProductDetail,
+  Signin,
+  Signup,
+  UserEdit,
+} from "@/pages";
+import GlobalStyle from "@/styles/reset";
+import theme from "@/styles/theme";
 
 if (process.env.NODE_ENV === "development") {
   const { worker } = require("./mocks/browser");

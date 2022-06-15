@@ -1,8 +1,7 @@
 import NotFoundImg from "@/assets/images/404.png";
-
 import {
-  StyledNotFoundMessage,
   StyledNotFoundContainer,
+  StyledNotFoundMessage,
 } from "@/pages/NotFound/index.styled";
 
 function NotFound() {

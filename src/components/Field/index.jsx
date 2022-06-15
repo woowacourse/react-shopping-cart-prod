@@ -1,8 +1,6 @@
-import Input from "@/components/Input";
-
-import { ERROR_MESSAGE } from "@/constants";
-
 import StyledField from "@/components/Field/index.styled";
+import Input from "@/components/Input";
+import { ERROR_MESSAGE } from "@/constants";
 
 function Field({
   labelName,

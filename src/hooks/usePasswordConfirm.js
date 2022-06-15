@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { STATUS, ERROR_STATUS } from "@/constants";
+import { ERROR_STATUS, STATUS } from "@/constants";
 
 const usePasswordConfirm = () => {
   const [passwordConfirm, setPasswordConfirm] = useState({

@@ -5,7 +5,9 @@ export default {
   title: "Dropdown",
 };
 
-const Template = () => <Dropdown />;
+function Template() {
+  return <Dropdown />;
+}
 
 export const Defaults = Template.bind({});
 Defaults.args = {};

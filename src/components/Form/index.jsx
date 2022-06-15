@@ -1,5 +1,4 @@
 import Button from "@/components/Button";
-
 import StyledForm from "@/components/Form/index.styled";
 
 function Form({ buttonText, children, onSubmit, preventFormSubmit }) {

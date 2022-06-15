@@ -1,17 +1,16 @@
-import { persistReducer, persistStore } from "redux-persist";
-import localStorage from "redux-persist/lib/storage";
-
 import {
+  applyMiddleware,
   combineReducers,
   legacy_createStore as createStore,
-  applyMiddleware,
 } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
+import { persistReducer, persistStore } from "redux-persist";
+import localStorage from "redux-persist/lib/storage";
 import reduxThunk from "redux-thunk";
 
+import { cartReducer } from "@/redux/modules/cart";
 import { snackbarReducer } from "@/redux/modules/snackbar";
 import { userReducer } from "@/redux/modules/user";
-import { cartReducer } from "@/redux/modules/cart";
 
 const persistConfig = {
   key: "root",

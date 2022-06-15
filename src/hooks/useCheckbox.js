@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import appClient from "@/api/appClient";
 import { deleteCartItem } from "@/redux/modules/cart";
-
-import appClient from "@/utils/appClient";
-import { getCookie } from "@/utils/auth";
+import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 const useCheckBox = (compareList = []) => {
   const [checkedItemList, setCheckedItemList] = useState([]);
@@ -36,8 +34,6 @@ const useCheckBox = (compareList = []) => {
       return;
     }
     if (confirm("정말로 삭제하시겠습니까?")) {
-      const accessToken = getCookie("accessToken");
-      const headers = { Authorization: `Bearer ${accessToken}` };
       for (const id of checkedItemList) {
         try {
           await appClient.delete(`users/me/carts/${id}`, { headers });

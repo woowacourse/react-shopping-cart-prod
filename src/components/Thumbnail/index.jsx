@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import Spinner from "@/components/Spinner";
-
 import StyledThumbnail from "@/components/Thumbnail/index.styled";
 
 function Thumbnail({ src, name, onClick }) {

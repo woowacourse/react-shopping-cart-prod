@@ -1,20 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { updateCartQuantity, deleteCartItem } from "@/redux/modules/cart";
-
 import TrashIcon from "@/assets/images/trash.svg";
-
-import Checkbox from "@/components/Checkbox";
 import Button from "@/components/Button";
-
-import { PATH } from "@/constants";
-
 import {
   StyledCartContainer,
   StyledHr,
 } from "@/components/CartItem/index.styled";
+import Checkbox from "@/components/Checkbox";
+import { PATH } from "@/constants";
 import useFetch from "@/hooks/useFetch";
+import { deleteCartItem, updateCartQuantity } from "@/redux/modules/cart";
 
 function CartItem({ onChange, checked, item }) {
   const { getData: updateQuantity } = useFetch(

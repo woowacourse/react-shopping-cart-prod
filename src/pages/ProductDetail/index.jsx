@@ -1,17 +1,13 @@
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-
-import { addCartItem } from "@/redux/modules/cart";
-
-import useFetch from "@/hooks/useFetch";
+import { useNavigate, useParams } from "react-router-dom";
 
 import Button from "@/components/Button";
 import Title from "@/components/Title";
-
 import { MESSAGE, PATH } from "@/constants";
-import { getCookie } from "@/utils/auth";
-
+import useFetch from "@/hooks/useFetch";
 import StyledProductDetailContainer from "@/pages/ProductDetail/index.style";
+import { addCartItem } from "@/redux/modules/cart";
+import { getCookie } from "@/utils/auth";
 
 function ProductDetail() {
   const { id } = useParams();

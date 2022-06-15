@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSnackbarClose } from "@/redux/modules/snackbar";
 
 import SnackbarContainer from "@/components/Snackbar/index.styled";
+import { toggleSnackbarClose } from "@/redux/modules/snackbar";
 
 function Snackbar({ timeout }) {
   const dispatch = useDispatch();

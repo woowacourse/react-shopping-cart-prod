@@ -1,12 +1,10 @@
 import { useEffect } from "react";
 
-import Error from "@/pages/Error";
-
-import Loading from "@/components/Loading";
 import Item from "@/components/Item";
-
-import StyledProductList from "@/pages/Home/index.styled";
+import Loading from "@/components/Loading";
 import useFetch from "@/hooks/useFetch";
+import Error from "@/pages/Error";
+import StyledProductList from "@/pages/Home/index.styled";
 
 function ProductList() {
   const { data, error, success, getData } = useFetch("get", "products");

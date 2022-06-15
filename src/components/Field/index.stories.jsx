@@ -5,7 +5,9 @@ export default {
   title: "Field",
 };
 
-const Template = (args) => <Field {...args} />;
+function Template(args) {
+  return <Field {...args} />;
+}
 
 export const Default = Template.bind({});
 Default.args = {

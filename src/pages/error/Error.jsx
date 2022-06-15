@@ -1,5 +1,4 @@
 import ErrorImg from "@/assets/images/error.png";
-
 import StyledErrorContainer from "@/pages/error/ErrorContainer.styled";
 import StyledErrorMessage from "@/pages/error/ErrorMessage.styled";
 

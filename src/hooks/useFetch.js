@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
-import appClient from "@/utils/appClient";
-import { MESSAGE, ERROR_CODE } from "@/constants";
-import { getCookie } from "@/utils/auth";
+import appClient from "@/api/appClient";
+import { ERROR_CODE, MESSAGE } from "@/constants";
+import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
 
 const useFetch = (method, url, func, rest) => {
   const [data, setData] = useState();
@@ -14,24 +13,11 @@ const useFetch = (method, url, func, rest) => {
   const dispatch = useDispatch();
 
   const getData = async (payload = {}, successMessage = "") => {
-    const accessToken = getCookie("accessToken");
-    const headers = { Authorization: `Bearer ${accessToken}` };
     try {
-      let response = "";
-      if (method === "delete" || method === "get") {
-        const { data } = await appClient[method](url, { headers });
-        response = data;
-      } else {
-        const { data } = await appClient[method](
-          url,
-          {
-            ...payload,
-          },
-          { headers }
-        );
-        response = data;
-      }
-      setData(response);
+      const { data } = await appClient[method](url, {
+        ...payload,
+      });
+      setData(data);
       setSuccess(true);
       if (successMessage) {
         dispatch(toggleSnackbarOpen(successMessage));

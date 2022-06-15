@@ -1,5 +1,4 @@
 import BaedaliImg from "@/assets/images/baedali.png";
-
 import StyledLoading from "@/components/Loading/index.styled";
 
 function Loading() {

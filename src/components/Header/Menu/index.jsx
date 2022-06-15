@@ -2,16 +2,13 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
-import { getUserInfo } from "@/redux/modules/user";
-import { getCart } from "@/redux/modules/cart";
-
-import StyledMenu from "@/components/Header/Menu/index.styled";
 import Badge from "@/components/Badge";
 import Dropdown from "@/components/Dropdown";
-import { logoutUser } from "@/redux/modules/user";
-
-import { getCookie } from "@/utils/auth";
+import StyledMenu from "@/components/Header/Menu/index.styled";
 import { PATH } from "@/constants";
+import { getCart } from "@/redux/modules/cart";
+import { getUserInfo, logoutUser } from "@/redux/modules/user";
+import { getCookie } from "@/utils/auth";
 
 function Menu() {
   const { cart } = useSelector((state) => state.cartState);

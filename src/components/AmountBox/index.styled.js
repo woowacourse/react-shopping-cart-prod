@@ -43,4 +43,4 @@ const PriceInfoContainer = styled.div`
   }
 `;
 
-export { AmountBoxWrapper, AmountBoxHeaderBox, PriceInfoContainer };
+export { AmountBoxHeaderBox, AmountBoxWrapper, PriceInfoContainer };

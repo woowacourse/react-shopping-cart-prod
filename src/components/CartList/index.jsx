@@ -2,17 +2,14 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { getCart } from "@/redux/modules/cart";
-
 import Button from "@/components/Button";
 import CartItem from "@/components/CartItem";
+import StyledCartList from "@/components/CartList/index.styled";
 import Checkbox from "@/components/Checkbox";
 import Title from "@/components/Title";
-
-import StyledCartList from "@/components/CartList/index.styled";
-
-import { getCookie } from "@/utils/auth";
 import { PATH } from "@/constants";
+import { getCart } from "@/redux/modules/cart";
+import { getCookie } from "@/utils/auth";
 
 function CartList({
   checkedItemList,

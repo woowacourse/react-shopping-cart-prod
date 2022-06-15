@@ -1,27 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { logoutUser, getUserInfo, editUser } from "@/redux/modules/user";
-
-import useInput from "@/hooks/useInput";
-import usePasswordConfirm from "@/hooks/usePasswordConfirm";
-import useFetch from "@/hooks/useFetch";
-
-import Form from "@/components/Form";
-import Field from "@/components/Field";
 import Button from "@/components/Button";
-
+import Field from "@/components/Field";
+import Form from "@/components/Form";
 import {
-  PATH,
-  STATUS,
   INPUT_TYPE,
   MESSAGE,
   NICKNAME,
   PASSWORD,
+  PATH,
+  STATUS,
 } from "@/constants";
-
+import useFetch from "@/hooks/useFetch";
+import useInput from "@/hooks/useInput";
+import usePasswordConfirm from "@/hooks/usePasswordConfirm";
 import StyledUserEditContainer from "@/pages/UserEdit/index.style";
+import { editUser, getUserInfo, logoutUser } from "@/redux/modules/user";
 
 function UserEdit() {
   const { email: prevEmail } = useSelector((state) => state.userState);

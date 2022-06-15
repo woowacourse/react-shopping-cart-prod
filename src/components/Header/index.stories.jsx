@@ -5,7 +5,9 @@ export default {
   title: "Header",
 };
 
-const Template = () => <Header />;
+function Template() {
+  return <Header />;
+}
 
 export const Defaults = Template.bind({});
 Defaults.args = {};

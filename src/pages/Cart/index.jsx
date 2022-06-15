@@ -1,16 +1,13 @@
 import { useSelector } from "react-redux";
 
-import Title from "@/components/Title";
-import CartList from "@/components/CartList";
 import AmountBox from "@/components/AmountBox";
-
-import useCheckBox from "@/hooks/useCheckBox";
-
-import { checkedQuantityPrice } from "@/utils";
-import { AMOUNTBOX_TYPE } from "@/constants";
-
-import CartWrapper from "@/pages/Cart/index.styled";
+import CartList from "@/components/CartList";
+import Title from "@/components/Title";
 import StyledWrapper from "@/components/Wrapper/index.styled";
+import { AMOUNTBOX_TYPE } from "@/constants";
+import useCheckBox from "@/hooks/useCheckBox";
+import CartWrapper from "@/pages/Cart/index.styled";
+import { checkedQuantityPrice } from "@/utils";
 
 function Cart() {
   const { cart } = useSelector((state) => state.cartState);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { STATUS, REGULAR_EXPRESSION, ERROR_STATUS } from "@/constants";
+import { ERROR_STATUS, REGULAR_EXPRESSION, STATUS } from "@/constants";
 
 const useInput = (type, initialState, initialValue = "") => {
   const [inputState, setInputState] = useState({

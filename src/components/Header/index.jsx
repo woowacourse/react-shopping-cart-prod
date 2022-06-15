@@ -1,9 +1,9 @@
 import { css } from "@emotion/react";
 
 import StyledHeader from "@/components/Header/index.styled";
-import HeaderWrapper from "@/components/Wrapper/index.styled";
 import LogoLink from "@/components/Header/Logo";
 import Menu from "@/components/Header/Menu";
+import HeaderWrapper from "@/components/Wrapper/index.styled";
 
 function Header() {
   return (
