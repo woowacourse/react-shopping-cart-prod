@@ -18,7 +18,7 @@ import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 import { ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import apiClient from 'apis/apiClient';
-import { doLogin } from 'reducers/auth.reducer';
+import { doLogin } from 'reducers/authReducer';
 import SeverSelectPage from 'page/ServerSelectPage';
 
 function App() {

@@ -1,7 +1,7 @@
 import useSnackbar from 'hooks/useSnackbar';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { doLogout } from 'reducers/auth.reducer';
+import { doLogout } from 'reducers/authReducer';
 import { ROUTES } from 'utils/constants';
 import { deleteCookie } from 'utils/cookie';
 

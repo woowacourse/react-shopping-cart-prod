@@ -11,7 +11,7 @@ import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
-import { doDeleteProductFromCart } from 'reducers/cart.reducer';
+import { doDeleteProductFromCart } from 'reducers/cartReducer';
 
 import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';

@@ -2,7 +2,7 @@
 import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { doInitializeProductList } from 'reducers/cart.reducer';
+import { doInitializeProductList } from 'reducers/cartReducer';
 
 // DONE  1. get 상품 목록 가져오기
 const useGetProductsAPI = () => {

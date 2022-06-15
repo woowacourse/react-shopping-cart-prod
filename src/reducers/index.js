@@ -1,3 +1,3 @@
-export { default as cartReducer } from 'reducers/cart.reducer';
-export { default as authReducer } from 'reducers/auth.reducer';
-export { default as snackbarReducer } from 'reducers/snackbar.reducer';
+export { default as cartReducer } from 'reducers/cartReducer';
+export { default as authReducer } from 'reducers/authReducer';
+export { default as snackbarReducer } from 'reducers/snackbarReducer';

@@ -3,7 +3,7 @@ import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { doDecideOrder } from 'reducers/cart.reducer';
+import { doDecideOrder } from 'reducers/cartReducer';
 import { MESSAGE, ROUTES } from 'utils/constants';
 import useSnackbar from '../../hooks/useSnackbar';
 

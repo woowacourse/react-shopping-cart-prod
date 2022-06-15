@@ -3,7 +3,7 @@ import { MESSAGE } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { doLogin } from 'reducers/auth.reducer';
+import { doLogin } from 'reducers/authReducer';
 
 const useEditNicknameAPI = (isNicknameCorrect, nickname) => {
   const dispatch = useDispatch();

@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import useSnackbar from '../../../hooks/useSnackbar';
 
 import apiClient from 'apis/apiClient';
-import { doLogout } from 'reducers/auth.reducer';
-import { doInitializeCartList } from 'reducers/cart.reducer';
+import { doLogout } from 'reducers/authReducer';
+import { doInitializeCartList } from 'reducers/cartReducer';
 
 import { MESSAGE, ROUTES } from 'utils/constants';
 import { deleteCookie } from 'utils/cookie';

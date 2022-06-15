@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
 
 import { getCookie, setCookie } from 'utils/cookie';
-import { doLogin } from 'reducers/auth.reducer';
+import { doLogin } from 'reducers/authReducer';
 import { MESSAGE, ROUTES } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 

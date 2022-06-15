@@ -2,8 +2,8 @@ import apiClient from 'apis/apiClient';
 
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { doLogout } from 'reducers/auth.reducer';
-import { doInitializeCartList } from 'reducers/cart.reducer';
+import { doLogout } from 'reducers/authReducer';
+import { doInitializeCartList } from 'reducers/cartReducer';
 import { AUTH_API_URL, ROUTES } from 'utils/constants';
 import { deleteCookie } from 'utils/cookie';
 

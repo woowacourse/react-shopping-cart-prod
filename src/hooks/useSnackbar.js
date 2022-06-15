@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { doHideSnackbar, doShowSnackbar } from 'reducers/snackbar.reducer';
+import { doHideSnackbar, doShowSnackbar } from 'reducers/snackbarReducer';
 
 const useSnackbar = () => {
   const dispatch = useDispatch();

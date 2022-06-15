@@ -2,7 +2,7 @@
 import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { doInitializeCartList } from 'reducers/cart.reducer';
+import { doInitializeCartList } from 'reducers/cartReducer';
 
 // DONE 3. get 장바구니 목록 가져오기
 const useGetCartAPI = () => {

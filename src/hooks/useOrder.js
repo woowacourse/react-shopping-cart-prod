@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { doAddProductToOrder, doDeleteProductFromOrder } from 'reducers/cart.reducer';
+import { doAddProductToOrder, doDeleteProductFromOrder } from 'reducers/cartReducer';
 
 const useOrder = id => {
   const dispatch = useDispatch();

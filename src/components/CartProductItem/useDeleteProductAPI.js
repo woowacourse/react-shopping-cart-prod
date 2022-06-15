@@ -2,7 +2,7 @@
 import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { doDeleteProductFromCart } from 'reducers/cart.reducer';
+import { doDeleteProductFromCart } from 'reducers/cartReducer';
 import { MESSAGE } from 'utils/constants';
 import useSnackbar from '../../hooks/useSnackbar';
 

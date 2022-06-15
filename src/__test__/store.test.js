@@ -2,7 +2,7 @@ import { legacy_createStore as createStore } from 'redux';
 import rootReducer from 'store/rootReducer';
 
 import { dummyProductList } from 'dummy_data';
-import { doAddProductToOrder, doDeleteProductFromCart, doDeleteProductFromOrder, doInitializeOrder, doInitializeProductList, doPutProductToCart } from 'reducers/cart.reducer';
+import { doAddProductToOrder, doDeleteProductFromCart, doDeleteProductFromOrder, doInitializeOrder, doInitializeProductList, doPutProductToCart } from 'reducers/cartReducer';
 
 describe('reducer 테스트', () => {
   let store;

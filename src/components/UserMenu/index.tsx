@@ -6,8 +6,8 @@ import useSnackbar from 'hooks/useSnackbar';
 import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
 import { MESSAGE, ROUTES } from 'utils/constants';
-import { doLogout } from 'reducers/auth.reducer';
-import { doInitializeCartList } from 'reducers/cart.reducer';
+import { doLogout } from 'reducers/authReducer';
+import { doInitializeCartList } from 'reducers/cartReducer';
 const UserMenu = ({ nickname }) => {
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
