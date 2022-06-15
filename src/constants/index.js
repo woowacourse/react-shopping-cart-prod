@@ -1,19 +1,21 @@
-const API_ZERO = 'http://ec2-13-124-88-137.ap-northeast-2.compute.amazonaws.com:8080/api';
-const API_KILLER_WHALE = `http://13.124.30.129:8080/api`;
-const API_AWESOME_O = `http://ec2-15-164-104-189.ap-northeast-2.compute.amazonaws.com:8080/api`;
-const API_ROOKIE = `http://ec2-15-164-103-26.ap-northeast-2.compute.amazonaws.com:8080/api`;
+const API_URL = Object.freeze({
+  API_ZERO: 'http://ec2-13-124-88-137.ap-northeast-2.compute.amazonaws.com:8080/api',
+  API_KILLER_WHALE: `http://13.124.30.129:8080/api`,
+  API_AWESOME_O: `http://ec2-15-164-104-189.ap-northeast-2.compute.amazonaws.com:8080/api`,
+  API_ROOKIE: `http://ec2-15-164-103-26.ap-northeast-2.compute.amazonaws.com:8080/api`,
+});
 
-const SERVER_PATH = {
-  PRODUCTS: `${API_KILLER_WHALE}/products`,
-  CART: `${API_KILLER_WHALE}/carts`,
-  CART_PRODUCT: `${API_KILLER_WHALE}/carts/products`,
-  USER: `${API_KILLER_WHALE}/customers`,
-  LOGIN: `${API_KILLER_WHALE}/login`,
-  PASSWORD: `${API_KILLER_WHALE}/customers/password`,
-  ME: `${API_KILLER_WHALE}/customers/me`,
-};
+const SERVER_PATH = Object.freeze({
+  PRODUCTS: `${API_URL.KILLER_WHALE}/products`,
+  CART: `${API_URL.KILLER_WHALE}/carts`,
+  CART_PRODUCT: `${API_URL.KILLER_WHALE}/carts/products`,
+  USER: `${API_URL.KILLER_WHALE}/customers`,
+  LOGIN: `${API_URL.KILLER_WHALE}/login`,
+  PASSWORD: `${API_URL.KILLER_WHALE}/customers/password`,
+  ME: `${API_URL.KILLER_WHALE}/customers/me`,
+});
 
-const ROUTES_PATH = {
+const ROUTES_PATH = Object.freeze({
   HOME: '/',
   DETAIL: '/product-detail/:id',
   DETAIL_LINK: '/product-detail/',
@@ -23,7 +25,7 @@ const ROUTES_PATH = {
   USER_INFO: '/user-info',
   MODIFY_PASSWORD: '/modify-password',
   MODIFY_USER_INFO: '/modify-user-info',
-};
+});
 
 const SIZE = {
   LARGE: 'large',
