@@ -1,20 +1,11 @@
-import {
-  forwardRef,
-  ComponentProps,
-  ForwardedRef,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import { forwardRef, ComponentProps, ForwardedRef } from 'react';
 import * as S from 'components/Input/Input.styles';
 
 function Input(
   props: ComponentProps<any>,
   ref: ForwardedRef<HTMLInputElement>
 ) {
-  const inputRef = useRef<HTMLInputElement>();
-  useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
-
-  return <S.Input ref={inputRef} {...props} />;
+  return <S.Input ref={ref} {...props} />;
 }
 
 export default forwardRef(Input);

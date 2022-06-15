@@ -1,20 +1,11 @@
-import {
-  ComponentProps,
-  ForwardedRef,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from 'react';
+import { ComponentProps, ForwardedRef, forwardRef } from 'react';
 import * as S from 'components/Checkbox/Checkbox.styled';
 
 function Checkbox(
   props: ComponentProps<any>,
   ref: ForwardedRef<HTMLInputElement>
 ) {
-  const inputRef = useRef<HTMLInputElement>();
-  useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
-
-  return <S.Checkbox ref={inputRef} {...props} type="checkbox" />;
+  return <S.Checkbox ref={ref} {...props} type="checkbox" />;
 }
 
 export default forwardRef(Checkbox);
