@@ -7,19 +7,8 @@ import SkeletonItem from 'components/SkeletonItem/SkeletonItem.component';
 
 import useLoadProducts from 'hooks/api/products/useLoadProducts';
 
-function LoadingSection() {
-  return (
-    <ProductListBox>
-      {new Array(8).fill('').map((_, idx) => (
-        <SkeletonItem key={idx} />
-      ))}
-    </ProductListBox>
-  );
-}
-
 function ProductList() {
   const { products, isLoading, loadProducts } = useLoadProducts();
-  console.log(products);
 
   return (
     <>
@@ -36,3 +25,13 @@ function ProductList() {
 }
 
 export default ProductList;
+
+function LoadingSection() {
+  return (
+    <ProductListBox>
+      {new Array(8).fill('').map((_, idx) => (
+        <SkeletonItem key={idx} />
+      ))}
+    </ProductListBox>
+  );
+}
