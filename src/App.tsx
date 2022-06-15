@@ -53,7 +53,7 @@ function App() {
             <Route
               path={PATHS.CART}
               element={
-                <Auth option={true}>
+                <Auth shouldLogin={true}>
                   <CartPage />
                 </Auth>
               }
@@ -61,7 +61,7 @@ function App() {
             <Route
               path={PATHS.SIGNIN}
               element={
-                <Auth option={false}>
+                <Auth shouldLogin={false}>
                   <SigninPage />
                 </Auth>
               }
@@ -72,7 +72,7 @@ function App() {
             <Route
               path={PATHS.PROFILE}
               element={
-                <Auth option={true}>
+                <Auth shouldLogin={true}>
                   <ProfilePage />
                 </Auth>
               }
