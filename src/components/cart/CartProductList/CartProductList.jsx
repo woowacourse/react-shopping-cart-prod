@@ -19,8 +19,24 @@ function CartProductList() {
   } = useCart();
 
   useEffect(() => {
-    loadCart();
+    const fetchCart = async () => {
+      try {
+        await loadCart();
+      } catch ({ message }) {
+        alert(message);
+      }
+    };
+
+    fetchCart();
   }, []);
+
+  const handleSelectedProductDelete = async () => {
+    try {
+      await deleteCheckedProducts();
+    } catch ({ message }) {
+      alert(message);
+    }
+  };
 
   return (
     <S.Container>
@@ -32,7 +48,7 @@ function CartProductList() {
           </S.CheckBoxLabel>
         </S.AllCheckControl>
         {checkedProductCount !== 0 && (
-          <S.Button type="button" onClick={deleteCheckedProducts}>
+          <S.Button type="button" onClick={handleSelectedProductDelete}>
             선택 상품 삭제
           </S.Button>
         )}
@@ -41,11 +57,7 @@ function CartProductList() {
       <S.ListWrapper>
         {cart &&
           cart.map(({ product, quantity }) => (
-            <CartProductCard
-              key={product.id}
-              product={product}
-              quantity={quantity}
-            />
+            <CartProductCard key={product.id} product={product} quantity={quantity} />
           ))}
         {cartLength === 0 && (
           <ErrorContainer>장바구니에 추가된 상품이 없어요 😥</ErrorContainer>

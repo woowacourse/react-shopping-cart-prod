@@ -15,8 +15,6 @@ const handleCartDispatch = async ({ dispatch, actionType, func, params = [] }) =
 
     dispatch({ type: actionType, payload: data && { cart: data.cart } });
   } catch ({ message }) {
-    alert(message);
-
     dispatch({ type: cartActionType.FAIL });
     throw new Error(message);
   }

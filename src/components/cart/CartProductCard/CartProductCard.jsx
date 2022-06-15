@@ -31,17 +31,26 @@ function CartProductCard({
   const counterValue = Math.min(stock, quantity);
   const checked = isChecked(productId);
 
-  const handleQuantityIncrement = () => {
+  const handleQuantityIncrement = async () => {
     if (isMoreThanStock) {
       alert(WARNING_MESSAGES.MAX_QUANTITY);
       return;
     }
 
-    incrementCartProduct(productId, quantity);
+    try {
+      await incrementCartProduct(productId, quantity);
+    } catch ({ message }) {
+      alert(message);
+    }
   };
 
-  const handleQuantityDecrement = () => {
+  const handleQuantityDecrement = async () => {
     let currentQuantity = quantity;
+
+    if (currentQuantity === 1) {
+      alert(WARNING_MESSAGES.MIN_QUANTITY);
+      return;
+    }
 
     if (quantity > stock) {
       if (NotConfirmDecrement(quantity, stock)) {
@@ -50,10 +59,20 @@ function CartProductCard({
       currentQuantity = stock;
     }
 
-    decrementCartProduct(productId, currentQuantity);
+    try {
+      await decrementCartProduct(productId, currentQuantity);
+    } catch ({ message }) {
+      alert(message);
+    }
   };
 
-  const handleProductDelete = () => deleteProduct([productId]);
+  const handleProductDelete = async () => {
+    try {
+      await deleteProduct([productId]);
+    } catch ({ message }) {
+      alert(message);
+    }
+  };
 
   const handleCheckBoxClick = () => toggleCheck(productId);
 
