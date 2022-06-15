@@ -34,19 +34,19 @@ function Menu() {
     <StyledMenu>
       <ul>
         <li>
-          <Link to="/cart">
+          <Link to={PATH.CART}>
             장바구니
             {authorized && cart.length > 0 && <Badge count={cart.length} />}
           </Link>
         </li>
         <li>
-          <Link to="/not-found">주문목록</Link>
+          <Link to={PATH.NOT_FOUND}>주문목록</Link>
         </li>
         <li>
           {authorized ? (
             <UserDropdown onClick={handleLogoutClick} />
           ) : (
-            <Link to="/login">로그인</Link>
+            <Link to={PATH.LOGIN}>로그인</Link>
           )}
         </li>
       </ul>

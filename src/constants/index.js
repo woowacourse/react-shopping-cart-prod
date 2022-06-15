@@ -15,7 +15,7 @@ const PATH = {
   EDIT: "/edit",
   DETAIL: "/detail",
   CART: "/cart",
-  NOT_FOUND: "*",
+  NOT_FOUND: "/not-found",
 };
 
 const STATUS = {
