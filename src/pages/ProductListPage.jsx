@@ -11,7 +11,7 @@ import useCart from '../hooks/useCart';
 import { MESSAGE, SERVER_PATH } from '../constants';
 
 function ProductListPage() {
-  const { data: productList, isLoading, isError } = useFetch(SERVER_PATH.PRODUCTS);
+  const { result: productList, isError, isLoading } = useFetch(SERVER_PATH.PRODUCTS);
   const { cartItemList, addItem, deleteItem } = useCart();
   const cartItemNameList = useMemo(
     () => new Set(cartItemList.map((cart) => cart.name)),

@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 const useCart = () => {
   const dispatch = useDispatch();
   const { accessToken } = useUser();
-  const cartList = useSelector(({ cart }) => cart.data);
+  const cartItemList = useSelector(({ cart }) => cart.data);
 
   const getItemList = () => {
     if (!accessToken) {
@@ -43,7 +43,7 @@ const useCart = () => {
     getItemList();
   }, [accessToken]);
 
-  return { cartList, getItemList, addItem, deleteItem, updateItemQuantity };
+  return { cartItemList, getItemList, addItem, deleteItem, updateItemQuantity };
 };
 
 export default useCart;

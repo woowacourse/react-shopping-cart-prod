@@ -2,25 +2,43 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import useUser from './useUser';
 
+const initialState = {
+  result: null,
+  isLoading: true,
+  isError: false,
+};
+
 function useFetch(url) {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  const [response, setResponse] = useState(initialState);
   const { accessToken } = useUser();
 
   const requestData = async () => {
-    setIsLoading(true);
     try {
       const { data } = await axios({
         method: 'get',
         url,
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      setData(data);
+      setResponse((prevState) => {
+        return {
+          ...prevState,
+          result: data,
+        };
+      });
     } catch (error) {
-      setIsError(true);
+      setResponse((prevState) => {
+        return {
+          ...prevState,
+          isError: true,
+        };
+      });
     } finally {
-      setIsLoading(false);
+      setResponse((prevState) => {
+        return {
+          ...prevState,
+          isLoading: false,
+        };
+      });
     }
   };
 
@@ -28,7 +46,7 @@ function useFetch(url) {
     requestData();
   }, []);
 
-  return { data, isLoading, isError };
+  return response;
 }
 
 export default useFetch;
