@@ -7,8 +7,8 @@ import LoadingThumbnail from "@components/LoadingThumbnail";
 
 import priceToDollar from "@utils/priceToDollar";
 import CartPage from "@assets/images/cart.svg";
+import ImageButton from "./ImageButton";
 import styles from "./ProductItem.module";
-import ImageButton from "../ImageButton/ImageButton";
 
 function ProductItem({
   id: productId,

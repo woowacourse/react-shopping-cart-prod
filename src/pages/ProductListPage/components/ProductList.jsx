@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 
 import { getProductList } from "@redux/reducers/product-list-reducer/productListThunks";
-import ProductItem from "../ProductItem/ProductItem";
+import ProductItem from "./ProductItem";
 import styles from "./ProductList.module";
 
 function ProductList({ className }) {

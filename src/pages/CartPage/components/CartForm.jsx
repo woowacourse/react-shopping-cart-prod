@@ -13,9 +13,9 @@ import Button from "@components/Button";
 
 // eslint-disable-next-line import/no-unresolved
 import LabeledCheckbox from "@components/CheckBox/LabeledCheckbox/LabeledCheckbox";
-import CartItem from "../CartItem/CartItem";
+import CartItem from "./CartItem";
 
-import getSelectedCartItemIds from "../../utils/getSelectedCartItemIds";
+import getSelectedCartItemIds from "../utils/getSelectedCartItemIds";
 import styles from "./CartForm.module";
 
 function CartForm({ className }) {

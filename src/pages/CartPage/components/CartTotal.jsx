@@ -8,7 +8,7 @@ import Highlighter from "@components/HighlightedText";
 import TitleBox from "@components/TitleBox";
 
 import priceToDollar from "@utils/priceToDollar";
-import getSelectedCartItemIds from "../../utils/getSelectedCartItemIds";
+import getSelectedCartItemIds from "../utils/getSelectedCartItemIds";
 import styles from "./CartTotal.module";
 
 function CartTotal({ className }) {

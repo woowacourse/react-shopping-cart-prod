@@ -5,7 +5,7 @@ import cn from "classnames";
 import { getOrderList } from "@redux/reducers/order-list-reducer/orderListThunks";
 
 import PageTitle from "@components/PageTitle";
-import OrderTable from "./components/OrderTable/OrderTable";
+import OrderTable from "./components/OrderTable";
 
 import styles from "./OrderListPage.module";
 

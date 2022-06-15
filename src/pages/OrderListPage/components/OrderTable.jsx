@@ -1,4 +1,4 @@
-import OrderTableItem from "../OrderTableItem/OrderTableItem";
+import OrderTableItem from "./OrderTableItem";
 import styles from "./OrderTable.module";
 
 function OrderTable({ orderId, orderedProducts }) {

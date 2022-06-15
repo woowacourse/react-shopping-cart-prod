@@ -1,8 +1,8 @@
 import cn from "classnames";
 
 import PageTitle from "@components/PageTitle";
-import CartForm from "./components/CartForm/CartForm";
-import CartTotal from "./components/CartTotal/CartTotal";
+import CartForm from "./components/CartForm";
+import CartTotal from "./components/CartTotal";
 
 import styles from "./CartPage.module";
 
