@@ -11,6 +11,8 @@ import useFetch from './useFetch';
 export default function useCartItem() {
   const accessToken = useSelector((state) => state.authReducer.accessToken);
 
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
+
   const dispatch = useDispatch();
 
   const {fetch: getCart} = useFetch('get');
@@ -40,7 +42,10 @@ export default function useCartItem() {
   };
 
   const initializeCart = useCallback(() => {
-    navigateLoginPage();
+    if (isLogin === false) {
+      navigateLoginPage();
+      return;
+    }
 
     getCart({
       API_URL: `${API_URL}/customers/cart`,
@@ -52,7 +57,10 @@ export default function useCartItem() {
   }, [dispatch, getCart, accessToken]);
 
   const addCartItem = (payload) => {
-    navigateLoginPage();
+    if (isLogin === false) {
+      navigateLoginPage();
+      return;
+    }
 
     const {id} = payload;
     postCart({

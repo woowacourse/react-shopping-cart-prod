@@ -23,15 +23,17 @@ export default function OrderListPage() {
   const {navigateLoginPage} = useAuth();
 
   useEffect(() => {
-    navigateLoginPage();
+    if (isLogin === false) {
+      navigateLoginPage();
+      return;
+    }
 
-    isLogin &&
-      orderList.fetch({
-        API_URL: `${API_URL}/customers/orders`,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+    orderList.fetch({
+      API_URL: `${API_URL}/customers/orders`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
   }, [isLogin]);
 
   return (

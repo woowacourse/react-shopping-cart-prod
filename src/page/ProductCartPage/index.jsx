@@ -29,9 +29,12 @@ export default function ProductCartPage() {
   const {navigateLoginPage} = useAuth();
 
   useEffect(() => {
-    navigateLoginPage();
+    if (isLogin === false) {
+      navigateLoginPage();
+      return;
+    }
 
-    isLogin && initializeCart();
+    initializeCart();
   }, [isLogin]);
 
   const selectedCartItem = cart.filter(({id}) => selectedItem.includes(id));
