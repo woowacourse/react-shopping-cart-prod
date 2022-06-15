@@ -5,6 +5,12 @@ import useCart from 'hooks/useCart';
 import { CheckBox, Counter, Icon, Image } from 'components/common';
 
 import * as S from 'components/cart/CartProductCard/CartProductCard.style';
+import {
+  STATUS_SOLD_OUT,
+  STATUS_MORE_THAN_STOCK,
+  STATUS_NORMAL,
+  STATUS_MESSAGE,
+} from 'components/cart/CartProductCard/constant';
 
 import { WARNING_MESSAGES } from 'constants/messages';
 
@@ -13,6 +19,21 @@ import { color } from 'styles/Theme.js';
 
 const NotConfirmDecrement = (quantity, stock) =>
   !window.confirm(WARNING_MESSAGES.DECREASE_TO_STOCK(quantity, stock));
+
+const isSoldOut = (stock) => stock === 0;
+const isMoreThanStock = (stock, quantity) => stock <= quantity;
+
+const determineStatus = (stock, quantity) => {
+  if (isSoldOut(stock)) {
+    return STATUS_SOLD_OUT;
+  }
+
+  if (isMoreThanStock(stock, quantity)) {
+    return STATUS_MORE_THAN_STOCK;
+  }
+
+  return STATUS_NORMAL;
+};
 
 function CartProductCard({
   product: { id: productId, name, price, imageUrl, stock },
@@ -26,13 +47,13 @@ function CartProductCard({
     toggleCheck,
   } = useCart();
 
-  const isSoldOut = stock === 0;
-  const isMoreThanStock = quantity >= stock;
+  const cartProductStatus = determineStatus(stock, quantity);
+
   const counterValue = Math.min(stock, quantity);
   const checked = isChecked(productId);
 
   const handleIncrementQuantity = async () => {
-    if (isMoreThanStock) {
+    if (cartProductStatus === STATUS_MORE_THAN_STOCK) {
       alert(WARNING_MESSAGES.MAX_QUANTITY);
       return;
     }
@@ -78,7 +99,11 @@ function CartProductCard({
 
   return (
     <S.Container>
-      <CheckBox checked={checked} disabled={isSoldOut} onClick={handleClickCheckBox} />
+      <CheckBox
+        checked={checked}
+        disabled={cartProductStatus === STATUS_SOLD_OUT}
+        onClick={handleClickCheckBox}
+      />
       <Image src={imageUrl} width="150px" backgroundColor={color.WHITE} />
       <S.Description>
         <Position position="absolute" top="0" right="0">
@@ -89,21 +114,24 @@ function CartProductCard({
         <S.Name>{name}</S.Name>
         <Counter
           count={counterValue}
-          disabled={isSoldOut}
+          disabled={cartProductStatus === STATUS_SOLD_OUT}
           onIncrement={handleIncrementQuantity}
           onDecrement={handleDecrementQuantity}
         />
-        <S.StatusMessage>
-          {isSoldOut
-            ? '품절된 상품입니다.'
-            : isMoreThanStock
-            ? '구매 가능한 최대 수량입니다.'
-            : ''}
-        </S.StatusMessage>
-        <S.Price>{isSoldOut ? 0 : (price * quantity).toLocaleString('ko-KR')} 원</S.Price>
+        {cartProductStatus !== STATUS_NORMAL && (
+          <S.StatusMessage>{STATUS_MESSAGE[cartProductStatus]}</S.StatusMessage>
+        )}
+        <S.Price cartProductStatus={cartProductStatus}>
+          {cartProductStatus === STATUS_SOLD_OUT
+            ? 0
+            : (price * quantity).toLocaleString('ko-KR')}{' '}
+          원
+        </S.Price>
       </S.Description>
     </S.Container>
   );
 }
 
 export default CartProductCard;
+
+// 돔 노드를 최소화하는 게 성능상 좋을 듯!!
