@@ -13,7 +13,10 @@ import { MESSAGE, SERVER_PATH } from '../constants';
 function ProductListPage() {
   const { data: productList, isLoading, isError } = useFetch(SERVER_PATH.PRODUCTS);
   const { cartItemList, addItem, deleteItem } = useCart();
-  const idSetInCart = useMemo(() => new Set(cartItemList.map((cart) => cart.name)), [cartItemList]);
+  const cartItemNameList = useMemo(
+    () => new Set(cartItemList.map((cart) => cart.name)),
+    [cartItemList]
+  );
 
   const handleClickCartItem = (id, isProductInCart) => {
     if (isProductInCart) {
@@ -35,8 +38,10 @@ function ProductListPage() {
           <Product
             key={product.id}
             productData={product}
-            handleCartItem={() => handleClickCartItem(product.id, idSetInCart.has(product.name))}
-            isProductInCart={idSetInCart.has(product.name)}
+            handleCartItem={() =>
+              handleClickCartItem(product.id, cartItemNameList.has(product.name))
+            }
+            isProductInCart={cartItemNameList.has(product.name)}
           />
         ))}
       </StyledGridContainer>
