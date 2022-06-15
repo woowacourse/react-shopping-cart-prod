@@ -62,9 +62,6 @@ function UserInfoEditPage() {
     userInfo.fetch({
       API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
-      onFail: (error) => {
-        alert(error);
-      },
     });
   };
 
@@ -99,9 +96,6 @@ function UserInfoEditPage() {
           },
         });
         navigation(PATH.HOME);
-      },
-      onFail: (error) => {
-        alert(error);
       },
     });
   };

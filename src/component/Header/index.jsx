@@ -43,9 +43,6 @@ export default function Header() {
         dispatch({type: AUTH.SET_USER_INFO, payload: res});
         dispatch({type: AUTH.LOGIN});
       },
-      onFail: (error) => {
-        alert(error);
-      },
     });
   };
 

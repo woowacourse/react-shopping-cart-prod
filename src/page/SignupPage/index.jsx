@@ -83,9 +83,6 @@ function SignupPage() {
       onSuccess: () => {
         navigation(PATH.LOGIN);
       },
-      onFail: (error) => {
-        alert(error);
-      },
     });
   };
 

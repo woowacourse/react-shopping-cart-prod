@@ -12,7 +12,9 @@ export default function useFetch(method = 'get') {
       headers = null,
       body = null,
       onSuccess = () => void 0,
-      onFail = () => void 0,
+      onFail = (error) => {
+        alert(error);
+      },
     }) => {
       setPending(true);
       setData(null);

@@ -36,9 +36,6 @@ function LoginPage() {
       onSuccess: (res) => {
         dispatch({type: AUTH.SET_USER_INFO, payload: res});
       },
-      onFail: (error) => {
-        alert(error);
-      },
     });
   };
 
@@ -54,9 +51,6 @@ function LoginPage() {
         setUserInfo();
         dispatch({type: AUTH.LOGIN});
         navigation(PATH.HOME);
-      },
-      onFail: (error) => {
-        alert(error);
       },
     });
   };

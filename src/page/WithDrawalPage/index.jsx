@@ -40,9 +40,6 @@ function WithDrawalPage() {
         navigation(PATH.HOME);
         dispatch({type: AUTH.LOGOUT});
       },
-      onFail: (error) => {
-        alert(error);
-      },
     });
   };
 
