@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-import StyledDropdownContainer from "@/components/Dropdown/index.styled";
+import StyledDropdownContainer from "@/components/UserDropdown/index.styled";
 
-export default function Dropdown({ onClick }) {
+export default function UserDropdown({ onClick }) {
   return (
     <StyledDropdownContainer>
       <div className="baedali" />

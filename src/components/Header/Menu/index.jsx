@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
 import Badge from "@/components/Badge";
-import Dropdown from "@/components/Dropdown";
 import StyledMenu from "@/components/Header/Menu/index.styled";
+import UserDropdown from "@/components/UserDropdown";
 import { PATH } from "@/constants";
 import { getCart } from "@/redux/modules/cart";
 import { getUserInfo, logoutUser } from "@/redux/modules/user";
@@ -44,7 +44,7 @@ function Menu() {
         </li>
         <li>
           {authorized ? (
-            <Dropdown onClick={handleLogoutClick} />
+            <UserDropdown onClick={handleLogoutClick} />
           ) : (
             <Link to="/login">로그인</Link>
           )}
