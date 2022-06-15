@@ -9,6 +9,7 @@ import Signin from "@/components/pages/sign-in/Signin";
 import Signup from "@/components/pages/sign-up/Signup";
 import UserEdit from "@/components/pages/user-edit/UserEdit";
 import ProductDetail from "@/components/pages/product-detail/ProductDetail";
+import RequireAuth from "@/components/common/auth/RequireAuth";
 
 import Layout from "@/components/common/layout/Layout";
 import Snackbar from "@/components/common/snackbar/Snackbar";
@@ -32,7 +33,14 @@ function App() {
           <Route path={PATH.MAIN} element={<ProductList />} />
           <Route path={PATH.LOGIN} element={<Signin />} />
           <Route path={PATH.REGISTER} element={<Signup />} />
-          <Route path={PATH.EDIT} element={<UserEdit />} />
+          <Route
+            path={PATH.EDIT}
+            element={
+              <RequireAuth>
+                <UserEdit />
+              </RequireAuth>
+            }
+          />
           <Route path={`${PATH.DETAIL}/:id`} element={<ProductDetail />} />
           <Route path={PATH.CART} element={<Cart />} />
           <Route path={PATH.NOT_FOUND} element={<NotFound />} />

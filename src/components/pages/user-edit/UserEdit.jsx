@@ -50,7 +50,6 @@ function UserEdit() {
       setNickname((prev) => ({ ...prev, value: data.nickname }));
     } catch (error) {
       dispatch(toggleSnackbarOpen(MESSAGE.NOT_AUTHORIZED));
-      navigate(PATH.MAIN);
     }
   };
 
