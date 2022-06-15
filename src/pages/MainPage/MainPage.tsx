@@ -1,6 +1,7 @@
-import ProductCardGrid from '../../components/ProductCardGrid/ProductCardGrid';
-import Spinner from '../../components/Spinner/Spinner';
-import useProductList from './useProductList';
+import useProductList from 'pages/MainPage/useProductList';
+
+import ProductCardGrid from 'components/ProductCardGrid/ProductCardGrid';
+import Spinner from 'components/Spinner/Spinner';
 
 function MainPage() {
   const { isLoading, productList, error } = useProductList();

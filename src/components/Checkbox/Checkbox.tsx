@@ -1,5 +1,6 @@
 import React from 'react';
-import * as S from './Checkbox.styled';
+
+import * as S from 'components/Checkbox/Checkbox.styled';
 
 type InputProps = React.HTMLProps<HTMLInputElement>;
 

@@ -1,5 +1,6 @@
-import { Action } from '../../types';
-import { TYPES } from '../actions';
+import { Action } from 'types';
+
+import { TYPES } from 'redux/actions';
 
 const initialState = {
   isLoading: false,
@@ -40,7 +41,7 @@ const cart = (state = initialState, action: Action) => {
       return { ...state, isLoading: true, error: null };
     }
     case `${TYPES.REMOVE_CART_ITEM}_FULFILLED`: {
-      return { ...state, isLoading: false, cart: action.payload };
+      return { ...state, isLoading: false };
     }
     case `${TYPES.REMOVE_CART_ITEM}_REJECTED`: {
       return { ...state, isLoading: true, error: action.payload };

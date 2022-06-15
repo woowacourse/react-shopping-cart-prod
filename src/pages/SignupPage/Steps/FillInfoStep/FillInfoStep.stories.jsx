@@ -1,5 +1,6 @@
-import customerHandlers from '../../../../mocks/handlers/customers';
-import FillInfoStep from './FillInfoStep';
+import customerHandlers from 'mocks/handlers/customers';
+
+import FillInfoStep from 'pages/SignupPage/Steps/FillInfoStep/FillInfoStep';
 
 export default {
   title: 'Signup Step/FillInfoStep',

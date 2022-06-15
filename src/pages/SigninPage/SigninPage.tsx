@@ -1,39 +1,12 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../components/Button/Button';
-import Input from '../../components/Input/Input';
-import * as S from './SigninPage.styled';
-import axios from 'axios';
-import PlainLink from '../../components/PlainLink/PlainLink';
-import { SigninResponseBody } from '../../types';
-import { SERVER_URL } from '../../configs/api';
+import * as S from 'pages/SigninPage/SigninPage.styled';
+import useSigninForm from 'pages/SigninPage/useSigninForm';
+
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
+import PlainLink from 'components/PlainLink/PlainLink';
 
 function SigninPage() {
-  const navigate = useNavigate();
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const payload = Object.fromEntries(formData.entries());
-
-    try {
-      const response = await axios.post<SigninResponseBody>(
-        `${SERVER_URL}/api/customer/authentication/sign-in`,
-        payload
-      );
-
-      const { accessToken, userId } = response.data;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('userId', String(userId));
-      navigate('/');
-    } catch (e) {
-      if (axios.isAxiosError(e)) {
-        alert('유효하지 않은 이메일 형식입니다.');
-      } else {
-        alert(e);
-      }
-    }
-  };
+  const { handleSubmit } = useSigninForm();
 
   return (
     <S.PageBox>

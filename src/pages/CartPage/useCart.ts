@@ -1,12 +1,16 @@
+import axios from 'axios';
+import { SERVER_URL } from 'configs/api';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions } from '../../redux/actions';
-import { StoreState } from '../../types';
+import { StoreState } from 'types';
+
+import { actions } from 'redux/actions';
 
 type SelectedState = StoreState['cartState'];
 
 const useCart = () => {
   const dispatch = useDispatch();
+  const accessToken = localStorage.getItem('accessToken');
   const { isLoading, error, cart } = useSelector<StoreState, SelectedState>(
     ({ cartState }) => ({
       isLoading: cartState.isLoading,
@@ -18,7 +22,7 @@ const useCart = () => {
   const totalPrice = useMemo(
     () =>
       cart
-        .filter(({ product }) => checkedFlags[product.id] ?? true)
+        .filter(({ cartItemId }) => checkedFlags[cartItemId] ?? true)
         .reduce(
           (totalPrice, { product, quantity }) =>
             totalPrice + product.price * Number(quantity),
@@ -28,40 +32,77 @@ const useCart = () => {
   );
 
   const handleChangeQuantity =
-    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(actions.updateQuantity(id, e.target.value));
+    (cartItemId: number, productId: number) => async (quantity: number) => {
+      await axios({
+        method: 'put',
+        url: `${SERVER_URL}/api/customers/cart/${cartItemId}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        data: {
+          productId,
+          quantity,
+        },
+      });
+
+      dispatch(actions.getCart(accessToken as string));
     };
 
   const handleCheck =
-    (id: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCheckedFlags((prev) => ({ ...prev, [id]: e.target.checked }));
+    (cartItemId: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      setCheckedFlags((prev) => ({ ...prev, [cartItemId]: e.target.checked }));
     };
 
   const handleCheckAll = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCheckedFlags((prev) => {
       const updated = {} as Record<string, boolean>;
 
-      cart.forEach(({ product }) => {
-        updated[product.id] = e.target.checked;
+      cart.forEach(({ cartItemId }) => {
+        updated[cartItemId] = e.target.checked;
       });
 
       return updated;
     });
   };
 
-  const removeCartItem = (id: string | Array<string>) => () => {
-    dispatch(actions.removeCartItem(id));
+  const removeCartItem = (cartItemId: number) => async () => {
+    await axios({
+      method: 'delete',
+      url: `${SERVER_URL}/api/customers/cart/${cartItemId}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    dispatch(actions.getCart(accessToken as string));
   };
 
-  const removeAllCartItem = () => {
-    const productIdList = cart
-      .filter(({ checked }) => checked)
-      .map(({ product }) => product.id);
-    dispatch(actions.removeCartItem(productIdList));
+  const removeAllCartItem = async () => {
+    const checkedList = Object.entries(checkedFlags).filter(
+      ([_, checked]) => checked
+    );
+
+    const urlList = checkedList.map(
+      ([cartItemId]) => `${SERVER_URL}/api/customers/cart/${cartItemId}`
+    );
+
+    const fetchURL = (url: string) =>
+      axios({
+        method: 'delete',
+        url,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
+    const promiseList = urlList.map(fetchURL);
+
+    await Promise.all(promiseList);
+    dispatch(actions.getCart(accessToken as string));
   };
 
   useEffect(() => {
-    dispatch(actions.getCart());
+    dispatch(actions.getCart(accessToken as string));
   }, [dispatch]);
 
   return {

@@ -1,4 +1,4 @@
-import TermsStep from './TermsStep';
+import TermsStep from 'pages/SignupPage//Steps/TermsStep/TermsStep';
 
 export default {
   title: 'Signup Step/TermsStep',

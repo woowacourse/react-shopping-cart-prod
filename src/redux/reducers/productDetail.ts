@@ -1,5 +1,6 @@
-import { Action, Product } from '../../types';
-import { TYPES } from '../actions';
+import { Action, Product } from 'types';
+
+import { TYPES } from 'redux/actions';
 
 const initialState: {
   isLoading: boolean;

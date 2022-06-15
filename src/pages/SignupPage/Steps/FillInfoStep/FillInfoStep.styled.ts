@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
-import * as T from './FillInfoStep.types';
+
+import * as T from 'pages/SignupPage//Steps/FillInfoStep/FillInfoStep.types';
 
 export const Form = styled.form`
   width: 100%;
@@ -78,9 +79,16 @@ export const SubmitButtonBox = styled.div`
   margin: 24px auto 0;
 `;
 
-export const HintParagraph = styled.p`
+const HintParagraph = styled.p`
   align-self: flex-start;
-  color: green;
   font-weight: bold;
   font-size: 0.7rem;
+`;
+
+export const HintGreenParagraph = styled(HintParagraph)`
+  color: green;
+`;
+
+export const HintRedParagraph = styled(HintParagraph)`
+  color: red;
 `;

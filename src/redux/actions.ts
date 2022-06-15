@@ -1,5 +1,5 @@
 import axios from 'axios';
-import API from '../configs/api';
+import API, { SERVER_URL } from 'configs/api';
 
 const TYPES = {
   GET_PRODUCT_LIST: 'GET_PRODUCT_LIST',
@@ -24,58 +24,86 @@ const TYPES = {
   UPDATE_QUANTITY_REJECTED: 'UPDATE_QUANTITY_REJECTED',
   HANDLE_CHECK: 'HANDLE_CHECK',
   REMOVE_CART_ITEM: 'REMOVE_CART_ITEM',
+  GET_USER_ID: 'GET_USER_ID',
+  INIT_USER_STATE: 'INIT_USER_STATE',
+  GET_USER_INFO: 'GET_USER_INFO',
+  GET_USER_INFO_PENDING: 'GET_USER_INFO_PENDING',
+  GET_USER_INFO_FULFILLED: 'GET_USER_INFO_FULFILLED',
+  GET_USER_INFO_REJECTED: 'GET_USER_INFO_REJECTED',
 } as const;
 
 const actions = {
-  getProductList: (ids?: Array<String>) => {
-    const query = ids ? `?${ids.map((id) => `id=${id}`).join('&')}` : '';
+  getProductList: () => {
     const request = axios
-      .get(`${API.PRODUCTS}${query}`)
+      .get(`${SERVER_URL}/api/products`)
       .then((res) => res.data);
 
     return { type: TYPES.GET_PRODUCT_LIST, payload: request };
   },
   getProductDetail: (id: string) => {
-    const request = axios.get(`${API.PRODUCTS}/${id}`).then((res) => res.data);
+    const request = axios
+      .get(`${SERVER_URL}/api/products/${id}`)
+      .then((res) => res.data);
 
     return { type: TYPES.GET_PRODUCT_DETAIL, payload: request };
   },
-  getCart: () => {
-    const request = axios.get(API.CART).then((res) => res.data);
+  getCart: (accessToken: string) => {
+    const request = axios({
+      method: 'get',
+      url: `${SERVER_URL}/api/customers/cart`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((res) => res.data);
 
     return { type: TYPES.GET_CART, payload: request };
   },
-  addItemToCart: (productId: string, quantity: number) => {
-    const request = axios
-      .post(API.CART, {
-        productId,
-        quantity,
-      })
-      .then((res) => res.data);
+  addItemToCart: (accessToken: string, productId: number, quantity: number) => {
+    axios({
+      method: 'post',
+      url: `${SERVER_URL}/api/customers/cart`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      data: { productId, quantity },
+    }).then((res) => res.data);
 
-    return { type: TYPES.ADD_ITEM_TO_CART, payload: request };
+    return { type: TYPES.ADD_ITEM_TO_CART };
   },
-  removeCartItem: (productId: string | string[]) => {
-    const productIdList = Array.isArray(productId) ? productId : [productId];
-    const query = productIdList.map((productId) => `id=${productId}`).join('&');
-    const request = axios
-      .delete(`${API.CART}?${query}`)
-      .then((res) => res.data);
 
-    return { type: TYPES.REMOVE_CART_ITEM, payload: request };
+  removeCartItem: (accessToken: string, cartItemId: number) => {
+    axios({
+      method: 'delete',
+      url: `${SERVER_URL}/api/customers/cart/${cartItemId}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((res) => res.data);
+
+    return { type: TYPES.REMOVE_CART_ITEM };
   },
   updateQuantity: (productId: string, quantity: string) => {
-    const request = axios
-      .patch(API.CART, {
-        productId,
-        quantity,
-      })
-      .then((res) => res.data);
-
-    return { type: TYPES.UPDATE_QUANTITY, payload: request };
+    return { type: TYPES.UPDATE_QUANTITY };
   },
   handleCheck: (id: string, checked: boolean) => {
     return { type: TYPES.HANDLE_CHECK, payload: { id, checked } };
+  },
+  initUserState: () => {
+    return { type: TYPES.INIT_USER_STATE };
+  },
+  getUserId: (id: number) => {
+    return { type: TYPES.GET_USER_ID, payload: id };
+  },
+  getUserInfo: (accessToken: string, customerId: number) => {
+    const request = axios({
+      method: 'get',
+      url: `${SERVER_URL}/api/customers/${customerId}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((res) => res.data);
+
+    return { type: TYPES.GET_USER_INFO, payload: request };
   },
 };
 

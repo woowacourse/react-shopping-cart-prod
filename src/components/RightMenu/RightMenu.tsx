@@ -1,14 +1,26 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import ICONS from '../../constants/icons';
-import Avatar from '../Avatar/Avatar';
-import PlainLink from '../PlainLink/PlainLink';
-import * as S from './RightMenu.styled';
+import { StoreState } from 'types';
+
+import Avatar from 'components/Avatar/Avatar';
+import PlainLink from 'components/PlainLink/PlainLink';
+import * as S from 'components/RightMenu/RightMenu.styled';
+
+import { actions } from 'redux/actions';
+
+import ICONS from 'constants/icons';
+
+type SelectedState = StoreState['userState'];
 
 function RightMenu() {
-  const [isDrawerOpened, setIsDrawerOpened] = useState(false);
-  const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { id: userId, info } = useSelector<StoreState, SelectedState>(
+    ({ userState }) => userState
+  );
+  const [isDrawerOpened, setIsDrawerOpened] = useState(false);
+
   const accessToken = localStorage.getItem('accessToken');
 
   const toggleDrawer = () => {
@@ -17,11 +29,11 @@ function RightMenu() {
 
   const handleLogoutButton = () => {
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('userId');
+    dispatch(actions.initUserState());
     navigate('/signin');
   };
 
-  if (userId && accessToken) {
+  if (userId !== null && accessToken) {
     return (
       <S.RightMenuBox>
         <S.Nav>
@@ -43,10 +55,7 @@ function RightMenu() {
             </li>
           </S.Ul>
         </S.Nav>
-        <Avatar
-          profileImageUrl="http://gravatar.com/avatar/1654096752111?d=identicon"
-          name="우"
-        />
+        <Avatar profileImageUrl={info?.profileImageUrl} name={info?.name} />
       </S.RightMenuBox>
     );
   }

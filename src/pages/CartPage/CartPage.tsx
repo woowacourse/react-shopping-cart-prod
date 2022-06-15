@@ -1,10 +1,11 @@
-import CartItem from '../../components/CartItem/CartItem';
-import Checkbox from '../../components/Checkbox/Checkbox';
-import Spinner from '../../components/Spinner/Spinner';
-import DivideLine from '../../components/DivideLine/DivideLine';
-import Button from '../../components/Button/Button';
-import useCart from './useCart';
-import * as S from './CartPage.styled';
+import * as S from 'pages/CartPage/CartPage.styled';
+import useCart from 'pages/CartPage/useCart';
+
+import Button from 'components/Button/Button';
+import CartItem from 'components/CartItem/CartItem';
+import Checkbox from 'components/Checkbox/Checkbox';
+import DivideLine from 'components/DivideLine/DivideLine';
+import Spinner from 'components/Spinner/Spinner';
 
 function CartPage() {
   const {
@@ -28,6 +29,10 @@ function CartPage() {
     return <Spinner />;
   }
 
+  const isAllChecked =
+    Object.values(checkedFlags).length !== 0 &&
+    Object.values(checkedFlags).every((checked) => checked);
+
   return (
     <S.PageBox>
       <S.Title>장바구니</S.Title>
@@ -39,9 +44,7 @@ function CartPage() {
               <Checkbox
                 id="select-all-checkbox"
                 name="select-all-checkbox"
-                checked={Object.values(checkedFlags).every(
-                  (checked) => checked
-                )}
+                checked={isAllChecked}
                 onChange={handleCheckAll}
               />
               <label htmlFor="select-all-checkbox">선택해제</label>
@@ -53,15 +56,18 @@ function CartPage() {
           <S.Subtitle>든든배송 상품 ({cart.length}개)</S.Subtitle>
           <DivideLine color="gray" />
           <ul>
-            {cart.map(({ product, quantity }) => (
+            {cart.map(({ product, quantity, cartItemId }) => (
               <li key={product.id}>
                 <CartItem
                   product={product}
                   quantity={quantity}
-                  checked={checkedFlags[product.id] ?? true}
-                  onChangeQuantity={handleChangeQuantity(product.id)}
-                  onCheck={handleCheck(product.id)}
-                  onClickRemove={removeCartItem(product.id)}
+                  checked={checkedFlags[cartItemId]}
+                  onChangeQuantity={handleChangeQuantity(
+                    cartItemId,
+                    Number(product.id)
+                  )}
+                  onCheck={handleCheck(cartItemId)}
+                  onClickRemove={removeCartItem(cartItemId)}
                 />
                 <DivideLine thickness="thin" />
               </li>

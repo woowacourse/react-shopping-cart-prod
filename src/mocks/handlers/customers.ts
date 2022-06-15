@@ -1,11 +1,6 @@
+import { SERVER_URL } from 'configs/api';
 import { rest, RestRequest } from 'msw';
-import { SERVER_URL } from '../../configs/api';
-import {
-  Customer,
-  SigninRequestBody,
-  SignupRequestBody,
-  User,
-} from '../../types';
+import { Customer, SigninRequestBody, SignupRequestBody, User } from 'types';
 
 const TOKEN_PREFIX = 'lokbawoody';
 const generateToken = (id: number) => `${TOKEN_PREFIX}${id}`;
@@ -43,11 +38,9 @@ const customers: User[] = [
     gender: 'male',
     birthday: '1999-03-23',
     contact: '01012345678',
-    fullAddress: {
-      address: '서울특별시 동작구 상도동',
-      detailAddress: '',
-      zoneCode: '50413',
-    },
+    address: '서울특별시 동작구 상도동',
+    detailAddress: '',
+    zonecode: '50413',
     terms: true,
     accessToken: null,
   },
@@ -178,7 +171,9 @@ const customerHandlers = [
       gender: customer.gender,
       birthday: customer.birthday,
       contact: customer.contact,
-      fullAddress: customer.fullAddress,
+      address: customer.address,
+      detailAddress: customer.detailAddress,
+      zonecode: customer.zonecode,
       terms: customer.terms,
     };
 
