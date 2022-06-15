@@ -19,17 +19,16 @@ const useInput = (type, initialState, initialValue = "") => {
     const {
       target: { value },
     } = e;
-    setInputState((prev) => ({ ...prev, value }));
 
     if (!value.match(REGULAR_EXPRESSION[type])) {
-      setInputState((prev) => ({
-        ...prev,
+      setInputState({
+        value,
         status: ERROR_STATUS[`${type}_RULE`],
-      }));
+      });
       return;
     }
 
-    setInputState((prev) => ({ ...prev, status: STATUS.FULFILLED }));
+    setInputState({ value, status: STATUS.FULFILLED });
   };
 
   return [inputState, onChangeInput, setInputState];

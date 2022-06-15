@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 
 import StyledInput from "@/components/Input/index.styled";
 
