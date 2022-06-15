@@ -18,7 +18,7 @@ const StyledUserEditContainer = styled.div`
     margin-top: 15px;
     align-self: flex-end;
     cursor: pointer;
-    color: ${({ theme }) => theme.colors.pink};
+    color: ${({ theme }) => theme.colors.pink_500};
   }
 `;
 

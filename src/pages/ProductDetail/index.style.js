@@ -12,7 +12,7 @@ const StyledProductDetailContainer = styled.div`
   img {
     width: 400px;
     height: 400px;
-    border: 2px solid ${({ theme }) => theme.colors.gray3};
+    border: 2px solid ${({ theme }) => theme.colors.gray_500};
     margin-bottom: 30px;
   }
 
@@ -37,7 +37,7 @@ const StyledProductDetailContainer = styled.div`
     font-size: ${({ theme }) => theme.fontSize.m};
     color: ${({ theme }) => theme.colors.white};
 
-    background-color: ${({ theme }) => theme.colors.brown};
+    background-color: ${({ theme }) => theme.colors.brown_500};
   }
 `;
 

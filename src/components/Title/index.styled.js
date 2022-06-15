@@ -15,7 +15,7 @@ const StyledTitle = styled.div`
 
     + hr {
       width: 100%;
-      border: 2px solid ${({ theme }) => theme.colors.black2};
+      border: 2px solid ${({ theme }) => theme.colors.gray_700};
       margin-top: 20px;
     }
   }
@@ -25,7 +25,7 @@ const StyledTitle = styled.div`
 
     + hr {
       width: 100%;
-      border: 1px solid ${({ theme }) => theme.colors.gray1};
+      border: 1px solid ${({ theme }) => theme.colors.gray_600};
       margin-top: 16px;
     }
   }
@@ -35,7 +35,7 @@ const StyledTitle = styled.div`
 
     + hr {
       width: 100%;
-      border: 1px solid ${({ theme }) => theme.colors.gray1};
+      border: 1px solid ${({ theme }) => theme.colors.gray_600};
       margin-bottom: 20px;
     }
   }

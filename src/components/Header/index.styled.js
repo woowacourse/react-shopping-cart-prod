@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 const StyledHeader = styled.header`
-  background-color: ${({ theme }) => theme.colors.mint};
+  background-color: ${({ theme }) => theme.colors.mint_500};
 
   position: sticky;
   z-index: 5;

@@ -20,7 +20,7 @@ const StyledSigninContainer = styled.div`
 
     a {
       margin-left: 5px;
-      color: ${({ theme }) => theme.colors.blue};
+      color: ${({ theme }) => theme.colors.blue_500};
     }
   }
 `;

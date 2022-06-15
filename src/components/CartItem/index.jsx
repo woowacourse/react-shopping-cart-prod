@@ -65,10 +65,10 @@ function CartItem({ onChange, checked, item }) {
           <div className="quantity__container">
             <div className="quantity">{item.quantity}</div>
             <div className="quantity__buttons">
-              <Button onClick={handleIncrementClick} color="black1">
+              <Button onClick={handleIncrementClick} color="black">
                 ▲
               </Button>
-              <Button onClick={handleDecrementClick} color="black1">
+              <Button onClick={handleDecrementClick} color="black">
                 ▼
               </Button>
             </div>

@@ -30,7 +30,7 @@ const StyledDropdownContainer = styled.div`
     display: none;
     position: absolute;
     border-color: ${({ theme }) =>
-      `transparent transparent ${theme.colors.gray5} transparent`};
+      `transparent transparent ${theme.colors.gray_300} transparent`};
     border-style: solid;
     border-width: 0 10px 16px 10px;
     height: 0px;
@@ -41,19 +41,19 @@ const StyledDropdownContainer = styled.div`
 
   .dropdown-content {
     position: absolute;
-    background-color: ${({ theme }) => theme.colors.gray5};
+    background-color: ${({ theme }) => theme.colors.gray_300};
     min-width: 160px;
     top: 16px;
     right: -25px;
   }
 
   .dropdown-content a {
-    color: ${({ theme }) => theme.colors.black1};
+    color: ${({ theme }) => theme.colors.black};
     padding: 12px 16px;
     display: block;
 
     &:hover {
-      background-color: ${({ theme }) => theme.colors.gray4};
+      background-color: ${({ theme }) => theme.colors.gray_400};
     }
   }
 `;

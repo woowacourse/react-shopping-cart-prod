@@ -50,7 +50,7 @@ function CartList({
             선택해제
           </label>
         </div>
-        <Button onClick={deleteSelectedItems} color="black1">
+        <Button onClick={deleteSelectedItems} color="black">
           상품삭제
         </Button>
       </div>

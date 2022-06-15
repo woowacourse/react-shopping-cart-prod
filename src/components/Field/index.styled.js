@@ -9,13 +9,13 @@ const StyledField = styled.div`
     justify-content: space-between;
 
     .error__message {
-      color: ${({ theme }) => theme.colors.pink};
+      color: ${({ theme }) => theme.colors.pink_500};
       font-size: ${({ theme }) => theme.fontSize.xs};
     }
   }
 
   label {
-    color: ${({ theme }) => theme.colors.gray1};
+    color: ${({ theme }) => theme.colors.gray_600};
     margin-bottom: 5px;
   }
 `;

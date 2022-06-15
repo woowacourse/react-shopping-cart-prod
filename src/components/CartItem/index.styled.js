@@ -52,7 +52,7 @@ const StyledCartContainer = styled.div`
 
         width: 50px;
         height: 40px;
-        border: 1px solid ${({ theme }) => theme.colors.gray4};
+        border: 1px solid ${({ theme }) => theme.colors.gray_400};
         text-align: center;
         line-height: 40px;
         font-size: ${({ theme }) => theme.fontSize.m};
@@ -69,12 +69,12 @@ const StyledCartContainer = styled.div`
 
           width: 20px;
           height: 20px;
-          border: 1px solid ${({ theme }) => theme.colors.gray4};
+          border: 1px solid ${({ theme }) => theme.colors.gray_400};
         }
       }
 
       .cart-price {
-        color: ${({ theme }) => theme.colors.black2};
+        color: ${({ theme }) => theme.colors.gray_700};
         align-self: flex-end;
       }
     }
@@ -83,7 +83,7 @@ const StyledCartContainer = styled.div`
 
 const StyledHr = styled.hr`
   width: 100%;
-  border: 1px solid ${({ theme }) => theme.colors.gray1};
+  border: 1px solid ${({ theme }) => theme.colors.gray_600};
   margin-top: 10px;
 `;
 

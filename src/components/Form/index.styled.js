@@ -12,7 +12,7 @@ const StyledForm = styled.form`
 
     border-radius: 4px;
 
-    background-color: ${({ theme }) => theme.colors.mint};
+    background-color: ${({ theme }) => theme.colors.mint_500};
     color: ${({ theme }) => theme.colors.white};
   }
 `;

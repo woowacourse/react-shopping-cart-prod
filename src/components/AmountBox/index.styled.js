@@ -3,12 +3,12 @@ import styled from "@emotion/styled";
 const AmountBoxWrapper = styled.div`
   width: 90%;
   height: 300px;
-  border: ${({ theme }) => `1px solid ${theme.colors.gray4}`};
+  border: ${({ theme }) => `1px solid ${theme.colors.gray_400}`};
   padding: 30px;
   margin: 0 auto;
 
   button {
-    background-color: ${({ theme }) => theme.colors.mint};
+    background-color: ${({ theme }) => theme.colors.mint_500};
     color: white;
     font-size: ${({ theme }) => theme.fontSize.l};
     width: 350px;
@@ -26,7 +26,7 @@ const AmountBoxHeaderBox = styled.div`
   font-size: 24px;
   margin-bottom: 20px;
   padding-bottom: 20px;
-  border-bottom: ${({ theme }) => `3px solid ${theme.colors.gray4}`};
+  border-bottom: ${({ theme }) => `3px solid ${theme.colors.gray_400}`};
 `;
 
 const PriceInfoContainer = styled.div`
@@ -39,7 +39,7 @@ const PriceInfoContainer = styled.div`
     font-weight: 700;
     background-size: 0% 50%;
     background: ${({ theme }) =>
-      `linear-gradient(to top, ${theme.colors.mint} 50%, transparent 50%)`};
+      `linear-gradient(to top, ${theme.colors.mint_500} 50%, transparent 50%)`};
   }
 `;
 

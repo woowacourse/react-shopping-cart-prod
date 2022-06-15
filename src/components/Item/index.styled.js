@@ -9,7 +9,7 @@ const StyledProductInfo = styled.div`
     width: 100%;
   }
 
-  color: ${({ theme }) => theme.colors.black1};
+  color: ${({ theme }) => theme.colors.black};
   .product-title {
     font-size: ${({ theme }) => theme.fontSize.m};
     cursor: pointer;
@@ -18,7 +18,7 @@ const StyledProductInfo = styled.div`
     &:hover {
       text-decoration: underline;
       text-underline-position: under;
-      text-decoration-color: ${({ theme }) => theme.colors.mint};
+      text-decoration-color: ${({ theme }) => theme.colors.mint_500};
     }
   }
   .product-price {

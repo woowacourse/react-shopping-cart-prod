@@ -22,7 +22,7 @@ const StyledCartList = styled.section`
       height: 40px;
       cursor: pointer;
 
-      border: 1px solid ${({ theme }) => theme.colors.gray4};
+      border: 1px solid ${({ theme }) => theme.colors.gray_400};
     }
   }
 
