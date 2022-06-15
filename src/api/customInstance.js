@@ -5,10 +5,8 @@ import { API_URLS } from 'api/constants';
 import { ERROR_MESSAGES } from 'constants/messages';
 
 const savedServerNumber = window.sessionStorage.getItem('serverNumber') || 0;
-const SERVER_INDEX = Number(savedServerNumber);
 
-export const BASE_URL = API_URLS[SERVER_INDEX].url;
-export const SERVER_NAME = API_URLS[SERVER_INDEX].name;
+export const { url: BASE_URL, name: SERVER_NAME } = API_URLS[Number(savedServerNumber)];
 
 const customInstance = axios.create({
   baseURL: BASE_URL,
