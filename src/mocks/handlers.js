@@ -52,62 +52,74 @@ let userDB = {
 
 export const handlers = [
   // 상품 리스트 가져오기
-  rest.get(`${BASE_SERVER_URL}${SERVER_PATH.PRODUCT}`, (req, res, ctx) => {
+  rest.get(`${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.PRODUCT}`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(MOCK_PRODUCT_LIST));
   }),
 
   // 선택된 상품 정보 가져오기
-  rest.get(`${BASE_SERVER_URL}${SERVER_PATH.PRODUCT}/:id`, (req, res, ctx) => {
-    const productId = Number.parseInt(req.params.id);
-    const detailItem = MOCK_PRODUCT_LIST.products.find(({id}) => id === productId);
+  rest.get(
+    `${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.PRODUCT}/:id`,
+    (req, res, ctx) => {
+      const productId = Number.parseInt(req.params.id);
+      const detailItem = MOCK_PRODUCT_LIST.products.find(({id}) => id === productId);
 
-    return res(ctx.status(200), ctx.json(detailItem));
-  }),
+      return res(ctx.status(200), ctx.json(detailItem));
+    },
+  ),
 
   // 장바구니 상품 추가
-  rest.post(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`, (req, res, ctx) => {
-    const {productId} = req.body;
-    const accessToken = req.headers._headers.authorization.split(' ')[1];
+  rest.post(
+    `${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+    (req, res, ctx) => {
+      const {productId} = req.body;
+      const accessToken = req.headers._headers.authorization.split(' ')[1];
 
-    if (!cart[accessToken]) {
-      cart[accessToken] = {cart: []};
-    }
+      if (!cart[accessToken]) {
+        cart[accessToken] = {cart: []};
+      }
 
-    const isInCart = cart[accessToken].cart.some(({id}) => id === Number.parseInt(productId));
+      const isInCart = cart[accessToken].cart.some(({id}) => id === Number.parseInt(productId));
 
-    if (isInCart) {
-      return res(ctx.status(404));
-    }
+      if (isInCart) {
+        return res(ctx.status(404));
+      }
 
-    const item = MOCK_PRODUCT_LIST.products.find(({id}) => id === productId);
-    cart[accessToken].cart = [...cart[accessToken].cart, item];
+      const item = MOCK_PRODUCT_LIST.products.find(({id}) => id === productId);
+      cart[accessToken].cart = [...cart[accessToken].cart, item];
 
-    return res(ctx.status(201));
-  }),
+      return res(ctx.status(201));
+    },
+  ),
 
   // 장바구니 상품 리스트 가져오기
-  rest.get(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`, (req, res, ctx) => {
-    const accessToken = req.headers._headers.authorization.split(' ')[1];
+  rest.get(
+    `${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+    (req, res, ctx) => {
+      const accessToken = req.headers._headers.authorization.split(' ')[1];
 
-    return res(ctx.status(200), ctx.json(cart[accessToken]));
-  }),
+      return res(ctx.status(200), ctx.json(cart[accessToken]));
+    },
+  ),
 
   // 장바구니 상품 삭제
-  rest.delete(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`, (req, res, ctx) => {
-    const accessToken = req.headers._headers.authorization.split(' ')[1];
-    const {productId} = req.body;
-    const isInCart = cart[accessToken].cart.some(({id}) => id === productId);
-    if (!isInCart) {
-      return res(ctx.status(404));
-    }
+  rest.delete(
+    `${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+    (req, res, ctx) => {
+      const accessToken = req.headers._headers.authorization.split(' ')[1];
+      const {productId} = req.body;
+      const isInCart = cart[accessToken].cart.some(({id}) => id === productId);
+      if (!isInCart) {
+        return res(ctx.status(404));
+      }
 
-    const newCart = cart[accessToken].cart.filter(({id}) => id !== productId);
-    cart[accessToken].cart = newCart;
-    return res(ctx.status(204));
-  }),
+      const newCart = cart[accessToken].cart.filter(({id}) => id !== productId);
+      cart[accessToken].cart = newCart;
+      return res(ctx.status(204));
+    },
+  ),
 
   // 로그인
-  rest.post(`${BASE_SERVER_URL}${SERVER_PATH.SIGNIN}`, (req, res, ctx) => {
+  rest.post(`${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.SIGNIN}`, (req, res, ctx) => {
     const {account, password} = req.body;
     const accessToken = Object.keys(userDB).find(
       (token) => userDB[token].account === account && userDB[token].password === password,
@@ -121,7 +133,7 @@ export const handlers = [
   }),
 
   // 회원가입
-  rest.post(`${BASE_SERVER_URL}${SERVER_PATH.SIGNUP}`, (req, res, ctx) => {
+  rest.post(`${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.SIGNUP}`, (req, res, ctx) => {
     const accounts = Object.values(userDB).map(({account}) => account);
 
     const isDuplicated = accounts.some((account) => req.body.account === account);
@@ -141,7 +153,7 @@ export const handlers = [
   }),
 
   // 사용자 정보 조회
-  rest.get(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`, (req, res, ctx) => {
+  rest.get(`${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
     if (!Object.hasOwnProperty.call(userDB, accessToken)) {
       return res(ctx.status(404));
@@ -150,7 +162,7 @@ export const handlers = [
   }),
 
   // 사용자 정보 수정
-  rest.put(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`, (req, res, ctx) => {
+  rest.put(`${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
 
     if (!Object.hasOwnProperty.call(userDB, accessToken)) {
@@ -166,12 +178,15 @@ export const handlers = [
   }),
 
   // 회원 탈퇴
-  rest.delete(`${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`, (req, res, ctx) => {
-    const accessToken = req.headers._headers.authorization.split(' ')[1];
-    if (req.body.password !== userDB[accessToken].password) {
-      return res(ctx.status(404));
-    }
-    localStorage.removeItem('accessToken');
-    return res(ctx.status(204));
-  }),
+  rest.delete(
+    `${process.env.REACT_APP_BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
+    (req, res, ctx) => {
+      const accessToken = req.headers._headers.authorization.split(' ')[1];
+      if (req.body.password !== userDB[accessToken].password) {
+        return res(ctx.status(404));
+      }
+      localStorage.removeItem('accessToken');
+      return res(ctx.status(204));
+    },
+  ),
 ];

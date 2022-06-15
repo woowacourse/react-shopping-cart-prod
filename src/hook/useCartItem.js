@@ -1,5 +1,4 @@
 import {CONFIRM_MESSAGE} from 'constant';
-import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
@@ -27,7 +26,7 @@ export default function useCartItem(path = null) {
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
     if (deleteConfirm) {
       deleteCart({
-        API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+        API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
         headers: {Authorization: `Bearer ${accessToken}`},
         body: {productId: payload},
 
@@ -54,7 +53,7 @@ export default function useCartItem(path = null) {
     const accessToken = response.accessToken;
 
     fetchCart({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
       headers: {Authorization: `Bearer ${accessToken}`},
 
       onSuccess: (fetchedData) => {
@@ -74,7 +73,7 @@ export default function useCartItem(path = null) {
     const accessToken = response.accessToken;
 
     postCart({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {productId: payload.id},
 
@@ -97,7 +96,7 @@ export default function useCartItem(path = null) {
     if (deleteConfirm) {
       payload.forEach((id) =>
         deleteCart({
-          API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}${SERVER_PATH.CART}`,
+          API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
           headers: {Authorization: `Bearer ${accessToken}`},
           body: {productId: id},
 

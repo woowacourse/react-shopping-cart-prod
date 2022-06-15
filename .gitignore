@@ -9,9 +9,6 @@
 # production
 /build
 
-# api path 
-src/constant/server.js
-
 # misc
 .DS_Store
 .env.local

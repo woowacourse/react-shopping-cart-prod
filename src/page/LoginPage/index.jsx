@@ -4,7 +4,6 @@ import * as S from './style';
 import theme from 'theme/theme';
 import {Link, useNavigate} from 'react-router-dom';
 import {PATH} from 'constant';
-import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 import useFetch from 'hook/useFetch';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
@@ -31,7 +30,7 @@ function LoginPage() {
     const accessToken = response.accessToken;
 
     userInfo({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
       onSuccess: (res) => {
         dispatch({type: AUTH.SET_USER_INFO, payload: res});
@@ -45,7 +44,7 @@ function LoginPage() {
 
   const onSubmit = (inputs) => {
     login.fetch({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.SIGNIN}`,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_SIGNIN}`,
       body: {
         account: inputs[0].value,
         password: inputs[1].value,

@@ -8,7 +8,6 @@ import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {PATH, VALIDATION_MESSAGE} from 'constant';
-import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 import {AUTH} from 'store/modules/auth';
 
 function UserInfoEditPage() {
@@ -60,7 +59,7 @@ function UserInfoEditPage() {
     const accessToken = response.accessToken;
 
     userInfo.fetch({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
     });
   };
@@ -73,7 +72,7 @@ function UserInfoEditPage() {
     const accessToken = response.accessToken;
 
     editInfo.fetch({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {
         nickname: nickname.value || nickname.placeholder,

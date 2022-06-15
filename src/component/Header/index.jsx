@@ -8,7 +8,6 @@ import {ReactComponent as LogoIcon} from 'assets/logoIcon.svg';
 import * as S from 'component/Header/style';
 
 import {PATH} from 'constant';
-import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 
 import baedale from 'assets/baedale.png';
 import baedaleHover from 'assets/baedale_hover.png';
@@ -37,7 +36,7 @@ export default function Header() {
     const accessToken = response.accessToken;
 
     userInfo({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMERS}`,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
       headers: {Authorization: `Bearer ${accessToken}`},
       onSuccess: (res) => {
         dispatch({type: AUTH.SET_USER_INFO, payload: res});

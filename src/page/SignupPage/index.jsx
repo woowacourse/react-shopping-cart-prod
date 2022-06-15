@@ -7,7 +7,6 @@ import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
 import {PATH, VALIDATION_MESSAGE} from 'constant';
-import {BASE_SERVER_URL, SERVER_PATH} from 'constant/server';
 
 function SignupPage() {
   const navigation = useNavigate();
@@ -68,7 +67,7 @@ function SignupPage() {
     // eslint-disable-next-line no-unused-vars
     const [account, nickname, password, passwordConfirm, address, start, middle, last] = inputs;
     signup.fetch({
-      API_URL: `${BASE_SERVER_URL}${SERVER_PATH.SIGNUP}`,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_SIGNUP}`,
       body: {
         account: account.value,
         nickname: nickname.value,
