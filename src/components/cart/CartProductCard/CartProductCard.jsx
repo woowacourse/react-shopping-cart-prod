@@ -31,7 +31,7 @@ function CartProductCard({
   const counterValue = Math.min(stock, quantity);
   const checked = isChecked(productId);
 
-  const handleQuantityIncrement = async () => {
+  const handleIncrementQuantity = async () => {
     if (isMoreThanStock) {
       alert(WARNING_MESSAGES.MAX_QUANTITY);
       return;
@@ -44,7 +44,7 @@ function CartProductCard({
     }
   };
 
-  const handleQuantityDecrement = async () => {
+  const handleDecrementQuantity = async () => {
     let currentQuantity = quantity;
 
     if (currentQuantity === 1) {
@@ -66,7 +66,7 @@ function CartProductCard({
     }
   };
 
-  const handleProductDelete = async () => {
+  const handleDeleteProduct = async () => {
     try {
       await deleteProduct([productId]);
     } catch ({ message }) {
@@ -74,15 +74,15 @@ function CartProductCard({
     }
   };
 
-  const handleCheckBoxClick = () => toggleCheck(productId);
+  const handleClickCheckBox = () => toggleCheck(productId);
 
   return (
     <S.Container>
-      <CheckBox checked={checked} disabled={isSoldOut} onClick={handleCheckBoxClick} />
+      <CheckBox checked={checked} disabled={isSoldOut} onClick={handleClickCheckBox} />
       <Image src={imageUrl} width="150px" backgroundColor={color.WHITE} />
       <S.Description>
         <Position position="absolute" top="0" right="0">
-          <S.Button type="button" onClick={handleProductDelete}>
+          <S.Button type="button" onClick={handleDeleteProduct}>
             <Icon iconName="Trash" fill={color.DARK_GRAY} />
           </S.Button>
         </Position>
@@ -90,8 +90,8 @@ function CartProductCard({
         <Counter
           count={counterValue}
           disabled={isSoldOut}
-          onIncrement={handleQuantityIncrement}
-          onDecrement={handleQuantityDecrement}
+          onIncrement={handleIncrementQuantity}
+          onDecrement={handleDecrementQuantity}
         />
         <S.StatusMessage>
           {isSoldOut

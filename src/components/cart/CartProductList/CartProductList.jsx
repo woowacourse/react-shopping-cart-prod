@@ -30,7 +30,7 @@ function CartProductList() {
     fetchCart();
   }, []);
 
-  const handleSelectedProductDelete = async () => {
+  const handleDeleteSelectedProduct = async () => {
     try {
       await deleteCheckedProducts();
     } catch ({ message }) {
@@ -48,7 +48,7 @@ function CartProductList() {
           </S.CheckBoxLabel>
         </S.AllCheckControl>
         {checkedProductCount !== 0 && (
-          <S.Button type="button" onClick={handleSelectedProductDelete}>
+          <S.Button type="button" onClick={handleDeleteSelectedProduct}>
             선택 상품 삭제
           </S.Button>
         )}

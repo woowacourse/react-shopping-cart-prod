@@ -48,7 +48,7 @@ function Header({ isLoggedIn }) {
     }
   };
 
-  const handleServerChange = ({ target: { selectedIndex } }) => {
+  const handleChangeServer = ({ target: { selectedIndex } }) => {
     window.sessionStorage.setItem('serverNumber', selectedIndex);
     dispatch(logoutUser());
     navigate(ROUTE.HOME);
@@ -68,7 +68,7 @@ function Header({ isLoggedIn }) {
             BLVIC&apos;S CAMPING
           </S.Logo>
         </S.NavLink>
-        <select name="server-select" onChange={handleServerChange} value={SERVER_NAME}>
+        <select name="server-select" onChange={handleChangeServer} value={SERVER_NAME}>
           {API_URLS.map(({ name }) => (
             <option key={name} value={name}>
               {name}
