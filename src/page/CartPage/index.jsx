@@ -9,7 +9,7 @@ import useTotalPrice from 'hooks/useTotalPrice';
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 import empty from 'assets/empty.jpeg';
 import Styled from 'page/CartPage/index.style';
-import { doAddProductToOrder, doInitializeOrder } from 'reducers/cartReducer';
+import { addProductToOrder, initializeOrder } from 'reducers/cartReducer';
 
 const CartPage = () => {
   const { shoppingCart, order } = useSelector(state => state.cartReducer);
@@ -28,13 +28,13 @@ const CartPage = () => {
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
-      dispatch(doInitializeOrder());
+      dispatch(initializeOrder());
       return;
     }
 
     shoppingCart.forEach(product => {
       if (!order.some(id => id === product.productId)) {
-        dispatch(doAddProductToOrder({ id: product.productId }));
+        dispatch(addProductToOrder({ id: product.productId }));
       }
     });
   };

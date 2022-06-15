@@ -2,7 +2,7 @@
 import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { doInitializeCartList } from 'reducers/cartReducer';
+import { initializeCartList } from 'reducers/cartReducer';
 
 // DONE 3. get 장바구니 목록 가져오기
 const useGetCartAPI = () => {
@@ -16,7 +16,7 @@ const useGetCartAPI = () => {
 
     try {
       const response = await apiClient.get('/cart');
-      dispatch(doInitializeCartList({ shoppingCart: response.data }));
+      dispatch(initializeCartList({ shoppingCart: response.data }));
       setIsCartLoading(false);
     } catch (error) {
       setError(error);

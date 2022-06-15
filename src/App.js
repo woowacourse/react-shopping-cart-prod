@@ -18,7 +18,7 @@ import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 import { ROUTES } from 'utils/constants';
 import { getCookie } from 'utils/cookie';
 import apiClient from 'apis/apiClient';
-import { doLogin } from 'reducers/authReducer';
+import { loginComplete } from 'reducers/authReducer';
 import SeverSelectPage from 'page/ServerSelectPage';
 
 function App() {
@@ -32,7 +32,7 @@ function App() {
       if (!accessToken) return;
 
       const response = await apiClient.get('/customers');
-      dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(loginComplete({ nickname: response.data.nickname }));
     } catch (error) {
       console.error(error);
     }

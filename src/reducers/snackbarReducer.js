@@ -12,13 +12,13 @@ const initState = {
 };
 
 // Action Creators
-export const doShowSnackbar = ({ message, status }) => ({
+export const showSnackbar = ({ message, status }) => ({
   type: SNACKBAR_ACTIONS.SHOW,
   message,
   status,
 });
 
-export const doHideSnackbar = () => ({ type: SNACKBAR_ACTIONS.HIDE });
+export const hideSnackbar = () => ({ type: SNACKBAR_ACTIONS.HIDE });
 
 // Reducers
 function snackbarReducer(state = initState, action) {

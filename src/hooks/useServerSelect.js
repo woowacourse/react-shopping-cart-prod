@@ -2,8 +2,8 @@ import apiClient from 'apis/apiClient';
 
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { doLogout } from 'reducers/authReducer';
-import { doInitializeCartList } from 'reducers/cartReducer';
+import { logoutComplete } from 'reducers/authReducer';
+import { initializeCartList } from 'reducers/cartReducer';
 import { AUTH_API_URL, ROUTES } from 'utils/constants';
 import { deleteCookie } from 'utils/cookie';
 
@@ -16,8 +16,8 @@ const useServerSelect = () => {
     apiClient.defaults.baseURL = AUTH_API_URL[name];
     document.title = `${name}의 API가 작동 중인 마르코 장바구니 사이트`;
     navigate(ROUTES.HOME);
-    dispatch(doLogout());
-    dispatch(doInitializeCartList({ shoppingCart: [] }));
+    dispatch(logoutComplete());
+    dispatch(initializeCartList({ shoppingCart: [] }));
     deleteCookie('accessToken');
   };
 

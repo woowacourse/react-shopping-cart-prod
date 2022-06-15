@@ -4,8 +4,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
 
-import { getCookie, setCookie } from 'utils/cookie';
-import { doLogin } from 'reducers/authReducer';
+import { setCookie } from 'utils/cookie';
+import { loginComplete } from 'reducers/authReducer';
 import { MESSAGE, ROUTES } from 'utils/constants';
 import apiClient from 'apis/apiClient';
 
@@ -42,7 +42,7 @@ const useLoginAPI = () => {
         withCredentials: true,
       };
       setCookie('accessToken', accessToken);
-      dispatch(doLogin({ nickname: response.data.nickname }));
+      dispatch(loginComplete({ nickname: response.data.nickname }));
       renderSnackbar(`${response.data.nickname}${MESSAGE.LOGIN_SUCCESS}`, 'SUCCESS');
       navigate(ROUTES.HOME);
     } catch (error) {

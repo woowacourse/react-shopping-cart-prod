@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import useSnackbar from '../../../hooks/useSnackbar';
 
 import apiClient from 'apis/apiClient';
-import { doLogout } from 'reducers/authReducer';
-import { doInitializeCartList } from 'reducers/cartReducer';
+import { logoutComplete } from 'reducers/authReducer';
+import { initializeCartList } from 'reducers/cartReducer';
 
 import { MESSAGE, ROUTES } from 'utils/constants';
 import { deleteCookie } from 'utils/cookie';
@@ -31,8 +31,8 @@ const useDeleteAccountAPI = (handleModal, password, isCorrectPassword) => {
       });
 
       deleteCookie('accessToken');
-      dispatch(doLogout());
-      dispatch(doInitializeCartList({ shoppingCart: [] }));
+      dispatch(logoutComplete());
+      dispatch(initializeCartList({ shoppingCart: [] }));
       handleModal();
       renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
       navigate(ROUTES.HOME);

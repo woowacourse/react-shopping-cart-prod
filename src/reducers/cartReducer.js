@@ -25,7 +25,7 @@ const initState = {
 };
 
 // Action Creators
-export const doPutProductToCart = ({ productId, name, price, image, quantity }) => ({
+export const putProductToCart = ({ productId, name, price, image, quantity }) => ({
   type: CART_ACTIONS.PUT,
   productId,
   name,
@@ -34,30 +34,30 @@ export const doPutProductToCart = ({ productId, name, price, image, quantity }) 
   quantity,
 });
 
-export const doDeleteProductFromCart = ({ productId }) => ({
+export const deleteProductFromCart = ({ productId }) => ({
   type: CART_ACTIONS.DELETE,
   productId,
 });
 
-export const doSelectiveDeleteFromCart = () => ({ type: CART_ACTIONS.SELECTIVE_DELETE });
+export const selectiveDeleteFromCart = () => ({ type: CART_ACTIONS.SELECTIVE_DELETE });
 
-export const doInitializeProductList = ({ products }) => ({
+export const initializeProductList = ({ products }) => ({
   type: PRODUCT_LIST_ACTIONS.INITIALIZE,
   products,
 });
 
-export const doInitializeCartList = ({ shoppingCart }) => ({
+export const initializeCartList = ({ shoppingCart }) => ({
   type: CART_ACTIONS.INITIALIZE,
   shoppingCart,
 });
 
-export const doAddProductToOrder = ({ id }) => ({ type: ORDER_ACTIONS.ADD, id });
+export const addProductToOrder = ({ id }) => ({ type: ORDER_ACTIONS.ADD, id });
 
-export const doDeleteProductFromOrder = ({ id }) => ({ type: ORDER_ACTIONS.DELETE, id });
+export const deleteProductFromOrder = ({ id }) => ({ type: ORDER_ACTIONS.DELETE, id });
 
-export const doInitializeOrder = () => ({ type: ORDER_ACTIONS.INITIALIZE });
+export const initializeOrder = () => ({ type: ORDER_ACTIONS.INITIALIZE });
 
-export const doDecideOrder = ({ orderList }) => ({ type: ORDER_ACTIONS.DECISION, orderList });
+export const decideOrder = ({ orderList }) => ({ type: ORDER_ACTIONS.DECISION, orderList });
 
 // Reducers
 function cartReducer(state = initState, action) {

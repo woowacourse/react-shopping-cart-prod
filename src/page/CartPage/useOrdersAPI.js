@@ -3,7 +3,7 @@ import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { doDecideOrder } from 'reducers/cartReducer';
+import { decideOrder } from 'reducers/cartReducer';
 import { MESSAGE, ROUTES } from 'utils/constants';
 import useSnackbar from '../../hooks/useSnackbar';
 
@@ -20,7 +20,7 @@ const useOrderAPI = () => {
     async order => {
       try {
         const response = await apiClient.post('/orders', { productIds: order });
-        dispatch(doDecideOrder({ orderList: response.data }));
+        dispatch(decideOrder({ orderList: response.data }));
         navigate(ROUTES.ORDER);
         renderSnackbar(MESSAGE.ORDER_PASS_SUCCESS, 'SUCCESS');
       } catch (error) {

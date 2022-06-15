@@ -1,7 +1,7 @@
 import useSnackbar from 'hooks/useSnackbar';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { doLogout } from 'reducers/authReducer';
+import { loginComplete } from 'reducers/authReducer';
 import { ROUTES } from 'utils/constants';
 import { deleteCookie } from 'utils/cookie';
 
@@ -16,7 +16,7 @@ const useLogout = () => {
     // 토큰 유효기간 만료, 유효하지 않은 토큰, 인증이 필요한 접근
     if ([1002, 1003, 1004].includes(code)) {
       deleteCookie('accessToken');
-      dispatch(doLogout());
+      dispatch(loginComplete());
       navigate(ROUTES.LOGIN);
       renderSnackbar(message || customError.message, 'FAILED');
     }

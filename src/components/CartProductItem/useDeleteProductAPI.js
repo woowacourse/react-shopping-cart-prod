@@ -2,7 +2,7 @@
 import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { doDeleteProductFromCart } from 'reducers/cartReducer';
+import { deleteProductFromCart } from 'reducers/cartReducer';
 import { MESSAGE } from 'utils/constants';
 import useSnackbar from '../../hooks/useSnackbar';
 
@@ -17,7 +17,7 @@ const useDeleteProductAPI = productId => {
   const deleteProduct = useCallback(async () => {
     try {
       await apiClient.delete('/cart', { data: { productIds: [productId] } });
-      dispatch(doDeleteProductFromCart({ productId: productId }));
+      dispatch(deleteProductFromCart({ productId: productId }));
       renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
     } catch (error) {
       const customError = error.response.data;

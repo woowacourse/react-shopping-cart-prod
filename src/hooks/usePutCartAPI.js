@@ -2,8 +2,8 @@
 import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { doPutProductToCart } from 'reducers/cartReducer';
-import { getCookie } from 'utils/cookie';
+import { putProductToCart } from 'reducers/cartReducer';
+
 import useLogout from './useLogout';
 import useSnackbar from './useSnackbar';
 
@@ -25,7 +25,7 @@ const usePutCartAPI = () => {
           quantity: updatedQuantity,
         });
         dispatch(
-          doPutProductToCart({
+          putProductToCart({
             productId: response.data.productId,
             name: response.data.name,
             image: response.data.image,

@@ -2,7 +2,7 @@ import { legacy_createStore as createStore } from 'redux';
 import rootReducer from 'store/rootReducer';
 
 import { dummyProductList } from 'dummy_data';
-import { doAddProductToOrder, doDeleteProductFromCart, doDeleteProductFromOrder, doInitializeOrder, doInitializeProductList, doPutProductToCart } from 'reducers/cartReducer';
+import { addProductToOrder, deleteProductFromCart, deleteProductFromOrder, initializeOrder, initializeProductList, putProductToCart } from 'reducers/cartReducer';
 
 describe('reducer 테스트', () => {
   let store;
@@ -12,13 +12,13 @@ describe('reducer 테스트', () => {
     store = createStore(rootReducer);
     store.subscribe(() => store.getState());
 
-    store.dispatch(doInitializeProductList({ products: dummyProductList }));
+    store.dispatch(initializeProductList({ products: dummyProductList }));
 
     expect(store.getState().reducer.products).toHaveLength(dummyProductList.length);
   });
 
   test('상품 목록을 초기화할 수 있다.', () => {
-    store.dispatch(doInitializeProductList({ products: dummyProductList }));
+    store.dispatch(initializeProductList({ products: dummyProductList }));
 
     expect(store.getState().reducer.products).toHaveLength(dummyProductList.length);
   });
@@ -26,7 +26,7 @@ describe('reducer 테스트', () => {
   test('카트에 특정 상품을 추가할 수 있다.', () => {
     const quantity = 3;
 
-    store.dispatch(doPutProductToCart({ id: targetProduct.id, quantity }));
+    store.dispatch(putProductToCart({ id: targetProduct.id, quantity }));
 
     expect(store.getState().reducer.shoppingCart).toHaveLength(1);
     expect(store.getState().reducer.shoppingCart[0].id).toBe(targetProduct.id);
@@ -36,29 +36,29 @@ describe('reducer 테스트', () => {
   test('카트에서 특정 상품을 삭제할 수 있다.', () => {
     const quantity = 3;
 
-    store.dispatch(doPutProductToCart({ id: targetProduct.id, quantity }));
-    store.dispatch(doDeleteProductFromCart({ id: targetProduct.id }));
+    store.dispatch(putProductToCart({ id: targetProduct.id, quantity }));
+    store.dispatch(deleteProductFromCart({ id: targetProduct.id }));
 
     expect(store.getState().reducer.shoppingCart).toHaveLength(0);
   });
 
   test('특정 상품을 주문 목록에 추가할 수 있다.', () => {
-    store.dispatch(doAddProductToOrder({ id: targetProduct.id }));
+    store.dispatch(addProductToOrder({ id: targetProduct.id }));
 
     expect(store.getState().reducer.order).toHaveLength(1);
     expect(store.getState().reducer.order[0]).toBe(targetProduct.id);
   });
 
   test('특정 상품을 주문 목록에서 제거할 수 있다.', () => {
-    store.dispatch(doAddProductToOrder({ id: targetProduct.id }));
-    store.dispatch(doDeleteProductFromOrder{ id: targetProduct.id }));
+    store.dispatch(addProductToOrder({ id: targetProduct.id }));
+    store.dispatch(deleteProductFromOrder{ id: targetProduct.id }));
 
     expect(store.getState().reducer.order).toHaveLength(0);
   });
 
   test('주문목록을 초기화할 수 있다.', () => {
-    store.dispatch(doAddProductToOrder({ id: targetProduct.id }));
-    store.dispatch(doInitializeOrder());
+    store.dispatch(addProductToOrder({ id: targetProduct.id }));
+    store.dispatch(initializeOrder());
 
     expect(store.getState().reducer.order).toHaveLength(0);
   });

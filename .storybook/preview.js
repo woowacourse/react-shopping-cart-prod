@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import { GlobalStyles, theme } from 'components';
 import store from 'store/store';
 import { dummyProductList } from 'dummy_data';
-import { doInitializeProductList } from 'reducers/cart.reducer';
+import { initializeProductList } from 'reducers/cartReducer';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -21,7 +21,7 @@ const dispatch = useDispatch();
 
 export const decorators = [
   (Story, context) => {
-    dispatch(doInitializeProductList({ products: dummyProductList }));
+    dispatch(initializeProductList({ products: dummyProductList }));
 
     return (
       <>

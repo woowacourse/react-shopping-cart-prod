@@ -6,8 +6,8 @@ import useSnackbar from 'hooks/useSnackbar';
 import { deleteCookie } from 'utils/cookie';
 import Styled from './index.style';
 import { MESSAGE, ROUTES } from 'utils/constants';
-import { doLogout } from 'reducers/authReducer';
-import { doInitializeCartList } from 'reducers/cartReducer';
+import { logoutComplete } from 'reducers/authReducer';
+import { initializeCartList } from 'reducers/cartReducer';
 const UserMenu = ({ nickname }) => {
   const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
@@ -22,8 +22,8 @@ const UserMenu = ({ nickname }) => {
   const logout = async () => {
     try {
       setIsOpen(false);
-      dispatch(doLogout());
-      dispatch(doInitializeCartList({ shoppingCart: [] }));
+      dispatch(logoutComplete());
+      dispatch(initializeCartList({ shoppingCart: [] }));
       renderSnackbar(MESSAGE.LOGOUT_SUCCESS, 'SUCCESS');
       deleteCookie('accessToken');
       navigate(ROUTES.HOME);

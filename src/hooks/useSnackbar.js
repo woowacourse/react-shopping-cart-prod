@@ -1,14 +1,14 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-import { doHideSnackbar, doShowSnackbar } from 'reducers/snackbarReducer';
+import { hideSnackbar, showSnackbar } from 'reducers/snackbarReducer';
 
 const useSnackbar = () => {
   const dispatch = useDispatch();
   const renderSnackbar = useCallback(
     (message, status) => {
-      dispatch(doShowSnackbar({ message, status }));
+      dispatch(showSnackbar({ message, status }));
 
-      setTimeout(() => dispatch(doHideSnackbar()), 3000);
+      setTimeout(() => dispatch(hideSnackbar()), 3000);
     },
     [dispatch],
   );
