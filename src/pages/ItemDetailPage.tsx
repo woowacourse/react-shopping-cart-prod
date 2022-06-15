@@ -7,10 +7,10 @@ import { updateSnackBar } from 'redux/actions/snackBar';
 import useUpdateCartItem from 'hooks/useUpdateCartItem';
 import { useFetch } from 'hooks/useFetch';
 import useThunkFetch from 'hooks/useThunkFetch';
-import CroppedImage from 'components/common/CroppedImage';
-import Button from 'components/common/Button';
-import RequestFail from 'components/common/RequestFail';
-import Loading from 'components/common/Loading';
+import CroppedImage from 'components/@common/CroppedImage';
+import Button from 'components/@common/Button';
+import RequestFail from 'components/@common/RequestFail';
+import Loading from 'components/@common/Loading';
 import { BASE_URL } from 'apis';
 import type { Item } from 'types/domain';
 

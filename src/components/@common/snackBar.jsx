@@ -1,7 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { useRef, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
-import PropTypes from 'prop-types';
 import { clearSnackBar } from 'redux/actions/snackBar';
 import { SNACKBAR_RUNNING_TIME } from 'constants';
 import { useAppSelector } from 'hooks/useAppSelector';
@@ -27,10 +26,6 @@ export default function SnackBar() {
 
   return text && <Styled.Box key={Math.random()}>{text}</Styled.Box>;
 }
-
-SnackBar.propTypes = {
-  message: PropTypes.string,
-};
 
 const fadeIn = keyframes`
 from {

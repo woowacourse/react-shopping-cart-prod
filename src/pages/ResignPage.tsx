@@ -8,7 +8,7 @@ import { FormEvent, useRef, useState, ChangeEvent, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { resign } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
-import SignInput from 'components/common/SignInput';
+import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
 import { isEmptyObject } from 'utils';
 

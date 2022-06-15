@@ -8,7 +8,7 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
 import useUpdateEffect from 'hooks/useUpdateEffect';
-import SignInput from 'components/common/SignInput';
+import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
 
 const EditPasswordPage = () => {
