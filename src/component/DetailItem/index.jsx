@@ -20,6 +20,11 @@ export default function DetailItem({productInfo}) {
   const isInCart = cartItem.some((item) => item.id === Number.parseInt(id));
 
   const handleCartButtonClick = () => {
+    if (isInCart) {
+      deleteCartItem(id);
+      return;
+    }
+
     const cartInfo = {
       imageUrl,
       name,
@@ -27,10 +32,6 @@ export default function DetailItem({productInfo}) {
       id: Number.parseInt(id),
     };
 
-    if (isInCart) {
-      deleteCartItem(id);
-      return;
-    }
     addCartItem(cartInfo);
   };
 
