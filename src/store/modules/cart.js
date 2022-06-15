@@ -16,6 +16,10 @@ Object.freeze(INITIAL_STATE.cart);
 export default function cartReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CART.INITIALIZE: {
+      if (state.cart) {
+        return state;
+      }
+
       const {cart} = action.payload;
       const newCart = cart.map((item) => ({...item, quantity: 1}));
 
