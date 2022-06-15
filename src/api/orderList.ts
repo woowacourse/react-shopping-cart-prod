@@ -11,6 +11,7 @@ export const addOrderList = body => {
     requestMethod: ordersAPI.post,
     endPoint: '/',
     body,
+    isLogged: true,
   });
 };
 
@@ -18,6 +19,7 @@ export const getOrderById = id => {
   return authorizedFetcher({
     requestMethod: ordersAPI.get,
     endPoint: `/${id}`,
+    isLogged: true,
     isOnlyConfig: true,
   });
 };
@@ -27,5 +29,6 @@ export const getAllOrderList = () => {
     requestMethod: ordersAPI.get,
     endPoint: '/',
     isOnlyConfig: true,
+    isLogged: true,
   });
 };

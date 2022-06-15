@@ -24,6 +24,7 @@ export const getCart = () => {
     return authorizedFetcher({
       requestMethod: cartAPI.get,
       endPoint: '/',
+      isLogged: true,
       isOnlyConfig: true,
     });
   }, `${CART_API_URL.TO_CART_ITEMS}_${accessToken}`);
@@ -34,6 +35,7 @@ export const deleteCart = async (id): Promise<any> => {
     requestMethod: cartAPI.delete,
     endPoint: `/${id}`,
     cachePath: CART_API_URL.TO_CART_ITEMS,
+    isLogged: true,
     isOnlyConfig: true,
   });
 };
@@ -45,5 +47,6 @@ export const patchCart = async (id, quantity): Promise<any> => {
     body: {},
     cachePath: CART_API_URL.TO_CART_ITEMS,
     options: { params: { quantity } },
+    isLogged: true,
   });
 };
