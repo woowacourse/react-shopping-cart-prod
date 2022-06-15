@@ -2,6 +2,7 @@ import {
   postCartItem,
   patchCartItem,
   deleteSelectedCartItem,
+  getCartList,
 } from 'redux/action-creators/cartListThunk';
 import { useAppDispatch } from './useAppDispatch';
 import { CartItem } from 'types/domain';
@@ -10,20 +11,25 @@ import { CartListAction } from 'redux/actions/cartList';
 const useUpdateCartItem = (cartList: CartItem[]) => {
   const dispatch = useAppDispatch<CartListAction>();
 
-  const increaseQuantity = (id: number, updateQuantity = 1) => {
-    const targetItem = cartList.find(cartItem => cartItem.id === id);
+  const increaseQuantity = async (id: number, updateQuantity = 1) => {
+    const targetItem = cartList.find(cartItem => cartItem.productId === id);
 
-    targetItem
-      ? dispatch(
-          patchCartItem([
-            {
-              id,
-              quantity: targetItem.quantity + updateQuantity,
-              checked: true,
-            },
-          ])
-        )
-      : dispatch(postCartItem({ id, quantity: 1, checked: true }));
+    if (targetItem) {
+      dispatch(
+        patchCartItem([
+          {
+            id: targetItem.id,
+            quantity: targetItem.quantity + updateQuantity,
+            checked: true,
+          },
+        ])
+      );
+
+      return;
+    }
+
+    await dispatch(postCartItem({ id, quantity: 1, checked: true }));
+    dispatch(getCartList());
   };
 
   const decreaseQuantity = (id: number, updateQuantity = 1) => {

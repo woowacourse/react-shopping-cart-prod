@@ -35,7 +35,7 @@ const patchCartItem = (state: CartItemState, action: CartListAction) => {
     case AsyncStatus.SUCCESS: {
       const newCartList = state.data.map(
         cartItem =>
-          action.payload.find(editedCartItem => editedCartItem.productId === cartItem.id) ||
+          action.payload.find(editedCartItem => editedCartItem.productId === cartItem.productId) ||
           cartItem
       );
 

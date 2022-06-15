@@ -50,6 +50,11 @@ export const patchCartItem =
 export const postCartItem = (cartItem: CartItem) => async (dispatch: Dispatch<CartListAction>) => {
   dispatch(cartListAction.postCartItem.pending());
   const token = getLocalStorageToken();
+  const targetItem = {
+    productId: cartItem.id,
+    quantity: cartItem.quantity,
+    checked: cartItem.checked,
+  };
 
   try {
     await axios({
@@ -59,14 +64,10 @@ export const postCartItem = (cartItem: CartItem) => async (dispatch: Dispatch<Ca
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      data: {
-        productId: cartItem.id,
-        quantity: cartItem.quantity,
-        checked: cartItem.checked,
-      },
+      data: targetItem,
     });
 
-    dispatch(cartListAction.postCartItem.success(cartItem));
+    dispatch(cartListAction.postCartItem.success(targetItem));
   } catch (error) {
     dispatch(cartListAction.postCartItem.failure(error.response.data.errorMessage));
   }
