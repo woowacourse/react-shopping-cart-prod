@@ -47,7 +47,7 @@ const Cart = ({ id, imageUrl, name, quantity, price, selected, productId }) => {
       ).unwrap();
       dispatch(addOneQuantity(id));
       dispatch(onMessage(SNACKBAR_MESSAGE.addProduct(name)));
-    }, [dispatch, id]),
+    }, [dispatch, id, quantity]),
     150,
   );
 
