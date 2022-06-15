@@ -1,18 +1,11 @@
-const API_URL = Object.freeze({
-  API_ZERO: 'http://ec2-13-124-88-137.ap-northeast-2.compute.amazonaws.com:8080/api',
-  API_KILLER_WHALE: `http://13.124.30.129:8080/api`,
-  API_AWESOME_O: `http://ec2-15-164-104-189.ap-northeast-2.compute.amazonaws.com:8080/api`,
-  API_ROOKIE: `http://ec2-15-164-103-26.ap-northeast-2.compute.amazonaws.com:8080/api`,
-});
-
 const SERVER_PATH = Object.freeze({
-  PRODUCTS: `${API_URL.API_ZERO}/products`,
-  CART: `${API_URL.API_ZERO}/carts`,
-  CART_PRODUCT: `${API_URL.API_ZERO}/carts/products`,
-  USER: `${API_URL.API_ZERO}/customers`,
-  LOGIN: `${API_URL.API_ZERO}/login`,
-  PASSWORD: `${API_URL.API_ZERO}/customers/password`,
-  ME: `${API_URL.API_ZERO}/customers/me`,
+  PRODUCTS: `${process.env.REACT_APP_API_ZERO}/products`,
+  CART: `${process.env.REACT_APP_API_ZERO}/carts`,
+  CART_PRODUCT: `${process.env.REACT_APP_API_ZERO}/carts/products`,
+  USER: `${process.env.REACT_APP_API_ZERO}/customers`,
+  LOGIN: `${process.env.REACT_APP_API_ZERO}/login`,
+  PASSWORD: `${process.env.REACT_APP_API_ZERO}/customers/password`,
+  ME: `${process.env.REACT_APP_API_ZERO}/customers/me`,
 });
 
 const ROUTES_PATH = Object.freeze({

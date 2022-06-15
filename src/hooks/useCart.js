@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useUser from './useUser';
@@ -9,7 +10,6 @@ import {
   getCartItemListAsync,
   updateItemQuantityAsync,
 } from '../store/cart/cart.actions';
-import { useEffect } from 'react';
 
 const useCart = () => {
   const dispatch = useDispatch();
