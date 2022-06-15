@@ -4,8 +4,9 @@ import { Fragment } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import * as Styled from './OrderInformation.style';
 
-function OrderInformation({ orderId, orderList, responsive }) {
+function OrderInformation(props) {
   const { id } = useParams();
+  const { orderId, orderList, responsive } = props;
 
   return (
     <>
@@ -18,11 +19,13 @@ function OrderInformation({ orderId, orderList, responsive }) {
         {orderList.map((order: any, index) => (
           <Fragment key={index}>
             <Styled.OrderItemContainer>
-              <Image
-                src={order.imageURL}
-                alt="대체 이미지"
-                width={responsive === 'desktop' ? '200px' : '150px'}
-              />
+              <Link to={`/products/${order.productId}`}>
+                <Image
+                  src={order.imageURL}
+                  alt="대체 이미지"
+                  width={responsive === 'desktop' ? '200px' : '150px'}
+                />
+              </Link>
 
               <Styled.OrderDescriptionContainer>
                 <h2>{order.name}</h2>

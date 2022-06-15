@@ -61,17 +61,15 @@ function OrderList() {
     <PageTemplate>
       <Styled.Container>
         <Styled.Title>주문목록</Styled.Title>
-        {orderList.length !== 0
-          ? orderList.map(order => (
-              <div key={order.id}>
-                <OrderInformation
-                  orderList={order.orderDetails}
-                  responsive={responsive}
-                  orderId={order.id}
-                />
-              </div>
-            ))
-          : null}
+        {orderList.map(order => (
+          <div key={order.id}>
+            <OrderInformation
+              orderList={order.orderDetails}
+              responsive={responsive}
+              orderId={order.id}
+            />
+          </div>
+        ))}
       </Styled.Container>
     </PageTemplate>
   );
