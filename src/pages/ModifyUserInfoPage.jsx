@@ -9,7 +9,7 @@ import useUser from '../hooks/useUser';
 import useFetch from '../hooks/useFetch';
 import useUserForm from '../hooks/useUserForm';
 
-import { SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+import { MESSAGE, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
 
 function ModifyUserInfoPage() {
   const [userInfo, setUserInfo] = useState({});
@@ -39,7 +39,7 @@ function ModifyUserInfoPage() {
           minLength={USER.NICKNAME.MIN}
           maxLength={USER.NICKNAME.MAX}
           value={userInfo.nickname}
-          placeholder="닉네임을 입력해주세요"
+          placeholder={MESSAGE.NICKNAME_PLACEHOLDER}
           onChange={handleUserInfoChange(USER_INFO_KEY.NICKNAME)}
         />
         <Button text="수정하기" />

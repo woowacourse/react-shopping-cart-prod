@@ -1,5 +1,4 @@
-import { useMemo, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useMemo } from 'react';
 
 import styled from 'styled-components';
 

@@ -7,7 +7,7 @@ import { StyledUserContainer, StyledUserForm } from '../components/common/Styled
 import useUserForm from '../hooks/useUserForm';
 import useUser from '../hooks/useUser';
 
-import { USER, USER_INFO_KEY } from '../constants';
+import { USER, USER_INFO_KEY, MESSAGE } from '../constants';
 
 const initialState = {
   email: '',
@@ -34,7 +34,7 @@ function SignUpPage() {
         <Input
           labelText="이메일"
           type="email"
-          placeholder="이메일 주소를 입력해주세요"
+          placeholder={MESSAGE.EMAIL_PLACEHOLDER}
           value={email}
           onChange={handleUserInfoChange(USER_INFO_KEY.EMAIL)}
         />
@@ -42,7 +42,7 @@ function SignUpPage() {
           labelText="닉네임"
           minLength={USER.NICKNAME.MIN}
           maxLength={USER.NICKNAME.MAX}
-          placeholder="닉네임을 입력해주세요"
+          placeholder={MESSAGE.NICKNAME_PLACEHOLDER}
           value={nickname}
           onChange={handleUserInfoChange(USER_INFO_KEY.NICKNAME)}
         />
@@ -52,7 +52,7 @@ function SignUpPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={password}
-          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD)}
         />
         <Input
@@ -61,7 +61,7 @@ function SignUpPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={passwordConfirm}
-          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD_CONFIRM)}
         />
         <Button text="가입하기" />

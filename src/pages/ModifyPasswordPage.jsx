@@ -7,7 +7,7 @@ import { StyledUserContainer, StyledUserForm } from '../components/common/Styled
 import useUser from '../hooks/useUser';
 import useUserForm from '../hooks/useUserForm';
 
-import { USER, PASSWORD_INFO_KEY } from '../constants';
+import { USER, PASSWORD_INFO_KEY, MESSAGE } from '../constants';
 
 const initialState = {
   prevPassword: '',
@@ -36,7 +36,7 @@ function ModifyPasswordPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={prevPassword}
-          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(PASSWORD_INFO_KEY.PREV_PASSWORD)}
         />
         <Input
@@ -45,7 +45,7 @@ function ModifyPasswordPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={newPassword}
-          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD)}
         />
         <Input
@@ -54,7 +54,7 @@ function ModifyPasswordPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={newPasswordConfirm}
-          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD_CONFIRM)}
         />
         <Button text="수정하기" />

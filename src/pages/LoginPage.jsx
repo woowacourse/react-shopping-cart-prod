@@ -7,7 +7,7 @@ import { StyledUserContainer, StyledUserForm } from '../components/common/Styled
 import useUserForm from '../hooks/useUserForm';
 import useUser from '../hooks/useUser';
 
-import { USER_INFO_KEY } from '../constants';
+import { MESSAGE, USER_INFO_KEY } from '../constants';
 
 const initialState = {
   email: '',
@@ -32,7 +32,7 @@ function LoginPage() {
         <Input
           labelText="이메일"
           type="email"
-          placeholder="이메일 주소를 입력해주세요"
+          placeholder={MESSAGE.EMAIL_PLACEHOLDER}
           value={email}
           onChange={handleUserInfoChange(USER_INFO_KEY.EMAIL)}
         />
@@ -40,7 +40,7 @@ function LoginPage() {
           labelText="비밀번호"
           type="password"
           value={password}
-          placeholder="영문자(대,소), 숫자, 특수기호 조합을 입력하세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD)}
         />
         <Button text="로그인" />
