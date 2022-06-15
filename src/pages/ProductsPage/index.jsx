@@ -33,7 +33,7 @@ const ProductsPage = () => {
 
   useEffect(() => {
     accessToken && dispatch(getCarts());
-  }, [dispatch]);
+  }, [dispatch, accessToken]);
 
   if (productLoading || (accessToken && cartLoading)) {
     return <Skeleton />;
