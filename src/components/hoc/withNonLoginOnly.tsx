@@ -4,7 +4,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from 'Routers';
 
-const withPublicRoute = (Component: React.ComponentType<unknown>) => {
+const withNonLoginOnly = (Component: React.ComponentType<unknown>) => {
   return function Wrapper({ ...props }) {
     const navigate = useNavigate();
 
@@ -21,4 +21,4 @@ const withPublicRoute = (Component: React.ComponentType<unknown>) => {
   };
 };
 
-export default withPublicRoute;
+export default withNonLoginOnly;

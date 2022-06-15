@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { getUser } from 'redux/user/thunk';
 import { PATH } from 'Routers';
 
-const withPrivateRoute = (Component: React.ComponentType<unknown>) => {
+const withLoginOnly = (Component: React.ComponentType<unknown>) => {
   return function Wrapper({ ...props }) {
     const navigate = useNavigate();
 
@@ -28,4 +28,4 @@ const withPrivateRoute = (Component: React.ComponentType<unknown>) => {
   };
 };
 
-export default withPrivateRoute;
+export default withLoginOnly;

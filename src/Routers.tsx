@@ -1,5 +1,5 @@
-import withPrivateRoute from 'components/hoc/withPrivateRoute';
-import withPublicRoute from 'components/hoc/withPublicRoute';
+import withLoginOnly from 'components/hoc/withLoginOnly';
+import withNonLoginOnly from 'components/hoc/withNonLoginOnly';
 import { lazy, LazyExoticComponent } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
@@ -43,12 +43,12 @@ const ROUTES: RoutesType[] = [
   { path: PATH.itemDetail, element: ItemDetail },
   { path: PATH.notFound, element: NotFound },
 
-  { path: PATH.signup, element: withPublicRoute(Signup) },
-  { path: PATH.login, element: withPublicRoute(Login) },
+  { path: PATH.signup, element: withNonLoginOnly(Signup) },
+  { path: PATH.login, element: withNonLoginOnly(Login) },
 
-  { path: PATH.cart, element: withPrivateRoute(Cart) },
-  { path: PATH.editUser, element: withPrivateRoute(UserEdit) },
-  { path: PATH.withdrawal, element: withPrivateRoute(UserWithDrawal) },
+  { path: PATH.cart, element: withLoginOnly(Cart) },
+  { path: PATH.editUser, element: withLoginOnly(UserEdit) },
+  { path: PATH.withdrawal, element: withLoginOnly(UserWithDrawal) },
 ];
 
 const Routers = () => {
