@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { BASE_SERVER_URL, SERVER_PATH } from "constants";
 import { useFetch } from "hooks/useFetch";
@@ -21,6 +22,7 @@ function ProductDetailPage() {
       url: `${BASE_SERVER_URL}${SERVER_PATH.PRODUCT_LIST}/${productId}`,
     })
   );
+  const cartList = useSelector((state) => state.cartList.data);
 
   const renderContent = () => {
     if (isLoading) return <Spinner />;
@@ -30,7 +32,14 @@ function ProductDetailPage() {
           😱 Error: 관리자에게 문의하세요.😱 <br /> %{errorMessage}%
         </ErrorPage>
       );
-    return <ProductDetail selectedProduct={selectedProduct} />;
+    return (
+      <ProductDetail
+        selectedProduct={selectedProduct}
+        isStored={cartList.some(
+          (item) => item.productId === selectedProduct.productId
+        )}
+      />
+    );
   };
 
   return <DetailContainer>{renderContent()}</DetailContainer>;

@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 
 function ProductDetail({
   selectedProduct: { productId, thumbnailUrl, name, price },
+  isStored,
 }) {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
@@ -63,6 +64,7 @@ function ProductDetail({
       <DefaultButton
         onClick={handleClickCartButton}
         bgColor={theme.color.point}
+        disabled={isStored}
       >
         장바구니 담기
       </DefaultButton>

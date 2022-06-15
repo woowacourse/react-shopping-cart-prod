@@ -6,6 +6,7 @@ import shoppingCartIconBlack from "asset/shopping-cart-icon-black.svg";
 import { BASE_SERVER_URL, SERVER_PATH, ROUTES, COOKIE_KEY } from "constants";
 import { postBaseServerCartItem } from "util/fetch";
 import { getCookie } from "util/cookie";
+import { getCartList } from "reducers/cartList";
 
 import IconButton from "components/common/Button/IconButton";
 import {
@@ -17,13 +18,17 @@ import {
   ProductPrice,
   ProductThumbnail,
 } from "./styled";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-function ProductCard({ product: { productId, thumbnailUrl, name, price } }) {
+function ProductCard({
+  product: { productId, thumbnailUrl, name, price },
+  isStored,
+}) {
   const navigate = useNavigate();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const dispatch = useDispatch();
 
-  const handleClickCardItem = () => {
+  const handleClickCardItem = (e) => {
     navigate(`${ROUTES.PRODUCT_DETAIL}/${productId}`);
   };
 
@@ -49,6 +54,7 @@ function ProductCard({ product: { productId, thumbnailUrl, name, price } }) {
         const data = await response.json();
         throw new Error(data.message);
       }
+      dispatch(getCartList());
     } catch (error) {
       alert(error.message);
       return;
@@ -71,6 +77,7 @@ function ProductCard({ product: { productId, thumbnailUrl, name, price } }) {
           src={shoppingCartIconBlack}
           alt="장바구니 담기 버튼"
           width="30px"
+          disabled={isStored}
         />
       </CardBottom>
     </CardContainer>
