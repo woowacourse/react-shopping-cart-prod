@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { StyledCheckbox } from './common/Styled';
@@ -10,18 +9,17 @@ import { BsTrash } from 'react-icons/bs';
 import { MESSAGE } from '../constants';
 
 function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedItem }) {
-  const accessToken = useSelector(({ user }) => user.accessToken);
-  const { deleteItem, updateItemQuantity } = useCart();
   const [isChecked, setChecked] = useState(isCheckedAll);
+  const { deleteItem, updateItemQuantity } = useCart();
   const { id, name, price, imageUrl, quantity } = item;
 
   const incrementQuantity = () => {
-    updateItemQuantity(id, quantity + 1, accessToken);
+    updateItemQuantity(id, quantity + 1);
   };
 
   const decrementQuantity = () => {
     if (quantity === 1) return;
-    updateItemQuantity(id, quantity - 1, accessToken);
+    updateItemQuantity(id, quantity - 1);
   };
 
   const toggleChecked = () => {
@@ -29,9 +27,9 @@ function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedIt
     setChecked(!isChecked);
   };
 
-  const onClickDeleteIcon = () => {
+  const handleClickDeleteIcon = () => {
     if (window.confirm(MESSAGE.CHECK_DELETE)) {
-      deleteItem(id, accessToken);
+      deleteItem(id);
       removeSelectedItem(id);
     }
   };
@@ -53,7 +51,7 @@ function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedIt
         <span>{name}</span>
       </StyledProductLeft>
       <StyledProductRight>
-        <BsTrash className="logo" onClick={onClickDeleteIcon} />
+        <BsTrash className="logo" onClick={handleClickDeleteIcon} />
         <StyledAmountContainer>
           <span>{quantity}</span>
           <div>

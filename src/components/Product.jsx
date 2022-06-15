@@ -9,7 +9,7 @@ import { ROUTES_PATH, SIZE } from '../constants/index';
 function Product({ productData, handleCartItem, isCart }) {
   const { id, name, price, imageUrl } = productData;
 
-  const onClickCartIcon = () => {
+  const handleClickCartIcon = () => {
     handleCartItem(id, isCart);
   };
 
@@ -27,7 +27,7 @@ function Product({ productData, handleCartItem, isCart }) {
             <StyledItemPrice>{Number(price).toLocaleString()} 원</StyledItemPrice>
           </StyledItemInfo>
         </Link>
-        <GiShoppingCart className="cart" size={28} onClick={onClickCartIcon} />
+        <GiShoppingCart className="cart" size={28} onClick={handleClickCartIcon} />
       </StyledItemInfoBox>
     </StyledItem>
   );

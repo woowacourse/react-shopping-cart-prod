@@ -23,7 +23,7 @@ function ProductDetailPage() {
     return false;
   });
 
-  const onClickCartButton = () => {
+  const handleClickCartButton = () => {
     if (isCart) {
       deleteItem(id);
       alert(MESSAGE.REMOVE);
@@ -51,7 +51,7 @@ function ProductDetailPage() {
           <StyledPriceBox>{Number(price).toLocaleString()}원</StyledPriceBox>
         </StyledProductDetailPrice>
       </StyledProductDetailInfo>
-      <StyledCartButton onClick={onClickCartButton} iscart={isCart.toString()}>
+      <StyledCartButton onClick={handleClickCartButton} iscart={isCart.toString()}>
         {isCart ? '장바구니 제거' : '장바구니'}
       </StyledCartButton>
     </StyledProductDetailContainer>

@@ -15,7 +15,7 @@ function ProductListPage() {
   const { cartList, addItem, deleteItem } = useCart();
   const idSetInCart = useMemo(() => new Set(cartList.map((cart) => cart.name)), [cartList]);
 
-  const handleCartItem = (id, isCart) => {
+  const handleClickCartItem = (id, isCart) => {
     if (isCart) {
       deleteItem(id);
       alert(MESSAGE.REMOVE);
@@ -35,7 +35,7 @@ function ProductListPage() {
           <Product
             key={product.id}
             productData={product}
-            handleCartItem={() => handleCartItem(product.id, idSetInCart.has(product.name))}
+            handleCartItem={() => handleClickCartItem(product.id, idSetInCart.has(product.name))}
             isCart={idSetInCart.has(product.name)}
           />
         ))}
