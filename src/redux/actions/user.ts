@@ -16,7 +16,12 @@ const patchUserInfo = generateAsyncActionGroup(USER_ACTION_TYPE.PATCH_USER_INFO)
 const patchNewPassword = generateAsyncActionGroup(USER_ACTION_TYPE.PATCH_NEW_PASSWORD);
 const deleteUser = generateAsyncActionGroup(USER_ACTION_TYPE.DELETE_USER);
 const autoSignIn = generateAsyncActionGroup(USER_ACTION_TYPE.AUTO_SIGN_IN);
-const signOut = generateAsyncActionGroup(USER_ACTION_TYPE.SIGN_OUT);
+
+export const signOut = () => {
+  return {
+    type: USER_ACTION_TYPE.SIGN_OUT,
+  };
+};
 
 export const userAction = {
   postSignUp,
@@ -25,7 +30,6 @@ export const userAction = {
   patchNewPassword,
   deleteUser,
   autoSignIn,
-  signOut,
 };
 
 export type UserAction = ReturnType<

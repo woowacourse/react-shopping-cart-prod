@@ -4,15 +4,16 @@ import { flexCenter } from 'styles/mixin';
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useState } from 'react';
-import { useAppDispatch } from 'hooks/useAppDispatch';
-import { UserAction, userAction } from 'redux/actions/user';
+import { signOut } from 'redux/actions/user';
+import { clearCartList } from 'redux/actions/cartList';
 import theme from 'styles/theme';
+import { useDispatch } from 'react-redux';
 
 const Header = () => {
   const navigate = useNavigate();
   const { data } = useAppSelector(state => state.userReducer);
   const [isShowHamburger, setIsShowHamburger] = useState(false);
-  const dispatch = useAppDispatch<UserAction>();
+  const dispatch = useDispatch();
 
   const toggleHamburger = () => {
     setIsShowHamburger(!isShowHamburger);
@@ -20,7 +21,8 @@ const Header = () => {
 
   const handleSignOut = () => {
     localStorage.clear();
-    dispatch(userAction.signOut.success());
+    dispatch(signOut());
+    dispatch(clearCartList());
   };
 
   return (

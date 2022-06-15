@@ -7,6 +7,7 @@ export const CART_LIST_ACTION_TYPE = {
   POST_CART_ITEM: 'cart/POST_CART_ITEM',
   DELETE_SELECTED_CART_ITEM: 'cart/DELETE_SELECTED_CART_ITEM',
   DELETE_ALL_CART_ITEM: 'cart/DELETE_ALL_CART_ITEM',
+  CLEAR_CART_LIST: 'cart/CLEAR_CART_LIST',
 };
 
 const getCartList = generateAsyncActionGroup<CartItem[]>(CART_LIST_ACTION_TYPE.GET_CART_LIST);
@@ -18,6 +19,12 @@ const deleteSelectedCartItem = generateAsyncActionGroup<{ id: number }[]>(
 const deleteAllCartItem = generateAsyncActionGroup<null>(
   CART_LIST_ACTION_TYPE.DELETE_ALL_CART_ITEM
 );
+
+export const clearCartList = () => {
+  return {
+    type: CART_LIST_ACTION_TYPE.CLEAR_CART_LIST,
+  };
+};
 
 export const cartListAction = {
   getCartList,

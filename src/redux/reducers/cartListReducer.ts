@@ -102,10 +102,15 @@ const deleteAllCartItem = (state: CartItemState, action: CartListAction) => {
   }
 };
 
+const clearCartList = (state, action) => {
+  return { loading: false, error: null, data: [] };
+};
+
 export const cartListReducer = createReducer(initialState, {
   [CART_LIST_ACTION_TYPE.GET_CART_LIST]: getCartList,
   [CART_LIST_ACTION_TYPE.PATCH_CART_ITEM]: patchCartItem,
   [CART_LIST_ACTION_TYPE.POST_CART_ITEM]: postCartItem,
   [CART_LIST_ACTION_TYPE.DELETE_SELECTED_CART_ITEM]: deleteSelectedCartItem,
   [CART_LIST_ACTION_TYPE.DELETE_ALL_CART_ITEM]: deleteAllCartItem,
+  [CART_LIST_ACTION_TYPE.CLEAR_CART_LIST]: clearCartList,
 });
