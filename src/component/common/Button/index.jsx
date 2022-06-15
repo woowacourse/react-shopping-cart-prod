@@ -14,9 +14,9 @@ export default function Button({
 }) {
   return (
     <S.ButtonLayout
+      {...rest}
       type={type}
       onClick={onClick}
-      {...rest}
       disabled={isDisabled}
       selected={selected}
     >

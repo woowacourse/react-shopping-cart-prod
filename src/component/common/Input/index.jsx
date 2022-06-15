@@ -17,12 +17,12 @@ function Input({
     <S.Layout>
       <S.Label htmlFor={id}>{label}</S.Label>
       <S.Input
+        {...rest}
         size={size}
         id={id}
         placeholder={placeHolder}
         disabled={isDisabled}
         value={value}
-        {...rest}
       />
       <S.Message value={value}>{isError && message}</S.Message>
     </S.Layout>
