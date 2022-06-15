@@ -25,7 +25,7 @@ function CartList({
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  let isAllChecked =
+  const isAllChecked =
     cart.length !== 0 && cart.length === checkedItemList.length;
 
   useEffect(() => {

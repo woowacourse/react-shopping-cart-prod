@@ -14,10 +14,9 @@ const StyledUserEditContainer = styled.div`
     font-size: ${({ theme }) => theme.fontSize.xl};
   }
 
-  .withdrawal {
+  button {
     margin-top: 15px;
     align-self: flex-end;
-    cursor: pointer;
     color: ${({ theme }) => theme.colors.pink_500};
   }
 `;

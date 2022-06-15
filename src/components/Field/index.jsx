@@ -1,5 +1,3 @@
-import React from "react";
-
 import Input from "@/components/Input";
 
 import { ERROR_MESSAGE } from "@/constants";

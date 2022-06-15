@@ -31,7 +31,7 @@ function CartItem({ onChange, checked, item }) {
   const navigate = useNavigate();
 
   const handleDetailClick = () => {
-    navigate(`${PATH.DETAIL}/${id}`);
+    navigate(`${PATH.DETAIL}/${item.id}`);
   };
 
   const handleIncrementClick = () => {
@@ -56,7 +56,7 @@ function CartItem({ onChange, checked, item }) {
             alt={`${item.name} 장바구니 이미지`}
             onClick={handleDetailClick}
           />
-          <a onClick={handleDetailClick}>{item.name}</a>
+          <Button onClick={handleDetailClick}>{item.name}</Button>
         </div>
         <div className="product-item__right">
           <Button onClick={handleRemoveIconClick}>

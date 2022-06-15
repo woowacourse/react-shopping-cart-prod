@@ -16,11 +16,10 @@ const StyledCartContainer = styled.div`
       cursor: pointer;
     }
 
-    a {
+    button {
+      width: 160px;
+      border: none;
       font-size: ${({ theme }) => theme.fontSize.xs};
-      height: 120px;
-
-      cursor: pointer;
 
       &:hover {
         text-decoration: underline;

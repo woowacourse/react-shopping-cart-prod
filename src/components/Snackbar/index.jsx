@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleSnackbarClose } from "@/redux/modules/snackbar";
 
 import SnackbarContainer from "@/components/Snackbar/index.styled";
 
-const Snackbar = ({ timeout }) => {
+function Snackbar({ timeout }) {
   const dispatch = useDispatch();
 
   const SHOW = useSelector((state) => state.snackbarState.toggleSnackbar);
   const MESSAGE = useSelector((state) => state.snackbarState.snackbarMessage);
 
-  let TIME = (timeout - 500) / 1000 + "s";
+  const TIME = `${(timeout - 500) / 1000}s`;
 
   let TIMER;
   function handleTimeout() {
@@ -35,6 +35,6 @@ const Snackbar = ({ timeout }) => {
       </SnackbarContainer>
     )
   );
-};
+}
 
 export default Snackbar;

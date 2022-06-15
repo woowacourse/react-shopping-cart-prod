@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { addCartItem } from "@/redux/modules/cart";
@@ -8,10 +8,8 @@ import useFetch from "@/hooks/useFetch";
 import Button from "@/components/Button";
 import Title from "@/components/Title";
 
-import { MESSAGE } from "@/constants";
+import { MESSAGE, PATH } from "@/constants";
 import { getCookie } from "@/utils/auth";
-
-import { PATH } from "@/constants";
 
 import StyledProductDetailContainer from "@/pages/ProductDetail/index.style";
 

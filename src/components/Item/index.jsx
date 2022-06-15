@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 
 import { addCartItem } from "@/redux/modules/cart";
@@ -45,32 +44,30 @@ function Item({ id, name, price, imageUrl }) {
   };
 
   return (
-    <>
-      <StyledProductItem>
-        <Thumbnail
-          src={`${imageUrl}`}
-          name={name}
-          onClick={handleProductDetailClick}
-        />
-        <div className="content">
-          <StyledProductInfo>
-            <div className="l-left">
-              <div className="product-title" onClick={handleProductDetailClick}>
-                {name}
-              </div>
-              <div className="product-price">
-                {price.toLocaleString("ko-KR")}원
-              </div>
+    <StyledProductItem>
+      <Thumbnail
+        src={`${imageUrl}`}
+        name={name}
+        onClick={handleProductDetailClick}
+      />
+      <div className="content">
+        <StyledProductInfo>
+          <div className="l-left">
+            <div className="product-title" onClick={handleProductDetailClick}>
+              {name}
             </div>
-            <div className="l-right">
-              <Button onClick={handleCartClick}>
-                <CartIcon />
-              </Button>
+            <div className="product-price">
+              {price.toLocaleString("ko-KR")}원
             </div>
-          </StyledProductInfo>
-        </div>
-      </StyledProductItem>
-    </>
+          </div>
+          <div className="l-right">
+            <Button onClick={handleCartClick}>
+              <CartIcon />
+            </Button>
+          </div>
+        </StyledProductInfo>
+      </div>
+    </StyledProductItem>
   );
 }
 

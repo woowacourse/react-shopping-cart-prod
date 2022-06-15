@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +10,7 @@ import useFetch from "@/hooks/useFetch";
 
 import Form from "@/components/Form";
 import Field from "@/components/Field";
+import Button from "@/components/Button";
 
 import {
   PATH,
@@ -139,9 +140,7 @@ function UserEdit() {
           errorMessage={passwordConfirm.status}
         />
       </Form>
-      <div className="withdrawal">
-        <a onClick={handleWithdrawalClick}>회원탈퇴</a>
-      </div>
+      <Button onClick={handleWithdrawalClick}>회원탈퇴</Button>
     </StyledUserEditContainer>
   );
 }
