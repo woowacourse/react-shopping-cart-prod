@@ -12,8 +12,8 @@ import { MESSAGE, SERVER_PATH } from '../constants';
 
 function ProductListPage() {
   const { data: productList, isLoading, isError } = useFetch(SERVER_PATH.PRODUCTS);
-  const { cartList, addItem, deleteItem } = useCart();
-  const idSetInCart = useMemo(() => new Set(cartList.map((cart) => cart.name)), [cartList]);
+  const { cartItemList, addItem, deleteItem } = useCart();
+  const idSetInCart = useMemo(() => new Set(cartItemList.map((cart) => cart.name)), [cartItemList]);
 
   const handleClickCartItem = (id, isProductInCart) => {
     if (isProductInCart) {

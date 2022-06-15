@@ -14,9 +14,9 @@ function ProductDetailPage() {
   const { id } = useParams();
   const { addItem, deleteItem } = useCart();
 
-  const cartList = useSelector(({ cart }) => cart.data);
+  const cartItemList = useSelector(({ cart }) => cart.data);
   const { data: product, isLoading, isError } = useFetch(`${SERVER_PATH.PRODUCTS}/${id}`);
-  const isProductInCart = cartList.some((cartItem) => {
+  const isProductInCart = cartItemList.some((cartItem) => {
     if (cartItem !== null && product !== null) {
       return cartItem.name === product.name;
     }

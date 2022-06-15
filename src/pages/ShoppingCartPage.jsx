@@ -14,11 +14,11 @@ function ShoppingCartPage() {
   const [totalPrice, setTotalPrice] = useState();
   const [selectedItems, setSelectedItems] = useState([]);
   const [isCheckedAll, setCheckedAll] = useReducer((checked) => !checked, true);
-  const { data: cartList } = useSelector(({ cart }) => cart);
+  const { data: cartItemList } = useSelector(({ cart }) => cart);
 
   const toggleCheckedAll = () => {
     if (!isCheckedAll) {
-      setSelectedItems(cartList.map(({ id }) => id));
+      setSelectedItems(cartItemList.map(({ id }) => id));
     } else {
       setSelectedItems([]);
     }
@@ -47,17 +47,17 @@ function ShoppingCartPage() {
   };
 
   useEffect(() => {
-    setSelectedItems(cartList.map(({ id }) => id));
-  }, [cartList]);
+    setSelectedItems(cartItemList.map(({ id }) => id));
+  }, [cartItemList]);
 
   useEffect(() => {
-    const selectedCarts = cartList.filter((item) => selectedItems.includes(item.id));
+    const selectedCarts = cartItemList.filter((item) => selectedItems.includes(item.id));
     const totalAmount = selectedCarts.reduce(
       (acc, { price, quantity }) => (acc += Number(price) * Number(quantity)),
       0
     );
     setTotalPrice(totalAmount);
-  }, [cartList, selectedItems]);
+  }, [cartItemList, selectedItems]);
 
   return (
     <StyledSection>
@@ -79,9 +79,9 @@ function ShoppingCartPage() {
             </StyledCheckboxContainer>
             <StyledDeleteButton onClick={deleteSelectedItems}>상품삭제</StyledDeleteButton>
           </StyledLeftDiv>
-          <StyledTitle>든든배송 상품({cartList.length}개)</StyledTitle>
+          <StyledTitle>든든배송 상품({cartItemList.length}개)</StyledTitle>
           <StyledDivideLine margin={10} size={2} />
-          {cartList.map((item) => (
+          {cartItemList.map((item) => (
             <React.Fragment key={item.id}>
               <ShoppingItem
                 item={item}
