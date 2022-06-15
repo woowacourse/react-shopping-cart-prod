@@ -5,11 +5,9 @@ import * as S from 'components/common/CheckBox/CheckBox.style';
 
 function CheckBox({ checked = false, disabled = false, onClick = () => {} }) {
   const handleOnClick = () => {
-    if (!disabled) {
-      onClick();
-    }
-  }
-  
+    onClick();
+  };
+
   return (
     <S.Container>
       <S.CustomCheckBox checked={checked} disabled={disabled} onClick={handleOnClick}>

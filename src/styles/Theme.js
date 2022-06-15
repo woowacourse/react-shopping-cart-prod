@@ -23,6 +23,7 @@ export default {
     warning: color.RED,
     black: color.BLACK,
     textWhite: color.WHITE,
+    background: color.WHITE,
     skeleton: color.NEAR_WHITE_01,
   },
 

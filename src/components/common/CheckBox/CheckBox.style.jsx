@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const Container = styled.div``;
 
-export const CustomCheckBox = styled.div`
+export const CustomCheckBox = styled.button`
   width: 20px;
   height: 20px;
 
@@ -13,11 +13,14 @@ export const CustomCheckBox = styled.div`
   border: 1px solid ${({ theme }) => theme.colorConfig.primary};
   border-radius: 3px;
 
-  background-color: ${({ checked, theme }) => checked && theme.colorConfig.primary};
+  background-color: ${({ checked, theme }) =>
+    checked ? theme.colorConfig.primary : theme.colorConfig.background};
   cursor: pointer;
 
-  ${({ disabled }) => disabled && css`
-    border: 1px solid ${({ theme }) => theme.colorConfig.secondary};
-    cursor: default;
-  `}
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      border: 1px solid ${({ theme }) => theme.colorConfig.secondary};
+      cursor: default;
+    `}
 `;
