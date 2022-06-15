@@ -33,13 +33,13 @@ const useUpdateCartItem = (cartList: CartItem[]) => {
   };
 
   const decreaseQuantity = (id: number, updateQuantity = 1) => {
-    const targetItem = cartList.find(cartItem => cartItem.id === id);
+    const targetItem = cartList.find(cartItem => cartItem.productId === id);
 
     if (targetItem.quantity > 0) {
       dispatch(
         patchCartItem([
           {
-            productId: targetItem.id,
+            id: targetItem.id,
             quantity: targetItem.quantity - updateQuantity,
             checked: true,
           },

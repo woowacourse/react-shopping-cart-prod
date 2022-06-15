@@ -31,8 +31,8 @@ export default function CartItemContainer({ cartList, cartItem }) {
         <Styled.TrashCan id={cartItem.id} onClick={() => deleteItem(cartItem.id)} />
         <QuantityController
           quantity={cartItem.quantity}
-          onIncreaseClick={() => increaseQuantity(cartItem.id)}
-          onDecreaseClick={() => decreaseQuantity(cartItem.id)}
+          onIncreaseClick={() => increaseQuantity(cartItem.productId)}
+          onDecreaseClick={() => decreaseQuantity(cartItem.productId)}
         ></QuantityController>
         <Styled.TotalPrice>{formatDecimal(cartItem.price)} 원</Styled.TotalPrice>
       </Styled.Operator>
