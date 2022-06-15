@@ -8,15 +8,10 @@ const useTotalPrice = () => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const calculateTotalPrice = useCallback(() => {
-    let total = 0;
-    order.forEach(id => {
-      const product = shoppingCart.find(product => product.productId === id);
-      if (product) {
-        const { price, quantity } = product;
-        total += price * quantity;
-      }
-    });
-    return total;
+    return order.reduce((total, currentId) => {
+      const product = shoppingCart.find(product => product.productId === currentId);
+      return total + product.price * product.quantity;
+    }, 0);
   }, [shoppingCart, order]);
 
   useEffect(() => {
