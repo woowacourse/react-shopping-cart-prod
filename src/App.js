@@ -17,22 +17,33 @@ import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 
 import { ROUTES } from 'utils/constants';
 import apiClient from 'apis/apiClient';
-import { loginComplete } from 'reducers/authReducer';
+import { loginComplete, logoutComplete } from 'reducers/authReducer';
 import ServerSelectPage from 'page/ServerSelectPage';
+import PrivateRoute from 'components/PrivateRoute';
+import PublicRoute from 'components/PublicRoute';
 
 function App() {
   const dispatch = useDispatch();
 
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
+  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
   const getAccount = useCallback(async () => {
-    const response = await apiClient.get('/customers');
-    dispatch(loginComplete({ nickname: response.data.nickname }));
+    try {
+      const response = await apiClient.get('/customers');
+      dispatch(loginComplete({ nickname: response.data.nickname }));
+    } catch (error) {
+      dispatch(logoutComplete());
+    }
   }, [dispatch]);
 
   useEffect(() => {
     getAccount();
   }, [getAccount]);
+
+  if (isLoading) {
+    return;
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -41,11 +52,47 @@ function App() {
           <Route element={<Layout />}>
             <Route path={ROUTES.HOME} element={<ProductListPage />} />
             <Route path={ROUTES.DETAILS_ID} element={<ProductDetailPage />} />
-            <Route path={ROUTES.CART} element={<CartPage />} />
-            <Route path={ROUTES.ORDER} element={<OrderPage />} />
-            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-            <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
-            <Route path={ROUTES.ACCOUNT} element={<AccountPage />} />
+            <Route
+              path={ROUTES.CART}
+              element={
+                <PrivateRoute isAuthenticated={isAuthenticated}>
+                  <CartPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={ROUTES.ORDER}
+              element={
+                <PrivateRoute isAuthenticated={isAuthenticated}>
+                  <OrderPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={ROUTES.ACCOUNT}
+              element={
+                <PrivateRoute isAuthenticated={isAuthenticated}>
+                  <AccountPage />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path={ROUTES.LOGIN}
+              element={
+                <PublicRoute isAuthenticated={isAuthenticated}>
+                  <LoginPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path={ROUTES.SIGNUP}
+              element={
+                <PublicRoute isAuthenticated={isAuthenticated}>
+                  <SignupPage />
+                </PublicRoute>
+              }
+            />
           </Route>
           <Route path={ROUTES.SERVER} element={<ServerSelectPage />} />
         </Routes>

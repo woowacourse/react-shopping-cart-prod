@@ -9,7 +9,7 @@ import useLoginAPI from 'page/LoginPage/useLoginAPI';
 
 const LoginPage = () => {
   const { email, setEmail, password, setPassword, login, isFulfilled } = useLoginAPI();
-  useCheckAuth(isFulfilled);
+  useCheckAuth();
 
   return (
     <Styled.Container>
