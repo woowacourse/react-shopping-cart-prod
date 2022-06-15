@@ -18,6 +18,7 @@ const handleCartDispatch = async ({ dispatch, actionType, func, params = [] }) =
     alert(message);
 
     dispatch({ type: cartActionType.FAIL });
+    throw new Error(message);
   }
 };
 

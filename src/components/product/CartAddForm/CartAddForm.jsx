@@ -7,6 +7,8 @@ import { Counter } from 'components/common';
 
 import * as S from 'components/product/CartAddForm/CartAddForm.style';
 
+import { ALERT_MESSAGES } from 'constants/messages';
+
 import * as GlobalStyled from 'styles/GlobalStyles';
 
 function CartAddForm({ product: { id: productId, name, price, stock }, closeModal }) {
@@ -17,8 +19,14 @@ function CartAddForm({ product: { id: productId, name, price, stock }, closeModa
   });
   const { addProduct } = useCart();
 
-  const onClickCartAdd = () => {
-    addProduct({ productId, name, count });
+  const onClickCartAdd = async () => {
+    try {
+      await addProduct({ productId, name, count });
+      alert(ALERT_MESSAGES.PRODUCT_ADDED(count));
+    } catch ({ message }) {
+      alert(message);
+    }
+
     closeModal();
   };
 

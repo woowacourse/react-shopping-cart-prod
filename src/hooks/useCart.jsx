@@ -23,8 +23,8 @@ const useCart = () => {
     dispatch(getCartThunk());
   };
 
-  const addProduct = ({ productId, count }) => {
-    dispatch(addToCartThunk(productId, count));
+  const addProduct = async ({ productId, count }) => {
+    await dispatch(addToCartThunk(productId, count));
   };
 
   const dispatchQuantityUpdate = (productId, quantity) => {
