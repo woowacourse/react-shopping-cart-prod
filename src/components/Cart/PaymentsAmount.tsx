@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { formatDecimal } from 'utils';
 
-const PaymentsAmount = ({ children }) => {
+const PaymentsAmount = ({ cartList }) => {
+  const totalPrice = cartList
+    .filter(item => item.checked)
+    .reduce((amount, item) => {
+      return amount + item.price * item.quantity;
+    }, 0);
+
   const onClick = () => {
     alert('주문하였습니다!!');
   };
@@ -14,7 +21,7 @@ const PaymentsAmount = ({ children }) => {
           <UnderLineBox>
             <div>총 결제액</div>
           </UnderLineBox>
-          <UnderLineBox> {children}</UnderLineBox>
+          <UnderLineBox>{formatDecimal(totalPrice)}원</UnderLineBox>
         </TotalPrice>
         <OrderButton onClick={onClick}>주문하기</OrderButton>
       </Bottom>

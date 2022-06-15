@@ -1,24 +1,17 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
 import { CartItem } from 'types/domain';
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import useUpdateCartItem from 'hooks/useUpdateCartItem';
-import CheckBox from 'components/common/CheckBox';
+import CheckBox from 'components/@common/CheckBox';
 import CartItemContainer from './CartItemContainer';
 
 interface CartListProps {
   cartList: CartItem[];
-  setPaymentsAmount: Dispatch<SetStateAction<number>>;
 }
 
-const CartList = ({ cartList, setPaymentsAmount }: CartListProps) => {
+const CartList = ({ cartList }: CartListProps) => {
   const { toggleCartItemAllChecked, removeSelectedCartItem } = useUpdateCartItem(cartList);
   const isAllItemChecked = cartList.every(cartItem => cartItem.checked);
-  const totalPaymentsPrice = cartList
-    .filter(item => item.checked)
-    .reduce((prev, item) => {
-      return prev + item.price * item.quantity;
-    }, 0);
 
   const toggleCheckedAll = () => {
     const targetItemList = cartList.filter(cartItem => cartItem.checked === isAllItemChecked);
@@ -29,10 +22,6 @@ const CartList = ({ cartList, setPaymentsAmount }: CartListProps) => {
   const deleteSelectedItem = () => {
     removeSelectedCartItem();
   };
-
-  useEffect(() => {
-    setPaymentsAmount(totalPaymentsPrice);
-  });
 
   return (
     <Styled.CartList>
@@ -54,12 +43,7 @@ const CartList = ({ cartList, setPaymentsAmount }: CartListProps) => {
       </Styled.CartItemListHeader>
       <Styled.CartItemList>
         {cartList.map(cartItem => (
-          <CartItemContainer
-            key={cartItem.id}
-            cartList={cartList}
-            cartItem={cartItem}
-            totalPrice={cartItem.quantity * cartItem.price}
-          />
+          <CartItemContainer key={cartItem.id} cartList={cartList} cartItem={cartItem} />
         ))}
       </Styled.CartItemList>
     </Styled.CartList>

@@ -1,22 +1,19 @@
 import styled from 'styled-components';
 import PaymentsAmount from 'components/Cart/PaymentsAmount';
 import theme from 'styles/theme';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { getCartList } from 'redux/action-creators/cartListThunk';
 import { CartListAction } from 'redux/actions/cartList';
 import CartList from 'components/Cart/CartList';
-import RequestFail from 'components/common/RequestFail';
-import { formatDecimal } from 'utils';
+import RequestFail from 'components/@common/RequestFail';
 
 const CartPage = () => {
   const { data: cartList, error: errorGetCartList } = useAppSelector(
     state => state.cartListReducer
   );
   const dispatch = useAppDispatch<CartListAction>();
-
-  const [paymentsAmount, setPaymentsAmount] = useState(0);
 
   useEffect(() => {
     dispatch(getCartList());
@@ -27,8 +24,8 @@ const CartPage = () => {
   return (
     <Styled.CartPage>
       <Styled.Header>장바구니</Styled.Header>
-      <CartList cartList={cartList} setPaymentsAmount={setPaymentsAmount} />
-      <PaymentsAmount>{formatDecimal(paymentsAmount)}원</PaymentsAmount>
+      <CartList cartList={cartList} />
+      <PaymentsAmount cartList={cartList} />
     </Styled.CartPage>
   );
 };

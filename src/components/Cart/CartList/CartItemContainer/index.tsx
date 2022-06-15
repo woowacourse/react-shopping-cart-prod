@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { formatDecimal } from 'utils';
-import CheckBox from 'components/common/CheckBox';
-import CroppedImage from 'components/common/CroppedImage';
+import CheckBox from 'components/@common/CheckBox';
+import CroppedImage from 'components/@common/CroppedImage';
 import { ReactComponent as TrashCanIcon } from 'assets/trashCanIcon.svg';
 import QuantityController from './QuantityController';
 import useUpdateCartItem from 'hooks/useUpdateCartItem';
 
-export default function CartItemContainer({ cartList, cartItem, totalPrice }) {
+export default function CartItemContainer({ cartList, cartItem }) {
   const { increaseQuantity, decreaseQuantity, removeCartItem, toggleCartItemChecked } =
     useUpdateCartItem(cartList);
 
@@ -34,7 +34,7 @@ export default function CartItemContainer({ cartList, cartItem, totalPrice }) {
           onIncreaseClick={() => increaseQuantity(cartItem.id)}
           onDecreaseClick={() => decreaseQuantity(cartItem.id)}
         ></QuantityController>
-        <Styled.TotalPrice>{formatDecimal(totalPrice)} 원</Styled.TotalPrice>
+        <Styled.TotalPrice>{formatDecimal(cartItem.price)} 원</Styled.TotalPrice>
       </Styled.Operator>
     </Styled.CartItemContainer>
   );
