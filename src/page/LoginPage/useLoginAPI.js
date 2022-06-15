@@ -31,16 +31,13 @@ const useLoginAPI = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await apiClient.post('/auth/login', {
+      const response = await apiClient.axios.post('/auth/login', {
         email,
         password,
       });
       const accessToken = response.data.accessToken;
 
-      apiClient.defaults.headers = {
-        Authorization: `Bearer ${accessToken}`,
-        withCredentials: true,
-      };
+      apiClient.setAuth(accessToken);
       setCookie('accessToken', accessToken);
       dispatch(loginComplete({ nickname: response.data.nickname }));
       renderSnackbar(`${response.data.nickname}${MESSAGE.LOGIN_SUCCESS}`, 'SUCCESS');

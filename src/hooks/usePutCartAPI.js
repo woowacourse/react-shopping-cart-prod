@@ -20,7 +20,7 @@ const usePutCartAPI = () => {
   const putCart = useCallback(
     async (productId, updatedQuantity) => {
       try {
-        const response = await apiClient.put(`/cart/products/${productId}`, {
+        const response = await apiClient.axios.put(`/cart/products/${productId}`, {
           quantity: updatedQuantity,
         });
         dispatch(

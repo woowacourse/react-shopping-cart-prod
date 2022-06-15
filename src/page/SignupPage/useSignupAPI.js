@@ -26,7 +26,7 @@ const useSignupAPI = () => {
     if (!isFulfilled) return;
 
     try {
-      const response = await apiClient.post('/customers', {
+      const response = await apiClient.axios.post('/customers', {
         email,
         nickname,
         password,
@@ -37,7 +37,7 @@ const useSignupAPI = () => {
     } catch (error) {
       const customError = error.response.data;
       navigate(ROUTES.LOGIN);
-      renderSnackbar(customError.message, 'FAILED');
+      renderSnackbar(customError, 'FAILED');
     }
   }, [email, isFulfilled, navigate, nickname, password, renderSnackbar]);
 

@@ -19,7 +19,7 @@ const useOrderAPI = () => {
   const orderCart = useCallback(
     async order => {
       try {
-        const response = await apiClient.post('/orders', { productIds: order });
+        const response = await apiClient.axios.post('/orders', { productIds: order });
         dispatch(decideOrder({ orderList: response.data }));
         navigate(ROUTES.ORDER);
         renderSnackbar(MESSAGE.ORDER_PASS_SUCCESS, 'SUCCESS');

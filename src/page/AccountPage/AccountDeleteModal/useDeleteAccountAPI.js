@@ -24,7 +24,7 @@ const useDeleteAccountAPI = (handleModal, password, isCorrectPassword) => {
     try {
       if (!isCorrectPassword) return;
 
-      await apiClient.delete('/customers', {
+      await apiClient.axios.delete('/customers', {
         data: {
           password,
         },

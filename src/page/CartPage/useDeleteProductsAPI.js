@@ -16,7 +16,7 @@ const useDeleteCheckedProductsAPI = productIds => {
 
   const deleteCheckedProducts = useCallback(async () => {
     try {
-      await apiClient.delete('/cart', { data: { productIds } });
+      await apiClient.axios.delete('/cart', { data: { productIds } });
       dispatch(selectiveDeleteFromCart());
       renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
     } catch (error) {

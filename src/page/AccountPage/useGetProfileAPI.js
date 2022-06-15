@@ -2,7 +2,6 @@
 import useSnackbar from 'hooks/useSnackbar';
 import apiClient from 'apis/apiClient';
 import { useCallback, useState } from 'react';
-import { getCookie } from 'utils/cookie';
 
 const useGetProfileAPI = (setEmail, setNickname) => {
   const [renderSnackbar] = useSnackbar();
@@ -11,7 +10,7 @@ const useGetProfileAPI = (setEmail, setNickname) => {
 
   const getProfile = useCallback(async () => {
     try {
-      const response = await apiClient.get('/customers');
+      const response = await apiClient.axios.get('/customers');
       setEmail(response.data.email);
       setNickname(response.data.nickname);
     } catch (error) {

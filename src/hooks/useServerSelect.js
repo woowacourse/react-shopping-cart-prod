@@ -13,7 +13,9 @@ const useServerSelect = () => {
 
   const setServerApi = (name = '이프') => {
     localStorage.setItem('api_name', name);
-    apiClient.defaults.baseURL = AUTH_API_URL[name];
+
+    apiClient.setBaseURL(AUTH_API_URL[name]);
+
     document.title = `${name}의 API가 작동 중인 마르코 장바구니 사이트`;
     navigate(ROUTES.HOME);
     dispatch(logoutComplete());

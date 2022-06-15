@@ -13,7 +13,7 @@ const useGetProductAPI = () => {
 
     try {
       console.log(id);
-      const response = await apiClient.get(`/products/${id}`);
+      const response = await apiClient.axios.get(`/products/${id}`);
       setProduct(response.data);
       setIsProductLoading(false);
     } catch (error) {

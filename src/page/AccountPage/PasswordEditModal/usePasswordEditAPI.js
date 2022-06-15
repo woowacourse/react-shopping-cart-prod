@@ -13,7 +13,7 @@ const usePasswordEditAPI = (handleModal, currentPassword, newPassword, isCorrect
     try {
       if (!isCorrectPassword) return;
 
-      await apiClient.patch('/customers/password', {
+      await apiClient.axios.patch('/customers/password', {
         password: currentPassword,
         newPassword,
       });

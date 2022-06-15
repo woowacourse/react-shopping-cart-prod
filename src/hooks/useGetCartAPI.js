@@ -13,7 +13,7 @@ const useGetCartAPI = () => {
 
   const getCart = useCallback(async () => {
     try {
-      const response = await apiClient.get('/cart');
+      const response = await apiClient.axios.get('/cart');
       dispatch(initializeCartList({ shoppingCart: response.data }));
     } catch (error) {
       setError(error);

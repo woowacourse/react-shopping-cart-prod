@@ -14,17 +14,15 @@ const useGetProductsAPI = () => {
   const { products } = useSelector(state => state.cartReducer);
 
   const getProducts = useCallback(async () => {
-    if (products.length > 0) return;
-
     try {
-      const response = await apiClient.get('/products');
+      const response = await apiClient.axios.get('/products');
       dispatch(initializeProductList({ products: response.data }));
     } catch (error) {
       setError(error);
     } finally {
       setIsLoading(false);
     }
-  }, [dispatch, products.length]);
+  }, [dispatch]);
 
   return { getProducts, products, isLoading, error };
 };

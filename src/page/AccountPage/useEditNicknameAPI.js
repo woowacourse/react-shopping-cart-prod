@@ -16,7 +16,7 @@ const useEditNicknameAPI = (isNicknameCorrect, nickname) => {
     try {
       if (!isNicknameCorrect) return;
 
-      const response = await apiClient.patch('/customers/profile', {
+      const response = await apiClient.axios.patch('/customers/profile', {
         nickname,
       });
       dispatch(loginComplete({ nickname: response.data.nickname }));

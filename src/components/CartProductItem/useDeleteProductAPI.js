@@ -16,7 +16,7 @@ const useDeleteProductAPI = productId => {
 
   const deleteProduct = useCallback(async () => {
     try {
-      await apiClient.delete('/cart', { data: { productIds: [productId] } });
+      await apiClient.axios.delete('/cart', { data: { productIds: [productId] } });
       dispatch(deleteProductFromCart({ productId: productId }));
       renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
     } catch (error) {
