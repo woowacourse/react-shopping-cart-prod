@@ -4,7 +4,7 @@ export const isInvalidEmail = (email) =>
   );
 
 export const isInvalidPassword = (password) =>
-  !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(password);
+  !/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*_-]{8,}$/.test(password);
 
 export const isInvalidName = (name) => /\d+|\s+/.test(name);
 
