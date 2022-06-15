@@ -12,7 +12,7 @@ const useInput = (type, initialState, initialValue = "") => {
     const {
       target: { value },
     } = e;
-    setInputState((prev) => ({ ...prev, value: value }));
+    setInputState((prev) => ({ ...prev, value }));
 
     if (!value.match(REGULAR_EXPRESSION[type])) {
       setInputState((prev) => ({
