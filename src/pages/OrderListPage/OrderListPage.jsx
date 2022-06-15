@@ -17,8 +17,6 @@ function OrderListPage() {
     orderList: state.orderList.data,
   }));
 
-  console.log("orderList in OrderListPage.jsx : ", orderList);
-
   useEffect(() => {
     dispatch(getOrderList());
   }, [dispatch]);
