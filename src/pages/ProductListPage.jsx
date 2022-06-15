@@ -15,8 +15,8 @@ function ProductListPage() {
   const { cartList, addItem, deleteItem } = useCart();
   const idSetInCart = useMemo(() => new Set(cartList.map((cart) => cart.name)), [cartList]);
 
-  const handleClickCartItem = (id, isCart) => {
-    if (isCart) {
+  const handleClickCartItem = (id, isProductInCart) => {
+    if (isProductInCart) {
       deleteItem(id);
       alert(MESSAGE.REMOVE);
       return;
@@ -36,7 +36,7 @@ function ProductListPage() {
             key={product.id}
             productData={product}
             handleCartItem={() => handleClickCartItem(product.id, idSetInCart.has(product.name))}
-            isCart={idSetInCart.has(product.name)}
+            isProductInCart={idSetInCart.has(product.name)}
           />
         ))}
       </StyledGridContainer>

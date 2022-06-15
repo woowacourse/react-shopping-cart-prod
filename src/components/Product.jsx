@@ -6,11 +6,11 @@ import { StyledImageBox, StyledImg } from './common/Styled';
 import { GiShoppingCart } from 'react-icons/gi';
 import { ROUTES_PATH, SIZE } from '../constants/index';
 
-function Product({ productData, handleCartItem, isCart }) {
+function Product({ productData, handleCartItem, isProductInCart }) {
   const { id, name, price, imageUrl } = productData;
 
   const handleClickCartIcon = () => {
-    handleCartItem(id, isCart);
+    handleCartItem(id, isProductInCart);
   };
 
   return (
@@ -20,7 +20,7 @@ function Product({ productData, handleCartItem, isCart }) {
           <StyledImg width={SIZE.MIDDLE} src={imageUrl} alt={name} />
         </StyledImageBox>
       </Link>
-      <StyledItemInfoBox iscart={isCart.toString()}>
+      <StyledItemInfoBox isProductInCart={isProductInCart.toString()}>
         <Link to={`${ROUTES_PATH.DETAIL_LINK}${id}`}>
           <StyledItemInfo>
             <StyledItemName>{name}</StyledItemName>
@@ -47,7 +47,7 @@ const StyledItemInfoBox = styled.div`
 
   .cart {
     color: ${(props) =>
-      props.iscart === 'true' ? props.theme.main.PRIMARY : props.theme.main.BLACK};
+      props.isProductInCart === 'true' ? props.theme.main.PRIMARY : props.theme.main.BLACK};
   .cart:hover {
     transform: scale(1.2);
     color: ${(props) => props.theme.main.PRIMARY};

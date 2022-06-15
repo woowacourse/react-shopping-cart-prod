@@ -16,7 +16,7 @@ function ProductDetailPage() {
 
   const cartList = useSelector(({ cart }) => cart.data);
   const { data: product, isLoading, isError } = useFetch(`${SERVER_PATH.PRODUCTS}/${id}`);
-  const isCart = cartList.some((cartItem) => {
+  const isProductInCart = cartList.some((cartItem) => {
     if (cartItem !== null && product !== null) {
       return cartItem.name === product.name;
     }
@@ -24,7 +24,7 @@ function ProductDetailPage() {
   });
 
   const handleClickCartButton = () => {
-    if (isCart) {
+    if (isProductInCart) {
       deleteItem(id);
       alert(MESSAGE.REMOVE);
       return;
@@ -51,8 +51,11 @@ function ProductDetailPage() {
           <StyledPriceBox>{Number(price).toLocaleString()}원</StyledPriceBox>
         </StyledProductDetailPrice>
       </StyledProductDetailInfo>
-      <StyledCartButton onClick={handleClickCartButton} iscart={isCart.toString()}>
-        {isCart ? '장바구니 제거' : '장바구니'}
+      <StyledCartButton
+        onClick={handleClickCartButton}
+        isProductInCart={isProductInCart.toString()}
+      >
+        {isProductInCart ? '장바구니 제거' : '장바구니'}
       </StyledCartButton>
     </StyledProductDetailContainer>
   );
@@ -95,7 +98,7 @@ const StyledCartButton = styled.button`
   left: 641px;
   bottom: 60px;
   background: ${(props) =>
-    props.iscart === 'true' ? props.theme.main.PRIMARY : props.theme.main.BROWN};
+    props.isProductInCart === 'true' ? props.theme.main.PRIMARY : props.theme.main.BROWN};
   color: ${(props) => props.theme.main.WHITE};
   font-size: 24px;
   font-weight: 700;
