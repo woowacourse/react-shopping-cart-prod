@@ -160,7 +160,7 @@ const useForm = ({
     );
     const prevElement =
       currentElementIndex - 1 >= 0
-        ? inputElementList.current[currentElementIndex + 1]
+        ? inputElementList.current[currentElementIndex - 1]
         : null;
 
     return prevElement;
