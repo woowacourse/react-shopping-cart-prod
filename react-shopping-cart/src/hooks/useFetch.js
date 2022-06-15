@@ -1,9 +1,14 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { setErrorStatus } from 'redux/actions/errors.action';
 
 import { LIMIT_SERVER_CONNECTION_TIME } from 'constants/index';
 
 function useFetch({ url, method = 'get', headers, skip = false }) {
+  const dispatch = useDispatch();
+
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -26,6 +31,7 @@ function useFetch({ url, method = 'get', headers, skip = false }) {
       setData(data);
       return data;
     } catch (error) {
+      dispatch(setErrorStatus(error.response.status));
       setError(error.message);
       throw new Error(error.message);
     } finally {

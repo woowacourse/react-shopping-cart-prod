@@ -1,4 +1,5 @@
 import auth from './auth.reducer';
+import error from './errors.reducer';
 import orderList from './orderList.reducer';
 import snackBar from './snackbar.reducer';
 import userInfo from './userInfo.reducer';
@@ -11,12 +12,13 @@ const rootReducer = combineReducers({
   userInfo,
   auth,
   snackBar,
+  error,
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['userInfo', 'snackBar'],
+  blacklist: ['userInfo', 'snackBar', 'error'],
 };
 
 export default persistReducer(persistConfig, rootReducer);
