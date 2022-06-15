@@ -1,8 +1,9 @@
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
 import CroppedImage from 'components/common/CroppedImage';
 import { useAppDispatch } from 'hooks/useAppDispatch';
+import { MESSAGE } from 'hooks/useSnackBar';
 import { memo, MouseEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CartListAction } from 'redux/cartList/action';
 import { postCartItemRequest, putCartItemRequest } from 'redux/cartList/thunk';
 import { PATH } from 'Routers';
@@ -13,12 +14,13 @@ import { CartItem, Item } from 'types/domain';
 
 interface ItemContainerProps {
   item: Item;
-  openSnackbar: () => void;
+  openSnackbar: (message: string) => void;
   cartItem: CartItem | undefined;
 }
 
 const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => {
-  const { id, thumbnailUrl, price, title } = item;
+  const { id, imageUrl, price, name } = item;
+  const navigate = useNavigate();
   const dispatch = useAppDispatch<CartListAction>();
   const handleClickItemContainer = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
     if (e.target instanceof SVGElement) {
@@ -27,27 +29,32 @@ const ItemContainer = ({ item, openSnackbar, cartItem }: ItemContainerProps) => 
   };
 
   const handleClickCartIcon = () => {
-    if (cartItem) {
-      dispatch(
-        putCartItemRequest({
-          ...cartItem,
-          quantity: cartItem.quantity + 1,
-        })
-      );
-    } else {
-      dispatch(postCartItemRequest({ id: Number(id), quantity: 1, isSelected: true }));
+    const accessToken = localStorage.getItem('access-token');
+
+    if (!accessToken) {
+      if (window.confirm('로그인이 필요한 서비스입니다. 로그인 창으로 가시겠어요?')) {
+        navigate(PATH.login);
+      }
+
+      return;
     }
-    openSnackbar();
+
+    if (cartItem) {
+      dispatch(putCartItemRequest(cartItem.id, cartItem.quantity + 1));
+    } else {
+      dispatch(postCartItemRequest(id));
+    }
+    openSnackbar(MESSAGE.cart);
   };
 
   return (
     <Link to={PATH.getItemDetail(id)} onClick={handleClickItemContainer} replace>
       <StyledRoot>
-        <CroppedImage src={thumbnailUrl} width='270px' height='270px' alt={title} />
+        <CroppedImage src={imageUrl} width='270px' height='270px' alt={name} />
         <StyledBottom>
           <StyledDescription>
-            <StyledTitle>{title}</StyledTitle>
-            <StyledPrice>{price.toLocaleString()}</StyledPrice>
+            <StyledTitle>{name}</StyledTitle>
+            <StyledPrice>{price.toLocaleString()} 원</StyledPrice>
           </StyledDescription>
           <StyledCartIcon width='31px' fill={theme.colors.GRAY_333} onClick={handleClickCartIcon} />
         </StyledBottom>
@@ -80,12 +87,20 @@ const StyledRoot = styled.div`
 const StyledBottom = styled.div`
   width: 100%;
   display: flex;
+  flex: 1;
   justify-content: space-between;
   padding: 0 2rem;
   align-items: center;
+  gap: 10px;
 `;
 
-const StyledDescription = styled.div``;
+const StyledDescription = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 
 const StyledTitle = styled.p`
   font-size: 1.6rem;

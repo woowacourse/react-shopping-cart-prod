@@ -1,13 +1,10 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
-import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { ALERT_MESSAGE } from 'constants/index';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from 'redux/user/thunk';
 import { PATH } from 'Routers';
@@ -18,35 +15,20 @@ const Login = () => {
   const [password, onChangePassword] = useInput();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const name = useAppSelector(state => state.user.data?.name);
-  const isLogin = useAppSelector(state => !!state.user.data);
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
-  const isLogining = useRef(false);
+  const { openSnackbar, SnackbarComponent } = useSnackBar();
 
-  useAuthError(openSnackbar);
+  useAuthError((message: string) => {
+    openSnackbar(message);
+  });
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(login({ loginId: email, password }));
-
-    isLogining.current = true;
-  };
-
-  // @TODO: withAuthPage HOC로 분리
-  useEffect(() => {
-    if (isLogin && !isLogining.current) {
-      alert(ALERT_MESSAGE.WRONG_ACCESS);
-      navigate(PATH.home);
-    }
-  }, [isLogin, navigate]);
-
-  useEffect(() => {
-    if (name && isLogining.current) {
+    dispatch(login({ loginId: email, password })).then(name => {
       alert(ALERT_MESSAGE.LOGIN_SUCCESS(name));
       navigate(PATH.home);
-    }
-  }, [name, navigate]);
+    });
+  };
 
   return (
     <AuthPage
@@ -74,7 +56,7 @@ const Login = () => {
         value={password}
         onChange={onChangePassword}
       />
-      {isOpenSnackbar && <Snackbar message={MESSAGE.login} />}
+      <SnackbarComponent />
     </AuthPage>
   );
 };

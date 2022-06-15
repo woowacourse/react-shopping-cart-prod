@@ -1,15 +1,17 @@
 export interface Item {
   id: number;
-  thumbnailUrl: string;
-  title: string;
+  imageUrl: string;
+  name: string;
   price: number;
 }
 
-export interface CartItem {
-  id: number;
+export interface CartItem extends Item {
+  productId: number;
   quantity: number;
-  isSelected: boolean;
+  isChecked: boolean;
 }
+
+export type CartItemResponse = Omit<CartItem, 'isChecked'>;
 
 export interface UserInfo {
   loginId: string;

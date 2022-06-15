@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { CartListAction } from 'redux/cartList/action';
 import { CartItem } from 'types/domain';
 
@@ -11,7 +12,7 @@ export interface CartListState {
     | 'deleteCartItem'
     | 'deleteAllCartItem'
     | null;
-  readonly error: Error | null;
+  readonly error: AxiosError | null;
   readonly data: CartItem[];
 }
 
@@ -25,8 +26,11 @@ export const cartListReducer = (state = initialState, action: CartListAction): C
   switch (action.type) {
     case 'cart/GET_CART_LIST_REQUEST':
       return { ...state, loading: 'getCartList' };
-    case 'cart/GET_CART_LIST_SUCCESS':
-      return { ...state, loading: null, data: action.payload };
+    case 'cart/GET_CART_LIST_SUCCESS': {
+      const cartList = action.payload.map(cart => ({ ...cart, isChecked: true }));
+
+      return { ...state, loading: null, data: cartList };
+    }
     case 'cart/GET_CART_LIST_FAILURE':
       return { ...state, loading: null, error: action.payload };
 
@@ -34,7 +38,8 @@ export const cartListReducer = (state = initialState, action: CartListAction): C
       return { ...state, loading: 'putCartItem' };
     case 'cart/PUT_CART_ITEM_SUCCESS': {
       const prevCartList = state.data;
-      const targetItem = action.payload;
+      const isChecked = prevCartList.find(cart => cart.id === action.payload.id).isChecked;
+      const targetItem = { ...action.payload, isChecked };
       const newCartList = prevCartList.map(cartItem =>
         cartItem.id === targetItem.id ? targetItem : cartItem
       );
@@ -49,30 +54,6 @@ export const cartListReducer = (state = initialState, action: CartListAction): C
     case 'cart/POST_CART_ITEM_SUCCESS':
       return { ...state, loading: null, data: [...state.data, action.payload] };
     case 'cart/POST_CART_ITEM_FAILURE':
-      return { ...state, loading: null, error: action.payload };
-
-    case 'cart/PATCH_CART_SELECTED_REQUEST':
-      return { ...state, loading: 'patchCartSelected' };
-    case 'cart/PATCH_CART_SELECTED_SUCCESS': {
-      const prevCartList = state.data;
-      const targetItem = action.payload;
-      const newCartList = prevCartList.map(cartItem =>
-        cartItem.id === targetItem.id ? targetItem : cartItem
-      );
-
-      return { ...state, loading: null, data: newCartList };
-    }
-    case 'cart/PATCH_CART_SELECTED_FAILURE':
-      return { ...state, loading: null, error: action.payload };
-
-    case 'cart/PATCH_ALL_CART_SELECTED_REQUEST':
-      return { ...state, loading: 'patchAllCartSelected' };
-    case 'cart/PATCH_ALL_CART_SELECTED_SUCCESS': {
-      const newCartList = state.data.map(item => ({ ...item, isSelected: action.payload }));
-
-      return { ...state, loading: null, data: newCartList };
-    }
-    case 'cart/PATCH_ALL_CART_SELECTED_FAILURE':
       return { ...state, loading: null, error: action.payload };
 
     case 'cart/DELETE_CART_ITEM_REQUEST':
@@ -92,6 +73,20 @@ export const cartListReducer = (state = initialState, action: CartListAction): C
     }
     case 'cart/DELETE_ALL_CART_ITEM_FAILURE':
       return { ...state, loading: null, error: action.payload };
+
+    case 'cart/CHECK_CART_ITEM': {
+      const cartList = [...state.data];
+      const cartItem = cartList.find(cart => cart.id === action.payload);
+
+      cartItem.isChecked = !cartItem.isChecked;
+
+      return { ...state, data: cartList };
+    }
+    case 'cart/CHECK_ALL_CART_ITEM': {
+      const cartList = state.data.map(cart => ({ ...cart, isChecked: !action.payload }));
+
+      return { ...state, data: cartList };
+    }
     default:
       return state;
   }

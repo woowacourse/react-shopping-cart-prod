@@ -1,59 +1,66 @@
 import Button from 'components/common/Button';
 import CroppedImage from 'components/common/CroppedImage';
 import Loading from 'components/common/Loading';
-import RequestFail from 'components/common/RequestFail';
-import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import useSnackBar from 'hooks/useSnackBar';
+import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
 import useThunkFetch from 'hooks/useThunkFetch';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { CartListAction } from 'redux/cartList/action';
 import { getCartListRequest, postCartItemRequest, putCartItemRequest } from 'redux/cartList/thunk';
 import { getItemRequest } from 'redux/item/thunk';
+import { PATH } from 'Routers';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 const ItemDetail = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch<CartListAction>();
+  const navigate = useNavigate();
+  const { openSnackbar, SnackbarComponent } = useSnackBar();
+  const { data: item, loading } = useThunkFetch(state => state.item, getItemRequest(id), {
+    useErrorBoundary: true,
+  });
+  const { data: cartList } = useThunkFetch(state => state.cartList, getCartListRequest(), {
+    useErrorBoundary: true,
+  });
 
-  const {
-    data: item,
-    loading,
-    error: error_itemList,
-  } = useThunkFetch(state => state.item, getItemRequest(id));
-  const { data: cartList, error: error_cartList } = useThunkFetch(
-    state => state.cartList,
-    getCartListRequest()
-  );
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
-
-  const isInCart = cartList?.some(cartItem => cartItem.id === item?.id);
+  const isInCart = cartList?.some(cartItem => cartItem.productId === item?.id);
 
   const postCart = () => {
-    dispatch(postCartItemRequest({ id: Number(id), quantity: 1, isSelected: true }));
-    openSnackbar();
+    const accessToken = localStorage.getItem('access-token');
+
+    if (!accessToken) {
+      if (window.confirm('로그인이 필요한 서비스입니다. 로그인 창으로 가시겠어요?')) {
+        navigate(PATH.login);
+      }
+
+      return;
+    }
+    if (cartList.length === 0) {
+      dispatch(getCartListRequest());
+    }
+    dispatch(postCartItemRequest(Number(id)));
+    openSnackbar(MESSAGE.cart);
   };
 
   const updateCart = () => {
-    const targetItem = cartList.find(cartItem => cartItem.id === Number(id));
+    const targetItem = cartList.find(cartItem => cartItem.productId === Number(id));
 
-    dispatch(putCartItemRequest({ ...targetItem, quantity: targetItem.quantity + 1 }));
-    openSnackbar();
+    dispatch(putCartItemRequest(targetItem.id, targetItem.quantity + 1));
+    openSnackbar(MESSAGE.cart);
   };
 
   if (loading) return <Loading />;
-  if (error_itemList || error_cartList) return <RequestFail />;
 
-  const { thumbnailUrl, title, price } = item;
+  const { imageUrl, name, price } = item || {};
 
   return (
     <StyledRoot>
-      <CroppedImage src={thumbnailUrl} width='570px' height='570px' alt='상품' />
-      <StyledTitle>{title}</StyledTitle>
+      <CroppedImage src={imageUrl} width='570px' height='570px' alt='상품' />
+      <StyledTitle>{name}</StyledTitle>
       <StyledPrice>
         <StyledPriceDescription>금액</StyledPriceDescription>
-        <StyledPriceValue>{price.toLocaleString()}</StyledPriceValue>
+        <StyledPriceValue>{price?.toLocaleString()} 원</StyledPriceValue>
       </StyledPrice>
       <Button
         width='63.8rem'
@@ -65,7 +72,7 @@ const ItemDetail = () => {
       >
         장바구니
       </Button>
-      {isOpenSnackbar && <Snackbar message={MESSAGE.cart} />}
+      <SnackbarComponent />
     </StyledRoot>
   );
 };

@@ -1,13 +1,12 @@
 import Button from 'components/common/Button';
 import LabeledInput from 'components/common/LabeledInput';
 import Modal from 'components/common/Modal';
-import Snackbar, { MESSAGE } from 'components/common/Snackbar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
 import useSnackBar from 'hooks/useSnackBar';
-import { KeyboardEvent, useEffect } from 'react';
+import { KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editUserInfo } from 'redux/user/thunk';
 import { PATH } from 'Routers';
@@ -21,22 +20,19 @@ interface PasswordConfirmModalProps {
 const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) => {
   const [password, onChangePassword] = useInput();
   const loginId = useAppSelector(state => state.user.data.loginId);
-  const { data } = useAppSelector(state => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const { openSnackbar, SnackbarComponent } = useSnackBar();
 
-  useAuthError(openSnackbar);
-
-  useEffect(() => {
-    if (name === data.name) {
-      closeModal();
-      navigate(PATH.home);
-    }
-  }, [data.name]);
+  useAuthError((message: string) => {
+    openSnackbar(message);
+  });
 
   const onSubmitPassword = () => {
-    dispatch(editUserInfo({ loginId, name, password }));
+    dispatch(editUserInfo({ loginId, name, password })).then(() => {
+      closeModal();
+      navigate(PATH.home);
+    });
   };
 
   const onKeydownEnter = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -68,8 +64,8 @@ const PasswordConfirmModal = ({ name, closeModal }: PasswordConfirmModalProps) =
         >
           확인
         </Button>
-        {isOpenSnackbar && <Snackbar message={MESSAGE.password} />}
       </StyledPasswordConfirmContent>
+      <SnackbarComponent />
     </Modal>
   );
 };

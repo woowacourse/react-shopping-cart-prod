@@ -1,12 +1,10 @@
 import AuthPage from 'components/common/AuthPage';
 import LabeledInput from 'components/common/LabeledInput';
-import Snackbar, { MESSAGE } from 'components/common/Snackbar';
-import withAuthPage from 'components/hoc/withAuthPage';
 import { ALERT_MESSAGE } from 'constants/index';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import useAuthError from 'hooks/useAuthError';
 import useInput from 'hooks/useInput';
-import useSnackBar from 'hooks/useSnackBar';
+import useSnackBar, { MESSAGE } from 'hooks/useSnackBar';
 import { useNavigate } from 'react-router-dom';
 import { signup } from 'redux/user/thunk';
 
@@ -19,21 +17,23 @@ const Signup = () => {
   const [passwordConfirmation, onChangePasswordConfirmation] = useInput();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isOpenSnackbar, openSnackbar } = useSnackBar();
+  const { openSnackbar, SnackbarComponent } = useSnackBar();
 
-  useAuthError(openSnackbar);
+  useAuthError((message: string) => {
+    openSnackbar(message);
+  });
 
   const onSubmitAuthForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (password === passwordConfirmation) {
-      dispatch(signup({ loginId: email, name, password }));
-
-      alert(ALERT_MESSAGE.SIGNUP_SUCCESS(name));
-      navigate(PATH.home);
+      dispatch(signup({ loginId: email, name, password })).then(() => {
+        alert(ALERT_MESSAGE.SIGNUP_SUCCESS(name));
+        navigate(PATH.home);
+      });
 
       return;
     }
-    openSnackbar();
+    openSnackbar(MESSAGE.passwordConfirm);
   };
 
   return (
@@ -72,9 +72,9 @@ const Signup = () => {
         value={passwordConfirmation}
         onChange={onChangePasswordConfirmation}
       />
-      {isOpenSnackbar && <Snackbar message={MESSAGE.passwordConfirm} />}
+      <SnackbarComponent />
     </AuthPage>
   );
 };
 
-export default withAuthPage(Signup, false);
+export default Signup;

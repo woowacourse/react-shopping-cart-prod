@@ -1,4 +1,5 @@
 import { client } from 'apis';
+import { AxiosError } from 'axios';
 import { MAX_RESULT_ITEM_LIST } from 'constants/index';
 import type { Dispatch } from 'redux';
 
@@ -12,7 +13,7 @@ export const getPageItemListRequest =
 
       dispatch(pageItemListActions.getPageItemListActionGroup.success(response.data));
     } catch (e: unknown) {
-      if (e instanceof Error) {
+      if (e instanceof AxiosError) {
         dispatch(pageItemListActions.getPageItemListActionGroup.failure(e));
       }
     }

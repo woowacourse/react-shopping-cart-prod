@@ -1,8 +1,6 @@
-import Login from 'pages/Login';
-import Signup from 'pages/Signup';
-import UserEdit from 'pages/UserEdit';
-import UserWithDrawal from 'pages/UserWithDrawal';
-import { lazy, ReactElement } from 'react';
+import withLoginOnly from 'components/hoc/withLoginOnly';
+import withNonLoginOnly from 'components/hoc/withNonLoginOnly';
+import { lazy, LazyExoticComponent } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 
 export const PATH = {
@@ -28,31 +26,37 @@ type Path = typeof PATH[PathName];
 
 interface RoutesType {
   path: Path;
-  element: ReactElement;
+  element: LazyExoticComponent<() => JSX.Element> | ((...args) => JSX.Element);
 }
 
 const ItemList = lazy(() => import('pages/ItemList'));
 const ItemDetail = lazy(() => import('pages/ItemDetail'));
 const Cart = lazy(() => import('pages/Cart'));
+const Signup = lazy(() => import('pages/Signup'));
+const Login = lazy(() => import('pages/Login'));
+const UserEdit = lazy(() => import('pages/UserEdit'));
+const UserWithDrawal = lazy(() => import('pages/UserWithDrawal'));
 const NotFound = lazy(() => import('pages/NotFound'));
 
 const ROUTES: RoutesType[] = [
-  { path: PATH.home, element: <Navigate replace to='/main/1' /> },
-  { path: PATH.main, element: <ItemList /> },
-  { path: PATH.itemDetail, element: <ItemDetail /> },
-  { path: PATH.cart, element: <Cart /> },
-  { path: PATH.signup, element: <Signup /> },
-  { path: PATH.login, element: <Login /> },
-  { path: PATH.editUser, element: <UserEdit /> },
-  { path: PATH.withdrawal, element: <UserWithDrawal /> },
-  { path: PATH.notFound, element: <NotFound /> },
+  { path: PATH.main, element: ItemList },
+  { path: PATH.itemDetail, element: ItemDetail },
+  { path: PATH.notFound, element: NotFound },
+
+  { path: PATH.signup, element: withNonLoginOnly(Signup) },
+  { path: PATH.login, element: withNonLoginOnly(Login) },
+
+  { path: PATH.cart, element: withLoginOnly(Cart) },
+  { path: PATH.editUser, element: withLoginOnly(UserEdit) },
+  { path: PATH.withdrawal, element: withLoginOnly(UserWithDrawal) },
 ];
 
 const Routers = () => {
   return (
     <Routes>
-      {ROUTES.map(route => (
-        <Route key={route.path} {...route} />
+      <Route path={PATH.home} element={<Navigate replace to='/main/1' />} />
+      {ROUTES.map(({ element: Element, ...route }) => (
+        <Route key={route.path} element={<Element />} {...route} />
       ))}
     </Routes>
   );
