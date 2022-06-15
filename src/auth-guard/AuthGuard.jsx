@@ -1,22 +1,34 @@
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import { getUser } from "@redux/reducers/user-reducer/userThunks";
+import LocalStorage from "@storage/localStorage";
 import { accessPolicy } from "./constants";
 
 // accessPolicy = "all" | "onlyLoggedInUser" | "onlyLoggedOutUser"
 function AuthGuard({ policy = accessPolicy.onlyLoggedInUser, children }) {
+  const dispatch = useDispatch();
+  const store = useStore();
   const isLoggedIn = useSelector((state) => state.user.data.isLoggedIn);
 
   useEffect(() => {
-    if (policy === accessPolicy.onlyLoggedInUser && !isLoggedIn) {
-      alert("접근할 수 없습니다!");
-      window.location.href = "/login";
-    }
+    (async () => {
+      const accessToken = LocalStorage.getItem("accessToken");
+      accessToken && (await dispatch(getUser()));
 
-    if (policy === accessPolicy.onlyLoggedOutUser && isLoggedIn) {
-      alert("접근할 수 없습니다!");
-      window.location.href = "/";
-    }
-  }, [isLoggedIn, policy]);
+      const state = store.getState();
+      const { isLoggedIn } = state.user.data;
+
+      if (policy === accessPolicy.onlyLoggedInUser && !isLoggedIn) {
+        alert("접근할 수 없습니다!");
+        window.location.href = "/login";
+      }
+
+      if (policy === accessPolicy.onlyLoggedOutUser && isLoggedIn) {
+        alert("접근할 수 없습니다!");
+        window.location.href = "/";
+      }
+    })();
+  }, [dispatch, store, policy]);
 
   if (policy === accessPolicy.onlyLoggedInUser && !isLoggedIn) {
     return <div>로그인 후 이용해 주세요</div>;

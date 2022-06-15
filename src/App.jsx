@@ -1,8 +1,8 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "@shared/header/Header";
 import styles from "@/app.module";
 import Home from "@home/Home";
 import Cart from "@cart/Cart";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ProductDetail from "@product-detail/ProductDetail";
 import OrderList from "@order-list/OrderList";
 import Login from "./pages/login/Login";

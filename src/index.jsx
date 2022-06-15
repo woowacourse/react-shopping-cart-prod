@@ -6,8 +6,6 @@ import App from "@/App";
 import reducer from "@redux/reducer";
 import "./index.css";
 import "@scss/style";
-import { getUser } from "@redux/reducers/user-reducer/userThunks";
-import LocalStorage from "./storage/localStorage";
 
 function prepareMSW() {
   if (process.env.NODE_ENV === "development") {
@@ -20,9 +18,6 @@ function prepareMSW() {
 
 prepareMSW().then(async () => {
   const store = createStore(reducer, applyMiddleware(thunk));
-
-  const accessToken = LocalStorage.getItem("accessToken");
-  accessToken && (await getUser()(store.dispatch));
 
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(
