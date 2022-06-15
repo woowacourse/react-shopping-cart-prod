@@ -38,9 +38,9 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
 
       isModified.current = false;
       setModifyQuantityShow(false);
-    }, 200000);
+    }, 2000);
   };
-  const handleChangeQuantity = async quantity => {
+  const handleChangeQuantity = async newQuantity => {
     isModified.current = true;
 
     debounce(async () => {
@@ -48,10 +48,14 @@ function ProductListItem({ id, thumbnail, name, price, quantity, loadProducts })
 
       isModified.current = false;
 
-      if (quantity !== 1) {
-        dispatch(setSnackBarMessage(`🛒 ${name} ${quantity}개가 장바구니에 담겼습니다!`));
+      if (newQuantity === quantity) {
+        return;
       }
-      await modifyCartQuantity({ productId: id, quantity });
+
+      if (newQuantity !== 1) {
+        dispatch(setSnackBarMessage(`🛒 ${name} ${newQuantity}개가 장바구니에 담겼습니다!`));
+      }
+      await modifyCartQuantity({ productId: id, quantity: newQuantity });
       await loadProducts();
     }, 1500);
   };

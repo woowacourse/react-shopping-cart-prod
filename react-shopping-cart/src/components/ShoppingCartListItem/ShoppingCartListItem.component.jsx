@@ -13,13 +13,11 @@ import { addSpecificItem, deleteSpecificItem } from 'redux/actions/orderList.act
 
 import useDeleteCarts from 'hooks/api/carts/useDeleteCarts';
 import useModifyCartQuantity from 'hooks/api/carts/useModifyCartQuantity';
-import useDebounce from 'hooks/useDebounce';
 
 import { ReactComponent as TrashCan } from 'assets/images/trash.svg';
 
 function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity, loadCarts }) {
   const dispatch = useDispatch();
-  const debounce = useDebounce();
   const { items: storedProducts } = useSelector(state => state.orderList);
 
   const { modifyCartQuantity } = useModifyCartQuantity(true);
@@ -46,10 +44,8 @@ function ShoppingCartListItem({ productId: id, name, thumbnail, price, quantity,
   };
 
   const onChangeQuantity = async newQuantity => {
-    debounce(async () => {
-      await modifyCartQuantity({ productId: id, quantity: newQuantity });
-      await loadCarts();
-    }, 1000);
+    await modifyCartQuantity({ productId: id, quantity: newQuantity });
+    await loadCarts();
   };
 
   return (
