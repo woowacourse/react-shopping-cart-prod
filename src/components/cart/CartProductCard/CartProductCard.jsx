@@ -133,5 +133,3 @@ function CartProductCard({
 }
 
 export default CartProductCard;
-
-// 돔 노드를 최소화하는 게 성능상 좋을 듯!!
