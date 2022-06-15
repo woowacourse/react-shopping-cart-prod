@@ -1,11 +1,16 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
-export const useCheckBox = (boxItems) => {
-  const [checkboxItems, setCheckboxItems] = useState(() => boxItems.map((item) => item.id));
-  const isAllChecked = useMemo(
-    () => boxItems.length === checkboxItems.length,
-    [boxItems.length, checkboxItems.length],
-  );
+export const useCheckBox = (cartList) => {
+  const [checkboxItems, setCheckboxItems] = useState([]);
+  const [isAllChecked, setIsAllChecked] = useState(false);
+
+  useEffect(() => {
+    setCheckboxItems(cartList.map((item) => Number(item.id)));
+  }, [cartList]);
+
+  useEffect(() => {
+    setIsAllChecked(cartList && cartList.length === checkboxItems.length);
+  }, [cartList, checkboxItems]);
 
   const handleChecked = (productId) => {
     const prevState = [...checkboxItems];
@@ -24,19 +29,6 @@ export const useCheckBox = (boxItems) => {
 
   const isChecked = (productId) => checkboxItems.findIndex((id) => id === productId) !== -1;
 
-  const checkAllSelectButton = () => {
-    if (boxItems.length <= 0) {
-      return;
-    }
-
-    if (checkboxItems.length >= boxItems.length) {
-      setCheckboxItems([]);
-      return;
-    }
-
-    setCheckboxItems(boxItems.map((item) => item.id));
-  };
-
   const clearCheckBoxItems = () => {
     if (checkboxItems <= 0) {
       return;
@@ -45,12 +37,23 @@ export const useCheckBox = (boxItems) => {
     setCheckboxItems([]);
   };
 
+  const checkAllSelectButton = () => {
+    if (cartList.length < 0) {
+      return;
+    }
+    if (checkboxItems.length >= cartList.length) {
+      setCheckboxItems([]);
+      return;
+    }
+    setCheckboxItems(cartList.map((item) => Number(item.id)));
+  };
+
   return {
     checkboxItems,
-    isAllChecked,
     handleChecked,
     isChecked,
-    checkAllSelectButton,
+    isAllChecked,
     clearCheckBoxItems,
+    checkAllSelectButton,
   };
 };

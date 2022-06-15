@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useCartItem } from 'hooks';
 
 import { addCartList } from 'actions/cart';
 import { snackbar } from 'actions/snackbar';
+import { checkIsLogin, handleRequestAddCartItem } from 'utils/addCartItem';
 
 import IconButton from 'components/@common/IconButton';
-import { 아이콘_코드, 알림_메시지 } from 'constants/';
+import { 비동기_요청, 아이콘_코드, 알림_메시지 } from 'constants/';
 import noImage from 'assets/no_image.png';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
@@ -15,15 +15,24 @@ import * as Styled from './styles';
 const ProductItem = ({ id, thumbnail, name, price }) => {
   const dispatch = useDispatch();
   const navigator = useNavigate();
-  const cartList = useCartItem();
 
-  const onClickAddCartButton = () => {
-    dispatch(addCartList({ id, thumbnail, name, price }, cartList));
-    dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_추가(name)));
+  const onClickAddCartButton = async () => {
+    if (!checkIsLogin()) {
+      dispatch(snackbar.pushMessageSnackbar('로그인 후에 사용해주세요!'));
+      return;
+    }
+    const requestStatus = await handleRequestAddCartItem(id, dispatch);
+    if (requestStatus === 비동기_요청.REDIRECT) {
+      navigator('/cart');
+    }
+    if (requestStatus === 비동기_요청.SUCCESS) {
+      dispatch(addCartList({ id, thumbnail, name, price }));
+      dispatch(snackbar.pushMessageSnackbar(알림_메시지.장바구니_추가(name)));
+    }
   };
 
   const onClickProduct = () => {
-    navigator(`/product?id=${id}`);
+    navigator(`/product/${id}`);
   };
 
   return (

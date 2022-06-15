@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 
+import { COLORS } from 'styles/theme';
+
 import Button from 'components/@common/Button/styles';
 import CheckBox from 'components/@common/CheckBox';
-import CartProducItem from 'components/CartProductItem';
+import CartProductItem from 'components/CartProductItem';
 
-import { COLORS } from 'styles/theme';
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 
 const CartList = ({
@@ -53,15 +54,15 @@ const CartList = ({
     <p>싱싱배송 상품 ({cartList.length}종)</p>
     <CommonStyled.HR />
     {cartList &&
-      cartList.map(({ id, name, thumbnail, price, count }) => (
+      cartList.map(({ id, name, thumbnail, price, quantity }) => (
         <>
-          <CartProducItem
+          <CartProductItem
             key={id}
             id={id}
             name={name}
             thumbnail={thumbnail}
             price={price}
-            count={count}
+            quantity={quantity}
             isChecked={isChecked}
             handleChecked={handleChecked()}
             handleItemCount={handleItemCount}

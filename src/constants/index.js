@@ -10,6 +10,7 @@ export const 아이콘_코드 = {
 export const 비동기_요청 = {
   SUCCESS: '비동기_요청_성공',
   FAILURE: '비동기_요청_실패',
+  REDIRECT: '비동기_요청_반환',
 };
 
 export const 숫자 = {

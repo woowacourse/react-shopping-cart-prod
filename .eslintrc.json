@@ -38,6 +38,7 @@
     "default-param-last": "off",
     "react/forbid-prop-types": "off",
     "function-paren-newline": "off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "arrow-body-style": "off"
   }
 }

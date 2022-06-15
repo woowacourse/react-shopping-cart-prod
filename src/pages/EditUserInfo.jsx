@@ -1,7 +1,10 @@
 import React, { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import useInput from 'hooks/useInput';
+
+import { COLORS } from 'styles/theme';
+import { 비동기_요청 } from 'constants';
 
 import Layout from 'components/Layout';
 import PageHeader from 'components/@common/PageHeader';
@@ -9,20 +12,18 @@ import Button from 'components/@common/Button/styles';
 import Input from 'components/@common/Input/styles';
 import ErrorMessage from 'components/@common/ErrorMessage';
 
-import { COLORS } from 'styles/theme';
 import { requestEditUserInfo, requestWithDrawUser } from 'api';
 import { snackbar } from 'actions/snackbar';
 import { removeUserData } from 'actions/user';
-import { 비동기_요청 } from 'constants';
-
 import * as Validate from 'utils/validate';
+
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
 const EditUserInfo = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userId } = useSelector((state) => state.user);
+  const userId = sessionStorage.getItem('userId');
 
   const {
     value: userNickName,
@@ -43,8 +44,7 @@ const EditUserInfo = () => {
   const handleEditUserInfo = async (e) => {
     e.preventDefault();
     const response = await requestEditUserInfo({
-      userName: userId,
-      nickName: userNickName,
+      nickname: userNickName,
       age: userAge,
     });
 
@@ -124,7 +124,7 @@ const EditUserInfo = () => {
               />
             </label>
 
-            {checkUserAge || <ErrorMessage>0살 이상의 숫자를 입력해주세요</ErrorMessage>}
+            {checkUserAge || <ErrorMessage>0살 초과 200살 이하 숫자를 입력해주세요</ErrorMessage>}
             <Button
               margin="0.5rem 0"
               backgroundColor={COLORS.MINT_200}

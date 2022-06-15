@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import useInput from 'hooks/useInput';
 
+import { COLORS } from 'styles/theme';
+import { 비동기_요청 } from 'constants/';
+
 import Layout from 'components/Layout';
 import PageHeader from 'components/@common/PageHeader';
 import Button from 'components/@common/Button/styles';
@@ -11,9 +14,8 @@ import ErrorMessage from 'components/@common/ErrorMessage';
 
 import { requestCheckDuplicatedId, requestSignUp } from 'api';
 import { snackbar } from 'actions/snackbar';
-import { 비동기_요청 } from 'constants/';
 import * as Validate from 'utils/validate';
-import { COLORS } from 'styles/theme';
+
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
@@ -76,13 +78,9 @@ const SignUp = () => {
       timer = setTimeout(async () => {
         timer = null;
         const { content } = await requestCheckDuplicatedId(userId);
-        if (!content.isUnique) {
-          dispatch(snackbar.pushMessageSnackbar('중복된 아이디입니다!'));
-          setCheckDuplicatedId(content.isUnique);
-          return;
-        }
 
-        dispatch(snackbar.pushMessageSnackbar('사용가능한 아이디입니다!'));
+        const message = content.isUnique ? '사용가능한 아이디입니다!' : '중복된 아이디입니다!';
+        dispatch(snackbar.pushMessageSnackbar(message));
         setCheckDuplicatedId(content.isUnique);
       }, 1000);
     };
@@ -91,19 +89,17 @@ const SignUp = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     const response = await requestSignUp({
-      userName: userId,
-      nickName: userNickName,
+      username: userId,
+      nickname: userNickName,
       password: userPassword,
       age: userAge,
     });
 
-    if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(snackbar.pushMessageSnackbar('회원가입에 성공하였습니다!'));
-      navigate('/');
-      return;
-    }
-
-    dispatch(snackbar.pushMessageSnackbar('회원가입에 실패하였습니다!'));
+    const message =
+      response.status === 비동기_요청.SUCCESS
+        ? '회원가입에 성공하였습니다!'
+        : '회원가입에 실패하였습니다!';
+    dispatch(snackbar.pushMessageSnackbar(message));
     navigate('/');
   };
 
@@ -143,6 +139,7 @@ const SignUp = () => {
                 margin="0.5rem 0 0 0"
                 border={`1px solid ${COLORS.MINT_200}`}
                 hoverColor={COLORS.MINT_100}
+                disabled={!checkUserId}
                 onClick={() => handleRequestDuplicatedId()()}
               >
                 중복확인
@@ -218,7 +215,7 @@ const SignUp = () => {
               />
             </label>
 
-            {checkUserAge || <ErrorMessage>0살 이상의 숫자를 입력해주세요</ErrorMessage>}
+            {checkUserAge || <ErrorMessage>0이상 200 이하의 숫자를 입력해주세요</ErrorMessage>}
             <Button
               margin="0.5rem 0"
               backgroundColor={COLORS.MINT_200}

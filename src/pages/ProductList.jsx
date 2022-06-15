@@ -6,6 +6,7 @@ import Layout from 'components/Layout';
 import EmptyProductItem from 'components/EmptyProductItem';
 import SkeletonProductItems from 'components/SkeletonProductItems';
 
+import { v4 as uuidv4 } from 'uuid';
 import { getProductList } from 'actions/products';
 
 import * as Styled from './styles';
@@ -15,8 +16,8 @@ const ProductList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (productList?.length === 0) dispatch(getProductList());
-  }, [dispatch, productList?.length]);
+    dispatch(getProductList());
+  }, [dispatch]);
 
   return (
     <Layout>
@@ -25,7 +26,7 @@ const ProductList = () => {
         {isLoading && <SkeletonProductItems />}
         {isLoading || productList ? (
           productList.map(({ id, name, price, thumbnail }) => (
-            <ProductItem key={id} id={id} thumbnail={thumbnail} name={name} price={price} />
+            <ProductItem key={uuidv4()} id={id} thumbnail={thumbnail} name={name} price={price} />
           ))
         ) : (
           <EmptyProductItem />

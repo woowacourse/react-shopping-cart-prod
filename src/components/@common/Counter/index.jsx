@@ -1,8 +1,11 @@
-import { 숫자 } from 'constants/';
 import PropTypes from 'prop-types';
-import Input from 'components/@common/Input/styles';
+
 import { COLORS } from 'styles/theme';
+import { 숫자 } from 'constants/';
+
+import Input from 'components/@common/Input/styles';
 import Button from '../Button/styles';
+
 import * as CommonStyle from '../CommonStyle/styles';
 
 const isValidOrder = (value) => value > 숫자.최대_주문수량 || value < 숫자.최소_주문수량;

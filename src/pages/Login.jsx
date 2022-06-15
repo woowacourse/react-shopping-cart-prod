@@ -1,17 +1,19 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setUserData } from 'actions/user';
-import { snackbar } from 'actions/snackbar';
+
+import { COLORS } from 'styles/theme';
+import { 비동기_요청 } from 'constants';
 
 import Layout from 'components/Layout';
 import Button from 'components/@common/Button/styles';
 import Input from 'components/@common/Input/styles';
 
+import { requestLogin, requestUserInfo } from 'api';
+import { setUserData } from 'actions/user';
+import { snackbar } from 'actions/snackbar';
 import { hideSpinner, showSpinner } from 'actions/spinner';
-import { 비동기_요청 } from 'constants';
-import { requestLogin } from 'api';
-import { COLORS } from 'styles/theme';
+
 import * as CommonStyled from 'components/@common/CommonStyle/styles';
 import * as Styled from './styles';
 
@@ -33,17 +35,25 @@ const Login = () => {
     dispatch(showSpinner());
 
     const response = await requestLogin(userId, userPassword);
-
     dispatch(hideSpinner());
 
     if (response.status === 비동기_요청.SUCCESS) {
-      dispatch(setUserData(response));
-      dispatch(snackbar.pushMessageSnackbar('로그인에 성공하였습니다'));
-      navigate('/');
-      return;
+      const { accessToken } = response.content;
+      sessionStorage.setItem('accessToken', accessToken);
+      const userResponse = await requestUserInfo();
+      if (userResponse.status === 비동기_요청.SUCCESS) {
+        const { username } = userResponse.content;
+        dispatch(setUserData(username));
+        navigate('/');
+      }
     }
-    dispatch(snackbar.pushMessageSnackbar('로그인에 실패하였습니다'));
-    navigate('/');
+
+    const message =
+      response.status === 비동기_요청.SUCCESS
+        ? '로그인에 성공하였습니다'
+        : '로그인에 실패하였습니다';
+
+    dispatch(snackbar.pushMessageSnackbar(message));
   };
 
   return (

@@ -10,12 +10,21 @@ import * as Styled from './styles';
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { userId: isLogin } = useSelector((state) => state.user);
+  const userId = sessionStorage.getItem('userId');
+  const accessToken = sessionStorage.getItem('accessToken');
 
   const onLogOutClick = () => {
     dispatch(removeUserData());
     dispatch(snackbar.pushMessageSnackbar('로그아웃 되었습니다'));
     navigate('/');
+  };
+
+  const onCartButtonClick = () => {
+    if (accessToken) {
+      navigate('/cart');
+      return;
+    }
+    dispatch(snackbar.pushMessageSnackbar('로그인 후 사용해주세요'));
   };
 
   return (
@@ -29,11 +38,11 @@ const Header = () => {
       </Link>
 
       <Styled.RightMenu>
-        <Link to="/cart">
-          <Styled.RightMenuButton icon={아이콘_코드.CART}>장바구니</Styled.RightMenuButton>
-        </Link>
+        <Styled.RightMenuButton icon={아이콘_코드.CART} onClick={onCartButtonClick}>
+          장바구니
+        </Styled.RightMenuButton>
 
-        {isLogin ? (
+        {userId && userId.length > 0 ? (
           <>
             <Styled.RightMenuButton icon={아이콘_코드.RECEIPT}>주문 목록</Styled.RightMenuButton>
             <Link to="/identification">
