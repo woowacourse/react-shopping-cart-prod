@@ -5,6 +5,8 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { onMessage } from 'reducers/snackbar';
 
 import { SNACKBAR_MESSAGE, PATH } from 'constants';
+import { clearToken, getUser } from 'service';
+import { withdraw } from 'reducers/user';
 
 const PrivateRoute = ({ children, path = PATH.LOGIN, showMessage = true }) => {
   const accessToken = useSelector((state) => state.user.accessToken);
@@ -15,6 +17,16 @@ const PrivateRoute = ({ children, path = PATH.LOGIN, showMessage = true }) => {
     accessToken ||
       (showMessage && dispatch(onMessage(SNACKBAR_MESSAGE.noAuth())));
     // eslint-disable-next-line react-hooks/exhaustive-deps
+    const verifyUser = async () => {
+      try {
+        accessToken && (await getUser());
+      } catch (e) {
+        dispatch(withdraw());
+        clearToken();
+        dispatch(onMessage(SNACKBAR_MESSAGE.expiredAuth()));
+      }
+    };
+    verifyUser();
   }, []);
 
   if (accessToken) {
