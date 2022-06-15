@@ -6,13 +6,20 @@ import { useAppDispatch } from 'hooks/useAppDispatch';
 import { autoSignIn } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
 import { KEYS } from 'utils/localStorage';
-import SnackBar from 'components/common/snackBar';
+import SnackBar from 'components/@common/snackBar';
+import { useDispatch } from 'react-redux';
+import { updateSnackBar } from 'redux/actions/snackBar';
 
 function App() {
-  const dispatch = useAppDispatch<UserAction>();
+  const dispatch = useDispatch();
+  const thunkDispatch = useAppDispatch<UserAction>();
 
   if (localStorage.getItem(KEYS.TOKEN)) {
-    dispatch(autoSignIn());
+    try {
+      thunkDispatch(autoSignIn());
+    } catch (error) {
+      dispatch(updateSnackBar('자동 로그인 실패'));
+    }
   }
 
   return (

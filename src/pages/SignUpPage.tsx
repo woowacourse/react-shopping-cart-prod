@@ -5,18 +5,18 @@ import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
+import { updateSnackBar } from 'redux/actions/snackBar';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
 import useSignInput from 'hooks/useSignInput';
 import usePasswordInput from 'hooks/usePasswordInput';
-import useUpdateEffect from 'hooks/useUpdateEffect';
-import SignInput from 'components/common/SignInput';
+import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
+import { useDispatch } from 'react-redux';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch<UserAction>();
-  const { loading, error } = useAppSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+  const thunkDispatch = useAppDispatch<UserAction>();
   const { inputState, validState, handleEmailInput, handleNameInput } = useSignInput();
   const {
     currentPasswordRef,
@@ -24,12 +24,6 @@ const SignUpPage = () => {
     handleCurrentPasswordInput,
     handleCurrentPasswordConfirmInput,
   } = usePasswordInput();
-
-  useUpdateEffect(() => {
-    if (!error && !loading) {
-      navigate(PATH.signIn);
-    }
-  }, [loading]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -44,7 +38,12 @@ const SignUpPage = () => {
       Object.values(validState).every(valid => valid) &&
       [passwordValid.current, passwordValid.confirm].every(valid => valid)
     ) {
-      dispatch(signUp(inputInfo));
+      try {
+        thunkDispatch(signUp(inputInfo));
+        navigate(PATH.signIn);
+      } catch (error) {
+        dispatch(updateSnackBar('회원가입에 실패했습니다.'));
+      }
     }
   };
 

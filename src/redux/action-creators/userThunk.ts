@@ -22,8 +22,8 @@ export const signUp = (signUpInfo: SignUpInfo) => async (dispatch: Dispatch<User
 
     dispatch(userAction.postSignUp.success());
   } catch (error) {
-    dispatch(userAction.postSignUp.failure(error.response.data.errorMessage));
-    alert(error.response.data.errorMessage);
+    dispatch(userAction.postSignUp.failure(error));
+    throw new Error(error.response.data.errorMessage);
   }
 };
 
@@ -44,8 +44,8 @@ export const signIn = (signInInfo: SignInInfo) => async (dispatch: Dispatch<User
     setLocalStorageToken(response.data.token);
     dispatch(userAction.postSignIn.success(response.data));
   } catch (error) {
-    dispatch(userAction.postSignIn.failure(error.response.data.errorMessage));
-    alert(error.response.data.errorMessage);
+    dispatch(userAction.postSignIn.failure(error));
+    throw new Error(error);
   }
 };
 
@@ -112,7 +112,7 @@ export const autoSignIn = () => async (dispatch: Dispatch<UserAction>) => {
     setLocalStorageToken(response.data.token);
     dispatch(userAction.autoSignIn.success(response.data));
   } catch (error) {
-    dispatch(userAction.autoSignIn.failure(error.response.data.errorMessage));
-    alert(error.response.data.errorMessage);
+    dispatch(userAction.autoSignIn.failure(error));
+    throw new Error(error);
   }
 };

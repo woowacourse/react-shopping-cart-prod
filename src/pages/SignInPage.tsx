@@ -1,32 +1,26 @@
 import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
 import theme from 'styles/theme';
-import { FormEvent, useEffect } from 'react';
+import { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signIn } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
 import { useAppDispatch } from 'hooks/useAppDispatch';
-import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
 import useSignInput from 'hooks/useSignInput';
-import SignInput from 'components/common/SignInput';
+import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
-import { isEmptyObject } from 'utils';
+import { useDispatch } from 'react-redux';
+import { updateSnackBar } from 'redux/actions/snackBar';
 
 const SignInPage = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch<UserAction>();
-  const { loading, data: userData } = useAppSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+  const thunkDispatch = useAppDispatch<UserAction>();
   const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
   const { inputState, validState, handleEmailInput } = useSignInput();
 
-  useEffect(() => {
-    if (!isEmptyObject(userData) && !loading) {
-      navigate(PATH.default);
-    }
-  }, [loading]);
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const inputInfo = {
@@ -35,7 +29,12 @@ const SignInPage = () => {
     };
 
     if (validState.email && passwordValid) {
-      dispatch(signIn(inputInfo));
+      try {
+        await thunkDispatch(signIn(inputInfo));
+        navigate(PATH.default);
+      } catch (error) {
+        dispatch(updateSnackBar('로그인 정보를 다시 확인해주세요.'));
+      }
     }
   };
 
