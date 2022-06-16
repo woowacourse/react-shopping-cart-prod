@@ -12,7 +12,7 @@ import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
-import { MESSAGE } from 'constants/message';
+import { MESSAGE } from 'constant/message';
 
 const ResignPage = () => {
   const navigate = useNavigate();

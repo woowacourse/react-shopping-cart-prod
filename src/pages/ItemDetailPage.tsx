@@ -13,7 +13,7 @@ import RequestFail from 'components/@common/RequestFail';
 import Loading from 'components/@common/Loading';
 import { BASE_URL } from 'apis';
 import type { Item } from 'types/domain';
-import { MESSAGE } from 'constants/message';
+import { MESSAGE } from 'constant/message';
 
 const ItemDetail = () => {
   const dispatch = useDispatch();

@@ -1,4 +1,4 @@
-import { emailReg } from 'constants/RegExp';
+import { emailReg } from 'constant/RegExp';
 import { ChangeEvent, useState } from 'react';
 
 const initialInputState = {

@@ -12,7 +12,7 @@ import usePasswordInput from 'hooks/usePasswordInput';
 import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
-import { MESSAGE } from 'constants/message';
+import { MESSAGE } from 'constant/message';
 
 const SignUpPage = () => {
   const navigate = useNavigate();

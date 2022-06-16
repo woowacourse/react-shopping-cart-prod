@@ -1,4 +1,4 @@
-import { passwordReg } from 'constants/RegExp';
+import { passwordReg } from 'constant/RegExp';
 import { ChangeEvent, useRef, useState } from 'react';
 
 const usePasswordInput = () => {
