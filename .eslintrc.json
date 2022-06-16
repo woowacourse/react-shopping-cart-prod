@@ -5,7 +5,7 @@
     "jest": true
   },
   "parser": "@babel/eslint-parser",
-  "plugins": ["prettier"],
+  "plugins": ["prettier", "simple-import-sort"],
   "extends": [
     "airbnb",
     "airbnb/hooks",
@@ -37,6 +37,8 @@
     "global-require": 0,
     "default-param-last": "off",
     "no-case-declarations": "off",
-    "react/jsx-filename-extension": [1, { "allow": "as-needed" }]
+    "react/jsx-filename-extension": [1, { "allow": "as-needed" }],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error"
   }
 }

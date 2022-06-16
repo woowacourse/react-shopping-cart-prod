@@ -1,5 +1,6 @@
+import { css, Global } from "@emotion/react";
 import emotionReset from "emotion-reset";
-import { Global, css } from "@emotion/react";
+
 import dohyeon from "@/assets/fonts/DOHYEON.woff";
 
 function GlobalStyle() {

@@ -1,0 +1,57 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+
+import Badge from "@/components/Badge";
+import StyledMenu from "@/components/Header/Menu/index.styled";
+import UserDropdown from "@/components/UserDropdown";
+import { PATH } from "@/constants";
+import { getCart } from "@/redux/modules/cart";
+import { getUserInfo, logoutUser } from "@/redux/modules/user";
+import { getCookie } from "@/utils/auth";
+
+function Menu() {
+  const { cart } = useSelector((state) => state.cartState);
+  const { authorized } = useSelector((state) => state.userState);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = getCookie("accessToken");
+    if (accessToken) {
+      dispatch(getUserInfo());
+      dispatch(getCart());
+    }
+  }, []);
+
+  const handleLogoutClick = () => {
+    dispatch(logoutUser());
+    navigate(PATH.HOME);
+  };
+
+  return (
+    <StyledMenu>
+      <ul>
+        <li>
+          <Link to={PATH.CART}>
+            장바구니
+            {authorized && cart.length > 0 && <Badge count={cart.length} />}
+          </Link>
+        </li>
+        <li>
+          <Link to={PATH.NOT_FOUND}>주문목록</Link>
+        </li>
+        <li>
+          {authorized ? (
+            <UserDropdown onClick={handleLogoutClick} />
+          ) : (
+            <Link to={PATH.LOGIN}>로그인</Link>
+          )}
+        </li>
+      </ul>
+    </StyledMenu>
+  );
+}
+
+export default Menu;

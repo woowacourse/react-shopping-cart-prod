@@ -12,4 +12,4 @@ const deleteCookie = (name) => {
   document.cookie = `${encodeURIComponent(name)}=; max-age=-1`;
 };
 
-export { setCookie, getCookie, deleteCookie };
+export { deleteCookie, getCookie, setCookie };

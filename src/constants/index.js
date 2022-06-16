@@ -1,12 +1,21 @@
-const BASE_URL = "https://woo-shopping-cart-api.herokuapp.com";
+const URL = {
+  릭: "http://ec2-3-39-194-30.ap-northeast-2.compute.amazonaws.com:8080",
+  봄: "http://ec2-54-180-119-11.ap-northeast-2.compute.amazonaws.com:8080",
+  베루스: "http://ec2-52-79-228-178.ap-northeast-2.compute.amazonaws.com:8080",
+  토닉: "http://ec2-3-39-11-100.ap-northeast-2.compute.amazonaws.com:8080",
+  쿤: "http://ec2-15-164-96-161.ap-northeast-2.compute.amazonaws.com:8080",
+};
+
+const BASE_URL = URL.베루스;
+
 const PATH = {
-  MAIN: "/",
+  HOME: "/",
   LOGIN: "/login",
   REGISTER: "/register",
   EDIT: "/edit",
   DETAIL: "/detail",
   CART: "/cart",
-  NOT_FOUND: "*",
+  NOT_FOUND: "/not-found",
 };
 
 const STATUS = {
@@ -15,17 +24,26 @@ const STATUS = {
 };
 
 const ERROR_STATUS = {
-  WRONG_LENGTH: "WRONG_LENGTH",
-  PASSWORD_RULE: "PASSWORD_RULE",
   EMAIL_RULE: "EMAIL_RULE",
+  NICKNAME_RULE: "NICKNAME_RULE",
+  PASSWORD_RULE: "PASSWORD_RULE",
   MISMATCH: "MISMATCH",
 };
 
 const ERROR_MESSAGE = {
   EMAIL_RULE: "이메일 주소를 입력해주세요",
-  WRONG_LENGTH: "올바르지 않은 길이입니다",
+  NICKNAME_RULE: "2~8자 사이의 닉네임을 입력해주세요",
   PASSWORD_RULE: "영문, 숫자를 포함하여 8-20자로 입력하세요",
   MISMATCH: "비밀번호가 일치하지 않습니다",
+};
+
+const ERROR_CODE = {
+  1000: "INVALID_SIGNUP_INPUT",
+  1001: "EXIST_EMAIL",
+  1002: "CHECK_EMAIL_OR_PASSWORD",
+  1100: "INVALID_CART",
+  1101: "EXIST_PRODUCT_IN_CART",
+  1102: "CANNOT_REMOVE",
 };
 
 const MESSAGE = {
@@ -35,6 +53,14 @@ const MESSAGE = {
   INVALID_SIGNUP_INPUT: "회원 정보 양식이 잘못되었습니다.",
   EXIST_EMAIL: "이미 존재하는 이메일입니다.",
   WITHDRAWAL_CONFIRM: "정말로 탈퇴하시겠습니까? 😭",
+  EXIST_PRODUCT_IN_CART: "장바구니에 이미 존재하는 물품입니다.",
+  LOGIN_SUCCESS: "로그인 성공",
+};
+
+const INPUT_TYPE = {
+  EMAIL: "EMAIL",
+  NICKNAME: "NICKNAME",
+  PASSWORD: "PASSWORD",
 };
 
 const NICKNAME = {
@@ -47,21 +73,21 @@ const PASSWORD = {
   MAX_LENGTH: 20,
 };
 
-const REGULAR_EXPRESSION = {
-  EMAIL:
-    /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
-  NICKNAME: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{2,8}$/,
-  PASSWORD: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,20}$/,
+const AMOUNTBOX_TYPE = {
+  CART: "cart",
+  PAY: "pay",
 };
 
 export {
+  AMOUNTBOX_TYPE,
   BASE_URL,
-  PATH,
-  STATUS,
-  ERROR_STATUS,
+  ERROR_CODE,
   ERROR_MESSAGE,
+  ERROR_STATUS,
+  INPUT_TYPE,
   MESSAGE,
   NICKNAME,
   PASSWORD,
-  REGULAR_EXPRESSION,
+  PATH,
+  STATUS,
 };
