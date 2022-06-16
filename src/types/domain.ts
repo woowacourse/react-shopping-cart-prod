@@ -6,7 +6,6 @@ export interface Item {
 }
 
 export interface CartItem {
-  type?: 'CartItem';
   id?: number;
   productId?: number;
   price?: number;

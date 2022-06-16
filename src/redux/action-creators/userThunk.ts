@@ -23,7 +23,7 @@ export const signUp = (signUpInfo: SignUpInfo) => async (dispatch: Dispatch<User
     dispatch(userAction.postSignUp.success());
   } catch (error) {
     dispatch(userAction.postSignUp.failure(error));
-    throw new Error(error.response.data.errorMessage);
+    throw new Error(error);
   }
 };
 

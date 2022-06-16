@@ -12,6 +12,7 @@ import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
+import { MESSAGE } from 'constants/message';
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const SignInPage = () => {
         await thunkDispatch(signIn(inputInfo));
         navigate(PATH.default);
       } catch (error) {
-        dispatch(updateSnackBar('로그인 정보를 다시 확인해주세요.'));
+        dispatch(updateSnackBar(MESSAGE.FAILED_SIGN_IN));
       }
     }
   };

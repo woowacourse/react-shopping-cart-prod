@@ -11,6 +11,7 @@ import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
+import { MESSAGE } from 'constants/message';
 
 const EditPasswordPage = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const EditPasswordPage = () => {
         await thunkDispatch(editPassword(editPasswordInfo));
         navigate(PATH.default);
       } catch (error) {
-        dispatch(updateSnackBar('비밀번호 변경에 실패했습니다.'));
+        dispatch(updateSnackBar(MESSAGE.FAILED_EDIT_PASSWORD));
       }
     }
   };

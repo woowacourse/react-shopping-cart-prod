@@ -21,7 +21,7 @@ export const getCartList = () => async (dispatch: Dispatch<CartListAction>) => {
 
     dispatch(cartListAction.getCartList.success(response.data.cartItems));
   } catch (error) {
-    dispatch(cartListAction.getCartList.failure(error.response.data.errorMessage));
+    dispatch(cartListAction.getCartList.failure(error));
   }
 };
 
@@ -43,7 +43,7 @@ export const patchCartItem =
 
       dispatch(cartListAction.patchCartItem.success(response.data.cartItems));
     } catch (error) {
-      dispatch(cartListAction.patchCartItem.failure(error.response.data.errorMessage));
+      dispatch(cartListAction.patchCartItem.failure(error));
     }
   };
 
@@ -69,7 +69,7 @@ export const postCartItem = (cartItem: CartItem) => async (dispatch: Dispatch<Ca
 
     dispatch(cartListAction.postCartItem.success(targetItem));
   } catch (error) {
-    dispatch(cartListAction.postCartItem.failure(error.response.data.errorMessage));
+    dispatch(cartListAction.postCartItem.failure(error));
   }
 };
 
@@ -92,7 +92,7 @@ export const deleteSelectedCartItem =
 
       dispatch(cartListAction.deleteSelectedCartItem.success(selectedIdList));
     } catch (error) {
-      dispatch(cartListAction.deleteSelectedCartItem.failure(error.response.data.errorMessage));
+      dispatch(cartListAction.deleteSelectedCartItem.failure(error));
     }
   };
 
@@ -112,6 +112,6 @@ export const deleteAllCartItem = () => async (dispatch: Dispatch<CartListAction>
 
     dispatch(cartListAction.deleteAllCartItem.success());
   } catch (error) {
-    dispatch(cartListAction.deleteAllCartItem.failure(error.response.data.errorMessage));
+    dispatch(cartListAction.deleteAllCartItem.failure(error));
   }
 };

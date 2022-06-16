@@ -12,6 +12,7 @@ import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
+import { MESSAGE } from 'constants/message';
 
 const ResignPage = () => {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ const ResignPage = () => {
         await thunkDispatch(resign(inputInfo));
         navigate(PATH.default);
       } catch (error) {
-        dispatch(updateSnackBar('회원 탈퇴에 실패했습니다.'));
+        dispatch(updateSnackBar(MESSAGE.FAILED_RESIGN));
       }
     }
   };

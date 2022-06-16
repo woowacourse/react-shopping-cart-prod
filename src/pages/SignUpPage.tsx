@@ -12,6 +12,7 @@ import usePasswordInput from 'hooks/usePasswordInput';
 import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
+import { MESSAGE } from 'constants/message';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const SignUpPage = () => {
         await thunkDispatch(signUp(inputInfo));
         navigate(PATH.signIn);
       } catch (error) {
-        dispatch(updateSnackBar('회원가입에 실패했습니다.'));
+        dispatch(updateSnackBar(MESSAGE.FAILED_SIGN_UP));
       }
     }
   };

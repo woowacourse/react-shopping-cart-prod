@@ -13,6 +13,7 @@ import RequestFail from 'components/@common/RequestFail';
 import Loading from 'components/@common/Loading';
 import { BASE_URL } from 'apis';
 import type { Item } from 'types/domain';
+import { MESSAGE } from 'constants/message';
 
 const ItemDetail = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const ItemDetail = () => {
 
   const onClick = () => {
     increaseQuantity(id);
-    dispatch(updateSnackBar(`${item.name} 1개를 장바구니에 추가했습니다.`));
+    dispatch(updateSnackBar(`${item.name} ${MESSAGE.ADD_CART}`));
   };
 
   if (loading) return <Loading />;
