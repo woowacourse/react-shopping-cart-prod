@@ -35,14 +35,18 @@ const loadCartAPI = (): any => async (dispatch: AppDispatch) => {
 };
 
 const addItemAPI =
-  (item: { id: number; imageUrl: string; name: string; price: number; isSelected: boolean }): any =>
+  (id: number): any =>
   async (dispatch: AppDispatch) => {
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/customers/me/carts`, item, {
-        headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-        },
-      });
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/customers/me/carts`,
+        { id },
+        {
+          headers: {
+            Authorization: `Bearer ${getCookie('accessToken')}`,
+          },
+        }
+      );
 
       dispatch(addItem());
       dispatch(show(INFO_MESSAGES.ADDED_TO_CART));

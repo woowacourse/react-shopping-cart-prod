@@ -40,8 +40,7 @@ function Product({ productInfo: { cartId, id, imageUrl, name, price } }: Product
       return;
     }
 
-    const newItem = { id, imageUrl, name, price };
-    const result = dispatch(addItemAPI({ ...newItem, isSelected: false }));
+    const result = dispatch(addItemAPI(id));
 
     if (!result) return;
 
