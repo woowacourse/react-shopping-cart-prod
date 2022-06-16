@@ -102,7 +102,7 @@ const deleteAllCartItem = (state: CartItemState, action: CartListAction) => {
   }
 };
 
-const clearCartList = (state, action) => {
+const clearCartList = () => {
   return { loading: false, error: null, data: [] };
 };
 

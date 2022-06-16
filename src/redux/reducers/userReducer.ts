@@ -23,6 +23,7 @@ const postSignUp = (state: UserState, action: UserAction) => {
       return { loading: false, error: action.payload, data: state.data };
   }
 };
+
 const postSignIn = (state: UserState, action: UserAction) => {
   switch (action.status) {
     case AsyncStatus.PENDING:
@@ -33,6 +34,7 @@ const postSignIn = (state: UserState, action: UserAction) => {
       return { loading: false, error: action.payload, data: state.data };
   }
 };
+
 const patchNewPassword = (state: UserState, action: UserAction) => {
   switch (action.status) {
     case AsyncStatus.PENDING:
@@ -43,6 +45,7 @@ const patchNewPassword = (state: UserState, action: UserAction) => {
       return { loading: false, error: action.payload, data: state.data };
   }
 };
+
 const deleteUser = (state: UserState, action: UserAction) => {
   switch (action.status) {
     case AsyncStatus.PENDING:
@@ -53,6 +56,7 @@ const deleteUser = (state: UserState, action: UserAction) => {
       return { loading: false, error: action.payload, data: state.data };
   }
 };
+
 const autoSignIn = (state: UserState, action: UserAction) => {
   switch (action.status) {
     case AsyncStatus.PENDING:
