@@ -11,7 +11,7 @@ import Divider from "@components/Divider";
 
 import styles from "./ProductDetailPage.module";
 
-function ProductDetail() {
+function ProductDetailPage() {
   const dispatch = useDispatch();
   const { id: productId } = useParams();
   const { isLoading, isError, isSuccess, error, productDetail } = useSelector(
@@ -54,4 +54,4 @@ function ProductDetail() {
   );
 }
 
-export default ProductDetail;
+export default ProductDetailPage;

@@ -11,7 +11,7 @@ import Button from "@components/Button";
 import styles from "./SignUpPage.module";
 import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
 
-function Signup({ className }) {
+function SignUpPage({ className }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { onSubmit, register, formData, errors } = useForm();
@@ -145,4 +145,4 @@ function Signup({ className }) {
   );
 }
 
-export default Signup;
+export default SignUpPage;
