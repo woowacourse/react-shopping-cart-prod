@@ -15,10 +15,11 @@ const Loading = () => {
 export default Loading;
 
 const StyledLoader = styled.div`
-  z-index: 1;
   position: absolute;
-  top: 48%;
-  left: 28%;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  transform: translateY(-50%);
 
   @-webkit-keyframes sk-bounce {
     0%,
@@ -48,7 +49,6 @@ const Spinner = styled.div`
   height: 14rem;
 
   position: relative;
-  margin: 10rem auto;
 `;
 
 const Debounce1 = styled.div`
