@@ -67,8 +67,8 @@ export const editPassword =
 
       dispatch(userAction.patchNewPassword.success());
     } catch (error) {
-      dispatch(userAction.patchNewPassword.failure(error.response.data.errorMessage));
-      alert(error.response.data.errorMessage);
+      dispatch(userAction.patchNewPassword.failure(error));
+      throw new Error(error);
     }
   };
 
@@ -87,11 +87,11 @@ export const resign = (password: string) => async (dispatch: Dispatch<UserAction
       data: password,
     });
 
+    localStorage.clear();
     dispatch(userAction.deleteUser.success());
-    localStorage.removeItem('token');
   } catch (error) {
-    dispatch(userAction.deleteUser.failure(error.response.data.errorMessage));
-    alert(error.response.data.errorMessage);
+    dispatch(userAction.deleteUser.failure(error));
+    throw new Error(error);
   }
 };
 

@@ -4,40 +4,40 @@ import theme from 'styles/theme';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
-import { FormEvent, useRef, useState, ChangeEvent, useEffect } from 'react';
+import { FormEvent, useRef, useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { resign } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
 import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
-import { isEmptyObject } from 'utils';
+import { useDispatch } from 'react-redux';
+import { updateSnackBar } from 'redux/actions/snackBar';
 
 const ResignPage = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch<UserAction>();
-  const { loading, data: userData } = useAppSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+  const thunkDispatch = useAppDispatch<UserAction>();
+  const { data: userData } = useAppSelector(state => state.userReducer);
   const [confirmMessageValid, setConfirmMessageValid] = useState(false);
   const confirmMessageRef = useRef<HTMLInputElement | null>(null);
   const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
 
-  useEffect(() => {
-    if (isEmptyObject(userData) && !loading) {
-      navigate(PATH.default);
-    }
-  }, [loading]);
+  const handleMessageInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    setConfirmMessageValid(value === '응');
+  };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const inputInfo = currentPasswordRef.current.value;
 
     if (passwordValid.current && confirmMessageValid) {
-      dispatch(resign(inputInfo));
+      try {
+        await thunkDispatch(resign(inputInfo));
+        navigate(PATH.default);
+      } catch (error) {
+        dispatch(updateSnackBar('회원 탈퇴에 실패했습니다.'));
+      }
     }
-  };
-
-  const handleMessageInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setConfirmMessageValid(value === '응');
   };
 
   return (

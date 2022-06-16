@@ -25,7 +25,7 @@ const SignUpPage = () => {
     handleCurrentPasswordConfirmInput,
   } = usePasswordInput();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const inputInfo = {
@@ -39,7 +39,7 @@ const SignUpPage = () => {
       [passwordValid.current, passwordValid.confirm].every(valid => valid)
     ) {
       try {
-        thunkDispatch(signUp(inputInfo));
+        await thunkDispatch(signUp(inputInfo));
         navigate(PATH.signIn);
       } catch (error) {
         dispatch(updateSnackBar('회원가입에 실패했습니다.'));

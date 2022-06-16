@@ -7,14 +7,16 @@ import { UserAction } from 'redux/actions/user';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
-import useUpdateEffect from 'hooks/useUpdateEffect';
 import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
+import { useDispatch } from 'react-redux';
+import { updateSnackBar } from 'redux/actions/snackBar';
 
 const EditPasswordPage = () => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch<UserAction>();
-  const { loading, error, data } = useAppSelector(state => state.userReducer);
+  const dispatch = useDispatch();
+  const thunkDispatch = useAppDispatch<UserAction>();
+  const { data } = useAppSelector(state => state.userReducer);
   const {
     prevPasswordRef,
     currentPasswordRef,
@@ -24,13 +26,7 @@ const EditPasswordPage = () => {
     handleCurrentPasswordConfirmInput,
   } = usePasswordInput();
 
-  useUpdateEffect(() => {
-    if (!error && !loading) {
-      navigate(PATH.default);
-    }
-  }, [loading]);
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const editPasswordInfo = {
@@ -39,7 +35,12 @@ const EditPasswordPage = () => {
     };
 
     if (Object.values(passwordValid).every(valid => valid)) {
-      dispatch(editPassword(editPasswordInfo));
+      try {
+        await thunkDispatch(editPassword(editPasswordInfo));
+        navigate(PATH.default);
+      } catch (error) {
+        dispatch(updateSnackBar('비밀번호 변경에 실패했습니다.'));
+      }
     }
   };
 
