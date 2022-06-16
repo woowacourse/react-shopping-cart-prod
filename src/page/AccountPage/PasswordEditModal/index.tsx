@@ -1,51 +1,23 @@
-import ModalOverlay from 'components/@shared/Modal';
-import Input from 'components/Input';
-import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-import Title from 'components/Title';
-import AuthButton from 'components/AuthButton';
 import { useState } from 'react';
-import Container from 'components/@shared/Container';
+import { Modal, Input, Title, AuthButton, Container } from 'components';
+import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import { validatePassword } from 'utils/validator';
-import { getCookie } from 'utils/cookie';
-import axios from 'axios';
-import useSnackbar from 'hooks/useSnackbar';
-import { MESSAGE } from 'utils/constants';
+import usePasswordEditAPI from './usePasswordEditAPI';
 
 const PasswordEditModal = ({ handleModal }) => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
-  const [renderSnackbar] = useSnackbar();
 
-  const editPassword = async () => {
-    try {
-      if (!isCorrectPassword) return;
-
-      const accessToken = getCookie('accessToken');
-
-      await axios.patch(
-        '/customers',
-        {
-          password: currentPassword,
-          newPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-
-      renderSnackbar(MESSAGE.UPDATE_PASSWORD_SUCCESS, 'SUCCESS');
-      handleModal();
-    } catch (error) {
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');
-    }
-  };
+  const { editPassword } = usePasswordEditAPI(
+    handleModal,
+    currentPassword,
+    newPassword,
+    isCorrectPassword,
+  );
 
   return (
-    <ModalOverlay onCloseModal={handleModal}>
+    <Modal onCloseModal={handleModal}>
       <Container width="505px" height="400px">
         <div>
           <Title mainTitle="비밀번호 변경" />
@@ -55,6 +27,7 @@ const PasswordEditModal = ({ handleModal }) => {
             label="Current Password"
             inputValue={currentPassword}
             setInputValue={setCurrentPassword}
+            autoFocus={true}
           />
           <Input
             type="password"
@@ -73,7 +46,7 @@ const PasswordEditModal = ({ handleModal }) => {
           />
         </div>
       </Container>
-    </ModalOverlay>
+    </Modal>
   );
 };
 

@@ -1,11 +1,11 @@
 import { BrowserRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles, theme } from 'components';
 import store from 'store/store';
-import { doInitializeProductList } from 'actions/actionCreator';
 import { dummyProductList } from 'dummy_data';
+import { initializeProductList } from 'reducers/cartReducer';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -17,10 +17,11 @@ export const parameters = {
     expanded: true,
   },
 };
+const dispatch = useDispatch();
 
 export const decorators = [
   (Story, context) => {
-    store.dispatch(doInitializeProductList({ products: dummyProductList }));
+    dispatch(initializeProductList({ products: dummyProductList }));
 
     return (
       <>

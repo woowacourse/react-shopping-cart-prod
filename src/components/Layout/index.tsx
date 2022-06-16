@@ -15,7 +15,7 @@ const Layout = () => {
   const [isHeaderShow, setIsHeaderShow] = useState(true);
 
   useEffect(() => {
-    setIsHeaderShow(location.pathname !== '/login' && location.pathname !== '/signup');
+    setIsHeaderShow(location.pathname !== ROUTES.LOGIN && location.pathname !== ROUTES.SIGNUP);
   }, [location]);
 
   return (
@@ -28,11 +28,11 @@ const Layout = () => {
               isAuthenticated ? (
                 <Styled.RightSide>
                   <Styled.CartLink to={ROUTES.CART}>장바구니</Styled.CartLink>
-                  <Styled.OrderLink to={ROUTES.HOME}>주문목록</Styled.OrderLink>
+                  <Styled.OrderLink to={ROUTES.ORDER}>주문목록</Styled.OrderLink>
                   <UserMenu nickname={nickname} />
                 </Styled.RightSide>
               ) : (
-                <Styled.LoginLink to="/login">로그인</Styled.LoginLink>
+                <Styled.LoginLink to={ROUTES.LOGIN}>로그인</Styled.LoginLink>
               )
             }
           />

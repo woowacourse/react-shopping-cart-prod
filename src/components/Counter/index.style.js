@@ -27,6 +27,10 @@ const Styled = {
     justify-content: center;
     outline: 1px solid ${({ theme }) => theme.colors.gray};
     cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   `,
 };
 

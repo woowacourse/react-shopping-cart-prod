@@ -1,57 +1,20 @@
-import ModalOverlay from 'components/@shared/Modal';
-import Input from 'components/Input';
-import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
-import Title from 'components/Title';
-import AuthButton from 'components/AuthButton';
 import { useState, useEffect } from 'react';
-import Container from 'components/@shared/Container';
+import { Modal, Container, Input, Title, AuthButton } from 'components';
 import Styled from './index.style';
-import { deleteCookie, getCookie } from 'utils/cookie';
-import axios from 'axios';
-import useSnackbar from 'hooks/useSnackbar';
-import { MESSAGE } from 'utils/constants';
-import store from 'store/store';
-import { doInitializeCartList, doLogout } from 'actions/actionCreator';
-import { useNavigate } from 'react-router-dom';
+import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
+import useDeleteAccountAPI from 'page/AccountPage/AccountDeleteModal/useDeleteAccountAPI';
 
 const AccountDeleteModal = ({ handleModal }) => {
-  const navigate = useNavigate();
   const [password, setPassword] = useState('');
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
-  const [renderSnackbar] = useSnackbar();
+  const { deleteAccount } = useDeleteAccountAPI(handleModal, password, isCorrectPassword);
 
   useEffect(() => {
     setIsCorrectPassword(password.length >= 10);
-  }, [password]);
-
-  const deleteAccount = async () => {
-    try {
-      if (!isCorrectPassword) return;
-
-      const accessToken = getCookie('accessToken');
-
-      await axios.delete('/customers', {
-        data: {
-          password,
-        },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      deleteCookie('accessToken');
-      store.dispatch(doLogout());
-      store.dispatch(doInitializeCartList({ shoppingCart: [] }));
-      handleModal();
-      renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
-      navigate('/');
-    } catch (error) {
-      renderSnackbar(MESSAGE.DELETE_ACCOUNT_FAILURE, 'FAILED');
-    }
-  };
+  }, [password.length]);
 
   return (
-    <ModalOverlay onCloseModal={handleModal}>
+    <Modal onCloseModal={handleModal}>
       <Container width="505px" height="370px">
         <div>
           <Title mainTitle="회원탈퇴" />
@@ -65,6 +28,7 @@ const AccountDeleteModal = ({ handleModal }) => {
             label="Password"
             inputValue={password}
             setInputValue={setPassword}
+            autoFocus={true}
           />
           <AuthButton
             actionType="Delete your account"
@@ -74,7 +38,7 @@ const AccountDeleteModal = ({ handleModal }) => {
           />
         </div>
       </Container>
-    </ModalOverlay>
+    </Modal>
   );
 };
 

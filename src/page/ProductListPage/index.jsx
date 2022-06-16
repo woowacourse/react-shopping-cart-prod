@@ -1,37 +1,29 @@
 // @ts-nocheck
-import { useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
+import { useEffect } from 'react';
 
 import { ProductItem } from 'components';
+import Styled from './index.style';
 
-import store from 'store/store';
-import { doInitializeProductList } from 'actions/actionCreator';
-
-import Styled from 'page/ProductListPage/index.style';
-import { SERVER_URL } from 'utils/constants';
+import useGetProductsAPI from 'page/ProductListPage/useGetProductsAPI';
+import useGetCartAPI from 'hooks/useGetCartAPI';
 
 const ProductListPage = () => {
-  const { products } = useSelector(state => state.reducer);
-
-  const getProducts = useCallback(async () => {
-    if (products.length > 0) return;
-
-    const response = await axios.get(`${SERVER_URL}products`);
-
-    store.dispatch(doInitializeProductList({ products: response.data }));
-  }, [products]);
+  const { getProducts, products, isLoading: isProductsLoading } = useGetProductsAPI();
+  const { getCart, isLoading: isCartLoading } = useGetCartAPI();
 
   useEffect(() => {
     getProducts();
-  }, [getProducts]);
+    getCart();
+  }, [getCart, getProducts]);
 
   return (
     <Styled.ProductListPage>
-      {products.length > 0 ? (
+      {!isProductsLoading && !isCartLoading ? (
         <Styled.ProductList>
           {products.map(({ id, name, price, image }) => {
-            return id && <ProductItem key={id} id={id} name={name} price={price} image={image} />;
+            return (
+              id && <ProductItem key={id} productId={id} name={name} price={price} image={image} />
+            );
           })}
         </Styled.ProductList>
       ) : (

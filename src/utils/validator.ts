@@ -1,23 +1,63 @@
-export const validateEmail = (email: string) => {
+import { ERROR, MESSAGE } from './constants';
+import CustomError from './CustomError';
+
+type UserType = {
+  id: string;
+  email: string;
+  nickname: string;
+  password: string;
+};
+
+export const validateEmail = (email: string): void => {
   if (!email.includes('@') || !email.includes('.', email.indexOf('@'))) {
-    throw new Error('올바른 이메일 형식을 입력해주세요.');
+    throw new CustomError(2101, MESSAGE.INVALID_EMAIL_FORMAT);
   }
 
   if (email.length !== email.trim().length) {
-    throw new Error('공백없이 이메일을 적어주세요.');
+    throw new CustomError(2101, MESSAGE.INVALID_EMAIL_BLANK);
   }
 };
 
-export const validatePassword = (password: string) => {
+export const validatePassword = (password: string): void => {
   const passwordRule = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{10,}$/;
 
   if (!passwordRule.test(password)) {
-    throw new Error('비밀번호는 10자리 이상이며 영문, 숫자, 특수문자가 조합되어야 합니다.');
+    throw new CustomError(2103, MESSAGE.INVALID_PASSWORD_FORMAT, 400);
   }
 };
 
-export const validateNickname = (nickname: string) => {
+export const validateNickname = (nickname: string): void => {
   if (nickname.length < 2 || nickname.length > 10) {
-    throw new Error('닉네임은 2자리 이상 10자리 이하여야 합니다.');
+    throw new CustomError(2102, MESSAGE.INVALID_NICKNAME_FORMAT);
+  }
+};
+
+export const checkPasswordSame = (users: UserType[], userId: string, password: string): void => {
+  if (users.find(user => user.id === userId).password !== password) {
+    throw new CustomError(2201, ERROR[2201]);
+  }
+};
+
+export const checkDuplicatedEmail = (users: UserType[], email: string): void => {
+  if (users.some(user => user.email === email)) {
+    throw new CustomError(2001, ERROR[2001]);
+  }
+};
+
+export const validateToken = (users: UserType[], accessToken: { id: string }): void => {
+  if (!users.some(user => user.id === accessToken.id)) {
+    throw new CustomError(1003, ERROR[1003]);
+  }
+};
+
+export const checkUserPassword = (user: UserType, password: string): void => {
+  if (user.password !== password) {
+    throw new CustomError(2201, ERROR[2201]);
+  }
+};
+
+export const checkEmailExist = (users: UserType[], email: string): void => {
+  if (!users.find(user => user.email === email)) {
+    throw new CustomError(2201, ERROR[2201]);
   }
 };

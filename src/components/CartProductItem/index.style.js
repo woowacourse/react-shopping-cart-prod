@@ -3,9 +3,8 @@ import { ReactComponent as DeleteIcon } from 'assets/trash_can_icon.svg';
 
 const Styled = {
   Container: styled.div`
-    width: 460px;
+    width: 530px;
     height: 133px;
-    border-top: 1px solid ${({ theme }) => theme.colors.gray};
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray};
     display: flex;
     padding: 20px;

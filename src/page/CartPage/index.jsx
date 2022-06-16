@@ -1,70 +1,47 @@
 // @ts-nocheck
-import { useCallback, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import useGetCartAPI from 'hooks/useGetCartAPI';
+import useDeleteCheckedProductsAPI from 'page/CartPage/useDeleteProductsAPI';
+import useOrderAPI from 'page/CartPage/useOrdersAPI';
+import useTotalPrice from 'hooks/useTotalPrice';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
-
-import store from 'store/store';
-import {
-  doAddProductToOrder,
-  doInitializeOrder,
-  doSelectiveDeleteFromCart,
-} from 'actions/actionCreator';
 import empty from 'assets/empty.jpeg';
 import Styled from 'page/CartPage/index.style';
-import { useNavigate } from 'react-router-dom';
-import useSnackbar from 'hooks/useSnackbar';
-import { MESSAGE } from 'utils/constants';
+import { addProductToOrder, initializeOrder } from 'reducers/cartReducer';
 
 const CartPage = () => {
-  const [renderSnackbar] = useSnackbar();
-  const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
-  const { products, shoppingCart, order } = useSelector(state => state.reducer);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const { shoppingCart, order } = useSelector(state => state.cartReducer);
+  const productIdsInCart = shoppingCart.map(product => product.productId);
+  const productIdsToDelete = productIdsInCart.filter(id => order.includes(id));
 
-  const calculateTotalPrice = useCallback(() => {
-    let total = 0;
-
-    order.forEach(productId => {
-      const { price } = products.find(product => product.id === productId);
-      const { quantity } = shoppingCart.find(product => product.id === productId);
-
-      total += quantity * price;
-    });
-
-    return total;
-  }, [products, shoppingCart, order]);
+  const dispatch = useDispatch();
+  const { orderCart } = useOrderAPI();
+  const { deleteCheckedProducts } = useDeleteCheckedProductsAPI(productIdsToDelete);
+  const { totalPrice } = useTotalPrice();
+  const { getCart, isLoading: isCartLoading } = useGetCartAPI();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
-    }
-    setTotalPrice(calculateTotalPrice());
-  }, []);
+    getCart();
+  }, [getCart]);
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
-      store.dispatch(doInitializeOrder());
+      dispatch(initializeOrder());
       return;
     }
 
     shoppingCart.forEach(product => {
-      if (!order.some(productId => productId === product.id)) {
-        store.dispatch(doAddProductToOrder({ id: product.id }));
+      if (!order.some(id => id === product.productId)) {
+        dispatch(addProductToOrder({ id: product.productId }));
       }
     });
   };
 
-  const deleteItem = () => {
-    store.dispatch(doSelectiveDeleteFromCart());
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
-  };
-
   return (
     <Styled.Container>
-      {shoppingCart.length > 0 ? (
+      {!isCartLoading ? (
         <>
           <Styled.Title>장바구니</Styled.Title>
           <Styled.Division />
@@ -79,7 +56,7 @@ const CartPage = () => {
                   />
                   선택해제
                 </Styled.CheckBoxContainer>
-                <Styled.ProductDeleteButton onClick={deleteItem}>
+                <Styled.ProductDeleteButton onClick={deleteCheckedProducts}>
                   상품삭제
                 </Styled.ProductDeleteButton>
               </Styled.SelectController>
@@ -88,9 +65,18 @@ const CartPage = () => {
                 든든배송 상품 ({shoppingCart.length}개)
               </Styled.ProductListTitle>
               <Styled.ProductList>
-                {shoppingCart.map(({ id, quantity }) => (
-                  <CartProductItem key={id} id={id} quantity={quantity} />
-                ))}
+                {shoppingCart.map(({ productId, name, price, image, quantity }) => {
+                  return (
+                    <CartProductItem
+                      key={productId}
+                      productId={productId}
+                      name={name}
+                      price={price}
+                      image={image}
+                      quantity={quantity}
+                    />
+                  );
+                })}
               </Styled.ProductList>
             </Styled.LeftSide>
 
@@ -98,7 +84,8 @@ const CartPage = () => {
               <TotalPrice
                 title="결제예상금액"
                 price={totalPrice}
-                action={`주문하기(${order.length}개)`}
+                actionType={`주문하기(${order.length}개)`}
+                action={() => orderCart(order)}
               />
             </Styled.RightSide>
           </Styled.OrderSheet>

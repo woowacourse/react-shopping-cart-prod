@@ -5,6 +5,8 @@ const Styled = {
   Container: styled.div`
     width: 348px;
     height: 230px;
+    position: sticky;
+    top: 0;
     border: 1px solid ${({ theme }) => theme.colors.gray};
   `,
 

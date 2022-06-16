@@ -1,52 +1,55 @@
 // @ts-nocheck
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import useCart from 'hooks/useCart';
+import useGetProductAPI from 'page/ProductDetailPage/useGetProductApi';
+import usePutCartAPI from 'hooks/usePutCartAPI';
 
 import { Image } from 'components';
-
-import store from 'store/store';
-import { doPutProductToCart } from 'actions/actionCreator';
-import autoComma from 'utils/autoComma';
-import { LINK, MESSAGE } from 'utils/constants';
 import Styled from 'page/ProductDetailPage/index.style';
-import useProduct from 'hooks/useProduct';
-import useCart from 'hooks/useCart';
 
-import useSnackbar from 'hooks/useSnackbar';
-import { useSelector } from 'react-redux';
+import autoComma from 'utils/autoComma';
+import { ROUTES } from 'utils/constants';
 
 const ProductDetailPage = () => {
-  const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
-
   const params = useParams();
   const id = Number(params.id);
-  const [{ image, name, price }] = useProduct(id);
-  const [isInCart, product] = useCart(id);
 
-  const putCart = () => {
-    if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
-      return;
+  const [isInCart, productInCart] = useCart(id);
+  const { getProduct, product, isProductLoading } = useGetProductAPI();
+  const { increaseQuantity, putCart } = usePutCartAPI();
+
+  useEffect(() => {
+    getProduct(id);
+  }, [getProduct, id]);
+
+  const handlePutCart = () => {
+    if (isInCart) {
+      increaseQuantity(id, productInCart.quantity);
+    } else {
+      putCart(id, 1);
     }
 
-    store.dispatch(doPutProductToCart({ id: id, quantity: isInCart ? product.quantity + 1 : 1 }));
-    navigate(LINK.TO_CART);
+    navigate(ROUTES.CART);
   };
 
   return (
     <Styled.Container>
-      <Styled.ProductContainer>
-        <Image src={image} alt={name} size="350px" />
-        <Styled.ProductName>{name}</Styled.ProductName>
-        <Styled.Division />
-        <Styled.PriceContainer>
-          <Styled.PriceTag>금액</Styled.PriceTag>
-          <Styled.ProductPrice>{autoComma(price)}원</Styled.ProductPrice>
-        </Styled.PriceContainer>
-        <Styled.PutCartButton onClick={putCart}>장바구니</Styled.PutCartButton>
-      </Styled.ProductContainer>
+      {isProductLoading ? (
+        '로딩중'
+      ) : (
+        <Styled.ProductContainer>
+          <Image src={product.image} alt={product.name} size="350px" />
+          <Styled.ProductName>{product.name}</Styled.ProductName>
+          <Styled.Division />
+          <Styled.PriceContainer>
+            <Styled.PriceTag>금액</Styled.PriceTag>
+            <Styled.ProductPrice>{autoComma(product.price)}원</Styled.ProductPrice>
+          </Styled.PriceContainer>
+          <Styled.PutCartButton onClick={handlePutCart}>장바구니</Styled.PutCartButton>
+        </Styled.ProductContainer>
+      )}
     </Styled.Container>
   );
 };

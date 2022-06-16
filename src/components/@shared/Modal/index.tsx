@@ -1,13 +1,14 @@
-import CloseButton from 'components/CloseButton';
 import { PropsWithChildren } from 'react';
 import ReactDOM from 'react-dom';
+
+import { CloseButton } from 'components';
 import Styled from './index.style';
 
 interface Props {
   onCloseModal(): void;
 }
 
-const ModalOverlay = ({ children, onCloseModal }: PropsWithChildren<Props>) => {
+const Modal = ({ children, onCloseModal }: PropsWithChildren<Props>) => {
   return (
     <>
       {ReactDOM.createPortal(
@@ -27,4 +28,4 @@ const ModalOverlay = ({ children, onCloseModal }: PropsWithChildren<Props>) => {
   );
 };
 
-export default ModalOverlay;
+export default Modal;

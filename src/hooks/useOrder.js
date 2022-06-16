@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import store from 'store/store';
-import { doDeleteProductFromOrder, doAddProductToOrder } from 'actions/actionCreator';
+import { useSelector, useDispatch } from 'react-redux';
+import { addProductToOrder, deleteProductFromOrder } from 'reducers/cartReducer';
 
 const useOrder = id => {
-  const { order } = useSelector(state => state.reducer);
+  const dispatch = useDispatch();
+  const { order } = useSelector(state => state.cartReducer);
   const [isInOrder, setIsInOrder] = useState(order.some(productId => productId === id));
 
   useEffect(() => {
@@ -13,9 +13,9 @@ const useOrder = id => {
 
   const updateOrder = () => {
     if (isInOrder) {
-      store.dispatch(doDeleteProductFromOrder({ id }));
+      dispatch(deleteProductFromOrder({ id }));
     } else {
-      store.dispatch(doAddProductToOrder({ id }));
+      dispatch(addProductToOrder({ id }));
     }
   };
 

@@ -1,14 +1,15 @@
-import { doInitializeCartList, doLogout } from 'actions/actionCreator';
-import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import store from 'store/store';
-import { deleteCookie, getCookie } from 'utils/cookie';
-import Styled from './index.style';
+import { useDispatch } from 'react-redux';
 import useSnackbar from 'hooks/useSnackbar';
-import { MESSAGE } from 'utils/constants';
 
+import { deleteCookie } from 'utils/cookie';
+import Styled from './index.style';
+import { MESSAGE, ROUTES } from 'utils/constants';
+import { logoutComplete } from 'reducers/authReducer';
+import { initializeCartList } from 'reducers/cartReducer';
 const UserMenu = ({ nickname }) => {
+  const dispatch = useDispatch();
   const [renderSnackbar] = useSnackbar();
 
   const navigate = useNavigate();
@@ -20,23 +21,14 @@ const UserMenu = ({ nickname }) => {
 
   const logout = async () => {
     try {
-      const accessToken = getCookie('accessToken');
-
-      await axios.post(
-        '/auth/logout',
-        {},
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        },
-      );
-
-      deleteCookie('accessToken');
       setIsOpen(false);
-      store.dispatch(doLogout());
-      store.dispatch(doInitializeCartList({ shoppingCart: [] }));
+      dispatch(logoutComplete());
+      dispatch(initializeCartList({ shoppingCart: [] }));
       renderSnackbar(MESSAGE.LOGOUT_SUCCESS, 'SUCCESS');
-      navigate('/');
+      deleteCookie('accessToken');
+      navigate(ROUTES.HOME);
     } catch (error) {
+      console.log(error);
       renderSnackbar(MESSAGE.LOGIN_FAILURE, 'FAILED');
     }
   };
@@ -50,7 +42,7 @@ const UserMenu = ({ nickname }) => {
           <Styled.Line />
           <Styled.MenuItem
             onClick={() => {
-              navigate('/account');
+              navigate(ROUTES.ACCOUNT);
               setIsOpen(false);
             }}
           >

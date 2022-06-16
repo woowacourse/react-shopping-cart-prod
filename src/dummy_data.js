@@ -72,5 +72,3 @@ export const dummyProductList = [
     price: 90000,
   },
 ];
-
-export const dummyshoppingCart = [];

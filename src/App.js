@@ -1,62 +1,100 @@
 // @ts-nocheck
+import { useCallback, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
-import { ProductListPage, ProductDetailPage, CartPage } from 'page';
-import { GlobalStyles, theme } from 'components';
+import {
+  ProductListPage,
+  ProductDetailPage,
+  CartPage,
+  OrderPage,
+  LoginPage,
+  SignupPage,
+  AccountPage,
+} from 'page';
+import { GlobalStyles, theme, Layout, Snackbar } from 'components';
 
-import { BASE_URL, MESSAGE, ROUTES } from 'utils/constants';
-import LoginPage from 'page/LoginPage';
-import SignupPage from 'page/SignupPage';
-import AccountPage from 'page/AccountPage';
-import { useEffect } from 'react';
-import axios from 'axios';
-import { deleteCookie, getCookie } from 'utils/cookie';
-import store from 'store/store';
-import { doLogin, doLogout } from 'actions/actionCreator';
-import Layout from 'components/Layout';
-import { useSelector } from 'react-redux';
-import Snackbar from 'components/Snackbar';
-import useSnackbar from 'hooks/useSnackbar';
+import { ROUTES } from 'utils/constants';
+import apiClient from 'apis/apiClient';
+import { loginComplete, logoutComplete } from 'reducers/authReducer';
+import ServerSelectPage from 'page/ServerSelectPage';
+import PrivateRoute from 'components/PrivateRoute';
+import PublicRoute from 'components/PublicRoute';
 
 function App() {
+  const dispatch = useDispatch();
+
   const { isVisible, message, status } = useSelector(state => state.snackbarReducer);
-  const [renderSnackbar] = useSnackbar();
+  const { isLoading, isAuthenticated } = useSelector(state => state.authReducer);
 
-  const getAccount = async () => {
+  const getAccount = useCallback(async () => {
     try {
-      const accessToken = getCookie('accessToken');
-      if (!accessToken) return;
-
-      const response = await axios.get('/customers', {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      store.dispatch(doLogin({ nickname: response.data.nickname }));
+      const response = await apiClient.get('/customers');
+      dispatch(loginComplete({ nickname: response.data.nickname }));
     } catch (error) {
-      deleteCookie('accessToken');
-      store.dispatch(doLogout());
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
+      dispatch(logoutComplete());
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     getAccount();
-  }, []);
+  }, [getAccount]);
+
+  if (isLoading) {
+    return;
+  }
 
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter basename={BASE_URL}>
+      <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
             <Route path={ROUTES.HOME} element={<ProductListPage />} />
-            <Route path={ROUTES.DETAILS} element={<ProductDetailPage />} />
-            <Route path={ROUTES.CART} element={<CartPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/account" element={<AccountPage />} />
+            <Route path={ROUTES.DETAILS_ID} element={<ProductDetailPage />} />
+            <Route
+              path={ROUTES.CART}
+              element={
+                <PrivateRoute isAuthenticated={isAuthenticated}>
+                  <CartPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={ROUTES.ORDER}
+              element={
+                <PrivateRoute isAuthenticated={isAuthenticated}>
+                  <OrderPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path={ROUTES.ACCOUNT}
+              element={
+                <PrivateRoute isAuthenticated={isAuthenticated}>
+                  <AccountPage />
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path={ROUTES.LOGIN}
+              element={
+                <PublicRoute isAuthenticated={isAuthenticated}>
+                  <LoginPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path={ROUTES.SIGNUP}
+              element={
+                <PublicRoute isAuthenticated={isAuthenticated}>
+                  <SignupPage />
+                </PublicRoute>
+              }
+            />
           </Route>
+          <Route path={ROUTES.SERVER} element={<ServerSelectPage />} />
         </Routes>
         <GlobalStyles />
       </BrowserRouter>

@@ -5,18 +5,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
+import store from 'store';
 import { ProductListPage } from 'page';
 import { theme } from 'components';
-import store from 'store/store';
+
 import { dummyProductList } from 'dummy_data';
-import { BASE_URL } from 'utils/constants';
 
 const render = ui => {
   function Wrapper({ children }) {
     return (
       <Provider store={store}>
         <ThemeProvider theme={theme}>
-          <BrowserRouter basename={BASE_URL}>{children}</BrowserRouter>
+          <BrowserRouter>{children}</BrowserRouter>
         </ThemeProvider>
       </Provider>
     );

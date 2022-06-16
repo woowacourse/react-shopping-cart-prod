@@ -1,84 +1,28 @@
 // @ts-nocheck
-import Container from 'components/@shared/Container';
-import Input from 'components/Input';
-import Title from 'components/Title';
-import Styled from './index.style';
+import { useState, useEffect } from 'react';
+import useEditNicknameAPI from './useEditNicknameAPI';
+import useGetProfileAPI from './useGetProfileAPI';
+
+import { PasswordEditModal, AccountDeleteModal } from 'page';
+import { Container, Input, Title, AuthButton } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
-import AuthButton from 'components/AuthButton';
-
-import { useState, useEffect } from 'react';
+import Styled from './index.style';
 import { validateNickname } from 'utils/validator';
-import PasswordEditModal from './PasswordEditModal';
-import AccountDeleteModal from './AccountDeleteModal';
-import axios from 'axios';
-import { getCookie } from 'utils/cookie';
-import store from 'store/store';
-import { doLogin } from 'actions/actionCreator';
-import { useNavigate } from 'react-router-dom';
-import useSnackbar from 'hooks/useSnackbar';
-import { MESSAGE } from 'utils/constants';
-import { useSelector } from 'react-redux';
 
 const AccountPage = () => {
-  const [renderSnackbar] = useSnackbar();
-  const navigate = useNavigate();
-  const { isAuthenticated } = useSelector(state => state.authReducer);
-
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
-
   const [isNicknameCorrect, setIsNicknameCorrect] = useState(false);
-
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isAccountDeleteModalOpen, setIsAccountDeleteModalOpen] = useState(false);
 
+  const { getProfile } = useGetProfileAPI(setEmail, setNickname);
+  const { editNickname } = useEditNicknameAPI(isNicknameCorrect, nickname);
+
   useEffect(() => {
     getProfile();
-  }, []);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
-    }
-  }, []);
-
-  const getProfile = async () => {
-    const accessToken = getCookie('accessToken');
-
-    const response = await axios.get('/customers', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    setEmail(response.data.email);
-  };
-
-  const updateProfile = async () => {
-    try {
-      if (!isNicknameCorrect) return;
-
-      const accessToken = getCookie('accessToken');
-
-      const response = await axios.patch(
-        '/customers',
-        {
-          nickname,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      store.dispatch(doLogin({ nickname: response.data.nickname }));
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
-    } catch (error) {
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');
-    }
-  };
+  }, [getProfile]);
 
   return (
     <Styled.Container>
@@ -92,6 +36,7 @@ const AccountPage = () => {
             inputValue={email}
             setInputValue={setEmail}
             isDisabled={true}
+            autoFocus={true}
           />
           <Input
             icon={<NicknameIcon />}
@@ -104,7 +49,7 @@ const AccountPage = () => {
           />
           <AuthButton
             actionType="Update Profile"
-            action={updateProfile}
+            action={editNickname}
             isDisabled={!isNicknameCorrect}
           />
 
@@ -135,7 +80,5 @@ const AccountPage = () => {
     </Styled.Container>
   );
 };
-
-// AccountDeleteModal
 
 export default AccountPage;

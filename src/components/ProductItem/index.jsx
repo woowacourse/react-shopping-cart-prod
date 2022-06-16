@@ -1,32 +1,35 @@
 // @ts-nocheck
 
 import { useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import useClose from 'hooks/useClose';
 import useCart from 'hooks/useCart';
+import usePutCartAPI from 'hooks/usePutCartAPI';
+import useSnackbar from 'hooks/useSnackbar';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
-import store from 'store/store';
-import { doDeleteProductFromCart, doPutProductToCart } from 'actions/actionCreator';
+import { deleteProductFromCart } from 'reducers/cartReducer';
 
 import autoComma from 'utils/autoComma';
 import Styled from 'components/ProductItem/index.style';
-import { LINK, MESSAGE } from 'utils/constants';
-import useSnackbar from 'hooks/useSnackbar';
-import { useSelector } from 'react-redux';
+import { MESSAGE, ROUTES } from 'utils/constants';
 
-const ProductItem = ({ id, name, price, image }) => {
+const ProductItem = ({ productId, name, price, image }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [renderSnackbar] = useSnackbar();
   const { isAuthenticated } = useSelector(state => state.authReducer);
 
-  const [isInCart, product] = useCart(id);
-  const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);
+  const [isInCart, productInCart] = useCart(productId);
+  const [quantity, setQuantity] = useState(isInCart ? productInCart.quantity : 1);
 
   const [isControllerOpen, setIsControllerOpen] = useState(false);
   const [clearTimer, setAutoCloseTimer, extendTimer] = useClose();
+
+  const { putCart } = usePutCartAPI();
 
   const quantityRef = useRef(quantity);
   quantityRef.current = quantity;
@@ -36,17 +39,17 @@ const ProductItem = ({ id, name, price, image }) => {
     clearTimer();
 
     if (quantityRef.current > 0) {
-      store.dispatch(doPutProductToCart({ id, quantity: quantityRef.current }));
+      putCart(productId, quantityRef.current);
       renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
       return;
     }
 
-    store.dispatch(doDeleteProductFromCart({ id }));
+    dispatch(deleteProductFromCart({ productId }));
     renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
   };
 
   const handleItemClick = () => {
-    navigate(`${LINK.TO_DETAILS}/${id}`);
+    navigate(`${ROUTES.DETAILS}/${productId}`);
   };
 
   const handleCartClick = e => {
@@ -54,7 +57,7 @@ const ProductItem = ({ id, name, price, image }) => {
 
     if (!isAuthenticated) {
       renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
+      navigate(ROUTES.LOGIN);
       return;
     }
 
@@ -102,7 +105,7 @@ ProductItem.propTypes = {
   /**
    * 해당 상품의 id
    */
-  id: PropTypes.number.isRequired,
+  productId: PropTypes.number.isRequired,
   /**
    * 상품의 이름
    */
