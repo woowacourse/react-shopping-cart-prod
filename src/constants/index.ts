@@ -35,6 +35,7 @@ const INFO_MESSAGES = {
   ASK_DELETE_SELECTED_PRODUCT: '선택된 상품을 모두 삭제하시겠습니까?',
   ASK_DELETE_PRODUCT: '상품을 삭제하시겠습니까?',
   VALID_USER_NAME: '사용 가능한 아이디입니다.',
+  UPDATED_USER_INFO: '회원 정보가 정상적으로 수정되었습니다. ☺️',
   ASK_LEAVE: '정말 탈퇴하시겠습니까? 🥲 회원 정보는 회원 탈퇴 즉시 파기되며 복원이 불가합니다.',
 };
 

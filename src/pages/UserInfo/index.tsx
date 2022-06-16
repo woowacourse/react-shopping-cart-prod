@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
+import { show } from '@/redux/modules/snackBar';
 import { logoutUser } from '@/redux/modules/user';
 
 import useInput from '@/hooks/useInput';
@@ -64,6 +65,7 @@ function UserInfo() {
 
     if (!result) return;
 
+    dispatch(show(INFO_MESSAGES.UPDATED_USER_INFO));
     navigate(routes.home);
   };
 
