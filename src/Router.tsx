@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useRoutes } from 'react-router-dom';
 import ItemDetail from 'pages/ItemDetailPage';
 import NotFound from 'pages/NotFoundPage';
 import ItemListPage from 'pages/ItemListPage';
@@ -7,6 +7,7 @@ import SignInPage from 'pages/SignInPage';
 import SignUpPage from 'pages/SignUpPage';
 import EditPasswordPage from 'pages/EditPasswordPage';
 import ResignPage from 'pages/ResignPage';
+import PrivateLayout from 'components/PrivateLayout';
 
 export const PATH = {
   notFound: '*',
@@ -21,19 +22,22 @@ export const PATH = {
 };
 
 const Router = () => {
-  return (
-    <Routes>
-      <Route path='/' element={<Navigate replace to='/main/1' />} />
-      <Route path={PATH.main} element={<ItemListPage />} />
-      <Route path={PATH.itemDetail} element={<ItemDetail />} />
-      <Route path={PATH.cart} element={<CartPage />} />
-      <Route path={PATH.signIn} element={<SignInPage />} />
-      <Route path={PATH.signUp} element={<SignUpPage />} />
-      <Route path={PATH.editPassword} element={<EditPasswordPage />} />
-      <Route path={PATH.resign} element={<ResignPage />} />
-      <Route path={PATH.notFound} element={<NotFound />} />
-    </Routes>
-  );
+  return useRoutes([
+    { path: '/', element: <Navigate replace to='/main/1' /> },
+    { path: PATH.main, element: <ItemListPage /> },
+    { path: PATH.itemDetail, element: <ItemDetail /> },
+    { path: PATH.signIn, element: <SignInPage /> },
+    { path: PATH.signUp, element: <SignUpPage /> },
+    {
+      element: <PrivateLayout />,
+      children: [
+        { path: PATH.cart, element: <CartPage /> },
+        { path: PATH.editPassword, element: <EditPasswordPage /> },
+        { path: PATH.resign, element: <ResignPage /> },
+      ],
+    },
+    { path: PATH.notFound, element: <NotFound /> },
+  ]);
 };
 
 export default Router;
