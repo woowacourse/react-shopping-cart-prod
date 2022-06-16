@@ -51,7 +51,7 @@ const EditPasswordPage = () => {
         <SignInput placeholder={data.email} type={'email'} disable={true}>
           이메일
         </SignInput>
-        <SignInput placeholder={data.name} type={'text'} disable={true}>
+        <SignInput placeholder={data.username} type={'text'} disable={true}>
           이름
         </SignInput>
         <SignInput
