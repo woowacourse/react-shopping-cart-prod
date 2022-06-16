@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/airman5573/react-shopping-cart.git"
+    "url": "git+https://github.com/soyi47/react-shopping-cart.git"
   },
   "keywords": [
     "woowa"
@@ -24,9 +24,9 @@
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/airman5573/react-shopping-cart/issues"
+    "url": "https://github.com/soyi47/react-shopping-cart/issues"
   },
-  "homepage": "https://github.com/airman5573/react-shopping-cart#readme",
+  "homepage": "https://github.com/soyi47/react-shopping-cart#readme",
   "devDependencies": {
     "@babel/cli": "^7.17.10",
     "@babel/core": "^7.17.10",
