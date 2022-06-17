@@ -15,7 +15,7 @@ export const getProductDetail =
 
     try {
       const { productId } = data;
-      const response = await Fetcher.get(`products/${productId}`);
+      const response = await Fetcher.get({ endpoint: `products/${productId}` });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
         const message = errorMessages[errorCode] ?? originalMessage;

@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import ApiError from "@redux/utils/ApiError";
+import LocalStorage from "@storage/localStorage";
 import Fetcher from "../../../utils/fetcher";
 import createAction from "../../utils/createAction";
 import ACTION_TYPE from "./cartActions";
@@ -34,7 +35,8 @@ export const getCart =
     dispatch(createAction(ACTION_TYPE.GET_CART_PENDING));
 
     try {
-      const response = await Fetcher.get("mycarts");
+      const accessToken = LocalStorage.getItem("accessToken");
+      const response = await Fetcher.get({ endpoint: "mycarts", accessToken });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
         const message = errorMessages[errorCode] ?? originalMessage;
@@ -62,7 +64,12 @@ export const addProductToCart =
 
     try {
       const { productId, quantity } = data;
-      const response = await Fetcher.post("mycarts", { productId, quantity });
+      const accessToken = LocalStorage.getItem("accessToken");
+      const response = await Fetcher.post({
+        endpoint: "mycarts",
+        body: { productId, quantity },
+        accessToken,
+      });
 
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
@@ -93,7 +100,12 @@ export const updateCartItemQuantity =
 
     try {
       const { cartItemId, quantity } = data;
-      const response = await Fetcher.patch("mycarts", { cartItemId, quantity });
+      const accessToken = LocalStorage.getItem("accessToken");
+      const response = await Fetcher.patch({
+        endpoint: "mycarts",
+        body: { cartItemId, quantity },
+        accessToken,
+      });
 
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
@@ -126,7 +138,12 @@ export const deleteCartItems =
 
     try {
       const { cartItemIds } = data;
-      const response = await Fetcher.delete("mycarts", { cartItemIds });
+      const accessToken = LocalStorage.getItem("accessToken");
+      const response = await Fetcher.delete({
+        endpoint: "mycarts",
+        body: { cartItemIds },
+        accessToken,
+      });
 
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();

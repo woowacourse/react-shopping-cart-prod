@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 import ApiError from "@redux/utils/ApiError";
+import LocalStorage from "@storage/localStorage";
 import Fetcher from "../../../utils/fetcher";
 import createAction from "../../utils/createAction";
 import ACTION_TYPE from "./userActions";
@@ -44,10 +45,13 @@ export const signup =
 
     try {
       const { email, password, username } = data;
-      const response = await Fetcher.post("customers", {
-        email,
-        password,
-        username,
+      const response = await Fetcher.post({
+        endpoint: "customers",
+        body: {
+          email,
+          password,
+          username,
+        },
       });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
@@ -72,7 +76,10 @@ export const login =
 
     try {
       const { email, password } = data;
-      const response = await Fetcher.post("auth/login", { email, password });
+      const response = await Fetcher.post({
+        endpoint: "auth/login",
+        body: { email, password },
+      });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
         const message = errorMessages[errorCode] ?? originalMessage;
@@ -100,7 +107,12 @@ export const secession =
 
     try {
       const { password } = data;
-      const response = await Fetcher.delete("customers/me", { password });
+      const accessToken = LocalStorage.getItem("accessToken");
+      const response = await Fetcher.delete({
+        endpoint: "customers/me",
+        body: { password },
+        accessToken,
+      });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
         const message = errorMessages[errorCode] ?? originalMessage;
@@ -126,7 +138,11 @@ export const getUser =
     dispatch(createAction(ACTION_TYPE.GET_USER_PENDING));
 
     try {
-      const response = await Fetcher.get("customers/me");
+      const accessToken = LocalStorage.getItem("accessToken");
+      const response = await Fetcher.get({
+        endpoint: "customers/me",
+        accessToken,
+      });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
         const message = errorMessages[errorCode] ?? originalMessage;
@@ -159,9 +175,14 @@ export const updateUserPassword =
 
     try {
       const { oldPassword, newPassword } = data;
-      const response = await Fetcher.patch("customers/me?target=password", {
-        oldPassword,
-        newPassword,
+      const accessToken = LocalStorage.getItem("accessToken");
+      const response = await Fetcher.patch({
+        endpoint: "customers/me?target=password",
+        body: {
+          oldPassword,
+          newPassword,
+        },
+        accessToken,
       });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
@@ -189,8 +210,13 @@ export const updateUserGeneralInfo =
 
     try {
       const { username } = data;
-      const response = await Fetcher.patch("customers/me?target=generalInfo", {
-        username,
+      const accessToken = LocalStorage.getItem("accessToken");
+      const response = await Fetcher.patch({
+        endpoint: "customers/me?target=generalInfo",
+        body: {
+          username,
+        },
+        accessToken,
       });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();

@@ -1,33 +1,25 @@
-import LocalStorage from "@storage/localStorage";
-
 class Fetcher {
   // eslint-disable-next-line no-undef
   static BASE_URL = API_URL;
 
-  static accessToken = LocalStorage.getItem("accessToken");
-
-  static updateAccessToken(accessToken) {
-    this.accessToken = accessToken;
-  }
-
-  static getHeadersWithAccessToken = () => {
-    const headers = this.accessToken
+  static getHeadersWithAccessToken = (accessToken) => {
+    const headers = accessToken
       ? {
-          Authorization: `Bearer ${this.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         }
       : {};
     return headers;
   };
 
-  static get = (endpoint) => {
+  static get = ({ endpoint, accessToken }) => {
     return fetch(`${this.BASE_URL}/${endpoint}`, {
-      headers: { ...this.getHeadersWithAccessToken() },
+      headers: { ...this.getHeadersWithAccessToken(accessToken) },
     });
   };
 
-  static post = (endpoint, body) => {
+  static post = ({ endpoint, body, accessToken }) => {
     const headers = {
-      ...this.getHeadersWithAccessToken(),
+      ...this.getHeadersWithAccessToken(accessToken),
       "Content-Type": "application/json",
     };
     return fetch(`${this.BASE_URL}/${endpoint}`, {
@@ -37,9 +29,9 @@ class Fetcher {
     });
   };
 
-  static patch = (endpoint, body) => {
+  static patch = ({ endpoint, body, accessToken }) => {
     const headers = {
-      ...this.getHeadersWithAccessToken(),
+      ...this.getHeadersWithAccessToken(accessToken),
       "Content-Type": "application/json",
     };
     return fetch(`${this.BASE_URL}/${endpoint}`, {
@@ -49,9 +41,9 @@ class Fetcher {
     });
   };
 
-  static delete = (endpoint, body) => {
+  static delete = ({ endpoint, body, accessToken }) => {
     const headers = {
-      ...this.getHeadersWithAccessToken(),
+      ...this.getHeadersWithAccessToken(accessToken),
       "Content-Type": "application/json",
     };
     return fetch(`${this.BASE_URL}/${endpoint}`, {

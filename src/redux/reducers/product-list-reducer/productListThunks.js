@@ -12,7 +12,7 @@ export const getProductList =
     dispatch(createAction(ACTION_TYPE.GET_PRODUCT_LIST_PENDING));
 
     try {
-      const response = await Fetcher.get("products");
+      const response = await Fetcher.get({ endpoint: "products" });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
         const message = errorMessages[errorCode] ?? originalMessage;

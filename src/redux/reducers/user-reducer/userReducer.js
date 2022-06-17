@@ -35,7 +35,6 @@ function userReducer(state, { type, payload }, totalState) {
       const { accessToken } = payload;
 
       LocalStorage.setItem("accessToken", accessToken);
-      Fetcher.updateAccessToken(accessToken);
       newState.query.login = queryState.fullfilled();
       newState.data.isLoggedIn = true;
 
