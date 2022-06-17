@@ -16,6 +16,7 @@ function useForm() {
     const errors = Object.keys(_fields.current).reduce((acc, cur) => {
       const field = _fields.current[cur];
       const { ref: input, validation } = field;
+
       if (validation) {
         if (validation.pattern) {
           const { value: regex, message } = validation.pattern;
@@ -24,6 +25,7 @@ function useForm() {
             acc[cur] = message;
           }
         }
+
         if (validation.customValidator) {
           const { isValid, errorMessage } = validation.customValidator(
             input.value
@@ -51,32 +53,32 @@ function useForm() {
     });
 
     const field = _fields.current[name];
-    const { validation } = field;
-    if (validation) {
-      if (validation.pattern) {
-        const {
-          pattern: { value: regex, message },
-        } = validation;
-        if (!regex) throw new Error("정규식을 넣어주세요!");
-        if (value && !regex.test(value)) {
-          setErrors((prev) => {
-            const newState = structuredClone(prev);
-            newState[name] = message;
-            return newState;
-          });
-          return;
-        }
+    const {
+      validation: { pattern, customValidator },
+    } = field;
+
+    if (pattern) {
+      const { value: regex, message } = pattern;
+
+      if (value && !regex.test(value)) {
+        setErrors((prev) => {
+          const newState = structuredClone(prev);
+          newState[name] = message;
+          return newState;
+        });
+        return;
       }
-      if (validation.customValidator) {
-        const { isValid, errorMessage } = validation.customValidator(value);
-        if (!isValid) {
-          setErrors((prev) => {
-            const newState = structuredClone(prev);
-            newState[name] = errorMessage;
-            return newState;
-          });
-          return;
-        }
+    }
+    if (customValidator) {
+      const { isValid, errorMessage } = customValidator(value);
+
+      if (!isValid) {
+        setErrors((prev) => {
+          const newState = structuredClone(prev);
+          newState[name] = errorMessage;
+          return newState;
+        });
+        return;
       }
     }
 
@@ -96,11 +98,10 @@ function useForm() {
       acc[cur] = null;
       return acc;
     }, {});
+
     setFormData(structuredClone(initialFormData));
     setErrors(structuredClone(initialErrors));
   }, []);
-
-  // 우리의 handleChange를 호출하면서, 사용자가 직접 넣은 handleChange도 실행 같이 해주고 싶다.
 
   const register = (name, options) => {
     if (
@@ -109,6 +110,7 @@ function useForm() {
     ) {
       throw new Error("customValidator는 함수여야합니다!");
     }
+
     return {
       ref: (ref) => {
         if (!ref) return;

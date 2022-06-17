@@ -1,17 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import Logo from "@assets/images/logo.svg";
-import { Link } from "react-router-dom";
-import { shallowEqual, useSelector } from "react-redux";
+import { getUser } from "@redux/reducers/user-reducer/userThunks";
+import AccessTokenStorage from "@storage/accessTokenStorage";
 import styles from "./header.module";
-import LocalStorage from "../../storage/localStorage";
 
 function Header({ className }) {
-  const user = useSelector((state) => state.user, shallowEqual);
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.data);
+  const { isLoading, isError } = useSelector(
+    (state) => state.user.query.getUser
+  );
+
   const handleLogoutBtnClick = () => {
-    LocalStorage.removeItem("accessToken");
+    AccessTokenStorage.clear();
     window.location.href = "/";
   };
+
+  useEffect(() => {
+    const accessToken = AccessTokenStorage.get();
+    accessToken && dispatch(getUser());
+  }, []);
+
+  if (isError) return <div>에러가 발생했습니다!</div>;
+
+  const loggedInMenuItems = (
+    <>
+      <li>
+        <Link to="/cart">장바구니</Link>
+      </li>
+      <li>
+        <Link to="/my-page">마이페이지</Link>
+      </li>
+      <li>
+        <button type="button" onClick={handleLogoutBtnClick}>
+          로그아웃
+        </button>
+      </li>
+    </>
+  );
+
+  const loginMneuItems = (
+    <li>
+      <Link to="/login">로그인</Link>
+    </li>
+  );
+
+  const menuItems = user.isLoggedIn ? loggedInMenuItems : loginMneuItems;
 
   return (
     <div className={cn(styles.header, className)}>
@@ -28,27 +65,7 @@ function Header({ className }) {
           <span className={styles.title}>WOOWA SHOP</span>
         </Link>
         <div className={cn(styles.menu)}>
-          <ul className={styles.ul}>
-            <li>
-              <Link to="/cart">장바구니</Link>
-            </li>
-            {user.isLoggedIn ? (
-              <>
-                <li>
-                  <Link to="/my-page">마이페이지</Link>
-                </li>
-                <li>
-                  <button type="button" onClick={handleLogoutBtnClick}>
-                    로그아웃
-                  </button>
-                </li>
-              </>
-            ) : (
-              <li>
-                <Link to="/login">로그인</Link>
-              </li>
-            )}
-          </ul>
+          <ul className={styles.ul}>{isLoading ? <div /> : menuItems}</ul>
         </div>
       </div>
     </div>

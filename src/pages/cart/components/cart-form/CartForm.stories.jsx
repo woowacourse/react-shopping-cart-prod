@@ -13,7 +13,7 @@ export default {
 
 const productList = productsFromJSON.map((product) => {
   const newProduct = structuredClone(product);
-  newProduct.thumbnail_image = {
+  newProduct.thumbnailImage = {
     url: "https://place-hold.it/150x150",
     alt: "Product Image Alt",
   };
@@ -21,7 +21,7 @@ const productList = productsFromJSON.map((product) => {
 });
 
 const productObjs = productList.reduce((acc, cur) => {
-  acc[cur.sku] = cur;
+  acc[cur.id] = cur;
   return acc;
 }, {});
 
@@ -31,7 +31,7 @@ const initialState = {
   cart: productList
     .splice(0, Math.ceil(productList.length / 2))
     .reduce((acc, product) => {
-      acc[product.sku] = { quantity: 1, selected: false };
+      acc[product.id] = { quantity: 1, selected: false };
       return acc;
     }, {}),
 };

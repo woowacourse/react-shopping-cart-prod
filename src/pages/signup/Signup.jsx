@@ -1,18 +1,26 @@
 import cn from "classnames";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import LabeledInput from "@shared/input/labeled-input/LabeledInput";
 import Button from "@shared/button/Button";
-import { useState } from "react";
+import { signup } from "@redux/reducers/user-reducer/userThunks";
+import { useEffect } from "react";
 import styles from "./signup.module";
 import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
 import useForm from "../../hooks/useForm/useForm";
 
 function Signup({ className }) {
-  const { onSubmit, register, formData, errors } = useForm();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const disabled = Object.keys(errors).some(
-    (inputName) => !!errors[inputName] || !formData[inputName]
+  const { onSubmit, register, formData, errors } = useForm();
+  const { isLoading, isSuccess } = useSelector(
+    (state) => state.user.query.signup
   );
+
+  const disabled =
+    Object.keys(errors).some(
+      (inputName) => !!errors[inputName] || !formData[inputName]
+    ) || isLoading;
 
   const handleSubmit = async (formData, errors) => {
     const { email, password, username, confirmPassword } = formData;
@@ -30,24 +38,12 @@ function Signup({ className }) {
       return;
     }
 
-    // eslint-disable-next-line no-undef
-    const response = await fetch(`${API_URL}/customers`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        username,
-      }),
-    });
-    if (!response.ok) {
-      alert("이미 존재하는 이메일 입니다");
-      return;
-    }
-    navigate("/login", { replace: true });
+    dispatch(signup({ email, password, username }));
   };
+
+  useEffect(() => {
+    isSuccess && navigate("/login", { replace: true });
+  }, [isSuccess, navigate]);
 
   const validateConfirmNewPassword = (value) => {
     if (formData.password !== value) {

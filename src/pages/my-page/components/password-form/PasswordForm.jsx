@@ -1,10 +1,11 @@
 import useForm from "@hooks/useForm/useForm";
 import LabeledInput from "@shared/input/labeled-input/LabeledInput";
 import Button from "@shared/button/Button";
-import LocalStorage from "../../../../storage/localStorage";
-import updateUserPassword from "../../../../remote/userPassword";
+import { useDispatch } from "react-redux";
+import { updateUserPassword } from "@redux/reducers/user-reducer/userThunks";
 
 function PasswordForm() {
+  const dispatch = useDispatch();
   const { onSubmit, register, formData, errors } = useForm();
   const disabled = Object.keys(errors).some(
     (inputName) => !!errors[inputName] || !formData[inputName]
@@ -12,18 +13,8 @@ function PasswordForm() {
 
   const handleSubmit = async (formData) => {
     const { oldPassword, newPassword } = formData;
-    const isOK = await updateUserPassword({
-      oldPassword,
-      newPassword,
-    });
-    if (!isOK) {
-      // client쪽에서 기존 비밀번호를 알 수 없기때문에 서버에서 판단해준다
-      alert("기존 비밀번호를 확인해 주세요");
-      return;
-    }
-    alert("비밀번호가 변경되었습니다. 다시 로그인 해주세요");
-    LocalStorage.removeItem("accessToken");
-    window.location.href = "/login";
+
+    dispatch(updateUserPassword({ oldPassword, newPassword }));
   };
 
   const validateConfirmNewPassword = (value) => {

@@ -1,0 +1,32 @@
+@import "@scss/colors";
+
+.container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.top {
+  text-align: center;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 16px 20px;
+}
+
+.productName {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding: 16px 0;
+}
+
+.productPriceText {
+  font-size: 1rem;
+  margin: auto 0;
+}
+
+.productPrice {
+  font-size: 1.25rem;
+}

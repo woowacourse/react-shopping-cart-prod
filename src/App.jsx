@@ -1,65 +1,64 @@
-import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "@shared/header/Header";
 import styles from "@/app.module";
 import Home from "@home/Home";
 import Cart from "@cart/Cart";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import createAction from "@redux/createAction";
-import { useDispatch, useSelector } from "react-redux";
-import ACTION_TYPE from "@redux/actions";
-import Alert from "@shared/alert/Alert";
-import productListEquality from "@redux/equalities/productListEquality";
 import ProductDetail from "@product-detail/ProductDetail";
+import OrderList from "@order-list/OrderList";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 import MyPage from "./pages/my-page/MyPage";
-import AuthGuard from "./auth-guard/AuthGuard/AuthGuard";
+import AuthGuard from "./auth-guard/AuthGuard";
+import { accessPolicy } from "./auth-guard/constants";
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const productList = useSelector(
-    ({ productList }) => productList,
-    productListEquality
-  );
-  const dispatch = useDispatch();
-  const getProductList = () => {
-    return async (dispatch) => {
-      // eslint-disable-next-line no-undef
-      const fetchResult = await fetch(`${API_URL}/products`);
-      const productList = await fetchResult.json();
-      setLoading(false);
-      setError(null);
-      dispatch(createAction(ACTION_TYPE.UPDATE_PRODUCT_LIST, productList));
-    };
-  };
-  useEffect(() => {
-    dispatch(getProductList());
-  }, [dispatch]);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error!</p>;
-  if (productList.length === 0)
-    return <Alert variant="danger">상품이 비어있습니다</Alert>;
-
   return (
     <div>
       <BrowserRouter>
         <Header className={styles.header} />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/cart"
+            element={
+              <AuthGuard policy={accessPolicy.onlyLoggedInUser}>
+                <Cart />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <AuthGuard policy={accessPolicy.onlyLoggedOutUser}>
+                <Login />
+              </AuthGuard>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <AuthGuard policy={accessPolicy.onlyLoggedOutUser}>
+                <Signup />
+              </AuthGuard>
+            }
+          />
           <Route
             path="/my-page"
             element={
-              <AuthGuard>
+              <AuthGuard policy={accessPolicy.onlyLoggedInUser}>
                 <MyPage />
               </AuthGuard>
             }
           />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route
+            path="/order-list"
+            element={
+              <AuthGuard policy={accessPolicy.onlyLoggedInUser}>
+                <OrderList />
+              </AuthGuard>
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

@@ -29,7 +29,12 @@ module.exports = {
         allowShortCircuit: true,
       },
     ],
-    "prettier/prettier": ["error"],
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
     "react/jsx-props-no-spreading": "off",
     "no-shadow": "off",
     "import/extensions": [

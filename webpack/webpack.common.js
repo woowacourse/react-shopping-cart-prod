@@ -7,12 +7,10 @@ module.exports = {
   mode: "development",
   entry: join(__dirname, "../src/index.jsx"),
   devtool: "source-map",
-  devServer: {
-    historyApiFallback: true,
-  },
   output: {
     filename: "main.js",
     path: join(__dirname, "../dist"),
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -78,10 +76,12 @@ module.exports = {
       "@home": resolve(__dirname, "../src/pages/home"),
       "@cart": resolve(__dirname, "../src/pages/cart"),
       "@product-detail": resolve(__dirname, "../src/pages/product-detail"),
+      "@order-list": resolve(__dirname, "../src/pages/order-list"),
       "@redux": resolve(__dirname, "../src/redux"),
       "@assets": resolve(__dirname, "../src/assets"),
       "@mock": resolve(__dirname, "../mock"),
       "@utils": resolve(__dirname, "../src/utils"),
+      "@storage": resolve(__dirname, "../src/storage"),
     },
     extensions: [".js", ".jsx", ".scss"],
   },

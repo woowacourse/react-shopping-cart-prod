@@ -32,8 +32,4 @@ class LocalStorage {
   }
 }
 
-export function saveAccessToken(accessToken) {
-  LocalStorage.setItem("accessToken", accessToken);
-}
-
 export default LocalStorage;
