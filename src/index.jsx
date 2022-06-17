@@ -4,6 +4,8 @@ import { Provider } from "react-redux";
 import { legacy_createStore as createStore, applyMiddleware } from "redux";
 import App from "@/App";
 import reducer from "@redux/reducer";
+import LocalStorage from "@storage/localStorage";
+import AccessTokenStorage from "@storage/accessTokenStorage";
 import "./index.css";
 import "@scss/style";
 
@@ -18,7 +20,7 @@ function prepareMSW() {
 
 prepareMSW().then(async () => {
   const store = createStore(reducer, applyMiddleware(thunk));
-
+  AccessTokenStorage.storage = LocalStorage;
   const root = ReactDOM.createRoot(document.getElementById("root"));
   root.render(
     <Provider store={store}>
