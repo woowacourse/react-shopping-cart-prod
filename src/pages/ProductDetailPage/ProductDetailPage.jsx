@@ -1,34 +1,60 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
-import { getProductDetail } from "@redux/reducers/product-detail-reducer/productDetailThunks";
-import { addProductToCart } from "@redux/reducers/cart-reducer/cartThunks";
 
 import LoadingThumbnail from "@components/LoadingThumbnail";
 import Button from "@components/Button";
 import Divider from "@components/Divider";
 
 import styles from "./ProductDetailPage.module";
+import { REQUEST_METHOD, FETCH_STATUS, API_SERVER } from "../../constants";
+import { useFetch } from "../../hooks/useFetch";
 
 function ProductDetailPage() {
-  const dispatch = useDispatch();
   const { id: productId } = useParams();
-  const { isLoading, isError, isSuccess, error, productDetail } = useSelector(
-    (state) => ({
-      ...state.productDetail.query,
-      productDetail: state.productDetail.data,
-    })
+
+  const {
+    fetch: getProductDetail,
+    data: productDetail,
+    status: getProductDetailStatus,
+    error: getProductDetailError,
+  } = useFetch(
+    REQUEST_METHOD.GET,
+    `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}/${productId}`
   );
 
-  const handleAddToCartBtnClick = () =>
-    dispatch(addProductToCart({ productId, quantity: 1 }));
+  const {
+    fetch: addProductToCart,
+    status: addProductToCartStatus,
+    error: addProductToCartError,
+  } = useFetch(
+    REQUEST_METHOD.POST,
+    `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}`,
+    {},
+    { productId, quantity: 1 }
+  );
+
+  const handleAddToCartButtonClick = () => {
+    addProductToCart();
+  };
 
   useEffect(() => {
-    dispatch(getProductDetail({ productId }));
-  }, [dispatch, productId]);
+    getProductDetail();
+  }, []);
 
-  if (isLoading) return <div>loading...</div>;
+  useEffect(() => {
+    if (addProductToCartStatus === FETCH_STATUS.FAIL) {
+      alert(`${addProductToCartError.code}, ${addProductToCartError.message}`);
+    }
+  }, [addProductToCartStatus, addProductToCartError]);
+
+  if (getProductDetailStatus === FETCH_STATUS.PENDING)
+    return <div>...Loading</div>;
+  if (getProductDetailStatus === FETCH_STATUS.FAIL)
+    return (
+      <div>
+        ERROR!! : {getProductDetailError.code}, {getProductDetailError.message}
+      </div>
+    );
 
   const { name, price, thumbnailImage } = productDetail;
 
@@ -47,7 +73,7 @@ function ProductDetailPage() {
         <span className={styles.productPriceText}>금액</span>
         <p className={styles.productPrice}>{price.toLocaleString()}원</p>
       </div>
-      <Button variant="primary" block onClick={handleAddToCartBtnClick}>
+      <Button variant="primary" block onClick={handleAddToCartButtonClick}>
         장바구니 담기
       </Button>
     </div>

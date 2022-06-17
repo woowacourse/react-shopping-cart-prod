@@ -1,29 +1,33 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
-
-import { getOrderList } from "@redux/reducers/order-list-reducer/orderListThunks";
 
 import PageTitle from "@components/PageTitle";
 import OrderTable from "./components/OrderTable";
 
+import { useFetch } from "../../hooks/useFetch";
+import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
+
 import styles from "./OrderListPage.module";
 
 function OrderListPage() {
-  const dispatch = useDispatch();
-
-  const { isLoading, isError, orderList } = useSelector((state) => ({
-    ...state.orderList.query.getOrderList,
-    orderList: state.orderList.data,
-  }));
+  const {
+    fetch: getOrderList,
+    data: orderList,
+    status,
+    error,
+  } = useFetch(
+    REQUEST_METHOD.GET,
+    `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_ORDERS}`,
+    []
+  );
 
   useEffect(() => {
-    dispatch(getOrderList());
-  }, [dispatch]);
+    getOrderList();
+  }, []);
 
-  if (isLoading) return <div>...loading</div>;
-
-  if (!orderList) return <div>...loading</div>;
+  if (status === FETCH_STATUS.PENDING || !orderList)
+    return <div>...Loading</div>;
+  if (status === FETCH_STATUS.FAIL) return <div>ERROR!! : {error.message}</div>;
 
   return (
     <div className="wrapper">

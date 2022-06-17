@@ -1,26 +1,6 @@
 import queryState from "./utils/queryState";
 
 export const initialState = {
-  productList: {
-    query: {
-      getProductList: queryState.init(),
-    },
-    data: [],
-  },
-  productDetail: {
-    query: {
-      getProductDetail: queryState.init(),
-    },
-    data: {
-      id: "product id",
-      name: "product name",
-      price: 0,
-      thumbnailImage: {
-        url: "https://via.placeholder.com/300",
-        alt: "Empty Image",
-      },
-    },
-  },
   cart: {
     query: {
       getCart: queryState.init(),
@@ -44,12 +24,6 @@ export const initialState = {
       email: null,
       username: null,
     },
-  },
-  orderList: {
-    query: {
-      getOrderList: queryState.init(),
-    },
-    data: [],
   },
   order: {
     query: {

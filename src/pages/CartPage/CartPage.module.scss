@@ -24,7 +24,7 @@
 }
 
 @include media("<=lg") {
-  .cartForm {
+  .CartForm {
     padding-right: 60px;
   }
   .cartTotal {
@@ -36,7 +36,7 @@
   .container {
     display: block;
   }
-  .cartForm {
+  .CartForm {
     padding-right: 0;
     margin-bottom: 60px;
   }

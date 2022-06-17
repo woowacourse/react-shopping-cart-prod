@@ -1,22 +1,31 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 
-import { getProductList } from "@redux/reducers/product-list-reducer/productListThunks";
+import { useFetch } from "../../hooks/useFetch";
 
-import styles from "./ProductListPage.module";
 import ProductItem from "./components/ProductItem";
 
+import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
+import styles from "./ProductListPage.module";
+
 function ProductListPage() {
-  const dispatch = useDispatch();
-  const { isLoading, isError, productList } = useSelector((state) => ({
-    productList: state.productList.data,
-    ...state.productList.query.getProductList,
-  }));
+  const {
+    fetch: getProductList,
+    data: productList,
+    status,
+    error,
+  } = useFetch(
+    REQUEST_METHOD.GET,
+    `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}`,
+    []
+  );
 
   useEffect(() => {
-    dispatch(getProductList());
-  }, [dispatch]);
+    getProductList();
+  }, []);
+
+  if (status === FETCH_STATUS.PENDING) return <div>...Loading</div>;
+  if (status === FETCH_STATUS.FAIL) return <div>ERROR!! : {error.message}</div>;
 
   return (
     <div className="wrapper">

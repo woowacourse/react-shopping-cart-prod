@@ -16,9 +16,9 @@ import LabeledCheckbox from "@components/CheckBox/LabeledCheckbox/LabeledCheckbo
 import CartItem from "./CartItem";
 
 import getSelectedCartItemIds from "../utils/getSelectedCartItemIds";
-import styles from "./CartForm.module";
+import styles from "./CartItemList.module";
 
-function CartForm({ className }) {
+function CartItemList({ className }) {
   const dispatch = useDispatch();
   const { isLoading, cart } = useSelector((state) => ({
     cart: state.cart.data,
@@ -139,4 +139,4 @@ function CartForm({ className }) {
   );
 }
 
-export default CartForm;
+export default CartItemList;

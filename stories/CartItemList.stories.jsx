@@ -5,11 +5,11 @@ import thunk from "redux-thunk";
 import reducer from "@redux/reducer";
 import productsFromJSON from "@mock/products.json";
 
-import CartForm from "../src/pages/CartPage/components/CartForm/CartForm";
+import CartItemList from "../src/pages/CartPage/components/CartItemList/CartItemList.jsx";
 
 export default {
-  title: "CartPage/CartForm",
-  component: CartForm,
+  title: "CartPage/CartItemList",
+  component: CartItemList,
   argTypes: {},
 };
 
@@ -44,7 +44,7 @@ function Template(args) {
   return (
     <Provider store={store}>
       <div style={{ maxWidth: "600px" }}>
-        <CartForm {...args} />
+        <CartItemList {...args} />
       </div>
     </Provider>
   );

@@ -92,19 +92,21 @@ export const handlers = [
       });
     }
 
-    const { productId, quantity } = req.body;
+    const { productId, quantity } = JSON.parse(req.body);
+
     const db = LocalStorage.getInstance();
-    const aleadyExist = db.carts.some(
+    const alreadyExist = db.carts.some(
       (cartItem) => cartItem.productId === productId
     );
 
-    if (aleadyExist) {
+    if (alreadyExist) {
       return errorResponse(res, {
         status: 400,
         errorCode: 5001,
         message: "Already Exist",
       });
     }
+
     const product = findProductById(productId, products);
     const cartItem = {
       id: product.id,
