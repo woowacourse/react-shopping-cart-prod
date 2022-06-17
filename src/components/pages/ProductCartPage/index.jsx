@@ -7,15 +7,19 @@ import PageHeader from "components/common/PageHeader";
 import PaymentAmount from "./PaymentAmount";
 import ProductCartList from "./ProductCartList";
 import { CartPageContainer, CartPageList, CartPagePayment } from "./styled";
+import { Navigate } from "react-router-dom";
+import { ROUTES } from "constants";
+import { useSelector } from "react-redux";
 
 function ProductCartPage() {
   const { data: cartList, isLoading, dispatch } = useStore("cartList");
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const [checkList, setCheckList] = useState([]);
 
   const [totalPrice, totalCount] = cartList.reduce(
-    (acc, { id, price, count }) => {
-      if (checkList.includes(id)) {
+    (acc, { productId, price, count }) => {
+      if (checkList.includes(productId)) {
         acc[0] += price * count;
         acc[1] += count;
       }
@@ -29,10 +33,13 @@ function ProductCartPage() {
   }, []);
 
   useEffect(() => {
-    if (!isLoading) setCheckList(cartList.map((cartItem) => cartItem.id));
+    if (!isLoading)
+      setCheckList(cartList.map((cartItem) => cartItem.productId));
   }, [isLoading]);
 
-  return (
+  return !isLoggedIn ? (
+    <Navigate to={ROUTES.ROOT} replace />
+  ) : (
     <CartPageContainer>
       <PageHeader>장바구니</PageHeader>
       <CartPageList>

@@ -23,28 +23,34 @@ function ProductCartList({ checkList, setCheckList }) {
 
   const handleChangeAllCheckbox = () => {
     if (checkList.length === 0) {
-      setCheckList(cartList.map((cartItem) => cartItem.id));
+      setCheckList(cartList.map((cartItem) => cartItem.productId));
       return;
     }
     setCheckList([]);
   };
 
   const handleDeleteAllItem = () => {
-    checkList.forEach((carItemId) => {
-      dispatch(deleteCartList(carItemId));
+    checkList.forEach((productId) => {
+      dispatch(deleteCartList(productId));
     });
     setCheckList([]);
   };
 
-  const handleClickIncreaseButton = (id, count) => () => {
-    if (!checkList.includes(id)) setCheckList((prev) => [...prev, id]);
-    dispatch(updateCartCount(id, count + 1));
+  const handleClickIncreaseButton = (productId, count, quantity) => () => {
+    if (quantity <= count) {
+      alert("재고가 부족합니다 :(");
+      return;
+    }
+    if (!checkList.includes(productId))
+      setCheckList((prev) => [...prev, productId]);
+    dispatch(updateCartCount(productId, count + 1));
   };
 
-  const handleClickDecreaseButton = (id, count) => () => {
+  const handleClickDecreaseButton = (productId, count) => () => {
     if (count <= 1) return;
-    if (!checkList.includes(id)) setCheckList((prev) => [...prev, id]);
-    dispatch(updateCartCount(id, count - 1));
+    if (!checkList.includes(productId))
+      setCheckList((prev) => [...prev, productId]);
+    dispatch(updateCartCount(productId, count - 1));
   };
 
   const handleClickDeleteItemButton = (id) => () => {
@@ -62,10 +68,10 @@ function ProductCartList({ checkList, setCheckList }) {
 
   const renderListContent = () => {
     if (isLoading) return <Spinner />;
-    if (errorMessage) return <ErrorPage>에러: ${errorMessage} </ErrorPage>;
     if (cartList.length === 0) return <div>담은 상품이 없습니다.</div>;
     return (
       <>
+        {errorMessage && <ErrorPage>에러: ${errorMessage} </ErrorPage>}
         {cartList.map((cartItem) => (
           <ProductCartItem
             product={cartItem}
@@ -74,7 +80,7 @@ function ProductCartList({ checkList, setCheckList }) {
             handleClickDecreaseButton={handleClickDecreaseButton}
             handleClickDeleteItemButton={handleClickDeleteItemButton}
             handleChangeCheckbox={handleChangeCheckbox}
-            key={cartItem.id}
+            key={cartItem.productId}
           />
         ))}
       </>

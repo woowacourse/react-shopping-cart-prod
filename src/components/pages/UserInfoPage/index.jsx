@@ -1,12 +1,18 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 import { theme } from "style";
-
-import { BASE_SERVER_URL, SERVER_PATH, ROUTES, RANGE } from "constants";
+import {
+  BASE_SERVER_URL,
+  SERVER_PATH,
+  ROUTES,
+  RANGE,
+  COOKIE_KEY,
+} from "constants";
+import { getCookie } from "util/cookie";
 
 import { useStore } from "hooks/useStore";
-import { checkNickName } from "validator";
+import { checkUserName } from "validator";
 import { deleteUser, USER_ACTION } from "reducers/user";
 import { updateUserBaseServer } from "util/fetch";
 
@@ -28,31 +34,31 @@ function UserInfoPage() {
   const {
     data: user,
     isLoading,
+    isLoggedIn,
     errorMessage: serverError,
     dispatch,
   } = useStore("user");
-  const navigator = useNavigate();
   const [isEditable, setIsEditable] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [nickname, setNickname] = useState(user.nickname);
+  const [username, setUsername] = useState(user.username);
   const [errorMessage, setErrorMessage] = useState("");
   const passwordRef = useRef(null);
-  const nicknameRef = useRef(null);
+  const usernameRef = useRef(null);
 
-  const handleNicknameChange = ({ target: { value } }) => {
+  const handleUsernameChange = ({ target: { value } }) => {
     try {
-      checkNickName(value);
+      checkUserName(value);
       setErrorMessage("");
     } catch (error) {
       setErrorMessage(error.message);
     }
-    setNickname(value);
+    setUsername(value);
   };
 
-  const changeNickname = (e) => {
+  const changeUsername = (e) => {
     e.preventDefault();
 
-    if (user.nickname !== nickname) {
+    if (user.username !== username) {
       requestUpdateUser();
       return;
     }
@@ -65,10 +71,10 @@ function UserInfoPage() {
       const response = await updateUserBaseServer({
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${user.accessToken}`,
+          Authorization: `Bearer ${getCookie(COOKIE_KEY.TOKEN)}`,
         },
         url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${user.id}`,
-        body: JSON.stringify({ username: nickname }),
+        body: JSON.stringify({ username: username }),
       });
 
       const data = await response.json();
@@ -82,7 +88,7 @@ function UserInfoPage() {
       }
       dispatch({
         type: USER_ACTION.UPDATE_USER_INFO_SUCCESS,
-        nickname: data.username,
+        username: data.username,
       });
       setIsEditable(false);
     } catch (error) {
@@ -95,14 +101,20 @@ function UserInfoPage() {
   };
 
   const handleCancleEdit = () => {
-    setNickname(user.nickname);
+    setUsername(user.username);
     dispatch({ type: USER_ACTION.CLEAN_ERROR });
     setErrorMessage("");
     setIsEditable(false);
   };
 
   const deleteAccount = () => {
-    dispatch(deleteUser(user.id, user.accessToken, passwordRef.current.value));
+    dispatch(
+      deleteUser(
+        user.id,
+        getCookie(COOKIE_KEY.TOKEN),
+        passwordRef.current.value
+      )
+    );
   };
 
   const closeModal = () => {
@@ -114,19 +126,13 @@ function UserInfoPage() {
 
   useEffect(() => {
     if (isEditable) {
-      nicknameRef.current.focus();
+      usernameRef.current.focus();
     }
   }, [isEditable]);
 
   useEffect(() => {
-    setNickname(user.nickname);
-  }, [user.nickname]);
-
-  useEffect(() => {
-    if (!user.accessToken) {
-      navigator(ROUTES.ROOT, { replace: true });
-    }
-  }, [user.accessToken]);
+    setUsername(user.username);
+  }, [user.username]);
 
   useEffect(() => {
     return () => {
@@ -134,11 +140,13 @@ function UserInfoPage() {
     };
   }, []);
 
-  return (
+  return !isLoggedIn ? (
+    <Navigate to={ROUTES.ROOT} replace />
+  ) : (
     <UserInfoPageContainer>
       <PageHeader>{isEditable ? "회원정보 수정" : "회원정보"}</PageHeader>
       {isLoading && <Spinner />}
-      <UserForm onSubmit={changeNickname}>
+      <UserForm onSubmit={changeUsername}>
         <UserInfoInputContainer>
           <UserInfoLabel>이메일</UserInfoLabel>
           <UserInput
@@ -153,14 +161,14 @@ function UserInfoPage() {
           <UserInput
             width="500px"
             placeholder="닉네임을 입력해주세요"
-            value={nickname}
-            onChange={handleNicknameChange}
+            value={username}
+            onChange={handleUsernameChange}
             disabled={!isEditable}
-            minLength={RANGE.NICKNAME_MIN_LENGTH}
-            maxLength={RANGE.NICKNAME_MAX_LENGTH}
+            minLength={RANGE.USERNAME_MIN_LENGTH}
+            maxLength={RANGE.USERNAME_MAX_LENGTH}
             errorMessage={errorMessage}
             autoFocus
-            ref={nicknameRef}
+            ref={usernameRef}
           />
         </UserInfoInputContainer>
         <UserInfoButtonContainer>
@@ -209,7 +217,7 @@ function UserInfoPage() {
           onClose={closeModal}
           onConfirm={deleteAccount}
           errorMessage={serverError}
-          userName={user.nickname}
+          userName={user.username}
           passwordRef={passwordRef}
         />
       )}

@@ -6,6 +6,11 @@ const Button = styled.button`
   background-color: transparent;
   cursor: pointer;
 
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   img {
     width: ${({ width }) => width};
     :hover {
@@ -14,9 +19,9 @@ const Button = styled.button`
   }
 `;
 
-function IconButton({ src, alt, onClick, width }) {
+function IconButton({ src, alt, onClick, width, disabled }) {
   return (
-    <Button onClick={onClick} width={width}>
+    <Button onClick={onClick} width={width} disabled={disabled}>
       <img src={src} alt={alt} />
     </Button>
   );

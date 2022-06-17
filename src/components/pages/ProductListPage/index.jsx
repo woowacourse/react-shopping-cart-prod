@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 import { useStore } from "hooks/useStore";
 import { getProductList } from "reducers/productList";
+import { getCartList } from "reducers/cartList";
 
 import Spinner from "components/common/Spinner";
 import ProductCard from "./ProductCard";
@@ -15,9 +17,11 @@ function ProductListPage() {
     errorMessage,
     dispatch,
   } = useStore("productList");
+  const cartList = useSelector((state) => state.cartList.data);
 
   useEffect(() => {
     dispatch(getProductList());
+    dispatch(getCartList());
   }, []);
 
   if (isLoading) return <Spinner />;
@@ -32,7 +36,13 @@ function ProductListPage() {
   return (
     <GridContainer colNo={4}>
       {productList.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard
+          key={product.productId}
+          product={product}
+          isStored={cartList.some(
+            (item) => item.productId === product.productId
+          )}
+        />
       ))}
     </GridContainer>
   );

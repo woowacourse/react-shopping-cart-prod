@@ -2,8 +2,9 @@ import React from "react";
 
 import { theme } from "style";
 
-import { BASE_SERVER_URL, SERVER_PATH } from "constants";
+import { BASE_SERVER_URL, SERVER_PATH, COOKIE_KEY } from "constants";
 import { postBaseServerCartItem } from "util/fetch";
+import { getCookie } from "util/cookie";
 
 import DefaultButton from "components/common/Button/DefaultButton";
 import {
@@ -14,26 +15,37 @@ import {
   ProductPriceTitle,
   Top,
 } from "./styled";
+import { useSelector } from "react-redux";
 
-function ProductDetail({ selectedProduct: { id, thumbnailUrl, name, price } }) {
+function ProductDetail({
+  selectedProduct: { productId, thumbnailUrl, name, price },
+  isStored,
+}) {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+
   const handleClickCartButton = async () => {
+    if (!isLoggedIn) {
+      alert("장바구니에 담으려면 로그인이 필요합니다.");
+      return;
+    }
     try {
       const response = await postBaseServerCartItem({
-        url: `${BASE_SERVER_URL}${SERVER_PATH.CART_LIST}`,
-        body: JSON.stringify({ id, count: 1 }),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie(COOKIE_KEY.TOKEN)}`,
+        },
+        url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}/${getCookie(
+          COOKIE_KEY.USER_ID
+        )}${SERVER_PATH.CART_LIST}`,
+        body: JSON.stringify({ productId, count: 1 }),
       });
 
       if (!response.ok) {
-        throw new Error(`문제가 발생했습니다. 잠시 후에 다시 시도해 주세요 :(`);
-      }
-
-      const { isAlreadyExists } = await response.json();
-      if (isAlreadyExists) {
-        alert("이미 장바구니에 담은 상품입니다.");
-        return;
+        const data = await response.json();
+        throw new Error(data.message);
       }
     } catch (error) {
-      alert(`장바구니 담기에 실패했습니다.`);
+      alert(error.message);
       return;
     }
     alert("장바구니에 담았습니다.");
@@ -52,6 +64,7 @@ function ProductDetail({ selectedProduct: { id, thumbnailUrl, name, price } }) {
       <DefaultButton
         onClick={handleClickCartButton}
         bgColor={theme.color.point}
+        disabled={isStored}
       >
         장바구니 담기
       </DefaultButton>

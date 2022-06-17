@@ -14,6 +14,15 @@ const BoxButton = styled.button`
     background-color: ${bgColor || color.point};
   `}
 
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+
   cursor: pointer;
 
   :hover {

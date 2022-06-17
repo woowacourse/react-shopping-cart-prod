@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { theme } from "style";
 
@@ -25,13 +25,13 @@ import {
 
 const initialUserInfo = {
   email: "",
-  nickname: "",
+  username: "",
   password: "",
   passwordConfirm: "",
 };
 
 function RegisterPage() {
-  const accessToken = useSelector((state) => state.user.data.accessToken);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
   const navigator = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +63,7 @@ function RegisterPage() {
         url: `${BASE_SERVER_URL}${SERVER_PATH.CUSTOMER_LIST}`,
         body: JSON.stringify({
           email: userInfo.email,
-          username: userInfo.nickname,
+          username: userInfo.username,
           password: userInfo.password,
         }),
       });
@@ -103,15 +103,14 @@ function RegisterPage() {
   };
 
   useEffect(() => {
-    if (accessToken) {
-      navigator(ROUTES.LOGIN);
-    }
     return () => {
       dispatch({ type: USER_ACTION.CLEAN_ERROR });
     };
   }, []);
 
-  return (
+  return isLoggedIn ? (
+    <Navigate to={ROUTES.ROOT} replace />
+  ) : (
     <RegisterPageContainer>
       <PageHeader>회원가입</PageHeader>
       {isLoading && <Spinner />}
@@ -136,15 +135,15 @@ function RegisterPage() {
           <RegisterLabel>닉네임</RegisterLabel>
           <UserInput
             type="text"
-            minLength={RANGE.NICKNAME_MIN_LENGTH}
-            maxLength={RANGE.NICKNAME_MAX_LENGTH}
+            minLength={RANGE.USERNAME_MIN_LENGTH}
+            maxLength={RANGE.USERNAME_MAX_LENGTH}
             width="500px"
             placeholder="닉네임을 입력해주세요"
-            name="nickname"
-            value={userInfo.nickname}
+            name="username"
+            value={userInfo.username}
             onChange={handleChangeInput}
             required
-            errorMessage={errorMessage.nickname}
+            errorMessage={errorMessage.username}
           />
         </RegisterInputContainer>
         <RegisterInputContainer>

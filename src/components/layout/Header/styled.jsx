@@ -21,8 +21,6 @@ export const NavButtonContainer = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  width: 450px;
 `;
 
 export const UserInfoButton = styled.div`
