@@ -1,11 +1,20 @@
-import { CART_MESSAGE } from 'constants/message';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { getCarts } from 'redux/thunks/cart';
+
 import Link from 'components/@shared/Link';
+import ShoppingCart from 'components/@shared/ShoppingCart';
+
+import theme from 'styles/theme';
+
+import cartAPI from 'apis/cart';
+import noImage from 'assets/noImage.png';
+import { CART_MESSAGE, USER_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
 import { Product } from 'types/index';
-import ShoppingCart from 'components/@shared/ShoppingCart';
-import { cartActions } from 'redux/actions';
-import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { isLogin } from 'utils/auth';
 
 type Props = {
   product: Product;
@@ -13,32 +22,54 @@ type Props = {
 };
 
 function ProductCard({ product, isInCart }: Props) {
-  const { id, name, price, stock, description, image } = {
+  const { id, name, price, description, imageUrl } = {
     ...product,
-    stock: Number(product.stock),
     price: Number(product.price),
   };
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
+  const onClickCartButton = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(cartActions.addToCart(id));
-    alert(CART_MESSAGE.SUCCESS_ADD);
+
+    //TODO: 추상화
+    if (!isLogin()) {
+      confirm(USER_MESSAGE.ASK_LOGIN_FOR_CART) && navigate(PATH.LOGIN);
+
+      return;
+    }
+
+    try {
+      const response = await cartAPI.addCartItem({
+        productId: id,
+        quantity: 1,
+      });
+
+      if (response?.status === 201) {
+        dispatch(getCarts());
+
+        alert(CART_MESSAGE.SUCCESS_ADD);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const onProductImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    e.currentTarget.src = noImage;
   };
 
   return (
-    <Link to={`${PATH.PRODUCT}/${id}`} disabled={stock <= 0}>
+    <Link to={`${PATH.PRODUCT}/${id}`}>
       <StyledProductCard>
         <CardImageContainer>
-          {stock > 0 ? (
-            <CardImageOverlay>
-              <p>{description}</p>
-              <div onClick={onClickCartButton}>구매하기</div>
-            </CardImageOverlay>
-          ) : (
-            <OutOfStockOverlay>품절</OutOfStockOverlay>
-          )}
-          <img src={image} alt={name} />
+          <CardImageOverlay>
+            <p>{description}</p>
+            <div onClick={onClickCartButton}>구매하기</div>
+          </CardImageOverlay>
+          <img src={imageUrl} alt={name} onError={onProductImageError} />
         </CardImageContainer>
         <CardDescriptionContainer>
           <h3>{name}</h3>
@@ -48,7 +79,7 @@ function ProductCard({ product, isInCart }: Props) {
           <button onClick={onClickCartButton}>
             <ShoppingCart
               width="100%"
-              fill={isInCart ? '#ff9c9c' : 'currentColor'}
+              fill={isInCart ? `${theme.colors.redPink}` : 'currentColor'}
             />
           </button>
         </CardButtonContainer>
@@ -56,24 +87,6 @@ function ProductCard({ product, isInCart }: Props) {
     </Link>
   );
 }
-
-const OutOfStockOverlay = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  box-sizing: border-box;
-
-  width: 100%;
-  height: 100%;
-  z-index: ${({ theme: { zPriorities } }) => zPriorities.front};
-
-  background: rgba(0, 0, 0, 0.3);
-  color: ${({ theme: { colors } }) => colors.white};
-
-  font-size: 25px;
-  font-weight: 700;
-`;
 
 const CardImageOverlay = styled.div`
   position: absolute;

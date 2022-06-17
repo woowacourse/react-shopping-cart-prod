@@ -1,31 +1,30 @@
-import { CartStoreState, User } from 'types/index';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+
+import { cartActions, userActions } from 'redux/actions';
 
 import Link from 'components/@shared/Link';
+import RightMenu from 'components/Layout/Header/RightMenu';
 import Logo from 'components/Logo/Logo';
+
 import PATH from 'constants/path';
-import RightMenu from './RightMenu';
+import { CartStoreState, User } from 'types/index';
 import { isLogin } from 'utils/auth';
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { userActions } from 'redux/actions';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+    (state: { cart: CartStoreState }) => state.cart.cartItems
   );
   const userName = useSelector((state: { user: User }) => state.user.username);
 
-  const [showUserToggle, setShowUserToggle] = useState(false);
-
   const onClickLogoutButton = () => {
     dispatch(userActions.resetUser());
+    dispatch(cartActions.resetCartItems());
 
-    localStorage.removeItem('accessToken');
     sessionStorage.removeItem('accessToken');
 
     navigate(PATH.BASE);
@@ -44,7 +43,7 @@ function Header() {
         <RightMenu>
           <Link to={PATH.CART}>
             장바구니
-            <Badge>{cart.length}</Badge>
+            <Badge>{cart?.length || 0}</Badge>
           </Link>
           <Link to={PATH.BASE}>주문목록</Link>
         </RightMenu>

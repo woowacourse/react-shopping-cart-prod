@@ -1,41 +1,54 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { CART_MESSAGE } from 'constants/message';
-import CONDITION from 'constants/condition';
-import Loading from 'components/@shared/Loading';
-import { ProductStoreState } from 'types/index';
-import { cartActions } from 'redux/actions';
-import { getProduct } from 'redux/thunks';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+
+import { getProduct } from 'redux/thunks/product';
+
+import Loading from 'components/@shared/Loading';
+
+import cartAPI from 'apis/cart';
+import noImage from 'assets/noImage.png';
+import CONDITION from 'constants/condition';
+import { CART_MESSAGE, USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
+import { ProductStoreState } from 'types/index';
+import { isLogin } from 'utils/auth';
 
 function ProductPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition,
+    (state: { product: ProductStoreState }) => state.product.condition
   );
   const productDetail = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productDetail,
+    (state: { product: ProductStoreState }) => state.product.productDetail
   );
 
-  useEffect(() => {
-    if (id) {
-      getProduct(dispatch, Number(id));
+  const onClickCartButton = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    // TODO: 반복되는 로직이므로 함수로 추출해야할듯
+    if (!isLogin()) {
+      confirm(USER_MESSAGE.ASK_LOGIN_FOR_CART) && navigate(PATH.LOGIN);
+
+      return;
     }
-  }, [dispatch, id]);
 
-  const onClickCartButton = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      e.preventDefault();
-      dispatch(cartActions.addToCart(Number(id)));
+    if (id) {
+      cartAPI.addCartItem({ productId: Number(id), quantity: 1 });
       alert(CART_MESSAGE.SUCCESS_ADD);
-    },
-    [dispatch, id],
-  );
+    }
+  };
 
-  const renderSwitch = useCallback(() => {
+  const onProductImageError = (
+    e: React.SyntheticEvent<HTMLImageElement, Event>
+  ) => {
+    e.currentTarget.src = noImage;
+  };
+
+  const renderSwitch = () => {
     switch (condition) {
       case CONDITION.LOADING:
         return <Loading />;
@@ -43,7 +56,11 @@ function ProductPage() {
         return productDetail ? (
           <>
             <StyledImageContainer>
-              <img src={productDetail.image} alt={productDetail.name} />
+              <img
+                src={productDetail.imageUrl}
+                alt={productDetail.name}
+                onError={onProductImageError}
+              />
             </StyledImageContainer>
             <h2>{productDetail.name}</h2>
             <hr />
@@ -65,7 +82,13 @@ function ProductPage() {
           <Message>상품 정보를 가져오는데 오류가 발생하였습니다 😱</Message>
         );
     }
-  }, [condition, productDetail, onClickCartButton]);
+  };
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getProduct(Number(id)));
+    }
+  }, []);
 
   return <StyledPage>{renderSwitch()}</StyledPage>;
 }

@@ -1,60 +1,91 @@
-import { CART_MESSAGE } from 'constants/message';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+import { cartActions } from 'redux/actions';
+import { getCarts } from 'redux/thunks/cart';
+
 import CheckBox from 'components/@shared/CheckBox';
-import { ReactComponent as Delete } from 'assets/Delete.svg';
 import Link from 'components/@shared/Link';
 import NumberInput from 'components/@shared/NumberInput';
+
+import cartAPI from 'apis/cart';
+import { ReactComponent as Delete } from 'assets/Delete.svg';
+import { CART_MESSAGE } from 'constants/message';
 import PATH from 'constants/path';
-import { Product } from 'types/index';
-import { cartActions } from 'redux/actions';
-import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { CartStoreState } from 'types';
+import { Product } from 'types/product';
 
 type Props = {
+  cartItemId: number;
   product: Product;
-  stock: number;
+  quantity: number;
   checked: boolean;
 };
 
-function CartItem({ product, stock, checked }: Props) {
-  const { id, name, image } = product;
+function CartItem({ cartItemId, product, quantity }: Props) {
+  const { id, name, imageUrl } = product;
   const dispatch = useDispatch();
+  const { checkedCartItems } = useSelector(
+    (state: { cart: CartStoreState }) => state.cart
+  );
 
-  const onClickDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
+  const isChecked = checkedCartItems.includes(cartItemId);
+
+  const onClickDeleteButton = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteToCart(id));
+      try {
+        const response = await cartAPI.deleteCartItem(cartItemId);
+
+        response?.status === 204 && dispatch(getCarts());
+      } catch (error) {
+        alert(error);
+      }
     }
   };
 
   const onChangeCheckBox = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 
-    dispatch(cartActions.toggleCheckAProduct(id));
+    if (!isChecked) {
+      dispatch(cartActions.checkCartItem(cartItemId));
+
+      return;
+    }
+
+    dispatch(cartActions.uncheckCartItem(cartItemId));
   };
 
-  const onChangeCartStock = (value: number) => {
-    dispatch(cartActions.changeProductStock({ id, stock: value }));
-  };
+  const onChangeCartItemQuantity =
+    (cartItemId: number) => (quantity: number) => {
+      cartAPI.changeCartItemQuantity(cartItemId, quantity).then((res) => {
+        dispatch(getCarts());
+      });
+    };
 
   return (
     <Link to={`${PATH.PRODUCT}/${id}`}>
       <StyledCartItem>
-        <CheckBox id={id + ''} checked={checked} onChange={onChangeCheckBox} />
-        <img src={image} alt={name} />
+        <CheckBox
+          id={id + ''}
+          checked={isChecked}
+          onChange={onChangeCheckBox}
+        />
+        <img src={imageUrl} alt={name} />
         <StyledProductName>{name}</StyledProductName>
         <StyledDeleteButton type="button" onClick={onClickDeleteButton}>
           <Delete />
         </StyledDeleteButton>
         <NumberInput
-          max={product.stock}
-          value={stock}
-          setValue={onChangeCartStock}
+          value={quantity}
+          setValue={onChangeCartItemQuantity(cartItemId)}
         />
         <StyledPrice>
-          {(product.price * stock).toLocaleString('ko-KR')} 원
+          {(product.price * quantity).toLocaleString('ko-KR')} 원
         </StyledPrice>
       </StyledCartItem>
     </Link>

@@ -1,8 +1,10 @@
+import productReducer from '../reducers/product';
+import db from 'db.json';
+
+import { productActions } from 'redux/actions';
+
 import CONDITION from 'constants/condition';
 import { ProductStoreState } from 'types/index';
-import db from 'db.json';
-import { productActions } from 'redux/actions';
-import productReducer from '../reducers/product';
 
 const initialState: ProductStoreState = {
   condition: CONDITION.NONE,

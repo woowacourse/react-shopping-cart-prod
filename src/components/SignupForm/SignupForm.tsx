@@ -1,16 +1,16 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+
+import authAPI from 'apis/auth';
+import { USER_MESSAGE } from 'constants/message';
+import PATH from 'constants/path';
+import { createInputValueGetter } from 'utils/dom';
+import { formatPhoneNumber } from 'utils/formats';
 import {
   isValidPasswordAllCharacters,
   isValidPasswordLength,
 } from 'utils/validator';
-import styled, { css } from 'styled-components';
-
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
-import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
-import { formatPhoneNumber } from 'utils/formats';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 function SignupForm() {
   const navigate = useNavigate();
@@ -26,40 +26,44 @@ function SignupForm() {
     useState(false);
   const [passwordCheckCorrect, setPasswordCheckCorrect] = useState(false);
 
-  const handleIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value);
   };
 
-  const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
 
     setPasswordLengthCorrect(isValidPasswordLength(e.target.value));
     setPasswordAllCharactersCorrect(
-      isValidPasswordAllCharacters(e.target.value),
+      isValidPasswordAllCharacters(e.target.value)
     );
   };
 
-  const handlePasswordCheckInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePasswordCheckInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setPasswordCheck(e.target.value);
 
     setPasswordCheckCorrect(password === e.target.value);
   };
 
-  const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
 
-  const handleAddressInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeAddressInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(e.target.value);
   };
 
-  const handlerPhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangerPhoneNumberInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     if (e.target.value.length <= 11) {
       setPhoneNumber(e.target.value);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const onSubmitSignupForm = (e: React.FormEvent) => {
     e.preventDefault();
     if (!(e.target instanceof HTMLFormElement)) return;
 
@@ -82,14 +86,14 @@ function SignupForm() {
   };
 
   return (
-    <StyledForm onSubmit={handleSubmit}>
+    <StyledForm onSubmit={onSubmitSignupForm}>
       <label htmlFor="id">아이디</label>
       <input
         id="id"
         type="text"
         placeholder="아이디를 입력해주세요"
         value={id}
-        onChange={handleIdInput}
+        onChange={onChangeIdInput}
         pattern={'^[a-z0-9_-]{5,20}$'}
         required
       />
@@ -112,7 +116,7 @@ function SignupForm() {
         type="password"
         placeholder="8~16자의 비밀번호(영문 소문자, 숫자, 특수문자)를 입력해주세요"
         value={password}
-        onChange={handlePasswordInput}
+        onChange={onChangePasswordInput}
         pattern={
           '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
         }
@@ -127,7 +131,7 @@ function SignupForm() {
         type="password"
         placeholder="비밀번호를 재입력해주세요"
         value={passwordCheck}
-        onChange={handlePasswordCheckInput}
+        onChange={onChangePasswordCheckInput}
         pattern={
           '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
         }
@@ -139,7 +143,7 @@ function SignupForm() {
         type="email"
         placeholder="이메일을 입력해주세요"
         value={email}
-        onChange={handleEmailInput}
+        onChange={onChangeEmailInput}
         pattern={'^[a-z0-9._-]+@[a-z]+[.]+[a-z]{2,3}$'}
         required
       />
@@ -149,7 +153,7 @@ function SignupForm() {
         type="address"
         placeholder="주소를 입력해주세요"
         value={address}
-        onChange={handleAddressInput}
+        onChange={onChangeAddressInput}
         maxLength={255}
         required
       />
@@ -159,7 +163,7 @@ function SignupForm() {
         type="number"
         placeholder="핸드폰 번호를 입력해주세요"
         value={phoneNumber}
-        onChange={handlerPhoneNumberInput}
+        onChange={onChangerPhoneNumberInput}
         required
       />
       <StyledSignupButton type="submit">회원가입</StyledSignupButton>

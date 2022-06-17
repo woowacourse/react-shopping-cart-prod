@@ -1,48 +1,37 @@
-import {
-  CartProductState,
-  CartStoreState,
-  Product,
-  ProductStoreState,
-} from 'types/index';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+import { getCarts } from 'redux/thunks/cart';
+import { getProducts } from 'redux/thunks/product';
+
+import Loading from 'components/@shared/Loading';
+import CartContent from 'components/CartContent/CartContent';
 
 import CONDITION from 'constants/condition';
-import CartContent from 'components/CartContent/CartContent';
-import Loading from 'components/@shared/Loading';
-import { getProducts } from 'redux/thunks';
-import styled from 'styled-components';
+import { CartStoreState, Product, ProductStoreState } from 'types/index';
 
 function CartPage() {
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition,
+    (state: { product: ProductStoreState }) => state.product.condition
   );
   const productList = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productList,
+    (state: { product: ProductStoreState }) => state.product.productList
   );
-  const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+  const cartItems = useSelector(
+    (state: { cart: CartStoreState }) => state.cart.cartItems
   );
-  const [cartItems, setCartItems] = useState<Array<CartProductState>>([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (productList.length < 1) {
-      getProducts(dispatch);
+      dispatch(getProducts());
     }
   }, [dispatch, productList.length]);
 
   useEffect(() => {
-    if (productList.length < 1) return;
-
-    setCartItems(
-      cart.map(({ id, stock, checked }) => {
-        const item = productList.find(product => product.id === id) as Product;
-
-        return { product: item, stock, checked };
-      }),
-    );
-  }, [cart, productList]);
+    dispatch(getCarts());
+  }, [dispatch]);
 
   const renderSwitch = () => {
     switch (condition) {

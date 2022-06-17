@@ -1,26 +1,27 @@
-import { CartStoreState, Product } from 'types/index';
+import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import ProductCard from 'components/ProductCard/ProductCard';
+
+import { CartStoreState, Product } from 'types/index';
 import { isProductInCart } from 'utils/validator';
-import styled from 'styled-components';
-import { useSelector } from 'react-redux';
 
 type Props = {
   productList: Array<Product>;
 };
 
 function ProductCardGrid({ productList }: Props) {
-  const cart = useSelector(
-    (state: { cart: CartStoreState }) => state.cart.cart,
+  const cartItems = useSelector(
+    (state: { cart: CartStoreState }) => state.cart.cartItems
   );
 
   return (
     <StyledProductCardGrid>
       {productList.length > 0 ? (
-        productList.map(product => (
+        productList.map((product) => (
           <ProductCard
             product={product}
-            isInCart={isProductInCart(product.id, cart)}
+            isInCart={isProductInCart(product.id, cartItems)}
             key={product.id}
           />
         ))

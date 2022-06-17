@@ -19,7 +19,6 @@ Default.args = {
       image:
         'https://user-images.githubusercontent.com/44823900/167772500-dff4dfb5-6ad2-48fe-937d-81bc6800d0e2.jpg',
       description: '전처리 양파 다이스',
-      stock: 76,
       brandId: 1,
       categoryId: 1,
       createdAt: 1652193534410,
@@ -31,7 +30,6 @@ Default.args = {
       image:
         'https://user-images.githubusercontent.com/44823900/167772807-6d640105-54d3-4648-b5b5-589a634861cd.jpg',
       description: '국내산 깐감자',
-      stock: 100,
       brandId: 1,
       categoryId: 1,
       createdAt: 1652193545357,
@@ -43,7 +41,6 @@ Default.args = {
       image:
         'https://user-images.githubusercontent.com/44823900/167772500-dff4dfb5-6ad2-48fe-937d-81bc6800d0e2.jpg',
       description: '전처리 양파 다이스',
-      stock: 76,
       brandId: 1,
       categoryId: 1,
       createdAt: 1652193534410,
@@ -55,7 +52,6 @@ Default.args = {
       image:
         'https://user-images.githubusercontent.com/44823900/167772807-6d640105-54d3-4648-b5b5-589a634861cd.jpg',
       description: '국내산 깐감자',
-      stock: 100,
       brandId: 1,
       categoryId: 1,
       createdAt: 1652193545357,
@@ -67,7 +63,6 @@ Default.args = {
       image:
         'https://user-images.githubusercontent.com/44823900/167772500-dff4dfb5-6ad2-48fe-937d-81bc6800d0e2.jpg',
       description: '전처리 양파 다이스',
-      stock: 76,
       brandId: 1,
       categoryId: 1,
       createdAt: 1652193534410,
@@ -79,7 +74,6 @@ Default.args = {
       image:
         'https://user-images.githubusercontent.com/44823900/167772807-6d640105-54d3-4648-b5b5-589a634861cd.jpg',
       description: '국내산 깐감자',
-      stock: 100,
       brandId: 1,
       categoryId: 1,
       createdAt: 1652193545357,

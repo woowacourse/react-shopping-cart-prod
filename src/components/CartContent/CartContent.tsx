@@ -1,43 +1,73 @@
-import { CART_MESSAGE } from 'constants/message';
-import CartItem from 'components/CartItem/CartItem';
-import { CartProductState } from 'types';
-import CheckBox from 'components/@shared/CheckBox';
-import { cartActions } from 'redux/actions';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+
+import { cartActions } from 'redux/actions';
+import { getCarts } from 'redux/thunks/cart';
+
+import CheckBox from 'components/@shared/CheckBox';
+import CartItem from 'components/CartItem/CartItem';
+
+import cartAPI from 'apis/cart';
+import { CART_MESSAGE } from 'constants/message';
+import { Cart, CartStoreState } from 'types/cart';
 
 type Props = {
-  cartItems: Array<CartProductState>;
+  cartItems: Array<Cart>;
 };
 
 function CartContent({ cartItems }: Props) {
   const dispatch = useDispatch();
+  const { checkedCartItems } = useSelector(
+    (state: { cart: CartStoreState }) => state.cart
+  );
+  const [isAllChecked, setIsAllChecked] = useState(false);
 
-  const calculateTotalMoney = () => {
-    return cartItems.reduce((prevMoney, item) => {
-      const { product, stock, checked } = item;
+  const getTotalMoney = () => {
+    return checkedCartItems.reduce((prevMoney, checkedCartItemId) => {
+      const cartItem = cartItems.find(
+        (cartItem) => cartItem.id === checkedCartItemId
+      );
 
-      if (!checked) return prevMoney;
+      if (cartItem) {
+        const {
+          product: { price },
+        } = cartItem;
 
-      return prevMoney + product.price * stock;
+        return prevMoney + price * cartItem.quantity;
+      }
+
+      return prevMoney;
     }, 0);
   };
 
-  const isAllChecked = () => {
-    return cartItems.every(item => item.checked === true);
-  };
-
   const onChangeAllChecked = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
 
-    dispatch(cartActions.toggleCheckAllProduct(!isAllChecked()));
+    //TODO: 이 코드 생각해보기
+    if (isAllChecked) {
+      cartItems.forEach(({ id }) => dispatch(cartActions.uncheckCartItem(id)));
+    } else {
+      cartItems.forEach(
+        ({ id }) =>
+          !checkedCartItems.includes(id) &&
+          dispatch(cartActions.checkCartItem(id))
+      );
+    }
+
+    setIsAllChecked((isAllChecked) => !isAllChecked);
   };
 
-  const onClickCheckedDeleteButton = () => {
+  const onClickCheckedDeleteButton = async () => {
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteCheckedToCart());
+      try {
+        await cartAPI.deleteCartItems(checkedCartItems);
+        await dispatch(getCarts());
+      } catch (error) {
+        alert(error);
+      }
     }
   };
 
@@ -48,7 +78,7 @@ function CartContent({ cartItems }: Props) {
           <StyledAllCheckOption>
             <CheckBox
               id="all-check"
-              checked={isAllChecked()}
+              checked={isAllChecked}
               onChange={onChangeAllChecked}
             />
             <p>전체 선택/해제</p>
@@ -60,12 +90,13 @@ function CartContent({ cartItems }: Props) {
             선택 상품 삭제
           </StyledDeleteButton>
         </StyledProductOptions>
-        {cartItems.map(({ product, stock, checked }) => (
+        {cartItems.map(({ id, product, quantity }) => (
           <CartItem
-            product={product}
-            stock={stock}
-            checked={checked}
             key={product.id}
+            cartItemId={id}
+            product={product}
+            quantity={quantity}
+            checked={isAllChecked}
           />
         ))}
       </StyledProductContainer>
@@ -73,7 +104,7 @@ function CartContent({ cartItems }: Props) {
         <h3>결제예상금액</h3>
         <hr />
         <StyledTotalMoney>
-          {calculateTotalMoney().toLocaleString('ko-KR')} 원
+          {getTotalMoney().toLocaleString('ko-KR')} 원
         </StyledTotalMoney>
         <StyledOrderButton type="button">주문하기</StyledOrderButton>
       </StyledTotalContainer>

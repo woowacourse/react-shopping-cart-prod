@@ -1,11 +1,12 @@
-import preventClickEvent from 'utils/event';
 import styled from 'styled-components';
+
+import preventClickEvent from 'utils/event';
 
 type Props = {
   min?: number;
   max?: number;
   value: number;
-  setValue: (value: number) => void;
+  setValue: (quantity: number) => void;
 };
 
 function NumberInput({ min = 1, max = 99, value, setValue }: Props) {
