@@ -9,6 +9,7 @@ import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
 
 import styles from "./OrderListPage.module";
 import PageLoader from "../../components/PageLoader";
+import PageErrorResult from "../../components/PageErrorResult";
 
 function OrderListPage() {
   const {
@@ -27,7 +28,8 @@ function OrderListPage() {
   }, []);
 
   if (status === FETCH_STATUS.PENDING || !orderList) return <PageLoader />;
-  if (status === FETCH_STATUS.FAIL) return <div>ERROR!! : {error.message}</div>;
+  if (status === FETCH_STATUS.FAIL)
+    return <PageErrorResult errorMessage={error.message} />;
 
   return (
     <div className="wrapper">

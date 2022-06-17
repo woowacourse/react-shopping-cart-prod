@@ -9,6 +9,7 @@ import styles from "./ProductDetailPage.module";
 import { REQUEST_METHOD, FETCH_STATUS, API_SERVER } from "../../constants";
 import { useFetch } from "../../hooks/useFetch";
 import PageLoader from "../../components/PageLoader";
+import PageErrorResult from "../../components/PageErrorResult";
 
 function ProductDetailPage() {
   const { id: productId } = useParams();
@@ -50,11 +51,7 @@ function ProductDetailPage() {
 
   if (getProductDetailStatus === FETCH_STATUS.PENDING) return <PageLoader />;
   if (getProductDetailStatus === FETCH_STATUS.FAIL)
-    return (
-      <div>
-        ERROR!! : {getProductDetailError.code}, {getProductDetailError.message}
-      </div>
-    );
+    return <PageErrorResult errorMessage={getProductDetailError.message} />;
 
   const { name, price, thumbnailImage } = productDetail;
 

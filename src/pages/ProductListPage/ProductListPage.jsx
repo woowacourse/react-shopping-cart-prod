@@ -8,6 +8,7 @@ import ProductItem from "./components/ProductItem";
 import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
 import styles from "./ProductListPage.module";
 import PageLoader from "../../components/PageLoader";
+import PageErrorResult from "../../components/PageErrorResult";
 
 function ProductListPage() {
   const {
@@ -26,7 +27,8 @@ function ProductListPage() {
   }, []);
 
   if (status === FETCH_STATUS.PENDING) return <PageLoader />;
-  if (status === FETCH_STATUS.FAIL) return <div>ERROR!! : {error.message}</div>;
+  if (status === FETCH_STATUS.FAIL)
+    return <PageErrorResult errorMessage={error.message} />;
 
   return (
     <div className="wrapper">
