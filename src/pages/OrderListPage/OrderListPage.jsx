@@ -8,6 +8,7 @@ import { useFetch } from "../../hooks/useFetch";
 import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
 
 import styles from "./OrderListPage.module";
+import PageLoader from "../../components/PageLoader";
 
 function OrderListPage() {
   const {
@@ -25,8 +26,7 @@ function OrderListPage() {
     getOrderList();
   }, []);
 
-  if (status === FETCH_STATUS.PENDING || !orderList)
-    return <div>...Loading</div>;
+  if (status === FETCH_STATUS.PENDING || !orderList) return <PageLoader />;
   if (status === FETCH_STATUS.FAIL) return <div>ERROR!! : {error.message}</div>;
 
   return (

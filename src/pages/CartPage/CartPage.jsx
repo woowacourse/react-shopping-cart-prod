@@ -9,6 +9,7 @@ import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
 
 import styles from "./CartPage.module";
 import { useFetch } from "../../hooks/useFetch";
+import PageLoader from "../../components/PageLoader";
 
 function CartPage() {
   const {
@@ -26,7 +27,7 @@ function CartPage() {
     getCartItemList();
   }, []);
 
-  if (status === FETCH_STATUS.PENDING) return <div>...Loading</div>;
+  if (status === FETCH_STATUS.PENDING) return <PageLoader />;
   if (status === FETCH_STATUS.FAIL) return <div>ERROR!! : {error.message}</div>;
 
   return (

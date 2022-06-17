@@ -8,6 +8,7 @@ import Divider from "@components/Divider";
 import styles from "./ProductDetailPage.module";
 import { REQUEST_METHOD, FETCH_STATUS, API_SERVER } from "../../constants";
 import { useFetch } from "../../hooks/useFetch";
+import PageLoader from "../../components/PageLoader";
 
 function ProductDetailPage() {
   const { id: productId } = useParams();
@@ -47,8 +48,7 @@ function ProductDetailPage() {
     }
   }, [addProductToCartStatus, addProductToCartError]);
 
-  if (getProductDetailStatus === FETCH_STATUS.PENDING)
-    return <div>...Loading</div>;
+  if (getProductDetailStatus === FETCH_STATUS.PENDING) return <PageLoader />;
   if (getProductDetailStatus === FETCH_STATUS.FAIL)
     return (
       <div>
