@@ -12,18 +12,22 @@ function useFetch({ url, method = 'get', headers, skip = false }) {
     try {
       const controller = new AbortController();
       setTimeout(() => controller.abort(), LIMIT_SERVER_CONNECTION_TIME);
-
       const { data } = await axios({
-        url: `${process.env.REACT_APP_API_HOST}${url}`,
+        url,
         method,
-        headers,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          ...headers,
+        },
         data: body,
         signal: controller.signal,
       });
 
       setData(data);
+      return data;
     } catch (error) {
       setError(error.message);
+      throw new Error(error.message);
     } finally {
       setIsLoading(false);
     }

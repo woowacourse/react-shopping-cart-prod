@@ -5,7 +5,26 @@ import ProductListBox from 'components/ProductListBox/ProductListBox.component';
 import ProductListContainer from 'components/ProductListContainer/ProductListContainer.component';
 import SkeletonItem from 'components/SkeletonItem/SkeletonItem.component';
 
-import useFetch from 'hooks/useFetch';
+import useLoadProducts from 'hooks/api/products/useLoadProducts';
+
+function ProductList() {
+  const { products, isLoading, loadProducts } = useLoadProducts();
+
+  return (
+    <>
+      <Header />
+      <PageContainer>
+        {isLoading ? (
+          <LoadingSection />
+        ) : (
+          <ProductListContainer products={products} loadProducts={loadProducts} />
+        )}
+      </PageContainer>
+    </>
+  );
+}
+
+export default ProductList;
 
 function LoadingSection() {
   return (
@@ -16,18 +35,3 @@ function LoadingSection() {
     </ProductListBox>
   );
 }
-
-function ProductList() {
-  const { data, isLoading } = useFetch({ url: `/product` });
-
-  return (
-    <>
-      <Header />
-      <PageContainer>
-        {isLoading ? <LoadingSection /> : <ProductListContainer data={data} />}
-      </PageContainer>
-    </>
-  );
-}
-
-export default ProductList;

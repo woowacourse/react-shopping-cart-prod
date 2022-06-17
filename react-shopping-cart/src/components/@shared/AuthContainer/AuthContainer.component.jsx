@@ -2,6 +2,16 @@ import styled from 'styled-components';
 
 import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
 
+function AuthContainer({ children }) {
+  return (
+    <AuthWrapper>
+      <AuthBox>{children}</AuthBox>
+    </AuthWrapper>
+  );
+}
+
+export default AuthContainer;
+
 const AuthWrapper = styled(FlexBox).attrs({
   justifyContent: 'center',
   alignItems: 'center',
@@ -17,13 +27,3 @@ const AuthBox = styled.div`
   margin: auto;
   padding: 30px 50px;
 `;
-
-function AuthContainer({ children }) {
-  return (
-    <AuthWrapper>
-      <AuthBox>{children}</AuthBox>
-    </AuthWrapper>
-  );
-}
-
-export default AuthContainer;
