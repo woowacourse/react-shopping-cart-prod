@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { getUser } from "@redux/reducers/user-reducer/userThunks";
-import LocalStorage from "@storage/localStorage";
+import AccessTokenStorage from "@storage/accessTokenStorage";
 import { accessPolicy } from "./constants";
 
 // accessPolicy = "all" | "onlyLoggedInUser" | "onlyLoggedOutUser"
@@ -12,7 +12,7 @@ function AuthGuard({ policy = accessPolicy.onlyLoggedInUser, children }) {
 
   useEffect(() => {
     (async () => {
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       accessToken && (await dispatch(getUser()));
 
       const state = store.getState();

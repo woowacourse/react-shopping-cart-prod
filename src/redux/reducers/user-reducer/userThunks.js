@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import ApiError from "@redux/utils/ApiError";
-import LocalStorage from "@storage/localStorage";
+import AccessTokenStorage from "@storage/accessTokenStorage";
 import Fetcher from "../../../utils/fetcher";
 import createAction from "../../utils/createAction";
 import ACTION_TYPE from "./userActions";
@@ -107,7 +107,7 @@ export const secession =
 
     try {
       const { password } = data;
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.delete({
         endpoint: "customers/me",
         body: { password },
@@ -138,7 +138,7 @@ export const getUser =
     dispatch(createAction(ACTION_TYPE.GET_USER_PENDING));
 
     try {
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.get({
         endpoint: "customers/me",
         accessToken,
@@ -175,7 +175,7 @@ export const updateUserPassword =
 
     try {
       const { oldPassword, newPassword } = data;
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.patch({
         endpoint: "customers/me?target=password",
         body: {
@@ -210,7 +210,7 @@ export const updateUserGeneralInfo =
 
     try {
       const { username } = data;
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.patch({
         endpoint: "customers/me?target=generalInfo",
         body: {

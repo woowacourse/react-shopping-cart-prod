@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import ApiError from "@redux/utils/ApiError";
-import LocalStorage from "@storage/localStorage";
+import AccessTokenStorage from "@storage/accessTokenStorage";
 import Fetcher from "../../../utils/fetcher";
 import createAction from "../../utils/createAction";
 import ACTION_TYPE from "./orderActions";
@@ -16,7 +16,7 @@ export const createOrder =
 
     const { cartItemIds } = data;
     try {
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.post({
         endpoint: "myorders",
         body: {

@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import ApiError from "@redux/utils/ApiError";
-import LocalStorage from "@storage/localStorage";
+import AccessTokenStorage from "@storage/accessTokenStorage";
 import Fetcher from "../../../utils/fetcher";
 import createAction from "../../utils/createAction";
 import ACTION_TYPE from "./orderListActions";
@@ -15,7 +15,7 @@ export const getOrderList =
     dispatch(createAction(ACTION_TYPE.GET_ORDER_LIST_PENDING));
 
     try {
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.get({ endpoint: "myorders", accessToken });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();

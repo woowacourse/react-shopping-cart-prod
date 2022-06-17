@@ -1,8 +1,8 @@
 import queryState from "@redux/utils/queryState";
 import LocalStorage from "@storage/localStorage";
 import { initialState } from "@redux/constants";
+import AccessTokenStorage from "@storage/accessTokenStorage";
 import ACTION_TYPE from "./userActions";
-import Fetcher from "../../../utils/fetcher";
 
 function userReducer(state, { type, payload }, totalState) {
   switch (type) {
@@ -34,7 +34,7 @@ function userReducer(state, { type, payload }, totalState) {
       const newState = structuredClone(state);
       const { accessToken } = payload;
 
-      LocalStorage.setItem("accessToken", accessToken);
+      AccessTokenStorage.save(accessToken);
       newState.query.login = queryState.fullfilled();
       newState.data.isLoggedIn = true;
 

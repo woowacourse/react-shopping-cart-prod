@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import ApiError from "@redux/utils/ApiError";
-import LocalStorage from "@storage/localStorage";
+import AccessTokenStorage from "@storage/accessTokenStorage";
 import Fetcher from "../../../utils/fetcher";
 import createAction from "../../utils/createAction";
 import ACTION_TYPE from "./cartActions";
@@ -35,7 +35,7 @@ export const getCart =
     dispatch(createAction(ACTION_TYPE.GET_CART_PENDING));
 
     try {
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.get({ endpoint: "mycarts", accessToken });
       if (!response.ok) {
         const { errorCode, message: originalMessage } = await response.json();
@@ -64,7 +64,7 @@ export const addProductToCart =
 
     try {
       const { productId, quantity } = data;
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.post({
         endpoint: "mycarts",
         body: { productId, quantity },
@@ -100,7 +100,7 @@ export const updateCartItemQuantity =
 
     try {
       const { cartItemId, quantity } = data;
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.patch({
         endpoint: "mycarts",
         body: { cartItemId, quantity },
@@ -138,7 +138,7 @@ export const deleteCartItems =
 
     try {
       const { cartItemIds } = data;
-      const accessToken = LocalStorage.getItem("accessToken");
+      const accessToken = AccessTokenStorage.get();
       const response = await Fetcher.delete({
         endpoint: "mycarts",
         body: { cartItemIds },

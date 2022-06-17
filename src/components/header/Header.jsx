@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import Logo from "@assets/images/logo.svg";
 import { getUser } from "@redux/reducers/user-reducer/userThunks";
-import LocalStorage from "@storage/localStorage";
+import AccessTokenStorage from "@storage/accessTokenStorage";
 import styles from "./header.module";
 
 function Header({ className }) {
@@ -15,12 +15,12 @@ function Header({ className }) {
   );
 
   const handleLogoutBtnClick = () => {
-    LocalStorage.removeItem("accessToken");
+    AccessTokenStorage.clear();
     window.location.href = "/";
   };
 
   useEffect(() => {
-    const accessToken = LocalStorage.getItem("accessToken");
+    const accessToken = AccessTokenStorage.get();
     accessToken && dispatch(getUser());
   }, []);
 
