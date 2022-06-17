@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
 
 import BorderBox from 'components/@shared/BorderBox/BorderBox.component';
 import CheckBox from 'components/@shared/CheckBox/CheckBox.component';
@@ -13,35 +14,42 @@ import PaymentAmountContainer from 'components/PaymentAmountContainer/PaymentAmo
 import ShoppingCartListContainer from 'components/ShoppingCartListContainer/ShoppingCartListContainer.component';
 
 import { addAllItem, deleteAllItem } from 'redux/actions/orderList.action';
-import { deleteItemList } from 'redux/actions/shoppingCart.action';
+import { setSnackBarMessage } from 'redux/actions/snackbar.action';
 
-import useFetch from 'hooks/useFetch';
+import useDeleteCart from 'hooks/api/carts/useDeleteCarts';
+import useLoadCarts from 'hooks/api/carts/useLoadCarts';
+
+import { calculatePrice } from 'utils';
 
 function ShoppingCartList() {
   const dispatch = useDispatch();
-  const { data, isLoading } = useFetch({ url: '/product' });
-  const orderList = useSelector(state => state.orderList);
-  const shoppingCart = useSelector(state => state.shoppingCart);
 
-  const disabled = shoppingCart.length === 0;
-  const checked = shoppingCart.length !== 0 && orderList.length === shoppingCart.length;
+  const { carts, isLoading, loadCarts } = useLoadCarts();
+  const { items: orderList } = useSelector(state => state.orderList);
+  const { deleteCarts } = useDeleteCart(true);
+
+  const total = calculatePrice(carts, orderList);
+
+  const disabled = carts?.length === 0;
+  const checked = carts?.length !== 0 && orderList.length === carts?.length;
 
   const handleChangeCheckBox = () => {
     if (checked) {
       dispatch(deleteAllItem());
     } else {
-      dispatch(addAllItem(shoppingCart));
+      dispatch(addAllItem(carts));
     }
   };
 
-  const handleClickDeleteBox = () => {
+  const handleClickDeleteBox = async () => {
     if (orderList.length === 0) {
-      alert('삭제할 상품이 존재하지 않습니다');
+      dispatch(setSnackBarMessage('삭제할 상품이 존재하지 않습니다'));
       return;
     }
     if (window.confirm(`${orderList.length}개의 상품을 장바구니에서 삭제하시겠습니까?`)) {
-      dispatch(deleteItemList(orderList));
+      await deleteCarts({ productIds: orderList });
       dispatch(deleteAllItem());
+      await loadCarts();
     }
   };
 
@@ -49,21 +57,16 @@ function ShoppingCartList() {
     <>
       <Header />
       <FlexBox as="main" justifyContent="center">
-        <PageContainer width="1320px" direction="column" alignItems="center">
+        <PageContainer direction="column" alignItems="center">
           <TitleBox as="h1">장바구니</TitleBox>
           {isLoading ? (
             <Loading />
           ) : (
-            <FlexBox width="1320px" justifyContent="space-between">
-              <article>
+            <FlexBox width="100%" gap="30px" justifyContent="space-between">
+              <CartList>
                 <h2 hidden>장바구니 상품들 리스트</h2>
-                <FlexBox
-                  width="736px"
-                  height="80px"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <FlexBox gap="10px">
+                <FlexBox height="80px" justifyContent="space-between" alignItems="center">
+                  <FlexBox gap="10px" alignItems="center">
                     <CheckBox
                       disabled={disabled}
                       checked={checked}
@@ -71,8 +74,7 @@ function ShoppingCartList() {
                     />
                     <TextBox fontSize="small">{checked ? '선택해제' : '전체선택'}</TextBox>
                   </FlexBox>
-                  <BorderBox
-                    width="117px"
+                  <SelectedCartDeleteButton
                     height="50px"
                     lineHeight="50px"
                     textAlign="center"
@@ -80,11 +82,11 @@ function ShoppingCartList() {
                     onClick={() => handleClickDeleteBox()}
                   >
                     상품삭제
-                  </BorderBox>
+                  </SelectedCartDeleteButton>
                 </FlexBox>
-                <ShoppingCartListContainer data={data} />
-              </article>
-              <PaymentAmountContainer count={orderList.length} data={data} />
+                <ShoppingCartListContainer carts={carts} loadCarts={loadCarts} />
+              </CartList>
+              <PaymentAmountContainer count={orderList.length} total={total} />
             </FlexBox>
           )}
         </PageContainer>
@@ -94,3 +96,19 @@ function ShoppingCartList() {
 }
 
 export default ShoppingCartList;
+
+const CartList = styled.article`
+  width: 60%;
+  min-width: 450px;
+`;
+
+const SelectedCartDeleteButton = styled(BorderBox).attrs({
+  padding: '1rem',
+  height: '50px',
+  lineHeight: '50px',
+  textAlign: 'center',
+  cursor: 'pointer',
+})`
+  display: flex;
+  align-items: center;
+`;

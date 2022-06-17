@@ -11,42 +11,19 @@ import Logo from 'components/@shared/Logo/Logo.component';
 import LoginInfoContainer from 'components/LoginInfoContaier/LoginInfoContainer.component';
 import UserInfoContainer from 'components/UserInfoContainer/UserInfoContainer.component';
 
+import { setSnackBarMessage } from 'redux/actions/snackbar.action';
 import { resetUserInfo } from 'redux/actions/userInfo.action';
 
-import useFetch from 'hooks/useFetch';
+import useSignUp from 'hooks/api/auth/useSignUp';
 
 import { processServerData } from 'utils';
-
-const InfoDiv = styled(FlexBox).attrs({
-  height: '100%',
-  direction: 'column',
-  justifyContent: 'center',
-  gap: '25px',
-})`
-  overflow-x: hidden;
-`;
-
-const SlideDiv = styled.div`
-  #userInfo {
-    transition: 0.25s;
-    transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(-100%)')};
-  }
-  #loginInfo {
-    transition: 0.25s;
-    transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(100%)')};
-  }
-`;
-
-const SlideTransition = ({ children, ...rest }) => (
-  <Transition {...rest}>{state => <SlideDiv state={state}>{children}</SlideDiv>}</Transition>
-);
 
 function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userInfo = useSelector(state => state.userInfo);
   const postUserInfo = processServerData(userInfo);
-  const { fetchData: signUp } = useFetch({ method: 'post', url: '/customers' });
+  const { signUp } = useSignUp();
   const [showLoginInfo, setShowLoginInfo] = useState(false);
 
   useEffect(() => {
@@ -61,16 +38,18 @@ function SignUp() {
 
   const handlePostUserInfo = async () => {
     await signUp(postUserInfo);
-    alert('회원가입에 성공하셨습니다!');
+    dispatch(setSnackBarMessage('🎉 회원가입에 성공하셨습니다!'));
     navigate('/login');
   };
 
   return (
     <AuthContainer>
-      <InfoDiv>
-        <Link to="/">
+      <Link to="/">
+        <LogoBox>
           <Logo color="MINT_001" />
-        </Link>
+        </LogoBox>
+      </Link>
+      <InfoDiv>
         <SwitchTransition>
           <SlideTransition
             key={showLoginInfo ? 'loginInfo' : 'userInfo'}
@@ -95,3 +74,30 @@ function SignUp() {
 }
 
 export default SignUp;
+
+const LogoBox = styled.div`
+  margin: 2rem 0;
+`;
+
+const InfoDiv = styled(FlexBox).attrs({
+  direction: 'column',
+  justifyContent: 'center',
+  gap: '25px',
+})`
+  overflow-x: hidden;
+`;
+
+const SlideDiv = styled.div`
+  #userInfo {
+    transition: 0.25s;
+    transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(-100%)')};
+  }
+  #loginInfo {
+    transition: 0.25s;
+    transform: ${({ state }) => (state === 'entered' ? 'translateX(0)' : 'translateX(100%)')};
+  }
+`;
+
+const SlideTransition = ({ children, ...rest }) => (
+  <Transition {...rest}>{state => <SlideDiv state={state}>{children}</SlideDiv>}</Transition>
+);

@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
-const ProductListBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 45px;
-`;
+import FlexBox from 'components/@shared/FlexBox/FlexBox.component';
+
+const ProductListBox = styled(FlexBox).attrs({
+  wrap: 'wrap',
+  gap: '45px',
+  justifyContent: 'center',
+})``;
 
 export default ProductListBox;

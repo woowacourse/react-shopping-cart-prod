@@ -7,6 +7,6 @@ export const isInvalidPassword = password =>
 
 export const isInvalidName = name => !(name && name.length < 30);
 
-export const isInvalidAddress = address => !address;
+export const isInvalidAddress = address => address.length === 0;
 
-export const isInvalidPhoneNumber = phoneNumber => !/[0-9]{4}/.test(phoneNumber);
+export const isInvalidPhone = phone => !/[0-9]{4}/.test(phone);

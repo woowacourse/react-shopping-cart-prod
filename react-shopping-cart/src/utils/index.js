@@ -11,20 +11,27 @@ export function addQuantityData(cartItem, data) {
   return { ...productData, quantity: cartItem.quantity };
 }
 
-export function calculatePrice(data, shoppingCart, orderList) {
-  const orderItemData = data.filter(({ id }) => orderList.includes(id));
-  const orderItemInfoList = shoppingCart
-    .filter(cartItem => orderList.includes(cartItem.id))
-    .map(orderItem => addQuantityData(orderItem, orderItemData));
+export function calculatePrice(carts, orderList) {
+  const orderItemInfoList = carts?.filter(cartItem => orderList.includes(cartItem.productId));
 
-  return orderItemInfoList.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
+  return orderItemInfoList?.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
 }
 
 export function processServerData(userInfo) {
   return Object.entries(userInfo).reduce((acc, [key, value]) => {
-    if (key === 'phoneNumber') {
+    if (key === 'phone') {
       return { ...acc, phone: `010-${value.first}-${value.second}` };
     }
     return { ...acc, [key]: value.value };
   }, {});
 }
+
+export const enterSubmit = (e, condition, cb) => {
+  if (condition) {
+    return;
+  }
+
+  if (e.nativeEvent.key === 'Enter') {
+    cb();
+  }
+};
