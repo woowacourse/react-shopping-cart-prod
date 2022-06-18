@@ -20,14 +20,10 @@ export default function useCartItem(path = null) {
   const {fetch: deleteCart} = useFetch('delete');
 
   const deleteCartItem = (payload) => {
-    const response = JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
-
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
     if (deleteConfirm) {
       deleteCart({
         API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
-        headers: {Authorization: `Bearer ${accessToken}`},
         body: {productId: payload},
 
         onSuccess: () => {
@@ -50,11 +46,8 @@ export default function useCartItem(path = null) {
       return;
     }
 
-    const accessToken = response.accessToken;
-
     fetchCart({
       API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
-      headers: {Authorization: `Bearer ${accessToken}`},
 
       onSuccess: (fetchedData) => {
         dispatch({type: CART.INITIALIZE, payload: fetchedData.cart});
@@ -70,11 +63,8 @@ export default function useCartItem(path = null) {
       return;
     }
 
-    const accessToken = response.accessToken;
-
     postCart({
       API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
-      headers: {Authorization: `Bearer ${accessToken}`},
       body: {productId: payload.id},
 
       onSuccess: () => {
@@ -88,16 +78,12 @@ export default function useCartItem(path = null) {
   };
 
   const deleteSelectedCart = (payload) => {
-    const response = JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
-
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
 
     if (deleteConfirm) {
       payload.forEach((id) =>
         deleteCart({
           API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
-          headers: {Authorization: `Bearer ${accessToken}`},
           body: {productId: id},
 
           onSuccess: () => {

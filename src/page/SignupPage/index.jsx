@@ -68,6 +68,7 @@ function SignupPage() {
     const [account, nickname, password, passwordConfirm, address, start, middle, last] = inputs;
     signup.fetch({
       API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_SIGNUP}`,
+      auth: false,
       body: {
         account: account.value,
         nickname: nickname.value,

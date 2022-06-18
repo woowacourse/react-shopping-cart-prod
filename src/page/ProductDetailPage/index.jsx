@@ -29,6 +29,7 @@ export default function ProductDetailPage() {
   useEffect(() => {
     fetchProductDetail({
       API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_PRODUCT}/${id}`,
+      auth: false,
     });
   }, [fetchProductDetail, id]);
 

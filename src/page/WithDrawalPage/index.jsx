@@ -26,15 +26,12 @@ function WithDrawalPage() {
 
   const onSubmit = async (inputs) => {
     const [password] = inputs;
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
 
     withDrawal.fetch({
       API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
       body: {
         password: password.value,
       },
-      headers: {Authorization: `Bearer ${accessToken}`},
       onSuccess: () => {
         navigation(PATH.HOME);
         dispatch({type: AUTH.LOGOUT});

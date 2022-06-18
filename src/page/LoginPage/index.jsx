@@ -27,11 +27,9 @@ function LoginPage() {
       return;
     }
 
-    const accessToken = response.accessToken;
-
     userInfo({
       API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
-      headers: {Authorization: `Bearer ${accessToken}`},
+      auth: false,
       onSuccess: (res) => {
         dispatch({type: AUTH.SET_USER_INFO, payload: res});
       },

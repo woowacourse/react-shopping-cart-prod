@@ -1,6 +1,17 @@
 import {useCallback, useState} from 'react';
 import axios from 'axios';
 
+const getAccessToken = () => {
+  const response = JSON.parse(localStorage.getItem('accessToken'));
+  if (!response) {
+    return;
+  }
+
+  const accessToken = response.accessToken;
+  console.log('hey');
+  return accessToken;
+};
+
 export default function useFetch(method = 'get') {
   const [pending, setPending] = useState(null);
   const [data, setData] = useState(null);
@@ -9,7 +20,8 @@ export default function useFetch(method = 'get') {
   const fetch = useCallback(
     ({
       API_URL = '',
-      headers = null,
+      auth = true,
+      headers = auth ? {Authorization: `Bearer ${getAccessToken()}`} : null,
       body = null,
       onSuccess = () => void 0,
       onFail = (error) => {
