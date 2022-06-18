@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import * as S from './style';
 import baedaleTear from 'assets/baedale_tear.png';
@@ -6,20 +6,22 @@ import baedaleTear from 'assets/baedale_tear.png';
 import CheckBox from 'component/common/CheckBox';
 import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
-import {PATH} from 'constant';
-import {useDispatch} from 'react-redux';
+import {API_URL, PATH} from 'constant';
+import {useDispatch, useSelector} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
 import useControlledInput from 'hook/useControlledInput';
 import {ERROR_MESSAGE} from 'constant';
 
-function WithDrawalPage() {
+function WithdrawalPage() {
   const [isChecked, setIsChecked] = useState(false);
-
-  const [onChangePassword, restPassword] = useControlledInput({});
 
   const navigation = useNavigate();
 
   const dispatch = useDispatch();
+
+  const accessToken = useSelector((state) => state.authReducer.accessToken);
+
+  const [onChangePassword, restPassword] = useControlledInput({});
 
   const withDrawal = useFetch('delete');
 
@@ -27,11 +29,9 @@ function WithDrawalPage() {
 
   const onSubmit = async (inputs) => {
     const [password] = inputs;
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
 
     withDrawal.fetch({
-      API_URL: process.env.REACT_APP_WITHDRAWAL_API_URL,
+      API_URL: `${API_URL}/customers`,
       body: {
         password: password.value,
       },
@@ -41,12 +41,9 @@ function WithDrawalPage() {
         dispatch({type: AUTH.LOGOUT});
         localStorage.removeItem('accessToken');
       },
+      onFail: () => alert(ERROR_MESSAGE.WITHDRAWAL),
     });
   };
-
-  useEffect(() => {
-    withDrawal.error && alert(ERROR_MESSAGE.WITHDRAWAL);
-  }, [withDrawal.error]);
 
   return (
     <S.Layout>
@@ -82,13 +79,13 @@ function WithDrawalPage() {
             }}
           >
             <S.WithDrawalInput
+              {...restPassword}
               type="password"
               id="password"
               size="large"
               label="비밀번호"
               placeHolder="비밀번호를 입력해주세요."
               onChange={(e) => onChangePassword(e.target.value)}
-              {...restPassword}
             />
             <S.WithDrawalButton isDisabled={!isChecked || !restPassword.value} type="submit">
               회원탈퇴
@@ -100,4 +97,4 @@ function WithDrawalPage() {
   );
 }
 
-export default WithDrawalPage;
+export default WithdrawalPage;

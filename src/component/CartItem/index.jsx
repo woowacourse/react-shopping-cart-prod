@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import CheckBox from 'component/common/CheckBox';
 import QuantityBox from 'component/common/QuantityBox';
 
-import useSelectedItem from 'hook/useSelectedItem';
+import useSelectItem from 'hook/useSelectItem';
 import useCartItem from 'hook/useCartItem';
 
 import * as S from 'component/CartItem/style';
@@ -13,32 +13,34 @@ import * as S from 'component/CartItem/style';
 import {PATH} from 'constant';
 
 export default function CartItem({cartInfo, initialChecked = false}) {
-  const {addSelectedItem, deleteSelectedItem} = useSelectedItem();
+  const {selectItem, deselectItem} = useSelectItem();
 
   const {deleteCartItem, increaseQuantity, decreaseQuantity} = useCartItem();
 
-  const {image, name, price, quantity, id} = cartInfo;
+  const {imageUrl, name, price, quantity, id} = cartInfo;
 
   return (
     <S.CartItemLayout>
       <CheckBox
         initialChecked={initialChecked}
         productId={Number.parseInt(id)}
-        handleCheckedTrue={addSelectedItem}
-        handleCheckedFalse={deleteSelectedItem}
+        handleCheckedTrue={selectItem}
+        handleCheckedFalse={deselectItem}
       />
       <Link to={`${PATH.DETAIL}/${id}`}>
-        <img src={image} alt="장바구니 상품 이미지" width="144px" height="144px" />
+        <img src={imageUrl} alt="장바구니 상품 이미지" width="144px" height="144px" />
       </Link>
       <S.ItemNameParagraph>{name}</S.ItemNameParagraph>
       <S.EditQuantityBox>
         <S.StyledDeleteIcon onClick={() => deleteCartItem(id)} />
         <QuantityBox
           quantity={quantity}
-          handleIncrease={() => increaseQuantity({quantity, id})}
-          handleDecrease={() => decreaseQuantity({quantity, id})}
+          handleIncrease={() => increaseQuantity(id)}
+          handleDecrease={() => decreaseQuantity(id)}
         />
-        <S.PriceSpan>{price.toLocaleString()}원</S.PriceSpan>
+        <S.PriceSpan>
+          {price.toLocaleString()}원 x {quantity} 개
+        </S.PriceSpan>
       </S.EditQuantityBox>
     </S.CartItemLayout>
   );

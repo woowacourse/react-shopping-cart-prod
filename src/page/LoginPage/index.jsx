@@ -1,9 +1,9 @@
 import Input from 'component/common/Input';
-import React, {useEffect} from 'react';
+import React from 'react';
 import * as S from './style';
 import theme from 'theme/theme';
 import {Link, useNavigate} from 'react-router-dom';
-import {ERROR_MESSAGE, PATH} from 'constant';
+import {API_URL, ERROR_MESSAGE, PATH} from 'constant';
 import useFetch from 'hook/useFetch';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
@@ -20,22 +20,21 @@ function LoginPage() {
 
   const onSubmit = (inputs) => {
     login.fetch({
-      API_URL: process.env.REACT_APP_LOGIN_API_URL,
+      API_URL: `${API_URL}/signin`,
       body: {
         account: inputs[0].value,
         password: inputs[1].value,
       },
       onSuccess: (data) => {
-        localStorage.setItem('accessToken', JSON.stringify(data));
-        dispatch({type: AUTH.LOGIN});
+        const accessToken = JSON.stringify(data);
+        localStorage.setItem('accessToken', accessToken);
+
+        dispatch({type: AUTH.LOGIN, payload: data.accessToken});
         navigation(PATH.HOME);
       },
+      onFail: () => alert(ERROR_MESSAGE.LOGIN),
     });
   };
-
-  useEffect(() => {
-    login.error && alert(ERROR_MESSAGE.LOGIN);
-  }, [login.error]);
 
   return (
     <S.Layout>
@@ -48,21 +47,21 @@ function LoginPage() {
           }}
         >
           <Input
+            {...restId}
             label="아이디"
             size="medium"
             id="id"
             placeHolder="아이디를 입력해주세요"
             onChange={(e) => onChangeId(e.target.value)}
-            {...restId}
           />
           <Input
+            {...restPassword}
             label="비밀번호"
             size="medium"
             id="password"
             type="password"
             placeHolder="비밀번호를 입력해주세요"
             onChange={(e) => onChangePassword(e.target.value)}
-            {...restPassword}
           />
           <S.ConfirmButton
             fontSize="14px"
@@ -73,12 +72,12 @@ function LoginPage() {
           >
             확인
           </S.ConfirmButton>
-          <S.SignupText>
+          <S.SignUpText>
             <span>아직 회원이 아니신가요?</span>
             <S.LinkText>
-              <Link to={PATH.SIGNUP}>회원가입</Link>
+              <Link to={PATH.SIGN_UP}>회원가입</Link>
             </S.LinkText>
-          </S.SignupText>
+          </S.SignUpText>
         </S.InputForm>
       </S.LoginContainer>
     </S.Layout>

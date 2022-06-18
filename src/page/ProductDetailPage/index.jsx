@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
 import {useParams} from 'react-router-dom';
 
 import ErrorPendingBoundary from 'component/common/ErrorPendingBoundary';
@@ -9,9 +8,13 @@ import * as S from 'page/ProductDetailPage/style';
 
 import useFetch from 'hook/useFetch';
 import useCartItem from 'hook/useCartItem';
+import {API_URL} from 'constant';
+import {useSelector} from 'react-redux';
 
 export default function ProductDetailPage() {
   const {id} = useParams();
+
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   const {initializeCart} = useCartItem();
 
@@ -23,11 +26,11 @@ export default function ProductDetailPage() {
   } = useFetch('get');
 
   useEffect(() => {
-    initializeCart();
-  }, [initializeCart]);
+    isLogin && initializeCart();
+  }, [isLogin, initializeCart]);
 
   useEffect(() => {
-    fetchProductDetail({API_URL: `${process.env.REACT_APP_PRODUCT_API_URL}/${id}`});
+    fetchProductDetail({API_URL: `${API_URL}/products/${id}`});
   }, [fetchProductDetail, id]);
 
   return (
@@ -42,9 +45,3 @@ export default function ProductDetailPage() {
     </S.DetailItemPageLayout>
   );
 }
-
-ProductDetailPage.propTypes = {
-  image: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.string,
-};

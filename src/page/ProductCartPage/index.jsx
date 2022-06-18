@@ -1,45 +1,61 @@
 import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
-import PropTypes from 'prop-types';
 
 import CheckBox from 'component/common/CheckBox';
 import ContentBox from 'component/common/ContentBox';
 import CartItem from 'component/CartItem';
-import ErrorPendingBoundary from 'component/common/ErrorPendingBoundary';
 
-import NotFoundPage from 'page/NotFoundPage';
 import * as S from 'page/ProductCartPage/style';
 
 import useCartItem from 'hook/useCartItem';
-import useSelectedItem from 'hook/useSelectedItem';
+import useSelectItem from 'hook/useSelectItem';
+import {useNavigate} from 'react-router-dom';
+import {CONFIRM_MESSAGE, PATH} from 'constant';
+import useAuth from 'hook/useAuth';
 
 export default function ProductCartPage() {
-  const cartItem = useSelector((state) => state.cartReducer.cart);
-  const error = useSelector((state) => state.cartReducer.error);
-  const pending = useSelector((state) => state.cartReducer.pending);
+  const navigation = useNavigate();
+
+  const cart = useSelector((state) => state.cartReducer.cart);
+
   const selectedItem = useSelector((state) => state.selectedItemReducer.selectedItem);
+
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   const {initializeCart, deleteSelectedCart} = useCartItem();
 
-  const {selectAllItem, unselectAllItem} = useSelectedItem();
+  const {selectAllItem, deselectAllItem} = useSelectItem();
+
+  const {navigateLoginPage} = useAuth();
 
   useEffect(() => {
-    initializeCart();
-  }, [initializeCart]);
+    if (isLogin === false) {
+      navigateLoginPage();
+      return;
+    }
 
-  const selectedCartItem = cartItem.filter(({id}) => selectedItem.includes(id));
+    initializeCart();
+  }, [isLogin]);
+
+  const selectedCartItem = cart.filter(({id}) => selectedItem.includes(id));
 
   const {totalQuantity, totalPrice} = selectedCartItem.reduce(
-    (prev, cur) => {
-      return {
-        totalQuantity: cur.quantity + prev.totalQuantity,
-        totalPrice: cur.price * cur.quantity + prev.totalPrice,
-      };
-    },
+    (prev, cur) => ({
+      totalQuantity: cur.quantity + prev.totalQuantity,
+      totalPrice: cur.price * cur.quantity + prev.totalPrice,
+    }),
     {totalQuantity: 0, totalPrice: 0},
   );
 
-  const isAllChecked = cartItem.length === selectedItem.length && selectedItem.length > 0;
+  const isAllChecked = cart.length === selectedItem.length && selectedItem.length > 0;
+
+  const onClickOrderButton = () => {
+    if (totalQuantity <= 0) {
+      alert(CONFIRM_MESSAGE.PLEASE_CHOOSE_PRODUCT);
+      return;
+    }
+    navigation(PATH.ORDER_PAY);
+  };
 
   return (
     <S.ProductCartPageLayout>
@@ -50,8 +66,8 @@ export default function ProductCartPage() {
             <S.CheckBoxRow>
               <CheckBox
                 initialChecked={isAllChecked}
-                handleCheckedTrue={() => selectAllItem(cartItem)}
-                handleCheckedFalse={unselectAllItem}
+                handleCheckedTrue={() => selectAllItem(cart)}
+                handleCheckedFalse={deselectAllItem}
               />
               {isAllChecked ? '선택해제' : '전체선택'}
             </S.CheckBoxRow>
@@ -60,23 +76,17 @@ export default function ProductCartPage() {
             </S.DeleteButton>
           </S.SelectDeleteRow>
 
-          <S.ListHeaderSpan>장바구니 상품 ({cartItem.length}개)</S.ListHeaderSpan>
+          <S.ListHeaderSpan>장바구니 상품 ({cart.length}개)</S.ListHeaderSpan>
           <S.CartListBox>
-            <ErrorPendingBoundary
-              error={error}
-              pending={pending}
-              fallback={<NotFoundPage>에러가 발생했어요.</NotFoundPage>}
-            >
-              {cartItem.map((cartInfo) => {
-                const initialChecked = selectedItem.includes(cartInfo.id);
-                return (
-                  <React.Fragment key={cartInfo.id}>
-                    <CartItem cartInfo={cartInfo} initialChecked={initialChecked} />
-                    <hr />
-                  </React.Fragment>
-                );
-              })}
-            </ErrorPendingBoundary>
+            {cart.map((cartInfo) => {
+              const initialChecked = selectedItem.includes(cartInfo.id);
+              return (
+                <React.Fragment key={cartInfo.id}>
+                  <CartItem cartInfo={cartInfo} initialChecked={initialChecked} />
+                  <hr />
+                </React.Fragment>
+              );
+            })}
           </S.CartListBox>
         </S.SelectCartBox>
 
@@ -85,14 +95,9 @@ export default function ProductCartPage() {
           leftContent="결제예상금액"
           rightContent={`${totalPrice.toLocaleString()}원`}
           buttonText={`주문하기 (${totalQuantity}개)`}
+          onClickButton={onClickOrderButton}
         />
       </S.CartInfoBox>
     </S.ProductCartPageLayout>
   );
 }
-
-ProductCartPage.propTypes = {
-  image: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.string,
-};

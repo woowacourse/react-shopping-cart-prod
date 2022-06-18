@@ -8,6 +8,8 @@ const ButtonLayout = styled.button`
 
   background-color: ${(props) => props.backgroundColor || 'transparent'};
 
+  background-color: ${(props) => props.selected && props.theme.GRAY_700};
+
   width: ${(props) => props.width || '200px'};
   height: ${(props) => props.height || '50px'};
 

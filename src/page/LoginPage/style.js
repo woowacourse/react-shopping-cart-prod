@@ -16,6 +16,7 @@ const LoginContainer = styled.div`
   width: 600px;
   height: 442px;
   background-color: ${({theme}) => theme.WHITE};
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 `;
 
 const Header = styled.header`
@@ -37,7 +38,7 @@ const ConfirmButton = styled(Button)`
   margin-top: 26px;
 `;
 
-const SignupText = styled.div`
+const SignUpText = styled.div`
   font-size: 15px;
   width: 300px;
   margin-top: 10px;
@@ -49,4 +50,4 @@ const LinkText = styled.span`
   margin-left: 10px;
 `;
 
-export {Layout, LoginContainer, Header, InputForm, ConfirmButton, SignupText, LinkText};
+export {Layout, LoginContainer, Header, InputForm, ConfirmButton, SignUpText, LinkText};

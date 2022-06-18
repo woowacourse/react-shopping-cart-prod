@@ -24,7 +24,7 @@ function Pagination({totalNumber, limit, pagePosition, setPagePosition}) {
       <button className="control-button" onClick={handlePrevButton} disabled={pagePosition === 1}>
         ᐸ
       </button>
-      {Array.from({length: pagesNumber}, (value, idx) => {
+      {Array.from({length: pagesNumber}, (_, idx) => {
         const pageNumber = idx + 1;
 
         return (

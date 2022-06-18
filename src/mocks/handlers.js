@@ -1,9 +1,9 @@
-/* eslint-disable no-unused-vars */
 import {rest} from 'msw';
 import {MOCK_PRODUCT_LIST} from './mockData';
 import shortid from 'shortid';
+import {API_URL} from 'constant';
 
-let cart = [];
+let orderId = 1;
 
 let userDB = {
   winnieToken: {
@@ -16,10 +16,11 @@ let userDB = {
       middle: '1234',
       last: '5678',
     },
+    cart: [],
   },
   nineToken: {
     account: 'jhy979',
-    password: 'Abc12345!',
+    password: 'Abc1234!',
     nickname: '나인',
     address: '하남',
     phoneNumber: {
@@ -27,17 +28,19 @@ let userDB = {
       middle: '1111',
       last: '2222',
     },
+    cart: [],
+    orders: [],
   },
 };
 
 export const handlers = [
   // 상품 리스트 가져오기
-  rest.get(process.env.REACT_APP_PRODUCT_API_URL, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(MOCK_PRODUCT_LIST));
+  rest.get(`${API_URL}/products`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json({products: MOCK_PRODUCT_LIST}));
   }),
 
   // 선택된 상품 정보 가져오기
-  rest.get(`${process.env.REACT_APP_PRODUCT_API_URL}/:id`, (req, res, ctx) => {
+  rest.get(`${API_URL}/products/:id`, (req, res, ctx) => {
     const productId = Number.parseInt(req.params.id);
     const detailItem = MOCK_PRODUCT_LIST.find(({id}) => id === productId);
 
@@ -45,60 +48,52 @@ export const handlers = [
   }),
 
   // 장바구니 상품 리스트 가져오기
-  rest.get(process.env.REACT_APP_CART_API_URL, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(cart));
+  rest.get(`${API_URL}/customers/cart`, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    return res(ctx.status(200), ctx.json({cart: userDB[accessToken].cart}));
   }),
 
   // 장바구니 상품 추가
-  rest.post(process.env.REACT_APP_CART_API_URL, (req, res, ctx) => {
-    const {id: productId} = req.body;
-    const isInCart = cart.some(({id}) => id === Number.parseInt(productId));
+  rest.post(`${API_URL}/customers/cart`, (req, res, ctx) => {
+    const {productId} = req.body;
+
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    const isInCart = userDB[accessToken].cart.some(({id}) => id === Number.parseInt(productId));
 
     if (isInCart) {
       return res(ctx.status(404));
     }
 
-    cart.push(req.body);
+    const selectedItem = MOCK_PRODUCT_LIST.find(({id}) => id === productId);
+
+    userDB[accessToken].cart.push({...selectedItem, quantity: 1});
 
     return res(ctx.status(200));
   }),
 
   // 장바구니 상품 삭제
-  rest.delete(`${process.env.REACT_APP_CART_API_URL}/:id`, (req, res, ctx) => {
-    const productId = Number.parseInt(req.params.id);
-    const isInCart = cart.some(({id}) => id === productId);
+  rest.delete(`${API_URL}/customers/cart`, (req, res, ctx) => {
+    const {productId} = req.body;
+
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    const isInCart = userDB[accessToken].cart.some(({id}) => id === productId);
 
     if (!isInCart) {
       return res(ctx.status(404));
     }
 
-    const newCart = cart.filter(({id}) => id !== productId);
-    cart = newCart;
+    const newCart = userDB[accessToken].cart.filter(({id}) => id !== productId);
 
-    return res(ctx.status(200));
-  }),
-
-  // 장바구니 상품 수량 변경하기
-  rest.patch(`${process.env.REACT_APP_CART_API_URL}/:id`, (req, res, ctx) => {
-    const productId = Number.parseInt(req.params.id);
-    const {quantity} = req.body;
-    const isInCart = cart.some(({id}) => id === productId);
-
-    if (!isInCart) {
-      return res(ctx.status(404));
-    }
-
-    const newCart = cart.map((item) => {
-      return item.id === productId ? {...item, quantity} : item;
-    });
-
-    cart = newCart;
+    userDB[accessToken].cart = newCart;
 
     return res(ctx.status(200));
   }),
 
   // 로그인
-  rest.post(process.env.REACT_APP_LOGIN_API_URL, (req, res, ctx) => {
+  rest.post(`${API_URL}/signin`, (req, res, ctx) => {
     const {account, password} = req.body;
     const accessToken = Object.keys(userDB).find(
       (token) => userDB[token].account === account && userDB[token].password === password,
@@ -112,7 +107,7 @@ export const handlers = [
   }),
 
   // 회원가입
-  rest.post(process.env.REACT_APP_SIGNUP_API_URL, (req, res, ctx) => {
+  rest.post(`${API_URL}/signup`, (req, res, ctx) => {
     const accounts = Object.values(userDB).map(({account}) => account);
 
     const isDuplicated = accounts.some((account) => req.body.account === account);
@@ -132,7 +127,7 @@ export const handlers = [
   }),
 
   // 사용자 정보 조회
-  rest.get(process.env.REACT_APP_GET_INFO_API_URL, (req, res, ctx) => {
+  rest.get(`${API_URL}/customers`, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
 
     if (!Object.hasOwnProperty.call(userDB, accessToken)) {
@@ -143,7 +138,7 @@ export const handlers = [
   }),
 
   // 사용자 정보 수정
-  rest.put(process.env.REACT_APP_EDIT_INFO_API_URL, (req, res, ctx) => {
+  rest.put(`${API_URL}/customers`, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
 
     if (!Object.hasOwnProperty.call(userDB, accessToken)) {
@@ -159,14 +154,90 @@ export const handlers = [
   }),
 
   // 회원 탈퇴
-  rest.delete(process.env.REACT_APP_WITHDRAWAL_API_URL, (req, res, ctx) => {
-    // 클라이언트에서 요청한 accessToken에 해당하는 계정을 삭제한다
-
+  rest.delete(`${API_URL}/customers`, (req, res, ctx) => {
     const accessToken = req.headers._headers.authorization.split(' ')[1];
     if (req.body.password !== userDB[accessToken].password) {
       return res(ctx.status(404));
     }
 
+    delete userDB[accessToken];
+
     return res(ctx.status(204));
+  }),
+
+  // 사용자 구매 목록 조회
+  rest.get(`${API_URL}/customers/orders`, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    if (!Object.hasOwnProperty.call(userDB, accessToken)) {
+      return res(ctx.status(404));
+    }
+
+    return res(ctx.status(200), ctx.json({orders: userDB[accessToken].orders}));
+  }),
+
+  // 구매 목록 추가
+  rest.post(`${API_URL}/customers/orders`, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+
+    if (!Object.hasOwnProperty.call(userDB, accessToken)) {
+      return res(ctx.status(404));
+    }
+
+    const {order} = req.body;
+
+    const orderedList = order.map(({id: orderedId, quantity}) => {
+      const orderedItem = MOCK_PRODUCT_LIST.find(({id}) => id === orderedId);
+
+      return {
+        id: orderedItem.id,
+        name: orderedItem.name,
+        cost: orderedItem.price * quantity,
+        quantity,
+        imageUrl: orderedItem.imageUrl,
+      };
+    });
+
+    const totalCost = orderedList.reduce((acc, cur) => acc + cur.cost, 0);
+
+    userDB[accessToken].orders.push({
+      orderId: orderId++,
+      order: orderedList,
+      totalCost,
+    });
+
+    return res(ctx.status(201));
+  }),
+
+  // 선택한 구매 정보 상세 가져오기
+  rest.get(`${API_URL}/customers/orders/:id`, (req, res, ctx) => {
+    const accessToken = req.headers._headers.authorization.split(' ')[1];
+    const id = Number.parseInt(req.params.id);
+
+    if (!Object.hasOwnProperty.call(userDB, accessToken)) {
+      return res(ctx.status(404));
+    }
+
+    const detailOrderInfo = userDB[accessToken].orders
+      .find(({orderId}) => orderId === id)
+      .order.map(({id, name, cost, quantity, imageUrl}) => {
+        return {
+          id,
+          name,
+          cost,
+          imageUrl,
+          quantity,
+        };
+      });
+
+    const totalCost = detailOrderInfo.reduce((acc, cur) => acc + cur.cost, 0);
+
+    return res(
+      ctx.status(200),
+      ctx.json({
+        order: detailOrderInfo,
+        totalCost,
+      }),
+    );
   }),
 ];

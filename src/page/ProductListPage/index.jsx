@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {PRODUCT_LIST} from 'store/modules/productList';
@@ -11,7 +10,7 @@ import Empty from 'assets/empty.png';
 
 import useCartItem from 'hook/useCartItem';
 import useFetch from 'hook/useFetch';
-import {PAGINATION_LIMIT} from 'constant';
+import {API_URL, PAGINATION_LIMIT} from 'constant';
 import Pagination from 'component/Pagination';
 
 export default function ProductListPage() {
@@ -22,6 +21,7 @@ export default function ProductListPage() {
   const dispatch = useDispatch();
 
   const productList = useSelector((state) => state.productListReducer.productList);
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   const {pending: productPending, error: productError, fetch: fetchProduct} = useFetch('get');
 
@@ -29,7 +29,7 @@ export default function ProductListPage() {
 
   useEffect(() => {
     fetchProduct({
-      API_URL: process.env.REACT_APP_PRODUCT_API_URL,
+      API_URL: `${API_URL}/products`,
       onSuccess: (fetchedData) => {
         dispatch({type: PRODUCT_LIST.INITIALIZE, payload: fetchedData});
       },
@@ -37,8 +37,8 @@ export default function ProductListPage() {
   }, [dispatch, fetchProduct]);
 
   useEffect(() => {
-    initializeCart();
-  }, [initializeCart]);
+    isLogin && initializeCart();
+  }, [isLogin, initializeCart]);
 
   return (
     <S.ProductListPageLayout>
@@ -67,7 +67,3 @@ export default function ProductListPage() {
     </S.ProductListPageLayout>
   );
 }
-
-ProductListPage.propTypes = {
-  itemList: PropTypes.array,
-};

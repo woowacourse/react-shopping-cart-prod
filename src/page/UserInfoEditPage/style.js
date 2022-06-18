@@ -4,16 +4,19 @@ import Button from 'component/common/Button';
 
 const Layout = styled.div`
   position: absolute;
+  top: 0px;
+  left: 0px;
   width: 100%;
   height: 1060px;
   background-color: ${({theme}) => theme.GRAY_400};
 `;
 
-const SignupContainer = styled.div`
+const SignUpContainer = styled.div`
   margin: 200px auto 0;
   width: 600px;
   height: 660px;
   background-color: ${({theme}) => theme.WHITE};
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 `;
 
 const Header = styled.header`
@@ -48,4 +51,4 @@ const Hyphen = styled.span`
   line-height: 83px;
 `;
 
-export {Layout, SignupContainer, Header, InputForm, ConfirmButton, PhoneNumberContainer, Hyphen};
+export {Layout, SignUpContainer, Header, InputForm, ConfirmButton, PhoneNumberContainer, Hyphen};

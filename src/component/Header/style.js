@@ -21,7 +21,7 @@ const HeaderLayout = styled(FlexRow)`
   z-index: 1;
 
   .active {
-    transform: scale(1.1);
+    transform: scale(1.3);
     font-weight: bold;
   }
 `;
@@ -63,7 +63,6 @@ const ProfileLinkText = styled(Link)`
 
 const Profile = styled.div`
   position: relative;
-
   width: 60px;
   height: 60px;
 
@@ -135,6 +134,17 @@ const ProfileImage = styled.img`
   cursor: pointer;
 `;
 
+const UserName = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 8vw;
+  font-size: 20px;
+  line-height: 25px;
+  color: ${({theme}) => theme.WHITE};
+`;
+
 export {
   HeaderLayout,
   HeaderNavBox,
@@ -144,4 +154,5 @@ export {
   ProfileNavContainer,
   ProfileImage,
   ProfileLinkText,
+  UserName,
 };

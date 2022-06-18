@@ -1,3 +1,4 @@
+import Button from 'component/common/Button';
 import {FlexColumn, FlexRow, Font} from 'style/common';
 import styled from 'styled-components';
 
@@ -44,4 +45,10 @@ const PriceFont = styled(Font)`
   line-height: 27px;
   letter-spacing: 0.5px;
 `;
-export {DetailItemLayout, ItemNameSpan, ItemPriceBox, PriceFont};
+
+const CartButton = styled(Button)`
+  font-weight: 700;
+  font-size: 30px;
+`;
+
+export {DetailItemLayout, ItemNameSpan, ItemPriceBox, PriceFont, CartButton};

@@ -9,6 +9,8 @@ const ContentBoxLayout = styled.div`
 
   border: ${({theme}) => `1px solid ${theme.GRAY_500}`};
   padding: 30px;
+
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 `;
 
 const ContentBoxHeader = styled.div`
@@ -28,8 +30,9 @@ const PriceInfoFont = styled(Font)`
   font-size: 20px;
   font-weight: 700;
   font-family: 'Lato';
+
   background-size: 0% 50%;
-  background: ${({theme}) => `linear-gradient(to top, ${theme.MINT} 50%, transparent 50%)`};
+  background: ${({theme}) => `linear-gradient(to top, ${theme.MINT_500} 50%, transparent 50%)`};
 `;
 
 export {ContentBoxLayout, ContentBoxHeader, PriceInfoBox, PriceInfoFont};

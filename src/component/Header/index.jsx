@@ -7,7 +7,7 @@ import {ReactComponent as LogoIcon} from 'assets/logoIcon.svg';
 
 import * as S from 'component/Header/style';
 
-import {PATH} from 'constant';
+import {API_URL, PATH} from 'constant';
 
 import baedale from 'assets/baedale.png';
 import baedaleHover from 'assets/baedale_hover.png';
@@ -19,14 +19,14 @@ import useFetch from 'hook/useFetch';
 export default function Header() {
   const dispatch = useDispatch();
 
-  const isLogined = useSelector((state) => state.authReducer.isLogined);
+  const isLogin = useSelector((state) => state.authReducer.isLogin);
 
   const navigation = useNavigate();
   const userInfo = useFetch('get');
 
   const checkLogin = async () => {
     const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
+    const accessToken = response?.accessToken || '';
 
     if (!accessToken) {
       dispatch({type: AUTH.LOGOUT});
@@ -34,8 +34,11 @@ export default function Header() {
     }
 
     userInfo.fetch({
-      API_URL: process.env.REACT_APP_GET_INFO_API_URL,
-      headers: {Authorization: `Bearer ${accessToken}`},
+      API_URL: `${API_URL}/customers`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      onSuccess: () => dispatch({type: AUTH.LOGIN, payload: accessToken}),
     });
   };
 
@@ -50,10 +53,6 @@ export default function Header() {
     checkLogin();
   }, []);
 
-  useEffect(() => {
-    userInfo.data && dispatch({type: AUTH.LOGIN});
-  }, [userInfo.data]);
-
   return (
     <S.HeaderLayout>
       <Button onClick={handleLogoClick}>
@@ -61,11 +60,12 @@ export default function Header() {
       </Button>
       <S.HeaderNavBox>
         <S.NavText to={PATH.CART}>장바구니</S.NavText>
-        <S.NavText to={PATH.ORDER}>구매목록</S.NavText>
-        {isLogined ? (
+        <S.NavText to={PATH.ORDER_LIST}>주문목록</S.NavText>
+        {isLogin ? (
           <S.Profile>
             <S.ProfileImage src={baedaleHover} alt="프로필 이미지" />
             <S.ProfileImage className="baedale" src={baedale} alt="프로필 이미지" />
+
             <div className="tooltip-container"></div>
             <div className="tooltip-content">
               <S.ProfileNavContainer>
@@ -79,6 +79,12 @@ export default function Header() {
           </S.Profile>
         ) : (
           <S.NavText to={PATH.LOGIN}>로그인</S.NavText>
+        )}
+        {isLogin && userInfo.data && (
+          <S.UserName>
+            {userInfo.data.nickname} 님 <br />
+            안녕하세요!
+          </S.UserName>
         )}
       </S.HeaderNavBox>
     </S.HeaderLayout>

@@ -5,11 +5,14 @@ import Input from 'component/common/Input';
 import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
-import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
+import {API_URL, ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
 import {useNavigate} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 function UserInfoEditPage() {
   const navigation = useNavigate();
+
+  const accessToken = useSelector((state) => state.authReducer.accessToken);
 
   const userInfo = useFetch('get');
   const editInfo = useFetch('put');
@@ -51,14 +54,13 @@ function UserInfoEditPage() {
     restMiddleNumber.isError ||
     restLastNumber.isError;
 
-  const getInfo = async () => {
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
-
+  const getInfo = () => {
     userInfo.fetch({
-      API_URL: process.env.REACT_APP_GET_INFO_API_URL,
-      body: {test: 'test:'},
-      headers: {Authorization: `Bearer ${accessToken}`},
+      API_URL: `${API_URL}/customers`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      onFail: () => alert(ERROR_MESSAGE.VIEW_USER_INFO),
     });
   };
 
@@ -66,11 +68,8 @@ function UserInfoEditPage() {
     // eslint-disable-next-line no-unused-vars
     const [account, nickname, password, address, start, middle, last] = inputs;
 
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
-
     editInfo.fetch({
-      API_URL: process.env.REACT_APP_EDIT_INFO_API_URL,
+      API_URL: `${API_URL}/customers`,
       headers: {Authorization: `Bearer ${accessToken}`},
       body: {
         nickname: nickname.value || nickname.placeholder,
@@ -84,24 +83,17 @@ function UserInfoEditPage() {
       onSuccess: () => {
         navigation(PATH.HOME);
       },
+      onFail: () => alert(ERROR_MESSAGE.VIEW_USER_INFO),
     });
   };
 
   useEffect(() => {
-    getInfo();
-  }, []);
-
-  useEffect(() => {
-    userInfo.error && alert(ERROR_MESSAGE.VIEW_USER_INFO);
-  }, [userInfo.error]);
-
-  useEffect(() => {
-    editInfo.error && alert(ERROR_MESSAGE.EDIT_USER_INFO);
-  }, [editInfo.error]);
+    accessToken && getInfo();
+  }, [accessToken]);
 
   return (
     <S.Layout>
-      <S.SignupContainer>
+      <S.SignUpContainer>
         <S.Header>회원 정보 수정</S.Header>
 
         {userInfo.data && (
@@ -119,12 +111,12 @@ function UserInfoEditPage() {
               value={userInfo.data.account}
             />
             <Input
+              {...restNickname}
               label="닉네임"
               size="medium"
               id="nickname"
               onChange={(e) => onChangeNickname(e.target.value)}
               placeHolder={userInfo.data.nickname}
-              {...restNickname}
               value={restNickname.isChanged ? restNickname.value : userInfo.data.nickname}
             />
             <Input
@@ -135,23 +127,23 @@ function UserInfoEditPage() {
               isDisabled={true}
             />
             <Input
+              {...restAddress}
               label="주소"
               size="medium"
               id="address"
               onChange={(e) => onChangeAddress(e.target.value)}
               placeHolder={userInfo.data.address}
-              {...restAddress}
               value={restAddress.isChanged ? restAddress.value : userInfo.data.address}
             />
             <S.PhoneNumberContainer>
               <Input
+                {...restStartNumber}
                 label="휴대폰"
                 size="small"
                 id="start-number"
                 onChange={(e) => onChangeStartNumber(e.target.value)}
                 maxLength="3"
                 placeHolder={userInfo.data.phoneNumber.start}
-                {...restStartNumber}
                 value={
                   restStartNumber.isChanged
                     ? restStartNumber.value
@@ -160,12 +152,12 @@ function UserInfoEditPage() {
               />
               <S.Hyphen>-</S.Hyphen>
               <Input
+                {...restMiddleNumber}
                 size="small"
                 id="middle-number"
                 onChange={(e) => onChangeMiddleNumber(e.target.value)}
                 maxLength="4"
                 placeHolder={userInfo.data.phoneNumber.middle}
-                {...restMiddleNumber}
                 value={
                   restMiddleNumber.isChanged
                     ? restMiddleNumber.value
@@ -174,12 +166,12 @@ function UserInfoEditPage() {
               />
               <S.Hyphen>-</S.Hyphen>
               <Input
+                {...restLastNumber}
                 size="small"
                 id="last-number"
                 onChange={(e) => onChangeLastNumber(e.target.value)}
                 maxLength="4"
                 placeHolder={userInfo.data.phoneNumber.last}
-                {...restLastNumber}
                 value={
                   restLastNumber.isChanged ? restLastNumber.value : userInfo.data.phoneNumber.last
                 }
@@ -197,7 +189,7 @@ function UserInfoEditPage() {
             </S.ConfirmButton>
           </S.InputForm>
         )}
-      </S.SignupContainer>
+      </S.SignUpContainer>
     </S.Layout>
   );
 }

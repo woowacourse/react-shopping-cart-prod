@@ -11,11 +11,12 @@ const Layout = styled.div`
   background-color: ${({theme}) => theme.GRAY_400};
 `;
 
-const SignupContainer = styled.div`
+const SignUpContainer = styled.div`
   margin: 200px auto 0;
   width: 600px;
   height: 820px;
   background-color: ${({theme}) => theme.WHITE};
+  box-shadow: ${({theme}) => `6px 6px ${theme.GRAY_300}`};
 `;
 
 const Header = styled.header`
@@ -54,7 +55,7 @@ const Hyphen = styled.span`
 
 export {
   Layout,
-  SignupContainer,
+  SignUpContainer,
   Header,
   InputForm,
   ConfirmButton,

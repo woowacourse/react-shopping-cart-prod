@@ -11,6 +11,8 @@ import productListReducer from 'store/modules/productList';
 import cartReducer from 'store/modules/cart';
 import authReducer from 'store/modules/auth';
 
+import {SmingModalProvider} from 'sming-payments';
+
 export const rootReducer = combineReducers({
   productListReducer,
   cartReducer,
@@ -22,7 +24,9 @@ export const store = createStore(rootReducer);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <SmingModalProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </SmingModalProvider>,
 );
