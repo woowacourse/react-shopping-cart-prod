@@ -5,7 +5,7 @@ import LocalStorage from "@utils/LocalStorage";
 
 import ACTION_TYPE from "./userActions";
 
-function userReducer(state, { type, payload }, totalState) {
+function userReducer(state, { type, payload }) {
   switch (type) {
     case ACTION_TYPE.SIGNUP_PENDING: {
       const newState = structuredClone(state);
@@ -48,6 +48,12 @@ function userReducer(state, { type, payload }, totalState) {
       const { error } = payload;
       alert(error.message);
       newState.query.login = queryState.rejected(error);
+      return newState;
+    }
+
+    case ACTION_TYPE.LOGOUT: {
+      const newState = structuredClone(state);
+      newState.query.login = queryState.init();
       return newState;
     }
 

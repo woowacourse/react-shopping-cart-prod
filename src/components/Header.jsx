@@ -1,19 +1,29 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import cn from "classnames";
 
 import LocalStorage from "@utils/LocalStorage";
 import Logo from "@assets/images/logo.svg";
 import styles from "./Header.module";
+import { getUser } from "../redux/reducers/user-reducer/userThunks";
+import USER_ACTION_TYPE from "../redux/reducers/user-reducer/userActions";
+import createAction from "../redux/utils/createAction";
 
 function Header({ className }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.data);
 
   const handleLogoutBtnClick = () => {
     LocalStorage.removeItem("accessToken");
-    window.location.href = "/";
+    dispatch(createAction(USER_ACTION_TYPE.LOGOUT));
+    navigate(0);
   };
+
+  useEffect(() => {
+    LocalStorage.getItem("accessToken") && dispatch(getUser());
+  }, []);
 
   return (
     <div className={cn(styles.header, className)}>

@@ -1,11 +1,7 @@
 import { legacy_createStore as createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-
 import reducer from "@redux/reducer";
 
-async function setupStore() {
-  const store = createStore(reducer, applyMiddleware(thunk));
-  return store;
-}
+const store = createStore(reducer, applyMiddleware(thunk));
 
-export default setupStore;
+export default store;
