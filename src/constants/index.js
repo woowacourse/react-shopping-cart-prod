@@ -1,4 +1,11 @@
-const BASE_URL = "https://woo-shopping-cart-api.herokuapp.com";
+const URL = {
+  봄: "http://ec2-54-180-119-11.ap-northeast-2.compute.amazonaws.com:8080",
+  릭: "http://ec2-3-39-194-30.ap-northeast-2.compute.amazonaws.com:8080",
+  쿤: "http://ec2-15-164-96-161.ap-northeast-2.compute.amazonaws.com:8080",
+  토닉: "http://ec2-3-39-11-100.ap-northeast-2.compute.amazonaws.com:8080",
+  베루스: "http://ec2-52-79-228-178.ap-northeast-2.compute.amazonaws.com:8080",
+};
+
 const PATH = {
   MAIN: "/",
   LOGIN: "/login",
@@ -35,6 +42,11 @@ const MESSAGE = {
   INVALID_SIGNUP_INPUT: "회원 정보 양식이 잘못되었습니다.",
   EXIST_EMAIL: "이미 존재하는 이메일입니다.",
   WITHDRAWAL_CONFIRM: "정말로 탈퇴하시겠습니까? 😭",
+  EXIST_ITEM_IN_CART: "장바구니에 이미 추가된 상품입니다.",
+  INVALID_ACCESS: "잘못된 접근입니다.",
+  LOGIN_REQUEST_FOR_ADD_CART: "장바구니에 상품을 추가하려면 로그인해주세요.",
+  LOGIN_REQUEST_FOR_USE_CART: "장바구니는 로그인 후 이용해주세요!",
+  SERVER_REQUEST_FAIL: "서버와의 연결에 문제가 있습니다.",
 };
 
 const NICKNAME = {
@@ -55,7 +67,7 @@ const REGULAR_EXPRESSION = {
 };
 
 export {
-  BASE_URL,
+  URL,
   PATH,
   STATUS,
   ERROR_STATUS,

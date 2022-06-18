@@ -15,11 +15,17 @@ function GlobalStyle() {
 
         html,
         body {
+          position: relative;
           width: 100%;
           height: 100%;
           margin: 0;
           font-family: "dohyeon", sans-serif;
           font-weight: 300;
+          overflow: auto;
+        }
+
+        body::-webkit-scrollbar {
+          display: none;
         }
 
         *,

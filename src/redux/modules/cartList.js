@@ -1,4 +1,8 @@
 import createAction from "@/redux/createAction";
+import { toggleSnackbarOpen } from "@/redux/modules/snackbar";
+import { MESSAGE } from "@/constants";
+import { getCookie } from "@/utils/cookie";
+import axios from "axios";
 
 export const ACTION_TYPES = {
   ADD_PRODUCT_TO_CART: "ADD_PRODUCT_TO_CART",
@@ -9,14 +13,81 @@ export const ACTION_TYPES = {
   DECREMENT_CART_ITEM_QUANTITY: "DECREMENT_CART_ITEM_QUANTITY",
   REMOVE_CHECKED_CART_ITEM: "REMOVE_CHECKED_CART_ITEM",
   REMOVE_ROW_CART_ITEM: "REMOVE_ROW_CART_ITEM",
+  GET_CART_LIST: "GET_CART_LIST",
+  CLEAR_CART_LIST: "CLEAR_CART_LIST",
 };
 
 export const addProductToCart = (args) => async (dispatch) => {
-  const { id, name, price, imgUrl } = args;
-  dispatch(
-    createAction(ACTION_TYPES.ADD_PRODUCT_TO_CART, { id, name, price, imgUrl })
-  );
+  const { id, name, price, imageUrl } = args;
+  try {
+    if (!getCookie("accessToken")) {
+      throw new Error(MESSAGE.LOGIN_REQUEST_FOR_ADD_CART);
+    }
+
+    await axios.post(
+      `/users/me/carts`,
+      {
+        productId: id,
+      },
+      {
+        headers: {
+          Authorization:
+            getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+        },
+      }
+    );
+    dispatch(
+      createAction(ACTION_TYPES.ADD_PRODUCT_TO_CART, {
+        id,
+        name,
+        price,
+        imageUrl,
+      })
+    );
+    dispatch(toggleSnackbarOpen(MESSAGE.CART_ADDED));
+  } catch (error) {
+    if (error.response?.status === 401) {
+      dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
+      return;
+    }
+    if (error.response?.status === 400) {
+      dispatch(toggleSnackbarOpen(MESSAGE.EXIST_ITEM_IN_CART));
+      return;
+    }
+    if (error.response?.status === 500) {
+      dispatch(toggleSnackbarOpen(MESSAGE.SERVER_REQUEST_FAIL));
+      return;
+    }
+    dispatch(toggleSnackbarOpen(error.message));
+  }
 };
+
+export const getCartList = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`/users/me/carts`, {
+      headers: {
+        Authorization:
+          getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+      },
+    });
+    dispatch(createAction(ACTION_TYPES.GET_CART_LIST, response.data.cartList));
+  } catch (error) {
+    if (error.response?.status === 401) {
+      dispatch(toggleSnackbarOpen(MESSAGE.LOGIN_REQUEST_FOR_USE_CART));
+      return;
+    }
+    if (error.response?.status === 500) {
+      dispatch(toggleSnackbarOpen(MESSAGE.SERVER_REQUEST_FAIL));
+      return;
+    }
+    dispatch(toggleSnackbarOpen(error));
+  }
+};
+
+export const clearCartList = () => {
+  return createAction(ACTION_TYPES.CLEAR_CART_LIST);
+};
+
 export const toggleCartItemCheckButton = (id) => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON, id));
 };
@@ -26,17 +97,88 @@ export const uncheckAllCheckButton = () => async (dispatch) => {
 export const checkAllCheckButton = () => async (dispatch) => {
   dispatch(createAction(ACTION_TYPES.CHECK_ALL_CHECK_BUTTON));
 };
-export const incrementCartItemQuantity = (id) => async (dispatch) => {
-  dispatch(createAction(ACTION_TYPES.INCREMENT_CART_ITEM_QUANTITY, id));
-};
-export const decrementCartItemQuantity = (id) => async (dispatch) => {
-  dispatch(createAction(ACTION_TYPES.DECREMENT_CART_ITEM_QUANTITY, id));
-};
-export const removeCheckedCartItem = () => async (dispatch) => {
-  dispatch(createAction(ACTION_TYPES.REMOVE_CHECKED_CART_ITEM));
+export const incrementCartItemQuantity =
+  (id, incrementedQuantity) => async (dispatch) => {
+    try {
+      const response = await axios.put(
+        `/users/me/carts/${id}`,
+        {
+          quantity: incrementedQuantity,
+        },
+        {
+          headers: {
+            Authorization:
+              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+          },
+        }
+      );
+      dispatch(createAction(ACTION_TYPES.INCREMENT_CART_ITEM_QUANTITY, id));
+    } catch (error) {
+      dispatch(toggleSnackbarOpen(error));
+    }
+  };
+export const decrementCartItemQuantity =
+  (id, decrementedQuantity) => async (dispatch) => {
+    if (decrementedQuantity < 1) return;
+    try {
+      const response = await axios.put(
+        `/users/me/carts/${id}`,
+        {
+          quantity: decrementedQuantity,
+        },
+        {
+          headers: {
+            Authorization:
+              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+          },
+        }
+      );
+      dispatch(createAction(ACTION_TYPES.DECREMENT_CART_ITEM_QUANTITY, id));
+    } catch (error) {
+      dispatch(toggleSnackbarOpen(error));
+    }
+  };
+export const removeCheckedCartItem = (cartList) => async (dispatch) => {
+  try {
+    const checkedCartItemIds = cartList
+      .filter((cartItem) => cartItem.checked)
+      .map((cartItem) => cartItem.id);
+
+    await Promise.all(
+      checkedCartItemIds.map((id) => {
+        return axios.delete(`/users/me/carts/${id}`, {
+          headers: {
+            Authorization:
+              getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+          },
+        });
+      })
+    );
+    dispatch(createAction(ACTION_TYPES.REMOVE_CHECKED_CART_ITEM));
+  } catch (error) {
+    if (error.response?.status === 401) {
+      dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
+      return;
+    }
+    dispatch(toggleSnackbarOpen(error));
+  }
 };
 export const removeRowCartItem = (id) => async (dispatch) => {
-  dispatch(createAction(ACTION_TYPES.REMOVE_ROW_CART_ITEM, id));
+  try {
+    await axios.delete(`/users/me/carts/${id}`, {
+      headers: {
+        Authorization:
+          getCookie("accessToken") && `Bearer ${getCookie("accessToken")}`,
+      },
+    });
+    dispatch(createAction(ACTION_TYPES.REMOVE_ROW_CART_ITEM, id));
+  } catch (error) {
+    if (error.response?.status === 401) {
+      dispatch(toggleSnackbarOpen(MESSAGE.INVALID_ACCESS));
+      return;
+    }
+    dispatch(toggleSnackbarOpen(error));
+  }
 };
 
 const cartListInitialState = [];
@@ -45,14 +187,13 @@ export const cartListReducer = (state = cartListInitialState, action) => {
   const newState = [...state];
 
   switch (action.type) {
-    case ACTION_TYPES.ADD_PRODUCT_TO_CART:
-      const isExistInCart = state.some((item) => {
-        return item.id === action.payload.id;
-      });
+    case ACTION_TYPES.GET_CART_LIST:
+      return action.payload.map((item) => ({ ...item, checked: true }));
 
-      if (isExistInCart) {
-        return state;
-      }
+    case ACTION_TYPES.CLEAR_CART_LIST:
+      return cartListInitialState;
+
+    case ACTION_TYPES.ADD_PRODUCT_TO_CART:
       return [...state, { ...action.payload, quantity: 1, checked: true }];
 
     case ACTION_TYPES.TOGGLE_CART_ITEM_CHECK_BUTTON:
@@ -66,18 +207,14 @@ export const cartListReducer = (state = cartListInitialState, action) => {
 
     case ACTION_TYPES.UNCHECK_ALL_CHECK_BUTTON:
       const allUnCheckedState = newState.map((item) => {
-        return item.checked === true
-          ? { ...item, checked: false }
-          : { ...item };
+        return { ...item, checked: !item.checked };
       });
 
       return allUnCheckedState;
 
     case ACTION_TYPES.CHECK_ALL_CHECK_BUTTON:
       const allCheckedState = newState.map((item) => {
-        return item.checked === false
-          ? { ...item, checked: true }
-          : { ...item };
+        return { ...item, checked: true };
       });
 
       return allCheckedState;
