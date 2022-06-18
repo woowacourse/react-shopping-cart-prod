@@ -1,6 +1,5 @@
-import styled from 'styled-components';
 import { forwardRef, ReactNode, ChangeEvent, InputHTMLAttributes } from 'react';
-import colors from '../../styles/theme';
+import { Styled } from './styles';
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   children: ReactNode;
@@ -24,9 +23,9 @@ const SignInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   } = props;
 
   return (
-    <StyledLabel>
+    <Styled.Label>
       {children}
-      <StyledInput
+      <Styled.Input
         placeholder={placeholder}
         type={type}
         onChange={onChange}
@@ -35,41 +34,11 @@ const SignInput = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         isValid={isValid}
         required
       />
-      {isValid || <StyledInstruction>{inValidText}</StyledInstruction>}
-    </StyledLabel>
+      {isValid || <p>{inValidText}</p>}
+    </Styled.Label>
   );
 });
 
 SignInput.displayName = 'signInput';
-
-const StyledLabel = styled.label`
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-
-  font-weight: 400;
-  font-size: 2.4rem;
-  line-height: 2.4rem;
-
-  letter-spacing: 0.5px;
-
-  gap: 0.4rem;
-`;
-
-const StyledInput = styled.input<any>`
-  width: 100%;
-  height: 6.5rem;
-  font-size: 2rem;
-  padding-left: 1rem;
-
-  border-top: 0px;
-  border-left: 0px;
-  border-right: 0px;
-
-  outline: none;
-  border-bottom: ${props => (props.isValid ? colors.colors.primary : 'red')} 3px solid;
-`;
-
-const StyledInstruction = styled.p``;
 
 export default SignInput;

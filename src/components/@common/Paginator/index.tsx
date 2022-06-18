@@ -1,7 +1,6 @@
-import { useState, MouseEvent, useEffect } from 'react';
-import { render } from 'react-dom';
+import { useState, MouseEvent } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import { Styled } from './styles';
 
 const Paginator = ({ maxIndex }: { maxIndex: number }) => {
   const params = useParams();
@@ -37,42 +36,24 @@ const Paginator = ({ maxIndex }: { maxIndex: number }) => {
   };
 
   return (
-    <StyledRoot>
-      <StyledPageIndicator onClick={handleClickBefore}>이전</StyledPageIndicator>
+    <Styled.Paginator>
+      <Styled.PageIndicator onClick={handleClickBefore}>이전</Styled.PageIndicator>
       {Array.from({ length: 10 }, (_, index: number) => {
         if (pageStartNumber + index + 1 <= pageLastNumber) {
           return (
-            <StyledPageIndicator
+            <Styled.PageIndicator
               key={index}
               active={page === pageStartNumber + index + 1}
               onClick={handleClickNumber}
             >
               {pageStartNumber + index + 1}
-            </StyledPageIndicator>
+            </Styled.PageIndicator>
           );
         }
       })}
-      <StyledPageIndicator onClick={handleClickAfter}>다음</StyledPageIndicator>
-    </StyledRoot>
+      <Styled.PageIndicator onClick={handleClickAfter}>다음</Styled.PageIndicator>
+    </Styled.Paginator>
   );
 };
 
 export default Paginator;
-
-const StyledRoot = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-top: 5rem;
-`;
-
-const StyledPageIndicator = styled.button<{ active?: boolean }>`
-  ${({ active, theme }) =>
-    active &&
-    css`
-      color: ${theme.colors.primary};
-      font-weight: 700;
-    `}
-
-  font-size: 3rem
-`;
