@@ -1,13 +1,10 @@
+import { usePaymentsAmount } from 'hooks/usePaymentsAmount';
 import { CartItem } from 'types/domain';
 import { formatDecimal } from 'utils';
 import { Styled } from './styles';
 
 const PaymentsAmount = ({ cartList }: { cartList: CartItem[] }) => {
-  const totalPrice = cartList
-    .filter(item => item.checked)
-    .reduce((amount, item) => {
-      return amount + item.price * item.quantity;
-    }, 0);
+  const { totalPrice } = usePaymentsAmount(cartList);
 
   const onClick = () => {
     alert('주문하였습니다!!');

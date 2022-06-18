@@ -1,5 +1,4 @@
 import { CartItem } from 'types/domain';
-import useUpdateCartItem from 'hooks/useUpdateCartItem';
 import CheckBox from 'components/@common/CheckBox';
 import CartItemContainer from './CartItemContainer';
 import { Styled } from './styles';
