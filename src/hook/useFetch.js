@@ -8,7 +8,6 @@ const getAccessToken = () => {
   }
 
   const accessToken = response.accessToken;
-  console.log('hey');
   return accessToken;
 };
 
