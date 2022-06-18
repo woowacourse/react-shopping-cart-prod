@@ -1,13 +1,13 @@
 import { Route, Routes, Navigate, useRoutes } from 'react-router-dom';
 import ItemDetail from 'pages/ItemDetailPage';
 import NotFound from 'pages/NotFoundPage';
-import ItemListPage from 'pages/ItemListPage';
 import CartPage from 'pages/CartPage';
 import SignInPage from 'pages/SignInPage';
 import SignUpPage from 'pages/SignUpPage';
 import EditPasswordPage from 'pages/EditPasswordPage';
 import ResignPage from 'pages/ResignPage';
 import PrivateLayout from 'components/PrivateLayout';
+import { lazy } from 'react';
 
 export const PATH = {
   notFound: '*',
@@ -20,6 +20,8 @@ export const PATH = {
   editPassword: '/editPassword',
   resign: '/resign',
 };
+
+const ItemListPage = lazy(() => import('pages/ItemListPage'));
 
 const Router = () => {
   return useRoutes([

@@ -10,6 +10,8 @@ import SnackBar from 'components/@common/snackBar';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
 import ErrorBoundary from 'components/@common/ErrorBoundary';
+import { Suspense } from 'react';
+import Loading from 'components/@common/Loading';
 
 function App() {
   const dispatch = useDispatch();
@@ -29,7 +31,9 @@ function App() {
         <Header />
         <StyledMain>
           <ErrorBoundary fallback={<p>에러가 발생했습니다.😭</p>}>
-            <Router />
+            <Suspense fallback={<Loading />}>
+              <Router />
+            </Suspense>
           </ErrorBoundary>
         </StyledMain>
         <SnackBar />
