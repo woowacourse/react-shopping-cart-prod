@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import SignInput from 'components/@common/SignInput';
 import { Styled } from './styles';
-import { useSignIn } from 'hooks/useSignIn';
+import { useSignIn } from 'pages/SignInPage/useSignIn';
 
 const SignInPage = () => {
   const { handleSubmit, handleEmailInput, currentPasswordRef } = useSignIn();

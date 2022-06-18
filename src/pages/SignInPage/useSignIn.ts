@@ -6,9 +6,9 @@ import { signIn } from 'redux/action-creators/userThunk';
 import { updateSnackBar } from 'redux/actions/snackBar';
 import { UserAction } from 'redux/actions/user';
 import { PATH } from 'Router';
-import { useAppDispatch } from './useAppDispatch';
-import usePasswordInput from './usePasswordInput';
-import useSignInput from './useSignInput';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import usePasswordInput from '../../hooks/usePasswordInput';
+import useSignInput from '../../hooks/useSignInput';
 
 export const useSignIn = () => {
   const navigate = useNavigate();

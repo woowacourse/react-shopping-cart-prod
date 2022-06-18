@@ -1,4 +1,4 @@
-import { usePaymentsAmount } from 'hooks/usePaymentsAmount';
+import { usePaymentsAmount } from 'components/Cart/PaymentsAmount/usePaymentsAmount';
 import { CartItem } from 'types/domain';
 import { formatDecimal } from 'utils';
 import { Styled } from './styles';

@@ -1,5 +1,5 @@
 import { CartItem } from 'types/domain';
-import useUpdateCartItem from './useUpdateCartItem';
+import useUpdateCartItem from '../../../hooks/useUpdateCartItem';
 
 export const useCartList = (cartList: CartItem[]) => {
   const { toggleCartItemAllChecked, removeSelectedCartItem } = useUpdateCartItem(cartList);

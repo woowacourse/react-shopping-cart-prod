@@ -2,7 +2,7 @@ import { CartItem } from 'types/domain';
 import CheckBox from 'components/@common/CheckBox';
 import CartItemContainer from './CartItemContainer';
 import { Styled } from './styles';
-import { useCartList } from 'hooks/useCartList';
+import { useCartList } from 'components/Cart/CartList/useCartList';
 
 interface CartListProps {
   cartList: CartItem[];
