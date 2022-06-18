@@ -8,15 +8,23 @@ export const CART_LIST_ACTION_TYPE = {
   DELETE_SELECTED_CART_ITEM: 'cart/DELETE_SELECTED_CART_ITEM',
   DELETE_ALL_CART_ITEM: 'cart/DELETE_ALL_CART_ITEM',
   CLEAR_CART_LIST: 'cart/CLEAR_CART_LIST',
-};
+} as const;
 
-const getCartList = generateAsyncActionGroup<CartItem[]>(CART_LIST_ACTION_TYPE.GET_CART_LIST);
-const patchCartItem = generateAsyncActionGroup<CartItem>(CART_LIST_ACTION_TYPE.PATCH_CART_ITEM);
-const postCartItem = generateAsyncActionGroup<CartItem>(CART_LIST_ACTION_TYPE.POST_CART_ITEM);
-const deleteSelectedCartItem = generateAsyncActionGroup<{ id: number }[]>(
+type ActionType = typeof CART_LIST_ACTION_TYPE[keyof typeof CART_LIST_ACTION_TYPE];
+
+const getCartList = generateAsyncActionGroup<CartItem[], ActionType>(
+  CART_LIST_ACTION_TYPE.GET_CART_LIST
+);
+const patchCartItem = generateAsyncActionGroup<CartItem, ActionType>(
+  CART_LIST_ACTION_TYPE.PATCH_CART_ITEM
+);
+const postCartItem = generateAsyncActionGroup<CartItem, ActionType>(
+  CART_LIST_ACTION_TYPE.POST_CART_ITEM
+);
+const deleteSelectedCartItem = generateAsyncActionGroup<{ id: number }[], ActionType>(
   CART_LIST_ACTION_TYPE.DELETE_SELECTED_CART_ITEM
 );
-const deleteAllCartItem = generateAsyncActionGroup<null>(
+const deleteAllCartItem = generateAsyncActionGroup<null, ActionType>(
   CART_LIST_ACTION_TYPE.DELETE_ALL_CART_ITEM
 );
 

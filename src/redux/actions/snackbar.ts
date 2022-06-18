@@ -1,9 +1,9 @@
 const SNACKBAR_ACTION_TYPE = {
   NEW_MESSAGE: 'NEW_MESSAGE',
   CLEAR_MESSAGE: 'CLEAR_MESSAGE',
-};
+} as const;
 
-const updateSnackBar = message => {
+const updateSnackBar = (message: string) => {
   return {
     type: SNACKBAR_ACTION_TYPE.NEW_MESSAGE,
     payload: {

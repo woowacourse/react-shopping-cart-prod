@@ -2,7 +2,7 @@ import { generateAsyncActionGroup } from 'redux/utils';
 
 export const ITEM_LIST_ACTION_TYPE = {
   GET_ITEM_LIST: 'items/GET_ITEM_LIST',
-};
+} as const;
 
 const getItemList = generateAsyncActionGroup(ITEM_LIST_ACTION_TYPE.GET_ITEM_LIST);
 

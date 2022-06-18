@@ -1,8 +1,9 @@
 import { UserAction, USER_ACTION_TYPE } from 'redux/actions/user';
 import { AsyncStatus, createReducer } from 'redux/utils';
+import { UserInfo } from 'types/domain';
 
 interface UserState {
-  data: any;
+  data: UserInfo | unknown;
   loading: boolean;
   error: string | null;
 }

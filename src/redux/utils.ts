@@ -4,13 +4,13 @@ enum AsyncStatus {
   FAILURE,
 }
 
-const generateAsyncActionGroup = <T>(asyncActionType: string) => ({
+const generateAsyncActionGroup = <DataType, ActionType>(asyncActionType: ActionType) => ({
   pending: () => ({
     type: asyncActionType,
     status: AsyncStatus.PENDING,
     payload: null,
   }),
-  success: (data?: T) => ({
+  success: (data?: DataType) => ({
     type: asyncActionType,
     status: AsyncStatus.SUCCESS,
     payload: data,

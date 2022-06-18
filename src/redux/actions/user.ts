@@ -8,7 +8,7 @@ export const USER_ACTION_TYPE = {
   DELETE_USER: 'user/DELETE_USER',
   AUTO_SIGN_IN: 'user/AUTO_SIGN_IN',
   SIGN_OUT: 'user/SIGN_OUT',
-};
+} as const;
 
 const postSignUp = generateAsyncActionGroup(USER_ACTION_TYPE.POST_SIGN_UP);
 const postSignIn = generateAsyncActionGroup(USER_ACTION_TYPE.POST_SIGN_IN);
