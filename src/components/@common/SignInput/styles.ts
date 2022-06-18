@@ -16,7 +16,7 @@ export const Styled = {
     gap: 0.4rem;
   `,
 
-  Input: styled.input<any>`
+  Input: styled.input<{ isValid: boolean }>`
     width: 100%;
     height: 6.5rem;
     font-size: 2rem;
@@ -27,6 +27,6 @@ export const Styled = {
     border-right: 0px;
 
     outline: none;
-    border-bottom: ${props => (props.isValid ? colors.colors.primary : 'red')} 3px solid;
+    border-bottom: ${({ isValid }) => (isValid ? colors.colors.primary : 'red')} 3px solid;
   `,
 };
