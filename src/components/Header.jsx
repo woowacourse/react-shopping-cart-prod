@@ -41,11 +41,14 @@ function Header({ className }) {
         </Link>
         <div className={cn(styles.menu)}>
           <ul className={styles.ul}>
-            <li>
-              <Link to="/cart">장바구니</Link>
-            </li>
             {user.isLoggedIn ? (
               <>
+                <li>
+                  <Link to="/cart">장바구니</Link>
+                </li>
+                <li>
+                  <Link to="/order-list">주문목록</Link>
+                </li>
                 <li>
                   <Link to="/my-page">마이페이지</Link>
                 </li>
