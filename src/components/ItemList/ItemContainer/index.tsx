@@ -1,6 +1,5 @@
 import theme from 'styles/theme';
-import { Link } from 'react-router-dom';
-import { memo, MouseEvent } from 'react';
+import { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
 import { Item } from 'types/domain';
@@ -10,6 +9,7 @@ import { formatDecimal, isEmptyObject } from 'utils';
 import CroppedImage from 'components/@common/CroppedImage';
 import { MESSAGE } from 'constant/message';
 import { Styled } from './styles';
+import LinkWrapper from 'components/@common/LinkWrapper';
 
 const ItemContainer = ({ item }: { item: Item }) => {
   const { id, imageUrl, name, price } = item;
@@ -17,12 +17,6 @@ const ItemContainer = ({ item }: { item: Item }) => {
   const { data: cartList } = useAppSelector(state => state.cartListReducer);
   const { data: userData } = useAppSelector(state => state.userReducer);
   const { increaseQuantity } = useUpdateCartItem(cartList);
-
-  const handleClickItemContainer = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
-    if (e.target instanceof SVGElement) {
-      e.preventDefault();
-    }
-  };
 
   const handleClickCartIcon = () => {
     if (isEmptyObject(userData)) {
@@ -37,14 +31,14 @@ const ItemContainer = ({ item }: { item: Item }) => {
 
   return (
     <Styled.ItemContainer>
-      <Link to={`/item_detail/${id}`} onClick={handleClickItemContainer} replace>
+      <LinkWrapper to={`/item_detail/${id}`}>
         <CroppedImage src={imageUrl} width='270px' height='270px' alt='상품 이미지' />
-      </Link>
+      </LinkWrapper>
       <Styled.Footer>
-        <Link to={`/item_detail/${id}`} onClick={handleClickItemContainer} replace>
+        <LinkWrapper to={`/item_detail/${id}`}>
           <Styled.Title>{name}</Styled.Title>
           <Styled.Price>{formatDecimal(price)}원</Styled.Price>
-        </Link>
+        </LinkWrapper>
         <Styled.CartIcon
           width='31px'
           fill={theme.colors.lightBlack}
