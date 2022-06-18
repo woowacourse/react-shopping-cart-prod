@@ -2,7 +2,7 @@ import cn from "classnames";
 
 import PageTitle from "@components/PageTitle";
 import { useEffect } from "react";
-import CartForm from "./components/CartItemList";
+import CartItemList from "./components/CartItemList";
 import CartTotal from "./components/CartTotal";
 
 import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
@@ -37,7 +37,7 @@ function CartPage() {
       <div className={cn(styles.cart)}>
         <PageTitle className="mb-50">장바구니</PageTitle>
         <div className={styles.container}>
-          <CartForm className={styles.cartForm} />
+          <CartItemList className={styles.cartForm} />
           <CartTotal className={styles.cartTotal} />
         </div>
       </div>

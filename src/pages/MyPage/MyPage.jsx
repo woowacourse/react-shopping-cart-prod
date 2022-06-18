@@ -4,7 +4,7 @@ import cn from "classnames";
 import Divider from "@components/Divider";
 import UserNameForm from "./components/UserNameForm";
 import PasswordForm from "./components/PasswordForm";
-import SecessionForm from "./components/SecessionForm";
+import WithdrawalForm from "./components/WithdrawalForm";
 
 import styles from "./MyPage.module";
 
@@ -25,7 +25,7 @@ function MyPage({ className }) {
           <Divider className="mt-40 mb-20" mini light />
           <PasswordForm />
           <Divider className="mt-40 mb-20" mini light />
-          <SecessionForm />
+          <WithdrawalForm />
         </div>
       </div>
     </div>

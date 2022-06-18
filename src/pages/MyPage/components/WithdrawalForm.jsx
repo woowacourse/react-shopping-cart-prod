@@ -6,7 +6,7 @@ import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";
 import useInput from "@hooks/useInput";
 
-function SecessionForm() {
+function WithdrawalForm() {
   const dispatch = useDispatch();
 
   const { state: password, handleChange: handleChangePassword } = useInput("");
@@ -36,4 +36,4 @@ function SecessionForm() {
   );
 }
 
-export default SecessionForm;
+export default WithdrawalForm;
