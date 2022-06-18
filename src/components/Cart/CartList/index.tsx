@@ -3,24 +3,14 @@ import useUpdateCartItem from 'hooks/useUpdateCartItem';
 import CheckBox from 'components/@common/CheckBox';
 import CartItemContainer from './CartItemContainer';
 import { Styled } from './styles';
+import { useCartList } from 'hooks/useCartList';
 
 interface CartListProps {
   cartList: CartItem[];
 }
 
 const CartList = ({ cartList }: CartListProps) => {
-  const { toggleCartItemAllChecked, removeSelectedCartItem } = useUpdateCartItem(cartList);
-  const isAllItemChecked = cartList.every(cartItem => cartItem.checked);
-
-  const toggleCheckedAll = () => {
-    const targetItemList = cartList.filter(cartItem => cartItem.checked === isAllItemChecked);
-
-    toggleCartItemAllChecked(targetItemList);
-  };
-
-  const deleteSelectedItem = () => {
-    removeSelectedCartItem();
-  };
+  const { isAllItemChecked, toggleCheckedAll, deleteSelectedItem } = useCartList(cartList);
 
   return (
     <Styled.CartList>
