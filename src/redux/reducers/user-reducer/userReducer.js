@@ -12,9 +12,9 @@ function userReducer(state, { type, payload }) {
       newState.query.signup = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.SIGNUP_FULLFILLED: {
+    case ACTION_TYPE.SIGNUP_FULFILLED: {
       const newState = structuredClone(state);
-      newState.query.signup = queryState.fullfilled();
+      newState.query.signup = queryState.fulfilled();
       window.location.href = "/login";
       return state;
     }
@@ -31,13 +31,13 @@ function userReducer(state, { type, payload }) {
       newState.query.login = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.LOGIN_FULLFILLED: {
+    case ACTION_TYPE.LOGIN_FULFILLED: {
       const newState = structuredClone(state);
       const { accessToken } = payload;
 
       LocalStorage.setItem("accessToken", accessToken);
       Fetcher.updateAccessToken(accessToken);
-      newState.query.login = queryState.fullfilled();
+      newState.query.login = queryState.fulfilled();
       newState.data.isLoggedIn = true;
 
       window.location.href = "/";
@@ -62,9 +62,9 @@ function userReducer(state, { type, payload }) {
       newState.query.secession = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.SECESSION_FULLFILLED: {
+    case ACTION_TYPE.SECESSION_FULFILLED: {
       const newState = structuredClone(state);
-      newState.query.secession = queryState.fullfilled();
+      newState.query.secession = queryState.fulfilled();
       newState.data = structuredClone(initialState.user.data);
 
       LocalStorage.removeItem("accessToken");
@@ -85,11 +85,11 @@ function userReducer(state, { type, payload }) {
       newState.query.getUser = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.GET_USER_FULLFILLED: {
+    case ACTION_TYPE.GET_USER_FULFILLED: {
       const newState = structuredClone(state);
       const { userData } = payload;
       newState.data = { ...userData, isLoggedIn: true };
-      newState.query.getUser = queryState.fullfilled();
+      newState.query.getUser = queryState.fulfilled();
       return newState;
     }
     case ACTION_TYPE.GET_USER_REJECTED: {
@@ -105,9 +105,9 @@ function userReducer(state, { type, payload }) {
       newState.query.updateUserPassword = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.UPDATE_USER_PASSWORD_FULLFILLED: {
+    case ACTION_TYPE.UPDATE_USER_PASSWORD_FULFILLED: {
       const newState = structuredClone(state);
-      newState.query.updateUserPassword = queryState.fullfilled();
+      newState.query.updateUserPassword = queryState.fulfilled();
       newState.data = structuredClone(initialState.user.data);
       LocalStorage.removeItem("accessToken");
       alert("비밀번호가 변경되었습니다. 다시 로그인 해주세요");
@@ -127,10 +127,10 @@ function userReducer(state, { type, payload }) {
       newState.query.updateUserGeneralInfo = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.UPDATE_USER_GENERAL_INFO_FULLFILLED: {
+    case ACTION_TYPE.UPDATE_USER_GENERAL_INFO_FULFILLED: {
       const newState = structuredClone(state);
       const { userData } = payload;
-      newState.query.updateUserGeneralInfo = queryState.fullfilled();
+      newState.query.updateUserGeneralInfo = queryState.fulfilled();
       newState.data = { ...newState.data, ...userData };
       return newState;
     }

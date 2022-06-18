@@ -9,9 +9,9 @@ const orderReducer = (state, { type, payload }, totalState) => {
       newState.query.createOrder = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.CREATE_ORDER_FULLFILLED: {
+    case ACTION_TYPE.CREATE_ORDER_FULFILLED: {
       const newState = structuredClone(state);
-      newState.query.createOrder = queryState.fullfilled();
+      newState.query.createOrder = queryState.fulfilled();
       alert("주문이 성공적으로 들어갔습니다.");
       window.location.href = "/order-list";
       return state;

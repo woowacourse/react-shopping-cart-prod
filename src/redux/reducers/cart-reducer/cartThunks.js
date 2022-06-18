@@ -42,7 +42,7 @@ export const getCart =
       }
       const cart = (await response.json()) ?? [];
 
-      dispatch(createAction(ACTION_TYPE.GET_CART_FULLFILLED, { cart }));
+      dispatch(createAction(ACTION_TYPE.GET_CART_FULFILLED, { cart }));
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.GET_CART_REJECTED, {
@@ -71,7 +71,7 @@ export const addProductToCart =
       const cartItem = await response.json();
 
       dispatch(
-        createAction(ACTION_TYPE.ADD_PRODUCT_TO_CART_FULLFILLED, { cartItem })
+        createAction(ACTION_TYPE.ADD_PRODUCT_TO_CART_FULFILLED, { cartItem })
       );
     } catch (e) {
       dispatch(
@@ -100,7 +100,7 @@ export const updateCartItemQuantity =
       }
 
       dispatch(
-        createAction(ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_FULLFILLED, {
+        createAction(ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_FULFILLED, {
           cartItemId,
           quantity,
         })
@@ -132,7 +132,7 @@ export const deleteCartItems =
       }
 
       dispatch(
-        createAction(ACTION_TYPE.DELETE_CART_ITEMS_FULLFILLED, { cartItemIds })
+        createAction(ACTION_TYPE.DELETE_CART_ITEMS_FULFILLED, { cartItemIds })
       );
     } catch (e) {
       dispatch(

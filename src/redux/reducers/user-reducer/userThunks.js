@@ -55,7 +55,7 @@ export const signup =
         throw new ApiError(errorCode, message);
       }
 
-      dispatch(createAction(ACTION_TYPE.SIGNUP_FULLFILLED));
+      dispatch(createAction(ACTION_TYPE.SIGNUP_FULFILLED));
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.SIGNUP_REJECTED, {
@@ -80,7 +80,7 @@ export const login =
       }
       const { accessToken } = await response.json();
 
-      dispatch(createAction(ACTION_TYPE.LOGIN_FULLFILLED, { accessToken }));
+      dispatch(createAction(ACTION_TYPE.LOGIN_FULFILLED, { accessToken }));
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.LOGIN_REJECTED, {
@@ -107,7 +107,7 @@ export const secession =
         throw new ApiError(errorCode, message);
       }
 
-      dispatch(createAction(ACTION_TYPE.SECESSION_FULLFILLED));
+      dispatch(createAction(ACTION_TYPE.SECESSION_FULFILLED));
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.SECESSION_REJECTED, {
@@ -136,7 +136,7 @@ export const getUser =
       const { email, username } = await response.json();
 
       dispatch(
-        createAction(ACTION_TYPE.GET_USER_FULLFILLED, {
+        createAction(ACTION_TYPE.GET_USER_FULFILLED, {
           userData: { email, username },
         })
       );
@@ -169,7 +169,7 @@ export const updateUserPassword =
         throw new ApiError(errorCode, message);
       }
 
-      dispatch(createAction(ACTION_TYPE.UPDATE_USER_PASSWORD_FULLFILLED));
+      dispatch(createAction(ACTION_TYPE.UPDATE_USER_PASSWORD_FULFILLED));
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.UPDATE_USER_PASSWORD_REJECTED, {
@@ -201,7 +201,7 @@ export const updateUserGeneralInfo =
       const { email, username: newUsername } = await response.json();
 
       dispatch(
-        createAction(ACTION_TYPE.UPDATE_USER_GENERAL_INFO_FULLFILLED, {
+        createAction(ACTION_TYPE.UPDATE_USER_GENERAL_INFO_FULFILLED, {
           userData: { email, username: newUsername },
         })
       );

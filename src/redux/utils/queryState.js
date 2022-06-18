@@ -11,7 +11,7 @@ const queryState = {
     error: null,
     isSuccess: false,
   }),
-  fullfilled: () => ({
+  fulfilled: () => ({
     isLoading: false,
     isError: false,
     error: null,

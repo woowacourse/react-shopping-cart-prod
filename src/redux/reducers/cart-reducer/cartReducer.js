@@ -9,10 +9,10 @@ const cartReducer = (state, { type, payload }, totalState) => {
       newState.query.getCart = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.GET_CART_FULLFILLED: {
+    case ACTION_TYPE.GET_CART_FULFILLED: {
       const newState = structuredClone(state);
       const { cart } = payload;
-      newState.query.getCart = queryState.fullfilled();
+      newState.query.getCart = queryState.fulfilled();
       cart.forEach((_, index) => {
         cart[index].selected = true;
       });
@@ -32,12 +32,12 @@ const cartReducer = (state, { type, payload }, totalState) => {
       newState.query.addProductToCart = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.ADD_PRODUCT_TO_CART_FULLFILLED: {
+    case ACTION_TYPE.ADD_PRODUCT_TO_CART_FULFILLED: {
       const newState = structuredClone(state);
       const { cartItem } = payload;
       cartItem.selected = true;
 
-      newState.query.addProductToCart = queryState.fullfilled();
+      newState.query.addProductToCart = queryState.fulfilled();
       newState.data.push(cartItem);
       alert("상품이 성공적으로 추가되었습니다");
 
@@ -56,14 +56,14 @@ const cartReducer = (state, { type, payload }, totalState) => {
       newState.query.updateCartItemQuantity = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_FULLFILLED: {
+    case ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_FULFILLED: {
       const newState = structuredClone(state);
       const { cartItemId, quantity } = payload;
       const index = newState.data.findIndex((cartItem) => {
         return cartItem.id === cartItemId;
       });
       newState.data[index].quantity = quantity;
-      newState.query.updateCartItemQuantity = queryState.fullfilled();
+      newState.query.updateCartItemQuantity = queryState.fulfilled();
       return newState;
     }
     case ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_REJECTED: {
@@ -79,14 +79,14 @@ const cartReducer = (state, { type, payload }, totalState) => {
       newState.query.deleteCartItems = queryState.pending();
       return newState;
     }
-    case ACTION_TYPE.DELETE_CART_ITEMS_FULLFILLED: {
+    case ACTION_TYPE.DELETE_CART_ITEMS_FULFILLED: {
       const newState = structuredClone(state);
       const { cartItemIds } = payload;
       const newCart = newState.data.filter(
         (cartItem) => !cartItemIds.includes(cartItem.id)
       );
       newState.data = newCart;
-      newState.query.deleteCartItems = queryState.fullfilled();
+      newState.query.deleteCartItems = queryState.fulfilled();
       return newState;
     }
     case ACTION_TYPE.DELETE_CART_ITEMS_REJECTED: {

@@ -24,7 +24,7 @@ export const createOrder =
         throw new ApiError(errorCode, message);
       }
 
-      dispatch(createAction(ACTION_TYPE.CREATE_ORDER_FULLFILLED));
+      dispatch(createAction(ACTION_TYPE.CREATE_ORDER_FULFILLED));
     } catch (e) {
       dispatch(
         createAction(ACTION_TYPE.CREATE_ORDER_REJECTED, {
