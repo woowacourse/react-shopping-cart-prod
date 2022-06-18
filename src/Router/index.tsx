@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 import ItemDetail from 'pages/ItemDetailPage';
 import NotFound from 'pages/NotFoundPage';
 import CartPage from 'pages/CartPage';
@@ -6,7 +6,7 @@ import SignInPage from 'pages/SignInPage';
 import SignUpPage from 'pages/SignUpPage';
 import EditPasswordPage from 'pages/EditPasswordPage';
 import ResignPage from 'pages/ResignPage';
-import PrivateLayout from 'components/PrivateLayout';
+import PrivatePage from 'Router/PrivatePage';
 import { lazy } from 'react';
 
 export const PATH = {
@@ -31,7 +31,7 @@ const Router = () => {
     { path: PATH.signIn, element: <SignInPage /> },
     { path: PATH.signUp, element: <SignUpPage /> },
     {
-      element: <PrivateLayout />,
+      element: <PrivatePage />,
       children: [
         { path: PATH.cart, element: <CartPage /> },
         { path: PATH.editPassword, element: <EditPasswordPage /> },
