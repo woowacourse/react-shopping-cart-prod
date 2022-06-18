@@ -13,7 +13,6 @@ import { getLocalStorageToken } from 'utils/localStorage';
 const ItemListPage = () => {
   const dispatch = useAppDispatch<ItemListAction>();
   const { data: itemList, loading, error } = useAppSelector(state => state.itemListReducer);
-  const { loading: cartListLoading } = useAppSelector(state => state.cartListReducer);
 
   useEffect(() => {
     dispatch(getItemList());
@@ -22,7 +21,7 @@ const ItemListPage = () => {
     }
   }, []);
 
-  if (loading && cartListLoading) return <Loading />;
+  if (loading) return <Loading />;
   if (error) return <RequestFail />;
 
   return (
