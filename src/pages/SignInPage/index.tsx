@@ -1,41 +1,10 @@
-import { FormEvent } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { signIn } from 'redux/action-creators/userThunk';
-import { UserAction } from 'redux/actions/user';
-import { useAppDispatch } from 'hooks/useAppDispatch';
-import usePasswordInput from 'hooks/usePasswordInput';
-import useSignInput from 'hooks/useSignInput';
+import { Link } from 'react-router-dom';
 import SignInput from 'components/@common/SignInput';
-import { PATH } from 'Router';
-import { useDispatch } from 'react-redux';
-import { updateSnackBar } from 'redux/actions/snackBar';
-import { MESSAGE } from 'constant/message';
 import { Styled } from './styles';
+import { useSignIn } from 'hooks/useSignIn';
 
 const SignInPage = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const thunkDispatch = useAppDispatch<UserAction>();
-  const { currentPasswordRef, passwordValid, handleCurrentPasswordInput } = usePasswordInput();
-  const { inputState, validState, handleEmailInput } = useSignInput();
-
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const inputInfo = {
-      email: inputState.email,
-      password: currentPasswordRef.current.value,
-    };
-
-    if (validState.email && passwordValid) {
-      try {
-        await thunkDispatch(signIn(inputInfo));
-        navigate(PATH.default);
-      } catch (error) {
-        dispatch(updateSnackBar(MESSAGE.FAILED_SIGN_IN));
-      }
-    }
-  };
+  const { handleSubmit, handleEmailInput, currentPasswordRef } = useSignIn();
 
   return (
     <Styled.SignInPage>
@@ -44,7 +13,7 @@ const SignInPage = () => {
         <SignInput type={'email'} onChange={handleEmailInput}>
           이메일
         </SignInput>
-        <SignInput type={'password'} onChange={handleCurrentPasswordInput} ref={currentPasswordRef}>
+        <SignInput type={'password'} onChange={handleEmailInput} ref={currentPasswordRef}>
           비밀번호
         </SignInput>
 
