@@ -1,47 +1,51 @@
 import { useDispatch } from "react-redux";
 
 import { updateUserPassword } from "@redux/reducers/user-reducer/userThunks";
-import useForm from "@hooks/useForm";
-
 import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";
+import useInput from "@hooks/useInput";
+import { passwordValidator, confirmPasswordValidator } from "@utils/validators";
 
 function PasswordForm() {
   const dispatch = useDispatch();
-  const { onSubmit, register, formData, errors } = useForm();
-  const disabled = Object.keys(errors).some(
-    (inputName) => !!errors[inputName] || !formData[inputName]
-  );
 
-  const handleSubmit = async (formData) => {
-    const { oldPassword, newPassword } = formData;
+  const {
+    state: oldPassword,
+    handleChange: handleChangeOldPassword,
+    validation: oldPasswordValidation,
+  } = useInput("");
 
+  const {
+    state: newPassword,
+    handleChange: handleChangeNewPassword,
+    validation: newPasswordValidation,
+  } = useInput("", passwordValidator);
+
+  const {
+    state: confirmNewPassword,
+    handleChange: handleChangeConfirmNewPassword,
+    validation: confirmNewPasswordValidation,
+  } = useInput("", confirmPasswordValidator(newPassword));
+
+  const disabled =
+    !oldPasswordValidation.isValid ||
+    !newPasswordValidation.isValid ||
+    !confirmNewPasswordValidation.isValid;
+
+  const handleSubmitChangePasswordForm = () => {
     dispatch(updateUserPassword({ oldPassword, newPassword }));
   };
 
-  const validateConfirmNewPassword = (value) => {
-    if (formData.newPassword !== value) {
-      return {
-        isValid: false,
-        errorMessage: "비밀번호를 동일하게 입력해 주세요",
-      };
-    }
-    return {
-      isValid: true,
-      errorMessage: null,
-    };
-  };
-
   return (
-    <form onSubmit={onSubmit(handleSubmit)}>
+    <form onSubmit={handleSubmitChangePasswordForm}>
       <LabeledInput
         label="기존 비밀번호"
         className="mb-30"
         id="old-password"
         type="password"
-        feedback={errors.oldPassword}
         placeholder="기존 비밀번호를 입력해주세요"
-        {...register("oldPassword")}
+        value={oldPassword}
+        onChange={(e) => handleChangeOldPassword(e.target.value)}
       />
       <LabeledInput
         label="새 비밀번호"
@@ -49,13 +53,9 @@ function PasswordForm() {
         id="new-password"
         type="password"
         placeholder="새 비밀번호를 입력해주세요"
-        feedback={errors.newPassword}
-        {...register("newPassword", {
-          pattern: {
-            value: /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
-            message: "영문,숫자,특수문자의 조합으로 8 ~ 12글자를 입력해 주세요",
-          },
-        })}
+        value={newPassword}
+        feedback={newPasswordValidation.errorMessage}
+        onChange={(e) => handleChangeNewPassword(e.target.value)}
       />
       <LabeledInput
         label="새 비밀번호 확인"
@@ -63,10 +63,9 @@ function PasswordForm() {
         id="confirm-new-password"
         type="password"
         placeholder="새 비밀번호를 입력해주세요"
-        feedback={errors.confirmNewPassword}
-        {...register("confirmNewPassword", {
-          customValidator: validateConfirmNewPassword,
-        })}
+        value={confirmNewPassword}
+        feedback={confirmNewPasswordValidation.errorMessage}
+        onChange={(e) => handleChangeConfirmNewPassword(e.target.value)}
       />
       <Button
         variant="primary"

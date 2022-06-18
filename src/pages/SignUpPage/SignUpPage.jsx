@@ -1,62 +1,60 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import cn from "classnames";
 
 import { signup } from "@redux/reducers/user-reducer/userThunks";
-import useForm from "@hooks/useForm";
+
 import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";
 
-import styles from "./SignUpPage.module";
+import useInput from "@hooks/useInput";
+import {
+  emailValidator,
+  passwordValidator,
+  usernameValidator,
+  confirmPasswordValidator,
+} from "@utils/validators";
+
 import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
+import styles from "./SignUpPage.module";
 
 function SignUpPage({ className }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { onSubmit, register, formData, errors } = useForm();
-  const { isLoading, isSuccess } = useSelector(
-    (state) => state.user.query.signup
-  );
+
+  const {
+    state: email,
+    handleChange: handleChangeEmail,
+    validation: emailValidation,
+  } = useInput("", emailValidator);
+
+  const {
+    state: username,
+    handleChange: handleChangeUsername,
+    validation: usernameValidation,
+  } = useInput("", usernameValidator);
+
+  const {
+    state: password,
+    handleChange: handleChangePassword,
+    validation: passwordValidation,
+  } = useInput("", passwordValidator);
+
+  const {
+    state: confirmPassword,
+    handleChange: handleChangeConfirmPassword,
+    validation: confirmPasswordValidation,
+  } = useInput("", confirmPasswordValidator(password));
+
   const disabled =
-    Object.keys(errors).some(
-      (inputName) => !!errors[inputName] || !formData[inputName]
-    ) || isLoading;
+    !emailValidation.isValid ||
+    !usernameValidation.isValid ||
+    !passwordValidation.isValid ||
+    !confirmPasswordValidation.isValid;
 
-  const handleSubmit = async (formData, errors) => {
-    const { email, password, username, confirmPassword } = formData;
-
-    const errorInputName = Object.keys(errors)[0];
-
-    if (errors[errorInputName]) {
-      alert(errors[errorInputName]);
-      return;
-    }
-
-    // (임시방편) 실시간 체크가 안되기 때문에 여기서 검사를 해준다
-    if (password !== confirmPassword) {
-      alert("비밀번호가 일치하지 않습니다");
-      return;
-    }
-
+  const handleSubmitSignUpForm = () => {
     dispatch(signup({ email, password, username }));
-  };
-
-  useEffect(() => {
-    isSuccess && navigate("/login", { replace: true });
-  }, [isSuccess, navigate]);
-
-  const validateConfirmNewPassword = (value) => {
-    if (formData.password !== value) {
-      return {
-        isValid: false,
-        errorMessage: "비밀번호를 동일하게 입력해 주세요",
-      };
-    }
-    return {
-      isValid: true,
-      errorMessage: null,
-    };
+    navigate("/login", { replace: true });
   };
 
   return (
@@ -65,36 +63,26 @@ function SignUpPage({ className }) {
         <AuthFormTemplate.Title>회원가입</AuthFormTemplate.Title>
         <AuthFormTemplate.Content>
           <form
-            onSubmit={onSubmit(handleSubmit)}
+            onSubmit={handleSubmitSignUpForm}
             className={cn(styles.signupForm, "mb-20")}
-            disabled={disabled}
           >
             <LabeledInput
               label="이메일"
               className="mb-24"
               id="email"
               placeholder="woowacourse@gmail.com"
-              feedback={errors.email}
-              {...register("email", {
-                pattern: {
-                  value: /^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                  message: "이메일 형식을 지켜주세요",
-                },
-              })}
+              value={email}
+              feedback={emailValidation.errorMessage}
+              onChange={(e) => handleChangeEmail(e.target.value)}
             />
-
             <LabeledInput
               label="이름"
               className="mb-24"
               id="username"
               placeholder="이름을 입력해주세요"
-              feedback={errors.username}
-              {...register("username", {
-                pattern: {
-                  value: /^.{1,10}$/,
-                  message: "이름은 1 ~ 10자 이내로 입력해 주세요",
-                },
-              })}
+              value={username}
+              feedback={usernameValidation.errorMessage}
+              onChange={(e) => handleChangeUsername(e.target.value)}
             />
             <LabeledInput
               label="비밀번호"
@@ -102,15 +90,9 @@ function SignUpPage({ className }) {
               id="password"
               type="password"
               placeholder="비밀번호를 입력해주세요"
-              feedback={errors.password}
-              {...register("password", {
-                pattern: {
-                  value:
-                    /^.*(?=^.{8,12}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
-                  message:
-                    "영문,숫자,특수문자의 조합으로 8 ~ 12글자를 입력해 주세요",
-                },
-              })}
+              value={password}
+              feedback={passwordValidation.errorMessage}
+              onChange={(e) => handleChangePassword(e.target.value)}
             />
             <LabeledInput
               label="비밀번호 확인"
@@ -118,10 +100,9 @@ function SignUpPage({ className }) {
               id="confirm-password"
               type="password"
               placeholder="비밀번호를 입력해주세요"
-              feedback={errors.confirmPassword}
-              {...register("confirmPassword", {
-                customValidator: validateConfirmNewPassword,
-              })}
+              value={confirmPassword}
+              feedback={confirmPasswordValidation.errorMessage}
+              onChange={(e) => handleChangeConfirmPassword(e.target.value)}
             />
             <Button
               variant="primary"

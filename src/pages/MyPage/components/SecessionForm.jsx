@@ -1,21 +1,17 @@
 import { useDispatch } from "react-redux";
 
 import { secession } from "@redux/reducers/user-reducer/userThunks";
-import useForm from "@hooks/useForm";
 
 import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";
+import useInput from "@hooks/useInput";
 
 function SecessionForm() {
   const dispatch = useDispatch();
-  const { onSubmit, register, formData, errors } = useForm();
 
-  const disabled = Object.keys(errors).some(
-    (inputName) => !!errors[inputName] || !formData[inputName]
-  );
+  const { state: password, handleChange: handleChangePassword } = useInput("");
 
-  const handleSubmit = async (formData) => {
-    const { password } = formData;
+  const handleSubmitWithdrawalForm = () => {
     const result = window.confirm("정말 탈퇴 하시겠습니까?");
     if (!result) return;
 
@@ -23,22 +19,17 @@ function SecessionForm() {
   };
 
   return (
-    <form onSubmit={onSubmit(handleSubmit)}>
+    <form onSubmit={handleSubmitWithdrawalForm}>
       <LabeledInput
         label="회원탈퇴"
         className="mb-30"
         id="password-for-secession"
         type="password"
         placeholder="비밀번호를 입력해주세요"
-        {...register("password")}
+        value={password}
+        onChange={(e) => handleChangePassword(e.target.value)}
       />
-      <Button
-        variant="primary"
-        size="md"
-        block
-        type="submit"
-        disabled={disabled}
-      >
+      <Button variant="primary" size="md" block type="submit">
         회원탈퇴
       </Button>
     </form>
