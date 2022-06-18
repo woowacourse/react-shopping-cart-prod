@@ -1,6 +1,3 @@
-import { flexCenter } from 'styles/mixin';
-import theme from 'styles/theme';
-import styled from 'styled-components';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { signUp } from 'redux/action-creators/userThunk';
@@ -13,6 +10,7 @@ import SignInput from 'components/@common/SignInput';
 import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
 import { MESSAGE } from 'constant/message';
+import { Styled } from './styles';
 
 const SignUpPage = () => {
   const navigate = useNavigate();
@@ -49,9 +47,9 @@ const SignUpPage = () => {
   };
 
   return (
-    <StyledRoot>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledTitle>회원가입</StyledTitle>
+    <Styled.SignUpPage>
+      <Styled.Form onSubmit={handleSubmit}>
+        <Styled.Title>회원가입</Styled.Title>
 
         <SignInput type={'email'} onChange={handleEmailInput} isValid={validState.email}>
           이메일
@@ -75,48 +73,10 @@ const SignUpPage = () => {
           비밀번호 확인
         </SignInput>
 
-        <StyledSignUpButton>확인</StyledSignUpButton>
-      </StyledForm>
-    </StyledRoot>
+        <Styled.SignUpButton>확인</Styled.SignUpButton>
+      </Styled.Form>
+    </Styled.SignUpPage>
   );
 };
-
-const StyledRoot = styled.div`
-  ${flexCenter}
-  height: 100rem;
-`;
-
-const StyledForm = styled.form`
-  ${flexCenter}
-  display: flex;
-  flex-direction: column;
-  width: 60rem;
-  gap: 5rem;
-  height: 90rem;
-  border: 1px solid ${({ theme }) => theme.colors.grey};
-  border-radius: 5px;
-`;
-
-const StyledTitle = styled.h1`
-  font-weight: 600;
-  font-size: 34px;
-  line-height: 36px;
-
-  text-align: center;
-`;
-
-const StyledSignUpButton = styled.button`
-  width: 80%;
-  height: 65px;
-  background-color: ${theme.colors.primary};
-  font-size: 23px;
-  font-weight: bold;
-  color: ${theme.colors.white};
-  border-radius: 6px;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.lightMint};
-  }
-`;
 
 export default SignUpPage;

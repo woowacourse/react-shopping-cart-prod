@@ -1,6 +1,3 @@
-import styled from 'styled-components';
-import { flexCenter } from 'styles/mixin';
-import theme from 'styles/theme';
 import { FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { signIn } from 'redux/action-creators/userThunk';
@@ -13,6 +10,7 @@ import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
 import { MESSAGE } from 'constant/message';
+import { Styled } from './styles';
 
 const SignInPage = () => {
   const navigate = useNavigate();
@@ -40,9 +38,9 @@ const SignInPage = () => {
   };
 
   return (
-    <StyledRoot>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledTitle>로그인</StyledTitle>
+    <Styled.SignInPage>
+      <Styled.Form onSubmit={handleSubmit}>
+        <Styled.Title>로그인</Styled.Title>
         <SignInput type={'email'} onChange={handleEmailInput}>
           이메일
         </SignInput>
@@ -50,62 +48,14 @@ const SignInPage = () => {
           비밀번호
         </SignInput>
 
-        <StyledSignInButton>로그인</StyledSignInButton>
+        <Styled.SignInButton>로그인</Styled.SignInButton>
 
-        <StyledFooter>
+        <Styled.Footer>
           <Link to='/signUp'>회원가입</Link>
-        </StyledFooter>
-      </StyledForm>
-    </StyledRoot>
+        </Styled.Footer>
+      </Styled.Form>
+    </Styled.SignInPage>
   );
 };
-
-const StyledRoot = styled.div`
-  ${flexCenter}
-  height: 100rem;
-`;
-
-const StyledForm = styled.form`
-  ${flexCenter}
-  display: flex;
-  flex-direction: column;
-  width: 60rem;
-  gap: 5rem;
-  height: 70rem;
-  border: 1px solid ${theme.colors.grey};
-  border-radius: 5px;
-`;
-
-const StyledTitle = styled.h1`
-  font-weight: 600;
-  font-size: 3.4rem;
-  line-height: 3.6rem;
-
-  text-align: center;
-`;
-
-const StyledSignInButton = styled.button`
-  width: 80%;
-  height: 6.5rem;
-  background-color: ${theme.colors.primary};
-  font-size: 2.3rem;
-  font-weight: bold;
-  color: ${theme.colors.white};
-  border-radius: 6px;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.lightMint};
-  }
-`;
-
-const StyledFooter = styled.div`
-  display: flex;
-  width: 80%;
-  justify-content: flex-end;
-  font-weight: 400;
-  font-size: 2rem;
-  line-height: 2.4rem;
-  letter-spacing: 0.5px;
-`;
 
 export default SignInPage;

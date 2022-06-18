@@ -1,6 +1,3 @@
-import styled from 'styled-components';
-import { flexCenter } from 'styles/mixin';
-import theme from 'styles/theme';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { useAppSelector } from 'hooks/useAppSelector';
 import usePasswordInput from 'hooks/usePasswordInput';
@@ -13,6 +10,7 @@ import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
 import { MESSAGE } from 'constant/message';
+import { Styled } from './styles';
 
 const ResignPage = () => {
   const navigate = useNavigate();
@@ -42,9 +40,9 @@ const ResignPage = () => {
   };
 
   return (
-    <StyledRoot>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledTitle>회원 탈퇴</StyledTitle>
+    <Styled.ResignPage>
+      <Styled.Form onSubmit={handleSubmit}>
+        <Styled.Title>회원 탈퇴</Styled.Title>
 
         <SignInput placeholder={userData.email} type={'email'} disable={true}>
           이메일
@@ -62,48 +60,10 @@ const ResignPage = () => {
           {'탈퇴하시려면 "응"을 입력해 주세요'}
         </SignInput>
 
-        <StyledSignUpButton>확인</StyledSignUpButton>
-      </StyledForm>
-    </StyledRoot>
+        <Styled.SignUpButton>확인</Styled.SignUpButton>
+      </Styled.Form>
+    </Styled.ResignPage>
   );
 };
-
-const StyledRoot = styled.div`
-  ${flexCenter}
-  height: 90rem;
-`;
-
-const StyledForm = styled.form`
-  ${flexCenter}
-  display: flex;
-  flex-direction: column;
-  width: 60rem;
-  gap: 5rem;
-  height: 90rem;
-  border: 1px solid ${({ theme }) => theme.colors.grey};
-  border-radius: 5px;
-`;
-
-const StyledTitle = styled.h1`
-  font-weight: 600;
-  font-size: 3.4rem;
-  line-height: 3.6rem;
-
-  text-align: center;
-`;
-
-const StyledSignUpButton = styled.button`
-  width: 80%;
-  height: 6.5rem;
-  background-color: ${({ theme }) => theme.colors.primary};
-  font-size: 2.3rem;
-  font-weight: bold;
-  color: ${theme.colors.white};
-  border-radius: 6px;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.lightMint};
-  }
-`;
 
 export default ResignPage;

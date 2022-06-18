@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-import { flexCenter } from 'styles/mixin';
 import { FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { editPassword } from 'redux/action-creators/userThunk';
@@ -12,6 +10,7 @@ import { PATH } from 'Router';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
 import { MESSAGE } from 'constant/message';
+import { Styled } from './styles';
 
 const EditPasswordPage = () => {
   const navigate = useNavigate();
@@ -46,9 +45,9 @@ const EditPasswordPage = () => {
   };
 
   return (
-    <StyledRoot>
-      <StyledForm onSubmit={handleSubmit}>
-        <StyledTitle>비밀번호 수정</StyledTitle>
+    <Styled.EditPasswordPage>
+      <Styled.Form onSubmit={handleSubmit}>
+        <Styled.Title>비밀번호 수정</Styled.Title>
 
         <SignInput placeholder={data.email} type={'email'} disable={true}>
           이메일
@@ -80,44 +79,10 @@ const EditPasswordPage = () => {
           새 비밀번호 확인
         </SignInput>
 
-        <StyledSignUpButton>확인</StyledSignUpButton>
-      </StyledForm>
-    </StyledRoot>
+        <Styled.SignUpButton>확인</Styled.SignUpButton>
+      </Styled.Form>
+    </Styled.EditPasswordPage>
   );
 };
-
-const StyledRoot = styled.div`
-  ${flexCenter}
-  height: 100rem;
-`;
-
-const StyledForm = styled.form`
-  ${flexCenter}
-  display: flex;
-  flex-direction: column;
-  width: 60rem;
-  gap: 5rem;
-  height: 100rem;
-  border: 1px solid ${({ theme }) => theme.colors.grey};
-  border-radius: 5px;
-`;
-
-const StyledTitle = styled.h1`
-  font-weight: 600;
-  font-size: 3.4rem;
-  line-height: 3.6rem;
-
-  text-align: center;
-`;
-
-const StyledSignUpButton = styled.button`
-  width: 80%;
-  height: 6.5rem;
-  background-color: ${({ theme }) => theme.colors.primary};
-  font-size: 2.3rem;
-  font-weight: bold;
-  color: ${({ theme }) => theme.colors.white};
-  border-radius: 6px;
-`;
 
 export default EditPasswordPage;
