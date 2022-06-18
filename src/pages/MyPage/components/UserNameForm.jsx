@@ -29,7 +29,7 @@ function UserNameForm() {
     <form onSubmit={handleSubmitChangeUsernameForm}>
       <LabeledInput
         label="이름"
-        className="mb-30"
+        className="mb-40"
         id="username"
         type="username"
         placeholder="이름을 입력해주세요"

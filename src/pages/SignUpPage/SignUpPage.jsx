@@ -68,7 +68,7 @@ function SignUpPage({ className }) {
           >
             <LabeledInput
               label="이메일"
-              className="mb-24"
+              className="mb-40"
               id="email"
               placeholder="woowacourse@gmail.com"
               value={email}
@@ -77,7 +77,7 @@ function SignUpPage({ className }) {
             />
             <LabeledInput
               label="이름"
-              className="mb-24"
+              className="mb-40"
               id="username"
               placeholder="이름을 입력해주세요"
               value={username}
@@ -86,7 +86,7 @@ function SignUpPage({ className }) {
             />
             <LabeledInput
               label="비밀번호"
-              className="mb-24"
+              className="mb-40"
               id="password"
               type="password"
               placeholder="비밀번호를 입력해주세요"

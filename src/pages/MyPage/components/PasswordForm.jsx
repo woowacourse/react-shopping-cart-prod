@@ -40,7 +40,7 @@ function PasswordForm() {
     <form onSubmit={handleSubmitChangePasswordForm}>
       <LabeledInput
         label="기존 비밀번호"
-        className="mb-30"
+        className="mb-40"
         id="old-password"
         type="password"
         placeholder="기존 비밀번호를 입력해주세요"
@@ -49,7 +49,7 @@ function PasswordForm() {
       />
       <LabeledInput
         label="새 비밀번호"
-        className="mb-30"
+        className="mb-40"
         id="new-password"
         type="password"
         placeholder="새 비밀번호를 입력해주세요"
@@ -59,7 +59,7 @@ function PasswordForm() {
       />
       <LabeledInput
         label="새 비밀번호 확인"
-        className="mb-30"
+        className="mb-40"
         id="confirm-new-password"
         type="password"
         placeholder="새 비밀번호를 입력해주세요"

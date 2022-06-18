@@ -22,7 +22,7 @@ function SecessionForm() {
     <form onSubmit={handleSubmitWithdrawalForm}>
       <LabeledInput
         label="회원탈퇴"
-        className="mb-30"
+        className="mb-40"
         id="password-for-secession"
         type="password"
         placeholder="비밀번호를 입력해주세요"

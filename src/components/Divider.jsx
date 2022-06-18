@@ -1,5 +1,5 @@
 import cn from "classnames";
-import styles from "./divider.module";
+import styles from "./Divider.module";
 
 function Divider({ className, mini, light }) {
   return (
