@@ -9,6 +9,7 @@ import { KEYS } from 'utils/localStorage';
 import SnackBar from 'components/@common/snackBar';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
+import ErrorBoundary from 'components/@common/ErrorBoundary';
 
 function App() {
   const dispatch = useDispatch();
@@ -27,7 +28,9 @@ function App() {
       <StyledRoot>
         <Header />
         <StyledMain>
-          <Router />
+          <ErrorBoundary fallback={<p>에러가 발생했습니다.😭</p>}>
+            <Router />
+          </ErrorBoundary>
         </StyledMain>
         <SnackBar />
       </StyledRoot>

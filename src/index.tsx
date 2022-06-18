@@ -19,13 +19,13 @@ async function main() {
     return;
   }
 
-  const { worker } = await import('./mocks/browser');
+  // const { worker } = await import('./mocks/browser');
 
-  await worker.start({
-    serviceWorker: {
-      url: '/react-shopping-cart-prod/mockServiceWorker.js',
-    },
-  });
+  // await worker.start({
+  //   serviceWorker: {
+  //     url: '/react-shopping-cart-prod/mockServiceWorker.js',
+  //   },
+  // });
 
   const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(thunk)));
   const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
