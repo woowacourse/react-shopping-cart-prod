@@ -28,7 +28,7 @@ const ItemContainer = ({ item }: { item: Item }) => {
 
   const handleClickCartIcon = () => {
     if (isEmptyObject(userData)) {
-      dispatch(updateSnackBar('로그인 후 이용가능합니다.'));
+      dispatch(updateSnackBar(MESSAGE.NOT_USER));
 
       return;
     }

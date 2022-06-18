@@ -12,6 +12,7 @@ import { updateSnackBar } from 'redux/actions/snackBar';
 import ErrorBoundary from 'components/@common/ErrorBoundary';
 import { Suspense } from 'react';
 import Loading from 'components/@common/Loading';
+import { MESSAGE } from 'constant/message';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function App() {
     try {
       thunkDispatch(autoSignIn());
     } catch (error) {
-      dispatch(updateSnackBar('자동 로그인 실패'));
+      dispatch(updateSnackBar(MESSAGE.FAILED_AUTO_SIGN));
     }
   }
 
@@ -30,7 +31,7 @@ function App() {
       <StyledRoot>
         <Header />
         <StyledMain>
-          <ErrorBoundary fallback={<p>에러가 발생했습니다.😭</p>}>
+          <ErrorBoundary fallback={MESSAGE.PAGE_ERROR}>
             <Suspense fallback={<Loading />}>
               <Router />
             </Suspense>
