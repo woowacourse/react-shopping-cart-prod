@@ -39,10 +39,10 @@ const cartReducer = (state = initialState, action): CartState => {
 
     case CartActionType.ADD_CART_SUCCEEDED: {
       const {
-        payload: { product },
+        payload: { cartItem },
       } = action;
 
-      return { ...state, cartList: [...state.cartList, product], isLoading: false };
+      return { ...state, cartList: [...state.cartList, cartItem], isLoading: false };
     }
 
     case CartActionType.ADD_CART_FAILED: {
@@ -59,6 +59,7 @@ const cartReducer = (state = initialState, action): CartState => {
       } = action;
 
       const newCartList = state.cartList.filter(cart => cart.id !== deletedCartId);
+
       return { ...state, isLoading: false, cartList: newCartList };
     }
 
@@ -97,12 +98,12 @@ const cartReducer = (state = initialState, action): CartState => {
 
     case CartActionType.PATCH_CART_SUCCEEDED: {
       const {
-        payload: { id, newCartProduct },
+        payload: { id, quantity },
       } = action;
 
       const newCartList = state.cartList.map(cart => {
         if (cart.id === id) {
-          return newCartProduct;
+          return { ...cart, quantity };
         }
         return cart;
       });
@@ -141,6 +142,30 @@ const cartReducer = (state = initialState, action): CartState => {
         selectedCartItem: state.cartList.map(cart => cart.id),
       };
     }
+
+    case CartActionType.ADD_ORDER_ITEM_START:
+      return { ...state, isLoading: true };
+
+    case CartActionType.ADD_ORDER_ITEM_SUCCEEDED: {
+      const {
+        payload: { orderList },
+      } = action;
+      const orderIdList = orderList.map(order => order.cartItemId);
+      const newCartList = [...state.cartList];
+
+      orderIdList.forEach(id => {
+        newCartList.forEach((cart, index) => {
+          if (id === cart.id) {
+            newCartList.splice(index, 1);
+          }
+        });
+      });
+
+      return { ...state, selectedCartItem: [], cartList: newCartList, isLoading: false };
+    }
+
+    case CartActionType.ADD_ORDER_ITEM_FAILED:
+      return { ...state, isLoading: false };
 
     default: {
       return state;

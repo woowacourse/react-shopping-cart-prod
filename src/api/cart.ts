@@ -1,51 +1,52 @@
-import { clearCache, caching } from '@/api/cache';
-import { API_URL } from '@/api/constants';
+import { caching } from '@/api/cache';
+import { CART_API_URL } from '@/api/constants';
 import axios from 'axios';
+import { authorizedFetcher } from './authorizedFetcher';
+import { getCookie } from './cookie';
 
 const cartAPI = axios.create({
-  baseURL: `${API_URL}/carts`,
+  baseURL: CART_API_URL.TO_CART_ITEMS,
 });
 
-const cartListEndpoint = `${API_URL}/carts/`;
-
-export const addCart = async (product): Promise<any> => {
-  const response = await cartAPI.post('/', product);
-
-  if (response.statusText !== 'Created') {
-    throw Error('서버 오류!');
-  }
-
-  clearCache(cartListEndpoint);
+export const addCart = async (body): Promise<any> => {
+  return authorizedFetcher({
+    requestMethod: cartAPI.post,
+    endPoint: '/',
+    body,
+    cachePath: CART_API_URL.TO_CART_ITEMS,
+  });
 };
 
 export const getCart = () => {
+  const accessToken = getCookie('access-token');
+
   return caching(async (): Promise<any> => {
-    const response = await cartAPI.get('/');
-
-    if (response.statusText !== 'OK') {
-      throw Error('서버 오류!');
-    }
-
-    return {
-      data: response.data,
-    };
-  }, cartListEndpoint);
+    return authorizedFetcher({
+      requestMethod: cartAPI.get,
+      endPoint: '/',
+      isLogged: true,
+      isOnlyConfig: true,
+    });
+  }, `${CART_API_URL.TO_CART_ITEMS}_${accessToken}`);
 };
 
 export const deleteCart = async (id): Promise<any> => {
-  const response = await cartAPI.delete(`/${id}`);
-  if (response.statusText !== 'OK') {
-    throw Error('서버 오류!');
-  }
-
-  clearCache(cartListEndpoint);
+  return authorizedFetcher({
+    requestMethod: cartAPI.delete,
+    endPoint: `/${id}`,
+    cachePath: CART_API_URL.TO_CART_ITEMS,
+    isLogged: true,
+    isOnlyConfig: true,
+  });
 };
 
-export const patchCart = async (id, newCartProduct): Promise<any> => {
-  const response = await cartAPI.patch(`/${id}`, newCartProduct);
-  if (response.statusText !== 'OK') {
-    throw Error('서버 오류!');
-  }
-
-  clearCache(cartListEndpoint);
+export const patchCart = async (id, quantity): Promise<any> => {
+  return authorizedFetcher({
+    requestMethod: cartAPI.patch,
+    endPoint: `/${id}`,
+    body: {},
+    cachePath: CART_API_URL.TO_CART_ITEMS,
+    options: { params: { quantity } },
+    isLogged: true,
+  });
 };

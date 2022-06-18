@@ -31,26 +31,26 @@ export type ProductListAction =
   | GetProductListSucceeded
   | GetProductListFailed;
 
-export const fetchProductListAsync =
-  (page: number) => async (dispatch: Dispatch<ProductListAction>) => {
-    dispatch({ type: ProductActionType.GET_PRODUCT_LIST_START });
-    try {
-      const {
-        data: { productList, totalProductCount },
-      } = await getProductList(page);
-      dispatch({
-        type: ProductActionType.GET_PRODUCT_LIST_SUCCEEDED,
-        payload: {
-          productList,
-          totalProductCount,
-        },
-      });
-    } catch ({ message }) {
-      dispatch({
-        type: ProductActionType.GET_PRODUCT_LIST_FAILED,
-        payload: {
-          message,
-        },
-      });
-    }
-  };
+export const fetchProductListAsync = () => async (dispatch: Dispatch<ProductListAction>) => {
+  dispatch({ type: ProductActionType.GET_PRODUCT_LIST_START });
+  try {
+    const {
+      data: { productList, totalProductCount },
+    } = await getProductList();
+
+    dispatch({
+      type: ProductActionType.GET_PRODUCT_LIST_SUCCEEDED,
+      payload: {
+        productList,
+        totalProductCount,
+      },
+    });
+  } catch ({ message }) {
+    dispatch({
+      type: ProductActionType.GET_PRODUCT_LIST_FAILED,
+      payload: {
+        message,
+      },
+    });
+  }
+};

@@ -1,5 +1,6 @@
 import { addCart, deleteCart, getCart, patchCart } from '@/api/cart';
-import { ProductType } from '@/domain/product';
+import { addOrderList } from '@/api/orderList';
+import { CartType } from '@/domain/product';
 import { Dispatch } from 'redux';
 export const enum CartActionType {
   GET_CART_START = 'cart/GET_CART_START',
@@ -24,6 +25,10 @@ export const enum CartActionType {
 
   SELECT_CART_ITEM = 'cart/SELECT_CART_ITEM',
   SELECT_EVERY_CART_ITEM = 'cart/SELECT_EVERY_CART_ITEM',
+
+  ADD_ORDER_ITEM_START = 'cart/ADD_ORDER_ITEM_START',
+  ADD_ORDER_ITEM_SUCCEEDED = 'cart/ADD_ORDER_ITEM_SUCCEEDED',
+  ADD_ORDER_ITEM_FAILED = 'cart/ADD_ORDER_ITEM_FAILED',
 }
 
 interface GetCartStart {
@@ -33,7 +38,7 @@ interface GetCartStart {
 interface GetCartSucceeded {
   type: CartActionType.GET_CART_SUCCEEDED;
   payload: {
-    cartList: ProductType[];
+    cartList: CartType[];
   };
 }
 
@@ -48,7 +53,7 @@ interface AddCartStart {
 interface AddCartSucceeded {
   type: CartActionType.ADD_CART_SUCCEEDED;
   payload: {
-    product: ProductType;
+    cartItem: CartType;
   };
 }
 
@@ -95,11 +100,23 @@ interface PatchCartFailed {
 
 interface SelectCartItem {
   type: CartActionType.SELECT_CART_ITEM;
-  payalod: { id: number };
+  payload: { id: number };
 }
 
 interface SelectEveryCartItem {
   type: CartActionType.SELECT_EVERY_CART_ITEM;
+}
+
+interface AddOrderItemStart {
+  type: CartActionType.ADD_ORDER_ITEM_START;
+}
+
+interface AddOrderItemSucceeded {
+  type: CartActionType.ADD_ORDER_ITEM_SUCCEEDED;
+}
+
+interface AddOrderItemFailed {
+  type: CartActionType.ADD_ORDER_ITEM_FAILED;
 }
 
 export type CartAction =
@@ -119,13 +136,18 @@ export type CartAction =
   | PatchCartSucceeded
   | PatchCartFailed
   | SelectCartItem
-  | SelectEveryCartItem;
+  | SelectEveryCartItem
+  | AddOrderItemStart
+  | AddOrderItemSucceeded
+  | AddOrderItemFailed;
 
 export const fetchGetCartAsync = () => async (dispatch: Dispatch<CartAction>) => {
   dispatch({ type: CartActionType.GET_CART_START });
 
   try {
-    const { data: cartList } = await getCart();
+    const {
+      data: { cartItems: cartList },
+    } = await getCart();
 
     dispatch({ type: CartActionType.GET_CART_SUCCEEDED, payload: { cartList } });
   } catch ({ message }) {
@@ -133,20 +155,28 @@ export const fetchGetCartAsync = () => async (dispatch: Dispatch<CartAction>) =>
   }
 };
 
-export const fetchAddCartAsync = product => async (dispatch: Dispatch<CartAction>) => {
-  dispatch({ type: CartActionType.ADD_CART_START });
+export const fetchAddCartAsync =
+  ({ productId, quantity }) =>
+  async (dispatch: Dispatch<CartAction>) => {
+    dispatch({ type: CartActionType.ADD_CART_START });
 
-  try {
-    await addCart(product);
+    try {
+      const {
+        data: { cartItem },
+      } = await addCart({ productId, quantity });
 
-    dispatch({ type: CartActionType.ADD_CART_SUCCEEDED, payload: { product } });
-  } catch ({ message }) {
-    dispatch({ type: CartActionType.ADD_CART_FAILED });
-  }
-};
+      dispatch({ type: CartActionType.ADD_CART_SUCCEEDED, payload: { cartItem } });
+    } catch ({
+      response: {
+        data: { error },
+      },
+    }) {
+      dispatch({ type: CartActionType.ADD_CART_FAILED });
+    }
+  };
 
 export const fetchDeleteCartAsync = id => async (dispatch: Dispatch<CartAction>) => {
-  dispatch({ type: CartActionType.DELETE_CART_START });
+  dispatch({ type: CartActionType.DELETE_CART_START, payload: { id } });
 
   try {
     await deleteCart(id);
@@ -175,13 +205,33 @@ export const fetchDeleteSelectedCartItemAsync =
     }
   };
 
-export const fetchPatchCartAsync =
-  (id, newCartProduct) => async (dispatch: Dispatch<CartAction>) => {
-    dispatch({ type: CartActionType.PATCH_CART_START, payload: { id } });
+export const fetchPatchCartAsync = (id, quantity) => async (dispatch: Dispatch<CartAction>) => {
+  dispatch({ type: CartActionType.PATCH_CART_START, payload: { id } });
+
+  try {
+    await patchCart(id, quantity);
+
+    dispatch({ type: CartActionType.PATCH_CART_SUCCEEDED, payload: { id, quantity } });
+  } catch ({ message }) {
+    dispatch({ type: CartActionType.PATCH_CART_FAILED });
+  }
+};
+
+export const postOrderListAsync =
+  (orderList, navigate) => async (dispatch: Dispatch<CartAction>) => {
+    dispatch({ type: CartActionType.ADD_ORDER_ITEM_START });
+
     try {
-      await patchCart(id, newCartProduct);
-      dispatch({ type: CartActionType.PATCH_CART_SUCCEEDED, payload: { id, newCartProduct } });
+      const {
+        headers: { location },
+      } = await addOrderList(orderList);
+
+      const orderId = location.split('/')[location.split('/').length - 1];
+
+      dispatch({ type: CartActionType.ADD_ORDER_ITEM_SUCCEEDED, payload: { orderList } });
+
+      navigate(orderId);
     } catch ({ message }) {
-      dispatch({ type: CartActionType.PATCH_CART_FAILED });
+      dispatch({ type: CartActionType.ADD_ORDER_ITEM_FAILED });
     }
   };

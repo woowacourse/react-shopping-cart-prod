@@ -2,6 +2,7 @@ export const ROUTE: {
   Home: string;
   ShoppingCart: string;
   OrderList: string;
+  OrderDetail: string;
   ProductDetail: string;
   NotFound: string;
   SignUp: string;
@@ -13,6 +14,7 @@ export const ROUTE: {
   Home: '/',
   ShoppingCart: '/shopping-cart',
   OrderList: '/order-list',
+  OrderDetail: '/order-detail',
   ProductDetail: '/products/:productId',
   SignUp: '/customers/signup',
   Login: '/customers/login',

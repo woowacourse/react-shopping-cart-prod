@@ -39,13 +39,19 @@ export const useCartList = () => {
   const decreaseCartItemCount = useCallback(cart => {
     const { id, quantity } = cart;
 
-    dispatch(fetchPatchCartAsync(id, { ...cart, quantity: quantity - 1 }) as any);
+    if (quantity > 1) {
+      dispatch(fetchPatchCartAsync(id, quantity - 1) as any);
+
+      return;
+    }
+
+    alert('구입할 수 있는 최소 수량입니다.');
   }, []);
 
   const increaseCartItemCount = useCallback(cart => {
     const { id, quantity } = cart;
 
-    dispatch(fetchPatchCartAsync(id, { ...cart, quantity: quantity + 1 }) as any);
+    dispatch(fetchPatchCartAsync(id, quantity + 1) as any);
   }, []);
 
   const changeCartItemCount = useCallback((cart, count) => {
@@ -55,7 +61,7 @@ export const useCartList = () => {
     }
 
     if (confirm('수량을 변경하시겠습니까?')) {
-      dispatch(fetchPatchCartAsync(id, { ...cart, quantity: count }) as any);
+      dispatch(fetchPatchCartAsync(id, count) as any);
     }
   }, []);
 
@@ -90,6 +96,8 @@ export const useCartList = () => {
   return {
     amount,
     dispatch,
+    selectedCartItem,
+    orderLength: selectedCartItem.length,
     cartItemStatusUtil: {
       checkCartItemLoading,
       checkCartItemChecked,

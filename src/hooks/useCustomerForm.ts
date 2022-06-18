@@ -105,7 +105,7 @@ export const useCustomerForm = (userInformation: UserInformation = {}) => {
       passwordConfirm: {
         ...prevState.passwordConfirm,
         value,
-        isError: !isValidPasswordInput(value) && value !== prevState.password,
+        isError: !isValidPasswordInput(value) || value !== prevState.password.value,
       },
     }));
   };
@@ -137,7 +137,9 @@ export const useCustomerForm = (userInformation: UserInformation = {}) => {
     e.preventDefault();
 
     try {
-      await editUser({ phoneNumber: phoneNumber.value, address: address.value });
+      const userInformation = { phoneNumber: phoneNumber.value, address: address.value };
+      await editUser(userInformation);
+
       triggerSucceededSnackbar('정보수정에 성공하였습니다.');
     } catch ({
       response: {
@@ -163,9 +165,17 @@ export const useCustomerForm = (userInformation: UserInformation = {}) => {
 
   const onSubmitChangePasswordForm = async e => {
     e.preventDefault();
+    const userInformation = { password: password.value };
+
+    if (password.value !== passwordConfirm.value) {
+      triggerFailedSnackbar('비밀번호가 일치 하지 않습니다.');
+
+      return;
+    }
 
     try {
-      await changePassword({ password: password.value });
+      await changePassword(userInformation);
+
       triggerSucceededSnackbar('비밀번호 변경에 성공하셨습니다.');
     } catch ({
       response: {

@@ -8,10 +8,12 @@ import { fetchProductListAsync } from '@/store/product/action';
 import { useThunkFetch } from '@/hooks/useFecth';
 import { fetchGetCartAsync } from '@/store/cart/action';
 import Loading from '@/components/common/Loading/Loading';
+import { PRODUCT_LIST_PAGE_LIMIT } from '@/api/constants';
+import { withLogin } from '@/components/helper/withLogin';
 
 function Home() {
   const [searchParams] = useSearchParams();
-  const currentPage = Number(searchParams.get('page')) ?? 1;
+  const currentPage = Number(searchParams.get('page') ?? 1);
 
   const {
     isLoading: isProductLoading,
@@ -19,7 +21,7 @@ function Home() {
     productList,
   } = useThunkFetch({
     selector: state => state.product,
-    thunkAction: () => fetchProductListAsync(currentPage),
+    thunkAction: fetchProductListAsync,
     deps: [currentPage],
   });
 
@@ -54,7 +56,12 @@ function Home() {
   return (
     <PageTemplate>
       <Styled.Container>
-        <ProductList productList={productList} />
+        <ProductList
+          productList={productList.slice(
+            PRODUCT_LIST_PAGE_LIMIT * (currentPage - 1),
+            PRODUCT_LIST_PAGE_LIMIT * currentPage,
+          )}
+        />
         <Pagination />
 
         {isCartLoading && <Loading type="page">👻</Loading>}

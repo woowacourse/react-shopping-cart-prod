@@ -18,14 +18,14 @@ function CartItem({
   onClickDeleteButton,
   onClickCheckBox,
 }) {
-  const { id, imageURL, name, price, quantity } = cart;
+  const { productId, imageURL, name, price, quantity } = cart;
 
   const navigate = useNavigate();
 
   const responsive = useResponsive();
 
   const navigateToProduct = () => {
-    navigate(`/products/${id}`);
+    navigate(`/products/${productId}`);
   };
 
   return (
@@ -61,7 +61,7 @@ function CartItem({
           )}
         </Styled.CounterWrapper>
 
-        <Styled.Text>{price}원</Styled.Text>
+        <Styled.Text>{price.toLocaleString('ko-KR')}원</Styled.Text>
       </Styled.PriceWrapper>
     </Styled.Container>
   );

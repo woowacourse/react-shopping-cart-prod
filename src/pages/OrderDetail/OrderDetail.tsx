@@ -1,14 +1,16 @@
-import { getAllOrderList } from '@/api/orderList';
+import { getOrderById } from '@/api/orderList';
 import ErrorContainer from '@/components/common/ErrorContainer/ErrorContainer';
 import Loading from '@/components/common/Loading/Loading';
+import PageTemplate from '@/components/common/PageTemplate/PageTemplate';
 import { withLogin } from '@/components/helper/withLogin';
 import OrderInformation from '@/components/order/OrderInformation/OrderInformation';
 import useResponsive from '@/hooks/useResponsive';
 import { useEffect, useState } from 'react';
-import PageTemplate from '../../components/common/PageTemplate/PageTemplate';
-import * as Styled from './OrderList.style';
+import { useParams } from 'react-router-dom';
+import * as Styled from './OrderDetail.style';
 
-function OrderList() {
+function OrderDetail() {
+  const { id: orderId } = useParams();
   const responsive = useResponsive();
   const [orderList, setOrderList] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -18,10 +20,10 @@ function OrderList() {
     const apiCall = async () => {
       try {
         const {
-          data: { orders },
-        } = await getAllOrderList();
+          data: { order },
+        } = await getOrderById(orderId);
 
-        setOrderList(orders);
+        setOrderList(order.orderDetails);
         setIsLoading(false);
       } catch (e) {
         setIsError(true);
@@ -29,7 +31,7 @@ function OrderList() {
     };
 
     apiCall();
-  }, []);
+  }, [orderId]);
 
   if (isLoading) {
     return (
@@ -39,40 +41,22 @@ function OrderList() {
     );
   }
 
-  if (isError) {
+  if (isError)
     return (
       <PageTemplate>
-        <Styled.Title>주문목록</Styled.Title>
+        <Styled.Title>주문내역상세</Styled.Title>
         <ErrorContainer>써버 에러</ErrorContainer>
       </PageTemplate>
     );
-  }
-
-  if (!orderList) {
-    return (
-      <PageTemplate>
-        <Styled.Title>주문목록</Styled.Title>
-        <ErrorContainer>준비된 상품이 없엉!!</ErrorContainer>
-      </PageTemplate>
-    );
-  }
 
   return (
     <PageTemplate>
       <Styled.Container>
-        <Styled.Title>주문목록</Styled.Title>
-        {orderList.map(order => (
-          <div key={order.id}>
-            <OrderInformation
-              orderList={order.orderDetails}
-              responsive={responsive}
-              orderId={order.id}
-            />
-          </div>
-        ))}
+        <Styled.Title>주문내역상세</Styled.Title>
+        <OrderInformation orderList={orderList} responsive={responsive} orderId={orderId} />
       </Styled.Container>
     </PageTemplate>
   );
 }
 
-export default withLogin(OrderList, true);
+export default withLogin(OrderDetail, true);

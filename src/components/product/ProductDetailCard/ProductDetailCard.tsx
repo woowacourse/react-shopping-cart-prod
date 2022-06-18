@@ -1,7 +1,7 @@
 import Button from '@/components/common/Button/Button';
 import Image from '@/components/common/Image/Image';
 import Modal from '@/components/common/Modal/Modal';
-import CartAdd from '@/components/product/CartAdd/CartAdd';
+import ProductAddCart from '@/components/product/ProductAddCart/ProductAddCart';
 import { ProductType } from '@/domain/product';
 import { useExcludeCart } from '@/hooks/useExcludeCart';
 import { useModal } from '@/hooks/useModal';
@@ -28,7 +28,7 @@ function ProductDetailCard({ product }: { product: ProductType }) {
         <Styled.Name>{(product as any).name}</Styled.Name>
         <Styled.Price>
           <span>금액 </span>
-          <span>{(product as any).price}원</span>
+          <span>{(product as any).price.toLocaleString('ko-KR')}원</span>
         </Styled.Price>
       </Styled.InformationWrapper>
 
@@ -42,7 +42,7 @@ function ProductDetailCard({ product }: { product: ProductType }) {
 
       {isShowModal && (
         <Modal closeModal={closeModal}>
-          <CartAdd product={product} closeModal={closeModal} />
+          <ProductAddCart product={product} closeModal={closeModal} />
         </Modal>
       )}
     </>

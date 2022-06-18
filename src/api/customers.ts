@@ -1,59 +1,63 @@
-import { API_URL } from '@/api/constants';
+import { CUSTOMERS_API_URL } from '@/api/constants';
 import { getCookie } from '@/api/cookie';
 import axios from 'axios';
+import { authorizedFetcher } from './authorizedFetcher';
 
 const customersAPI = axios.create({
-  baseURL: `${API_URL}/customers`,
+  baseURL: CUSTOMERS_API_URL.TO_CUSTOMERS,
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
 });
 
 export const signUp = userInformation => {
-  return customersAPI.post('/signup', userInformation);
+  return authorizedFetcher({
+    requestMethod: customersAPI.post,
+    endPoint: '/signup',
+    body: userInformation,
+  });
 };
 
 export const login = userInformation => {
-  return customersAPI.post('/login', userInformation);
+  return authorizedFetcher({
+    requestMethod: customersAPI.post,
+    endPoint: '/login',
+    body: userInformation,
+  });
 };
 
 export const editUser = userInformation => {
-  const accessToken = getCookie('access-token');
-
-  return customersAPI.put('/', userInformation, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  return authorizedFetcher({
+    requestMethod: customersAPI.put,
+    endPoint: '/',
+    body: userInformation,
+    isLogged: true,
   });
 };
 
 export const changePassword = userInformation => {
-  const accessToken = getCookie('access-token');
-
-  return customersAPI.patch('/password', userInformation, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  return authorizedFetcher({
+    requestMethod: customersAPI.patch,
+    endPoint: '/password',
+    body: userInformation,
+    isLogged: true,
   });
 };
 
 export const deleteUser = () => {
-  const accessToken = getCookie('access-token');
-
-  return customersAPI.delete('/', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  return authorizedFetcher({
+    requestMethod: customersAPI.delete,
+    endPoint: '/',
+    isLogged: true,
+    isOnlyConfig: true,
   });
 };
 
 export const getCustomer = () => {
-  const accessToken = getCookie('access-token');
-
-  return customersAPI.get('/', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
+  return authorizedFetcher({
+    requestMethod: customersAPI.get,
+    endPoint: '/',
+    isLogged: true,
+    isOnlyConfig: true,
   });
 };
