@@ -1,4 +1,4 @@
-import Stepper from './Stepper';
+import Stepper from 'components/Stepper/Stepper';
 
 const stepList = [
   {

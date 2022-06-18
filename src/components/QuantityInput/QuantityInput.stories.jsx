@@ -1,4 +1,4 @@
-import QuantityInput from './QuantityInput';
+import QuantityInput from 'components/QuantityInput/QuantityInput';
 
 export default {
   title: 'Component/QuantityInput',

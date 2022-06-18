@@ -1,10 +1,11 @@
-import React from 'react';
-import * as S from './Checkbox.styled';
+import { ComponentProps, ForwardedRef, forwardRef } from 'react';
+import * as S from 'components/Checkbox/Checkbox.styled';
 
-type InputProps = React.HTMLProps<HTMLInputElement>;
-
-function Checkbox({ ref, as, ...props }: InputProps) {
-  return <S.Checkbox {...props} type="checkbox" />;
+function Checkbox(
+  props: ComponentProps<any>,
+  ref: ForwardedRef<HTMLInputElement>
+) {
+  return <S.Checkbox ref={ref} {...props} type="checkbox" />;
 }
 
-export default Checkbox;
+export default forwardRef(Checkbox);

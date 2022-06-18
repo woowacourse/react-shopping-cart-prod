@@ -1,5 +1,5 @@
-import MainPage from './MainPage';
-import productsHandlers from '../../mocks/handlers/products';
+import MainPage from 'pages/MainPage/MainPage';
+import productsHandlers from 'mocks/handlers/products';
 
 export default {
   title: 'Page/MainPage',

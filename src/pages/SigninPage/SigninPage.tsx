@@ -1,34 +1,29 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import Button from '../../components/Button/Button';
-import Input from '../../components/Input/Input';
-import * as S from './SigninPage.styled';
 import axios from 'axios';
-import PlainLink from '../../components/PlainLink/PlainLink';
-import { SigninResponseBody } from '../../types';
-import { SERVER_URL } from '../../configs/api';
+import useForm from 'hooks/useForm';
+import Button from 'components/Button/Button';
+import Input from 'components/Input/Input';
+import PlainLink from 'components/PlainLink/PlainLink';
+import * as S from 'pages/SigninPage/SigninPage.styled';
+import { useDispatch } from 'react-redux';
+import { actions } from 'redux/actions';
 
 function SigninPage() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isSubmitting, registerForm, registerInput } = useForm();
+
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    const payload = Object.fromEntries(formData.entries());
+    const payload = Object.fromEntries(formData.entries()) as {
+      email: string;
+      password: string;
+    };
 
     try {
-      const response = await axios.post<SigninResponseBody>(
-        `${SERVER_URL}/api/customer/authentication/sign-in`,
-        payload
-      );
-
-      const { accessToken, userId } = response.data;
-
-      localStorage.setItem('accessToken', accessToken);
-      localStorage.setItem('userId', String(userId));
-      navigate('/');
+      dispatch(actions.signIn(payload));
     } catch (e) {
       if (axios.isAxiosError(e)) {
-        alert('유효하지 않은 이메일 형식입니다.');
+        alert('아이디, 비밀번호를 다시 확인해주세요.');
       } else {
         alert(e);
       }
@@ -38,23 +33,29 @@ function SigninPage() {
   return (
     <S.PageBox>
       <S.Title>로그인</S.Title>
-      <S.Form onSubmit={handleSubmit}>
+      <S.Form {...registerForm({ onSubmit: handleSubmit })}>
         <S.Section>
           <Input
             type="email"
-            name="email"
-            placeholder="이메일을 입력해주세요."
-            required
+            {...registerInput('email', {
+              placeholder: '이메일을 입력해주세요.',
+              maxLength: 50,
+              required: true,
+            })}
           />
           <Input
             type="password"
-            name="password"
-            placeholder="비밀번호를 입력해주세요."
-            required
+            {...registerInput('password', {
+              placeholder: '비밀번호를 입력해주세요.',
+              maxLength: 20,
+              required: true,
+            })}
           />
         </S.Section>
         <S.Section>
-          <Button type="submit">로그인</Button>
+          <Button type="submit" disabled={isSubmitting}>
+            로그인
+          </Button>
           <PlainLink to="/signup/1">
             <Button type="button" color="white">
               회원가입

@@ -1,37 +1,35 @@
 import React from 'react';
-import { Product } from '../../types';
-import Input from '../QuantityInput/QuantityInput';
-import Checkbox from '../Checkbox/Checkbox';
-import ICONS from '../../constants/icons';
-import * as S from './CartItem.styled';
+import { CartItem } from 'types';
+import Input from 'components/QuantityInput/QuantityInput';
+import Checkbox from 'components/Checkbox/Checkbox';
+import ICONS from 'constants/icons';
+import * as S from 'components/CartItemCard/CartItemCard.styled';
 
 type Props = {
-  product: Product;
-  quantity: number;
+  cart: CartItem;
   checked: boolean;
   onChangeQuantity: React.ChangeEventHandler<HTMLInputElement>;
   onCheck: React.ChangeEventHandler<HTMLInputElement>;
   onClickRemove: React.MouseEventHandler<HTMLButtonElement>;
 };
 
-function CartItem({
-  product,
-  quantity,
+function CartItemCard({
+  cart: { product, quantity },
   checked,
   onChangeQuantity,
   onCheck,
   onClickRemove,
 }: Props) {
   return (
-    <S.CartItemBox>
-      <S.CartItemInformationBox>
+    <S.CartItemCardBox>
+      <S.CartItemCardInformationBox>
         <Checkbox checked={checked} onChange={onCheck} />
         <S.ImageBox>
-          <img src={product.image} alt={product.name} />
+          <img src={product.imageUrl} alt={product.name} />
         </S.ImageBox>
         <p>{product.name}</p>
-      </S.CartItemInformationBox>
-      <S.CartItemControlBox>
+      </S.CartItemCardInformationBox>
+      <S.CartItemCardControlBox>
         <S.Button onClick={onClickRemove}>{ICONS.REMOVE}</S.Button>
         <Input
           type="number"
@@ -44,9 +42,9 @@ function CartItem({
         <p style={{ alignSelf: 'flex-end' }}>
           {(product.price * quantity).toLocaleString('ko-KR')}원
         </p>
-      </S.CartItemControlBox>
-    </S.CartItemBox>
+      </S.CartItemCardControlBox>
+    </S.CartItemCardBox>
   );
 }
 
-export default CartItem;
+export default CartItemCard;

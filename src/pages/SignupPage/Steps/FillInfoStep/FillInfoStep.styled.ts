@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import * as T from './FillInfoStep.types';
+import * as T from 'pages/SignupPage/Steps/FillInfoStep/FillInfoStep.types';
 
 export const Form = styled.form`
   width: 100%;

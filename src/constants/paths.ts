@@ -1,4 +1,4 @@
-import { Step } from '../components/Stepper/Stepper.types';
+import { Step } from 'components/Stepper/Stepper.types';
 
 const PATHS = {
   INDEX: '/',

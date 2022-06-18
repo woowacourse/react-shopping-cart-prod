@@ -1,5 +1,5 @@
-import { TYPES } from './redux/actions';
-import theme from './styles/theme';
+import { TYPES } from 'redux/actions';
+import theme from 'styles/theme';
 
 export type Customer = {
   email: string;
@@ -9,11 +9,9 @@ export type Customer = {
   gender: 'male' | 'female' | 'undefined';
   birthday: string;
   contact: string;
-  fullAddress: {
-    address: string;
-    detailAddress: string;
-    zoneCode: string;
-  };
+  address: string;
+  detailAddress: string;
+  zonecode: string;
   terms: boolean;
 };
 export type User = Customer & { userId: number; accessToken: string | null };
@@ -28,20 +26,18 @@ export type SigninRequestBody = {
 export type SigninResponseBody = { accessToken: string; userId: number };
 
 export type Product = {
-  id: string;
+  id: number;
   name: string;
   price: number;
-  image: string;
+  imageUrl: string;
   description: string;
   stock: number;
-  brandId: string;
-  categoryId: string;
-  createdAt: number;
   isAddedToCart?: boolean;
 };
 
 export type CartItem = {
-  userId: string;
+  cartItemId: number;
+  product: Product;
   quantity: number;
 };
 
@@ -51,6 +47,16 @@ export type Action = {
 };
 
 export type StoreState = {
+  customerState: {
+    isLoading: boolean;
+    error: any;
+    isSignupSuccessful: boolean;
+    isUpdateProfileSuccessful: boolean;
+    isUnregisterSuccessful: boolean;
+    userId: number | null;
+    accessToken: string | null;
+    customer: User | null;
+  };
   productsState: {
     isLoading: boolean;
     error: any;
@@ -60,16 +66,13 @@ export type StoreState = {
     isLoading: boolean;
     error: any;
     productDetail: Product | null;
+    isAddedToCart: boolean;
   };
   cartState: {
     isLoading: boolean;
     error: any;
-    cart: { product: Product; quantity: number; checked: boolean }[];
+    cart: CartItem[];
   };
 };
 
 export type Theme = typeof theme;
-
-export type Routes<T> = {
-  [property in keyof T]: string;
-};

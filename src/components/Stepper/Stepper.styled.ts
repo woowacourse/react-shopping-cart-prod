@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import * as T from './Stepper.types';
+import * as T from 'components/Stepper/Stepper.types';
 
 export const StepItem = styled.li`
   display: flex;

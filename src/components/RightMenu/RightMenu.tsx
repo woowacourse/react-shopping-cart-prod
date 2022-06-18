@@ -1,27 +1,41 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ICONS from '../../constants/icons';
-import Avatar from '../Avatar/Avatar';
-import PlainLink from '../PlainLink/PlainLink';
-import * as S from './RightMenu.styled';
+import ICONS from 'constants/icons';
+import Avatar from 'components/Avatar/Avatar';
+import PlainLink from 'components/PlainLink/PlainLink';
+import * as S from 'components/RightMenu/RightMenu.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from 'redux/actions';
+import { PATHS } from 'constants/paths';
+import { StoreState } from 'types';
+import { useEffect } from 'react';
 
 function RightMenu() {
+  const dispatch = useDispatch();
+  const { userId, customer } = useSelector<
+    StoreState,
+    StoreState['customerState']
+  >(({ customerState }) => customerState);
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
-  const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
 
   const toggleDrawer = () => {
     setIsDrawerOpened((prev) => !prev);
   };
 
-  const handleLogoutButton = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('userId');
-    navigate('/signin');
+  const handleSignoutButton = () => {
+    dispatch(actions.signOut());
+
+    navigate(PATHS.INDEX);
   };
 
-  if (userId && accessToken) {
+  useEffect(() => {
+    if (userId) {
+      dispatch(actions.getCustomer(userId));
+    }
+  }, [dispatch, userId]);
+
+  if (customer) {
     return (
       <S.RightMenuBox>
         <S.Nav>
@@ -37,16 +51,13 @@ function RightMenu() {
               <PlainLink to="/profile">내 정보 수정</PlainLink>
             </li>
             <li>
-              <S.LogoutButton onClick={handleLogoutButton}>
+              <S.LogoutButton onClick={handleSignoutButton}>
                 로그아웃
               </S.LogoutButton>
             </li>
           </S.Ul>
         </S.Nav>
-        <Avatar
-          profileImageUrl="http://gravatar.com/avatar/1654096752111?d=identicon"
-          name="우"
-        />
+        <Avatar profileImageUrl={customer.profileImageUrl} />
       </S.RightMenuBox>
     );
   }

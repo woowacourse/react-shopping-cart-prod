@@ -6,9 +6,9 @@ import { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise-middleware';
 import ReduxThunk from 'redux-thunk';
 
-import App from './App';
-import rootReducer from './redux/reducers';
-import worker from './mocks/browser';
+import App from 'App';
+import rootReducer from 'redux/reducers';
+import worker from 'mocks/browser';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 const store = createStore(

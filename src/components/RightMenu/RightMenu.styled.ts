@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Theme } from '../../types';
+import { Theme } from 'types';
 
 type StyledUlProps = {
   isDrawerOpened: boolean;

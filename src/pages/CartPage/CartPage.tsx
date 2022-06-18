@@ -1,10 +1,10 @@
-import CartItem from '../../components/CartItem/CartItem';
-import Checkbox from '../../components/Checkbox/Checkbox';
-import Spinner from '../../components/Spinner/Spinner';
-import DivideLine from '../../components/DivideLine/DivideLine';
-import Button from '../../components/Button/Button';
-import useCart from './useCart';
-import * as S from './CartPage.styled';
+import CartItemCard from 'components/CartItemCard/CartItemCard';
+import Checkbox from 'components/Checkbox/Checkbox';
+import Spinner from 'components/Spinner/Spinner';
+import DivideLine from 'components/DivideLine/DivideLine';
+import Button from 'components/Button/Button';
+import useCart from 'pages/CartPage/useCart';
+import * as S from 'pages/CartPage/CartPage.styled';
 
 function CartPage() {
   const {
@@ -53,19 +53,22 @@ function CartPage() {
           <S.Subtitle>든든배송 상품 ({cart.length}개)</S.Subtitle>
           <DivideLine color="gray" />
           <ul>
-            {cart.map(({ product, quantity }) => (
-              <li key={product.id}>
-                <CartItem
-                  product={product}
-                  quantity={quantity}
-                  checked={checkedFlags[product.id] ?? true}
-                  onChangeQuantity={handleChangeQuantity(product.id)}
-                  onCheck={handleCheck(product.id)}
-                  onClickRemove={removeCartItem(product.id)}
-                />
-                <DivideLine thickness="thin" />
-              </li>
-            ))}
+            {cart.map((cart) => {
+              const { cartItemId } = cart;
+
+              return (
+                <li key={cartItemId}>
+                  <CartItemCard
+                    cart={cart}
+                    checked={checkedFlags[cartItemId] ?? true}
+                    onChangeQuantity={handleChangeQuantity(cart)}
+                    onCheck={handleCheck(cart)}
+                    onClickRemove={removeCartItem(cart)}
+                  />
+                  <DivideLine thickness="thin" />
+                </li>
+              );
+            })}
           </ul>
         </S.LeftSection>
         <S.RightSection>

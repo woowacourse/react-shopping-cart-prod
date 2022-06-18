@@ -1,5 +1,5 @@
-import ICONS from '../../constants/icons';
-import * as S from './Spinner.styled';
+import ICONS from 'constants/icons';
+import * as S from 'components/Spinner/Spinner.styled';
 
 function Spinner() {
   return (

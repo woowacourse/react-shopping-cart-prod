@@ -1,7 +1,29 @@
-import axios from 'axios';
-import API from '../configs/api';
+import { Customer, Product } from 'types';
+import api from 'api';
 
 const TYPES = {
+  INITIALIZE_CUSTOMER: 'INITIALIZE_CUSTOMER',
+  GET_CUSTOMER: 'GET_CUSTOMER',
+  GET_CUSTOMER_PENDING: 'GET_CUSTOMER_PENDING',
+  GET_CUSTOMER_FULFILLED: 'GET_CUSTOMER_FULFILLED',
+  GET_CUSTOMER_REJECTED: 'GET_CUSTOMER_PENDING',
+  SIGN_IN: 'SIGN_IN',
+  SIGN_IN_PENDING: 'SIGN_IN_PENDING',
+  SIGN_IN_FULFILLED: 'SIGN_IN_FULFILLED',
+  SIGN_IN_REJECTED: 'SIGN_IN_REJECTED',
+  SIGN_OUT: 'SIGN_OUT',
+  SIGN_UP: 'SIGN_UP',
+  SIGN_UP_PENDING: 'SIGN_UP_PENDING',
+  SIGN_UP_FULFILLED: 'SIGN_UP_FULFILLED',
+  SIGN_UP_REJECTED: 'SIGN_UP_REJECTED',
+  UPDATE_PROFILE: 'UPDATE_PROFILE',
+  UPDATE_PROFILE_PENDING: 'UPDATE_PROFILE_PENDING',
+  UPDATE_PROFILE_FULFILLED: 'UPDATE_PROFILE_FULFILLED',
+  UPDATE_PROFILE_REJECTED: 'UPDATE_PROFILE_REJECTED',
+  UNREGISTER: 'UNREGISTER',
+  UNREGISTER_PENDING: 'UNREGISTER_PENDING',
+  UNREGISTER_FULFILLED: 'UNREGISTER_FULFILLED',
+  UNREGISTER_REJECTED: 'UNREGISTER_REJECTED',
   GET_PRODUCT_LIST: 'GET_PRODUCT_LIST',
   GET_PRODUCT_LIST_PENDING: 'GET_PRODUCT_LIST_PENDING',
   GET_PRODUCT_LIST_FULFILLED: 'GET_PRODUCT_LIST_FULFILLED',
@@ -10,6 +32,13 @@ const TYPES = {
   GET_PRODUCT_DETAIL_PENDING: 'GET_PRODUCT_DETAIL_PENDING',
   GET_PRODUCT_DETAIL_FULFILLED: 'GET_PRODUCT_DETAIL_FULFILLED',
   GET_PRODUCT_DETAIL_REJECTED: 'GET_PRODUCT_DETAIL_REJECTED',
+  CHECK_IS_PRODUCT_ADDED_TO_CART: 'CHECK_IS_PRODUCT_ADDED_TO_CART',
+  CHECK_IS_PRODUCT_ADDED_TO_CART_PENDING:
+    'CHECK_IS_PRODUCT_ADDED_TO_CART_PENDING',
+  CHECK_IS_PRODUCT_ADDED_TO_CART_FULFILLED:
+    'CHECK_IS_PRODUCT_ADDED_TO_CART_FULFILLED',
+  CHECK_IS_PRODUCT_ADDED_TO_CART_REJECTED:
+    'CHECK_IS_PRODUCT_ADDED_TO_CART_REJECTED',
   ADD_ITEM_TO_CART: 'ADD_ITEM_TO_CART',
   ADD_ITEM_TO_CART_PENDING: 'ADD_ITEM_TO_CART_PENDING',
   ADD_ITEM_TO_CART_FULFILLED: 'ADD_ITEM_TO_CART_FULFILLED',
@@ -27,50 +56,69 @@ const TYPES = {
 } as const;
 
 const actions = {
-  getProductList: (ids?: Array<String>) => {
-    const query = ids ? `?${ids.map((id) => `id=${id}`).join('&')}` : '';
-    const request = axios
-      .get(`${API.PRODUCTS}${query}`)
-      .then((res) => res.data);
+  initializeCustomer: () => {
+    return { type: TYPES.INITIALIZE_CUSTOMER };
+  },
+  getCustomer: (customerId: number) => {
+    const request = api.customer.get(customerId);
+
+    return { type: TYPES.GET_CUSTOMER, payload: request };
+  },
+  signIn: (signinPayload: { email: string; password: string }) => {
+    const request = api.customer.signin(signinPayload);
+
+    return { type: TYPES.SIGN_IN, payload: request };
+  },
+  signOut: () => {
+    return { type: TYPES.SIGN_OUT };
+  },
+  signUp: (signupPayload: Customer) => {
+    const request = api.customer.signup(signupPayload);
+
+    return { type: TYPES.SIGN_UP, payload: request };
+  },
+  updateProfile: (customerId: number, updatedCustomer: Customer) => {
+    const request = api.customer.update(customerId, updatedCustomer);
+
+    return { type: TYPES.UPDATE_PROFILE, payload: request };
+  },
+  unregister: (customerId: number) => {
+    const request = api.customer.remove(customerId);
+
+    return { type: TYPES.UNREGISTER, payload: request };
+  },
+  getProductList: () => {
+    const request = api.products.getAll();
 
     return { type: TYPES.GET_PRODUCT_LIST, payload: request };
   },
-  getProductDetail: (id: string) => {
-    const request = axios.get(`${API.PRODUCTS}/${id}`).then((res) => res.data);
+  getProductDetail: (id: number) => {
+    const request = api.products.get(id);
 
     return { type: TYPES.GET_PRODUCT_DETAIL, payload: request };
   },
   getCart: () => {
-    const request = axios.get(API.CART).then((res) => res.data);
+    const request = api.cart.get();
 
     return { type: TYPES.GET_CART, payload: request };
   },
-  addItemToCart: (productId: string, quantity: number) => {
-    const request = axios
-      .post(API.CART, {
-        productId,
-        quantity,
-      })
-      .then((res) => res.data);
+  checkIsProductAddedToCart: (productId: Product['id']) => {
+    const request = api.products.checkIsAddedToCart(productId);
+
+    return { type: TYPES.CHECK_IS_PRODUCT_ADDED_TO_CART, payload: request };
+  },
+  addItemToCart: (productId: number, quantity: number) => {
+    const request = api.cart.addItemToCart(productId, quantity);
 
     return { type: TYPES.ADD_ITEM_TO_CART, payload: request };
   },
-  removeCartItem: (productId: string | string[]) => {
-    const productIdList = Array.isArray(productId) ? productId : [productId];
-    const query = productIdList.map((productId) => `id=${productId}`).join('&');
-    const request = axios
-      .delete(`${API.CART}?${query}`)
-      .then((res) => res.data);
+  removeCartItem: (cartItemId: number) => {
+    const request = api.cart.removeItemFromCart(cartItemId);
 
     return { type: TYPES.REMOVE_CART_ITEM, payload: request };
   },
-  updateQuantity: (productId: string, quantity: string) => {
-    const request = axios
-      .patch(API.CART, {
-        productId,
-        quantity,
-      })
-      .then((res) => res.data);
+  updateQuantity: (cartItemId: number, productId: number, quantity: number) => {
+    const request = api.cart.updateQuantity(cartItemId, productId, quantity);
 
     return { type: TYPES.UPDATE_QUANTITY, payload: request };
   },

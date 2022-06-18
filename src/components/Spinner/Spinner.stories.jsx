@@ -1,4 +1,4 @@
-import Spinner from './Spinner';
+import Spinner from 'components/Spinner/Spinner';
 
 export default {
   title: 'Component/Spinner',

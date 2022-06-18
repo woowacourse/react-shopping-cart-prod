@@ -1,21 +1,32 @@
 import { Routes, Route } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 
-import GlobalStyle from './styles/GlobalStyle';
-import theme from './styles/theme';
+import GlobalStyle from 'styles/GlobalStyle';
+import theme from 'styles/theme';
 
-import Header from './components/Header/Header';
-import MainPage from './pages/MainPage/MainPage';
-import ProductPage from './pages/ProductPage/ProductPage';
-import CartPage from './pages/CartPage/CartPage';
-import SignupPage from './pages/SignupPage/SignupPage';
-import SigninPage from './pages/SigninPage/SigninPage';
-import SignupStep from './pages/SignupPage/SignupStep';
-import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
-import ProfilePage from './pages/ProfilePage/ProfilePage';
-import { PATHS } from './constants/paths';
+import Header from 'components/Header/Header';
+import MainPage from 'pages/MainPage/MainPage';
+import ProductPage from 'pages/ProductPage/ProductPage';
+import CartPage from 'pages/CartPage/CartPage';
+import SignupPage from 'pages/SignupPage/SignupPage';
+import SigninPage from 'pages/SigninPage/SigninPage';
+import SignupStep from 'pages/SignupPage/SignupStep';
+import NotFoundPage from 'pages/NotFoundPage/NotFoundPage';
+import ProfilePage from 'pages/ProfilePage/ProfilePage';
+import { PATHS } from 'constants/paths';
+
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { actions } from 'redux/actions';
+import Auth from 'components/Auth/Auth';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actions.initializeCustomer());
+  }, [dispatch]);
+
   return (
     <>
       <GlobalStyle />
@@ -23,15 +34,57 @@ function App() {
         <Header />
         <StyledContent>
           <Routes>
-            <Route path={PATHS.INDEX} element={<MainPage />} />
-            <Route path={PATHS.PRODUCT} element={<ProductPage />} />
-            <Route path={PATHS.CART} element={<CartPage />} />
-            <Route path={PATHS.SIGNIN} element={<SigninPage />} />
+            <Route
+              path={PATHS.INDEX}
+              element={
+                <Auth>
+                  <MainPage />
+                </Auth>
+              }
+            />
+            <Route
+              path={PATHS.PRODUCT}
+              element={
+                <Auth>
+                  <ProductPage />
+                </Auth>
+              }
+            />
+            <Route
+              path={PATHS.CART}
+              element={
+                <Auth shouldLogin={true}>
+                  <CartPage />
+                </Auth>
+              }
+            />
+            <Route
+              path={PATHS.SIGNIN}
+              element={
+                <Auth shouldLogin={false}>
+                  <SigninPage />
+                </Auth>
+              }
+            />
             <Route path={PATHS.SIGNUP} element={<SignupPage />}>
               <Route path={':stepId'} element={<SignupStep />} />
             </Route>
-            <Route path={PATHS.DEFAULT} element={<NotFoundPage />} />
-            <Route path={PATHS.PROFILE} element={<ProfilePage />} />
+            <Route
+              path={PATHS.PROFILE}
+              element={
+                <Auth shouldLogin={true}>
+                  <ProfilePage />
+                </Auth>
+              }
+            />
+            <Route
+              path={PATHS.DEFAULT}
+              element={
+                <Auth>
+                  <NotFoundPage />
+                </Auth>
+              }
+            />
           </Routes>
         </StyledContent>
       </ThemeProvider>

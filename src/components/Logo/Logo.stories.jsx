@@ -1,4 +1,4 @@
-import Logo from './Logo';
+import Logo from 'components/Logo/Logo';
 
 export default {
   title: 'Component/Logo',
