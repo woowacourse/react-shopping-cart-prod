@@ -1,25 +1,23 @@
-import styled from 'styled-components';
-import CroppedImage from 'components/@common/CroppedImage';
 import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
-import theme from 'styles/theme';
-import { memo, MouseEvent } from 'react';
+import styled from 'styled-components';
 import { flexCenter } from 'styles/mixin';
+import theme from 'styles/theme';
 import { Link } from 'react-router-dom';
-import { formatDecimal } from 'utils';
+import { memo, MouseEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateSnackBar } from 'redux/actions/snackBar';
-import useUpdateCartItem from 'hooks/useUpdateCartItem';
 import { Item } from 'types/domain';
+import useUpdateCartItem from 'hooks/useUpdateCartItem';
 import { useAppSelector } from 'hooks/useAppSelector';
+import { formatDecimal, isEmptyObject } from 'utils';
+import CroppedImage from 'components/@common/CroppedImage';
+import { MESSAGE } from 'constant/message';
 
-interface ItemContainerProps {
-  item: Item;
-}
-
-const ItemContainer = ({ item }: ItemContainerProps) => {
+const ItemContainer = ({ item }: { item: Item }) => {
   const { id, imageUrl, name, price } = item;
   const dispatch = useDispatch();
   const { data: cartList } = useAppSelector(state => state.cartListReducer);
+  const { data: userData } = useAppSelector(state => state.userReducer);
   const { increaseQuantity } = useUpdateCartItem(cartList);
 
   const handleClickItemContainer = (e: MouseEvent<HTMLAnchorElement, globalThis.MouseEvent>) => {
@@ -29,14 +27,20 @@ const ItemContainer = ({ item }: ItemContainerProps) => {
   };
 
   const handleClickCartIcon = () => {
+    if (isEmptyObject(userData)) {
+      dispatch(updateSnackBar('로그인 후 이용가능합니다.'));
+
+      return;
+    }
+
     increaseQuantity(id);
-    dispatch(updateSnackBar(`${name} 1개를 장바구니에 추가했습니다.`));
+    dispatch(updateSnackBar(`${name} ${MESSAGE.ADD_CART}`));
   };
 
   return (
     <Link to={`/item_detail/${id}`} onClick={handleClickItemContainer} replace>
       <StyledRoot>
-        <CroppedImage src={imageUrl} width='270px' height='270px' alt='상품' />
+        <CroppedImage src={imageUrl} width='270px' height='270px' alt='상품 이미지' />
         <StyledBottom>
           <StyledDescription>
             <StyledTitle>{name}</StyledTitle>
