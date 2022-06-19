@@ -1,27 +1,54 @@
-import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
-import { createOrder } from "@redux/reducers/order-reducer/orderThunks";
+import { useEffect, useCallback } from "react";
+import { useSelector } from "react-redux";
 
 import Button from "@components/Button";
 import Highlighter from "@components/HighlightedText";
 import TitleBox from "@components/TitleBox";
 
 import priceToDollar from "@utils/priceToDollar";
+import { useNavigate } from "react-router-dom";
 import getSelectedCartItemIds from "../utils/getSelectedCartItemIds";
 import styles from "./CartTotal.module";
+import { useFetch } from "../../../hooks/useFetch";
+import {
+  API_SERVER,
+  FETCH_STATUS,
+  REQUEST_METHOD,
+} from "../../../constants/index";
 
 function CartTotal({ className }) {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart.data);
 
   const total = getTotal(cart);
   const selectedCartItemIds = getSelectedCartItemIds(cart);
   const selectedCartItemCount = selectedCartItemIds.length;
 
-  const handleOrderBtnClick = useCallback(() => {
-    dispatch(createOrder({ cartItemIds: selectedCartItemIds }));
-  }, [dispatch, selectedCartItemIds]);
+  const {
+    fetch: createOrder,
+    status: createOrderStatus,
+    error: createOrderError,
+  } = useFetch(
+    REQUEST_METHOD.POST,
+    `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_ORDERS}`,
+    {},
+    { cartItemIds: selectedCartItemIds },
+    false
+  );
+
+  const handleClickOrderButton = useCallback(() => {
+    createOrder();
+  }, [createOrder]);
+
+  useEffect(() => {
+    if (createOrderStatus === FETCH_STATUS.SUCCESS) {
+      alert("주문 성공! 😉");
+      navigate("/order-list");
+    }
+    if (createOrderStatus === FETCH_STATUS.FAIL) {
+      alert("주문 실패! 다시 시도해주세요. 😂");
+    }
+  }, [createOrderStatus, navigate]);
 
   return (
     <TitleBox className={className}>
@@ -37,7 +64,7 @@ function CartTotal({ className }) {
           <Button
             variant="primary"
             block
-            onClick={handleOrderBtnClick}
+            onClick={handleClickOrderButton}
           >{`주문하기(${selectedCartItemCount}개)`}</Button>
         </div>
       </TitleBox.Content>
