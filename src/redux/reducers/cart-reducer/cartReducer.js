@@ -2,7 +2,7 @@
 import queryState from "@redux/utils/queryState";
 import ACTION_TYPE from "./cartActions";
 
-const cartReducer = (state, { type, payload }, totalState) => {
+const cartReducer = (state, { type, payload }) => {
   switch (type) {
     case ACTION_TYPE.GET_CART_PENDING: {
       const newState = structuredClone(state);

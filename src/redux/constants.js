@@ -25,9 +25,4 @@ export const initialState = {
       username: null,
     },
   },
-  order: {
-    query: {
-      createOrder: queryState.init(),
-    },
-  },
 };
