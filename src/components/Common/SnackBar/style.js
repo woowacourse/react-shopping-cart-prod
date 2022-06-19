@@ -18,7 +18,7 @@ export const Wrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  z-index: 1001;
+  z-index: 1000001;
 `;
 
 export const Text = styled.span`

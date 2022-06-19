@@ -5,14 +5,7 @@ import PropTypes from 'prop-types';
 import smallCart from 'assets/svg/smallCart.svg';
 import { parsePrice } from 'utils';
 
-const ProductItem = ({
-  id,
-  name,
-  price,
-  imgUrl,
-  onClickCartButton,
-  isInCart,
-}) => {
+const ProductItem = ({ id, name, price, imageUrl, onClickCartButton }) => {
   const navigate = useNavigate();
 
   const handleClickItem = () => {
@@ -24,13 +17,13 @@ const ProductItem = ({
       <Styled.Overlay>
         <Styled.ThumbnailText>{name}</Styled.ThumbnailText>
       </Styled.Overlay>
-      <Styled.Image src={imgUrl} alt={name} loading="lazy" />
+      <Styled.Image src={imageUrl} alt={name} loading="lazy" />
       <Styled.Detail>
         <Styled.TopBox>
           <Styled.Name>{name}</Styled.Name>
           <Styled.Price>{parsePrice(price)}원</Styled.Price>
         </Styled.TopBox>
-        <Styled.Button onClick={onClickCartButton} checked={isInCart}>
+        <Styled.Button onClick={onClickCartButton}>
           <Styled.CartSvg src={smallCart} />
         </Styled.Button>
       </Styled.Detail>
@@ -42,9 +35,8 @@ ProductItem.propTypes = {
   id: PropTypes.number,
   name: PropTypes.string,
   price: PropTypes.number,
-  imgUrl: PropTypes.string,
+  imageUrl: PropTypes.string,
   onClickCartButton: PropTypes.func,
-  isInCart: PropTypes.bool,
 };
 
 export default ProductItem;

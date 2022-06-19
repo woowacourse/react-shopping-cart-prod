@@ -15,7 +15,7 @@ const cartItems = productList.map((product, index) => (
     key={index}
     name={product.name}
     price={product.price}
-    imgUrl={product.imgUrl}
+    imageUrl={product.imageUrl}
     quantity={1}
   />
 ));

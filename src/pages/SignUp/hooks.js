@@ -1,19 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PATH_NAME } from 'constants';
+import { PATH_NAME, AUTHORIZATION_TYPE } from 'constants';
 
 import useInputValidate from 'hooks/useInputValidate';
-import useAuth from 'hooks/useAuth';
+import useAuthentication from 'hooks/useAuthentication';
+import useAuthorization from 'hooks/useAuthorization';
 import useSnackBar from 'hooks/useSnackBar';
 
 const useSignUpPage = () => {
+  useAuthorization(AUTHORIZATION_TYPE.PUBLIC_ONLY);
   const navigate = useNavigate();
   const passwordRef = useRef(null);
 
   const { showSuccessSnackBar, showErrorSnackBar } = useSnackBar();
 
-  const { isSignUpSucceed, isSignUpError, signUp, checkIsAuthenticated } =
-    useAuth();
+  const { isSignUpSucceed, isSignUpError, signUp } = useAuthentication();
 
   const [emailValidate, handleEmailBlur] = useInputValidate('email');
   const [nameValidate, handleNameBlur] = useInputValidate('name');
@@ -47,10 +48,6 @@ const useSignUpPage = () => {
       password,
     });
   };
-
-  useEffect(() => {
-    checkIsAuthenticated();
-  }, []);
 
   useEffect(() => {
     if (isSignUpSucceed) {

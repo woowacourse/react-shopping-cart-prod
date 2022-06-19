@@ -1,11 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import useFetch from 'hooks/useFetch';
 import { METHOD } from 'constants';
-import { setCookie, getCookie, deleteCookie } from 'utils/cookie';
+import { setCookie, deleteCookie } from 'utils/cookie';
 import { setUserInfo, setAuthenticated } from 'reducers/user/user.actions';
 import { initializeUserInfo } from 'reducers/user/user.actions';
 
-const useAuth = () => {
+const useAuthentication = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user);
@@ -13,12 +13,13 @@ const useAuth = () => {
   const {
     isSucceed: isLoginSucceed,
     isError: isLoginError,
+    errorMessage: loginErrorMessage,
     fetchApi: loginApi,
   } = useFetch({
     method: METHOD.POST,
     url: '/api/auth',
     handler: (data) => {
-      setCookie('userToken', data);
+      setCookie('userToken', data.accessToken);
       dispatch(setAuthenticated({ authenticated: true }));
     },
   });
@@ -26,6 +27,7 @@ const useAuth = () => {
   const {
     isSucceed: isSignUpSucceed,
     isError: isSignUpError,
+    errorMessage: signUpErrorMessage,
     fetchApi: signUpApi,
   } = useFetch({
     method: METHOD.POST,
@@ -39,10 +41,7 @@ const useAuth = () => {
   });
 
   const checkIsAuthenticated = () => {
-    const headers = {
-      Authorization: `Bearer ${getCookie('userToken')}`,
-    };
-    getUserApi({ payload: headers });
+    getUserApi();
   };
 
   const login = (email, password) => {
@@ -62,13 +61,15 @@ const useAuth = () => {
     user,
     isLoginSucceed,
     isLoginError,
+    loginErrorMessage,
     login,
     checkIsAuthenticated,
     isSignUpSucceed,
     isSignUpError,
+    signUpErrorMessage,
     signUp,
     logout,
   };
 };
 
-export default useAuth;
+export default useAuthentication;

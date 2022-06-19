@@ -2,20 +2,18 @@ import Form from 'components/Common/Form/Form';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import Input from 'components/Common/Input/Input';
 import Button from 'components/Common/Button/Button';
-import Title from 'components/Common/Title/Title';
-import useLoginPage from './hook';
+import useLoginPage from './hooks';
 import * as Styled from './style';
 
 const Login = () => {
   const { handleLogin } = useLoginPage();
   return (
     <Styled.Wrapper>
-      <Title contents="로그인" />
-      <Form onSubmit={handleLogin}>
+      <Form title="로그인" onSubmit={handleLogin}>
         <Fieldset>
           <Input
             description="이메일"
-            placeholder="coke@coke.com"
+            placeholder="example@example.com"
             type="email"
             name="email"
           />

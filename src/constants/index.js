@@ -19,3 +19,8 @@ export const METHOD = {
 };
 
 export const INITIAL_SKELETON_NUMBER = 8;
+
+export const AUTHORIZATION_TYPE = {
+  PRIVATE_ONLY: 'privateOnly',
+  PUBLIC_ONLY: 'publicOnly',
+};

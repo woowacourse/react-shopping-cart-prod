@@ -24,6 +24,7 @@ export const handlers = [
   }),
 
   rest.get(`${API_URL}/members/me`, (req, res, ctx) => {
+    console.log('req', req);
     return res(ctx.status(200, 'OK'), ctx.json({ ...user }));
   }),
 

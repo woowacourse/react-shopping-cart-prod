@@ -57,18 +57,21 @@ const Cart = () => {
 
           <CartContainer>
             {cartItems &&
-              cartItems.map(({ id, name, imgUrl, price, quantity }) => (
-                <CartItem
-                  key={id}
-                  id={id}
-                  name={name}
-                  imgUrl={imgUrl || itemAltImg}
-                  price={price}
-                  quantity={quantity}
-                  isSelected={includes(selectedItemList, id)}
-                  onToggleSelect={handleToggleSelect(id)}
-                />
-              ))}
+              cartItems.map(
+                ({ id, name, imageUrl, price, totalPrice, quantity }) => (
+                  <CartItem
+                    key={id}
+                    id={id}
+                    name={name}
+                    imageUrl={imageUrl || itemAltImg}
+                    price={price}
+                    totalPrice={totalPrice}
+                    quantity={quantity}
+                    isSelected={includes(selectedItemList, id)}
+                    onToggleSelect={handleToggleSelect(id)}
+                  />
+                ),
+              )}
           </CartContainer>
         </Styled.LeftBox>
         <Styled.RightBox>

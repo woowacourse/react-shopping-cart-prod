@@ -1,29 +1,33 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { getCartItemAsync } from 'reducers/cart/cart.thunk';
-import { setCart } from 'reducers/cart/cart.actions';
 import { METHOD } from 'constants';
 import useFetch from 'hooks/useFetch';
+import { useEffect } from 'react';
+import {
+  updateCartItemQuantityAction,
+  deleteCartItemAction,
+  deleteCartItemsAction,
+} from 'reducers/cart/cart.actions';
+import useSnackBar from './useSnackBar';
 
 const useCart = () => {
   const dispatch = useDispatch();
+  const { showSuccessSnackBar } = useSnackBar();
   const { isLoading, isError, data } = useSelector((state) => state.cart);
 
   const { fetchApi: deleteItemApi } = useFetch({
     method: METHOD.DELETE,
-    url: '/cart',
-    handler: (data) => dispatch(setCart(data)),
+    url: '/api/members/me/carts',
   });
 
   const { fetchApi: updateItemApi } = useFetch({
     method: METHOD.PUT,
-    url: '/cart',
-    handler: (data) => dispatch(setCart(data)),
+    url: '/api/members/me/carts',
   });
 
-  const { fetchApi: addItemApi } = useFetch({
+  const { isSucceed: isAddItemSucceed, fetchApi: addItemApi } = useFetch({
     method: METHOD.POST,
-    url: '/cart',
-    handler: (data) => dispatch(setCart(data)),
+    url: '/api/members/me/carts',
   });
 
   const getItems = () => {
@@ -31,20 +35,36 @@ const useCart = () => {
   };
 
   const deleteItem = (id) => {
-    deleteItemApi({ params: id });
+    deleteItemApi({ params: id }).then(() => {
+      dispatch(deleteCartItemAction(id));
+    });
   };
 
   const deleteItems = (idList) => {
-    Promise.all(idList.map((id) => deleteItemApi(id)));
+    Promise.all(idList.map((id) => deleteItemApi({ params: id }))).then(() => {
+      dispatch(deleteCartItemsAction(idList));
+    });
   };
 
   const updateItemQuantity = (id, quantity) => {
-    updateItemApi({ params: `${id}/${quantity}` });
+    updateItemApi({ params: id, payload: { quantity } }).then(() => {
+      dispatch(updateCartItemQuantityAction(id, quantity));
+    });
   };
 
-  const addItem = (id) => {
-    addItemApi({ params: id });
+  const addItem = (productId) => {
+    addItemApi({ payload: { productId, quantity: 1 } });
   };
+
+  useEffect(() => {
+    if (isAddItemSucceed) getItems();
+  }, [isAddItemSucceed]);
+
+  useEffect(() => {
+    if (isAddItemSucceed) {
+      showSuccessSnackBar('장바구니에 아이템이 추가되었습니다!');
+    }
+  }, [isAddItemSucceed]);
 
   return {
     isLoading,

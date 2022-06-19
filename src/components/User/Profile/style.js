@@ -4,7 +4,7 @@ export const Wrapper = styled.div`
   width: 300px;
   height: 400px;
   border-radius: 8px;
-  border: 1px solid ${({ theme }) => theme.COLOR.BLACK};
+  border: 1px solid ${({ theme }) => theme.COLOR.GREY_300};
   overflow: hidden;
 `;
 
@@ -25,6 +25,7 @@ export const Info = styled.div`
 
 export const Title = styled.div`
   color: ${({ theme }) => theme.COLOR.GREY_300};
+  font-family: ${({ theme }) => theme.FONT.PRIMARY};
 `;
 
 export const NameConverter = styled.div`

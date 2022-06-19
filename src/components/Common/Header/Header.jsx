@@ -6,7 +6,7 @@ import DropDownOption from 'components/Common/DropDownOption/DropDownOption';
 import DropDown from 'components/Common/DropDown/DropDown';
 import Avatar from 'components/User/Avatar/Avatar';
 
-import useAuth from 'hooks/useAuth';
+import useAuthentication from 'hooks/useAuthentication';
 import useCart from 'hooks/useCart';
 import bigCart from 'assets/svg/bigCart.svg';
 import { PATH_NAME } from 'constants';
@@ -14,8 +14,8 @@ import PropTypes from 'prop-types';
 import * as Styled from './style';
 
 const Header = () => {
-  const { cartItems } = useCart();
   const { authenticated, name } = useSelector((state) => state.user);
+  const { cartItems } = useCart();
 
   return (
     <Styled.Wrapper>
@@ -24,11 +24,12 @@ const Header = () => {
         <Styled.LogoText>우아한 상회</Styled.LogoText>
       </Styled.Logo>
       <Styled.MenuContainer>
-        <MenuItem>
-          <Link to={PATH_NAME.CART}>장바구니</Link>
-          <Styled.Badge>{cartItems?.length ?? 0}</Styled.Badge>
-        </MenuItem>
-        <MenuItem>주문목록</MenuItem>
+        {authenticated && (
+          <MenuItem>
+            <Link to={PATH_NAME.CART}>장바구니</Link>
+            <Styled.Badge>{cartItems?.length ?? 0}</Styled.Badge>
+          </MenuItem>
+        )}
         <AuthNav isAuthenticated={authenticated} name={name} />
       </Styled.MenuContainer>
     </Styled.Wrapper>
@@ -36,7 +37,7 @@ const Header = () => {
 };
 
 const AuthNav = ({ isAuthenticated, name }) => {
-  const { logout } = useAuth();
+  const { logout } = useAuthentication();
 
   const handleClickLogout = () => {
     logout();

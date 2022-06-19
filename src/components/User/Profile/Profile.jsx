@@ -24,6 +24,10 @@ const Profile = ({ name }) => {
   };
 
   const handleClickConvertButton = () => {
+    if (name === newName) {
+      setMode(CONFIRM_MODE);
+      return;
+    }
     updateName(newName);
   };
 
@@ -48,11 +52,11 @@ const Profile = ({ name }) => {
     <Styled.Wrapper>
       <Styled.Image src={profileDefaultImg} alt="프로필 사진" />
       <Styled.Info>
-        <Styled.Title>회원</Styled.Title>
+        <Styled.Title>귀하신 분</Styled.Title>
         <Styled.NameConverter>
           {mode === CONFIRM_MODE ? (
             <>
-              <span>{newName}</span>
+              <span>{newName}님💙</span>
               <Styled.Button onClick={handleClickConfirmButton}>
                 수정
               </Styled.Button>

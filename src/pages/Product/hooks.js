@@ -1,12 +1,13 @@
 import useFetch from 'hooks/useFetch';
 import useCart from 'hooks/useCart';
-import useAuth from 'hooks/useAuth';
 import { useParams } from 'react-router-dom';
-import { METHOD } from 'constants';
+import { METHOD, PATH_NAME } from 'constants';
 import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import useSnackBar from 'hooks/useSnackBar';
 
 const useProductPage = () => {
-  const { checkIsAuthenticated } = useAuth();
   const { id } = useParams();
   const {
     isLoading,
@@ -15,20 +16,36 @@ const useProductPage = () => {
     fetchApi,
   } = useFetch({
     method: METHOD.GET,
-    url: `/products/${id}`,
+    url: `/api/products/${id}`,
   });
-  const { addItem } = useCart();
+  const { addItem, cartItems, getItems } = useCart();
+  const { showErrorSnackBar } = useSnackBar();
+  const navigate = useNavigate();
+  const { authenticated } = useSelector((state) => state.user);
 
-  const handleClickCartButton = () => {
+  const includedInCart = (id) =>
+    cartItems && cartItems?.findIndex((item) => item.productId === +id) !== -1;
+
+  const handleAddCartItem = () => {
+    if (includedInCart(id)) {
+      showErrorSnackBar('이미 장바구니에 추가된 상품입니다.');
+      return;
+    }
+    if (!authenticated) {
+      navigate(PATH_NAME.LOGIN);
+      return;
+    }
     addItem(id);
   };
 
   useEffect(() => {
     fetchApi();
-    checkIsAuthenticated();
+    if (!cartItems) {
+      getItems();
+    }
   }, []);
 
-  return { isLoading, isError, product, handleClickCartButton };
+  return { isLoading, isError, product, handleAddCartItem };
 };
 
 export default useProductPage;
