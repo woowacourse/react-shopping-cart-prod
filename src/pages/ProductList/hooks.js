@@ -19,7 +19,7 @@ const useProductListPage = () => {
   const isEmpty = products && !isLoading && products.length === 0;
 
   const includedInCart = (id) =>
-    cartItems && cartItems?.findIndex((item) => item.id === id) !== -1;
+    cartItems && cartItems?.findIndex((item) => item.productId === id) !== -1;
 
   const handleClickCartButton = (id) => (e) => {
     e.stopPropagation();

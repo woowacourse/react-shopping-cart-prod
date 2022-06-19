@@ -12,8 +12,10 @@ const useCartPage = () => {
     const selectedItems = cartItems.filter(({ id }) =>
       includes(selectedItemList, id),
     );
+    // totalPrice
     return selectedItems.reduce(
-      (prev, { price, quantity }) => (prev += price * quantity),
+      (prev, { totalPrice }) => (prev += totalPrice),
+      // (prev, { price, quantity }) => (prev += price * quantity),
       0,
     );
   }, [cartItems, selectedItemList]);

@@ -22,7 +22,7 @@ const theme = {
     GREY_300: '#949494',
 
     GREY_500: '#78716C',
-    CYAN_TRANSPARENT: 'rgba(204, 255, 255, 0.5)',
+    CYAN_TRANSPARENT: '#34B3F160',
   },
   DEVICE: {
     EXTRA_SMALL: `screen and (max-width:${deviceSize.mobile})`,

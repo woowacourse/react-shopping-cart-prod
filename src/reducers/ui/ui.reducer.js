@@ -7,7 +7,9 @@ export const initialState = {
 };
 
 const uiReducer = (state = initialState, { type, payload }) => {
-  if (type === actionTypes.SHOW_SNACKBAR) {
+  // SHOW_SNACKBAR
+  if (type === `${actionTypes.SHOW_SNACKBAR}_PENDING`) return state;
+  if (type === `${actionTypes.SHOW_SNACKBAR}_FULFILLED`) {
     return {
       ...state,
       isSnackBarVisibile: true,
@@ -15,7 +17,11 @@ const uiReducer = (state = initialState, { type, payload }) => {
       snackBarType: payload.type,
     };
   }
-  if (type === actionTypes.HIDE_SNACKBAR) {
+  if (type === `${actionTypes.SHOW_SNACKBAR}_REJECTED`) return state;
+
+  // HIDE_SNACKBAR
+  if (type === `${actionTypes.HIDE_SNACKBAR}_PENDING`) return state;
+  if (type === `${actionTypes.HIDE_SNACKBAR}_FULFILLED`) {
     return {
       ...state,
       isSnackBarVisibile: false,
@@ -23,6 +29,7 @@ const uiReducer = (state = initialState, { type, payload }) => {
       snackBarType: '',
     };
   }
+  if (type === `${actionTypes.HIDE_SNACKBAR}_REJECTED`) return state;
 
   return state;
 };

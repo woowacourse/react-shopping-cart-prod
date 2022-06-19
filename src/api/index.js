@@ -1,8 +1,14 @@
 import axios from 'axios';
-const { REACT_APP_API_URL } = process.env;
+
+const getServerUrl = () => {
+  if (localStorage.getItem('serverUrl') === null)
+    return process.env.REACT_APP_API_ARI_URL;
+
+  return localStorage.getItem('serverUrl');
+};
 
 const apiClient = axios.create({
-  baseURL: REACT_APP_API_URL,
+  baseURL: `${getServerUrl()}/api`,
 });
 
 export default apiClient;

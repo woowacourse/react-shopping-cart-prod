@@ -1,21 +1,19 @@
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-
 import Form from 'components/Common/Form/Form';
 import Fieldset from 'components/Common/Fieldset/Fieldset';
 import Input from 'components/Common/Input/Input';
 import Button from 'components/Common/Button/Button';
 import Title from 'components/Common/Title/Title';
 
-import { loginApi } from 'api/auth';
-import { showSnackBar } from 'reducers/ui/ui.actions';
-import { setAuthenticated } from 'reducers/user/user.actions';
-import { PATH_NAME } from 'constants';
 import * as Styled from './style';
+import { useAuth } from 'hooks/useAuth';
+import useSnackBar from 'hooks/useSnackBar';
+import useCart from 'hooks/useCart';
 
 const Login = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { loginApi, getUserApi } = useAuth();
+  const { getUserCartsApi } = useCart();
+  const { showErrorSnackBar } = useSnackBar();
+
   const handlSubmit = (e) => {
     e.preventDefault();
 
@@ -25,23 +23,17 @@ const Login = () => {
     } = e.target.elements;
 
     if (email.length === 0 || password.length === 0) {
-      dispatch(
-        showSnackBar({ type: 'ERROR', text: '정보를 올바르게 입력하세요.' }),
-      );
+      showErrorSnackBar({ text: '정보를 올바르게 입력하세요.' });
+
       return;
     }
 
-    loginApi({
-      email,
-      password,
-    })
+    loginApi({ email, password })
       .then(() => {
-        dispatch(showSnackBar({ type: 'SUCCESS', text: '로그인 성공' }));
-        dispatch(setAuthenticated({ authenticated: true }));
-        navigate(PATH_NAME.HOME);
+        getUserApi();
       })
-      .catch(() => {
-        dispatch(showSnackBar({ type: 'ERROR', text: '로그인 실패' }));
+      .then(() => {
+        getUserCartsApi();
       });
   };
   return (

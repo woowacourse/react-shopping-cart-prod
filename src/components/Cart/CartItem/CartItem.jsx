@@ -9,7 +9,7 @@ import useCart from 'hooks/useCart';
 
 const CartItem = ({
   id,
-  imgUrl,
+  imageUrl,
   name,
   price,
   quantity,
@@ -46,7 +46,7 @@ const CartItem = ({
     <Styled.Wrapper>
       <Styled.LeftBox>
         <CheckBox onCheck={onToggleSelect} checkedStatus={isSelected} />
-        <Styled.Image src={imgUrl} alt={name} loading="lazy" />
+        <Styled.Image src={imageUrl} alt={name} loading="lazy" />
         <Styled.Name>{name}</Styled.Name>
       </Styled.LeftBox>
       <Styled.RightBox>
@@ -62,7 +62,7 @@ const CartItem = ({
             -
           </Styled.QuantityButton>
         </Styled.QuantityControlBox>
-        <Styled.Price>{parsePrice(itemQuantity * price)}원</Styled.Price>
+        <Styled.Price>{parsePrice(price)}원</Styled.Price>
       </Styled.RightBox>
     </Styled.Wrapper>
   );
@@ -70,7 +70,7 @@ const CartItem = ({
 
 CartItem.propTypes = {
   id: PropTypes.number,
-  imgUrl: PropTypes.string,
+  imageUrl: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.number,
   quantity: PropTypes.number,

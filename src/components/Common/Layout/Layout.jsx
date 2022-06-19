@@ -1,28 +1,24 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Header from 'components/Common/Header/Header';
-import { getUserApi } from 'api/auth';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setUserInfo } from 'reducers/user/user.actions';
+import { useAuth } from 'hooks/useAuth';
+import useCart from 'hooks/useCart';
+import { PATH_NAME } from 'constants';
 
 const Layout = () => {
-  const dispatch = useDispatch();
-  const { authenticated } = useSelector((state) => state.user);
+  const { pathname } = useLocation();
+  const showHeader = PATH_NAME.HOME !== pathname;
 
+  const { getUserApi } = useAuth();
+  const { getUserCartsApi } = useCart();
   useEffect(() => {
-    if (!authenticated) return;
-
-    async function getUserInfo() {
-      const userInfo = await getUserApi();
-      dispatch(setUserInfo({ ...userInfo }));
-    }
-
-    getUserInfo();
-  }, [authenticated]);
+    getUserApi();
+    getUserCartsApi();
+  }, []);
 
   return (
     <div>
-      <Header />
+      {showHeader && <Header />}
       <main>
         <Outlet />
       </main>

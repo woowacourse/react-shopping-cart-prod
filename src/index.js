@@ -5,10 +5,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'store/configureStore';
 
-if (process.env.NODE_ENV === 'development') {
-  const { worker } = require('./mocks/browser');
-  worker.start();
-}
+// if (process.env.NODE_ENV === 'development') {
+//   const { worker } = require('./mocks/browser');
+//   worker.start();
+// }
 
 const store = configureStore();
 
