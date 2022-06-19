@@ -19,24 +19,22 @@ function ProductDetailPage() {
     data: productDetail,
     status: getProductDetailStatus,
     error: getProductDetailError,
-  } = useFetch(
-    REQUEST_METHOD.GET,
-    `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}/${productId}`
-  );
+  } = useFetch({
+    method: REQUEST_METHOD.GET,
+    url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}/${productId}`,
+  });
 
   const {
     fetch: addProductToCart,
     status: addProductToCartStatus,
     error: addProductToCartError,
-  } = useFetch(
-    REQUEST_METHOD.POST,
-    `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}`,
-    {},
-    { productId, quantity: 1 }
-  );
+  } = useFetch({
+    method: REQUEST_METHOD.POST,
+    url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}`,
+  });
 
   const handleAddToCartButtonClick = () => {
-    addProductToCart();
+    addProductToCart({ productId, quantity: 1 });
   };
 
   useEffect(() => {

@@ -28,30 +28,25 @@ const getResponseWithFetch = async (
   return response;
 };
 
-export const useFetch = (
+export const useFetch = ({
   method,
-  requestUrl = "",
+  url = "",
   initialData = {},
-  requestData = {},
-  responseDataExist = true
-) => {
+  responseDataExist = true,
+}) => {
   const [status, setStatus] = useState(FETCH_STATUS.PENDING);
   const [response, setResponse] = useState(null);
   const [data, setData] = useState(initialData);
   const [error, setError] = useState(null);
 
-  const fetch = async () => {
+  const fetch = async (requestData = {}) => {
     setStatus(FETCH_STATUS.PENDING);
     setResponse(null);
     setData(initialData);
     setError(null);
 
     try {
-      const response = await getResponseWithFetch(
-        method,
-        requestUrl,
-        requestData
-      );
+      const response = await getResponseWithFetch(method, url, requestData);
       setResponse(response);
 
       if (responseDataExist) {

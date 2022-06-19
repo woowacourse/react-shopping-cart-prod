@@ -28,17 +28,15 @@ function CartTotal({ className }) {
     fetch: createOrder,
     status: createOrderStatus,
     error: createOrderError,
-  } = useFetch(
-    REQUEST_METHOD.POST,
-    `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_ORDERS}`,
-    {},
-    { cartItemIds: selectedCartItemIds },
-    false
-  );
+  } = useFetch({
+    method: REQUEST_METHOD.POST,
+    url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_ORDERS}`,
+    responseDataExist: false,
+  });
 
   const handleClickOrderButton = useCallback(() => {
-    createOrder();
-  }, [createOrder]);
+    createOrder({ cartItemIds: selectedCartItemIds });
+  }, [createOrder, selectedCartItemIds]);
 
   useEffect(() => {
     if (createOrderStatus === FETCH_STATUS.SUCCESS) {

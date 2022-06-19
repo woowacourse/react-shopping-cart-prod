@@ -16,11 +16,11 @@ function ProductListPage() {
     data: productList,
     status,
     error,
-  } = useFetch(
-    REQUEST_METHOD.GET,
-    `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}`,
-    []
-  );
+  } = useFetch({
+    method: REQUEST_METHOD.GET,
+    url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}`,
+    initialData: [],
+  });
 
   useEffect(() => {
     getProductList();

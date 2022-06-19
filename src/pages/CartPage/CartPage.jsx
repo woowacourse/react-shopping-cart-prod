@@ -18,11 +18,11 @@ function CartPage() {
     data: cartItemList,
     status,
     error,
-  } = useFetch(
-    REQUEST_METHOD.GET,
-    `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_CARTS}`,
-    []
-  );
+  } = useFetch({
+    method: REQUEST_METHOD.GET,
+    url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_CARTS}`,
+    initialData: [],
+  });
 
   useEffect(() => {
     getCartItemList();

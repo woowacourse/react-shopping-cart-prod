@@ -17,11 +17,11 @@ function OrderListPage() {
     data: orderList,
     status,
     error,
-  } = useFetch(
-    REQUEST_METHOD.GET,
-    `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_ORDERS}`,
-    []
-  );
+  } = useFetch({
+    method: REQUEST_METHOD.GET,
+    url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_ORDERS}`,
+    initialData: [],
+  });
 
   useEffect(() => {
     getOrderList();
