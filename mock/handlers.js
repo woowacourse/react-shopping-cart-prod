@@ -182,7 +182,7 @@ export const handlers = [
 
   // 주문을 한다
   rest.post("/api/myorders", (req, res, ctx) => {
-    const { cartItemIds } = req.body;
+    const { cartItemIds } = JSON.parse(req.body);
     const db = LocalStorage.getInstance();
     const orderedCartItemList = db.carts.reduce((acc, cartItem) => {
       const isOrderedCartItem = cartItemIds.some((id) => cartItem.id === id);
