@@ -1,167 +1,123 @@
-import {
-  isValidPasswordAllCharacters,
-  isValidPasswordLength,
-} from 'utils/validator';
 import styled, { css } from 'styled-components';
-
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
+import LabeledInput from 'components/@shared/LabeledInput';
+import useSignupForm from './useSignupForm';
+import REG_EXP from 'constants/regExp';
 import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
-import { formatPhoneNumber } from 'utils/formats';
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { snackBarActions } from 'redux/reducers/snackBar';
 
 function SignupForm() {
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const {
+    inputs,
+    onChange,
+    isPasswordLengthCorrect,
+    isPasswordAllCharactersCorrect,
+    isPasswordCheckCorrect,
+    handleSubmit,
+    handlePasswordInput,
+    handlePasswordCheckInput,
+  } = useSignupForm();
 
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [passwordLengthCorrect, setPasswordLengthCorrect] = useState(false);
-  const [passwordAllCharactersCorrect, setPasswordAllCharactersCorrect] =
-    useState(false);
-  const [passwordCheckCorrect, setPasswordCheckCorrect] = useState(false);
-
-  const handleIdInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setId(e.target.value);
-  };
-
-  const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-
-    setPasswordLengthCorrect(isValidPasswordLength(e.target.value));
-    setPasswordAllCharactersCorrect(
-      isValidPasswordAllCharacters(e.target.value),
-    );
-  };
-
-  const handlePasswordCheckInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPasswordCheck(e.target.value);
-
-    setPasswordCheckCorrect(password === e.target.value);
-  };
-
-  const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handleAddressInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAddress(e.target.value);
-  };
-
-  const handlerPhoneNumberInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length <= 11) {
-      setPhoneNumber(e.target.value);
+  const handleIdCheck = async () => {
+    const data = await authAPI.checkIdDuplicated(inputs.id);
+    if (!data.duplicated) {
+      dispatch(snackBarActions.show('사용 가능한 아이디 입니다.'));
+      return;
     }
+    alert('중복된 아이디입니다.');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!(e.target instanceof HTMLFormElement)) return;
-
-    const formElements = e.target.elements;
-    const getInputValue = createInputValueGetter(formElements);
-    const user = {
-      username: getInputValue('id'),
-      password: getInputValue('password'),
-      email: getInputValue('email'),
-      address: getInputValue('address'),
-      phoneNumber: formatPhoneNumber(getInputValue('phoneNumber')),
-    };
-
-    try {
-      authAPI.signup(user);
-      navigate(PATH.LOGIN);
-    } catch (error) {
-      alert(USER_MESSAGE.FAIL_SIGNUP);
+  const handleEmailCheck = async () => {
+    const data = await authAPI.checkEmailDuplicated(inputs.email);
+    if (!data.duplicated) {
+      dispatch(snackBarActions.show('사용 가능한 이메일 입니다.'));
+      return;
     }
+    alert('중복된 이메일입니다.');
   };
 
   return (
     <StyledForm onSubmit={handleSubmit}>
-      <label htmlFor="id">아이디</label>
-      <input
+      <LabeledInput
         id="id"
         type="text"
         placeholder="아이디를 입력해주세요"
-        value={id}
-        onChange={handleIdInput}
-        pattern={'^[a-z0-9_-]{5,20}$'}
+        pattern={REG_EXP.ID}
         required
-      />
-      <label htmlFor="password">
-        비밀번호
-        <StyledErrorSign
-          isCorrect={passwordLengthCorrect && passwordAllCharactersCorrect}
-        >
-          ✓
-        </StyledErrorSign>
-        <StyledErrorMessage isCorrect={passwordLengthCorrect}>
-          ∙ 8~16자 입력
-        </StyledErrorMessage>
-        <StyledErrorMessage isCorrect={passwordAllCharactersCorrect}>
-          ∙ 영문, 숫자, 특수문자 모두 입력
-        </StyledErrorMessage>
-      </label>
-      <input
-        id="password"
-        type="password"
-        placeholder="8~16자의 비밀번호(영문 소문자, 숫자, 특수문자)를 입력해주세요"
-        value={password}
-        onChange={handlePasswordInput}
-        pattern={
-          '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
-        }
-        required
-      />
-      <label htmlFor="passwordCheck">
-        비밀번호 재확인
-        <StyledErrorSign isCorrect={passwordCheckCorrect}>✓</StyledErrorSign>
-      </label>
-      <input
-        id="passwordCheck"
-        type="password"
-        placeholder="비밀번호를 재입력해주세요"
-        value={passwordCheck}
-        onChange={handlePasswordCheckInput}
-        pattern={
-          '^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()])[A-Za-z\\d!@#$%^&*()]{8,16}$'
-        }
-        required
-      />
-      <label htmlFor="email">이메일</label>
-      <input
+        onChange={onChange}
+      >
+        아이디
+        <StyledCheckButton type="button" onClick={handleIdCheck}>
+          중복 체크
+        </StyledCheckButton>
+      </LabeledInput>
+      <LabeledInput
         id="email"
         type="email"
         placeholder="이메일을 입력해주세요"
-        value={email}
-        onChange={handleEmailInput}
-        pattern={'^[a-z0-9._-]+@[a-z]+[.]+[a-z]{2,3}$'}
+        pattern={REG_EXP.EMAIL}
         required
-      />
-      <label htmlFor="address">주소</label>
-      <input
+        onChange={onChange}
+      >
+        이메일
+        <StyledCheckButton type="button" onClick={handleEmailCheck}>
+          중복 체크
+        </StyledCheckButton>
+      </LabeledInput>
+      <LabeledInput
+        id="password"
+        type="password"
+        placeholder="8~16자의 비밀번호(영문 소문자, 숫자, 특수문자)를 입력해주세요"
+        value={inputs.password}
+        onChange={handlePasswordInput}
+        pattern={REG_EXP.PASSWORD}
+        required
+      >
+        비밀번호
+        <StyledErrorSign
+          isCorrect={isPasswordLengthCorrect && isPasswordAllCharactersCorrect}
+        >
+          ✓
+        </StyledErrorSign>
+        <StyledErrorMessage isCorrect={isPasswordLengthCorrect}>
+          ∙ 8~16자 입력
+        </StyledErrorMessage>
+        <StyledErrorMessage isCorrect={isPasswordAllCharactersCorrect}>
+          ∙ 영문, 숫자, 특수문자 모두 입력
+        </StyledErrorMessage>
+      </LabeledInput>
+      <LabeledInput
+        id="passwordCheck"
+        type="password"
+        placeholder="비밀번호를 재입력해주세요"
+        value={inputs.passwordCheck}
+        onChange={handlePasswordCheckInput}
+        pattern={REG_EXP.PASSWORD}
+        required
+      >
+        비밀번호 재확인
+        <StyledErrorSign isCorrect={isPasswordCheckCorrect}>✓</StyledErrorSign>
+      </LabeledInput>
+      <LabeledInput
         id="address"
         type="address"
         placeholder="주소를 입력해주세요"
-        value={address}
-        onChange={handleAddressInput}
         maxLength={255}
         required
-      />
-      <label htmlFor="phoneNumber">핸드폰 번호</label>
-      <input
+      >
+        주소
+      </LabeledInput>
+      <LabeledInput
         id="phoneNumber"
-        type="number"
+        type="tel"
         placeholder="핸드폰 번호를 입력해주세요"
-        value={phoneNumber}
-        onChange={handlerPhoneNumberInput}
+        maxLength={11}
         required
-      />
+      >
+        핸드폰 번호
+      </LabeledInput>
       <StyledSignupButton type="submit">회원가입</StyledSignupButton>
     </StyledForm>
   );
@@ -219,4 +175,10 @@ const StyledSignupButton = styled.button`
   font-weight: 900;
 `;
 
+const StyledCheckButton = styled.button`
+  margin-left: 20px;
+  padding: 0 4px;
+  border-radius: 5px;
+  background-color: ${({ theme: { colors } }) => colors.pink};
+`;
 export default SignupForm;

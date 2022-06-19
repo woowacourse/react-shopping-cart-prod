@@ -8,51 +8,52 @@ import { Product } from 'types/index';
 import { cartActions } from 'redux/actions';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
+import cartAPI from 'apis/cart';
+import { useState } from 'react';
 
 type Props = {
   product: Product;
   stock: number;
   checked: boolean;
+  cartId: number;
+  checkCartItem: (targetId: number) => void;
 };
 
-function CartItem({ product, stock, checked }: Props) {
-  const { id, name, image } = product;
+function CartItem({ cartId, product, stock, checked, checkCartItem }: Props) {
+  const { id, name, imageUrl } = product;
   const dispatch = useDispatch();
 
-  const onClickDeleteButton = (e: React.MouseEvent<HTMLElement>) => {
+  const onClickDeleteButton = async (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
 
     if (window.confirm(CART_MESSAGE.ASK_DELETE)) {
-      dispatch(cartActions.deleteToCart(id));
+      const cartList = await cartAPI.deleteCartItem(cartId);
+      dispatch(cartActions.setCartItemList(cartList));
     }
   };
 
   const onChangeCheckBox = (
-    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>,
+    e: React.MouseEvent<HTMLElement> | React.ChangeEvent<HTMLElement>
   ) => {
     e.preventDefault();
-
-    dispatch(cartActions.toggleCheckAProduct(id));
+    checkCartItem(cartId);
   };
 
-  const onChangeCartStock = (value: number) => {
-    dispatch(cartActions.changeProductStock({ id, stock: value }));
+  const onChangeCartStock = async (value: number) => {
+    const cartList = await cartAPI.updateCartItemQuantity(cartId, value);
+    dispatch(cartActions.setCartItemList(cartList));
   };
 
   return (
     <Link to={`${PATH.PRODUCT}/${id}`}>
       <StyledCartItem>
         <CheckBox id={id + ''} checked={checked} onChange={onChangeCheckBox} />
-        <img src={image} alt={name} />
+        <img src={imageUrl} alt={name} />
         <StyledProductName>{name}</StyledProductName>
         <StyledDeleteButton type="button" onClick={onClickDeleteButton}>
           <Delete />
         </StyledDeleteButton>
-        <NumberInput
-          max={product.stock}
-          value={stock}
-          setValue={onChangeCartStock}
-        />
+        <NumberInput value={stock} setValue={onChangeCartStock} />
         <StyledPrice>
           {(product.price * stock).toLocaleString('ko-KR')} 원
         </StyledPrice>

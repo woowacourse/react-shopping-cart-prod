@@ -1,79 +1,46 @@
-import { useDispatch, useSelector } from 'react-redux';
-
-import PATH from 'constants/path';
-import { USER_MESSAGE } from 'constants/message';
-import { User } from 'types/index';
-import authAPI from 'apis/auth';
-import { createInputValueGetter } from 'utils/dom';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { userActions } from 'redux/actions';
+import { User } from 'types';
+import useEditUserInfoForm from './useEditUserInfoForm';
+import LabeledInput from 'components/@shared/LabeledInput';
+import REG_EXP from 'constants/regExp';
 
 function EditUserInfoForm() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const { handleClickWithdrawButton, handleSubmit } = useEditUserInfoForm();
   const { username, email, address, phoneNumber } = useSelector(
-    (state: { user: User }) => state.user,
+    (state: { user: User }) => state.user
   );
 
-  const onClickWithdrawButton = async () => {
-    if (!confirm(USER_MESSAGE.ASK_WITH_DRAW)) return;
-
-    try {
-      await authAPI.deleteUser();
-      dispatch(userActions.resetUser());
-      navigate(PATH.BASE);
-    } catch (error) {
-      alert(USER_MESSAGE.FAIL_WITH_DRAW);
-    }
-  };
-
-  const onSubmitEditUserInfoForm = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!(e.target instanceof HTMLFormElement)) return;
-
-    const formElement = e.target.elements;
-    const getInputValue = createInputValueGetter(formElement);
-    const userInputInfo = {
-      address: getInputValue('address'),
-      phoneNumber: getInputValue('phoneNumber'),
-    };
-
-    try {
-      const userInfo = await authAPI.editUserInfo(userInputInfo);
-
-      dispatch(userActions.setUser(userInfo));
-      navigate(PATH.BASE);
-    } catch (error) {
-      alert(USER_MESSAGE.FAIL_EDIT);
-    }
-  };
-
   return (
-    <StyledForm onSubmit={onSubmitEditUserInfoForm}>
-      <label htmlFor="id">아이디</label>
-      <input id="id" type="text" value={username} disabled />
-      <label htmlFor="email">이메일</label>
-      <input id="email" type="email" value={email} disabled />
-      <label htmlFor="address">주소</label>
-      <input
+    <StyledForm onSubmit={handleSubmit}>
+      <LabeledInput id="id" type="text" value={username} disabled>
+        아이디
+      </LabeledInput>
+      <LabeledInput id="email" type="email" value={email} disabled>
+        이메일
+      </LabeledInput>
+      <LabeledInput
         id="address"
         type="address"
         placeholder="주소를 입력해주세요"
+        maxLength={255}
         defaultValue={address}
         required
-      />
-      <label htmlFor="phoneNumber">핸드폰 번호</label>
-      <input
+      >
+        주소
+      </LabeledInput>
+      <LabeledInput
         id="phoneNumber"
         type="text"
         placeholder="핸드폰 번호를 입력해주세요"
-        pattern={'^010-?([0-9]{3,4})-?([0-9]{4})'}
+        pattern={REG_EXP.PHONE_NUMBER}
         defaultValue={phoneNumber}
         required
-      />
+      >
+        핸드폰 번호
+      </LabeledInput>
       <StyledButtons>
-        <StyledWithdrawButton type="button" onClick={onClickWithdrawButton}>
+        <StyledWithdrawButton type="button" onClick={handleClickWithdrawButton}>
           회원 탈퇴
         </StyledWithdrawButton>
         <StyledEditButton type="submit">회원 정보 수정</StyledEditButton>

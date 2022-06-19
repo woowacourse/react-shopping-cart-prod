@@ -7,8 +7,6 @@ const GlobalStyle = createGlobalStyle<{ theme: typeof theme }>`
 
   body {
     font-family: 'Gowun Dodum', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     font-size: 16px;
     background: ${({ theme: { colors } }) => colors.sakuraPink};
   }
@@ -21,8 +19,6 @@ const GlobalStyle = createGlobalStyle<{ theme: typeof theme }>`
 
   input, button {
     font-family: 'Gowun Dodum', sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   input:disabled {

@@ -1,84 +1,60 @@
 import PATH from 'constants/path';
 import { User } from 'types/index';
-import { axios } from 'configs/api';
-import { getAccessToken } from 'utils/auth';
+import { axios, axiosWithToken } from 'configs/api';
 
 const authAPI = {
-  login: async function (user: User, isKeepLogin: boolean) {
-    try {
-      const {
-        data: { accessToken },
-      } = await axios.post(PATH.REQUEST_AUTH_TOKEN, user);
+  login: async function (user: User) {
+    const {
+      data: { accessToken },
+    } = await axios.post(PATH.REQUEST_AUTH_TOKEN, user);
 
-      if (isKeepLogin) {
-        localStorage.setItem('accessToken', accessToken);
-      } else {
-        sessionStorage.setItem('accessToken', accessToken);
-      }
+    sessionStorage.setItem('accessToken', accessToken);
 
-      return this.getUserInfo(accessToken);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+    return this.getUserInfo();
   },
 
-  getUserInfo: async function (accessToken = getAccessToken()) {
-    try {
-      const { data } = await axios.get(PATH.REQUEST_CUSTOMER_ME, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+  getUserInfo: async function () {
+    const { data } = await axiosWithToken.get(PATH.REQUEST_CUSTOMER_ME);
 
-      return data;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+    return data;
   },
 
   signup: async function (user: User) {
-    try {
-      await axios.post(PATH.REQUEST_CUSTOMER, user);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+    await axios.post(PATH.REQUEST_CUSTOMER, user);
   },
 
   editUserInfo: async function (user: User) {
-    const accessToken = getAccessToken();
+    await axiosWithToken.put(PATH.REQUEST_CUSTOMER_ME, user);
 
-    try {
-      await axios.put(PATH.REQUEST_CUSTOMER_ME, user, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
-
-      return this.getUserInfo(accessToken);
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+    return this.getUserInfo();
   },
 
   deleteUser: async function () {
-    const accessToken = getAccessToken();
+    await axiosWithToken.delete(PATH.REQUEST_CUSTOMER_ME);
 
-    try {
-      await axios.delete(PATH.REQUEST_CUSTOMER_ME, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+    sessionStorage.removeItem('accessToken');
+  },
 
-      localStorage.removeItem('accessToken');
-      sessionStorage.removeItem('accessToken');
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+  checkIdDuplicated: async function (id: string) {
+    const requestBody = { username: id };
+
+    const { data } = await axios.post(
+      '/customers/duplication/username',
+      requestBody
+    );
+
+    return data;
+  },
+
+  checkEmailDuplicated: async function (email: string) {
+    const requestBody = { email };
+
+    const { data } = await axios.post(
+      '/customers/duplication/email',
+      requestBody
+    );
+
+    return data;
   },
 };
 

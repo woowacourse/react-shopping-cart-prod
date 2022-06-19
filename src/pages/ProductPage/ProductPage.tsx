@@ -9,15 +9,17 @@ import { cartActions } from 'redux/actions';
 import { getProduct } from 'redux/thunks';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import cartAPI from 'apis/cart';
+import { snackBarActions } from 'redux/reducers/snackBar';
 
 function ProductPage() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const condition = useSelector(
-    (state: { product: ProductStoreState }) => state.product.condition,
+    (state: { product: ProductStoreState }) => state.product.condition
   );
   const productDetail = useSelector(
-    (state: { product: ProductStoreState }) => state.product.productDetail,
+    (state: { product: ProductStoreState }) => state.product.productDetail
   );
 
   useEffect(() => {
@@ -26,14 +28,11 @@ function ProductPage() {
     }
   }, [dispatch, id]);
 
-  const onClickCartButton = useCallback(
-    (e: React.MouseEvent<HTMLElement>) => {
-      e.preventDefault();
-      dispatch(cartActions.addToCart(Number(id)));
-      alert(CART_MESSAGE.SUCCESS_ADD);
-    },
-    [dispatch, id],
-  );
+  const onClickCartButton = async (e: React.MouseEvent<HTMLElement>) => {
+    const data = await cartAPI.addCartItem(Number(id));
+    dispatch(cartActions.setCartItemList(data));
+    dispatch(snackBarActions.show(CART_MESSAGE.SUCCESS_ADD));
+  };
 
   const renderSwitch = useCallback(() => {
     switch (condition) {
@@ -43,7 +42,7 @@ function ProductPage() {
         return productDetail ? (
           <>
             <StyledImageContainer>
-              <img src={productDetail.image} alt={productDetail.name} />
+              <img src={productDetail.imageUrl} alt={productDetail.name} />
             </StyledImageContainer>
             <h2>{productDetail.name}</h2>
             <hr />
