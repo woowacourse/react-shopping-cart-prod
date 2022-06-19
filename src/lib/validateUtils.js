@@ -12,14 +12,16 @@ const isPasswordConfirm = (password, passwordConfirm) => password === passwordCo
 const isNickname = (value) => /^[a-zA-Z가-힣0-9]{2,10}$/g.test(value);
 
 const userValidator = {
-  userId: async (userId) => {
+  userId: async (userId, isDuplicateCheckEnabled = true) => {
     if (!isUserId(userId)) {
       throw new Error('이메일 주소를 정확히 입력해주세요.');
     }
 
-    const { status, content } = await requestCheckUserId(userId);
+    if (isDuplicateCheckEnabled === false) return;
+
+    const { status, body } = await requestCheckUserId(userId);
     if (status === REQUEST_STATUS.FAIL) {
-      throw new Error(content.message);
+      throw new Error(body.message);
     }
   },
   password: (password) => {
@@ -32,14 +34,19 @@ const userValidator = {
       throw new Error('비밀번호가 일치하지 않습니다.');
     }
   },
-  nickname: async (nickname) => {
-    if (!isNickname(nickname)) {
+  nickname: async (newNickname, currentNickname = '') => {
+    if (!isNickname(newNickname)) {
       throw new Error('한글, 영문, 숫자로 최소 2자부터 최대 10자까지 입력할 수 있습니다.');
     }
 
-    const { status, content } = requestCheckUserNickname(nickname);
+    if (currentNickname && newNickname === currentNickname) {
+      throw new Error('현재 닉네임과 동일한 닉네임입니다.');
+    }
+
+    const { status, body } = await requestCheckUserNickname(newNickname);
+
     if (status === REQUEST_STATUS.FAIL) {
-      throw new Error(content.message);
+      throw new Error(body.message);
     }
   },
 };

@@ -17,6 +17,7 @@ const Input = styled.input`
   }
 
   width: ${({ width }) => width};
+
   ${({ status }) =>
     ({
       default: css`
@@ -32,6 +33,11 @@ const Input = styled.input`
         }
       `,
     }[status])}
+
+  &:disabled {
+    background-color: ${COLORS.GRAY_200};
+    color: ${COLORS.GRAY_70};
+  }
 `;
 
 const Message = styled.p`

@@ -1,21 +1,29 @@
-import { REQUEST_STATUS, REQUEST_TIMEOUT } from 'constants/';
+import { ACCESS_TOKEN_COOKIE_NAME, REQUEST_STATUS, REQUEST_TIMEOUT } from 'constants/';
+import ApiServer from 'lib/backendUrlInstance';
 
 import { getCookie } from './cookieUtils';
+
+const addAccessTokenHeader = (requestOptions = {}) => {
+  requestOptions.headers.Authorization = `Bearer ${getCookie(ACCESS_TOKEN_COOKIE_NAME)}`;
+};
 
 const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
   const fetchController = new AbortController();
   const newOption = { ...option, signal: fetchController.signal };
 
-  if (isAccessTokenUsed) {
-    newOption.headers = newOption.headers ? newOption.headers : {};
-    newOption.headers.Authorization = `Bearer ${getCookie('accessToken')}`;
+  if (!newOption.headers) {
+    newOption.headers = {};
   }
+
+  isAccessTokenUsed === true && addAccessTokenHeader(newOption);
 
   const timerID = setTimeout(() => fetchController.abort(), REQUEST_TIMEOUT);
 
   try {
-    const response = await fetch(process.env.REACT_APP_API_URL + url, newOption);
-    const jsonBody = await response.json();
+    const response = await fetch(ApiServer.currentApiServer + url, newOption);
+    const responseBody = await response.text();
+
+    const jsonBody = responseBody ? JSON.parse(responseBody) : {};
     const responseHeader = Object.fromEntries(response.headers.entries());
 
     clearTimeout(timerID);
@@ -24,25 +32,15 @@ const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
       status: response.ok ? REQUEST_STATUS.SUCCESS : REQUEST_STATUS.FAIL,
       statusCode: response.status,
       header: responseHeader,
-      content: jsonBody,
+      body: jsonBody,
     };
   } catch (error) {
     return {
       status: REQUEST_STATUS.FAIL,
-      content: `서버와의 통신에 실패하였습니다.\n(${error.message})`,
+      statusCode: 500,
+      body: { message: `서버와의 통신에 실패하였습니다.\n(${error.message})` },
     };
   }
 };
 
-const createAsyncState = {
-  initial: () => ({
-    isLoading: false,
-    isLoaded: false,
-    error: null,
-  }),
-  pending: () => ({ isLoading: true, isLoaded: false, error: null }),
-  success: () => ({ isLoading: false, isLoaded: true, error: null }),
-  error: (error) => ({ isLoading: false, isLoaded: false, error }),
-};
-
-export { request, createAsyncState };
+export { request };

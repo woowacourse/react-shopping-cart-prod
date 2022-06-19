@@ -35,7 +35,10 @@ const membersHandlers = [
     const userInfo = membersDB.find((user) => user.userId === userId && user.password === password);
 
     if (!userInfo) {
-      return res(ctx.status(400), ctx.json({ message: '로그인에 실패하였습니다.' }));
+      return res(
+        ctx.status(400),
+        ctx.json({ message: '이메일 또는 비밀번호를 정확히 입력해주세요.' }),
+      );
     }
 
     const responseUserInfo = { ...userInfo };
@@ -69,14 +72,57 @@ const membersHandlers = [
 
     const queryName = req.url.href.includes('nickname=') ? '닉네임' : '이메일';
 
-    return res(
-      ctx.status(isExist ? 400 : 200),
-      ctx.json({ message: `이미 존재하는 ${queryName}입니다.` }),
-    );
+    if (isExist) {
+      return res(ctx.status(400), ctx.json({ message: `이미 존재하는 ${queryName}입니다.` }));
+    }
+
+    return res(ctx.status(200));
   }),
 
   // -- 이후
+  // 회원정보 수정 전 패스워드 확인
+  rest.post('./auth/customers/match/password', (req, res, ctx) => {
+    const { password } = req.body;
+
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
+    const userInfo = membersDB.find((user) => user.accessToken === accessToken);
+
+    if (!userInfo || userInfo.password !== password) {
+      return res(ctx.status(400), ctx.json({ message: '비밀번호가 올바르지 않습니다.' }));
+    }
+
+    return res(ctx.status(200));
+  }),
+
   // 회원정보 수정
+  rest.patch('./auth/customers/profile', (req, res, ctx) => {
+    const { nickname, password } = req.body;
+
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
+    const userInfo = membersDB.find((user) => user.accessToken === accessToken);
+
+    if (!userInfo || userInfo.password !== password) {
+      return res(ctx.status(400), ctx.json({ message: '비밀번호가 올바르지 않습니다.' }));
+    }
+
+    userInfo.nickname = nickname;
+    return res(ctx.status(200));
+  }),
+
+  // 패스워드 변경
+  rest.patch('./auth/customers/profile/password', (req, res, ctx) => {
+    const { oldPassword, newPassword } = req.body;
+
+    const accessToken = req.headers.get('Authorization').replace('Bearer ', '');
+    const userInfo = membersDB.find((user) => user.accessToken === accessToken);
+
+    if (!userInfo || userInfo.password !== oldPassword) {
+      return res(ctx.status(400), ctx.json({ message: '비밀번호가 올바르지 않습니다.' }));
+    }
+
+    userInfo.password = newPassword;
+    return res(ctx.status(200));
+  }),
   // 회원 탈퇴
 ];
 

@@ -1,15 +1,33 @@
 import styled from '@emotion/styled/macro';
 
-import FlexContainer from 'components/@common/FlexContainer';
+import { COLORS } from 'styles/theme';
 
-const Container = styled.div`
+const PageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  margin: 5rem auto;
+`;
+
+const Container = styled.form`
+  width: 100%;
+`;
+
+const InlineField = styled.div`
   display: grid;
-  grid-template-columns: 58% 40%;
-  gap: 2%;
+  width: 100%;
+  grid-template-columns: 75% 22%;
+  gap: 3%;
+`;
 
-  & > ${FlexContainer} {
-    padding: 1rem 1.5rem;
+const Link = styled.div`
+  padding: 2rem 0;
+  text-align: right;
+
+  a {
+    color: ${COLORS.GRAY_100};
+    font-size: 0.8rem;
   }
 `;
 
-export { Container };
+export { PageContent, Container, InlineField, Link };

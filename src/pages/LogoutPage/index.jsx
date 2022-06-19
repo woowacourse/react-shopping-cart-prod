@@ -1,23 +1,18 @@
-import { ACCESS_TOKEN_COOKIE_NAME } from 'constants';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-import * as memberActions from 'actions/members/action';
+import userThunk from 'store/user/thunk';
 
-import { removeCookie } from 'lib/cookieUtils';
+import { PAGE_LIST } from 'constants/';
 
 export function LogoutPage() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    removeCookie(ACCESS_TOKEN_COOKIE_NAME);
-
-    dispatch(memberActions.userLogout());
-    navigate('/');
+    dispatch(userThunk.userLogout());
   }, []);
 
-  return <></>;
+  return <Navigate to={PAGE_LIST.HOME} />;
 }
 export default LogoutPage;

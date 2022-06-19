@@ -1,10 +1,23 @@
-import { FlexContainer, Title, TextUnderline, Icon } from 'components/@common';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-import { ICON_CODE } from 'constants/';
+import { Title, Icon } from 'components/@common';
 
-import PasswordConfirm from './Containers/PasswordConfirm';
+import { ICON_CODE, PAGE_LIST } from 'constants/';
+
+import ConfirmPassword from './Containers/ConfirmPassword';
+import ProfileEdit from './Containers/ProfileEdit';
+import * as S from './styles';
 
 export function ProfilePage() {
+  const [pageStep, setPageStep] = useState(1);
+  const [password, setPassword] = useState();
+
+  const setAuthPassed = (confirmPassword) => {
+    setPassword(confirmPassword);
+    setPageStep(2);
+  };
+
   return (
     <>
       <Title description="현재 로그인한 계정의 회원 정보를 수정하실 수 있습니다.">
@@ -12,7 +25,14 @@ export function ProfilePage() {
         회원정보 관리
       </Title>
 
-      <PasswordConfirm />
+      <S.PageContent>
+        {pageStep === 1 && <ConfirmPassword setAuthPassed={setAuthPassed} />}
+        {pageStep === 2 && <ProfileEdit setAuthPassed={setAuthPassed} confirmPassword={password} />}
+
+        <S.Link>
+          <Link to={PAGE_LIST.WITHDRAWAL}>회원 탈퇴 요청</Link>
+        </S.Link>
+      </S.PageContent>
     </>
   );
 }

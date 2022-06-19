@@ -9,13 +9,13 @@ const requestSignUp = ({ userId, password, nickname }) =>
     body: JSON.stringify({ userId, password, nickname }),
   });
 
-const requestLogin = ({ userId, password }) =>
+const requestLogin = ({ loginId, password }) =>
   request('/customers/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ userId, password }),
+    body: JSON.stringify({ userId: loginId, password }),
   });
 
 const requestProfile = () =>
@@ -78,10 +78,27 @@ const requestCheckUserId = (userId) =>
   request(`/customers/check?userId=${encodeURIComponent(userId)}`, {
     method: 'GET',
   });
+
 const requestCheckUserNickname = (nickname) =>
   request(`/customers/check?nickname=${encodeURIComponent(nickname)}`, {
     method: 'GET',
   });
+
+const requestPasswordConfirm = (password) =>
+  request(
+    '/auth/customers/match/password',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ password }),
+    },
+    {
+      isAccessTokenUsed: true,
+    },
+  );
+
 export {
   requestSignUp,
   requestLogin,
@@ -91,4 +108,5 @@ export {
   requestPasswordUpdate,
   requestCheckUserId,
   requestCheckUserNickname,
+  requestPasswordConfirm,
 };

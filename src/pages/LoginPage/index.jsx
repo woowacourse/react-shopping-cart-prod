@@ -1,8 +1,12 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import * as membersThunk from 'actions/members/thunk';
+import userActions from 'store/user/action';
+import userThunk from 'store/user/thunk';
+
+import useDispatchEvent from 'hooks/useDispatchEvent';
+import useForm from 'hooks/useForm';
 
 import { Button, FlexContainer } from 'components/@common';
 import FieldSet from 'components/@common/FieldSet';
@@ -10,35 +14,51 @@ import InputField from 'components/@common/InputField';
 
 import { PAGE_LIST } from 'constants/';
 import { getFormData } from 'lib/formUtils';
+import { userValidator } from 'lib/validateUtils';
 
 import * as S from './styles';
 
 function LoginPage() {
-  const { userInfoAsyncState, isLoggedIn } = useSelector((state) => state.members);
-  const { error: errorMessage } = userInfoAsyncState;
+  const { dispatch, dispatchEvent } = useDispatchEvent();
+  const { error: serverErrorMessage } = useSelector(({ user }) => user.userInfoAsyncState);
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { state: pageState = {} } = useLocation();
 
-  useEffect(() => {
-    isLoggedIn && navigate('/');
-  }, [isLoggedIn]);
+  useEffect(
+    () =>
+      function cleanup() {
+        dispatch(userActions.updateInfo.initial());
+      },
+    [],
+  );
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const { userId, password } = getFormData(event.target);
-
-    dispatch(membersThunk.userLogin({ userId, password }));
+  const validationList = {
+    userId: ({ userId }) => userValidator.userId(userId, false),
+    password: ({ password }) => userValidator.password(password),
   };
 
+  const { onChangeInput, createFormSubmitEvent, errorList } = useForm(validationList);
+  const isError = errorList.userId || errorList.password || serverErrorMessage;
+
+  const onSubmitLogin = createFormSubmitEvent((event) => {
+    const { userId, password } = getFormData(event.target);
+
+    dispatchEvent({
+      action: userThunk.userLogin(userId, password),
+      onStateUpdated: ({ user }) => {
+        user.isLogin && navigate(pageState ? pageState.targetUrl : '/');
+      },
+    });
+  });
+
   return (
-    <S.Container onSubmit={handleSubmit}>
+    <S.Container onChange={onChangeInput} onSubmit={onSubmitLogin}>
       <FieldSet labelText="이메일">
         <InputField
           name="userId"
           type="text"
-          status={errorMessage && 'danger'}
+          status={isError && 'danger'}
           placeholder="이메일을 입력하여주세요."
         />
       </FieldSet>
@@ -47,8 +67,8 @@ function LoginPage() {
         <InputField
           name="password"
           type="password"
-          status={errorMessage && 'danger'}
-          message={errorMessage}
+          status={isError && 'danger'}
+          message={isError && '아이디 또는 비밀번호를 확인하여주세요'}
           placeholder="비밀번호를 입력하여주세요."
         />
       </FieldSet>

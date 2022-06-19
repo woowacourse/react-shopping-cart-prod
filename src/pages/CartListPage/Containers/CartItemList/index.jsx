@@ -1,6 +1,5 @@
-import { useDispatch } from 'react-redux';
-
 import useCart from 'hooks/useCart';
+import useDispatchEvent from 'hooks/useDispatchEvent';
 
 import { FlexContainer, StatusMessage } from 'components/@common';
 import { Case, SwitchAsync } from 'components/@common/SwitchAsync';
@@ -8,20 +7,22 @@ import { Case, SwitchAsync } from 'components/@common/SwitchAsync';
 import CartItem from 'components/CartItem';
 
 function CartItemList() {
-  const dispatch = useDispatch();
+  const { dispatch, dispatchEvent } = useDispatchEvent();
 
-  const { cartAction, cartThunk, state } = useCart();
-  const { cartItems, cartListAsyncState, cartCurdAsyncState } = state;
+  const { cartActions, cartThunk, cartState } = useCart();
+  const { items: cartItems, listAsyncState: cartListAsyncState } = cartState;
 
   const handleCheckItem = (id, isChecked) => {
-    dispatch(cartAction.updateItemCheck(id, isChecked));
+    dispatch(cartActions.setItemCheck(id, isChecked));
   };
 
   const handleChangeQuantity = async (id, quantity) => {
-    await dispatch(cartThunk.updateItem(id, { quantity }));
-
-    cartCurdAsyncState.isLoaded === false &&
-      alert('서버 오류로 인해 상품 정보 갱신에 실패하였습니다.');
+    dispatchEvent({
+      action: cartThunk.updateItem(id, { quantity }),
+      onStateUpdated: ({ cart }) => {
+        cart.curdAsyncState.error && alert(cart.curdAsyncState.error);
+      },
+    });
   };
 
   const handleRemoveItem = async (id) => {
@@ -29,10 +30,12 @@ function CartItemList() {
       return;
     }
 
-    await dispatch(cartThunk.removeItem(id));
-    cartCurdAsyncState.isLoaded
-      ? alert('해당 상품을 제거하였습니다.')
-      : alert('해당 상품 제거에 실패하였습니다.');
+    dispatchEvent({
+      action: cartThunk.removeItem(id),
+      onStateUpdated: ({ cart }) => {
+        cart.curdAsyncState.error && alert(cart.curdAsyncState.error);
+      },
+    });
   };
 
   return (
@@ -44,11 +47,11 @@ function CartItemList() {
       >
         <Case.Success>
           {(cartItems.length > 0 &&
-            cartItems.map(({ id, image, name, price, quantity, isChecked }) => (
+            cartItems.map(({ id, imageUrl, name, price, quantity, isChecked }) => (
               <CartItem
                 key={id}
                 id={id}
-                image={image}
+                image={imageUrl}
                 name={name}
                 price={price}
                 quantity={quantity}

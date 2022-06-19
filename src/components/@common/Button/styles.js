@@ -36,6 +36,10 @@ const Container = styled.button`
   border-radius: ${LAYOUT.BORDER_RADIUS}px;
   color: inherit;
 
+  ${({ width }) =>
+    css`
+      width: ${width};
+    `}
   ${({ containerType }) => BUTTON_TYPE[containerType]}
   ${({ status }) => BUTTON_STATE_COLOR(status)}
   ${({ status }) =>

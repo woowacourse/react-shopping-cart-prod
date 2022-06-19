@@ -1,6 +1,6 @@
 {
   "name": "react-shopping-cart",
-  "homepage": "https://compy-ryu.github.io/react-shopping-cart/",
+  "homepage": "https://compy-ryu.github.io/react-shopping-cart-prod/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -43,8 +43,11 @@
     "webpack": "^5.72.1"
   },
   "scripts": {
-    "start": "env-cmd -f env/.env.development react-app-rewired start",
-    "start:msw": "env-cmd -f env/.env.development.mocking react-app-rewired start",
+    "start": "env-cmd -f env/.env.development.mocking react-app-rewired start",
+    "start:jojogreen": "env-cmd -f env/.env.development.jojogreen react-app-rewired start",
+    "start:hunch": "env-cmd -f env/.env.development.hunch react-app-rewired start",
+    "start:yukong": "env-cmd -f env/.env.development.yukong react-app-rewired start",
+    "start:river": "env-cmd -f env/.env.development.river react-app-rewired start",
     "build": "env-cmd -f env/.env.production react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
