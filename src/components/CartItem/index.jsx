@@ -11,7 +11,7 @@ import * as S from './styles';
 
 function CartItem({
   id,
-  image,
+  imageUrl,
   name,
   price,
   quantity,
@@ -39,7 +39,7 @@ function CartItem({
       </FlexContainer>
 
       <FlexContainer width="70%">
-        <ProductItem direction="horizontal" id={id} image={image} name={name} price={price} />
+        <ProductItem direction="horizontal" id={id} imageUrl={imageUrl} name={name} price={price} />
       </FlexContainer>
 
       <FlexContainer width="20%" justify="space-between" align="end">
@@ -53,7 +53,7 @@ function CartItem({
 }
 
 CartItem.defaultProps = {
-  image: '기본 이미지 URL',
+  imageUrl: '기본 이미지 URL',
   name: '이름이 지정되지 않았습니다.',
   price: -1,
   quantity: 1,
@@ -65,7 +65,7 @@ CartItem.defaultProps = {
 
 CartItem.propTypes = {
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  image: PropTypes.string,
+  imageUrl: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   quantity: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

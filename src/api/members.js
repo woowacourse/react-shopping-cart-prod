@@ -29,7 +29,7 @@ const requestProfile = () =>
     },
   );
 
-const requestProfileUpdate = (editTarget = {}) =>
+const requestProfileUpdate = ({ newNickname, password }) =>
   request(
     '/auth/customers/profile',
     {
@@ -37,7 +37,7 @@ const requestProfileUpdate = (editTarget = {}) =>
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(editTarget),
+      body: JSON.stringify({ newNickname, password }),
     },
     {
       isAccessTokenUsed: true,
@@ -59,7 +59,7 @@ const requestPasswordUpdate = ({ oldPassword, newPassword }) =>
     },
   );
 
-const requestUserDropOut = (password) =>
+const requestUserDropOut = ({ password }) =>
   request(
     '/auth/customers/profile',
     {
@@ -78,10 +78,12 @@ const requestCheckUserId = (userId) =>
   request(`/customers/check?userId=${encodeURIComponent(userId)}`, {
     method: 'GET',
   });
+
 const requestCheckUserNickname = (nickname) =>
   request(`/customers/check?nickname=${encodeURIComponent(nickname)}`, {
     method: 'GET',
   });
+
 export {
   requestSignUp,
   requestLogin,

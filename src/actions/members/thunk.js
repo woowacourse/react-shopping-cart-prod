@@ -1,6 +1,12 @@
-import { requestLogin, requestProfile } from 'api/members';
+import {
+  requestLogin,
+  requestPasswordUpdate,
+  requestProfile,
+  requestProfileUpdate,
+  requestUserDropOut,
+} from 'api/members';
 import { ACCESS_TOKEN_COOKIE_NAME, ACCESS_TOKEN_EXPIRED_TIME, REQUEST_STATUS } from 'constants/';
-import { getCookie, setCookie } from 'lib/cookieUtils';
+import { getCookie, removeCookie, setCookie } from 'lib/cookieUtils';
 
 import * as memberActions from './action';
 
@@ -37,4 +43,64 @@ const userProfile = () => async (dispatch) => {
   return response;
 };
 
-export { userLogin, userProfile };
+const userNicknameEdit =
+  ({ newNickname, password }) =>
+  async (dispatch) => {
+    const accessToken = getCookie(ACCESS_TOKEN_COOKIE_NAME);
+
+    if (!accessToken) return;
+
+    const response = await requestProfileUpdate({ newNickname, password });
+    const { status, content } = response;
+
+    if (status === REQUEST_STATUS.FAIL) {
+      dispatch(memberActions.userProfileEdit.error(content.message));
+      return response;
+    }
+
+    dispatch(memberActions.userProfileEdit.success(content));
+    return response;
+  };
+
+const userPasswordEdit =
+  ({ oldPassword, newPassword }) =>
+  async (dispatch) => {
+    const accessToken = getCookie(ACCESS_TOKEN_COOKIE_NAME);
+
+    if (!accessToken) return;
+
+    const response = await requestPasswordUpdate({ oldPassword, newPassword });
+    const { status, content } = response;
+
+    if (status === REQUEST_STATUS.FAIL) {
+      dispatch(memberActions.userPasswordEdit.error(content.message));
+      return response;
+    }
+
+    dispatch(memberActions.userPasswordEdit.success(content));
+    return response;
+  };
+
+const userDropOut =
+  ({ password }) =>
+  async (dispatch) => {
+    const accessToken = getCookie(ACCESS_TOKEN_COOKIE_NAME);
+
+    if (!accessToken) return;
+
+    const response = await requestUserDropOut({ password });
+    const { status, content } = response;
+
+    if (status === REQUEST_STATUS.FAIL) {
+      dispatch(memberActions.userDropOut.error(content.message));
+      return response;
+    }
+
+    removeCookie(ACCESS_TOKEN_COOKIE_NAME);
+    dispatch(memberActions.userDropOut.success());
+    dispatch(memberActions.userLogout());
+
+    return response;
+  };
+
+export { userLogin, userProfile, userNicknameEdit, userPasswordEdit, userDropOut };

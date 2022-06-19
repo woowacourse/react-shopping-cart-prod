@@ -60,7 +60,7 @@ const RightMenuList = styled.li`
   justify-content: center;
   align-items: center;
 
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   padding: 1rem;
   color: ${COLORS.GRAY_50};
 
@@ -72,6 +72,7 @@ const RightMenuList = styled.li`
     font-family: 'Font Awesome 6 Free';
     font-style: normal;
     font-weight: 900;
+    font-size: 0.9rem;
 
     padding-right: 0.625rem;
   }
@@ -82,6 +83,14 @@ const RightMenuList = styled.li`
 
   &.order-list::before {
     content: '\\f007';
+  }
+
+  &.login::before {
+    content: '\\f090';
+  }
+
+  &.logout::before {
+    content: '\\f08b';
   }
 
   &::after {

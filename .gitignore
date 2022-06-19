@@ -17,3 +17,6 @@ npm-debug.log*
 
 /.vscode
 /storybook-static
+
+.yarn
+.yarnrc.yml

@@ -11,19 +11,23 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const { type, payload = {}, async = {} } = action;
+  const { type, payload = {} } = action;
 
   switch (type) {
     case PRODUCTS_ACTIONS.UPDATE_PRODUCT_LIST_PENDING:
-    case PRODUCTS_ACTIONS.UPDATE_PRODUCT_LIST_ERROR:
       return produce(state, (draft) => {
-        draft.listAsyncState = async;
+        draft.listAsyncState = createAsyncState.pending();
       });
 
     case PRODUCTS_ACTIONS.UPDATE_PRODUCT_LIST_SUCCESS:
       return produce(state, (draft) => {
         draft.productList = payload;
-        draft.listAsyncState = async;
+        draft.listAsyncState = createAsyncState.success();
+      });
+
+    case PRODUCTS_ACTIONS.UPDATE_PRODUCT_LIST_ERROR:
+      return produce(state, (draft) => {
+        draft.listAsyncState = createAsyncState.error(payload);
       });
 
     default:

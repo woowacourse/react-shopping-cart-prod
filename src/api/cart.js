@@ -1,54 +1,88 @@
 import { request } from 'lib/requestUtils';
 
 const requestGetCartList = () =>
-  request('/cart', {
-    method: 'GET',
-  });
-
-const requestAddCart = ({ id, image, name, price, quantity, isChecked }) =>
-  request('/cart', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  request(
+    '/auth/customer/cartItems',
+    {
+      method: 'GET',
     },
-    body: JSON.stringify({
-      product: id,
-      image,
-      name,
-      price,
-      quantity,
-      isChecked,
-    }),
-  });
+    {
+      isAccessTokenUsed: true,
+    },
+  );
+
+const requestAddCart = (itemList = []) =>
+  request(
+    '/auth/customer/cartItems',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(itemList),
+    },
+    {
+      isAccessTokenUsed: true,
+    },
+  );
 
 const requestUpdateCartItem = async (id, content) => {
-  const response = await request(`/cart/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
+  const response = await request(
+    '/auth/customer/cartItems',
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id,
+        ...content,
+      }),
     },
-    body: JSON.stringify({
-      ...content,
-    }),
-  });
+    {
+      isAccessTokenUsed: true,
+    },
+  );
 
   return response;
 };
 
-const requestRemoveCartItem = async (id) => {
-  const response = await request(`/cart/${id}`, {
-    method: 'DELETE',
-  });
-
-  return response;
-};
+const requestRemoveCartItem = async (id) =>
+  request(
+    '/auth/customer/cartItems',
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify([
+        {
+          id,
+        },
+      ]),
+    },
+    {
+      isAccessTokenUsed: true,
+    },
+  );
 
 const requestRemoveCartItemList = async (idList) => {
-  const response = await request(`/cart/${idList.join(',')}`, {
-    method: 'DELETE',
-  });
+  // API 스펙 변경 협의 필요.
+  const requestBody = idList.map((id) => ({ id }));
 
-  return response;
+  return request(
+    '/auth/customer/cartItems',
+    {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(requestBody),
+    },
+    {
+      isAccessTokenUsed: true,
+    },
+  );
 };
 
 export {

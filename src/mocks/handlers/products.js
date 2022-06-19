@@ -4,11 +4,8 @@ import { rest } from 'msw';
 import { MOCK_DB } from 'mocks/db';
 
 const productsHandlers = [
-  rest.get('./shopping', (req, res, ctx) => {
-    const { _page: page = 1, _limit: limit = 12 } = Object.fromEntries(
-      req.url.searchParams.entries(),
-    );
-
+  rest.get('./products', (req, res, ctx) => {
+    const { page = 1, limit = 12 } = Object.fromEntries(req.url.searchParams.entries());
     const limitStartIndex = Number((page - 1) * limit);
     const limitEndIndex = limitStartIndex + Number(limit);
 

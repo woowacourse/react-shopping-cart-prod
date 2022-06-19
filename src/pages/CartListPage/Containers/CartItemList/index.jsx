@@ -1,6 +1,5 @@
-import { useDispatch } from 'react-redux';
-
 import useCart from 'hooks/useCart';
+import useDispatchEvent from 'hooks/useDispatchEvent';
 
 import { FlexContainer, StatusMessage } from 'components/@common';
 import { Case, SwitchAsync } from 'components/@common/SwitchAsync';
@@ -8,10 +7,10 @@ import { Case, SwitchAsync } from 'components/@common/SwitchAsync';
 import CartItem from 'components/CartItem';
 
 function CartItemList() {
-  const dispatch = useDispatch();
+  const { dispatch, getRecentState } = useDispatchEvent();
 
   const { cartAction, cartThunk, state } = useCart();
-  const { cartItems, cartListAsyncState, cartCurdAsyncState } = state;
+  const { cartItems, cartListAsyncState } = state;
 
   const handleCheckItem = (id, isChecked) => {
     dispatch(cartAction.updateItemCheck(id, isChecked));
@@ -19,8 +18,9 @@ function CartItemList() {
 
   const handleChangeQuantity = async (id, quantity) => {
     await dispatch(cartThunk.updateItem(id, { quantity }));
+    const newCurdAsyncState = getRecentState('cart', 'curdAsyncState');
 
-    cartCurdAsyncState.isLoaded === false &&
+    newCurdAsyncState.isLoaded === false &&
       alert('서버 오류로 인해 상품 정보 갱신에 실패하였습니다.');
   };
 
@@ -30,7 +30,10 @@ function CartItemList() {
     }
 
     await dispatch(cartThunk.removeItem(id));
-    cartCurdAsyncState.isLoaded
+
+    const newCurdAsyncState = getRecentState('cart', 'curdAsyncState');
+
+    newCurdAsyncState.isLoaded
       ? alert('해당 상품을 제거하였습니다.')
       : alert('해당 상품 제거에 실패하였습니다.');
   };
@@ -43,12 +46,12 @@ function CartItemList() {
         isContentLoaded={cartListAsyncState.isLoaded}
       >
         <Case.Success>
-          {(cartItems.length > 0 &&
-            cartItems.map(({ id, image, name, price, quantity, isChecked }) => (
+          {cartItems.length > 0 &&
+            cartItems.map(({ id, imageUrl, name, price, quantity, isChecked }) => (
               <CartItem
                 key={id}
                 id={id}
-                image={image}
+                imageUrl={imageUrl}
                 name={name}
                 price={price}
                 quantity={quantity}
@@ -57,7 +60,8 @@ function CartItemList() {
                 onChangeCounter={handleChangeQuantity}
                 onClickRemove={handleRemoveItem}
               />
-            ))) || <StatusMessage status="empty">텅! 장바구니에 담은 상품이 없어요!</StatusMessage>}
+            ))}
+          {/* || <StatusMessage status="empty">텅! 장바구니에 담은 상품이 없어요!</StatusMessage>} */}
         </Case.Success>
 
         <Case.Loading>

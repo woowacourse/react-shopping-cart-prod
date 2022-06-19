@@ -13,16 +13,16 @@ import { userValidator } from 'lib/validateUtils';
 
 import * as S from './styles';
 
+const validationList = {
+  userId: ({ userId }) => userValidator.userId(userId),
+  password: ({ password }) => userValidator.password(password),
+  passwordConfirm: ({ password, passwordConfirm }) =>
+    userValidator.passwordConfirm(password, passwordConfirm),
+  nickname: ({ nickname }) => userValidator.nickname(nickname),
+};
+
 function SignUpPage() {
   const navigate = useNavigate();
-
-  const validationList = {
-    userId: ({ userId }) => userValidator.userId(userId),
-    password: ({ password }) => userValidator.password(password),
-    passwordConfirm: ({ password, passwordConfirm }) =>
-      userValidator.passwordConfirm(password, passwordConfirm),
-    nickname: ({ nickname }) => userValidator.nickname(nickname),
-  };
 
   const { errorList, isAllPassed, validationForm } = useFormValidation(validationList);
 
@@ -39,8 +39,7 @@ function SignUpPage() {
     const formData = getFormData(event.target);
 
     const response = await requestSignUp(formData);
-
-    if (response.status === REQUEST_STATUS.FAIL) return;
+    // if (response.status === REQUEST_STATUS.FAIL) return;
     navigate('/login');
   };
 

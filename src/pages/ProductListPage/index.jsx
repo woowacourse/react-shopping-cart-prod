@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import * as cartThunk from 'actions/cart/thunk';
 import * as productsThunk from 'actions/products/thunk';
 
 import useCart from 'hooks/useCart';
+import useDispatchEvent from 'hooks/useDispatchEvent';
 
 import { StatusMessage } from 'components/@common';
 import { SwitchAsync, Case } from 'components/@common/SwitchAsync';
@@ -14,30 +16,37 @@ import ProductItem from 'components/ProductItem';
 import * as S from './styles';
 
 export function ProductListPage() {
-  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { dispatch, getRecentState } = useDispatchEvent();
+  const { isLoggedIn } = useSelector((state) => state.members);
 
   const productState = useSelector((state) => state.products);
   const { productList, listAsyncState: productsAsyncState } = productState;
 
   const { state: cartState } = useCart();
-  const { cartItems, cartListAsyncState } = cartState;
+  const { cartItems } = cartState;
 
   useEffect(() => {
     dispatch(productsThunk.getList());
   }, []);
 
-  const handleAddCart = ({ id, image, name, price }) => {
-    dispatch(cartThunk.addList({ id, image, name, price })).then(() => {
-      cartListAsyncState.isLoaded === false &&
-        alert(`장바구니 상품 추가에 실패하였습니다.\n오류 내용 : ${cartListAsyncState.error}`);
-    });
+  const handleAddCart = async ({ id, imageUrl, name, price }) => {
+    if (!isLoggedIn) {
+      alert('로그인이 필요합니다.');
+      navigate('/login');
+      return;
+    }
+    await dispatch(cartThunk.addList([{ id, imageUrl, name, price }]));
+    const newCurdAsyncState = getRecentState('cart', 'curdAsyncState');
+    newCurdAsyncState.isLoaded === false &&
+      alert(`장바구니 상품 추가에 실패하였습니다.\n오류 내용 : ${newCurdAsyncState.error}`);
   };
 
-  const handleRemoveCart = ({ id }) => {
-    dispatch(cartThunk.removeItem(id)).then(() => {
-      cartListAsyncState.isLoaded === false &&
-        alert(`장바구니 상품 제거에 실패하였습니다.\n오류 내용 : ${cartListAsyncState.error}`);
-    });
+  const handleRemoveCart = async ({ id }) => {
+    await dispatch(cartThunk.removeItem(id));
+    const newCurdAsyncState = getRecentState('cart', 'curdAsyncState');
+    newCurdAsyncState.isLoaded === false &&
+      alert(`장바구니 상품 추가에 실패하였습니다.\n오류 내용 : ${newCurdAsyncState.error}`);
   };
 
   return (
@@ -49,16 +58,16 @@ export function ProductListPage() {
       <Case.Success>
         <S.Container>
           {productList &&
-            productList.map(({ id, name, goodsPrice, listImage }) => {
-              const cartItem = cartItems.find(({ product }) => product === id);
+            productList.map(({ id, name, price, imageUrl }) => {
+              const cartItem = cartItems.find(({ productId }) => productId === id);
 
               return (
                 <ProductItem
                   key={id}
                   id={id}
-                  image={listImage}
+                  imageUrl={imageUrl}
                   name={name}
-                  price={goodsPrice}
+                  price={price}
                   cartId={cartItem ? cartItem.id : null}
                   onClickCartButton={
                     cartItem ? () => handleRemoveCart({ id: cartItem.id }) : handleAddCart

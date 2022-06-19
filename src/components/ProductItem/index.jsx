@@ -6,18 +6,18 @@ import VerticalContent from './VerticalContent';
 function ProductItem({
   direction = 'vertical',
   id,
-  image,
+  imageUrl,
   name,
   price,
   cartId,
   onClickCartButton,
 }) {
   if (direction === 'vertical') {
-    return <VerticalContent {...{ id, image, name, price, cartId, onClickCartButton }} />;
+    return <VerticalContent {...{ id, imageUrl, name, price, cartId, onClickCartButton }} />;
   }
 
   if (direction === 'horizontal') {
-    return <HorizontalContent {...{ id, image, name, price }} />;
+    return <HorizontalContent {...{ id, imageUrl, name, price }} />;
   }
 
   throw new Error('상품 목록 컴포넌트에 지원되지 않는 방향이 입력되었습니다');
@@ -25,7 +25,7 @@ function ProductItem({
 
 ProductItem.defaultProps = {
   direction: 'vertical',
-  image: '기본 이미지 URL',
+  imageUrl: '기본 이미지 URL',
   name: '이름이 지정되지 않았습니다.',
   price: -1,
   cartId: null,
@@ -34,7 +34,7 @@ ProductItem.defaultProps = {
 ProductItem.propTypes = {
   direction: PropTypes.oneOf(['vertical', 'horizontal']),
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  image: PropTypes.string,
+  imageUrl: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   cartId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),

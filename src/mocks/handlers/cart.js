@@ -6,11 +6,11 @@ import { MOCK_DB } from 'mocks/db';
 const cartDB = MOCK_DB.cart;
 
 const cartHandlers = [
-  rest.get('./cart', (req, res, ctx) => {
+  rest.get('./auth/customer/cartItems', (req, res, ctx) => {
     return res(ctx.json(cartDB), ctx.set({ 'x-total-count': cartDB.length }));
   }),
 
-  rest.post('./cart', (req, res, ctx) => {
+  rest.post('./auth/customer/cartItems', (req, res, ctx) => {
     const insertID = cartDB.length;
     const insertData = { ...req.body, id: insertID };
 
@@ -18,7 +18,7 @@ const cartHandlers = [
     return res(ctx.json(insertData), ctx.set({ 'x-total-count': cartDB.length }));
   }),
 
-  rest.patch('./cart/*', (req, res, ctx) => {
+  rest.patch('./auth/customer/cartItems/*', (req, res, ctx) => {
     const targetId = Number(req.params[0]);
     const targetIndex = cartDB.findIndex(({ id }) => id === targetId);
 
@@ -29,7 +29,7 @@ const cartHandlers = [
     return res(ctx.json(cartDB[targetIndex]));
   }),
 
-  rest.delete('./cart/*', (req, res, ctx) => {
+  rest.delete('./auth/customer/cartItems/*', (req, res, ctx) => {
     const targetId = req.params[0];
     const targetIdList = targetId.indexOf(',') ? targetId.split(',') : [targetId];
 

@@ -5,7 +5,8 @@ import LoginPage from 'pages/LoginPage';
 import LogoutPage from 'pages/LogoutPage';
 import NotFoundPage from 'pages/NotFoundPage';
 import ProductListPage from 'pages/ProductListPage';
-import ProfilePage from 'pages/ProfilePage';
+import ProfileConfirmPage from 'pages/ProfilePage/ProfileConfirmPage';
+import ProfileEditPage from 'pages/ProfilePage/ProfileEditPage';
 import SignUpPage from 'pages/SignUpPage/index';
 
 import { PAGE_LIST } from 'constants/';
@@ -20,7 +21,8 @@ function PageRoutes() {
         <Route index element={<ProductListPage />} />
         <Route path={PAGE_LIST.PRODUCT_LIST} element={<ProductListPage />} />
         <Route path={PAGE_LIST.CART_LIST} element={<CartListPage />} />
-        <Route path={PAGE_LIST.PROFILE} element={<ProfilePage />} />
+        <Route path={PAGE_LIST.PROFILE_EDIT} element={<ProfileEditPage />} />
+        <Route path={PAGE_LIST.PROFILE_CONFIRM} element={<ProfileConfirmPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
 

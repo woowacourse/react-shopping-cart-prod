@@ -15,7 +15,9 @@ const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
 
   try {
     const response = await fetch(process.env.REACT_APP_API_URL + url, newOption);
-    const jsonBody = await response.json();
+    const responseBody = await response.text();
+
+    const jsonBody = responseBody ? JSON.parse(responseBody) : {};
     const responseHeader = Object.fromEntries(response.headers.entries());
 
     clearTimeout(timerID);
@@ -35,11 +37,7 @@ const request = async (url, option, { isAccessTokenUsed = false } = {}) => {
 };
 
 const createAsyncState = {
-  initial: () => ({
-    isLoading: false,
-    isLoaded: false,
-    error: null,
-  }),
+  initial: () => ({ isLoading: false, isLoaded: false, error: null }),
   pending: () => ({ isLoading: true, isLoaded: false, error: null }),
   success: () => ({ isLoading: false, isLoaded: true, error: null }),
   error: (error) => ({ isLoading: false, isLoaded: false, error }),
