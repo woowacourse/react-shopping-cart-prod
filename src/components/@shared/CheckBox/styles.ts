@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { flexCenter } from '../../../styles/mixin';
+import { flexCenter } from '@/styles/mixin';
 
 const CheckBox = styled.input.attrs({ type: 'checkbox' })`
   appearance: none;

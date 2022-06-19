@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button } from '../../components/@shared';
+import { Button } from '@/components/@shared';
 
 const LeaveButton = styled(Button)`
   width: 400px;

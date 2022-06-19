@@ -1,8 +1,7 @@
 import { useDispatch } from 'react-redux';
-import { CartItem, decrement, deleteItem, increment, selectItem } from '../../redux/modules/cart';
-import { CheckBox } from '../@shared';
-import { INFO_MESSAGES, PRODUCT } from '../../constants';
-import Delete from '../../assets/Delete.png';
+import { selectItem } from '@/redux/modules/cart/cartAction';
+import { deleteItemAPI, updateQuantityAPI } from '@/redux/modules/cart/cartThunk';
+
 import {
   CartProductContainer,
   ProductAmountContainer,
@@ -12,11 +11,20 @@ import {
   ProductOptionContainer,
 } from './styles';
 
+import { CartItem } from '@/types';
+
+import { CheckBox } from '@/components/@shared';
+
+import { CART, INFO_MESSAGES } from '@/constants';
+import Delete from '@/assets/Delete.png';
+
 interface CartProductProps {
   item: CartItem;
 }
 
-function CartProduct({ item: { id, img, name, price, amount, isSelected } }: CartProductProps) {
+function CartProduct({
+  item: { id, imageUrl, name, price, quantity, isSelected },
+}: CartProductProps) {
   const dispatch = useDispatch();
 
   const onToggleSelect = () => {
@@ -24,37 +32,42 @@ function CartProduct({ item: { id, img, name, price, amount, isSelected } }: Car
   };
 
   const onClickDeleteItem = () => {
-    confirm(INFO_MESSAGES.ASK_DELETE_PRODUCT) && dispatch(deleteItem(id));
+    confirm(INFO_MESSAGES.ASK_DELETE_PRODUCT) && dispatch(deleteItemAPI(id));
   };
 
   const onClickIncreaseCounter = () => {
-    dispatch(increment(id));
+    if (quantity === CART.MAX_QUANTITY) {
+      return;
+    }
+
+    dispatch(updateQuantityAPI(id, quantity + 1));
   };
 
   const onClickDecreaseCounter = () => {
-    if (amount === PRODUCT.MIN_COUNT) {
+    if (quantity === CART.MIN_QUANTITY) {
       return;
     }
-    dispatch(decrement(id));
+
+    dispatch(updateQuantityAPI(id, quantity - 1));
   };
 
   return (
     <CartProductContainer>
       <CheckBox checked={isSelected} onChange={onToggleSelect} />
       <ProductImageContainer>
-        <img src={img} alt={name} />
+        <img src={imageUrl} alt={name} />
         <span>{name}</span>
       </ProductImageContainer>
       <ProductOptionContainer>
         <img src={Delete} alt="상품 삭제" onClick={onClickDeleteItem} />
         <ProductAmountContainer>
-          <ProductAmountWrapper>{amount}</ProductAmountWrapper>
+          <ProductAmountWrapper>{quantity}</ProductAmountWrapper>
           <ProductCounterContainer>
             <button onClick={onClickIncreaseCounter}>▲</button>
             <button onClick={onClickDecreaseCounter}>▼</button>
           </ProductCounterContainer>
         </ProductAmountContainer>
-        <span>{price.toLocaleString()}원</span>
+        <span>{(price * quantity).toLocaleString()}원</span>
       </ProductOptionContainer>
     </CartProductContainer>
   );

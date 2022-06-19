@@ -1,20 +1,22 @@
 import { Link, useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
-import { login } from '../../redux/modules/customer';
+import { loginUser } from '@/redux/modules/user';
 
-import axios from 'axios';
+import useInput from '@/hooks/useInput';
 
-import useInput from '../../hooks/useInput';
-
-import { Button, Form, Input } from '../../components/@shared';
-import PageLayout from '../../components/PageLayout';
 import { SignupWrapper } from './styles';
 
+import { Button, Form, Input } from '@/components/@shared';
+import { PageLayout } from '@/components';
+
+import { loginAPI } from '@/apis/user';
+import { setCookie } from '@/utils';
+
 function Login() {
-  const [id, onChangeId] = useInput();
-  const [password, onChangePassword] = useInput();
+  const { value: userName, onChangeValue: onChangeUserName } = useInput();
+  const { value: password, onChangeValue: onChangePassword } = useInput();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -22,23 +24,25 @@ function Login() {
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      const { data } = await axios.post('/api/login', { userName: id, password });
+    const accessToken = await loginAPI(userName, password);
 
-      document.cookie = `accessToken=${data}`;
+    if (!accessToken) return;
 
-      dispatch(login());
-      navigate(routes.home);
-    } catch (error) {
-      alert('아이디가 존재하지 않거나 비밀번호가 일치하지 않습니다!');
-    }
+    dispatch(loginUser());
+    setCookie('accessToken', accessToken);
+    navigate(routes.home);
   };
 
   return (
     <PageLayout>
       <h1>로그인</h1>
       <Form onSubmit={onSubmit}>
-        <Input htmlFor="login-id" label="아이디" value={id} onChange={onChangeId} />
+        <Input
+          htmlFor="login-user-name"
+          label="아이디"
+          value={userName}
+          onChange={onChangeUserName}
+        />
         <Input
           type="password"
           htmlFor="login-password"

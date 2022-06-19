@@ -2,11 +2,10 @@ import { useState } from 'react';
 
 type Validate = (value: string) => void;
 
-const useInput = (
-  validate?: Validate
-): [string, (e: React.ChangeEvent<HTMLInputElement>) => void, string] => {
+const useInput = (validate?: Validate) => {
   const [value, setValue] = useState('');
-  const onChangeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+  const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value.replace(/ /, ''));
   };
 
@@ -14,11 +13,11 @@ const useInput = (
     validate && validate(value);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      return [value, onChangeInputValue, error.message];
+      return { value, onChangeValue, errorMessage: error.message };
     }
   }
 
-  return [value, onChangeInputValue, ''];
+  return { value, onChangeValue };
 };
 
 export default useInput;

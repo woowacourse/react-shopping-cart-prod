@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { alignCenter, spaceBetween } from '../../styles/mixin';
+import { alignCenter, spaceBetween } from '@/styles/mixin';
 
-const SelectAllContainer = styled.div`
+const SelectAllContainer = styled.div<{ loading: boolean }>`
   ${spaceBetween};
+  display: ${(props) => props.loading && 'none'};
   margin: 30px 0;
 
   div {
@@ -25,7 +26,8 @@ const SelectAllContainer = styled.div`
   }
 `;
 
-const CartListTitle = styled.h1`
+const CartListTitle = styled.h1<{ loading: boolean }>`
+  display: ${(props) => props.loading && 'none'};
   border-bottom: 2px solid ${({ theme }) => theme.colors.GRAY_400};
   padding-bottom: 10px;
   font-size: 18px;

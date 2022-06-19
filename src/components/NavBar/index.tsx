@@ -1,20 +1,24 @@
-import { Link } from 'react-router-dom';
-import routes from '../../routes';
+import { Link, useNavigate } from 'react-router-dom';
+import routes from '@/routes';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
-import { logout } from '../../redux/modules/customer';
+import { RootState } from '@/redux/store';
+import { logoutUser } from '@/redux/modules/user';
 
 import { NavBarContainer, NavBarTitle, NavBarMenu } from './styles';
-import Logo from '../../assets/Logo.png';
+
+import { removeCookie } from '@/utils';
+import Logo from '@/assets/Logo.png';
 
 function NavBar() {
-  const { isLoggedIn } = useSelector((state: RootState) => state.customer);
+  const { isLoggedIn } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onClickLogout = () => {
-    document.cookie = 'accessToken=';
-    dispatch(logout());
+    dispatch(logoutUser());
+    removeCookie('accessToken');
+    navigate(routes.home);
   };
 
   return (
@@ -24,11 +28,15 @@ function NavBar() {
         <h1>WOOWA SHOP</h1>
       </NavBarTitle>
       <NavBarMenu>
-        <Link to={routes.cart}>장바구니</Link>
-        <Link to={routes.orderList}>주문목록</Link>
-        {!isLoggedIn && <Link to={routes.login}>로그인</Link>}
+        {!isLoggedIn && (
+          <>
+            <Link to={routes.login}>로그인</Link>
+            <Link to={routes.signup}>회원가입</Link>
+          </>
+        )}
         {isLoggedIn && (
           <>
+            <Link to={routes.cart}>장바구니</Link>
             <Link to={routes.userInfo}>회원 정보 수정</Link>
             <button onClick={onClickLogout}>로그아웃</button>
           </>

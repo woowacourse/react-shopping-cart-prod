@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { spaceBetween } from '../../styles/mixin';
+import { spaceBetween } from '@/styles/mixin';
 
-const PaymentContainer = styled.div`
+const PaymentContainer = styled.div<{ loading: boolean }>`
+  display: ${(props) => props.loading && 'none'};
   margin-top: 80px;
   height: 200px;
 `;

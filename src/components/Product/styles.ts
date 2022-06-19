@@ -1,5 +1,5 @@
 import styled, { keyframes, css } from 'styled-components';
-import { alignCenter, directionColumn, spaceBetween } from '../../styles/mixin';
+import { alignCenter, directionColumn, spaceBetween } from '@/styles/mixin';
 
 const CartShake = keyframes`
   0%, 50%{
@@ -67,12 +67,16 @@ const CartImageBadge = styled.div`
   z-index: 1;
 `;
 
-const CartImageWrapper = styled.div`
-  cursor: pointer;
+const CartImageWrapper = styled.div<{ isInCart: boolean }>`
   position: relative;
-  &:hover img {
-    animation: ${CartShake} 2s infinite linear alternate;
-  }
+  ${(props) =>
+    !props.isInCart &&
+    css`
+      cursor: pointer;
+      &:hover img {
+        animation: ${CartShake} 2s infinite linear alternate;
+      }
+    `};
 `;
 
 const ProductContainer = styled.div`

@@ -1,81 +1,79 @@
 import { useState, useEffect } from 'react';
 
 import { useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from '@/routes';
 
 import { useDispatch } from 'react-redux';
-import { logout } from '../../redux/modules/customer';
+import { show } from '@/redux/modules/snackBar';
+import { logoutUser } from '@/redux/modules/user';
 
-import axios from 'axios';
-
-import usePassword from '../../hooks/usePassword';
+import useInput from '@/hooks/useInput';
+import usePasswordConfirm from '@/hooks/usePasswordConfirm';
 
 import { LeaveButton } from './styles';
 
-import { Button, Form, Input } from '../../components/@shared';
-import PageLayout from '../../components/PageLayout';
+import { Button, Form, Input } from '@/components/@shared';
+import PageLayout from '@/components/PageLayout';
 
-import { getCookie } from '../../utils';
+import { getUserNameAPI, removeUserInfoAPI, updateUserInfoAPI } from '@/apis/user';
+import { removeCookie } from '@/utils';
+import { validatePassword } from '@/validations';
+import { INFO_MESSAGES } from '@/constants';
 
 function UserInfo() {
-  const [userName, setUserName] = useState('');
   const {
-    password,
-    onChangePassword,
-    passwordErrorMessage,
-    passwordConfirm,
-    passwordConfirmErrorMessage,
-    onChangePasswordConfirm,
-  } = usePassword();
+    value: password,
+    onChangeValue: onChangePassword,
+    errorMessage: passwordErrorMessage,
+  } = useInput(validatePassword);
+
+  const { passwordConfirm, passwordConfirmErrorMessage, onChangePasswordConfirm } =
+    usePasswordConfirm(password);
+
+  const [userName, setUserName] = useState('LOADING...');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onClickLeave = () => {
-    if (!window.confirm('정말 탈퇴하시겠습니까? 🥲')) return;
+  useEffect(() => {
+    const updateUserName = async () => {
+      const userName = await getUserNameAPI();
 
-    axios.delete('/api/customers/me', {
-      headers: {
-        Authorization: `Bearer ${getCookie('accessToken')}`,
-      },
-    });
+      if (!userName) return;
 
-    dispatch(logout());
+      setUserName(userName);
+    };
+
+    updateUserName();
+  }, [getUserNameAPI]);
+
+  const onClickLeave = async () => {
+    if (!confirm(INFO_MESSAGES.ASK_LEAVE)) return;
+
+    const result = await removeUserInfoAPI();
+
+    if (!result) return;
+
+    dispatch(logoutUser());
+    removeCookie('accessToken');
     navigate(routes.home);
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    axios.put(
-      '/api/customers/me',
-      { password },
-      {
-        headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-        },
-      }
-    );
+    const result = await updateUserInfoAPI(password, userName);
+
+    if (!result) return;
+
+    dispatch(show(INFO_MESSAGES.UPDATED_USER_INFO));
+    navigate(routes.home);
   };
-
-  useEffect(() => {
-    const getUser = async () => {
-      const response = await axios.get('/api/customers/me', {
-        headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`,
-        },
-      });
-
-      setUserName(response.data);
-    };
-
-    getUser();
-  });
 
   return (
     <PageLayout>
       <h1>회원 정보 수정</h1>
       <Form onSubmit={onSubmit}>
-        <Input htmlFor="userinfo-id" label="아이디" value={userName} disabled={true} />
+        <Input htmlFor="userinfo-user-name" label="아이디" value={userName} disabled={true} />
         <Input
           type="password"
           htmlFor="userinfo-password"

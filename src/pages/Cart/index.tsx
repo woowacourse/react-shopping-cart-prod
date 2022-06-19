@@ -1,13 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from '@/routes';
 
-import { useCartAmount } from '../../hooks/useCartSelector';
-
-import CartProductList from '../../components/CartProductList';
-import PageLayout from '../../components/PageLayout';
-import PaymentBox from '../../components/PaymentBox';
+import { useCartAmount } from '@/hooks/useCartSelector';
 
 import { GridContainer } from './styles';
+
+import { CartProductList, PageLayout, PaymentBox } from '@/components';
 
 function Cart() {
   const navigate = useNavigate();

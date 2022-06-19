@@ -1,58 +1,72 @@
 import { useState } from 'react';
+
 import { useNavigate } from 'react-router-dom';
-import routes from '../../routes';
+import routes from '@/routes';
 
-import axios from 'axios';
+import useInput from '@/hooks/useInput';
+import usePasswordConfirm from '@/hooks/usePasswordConfirm';
 
-import useInput from '../../hooks/useInput';
-import usePassword from '../../hooks/usePassword';
+import { DuplicateCheckButton, UserNameContainer } from './styles';
 
-import { DuplicateCheckButton, IdContainer } from './styles';
+import { Button, Form, Input } from '@/components/@shared';
+import PageLayout from '@/components/PageLayout';
 
-import { Button, Form, Input } from '../../components/@shared';
-import PageLayout from '../../components/PageLayout';
+import { checkUserNameDuplicateAPI, signupAPI } from '@/apis/user';
+import { validatePassword, validateUserName } from '@/validations';
+import { ERROR_MESSAGES, INFO_MESSAGES } from '@/constants';
 
 function Signup() {
-  const [id, onChangeId] = useInput();
-  const [idStatus, setIdStatus] = useState({
-    isValid: false,
-    message: '',
-  });
   const {
-    password,
-    onChangePassword,
-    passwordErrorMessage,
-    passwordConfirm,
-    passwordConfirmErrorMessage,
-    onChangePasswordConfirm,
-  } = usePassword();
+    value: userName,
+    onChangeValue: onChangeUserName,
+    errorMessage: userNameErrorMessage,
+  } = useInput(validateUserName);
+  const {
+    value: password,
+    onChangeValue: onChangePassword,
+    errorMessage: passwordErrorMessage,
+  } = useInput(validatePassword);
+
+  const { passwordConfirm, passwordConfirmErrorMessage, onChangePasswordConfirm } =
+    usePasswordConfirm(password);
+
+  const [canSubmit, setCanSubmit] = useState(false);
   const navigate = useNavigate();
 
   const onClickDuplicateCheck = async () => {
-    const response = await axios.post('/api/customers/duplication', { userName: id });
-
-    if (!response.data) {
-      setIdStatus({ isValid: true, message: '사용 가능한 아이디입니다.' });
+    if (userNameErrorMessage) {
+      alert(ERROR_MESSAGES.SIGNUP.USER_NAME_RULE);
 
       return;
     }
 
-    setIdStatus({
-      isValid: false,
-      message: '이미 가입된 아이디입니다. 다른 아이디를 입력하여 주세요.',
-    });
+    const isDuplicate = await checkUserNameDuplicateAPI(userName);
+
+    if (isDuplicate === undefined) return;
+
+    setCanSubmit(true);
+
+    if (isDuplicate === false) {
+      alert(INFO_MESSAGES.VALID_USER_NAME);
+
+      return;
+    }
+
+    alert(ERROR_MESSAGES.SIGNUP.EXIST_USER_NAME);
   };
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!idStatus.isValid) {
-      alert('아이디 중복이 확인되지 않았습니다!');
+    if (!canSubmit) {
+      alert(ERROR_MESSAGES.SIGNUP.NOT_USER_NAME_DUPLICATE_CHECK);
 
       return;
     }
 
-    await axios.post('/api/customers', { userName: id, password });
+    const result = await signupAPI(userName, password);
+
+    if (!result) return;
 
     navigate(routes.login);
   };
@@ -61,22 +75,22 @@ function Signup() {
     <PageLayout>
       <h1>회원가입</h1>
       <Form onSubmit={onSubmit}>
-        <IdContainer>
+        <UserNameContainer>
           <Input
-            htmlFor="signup-id"
+            htmlFor="signup-user-name"
             label="아이디"
-            value={id}
-            onChange={onChangeId}
+            value={userName}
+            onChange={onChangeUserName}
             maxLength={10}
-            isValid={idStatus.isValid}
-            message={idStatus.message}
+            isValid={!userNameErrorMessage}
+            message={userName && userNameErrorMessage}
           />
-          {id && (
+          {userName && (
             <DuplicateCheckButton type="button" onClick={onClickDuplicateCheck}>
               중복 확인
             </DuplicateCheckButton>
           )}
-        </IdContainer>
+        </UserNameContainer>
         <Input
           type="password"
           htmlFor="signup-password"
