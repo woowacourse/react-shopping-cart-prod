@@ -9,6 +9,7 @@ export const SNACKBAR_MESSAGE = {
   noAuth: () => '권한이 없엉 ㅠㅠ',
   allReadyLogin: () => '이미 로그인 했엉!',
   signUpUser: () => '회원 가입!',
+  expiredAuth: () => '로그인 기간이 만료되었습니다.',
 };
 
 export const PAGING = {
@@ -26,4 +27,8 @@ export const PATH = {
   PROFILE: '/profile',
   PASSWORD: '/password',
   WITHDRAWAL: '/withdrawal',
+};
+
+export const ERROR_MESSAGE = {
+  INVALID_TOKEN: '로그인 기간이 만료되었습니다.',
 };

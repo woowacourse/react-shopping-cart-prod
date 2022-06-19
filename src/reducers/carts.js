@@ -8,7 +8,7 @@ export const getCarts = createAsyncThunk(
     try {
       const carts = await API.getCarts();
 
-      return carts;
+      return carts.map((cart) => ({ ...cart, selected: false }));
     } catch (error) {
       return rejectWithValue(error);
     }

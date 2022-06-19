@@ -1,3 +1,4 @@
+import { ERROR_MESSAGE } from 'constants';
 import { rest } from 'msw';
 
 let users = [
@@ -64,7 +65,10 @@ export default [
     const user = users.find((user) => user.token === token);
 
     if (!user) {
-      return res(ctx.status(403), ctx.json({ message: 'Invalid Token' }));
+      return res(
+        ctx.status(403),
+        ctx.json({ message: ERROR_MESSAGE.INVALID_TOKEN }),
+      );
     }
 
     return res(
@@ -81,7 +85,10 @@ export default [
     const user = users.find((user) => user.token === token);
 
     if (!user) {
-      return res(ctx.status(403), ctx.json({ message: 'Invalid Token' }));
+      return res(
+        ctx.status(403),
+        ctx.json({ message: ERROR_MESSAGE.INVALID_TOKEN }),
+      );
     }
 
     user.name = req.body.data.name;

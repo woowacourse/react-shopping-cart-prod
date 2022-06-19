@@ -6,9 +6,8 @@ import Wrapper from './style';
 
 import {
   addCart,
-  addMoreCart,
-  deleteCart,
-  downCart,
+  modifyCartQuantity,
+  deleteCarts,
 } from 'reducers/addUpdateDeleteCart';
 import { onMessage } from 'reducers/snackbar';
 import { open, close } from 'reducers/productQuantity';
@@ -34,9 +33,11 @@ const ProductQuantity = ({
       if (quantity === 0) return;
 
       if (quantity > 1) {
-        await dispatch(downCart(productId)).unwrap();
+        await dispatch(
+          modifyCartQuantity({ productId, quantity: quantity - 1 }),
+        ).unwrap();
       } else {
-        await dispatch(deleteCart(productId)).unwrap();
+        await dispatch(deleteCarts([productId])).unwrap();
       }
 
       setQuantity(quantity - 1);
@@ -48,7 +49,9 @@ const ProductQuantity = ({
   const handleClickAddButton = debounce(
     useCallback(async () => {
       if (quantity) {
-        await dispatch(addMoreCart(productId)).unwrap();
+        await dispatch(
+          modifyCartQuantity({ productId, quantity: quantity + 1 }),
+        ).unwrap();
       } else {
         await dispatch(addCart(productId)).unwrap();
       }
@@ -99,7 +102,10 @@ const ProductQuantity = ({
         <p>+</p>
       </div>
       <div className="img-wrapper" onClick={handleClickCartImage}>
-        <img src="/img/shopping-cart-black.png" alt="장바구니" />
+        <img
+          src={`${process.env.PUBLIC_URL}/img/shopping-cart-black.png`}
+          alt="장바구니"
+        />
       </div>
     </Wrapper>
   );

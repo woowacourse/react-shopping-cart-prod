@@ -11,7 +11,12 @@ import Skeleton from 'skeletons/CartSkeleton';
 
 import Wrapper from './style';
 
-import { getCarts, selectAllCart, clearAllCart, deleteSeveralCarts } from 'reducers/carts';
+import {
+  getCarts,
+  selectAllCart,
+  clearAllCart,
+  deleteSeveralCarts,
+} from 'reducers/carts';
 import { deleteCarts } from 'reducers/addUpdateDeleteCart';
 import { onMessage } from 'reducers/snackbar';
 
@@ -28,7 +33,10 @@ const CartsPage = () => {
         .reduce((acc, { price, quantity }) => acc + price * quantity, 0),
     [carts],
   );
-  const selectedCartCount = useMemo(() => carts.filter(({ selected }) => selected).length, [carts]);
+  const selectedCartCount = useMemo(
+    () => carts.filter(({ selected }) => selected).length,
+    [carts],
+  );
   const isAllSelectedCarts = useMemo(
     () => carts.length && carts.every(({ selected }) => selected),
     [carts],
@@ -40,6 +48,7 @@ const CartsPage = () => {
 
   const handleClickAllDeleteButton = useCallback(async () => {
     const ids = carts.filter(({ selected }) => selected).map(({ id }) => id);
+    if (ids.length <= 0) return;
 
     await dispatch(deleteCarts(ids)).unwrap();
     dispatch(deleteSeveralCarts(ids));

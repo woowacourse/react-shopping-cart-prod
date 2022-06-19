@@ -24,6 +24,7 @@ const ProductsPage = () => {
   const { loading: cartLoading, data: carts } = useSelector(
     (state) => state.carts,
   );
+  const accessToken = useSelector((state) => state.user.accessToken);
   const page = Number(useParams().page) || 1;
 
   useEffect(() => {
@@ -31,10 +32,10 @@ const ProductsPage = () => {
   }, [dispatch, page]);
 
   useEffect(() => {
-    dispatch(getCarts());
-  }, [dispatch]);
+    accessToken && dispatch(getCarts());
+  }, [dispatch, accessToken]);
 
-  if (productLoading || cartLoading) {
+  if (productLoading || (accessToken && cartLoading)) {
     return <Skeleton />;
   }
 
@@ -42,7 +43,7 @@ const ProductsPage = () => {
     <Wrapper>
       <div className="body">
         {products?.map((product) => {
-          const cart = carts.find(({ id }) => id === product.id);
+          const cart = carts.find(({ productId }) => productId === product.id);
 
           return (
             <Product

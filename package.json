@@ -30,9 +30,11 @@
     "@storybook/testing-library": "^0.0.11",
     "commitizen": "^4.2.4",
     "cz-customizable": "^6.3.0",
+    "env-cmd": "^10.1.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "gh-pages": "^4.0.0",
     "husky": "^7.0.4",
     "msw": "^0.40.0",
     "redux-devtools": "^3.7.0",
@@ -44,12 +46,18 @@
     }
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "env-cmd -f ./src/.env.production react-scripts start",
+    "start:prod": "env-cmd -f ./src/.env.production react-scripts start",
+    "start:ying": "env-cmd -f ./src/.env.ying react-scripts start",
+    "start:klay": "env-cmd -f ./src/.env.klay react-scripts start",
+    "start:sun": "env-cmd -f ./src/.env.sun react-scripts start",
+    "start:lala": "env-cmd -f ./src/.env.lala react-scripts start",
+    "build": "env-cmd -f ./src/.env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -105,5 +113,6 @@
   },
   "msw": {
     "workerDirectory": "public"
-  }
+  },
+  "homepage": "https://judonghyeok.github.io/react-shopping-cart-prod"
 }

@@ -37,9 +37,7 @@ const LoginForm = () => {
     setPassword(target.value);
   }, []);
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-
+  const checkForm = () => {
     let canSubmit = true;
 
     try {
@@ -58,7 +56,12 @@ const LoginForm = () => {
       canSubmit = false;
     }
 
-    if (!canSubmit) return;
+    return canSubmit;
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    if (!checkForm()) return;
 
     setLoading(true);
 

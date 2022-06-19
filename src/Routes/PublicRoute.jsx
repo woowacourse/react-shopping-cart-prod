@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 
@@ -10,8 +11,12 @@ const PublicRoute = ({ children }) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    accessToken && dispatch(onMessage(SNACKBAR_MESSAGE.allReadyLogin()));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   if (accessToken) {
-    dispatch(onMessage(SNACKBAR_MESSAGE.allReadyLogin()));
     return <Navigate to={PATH.HOME} state={{ from: location }} replace />;
   }
 

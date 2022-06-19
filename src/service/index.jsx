@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
+
 const getResult = async (url, method, option = {}) => {
   try {
     const res = await axios[method](url, option);
@@ -10,20 +12,21 @@ const getResult = async (url, method, option = {}) => {
   }
 };
 
-export const getProducts = (page) => getResult(`/products/${page}`, 'get');
+export const getProducts = (page) =>
+  getResult(`/api/products?page=${page}`, 'get');
 
 export const getProduct = (productId) =>
-  getResult(`/product/${productId}`, 'get');
+  getResult(`/api/products/${productId}`, 'get');
 
 export const getCart = (productId) => getResult(`/cart/${productId}`, 'get');
 
-export const getCarts = () => getResult('/carts', 'get');
+export const getCarts = () => getResult('/api/customer/carts', 'get');
 
 export const addCart = (productId) =>
-  getResult(`/addCart/${productId}`, 'post');
+  getResult(`/api/customer/carts`, 'post', { productId });
 
-export const addMoreCart = (productId) =>
-  getResult(`/addMoreCart/${productId}`, 'put');
+export const modifyCartQuantity = (productId, quantity) =>
+  getResult(`/api/customer/carts`, 'put', { productId, quantity });
 
 export const downCart = (productId) =>
   getResult(`/downCart/${productId}`, 'put');
@@ -31,18 +34,17 @@ export const downCart = (productId) =>
 export const deleteCart = (productId) =>
   getResult(`/delete/Cart/${productId}`, 'delete');
 
-export const deleteCarts = (productIds) =>
-  getResult('/deleteCarts', 'delete', { data: productIds });
+export const deleteCarts = (cartIds) =>
+  getResult('/api/customer/carts', 'delete', { data: { cartIds } });
 
-export const login = (user) => getResult('/api/login', 'post', { data: user });
+export const login = (user) => getResult('/api/login', 'post', user);
 
-export const signUp = (user) =>
-  getResult('/api/customer', 'post', { data: user });
+export const signUp = (user) => getResult('/api/customer', 'post', user);
 
 export const getUser = () => getResult('/api/customer', 'get');
 
 export const updateUser = (user) =>
-  getResult('/api/customer', 'put', { data: user });
+  getResult('/api/customer/profile', 'put', user);
 
 export const deleteUser = (password) =>
   getResult('/api/customer', 'delete', { data: { password } });

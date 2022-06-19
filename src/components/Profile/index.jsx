@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import Button from 'styles/Button';
@@ -12,12 +13,14 @@ import Wrapper from './style';
 import { TextLink } from 'styles/TextLink';
 
 import { onMessage } from 'reducers/snackbar';
+import { withdraw } from 'reducers/user';
 
 import { checkName, isInvalidName, isEmpty } from 'utils/validation';
 
 import * as API from 'service';
 
-import { SNACKBAR_MESSAGE } from 'constants';
+import { SNACKBAR_MESSAGE, PATH } from 'constants';
+import { ERROR_MESSAGE } from 'constants';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -25,6 +28,7 @@ const Profile = () => {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleNameChange = useCallback(({ target }) => {
     setName(target.value);
@@ -35,7 +39,7 @@ const Profile = () => {
 
     setLoading(true);
     try {
-      await API.updateUser({ email, name });
+      await API.updateUser({ name });
       dispatch(onMessage(SNACKBAR_MESSAGE.successUpdateUser()));
     } catch (e) {
       setError(e.message);
@@ -51,14 +55,22 @@ const Profile = () => {
 
         setName(data.name);
         setEmail(data.email);
-      } catch ({ message }) {
-        setError(message);
+        setError('');
+      } catch (e) {
+        if (e.message === ERROR_MESSAGE.INVALID_TOKEN) {
+          dispatch(withdraw());
+          API.clearToken();
+          navigate(PATH.LOGIN);
+          dispatch(onMessage(ERROR_MESSAGE.INVALID_TOKEN));
+        }
+        setError(e.message);
       } finally {
         setLoading(false);
       }
     };
 
     effect();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
