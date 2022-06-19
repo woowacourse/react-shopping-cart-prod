@@ -13,7 +13,7 @@ export const userHandlers = [
     mockUserList = [...mockUserList, signUpInfo];
     setLocalStorageUserList(mockUserList);
 
-    return res(ctx.status(200), ctx.json({ email: signUpInfo.email, name: signUpInfo.name }));
+    return res(ctx.status(200), ctx.json({ email: signUpInfo.email, name: signUpInfo.username }));
   }),
 
   rest.post<SignInInfo>(`${LOCAL_BASE_URL}/login`, (req, res, ctx) => {
@@ -44,7 +44,7 @@ export const userHandlers = [
       ctx.status(200),
       ctx.json({
         email: userInfo.email,
-        name: userInfo.name,
+        name: userInfo.username,
         token: tokenCode,
       })
     );
@@ -103,7 +103,7 @@ export const userHandlers = [
         ctx.status(200),
         ctx.json({
           email: targetUser.email,
-          name: targetUser.name,
+          name: targetUser.username,
           token: targetUser.token,
         })
       );

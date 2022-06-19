@@ -1,8 +1,9 @@
 {
-  "name": "react-shopping-cart",
+  "name": "react-shopping-cart-prod",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@compy-ryu/payments": "^0.2.28",
     "@types/path-browserify": "^1.0.0",
     "@types/react-redux": "^7.1.24",
     "axios": "^0.27.2",
@@ -94,7 +95,7 @@
     "prettier": "^2.6.2",
     "webpack": "^5.72.0"
   },
-  "homepage": "https://KangYunHo1221.github.com/react-shopping-cart/",
+  "homepage": "https://KangYunHo1221.github.com/react-shopping-cart-prod/",
   "msw": {
     "workerDirectory": "public"
   }

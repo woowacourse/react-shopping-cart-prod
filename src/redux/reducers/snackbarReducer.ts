@@ -3,6 +3,7 @@ import { SnackbarAction, SnackbarActionType } from 'redux/actions/snackbar';
 interface SnackbarState {
   isSnackbarOpen: boolean;
   contentsType: string;
+  value?: any;
 }
 
 const initialState: SnackbarState = {
@@ -13,7 +14,12 @@ const initialState: SnackbarState = {
 export const snackbarReducer = (state = initialState, action: SnackbarAction) => {
   switch (action.type) {
     case SnackbarActionType.OPEN_SNACKBAR:
-      return { ...state, isSnackbarOpen: true, contentsType: action.payload };
+      return {
+        ...state,
+        isSnackbarOpen: true,
+        contentsType: action.payload.type,
+        value: action.payload.value,
+      };
     case SnackbarActionType.CLOSE_SNACKBAR:
       return { ...state, isSnackbarOpen: false };
     default:

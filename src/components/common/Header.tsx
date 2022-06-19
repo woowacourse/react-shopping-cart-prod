@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { flexCenter } from 'styles/mixin';
-import { ReactComponent as CartIcon } from 'assets/cartIcon.svg';
+import nayongIcon from 'assets/nyIcon.png';
 import { useAppSelector } from 'hooks/useAppSelector';
 import { useState } from 'react';
 import { useAppDispatch } from 'hooks/useAppDispatch';
@@ -28,15 +28,14 @@ const Header = () => {
       <div>
         <Link to='/main/1'>
           <StyledLogo>
-            <CartIcon fill='white' />
-            <StyledBrandName>RoyStin Shop</StyledBrandName>
+            <NyaongIcon src={nayongIcon} />
+            <StyledBrandName>PokeMon 직판장</StyledBrandName>
           </StyledLogo>
         </Link>
         <StyledNav>
           <button onClick={() => navigate('/cart')}>장바구니</button>
-          <button>주문목록</button>
           {Object.keys(data).length ? (
-            <button onClick={toggleHambergur}>
+            <StyledDropDownBtn onClick={toggleHambergur}>
               마이페이지
               <MyPageHambergurList isShow={isShowHambergur}>
                 <Link to='/editPassword'>비밀번호 변경</Link>
@@ -45,7 +44,7 @@ const Header = () => {
                   로그아웃
                 </Link>
               </MyPageHambergurList>
-            </button>
+            </StyledDropDownBtn>
           ) : (
             <button onClick={() => navigate('/signIn')}>로그인</button>
           )}
@@ -55,13 +54,18 @@ const Header = () => {
   );
 };
 
+/**/
+
 export default Header;
 
 const StyledRoot = styled.header`
   width: 100%;
-  height: 8rem;
-  background-color: ${({ theme }) => theme.colors.primary};
-  margin-bottom: 6rem;
+  height: 10rem;
+
+  background: linear-gradient(${theme.colors.red} 55%, ${theme.colors.grey} 45%);
+
+  margin-bottom: 4rem;
+
   ${flexCenter}
 
   & > div {
@@ -72,19 +76,28 @@ const StyledRoot = styled.header`
   }
 `;
 
-const StyledLogo = styled.div``;
+const StyledLogo = styled.div`
+  ${flexCenter}
+`;
+
+const NyaongIcon = styled.img`
+  width: 77px;
+  height: 77px;
+`;
 
 const StyledBrandName = styled.span`
-  color: ${theme.colors.white};
-  font-size: 4rem;
-  font-weight: 900;
+  color: ${theme.colors.yellow};
+  -webkit-text-stroke: 2.5px blue;
+  font-size: 5rem;
+  font-weight: 1000;
   margin-left: 1rem;
 `;
 
 const StyledNav = styled.nav`
   & > button {
-    color: ${theme.colors.white};
-    font-size: 2.4rem;
+    color: ${theme.colors.yellow};
+    font-size: 2.6rem;
+    font-weight: 600;
     background-color: inherit;
   }
 
@@ -95,12 +108,12 @@ const StyledNav = styled.nav`
 
 type Hambergur = { isShow: boolean };
 const MyPageHambergurList = styled.div<Hambergur>`
-  width: 17rem;
+  width: 13rem;
   flex-direction: column;
   position: absolute;
   top: 8rem;
   background-color: ${theme.colors.white};
-  color: ${theme.colors.black};
+  color: ${theme.colors.yellow};
   display: ${props => (props.isShow ? 'flex' : 'none')};
   flex-wrap: wrap;
   z-index: 10000;
@@ -112,4 +125,13 @@ const MyPageHambergurList = styled.div<Hambergur>`
   a:hover {
     background-color: ${theme.colors.hewvyWhite};
   }
+`;
+
+const StyledDropDownBtn = styled.button`
+  background-color: #4caf50;
+  color: white;
+  padding: 16px;
+  font-size: 10px;
+  border: none;
+  cursor: pointer;
 `;

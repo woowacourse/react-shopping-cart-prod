@@ -75,7 +75,7 @@ describe('CartList Reducer', () => {
 
   test('장바구니 선택 취소 가능', () => {
     const action = {
-      type: CartListActionType.PUT_CART_ITEM_SUCCESS,
+      type: CartListActionType.PATCH_CART_ITEM_SUCCESS,
       payload: toggleCheckItem(newItem),
     };
 

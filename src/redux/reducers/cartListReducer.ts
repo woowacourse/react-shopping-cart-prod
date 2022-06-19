@@ -22,29 +22,42 @@ export const cartListReducer = (state = initialState, action: CartListAction) =>
     }
     case CartListActionType.GET_CART_LIST_FAILURE:
       return { loading: true, error: null, data: state.data };
-    case CartListActionType.PUT_CART_ITEM_START:
+
+    case CartListActionType.PATCH_CART_ITEM_START:
       return { loading: true, error: null, data: state.data };
-    case CartListActionType.PUT_CART_ITEM_SUCCESS: {
+    case CartListActionType.PATCH_CART_ITEM_SUCCESS: {
       const prevCartList = state.data;
-      const targetItem = action.payload;
-      const newCartList = prevCartList.map(cartItem =>
-        cartItem.id === targetItem.id ? targetItem : cartItem
-      );
+      const targetItems = action.payload.cartItems;
+      const targetItemIds = targetItems.map(item => item.productId);
+
+      const newCartList = prevCartList.map(item => {
+        const targetId = targetItemIds.find(id => id === item.productId);
+
+        if (targetId) {
+          return targetItems.find(item => item.productId === targetId);
+        }
+
+        return item;
+      });
 
       return { loading: false, error: null, data: newCartList };
     }
-    case CartListActionType.PUT_CART_ITEM_FAILURE:
+    case CartListActionType.PATCH_CART_ITEM_FAILURE:
       return { loading: true, error: null, data: state.data };
+
     case CartListActionType.POST_CART_ITEM_START:
       return { loading: true, error: null, data: state.data };
     case CartListActionType.POST_CART_ITEM_SUCCESS:
       return { loading: false, error: null, data: [...state.data, action.payload] };
     case CartListActionType.POST_CART_ITEM_FAILURE:
       return { loading: true, error: null, data: state.data };
+
     case CartListActionType.REMOVE_CART_ITEM_START:
       return { loading: true, error: null, data: state.data };
     case CartListActionType.REMOVE_CART_ITEM_SUCCESS: {
-      const itemDeletedCartList = state.data.filter(item => item.id !== action.payload.id);
+      const deletedIds = action.payload.map(item => item.id);
+
+      const itemDeletedCartList = state.data.filter(item => !deletedIds.includes(item.id));
 
       return {
         loading: false,

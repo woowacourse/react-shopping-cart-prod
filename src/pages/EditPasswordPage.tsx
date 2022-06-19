@@ -52,7 +52,7 @@ const EditPasswordPage = () => {
         <SignInput placeholder={data.email} type={'email'} disable={true}>
           이메일
         </SignInput>
-        <SignInput placeholder={data.name} type={'text'} disable={true}>
+        <SignInput placeholder={data.username} type={'text'} disable={true}>
           이름
         </SignInput>
         <SignInput
@@ -87,6 +87,13 @@ const EditPasswordPage = () => {
 
 const StyledRoot = styled.div`
   ${flexCenter}
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(121, 121, 121, 0.568) 5px 5px 5px 0.5px;
+
   height: 100rem;
 `;
 
@@ -98,6 +105,8 @@ const StyledForm = styled.form`
   gap: 5rem;
   height: 100rem;
   border: 1px solid ${theme.colors.black};
+
+  border-radius: 8px;
 `;
 
 const StyledTitle = styled.h1`

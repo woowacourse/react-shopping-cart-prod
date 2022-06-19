@@ -12,6 +12,8 @@ import { Item } from 'types/domain';
 import CartList from 'components/Cart/CartList';
 import Loading from 'components/common/Loading';
 import RequestFail from 'components/common/RequestFail';
+import { Payments } from '@compy-ryu/payments';
+import Modal from 'components/common/Snackbar';
 
 const CartPage = () => {
   const {
@@ -19,46 +21,22 @@ const CartPage = () => {
     error: errorGetCartList,
     loading: loadingGetCartList,
   } = useAppSelector(state => state.cartListReducer);
+
   const dispatch = useAppDispatch<CartListAction>();
-
   const [paymentsAmount, setpaymentsAmount] = useState(0);
-
-  const cartListString =
-    `${LOCAL_BASE_URL}/itemList?` +
-    cartList
-      .map(item => {
-        return `id=${item.id}`;
-      })
-      .join('&');
-
-  const {
-    data: cartDetail,
-    loading: loadingGetCartDetail,
-    error: errorGetCartDetail,
-  }: { data: Item[]; loading: boolean; error: string } = useFetch(cartListString);
 
   useEffect(() => {
     dispatch(getCartList());
   }, []);
 
-  if (loadingGetCartDetail) return <Loading></Loading>;
-  if (errorGetCartList || errorGetCartDetail) return <RequestFail />;
-
-  const cartListWithDetail = cartList.map(
-    (cartItem, idx) =>
-      new Object({ ...cartItem, ...cartDetail.filter(detail => detail.id === cartItem.id)[0] })
-  );
+  if (loadingGetCartList) return <Loading></Loading>;
+  if (errorGetCartList) return <RequestFail />;
 
   return (
     <>
       <StyledRoot>
         <StyledHeader>장바구니</StyledHeader>
-        <CartList
-          cartList={cartList}
-          cartDetail={cartDetail}
-          cartListWithDetail={cartListWithDetail}
-          setPaymentsAmount={setpaymentsAmount}
-        >
+        <CartList cartList={cartList} setPaymentsAmount={setpaymentsAmount}>
           {loadingGetCartList && <Loading></Loading>}
         </CartList>
         <PaymentsAmount>{paymentsAmount}원</PaymentsAmount>

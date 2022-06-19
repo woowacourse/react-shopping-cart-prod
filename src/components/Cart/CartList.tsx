@@ -1,5 +1,5 @@
 import { ReactComponent as TrashCanIcon } from 'assets/trashCanIcon.svg';
-import { CartItem, Item } from 'types/domain';
+import { CartItem } from 'types/domain';
 import styled from 'styled-components';
 import CroppedImage from 'components/common/CroppedImage';
 import { flexCenter } from 'styles/mixin';
@@ -11,14 +11,10 @@ import { formatDecimal } from 'utils';
 
 const CartList = ({
   cartList,
-  cartDetail,
-  cartListWithDetail,
   setPaymentsAmount,
   children,
 }: {
   cartList: CartItem[];
-  cartDetail: Item[];
-  cartListWithDetail: any[];
   setPaymentsAmount: Dispatch<SetStateAction<number>>;
   children: React.ReactNode;
 }) => {
@@ -29,9 +25,9 @@ const CartList = ({
     setPaymentsAmount(totalPaymentsPrice);
   });
 
-  const isAllItemWillPurchase = cartList.every(cartItem => cartItem.willPurchase);
-  const totalPaymentsPrice = cartListWithDetail.reduce((prev, after) => {
-    if (after.willPurchase) {
+  const isAllItemWillPurchase = cartList.every(cartItem => cartItem.checked);
+  const totalPaymentsPrice = cartList.reduce((prev, after) => {
+    if (after.checked) {
       return prev + after.price * after.quantity;
     }
 
@@ -50,8 +46,8 @@ const CartList = ({
 
   const toggleAll = (check: boolean) => {
     cartList.forEach(cartItem => {
-      if (cartItem.willPurchase === check) {
-        toggleCartItemWillPurchase(cartItem.id);
+      if (cartItem.checked === check) {
+        toggleCartItemWillPurchase(cartItem.productId);
       }
     });
   };
@@ -65,7 +61,33 @@ const CartList = ({
   };
 
   const deleteItem = (targetId: number) => {
-    removeCartItem(targetId);
+    const targetItem = cartList.find(cartItem => cartItem.productId === targetId);
+
+    const delteCartItems = {
+      cartItems: [
+        {
+          id: targetItem.id,
+        },
+      ],
+    };
+
+    removeCartItem(delteCartItems);
+  };
+
+  const deleteCheckedItems = () => {
+    const targetIds = cartList
+      .filter(cartItem => cartItem.checked === true)
+      .map(item => {
+        return {
+          id: item.id,
+        };
+      });
+
+    const delteCartItems = {
+      cartItems: targetIds,
+    };
+
+    removeCartItem(delteCartItems);
   };
 
   return (
@@ -79,29 +101,28 @@ const CartList = ({
           ></CheckBox>
           <p>선택 해제</p>
         </SelectItemAll>
-        <DeleteSelectedButton>상품 삭제</DeleteSelectedButton>
+        <DeleteSelectedButton onClick={deleteCheckedItems}>상품 삭제</DeleteSelectedButton>
       </ButtonSet>
       <CartItemListHeader>든든상품배송 {`( ${cartList.length} )`}개</CartItemListHeader>
       <CartItemList>
         {children}
         {cartList.map(cartItem => {
-          const id = cartItem.id;
-          const detail = cartDetail.filter(item => item.id === id)[0];
-          const totalPrice = cartItem.quantity * detail.price;
+          const id = cartItem.productId;
+          const totalPrice = cartItem.quantity * cartItem.price;
 
           return (
             <CartItemContainer key={cartItem.id}>
               <CheckBox
-                id={`${cartItem.id}`}
-                checked={cartItem.willPurchase}
+                id={`${cartItem.productId}`}
+                checked={cartItem.checked}
                 onChange={() => toggleChecked(id)}
               />
-              <CroppedImage src={detail.thumbnailUrl} width='150px' height='144px' alt='상품' />
-              <ItemName>{detail.title}</ItemName>
+              <CroppedImage src={cartItem.imageUrl} width='150px' height='144px' alt='상품' />
+              <ItemName>{cartItem.name}</ItemName>
               <StyledRight>
-                <TrashCan id={cartItem.id} onClick={() => deleteItem(id)} />
+                <TrashCan id={cartItem.productId} onClick={() => deleteItem(id)} />
                 <Controller
-                  id={cartItem.id}
+                  id={cartItem.productId}
                   quantity={cartItem.quantity}
                   modifyQuantity={modifyQuantity}
                 ></Controller>
