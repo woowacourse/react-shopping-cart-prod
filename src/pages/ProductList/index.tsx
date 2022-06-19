@@ -18,7 +18,7 @@ function ProductList() {
 
   useEffect(() => {
     dispatch(loadProductsAPI());
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, loadProductsAPI, isLoggedIn]);
 
   if (loading) {
     return <Loader />;

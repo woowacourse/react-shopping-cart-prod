@@ -44,7 +44,7 @@ function UserInfo() {
     };
 
     updateUserName();
-  }, []);
+  }, [getUserNameAPI]);
 
   const onClickLeave = async () => {
     if (!confirm(INFO_MESSAGES.ASK_LEAVE)) return;

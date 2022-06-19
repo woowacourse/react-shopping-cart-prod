@@ -23,7 +23,7 @@ function CartProductList() {
 
   useEffect(() => {
     dispatch(loadCartAPI());
-  }, [dispatch]);
+  }, [dispatch, loadCartAPI]);
 
   const onToggleAllSelect = () => {
     dispatch(selectAllItems(isAllSelected));
