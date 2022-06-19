@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 
 import {CART} from 'store/modules/cart';
 import {SELECTED_ITEM} from 'store/modules/selectedItem';
+import {ERROR_MESSAGE} from 'constant';
 
 import useFetch from './useFetch';
 
@@ -18,16 +19,17 @@ export default function useCartItem(path = null) {
 
   const {fetch: deleteCart} = useFetch('delete');
 
-  const {fetch: patchCart} = useFetch('patch');
-
   const deleteCartItem = (payload) => {
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
-
     if (deleteConfirm) {
-      dispatch({type: CART.DELETE, payload});
-      dispatch({type: SELECTED_ITEM.DELETE, payload});
       deleteCart({
-        API_URL: `${process.env.REACT_APP_CART_API_URL}/${payload}`,
+        API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
+        body: {productId: payload},
+
+        onSuccess: () => {
+          dispatch({type: CART.DELETE, payload});
+          dispatch({type: SELECTED_ITEM.DELETE, payload});
+        },
       });
       return;
     }
@@ -39,19 +41,35 @@ export default function useCartItem(path = null) {
   };
 
   const initializeCart = useCallback(() => {
+    const response = JSON.parse(localStorage.getItem('accessToken'));
+    if (!response) {
+      return;
+    }
+
     fetchCart({
-      API_URL: process.env.REACT_APP_CART_API_URL,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
+
       onSuccess: (fetchedData) => {
-        dispatch({type: CART.INITIALIZE, payload: fetchedData});
+        dispatch({type: CART.INITIALIZE, payload: fetchedData.cart});
       },
     });
   }, [dispatch, fetchCart]);
 
   const addCartItem = (payload) => {
-    dispatch({type: CART.ADD, payload});
+    const response = JSON.parse(localStorage.getItem('accessToken'));
+
+    if (!response) {
+      alert(ERROR_MESSAGE.IS_LOGOUT);
+      return;
+    }
+
     postCart({
-      API_URL: process.env.REACT_APP_CART_API_URL,
-      body: payload,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
+      body: {productId: payload.id},
+
+      onSuccess: () => {
+        dispatch({type: CART.ADD, payload: {...payload, test: 'test', quantity: 1}});
+      },
     });
     if (!path) {
       return;
@@ -59,39 +77,19 @@ export default function useCartItem(path = null) {
     navigation(path);
   };
 
-  const increaseQuantity = (payload) => {
-    const {quantity, id} = payload;
-
-    dispatch({type: CART.INCREASE_QUANTITY, payload: id});
-    patchCart({
-      API_URL: `${process.env.REACT_APP_CART_API_URL}/${id}`,
-      body: {
-        quantity: quantity + 1,
-      },
-    });
-  };
-
-  const decreaseQuantity = (payload) => {
-    const {quantity, id} = payload;
-
-    dispatch({type: CART.DECREASE_QUANTITY, payload: id});
-    patchCart({
-      params: `/${id}`,
-      body: {
-        quantity: Math.max(quantity - 1, 1),
-      },
-    });
-  };
-
   const deleteSelectedCart = (payload) => {
     const deleteConfirm = window.confirm(CONFIRM_MESSAGE.DELETE_CART);
 
     if (deleteConfirm) {
-      dispatch({type: SELECTED_ITEM.DELETE_ALL});
-      dispatch({type: CART.DELETE_SELECTED_CART, payload});
       payload.forEach((id) =>
         deleteCart({
-          API_URL: `${process.env.REACT_APP_CART_API_URL}/${id}`,
+          API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}${process.env.REACT_APP_CART}`,
+          body: {productId: id},
+
+          onSuccess: () => {
+            dispatch({type: CART.DELETE, payload: id});
+            dispatch({type: SELECTED_ITEM.DELETE, payload: id});
+          },
         }),
       );
       return;
@@ -101,8 +99,6 @@ export default function useCartItem(path = null) {
   return {
     deleteCartItem,
     addCartItem,
-    increaseQuantity,
-    decreaseQuantity,
     deleteSelectedCart,
     initializeCart,
   };

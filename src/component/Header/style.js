@@ -23,6 +23,7 @@ const HeaderLayout = styled(FlexRow)`
   .active {
     transform: scale(1.1);
     font-weight: bold;
+    text-shadow: ${({theme}) => theme.MINT_700} 1px 0 10px;
   }
 `;
 
@@ -31,6 +32,16 @@ const HeaderNavBox = styled.div`
 `;
 
 const NavText = styled(NavLink)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 10vw;
+  font-size: 24px;
+  color: ${({theme}) => theme.WHITE};
+`;
+
+const NicknameText = styled.p`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -144,4 +155,5 @@ export {
   ProfileNavContainer,
   ProfileImage,
   ProfileLinkText,
+  NicknameText,
 };

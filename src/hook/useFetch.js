@@ -1,13 +1,32 @@
 import {useCallback, useState} from 'react';
 import axios from 'axios';
 
+const getAccessToken = () => {
+  const response = JSON.parse(localStorage.getItem('accessToken'));
+  if (!response) {
+    return;
+  }
+
+  const accessToken = response.accessToken;
+  return accessToken;
+};
+
 export default function useFetch(method = 'get') {
   const [pending, setPending] = useState(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
 
   const fetch = useCallback(
-    ({API_URL = '', headers = null, body = null, onSuccess = () => void 0}) => {
+    ({
+      API_URL = '',
+      auth = true,
+      headers = auth ? {Authorization: `Bearer ${getAccessToken()}`} : null,
+      body = null,
+      onSuccess = () => void 0,
+      onFail = (error) => {
+        alert(error);
+      },
+    }) => {
       setPending(true);
       setData(null);
       setError(null);
@@ -25,7 +44,8 @@ export default function useFetch(method = 'get') {
         })
         .catch((error) => {
           setPending(false);
-          setError(error.message);
+          setError(error.response.data.message);
+          onFail(error.response.data.message);
         });
     },
     [method],

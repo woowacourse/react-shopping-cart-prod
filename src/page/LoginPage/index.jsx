@@ -1,9 +1,9 @@
 import Input from 'component/common/Input';
-import React, {useEffect} from 'react';
+import React from 'react';
 import * as S from './style';
 import theme from 'theme/theme';
 import {Link, useNavigate} from 'react-router-dom';
-import {ERROR_MESSAGE, PATH} from 'constant';
+import {PATH} from 'constant';
 import useFetch from 'hook/useFetch';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
@@ -12,30 +12,49 @@ import useControlledInput from 'hook/useControlledInput';
 function LoginPage() {
   const dispatch = useDispatch();
   const navigation = useNavigate();
+  const {fetch: userInfo} = useFetch('get');
 
   const [onChangeId, restId] = useControlledInput({});
   const [onChangePassword, restPassword] = useControlledInput({});
 
   const login = useFetch('post');
 
+  const setUserInfo = () => {
+    const response = JSON.parse(localStorage.getItem('accessToken'));
+
+    if (!response) {
+      dispatch({type: AUTH.LOGOUT});
+      return;
+    }
+
+    userInfo({
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
+      auth: false,
+      onSuccess: (res) => {
+        dispatch({type: AUTH.SET_USER_INFO, payload: res});
+      },
+      onFail: (error) => {
+        alert(error);
+        dispatch({type: AUTH.LOGOUT});
+      },
+    });
+  };
+
   const onSubmit = (inputs) => {
     login.fetch({
-      API_URL: process.env.REACT_APP_LOGIN_API_URL,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_SIGNIN}`,
       body: {
         account: inputs[0].value,
         password: inputs[1].value,
       },
       onSuccess: (data) => {
         localStorage.setItem('accessToken', JSON.stringify(data));
+        setUserInfo();
         dispatch({type: AUTH.LOGIN});
         navigation(PATH.HOME);
       },
     });
   };
-
-  useEffect(() => {
-    login.error && alert(ERROR_MESSAGE.LOGIN);
-  }, [login.error]);
 
   return (
     <S.Layout>

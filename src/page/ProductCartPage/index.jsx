@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
+import {useNavigate} from 'react-router-dom';
 
 import CheckBox from 'component/common/CheckBox';
 import ContentBox from 'component/common/ContentBox';
@@ -13,7 +14,11 @@ import * as S from 'page/ProductCartPage/style';
 import useCartItem from 'hook/useCartItem';
 import useSelectedItem from 'hook/useSelectedItem';
 
+import {PATH} from 'constant';
+
 export default function ProductCartPage() {
+  const navigation = useNavigate();
+
   const cartItem = useSelector((state) => state.cartReducer.cart);
   const error = useSelector((state) => state.cartReducer.error);
   const pending = useSelector((state) => state.cartReducer.pending);
@@ -40,6 +45,10 @@ export default function ProductCartPage() {
   );
 
   const isAllChecked = cartItem.length === selectedItem.length && selectedItem.length > 0;
+
+  const handleClickOrderButton = () => {
+    navigation(PATH.ORDER);
+  };
 
   return (
     <S.ProductCartPageLayout>
@@ -85,6 +94,7 @@ export default function ProductCartPage() {
           leftContent="결제예상금액"
           rightContent={`${totalPrice.toLocaleString()}원`}
           buttonText={`주문하기 (${totalQuantity}개)`}
+          onClickButton={handleClickOrderButton}
         />
       </S.CartInfoBox>
     </S.ProductCartPageLayout>
@@ -92,7 +102,7 @@ export default function ProductCartPage() {
 }
 
 ProductCartPage.propTypes = {
-  image: PropTypes.string,
+  imageUrl: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.string,
 };

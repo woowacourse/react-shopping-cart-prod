@@ -1,15 +1,18 @@
 import React, {useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 
 import * as S from './style';
 import Input from 'component/common/Input';
 import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
-import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
-import {useNavigate} from 'react-router-dom';
+import {PATH, VALIDATION_MESSAGE} from 'constant';
+import {AUTH} from 'store/modules/auth';
 
 function UserInfoEditPage() {
   const navigation = useNavigate();
+  const dispatch = useDispatch();
 
   const userInfo = useFetch('get');
   const editInfo = useFetch('put');
@@ -52,13 +55,8 @@ function UserInfoEditPage() {
     restLastNumber.isError;
 
   const getInfo = async () => {
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
-
     userInfo.fetch({
-      API_URL: process.env.REACT_APP_GET_INFO_API_URL,
-      body: {test: 'test:'},
-      headers: {Authorization: `Bearer ${accessToken}`},
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
     });
   };
 
@@ -66,12 +64,8 @@ function UserInfoEditPage() {
     // eslint-disable-next-line no-unused-vars
     const [account, nickname, password, address, start, middle, last] = inputs;
 
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
-
     editInfo.fetch({
-      API_URL: process.env.REACT_APP_EDIT_INFO_API_URL,
-      headers: {Authorization: `Bearer ${accessToken}`},
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
       body: {
         nickname: nickname.value || nickname.placeholder,
         address: address.value || address.placeholder,
@@ -82,6 +76,16 @@ function UserInfoEditPage() {
         },
       },
       onSuccess: () => {
+        dispatch({
+          type: AUTH.EDIT_USER_INFO,
+          payload: {
+            nickname: nickname.value,
+            address: address.value,
+            start: start.value,
+            middle: middle.value,
+            last: last.value,
+          },
+        });
         navigation(PATH.HOME);
       },
     });
@@ -90,14 +94,6 @@ function UserInfoEditPage() {
   useEffect(() => {
     getInfo();
   }, []);
-
-  useEffect(() => {
-    userInfo.error && alert(ERROR_MESSAGE.VIEW_USER_INFO);
-  }, [userInfo.error]);
-
-  useEffect(() => {
-    editInfo.error && alert(ERROR_MESSAGE.EDIT_USER_INFO);
-  }, [editInfo.error]);
 
   return (
     <S.Layout>

@@ -27,7 +27,10 @@ export default function ProductDetailPage() {
   }, [initializeCart]);
 
   useEffect(() => {
-    fetchProductDetail({API_URL: `${process.env.REACT_APP_PRODUCT_API_URL}/${id}`});
+    fetchProductDetail({
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_PRODUCT}/${id}`,
+      auth: false,
+    });
   }, [fetchProductDetail, id]);
 
   return (
@@ -44,7 +47,7 @@ export default function ProductDetailPage() {
 }
 
 ProductDetailPage.propTypes = {
-  image: PropTypes.string,
+  imageUrl: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.string,
 };

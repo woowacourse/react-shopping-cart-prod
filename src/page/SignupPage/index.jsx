@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import * as S from './style';
 import Input from 'component/common/Input';
@@ -6,7 +6,7 @@ import theme from 'theme/theme';
 import useControlledInput from 'hook/useControlledInput';
 import useFetch from 'hook/useFetch';
 import {useNavigate} from 'react-router-dom';
-import {ERROR_MESSAGE, PATH, VALIDATION_MESSAGE} from 'constant';
+import {PATH, VALIDATION_MESSAGE} from 'constant';
 
 function SignupPage() {
   const navigation = useNavigate();
@@ -64,9 +64,11 @@ function SignupPage() {
   const signup = useFetch('post');
 
   const onSubmit = (inputs) => {
-    const [account, nickname, password, address, start, middle, last] = inputs;
+    // eslint-disable-next-line no-unused-vars
+    const [account, nickname, password, passwordConfirm, address, start, middle, last] = inputs;
     signup.fetch({
-      API_URL: process.env.REACT_APP_SIGNUP_API_URL,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_SIGNUP}`,
+      auth: false,
       body: {
         account: account.value,
         nickname: nickname.value,
@@ -78,15 +80,11 @@ function SignupPage() {
           last: last.value,
         },
       },
-      onSuccess: (location) => {
+      onSuccess: () => {
         navigation(PATH.LOGIN);
       },
     });
   };
-
-  useEffect(() => {
-    signup.error && alert(ERROR_MESSAGE.SIGNUP);
-  }, [signup.error]);
 
   return (
     <S.Layout>
@@ -121,7 +119,10 @@ function SignupPage() {
               id="password"
               type="password"
               placeHolder="비밀번호를 입력해주세요"
-              onChange={(e) => onChangePassword(e.target.value)}
+              onChange={(e) => {
+                onChangePassword(e.target.value);
+                onChangeConfirmPassword('');
+              }}
               {...restPassword}
             />
             <Input

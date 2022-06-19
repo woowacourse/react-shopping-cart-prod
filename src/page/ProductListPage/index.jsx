@@ -29,7 +29,8 @@ export default function ProductListPage() {
 
   useEffect(() => {
     fetchProduct({
-      API_URL: process.env.REACT_APP_PRODUCT_API_URL,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_PRODUCT}`,
+      auth: false,
       onSuccess: (fetchedData) => {
         dispatch({type: PRODUCT_LIST.INITIALIZE, payload: fetchedData});
       },

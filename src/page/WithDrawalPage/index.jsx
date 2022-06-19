@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 
 import * as S from './style';
 import baedaleTear from 'assets/baedale_tear.png';
@@ -10,7 +10,6 @@ import {PATH} from 'constant';
 import {useDispatch} from 'react-redux';
 import {AUTH} from 'store/modules/auth';
 import useControlledInput from 'hook/useControlledInput';
-import {ERROR_MESSAGE} from 'constant';
 
 function WithDrawalPage() {
   const [isChecked, setIsChecked] = useState(false);
@@ -27,26 +26,18 @@ function WithDrawalPage() {
 
   const onSubmit = async (inputs) => {
     const [password] = inputs;
-    const response = await JSON.parse(localStorage.getItem('accessToken'));
-    const accessToken = response.accessToken;
 
     withDrawal.fetch({
-      API_URL: process.env.REACT_APP_WITHDRAWAL_API_URL,
+      API_URL: `${process.env.REACT_APP_BASE_SERVER_URL}${process.env.REACT_APP_CUSTOMERS}`,
       body: {
         password: password.value,
       },
-      headers: {Authorization: `Bearer ${accessToken}`},
-      onSuccess: (location) => {
+      onSuccess: () => {
         navigation(PATH.HOME);
         dispatch({type: AUTH.LOGOUT});
-        localStorage.removeItem('accessToken');
       },
     });
   };
-
-  useEffect(() => {
-    withDrawal.error && alert(ERROR_MESSAGE.WITHDRAWAL);
-  }, [withDrawal.error]);
 
   return (
     <S.Layout>

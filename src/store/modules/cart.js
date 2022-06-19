@@ -2,6 +2,7 @@ export const CART = {
   INITIALIZE: 'INITIALIZE_CART',
   ADD: 'ADD_CART',
   DELETE: 'DELETE_CART',
+  DELETE_ALL: 'DELETE_ALL',
   INCREASE_QUANTITY: 'INCREASE_QUANTITY',
   DECREASE_QUANTITY: 'DECREASE_QUANTITY',
   DELETE_SELECTED_CART: 'DELETE_SELECTED_CART',
@@ -16,9 +17,13 @@ Object.freeze(INITIAL_STATE.cart);
 export default function cartReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CART.INITIALIZE: {
-      const cart = action.payload;
+      const fetchedData = action.payload;
+      const newState = fetchedData.map((item) => ({
+        ...item,
+        quantity: 1,
+      }));
       return {
-        cart,
+        cart: [...newState],
       };
     }
 
@@ -33,10 +38,13 @@ export default function cartReducer(state = INITIAL_STATE, action) {
 
       return {cart: newState};
     }
+    case CART.DELETE_ALL: {
+      return {cart: []};
+    }
     case CART.INCREASE_QUANTITY: {
       const id = action.payload;
       const newState = state.cart.map((item) =>
-        item.id === id ? {...item, quantity: item.quantity + 1} : item,
+        item.id === id ? {...item, quantity: Math.min(item.quantity + 1, 99)} : item,
       );
 
       return {

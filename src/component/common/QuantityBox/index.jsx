@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import * as S from 'component/common/QuantityBox/style';
+import {useDispatch} from 'react-redux';
+import {CART} from 'store/modules/cart';
+export default function QuantityBox({quantity = 1, productId}) {
+  const dispatch = useDispatch();
+  const handleIncrease = () => dispatch({type: CART.INCREASE_QUANTITY, payload: productId});
+  const handleDecrease = () => dispatch({type: CART.DECREASE_QUANTITY, payload: productId});
 
-export default function QuantityBox({
-  quantity = 1,
-  handleIncrease = () => void 0,
-  handleDecrease = () => void 0,
-}) {
   return (
     <S.Layout>
       <S.QuantityFont>{quantity}</S.QuantityFont>
@@ -21,6 +22,5 @@ export default function QuantityBox({
 
 QuantityBox.propTypes = {
   quantity: PropTypes.number,
-  handleIncrease: PropTypes.func,
-  handleDecrease: PropTypes.func,
+  productId: PropTypes.number,
 };
