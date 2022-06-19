@@ -15,7 +15,15 @@ export default function useProductList() {
   const currentPage = searchParams.get('page') ?? 1;
 
   useEffect(() => {
-    dispatch(fetchProductListThunk(currentPage));
+    const fetchProductList = async () => {
+      try {
+        await dispatch(fetchProductListThunk(currentPage));
+      } catch ({ message }) {
+        alert(message);
+      }
+    };
+
+    fetchProductList();
   }, [currentPage]);
 
   return { isLoading, productList, pageCount, currentPage };

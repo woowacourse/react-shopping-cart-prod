@@ -26,8 +26,6 @@ export const Button = styled.button`
       font-size: 20px;
     `}
 
-  ${({ variant }) => variant && css``}
-
   &:hover {
     opacity: 0.9;
   }

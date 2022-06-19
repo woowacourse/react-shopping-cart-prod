@@ -1,3 +1,5 @@
+import { userActionType } from 'store/reducers/user.reducer';
+
 const initialState = {
   cart: [],
   checkedProductList: [],
@@ -9,12 +11,13 @@ export const cartActionType = {
   FAIL: 'cart/ACTION_FAIL',
   FETCH: 'cart/FETCH',
   UPDATE: 'cart/UPDATE',
+  ADD: 'cart/ADD',
   DELETE: 'cart/DELETE',
   UPDATE_CHECKED_LIST: 'cart/UPDATE_CHECKED_LIST',
 };
 
-const cartReducer = (state = initialState, action) => {
-  switch (action.type) {
+const cartReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
     case cartActionType.START: {
       return {
         ...state,
@@ -24,22 +27,27 @@ const cartReducer = (state = initialState, action) => {
 
     case cartActionType.FETCH:
     case cartActionType.DELETE: {
-      const {
-        payload: { cart },
-      } = action;
+      const { cart } = payload;
 
       return {
         ...state,
         cart,
-        checkedProductList: cart.map(({ productData }) => productData.id),
+        checkedProductList: cart
+          .filter(({ product }) => product.stock > 0)
+          .map(({ product }) => product.id),
+        isLoading: false,
+      };
+    }
+
+    case cartActionType.ADD: {
+      return {
+        ...state,
         isLoading: false,
       };
     }
 
     case cartActionType.UPDATE: {
-      const {
-        payload: { cart },
-      } = action;
+      const { cart } = payload;
 
       return {
         ...state,
@@ -56,13 +64,20 @@ const cartReducer = (state = initialState, action) => {
     }
 
     case cartActionType.UPDATE_CHECKED_LIST: {
-      const {
-        payload: { checkedProductList },
-      } = action;
+      const { checkedProductList } = payload;
 
       return {
         ...state,
         checkedProductList,
+      };
+    }
+
+    case userActionType.LOGOUT: {
+      return {
+        ...state,
+        cart: [],
+        checkedProductList: [],
+        isLoading: false,
       };
     }
 

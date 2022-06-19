@@ -11,6 +11,7 @@ export const WARNING_MESSAGES = {
   MIN_QUANTITY: '구입할 수 있는 최소 수량입니다.',
   MAX_QUANTITY: '구입할 수 있는 최대 수량입니다.',
   LOGIN_REQUIRED: '로그인 후에 장바구니에 추가할 수 있습니다.',
+  DECREASE_TO_STOCK: (quantity, stock) => `기존에 장바구니에 담긴 상품 개수는 ${quantity}개 입니다. 수량을 감소시키면 ${stock-1}개로 변경됩니다.`,
 };
 
 export const ERROR_MESSAGES = {

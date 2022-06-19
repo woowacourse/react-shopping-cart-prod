@@ -12,8 +12,8 @@ export const productActionTypes = {
   LIST_FETCH: 'product/LIST_FETCH',
 };
 
-const productReducer = (state = initialState, action) => {
-  switch (action.type) {
+const productReducer = (state = initialState, { type, payload }) => {
+  switch (type) {
     case productActionTypes.START: {
       return {
         ...state,
@@ -22,9 +22,7 @@ const productReducer = (state = initialState, action) => {
     }
 
     case productActionTypes.LIST_FETCH: {
-      const {
-        payload: { productList, totalProductCount },
-      } = action;
+      const { productList, totalProductCount } = payload;
 
       return {
         ...state,

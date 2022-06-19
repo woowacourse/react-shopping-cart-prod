@@ -14,7 +14,7 @@ import * as GlobalStyled from 'styles/GlobalStyles';
 import { color } from 'styles/Theme';
 
 function ProductCard({ product, isLoggedIn }) {
-  const { id, imageURL, name, price } = product;
+  const { id, imageUrl, name, price, stock } = product;
 
   const { isModalOpen, openModal, closeModal } = useModal();
   const navigate = useNavigate();
@@ -34,21 +34,24 @@ function ProductCard({ product, isLoggedIn }) {
   return (
     <GlobalStyled.Position>
       <S.Container onClick={onClickCard}>
-        <Image src={imageURL} alt={name} />
+        <Image src={imageUrl} alt={name} />
         <S.Content>
           <S.Description>
             <S.Name>{name}</S.Name>
-            <S.Price>{price}원</S.Price>
+            <S.Price>{price.toLocaleString('ko-KR')} 원</S.Price>
           </S.Description>
         </S.Content>
       </S.Container>
 
       <GlobalStyled.Position position="absolute" bottom="5px" right="5px">
-        <S.TransparentButton type="button" onClick={onClickCartButton}>
-          <Icon iconName="Cart" fill={color.DARK_GRAY} />
-        </S.TransparentButton>
+        {stock === 0 ? (
+          <S.SoldOut>일시 품절</S.SoldOut>
+        ) : (
+          <S.TransparentButton type="button" onClick={onClickCartButton}>
+            <Icon iconName="Cart" fill={color.DARK_GRAY} />
+          </S.TransparentButton>
+        )}
       </GlobalStyled.Position>
-
       {isModalOpen && (
         <Modal closeModal={closeModal}>
           <CartAddForm product={product} closeModal={closeModal} />

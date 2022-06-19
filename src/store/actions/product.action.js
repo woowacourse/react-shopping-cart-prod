@@ -11,8 +11,8 @@ export const fetchProductListThunk = (page) => async (dispatch) => {
       payload: { productList, totalProductCount },
     });
   } catch ({ message }) {
-    alert(message);
-
     dispatch({ type: productActionTypes.FAIL });
+
+    throw new Error(message);
   }
 };

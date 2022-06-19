@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { STATUS_NORMAL } from 'components/cart/CartProductCard/constant';
+
 export const Container = styled.div`
   width: 100%;
   padding: 20px 15px;
@@ -27,8 +29,19 @@ export const Button = styled.button`
 `;
 
 export const Name = styled.h1`
+  margin-bottom: 13px;
   font-size: 20px;
   align-self: flex-start;
 `;
 
-export const Price = styled.p``;
+export const StatusMessage = styled.p`
+  margin-top: 14px;
+  font-size: 20px;
+  line-height: 22px;
+  color: ${({ theme }) => theme.colorConfig.warning};
+`;
+
+export const Price = styled.p`
+  margin-top: ${({ cartProductStatus }) =>
+    cartProductStatus === STATUS_NORMAL ? '44px' : '8px'};
+`;
