@@ -92,7 +92,7 @@ export const handlers = [
       });
     }
 
-    const { productId, quantity } = JSON.parse(req.body);
+    const { productId, quantity } = req.body;
 
     const db = LocalStorage.getInstance();
     const alreadyExist = db.carts.some(
