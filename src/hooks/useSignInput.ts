@@ -1,3 +1,4 @@
+import { emailReg } from 'constant/RegExp';
 import { ChangeEvent, useState } from 'react';
 
 const initialInputState = {
@@ -16,24 +17,12 @@ const useSignInput = () => {
 
   const handleEmailInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setInputState(prev => ({ ...prev, email: value }));
-
-    if (value) {
-      setValidState(prev => ({ ...prev, email: true }));
-
-      return;
-    }
-
-    setValidState(prev => ({ ...prev, email: false }));
+    setValidState(prev => ({ ...prev, email: emailReg.test(value) }));
   };
 
   const handleNameInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setInputState(prev => ({ ...prev, name: value }));
-    if (value) {
-      setValidState(prev => ({ ...prev, name: true }));
-
-      return;
-    }
-    setValidState(prev => ({ ...prev, name: false }));
+    setValidState(prev => ({ ...prev, name: value ? true : false }));
   };
 
   return {

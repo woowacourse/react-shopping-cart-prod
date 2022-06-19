@@ -1,76 +1,117 @@
-import { LOCAL_BASE_URL } from 'apis';
-import { CartListActionType, CartListAction } from 'redux/actions/cartList';
+import { cartListAction, CartListAction } from 'redux/actions/cartList';
 import { CartItem } from 'types/domain';
 import type { Dispatch } from 'redux';
 import axios from 'axios';
+import { getLocalStorageToken } from 'utils/localStorage';
+import { BASE_URL } from 'apis';
 
 export const getCartList = () => async (dispatch: Dispatch<CartListAction>) => {
-  dispatch({ type: CartListActionType.GET_CART_LIST_START });
+  dispatch(cartListAction.getCartList.pending());
+  const token = getLocalStorageToken();
 
   try {
-    const response = await axios.get(`${LOCAL_BASE_URL}/cartList`);
+    const response = await axios({
+      method: 'get',
+      url: `${BASE_URL}/cart`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
-    dispatch({
-      type: CartListActionType.GET_CART_LIST_SUCCESS,
-      payload: response.data,
-    });
-  } catch (e) {
-    dispatch({
-      type: CartListActionType.GET_CART_LIST_FAILURE,
-      payload: e.message,
-    });
+    dispatch(cartListAction.getCartList.success(response.data.cartItems));
+  } catch (error) {
+    dispatch(cartListAction.getCartList.failure(error));
   }
 };
 
-export const putCartItem = (cartItem: CartItem) => async (dispatch: Dispatch<CartListAction>) => {
-  dispatch({ type: CartListActionType.PUT_CART_ITEM_START });
-  try {
-    const response = await axios.put(`${LOCAL_BASE_URL}/cartList/${cartItem.id}`, cartItem);
-
-    dispatch({
-      type: CartListActionType.PUT_CART_ITEM_SUCCESS,
-      payload: response.data,
-    });
-  } catch (e) {
-    dispatch({
-      type: CartListActionType.PUT_CART_ITEM_FAILURE,
-      payload: e.message,
-    });
-  }
-};
-
-export const postCartItem = (cartItem: CartItem) => async (dispatch: Dispatch<CartListAction>) => {
-  dispatch({ type: CartListActionType.POST_CART_ITEM_START });
-  try {
-    const response = await axios.post(`${LOCAL_BASE_URL}/cartList`, cartItem);
-
-    dispatch({
-      type: CartListActionType.POST_CART_ITEM_SUCCESS,
-      payload: response.data,
-    });
-  } catch (e) {
-    dispatch({
-      type: CartListActionType.POST_CART_ITEM_FAILURE,
-      payload: e.message,
-    });
-  }
-};
-
-export const removeCartItem =
-  (cartItem: CartItem) => async (dispatch: Dispatch<CartListAction>) => {
-    dispatch({ type: CartListActionType.REMOVE_CART_ITEM_START });
+export const patchCartItem =
+  (cartItemList: CartItem[]) => async (dispatch: Dispatch<CartListAction>) => {
+    dispatch(cartListAction.patchCartItem.pending());
+    const token = getLocalStorageToken();
 
     try {
-      const response = await axios.delete(`${LOCAL_BASE_URL}/cartList/${cartItem.id}`);
+      const response = await axios({
+        method: 'patch',
+        url: `${BASE_URL}/cart`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        data: { cartItems: cartItemList },
+      });
 
-      dispatch({
-        type: CartListActionType.REMOVE_CART_ITEM_SUCCESS,
-        payload: cartItem,
-      });
-    } catch (e) {
-      dispatch({
-        type: CartListActionType.REMOVE_CART_ITEM_FAILURE,
-        payload: e.message,
-      });
+      dispatch(cartListAction.patchCartItem.success(response.data.cartItems));
+    } catch (error) {
+      dispatch(cartListAction.patchCartItem.failure(error));
     }
   };
+
+export const postCartItem = (cartItem: CartItem) => async (dispatch: Dispatch<CartListAction>) => {
+  dispatch(cartListAction.postCartItem.pending());
+  const token = getLocalStorageToken();
+  const targetItem = {
+    productId: cartItem.id,
+    quantity: cartItem.quantity,
+    checked: cartItem.checked,
+  };
+
+  try {
+    await axios({
+      method: 'post',
+      url: `${BASE_URL}/cart`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      data: targetItem,
+    });
+
+    dispatch(cartListAction.postCartItem.success(targetItem));
+  } catch (error) {
+    dispatch(cartListAction.postCartItem.failure(error));
+  }
+};
+
+export const deleteSelectedCartItem =
+  (cartItemList: CartItem[]) => async (dispatch: Dispatch<CartListAction>) => {
+    dispatch(cartListAction.deleteSelectedCartItem.pending());
+    const token = getLocalStorageToken();
+    const selectedIdList = cartItemList.map(cartItem => ({ id: cartItem.id }));
+
+    try {
+      await axios({
+        method: 'delete',
+        url: `${BASE_URL}/cart`,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        data: { cartItems: selectedIdList },
+      });
+
+      dispatch(cartListAction.deleteSelectedCartItem.success(selectedIdList));
+    } catch (error) {
+      dispatch(cartListAction.deleteSelectedCartItem.failure(error));
+    }
+  };
+
+export const deleteAllCartItem = () => async (dispatch: Dispatch<CartListAction>) => {
+  dispatch(cartListAction.deleteAllCartItem.pending());
+  const token = getLocalStorageToken();
+
+  try {
+    await axios({
+      method: 'delete',
+      url: `${BASE_URL}/cart/all`,
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    dispatch(cartListAction.deleteAllCartItem.success());
+  } catch (error) {
+    dispatch(cartListAction.deleteAllCartItem.failure(error));
+  }
+};

@@ -1,7 +1,9 @@
-import { UserAction, UserActionType } from 'redux/actions/user';
+import { UserAction, USER_ACTION_TYPE } from 'redux/actions/user';
+import { AsyncStatus, createReducer } from 'redux/utils';
+import { UserInfo } from 'types/domain';
 
 interface UserState {
-  data: any;
+  data: UserInfo | unknown;
   loading: boolean;
   error: string | null;
 }
@@ -12,54 +14,70 @@ const initialState: UserState = {
   error: null,
 };
 
-export const userReducer = (state = initialState, action: UserAction) => {
-  switch (action.type) {
-    case UserActionType.POST_SIGN_UP_START:
+const postSignUp = (state: UserState, action: UserAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
       return { loading: true, error: null, data: state.data };
-    case UserActionType.POST_SIGN_UP_SUCCESS:
+    case AsyncStatus.SUCCESS:
       return { loading: false, error: null, data: state.data };
-    case UserActionType.POST_SIGN_UP_FAILURE:
-      return { loading: false, error: true, data: state.data };
-
-    case UserActionType.POST_SIGN_IN_START:
-      return { loading: true, error: null, data: state.data };
-    case UserActionType.POST_SIGN_IN_SUCCESS:
-      return { loading: false, error: null, data: action.payload };
-    case UserActionType.POST_SIGN_IN_FAILURE:
-      return { loading: false, error: true, data: state.data };
-
-    case UserActionType.PATCH_NEW_PASSWORD_START:
-      return { loading: true, error: null, data: state.data };
-    case UserActionType.PATCH_NEW_PASSWORD_SUCCESS:
-      return { loading: false, error: null, data: state.data };
-    case UserActionType.PATCH_NEW_PASSWORD_FAILURE:
-      return { loading: false, error: true, data: state.data };
-
-    case UserActionType.DELETE_USER_START:
-      return { loading: true, error: null, data: state.data };
-    case UserActionType.DELETE_USER_SUCCESS:
-      return { ...initialState };
-    case UserActionType.DELETE_USER_FAILURE:
-      return { loading: false, error: true, data: state.data };
-
-    case UserActionType.AUTO_SIGN_IN_START:
-      return { loading: true, error: null, data: state.data };
-    case UserActionType.AUTO_SIGN_IN_SUCCESS:
-      return { loading: false, error: null, data: action.payload };
-    case UserActionType.AUTO_SIGN_IN_FAILURE:
-      return { loading: false, error: true, data: state.data };
-
-    /* TODO - 회원 이름 수정 api 명세 작성 후 연동
-    case UserActionType.PATCH_USER_INFO_START:
-      return { loading: true, error: null, data: state };
-    case UserActionType.PATCH_USER_INFO_SUCCESS:
-      return { loading: false, error: null, data: action.payload };
-    case UserActionType.PATCH_USER_INFO_FAILURE:
-      return { loading: false, error: true, data: state.data };*/
-
-    case UserActionType.SIGN_OUT_ACTION:
-      return { ...initialState };
-    default:
-      return state;
+    case AsyncStatus.FAILURE:
+      return { loading: false, error: action.payload, data: state.data };
   }
 };
+
+const postSignIn = (state: UserState, action: UserAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
+      return { loading: true, error: null, data: state.data };
+    case AsyncStatus.SUCCESS:
+      return { loading: false, error: null, data: action.payload };
+    case AsyncStatus.FAILURE:
+      return { loading: false, error: action.payload, data: state.data };
+  }
+};
+
+const patchNewPassword = (state: UserState, action: UserAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
+      return { loading: true, error: null, data: state.data };
+    case AsyncStatus.SUCCESS:
+      return { loading: false, error: null, data: state.data };
+    case AsyncStatus.FAILURE:
+      return { loading: false, error: action.payload, data: state.data };
+  }
+};
+
+const deleteUser = (state: UserState, action: UserAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
+      return { loading: true, error: null, data: state.data };
+    case AsyncStatus.SUCCESS:
+      return { loading: false, error: null, data: {} };
+    case AsyncStatus.FAILURE:
+      return { loading: false, error: action.payload, data: state.data };
+  }
+};
+
+const autoSignIn = (state: UserState, action: UserAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
+      return { loading: true, error: null, data: state.data };
+    case AsyncStatus.SUCCESS:
+      return { loading: false, error: null, data: action.payload };
+    case AsyncStatus.FAILURE:
+      return { loading: false, error: action.payload, data: state.data };
+  }
+};
+
+const signOut = () => {
+  return { loading: false, error: null, data: {} };
+};
+
+export const userReducer = createReducer(initialState, {
+  [USER_ACTION_TYPE.POST_SIGN_UP]: postSignUp,
+  [USER_ACTION_TYPE.POST_SIGN_IN]: postSignIn,
+  [USER_ACTION_TYPE.PATCH_NEW_PASSWORD]: patchNewPassword,
+  [USER_ACTION_TYPE.DELETE_USER]: deleteUser,
+  [USER_ACTION_TYPE.AUTO_SIGN_IN]: autoSignIn,
+  [USER_ACTION_TYPE.SIGN_OUT]: signOut,
+});

@@ -1,5 +1,5 @@
 export const formatDecimal = (input: number) => {
-  return input.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
+  return input.toLocaleString('ko-KR');
 };
 
 export const generateRandomCode = (n: number): string => {
@@ -10,4 +10,8 @@ export const generateRandomCode = (n: number): string => {
   }
 
   return code;
+};
+
+export const isEmptyObject = (object: unknown) => {
+  return Object.keys(object).length === 0;
 };

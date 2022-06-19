@@ -1,4 +1,5 @@
-import { CartListAction, CartListActionType } from 'redux/actions/cartList';
+import { CART_LIST_ACTION_TYPE, CartListAction } from 'redux/actions/cartList';
+import { AsyncStatus, createReducer } from 'redux/utils';
 import { CartItem } from 'types/domain';
 
 interface CartItemState {
@@ -13,48 +14,103 @@ const initialState: CartItemState = {
   error: null,
 };
 
-export const cartListReducer = (state = initialState, action: CartListAction) => {
-  switch (action.type) {
-    case CartListActionType.GET_CART_LIST_START:
+const getCartList = (state: CartItemState, action: CartListAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
       return { loading: true, error: null, data: state.data };
-    case CartListActionType.GET_CART_LIST_SUCCESS: {
+
+    case AsyncStatus.SUCCESS:
       return { loading: false, error: null, data: action.payload };
-    }
-    case CartListActionType.GET_CART_LIST_FAILURE:
+
+    case AsyncStatus.FAILURE:
+      return { loading: true, error: action.payload, data: state.data };
+  }
+};
+
+const patchCartItem = (state: CartItemState, action: CartListAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
       return { loading: true, error: null, data: state.data };
-    case CartListActionType.PUT_CART_ITEM_START:
-      return { loading: true, error: null, data: state.data };
-    case CartListActionType.PUT_CART_ITEM_SUCCESS: {
-      const prevCartList = state.data;
-      const targetItem = action.payload;
-      const newCartList = prevCartList.map(cartItem =>
-        cartItem.id === targetItem.id ? targetItem : cartItem
+
+    case AsyncStatus.SUCCESS: {
+      const newCartList = state.data.map(
+        cartItem =>
+          action.payload.find(editedCartItem => editedCartItem.productId === cartItem.productId) ||
+          cartItem
       );
 
       return { loading: false, error: null, data: newCartList };
     }
-    case CartListActionType.PUT_CART_ITEM_FAILURE:
+
+    case AsyncStatus.FAILURE:
+      return { loading: true, error: action.payload, data: state.data };
+  }
+};
+
+const postCartItem = (state: CartItemState, action: CartListAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
       return { loading: true, error: null, data: state.data };
-    case CartListActionType.POST_CART_ITEM_START:
+
+    case AsyncStatus.SUCCESS:
+      return {
+        loading: false,
+        error: null,
+        data: [...state.data, action.payload],
+      };
+
+    case AsyncStatus.FAILURE:
+      return { loading: true, error: action.payload, data: state.data };
+  }
+};
+
+const deleteSelectedCartItem = (state: CartItemState, action: CartListAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
       return { loading: true, error: null, data: state.data };
-    case CartListActionType.POST_CART_ITEM_SUCCESS:
-      return { loading: false, error: null, data: [...state.data, action.payload] };
-    case CartListActionType.POST_CART_ITEM_FAILURE:
-      return { loading: true, error: null, data: state.data };
-    case CartListActionType.REMOVE_CART_ITEM_START:
-      return { loading: true, error: null, data: state.data };
-    case CartListActionType.REMOVE_CART_ITEM_SUCCESS: {
-      const itemDeletedCartList = state.data.filter(item => item.id !== action.payload.id);
+
+    case AsyncStatus.SUCCESS: {
+      const targetIdList = action.payload.map(idData => idData.id);
+      const newCartItemList = state.data.filter(item => !targetIdList.includes(item.id));
 
       return {
         loading: false,
         error: null,
-        data: itemDeletedCartList,
+        data: newCartItemList,
       };
     }
-    case CartListActionType.REMOVE_CART_ITEM_FAILURE:
-      return { loading: true, error: null, data: state.data };
-    default:
-      return state;
+
+    case AsyncStatus.FAILURE:
+      return { loading: true, error: action.payload, data: state.data };
   }
 };
+
+const deleteAllCartItem = (state: CartItemState, action: CartListAction) => {
+  switch (action.status) {
+    case AsyncStatus.PENDING:
+      return { loading: true, error: null, data: state.data };
+
+    case AsyncStatus.SUCCESS:
+      return {
+        loading: false,
+        error: null,
+        data: {},
+      };
+
+    case AsyncStatus.FAILURE:
+      return { loading: true, error: action.payload, data: state.data };
+  }
+};
+
+const clearCartList = () => {
+  return { loading: false, error: null, data: [] };
+};
+
+export const cartListReducer = createReducer(initialState, {
+  [CART_LIST_ACTION_TYPE.GET_CART_LIST]: getCartList,
+  [CART_LIST_ACTION_TYPE.PATCH_CART_ITEM]: patchCartItem,
+  [CART_LIST_ACTION_TYPE.POST_CART_ITEM]: postCartItem,
+  [CART_LIST_ACTION_TYPE.DELETE_SELECTED_CART_ITEM]: deleteSelectedCartItem,
+  [CART_LIST_ACTION_TYPE.DELETE_ALL_CART_ITEM]: deleteAllCartItem,
+  [CART_LIST_ACTION_TYPE.CLEAR_CART_LIST]: clearCartList,
+});

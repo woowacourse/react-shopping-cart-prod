@@ -1,26 +1,15 @@
-import { Item } from 'types/domain';
+import { generateAsyncActionGroup } from 'redux/utils';
 
-export enum ItemListActionType {
-  GET_ITEM_LIST_START = 'items/GET_ITEMLIST_START',
-  GET_ITEM_LIST_SUCCESS = 'items/GET_ITEMLIST_SUCCESS',
-  GET_ITEM_LIST_FAILURE = 'items/GET_ITEMLIST_FAILURE',
-}
+export const ITEM_LIST_ACTION_TYPE = {
+  GET_ITEM_LIST: 'items/GET_ITEM_LIST',
+} as const;
 
-interface GetItemListActionStart {
-  type: ItemListActionType.GET_ITEM_LIST_START;
-}
+const getItemList = generateAsyncActionGroup(ITEM_LIST_ACTION_TYPE.GET_ITEM_LIST);
 
-interface GetItemListActionSuccess {
-  type: ItemListActionType.GET_ITEM_LIST_SUCCESS;
-  payload: Item[];
-}
+export const itemListAction = {
+  getItemList,
+};
 
-interface GetItemListActionFailure {
-  type: ItemListActionType.GET_ITEM_LIST_FAILURE;
-  payload: string;
-}
-
-export type ItemListAction =
-  | GetItemListActionStart
-  | GetItemListActionSuccess
-  | GetItemListActionFailure;
+export type ItemListAction = ReturnType<
+  typeof itemListAction[keyof typeof itemListAction][keyof typeof itemListAction[keyof typeof itemListAction]]
+>;

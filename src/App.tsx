@@ -1,20 +1,29 @@
 import { BrowserRouter } from 'react-router-dom';
 import styled from 'styled-components';
-import Header from 'components/common/Header';
-import Modal from 'components/common/Snackbar';
-import { useAppSelector } from 'hooks/useAppSelector';
+import Header from 'components/Header';
 import Router from 'Router';
 import { useAppDispatch } from 'hooks/useAppDispatch';
 import { autoSignIn } from 'redux/action-creators/userThunk';
 import { UserAction } from 'redux/actions/user';
 import { KEYS } from 'utils/localStorage';
+import SnackBar from 'components/@common/snackBar';
+import { useDispatch } from 'react-redux';
+import { updateSnackBar } from 'redux/actions/snackBar';
+import ErrorBoundary from 'components/@common/ErrorBoundary';
+import { Suspense } from 'react';
+import Loading from 'components/@common/Loading';
+import { MESSAGE } from 'constant/message';
 
 function App() {
-  const { isSnackbarOpen } = useAppSelector(state => state.snackbarReducer);
-  const dispatch = useAppDispatch<UserAction>();
+  const dispatch = useDispatch();
+  const thunkDispatch = useAppDispatch<UserAction>();
 
   if (localStorage.getItem(KEYS.TOKEN)) {
-    dispatch(autoSignIn());
+    try {
+      thunkDispatch(autoSignIn());
+    } catch (error) {
+      dispatch(updateSnackBar(MESSAGE.FAILED_AUTO_SIGN));
+    }
   }
 
   return (
@@ -22,10 +31,14 @@ function App() {
       <StyledRoot>
         <Header />
         <StyledMain>
-          <Router />
+          <ErrorBoundary fallback={MESSAGE.PAGE_ERROR}>
+            <Suspense fallback={<Loading />}>
+              <Router />
+            </Suspense>
+          </ErrorBoundary>
         </StyledMain>
+        <SnackBar />
       </StyledRoot>
-      {isSnackbarOpen && <Modal />}
     </BrowserRouter>
   );
 }

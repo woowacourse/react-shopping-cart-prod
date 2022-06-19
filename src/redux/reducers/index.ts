@@ -1,14 +1,14 @@
 import { combineReducers } from 'redux';
 import { itemListReducer } from './itemListReducer';
 import { cartListReducer } from './cartListReducer';
-import { snackbarReducer } from './snackbarReducer';
 import { userReducer } from './userReducer';
+import { snackBarReducer } from './snackBarReducer';
 
 const rootReducer = combineReducers({
   itemListReducer,
   cartListReducer,
   userReducer,
-  snackbarReducer,
+  snackBarReducer,
 });
 
 export default rootReducer;

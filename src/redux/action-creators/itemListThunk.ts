@@ -1,21 +1,16 @@
-import { ItemListActionType, ItemListAction } from '../actions/itemList';
-import { LOCAL_BASE_URL } from 'apis';
+import { itemListAction, ItemListAction } from '../actions/itemList';
 import type { Dispatch } from 'redux';
 import axios from 'axios';
+import { BASE_URL } from 'apis';
 
 export const getItemList = () => async (dispatch: Dispatch<ItemListAction>) => {
-  dispatch({ type: ItemListActionType.GET_ITEM_LIST_START });
-  try {
-    const response = await axios.get(`${LOCAL_BASE_URL}/itemList`);
+  dispatch(itemListAction.getItemList.pending());
 
-    dispatch({
-      type: ItemListActionType.GET_ITEM_LIST_SUCCESS,
-      payload: response.data,
-    });
-  } catch (e) {
-    dispatch({
-      type: ItemListActionType.GET_ITEM_LIST_FAILURE,
-      payload: e.message,
-    });
+  try {
+    const response = await axios.get(`${BASE_URL}/products`);
+
+    dispatch(itemListAction.getItemList.success(response.data.products));
+  } catch (error) {
+    dispatch(itemListAction.getItemList.failure(error));
   }
 };

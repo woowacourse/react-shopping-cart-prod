@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const useUpdateEffect = (callbackFunc: () => any, dependancy: any[]) => {
+const useUpdateEffect = (callbackFunc: () => any, dependencies: any[]) => {
   const isFirstTime = useRef(true);
 
   useEffect(() => {
@@ -8,7 +8,7 @@ const useUpdateEffect = (callbackFunc: () => any, dependancy: any[]) => {
       return callbackFunc();
     }
     isFirstTime.current = false;
-  }, dependancy);
+  }, dependencies);
 };
 
 export default useUpdateEffect;

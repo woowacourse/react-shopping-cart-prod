@@ -1,89 +1,47 @@
+import { generateAsyncActionGroup } from 'redux/utils';
 import { CartItem } from 'types/domain';
 
-export enum CartListActionType {
-  GET_CART_LIST_START = 'cart/GET_CART_LIST_START',
-  GET_CART_LIST_SUCCESS = 'cart/GET_CART_LIST_SUCCESS',
-  GET_CART_LIST_FAILURE = 'cart/GET_CART_LIST_FAILURE',
+export const CART_LIST_ACTION_TYPE = {
+  GET_CART_LIST: 'cart/GET_CART_LIST',
+  PATCH_CART_ITEM: 'cart/PATCH_CART_ITEM',
+  POST_CART_ITEM: 'cart/POST_CART_ITEM',
+  DELETE_SELECTED_CART_ITEM: 'cart/DELETE_SELECTED_CART_ITEM',
+  DELETE_ALL_CART_ITEM: 'cart/DELETE_ALL_CART_ITEM',
+  CLEAR_CART_LIST: 'cart/CLEAR_CART_LIST',
+} as const;
 
-  PUT_CART_ITEM_START = 'cart/PUT_CART_ITEM_START',
-  PUT_CART_ITEM_SUCCESS = 'cart/PUT_CART_ITEM_SUCCESS',
-  PUT_CART_ITEM_FAILURE = 'cart/PUT_CART_ITEM_FAILURE',
+type ActionType = typeof CART_LIST_ACTION_TYPE[keyof typeof CART_LIST_ACTION_TYPE];
 
-  POST_CART_ITEM_START = 'cart/POST_CART_ITEM_START',
-  POST_CART_ITEM_SUCCESS = 'cart/POST_CART_ITEM_SUCCESS',
-  POST_CART_ITEM_FAILURE = 'cart/POST_CART_ITEM_FAILURE',
+const getCartList = generateAsyncActionGroup<CartItem[], ActionType>(
+  CART_LIST_ACTION_TYPE.GET_CART_LIST
+);
+const patchCartItem = generateAsyncActionGroup<CartItem, ActionType>(
+  CART_LIST_ACTION_TYPE.PATCH_CART_ITEM
+);
+const postCartItem = generateAsyncActionGroup<CartItem, ActionType>(
+  CART_LIST_ACTION_TYPE.POST_CART_ITEM
+);
+const deleteSelectedCartItem = generateAsyncActionGroup<{ id: number }[], ActionType>(
+  CART_LIST_ACTION_TYPE.DELETE_SELECTED_CART_ITEM
+);
+const deleteAllCartItem = generateAsyncActionGroup<null, ActionType>(
+  CART_LIST_ACTION_TYPE.DELETE_ALL_CART_ITEM
+);
 
-  REMOVE_CART_ITEM_START = 'cart/REMOVE_CART_ITEM_START',
-  REMOVE_CART_ITEM_SUCCESS = 'cart/REMOVE_CART_ITEM_SUCCESS',
-  REMOVE_CART_ITEM_FAILURE = 'cart/REMOVE_CART_ITEM_FALIURE',
-}
+export const clearCartList = () => {
+  return {
+    type: CART_LIST_ACTION_TYPE.CLEAR_CART_LIST,
+  };
+};
 
-interface GetCartListStart {
-  type: CartListActionType.GET_CART_LIST_START;
-}
+export const cartListAction = {
+  getCartList,
+  patchCartItem,
+  postCartItem,
+  deleteSelectedCartItem,
+  deleteAllCartItem,
+};
 
-interface GetCartListSuccess {
-  type: CartListActionType.GET_CART_LIST_SUCCESS;
-  payload: CartItem[];
-}
-
-interface GetCartListFailure {
-  type: CartListActionType.GET_CART_LIST_FAILURE;
-  payload: string;
-}
-
-interface PutCartItemStart {
-  type: CartListActionType.PUT_CART_ITEM_START;
-}
-
-interface PutCartItemSuccess {
-  type: CartListActionType.PUT_CART_ITEM_SUCCESS;
-  payload: CartItem;
-}
-
-interface PutCartItemFailure {
-  type: CartListActionType.PUT_CART_ITEM_FAILURE;
-  payload: string;
-}
-
-interface PostCartItemStart {
-  type: CartListActionType.POST_CART_ITEM_START;
-}
-
-interface PostCartItemSuccess {
-  type: CartListActionType.POST_CART_ITEM_SUCCESS;
-  payload: CartItem;
-}
-
-interface PostCartItemFailure {
-  type: CartListActionType.POST_CART_ITEM_FAILURE;
-  payload: string;
-}
-
-interface RemoveCartItemStart {
-  type: CartListActionType.REMOVE_CART_ITEM_START;
-}
-
-interface RemoveCartItemSuccess {
-  type: CartListActionType.REMOVE_CART_ITEM_SUCCESS;
-  payload: CartItem;
-}
-
-interface RemoveCartItemFailure {
-  type: CartListActionType.REMOVE_CART_ITEM_FAILURE;
-  payload: string;
-}
-
-export type CartListAction =
-  | GetCartListStart
-  | GetCartListSuccess
-  | GetCartListFailure
-  | PutCartItemStart
-  | PutCartItemSuccess
-  | PutCartItemFailure
-  | PostCartItemStart
-  | PostCartItemSuccess
-  | PostCartItemFailure
-  | RemoveCartItemStart
-  | RemoveCartItemSuccess
-  | RemoveCartItemFailure;
+export type CartListAction = ReturnType<
+  typeof cartListAction[keyof typeof cartListAction][keyof typeof cartListAction[keyof typeof cartListAction]]
+>;

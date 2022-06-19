@@ -1,14 +1,18 @@
 export interface Item {
   id: number;
-  thumbnailUrl: string;
-  title: string;
+  imageUrl: string;
+  name: string;
   price: number;
 }
 
 export interface CartItem {
-  id: number;
+  id?: number;
+  productId?: number;
+  price?: number;
   quantity: number;
-  willPurchase: boolean;
+  checked: boolean;
+  imageUrl?: string;
+  name?: string;
 }
 
 export interface UserInfo {
