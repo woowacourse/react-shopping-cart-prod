@@ -10,7 +10,6 @@ const Styled = {
     background-color: ${({ theme }) => theme.colors.white};
     padding: 40px;
     overflow: scroll;
-    height: 100%;
 
     -ms-overflow-style: none;
     &::-webkit-scrollbar {
@@ -28,7 +27,7 @@ const Styled = {
   ProductName: styled.p`
     width: inherit;
     box-sizing: border-box;
-    padding: 0 30px;
+    padding: 0 23px;
 
     font-weight: 700;
     font-size: 23px;
@@ -39,8 +38,8 @@ const Styled = {
 
   Division: styled.hr`
     width: 390px;
-    height: 1px;
-    background-color: black;
+    height: 0.15px;
+    background-color: ${({ theme }) => theme.colors.brown};
     margin: 16px 0;
   `,
 
@@ -54,14 +53,14 @@ const Styled = {
 
   PriceTag: styled.p`
     font-weight: 400;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 20px;
     letter-spacing: 0.5px;
   `,
 
   ProductPrice: styled.p`
     font-weight: 400;
-    font-size: 21px;
+    font-size: 18px;
     line-height: 23px;
     letter-spacing: 0.5px;
   `,
@@ -72,7 +71,7 @@ const Styled = {
     width: 390px;
     height: 60px;
     font-weight: 700;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 21px;
     margin-top: 30px;
     padding: 7px;

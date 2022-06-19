@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import { UnderlineText } from 'components';
-import autoComma from 'utils/autoComma';
+import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
 import Styled from './index.style';
 
-const TotalPrice = ({ title, price, action }) => {
+const TotalPrice = ({ title, price, actionType, action }) => {
   return (
     <Styled.Container>
       <Styled.Header>{title}</Styled.Header>
@@ -11,11 +11,11 @@ const TotalPrice = ({ title, price, action }) => {
       <Styled.Body>
         <Styled.PriceContainer>
           <UnderlineText text={title} />
-          <UnderlineText text={`${autoComma(price)}원`} />
+          <UnderlineText text={`${transformToLocalPriceFormat(price)}원`} />
         </Styled.PriceContainer>
 
         <Styled.ButtonContainer>
-          <Styled.Action>{action}</Styled.Action>
+          <Styled.Action onClick={action}>{actionType}</Styled.Action>
         </Styled.ButtonContainer>
       </Styled.Body>
     </Styled.Container>
@@ -34,7 +34,7 @@ TotalPrice.propTypes = {
   /**
    * 버튼에 쓰일 텍스트
    */
-  action: PropTypes.string.isRequired,
+  actionType: PropTypes.string.isRequired,
 };
 
 export default TotalPrice;

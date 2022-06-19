@@ -1,45 +1,31 @@
-import axios from 'axios';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
-
-import { doInitializeCart, doLogout } from 'actions/actionCreator';
-import { deleteCookie, getCookie } from 'utils/cookie';
+import useAuth from 'hooks/domain/useAuth';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const UserMenu = ({ nickname }) => {
-  const dispatch = useDispatch();
-  const [renderSnackbar] = useSnackbar();
-
   const navigate = useNavigate();
+  const { renderSnackbar } = useSnackbar();
+  const { logout: initializeAuth } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(prev => !prev);
   };
 
-  const logout = async () => {
-    try {
-      const accessToken = getCookie('accessToken');
+  const editAccount = () => {
+    setIsOpen(false);
+    navigate(PATHNAME.TO_ACCOUNT);
+  };
 
-      await axios.post(
-        '/auth/logout',
-        {},
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        },
-      );
-
-      deleteCookie('accessToken');
+  const logout = () => {
+    initializeAuth(() => {
+      renderSnackbar(MESSAGE.LOGOUT_SUCCESS, SNACKBAR.SUCCESS);
       setIsOpen(false);
-      dispatch(doInitializeCart());
-      dispatch(doLogout());
-      renderSnackbar('로그아웃이 완료되었습니다.', 'SUCCESS');
-      navigate('/');
-    } catch (error) {
-      renderSnackbar('로그아웃에 실패하였습니다', 'FAILED');
-    }
+      navigate(PATHNAME.TO_HOME);
+    });
   };
 
   return (
@@ -47,20 +33,15 @@ const UserMenu = ({ nickname }) => {
       <Styled.NicknameThumbail onClick={toggleMenu}>{nickname[0]}</Styled.NicknameThumbail>
       {isOpen && (
         <Styled.Menu>
-          <Styled.Nickname>{nickname}님 👋</Styled.Nickname>
-          <Styled.Line />
-          <Styled.MenuItem
-            onClick={() => {
-              navigate('/account');
-              setIsOpen(false);
-            }}
-          >
-            회원수정
-          </Styled.MenuItem>
-          <Styled.Line />
+          <Styled.NicknameContainer>
+            <Styled.Nickname>{nickname}</Styled.Nickname>님, 안녕하세요 👋
+          </Styled.NicknameContainer>
+
+          <Styled.MenuItem onClick={editAccount}>회원수정</Styled.MenuItem>
           <Styled.MenuItem onClick={logout}>로그아웃</Styled.MenuItem>
         </Styled.Menu>
       )}
+      {isOpen && <Styled.Dimmer onClick={toggleMenu} />}
     </Styled.Container>
   );
 };

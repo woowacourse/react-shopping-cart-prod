@@ -1,34 +1,30 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import useSnackbar from 'hooks/useSnackbar';
+import useAuth from 'hooks/domain/useAuth';
 
 import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import { doLogin } from 'actions/actionCreator';
-import { setCookie, getCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const LoginPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isAuthenticated = !!getCookie('accessToken');
+  const { renderSnackbar } = useSnackbar();
+  const { isAuthenticated, login } = useAuth();
 
-  const [isFulfilled, setIsFulfilled] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const [renderSnackbar] = useSnackbar();
+  const [isFulfilled, setIsFulfilled] = useState(false);
 
   useEffect(() => {
+    // TODO : page에서 분리하기
     if (isAuthenticated) {
-      renderSnackbar(MESSAGE.ALREADY_LOGINED, 'FAILED');
-      navigate('/');
+      renderSnackbar(MESSAGE.ALREADY_LOGINED, SNACKBAR.FAILED);
+      navigate(PATHNAME.TO_HOME);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -41,22 +37,13 @@ const LoginPage = () => {
     setIsFulfilled(false);
   }, [email, password]);
 
-  const login = async () => {
+  const handleLoginButtonClick = () => {
     if (!isFulfilled) return;
 
-    try {
-      const response = await axios.post('/auth/login', {
-        email,
-        password,
-      });
-
-      setCookie('accessToken', response.data.accessToken);
-      dispatch(doLogin({ nickname: response.data.nickname }));
-      renderSnackbar(`${response.data.nickname}님 환영합니다 👋`, 'SUCCESS');
-      navigate('/');
-    } catch (error) {
-      renderSnackbar(`아이디와 비밀번호를 다시 확인해주세요.`, 'FAILED');
-    }
+    login(email, password, nickname => {
+      renderSnackbar(`${nickname}님, 안녕하세요 🙇🏻‍♀️`, SNACKBAR.SUCCESS);
+      navigate(PATHNAME.TO_HOME);
+    });
   };
 
   return (
@@ -78,8 +65,16 @@ const LoginPage = () => {
             inputValue={password}
             setInputValue={setPassword}
           />
-          <AuthButton actionType="Login" action={login} isDisabled={!isFulfilled} />
-          <GuideText guide="Don’t have an account?" destination="Sign up" path="/signup" />
+          <AuthButton
+            actionType="Login"
+            action={handleLoginButtonClick}
+            isDisabled={!isFulfilled}
+          />
+          <GuideText
+            guide="Don’t have an account?"
+            destination="Sign up"
+            path={PATHNAME.TO_SIGNUP}
+          />
         </div>
       </Container>
     </Styled.Container>

@@ -2,8 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
+import useAuth from 'hooks/domain/useAuth';
 
 import PasswordEditModal from './PasswordEditModal';
 import AccountDeleteModal from './AccountDeleteModal';
@@ -11,72 +10,51 @@ import { Container, Input, Title, AuthButton } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
-import { doLogin } from 'actions/actionCreator';
 import { validateNickname } from 'utils/validator';
-import { getCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const AccountPage = () => {
-  const dispatch = useDispatch();
-  const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const isAuthenticated = getCookie('accessToken');
+  const { renderSnackbar } = useSnackbar();
+  const { getAccountAPI, updateNickname } = useAuth();
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
-
   const [isNicknameCorrect, setIsNicknameCorrect] = useState(false);
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [isAccountDeleteModalOpen, setIsAccountDeleteModalOpen] = useState(false);
 
   useEffect(() => {
-    getProfile();
-  }, []);
+    getEmail();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getProfile = async () => {
-    const accessToken = getCookie('accessToken');
+  const getEmail = async () => {
+    try {
+      const { email } = await getAccountAPI();
 
-    const response = await axios.get('/customers', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    setEmail(response.data.email);
+      setEmail(email);
+    } catch (error) {}
   };
 
-  const updateProfile = async () => {
-    try {
-      if (!isNicknameCorrect) return;
+  const handelUpdateButtonClick = () => {
+    if (!isNicknameCorrect) return;
 
-      const accessToken = getCookie('accessToken');
+    updateNickname(
+      nickname,
+      () => {
+        renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, SNACKBAR.SUCCESS);
+        navigate(PATHNAME.TO_HOME);
+      },
+      error => {
+        const { code } = error.response.data;
 
-      const response = await axios.patch(
-        '/customers',
-        {
-          nickname,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        },
-      );
-      dispatch(doLogin({ nickname: response.data.nickname }));
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_SUCCESS, 'SUCCESS');
-    } catch (error) {
-      renderSnackbar(MESSAGE.UPDATE_NICKNAME_FAILURE, 'FAILED');
-    }
+        if (code === 1003) navigate(PATHNAME.TO_LOGIN);
+      },
+    );
   };
 
   return (
@@ -88,7 +66,7 @@ const AccountPage = () => {
             type="email"
             icon={<EmailIcon />}
             label="Email Address"
-            inputValue={email}
+            inputValue={email || ''}
             setInputValue={setEmail}
             isDisabled={true}
           />
@@ -103,7 +81,7 @@ const AccountPage = () => {
           />
           <AuthButton
             actionType="Update Profile"
-            action={updateProfile}
+            action={handelUpdateButtonClick}
             isDisabled={!isNicknameCorrect}
           />
 
@@ -134,7 +112,5 @@ const AccountPage = () => {
     </Styled.Container>
   );
 };
-
-// AccountDeleteModal
 
 export default AccountPage;

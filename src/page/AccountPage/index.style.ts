@@ -5,9 +5,6 @@ const Styled = {
   Container: styled.main`
     width: 1269px;
     background-color: ${({ theme }) => theme.colors.white};
-    padding: 40px;
-    overflow: scroll;
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -24,7 +21,7 @@ const Styled = {
     border-radius: 5px;
     background-color: ${({ theme }) => theme.colors.mint_001};
     color: ${({ theme }) => theme.colors.white};
-    font-size: 16px;
+    font-size: 14px;
     padding: 15px;
   `,
 
@@ -33,7 +30,7 @@ const Styled = {
     width: 200px;
     border-radius: 5px;
     color: ${({ theme }) => theme.colors.white};
-    font-size: 16px;
+    font-size: 14px;
     padding: 15px;
   `,
 

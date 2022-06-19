@@ -1,54 +1,23 @@
 // @ts-nocheck
-import { useCallback, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
+import useCart from 'hooks/domain/useCart';
+import useOrder from 'hooks/domain/useOrder';
 
 import { Image, CartProductItem, CheckBox, TotalPrice } from 'components';
 
-import {
-  doAddProdcutToOrder,
-  doInitializeOrder,
-  doSelectiveDeleteFromCart,
-} from 'actions/actionCreator';
-import { MESSAGE } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
+import { doAddProdcutToOrder, doInitializeOrder } from 'modules/cart';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import empty from 'assets/empty.jpeg';
 import Styled from './index.style';
 
 const CartPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [renderSnackbar] = useSnackbar();
-  const isAuthenticated = getCookie('accessToken');
-
-  const { products, shoppingCart, order } = useSelector(state => state.reducer);
-  const [totalPrice, setTotalPrice] = useState(0);
-
-  const calculateTotalPrice = useCallback(() => {
-    let total = 0;
-
-    order.forEach(productId => {
-      const { price } = products.find(product => product.id === productId);
-      const { quantity } = shoppingCart.find(product => product.id === productId);
-
-      total += quantity * price;
-    });
-
-    return total;
-  }, [products, shoppingCart, order]);
-
-  useEffect(() => {
-    setTotalPrice(calculateTotalPrice());
-  }, [calculateTotalPrice]);
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { shoppingCart, deleteProductsInOrder } = useCart();
+  const { order, totalPrice, postOrder } = useOrder();
+  const { renderSnackbar } = useSnackbar();
 
   const handleCheckboxClick = () => {
     if (shoppingCart.length === order.length) {
@@ -57,15 +26,23 @@ const CartPage = () => {
     }
 
     shoppingCart.forEach(product => {
-      if (!order.some(productId => productId === product.id)) {
-        dispatch(doAddProdcutToOrder({ id: product.id }));
+      // TODO: reducer로 빼도 될 듯. cart랑 order동기화 시키면 됨
+      if (!order.some(productId => productId === product.productId)) {
+        dispatch(doAddProdcutToOrder({ id: product.productId }));
       }
     });
   };
 
-  const deleteItem = () => {
-    dispatch(doSelectiveDeleteFromCart());
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+  const deleteSelectedItems = () => {
+    deleteProductsInOrder(renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, SNACKBAR.SUCCESS));
+  };
+
+  const handleOrderButtonClick = () => {
+    if (order.length <= 0) return;
+
+    postOrder(id => {
+      navigate(`${PATHNAME.TO_PAY}/${id}`);
+    });
   };
 
   return (
@@ -85,7 +62,7 @@ const CartPage = () => {
                   />
                   선택해제
                 </Styled.CheckBoxContainer>
-                <Styled.ProductDeleteButton onClick={deleteItem}>
+                <Styled.ProductDeleteButton onClick={deleteSelectedItems}>
                   상품삭제
                 </Styled.ProductDeleteButton>
               </Styled.SelectController>
@@ -94,8 +71,15 @@ const CartPage = () => {
                 든든배송 상품 ({shoppingCart.length}개)
               </Styled.ProductListTitle>
               <Styled.ProductList>
-                {shoppingCart.map(({ id, quantity }) => (
-                  <CartProductItem key={id} id={id} quantity={quantity} />
+                {shoppingCart.map(({ productId, name, price, image, quantity }) => (
+                  <CartProductItem
+                    key={productId}
+                    id={productId}
+                    name={name}
+                    price={price}
+                    image={image}
+                    quantity={quantity}
+                  />
                 ))}
               </Styled.ProductList>
             </Styled.LeftSide>
@@ -104,7 +88,8 @@ const CartPage = () => {
               <TotalPrice
                 title="결제예상금액"
                 price={totalPrice}
-                action={`주문하기(${order.length}개)`}
+                actionType={`주문하기(${order.length}개)`}
+                action={handleOrderButtonClick}
               />
             </Styled.RightSide>
           </Styled.OrderSheet>

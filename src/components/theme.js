@@ -10,6 +10,7 @@ const COLORS = {
   gray_003: '#ececec',
   gray_004: '#F1F1F1',
   gray_005: '#7a7d82',
+  gray_006: '#333333',
   red: '#E05858',
   green: '#009721',
 };

@@ -1,37 +1,34 @@
 import React from 'react';
+import axios from 'axios';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import reportWebVitals from 'reportWebVitals';
 import App from 'App';
-import store from 'store/store';
+import store from 'store';
+import { URL } from 'utils/constants';
 
-async function main() {
-  if (process.env.NODE_ENV === 'development') {
-    const { worker } = require('./mocks/worker');
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = URL.DEV_SERVER;
 
-    if (window.location.pathname === '/react-shopping-cart') {
-      window.location.pathname = '/react-shopping-cart/';
-      return;
-    }
+  const { worker } = require('./mocks/worker');
 
-    await worker.start({
-      serviceWorker: {
-        url: `/react-shopping-cart/mockServiceWorker.js`,
-      },
-    });
-  }
-
-  const root = ReactDOM.createRoot(document.getElementById('root'));
-  root.render(
-    <Provider store={store}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    </Provider>,
-  );
+  worker.start({
+    serviceWorker: {
+      url: `/mockServiceWorker.js`,
+    },
+  });
+} else if (process.env.NODE_ENV === 'production') {
+  axios.defaults.baseURL = URL.이프_서버;
 }
 
-main();
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <Provider store={store}>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </Provider>,
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

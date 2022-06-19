@@ -13,6 +13,7 @@ export { default as Header } from 'components/Header';
 export { default as Image } from 'components/Image';
 export { default as Input } from 'components/Input';
 export { default as Layout } from 'components/Layout';
+export { default as PaymentProductItem } from 'components/PaymentProductItem';
 export { default as ProductItem } from 'components/ProductItem';
 export { default as QuantityController } from 'components/QuantityController';
 export { default as Snackbar } from 'components/Snackbar';

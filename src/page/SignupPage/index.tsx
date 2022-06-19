@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import useSnackbar from 'hooks/useSnackbar';
+import useAuth from 'hooks/domain/useAuth';
 
 import { Input, Title, GuideText, AuthButton, Container } from 'components';
 import { ReactComponent as EmailIcon } from 'assets/email_icon.svg';
@@ -10,13 +10,13 @@ import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 import { ReactComponent as NicknameIcon } from 'assets/nickname_icon.svg';
 
 import { validateEmail, validateNickname, validatePassword } from 'utils/validator';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const SignupPage = () => {
-  const [renderSnackbar] = useSnackbar();
   const navigate = useNavigate();
-  const isAuthenticated = getCookie('accessToken');
+  const { renderSnackbar } = useSnackbar();
+  const { signupAPI, isAuthenticated } = useAuth();
 
   const [email, setEmail] = useState('');
   const [nickname, setNickname] = useState('');
@@ -29,8 +29,8 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      renderSnackbar(MESSAGE.ALREADY_LOGINED, 'FAILED');
-      navigate('/');
+      renderSnackbar(MESSAGE.ALREADY_LOGINED, SNACKBAR.FAILED);
+      navigate(PATHNAME.TO_HOME);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -38,16 +38,17 @@ const SignupPage = () => {
 
   useEffect(() => {
     setIsFulfilled(isEmailCorrect && isNicknameCorrect && isPasswordCorrect);
-  }, [email, nickname, password, isEmailCorrect, isNicknameCorrect, isPasswordCorrect]);
+  }, [isEmailCorrect, isNicknameCorrect, isPasswordCorrect]);
 
   const signup = async () => {
     if (!isFulfilled) return;
 
-    await axios.post('/customers', {
-      email,
-      nickname,
-      password,
-    });
+    try {
+      await signupAPI(email, nickname, password);
+
+      renderSnackbar(`${nickname}님, 환영합니다 👋`, SNACKBAR.SUCCESS);
+      navigate(PATHNAME.TO_LOGIN);
+    } catch (error) {}
   };
 
   return (
@@ -87,7 +88,11 @@ const SignupPage = () => {
             />
           </Styled.InputContainer>
           <AuthButton actionType="Sign Up" action={signup} isDisabled={!isFulfilled} />
-          <GuideText guide="Already have an account?" destination="Login" path="/login" />
+          <GuideText
+            guide="Already have an account?"
+            destination="Login"
+            path={PATHNAME.TO_LOGIN}
+          />
         </div>
       </Container>
     </Styled.Container>

@@ -1,52 +1,87 @@
 // @ts-nocheck
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import useProduct from 'hooks/useProduct';
-import useCart from 'hooks/useCart';
+import useCart from 'hooks/domain/useCart';
 import useSnackbar from 'hooks/useSnackbar';
+import useProduct from 'hooks/domain/useProduct';
 
 import { Image } from 'components';
 
-import { doPutProductToCart } from 'actions/actionCreator';
-import autoComma from 'utils/autoComma';
-import { LINK, MESSAGE } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
+import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const ProductDetailPage = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [renderSnackbar] = useSnackbar();
-  const isAuthenticated = getCookie('accessToken');
+  const { renderSnackbar } = useSnackbar();
+  const { getProductAPI } = useProduct();
+  const { isInCart, getProductQuantity, putProductInCart } = useCart();
+
   const params = useParams();
   const id = Number(params.id);
-  const [{ image, name, price }] = useProduct(id);
-  const [isInCart, product] = useCart(id);
+  const [product, setProduct] = useState(null);
 
-  const putCart = () => {
-    if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
-      return;
+  const getProduct = async () => {
+    try {
+      const { image, name, price } = await getProductAPI(id);
+
+      setProduct({
+        id,
+        image,
+        name,
+        price,
+      });
+    } catch (error) {
+      navigate(PATHNAME.TO_HOME);
     }
+  };
 
-    dispatch(doPutProductToCart({ id: id, quantity: isInCart ? product.quantity + 1 : 1 }));
-    navigate(LINK.TO_CART);
+  useEffect(() => {
+    getProduct();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleCartButtonClick = () => {
+    putProductInCart(
+      id,
+      product.name,
+      product.price,
+      product.image,
+      isInCart(id) ? getProductQuantity(id) + 1 : 1,
+      () => {
+        renderSnackbar(MESSAGE.ADD_CART_SUCCESS, SNACKBAR.SUCCESS);
+        navigate(PATHNAME.TO_CART);
+      },
+      error => {
+        const { code } = error.response.data;
+
+        if (code === 1003) {
+          navigate(PATHNAME.TO_LOGIN);
+        }
+      },
+    );
   };
 
   return (
-    <Styled.Container>
-      <Styled.ProductContainer>
-        <Image src={image} alt={name} size="350px" />
-        <Styled.ProductName>{name}</Styled.ProductName>
-        <Styled.Division />
-        <Styled.PriceContainer>
-          <Styled.PriceTag>금액</Styled.PriceTag>
-          <Styled.ProductPrice>{autoComma(price)}원</Styled.ProductPrice>
-        </Styled.PriceContainer>
-        <Styled.PutCartButton onClick={putCart}>장바구니</Styled.PutCartButton>
-      </Styled.ProductContainer>
-    </Styled.Container>
+    <>
+      {product && (
+        <Styled.Container>
+          <Styled.ProductContainer>
+            <Image src={product.image} alt={product.name} size="400px" />
+            <Styled.ProductName>{product.name}</Styled.ProductName>
+            <Styled.Division />
+            <Styled.PriceContainer>
+              <Styled.PriceTag>금액</Styled.PriceTag>
+              <Styled.ProductPrice>
+                {transformToLocalPriceFormat(product.price)}원
+              </Styled.ProductPrice>
+            </Styled.PriceContainer>
+            <Styled.PutCartButton onClick={handleCartButtonClick}>장바구니</Styled.PutCartButton>
+          </Styled.ProductContainer>
+        </Styled.Container>
+      )}
+    </>
   );
 };
 

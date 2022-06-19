@@ -1,45 +1,32 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import useSnackbar from 'hooks/useSnackbar';
+import useAuth from 'hooks/domain/useAuth';
 
 import { Modal, Input, Title, AuthButton, Container } from 'components';
 import { ReactComponent as PasswordIcon } from 'assets/pw_icon.svg';
 
-import { getCookie } from 'utils/cookie';
-import { MESSAGE } from 'utils/constants';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const AccountDeleteModal = ({ handleModal }) => {
-  const [renderSnackbar] = useSnackbar();
+  const navigate = useNavigate();
+  const { renderSnackbar } = useSnackbar();
+  const { deleteAccount } = useAuth();
 
   const [password, setPassword] = useState('');
-
   const [isCorrectPassword, setIsCorrectPassword] = useState(false);
 
   useEffect(() => {
     setIsCorrectPassword(password.length >= 10);
   }, [password]);
 
-  const deleteAccount = async () => {
-    try {
-      if (!isCorrectPassword) return;
-
-      const accessToken = getCookie('accessToken');
-
-      await axios.delete('/customers', {
-        data: {
-          password,
-        },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, 'SUCCESS');
+  const handleDeleteButtonClick = () => {
+    deleteAccount(password, () => {
+      renderSnackbar(MESSAGE.DELETE_ACCOUNT_SUCCESS, SNACKBAR.SUCCESS);
       handleModal();
-    } catch (error) {
-      renderSnackbar(MESSAGE.DELETE_ACCOUT_FAILUER, 'FAILED');
-    }
+      navigate(PATHNAME.TO_HOME);
+    });
   };
 
   return (
@@ -60,7 +47,7 @@ const AccountDeleteModal = ({ handleModal }) => {
           />
           <AuthButton
             actionType="Delete your account"
-            action={deleteAccount}
+            action={handleDeleteButtonClick}
             isDisabled={!isCorrectPassword}
             color="red"
           />

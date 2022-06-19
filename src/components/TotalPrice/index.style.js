@@ -9,7 +9,7 @@ const Styled = {
   `,
 
   Header: styled.div`
-    width: 348px;
+    width: 350px;
     border: 1px solid ${({ theme }) => theme.colors.gray};
     display: flex;
     padding: 20px;
@@ -18,6 +18,7 @@ const Styled = {
     font-size: 16px;
     line-height: 20px;
     letter-spacing: 0.5px;
+    margin: -1px;
   `,
 
   Body: styled.div`

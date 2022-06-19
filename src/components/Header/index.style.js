@@ -9,7 +9,6 @@ const Styled = {
     height: 58px;
     background-color: ${({ theme }) => theme.colors.mint_001};
     z-index: 500;
-    padding-top: 10px;
   `,
 };
 

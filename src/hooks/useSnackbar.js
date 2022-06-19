@@ -1,16 +1,19 @@
-import { useDispatch } from 'react-redux';
-import { doShowSnackbar, doHideSnackbar } from 'actions/actionCreator';
+// @ts-nocheck
+import { useDispatch, useSelector } from 'react-redux';
+import { doHideSnackbar, doShowSnackbar } from 'modules/snackbar';
+import { TIMER } from 'utils/constants';
 
 const useSnackbar = () => {
   const dispatch = useDispatch();
+  const { isSnackbarVisible, message, status } = useSelector(state => state.snackbarReducer);
 
   const renderSnackbar = (message, status) => {
     dispatch(doShowSnackbar({ message, status }));
 
-    setTimeout(() => dispatch(doHideSnackbar()), 3000);
+    setTimeout(() => dispatch(doHideSnackbar()), TIMER.SNACKBAR_CLOSE_TIME);
   };
 
-  return [renderSnackbar];
+  return { renderSnackbar, isSnackbarVisible, message, status };
 };
 
 export default useSnackbar;

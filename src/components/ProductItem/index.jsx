@@ -1,65 +1,72 @@
 // @ts-nocheck
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import useClose from 'hooks/useClose';
-import useCart from 'hooks/useCart';
 import useSnackbar from 'hooks/useSnackbar';
+import useCart from 'hooks/domain/useCart';
+import useAuth from 'hooks/domain/useAuth';
 
 import { Image, CartIcon, QuantityController } from 'components';
 
-import { doDeleteProductFromCart, doPutProductToCart } from 'actions/actionCreator';
-import autoComma from 'utils/autoComma';
-import { LINK, MESSAGE } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
+import transformToLocalPriceFormat from 'utils/transformToLocalPriceFormat';
+import { PATHNAME, MESSAGE, SNACKBAR } from 'utils/constants';
 import Styled from './index.style';
 
 const ProductItem = ({ id, name, price, image }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [renderSnackbar] = useSnackbar();
-  const isAuthenticated = getCookie('accessToken');
-
-  const [isInCart, product] = useCart(id);
-  const [quantity, setQuantity] = useState(isInCart ? product.quantity : 1);
+  const { isAuthenticated } = useAuth();
+  const { renderSnackbar } = useSnackbar();
+  const { isInCart, getProductQuantity, putProductInCart, deleteProductInCart } = useCart();
 
   const [isControllerOpen, setIsControllerOpen] = useState(false);
   const [clearTimer, setAutoCloseTimer, extendTimer] = useClose();
 
+  const [quantity, setQuantity] = useState(1);
   const quantityRef = useRef(quantity);
   quantityRef.current = quantity;
 
-  const updateCart = () => {
+  useEffect(() => {
+    if (isInCart(id)) setQuantity(getProductQuantity(id));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isInCart(id)]);
+
+  const updateCart = async () => {
     setIsControllerOpen(false);
     clearTimer();
+    const isPositiveQuantity = quantityRef.current > 0;
 
-    if (quantityRef.current > 0) {
-      dispatch(doPutProductToCart({ id, quantity: quantityRef.current }));
-      renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
+    if (isPositiveQuantity) {
+      putProductInCart(
+        id,
+        name,
+        price,
+        image,
+        quantityRef.current,
+        renderSnackbar(MESSAGE.ADD_CART_SUCCESS, SNACKBAR.SUCCESS),
+      );
       return;
     }
 
-    dispatch(doDeleteProductFromCart({ id }));
-    renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, 'SUCCESS');
+    deleteProductInCart(id, renderSnackbar(MESSAGE.REMOVE_CART_SUCCESS, SNACKBAR.SUCCESS));
   };
 
   const handleItemClick = () => {
-    navigate(`${LINK.TO_DETAILS}/${id}`);
+    navigate(`${PATHNAME.TO_DETAILS}/${id}`);
   };
 
   const handleCartClick = e => {
     e.stopPropagation();
 
     if (!isAuthenticated) {
-      renderSnackbar(MESSAGE.NO_AUTHORIZATION, 'FAILED');
-      navigate('/login');
+      renderSnackbar(MESSAGE.NO_AUTHORIZATION, SNACKBAR.FAILED);
+      navigate(PATHNAME.TO_LOGIN);
       return;
     }
 
     if (isControllerOpen) {
       updateCart();
-      renderSnackbar(MESSAGE.ADD_CART_SUCCESS, 'SUCCESS');
     } else {
       setIsControllerOpen(true);
       setAutoCloseTimer(updateCart);
@@ -78,10 +85,10 @@ const ProductItem = ({ id, name, price, image }) => {
       <Styled.ProductController>
         <div>
           <Styled.ProductName>{name}</Styled.ProductName>
-          <Styled.ProductPrice>{autoComma(price)}원</Styled.ProductPrice>
+          <Styled.ProductPrice>{transformToLocalPriceFormat(price)}원</Styled.ProductPrice>
         </div>
         <Styled.CartController onClick={handleCartClick}>
-          {isInCart ? <Styled.Quantity>{quantity}</Styled.Quantity> : <CartIcon />}
+          {isInCart(id) ? <Styled.Quantity>{quantity}</Styled.Quantity> : <CartIcon />}
         </Styled.CartController>
       </Styled.ProductController>
 

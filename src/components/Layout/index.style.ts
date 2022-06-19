@@ -5,6 +5,7 @@ const Styled = {
   Container: styled.div`
     display: flex;
     flex-direction: column;
+    height: 100%;
   `,
 
   RightSide: styled.div`
@@ -13,16 +14,17 @@ const Styled = {
   `,
 
   HomeLink: styled(Link)`
+    display: flex;
     font-weight: 900;
     font-size: 30px;
     line-height: 58px;
     text-decoration: none;
     color: white;
+    align-items: center;
   `,
 
   CartLink: styled(Link)`
-    font-weight: 500;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 12px;
     text-decoration: none;
     color: white;
@@ -30,8 +32,7 @@ const Styled = {
   `,
 
   OrderLink: styled(Link)`
-    font-weight: 500;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 12px;
     text-decoration: none;
     color: white;
@@ -40,7 +41,7 @@ const Styled = {
 
   LoginLink: styled(Link)`
     font-weight: 500;
-    font-size: 20px;
+    font-size: 15px;
     line-height: 12px;
     text-decoration: none;
     color: white;
@@ -50,6 +51,7 @@ const Styled = {
   OutletContainer: styled.div`
     display: flex;
     justify-content: center;
+    height: 100%;
   `,
 };
 

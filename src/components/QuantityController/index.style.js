@@ -7,19 +7,19 @@ const Styled = {
     position: absolute;
     display: flex;
     border-radius: 25px;
-    width: 100px;
+    width: 120px;
     height: 30px;
     bottom: 60px;
-    left: 45px;
+    left: 30px;
     background-color: ${({ theme }) => theme.colors.white};
     box-shadow: 0px 0px 4px rgb(0 0 0 / 20%);
     align-items: center;
     justify-content: space-around;
+    font-size: 17px;
   `,
 
   Quantity: styled.p`
     font-weight: 500;
-    font-size: 15px;
     color: ${({ theme }) => theme.colors.mint_001};
   `,
 

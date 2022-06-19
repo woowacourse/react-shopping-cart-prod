@@ -1,22 +1,24 @@
 // @ts-nocheck
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Outlet, useLocation } from 'react-router-dom';
+import useAuth from 'hooks/domain/useAuth';
 
 import { Header, CartIcon, UserMenu } from 'components';
 
-import { ROUTES } from 'utils/constants';
-import { getCookie } from 'utils/cookie';
+import { ROUTES, PATHNAME } from 'utils/constants';
 import Styled from './index.style';
 
 const Layout = () => {
   const location = useLocation();
-  const { nickname } = useSelector(state => state.authReducer);
+  const { nickname, isAuthenticated } = useAuth();
   const [isHeaderShow, setIsHeaderShow] = useState(true);
-  const isAuthenticated = getCookie('accessToken');
 
   useEffect(() => {
-    setIsHeaderShow(location.pathname !== '/login' && location.pathname !== '/signup');
+    setIsHeaderShow(
+      location.pathname !== PATHNAME.TO_LOGIN &&
+        location.pathname !== PATHNAME.TO_SIGNUP &&
+        location.pathname !== PATHNAME.TO_SERVER,
+    );
   }, [location]);
 
   return (
@@ -32,12 +34,12 @@ const Layout = () => {
             right={
               isAuthenticated ? (
                 <Styled.RightSide>
-                  <Styled.CartLink to={ROUTES.CART}>장바구니</Styled.CartLink>
-                  <Styled.OrderLink to={ROUTES.HOME}>주문목록</Styled.OrderLink>
+                  <Styled.CartLink to={ROUTES.CART}>Cart</Styled.CartLink>
+                  <Styled.OrderLink to={ROUTES.HOME}>Order</Styled.OrderLink>
                   <UserMenu nickname={nickname} />
                 </Styled.RightSide>
               ) : (
-                <Styled.LoginLink to="/login">로그인</Styled.LoginLink>
+                <Styled.LoginLink to={PATHNAME.TO_LOGIN}>Login</Styled.LoginLink>
               )
             }
           />

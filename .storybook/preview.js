@@ -3,9 +3,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyles, theme } from 'components';
-import store from 'store/store';
-import { doInitializeProductList } from 'actions/actionCreator';
-import { dummyProductList } from 'dummy_data';
+import store from 'store';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -20,8 +18,6 @@ export const parameters = {
 
 export const decorators = [
   (Story, context) => {
-    store.dispatch(doInitializeProductList({ products: dummyProductList }));
-
     return (
       <>
         <BrowserRouter>
