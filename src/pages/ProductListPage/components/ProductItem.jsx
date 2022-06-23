@@ -24,7 +24,7 @@ function ProductItem({
 
   return (
     <div className={cn(styles.productItem, className)}>
-      <Link to={`/product/${productId}`}>
+      <Link to={`/products/${productId}`}>
         <LoadingThumbnail
           src={`${thumbnailUrl}`}
           className={styles.thumbnail}

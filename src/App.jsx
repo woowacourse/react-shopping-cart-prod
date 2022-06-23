@@ -53,7 +53,7 @@ function App() {
               </AuthGuard>
             }
           />
-          <Route path="/product/:id" element={<ProductDetailPage />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
           <Route
             path="/order-list"
             element={
