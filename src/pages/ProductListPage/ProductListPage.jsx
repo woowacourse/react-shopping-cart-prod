@@ -33,8 +33,11 @@ function ProductListPage() {
   return (
     <div className="wrapper">
       <div className={cn(styles.productList)}>
-        {productList &&
-          productList.map((item) => <ProductItem key={item.id} {...item} />)}
+        {productList.length === 0 ? (
+          <div className={styles.noProductItem}>상품이 없습니다. 😥</div>
+        ) : (
+          productList.map((item) => <ProductItem key={item.id} {...item} />)
+        )}
       </div>
     </div>
   );
