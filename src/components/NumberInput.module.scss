@@ -29,7 +29,8 @@
   background-color: black;
 }
 
-.up, .down {
+.up,
+.down {
   @include button-no-style;
   width: 25px;
   height: 15px;

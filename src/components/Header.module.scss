@@ -27,7 +27,7 @@
     height: 48px;
     line-height: 53px;
     text-align: center;
-    color: white;  
+    color: white;
   }
 }
 
@@ -47,7 +47,8 @@
       button {
         @include button-no-style;
       }
-      a, button {
+      a,
+      button {
         display: block;
         padding: 10px 0;
         font-size: 20px;
@@ -60,7 +61,7 @@
       }
     }
   }
-  
+
   & > .hello {
     height: 400px;
     background-color: yellow;

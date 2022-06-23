@@ -15,9 +15,9 @@
   color: #333333;
 
   &.primary {
-    background-color: #2AC1BC;
+    background-color: #2ac1bc;
     color: white;
-  
+
     &:disabled {
       background-color: $green800;
     }
@@ -48,9 +48,3 @@
 .md {
   padding: 6px 0;
 }
-
-.lg {}
-
-.xl {}
-
-.xxl {}
