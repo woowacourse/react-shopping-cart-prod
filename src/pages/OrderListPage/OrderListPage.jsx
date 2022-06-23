@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import cn from "classnames";
 
 import PageTitle from "@components/PageTitle";
 import OrderTable from "./components/OrderTable";
@@ -7,7 +6,6 @@ import OrderTable from "./components/OrderTable";
 import { useFetch } from "../../hooks/useFetch";
 import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
 
-import styles from "./OrderListPage.module";
 import PageLoader from "../../components/PageLoader";
 import PageErrorResult from "../../components/PageErrorResult";
 
@@ -33,9 +31,9 @@ function OrderListPage() {
 
   return (
     <div className="wrapper">
-      <div className={cn(styles.orderList)}>
+      <div>
         <PageTitle className="mb-50">주문목록</PageTitle>
-        <div className={styles.container}>
+        <div>
           {orderList.map((order) => (
             <OrderTable
               key={order.id}

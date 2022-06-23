@@ -3,8 +3,8 @@ import styles from "./OrderTable.module";
 
 function OrderTable({ orderId, orderedProducts }) {
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>주문번호: {orderId}</div>
+    <div>
+      <div>주문번호: {orderId}</div>
       <div className={styles.table}>
         <table>
           <tbody>
