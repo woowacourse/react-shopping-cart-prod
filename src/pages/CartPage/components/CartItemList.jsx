@@ -78,27 +78,6 @@ function CartItemList({ className }) {
 
   if (isLoading) return <div>...loading</div>;
 
-  if (cart.length === 0)
-    return (
-      <div className={className}>
-        <div className="flex justify-between mb-26">
-          <LabeledCheckbox
-            id="all-select"
-            label={isAllSelected ? "선택해제" : "전체선택"}
-            onChange={handleAllSelectToggle}
-            checked={isAllSelected}
-          />
-          <Button onClick={handleDeleteSelectedProducts}>상품삭제</Button>
-        </div>
-        <div>
-          <div className="mb-16">{`상품 리스트 (${cart.length}개)`}</div>
-          <div className={styles.noCartItem}>
-            장바구니에 담긴 상품이 없습니다. 😥
-          </div>
-        </div>
-      </div>
-    );
-
   return (
     <div className={className}>
       <div className="flex justify-between mb-26">
@@ -112,28 +91,34 @@ function CartItemList({ className }) {
       </div>
       <div>
         <div className="mb-16">{`상품 리스트 (${cart.length}개)`}</div>
-        <table className={styles.table}>
-          <tbody>
-            {cart.map((cartItem) => {
-              const { id, quantity } = cartItem;
-              const isSelected = selectedCartItemIds.includes(cartItem.id);
-              return (
-                <tr key={id}>
-                  <td>
-                    <CartItem
-                      {...cartItem}
-                      checked={isSelected}
-                      onChecked={handleCheck(id)}
-                      onQuantityChange={handleQuantityChange(id)}
-                      onDelete={handleDeleteProduct(id)}
-                      quantity={quantity}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        {cart.length === 0 ? (
+          <div className={styles.noCartItem}>
+            장바구니에 담긴 상품이 없습니다. 😥
+          </div>
+        ) : (
+          <table className={styles.table}>
+            <tbody>
+              {cart.map((cartItem) => {
+                const { id, quantity } = cartItem;
+                const isSelected = selectedCartItemIds.includes(cartItem.id);
+                return (
+                  <tr key={id}>
+                    <td>
+                      <CartItem
+                        {...cartItem}
+                        checked={isSelected}
+                        onChecked={handleCheck(id)}
+                        onQuantityChange={handleQuantityChange(id)}
+                        onDelete={handleDeleteProduct(id)}
+                        quantity={quantity}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
