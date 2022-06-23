@@ -7,6 +7,7 @@ import OrderListPage from "./pages/OrderListPage/OrderListPage";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import MyPage from "./pages/MyPage/MyPage";
+import WrongAccessPage from "./pages/WrongAccessPage/WrongAccessPage";
 
 import AuthGuard from "./components/AuthGuard";
 import Header from "./components/Header";
@@ -62,6 +63,7 @@ function App() {
               </AuthGuard>
             }
           />
+          <Route path="*" element={<WrongAccessPage />} />
         </Routes>
       </BrowserRouter>
     </div>
