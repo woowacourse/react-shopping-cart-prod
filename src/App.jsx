@@ -25,7 +25,7 @@ function App() {
           <Route
             path="/cart"
             element={
-              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_IN_USER}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_IN}>
                 <CartPage />
               </AuthGuard>
             }
@@ -33,7 +33,7 @@ function App() {
           <Route
             path="/login"
             element={
-              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_OUT_USER}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_OUT}>
                 <LoginPage />
               </AuthGuard>
             }
@@ -41,7 +41,7 @@ function App() {
           <Route
             path="/signup"
             element={
-              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_OUT_USER}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_OUT}>
                 <SignUpPage />
               </AuthGuard>
             }
@@ -49,7 +49,7 @@ function App() {
           <Route
             path="/my-page"
             element={
-              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_IN_USER}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_IN}>
                 <MyPage />
               </AuthGuard>
             }
@@ -58,7 +58,7 @@ function App() {
           <Route
             path="/order-list"
             element={
-              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_IN_USER}>
+              <AuthGuard policy={USER_ACCESS_POLICY.ONLY_LOGGED_IN}>
                 <OrderListPage />
               </AuthGuard>
             }
