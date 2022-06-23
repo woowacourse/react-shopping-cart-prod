@@ -1,4 +1,4 @@
-const queryState = {
+const apiRequestState = {
   init: () => ({
     isLoading: false,
     isError: false,
@@ -25,4 +25,4 @@ const queryState = {
   }),
 };
 
-export default queryState;
+export default apiRequestState;

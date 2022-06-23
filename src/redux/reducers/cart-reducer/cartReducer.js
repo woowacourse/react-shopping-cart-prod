@@ -1,18 +1,18 @@
 /* eslint-disable default-param-last */
-import queryState from "@redux/utils/queryState";
+import apiRequestState from "@redux/utils/apiRequestState";
 import ACTION_TYPE from "./cartActions";
 
 const cartReducer = (state, { type, payload }) => {
   switch (type) {
     case ACTION_TYPE.GET_CART_PENDING: {
       const newState = structuredClone(state);
-      newState.query.getCart = queryState.pending();
+      newState.query.getCart = apiRequestState.pending();
       return newState;
     }
     case ACTION_TYPE.GET_CART_FULFILLED: {
       const newState = structuredClone(state);
       const { cart } = payload;
-      newState.query.getCart = queryState.fulfilled();
+      newState.query.getCart = apiRequestState.fulfilled();
       cart.forEach((_, index) => {
         cart[index].selected = true;
       });
@@ -23,13 +23,13 @@ const cartReducer = (state, { type, payload }) => {
       const newState = structuredClone(state);
       const { error } = payload;
       alert(error.message);
-      newState.query.getCart = queryState.rejected(error);
+      newState.query.getCart = apiRequestState.rejected(error);
       return newState;
     }
 
     case ACTION_TYPE.ADD_PRODUCT_TO_CART_PENDING: {
       const newState = structuredClone(state);
-      newState.query.addProductToCart = queryState.pending();
+      newState.query.addProductToCart = apiRequestState.pending();
       return newState;
     }
     case ACTION_TYPE.ADD_PRODUCT_TO_CART_FULFILLED: {
@@ -37,7 +37,7 @@ const cartReducer = (state, { type, payload }) => {
       const { cartItem } = payload;
       cartItem.selected = true;
 
-      newState.query.addProductToCart = queryState.fulfilled();
+      newState.query.addProductToCart = apiRequestState.fulfilled();
       newState.data.push(cartItem);
       alert("상품이 성공적으로 추가되었습니다");
 
@@ -46,14 +46,14 @@ const cartReducer = (state, { type, payload }) => {
     case ACTION_TYPE.ADD_PRODUCT_TO_CART_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
-      newState.query.addProductToCart = queryState.rejected(error);
+      newState.query.addProductToCart = apiRequestState.rejected(error);
       alert(error.message);
       return newState;
     }
 
     case ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_PENDING: {
       const newState = structuredClone(state);
-      newState.query.updateCartItemQuantity = queryState.pending();
+      newState.query.updateCartItemQuantity = apiRequestState.pending();
       return newState;
     }
     case ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_FULFILLED: {
@@ -63,20 +63,20 @@ const cartReducer = (state, { type, payload }) => {
         return cartItem.id === cartItemId;
       });
       newState.data[index].quantity = quantity;
-      newState.query.updateCartItemQuantity = queryState.fulfilled();
+      newState.query.updateCartItemQuantity = apiRequestState.fulfilled();
       return newState;
     }
     case ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
-      newState.query.updateCartItemQuantity = queryState.rejected(error);
+      newState.query.updateCartItemQuantity = apiRequestState.rejected(error);
       alert(error.message);
       return newState;
     }
 
     case ACTION_TYPE.DELETE_CART_ITEMS_PENDING: {
       const newState = structuredClone(state);
-      newState.query.deleteCartItems = queryState.pending();
+      newState.query.deleteCartItems = apiRequestState.pending();
       return newState;
     }
     case ACTION_TYPE.DELETE_CART_ITEMS_FULFILLED: {
@@ -86,13 +86,13 @@ const cartReducer = (state, { type, payload }) => {
         (cartItem) => !cartItemIds.includes(cartItem.id)
       );
       newState.data = newCart;
-      newState.query.deleteCartItems = queryState.fulfilled();
+      newState.query.deleteCartItems = apiRequestState.fulfilled();
       return newState;
     }
     case ACTION_TYPE.DELETE_CART_ITEMS_REJECTED: {
       const { error } = payload;
       alert(error.message);
-      return queryState.rejected(state, payload);
+      return apiRequestState.rejected(state, payload);
     }
 
     case ACTION_TYPE.SELECT_CART_ITEM: {
