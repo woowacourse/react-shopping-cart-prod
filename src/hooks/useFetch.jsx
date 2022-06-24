@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LocalStorage from "@utils/LocalStorage";
-import ApiError from "@redux/utils/ApiError";
+import ApiError from "@utils/ApiError";
 import { FETCH_STATUS, REQUEST_METHOD } from "../constants";
 
 const getResponseWithFetch = async (

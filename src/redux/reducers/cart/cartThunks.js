@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
-import ApiError from "@redux/utils/ApiError";
-import Fetcher from "../../../utils/fetcher";
+import ApiError from "@utils/ApiError";
+import Fetcher from "@utils/fetcher";
+
 import createAction from "../../utils/createAction";
 import ACTION_TYPE from "./cartActions";
 
