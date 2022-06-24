@@ -23,14 +23,13 @@ export const getCart =
 
       dispatch(createAction(ACTION_TYPE.GET_CART_FULFILLED, { cart }));
     } catch (e) {
-      dispatch(
-        createAction(ACTION_TYPE.GET_CART_REJECTED, {
-          error: {
-            message: errorMessages[e.errorCode] ?? e.message,
-            errorCode: e.errorCode,
-          },
-        })
-      );
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
+      dispatch(createAction(ACTION_TYPE.GET_CART_REJECTED, { error }));
+      alert(error.message);
     }
   };
 
@@ -52,15 +51,17 @@ export const addProductToCart =
       dispatch(
         createAction(ACTION_TYPE.ADD_PRODUCT_TO_CART_FULFILLED, { cartItem })
       );
+      alert("상품이 성공적으로 추가되었습니다");
     } catch (e) {
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
       dispatch(
-        createAction(ACTION_TYPE.ADD_PRODUCT_TO_CART_REJECTED, {
-          error: {
-            message: errorMessages[e.errorCode] ?? e.message,
-            errorCode: e.errorCode,
-          },
-        })
+        createAction(ACTION_TYPE.ADD_PRODUCT_TO_CART_REJECTED, { error })
       );
+      alert(error.message);
     }
   };
 
@@ -85,14 +86,15 @@ export const updateCartItemQuantity =
         })
       );
     } catch (e) {
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
       dispatch(
-        createAction(ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_REJECTED, {
-          error: {
-            message: errorMessages[e.errorCode] ?? e.message,
-            errorCode: e.errorCode,
-          },
-        })
+        createAction(ACTION_TYPE.UPDATE_CART_ITEM_QUANTITY_REJECTED, { error })
       );
+      alert(error.message);
     }
   };
 
@@ -114,13 +116,12 @@ export const deleteCartItems =
         createAction(ACTION_TYPE.DELETE_CART_ITEMS_FULFILLED, { cartItemIds })
       );
     } catch (e) {
-      dispatch(
-        createAction(ACTION_TYPE.DELETE_CART_ITEMS_REJECTED, {
-          error: {
-            message: errorMessages[e.errorCode] ?? e.message,
-            errorCode: e.errorCode,
-          },
-        })
-      );
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
+      dispatch(createAction(ACTION_TYPE.DELETE_CART_ITEMS_REJECTED, { error }));
+      alert(error.message);
     }
   };

@@ -32,7 +32,6 @@ const cartReducer = (state = initialState, { type, payload }) => {
     case ACTION_TYPE.GET_CART_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
-      alert(error.message);
       newState.query.getCart = apiRequestState.rejected(error);
       return newState;
     }
@@ -49,15 +48,12 @@ const cartReducer = (state = initialState, { type, payload }) => {
 
       newState.query.addProductToCart = apiRequestState.fulfilled();
       newState.data.push(cartItem);
-      alert("상품이 성공적으로 추가되었습니다");
-
       return newState;
     }
     case ACTION_TYPE.ADD_PRODUCT_TO_CART_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
       newState.query.addProductToCart = apiRequestState.rejected(error);
-      alert(error.message);
       return newState;
     }
 
@@ -80,7 +76,6 @@ const cartReducer = (state = initialState, { type, payload }) => {
       const newState = structuredClone(state);
       const { error } = payload;
       newState.query.updateCartItemQuantity = apiRequestState.rejected(error);
-      alert(error.message);
       return newState;
     }
 
@@ -101,8 +96,7 @@ const cartReducer = (state = initialState, { type, payload }) => {
     }
     case ACTION_TYPE.DELETE_CART_ITEMS_REJECTED: {
       const { error } = payload;
-      alert(error.message);
-      return apiRequestState.rejected(state, payload);
+      return apiRequestState.rejected(error);
     }
 
     case ACTION_TYPE.SELECT_CART_ITEM: {
