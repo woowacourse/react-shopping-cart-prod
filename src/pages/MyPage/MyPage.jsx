@@ -9,7 +9,7 @@ import WithdrawalForm from "./components/WithdrawalForm";
 import styles from "./MyPage.module";
 
 function MyPage({ className }) {
-  const user = useSelector((state) => state.user.data, shallowEqual);
+  const user = useSelector((state) => state.userReducer.data, shallowEqual);
 
   return (
     <div className="wrapper">

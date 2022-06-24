@@ -5,7 +5,7 @@ import { USER_ACCESS_POLICY } from "../constants";
 
 function AuthGuard({ policy = USER_ACCESS_POLICY.ONLY_LOGGED_IN, children }) {
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.user.data.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.userReducer.data.isLoggedIn);
 
   if (policy === USER_ACCESS_POLICY.ONLY_LOGGED_IN && !isLoggedIn) {
     navigate("/login", { replace: true });

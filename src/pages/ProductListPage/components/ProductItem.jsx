@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import cn from "classnames";
 
-import { addProductToCart } from "@redux/reducers/cart-reducer/cartThunks";
+import { addProductToCart } from "@redux/reducers/cart/cartThunks";
 import LoadingThumbnail from "@components/LoadingThumbnail";
 
 import priceToDollar from "@utils/priceToDollar";

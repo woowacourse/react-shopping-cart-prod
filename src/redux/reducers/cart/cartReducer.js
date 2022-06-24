@@ -2,7 +2,17 @@
 import apiRequestState from "@redux/utils/apiRequestState";
 import ACTION_TYPE from "./cartActions";
 
-const cartReducer = (state, { type, payload }) => {
+const initialState = {
+  query: {
+    getCart: apiRequestState.init(),
+    addProductToCart: apiRequestState.init(),
+    updateCartItemQuantity: apiRequestState.init(),
+    deleteCartItems: apiRequestState.init(),
+  },
+  data: [],
+};
+
+const cartReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case ACTION_TYPE.GET_CART_PENDING: {
       const newState = structuredClone(state);

@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import cn from "classnames";
 
-import { signup } from "@redux/reducers/user-reducer/userThunks";
+import { signup } from "@redux/reducers/user/userThunks";
 
 import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";

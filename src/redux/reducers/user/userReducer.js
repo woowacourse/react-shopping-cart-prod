@@ -1,11 +1,27 @@
-import { initialState } from "@redux/constants";
+/* eslint-disable default-param-last */
 import apiRequestState from "@redux/utils/apiRequestState";
 import Fetcher from "@utils/fetcher";
 import LocalStorage from "@utils/LocalStorage";
 
 import ACTION_TYPE from "./userActions";
 
-function userReducer(state, { type, payload }) {
+const initialState = {
+  query: {
+    signup: apiRequestState.init(),
+    login: apiRequestState.init(),
+    secession: apiRequestState.init(),
+    getUser: apiRequestState.init(),
+    updateUserPassword: apiRequestState.init(),
+    updateUserGeneralInfo: apiRequestState.init(),
+  },
+  data: {
+    isLoggedIn: false,
+    email: null,
+    username: null,
+  },
+};
+
+function userReducer(state = initialState, { type, payload }) {
   switch (type) {
     case ACTION_TYPE.SIGNUP_PENDING: {
       const newState = structuredClone(state);
@@ -65,7 +81,7 @@ function userReducer(state, { type, payload }) {
     case ACTION_TYPE.SECESSION_FULFILLED: {
       const newState = structuredClone(state);
       newState.query.secession = apiRequestState.fulfilled();
-      newState.data = structuredClone(initialState.user.data);
+      newState.data = structuredClone(initialstate.userReducer.data);
 
       LocalStorage.removeItem("accessToken");
       alert("Good Bye!");
@@ -108,7 +124,7 @@ function userReducer(state, { type, payload }) {
     case ACTION_TYPE.UPDATE_USER_PASSWORD_FULFILLED: {
       const newState = structuredClone(state);
       newState.query.updateUserPassword = apiRequestState.fulfilled();
-      newState.data = structuredClone(initialState.user.data);
+      newState.data = structuredClone(initialstate.userReducer.data);
       LocalStorage.removeItem("accessToken");
       alert("비밀번호가 변경되었습니다. 다시 로그인 해주세요");
       window.location.href = "/login";

@@ -6,14 +6,14 @@ import cn from "classnames";
 import LocalStorage from "@utils/LocalStorage";
 import Logo from "@assets/images/logo.svg";
 import styles from "./Header.module";
-import { getUser } from "../redux/reducers/user-reducer/userThunks";
-import USER_ACTION_TYPE from "../redux/reducers/user-reducer/userActions";
+import { getUser } from "../redux/reducers/user/userThunks";
+import USER_ACTION_TYPE from "../redux/reducers/user/userActions";
 import createAction from "../redux/utils/createAction";
 
 function Header({ className }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.data);
+  const user = useSelector((state) => state.userReducer.data);
 
   const handleLogoutBtnClick = () => {
     LocalStorage.removeItem("accessToken");

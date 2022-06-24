@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import { secession } from "@redux/reducers/user-reducer/userThunks";
+import { secession } from "@redux/reducers/user/userThunks";
 
 import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";

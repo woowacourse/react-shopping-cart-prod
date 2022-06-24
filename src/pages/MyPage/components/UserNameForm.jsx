@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { updateUserGeneralInfo } from "@redux/reducers/user-reducer/userThunks";
+import { updateUserGeneralInfo } from "@redux/reducers/user/userThunks";
 
 import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";
@@ -11,8 +11,8 @@ function UserNameForm() {
   const dispatch = useDispatch();
 
   const { isLoading, username } = useSelector((state) => ({
-    ...state.user.query.updateUserGeneralInfo,
-    username: state.user.data.username,
+    ...state.userReducer.query.updateUserGeneralInfo,
+    username: state.userReducer.data.username,
   }));
 
   const {

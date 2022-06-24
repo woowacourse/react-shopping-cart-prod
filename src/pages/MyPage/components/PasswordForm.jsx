@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import { updateUserPassword } from "@redux/reducers/user-reducer/userThunks";
+import { updateUserPassword } from "@redux/reducers/user/userThunks";
 import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";
 import useInput from "@hooks/useInput";

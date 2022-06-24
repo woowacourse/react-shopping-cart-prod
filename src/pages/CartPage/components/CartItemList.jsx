@@ -2,12 +2,12 @@ import { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import createAction from "@redux/utils/createAction";
-import CART_ACTION_TYPE from "@redux/reducers/cart-reducer/cartActions";
+import CART_ACTION_TYPE from "@redux/reducers/cart/cartActions";
 import {
   updateCartItemQuantity,
   deleteCartItems,
   getCart,
-} from "@redux/reducers/cart-reducer/cartThunks";
+} from "@redux/reducers/cart/cartThunks";
 
 import Button from "@components/Button";
 
@@ -21,8 +21,8 @@ import styles from "./CartItemList.module";
 function CartItemList({ className }) {
   const dispatch = useDispatch();
   const { isLoading, cart } = useSelector((state) => ({
-    cart: state.cart.data,
-    ...state.cart.query.getCart,
+    cart: state.cartReducer.data,
+    ...state.cartReducer.query.getCart,
   }));
 
   const selectedCartItemIds = getSelectedCartItemIds(cart);

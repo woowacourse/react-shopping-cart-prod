@@ -18,7 +18,7 @@ import {
 
 function CartTotal({ className }) {
   const navigate = useNavigate();
-  const cart = useSelector((state) => state.cart.data);
+  const cart = useSelector((state) => state.cartReducer.data);
 
   const total = getTotal(cart);
   const selectedCartItemIds = getSelectedCartItemIds(cart);
