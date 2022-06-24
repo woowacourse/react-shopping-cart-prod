@@ -51,7 +51,7 @@ export const useFetch = ({
 
       if (responseDataExist) {
         const responseData = await response.json();
-        if (!responseData) throw new Error("No Data");
+        if (!responseData) throw new ApiError(10000, "No Data");
         setData(responseData);
       }
     } catch (err) {
