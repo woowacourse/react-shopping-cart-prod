@@ -7,12 +7,10 @@ module.exports = {
   mode: "development",
   entry: join(__dirname, "../src/index.jsx"),
   devtool: "source-map",
-  devServer: {
-    historyApiFallback: true,
-  },
   output: {
     filename: "main.js",
     path: join(__dirname, "../dist"),
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -73,11 +71,8 @@ module.exports = {
     alias: {
       "@": resolve(__dirname, "../src"),
       "@hooks": resolve(__dirname, "../src/hooks"),
-      "@shared": resolve(__dirname, "../src/components"),
+      "@components": resolve(__dirname, "../src/components"),
       "@scss": resolve(__dirname, "../src/scss"),
-      "@home": resolve(__dirname, "../src/pages/home"),
-      "@cart": resolve(__dirname, "../src/pages/cart"),
-      "@product-detail": resolve(__dirname, "../src/pages/product-detail"),
       "@redux": resolve(__dirname, "../src/redux"),
       "@assets": resolve(__dirname, "../src/assets"),
       "@mock": resolve(__dirname, "../mock"),

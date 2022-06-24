@@ -1,0 +1,16 @@
+@import "@scss/colors";
+
+.divider {
+  height: 2px;
+  background-color: black;
+  margin: 40px auto 20px;
+}
+
+.mini {
+  width: 20px;
+  height: 1px;
+}
+
+.light {
+  background-color: $gray500;
+}

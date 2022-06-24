@@ -1,180 +1,190 @@
 [
   {
-    "sku": "83kW9mUr",
+    "id": "83kW9mUr",
     "name": "Apple Watch Series 5",
     "price": 120,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/apple-watch-1.jpg",
       "alt": "Apple Watch Series 5"
     }
   },
   {
-    "sku": "jBR5pmE5",
+    "id": "jBR5pmE5",
     "name": "Apple Watch Nike",
     "price": 400,
-    "thumbnail_image": {
+    "stockQuantity": 0,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/apple-watch-nike.jpg",
       "alt": "Apple Watch Nike"
     }
   },
   {
-    "sku": "mUtrhmnU",
+    "id": "mUtrhmnU",
     "name": "Apple watch Aluminum",
     "price": 79,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/apple-watch-aluminum.jpg",
       "alt": "Apple watch Aluminum"
     }
   },
   {
-    "sku": "HNVjlRyB",
+    "id": "HNVjlRyB",
     "name": "Apple Smart Watch",
     "price": 35,
-    "thumbnail_image": {
+    "stockQuantity": 0,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/apple-smart-watch.jpg",
       "alt": "Apple Smart Watch"
     }
   },
   {
-    "sku": "qcm199ks",
+    "id": "qcm199ks",
     "name": "Microsoft Surface Book",
     "price": 550,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/microsoft-surface-book.jpg",
       "alt": "Microsoft Surface Book"
     }
   },
   {
-    "sku": "kyLQwT8F",
+    "id": "kyLQwT8F",
     "name": "Mackbook Pro Letina",
     "price": 250,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/mackbook-pro-retina.jpeg",
       "alt": "Mackbook Pro Letina"
     }
   },
   {
-    "sku": "rhkx3vzt",
+    "id": "rhkx3vzt",
     "name": "Apple iMac",
     "price": 300,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/apple-imac.jpg",
       "alt": "Apple iMac"
     }
   },
   {
-    "sku": "K9yK6Qzj",
+    "id": "K9yK6Qzj",
     "name": "XBox Wireless Controller",
     "price": 180,
-    "thumbnail_image": {
+    "stockQuantity": 0,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/xbox-wireless-controller.jpg",
       "alt": "XBox Wireless Controller"
     }
   },
   {
-    "sku": "J9iFajxs",
+    "id": "J9iFajxs",
     "name": "XBox One X 1TB",
     "price": 100,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/XBox-One-X-1TB.jpg",
       "alt": "XBox One X 1TB"
     }
   },
   {
-    "sku": "w4VYDK-7",
+    "id": "w4VYDK-7",
     "name": "Playstation 4",
     "price": 100,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/playstation-4.jpeg",
       "alt": "Playstation 4"
     }
   },
   {
-    "sku": "4VkdTBDc",
+    "id": "4VkdTBDc",
     "name": "Controller for PlayStation 4",
     "price": 200,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/Controller-for-Playstation-4.jpg",
       "alt": "Controller for PlayStation 4"
     }
   },
   {
-    "sku": "JLCBWz_1",
+    "id": "JLCBWz_1",
     "name": "Wireless Playstation",
     "price": 150,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/wireless-playstation.jpg",
       "alt": "Wireless Playstation"
     }
   },
   {
-    "sku": "sNE14x4i",
+    "id": "sNE14x4i",
     "name": "Sony Series Headphones",
     "price": 100,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/Sony-Series-Headphones.jpg",
       "alt": "Sony Series Headphones"
     }
   },
   {
-    "sku": "_FhduwwB",
-    "name": "Skullcandy Crusher Headphones",
-    "price": 60,
-    "thumbnail_image": {
-      "url": "https://develoger.kr/wp-content/uploads/Skullcandy-Crusher-Headphones.jpg",
-      "alt": "Skullcandy Crusher Headphones"
-    }
-  },
-  {
-    "sku": "OLMHb3_F",
+    "id": "OLMHb3_F",
     "name": "Bluetooth Headphones",
     "price": 100,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/Bluetooth-Headphones.jpg",
       "alt": "Bluetooth Headphones"
     }
   },
   {
-    "sku": "QdFzLvAs",
+    "id": "QdFzLvAs",
     "name": "Jabra Wireless Stereo Headset",
     "price": 80,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/Jabra-Wireless-Stereo-Headset.jpg",
       "alt": "Jabra Wireless Stereo Headset"
     }
   },
   {
-    "sku": "JIAI6rkN",
+    "id": "JIAI6rkN",
     "name": "Beats On-Ear Headphone",
     "price": 100,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/Beats-On-Ear-Headphone.jpg",
       "alt": "Beats On-Ear Headphone"
     }
   },
   {
-    "sku": "i2NUcPfb",
+    "id": "i2NUcPfb",
     "name": "Digital Alarm Clock",
     "price": 30,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/Digital-Alarm-Clock.jpg",
       "alt": "Digital Alarm Clock"
     }
   },
   {
-    "sku": "59TLiEMg",
+    "id": "59TLiEMg",
     "name": "Mkay Bluetooth Headphones",
     "price": 150,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/Mkay-Bluetooth-Headphones.jpg",
       "alt": "Mkay Bluetooth Headphones"
     }
   },
   {
-    "sku": "puf32AKr",
+    "id": "puf32AKr",
     "name": "Wireless Bluetooth Headphones",
     "price": 60,
-    "thumbnail_image": {
+    "stockQuantity": 5,
+    "thumbnailImage": {
       "url": "https://develoger.kr/wp-content/uploads/Wireless-Bluetooth-Headphones.jpg",
       "alt": "Wireless Bluetooth Headphones"
     }
