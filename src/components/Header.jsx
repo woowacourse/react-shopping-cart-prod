@@ -3,11 +3,9 @@ import { Link } from "react-router-dom";
 import cn from "classnames";
 
 import Logo from "@assets/images/logo.svg";
-import HeaderMenus from "./HeaderMenus";
-
 import styles from "./Header.module";
 
-function Header({ className }) {
+function Header({ className, menu }) {
   return (
     <div className={cn(styles.header, className)}>
       <div className="flex wrapper place-content-between">
@@ -22,9 +20,7 @@ function Header({ className }) {
           </div>
           <span className={styles.title}>WOOWA SHOP</span>
         </Link>
-        <div className={cn(styles.menu)}>
-          <HeaderMenus />
-        </div>
+        <div className={cn(styles.menu)}>{menu}</div>
       </div>
     </div>
   );

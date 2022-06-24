@@ -11,6 +11,7 @@ import WrongAccessPage from "./pages/WrongAccessPage/WrongAccessPage";
 
 import AuthGuard from "./components/AuthGuard";
 import Header from "./components/Header";
+import HeaderMenus from "./components/HeaderMenus";
 
 import styles from "./App.module";
 import { USER_ACCESS_POLICY } from "./constants";
@@ -19,7 +20,7 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-        <Header className={styles.header} />
+        <Header className={styles.header} menu={<HeaderMenus />} />
         <Routes>
           <Route path="/" element={<ProductListPage />} />
           <Route
