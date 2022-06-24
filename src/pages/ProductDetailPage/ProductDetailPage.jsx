@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
+import { addProductToCart } from "@redux/reducers/cart/cartThunks";
 import LoadingThumbnail from "@components/LoadingThumbnail";
 import Button from "@components/Button";
 import Divider from "@components/Divider";
@@ -13,6 +15,7 @@ import PageErrorResult from "../../components/PageErrorResult";
 
 function ProductDetailPage() {
   const { id: productId } = useParams();
+  const dispatch = useDispatch();
 
   const {
     fetch: getProductDetail,
@@ -24,28 +27,13 @@ function ProductDetailPage() {
     url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}/${productId}`,
   });
 
-  const {
-    fetch: addProductToCart,
-    status: addProductToCartStatus,
-    error: addProductToCartError,
-  } = useFetch({
-    method: REQUEST_METHOD.POST,
-    url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.PRODUCTS}`,
-  });
-
   const handleAddToCartButtonClick = () => {
-    addProductToCart({ productId, quantity: 1 });
+    dispatch(addProductToCart({ productId, quantity: 1 }));
   };
 
   useEffect(() => {
     getProductDetail();
   }, []);
-
-  useEffect(() => {
-    if (addProductToCartStatus === FETCH_STATUS.FAIL) {
-      alert(`${addProductToCartError.code}, ${addProductToCartError.message}`);
-    }
-  }, [addProductToCartStatus, addProductToCartError]);
 
   if (getProductDetailStatus === FETCH_STATUS.PENDING) return <PageLoader />;
   if (getProductDetailStatus === FETCH_STATUS.FAIL)
