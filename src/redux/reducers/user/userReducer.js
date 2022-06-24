@@ -81,7 +81,7 @@ function userReducer(state = initialState, { type, payload }) {
     case ACTION_TYPE.SECESSION_FULFILLED: {
       const newState = structuredClone(state);
       newState.query.secession = apiRequestState.fulfilled();
-      newState.data = structuredClone(initialstate.userReducer.data);
+      newState.data = structuredClone(initialState.userReducer.data);
 
       LocalStorage.removeItem("accessToken");
       alert("Good Bye!");
@@ -124,7 +124,7 @@ function userReducer(state = initialState, { type, payload }) {
     case ACTION_TYPE.UPDATE_USER_PASSWORD_FULFILLED: {
       const newState = structuredClone(state);
       newState.query.updateUserPassword = apiRequestState.fulfilled();
-      newState.data = structuredClone(initialstate.userReducer.data);
+      newState.data = structuredClone(initialState.userReducer.data);
       LocalStorage.removeItem("accessToken");
       alert("비밀번호가 변경되었습니다. 다시 로그인 해주세요");
       window.location.href = "/login";
