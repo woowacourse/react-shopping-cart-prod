@@ -26,12 +26,15 @@ export const signup =
       }
 
       dispatch(createAction(ACTION_TYPE.SIGNUP_FULFILLED));
+      window.location.href = "/login";
     } catch (e) {
-      dispatch(
-        createAction(ACTION_TYPE.SIGNUP_REJECTED, {
-          error: e.toPlainObj(),
-        })
-      );
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
+      dispatch(createAction(ACTION_TYPE.SIGNUP_REJECTED, { error }));
+      alert(error.message);
     }
   };
 
@@ -51,15 +54,15 @@ export const login =
       const { accessToken } = await response.json();
 
       dispatch(createAction(ACTION_TYPE.LOGIN_FULFILLED, { accessToken }));
+      window.location.href = "/";
     } catch (e) {
-      dispatch(
-        createAction(ACTION_TYPE.LOGIN_REJECTED, {
-          error: {
-            message: errorMessages[e.errorCode] ?? e.message,
-            errorCode: e.errorCode,
-          },
-        })
-      );
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
+      dispatch(createAction(ACTION_TYPE.LOGIN_REJECTED, { error }));
+      alert(error.message);
     }
   };
 
@@ -78,15 +81,18 @@ export const secession =
       }
 
       dispatch(createAction(ACTION_TYPE.SECESSION_FULFILLED));
+
+      LocalStorage.removeItem("accessToken");
+      alert("Good Bye!");
+      window.location.href = "/";
     } catch (e) {
-      dispatch(
-        createAction(ACTION_TYPE.SECESSION_REJECTED, {
-          error: {
-            message: errorMessages[e.errorCode] ?? e.message,
-            errorCode: e.errorCode,
-          },
-        })
-      );
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
+      dispatch(createAction(ACTION_TYPE.SECESSION_REJECTED, { error }));
+      alert(error.message);
     }
   };
 
@@ -111,14 +117,13 @@ export const getUser =
         })
       );
     } catch (e) {
-      dispatch(
-        createAction(ACTION_TYPE.GET_USER_REJECTED, {
-          error: {
-            message: errorMessages[e.errorCode] ?? e.message,
-            errorCode: e.errorCode,
-          },
-        })
-      );
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
+      dispatch(createAction(ACTION_TYPE.GET_USER_REJECTED, { error }));
+      alert(error.message);
     }
   };
 
@@ -140,15 +145,20 @@ export const updateUserPassword =
       }
 
       dispatch(createAction(ACTION_TYPE.UPDATE_USER_PASSWORD_FULFILLED));
+
+      LocalStorage.removeItem("accessToken");
+      alert("비밀번호가 변경되었습니다. 다시 로그인 해주세요");
+      window.location.href = "/login";
     } catch (e) {
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
       dispatch(
-        createAction(ACTION_TYPE.UPDATE_USER_PASSWORD_REJECTED, {
-          error: {
-            message: errorMessages[e.errorCode] ?? e.message,
-            errorCode: e.errorCode,
-          },
-        })
+        createAction(ACTION_TYPE.UPDATE_USER_PASSWORD_REJECTED, { error })
       );
+      alert(error.message);
     }
   };
 
@@ -167,7 +177,6 @@ export const updateUserGeneralInfo =
         const message = errorMessages[errorCode] ?? originalMessage;
         throw new ApiError(errorCode, message);
       }
-
       const { email, username: newUsername } = await response.json();
 
       dispatch(
@@ -176,13 +185,14 @@ export const updateUserGeneralInfo =
         })
       );
     } catch (e) {
+      const error = {
+        message: errorMessages[e.errorCode] ?? e.message,
+        errorCode: e.errorCode,
+      };
+
       dispatch(
-        createAction(ACTION_TYPE.UPDATE_USER_PASSWORD_REJECTED, {
-          error: {
-            message: errorMessages[e.errorCode] ?? e.message,
-            errorCode: e.errorCode,
-          },
-        })
+        createAction(ACTION_TYPE.UPDATE_USER_PASSWORD_REJECTED, { error })
       );
+      alert(error.message);
     }
   };

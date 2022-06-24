@@ -31,13 +31,11 @@ function userReducer(state = initialState, { type, payload }) {
     case ACTION_TYPE.SIGNUP_FULFILLED: {
       const newState = structuredClone(state);
       newState.query.signup = apiRequestState.fulfilled();
-      window.location.href = "/login";
       return state;
     }
     case ACTION_TYPE.SIGNUP_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
-      alert(error.message);
       newState.query.signup = apiRequestState.rejected(error);
       return newState;
     }
@@ -55,14 +53,11 @@ function userReducer(state = initialState, { type, payload }) {
       Fetcher.updateAccessToken(accessToken);
       newState.query.login = apiRequestState.fulfilled();
       newState.data.isLoggedIn = true;
-
-      window.location.href = "/";
       return state;
     }
     case ACTION_TYPE.LOGIN_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
-      alert(error.message);
       newState.query.login = apiRequestState.rejected(error);
       return newState;
     }
@@ -82,16 +77,11 @@ function userReducer(state = initialState, { type, payload }) {
       const newState = structuredClone(state);
       newState.query.secession = apiRequestState.fulfilled();
       newState.data = structuredClone(initialState.userReducer.data);
-
-      LocalStorage.removeItem("accessToken");
-      alert("Good Bye!");
-      window.location.href = "/";
       return state; // Todo : 정석이 아님
     }
     case ACTION_TYPE.SECESSION_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
-      alert(error.message);
       newState.query.secession = apiRequestState.rejected(error);
       return newState;
     }
@@ -111,7 +101,6 @@ function userReducer(state = initialState, { type, payload }) {
     case ACTION_TYPE.GET_USER_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
-      alert(error.message);
       newState.query.getUser = apiRequestState.rejected(error);
       return newState;
     }
@@ -125,15 +114,12 @@ function userReducer(state = initialState, { type, payload }) {
       const newState = structuredClone(state);
       newState.query.updateUserPassword = apiRequestState.fulfilled();
       newState.data = structuredClone(initialState.userReducer.data);
-      LocalStorage.removeItem("accessToken");
-      alert("비밀번호가 변경되었습니다. 다시 로그인 해주세요");
-      window.location.href = "/login";
       return state; // Todo : 정석이 아님
     }
     case ACTION_TYPE.UPDATE_USER_PASSWORD_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
-      alert(error.message);
+
       newState.query.updateUserPassword = apiRequestState.rejected(error);
       return newState;
     }
@@ -153,7 +139,6 @@ function userReducer(state = initialState, { type, payload }) {
     case ACTION_TYPE.UPDATE_USER_GENERAL_INFO_REJECTED: {
       const newState = structuredClone(state);
       const { error } = payload;
-      alert(error.message);
       newState.query.updateUserGeneralInfo = apiRequestState.rejected(error);
       return newState;
     }
