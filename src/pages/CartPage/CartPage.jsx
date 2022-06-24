@@ -1,18 +1,30 @@
+import { useEffect } from "react";
 import cn from "classnames";
 
 import PageTitle from "@components/PageTitle";
-import { useEffect } from "react";
+
+import useFetch from "@hooks/useFetch";
+import useAuthGuard from "@hooks/useAuthGuard";
+
 import CartItemList from "./components/CartItemList";
 import CartTotal from "./components/CartTotal";
-
-import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
-
-import styles from "./CartPage.module";
-import { useFetch } from "../../hooks/useFetch";
 import PageLoader from "../../components/PageLoader";
 import PageErrorResult from "../../components/PageErrorResult";
 
+import {
+  USER_ACCESS_POLICY,
+  API_SERVER,
+  FETCH_STATUS,
+  REQUEST_METHOD,
+} from "../../constants";
+
+import styles from "./CartPage.module";
+
 function CartPage() {
+  const checkUserAccessPolicy = useAuthGuard({
+    policy: USER_ACCESS_POLICY.ONLY_LOGGED_IN,
+  });
+
   const {
     fetch: getCartItemList,
     data: cartItemList,
@@ -23,6 +35,10 @@ function CartPage() {
     url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_CARTS}`,
     initialData: [],
   });
+
+  useEffect(() => {
+    checkUserAccessPolicy();
+  }, [checkUserAccessPolicy]);
 
   useEffect(() => {
     getCartItemList();

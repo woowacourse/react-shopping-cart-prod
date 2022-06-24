@@ -1,15 +1,25 @@
 import { useEffect } from "react";
 
+import useFetch from "@hooks/useFetch";
+import useAuthGuard from "@hooks/useAuthGuard";
+
 import PageTitle from "@components/PageTitle";
 import OrderTable from "./components/OrderTable";
-
-import { useFetch } from "../../hooks/useFetch";
-import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
+import {
+  API_SERVER,
+  FETCH_STATUS,
+  REQUEST_METHOD,
+  USER_ACCESS_POLICY,
+} from "../../constants";
 
 import PageLoader from "../../components/PageLoader";
 import PageErrorResult from "../../components/PageErrorResult";
 
 function OrderListPage() {
+  const checkUserAccessPolicy = useAuthGuard({
+    policy: USER_ACCESS_POLICY.ONLY_LOGGED_IN,
+  });
+
   const {
     fetch: getOrderList,
     data: orderList,
@@ -20,6 +30,10 @@ function OrderListPage() {
     url: `${API_SERVER.BASE_URL}${API_SERVER.PATH.MY_ORDERS}`,
     initialData: [],
   });
+
+  useEffect(() => {
+    checkUserAccessPolicy();
+  }, [checkUserAccessPolicy]);
 
   useEffect(() => {
     getOrderList();

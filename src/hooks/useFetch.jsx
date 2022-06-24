@@ -28,7 +28,7 @@ const getResponseWithFetch = async (
   return response;
 };
 
-export const useFetch = ({
+const useFetch = ({
   method,
   url = "",
   initialData = {},
@@ -64,3 +64,5 @@ export const useFetch = ({
 
   return { fetch, response, data, status, error };
 };
+
+export default useFetch;

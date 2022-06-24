@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import cn from "classnames";
@@ -8,6 +9,8 @@ import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";
 
 import useInput from "@hooks/useInput";
+import useAuthGuard from "@hooks/useAuthGuard";
+
 import {
   emailValidator,
   passwordValidator,
@@ -16,11 +19,17 @@ import {
 } from "@utils/validators";
 
 import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
+import { USER_ACCESS_POLICY } from "../../constants";
+
 import styles from "./SignUpPage.module";
 
 function SignUpPage({ className }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const checkUserAccessPolicy = useAuthGuard({
+    policy: USER_ACCESS_POLICY.ONLY_LOGGED_OUT,
+  });
 
   const {
     state: email,
@@ -56,6 +65,10 @@ function SignUpPage({ className }) {
     dispatch(signup({ email, password, username }));
     navigate("/login", { replace: true });
   };
+
+  useEffect(() => {
+    checkUserAccessPolicy();
+  }, [checkUserAccessPolicy]);
 
   return (
     <div className="wrapper">

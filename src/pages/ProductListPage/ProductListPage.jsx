@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import cn from "classnames";
 
-import { useFetch } from "../../hooks/useFetch";
+import useFetch from "@hooks/useFetch";
 
+import PageLoader from "@components/PageLoader";
+import PageErrorResult from "@components/PageErrorResult";
 import ProductItem from "./components/ProductItem";
 
 import { API_SERVER, FETCH_STATUS, REQUEST_METHOD } from "../../constants";
 import styles from "./ProductListPage.module";
-import PageLoader from "../../components/PageLoader";
-import PageErrorResult from "../../components/PageErrorResult";
 
 function ProductListPage() {
   const {

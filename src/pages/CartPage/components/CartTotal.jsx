@@ -1,15 +1,17 @@
 import { useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import useFetch from "@hooks/useFetch";
 
 import Button from "@components/Button";
 import Highlighter from "@components/HighlightedText";
 import TitleBox from "@components/TitleBox";
 
 import priceToDollar from "@utils/priceToDollar";
-import { useNavigate } from "react-router-dom";
 import getSelectedCartItemIds from "../utils/getSelectedCartItemIds";
 import styles from "./CartTotal.module";
-import { useFetch } from "../../../hooks/useFetch";
+
 import {
   API_SERVER,
   FETCH_STATUS,

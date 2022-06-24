@@ -1,19 +1,29 @@
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import cn from "classnames";
 
 import { login } from "@redux/reducers/user/userThunks";
+
+import useInput from "@hooks/useInput";
+import useAuthGuard from "@hooks/useAuthGuard";
+
 import LabeledInput from "@components/Input/LabeledInput/LabeledInput";
 import Button from "@components/Button";
 
-import useInput from "@hooks/useInput";
 import { emailValidator, passwordValidator } from "@utils/validators";
 
 import AuthFormTemplate from "../../templates/auth-form-template/AuthFormTemplate";
+import { USER_ACCESS_POLICY } from "../../constants";
+
 import styles from "./LoginPage.module";
 
 function LoginPage({ className }) {
   const dispatch = useDispatch();
+
+  const checkUserAccessPolicy = useAuthGuard({
+    policy: USER_ACCESS_POLICY.ONLY_LOGGED_OUT,
+  });
 
   const {
     state: email,
@@ -32,6 +42,10 @@ function LoginPage({ className }) {
   const handleSubmitLoginForm = () => {
     dispatch(login({ email, password }));
   };
+
+  useEffect(() => {
+    checkUserAccessPolicy();
+  }, [checkUserAccessPolicy]);
 
   return (
     <div className="wrapper">

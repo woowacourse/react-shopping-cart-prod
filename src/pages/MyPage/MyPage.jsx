@@ -1,15 +1,28 @@
 import { shallowEqual, useSelector } from "react-redux";
 import cn from "classnames";
 
+import useAuthGuard from "@hooks/useAuthGuard";
+
 import Divider from "@components/Divider";
+
+import { useEffect } from "react";
 import UserNameForm from "./components/UserNameForm";
 import PasswordForm from "./components/PasswordForm";
 import WithdrawalForm from "./components/WithdrawalForm";
 
 import styles from "./MyPage.module";
+import { USER_ACCESS_POLICY } from "../../constants";
 
 function MyPage({ className }) {
+  const checkUserAccessPolicy = useAuthGuard({
+    policy: USER_ACCESS_POLICY.ONLY_LOGGED_IN,
+  });
+
   const user = useSelector((state) => state.userReducer.data, shallowEqual);
+
+  useEffect(() => {
+    checkUserAccessPolicy();
+  }, [checkUserAccessPolicy]);
 
   return (
     <div className="wrapper">

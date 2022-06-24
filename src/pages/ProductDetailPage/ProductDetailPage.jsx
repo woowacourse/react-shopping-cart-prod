@@ -3,15 +3,18 @@ import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import { addProductToCart } from "@redux/reducers/cart/cartThunks";
+
+import useFetch from "@hooks/useFetch";
+
 import LoadingThumbnail from "@components/LoadingThumbnail";
 import Button from "@components/Button";
 import Divider from "@components/Divider";
+import PageLoader from "@components/PageLoader";
+import PageErrorResult from "@components/PageErrorResult";
+
+import { REQUEST_METHOD, FETCH_STATUS, API_SERVER } from "../../constants";
 
 import styles from "./ProductDetailPage.module";
-import { REQUEST_METHOD, FETCH_STATUS, API_SERVER } from "../../constants";
-import { useFetch } from "../../hooks/useFetch";
-import PageLoader from "../../components/PageLoader";
-import PageErrorResult from "../../components/PageErrorResult";
 
 function ProductDetailPage() {
   const { id: productId } = useParams();
