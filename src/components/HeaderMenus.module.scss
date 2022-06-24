@@ -1,0 +1,31 @@
+@import "@scss/responsive";
+@import "@scss/no-style";
+@import "@scss/colors";
+
+ul {
+  @include ul-no-style;
+  display: flex;
+  align-items: center;
+
+  li {
+    padding: 0 25px;
+    a {
+      @include a-no-style;
+    }
+    button {
+      @include button-no-style;
+    }
+    a,
+    button {
+      display: block;
+      padding: 10px 0;
+      font-size: 20px;
+      line-height: 20px;
+      color: white;
+
+      &:hover {
+        color: rgb(220, 220, 220);
+      }
+    }
+  }
+}
