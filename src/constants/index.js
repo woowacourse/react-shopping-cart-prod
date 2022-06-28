@@ -1,15 +1,14 @@
-const API = '/api';
+const SERVER_PATH = Object.freeze({
+  PRODUCTS: `${process.env.REACT_APP_API_ZERO}/products`,
+  CART: `${process.env.REACT_APP_API_ZERO}/carts`,
+  CART_PRODUCT: `${process.env.REACT_APP_API_ZERO}/carts/products`,
+  USER: `${process.env.REACT_APP_API_ZERO}/customers`,
+  LOGIN: `${process.env.REACT_APP_API_ZERO}/login`,
+  PASSWORD: `${process.env.REACT_APP_API_ZERO}/customers/password`,
+  ME: `${process.env.REACT_APP_API_ZERO}/customers/me`,
+});
 
-const SERVER_PATH = {
-  PRODUCTS: '/products',
-  CART: '/cart',
-  USER: `${API}/customers`,
-  LOGIN: `${API}/login`,
-  PASSWORD: `${API}/customers/password`,
-  ME: `${API}/customers/me`,
-};
-
-const ROUTES_PATH = {
+const ROUTES_PATH = Object.freeze({
   HOME: '/',
   DETAIL: '/product-detail/:id',
   DETAIL_LINK: '/product-detail/',
@@ -19,7 +18,7 @@ const ROUTES_PATH = {
   USER_INFO: '/user-info',
   MODIFY_PASSWORD: '/modify-password',
   MODIFY_USER_INFO: '/modify-user-info',
-};
+});
 
 const SIZE = {
   LARGE: 'large',
@@ -60,10 +59,14 @@ const MESSAGE = {
   MODIFY_NICKNAME_SUCCESS: '닉네임이 변경 되었습니다.',
   LOGOUT_SUCCESS: '로그아웃 되었습니다.',
   WITHDRAW_SUCCESS: '회원탈퇴 되었습니다.',
-  ERROR_EMAIL: '올바르지 않은 이메일입니다.',
-  ERROR_NICKNAME: '올바르지 않은 닉네임입니다.',
-  ERROR_PASSWORD: '올바르지 않은 비밀번호입니다.',
-  ERROR_PASSWORD_CONFIRM: '비밀번호가 일치하지 않습니다.',
+  NOT_AN_EMAIL_FORMAT: '올바른 이메일을 입력해 주세요.',
+  INCORRECT_NICKNAME: '올바른 닉네임을 입력해 주세요.',
+  PASSWORD_DOES_NOT_MATCH: '비밀번호가 일치하지 않습니다. 똑같은 비밀번호를 입력해 주세요.',
+  NOT_A_PASSWORD_FORMAT:
+    '비밀번호는 8~20글자 이하 영문자(대,소), 숫자, 특수기호 조합을 입력해 주세요',
+  PASSWORD_PLACEHOLDER: '영문자(대,소), 숫자, 특수기호 조합을 입력하세요',
+  EMAIL_PLACEHOLDER: '이메일 주소를 입력해주세요',
+  NICKNAME_PLACEHOLDER: '닉네임을 입력해주세요',
 };
 
 export { SERVER_PATH, ROUTES_PATH, SIZE, USER, USER_INFO_KEY, PASSWORD_INFO_KEY, MESSAGE };

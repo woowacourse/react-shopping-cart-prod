@@ -1,40 +1,29 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
 
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUser from '../hooks/useUser';
 import useUserForm from '../hooks/useUserForm';
-import { validPasswordInfo } from '../utils/validations';
-import { MESSAGE, SERVER_PATH, USER, ROUTES_PATH, PASSWORD_INFO_KEY } from '../constants';
-import actionTypes from '../store/user/user.actions';
+
+import { USER, PASSWORD_INFO_KEY, MESSAGE } from '../constants';
+
+const initialState = {
+  prevPassword: '',
+  newPassword: '',
+  newPasswordConfirm: '',
+};
 
 function ModifyPasswordPage() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [password, setPassword] = useState({
-    prevPassword: '',
-    newPassword: '',
-    newPasswordConfirm: '',
-  });
+  const [password, setPassword] = useState(initialState);
   const handleUserInfoChange = useUserForm(setPassword);
+  const { userModifyPassword } = useUser();
   const { prevPassword, newPassword, newPasswordConfirm } = password;
 
-  const handlePasswordSubmit = async (e) => {
+  const handlePasswordSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      validPasswordInfo(password);
-      await axios.patch(SERVER_PATH.PASSWORD, { prevPassword, newPassword });
-      dispatch({ type: actionTypes.DELETE_TOKEN });
-      alert(MESSAGE.MODIFY_PASSWORD_SUCCESS);
-      navigate(ROUTES_PATH.LOGIN);
-    } catch (error) {
-      alert(error.messages);
-    }
+    userModifyPassword(password);
   };
 
   return (
@@ -47,7 +36,7 @@ function ModifyPasswordPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={prevPassword}
-          placeholder="비밀번호를 입력해주세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(PASSWORD_INFO_KEY.PREV_PASSWORD)}
         />
         <Input
@@ -56,7 +45,7 @@ function ModifyPasswordPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={newPassword}
-          placeholder="새로운 비밀번호를 입력해주세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD)}
         />
         <Input
@@ -65,7 +54,7 @@ function ModifyPasswordPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={newPasswordConfirm}
-          placeholder="새로운 비밀번호를 입력해주세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(PASSWORD_INFO_KEY.NEW_PASSWORD_CONFIRM)}
         />
         <Button text="수정하기" />

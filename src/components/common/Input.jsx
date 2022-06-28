@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { COLORS } from '../../styles/theme';
 
 function Input({ labelText, ...rest }) {
   return (
@@ -17,7 +16,7 @@ const StyledInput = styled.input`
   padding-left: 8px;
   font-size: 16px;
   border-radius: 4px;
-  border: 1px solid ${COLORS.DARK_GRAY};
+  border: 1px solid ${(props) => props.theme.main.DARK_GRAY};
 `;
 
 export default Input;

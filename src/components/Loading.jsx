@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import { COLORS } from '../styles/theme';
 
 function Loading() {
   return (
@@ -36,7 +35,7 @@ const StyledSpan = styled.span`
   height: 10px;
   margin: 0 6px;
   border-radius: 50%;
-  background-color: ${COLORS.PRIMARY};
+  background-color: ${(props) => props.theme.main.PRIMARY};
   animation: ${loading} 1s 0s linear infinite;
   &:nth-child(1) {
     animation-delay: 0s;

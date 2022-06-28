@@ -1,21 +1,25 @@
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
+
 import styled from 'styled-components';
+
 import Product from '../components/Product';
-import useFetch from '../hooks/useFetch';
 import Loading from '../components/Loading';
-import { MESSAGE, SERVER_PATH } from '../constants';
+
+import useFetch from '../hooks/useFetch';
 import useCart from '../hooks/useCart';
 
+import { MESSAGE, SERVER_PATH } from '../constants';
+
 function ProductListPage() {
-  const { data: productList, isLoading, isError } = useFetch(SERVER_PATH.PRODUCTS);
-  const cartList = useSelector(({ cart }) => cart.data);
-  const { addItem, deleteItem } = useCart();
+  const { result: productList, isError, isLoading } = useFetch(SERVER_PATH.PRODUCTS);
+  const { cartItemList, addItem, deleteItem } = useCart();
+  const cartItemNameList = useMemo(
+    () => new Set(cartItemList.map((cart) => cart.name)),
+    [cartItemList]
+  );
 
-  const idSetInCart = useMemo(() => new Set(cartList.map((cart) => cart.id)), [cartList]);
-
-  const handleCartItem = (id, isCart) => {
-    if (isCart) {
+  const handleClickCartItem = (id, isProductInCart) => {
+    if (isProductInCart) {
       deleteItem(id);
       alert(MESSAGE.REMOVE);
       return;
@@ -34,8 +38,10 @@ function ProductListPage() {
           <Product
             key={product.id}
             productData={product}
-            handleCartItem={handleCartItem}
-            isCart={idSetInCart.has(product.id)}
+            handleCartItem={() =>
+              handleClickCartItem(product.id, cartItemNameList.has(product.name))
+            }
+            isProductInCart={cartItemNameList.has(product.name)}
           />
         ))}
       </StyledGridContainer>

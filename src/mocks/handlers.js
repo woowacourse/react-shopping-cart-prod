@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { v4 as uuidv4 } from 'uuid';
+
 import { SERVER_PATH } from '../constants';
 import { productList } from './data';
 

@@ -1,37 +1,30 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
 import useUserForm from '../hooks/useUserForm';
-import { validSignUpInfo } from '../utils/validations';
+import useUser from '../hooks/useUser';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+import { USER, USER_INFO_KEY, MESSAGE } from '../constants';
+
+const initialState = {
+  email: '',
+  nickname: '',
+  password: '',
+  passwordConfirm: '',
+};
+
 function SignUpPage() {
-  const navigate = useNavigate();
-  const [signUpInfo, setSignUpInfo] = useState({
-    email: '',
-    nickname: '',
-    password: '',
-    passwordConfirm: '',
-  });
+  const [signUpInfo, setSignUpInfo] = useState(initialState);
   const handleUserInfoChange = useUserForm(setSignUpInfo);
+  const { userSignUp } = useUser();
   const { email, nickname, password, passwordConfirm } = signUpInfo;
 
-  const handleSignUpInfoSubmit = async (e) => {
+  const handleSignUpInfoSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      validSignUpInfo(signUpInfo);
-      await axios.post(SERVER_PATH.USER, { email, nickname, password });
-      alert(MESSAGE.SIGN_UP_SUCCESS);
-      navigate(ROUTES_PATH.LOGIN);
-    } catch (error) {
-      alert(error.message);
-    }
+    userSignUp(signUpInfo);
   };
 
   return (
@@ -41,7 +34,7 @@ function SignUpPage() {
         <Input
           labelText="이메일"
           type="email"
-          placeholder="이메일 주소를 입력해주세요"
+          placeholder={MESSAGE.EMAIL_PLACEHOLDER}
           value={email}
           onChange={handleUserInfoChange(USER_INFO_KEY.EMAIL)}
         />
@@ -49,7 +42,7 @@ function SignUpPage() {
           labelText="닉네임"
           minLength={USER.NICKNAME.MIN}
           maxLength={USER.NICKNAME.MAX}
-          placeholder="닉네임을 입력해주세요"
+          placeholder={MESSAGE.NICKNAME_PLACEHOLDER}
           value={nickname}
           onChange={handleUserInfoChange(USER_INFO_KEY.NICKNAME)}
         />
@@ -59,7 +52,7 @@ function SignUpPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={password}
-          placeholder="비밀번호를 입력해주세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD)}
         />
         <Input
@@ -68,7 +61,7 @@ function SignUpPage() {
           minLength={USER.PASSWORD.MIN}
           maxLength={USER.PASSWORD.MAX}
           value={passwordConfirm}
-          placeholder="비밀번호를 입력해주세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD_CONFIRM)}
         />
         <Button text="가입하기" />

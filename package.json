@@ -1,5 +1,4 @@
 {
-  "homepage": "https://jin7969.github.io/react-shopping-cart",
   "name": "react-shopping-cart",
   "version": "0.1.0",
   "private": true,
@@ -19,6 +18,7 @@
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.1",
     "styled-components": "^5.3.5",
+    "styled-reset": "^4.4.1",
     "uuid": "^8.3.2",
     "web-vitals": "^2.1.4"
   },

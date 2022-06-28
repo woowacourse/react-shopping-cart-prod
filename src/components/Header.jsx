@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { GiShoppingCart } from 'react-icons/gi';
-import { COLORS } from '../styles/theme';
 import { Link } from 'react-router-dom';
-import { ROUTES_PATH } from '../constants';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
 import { FaUserCircle } from 'react-icons/fa';
+import { GiShoppingCart } from 'react-icons/gi';
+import { ROUTES_PATH } from '../constants';
 
 function Header() {
   const accessToken = useSelector(({ user }) => user.accessToken);
@@ -48,8 +48,8 @@ const StyledHeader = styled.header`
   width: 100%;
   height: 80px;
   top: 0;
-  background: ${COLORS.PRIMARY};
-  box-shadow: 0px 4px 4px ${COLORS.BOX_SHADOW};
+  background: ${(props) => props.theme.main.PRIMARY};
+  box-shadow: 0px 4px 4px ${(props) => props.theme.main.BOX_SHADOW};
 `;
 
 const StyledHeaderWrapper = styled.div`
@@ -64,7 +64,7 @@ const StyledTitleWrapper = styled.div`
   font-weight: 900;
   font-size: 40px;
   text-align: center;
-  color: ${COLORS.WHITE};
+  color: ${(props) => props.theme.main.WHITE};
   cursor: pointer;
 `;
 
@@ -78,7 +78,7 @@ const StyledNavWrapper = styled.div`
   .userIcon {
     margin-left: 20px;
     font-size: 35px;
-    color: ${COLORS.WHITE};
+    color: ${(props) => props.theme.main.WHITE};
     cursor: pointer;
   }
 `;
@@ -89,7 +89,7 @@ const StyledNavButton = styled.button`
   background: none;
   font-weight: 500;
   font-size: 18px;
-  color: ${COLORS.WHITE};
+  color: ${(props) => props.theme.main.WHITE};
 `;
 
 export default Header;

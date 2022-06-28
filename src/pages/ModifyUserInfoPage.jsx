@@ -1,47 +1,30 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
 import Loading from '../components/Loading';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
+import useUser from '../hooks/useUser';
+import useFetch from '../hooks/useFetch';
 import useUserForm from '../hooks/useUserForm';
-import { validUserInfo } from '../utils/validations';
 
-import { MESSAGE, ROUTES_PATH, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
+import { MESSAGE, SERVER_PATH, USER, USER_INFO_KEY } from '../constants';
 
 function ModifyUserInfoPage() {
-  const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({});
+  const { data } = useFetch(SERVER_PATH.ME);
+  const { userModifyUserInfo } = useUser();
   const handleUserInfoChange = useUserForm(setUserInfo);
 
   const handleUserInfoSubmit = async (e) => {
     e.preventDefault();
-    const { nickname } = userInfo;
-
-    try {
-      validUserInfo(userInfo);
-      await axios.patch(SERVER_PATH.USER, { nickname });
-      alert(MESSAGE.MODIFY_NICKNAME_SUCCESS);
-      navigate(ROUTES_PATH.HOME);
-    } catch (error) {
-      alert(error);
-    }
+    userModifyUserInfo(userInfo);
   };
 
   useEffect(() => {
-    async function getUserInfo() {
-      try {
-        const { data } = await axios.get(SERVER_PATH.ME);
-        setUserInfo(data);
-      } catch (error) {
-        alert(error);
-      }
-    }
-    getUserInfo();
-  }, []);
+    setUserInfo(data);
+  }, [data]);
 
   if (!userInfo) return <Loading />;
 
@@ -56,7 +39,7 @@ function ModifyUserInfoPage() {
           minLength={USER.NICKNAME.MIN}
           maxLength={USER.NICKNAME.MAX}
           value={userInfo.nickname}
-          placeholder="닉네임을 입력해주세요"
+          placeholder={MESSAGE.NICKNAME_PLACEHOLDER}
           onChange={handleUserInfoChange(USER_INFO_KEY.NICKNAME)}
         />
         <Button text="수정하기" />

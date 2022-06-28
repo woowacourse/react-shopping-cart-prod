@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
 import { StyledCheckbox } from './common/Styled';
-import { BsTrash } from 'react-icons/bs';
-import { COLORS } from '../styles/theme';
-import { MESSAGE } from '../constants';
+
 import useCart from '../hooks/useCart';
 
+import { BsTrash } from 'react-icons/bs';
+import { MESSAGE } from '../constants';
+
 function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedItem }) {
-  const { deleteItem, updateItemQuantity } = useCart();
   const [isChecked, setChecked] = useState(isCheckedAll);
+  const { deleteItem, updateItemQuantity } = useCart();
   const { id, name, price, imageUrl, quantity } = item;
 
   const incrementQuantity = () => {
@@ -25,7 +27,7 @@ function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedIt
     setChecked(!isChecked);
   };
 
-  const onClickDeleteIcon = () => {
+  const handleClickDeleteIcon = () => {
     if (window.confirm(MESSAGE.CHECK_DELETE)) {
       deleteItem(id);
       removeSelectedItem(id);
@@ -49,7 +51,7 @@ function ShoppingItem({ item, isCheckedAll, handleSelectedItem, removeSelectedIt
         <span>{name}</span>
       </StyledProductLeft>
       <StyledProductRight>
-        <BsTrash className="logo" onClick={onClickDeleteIcon} />
+        <BsTrash className="logo" onClick={handleClickDeleteIcon} />
         <StyledAmountContainer>
           <span>{quantity}</span>
           <div>
@@ -106,7 +108,7 @@ const StyledAmountContainer = styled.div`
   span {
     width: 66px;
     height: 55px;
-    border: 1px solid ${COLORS.LIGHT_GRAY};
+    border: 1px solid ${(props) => props.theme.main.LIGHT_GRAY};
     text-align: center;
     line-height: 55px;
     font-size: 24px;
@@ -117,7 +119,7 @@ const StyledAmountContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 4px 12px;
-    border: 1px solid ${COLORS.LIGHT_GRAY};
+    border: 1px solid ${(props) => props.theme.main.LIGHT_GRAY};
     font-size: 100%;
     cursor: pointer;
   }

@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { GiShoppingCart } from 'react-icons/gi';
-import { StyledImageBox, StyledImg } from './common/Styled';
-import { ROUTES_PATH, SIZE } from '../constants/index';
-import { COLORS } from '../styles/theme';
+import { Link } from 'react-router-dom';
 
-function Product({ productData, handleCartItem, isCart }) {
+import { StyledImageBox, StyledImg } from './common/Styled';
+
+import { GiShoppingCart } from 'react-icons/gi';
+import { ROUTES_PATH, SIZE } from '../constants/index';
+
+function Product({ productData, handleCartItem, isProductInCart }) {
   const { id, name, price, imageUrl } = productData;
 
-  const onClickCartIcon = () => {
-    handleCartItem(id, isCart);
+  const handleClickCartIcon = () => {
+    handleCartItem(id, isProductInCart);
   };
 
   return (
@@ -19,19 +20,14 @@ function Product({ productData, handleCartItem, isCart }) {
           <StyledImg width={SIZE.MIDDLE} src={imageUrl} alt={name} />
         </StyledImageBox>
       </Link>
-      <StyledItemInfoBox>
+      <StyledItemInfoBox isProductInCart={isProductInCart.toString()}>
         <Link to={`${ROUTES_PATH.DETAIL_LINK}${id}`}>
           <StyledItemInfo>
             <StyledItemName>{name}</StyledItemName>
             <StyledItemPrice>{Number(price).toLocaleString()} 원</StyledItemPrice>
           </StyledItemInfo>
         </Link>
-        <GiShoppingCart
-          className="cart"
-          size={28}
-          onClick={onClickCartIcon}
-          color={isCart ? COLORS.PRIMARY : ''}
-        />
+        <GiShoppingCart className="cart" size={28} onClick={handleClickCartIcon} />
       </StyledItemInfoBox>
     </StyledItem>
   );
@@ -50,11 +46,11 @@ const StyledItemInfoBox = styled.div`
   margin: 16px 8px 0px 8px;
 
   .cart {
-    color: ${(props) => props.color};
-  }
+    color: ${(props) =>
+      props.isProductInCart === 'true' ? props.theme.main.PRIMARY : props.theme.main.BLACK};
   .cart:hover {
     transform: scale(1.2);
-    color: ${COLORS.PRIMARY};
+    color: ${(props) => props.theme.main.PRIMARY};
   }
 `;
 

@@ -1,22 +1,30 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { StyledImageBox, StyledImg } from '../components/common/Styled';
-import { MESSAGE, SERVER_PATH, SIZE } from '../constants';
-import { COLORS } from '../styles/theme';
+
 import Loading from '../components/Loading';
 import useFetch from '../hooks/useFetch';
 import useCart from '../hooks/useCart';
 
+import { StyledImageBox, StyledImg } from '../components/common/Styled';
+
+import { MESSAGE, SERVER_PATH, SIZE } from '../constants';
+
 function ProductDetailPage() {
   const { id } = useParams();
   const { addItem, deleteItem } = useCart();
-  const cartList = useSelector(({ cart }) => cart.data);
-  const { data: product, isLoading, isError } = useFetch(`${SERVER_PATH.PRODUCTS}/${id}`);
-  const isCart = cartList.some(({ id: productId }) => productId === +id);
 
-  const onClickCartButton = () => {
-    if (isCart) {
+  const cartItemList = useSelector(({ cart }) => cart.data);
+  const { data: product, isLoading, isError } = useFetch(`${SERVER_PATH.PRODUCTS}/${id}`);
+  const isProductInCart = cartItemList.some((cartItem) => {
+    if (cartItem !== null && product !== null) {
+      return cartItem.name === product.name;
+    }
+    return false;
+  });
+
+  const handleClickCartButton = () => {
+    if (isProductInCart) {
       deleteItem(id);
       alert(MESSAGE.REMOVE);
       return;
@@ -44,10 +52,10 @@ function ProductDetailPage() {
         </StyledProductDetailPrice>
       </StyledProductDetailInfo>
       <StyledCartButton
-        onClick={onClickCartButton}
-        bgColor={isCart ? COLORS.LIGHT_BROWN : COLORS.BROWN}
+        onClick={handleClickCartButton}
+        isProductInCart={isProductInCart.toString()}
       >
-        {isCart ? '장바구니 제거' : '장바구니'}
+        {isProductInCart ? '장바구니 제거' : '장바구니'}
       </StyledCartButton>
     </StyledProductDetailContainer>
   );
@@ -89,14 +97,15 @@ const StyledCartButton = styled.button`
   height: 60px;
   left: 641px;
   bottom: 60px;
-  background: ${(props) => props.bgColor};
-  color: ${COLORS.WHITE};
+  background: ${(props) =>
+    props.isProductInCart === 'true' ? props.theme.main.PRIMARY : props.theme.main.BROWN};
+  color: ${(props) => props.theme.main.WHITE};
   font-size: 24px;
   font-weight: 700;
   border-radius: 4px;
   border: none;
   &:hover {
-    background-color: ${COLORS.LIGHT_BROWN};
+    background-color: ${(props) => props.theme.main.LIGHT_BROWN};
   }
 `;
 

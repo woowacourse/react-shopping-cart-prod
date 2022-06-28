@@ -1,17 +1,13 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import axios from 'axios';
 
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
 import { StyledUserContainer, StyledUserForm } from '../components/common/Styled';
 
 import useUserForm from '../hooks/useUserForm';
-import { validLoginInfo } from '../utils/validations';
+import useUser from '../hooks/useUser';
 
-import { MESSAGE, SERVER_PATH, ROUTES_PATH, USER_INFO_KEY } from '../constants';
-import actionTypes from '../store/user/user.actions';
+import { MESSAGE, USER_INFO_KEY } from '../constants';
 
 const initialState = {
   email: '',
@@ -19,26 +15,14 @@ const initialState = {
 };
 
 function LoginPage() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [loginInfo, setLoginInfo] = useState(initialState);
   const handleUserInfoChange = useUserForm(setLoginInfo);
+  const { userLogin } = useUser();
   const { email, password } = loginInfo;
 
-  const handleLoginInfoSubmit = async (e) => {
+  const handleLoginInfoSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      validLoginInfo(email);
-      const { data } = await axios.post(SERVER_PATH.LOGIN, { email, password });
-      const { accessToken } = data;
-      dispatch({ type: actionTypes.ADD_TOKEN, accessToken });
-      alert(MESSAGE.LOGIN_SUCCESS);
-      navigate(ROUTES_PATH.HOME);
-    } catch (error) {
-      setLoginInfo(initialState);
-      alert(error.message);
-    }
+    userLogin(loginInfo);
   };
 
   return (
@@ -48,7 +32,7 @@ function LoginPage() {
         <Input
           labelText="이메일"
           type="email"
-          placeholder="이메일 주소를 입력해주세요"
+          placeholder={MESSAGE.EMAIL_PLACEHOLDER}
           value={email}
           onChange={handleUserInfoChange(USER_INFO_KEY.EMAIL)}
         />
@@ -56,7 +40,7 @@ function LoginPage() {
           labelText="비밀번호"
           type="password"
           value={password}
-          placeholder="비밀번호를 입력해주세요"
+          placeholder={MESSAGE.PASSWORD_PLACEHOLDER}
           onChange={handleUserInfoChange(USER_INFO_KEY.PASSWORD)}
         />
         <Button text="로그인" />
