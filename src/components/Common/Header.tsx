@@ -1,11 +1,25 @@
+import { ChangeEventHandler } from 'react';
+import { useSetRecoilState } from 'recoil';
+
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+import SelectBox from './SelectBox';
+
 import CartIcon from '../../assets/CartIcon';
 import useCartProductCount from '../../hooks/useCartProductCount';
+import { serverNameState } from '../../states/serverName';
+import { ServerKey } from '../../constants/server';
 
 const Header = () => {
   const cartProductCount = useCartProductCount();
+  const setServerName = useSetRecoilState(serverNameState);
+
+  const onChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+    const serverKey = event.currentTarget.value;
+
+    setServerName(serverKey as ServerKey);
+  };
 
   return (
     <HeaderContainer>
@@ -14,6 +28,7 @@ const Header = () => {
           <CartIcon width={51} height={44} color='white' />
           <Logo>SHOP</Logo>
         </LogoContainer>
+        <SelectBox options={['도치', '푸우', '엔초']} onChange={onChange} />
         <CartPageLink to='/cart'>
           장바구니
           <ProductCountAlert>{cartProductCount}</ProductCountAlert>

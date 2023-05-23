@@ -5,9 +5,11 @@ import ProductItem from './ProductItem';
 import Message from '../Common/Message';
 
 import { productState } from '../../states/products';
+import { serverNameState } from '../../states/serverName';
 
 const ProductList = () => {
-  const products = useRecoilValue(productState);
+  const serverName = useRecoilValue(serverNameState);
+  const products = useRecoilValue(productState(serverName));
 
   if (products.length === 0) {
     return <Message type='empty' />;
