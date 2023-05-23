@@ -11,6 +11,7 @@ import type { HttpMethod } from './utils/http';
 import { joinPath } from './utils/http';
 
 type ClientOptions = {
+  origin?: string;
   baseUrl?: string;
 };
 
@@ -18,7 +19,7 @@ class Client<TRestAPI extends RestAPI> {
   constructor(private readonly options: ClientOptions = {}) {}
 
   private getUrl(path: string) {
-    return joinPath(this.options.baseUrl ?? '', path);
+    return (this.options.origin ?? '') + joinPath(this.options.baseUrl ?? '', path);
   }
 
   private async parseResponseData(response: Response) {
@@ -27,6 +28,14 @@ class Client<TRestAPI extends RestAPI> {
     } catch {
       return null;
     }
+  }
+
+  setOrigin(origin: string) {
+    this.options.origin = origin;
+  }
+
+  setBaseUrl(baseUrl: string) {
+    this.options.baseUrl = baseUrl;
   }
 
   fetch<Method extends TRestAPI['request']['method'], Path extends TRestAPI['request']['path']>(
@@ -38,6 +47,9 @@ class Client<TRestAPI extends RestAPI> {
       const response = await fetch(this.getUrl(path.toString()), {
         method,
         ...init,
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
       });
 
       return {

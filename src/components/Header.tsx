@@ -1,6 +1,9 @@
+import { useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import HomeIcon from '../assets/icons/home-icon.svg';
 import cartItemsState from '../recoil/atoms/cartItemsState';
+import serverState from '../recoil/atoms/serverState';
+import servers from '../servers';
 import Badge from './common/Badge';
 import AwaitRecoilState from './utils/AwaitRecoilState';
 
@@ -59,6 +62,14 @@ type HeaderProps = {
 
 const Header = (props: HeaderProps) => {
   const { onNavigate } = props;
+  const [server, setServer] = useRecoilState(serverState);
+
+  const handleServerChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+    const serverName = event.target.value;
+    const server = servers.find((server) => server.name === serverName)!;
+
+    setServer(server);
+  };
 
   return (
     <HeaderContainer>
@@ -69,6 +80,14 @@ const Header = (props: HeaderProps) => {
         </HomeButton>
 
         <Menu>
+          <select onChange={handleServerChange} value={server.name}>
+            {servers.map((server) => (
+              <option key={server.name} value={server.name}>
+                {server.name}
+              </option>
+            ))}
+          </select>
+
           <MenuButton onClick={() => onNavigate('/cart')}>
             장바구니{' '}
             <AwaitRecoilState state={cartItemsState}>
