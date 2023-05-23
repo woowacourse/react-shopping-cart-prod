@@ -1,10 +1,22 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
 import { CartItemType } from '@Types/index';
 
-const cartItemsState = atom<CartItemType[] | null>({
+import { fetchData } from '@Utils/api';
+
+import { FETCH_METHOD, FETCH_URL } from '@Constants/index';
+
+const cartItemsStateSelector = selector({
+  key: 'cartItemsStateSelector',
+
+  get: () => {
+    return fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET });
+  },
+});
+
+const cartItemsState = atom<CartItemType[]>({
   key: 'cartItemsState',
-  default: null,
+  default: cartItemsStateSelector,
 });
 
 export default cartItemsState;

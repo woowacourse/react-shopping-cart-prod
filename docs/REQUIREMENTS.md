@@ -2,8 +2,9 @@
 
 ### 서버 연동 이전 준비 작업
 
-- [ ] ErrorBoundary 적용
-- [ ] Suspense 적용
+- [x] ErrorBoundary 적용
+- [x] Suspense 적용
+- [ ] 장바구니 상태 업데이트
 
 ### 서버 연동 이후 준비 작업
 

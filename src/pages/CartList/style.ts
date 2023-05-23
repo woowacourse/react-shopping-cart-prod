@@ -22,13 +22,6 @@ export const ShoppingCartSubHeader = styled.div`
   }
 `;
 
-export const ProductAmount = styled.div`
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 30px;
-  color: #333333;
-`;
-
 export const ShoppingCartContentsLayout = styled.div`
   display: grid;
   grid-template-columns: auto 360px;
@@ -38,4 +31,14 @@ export const ShoppingCartContentsLayout = styled.div`
     grid-template-columns: auto;
     row-gap: 40px;
   }
+`;
+
+export const CartList = styled.div`
+  border-top: 2px solid #aaaaaa;
+`;
+
+export const CartListLayout = styled.div`
+  display: grid;
+  background-color: #cccccc;
+  row-gap: 1.5px;
 `;

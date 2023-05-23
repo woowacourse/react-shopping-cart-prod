@@ -1,36 +1,42 @@
-import { useRecoilValue } from 'recoil';
+import { Suspense } from 'react';
 
-import useCartItems from '@Hooks/useCartItems';
-
-import shoppingCartAmountState from '@Selector/cartItemsAmountState';
-
+import CartAmount from './CartAmount';
+import { SkeletonCartItem } from './CartItem';
 import CartItems from './CartItems';
 import CartListController from './CartListController';
-import EmptyCart from './EmptyCart';
+import LoadingCartListController from './CartListController/LoadingCartListController';
 import PaymentAmount from './PaymentAmount';
+import SkeletonPaymentAmount from './PaymentAmount/SkeletonPaymentAmount';
 import * as S from './style';
 
 function CartList() {
-  const shoppingCartAmount = useRecoilValue(shoppingCartAmountState);
-  const { cartItems, status, updateCartItem } = useCartItems();
-
   return (
     <S.Container>
       <S.Title>장바구니</S.Title>
-      {status === 'success' && cartItems?.length === 0 ? (
-        <EmptyCart />
-      ) : (
-        <>
-          <S.ShoppingCartSubHeader>
-            <S.ProductAmount>든든배송 상품 ({shoppingCartAmount}개)</S.ProductAmount>
-            <CartListController />
-          </S.ShoppingCartSubHeader>
-          <S.ShoppingCartContentsLayout>
-            <CartItems cartItems={cartItems} isLoading={status === 'loading'} updateCartItem={updateCartItem} />
-            <PaymentAmount />
-          </S.ShoppingCartContentsLayout>
-        </>
-      )}
+      <S.ShoppingCartSubHeader>
+        <Suspense fallback={<CartAmount isLoading />}>
+          <CartAmount />
+        </Suspense>
+        <Suspense fallback={<LoadingCartListController />}>
+          <CartListController />
+        </Suspense>
+      </S.ShoppingCartSubHeader>
+      <S.ShoppingCartContentsLayout>
+        <S.CartList>
+          <S.CartListLayout>
+            <Suspense
+              fallback={Array.from({ length: 3 }, (_, index) => (
+                <SkeletonCartItem key={index} />
+              ))}
+            >
+              <CartItems />
+            </Suspense>
+          </S.CartListLayout>
+        </S.CartList>
+        <Suspense fallback={<SkeletonPaymentAmount />}>
+          <PaymentAmount />
+        </Suspense>
+      </S.ShoppingCartContentsLayout>
     </S.Container>
   );
 }

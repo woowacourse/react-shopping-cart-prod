@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 import Checkbox from '@Components/Checkbox';
 import QuantityController from '@Components/QuantityController';
 
-import { Product, UpdateCartItem } from '@Types/index';
+import { Product } from '@Types/index';
 
 import useCartItems from '@Hooks/useCartItems';
 import useProduct from '@Hooks/useProduct';
@@ -15,15 +15,28 @@ import Trash from '@Asset/Trash.png';
 
 import * as S from './style';
 
-type ShoppingItemProps = {
+export const SkeletonCartItem = () => {
+  return (
+    <S.Container width="100%">
+      <Checkbox isChecked={true} size="small" updateSelectedState={() => alert('?')} />
+      <S.ShoppingItemImage />
+      <S.ShoppingItemName isLoading>로딩 중</S.ShoppingItemName>
+      <S.RightContents>
+        <div></div>
+        <div></div>
+        <S.ShoppingItemPrice isLoading>로딩 중 로딩 중</S.ShoppingItemPrice>
+      </S.RightContents>
+    </S.Container>
+  );
+};
+
+type CartItemProps = {
   product?: Product;
   width?: string;
   cartId: number;
-  isLoading?: boolean;
-  updateCartItem: UpdateCartItem;
 };
 
-function CartItem({ product, width = '100%', cartId, isLoading = false, updateCartItem }: ShoppingItemProps) {
+function CartItem({ product, width = '100%', cartId }: CartItemProps) {
   const { toggleSelected, deleteSelectedCartItem } = useCartItems();
   const { name, price, image, imageDescription } = useProduct(product);
 
@@ -40,21 +53,16 @@ function CartItem({ product, width = '100%', cartId, isLoading = false, updateCa
     <S.Container aria-label="장바구니 상품" width={width}>
       <Checkbox isChecked={isCartItemSelected} size="small" updateSelectedState={() => toggleSelected(cartId)} />
       <S.ShoppingItemImage src={image} alt={imageDescription} aria-label="장바구니 상품 이미지" />
-      <S.ShoppingItemName aria-label="장바구니 상품 이름" isLoading={isLoading}>
-        {name}
-      </S.ShoppingItemName>
+      <S.ShoppingItemName aria-label="장바구니 상품 이름">{name}</S.ShoppingItemName>
       <S.RightContents>
         <S.DeleteButton src={Trash} onClick={deleteShoppingItem} />
         <QuantityController
           product={product}
           quantity={cartItem?.quantity}
           cartItemId={cartItem?.cartItemId}
-          updateCartItem={updateCartItem}
           isAbleSetZeroState={false}
         />
-        <S.ShoppingItemPrice aria-label="장바구니 상품 가격" isLoading={isLoading}>
-          {price}
-        </S.ShoppingItemPrice>
+        <S.ShoppingItemPrice aria-label="장바구니 상품 가격">{price}</S.ShoppingItemPrice>
       </S.RightContents>
     </S.Container>
   );

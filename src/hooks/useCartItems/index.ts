@@ -1,19 +1,17 @@
-import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 import { CartItemType, UpdateCartItem } from '@Types/index';
 
-import useFetch from '@Hooks/useFetch';
-
-import localStorageHelper from '@Utils/localStorageHelper';
+import { fetchData } from '@Utils/api';
 
 import cartItemsState from '@Atoms/cartItemsState';
 
 import { FETCH_METHOD, FETCH_URL } from '@Constants/index';
 
 const useCartItems = () => {
-  const [cartItems, setCartItems] = useRecoilState<CartItemType[] | null>(cartItemsState);
-  const { data, status, errorMessage, fetchData } = useFetch<CartItemType[]>(FETCH_URL.cartItems);
+  const [cartItems, setCartItems] = useRecoilState<CartItemType[]>(cartItemsState);
+
+  const resetCartItems = useResetRecoilState(cartItemsState);
 
   const isEmpty = cartItems ? !cartItems.length : 0;
 
@@ -28,15 +26,7 @@ const useCartItems = () => {
   const updateCartItem: UpdateCartItem = async (url, method, body) => {
     await fetchData({ url, method, body });
 
-    const prevCartItems = localStorageHelper.getValue('cartItems') as CartItemType[];
-    const newCartItems = prevCartItems.map((cartItem) => {
-      return {
-        ...cartItem,
-        isSelected: isSelected(cartItem.id),
-      };
-    });
-
-    setCartItems(newCartItems);
+    resetCartItems();
   };
 
   const toggleSelected = (id: number) => {
@@ -82,23 +72,10 @@ const useCartItems = () => {
     setCartItems(cartItems.filter((cartItem) => !cartItem.isSelected));
   };
 
-  useEffect(() => {
-    if (data)
-      setCartItems(
-        data.map((cartItem) => {
-          return {
-            ...cartItem,
-            isSelected: true,
-          };
-        }),
-      );
-  }, [data]);
-
   return {
     cartItems,
-    status,
+
     isEmpty,
-    errorMessage,
     updateCartItem,
     toggleSelected,
     toggleAllSelected,

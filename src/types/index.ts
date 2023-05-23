@@ -18,4 +18,10 @@ export type fetchMethod = keyof typeof FETCH_METHOD;
 
 export type UpdateCartItem = (url: string, method: fetchMethod, body?: BodyInit | null | undefined) => void;
 
+export type FetchArgs = {
+  url: string;
+  method: fetchMethod;
+  body?: BodyInit | null | undefined;
+};
+
 export type BoxSize = keyof typeof BOX_SIZE;

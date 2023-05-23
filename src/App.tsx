@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import LoadingHeader from '@Components/Header/LoadingHeader';
+import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Header from '@Components/Header';
@@ -18,7 +19,9 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Header />
+      <Suspense fallback={<LoadingHeader />}>
+        <Header />
+      </Suspense>
       <CommonPageStyle>
         <ErrorBoundary fallback={NotFound}>
           <Outlet />

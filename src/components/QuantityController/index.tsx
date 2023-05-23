@@ -1,6 +1,8 @@
 import { useState } from 'react';
 
-import { Product, UpdateCartItem } from '@Types/index';
+import { Product } from '@Types/index';
+
+import useCartItems from '@Hooks/useCartItems';
 
 import {
   ALERT_MESSAGE,
@@ -20,7 +22,6 @@ type QuantityControllerProps = {
   quantity?: number;
   cartItemId?: number;
   isAbleSetZeroState?: boolean;
-  updateCartItem: UpdateCartItem;
 };
 
 type QuantityControlButton = (typeof QUANTITY_CONTROL_BUTTON)[keyof typeof QUANTITY_CONTROL_BUTTON];
@@ -30,9 +31,9 @@ function QuantityController({
   quantity = SHOPPING_QUANTITY.MIN,
   cartItemId,
   isAbleSetZeroState = true,
-  updateCartItem,
 }: QuantityControllerProps) {
   const [isUserWork, setIsUserWork] = useState(false);
+  const { updateCartItem } = useCartItems();
 
   const controlProductQuantity = (type: QuantityControlButton) => {
     const newValue =

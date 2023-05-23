@@ -32,6 +32,5 @@ export const DefaultCartItem: Story = {
 export const SkeletonCartItem: Story = {
   args: {
     width: '600px',
-    isLoading: true,
   },
 };

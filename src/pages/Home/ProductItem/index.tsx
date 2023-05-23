@@ -16,10 +16,9 @@ type ProductItemProps = {
     imageUrl: string;
   };
   width?: string;
-  updateCartItem: UpdateCartItem;
 };
 
-function ProductItem({ product, width, updateCartItem }: ProductItemProps) {
+function ProductItem({ product, width }: ProductItemProps) {
   const { name, price, imageUrl } = product;
   const { quantity, cartItemId } = useRecoilValue(cartItemState(product.id));
 
@@ -31,12 +30,7 @@ function ProductItem({ product, width, updateCartItem }: ProductItemProps) {
           <S.ProductItemName aria-label="판매 품목 이름">{name}</S.ProductItemName>
           <S.ProductItemPrice aria-label="판매 품목 가격">{price}</S.ProductItemPrice>
         </S.ProductItemLayout>
-        <QuantityController
-          quantity={quantity}
-          cartItemId={cartItemId}
-          product={product}
-          updateCartItem={updateCartItem}
-        />
+        <QuantityController quantity={quantity} cartItemId={cartItemId} product={product} />
       </S.ProductItemContents>
     </S.Container>
   );
