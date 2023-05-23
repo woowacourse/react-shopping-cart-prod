@@ -2,6 +2,7 @@ import Svg from 'components/@common/Svg';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { countCartListSelector } from 'recoil/cartList';
+import { ROUTES } from 'utils/constants';
 import * as S from './Header.styles';
 
 const Header = () => {
@@ -9,11 +10,11 @@ const Header = () => {
   const navigate = useNavigate();
 
   const onLogoClick = () => {
-    navigate('/');
+    navigate(ROUTES.PRODUCT_LIST);
   };
 
   const onNavigateToCart = () => {
-    navigate('/cart');
+    navigate(ROUTES.CART_LIST);
   };
 
   return (
