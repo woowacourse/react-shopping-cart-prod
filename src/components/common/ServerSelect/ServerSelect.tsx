@@ -17,7 +17,6 @@ const ServerSelect = () => {
         블랙캣
       </option>
       <option value="localhost:9000">케로</option>
-      <option value="http://localhost:3000">Local</option>
     </Select>
   );
 };
