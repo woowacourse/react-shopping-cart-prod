@@ -48,7 +48,7 @@ export const fetchCartList = async (url: string) => {
 
 export const fetchProductList = async (url: string) => {
   try {
-    const response = await fetch("/products");
+    const response = await fetch(`${url}/products`);
     const data: ProductItem[] = await response.json();
     return data;
   } catch (error) {
