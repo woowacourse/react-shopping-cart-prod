@@ -9,13 +9,7 @@ import SelectBox from './SelectBox';
 import CartIcon from '../../assets/CartIcon';
 import useCartProductCount from '../../hooks/useCartProductCount';
 import { serverNameState } from '../../states/serverName';
-import { SERVER, SERVER_KEYS, ServerKey } from '../../constants/server';
-
-const isServerKey = (value: unknown): value is ServerKey => {
-  const serverKey = value as ServerKey;
-
-  return serverKey in SERVER;
-};
+import { SERVER_KEYS, isServerKey } from '../../constants/server';
 
 const Header = () => {
   const cartProductCount = useCartProductCount();

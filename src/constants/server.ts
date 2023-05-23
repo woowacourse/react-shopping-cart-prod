@@ -19,3 +19,9 @@ export const SERVER = {
 export const SERVER_KEYS = Object.keys(SERVER);
 
 export type ServerKey = keyof typeof SERVER;
+
+export const isServerKey = (value: unknown): value is ServerKey => {
+  const serverKey = value as ServerKey;
+
+  return serverKey in SERVER;
+};
