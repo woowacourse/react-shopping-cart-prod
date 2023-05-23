@@ -1,7 +1,7 @@
 import * as S from './ProductItem.styles';
 import Svg from 'components/@common/Svg';
 import Counter from 'components/@common/Counter';
-import { useProductSelect } from 'hooks/useProductSelect';
+import { useCart } from 'components/Cart/hooks/useCart';
 import { Product } from 'types';
 
 interface ProductItemProps {
@@ -9,8 +9,8 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  const { currentCartItem, remove, add, onSelectItem } =
-    useProductSelect(product);
+  const { currentCartItem, onRemoveItem, onAddItem, onSelectItem } =
+    useCart(product);
 
   return (
     <S.ItemWrapper>
@@ -26,8 +26,8 @@ const ProductItem = ({ product }: ProductItemProps) => {
           <Counter
             count={currentCartItem.quantity}
             min={0}
-            increment={add}
-            decrement={remove}
+            increment={onAddItem}
+            decrement={onRemoveItem}
           />
         ) : (
           <Svg type="cart-icon" width={25} height={22} onClick={onSelectItem} />

@@ -1,7 +1,7 @@
 import * as S from './CartItem.styles';
 import Counter from 'components/@common/Counter';
 import Svg from 'components/@common/Svg';
-import { useProductSelect } from 'hooks/useProductSelect';
+import { useCart } from 'components/Cart/hooks/useCart';
 import { useCheckedItems } from '../hooks/useCheckedItems';
 import { Cart } from 'types';
 
@@ -10,7 +10,7 @@ interface CartItemProps {
 }
 
 const CartItem = ({ cartItem }: CartItemProps) => {
-  const { currentCartItem, remove, add, onDeleteItem } = useProductSelect(
+  const { currentCartItem, onRemoveItem, onAddItem, onDeleteItem } = useCart(
     cartItem.product
   );
   const { checkItem, checkedItems } = useCheckedItems();
@@ -36,8 +36,8 @@ const CartItem = ({ cartItem }: CartItemProps) => {
         <Counter
           count={currentCartItem?.quantity || 0}
           min={1}
-          increment={add}
-          decrement={remove}
+          increment={onAddItem}
+          decrement={onRemoveItem}
         />
         <S.CartProductPrice>
           {product.price.toLocaleString('KR')}원
