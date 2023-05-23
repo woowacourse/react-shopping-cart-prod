@@ -12,3 +12,8 @@ export const toastState = atom<ToastProps[]>({
   key: 'toastState',
   default: [],
 });
+
+export const serverOriginState = atom<string>({
+  key: 'serverOriginState',
+  default: 'http://localhost:3000',
+});

@@ -1,11 +1,14 @@
 import { selector } from 'recoil';
+import { serverOriginState } from '../atoms';
 import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../../constants';
 import type { CartItem, Product } from '../../types/product';
 
 export const productListQuery = selector<Product[]>({
   key: 'productList',
-  get: async () => {
-    const response = await fetch(PRODUCTS_BASE_URL);
+  get: async ({ get }) => {
+    const response = await fetch(
+      `${get(serverOriginState)}${PRODUCTS_BASE_URL}`,
+    );
 
     if (!response.ok) {
       throw new Error('상품 목록을 불러올 수 없습니다.');
