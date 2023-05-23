@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import * as S from './CartItemList.styles';
 import { useRecoilState } from 'recoil';
 import { cartListAtom } from 'recoil/cartList';
@@ -16,6 +17,11 @@ const CartItemList = () => {
   const { checkedItems, removeAllCheckedItems, checkAllItems } =
     useCheckedItems();
   const { isModalOpen, onOpenModal, onCloseModal } = useModal();
+
+  useEffect(() => {
+    checkAllItems();
+  }, []);
+
   const loading = (
     <S.Loading>
       <Spinner />
@@ -38,6 +44,7 @@ const CartItemList = () => {
       removeAllCheckedItems();
       return;
     }
+
     checkAllItems();
   };
 
