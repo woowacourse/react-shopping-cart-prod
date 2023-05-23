@@ -7,7 +7,7 @@ import { SmallCartIcon } from '../../../assets';
 import type { Product } from '../../../types/product';
 
 const ProductItem = (product: Product) => {
-  const { id, name, price, imageSrc } = product;
+  const { id, name, price, imageUrl } = product;
   const {
     cart,
     addProductToCart,
@@ -34,7 +34,7 @@ const ProductItem = (product: Product) => {
   return (
     <ItemContainer>
       <ProductImageWrapper>
-        <Image src={imageSrc} loading="lazy" alt={name} size="large" />
+        <Image src={imageUrl} loading="lazy" alt={name} size="large" />
 
         <CartButtonWrapper>
           {productInCart ? (

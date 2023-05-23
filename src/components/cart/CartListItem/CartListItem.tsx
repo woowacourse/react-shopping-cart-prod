@@ -19,7 +19,7 @@ const CartListItem = ({
   onChangeCheckbox,
 }: CartListItemProps) => {
   const { id: cartItemId, quantity, product } = cartItem;
-  const { id, name, price, imageSrc } = product;
+  const { id, name, price, imageUrl } = product;
   const { updateProductQuantity, removeProductFromCart } = useCartService();
 
   const handleChangeQuantity = (quantity: number) => {
@@ -42,7 +42,7 @@ const CartListItem = ({
             onChange={onChangeCheckbox}
           />
           <Spacer width={15} />
-          <Image src={imageSrc} loading="lazy" alt={name} />
+          <Image src={imageUrl} loading="lazy" alt={name} />
           <Title>{name}</Title>
         </Contents>
         <Right>
