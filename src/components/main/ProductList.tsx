@@ -13,7 +13,7 @@ const ProductList = () => {
   const { api, isLoading } = useFetchData<Product[]>(setProductList);
 
   useEffect(() => {
-    api.get(PRODUCT_LIST_URL);
+    api.get('http://54.180.95.7:8080/products');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -28,7 +28,7 @@ const ProductList = () => {
             id={product.id}
             name={product.name}
             price={product.price}
-            imageUrl={`${process.env.PUBLIC_URL}${product.imageUrl}`}
+            imageUrl={product.imageUrl}
           />
         ))
       )}
