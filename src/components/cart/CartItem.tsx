@@ -1,13 +1,13 @@
 import type { CartItemType } from '../../types';
 
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import CheckBox from '../common/CheckBox';
 import QuantityInput from '../common/QuantityInput';
 
 import * as api from '../../api';
-import { cartState } from '../../recoil/state';
+import { cartState, serverNameState } from '../../recoil/state';
 import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 
 interface Props extends CartItemType {
@@ -19,10 +19,11 @@ interface Props extends CartItemType {
 export default function CartItem(props: Props) {
   const { id, product, quantity, checked, toggleChecked, deleteChecked } = props;
   const setCart = useSetRecoilState(cartState);
+  const serverName = useRecoilValue(serverNameState);
 
   const removeCartItem = async () => {
     try {
-      await api.deleteCartItem(id);
+      await api.deleteCartItem(serverName, id);
       deleteChecked();
     } catch {
       alert(API_ERROR_MESSAGE.deleteCartItem);
@@ -30,7 +31,7 @@ export default function CartItem(props: Props) {
     }
 
     try {
-      const cart = await api.getCart();
+      const cart = await api.getCart(serverName);
       setCart(cart);
     } catch {
       alert(API_ERROR_MESSAGE.getCart);

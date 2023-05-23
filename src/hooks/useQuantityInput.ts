@@ -1,17 +1,18 @@
 import { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import * as api from '../api';
-import { cartState } from '../recoil/state';
+import { cartState, serverNameState } from '../recoil/state';
 import { API_ERROR_MESSAGE } from '../constants';
 
 const useQuantityInput = (cartItemId: number) => {
   const [input, setInput] = useState('');
   const setCart = useSetRecoilState(cartState);
+  const serverName = useRecoilValue(serverNameState);
 
   const getCart = async () => {
     try {
-      const cart = await api.getCart();
+      const cart = await api.getCart(serverName);
       setCart(cart);
     } catch {
       alert(API_ERROR_MESSAGE.getCart);
@@ -20,7 +21,7 @@ const useQuantityInput = (cartItemId: number) => {
 
   const deleteCartItem = async () => {
     try {
-      await api.deleteCartItem(cartItemId);
+      await api.deleteCartItem(serverName, cartItemId);
     } catch {
       alert(API_ERROR_MESSAGE.deleteCartItem);
       return;
@@ -31,7 +32,7 @@ const useQuantityInput = (cartItemId: number) => {
 
   const patchCartItemQuantity = async (quantity: number) => {
     try {
-      await api.patchCartItemQuantity(cartItemId, quantity);
+      await api.patchCartItemQuantity(serverName, cartItemId, quantity);
     } catch {
       alert(API_ERROR_MESSAGE.postCartItem);
     }

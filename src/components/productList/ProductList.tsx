@@ -1,29 +1,30 @@
 import type { ProductType } from '../../types';
 
 import { useEffect, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Product from './Product';
 import SkeletonProduct from './SkeletonProduct';
 
 import * as api from '../../api';
-import { cartState } from '../../recoil/state';
+import { cartState, serverNameState } from '../../recoil/state';
 import { API_ERROR_MESSAGE, SKELETONS_LENGTH } from '../../constants';
 
 export default function ProductList() {
   const [products, setProducts] = useState<ProductType[] | null>(null);
   const setCart = useSetRecoilState(cartState);
+  const serverName = useRecoilValue(serverNameState);
 
   useEffect(() => {
     try {
-      api.getProducts().then(setProducts);
+      api.getProducts(serverName).then(setProducts);
     } catch {
       alert(API_ERROR_MESSAGE.getProducts);
     }
 
     try {
-      api.getCart().then(setCart);
+      api.getCart(serverName).then(setCart);
     } catch {
       alert(API_ERROR_MESSAGE.getCart);
     }

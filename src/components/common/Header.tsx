@@ -3,6 +3,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import { cartCountState } from '../../recoil/state';
+import { SERVER_NAMES } from '../../constants';
 
 export default function Header() {
   const cartCount = useRecoilValue(cartCountState);
@@ -14,6 +15,11 @@ export default function Header() {
           <img src="./logo.svg" />
           <LogoTitle>SHOP</LogoTitle>
         </HomeLink>
+        <select>
+          {SERVER_NAMES.map((serverName) => (
+            <option key={serverName}>{serverName}</option>
+          ))}
+        </select>
         <CartLink to="/cart">
           장바구니
           <CartCount>{cartCount}</CartCount>

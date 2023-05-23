@@ -1,17 +1,18 @@
-import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import styled from "styled-components";
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 
-import CartItem from "./CartItem";
-import CheckBox from "../common/CheckBox";
+import CartItem from './CartItem';
+import CheckBox from '../common/CheckBox';
 
-import * as api from "../../api";
-import { cartState, checkedListState } from "../../recoil/state";
-import { API_ERROR_MESSAGE } from "../../constants";
+import * as api from '../../api';
+import { cartState, checkedListState, serverNameState } from '../../recoil/state';
+import { API_ERROR_MESSAGE } from '../../constants';
 
 export default function CartItemList() {
   const [cart, setCart] = useRecoilState(cartState);
   const [checkedList, setCheckedList] = useRecoilState(checkedListState);
+  const serverName = useRecoilValue(serverNameState);
 
   const checkedCount = checkedList.filter((checked) => checked).length;
   const allChecked = checkedCount === cart.length;
@@ -34,7 +35,7 @@ export default function CartItemList() {
 
   const removeCheckedCartItem = () => {
     checkedList.forEach((checked, index) => {
-      if (checked) api.deleteCartItem(cart[index].id);
+      if (checked) api.deleteCartItem(serverName, cart[index].id);
     });
 
     // 모든 삭제가 성공하리라 믿고 수행하는 로직
@@ -44,7 +45,7 @@ export default function CartItemList() {
 
   useEffect(() => {
     try {
-      api.getCart().then((cart) => {
+      api.getCart(serverName).then((cart) => {
         setCart(cart);
         setCheckedList(Array(cart.length).fill(true));
       });
@@ -68,10 +69,7 @@ export default function CartItemList() {
         ))}
       </List>
       <RemoveBox>
-        <CheckBox
-          checked={allChecked}
-          onClickCheckbox={allChecked ? uncheckAll : checkAll}
-        />
+        <CheckBox checked={allChecked} onClickCheckbox={allChecked ? uncheckAll : checkAll} />
         <RemoveLabel>
           전체선택 ({checkedCount}/{checkedList.length})
         </RemoveLabel>

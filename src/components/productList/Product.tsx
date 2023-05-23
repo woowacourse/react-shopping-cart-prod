@@ -1,20 +1,21 @@
-import type { ProductType } from "../../types";
+import type { ProductType } from '../../types';
 
-import { useState } from "react";
-import { useRecoilState } from "recoil";
-import styled from "styled-components";
+import { useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import styled from 'styled-components';
 
-import QuantityInput from "../common/QuantityInput";
+import QuantityInput from '../common/QuantityInput';
 
-import * as api from "../../api";
-import { cartState } from "../../recoil/state";
-import { API_ERROR_MESSAGE, MAX_QUANTITY } from "../../constants";
+import * as api from '../../api';
+import { cartState, serverNameState } from '../../recoil/state';
+import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 
 interface Props extends ProductType {}
 
 export default function Product({ id, name, price, imageUrl }: Props) {
   const [cart, setCart] = useRecoilState(cartState);
   const [addLoading, setAddLoading] = useState(false);
+  const serverName = useRecoilValue(serverNameState);
 
   const cartItem = cart.find((cartItem) => cartItem.product.id === id);
 
@@ -22,7 +23,7 @@ export default function Product({ id, name, price, imageUrl }: Props) {
     setAddLoading(true);
 
     try {
-      await api.postCartItem(id);
+      await api.postCartItem(serverName, id);
     } catch {
       alert(API_ERROR_MESSAGE.postCartItem);
       setAddLoading(false);
@@ -30,7 +31,7 @@ export default function Product({ id, name, price, imageUrl }: Props) {
     }
 
     try {
-      await api.getCart().then(setCart);
+      await api.getCart(serverName).then(setCart);
     } catch {
       alert(API_ERROR_MESSAGE.getCart);
     }
@@ -48,11 +49,7 @@ export default function Product({ id, name, price, imageUrl }: Props) {
         </LabelBox>
         <ControlBox>
           {cartItem ? (
-            <QuantityInput
-              cartItemId={cartItem.id}
-              min={0}
-              max={MAX_QUANTITY}
-            />
+            <QuantityInput cartItemId={cartItem.id} min={0} max={MAX_QUANTITY} />
           ) : (
             <CartItemAddButton onClick={addCartItem} disabled={addLoading}>
               <img src="./cart.svg" />
