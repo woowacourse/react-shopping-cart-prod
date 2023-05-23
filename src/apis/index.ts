@@ -3,7 +3,7 @@ export type ErrorResponse = {
 };
 
 type FetchedData<T> = {
-  data?: T;
+  data: T | null;
   headers: Headers;
 };
 
@@ -35,7 +35,7 @@ const fetcher = async <T>(url: string, options?: RequestInit): Promise<FetchedDa
   const headers = response.headers;
 
   if (response.status === 204) {
-    return { headers };
+    return { data: null, headers };
   }
 
   let data;
