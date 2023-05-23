@@ -1,10 +1,10 @@
-import { rest } from "msw";
-import { KEY_CART } from "../../constants/index";
-import { CART_URL } from "../../constants/url";
-import { CartItem } from "../../types";
-import { getDataFromLocalStorage } from "../../utils/getAndSetDataInLocalStorage";
+import { rest } from 'msw';
+import { KEY_CART } from '../../constants/index';
+import { CART_URL } from '../../constants/url';
+import { CartItem } from '../../types';
+import { getDataFromLocalStorage } from '../../utils/getAndSetDataInLocalStorage';
 
-import productList from "../productList.json";
+import productList from '../productList.json';
 
 export const cartHandlers = [
   // 장바구니 목록 조회
@@ -21,7 +21,7 @@ export const cartHandlers = [
 
     return res(
       ctx.status(201),
-      ctx.set("Location", `/cart-items/${cart.at(-1)?.id}`)
+      ctx.set('Location', `/cart-items/${cart.at(-1)?.id}`)
     );
   }),
 
@@ -37,7 +37,7 @@ export const cartHandlers = [
     if (!productExists) {
       return res(
         ctx.status(409),
-        ctx.json({ message: "장바구니에 해당 상품이 존재하지 않습니다." })
+        ctx.json({ message: '장바구니에 해당 상품이 존재하지 않습니다.' })
       );
     }
 
