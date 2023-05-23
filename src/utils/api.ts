@@ -17,5 +17,7 @@ export const fetchData = async <T>({ url, method, body }: FetchArgs): Promise<T>
 
   if (!response.ok) throw new Error(ERROR_MESSAGE.default);
 
+  if (method !== 'GET') return new Promise<T>((res) => res({ ok: true } as T));
+
   return await response.json();
 };

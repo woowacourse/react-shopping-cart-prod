@@ -1,4 +1,5 @@
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useState } from 'react';
+import { useRecoilState } from 'recoil';
 
 import { CartItemType, UpdateCartItem } from '@Types/index';
 
@@ -10,13 +11,11 @@ import { FETCH_METHOD, FETCH_URL } from '@Constants/index';
 
 const useCartItems = () => {
   const [cartItems, setCartItems] = useRecoilState<CartItemType[]>(cartItemsState);
-
-  const resetCartItems = useResetRecoilState(cartItemsState);
+  const [updateStats, setUpdateStats] = useState<'success' | 'loading'>('success');
 
   const isEmpty = cartItems ? !cartItems.length : 0;
 
   const isSelected = (id: number) => {
-    if (!cartItems) return false;
     const cartItem = cartItems.find((cartItem) => cartItem.id === id);
     if (!cartItem) return false;
 
@@ -24,9 +23,23 @@ const useCartItems = () => {
   };
 
   const updateCartItem: UpdateCartItem = async (url, method, body) => {
-    await fetchData({ url, method, body });
+    if (updateStats === 'loading') return;
 
-    resetCartItems();
+    await fetchData<{ ok: boolean }>({ url, method, body });
+
+    setUpdateStats('loading');
+    const data = await fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET });
+
+    const newCartItems = data.map((cartItem) => {
+      return {
+        ...cartItem,
+        isSelected: isSelected(cartItem.id),
+      };
+    });
+
+    setUpdateStats('success');
+
+    setCartItems(newCartItems);
   };
 
   const toggleSelected = (id: number) => {
@@ -74,7 +87,6 @@ const useCartItems = () => {
 
   return {
     cartItems,
-
     isEmpty,
     updateCartItem,
     toggleSelected,

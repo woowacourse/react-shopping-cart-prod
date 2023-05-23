@@ -2,6 +2,7 @@ import { useRecoilValue } from 'recoil';
 
 import Button from '@Components/Button';
 
+import cartItemsAmountState from '@Selector/cartItemsAmountState';
 import orderAmountState from '@Selector/orderAmountState';
 
 import { DELIVERY_FEE } from '@Constants/index';
@@ -10,6 +11,9 @@ import * as S from './style';
 
 function PaymentAmount() {
   const allPrice = useRecoilValue(orderAmountState);
+  const cartAmount = useRecoilValue(cartItemsAmountState);
+
+  if (cartAmount === '0') return <></>;
 
   const orderAmount = `${allPrice.toLocaleString()} 원`;
   const deliveryFee = !allPrice ? `0 원` : `${DELIVERY_FEE.toLocaleString()} 원`;

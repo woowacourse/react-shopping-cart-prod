@@ -1,6 +1,9 @@
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import Button from '@Components/Button';
+
+import cartItemsAmountState from '@Selector/cartItemsAmountState';
 
 import EmptyCartImage from '@Asset/emptyCart.png';
 
@@ -8,6 +11,10 @@ import * as S from './style';
 
 function EmptyCart() {
   const navigate = useNavigate();
+
+  const cartAmount = useRecoilValue(cartItemsAmountState);
+
+  if (cartAmount !== '0') return <></>;
 
   return (
     <S.Container>

@@ -12,6 +12,14 @@ export const Container = styled.div<ContainerProps>`
   width: ${(props) => props.width};
   background-color: #ffffff;
   padding: 20px 0px 30px 0px;
+
+  :first-child {
+    border-top: 2px solid #aaaaaa;
+  }
+
+  :last-child {
+    border-bottom: 2px solid #aaaaaa;
+  }
 `;
 
 type LoadingProps = {

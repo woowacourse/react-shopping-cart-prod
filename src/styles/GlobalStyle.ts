@@ -14,7 +14,7 @@ export const CommonPageStyle = styled.div`
   width: 60%;
   min-width: 1200px;
   margin: auto;
-  padding-top: 120px;
+  padding-top: 100px;
   @media only screen and (max-width: 1200px) {
     // 테블릿
     min-width: 768px;

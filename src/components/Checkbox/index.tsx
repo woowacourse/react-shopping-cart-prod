@@ -10,7 +10,7 @@ type CheckboxProps = {
   updateSelectedState?: () => void;
 };
 
-function Checkbox({ isChecked = true, size = 'medium', updateSelectedState }: CheckboxProps) {
+function Checkbox({ isChecked = false, size = 'medium', updateSelectedState }: CheckboxProps) {
   const toggleCheckbox = () => {
     if (!updateSelectedState) return;
     updateSelectedState();

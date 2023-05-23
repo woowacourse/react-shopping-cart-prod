@@ -6,12 +6,10 @@ import { fetchData } from '@Utils/api';
 
 import { FETCH_METHOD, FETCH_URL } from '@Constants/index';
 
-const cartItemsStateSelector = selector({
+export const cartItemsStateSelector = selector({
   key: 'cartItemsStateSelector',
 
-  get: () => {
-    return fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET });
-  },
+  get: () => fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET }),
 });
 
 const cartItemsState = atom<CartItemType[]>({

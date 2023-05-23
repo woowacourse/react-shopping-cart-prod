@@ -15,21 +15,6 @@ import Trash from '@Asset/Trash.png';
 
 import * as S from './style';
 
-export const SkeletonCartItem = () => {
-  return (
-    <S.Container width="100%">
-      <Checkbox isChecked={true} size="small" updateSelectedState={() => alert('?')} />
-      <S.ShoppingItemImage />
-      <S.ShoppingItemName isLoading>로딩 중</S.ShoppingItemName>
-      <S.RightContents>
-        <div></div>
-        <div></div>
-        <S.ShoppingItemPrice isLoading>로딩 중 로딩 중</S.ShoppingItemPrice>
-      </S.RightContents>
-    </S.Container>
-  );
-};
-
 type CartItemProps = {
   product?: Product;
   width?: string;

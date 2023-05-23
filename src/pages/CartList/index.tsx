@@ -1,10 +1,9 @@
 import { Suspense } from 'react';
 
-import CartAmount from './CartAmount';
-import { SkeletonCartItem } from './CartItem';
+import SkeletonCartItem from './CartItem/SkeletonCartItem';
 import CartItems from './CartItems';
-import CartListController from './CartListController';
-import LoadingCartListController from './CartListController/LoadingCartListController';
+import CartListSubHeader from './CartListSubHeader';
+import EmptyCart from './EmptyCart';
 import PaymentAmount from './PaymentAmount';
 import SkeletonPaymentAmount from './PaymentAmount/SkeletonPaymentAmount';
 import * as S from './style';
@@ -12,15 +11,10 @@ import * as S from './style';
 function CartList() {
   return (
     <S.Container>
-      <S.Title>장바구니</S.Title>
-      <S.ShoppingCartSubHeader>
-        <Suspense fallback={<CartAmount isLoading />}>
-          <CartAmount />
-        </Suspense>
-        <Suspense fallback={<LoadingCartListController />}>
-          <CartListController />
-        </Suspense>
-      </S.ShoppingCartSubHeader>
+      <Suspense fallback={<></>}>
+        <EmptyCart />
+      </Suspense>
+      <CartListSubHeader />
       <S.ShoppingCartContentsLayout>
         <S.CartList>
           <S.CartListLayout>

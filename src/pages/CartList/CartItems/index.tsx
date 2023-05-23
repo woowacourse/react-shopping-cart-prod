@@ -1,11 +1,11 @@
-import { useRecoilValue } from 'recoil';
-
-import cartItemsState from '@Atoms/cartItemsState';
+import useCartItems from '@Hooks/useCartItems';
 
 import CartItem from '../CartItem';
 
 function CartItems() {
-  const cartItems = useRecoilValue(cartItemsState);
+  // const cartItems = useRecoilValue(cartItemsState);
+
+  const { cartItems } = useCartItems();
 
   return (
     <>

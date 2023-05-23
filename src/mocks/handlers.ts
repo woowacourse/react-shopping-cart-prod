@@ -10,14 +10,14 @@ import mockData from './mockData.json';
 
 export const handlers = [
   rest.get(FETCH_URL.products, (_, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockData), ctx.delay(3000));
+    return res(ctx.status(200), ctx.json(mockData), ctx.delay(500));
   }),
 
   rest.get(FETCH_URL.cartItems, (req, res, ctx) => {
     if (!localStorageHelper.hasKey('cartItems')) localStorageHelper.setInitValue('cartItems', []);
     const cartItems = localStorageHelper.getValue<CartItemType[]>('cartItems');
 
-    return res(ctx.status(200), ctx.json(cartItems), ctx.delay(3000));
+    return res(ctx.status(200), ctx.json(cartItems), ctx.delay(500));
   }),
 
   rest.post(FETCH_URL.cartItems, async (req, res, ctx) => {
@@ -63,6 +63,6 @@ export const handlers = [
 
     localStorageHelper.setValue('cartItems', newCartItems);
 
-    return res(ctx.status(404));
+    return res(ctx.status(200));
   }),
 ];
