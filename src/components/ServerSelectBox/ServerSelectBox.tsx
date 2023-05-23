@@ -21,7 +21,7 @@ function ServerSelectBox() {
 
   useEffect(() => {
     loadCartList();
-  }, []);
+  }, [server]);
 
 
   return (
