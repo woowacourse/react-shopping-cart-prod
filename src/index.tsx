@@ -10,14 +10,14 @@ import CartPage from './components/pages/CartPage/CartPage';
 import ToastList from './components/common/Toast/ToastList';
 
 const main = async () => {
-  if (window.location.pathname === '/react-shopping-cart') {
-    window.location.pathname = '/react-shopping-cart/';
+  if (window.location.pathname === '/react-shopping-cart-prod') {
+    window.location.pathname = '/react-shopping-cart-prod/';
     return;
   }
 
   await worker.start({
     serviceWorker: {
-      url: '/react-shopping-cart/mockServiceWorker.js',
+      url: '/react-shopping-cart-prod/mockServiceWorker.js',
     },
   });
 };
