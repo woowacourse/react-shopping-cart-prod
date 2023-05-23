@@ -17,12 +17,19 @@ const Header = () => {
             <Logo>SHOP</Logo>
           </LogoContainer>
         </Link>
-        <Link to='/cart'>
-          <MoveCartPageBtn>
-            장바구니
-            <ProductCountAlert>{totalCartProduct}</ProductCountAlert>
-          </MoveCartPageBtn>
-        </Link>
+        <ControlContainer>
+          <SelectBox>
+            <option>포비</option>
+            <option>브라운</option>
+            <option>브리</option>
+          </SelectBox>
+          <Link to='/cart'>
+            <MoveCartPageBtn>
+              장바구니
+              <ProductCountAlert>{totalCartProduct}</ProductCountAlert>
+            </MoveCartPageBtn>
+          </Link>
+        </ControlContainer>
       </HeaderContent>
     </HeaderContainer>
   );
@@ -64,6 +71,13 @@ const Logo = styled.h1`
     display: none;
   }
 `;
+
+const ControlContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  gap: 40px;
+`;
+const SelectBox = styled.select``;
 
 const MoveCartPageBtn = styled.button`
   display: flex;
