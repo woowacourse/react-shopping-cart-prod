@@ -20,3 +20,5 @@ export interface CartItemType {
 }
 
 export interface CartType extends Array<CartItemType> {}
+
+export type ServerNameType = '라온' | '져니' | '쥬니';
