@@ -2,7 +2,7 @@ import * as S from './CartItem.styles';
 import Counter from 'components/@common/Counter';
 import Svg from 'components/@common/Svg';
 import { useCart } from 'components/Cart/hooks/useCart';
-import { useCheckedItems } from '../hooks/useCheckedItems';
+import { useCheckedItemIds } from '../hooks/useCheckedItems';
 import { Cart } from 'types';
 
 interface CartItemProps {
@@ -10,14 +10,19 @@ interface CartItemProps {
 }
 
 const CartItem = ({ cartItem }: CartItemProps) => {
-  const { currentCartItem, onRemoveItem, onAddItem, onDeleteItem } = useCart(
+  const { currentCartItem, removeItem, addItem, deleteItem } = useCart(
     cartItem.product
   );
-  const { checkItem, checkedItems } = useCheckedItems();
+  const { checkItem, checkedItemIds, unCheckItem } = useCheckedItemIds();
   const { product } = cartItem;
 
   const onCheckBoxChange = () => {
-    checkItem(cartItem);
+    checkItem(cartItem.id);
+  };
+
+  const onDelete = () => {
+    deleteItem();
+    unCheckItem(cartItem.id);
   };
 
   return (
@@ -25,19 +30,19 @@ const CartItem = ({ cartItem }: CartItemProps) => {
       <S.CheckBox
         type="checkbox"
         onChange={onCheckBoxChange}
-        checked={checkedItems.includes(cartItem)}
+        checked={checkedItemIds.includes(cartItem.id)}
       />
       <S.CartItemImage src={product.imageUrl} alt={product.name} />
       <S.CartProductName>{product.name}</S.CartProductName>
       <S.CounterWrapper>
-        <button onClick={onDeleteItem}>
+        <button onClick={onDelete}>
           <Svg type="trash-can" width={24} height={24} />
         </button>
         <Counter
           count={currentCartItem?.quantity || 0}
           min={1}
-          increment={onAddItem}
-          decrement={onRemoveItem}
+          increment={addItem}
+          decrement={removeItem}
         />
         <S.CartProductPrice>
           {product.price.toLocaleString('KR')}원

@@ -7,9 +7,16 @@ export const cartListAtom = atom<Cart[]>({
   default: getLocalStorageData<Cart[]>('cartList'),
 });
 
-export const checkedItemsAtom = atom<Cart[]>({
+export const checkedItemsAtom = atom<number[]>({
   key: 'checkedItemsAtom',
-  default: [],
+  default: selector({
+    key: 'initialCheckedList',
+    get: ({ get }) => {
+      const cart = get(cartListAtom);
+
+      return cart.map((item) => item.id);
+    },
+  }),
 });
 
 export const countCartListSelector = selector({
@@ -22,10 +29,14 @@ export const countCartListSelector = selector({
 export const totalPriceSelector = selector({
   key: 'totalPriceSelector',
   get: ({ get }) => {
+    const cartList = get(cartListAtom);
     const checkedItems = get(checkedItemsAtom);
-    return checkedItems.reduce((acc, item) => {
-      return acc + item.product.price * item.quantity;
-    }, 0);
+
+    return cartList
+      .filter((item) => checkedItems.includes(item.id))
+      .reduce((acc, item) => {
+        return acc + item.product.price * item.quantity;
+      }, 0);
   },
 });
 
