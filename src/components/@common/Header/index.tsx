@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { countCartListSelector } from 'recoil/cartList';
 import { ROUTES } from 'utils/constants';
+import SelectServer from '../SelectSever';
 import * as S from './Header.styles';
 
 const Header = () => {
@@ -25,6 +26,7 @@ const Header = () => {
           <S.LogoIcon onClick={onLogoClick} />
         </S.HeaderWrapper>
         <S.HeaderWrapper gap={8}>
+          <SelectServer />
           <S.CartRouteButton
             title="장바구니 페이지로 이동"
             onClick={onNavigateToCart}
