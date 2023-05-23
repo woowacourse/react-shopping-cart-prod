@@ -5,7 +5,7 @@ import * as S from './style';
 const SkeletonCartItem = () => {
   return (
     <S.Container width="100%">
-      <Checkbox isChecked={true} size="small" updateSelectedState={() => alert('?')} />
+      <Checkbox size="small" />
       <S.ShoppingItemImage />
       <S.ShoppingItemName isLoading>로딩 중</S.ShoppingItemName>
       <S.RightContents>
