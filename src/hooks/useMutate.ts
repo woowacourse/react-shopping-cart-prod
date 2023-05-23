@@ -5,7 +5,7 @@ export const useMutate = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
 
-  const fetchData = async (callback: Promise<void>) => {
+  const request = async (callback: Promise<void>) => {
     try {
       await callback;
     } catch (error) {
@@ -17,5 +17,5 @@ export const useMutate = () => {
     }
   };
 
-  return { fetchData, isLoading };
+  return { request, isLoading };
 };

@@ -7,10 +7,10 @@ export const useGet = <T>(callback: () => Promise<T>) => {
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchData();
+    request();
   }, []);
 
-  const fetchData = async () => {
+  const request = async () => {
     try {
       const data = await callback();
       setData(data);
