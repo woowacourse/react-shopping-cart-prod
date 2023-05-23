@@ -10,7 +10,7 @@ import productQuantityInCart from '../../../globalState/selectors/productQuantit
 import type { Product } from '../../../types/product';
 
 const ProductItem = (product: Product) => {
-  const { id: productId, name, price, imageSrc } = product;
+  const { id: productId, name, price, imageUrl } = product;
   const { addCartItem, updateCartItemQuantity, deleteCartItem, getCartId } =
     useCartService();
 
@@ -42,7 +42,7 @@ const ProductItem = (product: Product) => {
   return (
     <ItemContainer>
       <ProductImageWrapper>
-        <Image src={imageSrc} alt={name} size="large" />
+        <Image src={imageUrl} alt={name} size="large" />
         <CartButtonWrapper>
           {isDisplayCounter ? (
             <Counter

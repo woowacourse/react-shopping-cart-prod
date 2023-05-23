@@ -2,7 +2,7 @@ export interface Product {
   id: number;
   name: string;
   price: number;
-  imageSrc: string;
+  imageUrl: string;
 }
 
 export interface CartProduct {

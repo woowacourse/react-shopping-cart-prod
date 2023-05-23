@@ -14,7 +14,7 @@ const MockPaymentAmount = () => {
         id: 0,
         name: '순살치킨 1KG',
         price: 9900,
-        imageSrc:
+        imageUrl:
           'https://cdn-mart.baemin.com/sellergoods/main/c6f2f083-a8b8-4799-834b-444b5eaeb532.png?h=400&w=400',
       },
     },
@@ -25,7 +25,7 @@ const MockPaymentAmount = () => {
         id: 1,
         name: '리코스 나초칩 454g',
         price: 6200,
-        imageSrc:
+        imageUrl:
           'https://cdn-mart.baemin.com/sellergoods/main/bf308ce9-cbe5-45a0-808a-4fdda168f992.jpg?h=400&w=400',
       },
     },

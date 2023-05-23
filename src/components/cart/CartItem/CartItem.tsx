@@ -15,7 +15,7 @@ interface CartItemProps {
 
 const CartItem = ({ cartItem }: CartItemProps) => {
   const { id, quantity } = cartItem;
-  const { imageSrc, name, price } = cartItem.product;
+  const { imageUrl, name, price } = cartItem.product;
 
   const { updateCartItemQuantity, deleteCartItem } = useCartService();
   const { isChecked, addCheckedItem, deleteCheckedItem } =
@@ -47,7 +47,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
     <CartItemContainer>
       <ItemContents>
         <CheckBox isChecked={isChecked(id)} onChange={handleCheckBoxChange} />
-        <Image src={imageSrc} size="medium" />
+        <Image src={imageUrl} size="medium" />
         <Name>{name}</Name>
       </ItemContents>
       <ItemControllers>
