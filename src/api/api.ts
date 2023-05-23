@@ -1,5 +1,5 @@
-export const fetchAddCart = async (id: number) => {
-  const response = await fetch("/cart-items", {
+export const fetchAddCart = async (url: string, id: number) => {
+  const response = await fetch(`${url}/cart-items`, {
     method: "POST",
     body: JSON.stringify({
       productId: id,
@@ -9,15 +9,15 @@ export const fetchAddCart = async (id: number) => {
   console.log(result);
 };
 
-export const fetchDeleteCart = async (id: number) => {
-  const response = await fetch(`/cart-items/${id}`, {
+export const fetchDeleteCart = async (url: string, id: number) => {
+  const response = await fetch(`${url}/cart-items/${id}`, {
     method: "DELETE",
   });
   console.log(response);
 };
 
-export const fetchUpdateCart = async (id: number, quantity: number) => {
-  const response = await fetch(`/cart-items/${id}`, {
+export const fetchUpdateCart = async (url: string, id: number, quantity: number) => {
+  const response = await fetch(`${url}/cart-items/${id}`, {
     method: "PATCH",
     body: JSON.stringify({
       quantity,
