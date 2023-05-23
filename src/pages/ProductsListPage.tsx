@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import { useRecoilValue } from 'recoil';
 import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 
@@ -6,12 +7,16 @@ import Header from '../components/Common/Header';
 import Message from '../components/Common/Message';
 import ProductList from '../components/Product/ProductList';
 
+import { serverNameState } from '../states/serverName';
+
 const ProductsListPage = () => {
+  const serverName = useRecoilValue(serverNameState);
+
   return (
     <>
       <Header />
       <Main>
-        <ErrorBoundary fallback={<Message type='error' />}>
+        <ErrorBoundary key={serverName} fallback={<Message type='error' />}>
           <Suspense fallback={<Message type='loading' />}>
             <ProductList />
           </Suspense>
