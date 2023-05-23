@@ -16,14 +16,19 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   const { selectedItems, selectItem } = useCartSelector();
   const { updateCartItemMutation, deleteCartItemMutation } = useMutateCart();
 
-  const increaseQuantity = () =>
-    updateCartItemMutation({ id, quantity: Math.min(100, quantity + 1) });
+  const increaseQuantity = () => {
+    updateCartItemMutation({
+      cartId: id,
+      quantity: Math.min(100, quantity + 1),
+    });
+  };
 
-  const decreaseQuantity = () =>
-    updateCartItemMutation({ id, quantity: Math.max(1, quantity - 1) });
+  const decreaseQuantity = () => {
+    updateCartItemMutation({ cartId: id, quantity: Math.max(1, quantity - 1) });
+  };
 
   const deleteCartItem = () => {
-    window.confirm(DELETE_CART_ITEM) && deleteCartItemMutation([id]);
+    window.confirm(DELETE_CART_ITEM) && deleteCartItemMutation(id);
   };
 
   return (

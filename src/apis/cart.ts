@@ -1,6 +1,6 @@
 import { CartItem } from '../types/cart';
 import { waitFor, WaitForOptions } from '../utils/waitFor';
-import { fetchQuery, FetchQueryRes } from './api';
+import { authFetchQuery, fetchQuery, FetchQueryRes } from './api';
 
 export interface FetchCartRes {
   cart: CartItem[];
@@ -21,7 +21,7 @@ interface AddCartDataRes {}
 export const addToCart: (
   payload: AddCartDataReq
 ) => FetchQueryRes<AddCartDataRes> = ({ productId }) => {
-  return fetchQuery.post<AddCartDataRes>(`/cart-items`, {
+  return authFetchQuery.post<AddCartDataRes>(`/cart-items`, {
     body: { productId },
   });
 };
@@ -36,7 +36,7 @@ interface UpdateCartItemRes {}
 export const updateCartItem: (
   payload: UpdateCartItemReq
 ) => FetchQueryRes<UpdateCartItemRes> = ({ cartId, quantity }) => {
-  return fetchQuery.patch<UpdateCartItemRes>(`/cart-items/${cartId}`, {
+  return authFetchQuery.patch<UpdateCartItemRes>(`/cart-items/${cartId}`, {
     body: { quantity },
   });
 };
@@ -44,9 +44,7 @@ export const updateCartItem: (
 interface DeleteCartItemRes {}
 
 export const deleteCartItem: (
-  idList: Array<CartItem['id']>
-) => FetchQueryRes<DeleteCartItemRes> = (idList) => {
-  return fetchQuery.delete<DeleteCartItemRes>(`/cart`, {
-    body: idList,
-  });
+  id: CartItem['id']
+) => FetchQueryRes<DeleteCartItemRes> = (id) => {
+  return authFetchQuery.delete<DeleteCartItemRes>(`/cart-items/${id}`);
 };

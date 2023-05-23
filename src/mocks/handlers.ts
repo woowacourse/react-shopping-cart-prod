@@ -5,10 +5,16 @@ import { MockCart } from './fixtures/cart';
 import { MockProducts } from './fixtures/products';
 import { CartItem } from '../types/cart';
 
+const base64 = 'Basic IGFAYS5jb206MTIzNA==';
+
 export const handlers = [
   rest.post('/cart-items', async (req, res, ctx) => {
     let cartId;
     const { productId } = await req.json();
+
+    const authorization = req.headers.get('Authorization');
+
+    if (authorization !== base64) return res(ctx.status(401));
 
     const product = MockProducts.items.find(
       (product) => product.id === productId
@@ -19,10 +25,7 @@ export const handlers = [
 
     if (!product) return res(ctx.status(404), ctx.json({}));
 
-    if (targetItemIndex >= 0) {
-      cartId = MockCart.cart[targetItemIndex].id;
-      MockCart.cart[targetItemIndex].quantity += 1;
-    } else {
+    if (targetItemIndex === -1) {
       const newCartItem = {
         id: getUUID(),
         quantity: 1,
@@ -31,6 +34,8 @@ export const handlers = [
 
       cartId = newCartItem.id;
       MockCart.cart.push(newCartItem);
+    } else {
+      cartId = MockCart.cart[targetItemIndex].id;
     }
 
     setCart(MockCart.cart);
@@ -42,12 +47,16 @@ export const handlers = [
     );
   }),
 
-  rest.patch('/cart/:id', async (req, res, ctx) => {
-    const { id } = req.params;
-    const { quantity }: { quantity: CartItem['id'] } = await req.json();
+  rest.patch('/cart-items/:cartItemId', async (req, res, ctx) => {
+    const { cartItemId } = req.params;
+    const authorization = req.headers.get('Authorization');
+
+    if (authorization !== base64) return res(ctx.status(401));
+
+    const { quantity }: { quantity: CartItem['quantity'] } = await req.json();
 
     MockCart.cart = MockCart.cart.map((item) => {
-      if (item.id === Number(id)) {
+      if (item.id === Number(cartItemId)) {
         return {
           ...item,
           quantity,
@@ -59,24 +68,26 @@ export const handlers = [
 
     setCart(MockCart.cart);
 
-    return res(ctx.status(200), ctx.json(MockCart));
+    return res(ctx.status(200), ctx.json({}));
   }),
 
   rest.get('/products', (req, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(MockProducts));
+    return res(ctx.status(200), ctx.json(MockProducts));
   }),
 
   rest.get('/cart', (req, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(MockCart));
+    return res(ctx.status(200), ctx.json(MockCart));
   }),
 
-  rest.delete('/cart', async (req, res, ctx) => {
-    const idList: Array<CartItem['id']> = await req.json();
+  rest.delete('/cart-items/:cartItemId', async (req, res, ctx) => {
+    const { cartItemId } = req.params;
 
-    MockCart.cart = MockCart.cart.filter((item) => !idList.includes(item.id));
+    MockCart.cart = MockCart.cart.filter(
+      (item) => item.id !== Number(cartItemId)
+    );
 
     setCart(MockCart.cart);
 
-    return res(ctx.status(200), ctx.json(MockCart));
+    return res(ctx.status(200), ctx.json({}));
   }),
 ];

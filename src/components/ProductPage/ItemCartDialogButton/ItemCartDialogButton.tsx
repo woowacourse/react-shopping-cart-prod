@@ -12,12 +12,12 @@ type ItemCartDialogButtonProps = Product;
 const ItemCartDialogButton: React.FC<ItemCartDialogButtonProps> = (props) => {
   const { id, name, price, imageUrl } = props;
   const quantityRef = useRef<HTMLInputElement>(null);
-  const { addItemToCartMutation } = useMutateCart();
+  const { composedCartItemMutation } = useMutateCart();
 
   const addItemToCart = () => {
     const quantity = Number(quantityRef.current?.value);
 
-    addItemToCartMutation({ productId: id });
+    composedCartItemMutation({ id, quantity });
   };
 
   return (

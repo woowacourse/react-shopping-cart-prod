@@ -44,10 +44,26 @@ export const useMutateCart = () => {
   const selectedItems = useRefreshableRecoilValue(selectedItemsSelector);
 
   const addItemToCartMutation = waitForMutation(addToCart, {
-    onSuccess() {
+    onSuccess(params, { headers }) {
       refreshCart();
     },
   });
+
+  const composedCartItemMutation = ({
+    id,
+    quantity,
+  }: {
+    id: number;
+    quantity: number;
+  }) => {
+    waitForMutation(addItemToCartMutation, {
+      onSuccess(params, { headers }) {
+        const cartId = +headers.get('Location')!.replace('/cart-items/', '');
+
+        updateCartItemMutation({ cartId, quantity });
+      },
+    })({ productId: id });
+  };
 
   const updateCartItemMutation = waitForMutation(updateCartItem, {
     onSuccess() {
@@ -62,8 +78,9 @@ export const useMutateCart = () => {
   });
 
   const deleteSelectedCartItems = () => {
-    window.confirm(DELETE_CART_ITEMS) &&
-      deleteCartItemMutation([...selectedItems]);
+    if (window.confirm(DELETE_CART_ITEMS)) {
+      [...selectedItems].forEach((id) => deleteCartItemMutation(id));
+    }
   };
 
   return {
@@ -71,5 +88,6 @@ export const useMutateCart = () => {
     updateCartItemMutation,
     deleteCartItemMutation,
     deleteSelectedCartItems,
+    composedCartItemMutation,
   };
 };

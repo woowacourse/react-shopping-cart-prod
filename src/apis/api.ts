@@ -2,6 +2,8 @@ import { ERROR_CODE } from '../constants/errors';
 import { getValidURL, handleStatusCode } from '../validation/errorHandler';
 import { CustomError } from '../validation/errors';
 
+const base64 = 'IGFAYS5jb206MTIzNA==';
+
 const BASE =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000/react-shopping-cart/'
@@ -103,3 +105,9 @@ class FetchQuery implements FetchQueryInstance {
 }
 
 export const fetchQuery = new FetchQuery({ baseURL: BASE });
+export const authFetchQuery = new FetchQuery({
+  baseURL: BASE,
+  headers: {
+    Authorization: `Basic ${base64}`,
+  },
+});
