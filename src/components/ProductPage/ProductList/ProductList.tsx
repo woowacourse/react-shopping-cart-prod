@@ -4,7 +4,7 @@ import ProductItem from '../ProductItem/ProductItem';
 import * as S from './ProductList.styles';
 
 const ProductList = () => {
-  const { items } = useRecoilValue(products);
+  const items = useRecoilValue(products);
 
   return (
     <S.List>

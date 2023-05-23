@@ -1,12 +1,13 @@
 import { Product } from '../types/products';
-import { fetchQuery } from './api';
+import { fetchQuery, FetchQueryRes } from './api';
 
 interface FetchProductDataRes {
   items: Product[];
 }
 
-export const fetchProductData = async (): Promise<FetchProductDataRes> => {
-  const data = await fetchQuery.get<FetchProductDataRes>('/products');
+export const fetchProductData =
+  async (): FetchQueryRes<FetchProductDataRes> => {
+    const data = await fetchQuery.get<FetchProductDataRes>('/products');
 
-  return data;
-};
+    return data;
+  };
