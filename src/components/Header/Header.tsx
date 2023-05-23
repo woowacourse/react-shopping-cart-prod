@@ -11,40 +11,15 @@ import {
   LogoWrapper,
   Navbar,
 } from "./Header.style";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { cartCountSelector, cartState } from "../../recoil/cartAtoms";
-import { useEffect } from "react";
-import { CartItem, ReceivedCartItem } from "../../types/types.ts";
+import { useRecoilValue } from "recoil";
+import { cartCountSelector } from "../../recoil/cartAtoms";
 import ServerSelectBox from "../ServerSelectBox/ServerSelectBox.tsx";
 import { serverState } from "../../recoil/serverAtom.ts";
 
 function Header() {
   const navigate = useNavigate();
   const cartCount = useRecoilValue(cartCountSelector);
-  const setCartList = useSetRecoilState(cartState);
-
   const server = useRecoilValue(serverState);
-
-  const loadCartList = async () => {
-    try {
-      const response = await fetch("/cart-items");
-      const data = await response.json();
-      const checkedCartItems: CartItem[] = data.map(
-        (cartItem: ReceivedCartItem) => ({
-          ...cartItem,
-          checked: true,
-        })
-      );
-      setCartList(checkedCartItems);
-    } catch (error) {
-      console.error(error);
-      throw new Error();
-    }
-  };
-
-  useEffect(() => {
-    loadCartList();
-  }, []);
 
   return (
     <Navbar>

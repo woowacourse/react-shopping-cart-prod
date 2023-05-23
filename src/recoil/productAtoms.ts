@@ -1,16 +1,11 @@
 import { selector } from "recoil";
 import type { ProductItem } from "../types/types";
+import { fetchProductList } from "../api/api";
 
-export const fetchProductList = selector<ProductItem[]>({
-  key: "fetchProductList",
+export const productListSelector = selector<ProductItem[]>({
+  key: "productListSelector",
   get: async () => {
-    try {
-      const response = await fetch("/products");
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(error);
-      throw new Error();
-    }
+    const productList = await fetchProductList("");
+    return productList;
   },
 });

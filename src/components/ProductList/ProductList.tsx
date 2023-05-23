@@ -1,5 +1,5 @@
 import { useRecoilValueLoadable } from "recoil";
-import { fetchProductList } from "../../recoil/productAtoms";
+import { productListSelector } from "../../recoil/productAtoms";
 import type { ProductItem as ProductItemType } from "../../types/types";
 import ProductItem from "../../components/ProductItem";
 import { Col, Row } from "../../style/style";
@@ -8,7 +8,7 @@ import ProductItemSkeleton from "../ProductItemSkeleton";
 
 function ProductList() {
   const productLoadable =
-    useRecoilValueLoadable<ProductItemType[]>(fetchProductList);
+    useRecoilValueLoadable<ProductItemType[]>(productListSelector);
 
   switch (productLoadable.state) {
     case "hasValue":
