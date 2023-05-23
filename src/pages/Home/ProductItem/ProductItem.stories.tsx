@@ -54,7 +54,6 @@ export const LongNameProductItem: Story = {
  */
 export const SkeletonProductItem: Story = {
   args: {
-    isLoading: true,
     width: '280px',
   },
 };

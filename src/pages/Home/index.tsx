@@ -1,21 +1,21 @@
-import NotFound from '@Pages/NotFound';
+import { Suspense } from 'react';
 
-import { Product } from '@Types/index';
-
-import useFetch from '@Hooks/useFetch';
-
-import { FETCH_URL } from '@Constants/index';
-
+import SkeletonProductItem from './ProductItem/SkeletonProductItem';
 import ProductList from './ProductList';
+import * as S from './style';
 
 function Home() {
-  const { data, status, errorMessage } = useFetch<Product[]>(FETCH_URL.products);
-
-  if (status === 'error') {
-    return <NotFound errorMessage={errorMessage} />;
-  }
-
-  return <ProductList data={data} isLoading={status === 'loading'} />;
+  return (
+    <S.ProductListContainer>
+      <Suspense
+        fallback={Array.from({ length: 12 }).map((_, index) => (
+          <SkeletonProductItem key={index} />
+        ))}
+      >
+        <ProductList />
+      </Suspense>
+    </S.ProductListContainer>
+  );
 }
 
 export default Home;

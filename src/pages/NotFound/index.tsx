@@ -7,10 +7,10 @@ import NotFoundImage from '@Asset/notFound.png';
 import * as S from './style';
 
 type NotFoundProps = {
-  errorMessage: string | null;
+  error: Error | null;
 };
 
-function NotFound({ errorMessage }: NotFoundProps) {
+function NotFound({ error }: NotFoundProps) {
   const navigate = useNavigate();
 
   return (
@@ -18,7 +18,7 @@ function NotFound({ errorMessage }: NotFoundProps) {
       <S.Layout>
         <S.Image src={NotFoundImage} />
         <S.MainGuideMessage>페이지를 찾을 수 없습니다.</S.MainGuideMessage>
-        <S.SubGuideMessage>{errorMessage}</S.SubGuideMessage>
+        <S.SubGuideMessage>{error?.message}</S.SubGuideMessage>
         <Button text="홈으로 가기" onClick={() => navigate('/')} backgroundColor="#06C09E" width="180px" />
       </S.Layout>
     </S.Container>

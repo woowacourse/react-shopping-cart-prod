@@ -3,6 +3,9 @@ import { Outlet } from 'react-router-dom';
 
 import Header from '@Components/Header';
 
+import ErrorBoundary from '@Pages/ErrorBoundary';
+import NotFound from '@Pages/NotFound';
+
 import GlobalStyle, { CommonPageStyle } from '@Styles/GlobalStyle';
 
 import localStorageHelper from '@Utils/localStorageHelper';
@@ -17,7 +20,9 @@ function App() {
       <GlobalStyle />
       <Header />
       <CommonPageStyle>
-        <Outlet />
+        <ErrorBoundary fallback={NotFound}>
+          <Outlet />
+        </ErrorBoundary>
       </CommonPageStyle>
     </>
   );

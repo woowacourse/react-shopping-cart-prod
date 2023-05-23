@@ -1,32 +1,22 @@
-import NotFound from '@Pages/NotFound';
-
-import { Product } from '@Types/index';
+import { useRecoilValue } from 'recoil';
 
 import useShoppingCart from '@Hooks/useCartItems';
 
-import * as S from './style';
+import productsState from '@Atoms/productsState';
+
 import ProductItem from '../ProductItem';
 
-type ProductListProps = {
-  data?: Product[];
-  isLoading: boolean;
-};
+function ProductList() {
+  const data = useRecoilValue(productsState);
 
-function ProductList({ data, isLoading }: ProductListProps) {
-  const { updateCartItem, errorMessage, status } = useShoppingCart();
-
-  if (status === 'error') {
-    return <NotFound errorMessage={errorMessage} />;
-  }
+  const { updateCartItem } = useShoppingCart();
 
   return (
-    <S.ProductListContainer>
-      {data && data.map((data) => <ProductItem product={data} key={data.id} updateCartItem={updateCartItem} />)}
-      {isLoading &&
-        Array.from({ length: 12 }, (_, index) => (
-          <ProductItem key={index} isLoading={isLoading} updateCartItem={updateCartItem} />
-        ))}
-    </S.ProductListContainer>
+    <>
+      {data?.map((data) => (
+        <ProductItem product={data} key={data.id} updateCartItem={updateCartItem} />
+      ))}
+    </>
   );
 }
 

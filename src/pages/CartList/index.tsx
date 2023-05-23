@@ -1,7 +1,5 @@
 import { useRecoilValue } from 'recoil';
 
-import NotFound from '@Pages/NotFound';
-
 import useCartItems from '@Hooks/useCartItems';
 
 import shoppingCartAmountState from '@Selector/cartItemsAmountState';
@@ -14,11 +12,7 @@ import * as S from './style';
 
 function CartList() {
   const shoppingCartAmount = useRecoilValue(shoppingCartAmountState);
-  const { cartItems, status, errorMessage, updateCartItem } = useCartItems();
-
-  if (status === 'error') {
-    return <NotFound errorMessage={errorMessage} />;
-  }
+  const { cartItems, status, updateCartItem } = useCartItems();
 
   return (
     <S.Container>
