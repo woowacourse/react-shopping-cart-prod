@@ -1,6 +1,7 @@
-import { selector, atom, selectorFamily, atomFamily } from 'recoil';
+import { selector, atom, selectorFamily } from 'recoil';
 import { CartItem } from '../types/cart';
 import { fetchCart } from '../apis/cart';
+import { ENDPOINT } from '../constants/auth';
 
 export const cartState = atom({
   key: 'cart',
@@ -83,4 +84,9 @@ export const totalPriceSelector = selector({
       0
     );
   },
+});
+
+export const endpointKeyState = atom<keyof typeof ENDPOINT>({
+  key: 'endpointKeyState',
+  default: '말랑',
 });

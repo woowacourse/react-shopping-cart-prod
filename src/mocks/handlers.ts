@@ -75,7 +75,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(MockProducts));
   }),
 
-  rest.get('/cart', (req, res, ctx) => {
+  rest.get('/cart-items', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(MockCart));
   }),
 

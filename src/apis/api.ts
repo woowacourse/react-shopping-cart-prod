@@ -1,3 +1,4 @@
+import { ENDPOINT } from '../constants/auth';
 import { ERROR_CODE } from '../constants/errors';
 import { getValidURL, handleStatusCode } from '../validation/errorHandler';
 import { CustomError } from '../validation/errors';
@@ -102,11 +103,18 @@ class FetchQuery implements FetchQueryInstance {
   create(defaultConfig: ExternalConfig) {
     return new FetchQuery(defaultConfig);
   }
+
+  updateDefaultConfig(newConfig?: ExternalConfig) {
+    this.defaultConfig = {
+      ...this.defaultConfig,
+      ...newConfig,
+    };
+  }
 }
 
-export const fetchQuery = new FetchQuery({ baseURL: BASE });
+export const fetchQuery = new FetchQuery({ baseURL: ENDPOINT['말랑'] });
 export const authFetchQuery = new FetchQuery({
-  baseURL: BASE,
+  baseURL: ENDPOINT['말랑'],
   headers: {
     Authorization: `Basic ${base64}`,
   },

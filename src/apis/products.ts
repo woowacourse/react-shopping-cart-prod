@@ -1,9 +1,7 @@
 import { Product } from '../types/products';
 import { fetchQuery, FetchQueryRes } from './api';
 
-interface FetchProductDataRes {
-  items: Product[];
-}
+type FetchProductDataRes = Product[];
 
 export const fetchProductData =
   async (): FetchQueryRes<FetchProductDataRes> => {
