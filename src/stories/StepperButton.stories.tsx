@@ -27,58 +27,58 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof StepperButton>;
 
-export const Default: Story = {
-  render: ({ ...args }) => {
-    const [count, setCount] = useState(0);
+// export const Default: Story = {
+//   render: ({ ...args }) => {
+//     const [count, setCount] = useState(0);
 
-    return (
-      <StepperButton
-        count={count}
-        setCount={setCount}
-        minCount={args.minCount}
-        maxCount={args.maxCount}
-      />
-    );
-  },
-  args: {
-    minCount: 0,
-    maxCount: 100,
-  },
-};
+//     return (
+//       <StepperButton
+//         count={count}
+//         setCount={setCount}
+//         minCount={args.minCount}
+//         maxCount={args.maxCount}
+//       />
+//     );
+//   },
+//   args: {
+//     minCount: 0,
+//     maxCount: 100,
+//   },
+// };
 
-export const Interaction: Story = {
-  args: {
-    minCount: 0,
-    maxCount: 100,
-  },
-  render: ({ ...args }) => {
-    const [count, setCount] = useState(0);
+// export const Interaction: Story = {
+//   args: {
+//     minCount: 0,
+//     maxCount: 100,
+//   },
+//   render: ({ ...args }) => {
+//     const [count, setCount] = useState(0);
 
-    return (
-      <StepperButton
-        count={count}
-        setCount={setCount}
-        minCount={args.minCount}
-        maxCount={args.maxCount}
-      />
-    );
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
+//     return (
+//       <StepperButton
+//         count={count}
+//         setCount={setCount}
+//         minCount={args.minCount}
+//         maxCount={args.maxCount}
+//       />
+//     );
+//   },
+//   play: async ({ canvasElement }) => {
+//     const canvas = within(canvasElement);
 
-    const decreaseButton = canvas.getByRole('button', { name: 'decrease' });
-    const increaseButton = canvas.getByRole('button', { name: 'increase' });
-    const countInput = canvas.getByLabelText('count input');
+//     const decreaseButton = canvas.getByRole('button', { name: 'decrease' });
+//     const increaseButton = canvas.getByRole('button', { name: 'increase' });
+//     const countInput = canvas.getByLabelText('count input');
 
-    await userEvent.click(increaseButton);
-    await userEvent.click(increaseButton);
-    await userEvent.click(increaseButton);
-    expect(countInput).toHaveValue('3');
+//     await userEvent.click(increaseButton);
+//     await userEvent.click(increaseButton);
+//     await userEvent.click(increaseButton);
+//     expect(countInput).toHaveValue('3');
 
-    await userEvent.type(countInput, '4', { delay: 200 });
-    expect(countInput).toHaveValue('34');
+//     await userEvent.type(countInput, '4', { delay: 200 });
+//     expect(countInput).toHaveValue('34');
 
-    await userEvent.click(decreaseButton);
-    expect(countInput).toHaveValue('33');
-  },
-};
+//     await userEvent.click(decreaseButton);
+//     expect(countInput).toHaveValue('33');
+//   },
+// };

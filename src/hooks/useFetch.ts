@@ -19,11 +19,15 @@ export const useFetch = <T>(
 
     try {
       const result = await fetch(url, options);
+      // console.log(await result.json());
+
       if (isSuccessHttpStatus(result.status) && stateSetter) {
         const data = await result.json();
 
         setData(data);
-        stateSetter(data);
+        if (await result.body) {
+          stateSetter(data);
+        }
       }
       if (isFailureHttpStatus(result.status)) {
         throw new Error();
@@ -63,8 +67,8 @@ export const useFetch = <T>(
       fetchData(url, { method: 'POST', body: JSON.stringify(body) });
     },
 
-    patch: (url: string) => {
-      fetchData(url, { method: 'PATCH' });
+    patch: (url: string, body?: object) => {
+      fetchData(url, { method: 'PATCH', body: JSON.stringify(body) });
     },
 
     put: (url: string) => {

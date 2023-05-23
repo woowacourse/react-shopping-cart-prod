@@ -35,7 +35,13 @@ const CartPageSection = () => {
   };
 
   const selectedItemRemove = (itemId: number) => {
-    fetchApi.delete(`/cart-item-remove?id=${itemId}`);
+    // fetchApi.delete(`/cart-item-remove?id=${itemId}`);
+    fetchApi.delete(`/cart-item/${itemId}`);
+    setCartItemList(
+      cartItem.filter((item: CartItemType) => {
+        return item.id !== itemId;
+      })
+    );
   };
 
   const cartListLength = cartListCheckedLength();
