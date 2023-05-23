@@ -1,14 +1,15 @@
-import { atom, selector } from 'recoil';
+import { atomFamily, selectorFamily } from 'recoil';
 
-import { CartProduct } from '../../types/product';
 import cartProductApis from '../../apis/cartProducts';
+import { ServerKey } from '../../constants/server';
 
-export const cartProductState = atom<CartProduct[]>({
+export const cartProductState = atomFamily({
   key: 'cartProductState',
-  default: selector({
+  default: selectorFamily({
     key: 'cartProductState/default',
-    get: async () => {
-      const data = await cartProductApis.get();
+    get: (name: ServerKey) => async () => {
+      const { getData } = cartProductApis(name, '/cart-items');
+      const data = await getData();
       return data;
     },
   }),

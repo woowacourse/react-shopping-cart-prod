@@ -16,8 +16,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   loaders: [
-    async () => ({
-      products: await cartProductApis.get(),
-    }),
+    async () => {
+      const { getData } = cartProductApis('도치', '/cart-items');
+      return {
+        products: await getData(),
+      };
+    },
   ],
 };

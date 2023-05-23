@@ -1,9 +1,11 @@
 import { useRecoilValue } from 'recoil';
 
 import { cartProductCountState } from '../states/cartProducts';
+import { serverNameState } from '../states/serverName';
 
 const useCartProductCount = () => {
-  const cartProductCount = useRecoilValue(cartProductCountState);
+  const serverName = useRecoilValue(serverNameState);
+  const cartProductCount = useRecoilValue(cartProductCountState(serverName));
 
   return cartProductCount;
 };

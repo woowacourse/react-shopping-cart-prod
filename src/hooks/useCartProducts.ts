@@ -11,21 +11,28 @@ import {
   deleteTargetProduct,
 } from '../states/cartProducts/util';
 import type { Product } from '../types/product';
+import { serverNameState } from '../states/serverName';
 
 const useCartProducts = (product: Product) => {
   const { id } = product;
-  const setCartProducts = useSetRecoilState(cartProductState);
-  const targetProduct = useRecoilValue(targetCartProductState(id));
+  const serverName = useRecoilValue(serverNameState);
+  const setCartProducts = useSetRecoilState(cartProductState(serverName));
+  const targetProduct = useRecoilValue(
+    targetCartProductState({ name: serverName, id })
+  );
 
-  const addProduct = () => {
+  const { postData, deleteData } = cartProductApis(serverName, '/cart-items');
+
+  const addProduct = async () => {
+    const location = await postData(id);
+    console.log(location);
     setCartProducts((prev) => addTargetProduct(prev, product));
-    cartProductApis.post(id);
   };
 
   const deleteProduct = useCallback(() => {
     setCartProducts((prev) => deleteTargetProduct(prev, id));
-    cartProductApis.delete(id);
-  }, [id, setCartProducts]);
+    deleteData(id);
+  }, [deleteData, id, setCartProducts]);
 
   useEffect(() => {
     if (!targetProduct) return;

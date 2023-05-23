@@ -1,16 +1,19 @@
-import { atom, selector } from 'recoil';
+import { atomFamily, selectorFamily } from 'recoil';
 
 import { cartProductState } from '../cartProducts';
-import type { CheckedState } from './type';
+import { ServerKey } from '../../constants/server';
+import { CheckedState } from './type';
 
-export const checkedState = atom<CheckedState[]>({
+export const checkedState = atomFamily<CheckedState[], ServerKey>({
   key: 'checkedState',
-  default: selector({
+  default: selectorFamily({
     key: 'checkedState/default',
-    get: ({ get }) =>
-      get(cartProductState).map((cartProduct) => ({
-        id: cartProduct.id,
-        isChecked: false,
-      })),
+    get:
+      (name) =>
+      ({ get }) =>
+        get(cartProductState(name)).map((cartProduct) => ({
+          id: cartProduct.id,
+          isChecked: false,
+        })),
   }),
 });

@@ -3,13 +3,15 @@ import { useRecoilValue } from 'recoil';
 
 import useMultipleChecked from './useMultipleChecked';
 import { checkedPriceState } from '../states/checkedCartProducts';
+import { serverNameState } from '../states/serverName';
 
 const DELIVERY_FEE = 3_000;
 
 const useExpectedPayment = () => {
+  const serverName = useRecoilValue(serverNameState);
   const { isAllUnchecked } = useMultipleChecked();
 
-  const totalProductPrice = useRecoilValue(checkedPriceState);
+  const totalProductPrice = useRecoilValue(checkedPriceState(serverName));
 
   const deliveryFee = useMemo(
     () => (isAllUnchecked ? 0 : DELIVERY_FEE),

@@ -1,17 +1,21 @@
-import { selector, selectorFamily } from 'recoil';
+import { selectorFamily } from 'recoil';
 
 import { findTargetProduct } from './util';
 import { cartProductState } from './atom';
+import { ServerKey } from '../../constants/server';
 
-export const cartProductCountState = selector({
+export const cartProductCountState = selectorFamily({
   key: 'cartProductCountState',
-  get: ({ get }) => get(cartProductState).length,
+  get:
+    (name: ServerKey) =>
+    ({ get }) =>
+      get(cartProductState(name)).length,
 });
 
 export const targetCartProductState = selectorFamily({
   key: 'targetCartProductState',
   get:
-    (id: number) =>
+    ({ name, id }: { name: ServerKey; id: number }) =>
     ({ get }) =>
-      findTargetProduct(get(cartProductState), id),
+      findTargetProduct(get(cartProductState(name)), id),
 });
