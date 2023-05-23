@@ -9,7 +9,7 @@
   <tr>
     <td align="center" width="120px">
       <a href="https://github.com/inyeong-kang" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/78616893?v=4" alt="제로(강인영) 프로필" />
+        <img src="https://avatars.githubusercontent.com/u/81199414?v=4" alt="제로(강인영) 프로필" />
       </a>
     </td>
     <td align="center" width="120px">
