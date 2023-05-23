@@ -1,6 +1,5 @@
 export const handleResponseError = async (response: Response) => {
   if (!response.ok) {
-    console.log(response.ok);
     const errorData = await response.json();
 
     if ('message' in errorData) {

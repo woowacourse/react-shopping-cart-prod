@@ -10,9 +10,7 @@ import { serverNameState } from '../states/serverName';
 
 const useChecked = (id: number) => {
   const serverName = useRecoilValue(serverNameState);
-  const targetChecked = useRecoilValue(
-    targetCheckedState({ name: serverName, id })
-  );
+  const targetChecked = useRecoilValue(targetCheckedState({ serverName, id }));
   const setChecked = useSetRecoilState(checkedState(serverName));
 
   const updateChecked = (isChecked: boolean) => {

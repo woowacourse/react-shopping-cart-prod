@@ -6,8 +6,10 @@ import productApis from '../../apis/products';
 
 export const productState = selectorFamily({
   key: 'productState',
-  get: (name: ServerKey) => async () => {
-    const data = await productApis(name, '/products').getData<Product[]>();
+  get: (serverName: ServerKey) => async () => {
+    const data = await productApis(serverName, '/products').getData<
+      Product[]
+    >();
     return data;
   },
 });

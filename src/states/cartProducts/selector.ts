@@ -7,15 +7,15 @@ import { ServerKey } from '../../constants/server';
 export const cartProductCountState = selectorFamily({
   key: 'cartProductCountState',
   get:
-    (name: ServerKey) =>
+    (serverName: ServerKey) =>
     ({ get }) =>
-      get(cartProductState(name)).length,
+      get(cartProductState(serverName)).length,
 });
 
 export const targetCartProductState = selectorFamily({
   key: 'targetCartProductState',
   get:
-    ({ name, id }: { name: ServerKey; id: number }) =>
+    ({ serverName, id }: { serverName: ServerKey; id: number }) =>
     ({ get }) =>
-      findTargetProduct(get(cartProductState(name)), id),
+      findTargetProduct(get(cartProductState(serverName)), id),
 });

@@ -18,7 +18,7 @@ const useCartProducts = (product: Product) => {
   const serverName = useRecoilValue(serverNameState);
   const setCartProducts = useSetRecoilState(cartProductState(serverName));
   const targetProduct = useRecoilValue(
-    targetCartProductState({ name: serverName, id })
+    targetCartProductState({ serverName, id })
   );
 
   const { postData, deleteData } = cartProductApis(serverName, '/cart-items');

@@ -7,8 +7,8 @@ export const cartProductState = atomFamily({
   key: 'cartProductState',
   default: selectorFamily({
     key: 'cartProductState/default',
-    get: (name: ServerKey) => async () => {
-      const { getData } = cartProductApis(name, '/cart-items');
+    get: (serverName: ServerKey) => async () => {
+      const { getData } = cartProductApis(serverName, '/cart-items');
       const data = await getData();
       return data;
     },

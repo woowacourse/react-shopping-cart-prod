@@ -9,9 +9,9 @@ export const checkedState = atomFamily<CheckedState[], ServerKey>({
   default: selectorFamily({
     key: 'checkedState/default',
     get:
-      (name) =>
+      (serverName) =>
       ({ get }) =>
-        get(cartProductState(name)).map((cartProduct) => ({
+        get(cartProductState(serverName)).map((cartProduct) => ({
           id: cartProduct.id,
           isChecked: false,
         })),

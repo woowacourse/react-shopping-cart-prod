@@ -17,10 +17,10 @@ export const checkedCartProductState = selectorFamily<
 >({
   key: 'checkedCartProductState',
   get:
-    (name) =>
+    (serverName) =>
     ({ get }) => {
-      const checked = get(checkedState(name));
-      return get(cartProductState(name)).map((cartProduct) =>
+      const checked = get(checkedState(serverName));
+      return get(cartProductState(serverName)).map((cartProduct) =>
         updateCartProductChecked(
           cartProduct,
           findTargetChecked(checked, cartProduct.id)?.isChecked ?? false
@@ -32,23 +32,24 @@ export const checkedCartProductState = selectorFamily<
 export const targetCheckedState = selectorFamily({
   key: 'targetCheckedState',
   get:
-    ({ name, id }: { name: ServerKey; id: number }) =>
+    ({ serverName, id }: { serverName: ServerKey; id: number }) =>
     ({ get }) =>
-      findTargetChecked(get(checkedState(name)), id),
+      findTargetChecked(get(checkedState(serverName)), id),
 });
 
 export const checkedCartProductCountState = selectorFamily({
   key: 'checkedCartProductCountState',
   get:
-    (name: ServerKey) =>
+    (serverName: ServerKey) =>
     ({ get }) =>
-      filterCartProductChecked(get(checkedCartProductState(name)), true).length,
+      filterCartProductChecked(get(checkedCartProductState(serverName)), true)
+        .length,
 });
 
 export const checkedPriceState = selectorFamily({
   key: 'checkedPriceState',
   get:
-    (name: ServerKey) =>
+    (serverName: ServerKey) =>
     ({ get }) =>
-      getCheckedPrice(get(checkedCartProductState(name))),
+      getCheckedPrice(get(checkedCartProductState(serverName))),
 });
