@@ -15,11 +15,15 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { cartCountSelector, cartState } from "../../recoil/cartAtoms";
 import { useEffect } from "react";
 import { CartItem, ReceivedCartItem } from "../../types/types.ts";
+import ServerSelectBox from "../ServerSelectBox/ServerSelectBox.tsx";
+import { serverState } from "../../recoil/serverAtom.ts";
 
 function Header() {
   const navigate = useNavigate();
   const cartCount = useRecoilValue(cartCountSelector);
   const setCartList = useSetRecoilState(cartState);
+
+  const server = useRecoilValue(serverState);
 
   const loadCartList = async () => {
     try {
@@ -50,6 +54,8 @@ function Header() {
             <LogoImage src={titleLogo} />
           </LogoWrapper>
           <CartWrapper onClick={() => navigate("/cart")}>
+            <div style={{ color: 'black' }}>현재 상태 : {server}</div>
+            <ServerSelectBox />
             <CartTitle>장바구니</CartTitle>
             <CartCountWrapper>
               <CartCount>{cartCount}</CartCount>

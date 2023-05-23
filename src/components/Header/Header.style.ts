@@ -26,6 +26,7 @@ export const LogoImage = styled.img`
 export const CartWrapper = styled.div`
   display: flex;
   cursor: pointer;
+  gap: 10px;
 `;
 
 export const CartTitle = styled.div`
@@ -41,7 +42,6 @@ export const CartCountWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: 8px;
 `;
 
 export const CartCount = styled.div`
