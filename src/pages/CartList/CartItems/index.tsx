@@ -3,8 +3,6 @@ import useCartItems from '@Hooks/useCartItems';
 import CartItem from '../CartItem';
 
 function CartItems() {
-  // const cartItems = useRecoilValue(cartItemsState);
-
   const { cartItems } = useCartItems();
 
   return (
