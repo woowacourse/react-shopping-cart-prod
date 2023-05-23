@@ -2,9 +2,14 @@ export type ErrorResponse = {
   message: string;
 };
 
+type FetchedData<T> = {
+  data?: T;
+  headers: Headers;
+};
+
 const BASE_URL = ``;
 
-const fetcher = async <T>(url: string, options?: RequestInit): Promise<T | null> => {
+const fetcher = async <T>(url: string, options?: RequestInit): Promise<FetchedData<T>> => {
   const response = await fetch(`${BASE_URL}${url}`, options);
 
   if (response.status >= 500) {
@@ -27,15 +32,21 @@ const fetcher = async <T>(url: string, options?: RequestInit): Promise<T | null>
     ${errorMessage}`);
   }
 
+  const headers = response.headers;
+
   if (response.status === 204) {
-    return null;
+    return { headers };
   }
 
+  let data;
+
   try {
-    return await response.json();
+    data = await response.json();
   } catch {
     throw new Error('응답이 json형식이 아닙니다.');
   }
+
+  return { data, headers };
 };
 
 export default fetcher;
