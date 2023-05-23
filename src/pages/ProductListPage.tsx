@@ -6,9 +6,22 @@ import type { Product } from '../type';
 
 const ProductListContainer = styled.ul`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 230px);
   column-gap: 48px;
   row-gap: 80px;
+  justify-content: center;
+
+  @media screen and (max-width: 1140px) {
+    grid-template-columns: repeat(3, 230px);
+  }
+
+  @media screen and (max-width: 840px) {
+    grid-template-columns: repeat(2, 230px);
+  }
+
+  @media screen and (max-width: 540px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 type ProductListProps = {
