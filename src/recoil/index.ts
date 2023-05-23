@@ -66,3 +66,8 @@ export const totalPriceSelector = selector<number>({
     return totalPrice;
   },
 });
+
+export const serverState = atom({
+  key: 'serverState',
+  default: 'http://54.180.95.7:8080',
+});

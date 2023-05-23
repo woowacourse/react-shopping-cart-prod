@@ -1,19 +1,19 @@
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { PRODUCT_LIST_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
-import { productListState } from '../../recoil';
+import { productListState, serverState } from '../../recoil';
 import { Product } from '../../types';
 import ProductItem from './ProductItem';
 
 const ProductList = () => {
   const [productList, setProductList] = useRecoilState(productListState);
+  const server = useRecoilValue(serverState);
 
   const { api, isLoading } = useFetchData<Product[]>(setProductList);
 
   useEffect(() => {
-    api.get('http://54.180.95.7:8080/products');
+    api.get(`${server}/products`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
