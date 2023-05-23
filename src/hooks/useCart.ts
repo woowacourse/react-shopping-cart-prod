@@ -24,7 +24,6 @@ const useCart = () => {
     ({ set }) =>
       async () => {
         const newCartList = await getCartList();
-
         set(cartListState, newCartList);
       },
     []
@@ -32,13 +31,11 @@ const useCart = () => {
 
   const { mutate: addItem } = useMutationFetch<void, number>(
     useRecoilCallback(
-      ({ set }) =>
-        async (productId) => {
-          setIsAdded(true);
-          set(cartItemQuantityState(productId), 1);
-          await postCartItem(productId);
-          updateCart();
-        },
+      () => async (productId) => {
+        setIsAdded(true);
+        await postCartItem(productId);
+        updateCart();
+      },
       []
     )
   );
