@@ -10,7 +10,7 @@
   <tr>
     <td align="center" width="120px">
       <a href="https://github.com/ukkodeveloper" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/109048739?v=4" alt="우코(김유권) 프로필" />
+        <img src="https://avatars.githubusercontent.com/u/57815133?v=4" alt="파인(임낭경) 프로필" />
       </a>
     </td>
     <td align="center" width="120px">
@@ -21,8 +21,8 @@
   </tr>
   <tr>
     <td align="center">
-      <a href="https://github.com/ukkodeveloper" target="_blank">
-        우코(김유권)
+      <a href="https://github.com/nangkyeonglim" target="_blank">
+        파인(임낭경)
       </a>
     </td>
     <td align="center">
