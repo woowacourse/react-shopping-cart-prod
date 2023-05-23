@@ -1,0 +1,50 @@
+.cartItem {
+  display: flex;
+  margin-top: 10px;
+  padding-bottom: 10px;
+  background-color: #ffffff;
+  border-bottom: 0.5px solid #dddddd;
+  opacity: 0;
+  animation: view-cartItems 1s forwards;
+}
+
+@keyframes view-cartItems {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.deleteChecker {
+  width: 16px;
+  height: 16px;
+  border: 1px solid #04c09e;
+  border-radius: 2px;
+}
+
+.deleteCheckerBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cartImage {
+  width: 140px;
+  height: 120px;
+  padding: 10px;
+  background-size: cover;
+}
+
+.productName {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.itemCountDatas {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: end;
+}
