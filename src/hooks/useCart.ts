@@ -1,13 +1,14 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { FIRST_INDEX, ONE_ITEM_IN_CART } from '../constants';
-import { CART_URL } from '../constants/url';
-import { cartState, productSelector } from '../recoil';
+import { cartState, productSelector, serverState } from '../recoil';
 import { CartItem } from '../types';
 import { useFetchData } from './useFetchData';
 
 export const useSetCart = (id: number) => {
   const setCart = useSetRecoilState(cartState);
   const selectedProduct = useRecoilValue(productSelector(id));
+
+  const server = useRecoilValue(serverState);
 
   const { api } = useFetchData();
 
@@ -26,49 +27,65 @@ export const useSetCart = (id: number) => {
   };
 
   const updateCart = (value: string) => {
-    setCart((prev: CartItem[]) => {
-      const { cart, cartItemIndex } = findCartItemIndex(prev);
-      const quantity = Number(value);
+    const quantity = Number(value);
+    api
+      .patch(`${server}/cart-items/${id}`, { id, quantity })
+      .then(() => {
+        setCart((prev: CartItem[]) => {
+          const { cart, cartItemIndex } = findCartItemIndex(prev);
 
-      api.patch(`${CART_URL}/${id}`, { id, quantity });
+          const updatedItem = { ...prev[cartItemIndex], quantity: Number(value) };
+          cart[cartItemIndex] = updatedItem;
 
-      const updatedItem = { ...prev[cartItemIndex], quantity: Number(value) };
-      cart[cartItemIndex] = updatedItem;
-
-      return cart;
-    });
+          return cart;
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const addToCart = (value: string) => {
-    setCart((prev: CartItem[]) => {
-      const quantity = Number(value);
+    api
+      .post(`${server}/cart-items`, { productId: id })
+      .then(() => {
+        setCart((prev: CartItem[]) => {
+          const quantity = Number(value);
 
-      const { cart, cartItemIndex } = findCartItemIndex(prev);
+          const { cart, cartItemIndex } = findCartItemIndex(prev);
 
-      if (value === '') return removeProduct(cart, cartItemIndex);
+          if (value === '') return removeProduct(cart, cartItemIndex);
 
-      api.post(CART_URL, { id });
-
-      return [
-        ...prev,
-        {
-          id: id,
-          quantity: quantity,
-          product: selectedProduct,
-        },
-      ];
-    });
+          return [
+            ...prev,
+            {
+              id: id,
+              quantity: quantity,
+              product: selectedProduct,
+            },
+          ];
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   const removeItemFromCart = () => {
-    setCart((prev: CartItem[]) => {
-      const { cart, cartItemIndex, alreadyHasCartItem } = findCartItemIndex(prev);
-      api.delete(`${CART_URL}/${id}`, { id });
+    api
+      .delete(`${server}/cart-items/${id}`, { id })
+      .then(() => {
+        setCart((prev: CartItem[]) => {
+          const { cart, cartItemIndex, alreadyHasCartItem } = findCartItemIndex(prev);
 
-      if (alreadyHasCartItem) return removeProduct(cart, cartItemIndex);
+          if (alreadyHasCartItem) return removeProduct(cart, cartItemIndex);
 
-      return prev;
-    });
+          return prev;
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
   };
 
   return { addToCart, removeItemFromCart, updateCart };

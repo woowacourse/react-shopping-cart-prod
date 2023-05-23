@@ -12,7 +12,7 @@ export const useFetchData = <T>(setData?: SetDataType<T>) => {
 
       if (setData) setData(data);
     } catch (error) {
-      console.error(error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -20,25 +20,37 @@ export const useFetchData = <T>(setData?: SetDataType<T>) => {
 
   const api = {
     get: (url: string) => {
-      fetchData(url, {
+      return fetchData(url, {
         method: 'GET',
       });
     },
     post: <T>(url: string, body: T) => {
-      fetchData(url, {
+      return fetchData(url, {
         method: 'POST',
+        headers: {
+          Authorization: 'Basic YUBhLmNvbToxMjM0',
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(body),
       });
     },
     patch: <T>(url: string, body: T) => {
-      fetchData(url, {
+      return fetchData(url, {
         method: 'PATCH',
+        headers: {
+          Authorization: 'Basic YUBhLmNvbToxMjM0',
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(body),
       });
     },
     delete: <T>(url: string, body: T) => {
-      fetchData(url, {
+      return fetchData(url, {
         method: 'DELETE',
+        headers: {
+          Authorization: 'Basic YUBhLmNvbToxMjM0',
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(body),
       });
     },
