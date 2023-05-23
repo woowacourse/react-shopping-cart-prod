@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import useCartService from '../../../hooks/useCartService';
 import { CartIcon } from '../../../assets';
 import { Link } from 'react-router-dom';
+import ServerSelect from '../ServerSelect/ServerSelect';
 
 const Header = () => {
   const { cart } = useCartService();
@@ -12,13 +13,15 @@ const Header = () => {
         <CartIcon />
         <Title>SHOP</Title>
       </Logo>
-
-      <CartButton to="/cart">
-        장바구니
-        {cart.length > 0 && (
-          <CartTotalQuantity>{cart.length}</CartTotalQuantity>
-        )}
-      </CartButton>
+      <RightContainer>
+        <ServerSelect />
+        <CartButton to="/cart">
+          장바구니
+          {cart.length > 0 && (
+            <CartTotalQuantity>{cart.length}</CartTotalQuantity>
+          )}
+        </CartButton>
+      </RightContainer>
     </HeaderContainer>
   );
 };
@@ -54,6 +57,12 @@ const Title = styled.h1`
   font-size: 40px;
   font-weight: 900;
   padding-top: 8px;
+`;
+
+const RightContainer = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 24px;
 `;
 
 const CartButton = styled(Link)`
