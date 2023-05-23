@@ -7,7 +7,7 @@ import { CartProduct } from "types/domain";
 import { removeCartItem } from "api/cartItems";
 
 const CartItem = (item: CartProduct) => {
-  const setProduct = useSetRecoilState(cartSelector(item.id));
+  const setProduct = useSetRecoilState(cartSelector(item.product.id));
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProduct({

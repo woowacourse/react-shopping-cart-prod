@@ -5,8 +5,8 @@ import { MAX_QUANTITY, MIN_QUANTITY } from "constants/cartProduct";
 import { CartProduct } from "types/domain";
 import { changeItemQuantity, removeCartItem } from "api/cartItems";
 
-export const useQuantity = (itemID: number) => {
-  const [cartItem, setCartItem] = useRecoilState(cartSelector(itemID));
+export const useQuantity = (productId: number) => {
+  const [cartItem, setCartItem] = useRecoilState(cartSelector(productId));
   const [quantity, setQuantity] = useState<string>(
     cartItem ? cartItem.quantity.toString() : MIN_QUANTITY.toString()
   );
@@ -14,10 +14,15 @@ export const useQuantity = (itemID: number) => {
   const changeQuantity = async (newQuantity: string) => {
     if (Number(newQuantity) > MAX_QUANTITY || Number(newQuantity) < MIN_QUANTITY) return;
 
+    if (!cartItem) {
+      alert(`장바구니 상품 수량 변경 실패!`);
+      return;
+    }
+
     const result =
       Number(newQuantity) >= MIN_QUANTITY
-        ? await changeItemQuantity(itemID, Number(newQuantity))
-        : await removeCartItem(itemID);
+        ? await changeItemQuantity(cartItem.id, Number(newQuantity))
+        : await removeCartItem(cartItem.id);
 
     if (!result) {
       alert(`장바구니 상품 수량 변경 실패!`);

@@ -35,9 +35,13 @@ export const addCartItem = (id: number) => {
 
   if (!product) return;
 
-  cart.push({ id, quantity: 1, product: product });
+  const cartItemId = Date.now();
+
+  cart.push({ id: cartItemId, quantity: 1, product: product });
 
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cart));
+  
+  return cartItemId;
 };
 
 export const setCartItem = (id: number, quantity: number) => {

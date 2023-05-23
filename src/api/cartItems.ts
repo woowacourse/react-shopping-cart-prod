@@ -20,11 +20,14 @@ export const addCartItem = async (productId: number) => {
     body: JSON.stringify({ productId: productId }),
   });
 
-  return response.status === 201;
+  const cartItemId = response.headers.get("Location")?.split("/")[2];
+  console.log("헤더: ", cartItemId);
+
+  return response.status === 201 && cartItemId;
 };
 
-export const changeItemQuantity = async (productId: number, quantity: number) => {
-  const response = await fetch(`/cart-items/${productId}`, {
+export const changeItemQuantity = async (cartItemId: number, quantity: number) => {
+  const response = await fetch(`/cart-items/${cartItemId}`, {
     method: "PATCH",
     body: JSON.stringify({ quantity: Number(quantity) }),
   });
@@ -32,8 +35,8 @@ export const changeItemQuantity = async (productId: number, quantity: number) =>
   return response.status === 200;
 };
 
-export const removeCartItem = async (productId: number) => {
-  const response = await fetch(`/cart-items/${productId}`, {
+export const removeCartItem = async (cartItemId: number) => {
+  const response = await fetch(`/cart-items/${cartItemId}`, {
     method: "DELETE",
   });
 

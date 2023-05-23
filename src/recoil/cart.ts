@@ -31,16 +31,16 @@ export const cartListState = atom<CartProduct[]>({
 export const cartSelector = selectorFamily<CartProduct | null, number>({
   key: "cartSelector",
   get:
-    (id) =>
+    (productId) =>
     ({ get }) =>
-      get(cartListState).find((product) => product.id === id) ?? null,
+      get(cartListState).find((item) => item.product.id === productId) ?? null,
   set:
-    (id) =>
+    (productId) =>
     ({ get, set }, newProduct) => {
       if (newProduct instanceof DefaultValue) return;
 
       const cartList = [...get(cartListState)];
-      const index = cartList.findIndex((product) => product.id === id);
+      const index = cartList.findIndex((item) => item.product.id === productId);
 
       if (!newProduct || newProduct.quantity <= MIN_QUANTITY) {
         index !== -1 && cartList.splice(index, 1);

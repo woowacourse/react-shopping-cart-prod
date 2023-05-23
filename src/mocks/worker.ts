@@ -24,24 +24,24 @@ export const handlers = [
   rest.post("/cart-items", async (req, res, ctx) => {
     const { productId } = await req.json();
 
-    addCartItem(productId);
+    const cartItemId = addCartItem(productId);
 
-    return res(ctx.delay(100), ctx.status(201), ctx.set("Location", `/cart-items/${productId})`));
+    return res(ctx.delay(100), ctx.status(201), ctx.set("Location", `/cart-items/${cartItemId}`));
   }),
 
-  rest.patch("/cart-items/:productId", async (req, res, ctx) => {
-    const { productId } = req.params;
+  rest.patch("/cart-items/:cartItemId", async (req, res, ctx) => {
+    const { cartItemId } = req.params;
     const { quantity } = await req.json();
 
-    setCartItem(Number(productId), quantity);
+    setCartItem(Number(cartItemId), quantity);
 
     return res(ctx.delay(100), ctx.status(200));
   }),
 
-  rest.delete("/cart-items/:productId", async (req, res, ctx) => {
-    const { productId } = req.params;
+  rest.delete("/cart-items/:cartItemId", async (req, res, ctx) => {
+    const { cartItemId } = req.params;
 
-    setCartItem(Number(productId), 0);
+    setCartItem(Number(cartItemId), 0);
 
     return res(ctx.delay(100), ctx.status(204));
   }),

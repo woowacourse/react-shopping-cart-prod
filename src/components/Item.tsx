@@ -9,14 +9,14 @@ const Item = (item: Product) => {
   const [cartItem, setCartItem] = useRecoilState(cartSelector(item.id));
 
   const handleCartClicked = async () => {
-    const result = await addCartItem(item.id);
+    const cartItemId = await addCartItem(item.id);
 
-    if (!result) {
+    if (!cartItemId) {
       alert("장바구니 상품 추가 실패!");
       return;
     }
 
-    setCartItem({ id: item.id, quantity: 1, isChecked: true, product: item });
+    setCartItem({ id: Number(cartItemId), quantity: 1, isChecked: true, product: item });
   };
 
   return (
