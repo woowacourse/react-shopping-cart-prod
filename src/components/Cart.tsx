@@ -19,7 +19,7 @@ const Cart = () => {
   return (
     <S.Wrapper>
       <S.Button onClick={() => goToPage(PATH.CART_PAGE)}>장바구니</S.Button>
-      <S.Badge role="status" aria-label="장바구니에 담긴 상품 종류의 수">
+      <S.Badge role='status' aria-label='장바구니에 담긴 상품 종류의 수'>
         {selectedProducts.size}
       </S.Badge>
     </S.Wrapper>
@@ -30,7 +30,6 @@ const S = {
   Wrapper: styled.div`
     display: flex;
     align-items: center;
-    margin-left: auto;
   `,
 
   Button: styled.button`

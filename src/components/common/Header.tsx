@@ -3,6 +3,7 @@ import { PATH } from '../../constants/';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
 import Cart from '../Cart';
 import CartIcon from '../icons/CartIcon';
+import ServerSelector from '../ServerSelector';
 
 interface Props {
   title: string;
@@ -15,9 +16,10 @@ const Header = ({ title }: Props) => {
     <S.Header>
       <S.Wrapper>
         <S.Button onClick={() => goToPage(PATH.MAIN_PAGE)}>
-          <CartIcon aria-label="logo-cart-icon" />
+          <CartIcon aria-label='logo-cart-icon' />
           <span>{title}</span>
         </S.Button>
+        <ServerSelector />
         <Cart />
       </S.Wrapper>
     </S.Header>
