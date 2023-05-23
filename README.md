@@ -46,7 +46,7 @@
 <table>
   <tbody>
     <tr>
-      <td><a href="https://feb-dain.github.io/react-shopping-cart/">🛒 장바구니 앱 실행하기</a></td>
+      <td><a href="https://feb-dain.github.io/react-shopping-cart-prod/">🛒 장바구니 앱 실행하기</a></td>
       <td><a href="https://feb-dain.github.io/react-shopping-cart/storybook/">📕 스토리북 바로 보기</a></td>
     </tr>
   </tbody>
