@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import ProductItem from '../../box/ProductItem/ProductItem';
 import type { Product } from '../../../types/types';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
+import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import { Text } from '../../common/Text/Text';
 import { useQuery } from 'react-query';
 
@@ -13,7 +14,7 @@ const ProductList = () => {
   });
 
   if (isLoading) {
-    return <Text>로딩중...</Text>;
+    return <LoadingSpinner />;
   }
   if (!data) {
     return <ErrorBox errorType="network" />;
