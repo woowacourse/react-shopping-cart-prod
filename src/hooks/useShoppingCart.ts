@@ -9,12 +9,12 @@ const useShoppingCart = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
 
   const initialAddCart = async (product: Product) => {
-    await addCartProducts(product.id);
+    const cartProductId = await addCartProducts(product.id);
 
     setCartProducts((prev) => {
       const newCartProducts = new Map(prev.entries());
 
-      return newCartProducts.set(product.id, { quantity: 1, product });
+      return newCartProducts.set(cartProductId, { quantity: 1, product });
     });
   };
 
