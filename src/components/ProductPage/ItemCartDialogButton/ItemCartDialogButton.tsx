@@ -17,7 +17,7 @@ const ItemCartDialogButton: React.FC<ItemCartDialogButtonProps> = (props) => {
   const addItemToCart = () => {
     const quantity = Number(quantityRef.current?.value);
 
-    addItemToCartMutation({ id, quantity });
+    addItemToCartMutation({ productId: id });
   };
 
   return (

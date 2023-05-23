@@ -3,35 +3,43 @@ import { getUUID } from './../utils/uuid';
 import { rest } from 'msw';
 import { MockCart } from './fixtures/cart';
 import { MockProducts } from './fixtures/products';
-import { AddCartDataReq } from '../apis/cart';
 import { CartItem } from '../types/cart';
 
 export const handlers = [
-  rest.post('/cart/:id', async (req, res, ctx) => {
-    const { id, quantity }: AddCartDataReq = await req.json();
+  rest.post('/cart-items', async (req, res, ctx) => {
+    let cartId;
+    const { productId } = await req.json();
 
-    const product = MockProducts.items.find((product) => product.id === id);
+    const product = MockProducts.items.find(
+      (product) => product.id === productId
+    );
     const targetItemIndex = MockCart.cart.findIndex(
-      ({ product }) => product.id === id
+      ({ product }) => product.id === productId
     );
 
     if (!product) return res(ctx.status(404), ctx.json({}));
 
     if (targetItemIndex >= 0) {
-      MockCart.cart[targetItemIndex].quantity += quantity;
+      cartId = MockCart.cart[targetItemIndex].id;
+      MockCart.cart[targetItemIndex].quantity += 1;
     } else {
       const newCartItem = {
         id: getUUID(),
-        quantity,
+        quantity: 1,
         product,
       };
 
+      cartId = newCartItem.id;
       MockCart.cart.push(newCartItem);
     }
 
     setCart(MockCart.cart);
 
-    return res(ctx.status(200), ctx.json(MockCart));
+    return res(
+      ctx.status(200),
+      ctx.set('Location', `/cart-items/${cartId}`),
+      ctx.json(MockCart)
+    );
   }),
 
   rest.patch('/cart/:id', async (req, res, ctx) => {
