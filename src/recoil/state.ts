@@ -1,4 +1,4 @@
-import type { CartType } from '../types';
+import type { CartType, ServerNameType } from '../types';
 
 import { atom, selector, selectorFamily } from 'recoil';
 
@@ -37,4 +37,9 @@ export const cartBillTotalPriceState = selector({
 
     return checkedCart.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0);
   },
+});
+
+export const serverNameState = atom<ServerNameType>({
+  key: 'serverNameState',
+  default: '라온',
 });
