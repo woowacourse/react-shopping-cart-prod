@@ -13,7 +13,7 @@ const ProductList = () => {
 
   const { data, fetchApi, isLoading } = useFetch<ProductItemType[]>(setList);
   useEffect(() => {
-    fetchApi.get('/productlist');
+    fetchApi.get('/products');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
