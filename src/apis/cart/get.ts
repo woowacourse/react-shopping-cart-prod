@@ -4,7 +4,7 @@ import { CartProducts, Product } from 'types/product';
 const GET_URL = '/cart-items';
 
 type ServerCartProduct = {
-  id: Product['id'];
+  id: number;
   quantity: number;
   product: Product;
 };
