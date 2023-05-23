@@ -38,7 +38,7 @@ const SelectedProductList = () => {
       {productCountInCart === 0 ? (
         <S.Nothing
           src={`${process.env.PUBLIC_URL}/assets/nothing.png`}
-          alt="장바구니가 텅 비었어요"
+          alt='장바구니가 텅 비었어요'
         />
       ) : (
         <div>
@@ -48,7 +48,7 @@ const SelectedProductList = () => {
               id={item.product.id}
               name={item.product.name}
               price={item.product.price}
-              imageUrl={`${process.env.PUBLIC_URL}${item.product.imageUrl}`}
+              imageUrl={item.product.imageUrl}
               quantity={item.quantity}
             />
           ))}
@@ -57,13 +57,13 @@ const SelectedProductList = () => {
 
       <S.Fieldset>
         <Checkbox
-          type="checkbox"
-          id="select-all"
-          name="select-all"
+          type='checkbox'
+          id='select-all'
+          name='select-all'
           checked={isAllChecked}
           onChange={handleAllItemsCheck}
         />
-        <label htmlFor="select-all">{`전체선택 (${checkedItems.length}/${productCountInCart})`}</label>
+        <label htmlFor='select-all'>{`전체선택 (${checkedItems.length}/${productCountInCart})`}</label>
         <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
           선택삭제
         </Button>
