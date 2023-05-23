@@ -26,7 +26,8 @@ const cartProductsParser = (data: any): CartProducts => {
 };
 
 export const getCartProducts = async (): Promise<CartProducts> => {
-  const cartProducts = await fetcher<ServerCartProduct[]>(GET_URL);
+  const fetchedData = await fetcher<ServerCartProduct[]>(GET_URL);
+  const cartProducts = fetchedData.data;
 
   return cartProductsParser(cartProducts);
 };
