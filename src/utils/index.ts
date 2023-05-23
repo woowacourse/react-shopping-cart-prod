@@ -1,0 +1,23 @@
+import { useSetRecoilState } from "recoil";
+import { fetchProducts, fetchCartItems } from "../api";
+import { MIN_QUANTITY } from "../constants";
+import { productsState } from "../recoil/atom";
+import { PayloadType, CartItemType } from "../types/domain";
+
+export const getLocalStorage = <T>(key: string, defaultValue: T): T => {
+  const data = localStorage.getItem(key);
+  if (!data) return defaultValue;
+
+  try {
+    return JSON.parse(data);
+  } catch (e) {
+    console.error(
+      `[ERROR] ${key}값의 LocalStorage data 파싱 과정에서 오류가 발생했습니다.`
+    );
+    return defaultValue;
+  }
+};
+
+export const setLocalStorage = <T>(key: string, data: T) => {
+  localStorage.setItem(key, JSON.stringify(data));
+};
