@@ -4,12 +4,12 @@ import { styled } from 'styled-components';
 interface CheckboxProps {
   id?: string;
   checked?: boolean;
-  onChange?: (value: string) => void;
+  onChange?: (value: number) => void;
 }
 
 const Checkbox = ({ id = '', checked = false, onChange }: CheckboxProps) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    onChange?.(e.target.id);
+    onChange?.(Number(e.target.id));
   };
 
   return (

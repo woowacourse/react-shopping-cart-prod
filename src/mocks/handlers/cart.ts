@@ -4,7 +4,6 @@ import {
   CART_LOCAL_STORAGE_KEY,
   PRODUCTS_BASE_URL,
 } from '../../constants';
-import { uuid } from '../../utils/uuid';
 import type { CartItem, NewCartItem } from '../../types/product';
 
 const localStorageCart = localStorage.getItem(CART_LOCAL_STORAGE_KEY);
@@ -40,7 +39,7 @@ export const cartHandlers = [
       (res) => res.json(),
     );
     const newCartItem = {
-      id: uuid(),
+      id: Date.now(),
       quantity: 1,
       product: { ...product },
     } satisfies NewCartItem;

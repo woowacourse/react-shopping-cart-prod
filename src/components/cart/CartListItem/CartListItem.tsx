@@ -10,7 +10,7 @@ import type { CartItem } from '../../../types/product';
 interface CartListItemProps {
   cartItem: CartItem;
   checked?: boolean;
-  onChangeCheckbox?: (id: string) => void;
+  onChangeCheckbox?: (id: number) => void;
 }
 
 const CartListItem = ({

@@ -11,7 +11,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const cartItem = {
-  id: '0',
+  id: 0,
   quantity: 1,
   product: {
     id: 1,
