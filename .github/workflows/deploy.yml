@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: ['step2']
+    branches: ["step1"]
 
 jobs:
   deploy:
@@ -29,7 +29,7 @@ jobs:
         id: cache
         uses: actions/cache@v3
         with:
-          path: '**/node_modules'
+          path: "**/node_modules"
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
