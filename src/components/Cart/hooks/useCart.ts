@@ -22,21 +22,21 @@ export const useCart = (product: Product) => {
     toast.success('장바구니에 상품이 담겼습니다.');
   };
 
-  const onAddItem: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const addItem: React.MouseEventHandler<HTMLButtonElement> = () => {
     if (!cartItem) return;
 
     setCartItem({ ...cartItem, quantity: cartItem.quantity + 1 });
     request(patchCartItemQuantity(cartId, { quantity: cartItem.quantity + 1 }));
   };
 
-  const onRemoveItem: React.MouseEventHandler<HTMLButtonElement> = () => {
+  const removeItem: React.MouseEventHandler<HTMLButtonElement> = () => {
     if (!cartItem) return;
 
     setCartItem({ ...cartItem, quantity: cartItem.quantity - 1 });
     request(patchCartItemQuantity(cartId, { quantity: cartItem.quantity - 1 }));
   };
 
-  const onDeleteItem: React.MouseEventHandler<HTMLButtonElement> = async () => {
+  const deleteItem = () => {
     if (!cartItem) return;
 
     setCartItem({ ...cartItem, quantity: 0 });
@@ -45,9 +45,9 @@ export const useCart = (product: Product) => {
 
   return {
     currentCartItem: cartItem,
-    onRemoveItem,
-    onAddItem,
-    onDeleteItem,
+    removeItem,
+    addItem,
+    deleteItem,
     onSelectItem,
   };
 };

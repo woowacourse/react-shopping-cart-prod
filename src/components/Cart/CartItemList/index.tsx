@@ -6,7 +6,7 @@ import CartItem from 'components/Cart/CartItem';
 import Spinner from 'components/@common/Spinner';
 import Modal from 'components/@common/Modal';
 import { useGet } from 'hooks/useGet';
-import { useCheckedItems } from '../hooks/useCheckedItems';
+import { useCheckedItemIds } from '../hooks/useCheckedItems';
 import { useModal } from 'hooks/useModal';
 import { Cart } from 'types';
 import { deleteCartItem, getCartList } from 'api/requests';
@@ -14,8 +14,8 @@ import { deleteCartItem, getCartList } from 'api/requests';
 const CartItemList = () => {
   const { isLoading } = useGet<{ cartList: Cart[] }>(getCartList);
   const [cartList, setCartList] = useRecoilState(cartListAtom);
-  const { checkedItems, removeAllCheckedItems, checkAllItems } =
-    useCheckedItems();
+  const { checkedItemIds, emptyCheckedItemIds, checkAllItems, unCheckItem } =
+    useCheckedItemIds();
   const { isModalOpen, onOpenModal, onCloseModal } = useModal();
 
   useEffect(() => {
@@ -40,8 +40,8 @@ const CartItemList = () => {
     );
 
   const onChangeAllCheckBoxes = () => {
-    if (checkedItems.length === cartList.length) {
-      removeAllCheckedItems();
+    if (checkedItemIds.length === cartList.length) {
+      emptyCheckedItemIds();
       return;
     }
 
@@ -49,23 +49,32 @@ const CartItemList = () => {
   };
 
   const onDeleteSelectedItems = () => {
-    checkedItems.forEach(({ id }) => deleteCartItem(id));
-    setCartList((prev) => prev.filter((item) => !checkedItems.includes(item)));
+    checkedItemIds.forEach((id) => {
+      deleteCartItem(id);
+      unCheckItem(id);
+    });
+
+    setCartList((prev) =>
+      prev.filter((item) => !checkedItemIds.includes(item.id))
+    );
+
     onCloseModal();
   };
 
   return (
     <S.ItemWrapper>
-      <S.CartItemTitle>든든배송 상품({checkedItems.length}개)</S.CartItemTitle>
+      <S.CartItemTitle>
+        든든배송 상품({checkedItemIds.length}개)
+      </S.CartItemTitle>
       {isLoading ? loading : fetchedCartList}
       <S.CheckBoxWrapper>
         <S.SelectAllCheckBox
           type="checkbox"
           onChange={onChangeAllCheckBoxes}
-          checked={checkedItems.length === cartList.length}
+          checked={checkedItemIds.length === cartList.length}
         />
         <S.Text>
-          전체 선택 ({checkedItems.length}/{cartList.length})개
+          전체 선택 ({checkedItemIds.length}/{cartList.length})개
         </S.Text>
         <S.SelectDeleteButton onClick={onOpenModal}>
           선택 삭제

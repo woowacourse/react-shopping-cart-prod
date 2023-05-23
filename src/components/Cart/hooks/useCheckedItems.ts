@@ -1,31 +1,35 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { cartListAtom, checkedItemsAtom } from 'recoil/cartList';
-import { Cart } from 'types';
 
-export const useCheckedItems = () => {
-  const [checkedItems, setCheckedItems] = useRecoilState(checkedItemsAtom);
+export const useCheckedItemIds = () => {
+  const [checkedItemIds, setCheckedItemIds] = useRecoilState(checkedItemsAtom);
   const cartList = useRecoilValue(cartListAtom);
 
-  const removeAllCheckedItems = () => {
-    setCheckedItems([]);
+  const emptyCheckedItemIds = () => {
+    setCheckedItemIds([]);
   };
 
   const checkAllItems = () => {
-    setCheckedItems(cartList);
+    setCheckedItemIds(cartList.map((item) => item.id));
   };
 
-  const checkItem = (cartItem: Cart) => {
-    if (checkedItems.includes(cartItem)) {
-      setCheckedItems((prev) => prev.filter(({ id }) => id !== cartItem.id));
+  const checkItem = (id: number) => {
+    if (checkedItemIds.includes(id)) {
+      unCheckItem(id);
       return;
     }
-    setCheckedItems((prev) => [...prev, cartItem]);
+    setCheckedItemIds((prev) => [...prev, id]);
+  };
+
+  const unCheckItem = (id: number) => {
+    setCheckedItemIds((prev) => prev.filter((itemId) => itemId !== id));
   };
 
   return {
-    checkedItems,
+    checkedItemIds,
     checkItem,
-    removeAllCheckedItems,
+    emptyCheckedItemIds,
     checkAllItems,
+    unCheckItem,
   };
 };
