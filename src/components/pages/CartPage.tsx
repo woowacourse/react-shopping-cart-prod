@@ -91,7 +91,7 @@ const CartPageHead = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 32px;
+  margin-bottom: 8px;
 `;
 
 const CartPageContent = styled.div`
@@ -109,6 +109,7 @@ const CartPageContent = styled.div`
 const PriceBox = styled.div`
   position: sticky;
   top: 150px;
+  margin-top: 30px;
   @media screen and (max-width: 1320px) {
     width: 100%;
   }

@@ -49,24 +49,25 @@ const CartList = () => {
         <Text size="small" weight="light">
           든든배송 상품 ({data?.length}개)
         </Text>
+        <CartListFoot>
+          <CheckBox
+            label={`전체선택(${checkCartList.length})`}
+            checked={isAllCheck}
+            onClick={onClickCheckBox}
+          />
+          <Button
+            size="small"
+            text="선택삭제"
+            onClick={() => openModal({ callback: deleteSelectCart })}
+          />
+        </CartListFoot>
       </CartListHead>
+
       <Cart>
         {data?.map((cart) => (
           <CartItem key={cart.product.id} cart={cart} />
         ))}
       </Cart>
-      <CartListFoot>
-        <CheckBox
-          label={`전체선택(${checkCartList.length})`}
-          checked={isAllCheck}
-          onClick={onClickCheckBox}
-        />
-        <Button
-          size="small"
-          text="선택삭제"
-          onClick={() => openModal({ callback: deleteSelectCart })}
-        />
-      </CartListFoot>
     </CartListWrapper>
   );
 };
@@ -82,10 +83,14 @@ const CartListWrapper = styled.div`
 const CartListHead = styled.div`
   width: 100%;
   border-bottom: 3px solid #aaa;
-  padding: 0 0 20px 0;
+  padding: 80px 0 20px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 70px;
+  background-color: #fff;
+  z-index: 30;
 `;
 
 const Cart = styled.div`
@@ -98,5 +103,4 @@ const CartListFoot = styled.div`
   display: flex;
   align-items: center;
   gap: 15px;
-  margin-top: 20px;
 `;
