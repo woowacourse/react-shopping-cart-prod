@@ -6,6 +6,7 @@ import { Text } from '../../common/Text/Text';
 import InputStepper from '../../common/InputStepper/InputStepper';
 import getPriceFormat from '../../../utils/getPriceFormat';
 import { useCart } from '../../../hooks/useCart';
+import { keyframes } from '@emotion/react';
 
 const ProductItem = ({ product }: { product: Product }) => {
   const { data, addCartItemAPI, changeCartQuantityAPI, deleteCartItemAPI } = useCart();
@@ -36,7 +37,7 @@ const ProductItem = ({ product }: { product: Product }) => {
 
   return (
     <ProductWrapper>
-      <ProductImage src={product.imageUrl} alt={product.name} />
+      <ProductImage src={product.imageUrl} alt={product.name} loading="lazy" />
       <ProductInfoWrapper>
         <ProductTextWrapper>
           <Text size="smallest" weight="light" color="#333333">
@@ -68,6 +69,15 @@ const ProductItem = ({ product }: { product: Product }) => {
 
 export default ProductItem;
 
+const skeletonAnimation = keyframes`
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
+  }
+`;
+
 const ProductWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -83,6 +93,11 @@ const ProductImage = styled.img`
     transform: translateY(-10px) scale(1.05);
     box-shadow: 1px 14px 24px hsla(218, 53%, 10%, 12%);
   }
+
+  background: linear-gradient(120deg, #e5e5e5 20%, #f0f0f0 28%, #f0f0f0 40%, #e5e5e5 48%);
+  background-position: 100% 0;
+  background-size: 582px;
+  animation: ${skeletonAnimation} 1s infinite;
 `;
 
 const ProductInfoWrapper = styled.div`

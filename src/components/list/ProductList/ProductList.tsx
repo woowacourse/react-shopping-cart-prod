@@ -3,7 +3,6 @@ import ProductItem from '../../box/ProductItem/ProductItem';
 import type { Product } from '../../../types/types';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
-import { Text } from '../../common/Text/Text';
 import { useQuery } from 'react-query';
 
 const ProductList = () => {
