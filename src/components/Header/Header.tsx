@@ -28,13 +28,18 @@ function Header() {
           <LogoWrapper onClick={() => navigate("/")}>
             <LogoImage src={titleLogo} />
           </LogoWrapper>
-          <CartWrapper onClick={() => navigate("/cart")}>
+          <CartWrapper>
             <div style={{ color: 'black' }}>현재 상태 : {server}</div>
             <ServerSelectBox />
-            <CartTitle>장바구니</CartTitle>
-            <CartCountWrapper>
-              <CartCount>{cartCount}</CartCount>
-            </CartCountWrapper>
+            <div
+              style={{ display: 'flex', gap: '10px' }}
+              onClick={() => navigate("/cart")}
+            >
+              <CartTitle>장바구니</CartTitle>
+              <CartCountWrapper>
+                <CartCount>{cartCount}</CartCount>
+              </CartCountWrapper>
+            </div>
           </CartWrapper>
         </HeaderWrapper>
       </Container>

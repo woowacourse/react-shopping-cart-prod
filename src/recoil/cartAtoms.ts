@@ -6,6 +6,7 @@ import {
   ReceivedCartItem,
 } from "../types/types";
 import { fetchAddCart, fetchDeleteCart, fetchUpdateCart } from "../api/api.ts";
+import { serverState } from "./serverAtom.ts";
 
 export const cartState = atom<CartItem[]>({
   key: "cartState",
@@ -86,6 +87,7 @@ export const addCartItemSelector = selectorFamily<ProductItem, undefined>({
       ({ get, set }, newProductItem) => {
         const product = newProductItem as ProductItem;
         const cartList = get(cartState);
+        const server = get(serverState);
         const isCartItemExist = cartList.some(
           (cartItem) => cartItem.id === product.id
         );
@@ -99,7 +101,7 @@ export const addCartItemSelector = selectorFamily<ProductItem, undefined>({
           };
           const updatedCartList = [...cartList, newCartItem];
           set(cartState, updatedCartList);
-          fetchAddCart("", newCartItem.id);
+          fetchAddCart(server, newCartItem.id);
         }
       },
 });
@@ -114,6 +116,7 @@ export const updateCartItemQuantitySelector = selectorFamily<number, number>({
     (productId) =>
       ({ get, set }, newQuantity) => {
         const quantity = newQuantity as number;
+        const server = get(serverState);
 
         if (quantity === 0) {
           const id = productId as number;
@@ -121,7 +124,7 @@ export const updateCartItemQuantitySelector = selectorFamily<number, number>({
           if (confirm("정말로 삭제하시겠습니까?")) {
             const removedCartList = cartList.filter((cart) => cart.id !== id);
             set(cartState, removedCartList);
-            fetchDeleteCart("", id);
+            fetchDeleteCart(server, id);
           }
         } else {
           const cartList = get(cartState);
@@ -137,7 +140,7 @@ export const updateCartItemQuantitySelector = selectorFamily<number, number>({
             };
             set(cartState, updatedCartList);
 
-            fetchUpdateCart("", productId, newQuantity as number);
+            fetchUpdateCart(server, productId, newQuantity as number);
           }
         }
       },
@@ -153,11 +156,13 @@ export const removeCartItemSelector = selectorFamily<number, undefined>({
     () =>
       ({ get, set }, productId) => {
         const id = productId as number;
+        const server = get(serverState);
+
         const cartList = get(cartState);
         if (confirm("정말로 삭제하시겠습니까?")) {
           const removedCartList = cartList.filter((cart) => cart.id !== id);
           set(cartState, removedCartList);
-          fetchDeleteCart("", id);
+          fetchDeleteCart(server, id);
         }
       },
 });
@@ -171,6 +176,7 @@ export const removeCartItemsSelector = selector<undefined>({
   set: ({ get, set }) => {
     const cartList = get(cartState);
     const checkedCartList = get(checkedCartSelector);
+    const server = get(serverState);
     if (confirm("정말로 삭제하시겠습니까?")) {
       const targetIds = checkedCartList.map((cartList) => cartList.id);
       const removedCartList = cartList.filter(
@@ -178,7 +184,7 @@ export const removeCartItemsSelector = selector<undefined>({
       );
       set(cartState, removedCartList);
       targetIds.forEach((id) => {
-        fetchDeleteCart("", id);
+        fetchDeleteCart(server, id);
       });
     }
   },

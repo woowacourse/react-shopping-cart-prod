@@ -1,7 +1,8 @@
 import { CartItem, ProductItem, ReceivedCartItem } from "../types/types";
+import { url } from "./url";
 
-export const fetchAddCart = async (url: string, id: number) => {
-  const response = await fetch(`${url}/cart-items`, {
+export const fetchAddCart = async (server: string, id: number) => {
+  const response = await fetch(`${url[server]}/cart-items`, {
     method: "POST",
     body: JSON.stringify({
       productId: id,
@@ -11,15 +12,15 @@ export const fetchAddCart = async (url: string, id: number) => {
   console.log(result);
 };
 
-export const fetchDeleteCart = async (url: string, id: number) => {
-  const response = await fetch(`${url}/cart-items/${id}`, {
+export const fetchDeleteCart = async (server: string, id: number) => {
+  const response = await fetch(`${url[server]}/cart-items/${id}`, {
     method: "DELETE",
   });
   console.log(response);
 };
 
-export const fetchUpdateCart = async (url: string, id: number, quantity: number) => {
-  const response = await fetch(`${url}/cart-items/${id}`, {
+export const fetchUpdateCart = async (server: string, id: number, quantity: number) => {
+  const response = await fetch(`${url[server]}/cart-items/${id}`, {
     method: "PATCH",
     body: JSON.stringify({
       quantity,
@@ -29,9 +30,9 @@ export const fetchUpdateCart = async (url: string, id: number, quantity: number)
   console.log(result);
 };
 
-export const fetchCartList = async (url: string) => {
+export const fetchCartList = async (server: string) => {
   try {
-    const response = await fetch(`${url}/cart-items`);
+    const response = await fetch(`${url[server]}/cart-items`);
     const data = await response.json();
     const checkedCartItems: CartItem[] = data.map(
       (cartItem: ReceivedCartItem) => ({
@@ -46,9 +47,9 @@ export const fetchCartList = async (url: string) => {
   }
 };
 
-export const fetchProductList = async (url: string) => {
+export const fetchProductList = async (server: string) => {
   try {
-    const response = await fetch(`${url}/products`);
+    const response = await fetch(`${url[server]}/products`);
     const data: ProductItem[] = await response.json();
     return data;
   } catch (error) {
