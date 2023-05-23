@@ -15,7 +15,7 @@ const cartHandlers = [
   rest.get(API_ENDPOINT.CART_GET, (req, res, ctx) => {
     const cartList = getCartData();
 
-    return res(ctx.delay(2000), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(cartList));
+    return res(ctx.delay(100), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(cartList));
   }),
 
   rest.post(API_ENDPOINT.CART_POST, async (req, res, ctx) => {
