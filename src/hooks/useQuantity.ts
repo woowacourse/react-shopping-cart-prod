@@ -1,16 +1,16 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { initialProductsState, productsState } from "../recoil/atom";
+import { localProductsState, productsState } from "../recoil/atom";
 import React, { useState } from "react";
 import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
 import { changeQuantity, deleteCartItem } from "../api";
-import { ProductType } from "../types/domain";
-import { getNewProducts } from "../utils/domain";
+import { LocalProductType } from "../types/domain";
+import { makeLocalProducts } from "../utils/domain";
 
 export const useQuantity = (productId: number) => {
-  const initialProducts = useRecoilValue(initialProductsState);
-  const [products, setProducts] = useRecoilState(productsState);
-  const target = products.find(
-    (product: ProductType) => product.id === productId
+  const products = useRecoilValue(productsState);
+  const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
+  const target = localProducts.find(
+    (product: LocalProductType) => product.id === productId
   );
   const [quantity, setQuantity] = useState<string | undefined>(
     target?.quantity.toString()
@@ -24,8 +24,8 @@ export const useQuantity = (productId: number) => {
       : await changeQuantity(productId, Number(newQuantity));
 
     setQuantity(newQuantity.toString());
-    const newProducts = await getNewProducts(initialProducts);
-    setProducts(newProducts);
+    const newProducts = await makeLocalProducts(products);
+    setLocalProducts(newProducts);
   };
 
   const handleQuantityChanged = (e: React.ChangeEvent<HTMLInputElement>) => {

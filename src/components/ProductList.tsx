@@ -1,34 +1,34 @@
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { initialProductsState, productsState } from "../recoil/atom";
-import type { ProductType } from "../types/domain";
+import { productsState, localProductsState } from "../recoil/atom";
+import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
 import { MIN_QUANTITY } from "../constants";
 import { addCartItem } from "../api";
-import { getNewProducts } from "../utils/domain";
+import { makeLocalProducts } from "../utils/domain";
 
 export const ProductList = () => {
-  const products = useRecoilValue(productsState);
+  const products = useRecoilValue(localProductsState);
 
   return (
     <Wrapper>
-      {products.map((product) => (
+      {products.map((product: LocalProductType) => (
         <Product key={product.id} {...product} />
       ))}
     </Wrapper>
   );
 };
 
-const Product = ({ id, name, price, imageUrl, quantity }: ProductType) => {
-  const initialProducts = useRecoilValue(initialProductsState);
-  const setProducts = useSetRecoilState(productsState);
+const Product = ({ id, name, price, imageUrl, quantity }: LocalProductType) => {
+  const products = useRecoilValue(productsState);
+  const setLocalProducts = useSetRecoilState(localProductsState);
 
   const handleCartClicked = async () => {
     await addCartItem(id);
 
-    const newProducts = await getNewProducts(initialProducts);
-    setProducts(newProducts);
+    const newProducts = await makeLocalProducts(products);
+    setLocalProducts(newProducts);
   };
 
   return (

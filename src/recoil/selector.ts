@@ -1,13 +1,13 @@
 import { selector } from "recoil";
-import { ProductListType, ProductType } from "../types/domain";
-import { productsState } from "./atom";
+import { LocalProductType } from "../types/domain";
+import { localProductsState } from "./atom";
 import { MIN_QUANTITY } from "../constants";
 
-export const cartProductsSelector = selector<ProductListType>({
+export const cartProductsSelector = selector<LocalProductType[]>({
   key: "cartProducts",
   get: ({ get }) => {
-    return get(productsState).filter(
-      (product: ProductType) => product.quantity !== MIN_QUANTITY
+    return get(localProductsState).filter(
+      (localProduct: LocalProductType) => localProduct.quantity !== MIN_QUANTITY
     );
   },
 });

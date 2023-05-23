@@ -1,11 +1,11 @@
 import { atom, selector } from "recoil";
-import { ProductListType } from "../types/domain";
+import { LocalProductType, ProductType } from "../types/domain";
 import { fetchProducts } from "../api";
-import { getNewProducts } from "../utils/domain";
+import { makeLocalProducts } from "../utils/domain";
 
-export const initialProductsState = atom<ProductListType>({
-  key: "initialProducts",
-  default: selector<ProductListType>({
+export const productsState = atom<ProductType[]>({
+  key: "products",
+  default: selector<ProductType[]>({
     key: "initialProducts/default",
     get: async () => {
       const data = await fetchProducts();
@@ -14,17 +14,17 @@ export const initialProductsState = atom<ProductListType>({
   }),
 });
 
-export const productsState = atom<ProductListType>({
-  key: "products",
-  default: selector<ProductListType>({
+export const localProductsState = atom<LocalProductType[]>({
+  key: "localProducts",
+  default: selector<LocalProductType[]>({
     key: "products/default",
     get: async ({ get }) => {
-      return await getNewProducts(get(initialProductsState));
+      return await makeLocalProducts(get(productsState));
     },
   }),
 });
 
-export const selectedProductsState = atom<ProductListType>({
+export const selectedProductsState = atom<LocalProductType[]>({
   key: "selectedProducts",
   default: [],
 });

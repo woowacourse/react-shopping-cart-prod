@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import type { ProductListType, ProductType } from "../types/domain";
+import type { ProductType } from "../types/domain";
 import styled from "styled-components";
 import { TrashCanIcon } from "../assets";
 import { Counter } from "./Counter";
@@ -10,10 +10,8 @@ import { selectedProductsState } from "../recoil/atom";
 import { useFetch } from "../hooks/useFetch";
 
 export const CartProductList = () => {
-  const cartProducts = useRecoilValue<ProductListType>(cartProductsSelector);
-  const selectedProducts = useRecoilValue<ProductListType>(
-    selectedProductsState
-  );
+  const cartProducts = useRecoilValue<ProductType[]>(cartProductsSelector);
+  const selectedProducts = useRecoilValue<ProductType[]>(selectedProductsState);
   const { fetchNewProducts } = useFetch();
   const {
     checkedArray,
