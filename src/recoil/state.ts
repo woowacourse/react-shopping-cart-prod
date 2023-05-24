@@ -1,4 +1,4 @@
-import type { CartType, ServerNameType } from '../types';
+import type { CartType, ServerNameType, ToastInfoType } from '../types';
 
 import { atom, selector, selectorFamily } from 'recoil';
 
@@ -42,4 +42,13 @@ export const cartBillTotalPriceState = selector({
 export const serverNameState = atom<ServerNameType>({
   key: 'serverNameState',
   default: '라온',
+});
+
+export const toastInfoState = atom<ToastInfoType>({
+  key: 'toastInfoState',
+  default: {
+    show: false,
+    message: '',
+    type: 'info',
+  },
 });
