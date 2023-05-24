@@ -1,10 +1,5 @@
 import { selector } from 'recoil';
-import {
-  cartListState,
-  checkedCartItemIdsState,
-  productListState,
-  selectedHostState,
-} from './atoms';
+import { cartListState, checkedCartItemIdsState, selectedHostState } from './atoms';
 import { CartItemInfo, ProductInfo } from '../types';
 import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../constants';
 
@@ -12,7 +7,7 @@ export const currentProductListState = selector<ProductInfo[]>({
   key: 'currentProductList',
   get: async ({ get }) => {
     const host = get(selectedHostState);
-    const productList = get(productListState); // selector에 의존성을 추가하기 위한 코드
+    // const productList = get(productListState); // selector에 의존성을 추가하기 위한 코드
     console.log(host);
     const res = await fetch(`${host}${PRODUCTS_BASE_URL}`);
 
