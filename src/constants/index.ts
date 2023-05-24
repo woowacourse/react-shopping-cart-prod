@@ -49,3 +49,19 @@ export const ERROR_MESSAGE = {
   500: '처리할 수 없는 내부 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
   default: '서버 내부에서 오류가 발생했습니다. 해당 오류가 지속적으로 발생한다면 관리자에게 문의해주세요.',
 } as const;
+
+export const SERVERS = {
+  베베: {
+    apiUrl: '',
+    email: '',
+    password: '',
+    avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04M28KU1PU-ff7ca3cddc88-512',
+  },
+
+  에단: {
+    apiUrl: '',
+    email: '',
+    password: '',
+    avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04METH8VKK-f128d33fbf53-512',
+  },
+} as const;

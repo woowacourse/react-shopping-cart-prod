@@ -44,8 +44,6 @@ export const Option = styled.div<OptionProps>`
 
   border-radius: 50%;
 
-  animation: scale(2) 1s ease-in;
-
   cursor: pointer;
 
   &:hover {
