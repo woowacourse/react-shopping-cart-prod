@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useFetch } from '../../hooks/useFetch';
+import { originState } from '../../store/origin';
 import productListState from '../../store/product';
 import { ProductItemType } from '../../types';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
@@ -12,10 +13,11 @@ const ProductList = () => {
   const [, setList] = useRecoilState(productListState);
 
   const { data, fetchApi, isLoading } = useFetch<ProductItemType[]>(setList);
+  const origin = useRecoilValue(originState);
   useEffect(() => {
-    fetchApi.get('/products');
+    fetchApi.get(`${origin}/products`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [origin]);
 
   return (
     <div className={styles.container}>

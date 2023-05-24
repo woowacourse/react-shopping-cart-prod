@@ -13,20 +13,20 @@ export const useFetch = <T>(
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState<fetchResult>(null);
   const [isFailure, setIsFailure] = useState<fetchResult>(null);
+  const tokenized = btoa('a@a.com:1234');
 
   const fetchData = async (url: string, options: RequestInit) => {
     let shouldExecuteFinally = true;
 
     try {
       const result = await fetch(url, options);
-      // console.log(await result.json());
 
       if (isSuccessHttpStatus(result.status) && stateSetter) {
         const data = await result.json();
 
         setData(data);
         if (await result.body) {
-          if (url === '/cart-items') {
+          if (url.split('/').includes('/cart-items')) {
             stateSetter(
               data.map((item: CartItemType) => {
                 return {
@@ -71,23 +71,40 @@ export const useFetch = <T>(
 
   const fetchApi = {
     get: (url: string) => {
-      fetchData(url, { method: 'GET' });
+      fetchData(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json', Authorization: `Basic ${tokenized}` },
+      });
     },
 
     post: (url: string, body: object) => {
-      fetchData(url, { method: 'POST', body: JSON.stringify(body) });
+      fetchData(url, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json', Authorization: `Basic ${tokenized}` },
+      });
     },
 
     patch: (url: string, body?: object) => {
-      fetchData(url, { method: 'PATCH', body: JSON.stringify(body) });
+      fetchData(url, {
+        method: 'PATCH',
+        body: JSON.stringify(body),
+        headers: { 'Content-Type': 'application/json', Authorization: `Basic ${tokenized}` },
+      });
     },
 
     put: (url: string) => {
-      fetchData(url, { method: 'PUT' });
+      fetchData(url, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', Authorization: `Basic ${tokenized}` },
+      });
     },
 
     delete: (url: string) => {
-      fetchData(url, { method: 'DELETE' });
+      fetchData(url, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', Authorization: `Basic ${tokenized}` },
+      });
     },
   };
 

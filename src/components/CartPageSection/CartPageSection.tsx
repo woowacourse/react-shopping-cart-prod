@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { useCartList } from '../../hooks/useCartList';
 import { useFetch } from '../../hooks/useFetch';
 import { cartListState } from '../../store/cart';
+import { originState } from '../../store/origin';
 import { CartItemType } from '../../types';
 import { priceFormatter } from '../../utils/formatter';
 import CartItem from '../CartItem/CartItem';
@@ -23,31 +24,28 @@ const CartPageSection = () => {
     resetCartCheckStatusToFalse,
     cartListCheckedLength,
   } = useCartList();
-
+  const origin = useRecoilValue(originState);
   const { fetchApi, isLoading, isSuccess, isFailure } = useFetch<CartItemType[]>(setCartItemList);
   useEffect(() => {
-    fetchApi.get('/cartlist');
+    fetchApi.get(`${origin}/cart-items`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [origin]);
 
   const checkedItemRemove = () => {
     setCartItemList(
       cartItem.filter((item) => {
         if (item.isChecked === true) {
-          fetchApi.delete(`/cart-item/${item.id}`);
+          fetchApi.delete(`${origin}/cart-items/${item.id}`);
           return false;
         }
 
         return true;
       })
     );
-
-    fetchApi.patch('/checked-cart-item-remove');
   };
 
   const selectedItemRemove = (itemId: number) => {
-    // fetchApi.delete(`/cart-item-remove?id=${itemId}`);
-    fetchApi.delete(`/cart-item/${itemId}`);
+    fetchApi.delete(`${origin}/cart-items/${itemId}`);
     setCartItemList(
       cartItem.filter((item: CartItemType) => {
         return item.id !== itemId;

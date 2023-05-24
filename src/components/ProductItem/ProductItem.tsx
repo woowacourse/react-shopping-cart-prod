@@ -5,6 +5,7 @@ import { AddIcon } from '../../assets';
 import { useFetch } from '../../hooks/useFetch';
 import { useModal } from '../../hooks/useModal';
 import { cartItemQuantityState, cartListState } from '../../store/cart';
+import { originState } from '../../store/origin';
 import { ProductItemType } from '../../types';
 import { priceFormatter } from '../../utils/formatter';
 import Modal from '../Modal/Modal';
@@ -22,10 +23,11 @@ const ProductItem = ({ information }: ProductItemProps) => {
   const { isModalOpen, handleModalOpen, handleModalClose, handleModalClosePress } = useModal();
   const [cartList, setCartList] = useRecoilState(cartListState);
   const { fetchApi, isSuccess, isFailure } = useFetch<ProductItemType[]>(setCartList);
+  const origin = useRecoilValue(originState);
 
   const handleCartAdd = () => {
     const compareProductId = information.id;
-    fetchApi.post('/cart-items', { itemId: compareProductId });
+    fetchApi.post(`${origin}/cart-items`, { productId: compareProductId });
 
     const isExistItem = cartList.find((item) => item.product.id === compareProductId);
 

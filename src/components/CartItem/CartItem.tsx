@@ -1,8 +1,9 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { TrashCan } from '../../assets';
 import { useFetch } from '../../hooks/useFetch';
 import { cartListState } from '../../store/cart';
+import { originState } from '../../store/origin';
 import { CartItemType, ProductItemType } from '../../types';
 import { priceFormatter } from '../../utils/formatter';
 import Checkbox from '../Checkbox/Checkbox';
@@ -28,9 +29,10 @@ const CartItem = ({
 }: CartItemProps) => {
   const [cartList, setCartList] = useRecoilState(cartListState);
   const { fetchApi } = useFetch<ProductItemType[]>(setCartList);
+  const origin = useRecoilValue(originState);
 
   const updateCartItemQuantity = (quantity: number) => {
-    fetchApi.patch(`/cart-items/${itemId}`, { quantity });
+    fetchApi.patch(`${origin}/cart-items/${itemId}`, { quantity });
 
     setCartList(
       cartList.map((item: CartItemType) => {

@@ -1,38 +1,38 @@
 import { atom, selectorFamily } from 'recoil';
 
-import { CART_LIST_LOCAL_STORAGE_KEY } from '../constants';
+// import { CART_LIST_LOCAL_STORAGE_KEY } from '../constants';
 import { CartItemType } from '../types';
 
 export const cartListState = atom<CartItemType[]>({
   key: 'cartList',
   default: [],
-  effects: [
-    ({ setSelf, onSet }) => {
-      const storeKey = CART_LIST_LOCAL_STORAGE_KEY;
-      const savedValue = localStorage.getItem(storeKey);
+  // effects: [
+  //   ({ setSelf, onSet }) => {
+  //     const storeKey = CART_LIST_LOCAL_STORAGE_KEY;
+  //     const savedValue = localStorage.getItem(storeKey);
 
-      if (savedValue !== null) {
-        setSelf(JSON.parse(savedValue));
-      }
+  //     if (savedValue !== null) {
+  //       setSelf(JSON.parse(savedValue));
+  //     }
 
-      onSet((newValue, _, isReset) => {
-        isReset
-          ? localStorage.removeItem(storeKey)
-          : localStorage.setItem(
-              storeKey,
-              JSON.stringify(
-                newValue.map((item) => {
-                  return {
-                    id: item.id,
-                    quantity: item.quantity,
-                    product: item.product,
-                  };
-                })
-              )
-            );
-      });
-    },
-  ],
+  // onSet((newValue, _, isReset) => {
+  //   isReset
+  //     ? localStorage.removeItem(storeKey)
+  //     : localStorage.setItem(
+  //         storeKey,
+  //         JSON.stringify(
+  //           newValue.map((item) => {
+  //             return {
+  //               id: item.id,
+  //               quantity: item.quantity,
+  //               product: item.product,
+  //             };
+  //           })
+  //         )
+  //       );
+  // });
+  // },
+  // ],
 });
 
 export const cartItemQuantityState = selectorFamily({
