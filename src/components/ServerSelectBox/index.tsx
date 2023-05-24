@@ -1,3 +1,3 @@
-import ServerSelectBox from './ServerSelectBox';
+import ServerSelectBox from "./ServerSelectBox";
 
 export default ServerSelectBox;

@@ -27,11 +27,11 @@ function CartList() {
   const switchAllCheckboxes = useSetRecoilState(switchAllCartCheckboxSelector);
 
   const removeCheckedCartItems = async () => {
-    if (confirm('정말로 삭제 하시겠습니까?')) {
+    if (confirm("정말로 삭제 하시겠습니까?")) {
       const targetIds = checkedCartList.map((cartList) => cartList.id);
-      await Promise.all(targetIds.map((cartId) =>
-        fetchDeleteCart(server, cartId)
-      ));
+      await Promise.all(
+        targetIds.map((cartId) => fetchDeleteCart(server, cartId))
+      );
       const newCartList = await fetchCartList(server);
       setCartList(newCartList);
     }

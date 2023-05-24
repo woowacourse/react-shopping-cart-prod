@@ -29,10 +29,10 @@ function Header() {
             <LogoImage src={titleLogo} />
           </LogoWrapper>
           <CartWrapper>
-            <div style={{ color: 'black' }}>현재 상태 : {server}</div>
+            <div style={{ color: "black" }}>현재 상태 : {server}</div>
             <ServerSelectBox />
             <div
-              style={{ display: 'flex', gap: '10px' }}
+              style={{ display: "flex", gap: "10px" }}
               onClick={() => navigate("/cart")}
             >
               <CartTitle>장바구니</CartTitle>

@@ -1,10 +1,5 @@
 import { atom, selector, selectorFamily } from "recoil";
-import {
-  CartItem,
-  ReceivedCartItem,
-} from "../types/types";
-import { fetchDeleteCart, fetchUpdateCart } from "../api/api.ts";
-import { serverState } from "./serverAtom.ts";
+import { CartItem, ReceivedCartItem } from "../types/types";
 
 export const cartState = atom<CartItem[]>({
   key: "cartState",
@@ -68,11 +63,11 @@ export const quantityByProductIdSelector = selectorFamily({
   key: "quantityByProductIdSelector",
   get:
     (productId: number) =>
-      ({ get }) => {
-        const cartList = get(cartState);
-        const targetCart = cartList.find((cart) => cart.product.id === productId);
-        return targetCart?.quantity ?? 0;
-      },
+    ({ get }) => {
+      const cartList = get(cartState);
+      const targetCart = cartList.find((cart) => cart.product.id === productId);
+      return targetCart?.quantity ?? 0;
+    },
 });
 
 export const switchCartCheckboxSelector = selector<number>({

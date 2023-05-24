@@ -30,7 +30,7 @@ function CartItem({ cart }: CartItemProps) {
   const server = useRecoilValue(serverState);
 
   const removeCartItem = async (cartId: number) => {
-    if (confirm('정말로 삭제 하시겠습니까?')) {
+    if (confirm("정말로 삭제 하시겠습니까?")) {
       await fetchDeleteCart(server, cartId);
       const newCartList = await fetchCartList(server);
       setCartList(newCartList);

@@ -7,12 +7,14 @@ import {
   QuantityControlButton,
   QuantityInput,
 } from "./CartController.style";
+import { cartState, quantityByProductIdSelector } from "../../recoil/cartAtoms";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  cartState,
-  quantityByProductIdSelector,
-} from "../../recoil/cartAtoms";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { fetchAddCart, fetchCartList, fetchDeleteCart, fetchUpdateCart } from "../../api/api";
+  fetchAddCart,
+  fetchCartList,
+  fetchDeleteCart,
+  fetchUpdateCart,
+} from "../../api/api";
 import { serverState } from "../../recoil/serverAtom";
 
 interface CartControllerProps {
@@ -24,7 +26,9 @@ function CartController({ product }: CartControllerProps) {
   const server = useRecoilValue(serverState);
   const [cartList, setCartList] = useRecoilState(cartState);
 
-  const targetCartItem = cartList.find(cartItem => cartItem.product.id === product.id);
+  const targetCartItem = cartList.find(
+    (cartItem) => cartItem.product.id === product.id
+  );
 
   const addCartItem = async (productId: number) => {
     await fetchAddCart(server, productId);
@@ -36,11 +40,10 @@ function CartController({ product }: CartControllerProps) {
     if (targetCartItem) {
       const cartId = targetCartItem.id;
       if (newQuantity === 0) {
-        if (confirm('정말로 삭제 하시겠습니까?')) {
+        if (confirm("정말로 삭제 하시겠습니까?")) {
           await fetchDeleteCart(server, cartId);
         }
-      }
-      else {
+      } else {
         await fetchUpdateCart(server, cartId, newQuantity);
       }
       const newCartList = await fetchCartList(server);

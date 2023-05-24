@@ -23,7 +23,6 @@ function ServerSelectBox() {
     loadCartList();
   }, [server]);
 
-
   return (
     <Select onChange={onChangeServer}>
       <option>테스트</option>
