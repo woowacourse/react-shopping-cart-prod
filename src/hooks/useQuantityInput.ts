@@ -42,9 +42,9 @@ const useQuantityInput = (cartItemId: number) => {
 
   const setInputWithRequest = async (quantity: number) => {
     if (quantity === 0) {
-      deleteCartItem();
+      await deleteCartItem();
     } else {
-      patchCartItemQuantity(quantity);
+      await patchCartItemQuantity(quantity);
     }
 
     setInput(quantity.toString());
