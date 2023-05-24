@@ -1,12 +1,20 @@
 import styled from 'styled-components';
 
-import CartIcon from '../../assets/CartIcon';
-import { useRecoilValue } from 'recoil';
-import { totalCartProductSelect } from '../../recoil/cartProductData';
 import { Link } from 'react-router-dom';
+import CartIcon from '../../assets/CartIcon';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { totalCartProductSelect } from '../../recoil/cartProductData';
+import { servers } from '../../constants/server';
+import { hostNameAtom } from '../../recoil/hostData';
+import { HostNameType } from '../../types/server';
 
 const Header = () => {
   const totalCartProduct = useRecoilValue(totalCartProductSelect);
+  const [hostName, setHostName] = useRecoilState(hostNameAtom);
+
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setHostName(e.target.value as HostNameType);
+  };
 
   return (
     <HeaderContainer>
@@ -18,10 +26,10 @@ const Header = () => {
           </LogoContainer>
         </Link>
         <ControlContainer>
-          <SelectBox>
-            <option>포비</option>
-            <option>브라운</option>
-            <option>브리</option>
+          <SelectBox onChange={handleSelect}>
+            {Object.keys(servers).map((server) => (
+              <option>{server}</option>
+            ))}
           </SelectBox>
           <Link to='/cart'>
             <MoveCartPageBtn>
@@ -77,7 +85,10 @@ const ControlContainer = styled.div`
   justify-content: end;
   gap: 40px;
 `;
-const SelectBox = styled.select``;
+
+const SelectBox = styled.select`
+  padding: 0 5px;
+`;
 
 const MoveCartPageBtn = styled.button`
   display: flex;
