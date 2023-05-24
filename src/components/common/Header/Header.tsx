@@ -37,14 +37,9 @@ const Header = () => {
         <Title>SHOP</Title>
       </Logo>
       <RightContainer>
-        <select onChange={handleServerNameSelectChange}>
+        <select onChange={handleServerNameSelectChange} value={serverName}>
           {Object.keys(BASE_URL).map((serverNameOption) => (
-            <option
-              key={serverNameOption}
-              selected={serverNameOption === serverName}
-            >
-              {serverNameOption}
-            </option>
+            <option key={serverNameOption}>{serverNameOption}</option>
           ))}
         </select>
         <CartButton onClick={handleCartButtonClick}>
