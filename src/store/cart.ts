@@ -40,19 +40,21 @@ const cartListItemCountState = selector<number>({
 const cartItemQuantityState = selectorFamily<number, number>({
   key: 'cartItemQuantity',
   get:
-    (cartId) =>
+    (cartItemId) =>
     ({ get }) => {
       const cartList = get(cartListState);
 
-      return cartList.find((cartItem) => cartItem.id === cartId)?.quantity ?? 0;
+      return cartList.find((cartItem) => cartItem.id === cartItemId)?.quantity ?? 0;
     },
   set:
-    (cartId) =>
+    (cartItemId) =>
     ({ set }, quantity) => {
       if (!quantity || quantity instanceof DefaultValue) return;
 
       set(cartListState, (prevCartList) => {
-        return changeCartItemQuantity(prevCartList, cartId, quantity)!;
+        const updatedCartList = changeCartItemQuantity(prevCartList, cartItemId, quantity);
+
+        return updatedCartList ?? prevCartList;
       });
     },
 });
