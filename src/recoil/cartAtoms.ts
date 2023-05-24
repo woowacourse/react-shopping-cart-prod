@@ -121,29 +121,6 @@ export const updateCartItemQuantitySelector = selectorFamily<number, number>({
       },
 });
 
-export const removeCartItemsSelector = selector<undefined>({
-  key: "removeCartItemsSelector",
-  get: () => {
-    // 오류 방지를 위해 아무 값이나 리턴
-    return undefined;
-  },
-  set: ({ get, set }) => {
-    const cartList = get(cartState);
-    const checkedCartList = get(checkedCartSelector);
-    const server = get(serverState);
-    if (confirm("정말로 삭제하시겠습니까?")) {
-      const targetIds = checkedCartList.map((cartList) => cartList.id);
-      const removedCartList = cartList.filter(
-        (cart) => !targetIds.includes(cart.id)
-      );
-      set(cartState, removedCartList);
-      targetIds.forEach((id) => {
-        fetchDeleteCart(server, id);
-      });
-    }
-  },
-});
-
 export const switchCartCheckboxSelector = selector<number>({
   key: "switchCartCheckboxSelector",
   get: () => {
