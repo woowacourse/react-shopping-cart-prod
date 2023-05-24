@@ -3,7 +3,11 @@ import Image from '../../common/Image/Image';
 import { formatPrice } from '../../../utils/formatPrice';
 import type { CartItem } from '../../../types/product';
 
-const OrderListItem = (item: CartItem) => {
+interface OrderListItemProps {
+  item: CartItem;
+}
+
+const OrderListItem = ({ item }: OrderListItemProps) => {
   const { quantity, product } = item;
   const { name, price, imageUrl } = product;
   const totalPrice = price * quantity;
@@ -26,6 +30,7 @@ const Container = styled.li`
   align-items: center;
   height: 220px;
   column-gap: 33px;
+  padding: 0 26px;
 `;
 
 const Inner = styled.div`
