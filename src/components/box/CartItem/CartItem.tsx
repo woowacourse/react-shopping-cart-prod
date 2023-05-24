@@ -47,12 +47,12 @@ const CartItem = ({ cart }: { cart: CartType }) => {
     setCheck(true);
   };
 
-  useEffect(() => {
-    const mutateCartItem = async () => {
-      changeCartQuantityAPI(cart.id, { quantity: count });
-    };
-    mutateCartItem();
-  }, [count]);
+  const changeQuantity = (value: number) => {
+    if (value !== cart.quantity) {
+      changeCartQuantityAPI(cart.id, { quantity: value });
+      setCount(value);
+    }
+  };
 
   useEffect(() => {
     const existItemIndex = checkCartList.findIndex((cartId) => cartId === cart.id);
@@ -76,13 +76,15 @@ const CartItem = ({ cart }: { cart: CartType }) => {
             </Text>
             <TrashCanIcon
               style={{ cursor: 'pointer' }}
-              onClick={() => openModal({ callback: deleteCartItem })}
+              onClick={() =>
+                openModal({ callback: deleteCartItem, title: '정말 삭제하시겠습니까?' })
+              }
             />
           </CartInfoHead>
           <InputStepper
             size="big"
-            quantity={count}
-            setQuantity={(value: number) => setCount(value)}
+            quantity={cart.quantity}
+            setQuantity={changeQuantity}
             minNumber={1}
           />
           <CardInfoFoot>
