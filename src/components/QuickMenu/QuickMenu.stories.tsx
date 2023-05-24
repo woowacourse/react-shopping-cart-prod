@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import QuickMenu from '.';
 
 const meta: Meta<typeof QuickMenu> = {
-  title: 'QuantityController',
+  title: 'QuickMenu',
   component: QuickMenu,
 };
 
