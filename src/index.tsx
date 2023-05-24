@@ -7,6 +7,7 @@ import GlobalStyle from './GlobalStyle';
 import ProductPage from './components/pages/ProductPage/ProductPage';
 import CartPage from './components/pages/CartPage/CartPage';
 import ToastList from './components/common/Toast/ToastList';
+import ErrorPage from './components/pages/ErrorPage/ErrorPage';
 
 // const main = async () => {
 //   if (window.location.pathname === '/react-shopping-cart-prod') {
@@ -31,6 +32,7 @@ const router = createHashRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '',
