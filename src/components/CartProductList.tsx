@@ -6,7 +6,7 @@ import { Counter } from "./Counter";
 import { localProductsSelector } from "../recoil/selector";
 import { useCheckBox } from "../hooks/useCheckBox";
 import { deleteCartItem } from "../api";
-import { selectedProductsState } from "../recoil/atom";
+import { selectedProductsState, serverOwnerState } from "../recoil/atom";
 import { useFetch } from "../hooks/useFetch";
 
 export const CartProductList = () => {
@@ -23,10 +23,11 @@ export const CartProductList = () => {
     handleCheckBox,
     handleAllCheckBox,
   } = useCheckBox();
+  const serverOwner = useRecoilValue(serverOwnerState);
 
   const handleDeleteButtonClicked = () => {
     selectedProducts.forEach((product) => {
-      deleteCartItem(product.id);
+      deleteCartItem(product.id, serverOwner);
     });
 
     removeCheckedArray();
@@ -34,7 +35,7 @@ export const CartProductList = () => {
   };
 
   const handleDelete = (cartItemId: number, index: number) => async () => {
-    await deleteCartItem(cartItemId);
+    await deleteCartItem(cartItemId, serverOwner);
 
     removeTargetIndex(index);
     fetchNewProducts();

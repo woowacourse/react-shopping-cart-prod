@@ -39,5 +39,5 @@ export const selectedProductsState = atom<LocalProductType[]>({
 
 export const serverOwnerState = atom<string>({
   key: "serverOwner",
-  default: "루카",
+  default: "애쉬",
 });

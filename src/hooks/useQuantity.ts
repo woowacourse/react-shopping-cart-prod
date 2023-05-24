@@ -29,14 +29,18 @@ export const useQuantity = (productId: number) => {
 
     try {
       if (newQuantity === 0) {
-        const response = await deleteCartItem(currentLocalProduct.cartItemId);
+        const response = await deleteCartItem(
+          currentLocalProduct.cartItemId,
+          serverOwner
+        );
         if (!response.ok) {
           throw new Error(response.status.toString());
         }
       } else {
         const response = await changeQuantity(
           currentLocalProduct.cartItemId,
-          Number(newQuantity)
+          Number(newQuantity),
+          serverOwner
         );
         if (!response.ok) {
           throw new Error(response.status.toString());

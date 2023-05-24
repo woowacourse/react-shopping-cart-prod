@@ -11,6 +11,7 @@ import { Counter } from "./Counter";
 import { MIN_QUANTITY } from "../constants";
 import { addCartItem } from "../api";
 import { makeLocalProducts } from "../utils/domain";
+import { useState } from "react";
 
 export const ProductList = () => {
   const products = useRecoilValue(localProductsState);
@@ -28,12 +29,18 @@ const Product = ({ id, name, price, imageUrl, quantity }: LocalProductType) => {
   const serverOwner = useRecoilValue(serverOwnerState);
   const products = useRecoilValue(productsState);
   const setLocalProducts = useSetRecoilState(localProductsState);
+  const [isError, setIsError] = useState(false);
 
   const handleCartClicked = async () => {
-    await addCartItem(id);
+    try {
+      await addCartItem(id, serverOwner);
 
-    const newProducts = await makeLocalProducts(products, serverOwner);
-    setLocalProducts(newProducts);
+      const newProducts = await makeLocalProducts(products, serverOwner);
+      setLocalProducts(newProducts);
+    } catch (error) {
+      setIsError(true);
+      console.log(error);
+    }
   };
 
   return (
