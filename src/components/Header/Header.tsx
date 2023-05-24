@@ -1,16 +1,26 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import CartIcon from '../../assets/cart-icon.svg';
 import Logo from '../../assets/logo.png';
+import { useFetch } from '../../hooks/useFetch';
 import { cartListState } from '../../store/cart';
+import { originState } from '../../store/origin';
+import { CartItemType } from '../../types';
 import OriginSelector from '../OriginSelector/OriginSelector';
 import styles from './style.module.css';
 
 const Header = () => {
   const navigate = useNavigate();
-  const cartItemList = useRecoilValue(cartListState);
+  const [cartItemList, setCartItemList] = useRecoilState(cartListState);
+  const origin = useRecoilValue(originState);
+
+  const { fetchApi } = useFetch<CartItemType[]>(setCartItemList);
+  useEffect(() => {
+    fetchApi.get(`${origin}/cart-items`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [origin]);
 
   const navigateToMainPage = useCallback(() => {
     navigate('/');
