@@ -2,12 +2,12 @@ import { ChangeEventHandler } from 'react';
 import { styled } from 'styled-components';
 
 interface CheckboxProps {
-  id?: string;
+  id: string;
   checked?: boolean;
   onChange?: (value: number) => void;
 }
 
-const Checkbox = ({ id = '', checked = false, onChange }: CheckboxProps) => {
+const Checkbox = ({ id, checked = false, onChange }: CheckboxProps) => {
   const handleChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     onChange?.(Number(e.target.id));
   };

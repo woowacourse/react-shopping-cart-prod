@@ -26,6 +26,7 @@ const CartPage = () => {
         <CartList>
           <AllCheckBoxContainer>
             <Checkbox
+              id="all-checkbox"
               checked={isAllChecked}
               onChange={handleAllCheckboxChange}
             />
