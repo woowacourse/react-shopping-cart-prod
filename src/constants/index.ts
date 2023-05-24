@@ -32,10 +32,11 @@ export const FETCH_METHOD = {
   PATCH: 'PATCH',
 } as const;
 
-// http://43.200.8.82:8080/{path}
+// http://43.200.8.82:8080 - 베베
+// http://3.37.123.69:8080 - 에단
 export const FETCH_URL = {
-  products: '/api/products',
-  cartItems: '/api/cart-item',
+  products: 'http://3.37.123.69:8080/products',
+  cartItems: 'http://3.37.123.69:8080/cart-items',
 };
 
 export const DELIVERY_FEE = 3000;

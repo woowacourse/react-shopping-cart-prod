@@ -47,7 +47,8 @@ function QuantityController({
   };
 
   const addCartItem = () => {
-    updateCartItem(FETCH_URL.cartItems, FETCH_METHOD.POST, JSON.stringify({ productId: product?.id }));
+    if (!product) return;
+    updateCartItem(FETCH_URL.cartItems, FETCH_METHOD.POST, JSON.stringify({ productId: product.id }));
   };
 
   const changeQuantityValue = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -3,10 +3,29 @@ import { FetchArgs } from '@Types/index';
 import { ERROR_MESSAGE } from '@Constants/index';
 
 export const fetchData = async <T>({ url, method, body }: FetchArgs): Promise<T> => {
-  const response = await fetch(url, {
-    method,
-    body,
-  });
+  const username = 'a@a.com';
+  const password = '1234';
+
+  const base64 = btoa(username + ':' + password);
+
+  let response;
+  if (!body) {
+    response = await fetch(url, {
+      method,
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
+  } else {
+    response = await fetch(url, {
+      method,
+      body,
+      headers: {
+        Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  }
 
   if (response.status === 400) throw new Error(ERROR_MESSAGE[400]);
   if (response.status === 401) throw new Error(ERROR_MESSAGE[401]);
