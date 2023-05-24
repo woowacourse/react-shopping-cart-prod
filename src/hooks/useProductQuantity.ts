@@ -12,13 +12,21 @@ const useProductQuantity = (id: number, quantity: number) => {
   const { patchData } = cartProductApis(serverName, '/cart-items');
 
   const addCount = () => {
-    setCartProducts((prev) => updateTargetQuantity(prev, id, quantity + 1));
-    patchData(id, quantity + 1);
+    try {
+      patchData(id, quantity + 1);
+      setCartProducts((prev) => updateTargetQuantity(prev, id, quantity + 1));
+    } catch (error) {
+      // 에러 처리
+    }
   };
 
   const subtractCount = () => {
-    setCartProducts((prev) => updateTargetQuantity(prev, id, quantity - 1));
-    patchData(id, quantity - 1);
+    try {
+      patchData(id, quantity - 1);
+      setCartProducts((prev) => updateTargetQuantity(prev, id, quantity - 1));
+    } catch (error) {
+      // 에러 처리
+    }
   };
 
   return { addCount, subtractCount };

@@ -42,7 +42,11 @@ const useMultipleChecked = () => {
     setChecked((prev) => filterCartProductChecked(prev, false));
 
     checked.forEach((item) => {
-      if (item.isChecked) deleteData(item.id);
+      try {
+        if (item.isChecked) deleteData(item.id);
+      } catch (error) {
+        // 에러 처리
+      }
     });
   };
 

@@ -3,7 +3,7 @@ import type { CartProduct } from '../types/product';
 import { handleResponseError } from './utils';
 
 const cartProductApis = (serverName: ServerKey, endpoint: string) => {
-  const getUrl = (param?: string) => {
+  const getUrl = (param?: string | number) => {
     const baseUrl = SERVER[serverName].url + endpoint;
 
     return param ? `${baseUrl}/${param}` : baseUrl;
@@ -37,11 +37,11 @@ const cartProductApis = (serverName: ServerKey, endpoint: string) => {
 
     await handleResponseError(response);
 
-    return response.headers.get('Location');
+    return response.headers.get('location');
   };
 
   const patchData = async (id: number, quantity: number) => {
-    const response = await fetch(getUrl(id.toString()), {
+    const response = await fetch(getUrl(id), {
       method: 'PATCH',
       headers,
       body: JSON.stringify({ quantity }),
@@ -51,7 +51,7 @@ const cartProductApis = (serverName: ServerKey, endpoint: string) => {
   };
 
   const deleteData = async (id: number) => {
-    const response = await fetch(getUrl(id.toString()), {
+    const response = await fetch(getUrl(id), {
       method: 'DELETE',
       headers,
     });
