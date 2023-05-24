@@ -32,7 +32,7 @@ const CartList = () => {
     <S.CartListContainer>
       {cartList.map((cartItem) => (
         <Fragment key={cartItem.id}>
-          <CartItem quantity={cartItem.quantity} {...cartItem.product} />
+          <CartItem cartItemId={cartItem.id} quantity={cartItem.quantity} {...cartItem.product} />
           <Divider />
         </Fragment>
       ))}

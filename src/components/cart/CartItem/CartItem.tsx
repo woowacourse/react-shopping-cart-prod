@@ -14,24 +14,32 @@ import CartItemDelete from '../CartItemDelete/CartItemDelete';
 import * as S from './CartItem.styles';
 
 interface CartItemProps extends ProductItemData {
+  cartItemId: number;
   quantity: number;
 }
 
-const CartItem = ({ id, quantity, name, price, imageUrl }: CartItemProps) => {
+const CartItem = ({
+  cartItemId,
+  id: productId,
+  quantity,
+  name,
+  price,
+  imageUrl,
+}: CartItemProps) => {
   const { updateItemQuantity, removeItem } = useCart();
-  const { isChecked, toggleItemCheckbox } = useCheckbox(CART_LIST_CHECKBOX_KEY, id);
+  const { isChecked, toggleItemCheckbox } = useCheckbox(CART_LIST_CHECKBOX_KEY, productId);
   const { isModalOpen, handleModalOpen, handleModalClose } = useModal();
 
   const handleQuantityChange = useCallback(
     (quantity: number) => {
-      updateItemQuantity({ productId: id, quantity });
+      updateItemQuantity({ cartItemId, quantity });
     },
-    [updateItemQuantity, id]
+    [updateItemQuantity, cartItemId]
   );
 
   const handleRemoval = useCallback(() => {
-    removeItem(id);
-  }, [id, removeItem]);
+    removeItem(cartItemId);
+  }, [cartItemId, removeItem]);
 
   return (
     <S.CartItemContainer>
