@@ -1,3 +1,23 @@
+import { getFromLocalStorage } from '../utils/localStorage';
+
+const USERNAME = 'a@a.com';
+const PASSWORD = '1234';
+const BASE64 = btoa(USERNAME + ':' + PASSWORD);
+
+const MEMBER = ['프론트', '아코', '주디', '저문'] as const;
+
+const DEFAULT_MEMBER = MEMBER[0];
+
+const API_BASE_URL_LIST = {
+  [MEMBER[0]]: process.env.REACT_APP_JD_API_BASE_URL,
+  [MEMBER[1]]: process.env.REACT_APP_AK_API_BASE_URL,
+  [MEMBER[2]]: process.env.REACT_APP_JD_API_BASE_URL,
+  [MEMBER[3]]: process.env.REACT_APP_JM_API_BASE_URL,
+} as const;
+
+const API_BASE_URL =
+  getFromLocalStorage<string>('API_BASE_URL') ?? API_BASE_URL_LIST[DEFAULT_MEMBER];
+
 const API_ENDPOINT = {
   PRODUCTS: '/api/products',
   CART_ITEMS: '/api/cart-items',
@@ -7,6 +27,11 @@ const FETCH_DEFAULT_OPTION = {
   headers: {
     Accept: 'application/json',
   },
+} as const;
+
+const CART_FETCH_OPTION_HEADERS = {
+  'Content-Type': 'application/json',
+  Authorization: `Basic ${BASE64}`,
 } as const;
 
 const HTTP_STATUS_CODE = {
@@ -35,4 +60,13 @@ const HTTP_ERROR_MESSAGE = {
   },
 } as const;
 
-export { API_ENDPOINT, FETCH_DEFAULT_OPTION, HTTP_STATUS_CODE, HTTP_ERROR_MESSAGE };
+export {
+  BASE64,
+  API_BASE_URL_LIST,
+  API_BASE_URL,
+  API_ENDPOINT,
+  FETCH_DEFAULT_OPTION,
+  CART_FETCH_OPTION_HEADERS,
+  HTTP_STATUS_CODE,
+  HTTP_ERROR_MESSAGE,
+};
