@@ -13,9 +13,13 @@ const ProductItem = ({ product }: { product: Product }) => {
   const cartItemData = data && data.find((cart) => cart.product.id === product.id);
   const cartId = cartItemData && cartItemData.id;
 
-  const [quantity, setQuantity] = useState<number>(
-    (data && data.find((data) => data.product.id === product.id)?.quantity) || 0,
-  );
+  const [quantity, setQuantity] = useState<number>(0);
+
+  useEffect(() => {
+    if (cartItemData) {
+      setQuantity(cartItemData.quantity);
+    }
+  }, [cartItemData]);
 
   useEffect(() => {
     const mutateCartItem = async () => {
