@@ -35,8 +35,8 @@ export const FETCH_METHOD = {
 // http://43.200.8.82:8080 - 베베
 // http://3.37.123.69:8080 - 에단
 export const FETCH_URL = {
-  products: 'http://3.37.123.69:8080/products',
-  cartItems: 'http://3.37.123.69:8080/cart-items',
+  products: '/products',
+  cartItems: '/cart-items',
 };
 
 export const DELIVERY_FEE = 3000;
@@ -52,16 +52,16 @@ export const ERROR_MESSAGE = {
 
 export const SERVERS = {
   베베: {
-    apiUrl: '',
-    email: '',
-    password: '',
+    apiUrl: 'http://43.200.8.82:8080',
+    email: 'a@a.com',
+    password: '1234',
     avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04M28KU1PU-ff7ca3cddc88-512',
   },
 
   에단: {
-    apiUrl: '',
-    email: '',
-    password: '',
+    apiUrl: 'http://3.37.123.69:8080',
+    email: 'a@a.com',
+    password: '1234',
     avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04METH8VKK-f128d33fbf53-512',
   },
 } as const;

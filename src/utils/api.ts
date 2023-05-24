@@ -1,23 +1,23 @@
 import { FetchArgs } from '@Types/index';
 
-import { ERROR_MESSAGE } from '@Constants/index';
+import { ERROR_MESSAGE, SERVERS } from '@Constants/index';
 
-export const fetchData = async <T>({ url, method, body }: FetchArgs): Promise<T> => {
-  const username = 'a@a.com';
-  const password = '1234';
+export const fetchData = async <T>({ url, method, body, server }: FetchArgs): Promise<T> => {
+  const email = SERVERS[server].email;
+  const password = SERVERS[server].password;
 
-  const base64 = btoa(username + ':' + password);
+  const base64 = btoa(email + ':' + password);
 
   let response;
   if (!body) {
-    response = await fetch(url, {
+    response = await fetch(`${SERVERS[server].apiUrl}${url}`, {
       method,
       headers: {
         Authorization: `Basic ${base64}`,
       },
     });
   } else {
-    response = await fetch(url, {
+    response = await fetch(`${SERVERS[server].apiUrl}${url}`, {
       method,
       body,
       headers: {

@@ -1,4 +1,4 @@
-import { BOX_SIZE, FETCH_METHOD } from '@Constants/index';
+import { BOX_SIZE, FETCH_METHOD, SERVERS } from '@Constants/index';
 
 export type Product = {
   id: number;
@@ -22,6 +22,9 @@ export type FetchArgs = {
   url: string;
   method: fetchMethod;
   body?: BodyInit | null | undefined;
+  server: Servers;
 };
 
 export type BoxSize = keyof typeof BOX_SIZE;
+
+export type Servers = keyof typeof SERVERS;

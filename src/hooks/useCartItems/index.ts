@@ -1,17 +1,19 @@
 import { useState } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { CartItemType, UpdateCartItem } from '@Types/index';
 
 import { fetchData } from '@Utils/api';
 
 import cartItemsState from '@Atoms/cartItemsState';
+import serverState from '@Atoms/serverState';
 
 import { FETCH_METHOD, FETCH_URL } from '@Constants/index';
 
 const useCartItems = () => {
   const [cartItems, setCartItems] = useRecoilState<CartItemType[]>(cartItemsState);
   const [updateStats, setUpdateStats] = useState<'success' | 'loading'>('success');
+  const server = useRecoilValue(serverState);
 
   const isEmpty = cartItems ? !cartItems.length : 0;
 
@@ -25,10 +27,10 @@ const useCartItems = () => {
   const updateCartItem: UpdateCartItem = async (url, method, body) => {
     if (updateStats === 'loading') return;
 
-    await fetchData<{ ok: boolean }>({ url, method, body });
+    await fetchData<{ ok: boolean }>({ url, method, body, server });
 
     setUpdateStats('loading');
-    const data = await fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET });
+    const data = await fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET, server });
 
     const newCartItems = data.map((cartItem) => {
       return {
