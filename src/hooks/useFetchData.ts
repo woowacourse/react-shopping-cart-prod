@@ -1,16 +1,14 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { fetchApi } from '../api/fetchApi';
 
-type SetDataType<T> = Dispatch<SetStateAction<T>>;
-
-export const useFetchData = <T>(setData?: SetDataType<T>) => {
+export const useFetchData = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async (url: string, body: RequestInit) => {
     try {
       const data = await fetchApi(url, body);
 
-      if (setData) setData(data);
+      return data;
     } catch (error) {
       throw error;
     } finally {
@@ -19,9 +17,10 @@ export const useFetchData = <T>(setData?: SetDataType<T>) => {
   };
 
   const api = {
-    get: (url: string) => {
+    get: (url: string, headers?: HeadersInit) => {
       return fetchData(url, {
         method: 'GET',
+        headers,
       });
     },
     post: <T>(url: string, body: T) => {
