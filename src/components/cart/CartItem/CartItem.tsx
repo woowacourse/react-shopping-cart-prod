@@ -31,8 +31,9 @@ const CartItem = ({ cartItemId, quantity, name, price, imageUrl }: CartItemProps
   );
 
   const handleRemoval = useCallback(() => {
+    handleModalClose();
     removeItem(cartItemId);
-  }, [cartItemId, removeItem]);
+  }, [cartItemId, handleModalClose, removeItem]);
 
   return (
     <S.CartItemContainer>
