@@ -9,7 +9,6 @@ import {
 } from "./CartController.style";
 import {
   cartState,
-  // addCartItemSelector,
   quantityByProductIdSelector,
   updateCartItemQuantitySelector,
 } from "../../recoil/cartAtoms";
