@@ -2,25 +2,26 @@ import styled from 'styled-components';
 
 import ArrowUpIcon from '../../assets/ArrowUpIcon';
 import ArrowDownIcon from '../../assets/ArrowDownIcon';
+import useProductQuantity from '../../hooks/useProductQuantity';
 
 type AmountCounterSizeType = 'small' | 'medium';
 type AmountCounterStyle = Pick<AmountCounterProps, 'variant'>;
 
 interface AmountCounterProps {
   variant: AmountCounterSizeType;
+  cartItemId: number;
   count: number;
   minCount?: number;
-  addCount: () => void;
-  subtractCount: () => void;
 }
 
 const AmountCounter = ({
   variant,
+  cartItemId,
   count,
   minCount = 0,
-  addCount,
-  subtractCount,
 }: AmountCounterProps) => {
+  const { addCount, subtractCount } = useProductQuantity(cartItemId, count);
+
   return (
     <InputGroup variant={variant}>
       <CounterInput type='number' value={count} variant={variant} readOnly />

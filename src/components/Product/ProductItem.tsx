@@ -5,7 +5,6 @@ import Image from '../Common/Image';
 
 import CartIcon from '../../assets/CartIcon';
 import useCartProducts from '../../hooks/useCartProducts';
-import useProductQuantity from '../../hooks/useProductQuantity';
 import type { Product } from '../../types/product';
 
 interface ProductItemProps {
@@ -15,10 +14,6 @@ interface ProductItemProps {
 const ProductItem = ({ product }: ProductItemProps) => {
   const { imageUrl, name, price } = product;
   const { targetProduct, addProduct } = useCartProducts(product);
-  const { addCount, subtractCount } = useProductQuantity(
-    targetProduct?.id ?? Number('a'),
-    targetProduct?.quantity ?? 0
-  );
 
   return (
     <ProductContainer>
@@ -35,8 +30,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
         ) : (
           <AmountCounter
             count={targetProduct.quantity}
-            addCount={addCount}
-            subtractCount={subtractCount}
+            cartItemId={targetProduct.id}
             variant='small'
           />
         )}
