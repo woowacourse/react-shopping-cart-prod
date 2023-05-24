@@ -2,9 +2,7 @@ import { CartItem } from '../types/cart';
 import { waitFor, WaitForOptions } from '../utils/waitFor';
 import { authFetchQuery, FetchQueryRes } from './api';
 
-export interface FetchCartRes {
-  cart: CartItem[];
-}
+export type FetchCartRes = CartItem[];
 
 export const fetchCart = (options?: WaitForOptions<FetchCartRes>) => {
   const promise = authFetchQuery.get<FetchCartRes>(`/cart-items`);
