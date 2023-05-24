@@ -59,9 +59,9 @@ const Container = styled.div<{
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px 0;
+  padding: 16px 16px;
   border-radius: 4px;
-  width: 250px;
+  min-width: 50px;
 
   ${({ $isActive }) =>
     $isActive
