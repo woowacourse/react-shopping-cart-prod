@@ -25,9 +25,3 @@ export const ONE_ITEM_IN_CART = 1;
 export const MAX_NUMBER_LENGTH = 2;
 
 export const DELIVERY_FEE = 3000;
-
-export const SERVERS: Readonly<Record<string, string>> = {
-  준팍: 'http://54.180.95.7:8080',
-  우르: 'http://43.200.172.73:8080',
-  도이: 'http://54.180.105.131:8080',
-};

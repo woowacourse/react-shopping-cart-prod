@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { SERVERS } from '../constants';
+import { SERVERS } from '../constants/url';
 import { serverState } from '../recoil';
 
 const ServerSelector = () => {

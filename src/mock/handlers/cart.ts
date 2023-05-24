@@ -19,10 +19,7 @@ export const cartHandlers = [
     const ItemsInCart = getDataFromLocalStorage(KEY_CART);
     const cart: CartItem[] = ItemsInCart ? JSON.parse(ItemsInCart) : [];
 
-    return res(
-      ctx.status(201),
-      ctx.set('Location', `/cart-items/${cart.at(-1)?.id}`)
-    );
+    return res(ctx.status(201), ctx.set('Location', `${CART_URL}/${cart.at(-1)?.id}`));
   }),
 
   // 장바구니 아이템 수량 변경
@@ -30,8 +27,7 @@ export const cartHandlers = [
     const cartItemId = Number(req.params.id);
     const cart = JSON.parse(getDataFromLocalStorage(KEY_CART));
 
-    const isInCart = (id: number) =>
-      cart.some((cartItem: CartItem) => cartItem.product.id === id);
+    const isInCart = (id: number) => cart.some((cartItem: CartItem) => cartItem.product.id === id);
 
     const productExists = isInCart(cartItemId);
     if (!productExists) {

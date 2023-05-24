@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import { PRODUCT_LIST_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
 import { productListState, serverState } from '../../recoil';
 import { Product } from '../../types';
@@ -13,7 +14,7 @@ const ProductList = () => {
   const { api, isLoading } = useFetchData<Product[]>(setProductList);
 
   useEffect(() => {
-    api.get(`${server}/products`);
+    api.get(`${server}${PRODUCT_LIST_URL}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
