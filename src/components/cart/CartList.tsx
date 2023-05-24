@@ -11,7 +11,7 @@ import PriceWrapper from './PriceWrapper';
 import { LoadingSpinner } from '../@common/LoadingSpinner';
 import { CART_BASE_URL } from '../../constants/url';
 import { styled } from 'styled-components';
-import { serverState } from '../../store/ServerSelector';
+import { serverState } from '../../store/ServerState';
 
 const CartList = () => {
   const [cart, setCart] = useRecoilState(cartState);

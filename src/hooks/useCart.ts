@@ -4,7 +4,7 @@ import { ChangeEvent, MouseEvent, useState } from 'react';
 import { removeProductItemFromCartSelector, totalPriceSelector } from '../store/CartSelector';
 import { CART_BASE_URL } from '../constants/url';
 import { useFetchData } from './useFetchData';
-import { serverState } from '../store/ServerSelector';
+import { serverState } from '../store/ServerState';
 
 export const useCart = () => {
   const cart = useRecoilValue(cartState);

@@ -7,7 +7,7 @@ import { PRODUCT_BASE_URL } from '../../constants/url';
 import { productListState } from '../../store/ProductListState';
 import { useEffect } from 'react';
 import Skeleton from './Skeleton';
-import { serverState } from '../../store/ServerSelector';
+import { serverState } from '../../store/ServerState';
 
 const ProductList = () => {
   const [productList, setProductList] = useRecoilState<Product[]>(productListState);

@@ -10,7 +10,7 @@ import {
 import { validateQuantityInput } from '../utils/validateQuantityInput';
 import { CART_BASE_URL } from '../constants/url';
 import { useFetchData } from './useFetchData';
-import { serverState } from '../store/ServerSelector';
+import { serverState } from '../store/ServerState';
 
 export const useProduct = (id: number) => {
   const newQuantity = useRecoilValue(updateCartSelector({ id }));
