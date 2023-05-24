@@ -4,14 +4,8 @@ import { Product } from '@Types/index';
 
 import useCartItems from '@Hooks/useCartItems';
 
-import {
-  ALERT_MESSAGE,
-  FETCH_METHOD,
-  FETCH_URL,
-  QUANTITY_CONTROL_BUTTON,
-  QUANTITY_CONTROL_UNIT,
-  SHOPPING_QUANTITY,
-} from '@Constants/index';
+import { ALERT_MESSAGE, QUANTITY_CONTROL_BUTTON, QUANTITY_CONTROL_UNIT, SHOPPING_QUANTITY } from '@Constants/index';
+import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
 import ShoppingCart from '@Asset/ShoppingCart.png';
 

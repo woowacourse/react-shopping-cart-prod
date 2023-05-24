@@ -4,7 +4,7 @@ import { CartItemType } from '@Types/index';
 
 import { fetchData } from '@Utils/api';
 
-import { FETCH_METHOD, FETCH_URL } from '@Constants/index';
+import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
 import serverState from './serverState';
 

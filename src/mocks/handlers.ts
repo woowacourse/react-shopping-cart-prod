@@ -4,7 +4,8 @@ import { CartItemType } from '@Types/index';
 
 import localStorageHelper from '@Utils/localStorageHelper';
 
-import { FETCH_URL, SHOPPING_QUANTITY } from '@Constants/index';
+import { SHOPPING_QUANTITY } from '@Constants/index';
+import { FETCH_URL } from '@Constants/servers';
 
 import mockData from './mockData.json';
 

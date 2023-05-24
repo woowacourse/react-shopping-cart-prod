@@ -1,6 +1,6 @@
 import { FetchArgs } from '@Types/index';
 
-import { ERROR_MESSAGE, SERVERS } from '@Constants/index';
+import { ERROR_MESSAGE, SERVERS } from '@Constants/servers';
 
 export const fetchData = async <T>({ url, method, body, server }: FetchArgs): Promise<T> => {
   const email = SERVERS[server].email;

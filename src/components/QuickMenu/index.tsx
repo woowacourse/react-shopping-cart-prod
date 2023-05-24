@@ -2,7 +2,7 @@ import { useSetRecoilState } from 'recoil';
 
 import serverState from '@Atoms/serverState';
 
-import { SERVERS } from '@Constants/index';
+import { SERVERS, SERVERS_NAMES } from '@Constants/servers';
 
 import * as S from './style';
 
@@ -12,13 +12,14 @@ function QuickMenu() {
   return (
     <S.Container>
       <S.Button>
-        <S.Option onClick={() => setServerState('베베')} position={{ bottom: '60px' }} avatar={SERVERS.베베.avatar} />
-        <S.Option onClick={() => setServerState('에단')} position={{ bottom: '120px' }} avatar={SERVERS.에단.avatar} />
-        <S.Option
-          onClick={() => setServerState('도리와 노아')}
-          position={{ bottom: '180px' }}
-          avatar={SERVERS['도리와 노아'].avatar}
-        />
+        {SERVERS_NAMES.map((value, index) => (
+          <S.Option
+            key={value}
+            onClick={() => setServerState(value)}
+            position={{ bottom: `${(index + 1) * 60}px` }}
+            avatar={SERVERS[value].avatar}
+          />
+        ))}
       </S.Button>
     </S.Container>
   );
