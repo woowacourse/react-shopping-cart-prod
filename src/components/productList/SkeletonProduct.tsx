@@ -37,9 +37,8 @@ const InfoBox = styled.div`
   justify-content: space-between;
 
   width: 282px;
-
-  padding-top: 18px;
-  padding-left: 18px;
+  padding-top: 12px;
+  padding-left: 8px;
 `;
 
 const LabelBox = styled.div`
@@ -54,6 +53,7 @@ const Name = styled.p`
   width: 60%;
   height: 16px;
   margin-top: 4px;
+  border-radius: 4px;
 
   animation: ${skeletonBackground} 1s infinite;
 `;
@@ -62,6 +62,7 @@ const Price = styled.p`
   width: 40%;
   height: 20px;
   margin-top: 10px;
+  border-radius: 5px;
 
   animation: ${skeletonBackground} 0.7s infinite;
 `;
