@@ -1,12 +1,10 @@
 import { styled } from 'styled-components';
 import Order from '../components/cart/Order';
 import SelectedProductList from '../components/cart/SelectedProductList';
-import Header from '../components/common/Header';
 
 const CartPage = () => {
   return (
     <>
-      <Header title="STORE" />
       <S.Main>
         <S.Title>장바구니</S.Title>
         <S.Wrapper>

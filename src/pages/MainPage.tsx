@@ -1,13 +1,5 @@
-import Header from '../components/common/Header';
 import ProductList from '../components/main/ProductList';
 
-const MainPage = () => {
-  return (
-    <>
-      <Header title="STORE" />
-      <ProductList />
-    </>
-  );
-};
+const MainPage = () => <ProductList />;
 
 export default MainPage;
