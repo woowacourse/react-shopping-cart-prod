@@ -1,4 +1,4 @@
-import { FETCH_DEFAULT_OPTION, HTTP_STATUS_CODE } from '../constants/api';
+import { API_BASE_URL, FETCH_DEFAULT_OPTION } from '../constants/api';
 import HTTPError from './HTTPError';
 import { handleAPIError } from './apiError';
 
@@ -7,15 +7,17 @@ const fetchAPI = async (
   option: RequestInit = FETCH_DEFAULT_OPTION
 ) => {
   try {
-    const response = await fetch(endpoint, option);
+    const response = await fetch(`${API_BASE_URL}${endpoint}`, option);
 
-    if (response.status === HTTP_STATUS_CODE.NO_CONTENT) return response;
+    if (!response.ok) handleAPIError(response.status);
+
+    const contentType = response.headers.get('content-type');
+
+    if (!contentType && response.ok) return response;
 
     const jsonData = await response.json();
 
-    if (response.ok) return jsonData.data;
-
-    handleAPIError(response.status, jsonData.errorMessage);
+    return jsonData;
   } catch (error) {
     if (error instanceof HTTPError) {
       throw error;
