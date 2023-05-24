@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from '@storybook/react';
 
 import CartCheckoutBox from '../../components/cart/CartCheckoutBox/CartCheckoutBox';
-import { CART_LIST_LOCAL_STORAGE_KEY } from '../../constants';
+import { CART_LIST_LOCAL_STORAGE_KEY } from '../../constants/localStorage';
 import { saveToLocalStorage } from '../../utils/localStorage';
 
 const meta = {

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import CartList from '../../components/cart/CartList/CartList';
 import CartListSkeleton from '../../components/cart/CartList/CartListSkeleton';
-import { CART_LIST_LOCAL_STORAGE_KEY } from '../../constants';
+import { CART_LIST_LOCAL_STORAGE_KEY } from '../../constants/localStorage';
 import { saveToLocalStorage } from '../../utils/localStorage';
 
 const meta = {
