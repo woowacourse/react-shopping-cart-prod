@@ -1,11 +1,12 @@
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { CART_URL } from '../constants/url';
-import { cartState } from '../recoil';
+import { cartState, serverState } from '../recoil';
 import { CartItem } from '../types';
 import { useFetchData } from './useFetchData';
 
 export const useRemoveCheckedItemsFromCart = (checkedItemIdList: number[]) => {
   const setCart = useSetRecoilState(cartState);
+  const server = useRecoilValue(serverState);
 
   const { api } = useFetchData();
 
@@ -17,7 +18,7 @@ export const useRemoveCheckedItemsFromCart = (checkedItemIdList: number[]) => {
   };
 
   const removeCheckedItemsFromCart = () => {
-    checkedItemIdList.forEach((id) => api.delete(`${CART_URL}/${id}`, { id }));
+    checkedItemIdList.forEach((id) => api.delete(`${server}${CART_URL}/${id}`));
     setCart((prev: CartItem[]) => removeAllCheckedItemsFromCart(prev));
   };
 

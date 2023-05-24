@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import { CART_URL, PRODUCT_LIST_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
-import { productListState, serverState } from '../../recoil';
+import { cartState, productListState, serverState } from '../../recoil';
 import ProductItem from './ProductItem';
 
 const ProductList = () => {
   const [productList, setProductList] = useRecoilState(productListState);
   const server = useRecoilValue(serverState);
+  const setCart = useSetRecoilState(cartState);
 
   const { api, isLoading } = useFetchData();
 
@@ -22,7 +23,7 @@ const ProductList = () => {
         'Content-Type': 'application/json',
       })
       .then((data) => {
-        // TODO: setCartList
+        setCart(data);
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

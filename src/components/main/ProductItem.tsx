@@ -1,5 +1,4 @@
 import { css, styled } from 'styled-components';
-import { QUANTITY } from '../../constants';
 import { useSetCart } from '../../hooks/useCart';
 import { useHandleQuantityInput } from '../../hooks/useHandleQuantityInput';
 import { useLoadCart } from '../../hooks/useLoadCart';
@@ -14,7 +13,7 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
 
   const handleCartClick = () => {
     setIsSelected(true);
-    addToCart(String(QUANTITY.INITIAL));
+    addToCart();
   };
 
   const handleNumberInputChange = useHandleQuantityInput({
@@ -37,7 +36,7 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
         {isSelected ? (
           <QuantityInput id={name} value={quantity} onChange={handleNumberInputChange} />
         ) : (
-          <S.Button type="button" onClick={handleCartClick}>
+          <S.Button type='button' onClick={handleCartClick}>
             <CartIcon css={svgStyle} />
           </S.Button>
         )}
