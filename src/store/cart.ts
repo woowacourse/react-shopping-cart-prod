@@ -21,6 +21,17 @@ const cartIdListState = selector({
   },
 });
 
+const cartItemIdState = selectorFamily<number | null, number>({
+  key: 'cartItemId',
+  get:
+    (productId) =>
+    ({ get }) => {
+      const cartList = get(cartListState);
+
+      return cartList.find((cartItem) => cartItem.product.id === productId)?.id ?? null;
+    },
+});
+
 const cartListItemCountState = selector<number>({
   key: 'cartListItemCount',
   get: ({ get }) => get(cartListState).length,
@@ -61,8 +72,9 @@ const cartListSubTotalState = selector({
 });
 
 export {
-  cartIdListState,
   cartListState,
+  cartIdListState,
+  cartItemIdState,
   cartListItemCountState,
   cartItemQuantityState,
   cartListSubTotalState,
