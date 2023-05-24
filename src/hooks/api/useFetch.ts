@@ -22,13 +22,15 @@ const useFetch = <T>(url: string) => {
   };
 
   useEffect(() => {
+    setData(null);
     setPromise(fetchData());
-  }, []);
+  }, [url]);
 
   const getData = () => {
     if (data === null && promise) {
       throw promise;
     }
+
     return data;
   };
 
