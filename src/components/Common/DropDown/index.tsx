@@ -16,8 +16,8 @@ function DropDown({ options, selectedListHandler }: DropDownProps) {
     setCurrentValue(innerText);
   };
 
-  const optionLists = options.map(data => (
-    <li className={styles.option} onClick={handleOnChangeSelectValue}>
+  const optionLists = options.map((data, idx) => (
+    <li key={idx} className={styles.option} onClick={handleOnChangeSelectValue}>
       {data}
     </li>
   ));
