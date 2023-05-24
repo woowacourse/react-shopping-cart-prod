@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "baseUrl": "src",
+    "paths": {
+      "@common/*": ["common/*"],
+      "@assets/*": ["assets/*"],
+      "@constants/*": ["constants/*"],
+      "@layout/*": ["layout/*"],
+      "@mocks/*": ["mocks/*"],
+      "@pages/*": ["pages/*"],
+      "@recoil/*": ["recoil/*"],
+      "@router/*": ["router/*"],
+      "@stories/*": ["stories/*"],
+      "@styles/*": ["styles/*"],
+      "@utils/*": ["utils/*"],
+      "@views/*": ["views/*"]
+    },
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false, // deployment bug fix
+    "noUnusedParameters": false, // deployment bug fix
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": ["src", "src/types/svg.d.ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
+}
