@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import TotalPriceBox from '../box/TotalPriceBox/TotalPriceBox';
 import { Text } from '../common/Text/Text';
 import CartList from '../list/CartList/CartList';
@@ -6,18 +5,18 @@ import PageTemplate from '../templates/PageTemplate';
 import styled from '@emotion/styled';
 import Modal from '../common/Modal/Modal';
 import DeleteCartItemModal from '../common/Modal/DeleteCartItemModal';
-import { useCart } from '../../hooks/useCart';
+import { useCartFetch } from '../../hooks/useCartFetch';
 import { useRecoilValue } from 'recoil';
 import { checkCartListState } from '../../service/atom';
 
 const CartPage = () => {
-  const { data } = useCart();
+  const { cartData } = useCartFetch();
   const checkCartList = useRecoilValue(checkCartListState);
 
   const calcTotalPrice = () => {
     return checkCartList
       .map((cartId) => {
-        const cartItem = data && data.find((cart) => cart.id === cartId);
+        const cartItem = cartData && cartData.find((cart) => cart.id === cartId);
         if (cartItem) {
           return cartItem?.product.price * cartItem?.quantity;
         }

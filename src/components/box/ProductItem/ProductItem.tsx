@@ -1,34 +1,36 @@
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
 import { CartIcon } from '../../../assets';
-import type { CartItem, Product } from '../../../types/types';
+import type { CartItemType, ProductType } from '../../../types/types';
 import { Text } from '../../common/Text/Text';
 import InputStepper from '../../common/InputStepper/InputStepper';
 import getPriceFormat from '../../../utils/getPriceFormat';
-import { useCart } from '../../../hooks/useCart';
 import { keyframes } from '@emotion/react';
+import { useCartFetch } from '../../../hooks/useCartFetch';
 
-const ProductItem = ({ product }: { product: Product }) => {
-  const { data, addCartItemAPI, changeCartQuantityAPI, deleteCartItemAPI } = useCart();
-  const [cartItemData, setCartItemData] = useState<CartItem | null>(null);
+const ProductItem = ({ product }: { product: ProductType }) => {
+  const { cartData, addCartItemAPI, changeCartQuantityAPI, deleteCartItemAPI } = useCartFetch();
+  const [cartItemData, setCartItemData] = useState<CartItemType | null>(null);
 
   const [quantity, setQuantity] = useState<number>(0);
 
   useEffect(() => {
-    if (data) {
-      setCartItemData(data.find((cart) => cart.product.id === product.id) || null);
+    if (cartData) {
+      setCartItemData(cartData.find((cart) => cart.product.id === product.id) || null);
     }
-  }, [data]);
+  }, [cartData]);
 
   useEffect(() => {
     if (cartItemData) {
       setQuantity(cartItemData.quantity);
+      return;
     }
+    setQuantity(0);
   }, [cartItemData]);
 
   useEffect(() => {
     const mutateCartItem = async () => {
-      if (data) {
+      if (cartData) {
         if (cartItemData && cartItemData.quantity !== quantity) {
           if (quantity > 0) {
             cartItemData.id && changeCartQuantityAPI(cartItemData.id, { quantity });

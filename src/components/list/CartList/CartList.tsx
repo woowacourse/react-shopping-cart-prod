@@ -6,12 +6,12 @@ import Button from '../../common/Button/Button';
 import { Text } from '../../common/Text/Text';
 import { useEffect, useState } from 'react';
 import { useModal } from '../../../hooks/useModal';
-import { useCart } from '../../../hooks/useCart';
+import { useCartFetch } from '../../../hooks/useCartFetch';
 import { useRecoilState } from 'recoil';
 import { checkCartListState } from '../../../service/atom';
 
 const CartList = () => {
-  const { data, deleteCartItemAPI } = useCart();
+  const { cartData, deleteCartItemAPI } = useCartFetch();
 
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
   const [isAllCheck, setIsAllCheck] = useState(true);
@@ -31,12 +31,12 @@ const CartList = () => {
       setIsAllCheck(false);
       return;
     }
-    data && setCheckCartList(data.map((cart) => cart.id));
+    cartData && setCheckCartList(cartData.map((cart) => cart.id));
     setIsAllCheck(true);
   };
 
   useEffect(() => {
-    if (data && data.length === checkCartList.length) {
+    if (cartData && cartData.length === checkCartList.length) {
       setIsAllCheck(true);
       return;
     }
@@ -47,7 +47,7 @@ const CartList = () => {
     <CartListWrapper>
       <CartListHead>
         <Text size="small" weight="light">
-          든든배송 상품 ({data?.length}개)
+          든든배송 상품 ({cartData?.length}개)
         </Text>
         <CartListFoot>
           <CheckBox
@@ -58,14 +58,15 @@ const CartList = () => {
           <Button
             size="small"
             text="선택삭제"
-            onClick={() => openModal({ callback: deleteSelectCart })}
+            onClick={() =>
+              openModal({ callback: deleteSelectCart, title: '정말 삭제하시겠습니까?' })
+            }
           />
         </CartListFoot>
       </CartListHead>
-
       <Cart>
-        {data?.map((cart) => (
-          <CartItem key={cart.product.id} cart={cart} />
+        {cartData?.map((cart) => (
+          <CartItem key={cart.id} cart={cart} />
         ))}
       </Cart>
     </CartListWrapper>

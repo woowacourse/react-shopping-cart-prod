@@ -3,30 +3,35 @@ import { Text } from '../Text/Text';
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { Link } from 'react-router-dom';
-import { useCart } from '../../../hooks/useCart';
+import { useCartFetch } from '../../../hooks/useCartFetch';
 
 const UserCartInfo = () => {
-  const { data } = useCart();
+  const { cartData } = useCartFetch();
 
-  const cartTotalQuantity = data && data.length;
+  const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
 
-  const [isShown, setIsShown] = useState(false);
+  const [isShown, setIsShown] = useState(true);
 
   const ref = useRef(null);
 
   useEffect(() => {
-    if (cartTotalQuantity) {
-      if (cartTotalQuantity > 0) {
-        setIsShown(true);
-        return;
-      }
-      setTimeout(() => {
-        setIsShown(false);
-      }, 200);
+    if (cartData) {
+      setCartTotalQuantity(cartData.length);
     }
-  }, [cartTotalQuantity]);
+  }, [cartData]);
+
   useEffect(() => {
-    if (cartTotalQuantity && cartTotalQuantity > 0 && !isShown) {
+    if (cartTotalQuantity > 0) {
+      setIsShown(true);
+      return;
+    }
+    setTimeout(() => {
+      setIsShown(false);
+    }, 200);
+  }, [cartTotalQuantity]);
+
+  useEffect(() => {
+    if (cartTotalQuantity > 0 && !isShown) {
       gsap.fromTo(
         ref.current,
         { opacity: 0, transform: 'translateX(-10px)', delay: 0.3, ease: 'ease' },

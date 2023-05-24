@@ -1,67 +1,35 @@
 import styled from '@emotion/styled';
 import { TrashCanIcon } from '../../../assets';
 import InputStepper from '../../common/InputStepper/InputStepper';
-import type { CartItem as CartType } from '../../../types/types';
+import type { CartItemType } from '../../../types/types';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import { Text } from '../../common/Text/Text';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import getPriceFormat from '../../../utils/getPriceFormat';
 import { useModal } from '../../../hooks/useModal';
-import { useRecoilState } from 'recoil';
-import { checkCartListState } from '../../../service/atom';
-import { useCart } from '../../../hooks/useCart';
+import { useCartFetch } from '../../../hooks/useCartFetch';
+import useCheckCart from '../../../hooks/useCheckCart';
 
-const CartItem = ({ cart }: { cart: CartType }) => {
-  const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
+const CartItem = ({ cart }: { cart: CartItemType }) => {
+  const { check, changeCheckCartList } = useCheckCart(cart.id);
+  const { changeCartQuantityAPI, deleteCartItemAPI } = useCartFetch();
 
-  const [count, setCount] = useState(cart.quantity);
-  const [check, setCheck] = useState(
-    checkCartList.findIndex((cartId) => cartId === cart.id) !== -1,
-  );
+  const [quantity, setQuantity] = useState(cart.quantity);
 
   const totalPrice = check ? cart.product.price : 0;
 
-  const { changeCartQuantityAPI, deleteCartItemAPI } = useCart();
-
   const { openModal } = useModal();
 
-  const deleteCartItem = async () => {
+  const deleteCartItem = () => {
     deleteCartItemAPI(cart.id);
-  };
-
-  const changeCheckCartList = () => {
-    const existItemIndex = checkCartList.findIndex((cartId) => cartId === cart.id);
-    if (check) {
-      if (existItemIndex !== -1) {
-        setCheckCartList((prev) => {
-          const newCartList = [...prev];
-          newCartList.splice(existItemIndex, 1);
-          return newCartList;
-        });
-      }
-      setCheck(false);
-      return;
-    }
-    setCheckCartList((prev) => [...prev, cart.id]);
-    setCheck(true);
   };
 
   const changeQuantity = (value: number) => {
     if (value !== cart.quantity) {
       changeCartQuantityAPI(cart.id, { quantity: value });
-      setCount(value);
+      setQuantity(value);
     }
   };
-
-  useEffect(() => {
-    const existItemIndex = checkCartList.findIndex((cartId) => cartId === cart.id);
-
-    if (existItemIndex === -1) {
-      setCheck(false);
-      return;
-    }
-    setCheck(true);
-  }, [checkCartList]);
 
   return (
     <CartItemWrapper>
@@ -95,11 +63,11 @@ const CartItem = ({ cart }: { cart: CartType }) => {
       </CartItemInner>
       <CartItemFoot>
         <Text size="smallest" weight="light">
-          {`상품금액 ${getPriceFormat(totalPrice)}원 X ${count}개`}
+          {`상품금액 ${getPriceFormat(totalPrice)}원 X ${quantity}개`}
         </Text>
         &nbsp;=&nbsp;
         <Text size="smallest" weight="normal">
-          {`총 ${getPriceFormat(totalPrice * count)}원`}
+          {`총 ${getPriceFormat(totalPrice * quantity)}원`}
         </Text>
       </CartItemFoot>
     </CartItemWrapper>
