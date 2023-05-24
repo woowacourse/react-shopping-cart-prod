@@ -1,19 +1,29 @@
 import { FETCH_METHOD, MESSAGE } from '../constants';
 import { MutationFetchMethod } from '../types';
 
-interface UseMutationArg<ResponseData> {
-  onSuccess?: (data?: { response: ResponseData | string; headers: Headers }) => void;
+interface UseMutationArg<BodyData, ResponseData> {
+  onSuccess?: (data?: {
+    response: ResponseData | string;
+    headers: Headers;
+    fetchInformation: FetchInformation<BodyData>;
+  }) => void;
   onFailure?: (error?: string) => void;
   onSettled?: () => void;
 }
 
-const useMutation = <BodyData, ResponseData>({ onSuccess, onFailure, onSettled }: UseMutationArg<ResponseData>) => {
-  const mutateQuery = async (fetchInformation: {
-    url: string;
-    method: MutationFetchMethod;
-    bodyData?: BodyData;
-    headers?: HeadersInit;
-  }) => {
+interface FetchInformation<T> {
+  url: string;
+  method: MutationFetchMethod;
+  bodyData?: T;
+  headers?: HeadersInit;
+}
+
+const useMutation = <BodyData, ResponseData>({
+  onSuccess,
+  onFailure,
+  onSettled,
+}: UseMutationArg<BodyData, ResponseData>) => {
+  const mutateQuery = async (fetchInformation: FetchInformation<BodyData>) => {
     const { url, method, bodyData, headers } = fetchInformation;
 
     const body = bodyData ? JSON.stringify(bodyData) : null;
@@ -27,10 +37,10 @@ const useMutation = <BodyData, ResponseData>({ onSuccess, onFailure, onSettled }
 
       if (method === FETCH_METHOD.DELETE || FETCH_METHOD.PATCH) {
         const data = await response.text();
-        onSuccess?.({ response: data, headers: response.headers });
+        onSuccess?.({ response: data, headers: response.headers, fetchInformation });
       } else {
         const data: ResponseData = await response.json();
-        onSuccess?.({ response: data, headers: response.headers });
+        onSuccess?.({ response: data, headers: response.headers, fetchInformation });
       }
     } catch (e) {
       if (e instanceof Error) {
