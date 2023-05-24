@@ -25,10 +25,7 @@ const cartHandlers = [
     const newCartList = addCartItem(currentCartData, productId);
 
     if (!newCartList) {
-      return res(
-        ctx.status(HTTP_STATUS_CODE.NOT_FOUND),
-        ctx.json({ errorMessage: '해당하는 상품이 없습니다.' })
-      );
+      return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
     }
 
     setCartData(newCartList);
@@ -48,10 +45,7 @@ const cartHandlers = [
     const newCartList = changeCartItemQuantity(currentCartData, Number(cartItemId), quantity);
 
     if (!newCartList) {
-      return res(
-        ctx.status(HTTP_STATUS_CODE.NOT_FOUND),
-        ctx.json({ errorMessage: '해당하는 상품이 없습니다.' })
-      );
+      return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
     }
 
     setCartData(newCartList);
@@ -65,10 +59,7 @@ const cartHandlers = [
     const newCartList = removeCartItem(currentCartData, Number(cartItemId));
 
     if (currentCartData.length === 0 || !newCartList) {
-      return res(
-        ctx.status(HTTP_STATUS_CODE.NOT_FOUND),
-        ctx.json({ errorMessage: '장바구니가 비어있거나 해당하는 상품이 장바구니에 없습니다.' })
-      );
+      return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
     }
 
     setCartData(newCartList);
