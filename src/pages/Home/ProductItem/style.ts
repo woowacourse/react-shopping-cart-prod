@@ -17,8 +17,9 @@ type LoadingProps = {
 };
 
 export const ProductItemImage = styled.img<LoadingProps>`
-  height: 250px;
+  height: 230px;
   margin-bottom: 18px;
+  object-fit: cover;
   ${ImageSkeletonStyle};
 `;
 
