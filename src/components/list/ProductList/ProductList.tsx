@@ -5,20 +5,20 @@ import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import useProduct from '../../../hooks/useProduct';
 
 const ProductList = () => {
-  const { data, isLoading } = useProduct();
+  const { productData, isLoading } = useProduct();
 
   if (isLoading) {
     return <LoadingSpinner />;
   }
-  if (!data) {
+  if (!productData) {
     return <ErrorBox errorType="network" />;
   }
-  if (data.length === 0) {
+  if (productData.length === 0) {
     return <ErrorBox errorType="emptyList" />;
   }
   return (
     <ProductListWrapper>
-      {data.map((product) => (
+      {productData.map((product) => (
         <ProductItem key={product.id} product={product} />
       ))}
     </ProductListWrapper>
