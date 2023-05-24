@@ -19,8 +19,8 @@ const API_BASE_URL =
   getFromLocalStorage<string>('API_BASE_URL') ?? API_BASE_URL_LIST[DEFAULT_MEMBER];
 
 const API_ENDPOINT = {
-  PRODUCTS: '/api/products',
-  CART_ITEMS: '/api/cart-items',
+  PRODUCTS: '/products',
+  CART_ITEMS: '/cart-items',
 } as const;
 
 const FETCH_DEFAULT_OPTION = {
