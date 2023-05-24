@@ -58,9 +58,7 @@ const CartList = () => {
           <Button
             size="small"
             text="선택삭제"
-            onClick={() =>
-              openModal({ callback: deleteSelectCart, title: '정말 삭제하시겠습니까?' })
-            }
+            onClick={() => openModal({ callback: deleteSelectCart })}
           />
         </CartListFoot>
       </CartListHead>

@@ -43,9 +43,7 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
             </Text>
             <TrashCanIcon
               style={{ cursor: 'pointer' }}
-              onClick={() =>
-                openModal({ callback: deleteCartItem, title: '정말 삭제하시겠습니까?' })
-              }
+              onClick={() => openModal({ callback: deleteCartItem })}
             />
           </CartInfoHead>
           <InputStepper
