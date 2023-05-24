@@ -6,12 +6,10 @@ import {
   targetCheckedState,
 } from '../states/checkedCartProducts';
 import { updateCartProductChecked } from '../states/checkedCartProducts/utils';
-import { serverNameState } from '../states/serverName';
 
 const useChecked = (id: number) => {
-  const serverName = useRecoilValue(serverNameState);
-  const targetChecked = useRecoilValue(targetCheckedState({ serverName, id }));
-  const setChecked = useSetRecoilState(checkedState(serverName));
+  const targetChecked = useRecoilValue(targetCheckedState(id));
+  const setChecked = useSetRecoilState(checkedState);
 
   const updateChecked = (isChecked: boolean) => {
     setChecked((prev) =>

@@ -4,11 +4,9 @@ import styled from 'styled-components';
 import CartProductItem from './CartProductItem';
 
 import { cartProductState } from '../../states/cartProducts';
-import { serverNameState } from '../../states/serverName';
 
 const CartProductList = () => {
-  const serverName = useRecoilValue(serverNameState);
-  const cartProducts = useRecoilValue(cartProductState(serverName));
+  const cartProducts = useRecoilValue(cartProductState);
 
   return (
     <CartProductListContainer>

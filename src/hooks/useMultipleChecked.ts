@@ -16,8 +16,8 @@ import { toastState } from '../states/toast/atom';
 
 const useMultipleChecked = () => {
   const serverName = useRecoilValue(serverNameState);
-  const [checked, setChecked] = useRecoilState(checkedState(serverName));
-  const setCartProducts = useSetRecoilState(cartProductState(serverName));
+  const [checked, setChecked] = useRecoilState(checkedState);
+  const setCartProducts = useSetRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
 
   const { deleteData } = cartProductApis(serverName, '/cart-items');

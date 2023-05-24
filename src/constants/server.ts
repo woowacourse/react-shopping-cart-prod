@@ -1,11 +1,11 @@
 export const SERVER = {
-  도치: {
-    url: process.env.REACT_APP_DOCHI_URL,
+  푸우: {
+    url: process.env.REACT_APP_POOH_URL,
     id: process.env.REACT_APP_ID,
     password: process.env.REACT_APP_PASSWORD,
   },
-  푸우: {
-    url: process.env.REACT_APP_POOH_URL,
+  도치: {
+    url: process.env.REACT_APP_DOCHI_URL,
     id: process.env.REACT_APP_ID,
     password: process.env.REACT_APP_PASSWORD,
   },

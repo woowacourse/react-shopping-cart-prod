@@ -16,9 +16,9 @@ const useCartProducts = (product: Product) => {
 
   const { id } = product;
   const serverName = useRecoilValue(serverNameState);
-  const setCartProducts = useSetRecoilState(cartProductState(serverName));
+  const setCartProducts = useSetRecoilState(cartProductState);
   const targetProduct = useRecoilValue(
-    targetCartProductState({ serverName, productId: id, cartItemId })
+    targetCartProductState({ productId: id, cartItemId })
   );
   const setToastState = useSetRecoilState(toastState);
 

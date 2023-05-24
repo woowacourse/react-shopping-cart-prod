@@ -11,7 +11,7 @@ import { toastState } from '../states/toast/atom';
 
 const useProductQuantity = (id: number, quantity: number) => {
   const serverName = useRecoilValue(serverNameState);
-  const setCartProducts = useSetRecoilState(cartProductState(serverName));
+  const setCartProducts = useSetRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
 
   const { patchData, deleteData } = cartProductApis(serverName, '/cart-items');

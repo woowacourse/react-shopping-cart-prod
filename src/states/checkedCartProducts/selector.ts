@@ -1,4 +1,4 @@
-import { selectorFamily } from 'recoil';
+import { selector, selectorFamily } from 'recoil';
 
 import { checkedState } from './atom';
 import { cartProductState } from '../cartProducts';
@@ -9,47 +9,35 @@ import {
   updateCartProductChecked,
 } from './utils';
 import type { CartProductWithChecked } from './type';
-import { ServerKey } from '../../constants/server';
 
-export const checkedCartProductState = selectorFamily<
-  CartProductWithChecked[],
-  ServerKey
->({
+export const checkedCartProductState = selector<CartProductWithChecked[]>({
   key: 'checkedCartProductState',
-  get:
-    (serverName) =>
-    ({ get }) => {
-      const checked = get(checkedState(serverName));
-      return get(cartProductState(serverName)).map((cartProduct) =>
-        updateCartProductChecked(
-          cartProduct,
-          findTargetChecked(checked, cartProduct.id)?.isChecked ?? false
-        )
-      );
-    },
+  get: ({ get }) => {
+    const checked = get(checkedState);
+    return get(cartProductState).map((cartProduct) =>
+      updateCartProductChecked(
+        cartProduct,
+        findTargetChecked(checked, cartProduct.id)?.isChecked ?? false
+      )
+    );
+  },
 });
 
 export const targetCheckedState = selectorFamily({
   key: 'targetCheckedState',
   get:
-    ({ serverName, id }: { serverName: ServerKey; id: number }) =>
+    (id: number) =>
     ({ get }) =>
-      findTargetChecked(get(checkedState(serverName)), id),
+      findTargetChecked(get(checkedState), id),
 });
 
-export const checkedCartProductCountState = selectorFamily({
+export const checkedCartProductCountState = selector({
   key: 'checkedCartProductCountState',
-  get:
-    (serverName: ServerKey) =>
-    ({ get }) =>
-      filterCartProductChecked(get(checkedCartProductState(serverName)), true)
-        .length,
+  get: ({ get }) =>
+    filterCartProductChecked(get(checkedCartProductState), true).length,
 });
 
-export const checkedPriceState = selectorFamily({
+export const checkedPriceState = selector({
   key: 'checkedPriceState',
-  get:
-    (serverName: ServerKey) =>
-    ({ get }) =>
-      getCheckedPrice(get(checkedCartProductState(serverName))),
+  get: ({ get }) => getCheckedPrice(get(checkedCartProductState)),
 });
