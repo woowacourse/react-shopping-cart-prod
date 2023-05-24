@@ -24,6 +24,7 @@ export const waitFor = async <T>(
   } catch (error) {
     options?.onError?.(error);
 
+    if (error instanceof CustomError) throw error;
     /** @todo 에러 핸들링 */
     throw new CustomError({ code: ERROR_CODE.UNEXPECTED_ERROR });
   }
