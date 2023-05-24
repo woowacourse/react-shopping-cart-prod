@@ -17,9 +17,7 @@ const postCartItem = async (productId: number): Promise<CartItemData[]> => {
 
   return await fetchAPI(API_ENDPOINT.CART_ITEMS, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { ...CART_FETCH_OPTION_HEADERS },
     body: jsonData,
   });
 };
@@ -32,9 +30,7 @@ const patchCartItem = async (cartItemId: number, quantity: number): Promise<Cart
 
   return await fetchAPI(`${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: { ...CART_FETCH_OPTION_HEADERS },
     body: jsonData,
   });
 };
@@ -42,6 +38,7 @@ const patchCartItem = async (cartItemId: number, quantity: number): Promise<Cart
 const deleteCartItem = async (cartItemId: number): Promise<Response> => {
   return await fetchAPI(`${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
     method: 'DELETE',
+    headers: { Authorization: CART_FETCH_OPTION_HEADERS.Authorization },
   });
 };
 
