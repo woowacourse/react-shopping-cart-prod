@@ -11,6 +11,7 @@ export const fetchProducts = async () => {
     const response = await fetch(`${DEV_BASE_URL}/products`, {
       headers: {
         Authorization: `Basic ${base64}`,
+        "Content-Type": "application/json",
       },
     });
     const data = await response.json();
@@ -42,6 +43,7 @@ export const changeQuantity = async (
     await fetch(`${DEV_BASE_URL}/cart-items/${cartItemId}`, {
       headers: {
         Authorization: `Basic ${base64}`,
+        "Content-Type": "application/json",
       },
       method: "PATCH",
       body: JSON.stringify({ quantity: newQuantity }),
@@ -56,6 +58,7 @@ export const addCartItem = async (productId: number) => {
     await fetch(`${DEV_BASE_URL}/cart-items`, {
       headers: {
         Authorization: `Basic ${base64}`,
+        "Content-Type": "application/json",
       },
       method: "POST",
       body: JSON.stringify({ productId: productId }),
