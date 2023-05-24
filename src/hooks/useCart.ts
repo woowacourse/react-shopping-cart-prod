@@ -1,12 +1,15 @@
-import { useEffect, useRef, useState } from 'react';
-import { useRecoilCallback } from 'recoil';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRecoilCallback, useRecoilValue } from 'recoil';
 
-import { deleteCartItem, getCartList, patchCartItem, postCartItem } from '../api/cartAPI';
+import { cartAPI, deleteCartItem, getCartList } from '../api/cartAPI';
 import { TOAST_SHOW_DURATION } from '../constants';
 import { cartItemQuantityState, cartListState } from '../store/cart';
+import { currentServerState } from '../store/server';
 import { useMutationFetch } from './common/useMutationFetch';
 
 const useCart = () => {
+  const currentServer = useRecoilValue(currentServerState);
+  const api = useMemo(() => cartAPI(currentServer), [currentServer]);
   const [isAdded, setIsAdded] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout>>();
 
@@ -23,7 +26,7 @@ const useCart = () => {
   const updateCart = useRecoilCallback(
     ({ set }) =>
       async () => {
-        const newCartList = await getCartList();
+        const newCartList = await api.then((apiInstance) => apiInstance.getCartList());
         set(cartListState, newCartList);
       },
     []
@@ -33,7 +36,7 @@ const useCart = () => {
     useRecoilCallback(
       () => async (productId) => {
         setIsAdded(true);
-        await postCartItem(productId);
+        await api.then((apiInstance) => apiInstance.postCartItem(productId));
       },
       []
     ),
@@ -50,7 +53,7 @@ const useCart = () => {
       ({ set }) =>
         async ({ cartItemId, quantity }) => {
           set(cartItemQuantityState(cartItemId), quantity);
-          await patchCartItem(cartItemId, quantity);
+          await api.then((apiInstance) => apiInstance.patchCartItem(cartItemId, quantity));
         },
       []
     )
@@ -60,8 +63,26 @@ const useCart = () => {
     useRecoilCallback(
       ({ set }) =>
         async (cartItemId) => {
-          await deleteCartItem(cartItemId);
-          const newCartList = await getCartList();
+          // await api.then((apiInstance) => apiInstance.deleteCartItem(cartItemId));
+          // const newCartList = await api.then((apiInstance) => apiInstance.getCartList());
+
+          const newCartList = await api
+            .then(async (apiInstance) => {
+              await apiInstance.deleteCartItem(cartItemId);
+
+              return apiInstance;
+            })
+            .then((apiInstance) => apiInstance.getCartList());
+
+          // const newCartList = await api
+          //   .then((apiInstance) => {
+          //     apiInstance.deleteCartItem(cartItemId);
+          //     return apiInstance;
+          //   })
+          //   .then((apiInstance) => {
+          //     return apiInstance.getCartList();
+          //   });
+
           set(cartListState, newCartList);
         },
       []

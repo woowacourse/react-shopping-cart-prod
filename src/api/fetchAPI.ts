@@ -1,4 +1,4 @@
-import { API_BASE_URL, FETCH_DEFAULT_OPTION } from '../constants/api';
+import { FETCH_DEFAULT_OPTION } from '../constants/api';
 import HTTPError from './HTTPError';
 import { handleAPIError } from './apiError';
 
@@ -7,7 +7,7 @@ const fetchAPI = async (
   option: RequestInit = FETCH_DEFAULT_OPTION
 ) => {
   try {
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, option);
+    const response = await fetch(`${endpoint}`, option);
 
     if (!response.ok) handleAPIError(response.status);
 
