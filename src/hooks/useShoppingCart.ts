@@ -81,7 +81,13 @@ const useShoppingCart = () => {
   };
 
   const deleteCheckedCartProducts = (checkedCartProducts: CheckedCartProducts) => {
-    [...checkedCartProducts].forEach(async (id) => await deleteCartProduct(id));
+    [...checkedCartProducts].forEach(async (productCartId) => {
+      const productId = Object.keys(cartProductIdStore).find((productId) => {
+        return cartProductIdStore[Number(productId)] === productCartId;
+      });
+
+      await deleteCartProduct(Number(productId));
+    });
   };
 
   return {
