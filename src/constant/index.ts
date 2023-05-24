@@ -6,6 +6,8 @@ export const BASE_URL: Record<ServerName, string | undefined> = {
   필립: process.env.REACT_APP_PHILIP_SERVER_URL,
 };
 
+export const DEFAULT_SERVER_NAME = Object.keys(BASE_URL)[0] as ServerName;
+
 export const PRODUCTS_PATH_NAME = `/products`;
 export const CART_ITEMS_PATH_NAME = `/cart-items`;
 
