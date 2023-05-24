@@ -21,8 +21,8 @@ export const API_ERROR_MESSAGE = {
 export const SERVER_NAMES: ServerNameType[] = ['라온', '져니', '쥬니'];
 
 export const BASE_URL_MAP: Record<ServerNameType, string> = {
-  라온: MOCK_URL,
-  져니: 'http://13.209.48.187:8080',
+  라온: 'https://jourzura.kro.kr/admin',
+  져니: MOCK_URL,
   쥬니: 'http://13.209.48.187:8080',
 };
 
