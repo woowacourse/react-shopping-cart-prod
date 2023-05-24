@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
 
 export const CommonPageStyle = styled.div`
   width: 60%;
-  min-width: 1200px;
+  min-width: 1000px;
   margin: auto;
   padding-top: 100px;
   @media only screen and (max-width: 1200px) {

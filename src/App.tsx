@@ -3,6 +3,7 @@ import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import Header from '@Components/Header';
+import QuickMenu from '@Components/QuickMenu';
 
 import ErrorBoundary from '@Pages/ErrorBoundary';
 import NotFound from '@Pages/NotFound';
@@ -26,6 +27,7 @@ function App() {
         <ErrorBoundary fallback={NotFound}>
           <Outlet />
         </ErrorBoundary>
+        <QuickMenu />
       </CommonPageStyle>
     </>
   );
