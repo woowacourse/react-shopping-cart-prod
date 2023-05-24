@@ -45,7 +45,8 @@ const SelectedProductList = () => {
           {cart.map((item: CartItem) => (
             <SelectedProductItem
               key={item.product.id}
-              id={item.product.id}
+              id={item.id}
+              productId={item.product.id}
               name={item.product.name}
               price={item.product.price}
               imageUrl={item.product.imageUrl}

@@ -31,7 +31,7 @@ export const productInCartSelector = selectorFamily({
     (id) =>
     ({ get }) => {
       const cart = get(cartState);
-      const foundProductInCart = cart.find((item: CartItem) => item.id === id);
+      const foundProductInCart = cart.find((item: CartItem) => item.product.id === id);
 
       return foundProductInCart;
     },

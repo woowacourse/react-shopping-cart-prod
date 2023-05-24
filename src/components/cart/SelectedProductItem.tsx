@@ -11,22 +11,30 @@ import QuantityButton from './QuantityButton';
 
 interface Props extends Product {
   quantity: number;
+  productId: number;
 }
 
-const SelectedProductItem = ({ id, imageUrl, name, price, quantity }: Props) => {
-  const { removeItemFromCart } = useSetCart(id);
+const SelectedProductItem = ({
+  id: cartItemId,
+  productId,
+  imageUrl,
+  name,
+  price,
+  quantity,
+}: Props) => {
+  const { removeItemFromCart } = useSetCart(productId);
   const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
 
-  const isChecked = checkedItems.includes(id);
+  const isChecked = checkedItems.includes(cartItemId);
 
   const handleCheckedItem = () => {
     isChecked
-      ? setCheckedItems((prev) => prev.filter((itemId) => itemId !== id))
-      : setCheckedItems((prev) => [...prev, id]);
+      ? setCheckedItems((prev) => prev.filter((itemId) => itemId !== cartItemId))
+      : setCheckedItems((prev) => [...prev, cartItemId]);
   };
 
   const handleTrashCanClick = () => {
-    setCheckedItems((prev) => prev.filter((itemId) => itemId !== id));
+    setCheckedItems((prev) => prev.filter((itemId) => itemId !== cartItemId));
     removeItemFromCart();
   };
 
@@ -34,21 +42,21 @@ const SelectedProductItem = ({ id, imageUrl, name, price, quantity }: Props) => 
     <div>
       <S.Fieldset>
         <Checkbox
-          type="checkbox"
-          id={`${id}-checkbox`}
+          type='checkbox'
+          id={`${cartItemId}-checkbox`}
           name={name}
           checked={isChecked}
           onChange={handleCheckedItem}
         />
         <S.Image src={`${imageUrl}`} alt={name} />
-        <S.Name htmlFor={`${id}-checkbox`} title={name}>
+        <S.Name htmlFor={`${cartItemId}-checkbox`} title={name}>
           {name}
         </S.Name>
         <S.Wrapper>
           <Button css={trashCanButtonStyle} onClick={handleTrashCanClick}>
-            <TrashCanIcon patternId={id} imageSize={{ width: '40', height: '40' }} />
+            <TrashCanIcon patternId={cartItemId} imageSize={{ width: '40', height: '40' }} />
           </Button>
-          <QuantityButton productId={id} quantity={quantity} />
+          <QuantityButton productId={productId} quantity={quantity} />
           <Price price={price * quantity} />
         </S.Wrapper>
       </S.Fieldset>
