@@ -15,5 +15,5 @@
 ### ✅ 메인 로직 (Domain)
 
 - [x] 잘못된 응답을 받으면 set이 되지 않도록 한다.
-- [ ] fetch endpoint 변경
-  - [ ] 장바구니 요청은 authorization을 header에 담아서 서버에 보낸다.
+- [x] fetch endpoint 변경
+  - [x] 장바구니 요청은 authorization을 header에 담아서 서버에 보낸다.

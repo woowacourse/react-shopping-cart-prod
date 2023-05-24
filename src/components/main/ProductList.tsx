@@ -1,20 +1,30 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { PRODUCT_LIST_URL } from '../../constants/url';
+import { CART_URL, PRODUCT_LIST_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
 import { productListState, serverState } from '../../recoil';
-import { Product } from '../../types';
 import ProductItem from './ProductItem';
 
 const ProductList = () => {
   const [productList, setProductList] = useRecoilState(productListState);
   const server = useRecoilValue(serverState);
 
-  const { api, isLoading } = useFetchData<Product[]>(setProductList);
+  const { api, isLoading } = useFetchData();
 
   useEffect(() => {
-    api.get(`${server}${PRODUCT_LIST_URL}`);
+    api.get(`${server}${PRODUCT_LIST_URL}`).then((data) => {
+      setProductList(data);
+    });
+    api
+      .get(`${server}${CART_URL}`, {
+        Authorization: 'Basic YUBhLmNvbToxMjM0',
+        'Content-Type': 'application/json',
+      })
+      .then((data) => {
+        // TODO: setCartList
+      });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

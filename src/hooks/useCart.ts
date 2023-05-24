@@ -5,9 +5,9 @@ import { cartState, productSelector, serverState } from '../recoil';
 import { CartItem } from '../types';
 import { useFetchData } from './useFetchData';
 
-export const useSetCart = (id: number) => {
+export const useSetCart = (productId: number) => {
   const setCart = useSetRecoilState(cartState);
-  const selectedProduct = useRecoilValue(productSelector(id));
+  const selectedProduct = useRecoilValue(productSelector(productId));
 
   const server = useRecoilValue(serverState);
 
@@ -15,7 +15,7 @@ export const useSetCart = (id: number) => {
 
   const findCartItemIndex = (prev: CartItem[]) => {
     const cart = [...prev];
-    const cartItemIndex = prev.findIndex((item) => item.id === id);
+    const cartItemIndex = prev.findIndex((item) => item.id === productId);
     const alreadyHasCartItem = cartItemIndex >= FIRST_INDEX;
 
     return { cart, cartItemIndex, alreadyHasCartItem };
@@ -30,7 +30,7 @@ export const useSetCart = (id: number) => {
   const updateCart = (value: string) => {
     const quantity = Number(value);
     api
-      .patch(`${server}${CART_URL}/${id}`, { id, quantity })
+      .patch(`${server}${CART_URL}/${productId}`, { productId, quantity })
       .then(() => {
         setCart((prev: CartItem[]) => {
           const { cart, cartItemIndex } = findCartItemIndex(prev);
@@ -48,7 +48,7 @@ export const useSetCart = (id: number) => {
 
   const addToCart = (value: string) => {
     api
-      .post(`${server}${CART_URL}`, { productId: id })
+      .post(`${server}${CART_URL}`, { productId })
       .then(() => {
         setCart((prev: CartItem[]) => {
           const quantity = Number(value);
@@ -60,7 +60,7 @@ export const useSetCart = (id: number) => {
           return [
             ...prev,
             {
-              id: id,
+              id: productId,
               quantity: quantity,
               product: selectedProduct,
             },
@@ -74,7 +74,7 @@ export const useSetCart = (id: number) => {
 
   const removeItemFromCart = () => {
     api
-      .delete(`${server}${CART_URL}/${id}`, { id })
+      .delete(`${server}${CART_URL}/${productId}`, { productId })
       .then(() => {
         setCart((prev: CartItem[]) => {
           const { cart, cartItemIndex, alreadyHasCartItem } = findCartItemIndex(prev);
