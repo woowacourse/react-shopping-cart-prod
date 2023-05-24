@@ -8,10 +8,12 @@ import Modal from 'components/@common/Modal';
 import { useGet } from 'hooks/useGet';
 import { useCheckedItemIds } from '../hooks/useCheckedItems';
 import { useModal } from 'hooks/useModal';
+import { useMutate } from 'hooks/useMutate';
 import { Cart } from 'types';
 import { deleteCartItem, getCartList } from 'api/requests';
 
 const CartItemList = () => {
+  const { request } = useMutate();
   const { isLoading } = useGet<{ cartList: Cart[] }>(getCartList);
   const [cartList, setCartList] = useRecoilState(cartListAtom);
   const { checkedItemIds, emptyCheckedItemIds, checkAllItems, unCheckItem } =
@@ -50,7 +52,7 @@ const CartItemList = () => {
 
   const onDeleteSelectedItems = () => {
     checkedItemIds.forEach((id) => {
-      deleteCartItem(id);
+      request(deleteCartItem(id));
       unCheckItem(id);
     });
 

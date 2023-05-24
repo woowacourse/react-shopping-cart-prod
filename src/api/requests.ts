@@ -1,29 +1,28 @@
 import { api } from 'api';
 
-export const getProductList = async () => {
-  const data = await api.get('/api/products');
+export const getProductList = async (server: string) => {
+  const data = await api.get(`${server}/products`);
   return data;
 };
 
-export const getCartList = async () => {
-  const data = await api.get('/api/cart-items');
+export const getCartList = async (server: string) => {
+  const data = await api.get(`${server}/cart-items`);
   return data;
 };
 
-export const postCartItem = async (payload: { productId: number }) => {
-  const response = await api.post('/api/cart-items', payload);
-  return response;
-};
+export const postCartItem =
+  (payload: { productId: number }) => async (server: string) => {
+    const response = await api.post(`${server}/cart-items`, payload);
+    return response;
+  };
 
-export const patchCartItemQuantity = async (
-  cartId: number,
-  payload: { quantity: number }
-) => {
-  const response = await api.patch(`/api/cart-items/${cartId}`, payload);
-  return response;
-};
+export const patchCartItemQuantity =
+  (cartId: number, payload: { quantity: number }) => async (server: string) => {
+    const response = await api.patch(`${server}/cart-items/${cartId}`, payload);
+    return response;
+  };
 
-export const deleteCartItem = async (cartId: number) => {
-  const response = await api.delete(`/api/cart-items/${cartId}`);
+export const deleteCartItem = (cartId: number) => async (server: string) => {
+  const response = await api.delete(`${server}/cart-items/${cartId}`);
   return response;
 };
