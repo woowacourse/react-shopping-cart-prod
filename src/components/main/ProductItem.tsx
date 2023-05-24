@@ -1,23 +1,19 @@
+import { useRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
 import { useSetCart } from '../../hooks/useCart';
 import { useHandleQuantityInput } from '../../hooks/useHandleQuantityInput';
-import { useLoadCart } from '../../hooks/useLoadCart';
+import { quantitySelector } from '../../recoil';
 import { Product } from '../../types';
 import CartIcon from '../icons/CartIcon';
 import Price from '../Price';
 import QuantityInput from './QuantityInput';
 
 const ProductItem = ({ id, imageUrl, name, price }: Product) => {
-  const { isSelected, setIsSelected, quantity, setQuantity } = useLoadCart(id);
+  const [quantity, setQuantity] = useRecoilState(quantitySelector(id));
   const { addToCart, removeItemFromCart, updateCart } = useSetCart(id);
 
-  const handleCartClick = () => {
-    setIsSelected(true);
-    addToCart();
-  };
-
+  const handleCartClick = () => addToCart();
   const handleNumberInputChange = useHandleQuantityInput({
-    setIsSelected,
     removeItemFromCart,
     setQuantity,
     updateCart,
@@ -33,7 +29,7 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
           </S.Name>
           <Price price={price} css={priceStyle} />
         </div>
-        {isSelected ? (
+        {quantity > 0 ? (
           <QuantityInput id={name} value={quantity} onChange={handleNumberInputChange} />
         ) : (
           <S.Button type='button' onClick={handleCartClick}>

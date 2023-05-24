@@ -22,11 +22,10 @@ const ServerSelector = () => {
 
 const S = {
   List: styled.select`
-    margin-left: auto;
-    margin-right: 16px;
+    margin: 0 16px 0 auto;
     padding: 6px 12px;
-    font-weight: 500;
     font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
   `,
 

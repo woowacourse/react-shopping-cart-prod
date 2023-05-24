@@ -25,15 +25,30 @@ export const cartState = atom({
   default: JSON.parse(getDataFromLocalStorage(KEY_CART) ?? '[]'),
 });
 
-export const productInCartSelector = selectorFamily({
-  key: 'productInCartSelector',
+export const quantitySelector = selectorFamily({
+  key: 'quantitySelector',
   get:
     (id) =>
     ({ get }) => {
       const cart = get(cartState);
-      const foundProductInCart = cart.find((item: CartItem) => item.product.id === id);
+      const selectedCartItem = cart.find((item: CartItem) => item.product.id === id);
 
-      return foundProductInCart;
+      if (!selectedCartItem) return 0;
+      return selectedCartItem.quantity;
+    },
+
+  set:
+    (id) =>
+    ({ get, set }, newValue) => {
+      const cart = get(cartState);
+      const selectedCartItem = cart.find((item: CartItem) => item.product.id === id);
+
+      set(
+        cartState,
+        cart.map((cartItem: CartItem) =>
+          cartItem === selectedCartItem ? { ...cartItem, quantity: newValue } : cartItem
+        )
+      );
     },
 });
 
@@ -69,5 +84,5 @@ export const totalPriceSelector = selector<number>({
 
 export const serverState = atom({
   key: 'serverState',
-  default: 'http://54.180.95.7:8080',
+  default: 'https://www.woowacourse.com',
 });
