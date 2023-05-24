@@ -1,8 +1,8 @@
 import { selector } from 'recoil';
 import { serverOriginState } from '../atoms';
-import { CART_BASE_URL, PRODUCTS_BASE_URL, base64 } from '../../constants';
-import type { CartItem, Product } from '../../types/product';
+import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../../constants';
 import { fetchCartItems } from '../../remotes/api';
+import type { CartItem, Product } from '../../types/product';
 
 export const productListQuery = selector<Product[]>({
   key: 'productList',
