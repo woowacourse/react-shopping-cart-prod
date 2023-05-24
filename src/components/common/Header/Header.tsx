@@ -2,29 +2,56 @@ import styled from 'styled-components';
 import CartIcon from '../../../assets/icons/CartIcon';
 import { useNavigate } from 'react-router-dom';
 import useCartService from '../../../hooks/useCartService';
+import { BASE_URL } from '../../../constant';
+import { useRecoilState } from 'recoil';
+import serverNameState from '../../../globalState/atoms/serverName';
+import { isProperServerName } from '../../../types/server';
 
 const Header = () => {
   const navigate = useNavigate();
   const { cartList } = useCartService();
+  const [serverName, setServerName] = useRecoilState(serverNameState);
 
-  const onLogoClick = () => {
+  const handleLogoClick = () => {
     navigate('/');
   };
 
-  const onCartButtonClick = () => {
+  const handleServerNameSelectChange: React.ChangeEventHandler<
+    HTMLSelectElement
+  > = (event) => {
+    const selectedServerName = event.target.value;
+
+    if (!isProperServerName(selectedServerName)) return;
+
+    setServerName(selectedServerName);
+  };
+
+  const handleCartButtonClick = () => {
     navigate('/cart');
   };
 
   return (
     <HeaderContainer>
-      <Logo onClick={onLogoClick}>
+      <Logo onClick={handleLogoClick}>
         <CartIcon />
         <Title>SHOP</Title>
       </Logo>
-      <CartButton onClick={onCartButtonClick}>
-        장바구니
-        <CartTotalQuantity>{cartList.length}</CartTotalQuantity>
-      </CartButton>
+      <RightContainer>
+        <select onChange={handleServerNameSelectChange}>
+          {Object.keys(BASE_URL).map((serverNameOption) => (
+            <option
+              key={serverNameOption}
+              selected={serverNameOption === serverName}
+            >
+              {serverNameOption}
+            </option>
+          ))}
+        </select>
+        <CartButton onClick={handleCartButtonClick}>
+          장바구니
+          <CartTotalQuantity>{cartList.length}</CartTotalQuantity>
+        </CartButton>
+      </RightContainer>
     </HeaderContainer>
   );
 };
@@ -60,6 +87,11 @@ const Title = styled.h1`
   font-size: 40px;
   font-weight: 900;
   padding-top: 8px;
+`;
+
+const RightContainer = styled.div`
+  display: flex;
+  gap: 25px;
 `;
 
 const CartButton = styled.div`
