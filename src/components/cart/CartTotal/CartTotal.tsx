@@ -5,16 +5,17 @@ import { formatPrice } from '../../../utils/formatPrice';
 const FREE_SHIPPING_PRICE = 30_000;
 const SHIPPING_FEE = 3_000;
 
+const calcTotalOrderPrice = (
+  totalProductPrice: number,
+  isFreeShipping: boolean,
+) => {
+  if (totalProductPrice <= 0) return 0;
+
+  return isFreeShipping ? totalProductPrice : totalProductPrice + SHIPPING_FEE;
+};
+
 const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
   const isFreeShipping = totalProductPrice >= FREE_SHIPPING_PRICE;
-
-  const calcTotalOrderPrice = () => {
-    if (totalProductPrice <= 0) return 0;
-
-    return isFreeShipping
-      ? totalProductPrice
-      : totalProductPrice + SHIPPING_FEE;
-  };
 
   return (
     <Container>
@@ -46,14 +47,20 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
         <Spacer height={41} />
         <PriceWrapper>
           <dt>총 주문금액</dt>
-          <dd>{formatPrice(calcTotalOrderPrice())}</dd>
+          <dd>
+            {formatPrice(
+              calcTotalOrderPrice(totalProductPrice, isFreeShipping),
+            )}
+          </dd>
         </PriceWrapper>
       </Detail>
       <Spacer height={43} />
       <OrderButton disabled={totalProductPrice === 0}>
         {totalProductPrice === 0
           ? '장바구니에 상품을 담아주세요.'
-          : `주문하기 (총 ${formatPrice(calcTotalOrderPrice())})`}
+          : `주문하기 (총 ${formatPrice(
+              calcTotalOrderPrice(totalProductPrice, isFreeShipping),
+            )})`}
       </OrderButton>
     </Container>
   );
