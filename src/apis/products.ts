@@ -1,9 +1,10 @@
+import { servers } from '../constants/server';
 import type { Product } from '../types/product';
+import type { HostNameType } from '../types/server';
 
-const URL = `/products`;
-
-export const fetchProducts = async () => {
-  const response = await fetch(URL);
+export const fetchProducts = async (hostName: HostNameType) => {
+  const hostURL = servers[hostName];
+  const response = await fetch(`${hostURL}/products`);
 
   if (!response.ok) {
     throw new Error(response.status.toString());
