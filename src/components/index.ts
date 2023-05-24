@@ -6,3 +6,4 @@ export { CartProductList } from "./CartProductList";
 export { TotalPriceTable } from "./TotalPriceTable";
 export { Button } from "./Button";
 export { Loading } from "./Loading";
+export { ErrorBoundary } from "./ErrorBoundary";

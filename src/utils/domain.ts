@@ -23,7 +23,6 @@ export const makeLocalProducts = async (
       };
     });
   } catch (error) {
-    console.log("^^");
     console.log(error);
     return [];
   }

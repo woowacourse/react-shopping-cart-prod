@@ -12,8 +12,9 @@ export const Loading = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-self: center;
-  margin-top: 220px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 240px;
 
   & > img {
     width: 100px;
