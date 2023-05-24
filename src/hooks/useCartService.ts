@@ -1,13 +1,17 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import cartState from '../globalState/atoms/cartState';
 import type { Product } from '../types/product';
-import { CART_ITEMS_BASE_URL } from '../constant';
+import serverNameState from '../globalState/atoms/serverName';
+import ServerUtil from '../utils/ServerUrl';
 
 const useCartService = () => {
   const [cartList, setCartList] = useRecoilState(cartState);
 
+  const serverName = useRecoilValue(serverNameState);
+  const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
+
   const fetchCartItem = async () => {
-    const response = await fetch(CART_ITEMS_BASE_URL);
+    const response = await fetch(cartItemsUrl);
 
     if (!response.ok) {
       throw new Error('장바구니 목록을 불러오는 과정에서 문제가 발생했습니다.');
@@ -18,7 +22,7 @@ const useCartService = () => {
   };
 
   const addCartItem = async (product: Product) => {
-    const response = await fetch(CART_ITEMS_BASE_URL, {
+    const response = await fetch(cartItemsUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -35,7 +39,7 @@ const useCartService = () => {
 
   const updateCartItemQuantity =
     (cartId: string) => async (quantity: number) => {
-      const response = await fetch(`${CART_ITEMS_BASE_URL}/${cartId}`, {
+      const response = await fetch(`${cartItemsUrl}/${cartId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +66,7 @@ const useCartService = () => {
     };
 
   const deleteCartItem = async (cartId: string) => {
-    const response = await fetch(`${CART_ITEMS_BASE_URL}/${cartId}`, {
+    const response = await fetch(`${cartItemsUrl}/${cartId}`, {
       method: 'DELETE',
     });
 

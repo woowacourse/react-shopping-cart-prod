@@ -2,10 +2,15 @@ import { styled } from 'styled-components';
 import ProductItem from '../ProductItem/ProductItem';
 import useFetch from '../../../hooks/api/useFetch';
 import { Product } from '../../../types/product';
-import { PRODUCTS_BASE_URL } from '../../../constant';
+import { useRecoilValue } from 'recoil';
+import serverNameState from '../../../globalState/atoms/serverName';
+import ServerUtil from '../../../utils/ServerUrl';
 
 const ProductList = () => {
-  const { getData, error } = useFetch<Product[]>(PRODUCTS_BASE_URL);
+  const serverName = useRecoilValue(serverNameState);
+  const productsUrl = ServerUtil.getProductsUrl(serverName);
+
+  const { getData, error } = useFetch<Product[]>(productsUrl);
 
   if (error) {
     throw error;
