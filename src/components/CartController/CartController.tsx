@@ -8,11 +8,14 @@ import {
   QuantityInput,
 } from "./CartController.style";
 import {
-  addCartItemSelector,
+  cartState,
+  // addCartItemSelector,
   quantityByProductIdSelector,
   updateCartItemQuantitySelector,
 } from "../../recoil/cartAtoms";
 import { useRecoilValue, useSetRecoilState } from "recoil";
+import { fetchAddCart, fetchCartList } from "../../api/api";
+import { serverState } from "../../recoil/serverAtom";
 
 interface CartControllerProps {
   product: ProductItem;
@@ -20,11 +23,15 @@ interface CartControllerProps {
 
 function CartController({ product }: CartControllerProps) {
   const quantity = useRecoilValue(quantityByProductIdSelector(product.id));
-  const updateCartItemQuantity = useSetRecoilState(
-    updateCartItemQuantitySelector(product.id)
-  );
+  const server = useRecoilValue(serverState);
+  const updateCartItemQuantity = useSetRecoilState(updateCartItemQuantitySelector(product.id));
+  const setCartList = useSetRecoilState(cartState);
 
-  const addCartItem = useSetRecoilState(addCartItemSelector(undefined));
+  const addCartItem = async (productId: number) => {
+    await fetchAddCart(server, productId);
+    const newCartList = await fetchCartList(server);
+    setCartList(newCartList);
+  };
 
   const handleChangeQuantity = (event: ChangeEvent<HTMLInputElement>) => {
     const quantityInputValue = Number(
@@ -60,7 +67,7 @@ function CartController({ product }: CartControllerProps) {
       ) : (
         <AddCartButton
           onClick={() => {
-            addCartItem(product);
+            addCartItem(product.id);
           }}
         >
           장바구니에 담기

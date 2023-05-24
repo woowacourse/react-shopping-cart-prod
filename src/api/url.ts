@@ -3,7 +3,7 @@
  */
 export const url: { [server: string]: string } = {
   테스트: "",
-  디노: "",
+  디노: "http://www.good-dino.store:8080",
   레오: "http://54.180.87.152:8080",
-  비버: "http://3.39.192.66:8080",
+  비버: "http://zlzonbeaver.store:8080",
 };
