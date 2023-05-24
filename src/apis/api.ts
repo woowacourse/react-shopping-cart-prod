@@ -3,7 +3,7 @@ import { ERROR_CODE } from '../constants/errors';
 import { getValidURL, handleStatusCode } from '../validation/errorHandler';
 import { CustomError } from '../validation/errors';
 
-const base64 = 'IGFAYS5jb206MTIzNA==';
+const base64 = 'YUBhLmNvbToxMjM0';
 
 const BASE =
   process.env.NODE_ENV === 'development'
