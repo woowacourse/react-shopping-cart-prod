@@ -7,8 +7,8 @@ const meta = {
   title: 'ShoppingCart/Cart/CartItem',
   component: CartItem,
   args: {
+    cartItemId: 2,
     quantity: 7,
-    id: 2,
     name: '올인원 세트-물티수저',
     price: 57600,
     imageUrl:
@@ -17,7 +17,7 @@ const meta = {
 } satisfies Meta<typeof CartItem>;
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof CartItem>;
 
 export const Default: Story = {};
 
