@@ -1,17 +1,18 @@
-import Logo from '../../assets/Logo.svg';
+import Logo from '../../assets/Logo.png';
 import * as Styled from './Header.styles';
 import ShoppingCartStatus from './ShoppingCartStatus/ShoppingCartStatus.tsx';
 import { useNavigate } from 'react-router-dom';
 import { memo } from 'react';
+import routes from '../../constants/routes.ts';
 
 const Header = () => {
   const navigate = useNavigate();
   const handleLogoClick = () => {
-    navigate('/');
+    navigate(routes.list);
   };
 
   const handleShoppingCartButtonClick = () => {
-    navigate('/cart');
+    navigate(routes.cart);
   };
 
   return (
