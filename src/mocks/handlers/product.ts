@@ -5,7 +5,7 @@ import productListData from '../../data/mockData.json';
 
 const productHandlers = [
   rest.get(API_ENDPOINT.PRODUCTS, (req, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(productListData));
+    return res(ctx.delay(1000), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(productListData));
   }),
 ];
 
