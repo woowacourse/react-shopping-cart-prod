@@ -29,7 +29,7 @@ export const cart = [
     // 명세상 return되는 body가 없음...
     // 명세상 productId가 아닌, cartItemId가 반환됨...
     // Location: /cart-items/{cartItemId}
-    return res(ctx.status(201), ctx.set('Location', `/cart-items/${productId}`), ctx.json({}), ctx.delay(100));
+    return res(ctx.status(201), ctx.set('Location', `/cart-items/${productId + 1000}`), ctx.json({}), ctx.delay(100));
   }),
 
   rest.patch<PatchReqBody>('/cart-items/:cartItemId', async (req, res, ctx) => {

@@ -20,13 +20,6 @@ const defaultCartState = selector({
 export const cartProductsState = atom<CartProducts>({
   key: 'cartState',
   default: defaultCartState,
-  effects: [
-    persistAtomEffect<CartProducts>({
-      key: CART_KEY,
-      initialValue: new Map(),
-      options: { serializer: mapToString, deserializer: stringToMap },
-    }),
-  ],
 });
 
 export const checkedCartProductsTotalPrice = selectorFamily<number, Set<Product['id']>>({
@@ -36,8 +29,8 @@ export const checkedCartProductsTotalPrice = selectorFamily<number, Set<Product[
     ({ get }) => {
       const cartProducts = get(cartProductsState);
 
-      return [...cartProducts.values()].reduce((acc, { product, quantity }) => {
-        if (!checkedProducts.has(product.id)) return acc;
+      return [...cartProducts.entries()].reduce((acc, [cartProductId, { product, quantity }]) => {
+        if (!checkedProducts.has(cartProductId)) return acc;
 
         return acc + product.price * quantity;
       }, 0);
