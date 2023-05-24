@@ -72,7 +72,7 @@ const cartListSubTotalState = selector({
     const checkedCartItemList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
 
     const subTotal = cartList
-      .filter((cartItem) => checkedCartItemList.has(cartItem.product.id))
+      .filter((cartItem) => checkedCartItemList.has(cartItem.id))
       .reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0);
 
     return subTotal;
