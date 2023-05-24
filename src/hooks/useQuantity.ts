@@ -1,5 +1,9 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { localProductsState, productsState } from "../recoil/atom";
+import {
+  localProductsState,
+  productsState,
+  serverOwnerState,
+} from "../recoil/atom";
 import React, { useState } from "react";
 import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
 import { changeQuantity, deleteCartItem } from "../api";
@@ -7,6 +11,7 @@ import { LocalProductType } from "../types/domain";
 import { makeLocalProducts } from "../utils/domain";
 
 export const useQuantity = (productId: number) => {
+  const serverOwner = useRecoilValue(serverOwnerState);
   const products = useRecoilValue(productsState);
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
   const currentLocalProduct = localProducts.find(
@@ -16,19 +21,33 @@ export const useQuantity = (productId: number) => {
     currentLocalProduct?.quantity.toString()
   );
 
+  const [isError, setIsError] = useState<boolean>(false);
+
   const setNewQuantity = async (newQuantity: number) => {
     if (!currentLocalProduct) return;
     if (newQuantity > MAX_QUANTITY || newQuantity < MIN_QUANTITY) return;
 
-    newQuantity === 0
-      ? await deleteCartItem(currentLocalProduct.cartItemId)
-      : await changeQuantity(
+    try {
+      if (newQuantity === 0) {
+        const response = await deleteCartItem(currentLocalProduct.cartItemId);
+        if (!response.ok) {
+          throw new Error(response.status.toString());
+        }
+      } else {
+        const response = await changeQuantity(
           currentLocalProduct.cartItemId,
           Number(newQuantity)
         );
+        if (!response.ok) {
+          throw new Error(response.status.toString());
+        }
+      }
+    } catch (error) {
+      setIsError(true);
+    }
 
     setQuantity(newQuantity.toString());
-    const newProducts = await makeLocalProducts(products);
+    const newProducts = await makeLocalProducts(products, serverOwner);
     setLocalProducts(newProducts);
   };
 
@@ -50,6 +69,7 @@ export const useQuantity = (productId: number) => {
   };
 
   return {
+    isError,
     quantity,
     setNewQuantity,
     handleQuantityChanged,

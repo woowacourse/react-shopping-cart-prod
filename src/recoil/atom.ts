@@ -8,9 +8,16 @@ export const productsState = atom<ProductType[]>({
   key: "products",
   default: selector<ProductType[]>({
     key: "initialProducts/default",
-    get: async () => {
-      const data = await fetchProducts();
-      return data;
+    get: async ({ get }) => {
+      try {
+        const response = await fetchProducts(get(serverOwnerState));
+
+        if (!response.ok) throw new Error(response.status.toString());
+
+        return await response.json();
+      } catch (error) {
+        console.log(error);
+      }
     },
   }),
 });
@@ -19,8 +26,8 @@ export const localProductsState = atom<LocalProductType[]>({
   key: "localProducts",
   default: selector<LocalProductType[]>({
     key: "products/default",
-    get: async ({ get }) => {
-      return await makeLocalProducts(get(productsState));
+    get: ({ get }) => {
+      return makeLocalProducts(get(productsState), get(serverOwnerState));
     },
   }),
 });
@@ -32,5 +39,5 @@ export const selectedProductsState = atom<LocalProductType[]>({
 
 export const serverOwnerState = atom<string>({
   key: "serverOwner",
-  default: "리오",
+  default: "루카",
 });

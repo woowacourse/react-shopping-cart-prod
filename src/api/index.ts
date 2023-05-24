@@ -1,82 +1,48 @@
-const DEV_BASE_URL =
-  "http://cors-anywhere.herokuapp.com/http://43.201.20.174:8080";
+import { SERVERS } from "../constants";
+
+const DEV_BASE_URL = "http://cors-anywhere.herokuapp.com";
 const username = "a@a.com";
 const password = "1234";
 
 // Base64로 인코딩
 const base64 = btoa(username + ":" + password);
 
-export const fetchProducts = async () => {
-  try {
-    const response = await fetch(`${DEV_BASE_URL}/products`, {
-      headers: {
-        Authorization: `Basic ${base64}`,
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const fetchProducts = (serverOwner: string) =>
+  fetch(`http://cors-anywhere.herokuapp.com/${SERVERS[serverOwner]}/products`);
 
-export const fetchCartItems = async () => {
-  try {
-    const response = await fetch(`${DEV_BASE_URL}/cart-items`, {
+export const fetchCartItems = async (serverOwner: string) =>
+  fetch(
+    `http://cors-anywhere.herokuapp.com/${SERVERS[serverOwner]}/cart-items`,
+    {
       headers: {
         Authorization: `Basic ${base64}`,
       },
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.log(error);
-  }
-};
+    }
+  );
 
-export const changeQuantity = async (
-  cartItemId: number,
-  newQuantity: number
-) => {
-  try {
-    await fetch(`${DEV_BASE_URL}/cart-items/${cartItemId}`, {
-      headers: {
-        Authorization: `Basic ${base64}`,
-        "Content-Type": "application/json",
-      },
-      method: "PATCH",
-      body: JSON.stringify({ quantity: newQuantity }),
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const changeQuantity = async (cartItemId: number, newQuantity: number) =>
+  fetch(`${DEV_BASE_URL}/cart-items/${cartItemId}`, {
+    headers: {
+      Authorization: `Basic ${base64}`,
+    },
+    method: "PATCH",
+    body: JSON.stringify({ quantity: newQuantity }),
+  });
 
-export const addCartItem = async (productId: number) => {
-  try {
-    await fetch(`${DEV_BASE_URL}/cart-items`, {
-      headers: {
-        Authorization: `Basic ${base64}`,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({ productId: productId }),
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const addCartItem = async (productId: number) =>
+  fetch(`${DEV_BASE_URL}/cart-items`, {
+    headers: {
+      Authorization: `Basic ${base64}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+    body: JSON.stringify({ productId: productId }),
+  });
 
-export const deleteCartItem = async (cartItemId: number) => {
-  try {
-    await fetch(`${DEV_BASE_URL}/cart-items/${cartItemId}`, {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-      method: "DELETE",
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const deleteCartItem = async (cartItemId: number) =>
+  fetch(`${DEV_BASE_URL}/cart-items/${cartItemId}`, {
+    headers: {
+      Authorization: `Basic ${base64}`,
+    },
+    method: "DELETE",
+  });

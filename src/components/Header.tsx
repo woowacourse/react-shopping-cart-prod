@@ -26,7 +26,7 @@ export const Header = () => {
       <CartContainer>
         <SelectBox onSelect={handleServerSelected}>
           {Object.keys(SERVERS).map((server) => (
-            <option>{server}</option>
+            <option key={crypto.randomUUID()}>{server}</option>
           ))}
         </SelectBox>
         <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>

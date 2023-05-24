@@ -1,6 +1,10 @@
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { productsState, localProductsState } from "../recoil/atom";
+import {
+  productsState,
+  localProductsState,
+  serverOwnerState,
+} from "../recoil/atom";
 import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
@@ -21,13 +25,14 @@ export const ProductList = () => {
 };
 
 const Product = ({ id, name, price, imageUrl, quantity }: LocalProductType) => {
+  const serverOwner = useRecoilValue(serverOwnerState);
   const products = useRecoilValue(productsState);
   const setLocalProducts = useSetRecoilState(localProductsState);
 
   const handleCartClicked = async () => {
     await addCartItem(id);
 
-    const newProducts = await makeLocalProducts(products);
+    const newProducts = await makeLocalProducts(products, serverOwner);
     setLocalProducts(newProducts);
   };
 
