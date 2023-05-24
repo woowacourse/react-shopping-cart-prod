@@ -59,8 +59,8 @@ const useCart = () => {
   const { mutate: removeItem } = useMutationFetch<void, number>(
     useRecoilCallback(
       ({ set }) =>
-        async (productId) => {
-          await deleteCartItem(productId);
+        async (cartItemId) => {
+          await deleteCartItem(cartItemId);
           const newCartList = await getCartList();
           set(cartListState, newCartList);
         },
@@ -71,8 +71,8 @@ const useCart = () => {
   const { mutate: removeCheckedItems } = useMutationFetch<void, number[]>(
     useRecoilCallback(
       ({ set }) =>
-        async (productIds) => {
-          await Promise.all(productIds.map((productId) => deleteCartItem(productId)));
+        async (cartItemIds) => {
+          await Promise.all(cartItemIds.map((cartItemId) => deleteCartItem(cartItemId)));
           const newCartList = await getCartList();
           set(cartListState, newCartList);
         },
