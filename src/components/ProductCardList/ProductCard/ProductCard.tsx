@@ -3,6 +3,8 @@ import FlexBox from 'components/@common/FlexBox';
 import CartQuantityStepper from 'components/CartQuantityStepper/CartQuantityStepper';
 import useShoppingCart from 'hooks/useShoppingCart';
 import type { Product } from 'types/product';
+import { useRecoilValue } from 'recoil';
+import { cartProductIdStoreState } from 'state/cartProductIdStore';
 
 type ProductCardProps = {
   product: Product;
@@ -10,8 +12,9 @@ type ProductCardProps = {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { cartProducts, initialAddCart, increaseQuantity, decreaseQuantity } = useShoppingCart();
+  const cartProductIdStore = useRecoilValue(cartProductIdStoreState);
   const { id, price, name, imageUrl } = product;
-  const targetCartProduct = cartProducts.get(id);
+  const targetCartProduct = cartProducts.get(cartProductIdStore[id]);
   const cartProductQuantity = targetCartProduct?.quantity ?? 0;
 
   return (
