@@ -19,4 +19,4 @@
 
 ## 🐞 Bug Report
 
-버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-cart-prod/issues)에 등록해주세요.
+버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-shop-prod/issues)에 등록해주세요.
