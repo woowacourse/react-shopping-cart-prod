@@ -10,10 +10,10 @@ export const fetchAddCart = async (server: string, id: number) => {
     }),
     headers: {
       Authorization: `Basic ${base64}`,
+      "Content-Type": 'application/json',
     },
   });
-  const result = await response.json();
-  console.log(result);
+  console.log(response.ok);
 };
 
 export const fetchDeleteCart = async (server: string, id: number) => {
@@ -34,10 +34,10 @@ export const fetchUpdateCart = async (server: string, id: number, quantity: numb
     }),
     headers: {
       Authorization: `Basic ${base64}`,
+      "Content-Type": 'application/json',
     },
   });
-  const result = await response.json();
-  console.log(result);
+  console.log(response.ok);
 };
 
 export const fetchCartList = async (server: string) => {

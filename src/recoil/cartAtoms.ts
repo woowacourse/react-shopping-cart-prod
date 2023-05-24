@@ -72,7 +72,7 @@ export const quantityByProductIdSelector = selectorFamily({
     (productId: number) =>
       ({ get }) => {
         const cartList = get(cartState);
-        const targetCart = cartList.find((cart) => cart.id === productId);
+        const targetCart = cartList.find((cart) => cart.product.id === productId);
         return targetCart?.quantity ?? 0;
       },
 });
@@ -117,32 +117,38 @@ export const updateCartItemQuantitySelector = selectorFamily<number, number>({
       ({ get, set }, newQuantity) => {
         const quantity = newQuantity as number;
         const server = get(serverState);
+        const cartList = get(cartState);
 
-        if (quantity === 0) {
-          const id = productId as number;
-          const cartList = get(cartState);
-          if (confirm("정말로 삭제하시겠습니까?")) {
-            const removedCartList = cartList.filter((cart) => cart.id !== id);
-            set(cartState, removedCartList);
-            fetchDeleteCart(server, id);
-          }
-        } else {
-          const cartList = get(cartState);
-          const targetIndex = cartList.findIndex(
-            (cartItem) => cartItem.id === productId
-          );
+        const targetCartItem = cartList.find(cartItem => cartItem.product.id === productId);
+        if (targetCartItem) {
+          const cartId = targetCartItem.id;
 
-          if (targetIndex !== -1) {
-            const updatedCartList = [...cartList];
-            updatedCartList[targetIndex] = {
-              ...updatedCartList[targetIndex],
-              quantity,
-            };
-            set(cartState, updatedCartList);
+          if (quantity === 0) {
+            if (confirm("정말로 삭제하시겠습니까?")) {
+              const removedCartList = cartList.filter((cart) => cart.product.id !== productId);
+              set(cartState, removedCartList);
+              fetchDeleteCart(server, cartId);
+            }
+          } else {
+            const cartList = get(cartState);
+            const targetIndex = cartList.findIndex(
+              (cartItem) => cartItem.product.id === productId
+            );
 
-            fetchUpdateCart(server, productId, newQuantity as number);
+            if (targetIndex !== -1) {
+              const updatedCartList = [...cartList];
+              updatedCartList[targetIndex] = {
+                ...updatedCartList[targetIndex],
+                quantity,
+              };
+              set(cartState, updatedCartList);
+
+
+              fetchUpdateCart(server, cartId, newQuantity as number);
+            }
           }
         }
+
       },
 });
 
