@@ -14,7 +14,9 @@ function CartList() {
       <Suspense fallback={<></>}>
         <EmptyCart />
       </Suspense>
-      <CartListSubHeader />
+      <Suspense fallback={<></>}>
+        <CartListSubHeader />
+      </Suspense>
       <S.ShoppingCartContentsLayout>
         <S.CartList>
           <S.CartListLayout>

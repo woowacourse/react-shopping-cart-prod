@@ -13,11 +13,11 @@ function PaymentAmount() {
   const allPrice = useRecoilValue(orderAmountState);
   const cartAmount = useRecoilValue(cartItemsAmountState);
 
-  if (cartAmount === '0') return <></>;
-
   const orderAmount = `${allPrice.toLocaleString()} 원`;
   const deliveryFee = !allPrice ? `0 원` : `${DELIVERY_FEE.toLocaleString()} 원`;
   const totalOrderPrice = `${(allPrice + (!allPrice ? 0 : DELIVERY_FEE)).toLocaleString()} 원`;
+
+  if (cartAmount === '0') return <></>;
 
   return (
     <S.Container>
