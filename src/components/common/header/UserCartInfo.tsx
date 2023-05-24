@@ -46,11 +46,6 @@ const UserCartInfo = () => {
     <CardCounterWrapper ref={ref} to="/cart">
       {isShown && (
         <>
-          <select style={{ width: 70, height: 30, marginRight: 10 }}>
-            <option>다크론</option>
-            <option>에디</option>
-            <option>루루</option>
-          </select>
           <Text color="#ffffff" size="large" lineHeight="12px">
             의 장바구니
           </Text>

@@ -1,5 +1,3 @@
-export type serverURLType = (typeof servers)[keyof typeof servers];
-
 export const servers = {
   달리: 'http://52.79.233.108:8080',
   오션: 'http://east-c.shop',

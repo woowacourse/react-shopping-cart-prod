@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import styled from '@emotion/styled';
 import { TrashCanIcon } from '../../../assets';
 import InputStepper from '../../common/InputStepper/InputStepper';

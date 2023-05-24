@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
-import { serverURLType, servers } from './apiURL';
+import { servers } from './apiURL';
+import { ServerURLType } from '../types/types';
 
 type ModalType = {
   title?: string;
@@ -19,7 +20,7 @@ export const deleteModalState = atom<ModalType>({
   },
 });
 
-export const serverState = atom<serverURLType>({
+export const serverState = atom<ServerURLType>({
   key: 'serverUrl',
   default: servers.달리,
 });

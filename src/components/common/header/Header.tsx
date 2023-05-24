@@ -3,6 +3,7 @@ import { Text } from '../Text/Text';
 import { CartIcon } from '../../../assets';
 import UserCartInfo from './UserCartInfo';
 import { Link } from 'react-router-dom';
+import Selector from '../Selector/Selector';
 
 const Header = () => {
   return (
@@ -15,6 +16,7 @@ const Header = () => {
           </Text>
         </LogoWrapper>
         <CartWrapper>
+          <Selector />
           <UserCartInfo />
         </CartWrapper>
       </HeaderInner>

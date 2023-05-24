@@ -1,4 +1,5 @@
-import { base64, servers } from '../service/apiURL';
+import { useEffect } from 'react';
+import { base64 } from '../service/apiURL';
 import { serverState } from '../service/atom';
 import { CartItem } from '../types/types';
 import { useMutation, useQuery } from 'react-query';
@@ -74,6 +75,10 @@ export const useCart = () => {
     mutateCartData.mutate({ method: 'PATCH', cartId, body });
 
   const deleteCartItemAPI = (cartId: number) => mutateCartData.mutate({ method: 'DELETE', cartId });
+
+  useEffect(() => {
+    refetch();
+  }, [serverURL]);
 
   return {
     data,

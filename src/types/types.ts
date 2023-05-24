@@ -1,3 +1,5 @@
+import { servers } from '../service/apiURL';
+
 export interface Product {
   id: number;
   name: string;
@@ -10,3 +12,5 @@ export interface CartItem {
   quantity: number;
   product: Product;
 }
+
+export type ServerURLType = (typeof servers)[keyof typeof servers];

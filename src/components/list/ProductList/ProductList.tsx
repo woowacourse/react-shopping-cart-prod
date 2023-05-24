@@ -1,20 +1,11 @@
 import styled from '@emotion/styled';
 import ProductItem from '../../box/ProductItem/ProductItem';
-import type { Product } from '../../../types/types';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
-import { useQuery } from 'react-query';
-import { useRecoilValue } from 'recoil';
-import { serverState } from '../../../service/atom';
+import useProduct from '../../../hooks/useProduct';
 
 const ProductList = () => {
-  const serverURL = useRecoilValue(serverState);
-
-  const { data, isLoading } = useQuery<Product[]>('products', async () => {
-    const res = await fetch(`${serverURL}/products`, { method: 'GET' });
-    const resData = await res.json();
-    return resData;
-  });
+  const { data, isLoading } = useProduct();
 
   if (isLoading) {
     return <LoadingSpinner />;
