@@ -12,10 +12,10 @@ export const Button = styled.div`
   background-image: url(${ServersIcon});
   background-size: 50px;
   background-repeat: no-repeat;
-  background-position: 0px 70px;
+  background-position: 0px 130px;
 
   width: 70px;
-  height: 120px;
+  height: 180px;
 
   &:hover {
     & > div {

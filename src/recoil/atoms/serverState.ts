@@ -4,7 +4,7 @@ import { Servers } from '@Types/index';
 
 const serverState = atom<Servers>({
   key: 'serverState',
-  default: '에단',
+  default: '도리와 노아',
 });
 
 export default serverState;

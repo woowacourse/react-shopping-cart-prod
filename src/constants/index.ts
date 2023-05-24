@@ -64,4 +64,11 @@ export const SERVERS = {
     password: '1234',
     avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04METH8VKK-f128d33fbf53-512',
   },
+
+  '도리와 노아': {
+    apiUrl: '',
+    email: '',
+    password: '',
+    avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04LMNEGB2T-e1f4aef15b2c-512',
+  },
 } as const;
