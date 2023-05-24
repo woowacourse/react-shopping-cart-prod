@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { PATH } from '../../constants/';
+import { ROUTE_PATH } from '../../constants/';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
 import Cart from '../Cart';
 import CartIcon from '../icons/CartIcon';
@@ -15,7 +15,7 @@ const Header = ({ title }: Props) => {
   return (
     <S.Header>
       <S.Wrapper>
-        <S.Button onClick={() => goToPage(PATH.MAIN_PAGE)}>
+        <S.Button onClick={() => goToPage(ROUTE_PATH.MAIN_PAGE)}>
           <CartIcon aria-label='logo-cart-icon' />
           <span>{title}</span>
         </S.Button>

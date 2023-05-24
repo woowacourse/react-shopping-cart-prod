@@ -1,4 +1,4 @@
-export const PATH: Readonly<Record<string, string>> = {
+export const ROUTE_PATH: Readonly<Record<string, string>> = {
   MAIN_PAGE: '/',
   CART_PAGE: '/cart-page',
 };

@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { PATH } from './constants';
+import { ROUTE_PATH } from './constants';
 import CartPage from './pages/CartPage';
 import MainPage from './pages/MainPage';
 
-const { MAIN_PAGE, CART_PAGE } = PATH;
+const { MAIN_PAGE, CART_PAGE } = ROUTE_PATH;
 
 const App = () => {
   return (
