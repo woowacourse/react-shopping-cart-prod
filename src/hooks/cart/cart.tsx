@@ -43,26 +43,19 @@ export const useMutateCart = () => {
   const refreshCart = useRecoilRefresher_UNSTABLE(cartState);
   const selectedItems = useRefreshableRecoilValue(selectedItemsSelector);
 
-  const addItemToCartMutation = waitForMutation(addToCart, {
-    onSuccess(params, { headers }) {
-      refreshCart();
-    },
-  });
+  const addItemToCartMutation = waitForMutation(addToCart);
 
-  const composedCartItemMutation = ({
+  const composedCartItemMutation = async ({
     id,
     quantity,
   }: {
     id: number;
     quantity: number;
   }) => {
-    waitForMutation(addItemToCartMutation, {
-      onSuccess(params, { headers }) {
-        const cartId = +headers.get('Location')!.replace('/cart-items/', '');
+    const { headers } = await addItemToCartMutation({ productId: id });
+    const cartId = +headers.get('Location')!.replace('/cart-items/', '');
 
-        updateCartItemMutation({ cartId, quantity });
-      },
-    })({ productId: id });
+    await updateCartItemMutation({ cartId, quantity });
   };
 
   const updateCartItemMutation = waitForMutation(updateCartItem, {
