@@ -43,14 +43,12 @@ export const useFetchData = () => {
         body: JSON.stringify(body),
       });
     },
-    delete: <T>(url: string, body: T) => {
+    delete: (url: string) => {
       return fetchData(url, {
         method: 'DELETE',
         headers: {
           Authorization: 'Basic YUBhLmNvbToxMjM0',
-          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(body),
       });
     },
   };
