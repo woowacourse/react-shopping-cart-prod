@@ -35,7 +35,10 @@ function ProductItem({ product }: ProductItemProps) {
     <>
       <ProductItemBox onClick={openModal}>
         <ProductItemImageBox>
-          <ProductItemImage src={imageUrl} />
+          <ProductItemImage
+            src={imageUrl}
+            loading="lazy"
+          />
         </ProductItemImageBox>
         <ProductDetails>
           <ProductInfo>
