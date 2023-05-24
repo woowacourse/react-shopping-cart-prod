@@ -44,15 +44,15 @@ const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
   animation: ${toastAnim} 1.6s linear;
   position: absolute;
   left: 50%;
-  bottom: 64px;
+  bottom: 80px;
   transform: translateX(-50%);
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  padding: 0 16px;
-  height: 42px;
+  padding: 0 20px;
+  height: 44px;
   border-radius: 4px;
 
   background-color: ${({ type }) =>
@@ -62,7 +62,7 @@ const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
       error: 'rgb(222,96,96)',
     }[type])};
 
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: white;
 `;
