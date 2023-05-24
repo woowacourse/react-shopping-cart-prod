@@ -4,6 +4,7 @@ import { ReactComponent as Logo } from '../../assets/logo.svg';
 import useToast from '../../hooks/useToast';
 import { $CartIdList, $CurrentServerUrl } from '../../recoil/atom';
 import styles from './index.module.scss';
+import DropDown from '../Common/DropDown';
 
 function Header() {
   const cartIdList = useRecoilValue($CartIdList);
@@ -16,15 +17,9 @@ function Header() {
     에코: process.env.REACT_APP_SERVER_BASE_URL_ECO,
   };
 
-  const options = Object.keys(serverOptions).map((key, index) => (
-    <option key={index} value={key}>
-      {key}
-    </option>
-  ));
-
-  const serverSelectChange: React.ChangeEventHandler<HTMLSelectElement> = event => {
-    const { value } = event.currentTarget;
-    const updateOption = serverOptions[value];
+  const serverSelectChange = (target: HTMLLIElement) => {
+    const { textContent } = target;
+    const updateOption = serverOptions[textContent ?? ''];
 
     if (updateOption === undefined) {
       Toast.error('해당 서버가 존재하지 않습니다.');
@@ -40,7 +35,7 @@ function Header() {
         <Logo />
       </Link>
       <div className={styles.cart}>
-        <select onChange={serverSelectChange}>{options}</select>
+        <DropDown options={Object.keys(serverOptions)} selectedListHandler={serverSelectChange} />
         <Link to="/cart">
           <button type="button" onClick={Toast.reset}>
             장바구니

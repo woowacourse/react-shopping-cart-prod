@@ -17,7 +17,7 @@ const useGetQuery = <DataType>(fetchUrl: string, headers?: HeadersInit) => {
       })
       .catch((e: Error) => setError(e.message))
       .finally(() => setLoading(false));
-  }, []);
+  }, [fetchUrl]);
 
   const refreshQuery = useCallback(async () => {
     setLoading(true);
