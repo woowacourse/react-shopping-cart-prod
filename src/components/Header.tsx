@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CartIcon } from "../assets";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { localProductsSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
@@ -11,7 +11,7 @@ import { serverOwnerState } from "../recoil/atom";
 export const Header = () => {
   const { goPage } = useRouter();
   const cartProducts = useRecoilValue(localProductsSelector);
-  const setServerOwner = useSetRecoilState(serverOwnerState);
+  const [serverOwner, setServerOwner] = useRecoilState(serverOwnerState);
 
   const handleServerSelected = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setServerOwner(e.target.value);
@@ -24,7 +24,7 @@ export const Header = () => {
         <p>SHOP</p>
       </TitleContainer>
       <CartContainer>
-        <SelectBox onSelect={handleServerSelected}>
+        <SelectBox value={serverOwner} onChange={handleServerSelected}>
           {Object.keys(SERVERS).map((server) => (
             <option key={crypto.randomUUID()}>{server}</option>
           ))}
@@ -65,11 +65,19 @@ const TitleContainer = styled.section`
     color: white;
     font-weight: 900;
     font-size: 2rem;
+    @media screen and (max-width: 850px) {
+      font-size: 1.5rem;
+    }
   }
 
   & > img {
     width: 46px;
     height: 46px;
+
+    @media screen and (max-width: 850px) {
+      width: 35px;
+      height: 35px;
+    }
   }
 `;
 
@@ -83,6 +91,10 @@ const CartContainer = styled.section`
   color: white;
 
   cursor: pointer;
+
+  @media screen and (max-width: 850px) {
+    font-size: 20px;
+  }
 `;
 
 const ItemQuantityBox = styled.div`
@@ -101,6 +113,13 @@ const ItemQuantityBox = styled.div`
 `;
 
 const SelectBox = styled.select`
-  width: 102px;
+  width: 75px;
   height: 40px;
+
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0 5px;
+
+  border-radius: 4px;
+  background: var(--light-gray);
 `;

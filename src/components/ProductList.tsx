@@ -83,10 +83,19 @@ const ProductWrapper = styled.div`
   position: relative;
 
   & > img {
-    width: 100%;
-    height: 100%;
+    width: 300px;
+    height: 300px;
     border-radius: 5px;
     object-fit: cover;
+    @media screen and (max-width: 1200px) {
+      width: 250px;
+      height: 250px;
+    }
+
+    @media screen and (max-width: 800px) {
+      width: 200px;
+      height: 200px;
+    }
 
     &:hover {
       background-color: var(--shadow-gray);

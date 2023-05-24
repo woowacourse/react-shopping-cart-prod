@@ -1,13 +1,17 @@
-import { Header, Page, ProductList } from "../components";
+import { Suspense } from "react";
+import { Header, Loading, Page, ProductList } from "../components";
+import { ErrorBoundary } from "../components/index";
 
 const Main = () => {
   return (
-    <>
-      <Header />
-      <Page>
-        <ProductList />
-      </Page>
-    </>
+    <Suspense fallback={<Loading />}>
+      <ErrorBoundary>
+        <Header />
+        <Page>
+          <ProductList />
+        </Page>
+      </ErrorBoundary>
+    </Suspense>
   );
 };
 
