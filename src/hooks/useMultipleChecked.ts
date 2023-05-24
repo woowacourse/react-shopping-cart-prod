@@ -12,11 +12,13 @@ import {
   updateCartProductChecked,
 } from '../states/checkedCartProducts/utils';
 import { serverNameState } from '../states/serverName';
+import { toastState } from '../states/toast/atom';
 
 const useMultipleChecked = () => {
   const serverName = useRecoilValue(serverNameState);
   const [checked, setChecked] = useRecoilState(checkedState(serverName));
   const setCartProducts = useSetRecoilState(cartProductState(serverName));
+  const setToastState = useSetRecoilState(toastState);
 
   const { deleteData } = cartProductApis(serverName, '/cart-items');
 
@@ -34,20 +36,25 @@ const useMultipleChecked = () => {
   };
 
   const deleteCheckedProducts = () => {
-    setCartProducts((prev) =>
-      prev.filter(
-        (cartProduct) => !findTargetChecked(checked, cartProduct.id)?.isChecked
-      )
-    );
-    setChecked((prev) => filterCartProductChecked(prev, false));
+    try {
+      checked.forEach(async (item) => {
+        if (item.isChecked) await deleteData(item.id);
+      });
 
-    checked.forEach((item) => {
-      try {
-        if (item.isChecked) deleteData(item.id);
-      } catch (error) {
-        // 에러 처리
-      }
-    });
+      setCartProducts((prev) =>
+        prev.filter(
+          (cartProduct) =>
+            !findTargetChecked(checked, cartProduct.id)?.isChecked
+        )
+      );
+      setChecked((prev) => filterCartProductChecked(prev, false));
+    } catch {
+      setToastState({
+        message: '상품 삭제를 실패했습니다',
+        variant: 'error',
+        duration: 2000,
+      });
+    }
   };
 
   return {

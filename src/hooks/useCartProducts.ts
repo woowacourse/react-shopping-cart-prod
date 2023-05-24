@@ -9,6 +9,7 @@ import {
 import { addTargetProduct } from '../states/cartProducts/util';
 import type { Product } from '../types/product';
 import { serverNameState } from '../states/serverName';
+import { toastState } from '../states/toast/atom';
 
 const useCartProducts = (product: Product) => {
   const [cartItemId, setCartItemId] = useState<number>();
@@ -19,6 +20,7 @@ const useCartProducts = (product: Product) => {
   const targetProduct = useRecoilValue(
     targetCartProductState({ serverName, productId: id, cartItemId })
   );
+  const setToastState = useSetRecoilState(toastState);
 
   const { postData } = cartProductApis(serverName, '/cart-items');
 
@@ -29,13 +31,22 @@ const useCartProducts = (product: Product) => {
       const cartItemId = Number(location?.split('/').pop());
 
       if (Number.isNaN(cartItemId)) {
-        throw new Error('location fuck');
+        throw new Error('장바구니에서 상품을 찾지 못했습니다.');
       }
 
       setCartItemId(cartItemId);
       setCartProducts((prev) => addTargetProduct(prev, cartItemId, product));
+      setToastState({
+        message: '상품 추가를 성공했습니다.',
+        variant: 'success',
+        duration: 2000,
+      });
     } catch {
-      // 에러 처리
+      setToastState({
+        message: '상품 추가를 실패했습니다.',
+        variant: 'error',
+        duration: 2000,
+      });
     }
   };
 

@@ -7,36 +7,51 @@ import {
   updateTargetQuantity,
 } from '../states/cartProducts/util';
 import { serverNameState } from '../states/serverName';
+import { toastState } from '../states/toast/atom';
 
 const useProductQuantity = (id: number, quantity: number) => {
   const serverName = useRecoilValue(serverNameState);
   const setCartProducts = useSetRecoilState(cartProductState(serverName));
+  const setToastState = useSetRecoilState(toastState);
 
   const { patchData, deleteData } = cartProductApis(serverName, '/cart-items');
 
-  const deleteProduct = () => {
+  const deleteProduct = async () => {
     try {
-      deleteData(id);
+      await deleteData(id);
       setCartProducts((prev) => deleteTargetProduct(prev, id));
+      setToastState({
+        message: '상품을 삭제했어요',
+        variant: 'success',
+        duration: 2000,
+      });
     } catch (error) {
-      // 에러처리
+      setToastState({
+        message: '상품 삭제를 실패했습니다',
+        variant: 'error',
+        duration: 2000,
+      });
     }
   };
 
-  const addCount = () => {
+  const addCount = async () => {
     try {
       const updatedQuantity = quantity + 1;
 
-      patchData(id, updatedQuantity);
+      await patchData(id, updatedQuantity);
       setCartProducts((prev) =>
         updateTargetQuantity(prev, id, updatedQuantity)
       );
     } catch (error) {
-      // 에러 처리
+      setToastState({
+        message: '수량 변경을 실패했습니다',
+        variant: 'error',
+        duration: 2000,
+      });
     }
   };
 
-  const subtractCount = () => {
+  const subtractCount = async () => {
     try {
       const updatedQuantity = quantity - 1;
 
@@ -45,12 +60,16 @@ const useProductQuantity = (id: number, quantity: number) => {
         return;
       }
 
-      patchData(id, updatedQuantity);
+      await patchData(id, updatedQuantity);
       setCartProducts((prev) =>
         updateTargetQuantity(prev, id, updatedQuantity)
       );
     } catch (error) {
-      // 에러 처리
+      setToastState({
+        message: '수량 변경을 실패했습니다',
+        variant: 'error',
+        duration: 2000,
+      });
     }
   };
 
