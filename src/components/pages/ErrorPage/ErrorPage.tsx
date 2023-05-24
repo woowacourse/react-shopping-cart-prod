@@ -1,9 +1,11 @@
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { ResetButton } from '../ErrorFallback/ErrorFallback';
-// import emoji from 'src/assets/image/blobsad.png';
 import blobsad from '../../../assets/image/blobsad.png';
 
 const ErrorPage = () => {
+  const navigate = useNavigate();
+
   return (
     <Container role="alert">
       <Image src={blobsad} alt="에러 페이지 이모티콘" />
@@ -12,7 +14,9 @@ const ErrorPage = () => {
         <span>페이지를 새로고침 해 보시겠어요?</span>
         <span>또는 메인 페이지로 이동하실 수 있어요.</span>
       </DetailContainer>
-      <ReturnButton>메인 페이지로 이동</ReturnButton>
+      <ReturnButton onClick={() => navigate('/')}>
+        메인 페이지로 이동
+      </ReturnButton>
     </Container>
   );
 };
