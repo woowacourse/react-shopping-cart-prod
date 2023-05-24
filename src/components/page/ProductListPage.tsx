@@ -22,6 +22,7 @@ const Wrapper = styled.div`
   align-items: center;
 
   width: 100%;
+  height: 100%;
   padding-top: 80px;
 
   main {
@@ -29,7 +30,10 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
 
-    width: 80%;
+    width: 100%;
+    height: 100%;
     padding: 60px 0;
+
+    overflow: scroll;
   }
 `;

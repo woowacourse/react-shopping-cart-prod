@@ -17,9 +17,16 @@ const GlobalStyle = createGlobalStyle`
   }
   
   html,
-  body {
+  body,
+  #root {
+    height: 100%;
+
     font-family: 'Noto Sans KR', sans-serif;    
     font-size: 62.5%;
+  }
+
+  #root {
+    position: relative;
   }
 
   button {
