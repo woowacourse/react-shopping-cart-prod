@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router';
 
+import { Servers } from '@Types/index';
+
 import { SHOPPING_QUANTITY } from '@Constants/index';
 
 import * as S from './style';
 
 type CartBadgeProps = {
-  username?: string;
+  username?: Servers;
   cartItemsAmount: string;
 };
 

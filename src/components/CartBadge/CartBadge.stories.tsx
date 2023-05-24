@@ -42,7 +42,7 @@ export const DefaultCartBadge: Story = {
  */
 export const LoginCartBadge: Story = {
   args: {
-    username: '다크론',
+    username: '베베',
     cartItemsAmount: '3',
   },
 };
