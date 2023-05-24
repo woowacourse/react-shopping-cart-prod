@@ -10,8 +10,4 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
-  args: {
-    error: new Error('에러가 발생했습니다.'),
-  },
-};
+export const Default: Story = {};

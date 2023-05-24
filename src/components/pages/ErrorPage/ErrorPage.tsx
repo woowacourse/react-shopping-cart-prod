@@ -1,49 +1,46 @@
 import { styled } from 'styled-components';
+import { ResetButton } from '../ErrorFallback/ErrorFallback';
+// import emoji from 'src/assets/image/blobsad.png';
+import blobsad from '../../../assets/image/blobsad.png';
 
-interface ErrorPageProps {
-  error: Error;
-  onReset: (...args: unknown[]) => void;
-}
-
-const ErrorPage = ({ error, onReset }: ErrorPageProps) => {
-  const handleResetButtonClick = () => {
-    onReset();
-  };
-
+const ErrorPage = () => {
   return (
     <Container role="alert">
-      <ErrorMessage>⚠️ {error.message}</ErrorMessage>
-      <ResetButton type="button" onClick={handleResetButtonClick}>
-        <span>다시 시도하기</span>
-      </ResetButton>
+      <Image src={blobsad} alt="에러 페이지 이모티콘" />
+      <h1>알 수 없는 오류가 발생했어요.</h1>
+      <DetailContainer>
+        <span>페이지를 새로고침 해 보시겠어요?</span>
+        <span>또는 메인 페이지로 이동하실 수 있어요.</span>
+      </DetailContainer>
+      <ReturnButton>메인 페이지로 이동</ReturnButton>
     </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  row-gap: 20px;
-  height: calc(100vh - 80px);
-`;
-
-const ErrorMessage = styled.span`
-  font-size: 20px;
-  font-weight: 600;
-`;
-
-const ResetButton = styled.button`
-  display: flex;
   align-items: center;
   justify-content: center;
-  width: 200px;
-  height: 50px;
-  background-color: #333;
-  border-radius: 10px;
-  font-weight: 500;
-  color: #fff;
+  height: 100vh;
+  row-gap: 20px;
+`;
+
+const Image = styled.img`
+  width: 140px;
+  height: 140px;
+`;
+
+const DetailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 5px;
+  font-size: 18px;
+`;
+
+const ReturnButton = styled(ResetButton)`
+  font-size: 16px;
 `;
 
 export default ErrorPage;
