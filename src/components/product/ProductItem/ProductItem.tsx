@@ -22,12 +22,20 @@ const ProductItem = (product: Product) => {
   };
 
   const handleChangeQuantity = (quantity: number) => {
-    updateProductQuantity(id, quantity);
+    const cartItemId = cart.find((cartItem) => cartItem.product.id === id)?.id;
+
+    if (cartItemId === undefined) return;
+
+    updateProductQuantity(cartItemId, quantity);
   };
 
   const handleRemoveProduct = (quantity: number) => {
+    const cartItemId = cart.find((cartItem) => cartItem.product.id === id)?.id;
+
+    if (cartItemId === undefined) return;
+
     if (quantity === 0) {
-      removeProductFromCart(id);
+      removeProductFromCart(cartItemId);
     }
   };
 

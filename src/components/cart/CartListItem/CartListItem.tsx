@@ -20,16 +20,16 @@ const CartListItem = ({
   onChangeCheckbox,
 }: CartListItemProps) => {
   const { id: cartItemId, quantity, product } = cartItem;
-  const { id, name, price, imageUrl } = product;
+  const { name, price, imageUrl } = product;
   const { updateProductQuantity, removeProductFromCart } = useCartService();
 
   const handleChangeQuantity = (quantity: number) => {
-    updateProductQuantity(id, quantity);
+    updateProductQuantity(cartItemId, quantity);
   };
 
   const handleRemoveProduct = (quantity: number) => {
     if (quantity === 0) {
-      removeProductFromCart(id);
+      removeProductFromCart(cartItemId);
     }
   };
 
@@ -50,7 +50,7 @@ const CartListItem = ({
           <DeleteButton
             type="button"
             aria-label="장바구니에서 삭제하기"
-            onClick={() => removeProductFromCart(id)}
+            onClick={() => removeProductFromCart(cartItemId)}
           >
             <TrashIcon />
           </DeleteButton>

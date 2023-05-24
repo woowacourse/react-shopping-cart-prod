@@ -43,7 +43,7 @@ const useCartPage = () => {
   const handleSelectedItemDelete = () => {
     const selectedProductIds = cart
       .filter((cartItem) => checkedItemIds.has(cartItem.id))
-      .map((cartItem) => cartItem.product.id);
+      .map((cartItem) => cartItem.id);
 
     removeAllProductsFromCart(selectedProductIds);
   };
