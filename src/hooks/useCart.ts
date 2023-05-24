@@ -1,9 +1,19 @@
+import { base64, servers } from '../service/apiURL';
+import { serverState } from '../service/atom';
 import { CartItem } from '../types/types';
 import { useMutation, useQuery } from 'react-query';
+import { useRecoilValue } from 'recoil';
 
 export const useCart = () => {
+  const serverURL = useRecoilValue(serverState);
+
   const fetchCartData = async () => {
-    const res = await fetch('/cart-items', { method: 'get' });
+    const res = await fetch(`${serverURL}/cart-items`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
     const data = await res.json();
     return data;
   };
@@ -20,10 +30,18 @@ export const useCart = () => {
       cartId,
       body,
     }: {
-      method: 'delete' | 'patch';
+      method: 'DELETE' | 'PATCH';
       cartId: number;
       body?: object;
-    }) => await fetch(`/cart-items/${cartId}`, { method, body: JSON.stringify(body) }),
+    }) =>
+      await fetch(`${serverURL}/cart-items/${cartId}`, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${base64}`,
+        },
+        body: JSON.stringify(body),
+      }),
     {
       onSuccess: () => {
         refetch();
@@ -33,7 +51,14 @@ export const useCart = () => {
 
   const fetchAddCartItem = useMutation(
     async ({ body }: { body?: object }) =>
-      await fetch(`/cart-items`, { method: 'post', body: JSON.stringify(body) }),
+      await fetch(`${serverURL}/cart-items`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${base64}`,
+        },
+        body: JSON.stringify(body),
+      }),
     {
       onSuccess: () => {
         refetch();
@@ -46,9 +71,9 @@ export const useCart = () => {
   };
 
   const changeCartQuantityAPI = (cartId: number, body?: object) =>
-    mutateCartData.mutate({ method: 'patch', cartId, body });
+    mutateCartData.mutate({ method: 'PATCH', cartId, body });
 
-  const deleteCartItemAPI = (cartId: number) => mutateCartData.mutate({ method: 'delete', cartId });
+  const deleteCartItemAPI = (cartId: number) => mutateCartData.mutate({ method: 'DELETE', cartId });
 
   return {
     data,

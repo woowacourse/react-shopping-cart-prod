@@ -4,10 +4,14 @@ import type { Product } from '../../../types/types';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import { useQuery } from 'react-query';
+import { useRecoilValue } from 'recoil';
+import { serverState } from '../../../service/atom';
 
 const ProductList = () => {
+  const serverURL = useRecoilValue(serverState);
+
   const { data, isLoading } = useQuery<Product[]>('products', async () => {
-    const res = await fetch('/products', { method: 'get' });
+    const res = await fetch(`${serverURL}/products`, { method: 'GET' });
     const resData = await res.json();
     return resData;
   });
