@@ -3,14 +3,19 @@ import Svg from 'components/@common/Svg';
 import Counter from 'components/@common/Counter';
 import { useCart } from 'components/Cart/hooks/useCart';
 import { Product } from 'types';
+import { useRecoilValue } from 'recoil';
+import { cartListAtom } from 'recoil/cartList';
 
 interface ProductItemProps {
   product: Product;
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  const { currentCartItem, removeItem, addItem, onSelectItem } =
-    useCart(product);
+  const { removeItem, addItem, onSelectItem } = useCart(product);
+  const cartList = useRecoilValue(cartListAtom);
+  const currentCartItem = cartList.find(
+    (cartItem) => cartItem.product.id === product.id
+  );
 
   return (
     <S.ItemWrapper>
@@ -26,8 +31,8 @@ const ProductItem = ({ product }: ProductItemProps) => {
           <Counter
             count={currentCartItem.quantity}
             min={0}
-            increment={addItem}
-            decrement={removeItem}
+            increment={() => addItem(currentCartItem.id)}
+            decrement={() => removeItem(currentCartItem.id)}
           />
         ) : (
           <Svg type="cart-icon" width={25} height={22} onClick={onSelectItem} />
