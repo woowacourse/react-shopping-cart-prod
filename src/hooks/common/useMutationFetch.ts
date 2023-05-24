@@ -1,14 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useCallback, useState } from 'react';
 
 import HTTPError from '../../api/HTTPError';
-import { errorModalMessageState } from '../../store/error';
 
 type MutationFunction<T, V> = (variables: V) => Promise<T>;
 
 interface MutationOptions<T> {
   onSuccess?: (data: T) => void;
-  onError?: (error: Error | HTTPError) => void;
+  onError?: (error: HTTPError) => void;
 }
 
 interface MutationResult<V> {
@@ -25,7 +23,6 @@ const useMutationFetch = <T, V = undefined>(
 ): MutationResult<V> => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | HTTPError | null>(null);
-  const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
 
   const mutate = useCallback(
     (variables: V) => {
@@ -44,12 +41,6 @@ const useMutationFetch = <T, V = undefined>(
     },
     [mutationFn, onSuccess, onError]
   );
-
-  useEffect(() => {
-    if (error) {
-      setErrorModalMessage(error.message);
-    }
-  }, [error, setErrorModalMessage]);
 
   return { mutate, state: { isLoading, error } };
 };
