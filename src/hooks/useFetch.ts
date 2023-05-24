@@ -26,7 +26,18 @@ export const useFetch = <T>(
 
         setData(data);
         if (await result.body) {
-          stateSetter(data);
+          if (url === '/cart-items') {
+            stateSetter(
+              data.map((item: CartItemType) => {
+                return {
+                  ...item,
+                  isChecked: true,
+                };
+              })
+            );
+          } else {
+            stateSetter(data);
+          }
         }
       }
       if (isFailureHttpStatus(result.status)) {

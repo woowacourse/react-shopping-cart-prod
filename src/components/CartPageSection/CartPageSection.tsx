@@ -31,6 +31,17 @@ const CartPageSection = () => {
   }, []);
 
   const checkedItemRemove = () => {
+    setCartItemList(
+      cartItem.filter((item) => {
+        if (item.isChecked === true) {
+          fetchApi.delete(`/cart-item/${item.id}`);
+          return false;
+        }
+
+        return true;
+      })
+    );
+
     fetchApi.patch('/checked-cart-item-remove');
   };
 

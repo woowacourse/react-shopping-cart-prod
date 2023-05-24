@@ -18,7 +18,18 @@ export const cartListState = atom<CartItemType[]>({
       onSet((newValue, _, isReset) => {
         isReset
           ? localStorage.removeItem(storeKey)
-          : localStorage.setItem(storeKey, JSON.stringify(newValue));
+          : localStorage.setItem(
+              storeKey,
+              JSON.stringify(
+                newValue.map((item) => {
+                  return {
+                    id: item.id,
+                    quantity: item.quantity,
+                    product: item.product,
+                  };
+                })
+              )
+            );
       });
     },
   ],

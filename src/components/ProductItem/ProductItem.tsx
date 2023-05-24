@@ -20,12 +20,43 @@ const ProductItem = ({ information }: ProductItemProps) => {
   const cartItemQuantity = useRecoilValue(cartItemQuantityState(information.id));
 
   const { isModalOpen, handleModalOpen, handleModalClose, handleModalClosePress } = useModal();
-  const [, setCartList] = useRecoilState(cartListState);
+  const [cartList, setCartList] = useRecoilState(cartListState);
   const { fetchApi, isSuccess, isFailure } = useFetch<ProductItemType[]>(setCartList);
 
-  const handleCartAdd = (quantity: number) => {
+  const handleCartAdd = () => {
     const compareProductId = information.id;
-    fetchApi.post('/add-cart-list', { itemId: compareProductId, quantity });
+    fetchApi.post('/cart-items', { itemId: compareProductId });
+
+    const isExistItem = cartList.find((item) => item.product.id === compareProductId);
+
+    if (isExistItem) {
+      setCartList(
+        cartList.map((item) => {
+          if (item.product.id === compareProductId) {
+            console.log({
+              ...item,
+              quantity: item.quantity + 1,
+            });
+            return {
+              ...item,
+              quantity: item.quantity + 1,
+            };
+          }
+          return item;
+        })
+      );
+    } else {
+      const newCartList = [
+        ...cartList,
+        {
+          id: Number(new Date()),
+          quantity: 1,
+          product: information,
+          isChecked: true,
+        },
+      ];
+      setCartList(newCartList);
+    }
 
     handleModalClose();
   };
