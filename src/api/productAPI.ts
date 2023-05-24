@@ -3,7 +3,7 @@ import { ProductItemData } from '../types';
 import { fetchAPI } from './fetchAPI';
 
 const getProductList = async (): Promise<ProductItemData[]> => {
-  return await fetchAPI(API_ENDPOINT.PRODUCTS_GET);
+  return await fetchAPI(API_ENDPOINT.PRODUCTS);
 };
 
 export { getProductList };

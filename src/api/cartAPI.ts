@@ -1,9 +1,12 @@
-import { API_ENDPOINT } from '../constants/api';
+import { API_ENDPOINT, CART_FETCH_OPTION_HEADERS } from '../constants/api';
 import { CartItemData } from '../types';
 import { fetchAPI } from './fetchAPI';
 
 const getCartList = async (): Promise<CartItemData[]> => {
-  return await fetchAPI(API_ENDPOINT.CART_GET);
+  return await fetchAPI(API_ENDPOINT.CART_ITEMS, {
+    method: 'GET',
+    headers: { ...CART_FETCH_OPTION_HEADERS },
+  });
 };
 
 const postCartItem = async (productId: number): Promise<CartItemData[]> => {
@@ -12,7 +15,7 @@ const postCartItem = async (productId: number): Promise<CartItemData[]> => {
   };
   const jsonData = JSON.stringify(data);
 
-  return await fetchAPI(API_ENDPOINT.CART_POST, {
+  return await fetchAPI(API_ENDPOINT.CART_ITEMS, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -21,13 +24,13 @@ const postCartItem = async (productId: number): Promise<CartItemData[]> => {
   });
 };
 
-const patchCartItem = async (productId: number, quantity: number): Promise<CartItemData[]> => {
+const patchCartItem = async (cartItemId: number, quantity: number): Promise<CartItemData[]> => {
   const data = {
     quantity,
   };
   const jsonData = JSON.stringify(data);
 
-  return await fetchAPI(`${API_ENDPOINT.CART_PATCH}/${productId}`, {
+  return await fetchAPI(`${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -36,8 +39,8 @@ const patchCartItem = async (productId: number, quantity: number): Promise<CartI
   });
 };
 
-const deleteCartItem = async (productId: number): Promise<Response> => {
-  return await fetchAPI(`${API_ENDPOINT.CART_DELETE}/${productId}`, {
+const deleteCartItem = async (cartItemId: number): Promise<Response> => {
+  return await fetchAPI(`${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
     method: 'DELETE',
   });
 };
