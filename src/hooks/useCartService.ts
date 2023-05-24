@@ -1,31 +1,33 @@
 import { useRecoilCallback, useRecoilValue } from 'recoil';
-import { cartState } from '../recoil/atoms';
+import { cartState, serverOriginState } from '../recoil/atoms';
 import { CART_BASE_URL } from '../constants';
 import useToast from '../components/common/Toast/useToast';
+import {
+  addCartItem,
+  fetchCartItems,
+  removeCartItem,
+  updateQuantity,
+} from '../remotes/api';
 import type { CartItem, Product } from '../types/product';
 
 const useCartService = () => {
   const cart = useRecoilValue(cartState);
+  const serverOrigin = useRecoilValue(serverOriginState);
   const updateCart = useRecoilCallback(({ set }) => async () => {
-    const newCart = await fetch(CART_BASE_URL).then((res) => res.json());
+    const newCart = await fetchCartItems(`${serverOrigin}${CART_BASE_URL}`);
 
     set(cartState, newCart);
   });
   const { showToast } = useToast();
 
   const addProductToCart = async (productId: Product['id']) => {
-    const response = await fetch(CART_BASE_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(productId),
-    });
-
-    if (!response.ok) {
-      const { message } = await response.json();
-      showToast('error', message);
-      return;
+    try {
+      await addCartItem(`${serverOrigin}${CART_BASE_URL}`, productId);
+    } catch (e) {
+      if (e instanceof Error) {
+        showToast('error', e.message);
+        return;
+      }
     }
 
     showToast('success', '장바구니에 추가되었습니다.');
@@ -33,46 +35,39 @@ const useCartService = () => {
   };
 
   const updateProductQuantity = async (
-    targetId: Product['id'],
+    targetId: CartItem['id'],
     quantity: CartItem['quantity'],
   ) => {
-    const response = await fetch(`${CART_BASE_URL}/${targetId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(quantity),
-    });
-
-    if (!response.ok) {
-      const { message } = await response.json();
-      showToast('error', message);
-      return;
+    try {
+      await updateQuantity(
+        `${serverOrigin}${CART_BASE_URL}/${targetId}`,
+        quantity,
+      );
+    } catch (e) {
+      if (e instanceof Error) {
+        showToast('error', e.message);
+        return;
+      }
     }
 
     updateCart();
   };
 
-  const removeProductFromCart = async (targetId: Product['id']) => {
-    const response = await fetch(`${CART_BASE_URL}/${targetId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      const { message } = await response.json();
-      showToast('error', message);
-      return;
+  const removeProductFromCart = async (targetId: CartItem['id']) => {
+    try {
+      await removeCartItem(`${serverOrigin}${CART_BASE_URL}/${targetId}`);
+    } catch (e) {
+      if (e instanceof Error) {
+        showToast('error', e.message);
+        return;
+      }
     }
 
     updateCart();
   };
 
-  const removeAllProductsFromCart = (targetIds: Array<Product['id']>) => {
+  const removeAllProductsFromCart = (targetIds: Array<CartItem['id']>) => {
     targetIds.forEach((id) => removeProductFromCart(id));
-    showToast('success', '장바구니에서 삭제되었습니다.');
   };
 
   return {
