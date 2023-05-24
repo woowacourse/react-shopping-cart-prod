@@ -1,11 +1,8 @@
 import { selector } from 'recoil';
 import { serverOriginState } from '../atoms';
-import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../../constants';
+import { CART_BASE_URL, PRODUCTS_BASE_URL, base64 } from '../../constants';
 import type { CartItem, Product } from '../../types/product';
-
-const username = 'a@a.com';
-const password = '1234';
-const base64 = btoa(username + ':' + password);
+import { fetchCartItems } from '../../remotes/api';
 
 export const productListQuery = selector<Product[]>({
   key: 'productList',
@@ -27,17 +24,9 @@ export const productListQuery = selector<Product[]>({
 export const cartItemsQuery = selector<CartItem[]>({
   key: 'cartItems',
   get: async ({ get }) => {
-    const response = await fetch(`${get(serverOriginState)}${CART_BASE_URL}`, {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('장바구니 목록을 불러올 수 없습니다.');
-    }
-
-    const cartItems = await response.json();
+    const cartItems = await fetchCartItems(
+      `${get(serverOriginState)}${CART_BASE_URL}`,
+    );
 
     return cartItems;
   },
