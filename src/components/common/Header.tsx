@@ -1,12 +1,18 @@
 import { Link } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import { cartCountState } from '../../recoil/state';
+import { cartCountState, serverNameState } from '../../recoil/state';
 import { SERVER_NAMES } from '../../constants';
+import { ServerNameType } from '../../types';
 
 export default function Header() {
   const cartCount = useRecoilValue(cartCountState);
+  const [serverName, setServerName] = useRecoilState(serverNameState);
+
+  const onChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setServerName(e.target.value as ServerNameType);
+  };
 
   return (
     <Wrapper>
@@ -15,15 +21,17 @@ export default function Header() {
           <img src="./logo.svg" />
           <LogoTitle>SHOP</LogoTitle>
         </HomeLink>
-        <select>
-          {SERVER_NAMES.map((serverName) => (
-            <option key={serverName}>{serverName}</option>
-          ))}
-        </select>
-        <CartLink to="/cart">
-          장바구니
-          <CartCount>{cartCount}</CartCount>
-        </CartLink>
+        <RightBox>
+          <select value={serverName} onChange={onChangeSelect}>
+            {SERVER_NAMES.map((serverName) => (
+              <option key={serverName}>{serverName}</option>
+            ))}
+          </select>
+          <CartLink to="/cart">
+            장바구니
+            <CartCount>{cartCount}</CartCount>
+          </CartLink>
+        </RightBox>
       </ContentBox>
     </Wrapper>
   );
@@ -52,6 +60,12 @@ const ContentBox = styled.div`
   width: 80%;
   height: 100%;
   padding: 0 16px;
+`;
+
+const RightBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 196px;
 `;
 
 const HomeLink = styled(Link)`

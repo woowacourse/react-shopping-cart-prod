@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import * as api from '../api';
+import useToast from './useToast';
 import { cartState, serverNameState } from '../recoil/state';
 import { API_ERROR_MESSAGE } from '../constants';
 
@@ -9,13 +10,14 @@ const useQuantityInput = (cartItemId: number) => {
   const [input, setInput] = useState('');
   const setCart = useSetRecoilState(cartState);
   const serverName = useRecoilValue(serverNameState);
+  const { showToast } = useToast();
 
   const getCart = async () => {
     try {
       const cart = await api.getCart(serverName);
       setCart(cart);
     } catch {
-      alert(API_ERROR_MESSAGE.getCart);
+      showToast('error', API_ERROR_MESSAGE.getCart);
     }
   };
 
@@ -23,7 +25,7 @@ const useQuantityInput = (cartItemId: number) => {
     try {
       await api.deleteCartItem(serverName, cartItemId);
     } catch {
-      alert(API_ERROR_MESSAGE.deleteCartItem);
+      showToast('error', API_ERROR_MESSAGE.deleteCartItem);
       return;
     }
 
@@ -33,8 +35,9 @@ const useQuantityInput = (cartItemId: number) => {
   const patchCartItemQuantity = async (quantity: number) => {
     try {
       await api.patchCartItemQuantity(serverName, cartItemId, quantity);
+      showToast('info', '수량이 변경되었어요!');
     } catch {
-      alert(API_ERROR_MESSAGE.postCartItem);
+      showToast('error', API_ERROR_MESSAGE.postCartItem);
     }
 
     getCart();

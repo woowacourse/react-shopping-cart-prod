@@ -9,6 +9,7 @@ import QuantityInput from '../common/QuantityInput';
 import * as api from '../../api';
 import { cartState, serverNameState } from '../../recoil/state';
 import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
+import useToast from '../../hooks/useToast';
 
 interface Props extends CartItemType {
   checked: boolean;
@@ -20,13 +21,14 @@ export default function CartItem(props: Props) {
   const { id, product, quantity, checked, toggleChecked, deleteChecked } = props;
   const setCart = useSetRecoilState(cartState);
   const serverName = useRecoilValue(serverNameState);
+  const { showToast } = useToast();
 
   const removeCartItem = async () => {
     try {
       await api.deleteCartItem(serverName, id);
       deleteChecked();
     } catch {
-      alert(API_ERROR_MESSAGE.deleteCartItem);
+      showToast('error', API_ERROR_MESSAGE.deleteCartItem);
       return;
     }
 
@@ -34,7 +36,7 @@ export default function CartItem(props: Props) {
       const cart = await api.getCart(serverName);
       setCart(cart);
     } catch {
-      alert(API_ERROR_MESSAGE.getCart);
+      showToast('error', API_ERROR_MESSAGE.getCart);
     }
   };
 

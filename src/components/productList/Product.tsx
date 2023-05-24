@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import QuantityInput from '../common/QuantityInput';
 
 import * as api from '../../api';
+import useToast from '../../hooks/useToast';
 import { cartState, serverNameState } from '../../recoil/state';
 import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 
@@ -16,6 +17,7 @@ export default function Product({ id, name, price, imageUrl }: Props) {
   const [cart, setCart] = useRecoilState(cartState);
   const [addLoading, setAddLoading] = useState(false);
   const serverName = useRecoilValue(serverNameState);
+  const { showToast } = useToast();
 
   const cartItem = cart.find((cartItem) => cartItem.product.id === id);
 
@@ -25,7 +27,7 @@ export default function Product({ id, name, price, imageUrl }: Props) {
     try {
       await api.postCartItem(serverName, id);
     } catch {
-      alert(API_ERROR_MESSAGE.postCartItem);
+      showToast('error', API_ERROR_MESSAGE.postCartItem);
       setAddLoading(false);
       return;
     }
@@ -33,31 +35,34 @@ export default function Product({ id, name, price, imageUrl }: Props) {
     try {
       await api.getCart(serverName).then(setCart);
     } catch {
-      alert(API_ERROR_MESSAGE.getCart);
+      showToast('error', API_ERROR_MESSAGE.getCart);
     }
 
     setAddLoading(false);
+    showToast('info', '성공적으로 추가됐어요!');
   };
 
   return (
-    <Wrapper>
-      <Image src={imageUrl} />
-      <InfoBox>
-        <LabelBox>
-          <Name>{name}</Name>
-          <Price>{price.toLocaleString()} 원</Price>
-        </LabelBox>
-        <ControlBox>
-          {cartItem ? (
-            <QuantityInput cartItemId={cartItem.id} min={0} max={MAX_QUANTITY} />
-          ) : (
-            <CartItemAddButton onClick={addCartItem} disabled={addLoading}>
-              <img src="./cart.svg" />
-            </CartItemAddButton>
-          )}
-        </ControlBox>
-      </InfoBox>
-    </Wrapper>
+    <>
+      <Wrapper>
+        <Image src={imageUrl} />
+        <InfoBox>
+          <LabelBox>
+            <Name>{name}</Name>
+            <Price>{price.toLocaleString()} 원</Price>
+          </LabelBox>
+          <ControlBox>
+            {cartItem ? (
+              <QuantityInput cartItemId={cartItem.id} min={0} max={MAX_QUANTITY} />
+            ) : (
+              <CartItemAddButton onClick={addCartItem} disabled={addLoading}>
+                <img src="./cart.svg" />
+              </CartItemAddButton>
+            )}
+          </ControlBox>
+        </InfoBox>
+      </Wrapper>
+    </>
   );
 }
 

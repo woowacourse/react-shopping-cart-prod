@@ -8,11 +8,13 @@ import CheckBox from '../common/CheckBox';
 import * as api from '../../api';
 import { cartState, checkedListState, serverNameState } from '../../recoil/state';
 import { API_ERROR_MESSAGE } from '../../constants';
+import useToast from '../../hooks/useToast';
 
 export default function CartItemList() {
   const [cart, setCart] = useRecoilState(cartState);
   const [checkedList, setCheckedList] = useRecoilState(checkedListState);
   const serverName = useRecoilValue(serverNameState);
+  const { showToast } = useToast();
 
   const checkedCount = checkedList.filter((checked) => checked).length;
   const allChecked = checkedCount === cart.length;
@@ -50,7 +52,7 @@ export default function CartItemList() {
         setCheckedList(Array(cart.length).fill(true));
       });
     } catch {
-      alert(API_ERROR_MESSAGE.getCart);
+      showToast('error', API_ERROR_MESSAGE.getCart);
     }
   }, []);
 
