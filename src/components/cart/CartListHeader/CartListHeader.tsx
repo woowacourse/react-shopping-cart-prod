@@ -28,7 +28,7 @@ const CartListHeader = () => {
   }, [isAllChecked, setIsAllChecked]);
 
   const deleteCheckedItems = useCallback(() => {
-    removeCheckedItems(Array.from(checkedIdList));
+    removeCheckedItems([...checkedIdList]);
     handleModalClose();
   }, [checkedIdList, handleModalClose, removeCheckedItems]);
 
