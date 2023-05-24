@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
-import { ServerKey } from '../../constants/server';
+import { SERVER_KEYS, ServerKey, isServerKey } from '../../constants/server';
 
 export const serverNameState = atom<ServerKey>({
   key: 'serverNameState',
-  default: '푸우',
+  default: isServerKey(SERVER_KEYS[0]) ? SERVER_KEYS[0] : '도치',
 });

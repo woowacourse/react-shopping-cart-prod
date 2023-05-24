@@ -1,11 +1,11 @@
 export const SERVER = {
-  푸우: {
-    url: 'http://43.201.10.4:8080',
+  도치: {
+    url: 'http://13.209.67.114:8080',
     id: 'a@a.com',
     password: '1234',
   },
-  도치: {
-    url: 'http://13.209.67.114:8080',
+  푸우: {
+    url: 'http://43.201.10.4:8080',
     id: 'a@a.com',
     password: '1234',
   },
