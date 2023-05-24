@@ -2,6 +2,7 @@ import { useRecoilValue } from 'recoil';
 import { cartListAtom } from '../../stores/cartListStore.ts';
 import { useEffect } from 'react';
 import { setCartListInLocalStorage, getCartListFromLocalStorage } from '../../utils/localStorageCartList.ts';
+import deepEqual from '../../utils/deepEqual.ts';
 
 const UnloadHandler = () => {
   const cartList = useRecoilValue(cartListAtom);
@@ -9,20 +10,21 @@ const UnloadHandler = () => {
   useEffect(() => {
     const localStorageCartList = getCartListFromLocalStorage();
 
-    if (JSON.stringify(cartList) !== JSON.stringify(localStorageCartList)) {
-      const handleUnload = (event: BeforeUnloadEvent) => {
-        event.preventDefault();
-        if (cartList) {
-          setCartListInLocalStorage(cartList);
-        }
-      };
+    if (deepEqual(cartList, localStorageCartList)) return;
 
-      window.addEventListener('beforeunload', handleUnload);
+    const handleUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
 
-      return () => {
-        window.removeEventListener('beforeunload', handleUnload);
-      };
-    }
+      if (!cartList) return;
+
+      setCartListInLocalStorage(cartList);
+    };
+
+    window.addEventListener('beforeunload', handleUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleUnload);
+    };
   }, [cartList]);
 
   return null;
