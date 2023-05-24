@@ -68,17 +68,22 @@ class FetchQuery implements FetchQueryInstance {
     path: string,
     config?: InternalConfig
   ): FetchQueryRes<T> {
+    let body = {} as T;
     const url = getValidURL(
       path,
       config?.baseURL ?? this.defaultConfig.baseURL
     );
 
     const response = await fetch(url, config);
-    const body = await response.json();
+    const { headers } = response;
+
+    try {
+      body = await response.json();
+    } catch (error) {}
 
     if (!response.ok) handleStatusCode(response.status);
 
-    return { headers: response.headers, body };
+    return { headers, body };
   }
 
   private request<T>(...args: [Method, ...QueryParams]): FetchQueryRes<T> {
