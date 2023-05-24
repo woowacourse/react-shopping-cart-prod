@@ -4,8 +4,12 @@ import Spacer from '../../common/Spacer/Spacer';
 import CartTotal from '../../cart/CartTotal/CartTotal';
 import Checkbox from '../../common/Checkbox/Checkbox';
 import useCartPage from './useCartPage';
+import empty from '../../../assets/image/empty.png';
+import { ResetButton } from '../ErrorFallback/ErrorFallback';
+import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
+  const navigate = useNavigate();
   const {
     cart,
     checkedItemIds,
@@ -41,14 +45,24 @@ const CartPage = () => {
               선택삭제
             </DeleteButton>
           </AllCheckBoxContainer>
-          {cart.map((cartItem) => (
-            <CartListItem
-              key={cartItem.id}
-              cartItem={cartItem}
-              checked={checkedItemIds.has(cartItem.id)}
-              onChangeCheckbox={handleCheckboxChange}
-            />
-          ))}
+          {cart.length > 0 ? (
+            cart.map((cartItem) => (
+              <CartListItem
+                key={cartItem.id}
+                cartItem={cartItem}
+                checked={checkedItemIds.has(cartItem.id)}
+                onChangeCheckbox={handleCheckboxChange}
+              />
+            ))
+          ) : (
+            <ImageContainer>
+              <Image src={empty} alt="텅 빈 장바구니 이미지" />
+              <span>장바구니에 담긴 상품이 없어요.</span>
+              <HomeButton onClick={() => navigate('/')}>
+                상품 담으러 가기
+              </HomeButton>
+            </ImageContainer>
+          )}
           <Spacer height={20} />
         </CartList>
         <TotalWrapper>
@@ -115,6 +129,23 @@ const AllCheckBoxContainer = styled.div`
   & > span {
     font-size: 18px;
   }
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30px;
+`;
+
+const Image = styled.img`
+  width: 250px;
+`;
+
+const HomeButton = styled(ResetButton)`
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
 `;
 
 const DeleteButton = styled.button`
