@@ -34,10 +34,12 @@ const useCart = () => {
       () => async (productId) => {
         setIsAdded(true);
         await postCartItem(productId);
-        updateCart();
       },
       []
-    )
+    ),
+    {
+      onSuccess: updateCart,
+    }
   );
 
   const { mutate: updateItemQuantity } = useMutationFetch<
