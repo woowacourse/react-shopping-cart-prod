@@ -2,6 +2,8 @@ import type { CartType, ServerNameType, ToastInfoType } from '../types';
 
 import { atom, selector, selectorFamily } from 'recoil';
 
+import { localStorageEffect } from './effect';
+
 export const cartState = atom<CartType>({
   key: 'cartState',
   default: [],
@@ -42,6 +44,7 @@ export const cartBillTotalPriceState = selector({
 export const serverNameState = atom<ServerNameType>({
   key: 'serverNameState',
   default: '라온',
+  effects: [localStorageEffect('serverName')],
 });
 
 export const toastInfoState = atom<ToastInfoType>({
