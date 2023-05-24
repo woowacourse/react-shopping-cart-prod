@@ -10,6 +10,12 @@ export const MOCK_URL = 'https://backend';
 
 export const SKELETONS_LENGTH = 8;
 
+export const API_SUCCESS_MESSAGE = {
+  postCartItem: '장바구니에 상품을 담았어요! 😆',
+  patchCartItemQuantity: '수량을 변경했어요 🙂',
+  deleteCartItem: '상품을 장바구니에서 뺐어요!',
+};
+
 export const API_ERROR_MESSAGE = {
   getProducts: '상품 목록을 가져오지 못했어요! 페이지를 새로고침 해주세요 🙇',
   getCart: '장바구니 목록을 가져오지 못했어요! 페이지를 새로고침 해주세요 🙇',

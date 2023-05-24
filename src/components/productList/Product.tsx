@@ -9,7 +9,7 @@ import QuantityInput from '../common/QuantityInput';
 import * as api from '../../api';
 import useToast from '../../hooks/useToast';
 import { cartState, serverNameState } from '../../recoil/state';
-import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
+import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE, MAX_QUANTITY } from '../../constants';
 
 interface Props extends ProductType {}
 
@@ -26,6 +26,7 @@ export default function Product({ id, name, price, imageUrl }: Props) {
 
     try {
       await api.postCartItem(serverName, id);
+      showToast('info', API_SUCCESS_MESSAGE.postCartItem);
     } catch {
       showToast('error', API_ERROR_MESSAGE.postCartItem);
       setAddLoading(false);
@@ -39,7 +40,6 @@ export default function Product({ id, name, price, imageUrl }: Props) {
     }
 
     setAddLoading(false);
-    showToast('info', '성공적으로 추가됐어요!');
   };
 
   return (
