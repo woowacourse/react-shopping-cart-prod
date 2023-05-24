@@ -22,3 +22,9 @@ export interface CartItemType {
 export interface CartType extends Array<CartItemType> {}
 
 export type ServerNameType = '라온' | '져니' | '쥬니';
+
+export interface ToastInfoType {
+  show: boolean;
+  message: string;
+  type: 'info' | 'warning' | 'error';
+}
