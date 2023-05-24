@@ -18,29 +18,27 @@ function Cart() {
     return acc;
   }, 0);
 
-  if (cartIdList.length > 0) {
-    return (
-      <main className={styles.container}>
-        <h2 className={styles.title}>장바구니</h2>
-        <section className={styles['main-view']}>
-          <CartProductItemList
-            cartItemList={cartItemStateList}
-            deleteCartItem={deleteCartItem}
-            mutateQuantity={mutateQuantity}
-          />
-          <PaymentsView priceTotal={total} parcelPrice={PARCEL_PRICE} />
-        </section>
-      </main>
-    );
-  }
-
-  return (
-    <main className={styles.container}>
-      <h2 className={styles.title}>장바구니</h2>
+  const ResultComponent =
+    cartIdList.length > 0 ? (
+      <section className={styles['main-view']}>
+        <CartProductItemList
+          cartItemList={cartItemStateList}
+          deleteCartItem={deleteCartItem}
+          mutateQuantity={mutateQuantity}
+        />
+        <PaymentsView priceTotal={total} parcelPrice={PARCEL_PRICE} />
+      </section>
+    ) : (
       <section className={styles['main-view-blank']}>
         <AlertBlank />
         <p>장바구니가 비어있어요!</p>
       </section>
+    );
+
+  return (
+    <main className={styles.container}>
+      <h2 className={styles.title}>장바구니</h2>
+      {ResultComponent}
     </main>
   );
 }
