@@ -35,7 +35,7 @@ export const useSetCart = (productId: number) => {
     api
       .patch(`${server}${CART_URL}/${cartItemId}`, { quantity })
       .then(() => {
-        setCart((prev: CartItem[]) => {
+        setCart((prev) => {
           const { cart, cartItemIndex } = findCartItemIndex(prev);
 
           const updatedItem = { ...prev[cartItemIndex], quantity: Number(value) };
@@ -69,7 +69,7 @@ export const useSetCart = (productId: number) => {
     api
       .delete(`${server}${CART_URL}/${cartItemId}`)
       .then(() => {
-        setCart((prev: CartItem[]) => {
+        setCart((prev) => {
           const { cart, cartItemIndex, alreadyHasCartItem } = findCartItemIndex(prev);
 
           if (alreadyHasCartItem) return removeProduct(cart, cartItemIndex);

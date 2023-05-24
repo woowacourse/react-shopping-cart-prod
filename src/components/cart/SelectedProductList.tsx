@@ -3,7 +3,6 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
 import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
 import { cartState, checkedItemList } from '../../recoil';
-import { CartItem } from '../../types';
 import Button from '../common/Button';
 import { Checkbox } from '../common/CheckboxStyle';
 import SelectedProductItem from './SelectedProductItem';
@@ -13,7 +12,7 @@ const SelectedProductList = () => {
   const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
   const removeCheckedItemsFromCart = useRemoveCheckedItemsFromCart(checkedItems);
 
-  const initialCheckedItems = cart.map((item: CartItem) => item.id);
+  const initialCheckedItems = cart.map((item) => item.id);
 
   useEffect(() => {
     setCheckedItems(initialCheckedItems);
@@ -42,7 +41,7 @@ const SelectedProductList = () => {
         />
       ) : (
         <div>
-          {cart.map((item: CartItem) => (
+          {cart.map((item) => (
             <SelectedProductItem
               key={item.product.id}
               id={item.id}
