@@ -10,8 +10,10 @@ export const useCart = (productInfo?: ProductInfo) => {
   const cartList = useRecoilValue(currentCartListState);
   const { api } = useSetFetchedData<CartItemInfo[]>(CART_BASE_URL, setCartList);
 
-  const getCartItem = () => {
-    return cartList.find((cartItem) => cartItem.id === productInfo?.id);
+  const getCartItem = (productId?: number) => {
+    const curProductId = productId ? productId : productInfo?.id;
+
+    return cartList.find((cartItem) => cartItem.product.id === curProductId);
   };
 
   const addToCart = () => {
@@ -20,18 +22,23 @@ export const useCart = (productInfo?: ProductInfo) => {
   };
 
   const updateProductQuantity = (quantity: number) => {
-    if (!productInfo) return;
     if (quantity <= 0) {
       deleteFromCart();
       return;
     }
+    const currentCartItem = getCartItem();
+    if (!currentCartItem) return;
 
-    api.patch(`${CART_BASE_URL}/${productInfo.id}`, { quantity: quantity }, CART_BASE_URL);
+    api.patch(`${CART_BASE_URL}/${currentCartItem.id}`, { quantity: quantity }, CART_BASE_URL);
   };
 
   const deleteFromCart = (productId?: number) => {
     const curProductId = productId ? productId : productInfo?.id;
-    api.delete(`${CART_BASE_URL}/${curProductId}`, CART_BASE_URL);
+
+    const currentCartItem = getCartItem(curProductId);
+    if (!currentCartItem) return;
+
+    api.delete(`${CART_BASE_URL}/${currentCartItem.id}`, CART_BASE_URL);
   };
 
   return {
