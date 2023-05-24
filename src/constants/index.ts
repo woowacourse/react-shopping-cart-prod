@@ -34,8 +34,8 @@ export const FETCH_METHOD = {
 
 // http://43.200.8.82:8080/{path}
 export const FETCH_URL = {
-  products: 'http://43.200.8.82:8080/products',
-  cartItems: 'http://43.200.8.82:8080/cart-item',
+  products: '/api/products',
+  cartItems: '/api/cart-item',
 };
 
 export const DELIVERY_FEE = 3000;
