@@ -16,22 +16,21 @@ import { worker } from './mocks/browser';
  */
 
 async function main() {
-  // localStorage.setItem('products', JSON.stringify(mockData));
   await worker.start({
     serviceWorker: {
       url: '/react-shopping-cart/mockServiceWorker.js',
     },
   });
-
-  ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-      <RecoilRoot>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </RecoilRoot>
-    </React.StrictMode>
-  );
 }
-main();
+// main();
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </RecoilRoot>
+  </React.StrictMode>
+);
