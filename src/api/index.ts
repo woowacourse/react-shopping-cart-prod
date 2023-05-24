@@ -18,20 +18,20 @@ export const api = {
     const data = await fetchApi(url, { method: 'GET' });
     return data;
   },
-  post: <T>(url: string, body: T) => {
-    return fetchApi(url, {
+  post: async <T>(url: string, body: T) => {
+    return await fetchApi(url, {
       method: 'POST',
       body: JSON.stringify(body),
     });
   },
-  patch: <T>(url: string, body: T) => {
-    return fetchApi(url, {
+  patch: async <T>(url: string, body: T) => {
+    return await fetchApi(url, {
       method: 'PATCH',
       body: JSON.stringify(body),
     });
   },
-  delete: (url: string) => {
-    return fetchApi(url, {
+  delete: async (url: string) => {
+    return await fetchApi(url, {
       method: 'DELETE',
     });
   },
