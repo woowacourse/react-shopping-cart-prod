@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import { AddIcon } from '../../../assets';
 import { useCart } from '../../../hooks/useCart';
-import { cartItemQuantityState } from '../../../store/cart';
+import { cartItemIdState, cartItemQuantityState } from '../../../store/cart';
 import { ProductItemData } from '../../../types';
 import { priceFormatter } from '../../../utils/formatter';
 import StepperButton from '../../common/StepperButton/StepperButton';
@@ -13,7 +13,8 @@ import * as S from './ProductItem.styles';
 type ProductItemProps = ProductItemData;
 
 const ProductItem = ({ ...information }: ProductItemProps) => {
-  const cartItemQuantity = useRecoilValue(cartItemQuantityState(information.id));
+  const cartId = useRecoilValue(cartItemIdState(information.id));
+  const cartQuantity = useRecoilValue(cartItemQuantityState(cartId!));
   const { isAdded, addItem, updateItemQuantity } = useCart();
 
   const handleAddButtonClick = useCallback(() => {
@@ -22,9 +23,9 @@ const ProductItem = ({ ...information }: ProductItemProps) => {
 
   const handleQuantityChange = useCallback(
     (quantity: number) => {
-      updateItemQuantity({ productId: information.id, quantity });
+      updateItemQuantity({ cartItemId: cartId!, quantity });
     },
-    [updateItemQuantity, information.id]
+    [updateItemQuantity, cartId]
   );
 
   return (
@@ -33,14 +34,13 @@ const ProductItem = ({ ...information }: ProductItemProps) => {
         <S.ItemImageContainer>
           <S.ItemImage src={information.imageUrl} alt={information.name} />
           <S.ItemButtonWrapper>
-            {cartItemQuantity ? (
-              <StepperButton count={cartItemQuantity} handleCountChange={handleQuantityChange} />
+            {cartId ? (
+              <StepperButton count={cartQuantity} handleCountChange={handleQuantityChange} />
             ) : (
               <S.ItemButton
                 type="button"
-                value={cartItemQuantity || 0}
                 aria-label="상품 추가"
-                variant={cartItemQuantity ? 'primary' : 'textButton'}
+                variant="textButton"
                 onClick={handleAddButtonClick}
               >
                 <AddIcon width={16} height={16} />
