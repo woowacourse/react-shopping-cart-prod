@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 import SkeletonCartItem from './CartItem/SkeletonCartItem';
 import CartItems from './CartItems';
 import CartListSubHeader from './CartListSubHeader';
+import LoadingCartListSubHeader from './CartListSubHeader/LoadingCartListSubHeader';
 import EmptyCart from './EmptyCart';
 import PaymentAmount from './PaymentAmount';
 import SkeletonPaymentAmount from './PaymentAmount/SkeletonPaymentAmount';
@@ -14,7 +15,7 @@ function CartList() {
       <Suspense fallback={<></>}>
         <EmptyCart />
       </Suspense>
-      <Suspense fallback={<></>}>
+      <Suspense fallback={<LoadingCartListSubHeader />}>
         <CartListSubHeader />
       </Suspense>
       <S.ShoppingCartContentsLayout>
