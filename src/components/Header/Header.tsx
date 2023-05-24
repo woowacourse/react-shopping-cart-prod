@@ -33,21 +33,25 @@ const Header = () => {
   return (
     <header>
       <div className={styles.container}>
+        <OriginSelector />
         <img src={Logo} alt="logo" className={styles.logo} onClick={navigateToMainPage} />
-        <button type="button">
-          {cartItemList.length > 0 && (
-            <span className={styles.cartItemCount}>{cartItemList.length}</span>
-          )}
-          <OriginSelector />
-          <img
-            src={CartIcon}
-            alt="cart icon"
-            className={styles.cartIcon}
-            onClick={navigateToCartPage}
-          />
+        <div>
+          <button type="button">
+            {cartItemList.length > 0 && (
+              <div className={styles.cartItemCountBox}>
+                <span className={styles.cartItemCount}>{cartItemList.length}</span>
+              </div>
+            )}
 
-          <span className={styles.label}>장바구니</span>
-        </button>
+            <img
+              src={CartIcon}
+              alt="cart icon"
+              className={styles.cartIcon}
+              onClick={navigateToCartPage}
+            />
+            <span className={styles.label}>장바구니</span>
+          </button>
+        </div>
       </div>
     </header>
   );

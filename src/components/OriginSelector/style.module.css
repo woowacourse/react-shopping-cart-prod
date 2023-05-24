@@ -1,0 +1,6 @@
+.SelectBox {
+  width: fit-content;
+  border: 1px solid #dddddd;
+  padding: 5px;
+  border-radius: 5px;
+}
