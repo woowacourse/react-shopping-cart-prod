@@ -17,7 +17,7 @@ const cartIdListState = selector({
   get: ({ get }) => {
     const cartList = get(cartListState);
 
-    return cartList.map((cartItem) => cartItem.product.id);
+    return cartList.map((cartItem) => cartItem.id);
   },
 });
 

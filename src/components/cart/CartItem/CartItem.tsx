@@ -18,16 +18,9 @@ interface CartItemProps extends ProductItemData {
   quantity: number;
 }
 
-const CartItem = ({
-  cartItemId,
-  id: productId,
-  quantity,
-  name,
-  price,
-  imageUrl,
-}: CartItemProps) => {
+const CartItem = ({ cartItemId, quantity, name, price, imageUrl }: CartItemProps) => {
   const { updateItemQuantity, removeItem } = useCart();
-  const { isChecked, toggleItemCheckbox } = useCheckbox(CART_LIST_CHECKBOX_KEY, productId);
+  const { isChecked, toggleItemCheckbox } = useCheckbox(CART_LIST_CHECKBOX_KEY, cartItemId);
   const { isModalOpen, handleModalOpen, handleModalClose } = useModal();
 
   const handleQuantityChange = useCallback(
