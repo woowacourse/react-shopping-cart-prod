@@ -42,7 +42,7 @@ const GlobalStyle = createGlobalStyle`
   main {
     position: relative;
     margin: 0 24px;
-    padding-top: 124px;
+    padding-top: 130px;
     padding-bottom: 72px;
     max-width: 1080px;
     height: fit-content;
