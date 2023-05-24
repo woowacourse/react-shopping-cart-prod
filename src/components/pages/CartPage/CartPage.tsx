@@ -5,7 +5,7 @@ import CartTotal from '../../cart/CartTotal/CartTotal';
 import Checkbox from '../../common/Checkbox/Checkbox';
 import useCartPage from './useCartPage';
 import empty from '../../../assets/image/empty.png';
-import { ResetButton } from '../ErrorFallback/ErrorFallback';
+import { ResetButton } from '../../common/ErrorFallback/ErrorFallback';
 import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {

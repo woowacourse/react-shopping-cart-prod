@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { ResetButton } from '../ErrorFallback/ErrorFallback';
+import { ResetButton } from '../../common/ErrorFallback/ErrorFallback';
 import blobsad from '../../../assets/image/blobsad.png';
 
 const ErrorPage = () => {
