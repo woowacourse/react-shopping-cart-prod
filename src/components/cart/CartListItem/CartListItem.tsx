@@ -5,8 +5,8 @@ import Checkbox from '../../common/Checkbox/Checkbox';
 import useCartService from '../../../hooks/useCartService';
 import { formatPrice } from '../../../utils/formatPrice';
 import Spacer from '../../common/Spacer/Spacer';
+import { TrashIcon } from '../../../assets/svg';
 import type { CartItem } from '../../../types/product';
-import { TrashIcon } from '../../../assets';
 
 interface CartListItemProps {
   cartItem: CartItem;

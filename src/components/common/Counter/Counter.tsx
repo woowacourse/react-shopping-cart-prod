@@ -1,7 +1,7 @@
 import { css, styled } from 'styled-components';
-import { MinusIcon, PlusIcon } from '../../../assets';
 import useCounter from './useCounter';
 import { isNumericString } from '../../../utils/isNumericString';
+import { MinusIcon, PlusIcon } from '../../../assets/svg';
 import type { ChangeEventHandler, FocusEventHandler } from 'react';
 
 export type CounterSize = 'medium' | 'small';

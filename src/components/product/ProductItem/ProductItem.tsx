@@ -3,7 +3,7 @@ import Counter from '../../common/Counter/Counter';
 import Image from '../../common/Image/Image';
 import { formatPrice } from '../../../utils/formatPrice';
 import useCartService from '../../../hooks/useCartService';
-import { SmallCartIcon } from '../../../assets';
+import { SmallCartIcon } from '../../../assets/svg';
 import type { Product } from '../../../types/product';
 
 const ProductItem = (product: Product) => {

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import useCartService from '../../../hooks/useCartService';
-import { CartIcon } from '../../../assets';
 import { Link } from 'react-router-dom';
+import useCartService from '../../../hooks/useCartService';
 import ServerSelect from '../ServerSelect/ServerSelect';
+import { CartIcon } from '../../../assets/svg';
 
 const Header = () => {
   const { cart } = useCartService();
