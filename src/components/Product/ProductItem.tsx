@@ -20,12 +20,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
 
   return (
     <ProductContainer>
-      <Image
-        src={`${process.env.PUBLIC_URL}/${imageUrl}`}
-        alt={name}
-        loading='lazy'
-        size='medium'
-      />
+      <Image src={imageUrl} alt={name} loading='lazy' size='medium' />
       <ProductInfoContainer>
         <dl>
           <ProductName>{name}</ProductName>

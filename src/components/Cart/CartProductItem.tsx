@@ -27,12 +27,7 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
           checked={isCheckedProduct(cartProduct)}
         />
       </CheckBoxWrapper>
-      <Image
-        src={`${process.env.PUBLIC_URL}/${imageUrl}`}
-        alt={name}
-        loading='lazy'
-        size='small'
-      />
+      <Image src={imageUrl} alt={name} loading='lazy' size='small' />
       <CartProductName>{name}</CartProductName>
       <CartProductRightWrapper>
         <button onClick={removeProduct}>
