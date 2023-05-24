@@ -7,8 +7,8 @@ import { worker } from './mocks/browser';
 import router from './router';
 
 async function main() {
-  if (window.location.pathname === '/react-shopping-cart') {
-    window.location.pathname = '/react-shopping-cart/';
+  if (window.location.pathname === '/react-shopping-cart-prod') {
+    window.location.pathname = '/react-shopping-cart-prod/';
     return;
   }
 

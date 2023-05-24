@@ -32,6 +32,7 @@ export const FETCH_METHOD = {
   PATCH: 'PATCH',
 } as const;
 
+// http://43.200.8.82:8080/{path}
 export const FETCH_URL = {
   products: '/api/products',
   cartItems: '/api/cart-item',
