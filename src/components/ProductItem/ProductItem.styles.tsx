@@ -7,6 +7,7 @@ export const ProductItemWrapper = styled.div`
 
 export const ImageOverflowContainer = styled.div`
   overflow: hidden;
+  border-radius: 12px;
 `;
 
 export const ImageContainer = styled.div`
@@ -60,4 +61,10 @@ export const CartButton = styled.button`
   border: none;
   background: transparent;
   cursor: pointer;
+
+  transition: scale 0.5s ease-in-out;
+
+  &:hover {
+    transform: scale(1.1); 
+  }
 `;

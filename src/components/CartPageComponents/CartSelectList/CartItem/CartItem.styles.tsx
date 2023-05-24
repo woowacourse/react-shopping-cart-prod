@@ -1,15 +1,11 @@
 import styled from 'styled-components';
 import { ImageContainer, ImageOverflowContainer, ProductItemImage } from '../../../ProductItem/ProductItem.styles.tsx';
 import TrashIcon from '../../../@common/TrashIcon/TrashIcon.tsx';
+import viewports from '../../../../constants/viewports.ts';
 
 export const CartItem = styled.li`
   display: flex;
   position: relative;
-`;
-
-export const CartItemCheckBox = styled.input`
-  width: 28px;
-  height: 28px;
 `;
 
 export const ItemImageOverflowContainer = styled(ImageOverflowContainer)`
@@ -31,11 +27,19 @@ export const ItemImage = styled(ProductItemImage)`
 `;
 
 export const ItemTitle = styled.span`
+  width: 100%;
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
   margin-left: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
+  @media screen and (max-width: ${viewports.md}) {
+    width: 30%;
+  }
 `;
 
 export const itemFunctionWrapper = styled.div`
@@ -73,5 +77,11 @@ export const TrashLogo = styled(TrashIcon)`
 `;
 
 export const CartItemBorder = styled.hr`
-  border: 1.5px solid #cccccc;
+  width: 100%;
+  height: 3.3px;
+  border: none;
+  border-radius: 10px;
+
+  background: linear-gradient(90deg, transparent, var(--color-header), transparent);
+  background-size: 200% 200%;
 `;

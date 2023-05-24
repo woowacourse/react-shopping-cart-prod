@@ -13,14 +13,14 @@ const CartSelectList = () => {
   return (
     <Styled.CartSelectListWrapper>
       <Styled.CartQuantityText>배송 상품 ({cartList?.items.length || 0})개</Styled.CartQuantityText>
-      <hr />
+      <Styled.CartQuantityDivider />
       <div>
         <div>
           {cartList &&
             cartList.items.map((cart) => {
               return <CartItem key={cart.id} cart={cart} refetchCartList={refetchCartList} />;
             })}
-          <button onClick={selectAllItems}>전체선택</button>
+          <Styled.SelectAllButton onClick={selectAllItems}>전체선택</Styled.SelectAllButton>
           <span>
             ({selectedItemsCount}/{allItemsCount})
           </span>

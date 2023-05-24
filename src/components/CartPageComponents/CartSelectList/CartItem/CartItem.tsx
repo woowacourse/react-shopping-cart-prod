@@ -3,6 +3,7 @@ import StepperInput from '../../StepperInput/StepperInput.tsx';
 import { Item } from '../../../../types/CartList.ts';
 import useCart from '../../../../hooks/useCart.ts';
 import useDeleteProduct from '../../../../hooks/requests/useDeleteProduct.ts';
+import StyledCheckBox from '../../../@common/CheckBox/StyledCheckBox.tsx';
 
 type CartItemProps = {
   cart: Item;
@@ -31,7 +32,7 @@ const CartItem = ({ cart, refetchCartList }: CartItemProps) => {
         <>
           <ul>
             <Styled.CartItem>
-              <Styled.CartItemCheckBox type='checkbox' checked={isSelected} onChange={handleCheckBox} />
+              <StyledCheckBox checked={isSelected} onChange={handleCheckBox} />
               <Styled.ItemImageOverflowContainer>
                 <Styled.ItemImageContainer>
                   <Styled.ItemImage src={itemInfo.imageUrl} />

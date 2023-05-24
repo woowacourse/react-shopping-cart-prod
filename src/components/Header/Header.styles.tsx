@@ -1,4 +1,17 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+import viewports from '../../constants/viewports.ts';
+
+const slideDown = keyframes`
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+`;
 
 export const HeaderContainer = styled.div`
   background: var(--color-header);
@@ -10,9 +23,14 @@ export const HeaderContainer = styled.div`
   z-index: 100;
   border-radius: 0 0 20px 20px;
   box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+  animation: ${slideDown} 0.4s ease-out forwards;
 
   @media screen and (max-width: 1750px) {
     padding: 0 80px;
+  }
+
+  @media screen and (max-width: ${viewports.md}) {
+    padding: 0 16px;
   }
 `;
 
@@ -32,7 +50,7 @@ export const LogoButton = styled.button`
   transition: transform 0.3s;
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
 `;
 
@@ -40,6 +58,11 @@ export const LogoImage = styled.img`
   max-width: 400px;
   height: 91px;
   margin: 0 16px 14px 0;
+
+  @media screen and (max-width: ${viewports.md}) {
+    width: 150px;
+    height: 50px;
+  }
 `;
 
 export const ShoppingCartButton = styled.button`
@@ -60,6 +83,10 @@ export const ShoppingCartButtonText = styled.span`
   line-height: 12px;
   color: var(--color-brownish-red);
   margin-right: 6px;
+
+  @media screen and (max-width: ${viewports.md}) {
+    font-size: 16px;
+  }
 `;
 
 export const ShoppingCartQuantity = styled.div`
