@@ -1,7 +1,7 @@
 export const SERVERS: Readonly<Record<string, string>> = {
-  준팍: 'http://54.180.95.7:8080',
-  우르: 'http://43.200.172.73:8080',
-  도이: 'http://54.180.105.131:8080',
+  준팍: 'https://www.woowacourse.com',
+  우르: 'https://course-shopping.store/',
+  도이: 'https://wooteco.store',
 };
 
 export const PRODUCT_LIST_URL = '/products';
