@@ -67,4 +67,5 @@ const LogoWrapper = styled(Link)`
 
 const CartWrapper = styled.div`
   display: flex;
+  align-items: center;
 `;

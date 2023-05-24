@@ -5,9 +5,9 @@ import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 import useProduct from '../../../hooks/useProduct';
 
 const ProductList = () => {
-  const { productData, isLoading } = useProduct();
+  const { productData, isFetching } = useProduct();
 
-  if (isLoading) {
+  if (isFetching) {
     return <LoadingSpinner />;
   }
   if (!productData) {

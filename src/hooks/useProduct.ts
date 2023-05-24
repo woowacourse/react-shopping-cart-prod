@@ -9,13 +9,20 @@ const useProduct = () => {
 
   const {
     data: productData,
-    isLoading,
+    isFetching,
     refetch,
-  } = useQuery<ProductType[]>('products', async () => {
-    const res = await fetch(`${serverURL}/products`, { method: 'GET' });
-    const resData = await res.json();
-    return resData;
-  });
+  } = useQuery<ProductType[]>(
+    'products',
+    async () => {
+      const res = await fetch(`${serverURL}/products`, { method: 'GET' });
+      const resData = await res.json();
+      return resData;
+    },
+    {
+      staleTime: 100000,
+      cacheTime: Infinity,
+    },
+  );
 
   useEffect(() => {
     refetch();
@@ -23,8 +30,7 @@ const useProduct = () => {
 
   return {
     productData,
-    isLoading,
-    refetch,
+    isFetching,
   };
 };
 
