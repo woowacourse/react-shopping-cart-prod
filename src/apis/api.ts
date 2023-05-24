@@ -50,7 +50,6 @@ class FetchQuery implements FetchQueryInstance {
 
     if (!config?.method || method === config.method) {
       const composedConfig = this.getComposedConfigWithDefault(config);
-
       return [
         path,
         {
@@ -125,5 +124,6 @@ export const authFetchQuery = new FetchQuery({
   baseURL: ENDPOINT['말랑'],
   headers: {
     Authorization: `Basic ${base64}`,
+    'Content-Type': 'application/json',
   },
 });
