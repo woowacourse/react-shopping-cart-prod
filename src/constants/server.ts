@@ -1,18 +1,18 @@
 export const SERVER = {
   도치: {
-    url: 'http://13.209.67.114:8080',
-    id: 'a@a.com',
-    password: '1234',
+    url: process.env.REACT_APP_DOCHI_URL,
+    id: process.env.REACT_APP_ID,
+    password: process.env.REACT_APP_PASSWORD,
   },
   푸우: {
-    url: 'http://43.201.10.4:8080',
-    id: 'a@a.com',
-    password: '1234',
+    url: process.env.REACT_APP_POOH_URL,
+    id: process.env.REACT_APP_ID,
+    password: process.env.REACT_APP_PASSWORD,
   },
   엔초: {
-    url: 'http://13.124.236.192:8080',
-    id: 'a@a.com',
-    password: '1234',
+    url: process.env.REACT_APP_ENCHO_URL,
+    id: process.env.REACT_APP_ID,
+    password: process.env.REACT_APP_PASSWORD,
   },
 } as const;
 
