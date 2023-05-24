@@ -20,7 +20,7 @@ export const useSetCart = (productId: number) => {
     return { cart, cartItemIndex, alreadyHasCartItem };
   };
 
-  const findCartItemId = () => cart.find((item: CartItem) => item.product.id === productId).id;
+  const findCartItemId = () => cart.find((item) => item.product.id === productId)?.id;
 
   const removeProduct = (cart: CartItem[], cartItemIndex: number) => {
     if (cartItemIndex >= FIRST_INDEX) cart.splice(cartItemIndex, ONE_ITEM_IN_CART);
@@ -28,8 +28,8 @@ export const useSetCart = (productId: number) => {
     return cart;
   };
 
-  const updateCart = (value: string) => {
-    const quantity = Number(value);
+  const updateCart = (value: number) => {
+    const quantity = value;
     const cartItemId = findCartItemId();
 
     api

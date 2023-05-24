@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily } from 'recoil';
+import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 import { KEY_CART } from '../constants';
 import { CartItem, Product } from '../types';
 import { getDataFromLocalStorage } from '../utils/getAndSetDataInLocalStorage';
@@ -20,7 +20,7 @@ export const productSelector = selectorFamily({
     },
 });
 
-export const cartState = atom({
+export const cartState = atom<CartItem[]>({
   key: 'cartState',
   default: JSON.parse(getDataFromLocalStorage(KEY_CART) ?? '[]'),
 });
@@ -31,7 +31,7 @@ export const quantitySelector = selectorFamily({
     (id) =>
     ({ get }) => {
       const cart = get(cartState);
-      const selectedCartItem = cart.find((item: CartItem) => item.product.id === id);
+      const selectedCartItem = cart.find((item) => item.product.id === id);
 
       if (!selectedCartItem) return 0;
       return selectedCartItem.quantity;
@@ -39,16 +39,17 @@ export const quantitySelector = selectorFamily({
 
   set:
     (id) =>
-    ({ get, set }, newValue) => {
+    ({ get, set }, newQuantity) => {
       const cart = get(cartState);
-      const selectedCartItem = cart.find((item: CartItem) => item.product.id === id);
+      const selectedCartItem = cart.find((item) => item.product.id === id);
 
-      set(
-        cartState,
-        cart.map((cartItem: CartItem) =>
-          cartItem === selectedCartItem ? { ...cartItem, quantity: newValue } : cartItem
-        )
+      const quantity = newQuantity instanceof DefaultValue ? 1 : newQuantity;
+
+      const newCart = cart.map((cartItem) =>
+        cartItem === selectedCartItem ? { ...cartItem, quantity } : cartItem
       );
+
+      set(cartState, newCart);
     },
 });
 
@@ -72,9 +73,9 @@ export const totalPriceSelector = selector<number>({
   get: ({ get }) => {
     const cart = get(cartState);
     const checkedItems = get(checkedItemList);
-    const checkedProductsInCart = cart.filter((item: CartItem) => checkedItems.includes(item.id));
+    const checkedProductsInCart = cart.filter((item) => checkedItems.includes(item.id));
 
-    const totalPrice = checkedProductsInCart.reduce((acc: 0, cur: CartItem) => {
+    const totalPrice = checkedProductsInCart.reduce((acc, cur) => {
       return acc + cur.product.price * cur.quantity;
     }, 0);
 

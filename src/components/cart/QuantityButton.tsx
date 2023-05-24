@@ -23,7 +23,7 @@ const QuantityButton = ({ productId, quantity }: Props) => {
     const updatedQuantity = handler === UP ? quantity + STEP : quantity - STEP;
 
     setQuantity(updatedQuantity);
-    updateCart(String(updatedQuantity));
+    updateCart(updatedQuantity);
   };
 
   return (

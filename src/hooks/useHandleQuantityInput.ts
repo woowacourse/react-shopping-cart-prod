@@ -1,10 +1,11 @@
-import { ChangeEventHandler, Dispatch } from 'react';
-import { MAX_NUMBER_LENGTH, QUANTITY } from '../constants';
+import { ChangeEventHandler } from 'react';
+import { SetterOrUpdater } from 'recoil';
+import { QUANTITY } from '../constants';
 
 interface Props {
   removeItemFromCart: () => void;
-  setQuantity: Dispatch<string | number>;
-  updateCart: (value: string) => void;
+  setQuantity: SetterOrUpdater<number>;
+  updateCart: (value: number) => void;
 }
 
 export const useHandleQuantityInput = ({ ...props }: Props) => {
@@ -12,16 +13,16 @@ export const useHandleQuantityInput = ({ ...props }: Props) => {
 
   const handleNumberInputChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const { value } = target;
+    const numberValue = Number(value);
 
-    if (value === String(QUANTITY.NONE)) {
+    if (numberValue === QUANTITY.NONE) {
       removeItemFromCart();
 
       return setQuantity(QUANTITY.INITIAL);
     }
 
-    const onlyTwoDigits = value.slice(0, MAX_NUMBER_LENGTH);
-    setQuantity(onlyTwoDigits);
-    updateCart(onlyTwoDigits);
+    setQuantity(numberValue);
+    updateCart(numberValue);
   };
 
   return handleNumberInputChange;
