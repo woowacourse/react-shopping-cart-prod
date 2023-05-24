@@ -17,6 +17,7 @@ const ProductList = () => {
     api.get(`${server}${PRODUCT_LIST_URL}`).then((data) => {
       setProductList(data);
     });
+
     api
       .get(`${server}${CART_URL}`, {
         Authorization: 'Basic YUBhLmNvbToxMjM0',
@@ -27,7 +28,7 @@ const ProductList = () => {
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [server]);
 
   return (
     <S.Wrapper>
