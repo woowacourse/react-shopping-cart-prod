@@ -6,21 +6,21 @@ import { useCallback } from 'react';
 const useCart = () => {
   const [cartList, setCartList] = useRecoilState(cartListAtom);
 
-    const removeCartItem = useCallback(
-        (itemId: number) => {
-            if (!cartList) {
-                return;
-            }
+  const removeCartItem = useCallback(
+    (itemId: number) => {
+      if (!cartList) {
+        return;
+      }
 
-            const updatedItems = cartList.items.filter((item) => item.id !== itemId);
+      const updatedItems = cartList.items.filter((item) => item.id !== itemId);
 
-            setCartList({
-                ...cartList,
-                items: updatedItems,
-            });
-        },
-        [cartList, setCartList]
-    );
+      setCartList({
+        ...cartList,
+        items: updatedItems,
+      });
+    },
+    [cartList, setCartList]
+  );
 
   const updateCart = useCallback(
     (cartItem: Item) => {
@@ -37,11 +37,11 @@ const useCart = () => {
       const existingItemIndex = cartList.items.findIndex((item) => item.id === cartItem.id);
 
       if (existingItemIndex !== -1) {
-          if (cartItem.quantity === 0) {
-            // 수량이 0인 경우
-            removeCartItem(cartItem.id);
-            return;
-          }
+        if (cartItem.quantity === 0) {
+          // 수량이 0인 경우
+          removeCartItem(cartItem.id);
+          return;
+        }
 
         // 기존 아이템 업데이트
         setCartList({
@@ -60,8 +60,6 @@ const useCart = () => {
     },
     [cartList, setCartList]
   );
-
-
 
   const toggleIsSelected = useCallback(
     (itemId: number) => {
