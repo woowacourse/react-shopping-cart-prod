@@ -14,6 +14,7 @@ async function main() {
     serviceWorker: {
       url: "/react-shopping-cart-prod/mockServiceWorker.js",
     },
+    onUnhandledRequest: 'bypass',
   });
 
   ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
