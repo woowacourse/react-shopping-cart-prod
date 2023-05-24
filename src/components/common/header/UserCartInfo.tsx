@@ -10,7 +10,7 @@ const UserCartInfo = () => {
 
   const [cartTotalQuantity, setCartTotalQuantity] = useState(0);
 
-  const [isShown, setIsShown] = useState(true);
+  const [isShown, setIsShown] = useState(false);
 
   const ref = useRef(null);
 
@@ -21,13 +21,15 @@ const UserCartInfo = () => {
   }, [cartData]);
 
   useEffect(() => {
-    if (cartTotalQuantity > 0) {
+    if (cartTotalQuantity > 0 && !isShown) {
       setIsShown(true);
       return;
     }
-    setTimeout(() => {
-      setIsShown(false);
-    }, 200);
+    if (cartTotalQuantity === 0 && isShown) {
+      setTimeout(() => {
+        setIsShown(false);
+      }, 200);
+    }
   }, [cartTotalQuantity]);
 
   useEffect(() => {
