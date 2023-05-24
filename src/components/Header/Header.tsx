@@ -5,45 +5,42 @@ import {
   CartCount,
   CartCountWrapper,
   CartTitle,
-  CartWrapper,
-  HeaderWrapper,
+  NavBar,
+  HeaderContent,
   LogoImage,
   LogoWrapper,
-  Navbar,
+  HeaderWrapper,
+  CartWrapper,
 } from "./Header.style";
 import { useRecoilValue } from "recoil";
 import { cartCountSelector } from "../../recoil/cartAtoms";
 import ServerSelectBox from "../ServerSelectBox/ServerSelectBox.tsx";
-import { serverState } from "../../recoil/serverAtom.ts";
 
 function Header() {
   const navigate = useNavigate();
   const cartCount = useRecoilValue(cartCountSelector);
-  const server = useRecoilValue(serverState);
 
   return (
-    <Navbar>
+    <HeaderWrapper>
       <Container>
-        <HeaderWrapper>
+        <HeaderContent>
           <LogoWrapper onClick={() => navigate("/")}>
             <LogoImage src={titleLogo} />
           </LogoWrapper>
-          <CartWrapper>
-            <div style={{ color: "black" }}>현재 상태 : {server}</div>
+          <NavBar>
             <ServerSelectBox />
-            <div
-              style={{ display: "flex", gap: "10px" }}
+            <CartWrapper
               onClick={() => navigate("/cart")}
             >
               <CartTitle>장바구니</CartTitle>
               <CartCountWrapper>
                 <CartCount>{cartCount}</CartCount>
               </CartCountWrapper>
-            </div>
-          </CartWrapper>
-        </HeaderWrapper>
+            </CartWrapper>
+          </NavBar>
+        </HeaderContent>
       </Container>
-    </Navbar>
+    </HeaderWrapper>
   );
 }
 
