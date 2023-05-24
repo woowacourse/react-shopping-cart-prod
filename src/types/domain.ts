@@ -6,8 +6,8 @@ export interface ProductType {
 }
 
 export interface LocalProductType extends ProductType {
-  cartItemId: number;
   quantity: number;
+  cartItemId: number;
 }
 
 export interface CartItemType {

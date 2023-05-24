@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { selectedProductsState } from "../recoil/atom";
-import { cartProductsSelector } from "../recoil/selector";
+import { localProductsSelector } from "../recoil/selector";
 import { LocalProductType } from "../types/domain";
 
 export const useCheckBox = () => {
-  const cartProducts = useRecoilValue<LocalProductType[]>(cartProductsSelector);
+  const cartProducts = useRecoilValue<LocalProductType[]>(
+    localProductsSelector
+  );
   const setSelectedProducts = useSetRecoilState(selectedProductsState);
   const [checkedArray, setCheckedArray] = useState(
     [...Array(cartProducts.length)].map(() => true)

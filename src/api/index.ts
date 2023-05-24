@@ -1,5 +1,5 @@
 const DEV_BASE_URL =
-  "http://cors-anywhere.herokuapp.com/http://13.209.73.130:8080";
+  "http://cors-anywhere.herokuapp.com/http://43.201.20.174:8080";
 const username = "a@a.com";
 const password = "1234";
 
@@ -39,7 +39,10 @@ export const changeQuantity = async (
   newQuantity: number
 ) => {
   try {
-    await fetch(`/cart-items/${cartItemId}`, {
+    await fetch(`${DEV_BASE_URL}/cart-items/${cartItemId}`, {
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
       method: "PATCH",
       body: JSON.stringify({ quantity: newQuantity }),
     });
@@ -50,7 +53,10 @@ export const changeQuantity = async (
 
 export const addCartItem = async (productId: number) => {
   try {
-    await fetch("/cart-items", {
+    await fetch(`${DEV_BASE_URL}/cart-items`, {
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
       method: "POST",
       body: JSON.stringify({ productId: productId }),
     });
@@ -61,7 +67,10 @@ export const addCartItem = async (productId: number) => {
 
 export const deleteCartItem = async (cartItemId: number) => {
   try {
-    await fetch(`/cart-items/${cartItemId}`, {
+    await fetch(`${DEV_BASE_URL}/cart-items/${cartItemId}`, {
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
       method: "DELETE",
     });
   } catch (error) {

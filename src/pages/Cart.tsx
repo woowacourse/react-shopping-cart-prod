@@ -2,7 +2,7 @@ import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
 import { useFetch } from "../hooks/useFetch";
 import { useRouter } from "../hooks/useRouter";
-import { cartProductsSelector } from "../recoil/selector";
+import { localProductsSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import {
   Header,
@@ -15,7 +15,7 @@ import {
 
 const Cart = () => {
   const { goPage } = useRouter();
-  const cartProducts = useRecoilValue(cartProductsSelector);
+  const cartProducts = useRecoilValue(localProductsSelector);
   const { isLoading } = useFetch();
 
   return (

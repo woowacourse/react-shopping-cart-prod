@@ -2,6 +2,7 @@ import { atom, selector } from "recoil";
 import { LocalProductType, ProductType } from "../types/domain";
 import { fetchProducts } from "../api";
 import { makeLocalProducts } from "../utils/domain";
+import { SERVERS } from "../constants";
 
 export const productsState = atom<ProductType[]>({
   key: "products",
@@ -27,4 +28,9 @@ export const localProductsState = atom<LocalProductType[]>({
 export const selectedProductsState = atom<LocalProductType[]>({
   key: "selectedProducts",
   default: [],
+});
+
+export const serverOwnerState = atom<string>({
+  key: "serverOwner",
+  default: "리오",
 });

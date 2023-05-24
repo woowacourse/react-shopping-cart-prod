@@ -74,6 +74,7 @@ const ProductWrapper = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 5px;
+    object-fit: cover;
 
     &:hover {
       background-color: var(--shadow-gray);

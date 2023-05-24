@@ -1,16 +1,18 @@
 import { useRecoilValue } from "recoil";
-import type { ProductType } from "../types/domain";
+import type { LocalProductType, ProductType } from "../types/domain";
 import styled from "styled-components";
 import { TrashCanIcon } from "../assets";
 import { Counter } from "./Counter";
-import { cartProductsSelector } from "../recoil/selector";
+import { localProductsSelector } from "../recoil/selector";
 import { useCheckBox } from "../hooks/useCheckBox";
 import { deleteCartItem } from "../api";
 import { selectedProductsState } from "../recoil/atom";
 import { useFetch } from "../hooks/useFetch";
 
 export const CartProductList = () => {
-  const cartProducts = useRecoilValue<ProductType[]>(cartProductsSelector);
+  const localProductsInCart = useRecoilValue<LocalProductType[]>(
+    localProductsSelector
+  );
   const selectedProducts = useRecoilValue<ProductType[]>(selectedProductsState);
   const { fetchNewProducts } = useFetch();
   const {
@@ -31,8 +33,8 @@ export const CartProductList = () => {
     fetchNewProducts();
   };
 
-  const handleDelete = (id: number, index: number) => async () => {
-    await deleteCartItem(id);
+  const handleDelete = (cartItemId: number, index: number) => async () => {
+    await deleteCartItem(cartItemId);
 
     removeTargetIndex(index);
     fetchNewProducts();
@@ -40,14 +42,14 @@ export const CartProductList = () => {
 
   return (
     <Wrapper>
-      <TitleBox>든든배송 상품 ({cartProducts.length}개)</TitleBox>
+      <TitleBox>든든배송 상품 ({localProductsInCart.length}개)</TitleBox>
       <CartProductsContainer>
-        {cartProducts.map((product, index) => (
+        {localProductsInCart.map((localProduct, index) => (
           <CartProduct
-            key={product.id}
-            {...product}
+            key={localProduct.id}
+            {...localProduct}
             checked={checkedArray[index]}
-            onDeleteHandler={handleDelete(product.id, index)}
+            onDeleteHandler={handleDelete(localProduct.cartItemId, index)}
             onChangeHandler={handleCheckBox(index)}
           />
         ))}
@@ -62,7 +64,7 @@ export const CartProductList = () => {
           />
         </CheckBoxLabel>
         <p>
-          전체선택 ({selectedProducts.length}/{cartProducts.length})
+          전체선택 ({selectedProducts.length}/{localProductsInCart.length})
         </p>
         <button onClick={handleDeleteButtonClicked}>선택삭제</button>
       </AllCheckContainer>

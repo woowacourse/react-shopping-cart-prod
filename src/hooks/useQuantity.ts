@@ -9,19 +9,23 @@ import { makeLocalProducts } from "../utils/domain";
 export const useQuantity = (productId: number) => {
   const products = useRecoilValue(productsState);
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
-  const target = localProducts.find(
+  const currentLocalProduct = localProducts.find(
     (product: LocalProductType) => product.id === productId
   );
   const [quantity, setQuantity] = useState<string | undefined>(
-    target?.quantity.toString()
+    currentLocalProduct?.quantity.toString()
   );
 
   const setNewQuantity = async (newQuantity: number) => {
+    if (!currentLocalProduct) return;
     if (newQuantity > MAX_QUANTITY || newQuantity < MIN_QUANTITY) return;
 
     newQuantity === 0
-      ? await deleteCartItem(productId)
-      : await changeQuantity(productId, Number(newQuantity));
+      ? await deleteCartItem(currentLocalProduct.cartItemId)
+      : await changeQuantity(
+          currentLocalProduct.cartItemId,
+          Number(newQuantity)
+        );
 
     setQuantity(newQuantity.toString());
     const newProducts = await makeLocalProducts(products);
@@ -41,7 +45,6 @@ export const useQuantity = (productId: number) => {
       Number(quantity) < MIN_QUANTITY
     ) {
       e.target.value = MIN_QUANTITY.toString();
-      console.log("^^ ", Number(e.target.value));
     }
     setNewQuantity(Number(e.target.value));
   };

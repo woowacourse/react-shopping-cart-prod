@@ -1,13 +1,21 @@
 import styled from "styled-components";
 import { CartIcon } from "../assets";
-import { useRecoilValue } from "recoil";
-import { cartProductsSelector } from "../recoil/selector";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { localProductsSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
+import { SERVERS } from "../constants";
+import React from "react";
+import { serverOwnerState } from "../recoil/atom";
 
 export const Header = () => {
   const { goPage } = useRouter();
-  const cartProducts = useRecoilValue(cartProductsSelector);
+  const cartProducts = useRecoilValue(localProductsSelector);
+  const setServerOwner = useSetRecoilState(serverOwnerState);
+
+  const handleServerSelected = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setServerOwner(e.target.value);
+  };
 
   return (
     <Wrapper>
@@ -15,8 +23,13 @@ export const Header = () => {
         <img src={CartIcon} alt="홈카트" />
         <p>SHOP</p>
       </TitleContainer>
-      <CartContainer onClick={goPage(ROUTER_PATH.Cart)}>
-        장바구니
+      <CartContainer>
+        <SelectBox onSelect={handleServerSelected}>
+          {Object.keys(SERVERS).map((server) => (
+            <option>{server}</option>
+          ))}
+        </SelectBox>
+        <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>
         {cartProducts.length > 0 && (
           <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
         )}
@@ -85,4 +98,9 @@ const ItemQuantityBox = styled.div`
   font-size: 16px;
   font-weight: 500;
   color: white;
+`;
+
+const SelectBox = styled.select`
+  width: 102px;
+  height: 40px;
 `;
