@@ -6,7 +6,6 @@ import QuantityController from '@Components/QuantityController';
 import { Product } from '@Types/index';
 
 import useCartItems from '@Hooks/useCartItems';
-import useProduct from '@Hooks/useProduct';
 
 import cartItemState from '@Selector/cartItemState';
 import isCartItemSelectedState from '@Selector/isCartItemSelectedState';
@@ -23,7 +22,9 @@ type CartItemProps = {
 
 function CartItem({ product, width = '100%', cartId }: CartItemProps) {
   const { toggleSelected, deleteSelectedCartItem } = useCartItems();
-  const { name, price, image, imageDescription } = useProduct(product);
+  const { name, price, imageUrl } = product;
+
+  const textPrice = `${price.toLocaleString()} 원`;
 
   const isCartItemSelected = product && useRecoilValue(isCartItemSelectedState(cartId));
   const cartItem = product && useRecoilValue(cartItemState(product.id));
@@ -37,7 +38,7 @@ function CartItem({ product, width = '100%', cartId }: CartItemProps) {
   return (
     <S.Container aria-label="장바구니 상품" width={width}>
       <Checkbox isChecked={isCartItemSelected} size="small" updateSelectedState={() => toggleSelected(cartId)} />
-      <S.ShoppingItemImage src={image} alt={imageDescription} aria-label="장바구니 상품 이미지" />
+      <S.ShoppingItemImage src={imageUrl} alt={name} aria-label="장바구니 상품 이미지" />
       <S.ShoppingItemName aria-label="장바구니 상품 이름">{name}</S.ShoppingItemName>
       <S.RightContents>
         <S.DeleteButton src={Trash} onClick={deleteShoppingItem} />
@@ -47,7 +48,7 @@ function CartItem({ product, width = '100%', cartId }: CartItemProps) {
           cartItemId={cartItem?.cartItemId}
           isAbleSetZeroState={false}
         />
-        <S.ShoppingItemPrice aria-label="장바구니 상품 가격">{price}</S.ShoppingItemPrice>
+        <S.ShoppingItemPrice aria-label="장바구니 상품 가격">{textPrice}</S.ShoppingItemPrice>
       </S.RightContents>
     </S.Container>
   );
