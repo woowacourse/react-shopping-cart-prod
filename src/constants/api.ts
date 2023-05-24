@@ -4,15 +4,14 @@ const USERNAME = 'a@a.com';
 const PASSWORD = '1234';
 const BASE64 = btoa(USERNAME + ':' + PASSWORD);
 
-const MEMBER = ['프론트', '아코', '주디', '저문'] as const;
+const MEMBER = ['아코', '주디', '저문'] as const;
 
 const DEFAULT_MEMBER = MEMBER[0];
 
 const API_BASE_URL_LIST = {
-  [MEMBER[0]]: process.env.REACT_APP_JD_API_BASE_URL,
-  [MEMBER[1]]: process.env.REACT_APP_AK_API_BASE_URL,
-  [MEMBER[2]]: process.env.REACT_APP_JD_API_BASE_URL,
-  [MEMBER[3]]: process.env.REACT_APP_JM_API_BASE_URL,
+  [MEMBER[0]]: process.env.REACT_APP_AK_API_BASE_URL,
+  [MEMBER[1]]: process.env.REACT_APP_JD_API_BASE_URL,
+  [MEMBER[2]]: process.env.REACT_APP_JM_API_BASE_URL,
 } as const;
 
 const API_BASE_URL =
