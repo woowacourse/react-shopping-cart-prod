@@ -11,7 +11,10 @@ const BASE =
     : 'https://n0eyes.github.io/react-shopping-cart/';
 
 export type FetchQueryInstance = {
-  [m in Method]: <T>(path: string, config?: ExternalConfig) => FetchQueryRes<T>;
+  [m in Lowercase<Method>]: <T>(
+    path: string,
+    config?: ExternalConfig
+  ) => FetchQueryRes<T>;
 };
 
 export type FetchQueryRes<T> = Promise<HTTPResponse<T>>;
@@ -20,8 +23,8 @@ export type HTTPResponse<T> = {
   body: T;
 };
 
-type Method = 'get' | 'post' | 'patch' | 'delete';
-type QueryParams = Parameters<FetchQueryInstance[Method]>;
+type Method = 'GET' | 'POST' | 'PATCH' | 'DELETE';
+type QueryParams = Parameters<FetchQueryInstance[Lowercase<Method>]>;
 type QueryParamsWith<Config extends RequestInit> = [QueryParams[0], Config];
 type InternalConfig = Omit<ExternalConfig, 'body'> & RequestInit;
 type ExternalConfig = Omit<RequestInit, 'body'> & {
@@ -85,19 +88,19 @@ class FetchQuery implements FetchQueryInstance {
   }
 
   get<T>(...args: QueryParams): FetchQueryRes<T> {
-    return this.request<T>('get', ...args);
+    return this.request<T>('GET', ...args);
   }
 
   post<T>(...args: QueryParams): FetchQueryRes<T> {
-    return this.request<T>('post', ...args);
+    return this.request<T>('POST', ...args);
   }
 
   patch<T>(...args: QueryParams): FetchQueryRes<T> {
-    return this.request<T>('patch', ...args);
+    return this.request<T>('PATCH', ...args);
   }
 
   delete<T>(...args: QueryParams): FetchQueryRes<T> {
-    return this.request<T>('delete', ...args);
+    return this.request<T>('DELETE', ...args);
   }
 
   create(defaultConfig: ExternalConfig) {
