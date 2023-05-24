@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
 import { CartIcon } from '../../../assets';
-import type { Product } from '../../../types/types';
+import type { CartItem, Product } from '../../../types/types';
 import { Text } from '../../common/Text/Text';
 import InputStepper from '../../common/InputStepper/InputStepper';
 import getPriceFormat from '../../../utils/getPriceFormat';
@@ -10,10 +10,15 @@ import { keyframes } from '@emotion/react';
 
 const ProductItem = ({ product }: { product: Product }) => {
   const { data, addCartItemAPI, changeCartQuantityAPI, deleteCartItemAPI } = useCart();
-  const cartItemData = data && data.find((cart) => cart.product.id === product.id);
-  const cartId = cartItemData && cartItemData.id;
+  const [cartItemData, setCartItemData] = useState<CartItem | null>(null);
 
   const [quantity, setQuantity] = useState<number>(0);
+
+  useEffect(() => {
+    if (data) {
+      setCartItemData(data.find((cart) => cart.product.id === product.id) || null);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (cartItemData) {
@@ -26,10 +31,10 @@ const ProductItem = ({ product }: { product: Product }) => {
       if (data) {
         if (cartItemData && cartItemData.quantity !== quantity) {
           if (quantity > 0) {
-            cartId && changeCartQuantityAPI(cartId, { quantity });
+            cartItemData.id && changeCartQuantityAPI(cartItemData.id, { quantity });
             return;
           }
-          cartId && deleteCartItemAPI(cartId);
+          cartItemData.id && deleteCartItemAPI(cartItemData.id);
         }
         if (quantity > 0 && !cartItemData) {
           addCartItemAPI({ productId: product.id });
@@ -89,6 +94,8 @@ const ProductWrapper = styled.div`
   width: 282px;
 `;
 const ProductImage = styled.img`
+  object-fit: cover;
+
   width: 100%;
   height: 282px;
   transition: all 0.32s ease;

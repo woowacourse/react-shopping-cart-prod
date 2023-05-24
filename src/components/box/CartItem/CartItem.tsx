@@ -129,6 +129,7 @@ const CartItemInner = styled.div`
 `;
 
 const ProductImage = styled.img`
+  object-fit: cover;
   margin-left: 16px;
   width: 88px;
   height: 88px;
