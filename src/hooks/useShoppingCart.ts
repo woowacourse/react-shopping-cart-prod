@@ -1,10 +1,8 @@
-import { removeCartProduct } from 'apis/cart/delete';
-import { updateCartProductsQuantity } from 'apis/cart/patch';
-import { addCartProducts } from 'apis/cart/post';
 import { useRecoilState } from 'recoil';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
-import { CheckedCartProducts, Product } from 'types/product';
+import { addCartProducts, updateCartProductsQuantity, removeCartProduct } from 'apis/cart';
+import type { CheckedCartProducts, Product } from 'types/product';
 
 const useShoppingCart = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);

@@ -1,16 +1,6 @@
-import { CART_KEY } from 'constants/storeKey';
 import { atom, selector, selectorFamily } from 'recoil';
 import { CartProducts, Product } from 'types/product';
-import persistAtomEffect from './effects/persistAtomEffect';
-import { getCartProducts } from 'apis/cart/get';
-
-const mapToString = (value: CartProducts) => {
-  return JSON.stringify(Array.from(value));
-};
-
-const stringToMap = (value: string): CartProducts => {
-  return new Map(JSON.parse(value));
-};
+import { getCartProducts } from 'apis/cart';
 
 const defaultCartState = selector({
   key: 'defaultCartState',
