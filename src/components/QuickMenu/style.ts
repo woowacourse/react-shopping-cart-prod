@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { QuickMenuAppear, QuickMenuDisAppear } from '@Animations/index';
+
 import ServersIcon from '@Asset/servers.png';
 
 export const Container = styled.div`
@@ -12,14 +14,19 @@ export const Button = styled.div`
   background-image: url(${ServersIcon});
   background-size: 50px;
   background-repeat: no-repeat;
-  background-position: 0px 130px;
+  background-position: 0px 20px;
 
   width: 70px;
-  height: 180px;
+  height: 70px;
+
+  z-index: 5;
 
   &:hover {
+    height: 240px;
+    background-position: 0px 190px;
     & > div {
-      display: block;
+      pointer-events: auto;
+      opacity: 1;
     }
   }
 `;
@@ -27,10 +34,11 @@ export const Button = styled.div`
 type OptionProps = {
   position: Partial<Record<'right' | 'bottom' | 'top' | 'left', string>>;
   avatar: string;
+  hover: boolean;
 };
 
 export const Option = styled.div<OptionProps>`
-  display: none;
+  display: block;
   position: absolute;
   ${(props) => props.position};
 
@@ -44,12 +52,18 @@ export const Option = styled.div<OptionProps>`
 
   border-radius: 50%;
 
+  animation: ${(props) => (props.hover ? QuickMenuAppear(props.position) : QuickMenuDisAppear)} 0.3s ease forwards;
+
   cursor: pointer;
 
   &:hover {
+    transform: translateY(-2px);
+    transition: transform 0.3s ease;
     & ~ div {
-      display: block;
+      pointer-events: auto;
+      opacity: 1;
     }
-    display: block;
+    pointer-events: auto;
+    opacity: 1;
   }
 `;
