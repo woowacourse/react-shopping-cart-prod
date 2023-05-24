@@ -10,9 +10,7 @@ interface CartItemProps {
 }
 
 const CartItem = ({ cartItem }: CartItemProps) => {
-  const { currentCartItem, removeItem, addItem, deleteItem } = useCart(
-    cartItem.product
-  );
+  const { removeItem, addItem, deleteItem } = useCart(cartItem.product);
   const { checkItem, checkedItemIds, unCheckItem } = useCheckedItemIds();
   const { product } = cartItem;
 
@@ -21,7 +19,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   };
 
   const onDelete = () => {
-    deleteItem();
+    deleteItem(cartItem.id);
     unCheckItem(cartItem.id);
   };
 
@@ -39,10 +37,10 @@ const CartItem = ({ cartItem }: CartItemProps) => {
           <Svg type="trash-can" width={24} height={24} />
         </button>
         <Counter
-          count={currentCartItem?.quantity || 0}
+          count={cartItem.quantity}
           min={1}
-          increment={addItem}
-          decrement={removeItem}
+          increment={() => addItem(cartItem.id)}
+          decrement={() => removeItem(cartItem.id)}
         />
         <S.CartProductPrice>
           {product.price.toLocaleString('KR')}원
