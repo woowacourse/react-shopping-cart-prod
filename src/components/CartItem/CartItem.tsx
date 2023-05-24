@@ -11,11 +11,14 @@ import {
   CartItemTrashImage,
 } from "./CartItem.style";
 import trashIcon from "../../assets/trash.png";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  removeCartItemSelector,
+  cartState,
   switchCartCheckboxSelector,
 } from "../../recoil/cartAtoms.ts";
+import { serverState } from "../../recoil/serverAtom.ts";
+import { fetchCartList } from "../../api/api.ts";
+import { fetchDeleteCart } from "../../api/api.ts";
 
 interface CartItemProps {
   cart: CartItem;
@@ -23,7 +26,16 @@ interface CartItemProps {
 
 function CartItem({ cart }: CartItemProps) {
   const switchCheckbox = useSetRecoilState(switchCartCheckboxSelector);
-  const removeCartItem = useSetRecoilState(removeCartItemSelector(undefined));
+  const setCartList = useSetRecoilState(cartState);
+  const server = useRecoilValue(serverState);
+
+  const removeCartItem = async (cartId: number) => {
+    if (confirm('정말로 삭제 하시겠습니까?')) {
+      await fetchDeleteCart(server, cartId);
+      const newCartList = await fetchCartList(server);
+      setCartList(newCartList);
+    }
+  };
 
   return (
     <CartItemLayout>

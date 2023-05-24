@@ -121,27 +121,6 @@ export const updateCartItemQuantitySelector = selectorFamily<number, number>({
       },
 });
 
-export const removeCartItemSelector = selectorFamily<number, undefined>({
-  key: "removeCartItemSelector",
-  get: () => () => {
-    // 오류 방지를 위해 아무 값이나 리턴
-    return -1;
-  },
-  set:
-    () =>
-      ({ get, set }, productId) => {
-        const id = productId as number;
-        const server = get(serverState);
-
-        const cartList = get(cartState);
-        if (confirm("정말로 삭제하시겠습니까?")) {
-          const removedCartList = cartList.filter((cart) => cart.id !== id);
-          set(cartState, removedCartList);
-          fetchDeleteCart(server, id);
-        }
-      },
-});
-
 export const removeCartItemsSelector = selector<undefined>({
   key: "removeCartItemsSelector",
   get: () => {
