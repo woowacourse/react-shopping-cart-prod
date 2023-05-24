@@ -1,6 +1,6 @@
 import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 
-import { cartAPI } from '../api/cartAPI';
+import { getCartAPI } from '../api/cartAPI';
 import { API_BASE_URL } from '../constants/api';
 import { CART_LIST_CHECKBOX_KEY } from '../constants/store';
 import { changeCartItemQuantity } from '../domain/cart';
@@ -12,8 +12,8 @@ const cartListState = atom<CartItemData[]>({
   default: [],
   effects: [
     ({ setSelf }) => {
-      const api = cartAPI(API_BASE_URL);
-      setSelf(api.then((apiInstance) => apiInstance.getCartList()));
+      const cartAPI = getCartAPI(API_BASE_URL);
+      setSelf(cartAPI.then((api) => api.getCartList()));
     },
   ],
 });

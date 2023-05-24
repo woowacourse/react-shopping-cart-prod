@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 
-import { cartAPI, deleteCartItem, getCartList } from '../api/cartAPI';
+import { getCartAPI } from '../api/cartAPI';
 import { TOAST_SHOW_DURATION } from '../constants';
 import { cartItemQuantityState, cartListState } from '../store/cart';
 import { currentServerState } from '../store/server';
@@ -9,7 +9,7 @@ import { useMutationFetch } from './common/useMutationFetch';
 
 const useCart = () => {
   const currentServer = useRecoilValue(currentServerState);
-  const api = useMemo(() => cartAPI(currentServer), [currentServer]);
+  const cartAPI = useMemo(() => getCartAPI(currentServer), [currentServer]);
   const [isAdded, setIsAdded] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout>>();
 
@@ -26,7 +26,7 @@ const useCart = () => {
   const updateCart = useRecoilCallback(
     ({ set }) =>
       async () => {
-        const newCartList = await api.then((apiInstance) => apiInstance.getCartList());
+        const newCartList = await cartAPI.then((api) => api.getCartList());
         set(cartListState, newCartList);
       },
     []
@@ -36,7 +36,7 @@ const useCart = () => {
     useRecoilCallback(
       () => async (productId) => {
         setIsAdded(true);
-        await api.then((apiInstance) => apiInstance.postCartItem(productId));
+        await cartAPI.then((api) => api.postCartItem(productId));
       },
       []
     ),
@@ -53,7 +53,7 @@ const useCart = () => {
       ({ set }) =>
         async ({ cartItemId, quantity }) => {
           set(cartItemQuantityState(cartItemId), quantity);
-          await api.then((apiInstance) => apiInstance.patchCartItem(cartItemId, quantity));
+          await cartAPI.then((api) => api.patchCartItem(cartItemId, quantity));
         },
       []
     )

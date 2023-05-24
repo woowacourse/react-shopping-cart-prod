@@ -2,7 +2,7 @@ import { API_ENDPOINT, CART_FETCH_OPTION_HEADERS } from '../constants/api';
 import { CartItemData } from '../types';
 import { fetchAPI } from './fetchAPI';
 
-const cartAPI = async (baseUrl: string) => {
+const getCartAPI = async (baseUrl: string) => {
   const getCartList = async (): Promise<CartItemData[]> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
       method: 'GET',
@@ -46,4 +46,4 @@ const cartAPI = async (baseUrl: string) => {
   return { getCartList, postCartItem, patchCartItem, deleteCartItem };
 };
 
-export { cartAPI };
+export { getCartAPI };
