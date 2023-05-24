@@ -1,4 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { BrowserRouter } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 
 import QuantityController from '.';
 
@@ -8,6 +10,13 @@ import QuantityController from '.';
 const meta: Meta<typeof QuantityController> = {
   title: 'QuantityController',
   component: QuantityController,
+  decorators: [
+    (storyFn) => (
+      <RecoilRoot>
+        <BrowserRouter>{storyFn()}</BrowserRouter>
+      </RecoilRoot>
+    ),
+  ],
 };
 
 export default meta;

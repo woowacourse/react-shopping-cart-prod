@@ -16,7 +16,7 @@ import Trash from '@Asset/Trash.png';
 import * as S from './style';
 
 type CartItemProps = {
-  product?: Product;
+  product: Product;
   width?: string;
   cartId: number;
 };

@@ -2,8 +2,6 @@ import { useRecoilValue } from 'recoil';
 
 import QuantityController from '@Components/QuantityController';
 
-import { UpdateCartItem } from '@Types/index';
-
 import cartItemState from '@Selector/cartItemState';
 
 import * as S from './style';

@@ -28,9 +28,3 @@ export const DefaultCartItem: Story = {
     width: '600px',
   },
 };
-
-export const SkeletonCartItem: Story = {
-  args: {
-    width: '600px',
-  },
-};
