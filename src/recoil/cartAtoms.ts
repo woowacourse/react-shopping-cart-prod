@@ -75,52 +75,6 @@ export const quantityByProductIdSelector = selectorFamily({
       },
 });
 
-export const updateCartItemQuantitySelector = selectorFamily<number, number>({
-  key: "updateCartItemQuantitySelector",
-  get: () => () => {
-    // 오류 방지를 위해 아무 값이나 리턴
-    return -1;
-  },
-  set:
-    (productId) =>
-      ({ get, set }, newQuantity) => {
-        const quantity = newQuantity as number;
-        const server = get(serverState);
-        const cartList = get(cartState);
-
-        const targetCartItem = cartList.find(cartItem => cartItem.product.id === productId);
-        if (targetCartItem) {
-          const cartId = targetCartItem.id;
-
-          if (quantity === 0) {
-            if (confirm("정말로 삭제하시겠습니까?")) {
-              const removedCartList = cartList.filter((cart) => cart.product.id !== productId);
-              set(cartState, removedCartList);
-              fetchDeleteCart(server, cartId);
-            }
-          } else {
-            const cartList = get(cartState);
-            const targetIndex = cartList.findIndex(
-              (cartItem) => cartItem.product.id === productId
-            );
-
-            if (targetIndex !== -1) {
-              const updatedCartList = [...cartList];
-              updatedCartList[targetIndex] = {
-                ...updatedCartList[targetIndex],
-                quantity,
-              };
-              set(cartState, updatedCartList);
-
-
-              fetchUpdateCart(server, cartId, newQuantity as number);
-            }
-          }
-        }
-
-      },
-});
-
 export const switchCartCheckboxSelector = selector<number>({
   key: "switchCartCheckboxSelector",
   get: () => {
