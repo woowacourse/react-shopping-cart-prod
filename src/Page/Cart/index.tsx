@@ -4,12 +4,13 @@ import CartProductItemList from '../../components/CartProductItemList';
 import PaymentsView from '../../components/PaymentsView';
 import { PARCEL_PRICE } from '../../constants';
 import useCart from '../../hooks/useCart';
-import { $CheckedCartIdList } from '../../recoil/atom';
+import { $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
 import styles from './index.module.scss';
 
 function Cart() {
+  const currentServerUrl = useRecoilValue($CurrentServerUrl);
   const { cartItemStateList, cartIdList, deleteCartItem, mutateQuantity } = useCart();
-  const checkedCartIdList = useRecoilValue($CheckedCartIdList);
+  const checkedCartIdList = useRecoilValue($CheckedCartIdList(currentServerUrl));
 
   const total = cartItemStateList?.reduce((acc, { id, product, quantity }) => {
     if (checkedCartIdList.includes(id)) {

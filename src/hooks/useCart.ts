@@ -8,10 +8,9 @@ import type { CartItem } from '../types';
 
 const useCart = () => {
   const Toast = useToast();
-  const [cartIdList, setCartIdList] = useRecoilState($CartIdList);
-  const setCheckedCartIdList = useSetRecoilState($CheckedCartIdList);
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
-
+  const [cartIdList, setCartIdList] = useRecoilState($CartIdList(currentServerUrl));
+  const setCheckedCartIdList = useSetRecoilState($CheckedCartIdList(currentServerUrl));
   const {
     data: cartItemStateList,
     refreshQuery,

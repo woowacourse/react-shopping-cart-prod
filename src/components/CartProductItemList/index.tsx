@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { $CartIdList, $CheckedCartIdList } from '../../recoil/atom';
+import { $CartIdList, $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
 import CartProductItem from '../CartProductItem';
 import styles from './index.module.scss';
 import type { CartItem } from '../../types';
@@ -12,8 +12,9 @@ interface CartProductItemListProps {
 }
 
 function CartProductItemList({ cartItemList, deleteCartItem, mutateQuantity }: CartProductItemListProps) {
-  const cartIdList = useRecoilValue($CartIdList);
-  const [checkedCartIdList, setCheckedCartIdList] = useRecoilState($CheckedCartIdList);
+  const currentServerUrl = useRecoilValue($CurrentServerUrl);
+  const cartIdList = useRecoilValue($CartIdList(currentServerUrl));
+  const [checkedCartIdList, setCheckedCartIdList] = useRecoilState($CheckedCartIdList(currentServerUrl));
 
   const checkAllCartItem: React.ChangeEventHandler<HTMLInputElement> = ({ target: { checked } }) => {
     if (checked && cartItemList) {

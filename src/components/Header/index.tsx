@@ -7,7 +7,8 @@ import styles from './index.module.scss';
 import DropDown from '../Common/DropDown';
 
 function Header() {
-  const cartIdList = useRecoilValue($CartIdList);
+  const currentServerUrl = useRecoilValue($CurrentServerUrl);
+  const cartIdList = useRecoilValue($CartIdList(currentServerUrl));
   const setCurrentServerUrl = useSetRecoilState($CurrentServerUrl);
   const Toast = useToast();
 
