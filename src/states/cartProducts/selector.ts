@@ -15,7 +15,19 @@ export const cartProductCountState = selectorFamily({
 export const targetCartProductState = selectorFamily({
   key: 'targetCartProductState',
   get:
-    ({ serverName, id }: { serverName: ServerKey; id: number }) =>
+    ({
+      serverName,
+      productId,
+      cartItemId,
+    }: {
+      serverName: ServerKey;
+      productId: number;
+      cartItemId?: number;
+    }) =>
     ({ get }) =>
-      findTargetProduct(get(cartProductState(serverName)), id),
+      findTargetProduct(
+        get(cartProductState(serverName)),
+        productId,
+        cartItemId
+      ),
 });

@@ -13,10 +13,10 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  const { id, imageUrl, name, price } = product;
+  const { imageUrl, name, price } = product;
   const { targetProduct, addProduct } = useCartProducts(product);
   const { addCount, subtractCount } = useProductQuantity(
-    id,
+    targetProduct?.id ?? Number('a'),
     targetProduct?.quantity ?? 0
   );
 

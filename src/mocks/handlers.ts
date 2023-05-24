@@ -53,7 +53,7 @@ export const handlers = [
 
     localStorage.setItem(
       CART_STORAGE_ID,
-      JSON.stringify(addTargetProduct(storedCartProducts, product))
+      JSON.stringify(addTargetProduct(storedCartProducts, product.id, product))
     );
 
     return res(ctx.status(201), ctx.json({ message: 'Success to Create' }));
