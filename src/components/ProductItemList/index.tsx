@@ -7,9 +7,12 @@ import { Product } from '../../types';
 import LoadingView from '../Common/LoadingView';
 import ProductItem from '../ProductItem';
 import styles from './index.module.scss';
+import { useRecoilValue } from 'recoil';
+import { $CurrentServerUrl } from '../../recoil/atom';
 
 function ProductItemList() {
-  const { data: productsData, loading, error } = useGetQuery<Product[]>('./products');
+  const currentServerUrl = useRecoilValue($CurrentServerUrl);
+  const { data: productsData, loading, error } = useGetQuery<Product[]>(`${currentServerUrl}/products`);
   const Toast = useToast();
 
   useEffect(() => {
