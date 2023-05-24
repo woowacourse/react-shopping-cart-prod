@@ -3,18 +3,28 @@ import { ReactComponent as Logo } from '../assets/logo.svg';
 import CartRouteButton from './main/CartRouteButton';
 import ServerDropdown from './ServerDropdown';
 import useNavigatePage from '../hooks/useNavigatePage';
+import { useFetchData } from '../hooks/useFetchData';
+import { CartItem } from '../types';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { cartState } from '../store/CartState';
+import { serverState } from '../store/ServerState';
+import { useEffect } from 'react';
+import { CART_BASE_URL } from '../constants/url';
 
-interface Props {
-  onClickTitle?: () => void;
-}
+const Header = () => {
+  const { goHome, goCart } = useNavigatePage();
+  const serverUrl = useRecoilValue(serverState);
+  const setCart = useSetRecoilState(cartState);
+  const { api } = useFetchData<CartItem[]>(setCart);
 
-const Header = ({ onClickTitle }: Props) => {
-  const { goCart } = useNavigatePage();
+  useEffect(() => {
+    api.get(`${serverUrl}${CART_BASE_URL}`);
+  }, [serverUrl]);
 
   return (
     <S.Header>
       <S.Wrapper>
-        <S.TitleButton onClick={onClickTitle}>
+        <S.TitleButton onClick={goHome}>
           <Logo />
         </S.TitleButton>
         <ServerDropdown />
