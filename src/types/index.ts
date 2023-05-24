@@ -1,3 +1,5 @@
+import { HOSTS } from '../constants';
+
 export interface ProductInfo {
   id: number;
   name: string;
@@ -10,3 +12,5 @@ export interface CartItemInfo {
   quantity: number;
   product: ProductInfo;
 }
+
+export type Host = (typeof HOSTS)[number];

@@ -1,15 +1,20 @@
 import { selector } from 'recoil';
-import { cartListState, checkedCartItemIdsState, productListState } from './atoms';
+import {
+  cartListState,
+  checkedCartItemIdsState,
+  productListState,
+  selectedHostState,
+} from './atoms';
 import { CartItemInfo, ProductInfo } from '../types';
 import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../constants';
 
 export const currentProductListState = selector<ProductInfo[]>({
   key: 'currentProductList',
   get: async ({ get }) => {
+    const host = get(selectedHostState);
     const productList = get(productListState); // selector에 의존성을 추가하기 위한 코드
-    if (productList.length > 0) return productList;
-
-    const res = await fetch(PRODUCTS_BASE_URL);
+    console.log(host);
+    const res = await fetch(`${host}${PRODUCTS_BASE_URL}`);
 
     if (!res.ok) throw new Error('상품 목록을 불러올 수 없습니다.');
 

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { CartLogo } from '../assets/svg';
 import CartCountBadge from './cart/CartCountBadge';
+import ServerSelectBox from './ServerSelectBox';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -12,9 +13,12 @@ export default function Header() {
         <Style.Title title="홈으로 이동" onClick={() => navigate('/')}>
           <CartLogo />
         </Style.Title>
-        <Style.CartButton title="장바구니 페이지로 이동" onClick={() => navigate('/cart')}>
-          <CartCountBadge />
-        </Style.CartButton>
+        <Style.RightContainer>
+          <ServerSelectBox />
+          <Style.CartButton title="장바구니 페이지로 이동" onClick={() => navigate('/cart')}>
+            <CartCountBadge />
+          </Style.CartButton>
+        </Style.RightContainer>
       </Style.Content>
     </Style.Container>
   );
@@ -66,6 +70,13 @@ const Style = {
     @media screen and (max-width: 767px) {
       width: 315px;
     }
+  `,
+
+  RightContainer: styled.div`
+    display: flex;
+    justify-content: space-between;
+
+    gap: 10px;
   `,
 
   Title: styled.button`
