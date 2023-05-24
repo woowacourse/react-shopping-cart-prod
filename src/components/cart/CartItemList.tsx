@@ -6,9 +6,9 @@ import CartItem from './CartItem';
 import CheckBox from '../common/CheckBox';
 
 import * as api from '../../api';
+import useToast from '../../hooks/useToast';
 import { cartState, checkedListState, serverNameState } from '../../recoil/state';
 import { API_ERROR_MESSAGE } from '../../constants';
-import useToast from '../../hooks/useToast';
 
 export default function CartItemList() {
   const [cart, setCart] = useRecoilState(cartState);
@@ -35,14 +35,24 @@ export default function CartItemList() {
     setCheckedList(checkedList.toSpliced(index, 1));
   };
 
-  const removeCheckedCartItem = () => {
-    checkedList.forEach((checked, index) => {
-      if (checked) api.deleteCartItem(serverName, cart[index].id);
-    });
+  const removeCheckedCartItem = async () => {
+    const cartItemIdList = cart
+      .filter((_, index) => checkedList[index])
+      .map((cartItem) => cartItem.id);
 
-    // 모든 삭제가 성공하리라 믿고 수행하는 로직
-    setCart(cart.filter((_, index) => checkedList[index] === false));
-    setCheckedList(checkedList.filter((checked) => checked === false));
+    try {
+      await api.deleteCartItems(serverName, cartItemIdList);
+    } catch {
+      showToast('error', API_ERROR_MESSAGE.deleteCartItem);
+    }
+
+    try {
+      const cart = await api.getCart(serverName);
+      setCart(cart);
+      setCheckedList(Array(cart.length).fill(false));
+    } catch {
+      showToast('error', API_ERROR_MESSAGE.getCart);
+    }
   };
 
   useEffect(() => {
@@ -54,7 +64,7 @@ export default function CartItemList() {
     } catch {
       showToast('error', API_ERROR_MESSAGE.getCart);
     }
-  }, []);
+  }, [serverName]);
 
   return (
     <Wrapper>

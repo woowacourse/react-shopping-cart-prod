@@ -60,3 +60,12 @@ export const deleteCartItem = async (serverName: ServerNameType, cartItemId: num
 
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 };
+
+export const deleteCartItems = async (serverName: ServerNameType, cartItemIdList: number[]) => {
+  const ids = cartItemIdList.map(String).join(',');
+  const url = `${BASE_URL_MAP[serverName]}/cart-items/ids=${ids}`;
+
+  const response = await fetch(url, { method: 'DELETE', headers: { Authorization } });
+
+  if (!response.ok) throw new Error(`${url} FETCH Error`);
+};
