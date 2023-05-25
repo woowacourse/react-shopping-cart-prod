@@ -1,10 +1,11 @@
 import { ChangeEvent, useEffect } from "react";
-import { useRecoilState, useResetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { serverSelectState } from "recoil/server";
 import { styled } from "styled-components";
 import { ServerId } from "recoil/server";
 import { cartListState } from "recoil/cart";
-import { productListState } from "recoil/product";
+import { getCartItems } from "api/cartItems";
+import { CartProduct } from "types/domain";
 
 const ServerSeclector = () => {
   const [serverState, setServerState] = useRecoilState(serverSelectState);
@@ -12,12 +13,21 @@ const ServerSeclector = () => {
     setServerState(e.target.id as ServerId);
   };
 
-  const resetCartList = useResetRecoilState(cartListState);
-  const resetProductList = useResetRecoilState(productListState);
+  const setCartList = useSetRecoilState(cartListState);
 
   useEffect(() => {
-    resetProductList();
-    resetCartList();
+    getCartItems(serverState).then((res) => {
+      setCartList(
+        res.map((item) => {
+          const newItem: CartProduct = {
+            ...item,
+            isChecked: true,
+          };
+
+          return newItem;
+        })
+      );
+    });
   }, [serverState]);
 
   const serverList: { [key in ServerId]: string } = {
