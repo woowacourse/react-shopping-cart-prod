@@ -1,6 +1,5 @@
 import { ChangeEventHandler, FocusEventHandler } from 'react';
-import { NONE_QUANTITY, NOT_NUMBER } from '../constants';
-import { changeInvalidValueToBlank } from '../utils/changeInvalidValueToBlank';
+import { NONE_QUANTITY } from '../constants';
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   SelectorParams,
@@ -46,7 +45,6 @@ export const useProduct = (productId: number) => {
     api.patch(`${serverUrl}${CART_BASE_URL}/${findCartItemId}`, { quantity }, CART_BASE_URL);
     updateCart({ id: productId, cartId: findCartItemId, quantity });
   };
-
   const addItemToCart = () => {
     api.post(`${serverUrl}${CART_BASE_URL}`, { productId }, CART_BASE_URL);
 
@@ -57,17 +55,9 @@ export const useProduct = (productId: number) => {
     });
   };
 
-  const handleNumberInputChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    const { value } = target;
-
-    if (value === '00' && Number(value) === NONE_QUANTITY) {
-      removeItem();
-      return;
-    }
-
-    const newQuantity = changeInvalidValueToBlank(value, NOT_NUMBER);
-
-    updateItem(newQuantity);
+  const handleNumberInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    event.preventDefault();
+    alert('버튼으로 수량을 조절할 수 있습니다.');
   };
 
   const handleIncreaseItem = () => {

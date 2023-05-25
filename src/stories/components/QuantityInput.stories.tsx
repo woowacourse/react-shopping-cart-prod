@@ -3,8 +3,6 @@ import QuantityInputComponent from '../../components/QuantityInput';
 import { styled } from 'styled-components';
 import { ChangeEventHandler, useState } from 'react';
 import { validateQuantityInput } from '../../utils/validateQuantityInput';
-import { NONE_QUANTITY, NOT_NUMBER } from '../../constants';
-import { changeInvalidValueToBlank } from '../../utils/changeInvalidValueToBlank';
 
 const meta = {
   component: QuantityInputComponent,
@@ -65,16 +63,9 @@ export const QuantityInputStory = () => {
     setQuantity(newQuantity);
   };
 
-  const handleChangeNumberInput: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
-    const { value } = target;
-
-    if (value === '00' && Number(value) === NONE_QUANTITY) {
-      return;
-    }
-
-    const newQuantity = changeInvalidValueToBlank(value, NOT_NUMBER);
-
-    setQuantity(newQuantity);
+  const handleChangeNumberInput: ChangeEventHandler<HTMLInputElement> = (event) => {
+    event.preventDefault();
+    alert('버튼으로 수량을 조절할 수 있습니다.');
   };
 
   return (
