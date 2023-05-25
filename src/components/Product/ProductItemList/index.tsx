@@ -1,28 +1,16 @@
 import * as S from './ProductItemList.styles';
 import ProductItem from 'components/Product/ProductItem';
-import LoadingSkeleton from 'components/Product/ProductItem/LoadingSkeleton';
-import { useGet } from 'hooks/useGet';
-import { Product } from 'types';
-import { getProductList } from 'api/requests';
+import { productListSelector } from 'recoil/productList';
+import { useRecoilValue } from 'recoil';
 
 const ProductItemList = () => {
-  const { data, isLoading } = useGet<Product[]>(getProductList);
-
-  const loading = Array.from({ length: 16 }).map((_, idx) => (
-    <LoadingSkeleton key={idx} />
-  ));
+  const data = useRecoilValue(productListSelector);
 
   const fetchedProductList =
     data &&
     data.map((product) => <ProductItem key={product.id} product={product} />);
 
-  return (
-    <>
-      <S.ProductListWrapper>
-        {isLoading ? loading : fetchedProductList}
-      </S.ProductListWrapper>
-    </>
-  );
+  return <S.ProductListWrapper>{fetchedProductList}</S.ProductListWrapper>;
 };
 
 export default ProductItemList;

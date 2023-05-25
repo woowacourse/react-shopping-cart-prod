@@ -1,14 +1,15 @@
 import { getCartList } from 'api/requests';
 import { atom, selector } from 'recoil';
 import { Cart } from 'types';
-import { SERVERS } from 'utils/constants';
+import { serverAtom } from './server';
 
 export const cartListAtom = atom<Cart[]>({
   key: 'cartList',
   default: selector({
     key: 'initialCartList',
-    get: async () => {
-      const data = await getCartList(SERVERS['여우']);
+    get: async ({ get }) => {
+      const server = get(serverAtom);
+      const data = await getCartList(server);
       return data;
     },
   }),

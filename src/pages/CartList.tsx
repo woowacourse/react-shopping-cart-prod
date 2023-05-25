@@ -2,13 +2,16 @@ import { styled } from 'styled-components';
 import ContentLayout from 'components/@common/ContentLayout';
 import PaymentDetail from 'components/Cart/PaymentDetail';
 import CartItemList from 'components/Cart/CartItemList';
+import { Suspense } from 'react';
 
 const CartList = () => {
   return (
     <ContentLayout>
       <Title>🛒 장바구니 🛒</Title>
       <Container>
-        <CartItemList />
+        <Suspense fallback={<div>loading...</div>}>
+          <CartItemList />
+        </Suspense>
         <PaymentDetailWrapper>
           <PaymentDetail />
         </PaymentDetailWrapper>
