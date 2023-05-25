@@ -1,14 +1,18 @@
 import { atom, selector } from 'recoil';
 
 import type { CartProduct } from '../types/product';
-import { fetchCartProducts } from '../apis/cartProducts';
+import { api } from '../apis/cartProducts';
+import { hostNameAtom } from './hostData';
 
 export const cartProductAtom = atom<CartProduct[]>({
   key: 'cartProductState',
   default: selector({
     key: 'cartProductState/Default',
-    get: async () => {
-      const response = await fetchCartProducts();
+    get: async ({ get }) => {
+      const hostName = get(hostNameAtom);
+      const response = api(hostName).then((apiInstance) => {
+        return apiInstance.fetchCartProducts();
+      });
       return response;
     },
   }),
