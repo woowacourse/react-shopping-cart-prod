@@ -4,11 +4,20 @@ import useGetCartList from '../../../hooks/requests/useGetCartList.ts';
 import { useRecoilValue } from 'recoil';
 import { cartSelectedItemsSelector } from '../../../stores/cartListStore.ts';
 import useCart from '../../../hooks/useCart.ts';
+import { useEffect } from 'react';
+import useSetCartListStoreFromServer from '../../../hooks/useSetCartListStoreFromServer.ts';
 
 const CartSelectList = () => {
-  const { data: cartList, refetchCartList } = useGetCartList();
+  const { data: cartList, status: cartListFetchingStatus, refetchCartList } = useGetCartList();
   const [selectedItemsCount, allItemsCount] = useRecoilValue(cartSelectedItemsSelector);
   const { selectAllItems } = useCart();
+  const { setCartListStoreFromServer } = useSetCartListStoreFromServer();
+
+  useEffect(() => {
+    if (cartListFetchingStatus === 'success' && cartList) {
+      setCartListStoreFromServer(cartList);
+    }
+  }, [cartListFetchingStatus]);
 
   return (
     <Styled.CartSelectListWrapper>

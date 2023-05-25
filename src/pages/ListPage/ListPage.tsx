@@ -2,19 +2,19 @@ import * as Styled from './ListPage.styles.tsx';
 import ProductItem from '../../components/ProductItem/ProductItem.tsx';
 import useGetCartList from '../../hooks/requests/useGetCartList.ts';
 import useGetProductList from '../../hooks/requests/useGetProductList.ts';
-import { useRecoilValue } from 'recoil';
-
 import { useEffect } from 'react';
-import { serverAtom } from '../../stores/serverStore.ts';
+import useSetCartListStoreFromServer from '../../hooks/useSetCartListStoreFromServer.ts';
 
 const ListPage = () => {
-  const { data: productListData, refetchProductList } = useGetProductList();
-  const { data: cartListData, refetchCartList } = useGetCartList();
-  const serverName = useRecoilValue(serverAtom);
+  const { data: productListData } = useGetProductList();
+  const { data: cartListData, status: cartListFetchingStatus, refetchCartList } = useGetCartList();
+  const { setCartListStoreFromServer } = useSetCartListStoreFromServer();
 
   useEffect(() => {
-    refetchProductList({});
-  }, [serverName]);
+    if (cartListFetchingStatus === 'success' && cartListData) {
+      setCartListStoreFromServer(cartListData);
+    }
+  }, [cartListFetchingStatus]);
 
   return (
     <Styled.ProductList>
