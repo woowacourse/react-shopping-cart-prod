@@ -8,7 +8,7 @@ const clientState = selector({
   get: ({ get }) => {
     const server = get(serverState);
     const client = new Client<ShoppingCartRestAPI>({
-      origin: server.origin,
+      base: server.base,
     });
 
     return client;

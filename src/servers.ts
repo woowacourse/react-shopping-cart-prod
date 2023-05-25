@@ -1,13 +1,15 @@
-const servers = [
-  { name: 'api-1', origin: 'http://dev.solo5star.com:9090', baseUrl: '/api-1' },
-  { name: 'api-2', origin: 'http://dev.solo5star.com:9091', baseUrl: '/api-2' },
-  { name: 'api-3', origin: 'http://dev.solo5star.com:9092', baseUrl: '/api-3' },
-] as const satisfies readonly {
-  name: string;
-  origin: string;
-  baseUrl: string;
-}[];
+const SERVER_URLS: string = import.meta.env.VITE_SERVER_URLS;
 
-export type Server = (typeof servers)[number];
+const SERVER_NAMES = ['주드', '키아라', '히이로'];
+
+export type Server = {
+  name: string;
+  base: string;
+};
+
+const servers: Server[] = SERVER_URLS.split(',').map((serverUrl, index) => ({
+  name: SERVER_NAMES[index] ?? `서버-${index + 1}`,
+  base: serverUrl,
+}));
 
 export default servers;

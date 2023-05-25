@@ -17,5 +17,5 @@ export const joinPath = (...paths: (string | undefined | null)[]): string => {
   return paths
     .filter((path) => path)
     .join('/')
-    .replace(/\/{2,}/, '/');
+    .replace(/(?<!:)\/{2,}/, '/');
 };
