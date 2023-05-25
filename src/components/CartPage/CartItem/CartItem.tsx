@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { DELETE_CART_ITEM } from '../../../constants/cart';
 import { useCartSelector, useMutateCart } from '../../../hooks/cart/cart';
 import { CartItem as CartItemType } from '../../../types/cart';
+import { debounce } from '../../../utils/debounce';
 import Flex from '../../common/Flex';
 import QuantityStepper from '../../common/QuantityStepper/QuantityStepper';
 import * as S from './CartItem.styles';
@@ -14,21 +15,16 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     quantity,
     product: { imageUrl, name, price },
   } = props;
-  let debounceId = useRef<NodeJS.Timeout>();
   const quantityRef = useRef<HTMLInputElement>(null);
   const { selectedItems, selectItem } = useCartSelector();
   const { updateCartItemMutation, deleteCartItemMutation } = useMutateCart();
 
-  const updateQuantity = () => {
-    if (debounceId.current) clearTimeout(debounceId.current);
-
-    debounceId.current = setTimeout(() => {
-      updateCartItemMutation({
-        cartId: id,
-        quantity: Number(quantityRef.current?.value),
-      });
-    }, 400);
-  };
+  const updateQuantity = debounce(() =>
+    updateCartItemMutation({
+      cartId: id,
+      quantity: Number(quantityRef.current?.value),
+    })
+  );
 
   const deleteCartItem = () => {
     window.confirm(DELETE_CART_ITEM) && deleteCartItemMutation(id);
