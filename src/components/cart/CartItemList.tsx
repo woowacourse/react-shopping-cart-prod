@@ -68,6 +68,7 @@ export default function CartItemList() {
 
   return (
     <Wrapper>
+      <CountMessage>배송 상품 ({cart.length}개)</CountMessage>
       <List>
         {cart.map((cartItem, index) => (
           <ListItemBox key={cartItem.id}>
@@ -97,6 +98,17 @@ const Wrapper = styled.div`
   @media (max-width: 736px) {
     width: 100%;
   }
+`;
+
+const CountMessage = styled.p`
+  width: 100%;
+  margin-top: 16px;
+  padding: 24px 0;
+
+  line-height: 34px;
+  letter-spacing: 0.5px;
+  font-size: 20px;
+  color: #333333;
 `;
 
 const List = styled.div`

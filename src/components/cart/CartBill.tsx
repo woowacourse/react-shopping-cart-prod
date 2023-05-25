@@ -36,9 +36,11 @@ const Wrapper = styled.div`
 
   width: 448px;
   height: 410px;
+  margin-top: 98px;
 
   @media (max-width: 448px) {
     width: 100%;
+    margin-top: 64px;
   }
 `;
 
