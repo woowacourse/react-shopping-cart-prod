@@ -1,16 +1,23 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import ProductListPage from './components/page/ProductListPage';
 import CartPage from './components/page/CartPage';
+import RootPage from './components/page/RootPage';
+import ProductList from './components/productList/ProductList';
 
 const routes = [
   {
     path: '/',
-    element: <ProductListPage />,
-  },
-  {
-    path: '/cart',
-    element: <CartPage />,
+    element: <RootPage />,
+    children: [
+      {
+        path: '',
+        element: <ProductList />,
+      },
+      {
+        path: 'cart',
+        element: <CartPage />,
+      },
+    ],
   },
 ];
 

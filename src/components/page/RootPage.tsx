@@ -1,15 +1,15 @@
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Header from '../common/Header';
-import ProductList from '../productList/ProductList';
 
-export default function ProductListPage() {
+export default function RootPage() {
   return (
     <Wrapper>
       <Header />
-      <main>
-        <ProductList />
-      </main>
+      <Main>
+        <Outlet />
+      </Main>
     </Wrapper>
   );
 }
@@ -24,16 +24,16 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   padding-top: 80px;
+`;
 
-  main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+const Main = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    width: 100%;
-    height: 100%;
-    padding: 60px 0;
+  width: 100%;
+  height: 100%;
+  padding: 60px 16px;
 
-    overflow: scroll;
-  }
+  overflow: scroll;
 `;

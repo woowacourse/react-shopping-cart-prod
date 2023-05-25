@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import CartItemList from '../cart/CartItemList';
 import CartBill from '../cart/CartBill';
-import Header from '../common/Header';
 
 import { cartCountState } from '../../recoil/state';
 
@@ -11,21 +10,18 @@ export default function CartPage() {
   const cartCount = useRecoilValue(cartCountState);
 
   return (
-    <Wrapper>
-      <Header />
-      <Main>
-        <CartHeader>
-          <h2>장바구니</h2>
-        </CartHeader>
-        <CartCountMessage>배송 상품 ({cartCount}개)</CartCountMessage>
-        <CartMain>
-          <CartItemList />
-          <CartBillBox>
-            <CartBill />
-          </CartBillBox>
-        </CartMain>
-      </Main>
-    </Wrapper>
+    <>
+      <CartHeader>
+        <h2>장바구니</h2>
+      </CartHeader>
+      <CartCountMessage>배송 상품 ({cartCount}개)</CartCountMessage>
+      <CartMain>
+        <CartItemList />
+        <CartBillBox>
+          <CartBill />
+        </CartBillBox>
+      </CartMain>
+    </>
   );
 }
 
