@@ -1,10 +1,10 @@
-import { rest } from 'msw';
+/*import { rest } from 'msw';
 import { CartList, Product } from '../types/CartList.ts';
 import { getCartListFromLocalStorage } from '../utils/localStorageCartList.ts';
 import ProductItem from '../data/productList.json';
-import { CartUpdateBody } from '../types/requestBody.ts';
+import { CartUpdateBody } from '../types/request.ts';
 
-const cart: CartList = getCartListFromLocalStorage() ?? { items: [] };
+const cart: CartList = getCartListFromLocalStorage() ?? {};
 
 const updateQuantity = (itemId: number, quantity: number) => {
   cart.items = cart.items.map((item) => (item.id === itemId ? { ...item, quantity } : item));
@@ -19,7 +19,7 @@ const addToCart = (itemId: number, quantity: number, productInfo: Product) => {
 };
 
 export const handlers = [
-  rest.get('/src/assets/*', (req) => {
+  rest.get('/src/assets/!*', (req) => {
     return req.passthrough();
   }),
 
@@ -76,4 +76,6 @@ export const handlers = [
 
     return res(ctx.json({ id: itemId }));
   }),
-];
+];*/
+
+export const handlers = [];

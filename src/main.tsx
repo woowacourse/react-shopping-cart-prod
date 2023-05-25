@@ -10,7 +10,4 @@ const renderApp = () => {
   );
 };
 
-import('./mocks/server').then(async ({ worker }) => {
-  await worker.start();
-  renderApp();
-});
+renderApp();
