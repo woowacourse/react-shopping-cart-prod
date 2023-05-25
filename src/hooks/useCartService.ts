@@ -13,11 +13,15 @@ import type { CartItem, Product } from '../types/product';
 const useCartService = () => {
   const cart = useRecoilValue(cartState);
   const serverOrigin = useRecoilValue(serverOriginState);
-  const updateCart = useRecoilCallback(({ set }) => async () => {
-    const newCart = await fetchCartItems(`${serverOrigin}${CART_BASE_URL}`);
+  const updateCart = useRecoilCallback(
+    ({ set }) =>
+      async () => {
+        const newCart = await fetchCartItems(`${serverOrigin}${CART_BASE_URL}`);
 
-    set(cartState, newCart);
-  });
+        set(cartState, newCart);
+      },
+    [serverOrigin],
+  );
   const { showToast } = useToast();
 
   const addProductToCart = async (productId: Product['id']) => {

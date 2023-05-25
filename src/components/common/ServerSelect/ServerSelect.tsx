@@ -1,22 +1,31 @@
 import { ChangeEventHandler } from 'react';
 import { useRecoilState } from 'recoil';
+import { ChangeEventHandler, useState } from 'react';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { serverOriginState } from '../../../recoil/atoms';
+import { cartState, serverOriginState } from '../../../recoil/atoms';
+import { BASE_URLS } from '../../../constants/api';
+import { isKeyOf } from '../../../types/typeGuards';
 
 const ServerSelect = () => {
-  const [serverOrigin, setServerOrigin] = useRecoilState(serverOriginState);
+  const [value, setValue] = useState('baron');
+  const setServerOrigin = useSetRecoilState(serverOriginState);
 
   const changeServer: ChangeEventHandler<HTMLSelectElement> = (e) => {
-    setServerOrigin(e.target.value);
+    const value = e.target.value;
+
+    if (isKeyOf(BASE_URLS, value)) {
+      setValue(e.target.value);
+      resetCart();
+      setServerOrigin(BASE_URLS[value]);
+    }
   };
 
   return (
-    <Select value={serverOrigin} onChange={changeServer}>
-      <option value="">바론</option>
-      <option value="http://ec2-13-209-97-56.ap-northeast-2.compute.amazonaws.com:8080">
-        블랙캣
-      </option>
-      <option value="localhost:9000">케로</option>
+    <Select value={value} onChange={changeServer}>
+      <option value="baron">바론</option>
+      <option value="blackCat">블랙캣</option>
+      <option value="kkero">케로</option>
     </Select>
   );
 };
