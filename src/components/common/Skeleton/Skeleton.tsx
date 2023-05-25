@@ -1,7 +1,11 @@
 import { keyframes, styled } from 'styled-components';
 
-const Skeleton = () => {
-  return <Wrapper />;
+interface SkeletonProps {
+  type?: 'light' | 'dark';
+}
+
+const Skeleton = ({ type = 'light' }: SkeletonProps) => {
+  return <Wrapper type={type} />;
 };
 
 const loading = keyframes`
@@ -16,19 +20,22 @@ const loading = keyframes`
 	}
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ type: SkeletonProps['type'] }>`
   width: 100%;
   height: 100%;
   position: relative;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.09);
+  background-color: ${({ type }) =>
+    type === 'light' ? `rgba(0, 0, 0, 0.09)` : `rgba(255, 255, 255, 0.17)`};
+  border-radius: 10px;
 
   &::after {
     animation: ${loading} 1.5s linear 0.5s infinite;
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(0, 0, 0, 0.09),
+      ${({ type }) =>
+        type === 'light' ? `rgba(0, 0, 0, 0.09)` : `rgba(255, 255, 255, 0.17)`},
       transparent
     );
     content: '';
