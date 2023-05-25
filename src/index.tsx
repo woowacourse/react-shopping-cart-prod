@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import GlobalStyles from './styles/GlobalStyles';
 import App from './App';
-import { RecoilRoot } from 'recoil';
 import { worker } from './mocks/browser';
 
 (async () => {
@@ -22,10 +20,7 @@ import { worker } from './mocks/browser';
   );
   root.render(
     <React.StrictMode>
-      <RecoilRoot>
-        <GlobalStyles />
-        <App />
-      </RecoilRoot>
+      <App />
     </React.StrictMode>
   );
 })();
