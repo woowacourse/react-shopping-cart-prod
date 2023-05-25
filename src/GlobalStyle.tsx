@@ -33,7 +33,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-  a:-webkit-any-link {
+  a {
     text-decoration: none;
     color: inherit;
 

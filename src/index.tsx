@@ -9,6 +9,7 @@ import '../public/assets/arrowUp.svg';
 import '../public/assets/arrowDown.svg';
 import '../public/assets/trashCan.svg';
 import '../public/assets/whiteCheck.svg';
+import '../public/assets/404.svg';
 
 worker.start();
 

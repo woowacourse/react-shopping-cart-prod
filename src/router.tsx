@@ -1,8 +1,9 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import CartPage from './components/page/CartPage';
 import RootPage from './components/page/RootPage';
 import ProductList from './components/productList/ProductList';
+import CartPage from './components/page/CartPage';
+import ErrorPage from './components/page/ErrorPage';
 
 const routes = [
   {
@@ -16,6 +17,10 @@ const routes = [
       {
         path: 'cart',
         element: <CartPage />,
+      },
+      {
+        path: '*',
+        element: <ErrorPage />,
       },
     ],
   },
