@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { CartItemType, ProductItemType } from 'types/ProductType';
 
-const productList: ProductItemType[] = [
+export const MOCK_PRODUCT_LIST: ProductItemType[] = [
   {
     id: 1,
     name: '1) PET보틀-정사각(420ml) 정말 길고 긴 제목',
@@ -114,7 +114,7 @@ let cartList: CartItemType[] = [
 
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
-    return res(ctx.delay(500), ctx.status(200), ctx.json(productList));
+    return res(ctx.delay(500), ctx.status(200), ctx.json(MOCK_PRODUCT_LIST));
   }),
 
   rest.get('/cart-items', (req, res, ctx) => {
@@ -125,7 +125,7 @@ export const handlers = [
     const { productId: idData } = await req.json();
     const productId = Number(idData);
 
-    const product = productList.find((product) => product.id === productId);
+    const product = MOCK_PRODUCT_LIST.find((product) => product.id === productId);
 
     // TODO: 에러처리
     if (cartList.some(({ id }) => id === productId)) return;

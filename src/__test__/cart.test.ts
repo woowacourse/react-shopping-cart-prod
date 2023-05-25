@@ -1,4 +1,10 @@
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
+import {
+  addItemToCart,
+  createCartItem,
+  removeCartItem,
+  updateCartItemQuantity,
+} from '@views/CartItemList/utils/cart';
 import { CartItemType } from 'types/ProductType';
 
 const cartId = 1;
@@ -11,6 +17,7 @@ describe('장바구니 함수 테스트', () => {
     const cartItem: CartItemType = {
       id: cartId,
       quantity: 1,
+      checked: true,
       product,
     };
 

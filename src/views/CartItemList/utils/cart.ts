@@ -1,7 +1,55 @@
-export const createCartItem = ({ cartId, product }) => {};
+import { CartItemType, ProductItemType } from 'types/ProductType';
 
-export const addItemToCart = ({ cart, cartId, product }) => {};
+interface CreateCartItemParams {
+  cartId: number;
+  product: ProductItemType;
+}
 
-export const updateCartItemQuantity = ({ cart, cartId, quantity }) => {};
+interface AddItemToCartParams {
+  cart: CartItemType[];
+  cartId: number;
+  product: ProductItemType;
+}
+interface UpdateCartItemQuantityParams {
+  cart: CartItemType[];
+  cartId: number;
+  quantity: number;
+}
 
-export const removeCartItem = ({ cart, cartId }) => {};
+interface RemoveCartItemParams {
+  cart: CartItemType[];
+  cartId: number;
+}
+
+export const createCartItem = ({ cartId, product }: CreateCartItemParams): CartItemType => {
+  return {
+    id: cartId,
+    quantity: 1,
+    checked: true,
+    product,
+  };
+};
+
+export const addItemToCart = ({ cart, cartId, product }: AddItemToCartParams) => {
+  return [...cart, createCartItem({ cartId, product })];
+};
+
+export const updateCartItemQuantity = ({
+  cart,
+  cartId,
+  quantity,
+}: UpdateCartItemQuantityParams) => {
+  return cart.map((cartItem) => {
+    if (cartItem.id === cartId) {
+      return {
+        ...cartItem,
+        quantity,
+      };
+    }
+
+    return cartItem;
+  });
+};
+export const removeCartItem = ({ cart, cartId }: RemoveCartItemParams) => {
+  return cart.filter((cartItem) => cartItem.id !== cartId);
+};
