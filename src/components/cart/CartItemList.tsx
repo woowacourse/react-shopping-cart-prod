@@ -11,9 +11,9 @@ import { cartState, checkedListState, serverNameState } from '../../recoil/state
 import { API_ERROR_MESSAGE } from '../../constants';
 
 export default function CartItemList() {
+  const serverName = useRecoilValue(serverNameState);
   const [cart, setCart] = useRecoilState(cartState);
   const [checkedList, setCheckedList] = useRecoilState(checkedListState);
-  const serverName = useRecoilValue(serverNameState);
   const { showToast } = useToast();
 
   const checkedCount = checkedList.filter((checked) => checked).length;
@@ -54,17 +54,6 @@ export default function CartItemList() {
       showToast('error', API_ERROR_MESSAGE.getCart);
     }
   };
-
-  useEffect(() => {
-    try {
-      api.getCart(serverName).then((cart) => {
-        setCart(cart);
-        setCheckedList(Array(cart.length).fill(true));
-      });
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.getCart);
-    }
-  }, [serverName]);
 
   return (
     <Wrapper>

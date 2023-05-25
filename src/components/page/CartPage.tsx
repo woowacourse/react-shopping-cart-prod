@@ -1,13 +1,33 @@
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import CartItemList from '../cart/CartItemList';
 import CartBill from '../cart/CartBill';
-import { useRecoilValue } from 'recoil';
-import { cartCountState } from '../../recoil/state';
-import { Link } from 'react-router-dom';
+
+import { cartCountState, cartState, checkedListState, serverNameState } from '../../recoil/state';
+import * as api from '../../api';
+import useToast from '../../hooks/useToast';
+import { API_ERROR_MESSAGE } from '../../constants';
 
 export default function CartPage() {
+  const serverName = useRecoilValue(serverNameState);
   const cartCount = useRecoilValue(cartCountState);
+  const setCart = useSetRecoilState(cartState);
+  const setCheckedList = useSetRecoilState(checkedListState);
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    try {
+      api.getCart(serverName).then((cart) => {
+        setCart(cart);
+        setCheckedList(Array(cart.length).fill(true));
+      });
+    } catch {
+      showToast('error', API_ERROR_MESSAGE.getCart);
+    }
+  }, [serverName]);
 
   return (
     <>
