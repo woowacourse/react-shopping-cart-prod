@@ -20,9 +20,7 @@ export const localProductsState = atom<LocalProductType[]>({
   key: "localProducts",
   default: selector<LocalProductType[]>({
     key: "products/default",
-    get: ({ get }) => {
-      return makeLocalProducts();
-    },
+    get: () => makeLocalProducts(),
   }),
 });
 
@@ -30,8 +28,3 @@ export const selectedProductsState = atom<LocalProductType[]>({
   key: "selectedProducts",
   default: [],
 });
-
-// export const serverOwnerState = atom<string>({
-//   key: "serverOwner",
-//   default: "애쉬",
-// });
