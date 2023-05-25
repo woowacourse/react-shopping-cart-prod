@@ -1,44 +1,60 @@
 import { ChangeEventHandler, FocusEventHandler } from 'react';
 import { NONE_QUANTITY, NOT_NUMBER } from '../constants';
 import { changeInvalidValueToBlank } from '../utils/changeInvalidValueToBlank';
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   SelectorParams,
   updateCartSelector,
   removeProductItemFromCartSelector,
+  getCartItemIdSelector,
 } from '../store/CartSelector';
 import { validateQuantityInput } from '../utils/validateQuantityInput';
 import { CART_BASE_URL } from '../constants/url';
 import { useFetchData } from './useFetchData';
 import { serverState } from '../store/ServerState';
 
-export const useProduct = (id: number) => {
-  const newQuantity = useRecoilValue(updateCartSelector({ id }));
+import { CartItem } from '../types';
+import { cartState } from '../store/CartState';
+
+export const useProduct = (productId: number) => {
+  const newQuantity = useRecoilValue(updateCartSelector({ id: productId }));
   const serverUrl = useRecoilValue(serverState);
+  const setCart = useSetRecoilState(cartState);
+
+  const findCartItemId = useRecoilValue(getCartItemIdSelector(productId));
 
   const updateCart = useRecoilCallback(({ set }) => ({ id, quantity }: SelectorParams) => {
     set(updateCartSelector({ id, quantity }), 0);
   });
 
-  const removeProductItemFromCart = useRecoilCallback(({ set }) => (id: number) => {
-    set(removeProductItemFromCartSelector(id), []);
+  const removeProductItemFromCart = useRecoilCallback(({ set }) => (productId: number) => {
+    set(removeProductItemFromCartSelector(productId), []);
   });
 
-  const { api } = useFetchData();
+  const { api } = useFetchData<CartItem[]>(setCart);
 
   const removeItem = () => {
-    api.delete(`${serverUrl}${CART_BASE_URL}/${id}`, { id });
-    removeProductItemFromCart(id);
+    if (findCartItemId < 0) return;
+
+    api.delete(`${serverUrl}${CART_BASE_URL}/${findCartItemId}`, CART_BASE_URL);
+    removeProductItemFromCart(productId);
   };
 
   const updateItem = (quantity: number) => {
-    api.patch(`${serverUrl}${CART_BASE_URL}/${id}`, { id, quantity });
-    updateCart({ id, quantity });
+    if (findCartItemId < 0) return;
+
+    api.patch(`${serverUrl}${CART_BASE_URL}/${findCartItemId}`, { quantity }, CART_BASE_URL);
+    updateCart({ id: productId, cartId: findCartItemId, quantity });
   };
 
   const addItemToCart = () => {
-    api.post(CART_BASE_URL, { id });
-    updateCart({ id, quantity: 1 });
+    api.post(`${serverUrl}${CART_BASE_URL}`, { productId }, CART_BASE_URL);
+
+    updateCart({
+      id: productId,
+      cartId: findCartItemId,
+      quantity: 1,
+    });
   };
 
   const handleNumberInputChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
@@ -63,6 +79,7 @@ export const useProduct = (id: number) => {
 
   const handleDecreaseItem = () => {
     const newValue = newQuantity - 1;
+
     if (!validateQuantityInput(newValue)) return;
 
     if (newValue === NONE_QUANTITY) {
@@ -75,7 +92,6 @@ export const useProduct = (id: number) => {
 
   const handleDecreaseCartItem = () => {
     if (newQuantity === 1) return;
-
     const newValue = newQuantity - 1;
     if (!validateQuantityInput(newValue)) return;
 

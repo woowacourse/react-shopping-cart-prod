@@ -2,9 +2,9 @@ import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { cartState } from '../store/CartState';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { removeProductItemFromCartSelector, totalPriceSelector } from '../store/CartSelector';
-import { CART_BASE_URL } from '../constants/url';
 import { useFetchData } from './useFetchData';
 import { serverState } from '../store/ServerState';
+import { CART_BASE_URL } from '../constants/url';
 
 export const useCart = () => {
   const cart = useRecoilValue(cartState);
@@ -43,7 +43,7 @@ export const useCart = () => {
     const confirmResult = window.confirm('정말로 삭제하시겠습니까?');
     if (confirmResult) {
       checkedItems.forEach((id) => {
-        api.delete(`${serverUrl}${CART_BASE_URL}/${id}`, { id });
+        api.delete(`${serverUrl}${CART_BASE_URL}/${id}`, CART_BASE_URL);
         removeProductItemFromCart(id);
       });
       setCheckedItems([]);
