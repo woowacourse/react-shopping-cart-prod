@@ -1,13 +1,15 @@
 import { DefaultValue, atom, selector, selectorFamily } from "recoil";
-import { recoilPersist } from "recoil-persist";
 import { MIN_QUANTITY } from "constants/cartProduct";
 import { CartProduct } from "types/domain";
 import { getCartItems } from "api/cartItems";
+import { serverSelectState } from "./server";
 
 const getCartProductList = selector<CartProduct[]>({
   key: "getCartProductList",
-  get: async () => {
-    const cartItems = await getCartItems();
+  get: async ({ get }) => {
+    const selectedServer = get(serverSelectState);
+
+    const cartItems = await getCartItems(selectedServer);
 
     return cartItems.map((item) => {
       const cartProduct: CartProduct = {
@@ -20,12 +22,9 @@ const getCartProductList = selector<CartProduct[]>({
   },
 });
 
-const { persistAtom } = recoilPersist();
-
 export const cartListState = atom<CartProduct[]>({
   key: "cartList",
   default: getCartProductList,
-  effects_UNSTABLE: [persistAtom],
 });
 
 export const cartSelector = selectorFamily<CartProduct | null, number>({

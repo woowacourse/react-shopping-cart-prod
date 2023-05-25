@@ -1,14 +1,24 @@
-import { ChangeEvent } from "react";
-import { useSetRecoilState } from "recoil";
+import { ChangeEvent, useEffect } from "react";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { serverSelectState } from "recoil/server";
 import { styled } from "styled-components";
 import { ServerId } from "recoil/server";
+import { cartListState } from "recoil/cart";
+import { productListState } from "recoil/product";
 
 const ServerSeclector = () => {
-  const setServerState = useSetRecoilState(serverSelectState);
-  const changeEvent = (e: ChangeEvent<HTMLFieldSetElement>) => {
+  const [serverState, setServerState] = useRecoilState(serverSelectState);
+  const chagneServer = (e: ChangeEvent<HTMLInputElement>) => {
     setServerState(e.target.id as ServerId);
   };
+
+  const resetCartList = useResetRecoilState(cartListState);
+  const resetProductList = useResetRecoilState(productListState);
+
+  useEffect(() => {
+    resetProductList();
+    resetCartList();
+  }, [serverState]);
 
   const serverList: { [key in ServerId]: string } = {
     "power-server": "파워 서버",
@@ -17,17 +27,35 @@ const ServerSeclector = () => {
   };
 
   return (
-    <Wrapper onChange={changeEvent}>
+    <Wrapper>
       <InputBox>
-        <Input type="radio" name="server" id={Object.keys(serverList)[0]} defaultChecked />
+        <Input
+          type="radio"
+          name="server"
+          id={Object.keys(serverList)[0]}
+          checked={serverState === Object.keys(serverList)[0]}
+          onChange={chagneServer}
+        />
         {Object.values(serverList)[0]}
       </InputBox>
       <InputBox>
-        <Input type="radio" name="server" id={Object.keys(serverList)[1]} />
+        <Input
+          type="radio"
+          name="server"
+          id={Object.keys(serverList)[1]}
+          checked={serverState === Object.keys(serverList)[1]}
+          onChange={chagneServer}
+        />
         {Object.values(serverList)[1]}
       </InputBox>
       <InputBox>
-        <Input type="radio" name="server" id={Object.keys(serverList)[2]} />
+        <Input
+          type="radio"
+          name="server"
+          id={Object.keys(serverList)[2]}
+          checked={serverState === Object.keys(serverList)[2]}
+          onChange={chagneServer}
+        />
         {Object.values(serverList)[2]}
       </InputBox>
     </Wrapper>

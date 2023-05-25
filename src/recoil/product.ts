@@ -1,11 +1,14 @@
 import { atom, selector, selectorFamily } from "recoil";
 import { Product } from "types/domain";
 import { getProducts } from "api/products";
+import { serverSelectState } from "./server";
 
 const getProductList = selector<Product[]>({
   key: "getProductList",
-  get: async () => {
-    const products = await getProducts();
+  get: async ({ get }) => {
+    const selectedServer = get(serverSelectState);
+
+    const products = await getProducts(selectedServer);
 
     return products;
   },

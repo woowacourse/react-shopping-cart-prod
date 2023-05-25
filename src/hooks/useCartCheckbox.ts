@@ -1,9 +1,11 @@
 import { removeCartItem } from "api/cartItems";
 import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cartListState } from "recoil/cart";
+import { serverSelectState } from "recoil/server";
 
 export const useCartCheckbox = () => {
+  const selectedServer = useRecoilValue(serverSelectState);
   const [cartList, setCartList] = useRecoilState(cartListState);
   const [isAllchecked, setIsAllChecked] = useState(true);
   const [checkedCount, setCheckedCount] = useState(cartList.length);
@@ -37,7 +39,7 @@ export const useCartCheckbox = () => {
   };
 
   const removeItem = async (id: number) => {
-    const result = await removeCartItem(id);
+    const result = await removeCartItem(selectedServer, id);
 
     if (!result) {
       alert(`장바구니 상품 제거 실패! ${cartList.find((item) => item.id === id)}`);

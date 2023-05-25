@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cartSelector } from "recoil/cart";
 import { MAX_QUANTITY, MIN_QUANTITY } from "constants/cartProduct";
 import { CartProduct } from "types/domain";
 import { changeItemQuantity, removeCartItem } from "api/cartItems";
+import { serverSelectState } from "recoil/server";
 
 export const useQuantity = (productId: number) => {
+  const selectedServer = useRecoilValue(serverSelectState);
   const [cartItem, setCartItem] = useRecoilState(cartSelector(productId));
   const [quantity, setQuantity] = useState<string>(
     cartItem ? cartItem.quantity.toString() : MIN_QUANTITY.toString()
@@ -20,9 +22,9 @@ export const useQuantity = (productId: number) => {
     }
 
     const result =
-      Number(newQuantity) >= MIN_QUANTITY
-        ? await changeItemQuantity(cartItem.id, Number(newQuantity))
-        : await removeCartItem(cartItem.id);
+      Number(newQuantity) > MIN_QUANTITY
+        ? await changeItemQuantity(selectedServer, cartItem.id, Number(newQuantity))
+        : await removeCartItem(selectedServer, cartItem.id);
 
     if (!result) {
       alert(`장바구니 상품 수량 변경 실패!`);
