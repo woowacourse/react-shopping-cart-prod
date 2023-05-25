@@ -1,5 +1,5 @@
 {
-  "name": "react-shopping-cart",
+  "name": "react-shopping-cart-prod",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -70,7 +70,6 @@
     "chromatic": "^6.17.4",
     "msw": "^1.2.1",
     "msw-storybook-addon": "^1.8.0",
-    "recoil-persist": "^4.2.0",
     "storybook": "^7.0.10",
     "typescript": "^4.9.5",
     "webpack": "^5.82.1"
