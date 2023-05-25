@@ -5,19 +5,40 @@ import { ReactComponent as CartIcon } from 'assets/cart-icon.svg';
 import ROUTE_PATH from 'constants/routePath';
 import { useRecoilValue } from 'recoil';
 import { cartProductsState } from 'state/cartProducts';
+import FlexBox from 'components/@common/FlexBox';
+import SelectBox from 'components/@common/SelectBox/SelectBox';
+import { ServerOwner } from 'types/serverOwner';
+import BASE_URL from 'constants/apiBaseURL';
+
+const serverOwnerOptions = Object.entries(BASE_URL).map(([name, value]) => ({ name: name, value: name }));
 
 const Header = ({ children }: PropsWithChildren) => {
   const cartProductCount = useRecoilValue(cartProductsState).size;
+
+  const handleServerOwner = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value as ServerOwner;
+
+    localStorage.setItem('serverOwner', value);
+    window.location.reload();
+  };
 
   return (
     <HeaderContainer>
       <FlexLink to={ROUTE_PATH.root}>
         <Title>{children}</Title>
       </FlexLink>
-      <FlexLink to={ROUTE_PATH.cart}>
-        <Cart />
-        <CartProductCount>{cartProductCount}</CartProductCount>
-      </FlexLink>
+
+      <FlexBox>
+        <SelectBox
+          value={(localStorage.getItem('serverOwner') ?? '솔로스타') as ServerOwner}
+          options={serverOwnerOptions}
+          onChange={handleServerOwner}
+        />
+        <FlexLink to={ROUTE_PATH.cart}>
+          <Cart />
+          <CartProductCount>{cartProductCount}</CartProductCount>
+        </FlexLink>
+      </FlexBox>
     </HeaderContainer>
   );
 };
