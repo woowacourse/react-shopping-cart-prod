@@ -7,6 +7,7 @@ import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItems
 import { cartState, checkedItemList, serverState } from '../../recoil';
 import Button from '../common/Button';
 import { Checkbox } from '../common/CheckboxStyle';
+import Spinner from '../Spinner';
 import SelectedProductItem from './SelectedProductItem';
 
 const SelectedProductList = () => {
@@ -48,9 +49,7 @@ const SelectedProductList = () => {
     setCheckedItems([]);
   };
 
-  if (isLoading) {
-    return <p>로딩중...</p>;
-  }
+  if (isLoading) return <Spinner />;
 
   return (
     <S.Wrapper>
