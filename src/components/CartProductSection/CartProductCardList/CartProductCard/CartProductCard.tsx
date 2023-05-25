@@ -35,7 +35,7 @@ const CartProductCard = ({ cartProduct, toggleCheck, isChecked }: CartProductCar
             해당 상품을 삭제하시겠습니까??
           </ConfirmModal>
         </Container>
-        <Container justify="flex-end">
+        <StepperContainer justify="flex-end">
           <CartQuantityStepper
             quantity={quantity}
             initialIncrement={() => initialAddCart(product)}
@@ -43,7 +43,7 @@ const CartProductCard = ({ cartProduct, toggleCheck, isChecked }: CartProductCar
             decreaseQuantity={() => decreaseQuantity(id)}
           />
           <TotalPrice>{totalPrice.toLocaleString('ko-KR')}원</TotalPrice>
-        </Container>
+        </StepperContainer>
       </ProductInfoContainer>
     </CartProductCardContainer>
   );
@@ -52,6 +52,17 @@ const CartProductCard = ({ cartProduct, toggleCheck, isChecked }: CartProductCar
 const Container = styled(FlexBox)`
   width: 100%;
   height: 100%;
+`;
+
+const StepperContainer = styled(FlexBox)`
+  width: 100%;
+  height: 100%;
+
+  @media (max-width: 1080px) {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+  }
 `;
 
 const ProductInfoContainer = styled(FlexBox)`
