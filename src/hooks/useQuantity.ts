@@ -1,5 +1,5 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { localProductsState, productsState } from "../recoil/atom";
+import { useRecoilState } from "recoil";
+import { localProductsState } from "../recoil/atom";
 import React, { useEffect, useState } from "react";
 import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
 import { changeQuantity, deleteCartItem } from "../api";
@@ -7,17 +7,16 @@ import { LocalProductType } from "../types/domain";
 import { makeLocalProducts } from "../utils/domain";
 
 export const useQuantity = (productId: number) => {
+  const [errorStatus, setErrorStatus] = useState<string>("");
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
   const [quantity, setQuantity] = useState<string | undefined>("0");
-
   const currentLocalProduct = localProducts.find(
     (product: LocalProductType) => product.id === productId
   );
+
   useEffect(() => {
     setQuantity(currentLocalProduct?.quantity.toString());
   }, [currentLocalProduct]);
-
-  const [isError, setIsError] = useState<boolean>(false);
 
   const setNewQuantity = async (newQuantity: number) => {
     if (!currentLocalProduct) return;
@@ -38,8 +37,8 @@ export const useQuantity = (productId: number) => {
           throw new Error(response.status.toString());
         }
       }
-    } catch (error) {
-      setIsError(true);
+    } catch (error: any) {
+      setErrorStatus(error.message);
     }
 
     setQuantity(newQuantity.toString());
@@ -65,7 +64,7 @@ export const useQuantity = (productId: number) => {
   };
 
   return {
-    isError,
+    errorStatus,
     quantity,
     setNewQuantity,
     handleQuantityChanged,

@@ -4,7 +4,7 @@ import { localProductsState } from "../recoil/atom";
 import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
-import { MIN_QUANTITY } from "../constants";
+import { ERROR_MESSAGE, MIN_QUANTITY } from "../constants";
 import { addCartItem } from "../api";
 import { makeLocalProducts } from "../utils/domain";
 import { useState } from "react";
@@ -12,7 +12,9 @@ import ErrorBox from "./ErrorBox";
 
 export const ProductList = () => {
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
-  const [errorStatus, setErrorStatus] = useState("");
+  const [errorStatus, setErrorStatus] = useState<
+    keyof typeof ERROR_MESSAGE | null
+  >(null);
 
   const handleCartClicked = (productId: number) => async () => {
     try {
@@ -29,7 +31,7 @@ export const ProductList = () => {
 
   return (
     <Wrapper>
-      {errorStatus !== "" ? (
+      {errorStatus ? (
         <ErrorBox status={errorStatus} />
       ) : (
         localProducts.map((product: LocalProductType) => (

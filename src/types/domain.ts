@@ -5,13 +5,13 @@ export interface ProductType {
   imageUrl: string;
 }
 
-export interface LocalProductType extends ProductType {
-  quantity: number;
-  cartItemId: number;
-}
-
 export interface CartItemType {
   id: number;
   quantity: number;
   product: ProductType;
+}
+
+export interface LocalProductType extends ProductType {
+  quantity: number;
+  cartItemId: number;
 }

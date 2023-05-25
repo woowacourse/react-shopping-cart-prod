@@ -1,10 +1,9 @@
 export const MAX_QUANTITY = 99;
 export const MIN_QUANTITY = 0;
+export const MAX_LENGTH_QUANTITY = 2;
 
 export const KEY_LOCALSTORAGE_SERVER_OWNER = "owner";
 export const DEFAULT_VALUE_SERVER_OWNER = "애쉬";
-
-export const MAX_LENGTH_QUANTITY = 2;
 
 export const DELIVERY_FEE = 3000;
 
@@ -14,8 +13,7 @@ export const SERVERS: Record<string, string> = {
   루카: "https://woowa-luca.store",
 } as const;
 
-export const ERROR_MESSAGE: Record<string, string> = {
-  default: "Something wrong!",
+export const ERROR_MESSAGE = {
   "400": "Bad Request: 잘못된 요청입니다.",
   "401": "Unauthorized: 인증에 실패했습니다",
   "403": "Forbidden: 해당 페이지에 접근할 수 없습니다.",

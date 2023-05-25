@@ -9,7 +9,6 @@ export const productsState = atom<ProductType[]>({
     key: "initialProducts/default",
     get: async () => {
       const response = await fetchProducts();
-
       if (!response.ok) throw new Error(response.status.toString());
       return await response.json();
     },
