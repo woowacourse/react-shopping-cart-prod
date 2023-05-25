@@ -20,6 +20,7 @@ export const ProductItemImage = styled.img<LoadingProps>`
   height: 230px;
   margin-bottom: 18px;
   object-fit: cover;
+  border-radius: 3px;
   ${ImageSkeletonStyle};
 `;
 
