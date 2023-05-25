@@ -30,6 +30,10 @@ class Client<TRestAPI extends RestAPI> {
     }
   }
 
+  toJSON() {
+    return this.options;
+  }
+
   setOrigin(origin: string) {
     this.options.origin = origin;
   }
@@ -49,6 +53,7 @@ class Client<TRestAPI extends RestAPI> {
         ...init,
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
+          Authorization: `Basic ${btoa('a@a.com:1234')}`,
         },
       });
 
