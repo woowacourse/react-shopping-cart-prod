@@ -3,17 +3,17 @@ import styled from "styled-components";
 import { useQuantity } from "../hooks/useQuantity";
 
 interface CounterProps {
-  itemId: number;
+  productId: number;
   deleteable: boolean;
 }
 
-export const Counter = ({ itemId, deleteable }: CounterProps) => {
+export const Counter = ({ productId, deleteable }: CounterProps) => {
   const {
     quantity,
     setNewQuantity,
     handleQuantityChanged,
     handleQuantityBlured,
-  } = useQuantity(itemId);
+  } = useQuantity(productId);
 
   const handleCountInputKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!(e.target instanceof HTMLInputElement) || e.key !== "Enter") return;

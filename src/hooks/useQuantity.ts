@@ -1,25 +1,22 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import {
-  localProductsState,
-  productsState,
-  serverOwnerState,
-} from "../recoil/atom";
-import React, { useState } from "react";
+import { localProductsState, productsState } from "../recoil/atom";
+import React, { useEffect, useState } from "react";
 import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
 import { changeQuantity, deleteCartItem } from "../api";
 import { LocalProductType } from "../types/domain";
 import { makeLocalProducts } from "../utils/domain";
 
 export const useQuantity = (productId: number) => {
-  const serverOwner = useRecoilValue(serverOwnerState);
   const products = useRecoilValue(productsState);
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
+  const [quantity, setQuantity] = useState<string | undefined>("0");
+
   const currentLocalProduct = localProducts.find(
     (product: LocalProductType) => product.id === productId
   );
-  const [quantity, setQuantity] = useState<string | undefined>(
-    currentLocalProduct?.quantity.toString()
-  );
+  useEffect(() => {
+    setQuantity(currentLocalProduct?.quantity.toString());
+  }, [currentLocalProduct]);
 
   const [isError, setIsError] = useState<boolean>(false);
 
@@ -29,18 +26,14 @@ export const useQuantity = (productId: number) => {
 
     try {
       if (newQuantity === 0) {
-        const response = await deleteCartItem(
-          currentLocalProduct.cartItemId,
-          serverOwner
-        );
+        const response = await deleteCartItem(currentLocalProduct.cartItemId);
         if (!response.ok) {
           throw new Error(response.status.toString());
         }
       } else {
         const response = await changeQuantity(
           currentLocalProduct.cartItemId,
-          Number(newQuantity),
-          serverOwner
+          Number(newQuantity)
         );
         if (!response.ok) {
           throw new Error(response.status.toString());
@@ -51,7 +44,8 @@ export const useQuantity = (productId: number) => {
     }
 
     setQuantity(newQuantity.toString());
-    const newProducts = await makeLocalProducts(products, serverOwner);
+    const newProducts = await makeLocalProducts(products);
+    console.log("!!", newProducts);
     setLocalProducts(newProducts);
   };
 

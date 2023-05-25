@@ -1,10 +1,6 @@
 import styled from "styled-components";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import {
-  productsState,
-  localProductsState,
-  serverOwnerState,
-} from "../recoil/atom";
+import { productsState, localProductsState } from "../recoil/atom";
 import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
@@ -26,16 +22,15 @@ export const ProductList = () => {
 };
 
 const Product = ({ id, name, price, imageUrl, quantity }: LocalProductType) => {
-  const serverOwner = useRecoilValue(serverOwnerState);
   const products = useRecoilValue(productsState);
   const setLocalProducts = useSetRecoilState(localProductsState);
   const [isError, setIsError] = useState(false);
 
   const handleCartClicked = async () => {
     try {
-      await addCartItem(id, serverOwner);
+      await addCartItem(id);
 
-      const newProducts = await makeLocalProducts(products, serverOwner);
+      const newProducts = await makeLocalProducts(products);
       setLocalProducts(newProducts);
     } catch (error) {
       setIsError(true);
@@ -52,7 +47,7 @@ const Product = ({ id, name, price, imageUrl, quantity }: LocalProductType) => {
         {quantity === MIN_QUANTITY ? (
           <img src={CartGrayIcon} alt={"카트"} onClick={handleCartClicked} />
         ) : (
-          <Counter itemId={id} deleteable />
+          <Counter productId={id} deleteable />
         )}
       </IconContainer>
     </ProductWrapper>
