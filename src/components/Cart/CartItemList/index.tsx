@@ -16,7 +16,7 @@ const CartItemList = () => {
   const { request } = useMutate();
   const { isLoading } = useGet<{ cartList: Cart[] }>(getCartList);
   const [cartList, setCartList] = useRecoilState(cartListAtom);
-  const { checkedItemIds, emptyCheckedItemIds, checkAllItems, unCheckItem } =
+  const { checkedItemIds, unCheckAllItems, checkAllItems, unCheckItem } =
     useCheckedItemIds();
   const { isModalOpen, onOpenModal, onCloseModal } = useModal();
 
@@ -43,7 +43,7 @@ const CartItemList = () => {
 
   const onChangeAllCheckBoxes = () => {
     if (checkedItemIds.length === cartList.length) {
-      emptyCheckedItemIds();
+      unCheckAllItems();
       return;
     }
 

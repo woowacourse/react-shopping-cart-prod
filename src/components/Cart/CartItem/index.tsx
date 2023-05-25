@@ -10,11 +10,11 @@ interface CartItemProps {
 }
 
 const CartItem = ({ cartItem }: CartItemProps) => {
-  const { removeItem, addItem, deleteItem } = useCart(cartItem.product);
+  const { decreaseItemQuantity, increaseItemQuantity, deleteItem } = useCart();
   const { checkItem, checkedItemIds, unCheckItem } = useCheckedItemIds();
   const { product } = cartItem;
 
-  const onCheckBoxChange = () => {
+  const onCheckItem = () => {
     checkItem(cartItem.id);
   };
 
@@ -23,11 +23,19 @@ const CartItem = ({ cartItem }: CartItemProps) => {
     unCheckItem(cartItem.id);
   };
 
+  const increase = () => {
+    increaseItemQuantity(cartItem.id);
+  };
+
+  const decrease = () => {
+    decreaseItemQuantity(cartItem.id);
+  };
+
   return (
     <S.CartItemWrapper>
       <S.CheckBox
         type="checkbox"
-        onChange={onCheckBoxChange}
+        onChange={onCheckItem}
         checked={checkedItemIds.includes(cartItem.id)}
       />
       <S.CartItemImage src={product.imageUrl} alt={product.name} />
@@ -39,8 +47,8 @@ const CartItem = ({ cartItem }: CartItemProps) => {
         <Counter
           count={cartItem.quantity}
           min={1}
-          increment={() => addItem(cartItem.id)}
-          decrement={() => removeItem(cartItem.id)}
+          increment={increase}
+          decrement={decrease}
         />
         <S.CartProductPrice>
           {product.price.toLocaleString('KR')}원
