@@ -5,8 +5,11 @@ import { Product } from '../../../types/product';
 import { useRecoilValue } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
+import { useEffect } from 'react';
+import useCartService from '../../../hooks/useCartService';
 
 const ProductList = () => {
+  const { fetchCartItem } = useCartService();
   const serverName = useRecoilValue(serverNameState);
   const productsUrl = ServerUtil.getProductsUrl(serverName);
 
@@ -17,6 +20,10 @@ const ProductList = () => {
   }
 
   const productList = getData();
+
+  useEffect(() => {
+    fetchCartItem();
+  }, [serverName]);
 
   return (
     <section>

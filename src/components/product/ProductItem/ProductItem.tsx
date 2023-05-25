@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Counter from '../../common/Counter/Counter';
@@ -8,15 +8,25 @@ import { formatPrice } from '../../../utils/formatPrice';
 import useCartService from '../../../hooks/useCartService';
 import productQuantityInCart from '../../../globalState/selectors/productQuantityInCart';
 import type { Product } from '../../../types/product';
+import cartLoadingState from '../../../globalState/atoms/cartLoadingState';
 
 const ProductItem = (product: Product) => {
   const { id: productId, name, price, imageUrl } = product;
   const { addCartItem, updateCartItemQuantity, deleteCartItem, getCartId } =
     useCartService();
+  const isCartLoading = useRecoilValue(cartLoadingState);
 
   const quantityInCart = useRecoilValue(productQuantityInCart(productId));
+
   const [count, setCount] = useState(quantityInCart);
   const [isDisplayCounter, setIsDisplayCounter] = useState(!!quantityInCart);
+
+  useEffect(() => {
+    if (isCartLoading) return;
+
+    setCount(quantityInCart);
+    setIsDisplayCounter(!!quantityInCart);
+  }, [isCartLoading]);
 
   const updateCount = (quantity: number) => {
     setCount(quantity);
