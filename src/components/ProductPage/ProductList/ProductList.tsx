@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil';
-import { products } from '../../../atoms/products';
+import { productsSelector } from '../../../atoms/products';
 import ProductItem from '../ProductItem/ProductItem';
 import * as S from './ProductList.styles';
 
 const ProductList = () => {
-  const items = useRecoilValue(products);
+  const items = useRecoilValue(productsSelector);
   return (
     <S.List>
       {items.map((product) => (
