@@ -1,30 +1,34 @@
-import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { cartCheckedProductsState } from 'state/cartCheckedProducts';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
-import { CheckedCartProducts, Product } from 'types/product';
+import type { Product } from 'types/product';
 
 const useCartCheckBox = () => {
   const cartProducts = useRecoilValue(cartProductsState);
   const cartProductIdStore = useRecoilValue(cartProductIdStoreState);
-  const [checkedProducts, setCheckedProducts] = useState<CheckedCartProducts>(new Set(cartProducts.keys()));
+  const [checkedProducts, setCheckedProducts] = useRecoilState(cartCheckedProductsState);
 
   useEffect(() => {
-    setCheckedProducts(new Set(cartProducts.keys()));
+    const updatedCartProductIds = [...cartProducts.keys()];
+    const updatedCheckedProducts = updatedCartProductIds.filter((cartProductId) => checkedProducts.has(cartProductId));
+
+    setCheckedProducts(new Set(updatedCheckedProducts));
   }, [cartProducts]);
 
   const isAllChecked = cartProducts.size === checkedProducts.size;
   const isChecked = (id: Product['id']) => checkedProducts.has(cartProductIdStore[id]);
 
   const check = (id: Product['id']) => {
-    setCheckedProducts((prev) => new Set([...prev.add(cartProductIdStore[id])]));
+    setCheckedProducts((prev) => new Set(prev.add(cartProductIdStore[id])));
   };
 
   const unCheck = (id: Product['id']) => {
     setCheckedProducts((prev) => {
       prev.delete(cartProductIdStore[id]);
 
-      return new Set([...prev]);
+      return new Set(prev);
     });
   };
 

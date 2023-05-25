@@ -12,4 +12,4 @@ export type CartProduct = {
 
 export type CartProducts = Map<number, CartProduct>;
 
-export type CheckedCartProducts = Set<Product['id']>;
+export type CheckedCartProducts = Set<number>;
