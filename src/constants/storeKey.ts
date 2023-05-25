@@ -1,1 +1,1 @@
-export const CART_KEY = 'cart';
+export const SERVER_OWNER = 'serverOwner';

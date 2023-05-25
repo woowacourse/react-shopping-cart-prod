@@ -1,5 +1,6 @@
 import BASE_URL from 'constants/apiBaseURL';
 import { USER_1 } from 'constants/basicKey';
+import { SERVER_OWNER } from 'constants/storeKey';
 import type { ServerOwner } from 'types/serverOwner';
 import getBasicKey from 'utils/getBasicKey';
 
@@ -104,7 +105,7 @@ class API {
   }
 }
 
-const serverOwner = (localStorage.getItem('serverOwner') ?? '솔로스타') as ServerOwner;
+const serverOwner = (localStorage.getItem(SERVER_OWNER) ?? '솔로스타') as ServerOwner;
 const api = new API(BASE_URL[serverOwner]);
 
 export default api;

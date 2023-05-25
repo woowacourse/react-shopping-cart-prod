@@ -9,6 +9,7 @@ import FlexBox from 'components/@common/FlexBox';
 import SelectBox from 'components/@common/SelectBox/SelectBox';
 import { ServerOwner } from 'types/serverOwner';
 import BASE_URL from 'constants/apiBaseURL';
+import { SERVER_OWNER } from 'constants/storeKey';
 
 const serverOwnerOptions = Object.entries(BASE_URL).map(([name, value]) => ({ name: name, value: name }));
 
@@ -18,7 +19,7 @@ const Header = ({ children }: PropsWithChildren) => {
   const handleServerOwner = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as ServerOwner;
 
-    localStorage.setItem('serverOwner', value);
+    localStorage.setItem(SERVER_OWNER, value);
     window.location.reload();
   };
 
@@ -30,7 +31,7 @@ const Header = ({ children }: PropsWithChildren) => {
 
       <FlexBox>
         <SelectBox
-          value={(localStorage.getItem('serverOwner') ?? '솔로스타') as ServerOwner}
+          value={(localStorage.getItem(SERVER_OWNER) ?? '솔로스타') as ServerOwner}
           options={serverOwnerOptions}
           onChange={handleServerOwner}
         />
