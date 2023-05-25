@@ -11,10 +11,18 @@ export const ShoppingCartContentsLayout = styled.div`
     grid-template-columns: auto;
     row-gap: 40px;
   }
+
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 150px;
+  }
 `;
 
 export const CartList = styled.div`
   margin-bottom: 60px;
+
+  @media only screen and (max-width: 768px) {
+    margin-bottom: 30px;
+  }
 `;
 
 export const CartListLayout = styled.div`
