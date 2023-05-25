@@ -23,8 +23,12 @@ export const ERROR_MESSAGE = {
 
 export const SERVERS_NAMES = ['베베', '에단', '도리와 노아'] as const;
 
-export const SERVERS: Record<Servers, { apiUrl: string; email: string; password: string; avatar: string }> = {
+export const SERVERS: Record<
+  Servers,
+  { apiUrl: string; email: string; password: string; avatar: string; serverName: Servers }
+> = {
   베베: {
+    serverName: '베베',
     apiUrl: 'http://54.180.83.246:8080',
     email: 'a@a.com',
     password: '1234',
@@ -32,6 +36,7 @@ export const SERVERS: Record<Servers, { apiUrl: string; email: string; password:
   },
 
   에단: {
+    serverName: '에단',
     apiUrl: 'http://3.37.123.69:8080',
     email: 'a@a.com',
     password: '1234',
@@ -39,6 +44,7 @@ export const SERVERS: Record<Servers, { apiUrl: string; email: string; password:
   },
 
   '도리와 노아': {
+    serverName: '도리와 노아',
     apiUrl: '',
     email: '',
     password: '',
