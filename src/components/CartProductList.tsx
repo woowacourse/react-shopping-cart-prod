@@ -32,7 +32,6 @@ export const CartProductList = () => {
     });
 
     removeCheckedArray();
-    // fetchNewProducts();
     const newProducts = await makeLocalProducts();
     setLocalProducts(newProducts);
   };
@@ -41,7 +40,6 @@ export const CartProductList = () => {
     await deleteCartItem(cartItemId);
 
     removeTargetIndex(index);
-    // fetchNewProducts();
     const newProducts = await makeLocalProducts();
     setLocalProducts(newProducts);
   };

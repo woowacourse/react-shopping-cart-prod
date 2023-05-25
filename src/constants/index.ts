@@ -1,22 +1,17 @@
 export const MAX_QUANTITY = 99;
 export const MIN_QUANTITY = 0;
 
-export const KEY_LOCALSTORAGE_CART = "cart";
+export const KEY_LOCALSTORAGE_SERVER_OWNER = "owner";
+export const DEFAULT_VALUE_SERVER_OWNER = "애쉬";
 
 export const MAX_LENGTH_QUANTITY = 2;
 
 export const DELIVERY_FEE = 3000;
 
 export const SERVERS: Record<string, string> = {
-  리오: "http://13.125.102.213:8080",
+  리오: "https://woowa-reo.store",
   애쉬: "https://woowa-ash.store",
-  루카: "http://13.209.73.130:8080",
-} as const;
-
-export const PRO_SERVERS: Record<string, string> = {
-  리오: "https://woowa-reo.store/admin",
-  애쉬: "https://woowa-ash.store/admin",
-  루카: "https://woowa-luca.store/admin",
+  루카: "https://woowa-luca.store",
 } as const;
 
 export const ERROR_MESSAGE: Record<string, string> = {

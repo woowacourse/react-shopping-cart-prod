@@ -1,19 +1,37 @@
-import { SERVERS } from "../constants";
+import {
+  DEFAULT_VALUE_SERVER_OWNER,
+  KEY_LOCALSTORAGE_SERVER_OWNER,
+  SERVERS,
+} from "../constants";
 import { getLocalStorage } from "../utils";
 
-const DEV_BASE_URL = "";
-const username = "a@a.com";
-const password = "1234";
-
 // Base64로 인코딩
-const base64 = btoa(username + ":" + password);
+const base64 = btoa(
+  process.env.REACT_APP_USERNAME + ":" + process.env.REACT_APP_PASSWORD
+);
 
 export const fetchProducts = () =>
-  fetch(`${DEV_BASE_URL}${SERVERS[getLocalStorage("owner", "애쉬")]}/products`);
+  fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/products`
+  );
 
 export const fetchCartItems = async () =>
   fetch(
-    `${DEV_BASE_URL}${SERVERS[getLocalStorage("owner", "애쉬")]}/cart-items`,
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/cart-items`,
     {
       headers: {
         Authorization: `Basic ${base64}`,
@@ -23,8 +41,13 @@ export const fetchCartItems = async () =>
 
 export const changeQuantity = async (cartItemId: number, newQuantity: number) =>
   fetch(
-    `${DEV_BASE_URL}${
-      SERVERS[getLocalStorage("owner", "애쉬")]
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
     }/cart-items/${cartItemId}`,
     {
       headers: {
@@ -38,7 +61,14 @@ export const changeQuantity = async (cartItemId: number, newQuantity: number) =>
 
 export const addCartItem = async (productId: number) =>
   fetch(
-    `${DEV_BASE_URL}${SERVERS[getLocalStorage("owner", "애쉬")]}/cart-items`,
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/cart-items`,
     {
       headers: {
         Authorization: `Basic ${base64}`,
@@ -51,8 +81,13 @@ export const addCartItem = async (productId: number) =>
 
 export const deleteCartItem = async (cartItemId: number) =>
   fetch(
-    `${DEV_BASE_URL}${
-      SERVERS[getLocalStorage("owner", "애쉬")]
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
     }/cart-items/${cartItemId}`,
     {
       headers: {
