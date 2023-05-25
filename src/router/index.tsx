@@ -17,7 +17,12 @@ const router = createBrowserRouter(
     },
     {
       path: '/cart',
-      element: <CartList />,
+      element: (
+        <Suspense>
+          <CartList />
+        </Suspense>
+      ),
+      errorElement: <NotFound />,
     },
   ],
   { basename: process.env.PUBLIC_URL }
