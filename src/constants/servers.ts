@@ -21,12 +21,19 @@ export const ERROR_MESSAGE = {
   default: '서버 내부에서 오류가 발생했습니다. 해당 오류가 지속적으로 발생한다면 관리자에게 문의해주세요.',
 } as const;
 
-export const SERVERS_NAMES = ['베베', '에단', '도리와 노아'] as const;
+export const SERVERS_NAMES = ['솔로스타', '베베', '에단', '도리와 노아'] as const;
 
 export const SERVERS: Record<
   Servers,
   { apiUrl: string; email: string; password: string; avatar: string; serverName: Servers }
 > = {
+  솔로스타: {
+    serverName: '솔로스타',
+    apiUrl: 'http://shopping-cart-1.solo5star.com',
+    email: 'a@a.com',
+    password: '1234',
+    avatar: 'https://avatars.githubusercontent.com/u/20203944?v=4',
+  },
   베베: {
     serverName: '베베',
     apiUrl: 'http://54.180.83.246:8080',

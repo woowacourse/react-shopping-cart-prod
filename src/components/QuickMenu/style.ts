@@ -22,8 +22,8 @@ export const Button = styled.div`
   z-index: 5;
 
   &:hover {
-    height: 240px;
-    background-position: 0px 190px;
+    height: 270px;
+    background-position: 0px 220px;
     & > div {
       pointer-events: auto;
       opacity: 1;
@@ -47,6 +47,7 @@ export const Option = styled.div<OptionProps>`
 
   background-image: url(${(props) => props.avatar});
   background-size: 50px;
+  background-position: contain;
   background-repeat: no-repeat;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
