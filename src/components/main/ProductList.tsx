@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import { CART_URL, PRODUCT_LIST_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
 import { cartState, productListState, serverState } from '../../recoil';
+import Spinner from '../Spinner';
 import ProductItem from './ProductItem';
 
 const ProductList = () => {
@@ -30,21 +31,19 @@ const ProductList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
+  if (isLoading) return <Spinner />;
+
   return (
     <S.Wrapper>
-      {isLoading ? (
-        <p>로딩중...</p>
-      ) : (
-        productList.map((product) => (
-          <ProductItem
-            key={product.id}
-            id={product.id}
-            name={product.name}
-            price={product.price}
-            imageUrl={product.imageUrl}
-          />
-        ))
-      )}
+      {productList.map((product) => (
+        <ProductItem
+          key={product.id}
+          id={product.id}
+          name={product.name}
+          price={product.price}
+          imageUrl={product.imageUrl}
+        />
+      ))}
     </S.Wrapper>
   );
 };
