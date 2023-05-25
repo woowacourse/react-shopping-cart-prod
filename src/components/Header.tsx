@@ -22,7 +22,7 @@ const Header = () => {
 
   useEffect(() => {
     api.get(`${serverUrl}${CART_BASE_URL}`);
-  }, [serverUrl]);
+  }, [api, serverUrl]);
 
   return (
     <S.Header>
