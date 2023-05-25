@@ -21,12 +21,19 @@ export const ERROR_MESSAGE = {
   default: '서버 내부에서 오류가 발생했습니다. 해당 오류가 지속적으로 발생한다면 관리자에게 문의해주세요.',
 } as const;
 
-export const SERVERS_NAMES = ['솔로스타', '베베', '에단', '도리와 노아'] as const;
+export const SERVERS_NAMES = ['도리와 노아', '베베', '에단', '솔로스타'] as const;
 
 export const SERVERS: Record<
   Servers,
   { apiUrl: string; email: string; password: string; avatar: string; serverName: Servers }
 > = {
+  '도리와 노아': {
+    serverName: '도리와 노아',
+    apiUrl: '',
+    email: '',
+    password: '',
+    avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04LMNEGB2T-e1f4aef15b2c-512',
+  },
   솔로스타: {
     serverName: '솔로스타',
     apiUrl: 'https://shopping-cart-1.solo5star.com',
@@ -48,13 +55,5 @@ export const SERVERS: Record<
     email: 'a@a.com',
     password: '1234',
     avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04METH8VKK-f128d33fbf53-512',
-  },
-
-  '도리와 노아': {
-    serverName: '도리와 노아',
-    apiUrl: '',
-    email: '',
-    password: '',
-    avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04LMNEGB2T-e1f4aef15b2c-512',
   },
 };

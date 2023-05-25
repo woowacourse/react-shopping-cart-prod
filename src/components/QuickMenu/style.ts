@@ -8,6 +8,11 @@ export const Container = styled.div`
   position: fixed;
   bottom: 50px;
   right: 50px;
+
+  @media only screen and (max-width: 768px) {
+    // 모바일
+    display: none;
+  }
 `;
 
 export const Button = styled.div`

@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 
 import Header from '@Components/Header';
 import QuickMenu from '@Components/QuickMenu';
+import QuickMenuMobile from '@Components/QuickMenuMobile';
 
 import ErrorBoundary from '@Pages/ErrorBoundary';
 import NotFound from '@Pages/NotFound';
@@ -29,6 +30,7 @@ function App() {
         </ErrorBoundary>
         <Suspense>
           <QuickMenu />
+          <QuickMenuMobile />
         </Suspense>
       </CommonPageStyle>
     </>
