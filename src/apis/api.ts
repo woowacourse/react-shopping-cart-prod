@@ -20,7 +20,7 @@ const BASE =
     : 'https://n0eyes.github.io/react-shopping-cart/';
 
 class FetchQuery implements FetchQueryInstance {
-  defaultConfig: ExternalConfig = {};
+  private defaultConfig: ExternalConfig = {};
 
   constructor(defaultConfig?: ExternalConfig) {
     this.defaultConfig = defaultConfig ?? {};
