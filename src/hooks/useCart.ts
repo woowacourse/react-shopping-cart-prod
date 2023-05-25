@@ -1,5 +1,5 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { MESSAGE } from '../constants';
+import { MESSAGE, USER } from '../constants';
 import { $CartIdList, $CheckedCartIdList, $CurrentServerUrl } from '../recoil/atom';
 import useGetQuery from './useGetQuery';
 import useMutation from './useMutation';
@@ -16,7 +16,7 @@ const useCart = () => {
     refreshQuery,
     loading,
   } = useGetQuery<CartItem[]>(`${currentServerUrl}/cart-items`, {
-    Authorization: `Basic ${btoa('a@a.com:1234')}`,
+    Authorization: `Basic ${btoa(USER)}`,
   });
 
   const addCartQuery = useMutation<Record<string, number>, CartItem>({
@@ -66,7 +66,7 @@ const useCart = () => {
       method: 'PATCH',
       bodyData: { quantity },
       headers: {
-        Authorization: `Basic ${btoa('a@a.com:1234')}`,
+        Authorization: `Basic ${btoa(USER)}`,
         'Content-Type': 'application/json',
       },
     });
@@ -77,7 +77,7 @@ const useCart = () => {
       url: `${currentServerUrl}/cart-items/${cartId}`,
       method: 'DELETE',
       headers: {
-        Authorization: `Basic ${btoa('a@a.com:1234')}`,
+        Authorization: `Basic ${btoa(USER)}`,
       },
     });
   };
@@ -88,7 +88,7 @@ const useCart = () => {
       method: 'POST',
       bodyData: { productId },
       headers: {
-        Authorization: `Basic ${btoa('a@a.com:1234')}`,
+        Authorization: `Basic ${btoa(USER)}`,
         'Content-Type': 'application/json',
       },
     });

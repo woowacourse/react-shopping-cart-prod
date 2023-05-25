@@ -1,32 +1,31 @@
 import { Link } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
+import userServerUrlList from '../../data/serverData';
 import useToast from '../../hooks/useToast';
 import { $CartIdList, $CurrentServerUrl } from '../../recoil/atom';
-import styles from './index.module.scss';
+import { setLocalStorage, getLocalStorage } from '../../utils/localStorage';
 import DropDown from '../Common/DropDown';
+import styles from './index.module.scss';
 
 function Header() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
   const cartIdList = useRecoilValue($CartIdList(currentServerUrl));
   const setCurrentServerUrl = useSetRecoilState($CurrentServerUrl);
   const Toast = useToast();
-
-  const serverOptions: Record<string, string | undefined> = {
-    로지: process.env.REACT_APP_SERVER_BASE_URL_LOGI,
-    아마란스: process.env.REACT_APP_SERVER_BASE_URL_AMARANTH,
-    에코: process.env.REACT_APP_SERVER_BASE_URL_ECO,
-  };
+  const userNameList = Object.keys(userServerUrlList);
+  const index = userNameList.findIndex(name => name === getLocalStorage('name', '로지'));
 
   const serverSelectChange = (target: HTMLLIElement) => {
     const { textContent } = target;
-    const updateOption = serverOptions[textContent ?? ''];
+    const updateOption = userServerUrlList[textContent ?? ''];
 
     if (updateOption === undefined) {
       Toast.error('해당 서버가 존재하지 않습니다.');
       throw new Error('해당 서버가 존재하지 않습니다.');
     }
 
+    setLocalStorage('name', textContent);
     setCurrentServerUrl(updateOption);
   };
 
@@ -36,9 +35,9 @@ function Header() {
         <Logo />
       </Link>
       <div className={styles.cart}>
-        <DropDown options={Object.keys(serverOptions)} selectedListHandler={serverSelectChange} />
+        <DropDown options={userNameList} selectedListHandler={serverSelectChange} currentOptionIndex={index} />
         <Link to="/cart">
-          <button type="button" onClick={Toast.reset}>
+          <button type="button" onClick={() => Toast.reset}>
             장바구니
           </button>
         </Link>

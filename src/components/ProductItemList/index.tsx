@@ -1,14 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
 import { MESSAGE } from '../../constants';
 import useGetQuery from '../../hooks/useGetQuery';
 import useToast from '../../hooks/useToast';
+import { $CurrentServerUrl } from '../../recoil/atom';
 import { Product } from '../../types';
 import LoadingView from '../Common/LoadingView';
 import ProductItem from '../ProductItem';
 import styles from './index.module.scss';
-import { useRecoilValue } from 'recoil';
-import { $CurrentServerUrl } from '../../recoil/atom';
 
 function ProductItemList() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
