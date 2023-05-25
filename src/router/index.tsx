@@ -11,16 +11,21 @@ export const ROUTER_PATH = {
 };
 
 export const PageRouterProvider = () => {
-  const router = createBrowserRouter([
+  const router = createBrowserRouter(
+    [
+      {
+        path: ROUTER_PATH.Main,
+        element: <Main />,
+      },
+      {
+        path: ROUTER_PATH.Cart,
+        element: <Cart />,
+      },
+      { path: ROUTER_PATH.NotFound, element: <NotFound /> },
+    ],
     {
-      path: ROUTER_PATH.Main,
-      element: <Main />,
-    },
-    {
-      path: ROUTER_PATH.Cart,
-      element: <Cart />,
-    },
-    { path: ROUTER_PATH.NotFound, element: <NotFound /> },
-  ]);
+      basename: "/react-shopping-cart-prod",
+    }
+  );
   return <RouterProvider router={router} />;
 };
