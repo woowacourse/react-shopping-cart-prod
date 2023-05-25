@@ -1,17 +1,12 @@
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { DELIVERY_FEE } from "../constants";
-import { selectedProductsState } from "../recoil/atom";
+import { totalPriceSelector } from "../recoil/selector";
 import { Button } from "./Button";
 
 export const TotalPriceTable = () => {
-  const selectedProducts = useRecoilValue(selectedProductsState);
-  const deliveryFee = selectedProducts.length === 0 ? 0 : DELIVERY_FEE;
-  const totalPrice = selectedProducts.reduce(
-    (accumulator: number, currentValue) =>
-      accumulator + currentValue.price * currentValue.quantity,
-    0
-  );
+  const totalPrice = useRecoilValue(totalPriceSelector);
+  const deliveryFee = totalPrice === 0 ? 0 : DELIVERY_FEE;
 
   return (
     <Wrapper>
@@ -28,7 +23,7 @@ export const TotalPriceTable = () => {
         <p>총 주문금액</p>
         <p>{(totalPrice + deliveryFee).toLocaleString()}원</p>
       </RowContainer>
-      <Button disabled={selectedProducts.length === 0}>주문하기</Button>
+      <Button disabled={totalPrice === 0}>주문하기</Button>
     </Wrapper>
   );
 };
