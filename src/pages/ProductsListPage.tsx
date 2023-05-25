@@ -3,13 +3,17 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import Message from '../components/Common/Message';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
+import ProductList from '../components/Product/ProductList';
+import { Suspense } from 'react';
 
 const ProductsListPage = () => {
   return (
     <>
       <Main>
         <ErrorBoundary fallback={<Message type='error' />}>
-          <ContentListSkeleton content='product' />
+          <Suspense fallback={<ContentListSkeleton content='product' />}>
+            <ProductList />
+          </Suspense>
         </ErrorBoundary>
       </Main>
     </>

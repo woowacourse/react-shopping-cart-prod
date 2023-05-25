@@ -8,6 +8,8 @@ import { totalCartProductSelect } from '../recoil/cartProductData';
 import { checkedListSelector } from '../recoil/checkedProductData';
 import useCheckedProducts from '../hooks/useCheckedProducts';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
+import { Suspense } from 'react';
+import CartProductList from '../components/Cart/CartProductList';
 
 const CartProductsListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
@@ -24,7 +26,9 @@ const CartProductsListPage = () => {
             <CartProductListTitle>
               든든배송 상품 ({totalCartProductCount}개)
             </CartProductListTitle>
-            <ContentListSkeleton content='cart' />
+            <Suspense fallback={<ContentListSkeleton content='product' />}>
+              <CartProductList />
+            </Suspense>
             <SelectContainer>
               <CheckBox
                 onChange={handleAllCheckedProducts}
