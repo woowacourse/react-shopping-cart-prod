@@ -26,7 +26,7 @@ const Header = () => {
           </LogoContainer>
         </Link>
         <ControlContainer>
-          <SelectBox onChange={handleSelect}>
+          <SelectBox value={hostName} onChange={handleSelect}>
             {Object.keys(servers).map((server) => (
               <option>{server}</option>
             ))}
