@@ -1,8 +1,7 @@
 import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
-import { KEY_CART, QUANTITY } from '../constants';
+import { QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
 import { CartItem, Product } from '../types';
-import { getDataFromLocalStorage } from '../utils/getAndSetDataInLocalStorage';
 
 export const productListState = atom<Product[]>({
   key: 'productListState',
@@ -23,7 +22,7 @@ export const productSelector = selectorFamily({
 
 export const cartState = atom<CartItem[]>({
   key: 'cartState',
-  default: JSON.parse(getDataFromLocalStorage(KEY_CART) ?? '[]'),
+  default: [],
 });
 
 export const quantitySelector = selectorFamily({

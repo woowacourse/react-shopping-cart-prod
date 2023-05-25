@@ -62,7 +62,7 @@ export const useSetCart = (productId: number) => {
       setCart((prev) => [
         ...prev,
         {
-          id: cartId,
+          id: Number(cartId),
           quantity: QUANTITY.INITIAL,
           product: selectedProduct,
         },

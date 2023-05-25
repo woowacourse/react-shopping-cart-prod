@@ -1,16 +1,20 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
+import { CART_URL } from '../../constants/url';
+import { useFetchData } from '../../hooks/useFetchData';
 import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
-import { cartState, checkedItemList } from '../../recoil';
+import { cartState, checkedItemList, serverState } from '../../recoil';
 import Button from '../common/Button';
 import { Checkbox } from '../common/CheckboxStyle';
 import SelectedProductItem from './SelectedProductItem';
 
 const SelectedProductList = () => {
-  const cart = useRecoilValue(cartState);
+  const [cart, setCart] = useRecoilState(cartState);
   const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
   const removeCheckedItemsFromCart = useRemoveCheckedItemsFromCart(checkedItems);
+  const server = useRecoilValue(serverState);
+  const { api, isLoading } = useFetchData();
 
   const initialCheckedItems = cart.map((item) => item.id);
 
@@ -18,6 +22,19 @@ const SelectedProductList = () => {
     setCheckedItems(initialCheckedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    api
+      .get(`${server}${CART_URL}`, {
+        Authorization: 'Basic YUBhLmNvbToxMjM0',
+        'Content-Type': 'application/json',
+      })
+      .then((data) => {
+        setCart(data);
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [server]);
 
   const productCountInCart = cart.length;
   const isAllChecked = checkedItems.length === productCountInCart;
@@ -30,6 +47,10 @@ const SelectedProductList = () => {
     removeCheckedItemsFromCart();
     setCheckedItems([]);
   };
+
+  if (isLoading) {
+    return <p>로딩중...</p>;
+  }
 
   return (
     <S.Wrapper>
