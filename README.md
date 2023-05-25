@@ -11,27 +11,7 @@
 
 <br>
 
-## 👏 Contributing
-
-만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요.
-
-<br>
-
-## 🐞 Bug Report
-
-버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-cart-prod/issues)에 등록해주세요.
-<p align="middle">
-  <img src="https://techcourse-storage.s3.ap-northeast-2.amazonaws.com/3e6c6f30b11d4b098b5a3e81be19ce3a" width="400" >
-</p>
-<h2 align="middle">Level1 - 장바구니</h2>
-<p align="middle">Begin State Management</p>
-</p>
-
-<br>
-
-## step2
-
-<br>
+## step1
 
 <p align="middle" >
   <img width="50%" src="https://github.com/feb-dain/react-shopping-cart/assets/108778921/0f2dd16f-70d8-403a-be61-7c92222a64846" alt="장바구니 앱(step2) 이용 과정 예시" >
@@ -56,44 +36,6 @@
 
 <br>
 
-### ✨ 필수 요구 사항
-
-1. **장바구니 페이지**<br>
-   장바구니 페이지 마크업을 완성하고, 상품 목록 페이지와 함께 모바일 환경 대응
-2. **MSW를 활용한 API Mocking**<br>
-   MSW를 활용하여 실제 서버와 연동될 수 있는 API Mocking을 구현
-   단순한 Endpoint 변경으로 실제 API 사용이 가능하도록 작업
-3. **테스트**<br>
-   장바구니 페이지에서 다양한 사용자 인터렉션에 대한 테스트 케이스를 고민하고, 선택한 테스트 도구를 이용하여 검증
-4. **사용자 경험**<br>
-   새로고침 해도, 장바구니에 담은 상품 유지
-
-<br>
-
-### ✅ 프로그래밍 요구사항
-
-> 이전 미션의 프로그래밍 요구사항은 기본으로 포함한다.
-
-<br>
-<br>
-
-## step1
-
-<p align="middle" >
-  <img align="left" src="https://github.com/feb-dain/react-shopping-cart/assets/108778921/9876415b-1c43-41c1-9885-ac9585aabf5b" alt="장바구니 앱 이용 과정 예시" >
-
-  <br>
-
-  <img align="right" src="https://github.com/feb-dain/react-shopping-cart/assets/108778921/fe945777-cf77-4cf7-9639-6dba586aa6bc" alt="장바구니 앱 스크린샷 (반응형)" >
-  
-  <br>
-
-<span>이 앱은 반응형으로 제작되었습니다.</span>
-
-</p>
-
-<br>
-
 ### 🧑‍🤝‍🧑 페어 (페어 프로그래밍으로 개발)
 
 <table>
@@ -104,8 +46,8 @@
       </a>
     </td>
     <td align="center" width="140px">
-      <a href="https://github.com/regularPark" target="_blank">
-        <img src="https://avatars.githubusercontent.com/u/90092440?v=4" alt="레고(박정규) 프로필" />
+      <a href="https://github.com/cruelladevil" target="_blank">
+        <img src="https://avatars.githubusercontent.com/u/87710730?v=4" alt="코난(윤정민) 프로필" />
       </a>
     </td>
   </tr>
@@ -116,8 +58,8 @@
       </a>
     </td>
     <td align="center">
-      <a href="https://github.com/regularPark" target="_blank">
-        레고(박정규) 
+      <a href="https://github.com/cruelladevil" target="_blank">
+        코난(윤정민) 
       </a>
     </td>
   </tr>
@@ -155,15 +97,16 @@
 
 ### ✅ 프로그래밍 요구사항
 
-- **Readability**
-  - API 요청을 처리하는 공통 함수나 커스텀 훅을 작성하여 재사용 가능하게 만든다.
-    페이지간 공통 스타일이 있는 경우 재사용한다.
-- **Reusability**
-  - 서버와의 통신을 담당하는 코드와 UI를 렌더링 하는 코드를 분리하여 관심사를 분리한다.
-  - 에러 처리 로직을 명확하게 작성하여 코드의 가독성을 높인다.
-- **Performance**
-  - 불필요한 상태 관리를 최소화하고, 상태 업데이트를 최적화한다.
-    컴포넌트의 리렌더링을 최소화하기 위해 memoization을 적용한다.
+- 클라이언트 - 서버 연동을 통해 상품 목록을 보여준다.
+- 사용자 별 장바구니 기능이 정상적으로 동작하게 만든다.
+- 장바구니에 담긴 아이템 목록을 확인할 수 있다. (장바구니 아이템 목록 조회)
+- 상품을 장바구니에 추가할 수 있다. (장바구니 아이템 추가)
+- 장바구니에 담긴 아이템의 수량을 변경할 수 있다. (장바구니 아이템 수량 변경)
+- 장바구니에 담긴 아이템을 삭제할 수 있다. (장바구니 아이템 삭제)
+- 상품, 장바구니 기능은 API 명세를 따라야 한다. https://techcourse.woowahan.com/s/7TbGiSZS/ls/qhueURZ9
+- 사용자는 여러 서버 중 하나를 선택할 수 있다.
+- 사용자 인증 정보를 저장한다.
+  - 🚨 앱은 로컬에서 http 통신으로 동작하면 되며 https는 대응은 고려하지 않습니다.
 
 <br>
 <br>
