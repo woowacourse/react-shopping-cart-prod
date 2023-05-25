@@ -1,5 +1,6 @@
 import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
-import { KEY_CART } from '../constants';
+import { KEY_CART, QUANTITY } from '../constants';
+import { SERVERS } from '../constants/url';
 import { CartItem, Product } from '../types';
 import { getDataFromLocalStorage } from '../utils/getAndSetDataInLocalStorage';
 
@@ -33,7 +34,7 @@ export const quantitySelector = selectorFamily({
       const cart = get(cartState);
       const selectedCartItem = cart.find((item) => item.product.id === id);
 
-      if (!selectedCartItem) return 0;
+      if (!selectedCartItem) return QUANTITY.NONE;
       return selectedCartItem.quantity;
     },
 
@@ -43,7 +44,7 @@ export const quantitySelector = selectorFamily({
       const cart = get(cartState);
       const selectedCartItem = cart.find((item) => item.product.id === id);
 
-      const quantity = newQuantity instanceof DefaultValue ? 1 : newQuantity;
+      const quantity = newQuantity instanceof DefaultValue ? QUANTITY.INITIAL : newQuantity;
 
       const newCart = cart.map((cartItem) =>
         cartItem === selectedCartItem ? { ...cartItem, quantity } : cartItem
@@ -85,5 +86,5 @@ export const totalPriceSelector = selector<number>({
 
 export const serverState = atom({
   key: 'serverState',
-  default: 'https://www.woowacourse.com',
+  default: `${SERVERS.준팍}`,
 });
