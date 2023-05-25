@@ -9,7 +9,6 @@ import { originState } from '../../store/origin';
 import { ProductItemType } from '../../types';
 import { priceFormatter } from '../../utils/formatter';
 import Modal from '../Modal/Modal';
-import PopUp from '../PopUp/PopUp';
 import ProductAddition from '../ProductAddition/ProductAddition';
 import styles from './style.module.css';
 
@@ -22,7 +21,7 @@ const ProductItem = ({ information }: ProductItemProps) => {
 
   const { isModalOpen, handleModalOpen, handleModalClose, handleModalClosePress } = useModal();
   const [cartList, setCartList] = useRecoilState(cartListState);
-  const { fetchApi, isSuccess, isFailure } = useFetch<ProductItemType[]>(setCartList);
+  const { fetchApi } = useFetch<ProductItemType[]>(setCartList);
   const origin = useRecoilValue(originState);
 
   const handleCartAdd = () => {
@@ -92,13 +91,6 @@ const ProductItem = ({ information }: ProductItemProps) => {
           />
         </Modal>
       )}
-      {isSuccess &&
-        createPortal(<PopUp text={['아이템이 추가되었습니다.']} isSuccess={true} />, document.body)}
-      {isFailure &&
-        createPortal(
-          <PopUp text={['오류가 발생했습니다.😭', '다시 시도해주세요.']} isSuccess={false} />,
-          document.body
-        )}
     </div>
   );
 };

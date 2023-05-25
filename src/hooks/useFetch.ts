@@ -59,12 +59,7 @@ export const useFetch = <T>(
     } finally {
       if (shouldExecuteFinally) {
         setIsLoading(false);
-        if (options.method !== 'GET') {
-          setIsSuccess(true);
-          await new Promise((resolve) => setTimeout(resolve, 2500));
-          setIsFailure(false);
-          setIsSuccess(false);
-        }
+        setIsSuccess(true);
       }
     }
   };

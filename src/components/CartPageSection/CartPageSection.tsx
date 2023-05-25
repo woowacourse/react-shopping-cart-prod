@@ -11,7 +11,6 @@ import { priceFormatter } from '../../utils/formatter';
 import CartItem from '../CartItem/CartItem';
 import Checkbox from '../Checkbox/Checkbox';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
-import PopUp from '../PopUp/PopUp';
 import styles from './style.module.css';
 
 const CartPageSection = () => {
@@ -25,7 +24,7 @@ const CartPageSection = () => {
     cartListCheckedLength,
   } = useCartList();
   const origin = useRecoilValue(originState);
-  const { fetchApi, isLoading, isSuccess, isFailure } = useFetch<CartItemType[]>(setCartItemList);
+  const { fetchApi, isLoading } = useFetch<CartItemType[]>(setCartItemList);
   useEffect(() => {
     fetchApi.get(`${origin}/cart-items`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -128,13 +127,6 @@ const CartPageSection = () => {
           </div>
         </section>
       </div>
-      {isSuccess &&
-        createPortal(<PopUp text={['아이템이 삭제되었습니다.']} isSuccess={true} />, document.body)}
-      {isFailure &&
-        createPortal(
-          <PopUp text={['오류가 발생했습니다.😭', '다시 시도해주세요.']} isSuccess={false} />,
-          document.body
-        )}
     </>
   );
 };
