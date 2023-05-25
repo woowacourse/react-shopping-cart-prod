@@ -6,26 +6,6 @@ import App from './App';
 import GlobalStyle from './GlobalStyle';
 import ProductListPage from './pages/ProductListPage';
 import CartPage from './pages/CartPages';
-import { worker } from './mocks/browser';
-
-const main = async () => {
-  if (window.location.pathname === '/react-shopping-cart') {
-    window.location.pathname = '/react-shopping-cart/';
-    return;
-  }
-
-  await worker.start({
-    serviceWorker: {
-      url: '/react-shopping-cart/mockServiceWorker.js',
-    },
-  });
-};
-
-if (process.env.NODE_ENV === 'development') {
-  worker.start();
-} else {
-  main();
-}
 
 const router = createHashRouter([
   {
