@@ -1,21 +1,13 @@
-import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 
 import CartProductInfo from '../components/Cart/CartProductInfo';
 import ExpectedPaymentBox from '../components/Cart/ExpectedPaymentBox';
-import Message from '../components/Common/Message';
-
-import useFetchCartProducts from '../hooks/useFetchCartProducts';
 
 const CartPage = () => {
-  const serverName = useFetchCartProducts();
-
   return (
     <Main>
       <PageTitle>장바구니</PageTitle>
-      <ErrorBoundary key={serverName} fallback={<Message type='error' />}>
-        <CartProductInfo />
-      </ErrorBoundary>
+      <CartProductInfo />
       <ExpectedPaymentBoxWrapper>
         <ExpectedPaymentBox />
       </ExpectedPaymentBoxWrapper>

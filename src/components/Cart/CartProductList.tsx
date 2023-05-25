@@ -4,9 +4,21 @@ import styled from 'styled-components';
 import CartProductItem from './CartProductItem';
 
 import { cartProductState } from '../../states/cartProducts';
+import Message from '../Common/Message';
+import useFetchCartProducts from '../../hooks/useFetchCartProducts';
 
 const CartProductList = () => {
   const cartProducts = useRecoilValue(cartProductState);
+
+  useFetchCartProducts();
+
+  if (cartProducts.length === 0) {
+    return (
+      <MessageWrapper>
+        <Message type='cartEmpty' />
+      </MessageWrapper>
+    );
+  }
 
   return (
     <CartProductListContainer>
@@ -28,6 +40,11 @@ const CartProductListContainer = styled.ul`
       padding: 30px 0;
     }
   }
+`;
+
+const MessageWrapper = styled.div`
+  position: relative;
+  height: 400px;
 `;
 
 export default CartProductList;

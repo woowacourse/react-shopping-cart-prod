@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import ProductList from '../components/Product/ProductList';
 
-import productApis from '../apis/products';
+import productApis from '../../src/apis/products';
 
 const meta = {
   title: 'Product/ProductList',
@@ -16,8 +16,13 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   loaders: [
-    async () => ({
-      products: await productApis('푸우', '/products').getData(),
-    }),
+    async () => {
+      const { getData } = productApis('도치', '/products');
+      const something = await getData();
+
+      return {
+        products: something,
+      };
+    },
   ],
 };

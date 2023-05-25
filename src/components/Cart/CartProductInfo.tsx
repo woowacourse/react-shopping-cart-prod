@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import CartProductList from './CartProductList';
-import Message from '../Common/Message';
 import TotalCartProduct from './TotalCartProduct';
 
 import useCartProductCount from '../../hooks/useCartProductCount';
@@ -13,13 +12,7 @@ const CartProductInfo = () => {
     <Container>
       <div>
         <InfoTitle>든든배송 상품 ({cartProductCount}개)</InfoTitle>
-        {cartProductCount > 0 ? (
-          <CartProductList />
-        ) : (
-          <MessageWrapper>
-            <Message type='cartEmpty' />
-          </MessageWrapper>
-        )}
+        <CartProductList />
         <TotalCartProduct />
       </div>
     </Container>
@@ -43,11 +36,6 @@ const InfoTitle = styled.h3`
   font-size: 20px;
   font-weight: 400;
   border-bottom: 4px solid ${({ theme }) => theme.colors.gray400};
-`;
-
-const MessageWrapper = styled.div`
-  position: relative;
-  height: 400px;
 `;
 
 export default CartProductInfo;

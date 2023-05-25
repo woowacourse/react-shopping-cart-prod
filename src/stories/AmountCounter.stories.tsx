@@ -1,15 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { useState } from 'react';
 
 import AmountCounter from '../components/Common/AmountCounter';
+import useCartProducts from '../hooks/useCartProducts';
 
 type AmountCounterSizeType = 'small' | 'medium';
 
 interface AmountCounterProps {
   variant: AmountCounterSizeType;
+  cartItemId: number;
   count: number;
-  addCount: () => void;
-  subtractCount: () => void;
 }
 
 const meta: Meta = {
@@ -18,34 +17,30 @@ const meta: Meta = {
   tags: ['autodocs'],
   args: {
     variant: 'small',
-    count: 1,
-    addCount: () => {},
-    subtractCount: () => {},
   },
 };
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+const product = {
+  id: 1,
+  name: '치킨',
+  price: 10000,
+  imageUrl:
+    'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80',
+};
+
 export const Default: Story = (args: AmountCounterProps) => {
-  const [count, setCount] = useState(1);
+  const { targetProduct } = useCartProducts(product);
 
-  const addCount = () => {
-    setCount((prev) => prev + 1);
-  };
-
-  const subtractCount = () => {
-    if (count > 1) {
-      setCount((prev) => prev - 1);
-    }
-  };
+  if (!targetProduct) return <AmountCounter {...args} />;
 
   return (
     <AmountCounter
       {...args}
-      count={count}
-      addCount={addCount}
-      subtractCount={subtractCount}
+      count={targetProduct.quantity}
+      cartItemId={targetProduct.id}
     />
   );
 };
