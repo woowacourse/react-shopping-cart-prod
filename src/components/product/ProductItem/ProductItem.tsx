@@ -18,8 +18,8 @@ const ProductItem = ({ ...information }: ProductItemProps) => {
   const { isAdded, addItem, updateItemQuantity } = useCart();
 
   const handleAddButtonClick = useCallback(() => {
-    addItem(information.id);
-  }, [addItem, information.id]);
+    addItem(information);
+  }, [addItem, information]);
 
   const handleQuantityChange = useCallback(
     (quantity: number) => {
