@@ -38,7 +38,7 @@ const SelectedProductList = () => {
   }, [server]);
 
   const productCountInCart = cart.length;
-  const isAllChecked = checkedItems.length === productCountInCart;
+  const isAllChecked = checkedItems.length === productCountInCart && productCountInCart !== 0;
 
   const handleAllItemsCheck = () => {
     isAllChecked ? setCheckedItems([]) : setCheckedItems(initialCheckedItems);
