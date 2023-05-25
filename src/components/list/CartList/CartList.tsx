@@ -10,9 +10,7 @@ import { checkCartListState } from '../../../service/atom';
 
 const CartList = () => {
   const { cartData, deleteCartItemAPI } = useCartFetch();
-
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
-  const isCheckAll = cartData ? cartData.length === checkCartList.length : false;
 
   const { openModal } = useModal();
 
@@ -24,7 +22,7 @@ const CartList = () => {
   };
 
   const onClickCheckBox = () => {
-    if (isCheckAll) {
+    if (cartData && cartData.length === checkCartList.length) {
       setCheckCartList([]);
       return;
     }
@@ -40,7 +38,7 @@ const CartList = () => {
         <CartListFoot>
           <CheckBox
             label={`전체선택(${checkCartList.length})`}
-            checked={isCheckAll}
+            checked={cartData ? cartData.length === checkCartList.length : false}
             onClick={onClickCheckBox}
           />
           <Button

@@ -10,7 +10,8 @@ const useCheckCart = (cartId: number) => {
   );
 
   const changeCheckCartList = () => {
-    const existItemIndex = checkCartList.findIndex((cartId) => cartId === cartId);
+    const existItemIndex = checkCartList.findIndex((checkCartId) => checkCartId === cartId);
+    console.log(cartId);
     if (check) {
       if (existItemIndex !== -1) {
         setCheckCartList((prev) => {
@@ -27,7 +28,7 @@ const useCheckCart = (cartId: number) => {
   };
 
   useEffect(() => {
-    const existItemIndex = checkCartList.findIndex((cartId) => cartId === cartId);
+    const existItemIndex = checkCartList.findIndex((checkCartId) => checkCartId === cartId);
 
     if (existItemIndex === -1) {
       setCheck(false);
