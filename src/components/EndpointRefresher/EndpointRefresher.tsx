@@ -1,7 +1,8 @@
 import { PropsWithChildren, useEffect } from 'react';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import { authFetchQuery, fetchQuery } from '../../apis/api';
-import { cartState, endpointKeyState } from '../../atoms/cart';
+import { cartState } from '../../atoms/cart';
+import { endpointKeyState } from '../../atoms/endpoint';
 import { products } from '../../atoms/products';
 import { ENDPOINT } from '../../constants/auth';
 
