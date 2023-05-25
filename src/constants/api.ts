@@ -1,21 +1,20 @@
-import { getFromLocalStorage } from '../utils/localStorage';
+const BASE64 = btoa(process.env.REACT_APP_API_USERNAME + ':' + process.env.REACT_APP_API_PASSWORD);
 
-const USERNAME = 'a@a.com';
-const PASSWORD = '1234';
-const BASE64 = btoa(USERNAME + ':' + PASSWORD);
+const MEMBER = ['아코', '주디', '저문', '프론트'] as const;
 
-const MEMBER = ['아코', '주디', '저문'] as const;
-
-const DEFAULT_MEMBER = MEMBER[0];
+const FRONT_API_BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_FRONT_BASE_URL
+    : process.env.REACT_APP_LOCAL_BASE_URL;
 
 const API_BASE_URL_LIST = {
   [MEMBER[0]]: process.env.REACT_APP_AK_API_BASE_URL,
   [MEMBER[1]]: process.env.REACT_APP_JD_API_BASE_URL,
   [MEMBER[2]]: process.env.REACT_APP_JM_API_BASE_URL,
+  [MEMBER[3]]: FRONT_API_BASE_URL,
 } as const;
 
-const API_BASE_URL =
-  getFromLocalStorage<string>('API_BASE_URL') ?? API_BASE_URL_LIST[DEFAULT_MEMBER];
+const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[MEMBER[0]];
 
 const API_ENDPOINT = {
   PRODUCTS: '/products',
@@ -80,7 +79,7 @@ const CART_API_ERROR_MESSAGE = {
 export {
   BASE64,
   API_BASE_URL_LIST,
-  API_BASE_URL,
+  DEFAULT_API_BASE_URL,
   API_ENDPOINT,
   FETCH_DEFAULT_OPTION,
   CART_FETCH_OPTION_HEADERS,
