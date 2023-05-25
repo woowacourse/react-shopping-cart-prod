@@ -27,8 +27,11 @@ const useCartItemOperations = ({ cartItemNumber, id, name, price, imageUrl, refe
     await getFreshCartList({});
 
     if (cartListStatus === 'success' && cartList) {
-      const lastAddedCartItemNumber = cartList[cartList.length - 1]?.id;
-      updateCart({ id: lastAddedCartItemNumber, quantity: 1, product: { id, name, price, imageUrl }, isSelected: true });
+      const addedCartItem = cartList.find((item) => item.product.id === id);
+
+      if (!addedCartItem) return;
+
+      updateCart({ id: addedCartItem.id, quantity: 1, product: { id, name, price, imageUrl }, isSelected: true });
     }
   }, [cartItemNumber, id, name, price, imageUrl, refetchCartList, createCartItem, createCartItemState.error, updateCart]);
 
