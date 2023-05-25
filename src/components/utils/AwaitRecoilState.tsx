@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
-import type { RecoilState } from 'recoil';
+import type { RecoilValueReadOnly } from 'recoil';
 import { useRecoilValue } from 'recoil';
 import ErrorBoundary from './ErrorBoundary';
 
 type AwaitRecoilStateLoaderProps<T> = {
-  state: RecoilState<T>;
+  state: RecoilValueReadOnly<T>;
   children: (data: T) => React.ReactElement;
 };
 
@@ -18,7 +18,7 @@ const AwaitRecoilStateLoader = <T,>(props: AwaitRecoilStateLoaderProps<T>) => {
 type AwaitRecoilStateProps<T> = {
   loadingElement?: React.ReactNode;
   errorElement?: React.ReactNode;
-  state: RecoilState<T>;
+  state: RecoilValueReadOnly<T>;
   children: (data: T) => React.ReactElement;
 };
 
