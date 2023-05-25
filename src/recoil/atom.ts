@@ -21,7 +21,7 @@ export const localProductsState = atom<LocalProductType[]>({
   default: selector<LocalProductType[]>({
     key: "products/default",
     get: ({ get }) => {
-      return makeLocalProducts(get(productsState));
+      return makeLocalProducts();
     },
   }),
 });

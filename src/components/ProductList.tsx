@@ -22,7 +22,6 @@ export const ProductList = () => {
 };
 
 const Product = ({ id, name, price, imageUrl, quantity }: LocalProductType) => {
-  const products = useRecoilValue(productsState);
   const setLocalProducts = useSetRecoilState(localProductsState);
   const [isError, setIsError] = useState(false);
 
@@ -30,7 +29,7 @@ const Product = ({ id, name, price, imageUrl, quantity }: LocalProductType) => {
     try {
       await addCartItem(id);
 
-      const newProducts = await makeLocalProducts(products);
+      const newProducts = await makeLocalProducts();
       setLocalProducts(newProducts);
     } catch (error) {
       setIsError(true);

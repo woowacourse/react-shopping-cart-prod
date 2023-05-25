@@ -6,13 +6,13 @@ import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
 import { SERVERS } from "../constants";
 import React, { useState } from "react";
-import { localProductsState, productsState } from "../recoil/atom";
+import { localProductsState } from "../recoil/atom";
 import { makeLocalProducts } from "../utils/domain";
 import { getLocalStorage, setLocalStorage } from "../utils";
 
 export const Header = () => {
   const { goPage } = useRouter();
-  const products = useRecoilValue(productsState);
+
   const setLocalProducts = useSetRecoilState(localProductsState);
   const cartProducts = useRecoilValue(localProductsSelector);
   const [serverOwner, setServerOwner] = useState(
@@ -25,7 +25,7 @@ export const Header = () => {
     setLocalStorage("owner", e.target.value);
     setServerOwner(e.target.value);
 
-    const newProducts = await makeLocalProducts(products);
+    const newProducts = await makeLocalProducts();
     setLocalProducts(newProducts);
   };
 

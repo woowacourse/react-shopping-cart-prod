@@ -22,7 +22,7 @@ export const useFetch = () => {
   };
 
   const fetchNewProducts = async () => {
-    const newProducts = await makeLocalProducts(products);
+    const newProducts = await makeLocalProducts();
     setLocalProducts(newProducts);
   };
 

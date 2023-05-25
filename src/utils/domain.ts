@@ -1,16 +1,18 @@
-import { fetchCartItems } from "../api";
+import { fetchCartItems, fetchProducts } from "../api";
 import { MIN_QUANTITY } from "../constants";
 import { CartItemType, LocalProductType, ProductType } from "../types/domain";
 
-export const makeLocalProducts = async (
-  products: ProductType[],
-  serverOwner: string
-): Promise<LocalProductType[]> => {
+export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
   try {
-    const response = await fetchCartItems(serverOwner);
-    if (!response.ok) throw new Error(response.status.toString());
+    const productsResponse = await fetchProducts();
+    const cartItemsresponse = await fetchCartItems();
+    if (!productsResponse.ok)
+      throw new Error(productsResponse.status.toString());
+    if (!cartItemsresponse.ok)
+      throw new Error(cartItemsresponse.status.toString());
 
-    const cartItems = await response.json();
+    const products = await productsResponse.json();
+    const cartItems = await cartItemsresponse.json();
 
     return products.map((product: ProductType) => {
       const cartItem = cartItems.find(

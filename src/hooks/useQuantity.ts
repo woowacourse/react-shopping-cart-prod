@@ -7,7 +7,6 @@ import { LocalProductType } from "../types/domain";
 import { makeLocalProducts } from "../utils/domain";
 
 export const useQuantity = (productId: number) => {
-  const products = useRecoilValue(productsState);
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
   const [quantity, setQuantity] = useState<string | undefined>("0");
 
@@ -44,7 +43,7 @@ export const useQuantity = (productId: number) => {
     }
 
     setQuantity(newQuantity.toString());
-    const newProducts = await makeLocalProducts(products);
+    const newProducts = await makeLocalProducts();
     console.log("!!", newProducts);
     setLocalProducts(newProducts);
   };
