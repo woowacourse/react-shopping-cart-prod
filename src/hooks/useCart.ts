@@ -74,7 +74,7 @@ const useCart = () => {
       ({ set }) =>
         async ({ cartItemId, quantity }) => {
           set(cartItemQuantityState(cartItemId), quantity);
-          await cartAPI.then((api) => api.patchCartItem(cartItemId, quantity));
+          await cartAPI.patchCartItem(cartItemId, quantity);
         },
       [cartAPI]
     ),
@@ -89,26 +89,8 @@ const useCart = () => {
     useRecoilCallback(
       ({ set }) =>
         async (cartItemId) => {
-          // await api.then((apiInstance) => apiInstance.deleteCartItem(cartItemId));
-          // const newCartList = await api.then((apiInstance) => apiInstance.getCartList());
-
-          const newCartList = await api
-            .then(async (apiInstance) => {
-              await apiInstance.deleteCartItem(cartItemId);
-
-              return apiInstance;
-            })
-            .then((apiInstance) => apiInstance.getCartList());
-
-          // const newCartList = await api
-          //   .then((apiInstance) => {
-          //     apiInstance.deleteCartItem(cartItemId);
-          //     return apiInstance;
-          //   })
-          //   .then((apiInstance) => {
-          //     return apiInstance.getCartList();
-          //   });
-
+          await cartAPI.deleteCartItem(cartItemId);
+          const newCartList = await cartAPI.getCartList();
           set(cartListState, newCartList);
         },
       [cartAPI]
@@ -124,8 +106,8 @@ const useCart = () => {
     useRecoilCallback(
       ({ set }) =>
         async (cartItemIds) => {
-          await Promise.all(cartItemIds.map((cartItemId) => deleteCartItem(cartItemId)));
-          const newCartList = await getCartList();
+          await Promise.all(cartItemIds.map((cartItemId) => cartAPI.deleteCartItem(cartItemId)));
+          const newCartList = await cartAPI.getCartList();
           set(cartListState, newCartList);
         },
       [cartAPI]

@@ -2,7 +2,7 @@ import { API_ENDPOINT, CART_FETCH_OPTION_HEADERS } from '../constants/api';
 import { CartItemData } from '../types';
 import { fetchAPI } from './fetchAPI';
 
-const getCartAPI = async (baseUrl: string) => {
+const getCartAPI = (baseUrl: string) => {
   const getCartList = async (): Promise<CartItemData[]> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
       method: 'GET',
