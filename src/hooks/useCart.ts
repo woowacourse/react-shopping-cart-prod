@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { MESSAGE, USER } from '../constants';
-import { $CartIdList, $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../recoil/atom';
+import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../recoil/atom';
 import useGetQuery from './useGetQuery';
 import useMutation from './useMutation';
 import useToast from './useToast';
@@ -10,7 +10,6 @@ const useCart = () => {
   const Toast = useToast();
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
   const [cartList, setCartList] = useRecoilState($CartList(currentServerUrl));
-  const [cartIdList, setCartIdList] = useRecoilState($CartIdList(currentServerUrl));
   const setCheckedCartIdList = useSetRecoilState($CheckedCartIdList(currentServerUrl));
   const {
     data: cartItemStateList,
@@ -30,8 +29,6 @@ const useCart = () => {
         setCartList(prev => [...prev, { id: Number(cartId), quantity: 1, product }]);
       }
 
-      setCartIdList(prev => [...prev, Number(cartId)]);
-
       setCheckedCartIdList(prev => [...prev, Number(cartId)]);
 
       Toast.success(MESSAGE.ADD_CART_SUCCESSFUL);
@@ -48,7 +45,6 @@ const useCart = () => {
       const cartId = data?.fetchInformation.url.match(regex)?.at(1);
 
       setCartList(prev => prev.filter(({ id }) => id !== Number(cartId)));
-      setCartIdList(prev => prev.filter(item => item !== Number(cartId)));
       setCheckedCartIdList(prev => prev.filter(item => item !== Number(cartId)));
 
       Toast.success(MESSAGE.DELETE_CART_SUCCESSFUL);
@@ -112,7 +108,6 @@ const useCart = () => {
 
   return {
     cartList,
-    cartIdList,
     cartItemStateList,
     mutateQuantity,
     deleteCartItem,

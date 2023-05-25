@@ -3,14 +3,14 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
 import userServerUrlList from '../../data/serverData';
 import useToast from '../../hooks/useToast';
-import { $CartIdList, $CurrentServerUrl } from '../../recoil/atom';
+import { $CartList, $CurrentServerUrl } from '../../recoil/atom';
 import { setLocalStorage, getLocalStorage } from '../../utils/localStorage';
 import DropDown from '../Common/DropDown';
 import styles from './index.module.scss';
 
 function Header() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
-  const cartIdList = useRecoilValue($CartIdList(currentServerUrl));
+  const cartList = useRecoilValue($CartList(currentServerUrl));
   const setCurrentServerUrl = useSetRecoilState($CurrentServerUrl);
   const Toast = useToast();
   const userNameList = Object.keys(userServerUrlList);
@@ -41,7 +41,7 @@ function Header() {
             장바구니
           </button>
         </Link>
-        <div className={styles['cart-count']}>{cartIdList.length}</div>
+        <div className={styles['cart-count']}>{cartList.length}</div>
       </div>
     </header>
   );

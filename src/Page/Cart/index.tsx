@@ -9,7 +9,7 @@ import styles from './index.module.scss';
 
 function Cart() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
-  const { cartItemStateList, cartIdList, deleteCartItem, mutateQuantity } = useCart();
+  const { cartItemStateList, cartList, deleteCartItem, mutateQuantity } = useCart();
   const checkedCartIdList = useRecoilValue($CheckedCartIdList(currentServerUrl));
 
   const total = cartItemStateList?.reduce((acc, { id, product, quantity }) => {
@@ -20,7 +20,7 @@ function Cart() {
   }, 0);
 
   const ResultComponent =
-    cartIdList.length > 0 ? (
+    cartList.length > 0 ? (
       <section className={styles['main-view']}>
         <CartProductItemList
           cartItemList={cartItemStateList}
