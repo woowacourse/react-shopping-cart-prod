@@ -10,6 +10,8 @@ import { useMutationFetch } from './common/useMutationFetch';
 const useCart = () => {
   const currentServer = useRecoilValue(currentServerState);
   const cartAPI = useMemo(() => getCartAPI(currentServer), [currentServer]);
+  const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
+
   const [isAdded, setIsAdded] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout>>();
 
@@ -32,7 +34,20 @@ const useCart = () => {
     []
   );
 
-  const { mutate: addItem } = useMutationFetch<void, number>(
+  const handleCartError = useCallback(
+    (error: HTTPError, errorMessage: APIErrorMessage) => {
+      if (error.statusCode === HTTP_STATUS_CODE.BAD_REQUEST) {
+        setErrorModalMessage(errorMessage[error.statusCode] ?? error.message);
+      }
+
+      if (error.statusCode === HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR) {
+        setErrorModalMessage(errorMessage[error.statusCode] ?? error.message);
+      }
+    },
+    [setErrorModalMessage]
+  );
+
+  const { mutate: addItem } = useMutationFetch<CartItemData, ProductItemData>(
     useRecoilCallback(
       () => async (productId) => {
         setIsAdded(true);
@@ -41,7 +56,13 @@ const useCart = () => {
       []
     ),
     {
-      onSuccess: updateCart,
+      onSuccess: (cartItem) => {
+        setIsAdded(true);
+        updateCart(cartItem);
+      },
+      onError(error) {
+        handleCartError(error, CART_API_ERROR_MESSAGE.ADD);
+      },
     }
   );
 
@@ -55,8 +76,13 @@ const useCart = () => {
           set(cartItemQuantityState(cartItemId), quantity);
           await cartAPI.then((api) => api.patchCartItem(cartItemId, quantity));
         },
-      []
-    )
+      [cartAPI]
+    ),
+    {
+      onError(error) {
+        handleCartError(error, CART_API_ERROR_MESSAGE.UPDATE);
+      },
+    }
   );
 
   const { mutate: removeItem } = useMutationFetch<void, number>(
@@ -85,8 +111,13 @@ const useCart = () => {
 
           set(cartListState, newCartList);
         },
-      []
-    )
+      [cartAPI]
+    ),
+    {
+      onError(error) {
+        handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
+      },
+    }
   );
 
   const { mutate: removeCheckedItems } = useMutationFetch<void, number[]>(
@@ -97,8 +128,13 @@ const useCart = () => {
           const newCartList = await getCartList();
           set(cartListState, newCartList);
         },
-      []
-    )
+      [cartAPI]
+    ),
+    {
+      onError(error) {
+        handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
+      },
+    }
   );
 
   return { isAdded, addItem, updateItemQuantity, removeItem, removeCheckedItems };
