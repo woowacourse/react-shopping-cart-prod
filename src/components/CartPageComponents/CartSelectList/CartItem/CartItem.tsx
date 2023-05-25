@@ -6,7 +6,6 @@ import useDeleteCartItem from '../../../../hooks/requests/useDeleteCartItem.ts';
 import StyledCheckBox from '../../../@common/CheckBox/StyledCheckBox.tsx';
 import { useRecoilValue } from 'recoil';
 import { isSelectedSelector } from '../../../../stores/cartListStore.ts';
-import { useEffect } from 'react';
 
 type CartItemProps = {
   cart: Item;
@@ -16,29 +15,18 @@ type CartItemProps = {
 const CartItem = ({ cart, refetchCartList }: CartItemProps) => {
   const { product } = cart;
   const isSelected = useRecoilValue(isSelectedSelector(cart.id));
-  const { removeCartItem, toggleIsSelected, updateCart } = useCart();
-  const { deleteCartItemState, deleteCartItem } = useDeleteCartItem();
+  const { toggleIsSelected, updateCart } = useCart();
+  const { deleteCartItem } = useDeleteCartItem();
 
   const handleDeleteButton = async () => {
     await deleteCartItem({ param: cart.id });
-    updateCart({ ...cart, isSelected: false, quantity: 0 });
-    // removeCartItem(cart.id);
+    await refetchCartList({});
+    updateCart({ id: cart.id, isSelected: false, quantity: 0, product: cart.product });
   };
 
   const handleCheckBox = () => {
     toggleIsSelected(cart.id);
   };
-
-  const handleDeleteCartItem = async () => {
-    await removeCartItem(cart.id);
-    refetchCartList({});
-  };
-
-  useEffect(() => {
-    if (deleteCartItemState.status === 'success') {
-      handleDeleteCartItem();
-    }
-  }, [deleteCartItemState.status]);
 
   return (
     <>
