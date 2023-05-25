@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import CartList from '../../components/cart/CartList';
-import { handlers } from '../../mocks/handlers';
 import { CartListWrapper } from '../../style/ContentLayout';
 import { styled } from 'styled-components';
 import Header from '../../components/Header';
@@ -45,9 +44,6 @@ const mockData = [
 const meta = {
   title: 'Pages/cart/CartList',
   component: CartList,
-  parameters: {
-    msw: handlers,
-  },
   tags: ['autodocs'],
   decorators: [
     (Story) => {

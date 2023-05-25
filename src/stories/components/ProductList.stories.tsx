@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ProductList from '../../components/main/ProductList';
-import { handlers } from '../../mocks/handlers';
 import { within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { expect } from '@storybook/jest';
@@ -11,9 +10,6 @@ const meta = {
   title: 'Pages/product/ProductList',
   component: ProductList,
   tags: ['autodocs'],
-  parameters: {
-    msw: handlers,
-  },
   decorators: [
     (Story) => {
       return <Story />;
