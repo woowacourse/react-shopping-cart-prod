@@ -11,13 +11,22 @@ import Message from './components/Common/Message';
 function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <Layout>
-        <Routes>
-          <Route path='/' element={<ProductsListPage />} />
-          <Route path='/cart' element={<CartProductsListPage />} />
-          <Route path='*' element={<NotFoundPage />} />
-        </Routes>
-      </Layout>
+      <Suspense>
+        <Layout>
+          <Routes>
+            <Route
+              path='/'
+              element={
+                <Suspense>
+                  <ProductsListPage />
+                </Suspense>
+              }
+            />
+            <Route path='/cart' element={<CartProductsListPage />} />
+            <Route path='*' element={<NotFoundPage />} />
+          </Routes>
+        </Layout>
+      </Suspense>
     </BrowserRouter>
   );
 }
