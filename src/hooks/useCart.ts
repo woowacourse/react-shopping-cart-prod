@@ -1,10 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 
+import HTTPError from '../api/HTTPError';
 import { getCartAPI } from '../api/cartAPI';
 import { TOAST_SHOW_DURATION } from '../constants';
+import { CART_API_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../constants/api';
 import { cartItemQuantityState, cartListState } from '../store/cart';
+import { errorModalMessageState } from '../store/error';
 import { currentServerState } from '../store/server';
+import { CartItemData, ProductItemData } from '../types';
+import { APIErrorMessage } from '../types/api';
 import { useMutationFetch } from './common/useMutationFetch';
 
 const useCart = () => {
@@ -27,11 +32,10 @@ const useCart = () => {
 
   const updateCart = useRecoilCallback(
     ({ set }) =>
-      async () => {
-        const newCartList = await cartAPI.then((api) => api.getCartList());
-        set(cartListState, newCartList);
+      (cartItem: CartItemData) => {
+        set(cartListState, (prevCartList) => [...prevCartList, cartItem]);
       },
-    []
+    [cartAPI]
   );
 
   const handleCartError = useCallback(
@@ -49,11 +53,13 @@ const useCart = () => {
 
   const { mutate: addItem } = useMutationFetch<CartItemData, ProductItemData>(
     useRecoilCallback(
-      () => async (productId) => {
-        setIsAdded(true);
-        await cartAPI.then((api) => api.postCartItem(productId));
+      () => async (product) => {
+        const response = await cartAPI.postCartItem(product.id);
+        const cartItemId = response.headers.get('Location')?.split('/').pop();
+
+        return { id: Number(cartItemId), quantity: 1, product };
       },
-      []
+      [cartAPI]
     ),
     {
       onSuccess: (cartItem) => {
