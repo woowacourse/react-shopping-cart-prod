@@ -32,3 +32,5 @@ export const ROUTE_PATH = Object.freeze({
 });
 
 export const PARCEL_PRICE = 3000;
+
+export const USER = 'a@a.com:1234';
