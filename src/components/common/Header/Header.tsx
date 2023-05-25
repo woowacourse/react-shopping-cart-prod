@@ -28,20 +28,14 @@ const Header = () => {
 
 const HeaderContainer = styled.header`
   position: fixed;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   width: 100%;
   height: 80px;
-
   padding: 0 10%;
-
   background-color: #333;
-
   color: #fff;
-
   z-index: 1;
 `;
 
@@ -49,7 +43,6 @@ const Logo = styled(Link)`
   display: flex;
   align-items: center;
   column-gap: 15px;
-
   cursor: pointer;
 `;
 
