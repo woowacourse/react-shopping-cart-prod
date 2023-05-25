@@ -1,10 +1,9 @@
-import { atom, selector } from 'recoil';
-import { CartList } from '../types/CartList.ts';
-import { getCartListFromLocalStorage } from '../utils/localStorageCartList.ts';
+import { atom, selector, selectorFamily } from 'recoil';
+import { CartListWithSelected } from '../types/CartList.ts';
 
-export const cartListAtom = atom<CartList | null>({
+export const cartListAtom = atom<CartListWithSelected | null>({
   key: 'cartListAtom',
-  default: getCartListFromLocalStorage(),
+  default: [],
 });
 
 export const carListTotalQuantitySelector = selector({
@@ -16,9 +15,7 @@ export const carListTotalQuantitySelector = selector({
       return 0;
     }
 
-    return Object.keys(cartList.items).reduce((acc, curr) => {
-      return acc + cartList.items[parseInt(curr, 10)].quantity;
-    }, 0);
+    return cartList.length;
   },
 });
 
@@ -31,14 +28,14 @@ export const cartTotalPriceSelector = selector({
       return 0;
     }
 
-    return Object.keys(cartList.items).reduce((acc, curr) => {
-      const item = cartList.items[parseInt(curr, 10)];
+    return Object.keys(cartList).reduce((acc, curr) => {
+      const item = cartList[parseInt(curr, 10)];
 
       if (item.isSelected === false) {
         return acc;
       }
 
-      return acc + item.quantity * item.itemInfo.price;
+      return acc + item.quantity * item.product.price;
     }, 0);
   },
 });
@@ -52,6 +49,23 @@ export const cartSelectedItemsSelector = selector({
       return [];
     }
 
-    return [cartList.items.filter((item) => item.isSelected).length, cartList.items.length];
+    return [cartList.filter((item) => item.isSelected).length, cartList.length];
   },
+});
+
+export const isSelectedSelector = selectorFamily({
+  key: 'isSelectedSelector',
+  get:
+    (id: number) =>
+    ({ get }) => {
+      const cartList = get(cartListAtom);
+
+      if (!cartList) return true;
+
+      const targetItem = cartList.find((item) => item.id === id);
+
+      if (!targetItem) return true;
+
+      return targetItem.isSelected;
+    },
 });
