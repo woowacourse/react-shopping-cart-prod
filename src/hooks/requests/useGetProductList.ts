@@ -3,9 +3,9 @@ import { ProductList } from '../../types/CartList.ts';
 import { endPoints } from '../../constants/endPoints.ts';
 
 const useGetProductList = () => {
-  const [{ data }] = useFetch<ProductList>(endPoints.productList);
+  const [{ data }, refetchProductList] = useFetch<ProductList>(endPoints.productList);
 
-  return { data };
+  return { data, refetchProductList };
 };
 
 export default useGetProductList;

@@ -1,14 +1,10 @@
-import useFetch, { FetchState } from '../useFetch.ts';
+import useFetch from '../useFetch.ts';
 import { endPoints } from '../../constants/endPoints.ts';
 
-const useDeleteProduct = (): [FetchState<null>, (itemId: number) => Promise<void>] => {
-  const [deleteState, deleteItem] = useFetch<null>(endPoints.cart, 'DELETE');
+const useDeleteCartItem = () => {
+  const [deleteCartItemState, deleteCartItem] = useFetch<null>(endPoints.cart, 'DELETE');
 
-  const deleteProduct = async (itemId: number) => {
-    await deleteItem({ param: itemId });
-  };
-
-  return [deleteState, deleteProduct];
+  return { deleteCartItemState, deleteCartItem };
 };
 
-export default useDeleteProduct;
+export default useDeleteCartItem;
