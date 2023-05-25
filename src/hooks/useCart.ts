@@ -1,12 +1,14 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { FIRST_INDEX, ONE_ITEM_IN_CART } from '../constants';
+import { QUANTITY } from '../constants';
 import { CART_URL } from '../constants/url';
-import { cartState, serverState } from '../recoil';
+import { cartState, productSelector, serverState } from '../recoil';
 import { CartItem } from '../types';
 import { useFetchData } from './useFetchData';
 
 export const useSetCart = (productId: number) => {
   const [cart, setCart] = useRecoilState(cartState);
+  const selectedProduct = useRecoilValue(productSelector(productId));
 
   const server = useRecoilValue(serverState);
 
@@ -51,13 +53,20 @@ export const useSetCart = (productId: number) => {
 
   const addToCart = async () => {
     try {
-      await api.post(`${server}${CART_URL}`, { productId });
-      const newCart = await api.get(`${server}${CART_URL}`, {
-        Authorization: 'Basic YUBhLmNvbToxMjM0',
-        'Content-Type': 'application/json',
-      });
+      const response = await api.post(`${server}${CART_URL}`, { productId });
+      const location = response.headers.get('location');
+      const cartId = location.replace(`${CART_URL}/`, '');
 
-      setCart(newCart);
+      if (!selectedProduct) return;
+
+      setCart((prev) => [
+        ...prev,
+        {
+          id: cartId,
+          quantity: QUANTITY.INITIAL,
+          product: selectedProduct,
+        },
+      ]);
     } catch (error) {
       alert(error);
     }
