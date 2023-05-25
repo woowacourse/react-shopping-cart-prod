@@ -1,52 +1,79 @@
+import { servers } from '../constants/server';
 import type { CartProduct } from '../types/product';
+import type { HostNameType } from '../types/server';
 
-const URL = '/cart-items';
+const email = process.env.REACT_APP_EMAIL;
+const password = process.env.REACT_APP_PASSWORD;
+const base64 = btoa(email + ':' + password);
 
-export const fetchCartProducts = async () => {
-  const response = await fetch(URL);
-  const data: CartProduct[] = await response.json();
-  return data;
-};
+export const api = async (hostName: HostNameType) => {
+  const URL = `${servers[hostName]}/cart-items`;
 
-export const postCartProduct = async (id: number) => {
-  const response = await fetch(URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ productId: id }),
-  });
+  const fetchCartProducts = async () => {
+    const response = await fetch(URL, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
 
-  if (!response.ok) {
-    throw new Error(response.status.toString());
-  }
+    const data: CartProduct[] = await response.json();
+    return data;
+  };
 
-  const data = await response.json();
-  return data;
-};
+  const postCartProduct = async (productId: number) => {
+    const response = await fetch(URL, {
+      method: 'POST',
+      headers: {
+        Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ productId }),
+    });
 
-export const patchCartProduct = async (id: number, quantity: number) => {
-  const response = await fetch(`${URL}/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ quantity }),
-  });
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
 
-  if (!response.ok) {
-    throw new Error(response.status.toString());
-  }
+    const location = response.headers.get('location');
 
-  const data = await response.json();
-  return data;
-};
+    if (location !== null) {
+      const lastSlashIndex = location.lastIndexOf('/');
+      const cartItemId = location.slice(lastSlashIndex + 1);
+      return cartItemId;
+    }
+  };
 
-export const deleteCartProduct = async (id: number) => {
-  await fetch(`${URL}/${id}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const patchCartProduct = async (cartItemId: number, quantity: number) => {
+    const response = await fetch(`${URL}/${cartItemId}`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ quantity }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.status.toString());
+    }
+    return response;
+  };
+
+  const deleteCartProduct = async (cartItemId: number) => {
+    await fetch(`${URL}/${cartItemId}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/json',
+      },
+    });
+  };
+
+  return {
+    fetchCartProducts,
+    postCartProduct,
+    patchCartProduct,
+    deleteCartProduct,
+  };
 };
