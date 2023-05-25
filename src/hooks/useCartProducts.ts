@@ -27,7 +27,7 @@ const useCartProducts = (product: Product) => {
       ]);
   };
 
-  const removeProduct = async () => {
+  const removeProduct = () => {
     if (target) {
       api(hostName).then((apiInstance) => {
         return apiInstance.deleteCartProduct(target.id);
