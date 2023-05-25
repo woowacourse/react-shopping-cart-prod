@@ -7,7 +7,7 @@ import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Routes>
         <Route element={<PageLayout />}>
           <Route path='/' element={<ProductsListPage />} />
