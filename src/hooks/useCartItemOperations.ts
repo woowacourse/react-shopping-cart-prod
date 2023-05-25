@@ -4,6 +4,8 @@ import useCreateCartItem from './requests/useCreateCartItem.ts';
 import usePostUpdateCartItem from './requests/usePostUpdateCartItem.ts';
 import useDeleteCartItem from './requests/useDeleteCartItem.ts';
 import useGetCartList from './requests/useGetCartList.ts';
+import { useToast } from './useToast.ts';
+import toastMessages from '../constants/toastMessages.ts';
 
 type CartItemOperations = {
   cartItemNumber: number | undefined;
@@ -20,6 +22,7 @@ const useCartItemOperations = ({ cartItemNumber, id, name, price, imageUrl, refe
   const { updateCartItemState, updateCartItem } = usePostUpdateCartItem();
   const { deleteCartItemState, deleteCartItem } = useDeleteCartItem();
   const { status: cartListStatus, data: cartList, refetchCartList: getFreshCartList } = useGetCartList();
+  const showToast = useToast();
 
   const handleAddToCartButton = useCallback(async () => {
     await createCartItem({ body: { productId: id } });
@@ -31,6 +34,7 @@ const useCartItemOperations = ({ cartItemNumber, id, name, price, imageUrl, refe
 
       if (!addedCartItem) return;
 
+      showToast(toastMessages.created);
       updateCart({ id: addedCartItem.id, quantity: 1, product: { id, name, price, imageUrl }, isSelected: true });
     }
   }, [cartItemNumber, id, name, price, imageUrl, refetchCartList, createCartItem, createCartItemState.error, updateCart]);
@@ -44,6 +48,7 @@ const useCartItemOperations = ({ cartItemNumber, id, name, price, imageUrl, refe
 
         updateCart({ id: cartItemNumber, quantity: 0, product: { id, name, price, imageUrl }, isSelected: false });
         refetchCartList({});
+        showToast(toastMessages.deleted);
 
         return;
       }

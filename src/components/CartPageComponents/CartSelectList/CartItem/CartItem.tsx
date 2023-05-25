@@ -6,6 +6,8 @@ import useDeleteCartItem from '../../../../hooks/requests/useDeleteCartItem.ts';
 import StyledCheckBox from '../../../@common/CheckBox/StyledCheckBox.tsx';
 import { useRecoilValue } from 'recoil';
 import { isSelectedSelector } from '../../../../stores/cartListStore.ts';
+import toastMessages from '../../../../constants/toastMessages.ts';
+import { useToast } from '../../../../hooks/useToast.ts';
 
 type CartItemProps = {
   cart: Item;
@@ -17,11 +19,13 @@ const CartItem = ({ cart, refetchCartList }: CartItemProps) => {
   const isSelected = useRecoilValue(isSelectedSelector(cart.id));
   const { toggleIsSelected, updateCart } = useCart();
   const { deleteCartItem } = useDeleteCartItem();
+  const showToast = useToast();
 
   const handleDeleteButton = async () => {
     await deleteCartItem({ param: cart.id });
     await refetchCartList({});
     updateCart({ id: cart.id, isSelected: false, quantity: 0, product: cart.product });
+    showToast(toastMessages.deleted);
   };
 
   const handleCheckBox = () => {
