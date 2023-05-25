@@ -28,6 +28,10 @@ const useCartItems = () => {
   const toggleServer = async (server: Servers) => {
     const data = await fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET, server });
     setCartItems(data);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const updateCartItem: UpdateCartItem = async (url, method, body) => {

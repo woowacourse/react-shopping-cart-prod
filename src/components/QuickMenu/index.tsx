@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
+
+import { Servers } from '@Types/index';
 
 import useCartItems from '@Hooks/useCartItems';
 
@@ -11,10 +13,17 @@ import * as S from './style';
 
 function QuickMenu() {
   const { toggleServer } = useCartItems();
-  const setServer = useSetRecoilState(serverState);
+  const [server, setServer] = useRecoilState(serverState);
 
   const [isHover, setIsHover] = useState(false);
   const [isInit, setIsInit] = useState(true);
+
+  const switchServer = (value: Servers) => {
+    if (value === server) return;
+
+    setServer(value);
+    toggleServer(value);
+  };
 
   return (
     <S.Container>
@@ -32,8 +41,7 @@ function QuickMenu() {
             isHover={isHover}
             key={value}
             onClick={() => {
-              setServer(value);
-              toggleServer(value);
+              switchServer(value);
             }}
             position={{ bottom: `${(index + 1) * 60}px` }}
             avatar={SERVERS[value].avatar}
