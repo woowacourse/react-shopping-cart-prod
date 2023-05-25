@@ -13,14 +13,14 @@ import { products } from './atoms/products';
 
 const EndPointRefresher = ({ children }: PropsWithChildren) => {
   const endpointKey = useRecoilValue(endpointKeyState);
-  const reset = useRecoilRefresher_UNSTABLE(cartState);
-  const resetProducts = useRecoilRefresher_UNSTABLE(products);
+  const refreshCart = useRecoilRefresher_UNSTABLE(cartState);
+  const refreshProducts = useRecoilRefresher_UNSTABLE(products);
 
   useEffect(() => {
     fetchQuery.updateDefaultConfig({ baseURL: ENDPOINT[endpointKey] });
     authFetchQuery.updateDefaultConfig({ baseURL: ENDPOINT[endpointKey] });
-    reset();
-    resetProducts();
+    refreshCart();
+    refreshProducts();
   }, [endpointKey]);
 
   return <>{children}</>;
