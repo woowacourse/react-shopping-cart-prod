@@ -2,7 +2,7 @@
   "name": "react-shopping-cart",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://leejin-yang.github.io/react-shopping-cart/",
+  "homepage": "https://leejin-yang.github.io/react-shopping-cart-prod/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
