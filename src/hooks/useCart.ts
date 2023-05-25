@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { cartListAtom } from '../stores/cartListStore.ts';
-import { Item } from '../types/CartList.ts';
+import { ItemWithSelected } from '../types/CartList.ts';
 import { useCallback } from 'react';
 
 const useCart = () => {
@@ -12,53 +12,43 @@ const useCart = () => {
         return;
       }
 
-      const updatedItems = cartList.items.filter((item) => item.id !== itemId);
+      const updatedItems = cartList.filter((item) => item.id !== itemId);
 
-      setCartList({
-        ...cartList,
-        items: updatedItems,
-      });
+      setCartList(updatedItems);
     },
     [cartList, setCartList]
   );
 
   const updateCart = useCallback(
-    (cartItem: Item) => {
+    (cartItem: ItemWithSelected) => {
+      // If there's no cart, add the cartItem to the cart
       if (!cartList) {
-        // 카트가 없는 경우
-        setCartList({
-          items: [{ ...cartItem, isSelected: true }],
-        });
-
+        setCartList([cartItem]);
         return;
       }
 
-      // -1 은 없는 경우
-      const existingItemIndex = cartList.items.findIndex((item) => item.id === cartItem.id);
+      // Check if the item exists in the cart
+      const itemExists = cartList.some((item) => item.id === cartItem.id);
 
-      if (existingItemIndex !== -1) {
-        if (cartItem.quantity === 0) {
-          // 수량이 0인 경우
-          removeCartItem(cartItem.id);
-          return;
-        }
-
-        // 기존 아이템 업데이트
-        setCartList({
-          ...cartList,
-          items: cartList.items.map((item, index) => (index === existingItemIndex ? { ...cartItem, isSelected: true } : item)),
-        });
-
+      // If item exists and its quantity is 0, remove the item from the cart
+      if (cartItem.quantity === 0) {
+        setCartList(cartList.filter((item) => item.id !== cartItem.id));
         return;
       }
 
-      // 새로운 아이템 추가
-      setCartList({
-        ...cartList,
-        items: [...cartList.items, { ...cartItem, isSelected: true }],
-      });
+      // If item exists and its quantity is not 0, update the item
+      if (itemExists && cartItem.quantity !== 0) {
+        setCartList([...cartList.filter((item) => item.id !== cartItem.id), cartItem]);
+        return;
+      }
+
+      // If item does not exist, add it to the cart
+      if (!itemExists) {
+        setCartList([...cartList, cartItem]);
+        return;
+      }
     },
-    [cartList, setCartList]
+    [cartList]
   );
 
   const toggleIsSelected = useCallback(
@@ -67,7 +57,7 @@ const useCart = () => {
         return;
       }
 
-      const updatedItems = cartList.items.map((item) => {
+      const updatedItems = cartList.map((item: ItemWithSelected) => {
         if (item.id !== itemId) {
           return item;
         }
@@ -78,10 +68,7 @@ const useCart = () => {
         };
       });
 
-      setCartList({
-        ...cartList,
-        items: updatedItems,
-      });
+      setCartList([...updatedItems]);
     },
     [cartList, setCartList]
   );
@@ -91,17 +78,14 @@ const useCart = () => {
       return;
     }
 
-    const updatedItems = cartList.items.map((item) => {
+    const updatedItems = cartList.map((item) => {
       return {
         ...item,
         isSelected: true,
       };
     });
 
-    setCartList({
-      ...cartList,
-      items: updatedItems,
-    });
+    setCartList([...updatedItems]);
   }, [cartList, setCartList]);
 
   return { cartList, setCartList, updateCart, removeCartItem, toggleIsSelected, selectAllItems };
