@@ -13,26 +13,47 @@ export const fetchApi = async (url: string, options: RequestInit) => {
   return await response;
 };
 
+const username = 'a@a.com';
+const password = '1234';
+const base64 = btoa(username + ':' + password);
+
 export const api = {
   get: async (url: string) => {
-    const data = await fetchApi(url, { method: 'GET' });
+    const data = await fetchApi(url, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
     return data;
   },
   post: async <T>(url: string, body: T) => {
     return await fetchApi(url, {
       method: 'POST',
       body: JSON.stringify(body),
+      headers: {
+        Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/json',
+      },
     });
   },
   patch: async <T>(url: string, body: T) => {
     return await fetchApi(url, {
       method: 'PATCH',
       body: JSON.stringify(body),
+      headers: {
+        Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/json',
+      },
     });
   },
   delete: async (url: string) => {
     return await fetchApi(url, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Basic ${base64}`,
+        'Content-Type': 'application/json',
+      },
     });
   },
 };
