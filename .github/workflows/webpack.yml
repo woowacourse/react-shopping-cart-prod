@@ -32,6 +32,10 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
 
       - run: npm run build
+        env:
+          REACT_APP_NUNU_SERVER_URL: ${{ secrets.REACT_APP_NUNU_SERVER_URL }}
+          REACT_APP_CHANGER_SERVER_URL: ${{ secrets.REACT_APP_CHANGER_SERVER_URL }}
+          REACT_APP_PHILIP_SERVER_URL: ${{ secrets.REACT_APP_PHILIP_SERVER_URL }}
 
       - uses: peaceiris/actions-gh-pages@v3
         with:
