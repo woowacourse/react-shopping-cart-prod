@@ -5,9 +5,10 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import type { CartItemType, ProductItemType } from '../../types/ProductType';
-import fetchCartItems from '../../utils/fetchCartItem';
+import type { CartItemType } from '../../types/ProductType';
+
 import { useCallback, useMemo } from 'react';
+import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
 
 export const CartItemQuery = selector({
   key: 'cartListWithInfoState/default',
@@ -27,16 +28,9 @@ const cartState = atom<CartItemType[]>({
 
 export default cartState;
 
-export const useProductListInCart: () => ProductItemType[] = () => {
-  const cart = useRecoilValue(cartState);
-
-  return cart.map(({ product }) => {
-    const productInfo: ProductItemType = { ...product };
-    return productInfo;
-  });
-};
-
 export const useRefreshCartList = () => useRecoilRefresher_UNSTABLE(cartState);
+
+export const useCartList = () => useRecoilValue(cartState);
 
 export const useCheckCart = () => {
   const [cart, setCart] = useRecoilState(cartState);

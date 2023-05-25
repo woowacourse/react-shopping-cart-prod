@@ -1,16 +1,24 @@
 import { CheckBox } from '@common/CheckBox';
-import { ProductItemType } from 'types/ProductType';
+
 import * as S from './CartItemBox.style';
 import { Stepper } from '@common/Stepper';
 import deleteIcon from '@assets/delete.svg';
 import { useCartItemQuantityBy } from '@recoil/cart/withItemQuantityBy';
 import { useCartItemCheckedBy } from '@recoil/cart/withItemCheckBy';
 
-function CartItemBox({ id, imageUrl, name, price }: ProductItemType) {
-  // id: cartItem
+interface CartItemProps {
+  cartId: number;
+  productId: number;
+  imageUrl: string;
+  name: string;
+  price: number;
+}
 
-  const [quantity, setQuantity] = useCartItemQuantityBy(id);
-  const { isChecked, toggleCheck } = useCartItemCheckedBy(id);
+function CartItemBox({ cartId, productId, imageUrl, name, price }: CartItemProps) {
+  const [cartQuantity, setCartQuantity] = useCartItemQuantityBy(productId);
+  const { isChecked, toggleCheck } = useCartItemCheckedBy(cartId);
+
+  const { quantity } = cartQuantity;
 
   return (
     <S.CartItemContainer>
@@ -31,20 +39,32 @@ function CartItemBox({ id, imageUrl, name, price }: ProductItemType) {
         <S.DeleteIcon
           src={deleteIcon}
           onClick={() => {
-            setQuantity(0);
+            setCartQuantity({
+              cartId,
+              quantity: 0,
+            });
           }}
         />
 
         <Stepper
           onChange={(event) => {
-            setQuantity(Number(event.target.value));
+            setCartQuantity({
+              cartId,
+              quantity: Number(event.target.value),
+            });
           }}
           onIncrease={() => {
-            setQuantity(quantity + 1);
+            setCartQuantity({
+              cartId,
+              quantity: quantity + 1,
+            });
           }}
           onDecrease={() => {
             if (quantity === 1) return;
-            setQuantity(quantity - 1);
+            setCartQuantity({
+              cartId,
+              quantity: quantity - 1,
+            });
           }}
           quantity={quantity}
         />

@@ -8,11 +8,13 @@ export const createApiRequests = (baseUrl: string) => (resourcePath: string) => 
   const endpoint = `${baseUrl}/${resourcePath}`;
 
   return {
-    GET: (pathParameter?: string) => {
-      return fetchRequest({
+    GET: async (pathParameter?: string) => {
+      const promise = await fetchRequest({
         endpoint: `${endpoint}${pathParameter ? `/${pathParameter}` : ''}`,
         method: 'GET',
       });
+      const data = await promise.json();
+      return data;
     },
 
     POST: ({ pathParameter, body }: { pathParameter?: string; body?: unknown }) => {
@@ -40,11 +42,17 @@ export const createApiRequests = (baseUrl: string) => (resourcePath: string) => 
   };
 };
 
+const username = 'a@a.com';
+const password = '1234';
+
+const base64 = btoa(`${username}:${password}`);
+
 const fetchRequest = async ({ endpoint, method, body }: FetchParams) => {
   const options: RequestInit = {
     method,
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Basic ${base64}`,
     },
   };
 
@@ -58,10 +66,7 @@ const fetchRequest = async ({ endpoint, method, body }: FetchParams) => {
       throw new Error(`Fetch Error: ${response.statusText}`);
     }
 
-    if (method !== 'DELETE') {
-      const data = await response.json();
-      return data;
-    }
+    return response;
   } catch (error) {
     console.error(`Fetch Utility Error: ${error}`);
     throw error;

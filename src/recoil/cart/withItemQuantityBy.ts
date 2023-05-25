@@ -2,60 +2,80 @@ import { DefaultValue, selectorFamily, useRecoilState } from 'recoil';
 import cartState from './cartState';
 import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from '../../views/CartItem/constants/cartConstants';
 
-import fetchCartItems from '../../utils/fetchCartItem';
 import { productListState } from '../product/productListState';
+import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
 
-const withItemQuantityBy = selectorFamily<number, number>({
+interface newType {
+  cartId: number;
+  quantity: number;
+}
+
+const withItemQuantityBy = selectorFamily<newType, number>({
   key: 'cartItemQuantityState',
   get:
-    (id) =>
+    (productId) =>
     ({ get }) => {
       const cart = get(cartState);
-      const cartItem = cart.filter((cartItem) => cartItem.id === id)[0];
+      // TODO: 장바구니 리스트 가
 
-      return cartItem?.quantity ?? 0;
+      if (cart.length === 0) return { quantity: 0, cartId: 0 };
+
+      const cartItem = cart.filter((cartItem) => {
+        return cartItem.product.id === productId;
+      })[0];
+
+      if (!cartItem) {
+        return {
+          cartId: 0,
+          quantity: 0,
+        };
+      }
+
+      return { cartId: cartItem.id, quantity: cartItem.quantity };
     },
   set:
-    (id) =>
-    ({ get, set }, quantity) => {
-      if (
-        !(quantity instanceof DefaultValue) &&
-        quantity < MAX_CART_QUANTITY &&
-        quantity >= MIN_CART_QUANTITY
-      ) {
-        const cartList = get(cartState);
+    (productId) =>
+    ({ get, set }, newCart) => {
+      if (newCart instanceof DefaultValue) {
+        return;
+      }
 
+      const cartList = get(cartState);
+
+      const { cartId, quantity } = newCart;
+
+      if (quantity < MAX_CART_QUANTITY && quantity >= MIN_CART_QUANTITY) {
         // Post
-        if (!cartList.some((item) => item.id === id)) {
+        if (!cartList.some((item) => item.id === cartId)) {
           if (quantity === 0) return;
-          const product = get(productListState).filter((product) => product.id === id)[0];
+
+          const product = get(productListState).filter((product) => product.id === productId)[0];
 
           set(cartState, (prevCartList) => [
             ...prevCartList,
             {
-              id,
+              id: cartId,
               quantity,
               checked: true,
               product,
             },
           ]);
 
-          fetchCartItems.add(id);
           return;
         }
 
         //Delete
         if (quantity === 0) {
-          set(cartState, (prevCartList) => prevCartList.filter((item) => item.id !== id));
+          set(cartState, (prevCartList) => prevCartList.filter((item) => item.id !== cartId));
 
-          fetchCartItems.delete(id);
+          fetchCartItems.delete(cartId);
           return;
         }
 
         // Patch
         set(cartState, (prevCartList) => {
           return prevCartList.map((item) => {
-            if (item.id === id) {
+            if (item.id === cartId) {
               return {
                 ...item,
                 quantity,
@@ -66,7 +86,7 @@ const withItemQuantityBy = selectorFamily<number, number>({
           });
         });
 
-        fetchCartItems.update(id, quantity);
+        fetchCartItems.update(cartId, quantity);
         return;
       }
     },
@@ -74,4 +94,5 @@ const withItemQuantityBy = selectorFamily<number, number>({
 
 export default withItemQuantityBy;
 
-export const useCartItemQuantityBy = (id: number) => useRecoilState(withItemQuantityBy(id));
+export const useCartItemQuantityBy = (productId: number) =>
+  useRecoilState(withItemQuantityBy(productId));
