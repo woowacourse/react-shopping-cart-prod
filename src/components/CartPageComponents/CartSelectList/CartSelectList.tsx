@@ -12,12 +12,12 @@ const CartSelectList = () => {
 
   return (
     <Styled.CartSelectListWrapper>
-      <Styled.CartQuantityText>배송 상품 ({cartList?.items.length || 0})개</Styled.CartQuantityText>
+      <Styled.CartQuantityText>배송 상품 ({cartList?.length || 0})개</Styled.CartQuantityText>
       <Styled.CartQuantityDivider />
       <div>
         <div>
           {cartList &&
-            cartList.items.map((cart) => {
+            cartList.map((cart) => {
               return <CartItem key={cart.id} cart={cart} refetchCartList={refetchCartList} />;
             })}
           <Styled.SelectAllButton onClick={selectAllItems}>전체선택</Styled.SelectAllButton>
