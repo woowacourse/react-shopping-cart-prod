@@ -50,12 +50,6 @@ const Wrapper = styled.div`
   width: 90%;
 
   position: relative;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.25);
-    box-shadow: 0 10px 10px -3px rgba(0, 0, 0, 0.25);
-    transition: all 0.3s ease;
-  }
 `;
 
 const ImageBox = styled.div`
@@ -75,6 +69,12 @@ const ImageBox = styled.div`
     object-fit: cover;
 
     border-radius: 5px;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 10px -3px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
   }
 `;
 
