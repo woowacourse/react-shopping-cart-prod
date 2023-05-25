@@ -4,6 +4,9 @@ import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from '../../views/CartItem/const
 
 import { productListState } from '../product/productListState';
 import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
+import { createApiRequests, fetchApi } from '@utils/createApiRequests';
+import serverState, { SERVER } from '@recoil/server/serverState';
+import { CART_PATH } from '@constants/urlConstants';
 
 interface newType {
   cartId: number;
@@ -40,6 +43,8 @@ const withItemQuantityBy = selectorFamily<newType, number>({
         return;
       }
 
+      const server = get(serverState);
+
       const cartList = get(cartState);
 
       const { cartId, quantity } = newCart;
@@ -68,7 +73,10 @@ const withItemQuantityBy = selectorFamily<newType, number>({
         if (quantity === 0) {
           set(cartState, (prevCartList) => prevCartList.filter((item) => item.id !== cartId));
 
-          fetchCartItems.delete(cartId);
+          fetchApi(`${SERVER[server]}/${CART_PATH}/${cartId}`, {
+            method: 'DELETE',
+          });
+
           return;
         }
 
@@ -86,7 +94,11 @@ const withItemQuantityBy = selectorFamily<newType, number>({
           });
         });
 
-        fetchCartItems.update(cartId, quantity);
+        fetchApi(`${SERVER[server]}/${CART_PATH}/${cartId}`, {
+          method: 'PATCH',
+          body: JSON.stringify({ quantity }),
+        });
+
         return;
       }
     },

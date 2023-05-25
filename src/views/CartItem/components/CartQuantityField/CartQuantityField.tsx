@@ -5,6 +5,10 @@ import { ProductItemType } from 'types/ProductType';
 import { Stepper } from '@common/Stepper';
 import cartIcon from '@assets/cart.svg';
 import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
+import { useRecoilValue } from 'recoil';
+import serverState, { SERVER } from '@recoil/server/serverState';
+import { CART_PATH } from '@constants/urlConstants';
+import { fetchApi } from '@utils/createApiRequests';
 
 interface CartQuantityFieldProps {
   product: ProductItemType;
@@ -13,6 +17,7 @@ interface CartQuantityFieldProps {
 function CartQuantityField({ product }: CartQuantityFieldProps) {
   const [cartQuantity, setCartQuantity] = useCartItemQuantityBy(product.id);
   const { quantity, cartId } = cartQuantity;
+  const server = useRecoilValue(serverState);
 
   const isQuantityZero = quantity > 0;
 
@@ -36,9 +41,12 @@ function CartQuantityField({ product }: CartQuantityFieldProps) {
       ) : (
         <S.CartIcon
           onClick={async () => {
-            const response = await fetchCartItems.add(product.id);
+            const response = await fetchApi(`${SERVER[server]}/${CART_PATH}`, {
+              method: 'POST',
+              body: JSON.stringify({ productId: product.id }),
+            });
+
             const newCartId = response.headers.get('Location')?.split('/').pop();
-            console.log('>>> newCartId:', newCartId);
 
             if (!newCartId) return;
 

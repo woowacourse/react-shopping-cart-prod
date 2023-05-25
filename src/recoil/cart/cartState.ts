@@ -9,11 +9,16 @@ import type { CartItemType } from '../../types/ProductType';
 
 import { useCallback, useMemo } from 'react';
 import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
+import serverState, { SERVER } from '@recoil/server/serverState';
+import { createApiRequests } from '@utils/createApiRequests';
+import { CART_PATH } from '@constants/urlConstants';
 
 export const CartItemQuery = selector({
   key: 'cartListWithInfoState/default',
-  get: async () => {
-    const cartProducts: CartItemType[] = await fetchCartItems.get();
+  get: async ({ get }) => {
+    const server = get(serverState);
+    const cartProducts: CartItemType[] = await createApiRequests(SERVER[server])(CART_PATH).GET();
+
     return cartProducts.map((cartProduct) => {
       cartProduct.checked = true;
       return cartProduct;

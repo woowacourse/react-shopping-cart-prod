@@ -47,6 +47,26 @@ const password = '1234';
 
 const base64 = btoa(`${username}:${password}`);
 
+export const fetchApi = async (url: string, options: RequestInit) => {
+  const setOptions = {
+    method: options.method,
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Basic ${base64}`,
+      ...options.headers,
+    },
+    ...options,
+  };
+
+  const response = await fetch(url, setOptions);
+
+  if (!response.ok) {
+    throw new Error(`올바르지 않는 통신입니다. status: ${response.status}`);
+  }
+
+  return response;
+};
+
 const fetchRequest = async ({ endpoint, method, body }: FetchParams) => {
   const options: RequestInit = {
     method,
