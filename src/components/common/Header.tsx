@@ -22,11 +22,11 @@ export default function Header() {
           <LogoTitle>SHOP</LogoTitle>
         </HomeLink>
         <RightBox>
-          <select value={serverName} onChange={onChangeSelect}>
+          <Select value={serverName} onChange={onChangeSelect}>
             {SERVER_NAMES.map((serverName) => (
               <option key={serverName}>{serverName}</option>
             ))}
-          </select>
+          </Select>
           <CartLink to="/cart">
             장바구니
             <CartCount>{cartCount}</CartCount>
@@ -62,12 +62,6 @@ const ContentBox = styled.div`
   padding: 0 16px;
 `;
 
-const RightBox = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 196px;
-`;
-
 const HomeLink = styled(Link)`
   display: flex;
   align-items: center;
@@ -83,6 +77,22 @@ const LogoTitle = styled.h1`
 
   @media (max-width: 480px) {
     display: none;
+  }
+`;
+
+const RightBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 224px;
+`;
+
+const Select = styled.select`
+  width: 64px;
+  border: none;
+  border-radius: 4px;
+
+  & > option {
+    text-align: center;
   }
 `;
 
