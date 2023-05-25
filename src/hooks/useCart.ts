@@ -1,14 +1,15 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { MESSAGE, USER } from '../constants';
-import { $CartIdList, $CheckedCartIdList, $CurrentServerUrl } from '../recoil/atom';
+import { $CartIdList, $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../recoil/atom';
 import useGetQuery from './useGetQuery';
 import useMutation from './useMutation';
 import useToast from './useToast';
-import type { CartItem } from '../types';
+import type { CartItem, Product } from '../types';
 
 const useCart = () => {
   const Toast = useToast();
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
+  const [cartList, setCartList] = useRecoilState($CartList(currentServerUrl));
   const [cartIdList, setCartIdList] = useRecoilState($CartIdList(currentServerUrl));
   const setCheckedCartIdList = useSetRecoilState($CheckedCartIdList(currentServerUrl));
   const {
@@ -23,8 +24,14 @@ const useCart = () => {
     onSuccess: data => {
       const regex = /[^0-9]/g;
       const cartId = data?.headers.get('Location')?.replace(regex, '');
+      const product = data?.fetchInformation.referenceData as Product;
+
+      if (cartId && product) {
+        setCartList(prev => [...prev, { id: Number(cartId), quantity: 1, product }]);
+      }
 
       setCartIdList(prev => [...prev, Number(cartId)]);
+
       setCheckedCartIdList(prev => [...prev, Number(cartId)]);
 
       Toast.success(MESSAGE.ADD_CART_SUCCESSFUL);
@@ -40,6 +47,7 @@ const useCart = () => {
       const regex = /(\d+)$/;
       const cartId = data?.fetchInformation.url.match(regex)?.at(1);
 
+      setCartList(prev => prev.filter(({ id }) => id !== Number(cartId)));
       setCartIdList(prev => prev.filter(item => item !== Number(cartId)));
       setCheckedCartIdList(prev => prev.filter(item => item !== Number(cartId)));
 
@@ -52,7 +60,14 @@ const useCart = () => {
   });
 
   const mutateQuantityQuery = useMutation<Record<string, number>, CartItem>({
-    onSuccess: () => {
+    onSuccess: data => {
+      const regex = /(\d+)$/;
+      const cartId = data?.fetchInformation.url.match(regex)?.at(1);
+      const quantity = data?.fetchInformation?.bodyData?.quantity;
+
+      if (cartId && quantity) {
+        setCartList(prev => prev.map(item => (item.id === Number(cartId) ? { ...item, quantity } : item)));
+      }
       refreshQuery();
     },
     onFailure: () => {
@@ -82,19 +97,21 @@ const useCart = () => {
     });
   };
 
-  const addCartItem = async (productId: number) => {
+  const addCartItem = async (product: Product) => {
     await addCartQuery({
       url: `${currentServerUrl}/cart-items`,
       method: 'POST',
-      bodyData: { productId },
+      bodyData: { productId: product.id },
       headers: {
         Authorization: `Basic ${btoa(USER)}`,
         'Content-Type': 'application/json',
       },
+      referenceData: product,
     });
   };
 
   return {
+    cartList,
     cartIdList,
     cartItemStateList,
     mutateQuantity,

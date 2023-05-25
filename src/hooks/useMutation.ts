@@ -11,11 +11,12 @@ interface UseMutationArg<BodyData, ResponseData> {
   onSettled?: () => void;
 }
 
-interface FetchInformation<T> {
+interface FetchInformation<BodyData> {
   url: string;
   method: MutationFetchMethod;
-  bodyData?: T;
+  bodyData?: BodyData;
   headers?: HeadersInit;
+  referenceData?: unknown;
 }
 
 const useMutation = <BodyData, ResponseData>({

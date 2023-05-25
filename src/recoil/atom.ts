@@ -37,3 +37,21 @@ export const $CurrentServerUrl = atom<string>({
   key: 'CurrentServerUrl',
   default: userServerUrlList[getLocalStorage('name', '로지')],
 });
+
+const getCart = async (url: string) => {
+  const response = await fetch(`${url}/cart-items`, {
+    headers: {
+      Authorization: `Basic ${btoa(USER)}`,
+    },
+  });
+
+  if (!response.ok) return [];
+  const data = (await response.json()) as CartItem[];
+
+  return data;
+};
+
+export const $CartList = atomFamily<CartItem[], string>({
+  key: 'CartList',
+  default: async url => await getCart(url),
+});
