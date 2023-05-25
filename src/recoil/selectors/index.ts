@@ -1,21 +1,16 @@
 import { selector } from 'recoil';
 import { serverOriginState } from '../atoms';
 import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../../constants';
-import { fetchCartItems } from '../../remotes/api';
+import { fetchCartItems } from '../../remotes/cart';
+import { fetchProducts } from '../../remotes/product';
 import type { CartItem, Product } from '../../types/product';
 
-export const productListQuery = selector<Product[]>({
-  key: 'productList',
+export const productsQuery = selector<Product[]>({
+  key: 'products',
   get: async ({ get }) => {
-    const response = await fetch(
+    const products = await fetchProducts(
       `${get(serverOriginState)}${PRODUCTS_BASE_URL}`,
     );
-
-    if (!response.ok) {
-      throw new Error('상품 목록을 불러올 수 없습니다.');
-    }
-
-    const products = await response.json();
 
     return products;
   },

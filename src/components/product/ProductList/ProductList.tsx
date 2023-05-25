@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { productListQuery } from '../../../recoil/selectors';
+import { productsQuery } from '../../../recoil/selectors';
 import ProductItem from '../ProductItem/ProductItem';
 
 const ProductList = () => {
-  const products = useRecoilValue(productListQuery);
+  const products = useRecoilValue(productsQuery);
 
   return (
     <section>

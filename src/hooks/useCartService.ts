@@ -7,7 +7,7 @@ import {
   fetchCartItems,
   removeCartItem,
   updateQuantity,
-} from '../remotes/api';
+} from '../remotes/cart';
 import type { CartItem, Product } from '../types/product';
 
 const useCartService = () => {
