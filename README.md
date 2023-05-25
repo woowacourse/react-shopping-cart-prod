@@ -2,11 +2,7 @@
   <img src="https://techcourse-storage.s3.ap-northeast-2.amazonaws.com/3e6c6f30b11d4b098b5a3e81be19ce3a" width="400">
 </p>
 <h2 align="middle">Level2 - 장바구니</h2>
-<<<<<<< HEAD
-<p align="middle">React & Redux 장바구니 협업 미션</p>
-=======
 <p align="middle">React & Recoil 데스크탑 장바구니 애플리케이션</p>
->>>>>>> a165c2b ([장바구니 미션 Step 1] 타미(김태은) 미션 제출합니다. (#172))
 </p>
 
 ### 결과물: [장바구니🛒](https://xodms0309.github.io/react-shopping-cart/)
@@ -15,14 +11,10 @@
 
 백엔드와의 협업을 통해 실제 동작하는 애플리케이션을 만듭니다.
 
-<<<<<<< HEAD
-<br>
-=======
 ✔️ `데스크탑 타겟`의 웹 앱을 구현하며 구매로 이어지는 것에 끊김이 없고 `재방문을 고려한 UI/UX`에 대해 고민해봅니다.  
 ✔️ 상태 관리를 위해 `Recoil`을 활용합니다.
 ✔️ `Router`를 활용해 여러 페이지 전환을 고려합니다.  
 ✔️ [배민상회](https://mart.baemin.com) 서비스 참고
->>>>>>> a165c2b ([장바구니 미션 Step 1] 타미(김태은) 미션 제출합니다. (#172))
 
 ### 📝 1단계 기능 목록
 
@@ -42,9 +34,6 @@
 | :--------------------------------------------------------------------------: | :--------------------------------------------------------------------------: |
 |                     [타미](http://github.com/xodms0309)                      |                     [클린](http://github.com/hozzijeong)                     |
 
-<<<<<<< HEAD
-버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-cart-prod/issues)에 등록해주세요.
-=======
 ### 🌲 파일 구조
 
 ```
@@ -93,4 +82,3 @@
  ┣ 📜App.tsx
  ┗ 📜index.tsx
 ```
->>>>>>> a165c2b ([장바구니 미션 Step 1] 타미(김태은) 미션 제출합니다. (#172))
