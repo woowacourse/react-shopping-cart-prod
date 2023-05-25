@@ -8,8 +8,8 @@ import theme from './styles/theme';
 import App from './App';
 
 const main = async () => {
-  if (window.location.pathname === '/react-shopping-cart') {
-    window.location.pathname = '/react-shopping-cart/';
+  if (window.location.pathname === '/react-shopping-cart-prod') {
+    window.location.pathname = '/react-shopping-cart-prod/';
     return;
   }
 };
