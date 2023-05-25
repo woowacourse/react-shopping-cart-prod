@@ -1,9 +1,15 @@
+import { useSetRecoilState } from 'recoil';
+import { serverAtom } from 'recoil/server';
+import { SERVERS } from 'utils/constants';
+import { ServerName } from 'types';
 import * as S from './SelectServer.styles';
 
 const SelectServer = () => {
+  const setServer = useSetRecoilState(serverAtom);
+
   const onChangeServer: React.ChangeEventHandler<HTMLSelectElement> = (e) => {
-    const server = e.target.value;
-    //setServer(server);
+    const server = e.target.value as ServerName;
+    setServer(SERVERS[server]);
   };
 
   return (
