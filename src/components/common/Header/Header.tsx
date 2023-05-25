@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { useSetRecoilState } from 'recoil';
 import Logo from '../../../assets/png/logo.png';
-import { endpointKeyState } from '../../../atoms/cart';
+import { endpointKeyState } from '../../../atoms/endpoint';
 import { ENDPOINT } from '../../../constants/auth';
 import { PAGE_ROUTES } from '../../../constants/routes';
 import AsyncBoundary from '../../AsyncBoundary/AsyncBoundary';
