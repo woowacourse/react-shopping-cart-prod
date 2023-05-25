@@ -3,16 +3,14 @@ import { ReactComponent as AlertBlank } from '../../assets/baemin-alert-blank.sv
 import CartProductItemList from '../../components/CartProductItemList';
 import PaymentsView from '../../components/PaymentsView';
 import { PARCEL_PRICE } from '../../constants';
-import useCart from '../../hooks/useCart';
-import { $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
+import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
 import styles from './index.module.scss';
 
 function Cart() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
-  const { cartItemStateList, cartList, deleteCartItem, mutateQuantity } = useCart();
   const checkedCartIdList = useRecoilValue($CheckedCartIdList(currentServerUrl));
-
-  const total = cartItemStateList?.reduce((acc, { id, product, quantity }) => {
+  const cartList = useRecoilValue($CartList(currentServerUrl));
+  const total = cartList?.reduce((acc, { id, product, quantity }) => {
     if (checkedCartIdList.includes(id)) {
       return product.price * quantity + acc;
     }
@@ -22,11 +20,7 @@ function Cart() {
   const ResultComponent =
     cartList.length > 0 ? (
       <section className={styles['main-view']}>
-        <CartProductItemList
-          cartItemList={cartItemStateList}
-          deleteCartItem={deleteCartItem}
-          mutateQuantity={mutateQuantity}
-        />
+        <CartProductItemList />
         <PaymentsView priceTotal={total} parcelPrice={PARCEL_PRICE} />
       </section>
     ) : (

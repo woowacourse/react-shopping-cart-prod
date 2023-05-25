@@ -1,24 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
+import useCart from '../../hooks/useCart';
+import { $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
 import CartProductItem from '../CartProductItem';
 import styles from './index.module.scss';
 import type { CartItem } from '../../types';
 
-interface CartProductItemListProps {
-  cartItemList: CartItem[] | null;
-  deleteCartItem: (id: number) => Promise<void>;
-  mutateQuantity: (id: number, quantity: number) => Promise<void>;
-}
-
-function CartProductItemList({ cartItemList, deleteCartItem, mutateQuantity }: CartProductItemListProps) {
+function CartProductItemList() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
-  const cartList = useRecoilValue($CartList(currentServerUrl));
   const [checkedCartIdList, setCheckedCartIdList] = useRecoilState($CheckedCartIdList(currentServerUrl));
+  const { cartList, deleteCartItem, mutateQuantity } = useCart();
 
   const checkAllCartItem: React.ChangeEventHandler<HTMLInputElement> = ({ target: { checked } }) => {
-    if (checked && cartItemList) {
-      return setCheckedCartIdList(cartItemList.map(item => item.id));
+    if (checked) {
+      return setCheckedCartIdList(cartList.map(item => item.id));
     }
     return setCheckedCartIdList([]);
   };
@@ -33,16 +28,14 @@ function CartProductItemList({ cartItemList, deleteCartItem, mutateQuantity }: C
     };
 
   const deleteCheckedCartItem = () => {
-    checkedCartIdList.forEach(async id => {
-      await deleteCartItem(id);
-    });
+    Promise.all(checkedCartIdList.map(id => deleteCartItem(id)));
   };
 
   return (
     <div className={styles.container}>
       <h3 className={styles.title}>배송 상품 {`(${cartList.length}개)`}</h3>
       <section className={styles['cart-container']}>
-        {cartItemList?.map((item: CartItem) => (
+        {cartList?.map((item: CartItem) => (
           <CartProductItem
             key={item.id}
             cartItem={item}

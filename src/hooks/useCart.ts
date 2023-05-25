@@ -1,7 +1,6 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { MESSAGE, USER } from '../constants';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../recoil/atom';
-import useGetQuery from './useGetQuery';
 import useMutation from './useMutation';
 import useToast from './useToast';
 import type { CartItem, Product } from '../types';
@@ -11,13 +10,6 @@ const useCart = () => {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
   const [cartList, setCartList] = useRecoilState($CartList(currentServerUrl));
   const setCheckedCartIdList = useSetRecoilState($CheckedCartIdList(currentServerUrl));
-  const {
-    data: cartItemStateList,
-    refreshQuery,
-    loading,
-  } = useGetQuery<CartItem[]>(`${currentServerUrl}/cart-items`, {
-    Authorization: `Basic ${btoa(USER)}`,
-  });
 
   const addCartQuery = useMutation<Record<string, number>, CartItem>({
     onSuccess: data => {
@@ -32,7 +24,6 @@ const useCart = () => {
       setCheckedCartIdList(prev => [...prev, Number(cartId)]);
 
       Toast.success(MESSAGE.ADD_CART_SUCCESSFUL);
-      refreshQuery();
     },
     onFailure: () => {
       Toast.error(MESSAGE.ADD_CART_FAILED);
@@ -48,7 +39,6 @@ const useCart = () => {
       setCheckedCartIdList(prev => prev.filter(item => item !== Number(cartId)));
 
       Toast.success(MESSAGE.DELETE_CART_SUCCESSFUL);
-      refreshQuery();
     },
     onFailure: () => {
       Toast.error(MESSAGE.DELETE_CART_FAILED);
@@ -64,7 +54,6 @@ const useCart = () => {
       if (cartId && quantity) {
         setCartList(prev => prev.map(item => (item.id === Number(cartId) ? { ...item, quantity } : item)));
       }
-      refreshQuery();
     },
     onFailure: () => {
       Toast.error(MESSAGE.MUTATE_CART_FAILED);
@@ -108,12 +97,9 @@ const useCart = () => {
 
   return {
     cartList,
-    cartItemStateList,
     mutateQuantity,
     deleteCartItem,
     addCartItem,
-    refreshQuery,
-    loading,
   };
 };
 

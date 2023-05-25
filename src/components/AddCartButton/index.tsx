@@ -9,8 +9,8 @@ interface AddCardButtonProps {
 }
 
 function AddCartButton({ product }: AddCardButtonProps) {
-  const { cartItemStateList, addCartItem, mutateQuantity, deleteCartItem } = useCart();
-  const cart = cartItemStateList?.find(cartItem => cartItem.product.id === product.id);
+  const { cartList, addCartItem, mutateQuantity, deleteCartItem } = useCart();
+  const cart = cartList?.find(cartItem => cartItem.product.id === product.id);
 
   const handleClick = async () => {
     await addCartItem(product);
