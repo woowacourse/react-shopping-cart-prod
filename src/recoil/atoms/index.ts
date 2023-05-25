@@ -15,5 +15,5 @@ export const toastState = atom<ToastProps[]>({
 
 export const serverOriginState = atom<string>({
   key: 'serverOriginState',
-  default: 'http://ec2-13-209-97-56.ap-northeast-2.compute.amazonaws.com:8080',
+  default: 'http://somsom.techcourse.store',
 });
