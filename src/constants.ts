@@ -13,7 +13,7 @@ export const SKELETONS_LENGTH = 8;
 export const API_SUCCESS_MESSAGE = {
   postCartItem: '장바구니에 상품을 담았어요! 😆',
   patchCartItemQuantity: '수량을 변경했어요 🙂',
-  deleteCartItem: '상품을 장바구니에서 뺐어요!',
+  deleteCartItem: '장바구니에서 상품을 뺐어요!',
 };
 
 export const API_ERROR_MESSAGE = {
