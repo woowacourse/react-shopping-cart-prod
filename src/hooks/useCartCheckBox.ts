@@ -15,6 +15,8 @@ const useCartCheckBox = () => {
     const updatedCheckedProducts = updatedCartProductIds.filter((cartProductId) => checkedProducts.has(cartProductId));
 
     setCheckedProducts(new Set(updatedCheckedProducts));
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartProducts]);
 
   const isAllChecked = cartProducts.size === checkedProducts.size;

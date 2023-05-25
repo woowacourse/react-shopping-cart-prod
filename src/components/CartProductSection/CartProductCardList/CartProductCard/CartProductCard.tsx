@@ -6,7 +6,7 @@ import CartQuantityStepper from 'components/CartQuantityStepper/CartQuantityStep
 import useShoppingCart from 'hooks/useShoppingCart';
 import useModal from 'components/@common/Modal/hooks/useModal';
 import { ReactComponent as RecycleBinIcon } from 'assets/recycle-bin-icon.svg';
-import type { CartProduct, Product } from 'types/product';
+import type { CartProduct } from 'types/product';
 import useCartCheckBox from 'hooks/useCartCheckBox';
 
 type CartProductCardProps = {
