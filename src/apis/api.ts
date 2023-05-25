@@ -54,7 +54,7 @@ class FetchQuery implements FetchQueryInstance {
     path: string,
     config?: InternalConfig
   ): FetchQueryRes<T> {
-    let body = {} as T;
+    let data = {} as T;
     const url = getValidURL(
       path,
       config?.baseURL ?? this.defaultConfig.baseURL
@@ -64,12 +64,12 @@ class FetchQuery implements FetchQueryInstance {
     const { headers } = response;
 
     try {
-      body = await response.json();
+      data = await response.json();
     } catch (error) {}
 
     if (!response.ok) handleStatusCode(response.status);
 
-    return { headers, body };
+    return { headers, data };
   }
 
   private request<T>(...args: [Method, ...QueryParams]): FetchQueryRes<T> {

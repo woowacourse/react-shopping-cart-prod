@@ -10,7 +10,7 @@ export type FetchQueryInstance = {
 export type FetchQueryRes<T> = Promise<HTTPResponse<T>>;
 export type HTTPResponse<T> = {
   headers: Headers;
-  body: T;
+  data: T;
 };
 
 export type ExternalConfigKeys = 'baseURL' | 'body';

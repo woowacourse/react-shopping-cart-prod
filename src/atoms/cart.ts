@@ -7,9 +7,9 @@ export const cartState = atom({
   default: selector({
     key: 'getMockCart',
     get: async () => {
-      const { body } = await fetchCart();
+      const { data } = await fetchCart();
 
-      return body;
+      return data;
     },
   }),
 });

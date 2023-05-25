@@ -4,8 +4,8 @@ import { fetchProductData } from '../apis/products';
 export const products = selector({
   key: 'products',
   get: async () => {
-    const { body } = await fetchProductData();
+    const { data } = await fetchProductData();
 
-    return body;
+    return data;
   },
 });
