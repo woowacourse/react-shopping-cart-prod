@@ -1,14 +1,15 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { cartListState } from '../recoil/atoms';
+import { cartListState, selectedHostState } from '../recoil/atoms';
 import { CartItemInfo, ProductInfo } from '../types';
 import { CART_BASE_URL } from '../constants';
 import { useSetFetchedData } from './useSetFetchedData';
 import { currentCartListState } from '../recoil/selectors';
 
 export const useCart = (productInfo?: ProductInfo) => {
+  const host = useRecoilValue(selectedHostState);
   const setCartList = useSetRecoilState(cartListState);
   const cartList = useRecoilValue(currentCartListState);
-  const { api } = useSetFetchedData<CartItemInfo[]>(CART_BASE_URL, setCartList);
+  const { api } = useSetFetchedData<CartItemInfo[]>(`${host}${CART_BASE_URL}`, setCartList);
 
   const getCartItem = (productId?: number) => {
     const curProductId = productId ? productId : productInfo?.id;
@@ -18,7 +19,7 @@ export const useCart = (productInfo?: ProductInfo) => {
 
   const addToCart = () => {
     if (!productInfo) return;
-    api.post(CART_BASE_URL, { productId: productInfo.id }, CART_BASE_URL);
+    api.post(`${host}${CART_BASE_URL}`, { productId: productInfo.id }, `${host}${CART_BASE_URL}`);
   };
 
   const updateProductQuantity = (quantity: number) => {
@@ -29,7 +30,11 @@ export const useCart = (productInfo?: ProductInfo) => {
     const currentCartItem = getCartItem();
     if (!currentCartItem) return;
 
-    api.patch(`${CART_BASE_URL}/${currentCartItem.id}`, { quantity: quantity }, CART_BASE_URL);
+    api.patch(
+      `${host}${CART_BASE_URL}/${currentCartItem.id}`,
+      { quantity: quantity },
+      `${host}${CART_BASE_URL}`
+    );
   };
 
   const deleteFromCart = (productId?: number) => {
@@ -38,7 +43,7 @@ export const useCart = (productInfo?: ProductInfo) => {
     const currentCartItem = getCartItem(curProductId);
     if (!currentCartItem) return;
 
-    api.delete(`${CART_BASE_URL}/${currentCartItem.id}`, CART_BASE_URL);
+    api.delete(`${host}${CART_BASE_URL}/${currentCartItem.id}`, `${host}${CART_BASE_URL}`);
   };
 
   return {

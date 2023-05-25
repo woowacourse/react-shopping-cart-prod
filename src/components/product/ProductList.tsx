@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import Product from './Product';
 import { currentProductListState } from '../../recoil/selectors';
+import Product from './Product';
 
 export default function ProductList() {
   const productList = useRecoilValue(currentProductListState);

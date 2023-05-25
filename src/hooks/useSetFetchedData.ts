@@ -5,6 +5,8 @@ import { fetchApi } from '../api';
 type SetData<T> = SetterOrUpdater<T> | Dispatch<SetStateAction<T>>;
 
 export const useSetFetchedData = <T>(url: string, setData: SetData<T>) => {
+  const token = btoa('a@a.com:1234');
+
   const setFetchedData = useCallback(
     async (url: string, options: RequestInit, baseUrl?: string) => {
       const rawData = await fetchApi(url, options);
@@ -12,18 +14,22 @@ export const useSetFetchedData = <T>(url: string, setData: SetData<T>) => {
       if (options.method !== 'GET') {
         if (!baseUrl) return;
 
-        const reFetchedData = await fetchApi(baseUrl, { method: 'GET' });
+        const reFetchedData = await fetchApi(baseUrl, {
+          method: 'GET',
+          headers: { Authorization: `Basic ${token}` },
+        });
         setData(reFetchedData);
         return;
       }
 
       setData(rawData);
     },
-    [setData]
+    [token, setData]
   );
 
   const api = {
-    get: (url: string) => setFetchedData(url, { method: 'GET' }),
+    get: (url: string) =>
+      setFetchedData(url, { method: 'GET', headers: { Authorization: `Basic ${token}` } }),
     post: <T>(url: string, body: T, baseUrl: string) => {
       setFetchedData(
         url,
@@ -31,6 +37,7 @@ export const useSetFetchedData = <T>(url: string, setData: SetData<T>) => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Basic ${token}`,
           },
           body: JSON.stringify(body),
         },
@@ -44,6 +51,7 @@ export const useSetFetchedData = <T>(url: string, setData: SetData<T>) => {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
+            Authorization: `Basic ${token}`,
           },
           body: JSON.stringify(body),
         },
@@ -55,6 +63,9 @@ export const useSetFetchedData = <T>(url: string, setData: SetData<T>) => {
         url,
         {
           method: 'DELETE',
+          headers: {
+            Authorization: `Basic ${token}`,
+          },
         },
         baseUrl
       );

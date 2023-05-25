@@ -20,4 +20,4 @@ export const SERVER: Readonly<Record<Host, string>> = {
   밀리: 'http://52.79.242.83:8080',
 };
 export const PRODUCTS_BASE_URL = '/products';
-export const CART_BASE_URL = '/api/cart-items';
+export const CART_BASE_URL = '/cart-items';

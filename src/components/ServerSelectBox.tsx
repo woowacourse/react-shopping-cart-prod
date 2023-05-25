@@ -17,7 +17,7 @@ export default function ServerSelectBox() {
     <Style.Wrapper>
       <Style.ServerSelectBox name="serverList" onChange={load}>
         {HOSTS.map((host) => (
-          <option>{host}</option>
+          <option key={host}>{host}</option>
         ))}
       </Style.ServerSelectBox>
     </Style.Wrapper>
