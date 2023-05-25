@@ -6,9 +6,13 @@ import ProductListSkeleton from '../../components/product/ProductList/ProductLis
 import { productListState } from '../../store/product';
 
 const ProductListPage = () => {
-  const refreshProductList = useRecoilCallback(({ refresh }) => () => {
-    refresh(productListState);
-  });
+  const refreshProductList = useRecoilCallback(
+    ({ refresh }) =>
+      () => {
+        refresh(productListState);
+      },
+    []
+  );
 
   useEffect(() => {
     refreshProductList();
