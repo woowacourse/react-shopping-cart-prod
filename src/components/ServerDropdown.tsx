@@ -18,7 +18,9 @@ const ServerDropdown = () => {
   return (
     <S.Dropdown onChange={handlerChangeUrl}>
       {options.map((option) => (
-        <option value={option}>{option}</option>
+        <option key={option} value={option}>
+          {option}
+        </option>
       ))}
     </S.Dropdown>
   );
@@ -26,7 +28,7 @@ const ServerDropdown = () => {
 
 const S = {
   Dropdown: styled.select`
-    width: 100px;
+    width: 50px;
   `,
 };
 
