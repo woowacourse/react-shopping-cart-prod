@@ -95,11 +95,17 @@ const StyledLink = styled(Link)`
   width: 224px;
   height: 52px;
   margin: 64px 0;
+  border-radius: 8px;
 
   background-color: #04c09e;
-  border-radius: 8px;
 
   font-size: 20px;
   font-weight: 600;
   color: #ffffff;
+
+  transition: transform 0.4s;
+
+  &:hover {
+    transform: translate(0, 6px);
+  }
 `;

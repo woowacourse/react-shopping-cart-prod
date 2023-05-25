@@ -75,7 +75,7 @@ const LogoTitle = styled.h1`
 
   vertical-align: center;
 
-  @media (max-width: 480px) {
+  @media (max-width: 612px) {
     display: none;
   }
 `;

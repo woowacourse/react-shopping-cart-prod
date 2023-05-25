@@ -119,13 +119,22 @@ const CartItemAddButton = styled.button`
 
   background: transparent;
 
-  &:disabled {
-    cursor: wait;
-  }
+  transition: transform 0.2s;
 
   & > img {
     width: 100%;
     height: 100%;
+  }
+
+  &:hover {
+    transform: rotate(12deg);
+  }
+
+  &:disabled {
+    cursor: wait;
+  }
+  &:disabled > img {
+    visibility: hidden;
   }
 `;
 
