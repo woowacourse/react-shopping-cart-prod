@@ -1,21 +1,14 @@
 import { useEffect } from 'react';
 import * as S from './CartItemList.styles';
-import { useRecoilState } from 'recoil';
-import { cartListAtom } from 'recoil/cartList';
 import CartItem from 'components/Cart/CartItem';
 import Spinner from 'components/@common/Spinner';
 import Modal from 'components/@common/Modal';
-import { useGet } from 'hooks/useGet';
 import { useCheckedItemIds } from '../hooks/useCheckedItems';
 import { useModal } from 'hooks/useModal';
-import { useMutate } from 'hooks/useMutate';
-import { Cart } from 'types';
-import { deleteCartItem, getCartList } from 'api/requests';
+import { useCart } from '../hooks/useCart';
 
 const CartItemList = () => {
-  const { request } = useMutate();
-  const { isLoading } = useGet<{ cartList: Cart[] }>(getCartList);
-  const [cartList, setCartList] = useRecoilState(cartListAtom);
+  const { cartList, deleteItem } = useCart();
   const { checkedItemIds, unCheckAllItems, checkAllItems, unCheckItem } =
     useCheckedItemIds();
   const { isModalOpen, onOpenModal, onCloseModal } = useModal();
@@ -41,7 +34,7 @@ const CartItemList = () => {
       )
     );
 
-  const onChangeAllCheckBoxes = () => {
+  const onToggleCheckAllItems = () => {
     if (checkedItemIds.length === cartList.length) {
       unCheckAllItems();
       return;
@@ -52,13 +45,9 @@ const CartItemList = () => {
 
   const onDeleteSelectedItems = () => {
     checkedItemIds.forEach((id) => {
-      request(deleteCartItem(id));
+      deleteItem(id);
       unCheckItem(id);
     });
-
-    setCartList((prev) =>
-      prev.filter((item) => !checkedItemIds.includes(item.id))
-    );
 
     onCloseModal();
   };
@@ -68,11 +57,11 @@ const CartItemList = () => {
       <S.CartItemTitle>
         든든배송 상품({checkedItemIds.length}개)
       </S.CartItemTitle>
-      {isLoading ? loading : fetchedCartList}
+      {fetchedCartList}
       <S.CheckBoxWrapper>
         <S.SelectAllCheckBox
           type="checkbox"
-          onChange={onChangeAllCheckBoxes}
+          onChange={onToggleCheckAllItems}
           checked={checkedItemIds.length === cartList.length}
         />
         <S.Text>

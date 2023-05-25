@@ -66,6 +66,7 @@ export const useCart = () => {
   };
 
   return {
+    cartList,
     decreaseItemQuantity,
     increaseItemQuantity,
     deleteItem,
