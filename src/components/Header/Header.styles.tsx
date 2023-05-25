@@ -39,6 +39,7 @@ export const HeaderWrapper = styled.div`
   max-width: 1600px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const LogoButton = styled.button`
@@ -98,4 +99,12 @@ export const ShoppingCartQuantity = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const ServerSelectBox = styled.select`
+  width: 80px;
+  height: 40px;
+
+  border: none;
+  border-radius: 10px;
 `;
