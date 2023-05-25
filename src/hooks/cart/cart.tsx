@@ -70,10 +70,11 @@ export const useMutateCart = () => {
     },
   });
 
-  const deleteSelectedCartItems = () => {
-    if (window.confirm(DELETE_CART_ITEMS)) {
-      [...selectedItems].forEach((id) => deleteCartItemMutation(id));
-    }
+  const deleteSelectedCartItems = async () => {
+    if (window.confirm(DELETE_CART_ITEMS))
+      await Promise.all(
+        [...selectedItems].map((id) => deleteCartItemMutation(id))
+      );
   };
 
   return {
