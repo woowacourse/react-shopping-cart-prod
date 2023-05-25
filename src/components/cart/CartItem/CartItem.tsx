@@ -48,14 +48,17 @@ const CartItem = ({ cartItem }: CartItemProps) => {
       <ItemContents>
         <CheckBox isChecked={isChecked(id)} onChange={handleCheckBoxChange} />
         <Image src={imageUrl} size="medium" />
-        <Name>{name}</Name>
+        <div>
+          <Name>{name}</Name>
+          <PriceMobileView>{formatPrice(price)}</PriceMobileView>
+        </div>
       </ItemContents>
       <ItemControllers>
         <RemoveButton onClick={handleRemoveButtonClick}>
           <TrashCanIcon />
         </RemoveButton>
         <Counter count={count} updateCount={updateQuantity} min={1} />
-        <Price>{formatPrice(price)}</Price>
+        <PricePCView>{formatPrice(price)}</PricePCView>
       </ItemControllers>
     </CartItemContainer>
   );
@@ -73,21 +76,38 @@ const CartItemContainer = styled.div`
   @media screen and (max-width: 1320px) {
     width: 100%;
   }
+
+  @media screen and (max-width: 520px) {
+    flex-direction: column;
+
+    height: 250px;
+  }
 `;
 
 const ItemContents = styled.div`
+  max-height: 182px;
   display: flex;
   gap: 15px;
+
+  width: calc(100% - 120px);
+
+  overflow: hidden;
+
+  @media screen and (max-width: 520px) {
+    width: 100%;
+  }
 `;
 
 const Name = styled.div`
-  height: 20px;
+  max-height: 120px;
 
   font-weight: 400;
   font-size: 20px;
   color: #333;
 
-  text-overflow: ellipsis;
+  @media screen and (max-width: 520px) {
+    overflow: hidden;
+  }
 `;
 
 const ItemControllers = styled.div`
@@ -96,6 +116,14 @@ const ItemControllers = styled.div`
 
   align-items: end;
   justify-content: space-between;
+
+  @media screen and (max-width: 520px) {
+    flex-direction: row-reverse;
+    padding-left: 43px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+  }
 `;
 
 const RemoveButton = styled.button`
@@ -105,10 +133,28 @@ const RemoveButton = styled.button`
   cursor: pointer;
 `;
 
-const Price = styled.div`
+const PricePCView = styled.div`
   font-weight: 400;
   font-size: 16px;
   color: #333;
+
+  @media screen and (max-width: 520px) {
+    display: none;
+  }
+`;
+
+const PriceMobileView = styled.div`
+  display: none;
+
+  margin-top: 10px;
+
+  font-weight: 400;
+  font-size: 20x;
+  color: #333;
+
+  @media screen and (max-width: 520px) {
+    display: block;
+  }
 `;
 
 export default CartItem;
