@@ -16,7 +16,7 @@ const CartListItem = ({ item, setCheckItems }: Props) => {
     handleNumberInputChange,
     handleIncreaseItem,
     handleDecreaseCartItem,
-  } = useProduct(item.id);
+  } = useProduct(item.product.id);
 
   const handleRemoveFromCart = (id: number) => (e: MouseEvent<HTMLButtonElement>) => {
     const confirmResult = window.confirm('정말로 삭제하시겠습니까?');
