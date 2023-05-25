@@ -2,6 +2,7 @@ import type { ServerNameType } from './types';
 
 export const LOCAL_STORAGE_KEY = {
   cart: 'cart',
+  serverName: 'serverName',
 };
 
 export const MAX_QUANTITY = 1000;
@@ -28,8 +29,8 @@ export const SERVER_NAMES: ServerNameType[] = ['라온', '져니', '쥬니'];
 
 export const BASE_URL_MAP: Record<ServerNameType, string> = {
   라온: 'https://jourzura.kro.kr',
-  져니: MOCK_URL,
-  쥬니: 'http://13.209.48.187:8080',
+  져니: 'https://journey-shop.kro.kr',
+  쥬니: MOCK_URL,
 };
 
 export const USER_ID = 'a@a.com';
