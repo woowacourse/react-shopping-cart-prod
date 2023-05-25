@@ -14,30 +14,20 @@ export default function Toast() {
 }
 
 const toastAnim = keyframes`
-0% {
-  transform: translate(-50%, 20px);
-  opacity: 0;
-}
+  0% {
+    transform: translate(-50%, 20px);
+    opacity: 0;
+  }
 
-8% {
-  transform: translate(-50%, 0);
-  opacity: 1;
-}
+  8% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
 
-80%{
-  transform: translate(-50%, 0);
-  opacity: 1;
-}
-
-95% {
-  transform: translate(-50%, 20px);
-  opacity: 0;
-}
-
-100% {
-  transform: translate(-50%, 20px);
-  opacity: 0;
-}
+  100%{
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
 `;
 
 const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
