@@ -68,7 +68,6 @@ export const useUpdateCart = () => {
   };
 
   return {
-    // addProductToCart,
     deleteCartItem,
     increaseProductQuantity,
     decreaseProductQuantity,

@@ -1,4 +1,4 @@
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 
 import { RECOIL_KEY } from '../constants';
 
