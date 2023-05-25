@@ -10,6 +10,7 @@ import { useCartFetch } from '../../../hooks/useCartFetch';
 
 const ProductItem = ({ product }: { product: ProductType }) => {
   const { cartData, addCartItemAPI, changeCartQuantityAPI, deleteCartItemAPI } = useCartFetch();
+
   const [cartItemData, setCartItemData] = useState<CartItemType | null>(null);
 
   const [quantity, setQuantity] = useState<number>(0);

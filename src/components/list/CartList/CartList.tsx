@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import styled from '@emotion/styled';
 import CartItem from '../../box/CartItem/CartItem';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import Button from '../../common/Button/Button';
 import { Text } from '../../common/Text/Text';
-import { useEffect, useState } from 'react';
 import { useModal } from '../../../hooks/useModal';
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import { useRecoilState } from 'recoil';
@@ -14,7 +12,7 @@ const CartList = () => {
   const { cartData, deleteCartItemAPI } = useCartFetch();
 
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
-  const [isAllCheck, setIsAllCheck] = useState(true);
+  const isCheckAll = cartData ? cartData.length === checkCartList.length : false;
 
   const { openModal } = useModal();
 
@@ -26,22 +24,12 @@ const CartList = () => {
   };
 
   const onClickCheckBox = () => {
-    if (isAllCheck) {
+    if (isCheckAll) {
       setCheckCartList([]);
-      setIsAllCheck(false);
       return;
     }
     cartData && setCheckCartList(cartData.map((cart) => cart.id));
-    setIsAllCheck(true);
   };
-
-  useEffect(() => {
-    if (cartData && cartData.length === checkCartList.length) {
-      setIsAllCheck(true);
-      return;
-    }
-    setIsAllCheck(false);
-  }, [checkCartList]);
 
   return (
     <CartListWrapper>
@@ -52,7 +40,7 @@ const CartList = () => {
         <CartListFoot>
           <CheckBox
             label={`전체선택(${checkCartList.length})`}
-            checked={isAllCheck}
+            checked={isCheckAll}
             onClick={onClickCheckBox}
           />
           <Button

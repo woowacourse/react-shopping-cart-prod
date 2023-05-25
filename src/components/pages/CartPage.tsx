@@ -14,15 +14,14 @@ const CartPage = () => {
   const checkCartList = useRecoilValue(checkCartListState);
 
   const calcTotalPrice = () => {
-    return checkCartList
-      .map((cartId) => {
-        const cartItem = cartData && cartData.find((cart) => cart.id === cartId);
-        if (cartItem) {
-          return cartItem?.product.price * cartItem?.quantity;
-        }
-        return 0;
-      })
-      .reduce((prev, next) => prev + next, 0);
+    return checkCartList.reduce((prev, curr) => {
+      const cartItem = cartData && cartData.find((cart) => cart.id === curr);
+      if (cartItem) {
+        const { product, quantity } = cartItem;
+        return prev + product.price * quantity;
+      }
+      return prev + 0;
+    }, 0);
   };
 
   return (
@@ -37,7 +36,9 @@ const CartPage = () => {
           </Text>
         </CartPageHead>
         <CartPageContent>
-          <CartListWrapper>{<CartList />}</CartListWrapper>
+          <CartListWrapper>
+            <CartList />
+          </CartListWrapper>
           <PriceBox>
             <TotalPriceBox
               totalProductPrice={calcTotalPrice()}

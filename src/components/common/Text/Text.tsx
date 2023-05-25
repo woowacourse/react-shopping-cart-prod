@@ -31,7 +31,7 @@ const fontWeights: Record<StyledTextProps['$weight'], number> = {
   extraBold: 900,
 };
 
-export const StyledText = styled.div<StyledTextProps>`
+export const StyledText = styled.p<StyledTextProps>`
   font-size: ${(props) => fontSizes[props.$size]};
   font-weight: ${(props) => fontWeights[props.$weight]};
   color: ${(props) => props.$color ?? '#181a1c'};
