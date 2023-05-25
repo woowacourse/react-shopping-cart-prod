@@ -1,11 +1,12 @@
 import { base64 } from '../service/apiURL';
-import { serverState } from '../service/atom';
+import { checkCartListState, serverState } from '../service/atom';
 import { CartItemType } from '../types/types';
 import { useMutation, useQuery } from 'react-query';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 export const useCartFetch = () => {
   const serverURL = useRecoilValue(serverState);
+  const setCheckCartList = useSetRecoilState(checkCartListState);
 
   const fetchCartData = async () => {
     const res = await fetch(`${serverURL}/cart-items`, {
@@ -50,18 +51,27 @@ export const useCartFetch = () => {
   );
 
   const fetchAddCartItem = useMutation(
-    async ({ body }: { body?: object }) =>
-      await fetch(`${serverURL}/cart-items`, {
+    async ({ body }: { body?: object }) => {
+      const res = await fetch(`${serverURL}/cart-items`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Basic ${base64}`,
         },
         body: JSON.stringify(body),
-      }),
+      });
+      return res;
+    },
     {
-      onSuccess: () => {
+      onSuccess: async (res) => {
+        const cartId = Number(res.headers.get('Location')?.split('/')[2]);
+        if (cartId) {
+          setCheckCartList((prev) => [...prev, cartId]);
+        }
         refetch();
+      },
+      onError: (e) => {
+        console.log(e);
       },
     },
   );
