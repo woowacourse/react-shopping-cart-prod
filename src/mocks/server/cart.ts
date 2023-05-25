@@ -23,8 +23,6 @@ export const getCart = (): Cart => {
 
     return item ? JSON.parse(item) : [];
   } catch {
-    console.log("로컬 스토리지에서 데이터를 파싱하지 못했습니다!");
-
     return [];
   }
 };
@@ -40,7 +38,7 @@ export const addCartItem = (id: number) => {
   cart.push({ id: cartItemId, quantity: 1, product: product });
 
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cart));
-  
+
   return cartItemId;
 };
 
