@@ -10,8 +10,7 @@ const localStorageCart = localStorage.getItem(CART_LOCAL_STORAGE_KEY);
 // eslint-disable-next-line prefer-const
 let cart: CartItem[] = localStorageCart ? JSON.parse(localStorageCart) : [];
 
-const isInCart = (id: number) =>
-  cart.some((cartItem) => cartItem.product.id === id);
+const isInCart = (id: number) => cart.some((cartItem) => cartItem.id === id);
 
 const updateLocalStorage = () =>
   localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(cart));
@@ -35,9 +34,13 @@ export const cartHandlers = [
       );
     }
 
-    const product = await fetch(`${PRODUCTS_BASE_URL}/${productId}`).then(
-      (res) => res.json(),
-    );
+    const response = await fetch(`${PRODUCTS_BASE_URL}/${productId}`);
+
+    if (!response.ok) {
+      return res(ctx.status(404));
+    }
+
+    const product = await response.json();
     const newCartItem = {
       id: Date.now(),
       quantity: 1,
@@ -69,7 +72,7 @@ export const cartHandlers = [
     const quantity = Number(await req.text());
 
     cart = cart.map((cartItem) => {
-      if (cartItem.product.id !== cartItemId) return cartItem;
+      if (cartItem.id !== cartItemId) return cartItem;
 
       return {
         ...cartItem,
@@ -94,7 +97,7 @@ export const cartHandlers = [
       );
     }
 
-    cart = cart.filter((cartItem) => cartItem.product.id !== cartItemId);
+    cart = cart.filter((cartItem) => cartItem.id !== cartItemId);
 
     updateLocalStorage();
 
