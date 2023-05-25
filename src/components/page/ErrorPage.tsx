@@ -8,7 +8,7 @@ export default function ErrorPage() {
       <Title>페이지를 찾지 못했어요.</Title>
       <Message>주소에 오타가 있거나, </Message>
       <Message>변경, 삭제되었을 수도 있어요!</Message>
-      <GoToHome to="/">홈으로 가기</GoToHome>
+      <StyledLink to="/">홈으로 가기</StyledLink>
     </Wrapper>
   );
 }
@@ -41,16 +41,17 @@ const Message = styled.p`
   font-size: 16px;
 `;
 
-const GoToHome = styled(Link)`
+const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  margin: 64px 0;
   width: 160px;
   height: 44px;
+  margin: 64px 0;
 
   background-color: #04c09e;
   border-radius: 8px;
+
   color: #ffffff;
 `;

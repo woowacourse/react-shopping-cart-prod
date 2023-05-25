@@ -26,7 +26,7 @@ export default function CartPage() {
           <Image src="./shoppingBag.svg" />
           <Message>장바구니에 상품이 없습니다.</Message>
           <Message>상품을 추가해보세요.</Message>
-          <Button to="/">상품 담으러 가기</Button>
+          <StyledLink to="/">상품 담으러 가기</StyledLink>
         </EmptyCartMain>
       )}
     </>
@@ -87,7 +87,7 @@ const Message = styled.p`
   margin-top: 16px;
 `;
 
-const Button = styled(Link)`
+const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
