@@ -28,14 +28,9 @@ export const cartTotalPriceSelector = selector({
       return 0;
     }
 
-    return Object.keys(cartList).reduce((acc, curr) => {
-      const item = cartList[parseInt(curr, 10)];
-
-      if (item.isSelected === false) {
-        return acc;
-      }
-
-      return acc + item.quantity * item.product.price;
+    return cartList.reduce((acc, cur) => {
+      if (!cur.isSelected) return acc;
+      return acc + cur.product.price * cur.quantity;
     }, 0);
   },
 });
