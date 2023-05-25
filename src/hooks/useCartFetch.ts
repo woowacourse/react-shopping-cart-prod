@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { base64 } from '../service/apiURL';
 import { serverState } from '../service/atom';
 import { CartItemType } from '../types/types';
@@ -75,10 +74,6 @@ export const useCartFetch = () => {
     mutateCartData.mutate({ method: 'PATCH', cartId, body });
 
   const deleteCartItemAPI = (cartId: number) => mutateCartData.mutate({ method: 'DELETE', cartId });
-
-  useEffect(() => {
-    refetch();
-  }, [serverURL]);
 
   return {
     cartData,
