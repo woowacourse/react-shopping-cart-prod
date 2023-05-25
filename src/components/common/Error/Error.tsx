@@ -1,5 +1,9 @@
+import { useNavigate } from 'react-router-dom';
+
 import { HTTPErrorInfo } from '../../../api/HTTPError';
 import ErrorImage from '../../../assets/error-image.png';
+import { PATH } from '../../../constants/path';
+import ServerSelect from '../ServerSelect/ServerSelect';
 import * as S from './Error.styles';
 
 export interface ErrorProps {
@@ -9,6 +13,12 @@ export interface ErrorProps {
 }
 
 const Error = ({ message, information, resetError }: ErrorProps) => {
+  const navigate = useNavigate();
+
+  const handleReload = () => {
+    navigate(PATH.RELOAD);
+  };
+
   return (
     <S.ErrorWrapper>
       <S.ErrorContentContainer>
@@ -18,6 +28,7 @@ const Error = ({ message, information, resetError }: ErrorProps) => {
         <S.ErrorResetButton variant="primary" onClick={resetError}>
           {information?.BUTTON ?? '새로고침'}
         </S.ErrorResetButton>
+        <ServerSelect onChange={handleReload} />
       </S.ErrorContentContainer>
     </S.ErrorWrapper>
   );

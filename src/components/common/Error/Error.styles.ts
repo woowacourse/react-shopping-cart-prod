@@ -22,6 +22,15 @@ const ErrorContentContainer = styled.div`
   & > * {
     text-align: center;
   }
+
+  & > label {
+    margin-top: ${({ theme }) => theme.spacer.spacing3};
+    width: 250px;
+
+    & > select {
+      padding: 14px;
+    }
+  }
 `;
 
 const ErrorImage = styled.img`
