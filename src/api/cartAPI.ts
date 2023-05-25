@@ -10,7 +10,7 @@ const getCartAPI = async (baseUrl: string) => {
     });
   };
 
-  const postCartItem = async (productId: number): Promise<CartItemData[]> => {
+  const postCartItem = async (productId: number): Promise<Response> => {
     const data = {
       productId,
     };
@@ -23,7 +23,7 @@ const getCartAPI = async (baseUrl: string) => {
     });
   };
 
-  const patchCartItem = async (cartItemId: number, quantity: number): Promise<CartItemData[]> => {
+  const patchCartItem = async (cartItemId: number, quantity: number): Promise<Response> => {
     const data = {
       quantity,
     };
