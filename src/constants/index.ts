@@ -9,7 +9,7 @@ export const DELIVERY_FEE = 3000;
 
 export const SERVERS: Record<string, string> = {
   리오: "http://13.125.102.213:8080",
-  애쉬: "http://43.201.20.174:8080",
+  애쉬: "https://woowa-ash.store/admin",
   루카: "http://13.209.73.130:8080",
 } as const;
 

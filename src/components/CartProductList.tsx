@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import type { LocalProductType, ProductType } from "../types/domain";
 import styled from "styled-components";
 import { TrashCanIcon } from "../assets";
@@ -6,8 +6,8 @@ import { Counter } from "./Counter";
 import { localProductsSelector } from "../recoil/selector";
 import { useCheckBox } from "../hooks/useCheckBox";
 import { deleteCartItem } from "../api";
-import { selectedProductsState } from "../recoil/atom";
-import { useFetch } from "../hooks/useFetch";
+import { localProductsState, selectedProductsState } from "../recoil/atom";
+import { makeLocalProducts } from "../utils/domain";
 
 export const CartProductList = () => {
   const localProductsInCart = useRecoilValue<LocalProductType[]>(
@@ -16,7 +16,6 @@ export const CartProductList = () => {
   const selectedProducts = useRecoilValue<LocalProductType[]>(
     selectedProductsState
   );
-  const { fetchNewProducts } = useFetch();
   const {
     checkedArray,
     allChecked,
@@ -25,21 +24,26 @@ export const CartProductList = () => {
     handleCheckBox,
     handleAllCheckBox,
   } = useCheckBox();
+  const setLocalProducts = useSetRecoilState(localProductsState);
 
-  const handleDeleteButtonClicked = () => {
+  const handleDeleteButtonClicked = async () => {
     selectedProducts.forEach((product) => {
       deleteCartItem(product.cartItemId);
     });
 
     removeCheckedArray();
-    fetchNewProducts();
+    // fetchNewProducts();
+    const newProducts = await makeLocalProducts();
+    setLocalProducts(newProducts);
   };
 
   const handleDelete = (cartItemId: number, index: number) => async () => {
     await deleteCartItem(cartItemId);
 
     removeTargetIndex(index);
-    fetchNewProducts();
+    // fetchNewProducts();
+    const newProducts = await makeLocalProducts();
+    setLocalProducts(newProducts);
   };
 
   return (

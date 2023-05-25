@@ -1,6 +1,5 @@
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { useFetch } from "../hooks/useFetch";
 import { useRouter } from "../hooks/useRouter";
 import { localProductsSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
@@ -10,38 +9,28 @@ import {
   CartProductList,
   TotalPriceTable,
   Button,
-  Loading,
 } from "../components";
 
 const Cart = () => {
   const { goPage } = useRouter();
   const cartProducts = useRecoilValue(localProductsSelector);
-  const { isLoading } = useFetch();
 
   return (
     <>
       <Header />
       <Page>
-        {isLoading ? (
-          <Loading />
+        <TitleBox>장바구니</TitleBox>
+        {cartProducts.length === 0 ? (
+          <EmptyContainer>
+            <span>🛒</span>
+            <p>장바구니가 텅 비었어요</p>
+            <Button onClick={goPage(ROUTER_PATH.Main)}>상품 담으러 가기</Button>
+          </EmptyContainer>
         ) : (
-          <>
-            <TitleBox>장바구니</TitleBox>
-            {cartProducts.length === 0 ? (
-              <EmptyContainer>
-                <span>🛒</span>
-                <p>장바구니가 텅 비었어요</p>
-                <Button onClick={goPage(ROUTER_PATH.Main)}>
-                  상품 담으러 가기
-                </Button>
-              </EmptyContainer>
-            ) : (
-              <Container>
-                <CartProductList />
-                <TotalPriceTable />
-              </Container>
-            )}
-          </>
+          <Container>
+            <CartProductList />
+            <TotalPriceTable />
+          </Container>
         )}
       </Page>
     </>

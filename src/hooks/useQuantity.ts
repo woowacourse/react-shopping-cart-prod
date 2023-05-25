@@ -44,7 +44,6 @@ export const useQuantity = (productId: number) => {
 
     setQuantity(newQuantity.toString());
     const newProducts = await makeLocalProducts();
-    console.log("!!", newProducts);
     setLocalProducts(newProducts);
   };
 
