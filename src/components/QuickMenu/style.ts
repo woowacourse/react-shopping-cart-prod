@@ -11,7 +11,7 @@ export const Container = styled.div`
 
   @media only screen and (max-width: 768px) {
     // 모바일
-    display: none;
+    opacity: 0;
   }
 `;
 
@@ -39,11 +39,12 @@ export const Button = styled.div`
 type OptionProps = {
   position: Partial<Record<'right' | 'bottom' | 'top' | 'left', string>>;
   avatar: string;
-  hover: boolean;
+  isHover: boolean;
+  isInit: boolean;
 };
 
 export const Option = styled.div<OptionProps>`
-  display: block;
+  display: ${(props) => (props.isInit ? 'none' : 'block')};
   position: absolute;
   ${(props) => props.position};
 
@@ -58,7 +59,12 @@ export const Option = styled.div<OptionProps>`
 
   border-radius: 50%;
 
-  animation: ${(props) => (props.hover ? QuickMenuAppear(props.position) : QuickMenuDisAppear)} 0.3s ease forwards;
+  animation: ${(props) => {
+      if (props.isInit) return 'none';
+      if (props.isHover) return QuickMenuAppear(props.position);
+      return QuickMenuDisAppear;
+    }}
+    0.3s ease forwards;
 
   cursor: pointer;
 
@@ -70,6 +76,6 @@ export const Option = styled.div<OptionProps>`
       opacity: 1;
     }
     pointer-events: auto;
-    opacity: 1;
+    /* opacity: 1; */
   }
 `;

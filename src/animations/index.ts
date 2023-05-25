@@ -23,8 +23,8 @@ export const disappearAnimation = keyframes`
 export function QuickMenuAppear(position: Partial<Record<'right' | 'bottom' | 'top' | 'left', string>>) {
   return keyframes`
   from {
-    pointer-events: none;
     opacity: 0;
+    pointer-events: none;
     bottom: 0;
   }
   to {
