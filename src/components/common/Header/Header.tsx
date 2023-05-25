@@ -43,7 +43,7 @@ const Header = () => {
           ))}
         </select>
         <CartButton onClick={handleCartButtonClick}>
-          장바구니
+          <p>장바구니</p>
           <CartTotalQuantity>{cartList.length}</CartTotalQuantity>
         </CartButton>
       </RightContainer>
@@ -95,6 +95,12 @@ const CartButton = styled.div`
   font-size: 24px;
 
   cursor: pointer;
+
+  @media screen and (max-width: 520px) {
+    & > p {
+      display: none;
+    }
+  }
 `;
 
 const CartTotalQuantity = styled.span`
