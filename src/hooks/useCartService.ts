@@ -13,6 +13,8 @@ import type { CartItem, Product } from '../types/product';
 const useCartService = () => {
   const cart = useRecoilValue(cartState);
   const serverOrigin = useRecoilValue(serverOriginState);
+  const { showToast } = useToast();
+
   const updateCart = useRecoilCallback(
     ({ set }) =>
       async () => {
@@ -22,7 +24,6 @@ const useCartService = () => {
       },
     [serverOrigin],
   );
-  const { showToast } = useToast();
 
   const addProductToCart = async (productId: Product['id']) => {
     try {
@@ -76,6 +77,7 @@ const useCartService = () => {
 
   return {
     cart,
+    updateCart,
     addProductToCart,
     updateProductQuantity,
     removeProductFromCart,
