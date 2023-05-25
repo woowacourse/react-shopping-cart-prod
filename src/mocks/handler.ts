@@ -1,9 +1,9 @@
-import type { CartType, ProductType } from "../types";
+import type { CartType, ProductType } from '../types';
 
-import { rest } from "msw";
+import { rest } from 'msw';
 
-import { LOCAL_STORAGE_KEY, MOCK_URL } from "../constants";
-import mockProducts from "./mockProducts.json";
+import { LOCAL_STORAGE_KEY, MOCK_URL } from '../constants';
+import mockProducts from './mockProducts.json';
 
 const products: ProductType[] = mockProducts;
 
@@ -12,7 +12,7 @@ const getProduct = (productId: number) => {
 };
 
 const getCart = (): CartType => {
-  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY.cart) ?? "[]");
+  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY.cart) ?? '[]');
 };
 
 const setCart = (cart: CartType) => {
@@ -21,11 +21,11 @@ const setCart = (cart: CartType) => {
 
 export const handlers = [
   rest.get(`${MOCK_URL}/products`, (_req, res, ctx) => {
-    return res(ctx.delay(400), ctx.status(200), ctx.json(products));
+    return res(ctx.delay(200), ctx.status(200), ctx.json(products));
   }),
 
   rest.get(`${MOCK_URL}/cart-items`, (_req, res, ctx) => {
-    return res(ctx.delay(400), ctx.status(200), ctx.json(getCart()));
+    return res(ctx.delay(200), ctx.status(200), ctx.json(getCart()));
   }),
 
   rest.post(`${MOCK_URL}/cart-items`, async (req, res, ctx) => {
@@ -34,7 +34,7 @@ export const handlers = [
 
     setCart(getCart().concat([{ id: Date.now(), quantity: 1, product }]));
 
-    return res(ctx.status(201));
+    return res(ctx.delay(200), ctx.status(201));
   }),
 
   rest.patch(`${MOCK_URL}/cart-items/:cartItemId`, async (req, res, ctx) => {
@@ -47,13 +47,13 @@ export const handlers = [
 
     setCart(newCart);
 
-    return res(ctx.status(200));
+    return res(ctx.delay(200), ctx.status(200));
   }),
 
   rest.delete(`${MOCK_URL}/cart-items/:cartItemId`, (req, res, ctx) => {
     const cartItemId = Number(req.params.cartItemId);
     setCart(getCart().filter(({ id }) => id !== cartItemId));
 
-    return res(ctx.status(204));
+    return res(ctx.delay(200), ctx.status(204));
   }),
 ];
