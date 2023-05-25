@@ -1,11 +1,12 @@
-import { atom } from 'recoil';
-import type { AtomEffect } from 'recoil';
+import { atom, selector } from 'recoil';
 import type { CartProduct } from '../../types/product';
 import { DEFAULT_SERVER_NAME, USER_AUTH_TOKEN } from '../../constant';
 import ServerUtil from '../../utils/ServerUrl';
 
-const fetchEffect: AtomEffect<CartProduct[]> = ({ setSelf, trigger }) => {
-  const fetchCartItemList = async () => {
+export const fetchCartItemList = selector<CartProduct[]>({
+  key: 'fetchCartItemList',
+
+  get: async () => {
     const cartItemsUrl = ServerUtil.getCartItemsUrl(DEFAULT_SERVER_NAME);
 
     const response = await fetch(cartItemsUrl, {
@@ -15,18 +16,13 @@ const fetchEffect: AtomEffect<CartProduct[]> = ({ setSelf, trigger }) => {
     if (response.status !== 200) throw new Error('서버에 장애가 발생했습니다.');
 
     const cartItemList = await response.json();
-    setSelf(cartItemList);
-  };
-
-  if (trigger === 'get') {
-    fetchCartItemList();
-  }
-};
+    return cartItemList;
+  },
+});
 
 const cartState = atom<CartProduct[]>({
   key: 'cartState',
-  default: [],
-  effects: [fetchEffect],
+  default: fetchCartItemList,
 });
 
 export default cartState;
