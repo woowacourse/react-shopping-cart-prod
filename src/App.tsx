@@ -5,7 +5,6 @@ import Layout from './components/@common/Layout/Layout.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ListPage from './pages/ListPage/ListPage.tsx';
 import { RecoilRoot } from 'recoil';
-import UnloadHandler from './components/@common/UnloadHandler.tsx';
 import CartPage from './pages/CartPage/CartPage.tsx';
 import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
 
@@ -24,7 +23,6 @@ const App = () => {
           </Routes>
         </Layout>
       </BrowserRouter>
-      <UnloadHandler />
     </RecoilRoot>
   );
 };
