@@ -8,7 +8,7 @@ export const useMutate = () => {
   const { toast } = useToast();
   const server = useRecoilValue(serverAtom);
 
-  const request = async (callback: (server: string) => Promise<any>) => {
+  const request = async <T>(callback: (server: string) => Promise<T>) => {
     try {
       const res = await callback(server);
       return res;
