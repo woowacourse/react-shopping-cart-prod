@@ -23,12 +23,13 @@ export const useCart = (productInfo?: ProductInfo) => {
   };
 
   const updateProductQuantity = (quantity: number) => {
-    if (quantity <= 0) {
-      deleteFromCart();
-      return;
-    }
     const currentCartItem = getCartItem();
     if (!currentCartItem) return;
+
+    if (quantity <= 0) {
+      deleteFromCart(currentCartItem.id);
+      return;
+    }
 
     api.patch(
       `${host}${CART_BASE_URL}/${currentCartItem.id}`,
@@ -37,13 +38,8 @@ export const useCart = (productInfo?: ProductInfo) => {
     );
   };
 
-  const deleteFromCart = (productId?: number) => {
-    const curProductId = productId ? productId : productInfo?.id;
-
-    const currentCartItem = getCartItem(curProductId);
-    if (!currentCartItem) return;
-
-    api.delete(`${host}${CART_BASE_URL}/${currentCartItem.id}`, `${host}${CART_BASE_URL}`);
+  const deleteFromCart = (cartId: number) => {
+    api.delete(`${host}${CART_BASE_URL}/${cartId}`, `${host}${CART_BASE_URL}`);
   };
 
   return {

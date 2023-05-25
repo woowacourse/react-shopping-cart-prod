@@ -17,7 +17,7 @@ export default function CartItem({ cartItemInfo, deleteCheckedItem }: Props) {
 
   const handleDeleteCartItem = () => {
     deleteCheckedItem((prev) => prev.filter((itemId) => itemId !== cartItemInfo.id));
-    deleteFromCart();
+    deleteFromCart(cartItemInfo.id);
   };
 
   return (
