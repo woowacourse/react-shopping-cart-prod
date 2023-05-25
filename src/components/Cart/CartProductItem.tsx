@@ -19,7 +19,8 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
   const { name, price, imageUrl } = product;
 
   const { deleteProduct } = useProductQuantity(id, quantity);
-  const { targetChecked, updateChecked, deleteChecked } = useChecked(id);
+  const { targetChecked, updateChecked, deleteChecked } =
+    useChecked(cartProduct);
 
   const toggleProductChecked: ChangeEventHandler<HTMLInputElement> = (
     event
@@ -37,7 +38,7 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
       <CheckBox
         id={`cart-product-check-${id}`}
         onChange={toggleProductChecked}
-        checked={targetChecked?.isChecked ?? false}
+        checked={targetChecked ? true : false}
       />
       <Image src={imageUrl} alt={name} loading='lazy' size='small' />
       <ProductName>{name}</ProductName>

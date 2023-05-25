@@ -1,17 +1,12 @@
 import { atom, selector } from 'recoil';
 
 import { cartProductState } from '../cartProducts';
+import type { CartProduct } from '../../types/product';
 
-import { CheckedState } from './type';
-
-export const checkedState = atom<CheckedState[]>({
-  key: 'checkedState',
+export const checkedCartProductState = atom<CartProduct[]>({
+  key: 'checkedCartProductState',
   default: selector({
-    key: 'checkedState/default',
-    get: ({ get }) =>
-      get(cartProductState).map((cartProduct) => ({
-        id: cartProduct.id,
-        isChecked: false,
-      })),
+    key: 'checkedCartProductState/default',
+    get: ({ get }) => get(cartProductState),
   }),
 });

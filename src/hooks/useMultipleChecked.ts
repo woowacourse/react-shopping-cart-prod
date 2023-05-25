@@ -1,53 +1,59 @@
 import type { ChangeEventHandler } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil';
 
 import cartProductApis from '../apis/cartProducts';
-import { checkedState } from '../states/checkedCartProducts';
+import { checkedCartProductState } from '../states/checkedCartProducts';
 import { cartProductState } from '../states/cartProducts';
 import {
-  filterCartProductChecked,
   findTargetChecked,
   getIsAllChecked,
   getIsAllUnchecked,
-  updateCartProductChecked,
 } from '../states/checkedCartProducts/utils';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 
 const useMultipleChecked = () => {
   const serverName = useRecoilValue(serverNameState);
-  const [checked, setChecked] = useRecoilState(checkedState);
-  const setCartProducts = useSetRecoilState(cartProductState);
+  const [checked, setChecked] = useRecoilState(checkedCartProductState);
+  const resetChecked = useResetRecoilState(checkedCartProductState);
+  const [cartProducts, setCartProducts] = useRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
 
   const { deleteData } = cartProductApis(serverName, '/cart-items');
 
-  const isAllChecked = getIsAllChecked(checked);
+  const isAllChecked = getIsAllChecked(cartProducts, checked);
   const isAllUnchecked = getIsAllUnchecked(checked);
 
   const toggleAllProductChecked: ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
-    setChecked((prev) =>
-      prev.map((item) =>
-        updateCartProductChecked(item, event.currentTarget.checked)
-      )
-    );
+    const { checked } = event.currentTarget;
+
+    if (checked) {
+      resetChecked();
+      return;
+    }
+
+    setChecked([]);
   };
 
   const deleteCheckedProducts = () => {
     try {
       checked.forEach(async (item) => {
-        if (item.isChecked) await deleteData(item.id);
+        await deleteData(item.id);
       });
 
       setCartProducts((prev) =>
         prev.filter(
-          (cartProduct) =>
-            !findTargetChecked(checked, cartProduct.id)?.isChecked
+          (cartProduct) => !findTargetChecked(checked, cartProduct.id)
         )
       );
-      setChecked((prev) => filterCartProductChecked(prev, false));
+      setChecked([]);
     } catch {
       setToastState({
         message: '상품 삭제를 실패했습니다',

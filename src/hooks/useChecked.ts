@@ -1,34 +1,31 @@
-import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import {
-  checkedState,
+  checkedCartProductState,
   targetCheckedState,
 } from '../states/checkedCartProducts';
-import { updateCartProductChecked } from '../states/checkedCartProducts/utils';
+import {
+  addCartProductChecked,
+  deleteCartProductChecked,
+} from '../states/checkedCartProducts/utils';
+import { CartProduct } from '../types/product';
 
-const useChecked = (id: number) => {
+const useChecked = (cartProduct: CartProduct) => {
+  const { id } = cartProduct;
   const targetChecked = useRecoilValue(targetCheckedState(id));
-  const setChecked = useSetRecoilState(checkedState);
+  const setChecked = useSetRecoilState(checkedCartProductState);
 
   const updateChecked = (isChecked: boolean) => {
     setChecked((prev) =>
-      prev.map((item) => {
-        if (item.id !== id) return item;
-        return updateCartProductChecked(item, isChecked);
-      })
+      isChecked
+        ? addCartProductChecked(prev, cartProduct)
+        : deleteCartProductChecked(prev, id)
     );
   };
 
   const deleteChecked = () => {
-    setChecked((prev) => prev.filter((item) => item.id !== id));
+    setChecked((prev) => deleteCartProductChecked(prev, id));
   };
-
-  useEffect(() => {
-    if (targetChecked) return;
-
-    setChecked((prev) => [...prev, { id, isChecked: false }]);
-  }, [id, setChecked, targetChecked]);
 
   return { targetChecked, updateChecked, deleteChecked };
 };
