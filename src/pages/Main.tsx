@@ -3,11 +3,16 @@ import Page from "components/common/Page";
 import ItemList from "components/ItemList";
 import React from "react";
 import LoadingSpinner from "components/common/LodingSpinner";
+import Skeleton from "components/common/Skeleton";
 
 const Main = () => {
   return (
     <>
-      <Header />
+      <React.Suspense
+        fallback={<Skeleton {...{ background: "#333333", width: "100%", height: "70px" }} />}
+      >
+        <Header />
+      </React.Suspense>
       <Page>
         <React.Suspense fallback={<LoadingSpinner />}>
           <ItemList />
