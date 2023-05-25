@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 
+import useCartItems from '@Hooks/useCartItems';
+
 import serverState from '@Atoms/serverState';
 
 import { SERVERS, SERVERS_NAMES } from '@Constants/servers';
@@ -8,7 +10,8 @@ import { SERVERS, SERVERS_NAMES } from '@Constants/servers';
 import * as S from './style';
 
 function QuickMenu() {
-  const setServerState = useSetRecoilState(serverState);
+  const { toggleServer } = useCartItems();
+  const setServer = useSetRecoilState(serverState);
   const [hover, setHover] = useState(false);
 
   return (
@@ -18,7 +21,10 @@ function QuickMenu() {
           <S.Option
             hover={hover}
             key={value}
-            onClick={() => setServerState(value)}
+            onClick={() => {
+              setServer(value);
+              toggleServer(value);
+            }}
             position={{ bottom: `${(index + 1) * 60}px` }}
             avatar={SERVERS[value].avatar}
           />

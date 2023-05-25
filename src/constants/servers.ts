@@ -25,7 +25,7 @@ export const SERVERS_NAMES = ['베베', '에단', '도리와 노아'] as const;
 
 export const SERVERS: Record<Servers, { apiUrl: string; email: string; password: string; avatar: string }> = {
   베베: {
-    apiUrl: 'http://43.200.8.82:8080',
+    apiUrl: 'http://54.180.83.246:8080',
     email: 'a@a.com',
     password: '1234',
     avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04M28KU1PU-ff7ca3cddc88-512',

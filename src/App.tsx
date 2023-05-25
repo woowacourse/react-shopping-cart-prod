@@ -27,7 +27,9 @@ function App() {
         <ErrorBoundary fallback={NotFound}>
           <Outlet />
         </ErrorBoundary>
-        <QuickMenu />
+        <Suspense>
+          <QuickMenu />
+        </Suspense>
       </CommonPageStyle>
     </>
   );

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { CartItemType, UpdateCartItem } from '@Types/index';
+import { CartItemType, Servers, UpdateCartItem } from '@Types/index';
 
 import { fetchData } from '@Utils/api';
 
-import cartItemsState, { cartItemsStateSelector } from '@Atoms/cartItemsState';
+import cartItemsState from '@Atoms/cartItemsState';
 import serverState from '@Atoms/serverState';
 
 import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
@@ -13,7 +13,6 @@ import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 const useCartItems = () => {
   const server = useRecoilValue(serverState);
   const [cartItems, setCartItems] = useRecoilState<CartItemType[]>(cartItemsState);
-  const newCartItems = useRecoilValue(cartItemsStateSelector);
 
   const [updateStats, setUpdateStats] = useState<'success' | 'loading'>('success');
 
@@ -24,6 +23,11 @@ const useCartItems = () => {
     if (!cartItem) return false;
 
     return cartItem.isSelected;
+  };
+
+  const toggleServer = async (server: Servers) => {
+    const data = await fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET, server });
+    setCartItems(data);
   };
 
   const updateCartItem: UpdateCartItem = async (url, method, body) => {
@@ -89,12 +93,9 @@ const useCartItems = () => {
     setCartItems(cartItems.filter((cartItem) => !cartItem.isSelected));
   };
 
-  useEffect(() => {
-    setCartItems(newCartItems);
-  }, [server]);
-
   return {
     isEmpty,
+    toggleServer,
     updateCartItem,
     toggleSelected,
     toggleAllSelected,
