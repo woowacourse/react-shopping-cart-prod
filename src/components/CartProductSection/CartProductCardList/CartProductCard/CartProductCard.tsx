@@ -7,16 +7,16 @@ import useShoppingCart from 'hooks/useShoppingCart';
 import useModal from 'components/@common/Modal/hooks/useModal';
 import { ReactComponent as RecycleBinIcon } from 'assets/recycle-bin-icon.svg';
 import type { CartProduct, Product } from 'types/product';
+import useCartCheckBox from 'hooks/useCartCheckBox';
 
 type CartProductCardProps = {
   cartProduct: CartProduct;
-  toggleCheck: (id: Product['id']) => void;
-  isChecked: (id: Product['id']) => boolean;
 };
 
-const CartProductCard = ({ cartProduct, toggleCheck, isChecked }: CartProductCardProps) => {
+const CartProductCard = ({ cartProduct }: CartProductCardProps) => {
   const { product, quantity } = cartProduct;
   const { id, name, price, imageUrl } = product;
+  const { isChecked, toggleCheck } = useCartCheckBox();
   const { initialAddCart, decreaseQuantity, increaseQuantity, deleteCartProduct } = useShoppingCart();
   const { isModalOpen, openModal, closeModal } = useModal();
   const totalPrice = price * quantity;

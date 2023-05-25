@@ -8,7 +8,7 @@ import useShoppingCart from 'hooks/useShoppingCart';
 import styled from 'styled-components';
 
 const CartProductSection = () => {
-  const { checkedProducts, isChecked, isAllChecked, toggleCheck, toggleCheckAllBox } = useCartCheckBox();
+  const { checkedProducts, isAllChecked, toggleCheckAllBox } = useCartCheckBox();
   const { deleteCheckedCartProducts } = useShoppingCart();
   const { isModalOpen, openModal, closeModal } = useModal();
 
@@ -29,7 +29,7 @@ const CartProductSection = () => {
           {`선택한 ${checkedProducts.size}개의 상품을 삭제하시겠습니까?`}
         </ConfirmModal>
       </CheckBoxTab>
-      <CartProductCardList toggleCheck={toggleCheck} isChecked={isChecked} />
+      <CartProductCardList />
     </ProductSection>
   );
 };
