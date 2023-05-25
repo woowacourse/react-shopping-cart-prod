@@ -5,7 +5,6 @@ import { Text } from '../../common/Text/Text.styles';
 const CartCheckoutBoxWrapper = styled.aside`
   position: relative;
   width: 284px;
-  min-height: 942px;
   padding-top: 40px;
 
   @media screen and (max-width: 1200px) {
