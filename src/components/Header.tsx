@@ -56,6 +56,14 @@ const MenuButton = styled.button`
   font-weight: 500;
 `;
 
+const Selector = styled.select`
+  background-color: transparent;
+`;
+
+const Option = styled.option`
+  background-color: #333;
+`;
+
 type HeaderProps = {
   onNavigate: (to: string) => void;
 };
@@ -80,13 +88,13 @@ const Header = (props: HeaderProps) => {
         </HomeButton>
 
         <Menu>
-          <select onChange={handleServerChange} value={server.name}>
+          <Selector onChange={handleServerChange} value={server.name}>
             {servers.map((server) => (
-              <option key={server.name} value={server.name}>
+              <Option key={server.name} value={server.name}>
                 {server.name}
-              </option>
+              </Option>
             ))}
-          </select>
+          </Selector>
 
           <MenuButton onClick={() => onNavigate('/cart')}>
             장바구니{' '}
