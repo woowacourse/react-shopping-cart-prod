@@ -1,6 +1,6 @@
 import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { cartState, serverOriginState } from '../recoil/atoms';
-import { CART_BASE_URL } from '../constants';
+import { CART_BASE_URL } from '../constants/api';
 import useToast from '../components/common/Toast/useToast';
 import {
   addCartItem,

@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 import { serverOriginState } from '../atoms';
-import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../../constants';
+import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../../constants/api';
 import { fetchCartItems } from '../../remotes/cart';
 import { fetchProducts } from '../../remotes/product';
 import type { CartItem, Product } from '../../types/product';

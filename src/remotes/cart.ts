@@ -1,5 +1,5 @@
-import { base64 } from '../constants';
-import { CartItem, Product } from '../types/product';
+import { base64 } from '../constants/auth';
+import type { CartItem, Product } from '../types/product';
 
 export const fetchCartItems = async (url: string) => {
   const response = await fetch(url, {

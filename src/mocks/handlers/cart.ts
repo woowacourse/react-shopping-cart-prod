@@ -3,7 +3,7 @@ import {
   CART_BASE_URL,
   CART_LOCAL_STORAGE_KEY,
   PRODUCTS_BASE_URL,
-} from '../../constants';
+} from '../../constants/api';
 import type { CartItem, NewCartItem } from '../../types/product';
 
 const localStorageCart = localStorage.getItem(CART_LOCAL_STORAGE_KEY);
