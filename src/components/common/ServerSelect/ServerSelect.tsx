@@ -1,5 +1,3 @@
-import { ChangeEventHandler } from 'react';
-import { useRecoilState } from 'recoil';
 import { ChangeEventHandler, useState } from 'react';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -10,6 +8,7 @@ import { isKeyOf } from '../../../types/typeGuards';
 const ServerSelect = () => {
   const [value, setValue] = useState('baron');
   const setServerOrigin = useSetRecoilState(serverOriginState);
+  const resetCart = useResetRecoilState(cartState);
 
   const changeServer: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.target.value;
