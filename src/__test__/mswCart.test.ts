@@ -1,9 +1,15 @@
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
-import { server } from './setupTests';
+// import { server } from './setupTests';
 import { rest } from 'msw';
 import { BASE_URL, CART_PATH } from '@constants/urlConstants';
 import { CartItemType } from 'types/ProductType';
+import {
+  createCartItem,
+  removeCartItem,
+  updateCartItemQuantity,
+} from '@views/CartItemList/utils/cart';
+import { server } from './setupTests';
 
 const [product, product2, product3] = MOCK_PRODUCT_LIST;
 
@@ -41,8 +47,10 @@ describe('MSW 통신 테스트', () => {
 
         const product = MOCK_PRODUCT_LIST.find((productItem) => productItem.id === productId);
 
+        if (!product) throw new Error('id에 맞는 product item을 찾을 수 없습니다.');
+
         cartIdGenerator.increase();
-        const cartItem = convertProductToCartItem(cartIdGenerator.value, product);
+        const cartItem = createCartItem({ cartId: cartIdGenerator.value, product });
 
         serverData.push(cartItem);
 
@@ -52,7 +60,7 @@ describe('MSW 통신 테스트', () => {
       rest.delete(`${endpoint}/:cartItemId`, (req, res, ctx) => {
         const { cartItemId } = req.params;
 
-        serverData = removeCartItem(cartItemId, serverData);
+        serverData = removeCartItem({ cartId: Number(cartItemId.toString()), cart: serverData });
 
         return res(ctx.status(204));
       }),
@@ -61,7 +69,11 @@ describe('MSW 통신 테스트', () => {
         const { cartItemId } = req.params;
         const { quantity } = await req.json();
 
-        serverData = updateCartItemQuantity({ id: cartItemId, cart: serverData, quantity });
+        serverData = updateCartItemQuantity({
+          cartId: Number(cartItemId),
+          cart: serverData,
+          quantity,
+        });
 
         return res(ctx.status(200), ctx.body('OK'));
       })
@@ -75,13 +87,13 @@ describe('MSW 통신 테스트', () => {
 
     const cart = await fetchCartItems.get();
 
-    expect(cart[0]).toEqual(convertProductToCartItem(cartId, product));
+    expect(cart[0]).toEqual(createCartItem({ cartId: Number(cartId), product }));
   });
 
   test('장바구니 아이템 제거 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
     const cartId = 1;
 
-    serverData = [convertProductToCartItem(cartId, product)];
+    serverData = [createCartItem({ cartId, product })];
 
     await fetchCartItems.delete(Number(cartId));
 
@@ -92,7 +104,7 @@ describe('MSW 통신 테스트', () => {
   test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
     const cartId = 1;
 
-    serverData = [convertProductToCartItem(cartId, product)];
+    serverData = [createCartItem({ cartId, product })];
 
     await fetchCartItems.update(cartId, 40);
 
@@ -103,9 +115,9 @@ describe('MSW 통신 테스트', () => {
 
   test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
     serverData = [
-      convertProductToCartItem(1, product),
-      convertProductToCartItem(2, product2),
-      convertProductToCartItem(3, product3),
+      createCartItem({ cartId: 1, product }),
+      createCartItem({ cartId: 2, product: product2 }),
+      createCartItem({ cartId: 3, product: product3 }),
     ];
 
     const cart = await fetchCartItems.get();
