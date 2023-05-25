@@ -5,21 +5,36 @@ import PaymentAmount from '../components/cart/PaymentAmount/PaymentAmount';
 import CheckedCartListProvider from '../provider/CheckedListProvider';
 import useCartService from '../hooks/useCartService';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import cartLoadingState from '../globalState/atoms/cartLoadingState';
+import serverNameState from '../globalState/atoms/serverName';
+import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
 
 const CartPage = () => {
   const navigate = useNavigate();
-  const { cartList } = useCartService();
+  const { cartList, fetchCartItem } = useCartService();
+  const isCartLoading = useRecoilValue(cartLoadingState);
+  const serverName = useRecoilValue(serverNameState);
 
   const handleLinkButtonClick = () => {
     navigate('/');
   };
+
+  useEffect(() => {
+    fetchCartItem();
+  }, [serverName]);
 
   return (
     <CheckedCartListProvider>
       <Header />
       <Layout>
         <Title>장바구니</Title>
-        {cartList.length ? (
+        {isCartLoading ? (
+          <EmptyCartView>
+            <LoadingSpinner color="#06c09e" />
+          </EmptyCartView>
+        ) : cartList.length ? (
           <Contents>
             <>
               <CartList />
@@ -34,6 +49,7 @@ const CartPage = () => {
             </LinkButton>
           </EmptyCartView>
         )}
+        {/* </Suspense> */}
       </Layout>
     </CheckedCartListProvider>
   );
