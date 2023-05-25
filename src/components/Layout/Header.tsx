@@ -31,7 +31,7 @@ const Header = ({ children }: PropsWithChildren) => {
 
       <FlexBox>
         <SelectBox
-          value={(localStorage.getItem(SERVER_OWNER) ?? '솔로스타') as ServerOwner}
+          value={(localStorage.getItem(SERVER_OWNER) ?? '다즐') as ServerOwner}
           options={serverOwnerOptions}
           onChange={handleServerOwner}
         />
