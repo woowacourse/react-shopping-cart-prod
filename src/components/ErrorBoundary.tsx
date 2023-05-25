@@ -28,12 +28,7 @@ export class ErrorBoundary extends React.Component<
 
   render() {
     if (this.state.hasError) {
-      return (
-        <ErrorBox
-          status={this.state.status}
-          message={ERROR_MESSAGE[this.state.status]}
-        />
-      );
+      return <ErrorBox status={this.state.status} />;
     }
     return this.props.children;
   }

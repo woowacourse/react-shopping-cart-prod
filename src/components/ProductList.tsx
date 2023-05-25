@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { productsState, localProductsState } from "../recoil/atom";
+import { useRecoilState } from "recoil";
+import { localProductsState } from "../recoil/atom";
 import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
@@ -8,35 +8,54 @@ import { MIN_QUANTITY } from "../constants";
 import { addCartItem } from "../api";
 import { makeLocalProducts } from "../utils/domain";
 import { useState } from "react";
+import ErrorBox from "./ErrorBox";
 
 export const ProductList = () => {
-  const products = useRecoilValue(localProductsState);
+  const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
+  const [errorStatus, setErrorStatus] = useState("");
 
-  return (
-    <Wrapper>
-      {products.map((product: LocalProductType) => (
-        <Product key={product.id} {...product} />
-      ))}
-    </Wrapper>
-  );
-};
-
-const Product = ({ id, name, price, imageUrl, quantity }: LocalProductType) => {
-  const setLocalProducts = useSetRecoilState(localProductsState);
-  const [isError, setIsError] = useState(false);
-
-  const handleCartClicked = async () => {
+  const handleCartClicked = (productId: number) => async () => {
     try {
-      await addCartItem(id);
+      const response = await addCartItem(productId);
+      if (!response.ok) throw new Error(response.status.toString());
 
       const newProducts = await makeLocalProducts();
       setLocalProducts(newProducts);
-    } catch (error) {
-      setIsError(true);
+    } catch (error: any) {
+      setErrorStatus(error.message);
       console.log(error);
     }
   };
 
+  return (
+    <Wrapper>
+      {errorStatus !== "" ? (
+        <ErrorBox status={errorStatus} />
+      ) : (
+        localProducts.map((product: LocalProductType) => (
+          <Product
+            key={product.id}
+            {...product}
+            handleCartClicked={handleCartClicked(product.id)}
+          />
+        ))
+      )}
+    </Wrapper>
+  );
+};
+
+interface ProductType extends LocalProductType {
+  handleCartClicked: () => void;
+}
+
+const Product = ({
+  id,
+  name,
+  price,
+  imageUrl,
+  quantity,
+  handleCartClicked,
+}: ProductType) => {
   return (
     <ProductWrapper>
       <img src={imageUrl} alt="상품이미지" />

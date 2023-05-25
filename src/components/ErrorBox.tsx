@@ -1,15 +1,15 @@
 import { styled } from "styled-components";
+import { ERROR_MESSAGE } from "../constants/index";
 
 interface ErrorType {
   status: string;
-  message: string;
 }
 
-const ErrorBox = ({ status, message }: ErrorType) => {
+const ErrorBox = ({ status }: ErrorType) => {
   return (
     <Wrapper>
       <h2>{status}</h2>
-      <p>{message}</p>
+      <p>{ERROR_MESSAGE[status]}</p>
     </Wrapper>
   );
 };
@@ -18,9 +18,9 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-self: center;
-  width: 100%;
+  width: 100vw;
   height: 100%;
-  padding: 400px 0;
+  padding: 20% 0;
 
   align-items: center;
   text-align: center;
