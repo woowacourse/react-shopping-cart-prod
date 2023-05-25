@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
-import CartProductList from '../components/Cart/CartProductList';
 import EstimatedPaymentBox from '../components/Cart/EstimatedPaymentBox';
-import Header from '../components/Common/Header';
 import CheckBox from '../components/Common/CheckBox';
 import Button from '../components/Common/Button';
 import { useRecoilValue } from 'recoil';
 import { totalCartProductSelect } from '../recoil/cartProductData';
 import { checkedListSelector } from '../recoil/checkedProductData';
 import useCheckedProducts from '../hooks/useCheckedProducts';
+import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 
 const CartProductsListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
@@ -18,7 +17,6 @@ const CartProductsListPage = () => {
 
   return (
     <>
-      <Header />
       <Main>
         <CartProductTitle>장바구니</CartProductTitle>
         <CartProductContent>
@@ -26,7 +24,7 @@ const CartProductsListPage = () => {
             <CartProductListTitle>
               든든배송 상품 ({totalCartProductCount}개)
             </CartProductListTitle>
-            <CartProductList />
+            <ContentListSkeleton content='cart' />
             <SelectContainer>
               <CheckBox
                 onChange={handleAllCheckedProducts}

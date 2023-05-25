@@ -1,20 +1,15 @@
 import styled from 'styled-components';
-import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import Header from '../components/Common/Header';
-import ProductList from '../components/Product/ProductList';
 import Message from '../components/Common/Message';
+import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 
 const ProductsListPage = () => {
   return (
     <>
-      <Header />
       <Main>
         <ErrorBoundary fallback={<Message type='error' />}>
-          <Suspense fallback={<Message type='loading' />}>
-            <ProductList />
-          </Suspense>
+          <ContentListSkeleton content='product' />
         </ErrorBoundary>
       </Main>
     </>
