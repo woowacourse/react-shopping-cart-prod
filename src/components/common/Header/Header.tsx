@@ -15,6 +15,7 @@ const Header = () => {
   const onChange = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => {
     setEndPointKey(value as keyof typeof ENDPOINT);
   };
+
   return (
     <S.Root>
       <Flex width="80%" justify="space-between" align="center">

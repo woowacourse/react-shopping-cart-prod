@@ -59,7 +59,7 @@ class FetchQuery implements FetchQueryInstance {
       path,
       config?.baseURL ?? this.defaultConfig.baseURL
     );
-    console.log(config);
+
     const response = await fetch(url, config);
     const { headers } = response;
 
