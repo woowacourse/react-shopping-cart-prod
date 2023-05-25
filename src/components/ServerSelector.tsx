@@ -12,7 +12,7 @@ const ServerSelector = () => {
   };
 
   return (
-    <S.List onChange={handleSeverChange}>
+    <S.List name='서버' aria-label='서버 선택' onChange={handleSeverChange}>
       <option value='준팍'>준팍</option>
       <option value='도이'>도이</option>
       <option value='우르'>우르</option>
