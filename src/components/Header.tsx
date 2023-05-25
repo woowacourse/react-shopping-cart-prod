@@ -4,7 +4,11 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { localProductsSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
-import { SERVERS } from "../constants";
+import {
+  DEFAULT_VALUE_SERVER_OWNER,
+  KEY_LOCALSTORAGE_SERVER_OWNER,
+  SERVERS,
+} from "../constants";
 import React, { useState } from "react";
 import { localProductsState } from "../recoil/atom";
 import { makeLocalProducts } from "../utils/domain";
@@ -12,17 +16,16 @@ import { getLocalStorage, setLocalStorage } from "../utils";
 
 export const Header = () => {
   const { goPage } = useRouter();
-
   const setLocalProducts = useSetRecoilState(localProductsState);
   const cartProducts = useRecoilValue(localProductsSelector);
   const [serverOwner, setServerOwner] = useState(
-    getLocalStorage("owner", "애쉬")
+    getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
   );
 
   const handleServerSelected = async (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setLocalStorage("owner", e.target.value);
+    setLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, e.target.value);
     setServerOwner(e.target.value);
 
     const newProducts = await makeLocalProducts();
