@@ -43,14 +43,14 @@ jobs:
           PUBLIC_URL=$(echo $GITHUB_REPOSITORY | sed -r 's/^.+\/(.+)$/\/\1\//')
           echo PUBLIC_URL=$PUBLIC_URL > .env
 
-      - name: Build
-        run: |
-          npm run build
-          cp ./build/index.html ./build/404.html
-        env:
-          CI: ''
+      # - name: Build
+      #   run: |
+      #     npm run build
+      #     cp ./build/index.html ./build/404.html
+      #   env:
+      #     CI: ''
 
-      - uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+      # - uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     publish_dir: ./build
