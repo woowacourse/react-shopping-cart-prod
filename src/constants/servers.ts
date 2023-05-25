@@ -29,14 +29,14 @@ export const SERVERS: Record<
 > = {
   솔로스타: {
     serverName: '솔로스타',
-    apiUrl: 'http://shopping-cart-1.solo5star.com',
+    apiUrl: 'https://shopping-cart-1.solo5star.com',
     email: 'a@a.com',
     password: '1234',
     avatar: 'https://avatars.githubusercontent.com/u/20203944?v=4',
   },
   베베: {
     serverName: '베베',
-    apiUrl: 'http://54.180.83.246:8080',
+    apiUrl: 'https://dev-king-bebe.n-e.kr',
     email: 'a@a.com',
     password: '1234',
     avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04M28KU1PU-ff7ca3cddc88-512',
@@ -44,7 +44,7 @@ export const SERVERS: Record<
 
   에단: {
     serverName: '에단',
-    apiUrl: 'http://3.37.123.69:8080',
+    apiUrl: 'https://dev-king-ethan.n-e.kr',
     email: 'a@a.com',
     password: '1234',
     avatar: 'https://ca.slack-edge.com/TFELTJB7V-U04METH8VKK-f128d33fbf53-512',
