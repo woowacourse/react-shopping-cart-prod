@@ -24,7 +24,7 @@ function ServerSelectBox() {
   }, [server]);
 
   return (
-    <Select onChange={onChangeServer}>
+    <Select value={server} onChange={onChangeServer}>
       <option>테스트</option>
       <option>디노</option>
       <option>레오</option>
