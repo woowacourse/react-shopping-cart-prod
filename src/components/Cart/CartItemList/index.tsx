@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import * as S from './CartItemList.styles';
 import CartItem from 'components/Cart/CartItem';
-import Spinner from 'components/@common/Spinner';
 import Modal from 'components/@common/Modal';
 import { useCheckedItemIds } from '../hooks/useCheckedItems';
 import { useModal } from 'hooks/useModal';
@@ -16,13 +15,6 @@ const CartItemList = () => {
   useEffect(() => {
     checkAllItems();
   }, []);
-
-  const loading = (
-    <S.Loading>
-      <Spinner />
-      <S.LoadingText>장바구니를 불러오는 중입니다...</S.LoadingText>
-    </S.Loading>
-  );
 
   const fetchedCartList =
     cartList.length === 0 ? (

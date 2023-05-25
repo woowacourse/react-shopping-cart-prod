@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import ProductList from 'pages/ProductList';
 import CartList from 'pages/CartList';
@@ -7,7 +8,11 @@ const router = createBrowserRouter(
   [
     {
       path: '/',
-      element: <ProductList />,
+      element: (
+        <Suspense>
+          <ProductList />
+        </Suspense>
+      ),
       errorElement: <NotFound />,
     },
     {
