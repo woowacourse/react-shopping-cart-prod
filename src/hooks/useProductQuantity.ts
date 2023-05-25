@@ -1,59 +1,48 @@
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { cartProductAtom } from '../recoil/cartProductData';
-import type { CartProduct } from '../types/product';
-import { patchCartProduct } from '../apis/cartProducts';
+import { api } from '../apis/cartProducts';
 import { findTargetProduct } from '../domain/cartProductHandler';
-import {
-  getStoredCartProducts,
-  setStoredCartProducts,
-} from '../utils/localStorage';
+import { hostNameAtom } from '../recoil/hostData';
+import { HostNameType } from '../types/server';
+import type { CartProduct } from '../types/product';
 
-const addTargetQuantity = (cartProducts: CartProduct[], id: number) =>
-  cartProducts.map((cartProduct) => {
-    if (cartProduct.product.id === id) {
-      return { ...cartProduct, quantity: cartProduct.quantity + 1 };
-    }
-    return cartProduct;
+const updateCartProductQuantity = async (
+  hostName: HostNameType,
+  targetProduct: CartProduct,
+  delta: number
+) =>
+  await api(hostName).then((apiInstance) => {
+    return apiInstance.patchCartProduct(
+      targetProduct.id,
+      targetProduct.quantity + delta
+    );
   });
 
-const subtractTargetQuantity = (cartProducts: CartProduct[], id: number) =>
-  cartProducts.map((cartProduct) => {
-    if (cartProduct.product.id === id) {
-      return { ...cartProduct, quantity: cartProduct.quantity - 1 };
-    }
-    return cartProduct;
-  });
+const useProductQuantity = (productId: number) => {
+  const hostName = useRecoilValue(hostNameAtom);
+  const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
 
-const useProductQuantity = (id: number) => {
-  const setCartProducts = useSetRecoilState(cartProductAtom);
+  const updateCount = async (productId: number, delta: number) => {
+    const targetProduct = findTargetProduct(cartProducts, productId);
+
+    if (targetProduct) {
+      await updateCartProductQuantity(hostName, targetProduct, delta);
+
+      const updatedCartProducts = await api(hostName).then((apiInstance) => {
+        return apiInstance.fetchCartProducts();
+      });
+
+      setCartProducts(updatedCartProducts);
+    }
+  };
 
   const addCount = () => {
-    setCartProducts((prev) => {
-      const updatedCartProducts = addTargetQuantity(prev, id);
-      const targetProduct = findTargetProduct(updatedCartProducts, id);
-
-      if (targetProduct) {
-        patchCartProduct(id, targetProduct.quantity);
-        setStoredCartProducts(updatedCartProducts);
-      }
-
-      return updatedCartProducts;
-    });
+    updateCount(productId, 1);
   };
 
   const subtractCount = () => {
-    setCartProducts((prev) => {
-      const updatedCartProducts = subtractTargetQuantity(prev, id);
-      const targetProduct = findTargetProduct(updatedCartProducts, id);
-
-      if (targetProduct) {
-        patchCartProduct(id, targetProduct.quantity);
-        setStoredCartProducts(updatedCartProducts);
-      }
-
-      return updatedCartProducts;
-    });
+    updateCount(productId, -1);
   };
 
   return { addCount, subtractCount };
