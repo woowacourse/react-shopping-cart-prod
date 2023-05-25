@@ -1,4 +1,3 @@
-import { createPortal } from 'react-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { AddIcon } from '../../assets';
