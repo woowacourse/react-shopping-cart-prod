@@ -21,7 +21,7 @@ const Header = () => {
     <Wrapper>
       <TitleContainer onClick={goToMain}>
         <img src={process.env.PUBLIC_URL + "/assets/cart-icon.svg"} alt="홈카트" />
-        <p>SHOP</p>
+        <Title>SHOP</Title>
       </TitleContainer>
       <ServerSeclector />
       <CartContainer onClick={goToCart}>
@@ -42,8 +42,8 @@ const Wrapper = styled.section`
   top: 0;
 
   width: 100%;
-  min-height: 70px;
-  padding: 0 10%;
+  height: 70px;
+  padding: 0 5%;
 
   background: #333333;
 `;
@@ -51,19 +51,25 @@ const Wrapper = styled.section`
 const TitleContainer = styled.section`
   display: flex;
   align-items: end;
+  align-items: center;
   gap: 20px;
 
   cursor: pointer;
 
-  & > p {
-    color: white;
-    font-weight: 900;
-    font-size: 2rem;
-  }
-
   & > img {
     width: 46px;
     height: 46px;
+    margin: 5% 0;
+  }
+`;
+
+const Title = styled.p`
+  color: white;
+  font-weight: 900;
+  font-size: 2rem;
+
+  @media screen and (max-width: 800px) {
+    display: none;
   }
 `;
 
@@ -77,6 +83,14 @@ const CartContainer = styled.section`
   color: white;
 
   cursor: pointer;
+
+  @media screen and (max-width: 1200px) {
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 800px) {
+    font-size: 16px;
+  }
 `;
 
 const ItemQuantityBox = styled.div`
