@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { DELETE_CART_ITEM } from '../../../constants/cart';
 import { useCartSelector, useMutateCart } from '../../../hooks/cart/cart';
 import { CartItem as CartItemType } from '../../../types/cart';
@@ -13,18 +14,20 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     quantity,
     product: { imageUrl, name, price },
   } = props;
+  let debounceId = useRef<NodeJS.Timeout>();
+  const quantityRef = useRef<HTMLInputElement>(null);
   const { selectedItems, selectItem } = useCartSelector();
   const { updateCartItemMutation, deleteCartItemMutation } = useMutateCart();
 
-  const increaseQuantity = () => {
-    updateCartItemMutation({
-      cartId: id,
-      quantity: Math.min(100, quantity + 1),
-    });
-  };
+  const updateQuantity = () => {
+    if (debounceId.current) clearTimeout(debounceId.current);
 
-  const decreaseQuantity = () => {
-    updateCartItemMutation({ cartId: id, quantity: Math.max(1, quantity - 1) });
+    debounceId.current = setTimeout(() => {
+      updateCartItemMutation({
+        cartId: id,
+        quantity: Number(quantityRef.current?.value),
+      });
+    }, 400);
   };
 
   const deleteCartItem = () => {
@@ -47,9 +50,10 @@ const CartItem: React.FC<CartItemProps> = (props) => {
             <QuantityStepper
               max={100}
               min={1}
+              ref={quantityRef}
               init={quantity}
-              onIncrease={increaseQuantity}
-              onDecrease={decreaseQuantity}
+              onIncrease={updateQuantity}
+              onDecrease={updateQuantity}
             />
             <S.Price>{price.toLocaleString()} 원</S.Price>
           </S.Info>
