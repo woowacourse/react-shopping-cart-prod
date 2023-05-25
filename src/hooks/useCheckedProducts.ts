@@ -24,9 +24,9 @@ const useCheckedProducts = () => {
       )
     );
 
-    selectedProducts.forEach((id) => {
+    selectedProducts.forEach((productId) => {
       api(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(id);
+        return apiInstance.deleteCartProduct(productId);
       });
     });
   };
