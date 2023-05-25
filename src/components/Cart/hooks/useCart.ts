@@ -9,12 +9,12 @@ import { cartListAtom } from 'recoil/cartList';
 import { useMutate } from '../../../hooks/useMutate';
 import { Product } from 'types';
 
-export const useCart = (product: Product) => {
+export const useCart = () => {
   const { request } = useMutate();
   const [cartList, setCartList] = useRecoilState(cartListAtom);
   const { toast } = useToast();
 
-  const onSelectItem = async () => {
+  const addItem = async (product: Product) => {
     const res = await request(postCartItem({ productId: product.id }));
     const cartId = Number(
       res.headers.get('Location').replace('/cart-items/', '')
@@ -28,7 +28,7 @@ export const useCart = (product: Product) => {
     toast.success('장바구니에 상품이 담겼습니다.');
   };
 
-  const addItem = (cartId: number) => {
+  const increaseItemQuantity = (cartId: number) => {
     const cartItem = cartList.find((item) => item.id === cartId);
     if (!cartItem) return;
 
@@ -40,7 +40,7 @@ export const useCart = (product: Product) => {
     request(patchCartItemQuantity(cartId, { quantity: cartItem.quantity + 1 }));
   };
 
-  const removeItem = (cartId: number) => {
+  const decreaseItemQuantity = (cartId: number) => {
     const cartItem = cartList.find((item) => item.id === cartId);
     if (!cartItem) return;
 
@@ -66,9 +66,9 @@ export const useCart = (product: Product) => {
   };
 
   return {
-    removeItem,
-    addItem,
+    decreaseItemQuantity,
+    increaseItemQuantity,
     deleteItem,
-    onSelectItem,
+    addItem,
   };
 };

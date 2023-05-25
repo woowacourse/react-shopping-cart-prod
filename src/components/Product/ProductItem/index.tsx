@@ -11,11 +11,25 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  const { removeItem, addItem, onSelectItem } = useCart(product);
+  const { decreaseItemQuantity, addItem, increaseItemQuantity } = useCart();
   const cartList = useRecoilValue(cartListAtom);
-  const currentCartItem = cartList.find(
+  const cartItem = cartList.find(
     (cartItem) => cartItem.product.id === product.id
   );
+
+  const increase = () => {
+    if (!cartItem) return;
+    increaseItemQuantity(cartItem.id);
+  };
+
+  const decrease = () => {
+    if (!cartItem) return;
+    decreaseItemQuantity(cartItem.id);
+  };
+
+  const onAddItem = () => {
+    addItem(product);
+  };
 
   return (
     <S.ItemWrapper>
@@ -27,15 +41,15 @@ const ProductItem = ({ product }: ProductItemProps) => {
             {product.price.toLocaleString('KR')} 원
           </S.ProductPrice>
         </div>
-        {currentCartItem ? (
+        {cartItem ? (
           <Counter
-            count={currentCartItem.quantity}
+            count={cartItem.quantity}
             min={0}
-            increment={() => addItem(currentCartItem.id)}
-            decrement={() => removeItem(currentCartItem.id)}
+            increment={increase}
+            decrement={decrease}
           />
         ) : (
-          <Svg type="cart-icon" width={25} height={22} onClick={onSelectItem} />
+          <Svg type="cart-icon" width={25} height={22} onClick={onAddItem} />
         )}
       </S.ProductWrapper>
     </S.ItemWrapper>

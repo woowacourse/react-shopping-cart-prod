@@ -5,7 +5,7 @@ export const useCheckedItemIds = () => {
   const [checkedItemIds, setCheckedItemIds] = useRecoilState(checkedItemsAtom);
   const cartList = useRecoilValue(cartListAtom);
 
-  const emptyCheckedItemIds = () => {
+  const unCheckAllItems = () => {
     setCheckedItemIds([]);
   };
 
@@ -28,7 +28,7 @@ export const useCheckedItemIds = () => {
   return {
     checkedItemIds,
     checkItem,
-    emptyCheckedItemIds,
+    unCheckAllItems,
     checkAllItems,
     unCheckItem,
   };
