@@ -1,5 +1,5 @@
 import { CartProduct, CartProducts, Product } from 'types/product';
-import { get, post, patch, remove } from '../index';
+import api from 'apis';
 
 const URL = '/cart-items';
 
@@ -26,14 +26,14 @@ const cartProductsParser = (data: any): CartProducts => {
 };
 
 export const getCartProducts = async (): Promise<CartProducts> => {
-  const fetchedData = await get<ServerCartProduct[]>(URL);
+  const fetchedData = await api.get<ServerCartProduct[]>(URL);
   const cartProducts = fetchedData.data;
 
   return cartProductsParser(cartProducts);
 };
 
 export const addCartProducts = async (productId: Product['id']): Promise<number> => {
-  const fetchedData = await post(URL, { productId });
+  const fetchedData = await api.post(URL, { productId });
 
   const location = fetchedData.headers.get('Location');
   if (!location) {
@@ -46,9 +46,9 @@ export const addCartProducts = async (productId: Product['id']): Promise<number>
 };
 
 export const updateCartProductsQuantity = async (quantity: CartProduct['quantity'], cartProductId: number) => {
-  await patch(`${URL}/${cartProductId}`, { quantity });
+  await api.patch(`${URL}/${cartProductId}`, { quantity });
 };
 
 export const removeCartProduct = async (cartProductId: number) => {
-  await remove(`${URL}/${cartProductId}`);
+  await api.remove(`${URL}/${cartProductId}`);
 };

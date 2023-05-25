@@ -1,4 +1,6 @@
+import BASE_URL from 'constants/apiBaseURL';
 import { USER_1 } from 'constants/basicKey';
+import type { ServerOwner } from 'types/serverOwner';
 import getBasicKey from 'utils/getBasicKey';
 
 export type ErrorResponse = {
@@ -12,83 +14,97 @@ type FetchedData<T> = {
   data: T;
   headers: Headers;
 };
+class API {
+  private baseUrl: string;
 
-const BASE_URL = `https://dazzlebv.com`;
-
-const fetcher = async <T>(url: string, method: string, body?: unknown): Promise<FetchedData<T>> => {
-  const options: RequestInit = {
-    method: method,
-
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Basic ${getBasicKey(USER_1.id, USER_1.password)}`,
-    },
-  };
-
-  if (body) {
-    options.body = JSON.stringify(body);
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
   }
 
-  const response = await fetch(`${BASE_URL}${url}`, options);
+  async fetcher<T>(url: string, method: string, body?: unknown): Promise<FetchedData<T>> {
+    const options: RequestInit = {
+      method: method,
 
-  if (response.status >= 500) {
-    throw new Error(`서버문제로 HTTP 통신에 실패했습니다. 상태 코드:${response.status}`);
-  }
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${getBasicKey(USER_1.id, USER_1.password)}`,
+      },
+    };
 
-  if (!response.ok) {
-    let errorResponse: ErrorResponse;
-
-    try {
-      errorResponse = await response.json();
-    } catch (error) {
-      errorResponse = {
-        timestamp: new Date().toISOString(),
-        status: 500,
-        error: '에러 응답이 json 형식이 아닙니다.',
-        path: url,
-      };
+    if (body) {
+      options.body = JSON.stringify(body);
     }
 
-    throw errorResponse;
-  }
+    const response = await fetch(`${this.baseUrl}${url}`, options);
 
-  let data = null;
-  const headers = response.headers;
+    if (response.status >= 500) {
+      throw new Error(`서버문제로 HTTP 통신에 실패했습니다. 상태 코드:${response.status}`);
+    }
 
-  if (response.status === 204) {
-    return { data: data as T, headers };
-  }
+    if (!response.ok) {
+      let errorResponse: ErrorResponse;
 
-  if (method === 'GET') {
-    try {
-      data = await response.json();
-    } catch {
-      const errorResponse: ErrorResponse = {
-        timestamp: new Date().toISOString(),
-        status: 500,
-        error: '서버 응답 형식이 json 형식이 아닙니다.',
-        path: url,
-      };
+      try {
+        errorResponse = await response.json();
+      } catch (error) {
+        errorResponse = {
+          timestamp: new Date().toISOString(),
+          status: 500,
+          error: '에러 응답이 json 형식이 아닙니다.',
+          path: url,
+        };
+      }
 
       throw errorResponse;
     }
+
+    let data = null;
+    const headers = response.headers;
+
+    if (response.status === 204) {
+      return { data: data as T, headers };
+    }
+
+    if (method === 'GET') {
+      try {
+        data = await response.json();
+      } catch {
+        const errorResponse: ErrorResponse = {
+          timestamp: new Date().toISOString(),
+          status: 500,
+          error: '서버 응답 형식이 json 형식이 아닙니다.',
+          path: url,
+        };
+
+        throw errorResponse;
+      }
+    }
+
+    return { data: data as T, headers };
   }
 
-  return { data: data as T, headers };
-};
+  async get<T>(url: string): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'GET');
+  }
 
-export const get = async <T>(url: string): Promise<FetchedData<T>> => {
-  return await fetcher<T>(url, 'GET');
-};
+  async post<T>(url: string, body: unknown): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'POST', body);
+  }
 
-export const post = async <T>(url: string, body: unknown): Promise<FetchedData<T>> => {
-  return await fetcher<T>(url, 'POST', body);
-};
+  async remove<T>(url: string): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'DELETE');
+  }
 
-export const remove = async <T>(url: string): Promise<FetchedData<T>> => {
-  return await fetcher<T>(url, 'DELETE');
-};
+  async patch<T>(url: string, body: unknown): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'PATCH', body);
+  }
 
-export const patch = async <T>(url: string, body: unknown): Promise<FetchedData<T>> => {
-  return await fetcher<T>(url, 'PATCH', body);
-};
+  setBaseUrl(url: string) {
+    this.baseUrl = url;
+  }
+}
+
+const serverOwner = (localStorage.getItem('serverOwner') ?? '솔로스타') as ServerOwner;
+const api = new API(BASE_URL[serverOwner]);
+
+export default api;
