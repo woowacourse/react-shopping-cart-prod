@@ -40,10 +40,14 @@ export default function CartItem(props: Props) {
     }
   };
 
+  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = './emptyProduct.svg';
+  };
+
   return (
     <Wrapper>
       <CheckBox checked={checked} onClickCheckbox={toggleChecked} />
-      <Image src={product.imageUrl} />
+      <Image src={product.imageUrl} onError={setAltSrc} />
       <ProductName>{product.name}</ProductName>
       <ControlBox>
         <RemoveButton onClick={removeCartItem}>
@@ -82,8 +86,6 @@ const Wrapper = styled.div`
 const Image = styled.img`
   width: 144px;
   height: 144px;
-
-  background: rgba(0, 0, 0, 0.05);
 
   @media (max-width: 448px) {
     width: 96px;

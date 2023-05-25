@@ -42,10 +42,14 @@ export default function Product({ id, name, price, imageUrl }: Props) {
     setAddLoading(false);
   };
 
+  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = './emptyProduct.svg';
+  };
+
   return (
     <>
       <Wrapper>
-        <Image src={imageUrl} />
+        <Image src={imageUrl} onError={setAltSrc} />
         <InfoBox>
           <LabelBox>
             <Name>{name}</Name>
