@@ -14,7 +14,11 @@ export const useQuantity = (productId: number) => {
   );
 
   const changeQuantity = async (newQuantity: string) => {
-    if (Number(newQuantity) > MAX_QUANTITY || Number(newQuantity) < MIN_QUANTITY) return;
+    if (
+      Number(newQuantity) > MAX_QUANTITY ||
+      Number(newQuantity) < MIN_QUANTITY
+    )
+      return;
 
     if (!cartItem) {
       alert(`장바구니 상품 수량 변경 실패!`);
@@ -23,7 +27,11 @@ export const useQuantity = (productId: number) => {
 
     const result =
       Number(newQuantity) > MIN_QUANTITY
-        ? await changeItemQuantity(selectedServer, cartItem.id, Number(newQuantity))
+        ? await changeItemQuantity(
+            selectedServer,
+            cartItem.id,
+            Number(newQuantity)
+          )
         : await removeCartItem(selectedServer, cartItem.id);
 
     if (!result) {
@@ -42,7 +50,8 @@ export const useQuantity = (productId: number) => {
   const handleQuantityBlured = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (quantity === "" || Number(quantity) < MIN_QUANTITY)
       e.target.value = MIN_QUANTITY.toString();
-    if (Number(quantity) > MAX_QUANTITY) e.target.value = MAX_QUANTITY.toString();
+    if (Number(quantity) > MAX_QUANTITY)
+      e.target.value = MAX_QUANTITY.toString();
 
     changeQuantity(e.target.value);
   };
