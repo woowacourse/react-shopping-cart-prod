@@ -37,7 +37,7 @@ const InfoBox = styled.div`
   justify-content: space-between;
 
   width: 282px;
-  padding-top: 12px;
+  padding-top: 16px;
   padding-left: 8px;
 `;
 

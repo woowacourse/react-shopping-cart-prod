@@ -87,7 +87,7 @@ const InfoBox = styled.div`
   justify-content: space-between;
 
   width: 282px;
-  padding-top: 12px;
+  padding-top: 16px;
   padding-left: 8px;
 `;
 
@@ -113,14 +113,19 @@ const Price = styled.p`
 `;
 
 const CartItemAddButton = styled.button`
-  width: 26px;
-  height: 24px;
+  width: 32px;
+  height: 30px;
   margin-right: 10px;
 
   background: transparent;
 
   &:disabled {
     cursor: wait;
+  }
+
+  & > img {
+    width: 100%;
+    height: 100%;
   }
 `;
 
