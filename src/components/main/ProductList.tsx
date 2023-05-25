@@ -12,7 +12,6 @@ import { serverState } from '../../store/ServerState';
 const ProductList = () => {
   const [productList, setProductList] = useRecoilState<Product[]>(productListState);
   const serverUrl = useRecoilValue(serverState);
-  console.log(serverUrl);
 
   const { api, isLoading } = useFetchData<Product[]>(setProductList);
 
