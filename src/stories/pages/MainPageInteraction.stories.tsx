@@ -31,6 +31,8 @@ export const SuccessInteraction: Story = {
       return selectedCartIconButton;
     };
 
+    await pause();
+
     await step('Purchase Product', async () => {
       await waitFor(() => {
         localStorage.clear();

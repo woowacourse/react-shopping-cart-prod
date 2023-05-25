@@ -1,13 +1,10 @@
 import { rest } from 'msw';
 import { CART_URL, SERVERS } from '../../constants/url';
-import productList from '../productList.json';
 
 export const cartHandlers = [
   // 장바구니 목록 조회
   rest.get(`${SERVERS.준팍}${CART_URL}`, (_, res, ctx) => {
-    const ItemsInCart = productList;
-
-    return res(ctx.status(200), ctx.json(ItemsInCart));
+    return res(ctx.status(200), ctx.json([]));
   }),
 
   // 장바구니 아이템 추가

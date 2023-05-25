@@ -5,12 +5,12 @@ import Icon from '../common/Icon';
 const CartIcon = ({ css, ...props }: IconProps) => {
   return (
     <Icon
-      width="30"
-      height="27"
-      fill="#AAA"
+      width='30'
+      height='27'
+      fill='#AAA'
       path={CART_PATH}
-      viewBox="0 0 51 44"
-      aria-label="cart-icon-button"
+      viewBox='0 0 51 44'
+      aria-label='cart-icon-button'
       css={css}
       {...props}
     />
