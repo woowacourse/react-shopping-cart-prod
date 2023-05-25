@@ -14,7 +14,6 @@
       "@pages/*": ["pages/*"],
       "@recoil/*": ["recoil/*"],
       "@router/*": ["router/*"],
-      "@stories/*": ["stories/*"],
       "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"],
       "@views/*": ["views/*"]

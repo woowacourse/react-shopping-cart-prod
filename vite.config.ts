@@ -17,7 +17,6 @@ export default defineConfig({
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@recoil': path.resolve(__dirname, 'src/recoil'),
       '@router': path.resolve(__dirname, 'src/router'),
-      '@stories': path.resolve(__dirname, 'src/stories'),
       '@styles': path.resolve(__dirname, 'src/styles'),
       '@utils': path.resolve(__dirname, 'src/utils'),
       '@views': path.resolve(__dirname, 'src/views'),
