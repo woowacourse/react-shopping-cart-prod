@@ -1,10 +1,17 @@
+import { getCartList } from 'api/requests';
 import { atom, selector } from 'recoil';
 import { Cart } from 'types';
-import { getLocalStorageData } from 'utils/storage';
+import { SERVERS } from 'utils/constants';
 
 export const cartListAtom = atom<Cart[]>({
   key: 'cartList',
-  default: getLocalStorageData<Cart[]>('cartList'),
+  default: selector({
+    key: 'initialCartList',
+    get: async () => {
+      const data = await getCartList(SERVERS['여우']);
+      return data;
+    },
+  }),
 });
 
 export const checkedItemsAtom = atom<number[]>({

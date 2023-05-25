@@ -8,9 +8,10 @@ export const useMutate = () => {
   const { toast } = useToast();
   const server = useRecoilValue(serverAtom);
 
-  const request = async (callback: (server: string) => Promise<void>) => {
+  const request = async (callback: (server: string) => Promise<any>) => {
     try {
-      await callback(server);
+      const res = await callback(server);
+      return res;
     } catch (error) {
       if (!(error instanceof Error)) return;
       setIsLoading(false);
