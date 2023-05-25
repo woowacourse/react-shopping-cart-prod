@@ -1,5 +1,6 @@
 import { Product } from '../types/products';
-import { fetchQuery, FetchQueryRes } from './api';
+import { fetchQuery } from './api';
+import { FetchQueryRes } from './api.type';
 
 type FetchProductDataRes = Product[];
 

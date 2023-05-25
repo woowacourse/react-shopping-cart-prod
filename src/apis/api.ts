@@ -2,6 +2,15 @@ import { ENDPOINT } from '../constants/auth';
 import { ERROR_CODE } from '../constants/errors';
 import { getValidURL, handleStatusCode } from '../validation/errorHandler';
 import { CustomError } from '../validation/errors';
+import {
+  ExternalConfig,
+  FetchQueryInstance,
+  FetchQueryRes,
+  InternalConfig,
+  Method,
+  QueryParams,
+  QueryParamsWith,
+} from './api.type';
 
 const base64 = 'YUBhLmNvbToxMjM0';
 
@@ -9,28 +18,6 @@ const BASE =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000/react-shopping-cart/'
     : 'https://n0eyes.github.io/react-shopping-cart/';
-
-export type FetchQueryInstance = {
-  [m in Lowercase<Method>]: <T>(
-    path: string,
-    config?: ExternalConfig
-  ) => FetchQueryRes<T>;
-};
-
-export type FetchQueryRes<T> = Promise<HTTPResponse<T>>;
-export type HTTPResponse<T> = {
-  headers: Headers;
-  body: T;
-};
-
-type Method = 'GET' | 'POST' | 'PATCH' | 'DELETE';
-type QueryParams = Parameters<FetchQueryInstance[Lowercase<Method>]>;
-type QueryParamsWith<Config extends RequestInit> = [QueryParams[0], Config];
-type InternalConfig = Omit<ExternalConfig, 'body'> & RequestInit;
-type ExternalConfig = Omit<RequestInit, 'body'> & {
-  baseURL?: string;
-  body?: unknown;
-};
 
 class FetchQuery implements FetchQueryInstance {
   defaultConfig: ExternalConfig = {};
@@ -72,7 +59,7 @@ class FetchQuery implements FetchQueryInstance {
       path,
       config?.baseURL ?? this.defaultConfig.baseURL
     );
-
+    console.log(config);
     const response = await fetch(url, config);
     const { headers } = response;
 

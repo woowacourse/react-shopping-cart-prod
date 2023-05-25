@@ -1,14 +1,14 @@
-import { FetchQueryRes, HTTPResponse } from './../apis/api';
-
+import { FetchQueryRes } from '../apis/api.type';
 import { ERROR_CODE } from '../constants/errors';
+import { ResolvedValue } from '../types/common';
 import { CustomError } from '../validation/errors';
 
 export interface WaitForOptions<T> {
-  onSuccess?(data: HTTPResponse<T>): void;
+  onSuccess?(data: ResolvedValue<FetchQueryRes<T>>): void;
   onError?(error: unknown): void;
 }
 export interface WaitForMutationOptions<T, P> {
-  onSuccess?(param: P, data: HTTPResponse<T>): void;
+  onSuccess?(param: P, data: ResolvedValue<FetchQueryRes<T>>): void;
   onError?(error: unknown): void;
 }
 

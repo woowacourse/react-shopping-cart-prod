@@ -1,6 +1,7 @@
 import { CartItem } from '../types/cart';
 import { waitFor, WaitForOptions } from '../utils/waitFor';
-import { authFetchQuery, FetchQueryRes } from './api';
+import { authFetchQuery } from './api';
+import { FetchQueryRes } from './api.type';
 
 export type FetchCartRes = CartItem[];
 
