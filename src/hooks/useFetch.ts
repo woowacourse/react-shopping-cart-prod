@@ -1,5 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { auth } from '../constants/auth.ts';
+import { useRecoilValue } from 'recoil';
+import { serverAtom } from '../stores/serverStore.ts';
+import baseURL from '../../config.ts';
 
 type FetchStatus = 'idle' | 'loading' | 'fail' | 'success';
 
@@ -15,33 +19,39 @@ const useFetch = <T>(url: string, method = 'GET'): [FetchState<T>, (body?: any, 
     data: null,
     error: null,
   });
+
+  const serverName = useRecoilValue(serverAtom);
+
   const navigate = useNavigate();
 
   const fetchData = useCallback(
     async ({ body, param }: { body?: any; param?: string | number }) => {
-      const urlWithParam = param ? `${url}/${param}` : url;
+      const serverUrl = baseURL[serverName];
+      const urlWithParam = param ? `${serverUrl + url}/${param}` : `${serverUrl + url}`;
 
-      setFetchState({ status: 'loading', data: null, error: null });
+      setFetchState((prevState) => ({ ...prevState, status: 'loading', error: null }));
 
       try {
         const response: Response = await fetch(urlWithParam, {
           method,
           body: body ? JSON.stringify(body) : null,
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', authorization: `Basic ${auth}` },
         });
 
         if (!response.ok) {
           throw new Error(response.statusText);
         }
 
-        const data: T = await response.json();
+        const responseData = await response.text();
+        const data: T = responseData ? JSON.parse(responseData) : null;
+
         setFetchState({ status: 'success', data, error: null });
       } catch (error) {
-        setFetchState({ status: 'fail', data: null, error: error as Error });
-        navigate('/error', { state: { error: error as Error } });
+        setFetchState((prevState) => ({ ...prevState, status: 'fail', error: error as Error }));
+        // navigate('/error', { state: { error: error as Error } });
       }
     },
-    [url, method, navigate]
+    [url, method, navigate, serverName]
   );
 
   useEffect(() => {
