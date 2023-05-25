@@ -5,11 +5,12 @@ import AsyncBoundary from './components/AsyncBoundary/AsyncBoundary';
 import { PAGE_ROUTES } from './constants/routes';
 import CartPage from './pages/CartPage/CartPage';
 import EndpointRefresher from './components/EndpointRefresher/EndpointRefresher';
+import Loading from './components/common/Loading/Loading';
 
 const Router = () => {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
-      <AsyncBoundary page loadingFallback={<h1>Loading...</h1>}>
+      <AsyncBoundary page loadingFallback={<Loading />}>
         <EndpointRefresher>
           <Layout>
             <Routes>
