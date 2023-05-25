@@ -5,9 +5,7 @@ import ErrorBox from "./ErrorBox";
 
 interface ErrorBoundaryState {
   hasError: boolean;
-  status:
-    | (typeof ERROR_MESSAGE)[keyof typeof ERROR_MESSAGE]
-    | "Something wrong!";
+  status: keyof typeof ERROR_MESSAGE;
 }
 
 export class ErrorBoundary extends React.Component<
@@ -18,7 +16,7 @@ export class ErrorBoundary extends React.Component<
     super(props);
     this.state = {
       hasError: false,
-      status: "default",
+      status: "400",
     };
   }
 
