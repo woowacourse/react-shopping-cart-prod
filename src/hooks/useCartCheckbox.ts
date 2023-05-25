@@ -29,11 +29,10 @@ export const useCartCheckbox = () => {
     const checkedList = cartList.filter((item) => item.isChecked);
     const removedList = checkedList.filter((item) => removeItem(item.id));
 
-    const newList = cartList.filter((item) => {
-      const isRemoved = !!removedList.find((removedItem) => removedItem.id === item.id);
+    const newList = cartList.filter((item) => !removedList.includes(item));
 
-      return !isRemoved;
-    });
+    if (checkedList.length !== removedList.length)
+      alert("삭제 요청이 일부 실패하였습니다. 새로고침 후 다시 시도해주세요.");
 
     setCartList(newList);
   };
@@ -41,12 +40,7 @@ export const useCartCheckbox = () => {
   const removeItem = async (id: number) => {
     const result = await removeCartItem(selectedServer, id);
 
-    if (!result) {
-      alert(`장바구니 상품 제거 실패! ${cartList.find((item) => item.id === id)}`);
-      return false;
-    }
-
-    return true;
+    return result;
   };
 
   return { isAllchecked, checkedCount, setAllCheckbox, removeCheckedItem };
