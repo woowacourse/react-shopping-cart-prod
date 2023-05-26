@@ -31,8 +31,6 @@ jobs:
 
         if: steps.cache.outputs.cache-hit != 'true'
 
-      - run: yarn build
-
       - name: Set Environment Variables
         run: |
           echo "REACT_APP_USERNAME=$REACT_APP_USERNAME" >> .env
@@ -41,6 +39,8 @@ jobs:
         env:
           REACT_APP_USERNAME: ${{secrets.REACT_APP_USERNAME}}
           REACT_APP_PASSWORD: ${{secrets.REACT_APP_PASSWORD}}
+
+      - run: yarn build
 
       - run: |
           yarn build-storybook
