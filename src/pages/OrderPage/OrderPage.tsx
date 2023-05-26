@@ -1,5 +1,7 @@
+import * as S from './OrderPage.styles';
+
 const OrderPage = () => {
-  return <div>주문 목록페이지</div>;
+  return <S.Root></S.Root>;
 };
 
 export default OrderPage;
