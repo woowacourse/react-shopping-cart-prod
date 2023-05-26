@@ -35,8 +35,12 @@ jobs:
 
       - name: Set Environment Variables
         run: |
-          echo "REACT_APP_USERNAME=${{ secrets.REACT_APP_USERNAME }}" >> $GITHUB_ENV
-          echo "REACT_APP_PASSWORD=${{ secrets.REACT_APP_PASSWORD }}" >> $GITHUB_ENV
+          echo "REACT_APP_USERNAME=$REACT_APP_USERNAME" >> .env
+          echo "REACT_APP_PASSWORD=$REACT_APP_PASSWORD" >> .env
+
+        env:
+          REACT_APP_USERNAME: ${{secrets.REACT_APP_USERNAME}}
+          REACT_APP_PASSWORD: ${{secrets.REACT_APP_PASSWORD}}
 
       - run: |
           yarn build-storybook
