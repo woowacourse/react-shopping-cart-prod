@@ -16,9 +16,7 @@ export const handlers = [
 
     if (authorization !== base64) return res(ctx.status(401));
 
-    const product = MockProducts.items.find(
-      (product) => product.id === productId
-    );
+    const product = MockProducts.find((product) => product.id === productId);
     const targetItemIndex = MockCart.cart.findIndex(
       ({ product }) => product.id === productId
     );

@@ -106,9 +106,9 @@ class FetchQuery implements FetchQueryInstance {
   }
 }
 
-export const fetchQuery = new FetchQuery({ baseURL: ENDPOINT['말랑'] });
+export const fetchQuery = new FetchQuery({ baseURL: BASE });
 export const authFetchQuery = new FetchQuery({
-  baseURL: ENDPOINT['말랑'],
+  baseURL: BASE,
   headers: {
     Authorization: `Basic ${base64}`,
     'Content-Type': 'application/json',

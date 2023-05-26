@@ -5,6 +5,7 @@ import * as S from './ProductList.styles';
 
 const ProductList = () => {
   const items = useRecoilValue(productsSelector);
+
   return (
     <S.List>
       {items.map((product) => (
