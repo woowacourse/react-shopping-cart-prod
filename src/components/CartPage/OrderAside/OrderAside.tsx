@@ -12,7 +12,6 @@ const OrderAside = () => {
   const { postOrderMutation } = useMutateOrder();
   const navigate = useNavigate();
   const onOrder = async () => {
-    console.log(`submit : ${[...selectedItems]}`);
     await postOrderMutation({ cartItemIds: [...selectedItems] });
     navigate('/order');
   };

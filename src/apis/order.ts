@@ -15,3 +15,8 @@ export const postOrder: (
     body: { cartItemIds },
   });
 };
+
+export const fetchOrders = async (): FetchQueryRes<FetchOrdersRes> => {
+  const data = await authFetchQuery.get<FetchOrdersRes>('/orders');
+  return data;
+};
