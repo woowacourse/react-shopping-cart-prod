@@ -4,7 +4,7 @@ import type { HostNameType } from '../types/server';
 
 export const fetchProducts = async (hostName: HostNameType) => {
   const hostURL = servers[hostName];
-  const response = await fetch(`${hostURL}/products`);
+  const response = await fetch('/products');
 
   if (!response.ok) {
     throw new Error(response.status.toString());

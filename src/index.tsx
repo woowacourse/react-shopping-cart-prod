@@ -6,12 +6,19 @@ import GlobalStyle from './GlobalStyle';
 import { ThemeProvider } from 'styled-components';
 import theme from './styles/theme';
 import App from './App';
+import { worker } from './mocks/browsers';
 
 const main = async () => {
   if (window.location.pathname === '/react-shopping-cart-prod') {
     window.location.pathname = '/react-shopping-cart-prod/';
     return;
   }
+
+  await worker.start({
+    serviceWorker: {
+      url: '/react-shopping-cart-prod/mockServiceWorker.js',
+    },
+  });
 };
 
 const root = ReactDOM.createRoot(

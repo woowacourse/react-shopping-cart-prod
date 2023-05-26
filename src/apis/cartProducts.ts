@@ -7,7 +7,7 @@ const password = process.env.REACT_APP_PASSWORD;
 const base64 = btoa(email + ':' + password);
 
 export const api = async (hostName: HostNameType) => {
-  const URL = `${servers[hostName]}/cart-items`;
+  const URL = '/cart-items';
 
   const fetchCartProducts = async () => {
     const response = await fetch(URL, {
