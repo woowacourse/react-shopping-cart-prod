@@ -36,6 +36,7 @@ const Style = {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
 
     border: 1px solid #22a6a2;
     background-color: ${(props) => (props.isChecked ? '#333333' : 'white')};

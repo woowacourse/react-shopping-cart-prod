@@ -78,12 +78,26 @@ const Style = {
 
     display: flex;
     flex-direction: column;
+    align-items: center;
+
+    @media screen and (max-width: 480px) {
+      width: 100vw;
+
+      align-items: center;
+    }
   `,
   Header: styled.div`
     width: 100%;
     height: 56px;
 
     border-bottom: 4px solid #aaaaaa;
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+      height: 40px;
+
+      align-items: center;
+    }
   `,
   HeaderTitle: styled.h2`
     font-size: 20px;
@@ -95,6 +109,10 @@ const Style = {
     gap: 13px;
 
     margin-top: 23px;
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+    }
   `,
   CheckBox: styled.div`
     width: 28px;

@@ -38,10 +38,12 @@ export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
   );
 };
 
+// TODO: 카운터 숫자 안보이는 오류 수정하기
+
 const Style = {
   Container: styled.div`
-    width: 75px;
-    height: 28px;
+    width: 120px;
+    height: 35px;
 
     display: flex;
     flex-wrap: nowrap;
@@ -49,10 +51,10 @@ const Style = {
 
     border: 1px solid lightgray;
     background-color: white;
-    padding: 5px;
   `,
   Input: styled.input`
     width: 23px;
+    height: 35px;
 
     text-align: center;
 

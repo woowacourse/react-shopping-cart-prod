@@ -43,6 +43,10 @@ const Style = {
     border: 1px solid #dddddd;
     position: sticky;
     top: 80px;
+
+    @media screen and (max-width: 480px) {
+      display: none;
+    }
   `,
   Header: styled.div`
     width: 448px;

@@ -69,12 +69,14 @@ export const CartItem = ({
           id={productId}
         />
         <Style.ProductImage src={imageUrl} alt={name} />
-        <Style.ProductName>{name}</Style.ProductName>
         <Style.ProductSelectorContainer>
-          <Style.DeleteIcon
-            src={`${process.env.PUBLIC_URL}/trashCan.png`}
-            onClick={handleDeleteCartItem}
-          />
+          <Style.ProductNameAndDeleteButtonContainer>
+            <Style.ProductName>{name}</Style.ProductName>
+            <Style.DeleteIcon
+              src={`${process.env.PUBLIC_URL}/trashCan.png`}
+              onClick={handleDeleteCartItem}
+            />
+          </Style.ProductNameAndDeleteButtonContainer>
           <Counter
             quantity={initialQuantity}
             onQuantityChange={handleChangeQuantity}
@@ -97,6 +99,10 @@ const Style = {
     &:not(:last-child) {
       border-bottom: 1.5px solid #aaaaaa;
     }
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+    }
   `,
   Content: styled.div`
     width: 740px;
@@ -104,6 +110,10 @@ const Style = {
 
     display: flex;
     gap: 15px;
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+    }
   `,
   CheckBox: styled.div`
     width: 28px;
@@ -114,30 +124,61 @@ const Style = {
   ProductImage: styled.img`
     width: 144px;
     height: 147px;
+
+    @media screen and (max-width: 480px) {
+      width: 100px;
+      height: 100px;
+
+      border-radius: 15px;
+    }
   `,
   ProductName: styled.div`
-    width: 389px;
+    /* width: 500px; */
 
     font-size: 20px;
     color: #333333;
+
+    @media screen and (max-width: 480px) {
+      width: fit-content;
+      font-size: 15px;
+    }
   `,
   ProductSelectorContainer: styled.div`
-    min-width: 114px;
+    width: calc(740px - 28px - 144px - 30px);
     height: 147px;
 
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
     justify-content: space-between;
-    gap: 23px;
+    align-items: flex-end;
+
+    @media screen and (max-width: 480px) {
+      width: calc(90vw - 28px - 100px - 30px);
+    }
+  `,
+  ProductNameAndDeleteButtonContainer: styled.div`
+    width: calc(740px - 28px - 144px - 30px);
+    display: flex;
+    align-items: center;
+
+    justify-content: space-between;
+
+    @media screen and (max-width: 480px) {
+      width: calc(90vw - 28px - 100px - 30px);
+    }
   `,
   DeleteIcon: styled.img`
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
 
     cursor: pointer;
+
+    @media screen and (max-width: 480px) {
+      width: 25px;
+      height: 25px;
+    }
   `,
   ProductPrice: styled.span`
-    font-size: 16px;
+    font-size: 20px;
   `,
 };

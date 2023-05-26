@@ -36,5 +36,9 @@ const Style = {
 
     display: flex;
     flex-direction: column;
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+    }
   `,
 };

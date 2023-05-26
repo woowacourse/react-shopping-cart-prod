@@ -38,12 +38,21 @@ const Style = {
 
     border-bottom: 4px solid #333333;
     margin-bottom: 34px;
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+      margin-bottom: 25px;
+    }
   `,
   HeaderTitle: styled.h1`
     padding: 0;
     margin: 0;
 
     font-size: 32px;
+
+    @media screen and (max-width: 480px) {
+      font-size: 25px;
+    }
   `,
   Content: styled.div`
     width: 1320px;
@@ -51,6 +60,10 @@ const Style = {
 
     display: flex;
     gap: 104px;
+
+    @media screen and (max-width: 480px) {
+      width: 100vw;
+    }
   `,
   EmptyCartContainer: styled.div`
     width: 1320px;
@@ -61,5 +74,9 @@ const Style = {
     align-items: center;
 
     font-size: 50px;
+
+    @media screen and (max-width: 480px) {
+      width: 90vw;
+    }
   `,
 };

@@ -89,5 +89,7 @@ const Style = {
   ShoppingCartImage: styled.img`
     width: 35px;
     height: 35px;
+
+    cursor: pointer;
   `,
 };

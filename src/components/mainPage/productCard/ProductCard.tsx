@@ -71,15 +71,15 @@ const Style = {
     }
   `,
   Price: styled.span`
-    font-size: 20px;
+    font-size: 25px;
 
     @media screen and (max-width: 480px) {
-      font-size: 16px;
+      font-size: 20px;
     }
   `,
   AddCartButtonContainer: styled.div`
     position: absolute;
-    top: calc(283px - 28px - 10px);
+    top: calc(283px - 28px - 15px);
     right: 10px;
 
     @media screen and (max-width: 480px) {

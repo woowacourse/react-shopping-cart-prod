@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import { LogoIcon } from '../../assets/ShoppingCartIcon';
 import { useNavigate } from 'react-router-dom';
 import { CartListLengthViewer } from './CartListLengthViewer';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -75,7 +74,6 @@ const Style = {
     top: 0;
     left: 0;
 
-    /* background-color: #333333; */
     background-color: white;
     z-index: 999;
     border-bottom: 1px solid #d0d0d0;
@@ -109,9 +107,11 @@ const Style = {
     width: 170px;
     height: 40px;
 
+    cursor: pointer;
+
     @media screen and (max-width: 480px) {
       width: 100px;
-      height: 25px;
+      height: 23px;
     }
   `,
   CartContainer: styled.div`
