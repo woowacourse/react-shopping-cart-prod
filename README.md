@@ -14,7 +14,7 @@
 ## step1
 
 <p align="middle" >
-  <img width="50%" src="https://github.com/feb-dain/react-shopping-cart/assets/108778921/0f2dd16f-70d8-403a-be61-7c92222a64846" alt="장바구니 앱(step2) 이용 과정 예시" >
+  <img width="50%" src="https://user-images.githubusercontent.com/108778921/239757679-0f2dd16f-70d8-403a-be61-7c92222a6484.gif" alt="장바구니 앱(step2) 이용 과정 예시" >
 
   <img width="50%" src="https://github.com/feb-dain/react-shopping-cart/assets/108778921/3c7804ce-519d-4e77-9202-642a7bf907a1" alt="장바구니 앱(step2) 이용 과정 예시" >
 </p>
@@ -27,7 +27,7 @@
   <tbody>
     <tr>
       <td><a href="https://feb-dain.github.io/react-shopping-cart-prod/">🛒 장바구니 앱 실행하기</a></td>
-      <td><a href="https://feb-dain.github.io/react-shopping-cart/storybook/">📕 스토리북 바로 보기</a></td>
+      <td><a href="https://feb-dain.github.io/react-shopping-cart-prod/storybook/">📕 스토리북 바로 보기</a></td>
     </tr>
   </tbody>
 </table>
@@ -78,24 +78,6 @@
 <br>
 
 ### ✨ 필수 요구 사항
-
-- **상품 목록 페이지**
-
-  - ☑️ 상품 목록 페이지에 필요한 UI 마크업
-  - ☑️ header의 숫자 표시를 통해 장바구니에 담긴 품목의 갯수 표시
-
-- **전역 상태 관리**
-  - ☑️ recoil을 사용하여 전역 상태 관리
-- **mock 데이터 활용**
-
-  - ☑️ Mock 데이터를 활용하여 상품 데이터를 처리한다. 협업 미션을 고려하여 장바구니 API 예상 명세 참고
-
-- **테스트 도구 선정**
-  - ☑️ 적합한 테스트 도구를 선택하여 사용하고, 중요한 테스트 케이스를 정의하여 테스트 진행
-
-<br>
-
-### ✅ 프로그래밍 요구사항
 
 - 클라이언트 - 서버 연동을 통해 상품 목록을 보여준다.
 - 사용자 별 장바구니 기능이 정상적으로 동작하게 만든다.
