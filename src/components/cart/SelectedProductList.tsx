@@ -17,8 +17,6 @@ const SelectedProductList = () => {
   const server = useRecoilValue(serverState);
   const { api, isLoading } = useFetchData();
 
-  const initialCheckedItems = cart.map((item) => item.id);
-
   useEffect(() => {
     setCheckedItems(initialCheckedItems);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,6 +37,8 @@ const SelectedProductList = () => {
 
   const productCountInCart = cart.length;
   const isAllChecked = checkedItems.length === productCountInCart && productCountInCart !== 0;
+
+  const initialCheckedItems = cart.map((item) => item.id);
 
   const handleAllItemsCheck = () => {
     isAllChecked ? setCheckedItems([]) : setCheckedItems(initialCheckedItems);
