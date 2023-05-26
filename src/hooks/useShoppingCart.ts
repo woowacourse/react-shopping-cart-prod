@@ -9,20 +9,26 @@ const useShoppingCart = () => {
   const [cartProductIdStore, setCartProductIdStore] = useRecoilState(cartProductIdStoreState);
 
   const initialAddCart = async (product: Product) => {
-    const cartProductId = await addCartProducts(product.id);
+    try {
+      const cartProductId = await addCartProducts(product.id);
 
-    setCartProductIdStore((prev) => ({ ...prev, [product.id]: cartProductId }));
+      setCartProductIdStore((prev) => ({ ...prev, [product.id]: cartProductId }));
 
-    setCartProducts((prev) => {
-      const newCartProducts = new Map(prev.entries());
+      setCartProducts((prev) => {
+        const newCartProducts = new Map(prev.entries());
 
-      return newCartProducts.set(cartProductId, { quantity: 1, product });
-    });
+        return newCartProducts.set(cartProductId, { quantity: 1, product });
+      });
+    } catch (error) {
+      console.error(error);
+      alert('상품을 추가하지 못했어요. 다시 시도해주세요');
+      return;
+    }
   };
 
   const decreaseQuantity = async (id: Product['id']) => {
     const targetCartProduct = cartProducts.get(cartProductIdStore[id]);
-    if (!targetCartProduct) throw new Error('장바구니에 없는 상품의 수량은 조절할 수 없습니다.');
+    if (!targetCartProduct) return;
 
     const prevQuantity = targetCartProduct.quantity;
 
@@ -31,7 +37,13 @@ const useShoppingCart = () => {
       return;
     }
 
-    await updateCartProductsQuantity(prevQuantity - 1, cartProductIdStore[id]);
+    try {
+      await updateCartProductsQuantity(prevQuantity - 1, cartProductIdStore[id]);
+    } catch (error) {
+      console.error(error);
+      alert('수량을 변경하지 못했어요. 다시 시도해주세요');
+      return;
+    }
 
     setCartProducts((prev) => {
       const newCartProducts = new Map(prev.entries());
@@ -45,11 +57,17 @@ const useShoppingCart = () => {
 
   const increaseQuantity = async (id: Product['id']) => {
     const targetCartProduct = cartProducts.get(cartProductIdStore[id]);
-    if (!targetCartProduct) throw new Error('장바구니에 없는 상품의 수량은 조절할 수 없습니다.');
+    if (!targetCartProduct) return;
 
     const prevQuantity = targetCartProduct.quantity;
 
-    await updateCartProductsQuantity(prevQuantity + 1, cartProductIdStore[id]);
+    try {
+      await updateCartProductsQuantity(prevQuantity + 1, cartProductIdStore[id]);
+    } catch (error) {
+      console.error(error);
+      alert('수량을 변경하지 못했어요. 다시 시도해주세요');
+      return;
+    }
 
     setCartProducts((prev) => {
       const newCartProducts = new Map(prev.entries());
@@ -63,9 +81,15 @@ const useShoppingCart = () => {
 
   const deleteCartProduct = async (id: Product['id']) => {
     const targetCartProduct = cartProducts.get(cartProductIdStore[id]);
-    if (!targetCartProduct) throw new Error('장바구니에 없는 상품의 수량은 조절할 수 없습니다.');
+    if (!targetCartProduct) return;
 
-    await removeCartProduct(cartProductIdStore[id]);
+    try {
+      await removeCartProduct(cartProductIdStore[id]);
+    } catch (error) {
+      console.error(error);
+      alert('상품을 삭제하지 못했어요. 다시 시도해주세요');
+      return;
+    }
 
     setCartProductIdStore((prev) => {
       const { [id]: cartProductId, ...otherIds } = prev;
