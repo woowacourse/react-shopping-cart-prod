@@ -4,7 +4,7 @@ import {
   createCartItem,
   removeCartItem,
   updateCartItemQuantity,
-} from '@views/CartItemList/utils/cart';
+} from '@views/Cart/utils/cart';
 import { CartItemType } from 'types/ProductType';
 
 const cartId = 1;

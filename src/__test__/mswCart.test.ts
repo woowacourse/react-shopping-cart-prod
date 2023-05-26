@@ -1,14 +1,10 @@
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
-import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
+import fetchCartItems from '@views/Cart/remote/fetchCartItem';
 // import { server } from './setupTests';
 import { rest } from 'msw';
 import { BASE_URL, CART_PATH } from '@constants/urlConstants';
 import { CartItemType } from 'types/ProductType';
-import {
-  createCartItem,
-  removeCartItem,
-  updateCartItemQuantity,
-} from '@views/CartItemList/utils/cart';
+import { createCartItem, removeCartItem, updateCartItemQuantity } from '@views/Cart/utils/cart';
 import { server } from './setupTests';
 
 const [product, product2, product3] = MOCK_PRODUCT_LIST;

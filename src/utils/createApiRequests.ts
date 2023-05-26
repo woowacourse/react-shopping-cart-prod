@@ -42,8 +42,8 @@ export const createApiRequests = (baseUrl: string) => (resourcePath: string) => 
   };
 };
 
-const username = 'a@a.com';
-const password = '1234';
+const username = 'pizza1@pizza.com';
+const password = 'pizza';
 
 const base64 = btoa(`${username}:${password}`);
 

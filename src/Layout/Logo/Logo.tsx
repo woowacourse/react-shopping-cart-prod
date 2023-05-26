@@ -4,7 +4,7 @@ import * as S from './Logo.style';
 
 import logoImage from '../../assets/logo.svg';
 import shopImage from '../../assets/shop.svg';
-import { useRefreshCartList } from '../../recoil/cart/cartState';
+import { useRefreshCartList } from '../../views/Cart/recoil/cartState';
 
 function Logo() {
   const navigate = useNavigate();

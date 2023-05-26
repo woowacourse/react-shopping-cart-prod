@@ -5,6 +5,11 @@ export interface ProductItemType {
   imageUrl: string;
 }
 
+export interface CartItemFromRemote {
+  id: number;
+  quantity: number;
+  product: ProductItemType;
+}
 export interface CartItemType {
   id: number;
   quantity: number;

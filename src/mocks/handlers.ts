@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { CartItemType, ProductItemType } from 'types/ProductType';
+import { CartItemFromRemote, CartItemType, ProductItemType } from 'types/ProductType';
 
 export const MOCK_PRODUCT_LIST: ProductItemType[] = [
   {
@@ -76,7 +76,7 @@ export const MOCK_PRODUCT_LIST: ProductItemType[] = [
   },
 ];
 
-let cartList: CartItemType[] = [
+let cartList: CartItemFromRemote[] = [
   {
     id: 3,
     quantity: 5,
@@ -113,61 +113,67 @@ let cartList: CartItemType[] = [
 ];
 
 export const handlers = [
-  rest.get('/products', (req, res, ctx) => {
-    return res(ctx.delay(500), ctx.status(200), ctx.json(MOCK_PRODUCT_LIST));
+  rest.get('https://m4co.shop/products', (req, res, ctx) => {
+    return res(
+      ctx.set('Content-Type', 'application/json'),
+      ctx.delay(500),
+      ctx.status(200),
+      ctx.json(MOCK_PRODUCT_LIST)
+    );
   }),
 
-  rest.get('/cart-items', (req, res, ctx) => {
+  rest.get('https://m4co.shop/cart-items', (req, res, ctx) => {
     return res(ctx.delay(500), ctx.status(200), ctx.json(cartList));
   }),
 
-  rest.post('/cart-items', async (req, res, ctx) => {
-    const { productId: idData } = await req.json();
-    const productId = Number(idData);
+  rest.post('https://m4co.shop/cart-items', async (req, res, ctx) => {
+    const { productId: data } = await req.json();
+    const productId = Number(data);
 
-    const product = MOCK_PRODUCT_LIST.find((product) => product.id === productId);
+    const product = MOCK_PRODUCT_LIST.find((productItem) => productItem.id === productId);
 
-    // TODO: 에러처리
-    if (cartList.some(({ id }) => id === productId)) return;
+    if (cartList.some(({ product }) => product.id === productId)) return;
+
+    const nextId = cartList.reduce((max, cartItem) => Math.max(max, cartItem.id), 0);
 
     if (product) {
       cartList.push({
-        id: productId,
+        id: nextId,
         quantity: 1,
         product: product,
       });
     }
 
-    return res(ctx.delay(500), ctx.status(200), ctx.json('SUCCESS'));
+    return res(ctx.delay(500), ctx.status(201), ctx.set('Location', `/cart-items/${nextId}`));
   }),
 
-  rest.delete('/cart-items/:productId', async (req, res, ctx) => {
-    const { productId: idData } = req.params;
-    const productId = Number(idData);
+  rest.delete('https://m4co.shop/cart-items/:cartId', async (req, res, ctx) => {
+    const { cartId: idData } = req.params;
+    const cartId = Number(idData);
 
-    cartList = cartList.filter((product) => product.id !== productId);
+    cartList = cartList.filter((cartItem) => cartItem.product.id !== cartId);
 
-    return res(ctx.delay(500), ctx.status(200), ctx.json('SUCCESS'));
+    return res(ctx.delay(500), ctx.status(204));
   }),
 
-  rest.patch('/cart-items/:productId', async (req, res, ctx) => {
-    const { productId: idData } = req.params;
-    const productId = Number(idData);
+  rest.patch('https://m4co.shop/cart-items/:cartId', async (req, res, ctx) => {
+    const { cartId: idData } = req.params;
+    const cartId = Number(idData);
 
     const { quantity: quantityData } = await req.json();
     const quantity: number = quantityData;
 
-    cartList = cartList.map((cartProduct) => {
-      if (cartProduct.id === productId) {
+    cartList = cartList.map((cartItem) => {
+      if (cartItem.id === cartId) {
         return {
-          ...cartProduct,
+          ...cartItem,
           quantity,
         };
       } else {
-        return cartProduct;
+        return cartItem;
       }
     });
 
-    return res(ctx.delay(500), ctx.status(200), ctx.json('SUCCESS'));
+    return res(ctx.delay(500), ctx.status(200), ctx.body('OK'));
   }),
 ];

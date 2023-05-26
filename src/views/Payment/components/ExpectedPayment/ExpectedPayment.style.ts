@@ -1,4 +1,4 @@
-import { FlexColWrapper, FlexWrapper } from '@pages/Cart/Cart.style';
+import { FlexColWrapper, FlexWrapper } from '@pages/CartPage/CartPage.style';
 import { styled } from 'styled-components';
 
 export const PayingContainer = styled.div`

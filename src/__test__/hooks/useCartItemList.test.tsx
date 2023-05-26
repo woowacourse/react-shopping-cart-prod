@@ -4,9 +4,9 @@ import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { rest } from 'msw';
 import { BASE_URL, CART_PATH } from '@constants/urlConstants';
 import { CartItemType } from 'types/ProductType';
-import { createCartItem } from '@views/CartItemList/utils/cart';
+import { createCartItem } from '@views/Cart/utils/cart';
 import { server } from '../setupTests';
-import { useCartItemList } from '@views/CartItemList/hooks/useCartItemList';
+import { useCartItemList } from '@views/Cart/hooks/useCartItemList';
 import { Suspense } from 'react';
 
 const [product, product2, product3] = MOCK_PRODUCT_LIST;
