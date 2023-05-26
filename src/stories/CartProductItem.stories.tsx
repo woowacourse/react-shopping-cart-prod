@@ -20,6 +20,7 @@ const mockProduct = {
     name: 'PET보틀-정사각(420ml)',
     price: 43400,
     imageUrl: 'images/정사각-420.jpeg',
+    quantity: 1,
   },
 };
 
