@@ -25,6 +25,9 @@ const ProductItem = ({ product }: ProductItemProps) => {
         <dl>
           <ProductName>{name}</ProductName>
           <ProductPrice>{price.toLocaleString('ko-KR')} 원</ProductPrice>
+          {product.quantity < 6 && (
+            <StockWarning>⚠️ 품절임박 ({product.quantity}개 남음)</StockWarning>
+          )}
         </dl>
         {!productExistsInCart ? (
           <ProductCartBtn
@@ -72,6 +75,11 @@ const ProductCartBtn = styled.button`
   position: absolute;
   top: 0;
   right: 14px;
+`;
+
+const StockWarning = styled.p`
+  margin-top: 5px;
+  color: ${({ theme }) => theme.colors.red};
 `;
 
 export default ProductItem;
