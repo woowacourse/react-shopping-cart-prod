@@ -5,10 +5,10 @@ import { AddIcon } from '../../../assets';
 import { useCart } from '../../../hooks/useCart';
 import { cartItemIdState, cartItemQuantityState } from '../../../store/cart';
 import { ProductItemData } from '../../../types';
-import { priceFormatter } from '../../../utils/formatter';
 import StepperButton from '../../common/StepperButton/StepperButton';
 import Toast from '../../common/Toast/Toast';
 import * as S from './ProductItem.styles';
+import ProductItemPrice from './ProductItemPrice/ProductItemPrice';
 
 type ProductItemProps = ProductItemData;
 
@@ -49,7 +49,13 @@ const ProductItem = ({ ...information }: ProductItemProps) => {
           </S.ItemButtonWrapper>
         </S.ItemImageContainer>
         <S.ItemName size="small">{information.name}</S.ItemName>
-        <S.ItemPrice size="large">{priceFormatter(information.price)}원</S.ItemPrice>
+        <S.ItemPriceContainer>
+          <ProductItemPrice
+            price={information.price}
+            discountRate={information.discountRate}
+            discountedPrice={information.discountedPrice}
+          />
+        </S.ItemPriceContainer>
       </S.ProductItemContainer>
       {isAdded && <Toast>장바구니에 상품을 추가했습니다.</Toast>}
     </>

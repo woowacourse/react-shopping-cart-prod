@@ -78,10 +78,14 @@ const ItemName = styled(Text)`
   }
 `;
 
-const ItemPrice = styled(Text)`
+const ItemPriceContainer = styled.div`
+  min-height: 28px;
   margin-top: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   font-weight: 600;
-  letter-spacing: -0.2px;
+  letter-spacing: -0.3px;
 
   &.skeleton::after {
     font-size: 0;
@@ -96,5 +100,5 @@ export {
   ItemButton,
   ItemImage,
   ItemName,
-  ItemPrice,
+  ItemPriceContainer,
 };

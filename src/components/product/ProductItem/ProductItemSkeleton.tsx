@@ -5,7 +5,7 @@ const ProductItemSkeleton = () => {
     <S.ProductItemContainer>
       <S.ItemImageContainer className="skeleton" />
       <S.ItemName className="skeleton" />
-      <S.ItemPrice className="skeleton" />
+      <S.ItemPriceContainer className="skeleton" />
     </S.ProductItemContainer>
   );
 };
