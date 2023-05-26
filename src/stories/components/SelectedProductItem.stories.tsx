@@ -6,6 +6,13 @@ const meta = {
   component: SelectedProductItemComponent,
   title: 'Components/Cart/SelectedProductItem',
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <div style={{ pointerEvents: 'none' }}>
+        <Story />
+      </div>
+    ),
+  ],
 } satisfies Meta<typeof SelectedProductItemComponent>;
 
 export default meta;
