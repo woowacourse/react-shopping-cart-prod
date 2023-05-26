@@ -30,7 +30,7 @@ const cartHandlers = [
     setCartData(newCartList);
 
     return res(
-      ctx.status(201),
+      ctx.status(HTTP_STATUS_CODE.CREATED),
       ctx.set('Location', `${API_ENDPOINT.CART_ITEMS}/${newCartList.at(-1)?.id}`)
     );
   }),
