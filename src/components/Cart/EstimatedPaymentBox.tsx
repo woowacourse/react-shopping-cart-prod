@@ -2,10 +2,17 @@ import styled from 'styled-components';
 import Button from '../Common/Button';
 import { useRecoilValue } from 'recoil';
 import { totalPriceSelector } from '../../recoil/checkedProductData';
+import {
+  FREE_DELIVERY_THRESHOLD,
+  STANDARD_DELIVERY_FEE,
+} from '../../constants/price';
 
 const EstimatedPaymentBox = () => {
   const totalPrice = useRecoilValue(totalPriceSelector);
-  const deliveryPrice = totalPrice ? 3000 : 0;
+  const deliveryPrice =
+    totalPrice === 0 || totalPrice >= FREE_DELIVERY_THRESHOLD
+      ? 0
+      : STANDARD_DELIVERY_FEE;
   const orderPrice = totalPrice ? totalPrice + deliveryPrice : 0;
 
   return (
