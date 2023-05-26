@@ -90,11 +90,10 @@ const Contents = styled.div`
 
 const Title = styled.p`
   margin-left: 20px;
-  font-family: 'Noto Sans KR';
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: #333;
 
   @media only screen and (max-width: 600px) {
     font-size: 16px;
@@ -130,11 +129,10 @@ const DeleteButton = styled.button`
 `;
 
 const Price = styled.p`
-  font-family: 'Noto Sans KR';
   font-size: 18px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: #333;
 `;
 
 export default CartListItem;

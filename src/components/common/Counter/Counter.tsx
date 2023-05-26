@@ -57,7 +57,7 @@ const Counter = ({
 const CounterContainer = styled.span<{ size: CounterSize }>`
   display: flex;
 
-  border: 1px solid #dddddd;
+  border: 1px solid #ddd;
 
   ${({ size }) =>
     (size === 'medium' &&

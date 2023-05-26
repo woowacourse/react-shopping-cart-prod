@@ -85,7 +85,6 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.h3`
-  font-family: 'Noto Sans KR';
   font-size: 24px;
   font-weight: normal;
   line-height: 33px;
@@ -105,7 +104,6 @@ const PriceWrapper = styled.div`
 
   & > dt,
   dd {
-    font-family: 'Noto Sans KR';
     font-weight: 700;
     font-size: 20px;
     line-height: 27px;
@@ -125,7 +123,6 @@ const OrderButton = styled.button`
   height: 73px;
   margin: 0 auto;
   background: #333333;
-  font-family: 'Noto Sans KR';
   font-size: 24px;
   line-height: 21px;
   text-align: center;
