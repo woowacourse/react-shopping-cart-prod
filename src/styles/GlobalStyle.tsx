@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 import { skeleton } from './animations';
+import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
    * {
@@ -41,11 +42,16 @@ const GlobalStyle = createGlobalStyle`
 
   main {
     position: relative;
-    margin: 0 24px;
-    padding-top: 130px;
+    margin: 0 ${theme.spacer.spacing4};
+    padding-top: 124px;
     padding-bottom: 72px;
     max-width: 1080px;
     height: fit-content;
+  }
+
+  a {
+    text-decoration: none;
+    cursor: pointer;
   }
 
   .hide-overflow {
@@ -55,13 +61,13 @@ const GlobalStyle = createGlobalStyle`
   .skeleton {
     background: linear-gradient(
       -90deg,
-      ${({ theme }) => theme.color.gray3},
-      ${({ theme }) => theme.color.gray2},
-      ${({ theme }) => theme.color.gray3},
-      ${({ theme }) => theme.color.gray2}
+      ${theme.color.gray3},
+      ${theme.color.gray2},
+      ${theme.color.gray3},
+      ${theme.color.gray2}
     );
     background-size: 400%;
-    border-radius: ${({ theme }) => theme.borderRadius.small};
+    border-radius: ${theme.borderRadius.small};
     animation: ${skeleton} 5s infinite ease-out;
   }
 `;
