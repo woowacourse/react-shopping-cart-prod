@@ -36,7 +36,6 @@ jobs:
           echo "REACT_APP_USERNAME=${{ secrets.REACT_APP_USERNAME }}" >> $GITHUB_ENV
           echo "REACT_APP_PASSWORD=${{ secrets.REACT_APP_PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Build
       - run: |
           yarn build
           cp ./dist/index.html ./dist/404.html
@@ -45,7 +44,6 @@ jobs:
           yarn build-storybook
           mv ./storybook-static ./build/storybook
 
-      - name: Deploy
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
