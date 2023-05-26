@@ -93,7 +93,7 @@ export const getProducts = rest.get('/products', (req, res, ctx) => {
   return res(ctx.status(200), ctx.json(MockProducts));
 });
 
-export const postOrders = rest.post('/orders', async (req, res, ctx) => {
+export const postOrder = rest.post('/orders', async (req, res, ctx) => {
   const { cartItemIds } = await req.json();
   const cart = getCart();
   const orders = getOrders([]);
@@ -139,5 +139,16 @@ export const postOrders = rest.post('/orders', async (req, res, ctx) => {
     ctx.status(201),
     ctx.set('Location', `orders/${newOrder.orderId}`),
     ctx.json({})
+  );
+});
+
+export const getOrderList = rest.get('/orders', (req, res, ctx) => {
+  const orders = getOrders();
+
+  return res(
+    ctx.status(200),
+    ctx.json({
+      orders,
+    })
   );
 });

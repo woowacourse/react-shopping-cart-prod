@@ -1,10 +1,11 @@
 import {
   deleteCartItems,
   getCartItems,
+  getOrderList,
   getProducts,
   patchCartItems,
   postCartItems,
-  postOrders,
+  postOrder,
 } from './api';
 
 export const handlers = [
@@ -13,5 +14,6 @@ export const handlers = [
   patchCartItems,
   getCartItems,
   deleteCartItems,
-  postOrders,
+  postOrder,
+  getOrderList,
 ];
