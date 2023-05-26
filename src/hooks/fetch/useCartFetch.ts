@@ -5,7 +5,7 @@ import { base64 } from '../../constants/user';
 export const useCartFetch = () => {
   const apiEndPoint = useRecoilValue(APIAtom);
 
-  const addCartItemById = (id: number) => {
+  const addCartItemByProductId = (id: number) => {
     return fetch(`${apiEndPoint}/cart-items`, {
       method: 'POST',
       body: JSON.stringify({ productId: id }),
@@ -51,7 +51,7 @@ export const useCartFetch = () => {
   };
 
   return {
-    addCartItemByProductId: addCartItemById,
+    addCartItemByProductId,
     deleteCartItemById,
     patchCartItemQuantity,
     getCartItems,

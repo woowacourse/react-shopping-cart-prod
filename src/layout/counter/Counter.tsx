@@ -38,8 +38,6 @@ export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
   );
 };
 
-// TODO: 카운터 숫자 안보이는 오류 수정하기
-
 const Style = {
   Container: styled.div`
     width: 120px;
