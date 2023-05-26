@@ -6,7 +6,9 @@ interface PostOrderRes {
   cartItemIds: number[];
 }
 
-type FetchOrdersRes = Order[];
+interface FetchOrdersRes {
+  orders: Order[];
+}
 
 export const postOrder: (
   payload: PostOrderRes
