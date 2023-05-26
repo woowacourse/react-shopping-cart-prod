@@ -7,9 +7,9 @@ import { cartListState } from "recoil/cart";
 import { getCartItems } from "api/cartItems";
 import { CartProduct } from "types/domain";
 
-const ServerSeclector = () => {
+const ServerSelector = () => {
   const [serverState, setServerState] = useRecoilState(serverSelectState);
-  const chagneServer = (e: ChangeEvent<HTMLInputElement>) => {
+  const changeServer = (e: ChangeEvent<HTMLInputElement>) => {
     setServerState(e.target.id as ServerId);
   };
 
@@ -35,55 +35,70 @@ const ServerSeclector = () => {
     "ttaengchil-server": "땡칠 서버",
     "ori-server": "오리 서버",
   };
-
   return (
     <Wrapper>
-      <InputBox>
+      <label>
         <Input
           type="radio"
           name="server"
           id={Object.keys(serverList)[0]}
           checked={serverState === Object.keys(serverList)[0]}
-          onChange={chagneServer}
+          onChange={changeServer}
         />
         {Object.values(serverList)[0]}
-      </InputBox>
-      <InputBox>
+      </label>
+      <label>
         <Input
           type="radio"
           name="server"
           id={Object.keys(serverList)[1]}
           checked={serverState === Object.keys(serverList)[1]}
-          onChange={chagneServer}
+          onChange={changeServer}
         />
         {Object.values(serverList)[1]}
-      </InputBox>
-      <InputBox>
+      </label>
+      <label>
         <Input
           type="radio"
           name="server"
           id={Object.keys(serverList)[2]}
           checked={serverState === Object.keys(serverList)[2]}
-          onChange={chagneServer}
+          onChange={changeServer}
         />
         {Object.values(serverList)[2]}
-      </InputBox>
+      </label>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.fieldset`
+  border-radius: 5px 0 0 5px;
+  position: fixed;
+  top: 100px;
+  right: 0;
+  background: #04c09e;
+  color: #333333;
   display: flex;
-  width: 300px;
-  justify-content: space-around;
-`;
 
-const InputBox = styled.label`
-  color: white;
+  width: 120px;
+  height: 120px;
+
+  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+
+  font-size: 16px;
+
+  @media screen and (max-width: 800px) {
+    width: 100px;
+    height: 80px;
+
+    font-size: 14px;
+  }
 `;
 
 const Input = styled.input`
-  margin-right: 3px;
+  margin-right: 5px;
 `;
 
-export default ServerSeclector;
+export default ServerSelector;
