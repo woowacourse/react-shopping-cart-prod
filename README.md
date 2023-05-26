@@ -10,13 +10,8 @@
 백엔드와의 협업을 통해 실제 동작하는 애플리케이션을 만듭니다.
 
 <br>
-
-## 👏 Contributing
-
-만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요.
-
 <br>
 
-## 🐞 Bug Report
+---
 
-버그를 발견한다면, [Issues](https://github.com/woowacourse/react-shopping-cart-prod/issues)에 등록해주세요.
+<a href="https://github.com/woowacourse">@woowacourse</a>
