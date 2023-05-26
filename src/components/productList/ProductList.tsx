@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import Product from './Product';
-import SkeletonProduct from './SkeletonProduct';
+import ProductItem from './ProductItem';
+import ProductItemSkeleton from './ProductItemSkeleton';
 
 import * as api from '../../api';
 import useToast from '../../hooks/useToast';
@@ -37,8 +37,8 @@ export default function ProductList() {
   return (
     <Wrapper>
       {products === null
-        ? Array.from({ length: SKELETONS_LENGTH }).map(() => <SkeletonProduct />)
-        : products.map((product) => <Product key={product.id} {...product} />)}
+        ? Array.from({ length: SKELETONS_LENGTH }).map(() => <ProductItemSkeleton />)
+        : products.map((product) => <ProductItem key={product.id} {...product} />)}
     </Wrapper>
   );
 }

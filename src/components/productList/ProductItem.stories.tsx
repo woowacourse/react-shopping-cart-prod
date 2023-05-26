@@ -1,13 +1,15 @@
 import type { StoryFn } from '@storybook/react';
 
-import Product from './Product';
+import ProductItem from './ProductItem';
 
 export default {
-  title: 'Product',
-  component: Product,
+  title: 'ProductItem',
+  component: ProductItem,
 };
 
-const Template: StoryFn<React.ComponentProps<typeof Product>> = (props) => <Product {...props} />;
+const Template: StoryFn<React.ComponentProps<typeof ProductItem>> = (props) => (
+  <ProductItem {...props} />
+);
 
 export const Controls = Template.bind({});
 Controls.args = {

@@ -13,7 +13,7 @@ import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE, MAX_QUANTITY } from '../../cons
 
 interface Props extends ProductType {}
 
-export default function Product({ id, name, price, imageUrl }: Props) {
+export default function ProductItem({ id, name, price, imageUrl }: Props) {
   const [cart, setCart] = useRecoilState(cartState);
   const [addLoading, setAddLoading] = useState(false);
   const serverName = useRecoilValue(serverNameState);

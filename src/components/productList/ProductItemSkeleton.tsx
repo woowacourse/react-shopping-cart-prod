@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-export default function SkeletonProduct() {
+export default function ProductItemSkeleton() {
   return (
     <Wrapper>
       <Image />
