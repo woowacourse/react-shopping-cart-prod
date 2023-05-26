@@ -4,9 +4,9 @@ import { useSetCart } from '../../hooks/useCart';
 import { checkedItemList } from '../../recoil';
 import { Product } from '../../types';
 import Button from '../common/Button';
-import { Checkbox } from './CheckboxStyle';
 import TrashCanIcon from '../icons/TrashCanIcon';
 import Price from '../Price';
+import { Checkbox } from './CheckboxStyle';
 import QuantityButton from './QuantityButton';
 
 interface Props extends Product {
