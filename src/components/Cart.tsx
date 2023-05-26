@@ -1,20 +1,13 @@
-import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { KEY_CART, ROUTE_PATH } from '../constants';
+import { ROUTE_PATH } from '../constants';
 import { useGoToAnotherPage } from '../hooks/useGoToAnotherPage';
-import { cartBadgeSelector, cartState } from '../recoil';
-import { setDataInLocalStorage } from '../utils/getAndSetDataInLocalStorage';
+import { cartBadgeSelector } from '../recoil';
 
 const Cart = () => {
   const goToPage = useGoToAnotherPage();
 
   const selectedProducts = useRecoilValue(cartBadgeSelector);
-  const cart = useRecoilValue(cartState);
-
-  useEffect(() => {
-    setDataInLocalStorage(KEY_CART, cart);
-  }, [cart]);
 
   return (
     <S.Wrapper>
