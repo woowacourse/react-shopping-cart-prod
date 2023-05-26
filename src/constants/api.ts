@@ -29,7 +29,7 @@ const FETCH_DEFAULT_OPTION = {
   },
 } as const;
 
-const CART_FETCH_OPTION_HEADERS = {
+const AUTHORIZED_FETCH_OPTION_HEADERS = {
   'Content-Type': 'application/json',
   Authorization: `Basic ${BASE64}`,
 } as const;
@@ -85,7 +85,7 @@ export {
   DEFAULT_API_BASE_URL,
   API_ENDPOINT,
   FETCH_DEFAULT_OPTION,
-  CART_FETCH_OPTION_HEADERS,
+  AUTHORIZED_FETCH_OPTION_HEADERS,
   HTTP_STATUS_CODE,
   HTTP_ERROR_MESSAGE,
   CART_API_ERROR_MESSAGE,

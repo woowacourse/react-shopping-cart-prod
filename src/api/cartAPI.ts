@@ -1,4 +1,4 @@
-import { API_ENDPOINT, CART_FETCH_OPTION_HEADERS } from '../constants/api';
+import { API_ENDPOINT, AUTHORIZED_FETCH_OPTION_HEADERS } from '../constants/api';
 import { CartItemData } from '../types';
 import { fetchAPI } from './fetchAPI';
 
@@ -6,7 +6,7 @@ const getCartAPI = (baseUrl: string) => {
   const getCartList = async (): Promise<CartItemData[]> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
       method: 'GET',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
+      headers: { ...AUTHORIZED_FETCH_OPTION_HEADERS },
     });
   };
 
@@ -18,7 +18,7 @@ const getCartAPI = (baseUrl: string) => {
 
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
       method: 'POST',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
+      headers: { ...AUTHORIZED_FETCH_OPTION_HEADERS },
       body: jsonData,
     });
   };
@@ -31,7 +31,7 @@ const getCartAPI = (baseUrl: string) => {
 
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
       method: 'PATCH',
-      headers: { ...CART_FETCH_OPTION_HEADERS },
+      headers: { ...AUTHORIZED_FETCH_OPTION_HEADERS },
       body: jsonData,
     });
   };
@@ -39,7 +39,7 @@ const getCartAPI = (baseUrl: string) => {
   const deleteCartItem = async (cartItemId: number): Promise<Response> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
       method: 'DELETE',
-      headers: { Authorization: CART_FETCH_OPTION_HEADERS.Authorization },
+      headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 
