@@ -1,4 +1,3 @@
-import { ENDPOINT } from '../constants/auth';
 import { ERROR_CODE } from '../constants/errors';
 import { getValidURL, handleStatusCode } from '../validation/errorHandler';
 import { CustomError } from '../validation/errors';
@@ -14,7 +13,7 @@ import {
 
 const base64 = 'YUBhLmNvbToxMjM0';
 
-const BASE =
+export const BASE =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000/react-shopping-cart/'
     : 'https://n0eyes.github.io/react-shopping-cart/';

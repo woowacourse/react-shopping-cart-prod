@@ -2,13 +2,13 @@ import { rest } from 'msw';
 import { MockProducts } from './fixtures/products';
 import { MockCart } from './fixtures/cart';
 import { getUUID } from '../utils/uuid';
-import { setCart } from '../utils/localStorage';
+import { getCart, setCart } from '../utils/localStorage';
 import { CartItem } from '../types/cart';
 
-const base64 = 'Basic IGFAYS5jb206MTIzNA==';
+const base64 = 'Basic YUBhLmNvbToxMjM0';
 
 export const getCartItems = rest.get('/cart-items', (req, res, ctx) => {
-  return res(ctx.status(200), ctx.json(MockCart));
+  return res(ctx.status(200), ctx.json(getCart()));
 });
 
 export const postCartItems = rest.post('/cart-items', async (req, res, ctx) => {
@@ -77,6 +77,9 @@ export const deleteCartItems = rest.delete(
   '/cart-items/:cartItemId',
   async (req, res, ctx) => {
     const { cartItemId } = req.params;
+
+    const authorization = req.headers.get('Authorization');
+    if (authorization !== base64) return res(ctx.status(401));
 
     const newCart = MockCart.filter((item) => item.id !== Number(cartItemId));
 
