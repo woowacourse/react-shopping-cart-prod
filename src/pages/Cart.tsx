@@ -21,6 +21,11 @@ export const Cart = () => {
         </Style.Content>
       ) : (
         <Style.EmptyCartContainer>
+          <Style.EmptyCartImage
+            src={
+              'https://cdn-mart.baemin.com/front-end/assets/20230525153657/images/defaultEmptyImage.11f8bc33139d72b546eb54f5b89e2abf.png'
+            }
+          />
           장바구니가 비어있습니다!
         </Style.EmptyCartContainer>
       )}
@@ -40,8 +45,7 @@ const Style = {
     margin-bottom: 34px;
 
     @media screen and (max-width: 480px) {
-      width: 90vw;
-      margin-bottom: 25px;
+      display: none;
     }
   `,
   HeaderTitle: styled.h1`
@@ -70,13 +74,24 @@ const Style = {
     min-height: 50vh;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    font-size: 50px;
+    gap: 15px;
+
+    font-size: 30px;
 
     @media screen and (max-width: 480px) {
       width: 90vw;
+
+      font-size: 20px;
+    }
+  `,
+  EmptyCartImage: styled.img`
+    @media screen and (max-width: 480px) {
+      width: 80vw;
+      height: 80vw;
     }
   `,
 };

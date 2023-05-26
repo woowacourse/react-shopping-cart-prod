@@ -67,6 +67,19 @@ export const CartItemsSection = () => {
           선택삭제
         </Style.DeleteSelectedProductButton>
       </Style.SelectOrDeleteContainer>
+      <Style.BottomOrderSummary>
+        <Style.SelectAllButtonContainer>
+          <CheckBox
+            isChecked={isAllCheckBoxChecked}
+            id={Math.random()}
+            handleClickCheckBox={toggleAllCheckBoxChecked}
+          />
+          <Style.SelectedProductCount>
+            전체선택 ({selectedCartIdList.length}/{cartItems.length})
+          </Style.SelectedProductCount>
+        </Style.SelectAllButtonContainer>
+        <Style.OrderButton>주문하기</Style.OrderButton>
+      </Style.BottomOrderSummary>
     </Style.Container>
   );
 };
@@ -79,6 +92,8 @@ const Style = {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    padding-bottom: 30px;
 
     @media screen and (max-width: 480px) {
       width: 100vw;
@@ -112,6 +127,8 @@ const Style = {
 
     @media screen and (max-width: 480px) {
       width: 90vw;
+
+      display: none;
     }
   `,
   CheckBox: styled.div`
@@ -133,5 +150,44 @@ const Style = {
 
     border: 1px solid #bbbbbb;
     font-family: var(--baemin-font);
+  `,
+  BottomOrderSummary: styled.div`
+    width: 100vw;
+    height: 90px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    position: fixed;
+    bottom: 0;
+
+    background-color: #555555;
+    color: white;
+    padding-left: 20px;
+
+    @media screen and (min-width: 480px) {
+      display: none;
+    }
+  `,
+  SelectAllButtonContainer: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  `,
+  OrderButton: styled.button`
+    all: unset;
+
+    width: 120px;
+    height: 90px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+    border-left: 1px solid white;
+    background-color: rgb(42, 193, 188);
+    box-sizing: border-box;
   `,
 };

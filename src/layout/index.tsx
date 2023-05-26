@@ -18,5 +18,9 @@ const Style = {
 
     padding-top: 140px;
     padding-bottom: 60px;
+
+    @media screen and (max-width: 480px) {
+      padding-top: 100px;
+    }
   `,
 };

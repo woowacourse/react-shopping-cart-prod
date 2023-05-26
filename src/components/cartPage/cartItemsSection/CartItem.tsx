@@ -113,6 +113,7 @@ const Style = {
 
     @media screen and (max-width: 480px) {
       width: 90vw;
+      gap: 10px;
     }
   `,
   CheckBox: styled.div`
