@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 import { CART_URL, PRODUCT_LIST_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
 import { cartState, productListState, serverState } from '../../recoil';
-import Spinner from '../Spinner';
+import Spinner from '../common/Spinner';
 import ProductItem from './ProductItem';
 
 const ProductList = () => {

@@ -33,7 +33,7 @@ const Spinner = () => {
 
 const S = {
   Svg: styled.svg`
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     width: 100px;

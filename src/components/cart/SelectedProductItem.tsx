@@ -4,7 +4,7 @@ import { useSetCart } from '../../hooks/useCart';
 import { checkedItemList } from '../../recoil';
 import { Product } from '../../types';
 import Button from '../common/Button';
-import { Checkbox } from '../common/CheckboxStyle';
+import { Checkbox } from './CheckboxStyle';
 import TrashCanIcon from '../icons/TrashCanIcon';
 import Price from '../Price';
 import QuantityButton from './QuantityButton';

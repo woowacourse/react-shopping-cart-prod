@@ -6,8 +6,8 @@ import { useFetchData } from '../../hooks/useFetchData';
 import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
 import { cartState, checkedItemList, serverState } from '../../recoil';
 import Button from '../common/Button';
-import { Checkbox } from '../common/CheckboxStyle';
-import Spinner from '../Spinner';
+import Spinner from '../common/Spinner';
+import { Checkbox } from './CheckboxStyle';
 import SelectedProductItem from './SelectedProductItem';
 
 const SelectedProductList = () => {

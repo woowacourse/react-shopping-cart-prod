@@ -2,10 +2,10 @@ import { Meta } from '@storybook/react';
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
+import { Checkbox } from '../../components/cart/CheckboxStyle';
 import SelectedProductItem from '../../components/cart/SelectedProductItem';
 import SelectedProductList from '../../components/cart/SelectedProductList';
 import Button from '../../components/common/Button';
-import { Checkbox } from '../../components/common/CheckboxStyle';
 import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
 import { cartState, checkedItemList } from '../../recoil';
 
