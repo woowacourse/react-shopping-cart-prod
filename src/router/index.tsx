@@ -4,8 +4,8 @@ import Cart from "../pages/Cart";
 import Main from "../pages/Main";
 
 export const ROUTER_PATH = {
-  Main: "/",
-  Cart: "/Cart",
+  Main: "/react-shopping-cart-prod",
+  Cart: "/react-shopping-cart-prod/Cart",
   NotFound: "/*",
 };
 
