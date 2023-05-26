@@ -17,7 +17,7 @@ export const handlers = [
     if (authorization !== base64) return res(ctx.status(401));
 
     const product = MockProducts.find((product) => product.id === productId);
-    const targetItemIndex = MockCart.cart.findIndex(
+    const targetItemIndex = MockCart.findIndex(
       ({ product }) => product.id === productId
     );
 
@@ -31,12 +31,12 @@ export const handlers = [
       };
 
       cartId = newCartItem.id;
-      MockCart.cart.push(newCartItem);
+      MockCart.push(newCartItem);
     } else {
-      cartId = MockCart.cart[targetItemIndex].id;
+      cartId = MockCart[targetItemIndex].id;
     }
 
-    setCart(MockCart.cart);
+    setCart(MockCart);
 
     return res(
       ctx.status(200),
@@ -53,7 +53,7 @@ export const handlers = [
 
     const { quantity }: { quantity: CartItem['quantity'] } = await req.json();
 
-    MockCart.cart = MockCart.cart.map((item) => {
+    MockCart = MockCart.map((item) => {
       if (item.id === Number(cartItemId)) {
         return {
           ...item,
@@ -64,7 +64,7 @@ export const handlers = [
       return item;
     });
 
-    setCart(MockCart.cart);
+    setCart(MockCart);
 
     return res(ctx.status(200), ctx.json({}));
   }),
@@ -80,9 +80,7 @@ export const handlers = [
   rest.delete('/cart-items/:cartItemId', async (req, res, ctx) => {
     const { cartItemId } = req.params;
 
-    MockCart.cart = MockCart.cart.filter(
-      (item) => item.id !== Number(cartItemId)
-    );
+    MockCart = MockCart.filter((item) => item.id !== Number(cartItemId));
 
     setCart(MockCart.cart);
 
