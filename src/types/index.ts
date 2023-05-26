@@ -15,4 +15,29 @@ interface CartItemData {
   product: ProductItemData;
 }
 
-export type { ProductItemData, CartItemData, ProductItemPriceData };
+interface OrderCartItemsData {
+  cartItemId: number;
+  quantity: number;
+}
+
+interface OrderedItemData {
+  quantity: number;
+  product: ProductItemData;
+}
+
+interface OrderData {
+  id: number;
+  orderedItems: OrderedItemData[];
+  createdAt: Date;
+  totalPrice: number;
+  discountedTotalPrice: number;
+}
+
+export type {
+  ProductItemData,
+  ProductItemPriceData,
+  CartItemData,
+  OrderCartItemsData,
+  OrderedItemData,
+  OrderData,
+};
