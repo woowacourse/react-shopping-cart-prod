@@ -27,7 +27,7 @@ const getDiscountedTotalPrice = (orderedItems: OrderedItemData[]) => {
 
     // if (member.rank > '일반') acc + (orderedItems.quantity * orderedItems.product) * member.discountRate / 100
 
-    return orderedItems.quantity * orderedItems.product.price;
+    return acc + orderedItems.quantity * orderedItems.product.price;
   }, 0);
 
   return discountedTotalPrice;
