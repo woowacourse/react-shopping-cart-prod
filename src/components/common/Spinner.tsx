@@ -12,6 +12,7 @@ const Spinner = () => {
       viewBox='0 0 100 100'
       enableBackground='new 0 0 0 0'
       xmlSpace='preserve'
+      aria-label='로딩중 입니다'
     >
       <path
         fill='#000'
