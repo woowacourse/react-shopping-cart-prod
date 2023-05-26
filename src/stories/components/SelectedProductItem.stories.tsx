@@ -1,5 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react';
 import SelectedProductItemComponent from '../../components/cart/SelectedProductItem';
+import productList from '../../mock/productList.json';
 
 const meta = {
   component: SelectedProductItemComponent,
@@ -14,7 +15,7 @@ type Story = StoryObj<typeof SelectedProductItemComponent>;
 export const SelectedProductItem: Story = {
   args: {
     id: 1,
-    imageUrl: `${process.env.PUBLIC_URL}/assets/product1.svg`,
+    imageUrl: `${productList[0].imageUrl}`,
     name: 'PET보틀-정사각(420ml)',
     price: 43400,
     quantity: 1,
@@ -30,7 +31,13 @@ export const SelectedProductItem: Story = {
     },
 
     imageUrl: {
-      options: Array.from({ length: 8 }).map((_, index) => `/assets/product${index + 1}.svg`),
+      options: Array.from({ length: 11 })
+        .map((_, index) => ({
+          [`product${index + 1}`]: productList[index].imageUrl,
+        }))
+        .reduce((acc, cur) => {
+          return { ...acc, ...cur };
+        }, {}),
       control: {
         type: 'select',
       },
