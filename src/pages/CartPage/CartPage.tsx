@@ -5,6 +5,7 @@ import CartCheckoutBox from '../../components/cart/CartCheckoutBox/CartCheckoutB
 import CartList from '../../components/cart/CartList/CartList';
 import CartListSkeleton from '../../components/cart/CartList/CartListSkeleton';
 import CartListHeader from '../../components/cart/CartListHeader/CartListHeader';
+import PageHeading from '../../components/common/PageHeading/PageHeading';
 import { CART_LIST_CHECKBOX_KEY } from '../../constants/store';
 import { useCheckboxList } from '../../hooks/common/useCheckboxList';
 import { cartIdListState } from '../../store/cart';
@@ -22,7 +23,7 @@ const CartPage = () => {
 
   return (
     <>
-      <S.CartPageHeading size="small">장바구니</S.CartPageHeading>
+      <PageHeading>장바구니</PageHeading>
       <S.CartInformationContainer>
         <div>
           <CartListHeader />
