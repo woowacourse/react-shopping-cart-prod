@@ -8,8 +8,7 @@ import {
   removeCartItem,
   setCartData,
 } from '../../domain/cart';
-import { PostCartItemRequestBody } from '../../types';
-import { PatchCartItemRequestBody } from '../../types/api';
+import { PatchCartItemRequestBody, PostCartItemRequestBody } from '../../types/api';
 
 const cartHandlers = [
   rest.get(API_ENDPOINT.CART_ITEMS, (req, res, ctx) => {

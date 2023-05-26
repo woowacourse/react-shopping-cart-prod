@@ -7,14 +7,12 @@ interface ProductItemData {
   imageUrl: string;
 }
 
+type ProductItemPriceData = Pick<ProductItemData, 'price' | 'discountRate' | 'discountedPrice'>;
+
 interface CartItemData {
   id: number;
   quantity: number;
   product: ProductItemData;
 }
 
-interface PostCartItemRequestBody {
-  productId: number;
-}
-
-export type { ProductItemData, CartItemData, PostCartItemRequestBody };
+export type { ProductItemData, CartItemData, ProductItemPriceData };
