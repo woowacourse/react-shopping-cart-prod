@@ -1,14 +1,20 @@
+import { useNavigate } from 'react-router-dom';
 import { selectedItemsSelector } from '../../../atoms/cart';
 import { totalPriceSelector } from '../../../atoms/cart';
 import { DELIVERY_FEE } from '../../../constants/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
+import { useMutateOrder } from '../../../hooks/order/order';
 import * as S from './OrderAside.styles';
 
 const OrderAside = () => {
   const totalPrice = useRefreshableRecoilValue(totalPriceSelector);
   const selectedItems = useRefreshableRecoilValue(selectedItemsSelector);
-  const onOrder = () => {
+  const { postOrderMutation } = useMutateOrder();
+  const navigate = useNavigate();
+  const onOrder = async () => {
     console.log(`submit : ${[...selectedItems]}`);
+    await postOrderMutation({ cartItemIds: [...selectedItems] });
+    navigate('/order');
   };
   return (
     <S.Root>

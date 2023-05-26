@@ -98,7 +98,7 @@ export const postOrder = rest.post('/orders', async (req, res, ctx) => {
   const cart = getCart();
   const orders = getOrders([]);
 
-  if (!cartItemIds.length) {
+  if (!cartItemIds) {
     return res(
       ctx.status(400),
       ctx.json({
