@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import CartItemList from '../cart/CartItemList';
 import CartBill from '../cart/CartBill';
+import SubHeader from '../common/SubHeader';
 
 import { cartCountState, cartState, checkedListState, serverNameState } from '../../recoil/state';
 import * as api from '../../api';
@@ -31,9 +32,7 @@ export default function CartPage() {
 
   return (
     <>
-      <CartHeader>
-        <h2>장바구니</h2>
-      </CartHeader>
+      <SubHeader>장바구니</SubHeader>
       {cartCount !== 0 ? (
         <CartMain>
           <CartItemList />
@@ -52,20 +51,6 @@ export default function CartPage() {
     </>
   );
 }
-
-const CartHeader = styled.div`
-  width: 100%;
-  border-bottom: 4px solid #333333;
-  padding-bottom: 28px;
-
-  line-height: 37px;
-  letter-spacing: 0.5px;
-  font-size: 32px;
-  font-weight: 700;
-  text-align: center;
-
-  color: #333333;
-`;
 
 const CartMain = styled.div`
   display: flex;
