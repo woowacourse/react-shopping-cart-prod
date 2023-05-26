@@ -68,7 +68,7 @@ const ClosedStepper = styled.button`
   height: 36px;
   border: none;
   border-radius: 50%;
-  background-color: #2ac1bc;
+  background-color: var(--color-primary);
   cursor: pointer;
 `;
 
@@ -81,7 +81,7 @@ const Stepper = styled.div`
   padding: 5px;
   border: none;
   border-radius: 9999px;
-  background-color: #2ac1bc;
+  background-color: var(--color-primary);
 `;
 
 const DecreaseButton = styled.button`
@@ -89,7 +89,7 @@ const DecreaseButton = styled.button`
   height: 24px;
   border: none;
   border-radius: 50%;
-  background-color: #2ac1bc;
+  background-color: var(--color-primary);
   color: #ffffff;
   font-size: 26px;
   line-height: 20px;
@@ -109,7 +109,7 @@ const IncreaseButton = styled.button`
   height: 24px;
   border: none;
   border-radius: 50%;
-  background-color: #2ac1bc;
+  background-color: var(--color-primary);
   color: #ffffff;
   font-size: 26px;
   line-height: 20px;

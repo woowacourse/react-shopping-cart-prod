@@ -107,9 +107,14 @@ const OrderConfirmButton = styled.button<{ isActive: boolean }>`
   color: ${({ isActive }) => (isActive ? '#fff' : '#b1b3b5')};
   font-size: 18px;
   font-weight: 700;
-  background-color: ${({ isActive }) => (isActive ? '#2ac1bc' : '#0000000d')};
+  background-color: ${({ isActive }) => (isActive ? 'var(--color-primary-tone-down)' : '#0000000d')};
   cursor: pointer;
   pointer-events: ${({ isActive }) => (isActive ? 'initial' : 'none')};
+
+  :hover {
+    filter: brightness(1.2);
+    transition: background-color 100ms ease;
+  }
 
   @media (max-width: 430px) {
     margin: 0;

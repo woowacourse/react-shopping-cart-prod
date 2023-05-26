@@ -87,7 +87,7 @@ const CartProductCount = styled.span`
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background-color: #06c09e;
+  background-color: var(--color-primary);
   color: #ffffff;
   font-size: 16px;
   text-align: center;
