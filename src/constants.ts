@@ -5,7 +5,7 @@ export const LOCAL_STORAGE_KEY = {
   serverName: 'serverName',
 };
 
-export const MAX_QUANTITY = 1000;
+export const MAX_QUANTITY = 100;
 
 export const MOCK_URL = 'https://backend';
 
