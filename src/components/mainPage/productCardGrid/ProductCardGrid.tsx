@@ -26,8 +26,6 @@ const Style = {
     row-gap: 86px;
 
     @media screen and (max-width: 480px) {
-      padding: 0 10px;
-
       grid-template-columns: repeat(2, 1fr);
       column-gap: 27px;
       row-gap: 56px;

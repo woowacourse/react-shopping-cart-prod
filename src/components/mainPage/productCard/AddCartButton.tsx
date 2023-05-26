@@ -6,6 +6,7 @@ import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
 import Loading from '../../common/Loading';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
+import styled from 'styled-components';
 
 interface AddCartButtonProps {
   productId: number;
@@ -74,8 +75,19 @@ export const AddCartButton = ({ productId }: AddCartButtonProps) => {
       ) : isLoading ? (
         <Loading />
       ) : (
-        <ShoppingCartIcon handleClick={handleClickShoppingCartIcon} />
+        <Style.ShoppingCartImage
+          src={`${process.env.PUBLIC_URL}/plusIcon.svg`}
+          alt="장바구니 추가 버튼"
+          onClick={handleClickShoppingCartIcon}
+        />
       )}
     </>
   );
+};
+
+const Style = {
+  ShoppingCartImage: styled.img`
+    width: 35px;
+    height: 35px;
+  `,
 };

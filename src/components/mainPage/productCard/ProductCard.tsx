@@ -8,12 +8,14 @@ export const ProductCard = ({ id, name, price, imageUrl }: Product) => {
   return (
     <Style.Container>
       <Style.Image src={imageUrl} alt="상품 이미지" />
+      <Style.AddCartButtonContainer>
+        <AddCartButton productId={id} />
+      </Style.AddCartButtonContainer>
       <Style.DescriptionContainer>
         <Style.NamePriceContainer>
           <Style.Name>{name}</Style.Name>
           <Style.Price>{getCommaAddedNumber(price)}원</Style.Price>
         </Style.NamePriceContainer>
-        <AddCartButton productId={id} />
       </Style.DescriptionContainer>
     </Style.Container>
   );
@@ -27,6 +29,8 @@ const Style = {
     display: flex;
     flex-direction: column;
     gap: 18px;
+
+    position: relative;
 
     @media screen and (max-width: 480px) {
       width: 150px;
@@ -71,6 +75,16 @@ const Style = {
 
     @media screen and (max-width: 480px) {
       font-size: 16px;
+    }
+  `,
+  AddCartButtonContainer: styled.div`
+    position: absolute;
+    top: calc(283px - 28px - 10px);
+    right: 10px;
+
+    @media screen and (max-width: 480px) {
+      top: calc(150px - 28px - 10px);
+      right: 5px;
     }
   `,
 };

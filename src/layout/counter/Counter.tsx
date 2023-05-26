@@ -45,8 +45,11 @@ const Style = {
 
     display: flex;
     flex-wrap: nowrap;
+    flex-shrink: 0;
 
     border: 1px solid lightgray;
+    background-color: white;
+    padding: 5px;
   `,
   Input: styled.input`
     width: 23px;
