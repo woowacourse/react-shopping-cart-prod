@@ -8,9 +8,12 @@ const meta = {
   component: ProductItem,
   args: {
     id: 1,
-    name: '치킨',
-    price: 10000,
-    imageUrl: 'https://www.asiaa.co.kr/news/photo/202204/83451_94243_5547.png',
+    name: '종이용기(1100cc)-단골이 됐으면 좋겠다',
+    price: 61100,
+    discountRate: 0,
+    discountedPrice: 61100,
+    imageUrl:
+      'https://cdn-mart.baemin.com/sellergoods/list/cba783a5-b35d-4b9d-b58e-56801594351f.jpg?h=400&w=400',
   },
 } satisfies Meta<typeof ProductItem>;
 
