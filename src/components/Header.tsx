@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { ROUTER_PATH } from "router";
 import { cartListState } from "recoil/cart";
-import ServerSeclector from "./ServerSelector";
+import ServerSelector from "./ServerSelector";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -20,10 +20,13 @@ const Header = () => {
   return (
     <Wrapper>
       <TitleContainer onClick={goToMain}>
-        <img src={process.env.PUBLIC_URL + "/assets/cart-icon.svg"} alt="홈카트" />
+        <img
+          src={process.env.PUBLIC_URL + "/assets/cart-icon.svg"}
+          alt="홈카트"
+        />
         <Title>SHOP</Title>
       </TitleContainer>
-      <ServerSeclector />
+      <ServerSelector />
       <CartContainer onClick={goToCart}>
         장바구니
         {cartCount > 0 && <ItemQuantityBox>{cartCount}</ItemQuantityBox>}
