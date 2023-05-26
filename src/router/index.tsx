@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { RouterProvider } from "react-router-dom";
 import Cart from "../pages/Cart";
 import Main from "../pages/Main";
+import NotFound from "../pages/NotFound";
 
 export const ROUTER_PATH = {
   Main: "/react-shopping-cart-prod",
@@ -21,7 +22,7 @@ export const PageRouterProvider = () => {
     },
     {
       path: ROUTER_PATH.NotFound,
-      element: <Main />,
+      element: <NotFound />,
     },
   ]);
   return <RouterProvider router={router} />;
