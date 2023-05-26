@@ -1,10 +1,21 @@
 import styled from 'styled-components';
 
-import { Product } from '../../../types/Product';
 import { AddCartButton } from './AddCartButton';
 import { getCommaAddedNumber } from '../../../utils/number';
 
-export const ProductCard = ({ id, name, price, imageUrl }: Product) => {
+interface ProductCardProps {
+  id: number;
+  name: string;
+  price: number;
+  imageUrl: string;
+}
+
+export const ProductCard = ({
+  id,
+  name,
+  price,
+  imageUrl,
+}: ProductCardProps) => {
   return (
     <Style.Container>
       <Style.Image src={imageUrl} alt="상품 이미지" />

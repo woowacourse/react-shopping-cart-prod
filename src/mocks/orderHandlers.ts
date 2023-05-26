@@ -5,8 +5,6 @@ import {
   getOrderListFromLocalStorage,
 } from '../utils/localStorage';
 
-// TODO: 테스트 페이지에서 장바구니 상품 정보를 가져와 주문 넣는 기능 만들기
-
 export const orderHandlers = [
   rest.post('/orders', async (req, res, ctx) => {
     const cartItems = getCartItemsFromLocalStorage();
@@ -76,5 +74,13 @@ export const orderHandlers = [
     });
 
     return res(ctx.status(200), ctx.json(responseOrder));
+  }),
+  rest.get('/order/:id', (req, res, ctx) => {
+    const orderId = Number(req.params.id);
+    const orderList = getOrderListFromLocalStorage();
+
+    const order = orderList.find((o) => o.orderId === orderId);
+
+    return res(ctx.status(200), ctx.json(order));
   }),
 ];
