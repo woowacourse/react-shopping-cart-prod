@@ -6,6 +6,7 @@ import Main from "../pages/Main";
 export const ROUTER_PATH = {
   Main: "/",
   Cart: "/Cart",
+  NotFound: "/*",
 };
 
 export const PageRouterProvider = () => {
@@ -17,6 +18,10 @@ export const PageRouterProvider = () => {
     {
       path: ROUTER_PATH.Cart,
       element: <Cart />,
+    },
+    {
+      path: ROUTER_PATH.NotFound,
+      element: <Main />,
     },
   ]);
   return <RouterProvider router={router} />;
