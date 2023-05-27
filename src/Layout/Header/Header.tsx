@@ -4,18 +4,22 @@ import { ChangeEvent, Suspense } from 'react';
 import Logo from '@layout/Logo/Logo';
 
 import { SelectBox } from '@common/SelectBox';
-import { SERVER_NAME, useServer } from '@recoil/server/serverState';
+
 import { CartStepperWithIcon } from '@views/Cart/components/CartStepperWithIcon';
+import { useServerUrl } from '@recoil/server/serverUrlState';
+
+import { useResetCart } from '@views/Cart/recoil/cartState';
 
 function Header() {
-  const { server, handleServer } = useServer();
+  const { setServerUrlBy } = useServerUrl();
+
+  const reset = useResetCart();
 
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    const { value } = event.currentTarget;
+    const { value: crew } = event.currentTarget;
 
-    const result = SERVER_NAME.filter((item) => item === value)[0];
-
-    handleServer(result);
+    reset();
+    setServerUrlBy(crew);
   };
 
   return (
