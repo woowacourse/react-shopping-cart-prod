@@ -1,2 +1,3 @@
 export const FREE_DELIVERY_THRESHOLD = 50000;
 export const STANDARD_DELIVERY_FEE = 3000;
+export const REWARD_POINT_RATE = 0.05;

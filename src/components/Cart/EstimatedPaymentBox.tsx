@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { totalPriceSelector } from '../../recoil/checkedProductData';
 import {
   FREE_DELIVERY_THRESHOLD,
+  REWARD_POINT_RATE,
   STANDARD_DELIVERY_FEE,
 } from '../../constants/price';
 
@@ -14,6 +15,7 @@ const EstimatedPaymentBox = () => {
       ? 0
       : STANDARD_DELIVERY_FEE;
   const orderPrice = totalPrice ? totalPrice + deliveryPrice : 0;
+  const rewardPoints = totalPrice * REWARD_POINT_RATE;
 
   return (
     <EstimatedPaymentBoxContainer>
@@ -26,6 +28,14 @@ const EstimatedPaymentBox = () => {
         <EstimatedPaymentInfo>
           <dt>총 배송비</dt>
           <dd>{deliveryPrice.toLocaleString('KR')}원</dd>
+        </EstimatedPaymentInfo>
+        <EstimatedPaymentInfo>
+          <dt>총 적립 금액</dt>
+          <dd>{rewardPoints.toLocaleString('KR')}원</dd>
+        </EstimatedPaymentInfo>
+        <EstimatedPaymentInfo>
+          <dt>포인트 사용 금액</dt>
+          <dd>0원</dd>
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>총 주문금액</dt>
@@ -41,7 +51,7 @@ const EstimatedPaymentBox = () => {
 
 const EstimatedPaymentBoxContainer = styled.div`
   width: 448px;
-  height: 410px;
+  height: 510px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
 
   @media (max-width: 420px) {
@@ -60,7 +70,8 @@ const EstimatedPaymentTitle = styled.div`
 const EstimatedPaymentContent = styled.div`
   padding: 30px 30px 0;
 
-  & > :last-child {
+  & > :nth-child(3),
+  & > :nth-child(5) {
     padding-top: 41px;
   }
 `;
