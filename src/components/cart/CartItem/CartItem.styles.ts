@@ -54,16 +54,22 @@ const CartItemName = styled(Text)`
   }
 `;
 
-const CartItemPrice = styled(Text)`
+const CartItemPriceContainer = styled.p`
   width: 126px;
   margin-right: 12px;
   padding-left: 12px;
+  display: flex;
+  flex-direction: column;
   text-align: right;
   letter-spacing: -0.2px;
 
-  &.skeleton::after {
-    font-size: 0;
-    content: 'loading';
+  &.skeleton {
+    min-height: 30px;
+
+    &::after {
+      font-size: 0;
+      content: 'loading';
+    }
   }
 
   @media screen and (max-width: 600px) {
@@ -72,6 +78,16 @@ const CartItemPrice = styled(Text)`
     padding-left: 0;
     text-align: left;
   }
+`;
+
+const CustomerPrice = styled(Text)`
+  font-weight: 500;
+`;
+
+const OriginalPrice = styled(Text)`
+  color: #b1b3b5;
+  font-weight: normal;
+  text-decoration: line-through;
 `;
 
 const CartItemDeleteButton = styled(Button)`
@@ -112,6 +128,8 @@ export {
   CartItemImageWrapper,
   CartItemImage,
   CartItemName,
-  CartItemPrice,
+  CartItemPriceContainer,
+  CustomerPrice,
+  OriginalPrice,
   CartItemDeleteButton,
 };

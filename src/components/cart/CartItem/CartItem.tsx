@@ -18,7 +18,15 @@ interface CartItemProps extends ProductItemData {
   quantity: number;
 }
 
-const CartItem = ({ cartItemId, quantity, name, price, imageUrl }: CartItemProps) => {
+const CartItem = ({
+  cartItemId,
+  quantity,
+  name,
+  price,
+  discountRate,
+  discountedPrice,
+  imageUrl,
+}: CartItemProps) => {
   const { updateItemQuantity, removeItem } = useCart();
   const { isChecked, toggleItemCheckbox } = useCheckbox(CART_LIST_CHECKBOX_KEY, cartItemId);
   const { isModalOpen, handleModalOpen, handleModalClose } = useModal();
@@ -47,7 +55,14 @@ const CartItem = ({ cartItemId, quantity, name, price, imageUrl }: CartItemProps
         count={quantity}
         handleCountChange={handleQuantityChange}
       />
-      <S.CartItemPrice>{priceFormatter(price * quantity)}원</S.CartItemPrice>
+      <S.CartItemPriceContainer>
+        <S.CustomerPrice>
+          {discountRate > 0 ? priceFormatter(discountedPrice) : priceFormatter(price)}원
+        </S.CustomerPrice>
+        {discountRate > 0 && (
+          <S.OriginalPrice size="small">{priceFormatter(price)}원</S.OriginalPrice>
+        )}
+      </S.CartItemPriceContainer>
       <S.CartItemDeleteButton aria-label="상품 삭제" variant="textButton" onClick={handleModalOpen}>
         <CloseIcon />
       </S.CartItemDeleteButton>
