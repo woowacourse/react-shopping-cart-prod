@@ -8,16 +8,21 @@ import {
 import type { CartItemType } from '../../types/ProductType';
 
 import { useCallback, useMemo } from 'react';
-import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
-import serverState, { SERVER } from '@recoil/server/serverState';
-import { createApiRequests } from '@utils/createApiRequests';
-import { CART_PATH } from '@constants/urlConstants';
+import serverState from '@recoil/server/serverState';
+import { getCartPath } from '@constants/urlConstants';
+import { fetchGet } from '@utils/fetchUtils';
 
 export const CartItemQuery = selector({
   key: 'cartListWithInfoState/default',
   get: async ({ get }) => {
     const server = get(serverState);
-    const cartProducts: CartItemType[] = await createApiRequests(SERVER[server])(CART_PATH).GET();
+    const cartProducts: CartItemType[] | null = await fetchGet(
+      getCartPath(server)
+    );
+
+    if (!cartProducts) {
+      throw new Error('리코일에서 장바구니 목록을 불러올 수 없습니다.');
+    }
 
     return cartProducts.map((cartProduct) => {
       cartProduct.checked = true;
@@ -28,7 +33,7 @@ export const CartItemQuery = selector({
 
 const cartState = atom<CartItemType[]>({
   key: 'cartListWithInfoState',
-  default: CartItemQuery,
+  default: [],
 });
 
 export default cartState;
@@ -69,11 +74,7 @@ export const useCheckCart = () => {
   const deleteCheckedItems = () => {
     setCart(cart.filter((item) => item.checked === false));
 
-    cart
-      .filter((item) => item.checked === true)
-      .forEach((item) => {
-        fetchCartItems.delete(item.id);
-      });
+    // 이 부분 확인 필요
   };
 
   return {

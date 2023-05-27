@@ -1,19 +1,15 @@
-import cartState from '@recoil/cart/cartState';
-import { productListState } from '@recoil/product/productListState';
-import { atom, useRecoilRefresher_UNSTABLE, useRecoilState, useResetRecoilState } from 'recoil';
-
-export const SERVER_NAME = ['마코', '허브', '우가'] as const;
-
-export const SERVER = {
-  [SERVER_NAME[0]]: 'https://m4co.shop',
-  [SERVER_NAME[1]]: 'https://h3rb.shop',
-  [SERVER_NAME[2]]: 'https://wuga.shop',
-} as const;
-
-export type ServerName = keyof typeof SERVER;
+import { SERVER, SERVER_NAME, ServerName } from "@constants/urlConstants";
+import cartState from "@recoil/cart/cartState";
+import { productListState } from "@recoil/product/productListState";
+import {
+  atom,
+  useRecoilRefresher_UNSTABLE,
+  useRecoilState,
+  useResetRecoilState,
+} from "recoil";
 
 const serverState = atom<ServerName>({
-  key: 'serverState',
+  key: "serverState",
   default: SERVER_NAME[0],
 });
 

@@ -1,4 +1,5 @@
-import { SERVER_NAME, useServer } from '@recoil/server/serverState';
+import { SERVER_NAME } from '@constants/urlConstants';
+import { useServer } from '@recoil/server/serverState';
 import { renderHook, waitFor } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 
