@@ -25,7 +25,25 @@ const useFetch = () => {
     }
   };
 
-  return { addToCart };
+  const updateCartItem = async (id: number, quantity: number) => {
+    try {
+      const response = await fetch(`${baseURL}/cart-items/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Basic ${AUTH}`,
+        },
+        body: JSON.stringify({ quantity }),
+      });
+
+      if (!response.ok) throw new Error(`error code : ${response.status}`);
+      refreshCartList();
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  return { addToCart, updateCartItem };
 };
 
 export default useFetch;

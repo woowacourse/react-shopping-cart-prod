@@ -1,7 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as ShoppingCartImg } from '../../assets/icon/shopping-cart.svg';
-import useCartAtom from '../../hooks/useCartAtom';
 import { WIDTH } from '../../styles/mediaQuery';
 import { Product } from '../../types/product';
 import Counter from '../common/Counter/Counter';
@@ -10,7 +9,8 @@ import ProductInfo from './ProductInfo/ProductInfo';
 import useFetch from '../../hooks/useFetch';
 
 type ProductCartProps = Product & {
-  count: number;
+  count: number | undefined;
+  cartId: number | undefined;
 };
 const ProductCard = ({
   id,
@@ -18,17 +18,24 @@ const ProductCard = ({
   price,
   imageUrl,
   count,
+  cartId,
 }: ProductCartProps) => {
-  const { plusOne, minusOne } = useCartAtom(id, {
-    id,
-    name,
-    price,
-    imageUrl,
-  });
-  const { addToCart } = useFetch();
+  const { addToCart, updateCartItem } = useFetch();
 
   const onClickAddToCart = () => {
     addToCart(id);
+  };
+
+  const plusOne = () => {
+    if (!cartId || !count) return;
+
+    updateCartItem(cartId, count + 1);
+  };
+
+  const minusOne = () => {
+    if (!cartId || !count) return;
+
+    updateCartItem(cartId, count - 1);
   };
 
   return (
@@ -36,7 +43,7 @@ const ProductCard = ({
       <ProductImg imageUrl={imageUrl} />
       <ProductDetail>
         <ProductInfo name={name} price={price} />
-        {count > 0 ? (
+        {count && count > 0 ? (
           <Counter plusOne={plusOne} minusOne={minusOne} quantity={count} />
         ) : (
           <ShoppingCart onClick={onClickAddToCart}>

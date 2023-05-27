@@ -21,7 +21,8 @@ const ProductCardList = () => {
             name={name}
             price={price}
             imageUrl={imageUrl}
-            count={cart ? cart.quantity : 0}
+            count={cart?.quantity}
+            cartId={cart?.id}
           />
         );
       })}
