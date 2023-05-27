@@ -3,22 +3,25 @@ import { styled } from 'styled-components';
 import { fetchedProductListSelector } from '../../store/asyncSelector';
 import { WIDTH } from '../../styles/mediaQuery';
 import ProductCard from '../ProductCard/ProductCard';
+import { cartAtom } from '../../store/cart';
 
 const ProductCardList = () => {
   const fetchedProductList = useRecoilValue(fetchedProductListSelector);
+  const cartList = useRecoilValue(cartAtom);
 
   return (
     <Container>
       {fetchedProductList.map((product) => {
         const { id, name, price, imageUrl } = product;
-
+        const cart = cartList.find((cart) => cart.product.id === id);
         return (
           <ProductCard
-            key={product.id}
+            key={id}
             id={id}
             name={name}
             price={price}
             imageUrl={imageUrl}
+            count={cart ? cart.quantity : 0}
           />
         );
       })}

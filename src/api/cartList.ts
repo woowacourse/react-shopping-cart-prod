@@ -14,23 +14,6 @@ export const fetchCartList = async <T>(baseURL: string): Promise<T> => {
   return data;
 };
 
-export const postCartItem = async <T>(
-  baseURL: string,
-  id: number
-): Promise<T> => {
-  const response = await fetch(`${baseURL}/cart-items`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `Basic ${AUTH}`,
-    },
-    body: JSON.stringify({ id }),
-  });
-  const data = await response.json();
-
-  return data;
-};
-
 export const fetchCartItem = async <T>(id: number): Promise<T> => {
   const response = await fetch(`${BASE_URL.SPLIT}/cart-items/${id}`, {
     method: 'GET',

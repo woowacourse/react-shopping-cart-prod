@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { deleteCartItem, postCartItem, updateCartItem } from '../api/cartList';
+import { deleteCartItem, updateCartItem } from '../api/cartList';
 import { cartAtom, cartSelectorFamily } from '../store/cart';
 import { Product } from '../types/product';
-import { baseURLSelector } from '../store/server';
 
 const useCartAtom = (id: number, product?: Product) => {
   let name: string;
@@ -19,11 +18,9 @@ const useCartAtom = (id: number, product?: Product) => {
   const setCart = useSetRecoilState(cartAtom);
   const productInCart = useRecoilValue(cartSelectorFamily(id));
   const [count, setCount] = useState(productInCart?.quantity);
-  const baseURL = useRecoilValue(baseURLSelector);
 
   const addToCart = () => {
     setCount(1);
-    postCartItem(baseURL, id);
     setCart((prev) => [
       ...prev,
       { id, quantity: 1, product: { id, name, price, imageUrl } },

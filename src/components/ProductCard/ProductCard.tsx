@@ -7,14 +7,29 @@ import { Product } from '../../types/product';
 import Counter from '../common/Counter/Counter';
 import ProductImg from './ProductImg/ProductImg';
 import ProductInfo from './ProductInfo/ProductInfo';
+import useFetch from '../../hooks/useFetch';
 
-const ProductCard = ({ id, name, price, imageUrl }: Product) => {
-  const { count, addToCart, plusOne, minusOne } = useCartAtom(id, {
+type ProductCartProps = Product & {
+  count: number;
+};
+const ProductCard = ({
+  id,
+  name,
+  price,
+  imageUrl,
+  count,
+}: ProductCartProps) => {
+  const { plusOne, minusOne } = useCartAtom(id, {
     id,
     name,
     price,
     imageUrl,
   });
+  const { addToCart } = useFetch();
+
+  const onClickAddToCart = () => {
+    addToCart(id);
+  };
 
   return (
     <Container>
@@ -24,7 +39,7 @@ const ProductCard = ({ id, name, price, imageUrl }: Product) => {
         {count > 0 ? (
           <Counter plusOne={plusOne} minusOne={minusOne} quantity={count} />
         ) : (
-          <ShoppingCart onClick={addToCart}>
+          <ShoppingCart onClick={onClickAddToCart}>
             <ShoppingCartImg />
           </ShoppingCart>
         )}
