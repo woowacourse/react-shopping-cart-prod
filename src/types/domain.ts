@@ -11,3 +11,13 @@ export interface CartProduct {
   isChecked: boolean;
   product: Product;
 }
+
+export interface Coupon {
+  couponId: number;
+  name: string;
+  selected: boolean;
+  discount: {
+    type: "rate" | "price";
+    amount: number;
+  };
+}
