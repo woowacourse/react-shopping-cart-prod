@@ -45,6 +45,15 @@ const useCart = () => {
     }
   }, [isAdded]);
 
+  const refreshCart = useRecoilCallback(
+    ({ set }) =>
+      async () => {
+        const newCartList = await cartAPI.getCartList();
+        set(cartListState, newCartList);
+      },
+    [cartAPI]
+  );
+
   const updateCart = useRecoilCallback(
     ({ set }) =>
       (cartItem: CartItemData) => {
@@ -107,16 +116,16 @@ const useCart = () => {
   );
 
   const { mutate: removeItem } = useMutationFetch<void, number>(
-    useRecoilCallback(
-      ({ set }) =>
-        async (cartItemId) => {
-          await cartAPI.deleteCartItem(cartItemId);
-          const newCartList = await cartAPI.getCartList();
-          set(cartListState, newCartList);
-        },
+    useCallback(
+      async (cartItemId) => {
+        await cartAPI.deleteCartItem(cartItemId);
+      },
       [cartAPI]
     ),
     {
+      onSuccess: async () => {
+        await refreshCart();
+      },
       onError(error) {
         handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
       },
@@ -124,16 +133,16 @@ const useCart = () => {
   );
 
   const { mutate: removeCheckedItems } = useMutationFetch<void, number[]>(
-    useRecoilCallback(
-      ({ set }) =>
-        async (cartItemIds) => {
-          await Promise.all(cartItemIds.map((cartItemId) => cartAPI.deleteCartItem(cartItemId)));
-          const newCartList = await cartAPI.getCartList();
-          set(cartListState, newCartList);
-        },
+    useCallback(
+      async (cartItemIds) => {
+        await Promise.all(cartItemIds.map((cartItemId) => cartAPI.deleteCartItem(cartItemId)));
+      },
       [cartAPI]
     ),
     {
+      onSuccess: async () => {
+        await refreshCart();
+      },
       onError(error) {
         handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
       },
@@ -162,18 +171,10 @@ const useCart = () => {
       [currentServer]
     ),
     {
-      onSuccess: useRecoilCallback(
-        ({ set }) =>
-          async (orderId) => {
-            const newCartList = await cartAPI.getCartList();
-            set(cartListState, newCartList);
-
-            navigate(`${PATH.ORDER_SUCCESS}/?orderId=${orderId}`);
-            // 카드 정보 리패칭하기! 그런데 이 때 에러가 발생하면??????????
-            // try catch throw error!!?? 일시적인 오류가 발생했습니다.
-          },
-        [navigate]
-      ),
+      onSuccess: async (orderId) => {
+        await refreshCart();
+        navigate(`${PATH.ORDER_SUCCESS}?orderId=${orderId}`);
+      },
       onError(error) {
         handleCartError(error, ORDER_API_ERROR_MESSAGE.ADD);
       },
