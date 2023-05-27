@@ -31,5 +31,11 @@ const Style = {
     background-color: #04c09e;
     color: white;
     font-size: 16px;
+
+    @media screen and (max-width: 480px) {
+      width: 20px;
+      height: 20px;
+      font-size: 15px;
+    }
   `,
 };

@@ -5,25 +5,24 @@ import { Cart } from './pages/Cart';
 import { useEffect } from 'react';
 import { base64 } from './constants/user';
 import { Test } from './pages/Test';
+import { Order } from './pages/Order';
 
 export const App = () => {
   useEffect(() => {
-    fetch('/point', {
-      method: 'GET',
-      headers: { Autorization: `Basic ${base64}` },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-
-    fetch('/cart-items', {
-      method: 'GET',
-      headers: { Autorization: `Basic ${base64}` },
-    })
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-
+    // fetch('/point', {
+    //   method: 'GET',
+    //   headers: { Autorization: `Basic ${base64}` },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //   });
+    // fetch('/cart-items', {
+    //   method: 'GET',
+    //   headers: { Autorization: `Basic ${base64}` },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
     // fetch('/orders', {
     //   method: 'POST',
     //   headers: {
@@ -38,13 +37,11 @@ export const App = () => {
     //   }),
     // }).then((response) => {
     //   const orderId = response.headers.get('Location')?.replace('/orders/', '');
-
     //   console.log(`반환된 주문 id: ${orderId}`);
     // });
-
-    fetch('/orders')
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    // fetch('/orders')
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
   }, []);
 
   return (
@@ -53,6 +50,7 @@ export const App = () => {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<Order />} />
           <Route path="/test" element={<Test />} />
         </Routes>
       </BrowserRouter>

@@ -1,11 +1,26 @@
-import { useRecoilValue } from 'recoil';
+import { selector, useRecoilValue } from 'recoil';
 import { Layout } from '../layout';
-import { cartItemsState } from '../recoil/atoms/cartAtom';
+import {
+  cartItemsState,
+  selectedCartIdListState,
+} from '../recoil/atoms/cartAtom';
 import { useEffect } from 'react';
 import { base64 } from '../constants/user';
 
+const selectedCartItemsState = selector({
+  key: 'selectedCartItems',
+  get: ({ get }) => {
+    const cartItems = get(cartItemsState);
+    const selectedCartItemIds = get(selectedCartIdListState);
+
+    return cartItems.filter((cartItem) =>
+      selectedCartItemIds.includes(cartItem.id)
+    );
+  },
+});
+
 export const Test = () => {
-  const cartItems = useRecoilValue(cartItemsState);
+  const selectedCartItems = useRecoilValue(selectedCartItemsState);
 
   const handleOrderButtonClick = () => {
     // 일단 장바구니에 들어있는 모든 상품 다 주문한다고 가정한 계산 로직
@@ -17,12 +32,12 @@ export const Test = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        order: cartItems.map((cartItem) => cartItem.id),
-        originalPrice: cartItems.reduce((acc, curr) => {
+        order: selectedCartItems.map((cartItem) => cartItem.id),
+        originalPrice: selectedCartItems.reduce((acc, curr) => {
           return (acc += curr.product.price * curr.quantity);
         }, 0),
         usedPoint: 1000,
-        pointToAdd: cartItems.reduce((acc, curr) => {
+        pointToAdd: selectedCartItems.reduce((acc, curr) => {
           const earnedPoint = curr.product.pointAvailable
             ? (curr.product.price * curr.quantity * curr.product.pointRatio) /
               100
@@ -34,11 +49,9 @@ export const Test = () => {
   };
 
   useEffect(() => {
-    console.log(cartItems);
-
-    fetch('/order/0.3250189396132894')
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    // fetch('/order/0.3250189396132894')
+    //   .then((res) => res.json())
+    //   .then((data) => console.log(data));
   }, []);
 
   return (

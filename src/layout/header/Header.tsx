@@ -56,6 +56,9 @@ export const Header = () => {
         <Style.CartContainer>
           <Style.Cart onClick={() => navigate('/cart')}>장바구니</Style.Cart>
           <CartListLengthViewer />
+          <Style.Order onClick={() => navigate('/order')}>
+            주문 목록
+          </Style.Order>
         </Style.CartContainer>
       </Style.ContentWrapper>
     </Style.Container>
@@ -116,7 +119,7 @@ const Style = {
   `,
   CartContainer: styled.div`
     display: flex;
-    gap: 10px;
+    gap: 5px;
 
     cursor: pointer;
   `,
@@ -126,6 +129,10 @@ const Style = {
 
     font-size: 24px;
     font-weight: 300;
+
+    @media screen and (max-width: 480px) {
+      font-size: 15px;
+    }
 
     /* color: white; */
   `,
@@ -137,6 +144,19 @@ const Style = {
 
     @media screen and (max-width: 480px) {
       height: 30px;
+    }
+  `,
+  Order: styled.h1`
+    margin-top: 4px;
+    margin-left: 15px;
+    padding: 0;
+
+    font-size: 24px;
+    font-weight: 300;
+
+    @media screen and (max-width: 480px) {
+      font-size: 15px;
+      margin-left: 0px;
     }
   `,
   ServerOption: styled.option``,

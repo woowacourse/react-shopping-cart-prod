@@ -20,8 +20,6 @@ export const orderHandlers = [
 
     const orderList = getOrderListFromLocalStorage();
 
-    console.log(await requestData);
-
     localStorage.setItem(
       ORDER_LIST_KEY,
       JSON.stringify([
@@ -54,26 +52,8 @@ export const orderHandlers = [
   }),
   rest.get('/orders', (_, res, ctx) => {
     const orderList = getOrderListFromLocalStorage();
-    const cartItems = getCartItemsFromLocalStorage();
 
-    const responseOrder = orderList.map((order) => {
-      return {
-        orderId: order.orderId,
-        orderInfo: order.orderInfo.map((cartItemId: string) => {
-          const cartItem = cartItems.find((item) => item.id === cartItemId);
-
-          return {
-            productId: cartItem.product.id,
-            price: cartItem.product.price,
-            name: cartItem.product.name,
-            imageUrl: cartItem.product.imageUrl,
-            quantity: cartItem.quantity,
-          };
-        }),
-      };
-    });
-
-    return res(ctx.status(200), ctx.json(responseOrder));
+    return res(ctx.status(200), ctx.json(orderList));
   }),
   rest.get('/order/:id', (req, res, ctx) => {
     const orderId = Number(req.params.id);
