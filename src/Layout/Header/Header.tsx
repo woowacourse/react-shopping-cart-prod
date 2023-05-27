@@ -1,7 +1,6 @@
 import { Container } from '@styles/style';
 import * as S from './Header.style';
 import { ChangeEvent, Suspense } from 'react';
-import Logo from '@layout/Logo/Logo';
 
 import { SelectBox } from '@common/SelectBox';
 
@@ -9,6 +8,7 @@ import { CartStepperWithIcon } from '@views/Cart/components/CartStepperWithIcon'
 import { useServerUrl } from '@recoil/server/serverUrlState';
 
 import { useResetCart } from '@views/Cart/recoil/cartState';
+import { Logo } from '@layout/Logo';
 
 function Header() {
   const { setServerUrlBy } = useServerUrl();

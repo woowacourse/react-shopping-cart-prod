@@ -2,8 +2,9 @@ import { useNavigate } from 'react-router-dom';
 
 import * as S from './Logo.style';
 
-import logoImage from '../../assets/logo.svg';
-import shopImage from '../../assets/shop.svg';
+import logoImage from '@assets/logo.svg';
+import shopImage from '@assets/shop.svg';
+
 import { useRefreshCart, useResetCart } from '../../views/Cart/recoil/cartState';
 
 function Logo() {

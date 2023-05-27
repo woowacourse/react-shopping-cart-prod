@@ -1,5 +1,4 @@
-import { BASE_URL, PRODUCT_PATH } from '@constants/urlConstants';
-import { createApiRequests } from '@utils/createApiRequests';
+import { PRODUCT_PATH } from '@constants/urlConstants';
 
 const fetchProductList = (serverUrl: string) => {
   return fetch(`${serverUrl}/${PRODUCT_PATH}`);
