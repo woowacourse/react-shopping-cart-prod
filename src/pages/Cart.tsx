@@ -22,7 +22,7 @@ export const Cart = () => {
       ) : (
         <Style.EmptyCartContainer>
           <Style.EmptyCartImage
-            src={`${process.env.PUBLIC_URL}/empty_cart_image.jpg`}
+            src={`${process.env.PUBLIC_URL}/assets/empty_cart_image.jpg`}
           />
           <p>장바구니가 비어있습니다.</p>
         </Style.EmptyCartContainer>

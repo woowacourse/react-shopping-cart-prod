@@ -21,7 +21,6 @@ export const Header = () => {
           <LogoIcon />
         </Style.LogoContainer>
         <Style.LogoContainer>
-          서버 선택:
           <select
             name="serverList"
             onChange={(e) => {

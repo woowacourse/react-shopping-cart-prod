@@ -72,7 +72,7 @@ export const CartItem = ({
         <Style.ProductName>{name}</Style.ProductName>
         <Style.ProductSelectorContainer>
           <Style.DeleteIcon
-            src={`${process.env.PUBLIC_URL}/trashCan.png`}
+            src={`${process.env.PUBLIC_URL}/assets/trashCan.png`}
             onClick={handleDeleteCartItem}
           />
           <Counter

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-const logo = 'logo.png';
-const mobileLogo = 'mobile_logo.png';
+const logo = '/assets/logo.png';
+const mobileLogo = '/assets/mobile_logo.png';
 
 export const LogoIcon = () => (
   <picture>
