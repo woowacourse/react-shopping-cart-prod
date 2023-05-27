@@ -18,10 +18,7 @@ const OrderSuccessPage = () => {
       <S.HomeButton variant="primary" onClick={() => navigate(PATH.ROOT)}>
         홈으로 이동하기
       </S.HomeButton>
-      <S.OrderDetailButton
-        variant="secondary"
-        onClick={() => navigate(`${PATH.ORDER_DETAIL}/${orderId}`)}
-      >
+      <S.OrderDetailButton variant="secondary" onClick={() => navigate(`${PATH.ORDER}/${orderId}`)}>
         주문내역 상세보기
       </S.OrderDetailButton>
     </S.OrderSuccessMessageContainer>
