@@ -1,0 +1,55 @@
+.select-box {
+  position: relative;
+  width: 100px;
+  height: 32px;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: var(--white-color);
+  align-self: center;
+  cursor: pointer;
+
+  &::before {
+    content: '⌵';
+    position: absolute;
+    top: 1px;
+    right: 8px;
+    color: var(--mint-color);
+    font-size: 20px;
+  }
+}
+
+.label {
+  font-size: 14px;
+  margin-left: 4px;
+  text-align: center;
+  color: black;
+}
+
+.selectOption {
+  position: absolute;
+  list-style: none;
+  top: 32px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: var(--mint-color);
+  color: #fefefe;
+}
+
+.show {
+  padding: 4px 0;
+  max-height: 'none';
+}
+.hide {
+  max-height: 0;
+}
+
+.option {
+  font-size: 14px;
+  padding: 6px 8px;
+  transition: background-color 0.2s ease-in;
+  &:hover {
+    background-color: var(--mint-color-hover);
+  }
+}
