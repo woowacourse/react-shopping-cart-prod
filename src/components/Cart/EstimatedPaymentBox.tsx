@@ -61,10 +61,10 @@ const EstimatedPaymentBoxContainer = styled.div`
 `;
 
 const EstimatedPaymentTitle = styled.div`
-  height: 81px;
+  height: 71px;
   padding: 25px 0 20px 30px;
   border-bottom: 3px solid ${({ theme }) => theme.colors.gray100};
-  font-size: 24px;
+  font-size: 22px;
 `;
 
 const EstimatedPaymentContent = styled.div`
