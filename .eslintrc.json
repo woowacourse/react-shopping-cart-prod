@@ -1,0 +1,123 @@
+{
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "react-app",
+    "eslint:recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["react", "react-hooks", "@typescript-eslint"],
+  "rules": {
+    "quotes": ["error", "single"],
+    "no-duplicate-imports": "error",
+    "no-console": ["warn", { "allow": ["warn", "error", "info"] }],
+    "no-unused-vars": "error",
+    "no-multiple-empty-lines": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "type",
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "unknown"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react*",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@router/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@recoil/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@hooks/**",
+            "group": "internal",
+            "position": "after"
+          },
+
+          {
+            "pattern": "@pages/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@layout/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@views/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@common/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@mocks/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@utils/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@constants/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@type/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@assets/**",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@styles/**",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "alphabetize": {
+          "caseInsensitive": true,
+          "order": "asc"
+        },
+        "pathGroupsExcludedImportTypes": []
+      }
+    ]
+  }
+}

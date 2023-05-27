@@ -6,19 +6,19 @@
     "skipLibCheck": true,
     "baseUrl": "src",
     "paths": {
-      "@common/*": ["common/*"],
-      "@assets/*": ["assets/*"],
-      "@constants/*": ["constants/*"],
-      "@layout/*": ["layout/*"],
-      "@mocks/*": ["mocks/*"],
-      "@pages/*": ["pages/*"],
-      "@recoil/*": ["recoil/*"],
       "@router/*": ["router/*"],
-      "@styles/*": ["styles/*"],
-      "@utils/*": ["utils/*"],
-      "@views/*": ["views/*"],
+      "@recoil/*": ["recoil/*"],
       "@hooks/*": ["hooks/*"],
-      "@type/*": ["types/*"]
+      "@pages/*": ["pages/*"],
+      "@layout/*": ["layout/*"],
+      "@views/*": ["views/*"],
+      "@common/*": ["common/*"],
+      "@mocks/*": ["mocks/*"],
+      "@utils/*": ["utils/*"],
+      "@constants/*": ["constants/*"],
+      "@type/*": ["types/*"],
+      "@assets/*": ["assets/*"],
+      "@styles/*": ["styles/*"]
     },
 
     /* Bundler mode */
