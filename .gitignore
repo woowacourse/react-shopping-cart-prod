@@ -6,3 +6,5 @@
 .pnp.js
 /build
 /.storybook
+
+.env
