@@ -43,6 +43,10 @@ const Style = {
     border: 1px solid #dddddd;
     position: sticky;
     top: 80px;
+
+    @media (max-width: 480px) {
+      width: 330px;
+    }
   `,
   Header: styled.div`
     width: 448px;
@@ -51,6 +55,9 @@ const Style = {
     padding: 30px;
 
     border-bottom: 3px solid #dddddd;
+    @media (max-width: 480px) {
+      width: 330px;
+    }
   `,
   HeaderTitle: styled.h2`
     font-size: 24px;
@@ -63,10 +70,13 @@ const Style = {
     flex-direction: column;
     align-items: center;
 
-    padding-top: 34px;
+    padding: 34px 20px 0;
+    @media (max-width: 480px) {
+      width: 330px;
+    }
   `,
   TotalPriceSummary: styled.div`
-    width: 388px;
+    width: 100%;
     display: flex;
 
     justify-content: space-between;
@@ -74,14 +84,14 @@ const Style = {
     margin-bottom: 19px;
   `,
   TotalDeliveryPriceSummary: styled.div`
-    width: 388px;
+    width: 100%;
     display: flex;
 
     justify-content: space-between;
     margin-bottom: 41px;
   `,
   TotalOrderPriceSummary: styled.div`
-    width: 388px;
+    width: 100%;
     display: flex;
 
     justify-content: space-between;
@@ -91,7 +101,7 @@ const Style = {
     font-size: 20px;
   `,
   OrderButton: styled.button`
-    width: 388px;
+    width: 100%;
     height: 73px;
 
     display: flex;

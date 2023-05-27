@@ -76,6 +76,8 @@ export const CartItem = ({
             onClick={handleDeleteCartItem}
           />
           <Counter
+            width="110px"
+            height="48px"
             quantity={initialQuantity}
             onQuantityChange={handleChangeQuantity}
           />
@@ -88,7 +90,7 @@ export const CartItem = ({
 
 const Style = {
   Container: styled.li`
-    width: 740px;
+    width: 100%;
     height: 200px;
 
     display: flex;
@@ -99,7 +101,7 @@ const Style = {
     }
   `,
   Content: styled.div`
-    width: 740px;
+    width: 100%;
     height: 174px;
 
     display: flex;
@@ -116,8 +118,7 @@ const Style = {
     height: 147px;
   `,
   ProductName: styled.div`
-    width: 389px;
-
+    flex-grow: 1;
     font-size: 20px;
     color: #333333;
   `,

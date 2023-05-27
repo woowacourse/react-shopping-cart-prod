@@ -19,7 +19,6 @@ export const Header = () => {
       <Style.ContentWrapper>
         <Style.LogoContainer onClick={() => navigate('/')}>
           <LogoIcon />
-          <Style.Logo>배민문방구</Style.Logo>
         </Style.LogoContainer>
         <Style.LogoContainer>
           서버 선택:
@@ -60,29 +59,23 @@ const Style = {
     align-items: center;
 
     height: 80px;
-    width: 100vw;
+    width: 100%;
     position: fixed;
+    z-index: 3;
     top: 0;
     left: 0;
 
-    background-color: #333333;
+    padding: 0 30px;
 
-    @media screen and (max-width: 480px) {
-      max-width: 100%;
-    }
+    background: #ffffff;
+    border-bottom: 1px solid #cdcdcd;
   `,
   ContentWrapper: styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    width: 1320px;
-
-    @media screen and (max-width: 480px) {
-      padding: 0 10px;
-
-      max-width: 480px;
-    }
+    width: 1300px;
   `,
   LogoContainer: styled.div`
     display: flex;
@@ -92,22 +85,10 @@ const Style = {
 
     cursor: pointer;
   `,
-  Logo: styled.h1`
-    margin-top: 5px;
-    padding: 0;
 
-    font-size: 40px;
-    font-weight: 300;
-
-    color: white;
-
-    @media screen and (max-width: 480px) {
-      font-size: 24px;
-    }
-  `,
   CartContainer: styled.div`
     display: flex;
-    gap: 10px;
+    gap: 8px;
 
     cursor: pointer;
   `,
@@ -116,8 +97,7 @@ const Style = {
     padding: 0;
 
     font-size: 24px;
-    font-weight: 300;
 
-    color: white;
+    color: #333333;
   `,
 };

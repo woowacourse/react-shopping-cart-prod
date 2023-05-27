@@ -12,11 +12,12 @@ export const Layout = ({ children }: React.PropsWithChildren) => {
 
 const Style = {
   Container: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    max-width: 1300px;
+    padding: 140px 0 60px;
+    margin: 0 auto;
 
-    padding-top: 140px;
-    padding-bottom: 60px;
+    @media (max-width: 1300px) {
+      padding: 140px 20px 60px;
+    }
   `,
 };

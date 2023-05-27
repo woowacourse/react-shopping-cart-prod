@@ -7,13 +7,15 @@ import { getCommaAddedNumber } from '../../../utils/number';
 export const ProductCard = ({ id, name, price, imageUrl }: Product) => {
   return (
     <Style.Container>
-      <Style.Image src={imageUrl} alt="상품 이미지" />
+      <Style.ImageContainer>
+        <Style.Image src={imageUrl} alt="상품 이미지" />
+        <AddCartButton productId={id} />
+      </Style.ImageContainer>
       <Style.DescriptionContainer>
         <Style.NamePriceContainer>
           <Style.Name>{name}</Style.Name>
           <Style.Price>{getCommaAddedNumber(price)}원</Style.Price>
         </Style.NamePriceContainer>
-        <AddCartButton productId={id} />
       </Style.DescriptionContainer>
     </Style.Container>
   );
@@ -22,25 +24,24 @@ export const ProductCard = ({ id, name, price, imageUrl }: Product) => {
 const Style = {
   Container: styled.li`
     width: 283px;
-    height: 358px;
 
     display: flex;
     flex-direction: column;
     gap: 18px;
+  `,
+  ImageContainer: styled.div`
+    position: relative;
 
-    @media screen and (max-width: 480px) {
-      width: 150px;
-      height: 100%;
+    & > :last-child {
+      position: absolute;
+      bottom: 20px;
+      right: 15px;
     }
   `,
+
   Image: styled.img`
     width: 283px;
     height: 283px;
-
-    @media screen and (max-width: 480px) {
-      width: 150px;
-      height: 150px;
-    }
   `,
   DescriptionContainer: styled.div`
     width: 283px;
@@ -48,29 +49,18 @@ const Style = {
     display: flex;
     justify-content: space-between;
 
-    @media screen and (max-width: 480px) {
-      width: 150px;
-    }
+    padding: 0 6px;
   `,
   NamePriceContainer: styled.div`
     display: flex;
     flex-direction: column;
-
-    width: 201px;
+    width: 283px;
     gap: 10px;
   `,
   Name: styled.span`
     font-size: 16px;
-
-    @media screen and (max-width: 480px) {
-      font-size: 12px;
-    }
   `,
   Price: styled.span`
-    font-size: 20px;
-
-    @media screen and (max-width: 480px) {
-      font-size: 16px;
-    }
+    font-size: 22px;
   `,
 };

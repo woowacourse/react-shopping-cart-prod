@@ -30,7 +30,7 @@ export const Cart = () => {
 
 const Style = {
   Header: styled.div`
-    width: 1320px;
+    width: 100%;
     height: 67px;
 
     display: flex;
@@ -46,14 +46,22 @@ const Style = {
     font-size: 32px;
   `,
   Content: styled.div`
-    width: 1320px;
+    max-width: 1300px;
     height: max-content;
 
     display: flex;
     gap: 104px;
+
+    margin: 0 auto;
+
+    @media (max-width: 1300px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
   `,
   EmptyCartContainer: styled.div`
-    width: 1320px;
+    max-width: 1300px;
     min-height: 50vh;
 
     display: flex;

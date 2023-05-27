@@ -6,6 +6,7 @@ import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
 import Loading from '../../common/Loading';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
+import styled from 'styled-components';
 
 interface AddCartButtonProps {
   productId: number;
@@ -74,8 +75,22 @@ export const AddCartButton = ({ productId }: AddCartButtonProps) => {
       ) : isLoading ? (
         <Loading />
       ) : (
-        <ShoppingCartIcon handleClick={handleClickShoppingCartIcon} />
+        <Style.Container>
+          <ShoppingCartIcon handleClick={handleClickShoppingCartIcon} />
+        </Style.Container>
       )}
     </>
   );
+};
+
+const Style = {
+  Container: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #ffffff;
+  `,
 };

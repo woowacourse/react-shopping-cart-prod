@@ -20,17 +20,12 @@ export const ProductCardGrid = ({ products }: ProductCardListProps) => {
 const Style = {
   Container: styled.ul`
     display: grid;
-    grid-template-columns: repeat(4, 300px);
+    max-width: 1300px;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 283px));
+    justify-content: center;
     justify-items: center;
-    column-gap: 47px;
-    row-gap: 86px;
-
-    @media screen and (max-width: 480px) {
-      padding: 0 10px;
-
-      grid-template-columns: repeat(2, 1fr);
-      column-gap: 27px;
-      row-gap: 56px;
-    }
+    column-gap: 30px;
+    row-gap: 40px;
   `,
 };

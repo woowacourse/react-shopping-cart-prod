@@ -73,8 +73,8 @@ export const CartItemsSection = () => {
 
 const Style = {
   Container: styled.section`
-    width: 740px;
-    min-height: 704px;
+    width: 100%;
+    margin-bottom: 40px;
 
     display: flex;
     flex-direction: column;

@@ -31,7 +31,7 @@ export const CartItemList = ({ cartItemList }: CartProductListProps) => {
 
 const Style = {
   Container: styled.ul`
-    width: 740px;
+    width: 100%;
     height: max-content;
 
     display: flex;
