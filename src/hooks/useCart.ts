@@ -1,16 +1,23 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import HTTPError from '../api/HTTPError';
 import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getCartAPI } from '../api/cartAPI';
+import { postOrder } from '../api/orderAPI';
 import { TOAST_SHOW_DURATION } from '../constants';
-import { CART_API_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../constants/api';
+import {
+  CART_API_ERROR_MESSAGE,
+  HTTP_STATUS_CODE,
+  ORDER_API_ERROR_MESSAGE,
+} from '../constants/api';
+import { PATH } from '../constants/path';
 import { cartItemQuantityState, cartListState } from '../store/cart';
 import { errorModalMessageState } from '../store/error';
 import { currentMemberState } from '../store/member';
 import { currentServerState } from '../store/server';
-import { CartItemData, ProductItemData } from '../types';
+import { CartItemData, OrderCartItemsData, ProductItemData } from '../types';
 import { APIErrorMessage } from '../types/api';
 import { useMutationFetch } from './common/useMutationFetch';
 
@@ -23,6 +30,7 @@ const useCart = () => {
     [currentServer, authorizedHeaders]
   );
   const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
+  const navigate = useNavigate();
 
   const [isAdded, setIsAdded] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout>>();
@@ -132,7 +140,54 @@ const useCart = () => {
     }
   );
 
-  return { isAdded, addItem, updateItemQuantity, removeItem, removeCheckedItems };
+  const { mutate: orderCheckedItems } = useMutationFetch<string, number[]>(
+    useRecoilCallback(
+      ({ snapshot }) =>
+        async (cartItemIds) => {
+          const cartList = await snapshot.getPromise(cartListState);
+
+          const OrderCartItems = cartList.reduce<OrderCartItemsData[]>((acc, curr) => {
+            if (cartItemIds.includes(curr.id)) {
+              acc.push({ cartItemId: curr.id, quantity: curr.quantity });
+            }
+
+            return acc;
+          }, []);
+
+          const response = await postOrder(currentServer, OrderCartItems);
+          const orderId = response.headers.get('Location')?.split('/').pop()!;
+
+          return orderId;
+        },
+      [currentServer]
+    ),
+    {
+      onSuccess: useRecoilCallback(
+        ({ set }) =>
+          async (orderId) => {
+            const newCartList = await cartAPI.getCartList();
+            set(cartListState, newCartList);
+
+            navigate(`${PATH.ORDER_SUCCESS}/?orderId=${orderId}`);
+            // 카드 정보 리패칭하기! 그런데 이 때 에러가 발생하면??????????
+            // try catch throw error!!?? 일시적인 오류가 발생했습니다.
+          },
+        [navigate]
+      ),
+      onError(error) {
+        handleCartError(error, ORDER_API_ERROR_MESSAGE.ADD);
+      },
+    }
+  );
+
+  return {
+    isAdded,
+    addItem,
+    updateItemQuantity,
+    removeItem,
+    removeCheckedItems,
+    orderCheckedItems,
+  };
 };
 
 export { useCart };
