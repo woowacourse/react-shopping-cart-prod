@@ -39,25 +39,34 @@ export const changeItemQuantity = async (
   cartItemId: number,
   quantity: number
 ) => {
-  const response = await fetch(`${SERVER_LIST[serverId]}/cart-items/${cartItemId}`, {
-    method: "PATCH",
-    headers: {
-      Authorization: `Basic ${USER_TOKEN}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ quantity: quantity }),
-  });
+  const response = await fetch(
+    `${SERVER_LIST[serverId]}/cart-items/${cartItemId}`,
+    {
+      method: "PATCH",
+      headers: {
+        Authorization: `Basic ${USER_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ quantity: quantity }),
+    }
+  );
 
   return response.status;
 };
 
-export const removeCartItem = async (serverId: ServerId, cartItemId: number) => {
-  const response = await fetch(`${SERVER_LIST[serverId]}/cart-items/${cartItemId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Basic ${USER_TOKEN}`,
-    },
-  });
+export const removeCartItem = async (
+  serverId: ServerId,
+  cartItemId: number
+) => {
+  const response = await fetch(
+    `${SERVER_LIST[serverId]}/cart-items/${cartItemId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Basic ${USER_TOKEN}`,
+      },
+    }
+  );
 
   return response.status === 204;
 };
