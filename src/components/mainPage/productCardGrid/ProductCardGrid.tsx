@@ -21,7 +21,7 @@ const Style = {
   Container: styled.ul`
     display: grid;
     max-width: 1080px;
-    margin: 0 auto;
+    margin: 80px auto;
     grid-template-columns: repeat(auto-fill, minmax(140px, 240px));
     justify-content: center;
     justify-items: center;

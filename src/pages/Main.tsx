@@ -5,6 +5,7 @@ import { Product } from '../types/Product';
 import { useProductFetch } from '../hooks/fetch/useProductFetch';
 import { useRecoilValue } from 'recoil';
 import { APIAtom } from '../recoil/atoms/serverAtom';
+import { PageTitle } from '../layout/pageTitle/PageTitle';
 
 function Main() {
   const [products, setProducts] = useState<Product[]>();
@@ -19,6 +20,7 @@ function Main() {
 
   return (
     <Layout>
+      <PageTitle>상품 리스트</PageTitle>
       {products ? <ProductCardGrid products={products} /> : <>loading...</>}
     </Layout>
   );

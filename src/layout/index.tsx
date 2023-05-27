@@ -17,7 +17,7 @@ const Style = {
     margin: 0 auto;
 
     @media (max-width: 1080px) {
-      padding: 140px 20px 60px;
+      padding: 120px 20px 60px;
     }
   `,
 };

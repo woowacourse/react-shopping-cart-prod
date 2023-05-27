@@ -4,15 +4,14 @@ import { CartItemsSection } from '../components/cartPage/cartItemsSection/CartIt
 import { OrderSummarySection } from '../components/cartPage/orderSummarySection/OrderSummarySection';
 import { useRecoilValue } from 'recoil';
 import { cartItemsLengthState } from '../recoil/selectors/cartListSelector';
+import { PageTitle } from '../layout/pageTitle/PageTitle';
 
 export const Cart = () => {
   const cartItemsLength = useRecoilValue(cartItemsLengthState);
 
   return (
     <Layout>
-      <Style.Header>
-        <Style.HeaderTitle>장바구니</Style.HeaderTitle>
-      </Style.Header>
+      <PageTitle>장바구니</PageTitle>
 
       {cartItemsLength > 0 ? (
         <Style.Content>
