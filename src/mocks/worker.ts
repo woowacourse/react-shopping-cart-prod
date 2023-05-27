@@ -26,7 +26,11 @@ export const handlers = [
 
     const cartItemId = addCartItem(productId);
 
-    return res(ctx.delay(100), ctx.status(201), ctx.set("Location", `/cart-items/${cartItemId}`));
+    return res(
+      ctx.delay(100),
+      ctx.status(201),
+      ctx.set("Location", `/cart-items/${cartItemId}`)
+    );
   }),
 
   rest.patch("/cart-items/:cartItemId", async (req, res, ctx) => {

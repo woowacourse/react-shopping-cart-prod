@@ -18,7 +18,12 @@ const Item = (item: Product) => {
       return;
     }
 
-    setCartItem({ id: Number(cartItemId), quantity: 1, isChecked: true, product: item });
+    setCartItem({
+      id: Number(cartItemId),
+      quantity: 1,
+      isChecked: true,
+      product: item,
+    });
   };
 
   return (

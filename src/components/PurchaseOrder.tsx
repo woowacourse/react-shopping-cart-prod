@@ -20,7 +20,9 @@ const PurchaseOrder = () => {
         </AmountBox>
         <AmountBox>
           <p>총 주문 금액</p>
-          <p>{(totalPrice ? totalPrice + SHIPPING_FEE : 0).toLocaleString()}원</p>
+          <p>
+            {(totalPrice ? totalPrice + SHIPPING_FEE : 0).toLocaleString()}원
+          </p>
         </AmountBox>
       </TotalContainer>
       <OrderButton>주문하기</OrderButton>
@@ -100,6 +102,8 @@ const OrderButton = styled.button`
   font-size: 19px;
   color: rgba(255, 255, 255, 1);
   background: #333333;
+
+  cursor: pointer;
 `;
 
 export default PurchaseOrder;

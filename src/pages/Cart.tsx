@@ -10,7 +10,11 @@ const Cart = () => {
   return (
     <>
       <React.Suspense
-        fallback={<Skeleton {...{ background: "#333333", width: "100%", height: "70px" }} />}
+        fallback={
+          <Skeleton
+            {...{ background: "#333333", width: "100%", height: "70px" }}
+          />
+        }
       >
         <Header />
       </React.Suspense>
