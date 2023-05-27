@@ -1,27 +1,36 @@
 import { SHIPPING_FEE } from "constants/cartProduct";
 import { useRecoilValue } from "recoil";
-import { cartTotalPrice } from "recoil/cart";
+import { cartTotalDiscount, cartTotalPrice } from "recoil/cart";
 import styled, { keyframes } from "styled-components";
 
 const PurchaseOrder = () => {
   const totalPrice = useRecoilValue(cartTotalPrice);
+  const totalDiscount = useRecoilValue(cartTotalDiscount);
 
   return (
     <Wrapper>
       <TitleBox>결제 예상 금액</TitleBox>
       <TotalContainer>
         <AmountBox>
-          <p>총 상품 가격</p>
+          <p>총 상품 금액</p>
           <p>{totalPrice.toLocaleString()}원</p>
         </AmountBox>
         <AmountBox>
-          <p>총 배송비</p>
+          <p>배송비</p>
           <p>{(totalPrice ? SHIPPING_FEE : 0).toLocaleString()}원</p>
+        </AmountBox>
+        <AmountBox>
+          <p>할인 금액</p>
+          <p>- {totalDiscount.toLocaleString()}원</p>
         </AmountBox>
         <AmountBox>
           <p>총 주문 금액</p>
           <p>
-            {(totalPrice ? totalPrice + SHIPPING_FEE : 0).toLocaleString()}원
+            {(totalPrice
+              ? totalPrice + SHIPPING_FEE - totalDiscount
+              : 0
+            ).toLocaleString()}
+            원
           </p>
         </AmountBox>
       </TotalContainer>
@@ -104,11 +113,19 @@ const TitleBox = styled.h2`
 
 const TotalContainer = styled.div`
   display: grid;
-  grid-template-rows: 27% 27% 46%;
+  grid-template-rows: 23% 23% 24% 30%;
 
   height: 60%;
   padding: 3%;
   align-items: center;
+
+  & :first-child {
+    text-align: left;
+  }
+
+  & :last-child {
+    text-align: right;
+  }
 
   @media screen and (max-width: 800px) {
     color: rgba(255, 255, 255, 1);
