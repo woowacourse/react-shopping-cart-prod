@@ -10,11 +10,10 @@ const delay = Math.floor(Math.random() * (maxDelay - minDelay + 1)) + minDelay;
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
     const errorCode = req.url.searchParams.get('error_code');
-
     if (errorCode) {
       return res(ctx.delay(delay), ctx.status(Number(errorCode)));
     }
-
+    console.log(mockData);
     return res(ctx.delay(delay), ctx.status(200), ctx.json(mockData));
   }),
 
