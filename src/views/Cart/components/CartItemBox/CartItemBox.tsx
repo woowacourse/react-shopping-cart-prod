@@ -51,8 +51,6 @@ function CartItemBox({ cartItemId, product }: CartItemProps) {
             }
           }}
           onIncrease={() => {
-            console.log('increased');
-
             if (cartItemId) {
               updateCartItemQuantity(cartItemId, quantity + 1);
             }

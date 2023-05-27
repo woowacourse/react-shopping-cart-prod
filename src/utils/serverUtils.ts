@@ -36,12 +36,8 @@ export const getServerURL = (crew: CrewName) => {
 };
 
 export const getCredential = (crew: CrewName, userId: number) => {
-  console.log('>>> crew, userId:', crew, userId);
   const users = SERVER_BY_CREW[crew].user;
-
   const targetUser = users.find((user) => user.id === userId);
-
-  console.log('>>> targetUser:', targetUser);
 
   if (!targetUser) throw new Error(`id에 해당하는 user가 존재하지 않습니다.`);
 
