@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { serverSelectState } from "recoil/server";
-import { styled } from "styled-components";
+import { keyframes, styled } from "styled-components";
 import { ServerId } from "recoil/server";
 import { cartListState } from "recoil/cart";
 import { getCartItems } from "api/cartItems";
@@ -71,6 +71,15 @@ const ServerSelector = () => {
   );
 };
 
+const OpenAnimation = keyframes`
+  0% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+`;
+
 const Wrapper = styled.fieldset`
   border-radius: 5px 0 0 5px;
   position: fixed;
@@ -80,7 +89,7 @@ const Wrapper = styled.fieldset`
   color: #333333;
   display: flex;
 
-  width: 120px;
+  width: 20px;
   height: 120px;
 
   justify-content: space-evenly;
@@ -89,16 +98,34 @@ const Wrapper = styled.fieldset`
 
   font-size: 16px;
 
+  &: hover {
+    width: 120px;
+    animation: ${OpenAnimation} 0.1s;
+
+    & > * {
+      display: flex;
+    }
+  }
+
+  & > * {
+    display: none;
+  }
+
   @media screen and (max-width: 800px) {
     width: 100px;
     height: 80px;
 
     font-size: 14px;
+
+    &: hover {
+      width: 100px;
+    }
   }
 `;
 
 const Input = styled.input`
   margin-right: 5px;
+  cursor: pointer;
 `;
 
 export default ServerSelector;
