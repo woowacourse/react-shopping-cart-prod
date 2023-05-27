@@ -78,3 +78,145 @@
 - **_주문한 내역 상세페이지를 나타낸다._**
 - **_주문하기를 클릭하거나 주문목록 페이지에서 상세보기를 클릭하는 경우 해당 페이지로 이동한다._**
 - **_주문 내역과 결제 금액/할인 등을 표시한다._**
+
+### 고려사항
+
+- [] msw를 이용하여 api를 모킹한다.
+
+  - [] 쿠폰 전체 조희
+
+    - 사례
+
+      - 쿠폰이 있는 경우
+      - 쿠폰이 없는 경우
+      - 유효하지 않은 쿠폰은 백에서 주지 않음
+
+    - 요청
+      ```json
+      GET /coupons
+      Authorization: Basic ~~~~
+      ```
+    - 응답
+      ```json
+      [
+        {
+          couponId: 1,
+          name: "오픈 기념 쿠폰",
+          discount: {
+            type: "rate"
+            amount: 10
+          }
+        },
+        {
+          couponId: 2,
+          name: "오픈 기념 쿠폰",
+          discount: {
+            type: "price"
+            amount: 1000
+          }
+        }
+      ]
+      ```
+
+  - [] 주문 하기
+    - 사례
+      - 체크된 물품이 없는데 주문하기를 누른 경우
+      - 쿠폰을 사용하여 주문한 경우
+      - 쿠폰을 사용하지 않고 주문한 경우
+    - 요청
+      ```json
+      [
+        {
+          couponId: 1,
+          name: "오픈 기념 쿠폰",
+          discount: {
+            type: "rate"
+            amount: 10
+          }
+        },
+        {
+          couponId: 2,
+          name: "오픈 기념 쿠폰",
+          discount: {
+            type: "price"
+            amount: 1000
+          }
+        }
+      ]
+      ```
+    - 응답
+      ```json
+      204 NO_CONTENT
+      ```
+  - [] 주문내역 조회하기
+    - 사례
+      - 주문 내역이 없는 경우
+      - 주문 내역이 방대한 경우
+    - 요청
+      ```json
+      GET /orders
+      Authorization: Basic xxxx
+      ```
+    - 응답
+      ```json
+      [
+        {
+          orderId: 1,
+          orderItems: [
+            {
+              orderItemId: 3,
+              product: {
+                id: 1,
+                name: "샀던 시점의 이름",
+                price: 샀던 시점의 가격
+                imageUrl: "샀던 시점의 이미지"
+              }
+              couponIds: [1], // id가 아닌 실제 쿠폰으로 대체될 예정
+              total: 167400,
+              quantity: 3
+            },
+            {
+              orderItemId: 4,
+              product: {
+                id: 1,
+                name: "샀던 시점의 이름",
+                price: 샀던 시점의 가격
+                imageUrl: "샀던 시점의 이미지"
+              }
+              couponIds: [1],
+              total: 167400,
+              quantity: 3
+            }
+          ]
+        },
+        {
+          orderId: 2,
+          orderItems: [
+            {
+              orderItemId: 5,
+              product: {
+                id: 1,
+                name: "샀던 시점의 이름",
+                price: 샀던 시점의 가격
+                imageUrl: "샀던 시점의 이미지"
+              }
+              couponIds: [1],
+              total: 167400,
+              quantity: 3
+            },
+            {
+              orderItemId: 6,
+              product: {
+                id: 1,
+                name: "샀던 시점의 이름",
+                price: 샀던 시점의 가격
+                imageUrl: "샀던 시점의 이미지"
+              }
+              couponIds: [1],
+              total: 167400,
+              quantity: 3
+            }
+          ]
+        }
+      ]
+      ```
