@@ -56,7 +56,7 @@ const EstimatedPaymentBoxContainer = styled.div`
 
   @media (max-width: 420px) {
     width: 330px;
-    height: 372px;
+    height: 492px;
   }
 `;
 

@@ -117,7 +117,8 @@ const PaymentBoxWrapper = styled.div`
   @media (max-width: 1100px) {
     position: static;
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     margin-top: 0;
   }
 `;

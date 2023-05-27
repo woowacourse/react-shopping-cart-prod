@@ -23,6 +23,10 @@ const UserPointInfoContainer = styled.div`
   width: 448px;
   height: 200px;
   margin-bottom: 40px;
+
+  @media (max-width: 420px) {
+    width: 330px;
+  }
 `;
 
 const UserPointInfoTitle = styled.div`
