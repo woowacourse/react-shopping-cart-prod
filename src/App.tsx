@@ -10,14 +10,14 @@ import { WIDTH } from './styles/mediaQuery';
 const App = () => {
   return (
     <RecoilRoot>
-      <Header>
-        <CartTextButton />
-      </Header>
-      <Layout>
-        <React.Suspense fallback={<OnLoading />}>
+      <React.Suspense fallback={<OnLoading />}>
+        <Header>
+          <CartTextButton />
+        </Header>
+        <Layout>
           <Outlet />
-        </React.Suspense>
-      </Layout>
+        </Layout>
+      </React.Suspense>
     </RecoilRoot>
   );
 };

@@ -2,12 +2,23 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { ReactComponent as ShoppingCartIcon } from '../../assets/icon/stussy-logo.svg';
 import { WIDTH } from '../../styles/mediaQuery';
+import { useSetRecoilState } from 'recoil';
+import { ServerName, serverAtom } from '../../store/server';
 
 interface HeaderProps {
   children: React.ReactNode;
 }
 
 const Header = ({ children }: HeaderProps) => {
+  const setServerName = useSetRecoilState(serverAtom);
+
+  const onChangeServerNameHandler = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const serverName = e.target.value as ServerName;
+    setServerName(serverName);
+  };
+
   return (
     <Container>
       <Link to='/'>
@@ -17,6 +28,11 @@ const Header = ({ children }: HeaderProps) => {
           </ShoppingCartIconContainer>
         </HomeButton>
       </Link>
+      <ServerSelectBox onChange={onChangeServerNameHandler}>
+        <option value='ROY'>로이</option>
+        <option value='SPLIT'>스플릿</option>
+        <option value='IRAE'>이레</option>
+      </ServerSelectBox>
       <Link to='/cart'>{children}</Link>
     </Container>
   );
@@ -61,6 +77,14 @@ const HomeButton = styled.div`
   @media (max-width: ${WIDTH.MD}) {
     gap: 4px;
   }
+`;
+
+const ServerSelectBox = styled.select`
+  width: 80px;
+  height: 40px;
+
+  border: none;
+  border-radius: 10px;
 `;
 
 const ShoppingCartIconContainer = styled.div`
