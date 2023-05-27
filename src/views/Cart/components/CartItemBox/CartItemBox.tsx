@@ -3,22 +3,20 @@ import { CheckBox } from '@common/CheckBox';
 import * as S from './CartItemBox.style';
 import { Stepper } from '@common/Stepper';
 import deleteIcon from '@assets/delete.svg';
-import { useCartItemQuantityBy } from '@views/Cart/recoil/withItemQuantityBy';
+import { useCartItem } from '@views/Cart/recoil/cartState';
+import { ProductItemType } from 'types/ProductType';
 import { useCartItemCheckedBy } from '@views/Cart/recoil/withItemCheckBy';
 
 interface CartItemProps {
-  cartId: number;
-  productId: number;
-  imageUrl: string;
-  name: string;
-  price: number;
+  cartItemId: number;
+  product: ProductItemType;
 }
 
-function CartItemBox({ cartId, productId, imageUrl, name, price }: CartItemProps) {
-  const [cartQuantity, setCartQuantity] = useCartItemQuantityBy(productId);
-  const { isChecked, toggleCheck } = useCartItemCheckedBy(cartId);
+function CartItemBox({ cartItemId, product }: CartItemProps) {
+  const { quantity, updateCartItemQuantity } = useCartItem(product.id);
+  const { isChecked, toggleCheck } = useCartItemCheckedBy(cartItemId);
 
-  const { quantity } = cartQuantity;
+  const { name, id: productId, imageUrl, price } = product;
 
   return (
     <S.CartItemContainer>
@@ -39,34 +37,31 @@ function CartItemBox({ cartId, productId, imageUrl, name, price }: CartItemProps
         <S.DeleteIcon
           src={deleteIcon}
           onClick={() => {
-            setCartQuantity({
-              cartId,
-              quantity: 0,
-            });
+            if (cartItemId) {
+              updateCartItemQuantity(cartItemId, quantity - 1);
+            }
           }}
         />
 
         <Stepper
+          quantity={quantity}
           onChange={(event) => {
-            setCartQuantity({
-              cartId,
-              quantity: Number(event.target.value),
-            });
+            if (cartItemId) {
+              updateCartItemQuantity(cartItemId, Number(event.target.value));
+            }
           }}
           onIncrease={() => {
-            setCartQuantity({
-              cartId,
-              quantity: quantity + 1,
-            });
+            console.log('increased');
+
+            if (cartItemId) {
+              updateCartItemQuantity(cartItemId, quantity + 1);
+            }
           }}
           onDecrease={() => {
-            if (quantity === 1) return;
-            setCartQuantity({
-              cartId,
-              quantity: quantity - 1,
-            });
+            if (quantity !== 1 && cartItemId) {
+              updateCartItemQuantity(cartItemId, quantity - 1);
+            }
           }}
-          quantity={quantity}
         />
         <S.PriceText>{`${(price * quantity).toLocaleString('ko-KR')} 원`}</S.PriceText>
       </S.ProductInfo>

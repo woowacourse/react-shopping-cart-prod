@@ -1,16 +1,16 @@
-import { useCartList, useCheckCart } from '@views/Cart/recoil/cartState';
 import * as S from './CartItemList.style';
 import { CartItemBox } from '@views/Cart/components/CartItemBox';
 import { CheckBox } from '@common/CheckBox';
+import { useCartReadOnly, useCheckCart } from '@views/Cart/recoil/cartState';
 
 function CartItemList() {
-  const cartList = useCartList();
+  const cart = useCartReadOnly();
 
   const { isAllChecked, checkedCount, toggleAllCartItem, deleteCheckedItems } = useCheckCart();
 
-  const productCount = cartList.length;
+  const cartLength = cart.length;
 
-  if (productCount === 0) {
+  if (cartLength === 0) {
     return (
       <S.CartWrapper>
         <span style={{ textAlign: 'center', fontSize: '30px', margin: 'auto' }}>텅</span>
@@ -20,16 +20,10 @@ function CartItemList() {
 
   return (
     <S.CartWrapper>
-      {cartList.map(({ id, product }) => {
+      {cart.map(({ id, product }) => {
         return (
-          <li key={id}>
-            <CartItemBox
-              cartId={id}
-              productId={product.id}
-              imageUrl={product.imageUrl}
-              name={product.name}
-              price={product.price}
-            />
+          <li key={id + product.toString()}>
+            <CartItemBox cartItemId={id} product={product} />
           </li>
         );
       })}
@@ -41,7 +35,7 @@ function CartItemList() {
             toggleAllCartItem();
           }}
         />
-        <S.CheckAllSpan>{`전체 선택 (${checkedCount} / ${productCount})`}</S.CheckAllSpan>
+        <S.CheckAllSpan>{`전체 선택 (${checkedCount} / ${cartLength})`}</S.CheckAllSpan>
         <S.DeleteCheckBox onClick={deleteCheckedItems}>선택삭제</S.DeleteCheckBox>
       </S.CartItemListContainer>
     </S.CartWrapper>
