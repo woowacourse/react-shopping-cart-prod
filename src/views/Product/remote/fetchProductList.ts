@@ -1,4 +1,8 @@
 import { BASE_URL, PRODUCT_PATH } from '@constants/urlConstants';
 import { createApiRequests } from '@utils/createApiRequests';
 
-export const getProductsFetched = createApiRequests(BASE_URL)(PRODUCT_PATH).GET;
+const fetchProductList = (serverUrl: string) => {
+  return fetch(`${serverUrl}/${PRODUCT_PATH}`);
+};
+
+export default fetchProductList;
