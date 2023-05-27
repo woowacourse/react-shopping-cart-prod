@@ -33,6 +33,11 @@ interface OrderData {
   discountedTotalPrice: number;
 }
 
+interface Member {
+  username: string;
+  password: string;
+}
+
 interface MemberInformation {
   id: number;
   rank: string;
@@ -46,5 +51,6 @@ export type {
   OrderCartItemsData,
   OrderedItemData,
   OrderData,
+  Member,
   MemberInformation,
 };
