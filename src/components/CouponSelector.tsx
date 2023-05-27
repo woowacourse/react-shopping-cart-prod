@@ -1,12 +1,28 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { couponListState } from "recoil/coupon";
-import { serverSelectState } from "recoil/server";
+import { useState } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { couponListState, changeSelectSelector } from "recoil/coupon";
 import { styled } from "styled-components";
 
-const CouponSelector = () => {
+interface CouponSelectorProps {
+  changeCartItemCoupon: (couponId: number | undefined) => void;
+}
+
+const CouponSelector = ({ changeCartItemCoupon }: CouponSelectorProps) => {
+  const [currentCouponId, setCurrentCouponId] = useState<number | undefined>();
+  const setSelectedCoupon = useSetRecoilState(
+    changeSelectSelector(currentCouponId)
+  );
+
   const couponList = useRecoilValue(couponListState);
 
-  //   const [couponList, setcouponList] = ;
+  const changeCoupon = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedCouponId = couponList[e.target.selectedIndex - 1]?.couponId;
+
+    setSelectedCoupon(selectedCouponId);
+    setCurrentCouponId(selectedCouponId);
+    changeCartItemCoupon(selectedCouponId);
+  };
+
   const defaultText =
     couponList.length === 0
       ? "사용할 쿠폰이 없습니다."
@@ -15,17 +31,16 @@ const CouponSelector = () => {
   return (
     <Container>
       적용 쿠폰
-      <Select>
+      <Select onChange={changeCoupon}>
         <Option>{defaultText}</Option>
         {couponList.map((coupon) => {
-          if (coupon.selected) return;
-
-          const { couponId, name, discount } = coupon;
+          const { couponId, name, discount, selected } = coupon;
           const unit = discount.type === "rate" ? "%" : "원";
 
           return (
             <Option
               key={couponId}
+              disabled={selected}
             >{`${name}(-${discount.amount}${unit})`}</Option>
           );
         })}

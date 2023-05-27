@@ -10,6 +10,7 @@ export interface CartProduct {
   quantity: number;
   isChecked: boolean;
   product: Product;
+  couponId?: number;
 }
 
 export interface Coupon {

@@ -15,6 +15,7 @@ const getCartProductList = selector<CartProduct[]>({
       const cartProduct: CartProduct = {
         ...item,
         isChecked: true,
+        couponId: undefined,
       };
 
       return cartProduct;
@@ -60,4 +61,29 @@ export const cartTotalPrice = selector({
     get(cartListState)
       .filter((item) => item.isChecked)
       .reduce((sum, item) => sum + item.product.price * item.quantity, 0),
+});
+
+export const cartCouponSelector = selectorFamily<number | undefined, number>({
+  key: "cartCouponSelector",
+  get: (productId) => {
+    return ({ get }) => {
+      const targetCart = get(cartListState).find(
+        (item) => item.product.id === productId
+      );
+      return targetCart?.couponId ?? undefined;
+    };
+  },
+  set:
+    (productId) =>
+    ({ get, set }, couponId) => {
+      if (couponId instanceof DefaultValue) return;
+
+      const cartList = [...get(cartListState)].map((item) => {
+        if (item.product.id !== productId) return item;
+
+        return { ...item, couponId: couponId };
+      });
+
+      return set(cartListState, cartList);
+    },
 });

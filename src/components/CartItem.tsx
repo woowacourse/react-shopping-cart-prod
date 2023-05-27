@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import QuantityCounter from "components/QuantityCounter";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { cartSelector } from "recoil/cart";
+import { cartCouponSelector, cartSelector } from "recoil/cart";
 import { CartProduct } from "types/domain";
 import { removeCartItem } from "api/cartItems";
 import { serverSelectState } from "recoil/server";
@@ -10,6 +10,9 @@ import CouponSelector from "./CouponSelector";
 
 const CartItem = (item: CartProduct) => {
   const setProduct = useSetRecoilState(cartSelector(item.product.id));
+  const setSelectedCoupon = useSetRecoilState(
+    cartCouponSelector(item.product.id)
+  );
   const selectedServer = useRecoilValue(serverSelectState);
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,6 +33,10 @@ const CartItem = (item: CartProduct) => {
     setProduct(null);
   };
 
+  const changeCartItemCoupon = (couponId: number | undefined) => {
+    setSelectedCoupon(couponId);
+  };
+
   return (
     <Wrapper>
       <FirstPart>
@@ -46,7 +53,7 @@ const CartItem = (item: CartProduct) => {
       </FirstPart>
       <MiddlePart>
         <NameBox>{item.product.name}</NameBox>
-        <CouponSelector />
+        <CouponSelector changeCartItemCoupon={changeCartItemCoupon} />
       </MiddlePart>
       <LastPart>
         <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
