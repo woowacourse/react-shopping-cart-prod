@@ -2,7 +2,6 @@ import fetchMock from 'jest-fetch-mock';
 fetchMock.enableMocks();
 
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
-import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
 import { rest } from 'msw';
 import { CartItemType } from 'types/ProductType';
 import {
@@ -11,7 +10,12 @@ import {
   updateCartItemQuantity,
 } from '@views/CartItemList/utils/cart';
 import { server } from './setupTests';
-import { fetchGet, fetchPost } from '@utils/fetchUtils';
+import {
+  fetchDelete,
+  fetchGet,
+  fetchPatch,
+  fetchPost,
+} from '@utils/fetchUtils';
 import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
 
 const [product, product2, product3] = MOCK_PRODUCT_LIST;
@@ -37,8 +41,6 @@ describe('MSW 통신 테스트', () => {
 
     server.use(
       rest.get(fetchUrl, (req, res, ctx) => {
-        console.log('daudsudasu여기 와?');
-        console.log(serverData);
         return res(
           ctx.set('Content-Type', 'application/json'),
           ctx.status(200),
@@ -121,32 +123,32 @@ describe('MSW 통신 테스트', () => {
 
     serverData = [createCartItem({ cartId, product })];
 
-    await fetchCartItems.delete(Number(cartId));
+    await fetchDelete(`${fetchUrl}/${cartId}`);
 
-    const afterCart = await fetchCartItems.get();
+    const cart = await fetchGet<CartItemType[]>(fetchUrl);
 
-    expect(afterCart.length).toBe(0);
+    expect(cart.length).toBe(0);
   });
   test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
     const cartId = 1;
 
     serverData = [createCartItem({ cartId, product })];
 
-    await fetchCartItems.update(cartId, 40);
+    await fetchPatch(`${fetchUrl}/${cartId}`, { quantity: 40 });
 
-    const cart = await fetchCartItems.get();
+    const cart = await fetchGet<CartItemType[]>(fetchUrl);
 
     expect(cart[0].quantity).toBe(40);
   });
 
-  test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
+  test('서버에 있는 장바구니 아이템을 가져오는 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
     serverData = [
       createCartItem({ cartId: 1, product }),
       createCartItem({ cartId: 2, product: product2 }),
       createCartItem({ cartId: 3, product: product3 }),
     ];
 
-    const cart = await fetchCartItems.get();
+    const cart = await fetchGet<CartItemType[]>(fetchUrl);
 
     expect(cart).toEqual(serverData);
   });

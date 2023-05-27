@@ -27,7 +27,7 @@ const cartIdGenerator = {
 
 const fetchUrl = getCartPath(SERVER_NAME[0]);
 
-describe('useFetchCartList 통신 테스트', () => {
+describe('useFetchCart 통신 테스트', () => {
   let serverData: CartItemType[] = [];
 
   beforeEach(() => {
@@ -95,7 +95,7 @@ describe('useFetchCartList 통신 테스트', () => {
   });
 
   test('장바구니 아이템 추가 통신 기능 올바르게 작동하는 지 확인 테스트 ', async () => {
-    const { result } = renderHook(() => useFetchCartList());
+    const { result } = renderHook(() => useFetchCart());
 
     const { addProductToCart } = result.current;
 
@@ -105,7 +105,7 @@ describe('useFetchCartList 통신 테스트', () => {
   });
 
   test('장바구니 아이템 제거 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
-    const { result } = renderHook(() => useFetchCartList());
+    const { result } = renderHook(() => useFetchCart());
     const cartId = 1;
 
     serverData = [createCartItem({ cartId, product })];
@@ -117,7 +117,7 @@ describe('useFetchCartList 통신 테스트', () => {
     expect(serverData.length).toBe(0);
   });
   test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
-    const { result } = renderHook(() => useFetchCartList());
+    const { result } = renderHook(() => useFetchCart());
     const cartId = 1;
 
     serverData = [createCartItem({ cartId, product })];
@@ -130,7 +130,7 @@ describe('useFetchCartList 통신 테스트', () => {
   });
 
   test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
-    const { result } = renderHook(() => useFetchCartList());
+    const { result } = renderHook(() => useFetchCart());
 
     serverData = [
       createCartItem({ cartId: 1, product }),
@@ -146,7 +146,7 @@ describe('useFetchCartList 통신 테스트', () => {
   });
 
   test('프론트엔드에서 의도한 장바구니 API 레이어가 올바르게 기능하는 지 테스트', async () => {
-    const { result } = renderHook(() => useFetchCartList());
+    const { result } = renderHook(() => useFetchCart());
 
     const { addProductToCart } = result.current;
 

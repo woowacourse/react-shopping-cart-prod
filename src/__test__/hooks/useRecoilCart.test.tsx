@@ -8,10 +8,10 @@ import { rest } from 'msw';
 import { CartItemType } from 'types/ProductType';
 import { createCartItem } from '@views/CartItemList/utils/cart';
 import { server } from '../setupTests';
-import { useCartItemList } from '@views/CartItemList/hooks/useCartItemList';
 import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
+import { useRecoilCart } from '@hooks/useRecoilCart';
 
-const [product, product2, product3] = MOCK_PRODUCT_LIST;
+const [product] = MOCK_PRODUCT_LIST;
 
 const cartIdGenerator = {
   value: 0,
@@ -25,39 +25,34 @@ const cartIdGenerator = {
 
 const fetchUrl = getCartPath(SERVER_NAME[0]);
 
-describe('useCartItemList 훅 테스트', () => {
+describe('useRecoilCart 훅 테스트', () => {
   let serverData: CartItemType[] = [];
-
   beforeEach(() => {
-    serverData = [createCartItem({ cartId: cartIdGenerator.value, product })];
     cartIdGenerator.initValue();
+    serverData = [createCartItem({ cartId: cartIdGenerator.value, product })];
 
     server.use(
       rest.get(fetchUrl, (req, res, ctx) => {
         return res(
           ctx.set('Content-Type', 'application/json'),
           ctx.status(200),
-          ctx.body('OK'),
           ctx.json(serverData)
         );
       })
     );
   });
-  test.only('장바구니 리스트가 외부로부터 제대로 받아졌는 지 확인하는 테스트', async () => {
-    const { result } = renderHook(() => useCartItemList(), {
+  test('장바구니 리스트가 외부로부터 제대로 받아졌는 지 확인하는 테스트', async () => {
+    const { result } = renderHook(() => useRecoilCart(), {
       wrapper: RecoilRoot,
     });
 
-    await waitFor(
-      () => {
-        expect(result.current.cart).toEqual([]);
-      },
-      { timeout: 2000 }
-    );
+    await waitFor(async () => {
+      expect(result.current.cart).toEqual(serverData);
+    });
   });
 
   test('장바구니 아이템 수량 변경하는 경우 전역 장바구니 리스트 상태에 반영되는 지 테스트', async () => {
-    const { result } = renderHook(() => useCartItemList(), {
+    const { result } = renderHook(() => useRecoilCart(), {
       wrapper: RecoilRoot,
     });
 
@@ -76,7 +71,7 @@ describe('useCartItemList 훅 테스트', () => {
   });
 
   test('장바구니 아이템 제거하는 경우 전역 장바구니 리스트 상태에 반영되는 지 테스트', async () => {
-    const { result } = renderHook(() => useCartItemList(), {
+    const { result } = renderHook(() => useRecoilCart(), {
       wrapper: RecoilRoot,
     });
 
@@ -90,7 +85,7 @@ describe('useCartItemList 훅 테스트', () => {
 
   test('장바구니 아이템 추가하는 경우 전역 장바구니 리스트 상태에 반영되는 지 테스트', async () => {
     serverData = [];
-    const { result } = renderHook(() => useCartItemList(), {
+    const { result } = renderHook(() => useRecoilCart(), {
       wrapper: RecoilRoot,
     });
 
