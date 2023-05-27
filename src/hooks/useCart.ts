@@ -2,11 +2,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import HTTPError from '../api/HTTPError';
+import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getCartAPI } from '../api/cartAPI';
 import { TOAST_SHOW_DURATION } from '../constants';
 import { CART_API_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../constants/api';
 import { cartItemQuantityState, cartListState } from '../store/cart';
 import { errorModalMessageState } from '../store/error';
+import { currentMemberState } from '../store/member';
 import { currentServerState } from '../store/server';
 import { CartItemData, ProductItemData } from '../types';
 import { APIErrorMessage } from '../types/api';
@@ -14,7 +16,12 @@ import { useMutationFetch } from './common/useMutationFetch';
 
 const useCart = () => {
   const currentServer = useRecoilValue(currentServerState);
-  const cartAPI = useMemo(() => getCartAPI(currentServer), [currentServer]);
+  const currentMember = useRecoilValue(currentMemberState);
+  const authorizedHeaders = getAuthorizedOptionHeaders(currentMember);
+  const cartAPI = useMemo(
+    () => getCartAPI(currentServer, authorizedHeaders),
+    [currentServer, authorizedHeaders]
+  );
   const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
 
   const [isAdded, setIsAdded] = useState(false);

@@ -1,10 +1,12 @@
 import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 
+import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getCartAPI } from '../api/cartAPI';
 import { CART_LIST_CHECKBOX_KEY } from '../constants/store';
 import { changeCartItemQuantity } from '../domain/cart';
 import { CartItemData } from '../types';
 import { checkedListState } from './checkbox';
+import { currentMemberState } from './member';
 import { currentServerState } from './server';
 
 const cartListState = atom<CartItemData[]>({
@@ -13,7 +15,10 @@ const cartListState = atom<CartItemData[]>({
     key: 'cartList/default',
     get: ({ get }) => {
       const currentServer = get(currentServerState);
-      const cartAPI = getCartAPI(currentServer);
+      const currentMember = get(currentMemberState);
+      const authorizedHeaders = getAuthorizedOptionHeaders(currentMember);
+
+      const cartAPI = getCartAPI(currentServer, authorizedHeaders);
 
       return cartAPI.getCartList();
     },

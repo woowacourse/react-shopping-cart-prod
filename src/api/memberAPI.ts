@@ -1,19 +1,19 @@
-import { API_ENDPOINT, AUTHORIZED_FETCH_OPTION_HEADERS } from '../constants/api';
+import { API_ENDPOINT } from '../constants/api';
 import { MemberInformation } from '../types';
 import { fetchAPI } from './fetchAPI';
 
-const getMemberAPI = (baseUrl: string) => {
+const getMemberAPI = (baseUrl: string, headers: HeadersInit) => {
   const getMemberInfo = async (): Promise<MemberInformation> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBER}`, {
       method: 'GET',
-      headers: { ...AUTHORIZED_FETCH_OPTION_HEADERS },
+      headers,
     });
   };
 
   const getMemberOrders = async (memberId: number) => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBERS}/${memberId}${API_ENDPOINT.ORDERS}`, {
       method: 'GET',
-      headers: { ...AUTHORIZED_FETCH_OPTION_HEADERS },
+      headers,
     });
   };
 
@@ -22,7 +22,7 @@ const getMemberAPI = (baseUrl: string) => {
       `${baseUrl}${API_ENDPOINT.MEMBERS}/${memberId}${API_ENDPOINT.ORDERS}/${orderId}`,
       {
         method: 'GET',
-        headers: { ...AUTHORIZED_FETCH_OPTION_HEADERS },
+        headers,
       }
     );
   };
