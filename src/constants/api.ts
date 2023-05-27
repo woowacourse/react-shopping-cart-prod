@@ -1,6 +1,31 @@
-const BASE64 = btoa(process.env.REACT_APP_API_USERNAME + ':' + process.env.REACT_APP_API_PASSWORD);
+const MEMBER_BENEFIT = {
+  REGULAR: {
+    RANK: '일반',
+    DISCOUNT_RATE: 0,
+  },
+  SILVER: {
+    RANK: '실버',
+    DISCOUNT_RATE: 5,
+  },
+  GOLD: {
+    RANK: '골드',
+    DISCOUNT_RATE: 10,
+  },
+  PLATINUM: {
+    RANK: '플래티넘',
+    DISCOUNT_RATE: 15,
+  },
+  DIAMOND: {
+    RANK: '다이아몬드',
+    DISCOUNT_RATE: 20,
+  },
+};
 
-const MEMBER = ['아코', '주디', '저문', '프론트'] as const;
+const DEFAULT_BASE64 = btoa(
+  process.env.REACT_APP_API_USERNAME_1 + ':' + process.env.REACT_APP_API_PASSWORD_1
+);
+
+const SERVER = ['아코', '주디', '저문', '프론트'] as const;
 
 const FRONT_API_BASE_URL =
   process.env.NODE_ENV === 'production'
@@ -8,18 +33,19 @@ const FRONT_API_BASE_URL =
     : process.env.REACT_APP_LOCAL_BASE_URL;
 
 const API_BASE_URL_LIST = {
-  [MEMBER[0]]: process.env.REACT_APP_AK_API_BASE_URL,
-  [MEMBER[1]]: process.env.REACT_APP_JD_API_BASE_URL,
-  [MEMBER[2]]: process.env.REACT_APP_JM_API_BASE_URL,
-  [MEMBER[3]]: FRONT_API_BASE_URL,
+  [SERVER[0]]: process.env.REACT_APP_AK_API_BASE_URL,
+  [SERVER[1]]: process.env.REACT_APP_JD_API_BASE_URL,
+  [SERVER[2]]: process.env.REACT_APP_JM_API_BASE_URL,
+  [SERVER[3]]: FRONT_API_BASE_URL,
 } as const;
 
-const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[MEMBER[0]];
+const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[SERVER[0]];
 
 const API_ENDPOINT = {
   PRODUCTS: '/products',
   CART_ITEMS: '/cart-items',
   ORDERS: '/orders',
+  MEMBER: '/member',
   MEMBERS: '/members',
 } as const;
 
@@ -31,7 +57,7 @@ const FETCH_DEFAULT_OPTION = {
 
 const AUTHORIZED_FETCH_OPTION_HEADERS = {
   'Content-Type': 'application/json',
-  Authorization: `Basic ${BASE64}`,
+  Authorization: `Basic ${DEFAULT_BASE64}`,
 } as const;
 
 const HTTP_STATUS_CODE = {
@@ -79,8 +105,17 @@ const CART_API_ERROR_MESSAGE = {
   },
 } as const;
 
+const ORDER_API_ERROR_MESSAGE = {
+  ADD: {
+    [HTTP_STATUS_CODE.BAD_REQUEST]: '장바구니에 있는 상품들을 구매할 수 없습니다.',
+    [HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR]:
+      '일시적인 장애가 발생했어요. 잠시 후 다시 시도해주세요.',
+  },
+};
+
 export {
-  BASE64,
+  MEMBER_BENEFIT,
+  DEFAULT_BASE64,
   API_BASE_URL_LIST,
   DEFAULT_API_BASE_URL,
   API_ENDPOINT,
@@ -89,4 +124,5 @@ export {
   HTTP_STATUS_CODE,
   HTTP_ERROR_MESSAGE,
   CART_API_ERROR_MESSAGE,
+  ORDER_API_ERROR_MESSAGE,
 };
