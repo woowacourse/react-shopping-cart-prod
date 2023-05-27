@@ -1,11 +1,11 @@
-import { Column, Row } from '@styles/style';
+import { styled } from 'styled-components';
 import {
   ProductItemBox,
   ProductItemImage,
   ProductName,
   ProductPrice,
 } from '@views/ProductItem/ProductItem.style';
-import { styled } from 'styled-components';
+import { Column, Row } from '@styles/style';
 
 export const SkeletonRow = Row;
 

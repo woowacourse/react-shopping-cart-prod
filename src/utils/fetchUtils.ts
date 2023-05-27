@@ -1,9 +1,6 @@
 import { CustomError } from 'types/error';
 
-export const fetchGet = async <T>(
-  url: string,
-  options: RequestInit = {}
-): Promise<T> => {
+export const fetchGet = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
   try {
     const mergedOptions = {
       method: 'GET',
@@ -89,10 +86,7 @@ export const fetchPatch = async <T>(
   }
 };
 
-export const fetchDelete = async (
-  url: string,
-  options: RequestInit = {}
-): Promise<Response> => {
+export const fetchDelete = async (url: string, options: RequestInit = {}): Promise<Response> => {
   try {
     const mergedOptions = {
       method: 'DELETE',

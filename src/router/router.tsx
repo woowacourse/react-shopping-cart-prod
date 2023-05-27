@@ -1,8 +1,8 @@
 import { createBrowserRouter } from 'react-router-dom';
-import ROUTER_PATH from './constants/routerPath';
-import { HomeLayout } from '@layout/HomeLayout';
-import { Home } from '@pages/Home';
 import { Cart } from '@pages/Cart';
+import { Home } from '@pages/Home';
+import { HomeLayout } from '@layout/HomeLayout';
+import ROUTER_PATH from './constants/routerPath';
 
 const router = createBrowserRouter(
   [

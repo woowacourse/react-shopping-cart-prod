@@ -1,10 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react';
-import { server } from '../setupTests';
 import { rest } from 'msw';
+import { RecoilRoot } from 'recoil';
 import useRecoilProductList from '@hooks/useRecoilProductList';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { SERVER_NAME, getProductPath } from '@constants/urlConstants';
-import { RecoilRoot } from 'recoil';
+import { server } from '../setupTests';
 
 const fetchUrl = getProductPath(SERVER_NAME[0]);
 

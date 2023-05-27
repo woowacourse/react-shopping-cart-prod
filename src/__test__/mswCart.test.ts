@@ -1,22 +1,17 @@
 import fetchMock from 'jest-fetch-mock';
-fetchMock.enableMocks();
-
-import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { rest } from 'msw';
-import { CartItemType } from 'types/ProductType';
 import {
   createCartItem,
   removeCartItem,
   updateCartItemQuantity,
 } from '@views/CartItemList/utils/cart';
-import { server } from './setupTests';
-import {
-  fetchDelete,
-  fetchGet,
-  fetchPatch,
-  fetchPost,
-} from '@utils/fetchUtils';
+import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
+import { fetchDelete, fetchGet, fetchPatch, fetchPost } from '@utils/fetchUtils';
 import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
+import { CartItemType } from '@type/ProductType';
+import { server } from './setupTests';
+
+fetchMock.enableMocks();
 
 const [product, product2, product3] = MOCK_PRODUCT_LIST;
 
@@ -51,12 +46,9 @@ describe('MSW 통신 테스트', () => {
       rest.post(fetchUrl, async (req, res, ctx) => {
         const { productId }: { productId: number } = await req.json();
 
-        const product = MOCK_PRODUCT_LIST.find(
-          (productItem) => productItem.id === productId
-        );
+        const product = MOCK_PRODUCT_LIST.find((productItem) => productItem.id === productId);
 
-        if (!product)
-          throw new Error('id에 맞는 product item을 찾을 수 없습니다.');
+        if (!product) throw new Error('id에 맞는 product item을 찾을 수 없습니다.');
 
         cartIdGenerator.increase();
         const cartItem = createCartItem({
@@ -66,10 +58,7 @@ describe('MSW 통신 테스트', () => {
 
         serverData.push(cartItem);
 
-        return res(
-          ctx.status(201),
-          ctx.set('Location', `/cart-items/${cartIdGenerator.value}`)
-        );
+        return res(ctx.status(201), ctx.set('Location', `/cart-items/${cartIdGenerator.value}`));
       }),
 
       rest.delete(`${fetchUrl}/:cartItemId`, (req, res, ctx) => {
@@ -113,9 +102,7 @@ describe('MSW 통신 테스트', () => {
       throw new Error('장바구니 아이템을 불러올 수 없습니다');
     }
 
-    expect(cart[0]).toEqual(
-      createCartItem({ cartId: Number(cartId), product })
-    );
+    expect(cart[0]).toEqual(createCartItem({ cartId: Number(cartId), product }));
   });
 
   test('장바구니 아이템 제거 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {

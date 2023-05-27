@@ -1,13 +1,15 @@
-import cartState from '@recoil/cart/cartState';
-import { removeCartItem } from '@views/CartItemList/utils/cart';
-import { addItemToCart } from '@views/CartItemList/utils/cart';
-import { updateCartItemQuantity } from '@views/CartItemList/utils/cart';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { CartItemType, ProductItemType } from 'types/ProductType';
-import { ServerName, getCartPath } from '@constants/urlConstants';
-import { useFetch } from './useFetch';
+import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
+import {
+  addItemToCart,
+  removeCartItem,
+  updateCartItemQuantity,
+} from '@views/CartItemList/utils/cart';
+import { getCartPath } from '@constants/urlConstants';
+import { CartItemType, ProductItemType } from '@type/ProductType';
+import { useFetch } from './useFetch';
 
 interface UpdateCartListItemQuantityParams {
   cartId: number;
@@ -21,17 +23,10 @@ interface AddCartItemParams {
 
 export const useRecoilCart = () => {
   const serverName = useRecoilValue(serverState);
-  const {
-    data: originData,
-    isLoading,
-    error,
-  } = useFetch<CartItemType[]>(getCartPath(serverName));
+  const { data: originData, isLoading, error } = useFetch<CartItemType[]>(getCartPath(serverName));
   const [cart, setCart] = useRecoilState<CartItemType[]>(cartState);
 
-  const updateCartListItemQuantity = ({
-    cartId,
-    quantity,
-  }: UpdateCartListItemQuantityParams) => {
+  const updateCartListItemQuantity = ({ cartId, quantity }: UpdateCartListItemQuantityParams) => {
     setCart(updateCartItemQuantity({ cart, cartId, quantity }));
   };
 

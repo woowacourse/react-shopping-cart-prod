@@ -1,17 +1,17 @@
+import { renderHook, waitFor } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
-fetchMock.enableMocks();
-
-import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { rest } from 'msw';
-import { CartItemType } from 'types/ProductType';
 import {
   createCartItem,
   removeCartItem,
   updateCartItemQuantity,
 } from '@views/CartItemList/utils/cart';
-import { server } from '../setupTests';
-import { renderHook, waitFor } from '@testing-library/react';
+import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
+import { CartItemType } from '@type/ProductType';
+import { server } from '../setupTests';
+
+fetchMock.enableMocks();
 
 const [product, product2, product3] = MOCK_PRODUCT_LIST;
 
@@ -47,12 +47,9 @@ describe('useFetchCart 통신 테스트', () => {
       rest.post(fetchUrl, async (req, res, ctx) => {
         const { productId }: { productId: number } = await req.json();
 
-        const product = MOCK_PRODUCT_LIST.find(
-          (productItem) => productItem.id === productId
-        );
+        const product = MOCK_PRODUCT_LIST.find((productItem) => productItem.id === productId);
 
-        if (!product)
-          throw new Error('id에 맞는 product item을 찾을 수 없습니다.');
+        if (!product) throw new Error('id에 맞는 product item을 찾을 수 없습니다.');
 
         cartIdGenerator.increase();
         const cartItem = createCartItem({
@@ -62,10 +59,7 @@ describe('useFetchCart 통신 테스트', () => {
 
         serverData.push(cartItem);
 
-        return res(
-          ctx.status(201),
-          ctx.set('Location', `/cart-items/${cartIdGenerator.value}`)
-        );
+        return res(ctx.status(201), ctx.set('Location', `/cart-items/${cartIdGenerator.value}`));
       }),
 
       rest.delete(`${fetchUrl}/:cartItemId`, (req, res, ctx) => {

@@ -1,3 +1,4 @@
+import { useCallback, useMemo } from 'react';
 import {
   atom,
   selector,
@@ -5,20 +6,16 @@ import {
   useRecoilState,
   useRecoilValue,
 } from 'recoil';
-import type { CartItemType } from '../../types/ProductType';
-
-import { useCallback, useMemo } from 'react';
 import serverState from '@recoil/server/serverState';
-import { getCartPath } from '@constants/urlConstants';
 import { fetchGet } from '@utils/fetchUtils';
+import { getCartPath } from '@constants/urlConstants';
+import type { CartItemType } from '@type/ProductType';
 
 export const CartItemQuery = selector({
   key: 'cartListWithInfoState/default',
   get: async ({ get }) => {
     const server = get(serverState);
-    const cartProducts: CartItemType[] | null = await fetchGet(
-      getCartPath(server)
-    );
+    const cartProducts: CartItemType[] | null = await fetchGet(getCartPath(server));
 
     if (!cartProducts) {
       throw new Error('리코일에서 장바구니 목록을 불러올 수 없습니다.');

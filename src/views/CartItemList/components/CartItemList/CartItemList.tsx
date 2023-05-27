@@ -1,7 +1,7 @@
 import { useCartList, useCheckCart } from '@recoil/cart/cartState';
-import * as S from './CartItemList.style';
 import { CartItemBox } from '@views/CartItem/components/CartItemBox';
 import { CheckBox } from '@common/CheckBox';
+import * as S from './CartItemList.style';
 
 function CartItemList() {
   const cartList = useCartList();

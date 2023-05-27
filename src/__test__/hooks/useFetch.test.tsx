@@ -1,13 +1,13 @@
-import fetchMock from 'jest-fetch-mock';
-fetchMock.enableMocks();
-
 import { renderHook, waitFor } from '@testing-library/react';
+import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
 import { useFetch } from '@hooks/useFetch';
-import { CustomError } from '@type/error';
-import { server } from '../setupTests';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { SERVER_NAME, getProductPath } from '@constants/urlConstants';
+import { CustomError } from '@type/error';
+import { server } from '../setupTests';
+
+fetchMock.enableMocks();
 
 const fetchUrl = getProductPath(SERVER_NAME[0]);
 
@@ -15,10 +15,7 @@ describe('useFetch가 올바르게 작동하는 지 테스트', () => {
   beforeEach(() => {
     server.use(
       rest.get('api/error', (req, res, ctx) => {
-        return res(
-          ctx.set('Content-Type', 'application/json'),
-          ctx.status(500)
-        );
+        return res(ctx.set('Content-Type', 'application/json'), ctx.status(500));
       }),
 
       rest.get(fetchUrl, (req, res, ctx) => {
@@ -99,9 +96,7 @@ describe('useFetch가 올바르게 작동하는 지 테스트', () => {
       async () => {
         const { error } = result.current;
 
-        expect((error as CustomError).message as string).toBe(
-          'Error: HTTP 오류! Status: 500'
-        );
+        expect((error as CustomError).message as string).toBe('Error: HTTP 오류! Status: 500');
       },
       { timeout: 1500 }
     );

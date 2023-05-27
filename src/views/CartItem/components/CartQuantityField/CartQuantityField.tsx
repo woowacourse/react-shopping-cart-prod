@@ -1,14 +1,8 @@
-import { useCartItemQuantityBy } from '@recoil/cart/withItemQuantityBy';
-import * as S from './CartQuantityField.style';
-
 import { ProductItemType } from 'types/ProductType';
+import { useCartItemQuantityBy } from '@recoil/cart/withItemQuantityBy';
 import { Stepper } from '@common/Stepper';
 import cartIcon from '@assets/cart.svg';
-import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
-import { useRecoilValue } from 'recoil';
-import serverState, { SERVER } from '@recoil/server/serverState';
-import { CART_PATH } from '@constants/urlConstants';
-import { fetchApi } from '@utils/createApiRequests';
+import * as S from './CartQuantityField.style';
 
 interface CartQuantityFieldProps {
   product: ProductItemType;
@@ -17,7 +11,6 @@ interface CartQuantityFieldProps {
 function CartQuantityField({ product }: CartQuantityFieldProps) {
   const [cartQuantity, setCartQuantity] = useCartItemQuantityBy(product.id);
   const { quantity, cartId } = cartQuantity;
-  const server = useRecoilValue(serverState);
 
   const isQuantityZero = quantity > 0;
 
@@ -39,27 +32,8 @@ function CartQuantityField({ product }: CartQuantityFieldProps) {
           ariaDecreaseLabel={`${product.name}의 장바구니에 담긴 개수에서 하나 빼기`}
         />
       ) : (
-        <S.CartIcon
-          onClick={async () => {
-            const response = await fetchApi(`${SERVER[server]}/${CART_PATH}`, {
-              method: 'POST',
-              body: JSON.stringify({ productId: product.id }),
-            });
-
-            const newCartId = response.headers.get('Location')?.split('/').pop();
-
-            if (!newCartId) return;
-
-            setCartQuantity({
-              cartId: Number(newCartId),
-              quantity: 1,
-            });
-          }}
-          type="button"
-          aria-label={`${product.name}를 장바구니에 담기`}
-          role="cart-icon"
-        >
-          <img src={cartIcon}></img>
+        <S.CartIcon type="button" aria-label={`${product.name}를 장바구니에 담기`} role="cart-icon">
+          <img src={cartIcon} alt="장바구니 모양" />
         </S.CartIcon>
       )}
     </S.StepperContainer>

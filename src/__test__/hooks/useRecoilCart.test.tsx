@@ -1,15 +1,15 @@
-import fetchMock from 'jest-fetch-mock';
-fetchMock.enableMocks();
-
 import { renderHook, waitFor } from '@testing-library/react';
-import { RecoilRoot } from 'recoil';
-import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
+import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
-import { CartItemType } from 'types/ProductType';
-import { createCartItem } from '@views/CartItemList/utils/cart';
-import { server } from '../setupTests';
-import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
+import { RecoilRoot } from 'recoil';
 import { useRecoilCart } from '@hooks/useRecoilCart';
+import { createCartItem } from '@views/CartItemList/utils/cart';
+import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
+import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
+import { CartItemType } from '@type/ProductType';
+import { server } from '../setupTests';
+
+fetchMock.enableMocks();
 
 const [product] = MOCK_PRODUCT_LIST;
 

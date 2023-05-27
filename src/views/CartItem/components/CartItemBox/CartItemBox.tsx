@@ -1,10 +1,9 @@
+import { useCartItemCheckedBy } from '@recoil/cart/withItemCheckBy';
+import { useCartItemQuantityBy } from '@recoil/cart/withItemQuantityBy';
 import { CheckBox } from '@common/CheckBox';
-
-import * as S from './CartItemBox.style';
 import { Stepper } from '@common/Stepper';
 import deleteIcon from '@assets/delete.svg';
-import { useCartItemQuantityBy } from '@recoil/cart/withItemQuantityBy';
-import { useCartItemCheckedBy } from '@recoil/cart/withItemCheckBy';
+import * as S from './CartItemBox.style';
 
 interface CartItemProps {
   cartId: number;

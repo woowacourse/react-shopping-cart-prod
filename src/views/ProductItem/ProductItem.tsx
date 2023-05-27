@@ -1,6 +1,6 @@
 import { ProductItemType } from 'types/ProductType';
-import * as S from './ProductItem.style';
 import { CartQuantityField } from '@views/CartItem/components/CartQuantityField';
+import * as S from './ProductItem.style';
 
 interface ProductItemProps {
   product: ProductItemType;

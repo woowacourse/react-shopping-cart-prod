@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { CartItemType, ProductItemType } from 'types/ProductType';
+import { CartItemType, ProductItemType } from '@type/ProductType';
 
 export const MOCK_PRODUCT_LIST: ProductItemType[] = [
   {

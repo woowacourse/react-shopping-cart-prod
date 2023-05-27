@@ -30,7 +30,9 @@ const getPositionCheckMark = (size: 'small' | 'medium' | 'large'): [string, stri
   }
 };
 
-export const StyleCheckBox = styled.input.attrs({ type: 'checkbox' })<CheckboxProps>`
+export const StyleCheckBox = styled.input.attrs({
+  type: 'checkbox',
+})<CheckboxProps>`
   position: absolute;
   opacity: 0;
   height: ${({ boxsize }) => getCheckBoxSize(boxsize || 'medium')};

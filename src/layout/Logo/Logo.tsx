@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
+import { useRefreshCartList } from '@recoil/cart/cartState';
+import logoImage from '@assets/logo.svg';
+import shopImage from '@assets/shop.svg';
 import * as S from './Logo.style';
-
-import logoImage from '../../assets/logo.svg';
-import shopImage from '../../assets/shop.svg';
-import { useRefreshCartList } from '../../recoil/cart/cartState';
 
 function Logo() {
   const navigate = useNavigate();
@@ -21,10 +20,10 @@ function Logo() {
       }}
     >
       <S.LogoContainer>
-        <img src={logoImage}></img>
+        <img src={logoImage} alt="로고 이미지"></img>
       </S.LogoContainer>
 
-      <img src={shopImage}></img>
+      <img src={shopImage} alt="로고 이미지"></img>
     </S.LogoWrapper>
   );
 }

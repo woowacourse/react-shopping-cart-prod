@@ -1,15 +1,10 @@
-import { SERVER, SERVER_NAME, ServerName } from "@constants/urlConstants";
-import cartState from "@recoil/cart/cartState";
-import { productListState } from "@recoil/product/productListState";
-import {
-  atom,
-  useRecoilRefresher_UNSTABLE,
-  useRecoilState,
-  useResetRecoilState,
-} from "recoil";
+import { atom, useRecoilRefresher_UNSTABLE, useRecoilState } from 'recoil';
+import cartState from '@recoil/cart/cartState';
+import { productListState } from '@recoil/product/productListState';
+import { SERVER_NAME, ServerName } from '@constants/urlConstants';
 
 const serverState = atom<ServerName>({
-  key: "serverState",
+  key: 'serverState',
   default: SERVER_NAME[0],
 });
 

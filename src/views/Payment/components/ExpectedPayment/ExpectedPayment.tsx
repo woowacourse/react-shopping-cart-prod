@@ -1,6 +1,6 @@
+import { useCartTotalPriceReadOnly } from '@recoil/cart/withTotalPrice';
 import { FlexWrapper } from '@pages/Cart/Cart.style';
 import * as S from './ExpectedPayment.style';
-import { useCartTotalPriceReadOnly } from '@recoil/cart/withTotalPrice';
 
 function ExpectedPayment() {
   const { totalPriceReadOnly } = useCartTotalPriceReadOnly();

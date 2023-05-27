@@ -1,14 +1,14 @@
-import { Container } from '@styles/style';
-import * as S from './Header.style';
 import { ChangeEvent, Suspense } from 'react';
+import { useServer } from '@recoil/server/serverState';
 import Logo from '@layout/Logo/Logo';
 import { CartStepperWithIcon } from '@views/CartItem/components/CartStepperWithIcon';
 import { SelectBox } from '@common/SelectBox';
-import { useServer } from '@recoil/server/serverState';
 import { SERVER_NAME } from '@constants/urlConstants';
+import { Container } from '@styles/style';
+import * as S from './Header.style';
 
 function Header() {
-  const { server, handleServer } = useServer();
+  const { handleServer } = useServer();
 
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.currentTarget;

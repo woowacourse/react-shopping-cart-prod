@@ -11,6 +11,7 @@ export interface CartItemType {
   checked?: boolean;
   product: ProductItemType;
 }
+
 export interface NewCartItemType extends CartItemType {
   quantity: 1;
 }

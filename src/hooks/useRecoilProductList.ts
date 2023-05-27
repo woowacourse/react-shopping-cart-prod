@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useFetch } from './useFetch';
-import { ProductItemType } from '@type/ProductType';
-import { SERVER_NAME, getProductPath } from '@constants/urlConstants';
+import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { productListState } from '@recoil/product/productListState';
+import { SERVER_NAME, getProductPath } from '@constants/urlConstants';
+import { ProductItemType } from '@type/ProductType';
+import { useFetch } from './useFetch';
 
 const useRecoilProductList = (): {
   productList: ProductItemType[];
@@ -15,8 +15,7 @@ const useRecoilProductList = (): {
     isLoading,
     error,
   } = useFetch<ProductItemType[]>(getProductPath(SERVER_NAME[0]));
-  const [productList, setProductList] =
-    useRecoilState<ProductItemType[]>(productListState);
+  const [productList, setProductList] = useRecoilState<ProductItemType[]>(productListState);
 
   useEffect(() => {
     if (!originData) return;
