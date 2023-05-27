@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValueLoadable } from 'recoil';
 
@@ -7,6 +8,8 @@ import { PATH } from '../../../constants/path';
 import { cartListItemCountState } from '../../../store/cart';
 import ServerSelect from '../ServerSelect/ServerSelect';
 import * as S from './Header.styles';
+import UserInformation from './UserInformation/UserInformation';
+import UserInformationSkeleton from './UserInformation/UserInformationSkeleton';
 
 const Header = () => {
   const cartListItemCount = useRecoilValueLoadable(cartListItemCountState);
@@ -14,7 +17,10 @@ const Header = () => {
 
   return (
     <S.HeaderContainer>
-      <S.HeaderContentContainer>
+      <Suspense fallback={<UserInformationSkeleton />}>
+        <UserInformation />
+      </Suspense>
+      <S.HeaderMainContentContainer>
         <S.Logo src={Logo} alt="logo" onClick={() => navigate(PATH.ROOT)} />
         <S.HeaderRightContainer>
           <ServerSelect />
@@ -31,7 +37,7 @@ const Header = () => {
             <S.HeaderButtonLabel id="cart-button">장바구니</S.HeaderButtonLabel>
           </S.CartButton>
         </S.HeaderRightContainer>
-      </S.HeaderContentContainer>
+      </S.HeaderMainContentContainer>
     </S.HeaderContainer>
   );
 };

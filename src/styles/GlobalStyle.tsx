@@ -36,7 +36,7 @@ const GlobalStyle = createGlobalStyle`
   main {
     position: relative;
     margin: 0 ${theme.spacer.spacing4};
-    padding-top: 124px;
+    padding-top: 130px;
     padding-bottom: 72px;
     max-width: 1080px;
     min-height: 100vh;

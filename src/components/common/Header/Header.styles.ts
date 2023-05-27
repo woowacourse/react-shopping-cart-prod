@@ -6,13 +6,13 @@ const HeaderContainer = styled.header`
   position: fixed;
   top: 0;
   width: 100%;
-  padding: ${({ theme }) => theme.spacer.spacing3} ${({ theme }) => theme.spacer.spacing4};
+  padding: ${({ theme }) => `${theme.spacer.spacing3} ${theme.spacer.spacing4}`};
   background-color: ${({ theme }) => theme.color.white};
   border-bottom: 1px solid ${({ theme }) => theme.color.gray2};
   z-index: 2;
 `;
 
-const HeaderContentContainer = styled.div`
+const HeaderMainContentContainer = styled.div`
   position: relative;
   max-width: 1080px;
   margin: 0 auto;
@@ -83,7 +83,7 @@ const HeaderButtonLabel = styled.span`
 
 export {
   HeaderContainer,
-  HeaderContentContainer,
+  HeaderMainContentContainer,
   HeaderRightContainer,
   Logo,
   CartButton,
