@@ -1,13 +1,15 @@
+import fetchMock from 'jest-fetch-mock';
+fetchMock.enableMocks();
+
 import { renderHook, waitFor } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { rest } from 'msw';
-import { BASE_URL, CART_PATH } from '@constants/urlConstants';
 import { CartItemType } from 'types/ProductType';
 import { createCartItem } from '@views/CartItemList/utils/cart';
 import { server } from '../setupTests';
 import { useCartItemList } from '@views/CartItemList/hooks/useCartItemList';
-import { Suspense } from 'react';
+import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
 
 const [product, product2, product3] = MOCK_PRODUCT_LIST;
 
@@ -21,7 +23,7 @@ const cartIdGenerator = {
   },
 };
 
-const endpoint = `${BASE_URL}/${CART_PATH}`;
+const fetchUrl = getCartPath(SERVER_NAME[0]);
 
 describe('useCartItemList 훅 테스트', () => {
   let serverData: CartItemType[] = [];
@@ -31,7 +33,7 @@ describe('useCartItemList 훅 테스트', () => {
     cartIdGenerator.initValue();
 
     server.use(
-      rest.get(endpoint, (req, res, ctx) => {
+      rest.get(fetchUrl, (req, res, ctx) => {
         return res(
           ctx.set('Content-Type', 'application/json'),
           ctx.status(200),
@@ -43,11 +45,7 @@ describe('useCartItemList 훅 테스트', () => {
   });
   test.only('장바구니 리스트가 외부로부터 제대로 받아졌는 지 확인하는 테스트', async () => {
     const { result } = renderHook(() => useCartItemList(), {
-      wrapper: ({ children }) => (
-        <RecoilRoot>
-          <Suspense fallback="">{children}</Suspense>
-        </RecoilRoot>
-      ),
+      wrapper: RecoilRoot,
     });
 
     await waitFor(
@@ -66,7 +64,10 @@ describe('useCartItemList 훅 테스트', () => {
     await waitFor(
       () => {
         const { cart, updateCartListItemQuantity } = result.current;
-        updateCartListItemQuantity({ cartId: cartIdGenerator.value, quantity: 50 });
+        updateCartListItemQuantity({
+          cartId: cartIdGenerator.value,
+          quantity: 50,
+        });
 
         expect(cart[0].quantity).toBe(50);
       },

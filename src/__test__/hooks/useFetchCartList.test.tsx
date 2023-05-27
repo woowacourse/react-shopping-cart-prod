@@ -2,7 +2,6 @@ import fetchMock from 'jest-fetch-mock';
 fetchMock.enableMocks();
 
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
-import fetchCartItems from '@views/CartItemList/remote/fetchCartItem';
 import { rest } from 'msw';
 import { CartItemType } from 'types/ProductType';
 import {
@@ -10,8 +9,8 @@ import {
   removeCartItem,
   updateCartItemQuantity,
 } from '@views/CartItemList/utils/cart';
-import { server } from './setupTests';
-import { fetchGet, fetchPost } from '@utils/fetchUtils';
+import { server } from '../setupTests';
+import { renderHook, waitFor } from '@testing-library/react';
 import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
 
 const [product, product2, product3] = MOCK_PRODUCT_LIST;
@@ -28,7 +27,7 @@ const cartIdGenerator = {
 
 const fetchUrl = getCartPath(SERVER_NAME[0]);
 
-describe('MSW 통신 테스트', () => {
+describe('useFetchCartList 통신 테스트', () => {
   let serverData: CartItemType[] = [];
 
   beforeEach(() => {
@@ -37,11 +36,10 @@ describe('MSW 통신 테스트', () => {
 
     server.use(
       rest.get(fetchUrl, (req, res, ctx) => {
-        console.log('daudsudasu여기 와?');
-        console.log(serverData);
         return res(
           ctx.set('Content-Type', 'application/json'),
           ctx.status(200),
+          ctx.body('OK'),
           ctx.json(serverData)
         );
       }),
@@ -97,57 +95,81 @@ describe('MSW 통신 테스트', () => {
   });
 
   test('장바구니 아이템 추가 통신 기능 올바르게 작동하는 지 확인 테스트 ', async () => {
-    const response = await fetchPost(fetchUrl, {
-      productId: product.id,
-    });
+    const { result } = renderHook(() => useFetchCartList());
 
-    const location = response?.headers.get('Location');
+    const { addProductToCart } = result.current;
 
-    const cartId = location?.split('/').pop();
+    const cartId = addProductToCart({ productId });
 
-    const cart = await fetchGet<CartItemType[]>(fetchUrl);
-
-    if (cart === null) {
-      throw new Error('장바구니 아이템을 불러올 수 없습니다');
-    }
-
-    expect(cart[0]).toEqual(
-      createCartItem({ cartId: Number(cartId), product })
-    );
+    expect(cartId).toBe(serverData[0].id);
   });
 
   test('장바구니 아이템 제거 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
+    const { result } = renderHook(() => useFetchCartList());
     const cartId = 1;
 
     serverData = [createCartItem({ cartId, product })];
 
-    await fetchCartItems.delete(Number(cartId));
+    const { deleteCartItem } = result;
 
-    const afterCart = await fetchCartItems.get();
+    deleteCartItem({ cartId });
 
-    expect(afterCart.length).toBe(0);
+    expect(serverData.length).toBe(0);
   });
   test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
+    const { result } = renderHook(() => useFetchCartList());
     const cartId = 1;
 
     serverData = [createCartItem({ cartId, product })];
 
-    await fetchCartItems.update(cartId, 40);
+    const { updateQuntityByCartItem } = result.current;
 
-    const cart = await fetchCartItems.get();
+    updateCartItemQuantity({ cartId, quantity: 40 });
 
     expect(cart[0].quantity).toBe(40);
   });
 
   test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
+    const { result } = renderHook(() => useFetchCartList());
+
     serverData = [
       createCartItem({ cartId: 1, product }),
       createCartItem({ cartId: 2, product: product2 }),
       createCartItem({ cartId: 3, product: product3 }),
     ];
 
-    const cart = await fetchCartItems.get();
+    const { getCartList } = result.current;
+
+    const cart = getCartList();
 
     expect(cart).toEqual(serverData);
+  });
+
+  test('프론트엔드에서 의도한 장바구니 API 레이어가 올바르게 기능하는 지 테스트', async () => {
+    const { result } = renderHook(() => useFetchCartList());
+
+    const { addProductToCart } = result.current;
+
+    const product = PRODUCT_LIST.productList[0];
+
+    addProductToCart({
+      productId: product.id,
+    });
+
+    await waitFor(() => {
+      const { data } = result.current;
+
+      const keys = Object.keys(data ? data[0] : []);
+
+      expect(keys).toEqual(['id', 'quantity', 'product', 'checked']);
+    });
+
+    await waitFor(() => {
+      const { data } = result.current;
+
+      const productKeys = Object.keys(data[0].product);
+
+      expect(productKeys).toEqual(['id', 'name', 'price', 'imageUrl']);
+    });
   });
 });
