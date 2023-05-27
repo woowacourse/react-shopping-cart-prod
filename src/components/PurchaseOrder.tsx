@@ -1,7 +1,7 @@
 import { SHIPPING_FEE } from "constants/cartProduct";
 import { useRecoilValue } from "recoil";
 import { cartTotalPrice } from "recoil/cart";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const PurchaseOrder = () => {
   const totalPrice = useRecoilValue(cartTotalPrice);
@@ -30,6 +30,15 @@ const PurchaseOrder = () => {
   );
 };
 
+const OpenAnimation = keyframes`
+  0% {
+    transform: translate(10% ,0%);
+  }
+  100% {
+    transform: translate(0%, 0%);
+  }
+`;
+
 const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
@@ -40,25 +49,42 @@ const Wrapper = styled.section`
   margin-left: auto;
 
   width: 30%;
-  height: 40%;
+  height: 350px;
 
   border: 1px solid rgba(221, 221, 221, 1);
   padding: 2%;
 
   @media screen and (max-width: 800px) {
+    width: 20px;
+    height: 80px;
+
+    border-radius: 5px 0 0 5px;
+    background-color: #333333;
+    padding: 0;
+
     position: fixed;
-    gap: 0;
-
-    top: auto;
+    top: 200px;
     right: 0;
-    bottom: 0;
 
-    width: 100%;
-    height: 30%;
+    & * {
+      display: none;
+    }
 
-    border-top: 1px solid black;
+    &: hover {
+      width: 50%;
+      height: 50%;
+      padding: 5%;
 
-    background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+
+      animation: ${OpenAnimation} 0.5s;
+
+      & * {
+        display: grid;
+      }
+    }
   }
 `;
 
@@ -69,25 +95,30 @@ const TitleBox = styled.h2`
 
   font-size: 21px;
   font-weight: 400;
+  text-align: center;
+
+  @media screen and (max-width: 800px) {
+    color: rgba(255, 255, 255, 1);
+  }
 `;
 
 const TotalContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-rows: 27% 27% 46%;
 
   height: 60%;
   padding: 3%;
+  align-items: center;
 
-  div:last-child {
-    margin-top: auto;
-    margin-bottom: 8%;
+  @media screen and (max-width: 800px) {
+    color: rgba(255, 255, 255, 1);
+    font-size: 16px;
   }
 `;
 
 const AmountBox = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 
   text-align: center;
   font-size: 16px;
@@ -104,6 +135,12 @@ const OrderButton = styled.button`
   background: #333333;
 
   cursor: pointer;
+
+  @media screen and (max-width: 800px) {
+    background-color: rgba(255, 255, 255, 1);
+    color: #333333;
+    font-size: 16px;
+  }
 `;
 
 export default PurchaseOrder;

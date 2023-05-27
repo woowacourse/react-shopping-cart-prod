@@ -100,7 +100,7 @@ const Wrapper = styled.fieldset`
 
   &: hover {
     width: 120px;
-    animation: ${OpenAnimation} 0.1s;
+    animation: ${OpenAnimation} 0.5s;
 
     & > * {
       display: flex;
@@ -112,7 +112,7 @@ const Wrapper = styled.fieldset`
   }
 
   @media screen and (max-width: 800px) {
-    width: 100px;
+    width: 20px;
     height: 80px;
 
     font-size: 14px;

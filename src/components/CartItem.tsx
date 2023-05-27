@@ -86,6 +86,7 @@ const FirstPart = styled.div`
   & > input[type="checkbox"] {
     position: relative;
     top: 15px;
+    right: 20px;
     width: 40px;
     height: fit-content;
 
@@ -123,6 +124,8 @@ const NameBox = styled.div`
   margin: 15px 0 10px 10px;
 
   font-size: 17px;
+  font-weight: 500;
+
   white-space: nowrap;
 
   word-break: break-all;
@@ -130,7 +133,7 @@ const NameBox = styled.div`
   overflow: hidden;
 
   @media screen and (max-width: 800px) {
-    font-size: 13px;
+    font-size: 17px;
   }
 `;
 

@@ -6,7 +6,8 @@ import { useCartCheckbox } from "hooks/useCartCheckbox";
 
 const CartItemList = () => {
   const cartList = useRecoilValue(cartListState);
-  const { isAllchecked, checkedCount, setAllCheckbox, removeCheckedItem } = useCartCheckbox();
+  const { isAllchecked, checkedCount, setAllCheckbox, removeCheckedItem } =
+    useCartCheckbox();
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.currentTarget.checked && setAllCheckbox(true);
@@ -16,7 +17,11 @@ const CartItemList = () => {
   return (
     <Wrapper>
       <SelectorContainer>
-        <input type="checkbox" checked={isAllchecked} onChange={handleCheckbox} />
+        <input
+          type="checkbox"
+          checked={isAllchecked}
+          onChange={handleCheckbox}
+        />
         <CountBox>
           {checkedCount} / {cartList.length}
         </CountBox>
@@ -40,8 +45,6 @@ const Wrapper = styled.section`
 
   @media screen and (max-width: 800px) {
     width: 100%;
-
-    margin-bottom: 25vh;
   }
 `;
 
