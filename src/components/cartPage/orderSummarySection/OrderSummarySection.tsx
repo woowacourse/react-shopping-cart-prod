@@ -35,35 +35,35 @@ export const OrderSummarySection = () => {
 
 const Style = {
   Container: styled.section`
-    width: 448px;
+    width: 348px;
     height: 410px;
 
     margin-top: 49px;
 
     border: 1px solid #dddddd;
     position: sticky;
-    top: 80px;
+    top: 120px;
 
-    @media (max-width: 480px) {
-      width: 330px;
+    @media (max-width: 1080px) {
+      width: 100%;
     }
   `,
   Header: styled.div`
-    width: 448px;
+    width: 348px;
     height: 81px;
 
-    padding: 30px;
+    padding: 30px 20px;
 
     border-bottom: 3px solid #dddddd;
-    @media (max-width: 480px) {
-      width: 330px;
+    @media (max-width: 1080px) {
+      width: 100%;
     }
   `,
   HeaderTitle: styled.h2`
     font-size: 24px;
   `,
   Content: styled.div`
-    width: 448px;
+    width: 348px;
     height: 329px;
 
     display: flex;
@@ -71,8 +71,8 @@ const Style = {
     align-items: center;
 
     padding: 34px 20px 0;
-    @media (max-width: 480px) {
-      width: 330px;
+    @media (max-width: 1080px) {
+      width: 100%;
     }
   `,
   TotalPriceSummary: styled.div`

@@ -52,21 +52,23 @@ export const CartItemsSection = () => {
     <Style.Container>
       <Style.Header>
         <Style.HeaderTitle>배송상품 ({cartItems.length}개)</Style.HeaderTitle>
+        <Style.SelectOrDeleteContainer>
+          <Style.SlectAllCheckBoxContainer>
+            <CheckBox
+              isChecked={isAllCheckBoxChecked}
+              id={Math.random()}
+              handleClickCheckBox={toggleAllCheckBoxChecked}
+            />
+            <Style.SelectedProductCount>
+              전체선택 ({selectedCartIdList.length}/{cartItems.length})
+            </Style.SelectedProductCount>
+          </Style.SlectAllCheckBoxContainer>
+          <Style.DeleteSelectedProductButton onClick={deleteSelectedProduct}>
+            선택삭제
+          </Style.DeleteSelectedProductButton>
+        </Style.SelectOrDeleteContainer>
       </Style.Header>
       <CartItemList cartItemList={cartItems} />
-      <Style.SelectOrDeleteContainer>
-        <CheckBox
-          isChecked={isAllCheckBoxChecked}
-          id={Math.random()}
-          handleClickCheckBox={toggleAllCheckBoxChecked}
-        />
-        <Style.SelectedProductCount>
-          전체선택 ({selectedCartIdList.length}/{cartItems.length})
-        </Style.SelectedProductCount>
-        <Style.DeleteSelectedProductButton onClick={deleteSelectedProduct}>
-          선택삭제
-        </Style.DeleteSelectedProductButton>
-      </Style.SelectOrDeleteContainer>
     </Style.Container>
   );
 };
@@ -81,7 +83,6 @@ const Style = {
   `,
   Header: styled.div`
     width: 100%;
-    height: 56px;
 
     border-bottom: 4px solid #aaaaaa;
   `,
@@ -94,7 +95,13 @@ const Style = {
     align-items: center;
     gap: 13px;
 
-    margin-top: 23px;
+    margin: 23px 0;
+    justify-content: space-between;
+  `,
+  SlectAllCheckBoxContainer: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
   `,
   CheckBox: styled.div`
     width: 28px;

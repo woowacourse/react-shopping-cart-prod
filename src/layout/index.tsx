@@ -12,11 +12,11 @@ export const Layout = ({ children }: React.PropsWithChildren) => {
 
 const Style = {
   Container: styled.div`
-    max-width: 1300px;
+    max-width: 1080px;
     padding: 140px 0 60px;
     margin: 0 auto;
 
-    @media (max-width: 1300px) {
+    @media (max-width: 1080px) {
       padding: 140px 20px 60px;
     }
   `,

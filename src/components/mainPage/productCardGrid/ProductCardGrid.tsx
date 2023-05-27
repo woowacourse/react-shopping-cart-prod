@@ -20,9 +20,9 @@ export const ProductCardGrid = ({ products }: ProductCardListProps) => {
 const Style = {
   Container: styled.ul`
     display: grid;
-    max-width: 1300px;
+    max-width: 1080px;
     margin: 0 auto;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 283px));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 240px));
     justify-content: center;
     justify-items: center;
     column-gap: 30px;

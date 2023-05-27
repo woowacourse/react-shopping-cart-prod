@@ -5,13 +5,10 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'notosanskr';
     src: url(./fonts/NotoSansKR-Regular.otf);
     }
-
  
-
     :root {
     --vh: 100%;
     --font-notosanskr: 'notosanskr';
-    --font-test: 'test';
     }
 
     html,

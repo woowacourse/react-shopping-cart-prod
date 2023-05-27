@@ -75,7 +75,7 @@ const Style = {
     justify-content: space-between;
     align-items: center;
 
-    width: 1300px;
+    width: 1080px;
   `,
   LogoContainer: styled.div`
     display: flex;

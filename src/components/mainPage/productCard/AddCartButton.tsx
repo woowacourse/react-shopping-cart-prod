@@ -85,6 +85,7 @@ export const AddCartButton = ({ productId }: AddCartButtonProps) => {
 
 const Style = {
   Container: styled.div`
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,5 +93,11 @@ const Style = {
     height: 65px;
     border-radius: 50%;
     background: #ffffff;
+
+    & > :first-child {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+    }
   `,
 };

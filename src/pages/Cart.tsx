@@ -49,22 +49,22 @@ const Style = {
     font-size: 32px;
   `,
   Content: styled.div`
-    max-width: 1300px;
+    max-width: 1080px;
     height: max-content;
 
     display: flex;
-    gap: 104px;
+    gap: 70px;
 
     margin: 0 auto;
 
-    @media (max-width: 1300px) {
+    @media (max-width: 1080px) {
       flex-direction: column;
       align-items: center;
       gap: 0;
     }
   `,
   EmptyCartContainer: styled.div`
-    max-width: 1300px;
+    max-width: 1080px;
     min-height: 50vh;
 
     display: flex;

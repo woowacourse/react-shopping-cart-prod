@@ -76,8 +76,8 @@ export const CartItem = ({
             onClick={handleDeleteCartItem}
           />
           <Counter
-            width="110px"
-            height="48px"
+            width="90px"
+            height="40px"
             quantity={initialQuantity}
             onQuantityChange={handleChangeQuantity}
           />
@@ -96,7 +96,7 @@ const Style = {
     display: flex;
     align-items: flex-end;
 
-    &:not(:last-child) {
+    & {
       border-bottom: 1.5px solid #aaaaaa;
     }
   `,
@@ -105,22 +105,43 @@ const Style = {
     height: 174px;
 
     display: flex;
-    gap: 15px;
+    gap: 20px;
+    padding: 0 10px;
+
+    @media (max-width: 480px) {
+      gap: 10px;
+    }
   `,
   CheckBox: styled.div`
     width: 28px;
     height: 28px;
 
     border: 1px solid #22a6a2;
+
+    @media (max-width: 480px) {
+      width: 20px;
+      height: 20px;
+    }
   `,
   ProductImage: styled.img`
     width: 144px;
     height: 147px;
+
+    border-radius: 8px;
+
+    @media (max-width: 480px) {
+      width: 68px;
+      height: 69px;
+    }
   `,
   ProductName: styled.div`
     flex-grow: 1;
     font-size: 20px;
     color: #333333;
+
+    @media (max-width: 480px) {
+      font-size: 14px;
+    }
   `,
   ProductSelectorContainer: styled.div`
     min-width: 114px;
@@ -131,6 +152,11 @@ const Style = {
     align-items: flex-end;
     justify-content: space-between;
     gap: 23px;
+
+    @media (max-width: 480px) {
+      min-width: 20px;
+      height: 120px;
+    }
   `,
   DeleteIcon: styled.img`
     width: 24px;

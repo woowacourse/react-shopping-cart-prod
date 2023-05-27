@@ -23,7 +23,7 @@ export const ProductCard = ({ id, name, price, imageUrl }: Product) => {
 
 const Style = {
   Container: styled.li`
-    width: 283px;
+    width: 240px;
 
     display: flex;
     flex-direction: column;
@@ -33,18 +33,22 @@ const Style = {
     position: relative;
 
     & > :last-child {
+      opacity: 94%;
+
       position: absolute;
-      bottom: 20px;
+      bottom: 18px;
       right: 15px;
     }
   `,
 
   Image: styled.img`
-    width: 283px;
-    height: 283px;
+    width: 240px;
+    height: 240px;
+
+    border-radius: 8px;
   `,
   DescriptionContainer: styled.div`
-    width: 283px;
+    width: 240px;
 
     display: flex;
     justify-content: space-between;
@@ -54,7 +58,7 @@ const Style = {
   NamePriceContainer: styled.div`
     display: flex;
     flex-direction: column;
-    width: 283px;
+    width: 240px;
     gap: 10px;
   `,
   Name: styled.span`
