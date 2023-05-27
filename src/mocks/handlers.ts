@@ -1,7 +1,9 @@
 import { rest } from 'msw';
 import products from './data/products.json';
-import cartProducts from './data/cartProducts.json';
+import cartProductsData from './data/cartProducts.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
+
+const cartProducts = cartProductsData['cart-items'];
 
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
