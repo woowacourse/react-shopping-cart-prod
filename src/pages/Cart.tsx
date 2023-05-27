@@ -21,7 +21,10 @@ export const Cart = () => {
         </Style.Content>
       ) : (
         <Style.EmptyCartContainer>
-          장바구니가 비어있습니다!
+          <Style.EmptyCartImage
+            src={`${process.env.PUBLIC_URL}/empty_cart_image.jpg`}
+          />
+          <p>장바구니가 비어있습니다.</p>
         </Style.EmptyCartContainer>
       )}
     </Layout>
@@ -65,9 +68,19 @@ const Style = {
     min-height: 50vh;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    font-size: 50px;
+    & > p {
+      font-size: 24px;
+
+      margin-top: 60px;
+    }
+  `,
+
+  EmptyCartImage: styled.img`
+    width: 300px;
+    height: 300px;
   `,
 };
