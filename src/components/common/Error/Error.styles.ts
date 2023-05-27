@@ -6,7 +6,6 @@ import { Text } from '../Text/Text.styles';
 
 const ErrorWrapper = styled.div`
   position: relative;
-  height: 100%;
 `;
 
 const ErrorContentContainer = styled.div`
