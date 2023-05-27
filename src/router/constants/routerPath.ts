@@ -1,5 +1,5 @@
 const ROUTER_PATH = {
-  baseName: '/react-shopping-cart/',
+  baseName: '/react-shopping-cart-prod/',
   home: '/',
   cart: '/cart',
 };

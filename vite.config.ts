@@ -6,7 +6,7 @@ import path from 'path';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/react-shopping-cart/',
+  base: '/react-shopping-cart-prod/',
   resolve: {
     alias: {
       '@common': path.resolve(__dirname, 'src/common'),
