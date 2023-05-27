@@ -16,7 +16,9 @@
       "@router/*": ["router/*"],
       "@styles/*": ["styles/*"],
       "@utils/*": ["utils/*"],
-      "@views/*": ["views/*"]
+      "@views/*": ["views/*"],
+      "@hooks/*": ["hooks/*"],
+      "@type/*": ["types/*"]
     },
 
     /* Bundler mode */
@@ -31,7 +33,9 @@
     "strict": true,
     "noUnusedLocals": false, // deployment bug fix
     "noUnusedParameters": false, // deployment bug fix
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    "esModuleInterop": true
   },
   "include": ["src", "src/types/svg.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
