@@ -7,6 +7,7 @@ const HeaderContainer = styled.header`
   top: 0;
   width: 100%;
   padding: ${({ theme }) => `${theme.spacer.spacing3} ${theme.spacer.spacing4}`};
+  padding-bottom: 20px;
   background-color: ${({ theme }) => theme.color.white};
   border-bottom: 1px solid ${({ theme }) => theme.color.gray2};
   z-index: 2;
