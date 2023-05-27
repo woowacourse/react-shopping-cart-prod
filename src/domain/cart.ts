@@ -1,6 +1,6 @@
 import { CART_LIST_LOCAL_STORAGE_KEY } from '../constants/localStorage';
 import productListData from '../data/mockData.json';
-import { CartItemData } from '../types';
+import { CartItemData, OrderCartItemsData } from '../types';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 
 const getCartData = () => {
@@ -46,6 +46,18 @@ const removeCartItem = (cartList: CartItemData[], cartItemId: number) => {
   return cartList.filter((cartItem) => cartItem.id !== cartItemId);
 };
 
+const updateCart = (orderedCartItems: OrderCartItemsData[]) => {
+  const cartList = getCartData();
+
+  return cartList.filter((cartItem) => {
+    const ordered = orderedCartItems.find(
+      (orderedCartItem) => orderedCartItem.cartItemId === cartItem.id
+    );
+
+    return !ordered;
+  });
+};
+
 export {
   getCartData,
   setCartData,
@@ -53,4 +65,5 @@ export {
   addCartItem,
   changeCartItemQuantity,
   removeCartItem,
+  updateCart,
 };
