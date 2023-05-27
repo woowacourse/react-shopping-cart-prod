@@ -152,3 +152,21 @@ export const getOrderList = rest.get('/orders', (req, res, ctx) => {
     })
   );
 });
+
+export const getOrderDetail = rest.get('/orders/:orderId', (req, res, ctx) => {
+  const { orderId } = req.params;
+  const orders = getOrders([]);
+  const targetOrder = orders.find((order) => order.orderId === +orderId);
+
+  if (!targetOrder) {
+    return res(
+      ctx.status(400),
+      ctx.json({
+        code: 101,
+        message: '해당 상품이 존재하지 않습니다.',
+      })
+    );
+  }
+
+  return res(ctx.status(200), ctx.json(targetOrder));
+});
