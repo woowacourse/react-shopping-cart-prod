@@ -6,6 +6,7 @@ import { cartSelector } from "recoil/cart";
 import { CartProduct } from "types/domain";
 import { removeCartItem } from "api/cartItems";
 import { serverSelectState } from "recoil/server";
+import CouponSelector from "./CouponSelector";
 
 const CartItem = (item: CartProduct) => {
   const setProduct = useSetRecoilState(cartSelector(item.product.id));
@@ -31,31 +32,52 @@ const CartItem = (item: CartProduct) => {
 
   return (
     <Wrapper>
-      <input type="checkbox" value={item.id} checked={item.isChecked} onChange={handleCheckbox} />
-      <img src={item.product.imageUrl} alt={`${item.product.name} 상품 이미지`} />
-      <NameBox>{item.product.name}</NameBox>
-      <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
-      <PriceBox>{(item.product.price * item.quantity).toLocaleString()}원</PriceBox>
-      <QuantityCounter itemId={item.product.id} lowerBound={1} />
+      <FirstPart>
+        <input
+          type="checkbox"
+          value={item.id}
+          checked={item.isChecked}
+          onChange={handleCheckbox}
+        />
+        <img
+          src={item.product.imageUrl}
+          alt={`${item.product.name} 상품 이미지`}
+        />
+      </FirstPart>
+      <MiddlePart>
+        <NameBox>{item.product.name}</NameBox>
+        <CouponSelector />
+      </MiddlePart>
+      <LastPart>
+        <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
+        <QuantityCounter itemId={item.product.id} lowerBound={1} />
+        <PriceBox>
+          {(item.product.price * item.quantity).toLocaleString()}원
+        </PriceBox>
+      </LastPart>
     </Wrapper>
   );
 };
 
-const Wrapper = styled.ul`
+const Wrapper = styled.div`
   display: flex;
-
-  position: relative;
+  justify-content: space-around;
 
   margin-bottom: 10px;
 
   border-top: 1.5px solid rgba(204, 204, 204, 1);
   padding: 15px 10px 10px 10px;
 
-  & > img {
-    width: 20%;
-    border-radius: 5px;
+  @media screen and (max-width: 800px) {
+    padding-left: 0;
   }
+`;
+
+const FirstPart = styled.div`
+  width: 20%;
+
   & > input[type="checkbox"] {
+    position: relative;
     top: 15px;
     width: 40px;
     height: fit-content;
@@ -63,21 +85,34 @@ const Wrapper = styled.ul`
     transform: scale(1.6);
   }
 
-  :last-child {
-    align-self: center;
-
-    height: 50%;
-
-    margin-left: auto;
-  }
-
-  @media screen and (max-width: 800px) {
-    padding-left: 0;
+  & > img {
+    width: 100%;
+    height: 80%;
+    border-radius: 5px;
   }
 `;
 
-const NameBox = styled.div`
+const MiddlePart = styled.div`
   width: 65%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+
+  & > :last-child {
+    width: 95%;
+    align-self: center;
+  }
+`;
+
+const LastPart = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+`;
+
+const NameBox = styled.div`
   margin: 15px 0 10px 10px;
 
   font-size: 17px;
@@ -93,19 +128,12 @@ const NameBox = styled.div`
 `;
 
 const ButtonBox = styled.button`
-  position: absolute;
-  top: 6%;
-  right: 1%;
-
   cursor: pointer;
+
+  background-color: rgba(0, 0, 0, 0);
 `;
 
 const PriceBox = styled.p`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-
-  height: fit-content;
   font-size: 16px;
 `;
 
