@@ -1,24 +1,10 @@
-import { PRODUCT_PATH } from '@constants/urlConstants';
-import serverState, { SERVER } from '@recoil/server/serverState';
-import { createApiRequests } from '@utils/createApiRequests';
-import { getProductsFetched } from '@views/ProductItemList/remote/fetchProductList';
-import { atom, selector, useRecoilValue } from 'recoil';
+import { atom, useRecoilValue } from 'recoil';
 import { ProductItemType } from 'types/ProductType';
 
 export const productListState = atom<ProductItemType[]>({
   key: 'productListState',
-  default: selector({
-    key: 'productListState/selector',
-    get: async ({ get }) => {
-      const server = get(serverState);
-
-      const productList: ProductItemType[] = await createApiRequests(SERVER[server])(
-        PRODUCT_PATH
-      ).GET();
-
-      return productList;
-    },
-  }),
+  default: [],
 });
 
-export const useProductListReadOnly = () => useRecoilValue(productListState);
+export const useRecoilProductListReadOnly = () =>
+  useRecoilValue(productListState);
