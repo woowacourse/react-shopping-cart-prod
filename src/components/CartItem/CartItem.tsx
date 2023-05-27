@@ -7,9 +7,11 @@ import { Select } from '../CartItemList/CartItemList';
 import { deleteCartItem } from '../../api/cartList';
 import useCartAtom from '../../hooks/useCartAtom';
 import { WIDTH } from '../../styles/mediaQuery';
+import useFetch from '../../hooks/useFetch';
 
 interface CartItemProps {
   id: number;
+  quantity: number;
   cartItemState: Select;
   setIsSelectedList: React.Dispatch<React.SetStateAction<Select[]>>;
   setIsAllSelected: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,19 +19,15 @@ interface CartItemProps {
 
 const CartItem = ({
   id,
+  quantity,
   cartItemState,
   setIsSelectedList,
   setIsAllSelected,
 }: CartItemProps) => {
-  const {
-    count,
-    productInCart,
-    plusOne,
-    minusOneWhenOverOne,
-    removeCartItemFromAtom,
-  } = useCartAtom(id);
+  const { productInCart, removeCartItemFromAtom } = useCartAtom(id);
   const { product } = productInCart;
   const { name, imageUrl, price } = product;
+  const { updateCartItem } = useFetch();
 
   const toggleSelect = () => {
     setIsAllSelected(false);
@@ -43,6 +41,18 @@ const CartItem = ({
   const onClickDelete = () => {
     deleteCartItem(id);
     removeCartItemFromAtom();
+  };
+
+  const plusOne = () => {
+    if (!id || !quantity) return;
+
+    updateCartItem(id, quantity + 1);
+  };
+
+  const minusOne = () => {
+    if (!id || !quantity || quantity <= 1) return;
+
+    updateCartItem(id, quantity - 1);
   };
 
   return (
@@ -61,13 +71,9 @@ const CartItem = ({
           <TrashCan />
         </DeleteButton>
         <CounterWrapper>
-          <Counter
-            plusOne={plusOne}
-            minusOne={minusOneWhenOverOne}
-            quantity={count}
-          />
+          <Counter plusOne={plusOne} minusOne={minusOne} quantity={quantity} />
         </CounterWrapper>
-        <Price>{(price * count).toLocaleString()}원</Price>
+        <Price>{(price * quantity).toLocaleString()}원</Price>
       </DetailWrapper>
     </Wrapper>
   );

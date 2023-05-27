@@ -60,6 +60,7 @@ const CartItemList = () => {
           return (
             <CartItem
               id={item.id}
+              quantity={item.quantity}
               cartItemState={
                 isSelectedList.find((state) => state.id === item.id) as Select
               }
