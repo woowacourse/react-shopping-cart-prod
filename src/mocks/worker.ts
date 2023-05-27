@@ -2,51 +2,54 @@ import { rest } from "msw";
 import products from "./mockData.json";
 import { getCart, addCartItem, setCartItem } from "mocks/server/cart";
 
+import couponList from "./data/couponList.json";
+
 export const handlers = [
-  rest.get("/products", (req, res, ctx) => {
+  // 쿠폰 전체 조회
+  rest.get("/coupons", (req, res, ctx) => {
     return res(
       ctx.delay(1000),
       ctx.status(200),
       ctx.set("Content-Type", "application/json"),
-      ctx.json(products)
+      ctx.json(couponList)
     );
   }),
 
-  rest.get("/cart-items", (req, res, ctx) => {
-    return res(
-      ctx.delay(500),
-      ctx.status(200),
-      ctx.set("Content-Type", "application/json"),
-      ctx.json(getCart())
-    );
-  }),
+  // rest.get("/cart-items", (req, res, ctx) => {
+  //   return res(
+  //     ctx.delay(500),
+  //     ctx.status(200),
+  //     ctx.set("Content-Type", "application/json"),
+  //     ctx.json(getCart())
+  //   );
+  // }),
 
-  rest.post("/cart-items", async (req, res, ctx) => {
-    const { productId } = await req.json();
+  // rest.post("/cart-items", async (req, res, ctx) => {
+  //   const { productId } = await req.json();
 
-    const cartItemId = addCartItem(productId);
+  //   const cartItemId = addCartItem(productId);
 
-    return res(
-      ctx.delay(100),
-      ctx.status(201),
-      ctx.set("Location", `/cart-items/${cartItemId}`)
-    );
-  }),
+  //   return res(
+  //     ctx.delay(100),
+  //     ctx.status(201),
+  //     ctx.set("Location", `/cart-items/${cartItemId}`)
+  //   );
+  // }),
 
-  rest.patch("/cart-items/:cartItemId", async (req, res, ctx) => {
-    const { cartItemId } = req.params;
-    const { quantity } = await req.json();
+  // rest.patch("/cart-items/:cartItemId", async (req, res, ctx) => {
+  //   const { cartItemId } = req.params;
+  //   const { quantity } = await req.json();
 
-    setCartItem(Number(cartItemId), quantity);
+  //   setCartItem(Number(cartItemId), quantity);
 
-    return res(ctx.delay(100), ctx.status(200));
-  }),
+  //   return res(ctx.delay(100), ctx.status(200));
+  // }),
 
-  rest.delete("/cart-items/:cartItemId", async (req, res, ctx) => {
-    const { cartItemId } = req.params;
+  // rest.delete("/cart-items/:cartItemId", async (req, res, ctx) => {
+  //   const { cartItemId } = req.params;
 
-    setCartItem(Number(cartItemId), 0);
+  //   setCartItem(Number(cartItemId), 0);
 
-    return res(ctx.delay(100), ctx.status(204));
-  }),
+  //   return res(ctx.delay(100), ctx.status(204));
+  // }),
 ];

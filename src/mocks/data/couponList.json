@@ -1,0 +1,18 @@
+[
+  {
+    "couponId": 1,
+    "name": "오픈 기념 쿠폰",
+    "discount": {
+      "type": "rate",
+      "amount": 10
+    }
+  },
+  {
+    "couponId": 2,
+    "name": "오픈 기념 쿠폰",
+    "discount": {
+      "type": "price",
+      "amount": 1000
+    }
+  }
+]
