@@ -10,6 +10,7 @@ import useCheckedProducts from '../hooks/useCheckedProducts';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import { Suspense } from 'react';
 import CartProductList from '../components/Cart/CartProductList';
+import UserPointInfo from '../components/Cart/UserPointInfo';
 
 const CartProductsListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
@@ -45,9 +46,10 @@ const CartProductsListPage = () => {
             </SelectContainer>
           </CartProductInfo>
         </CartProductContent>
-        <EstimatedPaymentBoxWrapper>
+        <PaymentBoxWrapper>
+          <UserPointInfo />
           <EstimatedPaymentBox />
-        </EstimatedPaymentBoxWrapper>
+        </PaymentBoxWrapper>
       </Main>
     </>
   );
@@ -58,7 +60,6 @@ const Main = styled.main`
   display: flex;
   justify-content: space-between;
   max-width: 1300px;
-  height: calc(100vh - 80px);
   margin: 0 auto;
   padding: 0 0 100px 0;
   overflow-y: auto;
@@ -108,7 +109,7 @@ const TotalSelectedCount = styled.span`
   padding: 0 13px;
 `;
 
-const EstimatedPaymentBoxWrapper = styled.div`
+const PaymentBoxWrapper = styled.div`
   position: sticky;
   top: 30px;
   margin-top: 170px;
