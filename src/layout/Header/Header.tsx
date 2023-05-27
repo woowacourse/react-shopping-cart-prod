@@ -4,7 +4,8 @@ import { ChangeEvent, Suspense } from 'react';
 import Logo from '@layout/Logo/Logo';
 import { CartStepperWithIcon } from '@views/CartItem/components/CartStepperWithIcon';
 import { SelectBox } from '@common/SelectBox';
-import { SERVER, SERVER_NAME, useServer } from '@recoil/server/serverState';
+import { useServer } from '@recoil/server/serverState';
+import { SERVER_NAME } from '@constants/urlConstants';
 
 function Header() {
   const { server, handleServer } = useServer();
