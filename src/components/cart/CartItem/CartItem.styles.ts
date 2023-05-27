@@ -54,7 +54,7 @@ const CartItemName = styled(Text)`
   }
 `;
 
-const CartItemPriceContainer = styled.p`
+const CartItemPriceContainer = styled.div`
   width: 126px;
   margin-right: 12px;
   padding-left: 12px;
