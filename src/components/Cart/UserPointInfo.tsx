@@ -10,7 +10,10 @@ const UserPointInfo = () => {
   const [minUsagePoints, setMinUsagePoints] = useState(0);
 
   const handleUsedPoint = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const userInputPoint = Number(e.target.value);
+    const onlyNumbersRegex = /[^0-9]/g;
+    const userInputValue = e.target.value;
+    const filteredInputValue = userInputValue.replace(onlyNumbersRegex, '');
+    const userInputPoint = Number(filteredInputValue);
 
     if (userInputPoint > userPoint) {
       alert('사용할 수 있는 포인트를 초과하였습니다.');
