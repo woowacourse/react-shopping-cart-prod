@@ -42,6 +42,7 @@ function Header() {
           </button>
         </Link>
         <div className={styles['cart-count']}>{cartList.length}</div>
+        <Link to="/order">주문 목록</Link>
       </div>
     </header>
   );

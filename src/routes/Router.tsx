@@ -1,8 +1,9 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Cart from '../Page/Cart';
-import Home from '../Page/Home';
-import NotFound from '../Page/NotFound';
-import { ROUTE_PATH } from '../constants';
+import Order from 'src/Page/Order';
+import Cart from 'src/Page/Cart';
+import Home from 'src/Page/Home';
+import NotFound from 'src/Page/NotFound';
+import { ROUTE_PATH } from 'src/constants';
 import Root from './Root';
 
 function Router() {
@@ -14,6 +15,7 @@ function Router() {
       children: [
         { index: true, element: <Home /> },
         { path: ROUTE_PATH.CART, element: <Cart /> },
+        { path: ROUTE_PATH.ORDER, element: <Order /> },
       ],
     },
   ]);

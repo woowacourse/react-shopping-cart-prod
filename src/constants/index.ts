@@ -29,6 +29,8 @@ export const MESSAGE = Object.freeze({
 export const ROUTE_PATH = Object.freeze({
   DEFAULT: '/',
   CART: '/cart',
+  ORDER: '/order',
+  ORDER_DETAIL: '/order/:order-id',
 });
 
 export const PARCEL_PRICE = 3000;
