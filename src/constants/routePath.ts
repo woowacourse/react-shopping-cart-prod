@@ -1,6 +1,7 @@
 const ROUTE_PATH = {
   root: '/',
   cart: 'cart',
+  orderSheet: '/orderSheet',
   other: '*',
 };
 
