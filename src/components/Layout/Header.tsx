@@ -1,7 +1,10 @@
-import { PropsWithChildren } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { ReactComponent as CartIcon } from 'assets/cart-icon.svg';
+
+import mainLogo from 'assets/main-logo.png';
+import cartIcon from 'assets/cart-icon.svg';
+import orderList from 'assets/order-list-icon.svg';
+
 import ROUTE_PATH from 'constants/routePath';
 import { useRecoilValue } from 'recoil';
 import { cartProductsState } from 'state/cartProducts';
@@ -11,10 +14,11 @@ import { ServerOwner } from 'types/serverOwner';
 import BASE_URL from 'constants/apiBaseURL';
 import { SERVER_OWNER } from 'constants/storeKey';
 import store from 'utils/storage';
+import Box from 'components/@common/Box';
 
 const serverOwnerOptions = Object.keys(BASE_URL).map((name) => ({ name: name, value: name }));
 
-const Header = ({ children }: PropsWithChildren) => {
+const Header = () => {
   const cartProductCount = useRecoilValue(cartProductsState).size;
   const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '다즐';
 
@@ -28,14 +32,23 @@ const Header = ({ children }: PropsWithChildren) => {
   return (
     <HeaderContainer>
       <FlexLink to={ROUTE_PATH.ROOT}>
-        <Title>{children}</Title>
+        <MainLogo src={mainLogo} alt="배민상회" />
       </FlexLink>
-
-      <FlexBox>
-        <SelectBox value={serverOwner} options={serverOwnerOptions} onChange={handleServerOwner} />
+      <FlexBox gap="8px">
+        <SelectBoxContainer flexDirection="column" gap="4px">
+          <Box sizing={{ height: '24px' }}>
+            <SelectBox value={serverOwner} options={serverOwnerOptions} onChange={handleServerOwner} />
+          </Box>
+          <Meaning>서버선택</Meaning>
+        </SelectBoxContainer>
         <FlexLink to={ROUTE_PATH.CART}>
-          <Cart />
+          <Icon src={cartIcon} alt="장바구니" />
           <CartProductCount>{cartProductCount}</CartProductCount>
+          <Meaning>장바구니</Meaning>
+        </FlexLink>
+        <FlexLink to={ROUTE_PATH.ORDER}>
+          <Icon src={orderList} alt="주문목록" />
+          <Meaning>주문목록</Meaning>
         </FlexLink>
       </FlexBox>
     </HeaderContainer>
@@ -44,6 +57,7 @@ const Header = ({ children }: PropsWithChildren) => {
 
 const HeaderContainer = styled.header`
   display: flex;
+  align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
@@ -51,51 +65,86 @@ const HeaderContainer = styled.header`
   width: 100%;
   height: var(--header-height);
   padding: 0 16.66%;
-  background-color: #333333;
-`;
+  border-bottom: solid 2px var(--color-grayscale-100);
+  background-color: var(--color-pure-white);
 
-const Cart = styled(CartIcon)`
-  width: 30px;
-  height: 30px;
+  @media (max-width: 1280px) {
+    padding: 0 8.33%;
+  }
 
   @media (max-width: 768px) {
-    width: 30px;
-    height: 30px;
+    padding: 0 4.16%;
+    margin-bottom: 0;
   }
 `;
 
-const Title = styled.h1`
-  font-size: 30px;
-  color: #ffffff;
+const MainLogo = styled.img`
+  width: 180px;
+  height: 51px;
+  aspect-ratio: 60 / 17;
 
-  @media (max-width: 768px) {
-    font-size: 26px;
-  }
-
-  @media (max-width: 420px) {
-    font-size: 20px;
+  @media (max-width: 1280px) {
+    width: 150px;
+    height: 42px;
   }
 
   @media (max-width: 360px) {
-    font-size: 18px;
+    width: 120px;
+    height: 34px;
   }
 `;
 
 const CartProductCount = styled.span`
-  width: 26px;
-  height: 26px;
+  position: absolute;
+  top: -4px;
+  right: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background-color: var(--color-primary);
-  color: #ffffff;
-  font-size: 16px;
+  background-color: var(--color-primary-tone-down);
   text-align: center;
+  font-size: 12px;
+  font-weight: 700;
   line-height: 24px;
+  color: var(--color-pure-white);
+`;
+
+const SelectBoxContainer = styled(FlexBox)`
+  width: 46px;
+  height: 50px;
+
+  :hover {
+    background-color: var(--color-grayscale-100);
+  }
 `;
 
 const FlexLink = styled(Link)`
+  position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 4px;
+  width: 46px;
+  height: 50px;
+
+  :hover {
+    background-color: var(--color-grayscale-100);
+  }
+`;
+
+const Icon = styled.img`
+  width: 24px;
+  height: 24px;
+`;
+
+const Meaning = styled.span`
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-pure-dark);
 `;
 
 export default Header;
