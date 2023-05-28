@@ -76,19 +76,14 @@ export const OrderSummaryM = styled.div`
   bottom: 0;
   right: 0;
 
-  display: flex;
-  justify-content: space-between;
-
   width: 100%;
-  height: 70px;
+  height: 85px;
 
-  padding: 16px;
+  padding: 10px;
 
-  background-color: var(--grey-200);
+  background-color: var(--grey-100);
 
-  color: var(--grey-400);
-
-  border-top: 2px solid var(--grey-400);
+  border-top: 2px solid var(--grey-200);
 
   z-index: 100;
 
@@ -97,52 +92,52 @@ export const OrderSummaryM = styled.div`
   }
 `;
 
-export const PriceInfoM = styled.div`
+export const OrderButtonM = styled.button`
+  position: relative;
+
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: space-around;
+
+  background-color: var(--primary-color);
+
+  padding: 0 20px;
 
   width: 100%;
+  height: 48px;
+
+  color: var(--grey-100);
+
+  font-weight: 900;
+
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 `;
 
-export const PriceM = styled.div`
+export const SelectedProductLength = styled.div`
   display: flex;
-  flex-direction: column;
-
   justify-content: center;
   align-items: center;
 
-  font-size: 12px;
+  width: 22px;
+  height: 22px;
 
-  & > div {
-    display: inline-block;
-  }
+  background-color: white;
 
-  & > div:last-child {
-    font-weight: 600;
-    margin-top: 10px;
-  }
+  color: var(--primary-color);
+
+  border-radius: 50%;
 `;
 
-export const PriceSummaryM = styled.div`
-  display: flex;
-  align-items: center;
+export const ButtonRole = styled.div`
+  position: absolute;
 
-  & > span {
-    padding: 0 15px;
-  }
+  font-size: 18px;
+
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `;
 
-export const TotalPriceM = styled(PriceM)``;
-
-export const OrderButton = styled.button`
-  width: 100px;
-
-  background-color: var(--primary-color);
-  color: var(--grey-100);
-
-  font-weight: 600;
-
-  border: none;
-  border-radius: 10px;
-`;
+export const TotalPriceM = styled.div``;

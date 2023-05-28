@@ -43,25 +43,13 @@ export const OrderSummary = () => {
       </>
       <>
         <styled.OrderSummaryM>
-          <styled.PriceInfoM>
-            <styled.PriceSummaryM>
-              <styled.PriceM>
-                <div>총 상품가격</div>
-                <div>{totalProductPrice.toLocaleString('ko-kr')}원</div>
-              </styled.PriceM>
-              <span>+</span>
-              <styled.PriceM>
-                <div>배송비</div>
-                <div>{DeliveryCharge.toLocaleString('ko-kr')}</div>
-              </styled.PriceM>
-            </styled.PriceSummaryM>
-            <span>=</span>
+          <styled.OrderButtonM>
+            <styled.SelectedProductLength>{checkedLength}</styled.SelectedProductLength>
+            <styled.ButtonRole>주문하기</styled.ButtonRole>
             <styled.TotalPriceM>
-              <div>총 주문금액</div>
-              <div>{(totalProductPrice + DeliveryCharge).toLocaleString('ko-kr')}원</div>
+              {(totalProductPrice + DeliveryCharge).toLocaleString('ko-kr')}원
             </styled.TotalPriceM>
-          </styled.PriceInfoM>
-          <styled.OrderButton>주문하기</styled.OrderButton>
+          </styled.OrderButtonM>
         </styled.OrderSummaryM>
       </>
     </>
