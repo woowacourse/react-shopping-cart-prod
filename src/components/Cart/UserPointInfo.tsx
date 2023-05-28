@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { hostNameAtom } from '../../recoil/hostData';
 import { api } from '../../apis/cartProducts';
 
-const UserPointInfo = () => {
+const UserPointInfo = ({ onUserUsedPointUpdate }: any) => {
   const hostName = useRecoilValue(hostNameAtom);
   const [userPoint, setUserPoint] = useState(0);
   const [minUsagePoints, setMinUsagePoints] = useState(0);
@@ -19,7 +19,17 @@ const UserPointInfo = () => {
     if (userInputPoint > userPoint) {
       alert('사용할 수 있는 포인트를 초과하였습니다.');
       e.target.value = '';
+    } else {
+      e.target.value = filteredInputValue;
     }
+  };
+
+  const handleUsedPointOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const onlyNumbersRegex = /[^0-9]/g;
+    const userInputValue = e.target.value;
+    const filteredInputValue = userInputValue.replace(onlyNumbersRegex, '');
+    const userInputPoint = Number(filteredInputValue);
+    onUserUsedPointUpdate(userInputPoint);
   };
 
   useEffect(() => {
@@ -43,7 +53,11 @@ const UserPointInfo = () => {
         </HeldPointWrapper>
         <UsedPointWrapper>
           <label>사용 포인트</label>
-          <PointInput onChange={handleUsedPoint} disabled={isInputDisabled} />
+          <PointInput
+            onChange={handleUsedPoint}
+            disabled={isInputDisabled}
+            onBlur={handleUsedPointOnBlur}
+          />
           <span>원</span>
         </UsedPointWrapper>
         <UsedPointGuide>
@@ -57,7 +71,7 @@ const UserPointInfo = () => {
 
 const UserPointInfoContainer = styled.div`
   width: 448px;
-  height: 200px;
+  height: 220px;
   margin-bottom: 40px;
 
   @media (max-width: 420px) {
@@ -69,7 +83,7 @@ const UserPointInfoTitle = styled.div`
   height: 71px;
   padding: 25px 0 20px 30px;
   border-bottom: 3px solid ${({ theme }) => theme.colors.gray100};
-  font-size: 22px;
+  font-size: 20px;
 `;
 
 const PointContainer = styled.div`

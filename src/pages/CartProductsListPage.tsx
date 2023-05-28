@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 import styled from 'styled-components';
 
 import EstimatedPaymentBox from '../components/Cart/EstimatedPaymentBox';
@@ -17,6 +17,11 @@ const CartProductsListPage = () => {
   const checkedCartProductCount = useRecoilValue(checkedListSelector);
   const { removeCheckedProducts, handleAllCheckedProducts } =
     useCheckedProducts();
+  const [userUsedPoint, setUserUsedPoint] = useState(0);
+
+  const handleUserUsedPointUpdate = (updatedUserUsedPoint: any) => {
+    setUserUsedPoint(updatedUserUsedPoint);
+  };
 
   return (
     <>
@@ -47,8 +52,8 @@ const CartProductsListPage = () => {
           </CartProductInfo>
         </CartProductContent>
         <PaymentBoxWrapper>
-          <UserPointInfo />
-          <EstimatedPaymentBox />
+          <UserPointInfo onUserUsedPointUpdate={handleUserUsedPointUpdate} />
+          <EstimatedPaymentBox userUsedPoint={userUsedPoint} />
         </PaymentBoxWrapper>
       </Main>
     </>
