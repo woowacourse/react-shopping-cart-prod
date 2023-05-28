@@ -1,8 +1,11 @@
 import { rest } from 'msw';
 import {
+  CART_ITEMS_KEY,
   ORDER_LIST_KEY,
+  USER_POINT_KEY,
   getCartItemsFromLocalStorage,
   getOrderListFromLocalStorage,
+  getUserPointFromLocalStorage,
 } from '../utils/localStorage';
 
 export const orderHandlers = [
@@ -19,6 +22,7 @@ export const orderHandlers = [
     const randomOrderId = Math.random();
 
     const orderList = getOrderListFromLocalStorage();
+    const userPoint = getUserPointFromLocalStorage();
 
     localStorage.setItem(
       ORDER_LIST_KEY,
@@ -44,10 +48,25 @@ export const orderHandlers = [
       ])
     );
 
+    localStorage.setItem(
+      USER_POINT_KEY,
+      JSON.stringify({
+        point: userPoint.point - usedPoint + pointToAdd,
+      })
+    );
+
+    localStorage.setItem(
+      CART_ITEMS_KEY,
+      JSON.stringify(
+        cartItems.filter((cartItem) => !order.includes(cartItem.id))
+      )
+    );
+
     return res(
       ctx.json(''),
       ctx.status(200),
-      ctx.set({ Location: `${randomOrderId}` })
+      ctx.set({ Location: `${randomOrderId}` }),
+      ctx.delay(2000)
     );
   }),
   rest.get('/orders', (_, res, ctx) => {

@@ -33,7 +33,9 @@ export const getProductListFromLocalStorage = () => {
 
 export const getUserPointFromLocalStorage = () => {
   const localStoragePointData = localStorage.getItem(USER_POINT_KEY);
-  const userPoint = JSON.parse(localStoragePointData ?? '0');
+  const userPoint = JSON.parse(
+    localStoragePointData ?? JSON.stringify({ point: 0 })
+  );
 
   if (localStoragePointData === undefined) {
     localStorage.setItem(USER_POINT_KEY, JSON.stringify(0));

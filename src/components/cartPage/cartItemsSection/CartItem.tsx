@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { CheckBox } from '../../../layout/checkBox/CheckBox';
-import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 import { Counter } from '../../../layout/counter/Counter';
-import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
 import { useSelectedCartRecoil } from '../../../hooks/recoil/useSelectedCartRecoil';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
+import { useCartItem } from '../../../hooks/cartPage/useCartItem';
 
 interface ProductSelectItemProps {
   cartId: number;
@@ -26,39 +25,10 @@ export const CartItem = ({
   const initialQuantity =
     cartItems.find((cartItem) => cartItem.id === cartId)?.quantity ?? 1;
 
-  const { deleteRecoilCartById, patchRecoilCartItemQuantity } = useCartRecoil();
-  const {
-    getIsSelectedCartIdListIncludes,
-    addNewSelectedCartId,
-    deleteSelectedCartId,
-  } = useSelectedCartRecoil();
+  const { getIsSelectedCartIdListIncludes } = useSelectedCartRecoil();
 
-  const { deleteCartItemById, patchCartItemQuantity } = useCartFetch();
-
-  const handleDeleteCartItem = () => {
-    // eslint-disable-next-line no-restricted-globals
-    const isUserWantToDeleteProduct = confirm(`${name}을 삭제하시겠습니까?`);
-
-    if (!isUserWantToDeleteProduct) return;
-
-    deleteCartItemById(cartId);
-    deleteRecoilCartById(cartId);
-  };
-
-  const handleClickCheckBox: React.ChangeEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    if (e.target.checked) return addNewSelectedCartId(cartId);
-
-    deleteSelectedCartId(cartId);
-  };
-
-  const handleChangeQuantity = (quantity: number) => {
-    if (quantity <= 0) return handleDeleteCartItem();
-
-    patchRecoilCartItemQuantity(cartId, quantity);
-    patchCartItemQuantity(cartId, quantity);
-  };
+  const { handleChangeQuantity, handleClickCheckBox, handleDeleteCartItem } =
+    useCartItem(cartId, name);
 
   return (
     <Style.Container>

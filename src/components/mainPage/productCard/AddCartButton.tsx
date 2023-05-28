@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { ShoppingCartIcon } from '../../../assets/ShoppingCartIcon';
 import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 import { Counter } from '../../../layout/counter/Counter';
 import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
-import Loading from '../../common/Loading';
+import { Loading } from '../../common/Loading';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
 import styled from 'styled-components';

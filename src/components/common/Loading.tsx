@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-const Loading = () => {
+export const Loading = () => {
   return (
     <Container>
       <StyledLoading />
@@ -32,5 +32,3 @@ const StyledLoading = styled.div`
   border-top-color: #333;
   animation: ${spinnerAnimation} 1s linear infinite;
 `;
-
-export default Loading;

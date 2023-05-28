@@ -1,18 +1,20 @@
-import styled from 'styled-components';
-
-import { useRecoilValue } from 'recoil';
+import styled, { keyframes } from 'styled-components';
+import { Fragment, useState } from 'react';
 import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
-import { CaptionContainer } from './CaptionContainer';
-import { getCommaAddedNumber } from '../../../utils/number';
+import { useRecoilValue } from 'recoil';
 import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
 import { usePointInputHandler } from '../../../hooks/cartPage/usePointInputHandler';
-import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
-import { useState } from 'react';
+import { CaptionContainer } from '../orderSummarySection/CaptionContainer';
+import { getCommaAddedNumber } from '../../../utils/number';
 import { useNavigate } from 'react-router-dom';
-import { Loading } from '../../common/Loading';
-import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
+import { Loading } from './../../common/Loading';
+import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 
-export const OrderSummarySection = () => {
+interface OrderModalProps {
+  closeModal: () => void;
+}
+
+export const OrderModal = ({ closeModal }: OrderModalProps) => {
   const {
     totalProductPrice,
     deliveryPrice,
@@ -20,7 +22,6 @@ export const OrderSummarySection = () => {
     canUsingUserPoint,
     totalPointsToAdd,
   } = useRecoilValue(priceSummaryState);
-  const selectedCartIdList = useRecoilValue(selectedCartIdListState);
 
   const { order } = useOrderFetch();
 
@@ -38,13 +39,12 @@ export const OrderSummarySection = () => {
   const navigate = useNavigate();
 
   const handleClickOrderButton = () => {
-    if (selectedCartIdList.length === 0) return alert('상품을 선택해주세요!');
-
     setIsLoading(true);
 
     order(usingPoint).then((res) => {
       const orderId = res.headers.get('Location');
 
+      closeModal();
       setIsLoading(false);
       deleteAllSelectedRecoilCartItems();
 
@@ -53,22 +53,25 @@ export const OrderSummarySection = () => {
   };
 
   return (
-    <Style.Container>
-      <Style.Header>
-        <Style.HeaderTitle>결제예상금액</Style.HeaderTitle>
-      </Style.Header>
+    <Fragment>
+      <Style.BackDrop onClick={closeModal} />
       <Style.Content>
+        <Style.HeaderContainer>
+          <Style.Header>주문 내역 상세</Style.Header>
+        </Style.HeaderContainer>
         <CaptionContainer
           title="총 상품가격"
           marginBottom={19}
           price={totalProductPrice}
+          isMobile={true}
         />
         <CaptionContainer
           title="총 배송비"
           marginBottom={41}
           price={deliveryPrice}
+          isMobile={true}
         />
-        <CaptionContainer title="적립금 사용" marginBottom={60}>
+        <CaptionContainer title="적립금 사용" marginBottom={60} isMobile={true}>
           <Style.PointInputContainer>
             <Style.FlexBox>
               <Style.PointInput
@@ -94,73 +97,75 @@ export const OrderSummarySection = () => {
           title="총 주문 금액"
           marginBottom={19}
           price={totalPrice - (usingPoint ?? 0)}
+          isMobile={true}
         />
         <CaptionContainer
           title="적립 예정 금액"
           marginBottom={41}
           price={totalPointsToAdd}
+          isMobile={true}
         />
         <Style.OrderButton
-          disabled={isLoading}
           onClick={handleClickOrderButton}
+          disabled={isLoading}
         >
           {isLoading ? <Loading /> : '주문하기'}
         </Style.OrderButton>
       </Style.Content>
-    </Style.Container>
+    </Fragment>
   );
 };
 
+const ModalShowKeyframes = keyframes`
+from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const Style = {
-  Container: styled.section`
-    width: 448px;
-    height: max-content;
+  BackDrop: styled.div`
+    width: 100vw;
+    height: 100vh;
 
-    margin-top: 49px;
+    position: fixed;
+    top: 0;
+    left: 0;
 
-    border: 1px solid #dddddd;
-    position: sticky;
-    top: 80px;
-
-    @media screen and (max-width: 480px) {
-      display: none;
-    }
-  `,
-  Header: styled.div`
-    width: 448px;
-    height: 81px;
-
-    padding: 30px;
-
-    border-bottom: 3px solid #dddddd;
-  `,
-  HeaderTitle: styled.h2`
-    font-size: 24px;
+    background-color: #0000006d;
+    z-index: 9999;
   `,
   Content: styled.div`
-    width: 448px;
+    width: 100vw;
     height: max-content;
 
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
 
-    padding-top: 34px;
-    padding-bottom: 34px;
+    padding: 40px 0;
+    background-color: white;
+    z-index: 99999;
+
+    animation: ${ModalShowKeyframes} 0.4s;
   `,
-  OrderButton: styled.button`
-    width: 388px;
-    height: 73px;
+  HeaderContainer: styled.div`
+    width: 90vw;
+    height: 40px;
 
-    display: flex;
-    justify-content: center;
     align-items: center;
-
-    border-radius: 10px;
-    background-color: #04c092;
-    font-size: 24px;
-    color: #ffffff;
-    font-family: var(--baemin-font);
+    margin-bottom: 20px;
+  `,
+  Header: styled.h2`
+    font-size: 20px;
+    color: #333333;
   `,
   PointInputContainer: styled.div`
     width: max-content;
@@ -176,7 +181,7 @@ const Style = {
     display: flex;
   `,
   PointInput: styled.input`
-    width: 200px;
+    width: 150px;
     height: 40px;
 
     text-align: right;
@@ -207,5 +212,15 @@ const Style = {
 
     font-size: 15px;
     color: #04c092;
+  `,
+  OrderButton: styled.button`
+    width: 90vw;
+    height: 50px;
+
+    background-color: #04c092;
+    color: white;
+    border-radius: 10px;
+    font-size: 20px;
+    font-family: var(--baemin-font);
   `,
 };

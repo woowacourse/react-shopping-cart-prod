@@ -16,14 +16,19 @@ export const useSelectedCartRecoil = () => {
     );
   };
 
+  const deleteAllSelectedCartId = () => {
+    setSelectedCartIdList(() => []);
+  };
+
   const getIsSelectedCartIdListIncludes = (cartId: number) => {
     return selectedCartIdList.includes(cartId);
   };
 
   return {
     selectedCartIdList,
-    addNewSelectedCartId: addNewSelectedCartId,
+    addNewSelectedCartId,
     deleteSelectedCartId,
+    deleteAllSelectedCartId,
     getIsSelectedCartIdListIncludes,
   };
 };
