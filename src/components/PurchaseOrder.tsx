@@ -63,7 +63,7 @@ const Wrapper = styled.section`
   border: 1px solid rgba(221, 221, 221, 1);
   padding: 2%;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     width: 20px;
     height: 80px;
 
@@ -80,8 +80,8 @@ const Wrapper = styled.section`
     }
 
     &: hover {
-      width: 50%;
-      height: 50%;
+      width: 70%;
+      height: 45%;
       padding: 5%;
 
       display: flex;
@@ -106,7 +106,7 @@ const TitleBox = styled.h2`
   font-weight: 400;
   text-align: center;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     color: rgba(255, 255, 255, 1);
   }
 `;
@@ -127,7 +127,7 @@ const TotalContainer = styled.div`
     text-align: right;
   }
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     color: rgba(255, 255, 255, 1);
     font-size: 16px;
   }
@@ -153,7 +153,7 @@ const OrderButton = styled.button`
 
   cursor: pointer;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     background-color: rgba(255, 255, 255, 1);
     color: #333333;
     font-size: 16px;

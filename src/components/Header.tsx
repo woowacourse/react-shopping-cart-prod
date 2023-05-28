@@ -71,7 +71,7 @@ const Title = styled.p`
   font-weight: 900;
   font-size: 2rem;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     display: none;
   }
 `;
@@ -87,11 +87,11 @@ const CartContainer = styled.section`
 
   cursor: pointer;
 
-  @media screen and (max-width: 1200px) {
+  @media (max-width: 1199px) {
     font-size: 20px;
   }
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     font-size: 16px;
   }
 `;

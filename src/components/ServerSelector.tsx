@@ -111,7 +111,7 @@ const Wrapper = styled.fieldset`
     display: none;
   }
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     width: 20px;
     height: 80px;
 

@@ -52,7 +52,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 90%;
+  width: 100%;
 
   position: relative;
 `;
@@ -72,7 +72,6 @@ const ImageBox = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
-
     border-radius: 5px;
   }
 
@@ -84,8 +83,9 @@ const ImageBox = styled.div`
 `;
 
 const NameBox = styled.div`
-  width: 190px;
-  margin: 15px 0 10px 10px;
+  width: 100%;
+
+  margin: 5px 0 10px 10px;
 
   font-size: 16px;
   white-space: nowrap;
@@ -94,7 +94,7 @@ const NameBox = styled.div`
   text-overflow: ellipsis;
   overflow: hidden;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     font-size: 13px;
   }
 `;
@@ -104,7 +104,7 @@ const PriceBox = styled.p`
 
   font-size: 20px;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     font-size: 16px;
   }
 `;
@@ -128,7 +128,7 @@ const IconContainer = styled.div`
     }
   }
 
-  @media screen and (max-width: 1200px) {
+  @media (max-width: 1199px) {
     bottom: -5px;
   }
 `;

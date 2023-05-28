@@ -46,10 +46,12 @@ const CartItem = (item: CartProduct) => {
           checked={item.isChecked}
           onChange={handleCheckbox}
         />
-        <img
-          src={item.product.imageUrl}
-          alt={`${item.product.name} 상품 이미지`}
-        />
+        <ImageBox>
+          <img
+            src={item.product.imageUrl}
+            alt={`${item.product.name} 상품 이미지`}
+          />
+        </ImageBox>
       </FirstPart>
       <MiddlePart>
         <NameBox>{item.product.name}</NameBox>
@@ -70,18 +72,18 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-around;
 
-  margin-bottom: 10px;
+  margin: 15px 10px 10px 10px;
 
   border-top: 1.5px solid rgba(204, 204, 204, 1);
-  padding: 15px 10px 10px 10px;
+  padding-top: 10px;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     padding-left: 0;
   }
 `;
 
 const FirstPart = styled.div`
-  width: 20%;
+  width: 18%;
 
   & > input[type="checkbox"] {
     position: relative;
@@ -93,10 +95,29 @@ const FirstPart = styled.div`
     transform: scale(1.6);
   }
 
+  @media (max-width: 575px) {
+    width: 0;
+  }
+`;
+
+const ImageBox = styled.div`
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+
   & > img {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 80%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 5px;
+  }
+
+  @media (max-width: 575px) {
+    display: none;
   }
 `;
 
@@ -105,7 +126,7 @@ const MiddlePart = styled.div`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
 
   & > :last-child {
     width: 95%;
@@ -116,23 +137,24 @@ const MiddlePart = styled.div`
 const LastPart = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: flex-end;
 `;
 
 const NameBox = styled.div`
-  margin: 15px 0 10px 10px;
-
   font-size: 17px;
   font-weight: 500;
 
   white-space: nowrap;
 
+  margin: 5px 3% 0 3%;
+  height: 50px;
+
   word-break: break-all;
   text-overflow: ellipsis;
   overflow: hidden;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     font-size: 17px;
   }
 `;

@@ -30,7 +30,7 @@ const CouponSelector = ({ changeCartItemCoupon }: CouponSelectorProps) => {
 
   return (
     <Container>
-      적용 쿠폰
+      쿠폰
       <Select onChange={changeCoupon}>
         <Option>{defaultText}</Option>
         {couponList.map((coupon) => {

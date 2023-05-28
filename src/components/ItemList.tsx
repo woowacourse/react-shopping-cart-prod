@@ -23,11 +23,11 @@ const Wrapper = styled.div`
   width: 100%;
   grid-gap: 60px 20px;
 
-  @media screen and (max-width: 1200px) {
+  @media (max-width: 1199px) {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     grid-template-columns: repeat(2, 1fr);
   }
 `;

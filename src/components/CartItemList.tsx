@@ -43,7 +43,7 @@ const Wrapper = styled.section`
 
   width: 65%;
 
-  @media screen and (max-width: 800px) {
+  @media (max-width: 767px) {
     width: 100%;
   }
 `;
