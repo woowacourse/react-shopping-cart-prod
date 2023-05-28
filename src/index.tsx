@@ -5,6 +5,7 @@ import App from './App';
 import CartPage from './pages/CartPage';
 import ProductPage from './pages/ProductPage';
 import GlobalStyle from './styles/GlobalStyle';
+import OrderListPage from './pages/OrderListPage';
 
 const router = createBrowserRouter(
   [
@@ -19,6 +20,10 @@ const router = createBrowserRouter(
         {
           path: '/cart',
           element: <CartPage />,
+        },
+        {
+          path: '/order-list',
+          element: <OrderListPage />,
         },
       ],
     },

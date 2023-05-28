@@ -28,12 +28,17 @@ const Header = ({ children }: HeaderProps) => {
           </ShoppingCartIconContainer>
         </HomeButton>
       </Link>
-      <ServerSelectBox onChange={onChangeServerNameHandler}>
-        <option value='ROY'>로이</option>
-        <option value='SPLIT'>스플릿</option>
-        <option value='IRAE'>이레</option>
-      </ServerSelectBox>
-      <Link to='/cart'>{children}</Link>
+      <ButtonContainer>
+        <ServerSelectBox onChange={onChangeServerNameHandler}>
+          <option value='ROY'>로이</option>
+          <option value='SPLIT'>스플릿</option>
+          <option value='IRAE'>이레</option>
+        </ServerSelectBox>
+        <Link to='/cart'>{children}</Link>
+        <Link to='/order-list'>
+          <OrderListButton>주문 목록</OrderListButton>
+        </Link>
+      </ButtonContainer>
     </Container>
   );
 };
@@ -85,6 +90,8 @@ const ServerSelectBox = styled.select`
 
   border: none;
   border-radius: 10px;
+
+  padding-left: 8px;
 `;
 
 const ShoppingCartIconContainer = styled.div`
@@ -95,6 +102,19 @@ const ShoppingCartIconContainer = styled.div`
   @media (max-width: ${WIDTH.MD}) {
     width: 45px;
   }
+`;
+
+const OrderListButton = styled.div`
+  color: white;
+  font-size: 18px;
+
+  cursor: pointer;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 32px;
 `;
 
 export default Header;
