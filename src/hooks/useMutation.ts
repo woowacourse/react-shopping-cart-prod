@@ -28,13 +28,13 @@ const useMutation = <BodyData, ResponseData>({
   const [isLoading, setIsLoading] = useState(false);
 
   const mutateQuery = async (fetchInformation: FetchInformation<BodyData>) => {
+    setIsLoading(true);
     const { url, method, bodyData, headers } = fetchInformation;
 
     const body = bodyData ? JSON.stringify(bodyData) : null;
 
     try {
       const response = await fetch(url, { method, body, headers });
-      setIsLoading(true);
       if (!response.ok) {
         throw new Error(MESSAGE.RESPONSE_NOT_OKAY);
       }
