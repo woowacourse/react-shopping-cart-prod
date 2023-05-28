@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import { useEffect, useState } from 'react';
-import { TOAST_TYPE } from '../../../constants';
+import { TOAST_TYPE } from 'src/constants';
+import type { ToastState } from 'src/types';
 import styles from './index.module.scss';
-import type { ToastState } from '../../../types';
 
 interface ToastProps extends ToastState {
   showTime?: number;

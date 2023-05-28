@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilState, useRecoilValue } from 'recoil';
-import useCart from '../../hooks/useCart';
-import { $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
-import CartProductItem from '../CartProductItem';
+import useCart from 'src/hooks/useCart';
+import { $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
+import CartProductItem from 'src/components/CartProductItem';
+import type { CartItem } from 'src/types';
 import styles from './index.module.scss';
-import type { CartItem } from '../../types';
 
 function CartProductItemList() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);

@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { MESSAGE } from '../../constants';
-import useGetQuery from '../../hooks/useGetQuery';
-import useToast from '../../hooks/useToast';
-import { $CurrentServerUrl } from '../../recoil/atom';
-import { Product } from '../../types';
-import LoadingView from '../Common/LoadingView';
-import ProductItem from '../ProductItem';
+import { MESSAGE } from 'src/constants';
+import useGetQuery from 'src/hooks/useGetQuery';
+import useToast from 'src/hooks/useToast';
+import { $CurrentServerUrl } from 'src/recoil/atom';
+import { Product } from 'src/types';
+import LoadingView from 'src/components/Common/LoadingView';
+import ProductItem from 'src/components/ProductItem';
 import styles from './index.module.scss';
 
 function ProductItemList() {

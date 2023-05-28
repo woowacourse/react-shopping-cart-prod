@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import { useRef, useState } from 'react';
-import useOnClickOutside from '../../../hooks/useOnClickOutside';
+import useOnClickOutside from 'src/hooks/useOnClickOutside';
 import styles from './index.module.scss';
 
 interface DropDownProps {

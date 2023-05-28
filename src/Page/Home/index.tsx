@@ -1,4 +1,4 @@
-import ProductItemList from '../../components/ProductItemList';
+import ProductItemList from 'src/components/ProductItemList';
 import styles from './index.module.scss';
 
 function Home() {

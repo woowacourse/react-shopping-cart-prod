@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { ReactComponent as Logo } from '../../assets/logo.svg';
-import userServerUrlList from '../../data/serverData';
-import useToast from '../../hooks/useToast';
-import { $CartList, $CurrentServerUrl } from '../../recoil/atom';
-import { setLocalStorage, getLocalStorage } from '../../utils/localStorage';
+import { ReactComponent as Logo } from 'src/assets/logo.svg';
+import userServerUrlList from 'src/data/serverData';
+import useToast from 'src/hooks/useToast';
+import { $CartList, $CurrentServerUrl } from 'src/recoil/atom';
+import { setLocalStorage, getLocalStorage } from 'src/utils/localStorage';
 import DropDown from '../Common/DropDown';
 import styles from './index.module.scss';
 

@@ -1,8 +1,8 @@
-import { ReactComponent as ShopIcon } from '../../assets/mini-shop-icon.svg';
-import useUpdateCartItem from '../../hooks/useUpdateCartItem';
-import { Product } from '../../types';
-import CountButton from '../Common/CountButton';
-import LoadingSpinner from '../Common/LoadingSpinner';
+import { ReactComponent as ShopIcon } from 'src/assets/mini-shop-icon.svg';
+import useUpdateCartItem from 'src/hooks/useUpdateCartItem';
+import { Product } from 'src/types';
+import CountButton from 'src/components/Common/CountButton';
+import LoadingSpinner from 'src/components/Common/LoadingSpinner';
 import styles from './index.module.scss';
 
 interface AddCardButtonProps {

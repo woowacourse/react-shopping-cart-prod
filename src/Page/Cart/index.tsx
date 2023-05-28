@@ -1,10 +1,10 @@
 import { useRecoilValue } from 'recoil';
-import { ReactComponent as AlertBlank } from '../../assets/baemin-alert-blank.svg';
-import CartProductItemList from '../../components/CartProductItemList';
-import PaymentsView from '../../components/PaymentsView';
-import { PARCEL_PRICE } from '../../constants';
-import { $CartList, $CurrentServerUrl } from '../../recoil/atom';
-import $CheckedCartTotalPrice from '../../recoil/selector';
+import { ReactComponent as AlertBlank } from 'src/assets/baemin-alert-blank.svg';
+import CartProductItemList from 'src/components/CartProductItemList';
+import PaymentsView from 'src/components/PaymentsView';
+import { PARCEL_PRICE } from 'src/constants';
+import { $CartList, $CurrentServerUrl } from 'src/recoil/atom';
+import $CheckedCartTotalPrice from 'src/recoil/selector';
 import styles from './index.module.scss';
 
 function Cart() {
