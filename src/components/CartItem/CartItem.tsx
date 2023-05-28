@@ -4,7 +4,6 @@ import { ReactComponent as TrashCan } from '../../assets/icon/trash-can.svg';
 import Counter from '../common/Counter/Counter';
 import CheckBox from '../common/CheckBox/CheckBox';
 import { Select } from '../CartItemList/CartItemList';
-import { deleteCartItem } from '../../api/cartList';
 import useCartAtom from '../../hooks/useCartAtom';
 import { WIDTH } from '../../styles/mediaQuery';
 import useFetch from '../../hooks/useFetch';
@@ -24,10 +23,10 @@ const CartItem = ({
   setIsSelectedList,
   setIsAllSelected,
 }: CartItemProps) => {
-  const { productInCart, removeCartItemFromAtom } = useCartAtom(id);
+  const { productInCart } = useCartAtom(id);
   const { product } = productInCart;
   const { name, imageUrl, price } = product;
-  const { updateCartItem } = useFetch();
+  const { updateCartItem, deleteCartItem } = useFetch();
 
   const toggleSelect = () => {
     setIsAllSelected(false);
@@ -40,7 +39,6 @@ const CartItem = ({
 
   const onClickDelete = () => {
     deleteCartItem(id);
-    removeCartItemFromAtom();
   };
 
   const plusOne = () => {

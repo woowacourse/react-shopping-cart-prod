@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { deleteCartItem } from '../../api/cartList';
 import { cartAtom, checkedValue, totalAmountAtom } from '../../store/cart';
 import { WIDTH } from '../../styles/mediaQuery';
 import CartItem from '../CartItem/CartItem';
 import CheckBox from '../common/CheckBox/CheckBox';
+import useFetch from '../../hooks/useFetch';
 
 export type Select = {
   id: number;
@@ -13,6 +13,7 @@ export type Select = {
 };
 
 const CartItemList = () => {
+  const { deleteCartItem } = useFetch();
   const [cartList, setCartList] = useRecoilState(cartAtom);
   const { ALL_CHECKED, NO_CHECKED } = useRecoilValue(checkedValue);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);

@@ -43,7 +43,24 @@ const useFetch = () => {
     }
   };
 
-  return { addToCart, updateCartItem };
+  const deleteCartItem = async (id: number) => {
+    try {
+      const response = await fetch(`${baseURL}/cart-items/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: `Basic ${AUTH}`,
+        },
+      });
+
+      if (!response.ok) throw new Error(`error code : ${response.status}`);
+      refreshCartList();
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  return { addToCart, updateCartItem, deleteCartItem };
 };
 
 export default useFetch;
