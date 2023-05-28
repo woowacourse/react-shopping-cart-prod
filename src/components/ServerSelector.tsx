@@ -6,11 +6,16 @@ import { ServerId } from "recoil/server";
 import { cartListState } from "recoil/cart";
 import { getCartItems } from "api/cartItems";
 import { CartProduct } from "types/domain";
+import { useNavigate } from "react-router-dom";
+import { ROUTER_PATH } from "router";
 
 const ServerSeclector = () => {
+  const navigate = useNavigate();
   const [serverState, setServerState] = useRecoilState(serverSelectState);
+
   const chagneServer = (e: ChangeEvent<HTMLInputElement>) => {
     setServerState(e.target.id as ServerId);
+    navigate(ROUTER_PATH.Main);
   };
 
   const setCartList = useSetRecoilState(cartListState);
