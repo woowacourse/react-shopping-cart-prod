@@ -17,3 +17,20 @@ export interface CartDetails {
   userPoint: number;
   minUsagePoints: number;
 }
+
+export interface OrderProduct {
+  quantity: number;
+  product: {
+    productId: number;
+    price: number;
+    name: string;
+    imageUrl: string;
+  };
+}
+
+export interface OrderDetails {
+  orderId: number;
+  orderDateTime: string;
+  orderItems: OrderProduct[];
+  totalPrice: number;
+}
