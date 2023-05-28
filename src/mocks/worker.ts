@@ -15,14 +15,9 @@ export const handlers = [
     );
   }),
 
-  // rest.get("/cart-items", (req, res, ctx) => {
-  //   return res(
-  //     ctx.delay(500),
-  //     ctx.status(200),
-  //     ctx.set("Content-Type", "application/json"),
-  //     ctx.json(getCart())
-  //   );
-  // }),
+  rest.post("/orders", (req, res, ctx) => {
+    return res(ctx.delay(500), ctx.status(204));
+  }),
 
   // rest.post("/cart-items", async (req, res, ctx) => {
   //   const { productId } = await req.json();
