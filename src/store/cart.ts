@@ -9,20 +9,22 @@ import { checkedListState } from './checkbox';
 import { currentMemberState } from './member';
 import { currentServerState } from './server';
 
+const cartListQuery = selector({
+  key: 'cartList/default',
+  get: ({ get }) => {
+    const currentServer = get(currentServerState);
+    const currentMember = get(currentMemberState);
+    const authorizedHeaders = getAuthorizedOptionHeaders(currentMember);
+
+    const cartAPI = getCartAPI(currentServer, authorizedHeaders);
+
+    return cartAPI.getCartList();
+  },
+});
+
 const cartListState = atom<CartItemData[]>({
   key: 'cartList',
-  default: selector({
-    key: 'cartList/default',
-    get: ({ get }) => {
-      const currentServer = get(currentServerState);
-      const currentMember = get(currentMemberState);
-      const authorizedHeaders = getAuthorizedOptionHeaders(currentMember);
-
-      const cartAPI = getCartAPI(currentServer, authorizedHeaders);
-
-      return cartAPI.getCartList();
-    },
-  }),
+  default: cartListQuery,
 });
 
 const cartIdListState = selector({
@@ -87,6 +89,7 @@ const cartListSubTotalState = selector({
 });
 
 export {
+  cartListQuery,
   cartListState,
   cartIdListState,
   cartItemIdState,
