@@ -1,5 +1,7 @@
 {
-  "extends": ["react-app", "react-app/jest"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": ["plugin:jsx-a11y/recommended", "react-app", "react-app/jest"],
   "overrides": [
     {
       "files": ["**/*.stories.*"],
