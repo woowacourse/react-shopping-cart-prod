@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 type Options = { name: string; value: string };
 
 type SelectBoxProps = {
@@ -8,14 +10,27 @@ type SelectBoxProps = {
 
 const SelectBox = ({ value, options, onChange }: SelectBoxProps) => {
   return (
-    <select value={value} onChange={onChange}>
+    <Select value={value} onChange={onChange}>
       {options.map(({ name, value }) => (
-        <option key={value} value={value}>
+        <Option key={value} value={value}>
           {name}
-        </option>
+        </Option>
       ))}
-    </select>
+    </Select>
   );
 };
 
 export default SelectBox;
+
+const Select = styled.select`
+  width: 100%;
+  border: 0;
+  border-radius: 4px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+`;
+
+const Option = styled.option`
+  font-weight: 700;
+`;
