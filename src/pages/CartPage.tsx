@@ -80,7 +80,7 @@ type CartPageContentProps = {
 
 const CartPageContent = (props: CartPageContentProps) => {
   const { cartItems } = props;
-  const selectedCount = cartItems.filter((cartItem) => !cartItem.unselectedForOrder).length;
+  const selectedCount = cartItems.filter((cartItem) => cartItem.checked).length;
   const allSelected = selectedCount === cartItems.length;
 
   const { deleteCartItems } = useCartActions();
@@ -107,7 +107,7 @@ const CartPageContent = (props: CartPageContentProps) => {
           {cartItems.map((cartItem) => (
             <CartItemListItemContainer>
               <Checkbox
-                value={!cartItem.unselectedForOrder}
+                value={cartItem.checked}
                 onChange={() => toggleForOrder(cartItem.product.id)}
               />
               <CartItemListItem

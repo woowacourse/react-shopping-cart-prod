@@ -1,73 +1,34 @@
 /* eslint-disable no-nested-ternary */
-import { atom, atomFamily, DefaultValue, selector } from 'recoil';
+import { atomFamily, DefaultValue, selector } from 'recoil';
 import type { Client } from '../../api';
+import type { CartItemEntity } from '../../api/rest/ShoppingCartRestAPI';
 import type { CartItem } from '../../types/CartItem';
-import localStorageEffect from '../effects/localStorageEffect';
+import syncCartItemsEffect from '../effects/syncCartItemsEffect';
 import cartItemsQuery from '../queries/cartItemsQuery';
 import clientState from './clientState';
-import syncCartItemState, { syncCartItemStateKey } from './syncCartItemState';
 
-const localCartItemsState = atomFamily<Omit<CartItem, 'unselectedForOrder'>[], Client>({
-  key: 'localCartItemsState',
+const internalCartItemsState = atomFamily<(CartItem | CartItemEntity)[], Client>({
+  key: 'internalCartItemsState',
   default: cartItemsQuery,
-});
-
-const unselectedForOrdersState = atom<Array<CartItem['product']['id']>>({
-  key: 'unselectedForOrdersState',
-  default: [],
-  effects: [localStorageEffect('unselectedForOrders')],
+  effects: (client) => [syncCartItemsEffect(client)],
 });
 
 const cartItemsState = selector<CartItem[]>({
   key: 'cartItemsState',
   get: ({ get }) => {
     const client = get(clientState);
-    const cartItems = get(localCartItemsState(client));
-    const unselectedForOrders = get(unselectedForOrdersState);
-
-    return cartItems.map((cartItem) => ({
-      ...cartItem,
-      unselectedForOrder: unselectedForOrders.includes(cartItem.product.id),
-    }));
+    const cartItems = get(internalCartItemsState(client));
+    return cartItems;
   },
-  set: ({ get, set }, rawNewCartItems) => {
+  set: ({ get, set, reset }, rawNewCartItems) => {
     const client = get(clientState);
-    const oldCartItems = get(localCartItemsState(client));
     if (rawNewCartItems instanceof DefaultValue) {
-      throw new Error('reset of cartItemsState is not implemented!');
+      reset(internalCartItemsState(client));
+      return;
     }
 
     const newCartItems = rawNewCartItems.filter((newCartItem) => newCartItem.quantity > 0);
-
-    // update origin atoms
-    set(localCartItemsState(client), newCartItems);
-    set(
-      unselectedForOrdersState,
-      newCartItems
-        .filter((cartItem) => cartItem.unselectedForOrder)
-        .map((cartItem) => cartItem.product.id),
-    );
-
-    // enqueue update to syncCartItemState
-    const deletedCartItems = oldCartItems.filter(
-      (cartItemEntity) =>
-        newCartItems.find((newCartItem) => newCartItem.product.id === cartItemEntity.product.id) ===
-        undefined,
-    );
-
-    deletedCartItems.forEach((cartItem) => {
-      set(syncCartItemState(syncCartItemStateKey(client, cartItem.product.id)), (syncCartItem) => ({
-        ...syncCartItem,
-        enqueuedUpdates: [...syncCartItem.enqueuedUpdates, { quantity: 0 }],
-      }));
-    });
-
-    newCartItems.forEach((cartItem) => {
-      set(syncCartItemState(syncCartItemStateKey(client, cartItem.product.id)), (syncCartItem) => ({
-        ...syncCartItem,
-        enqueuedUpdates: [...syncCartItem.enqueuedUpdates, { quantity: cartItem.quantity }],
-      }));
-    });
+    set(internalCartItemsState(client), newCartItems);
   },
 });
 

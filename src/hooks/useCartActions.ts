@@ -8,7 +8,7 @@ const useCartActions = () => {
       const cartItem = cartItems.find((cartItem) => cartItem.product.id === product.id) ?? null;
 
       return cartItem === null
-        ? [...cartItems, { product, quantity, unselectedForOrder: false }]
+        ? [...cartItems, { product, quantity, checked: true }]
         : cartItems.map((it) => (it.product.id === cartItem.product.id ? { ...it, quantity } : it));
     });
   });

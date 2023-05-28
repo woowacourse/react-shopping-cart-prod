@@ -14,7 +14,7 @@ type RestClientOptions = {
   base?: string;
 };
 
-class RestClient<TRestAPI extends RestAPI> {
+class RestClient<TRestAPI extends RestAPI = RestAPI> {
   constructor(private readonly options: RestClientOptions = {}) {}
 
   private getUrl(path: string) {

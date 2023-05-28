@@ -8,24 +8,20 @@ const useCartOrder = () => {
   const selectForOrder = (productId: Product['id']) =>
     setCartItems((cartItems) =>
       cartItems.map((cartItem) =>
-        cartItem.product.id === productId ? { ...cartItem, unselectedForOrder: false } : cartItem,
+        cartItem.product.id === productId ? { ...cartItem, checked: true } : cartItem,
       ),
     );
 
   const toggleForOrder = (productId: Product['id']) => {
     setCartItems((cartItems) =>
       cartItems.map((cartItem) =>
-        cartItem.product.id === productId
-          ? { ...cartItem, unselectedForOrder: !cartItem.unselectedForOrder }
-          : cartItem,
+        cartItem.product.id === productId ? { ...cartItem, checked: !cartItem.checked } : cartItem,
       ),
     );
   };
 
   const unselectAllForOrder = () => {
-    setCartItems((cartItem) =>
-      cartItem.map((cartItem) => ({ ...cartItem, unselectedForOrder: true })),
-    );
+    setCartItems((cartItem) => cartItem.map((cartItem) => ({ ...cartItem, checked: false })));
   };
 
   return {

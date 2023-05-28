@@ -7,7 +7,7 @@ const cartOrderPriceState = selector({
     const cartItems = get(cartItemsState);
 
     const productsPrice = cartItems
-      .filter((cartItem) => !cartItem.unselectedForOrder)
+      .filter((cartItem) => cartItem.checked)
       .reduce((sum, cartItem) => sum + cartItem.quantity * cartItem.product.price, 0);
     const shippingFee = productsPrice > 0 ? 3000 : 0;
 
