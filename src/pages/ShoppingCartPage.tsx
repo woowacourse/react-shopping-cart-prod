@@ -22,7 +22,7 @@ const ShoppingCartPage = () => {
         <EmptyCartImgBackground flexDirection="column" gap="20px">
           <EmptyCartImg src={emptyCartImg} alt="장바구니가 텅 비었습니다." />
           <EmptyCartMessage>장바구니에 담긴 상품이 없습니다.</EmptyCartMessage>
-          <GoHomeLink to={ROUTE_PATH.root}>홈으로 가기</GoHomeLink>
+          <GoHomeLink to={ROUTE_PATH.ROOT}>홈으로 가기</GoHomeLink>
         </EmptyCartImgBackground>
       )}
     </ShoppingCartPageContainer>

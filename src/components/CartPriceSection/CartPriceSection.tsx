@@ -1,5 +1,7 @@
 import FlexBox from 'components/@common/FlexBox';
+import ROUTE_PATH from 'constants/routePath';
 import useCartCheckBox from 'hooks/useCartCheckBox';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { checkedCartProductsTotalPrice } from 'state/cartProducts';
 import styled from 'styled-components';
@@ -8,8 +10,9 @@ const SHIPPING_FEE = 3000;
 
 const CartPriceSection = () => {
   const { checkedProducts } = useCartCheckBox();
-
   const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPrice(checkedProducts));
+  const navigate = useNavigate();
+
   const isCheckedProductsExist = checkedProducts.size > 0;
   const cartTotalPriceWithFee = cartTotalPrice + SHIPPING_FEE;
 
@@ -34,7 +37,9 @@ const CartPriceSection = () => {
         <SubTitle>예상 주문금액</SubTitle>
         <CartTotalPrice>{cartTotalPriceText}</CartTotalPrice>
       </Container>
-      <OrderConfirmButton isActive={isCheckedProductsExist}>{orderConfirmButtonText}</OrderConfirmButton>
+      <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.ORDER)} isActive={isCheckedProductsExist}>
+        {orderConfirmButtonText}
+      </OrderConfirmButton>
     </PriceSection>
   );
 };

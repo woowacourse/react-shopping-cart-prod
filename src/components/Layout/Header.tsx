@@ -25,7 +25,7 @@ const Header = ({ children }: PropsWithChildren) => {
 
   return (
     <HeaderContainer>
-      <FlexLink to={ROUTE_PATH.root}>
+      <FlexLink to={ROUTE_PATH.ROOT}>
         <Title>{children}</Title>
       </FlexLink>
 
@@ -35,7 +35,7 @@ const Header = ({ children }: PropsWithChildren) => {
           options={serverOwnerOptions}
           onChange={handleServerOwner}
         />
-        <FlexLink to={ROUTE_PATH.cart}>
+        <FlexLink to={ROUTE_PATH.CART}>
           <Cart />
           <CartProductCount>{cartProductCount}</CartProductCount>
         </FlexLink>
