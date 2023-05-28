@@ -18,9 +18,9 @@
   {
     "id": 3,
     "name": "종이용기(900cc)-너무맛있겠다",
-    "price": 57300,
+    "price": 60000,
     "discountRate": 5,
-    "discountedPrice": 54300,
+    "discountedPrice": 57000,
     "imageUrl": "https://cdn-mart.baemin.com/sellergoods/list/4ece565d-7fbf-4af4-b4a0-e545c15eda10.jpg?h=400&w=400"
   },
   {
@@ -42,9 +42,9 @@
   {
     "id": 6,
     "name": "숟가락(비닐)-주의 너무맛있어서",
-    "price": 277000,
+    "price": 27700,
     "discountRate": 0,
-    "discountedPrice": 277000,
+    "discountedPrice": 27700,
     "imageUrl": "https://cdn-mart.baemin.com/sellergoods/list/18597b93-f42b-4381-b7d5-8f3bb18b43bb.jpg?h=400&w=400"
   },
   {
@@ -91,8 +91,8 @@
     "id": 12,
     "name": "스티커-고객님을 위한 써비스 700개",
     "price": 12400,
-    "discountRate": 4,
-    "discountedPrice": 11800,
+    "discountRate": 5,
+    "discountedPrice": 11780,
     "imageUrl": "https://cdn-mart.baemin.com/sellergoods/list/4ee2ef4c-c61a-4a66-8d10-caac470e1038.jpg?h=400&w=400"
   },
   {
@@ -100,15 +100,15 @@
     "name": "컵홀더(16,20,24온스)-ICED 500개",
     "price": 23000,
     "discountRate": 5,
-    "discountedPrice": 21800,
+    "discountedPrice": 21850,
     "imageUrl": "https://cdn-mart.baemin.com/sellergoods/list/2013c600-930e-48c4-89ac-c43e7853fdc9.jpg?h=400&w=400"
   },
   {
     "id": 14,
     "name": "비닐봉투(8잔)-단골이 됐으면 좋겠다",
-    "price": 56200,
-    "discountRate": 5,
-    "discountedPrice": 53300,
+    "price": 53300,
+    "discountRate": 15,
+    "discountedPrice": 47600,
     "imageUrl": "https://cdn-mart.baemin.com/sellergoods/list/8eddaabd-8e04-4cc7-8e07-d4cb060e3c57.jpg?h=400&w=400"
   },
   {
