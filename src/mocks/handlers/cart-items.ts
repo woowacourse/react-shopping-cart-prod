@@ -1,75 +1,66 @@
-import cart from '../fixtures/cart';
+import cartItems from '../fixtures/cart-items';
 import products from '../fixtures/products';
 import rest from '../rest';
 
 export const handlers = [
-  rest.on('GET /cart-items', (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(cart));
+  rest.get('/cart-items', (req, res) => {
+    return res(res.response(200, cartItems));
   }),
 
-  rest.on('POST /cart-items', async (req, res, ctx) => {
+  rest.post('/cart-items', async (req, res) => {
     const body = await req.json();
     const { productId } = body;
 
-    if (cart.some((cartItem) => cartItem.product.id === productId)) {
-      return res(
-        ctx.status(409),
-        ctx.json({
-          message: '이미 카드에 존재하는 상품입니다.',
-        }),
-      );
+    if (cartItems.some((cartItem) => cartItem.product.id === productId)) {
+      return res(res.response(409, { message: '이미 카드에 존재하는 상품입니다.' }));
     }
 
     const product = products.find((it) => it.id === productId) ?? null;
     if (product === null) {
-      return res(
-        ctx.status(404),
-        ctx.json({
-          message: '존재하지 않는 상품입니다.',
-        }),
-      );
+      return res(res.response(404, { message: '존재하지 않는 상품입니다.' }));
     }
 
-    const cartItemId = Math.max(1, ...cart.map((cartItem) => cartItem.id)) + 1;
+    const cartItemId = Math.max(1, ...cartItems.map((cartItem) => cartItem.id)) + 1;
 
-    cart.push({
+    cartItems.push({
       id: cartItemId,
       product,
+      checked: true,
       quantity: 1,
     });
 
-    return res(ctx.status(201), ctx.set('Location', `/cart-items/${cartItemId}`));
+    return res(res.response(201, undefined, { location: `/cart-items/${cartItemId}` }));
   }),
 
-  rest.on('PATCH /cart-items/:cartItemId', async (req, res, ctx) => {
+  rest.patch('/cart-items/:cartItemId', async (req, res) => {
     const { cartItemId } = req.params;
     const body = await req.json();
     const quantity = Number(body.quantity);
 
-    const cartItem = cart.find((it) => String(it.id) === cartItemId) ?? null;
+    const cartItem = cartItems.find((it) => String(it.id) === cartItemId) ?? null;
     if (cartItem === null) {
-      return res(
-        ctx.status(400),
-        ctx.json({
-          message: '존재하지 않는 장바구니 아이템입니다.',
-        }),
-      );
+      return res(res.response(400, { message: '존재하지 않는 장바구니 아이템입니다.' }));
     }
 
     cartItem.quantity = quantity;
 
-    return res(ctx.status(200));
+    return res(
+      res.response(200, {
+        quantity: cartItem.quantity,
+        checked: cartItem.checked,
+      }),
+    );
   }),
 
-  rest.on('DELETE /cart-items/:cartItemId', async (req, res, ctx) => {
+  rest.delete('/cart-items/:cartItemId', async (req, res) => {
     const { cartItemId } = req.params;
 
-    const foundIndex = cart.findIndex((it) => it.id === Number(cartItemId));
+    const foundIndex = cartItems.findIndex((it) => it.id === Number(cartItemId));
     if (foundIndex === -1) {
-      return res(ctx.status(400), ctx.json({ message: '존재하지 않는 장바구니 아이템입니다.' }));
+      return res(res.response(400, { message: '존재하지 않는 장바구니 아이템입니다.' }));
     }
 
-    cart.splice(foundIndex, 1);
-    return res(ctx.status(204));
+    cartItems.splice(foundIndex, 1);
+    return res(res.response(204));
   }),
 ];
