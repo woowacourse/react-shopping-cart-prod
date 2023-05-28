@@ -27,8 +27,8 @@ const Header = () => {
         </Link>
         <ControlContainer>
           <SelectBox value={hostName} onChange={handleSelect}>
-            {Object.keys(servers).map((server) => (
-              <option>{server}</option>
+            {Object.keys(servers).map((server, index) => (
+              <option key={`server-${index}`}>{server}</option>
             ))}
           </SelectBox>
           <Link to='/cart'>
