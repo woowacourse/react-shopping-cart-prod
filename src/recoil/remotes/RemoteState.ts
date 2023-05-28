@@ -38,7 +38,7 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
   /**
    * client -> remote 로 동기화하는 비동기 작업입니다.
    */
-  protected upstreamSync: Promise<unknown> | null = null;
+  protected upstreamSync: Promise<State> | null = null;
 
   /**
    * client <- remote 로 동기화하는 비동기 작업입니다.
@@ -85,9 +85,10 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
   /**
    * client -> remote로 동기화 할 작업을 추가합니다.
    */
-  enqueueUpstreamSync(sync: Promise<unknown>) {
+  enqueueUpstreamSync(sync: Promise<State>) {
     this.upstreamSync = sync;
-    this.upstreamSync.then(() => {
+    this.upstreamSync.then((synchronizedState) => {
+      this.synchronizedState = synchronizedState;
       this.upstreamSync = null;
       this.flushDirtyUpdates();
     });
@@ -121,18 +122,21 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
    * dirtyUpdates를 lastState로 취합한 후, 이를 client -> remote로 동기화하는
    * 작업을 수행합니다.
    *
-   * 이 함수는 동기화 작업(`Promise`)을 반환해야 합니다. 만약 아무것도 하지 않아도
-   * 된다면 `null`을 반환합니다.
+   * 이 함수는 동기화 작업(`Promise<State>`)을 반환해야 합니다.
+   * 동기화 작업이 완료되면 완료된 값이 {@link synchronizedState} 가 됩니다.
+   *
+   * 만약 아무것도 하지 않아도 된다면 `null`을 반환합니다.
    *
    * @example
    * syncToRemote(lastState: { count: number }): Promise<unknown> | null {
    *   if (this.synchronizedState.count === lastState.count) {
    *     return null; // up to date, no-op
    *   }
-   *   return this.client.post('/count', { count: lastState.count }).acceptOrThrow(200);
+   *   return this.client.post('/count', { count: lastState.count })
+   *     .acceptOrThrow(200).then((response) => ({ count: response.data.count }));
    * }
    */
-  abstract syncToRemote(lastState: State): Promise<unknown> | null;
+  abstract syncToRemote(lastState: State): Promise<State> | null;
 
   /**
    * 동기화 중 오류가 발생했을 시의 동작을 지정합니다.
