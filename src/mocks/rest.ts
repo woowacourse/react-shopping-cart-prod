@@ -27,7 +27,7 @@ class Rest<TRestAPI extends RestAPI> {
     };
 
     return mswRest[method.toLowerCase() as Lowercase<Method>](
-      joinPath(this.options.baseUrl, 'api', path),
+      joinPath(this.options.baseUrl, path),
       wrappedResolver,
     );
   }
@@ -69,7 +69,7 @@ class Rest<TRestAPI extends RestAPI> {
 }
 
 const rest = new Rest<ShoppingCartRestAPI>({
-  baseUrl: BASE_URL,
+  baseUrl: joinPath(BASE_URL, 'api'),
 });
 
 export default rest;
