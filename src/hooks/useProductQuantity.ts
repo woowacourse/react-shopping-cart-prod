@@ -29,9 +29,11 @@ const useProductQuantity = (productId: number) => {
     if (targetProduct) {
       await updateCartProductQuantity(hostName, targetProduct, delta);
 
-      const updatedCartProducts = await api(hostName).then((apiInstance) => {
+      const cartDetails = await api(hostName).then((apiInstance) => {
         return apiInstance.fetchCartProducts();
       });
+
+      const updatedCartProducts = cartDetails['cart-items'];
 
       setCartProducts(updatedCartProducts);
     }

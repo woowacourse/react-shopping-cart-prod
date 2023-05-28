@@ -4,6 +4,7 @@ import cartProductsData from './data/cartProducts.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
 
 const cartProducts = cartProductsData['cart-items'];
+console.log(cartProducts);
 
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
@@ -19,7 +20,7 @@ export const handlers = [
   }),
 
   rest.get('/cart-items', (req, res, ctx) => {
-    return res(ctx.delay(200), ctx.status(200), ctx.json(cartProducts));
+    return res(ctx.delay(200), ctx.status(200), ctx.json(cartProductsData));
   }),
 
   rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
