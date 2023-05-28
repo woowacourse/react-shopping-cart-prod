@@ -3,16 +3,15 @@ import Svg from 'components/@common/Svg';
 import Counter from 'components/@common/Counter';
 import { useCart } from 'components/Cart/hooks/useCart';
 import { Product } from 'types';
-import { useRecoilValue } from 'recoil';
-import { cartListAtom } from 'recoil/cartList';
 
 interface ProductItemProps {
   product: Product;
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  const { decreaseItemQuantity, addItem, increaseItemQuantity } = useCart();
-  const cartList = useRecoilValue(cartListAtom);
+  const { cartList, decreaseItemQuantity, addItem, increaseItemQuantity } =
+    useCart();
+
   const cartItem = cartList.find(
     (cartItem) => cartItem.product.id === product.id
   );
