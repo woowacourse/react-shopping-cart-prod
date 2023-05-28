@@ -24,6 +24,7 @@ const OrderSuccessPage = () => {
       <S.SuccessMessageHeading size="small">
         <span>내일 아침</span>에 만나요!
       </S.SuccessMessageHeading>
+      <S.OrderSuccessIdText>주문번호 {orderId}</S.OrderSuccessIdText>
       <S.HomeButton variant="primary" onClick={() => navigate(PATH.ROOT)}>
         홈으로 이동하기
       </S.HomeButton>

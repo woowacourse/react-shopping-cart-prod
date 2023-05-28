@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import { TickCircleIcon } from '../../assets';
 import { Button } from '../../components/common/Button/Button.styles';
 import { Heading } from '../../components/common/Heading/Heading.styles';
+import { Text } from '../../components/common/Text/Text.styles';
 
 const OrderSuccessMessageContainer = styled.div`
   position: relative;
@@ -33,6 +34,10 @@ const SuccessMessageHeading = styled(Heading)`
   }
 `;
 
+const OrderSuccessIdText = styled(Text)`
+  margin: ${({ theme }) => theme.spacer.spacing2} 0;
+`;
+
 const HomeButton = styled(Button)`
   margin-top: ${({ theme }) => theme.spacer.spacing3};
 `;
@@ -45,6 +50,7 @@ export {
   OrderSuccessMessageContainer,
   OrderSuccessIcon,
   SuccessMessageHeading,
+  OrderSuccessIdText,
   HomeButton,
   OrderDetailButton,
 };
