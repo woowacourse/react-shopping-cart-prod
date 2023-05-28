@@ -31,9 +31,9 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <FlexLink to={ROUTE_PATH.ROOT}>
+      <Link to={ROUTE_PATH.ROOT}>
         <MainLogo src={mainLogo} alt="배민상회" />
-      </FlexLink>
+      </Link>
       <FlexBox gap="8px">
         <SelectBoxContainer flexDirection="column" gap="4px">
           <Box sizing={{ height: '24px' }}>
