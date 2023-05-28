@@ -13,9 +13,11 @@ import React, { useState } from "react";
 import { localProductsState } from "../recoil/atom";
 import { makeLocalProducts } from "../utils/domain";
 import { getLocalStorage, setLocalStorage } from "../utils";
+import { useToast } from "../hooks/useToast";
 
 export const Header = () => {
   const { goPage } = useRouter();
+  const { showToast } = useToast();
   const setLocalProducts = useSetRecoilState(localProductsState);
   const cartProducts = useRecoilValue(localProductsSelector);
   const [serverOwner, setServerOwner] = useState(
@@ -30,6 +32,8 @@ export const Header = () => {
 
     const newProducts = await makeLocalProducts();
     setLocalProducts(newProducts);
+
+    showToast("success", `${e.target.value}의 서버로 변경되었습니다.`);
   };
 
   return (
