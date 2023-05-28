@@ -1,13 +1,13 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import LoadingView from '../components/Common/LoadingView';
+import LoadingSpinner from '../components/Common/LoadingSpinner';
 import ToastList from '../components/Common/Toast/ToastList';
 import Header from '../components/Header';
 
 function Root() {
   return (
     <>
-      <Suspense fallback={<LoadingView />}>
+      <Suspense fallback={<LoadingSpinner />}>
         <Header />
         <Outlet />
       </Suspense>
