@@ -11,14 +11,25 @@ import {
   LogoWrapper,
   HeaderWrapper,
   CartWrapper,
+  SignButton,
 } from "./Header.style";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { cartCountSelector } from "../../recoil/cartAtoms";
-import ServerSelectBox from "../ServerSelectBox/ServerSelectBox.tsx";
+import ServerSelectBox from "../ServerSelectBox";
+import { modalContentState, modalOpenState } from "../../recoil/modalAtoms.tsx";
 
 function Header() {
   const navigate = useNavigate();
   const cartCount = useRecoilValue(cartCountSelector);
+  const [isModalOpen, setModalOpen] = useRecoilState(modalOpenState);
+  const closeModal = () => {
+    setModalOpen(false);
+  };
+  const [modalContent, setModalContent] = useRecoilState(modalContentState);
+  const openModal = () => {
+    setModalOpen(true);
+    setModalContent(<>로그인 페이지</>);
+  };
 
   return (
     <HeaderWrapper>
@@ -37,10 +48,11 @@ function Header() {
                 <CartCount>{cartCount}</CartCount>
               </CartCountWrapper>
             </CartWrapper>
+            <SignButton onClick={() => openModal()}>로그인</SignButton>
           </NavBar>
         </HeaderContent>
       </Container>
-    </HeaderWrapper>
+    </HeaderWrapper >
   );
 }
 

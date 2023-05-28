@@ -16,12 +16,13 @@ export const HeaderContent = styled.div`
 export const CartWrapper = styled.div`
   display: flex;
   gap: 10px; 
+  align-items: center;
+  cursor: pointer;
 `;
 
 export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  cursor: pointer;
 `;
 
 export const LogoImage = styled.img`
@@ -30,8 +31,8 @@ export const LogoImage = styled.img`
 
 export const NavBar = styled.div`
   display: flex;
-  cursor: pointer;
   gap: 10px;
+  align-items: center;
 `;
 
 export const CartTitle = styled.div`
@@ -52,4 +53,9 @@ export const CartCountWrapper = styled.div`
 export const CartCount = styled.div`
   font-size: 16px;
   color: #fff;
+`;
+
+export const SignButton = styled.div`
+  color: black;
+  cursor: pointer;
 `;
