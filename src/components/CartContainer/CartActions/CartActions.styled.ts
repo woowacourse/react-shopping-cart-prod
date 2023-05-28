@@ -4,13 +4,15 @@ export const SelectionActions = styled.div`
   display: flex;
   align-items: center;
 
-  column-gap: 15px;
+  column-gap: 12px;
 
-  @media screen and (max-width: 500px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
 
     justify-content: space-between;
   }
+
+  font-size: 14px;
 `;
 
 export const ToggleAllCheckBox = styled.div`
@@ -25,13 +27,14 @@ export const ToggleAllCheckBox = styled.div`
 export const DeleteSelectedItemButton = styled.button`
   width: 70px;
   height: 30px;
-  border: 1px solid var(--grey-300);
 
   background-color: var(--grey-100);
 
+  border: 1px solid var(--grey-300);
   border-radius: 8px;
 
   font-weight: 600;
+
   cursor: pointer;
 
   &:hover {

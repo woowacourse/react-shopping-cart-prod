@@ -13,7 +13,6 @@ export const handlers = [
     if (errorCode) {
       return res(ctx.delay(delay), ctx.status(Number(errorCode)));
     }
-    console.log(mockData);
     return res(ctx.delay(delay), ctx.status(200), ctx.json(mockData));
   }),
 
@@ -37,7 +36,14 @@ export const handlers = [
       return res(ctx.delay(delay), ctx.status(Number(errorCode)));
     }
 
-    return res(ctx.delay(delay), ctx.status(201));
+    return res(
+      ctx.delay(delay),
+      ctx.status(201),
+      ctx.set(
+        'Location',
+        `http://localhost:3000/react-shopping-cart/cart-items/${new Date().getTime()}`
+      )
+    );
   }),
 
   rest.patch('/cart-items/:id', (req, res, ctx) => {

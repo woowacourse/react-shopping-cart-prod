@@ -20,15 +20,18 @@ export const Button = styled.button<Partial<Props>>`
   }
 
   &.rectangle {
-    width: 388px;
-    height: 73px;
+    width: inherit;
+    height: 60px;
 
     border: ${(props) => props.bgColor ?? 'solid 1px var(--grey-300)'};
-    background-color: ${(props) => props.bgColor ?? 'var(--primary-color)'};
+    background-color: ${(props) => props.bgColor ?? 'var(--blue)'};
 
     color: ${(props) => props.bgColor ?? 'var(--grey-100)'};
 
-    font-size: 24px;
+    font-size: 16px;
+    font-weight: 900;
+
+    letter-spacing: 0.5px;
   }
 
   &:disabled {

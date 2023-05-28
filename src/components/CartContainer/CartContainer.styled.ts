@@ -1,9 +1,7 @@
 import { styled } from 'styled-components';
 
 export const CartContainer = styled.div`
-  @media screen and (max-width: 500px) {
-    width: 100%;
-  }
+  width: 100%;
 `;
 
 export const CartHeader = styled.div`
@@ -14,13 +12,11 @@ export const CartHeader = styled.div`
 
   padding: 8px 0;
 
-  @media screen and (min-width: 501px) {
-    width: 735px;
-  }
+  width: 100%;
 
-  @media screen and (max-width: 500px) {
-    width: 100%;
+  font-size: 14px;
 
+  @media screen and (max-width: 767px) {
     font-size: 13px;
 
     & > span {

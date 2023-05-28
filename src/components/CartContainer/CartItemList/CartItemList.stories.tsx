@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { customViewPorts } from '../../../.storybook/preview';
+import { customViewPorts } from '../../../../.storybook/preview';
 
-import GlobalStyle from '../../GlobalStyle';
+import GlobalStyle from '../../../GlobalStyle';
 
 import { RecoilRoot } from 'recoil';
 
 import { CartItemList } from './CartItemList';
-import { LOCAL_STORAGE_KEY } from '../../constants';
+import { LOCAL_STORAGE_KEY } from '../../../constants';
 
 const meta = {
   title: 'ShoppingCart/CartItemList',

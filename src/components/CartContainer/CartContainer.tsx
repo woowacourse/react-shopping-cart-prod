@@ -4,8 +4,8 @@ import * as styled from './CartContainer.styled';
 
 import { useCartSizeValue } from '../../recoils/recoilCart';
 
-import { CartActions } from '../CartActions/CartActions';
-import { CartItemList } from '../CartItemList/CartItemList';
+import { CartActions } from './CartActions/CartActions';
+import { CartItemList } from './CartItemList/CartItemList';
 
 import { PATH } from '../../constants';
 
@@ -15,8 +15,8 @@ export const CartContainer = () => {
   return (
     <styled.CartContainer>
       <styled.CartHeader>
-        <span>든든배송 상품 ({cartSize}개)</span>
         <CartActions />
+        <span>든든배송 상품 ({cartSize}개)</span>
       </styled.CartHeader>
       {cartSize > 0 ? (
         <CartItemList />

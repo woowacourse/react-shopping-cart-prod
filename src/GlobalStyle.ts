@@ -12,10 +12,11 @@ const GlobalStyle = createGlobalStyle`
 
   :root {
     --primary-color: #00B9B3;
+    --blue: #006DF9;
 
     --grey-100: #ffffff;
     --grey-200: #F1F3F6;
-    --grey-300: #aaaaaa;
+    --grey-300: #E5E5E5;
     --grey-400: #333333;
 
     --red: #FF5C23;

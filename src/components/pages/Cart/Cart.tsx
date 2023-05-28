@@ -7,10 +7,10 @@ export const Cart = () => {
   return (
     <>
       <styled.PageTitle>장바구니</styled.PageTitle>
-      <styled.Main>
+      <styled.Content>
         <CartContainer />
         <OrderSummary />
-      </styled.Main>
+      </styled.Content>
     </>
   );
 };
