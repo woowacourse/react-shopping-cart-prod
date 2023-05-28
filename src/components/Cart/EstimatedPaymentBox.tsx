@@ -8,7 +8,11 @@ import {
   STANDARD_DELIVERY_FEE,
 } from '../../constants/price';
 
-const EstimatedPaymentBox = ({ userUsedPoint }: any) => {
+interface EstimatedPaymentBoxProps {
+  userUsedPoint: number;
+}
+
+const EstimatedPaymentBox = ({ userUsedPoint }: EstimatedPaymentBoxProps) => {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const deliveryPrice =
     totalPrice === 0 || totalPrice >= FREE_DELIVERY_THRESHOLD

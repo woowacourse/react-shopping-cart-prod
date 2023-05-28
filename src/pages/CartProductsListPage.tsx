@@ -19,7 +19,7 @@ const CartProductsListPage = () => {
     useCheckedProducts();
   const [userUsedPoint, setUserUsedPoint] = useState(0);
 
-  const handleUserUsedPointUpdate = (updatedUserUsedPoint: any) => {
+  const handleUserUsedPointUpdate = (updatedUserUsedPoint: number) => {
     setUserUsedPoint(updatedUserUsedPoint);
   };
 

@@ -4,7 +4,11 @@ import { useRecoilValue } from 'recoil';
 import { hostNameAtom } from '../../recoil/hostData';
 import { api } from '../../apis/cartProducts';
 
-const UserPointInfo = ({ onUserUsedPointUpdate }: any) => {
+interface UserPointInfoProps {
+  onUserUsedPointUpdate: (value: number) => void;
+}
+
+const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
   const hostName = useRecoilValue(hostNameAtom);
   const [userPoint, setUserPoint] = useState(0);
   const [minUsagePoints, setMinUsagePoints] = useState(0);
