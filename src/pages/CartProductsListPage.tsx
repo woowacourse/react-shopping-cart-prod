@@ -11,17 +11,14 @@ import { useRecoilValue } from 'recoil';
 import { totalCartProductSelect } from '../recoil/cartProductData';
 import { checkedListSelector } from '../recoil/checkedProductData';
 import useCheckedProducts from '../hooks/useCheckedProducts';
+import usePoint from '../hooks/usePoint';
 
 const CartProductsListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
   const checkedCartProductCount = useRecoilValue(checkedListSelector);
   const { removeCheckedProducts, handleAllCheckedProducts } =
     useCheckedProducts();
-  const [userUsedPoint, setUserUsedPoint] = useState(0);
-
-  const handleUserUsedPointUpdate = (updatedUserUsedPoint: number) => {
-    setUserUsedPoint(updatedUserUsedPoint);
-  };
+  const { userUsedPoint, handleUserUsedPointUpdate } = usePoint();
 
   return (
     <>

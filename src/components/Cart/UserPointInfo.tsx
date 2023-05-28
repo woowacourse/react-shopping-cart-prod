@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { hostNameAtom } from '../../recoil/hostData';
-import { api } from '../../apis/cartProducts';
+import usePoint from '../../hooks/usePoint';
 
 interface UserPointInfoProps {
   onUserUsedPointUpdate: (value: number) => void;
 }
 
 const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
-  const hostName = useRecoilValue(hostNameAtom);
-  const [userPoint, setUserPoint] = useState(0);
-  const [minUsagePoints, setMinUsagePoints] = useState(0);
+  const { userPoint, minUsagePoints } = usePoint();
   const isInputDisabled = userPoint < minUsagePoints;
 
   const handleUsedPoint = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,29 +18,15 @@ const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
     if (userInputPoint > userPoint) {
       alert('사용할 수 있는 포인트를 초과하였습니다.');
       e.target.value = '';
-    } else {
-      e.target.value = filteredInputValue;
+      return;
     }
+    e.target.value = filteredInputValue;
   };
 
   const handleUsedPointOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    const onlyNumbersRegex = /[^0-9]/g;
-    const userInputValue = e.target.value;
-    const filteredInputValue = userInputValue.replace(onlyNumbersRegex, '');
-    const userInputPoint = Number(filteredInputValue);
+    const userInputPoint = Number(e.target.value);
     onUserUsedPointUpdate(userInputPoint);
   };
-
-  useEffect(() => {
-    const fetchUserPoints = async () => {
-      const response = await await api(hostName).then((apiInstance) => {
-        return apiInstance.fetchCartProducts();
-      });
-      setUserPoint(response.userPoint);
-      setMinUsagePoints(response.minUsagePoints);
-    };
-    fetchUserPoints();
-  }, []);
 
   return (
     <UserPointInfoContainer>
