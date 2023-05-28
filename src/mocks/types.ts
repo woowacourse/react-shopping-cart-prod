@@ -29,7 +29,7 @@ export const internalResponse =
   ): ResponseTransformer<TResponse['data']> => {
     return (res) => {
       res.status = status;
-      if (body !== undefined) res.body = body;
+      if (body !== undefined) res.body = JSON.stringify(body);
       Object.entries(headers).forEach(([key, value]) => res.headers.set(key, value));
       return res;
     };
