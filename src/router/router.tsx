@@ -1,8 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { Cart } from '@pages/Cart';
 import { Home } from '@pages/Home';
-import { HomeLayout } from '@layout/HomeLayout';
-import ROUTER_PATH from './constants/routerPath';
+import { HomeLayout } from 'components/layout/HomeLayout';
+
+export const ROUTER_PATH = {
+  baseName: '/react-shopping-cart/',
+  home: '/',
+  cart: '/cart',
+};
 
 const router = createBrowserRouter(
   [

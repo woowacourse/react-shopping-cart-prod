@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
-import ProductList from '@views/ProductItemList/Components/ProductItemList/ProductItemList';
-import { SkeletonProduct } from '@views/ProductItemList/Components/SkeletonProduct';
+import ProductList from 'components/home/ProductItemList/ProductItemList';
+import { SkeletonProduct } from '@components/home/SkeletonProduct';
 
 function Home() {
   return (
-    <Suspense fallback={<SkeletonProduct></SkeletonProduct>}>
+    <Suspense fallback={<SkeletonProduct />}>
       <ProductList />
     </Suspense>
   );

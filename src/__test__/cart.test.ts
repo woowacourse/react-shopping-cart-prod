@@ -3,7 +3,7 @@ import {
   createCartItem,
   removeCartItem,
   updateCartItemQuantity,
-} from '@views/CartItemList/utils/cart';
+} from '@utils/cart/cart';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { CartItemType } from '@type/ProductType';
 

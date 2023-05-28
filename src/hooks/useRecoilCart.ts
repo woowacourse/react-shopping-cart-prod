@@ -2,11 +2,7 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
-import {
-  addItemToCart,
-  removeCartItem,
-  updateCartItemQuantity,
-} from '@views/CartItemList/utils/cart';
+import { addItemToCart, removeCartItem, updateCartItemQuantity } from '@utils/cart/cart';
 import { getCartPath } from '@constants/urlConstants';
 import { CartItemType, ProductItemType } from '@type/ProductType';
 import { useFetch } from './useFetch';

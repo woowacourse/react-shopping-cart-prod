@@ -1,10 +1,6 @@
 import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
-import {
-  createCartItem,
-  removeCartItem,
-  updateCartItemQuantity,
-} from '@views/CartItemList/utils/cart';
+import { createCartItem, removeCartItem, updateCartItemQuantity } from '@utils/cart/cart';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { fetchDelete, fetchGet, fetchPatch, fetchPost } from '@utils/fetchUtils';
 import { SERVER_NAME, getCartPath } from '@constants/urlConstants';

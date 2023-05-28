@@ -4,7 +4,7 @@ import {
   ProductItemImage,
   ProductName,
   ProductPrice,
-} from '@views/ProductItem/ProductItem.style';
+} from 'components/home/ProductItem/ProductItem.style';
 import { Column, Row } from '@styles/style';
 
 export const SkeletonRow = Row;

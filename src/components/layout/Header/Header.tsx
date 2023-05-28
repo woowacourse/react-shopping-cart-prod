@@ -1,8 +1,8 @@
 import { ChangeEvent, Suspense } from 'react';
 import { useServer } from '@recoil/server/serverState';
-import Logo from '@layout/Logo/Logo';
+import Logo from 'components/layout/Logo/Logo';
 import { CartStepperWithIcon } from '@views/CartItem/components/CartStepperWithIcon';
-import { SelectBox } from '@common/SelectBox';
+import { SelectBox } from 'components/common/SelectBox';
 import { SERVER_NAME } from '@constants/urlConstants';
 import { Container } from '@styles/style';
 import * as S from './Header.style';

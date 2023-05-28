@@ -5,16 +5,14 @@
   "testEnvironment": "jsdom",
 
   "moduleNameMapper": {
-    "^@common/(.*)$": "<rootDir>/src/common/$1",
     "^@constants/(.*)$": "<rootDir>/src/constants/$1",
-    "^@layout/(.*)$": "<rootDir>/src/styles/$1",
     "^@mocks/(.*)$": "<rootDir>/src/mocks/$1",
     "^@pages/(.*)$": "<rootDir>/src/pages/$1",
     "^@recoil/(.*)$": "<rootDir>/src/recoil/$1",
     "^@router/(.*)$": "<rootDir>/src/router/$1",
     "^@styles/(.*)$": "<rootDir>/src/styles/$1",
     "^@utils/(.*)$": "<rootDir>/src/utils/$1",
-    "^@views/(.*)$": "<rootDir>/src/views/$1",
+    "^@components/(.*)$": "<rootDir>/src/components/$1",
     "^@hooks/(.*)$": "<rootDir>/src/hooks/$1",
     "\\.(css|less|svg)$": "identity-obj-proxy"
   },

@@ -3,7 +3,7 @@ import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
 import { RecoilRoot } from 'recoil';
 import { useRecoilCart } from '@hooks/useRecoilCart';
-import { createCartItem } from '@views/CartItemList/utils/cart';
+import { createCartItem } from '@utils/cart/cart';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
 import { CartItemType } from '@type/ProductType';

@@ -60,24 +60,13 @@
             "group": "internal",
             "position": "after"
           },
-
           {
             "pattern": "@pages/**",
             "group": "internal",
             "position": "after"
           },
           {
-            "pattern": "@layout/**",
-            "group": "internal",
-            "position": "after"
-          },
-          {
-            "pattern": "@views/**",
-            "group": "internal",
-            "position": "after"
-          },
-          {
-            "pattern": "@common/**",
+            "pattern": "@components/**",
             "group": "internal",
             "position": "after"
           },
