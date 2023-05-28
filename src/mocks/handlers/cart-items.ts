@@ -29,7 +29,9 @@ export const handlers = [
       quantity: 1,
     });
 
-    return res(res.response(201, undefined, { location: `/cart-items/${cartItemId}` }));
+    return res(
+      res.response(201, { quantity: 1, checked: true }, { location: `/cart-items/${cartItemId}` }),
+    );
   }),
 
   rest.patch('/cart-items/:cartItemId', async (req, res) => {
@@ -39,7 +41,7 @@ export const handlers = [
 
     const cartItem = cartItems.find((it) => String(it.id) === cartItemId) ?? null;
     if (cartItem === null) {
-      return res(res.response(400, { message: '존재하지 않는 장바구니 아이템입니다.' }));
+      return res(res.response(404, { message: '존재하지 않는 장바구니 아이템입니다.' }));
     }
 
     cartItem.quantity = quantity;
@@ -57,7 +59,7 @@ export const handlers = [
 
     const foundIndex = cartItems.findIndex((it) => it.id === Number(cartItemId));
     if (foundIndex === -1) {
-      return res(res.response(400, { message: '존재하지 않는 장바구니 아이템입니다.' }));
+      return res(res.response(404, { message: '존재하지 않는 장바구니 아이템입니다.' }));
     }
 
     cartItems.splice(foundIndex, 1);
