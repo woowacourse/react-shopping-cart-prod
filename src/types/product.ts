@@ -11,3 +11,9 @@ export interface CartProduct {
   quantity: number;
   product: Product;
 }
+
+export interface CartDetails {
+  'cart-items': CartProduct[];
+  userPoint: number;
+  minUsagePoints: number;
+}
