@@ -8,6 +8,18 @@ type ErrorHandler<Client extends RestClient, State extends BaseState> = (
   remoteState: RemoteState<Client, State>,
 ) => void;
 
+/**
+ * client와 remote의 상태를 동기화할 때 사용하는 상태입니다.
+ *
+ * client side에서 상태가 자주 변경됨을 가정하고 설계하였기 때문에
+ * 낙관적 업데이트(Optimistic update)에 적합합니다.
+ *
+ * @example
+ * const client = new Client();
+ * const remoteState = new RemoteState<Client, { count: number }>(client, { count: 1 });
+ * remoteState.set({ count: 2 });
+ * remoteState.set({ count: 3 });
+ */
 export abstract class RemoteState<Client extends RestClient, State extends BaseState> {
   readonly client: Client;
 
@@ -40,6 +52,9 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
     this.synchronizedState = initialState;
   }
 
+  /**
+   * 상태 업데이트를 추가합니다. 현재 진행중인 동기화 작업이 없다면 즉시 수행됩니다.
+   */
   set(state: SetOrUpdate<State>) {
     this.dirtyUpdates?.push(state);
     this.flushDirtyUpdates();
@@ -49,6 +64,9 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
     return this.dirtyUpdates.length > 0;
   }
 
+  /**
+   * remote -> client로 동기화 할 작업을 추가합니다.
+   */
   enqueueDownstreamSync(sync: Promise<State> | State) {
     this.dirtyUpdates = [];
 
@@ -64,6 +82,9 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
     this.synchronizedState = sync;
   }
 
+  /**
+   * client -> remote로 동기화 할 작업을 추가합니다.
+   */
   enqueueUpstreamSync(sync: Promise<unknown>) {
     this.upstreamSync = sync;
     this.upstreamSync.then(() => {
@@ -74,6 +95,8 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
 
   /**
    * remote에 동기화해야 하는 update들을 remote에 전송합니다.
+   *
+   * 동기화 작업은 동시에 한 번만 수행됩니다.
    */
   flushDirtyUpdates() {
     if (!this.hasDirtyUpdate()) return; // 업데이트 할 사항이 없다면 리턴합니다.
@@ -88,8 +111,6 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
     }, this.synchronizedState);
     this.dirtyUpdates = [];
 
-    console.log(lastState);
-
     const sync = this.syncToRemote(lastState);
     if (sync === null) return;
 
@@ -102,9 +123,20 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
    *
    * 이 함수는 동기화 작업(`Promise`)을 반환해야 합니다. 만약 아무것도 하지 않아도
    * 된다면 `null`을 반환합니다.
+   *
+   * @example
+   * syncToRemote(lastState: { count: number }): Promise<unknown> | null {
+   *   if (this.synchronizedState.count === lastState.count) {
+   *     return null; // up to date, no-op
+   *   }
+   *   return this.client.post('/count', { count: lastState.count }).acceptOrThrow(200);
+   * }
    */
   abstract syncToRemote(lastState: State): Promise<unknown> | null;
 
+  /**
+   * 동기화 중 오류가 발생했을 시의 동작을 지정합니다.
+   */
   onError(errorHandler: ErrorHandler<Client, State> | null) {
     this.errorHandler = errorHandler;
   }
