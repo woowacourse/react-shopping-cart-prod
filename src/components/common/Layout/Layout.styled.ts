@@ -8,13 +8,13 @@ export const Layout = styled.div`
 `;
 
 export const Container = styled.div`
-  @media screen and (min-width: 501px) {
-    width: 1320px;
-  }
-
-  width: 100%;
+  width: 1080px;
 
   margin-top: 80px;
 
-  padding: 0px 16px;
+  @media screen and (max-width: 767px) {
+    width: 100%;
+
+    padding: 0 16px;
+  }
 `;

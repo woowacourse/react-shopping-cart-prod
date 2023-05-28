@@ -1,6 +1,6 @@
 import * as styled from './CartSize.styled';
 
-import { useCartSizeValue } from '../../recoils/recoilCart';
+import { useCartSizeValue } from '../../../recoils/recoilCart';
 
 export const CartSize = () => {
   const cartSize = useCartSizeValue();

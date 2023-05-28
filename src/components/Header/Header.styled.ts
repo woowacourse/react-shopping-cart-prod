@@ -8,13 +8,12 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding: 0px 16px;
-
   width: 100vw;
-  height: 80px;
-  background-color: var(--grey-500);
+  height: 70px;
 
-  color: var(--grey-100);
+  background-color: var(--grey-100);
+
+  border-bottom: 1px solid var(--grey-200);
 
   z-index: 100;
 `;
@@ -24,19 +23,22 @@ export const Content = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  width: 1263px;
+  width: 1080px;
+
+  @media screen and (max-width: 1080px) {
+    padding: 0 16px;
+  }
 `;
 
 export const Title = styled(Link)`
   display: flex;
   align-items: center;
 
-  font-size: 32px;
-  font-weight: 900;
+  font-size: 24px;
+  font-weight: 9000;
 
-  &::after {
-    content: 'SHOP';
-    padding-left: 12px;
+  & > span:first-child {
+    color: var(--primary-color);
   }
 `;
 
@@ -45,22 +47,17 @@ export const RightWrapper = styled.div`
   align-items: center;
 `;
 
-export const Selector = styled.select`
-  height: 42px;
-  width: 102px;
+export const CartPageLink = styled(Link)`
+  position: relative;
 
-  font-size: 16px;
-  margin-right: 30px;
-`;
-
-export const CartLink = styled(Link)`
   display: flex;
+  flex-direction: column;
   align-items: center;
 
-  font-weight: 500;
+  color: var(--grey-400);
+  font-size: 11px;
 
-  &::before {
-    content: '장바구니';
-    padding-right: 6px;
+  & > span {
+    margin-top: 6px;
   }
 `;
