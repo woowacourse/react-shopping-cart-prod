@@ -1,11 +1,25 @@
+import { addOrder } from "api/orders";
 import { SHIPPING_FEE } from "constants/cartProduct";
 import { useRecoilValue } from "recoil";
-import { cartTotalDiscount, cartTotalPrice } from "recoil/cart";
+import { cartTotalDiscount, cartTotalPrice, orderCartList } from "recoil/cart";
 import styled, { keyframes } from "styled-components";
 
 const PurchaseOrder = () => {
   const totalPrice = useRecoilValue(cartTotalPrice);
   const totalDiscount = useRecoilValue(cartTotalDiscount);
+  const purchaseOrder = useRecoilValue(orderCartList);
+
+  const orderCartItem = async () => {
+    const isSuccess = await addOrder(purchaseOrder);
+
+    if (!isSuccess) {
+      alert("구입 실패!");
+      return;
+    }
+
+    //추가 구현 예정
+    console.log("완료!!");
+  };
 
   return (
     <Wrapper>
@@ -34,7 +48,7 @@ const PurchaseOrder = () => {
           </p>
         </AmountBox>
       </TotalContainer>
-      <OrderButton>주문하기</OrderButton>
+      <OrderButton onClick={orderCartItem}>주문하기</OrderButton>
     </Wrapper>
   );
 };

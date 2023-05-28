@@ -22,3 +22,9 @@ export interface Coupon {
     amount: number;
   };
 }
+
+export interface Order {
+  product: Product;
+  quantity: number;
+  couponId: number[];
+}
