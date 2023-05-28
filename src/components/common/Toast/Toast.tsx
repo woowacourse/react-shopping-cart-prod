@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { TOAST_SHOW_DURATION } from '../../../constants';
+import { TOAST_SHOW_DURATION } from '../../../constants/ui';
 import * as S from './Toast.styles';
 
 export interface ToastProps extends PropsWithChildren {

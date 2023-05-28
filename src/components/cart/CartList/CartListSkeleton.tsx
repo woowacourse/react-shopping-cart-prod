@@ -1,4 +1,4 @@
-import { CART_LIST_SKELETON_ITEM_LENGTH } from '../../../constants';
+import { CART_LIST_SKELETON_ITEM_LENGTH } from '../../../constants/ui';
 import CartItemSkeleton from '../CartItem/CartItemSkeleton';
 import * as S from './CartList.styles';
 

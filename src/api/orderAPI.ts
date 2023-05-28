@@ -1,8 +1,12 @@
-import { API_ENDPOINT, AUTHORIZED_FETCH_OPTION_HEADERS } from '../constants/api';
+import { API_ENDPOINT } from '../constants/api';
 import { OrderCartItemsData } from '../types';
 import { fetchAPI } from './fetchAPI';
 
-const postOrder = async (baseUrl: string, cartItems: OrderCartItemsData[]): Promise<Response> => {
+const postOrder = async (
+  baseUrl: string,
+  headers: HeadersInit,
+  cartItems: OrderCartItemsData[]
+): Promise<Response> => {
   const data = {
     cartItems,
   };
@@ -10,7 +14,7 @@ const postOrder = async (baseUrl: string, cartItems: OrderCartItemsData[]): Prom
 
   return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}`, {
     method: 'POST',
-    headers: { ...AUTHORIZED_FETCH_OPTION_HEADERS },
+    headers,
     body: jsonData,
   });
 };

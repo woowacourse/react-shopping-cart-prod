@@ -1,30 +1,3 @@
-const MEMBER_BENEFIT = {
-  REGULAR: {
-    RANK: '일반',
-    DISCOUNT_RATE: 0,
-  },
-  SILVER: {
-    RANK: '실버',
-    DISCOUNT_RATE: 5,
-  },
-  GOLD: {
-    RANK: '골드',
-    DISCOUNT_RATE: 10,
-  },
-  PLATINUM: {
-    RANK: '플래티넘',
-    DISCOUNT_RATE: 15,
-  },
-  DIAMOND: {
-    RANK: '다이아몬드',
-    DISCOUNT_RATE: 20,
-  },
-};
-
-const DEFAULT_BASE64 = btoa(
-  process.env.REACT_APP_API_USERNAME_1 + ':' + process.env.REACT_APP_API_PASSWORD_1
-);
-
 const SERVER = ['아코', '주디', '저문', '프론트'] as const;
 
 const FRONT_API_BASE_URL =
@@ -55,16 +28,12 @@ const FETCH_DEFAULT_OPTION = {
   },
 } as const;
 
-const AUTHORIZED_FETCH_OPTION_HEADERS = {
-  'Content-Type': 'application/json',
-  Authorization: `Basic ${DEFAULT_BASE64}`,
-} as const;
-
 const HTTP_STATUS_CODE = {
   OK: 200,
   CREATED: 201,
   NO_CONTENT: 204,
   BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
   NOT_FOUND: 404,
   INTERNAL_SERVER_ERROR: 500,
 } as const;
@@ -114,13 +83,10 @@ const ORDER_API_ERROR_MESSAGE = {
 };
 
 export {
-  MEMBER_BENEFIT,
-  DEFAULT_BASE64,
   API_BASE_URL_LIST,
   DEFAULT_API_BASE_URL,
   API_ENDPOINT,
   FETCH_DEFAULT_OPTION,
-  AUTHORIZED_FETCH_OPTION_HEADERS,
   HTTP_STATUS_CODE,
   HTTP_ERROR_MESSAGE,
   CART_API_ERROR_MESSAGE,

@@ -13,6 +13,7 @@ import {
   ORDER_API_ERROR_MESSAGE,
 } from '../constants/api';
 import { PATH } from '../constants/path';
+import { TOAST_SHOW_DURATION } from '../constants/ui';
 import { cartItemQuantityState, cartListState } from '../store/cart';
 import { errorModalMessageState } from '../store/error';
 import { currentMemberState } from '../store/member';
@@ -163,12 +164,12 @@ const useCart = () => {
             return acc;
           }, []);
 
-          const response = await postOrder(currentServer, OrderCartItems);
+          const response = await postOrder(currentServer, authorizedHeaders, OrderCartItems);
           const orderId = response.headers.get('Location')?.split('/').pop()!;
 
           return orderId;
         },
-      [currentServer]
+      [currentServer, authorizedHeaders]
     ),
     {
       onSuccess: async (orderId) => {

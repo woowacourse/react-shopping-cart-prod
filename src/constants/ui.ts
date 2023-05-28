@@ -1,6 +1,15 @@
 import { OrderData } from '../types';
 import { priceFormatter } from '../utils/formatter';
 
+const DEFAULT_MIN_COUNT = 1;
+const DEFAULT_MAX_COUNT = 99;
+const DEFAULT_STEP = 1;
+
+const TOAST_SHOW_DURATION = 2000;
+
+const PRODUCT_LIST_SKELETON_ITEM_LENGTH = 15;
+const CART_LIST_SKELETON_ITEM_LENGTH = 5;
+
 const ORDER_ITEM_DESCRIPTION_DATA = [
   {
     LABEL: '상품명',
@@ -26,4 +35,12 @@ const ORDER_ITEM_DESCRIPTION_DATA = [
   },
 ] as const;
 
-export { ORDER_ITEM_DESCRIPTION_DATA };
+export {
+  DEFAULT_MIN_COUNT,
+  DEFAULT_MAX_COUNT,
+  DEFAULT_STEP,
+  TOAST_SHOW_DURATION,
+  PRODUCT_LIST_SKELETON_ITEM_LENGTH,
+  CART_LIST_SKELETON_ITEM_LENGTH,
+  ORDER_ITEM_DESCRIPTION_DATA,
+};
