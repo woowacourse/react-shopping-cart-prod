@@ -1,6 +1,6 @@
 import * as styled from './Product.styled';
 
-import { CartIcon } from '../../assets/svg';
+import { CartAddIcon, CartIcon } from '../../assets/svg';
 
 import { useCartItemValue, useSetCartState } from '../../recoils/recoilCart';
 
@@ -58,7 +58,7 @@ export const Product = ({ item }: Props) => {
           </styled.StepperWrapper>
         ) : (
           <styled.CartIconWrapper onClick={onClickCartIcon}>
-            <CartIcon fill="#AAAAAA" />
+            <CartAddIcon />
           </styled.CartIconWrapper>
         )}
       </styled.ProductInfo>

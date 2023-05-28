@@ -68,8 +68,8 @@ export const RightInfo = styled.div`
 export const ProductPrice = styled.div`
   display: flex;
   justify-content: center;
-  width: 90px;
-  font-size: 14px;
+  width: 81px;
+  font-size: 13px;
 `;
 
 export const DeleteButton = styled.button`
