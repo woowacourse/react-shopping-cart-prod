@@ -1,4 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
+import { BASE_URL } from './config/environment';
 import CartPage from './pages/CartPage';
 import ErrorPage from './pages/ErrorPage';
 import ProductListPage from './pages/ProductListPage';
@@ -23,7 +24,7 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: import.meta.env.BASE_URL,
+    basename: BASE_URL,
   },
 );
 

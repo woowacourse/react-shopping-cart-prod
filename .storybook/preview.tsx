@@ -6,13 +6,14 @@ import React from 'react';
 import { RecoilRoot } from 'recoil';
 import { withRouter } from 'storybook-addon-react-router-v6';
 import { joinPath } from '../src/api/utils/http';
+import { BASE_URL } from '../src/config/environment';
 import handlers from '../src/mocks/handlers';
 import GlobalStyle from '../src/styles/GlobalStyle';
 import ResetStyle from '../src/styles/ResetStyle';
 
 initialize({
   serviceWorker: {
-    url: joinPath(import.meta.env.BASE_URL, 'mockServiceWorker.js'),
+    url: joinPath(BASE_URL, 'mockServiceWorker.js'),
   },
 });
 
