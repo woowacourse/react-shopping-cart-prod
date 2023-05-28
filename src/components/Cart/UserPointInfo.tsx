@@ -1,19 +1,38 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { api } from '../../apis/cartProducts';
 
 const UserPointInfo = () => {
+  const [userPoint, setUserPoint] = useState(0);
+  const [minUsagePoints, setMinUsagePoints] = useState(0);
+
+  useEffect(() => {
+    const fetchUserPoints = async () => {
+      const response = await await api('도기').then((apiInstance) => {
+        return apiInstance.fetchCartProducts();
+      });
+      setUserPoint(response.userPoint);
+      setMinUsagePoints(response.minUsagePoints);
+    };
+    fetchUserPoints();
+  }, []);
+
   return (
     <UserPointInfoContainer>
       <UserPointInfoTitle>포인트</UserPointInfoTitle>
       <PointContainer>
         <HeldPointWrapper>
           <HeldPointTitle>보유 포인트</HeldPointTitle>
-          <HeldPointAmount>0원</HeldPointAmount>
+          <HeldPointAmount>{userPoint.toLocaleString('KR')}원</HeldPointAmount>
         </HeldPointWrapper>
         <UsedPointWrapper>
           <label>사용 포인트</label>
           <PointInput />
           <span>원</span>
         </UsedPointWrapper>
+        <UsedPointGuide>
+          🔔 포인트는 3000원 이상부터 사용 가능합니다
+        </UsedPointGuide>
       </PointContainer>
     </UserPointInfoContainer>
   );
@@ -75,6 +94,13 @@ const PointInput = styled.input`
   &:focus {
     border-bottom: 1px solid ${({ theme }) => theme.colors.gray400};
   }
+`;
+
+const UsedPointGuide = styled.p`
+  margin: 10px 0 0 5px;
+  font-size: 14px;
+  font-weight: 400;
+  color: ${({ theme }) => theme.colors.gray200};
 `;
 
 export default UserPointInfo;
