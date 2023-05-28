@@ -3,6 +3,7 @@ import { USER_1 } from 'constants/basicKey';
 import { SERVER_OWNER } from 'constants/storeKey';
 import type { ServerOwner } from 'types/serverOwner';
 import getBasicKey from 'utils/getBasicKey';
+import store from 'utils/storage';
 
 export type ErrorResponse = {
   timestamp: string;
@@ -105,7 +106,7 @@ class API {
   }
 }
 
-const serverOwner = (localStorage.getItem(SERVER_OWNER) ?? '다즐') as ServerOwner;
+const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '다즐';
 const api = new API(BASE_URL[serverOwner]);
 
 export default api;

@@ -10,16 +10,18 @@ import SelectBox from 'components/@common/SelectBox/SelectBox';
 import { ServerOwner } from 'types/serverOwner';
 import BASE_URL from 'constants/apiBaseURL';
 import { SERVER_OWNER } from 'constants/storeKey';
+import store from 'utils/storage';
 
-const serverOwnerOptions = Object.entries(BASE_URL).map(([name, value]) => ({ name: name, value: name }));
+const serverOwnerOptions = Object.keys(BASE_URL).map((name) => ({ name: name, value: name }));
 
 const Header = ({ children }: PropsWithChildren) => {
   const cartProductCount = useRecoilValue(cartProductsState).size;
+  const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '다즐';
 
   const handleServerOwner = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as ServerOwner;
 
-    localStorage.setItem(SERVER_OWNER, value);
+    store.setStorage(SERVER_OWNER, value);
     window.location.reload();
   };
 
@@ -30,11 +32,7 @@ const Header = ({ children }: PropsWithChildren) => {
       </FlexLink>
 
       <FlexBox>
-        <SelectBox
-          value={(localStorage.getItem(SERVER_OWNER) ?? '다즐') as ServerOwner}
-          options={serverOwnerOptions}
-          onChange={handleServerOwner}
-        />
+        <SelectBox value={serverOwner} options={serverOwnerOptions} onChange={handleServerOwner} />
         <FlexLink to={ROUTE_PATH.CART}>
           <Cart />
           <CartProductCount>{cartProductCount}</CartProductCount>
