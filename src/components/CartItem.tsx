@@ -60,9 +60,7 @@ const CartItem = (item: CartProduct) => {
       <LastPart>
         <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
         <QuantityCounter itemId={item.product.id} lowerBound={1} />
-        <PriceBox>
-          {(item.product.price * item.quantity).toLocaleString()}원
-        </PriceBox>
+        <PriceBox>{item.product.price.toLocaleString()}원</PriceBox>
       </LastPart>
     </Wrapper>
   );
