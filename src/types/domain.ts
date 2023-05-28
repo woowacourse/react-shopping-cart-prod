@@ -15,3 +15,9 @@ export interface LocalProductType extends ProductType {
   quantity: number;
   cartItemId: number;
 }
+
+export interface ToastType {
+  type: "success" | "error";
+  isShown: boolean;
+  message: string;
+}

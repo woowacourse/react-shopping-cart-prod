@@ -1,5 +1,5 @@
 import { atom, selector } from "recoil";
-import { LocalProductType, ProductType } from "../types/domain";
+import { LocalProductType, ProductType, ToastType } from "../types/domain";
 import { fetchProducts } from "../api";
 import { makeLocalProducts } from "../utils/domain";
 
@@ -26,4 +26,13 @@ export const localProductsState = atom<LocalProductType[]>({
 export const selectedProductsState = atom<LocalProductType[]>({
   key: "selectedProducts",
   default: [],
+});
+
+export const toastState = atom<ToastType>({
+  key: "toastState",
+  default: {
+    type: "success",
+    isShown: false,
+    message: "",
+  },
 });
