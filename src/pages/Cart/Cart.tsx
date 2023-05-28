@@ -1,8 +1,8 @@
-import * as S from './Cart.style';
-import { CartItemList } from '@components/cart/CartItemList';
 import { Suspense } from 'react';
-import SkeletonCart from '@components/cart/SkeletonCartItemList/SkeletonCartItemList';
+import { CartItemList } from '@components/cart/CartItemList';
 import { ExpectedPayment } from '@components/cart/ExpectedPayment';
+import SkeletonCart from '@components/cart/SkeletonCartItemList/SkeletonCartItemList';
+import * as S from './Cart.style';
 
 function Cart() {
   return (

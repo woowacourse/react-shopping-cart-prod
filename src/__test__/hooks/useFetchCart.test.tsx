@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
-import { createCartItem, removeCartItem, updateCartItemQuantity } from '@utils/cart/cart';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
+import { createCartItem, removeCartItem, updateCartItemQuantity } from '@utils/cart/cart';
 import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
 import { CartItemType } from '@type/ProductType';
 import { server } from '../setupTests';
@@ -114,7 +114,7 @@ describe('useFetchCart 통신 테스트', () => {
 
     const { updateQuntityByCartItem } = result.current;
 
-    updateCartItemQuantity({ cartId, quantity: 40 });
+    updateQuntityByCartItem({ cartId, quantity: 40 });
 
     expect(cart[0].quantity).toBe(40);
   });

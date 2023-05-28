@@ -1,10 +1,10 @@
+import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import {
   addItemToCart,
   createCartItem,
   removeCartItem,
   updateCartItemQuantity,
 } from '@utils/cart/cart';
-import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { CartItemType } from '@type/ProductType';
 
 const cartId = 1;

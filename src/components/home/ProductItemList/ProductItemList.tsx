@@ -1,5 +1,5 @@
 import { useProductListReadOnly } from '@recoil/product/productListState';
-import { ProductItem } from 'components/home/ProductItem';
+import { ProductItem } from '@components/home/ProductItem';
 import { Column, Row } from '@styles/style';
 
 function ProductList() {

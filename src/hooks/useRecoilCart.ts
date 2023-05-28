@@ -51,7 +51,7 @@ export const useRecoilCart = () => {
     });
 
     setCart(clientCart);
-  }, [originData]);
+  }, [originData, setCart]);
 
   return {
     cart,

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
-import { CartItemContainer } from 'components/cart/CartItemBox/CartItemBox.style';
-import { PayingBox, PayingContainer } from 'components/cart/ExpectedPayment/ExpectedPayment.style';
+import { CartItemContainer } from '@components/cart/CartItemBox/CartItemBox.style';
+import { PayingBox, PayingContainer } from '@components/cart/ExpectedPayment/ExpectedPayment.style';
 import { CartWrapper } from '../CartItemList/CartItemList.style';
 
 export const SkeletonWrapper = CartWrapper;

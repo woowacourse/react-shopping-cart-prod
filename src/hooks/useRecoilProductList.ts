@@ -29,7 +29,7 @@ const useRecoilProductList = (): {
     });
 
     setProductList(clientProductList);
-  }, [originData]);
+  }, [originData, setProductList]);
 
   return { productList, isLoading, error };
 };

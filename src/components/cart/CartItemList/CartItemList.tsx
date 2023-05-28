@@ -1,6 +1,6 @@
 import { useCartList, useCheckCart } from '@recoil/cart/cartState';
-import { CartItemBox } from 'components/cart/CartItemBox';
-import { CheckBox } from 'components/common/CheckBox';
+import { CartItemBox } from '@components/cart/CartItemBox';
+import { CheckBox } from '@components/common/CheckBox';
 import * as S from './CartItemList.style';
 
 function CartItemList() {
