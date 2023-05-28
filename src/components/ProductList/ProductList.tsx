@@ -3,7 +3,7 @@ import * as styled from './ProductList.styled';
 import { useQuery } from '../../hooks/useQuery';
 import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
 
-import { Skeleton } from '../common/Skeleton/Skeleton';
+import { Skeleton } from './Skeleton/Skeleton';
 import { Product } from '../Product/Product';
 
 import { ProductType as IProduct } from '../../types';

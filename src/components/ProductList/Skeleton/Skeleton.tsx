@@ -4,10 +4,10 @@ export const Skeleton = () => {
   return (
     <styled.Skeleton>
       <styled.Image />
-      <div>
+      <styled.Info>
         <styled.Text />
         <styled.Text />
-      </div>
+      </styled.Info>
     </styled.Skeleton>
   );
 };

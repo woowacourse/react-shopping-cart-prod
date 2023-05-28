@@ -4,30 +4,28 @@ const StyledSkeleton = styled.div`
   background: linear-gradient(-90deg, #aaa, #f0f0f0, #aaa, #f0f0f0);
   background-size: 400%;
   animation: skeleton-animation 5s infinite ease-out;
-  border-radius: 8px;
+  border-radius: 4px;
 `;
 
 export const Skeleton = styled.div`
   display: flex;
   flex-direction: column;
-
-  @media screen and (max-width: 500px) {
-    margin-bottom: 45px;
-  }
 `;
 
 export const Image = styled(StyledSkeleton)`
-  width: 282px;
-  height: 282px;
+  width: 100%;
+  padding-bottom: 100%;
+`;
 
-  margin-bottom: 10px;
+export const Info = styled.div`
+  padding-top: 8px;
 `;
 
 export const Text = styled(StyledSkeleton)`
-  width: 160px;
-  height: 25px;
+  width: 140px;
+  height: 20px;
 
   &:not(:last-child) {
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
 `;
