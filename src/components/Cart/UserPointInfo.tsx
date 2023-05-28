@@ -1,14 +1,26 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { api } from '../../apis/cartProducts';
+import { useRecoilValue } from 'recoil';
+import { hostNameAtom } from '../../recoil/hostData';
 
 const UserPointInfo = () => {
+  const hostName = useRecoilValue(hostNameAtom);
   const [userPoint, setUserPoint] = useState(0);
   const [minUsagePoints, setMinUsagePoints] = useState(0);
 
+  const handleUsedPoint = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const userInputPoint = Number(e.target.value);
+
+    if (userInputPoint > userPoint) {
+      alert('사용할 수 있는 포인트를 초과하였습니다.');
+      e.target.value = '';
+    }
+  };
+
   useEffect(() => {
     const fetchUserPoints = async () => {
-      const response = await await api('도기').then((apiInstance) => {
+      const response = await await api(hostName).then((apiInstance) => {
         return apiInstance.fetchCartProducts();
       });
       setUserPoint(response.userPoint);
@@ -27,7 +39,7 @@ const UserPointInfo = () => {
         </HeldPointWrapper>
         <UsedPointWrapper>
           <label>사용 포인트</label>
-          <PointInput />
+          <PointInput onChange={handleUsedPoint} />
           <span>원</span>
         </UsedPointWrapper>
         <UsedPointGuide>
