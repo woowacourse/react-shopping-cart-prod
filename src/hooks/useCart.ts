@@ -11,7 +11,7 @@ const useCart = () => {
   const [cartList, setCartList] = useRecoilState($CartList(currentServerUrl));
   const setCheckedCartIdList = useSetRecoilState($CheckedCartIdList(currentServerUrl));
 
-  const addCartQuery = useMutation<Record<string, number>, CartItem>({
+  const { mutateQuery: addCartQuery, isLoading: addLoading } = useMutation<Record<string, number>, CartItem>({
     onSuccess: data => {
       const regex = /[^0-9]/g;
       const cartId = data?.headers.get('Location')?.replace(regex, '');
@@ -30,7 +30,7 @@ const useCart = () => {
     },
   });
 
-  const deleteCartQuery = useMutation<Record<string, number>, CartItem>({
+  const { mutateQuery: deleteCartQuery, isLoading: deleteLoading } = useMutation<Record<string, number>, CartItem>({
     onSuccess: data => {
       const regex = /(\d+)$/;
       const cartId = data?.fetchInformation.url.match(regex)?.at(1);
@@ -45,7 +45,7 @@ const useCart = () => {
     },
   });
 
-  const mutateQuantityQuery = useMutation<Record<string, number>, CartItem>({
+  const { mutateQuery: mutateQuantityQuery, isLoading: mutateLoading } = useMutation<Record<string, number>, CartItem>({
     onSuccess: data => {
       const regex = /(\d+)$/;
       const cartId = data?.fetchInformation.url.match(regex)?.at(1);
@@ -95,11 +95,14 @@ const useCart = () => {
     });
   };
 
+  const loading = addLoading || deleteLoading || mutateLoading;
+
   return {
     cartList,
     mutateQuantity,
     deleteCartItem,
     addCartItem,
+    loading,
   };
 };
 

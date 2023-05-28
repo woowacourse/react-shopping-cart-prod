@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FETCH_METHOD, MESSAGE } from '../constants';
 import { MutationFetchMethod } from '../types';
 
@@ -24,6 +25,8 @@ const useMutation = <BodyData, ResponseData>({
   onFailure,
   onSettled,
 }: UseMutationArg<BodyData, ResponseData>) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const mutateQuery = async (fetchInformation: FetchInformation<BodyData>) => {
     const { url, method, bodyData, headers } = fetchInformation;
 
@@ -31,7 +34,7 @@ const useMutation = <BodyData, ResponseData>({
 
     try {
       const response = await fetch(url, { method, body, headers });
-
+      setIsLoading(true);
       if (!response.ok) {
         throw new Error(MESSAGE.RESPONSE_NOT_OKAY);
       }
@@ -39,19 +42,24 @@ const useMutation = <BodyData, ResponseData>({
       if (method === FETCH_METHOD.DELETE || FETCH_METHOD.PATCH) {
         const data = await response.text();
         onSuccess?.({ response: data, headers: response.headers, fetchInformation });
+        setIsLoading(false);
       } else {
         const data: ResponseData = await response.json();
         onSuccess?.({ response: data, headers: response.headers, fetchInformation });
+        setIsLoading(false);
       }
     } catch (e) {
       if (e instanceof Error) {
+        setIsLoading(false);
+
         onFailure?.(e.message);
       }
     } finally {
       onSettled?.();
+      setIsLoading(false);
     }
   };
 
-  return mutateQuery;
+  return { mutateQuery, isLoading };
 };
 export default useMutation;
