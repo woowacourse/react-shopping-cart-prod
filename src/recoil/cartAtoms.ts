@@ -63,47 +63,9 @@ export const quantityByProductIdSelector = selectorFamily({
   key: "quantityByProductIdSelector",
   get:
     (productId: number) =>
-    ({ get }) => {
-      const cartList = get(cartState);
-      const targetCart = cartList.find((cart) => cart.product.id === productId);
-      return targetCart?.quantity ?? 0;
-    },
-});
-
-export const switchCartCheckboxSelector = selector<number>({
-  key: "switchCartCheckboxSelector",
-  get: () => {
-    // 오류 방지를 위해 아무 값이나 리턴
-    return -1;
-  },
-  set: ({ get, set }, id) => {
-    const cartList = [...get(cartState)];
-    const targetIndex = cartList.findIndex(
-      (cartItem) => cartItem.id === (id as number)
-    );
-    const targetCart = cartList[targetIndex];
-    const updatedCart = {
-      ...targetCart,
-      checked: !targetCart.checked,
-    };
-    cartList[targetIndex] = updatedCart;
-    set(cartState, cartList);
-  },
-});
-
-export const switchAllCartCheckboxSelector = selector<undefined>({
-  key: "switchAllCartCheckboxSelector",
-  get: () => {
-    // 오류 방지를 위해 아무 값이나 리턴
-    return undefined;
-  },
-  set: ({ get, set }) => {
-    const cartList = [...get(cartState)];
-    const isAllCartItemChecked = get(allCartCheckedSelector);
-    const newCartList = cartList.map((cartItem: ReceivedCartItem) => ({
-      ...cartItem,
-      checked: !isAllCartItemChecked,
-    }));
-    set(cartState, newCartList);
-  },
+      ({ get }) => {
+        const cartList = get(cartState);
+        const targetCart = cartList.find((cart) => cart.product.id === productId);
+        return targetCart?.quantity ?? 0;
+      },
 });
