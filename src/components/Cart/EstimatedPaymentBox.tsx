@@ -8,7 +8,7 @@ import {
   STANDARD_DELIVERY_FEE,
 } from '../../constants/price';
 
-const EstimatedPaymentBox = () => {
+const EstimatedPaymentBox = ({ userUsedPoint }: any) => {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const deliveryPrice =
     totalPrice === 0 || totalPrice >= FREE_DELIVERY_THRESHOLD
@@ -35,7 +35,7 @@ const EstimatedPaymentBox = () => {
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>포인트 사용 금액</dt>
-          <dd>0원</dd>
+          <dd>{userUsedPoint.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>총 주문금액</dt>
@@ -51,7 +51,7 @@ const EstimatedPaymentBox = () => {
 
 const EstimatedPaymentBoxContainer = styled.div`
   width: 448px;
-  height: 510px;
+  height: 480px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
 
   @media (max-width: 420px) {
@@ -64,11 +64,11 @@ const EstimatedPaymentTitle = styled.div`
   height: 71px;
   padding: 25px 0 20px 30px;
   border-bottom: 3px solid ${({ theme }) => theme.colors.gray100};
-  font-size: 22px;
+  font-size: 20px;
 `;
 
 const EstimatedPaymentContent = styled.div`
-  padding: 30px 30px 0;
+  padding: 20px 30px 0;
 
   & > :nth-child(3),
   & > :nth-child(5) {
@@ -81,7 +81,7 @@ const EstimatedPaymentInfo = styled.dl`
   justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.5px;
 `;
