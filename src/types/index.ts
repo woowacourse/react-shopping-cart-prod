@@ -1,3 +1,5 @@
+import { RANK } from '../constants/member';
+
 interface ProductItemData {
   id: number;
   name: string;
@@ -38,9 +40,11 @@ interface Member {
   password: string;
 }
 
+type MemberRank = (typeof RANK)[number];
+
 interface MemberInformation {
   id: number;
-  rank: string;
+  rank: MemberRank;
   discountRate: number;
 }
 
@@ -52,5 +56,6 @@ export type {
   OrderedItemData,
   OrderData,
   Member,
+  MemberRank,
   MemberInformation,
 };
