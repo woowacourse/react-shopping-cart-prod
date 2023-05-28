@@ -8,7 +8,7 @@ import CartItemRemoteState from '../remotes/CartItemRemoteState';
 /**
  * remote로 부터 데이터를 받아 동기화하는 간격을 설정합니다. 단위: ms
  */
-const SYNC_INTERVAL = 10_000;
+const SYNC_INTERVAL = 30_000;
 
 /**
  * cartItems를 remote와 동기화하는 AtomEffect입니다.
