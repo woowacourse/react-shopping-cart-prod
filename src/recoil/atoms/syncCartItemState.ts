@@ -1,22 +1,23 @@
 import { DefaultValue, atomFamily, selectorFamily } from 'recoil';
-import type Client from '../../api/Client';
+import type RestClient from '../../api/RestClient';
 import type {
   CartItemEntity,
   ProductEntity,
   ShoppingCartRestAPI,
 } from '../../api/rest/ShoppingCartRestAPI';
-import type { CartItem, Product } from '../../type';
+import type { CartItem } from '../../types/CartItem';
+import type { Product } from '../../types/Product';
 import cartItemsQuery from '../queries/cartItemsQuery';
 
 type SyncCartItemStateKeyEntry = Readonly<{
-  client: Client<ShoppingCartRestAPI>;
+  client: RestClient<ShoppingCartRestAPI>;
   productId: Product['id'];
 }>;
 
 const syncCartItemStateKeyEntries: Array<SyncCartItemStateKeyEntry> = [];
 
 export const syncCartItemStateKey = (
-  client: Client<ShoppingCartRestAPI>,
+  client: RestClient<ShoppingCartRestAPI>,
   productId: Product['id'],
 ) => {
   const foundEntry =
@@ -38,7 +39,7 @@ type SyncCartItem = {
 };
 
 type SyncCartItemState = {
-  client: Client<ShoppingCartRestAPI>;
+  client: RestClient<ShoppingCartRestAPI>;
   semaphore: Promise<unknown> | null;
   state: Pick<SyncCartItem, 'productId'> | SyncCartItem;
   enqueuedUpdates: Array<Partial<SyncCartItem> | null>;

@@ -1,9 +1,4 @@
-export type Product = {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
-};
+import type { Product } from './Product';
 
 export type CartItem = {
   quantity: number;
