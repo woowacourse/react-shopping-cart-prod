@@ -97,11 +97,7 @@ export const ProductListInCart = () => {
   );
 };
 
-export const NothingInCart = () => {
-  localStorage.clear();
-
-  return <SelectedProductList />;
-};
+export const NothingInCart = () => <SelectedProductList productCountInCart={0} />;
 
 const S = {
   Wrapper: styled.section`

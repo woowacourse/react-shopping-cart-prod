@@ -5,22 +5,18 @@ import { CART_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
 import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
 import { cartState, checkedItemList, serverState } from '../../recoil';
+import { CartItem } from '../../types';
 import Button from '../common/Button';
-import Spinner from '../common/Spinner';
 import { Checkbox } from './CheckboxStyle';
 import SelectedProductItem from './SelectedProductItem';
 
-const SelectedProductList = () => {
+const SelectedProductList = ({ productCountInCart }: { productCountInCart: number }) => {
   const [cart, setCart] = useRecoilState(cartState);
   const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
   const removeCheckedItemsFromCart = useRemoveCheckedItemsFromCart(checkedItems);
   const server = useRecoilValue(serverState);
-  const { api, isLoading } = useFetchData();
-
-  useEffect(() => {
-    setCheckedItems(initialCheckedItems);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { api } = useFetchData();
+  const initialCheckedItems = cart.map((item) => item.id);
 
   useEffect(() => {
     api
@@ -30,15 +26,13 @@ const SelectedProductList = () => {
       })
       .then((data) => {
         setCart(data);
+        setCheckedItems(data.map((item: CartItem) => item.id));
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
-  const productCountInCart = cart.length;
   const isAllChecked = checkedItems.length === productCountInCart && productCountInCart !== 0;
-
-  const initialCheckedItems = cart.map((item) => item.id);
 
   const handleAllItemsCheck = () => {
     isAllChecked ? setCheckedItems([]) : setCheckedItems(initialCheckedItems);
@@ -48,8 +42,6 @@ const SelectedProductList = () => {
     removeCheckedItemsFromCart();
     setCheckedItems([]);
   };
-
-  if (isLoading) return <Spinner />;
 
   return (
     <S.Wrapper>

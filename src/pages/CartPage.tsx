@@ -1,14 +1,36 @@
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Order from '../components/cart/Order';
 import SelectedProductList from '../components/cart/SelectedProductList';
+import Spinner from '../components/common/Spinner';
 import { ROUTE_PATH } from '../constants';
-import { cartState } from '../recoil';
+import { CART_URL } from '../constants/url';
+import { useFetchData } from '../hooks/useFetchData';
+import { cartState, serverState } from '../recoil';
 
 const CartPage = () => {
-  const cart = useRecoilValue(cartState);
+  const [cart, setCart] = useRecoilState(cartState);
   const productCountInCart = cart.length;
+
+  const server = useRecoilValue(serverState);
+  const { api, isLoading } = useFetchData();
+
+  useEffect(() => {
+    api
+      .get(`${server}${CART_URL}`, {
+        Authorization: 'Basic YUBhLmNvbToxMjM0',
+        'Content-Type': 'application/json',
+      })
+      .then((data) => {
+        setCart(data);
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [server]);
+
+  if (isLoading) return <Spinner />;
 
   if (productCountInCart === 0)
     return (
@@ -26,7 +48,7 @@ const CartPage = () => {
       <S.Main>
         <S.Title>장바구니</S.Title>
         <S.Wrapper>
-          <SelectedProductList />
+          <SelectedProductList productCountInCart={productCountInCart} />
           <Order />
         </S.Wrapper>
       </S.Main>
