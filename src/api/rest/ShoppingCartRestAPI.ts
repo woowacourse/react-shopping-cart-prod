@@ -84,7 +84,10 @@ type CartItemsRestAPI =
     }
   | {
       request: HttpRequest<'POST', '/cart-items', never, { productId: number }>;
-      response: HttpResponse<201> | HttpErrorResponse<404> | HttpErrorResponse<409>;
+      response:
+        | HttpResponse<201, { quantity: number; checked: boolean }>
+        | HttpErrorResponse<404>
+        | HttpErrorResponse<409>;
     }
   | {
       request: HttpRequest<
@@ -93,11 +96,11 @@ type CartItemsRestAPI =
         never,
         { quantity: number; checked: boolean }
       >;
-      response: HttpResponse<200, { quantity: number; checked: boolean }> | HttpErrorResponse<400>;
+      response: HttpResponse<200, { quantity: number; checked: boolean }> | HttpErrorResponse<404>;
     }
   | {
       request: HttpRequest<'DELETE', '/cart-items/:cartItemId'>;
-      response: HttpResponse<204> | HttpErrorResponse<400>;
+      response: HttpResponse<204> | HttpErrorResponse<404>;
     };
 
 type CartPointsRestAPI = {
