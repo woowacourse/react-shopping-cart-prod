@@ -31,7 +31,40 @@ const CheckoutInformationTextContainer = styled.div`
 `;
 
 const CheckoutValueText = styled(Text)`
-  letter-spacing: -0.2pz;
+  letter-spacing: -0.2px;
+`;
+
+const CheckoutInformationSubTextContainer = styled.div`
+  margin-bottom: ${({ theme }) => theme.spacer.spacing3};
+  display: flex;
+  justify-content: space-between;
+
+  & > * {
+    color: ${({ theme }) => theme.color.gray4};
+  }
+`;
+
+const CheckoutMembershipDiscountInformation = styled.div`
+  margin-bottom: ${({ theme }) => theme.spacer.spacing4};
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: ${({ theme }) => theme.spacer.spacing2};
+
+  & > span {
+    color: ${({ theme }) => theme.color.gray4};
+  }
+`;
+
+const MembershipRank = styled.span`
+  margin-right: ${({ theme }) => theme.spacer.spacing1};
+  padding: 0px 6px;
+  color: ${({ theme }) => theme.color.primary} !important;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 18px;
+  border-radius: 10px;
+  border: 1px solid ${({ theme }) => theme.color.primary};
 `;
 
 const CheckoutTotalPriceContainer = styled(CheckoutInformationTextContainer)`
@@ -47,6 +80,9 @@ export {
   CheckoutInformationContainer,
   CheckoutInformationTextContainer,
   CheckoutTotalPriceContainer,
+  CheckoutInformationSubTextContainer,
+  CheckoutMembershipDiscountInformation,
+  MembershipRank,
   CheckoutValueText,
   CheckoutTotalPriceValueText,
 };

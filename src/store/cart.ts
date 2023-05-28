@@ -6,11 +6,11 @@ import { CART_LIST_CHECKBOX_KEY } from '../constants/store';
 import { changeCartItemQuantity } from '../domain/cart';
 import { CartItemData } from '../types';
 import { checkedListState } from './checkbox';
-import { currentMemberState } from './member';
+import { currentMemberInformationState, currentMemberState } from './member';
 import { currentServerState } from './server';
 
 const cartListQuery = selector({
-  key: 'cartList/default',
+  key: 'cartListQuery',
   get: ({ get }) => {
     const currentServer = get(currentServerState);
     const currentMember = get(currentMemberState);
@@ -88,6 +88,47 @@ const cartListSubTotalState = selector({
   },
 });
 
+const cartListTotalItemDiscountAmountState = selector<number>({
+  key: 'cartListItemDiscountAmount',
+  get: ({ get }) => {
+    const cartList = get(cartListState);
+    const checkedCartItemList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
+
+    const totalItemDiscountAmount = cartList
+      .filter((cartItem) => checkedCartItemList.has(cartItem.id))
+      .reduce((acc, curr) => {
+        if (curr.product.discountRate > 0) {
+          return acc + curr.quantity * curr.product.price * (curr.product.discountRate / 100);
+        }
+
+        return acc;
+      }, 0);
+
+    return totalItemDiscountAmount;
+  },
+});
+
+const cartListMemberDiscountAmountState = selector<number>({
+  key: 'cartListMemberDiscountAmount',
+  get: ({ get }) => {
+    const cartList = get(cartListState);
+    const checkedCartItemList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
+    const memberInformation = get(currentMemberInformationState);
+
+    const memberDiscountAmount = cartList
+      .filter((cartItem) => checkedCartItemList.has(cartItem.id))
+      .reduce((acc, curr) => {
+        if (memberInformation.rank === '일반' || curr.product.discountRate > 0) {
+          return acc;
+        }
+
+        return acc + curr.quantity * curr.product.price * (memberInformation.discountRate / 100);
+      }, 0);
+
+    return memberDiscountAmount;
+  },
+});
+
 export {
   cartListQuery,
   cartListState,
@@ -96,4 +137,6 @@ export {
   cartListItemCountState,
   cartItemQuantityState,
   cartListSubTotalState,
+  cartListTotalItemDiscountAmountState,
+  cartListMemberDiscountAmountState,
 };

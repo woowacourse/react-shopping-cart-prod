@@ -4,8 +4,13 @@ import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import { SHIPPING_FEE } from '../../../constants';
 import { CART_LIST_CHECKBOX_KEY } from '../../../constants/store';
 import { useCart } from '../../../hooks/useCart';
-import { cartListSubTotalState } from '../../../store/cart';
+import {
+  cartListMemberDiscountAmountState,
+  cartListSubTotalState,
+  cartListTotalItemDiscountAmountState,
+} from '../../../store/cart';
 import { checkedListState } from '../../../store/checkbox';
+import { currentMemberInformationState } from '../../../store/member';
 import { priceFormatter } from '../../../utils/formatter';
 import Button from '../../common/Button/Button';
 import Spinner from '../../common/Spinner/Spinner';
@@ -13,15 +18,24 @@ import { Text } from '../../common/Text/Text.styles';
 import * as S from './CartCheckoutBox.styles';
 
 const CartCheckoutBox = () => {
-  const cartListSubTotal = useRecoilValueLoadable(cartListSubTotalState);
   const checkedIdList = useRecoilValue(checkedListState(CART_LIST_CHECKBOX_KEY));
+  const cartListSubTotal = useRecoilValueLoadable(cartListSubTotalState);
+  const cartListTotalItemDiscountAmount = useRecoilValueLoadable(
+    cartListTotalItemDiscountAmountState
+  );
+  const cartListMemberDiscountAmount = useRecoilValueLoadable(cartListMemberDiscountAmountState);
+  const memberInformation = useRecoilValueLoadable(currentMemberInformationState);
   const { orderCheckedItems } = useCart();
 
   const isLoading = cartListSubTotal.state === 'loading';
   const isCartEmpty = cartListSubTotal.contents === 0;
   const subTotal = cartListSubTotal.contents > 0 ? cartListSubTotal.contents : 0;
+  const totalItemDiscountAmount =
+    cartListTotalItemDiscountAmount.contents > 0 ? -cartListTotalItemDiscountAmount.contents : 0;
+  const memberDiscountAmount =
+    cartListMemberDiscountAmount.contents > 0 ? -cartListMemberDiscountAmount.contents : 0;
   const shippingFee = cartListSubTotal.contents > 0 ? SHIPPING_FEE : 0;
-  const totalPrice = subTotal + shippingFee ?? 0;
+  const totalPrice = subTotal - totalItemDiscountAmount - memberDiscountAmount + shippingFee ?? 0;
 
   const handleOrder = useCallback(() => {
     orderCheckedItems([...checkedIdList]);
@@ -31,15 +45,33 @@ const CartCheckoutBox = () => {
     <S.CartCheckoutBoxWrapper>
       <S.CheckoutInformationContainer>
         <S.CheckoutInformationTextContainer>
-          <Text>총 상품 가격</Text>
+          <Text>상품 금액</Text>
           <S.CheckoutValueText>{priceFormatter(subTotal)}원</S.CheckoutValueText>
         </S.CheckoutInformationTextContainer>
+        <S.CheckoutInformationSubTextContainer>
+          <Text size="small">&#8735; 상품 할인 금액</Text>
+          <S.CheckoutValueText size="small">
+            {priceFormatter(totalItemDiscountAmount)}원
+          </S.CheckoutValueText>
+        </S.CheckoutInformationSubTextContainer>
+        <S.CheckoutInformationSubTextContainer>
+          <Text size="small">&#8735; 등급 할인 금액</Text>
+          <S.CheckoutValueText size="small">
+            {priceFormatter(memberDiscountAmount)}원
+          </S.CheckoutValueText>
+        </S.CheckoutInformationSubTextContainer>
+        <S.CheckoutMembershipDiscountInformation>
+          <S.MembershipRank>{memberInformation.contents.rank ?? ''}</S.MembershipRank>
+          <Text size="small" as="span">
+            {memberInformation.contents.discountRate ?? 0}% 할인
+          </Text>
+        </S.CheckoutMembershipDiscountInformation>
         <S.CheckoutInformationTextContainer>
-          <Text>총 배송비</Text>
+          <Text>배송비</Text>
           <S.CheckoutValueText>{priceFormatter(shippingFee)}원</S.CheckoutValueText>
         </S.CheckoutInformationTextContainer>
         <S.CheckoutTotalPriceContainer>
-          <Text>결제 예상 금액</Text>
+          <Text>결제 예정 금액</Text>
           <S.CheckoutTotalPriceValueText>
             {priceFormatter(totalPrice)}원
           </S.CheckoutTotalPriceValueText>
