@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import ProductListItem from '../components/ProductListItem';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import productsState from '../recoil/atoms/productsState';
-import type { Product } from '../type';
+import type { Product } from '../types/Product';
 
 const ProductListContainer = styled.ul`
   display: grid;

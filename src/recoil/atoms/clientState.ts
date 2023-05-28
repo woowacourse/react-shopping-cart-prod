@@ -1,13 +1,12 @@
 import { selector } from 'recoil';
-import Client from '../../api/Client';
-import type { ShoppingCartRestAPI } from '../../api/rest/ShoppingCartRestAPI';
+import { Client } from '../../api';
 import serverState from './serverState';
 
 const clientState = selector({
   key: 'clientState',
   get: ({ get }) => {
     const server = get(serverState);
-    const client = new Client<ShoppingCartRestAPI>({
+    const client = new Client({
       base: server.base,
     });
 

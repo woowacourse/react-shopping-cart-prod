@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import CartIcon from '../assets/icons/cart.svg';
 import useCartActions from '../hooks/useCartActions';
 import cartItemsState from '../recoil/atoms/cartItemsState';
-import type { Product } from '../type';
+import type { Product } from '../types/Product';
 import Stepper from './common/Stepper';
 
 const ProductListItemContainer = styled.div`

@@ -1,11 +1,11 @@
 import { atomFamily, selector } from 'recoil';
-import type Client from '../../api/Client';
+import type RestClient from '../../api/RestClient';
 import type { ShoppingCartRestAPI } from '../../api/rest/ShoppingCartRestAPI';
-import type { Product } from '../../type';
+import type { Product } from '../../types/Product';
 import productsQuery from '../queries/productsQuery';
 import clientState from './clientState';
 
-const localProductsState = atomFamily<Product[], Client<ShoppingCartRestAPI>>({
+const localProductsState = atomFamily<Product[], RestClient<ShoppingCartRestAPI>>({
   key: 'localProductsState',
   default: productsQuery,
 });

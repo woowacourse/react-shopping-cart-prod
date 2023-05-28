@@ -1,6 +1,6 @@
 import { useRecoilCallback } from 'recoil';
 import cartItemsState from '../recoil/atoms/cartItemsState';
-import type { Product } from '../type';
+import type { Product } from '../types/Product';
 
 const useCartActions = () => {
   const setQuantity = useRecoilCallback(({ set }) => (product: Product, quantity: number) => {

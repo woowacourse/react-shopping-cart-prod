@@ -7,7 +7,7 @@ import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import useCartActions from '../hooks/useCartActions';
 import useCartOrder from '../hooks/useCartOrder';
 import cartItemsState from '../recoil/atoms/cartItemsState';
-import type { CartItem } from '../type';
+import type { CartItem } from '../types/CartItem';
 
 const Header = styled.header`
   padding-bottom: 32px;

@@ -1,5 +1,5 @@
 // eslint-disable-next-line max-classes-per-file
-import ClientResponse from './ClientResponse';
+import RestClientResponse from './RestClientResponse';
 import type {
   ExtractBodyFromRestAPI,
   ExtractPathFromRestAPI,
@@ -10,12 +10,12 @@ import PathGenerator from './utils/PathGenerator';
 import type { HttpMethod } from './utils/http';
 import { joinPath } from './utils/http';
 
-type ClientOptions = {
+type RestClientOptions = {
   base?: string;
 };
 
-class Client<TRestAPI extends RestAPI> {
-  constructor(private readonly options: ClientOptions = {}) {}
+class RestClient<TRestAPI extends RestAPI> {
+  constructor(private readonly options: RestClientOptions = {}) {}
 
   private getUrl(path: string) {
     return joinPath(this.options.base ?? '', path);
@@ -42,7 +42,7 @@ class Client<TRestAPI extends RestAPI> {
     path: Path | PathGenerator<TRestAPI, 'GET', Path>,
     init?: RequestInit,
   ) {
-    return new ClientResponse<ExtractResponseFromRestAPI<TRestAPI, Method, Path>>(async () => {
+    return new RestClientResponse<ExtractResponseFromRestAPI<TRestAPI, Method, Path>>(async () => {
       const response = await fetch(this.getUrl(path.toString()), {
         method,
         ...init,
@@ -104,4 +104,4 @@ class Client<TRestAPI extends RestAPI> {
   }
 }
 
-export default Client;
+export default RestClient;

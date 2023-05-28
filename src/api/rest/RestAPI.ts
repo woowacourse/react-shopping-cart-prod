@@ -15,7 +15,19 @@ export interface HttpRequest<
 
 export interface HttpResponse<
   StatusCode extends number = number,
-  Data = unknown,
+  Data extends Record<string, unknown> | string | number | null | undefined | unknown = any,
+  Headers extends Record<string, string> = Record<string, string>,
+> {
+  statusCode: StatusCode;
+  data: Data;
+  headers: Headers;
+}
+
+export interface HttpErrorResponse<
+  StatusCode extends number = number,
+  Data extends Record<string, unknown> | string | number | null | undefined | unknown = {
+    message: string;
+  },
   Headers extends Record<string, string> = Record<string, string>,
 > {
   statusCode: StatusCode;

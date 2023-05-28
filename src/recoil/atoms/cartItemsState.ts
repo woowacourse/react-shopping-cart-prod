@@ -1,17 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import { atom, atomFamily, DefaultValue, selector } from 'recoil';
-import type Client from '../../api/Client';
-import type { ShoppingCartRestAPI } from '../../api/rest/ShoppingCartRestAPI';
-import type { CartItem } from '../../type';
+import type { Client } from '../../api';
+import type { CartItem } from '../../types/CartItem';
 import localStorageEffect from '../effects/localStorageEffect';
 import cartItemsQuery from '../queries/cartItemsQuery';
 import clientState from './clientState';
 import syncCartItemState, { syncCartItemStateKey } from './syncCartItemState';
 
-const localCartItemsState = atomFamily<
-  Omit<CartItem, 'unselectedForOrder'>[],
-  Client<ShoppingCartRestAPI>
->({
+const localCartItemsState = atomFamily<Omit<CartItem, 'unselectedForOrder'>[], Client>({
   key: 'localCartItemsState',
   default: cartItemsQuery,
 });
