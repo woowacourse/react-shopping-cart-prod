@@ -52,8 +52,8 @@ const PriceSection = styled(FlexBox)`
   width: 40%;
   margin-top: 60px;
   padding: 20px 26px;
-  border: 1px solid #dddddd;
-  background-color: #f2f2f2;
+  border: 1px solid var(--color-grayscale-200);
+  background-color: var(--color-grayscale-100);
 
   @media (max-width: 1280px) {
     span {
@@ -81,7 +81,7 @@ const PriceSection = styled(FlexBox)`
 const Container = styled(FlexBox)`
   width: 100%;
   height: 50px;
-  border-bottom: solid 1px #dddddd;
+  border-bottom: solid 1px var(--color-grayscale-200);
 `;
 
 const SubTitle = styled.span`
@@ -109,12 +109,13 @@ const OrderConfirmButton = styled.button<{ isActive: boolean }>`
   height: 50px;
   margin-top: 20px;
   border: none;
-  color: ${({ isActive }) => (isActive ? '#fff' : '#b1b3b5')};
+  color: ${({ isActive }) => (isActive ? 'var(--color-pure-white)' : 'var(--color-grayscale-500)')};
   font-size: 18px;
   font-weight: 700;
-  background-color: ${({ isActive }) => (isActive ? 'var(--color-primary-tone-down)' : '#0000000d')};
+  background-color: ${({ isActive }) => (isActive ? 'var(--color-primary-tone-down)' : 'var(--color-grayscale-200)')};
   cursor: pointer;
   pointer-events: ${({ isActive }) => (isActive ? 'initial' : 'none')};
+  user-select: none;
 
   :hover {
     filter: brightness(1.2);

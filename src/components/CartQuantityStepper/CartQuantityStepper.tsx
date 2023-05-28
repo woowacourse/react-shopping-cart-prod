@@ -90,7 +90,7 @@ const DecreaseButton = styled.button`
   border: none;
   border-radius: 50%;
   background-color: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-pure-white);
   font-size: 26px;
   line-height: 20px;
 
@@ -110,7 +110,7 @@ const IncreaseButton = styled.button`
   border: none;
   border-radius: 50%;
   background-color: var(--color-primary);
-  color: #ffffff;
+  color: var(--color-pure-white);
   font-size: 26px;
   line-height: 20px;
 

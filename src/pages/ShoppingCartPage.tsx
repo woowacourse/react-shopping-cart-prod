@@ -47,14 +47,14 @@ const SectionContainer = styled(FlexBox)`
 const PageTitle = styled.h2`
   width: 100%;
   height: 80px;
-  border-bottom: 3px solid #333333;
+  border-bottom: 3px solid var(--color-grayscale-500);
   font-size: 32px;
   text-align: center;
 `;
 
 const EmptyCartImgBackground = styled(FlexBox)`
   width: 100%;
-  background-color: #f2f2f2;
+  background-color: var(--color-grayscale-100);
   padding: 20px 0;
 `;
 
@@ -75,9 +75,9 @@ const GoHomeLink = styled(Link)`
   width: 150px;
   height: 50px;
   border-radius: 4px;
-  background-color: #63cbff;
+  background-color: var(--color-primary);
   font-size: 16px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-pure-white);
   cursor: pointer;
 `;

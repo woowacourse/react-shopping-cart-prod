@@ -20,7 +20,7 @@ export default LoadingErrorCard;
 
 const ErrorImgBackground = styled(FlexBox)`
   padding: 30px 0;
-  background-color: #f2f2f2;
+  background-color: var(--color-grayscale-100);
 `;
 
 const ErrorImg = styled.img`
@@ -41,9 +41,9 @@ const RetryButton = styled.button`
   height: 50px;
   border: none;
   border-radius: 4px;
-  background-color: #63cbff;
+  background-color: var(--color-primary);
   font-size: 16px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--color-pure-white);
   cursor: pointer;
 `;

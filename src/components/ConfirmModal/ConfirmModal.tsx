@@ -47,10 +47,10 @@ const MessageWrapper = styled.div`
 const ButtonContainer = styled(FlexBox)`
   width: 100%;
   height: 50px;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid var(--color-grayscale-200);
 
   button:first-child {
-    border-right: 1px solid #eeeeee;
+    border-right: 1px solid var(--color-grayscale-200);
   }
 `;
 

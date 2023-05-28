@@ -52,17 +52,17 @@ const CheckBoxTab = styled(FlexBox)`
   width: 100%;
   height: 60px;
   padding-bottom: 10px;
-  border-bottom: 3px solid #dddddd;
-  background-color: #ffffff;
+  border-bottom: 3px solid var(--color-grayscale-200);
+  background-color: var(--color-pure-white);
 `;
 
 const CheckedProductDeleteButton = styled.button`
   width: 100px;
   height: 30px;
-  border: solid 1px #dddddd;
+  border: solid 1px var(--color-grayscale-300);
   border-radius: 4px;
   font-size: 16px;
   font-weight: 700;
-  background-color: #f2f2f2;
+  background-color: var(--color-grayscale-100);
   cursor: pointer;
 `;

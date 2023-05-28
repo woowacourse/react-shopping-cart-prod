@@ -75,7 +75,7 @@ const CartProductCardContainer = styled(FlexBox)`
   width: 100%;
   height: 100%;
   padding: 20px 0;
-  border-top: 1px solid #dddddd;
+  border-top: 1px solid var(--color-grayscale-200);
 `;
 
 const ProductImageWrapper = styled.div`
