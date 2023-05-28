@@ -28,7 +28,7 @@ export const couponListState = atom<Coupon[]>({
   default: getProductList,
 });
 
-export const changeSelectSelector = selectorFamily({
+export const selectedCoupon = selectorFamily({
   key: "cartCouponSelector",
   get: () => {
     return ({ get }) => {
