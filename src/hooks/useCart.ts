@@ -6,7 +6,6 @@ import HTTPError from '../api/HTTPError';
 import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getCartAPI } from '../api/cartAPI';
 import { postOrder } from '../api/orderAPI';
-import { TOAST_SHOW_DURATION } from '../constants';
 import {
   CART_API_ERROR_MESSAGE,
   HTTP_STATUS_CODE,

@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily } from 'recoil';
+import { selector, selectorFamily } from 'recoil';
 
 import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getMemberAPI } from '../api/memberAPI';
@@ -6,8 +6,8 @@ import { OrderData } from '../types';
 import { currentMemberInformationState, currentMemberState } from './member';
 import { currentServerState } from './server';
 
-const orderListQuery = selector<OrderData[]>({
-  key: 'orderListQuery',
+const orderListState = selector<OrderData[]>({
+  key: 'orderList',
   get: ({ get }) => {
     const currentServer = get(currentServerState);
     const currentMember = get(currentMemberState);
@@ -16,13 +16,8 @@ const orderListQuery = selector<OrderData[]>({
     const memberAPI = getMemberAPI(currentServer, authorizedHeaders);
     const currentMemberInformation = get(currentMemberInformationState);
 
-    return memberAPI.getMemberOrders(currentMemberInformation.id);
+    return memberAPI.getMemberOrderList(currentMemberInformation.id);
   },
-});
-
-const orderListState = atom<OrderData[]>({
-  key: 'orderList',
-  default: orderListQuery,
 });
 
 const orderState = selectorFamily<OrderData | null, number>({
@@ -32,8 +27,6 @@ const orderState = selectorFamily<OrderData | null, number>({
     ({ get }) => {
       const orderList = get(orderListState);
       const orderItem = orderList.find((orderItem) => orderItem.id === orderId);
-
-      console.log(orderItem);
 
       return orderItem ?? null;
     },
