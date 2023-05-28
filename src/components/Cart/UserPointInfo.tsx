@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { api } from '../../apis/cartProducts';
 import { useRecoilValue } from 'recoil';
 import { hostNameAtom } from '../../recoil/hostData';
+import { api } from '../../apis/cartProducts';
 
 const UserPointInfo = () => {
   const hostName = useRecoilValue(hostNameAtom);
   const [userPoint, setUserPoint] = useState(0);
   const [minUsagePoints, setMinUsagePoints] = useState(0);
+  const isInputDisabled = userPoint < minUsagePoints;
 
   const handleUsedPoint = (e: React.ChangeEvent<HTMLInputElement>) => {
     const onlyNumbersRegex = /[^0-9]/g;
@@ -42,11 +43,12 @@ const UserPointInfo = () => {
         </HeldPointWrapper>
         <UsedPointWrapper>
           <label>사용 포인트</label>
-          <PointInput onChange={handleUsedPoint} />
+          <PointInput onChange={handleUsedPoint} disabled={isInputDisabled} />
           <span>원</span>
         </UsedPointWrapper>
         <UsedPointGuide>
-          🔔 포인트는 3000원 이상부터 사용 가능합니다
+          🔔 포인트는 {minUsagePoints.toLocaleString('KR')}원 이상부터 사용
+          가능합니다
         </UsedPointGuide>
       </PointContainer>
     </UserPointInfoContainer>
