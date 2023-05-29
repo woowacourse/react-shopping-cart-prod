@@ -8,6 +8,7 @@ import router from "./router";
 import { RecoilRoot } from "recoil";
 import "./configs/recoil";
 import { worker } from "./mocks/browser";
+import ModalContainer from "./containers/ModalContainer";
 
 async function main() {
   await worker.start({
@@ -23,6 +24,7 @@ async function main() {
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <RouterProvider router={router} />
+          <ModalContainer />
         </ThemeProvider>
       </RecoilRoot>
     </React.StrictMode>
