@@ -1,14 +1,14 @@
 import { StoryFn, Meta } from "@storybook/react";
-import OrderItem from "components/OrderItem";
+import OrderItemList from "components/OrderItemList";
 
 export default {
-  title: "OrderItem",
-  component: OrderItem,
+  title: "OrderItemList",
+  component: OrderItemList,
   decorators: [(StoryFn) => <div style={{ width: "500px" }}>{StoryFn()}</div>],
 } as Meta;
 
 const Template: StoryFn = () => {
-  const item = {
+  const items = {
     quantity: 1,
     couponId: [1],
     product: {
@@ -20,6 +20,6 @@ const Template: StoryFn = () => {
     },
   };
 
-  return <OrderItem item={item} />;
+  return <OrderItemList items={[items]} />;
 };
-export const DefaultOrderItem = Template.bind({});
+export const DefaultOrderItemList = Template.bind({});
