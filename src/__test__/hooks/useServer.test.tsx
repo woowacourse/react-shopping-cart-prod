@@ -2,7 +2,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { RecoilRoot } from 'recoil';
 import { SERVER_NAME } from '@constants/serverUrlConstants';
-import { useServer } from '@hooks/useServer';
+import { useServer } from '@hooks/recoil/server/useServer';
 
 describe('useServer 훅 테스트', () => {
   test('server 초기 값이 잘 적용되었는 지 확인 ', () => {

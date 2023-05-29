@@ -1,4 +1,4 @@
-import { productApiWrapper, productListApiWrapper } from '@utils/productList/productList';
+import { productApiWrapper } from '@utils/productList/productList';
 import { CartItemType, ServerCartItemType } from '@type/cartType';
 import { ProductItemType } from '@type/productType';
 

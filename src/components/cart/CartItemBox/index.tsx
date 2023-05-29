@@ -1,5 +1,5 @@
-import { useCartItemCheckedBy } from '@recoil/cart/withItemCheckBy';
 import { useCartItemQuantityBy } from '@recoil/cart/withItemQuantityBy';
+import { useCartToggleSelection } from '@hooks/recoil/cart/useCartToggleSelection';
 import CheckBox from '@components/common/CheckBox';
 import Stepper from '@components/common/Stepper';
 import deleteIcon from '@assets/delete.svg';
@@ -15,7 +15,7 @@ interface CartItemProps {
 
 function CartItemBox({ cartId, productId, imageUrl, name, price }: CartItemProps) {
   const [cartQuantity, setCartQuantity] = useCartItemQuantityBy(productId);
-  const { isChecked, toggleCheck } = useCartItemCheckedBy(cartId);
+  const { isChecked, toggleCheck } = useCartToggleSelection(cartId);
 
   const { quantity } = cartQuantity;
 

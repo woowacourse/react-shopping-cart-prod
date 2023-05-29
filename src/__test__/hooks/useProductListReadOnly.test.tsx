@@ -1,14 +1,14 @@
 import { renderHook, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import { RecoilRoot } from 'recoil';
-import useRecoilProductList from '@hooks/useRecoilProductList';
+import { useProductListReadOnly } from '@hooks/recoil/productList/useProductListReadOnly';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { SERVER_NAME, getProductPath } from '@constants/serverUrlConstants';
 import { server } from '../setupTests';
 
 const fetchUrl = getProductPath(SERVER_NAME[0]);
 
-describe('API 변경에 유연하도록 구현한 useRecoilProductList API 레이어가 올바르게 기능하는 지 테스트', () => {
+describe('Recoil의 selector을 이용하여 상품 목록을 올바르게 불러오는 지 테스트', () => {
   beforeEach(() => {
     server.use(
       rest.get(fetchUrl, (req, res, ctx) => {
@@ -22,15 +22,15 @@ describe('API 변경에 유연하도록 구현한 useRecoilProductList API 레�
   });
 
   test('프론트엔드에서 의도한 API 레이어가 올바르게 기능하는 지 테스트', async () => {
-    const { result } = renderHook(() => useRecoilProductList(), {
+    const { result } = renderHook(() => useProductListReadOnly(), {
       wrapper: RecoilRoot,
     });
 
     await waitFor(() => {
       setTimeout(() => {
-        const { productList } = result.current;
+        const productList = result.current;
 
-        const keys = Object.keys(productList ? productList[0] : []);
+        const keys = Object.keys(productList);
 
         expect(keys).toEqual(['id', 'name', 'price', 'imageUrl']);
       }, 1000);
