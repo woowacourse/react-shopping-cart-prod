@@ -46,14 +46,16 @@ const CartPage = () => {
             </DeleteButton>
           </AllCheckBoxContainer>
           {cart.length > 0 ? (
-            cart.map((cartItem) => (
-              <CartListItem
-                key={cartItem.id}
-                cartItem={cartItem}
-                checked={checkedItemIds.has(cartItem.id)}
-                onChangeCheckbox={handleCheckboxChange}
-              />
-            ))
+            <CartListContainer>
+              {cart.map((cartItem) => (
+                <CartListItem
+                  key={cartItem.id}
+                  cartItem={cartItem}
+                  checked={checkedItemIds.has(cartItem.id)}
+                  onChangeCheckbox={handleCheckboxChange}
+                />
+              ))}
+            </CartListContainer>
           ) : (
             <ImageContainer>
               <Image src={empty} alt="텅 빈 장바구니 이미지" />
@@ -77,29 +79,30 @@ const Container = styled.div``;
 
 const TitleWrapper = styled.div`
   height: 67px;
-  border-bottom: 4px solid #333;
 `;
 
 const Title = styled.h2`
   font-family: 'Noto Sans KR';
   font-weight: 700;
-  font-size: 32px;
+  font-size: 26px;
   line-height: 37px;
   text-align: center;
   letter-spacing: 0.5px;
-  color: #333;
+  color: ${(props) => props.theme.black};
 `;
 
-const CartList = styled.ul`
-  width: 735px;
-
+const CartListContainer = styled.div`
   & > li {
-    border-bottom: 1.5px solid #ccc;
+    border-bottom: 1.5px solid ${(props) => props.theme.color.gray350};
   }
 
   & > li:last-child {
     border: none;
   }
+`;
+
+const CartList = styled.ul`
+  width: 735px;
 
   @media only screen and (max-width: 768px) {
     width: 600px;
@@ -124,7 +127,7 @@ const AllCheckBoxContainer = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
-  border-bottom: 4px solid #aaaaaa;
+  border-bottom: 1px solid ${(props) => props.theme.color.gray350};
 
   & > span {
     font-size: 18px;
@@ -157,11 +160,13 @@ const DeleteButton = styled.button`
   font-size: 16px;
   line-height: 21px;
   text-align: center;
-  color: #333;
-  border: 1px solid #bbb;
+  color: ${(props) => props.theme.color.black};
+  border: 1px solid ${(props) => props.theme.color.gray350};
+  border-radius: 4px;
 
   &:disabled {
-    color: #bbb;
+    background-color: ${(props) => props.theme.color.gray100};
+    color: ${(props) => props.theme.color.gray350};
   }
 `;
 

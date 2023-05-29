@@ -4,6 +4,7 @@ const color = {
   gray100: '#f8f8f8',
   gray200: '#e9e9e9',
   gray300: '#ddd',
+  gray350: '#ccc',
   gray400: '#888',
   gray500: '#525252',
   gray600: '#363636',

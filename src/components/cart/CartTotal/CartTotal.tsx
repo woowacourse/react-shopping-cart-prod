@@ -47,7 +47,7 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
         <Spacer height={41} />
         <PriceWrapper>
           <dt>총 결제금액</dt>
-          <TotalPrice>
+          <TotalPrice isHighlight={totalProductPrice > 0}>
             {formatPrice(
               calcTotalOrderPrice(totalProductPrice, isFreeShipping),
             )}
@@ -117,8 +117,8 @@ const PriceWrapper = styled.div`
   }
 `;
 
-const TotalPrice = styled.dd`
-  color: ${(props) => props.theme.color.primary};
+const TotalPrice = styled.dd<{ isHighlight: boolean }>`
+  color: ${(props) => props.isHighlight && props.theme.color.primary};
 `;
 
 const OrderDetail = styled.div`
@@ -135,6 +135,7 @@ const OrderButton = styled.button`
   font-family: 'Noto Sans KR';
   font-size: 22px;
   line-height: 21px;
+  letter-spacing: 0.4px;
   text-align: center;
   color: ${(props) => props.theme.color.white};
   border-radius: 4px;
