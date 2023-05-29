@@ -34,14 +34,14 @@ function Header() {
       <Link to="/">
         <Logo />
       </Link>
-      <div className={styles.cart}>
+      <div className={styles['header-nav']}>
         <DropDown options={userNameList} selectedListHandler={serverSelectChange} currentOptionIndex={index} />
-        <Link to="/cart">
-          <button type="button" onClick={() => Toast.reset}>
+        <div className={styles['cart-container']}>
+          <Link to="/cart" onClick={() => Toast.reset}>
             장바구니
-          </button>
-        </Link>
-        <div className={styles['cart-count']}>{cartList.length}</div>
+          </Link>
+          <div className={styles['cart-count']}>{cartList.length}</div>
+        </div>
         <Link to="/order">주문 목록</Link>
       </div>
     </header>

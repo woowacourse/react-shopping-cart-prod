@@ -17,17 +17,38 @@ button {
   border-bottom: 2px solid var(--white-color-002);
 }
 
-.cart {
+.header-nav {
   display: flex;
   align-items: center;
+  gap: 20px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 12px;
+
+  color: var(--primary-color);
+}
+
+.cart-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .cart-count {
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 26px;
   height: 26px;
+
   border-radius: 50%;
   background-color: var(--mint-color);
+
+  color: var(--white-color);
+  font-size: 16px;
+  line-height: 12px;
 }
