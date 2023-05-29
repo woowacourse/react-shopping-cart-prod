@@ -2,10 +2,10 @@ import { atom, selector } from 'recoil';
 
 import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getMemberAPI } from '../api/memberAPI';
-import { Member, MemberInformation } from '../types';
+import { MemberAuthorization, MemberInformation } from '../types/member';
 import { currentServerState } from './server';
 
-const currentMemberState = atom<Member>({
+const currentMemberState = atom<MemberAuthorization>({
   key: 'currentMember',
   default: {
     username: process.env.REACT_APP_API_USERNAME_1!,

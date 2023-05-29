@@ -1,5 +1,5 @@
-import { OrderCartItemsData } from '.';
 import { HTTP_ERROR_MESSAGE } from '../constants/api';
+import { OrderCartItemsData } from './order';
 
 type HTTPErrorMessageCode = keyof typeof HTTP_ERROR_MESSAGE;
 

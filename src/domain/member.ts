@@ -1,6 +1,7 @@
 import { MEMBER_INFORMATION_LOCAL_STORAGE_KEY } from '../constants/localStorage';
 import { MEMBER_DISCOUNT_RATE, MEMBER_RANK_PURCHASE_CONDITION, RANK } from '../constants/member';
-import { MemberInformation, MemberRank, OrderData } from '../types';
+import { MemberInformation, MemberRank } from '../types/member';
+import { OrderData } from '../types/order';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 
 const getMemberData = () => {

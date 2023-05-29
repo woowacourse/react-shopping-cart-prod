@@ -1,5 +1,5 @@
 import { API_ENDPOINT } from '../constants/api';
-import { MemberInformation } from '../types';
+import { MemberInformation } from '../types/member';
 import { fetchAPI } from './fetchAPI';
 
 const getMemberAPI = (baseUrl: string, headers: HeadersInit) => {

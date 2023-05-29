@@ -2,7 +2,7 @@ import { selector, selectorFamily } from 'recoil';
 
 import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getMemberAPI } from '../api/memberAPI';
-import { OrderData } from '../types';
+import { OrderData } from '../types/order';
 import { currentMemberInformationState, currentMemberState } from './member';
 import { currentServerState } from './server';
 

@@ -1,5 +1,5 @@
 import { API_ENDPOINT } from '../constants/api';
-import { OrderCartItemsData } from '../types';
+import { OrderCartItemsData } from '../types/order';
 import { fetchAPI } from './fetchAPI';
 
 const postOrder = async (

@@ -5,7 +5,7 @@ import { CART_LIST_CHECKBOX_KEY } from '../../../constants/store';
 import { useCheckbox } from '../../../hooks/common/useCheckbox';
 import { useModal } from '../../../hooks/common/useModal';
 import { useCart } from '../../../hooks/useCart';
-import { ProductItemData } from '../../../types';
+import { ProductItemData } from '../../../types/product';
 import { priceFormatter } from '../../../utils/formatter';
 import Checkbox from '../../common/Checkbox/Checkbox';
 import Modal from '../../common/Modal/Modal';

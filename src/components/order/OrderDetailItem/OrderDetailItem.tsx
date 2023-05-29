@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { useOrder } from '../../../hooks/useOrder';
-import { OrderedItemData } from '../../../types';
+import { OrderedItemData } from '../../../types/order';
 import { priceFormatter } from '../../../utils/formatter';
 import Toast from '../../common/Toast/Toast';
 import * as S from './OrderDetailItem.styles';

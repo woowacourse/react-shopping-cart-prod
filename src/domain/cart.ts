@@ -1,6 +1,7 @@
 import { CART_LIST_LOCAL_STORAGE_KEY } from '../constants/localStorage';
 import productListData from '../data/mockData.json';
-import { CartItemData, OrderCartItemsData } from '../types';
+import { CartItemData } from '../types/cart';
+import { OrderCartItemsData } from '../types/order';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 
 const getCartData = () => {

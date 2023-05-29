@@ -1,5 +1,5 @@
 import { API_ENDPOINT } from '../constants/api';
-import { CartItemData } from '../types';
+import { CartItemData } from '../types/cart';
 import { fetchAPI } from './fetchAPI';
 
 const getCartAPI = (baseUrl: string, headers: HeadersInit) => {

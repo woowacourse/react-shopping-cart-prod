@@ -2,7 +2,7 @@ import { useRecoilCallback } from 'recoil';
 
 import { cartListState } from '../store/cart';
 import { orderListState } from '../store/order';
-import { ProductItemData } from '../types';
+import { ProductItemData } from '../types/product';
 import { useCart } from './useCart';
 
 const useOrder = () => {

@@ -1,4 +1,4 @@
-import { ProductItemPriceData } from '../../../../types';
+import { ProductItemPriceData } from '../../../../types/product';
 import { priceFormatter } from '../../../../utils/formatter';
 import * as S from './ProductItemPrice.styles';
 

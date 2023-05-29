@@ -1,5 +1,5 @@
 import { API_ENDPOINT } from '../constants/api';
-import { ProductItemData } from '../types';
+import { ProductItemData } from '../types/product';
 import { fetchAPI } from './fetchAPI';
 
 const getProductList = async (baseUrl: string): Promise<ProductItemData[]> => {

@@ -17,8 +17,10 @@ import { cartItemQuantityState, cartListState } from '../store/cart';
 import { errorModalMessageState } from '../store/error';
 import { currentMemberInformationState, currentMemberState } from '../store/member';
 import { currentServerState } from '../store/server';
-import { CartItemData, OrderCartItemsData, ProductItemData } from '../types';
 import { APIErrorMessage } from '../types/api';
+import { CartItemData } from '../types/cart';
+import { OrderCartItemsData } from '../types/order';
+import { ProductItemData } from '../types/product';
 import { useMutationFetch } from './common/useMutationFetch';
 
 const useCart = () => {

@@ -1,6 +1,7 @@
 import { SHIPPING_FEE, SHIPPING_FEE_EXEMPTION_CONDITION } from '../constants';
 import { ORDERS_LOCAL_STORAGE_KEY } from '../constants/localStorage';
-import { MemberInformation, OrderCartItemsData, OrderData, OrderedItemData } from '../types';
+import { MemberInformation } from '../types/member';
+import { OrderCartItemsData, OrderData, OrderedItemData } from '../types/order';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 import { getCartData } from './cart';
 import { getMemberData } from './member';

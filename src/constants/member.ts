@@ -1,4 +1,4 @@
-import { MemberRank } from '../types';
+import { MemberRank } from '../types/member';
 
 const RANK = ['일반', '실버', '골드', '플래티넘', '다이아몬드'] as const;
 

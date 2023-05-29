@@ -4,7 +4,7 @@ import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getCartAPI } from '../api/cartAPI';
 import { CART_LIST_CHECKBOX_KEY } from '../constants/store';
 import { changeCartItemQuantity } from '../domain/cart';
-import { CartItemData } from '../types';
+import { CartItemData } from '../types/cart';
 import { checkedListState } from './checkbox';
 import { currentMemberInformationState, currentMemberState } from './member';
 import { currentServerState } from './server';
