@@ -1,5 +1,5 @@
 import { MEMBER_INFORMATION_LOCAL_STORAGE_KEY } from '../constants/localStorage';
-import { MEMBER_DISCOUNT_RATE, MEMBER_RANK_PURCHASE_CONDITION } from '../constants/member';
+import { MEMBER_DISCOUNT_RATE, MEMBER_RANK_PURCHASE_CONDITION, RANK } from '../constants/member';
 import { MemberInformation, MemberRank, OrderData } from '../types';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 
@@ -19,15 +19,12 @@ const seMemberData = (newMemberInformation: MemberInformation) => {
 
 const updateMemberInformation = (orderList: OrderData[]) => {
   const memberInformation = getMemberData();
+  const currentMemberRankIndex = RANK.indexOf(memberInformation.rank);
   const accumulatedPurchases = orderList.reduce((acc, curr) => acc + curr.totalPrice, 0);
 
   const newRank = Object.entries(MEMBER_RANK_PURCHASE_CONDITION).reduce(
-    (foundRank: MemberRank | null, [memberRank, purchaseCondition]): MemberRank | null => {
-      if (
-        !foundRank &&
-        memberRank !== memberInformation.rank &&
-        accumulatedPurchases >= purchaseCondition
-      ) {
+    (foundRank: MemberRank | null, [memberRank, purchaseCondition], index): MemberRank | null => {
+      if (index > currentMemberRankIndex && accumulatedPurchases >= purchaseCondition) {
         return memberRank as MemberRank;
       }
 
