@@ -16,6 +16,7 @@ const ProductItem = ({ ...information }: ProductItemProps) => {
   const cartId = useRecoilValue(cartItemIdState(information.id));
   const cartQuantity = useRecoilValue(cartItemQuantityState(cartId!));
   const { isAdded, addItem, updateItemQuantity } = useCart();
+  const hasDiscounted = information.discountRate > 0;
 
   const handleAddButtonClick = useCallback(() => {
     addItem(information);
@@ -49,7 +50,22 @@ const ProductItem = ({ ...information }: ProductItemProps) => {
           </S.ItemButtonWrapper>
         </S.ItemImageContainer>
         <S.ItemName size="small">{information.name}</S.ItemName>
-        <S.ItemPrice size="large">{priceFormatter(information.price)}원</S.ItemPrice>
+        <S.ItemPriceContainer>
+          {hasDiscounted && (
+            <S.ItemDiscountRate size="large">{information.discountRate}%</S.ItemDiscountRate>
+          )}
+          <S.ItemPrice size="large">
+            {hasDiscounted
+              ? priceFormatter(information.discountedPrice)
+              : priceFormatter(information.price)}
+            원
+          </S.ItemPrice>
+          {hasDiscounted && (
+            <S.ItemOriginalPrice size="small">
+              {priceFormatter(information.price)}원
+            </S.ItemOriginalPrice>
+          )}
+        </S.ItemPriceContainer>
       </S.ProductItemContainer>
       {isAdded && <Toast>장바구니에 상품을 추가했습니다.</Toast>}
     </>

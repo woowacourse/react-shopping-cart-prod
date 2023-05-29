@@ -78,6 +78,19 @@ const ItemName = styled(Text)`
   }
 `;
 
+const ItemPriceContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
+const ItemDiscountRate = styled(Text)`
+  margin-top: 2px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: ${({ theme }) => theme.color.lightRed};
+`;
+
 const ItemPrice = styled(Text)`
   margin-top: 2px;
   font-weight: 600;
@@ -89,12 +102,23 @@ const ItemPrice = styled(Text)`
   }
 `;
 
+const ItemOriginalPrice = styled(Text)`
+  margin-top: 2px;
+  font-weight: 600;
+  letter-spacing: -0.2px;
+  color: ${({ theme }) => theme.color.gray3};
+  text-decoration: line-through;
+`;
+
 export {
   ProductItemContainer,
   ItemImageContainer,
   ItemButtonWrapper,
   ItemButton,
   ItemImage,
+  ItemPriceContainer,
   ItemName,
+  ItemDiscountRate,
   ItemPrice,
+  ItemOriginalPrice,
 };

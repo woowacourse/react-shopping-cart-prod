@@ -21,6 +21,7 @@ const color = {
   lightRed3: '#eb7171',
   red: '#ce0000',
   darkRed: '#9f0000',
+  lightRed: '#ff403e',
 };
 
 const spacer = {
