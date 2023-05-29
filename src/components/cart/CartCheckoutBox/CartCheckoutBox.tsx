@@ -1,15 +1,14 @@
 import { useCallback } from 'react';
-import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
+import { useRecoilValueLoadable } from 'recoil';
 
 import { SHIPPING_FEE } from '../../../constants';
-import { CART_LIST_CHECKBOX_KEY } from '../../../constants/store';
 import { useCart } from '../../../hooks/useCart';
 import {
   cartListMemberDiscountAmountState,
   cartListSubTotalState,
   cartListTotalItemDiscountAmountState,
 } from '../../../store/cart';
-import { checkedListState } from '../../../store/checkbox';
+import { checkedCartIdListState } from '../../../store/cartCheckbox';
 import { currentMemberInformationState } from '../../../store/member';
 import { priceFormatter } from '../../../utils/formatter';
 import Button from '../../common/Button/Button';
@@ -18,7 +17,7 @@ import { Text } from '../../common/Text/Text.styles';
 import * as S from './CartCheckoutBox.styles';
 
 const CartCheckoutBox = () => {
-  const checkedIdList = useRecoilValue(checkedListState(CART_LIST_CHECKBOX_KEY));
+  const checkedIdList = useRecoilValueLoadable(checkedCartIdListState);
   const cartListSubTotal = useRecoilValueLoadable(cartListSubTotalState);
   const cartListTotalItemDiscountAmount = useRecoilValueLoadable(
     cartListTotalItemDiscountAmountState
@@ -27,8 +26,8 @@ const CartCheckoutBox = () => {
   const memberInformation = useRecoilValueLoadable(currentMemberInformationState);
   const { orderCheckedItems } = useCart();
 
-  const isLoading = cartListSubTotal.state === 'loading';
-  const isCartEmpty = cartListSubTotal.contents === 0;
+  const isLoading = checkedIdList.state === 'loading';
+  const isCartEmpty = checkedIdList.contents.size === 0;
   const subTotal = cartListSubTotal.contents > 0 ? cartListSubTotal.contents : 0;
   const totalItemDiscountAmount =
     cartListTotalItemDiscountAmount.contents > 0 ? -cartListTotalItemDiscountAmount.contents : 0;
@@ -38,7 +37,7 @@ const CartCheckoutBox = () => {
   const totalPrice = subTotal - totalItemDiscountAmount - memberDiscountAmount + shippingFee ?? 0;
 
   const handleOrder = useCallback(() => {
-    orderCheckedItems([...checkedIdList]);
+    orderCheckedItems([...checkedIdList.contents]);
   }, [checkedIdList, orderCheckedItems]);
 
   return (

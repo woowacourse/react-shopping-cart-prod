@@ -1,10 +1,11 @@
 import { memo, useCallback } from 'react';
+import { useRecoilValue } from 'recoil';
 
 import { CloseIcon } from '../../../assets';
-import { CART_LIST_CHECKBOX_KEY } from '../../../constants/store';
-import { useCheckbox } from '../../../hooks/common/useCheckbox';
 import { useModal } from '../../../hooks/common/useModal';
 import { useCart } from '../../../hooks/useCart';
+import { useCartCheckbox } from '../../../hooks/useCartCheckbox';
+import { checkedCartItemState } from '../../../store/cartCheckbox';
 import { ProductItemData } from '../../../types/product';
 import { priceFormatter } from '../../../utils/formatter';
 import Checkbox from '../../common/Checkbox/Checkbox';
@@ -27,9 +28,14 @@ const CartItem = ({
   discountedPrice,
   imageUrl,
 }: CartItemProps) => {
+  const isChecked = useRecoilValue(checkedCartItemState(cartItemId));
   const { updateItemQuantity, removeItem } = useCart();
-  const { isChecked, toggleItemCheckbox } = useCheckbox(CART_LIST_CHECKBOX_KEY, cartItemId);
+  const { toggleItemCheckbox } = useCartCheckbox();
   const { isModalOpen, handleModalOpen, handleModalClose } = useModal();
+
+  const onCheckboxChange = useCallback(() => {
+    toggleItemCheckbox(cartItemId);
+  }, [cartItemId, toggleItemCheckbox]);
 
   const handleQuantityChange = useCallback(
     (quantity: number) => {
@@ -45,7 +51,7 @@ const CartItem = ({
 
   return (
     <S.CartItemContainer>
-      <Checkbox checked={isChecked} onChange={toggleItemCheckbox} />
+      <Checkbox checked={isChecked} onChange={onCheckboxChange} />
       <S.CartItemImageWrapper>
         <S.CartItemImage src={imageUrl} alt={name} />
       </S.CartItemImageWrapper>

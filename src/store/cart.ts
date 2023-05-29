@@ -2,10 +2,9 @@ import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 
 import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getCartAPI } from '../api/cartAPI';
-import { CART_LIST_CHECKBOX_KEY } from '../constants/store';
 import { changeCartItemQuantity } from '../domain/cart';
 import { CartItemData } from '../types/cart';
-import { checkedListState } from './checkbox';
+import { checkedCartIdListState } from './cartCheckbox';
 import { currentMemberInformationState, currentMemberState } from './member';
 import { currentServerState } from './server';
 
@@ -78,10 +77,10 @@ const cartListSubTotalState = selector({
   key: 'cartListSubTotal',
   get: ({ get }) => {
     const cartList = get(cartListState);
-    const checkedCartItemList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
+    const checkedCartIdList = get(checkedCartIdListState);
 
     const subTotal = cartList
-      .filter((cartItem) => checkedCartItemList.has(cartItem.id))
+      .filter((cartItem) => checkedCartIdList.has(cartItem.id))
       .reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0);
 
     return subTotal;
@@ -92,10 +91,10 @@ const cartListTotalItemDiscountAmountState = selector<number>({
   key: 'cartListItemDiscountAmount',
   get: ({ get }) => {
     const cartList = get(cartListState);
-    const checkedCartItemList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
+    const checkedCartIdList = get(checkedCartIdListState);
 
     const totalItemDiscountAmount = cartList
-      .filter((cartItem) => checkedCartItemList.has(cartItem.id))
+      .filter((cartItem) => checkedCartIdList.has(cartItem.id))
       .reduce((acc, curr) => {
         if (curr.product.discountRate > 0) {
           return acc + curr.quantity * curr.product.price * (curr.product.discountRate / 100);
@@ -112,11 +111,11 @@ const cartListMemberDiscountAmountState = selector<number>({
   key: 'cartListMemberDiscountAmount',
   get: ({ get }) => {
     const cartList = get(cartListState);
-    const checkedCartItemList = get(checkedListState(CART_LIST_CHECKBOX_KEY));
+    const checkedCartIdList = get(checkedCartIdListState);
     const memberInformation = get(currentMemberInformationState);
 
     const memberDiscountAmount = cartList
-      .filter((cartItem) => checkedCartItemList.has(cartItem.id))
+      .filter((cartItem) => checkedCartIdList.has(cartItem.id))
       .reduce((acc, curr) => {
         if (memberInformation.rank === '일반' || curr.product.discountRate > 0) {
           return acc;
