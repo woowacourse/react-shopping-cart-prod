@@ -68,6 +68,14 @@ export const handlers = [
   }),
 
   // 주문 하기
+
+  rest.get('/orders', async (req, res, ctx) => {
+    if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
+    const orderItems = localStorageHelper.getValue<CartItemType[]>('orderItems');
+
+    return res(ctx.status(200), ctx.json(orderItems), ctx.delay(100));
+  }),
+
   rest.post('/orders', async (req, res, ctx) => {
     const body = (await req.json()) as { id: number[]; price: number; couponId?: number };
 
