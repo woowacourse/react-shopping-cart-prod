@@ -8,12 +8,12 @@ import useShoppingCart from 'hooks/useShoppingCart';
 import styled from 'styled-components';
 
 const CartProductSection = () => {
-  const { checkedProducts, isAllChecked, toggleCheckAllBox } = useCartCheckBox();
+  const { checkedCartProductIds, isAllChecked, toggleCheckAllBox } = useCartCheckBox();
   const { deleteCheckedCartProducts } = useShoppingCart();
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const checkBoxLabel = isAllChecked ? '선택해제' : '전체선택';
-  const isCheckedProductExist = checkedProducts.size > 0;
+  const isCheckedProductExist = checkedCartProductIds.size > 0;
 
   return (
     <ProductSection flexDirection="column" align="flex-start">
@@ -27,9 +27,9 @@ const CartProductSection = () => {
         <ConfirmModal
           isOpen={isModalOpen}
           closeModal={closeModal}
-          onClickConfirmButton={() => deleteCheckedCartProducts(checkedProducts)}
+          onClickConfirmButton={() => deleteCheckedCartProducts(checkedCartProductIds)}
         >
-          {`선택한 ${checkedProducts.size}개의 상품을 삭제하시겠습니까?`}
+          {`선택한 ${checkedCartProductIds.size}개의 상품을 삭제하시겠습니까?`}
         </ConfirmModal>
       </CheckBoxTab>
       <CartProductCardList />
