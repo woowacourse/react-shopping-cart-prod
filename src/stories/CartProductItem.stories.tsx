@@ -1,4 +1,4 @@
-import CartProductItem from '../components/CartProductItem';
+import CartProductItem from 'src/components/CartProductItem';
 import type { Meta, StoryObj } from '@storybook/react';
 
 type Story = StoryObj<typeof CartProductItem>;

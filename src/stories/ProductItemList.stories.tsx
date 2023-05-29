@@ -1,5 +1,5 @@
-import ProductItemList from '../components/ProductItemList';
-import handlers from '../mocks/handlers';
+import ProductItemList from 'src/components/ProductItemList';
+import handlers from 'src/mocks/handlers';
 import type { Meta, StoryObj } from '@storybook/react';
 
 type Story = StoryObj<typeof ProductItemList>;

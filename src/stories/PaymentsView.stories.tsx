@@ -1,4 +1,4 @@
-import PaymentsView from '../components/PaymentsView';
+import PaymentsView from 'src/components/PaymentsView';
 import type { Meta, StoryObj } from '@storybook/react';
 
 type Story = StoryObj<typeof PaymentsView>;
