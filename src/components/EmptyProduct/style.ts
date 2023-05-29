@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  position: absolute;
   margin-top: 40px;
-  width: 100%;
+  right: 0;
+  left: 0;
   display: grid;
   row-gap: 60px;
   justify-items: center;

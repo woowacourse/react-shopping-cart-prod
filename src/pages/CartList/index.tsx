@@ -4,7 +4,6 @@ import SkeletonCartItem from './CartItem/SkeletonCartItem';
 import CartItems from './CartItems';
 import CartListSubHeader from './CartListSubHeader';
 import LoadingCartListSubHeader from './CartListSubHeader/LoadingCartListSubHeader';
-import EmptyCart from './EmptyCart';
 import PaymentAmount from './PaymentAmount';
 import SkeletonPaymentAmount from './PaymentAmount/SkeletonPaymentAmount';
 import * as S from './style';
@@ -12,23 +11,22 @@ import * as S from './style';
 function CartList() {
   return (
     <S.Container>
-      <Suspense fallback={<></>}>
-        <EmptyCart />
-      </Suspense>
       <Suspense fallback={<LoadingCartListSubHeader />}>
         <CartListSubHeader />
       </Suspense>
       <S.ShoppingCartContentsLayout>
         <S.CartList>
-          <S.CartListLayout>
-            <Suspense
-              fallback={Array.from({ length: 3 }, (_, index) => (
-                <SkeletonCartItem key={index} />
-              ))}
-            >
-              <CartItems />
-            </Suspense>
-          </S.CartListLayout>
+          <Suspense
+            fallback={
+              <S.CartListLayout>
+                {Array.from({ length: 3 }, (_, index) => (
+                  <SkeletonCartItem key={index} />
+                ))}
+              </S.CartListLayout>
+            }
+          >
+            <CartItems />
+          </Suspense>
         </S.CartList>
         <Suspense fallback={<SkeletonPaymentAmount />}>
           <PaymentAmount />
