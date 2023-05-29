@@ -1,6 +1,6 @@
 const PATH = {
   ROOT: '/',
-  CARTS: '/cart',
+  CART: '/cart',
   ORDER: '/order',
   ORDER_SUCCESS: '/order/success',
   ORDER_DETAIL: '/order/:orderId',

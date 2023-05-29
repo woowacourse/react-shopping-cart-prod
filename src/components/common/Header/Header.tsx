@@ -28,7 +28,7 @@ const Header = () => {
             type="button"
             aria-labelledby="cart-button"
             variant="textButton"
-            onClick={() => navigate(PATH.CARTS)}
+            onClick={() => navigate(PATH.CART)}
           >
             {cartListItemCount.contents > 0 && (
               <S.CartItemCount>{cartListItemCount.contents}</S.CartItemCount>
