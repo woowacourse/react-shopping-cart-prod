@@ -9,6 +9,8 @@ interface OrderStatementProps {
 }
 
 const OrderStatement = ({ orders, orderId }: OrderStatementProps) => {
+  const orderLastIndex = orders.length - 1;
+
   return (
     <Wrapper>
       <Header>
@@ -16,12 +18,14 @@ const OrderStatement = ({ orders, orderId }: OrderStatementProps) => {
         <NextButton>상세보기 ►</NextButton>
       </Header>
       <Body>
-        {orders.map((item) => (
-          <OrderItem
-            key={`order-item-${item.product.id}`}
-            item={item}
-          ></OrderItem>
-        ))}
+        {orders.map((item, index) => {
+          return (
+            <>
+              <OrderItem key={`order-item-${item.product.id}`} item={item} />
+              {index !== orderLastIndex && <Contour />}
+            </>
+          );
+        })}
       </Body>
     </Wrapper>
   );
@@ -32,7 +36,7 @@ const Wrapper = styled.div`
   border-radius: 5px;
 
   width: 100%;
-  margin: 1% 5%;
+  margin: 2% 0;
   padding: 3%;
 `;
 
@@ -51,6 +55,11 @@ const Body = styled.div`
 
 const NextButton = styled.button`
   cursor: pointer;
+`;
+
+const Contour = styled.hr`
+  width: 95%;
+  border: 1px solid rgba(170, 170, 170, 0.2);
 `;
 
 export default OrderStatement;

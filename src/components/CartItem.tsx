@@ -72,8 +72,7 @@ const Wrapper = styled.div`
 
   margin: 15px 10px 10px 10px;
 
-  border-top: 1.5px solid rgba(204, 204, 204, 1);
-  padding-top: 10px;
+  padding-bottom: 12px;
 
   @media (max-width: 767px) {
     padding-left: 0;
@@ -143,14 +142,13 @@ const NameBox = styled.div`
   font-size: 17px;
   font-weight: 500;
 
-  white-space: nowrap;
-
   margin: 5px 3% 0 3%;
   height: 50px;
 
   word-break: break-all;
   text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 
   @media (max-width: 767px) {
     font-size: 17px;

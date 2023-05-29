@@ -88,11 +88,11 @@ const NameBox = styled.div`
   margin: 5px 0 10px 10px;
 
   font-size: 16px;
-  white-space: nowrap;
 
   word-break: break-all;
   text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 
   @media (max-width: 767px) {
     font-size: 13px;

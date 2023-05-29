@@ -25,6 +25,7 @@ const Wrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr 5fr;
   padding: 3%;
+  min-height: 80px;
 
   @media (max-width: 350px) {
     grid-template-columns: 1fr;
@@ -54,17 +55,28 @@ const ImageBox = styled.div`
 
 const InfoBox = styled.div`
   display: grid;
-  grid-template-rows: 1fr 3fr;
+  grid-template-rows: 23px 23px auto;
 
   padding: 3px 3%;
+  gap: 5px;
+
+  // @media (max-width: 767px) {
+  //   grid-template-rows: 20px 20px auto;
+  // }
+
+  // @media (max-width: 350px) {
+  //   grid-template-rows: 20px 20px auto;
+  // }
 `;
 
-const NameBox = styled.div`
+const NameBox = styled.p`
   font-size: 17px;
 
+  width: 100%;
   word-break: break-all;
   text-overflow: ellipsis;
   overflow: hidden;
+  white-space: nowrap;
 
   @media (max-width: 767px) {
     font-size: 17px;

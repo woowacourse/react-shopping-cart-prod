@@ -22,7 +22,8 @@ const Wrapper = styled.section`
 `;
 
 const Container = styled.div`
-  display: flex;
+  width: 90%;
+  margin: auto;
 `;
 
 export default Page;

@@ -68,7 +68,7 @@ const Wrapper = styled.section`
   gap: 10px;
 
   position: sticky;
-  top: 12%;
+  top: 0;
   margin-left: auto;
 
   width: 30%;

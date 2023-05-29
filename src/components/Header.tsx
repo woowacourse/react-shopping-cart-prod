@@ -89,7 +89,7 @@ const CartContainer = styled.div`
   gap: 5px;
   width: 110px;
 
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   color: white;
 
@@ -117,15 +117,11 @@ const ItemQuantityBox = styled.div`
 `;
 
 const OrderContainer = styled.div`
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   color: white;
 
   cursor: pointer;
-
-  @media (max-width: 1199px) {
-    font-size: 20px;
-  }
 
   @media (max-width: 767px) {
     font-size: 16px;

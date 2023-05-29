@@ -20,8 +20,10 @@ const Cart = () => {
       </React.Suspense>
       <Page pageName="장바구니">
         <React.Suspense fallback={<LoadingSpinner />}>
-          <CartItemList />
-          <PurchaseOrder />
+          <div style={{ display: "flex" }}>
+            <CartItemList />
+            <PurchaseOrder />
+          </div>
         </React.Suspense>
       </Page>
     </>

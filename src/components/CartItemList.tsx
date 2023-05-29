@@ -8,6 +8,7 @@ const CartItemList = () => {
   const cartList = useRecoilValue(cartListState);
   const { isAllchecked, checkedCount, setAllCheckbox, removeCheckedItem } =
     useCartCheckbox();
+  const cartListLastIndex = cartList.length - 1;
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.currentTarget.checked && setAllCheckbox(true);
@@ -28,9 +29,14 @@ const CartItemList = () => {
         <button onClick={removeCheckedItem}>선택삭제</button>
       </SelectorContainer>
       <ListBox>
-        {cartList.map((item) => (
-          <CartItem key={item.id} {...item} />
-        ))}
+        {cartList.map((item, index) => {
+          return (
+            <>
+              <CartItem key={item.id} {...item} />
+              {index !== cartListLastIndex && <Contour />}
+            </>
+          );
+        })}
       </ListBox>
     </Wrapper>
   );
@@ -86,6 +92,11 @@ const ListBox = styled.li`
   ul:first-child {
     border-top: none;
   }
+`;
+
+const Contour = styled.hr`
+  width: 95%;
+  border: 1px solid rgba(170, 170, 170, 0.2);
 `;
 
 export default CartItemList;
