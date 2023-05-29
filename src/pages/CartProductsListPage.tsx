@@ -12,6 +12,7 @@ import { totalCartProductSelect } from '../recoil/cartProductData';
 import { checkedListSelector } from '../recoil/checkedProductData';
 import useCheckedProducts from '../hooks/useCheckedProducts';
 import usePoint from '../hooks/usePoint';
+import Title from '../components/Common/Title';
 
 const CartProductsListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
@@ -74,15 +75,8 @@ const Main = styled.main`
   }
 `;
 
-const CartProductTitle = styled.div`
+const CartProductTitle = styled(Title)`
   position: absolute;
-  width: 100%;
-  height: 130px;
-  padding: 58px 0 29px 0;
-  border-bottom: 4px solid ${({ theme }) => theme.colors.black};
-  text-align: center;
-  font-size: 32px;
-  font-weight: 700;
 `;
 
 const CartProductContent = styled.div`

@@ -1,8 +1,9 @@
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import OrderProductList from '../components/Order/OrderProductList';
-import orderProducts from '../mocks/data/orderProduct.json';
-import { useParams } from 'react-router-dom';
 import PaymentInfoBox from '../components/Order/PaymentInfoBox';
+import Title from '../components/Common/Title';
+import orderProducts from '../mocks/data/orderProduct.json';
 
 const OrderDetailsPage = () => {
   const { orderId } = useParams();
@@ -12,7 +13,7 @@ const OrderDetailsPage = () => {
 
   return (
     <Main>
-      <OrderDetailsTitle>주문 내역 상세</OrderDetailsTitle>
+      <Title>주문 내역 상세</Title>
       {filteredOrders.map((orderProduct) => (
         <>
           <OrderProductList
@@ -30,16 +31,6 @@ const Main = styled.section`
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 0 100px 0;
-`;
-
-const OrderDetailsTitle = styled.h1`
-  width: 100%;
-  height: 130px;
-  padding: 58px 0 29px 0;
-  border-bottom: 4px solid ${({ theme }) => theme.colors.black};
-  text-align: center;
-  font-size: 32px;
-  font-weight: 700;
 `;
 
 export default OrderDetailsPage;
