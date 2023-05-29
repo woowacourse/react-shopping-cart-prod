@@ -30,9 +30,11 @@ interface OrderedItemData {
 interface OrderData {
   id: number;
   orderedItems: OrderedItemData[];
-  createdAt: Date;
+  orderedAt: Date;
+  totalItemPrice: number;
+  discountedTotalItemPrice: number;
+  shippingFee: number;
   totalPrice: number;
-  discountedTotalPrice: number;
 }
 
 interface Member {

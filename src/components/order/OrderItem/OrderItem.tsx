@@ -12,7 +12,7 @@ const OrderItem = ({ ...information }: OrderItemProps) => {
     <S.OrderItemContainer>
       <S.OrderItemHeader>
         <S.OrderDate size="large">
-          {dateFormatter(information.createdAt)} ({timeFormatter(information.createdAt)})
+          {dateFormatter(information.orderedAt)} ({timeFormatter(information.orderedAt)})
         </S.OrderDate>
         <S.OrderDetailLink to={`${PATH.ORDER}/${information.id}`}>
           주문내역 상세보기 <RightChevronIcon />

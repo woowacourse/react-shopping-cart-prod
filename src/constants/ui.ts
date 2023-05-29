@@ -30,7 +30,7 @@ const ORDER_ITEM_DESCRIPTION_DATA = [
   {
     LABEL: '결제금액',
     value: (information: OrderData) => {
-      return `${priceFormatter(information.discountedTotalPrice)}원`;
+      return `${priceFormatter(information.totalPrice)}원`;
     },
   },
 ] as const;

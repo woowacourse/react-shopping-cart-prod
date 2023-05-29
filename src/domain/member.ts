@@ -19,7 +19,7 @@ const seMemberData = (newMemberInformation: MemberInformation) => {
 
 const updateMemberInformation = (orderList: OrderData[]) => {
   const memberInformation = getMemberData();
-  const accumulatedPurchases = orderList.reduce((acc, curr) => acc + curr.discountedTotalPrice, 0);
+  const accumulatedPurchases = orderList.reduce((acc, curr) => acc + curr.totalPrice, 0);
 
   const newRank = Object.entries(MEMBER_RANK_PURCHASE_CONDITION).reduce(
     (foundRank: MemberRank | null, [memberRank, purchaseCondition]): MemberRank | null => {

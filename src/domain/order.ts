@@ -1,3 +1,4 @@
+import { SHIPPING_FEE, SHIPPING_FEE_EXEMPTION_CONDITION } from '../constants';
 import { ORDERS_LOCAL_STORAGE_KEY } from '../constants/localStorage';
 import { MemberInformation, OrderCartItemsData, OrderData, OrderedItemData } from '../types';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
@@ -42,7 +43,11 @@ const getDiscountedTotalPrice = (
   return discountedTotalPrice;
 };
 
-const addOrder = (orderList: OrderData[], orderedCartItems: OrderCartItemsData[]) => {
+const getShippingFee = (discountedTotalItemPrice: number) => {
+  return discountedTotalItemPrice > SHIPPING_FEE_EXEMPTION_CONDITION ? 0 : SHIPPING_FEE;
+};
+
+const addOrder = (orderList: OrderData[], orderedCartItems: OrderCartItemsData[]): OrderData[] => {
   const currentCartData = getCartData();
   const memberInformation = getMemberData();
 
@@ -55,15 +60,18 @@ const addOrder = (orderList: OrderData[], orderedCartItems: OrderCartItemsData[]
 
     return orderedItem;
   });
-  const totalPrice = getTotalOrderPrice(orderedItems);
-  const discountedTotalPrice = getDiscountedTotalPrice(orderedItems, memberInformation);
+  const totalItemPrice = getTotalOrderPrice(orderedItems);
+  const discountedTotalItemPrice = getDiscountedTotalPrice(orderedItems, memberInformation);
+  const shippingFee = getShippingFee(discountedTotalItemPrice);
 
   const order = {
     id: newOrderId,
     orderedItems,
-    createdAt: new Date(),
-    totalPrice,
-    discountedTotalPrice,
+    orderedAt: new Date(),
+    totalItemPrice,
+    discountedTotalItemPrice,
+    shippingFee,
+    totalPrice: discountedTotalItemPrice + shippingFee,
   };
 
   return [...orderList, order];
