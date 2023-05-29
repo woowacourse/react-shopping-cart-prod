@@ -23,10 +23,7 @@ const OrderDetailItem = ({ quantity, product }: OrderDetailItemProps) => {
           <S.OrderDetailItemName>{product.name}</S.OrderDetailItemName>
           <S.OrderDetailItemPriceContainer>
             <S.OrderDetailItemConsumerPrice as="span">
-              {product.discountRate > 0
-                ? priceFormatter(product.discountedPrice)
-                : priceFormatter(product.price)}
-              원
+              {priceFormatter(product.discountedPrice)}원
             </S.OrderDetailItemConsumerPrice>
             {product.discountRate > 0 && (
               <S.OrderDetailItemOriginalPrice>

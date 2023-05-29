@@ -62,9 +62,7 @@ const CartItem = ({
         handleCountChange={handleQuantityChange}
       />
       <S.CartItemPriceContainer>
-        <S.CustomerPrice>
-          {discountRate > 0 ? priceFormatter(discountedPrice) : priceFormatter(price)}원
-        </S.CustomerPrice>
+        <S.CustomerPrice>{priceFormatter(discountedPrice)}원</S.CustomerPrice>
         {discountRate > 0 && (
           <S.OriginalPrice size="small">{priceFormatter(price)}원</S.OriginalPrice>
         )}
