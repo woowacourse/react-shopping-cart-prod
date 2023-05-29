@@ -25,9 +25,11 @@ const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
 };
 
 const OrderProductItemContainer = styled.div`
-  width: 1300px;
+  width: 100%;
   height: 220px;
   display: flex;
+  padding: 33px 0 0 26px;
+  border-top: 1px solid ${({ theme }) => theme.colors.gray400};
 `;
 
 const OrderProductInfo = styled.div`
