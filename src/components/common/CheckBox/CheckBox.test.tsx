@@ -1,5 +1,5 @@
 import { render, fireEvent } from '@testing-library/react';
-import { CheckBox } from './CheckBox';
+import CheckBox from '.';
 
 describe('CheckBox 컴포넌트', () => {
   test('체크박스가 정상적으로 렌더링되고 체크 상태를 변경할 수 있어야 합니다.', () => {

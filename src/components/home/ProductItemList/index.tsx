@@ -1,6 +1,6 @@
 import useRecoilProductList from '@hooks/useRecoilProductList';
-import { ProductItem } from '@components/home/ProductItem';
 import { Column, Row } from '@styles/style';
+import ProductItem from '../ProductItem';
 
 function ProductList() {
   const { productList } = useRecoilProductList();

@@ -8,8 +8,8 @@ import {
   updateCartItemQuantityApi,
 } from '@utils/cart/fetchCart';
 import { fetchGet } from '@utils/fetchUtils';
-import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
-import { CartItemType } from '@type/ProductType';
+import { SERVER_NAME, getCartPath } from '@constants/serverUrlConstants';
+import { CartItemType } from '@type/cartType';
 import { server } from './setupTests';
 
 fetchMock.enableMocks();

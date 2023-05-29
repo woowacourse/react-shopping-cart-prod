@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import CartQuantityField from './CartQuantityField';
+import CartQuantityField from '.';
 
 const meta = {
   component: CartQuantityField,

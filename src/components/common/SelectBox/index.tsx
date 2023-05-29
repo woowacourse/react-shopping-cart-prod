@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import * as S from './SelectBox.style';
 
 interface SelectBoxProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: {
@@ -9,7 +9,7 @@ interface SelectBoxProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
 
 function SelectBox({ options, ...restProps }: SelectBoxProps) {
   return (
-    <Select {...restProps}>
+    <S.Select {...restProps}>
       {options.map(({ value, name }) => {
         return (
           <option key={value} value={value}>
@@ -17,14 +17,8 @@ function SelectBox({ options, ...restProps }: SelectBoxProps) {
           </option>
         );
       })}
-    </Select>
+    </S.Select>
   );
 }
-
-const Select = styled.select`
-  padding: 0.4rem 0.8rem;
-  border: 1px solid black;
-  text-align: center;
-`;
 
 export default SelectBox;

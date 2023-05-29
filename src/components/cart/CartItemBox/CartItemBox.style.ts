@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { FlexWrapper } from '@pages/Cart/Cart.style';
 
 export const CartItemContainer = styled(FlexWrapper)`

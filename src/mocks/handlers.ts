@@ -1,7 +1,8 @@
 import { rest } from 'msw';
-import { CartItemType, ProductItemType } from '@type/ProductType';
+import { ServerCartItemType } from '@type/cartType';
+import { ServerProductItemType } from '@type/productType';
 
-export const MOCK_PRODUCT_LIST: ProductItemType[] = [
+export const MOCK_PRODUCT_LIST: ServerProductItemType[] = [
   {
     id: 1,
     name: '1) PET보틀-정사각(420ml) 정말 길고 긴 제목',
@@ -76,7 +77,7 @@ export const MOCK_PRODUCT_LIST: ProductItemType[] = [
   },
 ];
 
-let cartList: CartItemType[] = [
+let cartList: ServerCartItemType[] = [
   {
     id: 3,
     quantity: 5,

@@ -3,7 +3,7 @@ import { rest } from 'msw';
 import { RecoilRoot } from 'recoil';
 import useRecoilProductList from '@hooks/useRecoilProductList';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
-import { SERVER_NAME, getProductPath } from '@constants/urlConstants';
+import { SERVER_NAME, getProductPath } from '@constants/serverUrlConstants';
 import { server } from '../setupTests';
 
 const fetchUrl = getProductPath(SERVER_NAME[0]);

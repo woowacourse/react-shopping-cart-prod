@@ -8,8 +8,8 @@ import {
 } from 'recoil';
 import serverState from '@recoil/server/serverState';
 import { fetchGet } from '@utils/fetchUtils';
-import { getCartPath } from '@constants/urlConstants';
-import type { CartItemType } from '@type/ProductType';
+import { getCartPath } from '@constants/serverUrlConstants';
+import { CartItemType } from '@type/cartType';
 
 export const CartItemQuery = selector({
   key: 'cartListWithInfoState/default',
@@ -22,7 +22,7 @@ export const CartItemQuery = selector({
     }
 
     return cartProducts.map((cartProduct) => {
-      cartProduct.checked = true;
+      cartProduct.isSelect = true;
       return cartProduct;
     });
   },
@@ -43,14 +43,14 @@ export const useCheckCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
 
   const toggleMap = useMemo<{ [id: number]: boolean }>(() => {
-    return cart.reduce((acc, { product, checked }) => {
+    return cart.reduce((acc, { product, isSelect }) => {
       const { id } = product;
-      Object.assign(acc, { [id]: checked });
+      Object.assign(acc, { [id]: isSelect });
       return acc;
     }, {});
   }, [cart]);
 
-  const isAllChecked = cart.every((cartItem) => cartItem.checked);
+  const isAllChecked = cart.every((cartItem) => cartItem.isSelect);
 
   const checkedCount = Object.values(toggleMap).reduce((acc, cur) => {
     if (cur) {
@@ -69,7 +69,7 @@ export const useCheckCart = () => {
   }, [isAllChecked, setCart]);
 
   const deleteCheckedItems = () => {
-    setCart(cart.filter((item) => item.checked === false));
+    setCart(cart.filter((item) => item.isSelect === false));
 
     // 이 부분 확인 필요
   };

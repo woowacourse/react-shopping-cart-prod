@@ -1,4 +1,5 @@
-import { CartItemType, ProductItemType } from 'types/ProductType';
+import { CartItemType } from '@type/cartType';
+import { ProductItemType } from '@type/productType';
 
 interface CreateCartItemParams {
   cartId: number;
@@ -25,7 +26,7 @@ export const createCartItem = ({ cartId, product }: CreateCartItemParams): CartI
   return {
     id: cartId,
     quantity: 1,
-    checked: true,
+    isSelect: true,
     product,
   };
 };

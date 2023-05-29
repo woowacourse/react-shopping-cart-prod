@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { productListState } from '@recoil/product/productListState';
 import serverState from '@recoil/server/serverState';
-import { getProductPath } from '@constants/urlConstants';
-import { ProductItemType } from '@type/ProductType';
+import { getProductPath } from '@constants/serverUrlConstants';
+import { ProductItemType } from '@type/productType';
 import { useFetch } from './useFetch';
+import { ServerProductItemType } from '@type/productType';
 
 const useRecoilProductList = (): {
   productList: ProductItemType[];
@@ -16,12 +17,12 @@ const useRecoilProductList = (): {
     data: originData,
     isLoading,
     error,
-  } = useFetch<ProductItemType[]>(getProductPath(serverName));
+  } = useFetch<ServerProductItemType[]>(getProductPath(serverName));
   const [productList, setProductList] = useRecoilState<ProductItemType[]>(productListState);
 
   useEffect(() => {
     if (!originData) return;
-    const clientProductList = originData.map((product) => {
+    const clientProductList: ProductItemType[] = originData.map((product) => {
       return {
         id: product.id,
         name: product.name,

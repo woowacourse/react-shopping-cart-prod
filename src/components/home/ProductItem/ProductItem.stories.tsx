@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ProductItem from './ProductItem';
+import ProductItem from '.';
 
 const meta = {
   component: ProductItem,

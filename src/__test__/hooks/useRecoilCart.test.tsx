@@ -5,8 +5,8 @@ import { RecoilRoot } from 'recoil';
 import { useRecoilCart } from '@hooks/useRecoilCart';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { createCartItem } from '@utils/cart/cart';
-import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
-import { CartItemType } from '@type/ProductType';
+import { SERVER_NAME, getCartPath } from '@constants/serverUrlConstants';
+import { CartItemType } from '@type/cartType';
 import { server } from '../setupTests';
 
 fetchMock.enableMocks();
@@ -106,7 +106,7 @@ describe('useRecoilCart 훅 테스트', () => {
       const { cart } = result.current;
       const keys = Object.keys(cart[0]);
 
-      expect(keys).toEqual(['id', 'quantity', 'product', 'checked']);
+      expect(keys).toEqual(['id', 'quantity', 'product', 'isSelect']);
     });
 
     await waitFor(() => {

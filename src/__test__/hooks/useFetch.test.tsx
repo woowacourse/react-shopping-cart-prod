@@ -3,7 +3,7 @@ import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
 import { useFetch } from '@hooks/useFetch';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
-import { SERVER_NAME, getProductPath } from '@constants/urlConstants';
+import { SERVER_NAME, getProductPath } from '@constants/serverUrlConstants';
 import { CustomError } from '@type/error';
 import { server } from '../setupTests';
 

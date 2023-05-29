@@ -1,5 +1,5 @@
 import { atom, useRecoilValue } from 'recoil';
-import { ProductItemType } from '@type/ProductType';
+import { ProductItemType } from '@type/productType';
 
 export const productListState = atom<ProductItemType[]>({
   key: 'productListState',

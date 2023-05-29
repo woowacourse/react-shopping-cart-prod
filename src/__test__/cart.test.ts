@@ -5,7 +5,7 @@ import {
   removeCartItem,
   updateCartItemQuantity,
 } from '@utils/cart/cart';
-import { CartItemType } from '@type/ProductType';
+import { CartItemType } from '@type/cartType';
 
 const cartId = 1;
 const product = MOCK_PRODUCT_LIST[0];
@@ -17,7 +17,7 @@ describe('장바구니 함수 테스트', () => {
     const cartItem: CartItemType = {
       id: cartId,
       quantity: 1,
-      checked: true,
+      isSelect: true,
       product,
     };
 

@@ -1,5 +1,5 @@
 import { fetchDelete, fetchPatch, fetchPost } from '@utils/fetchUtils';
-import { ServerName, getCartPath } from '@constants/urlConstants';
+import { ServerName, getCartPath } from '@constants/serverUrlConstants';
 
 interface AddItemToCartApiParams {
   productId: number;

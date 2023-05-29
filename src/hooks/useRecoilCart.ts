@@ -3,9 +3,10 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
 import { addItemToCart, removeCartItem, updateCartItemQuantity } from '@utils/cart/cart';
-import { getCartPath } from '@constants/urlConstants';
-import { CartItemType, ProductItemType } from '@type/ProductType';
+import { getCartPath } from '@constants/serverUrlConstants';
 import { useFetch } from './useFetch';
+import { ProductItemType } from '@type/productType';
+import { CartItemType, ServerCartItemType } from '@type/cartType';
 
 interface UpdateCartListItemQuantityParams {
   cartId: number;
@@ -19,7 +20,11 @@ interface AddCartItemParams {
 
 export const useRecoilCart = () => {
   const serverName = useRecoilValue(serverState);
-  const { data: originData, isLoading, error } = useFetch<CartItemType[]>(getCartPath(serverName));
+  const {
+    data: originData,
+    isLoading,
+    error,
+  } = useFetch<ServerCartItemType[]>(getCartPath(serverName));
   const [cart, setCart] = useRecoilState<CartItemType[]>(cartState);
 
   const updateCartListItemQuantity = ({ cartId, quantity }: UpdateCartListItemQuantityParams) => {
@@ -46,7 +51,7 @@ export const useRecoilCart = () => {
           price: cartItem.product.price,
           imageUrl: cartItem.product.imageUrl,
         },
-        checked: true,
+        isSelect: true,
       };
     });
 
