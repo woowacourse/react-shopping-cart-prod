@@ -3,9 +3,8 @@ import { CheckBox } from '@common/CheckBox';
 import * as S from './CartItemBox.style';
 import { Stepper } from '@common/Stepper';
 import deleteIcon from '@assets/delete.svg';
-import { useCartItem } from '@views/Cart/recoil/cartState';
+import { useCart } from '@views/Cart/recoil/cartState';
 import { ProductItemType } from 'types/ProductType';
-import { useCartItemCheckedBy } from '@views/Cart/recoil/withItemCheckBy';
 
 interface CartItemProps {
   cartItemId: number;
@@ -13,10 +12,17 @@ interface CartItemProps {
 }
 
 function CartItemBox({ cartItemId, product }: CartItemProps) {
-  const { quantity, updateCartItemQuantity } = useCartItem(product.id);
-  const { isChecked, toggleCheck } = useCartItemCheckedBy(cartItemId);
+  const {
+    setCartItemIsChecked,
+    getCartItemIsChecked,
+    getCartItemQuantity,
+    updateCartItemQuantity,
+  } = useCart();
 
-  const { name, id: productId, imageUrl, price } = product;
+  const quantity = getCartItemQuantity(product.id);
+  const isChecked = getCartItemIsChecked(cartItemId);
+
+  const { name, imageUrl, price } = product;
 
   return (
     <S.CartItemContainer>
@@ -24,7 +30,7 @@ function CartItemBox({ cartItemId, product }: CartItemProps) {
         type="checkbox"
         checked={isChecked}
         onChange={() => {
-          toggleCheck();
+          setCartItemIsChecked(cartItemId);
         }}
         size="medium"
       />
@@ -38,7 +44,7 @@ function CartItemBox({ cartItemId, product }: CartItemProps) {
           src={deleteIcon}
           onClick={() => {
             if (cartItemId) {
-              updateCartItemQuantity(cartItemId, quantity - 1);
+              updateCartItemQuantity(cartItemId, 0);
             }
           }}
         />

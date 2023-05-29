@@ -1,12 +1,10 @@
 import * as S from './CartItemList.style';
 import { CartItemBox } from '@views/Cart/components/CartItemBox';
 import { CheckBox } from '@common/CheckBox';
-import { useCartReadOnly, useCheckCart } from '@views/Cart/recoil/cartState';
+import { useCart } from '@views/Cart/recoil/cartState';
 
 function CartItemList() {
-  const cart = useCartReadOnly();
-
-  const { isAllChecked, checkedCount, toggleAllCartItem, deleteCheckedItems } = useCheckCart();
+  const { cart, isAllChecked, checkedCartCount, toggleAllCartItem, deleteCheckedItems } = useCart();
 
   const cartLength = cart.length;
 
@@ -35,7 +33,7 @@ function CartItemList() {
             toggleAllCartItem();
           }}
         />
-        <S.CheckAllSpan>{`전체 선택 (${checkedCount} / ${cartLength})`}</S.CheckAllSpan>
+        <S.CheckAllSpan>{`전체 선택 (${checkedCartCount} / ${cartLength})`}</S.CheckAllSpan>
         <S.DeleteCheckBox onClick={deleteCheckedItems}>선택삭제</S.DeleteCheckBox>
       </S.CartItemListContainer>
     </S.CartWrapper>

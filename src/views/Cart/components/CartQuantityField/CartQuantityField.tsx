@@ -4,14 +4,16 @@ import { ProductItemType } from 'types/ProductType';
 import { Stepper } from '@common/Stepper';
 import cartIcon from '@assets/cart.svg';
 
-import { useCartItem } from '@views/Cart/recoil/cartState';
+import { useCart } from '@views/Cart/recoil/cartState';
 
 interface CartQuantityFieldProps {
   product: ProductItemType;
 }
 
 function CartQuantityField({ product }: CartQuantityFieldProps) {
-  const { cartItemId, quantity, updateCartItemQuantity, addCartItem } = useCartItem(product.id);
+  const { getCartItemId, getCartItemQuantity, updateCartItemQuantity, addCartItem } = useCart();
+  const quantity = getCartItemQuantity(product.id);
+  const cartItemId = getCartItemId(product.id);
   const isQuantityZero = quantity > 0;
 
   return (
