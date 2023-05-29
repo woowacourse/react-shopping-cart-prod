@@ -8,13 +8,14 @@ export const Container = styled.div`
 export const OrderInfo = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
+  column-gap: 10px;
   padding: 30px;
   background: #f6f6f6;
 
   border-bottom: 2px solid #aaaaaa;
 `;
 
-export const OrderNumber = styled.div``;
+export const OrderDate = styled.div``;
 
 export const MoveDetailPage = styled.div`
   cursor: pointer;

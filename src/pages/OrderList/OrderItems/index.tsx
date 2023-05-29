@@ -10,8 +10,8 @@ function OrderItems() {
 
   return (
     <S.Container>
-      {orderItems.map((orderItem, index) => (
-        <OrderItem key={orderItem.id} {...orderItem} order={index + 1} />
+      {orderItems.map((orderItem) => (
+        <OrderItem key={orderItem.id} {...orderItem} />
       ))}
     </S.Container>
   );

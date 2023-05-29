@@ -1,18 +1,25 @@
 import { OrderItemType } from '@Types/index';
 
+import dateHelper from '@Utils/dateHelper';
+
 import * as S from './style';
 import OrderProduct from '../OrderProduct';
 
-function OrderItem({ date, price, cartItems, order }: OrderItemType & { order: number }) {
-  console.log(date, price, cartItems, order);
+function OrderItem({ date, cartItems }: OrderItemType) {
+  const displayCartItems = () => {
+    if (cartItems.length < 3) return cartItems;
+
+    return cartItems.slice(0, 2);
+  };
+
   return (
     <S.Container>
       <S.OrderInfo>
-        <S.OrderNumber>주문번호 : {order}</S.OrderNumber>
+        <S.OrderDate>{dateHelper.changeLocalDate(date)}</S.OrderDate>
         <S.MoveDetailPage>상세보기 ⟩</S.MoveDetailPage>
       </S.OrderInfo>
       <S.OrderItems>
-        {cartItems.map((cartItem) => {
+        {displayCartItems().map((cartItem) => {
           return <OrderProduct key={cartItem.id} {...cartItem} />;
         })}
       </S.OrderItems>
