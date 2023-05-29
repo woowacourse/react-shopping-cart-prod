@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import Button from '@Components/Button';
@@ -10,6 +11,7 @@ import { DELIVERY_FEE } from '@Constants/index';
 import * as S from './style';
 
 function PaymentAmount() {
+  const navigate = useNavigate();
   const allPrice = useRecoilValue(orderAmountState);
   const cartAmount = useRecoilValue(cartItemsAmountState);
 
@@ -35,7 +37,7 @@ function PaymentAmount() {
           <S.AmountCategory>총 주문가격</S.AmountCategory>
           <S.Amount>{totalOrderPrice}</S.Amount>
         </S.AmountWrapper>
-        <Button backgroundColor="#22a6a2" text="주문하기" />
+        <Button onClick={() => navigate('/order-list')} backgroundColor="#22a6a2" text="주문하기" />
       </S.ExpectedAmountLayout>
     </S.Container>
   );
