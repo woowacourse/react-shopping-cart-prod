@@ -5,6 +5,7 @@ import PaymentsView from 'src/components/PaymentsView';
 import { PARCEL_PRICE } from 'src/constants';
 import { $CartList, $CurrentServerUrl } from 'src/recoil/atom';
 import $CheckedCartTotalPrice from 'src/recoil/selector';
+import ContentLayout from 'src/components/Common/ContentLayout';
 import styles from './index.module.scss';
 
 function Cart() {
@@ -25,12 +26,7 @@ function Cart() {
       </section>
     );
 
-  return (
-    <main className={styles.container}>
-      <h2 className={styles.title}>장바구니</h2>
-      {ResultComponent}
-    </main>
-  );
+  return <ContentLayout title="장바구니">{ResultComponent}</ContentLayout>;
 }
 
 export default Cart;

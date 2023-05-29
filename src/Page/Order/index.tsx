@@ -1,12 +1,11 @@
 import OrderList from 'src/components/OrderList';
-import styles from './index.module.scss';
+import ContentLayout from 'src/components/Common/ContentLayout';
 
 function Order() {
   return (
-    <main className={styles.container}>
-      <h2 className={styles.title}>주문 목록</h2>
+    <ContentLayout title="주문 목록">
       <OrderList />
-    </main>
+    </ContentLayout>
   );
 }
 
