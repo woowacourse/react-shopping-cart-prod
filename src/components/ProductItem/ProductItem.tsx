@@ -2,7 +2,7 @@ import * as Styled from './ProductItem.styles.tsx';
 import ShoppingCartLogo from '../@common/ShoppingCartLogo/ShoppingCartLogo';
 import { Item } from '../../types/CartList.ts';
 import StepperInput from '../@common/StepperInput/StepperInput.tsx';
-import useCartItemOperations from '../../hooks/useCartItemOperations.ts';
+import useCartItemOperations from '../../hooks/cartItemOperations/useCartItemOperations.ts';
 
 export type ProductItemProps = {
   cartItem?: Item;
