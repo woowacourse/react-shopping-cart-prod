@@ -21,7 +21,7 @@ const CartPage = () => {
   } = useCartPage();
 
   return (
-    <Container>
+    <div>
       <TitleWrapper>
         <Title>장바구니</Title>
       </TitleWrapper>
@@ -71,11 +71,9 @@ const CartPage = () => {
           <CartTotal totalProductPrice={calcTotalPrice()} />
         </TotalWrapper>
       </Inner>
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div``;
 
 const TitleWrapper = styled.div`
   height: 67px;
@@ -115,7 +113,7 @@ const CartList = styled.ul`
 
 const Inner = styled.div`
   display: flex;
-  column-gap: 104px;
+  column-gap: 50px;
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;

@@ -71,8 +71,8 @@ const Container = styled.div`
   top: 130px;
   display: flex;
   flex-direction: column;
-  width: 448px;
-  height: 410px;
+  width: 420px;
+  height: 380px;
   border: 1px solid ${(props) => props.theme.color.gray300};
   border-radius: 8px;
 `;
