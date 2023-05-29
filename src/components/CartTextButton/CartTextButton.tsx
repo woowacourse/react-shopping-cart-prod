@@ -19,6 +19,8 @@ const Container = styled.div`
   justify-content: start;
   gap: 8px;
 
+  width: 100px;
+
   cursor: pointer;
 `;
 

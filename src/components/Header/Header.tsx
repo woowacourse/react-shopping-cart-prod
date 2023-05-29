@@ -4,12 +4,9 @@ import { ReactComponent as ShoppingCartIcon } from '../../assets/icon/stussy-log
 import { WIDTH } from '../../styles/mediaQuery';
 import { useSetRecoilState } from 'recoil';
 import { ServerName, serverAtom } from '../../store/server';
+import CartTextButton from '../CartTextButton/CartTextButton';
 
-interface HeaderProps {
-  children: React.ReactNode;
-}
-
-const Header = ({ children }: HeaderProps) => {
+const Header = () => {
   const setServerName = useSetRecoilState(serverAtom);
 
   const onChangeServerNameHandler = (
@@ -34,7 +31,7 @@ const Header = ({ children }: HeaderProps) => {
           <option value='SPLIT'>스플릿</option>
           <option value='IRAE'>이레</option>
         </ServerSelectBox>
-        <Link to='/cart'>{children}</Link>
+        <CartTextButton />
         <Link to='/order-list'>
           <OrderListButton>주문 목록</OrderListButton>
         </Link>
