@@ -1,3 +1,5 @@
+export { OrderItem } from "./OrderItem";
+export { OrderList } from "./OrderList";
 export { Counter } from "./Counter";
 export { Header } from "./Header";
 export { Page } from "./Page";

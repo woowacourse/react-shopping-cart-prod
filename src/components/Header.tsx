@@ -38,17 +38,20 @@ export const Header = () => {
         <img src={CartIcon} alt="홈카트" />
         <p>SHOP</p>
       </TitleContainer>
-      <CartContainer>
-        <SelectBox value={serverOwner} onChange={handleServerSelected}>
+      <InfoContainer>
+        <ServerSelectBox value={serverOwner} onChange={handleServerSelected}>
           {Object.keys(SERVERS).map((server) => (
             <option key={crypto.randomUUID()}>{server}</option>
           ))}
-        </SelectBox>
-        <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>
-        {cartProducts.length > 0 && (
-          <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
-        )}
-      </CartContainer>
+        </ServerSelectBox>
+        <CartContainer>
+          <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>
+          {cartProducts.length > 0 && (
+            <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
+          )}
+        </CartContainer>
+        <p onClick={goPage(ROUTER_PATH.Order)}>주문 목록</p>
+      </InfoContainer>
     </Wrapper>
   );
 };
@@ -96,10 +99,10 @@ const TitleContainer = styled.section`
   }
 `;
 
-const CartContainer = styled.section`
+const InfoContainer = styled.section`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 
   font-size: 24px;
   font-weight: 500;
@@ -127,7 +130,7 @@ const ItemQuantityBox = styled.div`
   color: white;
 `;
 
-const SelectBox = styled.select`
+const ServerSelectBox = styled.select`
   width: 75px;
   height: 40px;
 
@@ -137,4 +140,10 @@ const SelectBox = styled.select`
 
   border-radius: 4px;
   background: var(--light-gray);
+`;
+
+const CartContainer = styled.section`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 `;
