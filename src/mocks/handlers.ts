@@ -8,7 +8,8 @@ const LOCAL_STORAGE_KEY = 'cartItems';
 
 export const handlers = [
   rest.get("/products", (req, res, ctx) => {
-    return res(ctx.delay(1000), ctx.status(200), ctx.json(mockData));
+    // return res(ctx.delay(1000), ctx.status(200), ctx.json(mockData));
+    return res(ctx.delay(1000), ctx.status(404));
   }),
 
   rest.get("/cart-items", (req, res, ctx) => {

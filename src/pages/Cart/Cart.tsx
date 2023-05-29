@@ -4,7 +4,7 @@ import { CartTitle, CartWrapper, FatBorder } from "./Cart.style.ts";
 import { CartListTitle } from "../../components/CartList/CartList.style.ts";
 import { useRecoilValue } from "recoil";
 import { cartCountSelector } from "../../recoil/cartAtoms.ts";
-import EmptyAlert from "../../components/EmptyAlert";
+import BigAlert from "../../components/BigAlert/index.tsx";
 
 function Cart() {
   const cartCount = useRecoilValue(cartCountSelector);
@@ -22,10 +22,11 @@ function Cart() {
           </CartWrapper>
         </>
       ) : (
-        <EmptyAlert
+        <BigAlert
+          title="텅"
           message="장바구니가 비어있어요."
-          goBack={true}
-          goHome={true}
+          goBack
+          goHome
         />
       )}
     </div>
