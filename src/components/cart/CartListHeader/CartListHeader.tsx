@@ -10,6 +10,7 @@ import {
   checkedListState,
   isAllCheckedState,
 } from '../../../store/checkbox';
+import { VerticalLine } from '../../../styles/mixin';
 import Checkbox from '../../common/Checkbox/Checkbox';
 import Modal from '../../common/Modal/Modal';
 import CartItemDelete from '../CartItemDelete/CartItemDelete';
@@ -39,7 +40,7 @@ const CartListHeader = () => {
         전체선택 ({checkedItemCount}/
         {cartListItemCount.state === 'hasValue' ? cartListItemCount.contents : 0})
       </S.CartItemAllSelectText>
-      <S.VerticalLine />
+      <VerticalLine />
       <S.CartItemPartialSelectDeleteButton
         disabled={checkedIdList.size === 0}
         onClick={handleModalOpen}
