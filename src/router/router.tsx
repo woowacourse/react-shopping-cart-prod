@@ -19,7 +19,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: `${process.env.PUBLIC_URL}` }
+  { basename: '/react-shopping-cart-prod' }
 );
 
 export default router;
