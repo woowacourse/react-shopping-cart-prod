@@ -14,11 +14,9 @@ function OrderItem({ item }: OrderItemProps) {
       <S.ItemInfo>
         <S.Name>{productName}</S.Name>
         <S.ItemSubInfo>
-          <S.InfoText>
-            {(productPrice * productQuantity).toLocaleString()}원
-          </S.InfoText>
-          <S.InfoText> / </S.InfoText>
-          <S.InfoText>수량: {productQuantity}개</S.InfoText>
+          <span>{(productPrice * productQuantity).toLocaleString()}원</span>
+          <span> / </span>
+          <span>수량: {productQuantity}개</span>
         </S.ItemSubInfo>
       </S.ItemInfo>
     </S.Wrapper>

@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
-  padding: 39px 26px;
-  border: 1px solid #aaa;
+  padding: 32px 24px;
+  border-top: 1px solid #aaa;
 `;
 
 export const ItemImage = styled.img`
@@ -12,7 +12,7 @@ export const ItemImage = styled.img`
 `;
 
 export const ItemInfo = styled.div`
-  padding: 0 33px;
+  padding: 0 28px;
 `;
 
 export const Name = styled.div`
@@ -25,5 +25,3 @@ export const ItemSubInfo = styled.div`
   color: #888;
   padding-top: 12px;
 `;
-
-export const InfoText = styled.span``;
