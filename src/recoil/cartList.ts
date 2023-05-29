@@ -21,7 +21,6 @@ export const checkedItemsAtom = atom<number[]>({
     key: 'initialCheckedList',
     get: ({ get }) => {
       const cart = get(cartListAtom);
-
       return cart.map((item) => item.id);
     },
   }),
