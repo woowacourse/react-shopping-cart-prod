@@ -15,9 +15,15 @@ import credentialState from '@recoil/server/credentialState';
 import useFetchCart from '../hooks/useFetchCart';
 import { CART_PATH } from '@constants/urlConstants';
 
-export const cartQuery = selector({
+const cartRefresher = atom({
+  key: 'cartRefresher',
+  default: 0,
+});
+
+const cartQuery = selector({
   key: 'cartState/default',
   get: async ({ get }) => {
+    get(cartRefresher);
     const serverUrl = get(serverUrlState);
     const credential = get(credentialState);
     const fetchCart = generateFetchCart({ resource: `${serverUrl}/${CART_PATH}`, credential });
@@ -39,9 +45,15 @@ const cartState = atom<CartItemType[]>({
 
 export default cartState;
 
-export const useRefreshCart = () => useRecoilRefresher_UNSTABLE(cartState);
+export const useResetCart = () => {
+  const resetCart = useResetRecoilState(cartState);
+  const [refreshCount, setRefresher] = useRecoilState(cartRefresher);
 
-export const useResetCart = () => useResetRecoilState(cartState);
+  return () => {
+    resetCart();
+    setRefresher(refreshCount + 1);
+  };
+};
 
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
