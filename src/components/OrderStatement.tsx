@@ -6,16 +6,21 @@ import OrderItem from "./OrderItem";
 interface OrderStatementProps {
   orderId: number;
   orders: Order[];
+  openModal?: () => void;
 }
 
-const OrderStatement = ({ orders, orderId }: OrderStatementProps) => {
+const OrderStatement = ({
+  orders,
+  orderId,
+  openModal,
+}: OrderStatementProps) => {
   const orderLastIndex = orders.length - 1;
 
   return (
     <Wrapper>
       <Header>
         <span>주문번호: {orderId}</span>
-        <NextButton>상세보기 ►</NextButton>
+        <NextButton onClick={openModal}>상세보기 ►</NextButton>
       </Header>
       <Body>
         {orders.map((item, index) => {

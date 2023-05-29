@@ -1,11 +1,35 @@
-import { ReactNode } from "react";
+import { KeyboardEvent, ReactNode, useEffect } from "react";
 import { styled } from "styled-components";
 
-const Modal = ({ children }: { children: ReactNode }) => {
+interface ModalProps {
+  children: ReactNode;
+  closeEvent: () => void;
+}
+
+const Modal = ({ children, closeEvent }: ModalProps) => {
+  useEffect(() => {
+    const handleKeyDown = (e: Event) => {
+      const target = e as unknown as KeyboardEvent;
+
+      if (target.key === "Escape") {
+        closeEvent();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
-      <Background></Background>
-      <Main>{children}</Main>
+      <Background onClick={closeEvent}></Background>
+      <Main>
+        <CloseButton onClick={closeEvent}>x</CloseButton>
+        {children}
+      </Main>
     </>
   );
 };
@@ -35,6 +59,22 @@ const Main = styled.div`
   border-radius: 5px;
 
   padding: 5%;
+`;
+
+const CloseButton = styled.button`
+  position: fixed;
+  top: 13vh;
+  right: 18vw;
+
+  cursor: pointer;
+
+  height: 24px;
+  width: 24px;
+
+  border-radius: 50%;
+
+  background-color: #333333;
+  color: white;
 `;
 
 export default Modal;

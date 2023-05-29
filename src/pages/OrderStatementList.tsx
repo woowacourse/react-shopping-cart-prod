@@ -1,6 +1,7 @@
 import { getOrderStatement } from "api/orders";
 import Header from "components/Header";
 import OrderStatement from "components/OrderStatement";
+import OrderStatementModal from "components/OrderStatementModal";
 import LoadingSpinner from "components/common/LodingSpinner";
 import Page from "components/common/Page";
 import Skeleton from "components/common/Skeleton";
@@ -8,9 +9,10 @@ import { Suspense, useEffect, useState } from "react";
 import { EachOrderStatement } from "types/domain";
 
 const OrderStatementList = () => {
-  const [orderStatementList, setOrderStatementList] = useState<
-    EachOrderStatement[]
-  >([]);
+  const [orderStatementList, setOrderStatementList] =
+    useState<EachOrderStatement[]>();
+  const [orderForModal, setOrderForModal] = useState<EachOrderStatement>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     getOrderStatement().then((res) => {
@@ -20,8 +22,26 @@ const OrderStatementList = () => {
     });
   }, []);
 
+  const openModal = (orderId: number) => () => {
+    setOrderForModal(
+      orderStatementList?.find((order) => order.orderId === orderId)
+    );
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
+      {isModalOpen && orderForModal && (
+        <OrderStatementModal
+          orderId={orderForModal.orderId}
+          orders={orderForModal.orderItems}
+          closeModal={closeModal}
+        />
+      )}
       <Suspense
         fallback={
           <Skeleton
@@ -32,15 +52,18 @@ const OrderStatementList = () => {
         <Header />
       </Suspense>
       <Page pageName="주문내역">
-        <Suspense fallback={<LoadingSpinner />}>
-          {orderStatementList.map((order) => (
+        {orderStatementList ? (
+          orderStatementList.map((order) => (
             <OrderStatement
               key={order.orderId}
               orderId={order.orderId}
               orders={order.orderItems}
-            ></OrderStatement>
-          ))}
-        </Suspense>
+              openModal={openModal(order.orderId)}
+            />
+          ))
+        ) : (
+          <LoadingSpinner />
+        )}
       </Page>
     </>
   );
