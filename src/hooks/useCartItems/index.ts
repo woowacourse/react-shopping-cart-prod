@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { CartItemType, Servers, UpdateCartItem } from '@Types/index';
@@ -13,8 +12,6 @@ import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 const useCartItems = () => {
   const server = useRecoilValue(serverState);
   const [cartItems, setCartItems] = useRecoilState<CartItemType[]>(cartItemsState);
-
-  const [updateStats, setUpdateStats] = useState<'success' | 'loading'>('success');
 
   const isEmpty = cartItems ? !cartItems.length : 0;
 
@@ -35,11 +32,8 @@ const useCartItems = () => {
   };
 
   const updateCartItem: UpdateCartItem = async (url, method, body) => {
-    if (updateStats === 'loading') return;
-
     await fetchData<{ ok: boolean }>({ url, method, body, server });
 
-    setUpdateStats('loading');
     const data = await fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET, server });
 
     const newCartItems = data.map((cartItem) => {
@@ -48,8 +42,6 @@ const useCartItems = () => {
         isSelected: isSelected(cartItem.id),
       };
     });
-
-    setUpdateStats('success');
 
     setCartItems(newCartItems);
   };

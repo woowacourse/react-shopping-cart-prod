@@ -5,11 +5,12 @@ type ButtonProps = {
   width?: string;
   backgroundColor?: string;
   onClick?: () => void;
+  disable?: boolean;
 };
 
-function Button({ text, width = '100%', backgroundColor = '#000000', onClick }: ButtonProps) {
+function Button({ text, width = '100%', backgroundColor = '#000000', onClick, disable = false }: ButtonProps) {
   return (
-    <S.Button width={width} backgroundColor={backgroundColor} onClick={onClick}>
+    <S.Button disable={disable} width={width} backgroundColor={backgroundColor} onClick={onClick}>
       {text}
     </S.Button>
   );

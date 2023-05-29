@@ -10,6 +10,7 @@ export const FETCH_METHOD = {
 export const FETCH_URL = {
   products: '/products',
   cartItems: '/cart-items',
+  orders: '/orders',
 };
 
 export const ERROR_MESSAGE = {

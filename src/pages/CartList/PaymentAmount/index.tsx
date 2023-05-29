@@ -1,21 +1,27 @@
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import Button from '@Components/Button';
 
+import useOrderItems from '@Hooks/useOrderItems';
+
 import cartItemsAmountState from '@Selector/cartItemsAmountState';
 import orderAmountState from '@Selector/orderAmountState';
-
-import { DELIVERY_FEE } from '@Constants/index';
 
 import * as S from './style';
 
 function PaymentAmount() {
-  const allPrice = useRecoilValue(orderAmountState);
+  const { orderAmount, deliveryFee, totalOrderPrice } = useRecoilValue(orderAmountState);
   const cartAmount = useRecoilValue(cartItemsAmountState);
 
-  const orderAmount = `${allPrice.toLocaleString()} 원`;
-  const deliveryFee = !allPrice ? `0 원` : `${DELIVERY_FEE.toLocaleString()} 원`;
-  const totalOrderPrice = `${(allPrice + (!allPrice ? 0 : DELIVERY_FEE)).toLocaleString()} 원`;
+  const navigate = useNavigate();
+
+  const { orderCartItems } = useOrderItems();
+
+  const handleOrderCartItems = () => {
+    orderCartItems(totalOrderPrice);
+    navigate('/order-list');
+  };
 
   if (cartAmount === '0') return <></>;
 
@@ -35,7 +41,12 @@ function PaymentAmount() {
           <S.AmountCategory>총 주문가격</S.AmountCategory>
           <S.Amount>{totalOrderPrice}</S.Amount>
         </S.AmountWrapper>
-        <Button backgroundColor="#22a6a2" text="주문하기" />
+        <Button
+          backgroundColor="#22a6a2"
+          text="주문하기"
+          onClick={handleOrderCartItems}
+          disable={orderAmount === '0 원'}
+        />
       </S.ExpectedAmountLayout>
     </S.Container>
   );

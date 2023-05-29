@@ -3,6 +3,7 @@ import styled from 'styled-components';
 type ButtonProps = {
   width: string;
   backgroundColor: string;
+  disable: boolean;
 };
 
 export const Button = styled.button<ButtonProps>`
@@ -13,5 +14,7 @@ export const Button = styled.button<ButtonProps>`
   padding: 20px 0px;
   font-size: 20px;
   font-weight: 400;
-  cursor: pointer;
+  cursor: ${(props) => !props.disable && 'pointer'};
+  opacity: ${(props) => props.disable && 0.4};
+  transition: opacity 0.2s ease;
 `;
