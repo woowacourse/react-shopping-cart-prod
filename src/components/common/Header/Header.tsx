@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValueLoadable } from 'recoil';
 
-import CartIcon from '../../../assets/cart-icon.svg';
 import Logo from '../../../assets/logo.png';
+import CartIcon from '../../../assets/svg/cart-icon.svg';
 import { PATH } from '../../../constants/path';
 import { cartListItemCountState } from '../../../store/cart';
 import ServerSelect from '../ServerSelect/ServerSelect';

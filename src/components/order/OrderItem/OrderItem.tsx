@@ -1,4 +1,4 @@
-import { RightChevronIcon } from '../../../assets';
+import { RightChevronIcon } from '../../../assets/svg';
 import { PATH } from '../../../constants/path';
 import { ORDER_ITEM_DESCRIPTION_DATA } from '../../../constants/ui';
 import { OrderData } from '../../../types/order';

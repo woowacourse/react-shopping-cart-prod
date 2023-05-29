@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { AddIcon } from '../../../assets';
+import { AddIcon } from '../../../assets/svg';
 import { useCart } from '../../../hooks/useCart';
 import { cartItemIdState, cartItemQuantityState } from '../../../store/cart';
 import { ProductItemData } from '../../../types/product';

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-import { TickCircleIcon } from '../../assets';
+import { TickCircleIcon } from '../../assets/svg';
 import { Button } from '../../components/common/Button/Button.styles';
 import { Heading } from '../../components/common/Heading/Heading.styles';
 import { Text } from '../../components/common/Text/Text.styles';

@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react';
 
-import { CheckedIcon, UncheckedIcon } from '../../../assets';
+import { CheckedIcon, UncheckedIcon } from '../../../assets/svg';
 import * as S from './Checkbox.styles';
 
 interface CheckboxProps extends ComponentPropsWithoutRef<'input'> {}

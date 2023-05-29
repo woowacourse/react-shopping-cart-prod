@@ -1,7 +1,7 @@
 import { memo, useCallback } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { CloseIcon } from '../../../assets';
+import { CloseIcon } from '../../../assets/svg';
 import { useModal } from '../../../hooks/common/useModal';
 import { useCart } from '../../../hooks/useCart';
 import { useCartCheckbox } from '../../../hooks/useCartCheckbox';
