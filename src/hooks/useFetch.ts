@@ -63,7 +63,7 @@ const useFetch = <T>({ url, method = 'GET', isNotAutomaticallyFetched = false }:
   );
 
   useEffect(() => {
-    if (method.toLowerCase() === 'get') {
+    if (method.toLowerCase() === 'get' && !isNotAutomaticallyFetched) {
       fetchData({});
     }
   }, [fetchData, method, isNotAutomaticallyFetched]);
