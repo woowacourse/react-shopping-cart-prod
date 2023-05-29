@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
+import { pointUsageState } from 'state/pointUsageState';
 import { userState } from 'state/userState';
 import styled from 'styled-components';
 
@@ -15,10 +16,12 @@ const UserSelectPage = () => {
   const currentUser = useRecoilValue(userState);
   const resetCartProduct = useResetRecoilState(cartProductsState);
   const resetCartProductIdStore = useResetRecoilState(cartProductIdStoreState);
+  const resetPointUsage = useResetRecoilState(pointUsageState);
 
   const handleOnClick = () => {
     resetCartProduct();
     resetCartProductIdStore();
+    resetPointUsage();
     navigate(ROUTE_PATH.root);
   };
 
