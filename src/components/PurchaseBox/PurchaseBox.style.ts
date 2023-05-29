@@ -27,7 +27,25 @@ export const PurchaseTitle = styled.div`
 export const PurchaseText = styled.div`
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 19px;
+  line-height: 27px;
+
+  letter-spacing: 0.5px;
+`;
+
+export const DiscountText = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 27px;
+
+  letter-spacing: 0.5px;
+`;
+
+export const RealPriceText = styled.div`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
   line-height: 27px;
 
   letter-spacing: 0.5px;
