@@ -11,7 +11,7 @@ import serverState from '@Atoms/serverState';
 import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
 const useCartItems = () => {
-  const server = useRecoilValue(serverState);
+  const server = useRecoilValue<Servers>(serverState);
   const [cartItems, setCartItems] = useRecoilState<CartItemType[]>(cartItemsState);
 
   const [updateStats, setUpdateStats] = useState<'success' | 'loading'>('success');
