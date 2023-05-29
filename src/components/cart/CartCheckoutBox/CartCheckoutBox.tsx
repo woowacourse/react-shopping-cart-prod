@@ -30,9 +30,9 @@ const CartCheckoutBox = () => {
   const isCartEmpty = checkedIdList.contents.size === 0;
   const subTotal = cartListSubTotal.contents > 0 ? cartListSubTotal.contents : 0;
   const totalItemDiscountAmount =
-    cartListTotalItemDiscountAmount.contents > 0 ? -cartListTotalItemDiscountAmount.contents : 0;
+    cartListTotalItemDiscountAmount.contents > 0 ? cartListTotalItemDiscountAmount.contents : 0;
   const memberDiscountAmount =
-    cartListMemberDiscountAmount.contents > 0 ? -cartListMemberDiscountAmount.contents : 0;
+    cartListMemberDiscountAmount.contents > 0 ? cartListMemberDiscountAmount.contents : 0;
   const shippingFee = cartListSubTotal.contents > 0 ? SHIPPING_FEE : 0;
   const totalPrice = subTotal - totalItemDiscountAmount - memberDiscountAmount + shippingFee ?? 0;
 

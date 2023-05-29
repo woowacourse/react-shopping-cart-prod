@@ -8,7 +8,7 @@ import { checkedCartIdListState } from './cartCheckbox';
 import { currentMemberInformationState, currentMemberState } from './member';
 import { currentServerState } from './server';
 
-const cartListQuery = selector({
+const cartListQuery = selector<CartItemData[]>({
   key: 'cartListQuery',
   get: ({ get }) => {
     const currentServer = get(currentServerState);
@@ -26,7 +26,7 @@ const cartListState = atom<CartItemData[]>({
   default: cartListQuery,
 });
 
-const cartIdListState = selector({
+const cartIdListState = selector<number[]>({
   key: 'cartIdList',
   get: ({ get }) => {
     const cartList = get(cartListState);
@@ -73,7 +73,7 @@ const cartItemQuantityState = selectorFamily<number, number>({
     },
 });
 
-const cartListSubTotalState = selector({
+const cartListSubTotalState = selector<number>({
   key: 'cartListSubTotal',
   get: ({ get }) => {
     const cartList = get(cartListState);
@@ -103,7 +103,7 @@ const cartListTotalItemDiscountAmountState = selector<number>({
         return acc;
       }, 0);
 
-    return totalItemDiscountAmount;
+    return totalItemDiscountAmount > 0 ? -totalItemDiscountAmount : 0;
   },
 });
 
@@ -124,7 +124,7 @@ const cartListMemberDiscountAmountState = selector<number>({
         return acc + curr.quantity * curr.product.price * (memberInformation.discountRate / 100);
       }, 0);
 
-    return memberDiscountAmount;
+    return memberDiscountAmount > 0 ? -memberDiscountAmount : 0;
   },
 });
 
