@@ -5,6 +5,8 @@ import GlobalStyles from '../src/styles/GlobalStyles';
 import { RecoilRoot } from 'recoil';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { BrowserRouter } from 'react-router-dom';
+import { cart } from '../src/mocks/handlers/cart';
+import { product } from '../src/mocks/handlers/product';
 
 const customViewport = {
   Default: {
@@ -37,6 +39,7 @@ const customViewport = {
   },
 };
 
+// initialize({ serviceWorker: { url: `${process.env.PUBLIC_URL}/mockServiceWorker.js` } });
 initialize();
 
 const preview: Preview = {
@@ -51,6 +54,9 @@ const preview: Preview = {
     viewport: {
       viewports: { ...customViewport },
       defaultViewport: 'Default',
+    },
+    msw: {
+      handlers: [...cart, ...product],
     },
   },
   decorators: [
