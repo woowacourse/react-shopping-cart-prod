@@ -28,7 +28,9 @@ const S = {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    margin-top: 28px;
     padding: 36px 40px;
+    border: 1px solid var(--gray-color-300);
     font-size: 20px;
     color: var(--text-color);
     background: #f6f6f6;
