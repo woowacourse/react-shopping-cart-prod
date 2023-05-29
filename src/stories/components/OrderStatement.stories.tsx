@@ -21,6 +21,6 @@ const Template: StoryFn = () => {
     },
   };
 
-  return <OrderStatement orders={...[items]} />;
+  return <OrderStatement orderId={1} orders={...[items]} />;
 };
 export const DefaultOrderItemList = Template.bind({});
