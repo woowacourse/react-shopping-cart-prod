@@ -8,6 +8,11 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: ${theme.color.black}
+  }
+
   ul,
   li {
     list-style: none;

@@ -20,12 +20,12 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
   return (
     <Container>
       <TitleWrapper>
-        <Title>결제예상금액</Title>
+        <Title>결제 금액</Title>
       </TitleWrapper>
       <Spacer height={34} />
       <Detail>
         <PriceWrapper>
-          <dt>총 상품가격</dt>
+          <dt>상품금액</dt>
           <dd>{formatPrice(totalProductPrice)}</dd>
         </PriceWrapper>
         <Spacer height={19} />
@@ -46,12 +46,12 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
         </PriceWrapper>
         <Spacer height={41} />
         <PriceWrapper>
-          <dt>총 주문금액</dt>
-          <dd>
+          <dt>총 결제금액</dt>
+          <TotalPrice>
             {formatPrice(
               calcTotalOrderPrice(totalProductPrice, isFreeShipping),
             )}
-          </dd>
+          </TotalPrice>
         </PriceWrapper>
       </Detail>
       <Spacer height={43} />
@@ -73,30 +73,35 @@ const Container = styled.div`
   flex-direction: column;
   width: 448px;
   height: 410px;
-  border: 1px solid #ddd;
+  border: 1px solid ${(props) => props.theme.color.gray300};
+  border-radius: 8px;
 `;
 
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 81px;
-  border-bottom: 3px solid #dddddd;
+  border-bottom: 3px solid ${(props) => props.theme.color.gray300};
   padding: 0 30px;
 `;
 
 const Title = styled.h3`
   font-family: 'Noto Sans KR';
-  font-size: 24px;
-  font-weight: normal;
+  font-size: 22px;
+  font-weight: 700;
   line-height: 33px;
   letter-spacing: 0.5px;
-  color: #333333;
 `;
 
 const Detail = styled.dl`
   display: flex;
   flex-direction: column;
   padding: 0 30px;
+
+  & > div:last-child > * {
+    font-size: 20px;
+    font-weight: 700;
+  }
 `;
 
 const PriceWrapper = styled.div`
@@ -104,14 +109,16 @@ const PriceWrapper = styled.div`
   justify-content: space-between;
 
   & > dt,
-  dd {
+  & > dd {
     font-family: 'Noto Sans KR';
-    font-weight: 700;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 27px;
     letter-spacing: 0.5px;
-    color: #333333;
   }
+`;
+
+const TotalPrice = styled.dd`
+  color: ${(props) => props.theme.color.primary};
 `;
 
 const OrderDetail = styled.div`
@@ -124,15 +131,16 @@ const OrderButton = styled.button`
   width: 388px;
   height: 73px;
   margin: 0 auto;
-  background: #333333;
+  background: ${(props) => props.theme.color.primary};
   font-family: 'Noto Sans KR';
-  font-size: 24px;
+  font-size: 22px;
   line-height: 21px;
   text-align: center;
-  color: #ffffff;
+  color: ${(props) => props.theme.color.white};
+  border-radius: 4px;
 
   &:disabled {
-    background-color: #afafaf;
+    background-color: ${(props) => props.theme.color.gray400};
   }
 `;
 
