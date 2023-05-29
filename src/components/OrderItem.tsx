@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Order } from "types/domain";
 
-const OrderItem = (item: Order) => {
+const OrderItem = ({ item }: { item: Order }) => {
   return (
     <Wrapper>
       <ImageBox>
@@ -23,9 +23,11 @@ const OrderItem = (item: Order) => {
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 5fr;
+  padding: 3%;
 
-  @media (max-width: 767px) {
+  @media (max-width: 350px) {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -36,7 +38,7 @@ const ImageBox = styled.div`
 
   & > img {
     position: absolute;
-    z-index: -1;
+    z-index: 0;
     top: 0;
     left: 0;
     width: 100%;
@@ -45,7 +47,7 @@ const ImageBox = styled.div`
     border-radius: 5px;
   }
 
-  @media (max-width: 575px) {
+  @media (max-width: 350px) {
     display: none;
   }
 `;
