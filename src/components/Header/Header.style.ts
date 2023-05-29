@@ -15,7 +15,9 @@ export const HeaderContent = styled.div`
 
 export const CartWrapper = styled.div`
   display: flex;
+  align-items: center;
   gap: 4px;
+  cursor: pointer;
 `;
 
 export const LogoWrapper = styled.div`
@@ -30,7 +32,7 @@ export const LogoImage = styled.img`
 
 export const NavBar = styled.div`
   display: flex;
-  cursor: pointer;
+  align-items: center;
   gap: 28px;
 `;
 

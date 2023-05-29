@@ -67,6 +67,8 @@ export const User = styled.li`
 
   &:hover {
     background-color: aliceblue;
+  }
+  &:hover > * {
     color: ${({ theme }) => theme.color.info};
   }
 `;
