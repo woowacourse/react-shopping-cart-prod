@@ -1,4 +1,4 @@
-import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../constants/api';
+import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../../constants/api';
 import HTTPError from './HTTPError';
 
 const handleAPIError = (responseStatus: number, message?: string) => {

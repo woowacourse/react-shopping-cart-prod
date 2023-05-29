@@ -1,4 +1,4 @@
-import { MemberAuthorization } from '../types/member';
+import { MemberAuthorization } from '../../types/member';
 
 const getAuthorizedOptionHeaders = ({ username, password }: MemberAuthorization): HeadersInit => {
   const base64 = btoa(username + ':' + password);

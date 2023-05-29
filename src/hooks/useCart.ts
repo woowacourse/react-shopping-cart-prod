@@ -2,10 +2,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import HTTPError from '../api/HTTPError';
-import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getCartAPI } from '../api/cartAPI';
 import { postOrder } from '../api/orderAPI';
+import HTTPError from '../api/utils/HTTPError';
+import { getAuthorizedOptionHeaders } from '../api/utils/authorizedOptionHeaders';
 import {
   CART_API_ERROR_MESSAGE,
   HTTP_STATUS_CODE,

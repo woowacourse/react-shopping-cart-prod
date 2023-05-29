@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import HTTPError from '../../../api/HTTPError';
+import HTTPError from '../../../api/utils/HTTPError';
 import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../../../constants/api';
 import { orderState } from '../../../store/order';
 import { Divider } from '../../common/Divider/Divider.styles';

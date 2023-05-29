@@ -1,7 +1,7 @@
 import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 
-import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getCartAPI } from '../api/cartAPI';
+import { getAuthorizedOptionHeaders } from '../api/utils/authorizedOptionHeaders';
 import { changeCartItemQuantity } from '../domain/cart';
 import { CartItemData } from '../types/cart';
 import { getMemberDiscountAmount, getTotalItemDiscountAmount } from '../utils/discount';

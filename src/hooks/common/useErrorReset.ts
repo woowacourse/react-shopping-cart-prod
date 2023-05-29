@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import HTTPError from '../../api/HTTPError';
+import HTTPError from '../../api/utils/HTTPError';
 import { HTTP_STATUS_CODE } from '../../constants/api';
 import { PATH } from '../../constants/path';
 

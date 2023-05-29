@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import HTTPError from '../../api/HTTPError';
+import HTTPError from '../../api/utils/HTTPError';
 
 type MutationFunction<T, V> = (variables: V) => Promise<T>;
 

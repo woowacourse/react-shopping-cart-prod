@@ -1,7 +1,7 @@
 import { atom, selector } from 'recoil';
 
-import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getMemberAPI } from '../api/memberAPI';
+import { getAuthorizedOptionHeaders } from '../api/utils/authorizedOptionHeaders';
 import { MemberAuthorization, MemberInformation } from '../types/member';
 import { currentServerState } from './server';
 

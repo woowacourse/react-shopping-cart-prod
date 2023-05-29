@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '../constants/api';
 import { OrderCartItemsData } from '../types/order';
-import { fetchAPI } from './fetchAPI';
+import { fetchAPI } from './utils/fetchAPI';
 
 const postOrder = async (
   baseUrl: string,

@@ -1,7 +1,7 @@
 import { selector, selectorFamily } from 'recoil';
 
-import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getMemberAPI } from '../api/memberAPI';
+import { getAuthorizedOptionHeaders } from '../api/utils/authorizedOptionHeaders';
 import { OrderData } from '../types/order';
 import { getMemberDiscountAmount, getTotalItemDiscountAmount } from '../utils/discount';
 import { currentMemberInformationState, currentMemberState } from './member';

@@ -1,6 +1,6 @@
 import { API_ENDPOINT } from '../constants/api';
 import { CartItemData } from '../types/cart';
-import { fetchAPI } from './fetchAPI';
+import { fetchAPI } from './utils/fetchAPI';
 
 const getCartAPI = (baseUrl: string, headers: HeadersInit) => {
   const getCartList = async (): Promise<CartItemData[]> => {
