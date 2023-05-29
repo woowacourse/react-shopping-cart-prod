@@ -71,10 +71,10 @@ export const QuantityButton = () => {
   return (
     <>
       <ButtonComponent css={quantityButtonStyle}>
-        <BsPlus />
+        <BsPlus aria-label='상품 수량 1개 더하기' />
       </ButtonComponent>
       <ButtonComponent css={quantityButtonStyle}>
-        <BsDash />
+        <BsDash aria-label='상품 수량 1개 줄이기' />
       </ButtonComponent>
     </>
   );

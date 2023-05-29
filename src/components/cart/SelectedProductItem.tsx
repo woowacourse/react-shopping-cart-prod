@@ -6,8 +6,8 @@ import { Product } from '../../types';
 import Button from '../common/Button';
 import TrashCanIcon from '../icons/TrashCanIcon';
 import Price from '../Price';
+import QuantityButton from '../QuantityButton';
 import { Checkbox } from './CheckboxStyle';
-import QuantityButton from './QuantityButton';
 
 interface Props extends Product {
   quantity: number;

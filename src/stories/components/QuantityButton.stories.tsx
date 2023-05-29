@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import QuantityButtonComponent from '../../components/cart/QuantityButton';
+import QuantityButtonComponent from '../../components/QuantityButton';
 
 const meta = {
   component: QuantityButtonComponent,
-  title: 'Components/Cart/QuantityButton',
+  title: 'Components/QuantityButton',
   tags: ['autodocs'],
 } satisfies Meta<typeof QuantityButtonComponent>;
 
@@ -32,13 +32,20 @@ export const Minimum: Story = {
       },
       description: '상품의 수량을 바꿀 수 있습니다.<br> 수량을 변경하면 상품의 가격도 변경됩니다.',
     },
+
+    isMainPage: {
+      control: {
+        type: 'boolean',
+      },
+      description: '메인 페이지일 경우(true),<br> 상품 수량이 1일 때도 수량을 줄일 수 있습니다.',
+    },
   },
 };
 
 export const Medium: Story = {
   args: {
     productId: 1,
-    quantity: 2,
+    quantity: 5,
   },
 
   argTypes: {
@@ -62,7 +69,7 @@ export const Medium: Story = {
 export const Maximum: Story = {
   args: {
     productId: 1,
-    quantity: 99,
+    quantity: 10,
   },
 
   argTypes: {
