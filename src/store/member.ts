@@ -13,20 +13,17 @@ const currentMemberState = atom<Member>({
   },
 });
 
-const currentMemberInformationState = atom<MemberInformation>({
+const currentMemberInformationState = selector<MemberInformation>({
   key: 'currentMemberInformation',
-  default: selector({
-    key: 'currentMemberInformation/default',
-    get: ({ get }) => {
-      const currentServer = get(currentServerState);
-      const currentMember = get(currentMemberState);
-      const authorizedHeaders = getAuthorizedOptionHeaders(currentMember);
+  get: ({ get }) => {
+    const currentServer = get(currentServerState);
+    const currentMember = get(currentMemberState);
+    const authorizedHeaders = getAuthorizedOptionHeaders(currentMember);
 
-      const memberAPI = getMemberAPI(currentServer, authorizedHeaders);
+    const memberAPI = getMemberAPI(currentServer, authorizedHeaders);
 
-      return memberAPI.getMemberInfo();
-    },
-  }),
+    return memberAPI.getMemberInfo();
+  },
 });
 
 export { currentMemberState, currentMemberInformationState };

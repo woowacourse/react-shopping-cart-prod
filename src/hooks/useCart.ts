@@ -15,7 +15,7 @@ import { PATH } from '../constants/path';
 import { TOAST_SHOW_DURATION } from '../constants/ui';
 import { cartItemQuantityState, cartListState } from '../store/cart';
 import { errorModalMessageState } from '../store/error';
-import { currentMemberState } from '../store/member';
+import { currentMemberInformationState, currentMemberState } from '../store/member';
 import { currentServerState } from '../store/server';
 import { CartItemData, OrderCartItemsData, ProductItemData } from '../types';
 import { APIErrorMessage } from '../types/api';
@@ -171,10 +171,15 @@ const useCart = () => {
       [currentServer, authorizedHeaders]
     ),
     {
-      onSuccess: async (orderId) => {
-        await refreshCart();
-        navigate(`${PATH.ORDER_SUCCESS}?orderId=${orderId}`);
-      },
+      onSuccess: useRecoilCallback(
+        ({ refresh }) =>
+          async (orderId) => {
+            await refreshCart();
+            refresh(currentMemberInformationState);
+            navigate(`${PATH.ORDER_SUCCESS}?orderId=${orderId}`);
+          },
+        [refreshCart, navigate]
+      ),
       onError(error) {
         handleCartError(error, ORDER_API_ERROR_MESSAGE.ADD);
       },

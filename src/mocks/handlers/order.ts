@@ -2,6 +2,7 @@ import { rest } from 'msw';
 
 import { API_ENDPOINT, HTTP_STATUS_CODE } from '../../constants/api';
 import { setCartData, updateCart } from '../../domain/cart';
+import { seMemberData, updateMemberInformation } from '../../domain/member';
 import { addOrder, getOrderListData, setOrderListData } from '../../domain/order';
 import { PostOrderRequestBody } from '../../types/api';
 
@@ -12,9 +13,11 @@ const orderHandlers = [
 
     const newOrderList = addOrder(currentOrderListData, cartItems);
     const newCartList = updateCart(cartItems);
+    const newMemberInformation = updateMemberInformation(newOrderList);
 
     setOrderListData(newOrderList);
     setCartData(newCartList);
+    seMemberData(newMemberInformation);
 
     return res(
       ctx.status(HTTP_STATUS_CODE.CREATED),

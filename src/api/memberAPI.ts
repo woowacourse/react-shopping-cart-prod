@@ -10,7 +10,7 @@ const getMemberAPI = (baseUrl: string, headers: HeadersInit) => {
     });
   };
 
-  const getMemberOrders = async (memberId: number) => {
+  const getMemberOrderList = async (memberId: number) => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBERS}/${memberId}${API_ENDPOINT.ORDERS}`, {
       method: 'GET',
       headers,
@@ -27,7 +27,7 @@ const getMemberAPI = (baseUrl: string, headers: HeadersInit) => {
     );
   };
 
-  return { getMemberInfo, getMemberOrders, getMemberOrderDetail };
+  return { getMemberInfo, getMemberOrderList, getMemberOrderDetail };
 };
 
 export { getMemberAPI };
