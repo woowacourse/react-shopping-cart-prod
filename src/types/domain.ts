@@ -26,15 +26,15 @@ export interface Coupon {
 export interface Order {
   product: Product;
   quantity: number;
-  couponId: number[];
+  couponIds: number[];
 }
 
-interface OrderItem extends Order {
+export interface OrderResult extends Order {
   orderItemId: number;
   total: number;
 }
 
 export interface EachOrderStatement {
   orderId: 1;
-  orderItems: OrderItem[];
+  orderItems: OrderResult[];
 }

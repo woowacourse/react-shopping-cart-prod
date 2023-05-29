@@ -93,7 +93,7 @@ export const orderCartList = selector<Order[]>({
       .filter((item) => item.isChecked)
       .map((item) => {
         const { product, quantity, couponId } = item;
-        return { product, quantity, couponId: couponId ? [couponId] : [] };
+        return { product, quantity, couponIds: couponId ? [couponId] : [] };
       });
   },
 });
