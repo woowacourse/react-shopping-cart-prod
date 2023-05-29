@@ -1,9 +1,15 @@
 import * as Styled from './CartPriceBox.styles.tsx';
 import { useRecoilValue } from 'recoil';
 import { cartTotalPriceSelector } from '../../../stores/cartListStore.ts';
+import useOrderItems from '../../../hooks/cartItemOperations/useOrderItems.ts';
 
 const CartPriceBox = () => {
   const totalItemPrice = useRecoilValue(cartTotalPriceSelector);
+  const { handleOrderItems } = useOrderItems();
+
+  const handleOrderButton = () => {
+    handleOrderItems();
+  };
 
   return (
     <Styled.CartPriceBoxWrapper>
@@ -23,7 +29,7 @@ const CartPriceBox = () => {
             <Styled.CartPriceText>총 주문금액</Styled.CartPriceText>
             <Styled.CartPriceText>{(totalItemPrice + 3000).toLocaleString()}원</Styled.CartPriceText>
           </Styled.PriceTextWrapper>
-          <Styled.OrderButton>주문하기</Styled.OrderButton>
+          <Styled.OrderButton onClick={handleOrderButton}>주문하기</Styled.OrderButton>
         </Styled.CartPriceTextWrapper>
       </Styled.CartPriceBoxContent>
     </Styled.CartPriceBoxWrapper>
