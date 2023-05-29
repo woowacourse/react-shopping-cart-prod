@@ -1,8 +1,9 @@
 import { rest } from "msw";
-import products from "./mockData.json";
+import products from "./data/mockProduct.json";
 import { getCart, addCartItem, setCartItem } from "mocks/server/cart";
 
-import couponList from "./data/couponList.json";
+import couponList from "./data/mockCouponList.json";
+import orderList from "./data/mockOrderList.json";
 
 export const handlers = [
   // 쿠폰 전체 조회
@@ -17,6 +18,15 @@ export const handlers = [
 
   rest.post("/orders", (req, res, ctx) => {
     return res(ctx.delay(500), ctx.status(204));
+  }),
+
+  rest.get("/orders", (req, res, ctx) => {
+    return res(
+      ctx.delay(1000),
+      ctx.status(200),
+      ctx.set("Content-Type", "application/json"),
+      ctx.json(orderList)
+    );
   }),
 
   // rest.post("/cart-items", async (req, res, ctx) => {
