@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { cartCheckedProductsState } from 'state/cartCheckedProducts';
+import { checkedCartProductsState } from 'state/cartCheckedProducts';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
 import type { Product } from 'types/product';
@@ -8,7 +8,7 @@ import type { Product } from 'types/product';
 const useCartCheckBox = () => {
   const cartProducts = useRecoilValue(cartProductsState);
   const cartProductIdStore = useRecoilValue(cartProductIdStoreState);
-  const [checkedProducts, setCheckedProducts] = useRecoilState(cartCheckedProductsState);
+  const [checkedProducts, setCheckedProducts] = useRecoilState(checkedCartProductsState);
 
   useEffect(() => {
     const updatedCartProductIds = [...cartProducts.keys()];
