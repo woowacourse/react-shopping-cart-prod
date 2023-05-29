@@ -7,18 +7,17 @@ import { SelectBox } from '@common/SelectBox';
 import { CartButtonWithIcon } from '@views/Cart/components/CartButtonWithIcon';
 import { useServerUrl } from '@recoil/server/serverUrlState';
 
-import { useResetCart } from '@views/Cart/recoil/cartState';
+import { useRefreshCart, useResetCart } from '@views/Cart/recoil/cartState';
 import { Logo } from '@layout/Logo';
 
 function Header() {
   const { setServerUrlBy } = useServerUrl();
-
-  const reset = useResetCart();
+  const resetCart = useResetCart();
 
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value: crew } = event.currentTarget;
 
-    reset();
+    resetCart();
     setServerUrlBy(crew);
   };
 
