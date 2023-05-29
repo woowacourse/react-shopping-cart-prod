@@ -80,7 +80,7 @@ const Wrapper = styled.div`
 `;
 
 const FirstPart = styled.div`
-  width: 18%;
+  width: 13%;
 
   & > input[type="checkbox"] {
     position: relative;
@@ -139,7 +139,7 @@ const LastPart = styled.div`
 `;
 
 const NameBox = styled.div`
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 500;
 
   margin: 5px 3% 0 3%;
@@ -151,7 +151,7 @@ const NameBox = styled.div`
   white-space: nowrap;
 
   @media (max-width: 767px) {
-    font-size: 17px;
+    font-size: 19px;
   }
 `;
 
@@ -162,7 +162,7 @@ const ButtonBox = styled.button`
 `;
 
 const PriceBox = styled.p`
-  font-size: 16px;
+  font-size: 18px;
 `;
 
 export default React.memo(CartItem);

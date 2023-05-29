@@ -51,13 +51,16 @@ const Container = styled.label`
   display: flex;
   align-items: center;
 
-  font-size: 14px;
+  font-size: 17px;
 `;
 
 const Select = styled.select`
   border: 1px solid gray;
-  margin-left: 5px;
+  border-radius: 5px;
+
+  margin-left: 15px;
   width: 80%;
+  height: 25px;
 `;
 
 const Option = styled.option``;
