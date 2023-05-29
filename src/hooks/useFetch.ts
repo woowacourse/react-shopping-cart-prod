@@ -13,7 +13,15 @@ export type FetchState<T> = {
   error: Error | null;
 };
 
-const useFetch = <T>(url: string, method = 'GET'): [FetchState<T>, (body?: any, param?: number | string) => Promise<void>] => {
+type UseFetchParams = {
+  url: string;
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  isNotAutomaticallyFetched?: boolean;
+};
+
+type UseFetchReturn<T> = [FetchState<T>, (body?: any, param?: number | string) => Promise<void>];
+
+const useFetch = <T>({ url, method = 'GET', isNotAutomaticallyFetched = false }: UseFetchParams): UseFetchReturn<T> => {
   const [fetchState, setFetchState] = useState<FetchState<T>>({
     status: 'idle',
     data: null,
@@ -58,7 +66,7 @@ const useFetch = <T>(url: string, method = 'GET'): [FetchState<T>, (body?: any, 
     if (method.toLowerCase() === 'get') {
       fetchData({});
     }
-  }, [fetchData, method]);
+  }, [fetchData, method, isNotAutomaticallyFetched]);
 
   return [fetchState, fetchData];
 };
