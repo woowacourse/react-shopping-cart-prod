@@ -16,6 +16,7 @@ const useCart = () => {
   const currentServer = useRecoilValue(currentServerState);
   const cartAPI = useMemo(() => getCartAPI(currentServer), [currentServer]);
   const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
+  const setCartListState = useSetRecoilState(cartListState);
 
   const [isAdded, setIsAdded] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout>>();
@@ -30,13 +31,19 @@ const useCart = () => {
     }
   }, [isAdded]);
 
-  const updateCart = useRecoilCallback(
-    ({ set }) =>
-      (cartItem: CartItemData) => {
-        set(cartListState, (prevCartList) => [...prevCartList, cartItem]);
-      },
-    [cartAPI]
-  );
+  // useRecoilCallback을 쓴 이유?
+  // useSetRecoilState를 써도 되지 않나?
+  // const updateCart = useRecoilCallback(
+  //   ({ set }) =>
+  //     (cartItem: CartItemData) => {
+  //       set(cartListState, (prevCartList) => [...prevCartList, cartItem]);
+  //     },
+  //   [cartAPI]
+  // );
+
+  const updateCart = (cartItem: CartItemData) => {
+    setCartListState((prevCartList) => [...prevCartList, cartItem]);
+  };
 
   const handleCartError = useCallback(
     (error: HTTPError, errorMessage: APIErrorMessage) => {
