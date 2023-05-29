@@ -15,6 +15,13 @@ export type CartItemType = {
   isSelected: boolean;
 };
 
+export type OrderItemType = {
+  id: number;
+  cartItems: CartItemType[];
+  date: Date;
+  price: number;
+};
+
 export type fetchMethod = keyof typeof FETCH_METHOD;
 
 export type UpdateCartItem = (url: string, method: fetchMethod, body?: BodyInit | null | undefined) => void;

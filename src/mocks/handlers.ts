@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-import { CartItemType } from '@Types/index';
+import { CartItemType, OrderItemType } from '@Types/index';
 
 import localStorageHelper from '@Utils/localStorageHelper';
 
@@ -65,5 +65,28 @@ export const handlers = [
     localStorageHelper.setValue('cartItems', newCartItems);
 
     return res(ctx.status(200));
+  }),
+
+  // 주문 하기
+  rest.post('/orders', async (req, res, ctx) => {
+    const body = (await req.json()) as { id: number[]; price: number; couponId?: number };
+
+    const cartList = localStorageHelper.getValue<CartItemType[]>('cartItems');
+    const orderList = localStorageHelper.getValue<OrderItemType[]>('orderItems');
+
+    const orderItems = cartList.filter((cartItem) => body.id.includes(cartItem.id));
+
+    const newOrderItem = {
+      id: Date.now(),
+      cartItems: orderItems,
+      date: new Date(),
+      price: body.price,
+    };
+
+    // 쿠폰 적용은 이후에
+
+    localStorageHelper.setValue('orderItems', orderList.push(newOrderItem));
+
+    return res(ctx.status(201));
   }),
 ];
