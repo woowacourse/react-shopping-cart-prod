@@ -4,9 +4,10 @@ import { ReactComponent as TrashCan } from '../../assets/icon/trash-can.svg';
 import Counter from '../common/Counter/Counter';
 import CheckBox from '../common/CheckBox/CheckBox';
 import { Select } from '../CartItemList/CartItemList';
-import useCartAtom from '../../hooks/useCartAtom';
 import { WIDTH } from '../../styles/mediaQuery';
 import useFetch from '../../hooks/useFetch';
+import { useRecoilValue } from 'recoil';
+import { cartSelectorFamily } from '../../store/cart';
 
 interface CartItemProps {
   id: number;
@@ -23,7 +24,7 @@ const CartItem = ({
   setIsSelectedList,
   setIsAllSelected,
 }: CartItemProps) => {
-  const { productInCart } = useCartAtom(id);
+  const productInCart = useRecoilValue(cartSelectorFamily(id));
   const { product } = productInCart;
   const { name, imageUrl, price } = product;
   const { updateCartItem, deleteCartItem } = useFetch();
