@@ -8,8 +8,6 @@ import {
 } from 'recoil';
 import type { CartItemType } from '../../../types/ProductType';
 
-import { useCallback, useMemo } from 'react';
-
 import serverUrlState from '@recoil/server/serverUrlState';
 
 import generateFetchCart from '../remote/generateFetchCart';
@@ -43,13 +41,21 @@ export default cartState;
 
 export const useRefreshCart = () => useRecoilRefresher_UNSTABLE(cartState);
 
-export const useCartItem = (productId: number) => {
+export const useResetCart = () => useResetRecoilState(cartState);
+
+export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
-  const cartItem = cart.find((cartItem) => cartItem.product.id === productId);
   const fetchCart = useFetchCart();
 
-  const quantity = cartItem?.quantity ?? 0;
-  const cartItemId = cartItem?.id;
+  const getCartItemQuantity = (productId: number) => {
+    const cartItem = cart.find((cartItem) => cartItem.product.id === productId);
+    return cartItem?.quantity ?? 0;
+  };
+
+  const getCartItemId = (productId: number): number | undefined => {
+    const cartItem = cart.find((cartItem) => cartItem.product.id === productId);
+    return cartItem?.id;
+  };
 
   const addCartItem = async (productId: number) => {
     await fetchCart.POST(productId);
@@ -94,65 +100,68 @@ export const useCartItem = (productId: number) => {
     fetchCart.PATCH(cartId, quantity);
   };
 
-  return {
-    cartItemId,
-    quantity,
-    updateCartItemQuantity,
-    addCartItem,
-  };
-};
-
-export const useCheckedCartItem = () => {};
-
-export const useResetCart = () => useResetRecoilState(cartState);
-
-export const useCartReadOnly = () => useRecoilValue(cartState);
-
-export const useCheckCart = () => {
-  const [cart, setCart] = useRecoilState(cartState);
-  const fetchCart = useFetchCart();
-
-  const toggleMap = useMemo<{ [id: number]: boolean }>(() => {
-    return cart.reduce((acc, { product, checked }) => {
-      const { id } = product;
-      Object.assign(acc, { [id]: checked });
-      return acc;
-    }, {});
-  }, [cart]);
-
   const isAllChecked = cart.every((cartItem) => cartItem.checked);
 
-  const checkedCount = Object.values(toggleMap).reduce((acc, cur) => {
-    if (cur) {
-      return acc + 1;
-    } else {
-      return acc;
-    }
-  }, 0);
+  const getCartItemIsChecked = (cartId: number) => {
+    const cartItem = cart.find((cartItem) => cartItem.id === cartId);
+    return cartItem?.checked ?? false;
+  };
 
-  const isCheckedById = useCallback((id: number) => toggleMap[id], [toggleMap]);
+  const setCartItemIsChecked = (cartId: number) => {
+    setCart(
+      cart.map((cartItem) => {
+        if (cartItem.id === cartId) {
+          return {
+            ...cartItem,
+            checked: !cartItem.checked,
+          };
+        }
+        return cartItem;
+      })
+    );
+  };
 
-  const toggleAllCartItem = useCallback(() => {
+  const checkedCartCount = cart.reduce(
+    (totalCount, cartItem) => (cartItem.checked ? totalCount + 1 : totalCount),
+    0
+  );
+
+  const toggleAllCartItem = () => {
     setCart((prevCart) => {
       return prevCart.map((item) => ({ ...item, checked: !isAllChecked }));
     });
-  }, [isAllChecked, setCart]);
+  };
 
   const deleteCheckedItems = () => {
-    setCart(cart.filter((item) => item.checked === false));
+    setCart(cart.filter((cartItem) => cartItem.checked === false));
 
     cart
-      .filter((item) => item.checked === true)
-      .forEach((item) => {
-        fetchCart.DELETE(item.id);
+      .filter((cartItem) => cartItem.checked === true)
+      .forEach((cartItem) => {
+        fetchCart.DELETE(cartItem.id);
       });
   };
 
+  const totalPrice = cart.reduce((totalPrice, cartItem) => {
+    return cartItem.checked ? totalPrice + cartItem.product.price * cartItem.quantity : totalPrice;
+  }, 0);
+
   return {
+    cart,
+    setCart,
+
+    getCartItemQuantity,
+    getCartItemId,
+    updateCartItemQuantity,
+    addCartItem,
+
     isAllChecked,
-    checkedCount,
-    isCheckedById,
+    checkedCartCount,
+    getCartItemIsChecked,
+    setCartItemIsChecked,
     toggleAllCartItem,
     deleteCheckedItems,
+
+    totalPrice,
   };
 };
