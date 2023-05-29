@@ -1,6 +1,8 @@
 import FlexBox from 'components/@common/FlexBox';
+import SkeletonImg from 'components/@common/SkeletonImg';
 import styled from 'styled-components';
 import { CartProduct } from 'types/product';
+import emptyImg from 'assets/gradiation-min.png';
 
 type SheetProductCardProps = {
   sheetProduct: CartProduct;
@@ -13,7 +15,7 @@ const SheetProductCard = ({ sheetProduct }: SheetProductCardProps) => {
   return (
     <CartProductCardContainer justify="flex-start" gap="16px" role="list">
       <ProductImageWrapper>
-        <ProductImage src={imageUrl} />
+        <SkeletonImg placeholderSrc={emptyImg} src={imageUrl} width={75} height={75} alt="Product Image" />
       </ProductImageWrapper>
       <ProductInfoContainer flexDirection="column" justify="space-between">
         <Container flexDirection="column" justify="flex-end" align="left">

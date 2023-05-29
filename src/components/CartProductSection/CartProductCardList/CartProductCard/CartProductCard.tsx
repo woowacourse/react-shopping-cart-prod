@@ -8,6 +8,8 @@ import useModal from 'components/@common/Modal/hooks/useModal';
 import { ReactComponent as RecycleBinIcon } from 'assets/recycle-bin-icon.svg';
 import type { CartProduct } from 'types/product';
 import useCartCheckBox from 'hooks/useCartCheckBox';
+import emptyCartImg from 'assets/gradiation-min.png';
+import SkeletonImg from 'components/@common/SkeletonImg';
 
 type CartProductCardProps = {
   cartProduct: CartProduct;
@@ -25,7 +27,7 @@ const CartProductCard = ({ cartProduct }: CartProductCardProps) => {
     <CartProductCardContainer justify="flex-start" gap="16px" role="list">
       <CheckBox checked={isChecked(id)} onChange={() => toggleCheck(id)} />
       <ProductImageWrapper>
-        <ProductImage src={imageUrl} />
+        <SkeletonImg src={imageUrl} placeholderSrc={emptyCartImg} width={150} height={150} />
       </ProductImageWrapper>
       <ProductInfoContainer flexDirection="column" justify="space-between">
         <Container>

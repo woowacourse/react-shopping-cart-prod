@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import emptyCartImg from 'assets/gradiation-min.png';
 import FlexBox from 'components/@common/FlexBox';
 import CartQuantityStepper from 'components/CartQuantityStepper/CartQuantityStepper';
 import useShoppingCart from 'hooks/useShoppingCart';
 import type { Product } from 'types/product';
 import { useRecoilValue } from 'recoil';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
+import SkeletonImg from 'components/@common/SkeletonImg';
 
 type ProductCardProps = {
   product: Product;
@@ -20,7 +22,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <FlexBox flexDirection="column" justify="flex-start" gap="8px" role="list">
       <ProductImgContainer>
-        <ProductImage src={imageUrl} />
+        <SkeletonImg src={imageUrl} placeholderSrc={emptyCartImg} />
         <StepperWrapper>
           <CartQuantityStepper
             quantity={cartProductQuantity}
@@ -41,18 +43,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
 const ProductImgContainer = styled.div`
   position: relative;
-`;
-
-const ProductImage = styled.img`
-  width: 100%;
-  height: 100%;
-  border-radius: 4px;
-  filter: brightness(96%);
-
-  @media (max-width: 360px) {
-    width: 100%;
-    height: 100%;
-  }
 `;
 
 const ProductInfo = styled(FlexBox)`
