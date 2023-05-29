@@ -11,7 +11,7 @@ export default {
 const Template: StoryFn = () => {
   const items = {
     quantity: 1,
-    couponId: [1],
+    couponIds: [1],
     product: {
       id: 1,
       name: "친환경미니탕용기 158 중 (EL)",
