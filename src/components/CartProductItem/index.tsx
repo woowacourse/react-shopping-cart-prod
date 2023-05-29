@@ -1,7 +1,7 @@
-import { ReactComponent as TrashBox } from '../../assets/trash-box.svg';
-import CountButton from '../Common/CountButton';
+import { ReactComponent as TrashBox } from 'src/assets/trash-box.svg';
+import CountButton from 'src/components/Common/CountButton';
+import type { CartItem } from 'src/types';
 import styles from './index.module.scss';
-import type { CartItem } from '../../types';
 
 interface CartProductItemProps {
   cartItem: CartItem;
