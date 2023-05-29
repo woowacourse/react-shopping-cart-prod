@@ -2,9 +2,9 @@ import { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 
 import PageHeading from '../../components/common/PageHeading/PageHeading';
-import OrderDetailList from '../../components/order/OrderDetailList/OrderDetailList';
-import OrderDetailListFallback from '../../components/order/OrderDetailList/OrderDetailListFallback';
-import OrderDetailPurchaseInformation from '../../components/order/OrderDetailPurchaseInformation/OrderDetailPurchaseInformation';
+import OrderDetailList from '../../components/orderDetail/OrderDetailList/OrderDetailList';
+import OrderDetailListFallback from '../../components/orderDetail/OrderDetailList/OrderDetailListFallback';
+import OrderDetailPurchaseInformation from '../../components/orderDetail/OrderDetailPurchaseInformation/OrderDetailPurchaseInformation';
 
 const OrderDetailPage = () => {
   const { orderId } = useParams();
