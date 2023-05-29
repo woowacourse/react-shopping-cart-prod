@@ -22,12 +22,21 @@ function OrderItem({ id, date, cartItems, page, price }: OrderItemType & { page?
     return cartItems.slice(0, 2);
   };
 
+  const displayMoveDetailPage = () => {
+    if (cartItems.length < 3) return '상세보기 ⟩';
+
+    const remainsProductAmount = cartItems.length - 2;
+    return `${remainsProductAmount}개의 상품 더 보기 ⟩`;
+  };
+
   return (
     <>
       <S.Container>
         <S.OrderInfo>
           <S.OrderDate>{dateHelper.changeLocalDate(date)}</S.OrderDate>
-          {page !== 'detail' && <S.MoveDetailPage onClick={moveOrderDetail}>상세보기 ⟩</S.MoveDetailPage>}
+          {page !== 'detail' && (
+            <S.MoveDetailPage onClick={moveOrderDetail}>{displayMoveDetailPage()}</S.MoveDetailPage>
+          )}
         </S.OrderInfo>
         <S.OrderItems>
           {displayCartItems().map((cartItem) => {
