@@ -39,13 +39,13 @@ const CartItem = (item: CartProduct) => {
 
   return (
     <Wrapper>
+      <input
+        type="checkbox"
+        value={item.id}
+        checked={item.isChecked}
+        onChange={handleCheckbox}
+      />
       <FirstPart>
-        <input
-          type="checkbox"
-          value={item.id}
-          checked={item.isChecked}
-          onChange={handleCheckbox}
-        />
         <ImageBox>
           <img
             src={item.product.imageUrl}
@@ -54,13 +54,15 @@ const CartItem = (item: CartProduct) => {
         </ImageBox>
       </FirstPart>
       <MiddlePart>
-        <NameBox>{item.product.name}</NameBox>
+        <NameBox>
+          {item.product.name}{" "}
+          <PriceBox>{item.product.price.toLocaleString()}원</PriceBox>
+        </NameBox>
         <CouponSelector changeCartItemCoupon={changeCartItemCoupon} />
       </MiddlePart>
       <LastPart>
         <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
         <QuantityCounter itemId={item.product.id} lowerBound={1} />
-        <PriceBox>{item.product.price.toLocaleString()}원</PriceBox>
       </LastPart>
     </Wrapper>
   );
@@ -74,26 +76,32 @@ const Wrapper = styled.div`
 
   padding-bottom: 12px;
 
+  & > input[type="checkbox"] {
+    position: relative;
+    top: 5px;
+    width: 30px;
+    height: fit-content;
+
+    transform: scale(1.6);
+  }
+
   @media (max-width: 767px) {
     padding-left: 0;
   }
 `;
 
 const FirstPart = styled.div`
-  width: 13%;
+  width: 15%;
 
-  & > input[type="checkbox"] {
-    position: relative;
-    top: 15px;
-    right: 20px;
-    width: 40px;
-    height: fit-content;
-
-    transform: scale(1.6);
-  }
+  display: flex;
+  flex-direction: row;
 
   @media (max-width: 575px) {
     width: 0;
+  }
+
+  @media (max-width: 575px) {
+    display: none;
   }
 `;
 
@@ -112,10 +120,6 @@ const ImageBox = styled.div`
     object-fit: cover;
     border-radius: 5px;
   }
-
-  @media (max-width: 575px) {
-    display: none;
-  }
 `;
 
 const MiddlePart = styled.div`
@@ -126,6 +130,7 @@ const MiddlePart = styled.div`
   justify-content: space-evenly;
 
   & > :last-child {
+    margin-top: 20px;
     width: 95%;
     align-self: center;
   }
@@ -134,7 +139,7 @@ const MiddlePart = styled.div`
 const LastPart = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: flex-end;
 `;
 
@@ -162,7 +167,9 @@ const ButtonBox = styled.button`
 `;
 
 const PriceBox = styled.p`
-  font-size: 18px;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 400;
 `;
 
 export default React.memo(CartItem);
