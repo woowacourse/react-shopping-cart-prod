@@ -1,4 +1,4 @@
-import { Suspense, useState } from 'react';
+import { Suspense } from 'react';
 import styled from 'styled-components';
 
 import EstimatedPaymentBox from '../components/Cart/EstimatedPaymentBox';
