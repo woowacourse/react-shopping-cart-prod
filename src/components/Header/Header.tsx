@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { ReactComponent as ShoppingCartIcon } from '../../assets/icon/stussy-logo.svg';
 import { WIDTH } from '../../styles/mediaQuery';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { ServerName, serverAtom } from '../../store/server';
 import CartTextButton from '../CartTextButton/CartTextButton';
 
 const Header = () => {
-  const setServerName = useSetRecoilState(serverAtom);
+  const [serverName, setServerName] = useRecoilState(serverAtom);
 
   const onChangeServerNameHandler = (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -26,9 +26,11 @@ const Header = () => {
         </HomeButton>
       </Link>
       <ButtonContainer>
-        <ServerSelectBox onChange={onChangeServerNameHandler}>
-          <option value='ROY'>로이</option>
+        <ServerSelectBox
+          defaultValue={serverName}
+          onChange={onChangeServerNameHandler}>
           <option value='SPLIT'>스플릿</option>
+          <option value='ROY'>로이</option>
           <option value='IRAE'>이레</option>
         </ServerSelectBox>
         <CartTextButton />
