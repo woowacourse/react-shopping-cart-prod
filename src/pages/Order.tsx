@@ -7,8 +7,6 @@ import { OrderGroup } from '../components/OrderPage/OrderGroup';
 export const Order = () => {
   const orderList = useRecoilValue(orderListState);
 
-  console.log(orderList);
-
   return (
     <Layout>
       <Style.HeaderContainer>
@@ -27,7 +25,7 @@ export const Order = () => {
   );
 };
 
-const Style = {
+export const Style = {
   HeaderContainer: styled.div`
     width: 1320px;
     height: 69px;
@@ -40,10 +38,15 @@ const Style = {
 
     @media screen and (max-width: 480px) {
       width: 90vw;
+      height: 50px;
     }
   `,
   Header: styled.h1`
     font-size: 32px;
+
+    @media screen and (max-width: 480px) {
+      font-size: 25px;
+    }
   `,
   ContentContainer: styled.div`
     width: 1320px;
@@ -51,6 +54,7 @@ const Style = {
 
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
     gap: 50px;
 
     padding-top: 28px;

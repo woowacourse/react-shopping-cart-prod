@@ -30,7 +30,7 @@ export const useOrderFetch = () => {
     });
   };
 
-  const getUserPoint = () => {
+  const getUserPoint = async () => {
     return fetch(`${apiEndPoint}/point`, {
       method: 'GET',
       headers: {
@@ -39,5 +39,14 @@ export const useOrderFetch = () => {
     }).then((res) => res.json());
   };
 
-  return { order, getUserPoint };
+  const getOrderDetail = async (orderId: number) => {
+    return fetch(`${apiEndPoint}/order/${orderId}`, {
+      method: 'GET',
+      headers: {
+        Autorization: `Basic ${base64}`,
+      },
+    }).then((res) => res.json());
+  };
+
+  return { order, getUserPoint, getOrderDetail };
 };
