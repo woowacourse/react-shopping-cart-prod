@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import ProductList from 'pages/ProductList';
 import CartList from 'pages/CartList';
 import NotFound from 'pages/NotFound';
+import Order from 'pages/Order';
 
 const router = createBrowserRouter(
   [
@@ -22,6 +23,11 @@ const router = createBrowserRouter(
           <CartList />
         </Suspense>
       ),
+      errorElement: <NotFound />,
+    },
+    {
+      path: '/order',
+      element: <Order />,
       errorElement: <NotFound />,
     },
   ],
