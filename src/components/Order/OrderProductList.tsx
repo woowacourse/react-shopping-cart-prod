@@ -5,9 +5,13 @@ import type { OrderDetails } from '../../types/product';
 
 interface OrderProductListProps {
   orderProducts: OrderDetails;
+  showDetailsLink?: boolean;
 }
 
-const OrderProductList = ({ orderProducts }: OrderProductListProps) => {
+const OrderProductList = ({
+  orderProducts,
+  showDetailsLink,
+}: OrderProductListProps) => {
   const { orderId, orderDateTime } = orderProducts;
   const orderItems = orderProducts.orderItems;
 
@@ -18,9 +22,11 @@ const OrderProductList = ({ orderProducts }: OrderProductListProps) => {
           <OrderId>주문번호 : {orderId}</OrderId>
           <span>{orderDateTime}</span>
         </div>
-        <OrderDetailsLink to={`/orders/${orderId}`}>
-          상세보기 {'>'}
-        </OrderDetailsLink>
+        {showDetailsLink && (
+          <OrderDetailsLink to={`/orders/${orderId}`}>
+            상세보기 {'>'}
+          </OrderDetailsLink>
+        )}
       </OrderProductListHeader>
       {orderItems.map((orderItem, index) => (
         <li>

@@ -7,7 +7,11 @@ const OrderProductsListPage = () => {
     <Main>
       <OrderProductsTitle>주문 목록</OrderProductsTitle>
       {orderProducts.map((order) => (
-        <OrderProductList orderProducts={order} key={order.orderId} />
+        <OrderProductList
+          orderProducts={order}
+          key={order.orderId}
+          showDetailsLink
+        />
       ))}
     </Main>
   );
