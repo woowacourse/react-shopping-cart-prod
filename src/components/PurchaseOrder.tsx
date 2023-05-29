@@ -3,11 +3,14 @@ import { SHIPPING_FEE } from "constants/cartProduct";
 import { useRecoilValue } from "recoil";
 import { cartTotalDiscount, cartTotalPrice, orderCartList } from "recoil/cart";
 import styled, { keyframes } from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { ROUTER_PATH } from "router";
 
 const PurchaseOrder = () => {
   const totalPrice = useRecoilValue(cartTotalPrice);
   const totalDiscount = useRecoilValue(cartTotalDiscount);
   const purchaseOrder = useRecoilValue(orderCartList);
+  const navigate = useNavigate();
 
   const orderCartItem = async () => {
     const isSuccess = await addOrder(purchaseOrder);
@@ -17,8 +20,7 @@ const PurchaseOrder = () => {
       return;
     }
 
-    //추가 구현 예정
-    console.log("완료!!");
+    navigate(ROUTER_PATH.OrderList);
   };
 
   return (
