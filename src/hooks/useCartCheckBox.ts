@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { checkedCartProductsState } from 'state/cartCheckedProducts';
+import { checkedCartProductIdsState } from 'state/cartCheckedProducts';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
 import type { Product } from 'types/product';
@@ -8,26 +8,28 @@ import type { Product } from 'types/product';
 const useCartCheckBox = () => {
   const cartProducts = useRecoilValue(cartProductsState);
   const cartProductIdStore = useRecoilValue(cartProductIdStoreState);
-  const [checkedProducts, setCheckedProducts] = useRecoilState(checkedCartProductsState);
+  const [checkedCartProductIds, setCheckedCartProductIds] = useRecoilState(checkedCartProductIdsState);
 
   useEffect(() => {
     const updatedCartProductIds = [...cartProducts.keys()];
-    const updatedCheckedProducts = updatedCartProductIds.filter((cartProductId) => checkedProducts.has(cartProductId));
+    const updatedCheckedProducts = updatedCartProductIds.filter((cartProductId) =>
+      checkedCartProductIds.has(cartProductId)
+    );
 
-    setCheckedProducts(new Set(updatedCheckedProducts));
+    setCheckedCartProductIds(new Set(updatedCheckedProducts));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartProducts]);
 
-  const isAllChecked = cartProducts.size === checkedProducts.size;
-  const isChecked = (id: Product['id']) => checkedProducts.has(cartProductIdStore[id]);
+  const isAllChecked = cartProducts.size === checkedCartProductIds.size;
+  const isChecked = (id: Product['id']) => checkedCartProductIds.has(cartProductIdStore[id]);
 
   const check = (id: Product['id']) => {
-    setCheckedProducts((prev) => new Set(prev.add(cartProductIdStore[id])));
+    setCheckedCartProductIds((prev) => new Set(prev.add(cartProductIdStore[id])));
   };
 
   const unCheck = (id: Product['id']) => {
-    setCheckedProducts((prev) => {
+    setCheckedCartProductIds((prev) => {
       prev.delete(cartProductIdStore[id]);
 
       return new Set(prev);
@@ -42,11 +44,11 @@ const useCartCheckBox = () => {
   const checkAllBox = () => {
     const allChecked = [...cartProducts.keys()];
 
-    setCheckedProducts(new Set(allChecked));
+    setCheckedCartProductIds(new Set(allChecked));
   };
 
   const unCheckAllBox = () => {
-    setCheckedProducts(new Set([]));
+    setCheckedCartProductIds(new Set([]));
   };
 
   const toggleCheckAllBox = () => {
@@ -54,7 +56,7 @@ const useCartCheckBox = () => {
     else checkAllBox();
   };
 
-  return { checkedProducts, isAllChecked, isChecked, toggleCheck, toggleCheckAllBox };
+  return { checkedCartProductIds, isAllChecked, isChecked, toggleCheck, toggleCheckAllBox };
 };
 
 export default useCartCheckBox;

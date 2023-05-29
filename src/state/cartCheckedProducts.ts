@@ -2,7 +2,7 @@ import { atom, selector } from 'recoil';
 import { cartProductsState } from './cartProducts';
 import { CheckedCartProducts } from 'types/product';
 
-const defaultCheckedCartProductsState = selector({
+const defaultCheckedCartProductIdsState = selector({
   key: 'defaultCartCheckedProducts',
   get: ({ get }) => {
     const cartProducts = get(cartProductsState);
@@ -11,7 +11,22 @@ const defaultCheckedCartProductsState = selector({
   },
 });
 
-export const checkedCartProductsState = atom<CheckedCartProducts>({
+export const checkedCartProductIdsState = atom<CheckedCartProducts>({
   key: 'cartCheckedProductsState',
-  default: defaultCheckedCartProductsState,
+  default: defaultCheckedCartProductIdsState,
+});
+
+const getCheckedCartProductsState = selector({
+  key: 'getCheckedCartProductsState',
+  get: ({ get }) => {
+    const cartProducts = get(cartProductsState);
+    const cartCheckedProducts = get(checkedCartProductIdsState);
+    [...cartProducts.entries()].filter(([cartProductId, cartProduct]) => {});
+
+    cartProducts.forEach((cartProduct, cartProductId) => {
+      new Map(cartProducts);
+    });
+
+    return;
+  },
 });
