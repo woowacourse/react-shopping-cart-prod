@@ -3,6 +3,7 @@ import Order from 'src/Page/Order';
 import Cart from 'src/Page/Cart';
 import Home from 'src/Page/Home';
 import NotFound from 'src/Page/NotFound';
+import OrderDetail from 'src/Page/OrderDetail';
 import { ROUTE_PATH } from 'src/constants';
 import Root from './Root';
 
@@ -16,6 +17,7 @@ function Router() {
         { index: true, element: <Home /> },
         { path: ROUTE_PATH.CART, element: <Cart /> },
         { path: ROUTE_PATH.ORDER, element: <Order /> },
+        { path: ROUTE_PATH.ORDER_DETAIL, element: <OrderDetail /> },
       ],
     },
   ]);

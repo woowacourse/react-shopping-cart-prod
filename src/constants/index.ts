@@ -30,7 +30,7 @@ export const ROUTE_PATH = Object.freeze({
   DEFAULT: '/',
   CART: '/cart',
   ORDER: '/order',
-  ORDER_DETAIL: '/order/:order-id',
+  ORDER_DETAIL: '/order/:id',
 });
 
 export const PARCEL_PRICE = 3000;
