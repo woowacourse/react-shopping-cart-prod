@@ -8,7 +8,7 @@ type CartItemOperations = {
   name: string;
   price: number;
   imageUrl: string;
-  refetchCartList: () => void;
+  refetchCartList: ({}) => void;
 };
 
 const useCartItemOperations = ({ cartItemNumber, id, name, price, imageUrl, refetchCartList }: CartItemOperations) => {
