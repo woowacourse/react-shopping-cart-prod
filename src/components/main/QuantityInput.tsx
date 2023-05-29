@@ -28,14 +28,13 @@ const QuantityInput = ({ id, value, onChange }: Props) => {
   return (
     <QuantityStyle.Wrapper>
       <Input
-        type="number"
+        type='number'
         value={value}
         id={id}
-        inputMode="numeric"
-        name="quantity"
-        aria-label="quantity-input"
-        autoComplete="on"
-        autoFocus
+        inputMode='numeric'
+        name='quantity'
+        aria-label='quantity-input'
+        autoComplete='on'
         min={0}
         max={99}
         css={QuantityInputStyle}
@@ -44,8 +43,8 @@ const QuantityInput = ({ id, value, onChange }: Props) => {
         onInput={handleDigitsOnlyAllow}
       />
 
-      <FaCaretUp aria-label="button-to-raise-quantity" />
-      <FaCaretDown aria-label="button-to-lower-quantity" />
+      <FaCaretUp aria-label='button-to-raise-quantity' />
+      <FaCaretDown aria-label='button-to-lower-quantity' />
     </QuantityStyle.Wrapper>
   );
 };
