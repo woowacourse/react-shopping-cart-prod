@@ -13,30 +13,33 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockProduct = {
+  orderId: 1,
+  orderDateTime: '2023-05-24 08:30:21',
   orderItems: [
     {
       quantity: 5,
       product: {
         productId: 1,
-        price: 10000,
-        name: '치킨',
-        imageUrl: 'http://example.com/chicken.jpg',
+        name: 'PET보틀-정사각(420ml)',
+        price: 43400,
+        imageUrl: 'images/정사각-420.jpeg',
       },
     },
     {
       quantity: 1,
       product: {
-        productId: 2,
-        price: 20000,
-        name: '피자',
-        imageUrl: 'http://example.com/pizza.jpg',
+        productId: 3,
+        name: 'PET보틀-정사각(370ml)',
+        price: 41000,
+        imageUrl: 'images/정사각-370.jpeg',
       },
     },
   ],
+  totalPrice: 40500,
 };
 
 export const Default: Story = {
   args: {
-    orderProducts: mockProduct.orderItems,
+    orderProducts: mockProduct,
   },
 };
