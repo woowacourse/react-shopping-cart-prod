@@ -6,7 +6,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
-  base: '/react-shopping-cart/',
+  base: '/react-shopping-cart-prod',
   resolve: {
     alias: {
       '@router': path.resolve(__dirname, 'src/router'),
