@@ -17,7 +17,16 @@ function Cart() {
     cartList.length > 0 ? (
       <section className={styles['main-view']}>
         <CartProductItemList />
-        <PaymentsView priceTotal={totalPrice} parcelPrice={PARCEL_PRICE} />
+        <PaymentsView
+          puschaseOption
+          paymentAmount={{
+            originalPrice: totalPrice,
+            deliveryFee: PARCEL_PRICE,
+            discountedPrice: totalPrice,
+            discounts: [],
+            finalPrice: totalPrice + PARCEL_PRICE,
+          }}
+        />
       </section>
     ) : (
       <section className={styles['main-view-blank']}>

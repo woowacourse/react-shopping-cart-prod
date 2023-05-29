@@ -38,6 +38,15 @@
   }
 }
 
+.discount-container {
+  width: 90%;
+
+  & > div {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
 .payments-button {
   display: flex;
   width: 90%;
