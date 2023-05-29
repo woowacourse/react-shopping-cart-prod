@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import theme from './theme';
 
 const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
@@ -15,12 +16,12 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     outline: none;
-    color: #fff;
+    color: ${theme.color.white};
   }
 
   a:hover, a:active, a:visited {
     text-decoration: none;
-    color: #fff;
+    color: ${theme.color.white};
   }
 
   button {

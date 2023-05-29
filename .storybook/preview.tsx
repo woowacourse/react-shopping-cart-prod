@@ -1,10 +1,12 @@
 import React, { Suspense } from 'react';
 import { RecoilRoot } from 'recoil';
-import GlobalStyle from '../src/GlobalStyle';
-import { initialize, mswDecorator } from 'msw-storybook-addon';
-import type { Preview } from '@storybook/react';
-import { handlers } from '../src/mocks/handlers/index';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { initialize, mswDecorator } from 'msw-storybook-addon';
+import { handlers } from '../src/mocks/handlers/index';
+import GlobalStyle from '../src/styles/GlobalStyle';
+import theme from '../src/styles/theme';
+import type { Preview } from '@storybook/react';
 
 initialize();
 
@@ -23,14 +25,16 @@ const preview: Preview = {
 
 export const decorators = [
   (Story) => (
-    <RecoilRoot>
-      <GlobalStyle />
-      <MemoryRouter initialEntries={['/']}>
-        <Suspense>
-          <Story />
-        </Suspense>
-      </MemoryRouter>
-    </RecoilRoot>
+    <ThemeProvider theme={theme}>
+      <RecoilRoot>
+        <GlobalStyle />
+        <MemoryRouter initialEntries={['/']}>
+          <Suspense>
+            <Story />
+          </Suspense>
+        </MemoryRouter>
+      </RecoilRoot>
+    </ThemeProvider>
   ),
   mswDecorator,
 ];

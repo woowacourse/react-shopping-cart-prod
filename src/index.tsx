@@ -2,8 +2,10 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createHashRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+import { ThemeProvider } from 'styled-components';
 import App from './App';
-import GlobalStyle from './GlobalStyle';
+import GlobalStyle from './styles/GlobalStyle';
+import theme from './styles/theme';
 import ProductPage from './components/pages/ProductPage/ProductPage';
 import CartPage from './components/pages/CartPage/CartPage';
 import ToastList from './components/common/Toast/ToastList';
@@ -52,12 +54,14 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <GlobalStyle />
-    <RecoilRoot>
-      <Suspense>
-        <RouterProvider router={router} />
-        <ToastList />
-      </Suspense>
-    </RecoilRoot>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <RecoilRoot>
+        <Suspense>
+          <RouterProvider router={router} />
+          <ToastList />
+        </Suspense>
+      </RecoilRoot>
+    </ThemeProvider>
   </React.StrictMode>,
 );
