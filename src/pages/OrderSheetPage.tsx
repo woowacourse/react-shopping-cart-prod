@@ -1,5 +1,5 @@
 import FlexBox from 'components/@common/FlexBox';
-import CartPriceSection from 'components/CartPriceSection/CartPriceSection';
+import OrderPriceSection from 'components/OrderPriceSection/OrderPriceSection';
 import SheetLeftSection from 'components/SheetLeftSection/SheetLeftSection';
 import styled from 'styled-components';
 
@@ -9,7 +9,7 @@ const OrderSheetPage = () => {
       <PageTitle>주문서</PageTitle>
       <SectionContainer gap="80px" align="flex-start" role="region">
         <SheetLeftSection />
-        <CartPriceSection />
+        <OrderPriceSection />
       </SectionContainer>
     </OrderSheetPageContainer>
   );
