@@ -7,7 +7,7 @@ const withTotalCheckedCount = selector({
     const cart = get(cartState);
 
     return cart.reduce((acc, cur) => {
-      if (cur.checked) return acc + 1;
+      if (cur.isSelect) return acc + 1;
       return acc;
     }, 0);
   },

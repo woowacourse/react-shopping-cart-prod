@@ -1,7 +1,6 @@
 import { DefaultValue, selectorFamily, useRecoilState } from 'recoil';
 import { MAX_CART_QUANTITY, MIN_CART_QUANTITY } from '@constants/cartConstants';
 
-import { productListState } from '../product/productListState';
 import cartState from './cartState';
 
 interface newType {
@@ -48,17 +47,17 @@ const withItemQuantityBy = selectorFamily<newType, number>({
         if (!cartList.some((item) => item.id === cartId)) {
           if (quantity === 0) return;
 
-          const product = get(productListState).filter((product) => product.id === productId)[0];
+          // const product = get(productListState).filter((product) => product.id === productId)[0];
 
-          set(cartState, (prevCartList) => [
-            ...prevCartList,
-            {
-              id: cartId,
-              quantity,
-              checked: true,
-              product,
-            },
-          ]);
+          // set(cartState, (prevCartList) => [
+          //   ...prevCartList,
+          //   {
+          //     id: cartId,
+          //     quantity,
+          //     checked: true,
+          //     product,
+          //   },
+          // ]);
 
           return;
         }
