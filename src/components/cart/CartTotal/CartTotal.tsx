@@ -125,6 +125,10 @@ const OrderDetail = styled.div`
   display: flex;
   flex-direction: column;
   text-align: right;
+
+  & > span {
+    font-weight: 600;
+  }
 `;
 
 const OrderButton = styled.button`
