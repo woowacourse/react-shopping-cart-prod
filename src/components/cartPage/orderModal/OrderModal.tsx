@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { Loading } from './../../common/Loading';
 import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 import { userAtomState } from '../../../recoil/atoms/userAtom';
+import { orderListState } from '../../../recoil/atoms/orderAtom';
 
 interface OrderModalProps {
   closeModal: () => void;
@@ -24,8 +25,9 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
     totalPointsToAdd,
   } = useRecoilValue(priceSummaryState);
   const setUserPoint = useSetRecoilState(userAtomState);
+  const setOrders = useSetRecoilState(orderListState);
 
-  const { order, getUserPoint } = useOrderFetch();
+  const { order, getUserPoint, getOrders } = useOrderFetch();
 
   const {
     usingPoint,
@@ -50,6 +52,7 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
       setIsLoading(false);
       deleteAllSelectedRecoilCartItems();
       getUserPoint().then((userPoint) => setUserPoint(userPoint.point));
+      getOrders().then((orders) => setOrders(orders));
 
       if (orderId) navigate('/orderDetail', { state: { orderId } });
     });

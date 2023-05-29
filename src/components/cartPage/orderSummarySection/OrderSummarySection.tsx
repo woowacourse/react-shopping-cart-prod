@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { Loading } from '../../common/Loading';
 import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
 import { userAtomState } from '../../../recoil/atoms/userAtom';
+import { orderListState } from '../../../recoil/atoms/orderAtom';
 
 export const OrderSummarySection = () => {
   const {
@@ -23,8 +24,9 @@ export const OrderSummarySection = () => {
   } = useRecoilValue(priceSummaryState);
   const selectedCartIdList = useRecoilValue(selectedCartIdListState);
   const setUserPoint = useSetRecoilState(userAtomState);
+  const setOrders = useSetRecoilState(orderListState);
 
-  const { order, getUserPoint } = useOrderFetch();
+  const { order, getUserPoint, getOrders } = useOrderFetch();
 
   const {
     usingPoint,
@@ -50,6 +52,7 @@ export const OrderSummarySection = () => {
       setIsLoading(false);
       deleteAllSelectedRecoilCartItems();
       getUserPoint().then((userPoint) => setUserPoint(userPoint.point));
+      getOrders().then((orders) => setOrders(orders));
 
       if (orderId) navigate('/orderDetail', { state: { orderId } });
     });

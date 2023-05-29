@@ -48,5 +48,14 @@ export const useOrderFetch = () => {
     }).then((res) => res.json());
   };
 
-  return { order, getUserPoint, getOrderDetail };
+  const getOrders = async () => {
+    return fetch('/orders', {
+      method: 'GET',
+      headers: {
+        Autorization: `Basic ${base64}`,
+      },
+    }).then((res) => res.json());
+  };
+
+  return { order, getUserPoint, getOrderDetail, getOrders };
 };
