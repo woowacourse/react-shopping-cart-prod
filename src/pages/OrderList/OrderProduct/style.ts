@@ -23,6 +23,7 @@ export const ProductName = styled.div`
   font-size: 18px;
   margin-bottom: 20px;
   color: #333333;
+  line-height: 160%;
 `;
 
 export const ProductAmount = styled.div`

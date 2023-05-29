@@ -3,12 +3,13 @@ import { Suspense } from 'react';
 import PageTitle from '@Components/PageTitle';
 
 import OrderItems from './OrderItems';
+import OrderListLoading from './OrderListLoading';
 
 function OrderList() {
   return (
     <>
       <PageTitle title="주문 목록" />
-      <Suspense fallback={<div>로딩중..</div>}>
+      <Suspense fallback={<OrderListLoading />}>
         <OrderItems />
       </Suspense>
     </>
