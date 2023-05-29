@@ -22,7 +22,14 @@ const useStepperInputChange = ({ cartItemNumber, id, name, price, imageUrl, refe
 
   const handleStepperInputChange = useCallback(
     async (e: React.ChangeEvent<HTMLInputElement>) => {
-      const targetQuantity = parseInt(e.target.value, 10);
+      let targetQuantity = parseInt(e.target.value, 10);
+
+      if (isNaN(targetQuantity) || targetQuantity < 1) {
+        targetQuantity = 1;
+      } else if (targetQuantity > 99) {
+        targetQuantity = 99;
+      }
+
       if (!cartItemNumber) return;
       if (targetQuantity === 0) {
         await deleteCartItem({ param: cartItemNumber });
