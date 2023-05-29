@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../Common/Button';
 import { useRecoilValue } from 'recoil';
@@ -47,7 +48,9 @@ const EstimatedPaymentBox = ({ userUsedPoint }: EstimatedPaymentBoxProps) => {
         </EstimatedPaymentInfo>
       </EstimatedPaymentContent>
       <OrderButtonWrapper>
-        <Button designType='order' buttonLabel='주문하기' />
+        <Link to={'/orders'}>
+          <Button designType='order' buttonLabel='주문하기' />
+        </Link>
       </OrderButtonWrapper>
     </EstimatedPaymentBoxContainer>
   );
