@@ -4,12 +4,13 @@ import handlers from '../src/mocks/handlers';
 import worker from '../src/mocks/browser';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import React from 'react';
+import { MemoryRouter } from 'react-router'; // or "react-router-dom";
 
 let options = {};
 if (location.hostname === 'hozzijeong.github.io') {
   options = {
     serviceWorker: {
-      url: '/react-shopping-cart/mockServiceWorker.js',
+      url: '/react-shopping-cart-prod/mockServiceWorker.js',
     },
   };
 }
@@ -22,7 +23,9 @@ export const decorators = [
   Story => {
     return (
       <RecoilRoot>
-        <Story />
+        <MemoryRouter initialEntries={['/']}>
+          <Story />
+        </MemoryRouter>
       </RecoilRoot>
     );
   },
