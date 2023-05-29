@@ -9,11 +9,31 @@ import {
   Vacant,
 } from "./PurchaseBox.style";
 import { useRecoilValue } from "recoil";
-import { totalPriceSelector } from "../../recoil/cartAtoms.ts";
+import {
+  checkedCartSelector,
+  totalPriceSelector,
+} from "../../recoil/cartAtoms.ts";
+import { Order, OrderItem } from "../../types/types.ts";
 
 function PurchaseBox() {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
+  const checkedCartList = useRecoilValue(checkedCartSelector);
+
+  const purchase = () => {
+    const order: Order = {
+      orders: checkedCartList.map(
+        (cart): OrderItem => ({
+          cartItemId: cart.id,
+          quantity: cart.quantity,
+          productId: cart.product.id,
+        })
+      ),
+      couponId: null,
+      point: 1000,
+    };
+    alert(`서버로 보낼 데이터 (아직 안보내용): ${JSON.stringify(order)}`);
+  };
 
   return (
     <PurchaseBoxWrapper>
@@ -37,7 +57,7 @@ function PurchaseBox() {
           </PurchaseText>
         </PurchasePropertyWrapper>
         <PurchaseButtonWrapper>
-          <PurchaseButton>주문하기</PurchaseButton>
+          <PurchaseButton onClick={() => purchase()}>주문하기</PurchaseButton>
         </PurchaseButtonWrapper>
       </PurchaseWrapper>
     </PurchaseBoxWrapper>

@@ -19,3 +19,15 @@ export interface NewCartItem extends CartItem {
   quantity: 1;
   checked: true;
 }
+
+export interface OrderItem {
+  cartItemId: number;
+  quantity: number;
+  productId: number;
+}
+
+export interface Order {
+  orders: OrderItem[];
+  couponId: number | null;
+  point: number;
+}
