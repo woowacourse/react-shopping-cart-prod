@@ -134,7 +134,6 @@ const S = {
 const deleteButtonStyle = css`
   margin-left: 20px;
   padding: 6px 12px 7px;
-  background: none;
   border: 1px solid var(--gray-color-100);
 
   @media (max-width: 548px) {

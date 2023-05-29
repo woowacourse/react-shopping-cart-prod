@@ -4,6 +4,7 @@ import { useSetCart } from '../../hooks/useCart';
 import { useHandleQuantityInput } from '../../hooks/useHandleQuantityInput';
 import { quantitySelector } from '../../recoil';
 import { Product } from '../../types';
+import Button from '../common/Button';
 import CartIcon from '../icons/CartIcon';
 import Price from '../Price';
 import QuantityInput from './QuantityInput';
@@ -13,6 +14,7 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
   const { addToCart, removeItemFromCart, updateCart } = useSetCart(id);
 
   const handleCartClick = () => addToCart();
+
   const handleNumberInputChange = useHandleQuantityInput({
     removeItemFromCart,
     setQuantity,
@@ -32,9 +34,9 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
         {quantity > 0 ? (
           <QuantityInput id={name} value={quantity} onChange={handleNumberInputChange} />
         ) : (
-          <S.Button type='button' onClick={handleCartClick}>
+          <Button css={buttonStyle} onClick={handleCartClick}>
             <CartIcon css={svgStyle} />
-          </S.Button>
+          </Button>
         )}
       </S.InfoWrapper>
     </div>
@@ -51,12 +53,6 @@ const S = {
     display: flex;
     justify-content: space-between;
     padding: 12px 6px 0;
-  `,
-
-  Button: styled.button`
-    align-self: start;
-    background: none;
-    cursor: pointer;
   `,
 
   Name: styled.label`
@@ -89,6 +85,10 @@ const svgStyle = css`
 const priceStyle = css`
   margin-top: 8px;
   font-weight: 500;
+`;
+
+const buttonStyle = css`
+  align-self: start;
 `;
 
 export default ProductItem;

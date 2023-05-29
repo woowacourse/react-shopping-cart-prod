@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { css, styled } from 'styled-components';
+import { styled } from 'styled-components';
 import { useSetCart } from '../../hooks/useCart';
 import { checkedItemList } from '../../recoil';
 import { Product } from '../../types';
@@ -53,7 +53,7 @@ const SelectedProductItem = ({
           {name}
         </S.Name>
         <S.Wrapper>
-          <Button css={trashCanButtonStyle} onClick={handleTrashCanClick}>
+          <Button onClick={handleTrashCanClick}>
             <TrashCanIcon patternId={cartItemId} imageSize={{ width: '40', height: '40' }} />
           </Button>
           <QuantityButton productId={productId} quantity={quantity} />
@@ -126,9 +126,5 @@ const S = {
     }
   `,
 };
-
-const trashCanButtonStyle = css`
-  background: none;
-`;
 
 export default SelectedProductItem;

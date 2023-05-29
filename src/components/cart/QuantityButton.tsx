@@ -1,9 +1,10 @@
 import { BsPlus, BsDash } from 'react-icons/bs';
 import { useSetRecoilState } from 'recoil';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import { QUANTITY, STEP_HANDLER } from '../../constants';
 import { useSetCart } from '../../hooks/useCart';
 import { quantitySelector } from '../../recoil';
+import Button from '../common/Button';
 
 const { MAX, MIN, STEP } = QUANTITY;
 const { UP, DOWN } = STEP_HANDLER;
@@ -28,21 +29,21 @@ const QuantityButton = ({ productId, quantity }: Props) => {
 
   return (
     <S.Wrapper>
-      <S.Button
-        quantity={quantity}
+      <Button
+        css={buttonStyle(quantity)}
         onClick={() => handleQuantityChange(MIN, DOWN)}
         aria-label='button-to-lower-quantity'
       >
         <BsDash />
-      </S.Button>
+      </Button>
       <S.Quantity>{quantity}</S.Quantity>
-      <S.Button
-        quantity={quantity}
+      <Button
+        css={buttonStyle(quantity)}
         onClick={() => handleQuantityChange(MAX, UP)}
         aria-label='button-to-raise-quantity'
       >
         <BsPlus />
-      </S.Button>
+      </Button>
     </S.Wrapper>
   );
 };
@@ -71,33 +72,31 @@ const S = {
       font-size: 13px;
     }
   `,
-
-  Button: styled.button<{ quantity: number }>`
-    width: 26px;
-    max-width: 26px;
-    border: 1px solid var(--gray-color-200);
-    font-size: 16px;
-    background: none;
-    cursor: pointer;
-
-    &[aria-label='button-to-raise-quantity'] {
-      border-left: 0;
-      cursor: ${(props) => props.quantity === MAX && 'default'};
-
-      & > svg {
-        fill: ${(props) => props.quantity === MAX && 'var(--gray-color-100)'};
-      }
-    }
-
-    &[aria-label='button-to-lower-quantity'] {
-      border-right: 0;
-      cursor: ${(props) => props.quantity === MIN && 'default'};
-
-      & > svg {
-        fill: ${(props) => props.quantity === MIN && 'var(--gray-color-100)'};
-      }
-    }
-  `,
 };
+
+const buttonStyle = (quantity: number) => css`
+  width: 26px;
+  max-width: 26px;
+  border: 1px solid var(--gray-color-200);
+  font-size: 16px;
+
+  &[aria-label='button-to-raise-quantity'] {
+    border-left: 0;
+    cursor: ${quantity === MAX && 'default'};
+
+    & > svg {
+      fill: ${quantity === MAX && 'var(--gray-color-100)'};
+    }
+  }
+
+  &[aria-label='button-to-lower-quantity'] {
+    border-right: 0;
+    cursor: ${quantity === MIN && 'default'};
+
+    & > svg {
+      fill: ${quantity === MIN && 'var(--gray-color-100)'};
+    }
+  }
+`;
 
 export default QuantityButton;

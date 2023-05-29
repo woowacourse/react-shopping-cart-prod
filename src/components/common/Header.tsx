@@ -1,9 +1,10 @@
-import styled from 'styled-components';
-import { ROUTE_PATH } from '../../constants/';
+import styled, { css } from 'styled-components';
+import { ROUTE_PATH } from '../../constants';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
 import Cart from '../Cart';
 import CartIcon from '../icons/CartIcon';
 import ServerSelector from '../ServerSelector';
+import Button from './Button';
 
 interface Props {
   title: string;
@@ -15,10 +16,10 @@ const Header = ({ title }: Props) => {
   return (
     <S.Header>
       <S.Wrapper>
-        <S.Button onClick={() => goToPage(ROUTE_PATH.MAIN_PAGE)}>
-          <CartIcon aria-label='logo-cart-icon' />
+        <Button css={buttonStyle} onClick={() => goToPage(ROUTE_PATH.MAIN_PAGE)}>
+          <CartIcon aria-label='하얀색 카트 모양의 로고' />
           <span>{title}</span>
-        </S.Button>
+        </Button>
         <ServerSelector />
         <Cart />
       </S.Wrapper>
@@ -32,12 +33,28 @@ const S = {
     height: 80px;
     margin-bottom: 62px;
     background: var(--text-color);
-    font-size: 34px;
-    font-weight: 900;
     line-height: 80px;
-    letter-spacing: 0.2px;
+    `,
 
-    & svg {
+Wrapper: styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    max-width: 1270px;
+    margin: 0 auto;
+    padding: 0 20px;
+  `,
+};
+
+const buttonStyle = css`
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  
+  & svg {
       width: 44px;
       height: 36px;
       margin-right: 20px;
@@ -63,26 +80,6 @@ const S = {
         padding: 2px;
       }
     }
-  `,
-
-  Button: styled.button`
-    color: #fff;
-    background: none;
-    cursor: pointer;
-
-    @media (max-width: 480px) {
-      display: flex;
-    }
-  `,
-
-  Wrapper: styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    max-width: 1270px;
-    margin: 0 auto;
-    padding: 0 20px;
-  `,
-};
+`;
 
 export default Header;
