@@ -11,6 +11,8 @@ const Item = (item: Product) => {
   const [cartItem, setCartItem] = useRecoilState(cartSelector(item.id));
 
   const handleCartClicked = async () => {
+    if (cartItem?.quantity && cartItem?.quantity >= 1) return;
+
     const cartItemId = await addCartItem(selectedServer, item.id);
 
     if (!cartItemId) {
@@ -28,7 +30,7 @@ const Item = (item: Product) => {
 
   return (
     <Wrapper>
-      <ImageBox>
+      <ImageBox onClick={handleCartClicked}>
         <img src={item.imageUrl} alt={`${item.name} 상품 이미지`} />
       </ImageBox>
       <NameBox>{item.name}</NameBox>
@@ -49,8 +51,12 @@ const Item = (item: Product) => {
 };
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-areas:
+    "image image"
+    "name quantity"
+    "price quantity";
+  grid-template-columns: auto 74px;
 
   width: 100%;
 
@@ -58,6 +64,8 @@ const Wrapper = styled.div`
 `;
 
 const ImageBox = styled.div`
+  grid-area: image;
+
   width: 100%;
   padding-top: 100%;
   position: relative;
@@ -83,7 +91,7 @@ const ImageBox = styled.div`
 `;
 
 const NameBox = styled.div`
-  width: 100%;
+  grid-area: name;
 
   margin: 5px 0 10px 10px;
 
@@ -100,6 +108,8 @@ const NameBox = styled.div`
 `;
 
 const PriceBox = styled.p`
+  grid-area: price;
+
   margin-left: 10px;
 
   font-size: 20px;
@@ -110,13 +120,15 @@ const PriceBox = styled.p`
 `;
 
 const IconContainer = styled.div`
-  position: absolute;
-  right: 10px;
-  bottom: 20px;
+  grid-area: quantity;
 
   cursor: pointer;
 
   & > img {
+    position: absolute;
+    right: 10px;
+    bottom: 20px;
+
     width: 24px;
     height: 24px;
 
