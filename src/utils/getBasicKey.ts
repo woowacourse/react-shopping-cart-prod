@@ -1,3 +1,3 @@
-const getBasicKey = (id: string, password: string) => btoa(`${id}:${password}`);
+const getBasicKey = (id: string, password: number) => btoa(`${id}:${password}`);
 
 export default getBasicKey;

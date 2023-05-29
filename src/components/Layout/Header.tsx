@@ -29,7 +29,10 @@ const Header = ({ children }: PropsWithChildren) => {
         <Title>{children}</Title>
       </FlexLink>
 
-      <FlexBox>
+      <FlexBox gap="4px">
+        <FlexLink to={ROUTE_PATH.user}>
+          <span>유저 선택</span>
+        </FlexLink>
         <SelectBox
           value={(localStorage.getItem(SERVER_OWNER) ?? '솔로스타') as ServerOwner}
           options={serverOwnerOptions}
@@ -97,7 +100,8 @@ const CartProductCount = styled.span`
 const FlexLink = styled(Link)`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+  color: white;
 `;
 
 export default Header;
