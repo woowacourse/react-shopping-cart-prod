@@ -55,53 +55,38 @@ const Counter = ({
 };
 
 const CounterContainer = styled.span<{ size: CounterSize }>`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(33%, auto));
+  border: 1px solid ${(props) => props.theme.color.gray300};
 
-  border: 1px solid #dddddd;
-
-  ${({ size }) =>
-    (size === 'medium' &&
-      css`
+  ${({ size }) => {
+    if (size === 'medium') {
+      return css`
         width: 120px;
         height: 42px;
+      `;
+    }
 
-        & > * {
-          width: 40px;
-          height: 40px;
-
-          font-size: 24px;
-        }
-      `) ||
-    (size === 'small' &&
-      css`
+    if (size === 'small') {
+      return css`
         width: 92px;
-
-        & > * {
-          width: 30px;
-          height: 30px;
-
-          font-size: 16px;
-        }
-      `)}
+      `;
+    }
+  }}
 `;
 
 const Input = styled.input`
-  border: none;
-
-  font-weight: 400;
-  color: #333;
-
+  font-size: 22px;
   text-align: center;
+  border: none;
+  color: ${(props) => props.theme.color.black};
 `;
 
 const CounterButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background-color: #fff;
-  border: none;
-
+  background-color: ${(props) => props.theme.color.white};
   cursor: pointer;
 `;
 
