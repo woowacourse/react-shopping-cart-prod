@@ -1,4 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import { RecoilRoot } from 'recoil';
 import { useServer } from '@recoil/server/serverState';
 import { SERVER_NAME } from '@constants/urlConstants';
@@ -13,7 +14,10 @@ describe('useServer 훅 테스트', () => {
     const { result } = renderHook(() => useServer(), { wrapper: RecoilRoot });
     const { server, handleServer } = result.current;
 
-    handleServer(SERVER_NAME[2]);
+    act(() => {
+      handleServer(SERVER_NAME[2]);
+    });
+
     waitFor(() => {
       expect(server).toBe('우가');
     });
