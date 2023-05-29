@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const CartItemLayout = styled.div`
   display: flex;
@@ -45,4 +45,39 @@ export const CartItemInfo = styled.div`
   display: flex;
   justify-content: space-between;
   height: 100%;
+`;
+
+export const Label = styled.label`
+  width: 28px;
+  height: 28px;
+  align-self: flex-start;
+`;
+
+export const Input = styled.input<{ icon: string }>`
+  appearance: none;
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid #22a6a2;
+  border-radius: 2px;
+  transform: translateY(0%);
+  cursor: pointer;
+
+  &:checked {
+    background: #333333;
+    border: 1px solid #3288ff;
+  }
+
+  &:after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: ${({ icon }) => `url(${icon})`};
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 `;

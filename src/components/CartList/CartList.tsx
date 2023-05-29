@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   allCartCheckedSelector,
   cartCountSelector,
@@ -6,16 +6,18 @@ import {
   checkedCartCountSelector,
   checkedCartSelector,
   switchAllCartCheckboxSelector,
-} from "../../recoil/cartAtoms";
-import CartItem from "../CartItem";
+} from '../../recoil/cartAtoms';
+import CartItem from '../CartItem';
 import {
   CartListCheckCounter,
   CartListController,
   CartListWrapper,
   CartsDeleteButton,
-} from "./CartList.style";
-import { fetchCartList, fetchDeleteCart } from "../../api/api";
-import { serverState } from "../../recoil/serverAtom";
+} from './CartList.style';
+import { fetchCartList, fetchDeleteCart } from '../../api/api';
+import { serverState } from '../../recoil/serverAtom';
+import { Input, Label } from '../CartItem/CartItem.style';
+import checkIcon from '../../assets/check.svg';
 
 function CartList() {
   const [cartList, setCartList] = useRecoilState(cartState);
@@ -27,7 +29,7 @@ function CartList() {
   const switchAllCheckboxes = useSetRecoilState(switchAllCartCheckboxSelector);
 
   const removeCheckedCartItems = async () => {
-    if (confirm("정말로 삭제 하시겠습니까?")) {
+    if (confirm('정말로 삭제 하시겠습니까?')) {
       const targetIds = checkedCartList.map((cartList) => cartList.id);
       await Promise.all(
         targetIds.map((cartId) => fetchDeleteCart(server, cartId))
@@ -43,11 +45,14 @@ function CartList() {
         <CartItem key={cart.id} cart={cart} />
       ))}
       <CartListController>
-        <input
-          type="checkbox"
-          checked={isAllCartItemChecked}
-          onChange={() => switchAllCheckboxes(undefined)}
-        />
+        <Label>
+          <Input
+            type="checkbox"
+            icon={checkIcon}
+            checked={isAllCartItemChecked}
+            onChange={() => switchAllCheckboxes(undefined)}
+          />
+        </Label>
         <CartListCheckCounter onClick={() => switchAllCheckboxes(undefined)}>
           전체선택 ({checkedCartListCount}/{cartCount})
         </CartListCheckCounter>

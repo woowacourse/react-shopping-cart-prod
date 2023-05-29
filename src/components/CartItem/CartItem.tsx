@@ -1,5 +1,5 @@
-import type { CartItem } from "../../types/types";
-import CartController from "../CartController";
+import type { CartItem } from '../../types/types';
+import CartController from '../CartController';
 import {
   CartItemControllerWrapper,
   CartItemImage,
@@ -9,16 +9,19 @@ import {
   CartItemName,
   CartItemPrice,
   CartItemTrashImage,
-} from "./CartItem.style";
-import trashIcon from "../../assets/trash.png";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+  Input,
+  Label,
+} from './CartItem.style';
+import trashIcon from '../../assets/trash.png';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   cartState,
   switchCartCheckboxSelector,
-} from "../../recoil/cartAtoms.ts";
-import { serverState } from "../../recoil/serverAtom.ts";
-import { fetchCartList } from "../../api/api.ts";
-import { fetchDeleteCart } from "../../api/api.ts";
+} from '../../recoil/cartAtoms.ts';
+import { serverState } from '../../recoil/serverAtom.ts';
+import { fetchCartList } from '../../api/api.ts';
+import { fetchDeleteCart } from '../../api/api.ts';
+import checkIcon from '../../assets/check.svg';
 
 interface CartItemProps {
   cart: CartItem;
@@ -30,7 +33,7 @@ function CartItem({ cart }: CartItemProps) {
   const server = useRecoilValue(serverState);
 
   const removeCartItem = async (cartId: number) => {
-    if (confirm("정말로 삭제 하시겠습니까?")) {
+    if (confirm('정말로 삭제 하시겠습니까?')) {
       await fetchDeleteCart(server, cartId);
       const newCartList = await fetchCartList(server);
       setCartList(newCartList);
@@ -40,13 +43,14 @@ function CartItem({ cart }: CartItemProps) {
   return (
     <CartItemLayout>
       <div>
-        <input
-          type="checkbox"
-          checked={cart.checked}
-          onChange={() => {
-            switchCheckbox(cart.id);
-          }}
-        />
+        <Label>
+          <Input
+            type="checkbox"
+            icon={checkIcon}
+            checked={cart.checked}
+            onChange={() => switchCheckbox(cart.id)}
+          />
+        </Label>
       </div>
       <CartItemImage
         src={cart.product.imageUrl}

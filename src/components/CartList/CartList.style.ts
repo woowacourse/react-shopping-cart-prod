@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const CartListWrapper = styled.div`
   width: 100%;
@@ -27,6 +27,7 @@ export const CartListController = styled.div`
 `;
 
 export const CartListCheckCounter = styled.div`
+  width: 100px;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
