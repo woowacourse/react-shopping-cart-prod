@@ -16,17 +16,15 @@ export const checkedCartProductIdsState = atom<CheckedCartProducts>({
   default: defaultCheckedCartProductIdsState,
 });
 
-const getCheckedCartProductsState = selector({
+export const getCheckedCartProductsState = selector({
   key: 'getCheckedCartProductsState',
   get: ({ get }) => {
     const cartProducts = get(cartProductsState);
-    const cartCheckedProducts = get(checkedCartProductIdsState);
-    [...cartProducts.entries()].filter(([cartProductId, cartProduct]) => {});
+    const cartCheckedProductIds = get(checkedCartProductIdsState);
+    const checkedCartProducts = [...cartProducts.entries()]
+      .filter(([cartProductId]) => cartCheckedProductIds.has(cartProductId))
+      .map(([_, cartProduct]) => cartProduct);
 
-    cartProducts.forEach((cartProduct, cartProductId) => {
-      new Map(cartProducts);
-    });
-
-    return;
+    return checkedCartProducts;
   },
 });
