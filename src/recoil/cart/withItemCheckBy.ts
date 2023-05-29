@@ -1,4 +1,5 @@
-import { DefaultValue, selectorFamily, useRecoilState } from 'recoil';
+import { selectorFamily } from 'recoil';
+import { toggleSelectCartItem } from '@utils/cart/cart';
 import cartState from './cartState';
 
 const withItemCheckBy = selectorFamily<boolean, number>({
@@ -7,39 +8,22 @@ const withItemCheckBy = selectorFamily<boolean, number>({
     (id) =>
     ({ get }) => {
       const cart = get(cartState);
-      const cartItem = cart.filter((cartItem) => cartItem.id === id)[0];
+      const cartItem = cart.find((cartItem) => cartItem.id === id);
 
-      return cartItem?.checked ?? false;
+      if (!cartItem) {
+        throw new Error('장바구니 아이템을 찾을 수 없습니다. - withItemCheckBy');
+      }
+
+      return cartItem.isSelect;
     },
 
   set:
     (id) =>
-    ({ set }, checked) => {
-      if (!(checked instanceof DefaultValue)) {
-        set(cartState, (prevCartList) => {
-          return prevCartList.map((item) => {
-            if (item.id === id) {
-              return {
-                ...item,
-                checked,
-              };
-            } else {
-              return item;
-            }
-          });
-        });
-      }
+    ({ get, set }) => {
+      const cart = get(cartState);
+      const updatedCart = toggleSelectCartItem({ cart, cartId: id });
+      set(cartState, updatedCart);
     },
 });
 
 export default withItemCheckBy;
-
-export const useCartItemCheckedBy = (id: number) => {
-  const [isChecked, setIsChecked] = useRecoilState(withItemCheckBy(id));
-  return {
-    isChecked,
-    toggleCheck: () => {
-      setIsChecked(!isChecked);
-    },
-  };
-};
