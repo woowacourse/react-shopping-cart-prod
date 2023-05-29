@@ -34,7 +34,7 @@ const OrderStatementList = () => {
       <Page pageName="주문내역">
         <Suspense fallback={<LoadingSpinner />}>
           <OrderStatement
-            items={[item, item, item, item, item, item, item]}
+            orders={[item, item, item, item, item, item, item]}
           ></OrderStatement>
         </Suspense>
       </Page>

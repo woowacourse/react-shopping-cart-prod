@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Order } from "types/domain";
 import OrderItem from "./OrderItem";
 
-const OrderStatement = ({ order }: { order: Order[] }) => {
+const OrderStatement = ({ orders }: { orders: Order[] }) => {
   return (
     <Wrapper>
       <Header>
@@ -11,7 +11,7 @@ const OrderStatement = ({ order }: { order: Order[] }) => {
         <NextButton>상세보기 ►</NextButton>
       </Header>
       <Body>
-        {order.map((item) => (
+        {orders.map((item) => (
           <OrderItem item={item}></OrderItem>
         ))}
       </Body>
