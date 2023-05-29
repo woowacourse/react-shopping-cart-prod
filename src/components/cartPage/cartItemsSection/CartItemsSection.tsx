@@ -65,7 +65,13 @@ export const CartItemsSection = () => {
           <Style.DeleteSelectedItemsButton onClick={deleteSelectedProduct}>
             선택삭제
           </Style.DeleteSelectedItemsButton>
-          <Style.OrderButton onClick={() => setIsModalOpen(true)}>
+          <Style.OrderButton
+            onClick={() => {
+              if (selectedCartIdList.length === 0)
+                return alert('상품을 선택해주세요!');
+              setIsModalOpen(true);
+            }}
+          >
             주문하기
           </Style.OrderButton>
         </Style.OrderNavigation>
