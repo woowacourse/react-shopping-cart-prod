@@ -14,7 +14,7 @@ const OrderStatement = ({ orders, orderId }: OrderStatementProps) => {
   return (
     <Wrapper>
       <Header>
-        <span>주문번호: XXXXXXX</span>
+        <span>주문번호: {orderId}</span>
         <NextButton>상세보기 ►</NextButton>
       </Header>
       <Body>
