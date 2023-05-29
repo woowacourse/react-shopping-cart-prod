@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import CartQuantityField from './CartQuantityField';
+import CartStepper from './CartStepper';
 
 const meta = {
-  component: CartQuantityField,
+  component: CartStepper,
   title: 'CartQuantityField',
-} satisfies Meta<typeof CartQuantityField>;
+} satisfies Meta<typeof CartStepper>;
 
 export default meta;
 

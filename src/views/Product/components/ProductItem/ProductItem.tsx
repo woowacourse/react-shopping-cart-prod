@@ -1,6 +1,6 @@
 import { ProductItemType } from 'types/ProductType';
 import * as S from './ProductItem.style';
-import { CartQuantityField } from '@views/Cart/components/CartQuantityField';
+import { CartStepper } from '@views/Cart/components/CartStepper';
 
 interface ProductItemProps {
   product: ProductItemType;
@@ -18,7 +18,7 @@ function ProductItem({ product }: ProductItemProps) {
           <S.ProductName>{name}</S.ProductName>
           <S.ProductPrice>{price.toLocaleString('ko-KR')}원</S.ProductPrice>
         </S.ProductInfo>
-        <CartQuantityField product={product} />
+        <CartStepper product={product} />
       </S.ProductDetails>
     </S.ProductItemBox>
   );

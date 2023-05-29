@@ -1,4 +1,4 @@
-import * as S from './CartQuantityField.style';
+import * as S from './CartStepper.style';
 
 import { ProductItemType } from 'types/ProductType';
 import { Stepper } from '@common/Stepper';
@@ -10,7 +10,7 @@ interface CartQuantityFieldProps {
   product: ProductItemType;
 }
 
-function CartQuantityField({ product }: CartQuantityFieldProps) {
+function CartStepper({ product }: CartQuantityFieldProps) {
   const { getCartItemId, getCartItemQuantity, updateCartItemQuantity, addCartItem } = useCart();
   const quantity = getCartItemQuantity(product.id);
   const cartItemId = getCartItemId(product.id);
@@ -55,4 +55,4 @@ function CartQuantityField({ product }: CartQuantityFieldProps) {
   );
 }
 
-export default CartQuantityField;
+export default CartStepper;

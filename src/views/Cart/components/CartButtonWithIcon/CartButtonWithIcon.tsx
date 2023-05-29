@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 
-import * as S from './CartStepperWithIcon.style';
+import * as S from './CartButtonWithIcon.style';
 
 import { useCart, useRefreshCart, useResetCart } from '@views/Cart/recoil/cartState';
 
-function CartStepperWithIcon() {
+function CartButtonWithIcon() {
   const navigate = useNavigate();
   const { cart } = useCart();
   const refreshCart = useRefreshCart();
@@ -31,4 +31,4 @@ function CartStepperWithIcon() {
   );
 }
 
-export default CartStepperWithIcon;
+export default CartButtonWithIcon;

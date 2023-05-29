@@ -4,7 +4,7 @@ import { ChangeEvent, Suspense } from 'react';
 
 import { SelectBox } from '@common/SelectBox';
 
-import { CartStepperWithIcon } from '@views/Cart/components/CartStepperWithIcon';
+import { CartButtonWithIcon } from '@views/Cart/components/CartButtonWithIcon';
 import { useServerUrl } from '@recoil/server/serverUrlState';
 
 import { useResetCart } from '@views/Cart/recoil/cartState';
@@ -36,7 +36,7 @@ function Header() {
             onChange={onChange}
           />
           <Suspense>
-            <CartStepperWithIcon />
+            <CartButtonWithIcon />
           </Suspense>
         </S.HeaderWrapper>
       </Container>
