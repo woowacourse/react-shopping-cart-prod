@@ -7,7 +7,7 @@ import CartItem from '.';
  * `CartItem`은 장바구니에 담긴 상품을 나타내는 컴포넌트입니다.
  */
 const meta: Meta<typeof CartItem> = {
-  title: 'CartItem',
+  title: 'Product/CartItem',
   component: CartItem,
   decorators: [(storyFn) => <RecoilRoot>{storyFn()}</RecoilRoot>],
 };

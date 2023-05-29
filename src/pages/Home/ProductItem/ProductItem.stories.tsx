@@ -8,7 +8,7 @@ import ProductItem from '.';
  * `ProductItem`은 하나의 쇼핑 품목을 나타내는 컴포넌트입니다.
  */
 const meta: Meta<typeof ProductItem> = {
-  title: 'ProductItem',
+  title: 'Product/ProductItem',
   decorators: [(storyFn) => <RecoilRoot>{storyFn()}</RecoilRoot>],
   component: ProductItem,
 };
