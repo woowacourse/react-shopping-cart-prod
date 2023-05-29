@@ -72,13 +72,13 @@ const Container = styled.div<{
           animation: 0.3s ease-in ${fadeOut} both;
         `}
 
-  background-color: ${({ status }) => {
-    if (status === 'success') {
-      return '#000';
+  background-color: ${(props) => {
+    if (props.status === 'success') {
+      return props.theme.color.primary;
     }
 
-    if (status === 'error') {
-      return '#e53e53';
+    if (props.status === 'error') {
+      return props.theme.color.error;
     }
   }};
 `;
