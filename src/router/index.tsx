@@ -3,7 +3,7 @@ import { RouterProvider } from "react-router-dom";
 import Main from "pages/Main";
 import NotFound from "pages/NotFound";
 import Cart from "pages/Cart";
-import OrderList from "pages/OrderList";
+import OrderStatementList from "pages/OrderStatementList";
 
 export const ROUTER_PATH = {
   Main: "/",
@@ -24,7 +24,7 @@ export const PageRouterProvider = () => {
     },
     {
       path: ROUTER_PATH.OrderList,
-      element: <OrderList />,
+      element: <OrderStatementList />,
     },
     { path: ROUTER_PATH.NotFound, element: <NotFound /> },
   ]);

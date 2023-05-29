@@ -3,7 +3,7 @@ import products from "./data/mockProduct.json";
 import { getCart, addCartItem, setCartItem } from "mocks/server/cart";
 
 import couponList from "./data/mockCouponList.json";
-import orderList from "./data/mockOrderList.json";
+import orderList from "./data/mockOrderStatementList.json";
 
 export const handlers = [
   // 쿠폰 전체 조회

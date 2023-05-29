@@ -1,9 +1,9 @@
 import Header from "components/Header";
-import OrderItemList from "components/OrderItemList";
+import OrderStatement from "components/OrderStatement";
 import LoadingSpinner from "components/common/LodingSpinner";
 import Page from "components/common/Page";
 import Skeleton from "components/common/Skeleton";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
 const item = {
   quantity: 1,
@@ -17,7 +17,9 @@ const item = {
   },
 };
 
-const OrderList = () => {
+const OrderStatementList = () => {
+  useEffect(() => {});
+
   return (
     <>
       <Suspense
@@ -31,13 +33,13 @@ const OrderList = () => {
       </Suspense>
       <Page pageName="주문내역">
         <Suspense fallback={<LoadingSpinner />}>
-          <OrderItemList
+          <OrderStatement
             items={[item, item, item, item, item, item, item]}
-          ></OrderItemList>
+          ></OrderStatement>
         </Suspense>
       </Page>
     </>
   );
 };
 
-export default OrderList;
+export default OrderStatementList;

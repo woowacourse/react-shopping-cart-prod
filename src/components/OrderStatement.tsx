@@ -3,11 +3,7 @@ import styled from "styled-components";
 import { Order } from "types/domain";
 import OrderItem from "./OrderItem";
 
-interface OrderItemListProps {
-  items: Order[];
-}
-
-const OrderItemList = ({ items }: OrderItemListProps) => {
+const OrderStatement = ({ order }: { order: Order[] }) => {
   return (
     <Wrapper>
       <Header>
@@ -15,7 +11,7 @@ const OrderItemList = ({ items }: OrderItemListProps) => {
         <NextButton>상세보기 ►</NextButton>
       </Header>
       <Body>
-        {items.map((item) => (
+        {order.map((item) => (
           <OrderItem item={item}></OrderItem>
         ))}
       </Body>
@@ -49,4 +45,4 @@ const NextButton = styled.button`
   cursor: pointer;
 `;
 
-export default OrderItemList;
+export default OrderStatement;
