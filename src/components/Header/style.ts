@@ -9,10 +9,13 @@ export const Container = styled.div`
 
 export const Layout = styled.div`
   display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  column-gap: 30px;
   max-width: 1200px;
   margin: auto;
   justify-content: space-between;
-
   @media only screen and (max-width: 1200px) {
     // 테블릿
     max-width: 768px;
@@ -41,4 +44,9 @@ export const LogoText = styled.span`
   top: 4px;
   font-size: 40px;
   font-weight: 900;
+`;
+
+export const OrderList = styled.div`
+  color: #ffffff;
+  cursor: pointer;
 `;

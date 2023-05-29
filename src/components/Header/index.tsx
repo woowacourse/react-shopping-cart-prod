@@ -18,6 +18,8 @@ function Header() {
 
   const moveMain = () => navigate('/');
 
+  const moveOrderList = () => navigate('/order-list');
+
   return (
     <S.Container aria-label="페이지 헤더">
       <S.Layout>
@@ -26,6 +28,7 @@ function Header() {
           <S.LogoText>SHOP</S.LogoText>
         </S.LogoWrapper>
         <CartBadge cartItemsAmount={cartItemsAmount} username={server} />
+        <S.OrderList onClick={moveOrderList}>주문 목록</S.OrderList>
       </S.Layout>
     </S.Container>
   );
