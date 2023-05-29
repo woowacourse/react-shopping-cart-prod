@@ -7,7 +7,7 @@ import NotFoundImage from '@Asset/notFound.png';
 import * as S from './style';
 
 type NotFoundProps = {
-  error: Error | null;
+  error?: Error | null;
 };
 
 function NotFound({ error }: NotFoundProps) {
