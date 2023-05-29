@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 /**
  * 레이아웃 관련 CSS 스타일은 Bootstrap 기준으로 적용했습니다.
@@ -51,4 +51,20 @@ export const Col = styled.div`
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
     width: 25%;
   }
+`;
+
+export const PageTitle = styled.div`
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 37px;
+
+  text-align: center;
+  letter-spacing: 0.5px;
+
+  margin: 60px 0px 30px 0px;
+`;
+
+export const FatBorder = styled.hr`
+  border: solid 2px black;
 `;
