@@ -96,4 +96,24 @@ describe('useRecoilCart 훅 테스트', () => {
       expect(cart).toEqual(serverData);
     });
   });
+
+  test('프론트엔드에서 의도한 장바구니 API 레이어가 올바르게 기능하는 지 테스트', async () => {
+    const { result } = renderHook(() => useRecoilCart(), {
+      wrapper: RecoilRoot,
+    });
+
+    await waitFor(() => {
+      const { cart } = result.current;
+      const keys = Object.keys(cart[0]);
+
+      expect(keys).toEqual(['id', 'quantity', 'product', 'checked']);
+    });
+
+    await waitFor(() => {
+      const { cart } = result.current;
+      const productKeys = Object.keys(cart[0].product);
+
+      expect(productKeys).toEqual(['id', 'name', 'price', 'imageUrl']);
+    });
+  });
 });
