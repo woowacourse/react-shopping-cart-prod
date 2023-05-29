@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-
-import { useRefreshCartList } from '@recoil/cart/cartState';
-import { useCartLength } from '@recoil/cart/withCartLength';
+import { useRecoilValue } from 'recoil';
+import cartState, { useRefreshCartList } from '@recoil/cart/cartState';
 import * as S from './CartStepperWithIcon.style';
 
 function CartStepperWithIcon() {
+  const cart = useRecoilValue(cartState);
   const navigate = useNavigate();
-  const cartListLength = useCartLength();
   const refresher = useRefreshCartList();
 
   return (
@@ -23,7 +22,7 @@ function CartStepperWithIcon() {
         <S.CartText>장바구니</S.CartText>
       </S.CartTitle>
       <S.CartCountWrapper>
-        <S.CartCount aria-live="polite">{cartListLength}</S.CartCount>
+        <S.CartCount aria-live="polite">{cart.length}</S.CartCount>
       </S.CartCountWrapper>
     </S.CartWrapper>
   );
