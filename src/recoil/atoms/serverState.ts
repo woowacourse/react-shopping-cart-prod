@@ -6,7 +6,7 @@ import { SERVERS } from '@Constants/servers';
 
 const serverState = atom<Servers>({
   key: 'serverState',
-  default: SERVERS['도리와 노아'].serverName,
+  default: SERVERS['베베'].serverName,
 });
 
 export default serverState;
