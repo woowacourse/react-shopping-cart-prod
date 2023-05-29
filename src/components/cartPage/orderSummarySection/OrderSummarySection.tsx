@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
 import { CaptionContainer } from './CaptionContainer';
 import { getCommaAddedNumber } from '../../../utils/number';
@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from '../../common/Loading';
 import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
+import { userAtomState } from '../../../recoil/atoms/userAtom';
 
 export const OrderSummarySection = () => {
   const {
@@ -21,8 +22,9 @@ export const OrderSummarySection = () => {
     totalPointsToAdd,
   } = useRecoilValue(priceSummaryState);
   const selectedCartIdList = useRecoilValue(selectedCartIdListState);
+  const setUserPoint = useSetRecoilState(userAtomState);
 
-  const { order } = useOrderFetch();
+  const { order, getUserPoint } = useOrderFetch();
 
   const {
     usingPoint,
@@ -47,6 +49,7 @@ export const OrderSummarySection = () => {
 
       setIsLoading(false);
       deleteAllSelectedRecoilCartItems();
+      getUserPoint().then((userPoint) => setUserPoint(userPoint.point));
 
       if (orderId) navigate('/orderDetail', { state: { orderId } });
     });

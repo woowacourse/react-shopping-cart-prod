@@ -21,16 +21,23 @@ export const useOrderFetch = () => {
         }, 0),
         usedPoint: usingPoint ?? 0,
         pointToAdd: selectedCartItems.reduce((acc, curr) => {
-          const earnedPoint = curr.product.pointAvailable
-            ? (curr.product.price * curr.quantity * curr.product.pointRatio) /
-              100
-            : 0;
-
+          const earnedPoint =
+            (curr.product.price * curr.quantity * curr.product.pointRatio) /
+            100;
           return (acc += earnedPoint);
         }, 0),
       }),
     });
   };
 
-  return { order };
+  const getUserPoint = () => {
+    return fetch(`${apiEndPoint}/point`, {
+      method: 'GET',
+      headers: {
+        Autorization: `Basic ${base64}`,
+      },
+    }).then((res) => res.json());
+  };
+
+  return { order, getUserPoint };
 };

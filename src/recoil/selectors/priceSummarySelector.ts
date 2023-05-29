@@ -42,14 +42,11 @@ export const priceSummaryState = selector({
           (cartProduct) => cartProduct.id === selectedCartItemId
         );
 
-        if (product?.product.pointAvailable === true)
-          return (acc +=
-            (Number(product?.quantity) *
-              Number(product?.product.price) *
-              Number(product.product.pointRatio)) /
-            100);
-
-        return (acc += 0);
+        return (acc +=
+          (Number(product?.quantity) *
+            Number(product?.product.price) *
+            Number(product?.product.pointRatio)) /
+          100);
       },
       0
     );

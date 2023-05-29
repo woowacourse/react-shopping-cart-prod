@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { Fragment, useState } from 'react';
 import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
 import { usePointInputHandler } from '../../../hooks/cartPage/usePointInputHandler';
 import { CaptionContainer } from '../orderSummarySection/CaptionContainer';
@@ -9,6 +9,7 @@ import { getCommaAddedNumber } from '../../../utils/number';
 import { useNavigate } from 'react-router-dom';
 import { Loading } from './../../common/Loading';
 import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
+import { userAtomState } from '../../../recoil/atoms/userAtom';
 
 interface OrderModalProps {
   closeModal: () => void;
@@ -22,8 +23,9 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
     canUsingUserPoint,
     totalPointsToAdd,
   } = useRecoilValue(priceSummaryState);
+  const setUserPoint = useSetRecoilState(userAtomState);
 
-  const { order } = useOrderFetch();
+  const { order, getUserPoint } = useOrderFetch();
 
   const {
     usingPoint,
@@ -47,6 +49,7 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
       closeModal();
       setIsLoading(false);
       deleteAllSelectedRecoilCartItems();
+      getUserPoint().then((userPoint) => setUserPoint(userPoint.point));
 
       if (orderId) navigate('/orderDetail', { state: { orderId } });
     });
