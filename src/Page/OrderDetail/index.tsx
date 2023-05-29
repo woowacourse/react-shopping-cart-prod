@@ -1,21 +1,23 @@
 import { useLocation } from 'react-router-dom';
 import ContentLayout from 'src/components/Common/ContentLayout';
 import OrderItem from 'src/components/OrderItem';
-import { orderList } from 'src/data/mockData';
-import { Order } from 'src/types';
+import PaymentsView from 'src/components/PaymentsView';
+import { orderDetail } from 'src/data/mockData';
 
 function OrderDetail() {
   const location = useLocation();
   const orderId = location.pathname.split('/').at(-1);
-
-  const data = orderList.find(item => item.id === Number(orderId)) as Order;
+  console.log(orderId);
+  const data = orderDetail;
 
   return (
     <ContentLayout title="주문 내역 상세">
       <div>
-        <OrderItem order={data} />
+        <OrderItem order={{ id: data.id, orderTime: data.orderTime, productList: data.productList }} />
       </div>
-      <div>여기는 계산서 입니다.</div>
+      <div>
+        <PaymentsView paymentAmount={data.paymentAmount} puschaseOption={false} />
+      </div>
     </ContentLayout>
   );
 }
