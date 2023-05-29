@@ -1,11 +1,11 @@
 import useFetch from '../useFetch.ts';
-import { ProductList } from '../../types/CartList.ts';
 import { endPoints } from '../../constants/endPoints.ts';
+import { OrderResponse } from '../../types/responses/postOrderResponse.ts';
 
 const useGetOrderDetail = (orderID: string) => {
-  const [{ data, status }, refetchProductList] = useFetch<ProductList>({ url: `${endPoints.order}/${orderID}`, isNotAutomaticallyFetched: true });
+  const [{ data, status }, fetchOrderDetail] = useFetch<OrderResponse>({ url: `${endPoints.orderDetail}/${orderID}`, isNotAutomaticallyFetched: true });
 
-  return { data, status, refetchProductList };
+  return { data, status, fetchOrderDetail };
 };
 
 export default useGetOrderDetail;

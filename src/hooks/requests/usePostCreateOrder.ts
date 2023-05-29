@@ -3,7 +3,7 @@ import useFetch from '../useFetch.ts';
 import { OrderResponse } from '../../types/responses/postOrderResponse.ts';
 
 const usePostCreateOrder = () => {
-  const [createOrderState, createOrder] = useFetch<OrderResponse>({ url: endPoints.order, method: 'POST' });
+  const [createOrderState, createOrder] = useFetch<OrderResponse>({ url: endPoints.makeOrder, method: 'POST' });
 
   return { createOrderState, createOrder };
 };
