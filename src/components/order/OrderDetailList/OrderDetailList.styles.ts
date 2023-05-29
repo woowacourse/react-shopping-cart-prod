@@ -10,6 +10,7 @@ const OrderDetailListHeading = styled(Heading)`
 `;
 
 const OrderDetailListContainer = styled.ol`
+  margin-bottom: ${({ theme }) => theme.spacer.spacing6};
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacer.spacing4};

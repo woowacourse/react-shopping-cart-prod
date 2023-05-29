@@ -32,4 +32,48 @@ const orderState = selectorFamily<OrderData | null, number>({
     },
 });
 
-export { orderListState, orderState };
+const orderTotalItemDiscountAmountState = selectorFamily<number, number>({
+  key: 'orderTotalItemDiscountAmount',
+  get:
+    (orderId) =>
+    ({ get }) => {
+      const order = get(orderState(orderId))!;
+
+      const totalItemDiscountAmount = order?.orderedItems.reduce((acc, curr) => {
+        if (curr.product.discountRate > 0) {
+          return acc + curr.quantity * curr.product.price * (curr.product.discountRate / 100);
+        }
+
+        return acc;
+      }, 0);
+
+      return totalItemDiscountAmount > 0 ? -totalItemDiscountAmount : 0;
+    },
+});
+
+const orderMemberDiscountAmountState = selectorFamily<number, number>({
+  key: 'cartListMemberDiscountAmount',
+  get:
+    (orderId) =>
+    ({ get }) => {
+      const order = get(orderState(orderId))!;
+      const memberInformation = get(currentMemberInformationState);
+
+      const memberDiscountAmount = order?.orderedItems.reduce((acc, curr) => {
+        if (memberInformation.rank === '일반' || curr.product.discountRate > 0) {
+          return acc;
+        }
+
+        return acc + curr.quantity * curr.product.price * (memberInformation.discountRate / 100);
+      }, 0);
+
+      return memberDiscountAmount > 0 ? -memberDiscountAmount : 0;
+    },
+});
+
+export {
+  orderListState,
+  orderState,
+  orderTotalItemDiscountAmountState,
+  orderMemberDiscountAmountState,
+};
