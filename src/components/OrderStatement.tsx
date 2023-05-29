@@ -3,7 +3,12 @@ import styled from "styled-components";
 import { Order } from "types/domain";
 import OrderItem from "./OrderItem";
 
-const OrderStatement = ({ orders }: { orders: Order[] }) => {
+interface OrderStatementProps {
+  orderId: number;
+  orders: Order[];
+}
+
+const OrderStatement = ({ orders, orderId }: OrderStatementProps) => {
   return (
     <Wrapper>
       <Header>
@@ -12,7 +17,10 @@ const OrderStatement = ({ orders }: { orders: Order[] }) => {
       </Header>
       <Body>
         {orders.map((item) => (
-          <OrderItem item={item}></OrderItem>
+          <OrderItem
+            key={`order-item-${item.product.id}`}
+            item={item}
+          ></OrderItem>
         ))}
       </Body>
     </Wrapper>
