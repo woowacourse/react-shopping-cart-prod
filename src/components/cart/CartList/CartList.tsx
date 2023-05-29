@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import EmptyImage from '../../../assets/empty-image.png';
+import EmptyImage from '../../../assets/png/empty-image.png';
 import { PATH } from '../../../constants/path';
 import { cartListState } from '../../../store/cart';
 import Button from '../../common/Button/Button';

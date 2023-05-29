@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValueLoadable } from 'recoil';
 
-import Logo from '../../../assets/logo.png';
+import Logo from '../../../assets/png/logo.png';
 import CartIcon from '../../../assets/svg/cart-icon.svg';
 import { PATH } from '../../../constants/path';
 import { cartListItemCountState } from '../../../store/cart';

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { HTTPErrorInfo } from '../../../api/utils/HTTPError';
-import ErrorImage from '../../../assets/error-image.png';
+import ErrorImage from '../../../assets/png/error-image.png';
 import { PATH } from '../../../constants/path';
 import ServerSelect from '../ServerSelect/ServerSelect';
 import * as S from './Error.styles';
