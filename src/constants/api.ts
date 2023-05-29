@@ -80,7 +80,7 @@ const ORDER_API_ERROR_MESSAGE = {
     [HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR]:
       '일시적인 장애가 발생했어요. 잠시 후 다시 시도해주세요.',
   },
-};
+} as const;
 
 export {
   API_BASE_URL_LIST,
