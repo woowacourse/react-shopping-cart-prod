@@ -13,6 +13,11 @@ function OrderItem({ id, date, cartItems, page, price }: OrderItemType & { page?
 
   const moveOrderDetail = () => {
     navigate(`/order-list/${id}`);
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const displayCartItems = () => {
