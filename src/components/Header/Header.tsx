@@ -18,7 +18,7 @@ const Header = () => {
 
   const { fetchApi } = useFetch<CartItemType[]>(setCartItemList);
   useEffect(() => {
-    fetchApi.get(`${origin}/cart-items`);
+    fetchApi.get(`${origin}cart-items`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [origin]);
 

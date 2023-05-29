@@ -25,7 +25,7 @@ const CartPageSection = () => {
   const origin = useRecoilValue(originState);
   const { fetchApi, isLoading } = useFetch<CartItemType[]>(setCartItemList);
   useEffect(() => {
-    fetchApi.get(`${origin}/cart-items`);
+    fetchApi.get(`${origin}cart-items`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [origin]);
 
@@ -33,7 +33,7 @@ const CartPageSection = () => {
     setCartItemList(
       cartItem.filter((item) => {
         if (item.isChecked === true) {
-          fetchApi.delete(`${origin}/cart-items/${item.id}`);
+          fetchApi.delete(`${origin}cart-items/${item.id}`);
           return false;
         }
 
@@ -43,7 +43,7 @@ const CartPageSection = () => {
   };
 
   const selectedItemRemove = (itemId: number) => {
-    fetchApi.delete(`${origin}/cart-items/${itemId}`);
+    fetchApi.delete(`${origin}cart-items/${itemId}`);
     setCartItemList(
       cartItem.filter((item: CartItemType) => {
         return item.id !== itemId;

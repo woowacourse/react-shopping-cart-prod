@@ -25,7 +25,7 @@ const ProductItem = ({ information }: ProductItemProps) => {
 
   const handleCartAdd = () => {
     const compareProductId = information.id;
-    fetchApi.post(`${origin}/cart-items`, { productId: compareProductId });
+    fetchApi.post(`${origin}cart-items`, { productId: compareProductId });
 
     const isExistItem = cartList.find((item) => item.product.id === compareProductId);
 

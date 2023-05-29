@@ -32,7 +32,7 @@ const CartItem = ({
   const origin = useRecoilValue(originState);
 
   const updateCartItemQuantity = (quantity: number) => {
-    fetchApi.patch(`${origin}/cart-items/${itemId}`, { quantity });
+    fetchApi.patch(`${origin}cart-items/${itemId}`, { quantity });
 
     setCartList(
       cartList.map((item: CartItemType) => {
