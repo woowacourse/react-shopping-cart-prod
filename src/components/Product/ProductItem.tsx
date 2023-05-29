@@ -25,8 +25,8 @@ const ProductItem = ({ product }: ProductItemProps) => {
         <dl>
           <ProductName>{name}</ProductName>
           <ProductPrice>{price.toLocaleString('ko-KR')} 원</ProductPrice>
-          {product.quantity < 6 && (
-            <StockWarning>⚠️ 품절임박 ({product.quantity}개 남음)</StockWarning>
+          {product.stock < 6 && (
+            <StockWarning>⚠️ 품절임박 ({product.stock}개 남음)</StockWarning>
           )}
         </dl>
         {!productExistsInCart ? (
