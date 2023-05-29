@@ -146,6 +146,7 @@ const HomeButton = styled(ResetButton)`
   font-size: 16px;
   font-weight: 600;
   margin-top: 10px;
+  background-color: ${(props) => props.theme.color.primary};
 `;
 
 const DeleteButton = styled.button`

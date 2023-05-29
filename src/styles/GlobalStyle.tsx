@@ -21,12 +21,12 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     outline: none;
-    color: ${theme.color.white};
+    color: ${theme.color.black};
   }
 
   a:hover, a:active, a:visited {
     text-decoration: none;
-    color: ${theme.color.white};
+    color: ${theme.color.black};
   }
 
   button {

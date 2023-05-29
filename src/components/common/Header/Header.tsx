@@ -10,15 +10,20 @@ const Header = () => {
   return (
     <HeaderContainer>
       <Logo to="/">
-        <CartIcon />
-        <Title>SHOP</Title>
+        <LogoImage
+          src="https://cdn-mart.baemin.com/front-end/assets-static/bmmart_logo_2021@3x.png"
+          alt="배민상회 로고"
+        />
       </Logo>
       <RightContainer>
         <ServerSelect />
         <CartButton to="/cart">
-          장바구니
+          <CartIcon />
+          <CartText>장바구니</CartText>
           {cart.length > 0 && (
-            <CartTotalQuantity>{cart.length}</CartTotalQuantity>
+            <CartTotalQuantity>
+              <span>{cart.length}</span>
+            </CartTotalQuantity>
           )}
         </CartButton>
       </RightContainer>
@@ -33,9 +38,9 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   width: 100%;
   height: 80px;
-  padding: 0 10%;
-  background-color: #333;
-  color: #fff;
+  padding: 0 8%;
+  background-color: ${(props) => props.theme.color.white};
+  border-bottom: 1px solid ${(props) => props.theme.color.gray300};
   z-index: 1;
 `;
 
@@ -46,38 +51,42 @@ const Logo = styled(Link)`
   cursor: pointer;
 `;
 
-const Title = styled.h1`
-  font-size: 40px;
-  font-weight: 900;
-  padding-top: 8px;
+const LogoImage = styled.img`
+  width: 136px;
+  height: 38px;
 `;
 
 const RightContainer = styled.div`
   display: flex;
   align-items: center;
-  column-gap: 24px;
+  column-gap: 20px;
 `;
 
 const CartButton = styled(Link)`
   display: flex;
-  column-gap: 6px;
+  flex-direction: column;
+  position: relative;
   font-size: 24px;
-
   cursor: pointer;
 `;
 
+const CartText = styled.span`
+  font-size: 10px;
+`;
+
 const CartTotalQuantity = styled.span`
+  position: absolute;
+  top: -2px;
+  right: 2px;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  width: 26px;
-  height: 26px;
-
+  width: 16px;
+  height: 16px;
   border-radius: 50%;
-  background: #04c09e;
-
-  font-size: 16px;
+  background: ${(props) => props.theme.color.orange};
+  color: ${(props) => props.theme.color.white};
+  font-size: 12px;
 `;
 
 export default Header;
