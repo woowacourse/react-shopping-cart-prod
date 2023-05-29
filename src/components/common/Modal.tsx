@@ -59,6 +59,8 @@ const Main = styled.div`
   border-radius: 5px;
 
   padding: 5%;
+
+  overflow-y: auto;
 `;
 
 const CloseButton = styled.button`
