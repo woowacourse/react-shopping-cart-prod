@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { VerticalLine } from '../../../styles/mixin';
 import { Button } from '../Button/Button.styles';
 
 const HeaderContainer = styled.header`
@@ -36,8 +37,22 @@ const Logo = styled.img`
   height: 40px;
 `;
 
+const OrderPageButton = styled(Button)`
+  position: relative;
+  width: initial;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const DividerLine = styled(VerticalLine)`
+  height: 24px;
+`;
+
 const CartButton = styled(Button)`
-  position: absolute;
+  position: relative;
   width: initial;
   padding: 8px;
   display: flex;
@@ -70,7 +85,7 @@ const CartItemCount = styled.span`
   transform: translateX(calc(50% - 7px));
 `;
 
-const CartIcon = styled.img`
+const Icon = styled.img`
   width: 32px;
   height: 32px;
   margin-bottom: ${({ theme }) => theme.spacer.spacing1};
@@ -86,8 +101,10 @@ export {
   HeaderContentContainer,
   HeaderRightContainer,
   Logo,
+  OrderPageButton,
+  DividerLine,
   CartButton,
   CartItemCount,
-  CartIcon,
+  Icon,
   HeaderButtonLabel,
 };
