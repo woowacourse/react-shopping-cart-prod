@@ -8,6 +8,7 @@ import { RecoilRoot } from 'recoil';
 import CartPage from './pages/CartPage/CartPage.tsx';
 import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
 import ToastProvider from './providers/toast/ToastProvider.tsx';
+import OrderDetailPage from './pages/OrderDetailPage/OrderDetailPage.tsx';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
             <Routes>
               <Route path='/' element={<ListPage />} />
               <Route path='/cart' element={<CartPage />} />
+              <Route path='/order/:orderId' element={<OrderDetailPage />} />
               <Route path='/error' element={<ErrorPage />} />
             </Routes>
           </Layout>
