@@ -15,7 +15,7 @@ import {
   checkedCartSelector,
   totalPriceSelector,
 } from "../../recoil/cartAtoms.ts";
-import { Order, OrderItem } from "../../types/types.ts";
+import { NewOrder, NewOrderItem } from "../../types/types.ts";
 import { useNavigate } from "react-router-dom";
 
 function PurchaseBox() {
@@ -27,9 +27,9 @@ function PurchaseBox() {
   const POINTS = 1000;
 
   const purchase = () => {
-    const order: Order = {
+    const order: NewOrder = {
       orders: checkedCartList.map(
-        (cart): OrderItem => ({
+        (cart): NewOrderItem => ({
           cartItemId: cart.id,
           quantity: cart.quantity,
           productId: cart.product.id,

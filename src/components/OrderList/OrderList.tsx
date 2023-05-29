@@ -4,9 +4,10 @@ import {
   OrderListWrapper,
 } from "./OrderList.style.ts";
 import OrderItem from "../OrderItem/OrderItem.tsx";
+import type { Order } from "../../types/types.ts";
 
 function OrderList() {
-  const orderList = [
+  const orderList: Order[] = [
     {
       orderId: 1,
       orderItems: [
@@ -45,16 +46,6 @@ function OrderList() {
           image:
             "http://image.elandgift.com/images/web/Product/20220404/JW20220404130056685001.jpg",
         },
-        {
-          id: 2,
-          productName: "레오",
-          productPrice: 9999,
-          paymentPrice: 1000,
-          createdAt: "2021.10.10",
-          productQuantity: 10000,
-          image:
-            "http://image.elandgift.com/images/web/Product/20220404/JW20220404130056685001.jpg",
-        },
       ],
     },
   ];
@@ -62,9 +53,10 @@ function OrderList() {
     <OrderListWrapper>
       <OrderListTitle>주문 목록</OrderListTitle>
       <OrderListDivider />
-      {orderList.map((orderItem) => (
-        <OrderItem />
+      {orderList.map((orderItem, i) => (
+        <OrderItem key={i} orderItem={orderItem} />
       ))}
+      <div>{JSON.stringify(orderList)}</div>
     </OrderListWrapper>
   );
 }

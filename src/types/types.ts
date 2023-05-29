@@ -20,14 +20,29 @@ export interface NewCartItem extends CartItem {
   checked: true;
 }
 
-export interface OrderItem {
+export interface NewOrderItem {
   cartItemId: number;
   quantity: number;
   productId: number;
 }
 
-export interface Order {
-  orders: OrderItem[];
+export interface NewOrder {
+  orders: NewOrderItem[];
   couponId: number | null;
   point: number;
+}
+
+export interface OrderItem {
+  id: number;
+  productName: string;
+  productPrice: number;
+  paymentPrice: number;
+  createdAt: string;
+  productQuantity: number;
+  image: string;
+}
+
+export interface Order {
+  orderId: number;
+  orderItems: OrderItem[];
 }

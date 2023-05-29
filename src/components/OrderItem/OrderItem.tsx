@@ -8,21 +8,33 @@ import {
   OrderItemPrice,
   OrderItemWrapper,
 } from "./OrderItem.style.ts";
+import type { Order } from "../../types/types.ts";
 
-function OrderItem() {
+interface OrderItemProps {
+  orderItem: Order;
+}
+
+function OrderItem({ orderItem }: OrderItemProps) {
+  const { orderItems } = orderItem;
   return (
     <OrderItemWrapper>
       <OrderItemHeader>
-        <OrderItemHeaderName>주문번호 : 1</OrderItemHeaderName>
+        <OrderItemHeaderName>
+          주문번호 : {orderItem.orderId}
+        </OrderItemHeaderName>
         <OrderItemHeaderName>상세보기 {">"}</OrderItemHeaderName>
       </OrderItemHeader>
-      <OrderItemBox>
-        <OrderItemImage />
-        <OrderItemInfo>
-          <OrderItemName>아이템 이름</OrderItemName>
-          <OrderItemPrice>10,000원 / 수량 : 3개</OrderItemPrice>
-        </OrderItemInfo>
-      </OrderItemBox>
+      {orderItems.map((orderItem) => (
+        <OrderItemBox>
+          <OrderItemImage src={orderItem.image} />
+          <OrderItemInfo>
+            <OrderItemName>{orderItem.productName}</OrderItemName>
+            <OrderItemPrice>
+              {orderItem.productPrice}원 / 수량 : {orderItem.productQuantity}개
+            </OrderItemPrice>
+          </OrderItemInfo>
+        </OrderItemBox>
+      ))}
     </OrderItemWrapper>
   );
 }
