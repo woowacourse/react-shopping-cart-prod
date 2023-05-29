@@ -9,23 +9,3 @@ const serverState = atom<ServerName>({
 });
 
 export default serverState;
-
-export const useServer = () => {
-  const [server, setServer] = useRecoilState(serverState);
-
-  const refreshServer = useRecoilRefresher_UNSTABLE(serverState);
-  const refreshCart = useRecoilRefresher_UNSTABLE(cartState);
-  const refreshProduct = useRecoilRefresher_UNSTABLE(productListState);
-
-  const handleServer = (newServer: ServerName) => {
-    setServer(newServer);
-    refreshServer();
-    refreshCart();
-    refreshProduct();
-  };
-
-  return {
-    server,
-    handleServer,
-  };
-};
