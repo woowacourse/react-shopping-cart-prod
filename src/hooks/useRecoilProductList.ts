@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { productListState } from '@recoil/product/productListState';
-import { SERVER_NAME, getProductPath } from '@constants/urlConstants';
+import serverState from '@recoil/server/serverState';
+import { getProductPath } from '@constants/urlConstants';
 import { ProductItemType } from '@type/ProductType';
 import { useFetch } from './useFetch';
 
@@ -10,11 +11,12 @@ const useRecoilProductList = (): {
   isLoading: boolean;
   error: unknown | null;
 } => {
+  const serverName = useRecoilValue(serverState);
   const {
     data: originData,
     isLoading,
     error,
-  } = useFetch<ProductItemType[]>(getProductPath(SERVER_NAME[0]));
+  } = useFetch<ProductItemType[]>(getProductPath(serverName));
   const [productList, setProductList] = useRecoilState<ProductItemType[]>(productListState);
 
   useEffect(() => {

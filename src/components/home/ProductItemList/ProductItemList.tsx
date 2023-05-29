@@ -1,9 +1,9 @@
-import { useProductListReadOnly } from '@recoil/product/productListState';
+import useRecoilProductList from '@hooks/useRecoilProductList';
 import { ProductItem } from '@components/home/ProductItem';
 import { Column, Row } from '@styles/style';
 
 function ProductList() {
-  const productList = useProductListReadOnly();
+  const { productList } = useRecoilProductList();
 
   return (
     <Row>
