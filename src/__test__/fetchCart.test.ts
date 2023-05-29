@@ -1,11 +1,16 @@
-import { renderHook, waitFor } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { createCartItem, removeCartItem, updateCartItemQuantity } from '@utils/cart/cart';
+import {
+  addItemToCartApi,
+  removeCartItemApi,
+  updateCartItemQuantityApi,
+} from '@utils/cart/fetchCart';
+import { fetchGet } from '@utils/fetchUtils';
 import { SERVER_NAME, getCartPath } from '@constants/urlConstants';
 import { CartItemType } from '@type/ProductType';
-import { server } from '../setupTests';
+import { server } from './setupTests';
 
 fetchMock.enableMocks();
 
@@ -23,7 +28,7 @@ const cartIdGenerator = {
 
 const fetchUrl = getCartPath(SERVER_NAME[0]);
 
-describe('useFetchCart 통신 테스트', () => {
+describe('서버와 장바구니에 대한 통신 테스트', () => {
   let serverData: CartItemType[] = [];
 
   beforeEach(() => {
@@ -35,7 +40,6 @@ describe('useFetchCart 통신 테스트', () => {
         return res(
           ctx.set('Content-Type', 'application/json'),
           ctx.status(200),
-          ctx.body('OK'),
           ctx.json(serverData)
         );
       }),
@@ -85,81 +89,49 @@ describe('useFetchCart 통신 테스트', () => {
   });
 
   test('장바구니 아이템 추가 통신 기능 올바르게 작동하는 지 확인 테스트 ', async () => {
-    const { result } = renderHook(() => useFetchCart());
+    const cartId = await addItemToCartApi({ productId: product.id, serverName: SERVER_NAME[0] });
 
-    const { addProductToCart } = result.current;
+    const cart = await fetchGet<CartItemType[]>(fetchUrl);
 
-    const cartId = addProductToCart({ productId });
+    if (cart === null) {
+      throw new Error('장바구니 아이템을 불러올 수 없습니다');
+    }
 
-    expect(cartId).toBe(serverData[0].id);
+    expect(cart[0]).toEqual(createCartItem({ cartId: Number(cartId), product }));
   });
 
   test('장바구니 아이템 제거 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
-    const { result } = renderHook(() => useFetchCart());
     const cartId = 1;
 
     serverData = [createCartItem({ cartId, product })];
 
-    const { deleteCartItem } = result;
+    await removeCartItemApi({ cartId, serverName: SERVER_NAME[0] });
 
-    deleteCartItem({ cartId });
+    const cart = await fetchGet<CartItemType[]>(fetchUrl);
 
-    expect(serverData.length).toBe(0);
+    expect(cart.length).toBe(0);
   });
   test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
-    const { result } = renderHook(() => useFetchCart());
     const cartId = 1;
 
     serverData = [createCartItem({ cartId, product })];
 
-    const { updateQuntityByCartItem } = result.current;
+    await updateCartItemQuantityApi({ cartId, serverName: SERVER_NAME[0], quantity: 40 });
 
-    updateQuntityByCartItem({ cartId, quantity: 40 });
+    const cart = await fetchGet<CartItemType[]>(fetchUrl);
 
     expect(cart[0].quantity).toBe(40);
   });
 
-  test('장바구니 아이템 수량 조절 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
-    const { result } = renderHook(() => useFetchCart());
-
+  test('서버에 있는 장바구니 아이템을 가져오는 통신 기능 올바르게 작동하는 지 확인 테스트', async () => {
     serverData = [
       createCartItem({ cartId: 1, product }),
       createCartItem({ cartId: 2, product: product2 }),
       createCartItem({ cartId: 3, product: product3 }),
     ];
 
-    const { getCartList } = result.current;
-
-    const cart = getCartList();
+    const cart = await fetchGet<CartItemType[]>(fetchUrl);
 
     expect(cart).toEqual(serverData);
-  });
-
-  test('프론트엔드에서 의도한 장바구니 API 레이어가 올바르게 기능하는 지 테스트', async () => {
-    const { result } = renderHook(() => useFetchCart());
-
-    const { addProductToCart } = result.current;
-
-    const product = PRODUCT_LIST.productList[0];
-
-    addProductToCart({
-      productId: product.id,
-    });
-
-    await waitFor(() => {
-      const { data } = result.current;
-
-      const keys = Object.keys(data ? data[0] : []);
-
-      expect(keys).toEqual(['id', 'quantity', 'product', 'checked']);
-    });
-
-    await waitFor(() => {
-      const { data } = result.current;
-
-      const productKeys = Object.keys(data[0].product);
-
-      expect(productKeys).toEqual(['id', 'name', 'price', 'imageUrl']);
-    });
   });
 });
