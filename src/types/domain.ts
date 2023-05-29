@@ -28,3 +28,13 @@ export interface Order {
   quantity: number;
   couponId: number[];
 }
+
+interface OrderItem extends Order {
+  orderItemId: number;
+  total: number;
+}
+
+export interface OrderStatement {
+  orderId: 1;
+  orderItems: OrderItem[];
+}
