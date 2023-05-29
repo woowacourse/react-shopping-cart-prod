@@ -1,25 +1,25 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { RecoilRoot } from 'recoil';
 
-import OrderItem from '.';
+import OrderProduct from '.';
 
 /**
- * `OrderItem`은 하나의 주문 상품 품목을 나타내는 컴포넌트입니다.
+ * `OrderProduct`은 하나의 주문 상품 품목을 나타내는 컴포넌트입니다.
  */
-const meta: Meta<typeof OrderItem> = {
-  title: 'Product/OrderItem',
+const meta: Meta<typeof OrderProduct> = {
+  title: 'Product/OrderProduct',
   decorators: [(storyFn) => <RecoilRoot>{storyFn()}</RecoilRoot>],
-  component: OrderItem,
+  component: OrderProduct,
 };
 
 export default meta;
 
-type Story = StoryObj<typeof OrderItem>;
+type Story = StoryObj<typeof OrderProduct>;
 
 /**
  * 주문 상품의 기본 스토리입니다.
  */
-export const DefaultOrderItem: Story = {
+export const DefaultOrderProduct: Story = {
   args: {
     quantity: 3,
     product: {

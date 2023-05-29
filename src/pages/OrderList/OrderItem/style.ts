@@ -1,28 +1,27 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  display: grid;
-  grid-template-columns: auto 1fr;
-  column-gap: 30px;
-`;
-
-export const ProductImage = styled.img`
-  width: 140px;
-  height: 140px;
-  object-fit: cover;
-`;
-
-export const OrderInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const ProductName = styled.div`
-  font-size: 18px;
-  margin-bottom: 20px;
+  border: 1px solid #aaaaaa;
   color: #333333;
 `;
 
-export const ProductAmount = styled.div`
-  color: #888888;
+export const OrderInfo = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  padding: 30px;
+  background: #f6f6f6;
+
+  border-bottom: 2px solid #aaaaaa;
+`;
+
+export const OrderNumber = styled.div``;
+
+export const MoveDetailPage = styled.div`
+  cursor: pointer;
+`;
+
+export const OrderItems = styled.div`
+  display: grid;
+  background-color: #aaaaaa;
+  row-gap: 1px;
 `;

@@ -1,22 +1,21 @@
-import { CartItemType } from '@Types/index';
+import { OrderItemType } from '@Types/index';
 
 import * as S from './style';
+import OrderProduct from '../OrderProduct';
 
-function OrderItem({ quantity, product }: CartItemType) {
-  const displayProductAmount = () => {
-    const price = `${product.price.toLocaleString()}원`;
-    const amount = `수량: ${quantity}개`;
-
-    return `${price} / ${amount}`;
-  };
-
+function OrderItem({ date, price, cartItems, order }: OrderItemType & { order: number }) {
+  console.log(date, price, cartItems, order);
   return (
     <S.Container>
-      <S.ProductImage src={product.imageUrl} alt={product.name} />
       <S.OrderInfo>
-        <S.ProductName>{product.name}</S.ProductName>
-        <S.ProductAmount>{displayProductAmount()}</S.ProductAmount>
+        <S.OrderNumber>주문번호 : {order}</S.OrderNumber>
+        <S.MoveDetailPage>상세보기 ⟩</S.MoveDetailPage>
       </S.OrderInfo>
+      <S.OrderItems>
+        {cartItems.map((cartItem) => {
+          return <OrderProduct key={cartItem.id} {...cartItem} />;
+        })}
+      </S.OrderItems>
     </S.Container>
   );
 }
