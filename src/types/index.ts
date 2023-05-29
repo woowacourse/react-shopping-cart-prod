@@ -17,4 +17,19 @@ interface PostCartItemRequestBody {
   productId: number;
 }
 
-export type { ProductItemData, CartItemData, PostCartItemRequestBody };
+interface OrderedItem {
+  quantity: number;
+  product: ProductItemData;
+}
+
+interface OrderData {
+  id: number;
+  orderedItems: OrderedItem[];
+  orderedAt: string;
+  totalItemPrice: number;
+  discountedTotalItemPrice: number;
+  shippingFee: number;
+  totalPrice: number;
+}
+
+export type { ProductItemData, CartItemData, PostCartItemRequestBody, OrderedItem, OrderData };
