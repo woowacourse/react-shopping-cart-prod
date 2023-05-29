@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import OrderProductItem from './OrderProductItem';
 import type { OrderDetails } from '../../types/product';
@@ -17,7 +18,9 @@ const OrderProductList = ({ orderProducts }: OrderProductListProps) => {
           <OrderId>주문번호 : {orderId}</OrderId>
           <span>{orderDateTime}</span>
         </div>
-        <OrderDetailsLink>상세보기 {'>'}</OrderDetailsLink>
+        <OrderDetailsLink to={`/orders/${orderId}`}>
+          상세보기 {'>'}
+        </OrderDetailsLink>
       </OrderProductListHeader>
       {orderItems.map((orderItem, index) => (
         <li>
@@ -51,8 +54,9 @@ const OrderId = styled.span`
   margin-right: 50px;
 `;
 
-const OrderDetailsLink = styled.p`
+const OrderDetailsLink = styled(Link)`
   cursor: pointer;
+  color: ${({ theme }) => theme.colors.black};
 `;
 
 export default OrderProductList;
