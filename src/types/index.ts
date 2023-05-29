@@ -17,3 +17,18 @@ export type ProductId = number;
 
 export type ServerName = '여우' | '루쿠' | '제이';
 export type Server = '여우' | '루쿠' | 'http://13.124.43.137:8080/';
+
+export interface Order {
+  orderId: number;
+  orderedTime: string;
+  products: Product[];
+  deliveryPrice: {
+    price: number;
+  };
+  coupons: Coupon[];
+}
+
+export interface Coupon {
+  couponId: number;
+  couponName: string;
+}

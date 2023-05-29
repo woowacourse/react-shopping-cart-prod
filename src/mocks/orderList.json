@@ -1,0 +1,41 @@
+{
+  "orders": [
+    {
+      "orderId": 1,
+      "orderedTime": "2023-05-28 21:20:20.316874",
+      "products": [
+        {
+          "id": 1,
+          "name": "오히려 좋은 춘식이",
+          "imageUrl": "https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73ff604e7b0e6900f9ac53a43965300eb9a",
+          "price": 7000,
+          "quantity": 3
+        },
+        {
+          "id": 2,
+          "name": "힝 춘식이",
+          "imageUrl": "https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73f15b3f4e3c2033bfd702a321ec6eda72c",
+          "price": 16000,
+          "quantity": 1
+        }
+      ],
+      "deliveryPrice": {
+        "price": 0
+      },
+      "coupons": [
+        {
+          "couponId": 1,
+          "couponName": "전체 10% 할인 쿠폰"
+        },
+        {
+          "couponId": 2,
+          "couponName": "전체 2000원 할인 쿠폰"
+        },
+        {
+          "couponId": 3,
+          "couponName": "DELIVERY_FREE"
+        }
+      ]
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-export const OrderItemWrapper = styled.div`
+export const OrderItemWrapper = styled.li`
   display: flex;
+  padding: 16px;
 `;
 
 export const OrderItemImage = styled.img`
