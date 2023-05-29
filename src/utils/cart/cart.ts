@@ -1,4 +1,4 @@
-import { CartItemType } from '@type/cartType';
+import { CartItemType, ServerCartItemType } from '@type/cartType';
 import { ProductItemType } from '@type/productType';
 
 interface CreateCartItemParams {
@@ -11,6 +11,7 @@ interface AddItemToCartParams {
   cartId: number;
   product: ProductItemType;
 }
+
 interface UpdateCartItemQuantityParams {
   cart: CartItemType[];
   cartId: number;
@@ -51,6 +52,18 @@ export const updateCartItemQuantity = ({
     return cartItem;
   });
 };
+
 export const removeCartItem = ({ cart, cartId }: RemoveCartItemParams) => {
   return cart.filter((cartItem) => cartItem.id !== cartId);
+};
+
+export const cartApiWrapper = (cart: ServerCartItemType[]): CartItemType[] => {
+  return cart.map((cartItem) => {
+    return {
+      id: cartItem.id,
+      quantity: cartItem.quantity,
+      product: cartItem.product,
+      isSelect: true,
+    };
+  });
 };

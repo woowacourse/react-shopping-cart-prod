@@ -1,11 +1,12 @@
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import {
   addItemToCart,
+  cartApiWrapper,
   createCartItem,
   removeCartItem,
   updateCartItemQuantity,
 } from '@utils/cart/cart';
-import { CartItemType } from '@type/cartType';
+import { CartItemType, ServerCartItemType } from '@type/cartType';
 
 const cartId = 1;
 const product = MOCK_PRODUCT_LIST[0];
@@ -47,5 +48,19 @@ describe('장바구니 함수 테스트', () => {
     const result = removeCartItem({ cart, cartId });
 
     expect(result.length).toBe(0);
+  });
+
+  test('서버에서 받아온 장바구니를 클라이언트에서 사용하는 장바구니로 변경하는 기능이 올바르게 작동하는 지 테스트', () => {
+    const cart: ServerCartItemType[] = [
+      {
+        id: 1,
+        product,
+        quantity: 1,
+      },
+    ];
+
+    const result = cartApiWrapper(cart);
+
+    expect(result).toEqual([createCartItem({ cartId: 1, product })]);
   });
 });
