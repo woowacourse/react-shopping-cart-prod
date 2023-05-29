@@ -41,8 +41,8 @@ const Header = () => {
           <Styled.LogoImage src={Logo} alt='SHOP' />
         </Styled.LogoButton>
         <Styled.ServerSelectBox onChange={onChangeServerNameHandler}>
-          <option value='ROY'>로이 👨🏻‍🦰</option>
           <option value='SPLIT'>스플릿 👨🏻‍🦱</option>
+          <option value='ROY'>로이 👨🏻‍🦰</option>
           <option value='IRAE'>이레 👧🏻</option>
         </Styled.ServerSelectBox>
         <Styled.ShoppingCartButton onClick={handleShoppingCartButtonClick}>
