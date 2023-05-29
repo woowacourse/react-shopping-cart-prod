@@ -22,9 +22,12 @@ function OrderItems() {
     const orderItem = orderItems.find((orderItem) => orderItem.id === Number(orderId));
 
     return orderItem ? (
-      <S.Container>
-        <OrderItem key={orderItem.id} {...orderItem} page="detail" />
-      </S.Container>
+      <>
+        <PageTitle title={pageTitle} />
+        <S.Container>
+          <OrderItem key={orderItem.id} {...orderItem} page="detail" />
+        </S.Container>
+      </>
     ) : (
       <NotFound />
     );

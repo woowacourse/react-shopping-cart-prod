@@ -67,3 +67,31 @@ export const ServerLabel = styled.div<ServerLabelProps>`
   opacity: ${(props) => (props.isSelected ? 1 : 0.6)};
   font-weight: ${(props) => props.isSelected && 600};
 `;
+
+export const OrderListLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 86px;
+
+  cursor: pointer;
+`;
+
+export const OrderListIcon = styled.div`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f3f3f3;
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
+
+export const OrderListLabel = styled.div`
+  margin-top: 10px;
+
+  font-size: 12px;
+  opacity: 0.6;
+`;

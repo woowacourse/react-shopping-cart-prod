@@ -49,4 +49,9 @@ export const LogoText = styled.span`
 export const OrderList = styled.div`
   color: #ffffff;
   cursor: pointer;
+
+  @media only screen and (max-width: 768px) {
+    // 모바일
+    display: none;
+  }
 `;
