@@ -10,7 +10,7 @@ const ListPage = () => {
   const { data: productListData, status: productListFetchingStatus } = useGetProductList();
   const { data: cartListData, status: cartListFetchingStatus, refetchCartList } = useGetCartList();
   const { setCartListStoreFromServer } = useSetCartListStoreFromServer();
-  const [loaddedImages, setLoadedImages] = useState(0);
+  const [loadedImages, setLoadedImages] = useState(0);
 
   useEffect(() => {
     if (cartListFetchingStatus === 'success' && cartListData) {
@@ -22,7 +22,7 @@ const ListPage = () => {
     setLoadedImages((prevCount) => prevCount + 1);
   };
 
-  const isAllImagesLoaded = productListData && loaddedImages >= productListData?.length;
+  const isAllImagesLoaded = productListData && loadedImages >= productListData?.length;
 
   return (
     <Styled.ProductList>
