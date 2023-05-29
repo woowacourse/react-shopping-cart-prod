@@ -14,6 +14,7 @@ const SheetProductCardList = () => {
 
   return (
     <SheetProductFlex>
+      <Title>주문상품</Title>
       {checkedProducts.map((cartProduct) => {
         return <SheetProductCard key={cartProduct.product.id} sheetProduct={cartProduct} />;
       })}
@@ -27,4 +28,11 @@ const SheetProductFlex = styled.ul`
   display: flex;
   flex-direction: column;
   width: 100%;
+`;
+
+const Title = styled.h4`
+  width: 100%;
+  font-size: 20px;
+  overflow: hidden;
+  margin: 20px auto 20px;
 `;
