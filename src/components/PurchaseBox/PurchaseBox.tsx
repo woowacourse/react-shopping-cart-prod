@@ -16,8 +16,11 @@ import {
   totalPriceSelector,
 } from "../../recoil/cartAtoms.ts";
 import { Order, OrderItem } from "../../types/types.ts";
+import { useNavigate } from "react-router-dom";
 
 function PurchaseBox() {
+  const navigate = useNavigate();
+
   const totalPrice = useRecoilValue(totalPriceSelector);
   const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
   const checkedCartList = useRecoilValue(checkedCartSelector);
@@ -36,6 +39,7 @@ function PurchaseBox() {
       point: POINTS,
     };
     alert(`서버로 보낼 데이터 (아직 안보내용): ${JSON.stringify(order)}`);
+    navigate("/order");
   };
 
   return (

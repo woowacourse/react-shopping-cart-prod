@@ -13,7 +13,7 @@ import {
   CartWrapper,
   SignButton,
 } from "./Header.style";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { cartCountSelector } from "../../recoil/cartAtoms";
 import ServerSelectBox from "../ServerSelectBox";
 import { modalContentState, modalOpenState } from "../../recoil/modalAtoms.tsx";
@@ -37,19 +37,18 @@ function Header() {
           </LogoWrapper>
           <NavBar>
             <ServerSelectBox />
-            <CartWrapper
-              onClick={() => navigate("/cart")}
-            >
+            <CartWrapper onClick={() => navigate("/cart")}>
               <CartTitle>장바구니</CartTitle>
               <CartCountWrapper>
                 <CartCount>{cartCount}</CartCount>
               </CartCountWrapper>
             </CartWrapper>
+            <SignButton onClick={() => navigate("/order")}>주문목록</SignButton>
             <SignButton onClick={() => openModal()}>로그인</SignButton>
           </NavBar>
         </HeaderContent>
       </Container>
-    </HeaderWrapper >
+    </HeaderWrapper>
   );
 }
 

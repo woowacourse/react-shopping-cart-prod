@@ -1,5 +1,11 @@
+import OrderList from "../../components/OrderList";
+
 function Order() {
-  return <>주문목록</>;
+  return (
+    <>
+      <OrderList />
+    </>
+  );
 }
 
 export default Order;
