@@ -85,7 +85,13 @@ export const handlers = [
 
     // 쿠폰 적용은 이후에
 
-    localStorageHelper.setValue('orderItems', orderList.push(newOrderItem));
+    orderList.push(newOrderItem);
+
+    localStorageHelper.setValue('orderItems', orderList);
+    localStorageHelper.setValue(
+      'cartItems',
+      cartList.filter((cartItem) => !body.id.includes(cartItem.id)),
+    );
 
     return res(ctx.status(201));
   }),
