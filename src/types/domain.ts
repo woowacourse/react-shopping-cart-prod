@@ -34,7 +34,7 @@ interface OrderItem extends Order {
   total: number;
 }
 
-export interface OrderStatement {
+export interface EachOrderStatement {
   orderId: 1;
   orderItems: OrderItem[];
 }
