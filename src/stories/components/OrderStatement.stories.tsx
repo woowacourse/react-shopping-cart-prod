@@ -10,6 +10,8 @@ export default {
 
 const Template: StoryFn = () => {
   const items = {
+    orderItemId: 1,
+    total: 4000,
     quantity: 1,
     couponIds: [1],
     product: {
