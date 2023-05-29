@@ -13,6 +13,7 @@ const CartProductSection = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const checkBoxLabel = isAllChecked ? '선택해제' : '전체선택';
+  const isCheckedProductExist = checkedProducts.size > 0;
 
   return (
     <ProductSection flexDirection="column" align="flex-start">
@@ -20,7 +21,9 @@ const CartProductSection = () => {
         <CheckBox checked={isAllChecked} onChange={toggleCheckAllBox}>
           {checkBoxLabel}
         </CheckBox>
-        <CheckedProductDeleteButton onClick={openModal}>선택 삭제</CheckedProductDeleteButton>
+        <CheckedProductDeleteButton onClick={openModal} isActive={isCheckedProductExist}>
+          선택 삭제
+        </CheckedProductDeleteButton>
         <ConfirmModal
           isOpen={isModalOpen}
           closeModal={closeModal}
@@ -56,13 +59,21 @@ const CheckBoxTab = styled(FlexBox)`
   background-color: var(--color-pure-white);
 `;
 
-const CheckedProductDeleteButton = styled.button`
+const CheckedProductDeleteButton = styled.button<{ isActive: boolean }>`
   width: 100px;
   height: 30px;
-  border: solid 1px var(--color-grayscale-300);
+  border: none;
   border-radius: 4px;
+  background-color: ${({ isActive }) => (isActive ? 'var(--color-primary-tone-down)' : 'var(--color-grayscale-200)')};
   font-size: 16px;
   font-weight: 700;
-  background-color: var(--color-grayscale-100);
+  color: ${({ isActive }) => (isActive ? 'var(--color-pure-white)' : 'var(--color-grayscale-500)')};
   cursor: pointer;
+  user-select: none;
+  pointer-events: ${({ isActive }) => (isActive ? 'initial' : 'none')};
+
+  :hover {
+    filter: brightness(1.2);
+    transition: background-color 100ms ease;
+  }
 `;
