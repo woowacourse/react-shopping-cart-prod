@@ -25,7 +25,7 @@ const CartPage = () => {
       <TitleWrapper>
         <Title>장바구니</Title>
       </TitleWrapper>
-      <Spacer height={34} />
+      <Spacer height={20} />
       <Inner>
         <CartList>
           <AllCheckBoxContainer>
@@ -170,7 +170,7 @@ const DeleteButton = styled.button`
 
 const TotalWrapper = styled.div`
   position: relative;
-  padding-top: 54px;
+  padding-top: 56px;
 `;
 
 export default CartPage;

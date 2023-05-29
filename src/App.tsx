@@ -18,7 +18,7 @@ function App() {
 }
 
 const Layout = styled.main`
-  padding: 140px 0 60px 0;
+  padding: 120px 0 60px 0;
 
   @media screen and (min-width: 1200px) {
     display: flex;
