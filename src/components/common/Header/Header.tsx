@@ -26,7 +26,7 @@ const Header = () => {
             onClick={() => navigate(PATH.ORDERS)}
           >
             <S.Icon src={OrderIcon} alt="order icon" />
-            <S.HeaderButtonLabel id="cart-button">주문목록</S.HeaderButtonLabel>
+            <S.HeaderButtonLabel id="cart-button">주문내역</S.HeaderButtonLabel>
           </S.OrderPageButton>
           <S.DividerLine />
           <S.CartButton
