@@ -1,5 +1,4 @@
 import { ChangeEvent } from 'react';
-
 import * as S from './Stepper.style';
 
 interface StepperProps {

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Cart } from '@pages/Cart';
-import { Home } from '@pages/Home';
-import { HomeLayout } from '@components/layout/HomeLayout';
+import Cart from '@pages/Cart';
+import Home from '@pages/Home';
+import HomeLayout from '@components/layout/HomeLayout';
 
 export const ROUTER_PATH = {
   baseName: '/react-shopping-cart/',

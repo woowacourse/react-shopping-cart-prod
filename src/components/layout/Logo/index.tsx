@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-
 import { useRefreshCartList } from '@recoil/cart/cartState';
 import logoImage from '@assets/logo.svg';
 import shopImage from '@assets/shop.svg';

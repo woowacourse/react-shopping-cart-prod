@@ -1,7 +1,7 @@
 import { ChangeEvent, Suspense } from 'react';
-import { useServer } from '@recoil/server/serverState';
-import { CartStepperWithIcon } from '@components/cart/CartStepperWithIcon';
-import { SelectBox } from '@components/common/SelectBox';
+import { useServer } from '@hooks/useServer';
+import CartStepperWithIcon from '@components/cart/CartStepperWithIcon';
+import SelectBox from '@components/common/SelectBox';
 import Logo from '@components/layout/Logo';
 import { SERVER_NAME } from '@constants/serverUrlConstants';
 import { Container } from '@styles/style';

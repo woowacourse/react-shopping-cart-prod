@@ -7,7 +7,7 @@ const cartTotalPriceState = selector({
     const cart = get(cartState);
 
     return cart.reduce((acc: number, item) => {
-      if (!item.checked) return acc;
+      if (!item.isSelect) return acc;
 
       return acc + item.product.price * item.quantity;
     }, 0);

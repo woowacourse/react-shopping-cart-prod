@@ -1,6 +1,6 @@
-import { ProductItemType } from 'types/ProductType';
 import { useCartItemQuantityBy } from '@recoil/cart/withItemQuantityBy';
-import { Stepper } from '@components/common/Stepper';
+import Stepper from '@components/common/Stepper';
+import { ProductItemType } from '@type/productType';
 import cartIcon from '@assets/cart.svg';
 import * as S from './CartQuantityField.style';
 

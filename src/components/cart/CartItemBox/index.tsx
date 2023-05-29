@@ -1,7 +1,7 @@
 import { useCartItemCheckedBy } from '@recoil/cart/withItemCheckBy';
 import { useCartItemQuantityBy } from '@recoil/cart/withItemQuantityBy';
-import { CheckBox } from '@components/common/CheckBox';
-import { Stepper } from '@components/common/Stepper';
+import CheckBox from '@components/common/CheckBox';
+import Stepper from '@components/common/Stepper';
 import deleteIcon from '@assets/delete.svg';
 import * as S from './CartItemBox.style';
 
