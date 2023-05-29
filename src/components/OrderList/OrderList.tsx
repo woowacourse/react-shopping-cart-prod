@@ -6,18 +6,21 @@ import { OrderItem } from '../OrderItem';
 type OrderListProps = {
   orderId: number;
   orderItems: OrderItemType[];
+  detail?: boolean;
 };
 
-function OrderList({ orderId, orderItems }: OrderListProps) {
+function OrderList({ orderId, orderItems, detail = true }: OrderListProps) {
   const navigate = useNavigate();
 
   return (
     <S.OrderItemList>
       <S.OrderInfo>
         <span>주문번호: {orderId}</span>
-        <S.DetailButton onClick={() => navigate(`/order/${orderId}`)}>
-          상세보기 &gt;
-        </S.DetailButton>
+        {detail && (
+          <S.DetailButton onClick={() => navigate(`/order/${orderId}`)}>
+            상세보기 &gt;
+          </S.DetailButton>
+        )}
       </S.OrderInfo>
       {orderItems.map((item) => (
         <OrderItem item={item} />
