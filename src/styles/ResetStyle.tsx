@@ -21,6 +21,12 @@ const ResetStyle = createGlobalStyle`
   dd {
     margin: 0;
   }
+
+  /* Set properties for all headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-size: 16px; 
+    font-weight: normal;
+  }
   
   ul {
     padding: 0;
