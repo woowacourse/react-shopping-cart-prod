@@ -1,21 +1,33 @@
-export interface ProductItem {
+interface ProductItem {
   id: number;
   name: string;
   price: number;
   imageUrl: string;
 }
 
-export interface ReceivedCartItem {
+interface ReceivedCartItem {
   id: number;
   quantity: number;
   product: ProductItem;
 }
 
-export interface CartItem extends ReceivedCartItem {
+interface CartItem extends ReceivedCartItem {
   checked: boolean;
 }
 
-export interface NewCartItem extends CartItem {
+interface NewCartItem extends CartItem {
   quantity: 1;
   checked: true;
 }
+
+interface OrderItem {
+  id: number;
+  productName: string;
+  productPrice: number;
+  paymentPrice: number;
+  createdAt: string;
+  productQuantity: number;
+  imageUrl: string;
+}
+
+export type { ProductItem, ReceivedCartItem, CartItem, NewCartItem, OrderItem };
