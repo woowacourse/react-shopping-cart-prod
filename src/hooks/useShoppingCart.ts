@@ -1,15 +1,17 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
 import { addCartProducts, updateCartProductsQuantity, removeCartProduct } from 'apis/cart';
 import type { CheckedCartProducts, Product } from 'types/product';
+import { userState } from 'state/userState';
 
 const useShoppingCart = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
   const [cartProductIdStore, setCartProductIdStore] = useRecoilState(cartProductIdStoreState);
-
+  const { id, password } = useRecoilValue(userState);
+  const user = { id, password };
   const initialAddCart = async (product: Product) => {
-    const cartProductId = await addCartProducts(product.id);
+    const cartProductId = await addCartProducts(user, product.id);
 
     setCartProductIdStore((prev) => ({ ...prev, [product.id]: cartProductId }));
 
@@ -31,7 +33,7 @@ const useShoppingCart = () => {
       return;
     }
 
-    await updateCartProductsQuantity(prevQuantity - 1, cartProductIdStore[id]);
+    await updateCartProductsQuantity(user, prevQuantity - 1, cartProductIdStore[id]);
 
     setCartProducts((prev) => {
       const newCartProducts = new Map(prev.entries());
@@ -49,7 +51,7 @@ const useShoppingCart = () => {
 
     const prevQuantity = targetCartProduct.quantity;
 
-    await updateCartProductsQuantity(prevQuantity + 1, cartProductIdStore[id]);
+    await updateCartProductsQuantity(user, prevQuantity + 1, cartProductIdStore[id]);
 
     setCartProducts((prev) => {
       const newCartProducts = new Map(prev.entries());
@@ -65,7 +67,7 @@ const useShoppingCart = () => {
     const targetCartProduct = cartProducts.get(cartProductIdStore[id]);
     if (!targetCartProduct) throw new Error('장바구니에 없는 상품의 수량은 조절할 수 없습니다.');
 
-    await removeCartProduct(cartProductIdStore[id]);
+    await removeCartProduct(user, cartProductIdStore[id]);
 
     setCartProductIdStore((prev) => {
       const { [id]: cartProductId, ...otherIds } = prev;

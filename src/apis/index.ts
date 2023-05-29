@@ -1,5 +1,4 @@
 import BASE_URL from 'constants/apiBaseURL';
-import { USER_1 } from 'constants/basicKey';
 import { SERVER_OWNER } from 'constants/storeKey';
 import type { ServerOwner } from 'types/serverOwner';
 import getBasicKey from 'utils/getBasicKey';
@@ -15,21 +14,26 @@ type FetchedData<T> = {
   data: T;
   headers: Headers;
 };
-class API {
+
+export class API {
   private baseUrl: string;
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
-  async fetcher<T>(url: string, method: string, body?: unknown): Promise<FetchedData<T>> {
+  async fetcher<T>(url: string, method: string, user?: { id: string, password: number }, body?: unknown,): Promise<FetchedData<T>> {
+    let headers = new Headers({
+      'Content-Type': 'application/json',
+    });
+
+    if (user) {
+      headers.append('Authorization', `Basic ${getBasicKey(user.id, user.password)}`);
+    }
+
     const options: RequestInit = {
       method: method,
-
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${getBasicKey(USER_1.id, USER_1.password)}`,
-      },
+      headers: headers,
     };
 
     if (body) {
@@ -60,7 +64,7 @@ class API {
     }
 
     let data = null;
-    const headers = response.headers;
+    headers = response.headers;
 
     if (response.status === 204) {
       return { data: data as T, headers };
@@ -84,20 +88,21 @@ class API {
     return { data: data as T, headers };
   }
 
-  async get<T>(url: string): Promise<FetchedData<T>> {
+  async get<T>(url: string, user?: { id: string, password: number }): Promise<FetchedData<T>> {
+    if (user) return await this.fetcher<T>(url, 'GET', { id: user.id, password: user.password });
     return await this.fetcher<T>(url, 'GET');
   }
 
-  async post<T>(url: string, body: unknown): Promise<FetchedData<T>> {
-    return await this.fetcher<T>(url, 'POST', body);
+  async post<T>(url: string, user: { id: string, password: number }, body: unknown): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'POST', user, body);
   }
 
-  async remove<T>(url: string): Promise<FetchedData<T>> {
-    return await this.fetcher<T>(url, 'DELETE');
+  async remove<T>(url: string, user: { id: string, password: number }): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'DELETE', user);
   }
 
-  async patch<T>(url: string, body: unknown): Promise<FetchedData<T>> {
-    return await this.fetcher<T>(url, 'PATCH', body);
+  async patch<T>(url: string, user: { id: string, password: number }, body: unknown): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'PATCH', user, body);
   }
 
   setBaseUrl(url: string) {
