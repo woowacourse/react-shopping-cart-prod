@@ -24,8 +24,6 @@ const S = {
     letter-spacing: 0.5px;
     color: var(--text-color);
 
-    ${(props) => props.css}
-
     @media (max-width: 1270px) {
       font-size: 16px;
     }
@@ -33,6 +31,8 @@ const S = {
     @media (max-width: 768px) {
       font-size: 15px;
     }
+
+    ${(props) => props.css}
   `,
 };
 
