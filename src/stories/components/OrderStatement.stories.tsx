@@ -1,9 +1,10 @@
 import { StoryFn, Meta } from "@storybook/react";
-import OrderItemList from "components/OrderItemList";
+import OrderStatement from "components/OrderStatement";
+import { Order } from "types/domain";
 
 export default {
   title: "OrderItemList",
-  component: OrderItemList,
+  component: OrderStatement,
   decorators: [(StoryFn) => <div style={{ width: "500px" }}>{StoryFn()}</div>],
 } as Meta;
 
@@ -20,6 +21,6 @@ const Template: StoryFn = () => {
     },
   };
 
-  return <OrderItemList items={[items]} />;
+  return <OrderStatement orders={...[items]} />;
 };
 export const DefaultOrderItemList = Template.bind({});
