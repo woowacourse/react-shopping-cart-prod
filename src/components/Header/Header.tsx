@@ -1,6 +1,6 @@
-import titleLogo from "../../assets/logo.png";
-import { useNavigate } from "react-router-dom";
-import { Container } from "../../style/style";
+import titleLogo from '../../assets/logo.png';
+import { useNavigate } from 'react-router-dom';
+import { Container } from '../../style/style';
 import {
   CartCount,
   CartCountWrapper,
@@ -11,10 +11,11 @@ import {
   LogoWrapper,
   HeaderWrapper,
   CartWrapper,
-} from "./Header.style";
-import { useRecoilValue } from "recoil";
-import { cartCountSelector } from "../../recoil/cartAtoms";
-import ServerSelectBox from "../ServerSelectBox/ServerSelectBox.tsx";
+  OrderListButton,
+} from './Header.style';
+import { useRecoilValue } from 'recoil';
+import { cartCountSelector } from '../../recoil/cartAtoms';
+import ServerSelectBox from '../ServerSelectBox/ServerSelectBox.tsx';
 
 function Header() {
   const navigate = useNavigate();
@@ -24,19 +25,20 @@ function Header() {
     <HeaderWrapper>
       <Container>
         <HeaderContent>
-          <LogoWrapper onClick={() => navigate("/")}>
+          <LogoWrapper onClick={() => navigate('/')}>
             <LogoImage src={titleLogo} />
           </LogoWrapper>
           <NavBar>
             <ServerSelectBox />
-            <CartWrapper
-              onClick={() => navigate("/cart")}
-            >
+            <CartWrapper onClick={() => navigate('/cart')}>
               <CartTitle>장바구니</CartTitle>
               <CartCountWrapper>
                 <CartCount>{cartCount}</CartCount>
               </CartCountWrapper>
             </CartWrapper>
+            <OrderListButton onClick={() => navigate('/order')}>
+              주문목록
+            </OrderListButton>
           </NavBar>
         </HeaderContent>
       </Container>

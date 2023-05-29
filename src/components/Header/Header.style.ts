@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const HeaderWrapper = styled.div`
   width: 100vw;
@@ -15,7 +15,7 @@ export const HeaderContent = styled.div`
 
 export const CartWrapper = styled.div`
   display: flex;
-  gap: 10px; 
+  gap: 4px;
 `;
 
 export const LogoWrapper = styled.div`
@@ -31,7 +31,7 @@ export const LogoImage = styled.img`
 export const NavBar = styled.div`
   display: flex;
   cursor: pointer;
-  gap: 10px;
+  gap: 28px;
 `;
 
 export const CartTitle = styled.div`
@@ -52,4 +52,9 @@ export const CartCountWrapper = styled.div`
 export const CartCount = styled.div`
   font-size: 16px;
   color: #fff;
+`;
+
+export const OrderListButton = styled.button`
+  font-size: 24px;
+  color: ${({ theme }) => theme.color.dark};
 `;
