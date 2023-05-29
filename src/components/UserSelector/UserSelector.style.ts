@@ -72,3 +72,10 @@ export const User = styled.li`
     color: ${({ theme }) => theme.color.info};
   }
 `;
+
+export const UserListTitle = styled.div`
+  padding: 12px 12px 0 12px;
+  font-size: 8px;
+  color: #00a3f9;
+  font-weight: 800;
+`;

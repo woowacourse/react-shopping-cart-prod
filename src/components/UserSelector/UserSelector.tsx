@@ -33,6 +33,7 @@ const UserSelector = () => {
           <S.UserInfoPoint>보유 포인트: 124p</S.UserInfoPoint>
         </S.UserInfoWrapper>
         <S.UserListWrapper>
+          <S.UserListTitle>계정 전환</S.UserListTitle>
           {users.map((user) => {
             return (
               <S.User key={user.id}>
