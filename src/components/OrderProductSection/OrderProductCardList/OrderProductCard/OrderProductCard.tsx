@@ -14,13 +14,13 @@ const OrderProductCard = ({ checkedCartProduct }: OrderProductCardProps) => {
 
   return (
     <Container
-      sizing={{ width: '100%', height: '160px' }}
+      sizing={{ width: '100%', height: '140px' }}
       flex={{ gap: '16px', justify: 'flex-start' }}
       role="listitem"
     >
       <ProductImage src={imageUrl} alt={name} />
       <Box
-        flex={{ flexDirection: 'column', justify: 'flex-start', align: 'flex-start', gap: '20px' }}
+        flex={{ flexDirection: 'column', justify: 'flex-start', align: 'flex-start', gap: '16px' }}
         sizing={{ minHeight: '100%' }}
       >
         <Title>{name}</Title>
@@ -31,13 +31,13 @@ const OrderProductCard = ({ checkedCartProduct }: OrderProductCardProps) => {
 };
 
 const Container = styled(Box)`
-  border: 1px solid var(--color-grayscale-200);
-  padding: 20px 10px;
+  border-top: 1px solid var(--color-grayscale-200);
+  padding: 20px 20px;
 `;
 
 const ProductImage = styled.img`
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   border-radius: 4px;
   filter: brightness(96%);
 `;
