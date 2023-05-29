@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const ProductItemWrapper = styled.div`
-  width: 400px;
+  width: 300px;
   padding: 47px;
 `;
 
@@ -34,7 +34,7 @@ export const ImageContainer = styled.div`
 
 export const ProductItemImage = styled.img`
   width: 100%;
-  height: 100%;
+  height: 259px;
   object-fit: cover;
 `;
 
@@ -65,6 +65,6 @@ export const CartButton = styled.button`
   transition: scale 0.5s ease-in-out;
 
   &:hover {
-    transform: scale(1.1); 
+    transform: scale(1.1);
   }
 `;
