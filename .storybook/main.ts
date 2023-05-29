@@ -6,6 +6,7 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@storybook/preset-create-react-app',
     '@storybook/addon-interactions',
+    'storybook-addon-react-router-v6',
   ],
   framework: {
     name: '@storybook/react-webpack5',
@@ -14,6 +15,6 @@ const config: StorybookConfig = {
   docs: {
     autodocs: true,
   },
-  staticDirs: ['..\\public'],
+  staticDirs: ['../public'],
 };
 export default config;

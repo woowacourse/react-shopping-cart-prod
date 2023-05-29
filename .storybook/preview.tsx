@@ -3,6 +3,8 @@ import type { Preview } from '@storybook/react';
 import { withThemeFromJSXProvider } from '@storybook/addon-styling';
 import GlobalStyles from '../src/styles/GlobalStyles';
 import { RecoilRoot } from 'recoil';
+import { initialize, mswDecorator } from 'msw-storybook-addon';
+import { BrowserRouter } from 'react-router-dom';
 
 const customViewport = {
   Default: {
@@ -35,6 +37,8 @@ const customViewport = {
   },
 };
 
+initialize();
+
 const preview: Preview = {
   parameters: {
     actions: { argTypesRegex: '^on[A-Z].*' },
@@ -49,15 +53,18 @@ const preview: Preview = {
       defaultViewport: 'Default',
     },
   },
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <RecoilRoot>
+          <Story />
+        </RecoilRoot>
+      </BrowserRouter>
+    ),
+
+    mswDecorator,
+    withThemeFromJSXProvider({ GlobalStyles }),
+  ],
 };
 
 export default preview;
-
-export const decorators = [
-  (Story) => (
-    <RecoilRoot>
-      <Story />
-    </RecoilRoot>
-  ),
-  withThemeFromJSXProvider({ GlobalStyles }),
-];
