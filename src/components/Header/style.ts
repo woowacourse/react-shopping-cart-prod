@@ -9,9 +9,18 @@ export const Container = styled.div`
 
 export const Layout = styled.div`
   display: flex;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: auto;
   justify-content: space-between;
+
+  @media only screen and (max-width: 1200px) {
+    // 테블릿
+    max-width: 768px;
+  }
+  @media only screen and (max-width: 768px) {
+    // 모바일
+    max-width: 400px;
+  }
 `;
 
 export const LogoWrapper = styled.div`
