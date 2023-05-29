@@ -18,7 +18,7 @@ export const orderItemsStateSelector = selector({
   },
 });
 
-const orderItemsState = atom<OrderItemType[]>({
+export const orderItemsState = atom<OrderItemType[]>({
   key: 'orderItemsState',
   default: orderItemsStateSelector,
 });
