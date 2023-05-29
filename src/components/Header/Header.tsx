@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { memo, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import CartIcon from '../../assets/cart-icon.svg';
+import OrderIcon from '../../assets/order-icon.svg';
 import Logo from '../../assets/logo.png';
 import { useFetch } from '../../hooks/useFetch';
 import { cartListState } from '../../store/cart';
@@ -19,30 +21,32 @@ const Header = () => {
   const { fetchApi } = useFetch<CartItemType[]>(setCartItemList);
   useEffect(() => {
     fetchApi.get(`${origin}cart-items`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [origin]);
 
   const navigateToMainPage = useCallback(() => {
     navigate('/');
-  }, [navigate]);
+  }, []);
 
   const navigateToCartPage = useCallback(() => {
-    navigate('/cartlist');
-  }, [navigate]);
+    navigate('/cartList');
+  }, []);
+
+  const navigateToOrderPage = useCallback(() => {
+    navigate('/orderList');
+  }, []);
 
   return (
     <header>
       <div className={styles.container}>
         <OriginSelector />
         <img src={Logo} alt="logo" className={styles.logo} onClick={navigateToMainPage} />
-        <div>
+        <div className={styles.flex}>
           <button type="button">
             {cartItemList.length > 0 && (
               <div className={styles.cartItemCountBox}>
                 <span className={styles.cartItemCount}>{cartItemList.length}</span>
               </div>
             )}
-
             <img
               src={CartIcon}
               alt="cart icon"
@@ -50,6 +54,15 @@ const Header = () => {
               onClick={navigateToCartPage}
             />
             <span className={styles.label}>장바구니</span>
+          </button>
+          <button type="button">
+            <img
+              src={OrderIcon}
+              alt="order icon"
+              className={styles.cartIcon}
+              onClick={navigateToOrderPage}
+            />
+            <span className={styles.label}>주문목록</span>
           </button>
         </div>
       </div>
