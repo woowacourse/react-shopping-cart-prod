@@ -4,6 +4,7 @@ import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getCartAPI } from '../api/cartAPI';
 import { changeCartItemQuantity } from '../domain/cart';
 import { CartItemData } from '../types/cart';
+import { getMemberDiscountAmount, getTotalItemDiscountAmount } from '../utils/discount';
 import { checkedCartIdListState } from './cartCheckbox';
 import { currentMemberInformationState, currentMemberState } from './member';
 import { currentServerState } from './server';
@@ -92,18 +93,11 @@ const cartListTotalItemDiscountAmountState = selector<number>({
   get: ({ get }) => {
     const cartList = get(cartListState);
     const checkedCartIdList = get(checkedCartIdListState);
+    const checkedCartItems = cartList.filter((cartItem) => checkedCartIdList.has(cartItem.id));
 
-    const totalItemDiscountAmount = cartList
-      .filter((cartItem) => checkedCartIdList.has(cartItem.id))
-      .reduce((acc, curr) => {
-        if (curr.product.discountRate > 0) {
-          return acc + curr.quantity * curr.product.price * (curr.product.discountRate / 100);
-        }
+    const totalItemDiscountAmount = getTotalItemDiscountAmount(checkedCartItems);
 
-        return acc;
-      }, 0);
-
-    return totalItemDiscountAmount > 0 ? -totalItemDiscountAmount : 0;
+    return totalItemDiscountAmount !== 0 ? -totalItemDiscountAmount : 0;
   },
 });
 
@@ -113,18 +107,11 @@ const cartListMemberDiscountAmountState = selector<number>({
     const cartList = get(cartListState);
     const checkedCartIdList = get(checkedCartIdListState);
     const memberInformation = get(currentMemberInformationState);
+    const checkedCartItems = cartList.filter((cartItem) => checkedCartIdList.has(cartItem.id));
 
-    const memberDiscountAmount = cartList
-      .filter((cartItem) => checkedCartIdList.has(cartItem.id))
-      .reduce((acc, curr) => {
-        if (memberInformation.rank === '일반' || curr.product.discountRate > 0) {
-          return acc;
-        }
+    const memberDiscountAmount = getMemberDiscountAmount(checkedCartItems, memberInformation);
 
-        return acc + curr.quantity * curr.product.price * (memberInformation.discountRate / 100);
-      }, 0);
-
-    return memberDiscountAmount > 0 ? -memberDiscountAmount : 0;
+    return memberDiscountAmount !== 0 ? -memberDiscountAmount : 0;
   },
 });
 

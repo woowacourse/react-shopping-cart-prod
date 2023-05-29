@@ -1,11 +1,11 @@
-import { RANK } from '../constants/member';
+import { MEMBER_RANK } from '../constants/member';
 
 interface MemberAuthorization {
   username: string;
   password: string;
 }
 
-type MemberRank = (typeof RANK)[number];
+type MemberRank = (typeof MEMBER_RANK)[number];
 
 interface MemberInformation {
   id: number;

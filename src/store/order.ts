@@ -3,6 +3,7 @@ import { selector, selectorFamily } from 'recoil';
 import { getAuthorizedOptionHeaders } from '../api/authorizedOptionHeaders';
 import { getMemberAPI } from '../api/memberAPI';
 import { OrderData } from '../types/order';
+import { getMemberDiscountAmount, getTotalItemDiscountAmount } from '../utils/discount';
 import { currentMemberInformationState, currentMemberState } from './member';
 import { currentServerState } from './server';
 
@@ -39,15 +40,9 @@ const orderTotalItemDiscountAmountState = selectorFamily<number, number>({
     ({ get }) => {
       const order = get(orderState(orderId))!;
 
-      const totalItemDiscountAmount = order?.orderedItems.reduce((acc, curr) => {
-        if (curr.product.discountRate > 0) {
-          return acc + curr.quantity * curr.product.price * (curr.product.discountRate / 100);
-        }
+      const totalItemDiscountAmount = getTotalItemDiscountAmount(order.orderedItems);
 
-        return acc;
-      }, 0);
-
-      return totalItemDiscountAmount > 0 ? -totalItemDiscountAmount : 0;
+      return totalItemDiscountAmount !== 0 ? -totalItemDiscountAmount : 0;
     },
 });
 
@@ -59,15 +54,9 @@ const orderMemberDiscountAmountState = selectorFamily<number, number>({
       const order = get(orderState(orderId))!;
       const memberInformation = get(currentMemberInformationState);
 
-      const memberDiscountAmount = order?.orderedItems.reduce((acc, curr) => {
-        if (memberInformation.rank === '일반' || curr.product.discountRate > 0) {
-          return acc;
-        }
+      const memberDiscountAmount = getMemberDiscountAmount(order.orderedItems, memberInformation);
 
-        return acc + curr.quantity * curr.product.price * (memberInformation.discountRate / 100);
-      }, 0);
-
-      return memberDiscountAmount > 0 ? -memberDiscountAmount : 0;
+      return memberDiscountAmount !== 0 ? -memberDiscountAmount : 0;
     },
 });
 

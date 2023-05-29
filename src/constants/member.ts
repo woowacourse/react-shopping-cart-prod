@@ -1,6 +1,6 @@
 import { MemberRank } from '../types/member';
 
-const RANK = ['일반', '실버', '골드', '플래티넘', '다이아몬드'] as const;
+const MEMBER_RANK = ['일반', '실버', '골드', '플래티넘', '다이아몬드'] as const;
 
 const MEMBER_RANK_PURCHASE_CONDITION: Record<MemberRank, number> = {
   일반: 0,
@@ -18,4 +18,4 @@ const MEMBER_DISCOUNT_RATE: Record<MemberRank, number> = {
   다이아몬드: 30,
 } as const;
 
-export { RANK, MEMBER_RANK_PURCHASE_CONDITION, MEMBER_DISCOUNT_RATE };
+export { MEMBER_RANK, MEMBER_RANK_PURCHASE_CONDITION, MEMBER_DISCOUNT_RATE };
