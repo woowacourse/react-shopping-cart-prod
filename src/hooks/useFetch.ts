@@ -1,20 +1,18 @@
-import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { baseURLSelector } from '../store/server';
 import { AUTH } from '../constants/auth';
-import { fetchedCartListSelector } from '../store/asyncSelector';
+import { useCallback } from 'react';
+import { cartAtom } from '../store/cart';
+import { Cart } from '../types/product';
 
 type FetchMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
 const useFetch = () => {
   const baseURL = useRecoilValue(baseURLSelector);
-  const refreshCartList = useRecoilRefresher_UNSTABLE(fetchedCartListSelector);
+  const setCartList = useSetRecoilState(cartAtom);
 
-  const handleCartItems = async (
-    method: FetchMethod,
-    body: {},
-    id?: number
-  ) => {
-    try {
+  const handleCartItems = useCallback(
+    async (method: FetchMethod, body: {}, id?: number) => {
       const response = await fetch(
         `${baseURL}/cart-items${id ? `/${id}` : ''}`,
         {
@@ -28,22 +26,47 @@ const useFetch = () => {
       );
 
       if (!response.ok) throw new Error(`error code : ${response.status}`);
-      refreshCartList();
+
+      const data = await response.text();
+      if (!data) return null;
+      return JSON.parse(data);
+    },
+    [baseURL]
+  );
+
+  const addToCart = async (productId: number) => {
+    try {
+      const data = await handleCartItems('POST', { productId });
+      const { id, quantity, product } = data;
+
+      setCartList((cartList) => [...cartList, { id, quantity, product }]);
     } catch (error) {
       alert(error);
     }
   };
 
-  const addToCart = async (productId: number) => {
-    handleCartItems('POST', { productId });
-  };
-
   const updateCartItem = async (id: number, quantity: number) => {
-    handleCartItems('PATCH', { quantity }, id);
+    try {
+      handleCartItems('PATCH', { quantity }, id);
+      setCartList(
+        (cartList) =>
+          [
+            ...cartList.filter((item) => item.id !== id),
+            { ...cartList.find((item) => item.id === id), quantity },
+          ] as Cart[]
+      );
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const deleteCartItem = async (id: number) => {
-    handleCartItems('DELETE', {}, id);
+    try {
+      handleCartItems('DELETE', {}, id);
+      setCartList((cartList) => [...cartList.filter((item) => item.id !== id)]);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   return { addToCart, updateCartItem, deleteCartItem };

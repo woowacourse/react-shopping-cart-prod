@@ -33,7 +33,9 @@ const Header = () => {
           <option value='ROY'>로이</option>
           <option value='IRAE'>이레</option>
         </ServerSelectBox>
-        <CartTextButton />
+        <Link to='/cart'>
+          <CartTextButton />
+        </Link>
         <Link to='/order-list'>
           <OrderListButton>주문 목록</OrderListButton>
         </Link>

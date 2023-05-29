@@ -60,8 +60,7 @@ const CartItemList = () => {
         {cartList.map((item) => {
           return (
             <CartItem
-              id={item.id}
-              quantity={item.quantity}
+              cart={item}
               cartItemState={
                 isSelectedList.find((state) => state.id === item.id) as Select
               }

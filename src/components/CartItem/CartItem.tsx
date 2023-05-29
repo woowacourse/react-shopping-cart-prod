@@ -6,26 +6,22 @@ import CheckBox from '../common/CheckBox/CheckBox';
 import { Select } from '../CartItemList/CartItemList';
 import { WIDTH } from '../../styles/mediaQuery';
 import useFetch from '../../hooks/useFetch';
-import { useRecoilValue } from 'recoil';
-import { cartSelectorFamily } from '../../store/cart';
+import { Cart } from '../../types/product';
 
 interface CartItemProps {
-  id: number;
-  quantity: number;
+  cart: Cart;
   cartItemState: Select;
   setIsSelectedList: React.Dispatch<React.SetStateAction<Select[]>>;
   setIsAllSelected: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CartItem = ({
-  id,
-  quantity,
+  cart,
   cartItemState,
   setIsSelectedList,
   setIsAllSelected,
 }: CartItemProps) => {
-  const productInCart = useRecoilValue(cartSelectorFamily(id));
-  const { product } = productInCart;
+  const { id, product, quantity } = cart;
   const { name, imageUrl, price } = product;
   const { updateCartItem, deleteCartItem } = useFetch();
 

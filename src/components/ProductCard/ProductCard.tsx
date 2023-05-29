@@ -20,7 +20,7 @@ const ProductCard = ({
   count,
   cartId,
 }: ProductCartProps) => {
-  const { addToCart, updateCartItem } = useFetch();
+  const { addToCart, updateCartItem, deleteCartItem } = useFetch();
 
   const onClickAddToCart = () => {
     addToCart(id);
@@ -34,6 +34,10 @@ const ProductCard = ({
 
   const minusOne = () => {
     if (!cartId || !count) return;
+    if (count === 1) {
+      deleteCartItem(cartId);
+      return;
+    }
 
     updateCartItem(cartId, count - 1);
   };
