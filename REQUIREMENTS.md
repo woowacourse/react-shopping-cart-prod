@@ -83,7 +83,7 @@
 
 - [] msw를 이용하여 api를 모킹한다.
 
-  - [] 쿠폰 전체 조희
+  - [x] 쿠폰 전체 조희
 
     - 사례
 
@@ -118,29 +118,36 @@
       ]
       ```
 
-  - [] 주문 하기
+  - [x] 주문 하기
     - 사례
       - 체크된 물품이 없는데 주문하기를 누른 경우
       - 쿠폰을 사용하여 주문한 경우
       - 쿠폰을 사용하지 않고 주문한 경우
     - 요청
       ```json
+      POST /orders
+      Authorization: Basic ~~~~~
+      Body:
       [
         {
-          couponId: 1,
-          name: "오픈 기념 쿠폰",
-          discount: {
-            type: "rate"
-            amount: 10
+          product: {
+            id: 1
+            name: "친환경 실링용기-ECO 19153"
+            price: 60200,
+            imageUrl: "Xxxxxx"
           }
+          quantity: 10,
+          couponId: []
         },
         {
-          couponId: 2,
-          name: "오픈 기념 쿠폰",
-          discount: {
-            type: "price"
-            amount: 1000
+          product: {
+            id: 1
+            name: "친환경 실링용기-ECO 19153"
+            price: 60200,
+            imageUrl: "Xxxxxx"
           }
+          quantity: 10,
+          couponId: [1]
         }
       ]
       ```
