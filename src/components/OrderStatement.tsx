@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Order } from "types/domain";
+import { OrderResult } from "types/domain";
 import OrderItem from "./OrderItem";
 
 interface OrderStatementProps {
   orderId: number;
-  orders: Order[];
+  orders: OrderResult[];
   openModal?: () => void;
 }
 

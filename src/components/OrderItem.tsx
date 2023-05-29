@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Order } from "types/domain";
+import { OrderResult } from "types/domain";
 
-const OrderItem = ({ item }: { item: Order }) => {
+const OrderItem = ({ item }: { item: OrderResult }) => {
   return (
     <Wrapper>
       <ImageBox>
@@ -13,9 +13,7 @@ const OrderItem = ({ item }: { item: Order }) => {
       </ImageBox>
       <InfoBox>
         <NameBox>{item.product.name}</NameBox>
-        <PriceAndQuantityBox>
-          {item.product.price.toLocaleString()}원 / 수량: {item.quantity}개
-        </PriceAndQuantityBox>
+        <PriceBox>{item.total.toLocaleString()}원</PriceBox>
       </InfoBox>
     </Wrapper>
   );
@@ -59,14 +57,6 @@ const InfoBox = styled.div`
 
   padding: 3px 3%;
   gap: 5px;
-
-  // @media (max-width: 767px) {
-  //   grid-template-rows: 20px 20px auto;
-  // }
-
-  // @media (max-width: 350px) {
-  //   grid-template-rows: 20px 20px auto;
-  // }
 `;
 
 const NameBox = styled.p`
@@ -82,7 +72,7 @@ const NameBox = styled.p`
     font-size: 17px;
   }
 `;
-const PriceAndQuantityBox = styled.p`
+const PriceBox = styled.p`
   font-size: 16px;
 
   color: gray;
