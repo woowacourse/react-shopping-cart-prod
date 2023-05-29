@@ -13,7 +13,7 @@ const ProductItemPrice = ({ price, discountRate, discountedPrice }: ProductItemP
         </S.DiscountRate>
       )}
       <S.DiscountedPrice size="large" as="span">
-        {discountRate > 0 ? priceFormatter(discountedPrice) : priceFormatter(price)}원
+        {priceFormatter(discountedPrice)}원
       </S.DiscountedPrice>
       {discountRate > 0 && (
         <S.ItemPrice size="small" as="span">
