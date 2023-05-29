@@ -11,9 +11,10 @@ export type ProductItemProps = {
   price: number;
   imageUrl: string;
   refetchCartList: ({}) => void;
+  onImageLoad: () => void;
 };
 
-const ProductItem = ({ cartItem: cartItemProp, id, name, price, imageUrl, refetchCartList }: ProductItemProps) => {
+const ProductItem = ({ cartItem: cartItemProp, id, name, price, imageUrl, refetchCartList, onImageLoad }: ProductItemProps) => {
   const { handleAddToCartButton, handleStepperInputChange } = useCartItemOperations({
     cartItemNumber: cartItemProp?.id,
     id,
@@ -35,7 +36,7 @@ const ProductItem = ({ cartItem: cartItemProp, id, name, price, imageUrl, refetc
     <Styled.ProductItemWrapper data-cy='productItem'>
       <Styled.ImageOverflowContainer>
         <Styled.ImageContainer>
-          <Styled.ProductItemImage src={imageUrl} />
+          <Styled.ProductItemImage src={imageUrl} onLoad={onImageLoad} />
         </Styled.ImageContainer>
       </Styled.ImageOverflowContainer>
       <Styled.ProductItemInfo>
