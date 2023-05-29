@@ -18,7 +18,7 @@ const Cart = () => {
       >
         <Header />
       </React.Suspense>
-      <Page>
+      <Page pageName="장바구니">
         <React.Suspense fallback={<LoadingSpinner />}>
           <CartItemList />
           <PurchaseOrder />
