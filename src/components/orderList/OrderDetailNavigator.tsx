@@ -23,13 +23,13 @@ const OrderDetailNavigator = ({ orderId }: Props) => {
 };
 
 const S = {
-  Head: styled.dt`
+  Head: styled.li`
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
     margin-top: 28px;
-    padding: 36px 40px;
+    padding: 30px 40px 32px;
     border: 1px solid var(--gray-color-300);
     font-size: 20px;
     color: var(--text-color);

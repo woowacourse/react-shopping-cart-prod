@@ -2,15 +2,14 @@ import { useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import { useSetCart } from '../../hooks/useCart';
 import { checkedItemList } from '../../recoil';
-import { Product } from '../../types';
+import { Cart } from '../../types';
 import Button from '../common/Button';
 import TrashCanIcon from '../icons/TrashCanIcon';
 import Price from '../Price';
 import QuantityButton from '../QuantityButton';
 import { Checkbox } from './CheckboxStyle';
 
-interface Props extends Product {
-  quantity: number;
+interface Props extends Cart {
   productId: number;
 }
 
