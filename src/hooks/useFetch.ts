@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { SetterOrUpdater } from 'recoil';
+import { OrderItemType } from '../store/order';
 
 import { CartItemType, ProductItemType } from '../types';
 import { isFailureHttpStatus, isSuccessHttpStatus } from '../utils/httpStatusValidator';
@@ -7,7 +8,11 @@ import { isFailureHttpStatus, isSuccessHttpStatus } from '../utils/httpStatusVal
 type fetchResult = boolean | null;
 
 export const useFetch = <T>(
-  stateSetter: SetterOrUpdater<ProductItemType[]> | SetterOrUpdater<CartItemType[]>
+  stateSetter:
+    | SetterOrUpdater<ProductItemType[]>
+    | SetterOrUpdater<CartItemType[]>
+    | SetterOrUpdater<OrderItemType[]>
+    | SetterOrUpdater<OrderItemType>
 ) => {
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(true);
