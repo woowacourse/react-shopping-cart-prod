@@ -18,3 +18,16 @@ export type OrderResponse = {
   deliveryFee: number;
   totalPrice: number;
 };
+
+type Order = {
+  orderId: number;
+  items: Item[];
+  productPrice: number;
+  discountPrice: number;
+  deliveryFee: number;
+  totalPrice: number;
+};
+
+export type OrdersResponse = {
+  orders: Order[];
+};
