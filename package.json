@@ -1,5 +1,5 @@
 {
-  "name": "react-shopping-cart",
+  "name": "react-shopping-cart-prod",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -60,6 +60,7 @@
     "msw-storybook-addon": "^1.8.0",
     "node-fetch": "^3.3.1",
     "prop-types": "^15.8.1",
+    "react-error-boundary": "^4.0.8",
     "storybook": "^7.0.9",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.2",
