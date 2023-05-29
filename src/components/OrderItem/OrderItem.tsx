@@ -9,23 +9,28 @@ import {
   OrderItemWrapper,
 } from "./OrderItem.style.ts";
 import type { Order } from "../../types/types.ts";
+import { useNavigate } from "react-router-dom";
 
 interface OrderItemProps {
   orderItem: Order;
 }
 
 function OrderItem({ orderItem }: OrderItemProps) {
+  const navigate = useNavigate();
   const { orderItems } = orderItem;
+
   return (
     <OrderItemWrapper>
       <OrderItemHeader>
         <OrderItemHeaderName>
           주문번호 : {orderItem.orderId}
         </OrderItemHeaderName>
-        <OrderItemHeaderName>상세보기 {">"}</OrderItemHeaderName>
+        <OrderItemHeaderName onClick={() => navigate(`${orderItem.orderId}`)}>
+          상세보기 {">"}
+        </OrderItemHeaderName>
       </OrderItemHeader>
-      {orderItems.map((orderItem) => (
-        <OrderItemBox>
+      {orderItems.map((orderItem, i) => (
+        <OrderItemBox key={i}>
           <OrderItemImage src={orderItem.image} />
           <OrderItemInfo>
             <OrderItemName>{orderItem.productName}</OrderItemName>
