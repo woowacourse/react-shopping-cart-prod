@@ -1,6 +1,10 @@
 import { rest } from 'msw';
 import cartProducts from 'mocks/fixtures/cartProducts.json';
 import { ErrorResponse } from 'apis';
+import store from 'utils/storage';
+import { ServerOwner } from 'types/serverOwner';
+import { SERVER_OWNER } from 'constants/storeKey';
+import BASE_URL from 'constants/apiBaseURL';
 
 type PostReqBody = {
   productId: number;
@@ -17,12 +21,15 @@ const authorizationError: ErrorResponse = {
   path: '/cart-items',
 };
 
+const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '다즐';
+const BASE_URL_BY_OWNER = BASE_URL[serverOwner];
+
 export const cart = [
-  rest.get('/cart-items', (req, res, ctx) => {
+  rest.get(`${BASE_URL_BY_OWNER}/cart-items`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(cartProducts), ctx.delay(100));
   }),
 
-  rest.post<PostReqBody>('/cart-items', async (req, res, ctx) => {
+  rest.post<PostReqBody>(`${BASE_URL_BY_OWNER}/cart-items`, async (req, res, ctx) => {
     const { productId } = await req.json<PostReqBody>();
     const authorization = req.headers.get('Authorization');
 
@@ -37,7 +44,7 @@ export const cart = [
     return res(ctx.status(201), ctx.set('Location', `/cart-items/${productId + 1000}`), ctx.json({}), ctx.delay(100));
   }),
 
-  rest.patch<PatchReqBody>('/cart-items/:cartItemId', async (req, res, ctx) => {
+  rest.patch<PatchReqBody>(`${BASE_URL_BY_OWNER}/cart-items/:cartItemId`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (authorization !== 'Basic bob:486') {
@@ -47,7 +54,7 @@ export const cart = [
     return res(ctx.status(200), ctx.json({}), ctx.delay(100));
   }),
 
-  rest.delete('/cart-items/:cartItemId', async (req, res, ctx) => {
+  rest.delete(`${BASE_URL_BY_OWNER}/cart-items/:cartItemId`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (authorization !== 'Basic bob:486') {
