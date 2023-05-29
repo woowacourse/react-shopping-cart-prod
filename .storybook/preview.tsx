@@ -5,6 +5,7 @@ import worker from '../src/mocks/browser';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import React from 'react';
 import { MemoryRouter } from 'react-router'; // or "react-router-dom";
+import '../src/styles/index.css';
 
 let options = {};
 if (location.hostname === 'hozzijeong.github.io') {
