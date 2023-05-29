@@ -17,6 +17,10 @@ const Header = () => {
     navigate(ROUTER_PATH.Cart);
   };
 
+  const goToOrderList = () => {
+    navigate(ROUTER_PATH.OrderList);
+  };
+
   return (
     <Wrapper>
       <TitleContainer onClick={goToMain}>
@@ -27,6 +31,7 @@ const Header = () => {
         <Title>SHOP</Title>
       </TitleContainer>
       <ServerSelector />
+      <OrderContainer onClick={goToOrderList}>주문목록</OrderContainer>
       <CartContainer onClick={goToCart}>
         장바구니
         {cartCount > 0 && <ItemQuantityBox>{cartCount}</ItemQuantityBox>}
@@ -36,9 +41,11 @@ const Header = () => {
 };
 
 const Wrapper = styled.section`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 3fr auto auto;
+  grid-template-rows: 70px;
   align-items: center;
+  gap: 0 20px;
 
   position: fixed;
   z-index: 1;
@@ -51,18 +58,17 @@ const Wrapper = styled.section`
   background: #333333;
 `;
 
-const TitleContainer = styled.section`
+const TitleContainer = styled.div`
   display: flex;
   align-items: end;
-  align-items: center;
-  gap: 20px;
+  align-items: flex-end;
+  gap: 10px;
 
   cursor: pointer;
 
   & > img {
-    width: 46px;
-    height: 46px;
-    margin: 5% 0;
+    width: 40px;
+    height: 40px;
   }
 `;
 
@@ -76,23 +82,22 @@ const Title = styled.p`
   }
 `;
 
-const CartContainer = styled.section`
+const CartContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-start;
+  gap: 5px;
+  width: 110px;
 
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 400;
   color: white;
 
   cursor: pointer;
 
-  @media (max-width: 1199px) {
-    font-size: 20px;
-  }
-
   @media (max-width: 767px) {
     font-size: 16px;
+    width: 90px;
   }
 `;
 
@@ -109,6 +114,22 @@ const ItemQuantityBox = styled.div`
   font-size: 16px;
   font-weight: 500;
   color: #ffffff;
+`;
+
+const OrderContainer = styled.div`
+  font-size: 22px;
+  font-weight: 400;
+  color: white;
+
+  cursor: pointer;
+
+  @media (max-width: 1199px) {
+    font-size: 20px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
 `;
 
 export default Header;
