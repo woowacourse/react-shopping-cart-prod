@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { checkedCartProductIdsState } from 'state/cartCheckedProducts';
+import { checkedCartProductIdsState } from 'state/checkedCartProductIds';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
 import type { Product } from 'types/product';
