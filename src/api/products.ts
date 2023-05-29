@@ -10,5 +10,5 @@ export const getProducts = async (serverId: ServerId): Promise<Product[]> => {
     },
   });
 
-  return response.json();
+  return response.status === 200 && response.json();
 };
