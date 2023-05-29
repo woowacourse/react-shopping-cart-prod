@@ -1,9 +1,9 @@
-import * as S from './style';
+import PageTitle from '@Components/PageTitle';
 
 function OrderList() {
   return (
     <>
-      <S.Title>주문 목록</S.Title>
+      <PageTitle title="주문 목록" />
     </>
   );
 }
