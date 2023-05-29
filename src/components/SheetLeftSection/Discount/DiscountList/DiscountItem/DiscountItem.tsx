@@ -1,4 +1,8 @@
 import FlexBox from 'components/@common/FlexBox';
+import useModal from 'components/@common/Modal/hooks/useModal';
+import DiscountModal from 'components/DiscountModal/DiscountModal';
+import { useRecoilValue } from 'recoil';
+import { pointUsageState } from 'state/pointUsageState';
 import styled from 'styled-components';
 import { DiscountType } from 'types/discount';
 
@@ -7,11 +11,25 @@ type DiscountItemProps = {
 };
 
 const DiscountItem = ({ type }: DiscountItemProps) => {
+  const { isModalOpen, openModal, closeModal } = useModal();
+  const appliedPoint = useRecoilValue(pointUsageState);
+
+  const applyDiscount = () => {
+    console.log('할인 적용');
+  };
+
   return (
     <FlexBox flexDirection="column" justify="flex-start" align="flex-start" gap="8px" role="list">
       <DiscountMessageSection>
-        <Message>{`사용가능한 ${type}가 있습니다`}</Message>
-        <Button>할인 적용하기</Button>
+        <div>
+          {appliedPoint.appliedPoint > 0 ? (
+            <Message style={{ color: 'red' }}>{appliedPoint.appliedPoint}원 할인이 적용되었습니다.</Message>
+          ) : (
+            <Message>사용가능한 {type}가 있습니다</Message>
+          )}
+        </div>
+        <Button onClick={openModal}>{appliedPoint.appliedPoint > 0 ? `할인 변경하기` : `할인 적용하기`}</Button>
+        <DiscountModal isOpen={isModalOpen} closeModal={closeModal} onClickConfirmButton={() => applyDiscount} />
       </DiscountMessageSection>
     </FlexBox>
   );

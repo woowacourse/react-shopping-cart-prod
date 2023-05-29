@@ -1,6 +1,6 @@
 import FlexBox from 'components/@common/FlexBox';
 import CartPriceSection from 'components/CartPriceSection/CartPriceSection';
-import SheetLeftSection from 'components/SheetLeftSection/SheetLefttSection';
+import SheetLeftSection from 'components/SheetLeftSection/SheetLeftSection';
 import styled from 'styled-components';
 
 const OrderSheetPage = () => {
