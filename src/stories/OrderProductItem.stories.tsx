@@ -12,7 +12,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const mockCard = {
+const mockProduct = {
   quantity: 1,
   product: {
     productId: 1,
@@ -24,6 +24,6 @@ const mockCard = {
 
 export const Default: Story = {
   args: {
-    orderProduct: mockCard,
+    orderProduct: mockProduct,
   },
 };
