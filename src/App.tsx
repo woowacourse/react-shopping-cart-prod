@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import { ROUTE_PATH } from './constants';
 import CartPage from './pages/CartPage';
@@ -15,7 +15,7 @@ const App = () => {
           <Route path={MAIN_PAGE} element={<MainPage />} />
           <Route path={CART_PAGE} element={<CartPage />} />
           <Route path={ERROR_PAGE} element={<GotLost />} />
-          <Route path='*' element={ERROR_PAGE} />
+          <Route path='*' element={<Navigate replace to={ERROR_PAGE} />} />
         </Route>
       </Routes>
     </BrowserRouter>
