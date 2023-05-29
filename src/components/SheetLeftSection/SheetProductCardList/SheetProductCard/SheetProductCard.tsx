@@ -16,8 +16,11 @@ const SheetProductCard = ({ sheetProduct }: SheetProductCardProps) => {
         <ProductImage src={imageUrl} />
       </ProductImageWrapper>
       <ProductInfoContainer flexDirection="column" justify="space-between">
-        <Container>
+        <Container flexDirection="column" justify="flex-end" align="left">
           <Title>{name}</Title>
+          <Description>
+            수량 : {quantity}개 | <Price>총 {quantity * price}원</Price>
+          </Description>
         </Container>
       </ProductInfoContainer>
     </CartProductCardContainer>
@@ -34,12 +37,12 @@ const CartProductCardContainer = styled(FlexBox)`
 `;
 
 const ProductImageWrapper = styled.div`
-  width: 150px;
+  width: 75px;
 `;
 
 const ProductImage = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 75px;
+  height: 75px;
   border-radius: 4px;
   filter: brightness(96%);
 `;
@@ -47,7 +50,7 @@ const ProductImage = styled.img`
 const ProductInfoContainer = styled(FlexBox)`
   position: relative;
   width: 100%;
-  min-height: 150px;
+  min-height: 75px;
 `;
 
 const Container = styled(FlexBox)`
@@ -55,8 +58,22 @@ const Container = styled(FlexBox)`
   height: 100%;
 `;
 
-const Title = styled.span`
+const Title = styled.div`
   width: 100%;
   font-size: 18px;
   overflow: hidden;
+`;
+
+const Description = styled.div`
+  width: 100%;
+  margin-top: 8px;
+  font-size: 14px;
+  overflow: hidden;
+  color: #828282;
+`;
+
+const Price = styled.span`
+  font-size: 14px;
+  font-weight: 700;
+  color: #333333;
 `;
