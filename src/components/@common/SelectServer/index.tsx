@@ -1,10 +1,10 @@
-import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilValue } from 'recoil';
 import { serverAtom } from 'recoil/server';
 import { SERVERS } from 'utils/constants';
-import { ServerName } from 'types';
+import { Cart, ServerName } from 'types';
 import * as S from './SelectServer.styles';
 import { getCartList } from 'api/requests';
-import { cartListAtom } from 'recoil/cartList';
+import { cartListAtom, checkedItemsAtom } from 'recoil/cartList';
 
 const SelectServer = () => {
   const server = useRecoilValue(serverAtom);
@@ -15,9 +15,14 @@ const SelectServer = () => {
         async (event) => {
           const serverName = event.target.value as ServerName;
           set(serverAtom, SERVERS[serverName]);
+
           try {
             const cartList = await getCartList(SERVERS[serverName]);
             set(cartListAtom, cartList);
+            set(
+              checkedItemsAtom,
+              cartList.map((item: Cart) => item.id)
+            );
           } catch (error) {
             if (!(error instanceof Error)) return;
           }

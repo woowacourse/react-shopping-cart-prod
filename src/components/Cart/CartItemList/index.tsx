@@ -1,15 +1,23 @@
+import { useEffect } from 'react';
 import * as S from './CartItemList.styles';
 import CartItem from 'components/Cart/CartItem';
 import Modal from 'components/@common/Modal';
 import { useCheckedItemIds } from '../hooks/useCheckedItems';
 import { useModal } from 'hooks/useModal';
 import { useCart } from '../hooks/useCart';
+import { useRecoilValue } from 'recoil';
+import { serverAtom } from 'recoil/server';
 
 const CartItemList = () => {
   const { cartList, deleteItem } = useCart();
   const { checkedItemIds, unCheckAllItems, checkAllItems, unCheckItem } =
     useCheckedItemIds();
   const { isModalOpen, openModal, closeModal } = useModal();
+  const server = useRecoilValue(serverAtom);
+
+  useEffect(() => {
+    checkAllItems();
+  }, [server]);
 
   const fetchedCartList =
     cartList.length === 0 ? (
