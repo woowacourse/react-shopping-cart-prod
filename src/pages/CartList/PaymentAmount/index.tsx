@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import Button from '@Components/Button';
+import HelperMessage from '@Components/HelperMessage';
 
 import useOrderItems from '@Hooks/useOrderItems';
 
@@ -34,7 +35,12 @@ function PaymentAmount() {
           <S.Amount>{orderAmount}</S.Amount>
         </S.AmountWrapper>
         <S.AmountWrapper aria-label="할인가격">
-          <S.AmountCategory>할인가격</S.AmountCategory>
+          <S.AmountCategory>
+            <HelperMessage
+              text="할인가격"
+              message="10만원 이상 구매시 1%, 30만원 이상 구매시 3%, 50만원 이상 구매시 5%의 할인이 적용됩니다."
+            />
+          </S.AmountCategory>
           <S.Amount>{discountAmount}</S.Amount>
         </S.AmountWrapper>
         <S.AmountWrapper aria-label="쿠폰적용">

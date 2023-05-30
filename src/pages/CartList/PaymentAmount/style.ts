@@ -53,7 +53,9 @@ export const AmountWrapper = styled.div`
   }
 `;
 
-export const AmountCategory = styled.div``;
+export const AmountCategory = styled.div`
+  position: relative;
+`;
 
 export const Amount = styled.div``;
 
