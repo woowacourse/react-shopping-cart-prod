@@ -11,6 +11,9 @@ import {
   REWARD_POINT_RATE,
   STANDARD_DELIVERY_FEE,
 } from '../../constants/price';
+import { hostNameAtom } from '../../recoil/hostData';
+import { orderApi } from '../../apis/orderProducts';
+import type { OrderData } from '../../types/product';
 
 interface EstimatedPaymentBoxProps {
   usePoint: number;
@@ -23,10 +26,32 @@ const EstimatedPaymentBox = ({ usePoint }: EstimatedPaymentBoxProps) => {
     totalProductPrice === 0 || totalProductPrice >= FREE_DELIVERY_THRESHOLD
       ? 0
       : STANDARD_DELIVERY_FEE;
-  const orderPrice = totalProductPrice
+  const totalPrice = totalProductPrice
     ? totalProductPrice + totalDeliveryFee
     : 0;
   const rewardPoints = totalProductPrice * REWARD_POINT_RATE;
+
+  // 커스텀 훅 분리
+  const hostName = useRecoilValue(hostNameAtom);
+
+  const submitOrder = () => {
+    const products = checkedCartProduct.map((item) => ({
+      productId: item.product.productId,
+      quantity: item.quantity,
+    }));
+
+    const orderData: OrderData = {
+      products,
+      totalProductPrice,
+      totalDeliveryFee,
+      usePoint,
+      totalPrice,
+    };
+
+    orderApi(hostName).then((apiInstance) => {
+      return apiInstance.postOrderProduct(orderData);
+    });
+  };
 
   return (
     <EstimatedPaymentBoxContainer>
@@ -50,12 +75,16 @@ const EstimatedPaymentBox = ({ usePoint }: EstimatedPaymentBoxProps) => {
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>총 주문금액</dt>
-          <dd>{orderPrice.toLocaleString('KR')}원</dd>
+          <dd>{totalPrice.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
       </EstimatedPaymentContent>
       <OrderButtonWrapper>
         <Link to={'/orders'}>
-          <Button designType='order' buttonLabel='주문하기' />
+          <Button
+            designType='order'
+            buttonLabel='주문하기'
+            onClick={submitOrder}
+          />
         </Link>
       </OrderButtonWrapper>
     </EstimatedPaymentBoxContainer>

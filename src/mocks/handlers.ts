@@ -2,6 +2,7 @@ import { rest } from 'msw';
 import products from './data/products.json';
 import cartProductsData from './data/cartProducts.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
+import { OrderData } from '../types/product';
 
 const cartProducts = cartProductsData.cartItems;
 
@@ -53,6 +54,18 @@ export const handlers = [
       ctx.status(201),
       ctx.set('Location', location),
       ctx.json({ message: '상품이 추가되었습니다' })
+    );
+  }),
+
+  rest.post<{ orderData: OrderData }>('/orders', (req, res, ctx) => {
+    const orderId = Date.now();
+
+    const location = `/orders/${orderId}`;
+    return res(
+      ctx.delay(200),
+      ctx.status(201),
+      ctx.set('Location', location),
+      ctx.json({ message: '주문이 완료되었습니다.' })
     );
   }),
 

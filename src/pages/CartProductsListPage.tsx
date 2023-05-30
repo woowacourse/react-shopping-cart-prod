@@ -50,7 +50,7 @@ const CartProductsListPage = () => {
       </CartProductContent>
       <PaymentBoxWrapper>
         <UserPointInfo onUserUsedPointUpdate={handleUserUsedPointUpdate} />
-        <EstimatedPaymentBox userUsedPoint={userUsedPoint} />
+        <EstimatedPaymentBox usePoint={userUsedPoint} />
       </PaymentBoxWrapper>
     </Main>
   );
