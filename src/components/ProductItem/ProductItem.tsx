@@ -1,8 +1,8 @@
 import * as Styled from './ProductItem.styles.tsx';
 import ShoppingCartLogo from '../@common/ShoppingCartLogo/ShoppingCartLogo';
 import { Item } from '../../types/CartList.ts';
-import StepperInput from '../@common/StepperInput/StepperInput.tsx';
 import useCartItemOperations from '../../hooks/cartItemOperations/useCartItemOperations.ts';
+import StepperInput from '../@common/StepperInput/StepperInput.tsx';
 
 export type ProductItemProps = {
   cartItem?: Item;
@@ -15,7 +15,7 @@ export type ProductItemProps = {
 };
 
 const ProductItem = ({ cartItem: cartItemProp, id, name, price, imageUrl, refetchCartList, onImageLoad }: ProductItemProps) => {
-  const { handleAddToCartButton, handleStepperInputChange } = useCartItemOperations({
+  const { handleAddToCartButton } = useCartItemOperations({
     cartItemNumber: cartItemProp?.id,
     id,
     name,
@@ -42,7 +42,7 @@ const ProductItem = ({ cartItem: cartItemProp, id, name, price, imageUrl, refetc
       <Styled.ProductItemInfo>
         <Styled.ProductItemInfoUpperBoundary>
           <Styled.ProductItemTitle>{name}</Styled.ProductItemTitle>
-          {cartItemProp?.quantity ? <StepperInput value={cartItemProp?.quantity || 0} onChange={handleStepperInputChange} /> : <CartButton />}
+          {cartItemProp?.quantity ? <StepperInput initialValue={cartItemProp?.quantity || 0} cartItem={cartItemProp} refetchCartList={refetchCartList} usedPlace='listPage' /> : <CartButton />}
         </Styled.ProductItemInfoUpperBoundary>
         <Styled.ProductItemPrice>{price.toLocaleString()}원</Styled.ProductItemPrice>
       </Styled.ProductItemInfo>

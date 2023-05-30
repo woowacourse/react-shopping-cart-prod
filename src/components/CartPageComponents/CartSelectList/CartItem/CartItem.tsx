@@ -1,5 +1,5 @@
 import * as Styled from './CartItem.styles.tsx';
-import StepperInput from '../../StepperInput/StepperInput.tsx';
+import StepperInput from '../../../@common/StepperInput/StepperInput.tsx';
 import { Item } from '../../../../types/CartList.ts';
 import useCart from '../../../../hooks/useCart.ts';
 import useDeleteCartItem from '../../../../hooks/requests/useDeleteCartItem.ts';
@@ -48,7 +48,7 @@ const CartItem = ({ cart, refetchCartList }: CartItemProps) => {
             <Styled.DeleteButton onClick={handleDeleteButton}>
               <Styled.TrashLogo />
             </Styled.DeleteButton>
-            <StepperInput initialValue={cart.quantity} cartItem={cart} refetchCartList={refetchCartList} />
+            <StepperInput initialValue={cart.quantity} cartItem={cart} refetchCartList={refetchCartList} usedPlace='cartPage' />
             <span>{product.price.toLocaleString()}원</span>
           </Styled.itemFunctionWrapper>
         </Styled.CartItem>
