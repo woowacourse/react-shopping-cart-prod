@@ -7,8 +7,8 @@ export const StepperInputWrapper = styled.div`
   border-radius: 5px;
 `;
 
-export const Input = styled.input<{ usedPlace: string }>`
-  width: ${({ usedPlace }) => (usedPlace === 'listPage' ? '44px' : usedPlace === 'cartPage' ? '88px' : 'auto')};
+export const Input = styled.input<{ usedplace: string }>`
+  width: ${({ usedplace }) => (usedplace === 'listPage' ? '44px' : usedplace === 'cartPage' ? '88px' : 'auto')};
   flex: 1;
   border: none;
 `;

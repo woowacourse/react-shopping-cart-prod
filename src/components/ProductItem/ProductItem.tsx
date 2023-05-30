@@ -42,7 +42,7 @@ const ProductItem = ({ cartItem: cartItemProp, id, name, price, imageUrl, refetc
       <Styled.ProductItemInfo>
         <Styled.ProductItemInfoUpperBoundary>
           <Styled.ProductItemTitle>{name}</Styled.ProductItemTitle>
-          {cartItemProp?.quantity ? <StepperInput initialValue={cartItemProp?.quantity || 0} cartItem={cartItemProp} refetchCartList={refetchCartList} usedPlace='listPage' /> : <CartButton />}
+          {cartItemProp?.quantity ? <StepperInput initialValue={cartItemProp?.quantity || 0} cartItem={cartItemProp} refetchCartList={refetchCartList} usedplace='listPage' /> : <CartButton />}
         </Styled.ProductItemInfoUpperBoundary>
         <Styled.ProductItemPrice>{price.toLocaleString()}원</Styled.ProductItemPrice>
       </Styled.ProductItemInfo>

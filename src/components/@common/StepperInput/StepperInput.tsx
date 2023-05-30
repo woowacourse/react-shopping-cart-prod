@@ -7,10 +7,10 @@ type StepperInputProps = {
   initialValue: number;
   cartItem: Item;
   refetchCartList: ({}) => void;
-  usedPlace: string;
+  usedplace: string;
 };
 
-const StepperInput = ({ cartItem, refetchCartList, usedPlace }: StepperInputProps) => {
+const StepperInput = ({ cartItem, refetchCartList, usedplace }: StepperInputProps) => {
   const { handleStepperInputChange, handleStepperIncreaseButton, handleStepperDecreaseButton } = useCartItemOperations({
     cartItemNumber: cartItem.id,
     id: cartItem.product.id,
@@ -42,7 +42,7 @@ const StepperInput = ({ cartItem, refetchCartList, usedPlace }: StepperInputProp
 
   return (
     <Styled.StepperInputWrapper>
-      <Styled.Input type='text' value={inputValue} onChange={handleInputChange} onBlur={handleBlur} usedPlace={usedPlace} />
+      <Styled.Input type='text' value={inputValue} onChange={handleInputChange} onBlur={handleBlur} usedplace={usedplace} />
       <Styled.ButtonWrapper>
         <Styled.Button onClick={() => handleStepperIncreaseButton(cartItem.quantity)}>+</Styled.Button>
         <Styled.Button onClick={() => handleStepperDecreaseButton(cartItem.quantity)}>-</Styled.Button>
