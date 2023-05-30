@@ -11,8 +11,8 @@ import useToast from './useToast';
 
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
-  const initialCheckedItems = cart.map((item) => item.id);
-  const [checkedItems, setCheckedItems] = useState<number[]>(initialCheckedItems);
+
+  const [checkedItems, setCheckedItems] = useState<number[]>([]);
   const removeProductItemFromCart = useRecoilCallback(({ set }) => (id: number) => {
     set(removeProductItemFromCartSelector(id), []);
   });
@@ -20,6 +20,11 @@ export const useCart = () => {
 
   const { mutate, error } = useMutation<CartItem[]>(setCart);
   const { toast } = useToast();
+
+  const initializeCheckItems = () => {
+    const initialCheckedItems = cart.map((item) => item.id);
+    setCheckedItems(initialCheckedItems);
+  };
 
   const isChecked = (id: number) => {
     return checkedItems.includes(id);
@@ -47,16 +52,20 @@ export const useCart = () => {
     const confirmResult = window.confirm('정말로 삭제하시겠습니까?');
     if (confirmResult) {
       checkedItems.forEach((id) => {
-        mutate({
-          url: `${serverUrl}${CART_BASE_URL}/${id}`,
-          method: 'DELETE',
-          bodyData: { id },
-          headers: {
-            Authorization: `Basic ${btoa(base64)}`,
-            'Content-Type': 'application/json',
+        mutate(
+          {
+            url: `${serverUrl}${CART_BASE_URL}/${id}`,
+            method: 'DELETE',
+            bodyData: { id },
+            headers: {
+              Authorization: `Basic ${base64}`,
+              'Content-Type': 'application/json',
+            },
           },
-        });
+          CART_BASE_URL,
+        );
         if (error) return;
+
         toast.success(`${checkedItems.length}개의 상품을 장바구니에서 삭제했습니다.`);
         removeProductItemFromCart(id);
       });
@@ -73,5 +82,6 @@ export const useCart = () => {
     handleCheckAllItems,
     handleCheckedItem,
     handleRemoveCheckedItem,
+    initializeCheckItems,
   };
 };

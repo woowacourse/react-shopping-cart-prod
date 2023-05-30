@@ -22,8 +22,8 @@ export const useProduct = (productId: number) => {
 
   const findCartItemId = useRecoilValue(getCartItemIdSelector(productId));
 
-  const updateCart = useRecoilCallback(({ set }) => ({ id, quantity }: SelectorParams) => {
-    set(updateCartSelector({ id, quantity }), 0);
+  const updateCart = useRecoilCallback(({ set }) => ({ id, cartId, quantity }: SelectorParams) => {
+    set(updateCartSelector({ id, cartId, quantity }), 0);
   });
 
   const removeProductItemFromCart = useRecoilCallback(({ set }) => (productId: number) => {
@@ -34,25 +34,28 @@ export const useProduct = (productId: number) => {
 
   const { toast } = useToast();
 
-  const removeItem = () => {
-    if (findCartItemId < 0) return;
-
+  const addItemToCart = () => {
     mutate(
       {
-        url: `${serverUrl}${CART_BASE_URL}/${findCartItemId}`,
-        method: 'DELETE',
+        url: `${serverUrl}${CART_BASE_URL}`,
+        method: 'POST',
         bodyData: { productId },
         headers: {
-          Authorization: `Basic ${btoa(base64)}`,
+          Authorization: `basic ${base64}`,
           'Content-Type': 'application/json',
         },
       },
       CART_BASE_URL,
     );
-    if (error) return;
-    toast.success('🥲 상품을 장바구니에서 꺼냈습니다.');
 
-    removeProductItemFromCart(productId);
+    if (error) return;
+
+    toast.success('🧺 상품이 장바구니에 담겼습니다.');
+    updateCart({
+      id: productId,
+      cartId: findCartItemId,
+      quantity: 1,
+    });
   };
 
   const updateItem = (quantity: number) => {
@@ -62,40 +65,39 @@ export const useProduct = (productId: number) => {
       {
         url: `${serverUrl}${CART_BASE_URL}/${findCartItemId}`,
         method: 'PATCH',
-        // bodyData: { quantity }, FIXME: for msw
-        bodyData: { productId, quantity },
+        bodyData: { quantity },
+
         headers: {
-          Authorization: `Basic ${btoa(base64)}`,
+          Authorization: `Basic ${base64}`,
           'Content-Type': 'application/json',
         },
       },
       CART_BASE_URL,
     );
     if (error) return;
-    // updateCart({ id: productId, cartId: findCartItemId, quantity });
-    updateCart({ id: productId, cartId: productId, quantity });
+
+    updateCart({ id: productId, cartId: findCartItemId, quantity });
   };
 
-  const addItemToCart = () => {
+  const removeItem = () => {
+    if (findCartItemId < 0) return;
+
     mutate(
       {
-        url: `${serverUrl}${CART_BASE_URL}`,
-        method: 'POST',
+        url: `${serverUrl}${CART_BASE_URL}/${findCartItemId}`,
+        method: 'DELETE',
         bodyData: { productId },
         headers: {
-          Authorization: `basic ${btoa(base64)}`,
+          Authorization: `Basic ${base64}`,
           'Content-Type': 'application/json',
         },
       },
       CART_BASE_URL,
     );
     if (error) return;
-    toast.success('🧺 상품이 장바구니에 담겼습니다.');
-    updateCart({
-      id: productId,
-      cartId: findCartItemId,
-      quantity: 1,
-    });
+
+    toast.success('🥲 상품을 장바구니에서 꺼냈습니다.');
+    removeProductItemFromCart(productId);
   };
 
   const handleNumberInputChange: ChangeEventHandler<HTMLInputElement> = (event) => {
