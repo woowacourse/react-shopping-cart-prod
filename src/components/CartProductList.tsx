@@ -119,7 +119,7 @@ const CartProduct = ({
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 90%;
   max-width: 750px;
 `;
 
