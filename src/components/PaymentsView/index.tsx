@@ -1,3 +1,5 @@
+/* eslint-disable react/no-array-index-key */
+
 import { Payments } from 'src/types';
 import convertKORWon from 'src/utils';
 import usePurchase from 'src/hooks/usePurchase';
@@ -26,12 +28,12 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
   const discountView = discounts.length > 0 && (
     <div className={styles['discount-container']}>
       {discounts.map((option, idx) => (
-        <div key={idx}>
+        <div key={idx} className={styles['discount-detial-container']}>
           <span>{option.discountPolicy}</span>
           <span>-{convertKORWon(option.discountAmount)}</span>
         </div>
       ))}
-      <div>
+      <div className={styles['discounted-price-container']}>
         <span>할인 적용 금액</span>
         <span>{convertKORWon(discountedPrice)}</span>
       </div>

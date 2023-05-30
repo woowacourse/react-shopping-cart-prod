@@ -29,20 +29,18 @@ function OrderDetail() {
 
   return (
     <ContentLayout title="주문 내역 상세">
-      <div>
-        <OrderItem
-          order={{
-            id: orderDetailData.id,
-            orderTime: orderDetailData.orderTime,
-            productList: orderDetailData.productList,
-          }}
-        />
-      </div>
-      <div className={styles['payment-container']}>
+      <section className={styles['main-view']}>
         <div>
-          <PaymentsView paymentAmount={orderDetailData.paymentAmount} puschaseOption={false} />
+          <OrderItem
+            order={{
+              id: orderDetailData.id,
+              orderTime: orderDetailData.orderTime,
+              productList: orderDetailData.productList,
+            }}
+          />
         </div>
-      </div>
+        <PaymentsView paymentAmount={orderDetailData.paymentAmount} puschaseOption={false} />
+      </section>
     </ContentLayout>
   );
 }

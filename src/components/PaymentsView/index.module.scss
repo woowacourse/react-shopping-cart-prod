@@ -1,5 +1,6 @@
 .container {
   width: 100%;
+  height: fit-content;
 
   letter-spacing: 0.5px;
   color: #333333;
@@ -39,11 +40,23 @@
 
 .discount-container {
   width: 90%;
+}
 
-  & > div {
-    display: flex;
-    justify-content: space-between;
+.discount-detial-container {
+  display: flex;
+  justify-content: flex-end;
+
+  font-size: 16px;
+  color: #aaaaaa;
+
+  & > span:last-child {
+    margin-left: 12px;
   }
+}
+
+.discounted-price-container {
+  display: flex;
+  justify-content: space-between;
 }
 
 .payments-button {
