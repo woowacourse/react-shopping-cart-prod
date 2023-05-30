@@ -37,6 +37,7 @@ const GlobalStyle = createGlobalStyle`
   html, body {
     height:100%;
     font-family: 'Baemin', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: var(--grey-400);
     
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */
