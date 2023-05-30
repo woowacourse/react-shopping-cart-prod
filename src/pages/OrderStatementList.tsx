@@ -2,10 +2,11 @@ import { getOrderStatement } from "api/orders";
 import Header from "components/Header";
 import OrderStatement from "components/OrderStatement";
 import OrderStatementModal from "components/OrderStatementModal";
-import LoadingSpinner from "components/common/LodingSpinner";
+import LoadingSpinner from "components/common/LoadingSpinner";
 import Page from "components/common/Page";
 import Skeleton from "components/common/Skeleton";
 import { Suspense, useEffect, useState } from "react";
+import { styled } from "styled-components";
 import { EachOrderStatement } from "types/domain";
 
 const OrderStatementList = () => {
@@ -52,21 +53,32 @@ const OrderStatementList = () => {
         <Header />
       </Suspense>
       <Page pageName="주문내역">
-        {orderStatementList ? (
-          orderStatementList.map((order) => (
-            <OrderStatement
-              key={order.orderId}
-              orderId={order.orderId}
-              orders={order.orderItems}
-              openModal={openModal(order.orderId)}
-            />
-          ))
-        ) : (
-          <LoadingSpinner />
-        )}
+        <Wrapper>
+          {orderStatementList ? (
+            orderStatementList.map((order) => (
+              <OrderStatement
+                key={order.orderId}
+                orderId={order.orderId}
+                orders={order.orderItems}
+                openModal={openModal(order.orderId)}
+              />
+            ))
+          ) : (
+            <LoadingSpinner />
+          )}
+        </Wrapper>
       </Page>
     </>
   );
 };
+
+const Wrapper = styled.main`
+  margin: auto;
+  width: 80%;
+
+  @media (max-width: 575px) {
+    width: 100%;
+  }
+`;
 
 export default OrderStatementList;

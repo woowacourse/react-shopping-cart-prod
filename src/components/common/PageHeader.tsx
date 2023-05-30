@@ -6,7 +6,7 @@ const PageHeader = ({ children }: { children: string }) => {
 
 const Wrapper = styled.div`
   margin: auto;
-  width: 100%;
+  width: 85%;
   border-bottom: 4px solid rgba(170, 170, 170, 1);
   border-bottom-style: double;
 
@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   margin-bottom: 5%;
 
   font-weight: 500;
-  font-size: 1.6rem;
+  font-size: 2rem;
   letter-spacing: 2px;
 `;
 
