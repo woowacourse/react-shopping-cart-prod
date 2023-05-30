@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  align-self: flex-start;
-  min-width: 360px;
   border: 1px solid #dddddd;
   color: #333333;
   background-color: #dddddd;

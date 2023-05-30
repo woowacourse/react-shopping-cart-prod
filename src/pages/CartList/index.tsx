@@ -4,6 +4,7 @@ import SkeletonCartItem from './CartItem/SkeletonCartItem';
 import CartItems from './CartItems';
 import CartListSubHeader from './CartListSubHeader';
 import LoadingCartListSubHeader from './CartListSubHeader/LoadingCartListSubHeader';
+import IssuedCoupon from './IssuedCoupon';
 import PaymentAmount from './PaymentAmount';
 import SkeletonPaymentAmount from './PaymentAmount/SkeletonPaymentAmount';
 import * as S from './style';
@@ -28,9 +29,12 @@ function CartList() {
             <CartItems />
           </Suspense>
         </S.CartList>
-        <Suspense fallback={<SkeletonPaymentAmount />}>
-          <PaymentAmount />
-        </Suspense>
+        <S.PaymentLayout>
+          <IssuedCoupon />
+          <Suspense fallback={<SkeletonPaymentAmount />}>
+            <PaymentAmount />
+          </Suspense>
+        </S.PaymentLayout>
       </S.ShoppingCartContentsLayout>
     </S.Container>
   );

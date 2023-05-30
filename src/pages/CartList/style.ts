@@ -30,3 +30,10 @@ export const CartListLayout = styled.div`
   background-color: #cccccc;
   row-gap: 1.5px;
 `;
+
+export const PaymentLayout = styled.div`
+  display: grid;
+  row-gap: 20px;
+  align-self: flex-start;
+  min-width: 360px;
+`;

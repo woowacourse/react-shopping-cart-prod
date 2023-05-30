@@ -26,6 +26,7 @@ export const QuestionMark = styled.div`
   color: #23a6a2;
   border: 1px solid #23a6a2;
   border-radius: 50%;
+  user-select: none;
 `;
 
 export const HelperMessage = styled.div`
