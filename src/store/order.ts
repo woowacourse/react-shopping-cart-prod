@@ -3,7 +3,7 @@ import { selector, selectorFamily } from 'recoil';
 import { getMemberAPI } from '../api/memberAPI';
 import { getAuthorizedOptionHeaders } from '../api/utils/authorizedOptionHeaders';
 import { OrderData } from '../types/order';
-import { getMemberDiscountAmount, getTotalItemDiscountAmount } from '../utils/discount';
+import { getTotalItemDiscountAmount } from '../utils/discount';
 import { currentMemberInformationState, currentMemberState } from './member';
 import { currentServerState } from './server';
 
@@ -52,9 +52,10 @@ const orderMemberDiscountAmountState = selectorFamily<number, number>({
     (orderId) =>
     ({ get }) => {
       const order = get(orderState(orderId))!;
-      const memberInformation = get(currentMemberInformationState);
+      const totalItemDiscountAmount = get(orderTotalItemDiscountAmountState(orderId));
+      const totalDiscountedAmount = order.totalItemPrice - order.discountedTotalItemPrice;
 
-      const memberDiscountAmount = getMemberDiscountAmount(order.orderedItems, memberInformation);
+      const memberDiscountAmount = totalDiscountedAmount + totalItemDiscountAmount;
 
       return memberDiscountAmount !== 0 ? -memberDiscountAmount : 0;
     },
