@@ -6,27 +6,47 @@ import {
   QUANTITY_ERROR_MESSAGE,
 } from '@constants/cartConstants';
 
-export const useQuantityCounter = (initialValue: number) => {
+interface OptionsParams {
+  deleteItem: () => void;
+  updateItem: (value: number) => void;
+}
+
+const INIT_VALUE = 1;
+
+export const useQuantityCounter = (
+  initialValue: number,
+  { deleteItem, updateItem }: OptionsParams
+) => {
   const countInputRef = useRef<HTMLInputElement>(null);
   const [quantity, setQuantity] = useState(initialValue);
 
   const increaseQuantity = () => {
     if (quantity >= MAX_CART_QUANTITY) {
-      showInputErrorMessage(isMaximumCountError(), countInputRef.current, QUANTITY_ERROR_MESSAGE);
+      showInputErrorMessage(
+        isMaximumCountError(quantity + 1),
+        countInputRef.current,
+        QUANTITY_ERROR_MESSAGE
+      );
       return;
     }
 
+    updateItem(quantity + 1);
     setQuantity((prev) => prev + 1);
   };
 
-  const decreaseQuantity = () => {
-    if (quantity <= MIN_CART_QUANTITY) return;
-
+  const decreaseQuantity = async () => {
     showInputErrorMessage(
       isMaximumCountError(quantity - 1),
       countInputRef.current,
       QUANTITY_ERROR_MESSAGE
     );
+
+    if (quantity <= MIN_CART_QUANTITY + 1) {
+      deleteItem();
+      return;
+    }
+
+    updateItem(quantity - 1);
     setQuantity((prev) => prev - 1);
   };
 
@@ -41,6 +61,7 @@ export const useQuantityCounter = (initialValue: number) => {
         countInputRef.current,
         QUANTITY_ERROR_MESSAGE
       );
+
       setQuantity(MAX_CART_QUANTITY);
       return;
     }
@@ -48,5 +69,26 @@ export const useQuantityCounter = (initialValue: number) => {
     setQuantity(value);
   };
 
-  return { quantity, increaseQuantity, decreaseQuantity, onQuantityChange, countInputRef };
+  const onQuantityBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
+    const { relatedTarget, target } = event;
+
+    if (relatedTarget?.parentElement?.parentElement === target.parentElement) return;
+
+    if (quantity === 0) {
+      setQuantity(INIT_VALUE);
+      deleteItem();
+      return;
+    }
+
+    updateItem(quantity);
+  };
+
+  return {
+    quantity,
+    increaseQuantity,
+    decreaseQuantity,
+    onQuantityChange,
+    countInputRef,
+    onQuantityBlur,
+  };
 };

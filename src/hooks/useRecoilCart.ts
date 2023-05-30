@@ -2,11 +2,16 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
-import { addItemToCart, removeCartItem, updateCartItemQuantity } from '@utils/cart/cart';
+import {
+  addItemToCart,
+  findCartItemById,
+  removeCartItem,
+  updateCartItemQuantity,
+} from '@utils/cart/cart';
 import { getCartPath } from '@constants/serverUrlConstants';
-import { useFetch } from './useFetch';
-import { ProductItemType } from '@type/productType';
 import { CartItemType, ServerCartItemType } from '@type/cartType';
+import { ProductItemType } from '@type/productType';
+import { useFetch } from './useFetch';
 
 interface UpdateCartListItemQuantityParams {
   cartId: number;
@@ -39,6 +44,14 @@ export const useRecoilCart = () => {
     setCart(addItemToCart({ cart, cartId, product }));
   };
 
+  const getCartItemQuantity = (productId: number) => {
+    const cartId = findCartItemById({ cart, productId });
+    const findCart = cart.find((cartItem) => cartItem.id === cartId);
+    const serverCartItemQuantity = findCart ? findCart.quantity : 1;
+
+    return serverCartItemQuantity;
+  };
+
   useEffect(() => {
     if (!originData) return;
     const clientCart: CartItemType[] = originData.map((cartItem) => {
@@ -63,6 +76,7 @@ export const useRecoilCart = () => {
     isLoading,
     error,
     updateCartListItemQuantity,
+    getCartItemQuantity,
     deleteCartItem,
     addCartItem,
   };

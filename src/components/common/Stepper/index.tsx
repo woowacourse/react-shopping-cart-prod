@@ -8,6 +8,8 @@ interface StepperProps {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   ariaIncreaseLabel?: string;
   ariaDecreaseLabel?: string;
+  countInputRef: React.RefObject<HTMLInputElement>;
+  onQuantityBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
 }
 
 function Stepper({
@@ -17,10 +19,18 @@ function Stepper({
   onChange,
   ariaIncreaseLabel,
   ariaDecreaseLabel,
+  countInputRef,
+  onQuantityBlur,
 }: StepperProps) {
   return (
     <S.CartBox>
-      <S.QuantityInput data-testid="quantity-input" value={quantity} onChange={onChange} />
+      <S.QuantityInput
+        ref={countInputRef}
+        data-testid="quantity-input"
+        value={quantity === 0 ? '' : quantity}
+        onChange={onChange}
+        onBlur={onQuantityBlur}
+      />
       <S.ButtonBox>
         <S.QuantityControlButton
           onClick={onIncrease}
