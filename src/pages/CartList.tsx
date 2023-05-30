@@ -20,7 +20,6 @@ const CartList = () => {
 };
 
 const Wrapper = styled.div`
-  position: fixed;
   display: flex;
   flex-direction: column;
   right: 60px;

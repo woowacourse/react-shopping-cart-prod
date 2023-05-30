@@ -14,7 +14,7 @@ const PaymentDetail = () => {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const makeOrder = () => {
-    moveTo(ROUTES.PAYMENT_LIST);
+    moveTo(ROUTES.ORDERED_LIST);
   };
 
   return (

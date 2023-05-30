@@ -2,7 +2,7 @@ import ContentLayout from 'components/@common/ContentLayout';
 import OrderedItemList from 'components/payment/OrderedItemList';
 import React, { Suspense } from 'react';
 
-const PaymentList = () => {
+const OrderedList = () => {
   return (
     <ContentLayout title="주문 목록">
       <Suspense>
@@ -12,4 +12,4 @@ const PaymentList = () => {
   );
 };
 
-export default PaymentList;
+export default OrderedList;

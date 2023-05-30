@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import ProductList from 'pages/ProductList';
 import CartList from 'pages/CartList';
 import NotFound from 'pages/NotFound';
-import PaymentList from 'pages/PaymentList';
+import OrderedList from 'pages/OrderedList';
 import { ROUTES } from 'utils/constants';
 
 const router = createBrowserRouter(
@@ -25,10 +25,10 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: ROUTES.PAYMENT_LIST,
+      path: ROUTES.ORDERED_LIST,
       element: (
         <Suspense>
-          <PaymentList />
+          <OrderedList />
         </Suspense>
       ),
     },
