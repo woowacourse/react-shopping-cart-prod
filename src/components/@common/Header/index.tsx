@@ -8,14 +8,14 @@ import * as S from './Header.styles';
 
 const Header = () => {
   const cartCount = useRecoilValue(countCartListSelector);
-  const navigate = useNavigate();
+  const moveTo = useNavigate();
 
   const onLogoClick = () => {
-    navigate(ROUTES.PRODUCT_LIST);
+    moveTo(ROUTES.PRODUCT_LIST);
   };
 
   const onNavigateToCart = () => {
-    navigate(ROUTES.CART_LIST);
+    moveTo(ROUTES.CART_LIST);
   };
 
   return (
