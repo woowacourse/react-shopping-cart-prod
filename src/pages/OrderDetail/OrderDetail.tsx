@@ -6,6 +6,13 @@ import {
 } from "../../components/OrderList/OrderList.style.ts";
 import OrderItem from "../../components/OrderItem/OrderItem.tsx";
 import { Order } from "../../types/types.ts";
+import PaidBox from "../../components/PaidBox";
+import styled from "styled-components";
+
+const FlexEnd = styled.div`
+  display: flex;
+  justify-content: end;
+`;
 
 function OrderDetail() {
   const params = useParams();
@@ -32,6 +39,9 @@ function OrderDetail() {
       <OrderListTitle>주문 내역 상세</OrderListTitle>
       <OrderListDivider />
       <OrderItem orderItem={orderItem} />
+      <FlexEnd>
+        <PaidBox orderItem={orderItem} />
+      </FlexEnd>
     </OrderListWrapper>
   );
 }

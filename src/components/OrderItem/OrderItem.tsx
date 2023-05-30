@@ -13,9 +13,10 @@ import { useNavigate } from "react-router-dom";
 
 interface OrderItemProps {
   orderItem: Order;
+  goDetail?: boolean;
 }
 
-function OrderItem({ orderItem }: OrderItemProps) {
+function OrderItem({ orderItem, goDetail }: OrderItemProps) {
   const navigate = useNavigate();
   const { orderItems } = orderItem;
 
@@ -25,9 +26,11 @@ function OrderItem({ orderItem }: OrderItemProps) {
         <OrderItemHeaderName>
           주문번호 : {orderItem.orderId}
         </OrderItemHeaderName>
-        <OrderItemHeaderName onClick={() => navigate(`${orderItem.orderId}`)}>
-          상세보기 {">"}
-        </OrderItemHeaderName>
+        {goDetail && (
+          <OrderItemHeaderName onClick={() => navigate(`${orderItem.orderId}`)}>
+            상세보기 {">"}
+          </OrderItemHeaderName>
+        )}
       </OrderItemHeader>
       {orderItems.map((orderItem, i) => (
         <OrderItemBox key={i}>
