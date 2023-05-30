@@ -1,7 +1,9 @@
 import { styled } from 'styled-components';
 import ProductListItem from '../components/ProductListItem';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
+import cartItemsState from '../recoil/atoms/cartItemsState';
 import productsState from '../recoil/atoms/productsState';
+import type { CartItem } from '../types/CartItem';
 import type { Product } from '../types/Product';
 
 const ProductListContainer = styled.ul`
@@ -26,15 +28,20 @@ const ProductListContainer = styled.ul`
 
 type ProductListProps = {
   products: Product[];
+  cartItems: CartItem[];
 };
 
 const ProductList = (props: ProductListProps) => {
-  const { products } = props;
+  const { products, cartItems } = props;
 
   return (
     <ProductListContainer>
       {products.map((product) => (
-        <ProductListItem key={product.id} product={product} />
+        <ProductListItem
+          key={product.id}
+          product={product}
+          cartItem={cartItems.find((cartItem) => cartItem.product.id === product.id)}
+        />
       ))}
     </ProductListContainer>
   );
@@ -43,7 +50,11 @@ const ProductList = (props: ProductListProps) => {
 const ProductListPage = () => {
   return (
     <AwaitRecoilState state={productsState}>
-      {(products) => <ProductList products={products} />}
+      {(products) => (
+        <AwaitRecoilState state={cartItemsState}>
+          {(cartItems) => <ProductList products={products} cartItems={cartItems} />}
+        </AwaitRecoilState>
+      )}
     </AwaitRecoilState>
   );
 };

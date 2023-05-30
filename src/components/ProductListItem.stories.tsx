@@ -8,7 +8,7 @@ const Container = styled.div`
 `;
 
 const meta = {
-  title: 'ProductItem',
+  title: 'ProductListItem',
   component: ProductListItem,
   decorators: [
     (Story) => (
@@ -30,6 +30,27 @@ export const Default: Story = {
       name: '아이크',
       imageUrl: ExampleProduct,
       price: 1000,
+    },
+  },
+};
+
+export const WithCartItem: Story = {
+  args: {
+    product: {
+      id: 1,
+      name: '아이크',
+      imageUrl: ExampleProduct,
+      price: 1000,
+    },
+    cartItem: {
+      checked: false,
+      product: {
+        id: 1,
+        name: '아이크',
+        imageUrl: ExampleProduct,
+        price: 1000,
+      },
+      quantity: 3,
     },
   },
 };
