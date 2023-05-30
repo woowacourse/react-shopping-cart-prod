@@ -1,3 +1,4 @@
+import AllCoupon from '@Components/Modal/AllCoupon';
 import MyCoupon from '@Components/Modal/MyCoupon';
 import { ModalProvider } from 'noah-modal';
 import React from 'react';
@@ -30,6 +31,13 @@ async function main() {
               title: '쿠폰 사용하기',
               component: <MyCoupon />,
               name: 'myCoupon',
+              delayMsTime: 300,
+              position: 'middle',
+            },
+            {
+              title: '쿠폰 발급받기',
+              component: <AllCoupon />,
+              name: 'allCoupon',
               delayMsTime: 300,
               position: 'middle',
             },

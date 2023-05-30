@@ -1,4 +1,4 @@
-import { RecoilState, useRecoilValue } from 'recoil';
+import { RecoilValue, useRecoilValue } from 'recoil';
 
 import Coupon from '@Components/Coupon';
 
@@ -7,11 +7,13 @@ import { CouponType } from '@Types/index';
 import * as S from './style';
 
 type CouponListProps<T> = {
-  couponState: RecoilState<T[]>;
+  couponState: RecoilValue<T[]>;
 };
 
 function CouponList<T extends CouponType>({ couponState }: CouponListProps<T>) {
   const myCoupons = useRecoilValue(couponState) as T[];
+
+  console.log(myCoupons);
 
   return (
     <S.Container>
