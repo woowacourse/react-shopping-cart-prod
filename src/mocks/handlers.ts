@@ -1,8 +1,8 @@
 import { rest } from 'msw';
 import { LOCAL_STORAGE_KEY } from '../constants';
-import { cartItems, products } from '../data/mockData';
+import { cartItems, paymentsData, products } from '../data/mockData';
 import { CartItem, Product } from '../types';
-import { setLocalStorage } from '../utils/localStorage';
+import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
 const handlers = [
   // 제품 목록
@@ -101,6 +101,40 @@ const handlers = [
       return res(ctx.delay(100), ctx.status(204), ctx.set('Location', `/cart-items/${cartItemsId}`));
     }
     return res(ctx.status(404));
+  }),
+
+  // 체크된 장바구니 상품 가격 조회
+  rest.get('/total-cart-price', async (req, res, ctx) => {
+    const cartItemIds = req.url.searchParams.getAll('cartItemIds');
+
+    const originalPrice = getLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.CART_ITEM, []).reduce((acc, item) => {
+      if (cartItemIds.find((id: string) => id === String(item.id))) {
+        return acc + item.quantity * item.product.price;
+      }
+      return acc;
+    }, 0);
+
+    const discounts = [];
+
+    if (originalPrice >= 50_000) {
+      discounts.push({
+        discountPolicy: '5만원 이상 주문 시 10% 할인',
+        discountAmount: Math.floor(originalPrice / 1000) * 100,
+      });
+    }
+
+    const discountedPrice = originalPrice - discounts.reduce((acc, { discountAmount }) => acc + discountAmount, 0);
+    const deliveryFee = 3000;
+
+    paymentsData.originalPrice = originalPrice;
+    paymentsData.discounts = discounts;
+    paymentsData.discountedPrice = discountedPrice;
+    paymentsData.deliveryFee = deliveryFee;
+    paymentsData.finalPrice = discountedPrice + deliveryFee;
+
+    setLocalStorage(LOCAL_STORAGE_KEY.PAYMENTS, paymentsData);
+
+    return res(ctx.delay(50), ctx.status(201), ctx.json(paymentsData));
   }),
 ];
 
