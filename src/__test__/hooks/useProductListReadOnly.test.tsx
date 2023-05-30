@@ -1,10 +1,13 @@
 import { renderHook, waitFor } from '@testing-library/react';
+import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
 import { RecoilRoot } from 'recoil';
 import { useProductListReadOnly } from '@hooks/recoil/productList/useProductListReadOnly';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { SERVER_NAME, getProductPath } from '@constants/serverUrlConstants';
 import { server } from '../setupTests';
+
+fetchMock.enableMocks();
 
 const fetchUrl = getProductPath(SERVER_NAME[0]);
 
