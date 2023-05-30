@@ -3,6 +3,8 @@ const ROUTE_PATH = {
   cart: 'cart',
   user: '/user',
   orderSheet: '/orderSheet',
+  orderList: '/orderList',
+  orderDetail: '/order/:orderId',
   other: '*',
 };
 

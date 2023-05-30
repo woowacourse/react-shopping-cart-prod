@@ -6,6 +6,8 @@ import ShoppingCartPage from 'pages/ShoppingCartPage';
 import { Suspense } from 'react';
 import OrderSheetPage from 'pages/OrderSheetPage';
 import UserSelectPage from 'pages/UserSelectPage';
+import OrderListPage from 'pages/OrderListPage';
+import OrderDetailPage from 'pages/OrderDetailPage';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
             <OrderSheetPage />
           </Suspense>
         ),
+      },
+      {
+        path: ROUTE_PATH.orderList,
+        element: <OrderListPage />,
+      },
+      {
+        path: ROUTE_PATH.orderDetail,
+        element: <OrderDetailPage />,
       },
     ],
   },

@@ -30,9 +30,7 @@ const Header = ({ children }: PropsWithChildren) => {
       </FlexLink>
 
       <FlexBox gap="4px">
-        <FlexLink to={ROUTE_PATH.user}>
-          <span>유저 선택</span>
-        </FlexLink>
+        <FlexLink to={ROUTE_PATH.user}>설정</FlexLink>
         <SelectBox
           value={(localStorage.getItem(SERVER_OWNER) ?? '솔로스타') as ServerOwner}
           options={serverOwnerOptions}
@@ -41,6 +39,9 @@ const Header = ({ children }: PropsWithChildren) => {
         <FlexLink to={ROUTE_PATH.cart}>
           <Cart />
           <CartProductCount>{cartProductCount}</CartProductCount>
+        </FlexLink>
+        <FlexLink to={ROUTE_PATH.orderList}>
+          <div>주문목록</div>
         </FlexLink>
       </FlexBox>
     </HeaderContainer>
