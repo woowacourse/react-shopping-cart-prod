@@ -32,10 +32,13 @@ const Header = () => {
             ))}
           </SelectBox>
           <Link to='/cart'>
-            <MoveCartPageBtn>
+            <MovePageBtn>
               장바구니
               <ProductCountAlert>{totalCartProduct}</ProductCountAlert>
-            </MoveCartPageBtn>
+            </MovePageBtn>
+          </Link>
+          <Link to='/order'>
+            <MovePageBtn>주문 목록</MovePageBtn>
           </Link>
         </ControlContainer>
       </HeaderContent>
@@ -90,7 +93,7 @@ const SelectBox = styled.select`
   padding: 0 5px;
 `;
 
-const MoveCartPageBtn = styled.button`
+const MovePageBtn = styled.button`
   display: flex;
   color: ${({ theme }) => theme.colors.white};
   font-size: 24px;
