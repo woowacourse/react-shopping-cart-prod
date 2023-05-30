@@ -25,6 +25,15 @@ export const useQuery = <T>(url: string, headers?: HeadersInit) => {
         ...(headers && { headers }),
       });
 
+      if (!response.ok) {
+        throw new Error(
+          JSON.stringify({
+            message: `HTTP request failed: ${response.status}`,
+            statusCode: response.status,
+          })
+        );
+      }
+
       const contentType = response.headers.get('content-type');
 
       if (response.ok && contentType === 'application/json') {
@@ -32,8 +41,9 @@ export const useQuery = <T>(url: string, headers?: HeadersInit) => {
 
         setState((prev) => ({ ...prev, data }));
       }
-    } catch {
-      setState((prev) => ({ ...prev, error }));
+    } catch ({ message }) {
+      const jsonData = JSON.parse(message as string);
+      setState((prev) => ({ ...prev, error: jsonData }));
     } finally {
       setState((prev) => ({ ...prev, loading: false }));
     }

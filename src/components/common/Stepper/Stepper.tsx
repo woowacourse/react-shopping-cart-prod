@@ -2,35 +2,55 @@ import { ChangeEvent } from 'react';
 
 import * as styled from './Stepper.styled';
 
-import { useUpdateCart } from '../../../hooks/useUpdateCart';
+import { useUpdateRecoilCart } from '../../../hooks/useUpdateRecoilCart';
 
 import { Button } from '../Button/Button';
 
-import { QUANTITY } from '../../../constants';
+import { FETCH_METHOD, FETCH_URL, QUANTITY } from '../../../constants';
+import { useMutation } from '../../../hooks/useMutation';
+import { useApiBaseUrlValue } from '../../../recoils/recoilApiBaseUrl';
 
 interface Props {
-  cartId: number;
+  cartItemId: number;
   quantity: number;
 }
 
-export const Stepper = ({ cartId, quantity }: Props) => {
-  const { increaseProductQuantity, decreaseProductQuantity, updateProductQuantity } =
-    useUpdateCart();
+export const Stepper = ({ cartItemId, quantity }: Props) => {
+  const baseUrl = useApiBaseUrlValue();
+  const { mutation: updateQuantityMutation } = useMutation(FETCH_METHOD.PATCH);
+
+  const {
+    increaseRecoilProductQuantity,
+    decreaseRecoilProductQuantity,
+    updateRecoilProductQuantity,
+  } = useUpdateRecoilCart();
 
   const onClickPlusButton = () => {
     if (quantity === QUANTITY.MAX) return;
 
-    increaseProductQuantity(cartId, quantity + 1);
+    increaseRecoilProductQuantity(cartItemId, quantity + 1);
+
+    updateQuantityMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`, {
+      quantity,
+    });
   };
 
   const onClickMinusButton = () => {
     if (quantity === QUANTITY.MIN) return;
 
-    decreaseProductQuantity(cartId, quantity - 1);
+    decreaseRecoilProductQuantity(cartItemId, quantity - 1);
+
+    updateQuantityMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`, {
+      quantity,
+    });
   };
 
   const onChangeQuantity = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    updateProductQuantity(cartId, Number(value) || 1);
+    updateRecoilProductQuantity(cartItemId, Number(value) || 1);
+
+    updateQuantityMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`, {
+      quantity,
+    });
   };
 
   return (

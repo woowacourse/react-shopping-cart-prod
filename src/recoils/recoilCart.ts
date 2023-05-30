@@ -19,7 +19,7 @@ export const CartState = atom<CartItemType[]>({
   effects: [localStorageEffect(LOCAL_STORAGE_KEY.CART_STATE)],
 });
 
-const CartSizeValue = selector<number>({
+export const CartSizeValue = selector<number>({
   key: RECOIL_KEY.CART_SIZE_VALUE,
   get: ({ get }) => {
     const cart = get(CartState);

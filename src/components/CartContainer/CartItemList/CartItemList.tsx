@@ -1,7 +1,7 @@
 import * as styled from './CartItemList.styled';
 import { Checkbox } from '../../styled/Checkbox';
 
-import { useUpdateCart } from '../../../hooks/useUpdateCart';
+import { useUpdateRecoilCart } from '../../../hooks/useUpdateRecoilCart';
 import { useCartStateValue } from '../../../recoils/recoilCart';
 import { useCheckedState } from '../../../recoils/recoilChecked';
 
@@ -9,11 +9,17 @@ import { DeleteIcon } from '../../../assets/svg';
 import { Stepper } from '../../common/Stepper/Stepper';
 
 import { CartItemType } from '../../../types';
+import { useApiBaseUrlValue } from '../../../recoils/recoilApiBaseUrl';
+import { useMutation } from '../../../hooks/useMutation';
+import { FETCH_METHOD, FETCH_URL } from '../../../constants';
 
 export const CartItemList = () => {
-  const cart = useCartStateValue();
+  const baseUrl = useApiBaseUrlValue();
+  const { mutation: deleteCartMutation } = useMutation(FETCH_METHOD.DELETE);
 
-  const { deleteCartItem } = useUpdateCart();
+  const { deleteRecoilCartItem } = useUpdateRecoilCart();
+
+  const cart = useCartStateValue();
 
   const [checkState, setCheckState] = useCheckedState();
 
@@ -42,7 +48,8 @@ export const CartItemList = () => {
       });
     }
 
-    deleteCartItem(id);
+    deleteCartMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${id}`);
+    deleteRecoilCartItem(id);
   };
 
   return (
@@ -60,7 +67,7 @@ export const CartItemList = () => {
               <styled.ProductName>{product.name}</styled.ProductName>
             </styled.LeftInfo>
             <styled.RightInfo>
-              <Stepper cartId={id} quantity={quantity} />
+              <Stepper cartItemId={id} quantity={quantity} />
               <styled.ProductPrice>{product.price.toLocaleString('ko-KR')}원</styled.ProductPrice>
               <styled.DeleteButton onClick={() => onClickDeleteIcon(id)}>
                 <DeleteIcon />

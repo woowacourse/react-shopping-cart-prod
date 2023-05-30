@@ -3,13 +3,20 @@ import { Checkbox } from '../../styled/Checkbox';
 
 import { useCartStateValue } from '../../../recoils/recoilCart';
 import { useCheckedState } from '../../../recoils/recoilChecked';
-import { useUpdateCart } from '../../../hooks/useUpdateCart';
+import { useUpdateRecoilCart } from '../../../hooks/useUpdateRecoilCart';
 
 import { CheckedStateType } from '../../../types';
+import { useApiBaseUrlValue } from '../../../recoils/recoilApiBaseUrl';
+import { useMutation } from '../../../hooks/useMutation';
+import { FETCH_METHOD, FETCH_URL } from '../../../constants';
 
 export const CartActions = () => {
+  const baseUrl = useApiBaseUrlValue();
+  const { mutation: deleteCartMutation } = useMutation(FETCH_METHOD.DELETE);
+
+  const { deleteRecoilCartItem } = useUpdateRecoilCart();
+
   const cart = useCartStateValue();
-  const { deleteCartItem } = useUpdateCart();
   const [checkedState, setCheckedState] = useCheckedState();
 
   const onChangeAllCheckbox = () => {
@@ -32,7 +39,11 @@ export const CartActions = () => {
     const { all, ...selectedItems } = checkedState;
     const targetItemsId = Object.keys(selectedItems).map(Number);
 
-    deleteCartItem(...targetItemsId);
+    targetItemsId.forEach((cartItemId) => {
+      deleteCartMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`);
+    });
+
+    deleteRecoilCartItem(...targetItemsId);
 
     setCheckedState({ all: false });
   };

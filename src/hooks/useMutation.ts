@@ -27,15 +27,21 @@ export const useMutation = (method: string) => {
           ...(bodyData && { body: JSON.stringify(bodyData) }),
         });
 
+        if (!response.ok) {
+          throw new Error(
+            JSON.stringify({
+              message: `HTTP request failed: ${response.status}`,
+              statusCode: response.status,
+            })
+          );
+        }
+
         const location = response.headers.get('location');
 
         setState((prev) => ({ ...prev, data: { location } }));
-
-        if (response.ok) {
-          return { location };
-        }
-      } catch (error) {
-        console.log(error);
+      } catch ({ message }) {
+        const jsonData = JSON.parse(message as string);
+        setState((prev) => ({ ...prev, error: jsonData }));
       } finally {
         setState((prev) => ({ ...prev, loading: false }));
       }
