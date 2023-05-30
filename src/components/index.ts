@@ -1,3 +1,5 @@
+export { OrderTotalPriceBox } from "./OrderTotalPriceBox";
+export { OrderDetail } from "./../pages/OrderDetail";
 export { OrderItem } from "./OrderItem";
 export { OrderList } from "./OrderList";
 export { Counter } from "./Counter";

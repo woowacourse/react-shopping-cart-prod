@@ -7,7 +7,9 @@ export const Order = () => {
       <Header />
       <Page>
         <TitleBox>주문 목록</TitleBox>
-        <OrderList />
+        <OrderListWrapper>
+          <OrderList detail />
+        </OrderListWrapper>
       </Page>
     </>
   );
@@ -22,6 +24,11 @@ const TitleBox = styled.div`
   font-size: 25px;
   text-align: center;
   border-bottom: 4px solid var(--dark-gray);
+`;
+
+const OrderListWrapper = styled.div`
+  width: 85%;
+  align-self: center;
 `;
 
 export default Order;
