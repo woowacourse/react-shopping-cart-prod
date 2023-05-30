@@ -64,6 +64,28 @@ export const LogoImage = styled.img`
     width: 150px;
     height: 50px;
   }
+
+  @media screen and (max-width: ${viewports.sm}) {
+    display: none;
+  }
+`;
+
+export const OrderListButton = styled.button`
+  border: none;
+  background: inherit;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 12px;
+  color: var(--color-brownish-red);
+  transition: 0.3s;
+
+  &:hover {
+    transform: rotate(3deg);
+  }
+
+  @media screen and (max-width: ${viewports.md}) {
+    font-size: 16px;
+  }
 `;
 
 export const ShoppingCartButton = styled.button`
@@ -71,11 +93,10 @@ export const ShoppingCartButton = styled.button`
   background: transparent;
   border: none;
   align-items: center;
-  cursor: pointer;
   transition: 0.3s;
 
   &:hover {
-    transform: rotate(5deg);
+    transform: rotate(3deg);
   }
 `;
 export const ShoppingCartButtonText = styled.span`
