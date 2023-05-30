@@ -49,8 +49,6 @@ const Style = {
     width: 550px;
     padding: 20px;
 
-    pointer-events: none;
-
     /* 태블릿 */
     @media screen and (max-width: 991px) {
       width: 708px;
