@@ -15,8 +15,8 @@ const Header = () => {
   const setServerName = useSetRecoilState(serverAtom);
   const resetCartList = useResetRecoilState(cartListAtom);
   const showToast = useToast();
-
   const navigate = useNavigate();
+
   const handleLogoClick = () => {
     navigate(routes.list);
   };
@@ -32,6 +32,11 @@ const Header = () => {
 
     setServerName(name);
     showToast(toastMessages.serverChanged);
+    navigate(routes.list);
+  };
+
+  const orderListButtonHandler = () => {
+    navigate(routes.orderList);
   };
 
   return (
@@ -45,6 +50,7 @@ const Header = () => {
           <option value='ROY'>로이 👨🏻‍🦰</option>
           <option value='IRAE'>이레 👧🏻</option>
         </Styled.ServerSelectBox>
+        <Styled.OrderListButton onClick={orderListButtonHandler}>주문 목록 🛒</Styled.OrderListButton>
         <Styled.ShoppingCartButton onClick={handleShoppingCartButtonClick}>
           <Styled.ShoppingCartButtonText>장바구니</Styled.ShoppingCartButtonText>
           <ShoppingCartStatus />
