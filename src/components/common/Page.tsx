@@ -1,6 +1,8 @@
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 import styled from "styled-components";
 import PageHeader from "./PageHeader";
+import Skeleton from "./Skeleton";
+import Header from "components/Header";
 
 const Page = ({
   children,
@@ -10,10 +12,21 @@ const Page = ({
   pageName?: string;
 }) => {
   return (
-    <Wrapper>
-      {pageName && <PageHeader>{pageName}</PageHeader>}
-      <Container>{children}</Container>
-    </Wrapper>
+    <>
+      <Suspense
+        fallback={
+          <Skeleton
+            {...{ background: "#333333", width: "100%", height: "70px" }}
+          />
+        }
+      >
+        <Header />
+      </Suspense>
+      <Wrapper>
+        {pageName && <PageHeader>{pageName}</PageHeader>}
+        <Container>{children}</Container>
+      </Wrapper>
+    </>
   );
 };
 

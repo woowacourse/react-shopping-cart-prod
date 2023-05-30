@@ -1,12 +1,14 @@
 import { getOrderStatement } from "api/orders";
-import Header from "components/Header";
+
 import OrderStatement from "components/OrderStatement";
 import OrderStatementModal from "components/OrderStatementModal";
 import LoadingSpinner from "components/common/LoadingSpinner";
 import Page from "components/common/Page";
-import Skeleton from "components/common/Skeleton";
-import { Suspense, useEffect, useState } from "react";
+
+import { useEffect, useState } from "react";
+
 import { styled } from "styled-components";
+
 import { EachOrderStatement } from "types/domain";
 
 const OrderStatementList = () => {
@@ -43,15 +45,6 @@ const OrderStatementList = () => {
           closeModal={closeModal}
         />
       )}
-      <Suspense
-        fallback={
-          <Skeleton
-            {...{ background: "#333333", width: "100%", height: "70px" }}
-          />
-        }
-      >
-        <Header />
-      </Suspense>
       <Page pageName="주문내역">
         <Wrapper>
           {orderStatementList ? (
