@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { OrderCartItem } from '../types/OrderCartItem';
 
 const OrderCartItemContainer = styled.div`
   display: flex;
@@ -30,10 +31,10 @@ const OrderPriceAndQuantity = styled.p`
 `;
 
 type OrderCartItemProps = {
-  productName: string;
-  productPrice: number;
-  quantity: number;
-  imageUrl: string;
+  productName: OrderCartItem['name'];
+  productPrice: OrderCartItem['price'];
+  quantity: OrderCartItem['quantity'];
+  imageUrl: OrderCartItem['imageUrl'];
 };
 
 const OrderCartItem = (props: OrderCartItemProps) => {
