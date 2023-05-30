@@ -12,7 +12,6 @@ type Story = StoryObj<typeof OrderItem>;
 
 export const Default: Story = {
   args: {
-    id: 2,
     quantity: 3,
     name: 'SPRAYCAN TEE',
     price: 68000,

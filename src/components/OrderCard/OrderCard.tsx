@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { Order } from '../../types/responseData';
+import OrderItem from '../OrderItem/OrderItem';
 
 const OrderCard = ({
   order_id,
@@ -8,16 +10,30 @@ const OrderCard = ({
   discount_price,
   delivery_fee,
   total_price,
-}) => {
+}: Order) => {
   return (
     <Wrapper>
       <TopSection>
         <div>
-          주문 번호 : <span>1</span>
+          주문 번호 : <span>{order_id}</span>
         </div>
         <Link to='/orders/detail/:id'>상세보기</Link>
       </TopSection>
-      <BottomSection></BottomSection>
+      <BottomSection>
+        {items.map((item) => {
+          const { quantity, product } = item;
+          const { name, price, imageUrl } = product;
+
+          return (
+            <OrderItem
+              quantity={quantity}
+              name={name}
+              price={price}
+              imageUrl={imageUrl}
+            />
+          );
+        })}
+      </BottomSection>
     </Wrapper>
   );
 };

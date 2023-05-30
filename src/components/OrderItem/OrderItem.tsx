@@ -2,14 +2,13 @@ import { styled } from 'styled-components';
 import ProductImg from '../ProductCard/ProductImg/ProductImg';
 
 type OrderItemProps = {
-  id: number;
   quantity: number;
   name: string;
   price: number;
   imageUrl: string;
 };
 
-const OrderItem = ({ id, quantity, name, price, imageUrl }: OrderItemProps) => {
+const OrderItem = ({ quantity, name, price, imageUrl }: OrderItemProps) => {
   return (
     <Wrapper>
       <ImageWrapper>
@@ -18,7 +17,7 @@ const OrderItem = ({ id, quantity, name, price, imageUrl }: OrderItemProps) => {
       <DetailInfo>
         <ProductName>{name}</ProductName>
         <ProductPriceWithQuantity>
-          {price} / 수량 : {quantity}개
+          {(price * quantity).toLocaleString()} 원 / 수량 : {quantity}개
         </ProductPriceWithQuantity>
       </DetailInfo>
     </Wrapper>
