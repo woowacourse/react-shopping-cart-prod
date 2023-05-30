@@ -1,11 +1,17 @@
 import { CustomError } from 'types/error';
 
+const username = 'pizza1@pizza.com';
+const password = 'pizza';
+
+const base64 = btoa(`${username}:${password}`);
+
 export const fetchGet = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
   try {
     const mergedOptions = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Basic ${base64}`,
         ...options.headers,
       },
       ...options,
@@ -39,6 +45,7 @@ export const fetchPost = async <T>(
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Basic ${base64}`,
         ...options.headers,
       },
       ...options,
@@ -68,6 +75,7 @@ export const fetchPatch = async <T>(
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
+        Authorization: `Basic ${base64}`,
         ...options.headers,
       },
       ...options,
@@ -90,6 +98,7 @@ export const fetchDelete = async (url: string, options: RequestInit = {}): Promi
   try {
     const mergedOptions = {
       method: 'DELETE',
+      Authorization: `Basic ${base64}`,
       ...options,
     };
 
