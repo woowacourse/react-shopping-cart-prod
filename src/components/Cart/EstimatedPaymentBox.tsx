@@ -2,7 +2,10 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../Common/Button';
 import { useRecoilValue } from 'recoil';
-import { totalPriceSelector } from '../../recoil/checkedProductData';
+import {
+  checkedItemAtom,
+  totalPriceSelector,
+} from '../../recoil/checkedProductData';
 import {
   FREE_DELIVERY_THRESHOLD,
   REWARD_POINT_RATE,
@@ -10,17 +13,20 @@ import {
 } from '../../constants/price';
 
 interface EstimatedPaymentBoxProps {
-  userUsedPoint: number;
+  usePoint: number;
 }
 
-const EstimatedPaymentBox = ({ userUsedPoint }: EstimatedPaymentBoxProps) => {
-  const totalPrice = useRecoilValue(totalPriceSelector);
-  const deliveryPrice =
-    totalPrice === 0 || totalPrice >= FREE_DELIVERY_THRESHOLD
+const EstimatedPaymentBox = ({ usePoint }: EstimatedPaymentBoxProps) => {
+  const checkedCartProduct = useRecoilValue(checkedItemAtom);
+  const totalProductPrice = useRecoilValue(totalPriceSelector);
+  const totalDeliveryFee =
+    totalProductPrice === 0 || totalProductPrice >= FREE_DELIVERY_THRESHOLD
       ? 0
       : STANDARD_DELIVERY_FEE;
-  const orderPrice = totalPrice ? totalPrice + deliveryPrice : 0;
-  const rewardPoints = totalPrice * REWARD_POINT_RATE;
+  const orderPrice = totalProductPrice
+    ? totalProductPrice + totalDeliveryFee
+    : 0;
+  const rewardPoints = totalProductPrice * REWARD_POINT_RATE;
 
   return (
     <EstimatedPaymentBoxContainer>
@@ -28,11 +34,11 @@ const EstimatedPaymentBox = ({ userUsedPoint }: EstimatedPaymentBoxProps) => {
       <EstimatedPaymentContent>
         <EstimatedPaymentInfo>
           <dt>총 상품가격</dt>
-          <dd>{totalPrice.toLocaleString('KR')}원</dd>
+          <dd>{totalProductPrice.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>총 배송비</dt>
-          <dd>{deliveryPrice.toLocaleString('KR')}원</dd>
+          <dd>{totalDeliveryFee.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>총 적립 금액</dt>
@@ -40,7 +46,7 @@ const EstimatedPaymentBox = ({ userUsedPoint }: EstimatedPaymentBoxProps) => {
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>포인트 사용 금액</dt>
-          <dd>{userUsedPoint.toLocaleString('KR')}원</dd>
+          <dd>{usePoint.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>총 주문금액</dt>
