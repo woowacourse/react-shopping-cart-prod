@@ -3,7 +3,7 @@ import { atom, useRecoilState } from 'recoil';
 
 const serverUrlState = atom<string>({
   key: 'serverState',
-  default: 'https://m4co.shop',
+  default: 'msw',
 });
 
 export default serverUrlState;
