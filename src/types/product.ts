@@ -11,6 +11,11 @@ export interface CartItem {
   product: Product;
 }
 
+export interface PointsInfo {
+  selectedPoints: number;
+  maxPoints: number;
+}
+
 export interface NewCartItem extends CartItem {
   quantity: 1;
 }

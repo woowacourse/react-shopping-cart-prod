@@ -1,22 +1,12 @@
 import { styled } from 'styled-components';
 import Spacer from '../../common/Spacer/Spacer';
-import { formatPrice } from '../../../utils/formatPrice';
+import PointsInput from '../PointsInput/PointsInput';
+import usePurchaseChecker from './usePurchaseChecker';
 import colors from '../../../colors';
 
-const FREE_SHIPPING_PRICE = 30_000;
-const SHIPPING_FEE = 3_000;
-
-const calcTotalOrderPrice = (
-  totalProductPrice: number,
-  isFreeShipping: boolean,
-) => {
-  if (totalProductPrice <= 0) return 0;
-
-  return isFreeShipping ? totalProductPrice : totalProductPrice + SHIPPING_FEE;
-};
-
-const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
-  const isFreeShipping = totalProductPrice >= FREE_SHIPPING_PRICE;
+const CartTotal = () => {
+  const { cartPrice, finalPrice, isPurchasePossible, buttonMessage } =
+    usePurchaseChecker();
 
   return (
     <Container>
@@ -27,42 +17,21 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
       <Detail>
         <PriceWrapper>
           <dt>총 상품가격</dt>
-          <dd>{formatPrice(totalProductPrice)}</dd>
+          <dd>{cartPrice}</dd>
         </PriceWrapper>
         <Spacer height={19} />
         <PriceWrapper>
-          <dt>배송비</dt>
-          {isFreeShipping ? (
-            <OrderDetail>
-              <dd>
-                <s>{formatPrice(SHIPPING_FEE)}</s>
-              </dd>
-              <span>
-                ({formatPrice(FREE_SHIPPING_PRICE)} 이상 주문시 무료배송)
-              </span>
-            </OrderDetail>
-          ) : (
-            <dd>{formatPrice(totalProductPrice > 0 ? SHIPPING_FEE : 0)}</dd>
-          )}
+          <dt>포인트</dt>
+          <PointsInput />
         </PriceWrapper>
         <Spacer height={41} />
         <PriceWrapper>
           <dt>총 주문금액</dt>
-          <dd>
-            {formatPrice(
-              calcTotalOrderPrice(totalProductPrice, isFreeShipping),
-            )}
-          </dd>
+          <dd>{finalPrice}</dd>
         </PriceWrapper>
       </Detail>
       <Spacer height={43} />
-      <OrderButton disabled={totalProductPrice === 0}>
-        {totalProductPrice === 0
-          ? '장바구니에 상품을 담아주세요.'
-          : `주문하기 (총 ${formatPrice(
-              calcTotalOrderPrice(totalProductPrice, isFreeShipping),
-            )})`}
-      </OrderButton>
+      <OrderButton disabled={!isPurchasePossible}>{buttonMessage}</OrderButton>
     </Container>
   );
 };
@@ -111,12 +80,6 @@ const PriceWrapper = styled.div`
     letter-spacing: 0.5px;
     color: ${colors.lightGold};
   }
-`;
-
-const OrderDetail = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: right;
 `;
 
 const OrderButton = styled.button`
