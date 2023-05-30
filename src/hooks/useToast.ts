@@ -17,7 +17,7 @@ export const useToast = () => {
 
     timeoutID = window.setTimeout(() => {
       setToast({ isShown: false, type, message: "" });
-    }, 1800);
+    }, 2000);
   };
 
   return { showToast };

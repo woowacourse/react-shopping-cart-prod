@@ -8,7 +8,7 @@ export default function Toast() {
 
   const root = document.querySelector("#root") as HTMLElement;
   return ReactDOM.createPortal(
-    isShown && <Wrapper $type={type}>✅ {message}</Wrapper>,
+    isShown && <Wrapper $type={type}>{message}</Wrapper>,
     root
   );
 }
@@ -45,9 +45,8 @@ const Wrapper = styled.div<{ $type: string }>`
   transform: translate(-50%);
 
   padding: 0 10px;
-  border: 1px solid var(--mintish-green);
 
-  background: #def5f1;
+  background: ${(props) => (props.$type === "success" ? "#def5f1" : "#f5dede")};
   color: var(--dark-gray);
   font-weight: 600;
 
