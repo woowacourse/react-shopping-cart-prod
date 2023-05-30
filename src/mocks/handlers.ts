@@ -34,7 +34,7 @@ export const handlers = [
       );
     }
 
-    const product = products.find((product) => product.id === productId);
+    const product = products.find((product) => product.productId === productId);
 
     if (!product)
       return res(ctx.status(404), ctx.json({ message: '상품이 없습니다' }));
