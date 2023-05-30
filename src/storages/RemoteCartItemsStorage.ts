@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import type { Client } from '../api';
 import type { CartItemEntity } from '../api/rest/ShoppingCartRestAPI';
 import type { CartItem } from '../types/CartItem';
@@ -122,6 +123,16 @@ class RemoteCartItemsStorage {
       ),
     );
     this.changeByDownstreamHandler?.(() => cartItems);
+  }
+
+  async waitForSync() {
+    while ([...this.states.values()].some((state) => state.isSynchronizing())) {
+      await Promise.all(
+        [...this.states.values()]
+          .filter((state) => state.isSynchronizing())
+          .map((state) => state.waitForSync()),
+      );
+    }
   }
 
   clear() {

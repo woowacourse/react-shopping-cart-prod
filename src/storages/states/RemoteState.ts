@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import type RestClient from '../../api/RestClient';
 
 type BaseState = object | number | string | null | undefined;
@@ -75,6 +76,20 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
     return this.dirtyUpdates.length > 0;
   }
 
+  isSynchronizing() {
+    return this.upstreamSync || this.downstreamSync;
+  }
+
+  /**
+   * 동기화 작업이 모두 끝날 때 까지 대기할 수 있는 함수입니다.
+   */
+  async waitForSync() {
+    while (this.upstreamSync || this.downstreamSync) {
+      await this.upstreamSync;
+      await this.downstreamSync;
+    }
+  }
+
   /**
    * remote -> client로 동기화 할 작업을 추가합니다.
    */
@@ -119,8 +134,7 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
    */
   flushDirtyUpdates() {
     if (!this.hasDirtyUpdate()) return; // 업데이트 할 사항이 없다면 리턴합니다.
-    if (this.upstreamSync) return; // 이미 upstreamSync가 수행되고 있다면 리턴합니다.
-    if (this.downstreamSync) return; // downstreamSync가 종료된 후 dirtyUpdate를 진행합니다.
+    if (this.isSynchronizing()) return; // 이미 upstreamSync 혹은 downstreamSync가 수행중이라면 종료된 후 dirtyUpdate를 진행합니다.
 
     const lastState = (this.dirtyUpdates ?? []).reduce<State>((accumulatedState, update) => {
       if (typeof update === 'function') {
