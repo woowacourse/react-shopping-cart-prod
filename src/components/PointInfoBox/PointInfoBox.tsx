@@ -12,7 +12,7 @@ function PointInfoBox() {
         <S.Description>배송완료 다음날 적립됩니다</S.Description>
         <PurchasePropertyWrapper>
           <PurchaseText>적립 포인트</PurchaseText>
-          <PurchaseText>58원</PurchaseText>
+          <PurchaseText>58p</PurchaseText>
         </PurchasePropertyWrapper>
       </S.PaymentInfoWrapper>
     </S.Wrapper>
