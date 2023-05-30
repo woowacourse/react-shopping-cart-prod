@@ -18,3 +18,7 @@ export const Header = styled.header`
 `;
 
 export const List = styled.ul``;
+
+export const OrderDetailLink = styled.span`
+  cursor: pointer;
+`;

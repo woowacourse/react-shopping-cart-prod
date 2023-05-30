@@ -18,7 +18,9 @@ const Order = ({ orderId, orderItems }: OrderProps) => {
     <S.OrderContainer>
       <S.Header>
         <span>주문번호: {orderId}</span>
-        <span onClick={onDetailClick}>상세보기 {'>'}</span>
+        <S.OrderDetailLink onClick={onDetailClick}>
+          상세보기 {'>'}
+        </S.OrderDetailLink>
       </S.Header>
       <S.List>
         {orderItems.map((orderItem) => (
