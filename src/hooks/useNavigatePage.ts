@@ -5,11 +5,20 @@ const useNavigatePage = () => {
   const goHome = () => {
     navigator('/');
   };
+
   const goCart = () => {
     navigator('/cart');
   };
 
-  return { goHome, goCart };
+  const goOrder = () => {
+    navigator('/order');
+  };
+
+  const goOrderDetail = (orderId: number) => {
+    navigator(`/order/${orderId}`);
+  };
+
+  return { goHome, goCart, goOrder, goOrderDetail };
 };
 
 export default useNavigatePage;

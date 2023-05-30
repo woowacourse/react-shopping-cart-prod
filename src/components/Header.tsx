@@ -4,7 +4,6 @@ import { ReactComponent as MobileLogo } from '../assets/onlyImageIcon.svg';
 import CartRouteButton from './main/CartRouteButton';
 import ServerDropdown from './ServerDropdown';
 import useNavigatePage from '../hooks/useNavigatePage';
-import { useFetchData } from '../hooks/useFetchData';
 import { CartItem } from '../types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { cartState } from '../store/CartState';
@@ -12,17 +11,19 @@ import { serverState } from '../store/ServerState';
 import { useEffect } from 'react';
 import { CART_BASE_URL } from '../constants/url';
 import useIsMobile from '../hooks/useIsMobile';
+import useGet from '../hooks/useGet';
 
 const Header = () => {
-  const { goHome, goCart } = useNavigatePage();
+  const { goHome, goCart, goOrder } = useNavigatePage();
   const serverUrl = useRecoilValue(serverState);
   const setCart = useSetRecoilState(cartState);
-  const { api } = useFetchData<CartItem[]>(setCart);
   const isMobile = useIsMobile();
 
+  const { data: fetchedCartList } = useGet<CartItem[]>(`${serverUrl}${CART_BASE_URL}`);
+
   useEffect(() => {
-    api.get(`${serverUrl}${CART_BASE_URL}`);
-  }, [api, serverUrl]);
+    if (fetchedCartList) setCart(fetchedCartList);
+  }, [fetchedCartList, setCart, serverUrl]);
 
   return (
     <S.Header>
@@ -32,7 +33,7 @@ const Header = () => {
         </S.TitleButton>
         <ServerDropdown />
         <CartRouteButton onClick={goCart} />
-        <S.OrderButton>주문 목록</S.OrderButton>
+        <S.OrderButton onClick={goOrder}>주문 목록</S.OrderButton>
       </S.Wrapper>
     </S.Header>
   );
@@ -80,8 +81,8 @@ const S = {
     display: flex;
     justify-content: center;
     background-color: transparent;
-    cursor: pointer;
     color: var(--text-color);
+
     @media all and (max-width: 479px) {
       width: 60px;
       height: 60px;
