@@ -37,7 +37,8 @@ const Wrapper = styled.li`
   width: 100%;
   height: 220px;
 
-  border: 1px solid black;
+  background-color: #f6eedb;
+  border: 2px solid #fff;
 `;
 
 const ImageWrapper = styled.div`

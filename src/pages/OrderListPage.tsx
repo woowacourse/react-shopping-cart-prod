@@ -30,6 +30,7 @@ const OrderListPage = () => {
               discountPrice={discountPrice}
               deliveryFee={deliveryFee}
               totalPrice={totalPrice}
+              showDetailButton={true}
             />
           );
         })}

@@ -11,8 +11,6 @@ const ProductImg = ({ imageUrl }: ProductImgProps) => {
 
 const Img = styled.img`
   width: 100%;
-
-  cursor: pointer;
 `;
 
 export default memo(ProductImg);

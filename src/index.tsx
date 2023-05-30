@@ -6,6 +6,7 @@ import CartPage from './pages/CartPage';
 import ProductPage from './pages/ProductPage';
 import GlobalStyle from './styles/GlobalStyle';
 import OrderListPage from './pages/OrderListPage';
+import OrderDetailPage from './pages/OrderDetailPage';
 
 const router = createBrowserRouter(
   [
@@ -24,6 +25,10 @@ const router = createBrowserRouter(
         {
           path: '/order-list',
           element: <OrderListPage />,
+        },
+        {
+          path: '/orders/detail/:id',
+          element: <OrderDetailPage />,
         },
       ],
     },
