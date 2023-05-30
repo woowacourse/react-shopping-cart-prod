@@ -1,12 +1,18 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+type ContainerProps = {
+  isUsed: boolean;
+};
+
+export const Container = styled.div<ContainerProps>`
   display: grid;
   grid-template-columns: 1fr auto;
   background-color: #fcfcfc;
   padding: 20px;
   border-radius: 8px;
   color: #333333;
+
+  opacity: ${(props) => props.isUsed && '0.6'};
 `;
 
 export const CouponLayout = styled.div`
