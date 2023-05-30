@@ -2,6 +2,8 @@ import { rest } from 'msw';
 import { Cart } from 'types';
 import { getLocalStorageData, setLocalStorageData } from 'utils/storage';
 import productList from './productList.json';
+import payment from './payment.json';
+import orderList from './orderList.json';
 
 const cartListStorage = getLocalStorageData<Cart[]>('cartList');
 const cartData = { cartList: [...cartListStorage] };
@@ -60,5 +62,19 @@ export const handlers = [
     setLocalStorageData<Cart[]>('cartList', cartData.cartList);
 
     return res(ctx.status(204));
+  }),
+
+  rest.get('/api/payments', (req, res, ctx) => {
+    return res(ctx.delay(2000), ctx.status(200), ctx.json(payment));
+  }),
+
+  rest.get('/api/orders', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(orderList));
+  }),
+
+  rest.get('/api/orders/:orderId', (req, res, ctx) => {
+    const orderId = Number(req.params.orderId);
+    const order = orderList.orders.find((item) => item.orderId === orderId);
+    return res(ctx.status(200), ctx.json(order));
   }),
 ];
