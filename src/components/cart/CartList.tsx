@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { cartState } from '../../store/CartState';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { useCart } from '../../hooks/useCart';
-import { useFetchData } from '../../hooks/useFetchData';
 import { CartItem, Product } from '../../types';
 import CartListItem from './CartListItem';
 import Checkbox from '../@common/Checkbox';
@@ -13,19 +13,20 @@ import { CART_BASE_URL, PRODUCT_BASE_URL } from '../../constants/url';
 import { styled } from 'styled-components';
 import { serverState } from '../../store/ServerState';
 import { productListState } from '../../store/ProductListState';
+import useGet from '../../hooks/useGet';
 
 const CartList = () => {
   const [cart, setCart] = useRecoilState(cartState);
   const setProduct = useSetRecoilState(productListState);
-  const { api, isLoading } = useFetchData<CartItem[]>(setCart);
-  const { api: productApi } = useFetchData<Product[]>(setProduct);
   const serverUrl = useRecoilValue(serverState);
 
+  const { data: fetchedCartList, isLoading } = useGet<CartItem[]>(`${serverUrl}${CART_BASE_URL}`);
+  const { data: fetchedProductList } = useGet<Product[]>(`${serverUrl}${PRODUCT_BASE_URL}`);
+
   useEffect(() => {
-    api.get(`${serverUrl}${CART_BASE_URL}`);
-    productApi.get(`${serverUrl}${PRODUCT_BASE_URL}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (fetchedCartList) setCart(fetchedCartList);
+    if (fetchedProductList) setProduct(fetchedProductList);
+  }, [serverUrl]);
 
   const {
     checkedItems,

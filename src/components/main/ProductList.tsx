@@ -1,24 +1,23 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import ProductItem from './ProductItem';
-import { useFetchData } from '../../hooks/useFetchData';
 import { Product } from '../../types';
 import { PRODUCT_BASE_URL } from '../../constants/url';
 import { productListState } from '../../store/ProductListState';
 import { useEffect } from 'react';
 import Skeleton from './Skeleton';
 import { serverState } from '../../store/ServerState';
+import useGet from '../../hooks/useGet';
 
+// TODO: 관심사 분리하기
 const ProductList = () => {
   const [productList, setProductList] = useRecoilState<Product[]>(productListState);
   const serverUrl = useRecoilValue(serverState);
-
-  const { api, isLoading } = useFetchData<Product[]>(setProductList);
+  const { data, isLoading } = useGet<Product[]>(`${serverUrl}${PRODUCT_BASE_URL}`);
 
   useEffect(() => {
-    api.get(`${serverUrl}${PRODUCT_BASE_URL}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [serverUrl]);
+    if (data) setProductList(data);
+  }, [data, serverUrl, setProductList]);
 
   const skeleton = Array.from({ length: 12 }).map((_, index) => <Skeleton key={index} />);
   const products = productList.map((product) => (
