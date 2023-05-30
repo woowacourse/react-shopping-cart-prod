@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ControllerWrapper = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ export const QuantityInput = styled.input`
   padding: 0px 5px;
   border: 1px solid ${({ theme }) => theme.color.secondary};
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
 `;
 
 export const QuantityControlButton = styled.button`
@@ -23,7 +23,7 @@ export const QuantityControlButton = styled.button`
   padding: 0px;
   border: 1px solid ${({ theme }) => theme.color.secondary};
   line-height: 0px;
-  font-size: 20px;
+  font-size: 16px;
 `;
 
 export const ButtonBox = styled.div`
@@ -39,6 +39,6 @@ export const AddCartButton = styled.button`
 
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 21px;
 `;

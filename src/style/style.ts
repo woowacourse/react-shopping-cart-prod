@@ -27,6 +27,7 @@ export const Container = styled.div`
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xxl}) {
     max-width: 1320px;
+    padding: 0 100px;
   }
 `;
 

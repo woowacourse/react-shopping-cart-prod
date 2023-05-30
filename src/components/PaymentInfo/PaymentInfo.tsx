@@ -24,6 +24,7 @@ function PaymentInfo({ totalPrice }: PaymentInfoProps) {
 
   return (
     <>
+      <Vacant />
       <PurchasePropertyWrapper>
         <PurchaseText>총 상품가격</PurchaseText>
         <PurchaseText>{totalPrice.toLocaleString()}원</PurchaseText>

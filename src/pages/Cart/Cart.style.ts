@@ -1,5 +1,15 @@
 import styled from 'styled-components';
 
+export const PurchaseBoxWrapper = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  padding: 25px;
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    flex: 0 0 480px;
+  }
+`;
+
 export const CartWrapper = styled.div`
   display: flex;
   justify-content: space-between;

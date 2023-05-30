@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ProductItemImageBox = styled.div`
   display: flex;
@@ -37,10 +37,10 @@ export const ProductModalContentWrapper = styled.div`
 `;
 
 export const ProductName = styled.div`
-  font-size: 20px;
+  font-size: 16px;
 `;
 export const ProductPrice = styled.div`
-  font-size: 28px;
+  font-size: 24px;
   font-weight: bold;
 `;
 
@@ -52,9 +52,9 @@ export const ModalHeader = styled.div`
 `;
 
 export const ModalTitle = styled.div`
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
 `;
 export const ModalCloseButton = styled.button`
-  font-size: 20px;
+  font-size: 16px;
 `;

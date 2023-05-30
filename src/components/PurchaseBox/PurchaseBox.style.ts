@@ -1,24 +1,14 @@
 import styled from 'styled-components';
 
-export const PurchaseBoxWrapper = styled.div`
-  width: 100%;
-  box-sizing: border-box;
-  padding: 25px;
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: 40%;
-  }
-`;
-
 export const PurchaseWrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.color.secondary};
-  padding: 30px;
+  padding: 12px 30px;
 `;
 
 export const PurchaseTitle = styled.div`
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 33px;
 
   letter-spacing: 0.5px;
@@ -27,7 +17,7 @@ export const PurchaseTitle = styled.div`
 export const PurchaseText = styled.div`
   font-style: normal;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 27px;
 
   letter-spacing: 0.5px;
@@ -39,18 +29,20 @@ export const PurchasePropertyWrapper = styled.div`
 `;
 
 export const PurchaseButtonWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 32px;
 `;
 
 export const PurchaseButton = styled.button`
-  padding: 26px 0px 26px 0px;
+  padding: 20px 0;
   background-color: black;
+  border-radius: 4px;
   color: white;
   width: 100%;
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 21px;
+  margin-bottom: 10px;
   &:disabled {
     background-color: ${({ theme }) => theme.color.secondary};
     color: ${({ theme }) => theme.color.light};
@@ -58,5 +50,5 @@ export const PurchaseButton = styled.button`
 `;
 
 export const Vacant = styled.div`
-  margin: 30px 0px 0px 0px;
+  margin: 16px 0px 0px 0px;
 `;

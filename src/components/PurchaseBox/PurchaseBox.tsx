@@ -1,5 +1,4 @@
 import {
-  PurchaseBoxWrapper,
   PurchaseButton,
   PurchaseButtonWrapper,
   PurchaseTitle,
@@ -13,7 +12,7 @@ function PurchaseBox() {
   const totalPrice = useRecoilValue(totalPriceSelector);
 
   return (
-    <PurchaseBoxWrapper>
+    <>
       <PurchaseWrapper>
         <PurchaseTitle>결제예상금액</PurchaseTitle>
       </PurchaseWrapper>
@@ -23,7 +22,7 @@ function PurchaseBox() {
           <PurchaseButton disabled={totalPrice === 0}>주문하기</PurchaseButton>
         </PurchaseButtonWrapper>
       </PurchaseWrapper>
-    </PurchaseBoxWrapper>
+    </>
   );
 }
 

@@ -6,19 +6,19 @@ export const CartListWrapper = styled.div`
   padding: 25px;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: 60%;
+    flex: 1;
   }
 `;
 
 export const CartListTitle = styled.div`
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 33px;
 
   letter-spacing: 0.5px;
 
-  margin: 34px 25px 16px 25px;
+  margin: 34px 25px 0 25px;
 `;
 
 export const CartListController = styled.div`

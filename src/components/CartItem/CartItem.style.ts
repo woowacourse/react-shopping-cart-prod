@@ -14,7 +14,7 @@ export const CartItemImage = styled.img`
 `;
 
 export const CartItemName = styled.div`
-  font-size: 20px;
+  font-size: 16px;
   width: 100%;
 `;
 

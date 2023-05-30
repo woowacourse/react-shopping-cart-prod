@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const TotalDiscountText = styled.div`
   color: ${({ theme }) => theme.color.info};
   font-weight: 700;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 27px;
 
   letter-spacing: 0.5px;
