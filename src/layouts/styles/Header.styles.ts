@@ -26,38 +26,10 @@ export const ContentBox = styled.div`
   padding: 0 16px;
 `;
 
-export const HomeLink = styled(Link)`
-  display: flex;
-  align-items: center;
-
-  font-size: 40px;
-  font-weight: 900;
-`;
-
-export const LogoTitle = styled.h1`
-  margin-left: 24px;
-
-  vertical-align: center;
-
-  @media (max-width: 612px) {
-    display: none;
-  }
-`;
-
 export const RightBox = styled.div`
   display: flex;
   justify-content: space-between;
   width: 224px;
-`;
-
-export const Select = styled.select`
-  width: 64px;
-  border: none;
-  border-radius: 4px;
-
-  & > option {
-    text-align: center;
-  }
 `;
 
 export const CartLink = styled(Link)`
