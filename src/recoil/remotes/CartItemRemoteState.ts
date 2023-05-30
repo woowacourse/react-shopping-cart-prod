@@ -45,6 +45,15 @@ class CartItemRemoteState extends RemoteState<Client, CartItemState> {
         }));
     }
 
+    // sync: optimize update
+    // remote와 동일한 값이라면 업데이트할 필요가 없습니다.
+    if (
+      this.synchronizedState.checked === lastState.checked &&
+      this.synchronizedState.quantity === lastState.quantity
+    ) {
+      return null;
+    }
+
     // sync: update
     // 삭제 혹은 생성이 아닐 경우 값을 업데이트하는 쿼리를 보냅니다.
     const { id } = this.synchronizedState;
