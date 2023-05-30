@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { IssuableCouponType } from '../types/types';
 
 const useCouponFetch = () => {
@@ -20,7 +20,31 @@ const useCouponFetch = () => {
     },
   );
 
-  return { allCoupon };
+  const fetchAddCoupon = useMutation(
+    async ({ body }: { body?: object }) => {
+      const res = await fetch(`/users/coupons`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      return res;
+    },
+    {
+      onSuccess: () => {
+        refetch();
+      },
+      onError: (e) => {
+        console.log(e);
+      },
+    },
+  );
+
+  const addCouponAPI = (body?: object) => {
+    fetchAddCoupon.mutate({ body });
+  };
+  return { allCoupon, addCouponAPI };
 };
 
 export default useCouponFetch;

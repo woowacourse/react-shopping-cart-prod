@@ -1,24 +1,39 @@
 import styled from '@emotion/styled';
 import CouponItem from '../../box/CouponItem/CouponItem';
-import { CouponType } from '../../../types/types';
 import useCouponFetch from '../../../hooks/useCouponFetch';
 import Button from '../../common/Button/Button';
+import { useModal } from '../../../hooks/useModal';
 
 const CouponList = () => {
-  const { allCoupon } = useCouponFetch();
+  const { allCoupon, addCouponAPI } = useCouponFetch();
+  const { openModal } = useModal();
 
-  const coupons: CouponType[] =
-    (allCoupon && allCoupon.map(({ issuable, ...coupon }) => coupon)) || [];
-
-  console.log(coupons);
+  const addCoupon = async (couponId: number) => {
+    addCouponAPI({ id: couponId });
+  };
   return (
     <CouponListWrapper>
-      {coupons?.map((coupon) => (
-        <CouponWrapper key={coupon.id}>
-          <CouponItem key={coupon.id} coupon={coupon} />
-          <PublishButton key={coupon.id} size="big" text="발급하기" />
-        </CouponWrapper>
-      ))}
+      {allCoupon?.map((issuableCoupon) => {
+        const { issuable, ...coupon } = issuableCoupon;
+
+        return (
+          <CouponWrapper key={coupon.id}>
+            <CouponItem coupon={coupon} />
+            <PublishButton
+              size="big"
+              text="발급하기"
+              onClick={() => {
+                issuable
+                  ? openModal({
+                      title: '발급이 완료되었습니다.',
+                      callback: () => addCoupon(coupon.id),
+                    })
+                  : openModal({ title: '이미 발급된 쿠폰입니다.' });
+              }}
+            />
+          </CouponWrapper>
+        );
+      })}
     </CouponListWrapper>
   );
 };

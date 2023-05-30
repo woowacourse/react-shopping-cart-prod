@@ -37,6 +37,10 @@ const CouponItemWrapper = styled.div`
 
   padding: 23px 16px 16px 16px;
   background-color: #414141;
+  @media screen and (max-width: 1000px) {
+    width: 350px;
+  }
+
   @media screen and (max-width: 660px) {
     width: 100%;
   }

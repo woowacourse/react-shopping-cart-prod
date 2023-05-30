@@ -1,15 +1,26 @@
 import { rest } from 'msw';
 import couponData from './couponMockData.json';
-import type { IssuableCouponType } from '../types/types';
+import type { CouponType, IssuableCouponType } from '../types/types';
 
 const coupons = couponData as IssuableCouponType[];
 
-// let cartList = [] as CartItemType[];
+const couponList = [] as CouponType[];
 
 export const handlers = [
   rest.get('/coupons', async (_, res, ctx) => {
     await delay(200);
     return res(ctx.status(200), ctx.json(coupons));
+  }),
+  rest.post('/users/coupons', async (req, res, ctx) => {
+    const { id } = await req.json<{ id: number }>();
+    const foundCoupon = coupons.find((coupon) => coupon.id === id);
+    const foundCouponIndex = coupons.findIndex((coupon) => coupon.id === id);
+    if (foundCoupon) {
+      couponList.push(foundCoupon);
+      coupons[foundCouponIndex].issuable = false;
+      return res(ctx.status(201), ctx.text('Add Cart Item Success'));
+    }
+    return res(ctx.status(400, 'Product Does Not Found'));
   }),
   // rest.get('/products', async (_, res, ctx) => {
   //   await delay(200);

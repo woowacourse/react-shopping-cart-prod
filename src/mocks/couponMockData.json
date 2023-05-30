@@ -9,13 +9,13 @@
     "issuable": true
   },
   {
-    "coupon_id": 2,
+    "id": 2,
     "name": "5월의 달 1000원 할인 쿠폰",
     "discount_type": "deduction",
     "discount_rate": 0.0,
     "discount_amount": 1000,
     "minimum_price": 0,
-    "issuable": false
+    "issuable": true
   },
   {
     "id": 3,
