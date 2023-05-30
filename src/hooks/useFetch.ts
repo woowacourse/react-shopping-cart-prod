@@ -7,6 +7,8 @@ import baseURL from '../../config.ts';
 
 type FetchStatus = 'idle' | 'loading' | 'fail' | 'success';
 
+export type FetchMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+
 export type FetchState<T> = {
   status: FetchStatus;
   data: T | null;
@@ -15,7 +17,7 @@ export type FetchState<T> = {
 
 type UseFetchParams = {
   url: string;
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  method?: FetchMethod;
   isNotAutomaticallyFetched?: boolean;
 };
 

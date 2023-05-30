@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
-import useFetch from './useFetch';
+import useFetch, { FetchMethod } from './useFetch';
 
 type optimisticUpdateProps<T> = {
   url: string;
-  method: string;
+  method: FetchMethod;
   initialState: T | undefined;
 };
 
 const useOptimisticUpdate = <T, U>({ url, method, initialState }: optimisticUpdateProps<T>) => {
   const [data, setData] = useState(initialState);
   const [isLoading, setIsLoading] = useState(false);
-  const [{ data: fetchedData, error: fetchError }, triggerRequest] = useFetch<T>(url, method);
+  const [{ data: fetchedData, error: fetchError }, triggerRequest] = useFetch<T>({ url, method });
 
   const optimisticUpdate = async (newData: T, body: U) => {
     setIsLoading(true);
