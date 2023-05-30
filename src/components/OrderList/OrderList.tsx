@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
+import OrderItem from '../OrderItem/OrderItem';
 
 const OrderList = () => {
   return (
@@ -38,10 +39,3 @@ const TopSection = styled.div`
 `;
 
 const BottomSection = styled.div``;
-
-const OrderItem = styled.li`
-  width: 100%;
-  height: 220px;
-
-  border: 1px solid black;
-`;

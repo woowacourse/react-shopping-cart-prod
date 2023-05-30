@@ -30,8 +30,6 @@ const GlobalStyle = createGlobalStyle`
   *{
     font-family: "Helvetica Neue";
   }
-
-
 `;
 
 export default GlobalStyle;

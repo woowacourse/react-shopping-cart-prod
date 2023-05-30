@@ -79,7 +79,7 @@
     "msw": "^1.2.1",
     "prettier": "^2.8.8",
     "prop-types": "^15.8.1",
-    "storybook": "^7.0.9",
+    "storybook": "^7.0.18",
     "webpack": "^5.82.0"
   },
   "msw": {
