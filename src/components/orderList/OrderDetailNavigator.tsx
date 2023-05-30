@@ -1,4 +1,5 @@
 import { BsChevronRight } from 'react-icons/bs';
+import { useLocation } from 'react-router-dom';
 import { css, styled } from 'styled-components';
 import { ROUTE_PATH } from '../../constants';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
@@ -11,13 +12,17 @@ interface Props {
 const OrderDetailNavigator = ({ orderId }: Props) => {
   const goToPage = useGoToAnotherPage();
 
+  const location = useLocation().pathname;
+
   return (
     <S.Head>
       주문번호 : {orderId}
-      <Button css={buttonStyle} onClick={() => goToPage(ROUTE_PATH.ORDER_DETAIL_PAGE)}>
-        상세보기
-        <BsChevronRight style={{ marginLeft: '4px' }} />
-      </Button>
+      {location !== ROUTE_PATH.ORDER_DETAIL_PAGE && (
+        <Button css={buttonStyle} onClick={() => goToPage(ROUTE_PATH.ORDER_DETAIL_PAGE)}>
+          상세보기
+          <BsChevronRight style={{ marginLeft: '4px' }} />
+        </Button>
+      )}
     </S.Head>
   );
 };
