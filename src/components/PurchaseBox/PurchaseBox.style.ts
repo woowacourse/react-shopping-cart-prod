@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PurchaseBoxWrapper = styled.div`
   width: 100%;
@@ -47,11 +47,14 @@ export const PurchaseButton = styled.button`
   background-color: black;
   color: white;
   width: 100%;
-
   font-style: normal;
   font-weight: 400;
   font-size: 24px;
   line-height: 21px;
+  &:disabled {
+    background-color: ${({ theme }) => theme.color.secondary};
+    color: ${({ theme }) => theme.color.light};
+  }
 `;
 
 export const Vacant = styled.div`
