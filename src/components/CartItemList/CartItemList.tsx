@@ -20,7 +20,6 @@ const CartItemList = () => {
   const [isSelectedList, setIsSelectedList] = useState<Select[]>(ALL_CHECKED);
   const setTotalAmount = useSetRecoilState(totalAmountAtom);
 
-  console.log(cartList);
   useEffect(() => {
     setIsSelectedList(ALL_CHECKED);
   }, []);

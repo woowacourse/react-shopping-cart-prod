@@ -1,6 +1,7 @@
 import { atom, selector, selectorFamily } from 'recoil';
 import { Cart } from '../types/responseData';
 import { fetchedCartListSelector } from './asyncSelector';
+import { Select } from '../components/CartItemList/CartItemList';
 
 export const cartAtom = atom<Cart[]>({
   key: 'cart/cart-list',
