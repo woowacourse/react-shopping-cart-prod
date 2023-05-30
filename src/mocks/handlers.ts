@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { LOCAL_STORAGE_KEY } from '../constants';
-import { cartItems, products } from '../data/mockData';
-import { CartItem, Product } from '../types';
+import { cartItems, products, orderList } from '../data/mockData';
+import { CartItem, Order, Product } from '../types';
 import { setLocalStorage } from '../utils/localStorage';
 
 const handlers = [
@@ -101,6 +101,32 @@ const handlers = [
       return res(ctx.delay(100), ctx.status(204), ctx.set('Location', `/cart-items/${cartItemsId}`));
     }
     return res(ctx.status(404));
+  }),
+
+  rest.post('/orders', async (req, res, ctx) => {
+    const { cartItemIds } = await req.json();
+
+    const selected = cartItems.filter(item => cartItemIds.includes(item.id));
+
+    const orderItem: Order = {
+      id: Math.floor(Math.random() * 1000),
+      orderTime: new Date().toDateString(),
+      productList: selected.map(item => ({
+        name: item.product.name,
+        quantity: item.quantity,
+        totalPrice: item.product.price * item.quantity,
+        imageUrl: item.product.imageUrl,
+      })),
+    };
+
+    orderList.push(orderItem);
+
+    setLocalStorage<Order[]>(LOCAL_STORAGE_KEY.ORDER_LIST, orderList);
+
+    const updatedCartItems = cartItems.filter(item => !cartItemIds.includes(item.id));
+    setLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.ORDER_LIST, updatedCartItems);
+
+    return res(ctx.delay(100), ctx.status(201), ctx.set('Location', `/orders/${orderItem.id}`));
   }),
 ];
 

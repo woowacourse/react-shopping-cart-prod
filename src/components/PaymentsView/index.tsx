@@ -1,5 +1,8 @@
 import { Payments } from 'src/types';
 import convertKORWon from 'src/utils';
+import usePayment from 'src/hooks/usePayment';
+import { $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
+import { useRecoilValue } from 'recoil';
 import styles from './index.module.scss';
 
 interface PaymentsViewProps {
@@ -9,6 +12,14 @@ interface PaymentsViewProps {
 
 function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
   const { originalPrice, discounts, discountedPrice, deliveryFee, finalPrice } = paymentAmount;
+  const currentServer = useRecoilValue($CurrentServerUrl);
+  const checkedCartItemsId = useRecoilValue($CheckedCartIdList(currentServer));
+
+  const { purchaseCartItem } = usePayment();
+
+  const handleClick = async () => {
+    await purchaseCartItem(checkedCartItemsId);
+  };
 
   const discountView = discounts.length > 0 && (
     <div className={styles['discount-container']}>
@@ -44,7 +55,7 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
         </ul>
       </li>
       {puschaseOption && (
-        <button type="button" className={styles['payments-button']}>
+        <button type="button" className={styles['payments-button']} onClick={handleClick}>
           주문하기
         </button>
       )}
