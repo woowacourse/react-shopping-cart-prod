@@ -2,7 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 
 import resetStyle from './resetStyle';
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<{ isModalOpen: boolean }>`
     ${resetStyle}
 
     button {
@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
 
     body {
       background-color: #FcFcFc;
+      overflow: ${(props) => props.isModalOpen && 'hidden'};
     }
 `;
 

@@ -23,11 +23,11 @@ function App() {
     if (!localStorageHelper.hasKey('myCoupons')) localStorageHelper.setInitValue('myCoupons', mockMyCouponData);
   }, []);
 
-  const { Modal } = useModal();
+  const { Modal, isModalOpen } = useModal();
 
   return (
     <>
-      <GlobalStyle />
+      <GlobalStyle isModalOpen={isModalOpen} />
       <Suspense fallback={<LoadingHeader />}>
         <Header />
       </Suspense>

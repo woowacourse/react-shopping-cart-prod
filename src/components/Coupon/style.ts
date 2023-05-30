@@ -11,7 +11,7 @@ export const Container = styled.div<ContainerProps>`
   padding: 20px;
   border-radius: 8px;
   color: #333333;
-
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   opacity: ${(props) => props.isUsed && '0.6'};
 `;
 
