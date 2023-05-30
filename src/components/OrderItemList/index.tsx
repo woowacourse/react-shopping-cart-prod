@@ -9,11 +9,13 @@ interface OrderItemListProps {
 }
 
 function OrderItemList({ orderItemList, orderNumber }: OrderItemListProps) {
+  const path = `/order-detail/${orderNumber}`;
+
   return (
     <div className={styles.container}>
       <div className={styles['list-title']}>
         <span>주문번호: {orderNumber}</span>
-        <Link to="/order-detail">
+        <Link to={path}>
           <button type="button">상세보기{'>'}</button>
         </Link>
       </div>

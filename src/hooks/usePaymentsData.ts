@@ -10,7 +10,6 @@ const usePaymentsData = (currentServerUrl: string) => {
   const checkedCartIdList = useRecoilValue($CheckedCartIdList(currentServerUrl));
 
   const queryParams = new URLSearchParams();
-
   checkedCartIdList.forEach(id => {
     queryParams.append('cartItemIds', String(id));
   });
@@ -20,7 +19,7 @@ const usePaymentsData = (currentServerUrl: string) => {
   );
 
   useEffect(() => {
-    refreshPaymentsData();
+    refreshPaymentsData(`/total-cart-price?${queryParams.toString()}`);
   }, [cartList]);
 
   return paymentsData;

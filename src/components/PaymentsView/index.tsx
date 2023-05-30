@@ -3,9 +3,10 @@ import styles from './index.module.scss';
 
 interface PaymentsViewProps {
   paymentsData: PaymentsData;
+  handleOrder?: () => Promise<void>;
 }
 
-function PaymentsView({ paymentsData }: PaymentsViewProps) {
+function PaymentsView({ paymentsData, handleOrder }: PaymentsViewProps) {
   const { originalPrice, discounts, discountedPrice, deliveryFee, finalPrice } = paymentsData;
   const hasDiscount = discounts.length !== 0;
 
@@ -19,14 +20,16 @@ function PaymentsView({ paymentsData }: PaymentsViewProps) {
         </ul>
         {discounts.map(({ discountPolicy, discountAmount }: DiscountPolicy) => (
           <ul className={styles.discount}>
-            <span>- {discountPolicy}</span>
-            <span>{discountAmount.toLocaleString()} 원</span>
+            <span>{discountPolicy}</span>
+            <span>-{discountAmount.toLocaleString()} 원</span>
           </ul>
         ))}
-        <ul>
-          <span>할인 가격</span>
-          <span>{discountedPrice.toLocaleString()} 원</span>
-        </ul>
+        {hasDiscount && (
+          <ul>
+            <span>할인 가격</span>
+            <span>{discountedPrice.toLocaleString()} 원</span>
+          </ul>
+        )}
         <ul>
           <span>총 배송비</span>
           <span>{deliveryFee.toLocaleString()} 원</span>
@@ -36,9 +39,16 @@ function PaymentsView({ paymentsData }: PaymentsViewProps) {
           <span>{finalPrice.toLocaleString()} 원</span>
         </ul>
       </li>
-      <button type="button" className={styles['payments-button']} disabled={originalPrice === 0}>
-        주문하기
-      </button>
+      {handleOrder && (
+        <button
+          type="button"
+          className={styles['payments-button']}
+          onClick={handleOrder}
+          disabled={originalPrice === 0}
+        >
+          주문하기
+        </button>
+      )}
     </section>
   );
 }
