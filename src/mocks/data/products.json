@@ -1,74 +1,86 @@
 [
   {
-    "id": 1,
+    "productId": 1,
     "name": "PET보틀-정사각(420ml)",
     "price": 43400,
-    "imageUrl": "images/정사각-420.jpeg"
+    "imageUrl": "images/정사각-420.jpeg",
+    "stock": 30
   },
   {
-    "id": 2,
+    "productId": 2,
     "name": "PET보틀-밀크티(370ml)",
     "price": 73400,
-    "imageUrl": "images/밀크티-370.jpeg"
+    "imageUrl": "images/밀크티-370.jpeg",
+    "stock": 20
   },
   {
-    "id": 3,
+    "productId": 3,
     "name": "PET보틀-정사각(370ml)",
     "price": 41000,
-    "imageUrl": "images/정사각-370.jpeg"
+    "imageUrl": "images/정사각-370.jpeg",
+    "stock": 12
   },
   {
-    "id": 4,
+    "productId": 4,
     "name": "PET보틀-납작(450ml)",
     "price": 39900,
-    "imageUrl": "images/납작-450.jpeg"
+    "imageUrl": "images/납작-450.jpeg",
+    "stock": 7
   },
   {
-    "id": 5,
+    "productId": 5,
     "name": "PET보틀-단지(480ml)",
     "price": 41000,
-    "imageUrl": "images/단지-480.jpeg"
+    "imageUrl": "images/단지-480.jpeg",
+    "stock": 2
   },
   {
-    "id": 6,
+    "productId": 6,
     "name": "PET보틀-납작(260ml)",
     "price": 61800,
-    "imageUrl": "images/납작-260.jpeg"
+    "imageUrl": "images/납작-260.jpeg",
+    "stock": 5
   },
   {
-    "id": 7,
+    "productId": 7,
     "name": "PET보틀-원형(500ml)",
     "price": 42200,
-    "imageUrl": "images/원형-500.jpeg"
+    "imageUrl": "images/원형-500.jpeg",
+    "stock": 1
   },
   {
-    "id": 8,
+    "productId": 8,
     "name": "PET보틀-원형(600ml)",
     "price": 44500,
-    "imageUrl": "images/원형-600.jpeg"
+    "imageUrl": "images/원형-600.jpeg",
+    "stock": 3
   },
   {
-    "id": 9,
+    "productId": 9,
     "name": "PET보틀-정사각(420ml)",
     "price": 43400,
-    "imageUrl": "images/정사각-420.jpeg"
+    "imageUrl": "images/정사각-420.jpeg",
+    "stock": 20
   },
   {
-    "id": 10,
+    "productId": 10,
     "name": "PET보틀-밀크티(370ml)",
     "price": 73400,
-    "imageUrl": "images/밀크티-370.jpeg"
+    "imageUrl": "images/밀크티-370.jpeg",
+    "stock": 15
   },
   {
-    "id": 11,
+    "productId": 11,
     "name": "PET보틀-정사각(370ml)",
     "price": 41000,
-    "imageUrl": "images/정사각-370.jpeg"
+    "imageUrl": "images/정사각-370.jpeg",
+    "stock": 11
   },
   {
-    "id": 12,
+    "productId": 12,
     "name": "PET보틀-납작(450ml)",
     "price": 39900,
-    "imageUrl": "images/납작-450.jpeg"
+    "imageUrl": "images/납작-450.jpeg",
+    "stock": 6
   }
 ]
