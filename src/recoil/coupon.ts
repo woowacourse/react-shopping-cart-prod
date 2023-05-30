@@ -15,7 +15,7 @@ const getProductList = selector<Coupon[]>({
     return coupons.map((coupon) => {
       const newCoupon: Coupon = {
         ...coupon,
-        selected: false,
+        isSelected: false,
       };
 
       return newCoupon;
@@ -50,7 +50,7 @@ export const selectedCoupon = selectorFamily({
 
         return {
           ...coupon,
-          selected: coupon.couponId === currentCouponId,
+          isSelected: coupon.couponId === currentCouponId,
         };
       });
 

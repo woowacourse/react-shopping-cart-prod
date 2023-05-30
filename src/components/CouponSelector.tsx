@@ -32,7 +32,7 @@ const CouponSelector = ({ changeCartItemCoupon }: CouponSelectorProps) => {
       <Select onChange={changeCoupon}>
         <Option>{defaultText}</Option>
         {couponList.map((coupon) => {
-          const { couponId, name, discount, selected } = coupon;
+          const { couponId, name, discount, isSelected: selected } = coupon;
           const unit = discount.type === "rate" ? "%" : "원";
 
           return (

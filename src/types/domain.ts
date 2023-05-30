@@ -16,7 +16,7 @@ export interface CartProduct {
 export interface Coupon {
   couponId: number;
   name: string;
-  selected: boolean;
+  isSelected: boolean;
   discount: {
     type: "rate" | "price";
     amount: number;
