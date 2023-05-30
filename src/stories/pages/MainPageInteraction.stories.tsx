@@ -28,8 +28,6 @@ export const SuccessInteraction: Story = {
   play: async ({ canvasElement, step }) => {
     const canvas = within(canvasElement);
 
-    localStorage.clear();
-
     const purchaseProduct = (productOrder: number) => {
       const allCartIconButtons = canvas.getAllByLabelText('장바구니에 담기');
       const selectedCartIconButton = allCartIconButtons[productOrder];
@@ -43,8 +41,6 @@ export const SuccessInteraction: Story = {
 
     await step('Purchase Product', async () => {
       await waitFor(() => {
-        localStorage.clear();
-
         const secondCartIconButton = purchaseProduct(1);
 
         userEvent.click(secondCartIconButton);
@@ -112,7 +108,5 @@ export const SuccessInteraction: Story = {
         expect(firstCartIcon).toBeInTheDocument();
       });
     });
-
-    localStorage.clear();
   },
 };
