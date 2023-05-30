@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import * as S from './CartItemList.styles';
 import CartItem from 'components/Cart/CartItem';
 import Modal from 'components/@common/Modal';
@@ -10,7 +9,7 @@ const CartItemList = () => {
   const { cartList, deleteItem } = useCart();
   const { checkedItemIds, unCheckAllItems, checkAllItems, unCheckItem } =
     useCheckedItemIds();
-  const { isModalOpen, onOpenModal, onCloseModal } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
 
   const fetchedCartList =
     cartList.length === 0 ? (
@@ -37,7 +36,7 @@ const CartItemList = () => {
       unCheckItem(id);
     });
 
-    onCloseModal();
+    closeModal();
   };
 
   return (
@@ -57,14 +56,15 @@ const CartItemList = () => {
         <S.Text>
           전체 선택 ({checkedItemIds.length}/{cartList.length})개
         </S.Text>
-        <S.SelectDeleteButton onClick={onOpenModal}>
+        <S.SelectDeleteButton onClick={openModal}>
           선택 삭제
         </S.SelectDeleteButton>
       </S.CheckBoxWrapper>
       <Modal
+        message="선택한 상품들을 삭제하시겠습니까?"
         isOpen={isModalOpen}
-        onCloseModal={onCloseModal}
-        onDeleteSelectedItems={onDeleteSelectedItems}
+        onCloseModal={closeModal}
+        onClickYes={onDeleteSelectedItems}
       />
     </S.ItemWrapper>
   );

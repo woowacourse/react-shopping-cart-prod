@@ -12,12 +12,13 @@ const modal = {
 export default modal;
 
 const Template = () => {
-  const { onCloseModal } = useModal();
+  const { closeModal } = useModal();
   return (
     <Modal
       isOpen={true}
-      onCloseModal={onCloseModal}
-      onDeleteSelectedItems={onCloseModal}
+      message="삭제하시겠습니까?"
+      onCloseModal={closeModal}
+      onClickYes={closeModal}
     />
   );
 };
