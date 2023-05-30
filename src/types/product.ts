@@ -20,12 +20,7 @@ export interface CartDetails {
 
 export interface OrderProduct {
   quantity: number;
-  product: {
-    productId: number;
-    price: number;
-    name: string;
-    imageUrl: string;
-  };
+  product: Product;
 }
 
 export interface OrderDetails {

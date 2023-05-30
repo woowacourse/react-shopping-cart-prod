@@ -9,7 +9,8 @@
           "productId": 1,
           "name": "PET보틀-정사각(420ml)",
           "price": 43400,
-          "imageUrl": "images/정사각-420.jpeg"
+          "imageUrl": "images/정사각-420.jpeg",
+          "stock": 1
         }
       },
       {
@@ -18,7 +19,8 @@
           "productId": 3,
           "name": "PET보틀-정사각(370ml)",
           "price": 41000,
-          "imageUrl": "images/정사각-370.jpeg"
+          "imageUrl": "images/정사각-370.jpeg",
+          "stock": 6
         }
       }
     ],
@@ -34,7 +36,8 @@
           "productId": 2,
           "name": "PET보틀-밀크티(370ml)",
           "price": 73400,
-          "imageUrl": "images/밀크티-370.jpeg"
+          "imageUrl": "images/밀크티-370.jpeg",
+          "stock": 3
         }
       },
       {
@@ -43,7 +46,8 @@
           "productId": 1,
           "name": "PET보틀-정사각(420ml)",
           "price": 43400,
-          "imageUrl": "images/정사각-420.jpeg"
+          "imageUrl": "images/정사각-420.jpeg",
+          "stock": 1
         }
       }
     ],
