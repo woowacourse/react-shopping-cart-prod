@@ -17,12 +17,15 @@ interface OrderModalProps {
 }
 
 export const OrderModal = ({ closeModal }: OrderModalProps) => {
+  const navigate = useNavigate();
+
   const {
     totalProductPrice,
     deliveryPrice,
     totalPrice,
     canUsingUserPoint,
     totalPointsToAdd,
+    userPoint,
   } = useRecoilValue(priceSummaryState);
   const setUserPoint = useSetRecoilState(userAtomState);
   const setOrders = useSetRecoilState(orderListState);
@@ -40,7 +43,6 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
   const { deleteAllSelectedRecoilCartItems } = useCartRecoil();
 
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleClickOrderButton = () => {
     setIsLoading(true);
@@ -95,7 +97,8 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
               </Style.UseAllPointButton>
             </Style.FlexBox>
             <Style.PointCaption>
-              사용 가능 적립금 ({getCommaAddedNumber(canUsingUserPoint)}원)
+              사용 가능 적립금 {getCommaAddedNumber(canUsingUserPoint)}원 / 총{' '}
+              {getCommaAddedNumber(userPoint)}원
             </Style.PointCaption>
           </Style.PointInputContainer>
         </CaptionContainer>
@@ -213,6 +216,9 @@ const Style = {
     padding: 0 5px;
   `,
   PointCaption: styled.span`
+    width: 90vw;
+
+    text-align: end;
     position: absolute;
     top: 45px;
 

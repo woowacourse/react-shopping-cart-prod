@@ -11,7 +11,12 @@ export const useCartItemSelect = () => {
   const { deleteRecoilCartById, getAllCartIdList } = useCartRecoil();
   const { deleteCartItemById } = useCartFetch();
 
-  const deleteSelectedProduct = () => {
+  const deleteSelectedProduct = (confirmString: string) => {
+    // eslint-disable-next-line no-restricted-globals
+    const isUserWantToDelete = confirm(confirmString);
+
+    if (!isUserWantToDelete) return;
+
     selectedCartIdList.forEach((selectedCartId) => {
       deleteRecoilCartById(selectedCartId);
       deleteCartItemById(selectedCartId);

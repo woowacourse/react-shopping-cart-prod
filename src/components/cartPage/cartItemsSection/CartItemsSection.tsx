@@ -40,7 +40,11 @@ export const CartItemsSection = () => {
         <Style.SelectedProductCount>
           전체선택 ({selectedCartIdList.length}/{cartItems.length})
         </Style.SelectedProductCount>
-        <Style.DeleteSelectedProductButton onClick={deleteSelectedProduct}>
+        <Style.DeleteSelectedProductButton
+          onClick={() =>
+            deleteSelectedProduct('선택한 상품들을 삭제하시겠습니까?')
+          }
+        >
           선택삭제
         </Style.DeleteSelectedProductButton>
       </Style.SelectOrDeleteContainer>
@@ -62,7 +66,11 @@ export const CartItemsSection = () => {
               </Style.Caption>
             </Style.SelectedProductCount>
           </Style.SelectAllButtonContainer>
-          <Style.DeleteSelectedItemsButton onClick={deleteSelectedProduct}>
+          <Style.DeleteSelectedItemsButton
+            onClick={() =>
+              deleteSelectedProduct('선택한 상품들을 삭제하시겠습니까?')
+            }
+          >
             선택삭제
           </Style.DeleteSelectedItemsButton>
           <Style.OrderButton

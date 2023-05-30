@@ -21,6 +21,7 @@ export const OrderSummarySection = () => {
     totalPrice,
     canUsingUserPoint,
     totalPointsToAdd,
+    userPoint,
   } = useRecoilValue(priceSummaryState);
   const selectedCartIdList = useRecoilValue(selectedCartIdListState);
   const setUserPoint = useSetRecoilState(userAtomState);
@@ -92,7 +93,8 @@ export const OrderSummarySection = () => {
               </Style.UseAllPointButton>
             </Style.FlexBox>
             <Style.PointCaption>
-              사용 가능 적립금 ({getCommaAddedNumber(canUsingUserPoint)}원)
+              사용 가능 적립금 {getCommaAddedNumber(canUsingUserPoint)}원 / 총{' '}
+              {getCommaAddedNumber(userPoint)}원
             </Style.PointCaption>
           </Style.PointInputContainer>
         </CaptionContainer>

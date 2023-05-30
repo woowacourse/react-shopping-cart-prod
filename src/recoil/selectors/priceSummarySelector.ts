@@ -64,6 +64,7 @@ export const priceSummaryState = selector({
       totalPrice,
       canUsingUserPoint,
       totalPointsToAdd,
+      userPoint,
     };
   },
 });

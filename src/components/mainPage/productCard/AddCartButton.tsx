@@ -45,6 +45,11 @@ export const AddCartButton = ({ productId }: AddCartButtonProps) => {
   const deleteCartItem = () => {
     if (cartId === undefined) return;
 
+    // eslint-disable-next-line no-restricted-globals
+    const isUserWantDelete = confirm('상품을 장바구니에서 삭제하시겠습니까?');
+
+    if (!isUserWantDelete) return;
+
     deleteRecoilCartById(cartId);
     deleteCartItemById(cartId);
   };
