@@ -1,6 +1,7 @@
 export const LOCAL_STORAGE_KEY = Object.freeze({
   CART_ITEM: 'cart-items',
   ORDER_LIST: 'order-list',
+  PAYMENTS: 'payments',
 });
 
 export const FETCH_METHOD = Object.freeze({

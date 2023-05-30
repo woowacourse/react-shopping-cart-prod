@@ -1,8 +1,8 @@
 import { rest } from 'msw';
 import { LOCAL_STORAGE_KEY } from '../constants';
-import { cartItems, products, orderList } from '../data/mockData';
+import { cartItems, products, orderList, paymentsData } from '../data/mockData';
 import { CartItem, Order, Product } from '../types';
-import { setLocalStorage } from '../utils/localStorage';
+import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
 const handlers = [
   // 제품 목록
@@ -103,6 +103,7 @@ const handlers = [
     return res(ctx.status(404));
   }),
 
+  // 주문 목록 추가
   rest.post('/orders', async (req, res, ctx) => {
     const { cartItemIds } = await req.json();
 
@@ -124,9 +125,41 @@ const handlers = [
     setLocalStorage<Order[]>(LOCAL_STORAGE_KEY.ORDER_LIST, orderList);
 
     const updatedCartItems = cartItems.filter(item => !cartItemIds.includes(item.id));
-    setLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.ORDER_LIST, updatedCartItems);
+    setLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.CART_ITEM, updatedCartItems);
 
     return res(ctx.delay(100), ctx.status(201), ctx.set('Location', `/orders/${orderItem.id}`));
+  }),
+
+  // 주문 가격표 출력
+  rest.get('/total-cart-price', async (req, res, ctx) => {
+    const cartItemIds = req.url.searchParams.getAll('cartItemIds');
+
+    const originalPrice = getLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.CART_ITEM, []).reduce((acc, item) => {
+      if (cartItemIds.find((id: string) => id === String(item.id))) {
+        return acc + item.quantity * item.product.price;
+      }
+      return acc;
+    }, 0);
+
+    const discounts = [];
+
+    if (originalPrice >= 50_000) {
+      discounts.push({
+        discountPolicy: '5만원 이상 주문 시 10% 할인',
+        discountAmount: Math.floor(originalPrice / 1000) * 100,
+      });
+    }
+    const discountedPrice = originalPrice - discounts.reduce((acc, { discountAmount }) => acc + discountAmount, 0);
+    const deliveryFee = 3000;
+
+    paymentsData.originalPrice = originalPrice;
+    paymentsData.discounts = discounts;
+    paymentsData.discountedPrice = discountedPrice;
+    paymentsData.deliveryFee = deliveryFee;
+    paymentsData.finalPrice = discountedPrice + deliveryFee;
+    setLocalStorage(LOCAL_STORAGE_KEY.PAYMENTS, paymentsData);
+
+    return res(ctx.delay(50), ctx.status(201), ctx.json(paymentsData));
   }),
 ];
 

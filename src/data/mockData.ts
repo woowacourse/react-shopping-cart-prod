@@ -1,8 +1,22 @@
 import { LOCAL_STORAGE_KEY } from '../constants';
 import { getLocalStorage } from '../utils/localStorage';
-import type { CartItem, Order, OrderDetail, Product } from '../types';
+import type { CartItem, Order, OrderDetail, Payments, Product } from '../types';
 
 export const cartItems: CartItem[] = getLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.CART_ITEM, []);
+
+export const paymentsData: Payments = {
+  originalPrice: 0, // 상품들의 주문 가격
+
+  // 할인 정책, 할인율, 적용시 가격을 담은 객체의 배열
+  discounts: [],
+
+  // 정책이 모두 적용된 총 가격
+  discountedPrice: 0,
+  deliveryFee: 0,
+
+  // 배송비 + 물건 총 가격
+  finalPrice: 0,
+};
 
 export const products: Product[] = [
   {

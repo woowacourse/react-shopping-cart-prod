@@ -19,13 +19,14 @@ const useGetQuery = <DataType>(fetchUrl: string, headers?: HeadersInit) => {
       .finally(() => setLoading(false));
   }, [fetchUrl]);
 
-  const refreshQuery = useCallback(async () => {
+  const refreshQuery = useCallback(async (url?: string, refreshHeaders?: HeadersInit) => {
     setLoading(true);
     setError(null);
 
-    await fetch(fetchUrl, { headers })
+    await fetch(url ?? fetchUrl, { headers: headers ?? refreshHeaders })
       .then(res => res.json())
       .then(resData => {
+        console.log(resData, 2);
         setData(resData);
       })
       .catch((e: Error) => setError(e.message))
