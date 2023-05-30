@@ -20,6 +20,10 @@ export const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
+  button {
+    cursor: pointer;
+  }
+
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     width: 16px;

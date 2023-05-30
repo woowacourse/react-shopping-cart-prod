@@ -31,7 +31,6 @@ const S = {
     font-weight: 500;
     background: none;
     color: var(--text-color);
-    cursor: pointer;
   `,
 
   Badge: styled.div`

@@ -3,11 +3,9 @@ import { CartListWrapper } from '../style/ContentLayout';
 
 const CartPage = () => {
   return (
-    <>
-      <CartListWrapper>
-        <CartList />
-      </CartListWrapper>
-    </>
+    <CartListWrapper>
+      <CartList />
+    </CartListWrapper>
   );
 };
 

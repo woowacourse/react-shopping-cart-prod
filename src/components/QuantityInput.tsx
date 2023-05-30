@@ -41,7 +41,6 @@ const Button = styled.button`
   margin: 0px;
   padding: 3px;
   color: #aaa;
-  cursor: pointer;
 `;
 
 const S = {

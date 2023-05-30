@@ -48,7 +48,6 @@ const S = {
     border: 1px solid #bbb;
     border-radius: 7px;
     font-size: 16px;
-    cursor: pointer;
   `,
 
   CheckboxAll: styled(CheckboxStyle)``,
