@@ -3,6 +3,8 @@ import NotFound from '../pages/NotFound';
 import MainPage from '../pages/MainPage';
 import CartPage from '../pages/CartPage';
 import Root from './Root';
+import OrderPage from '../pages/OrderPage';
+import OrderDetailPage from '../pages/OrderDetailPage';
 
 const Router = () => {
   const router = createBrowserRouter(
@@ -14,6 +16,8 @@ const Router = () => {
         children: [
           { index: true, element: <MainPage /> },
           { path: 'cart', element: <CartPage /> },
+          { path: 'order', element: <OrderPage /> },
+          { path: 'order/:orderId', element: <OrderDetailPage /> },
         ],
       },
     ],
