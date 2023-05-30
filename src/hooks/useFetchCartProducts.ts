@@ -11,11 +11,11 @@ const useFetchCartProducts = () => {
   const resetCartProducts = useResetRecoilState(cartProductState);
 
   useEffect(() => {
-    const { getData } = cartProductApis(serverName, '/cart-items');
+    const { getCartProducts } = cartProductApis(serverName);
 
     const fetch = async () => {
       try {
-        const cartProducts = await getData();
+        const cartProducts = await getCartProducts();
         setCartProducts(cartProducts);
       } catch {
         resetCartProducts();

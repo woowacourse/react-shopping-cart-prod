@@ -24,7 +24,7 @@ const useMultipleChecked = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
 
-  const { deleteData } = cartProductApis(serverName, '/cart-items');
+  const { deleteCartProduct } = cartProductApis(serverName);
 
   const isAllChecked = getIsAllChecked(cartProducts, checked);
   const isAllUnchecked = getIsAllUnchecked(checked);
@@ -45,7 +45,7 @@ const useMultipleChecked = () => {
   const deleteCheckedProducts = () => {
     try {
       checked.forEach(async (item) => {
-        await deleteData(item.id);
+        await deleteCartProduct(item.id);
       });
 
       setCartProducts((prev) =>

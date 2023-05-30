@@ -14,11 +14,11 @@ const useProductQuantity = (id: number, quantity: number) => {
   const setCartProducts = useSetRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
 
-  const { patchData, deleteData } = cartProductApis(serverName, '/cart-items');
+  const { patchCartProduct, deleteCartProduct } = cartProductApis(serverName);
 
   const deleteProduct = async () => {
     try {
-      await deleteData(id);
+      await deleteCartProduct(id);
       setCartProducts((prev) => deleteTargetProduct(prev, id));
       setToastState({
         message: '상품을 삭제했어요',
@@ -38,7 +38,7 @@ const useProductQuantity = (id: number, quantity: number) => {
     try {
       const updatedQuantity = quantity + 1;
 
-      await patchData(id, updatedQuantity);
+      await patchCartProduct(id, updatedQuantity);
       setCartProducts((prev) =>
         updateTargetQuantity(prev, id, updatedQuantity)
       );
@@ -60,7 +60,7 @@ const useProductQuantity = (id: number, quantity: number) => {
         return;
       }
 
-      await patchData(id, updatedQuantity);
+      await patchCartProduct(id, updatedQuantity);
       setCartProducts((prev) =>
         updateTargetQuantity(prev, id, updatedQuantity)
       );

@@ -1,13 +1,9 @@
 import { SERVER, ServerKey } from '../constants/server';
 import type { CartProduct } from '../types/product';
-import { handleResponseError } from './utils';
+import { getData, mutateData } from './utils';
 
-const cartProductApis = (serverName: ServerKey, endpoint: string) => {
-  const getUrl = (param?: string | number) => {
-    const baseUrl = SERVER[serverName].url + endpoint;
-
-    return param ? `${baseUrl}/${param}` : baseUrl;
-  };
+const cartProductApis = (serverName: ServerKey) => {
+  const url = `${SERVER[serverName].url}/cart-items`;
 
   const base64 = btoa(
     SERVER[serverName].id + ':' + SERVER[serverName].password
@@ -18,48 +14,46 @@ const cartProductApis = (serverName: ServerKey, endpoint: string) => {
     Authorization: `Basic ${base64}`,
   };
 
-  const getData = async () => {
-    const response = await fetch(getUrl(), { headers });
-
-    await handleResponseError(response);
-
-    const data: CartProduct[] = await response.json();
-
-    return data;
+  const getCartProducts = () => {
+    return getData<CartProduct[]>({ url, headers });
   };
 
-  const postData = async (id: number) => {
-    const response = await fetch(getUrl(), {
+  const postCartProduct = async (id: number) => {
+    const response = await mutateData({
+      url,
       method: 'POST',
       headers,
-      body: JSON.stringify({ productId: id }),
+      body: { productId: id },
     });
-
-    await handleResponseError(response);
 
     return response.headers.get('location');
   };
 
-  const patchData = async (id: number, quantity: number) => {
-    const response = await fetch(getUrl(id), {
+  const patchCartProduct = (id: number, quantity: number) => {
+    return mutateData({
+      url,
       method: 'PATCH',
+      param: id,
       headers,
-      body: JSON.stringify({ quantity }),
+      body: { quantity },
     });
-
-    await handleResponseError(response);
   };
 
-  const deleteData = async (id: number) => {
-    const response = await fetch(getUrl(id), {
+  const deleteCartProduct = async (id: number) => {
+    return mutateData({
+      url,
       method: 'DELETE',
+      param: id,
       headers,
     });
-
-    await handleResponseError(response);
   };
 
-  return { getData, postData, patchData, deleteData };
+  return {
+    getCartProducts,
+    postCartProduct,
+    patchCartProduct,
+    deleteCartProduct,
+  };
 };
 
 export default cartProductApis;

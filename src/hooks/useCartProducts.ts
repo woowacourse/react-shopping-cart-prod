@@ -22,11 +22,11 @@ const useCartProducts = (product: Product) => {
   );
   const setToastState = useSetRecoilState(toastState);
 
-  const { postData } = cartProductApis(serverName, '/cart-items');
+  const { postCartProduct } = cartProductApis(serverName);
 
   const addProduct = async () => {
     try {
-      const location = await postData(id);
+      const location = await postCartProduct(id);
 
       const cartItemId = Number(location?.split('/').pop());
 

@@ -1,23 +1,15 @@
 import { SERVER, ServerKey } from '../constants/server';
-import { handleResponseError } from './utils';
+import type { Product } from '../types/product';
+import { getData } from './utils';
 
-const productApis = (serverName: ServerKey, endpoint: string) => {
-  const getUrl = (param?: string) => {
-    const baseUrl = SERVER[serverName].url + endpoint;
+const productApis = (serverName: ServerKey) => {
+  const url = `${SERVER[serverName].url}/products`;
 
-    return param ? `${baseUrl}/${param}` : baseUrl;
+  const getProducts = () => {
+    return getData<Product[]>({ url });
   };
 
-  const getData = async <T>() => {
-    const response = await fetch(getUrl());
-
-    await handleResponseError(response);
-
-    const data: T = await response.json();
-    return data;
-  };
-
-  return { getData };
+  return { getProducts };
 };
 
 export default productApis;
