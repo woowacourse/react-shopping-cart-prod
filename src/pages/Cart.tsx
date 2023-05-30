@@ -4,7 +4,7 @@ import CartItemList from "components/CartItemList";
 import PurchaseOrder from "components/PurchaseOrder";
 import React from "react";
 import Skeleton from "components/common/Skeleton";
-import LoadingSpinner from "components/common/LodingSpinner";
+import LoadingSpinner from "components/common/LoadingSpinner";
 
 const Cart = () => {
   return (
