@@ -36,6 +36,7 @@ const Style = {
     height: 28px;
 
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
     align-items: center;
 
