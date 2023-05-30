@@ -3,7 +3,7 @@ import products from './data/products.json';
 import cartProductsData from './data/cartProducts.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
 
-const cartProducts = cartProductsData['cart-items'];
+const cartProducts = cartProductsData.cartItems;
 
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {

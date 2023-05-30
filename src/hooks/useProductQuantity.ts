@@ -33,7 +33,7 @@ const useProductQuantity = (productId: number) => {
         return apiInstance.fetchCartProducts();
       });
 
-      const updatedCartProducts = cartDetails['cart-items'];
+      const updatedCartProducts = cartDetails.cartItems;
 
       setCartProducts(updatedCartProducts);
     }

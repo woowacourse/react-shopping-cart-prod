@@ -13,7 +13,7 @@ export interface CartProduct {
 }
 
 export interface CartDetails {
-  'cart-items': CartProduct[];
+  cartItems: CartProduct[];
   userPoint: number;
   minUsagePoints: number;
 }
@@ -32,5 +32,16 @@ export interface OrderDetails {
   orderId: number;
   orderDateTime: string;
   orderItems: OrderProduct[];
+  totalPrice: number;
+}
+
+export interface OrderData {
+  products: {
+    productId: number;
+    quantity: number;
+  }[];
+  totalProductPrice: number;
+  totalDeliveryFee: number;
+  usePoint: number;
   totalPrice: number;
 }

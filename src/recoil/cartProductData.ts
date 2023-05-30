@@ -15,7 +15,7 @@ export const cartProductAtom = atom<CartProduct[]>({
       });
 
       const cartDetails: CartDetails = response;
-      return cartDetails['cart-items'];
+      return cartDetails.cartItems;
     },
   }),
 });
