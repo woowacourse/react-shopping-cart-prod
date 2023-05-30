@@ -1,6 +1,8 @@
+import { BiDetail } from 'react-icons/bi';
 import { styled } from 'styled-components';
 import { OrderItemInfo } from '../../types';
 import Price from '../common/Price';
+import Button from '../common/Button';
 
 interface Props {
   orderItemInfo: OrderItemInfo;
@@ -11,10 +13,15 @@ export default function OrderItem({ orderItemInfo }: Props) {
 
   return (
     <>
-      <Style.Title>
-        <span>주문번호: {orderNumber}</span>
-        <span>({date})</span>
-      </Style.Title>
+      <Style.TitleContainer>
+        <Style.Title>
+          <span>주문번호: {orderNumber}</span>
+          <span>({date})</span>
+        </Style.Title>
+        <Button designType="text" fontSize="20px" color="var(--grey-400)" aria-label="상세보기">
+          <BiDetail />
+        </Button>
+      </Style.TitleContainer>
       <Style.Products>
         {products.map(({ id, name, price, imageUrl, quantity }) => (
           <Style.ProductContainer key={id}>
@@ -37,12 +44,21 @@ export default function OrderItem({ orderItemInfo }: Props) {
 }
 
 const Style = {
+  TitleContainer: styled.div`
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--grey-300);
+    padding: 20px;
+  `,
+
   Title: styled.h3`
     display: flex;
     gap: 10px;
+  `,
 
-    border-bottom: 2px solid var(--grey-300);
-    padding: 20px;
+  ButtonContent: styled.p`
+    margin-left: 5px;
+    font-size: 12px;
   `,
 
   Products: styled.ul`
