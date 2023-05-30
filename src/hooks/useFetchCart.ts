@@ -50,8 +50,10 @@ const useFetchCart = () => {
       setCartList(
         (cartList) =>
           [
-            ...cartList.filter((item) => item.id !== id),
-            { ...cartList.find((item) => item.id === id), quantity },
+            ...cartList.map((cart) => {
+              if (cart.id === id) return { ...cart, quantity };
+              return cart;
+            }),
           ] as Cart[]
       );
     } catch (error) {

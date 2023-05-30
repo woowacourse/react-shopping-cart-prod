@@ -3,34 +3,36 @@ import ProductImg from '../ProductCard/ProductImg/ProductImg';
 import { ReactComponent as TrashCan } from '../../assets/icon/trash-can.svg';
 import Counter from '../common/Counter/Counter';
 import CheckBox from '../common/CheckBox/CheckBox';
-import { Select } from '../CartItemList/CartItemList';
 import { WIDTH } from '../../styles/mediaQuery';
 import useFetchCart from '../../hooks/useFetchCart';
 import { Cart } from '../../types/responseData';
+import { useRecoilState } from 'recoil';
+import { isSelectedListAtom } from '../../store/cart';
 
 interface CartItemProps {
   cart: Cart;
-  cartItemState: Select;
-  setIsSelectedList: React.Dispatch<React.SetStateAction<Select[]>>;
   setIsAllSelected: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CartItem = ({
   cart,
-  cartItemState,
-  setIsSelectedList,
+
   setIsAllSelected,
 }: CartItemProps) => {
   const { id, product, quantity } = cart;
   const { name, imageUrl, price } = product;
   const { updateCartItem, deleteCartItem } = useFetchCart();
+  const [isSelectedList, setIsSelectedList] =
+    useRecoilState(isSelectedListAtom);
+  const cartItemState = isSelectedList.find((item) => item.id === id);
 
   const toggleSelect = () => {
     setIsAllSelected(false);
-
     setIsSelectedList((prev) => [
-      ...prev.filter((item) => item.id !== id),
-      { id, isSelected: !cartItemState.isSelected },
+      ...prev.map((item) => {
+        if (item.id === id) return { ...item, isSelected: !item.isSelected };
+        return item;
+      }),
     ]);
   };
 
@@ -53,7 +55,7 @@ const CartItem = ({
   return (
     <Wrapper>
       <CheckBoxWrapper>
-        <CheckBox checked={cartItemState.isSelected} onClick={toggleSelect} />
+        <CheckBox checked={cartItemState?.isSelected} onClick={toggleSelect} />
       </CheckBoxWrapper>
 
       <ProductImgContainer>

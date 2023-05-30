@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { cartAtom, checkedValue, totalAmountAtom } from '../../store/cart';
+import {
+  cartAtom,
+  checkedValue,
+  isSelectedListAtom,
+  totalAmountAtom,
+} from '../../store/cart';
 import { WIDTH } from '../../styles/mediaQuery';
 import CartItem from '../CartItem/CartItem';
 import CheckBox from '../common/CheckBox/CheckBox';
@@ -10,6 +15,7 @@ import useFetchCart from '../../hooks/useFetchCart';
 export type Select = {
   id: number;
   isSelected: boolean;
+  order: { id: number; quantity: number };
 };
 
 const CartItemList = () => {
@@ -17,7 +23,8 @@ const CartItemList = () => {
   const [cartList, setCartList] = useRecoilState(cartAtom);
   const { ALL_CHECKED, NO_CHECKED } = useRecoilValue(checkedValue);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
-  const [isSelectedList, setIsSelectedList] = useState<Select[]>(ALL_CHECKED);
+  const [isSelectedList, setIsSelectedList] =
+    useRecoilState(isSelectedListAtom);
   const setTotalAmount = useSetRecoilState(totalAmountAtom);
 
   useEffect(() => {
@@ -62,10 +69,6 @@ const CartItemList = () => {
             <CartItem
               key={item.id}
               cart={item}
-              cartItemState={
-                isSelectedList.find((state) => state.id === item.id) as Select
-              }
-              setIsSelectedList={setIsSelectedList}
               setIsAllSelected={setIsAllSelected}
             />
           );

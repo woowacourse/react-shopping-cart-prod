@@ -1,13 +1,18 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { cartAtom, totalAmountAtom } from '../../store/cart';
+import {
+  cartAtom,
+  isSelectedListAtom,
+  totalAmountAtom,
+} from '../../store/cart';
 import { WIDTH } from '../../styles/mediaQuery';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../store/path';
 import useFetchOrder from '../../hooks/useFetchOrder';
 
 const Bill = () => {
-  const cartList = useRecoilValue(cartAtom);
+  const isSelectedList = useRecoilValue(isSelectedListAtom);
+  const setCartList = useSetRecoilState(cartAtom);
   const { postOrders } = useFetchOrder();
   const totalAmount = useRecoilValue(totalAmountAtom);
   const deliveryFee = totalAmount >= 100000 || totalAmount === 0 ? 0 : 4000;
@@ -15,11 +20,17 @@ const Bill = () => {
   const navigate = useNavigate();
 
   const onClickOrder = async () => {
-    const orders = cartList.map((cart) => ({
-      id: cart.product.id,
-      quantity: cart.quantity,
-    }));
+    const orders = isSelectedList
+      .filter((item) => item.isSelected)
+      .map((item) => item.order);
+    console.log(orders);
     await postOrders(orders);
+    setCartList((prev) =>
+      prev.filter((cart) => {
+        if (orders.find((order) => order.id === cart.product.id)) return false;
+        return true;
+      })
+    );
     navigate(`${PATH.ORDER_LIST_PAGE}`);
   };
 

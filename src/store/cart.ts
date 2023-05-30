@@ -38,11 +38,19 @@ export const checkedValue = selector({
     const NO_CHECKED = cartList.map((item) => ({
       id: item.id,
       isSelected: false,
+      order: {
+        id: item.product.id,
+        quantity: item.quantity,
+      },
     }));
 
     const ALL_CHECKED = cartList.map((item) => ({
       id: item.id,
       isSelected: true,
+      order: {
+        id: item.product.id,
+        quantity: item.quantity,
+      },
     }));
 
     return { NO_CHECKED, ALL_CHECKED };
@@ -52,4 +60,9 @@ export const checkedValue = selector({
 export const totalAmountAtom = atom({
   key: 'cart/total-amount',
   default: 0,
+});
+
+export const isSelectedListAtom = atom<Select[]>({
+  key: 'cart/is-selected-list',
+  default: [],
 });
