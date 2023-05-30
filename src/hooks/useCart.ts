@@ -31,16 +31,6 @@ const useCart = () => {
     }
   }, [isAdded]);
 
-  // useRecoilCallback을 쓴 이유?
-  // useSetRecoilState를 써도 되지 않나?
-  // const updateCart = useRecoilCallback(
-  //   ({ set }) =>
-  //     (cartItem: CartItemData) => {
-  //       set(cartListState, (prevCartList) => [...prevCartList, cartItem]);
-  //     },
-  //   [cartAPI]
-  // );
-
   const updateCart = (cartItem: CartItemData) => {
     setCartListState((prevCartList) => [...prevCartList, cartItem]);
   };
