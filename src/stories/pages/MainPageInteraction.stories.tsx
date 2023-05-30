@@ -45,7 +45,7 @@ export const SuccessInteraction: Story = {
     await pause();
 
     await step('Raise Quantity', async () => {
-      const quantity = screen.getByText('1');
+      const quantity = screen.getByLabelText('상품 개수 : 1개');
 
       expect(quantity).toBeInTheDocument();
 
