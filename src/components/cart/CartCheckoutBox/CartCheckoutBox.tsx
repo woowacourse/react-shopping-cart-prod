@@ -1,13 +1,8 @@
 import { useCallback } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
 
-import { SHIPPING_FEE } from '../../../constants';
 import { useCart } from '../../../hooks/useCart';
-import {
-  cartListMemberDiscountAmountState,
-  cartListSubTotalState,
-  cartListTotalItemDiscountAmountState,
-} from '../../../store/cart';
+import { cartListCheckoutPriceState } from '../../../store/cart';
 import { checkedCartIdListState } from '../../../store/cartCheckbox';
 import { currentMemberInformationState } from '../../../store/member';
 import { priceFormatter } from '../../../utils/formatter';
@@ -18,23 +13,12 @@ import * as S from './CartCheckoutBox.styles';
 
 const CartCheckoutBox = () => {
   const checkedIdList = useRecoilValueLoadable(checkedCartIdListState);
-  const cartListSubTotal = useRecoilValueLoadable(cartListSubTotalState);
-  const cartListTotalItemDiscountAmount = useRecoilValueLoadable(
-    cartListTotalItemDiscountAmountState
-  );
-  const cartListMemberDiscountAmount = useRecoilValueLoadable(cartListMemberDiscountAmountState);
+  const cartListCheckoutPrice = useRecoilValueLoadable(cartListCheckoutPriceState);
   const memberInformation = useRecoilValueLoadable(currentMemberInformationState);
   const { orderCheckedItems } = useCart();
 
-  const isLoading = checkedIdList.state === 'loading';
+  const isLoading = cartListCheckoutPrice.state === 'loading';
   const isCartEmpty = checkedIdList.contents.size === 0;
-  const subTotal = cartListSubTotal.contents > 0 ? cartListSubTotal.contents : 0;
-  const totalItemDiscountAmount =
-    cartListTotalItemDiscountAmount.contents > 0 ? cartListTotalItemDiscountAmount.contents : 0;
-  const memberDiscountAmount =
-    cartListMemberDiscountAmount.contents > 0 ? cartListMemberDiscountAmount.contents : 0;
-  const shippingFee = cartListSubTotal.contents > 0 ? SHIPPING_FEE : 0;
-  const totalPrice = subTotal - totalItemDiscountAmount - memberDiscountAmount + shippingFee ?? 0;
 
   const handleOrder = useCallback(() => {
     orderCheckedItems([...checkedIdList.contents]);
@@ -45,18 +29,21 @@ const CartCheckoutBox = () => {
       <S.CheckoutInformationContainer>
         <S.CheckoutInformationTextContainer>
           <Text>상품 금액</Text>
-          <S.CheckoutValueText>{priceFormatter(subTotal)}원</S.CheckoutValueText>
+          <S.CheckoutValueText>
+            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.subTotal)}원
+          </S.CheckoutValueText>
         </S.CheckoutInformationTextContainer>
         <S.CheckoutInformationSubTextContainer>
           <Text size="small">&#8735; 상품 할인 금액</Text>
           <S.CheckoutValueText size="small">
-            {priceFormatter(totalItemDiscountAmount)}원
+            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.totalItemDiscountAmount)}
+            원
           </S.CheckoutValueText>
         </S.CheckoutInformationSubTextContainer>
         <S.CheckoutInformationSubTextContainer>
           <Text size="small">&#8735; 등급 할인 금액</Text>
           <S.CheckoutValueText size="small">
-            {priceFormatter(memberDiscountAmount)}원
+            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.memberDiscountAmount)}원
           </S.CheckoutValueText>
         </S.CheckoutInformationSubTextContainer>
         <S.CheckoutMembershipDiscountInformation>
@@ -67,12 +54,14 @@ const CartCheckoutBox = () => {
         </S.CheckoutMembershipDiscountInformation>
         <S.CheckoutInformationTextContainer>
           <Text>배송비</Text>
-          <S.CheckoutValueText>{priceFormatter(shippingFee)}원</S.CheckoutValueText>
+          <S.CheckoutValueText>
+            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.shippingFee)}원
+          </S.CheckoutValueText>
         </S.CheckoutInformationTextContainer>
         <S.CheckoutTotalPriceContainer>
           <Text>결제 예정 금액</Text>
           <S.CheckoutTotalPriceValueText>
-            {priceFormatter(totalPrice)}원
+            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.totalPrice)}원
           </S.CheckoutTotalPriceValueText>
         </S.CheckoutTotalPriceContainer>
         {isLoading ? (
