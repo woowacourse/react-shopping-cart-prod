@@ -7,6 +7,7 @@ import localStorageHelper from '@Utils/localStorageHelper';
 import { SHOPPING_QUANTITY } from '@Constants/index';
 import { FETCH_URL } from '@Constants/servers';
 
+import mockCouponData from './mockCouponData.json';
 import mockData from './mockData.json';
 
 export const handlers = [
@@ -110,5 +111,10 @@ export const handlers = [
     const myCoupons = localStorageHelper.getValue<MyCouponType[]>('myCoupons');
 
     return res(ctx.status(200), ctx.json(myCoupons), ctx.delay(100));
+  }),
+
+  // 전체 쿠폰 불러오기
+  rest.get('/coupons', async (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(mockCouponData), ctx.delay(100));
   }),
 ];
