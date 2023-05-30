@@ -4,7 +4,7 @@ import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/ato
 import useMutation from './useMutation';
 import useToast from './useToast';
 
-function usePayment() {
+function usePurchase() {
   const Toast = useToast();
   const curServer = useRecoilValue($CurrentServerUrl);
   const setCartList = useSetRecoilState($CartList(curServer));
@@ -40,4 +40,4 @@ function usePayment() {
   return { purchaseCartItem };
 }
 
-export default usePayment;
+export default usePurchase;

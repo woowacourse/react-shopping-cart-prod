@@ -1,6 +1,6 @@
 import { Payments } from 'src/types';
 import convertKORWon from 'src/utils';
-import usePayment from 'src/hooks/usePayment';
+import usePurchase from 'src/hooks/usePurchase';
 import { $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import { useRecoilValue } from 'recoil';
 import styles from './index.module.scss';
@@ -17,7 +17,7 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
 
   const notChecked = checkedCartItemsId.length === 0;
 
-  const { purchaseCartItem } = usePayment();
+  const { purchaseCartItem } = usePurchase();
 
   const handleClick = async () => {
     await purchaseCartItem(checkedCartItemsId);
