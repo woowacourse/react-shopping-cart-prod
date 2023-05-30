@@ -1,5 +1,4 @@
 import CartList from '../../components/CartList';
-import PurchaseBox from '../../components/PurchaseBox';
 import {
   CartWrapper,
   EmptyCartButton,
@@ -13,7 +12,7 @@ import { useRecoilValue } from 'recoil';
 import { cartCountSelector } from '../../recoil/cartAtoms.ts';
 import { useNavigate } from 'react-router-dom';
 import { FatBorder, PageTitle } from '../../style/style.ts';
-import DiscountBox from '../../components/DiscountBox/DiscountBox.tsx';
+import PriceCounter from '../../components/PriceCounter/PriceCounter.tsx';
 
 function Cart() {
   const cartCount = useRecoilValue(cartCountSelector);
@@ -28,8 +27,7 @@ function Cart() {
           <CartWrapper>
             <CartList />
             <PurchaseBoxWrapper>
-              <DiscountBox />
-              <PurchaseBox />
+              <PriceCounter />
             </PurchaseBoxWrapper>
           </CartWrapper>
         </>
