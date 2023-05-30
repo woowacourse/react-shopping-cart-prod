@@ -9,11 +9,12 @@ interface OptionProps {
   customInputChange: (value: number) => void;
   point: {
     checkedBy: string;
-    appliedPoint: string | number; // Updated type to accept string or number
+    appliedPoint: string | number;
   };
+  userMaxPoint: number;
 }
 
-const Option = ({ label, checked, onClick, selectedOption, customInputChange, point }: OptionProps) => {
+const Option = ({ label, checked, onClick, selectedOption, customInputChange, point, userMaxPoint }: OptionProps) => {
   const handleCustomInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(e.target.value);
     customInputChange(value);
@@ -27,7 +28,7 @@ const Option = ({ label, checked, onClick, selectedOption, customInputChange, po
       {selectedOption === 'custom' && checked && (
         <CustomInput
           min={0}
-          max={300}
+          max={userMaxPoint}
           placeholder="사용할 포인트"
           onChange={handleCustomInputChange}
           defaultValue={point.checkedBy === 'custom' ? point.appliedPoint : ''}

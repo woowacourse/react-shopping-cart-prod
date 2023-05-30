@@ -9,9 +9,10 @@ import { options } from 'constants/discountOption';
 
 interface ConfirmModalProps extends ModalProps {
   onClickConfirmButton: () => void;
+  userPoint: number;
 }
 
-const DiscountModal = ({ isOpen, closeModal }: PropsWithChildren<ConfirmModalProps>) => {
+const DiscountModal = ({ userPoint, isOpen, closeModal }: PropsWithChildren<ConfirmModalProps>) => {
   const [point, setPoint] = useState(0);
   const [pointUsage, setPointUsage] = useRecoilState(pointUsageState);
   const [selectedOption, setSelectedOption] = useState(pointUsage.checkedBy ?? 'none');
@@ -19,7 +20,7 @@ const DiscountModal = ({ isOpen, closeModal }: PropsWithChildren<ConfirmModalPro
   const handleOptionChange = (option: string) => {
     const optionToPoints: { [key: string]: number } = {
       none: 0,
-      all: 100,
+      all: userPoint,
     };
 
     setSelectedOption(option);
@@ -58,18 +59,18 @@ const DiscountModal = ({ isOpen, closeModal }: PropsWithChildren<ConfirmModalPro
           />
         </ModalHeader>
         <ModalBody>
-          <ModalSubTitle>포인트</ModalSubTitle>
+          <ModalSubTitle>보유 포인트 : {userPoint} p</ModalSubTitle>
           <SelectSection onSubmit={handleFormSubmit}>
             {options.map((option) => (
               <Option
                 key={option.value}
                 label={option.label}
                 checked={selectedOption === option.value}
-                // defaultChecked={pointUsage.checkedBy === option.value}
                 onClick={() => handleOptionChange(option.value)}
                 selectedOption={selectedOption}
                 customInputChange={handleCustomInputChange}
                 point={pointUsage}
+                userMaxPoint={userPoint}
               />
             ))}
             <Button type="submit">포인트 적용하기</Button>
