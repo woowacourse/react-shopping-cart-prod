@@ -7,10 +7,10 @@ function Coupon({
   description,
   isUsed = false,
   subMessage,
-  ableIssued,
+  type,
   isLoading = false,
-}: Partial<CouponType> & { subMessage?: string; ableIssued?: boolean; isLoading?: boolean }) {
-  const couponButton = ableIssued ? '⬇︎' : '➡︎';
+}: Partial<CouponType> & Partial<{ subMessage: string; type: 'issued' | 'use'; isLoading: boolean }>) {
+  const couponButton = type === 'issued' ? '⬇︎' : '➡︎';
 
   return (
     <S.Container isUsed={isUsed} isLoading={isLoading}>

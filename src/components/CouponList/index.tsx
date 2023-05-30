@@ -13,7 +13,7 @@ type CouponListProps<T> = {
   noExistCouponText: string;
   noExistCouponSubText: string;
   couponSubMessage: string;
-  ableIssued?: boolean;
+  type: 'issued' | 'use';
 };
 
 function CouponList<T extends CouponType>({
@@ -21,7 +21,7 @@ function CouponList<T extends CouponType>({
   noExistCouponText,
   noExistCouponSubText,
   couponSubMessage,
-  ableIssued = false,
+  type,
 }: CouponListProps<T>) {
   const myCoupons = useRecoilValue(couponState) as T[];
 
@@ -38,7 +38,7 @@ function CouponList<T extends CouponType>({
   return (
     <S.Container>
       {myCoupons.map((coupon) => (
-        <Coupon key={coupon.id} {...coupon} subMessage={couponSubMessage} ableIssued={ableIssued} />
+        <Coupon key={coupon.id} {...coupon} subMessage={couponSubMessage} type={type} />
       ))}
     </S.Container>
   );
