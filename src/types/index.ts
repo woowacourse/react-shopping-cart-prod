@@ -37,6 +37,25 @@ interface PaymentsData {
   finalPrice: number;
 }
 
+interface OrderProduct {
+  name: string;
+  totalPrice: number;
+  quantity: number;
+  imageUrl: string;
+}
+
+interface OrderType {
+  id: number;
+  orderTime: string;
+  productList: OrderProduct[];
+}
+
+interface OrderDetailType {
+  id: number;
+  productList: OrderProduct[];
+  paymentAmount: PaymentsData;
+}
+
 interface ToastState {
   type: 'success' | 'error' | 'warning';
   message: string;
@@ -44,4 +63,14 @@ interface ToastState {
 
 type MutationFetchMethod = 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-export type { Product, CartItem, OrderProduct, DiscountPolicy, ToastState, MutationFetchMethod, PaymentsData };
+export type {
+  Product,
+  CartItem,
+  OrderProduct,
+  DiscountPolicy,
+  ToastState,
+  MutationFetchMethod,
+  PaymentsData,
+  OrderType,
+  OrderDetailType,
+};

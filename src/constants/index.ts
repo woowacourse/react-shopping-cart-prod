@@ -1,6 +1,7 @@
 export const LOCAL_STORAGE_KEY = Object.freeze({
   CART_ITEM: 'cart-items',
   PAYMENTS: 'payments',
+  ORDERS: 'orders',
 });
 
 export const FETCH_METHOD = Object.freeze({
@@ -31,6 +32,7 @@ export const ROUTE_PATH = Object.freeze({
   DEFAULT: '/',
   CART: '/cart',
   ORDER: '/order',
+  ORDER_DETAIL: '/order-detail/:id',
 });
 
 export const PARCEL_PRICE = 3000;

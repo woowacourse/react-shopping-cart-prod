@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { LOCAL_STORAGE_KEY } from '../constants';
-import { cartItems, paymentsData, products } from '../data/mockData';
-import { CartItem, Product } from '../types';
+import { cartItems, orderList, paymentsData, products } from '../data/mockData';
+import { CartItem, OrderDetailType, OrderProduct, OrderType, PaymentsData, Product } from '../types';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
 const handlers = [
@@ -135,6 +135,68 @@ const handlers = [
     setLocalStorage(LOCAL_STORAGE_KEY.PAYMENTS, paymentsData);
 
     return res(ctx.delay(50), ctx.status(201), ctx.json(paymentsData));
+  }),
+
+  // 주문 목록 조회
+  rest.get<OrderType>('/orders', async (req, res, ctx) => {
+    const result = getLocalStorage<OrderType[]>(LOCAL_STORAGE_KEY.ORDERS, []);
+    return res(ctx.delay(100), ctx.status(201), ctx.json(result));
+  }),
+
+  // 주문서 생성
+  rest.post<OrderType>('/orders', async (req, res, ctx) => {
+    const { cartItemIds } = await req.json();
+    const id = Math.floor(Math.random() * 1000);
+
+    const productList = getLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY.CART_ITEM, []).reduce<OrderProduct[]>(
+      (acc, { id: cartId, product, quantity }) => {
+        if (cartItemIds.find((wantedId: number) => wantedId === cartId)) {
+          const item: OrderProduct = {
+            name: product.name,
+            totalPrice: product.price * quantity,
+            quantity,
+            imageUrl: product.imageUrl,
+          };
+          return [...acc, item];
+        }
+        return acc;
+      },
+      [],
+    );
+
+    const order = {
+      id,
+      orderTime: new Date(Date.now()).toISOString(),
+      productList,
+    };
+
+    orderList.push(order as OrderType);
+    setLocalStorage(LOCAL_STORAGE_KEY.ORDERS, orderList);
+
+    return res(ctx.delay(100), ctx.status(201), ctx.set('Location', `/orders/${order.id}`));
+  }),
+
+  // 주문 내역 상세 조회
+  rest.get<OrderDetailType>(`/orders/:orderId`, async (req, res, ctx) => {
+    const { orderId } = req.params;
+    const filteredOrder = orderList.find((order: OrderType) => order.id === Number(orderId));
+    const currentPaymentsData = getLocalStorage<PaymentsData>(LOCAL_STORAGE_KEY.PAYMENTS, {
+      originalPrice: 0,
+      discounts: [],
+      discountedPrice: 0,
+      deliveryFee: 0,
+      finalPrice: 0,
+    });
+
+    if (filteredOrder && currentPaymentsData) {
+      const responseWithId: OrderDetailType = {
+        productList: filteredOrder.productList,
+        id: Number(orderId),
+        paymentAmount: currentPaymentsData,
+      };
+      return res(ctx.status(200), ctx.json(responseWithId));
+    }
+    return res(ctx.status(404));
   }),
 ];
 
