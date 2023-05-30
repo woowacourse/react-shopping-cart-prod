@@ -131,6 +131,7 @@ table {
 }
 :root {
   --dark-gray: #333333;
+  --gray: #9c9a9a;
   --light-gray: #dddddd;
   --mintish-green: #04c09e;
   --shadow-gray: rgba(0, 0, 0, 0.25);
