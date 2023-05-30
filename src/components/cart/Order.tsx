@@ -1,22 +1,26 @@
 import { useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
-import { DELIVERY_FEE } from '../../constants';
+import { DELIVERY_FEE, ROUTE_PATH } from '../../constants';
+import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
 import { totalPriceSelector } from '../../recoil';
 import Button from '../common/Button';
 import Price from '../Price';
 
 const Order = () => {
   const totalPrice = useRecoilValue(totalPriceSelector);
+  const goToPage = useGoToAnotherPage();
 
   return (
     <S.Wrapper>
       <S.Title>결제예상금액</S.Title>
       <S.List>
-        <Price price={totalPrice} tag="li" description="총 상품가격" />
-        <Price price={DELIVERY_FEE} tag="li" description="총 배송비" />
-        <Price price={totalPrice + DELIVERY_FEE} tag="li" description="총 주문금액" />
+        <Price price={totalPrice} tag='li' description='총 상품가격' />
+        <Price price={DELIVERY_FEE} tag='li' description='총 배송비' />
+        <Price price={totalPrice + DELIVERY_FEE} tag='li' description='총 주문금액' />
       </S.List>
-      <Button css={orderButtonStyle}>주문하기</Button>
+      <Button css={orderButtonStyle} onClick={() => goToPage(ROUTE_PATH.ORDER_LIST_PAGE)}>
+        주문하기
+      </Button>
     </S.Wrapper>
   );
 };
