@@ -34,6 +34,7 @@ function App() {
       </Suspense>
       <CommonPageStyle>
         <ErrorBoundary fallback={NotFound}>
+          <button onClick={onClick}>모달열기</button>
           <Outlet />
           {Modal && <Modal />}
         </ErrorBoundary>

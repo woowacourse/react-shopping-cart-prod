@@ -31,6 +31,7 @@ async function main() {
               component: <UseCoupon />,
               name: 'useCoupon',
               delayMsTime: 500,
+              position: 'middle',
             },
           ]}
         >

@@ -14,4 +14,11 @@ export default meta;
 
 type Story = StoryObj<typeof Coupon>;
 
-export const DefaultCoupon: Story = {};
+export const DefaultCoupon: Story = {
+  args: {
+    name: '3000원 할인',
+    description: '오픈맞이 특별 할인',
+    isUsed: true,
+    subMessage: '쿠폰으로 할인 받고 상품 구매하기',
+  },
+};
