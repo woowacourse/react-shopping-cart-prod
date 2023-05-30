@@ -1,5 +1,7 @@
 import { OrderResponse } from '../../../types/responses/OrderResponse.ts';
 import { useNavigate } from 'react-router-dom';
+import routes from '../../../constants/routes.ts';
+import * as Styled from './OrderList.styles.tsx';
 
 type OrderListProps = {
   orderData: OrderResponse;
@@ -10,27 +12,29 @@ const OrderList = ({ orderData, hasDetailNavigateButton }: OrderListProps) => {
   const navigate = useNavigate();
 
   const handleDetailButton = () => {
-    navigate(`/order/${orderData.orderId}`, { state: { makeOrder: orderData } });
+    navigate(`${routes.orderList}/${orderData.orderId}`, { state: { makeOrder: orderData } });
   };
 
   return (
-    <ul>
-      <div>
-        <h2>Order ID: {orderData.orderId}</h2>
-        {hasDetailNavigateButton && <button onClick={handleDetailButton}>상세보기</button>}
-      </div>
+    <Styled.OrderListWrapper>
+      <Styled.OrderListHeader>
+        <h2>주문 번호: {orderData.orderId}</h2>
+        {hasDetailNavigateButton && <Styled.OrderDetailButton onClick={handleDetailButton}>상세보기</Styled.OrderDetailButton>}
+      </Styled.OrderListHeader>
       {orderData.items.map((item) => {
         return (
-          <li key={item.product.id}>
-            <img src={item.product.imageUrl} alt='' />
-            <h3>{item.product.name}</h3>
-            <p>
-              {item.product.price}원 / 수량: {item.quantity}개
-            </p>
-          </li>
+          <Styled.OrderList key={item.product.id}>
+            <Styled.OrderListImage src={item.product.imageUrl} alt={`picture of ${item.product.name}`} aria-label={`picture of ${item.product.name}`} />
+            <Styled.OrderListContent>
+              <h3>{item.product.name}</h3>
+              <Styled.OrderQuantity>
+                {item.product.price.toLocaleString()}원 / 수량: {item.quantity}개
+              </Styled.OrderQuantity>
+            </Styled.OrderListContent>
+          </Styled.OrderList>
         );
       })}
-    </ul>
+    </Styled.OrderListWrapper>
   );
 };
 
