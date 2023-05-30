@@ -9,8 +9,8 @@ const OrderList = () => {
 
   return (
     <S.OrderListContainer>
-      {orderList.map((orderItem) => (
-        <OrderItem key={orderItem.id} {...orderItem} />
+      {orderList.map((order) => (
+        <OrderItem key={order.id} {...order} />
       ))}
     </S.OrderListContainer>
   );
