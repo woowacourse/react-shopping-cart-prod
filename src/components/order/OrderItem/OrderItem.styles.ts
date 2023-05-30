@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Text } from '../../common/Text/Text.styles';
 
 const OrderItemContainer = styled.li`
-  width: 960px;
+  width: 100%;
 `;
 
 const OrderItemHeader = styled.div`
@@ -60,7 +60,7 @@ const OrderInformationData = styled.dl`
 const OrderInformationDataLabel = styled(Text)`
   position: relative;
   top: 1px;
-  width: 50px;
+  min-width: 50px;
   color: ${({ theme }) => theme.color.gray4};
 `;
 

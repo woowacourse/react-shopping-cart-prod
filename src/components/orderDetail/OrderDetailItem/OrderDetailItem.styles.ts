@@ -4,10 +4,15 @@ import { Button } from '../../common/Button/Button.styles';
 import { Text } from '../../common/Text/Text.styles';
 
 const OrderDetailItemContainer = styled.div`
-  width: 960px;
+  width: 100%;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: ${({ theme }) => theme.spacer.spacing4};
+
+  @media screen and (max-width: 600px) {
+    gap: ${({ theme }) => theme.spacer.spacing3};
+  }
 `;
 
 const OrderDetailItemImage = styled.img`
@@ -18,7 +23,13 @@ const OrderDetailItemImage = styled.img`
   border-radius: ${({ theme }) => theme.borderRadius.small};
 `;
 
-const OrderDetailItemInformation = styled.div``;
+const OrderDetailItemInformation = styled.div`
+  @media screen and (max-width: 600px) {
+    & > * {
+      width: 208px;
+    }
+  }
+`;
 
 const OrderDetailItemName = styled(Text)`
   font-weight: 600;
@@ -56,6 +67,11 @@ const AddToCartButton = styled(Button)`
   position: absolute;
   right: 0;
   width: initial;
+
+  @media screen and (max-width: 600px) {
+    position: relative;
+    left: 116px;
+  }
 `;
 
 export {

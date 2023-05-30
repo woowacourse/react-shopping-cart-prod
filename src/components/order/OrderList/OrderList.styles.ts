@@ -4,6 +4,8 @@ import { SpinnerContainer } from '../../common/SpinnerContainer/SpinnerContainer
 import { Text } from '../../common/Text/Text.styles';
 
 const OrderListContainer = styled.ol`
+  max-width: calc(100vw - 48px);
+  width: 960px;
   display: flex;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacer.spacing6};

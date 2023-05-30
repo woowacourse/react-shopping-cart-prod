@@ -31,10 +31,26 @@ const HeaderRightContainer = styled.section`
     margin-left: ${({ theme }) => theme.spacer.spacing2};
     margin-right: 72px;
   }
+
+  @media screen and (max-width: 600px) {
+    & > label {
+      width: 86px;
+      margin-right: 48px;
+      padding-right: 6px;
+
+      & > select {
+        padding: 12px 10px;
+      }
+    }
+  }
 `;
 
 const Logo = styled.img`
   height: 40px;
+
+  @media screen and (max-width: 600px) {
+    height: 28px;
+  }
 `;
 
 const CartButton = styled(Button)`
@@ -45,6 +61,10 @@ const CartButton = styled(Button)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 600px) {
+    right: -8px;
+  }
 `;
 
 const CartItemCount = styled.span`

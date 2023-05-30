@@ -7,6 +7,10 @@ const ProductItemContainer = styled.li`
   width: 200px;
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: 600px) {
+    width: 150px;
+  }
 `;
 
 const ItemImageContainer = styled.div`
@@ -14,6 +18,11 @@ const ItemImageContainer = styled.div`
   width: 200px;
   height: 200px;
   margin-bottom: ${({ theme }) => theme.spacer.spacing2};
+
+  @media screen and (max-width: 600px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 const ItemButtonWrapper = styled.div`

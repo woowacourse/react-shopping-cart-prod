@@ -10,6 +10,8 @@ const OrderDetailListHeading = styled(Heading)`
 `;
 
 const OrderDetailListContainer = styled.ol`
+  max-width: calc(100vw - 48px);
+  width: 960px;
   margin-bottom: ${({ theme }) => theme.spacer.spacing6};
   display: flex;
   flex-direction: column;

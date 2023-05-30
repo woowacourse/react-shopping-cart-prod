@@ -55,21 +55,27 @@ const CartItem = ({
       <S.CartItemImageWrapper>
         <S.CartItemImage src={imageUrl} alt={name} />
       </S.CartItemImageWrapper>
-      <S.CartItemName>{name}</S.CartItemName>
-      <StepperButton
-        className="stepper-button"
-        count={quantity}
-        handleCountChange={handleQuantityChange}
-      />
-      <S.CartItemPriceContainer>
-        <S.CustomerPrice>{priceFormatter(discountedPrice)}원</S.CustomerPrice>
-        {discountRate > 0 && (
-          <S.OriginalPrice size="small">{priceFormatter(price)}원</S.OriginalPrice>
-        )}
-      </S.CartItemPriceContainer>
-      <S.CartItemDeleteButton aria-label="상품 삭제" variant="textButton" onClick={handleModalOpen}>
-        <CloseIcon />
-      </S.CartItemDeleteButton>
+      <S.CartItemInformationContainer>
+        <S.CartItemName>{name}</S.CartItemName>
+        <StepperButton
+          className="stepper-button"
+          count={quantity}
+          handleCountChange={handleQuantityChange}
+        />
+        <S.CartItemPriceContainer>
+          <S.CustomerPrice>{priceFormatter(discountedPrice)}원</S.CustomerPrice>
+          {discountRate > 0 && (
+            <S.OriginalPrice size="small">{priceFormatter(price)}원</S.OriginalPrice>
+          )}
+        </S.CartItemPriceContainer>
+        <S.CartItemDeleteButton
+          aria-label="상품 삭제"
+          variant="textButton"
+          onClick={handleModalOpen}
+        >
+          <CloseIcon />
+        </S.CartItemDeleteButton>
+      </S.CartItemInformationContainer>
       <Modal isOpen={isModalOpen} handleClose={handleModalClose}>
         <CartItemDelete handleModalClose={handleModalClose} removeItem={handleRemoval} />
       </Modal>

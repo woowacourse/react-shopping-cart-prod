@@ -7,18 +7,9 @@ const CartItemContainer = styled.li`
   display: flex;
   align-items: center;
 
-  & > p {
-    font-weight: 600;
-  }
-
   @media screen and (max-width: 600px) {
     flex-wrap: wrap;
     align-items: flex-start;
-
-    & .stepper-button {
-      margin-top: -20px;
-      margin-left: 144px;
-    }
   }
 `;
 
@@ -27,6 +18,10 @@ const CartItemImageWrapper = styled.div`
   height: 80px;
   margin-left: ${({ theme }) => theme.spacer.spacing3};
   margin-right: ${({ theme }) => theme.spacer.spacing4};
+
+  @media screen and (max-width: 600px) {
+    margin-right: ${({ theme }) => theme.spacer.spacing3};
+  }
 `;
 
 const CartItemImage = styled.img`
@@ -35,6 +30,21 @@ const CartItemImage = styled.img`
   background-color: ${({ theme }) => theme.color.gray2};
   object-fit: cover;
   border-radius: ${({ theme }) => theme.borderRadius.small};
+`;
+
+const CartItemInformationContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: ${({ theme }) => theme.spacer.spacing2};
+
+  & > p {
+    font-weight: 600;
+  }
+
+  @media screen and (max-width: 600px) {
+    width: calc(100% - 140px);
+  }
 `;
 
 const CartItemName = styled(Text)`
@@ -50,7 +60,7 @@ const CartItemName = styled(Text)`
   }
 
   @media screen and (max-width: 600px) {
-    width: calc(100% - 178px);
+    width: 100%;
   }
 `;
 
@@ -73,8 +83,8 @@ const CartItemPriceContainer = styled.div`
   }
 
   @media screen and (max-width: 600px) {
-    margin-top: -74px;
-    margin-left: 144px;
+    width: 100%;
+    margin-right: ${({ theme }) => theme.spacer.spacing4};
     padding-left: 0;
     text-align: left;
   }
@@ -127,6 +137,7 @@ export {
   CartItemContainer,
   CartItemImageWrapper,
   CartItemImage,
+  CartItemInformationContainer,
   CartItemName,
   CartItemPriceContainer,
   CustomerPrice,
