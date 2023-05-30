@@ -4,6 +4,7 @@ import CartItem from "components/CartItem";
 export default {
   title: "CartItem",
   component: CartItem,
+  decorators: [(StoryFn) => <div style={{ width: "800px" }}>{StoryFn()}</div>],
 } as Meta;
 
 const Template: StoryFn = () => {
