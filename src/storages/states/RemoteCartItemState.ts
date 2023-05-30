@@ -7,11 +7,11 @@ type CartItemState =
   | Pick<CartItemEntity, 'quantity' | 'checked'>
   | Pick<CartItemEntity, 'id' | 'quantity' | 'checked'>;
 
-class CartItemRemoteState extends RemoteState<Client, CartItemState> {
+class RemoteCartItemState extends RemoteState<Client, CartItemState> {
   readonly productId: number;
 
-  constructor(client: Client, state: CartItemState, productId: number) {
-    super(client, state);
+  constructor(client: Client, productId: number, synchronizedState: CartItemState) {
+    super(client, synchronizedState);
     this.productId = productId;
   }
 
@@ -67,4 +67,4 @@ class CartItemRemoteState extends RemoteState<Client, CartItemState> {
   }
 }
 
-export default CartItemRemoteState;
+export default RemoteCartItemState;

@@ -52,9 +52,13 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
 
   protected corruptWhileUpstreamSyncHandler: CorruptWhileUpstreamSyncHandler<State> | null = null;
 
-  constructor(client: Client, initialState: State) {
+  /**
+   * @param client 비동기 통신에 필요한 API Client 구현체입니다.
+   * @param synchronizedState 현재 remote와 동일한 상태를 주어야 합니다. 이 값을 기준으로 동기화를 시작합니다.
+   */
+  constructor(client: Client, synchronizedState: State) {
     this.client = client;
-    this.synchronizedState = initialState;
+    this.synchronizedState = synchronizedState;
   }
 
   /**
