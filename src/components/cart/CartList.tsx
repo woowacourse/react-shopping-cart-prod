@@ -69,7 +69,10 @@ export default function CartList() {
             </Button>
           </Style.TotalCheckboxAndDeleteButtonContainer>
         </Style.CartItemsContainer>
-        <TotalPayment totalProductsPrice={totalProductsPrice} deliveryFee={DELIVERY_FEE} />
+        <TotalPayment
+          totalProductsPrice={totalProductsPrice}
+          deliveryFee={totalProductsPrice > 0 ? DELIVERY_FEE : 0}
+        />
       </Style.CartItemsAndPaymentContainer>
     </Style.Container>
   );
