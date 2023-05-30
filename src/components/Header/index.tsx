@@ -14,7 +14,7 @@ function Header() {
   const setCurrentServerUrl = useSetRecoilState($CurrentServerUrl);
   const Toast = useToast();
   const userNameList = Object.keys(userServerUrlList);
-  const index = userNameList.findIndex(name => name === getLocalStorage('name', '로지'));
+  const index = userNameList.findIndex(name => name === getLocalStorage('name', 'msw'));
 
   const serverSelectChange = (target: HTMLLIElement) => {
     const { textContent } = target;
