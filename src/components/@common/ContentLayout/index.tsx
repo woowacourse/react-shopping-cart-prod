@@ -22,14 +22,13 @@ const ContentLayout = ({
 };
 
 const ContentSection = styled.section`
-  width: 100%;
+  width: 80%;
   margin: 140px auto 0 auto;
 `;
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  margin: 0 60px;
 
   @media (min-width: 320px) and (max-width: 1100px) {
     flex-direction: column;
