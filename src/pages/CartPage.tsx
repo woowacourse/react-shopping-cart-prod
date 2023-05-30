@@ -8,41 +8,34 @@ const CartPage = () => {
   return (
     <Main>
       <PageTitle>장바구니</PageTitle>
-      <CartProductInfo />
-      <ExpectedPaymentBoxWrapper>
+      <CartPageFlexBox>
+        <CartProductInfo />
         <ExpectedPaymentBox />
-      </ExpectedPaymentBoxWrapper>
+      </CartPageFlexBox>
     </Main>
   );
 };
 
 const Main = styled.main`
+  display: flex;
+  flex-direction: column;
   position: relative;
 
   max-width: 1300px;
   height: calc(100vh - 80px);
   margin: 0 auto;
   padding: 0 30px;
-  overflow-y: auto;
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
-    display: flex;
-    justify-content: space-between;
-    gap: 40px;
-  }
 `;
 
-const ExpectedPaymentBoxWrapper = styled.section`
-  margin: 0 0 60px 0;
+const CartPageFlexBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  margin: 40px 0;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
-    position: sticky;
-    top: 90px;
-    margin: 210px 0 0 0;
+  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+    flex-direction: column;
   }
 `;
 
