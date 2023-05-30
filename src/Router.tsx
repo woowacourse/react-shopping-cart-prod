@@ -6,6 +6,7 @@ import { PAGE_ROUTES } from './constants/routes';
 import CartPage from './pages/CartPage/CartPage';
 import EndpointRefresher from './components/EndpointRefresher/EndpointRefresher';
 import Loading from './components/common/Loading/Loading';
+import OrderPage from './pages/OrderPage/OrderPage';
 
 const Router = () => {
   return (
@@ -17,10 +18,7 @@ const Router = () => {
               <Route element={<Content />}>
                 <Route index element={<ProductPage />} />
                 <Route path={PAGE_ROUTES.CART} element={<CartPage />} />
-                <Route
-                  path={PAGE_ROUTES.ORDER}
-                  element={<div>주문 목록</div>}
-                />
+                <Route path={PAGE_ROUTES.ORDER} element={<OrderPage />} />
               </Route>
             </Routes>
           </Layout>
