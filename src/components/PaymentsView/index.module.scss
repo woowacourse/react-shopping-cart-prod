@@ -57,4 +57,9 @@
   color: var(--white-color);
   background: #333333;
   border-radius: 0px;
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: auto;
+  }
 }

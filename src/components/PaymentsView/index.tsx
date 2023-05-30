@@ -15,6 +15,8 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
   const currentServer = useRecoilValue($CurrentServerUrl);
   const checkedCartItemsId = useRecoilValue($CheckedCartIdList(currentServer));
 
+  const notChecked = checkedCartItemsId.length === 0;
+
   const { purchaseCartItem } = usePayment();
 
   const handleClick = async () => {
@@ -47,15 +49,15 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
         {discountView}
         <ul>
           <span>배송비</span>
-          <span>{convertKORWon(deliveryFee)}</span>
+          <span>{notChecked ? '0원 ' : convertKORWon(deliveryFee)}</span>
         </ul>
         <ul>
           <span>총 주문금액</span>
-          <span>{convertKORWon(finalPrice)}</span>
+          <span>{notChecked ? '0원 ' : convertKORWon(finalPrice)}</span>
         </ul>
       </li>
       {puschaseOption && (
-        <button type="button" className={styles['payments-button']} onClick={handleClick}>
+        <button type="button" className={styles['payments-button']} onClick={handleClick} disabled={notChecked}>
           주문하기
         </button>
       )}
