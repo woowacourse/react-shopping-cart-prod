@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-import { CartItemType, MyCouponType, OrderItemType } from '@Types/index';
+import { CartItemType, CouponType, OrderItemType } from '@Types/index';
 
 import localStorageHelper from '@Utils/localStorageHelper';
 
@@ -68,8 +68,7 @@ export const handlers = [
     return res(ctx.status(200));
   }),
 
-  // 주문 하기
-
+  // 주문 목록 불러오기
   rest.get('/orders', async (req, res, ctx) => {
     if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
     const orderItems = localStorageHelper.getValue<CartItemType[]>('orderItems');
@@ -77,29 +76,37 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(orderItems), ctx.delay(100));
   }),
 
+  // 주문하기
   rest.post('/orders', async (req, res, ctx) => {
-    const body = (await req.json()) as { id: number[]; price: number; couponId?: number };
+    const { id, price, couponId } = (await req.json()) as { id: number[]; price: number; couponId: number | null };
 
     const cartList = localStorageHelper.getValue<CartItemType[]>('cartItems');
     const orderList = localStorageHelper.getValue<OrderItemType[]>('orderItems');
+    const myCoupons = localStorageHelper.getValue<CouponType[]>('myCoupons');
 
-    const orderItems = cartList.filter((cartItem) => body.id.includes(cartItem.id));
+    const orderItems = cartList.filter((cartItem) => id.includes(cartItem.id));
 
     const newOrderItem = {
       id: Date.now(),
       cartItems: orderItems,
       date: new Date(),
-      price: body.price,
+      price,
     };
 
-    // 쿠폰 적용은 이후에
+    if (couponId) {
+      const newMyCoupons = myCoupons.map((coupon) => {
+        return { ...coupon, isUsed: coupon.id === couponId };
+      });
+
+      localStorageHelper.setValue('myCoupons', newMyCoupons);
+    }
 
     orderList.push(newOrderItem);
 
     localStorageHelper.setValue('orderItems', orderList);
     localStorageHelper.setValue(
       'cartItems',
-      cartList.filter((cartItem) => !body.id.includes(cartItem.id)),
+      cartList.filter((cartItem) => !id.includes(cartItem.id)),
     );
 
     return res(ctx.status(201));
@@ -108,7 +115,7 @@ export const handlers = [
   // 나의 쿠폰 불러오기
   rest.get('/coupons/member', async (req, res, ctx) => {
     if (!localStorageHelper.hasKey('myCoupons')) localStorageHelper.setInitValue('myCoupons', []);
-    const myCoupons = localStorageHelper.getValue<MyCouponType[]>('myCoupons');
+    const myCoupons = localStorageHelper.getValue<CouponType[]>('myCoupons');
 
     return res(ctx.status(200), ctx.json(myCoupons), ctx.delay(300));
   }),

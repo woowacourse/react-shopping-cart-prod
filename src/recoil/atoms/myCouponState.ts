@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 
-import { MyCouponType } from '@Types/index';
+import { CouponType } from '@Types/index';
 
 import { fetchData } from '@Utils/api';
 
@@ -14,11 +14,11 @@ export const myCouponStateSelector = selector({
   get: ({ get }) => {
     const server = get(serverState);
 
-    return fetchData<MyCouponType[]>({ url: FETCH_URL.myCoupon, method: FETCH_METHOD.GET, server });
+    return fetchData<CouponType[]>({ url: FETCH_URL.myCoupon, method: FETCH_METHOD.GET, server });
   },
 });
 
-const myCouponState = atom<MyCouponType[]>({
+const myCouponState = atom<CouponType[]>({
   key: 'myCouponState',
   default: myCouponStateSelector,
 });

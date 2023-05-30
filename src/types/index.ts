@@ -30,8 +30,6 @@ export type CouponType = {
   isUsed?: boolean;
 };
 
-export type MyCouponType = CouponType & { isUsed: boolean };
-
 export type fetchMethod = keyof typeof FETCH_METHOD;
 
 export type UpdateCartItem = (url: string, method: fetchMethod, body?: BodyInit | null | undefined) => void;
