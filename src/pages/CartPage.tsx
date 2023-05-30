@@ -6,6 +6,7 @@ import Order from '../components/cart/Order';
 import SelectedProductList from '../components/cart/SelectedProductList';
 import Spinner from '../components/common/Spinner';
 import Title from '../components/common/Title';
+import MainLayout from '../components/PageMainLayout';
 import { ROUTE_PATH } from '../constants';
 import { CART_URL } from '../constants/url';
 import { useFetchData } from '../hooks/useFetchData';
@@ -46,13 +47,13 @@ const CartPage = () => {
 
   return (
     <>
-      <S.Main>
+      <MainLayout>
         <Title title='장바구니' />
         <S.Wrapper>
           <SelectedProductList productCountInCart={productCountInCart} />
           <Order />
         </S.Wrapper>
-      </S.Main>
+      </MainLayout>
     </>
   );
 };
@@ -81,20 +82,6 @@ const S = {
 
     &:hover {
       transform: scale(1.01);
-    }
-  `,
-
-  Main: styled.main`
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 0 20px;
-
-    @media (max-width: 1270px) {
-      padding: 0 36px;
-    }
-
-    @media (max-width: 420px) {
-      padding: 0 28px;
     }
   `,
 
