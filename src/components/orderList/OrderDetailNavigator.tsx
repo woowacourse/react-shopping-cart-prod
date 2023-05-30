@@ -33,7 +33,6 @@ const S = {
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    margin-top: 28px;
     padding: 30px 0 24px;
     border-bottom: 1px solid var(--gray-color-300);
     color: var(--text-color);

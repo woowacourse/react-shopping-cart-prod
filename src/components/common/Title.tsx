@@ -11,6 +11,7 @@ const Title = ({ title }: Props) => {
 const S = {
   Head: styled.h2`
     width: 100%;
+    margin-bottom: 28px;
     padding-bottom: 30px;
     border-bottom: 4px solid var(--text-color);
     font-size: 32px;

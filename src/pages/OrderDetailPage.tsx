@@ -1,15 +1,16 @@
-import React from 'react';
 import { styled } from 'styled-components';
 import Title from '../components/common/Title';
-import OrderPrice from '../components/orderDetail/OrderPrice';
+import OrderDetail from '../components/orderDetail/OrderDetail';
 import OrderItemList from '../components/orderList/OrderItemList';
 
 const OrderDetailPage = () => {
   return (
     <S.Main>
       <Title title='주문 내역 상세' />
-      <OrderItemList />
-      <OrderPrice totalPrice={325000} />
+      <S.Wrapper>
+        <OrderItemList />
+        <OrderDetail totalPrice={325000} />
+      </S.Wrapper>
     </S.Main>
   );
 };
@@ -27,6 +28,10 @@ const S = {
     @media (max-width: 420px) {
       padding: 0 28px;
     }
+  `,
+
+  Wrapper: styled.div`
+    display: flex;
   `,
 };
 
