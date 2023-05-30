@@ -11,5 +11,8 @@
     "browser": true,
     "node": true,
     "es2021": true
+  },
+  "rules": {
+    "prettier/prettier": ["error", { "endOfLine": "auto" }]
   }
 }
