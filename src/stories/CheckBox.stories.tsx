@@ -1,6 +1,5 @@
 import type { StoryFn } from '@storybook/react';
-
-import CheckBox from './CheckBox';
+import CheckBox from '../components/common/CheckBox';
 
 export default {
   title: 'CheckBox',

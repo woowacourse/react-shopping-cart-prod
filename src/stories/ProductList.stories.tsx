@@ -1,6 +1,5 @@
 import type { StoryFn } from '@storybook/react';
-
-import ProductList from './ProductList';
+import ProductList from '../components/productList/ProductList';
 
 export default {
   title: 'ProductList',

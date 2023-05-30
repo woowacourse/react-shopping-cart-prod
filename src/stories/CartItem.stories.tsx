@@ -1,6 +1,5 @@
 import type { StoryFn } from '@storybook/react';
-
-import CartItem from './CartItem';
+import CartItem from '../components/cartList/CartItem';
 
 export default {
   title: 'CartItem',

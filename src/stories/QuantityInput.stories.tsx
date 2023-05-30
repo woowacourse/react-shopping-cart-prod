@@ -1,6 +1,5 @@
 import type { StoryFn } from '@storybook/react';
-
-import QuantityInput from './QuantityInput';
+import QuantityInput from '../components/common/QuantityInput';
 
 export default {
   title: 'QuantityInput',

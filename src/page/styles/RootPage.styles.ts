@@ -1,20 +1,6 @@
-import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
-import Header from '../common/Header';
-
-export default function RootPage() {
-  return (
-    <Wrapper>
-      <Header />
-      <Main>
-        <Outlet />
-      </Main>
-    </Wrapper>
-  );
-}
-
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   position: relative;
 
   display: flex;
@@ -26,7 +12,7 @@ const Wrapper = styled.div`
   padding-top: 80px;
 `;
 
-const Main = styled.main`
+export const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;

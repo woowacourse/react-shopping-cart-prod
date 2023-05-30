@@ -1,13 +1,10 @@
-import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import styled from 'styled-components';
-
+import * as S from './styles/CartItemList.styles';
 import CartItem from './CartItem';
 import CheckBox from '../common/CheckBox';
-
 import * as api from '../../api';
-import useToast from '../../hooks/useToast';
-import { cartState, checkedListState, serverNameState } from '../../recoil/state';
+import useToast from '../hooks/useToast';
+import { cartState, checkedListState, serverNameState } from '../../atom/state';
 import { API_ERROR_MESSAGE } from '../../constants';
 
 export default function CartItemList() {
@@ -56,89 +53,27 @@ export default function CartItemList() {
   };
 
   return (
-    <Wrapper>
-      <CountMessage>배송 상품 ({cart.length}개)</CountMessage>
-      <List>
+    <S.Wrapper>
+      <S.CountMessage>배송 상품 ({cart.length}개)</S.CountMessage>
+      <S.List>
         {cart.map((cartItem, index) => (
-          <ListItemBox key={cartItem.id}>
+          <S.ListItemBox key={cartItem.id}>
             <CartItem
               {...cartItem}
               checked={checkedList[index]}
               toggleChecked={toggleCheckedList(index)}
               deleteChecked={deleteCheckedList(index)}
             />
-          </ListItemBox>
+          </S.ListItemBox>
         ))}
-      </List>
-      <RemoveBox>
+      </S.List>
+      <S.RemoveBox>
         <CheckBox checked={allChecked} onClickCheckbox={allChecked ? uncheckAll : checkAll} />
-        <RemoveLabel>
+        <S.RemoveLabel>
           전체선택 ({checkedCount}/{checkedList.length})
-        </RemoveLabel>
-        <RemoveButton onClick={removeCheckedCartItem}>선택삭제</RemoveButton>
-      </RemoveBox>
-    </Wrapper>
+        </S.RemoveLabel>
+        <S.RemoveButton onClick={removeCheckedCartItem}>선택삭제</S.RemoveButton>
+      </S.RemoveBox>
+    </S.Wrapper>
   );
 }
-
-const Wrapper = styled.div`
-  width: 736px;
-
-  @media (max-width: 736px) {
-    width: 100%;
-  }
-`;
-
-const CountMessage = styled.p`
-  width: 100%;
-  margin-top: 16px;
-  padding: 24px 0;
-
-  line-height: 34px;
-  letter-spacing: 0.5px;
-  font-size: 20px;
-  color: #333333;
-`;
-
-const List = styled.div`
-  min-height: 128px;
-  max-height: 612px;
-  border-top: 4px solid #aaaaaa;
-
-  overflow: scroll;
-`;
-
-const ListItemBox = styled.div`
-  padding: 28px 0;
-
-  & + & {
-    border-top: 1.5px solid #cccccc;
-  }
-`;
-
-const RemoveBox = styled.div`
-  display: flex;
-  align-items: center;
-
-  margin-top: 8px;
-`;
-
-const RemoveLabel = styled.p`
-  margin: 0 16px;
-
-  line-height: 20px;
-  letter-spacing: 0.5px;
-  font-size: 16px;
-  color: #333333;
-`;
-
-const RemoveButton = styled.button`
-  width: 98px;
-  height: 36px;
-
-  border: 1px solid #bbbbbb;
-  background: #ffffff;
-
-  font-size: 16px;
-  color: #333333;
-`;
