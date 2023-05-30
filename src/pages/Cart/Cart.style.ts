@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const CartWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
   margin: 0 -15px;
 `;

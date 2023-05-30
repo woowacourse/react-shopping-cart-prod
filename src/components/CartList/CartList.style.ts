@@ -6,7 +6,7 @@ export const CartListWrapper = styled.div`
   padding: 25px;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: 66.66%;
+    width: 60%;
   }
 `;
 

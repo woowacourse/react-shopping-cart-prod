@@ -6,7 +6,7 @@ export const PurchaseBoxWrapper = styled.div`
   padding: 25px;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    width: 33.33%;
+    width: 40%;
   }
 `;
 
