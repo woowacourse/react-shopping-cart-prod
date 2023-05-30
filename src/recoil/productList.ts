@@ -1,4 +1,4 @@
-import { getProductList } from 'api/requests';
+import { getProductList } from 'api/products';
 import { atom, selector } from 'recoil';
 import { Product } from 'types';
 import { serverAtom } from './server';

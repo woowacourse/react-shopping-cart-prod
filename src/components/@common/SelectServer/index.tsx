@@ -3,7 +3,7 @@ import { serverAtom } from 'recoil/server';
 import { SERVERS } from 'utils/constants';
 import { Cart, ServerName } from 'types';
 import * as S from './SelectServer.styles';
-import { getCartList } from 'api/requests';
+import { getCartList } from 'api/cart';
 import { cartListAtom, checkedItemsAtom } from 'recoil/cartList';
 
 const SelectServer = () => {
