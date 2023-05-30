@@ -17,6 +17,10 @@ const Router = () => {
               <Route element={<Content />}>
                 <Route index element={<ProductPage />} />
                 <Route path={PAGE_ROUTES.CART} element={<CartPage />} />
+                <Route
+                  path={PAGE_ROUTES.ORDER}
+                  element={<div>주문 목록</div>}
+                />
               </Route>
             </Routes>
           </Layout>
