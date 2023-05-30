@@ -45,6 +45,7 @@ export const Header = () => {
         <Style.CartContainer>
           <Style.Cart onClick={() => navigate('/cart')}>장바구니</Style.Cart>
           <CartListLengthViewer />
+          <Style.Cart onClick={() => navigate('/orders')}>주문 목록</Style.Cart>
         </Style.CartContainer>
       </Style.ContentWrapper>
     </Style.Container>

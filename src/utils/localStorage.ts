@@ -1,7 +1,8 @@
-import mockData from '../assets/mockData.json';
+import mockData from '../mocks/mockData.json';
 
 export const CART_ITEMS_KEY = 'cartItemsKey';
 export const PRODUCT_LIST_KEY = 'productListKey';
+export const POINT_KEY = 'pointKey';
 
 export const getCartItems = () => {
   const localStorageCartItems = localStorage.getItem(CART_ITEMS_KEY) ?? '[]';
@@ -27,4 +28,12 @@ export const getProductList = () => {
     throw new Error('상품 목록이 배열 형식이 아닙니다!');
 
   return productList;
+};
+
+export const getPoint = () => {
+  const localStoragePoint = localStorage.getItem(POINT_KEY) ?? '2000';
+
+  const point = JSON.parse(localStoragePoint);
+
+  return point;
 };

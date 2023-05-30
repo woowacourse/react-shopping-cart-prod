@@ -6,6 +6,7 @@ import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
 import { useSelectedCartRecoil } from '../../../hooks/recoil/useSelectedCartRecoil';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
+import { getCommaAddedNumber } from '../../../utils/number';
 
 interface ProductSelectItemProps {
   cartId: number;
@@ -81,7 +82,9 @@ export const CartItem = ({
             quantity={initialQuantity}
             onQuantityChange={handleChangeQuantity}
           />
-          <Style.ProductPrice>{price}원</Style.ProductPrice>
+          <Style.ProductPrice>
+            {getCommaAddedNumber(price)}원
+          </Style.ProductPrice>
         </Style.ProductSelectorContainer>
       </Style.Content>
     </Style.Container>
@@ -165,6 +168,10 @@ const Style = {
     cursor: pointer;
   `,
   ProductPrice: styled.span`
-    font-size: 16px;
+    font-size: 24px;
+
+    @media (max-width: 480px) {
+      font-size: 18px;
+    }
   `,
 };

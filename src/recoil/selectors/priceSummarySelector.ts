@@ -23,6 +23,8 @@ export const priceSummaryState = selector({
 
     const totalPrice = totalProductPrice + deliveryPrice;
 
-    return { totalProductPrice, deliveryPrice, totalPrice };
+    const pointToAdd = totalPrice / 10;
+
+    return { totalProductPrice, deliveryPrice, totalPrice, pointToAdd };
   },
 });
