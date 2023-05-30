@@ -71,7 +71,7 @@ const cartItemsRepository = selector<CartItemsRepository>({
         );
       }),
       removeCheckedCartItem: getCallback(({ set }) => () => {
-        set(cartItemsState, (cartItems) => cartItems.filter((cartItem) => cartItem.checked));
+        set(cartItemsState, (cartItems) => cartItems.filter((cartItem) => !cartItem.checked));
       }),
     };
   },
