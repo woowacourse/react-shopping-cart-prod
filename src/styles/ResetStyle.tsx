@@ -69,6 +69,16 @@ const ResetStyle = createGlobalStyle`
   select {
     font: inherit;
   }
+  
+  /* make cursor pointer */
+  button, select {
+    cursor: pointer;
+  }
+
+  /* Add rules for li tag */
+  li {
+    list-style-type: none;
+  }
 
   /* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
   @media (prefers-reduced-motion: reduce) {
