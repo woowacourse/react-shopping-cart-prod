@@ -8,6 +8,7 @@ export const CartWrapper = styled.div`
 
 export const EmptyCartWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 700px;

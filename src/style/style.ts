@@ -56,7 +56,7 @@ export const Col = styled.div`
 export const PageTitle = styled.div`
   font-style: normal;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 37px;
 
   text-align: center;

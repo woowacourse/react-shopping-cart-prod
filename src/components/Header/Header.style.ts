@@ -37,7 +37,7 @@ export const NavBar = styled.div`
 `;
 
 export const CartTitle = styled.div`
-  font-size: 24px;
+  font-size: 20px;
   color: ${({ theme }) => theme.color.dark};
 `;
 
@@ -57,6 +57,6 @@ export const CartCount = styled.div`
 `;
 
 export const OrderListButton = styled.button`
-  font-size: 24px;
+  font-size: 20px;
   color: ${({ theme }) => theme.color.dark};
 `;
