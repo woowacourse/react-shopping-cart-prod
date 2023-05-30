@@ -7,4 +7,4 @@ export const deleteProduct = (
   cartProducts: CartProduct[],
   id: number
 ): CartProduct[] =>
-  cartProducts.filter((cartProduct) => cartProduct.product.productId !== id);
+  cartProducts.filter((cartProduct) => cartProduct.cartItemId !== id);

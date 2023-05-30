@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { cartProductAtom } from '../recoil/cartProductData';
-import { findTargetProduct } from '../domain/cartProductHandler';
+import { deleteProduct, findTargetProduct } from '../domain/cartProductHandler';
 import { api } from '../apis/cartProducts';
 import useProductQuantity from './useProductQuantity';
 import { hostNameAtom } from '../recoil/hostData';
@@ -33,11 +33,7 @@ const useCartProducts = (product: Product) => {
         return apiInstance.deleteCartProduct(target.cartItemId);
       });
 
-      setCartProducts(
-        cartProducts.filter(
-          (cartProduct) => cartProduct.cartItemId !== target.cartItemId
-        )
-      );
+      setCartProducts(deleteProduct(cartProducts, target.cartItemId));
     }
   };
 
