@@ -1,30 +1,22 @@
-import { useEffect } from 'react';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
-import styled, { css } from 'styled-components';
-import { toastState } from '../../states/toast/atom';
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import styled, { css } from "styled-components";
+
+import { toastState } from "../../states/toast/atom";
 
 interface ToastStyleProps {
-  variant: 'success' | 'error';
+  variant: "success" | "error";
 }
 
 const Toast = () => {
   const toastInfo = useRecoilValue(toastState);
   const resetToastState = useResetRecoilState(toastState);
 
-  useEffect(() => {
-    if (toastInfo === null) return;
-
-    const closeTimeout = setTimeout(() => {
-      resetToastState();
-      clearTimeout(closeTimeout);
-    }, toastInfo.duration);
-
-    return () => {
-      clearTimeout(closeTimeout);
-    };
-  }, [resetToastState, toastInfo]);
-
   if (toastInfo === null) return null;
+
+  const closeTimeout = setTimeout(() => {
+    resetToastState();
+    clearTimeout(closeTimeout);
+  }, toastInfo.duration);
 
   return <Container variant={toastInfo.variant}>{toastInfo.message}</Container>;
 };

@@ -16,6 +16,7 @@ import {
 } from '../states/checkedCartProducts/utils';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
+import { TOAST_STATE } from '../constants/toast';
 
 const useMultipleChecked = () => {
   const serverName = useRecoilValue(serverNameState);
@@ -29,9 +30,9 @@ const useMultipleChecked = () => {
   const isAllChecked = getIsAllChecked(cartProducts, checked);
   const isAllUnchecked = getIsAllUnchecked(checked);
 
-  const toggleAllProductChecked: ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
+  const toggleAllProductChecked: ChangeEventHandler<
+    HTMLInputElement
+  > = event => {
     const { checked } = event.currentTarget;
 
     if (checked) {
@@ -44,22 +45,17 @@ const useMultipleChecked = () => {
 
   const deleteCheckedProducts = () => {
     try {
-      checked.forEach(async (item) => {
+      checked.forEach(async item => {
         await deleteData(item.id);
       });
 
-      setCartProducts((prev) =>
-        prev.filter(
-          (cartProduct) => !findTargetChecked(checked, cartProduct.id)
-        )
+      setCartProducts(prev =>
+        prev.filter(cartProduct => !findTargetChecked(checked, cartProduct.id))
       );
       setChecked([]);
+      setToastState(TOAST_STATE.successDeleteProduct);
     } catch {
-      setToastState({
-        message: '상품 삭제를 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(TOAST_STATE.failedDeleteProduct);
     }
   };
 

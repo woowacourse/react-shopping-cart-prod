@@ -8,6 +8,7 @@ import {
 } from '../states/cartProducts/util';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
+import { TOAST_STATE } from '../constants/toast';
 
 const useProductQuantity = (id: number, quantity: number) => {
   const serverName = useRecoilValue(serverNameState);
@@ -19,18 +20,10 @@ const useProductQuantity = (id: number, quantity: number) => {
   const deleteProduct = async () => {
     try {
       await deleteData(id);
-      setCartProducts((prev) => deleteTargetProduct(prev, id));
-      setToastState({
-        message: '상품을 삭제했어요',
-        variant: 'success',
-        duration: 2000,
-      });
+      setCartProducts(prev => deleteTargetProduct(prev, id));
+      setToastState(TOAST_STATE.successDeleteProduct);
     } catch (error) {
-      setToastState({
-        message: '상품 삭제를 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(TOAST_STATE.failedDeleteProduct);
     }
   };
 
@@ -39,15 +32,9 @@ const useProductQuantity = (id: number, quantity: number) => {
       const updatedQuantity = quantity + 1;
 
       await patchData(id, updatedQuantity);
-      setCartProducts((prev) =>
-        updateTargetQuantity(prev, id, updatedQuantity)
-      );
+      setCartProducts(prev => updateTargetQuantity(prev, id, updatedQuantity));
     } catch (error) {
-      setToastState({
-        message: '수량 변경을 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(TOAST_STATE.failedUpdateQuantity);
     }
   };
 
@@ -61,15 +48,9 @@ const useProductQuantity = (id: number, quantity: number) => {
       }
 
       await patchData(id, updatedQuantity);
-      setCartProducts((prev) =>
-        updateTargetQuantity(prev, id, updatedQuantity)
-      );
+      setCartProducts(prev => updateTargetQuantity(prev, id, updatedQuantity));
     } catch (error) {
-      setToastState({
-        message: '수량 변경을 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(TOAST_STATE.failedUpdateQuantity);
     }
   };
 
