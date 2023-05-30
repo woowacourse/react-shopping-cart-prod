@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-import { CartItemType, OrderItemType } from '@Types/index';
+import { CartItemType, MyCouponType, OrderItemType } from '@Types/index';
 
 import localStorageHelper from '@Utils/localStorageHelper';
 
@@ -102,5 +102,13 @@ export const handlers = [
     );
 
     return res(ctx.status(201));
+  }),
+
+  // 나의 쿠폰 불러오기
+  rest.get('/coupons/member', async (req, res, ctx) => {
+    if (!localStorageHelper.hasKey('myCoupons')) localStorageHelper.setInitValue('myCoupons', []);
+    const myCoupons = localStorageHelper.getValue<MyCouponType[]>('myCoupons');
+
+    return res(ctx.status(200), ctx.json(myCoupons), ctx.delay(100));
   }),
 ];

@@ -1,4 +1,4 @@
-import UseCoupon from '@Components/Modal/UseCoupon';
+import MyCoupon from '@Components/Modal/MyCoupon';
 import { ModalProvider } from 'noah-modal';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -28,8 +28,8 @@ async function main() {
           modals={[
             {
               title: '쿠폰 사용하기',
-              component: <UseCoupon />,
-              name: 'useCoupon',
+              component: <MyCoupon />,
+              name: 'myCoupon',
               delayMsTime: 300,
               position: 'middle',
             },
