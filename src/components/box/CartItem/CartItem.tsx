@@ -6,7 +6,7 @@ import CheckBox from '../../common/CheckBox/CheckBox';
 import { Text } from '../../common/Text/Text';
 import { useState } from 'react';
 import getPriceFormat from '../../../utils/getPriceFormat';
-import { useModal } from '../../../hooks/useModal';
+import { useConfirmModal } from '../../../hooks/useConfirmModal';
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import useCheckCart from '../../../hooks/useCheckCart';
 
@@ -18,7 +18,7 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
 
   const totalPrice = check ? cart.product.price : 0;
 
-  const { openModal } = useModal();
+  const { openModal } = useConfirmModal();
 
   const deleteCartItem = () => {
     deleteCartItemAPI(cart.id);

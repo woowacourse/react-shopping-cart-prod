@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
 import { Text } from '../common/Text/Text';
-import { useModal } from '../../hooks/useModal';
+import { useConfirmModal } from '../../hooks/useConfirmModal';
 
 const AddCouponModal = () => {
-  const { modalDataState, closeModal } = useModal();
+  const { modalDataState, closeModal } = useConfirmModal();
 
   const onSubmit = () => {
     modalDataState.callBack && modalDataState.callBack();

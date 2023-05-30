@@ -13,8 +13,13 @@ export const checkCartListState = atom<number[]>({
   default: [],
 });
 
-export const deleteModalState = atom<ModalType>({
-  key: 'deleteModal',
+export const confirmModalState = atom<ModalType>({
+  key: 'confirmModal',
+  default: {
+    isOpen: false,
+  },
+});
+
   default: {
     isOpen: false,
   },

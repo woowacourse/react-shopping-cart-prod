@@ -3,7 +3,7 @@ import CartItem from '../../box/CartItem/CartItem';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import Button from '../../common/Button/Button';
 import { Text } from '../../common/Text/Text';
-import { useModal } from '../../../hooks/useModal';
+import { useConfirmModal } from '../../../hooks/useConfirmModal';
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import { useRecoilState } from 'recoil';
 import { checkCartListState } from '../../../service/atom';
@@ -12,7 +12,7 @@ const CartList = () => {
   const { cartData, deleteCartItemAPI } = useCartFetch();
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
 
-  const { openModal } = useModal();
+  const { openModal } = useConfirmModal();
 
   const deleteSelectCart = async () => {
     checkCartList.forEach((cartId) => {
