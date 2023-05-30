@@ -44,7 +44,7 @@ export const cartBillTotalPriceState = selector({
 
 export const serverNameState = atom<ServerNameType>({
   key: 'serverNameState',
-  default: '라온',
+  default: 'RAON',
   effects: [localStorageEffect(LOCAL_STORAGE_KEY.serverName)],
 });
 

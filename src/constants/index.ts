@@ -25,12 +25,12 @@ export const API_ERROR_MESSAGE = {
   deleteCartItem: '상품 삭제를 못했어요. 다시 시도해주세요.',
 };
 
-export const SERVER_NAMES: ServerNameType[] = ['라온', '져니', '쥬니'];
+export const SERVER_NAMES: ServerNameType[] = ['RAON', 'JOURNY', 'ZUNY'];
 
 export const BASE_URL_MAP: Record<ServerNameType, string> = {
-  라온: 'https://jourzura.kro.kr',
-  져니: 'https://journey-shop.kro.kr',
-  쥬니: 'https://jourzura2.kro.kr',
+  RAON: 'https://jourzura.kro.kr',
+  JOURNY: 'https://journey-shop.kro.kr',
+  ZUNY: 'https://jourzura2.kro.kr',
 };
 
 export const USER_ID = 'a@a.com';
