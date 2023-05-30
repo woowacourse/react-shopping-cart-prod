@@ -5,7 +5,6 @@ import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 import { getCartAPI } from '../api/cartAPI';
 import { postOrder } from '../api/orderAPI';
 import HTTPError from '../api/utils/HTTPError';
-import { getAuthorizedOptionHeaders } from '../api/utils/authorizedOptionHeaders';
 import {
   CART_API_ERROR_MESSAGE,
   HTTP_STATUS_CODE,
@@ -15,7 +14,7 @@ import { PATH } from '../constants/path';
 import { TOAST_SHOW_DURATION } from '../constants/ui';
 import { cartItemQuantityState, cartListState } from '../store/cart';
 import { errorModalMessageState } from '../store/error';
-import { currentMemberInformationState, currentMemberState } from '../store/member';
+import { currentMemberInformationState } from '../store/member';
 import { currentServerState } from '../store/server';
 import { APIErrorMessage } from '../types/api';
 import { CartItemData } from '../types/cart';
@@ -25,12 +24,7 @@ import { useMutationFetch } from './common/useMutationFetch';
 
 const useCart = () => {
   const currentServer = useRecoilValue(currentServerState);
-  const currentMember = useRecoilValue(currentMemberState);
-  const authorizedHeaders = getAuthorizedOptionHeaders(currentMember);
-  const cartAPI = useMemo(
-    () => getCartAPI(currentServer, authorizedHeaders),
-    [currentServer, authorizedHeaders]
-  );
+  const cartAPI = useMemo(() => getCartAPI(currentServer), [currentServer]);
   const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
   const navigate = useNavigate();
 
@@ -165,12 +159,12 @@ const useCart = () => {
             return acc;
           }, []);
 
-          const response = await postOrder(currentServer, authorizedHeaders, OrderCartItems);
+          const response = await postOrder(currentServer, OrderCartItems);
           const orderId = response.headers.get('Location')?.split('/').pop()!;
 
           return orderId;
         },
-      [currentServer, authorizedHeaders]
+      [currentServer]
     ),
     {
       onSuccess: useRecoilCallback(

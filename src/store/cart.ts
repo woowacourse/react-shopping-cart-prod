@@ -1,23 +1,19 @@
 import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
-import { getAuthorizedOptionHeaders } from '../api/utils/authorizedOptionHeaders';
 import { SHIPPING_FEE, SHIPPING_FEE_EXEMPTION_CONDITION } from '../constants';
 import { changeCartItemQuantity } from '../domain/cart';
 import { CartItemData } from '../types/cart';
 import { getMemberDiscountAmount, getTotalItemDiscountAmount } from '../utils/discount';
 import { checkedCartIdListState } from './cartCheckbox';
-import { currentMemberInformationState, currentMemberState } from './member';
+import { currentMemberInformationState } from './member';
 import { currentServerState } from './server';
 
 const cartListQuery = selector<CartItemData[]>({
   key: 'cartListQuery',
   get: ({ get }) => {
     const currentServer = get(currentServerState);
-    const currentMember = get(currentMemberState);
-    const authorizedHeaders = getAuthorizedOptionHeaders(currentMember);
-
-    const cartAPI = getCartAPI(currentServer, authorizedHeaders);
+    const cartAPI = getCartAPI(currentServer);
 
     return cartAPI.getCartList();
   },

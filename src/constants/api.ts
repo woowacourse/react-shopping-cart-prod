@@ -1,3 +1,16 @@
+const BASE64 = btoa(process.env.REACT_APP_API_USERNAME + ':' + process.env.REACT_APP_API_PASSWORD);
+
+const FETCH_DEFAULT_OPTION = {
+  headers: {
+    Accept: 'application/json',
+  },
+} as const;
+
+const AUTHORIZED_FETCH_OPTION_HEADERS = {
+  'Content-Type': 'application/json',
+  Authorization: `Basic ${BASE64}`,
+} as const;
+
 const SERVER = ['프론트', '아코', '주디', '저문'] as const;
 
 const API_BASE_URL_LIST = {
@@ -15,12 +28,6 @@ const API_ENDPOINT = {
   ORDERS: '/orders',
   MEMBER: '/member',
   MEMBERS: '/members',
-} as const;
-
-const FETCH_DEFAULT_OPTION = {
-  headers: {
-    Accept: 'application/json',
-  },
 } as const;
 
 const HTTP_STATUS_CODE = {
@@ -78,10 +85,11 @@ const ORDER_API_ERROR_MESSAGE = {
 } as const;
 
 export {
+  FETCH_DEFAULT_OPTION,
+  AUTHORIZED_FETCH_OPTION_HEADERS,
   API_BASE_URL_LIST,
   DEFAULT_API_BASE_URL,
   API_ENDPOINT,
-  FETCH_DEFAULT_OPTION,
   HTTP_STATUS_CODE,
   HTTP_ERROR_MESSAGE,
   CART_API_ERROR_MESSAGE,

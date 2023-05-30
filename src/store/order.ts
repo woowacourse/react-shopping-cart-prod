@@ -1,20 +1,16 @@
 import { selector, selectorFamily } from 'recoil';
 
 import { getMemberAPI } from '../api/memberAPI';
-import { getAuthorizedOptionHeaders } from '../api/utils/authorizedOptionHeaders';
 import { OrderData } from '../types/order';
 import { getTotalItemDiscountAmount } from '../utils/discount';
-import { currentMemberInformationState, currentMemberState } from './member';
+import { currentMemberInformationState } from './member';
 import { currentServerState } from './server';
 
 const orderListState = selector<OrderData[]>({
   key: 'orderList',
   get: ({ get }) => {
     const currentServer = get(currentServerState);
-    const currentMember = get(currentMemberState);
-    const authorizedHeaders = getAuthorizedOptionHeaders(currentMember);
-
-    const memberAPI = getMemberAPI(currentServer, authorizedHeaders);
+    const memberAPI = getMemberAPI(currentServer);
     const currentMemberInformation = get(currentMemberInformationState);
 
     return memberAPI.getMemberOrderList(currentMemberInformation.id);
