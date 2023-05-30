@@ -1,12 +1,12 @@
 import FlexBox from 'components/@common/FlexBox';
 import SkeletonImg from 'components/@common/SkeletonImg';
 import styled from 'styled-components';
-import { CartProduct } from 'types/product';
+// import { CartProduct } from 'types/product';
 import emptyImg from 'assets/gradiation-min.png';
 
-type SheetProductCardProps = {
-  sheetProduct: CartProduct;
-};
+// type SheetProductCardProps = {
+//   sheetProduct: CartProduct;
+// };
 
 const SheetProductCard = ({ sheetProduct }: any) => {
   // OrderItem에서 사용되는 경우 구조가 다른 문제 해결
@@ -47,12 +47,12 @@ const ProductImageWrapper = styled.div`
   width: 75px;
 `;
 
-const ProductImage = styled.img`
-  width: 75px;
-  height: 75px;
-  border-radius: 4px;
-  filter: brightness(96%);
-`;
+// const ProductImage = styled.img`
+//   width: 75px;
+//   height: 75px;
+//   border-radius: 4px;
+//   filter: brightness(96%);
+// `;
 
 const ProductInfoContainer = styled(FlexBox)`
   position: relative;

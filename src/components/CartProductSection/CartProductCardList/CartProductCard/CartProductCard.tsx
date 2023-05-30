@@ -84,12 +84,12 @@ const ProductImageWrapper = styled.div`
   width: 150px;
 `;
 
-const ProductImage = styled.img`
-  width: 150px;
-  height: 150px;
-  border-radius: 4px;
-  filter: brightness(96%);
-`;
+// const ProductImage = styled.img`
+//   width: 150px;
+//   height: 150px;
+//   border-radius: 4px;
+//   filter: brightness(96%);
+// `;
 
 const Title = styled.span`
   width: 100%;

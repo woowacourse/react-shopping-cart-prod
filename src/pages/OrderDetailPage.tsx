@@ -1,8 +1,5 @@
 import FlexBox from 'components/@common/FlexBox';
 import OrderItem from 'components/OrderItem/OrderItem';
-import OrderPriceSection from 'components/OrderPriceSection/OrderPriceSection';
-import SheetLeftSection from 'components/SheetLeftSection/SheetLeftSection';
-import React from 'react';
 import styled from 'styled-components';
 
 const order = {

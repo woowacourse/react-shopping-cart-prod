@@ -16,6 +16,7 @@ type UserItemProps = {
 };
 
 const UserItem = ({ currentUser, user, onClick }: UserItemProps) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, setUserState] = useRecoilState(userState);
   const isChecked = user.id === currentUser.id;
 

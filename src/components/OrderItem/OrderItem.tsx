@@ -2,8 +2,14 @@ import FlexBox from 'components/@common/FlexBox';
 import SheetProductCard from 'components/SheetLeftSection/SheetProductCardList/SheetProductCard/SheetProductCard';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { Order } from 'types/order';
 
-const OrderItem = ({ order, type }: any) => {
+type OrderItemProps = {
+  order: Order;
+  type: string;
+};
+
+const OrderItem = ({ order, type }: OrderItemProps) => {
   const navigate = useNavigate();
 
   const handleOnClick = () => {
