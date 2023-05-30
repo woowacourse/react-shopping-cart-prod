@@ -1,8 +1,9 @@
-import { atom, selector, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
 import { localStorageEffect } from './localStorageEffect';
 
-import { CheckedStateType } from '../types';
 import { LOCAL_STORAGE_KEY, RECOIL_KEY } from '../constants';
+
+import { type CheckedStateType } from '../types';
 
 export const CheckedState = atom<CheckedStateType>({
   key: RECOIL_KEY.CHECKED_STATE,
@@ -20,8 +21,8 @@ export const CheckedLength = selector({
   },
 });
 
-export const useCheckedState = () => useRecoilState(CheckedState);
-
-export const useCheckedLength = () => useRecoilValue(CheckedLength);
+export const useCheckedValue = () => useRecoilValue(CheckedState);
 
 export const useSetCheckedState = () => useSetRecoilState(CheckedState);
+
+export const useCheckedLength = () => useRecoilValue(CheckedLength);

@@ -2,54 +2,38 @@ import * as styled from './CartItemList.styled';
 import { Checkbox } from '../../styled/Checkbox';
 
 import { useUpdateRecoilCart } from '../../../hooks/useUpdateRecoilCart';
+import { useMutation } from '../../../hooks/useMutation';
+import { useUpdateCheckbox } from '../../../hooks/useUpdateCheckbox';
 import { useCartStateValue } from '../../../recoils/recoilCart';
-import { useCheckedState } from '../../../recoils/recoilChecked';
+import { useCheckedValue } from '../../../recoils/recoilChecked';
+import { useApiBaseUrlValue } from '../../../recoils/recoilApiBaseUrl';
 
-import { DeleteIcon } from '../../../assets/svg';
 import { Stepper } from '../../common/Stepper/Stepper';
 
-import { CartItemType } from '../../../types';
-import { useApiBaseUrlValue } from '../../../recoils/recoilApiBaseUrl';
-import { useMutation } from '../../../hooks/useMutation';
+import { DeleteIcon } from '../../../assets/svg';
 import { FETCH_METHOD, FETCH_URL } from '../../../constants';
+
+import { type CartItemType } from '../../../types';
 
 export const CartItemList = () => {
   const baseUrl = useApiBaseUrlValue();
   const { mutation: deleteCartMutation } = useMutation(FETCH_METHOD.DELETE);
 
   const { deleteRecoilCartItem } = useUpdateRecoilCart();
+  const { toggleCheckbox } = useUpdateCheckbox();
 
   const cart = useCartStateValue();
+  const checkState = useCheckedValue();
 
-  const [checkState, setCheckState] = useCheckedState();
-
-  const onChangeCheckBox = (id: CartItemType['id']) => {
-    setCheckState((prev) => {
-      if (prev[id]) {
-        const { [id]: _, ...updatedState } = prev;
-        return {
-          ...updatedState,
-          all: false,
-        };
-      }
-      return {
-        ...prev,
-        [id]: true,
-      };
-    });
+  const onChangeCheckBox = (cartItemId: CartItemType['id']) => {
+    toggleCheckbox(cartItemId);
   };
 
-  const onClickDeleteIcon = (id: CartItemType['id']) => {
-    if (checkState[id]) {
-      setCheckState((prev) => {
-        const { [id]: _, ...updatedState } = prev;
+  const onClickDeleteIcon = (cartItemId: CartItemType['id']) => {
+    toggleCheckbox(cartItemId);
 
-        return updatedState;
-      });
-    }
-
-    deleteCartMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${id}`);
-    deleteRecoilCartItem(id);
+    deleteCartMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`);
+    deleteRecoilCartItem(cartItemId);
   };
 
   return (

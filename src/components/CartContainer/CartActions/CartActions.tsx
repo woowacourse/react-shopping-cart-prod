@@ -1,14 +1,14 @@
 import * as styled from './CartActions.styled';
 import { Checkbox } from '../../styled/Checkbox';
 
-import { useCartStateValue } from '../../../recoils/recoilCart';
-import { useCheckedState } from '../../../recoils/recoilChecked';
 import { useUpdateRecoilCart } from '../../../hooks/useUpdateRecoilCart';
 
-import { CheckedStateType } from '../../../types';
 import { useApiBaseUrlValue } from '../../../recoils/recoilApiBaseUrl';
 import { useMutation } from '../../../hooks/useMutation';
 import { FETCH_METHOD, FETCH_URL } from '../../../constants';
+import { useUpdateCheckbox } from '../../../hooks/useUpdateCheckbox';
+import { useCartStateValue } from '../../../recoils/recoilCart';
+import { useCheckedValue } from '../../../recoils/recoilChecked';
 
 export const CartActions = () => {
   const baseUrl = useApiBaseUrlValue();
@@ -17,35 +17,23 @@ export const CartActions = () => {
   const { deleteRecoilCartItem } = useUpdateRecoilCart();
 
   const cart = useCartStateValue();
-  const [checkedState, setCheckedState] = useCheckedState();
+
+  const checkedState = useCheckedValue();
+  const { toggleAllCheckbox } = useUpdateCheckbox();
 
   const onChangeAllCheckbox = () => {
-    setCheckedState((prev) => {
-      const updatedCheckedState: CheckedStateType = {
-        all: !prev.all,
-      };
-
-      if (!prev.all) {
-        for (const item of cart) {
-          updatedCheckedState[item.id] = true;
-        }
-      }
-
-      return updatedCheckedState;
-    });
+    toggleAllCheckbox(cart);
   };
 
-  const onClickDeleteSelectedItemButton = () => {
+  const onClickDeleteCheckedItemButton = () => {
     const { all, ...selectedItems } = checkedState;
-    const targetItemsId = Object.keys(selectedItems).map(Number);
+    const checkedItemsId = Object.keys(selectedItems).map(Number);
 
-    targetItemsId.forEach((cartItemId) => {
+    checkedItemsId.forEach((cartItemId) => {
       deleteCartMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`);
     });
 
-    deleteRecoilCartItem(...targetItemsId);
-
-    setCheckedState({ all: false });
+    deleteRecoilCartItem(...checkedItemsId);
   };
 
   return (
@@ -56,7 +44,7 @@ export const CartActions = () => {
           전체선택 ({Object.keys(checkedState).length - 1}/{cart.length})
         </span>
       </styled.ToggleAllCheckBox>
-      <styled.DeleteSelectedItemButton onClick={onClickDeleteSelectedItemButton}>
+      <styled.DeleteSelectedItemButton onClick={onClickDeleteCheckedItemButton}>
         선택삭제
       </styled.DeleteSelectedItemButton>
     </styled.SelectionActions>
