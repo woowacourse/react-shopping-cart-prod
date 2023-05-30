@@ -5,8 +5,6 @@ import ProductsListPage from './pages/ProductsListPage';
 import CartProductsListPage from './pages/CartProductsListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Layout from './Layout';
-import ProductListSkeleton from './components/Common/ContentListSkeleton';
-import Message from './components/Common/Message';
 
 function App() {
   return (
