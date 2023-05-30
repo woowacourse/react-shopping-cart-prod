@@ -1,7 +1,9 @@
+import { TextSkeletonStyle } from '@Styles/common/skeleton';
 import styled from 'styled-components';
 
 type ContainerProps = {
   isUsed: boolean;
+  isLoading: boolean;
 };
 
 export const Container = styled.div<ContainerProps>`
@@ -13,6 +15,8 @@ export const Container = styled.div<ContainerProps>`
   color: #333333;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   opacity: ${(props) => props.isUsed && '0.6'};
+
+  ${(props) => props.isLoading && TextSkeletonStyle}
 `;
 
 export const CouponLayout = styled.div`
@@ -33,7 +37,12 @@ export const CouponSubMessage = styled.div`
   color: #4f4f4f;
 `;
 
-export const CouponButton = styled.button`
+type CouponButtonProps = {
+  isLoading: boolean;
+};
+
+export const CouponButton = styled.button<CouponButtonProps>`
+  opacity: ${(props) => props.isLoading && '0'};
   align-self: center;
   border: none;
   background-color: #06c09e;

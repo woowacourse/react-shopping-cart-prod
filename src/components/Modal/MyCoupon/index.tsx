@@ -1,13 +1,14 @@
 import { Suspense } from 'react';
 
 import CouponList from '@Components/CouponList';
+import CouponListSkeleton from '@Components/CouponList/CouponListSkeleton';
 
 import myCouponState from '@Atoms/myCouponState';
 
 function MyCoupon() {
   return (
     <div>
-      <Suspense fallback={<div></div>}>
+      <Suspense fallback={<CouponListSkeleton />}>
         <CouponList
           couponState={myCouponState}
           noExistCouponText="쿠폰을 다 사용했요!"

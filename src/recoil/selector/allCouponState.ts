@@ -19,8 +19,6 @@ const allCouponState = selector({
 
     const myCouponIds = myCoupon.map((coupon) => coupon.id);
 
-    console.log(allCoupon, myCouponIds);
-
     return allCoupon.filter((coupon) => !myCouponIds.includes(coupon.id));
   },
 });
