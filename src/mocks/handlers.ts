@@ -17,10 +17,15 @@ export const handlers = [
     const foundCouponIndex = coupons.findIndex((coupon) => coupon.id === id);
     if (foundCoupon) {
       couponList.push(foundCoupon);
+      console.log(couponList);
       coupons[foundCouponIndex].issuable = false;
       return res(ctx.status(201), ctx.text('Add Cart Item Success'));
     }
     return res(ctx.status(400, 'Product Does Not Found'));
+  }),
+  rest.get('/users/coupons', async (_, res, ctx) => {
+    await delay(200);
+    return res(ctx.status(200), ctx.json(couponList));
   }),
   // rest.get('/products', async (_, res, ctx) => {
   //   await delay(200);

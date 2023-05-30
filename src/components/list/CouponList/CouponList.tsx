@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import CouponItem from '../../box/CouponItem/CouponItem';
 import useCouponFetch from '../../../hooks/useCouponFetch';
 import Button from '../../common/Button/Button';
-import { useModal } from '../../../hooks/useModal';
+import { useConfirmModal } from '../../../hooks/useConfirmModal';
 
 const CouponList = () => {
   const { allCoupon, addCouponAPI } = useCouponFetch();
-  const { openModal } = useModal();
+  const { openModal } = useConfirmModal();
 
   const addCoupon = async (couponId: number) => {
     addCouponAPI({ id: couponId });
@@ -25,7 +25,7 @@ const CouponList = () => {
               onClick={() => {
                 issuable
                   ? openModal({
-                      title: '발급이 완료되었습니다.',
+                      title: '쿠폰을 발급하시겠습니까?',
                       callback: () => addCoupon(coupon.id),
                     })
                   : openModal({ title: '이미 발급된 쿠폰입니다.' });

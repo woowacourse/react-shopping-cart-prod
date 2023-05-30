@@ -20,6 +20,8 @@ export const confirmModalState = atom<ModalType>({
   },
 });
 
+export const couponModalState = atom<ModalType>({
+  key: 'couponModal',
   default: {
     isOpen: false,
   },

@@ -1,5 +1,5 @@
-import Modal from '../common/Modal/Modal';
-import AddCouponModal from '../common/Modal/AddCouponModal';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import AddCouponModal from '../ConfirmModal/AddCouponModal';
 import { Text } from '../common/Text/Text';
 import CouponList from '../list/CouponList/CouponList';
 import PageTemplate from '../templates/PageTemplate';
@@ -19,9 +19,9 @@ const EventPage = () => {
         </EventPageHead>
         <CouponList />
       </EventPageWrapper>
-      <Modal>
+      <ConfirmModal>
         <AddCouponModal />
-      </Modal>
+      </ConfirmModal>
     </PageTemplate>
   );
 };

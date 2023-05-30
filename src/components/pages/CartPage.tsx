@@ -3,14 +3,21 @@ import { Text } from '../common/Text/Text';
 import CartList from '../list/CartList/CartList';
 import PageTemplate from '../templates/PageTemplate';
 import styled from '@emotion/styled';
-import Modal from '../common/Modal/Modal';
-import DeleteCartItemModal from '../common/Modal/DeleteCartItemModal';
+import ConfirmModal from '../ConfirmModal/ConfirmModal';
+import DeleteCartItemModal from '../ConfirmModal/DeleteCartItemModal';
 import { useCartFetch } from '../../hooks/useCartFetch';
 import { useRecoilValue } from 'recoil';
 import { checkCartListState } from '../../service/atom';
+import Button from '../common/Button/Button';
+import CouponModal from '../CouponModal/CouponModal';
+import ApplyCouponModal from '../CouponModal/ApplyCouponModal';
+import { useCouponModal } from '../../hooks/useCouponModal';
+import useCouponFetch from '../../hooks/useCouponFetch';
 
 const CartPage = () => {
   const { cartData } = useCartFetch();
+  const { userCoupon } = useCouponFetch();
+  const { openModal } = useCouponModal();
   const checkCartList = useRecoilValue(checkCartListState);
 
   const calcTotalPrice = () => {
@@ -40,6 +47,14 @@ const CartPage = () => {
             <CartList />
           </CartListWrapper>
           <PriceBox>
+            <Button
+              primary
+              size="small"
+              text="쿠폰보기"
+              onClick={() => {
+                openModal({});
+              }}
+            />
             <TotalPriceBox
               totalProductPrice={calcTotalPrice()}
               shippingFee={checkCartList.length > 0 ? 3000 : 0}
@@ -48,9 +63,12 @@ const CartPage = () => {
           </PriceBox>
         </CartPageContent>
       </CartPageWrapper>
-      <Modal>
+      <ConfirmModal>
         <DeleteCartItemModal />
-      </Modal>
+      </ConfirmModal>
+      <CouponModal>
+        <ApplyCouponModal coupons={userCoupon} totalPrice={calcTotalPrice()} />
+      </CouponModal>
     </PageTemplate>
   );
 };
@@ -107,9 +125,13 @@ const CartPageContent = styled.div`
 `;
 
 const PriceBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   position: sticky;
   top: 150px;
   margin-top: 30px;
+  gap: 6px;
   @media screen and (max-width: 1320px) {
     width: 100%;
   }
