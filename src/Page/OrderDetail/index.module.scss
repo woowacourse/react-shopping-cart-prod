@@ -1,0 +1,8 @@
+.payment-container {
+  display: flex;
+  justify-content: end;
+
+  & > div {
+    width: 560px;
+  }
+}

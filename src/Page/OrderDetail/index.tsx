@@ -3,6 +3,7 @@ import ContentLayout from 'src/components/Common/ContentLayout';
 import OrderItem from 'src/components/OrderItem';
 import PaymentsView from 'src/components/PaymentsView';
 import { orderDetail } from 'src/data/mockData';
+import styles from './index.module.scss';
 
 function OrderDetail() {
   const location = useLocation();
@@ -15,8 +16,10 @@ function OrderDetail() {
       <div>
         <OrderItem order={{ id: data.id, orderTime: data.orderTime, productList: data.productList }} />
       </div>
-      <div>
-        <PaymentsView paymentAmount={data.paymentAmount} puschaseOption={false} />
+      <div className={styles['payment-container']}>
+        <div>
+          <PaymentsView paymentAmount={data.paymentAmount} puschaseOption={false} />
+        </div>
       </div>
     </ContentLayout>
   );
