@@ -4,11 +4,15 @@ import Cart from "../pages/Cart";
 import Login from "../pages/Login";
 import Main from "../pages/Main";
 import NotFound from "../pages/NotFound";
+import Order from "../pages/Order";
+import OrderHistory from "../pages/OrderHistory";
 
 export const ROUTER_PATH = {
   Main: "/",
   Cart: "/Cart",
   Login: "/Login",
+  Order: "/Order",
+  OrderHistory: "/OrderHistory",
   NotFound: "/*",
 };
 
@@ -25,6 +29,14 @@ export const PageRouterProvider = () => {
     {
       path: ROUTER_PATH.Login,
       element: <Login />,
+    },
+    {
+      path: ROUTER_PATH.Order,
+      element: <Order />,
+    },
+    {
+      path: ROUTER_PATH.OrderHistory,
+      element: <OrderHistory />,
     },
     { path: ROUTER_PATH.NotFound, element: <NotFound /> },
   ]);
