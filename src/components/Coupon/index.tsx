@@ -2,7 +2,15 @@ import { CouponType } from '@Types/index';
 
 import * as S from './style';
 
-function Coupon({ name, description, isUsed = false, subMessage }: CouponType & { subMessage: string }) {
+function Coupon({
+  name,
+  description,
+  isUsed = false,
+  subMessage,
+  ableIssued,
+}: CouponType & { subMessage: string; ableIssued: boolean }) {
+  const couponButton = ableIssued ? '⬇︎' : '➡︎';
+
   return (
     <S.Container isUsed={isUsed}>
       <S.CouponLayout>
@@ -10,7 +18,7 @@ function Coupon({ name, description, isUsed = false, subMessage }: CouponType & 
         <S.CouponName>{name}</S.CouponName>
         <S.CouponSubMessage>{subMessage}</S.CouponSubMessage>
       </S.CouponLayout>
-      <S.CouponButton>➔</S.CouponButton>
+      <S.CouponButton>{couponButton}</S.CouponButton>
     </S.Container>
   );
 }
