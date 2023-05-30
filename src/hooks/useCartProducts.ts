@@ -9,32 +9,34 @@ import { hostNameAtom } from '../recoil/hostData';
 import type { Product } from '../types/product';
 
 const useCartProducts = (product: Product) => {
-  const { id } = product;
+  const { productId } = product;
   const hostName = useRecoilValue(hostNameAtom);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
-  const { addCount, subtractCount } = useProductQuantity(id);
-  const target = findTargetProduct(cartProducts, id);
+  const { addCount, subtractCount } = useProductQuantity(productId);
+  const target = findTargetProduct(cartProducts, productId);
 
   const addProduct = async () => {
     const cartItemId = await api(hostName).then((apiInstance) => {
-      return apiInstance.postCartProduct(product.id);
+      return apiInstance.postCartProduct(product.productId);
     });
 
     if (cartItemId)
       setCartProducts([
         ...cartProducts,
-        { id: Number(cartItemId), quantity: 1, product },
+        { cartItemId: Number(cartItemId), quantity: 1, product },
       ]);
   };
 
   const removeProduct = () => {
     if (target) {
       api(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(target.id);
+        return apiInstance.deleteCartProduct(target.cartItemId);
       });
 
       setCartProducts(
-        cartProducts.filter((cartProduct) => cartProduct.id !== target.id)
+        cartProducts.filter(
+          (cartProduct) => cartProduct.cartItemId !== target.cartItemId
+        )
       );
     }
   };
@@ -45,7 +47,7 @@ const useCartProducts = (product: Product) => {
     if (target.quantity === 0) {
       removeProduct();
     }
-  }, [id, setCartProducts, target]);
+  }, [productId, setCartProducts, target]);
 
   return { target, addProduct, removeProduct, addCount, subtractCount };
 };

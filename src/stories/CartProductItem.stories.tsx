@@ -13,13 +13,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockProduct = {
-  id: 1,
+  cartItemId: 1,
   quantity: 4,
   product: {
-    id: 1,
+    productId: 1,
     name: 'PET보틀-정사각(420ml)',
     price: 43400,
     imageUrl: 'images/정사각-420.jpeg',
+    stock: 4,
   },
 };
 

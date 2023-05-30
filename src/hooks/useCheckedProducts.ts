@@ -13,14 +13,18 @@ const useCheckedProducts = () => {
   const [checkedProducts, setCheckedProducts] = useRecoilState(checkedItemAtom);
 
   const removeCheckedProducts = () => {
-    const selectedProducts = checkedProducts.map((product) => product.id);
+    const selectedProducts = checkedProducts.map(
+      (cartProduct) => cartProduct.cartItemId
+    );
 
     setCartProducts(
-      cartProducts.filter((product) => !selectedProducts.includes(product.id))
+      cartProducts.filter(
+        (cartProduct) => !selectedProducts.includes(cartProduct.cartItemId)
+      )
     );
     setCheckedProducts(
       checkedProducts.filter(
-        (product) => !selectedProducts.includes(product.id)
+        (cartProduct) => !selectedProducts.includes(cartProduct.cartItemId)
       )
     );
 

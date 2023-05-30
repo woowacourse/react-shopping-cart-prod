@@ -3,6 +3,8 @@ import products from './data/products.json';
 import cartProducts from './data/cartProducts.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
 
+import type { Cart } from '../types/product';
+
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
     return res(ctx.delay(200), ctx.status(200), ctx.json(products));
@@ -23,16 +25,16 @@ export const handlers = [
   rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
     const { productId } = req.body;
 
-    const storedCartProducts = cartProducts;
+    const storedCartProducts: Cart = cartProducts;
 
-    if (findTargetProduct(storedCartProducts, productId)) {
+    if (findTargetProduct(storedCartProducts.cartItems, productId)) {
       return res(
         ctx.status(304),
         ctx.json({ message: '이미 상품이 있습니다' })
       );
     }
 
-    const product = products.find((product) => product.id === productId);
+    const product = products.find((product) => product.productId === productId);
 
     if (!product)
       return res(ctx.status(404), ctx.json({ message: '상품이 없습니다' }));
@@ -50,8 +52,8 @@ export const handlers = [
       const storedCartProducts = cartProducts;
 
       if (
-        !storedCartProducts.find(
-          (cartProduct) => cartProduct.id === cartProductId
+        !storedCartProducts.cartItems.find(
+          (cartProduct) => cartProduct.cartItemId === cartProductId
         )
       ) {
         return res(
@@ -76,8 +78,8 @@ export const handlers = [
     const storedCartProducts = cartProducts;
 
     if (
-      !storedCartProducts.find(
-        (cartProduct) => cartProduct.id === cartProductId
+      !storedCartProducts.cartItems.find(
+        (cartProduct) => cartProduct.cartItemId === cartProductId
       )
     ) {
       return res(
