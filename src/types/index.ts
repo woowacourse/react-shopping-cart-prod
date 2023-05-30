@@ -11,6 +11,23 @@ export interface Product {
   imageUrl: string;
 }
 
+export type ProductInOrder = {
+  [K in keyof Product as `product_${string & K}`]: Product[K];
+};
+
+export interface Order {
+  orderId: number;
+  orderedTime: string;
+  products: ProductInOrder[];
+  deliveryPrice: { price: number };
+  coupons: Coupon[];
+}
+
+export interface Coupon {
+  couponId: number;
+  couponName: string;
+}
+
 export type CartId = number;
 export type ProductId = number;
 

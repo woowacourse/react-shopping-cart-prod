@@ -1,12 +1,12 @@
 import ContentLayout from 'components/@common/ContentLayout';
-import PaymentItemList from 'components/payment/PaymentItemList';
+import OrderedItemList from 'components/payment/OrderedItemList';
 import React, { Suspense } from 'react';
 
 const PaymentList = () => {
   return (
     <ContentLayout title="주문 목록">
       <Suspense>
-        <PaymentItemList />
+        <OrderedItemList />
       </Suspense>
     </ContentLayout>
   );
