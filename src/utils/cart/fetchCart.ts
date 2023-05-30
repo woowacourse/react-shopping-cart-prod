@@ -29,6 +29,10 @@ export const addItemToCartApi = async ({ productId, serverName }: AddItemToCartA
   const location = response.headers.get('Location');
   const cartId = location?.split('/').pop();
 
+  if (!cartId) {
+    throw new Error('장바구니 아이템 생성에 실패했습니다.');
+  }
+
   return cartId;
 };
 
