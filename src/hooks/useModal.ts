@@ -4,6 +4,7 @@ import { deleteModalState } from '../service/atom';
 import { useBodyScrollLock } from './useBodyScrollLock';
 
 type OpenModalType = {
+  title?: string;
   callback?: () => void;
 };
 
@@ -19,9 +20,10 @@ export const useModal = () => {
   }, [setModalDataState]);
 
   const openModal = useCallback(
-    ({ callback }: OpenModalType) => {
+    ({ title, callback }: OpenModalType) => {
       lockScroll();
       setModalDataState({
+        title: title,
         isOpen: true,
         callBack: callback,
       });

@@ -1,3 +1,5 @@
+import Modal from '../common/Modal/Modal';
+import AddCouponModal from '../common/Modal/AddCouponModal';
 import { Text } from '../common/Text/Text';
 import CouponList from '../list/CouponList/CouponList';
 import PageTemplate from '../templates/PageTemplate';
@@ -17,6 +19,9 @@ const EventPage = () => {
         </EventPageHead>
         <CouponList />
       </EventPageWrapper>
+      <Modal>
+        <AddCouponModal />
+      </Modal>
     </PageTemplate>
   );
 };
