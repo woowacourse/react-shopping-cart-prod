@@ -1,3 +1,5 @@
+import { useRef, useEffect } from 'react';
+
 interface UseCounterProps {
   count: number;
   onChange: (count: number) => void;
@@ -5,13 +7,24 @@ interface UseCounterProps {
 }
 
 const useCounter = ({ count, onChange, onBlur }: UseCounterProps) => {
-  const increaseCount = () => {
-    if (count >= 99) return;
+  const isLocked = useRef(false);
 
+  useEffect(() => {
+    isLocked.current = false;
+  });
+
+  const increaseCount = () => {
+    if (count >= 99 || isLocked.current) return;
+
+    isLocked.current = true;
     onChange(count + 1);
   };
 
   const decreaseCount = () => {
+    if (isLocked.current) return;
+
+    isLocked.current = true;
+
     if (count <= 1) {
       onBlur(0);
       return;
@@ -21,6 +34,9 @@ const useCounter = ({ count, onChange, onBlur }: UseCounterProps) => {
   };
 
   const updateCount = (count: number) => {
+    if (isLocked.current) return;
+
+    isLocked.current = true;
     onChange(count);
   };
 
