@@ -13,7 +13,7 @@ function AddCartButton({ product }: AddCardButtonProps) {
   const { cart, handleUpButton, handleDownButton, handleClick, loading } = useUpdateCartItem({ product });
 
   return loading ? (
-    <LoadingSpinner />
+    <LoadingSpinner size="small" />
   ) : (
     <div className={styles.container}>
       {cart?.product.id === product.id ? (

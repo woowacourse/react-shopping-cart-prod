@@ -7,7 +7,7 @@ import Header from '../components/Header';
 function Root() {
   return (
     <>
-      <Suspense fallback={<LoadingSpinner />}>
+      <Suspense fallback={<LoadingSpinner size="large" />}>
         <Header />
         <Outlet />
       </Suspense>

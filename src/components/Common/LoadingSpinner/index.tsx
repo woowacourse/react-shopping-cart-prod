@@ -1,9 +1,14 @@
 import styles from './index.module.scss';
 
-function LoadingSpinner() {
+type SpinnerSize = 'small' | 'medium' | 'large';
+interface LoadingSpinnerProps {
+  size: SpinnerSize;
+}
+
+function LoadingSpinner({ size = 'small' }: LoadingSpinnerProps) {
   return (
     <div className={styles.loading_spinner_box}>
-      <div className={styles.loading_spinner} />
+      <div className={`${styles.loading_spinner} ${styles[size]}`} />
     </div>
   );
 }

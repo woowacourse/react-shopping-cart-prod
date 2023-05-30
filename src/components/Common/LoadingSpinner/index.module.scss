@@ -2,10 +2,6 @@
   margin-left: 3px;
 
   .loading_spinner {
-    width: 24px;
-    height: 24px;
-    border: 3px solid white;
-    border-top: 3px solid var(--mint-color);
     border-radius: 50%;
 
     -webkit-animation: spin 1s linear infinite;
@@ -29,4 +25,25 @@
       }
     }
   }
+}
+
+.small {
+  width: 24px;
+  height: 24px;
+  border: 3px solid white;
+  border-top: 3px solid var(--mint-color);
+}
+
+.medium {
+  width: 48px;
+  height: 48px;
+  border: 6px solid white;
+  border-top: 6px solid var(--mint-color);
+}
+
+.large {
+  width: 72px;
+  height: 72px;
+  border: 9px solid white;
+  border-top: 9px solid var(--mint-color);
 }
