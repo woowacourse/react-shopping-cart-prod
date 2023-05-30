@@ -12,7 +12,7 @@ type Story = StoryObj<typeof OrderCard>;
 
 export const Default: Story = {
   args: {
-    order_id: 1,
+    orderId: 1,
     items: [
       {
         id: 1,
@@ -37,9 +37,9 @@ export const Default: Story = {
         },
       },
     ],
-    product_price: 30000,
-    discount_price: 3000,
-    delivery_fee: 3000,
-    total_price: 30000,
+    productPrice: 30000,
+    discountPrice: 3000,
+    deliveryFee: 3000,
+    totalPrice: 30000,
   },
 };

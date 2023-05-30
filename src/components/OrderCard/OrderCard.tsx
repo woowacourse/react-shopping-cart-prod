@@ -4,28 +4,29 @@ import { Order } from '../../types/responseData';
 import OrderItem from '../OrderItem/OrderItem';
 
 const OrderCard = ({
-  order_id,
+  orderId,
   items,
-  product_price,
-  discount_price,
-  delivery_fee,
-  total_price,
+  productPrice,
+  discountPrice,
+  deliveryFee,
+  totalPrice,
 }: Order) => {
   return (
     <Wrapper>
       <TopSection>
         <div>
-          주문 번호 : <span>{order_id}</span>
+          주문 번호 : <span>{orderId}</span>
         </div>
         <Link to='/orders/detail/:id'>상세보기</Link>
       </TopSection>
       <BottomSection>
         {items.map((item) => {
           const { quantity, product } = item;
-          const { name, price, imageUrl } = product;
+          const { id: productId, name, price, imageUrl } = product;
 
           return (
             <OrderItem
+              key={`${orderId}/${productId}`}
               quantity={quantity}
               name={name}
               price={price}
@@ -40,7 +41,9 @@ const OrderCard = ({
 
 export default OrderCard;
 
-const Wrapper = styled.ul``;
+const Wrapper = styled.ul`
+  width: 100%;
+`;
 
 const TopSection = styled.div`
   display: flex;

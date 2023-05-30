@@ -1,13 +1,38 @@
 import { styled } from 'styled-components';
 import { WIDTH } from '../styles/mediaQuery';
+import { useRecoilValue } from 'recoil';
 import OrderCard from '../components/OrderCard/OrderCard';
+import { orderAtom } from '../store/order';
 
 const OrderListPage = () => {
+  const orders = useRecoilValue(orderAtom);
+
   return (
     <Wrapper>
       <Title>주문 목록</Title>
       <OrderListContainer>
-        <OrderCard />
+        {Array.from(orders).map((order) => {
+          const {
+            orderId,
+            items,
+            productPrice,
+            discountPrice,
+            deliveryFee,
+            totalPrice,
+          } = order;
+
+          return (
+            <OrderCard
+              key={orderId}
+              orderId={orderId}
+              items={items}
+              productPrice={productPrice}
+              discountPrice={discountPrice}
+              deliveryFee={deliveryFee}
+              totalPrice={totalPrice}
+            />
+          );
+        })}
       </OrderListContainer>
     </Wrapper>
   );
@@ -45,6 +70,10 @@ const Title = styled.div`
 `;
 
 const OrderListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 42px;
+
   width: 70%;
 
   padding: 32px 0px;

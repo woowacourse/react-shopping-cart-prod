@@ -12,10 +12,10 @@ export type Cart = {
 };
 
 export type Order = {
-  order_id: number;
+  orderId: number;
   items: Cart[];
-  product_price: number;
-  discount_price: number;
-  delivery_fee: number;
-  total_price: number;
+  productPrice: number;
+  discountPrice: number;
+  deliveryFee: number;
+  totalPrice: number;
 };
