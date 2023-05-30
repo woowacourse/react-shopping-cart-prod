@@ -64,10 +64,10 @@ const S = {
   `,
 
   Fieldset: styled.fieldset`
-    width: 126px;
-    max-width: 126px;
+    width: 124px;
+    max-width: 124px;
     margin: 12px;
-    animation: show 2s forwards;
+    animation: show 1.4s forwards;
 
     @keyframes show {
       0% {
@@ -75,22 +75,21 @@ const S = {
         opacity: 0;
       }
       100% {
-        width: 126px;
+        width: 124px;
         opacity: 1;
       }
     }
 
     & label {
       display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 8px 0;
+      padding: 8px;
       font-size: 14px;
       cursor: pointer;
 
       & img {
         width: 50px;
-        margin-right: 20px;
+        margin-right: 24px;
 
         &:hover {
           transform: scale(1.02);
