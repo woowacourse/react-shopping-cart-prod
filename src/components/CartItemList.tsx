@@ -85,7 +85,7 @@ const CountBox = styled.p`
   font-size: 18px;
 `;
 
-const ListBox = styled.li`
+const ListBox = styled.ul`
   list-style: none;
   row-gap: 10px;
 
