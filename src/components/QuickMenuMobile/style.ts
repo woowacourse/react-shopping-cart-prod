@@ -3,6 +3,8 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: none;
 
+  z-index: 5;
+
   position: fixed;
 
   padding: 30px;

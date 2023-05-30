@@ -10394,6 +10394,13 @@ no-case@^3.0.4:
     lower-case "^2.0.2"
     tslib "^2.0.3"
 
+noah-modal@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/noah-modal/-/noah-modal-2.0.6.tgz#a748a2f05c69d462efc20213661c523b0df72618"
+  integrity sha512-x5uigxT1UPfm7cSpV/29MExOeovxAIdGPKtibgufn04rYCFxbQ8tuHRjqNG2RdA6l1AxgnLpqxrobARfetLV3A==
+  dependencies:
+    web-vitals "^2.1.4"
+
 node-abort-controller@^3.0.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/node-abort-controller/-/node-abort-controller-3.1.1.tgz#a94377e964a9a37ac3976d848cb5c765833b8548"

@@ -1,4 +1,5 @@
 import LoadingHeader from '@Components/Header/LoadingHeader';
+import { useModal } from 'noah-modal';
 import { Suspense, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
@@ -19,6 +20,12 @@ function App() {
     if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
   }, []);
 
+  const { openModal, Modal } = useModal();
+
+  const onClick = () => {
+    openModal('useCoupon');
+  };
+
   return (
     <>
       <GlobalStyle />
@@ -28,6 +35,7 @@ function App() {
       <CommonPageStyle>
         <ErrorBoundary fallback={NotFound}>
           <Outlet />
+          {Modal && <Modal />}
         </ErrorBoundary>
         <Suspense>
           <QuickMenu />

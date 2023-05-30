@@ -1,3 +1,4 @@
+import { useModal } from 'noah-modal';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -15,6 +16,7 @@ function QuickMenuMobile() {
   const navigate = useNavigate();
   const { toggleServer } = useCartItems();
   const [server, setServer] = useRecoilState(serverState);
+  const { isModalOpen } = useModal();
 
   const switchServer = (value: Servers) => {
     if (value === server) return;
@@ -24,6 +26,8 @@ function QuickMenuMobile() {
   };
 
   const moveOrderList = () => navigate('/order-list');
+
+  if (isModalOpen) return <div></div>;
 
   return (
     <S.Container>

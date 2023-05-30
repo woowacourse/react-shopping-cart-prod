@@ -1,3 +1,5 @@
+import UseCoupon from '@Components/Modal/UseCoupon';
+import { ModalProvider } from 'noah-modal';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
@@ -22,7 +24,18 @@ async function main() {
   root.render(
     <React.StrictMode>
       <RecoilRoot>
-        <RouterProvider router={router} />
+        <ModalProvider
+          modals={[
+            {
+              title: '쿠폰 사용하기',
+              component: <UseCoupon />,
+              name: 'useCoupon',
+              delayMsTime: 500,
+            },
+          ]}
+        >
+          <RouterProvider router={router} />
+        </ModalProvider>
       </RecoilRoot>
     </React.StrictMode>,
   );
