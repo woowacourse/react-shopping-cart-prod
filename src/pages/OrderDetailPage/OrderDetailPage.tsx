@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { OrderResponse } from '../../types/responses/OrderResponse.ts';
 import OrderList from '../../components/@common/OrderList/OrderList.tsx';
 import routes from '../../constants/routes.ts';
+import * as Styled from './OrderDetailPage.styles.tsx';
 
 const OrderDetailPage = () => {
   const navigate = useNavigate();
@@ -30,23 +31,31 @@ const OrderDetailPage = () => {
   return (
     <>
       {orderData && (
-        <div>
-          <h1>Order Detail Page</h1>
+        <Styled.OrderDetailPageWrapper>
+          <Styled.OrderDetailPageContent>
+            <Styled.OrderDetailPageTitle>주문 내역 상세</Styled.OrderDetailPageTitle>
+            <Styled.OrderDetailPageTitleBorder />
 
-          <OrderList orderData={orderData} />
+            <OrderList orderData={orderData} />
 
-          <div>
-            <h2>결제금액 정보</h2>
-            <p>상품금액: {orderData.productPrice}</p>
-            <p>할인금액: {orderData.discountPrice}</p>
-            <p>배달금액: {orderData.deliveryFee}</p>
-            <p>총 결제: {orderData.totalPrice}</p>
-          </div>
-          <div>
-            <button onClick={handleOrderListButton}>주문 목록</button>
-            <button onClick={handleProductListButton}>홈으로</button>
-          </div>
-        </div>
+            <Styled.PriceBoxWrapper>
+              <Styled.PriceBoxContent>
+                <Styled.PriceBoxHeader>결제금액 정보</Styled.PriceBoxHeader>
+                <Styled.PriceInnerContent>
+                  <li>상품금액: {orderData.productPrice.toLocaleString()}원</li>
+                  <li>ㄴ할인금액: {orderData.discountPrice.toLocaleString()}원</li>
+                  <li>배달금액: {orderData.deliveryFee.toLocaleString()}원</li>
+                  <li>총 결제: {orderData.totalPrice.toLocaleString()}원</li>
+                </Styled.PriceInnerContent>
+              </Styled.PriceBoxContent>
+            </Styled.PriceBoxWrapper>
+
+            <div>
+              <Styled.DetailPageButton onClick={handleOrderListButton}>주문 목록</Styled.DetailPageButton>
+              <Styled.DetailPageButton onClick={handleProductListButton}>홈으로</Styled.DetailPageButton>
+            </div>
+          </Styled.OrderDetailPageContent>
+        </Styled.OrderDetailPageWrapper>
       )}
     </>
   );
