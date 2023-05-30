@@ -11,12 +11,7 @@ import { WIDTH } from '../../styles/mediaQuery';
 import CartItem from '../CartItem/CartItem';
 import CheckBox from '../common/CheckBox/CheckBox';
 import useFetchCart from '../../hooks/useFetchCart';
-
-export type Select = {
-  id: number;
-  isSelected: boolean;
-  order: { id: number; quantity: number };
-};
+import { serverAtom } from '../../store/server';
 
 const CartItemList = () => {
   const { deleteCartItem } = useFetchCart();
@@ -26,10 +21,11 @@ const CartItemList = () => {
   const [isSelectedList, setIsSelectedList] =
     useRecoilState(isSelectedListAtom);
   const setTotalAmount = useSetRecoilState(totalAmountAtom);
+  const serverName = useRecoilValue(serverAtom);
 
   useEffect(() => {
     setIsSelectedList(ALL_CHECKED);
-  }, []);
+  }, [serverName]);
 
   useEffect(() => {
     const total = isSelectedList.reduce((a, b) => {

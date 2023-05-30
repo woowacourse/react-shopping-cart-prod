@@ -1,4 +1,9 @@
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  useRecoilRefresher_UNSTABLE,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from 'recoil';
 import { styled } from 'styled-components';
 import {
   cartAtom,
@@ -9,10 +14,12 @@ import { WIDTH } from '../../styles/mediaQuery';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../store/path';
 import useFetchOrder from '../../hooks/useFetchOrder';
+import { orderAtom } from '../../store/order';
 
 const Bill = () => {
   const isSelectedList = useRecoilValue(isSelectedListAtom);
   const setCartList = useSetRecoilState(cartAtom);
+  const refreshOrderList = useRecoilRefresher_UNSTABLE(orderAtom);
   const { postOrders } = useFetchOrder();
   const totalAmount = useRecoilValue(totalAmountAtom);
   const deliveryFee = totalAmount >= 100000 || totalAmount === 0 ? 0 : 4000;
@@ -23,7 +30,6 @@ const Bill = () => {
     const orders = isSelectedList
       .filter((item) => item.isSelected)
       .map((item) => item.order);
-    console.log(orders);
     await postOrders(orders);
     setCartList((prev) =>
       prev.filter((cart) => {
@@ -31,6 +37,7 @@ const Bill = () => {
         return true;
       })
     );
+    refreshOrderList();
     navigate(`${PATH.ORDER_LIST_PAGE}`);
   };
 

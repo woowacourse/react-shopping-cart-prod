@@ -2,19 +2,22 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { ReactComponent as ShoppingCartIcon } from '../../assets/icon/stussy-logo.svg';
 import { WIDTH } from '../../styles/mediaQuery';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ServerName, serverAtom } from '../../store/server';
 import CartTextButton from '../CartTextButton/CartTextButton';
 import { PATH } from '../../store/path';
+import { cartAtom } from '../../store/cart';
 
 const Header = () => {
   const [serverName, setServerName] = useRecoilState(serverAtom);
+  const resetCartList = useResetRecoilState(cartAtom);
 
   const onChangeServerNameHandler = (
     e: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const serverName = e.target.value as ServerName;
-    setServerName(serverName);
+    setServerName(() => serverName);
+    resetCartList();
   };
 
   return (

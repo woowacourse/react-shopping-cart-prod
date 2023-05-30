@@ -2,8 +2,7 @@ import { useRecoilValue } from 'recoil';
 import { baseURLSelector } from '../store/server';
 import { AUTH } from '../constants/auth';
 import { FetchMethod } from '../types/global';
-
-type OrderItem = { id: number; quantity: number };
+import { OrderItem } from '../types/requestData';
 
 const useFetchOrder = () => {
   const baseURL = useRecoilValue(baseURLSelector);
