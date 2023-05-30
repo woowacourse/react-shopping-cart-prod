@@ -16,7 +16,7 @@ const OrderDetailNavigator = ({ orderId }: Props) => {
       주문번호 : {orderId}
       <Button css={buttonStyle} onClick={() => goToPage(ROUTE_PATH.ORDER_DETAIL_PAGE)}>
         상세보기
-        <BsChevronRight />
+        <BsChevronRight style={{ marginLeft: '4px' }} />
       </Button>
     </S.Head>
   );

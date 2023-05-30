@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/react';
-import { BsPlus, BsDash } from 'react-icons/bs';
+import { BsPlus, BsDash, BsChevronRight } from 'react-icons/bs';
 import { css } from 'styled-components';
 import ButtonComponent from '../../../components/common/Button';
 import CartIcon from '../../../components/icons/CartIcon';
@@ -92,6 +92,15 @@ export const DeleteButton = () => {
   return <ButtonComponent css={deleteButtonStyle}>선택삭제</ButtonComponent>;
 };
 
+export const MoreButton = () => {
+  return (
+    <ButtonComponent css={moreButtonStyle}>
+      상세보기
+      <BsChevronRight style={{ marginLeft: '4px' }} />
+    </ButtonComponent>
+  );
+};
+
 const logoButtonStyle = css`
   display: flex;
   align-items: center;
@@ -167,5 +176,13 @@ const deleteButtonStyle = css`
 
   @media (max-width: 548px) {
     margin-left: 12px;
+  }
+`;
+
+const moreButtonStyle = css`
+  display: flex;
+
+  & > svg {
+    padding-top: 2px;
   }
 `;
