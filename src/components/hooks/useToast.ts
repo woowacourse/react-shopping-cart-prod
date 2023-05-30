@@ -15,7 +15,7 @@ const useToast = () => {
 
     timeoutID = window.setTimeout(() => {
       setToastInfo({ show: false, type, message: '' });
-    }, 1600);
+    }, 2000);
   };
 
   return { showToast };

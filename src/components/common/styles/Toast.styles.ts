@@ -19,7 +19,7 @@ const toastAnim = keyframes`
 `;
 
 export const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
-  animation: ${toastAnim} 1.6s linear;
+  animation: ${toastAnim} 2s linear;
   position: absolute;
   left: 50%;
   bottom: 80px;
