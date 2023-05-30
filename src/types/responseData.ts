@@ -10,3 +10,12 @@ export type Cart = {
   quantity: number;
   product: Product;
 };
+
+export type Order = {
+  order_id: number;
+  items: Cart[];
+  product_price: number;
+  discount_price: number;
+  delivery_fee: number;
+  total_price: number;
+};

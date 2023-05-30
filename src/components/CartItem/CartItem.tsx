@@ -6,7 +6,7 @@ import CheckBox from '../common/CheckBox/CheckBox';
 import { Select } from '../CartItemList/CartItemList';
 import { WIDTH } from '../../styles/mediaQuery';
 import useFetch from '../../hooks/useFetch';
-import { Cart } from '../../types/product';
+import { Cart } from '../../types/responseData';
 
 interface CartItemProps {
   cart: Cart;

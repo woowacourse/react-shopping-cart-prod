@@ -3,7 +3,7 @@ import { baseURLSelector } from '../store/server';
 import { AUTH } from '../constants/auth';
 import { useCallback } from 'react';
 import { cartAtom } from '../store/cart';
-import { Cart } from '../types/product';
+import { Cart } from '../types/responseData';
 
 type FetchMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 

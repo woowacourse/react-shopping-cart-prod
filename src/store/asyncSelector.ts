@@ -1,7 +1,7 @@
 import { selector } from 'recoil';
 import { fetchCartList } from '../api/cartList';
 import fetchProductList from '../api/productList';
-import { Cart, Product } from '../types/product';
+import { Cart, Product } from '../types/responseData';
 import { serverAtom } from './server';
 import { BASE_URL } from '../constants/baseURL';
 

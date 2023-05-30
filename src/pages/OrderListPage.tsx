@@ -1,13 +1,13 @@
 import { styled } from 'styled-components';
 import { WIDTH } from '../styles/mediaQuery';
-import OrderList from '../components/OrderList/OrderList';
+import OrderCard from '../components/OrderCard/OrderCard';
 
 const OrderListPage = () => {
   return (
     <Wrapper>
       <Title>주문 목록</Title>
       <OrderListContainer>
-        <OrderList />
+        <OrderCard />
       </OrderListContainer>
     </Wrapper>
   );

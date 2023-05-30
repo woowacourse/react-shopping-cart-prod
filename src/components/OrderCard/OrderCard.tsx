@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
-import OrderItem from '../OrderItem/OrderItem';
 
-const OrderList = () => {
+const OrderCard = ({
+  order_id,
+  items,
+  product_price,
+  discount_price,
+  delivery_fee,
+  total_price,
+}) => {
   return (
     <Wrapper>
       <TopSection>
@@ -11,15 +17,12 @@ const OrderList = () => {
         </div>
         <Link to='/orders/detail/:id'>상세보기</Link>
       </TopSection>
-      <BottomSection>
-        <OrderItem></OrderItem>
-        <OrderItem></OrderItem>
-      </BottomSection>
+      <BottomSection></BottomSection>
     </Wrapper>
   );
 };
 
-export default OrderList;
+export default OrderCard;
 
 const Wrapper = styled.ul``;
 
