@@ -19,9 +19,36 @@
 }
 
 .item-container {
+  width: 100%;
+  height: 220px;
+
   display: flex;
   border: 1px solid #aaaaaa;
   padding: 40px 25px;
+
+  gap: 33px;
+
+  img {
+    width: 142px;
+    height: 142px;
+  }
+}
+
+.item-information-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  & > p {
+    display: -webkit-box;
+
+    overflow: hidden;
+    vertical-align: top;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+  }
 
   span {
     font-family: 'Noto Sans KR';
@@ -33,10 +60,5 @@
     letter-spacing: 0.5px;
 
     color: #888888;
-  }
-
-  img {
-    width: 142px;
-    height: 142px;
   }
 }

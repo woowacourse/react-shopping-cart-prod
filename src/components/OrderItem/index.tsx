@@ -11,7 +11,7 @@ function OrderItem({ order }: OrderItemProps) {
   const products = order.productList.map(product => (
     <div key={product.name} className={styles['item-container']}>
       <img src={product.imageUrl} alt={product.name} />
-      <div>
+      <div className={styles['item-information-container']}>
         <p>{product.name}</p>
         <div>
           <span>{convertKORWon(product.totalPrice)}</span>/<span>{product.quantity}개</span>
