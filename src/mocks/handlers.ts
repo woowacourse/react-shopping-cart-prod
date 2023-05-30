@@ -1,8 +1,8 @@
 import { rest } from 'msw';
 import productList from '../mocks/productList.json';
-import { CART_BASE_URL, LOCAL_STORAGE_KEY, PRODUCTS_BASE_URL } from '../constants';
+import { CART_BASE_URL, LOCAL_STORAGE_KEY, ORDERS_BASE_URL, PRODUCTS_BASE_URL } from '../constants';
 import { getLocalStorage, updateLocalStorage } from '../utils/store';
-import { CartItemInfo } from '../types';
+import { CartItemInfo, OrderItemInfo } from '../types';
 
 export const handlers = [
   // 상품 조회
@@ -75,5 +75,52 @@ export const handlers = [
     updateLocalStorage<CartItemInfo[]>(LOCAL_STORAGE_KEY.CART, newCartList);
 
     return res(ctx.status(204));
+  }),
+
+  // 주문 목록 조회
+  rest.get(ORDERS_BASE_URL, (req, res, ctx) => {
+    const orders = getLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS);
+    return res(ctx.status(200), ctx.json(orders));
+  }),
+
+  // 주문 아이템 추가
+  rest.post(ORDERS_BASE_URL, async (req, res, ctx) => {
+    const { cartItemIds } = await req.json();
+    const currentCartList = getLocalStorage<CartItemInfo[]>(LOCAL_STORAGE_KEY.CART);
+    const currentOrderList = getLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS);
+    const currentDate = new Date();
+    const [day, month, year] = [
+      currentDate.getDate(),
+      currentDate.getMonth() + 1,
+      currentDate.getFullYear(),
+    ];
+
+    const productsInOrder = cartItemIds.map(({ id }: { id: number }) => {
+      const cartItem = currentCartList.find((cartItem) => cartItem.id === id);
+      return {
+        id: cartItem?.product.id,
+        name: cartItem?.product.name,
+        price: cartItem?.product.price,
+        imageUrl: cartItem?.product.imageUrl,
+        quantity: cartItem?.quantity,
+      };
+    });
+
+    const newOrderList: OrderItemInfo[] = [
+      ...currentOrderList,
+      {
+        id: currentOrderList.length + 1,
+        orderNumber: currentOrderList.length + 1,
+        date: `${year}-${month}-${day}`,
+        products: productsInOrder,
+      },
+    ];
+
+    updateLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS, newOrderList);
+
+    return res(
+      ctx.status(201),
+      ctx.set('Location', `${ORDERS_BASE_URL}/${newOrderList.at(-1)?.id}`)
+    );
   }),
 ];

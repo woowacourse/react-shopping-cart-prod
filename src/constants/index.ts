@@ -8,6 +8,7 @@ export const PRODUCT = {
 export const DELIVERY_FEE = 3000;
 export const LOCAL_STORAGE_KEY = {
   CART: 'cart',
+  ORDERS: 'orders',
 } as const;
 
 export const URL = {
@@ -20,4 +21,5 @@ export const SERVER: Readonly<Record<Host, string>> = {
   밀리: 'http://52.79.242.83:8080',
 };
 export const PRODUCTS_BASE_URL = '/products';
+export const ORDERS_BASE_URL = '/orders';
 export const CART_BASE_URL = '/cart-items';
