@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { OrderCartItem } from '../types/OrderCartItem';
+import type { OrderCartItem as OrderCartItemType } from '../types/OrderCartItem';
 
 const OrderCartItemContainer = styled.div`
   display: flex;
@@ -31,10 +31,10 @@ const OrderPriceAndQuantity = styled.p`
 `;
 
 type OrderCartItemProps = {
-  productName: OrderCartItem['name'];
-  productPrice: OrderCartItem['price'];
-  quantity: OrderCartItem['quantity'];
-  imageUrl: OrderCartItem['imageUrl'];
+  productName: OrderCartItemType['name'];
+  productPrice: OrderCartItemType['price'];
+  quantity: OrderCartItemType['quantity'];
+  imageUrl: OrderCartItemType['imageUrl'];
 };
 
 const OrderCartItem = (props: OrderCartItemProps) => {
