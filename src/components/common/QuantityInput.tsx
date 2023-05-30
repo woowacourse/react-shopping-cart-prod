@@ -24,10 +24,10 @@ export default function QuantityInput({ cartItemId, min = 0, max, style }: Props
   };
 
   const onChangeInput = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    if (isNaturalNumberString(value)) {
-      setInputWithRequest(getValidRange(Number(value)));
-    } else if (value === '') {
+    if (value === '') {
       setInput(value);
+    } else if (isNaturalNumberString(value)) {
+      setInputWithRequest(getValidRange(Number(value)));
     }
   };
 
@@ -35,11 +35,11 @@ export default function QuantityInput({ cartItemId, min = 0, max, style }: Props
     if (input === '') setInputWithRequest(min);
   };
 
-  const quantityIncrease = () => {
+  const increase = () => {
     setInputWithRequest(Number(input) + 1);
   };
 
-  const quantityDecrease = () => {
+  const decrease = () => {
     setInputWithRequest(Number(input) - 1);
   };
 
@@ -51,11 +51,11 @@ export default function QuantityInput({ cartItemId, min = 0, max, style }: Props
     <Wrapper style={style}>
       <Input type="text" value={input} onChange={onChangeInput} onBlur={onBlurInput} />
       <CounterBox>
-        <Counter onClick={quantityIncrease} disabled={Number(input) === max}>
-          <img src="./arrowUp.svg" />
+        <Counter onClick={increase} disabled={Number(input) === max}>
+          <img src="/arrowUp.svg" />
         </Counter>
-        <Counter onClick={quantityDecrease} disabled={Number(input) === min}>
-          <img src="./arrowDown.svg" />
+        <Counter onClick={decrease} disabled={Number(input) === min}>
+          <img src="/arrowDown.svg" />
         </Counter>
       </CounterBox>
     </Wrapper>

@@ -13,7 +13,7 @@ export default function Toast() {
   return ReactDOM.createPortal(show && <Wrapper type={type}>{message}</Wrapper>, root);
 }
 
-const toastAnim = keyframes`
+const popUp = keyframes`
   0% {
     transform: translate(-50%, 20px);
     opacity: 0;
@@ -31,11 +31,9 @@ const toastAnim = keyframes`
 `;
 
 const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
-  animation: ${toastAnim} 1.6s linear;
   position: absolute;
   left: 50%;
   bottom: 80px;
-  transform: translateX(-50%);
 
   display: flex;
   justify-content: center;
@@ -48,11 +46,15 @@ const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
   background-color: ${({ type }) =>
     ({
       info: 'rgb(4, 192, 158)',
-      warning: 'rgb(245, 213, 96)',
+      warning: 'rgb(231, 186, 24)',
       error: 'rgb(222,96,96)',
     }[type])};
 
   font-size: 16px;
   font-weight: 600;
   color: white;
+
+  animation: ${popUp} 1.6s linear;
+  transform: translateX(-50%);
+  transition: all 0.3s;
 `;

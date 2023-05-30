@@ -31,7 +31,7 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
 
-  width: 100%;
+  width: 80%;
   height: 100%;
   padding: 60px 16px;
 

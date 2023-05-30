@@ -6,10 +6,10 @@ import styled from 'styled-components';
 import CheckBox from '../common/CheckBox';
 import QuantityInput from '../common/QuantityInput';
 
-import * as api from '../../api';
-import { cartState, serverNameState } from '../../recoil/state';
-import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 import useToast from '../../hooks/useToast';
+import { cartState, serverNameState } from '../../recoil/state';
+import * as api from '../../api';
+import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 
 interface Props extends CartItemType {
   checked: boolean;
@@ -19,8 +19,8 @@ interface Props extends CartItemType {
 
 export default function CartItem(props: Props) {
   const { id, product, quantity, checked, toggleChecked, deleteChecked } = props;
-  const setCart = useSetRecoilState(cartState);
   const serverName = useRecoilValue(serverNameState);
+  const setCart = useSetRecoilState(cartState);
   const { showToast } = useToast();
 
   const removeCartItem = async () => {
@@ -41,7 +41,7 @@ export default function CartItem(props: Props) {
   };
 
   const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = './emptyProduct.svg';
+    e.currentTarget.src = '/emptyProduct.svg';
   };
 
   return (
@@ -51,7 +51,7 @@ export default function CartItem(props: Props) {
       <ProductName>{product.name}</ProductName>
       <ControlBox>
         <RemoveButton onClick={removeCartItem}>
-          <img src="./trashCan.svg" />
+          <img src="/trashCan.svg" />
         </RemoveButton>
         <QuantityInput
           cartItemId={id}
@@ -86,6 +86,8 @@ const Wrapper = styled.div`
 const Image = styled.img`
   width: 144px;
   height: 144px;
+
+  object-fit: cover;
 
   @media (max-width: 448px) {
     width: 96px;

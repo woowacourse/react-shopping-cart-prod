@@ -102,7 +102,7 @@ const CountMessage = styled.p`
 
 const List = styled.div`
   min-height: 128px;
-  max-height: 612px;
+  max-height: 484px;
   border-top: 4px solid #aaaaaa;
 
   overflow: scroll;

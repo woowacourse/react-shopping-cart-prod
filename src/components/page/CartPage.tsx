@@ -31,34 +31,38 @@ export default function CartPage() {
   }, [serverName]);
 
   return (
-    <>
+    <Wrapper>
       <SubHeader>장바구니</SubHeader>
       {cartCount !== 0 ? (
-        <CartMain>
+        <Main>
           <CartItemList />
           <CartBillBox>
             <CartBill />
           </CartBillBox>
-        </CartMain>
+        </Main>
       ) : (
         <EmptyCartMain>
-          <Image src="./shoppingBag.svg" />
+          <Image src="/shoppingBag.svg" />
           <Message>장바구니에 상품이 없습니다.</Message>
           <Message>상품을 추가해보세요.</Message>
           <StyledLink to="/">상품 담으러 가기</StyledLink>
         </EmptyCartMain>
       )}
-    </>
+    </Wrapper>
   );
 }
 
-const CartMain = styled.div`
+const Wrapper = styled.div`
+  width: 100%;
+`;
+
+const Main = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
   width: 100%;
 
-  @media (max-width: 1184px) {
+  @media (max-width: 1480px) {
     flex-direction: column;
     align-items: center;
   }
@@ -102,7 +106,7 @@ const StyledLink = styled(Link)`
   margin: 64px 0;
   border-radius: 8px;
 
-  background-color: #04c09e;
+  background: #04c09e;
 
   font-size: 20px;
   font-weight: 600;
