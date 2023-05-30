@@ -161,6 +161,8 @@ const handlers = [
 
     return res(ctx.delay(50), ctx.status(201), ctx.json(paymentsData));
   }),
+
+  rest.get('orders', (req, res, ctx) => res(ctx.delay(2000), ctx.status(200), ctx.json(orderList))),
 ];
 
 export default handlers;
