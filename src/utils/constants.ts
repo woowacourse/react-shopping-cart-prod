@@ -1,6 +1,7 @@
 export const ROUTES = {
   PRODUCT_LIST: '/',
   CART_LIST: '/cart',
+  PAYMENT_LIST: '/payment',
 } as const;
 
 export const SERVERS = {

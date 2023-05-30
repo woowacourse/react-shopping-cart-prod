@@ -1,11 +1,18 @@
 import { useRecoilValue } from 'recoil';
 import { totalPriceSelector } from 'recoil/cartList';
 import * as S from './PaymentDetail.styles';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from 'utils/constants';
 
 const PaymentDetail = () => {
   const deliveryPrice = 3000;
   const totalPrice = useRecoilValue(totalPriceSelector);
   const orderPrice = totalPrice === 0 ? 0 : totalPrice + deliveryPrice;
+  const moveTo = useNavigate();
+
+  const makeOrder = () => {
+    moveTo(ROUTES.PAYMENT_LIST);
+  };
 
   return (
     <S.Container>
@@ -22,7 +29,7 @@ const PaymentDetail = () => {
         <S.Text>총 주문 금액</S.Text>
         <S.Text>{orderPrice.toLocaleString('KR')}원</S.Text>
       </S.Wrapper>
-      <S.OrderButton>주문하기</S.OrderButton>
+      <S.OrderButton onClick={makeOrder}>주문하기</S.OrderButton>
     </S.Container>
   );
 };
