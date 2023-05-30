@@ -2,9 +2,18 @@ import { expect } from '@storybook/jest';
 import { Meta, StoryObj } from '@storybook/react';
 import { screen, userEvent, waitFor, within } from '@storybook/testing-library';
 import MainPage from '../../pages/MainPage';
+import { Header } from '../components/common/Header.stories';
 
 const meta = {
   title: 'Pages/MainPage',
+  decorators: [
+    (Story) => (
+      <>
+        <Header title='STORE' />
+        <Story />
+      </>
+    ),
+  ],
 } satisfies Meta<typeof MainPage>;
 
 export default meta;
