@@ -5,7 +5,6 @@ import { Heading } from '../../components/common/Heading/Heading.styles';
 const OrderPageHeading = styled(Heading)`
   text-align: center;
   padding-bottom: ${({ theme }) => theme.spacer.spacing5};
-  border-bottom: 1px solid ${({ theme }) => theme.color.gray4};
 `;
 
 const OrderInformationContainer = styled.div`

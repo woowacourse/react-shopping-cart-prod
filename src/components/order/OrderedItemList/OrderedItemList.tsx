@@ -12,7 +12,9 @@ export const OrderedItemList = ({}: Props) => {
   return (
     <S.OrderListContainer>
       {orderList.map((orderItem) => (
-        <OrderedItem key={orderItem.id} {...orderItem} />
+        <S.OrderedItemWrapper>
+          <OrderedItem key={orderItem.id} {...orderItem} />
+        </S.OrderedItemWrapper>
       ))}
     </S.OrderListContainer>
   );
