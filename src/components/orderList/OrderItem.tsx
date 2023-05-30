@@ -1,13 +1,20 @@
+import { useLocation } from 'react-router-dom';
 import { css, styled } from 'styled-components';
+import { ROUTE_PATH } from '../../constants';
 import { Cart } from '../../types';
 import Price from '../Price';
 
 const OrderItem = ({ imageUrl, name, price, quantity }: Cart) => {
+  const location = useLocation().pathname;
+
   return (
     <S.Wrapper tabIndex={0}>
       <S.Image src={`${imageUrl}`} alt={name} />
       <div>
-        <S.Name>{name}</S.Name>
+        <S.Name>
+          {name}
+          {location === ROUTE_PATH.ORDER_LIST_PAGE && <span>외 {2}개의 상품</span>}
+        </S.Name>
         <S.Detail>
           <Price price={price} css={textStyle} />
           <span>&nbsp;/&nbsp;수량&nbsp;{quantity}개</span>
@@ -25,6 +32,10 @@ const S = {
 
   Name: styled.h3`
     font-size: 17px;
+
+    & span {
+      margin-left: 4px;
+    }
   `,
 
   Image: styled.img`
