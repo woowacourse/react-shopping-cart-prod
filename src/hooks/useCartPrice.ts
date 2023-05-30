@@ -3,8 +3,7 @@ import { useRecoilValue } from 'recoil';
 
 import useMultipleChecked from './useMultipleChecked';
 import { checkedPriceState } from '../states/checkedCartProducts';
-
-const DELIVERY_FEE = 3_000;
+import { DELIVERY_FEE } from '../constants/fee';
 
 const useExpectedPayment = () => {
   const { isAllUnchecked } = useMultipleChecked();

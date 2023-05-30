@@ -4,10 +4,16 @@ import Button from '../Common/Button';
 
 import useMultipleChecked from '../../hooks/useMultipleChecked';
 import useExpectedPayment from '../../hooks/useCartPrice';
+import useOrder from '../../hooks/useOrder';
 
 const ExpectedPaymentBox = () => {
   const { isAllUnchecked } = useMultipleChecked();
   const { totalProductPrice, deliveryFee, totalPrice } = useExpectedPayment();
+  const { addOrder } = useOrder();
+
+  const onClickOrderButton = () => {
+    addOrder();
+  };
 
   return (
     <ExpectedPaymentContainer>
@@ -27,7 +33,12 @@ const ExpectedPaymentBox = () => {
         </PaymentInfoItem>
       </ExpectedPaymentInfo>
       <OrderButtonWrapper>
-        <Button type='button' autoSize disabled={isAllUnchecked}>
+        <Button
+          type='button'
+          autoSize
+          disabled={isAllUnchecked}
+          onClick={onClickOrderButton}
+        >
           주문하기
         </Button>
       </OrderButtonWrapper>

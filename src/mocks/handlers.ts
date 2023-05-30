@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 
-import { CART_STORAGE_ID } from '../constants/storage';
+import { CART_STORAGE_ID, ORDER_STORAGE_ID } from '../constants/storage';
 import products from './data/products.json';
 import {
   addTargetProduct,
@@ -9,6 +9,7 @@ import {
   updateTargetQuantity,
 } from '../states/cartProducts/util';
 import type { CartProduct } from '../types/product';
+import type { OrderInfo } from '../types/order';
 
 export const handlers = [
   rest.get('/products', (_, res, ctx) => {
@@ -109,5 +110,18 @@ export const handlers = [
     );
 
     return res(ctx.delay(2000), ctx.status(204));
+  }),
+
+  rest.post<OrderInfo>('/orders', (req, res, ctx) => {
+    const storedOrders: OrderInfo[] = JSON.parse(
+      localStorage.getItem(ORDER_STORAGE_ID) ?? '[]'
+    );
+
+    localStorage.setItem(
+      ORDER_STORAGE_ID,
+      JSON.stringify([...storedOrders, req.body])
+    );
+
+    return res(ctx.status(201), ctx.json({ message: 'Success to Create' }));
   }),
 ];
