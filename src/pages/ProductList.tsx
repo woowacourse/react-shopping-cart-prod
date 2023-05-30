@@ -6,7 +6,7 @@ const ProductList = () => {
   const { renderToast } = useToast();
 
   return (
-    <ContentLayout>
+    <ContentLayout title="상품 목록">
       <ProductItemList />
       {renderToast}
     </ContentLayout>
