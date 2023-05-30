@@ -25,8 +25,8 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
 
   const discountView = discounts.length > 0 && (
     <div className={styles['discount-container']}>
-      {discounts.map(option => (
-        <div>
+      {discounts.map((option, idx) => (
+        <div key={idx}>
           <span>{option.discountPolicy}</span>
           <span>-{convertKORWon(option.discountAmount)}</span>
         </div>
