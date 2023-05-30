@@ -1,15 +1,10 @@
-const SERVER = ['아코', '주디', '저문', '프론트'] as const;
-
-const FRONT_API_BASE_URL =
-  process.env.NODE_ENV === 'production'
-    ? process.env.REACT_APP_FRONT_BASE_URL
-    : process.env.REACT_APP_LOCAL_BASE_URL;
+const SERVER = ['프론트', '아코', '주디', '저문'] as const;
 
 const API_BASE_URL_LIST = {
-  [SERVER[0]]: process.env.REACT_APP_AK_API_BASE_URL,
-  [SERVER[1]]: process.env.REACT_APP_JD_API_BASE_URL,
-  [SERVER[2]]: process.env.REACT_APP_JM_API_BASE_URL,
-  [SERVER[3]]: FRONT_API_BASE_URL,
+  [SERVER[0]]: '',
+  [SERVER[1]]: process.env.REACT_APP_AK_API_BASE_URL,
+  [SERVER[2]]: process.env.REACT_APP_JD_API_BASE_URL,
+  [SERVER[3]]: process.env.REACT_APP_JM_API_BASE_URL,
 } as const;
 
 const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[SERVER[0]];
