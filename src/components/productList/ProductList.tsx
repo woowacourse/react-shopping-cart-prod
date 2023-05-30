@@ -34,7 +34,7 @@ export default function ProductList() {
   return (
     <S.Wrapper>
       {products === null
-        ? Array.from({ length: SKELETONS_LENGTH }).map(() => <SkeletonProduct />)
+        ? Array.from({ length: SKELETONS_LENGTH }).map((_, idx) => <SkeletonProduct key={idx} />)
         : products.map((product) => <Product key={product.id} {...product} />)}
     </S.Wrapper>
   );
