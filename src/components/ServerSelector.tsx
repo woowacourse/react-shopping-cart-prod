@@ -95,6 +95,8 @@ const Wrapper = styled.fieldset`
   width: 20px;
   height: 120px;
 
+  z-index: 1;
+
   justify-content: space-evenly;
   flex-direction: column;
   align-items: center;

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { ROUTER_PATH } from "router";
 import { cartListState } from "recoil/cart";
-import ServerSelector from "./ServerSelector";
+import { memo } from "react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -30,7 +30,6 @@ const Header = () => {
         />
         <Title>SHOP</Title>
       </TitleContainer>
-      <ServerSelector />
       <OrderContainer onClick={goToOrderList}>주문목록</OrderContainer>
       <CartContainer onClick={goToCart}>
         장바구니
@@ -128,4 +127,4 @@ const OrderContainer = styled.div`
   }
 `;
 
-export default Header;
+export default memo(Header);

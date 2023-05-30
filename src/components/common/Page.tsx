@@ -3,6 +3,7 @@ import styled from "styled-components";
 import PageHeader from "./PageHeader";
 import Skeleton from "./Skeleton";
 import Header from "components/Header";
+import ServerSelector from "components/ServerSelector";
 
 const Page = ({
   children,
@@ -22,6 +23,7 @@ const Page = ({
       >
         <Header />
       </Suspense>
+      <ServerSelector />
       <Wrapper>
         {pageName && <PageHeader>{pageName}</PageHeader>}
         <Container>{children}</Container>
