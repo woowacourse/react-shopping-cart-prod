@@ -131,7 +131,7 @@ export const handlers = [
     return res(ctx.delay(500), ctx.status(200), ctx.json(order));
   }),
 
-  rest.get('msw/coupons/', (req, res, ctx) => {
+  rest.get('msw/coupons', (req, res, ctx) => {
     return res(ctx.delay(500), ctx.status(200), ctx.json(MOCK_COUPON_LIST));
   }),
 ];

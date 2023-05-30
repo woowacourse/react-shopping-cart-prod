@@ -3,12 +3,22 @@ import * as S from './ExpectedPayment.style';
 
 import { useCart } from '@views/Cart/recoil/cartState';
 import { DELIVERY_FEE_BASIC } from '@views/Payment/constants/orderConstants';
+import useFetchCoupons from '@views/Payment/hooks/useFetchCoupons';
 
 function ExpectedPayment() {
   const { totalPrice } = useCart();
+  const fetchCoupons = useFetchCoupons();
 
   const deliveryFee = totalPrice ? DELIVERY_FEE_BASIC : 0;
   const totalPayingPrice = totalPrice + deliveryFee;
+
+  const handleSeeCoupons = async () => {
+    const response = await fetchCoupons();
+    const coupons = await response.json();
+
+    console.log('>>> coupons:', coupons);
+  };
+
   return (
     <S.PayingContainer>
       <S.PayingBox>
@@ -30,7 +40,9 @@ function ExpectedPayment() {
           </S.TotalPriceContainer>
         </S.PayingBackground>
         <div style={{ display: 'flex', columnGap: '2rem' }}>
-          <S.CouponButton disabled={totalPrice === 0}>쿠폰선택</S.CouponButton>
+          <S.CouponButton onClick={handleSeeCoupons} disabled={totalPrice === 0}>
+            쿠폰선택
+          </S.CouponButton>
           <S.PayingButton disabled={totalPrice === 0}>결제하기</S.PayingButton>
         </div>
       </S.PayingBox>

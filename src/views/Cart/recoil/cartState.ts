@@ -29,6 +29,7 @@ const cartQuery = selector({
     const fetchCart = generateFetchCart({ resource: `${serverUrl}/${CART_PATH}`, credential });
 
     const response = await fetchCart.GET();
+
     const cartProducts: CartItemType[] = await response.json();
 
     return cartProducts.map((cartProduct) => {
