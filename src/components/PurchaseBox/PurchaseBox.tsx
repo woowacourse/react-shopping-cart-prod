@@ -11,11 +11,7 @@ import {
   Vacant,
 } from "./PurchaseBox.style";
 import { useRecoilValue } from "recoil";
-import {
-  checkedCartSelector,
-  totalPriceSelector,
-} from "../../recoil/cartAtoms.ts";
-import { NewOrder, NewOrderItem } from "../../types/types.ts";
+import { totalPriceSelector } from "../../recoil/cartAtoms.ts";
 import { useNavigate } from "react-router-dom";
 
 function PurchaseBox() {
@@ -23,24 +19,7 @@ function PurchaseBox() {
 
   const totalPrice = useRecoilValue(totalPriceSelector);
   const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
-  const checkedCartList = useRecoilValue(checkedCartSelector);
   const POINTS = 1000;
-
-  const purchase = () => {
-    const order: NewOrder = {
-      orders: checkedCartList.map(
-        (cart): NewOrderItem => ({
-          cartItemId: cart.id,
-          quantity: cart.quantity,
-          productId: cart.product.id,
-        })
-      ),
-      couponId: null,
-      point: POINTS,
-    };
-    alert(`서버로 보낼 데이터 (아직 안보내용): ${JSON.stringify(order)}`);
-    navigate("/order");
-  };
 
   return (
     <>
@@ -84,7 +63,15 @@ function PurchaseBox() {
             </RealPriceText>
           </PurchasePropertyWrapper>
           <PurchaseButtonWrapper>
-            <PurchaseButton onClick={() => purchase()}>주문하기</PurchaseButton>
+            <PurchaseButton
+              onClick={() => {
+                if (confirm("결제 페이지로 이동하시겠습니까?")) {
+                  navigate("/purchase");
+                }
+              }}
+            >
+              주문하기
+            </PurchaseButton>
           </PurchaseButtonWrapper>
         </PurchaseWrapper>
       </PurchaseBoxWrapper>
