@@ -1,6 +1,9 @@
+import { Point, getUserPoints } from 'apis/members';
 import FlexBox from 'components/@common/FlexBox';
+import Spinner from 'components/@common/Loader';
 import useModal from 'components/@common/Modal/hooks/useModal';
 import DiscountModal from 'components/DiscountModal/DiscountModal';
+import useFetch from 'hooks/useFetch';
 import { useRecoilValue } from 'recoil';
 import { pointUsageState } from 'state/pointUsageState';
 import styled from 'styled-components';
@@ -14,22 +17,40 @@ const DiscountItem = ({ type }: DiscountItemProps) => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const appliedPoint = useRecoilValue(pointUsageState);
 
+  //test
+  const { data, isLoading, errorState, fetchData } = useFetch<Point>(getUserPoints);
+  const userPoint = data?.point ?? 0;
+
   const applyDiscount = () => {
     console.log('할인 적용');
   };
 
+  if (errorState?.isError) {
+    throw errorState.error;
+  }
+
   return (
     <FlexBox flexDirection="column" justify="flex-start" align="flex-start" gap="8px" role="list">
       <DiscountMessageSection>
-        <div>
-          {appliedPoint.appliedPoint > 0 ? (
-            <Message style={{ color: 'red' }}>{appliedPoint.appliedPoint}원 할인이 적용되었습니다.</Message>
-          ) : (
-            <Message>사용가능한 {type}가 있습니다</Message>
-          )}
-        </div>
-        <Button onClick={openModal}>{appliedPoint.appliedPoint > 0 ? `할인 변경하기` : `할인 적용하기`}</Button>
-        <DiscountModal isOpen={isModalOpen} closeModal={closeModal} onClickConfirmButton={() => applyDiscount} />
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            {appliedPoint.appliedPoint > 0 ? (
+              <Message style={{ color: 'red' }}>{appliedPoint.appliedPoint}원 할인이 적용되었습니다.</Message>
+            ) : (
+              <Message>사용가능한 {type}가 있습니다</Message>
+            )}
+            <Button onClick={openModal}>{appliedPoint.appliedPoint > 0 ? `할인 변경하기` : `할인 적용하기`}</Button>
+          </>
+        )}
+
+        <DiscountModal
+          userPoint={userPoint}
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          onClickConfirmButton={() => applyDiscount}
+        />
       </DiscountMessageSection>
     </FlexBox>
   );

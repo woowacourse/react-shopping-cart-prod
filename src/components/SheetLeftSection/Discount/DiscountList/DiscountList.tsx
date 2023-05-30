@@ -20,5 +20,6 @@ const DiscountItemFlex = styled.ul`
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 150px;
   margin-bottom: 20px;
 `;
