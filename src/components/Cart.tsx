@@ -26,6 +26,7 @@ const S = {
   Wrapper: styled.div`
     display: flex;
     align-items: center;
+    margin-left: auto;
   `,
 
   Badge: styled.span`
