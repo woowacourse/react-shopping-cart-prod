@@ -37,6 +37,24 @@ const syncCartItemsEffect = (client: Client): AtomEffect<(CartItem | CartItemEnt
       );
     };
 
+    const correctToExpectedState = (
+      productId: CartItemEntity['product']['id'],
+      expectedState: Partial<CartItemEntity> | null,
+    ) => {
+      setSelf((cartItems) => {
+        if (cartItems instanceof DefaultValue) return cartItems;
+
+        // correction: deleted
+        if (expectedState === null)
+          return cartItems.filter((cartItem) => cartItem.product.id !== productId);
+
+        // correction: different value
+        return cartItems.map((cartItem) =>
+          cartItem.product.id === productId ? { ...cartItem, ...expectedState } : cartItem,
+        );
+      });
+    };
+
     onSet((newCartItems, rawOldCartItems, isReset) => {
       if (isReset) clear();
 
@@ -50,13 +68,18 @@ const syncCartItemsEffect = (client: Client): AtomEffect<(CartItem | CartItemEnt
 
         if (!shouldUpdate) return;
 
-        let remoteState = remoteStates.get(cartItem.product.id);
-        if (!remoteState) {
-          remoteState = new CartItemRemoteState(client, cartItem, cartItem.product.id);
-          remoteState.onError(doDownstreamSync);
-          remoteStates.set(cartItem.product.id, remoteState);
+        const remoteState = remoteStates.get(cartItem.product.id);
+        if (remoteState) {
+          remoteState.set(cartItem);
+          return;
         }
-        remoteState.set(cartItem);
+
+        const remoteStateCreated = new CartItemRemoteState(client, cartItem, cartItem.product.id);
+        remoteStateCreated.onError(doDownstreamSync);
+        remoteStateCreated.onCorruptWhileUpstreamSync((expectedState) => {
+          correctToExpectedState(remoteStateCreated.productId, expectedState);
+        });
+        remoteStates.set(cartItem.product.id, remoteStateCreated);
       });
 
       if (isReset) return;

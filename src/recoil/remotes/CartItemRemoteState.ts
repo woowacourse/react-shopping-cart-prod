@@ -15,6 +15,10 @@ class CartItemRemoteState extends RemoteState<Client, CartItemState> {
     this.productId = productId;
   }
 
+  override stateEquals(state1: CartItemState, state2: CartItemState): boolean {
+    return state1?.checked === state2?.checked && state1?.quantity === state2?.quantity;
+  }
+
   override syncToRemote(lastState: CartItemState): Promise<CartItemState> | null {
     // sync: delete
     // 최종적으로 설정될 상태가 null(삭제됨)이라면, 삭제 쿼리를 보냅니다.

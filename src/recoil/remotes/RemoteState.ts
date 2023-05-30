@@ -4,8 +4,11 @@ type BaseState = object | number | string | null | undefined;
 
 type SetOrUpdate<State> = State | ((state: State) => State);
 
-type ErrorHandler<Client extends RestClient, State extends BaseState> = (
-  remoteState: RemoteState<Client, State>,
+type ErrorHandler = () => void;
+
+type CorruptWhileUpstreamSyncHandler<State extends BaseState> = (
+  expectedState: State,
+  corruptedState: State,
 ) => void;
 
 /**
@@ -31,7 +34,7 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
   protected dirtyUpdates: SetOrUpdate<State>[] = [];
 
   /**
-   * remote와 동기화 된 상태입니다. 이 상태는 remote에 저장되어 있음을 보장합니다.
+   * remote와 동기화 된 상태입니다. 이 상태는 remote와 동일함을 보장합니다.
    */
   protected synchronizedState: State;
 
@@ -45,7 +48,9 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
    */
   protected downstreamSync: Promise<State> | null = null;
 
-  protected errorHandler: ErrorHandler<Client, State> | null = null;
+  protected errorHandler: ErrorHandler | null = null;
+
+  protected corruptWhileUpstreamSyncHandler: CorruptWhileUpstreamSyncHandler<State> | null = null;
 
   constructor(client: Client, initialState: State) {
     this.client = client;
@@ -86,12 +91,19 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
 
   /**
    * client -> remote로 동기화 할 작업을 추가합니다.
+   *
+   * {@link sync} 는 resolve된 값으로 반드시 remote에서 응답한 상태여야 합니다.
+   * 만약 remote에서 받아온 상태가 client와 일치하지 않을 시
+   * {@link corruptWhileUpstreamSyncHandler} 함수를 invoke합니다.
    */
-  enqueueUpstreamSync(sync: Promise<State>) {
+  protected enqueueUpstreamSync(sync: Promise<State>, expectedState: State) {
     this.upstreamSync = sync;
     this.upstreamSync.then((synchronizedState) => {
       this.synchronizedState = synchronizedState;
       this.upstreamSync = null;
+      if (!this.stateEquals(this.synchronizedState, expectedState)) {
+        this.corruptWhileUpstreamSyncHandler?.(this.synchronizedState, expectedState);
+      }
       this.flushDirtyUpdates();
     });
   }
@@ -117,8 +129,15 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
     const sync = this.syncToRemote(lastState);
     if (sync === null) return;
 
-    this.enqueueUpstreamSync(sync);
+    this.enqueueUpstreamSync(sync, lastState);
   }
+
+  /**
+   * 상태 동등성 비교 함수입니다.
+   *
+   * {@link enqueueUpstreamSync} 에서 예상했던 상태와 동일한지 확인하기 위해 사용합니다.
+   */
+  abstract stateEquals(state1: State, state2: State): boolean;
 
   /**
    * dirtyUpdates를 lastState로 취합한 후, 이를 client -> remote로 동기화하는
@@ -143,12 +162,23 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
   /**
    * 동기화 중 오류가 발생했을 시의 동작을 지정합니다.
    */
-  onError(errorHandler: ErrorHandler<Client, State> | null) {
+  onError(errorHandler: ErrorHandler | null) {
     this.errorHandler = errorHandler;
+  }
+
+  /**
+   * client -> remote로 상태를 전송하였으나 remote에서 응답한 상태가
+   * client와 일치하지 않는 경우의 동작을 지정합니다.
+   */
+  onCorruptWhileUpstreamSync(
+    corruptWhileUpstreamSyncHandler: CorruptWhileUpstreamSyncHandler<State> | null,
+  ) {
+    this.corruptWhileUpstreamSyncHandler = corruptWhileUpstreamSyncHandler;
   }
 
   clear() {
     this.errorHandler = null;
+    this.corruptWhileUpstreamSyncHandler = null;
   }
 }
 
