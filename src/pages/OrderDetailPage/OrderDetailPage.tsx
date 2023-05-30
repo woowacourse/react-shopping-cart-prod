@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
-import OrderDetail from './OrderDetail';
+import OrderDetail from '../../components/OrderDetailPage/OrderDetail';
 
 const OrderDetailPage = () => {
   const { orderId } = useParams();
