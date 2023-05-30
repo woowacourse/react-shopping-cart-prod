@@ -28,7 +28,7 @@ const buttonStyle = (location: keyof typeof ROUTE_PATH) => css`
   top: 108px;
   right: 0;
   z-index: 99;
-  padding: 12px 16px;
+  padding: 12px 16px 12px 20px;
   font-size: 14px;
   color: ${location === ROUTE_PATH.ORDER_LIST_PAGE ? '#fff' : 'var(--text-color)'};
   background: ${location === ROUTE_PATH.ORDER_LIST_PAGE ? 'var(--text-color)' : '#fff'};

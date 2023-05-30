@@ -124,7 +124,7 @@ const S = {
 };
 
 const buttonStyle = css`
-  padding: 12px 16px;
+  padding: 12px 16px 12px 20px;
   font-size: 14px;
   color: #fff;
   background: var(--text-color);
