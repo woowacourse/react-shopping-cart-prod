@@ -1,24 +1,32 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  width: 282px;
-  height: 362px;
+  width: 240px;
+  height: 340px;
 
   color: #333333;
+
+  @media (max-width: 520px) {
+    width: 180px;
+  }
 `;
 
 export const Image = styled.img`
   width: 100%;
-  height: 282px;
+  height: 240px;
+  object-fit: cover;
+
+  @media (max-width: 520px) {
+    height: 180px;
+  }
 `;
 
 export const InfoBox = styled.div`
   display: flex;
   justify-content: space-between;
 
-  width: 282px;
-  padding-top: 16px;
-  padding-left: 8px;
+  width: 100%;
+  padding-top: 8px;
 `;
 
 export const LabelBox = styled.div`

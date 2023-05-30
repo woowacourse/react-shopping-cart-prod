@@ -7,8 +7,8 @@ export const skeletonBackground = keyframes`
 `;
 
 export const Wrapper = styled.div`
-  width: 282px;
-  height: 362px;
+  width: 240px;
+  height: 360px;
 `;
 
 export const Image = styled.div`
@@ -23,8 +23,7 @@ export const InfoBox = styled.div`
   justify-content: space-between;
 
   width: 282px;
-  padding-top: 16px;
-  padding-left: 8px;
+  padding-top: 8px;
 `;
 
 export const LabelBox = styled.div`

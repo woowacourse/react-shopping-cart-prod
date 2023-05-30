@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  width: 736px;
+  width: 660px;
 
-  @media (max-width: 736px) {
+  @media (max-width: 670px) {
     width: 100%;
   }
 `;
@@ -22,7 +22,8 @@ export const CountMessage = styled.p`
 export const List = styled.div`
   min-height: 128px;
   max-height: 612px;
-  border-top: 4px solid #aaaaaa;
+  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
 
   overflow: scroll;
 `;
@@ -30,8 +31,12 @@ export const List = styled.div`
 export const ListItemBox = styled.div`
   padding: 28px 0;
 
-  & + & {
-    border-top: 1.5px solid #cccccc;
+  & {
+    border-bottom: 1px solid #cccccc;
+  }
+
+  &:last-of-type {
+    border: 0;
   }
 `;
 

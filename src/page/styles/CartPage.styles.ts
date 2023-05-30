@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const CartHeader = styled.div`
-  width: 100%;
-  border-bottom: 4px solid #333333;
+  width: 1200px;
+  border-bottom: 1px solid #333333;
   padding-bottom: 28px;
 
   line-height: 37px;
@@ -13,17 +13,26 @@ export const CartHeader = styled.div`
   text-align: center;
 
   color: #333333;
+
+  @media (max-width: 1199px) {
+    width: 660px;
+  }
+
+  @media (max-width: 670px) {
+    width: 100%;
+  }
 `;
 
 export const CartMain = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
-  width: 100%;
+  width: 1200px;
 
-  @media (max-width: 1184px) {
+  @media (max-width: 1199px) {
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 `;
 
@@ -31,7 +40,7 @@ export const CartBillBox = styled.div`
   display: flex;
   justify-content: center;
 
-  @media (max-width: 448px) {
+  @media (max-width: 670px) {
     width: 100%;
   }
 `;
@@ -46,6 +55,7 @@ export const EmptyCartMain = styled.main`
 export const Image = styled.img`
   margin-top: 64px;
   margin-bottom: 36px;
+  object-fit: cover;
 `;
 
 export const Message = styled.p`

@@ -15,6 +15,7 @@ export default function Logo() {
     <S.Wrapper>
       <S.HomeLink to="/">
         <img src="./logo.svg" />
+        <S.LogoTitle>{serverName}</S.LogoTitle>
       </S.HomeLink>
       <S.Select value={serverName} onChange={onChangeSelect}>
         {SERVER_NAMES.map((serverName) => (

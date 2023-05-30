@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   justify-content: space-between;
   align-items: start;
 
-  width: 736px;
+  width: 100%;
   height: 144px;
 
   @media (max-width: 736px) {
@@ -21,15 +21,16 @@ export const Wrapper = styled.div`
 export const Image = styled.img`
   width: 144px;
   height: 144px;
+  object-fit: cover;
 
   @media (max-width: 448px) {
-    width: 96px;
-    height: 96px;
+    width: 120px;
+    height: 120px;
   }
 `;
 
 export const ProductName = styled.p`
-  width: 400px;
+  width: 328px;
 
   font-size: 20px;
   line-height: 24px;
@@ -38,7 +39,6 @@ export const ProductName = styled.p`
 
   @media (max-width: 448px) {
     width: 24%;
-    font-size: 14px;
   }
 `;
 

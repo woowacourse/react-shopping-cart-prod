@@ -21,15 +21,13 @@ export const ContentBox = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  width: 80%;
+  width: 1200px;
   height: 100%;
-  padding: 0 16px;
 `;
 
 export const RightBox = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 224px;
 `;
 
 export const CartLink = styled(Link)`

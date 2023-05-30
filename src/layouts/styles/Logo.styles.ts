@@ -8,17 +8,25 @@ export const Wrapper = styled.div`
 `;
 
 export const Select = styled.select`
-  width: 160px;
+  width: 20px;
   height: 48px;
   border: none;
-  border-radius: 4px;
   margin-left: 12px;
-  font-size: 32px;
+  font-size: 20px;
   background-color: transparent;
   color: #fff;
 
   & > option {
-    text-align: center;
+  }
+`;
+
+export const LogoTitle = styled.h1`
+  margin-left: 12px;
+
+  vertical-align: center;
+
+  @media (max-width: 520px) {
+    font-size: 24px;
   }
 `;
 

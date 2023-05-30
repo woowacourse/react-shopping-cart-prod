@@ -8,9 +8,13 @@ export const Wrapper = styled.div`
   height: 410px;
   margin-top: 98px;
 
-  @media (max-width: 448px) {
-    width: 100%;
+  @media (max-width: 1199px) {
+    width: 660px;
     margin-top: 64px;
+  }
+
+  @media (max-width: 670px) {
+    width: 100%;
   }
 `;
 

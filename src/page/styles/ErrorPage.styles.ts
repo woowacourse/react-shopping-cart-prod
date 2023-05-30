@@ -15,6 +15,7 @@ export const Wrapper = styled.div`
 
 export const Image = styled.img`
   margin-bottom: 16px;
+  object-fit: cover;
 `;
 
 export const Title = styled.h1`
