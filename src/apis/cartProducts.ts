@@ -1,13 +1,13 @@
 import { servers } from '../constants/server';
-import type { CartProduct } from '../types/product';
+import type { CartDetails } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 const email = process.env.REACT_APP_EMAIL;
 const password = process.env.REACT_APP_PASSWORD;
 const base64 = btoa(email + ':' + password);
 
-export const api = async (hostName: HostNameType) => {
-  const URL = '/cart-items';
+export const cartApi = async (hostName: HostNameType) => {
+  const URL = `${servers[hostName]}/cart-items`;
 
   const fetchCartProducts = async () => {
     const response = await fetch(URL, {
@@ -17,7 +17,7 @@ export const api = async (hostName: HostNameType) => {
       },
     });
 
-    const data: CartProduct[] = await response.json();
+    const data: CartDetails = await response.json();
     return data;
   };
 

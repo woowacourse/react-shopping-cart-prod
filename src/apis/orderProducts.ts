@@ -7,8 +7,7 @@ const password = process.env.REACT_APP_PASSWORD;
 const base64 = btoa(email + ':' + password);
 
 export const orderApi = async (hostName: HostNameType) => {
-  const URL = '/orders';
-  // const URL = `${servers[hostName]}/orders`;
+  const URL = `${servers[hostName]}/orders`;
 
   const fetchOrderProducts = async () => {
     const response = await fetch(URL, {
