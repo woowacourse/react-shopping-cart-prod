@@ -16,7 +16,7 @@ const OrderDetailNavigator = ({ orderId }: Props) => {
 
   return (
     <S.Head>
-      주문번호 : {orderId}
+      주문번호&nbsp;&nbsp;|&nbsp;<S.OrderId>{orderId}</S.OrderId>
       {location !== ROUTE_PATH.ORDER_DETAIL_PAGE && (
         <Button css={buttonStyle} onClick={() => goToPage(ROUTE_PATH.ORDER_DETAIL_PAGE)}>
           상세보기
@@ -34,11 +34,14 @@ const S = {
     justify-content: space-between;
     width: 100%;
     margin-top: 28px;
-    padding: 30px 40px 32px;
-    border: 1px solid var(--gray-color-300);
-    font-size: 20px;
+    padding: 30px 0 24px;
+    border-bottom: 1px solid var(--gray-color-300);
     color: var(--text-color);
-    background: #f6f6f6;
+  `,
+
+  OrderId: styled.span`
+    font-size: 14px;
+    margin: 0 auto 0 8px;
   `,
 };
 

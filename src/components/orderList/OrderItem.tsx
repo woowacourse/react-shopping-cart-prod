@@ -10,7 +10,7 @@ const OrderItem = ({ imageUrl, name, price, quantity }: Cart) => {
         <S.Name>{name}</S.Name>
         <S.Detail>
           <Price price={price} css={textStyle} />
-          <span>&nbsp;/&nbsp;수량&nbsp;:&nbsp;{quantity}개</span>
+          <span>&nbsp;/&nbsp;수량&nbsp;{quantity}개</span>
         </S.Detail>
       </div>
     </S.Wrapper>
@@ -20,12 +20,11 @@ const OrderItem = ({ imageUrl, name, price, quantity }: Cart) => {
 const S = {
   Wrapper: styled.li`
     display: flex;
-    padding: 38px 26px;
-    border: 1px solid var(--gray-color-300);
+    padding: 38px 0;
   `,
 
   Name: styled.h3`
-    font-size: 18px;
+    font-size: 17px;
   `,
 
   Image: styled.img`
@@ -45,20 +44,18 @@ const S = {
   Detail: styled.div`
     display: flex;
     margin-top: 32px;
-    font-size: 17px;
+    font-size: 16px;
     color: #888;
+    font-size: 15px;
 
     @media (max-width: 1270px) {
-      font-size: 16px;
-    }
-
-    @media (max-width: 768px) {
       font-size: 15px;
     }
   `,
 };
 
 const textStyle = css`
+  font-size: 15px;
   color: #888;
 `;
 
