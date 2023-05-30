@@ -29,7 +29,10 @@ function ExpectedPayment() {
             <S.TotalText>{totalPayingPrice.toLocaleString('ko-KR')}원</S.TotalText>
           </S.TotalPriceContainer>
         </S.PayingBackground>
-        <S.PayingButton disabled={totalPrice === 0}>결제하기</S.PayingButton>
+        <div style={{ display: 'flex', columnGap: '2rem' }}>
+          <S.CouponButton disabled={totalPrice === 0}>쿠폰선택</S.CouponButton>
+          <S.PayingButton disabled={totalPrice === 0}>결제하기</S.PayingButton>
+        </div>
       </S.PayingBox>
     </S.PayingContainer>
   );

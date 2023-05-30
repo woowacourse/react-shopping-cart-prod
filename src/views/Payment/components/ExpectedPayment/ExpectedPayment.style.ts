@@ -12,9 +12,9 @@ export const PayingBox = styled(FlexColWrapper)`
   column-gap: 1rem;
   width: 90%;
   margin: 1rem;
-  background-color: ${({ theme }) => theme.primaryColor};
-  border: ${({ theme }) => theme.primaryColor} 1px solid;
-  color: ${({ theme }) => theme.lightColor};
+
+  border: ${({ theme }) => theme.secondaryColor} 1px solid;
+  color: ${({ theme }) => theme.primaryColor};
 
   padding: 2rem 1.5rem;
   border-radius: 8px;
@@ -22,7 +22,6 @@ export const PayingBox = styled(FlexColWrapper)`
 `;
 
 export const PayingBackground = styled.div`
-  background-color: ${({ theme }) => theme.secondaryColor};
   border: ${({ theme }) => theme.secondaryColor} 1px solid;
   padding: 1rem;
   border-radius: 8px;
@@ -57,6 +56,7 @@ export const PayingButton = styled.button`
   border-radius: 8px;
   font-size: 2.4rem;
   height: 60px;
+  flex: 1;
 
   &:disabled {
     background-color: ${({ theme }) => theme.secondaryColor};
@@ -64,4 +64,9 @@ export const PayingButton = styled.button`
     opacity: 0.5;
     cursor: not-allowed;
   }
+`;
+
+export const CouponButton = styled(PayingButton)`
+  background-color: ${({ theme }) => theme.primaryColor};
+  color: ${({ theme }) => theme.lightColor};
 `;
