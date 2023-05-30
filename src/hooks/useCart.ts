@@ -88,7 +88,20 @@ const useCart = () => {
     setCartList([...updatedItems]);
   }, [cartList, setCartList]);
 
-  return { cartList, setCartList, updateCart, removeCartItem, toggleIsSelected, selectAllItems };
+  const removeCartsWithId = useCallback(
+    (items: number[]) => {
+      if (!cartList) {
+        return;
+      }
+
+      const updatedItems = cartList.filter((item) => !items.includes(item.id));
+
+      setCartList([...updatedItems]);
+    },
+    [cartList, setCartList]
+  );
+
+  return { cartList, setCartList, updateCart, removeCartItem, toggleIsSelected, selectAllItems, removeCartsWithId };
 };
 
 export default useCart;
