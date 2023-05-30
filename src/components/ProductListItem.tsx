@@ -1,6 +1,7 @@
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import CartIcon from '../assets/icons/cart.svg';
-import useCartActions from '../hooks/useCartActions';
+import cartItemsRepository from '../recoil/repositories/cartItemsRepository';
 import type { CartItem } from '../types/CartItem';
 import type { Product } from '../types/Product';
 import Stepper from './common/Stepper';
@@ -54,12 +55,12 @@ const AddCartButton = styled.button`
 
 type ProductListItemProps = {
   product: Product;
-  cartItem?: CartItem;
+  cartItem?: CartItem | null;
 };
 
 const ProductListItem = (props: ProductListItemProps) => {
   const { product, cartItem } = props;
-  const { setQuantity } = useCartActions();
+  const { setQuantity } = useRecoilValue(cartItemsRepository);
 
   return (
     <ProductListItemContainer>

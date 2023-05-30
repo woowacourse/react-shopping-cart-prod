@@ -1,12 +1,10 @@
 import { styled } from 'styled-components';
 import ProductListItem from '../components/ProductListItem';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
-import cartItemsState from '../recoil/atoms/cartItemsState';
 import productsState from '../recoil/atoms/productsState';
-import type { CartItem } from '../types/CartItem';
-import type { Product } from '../types/Product';
+import cartItemsRepository from '../recoil/repositories/cartItemsRepository';
 
-const ProductListContainer = styled.ul`
+const ProductList = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 230px);
   column-gap: 48px;
@@ -26,33 +24,22 @@ const ProductListContainer = styled.ul`
   }
 `;
 
-type ProductListProps = {
-  products: Product[];
-  cartItems: CartItem[];
-};
-
-const ProductList = (props: ProductListProps) => {
-  const { products, cartItems } = props;
-
-  return (
-    <ProductListContainer>
-      {products.map((product) => (
-        <ProductListItem
-          key={product.id}
-          product={product}
-          cartItem={cartItems.find((cartItem) => cartItem.product.id === product.id)}
-        />
-      ))}
-    </ProductListContainer>
-  );
-};
-
 const ProductListPage = () => {
   return (
     <AwaitRecoilState state={productsState}>
       {(products) => (
-        <AwaitRecoilState state={cartItemsState}>
-          {(cartItems) => <ProductList products={products} cartItems={cartItems} />}
+        <AwaitRecoilState state={cartItemsRepository}>
+          {({ getCartItemByProductId }) => (
+            <ProductList>
+              {products.map((product) => (
+                <ProductListItem
+                  key={product.id}
+                  product={product}
+                  cartItem={getCartItemByProductId(product.id)}
+                />
+              ))}
+            </ProductList>
+          )}
         </AwaitRecoilState>
       )}
     </AwaitRecoilState>

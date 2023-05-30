@@ -1,6 +1,7 @@
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import DeleteIcon from '../assets/icons/delete.svg';
-import useCartActions from '../hooks/useCartActions';
+import cartItemsRepository from '../recoil/repositories/cartItemsRepository';
 import type { Product } from '../types/Product';
 import Stepper from './common/Stepper';
 
@@ -50,7 +51,7 @@ type CartItemListItemProps = {
 
 const CartItemListItem = (props: CartItemListItemProps) => {
   const { quantity, product } = props;
-  const { setQuantity } = useCartActions();
+  const { setQuantity } = useRecoilValue(cartItemsRepository);
 
   const handleChangeQuantityWithinSafeRange = (newQuantity: number) => {
     setQuantity(product, Math.max(1, newQuantity));
