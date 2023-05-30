@@ -1,4 +1,5 @@
 const userServerUrlList: Record<string, string | undefined> = {
+  msw: '',
   로지: process.env.REACT_APP_SERVER_BASE_URL_LOGI,
   아마란스: process.env.REACT_APP_SERVER_BASE_URL_AMARANTH,
   에코: process.env.REACT_APP_SERVER_BASE_URL_ECO,

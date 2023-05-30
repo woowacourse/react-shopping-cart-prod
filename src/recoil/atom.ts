@@ -30,7 +30,7 @@ export const $ToastStateList = atom<ToastState[]>({
 
 export const $CurrentServerUrl = atom<string>({
   key: 'CurrentServerUrl',
-  default: userServerUrlList[getLocalStorage('name', '로지')],
+  default: userServerUrlList[getLocalStorage('name', 'msw')],
 });
 
 export const $CartList = atomFamily<CartItem[], string>({
