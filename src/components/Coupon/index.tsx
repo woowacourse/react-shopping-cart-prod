@@ -1,8 +1,8 @@
-import { MyCouponType } from '@Types/index';
+import { CouponType } from '@Types/index';
 
 import * as S from './style';
 
-function Coupon({ name, description, isUsed, subMessage }: MyCouponType & { subMessage: string }) {
+function Coupon({ name, description, isUsed = false, subMessage }: CouponType & { subMessage: string }) {
   return (
     <S.Container isUsed={isUsed}>
       <S.CouponLayout>

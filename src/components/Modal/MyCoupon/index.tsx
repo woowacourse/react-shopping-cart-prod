@@ -1,12 +1,14 @@
 import { Suspense } from 'react';
 
-import CouponList from './CouponList';
+import CouponList from '@Components/CouponList';
+
+import myCouponState from '@Atoms/myCouponState';
 
 function MyCoupon() {
   return (
     <div>
       <Suspense fallback={<div></div>}>
-        <CouponList />
+        <CouponList couponState={myCouponState} />
       </Suspense>
     </div>
   );

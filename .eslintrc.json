@@ -17,6 +17,7 @@
   },
   "plugins": ["react", "@typescript-eslint", "import"],
   "rules": {
+    "import/named": "off",
     "import/no-unresolved": "off",
     "react/react-in-jsx-scope": "off",
     "import/order": [

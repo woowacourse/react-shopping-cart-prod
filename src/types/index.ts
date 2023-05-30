@@ -27,6 +27,7 @@ export type CouponType = {
   name: string;
   discountAmount: number;
   description: string;
+  isUsed?: boolean;
 };
 
 export type MyCouponType = CouponType & { isUsed: boolean };
