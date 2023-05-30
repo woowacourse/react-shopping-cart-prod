@@ -16,14 +16,15 @@ interface OrderDetailPurchaseInformationProps {
 
 const OrderDetailPurchaseInformation = ({ orderId }: OrderDetailPurchaseInformationProps) => {
   const order = useRecoilValue(orderState(orderId));
-  const totalItemDiscountAmount = useRecoilValue(orderTotalItemDiscountAmountState(orderId));
-  const memberDiscountAmount = useRecoilValue(orderMemberDiscountAmountState(orderId));
 
   if (!order) {
     throw new HTTPError(HTTP_STATUS_CODE.NOT_FOUND, {
       payload: HTTP_ERROR_MESSAGE[HTTP_STATUS_CODE.NOT_FOUND],
     });
   }
+
+  const totalItemDiscountAmount = useRecoilValue(orderTotalItemDiscountAmountState(orderId));
+  const memberDiscountAmount = useRecoilValue(orderMemberDiscountAmountState(orderId));
 
   return (
     <>
@@ -34,7 +35,7 @@ const OrderDetailPurchaseInformation = ({ orderId }: OrderDetailPurchaseInformat
         <S.PurchaseInformationData>
           <S.PurchaseInformationDataLabel>상품 금액</S.PurchaseInformationDataLabel>
           <S.PurchaseInformationDataDescription>
-            {priceFormatter(order.totalPrice)}원
+            {priceFormatter(order.totalItemPrice)}원
           </S.PurchaseInformationDataDescription>
         </S.PurchaseInformationData>
         <S.PurchaseInformationData>
