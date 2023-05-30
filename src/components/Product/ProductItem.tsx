@@ -30,11 +30,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
           )}
         </dl>
         {!productExistsInCart ? (
-          <ProductCartBtn
-            type='button'
-            data-testid='product-cart-btn'
-            onClick={addProduct}
-          >
+          <ProductCartBtn type='button' onClick={addProduct}>
             <CartIcon width={25} height={22} color='gray400' />
           </ProductCartBtn>
         ) : (
