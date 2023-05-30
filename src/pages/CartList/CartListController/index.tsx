@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil';
 
 import Checkbox from '@Components/Checkbox';
+import SecondaryButton from '@Components/SecondaryButton';
 
 import useCartItems from '@Hooks/useCartItems';
 
@@ -36,7 +37,7 @@ function CartListController() {
       <S.SelectedSituation>
         {isAllCartItemSelected ? '전체해제' : '전체선택'}({selectedCartItemsAmount}/{shoppingCartAmount})
       </S.SelectedSituation>
-      <S.DeleteButton onClick={deleteManyShoppingItem}>선택삭제</S.DeleteButton>
+      <SecondaryButton onClick={deleteManyShoppingItem} text="선택삭제" />
     </S.Container>
   );
 }
