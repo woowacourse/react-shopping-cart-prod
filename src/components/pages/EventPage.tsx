@@ -1,9 +1,7 @@
 import { Text } from '../common/Text/Text';
-import CartList from '../list/CartList/CartList';
+import CouponList from '../list/CouponList/CouponList';
 import PageTemplate from '../templates/PageTemplate';
 import styled from '@emotion/styled';
-import Modal from '../common/Modal/Modal';
-import DeleteCartItemModal from '../common/Modal/DeleteCartItemModal';
 
 const EventPage = () => {
   return (
@@ -17,11 +15,7 @@ const EventPage = () => {
             ✨EVENT ZONE✨
           </Text>
         </EventPageHead>
-        <CartPageContent>
-          <CartListWrapper>
-            <CartList />
-          </CartListWrapper>
-        </CartPageContent>
+        <CouponList />
       </EventPageWrapper>
     </PageTemplate>
   );
@@ -48,7 +42,7 @@ const EventPageWrapper = styled.div`
   }
 `;
 
-const CartListWrapper = styled.div`
+const CouponListWrapper = styled.div`
   width: 100%;
   margin-top: -50px;
 `;
@@ -60,16 +54,4 @@ const EventPageHead = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 8px;
-`;
-
-const CartPageContent = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 50px;
-  position: relative;
-  @media screen and (max-width: 1320px) {
-    flex-direction: column;
-    width: 100%;
-  }
 `;

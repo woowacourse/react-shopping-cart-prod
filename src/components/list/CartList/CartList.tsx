@@ -66,16 +66,16 @@ const CartListWrapper = styled.div`
 `;
 
 const CartListHead = styled.div`
-  width: 100%;
-  border-bottom: 3px solid #aaa;
-  padding: 80px 0 20px 0;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   position: sticky;
-  top: 70px;
-  background-color: #fff;
   z-index: 30;
+  align-items: center;
+  width: 100%;
+  top: 70px;
+  border-bottom: 3px solid #aaa;
+  padding: 80px 0 20px 0;
+  background-color: #fff;
 `;
 
 const Cart = styled.div`
