@@ -29,3 +29,25 @@ export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
     return [];
   }
 };
+
+export const makeProducts = async (): Promise<LocalProductType[]> => {
+  try {
+    const productsResponse = await fetchProducts();
+
+    if (!productsResponse.ok)
+      throw new Error(productsResponse.status.toString());
+
+    const products = await productsResponse.json();
+
+    return products.map((product: ProductType) => {
+      return {
+        ...product,
+        quantity: MIN_QUANTITY,
+        cartItemId: null,
+      };
+    });
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};

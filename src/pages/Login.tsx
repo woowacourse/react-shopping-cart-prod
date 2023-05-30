@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { Button, Page } from "../components";
 import { ROUTER_PATH } from "../router";
+import { setLocalStorage } from "../utils";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,9 +27,11 @@ const Login = () => {
   };
 
   const submitUser = (e: React.FormEvent) => {
-    console.log(112);
+    const base64 = btoa(username + ":" + password);
+
+    setLocalStorage("login", base64);
     e.preventDefault();
-    navigate(ROUTER_PATH.Main);
+    navigate(ROUTER_PATH.Cart);
   };
 
   return (
@@ -43,6 +46,7 @@ const Login = () => {
           ref={usernameRef}
           value={username}
           autoFocus
+          required
           onChange={handleUsernameChanged}
           maxLength={20}
           placeholder="아이디 혹은 이메일을 입력해 주세요."
@@ -58,6 +62,7 @@ const Login = () => {
           minLength={4}
           maxLength={20}
           type="password"
+          required
           placeholder="비밀번호를 입력해 주세요."
           onKeyDown={handlePasswordKey}
         />

@@ -1,7 +1,12 @@
 import { atom, selector } from "recoil";
 import { LocalProductType, ProductType, ToastType } from "../types/domain";
 import { fetchProducts } from "../api";
-import { makeLocalProducts } from "../utils/domain";
+import { makeLocalProducts, makeProducts } from "../utils/domain";
+import { getLocalStorage } from "../utils";
+import {
+  DEFAULT_VALUE_LOGIN_TOKEN,
+  KEY_LOCALSTORAGE_LOGIN_TOKEN,
+} from "../constants";
 
 export const productsState = atom<ProductType[]>({
   key: "products",
@@ -19,7 +24,9 @@ export const localProductsState = atom<LocalProductType[]>({
   key: "localProducts",
   default: selector<LocalProductType[]>({
     key: "products/default",
-    get: () => makeLocalProducts(),
+    get: async ({ get }) => {
+      return get(loginState) ? makeLocalProducts() : makeProducts();
+    },
   }),
 });
 
@@ -35,4 +42,11 @@ export const toastState = atom<ToastType>({
     isShown: false,
     message: "",
   },
+});
+
+export const loginState = atom<boolean>({
+  key: "loginState",
+  default:
+    getLocalStorage(KEY_LOCALSTORAGE_LOGIN_TOKEN, DEFAULT_VALUE_LOGIN_TOKEN) &&
+    true,
 });

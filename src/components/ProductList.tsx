@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { localProductsState } from "../recoil/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { localProductsState, loginState } from "../recoil/atom";
 import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
@@ -9,14 +9,22 @@ import { addCartItem } from "../api";
 import { makeLocalProducts } from "../utils/domain";
 import { useState } from "react";
 import ErrorBox from "./ErrorBox";
+import { useToast } from "../hooks/useToast";
 
 export const ProductList = () => {
+  const isLogined = useRecoilValue(loginState);
+  const { showToast } = useToast();
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
   const [errorStatus, setErrorStatus] = useState<
     keyof typeof ERROR_MESSAGE | null
   >(null);
 
   const handleCartClicked = (productId: number) => async () => {
+    if (!isLogined) {
+      showToast("error", "로그인이 필요한 서비스입니다. 😊");
+      return;
+    }
+
     try {
       const response = await addCartItem(productId);
       if (!response.ok) throw new Error(response.status.toString());

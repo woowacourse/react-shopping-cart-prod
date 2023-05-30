@@ -4,22 +4,24 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { localProductsSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
+import React, { useState } from "react";
+import { localProductsState, loginState } from "../recoil/atom";
+import { makeLocalProducts, makeProducts } from "../utils/domain";
+import { getLocalStorage, setLocalStorage } from "../utils";
+import { useToast } from "../hooks/useToast";
 import {
   DEFAULT_VALUE_SERVER_OWNER,
   KEY_LOCALSTORAGE_SERVER_OWNER,
   SERVERS,
 } from "../constants";
-import React, { useState } from "react";
-import { localProductsState } from "../recoil/atom";
-import { makeLocalProducts } from "../utils/domain";
-import { getLocalStorage, setLocalStorage } from "../utils";
-import { useToast } from "../hooks/useToast";
 
 export const Header = () => {
   const { goPage } = useRouter();
   const { showToast } = useToast();
-  const setLocalProducts = useSetRecoilState(localProductsState);
+
+  const isLogined = useRecoilValue(loginState);
   const cartProducts = useRecoilValue(localProductsSelector);
+  const setLocalProducts = useSetRecoilState(localProductsState);
   const [serverOwner, setServerOwner] = useState(
     getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
   );
@@ -30,10 +32,12 @@ export const Header = () => {
     setLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, e.target.value);
     setServerOwner(e.target.value);
 
-    const newProducts = await makeLocalProducts();
+    const newProducts = isLogined
+      ? await makeLocalProducts()
+      : await makeProducts();
     setLocalProducts(newProducts);
 
-    showToast("success", `${e.target.value}의 서버로 변경되었습니다.`);
+    showToast("success", `${e.target.value}의 서버로 변경되었습니다. ✅`);
   };
 
   return (
@@ -42,17 +46,24 @@ export const Header = () => {
         <img src={CartIcon} alt="홈카트" />
         <p>SHOP</p>
       </TitleContainer>
-      <CartContainer>
+      <NavContainer>
         <SelectBox value={serverOwner} onChange={handleServerSelected}>
           {Object.keys(SERVERS).map((server) => (
             <option key={crypto.randomUUID()}>{server}</option>
           ))}
         </SelectBox>
-        <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>
-        {cartProducts.length > 0 && (
-          <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
+        {!isLogined ? (
+          <p onClick={goPage(ROUTER_PATH.Login)}>로그인</p>
+        ) : (
+          <CartContainer>
+            <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>
+            {cartProducts.length > 0 && (
+              <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
+            )}
+            <p onClick={goPage(ROUTER_PATH.Order)}>주문목록</p>
+          </CartContainer>
         )}
-      </CartContainer>
+      </NavContainer>
     </Wrapper>
   );
 };
@@ -76,7 +87,7 @@ const Wrapper = styled.section`
 const TitleContainer = styled.section`
   display: flex;
   align-items: end;
-  gap: 20px;
+  gap: 5%;
 
   cursor: pointer;
 
@@ -84,8 +95,9 @@ const TitleContainer = styled.section`
     color: white;
     font-weight: 900;
     font-size: 2rem;
+
     @media screen and (max-width: 850px) {
-      font-size: 1.5rem;
+      font-size: 1.3rem;
     }
   }
 
@@ -100,10 +112,8 @@ const TitleContainer = styled.section`
   }
 `;
 
-const CartContainer = styled.section`
+const NavContainer = styled.div`
   display: flex;
-  align-items: center;
-  gap: 10px;
 
   font-size: 24px;
   font-weight: 500;
@@ -112,8 +122,16 @@ const CartContainer = styled.section`
   cursor: pointer;
 
   @media screen and (max-width: 850px) {
-    font-size: 20px;
+    font-size: 18px;
   }
+`;
+
+const CartContainer = styled.section`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  cursor: pointer;
 `;
 
 const ItemQuantityBox = styled.div`
@@ -141,4 +159,11 @@ const SelectBox = styled.select`
 
   border-radius: 4px;
   background: var(--light-gray);
+
+  margin-right: 10px;
+
+  @media screen and (max-width: 850px) {
+    width: 70px;
+    height: 37px;
+  }
 `;

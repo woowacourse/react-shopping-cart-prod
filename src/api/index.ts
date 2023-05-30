@@ -1,14 +1,11 @@
+import { getLocalStorage } from "../utils";
 import {
+  DEFAULT_VALUE_LOGIN_TOKEN,
   DEFAULT_VALUE_SERVER_OWNER,
+  KEY_LOCALSTORAGE_LOGIN_TOKEN,
   KEY_LOCALSTORAGE_SERVER_OWNER,
   SERVERS,
 } from "../constants";
-import { getLocalStorage } from "../utils";
-
-// Base64로 인코딩
-const base64 = btoa(
-  process.env.REACT_APP_USERNAME + ":" + process.env.REACT_APP_PASSWORD
-);
 
 export const fetchProducts = () =>
   fetch(
@@ -34,7 +31,10 @@ export const fetchCartItems = async () =>
     }/cart-items`,
     {
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
       },
     }
   );
@@ -51,7 +51,10 @@ export const changeQuantity = async (cartItemId: number, newQuantity: number) =>
     }/cart-items/${cartItemId}`,
     {
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
         "Content-Type": "application/json",
       },
       method: "PATCH",
@@ -71,7 +74,10 @@ export const addCartItem = async (productId: number) =>
     }/cart-items`,
     {
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
         "Content-Type": "application/json",
       },
       method: "POST",
@@ -91,7 +97,10 @@ export const deleteCartItem = async (cartItemId: number) =>
     }/cart-items/${cartItemId}`,
     {
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
       },
       method: "DELETE",
     }
