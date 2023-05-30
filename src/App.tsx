@@ -14,10 +14,13 @@ import GlobalStyle, { CommonPageStyle } from '@Styles/GlobalStyle';
 
 import localStorageHelper from '@Utils/localStorageHelper';
 
+import mockMyCouponData from './mocks/mockMyCouponData.json';
+
 function App() {
   useEffect(() => {
     if (!localStorageHelper.hasKey('cartItems')) localStorageHelper.setInitValue('cartItems', []);
     if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
+    if (!localStorageHelper.hasKey('myCoupons')) localStorageHelper.setInitValue('myCoupons', mockMyCouponData);
   }, []);
 
   const { Modal } = useModal();

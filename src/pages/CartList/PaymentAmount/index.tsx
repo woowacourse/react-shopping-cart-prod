@@ -49,7 +49,7 @@ function PaymentAmount() {
         <S.AmountWrapper aria-label="쿠폰적용">
           <S.AmountCategory>쿠폰적용</S.AmountCategory>
           <S.Amount>
-            <SecondaryButton text="쿠폰 선택" onClick={() => openModal('useCoupon')} />
+            <SecondaryButton text="쿠폰 선택" onClick={() => openModal('myCoupon')} />
           </S.Amount>
         </S.AmountWrapper>
         <S.AmountWrapper aria-label="총 배송비">
