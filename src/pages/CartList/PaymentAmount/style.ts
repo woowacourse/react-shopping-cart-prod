@@ -26,7 +26,7 @@ export const ExpectedAmountLayout = styled.div`
   background-color: #ffffff;
   padding: 20px 30px;
   display: grid;
-  row-gap: 30px;
+  row-gap: 15px;
 `;
 
 export const AmountWrapper = styled.div`
@@ -36,21 +36,26 @@ export const AmountWrapper = styled.div`
   font-weight: 700;
   font-size: 18px;
   line-height: 27px;
-  :nth-child(3) {
+  :nth-child(5) {
     padding: 10px 0px;
+  }
+
+  :nth-child(2) {
+    padding-top: 15px;
+    border-top: 1px solid #dddddd;
+    color: #06c09e;
+  }
+
+  :nth-child(3) {
+    padding-bottom: 15px;
+    border-bottom: 1px solid #dddddd;
+    color: #06c09e;
   }
 `;
 
 export const AmountCategory = styled.div``;
 
-type AmountProps = {
-  isDiscounted?: boolean;
-};
-
-export const Amount = styled.div<AmountProps>`
-  opacity: ${(props) => props.isDiscounted && 0.6};
-  text-decoration: ${(props) => props.isDiscounted && 'line-through'};
-`;
+export const Amount = styled.div``;
 
 export const DiscountAmount = styled.div`
   position: absolute;

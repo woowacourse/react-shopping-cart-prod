@@ -31,8 +31,15 @@ function PaymentAmount() {
       <S.ExpectedAmountLayout>
         <S.AmountWrapper aria-label="총 상품가격">
           <S.AmountCategory>총 상품가격</S.AmountCategory>
-          <S.Amount isDiscounted={!!discountAmount}>{orderAmount}</S.Amount>
-          {discountAmount && <S.DiscountAmount>{discountAmount}</S.DiscountAmount>}
+          <S.Amount>{orderAmount}</S.Amount>
+        </S.AmountWrapper>
+        <S.AmountWrapper aria-label="할인가격">
+          <S.AmountCategory>할인가격</S.AmountCategory>
+          <S.Amount>{discountAmount}</S.Amount>
+        </S.AmountWrapper>
+        <S.AmountWrapper aria-label="쿠폰적용">
+          <S.AmountCategory>쿠폰적용</S.AmountCategory>
+          <S.Amount></S.Amount>
         </S.AmountWrapper>
         <S.AmountWrapper aria-label="총 배송비">
           <S.AmountCategory>총 배송비</S.AmountCategory>

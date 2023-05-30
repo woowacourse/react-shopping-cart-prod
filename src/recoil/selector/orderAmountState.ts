@@ -23,23 +23,23 @@ const orderAmountState = selector({
 
     const orderAmount = convertLocalPrice(allPrice);
     const discountAmount = () => {
-      if (allPrice >= 500000) return Math.floor((allPrice * 95) / 100);
-      if (allPrice >= 300000) return Math.floor((allPrice * 97) / 100);
-      if (allPrice >= 100000) return Math.floor((allPrice * 99) / 100);
+      if (allPrice >= 500000) return Math.floor((allPrice * 5) / 100);
+      if (allPrice >= 300000) return Math.floor((allPrice * 3) / 100);
+      if (allPrice >= 100000) return Math.floor((allPrice * 1) / 100);
 
-      return allPrice;
+      return 0;
     };
 
     const deliveryFee = !allPrice ? `0 원` : convertLocalPrice(DELIVERY_FEE);
     const totalOrderPrice = isDiscounted
-      ? convertLocalPrice(discountAmount() + DELIVERY_FEE)
+      ? convertLocalPrice(allPrice - discountAmount() + DELIVERY_FEE)
       : convertLocalPrice(allPrice + (!allPrice ? 0 : DELIVERY_FEE));
 
     return {
       orderAmount,
       deliveryFee,
       totalOrderPrice,
-      discountAmount: isDiscounted ? convertLocalPrice(discountAmount()) : null,
+      discountAmount: isDiscounted ? `- ${convertLocalPrice(discountAmount())}` : `0 원`,
     };
   },
 });
