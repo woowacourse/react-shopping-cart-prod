@@ -1,14 +1,13 @@
-import { createPortal } from 'react-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
-import { AddIcon } from '../../assets';
-import { useFetch } from '../../hooks/useFetch';
-import { useModal } from '../../hooks/useModal';
-import { cartItemQuantityState, cartListState } from '../../store/cart';
-import { originState } from '../../store/origin';
-import { ProductItemType } from '../../types';
-import { priceFormatter } from '../../utils/formatter';
-import Modal from '../Modal/Modal';
+import { AddIcon } from '../../../assets';
+import useCartList from '../../../hooks/useCartList';
+import { useModal } from '../../../hooks/useModal';
+import { cartItemQuantityState } from '../../../store/cart';
+import { ProductItemType } from '../../../types';
+import { priceFormatter } from '../../../utils/formatter';
+import Modal from '../../utils/Modal/Modal';
 import ProductAddition from '../ProductAddition/ProductAddition';
 import styles from './style.module.css';
 
@@ -19,46 +18,13 @@ interface ProductItemProps {
 const ProductItem = ({ information }: ProductItemProps) => {
   const cartItemQuantity = useRecoilValue(cartItemQuantityState(information.id));
 
+  const [addQuantity, setAddQuantity] = useState(1);
+  const { fetchProductAddToCart } = useCartList();
+
   const { isModalOpen, handleModalOpen, handleModalClose, handleModalClosePress } = useModal();
-  const [cartList, setCartList] = useRecoilState(cartListState);
-  const { fetchApi } = useFetch<ProductItemType[]>(setCartList);
-  const origin = useRecoilValue(originState);
 
   const handleCartAdd = () => {
-    const compareProductId = information.id;
-    fetchApi.post(`${origin}/cart-items`, { productId: compareProductId });
-
-    const isExistItem = cartList.find((item) => item.product.id === compareProductId);
-
-    if (isExistItem) {
-      setCartList(
-        cartList.map((item) => {
-          if (item.product.id === compareProductId) {
-            console.log({
-              ...item,
-              quantity: item.quantity + 1,
-            });
-            return {
-              ...item,
-              quantity: item.quantity + 1,
-            };
-          }
-          return item;
-        })
-      );
-    } else {
-      const newCartList = [
-        ...cartList,
-        {
-          id: Number(new Date()),
-          quantity: 1,
-          product: information,
-          isChecked: true,
-        },
-      ];
-      setCartList(newCartList);
-    }
-
+    fetchProductAddToCart(information, addQuantity);
     handleModalClose();
   };
 
@@ -85,6 +51,8 @@ const ProductItem = ({ information }: ProductItemProps) => {
       {isModalOpen && (
         <Modal closeModalByClick={handleModalClose} closeModalByPress={handleModalClosePress}>
           <ProductAddition
+            quantity={addQuantity}
+            setQuantity={setAddQuantity}
             closeModalByClick={handleModalClose}
             productInformation={information}
             submitEvent={handleCartAdd}

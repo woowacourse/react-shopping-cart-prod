@@ -1,33 +1,38 @@
 import { memo, useCallback, useEffect } from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import CartIcon from '../../assets/cart-icon.svg';
 import Logo from '../../assets/logo.png';
-import { useFetch } from '../../hooks/useFetch';
+import { CART_PAGE_LOCATE, MAIN_PAGE_LOCATE } from '../../constants';
+import useCartList from '../../hooks/useCartList';
 import { cartListState } from '../../store/cart';
 import { originState } from '../../store/origin';
 import { CartItemType } from '../../types';
-import OriginSelector from '../OriginSelector/OriginSelector';
+import OriginSelector from '../utils/OriginSelector/OriginSelector';
 import styles from './style.module.css';
 
 const Header = () => {
   const navigate = useNavigate();
-  const [cartItemList, setCartItemList] = useRecoilState(cartListState);
+  const cartItemList = useRecoilValue(cartListState);
+
+  const { fetchCartList } = useCartList();
+
+  useQuery<CartItemType[]>('cartItemData', fetchCartList);
+
   const origin = useRecoilValue(originState);
 
-  const { fetchApi } = useFetch<CartItemType[]>(setCartItemList);
   useEffect(() => {
-    fetchApi.get(`${origin}/cart-items`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [origin]);
+    fetchCartList();
+  }, [fetchCartList, origin]);
 
   const navigateToMainPage = useCallback(() => {
-    navigate('/');
+    navigate(MAIN_PAGE_LOCATE);
   }, [navigate]);
 
   const navigateToCartPage = useCallback(() => {
-    navigate('/cartlist');
+    navigate(CART_PAGE_LOCATE);
   }, [navigate]);
 
   return (

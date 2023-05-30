@@ -1,13 +1,13 @@
 import { ChangeEvent } from 'react';
 import { useRecoilState } from 'recoil';
 
-import { originState } from '../../store/origin';
-import { ORIGIN } from '../../utils/origin';
+import { originState } from '../../../store/origin';
+import { ORIGIN } from '../../../utils/origin';
 import styles from './style.module.css';
 
 const OriginSelector = () => {
   const [origin, setOrigin] = useRecoilState(originState);
-
+  console.log(origin);
   const onChangeOrigin = (e: ChangeEvent<HTMLSelectElement>) => {
     setOrigin(ORIGIN[e.target.value]);
   };
