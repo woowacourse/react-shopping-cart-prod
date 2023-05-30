@@ -42,6 +42,10 @@ const Wrapper = styled.div`
   width: 100%;
   padding: 0 20px;
   border-bottom: 1px solid var(--color-grayscale-200);
+
+  :hover {
+    background-color: var(--color-grayscale-100);
+  }
 `;
 
 const Title = styled.span`
