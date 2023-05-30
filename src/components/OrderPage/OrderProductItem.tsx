@@ -12,15 +12,13 @@ const OrderProductItem = ({
   price,
   quantity,
 }: OrderProductItemProps) => {
-  const itemTotalPrice = price * quantity;
-
   return (
     <S.Item>
       <S.ProductImg src={imageUrl} alt={name} />
       <S.ProductInfo>
         <S.ProductName>{name}</S.ProductName>
         <S.ProductQuantity>
-          {itemTotalPrice.toLocaleString()}원 / 수량 : {quantity}개
+          {price.toLocaleString()}원 / 수량 : {quantity}개
         </S.ProductQuantity>
       </S.ProductInfo>
     </S.Item>
