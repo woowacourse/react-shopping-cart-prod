@@ -34,7 +34,9 @@ const getDiscountedTotalPrice = (
     if (memberInformation.rank !== '일반') {
       return (
         acc +
-        orderedItems.quantity * orderedItems.product.price * (memberInformation.discountRate / 100)
+        orderedItems.quantity *
+          orderedItems.product.price *
+          (1 - memberInformation.discountRate / 100)
       );
     }
 
