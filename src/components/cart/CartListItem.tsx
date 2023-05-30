@@ -122,7 +122,6 @@ const S = {
 
   RemoveButton: styled.button`
     background-color: transparent;
-    cursor: pointer;
   `,
 
   Name: styled.p`

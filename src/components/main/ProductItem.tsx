@@ -4,8 +4,6 @@ import { useRecoilValue } from 'recoil';
 import { isSelectedProductSelector } from '../../store/CartSelector';
 import CartIconButton from './CartIconButton';
 import { useProduct } from '../../hooks/useProduct';
-import useToast from '../../hooks/useToast';
-import Toast from '../@common/Toast';
 
 interface Props {
   id: number;
@@ -25,11 +23,8 @@ const ProductItem = ({ id, imgUrl, name, price }: Props) => {
     handleNumberInputChange,
   } = useProduct(id);
 
-  const { isShowToast, showToast, dismissToast } = useToast();
-
   const handleCartClick = () => {
     addItemToCart();
-    showToast();
   };
 
   return (
@@ -44,21 +39,14 @@ const ProductItem = ({ id, imgUrl, name, price }: Props) => {
           </S.Price>
         </div>
         {isSelected ? (
-          <>
-            <QuantityInput
-              value={newQuantity}
-              onChange={handleNumberInputChange}
-              onIncrement={handleIncreaseItem}
-              onDecrement={handleDecreaseItem}
-              onBlur={handleBlurItem}
-              id={`product${id}`}
-            />
-            <Toast
-              isShowToast={isShowToast}
-              message="상품이 장바구니에 담겼습니다."
-              dismissToast={dismissToast}
-            />
-          </>
+          <QuantityInput
+            value={newQuantity}
+            onChange={handleNumberInputChange}
+            onIncrement={handleIncreaseItem}
+            onDecrement={handleDecreaseItem}
+            onBlur={handleBlurItem}
+            id={`product${id}`}
+          />
         ) : (
           <CartIconButton onClick={handleCartClick} ariaLabel={id} />
         )}
@@ -78,10 +66,6 @@ const S = {
     display: flex;
     justify-content: space-between;
     padding: 12px 6px 0;
-
-    & > button:last-child {
-      cursor: pointer;
-    }
   `,
 
   Name: styled.label`
