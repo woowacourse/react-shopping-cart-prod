@@ -11,7 +11,7 @@ import orderAmountState from '@Selector/orderAmountState';
 import * as S from './style';
 
 function PaymentAmount() {
-  const { orderAmount, deliveryFee, totalOrderPrice } = useRecoilValue(orderAmountState);
+  const { orderAmount, deliveryFee, totalOrderPrice, discountAmount } = useRecoilValue(orderAmountState);
   const cartAmount = useRecoilValue(cartItemsAmountState);
 
   const navigate = useNavigate();
@@ -31,7 +31,8 @@ function PaymentAmount() {
       <S.ExpectedAmountLayout>
         <S.AmountWrapper aria-label="총 상품가격">
           <S.AmountCategory>총 상품가격</S.AmountCategory>
-          <S.Amount>{orderAmount}</S.Amount>
+          <S.Amount isDiscounted={!!discountAmount}>{orderAmount}</S.Amount>
+          {discountAmount && <S.DiscountAmount>{discountAmount}</S.DiscountAmount>}
         </S.AmountWrapper>
         <S.AmountWrapper aria-label="총 배송비">
           <S.AmountCategory>총 배송비</S.AmountCategory>

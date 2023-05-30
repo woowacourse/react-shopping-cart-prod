@@ -26,10 +26,11 @@ export const ExpectedAmountLayout = styled.div`
   background-color: #ffffff;
   padding: 20px 30px;
   display: grid;
-  row-gap: 20px;
+  row-gap: 30px;
 `;
 
 export const AmountWrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   font-weight: 700;
@@ -42,4 +43,17 @@ export const AmountWrapper = styled.div`
 
 export const AmountCategory = styled.div``;
 
-export const Amount = styled.div``;
+type AmountProps = {
+  isDiscounted?: boolean;
+};
+
+export const Amount = styled.div<AmountProps>`
+  opacity: ${(props) => props.isDiscounted && 0.6};
+  text-decoration: ${(props) => props.isDiscounted && 'line-through'};
+`;
+
+export const DiscountAmount = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: -22px;
+`;
