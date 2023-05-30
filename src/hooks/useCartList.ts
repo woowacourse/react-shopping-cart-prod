@@ -31,7 +31,13 @@ const useCartList = () => {
   const removeCheckedItems = useCallback(async () => {
     cartItem.forEach(async (item) => {
       if (item.isChecked === true) {
-        await fetch(`${origin}/cart-items/${item.id}`, { method: 'DELETE' });
+        await fetch(`${origin}/cart-items/${item.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Basic ${USER_TOKEN}`,
+          },
+        });
       }
     });
 
@@ -110,6 +116,7 @@ const useCartList = () => {
           'Content-Type': 'application/json',
           Authorization: `Basic ${USER_TOKEN}`,
         },
+        body: JSON.stringify({}),
       });
 
       if (response.ok) {
@@ -145,6 +152,10 @@ const useCartList = () => {
   const updateCartItemQuantity = async (itemId: number, updateQuantity: number) => {
     const response = await fetch(`${origin}/cart-items/${itemId}`, {
       method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${USER_TOKEN}`,
+      },
       body: JSON.stringify({
         quantity: updateQuantity,
       }),

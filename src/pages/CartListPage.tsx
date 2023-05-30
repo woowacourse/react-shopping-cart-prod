@@ -6,12 +6,14 @@ import LoadingSpinner from '../components/utils/LoadingSpinner/LoadingSpinner';
 
 const CartListPage = () => {
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <>
       <Header />
       <main>
-        <CartPageSection />
+        <Suspense fallback={<LoadingSpinner />}>
+          <CartPageSection />
+        </Suspense>
       </main>
-    </Suspense>
+    </>
   );
 };
 

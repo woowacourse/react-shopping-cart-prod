@@ -1,0 +1,36 @@
+.OrderListHeader {
+  padding-top: 22px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+
+.OrderItemBox {
+  margin-top: 10px;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+}
+
+.OrderItemBox img {
+  width: 100px;
+  height: 100px;
+}
+
+.OrderItemHeader {
+  display: flex;
+  justify-content: space-between;
+  background-color: #31d4b9;
+  padding: 15px;
+  margin: 0;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+}
+
+.OrderItemData {
+  padding: 30px;
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid #aaaaaa;
+}
