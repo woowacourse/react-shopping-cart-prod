@@ -12,14 +12,14 @@ import {
 
 type PaymentInfoProps = {
   totalPrice: number;
+  point: string;
 };
 
 const discount = {
   coupon: 9900,
-  point: 120,
 };
 
-function PaymentInfo({ totalPrice }: PaymentInfoProps) {
+function PaymentInfo({ totalPrice, point }: PaymentInfoProps) {
   const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
 
   return (
@@ -33,12 +33,14 @@ function PaymentInfo({ totalPrice }: PaymentInfoProps) {
         <PurchasePropertyWrapper>
           <TotalDiscountText>할인</TotalDiscountText>
           <TotalDiscountText>
-            -{(discount.coupon + discount.point).toLocaleString()}원
+            -{(discount.coupon + Number(point)).toLocaleString()}원
           </TotalDiscountText>
         </PurchasePropertyWrapper>
         <DiscountPropertyWrapper>
           <DiscountText>ㄴ포인트</DiscountText>
-          <DiscountText>-{discount.point.toLocaleString()}원</DiscountText>
+          <DiscountText>
+            -{Number(point).toLocaleString().toLocaleString()}원
+          </DiscountText>
         </DiscountPropertyWrapper>
         <DiscountPropertyWrapper>
           <DiscountText>ㄴ쿠폰</DiscountText>
@@ -57,7 +59,7 @@ function PaymentInfo({ totalPrice }: PaymentInfoProps) {
             totalPrice +
             DELIVERY_FEE -
             discount.coupon -
-            discount.point
+            Number(point)
           ).toLocaleString()}
           원
         </PurchaseText>
