@@ -112,3 +112,18 @@ export const cartItemSelectedById = (cart: CartItemType[]) => {
 export const removeSelectedCartItem = (cart: CartItemType[]) => {
   return cart.filter((cartItem) => cartItem.isSelect === false);
 };
+
+interface FindCartItemByIdParams {
+  cart: CartItemType[];
+  productId: number;
+}
+
+export const findCartItemById = ({ cart, productId }: FindCartItemByIdParams) => {
+  const findCartItem = cart.find((cartItem) => cartItem.product.id === productId);
+
+  if (!findCartItem) {
+    return 0;
+  }
+
+  return findCartItem.id;
+};

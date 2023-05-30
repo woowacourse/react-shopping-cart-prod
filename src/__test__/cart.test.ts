@@ -6,6 +6,7 @@ import {
   cartApiWrapper,
   cartItemSelectedById,
   createCartItem,
+  findCartItemById,
   removeCartItem,
   removeSelectedCartItem,
   toggleSelectCartItem,
@@ -166,5 +167,20 @@ describe('장바구니 함수 테스트', () => {
     const result = cartApiWrapper(cart);
 
     expect(result).toEqual([createCartItem({ cartId: 1, product })]);
+  });
+
+  test('상품 아이디로 장바구니 아이디를 구하는 함수가 올바르게 동작하는 지 테스트', () => {
+    const cart: CartItemType[] = [
+      {
+        id: 1,
+        product,
+        quantity: 1,
+        isSelect: true,
+      },
+    ];
+
+    const result = findCartItemById({ cart, productId: product.id });
+
+    expect(result).toEqual(cart[0].id);
   });
 });
