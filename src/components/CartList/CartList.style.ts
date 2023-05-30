@@ -18,7 +18,7 @@ export const CartListTitle = styled.div`
 
   letter-spacing: 0.5px;
 
-  margin: 34px 25px 0 25px;
+  margin: 0 25px 12px 25px;
 `;
 
 export const CartListController = styled.div`

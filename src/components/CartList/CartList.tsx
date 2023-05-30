@@ -11,6 +11,7 @@ import CartItem from '../CartItem';
 import {
   CartListCheckCounter,
   CartListController,
+  CartListTitle,
   CartListWrapper,
   CartsDeleteButton,
 } from './CartList.style';
@@ -41,6 +42,7 @@ function CartList() {
 
   return (
     <CartListWrapper>
+      <CartListTitle>든든배송 상품 ({cartCount}개)</CartListTitle>
       {cartList.map((cart) => (
         <CartItem key={cart.id} cart={cart} />
       ))}
