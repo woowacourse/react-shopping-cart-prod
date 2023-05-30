@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { Text } from '../Text/Text';
-import { useModal } from '../../../hooks/useModal';
+import { Text } from '../common/Text/Text';
+import { useModal } from '../../hooks/useModal';
 
-const AddCouponModal = () => {
+const DeleteCartItemModal = () => {
   const { modalDataState, closeModal } = useModal();
 
   const onSubmit = () => {
@@ -14,21 +14,26 @@ const AddCouponModal = () => {
     <ModalWrapper>
       <TextWrapper>
         <Text size="smallest" weight="light">
-          {modalDataState.title}
+          해당 상품을 삭제하시겠습니까?
         </Text>
       </TextWrapper>
       <ButtonWrapper>
-        <ButtonStyle onClick={onSubmit}>
+        <CancelButton onClick={closeModal}>
+          <Text size="smallest" weight="light">
+            취소
+          </Text>
+        </CancelButton>
+        <SubmitButton onClick={onSubmit}>
           <Text size="smallest" weight="normal">
             확인
           </Text>
-        </ButtonStyle>
+        </SubmitButton>
       </ButtonWrapper>
     </ModalWrapper>
   );
 };
 
-export default AddCouponModal;
+export default DeleteCartItemModal;
 
 const ModalWrapper = styled.div`
   display: flex;
@@ -60,7 +65,7 @@ const ButtonWrapper = styled.div`
 `;
 
 const ButtonStyle = styled.button`
-  width: 100%;
+  width: 50%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -70,4 +75,13 @@ const ButtonStyle = styled.button`
   &:hover {
     filter: brightness(0.94);
   }
+`;
+
+const CancelButton = styled(ButtonStyle)`
+  border-radius: 0 0 0 8px;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+`;
+
+const SubmitButton = styled(ButtonStyle)`
+  border-radius: 0 0 8px 0;
 `;
