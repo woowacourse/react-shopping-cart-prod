@@ -36,12 +36,15 @@ const HeaderWrapper = styled.div`
   position: fixed;
   top: 0;
   z-index: 1000;
+
+  @media screen and (max-width: 660px) {
+    height: 130px;
+  }
 `;
 
 const HeaderInner = styled.div`
   width: 1280px;
   display: flex;
-  flex-direction: row;
   align-items: center;
   position: relative;
   justify-content: space-between;
@@ -56,6 +59,7 @@ const HeaderInner = styled.div`
 
   @media screen and (max-width: 660px) {
     width: 330px;
+    flex-direction: column;
   }
 `;
 
@@ -70,4 +74,8 @@ const MenuWrapper = styled.div`
   flex-direction: column;
   gap: 6px;
   align-items: flex-end;
+
+  @media screen and (max-width: 660px) {
+    align-items: center;
+  }
 `;

@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ProductPage from './pages/ProductPage';
 import CartPage from './pages/CartPage';
 import Header from './common/header/Header';
+import EventPage from './pages/EventPage';
 
 const Router = () => {
   return (
@@ -10,6 +11,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<ProductPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/event" element={<EventPage />} />
       </Routes>
     </BrowserRouter>
   );

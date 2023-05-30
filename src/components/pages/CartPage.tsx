@@ -72,7 +72,7 @@ const CartPageWrapper = styled.div`
   }
 
   @media screen and (max-width: 660px) {
-    width: 350px;
+    width: 500px;
   }
 `;
 
