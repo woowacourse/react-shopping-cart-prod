@@ -5,10 +5,13 @@ const GlobalStyle = createGlobalStyle`
   ${reset}
   
   * {
-    padding: 0;
-    margin: 0;
     box-sizing: border-box;
-    border:none
+
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    font-family: 'Noto Sans KR', sans-serif;
   }
   
   ul,
@@ -20,9 +23,7 @@ const GlobalStyle = createGlobalStyle`
   body,
   #root {
     height: 100%;
-
-    font-family: 'Noto Sans KR', sans-serif;    
-    font-size: 62.5%;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
   #root {
