@@ -12,10 +12,6 @@ const CartItemList = () => {
     useCheckedItemIds();
   const { isModalOpen, onOpenModal, onCloseModal } = useModal();
 
-  useEffect(() => {
-    checkAllItems();
-  }, []);
-
   const fetchedCartList =
     cartList.length === 0 ? (
       <S.EmptyList>장바구니가 비어있습니다.</S.EmptyList>
@@ -54,7 +50,9 @@ const CartItemList = () => {
         <S.SelectAllCheckBox
           type="checkbox"
           onChange={onToggleCheckAllItems}
-          checked={checkedItemIds.length === cartList.length}
+          checked={
+            checkedItemIds.length === cartList.length && cartList.length !== 0
+          }
         />
         <S.Text>
           전체 선택 ({checkedItemIds.length}/{cartList.length})개

@@ -1,16 +1,14 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { cartListAtom, checkedItemsAtom } from 'recoil/cartList';
-import { serverAtom } from 'recoil/server';
 
 export const useCheckedItemIds = () => {
   const [checkedItemIds, setCheckedItemIds] = useRecoilState(checkedItemsAtom);
   const cartList = useRecoilValue(cartListAtom);
-  const server = useRecoilValue(serverAtom);
 
   useEffect(() => {
     checkAllItems();
-  }, [server]);
+  }, [cartList]);
 
   const unCheckAllItems = () => {
     setCheckedItemIds([]);
