@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { customViewPorts } from '../../../../.storybook/preview';
 
-import { Cart } from './Cart';
+import { CartPage } from './CartPage';
 
 const meta = {
   title: 'ShoppingCart/ShoppingCart',
-  component: Cart,
+  component: CartPage,
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
   },
-} satisfies Meta<typeof Cart>;
+} satisfies Meta<typeof CartPage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

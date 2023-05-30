@@ -1,12 +1,13 @@
-import * as styled from './Cart.styled';
+import * as styled from './CartPage.styled';
 
 import { CartContainer } from '../../CartContainer/CartContainer';
 import { OrderSummary } from '../../OrderSummary/OrderSummary';
+import { PageTitle } from '../../styled/PageTitle';
 
-export const Cart = () => {
+export const CartPage = () => {
   return (
     <>
-      <styled.PageTitle>장바구니</styled.PageTitle>
+      <PageTitle>장바구니</PageTitle>
       <styled.Content>
         <CartContainer />
         <OrderSummary />

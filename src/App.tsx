@@ -8,12 +8,13 @@ import GlobalStyle from './GlobalStyle';
 
 import { useApiBaseUrlValue } from './recoils/recoilApiBaseUrl';
 
+import { Layout } from './components/common/Layout/Layout';
 import { Home } from './components/pages/Home/Home';
-import { Cart } from './components/pages/Cart/Cart';
+import { CartPage } from './components/pages/CartPage/CartPage';
+import { OrdersPage } from './components/pages/OrdersPage/OrdersPage';
 
 import { CartItemType } from './types';
 import { FETCH_URL, PATH } from './constants';
-import { Layout } from './components/common/Layout/Layout';
 
 export const App = () => {
   const baseUrl = useApiBaseUrlValue();
@@ -46,10 +47,15 @@ export const App = () => {
             path={PATH.CART}
             Component={() => (
               <Layout>
-                <Cart />
+                <CartPage />
               </Layout>
             )}
           />
+          <Route path={PATH.ORDERS} Component={() => (
+            <Layout>
+              <OrdersPage />
+            </Layout>
+          )} />
         </Routes>
       </BrowserRouter>
     </>

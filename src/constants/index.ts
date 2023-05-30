@@ -1,6 +1,7 @@
 const PATH = Object.freeze({
   HOME: '/',
   CART: '/shopping-cart',
+  ORDERS: '/orders'
 });
 
 const QUANTITY = Object.freeze({
