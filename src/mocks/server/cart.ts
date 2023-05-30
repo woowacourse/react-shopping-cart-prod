@@ -1,4 +1,4 @@
-import products from "mocks/mockData.json";
+import products from "mocks/data/mockProduct.json";
 
 const LOCAL_STORAGE_KEY = "server";
 
@@ -48,7 +48,8 @@ export const setCartItem = (id: number, quantity: number) => {
 
   if (itemIndex === -1) return;
 
-  if (quantity > 0) cart[itemIndex] = { ...cart[itemIndex], quantity: quantity };
+  if (quantity > 0)
+    cart[itemIndex] = { ...cart[itemIndex], quantity: quantity };
   if (quantity === 0) cart.splice(itemIndex, 1);
 
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cart));
