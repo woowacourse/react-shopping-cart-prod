@@ -14,7 +14,7 @@ const Selector = () => {
   };
 
   return (
-    <select style={{ width: 70, height: 30, marginRight: 10 }} onChange={changeServerURL}>
+    <select style={{ width: 70, height: 30 }} onChange={changeServerURL}>
       <option>달리</option>
       <option>홍고</option>
       <option>오션</option>

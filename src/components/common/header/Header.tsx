@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Text } from '../Text/Text';
 import { CartIcon } from '../../../assets';
-import UserCartInfo from './UserCartInfo';
+import Menu from '../Menu/Menu';
 import { Link } from 'react-router-dom';
 import Selector from '../Selector/Selector';
 
@@ -15,10 +15,10 @@ const Header = () => {
             SHOP
           </Text>
         </LogoWrapper>
-        <CartWrapper>
+        <MenuWrapper>
           <Selector />
-          <UserCartInfo />
-        </CartWrapper>
+          <Menu />
+        </MenuWrapper>
       </HeaderInner>
     </HeaderWrapper>
   );
@@ -28,7 +28,7 @@ export default Header;
 
 const HeaderWrapper = styled.div`
   width: 100%;
-  height: 80px;
+  height: 100px;
   background-color: #333333;
   display: flex;
   align-items: center;
@@ -65,7 +65,9 @@ const LogoWrapper = styled(Link)`
   align-items: center;
 `;
 
-const CartWrapper = styled.div`
+const MenuWrapper = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-end;
 `;
