@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import styled from "styled-components";
 import { OrderResult } from "types/domain";
 
@@ -78,4 +78,4 @@ const PriceBox = styled.p`
   color: gray;
 `;
 
-export default React.memo(OrderItem);
+export default memo(OrderItem);

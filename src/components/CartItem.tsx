@@ -1,4 +1,4 @@
-import React from "react";
+import { memo } from "react";
 import styled from "styled-components";
 import QuantityCounter from "components/QuantityCounter";
 import { useRecoilValue, useSetRecoilState } from "recoil";
@@ -68,7 +68,7 @@ const CartItem = (item: CartProduct) => {
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.li`
   display: flex;
   justify-content: space-around;
 
@@ -172,4 +172,4 @@ const PriceBox = styled.p`
   font-weight: 400;
 `;
 
-export default React.memo(CartItem);
+export default memo(CartItem);
