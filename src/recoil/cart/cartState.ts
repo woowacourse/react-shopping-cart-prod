@@ -7,30 +7,28 @@ import {
   useRecoilValue,
 } from 'recoil';
 import serverState from '@recoil/server/serverState';
+import { cartApiWrapper } from '@utils/cart/cart';
 import { fetchGet } from '@utils/fetchUtils';
 import { getCartPath } from '@constants/serverUrlConstants';
 import { CartItemType } from '@type/cartType';
 
-export const CartItemQuery = selector({
+export const CartItemQuery = selector<CartItemType[]>({
   key: 'cartListWithInfoState/default',
   get: async ({ get }) => {
     const server = get(serverState);
-    const cartProducts: CartItemType[] | null = await fetchGet(getCartPath(server));
+    const cart: CartItemType[] = await fetchGet<CartItemType[]>(getCartPath(server));
 
-    if (!cartProducts) {
+    if (!cart) {
       throw new Error('리코일에서 장바구니 목록을 불러올 수 없습니다.');
     }
 
-    return cartProducts.map((cartProduct) => {
-      cartProduct.isSelect = true;
-      return cartProduct;
-    });
+    return cartApiWrapper(cart);
   },
 });
 
 const cartState = atom<CartItemType[]>({
   key: 'cartListWithInfoState',
-  default: [],
+  default: CartItemQuery,
 });
 
 export default cartState;
