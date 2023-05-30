@@ -42,11 +42,6 @@ const EventPageWrapper = styled.div`
   }
 `;
 
-const CouponListWrapper = styled.div`
-  width: 100%;
-  margin-top: -50px;
-`;
-
 const EventPageHead = styled.div`
   border-bottom: 4px solid #333;
   padding: 20px 0;
