@@ -67,6 +67,8 @@ const Wrapper = styled.section`
   border: 1px solid #dddddd;
   border-bottom: none;
 
+  cursor: pointer;
+
   @media screen and (max-width: 300px) {
     width: 290px;
   }
@@ -103,6 +105,14 @@ const CouponContainer = styled.div`
   border-bottom: 1px solid #dddddd;
   transition: all 0.5s ease;
 
+  &:hover {
+    opacity: 60%;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
   // disabled 된 쿠폰 css
   /* background: #dddddd;
   color: var(--gray); */
@@ -110,14 +120,12 @@ const CouponContainer = styled.div`
   & > h1 {
     font-weight: 600;
     font-size: 19px;
-
     color: var(--dark-gray);
   }
 
   & > p {
     font-weight: 500;
     font-size: 14px;
-
     color: var(--gray);
   }
 `;

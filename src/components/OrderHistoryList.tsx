@@ -32,11 +32,15 @@ const OrderHistory = ({
         <p>주문 번호</p>
         <p>상세보기 {">"}</p>
       </OrderTitleContainer>
-      <img src={imageUrl} alt="상품이미지" />
-      <Container>
-        <NameBox>{name}</NameBox>
-        <PriceBox>{price.toLocaleString()}원</PriceBox>
-      </Container>
+      <OrderContainer>
+        <img src={imageUrl} alt="상품이미지" />
+        <InfoContainer>
+          <NameBox>{name}</NameBox>
+          <PriceBox>
+            {(price * quantity).toLocaleString()}원 / 수량 : {quantity}개
+          </PriceBox>
+        </InfoContainer>
+      </OrderContainer>
     </HistoryWrapper>
   );
 };
@@ -49,9 +53,6 @@ const Wrapper = styled.section`
   max-width: 1000px;
 
   color: #333333;
-
-  & > p {
-  }
 `;
 
 const OrderTitleContainer = styled.div`
@@ -61,11 +62,9 @@ const OrderTitleContainer = styled.div`
   width: 100%;
   height: 65px;
 
+  padding: 0 20px;
   font-size: 17px;
   background: #f6f6f6;
-
-  padding: 0 20px;
-
   border-bottom: 1px solid #aaaaaa;
 `;
 
@@ -75,25 +74,31 @@ const HistoryWrapper = styled.div`
   border: 1px solid #aaaaaa;
 
   margin-top: 30px;
+`;
+
+const OrderContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  padding: 20px;
+  border-bottom: 1px solid #aaaaaa;
 
   & > img {
     width: 137px;
     height: 137px;
+  }
+
+  &:last-of-type {
+    border: none;
   }
 `;
 
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 100%;
-`;
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  padding: 5px 15px;
 `;
 
 const OrderProductsContainer = styled.div`
@@ -106,9 +111,10 @@ const OrderProductsContainer = styled.div`
 
 const NameBox = styled.div`
   width: 300px;
-  margin: 5px 15px;
+  margin-bottom: 30px;
 
   font-size: 18px;
+  font-weight: 600;
   white-space: nowrap;
 
   word-break: break-all;
@@ -120,13 +126,10 @@ const NameBox = styled.div`
   }
 `;
 
-const QuantityBox = styled.p`
-  font-size: 18px;
-  font-weight: 600;
-`;
-
 const PriceBox = styled.p`
-  align-self: end;
+  height: 60%;
 
   font-size: 14px;
+  letter-spacing: 0.5px;
+  color: #888888;
 `;

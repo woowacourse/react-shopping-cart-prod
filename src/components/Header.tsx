@@ -60,7 +60,7 @@ export const Header = () => {
             {cartProducts.length > 0 && (
               <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
             )}
-            <p onClick={goPage(ROUTER_PATH.Order)}>주문목록</p>
+            <p onClick={goPage(ROUTER_PATH.OrderHistory)}>주문목록</p>
           </CartContainer>
         )}
       </NavContainer>
@@ -114,6 +114,7 @@ const TitleContainer = styled.section`
 
 const NavContainer = styled.div`
   display: flex;
+  align-items: center;
 
   font-size: 24px;
   font-weight: 500;
