@@ -1,6 +1,5 @@
 import { StoryFn, Meta } from "@storybook/react";
 import OrderStatement from "components/OrderStatement";
-import { Order } from "types/domain";
 
 export default {
   title: "OrderItemList",
@@ -23,6 +22,6 @@ const Template: StoryFn = () => {
     },
   };
 
-  return <OrderStatement orderId={1} orders={...[items]} />;
+  return <OrderStatement orderId={1} orders={[items]} />;
 };
 export const DefaultOrderItemList = Template.bind({});
