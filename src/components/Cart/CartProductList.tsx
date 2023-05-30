@@ -13,7 +13,7 @@ const CartProductList = () => {
   return (
     <CartProductListContainer>
       {cartProducts.map((cartProduct) => (
-        <li key={cartProduct.id}>
+        <li key={cartProduct.cartItemId}>
           <CartProductItem cartProduct={cartProduct} />
         </li>
       ))}

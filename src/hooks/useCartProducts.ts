@@ -23,18 +23,20 @@ const useCartProducts = (product: Product) => {
     if (cartItemId)
       setCartProducts([
         ...cartProducts,
-        { id: Number(cartItemId), quantity: 1, product },
+        { cartItemId: Number(cartItemId), quantity: 1, product },
       ]);
   };
 
   const removeProduct = () => {
     if (target) {
       api(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(target.id);
+        return apiInstance.deleteCartProduct(target.cartItemId);
       });
 
       setCartProducts(
-        cartProducts.filter((cartProduct) => cartProduct.id !== target.id)
+        cartProducts.filter(
+          (cartProduct) => cartProduct.cartItemId !== target.cartItemId
+        )
       );
     }
   };

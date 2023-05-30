@@ -41,7 +41,7 @@ export const handlers = [
 
     const cartItemId = Date.now();
     const newItem = {
-      id: cartItemId,
+      cartItemId: cartItemId,
       quantity: 1,
       product: { ...product },
     };
@@ -67,7 +67,7 @@ export const handlers = [
       const storedCartProducts = cartProducts;
 
       const targetCartProduct = storedCartProducts.find(
-        (cartProduct) => cartProduct.id === cartProductId
+        (cartProduct) => cartProduct.cartItemId === cartProductId
       );
 
       if (!targetCartProduct) {
@@ -92,7 +92,7 @@ export const handlers = [
     const cartItemId = Number(id as string);
 
     const index = cartProducts.findIndex(
-      (product) => product.id === cartItemId
+      (product) => product.cartItemId === cartItemId
     );
 
     if (index === -1) {

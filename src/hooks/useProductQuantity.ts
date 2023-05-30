@@ -14,7 +14,7 @@ const updateCartProductQuantity = async (
 ) =>
   await api(hostName).then((apiInstance) => {
     return apiInstance.patchCartProduct(
-      targetProduct.id,
+      targetProduct.cartItemId,
       targetProduct.quantity + delta
     );
   });

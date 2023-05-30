@@ -13,7 +13,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const mockProduct = {
-  id: 1,
+  cartItemId: 1,
   quantity: 4,
   product: {
     productId: 1,
