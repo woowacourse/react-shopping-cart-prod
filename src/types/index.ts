@@ -13,4 +13,15 @@ export interface CartItemInfo {
   product: ProductInfo;
 }
 
+export interface OrderItemInfo {
+  id: number;
+  orderNumber: number;
+  date: string;
+  products: ProductInfoInOrder[];
+}
+
+export interface ProductInfoInOrder extends ProductInfo {
+  quantity: number;
+}
+
 export type Host = (typeof HOSTS)[number];

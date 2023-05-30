@@ -157,9 +157,10 @@ const Style = {
     /* 모바일 */
     @media screen and (max-width: 767px) {
       flex-direction: row;
-      justify-content: none;
+      justify-content: space-between;
       align-items: none;
 
+      width: 250px;
       margin-top: 20px;
     }
   `,

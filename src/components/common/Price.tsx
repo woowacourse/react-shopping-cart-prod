@@ -11,13 +11,13 @@ interface Props {
 export default function Price({
   price = 0,
   size = 'medium',
-  color = 'black',
-  tag = '',
+  color = 'inherit',
+  tag,
   label = '',
 }: Partial<Props>) {
   return (
     <Style.Wrapper className={size} color={color} aria-label={`${label} 가격 ${price}원`}>
-      <span>{tag}</span>
+      {tag && <span>{tag}</span>}
       {price.toLocaleString('ko-KR')}원
     </Style.Wrapper>
   );
@@ -27,8 +27,6 @@ const Style = {
   Wrapper: styled.p<Partial<Props>>`
     display: flex;
     justify-content: space-between;
-
-    width: 100%;
 
     &.small {
       font-size: 10px;
