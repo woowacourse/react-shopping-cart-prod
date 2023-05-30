@@ -5,7 +5,7 @@ import { cartAtom, checkedValue, totalAmountAtom } from '../../store/cart';
 import { WIDTH } from '../../styles/mediaQuery';
 import CartItem from '../CartItem/CartItem';
 import CheckBox from '../common/CheckBox/CheckBox';
-import useFetch from '../../hooks/useFetch';
+import useFetchCart from '../../hooks/useFetchCart';
 
 export type Select = {
   id: number;
@@ -13,13 +13,14 @@ export type Select = {
 };
 
 const CartItemList = () => {
-  const { deleteCartItem } = useFetch();
+  const { deleteCartItem } = useFetchCart();
   const [cartList, setCartList] = useRecoilState(cartAtom);
   const { ALL_CHECKED, NO_CHECKED } = useRecoilValue(checkedValue);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
   const [isSelectedList, setIsSelectedList] = useState<Select[]>(ALL_CHECKED);
   const setTotalAmount = useSetRecoilState(totalAmountAtom);
 
+  console.log(cartList);
   useEffect(() => {
     setIsSelectedList(ALL_CHECKED);
   }, []);
@@ -60,6 +61,7 @@ const CartItemList = () => {
         {cartList.map((item) => {
           return (
             <CartItem
+              key={item.id}
               cart={item}
               cartItemState={
                 isSelectedList.find((state) => state.id === item.id) as Select

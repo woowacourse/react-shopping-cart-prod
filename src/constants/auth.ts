@@ -6,7 +6,7 @@ export type UserCredentialData = {
 
 const userCredentialData: UserCredentialData = {
   id: 0,
-  email: 'a@a.com',
+  email: 'b@b.com',
   password: '1234',
 };
 

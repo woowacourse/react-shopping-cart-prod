@@ -4,10 +4,9 @@ import { AUTH } from '../constants/auth';
 import { useCallback } from 'react';
 import { cartAtom } from '../store/cart';
 import { Cart } from '../types/responseData';
+import { FetchMethod } from '../types/global';
 
-type FetchMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
-
-const useFetch = () => {
+const useFetchCart = () => {
   const baseURL = useRecoilValue(baseURLSelector);
   const setCartList = useSetRecoilState(cartAtom);
 
@@ -72,4 +71,4 @@ const useFetch = () => {
   return { addToCart, updateCartItem, deleteCartItem };
 };
 
-export default useFetch;
+export default useFetchCart;

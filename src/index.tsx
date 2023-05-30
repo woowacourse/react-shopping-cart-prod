@@ -7,6 +7,7 @@ import ProductPage from './pages/ProductPage';
 import GlobalStyle from './styles/GlobalStyle';
 import OrderListPage from './pages/OrderListPage';
 import OrderDetailPage from './pages/OrderDetailPage';
+import { PATH } from './store/path';
 
 const router = createBrowserRouter(
   [
@@ -15,19 +16,19 @@ const router = createBrowserRouter(
       element: <App />,
       children: [
         {
-          path: '',
+          path: PATH.PRODUCT_PAGE,
           element: <ProductPage />,
         },
         {
-          path: '/cart',
+          path: PATH.CART_PAGE,
           element: <CartPage />,
         },
         {
-          path: '/order-list',
+          path: PATH.ORDER_LIST_PAGE,
           element: <OrderListPage />,
         },
         {
-          path: '/orders/detail/:id',
+          path: `${PATH.ORDER_LIST_PAGE}${PATH.ORDER_DETAIL_PAGE}/:id`,
           element: <OrderDetailPage />,
         },
       ],

@@ -5,7 +5,7 @@ import Counter from '../common/Counter/Counter';
 import CheckBox from '../common/CheckBox/CheckBox';
 import { Select } from '../CartItemList/CartItemList';
 import { WIDTH } from '../../styles/mediaQuery';
-import useFetch from '../../hooks/useFetch';
+import useFetchCart from '../../hooks/useFetchCart';
 import { Cart } from '../../types/responseData';
 
 interface CartItemProps {
@@ -23,7 +23,7 @@ const CartItem = ({
 }: CartItemProps) => {
   const { id, product, quantity } = cart;
   const { name, imageUrl, price } = product;
-  const { updateCartItem, deleteCartItem } = useFetch();
+  const { updateCartItem, deleteCartItem } = useFetchCart();
 
   const toggleSelect = () => {
     setIsAllSelected(false);

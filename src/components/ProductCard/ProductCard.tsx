@@ -6,7 +6,7 @@ import { Product } from '../../types/responseData';
 import Counter from '../common/Counter/Counter';
 import ProductImg from './ProductImg/ProductImg';
 import ProductInfo from './ProductInfo/ProductInfo';
-import useFetch from '../../hooks/useFetch';
+import useFetchCart from '../../hooks/useFetchCart';
 
 type ProductCartProps = Product & {
   count: number | undefined;
@@ -20,7 +20,7 @@ const ProductCard = ({
   count,
   cartId,
 }: ProductCartProps) => {
-  const { addToCart, updateCartItem, deleteCartItem } = useFetch();
+  const { addToCart, updateCartItem, deleteCartItem } = useFetchCart();
 
   const onClickAddToCart = () => {
     addToCart(id);

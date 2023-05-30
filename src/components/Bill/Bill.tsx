@@ -1,11 +1,27 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { totalAmountAtom } from '../../store/cart';
+import { cartAtom, totalAmountAtom } from '../../store/cart';
 import { WIDTH } from '../../styles/mediaQuery';
+import { useNavigate } from 'react-router-dom';
+import { PATH } from '../../store/path';
+import useFetchOrder from '../../hooks/useFetchOrder';
 
 const Bill = () => {
+  const cartList = useRecoilValue(cartAtom);
+  const { postOrders } = useFetchOrder();
   const totalAmount = useRecoilValue(totalAmountAtom);
   const deliveryFee = totalAmount >= 100000 || totalAmount === 0 ? 0 : 4000;
+
+  const navigate = useNavigate();
+
+  const onClickOrder = async () => {
+    const orders = cartList.map((cart) => ({
+      id: cart.product.id,
+      quantity: cart.quantity,
+    }));
+    await postOrders(orders);
+    navigate(`${PATH.ORDER_LIST_PAGE}`);
+  };
 
   return (
     <Wrapper>
@@ -19,10 +35,10 @@ const Bill = () => {
         </Detail>
         <Message>10만원 이상 주문시 무료배송</Message>
         <TotalAmount>
-          총 주문금액{' '}
+          총 주문금액
           <span>{(totalAmount + deliveryFee).toLocaleString()}원</span>
         </TotalAmount>
-        <OrderButton>주문하기</OrderButton>
+        <OrderButton onClick={onClickOrder}>주문하기</OrderButton>
       </DetailWrapper>
     </Wrapper>
   );

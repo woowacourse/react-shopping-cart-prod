@@ -5,6 +5,7 @@ import { WIDTH } from '../../styles/mediaQuery';
 import { useRecoilState } from 'recoil';
 import { ServerName, serverAtom } from '../../store/server';
 import CartTextButton from '../CartTextButton/CartTextButton';
+import { PATH } from '../../store/path';
 
 const Header = () => {
   const [serverName, setServerName] = useRecoilState(serverAtom);
@@ -33,10 +34,10 @@ const Header = () => {
           <option value='ROY'>로이</option>
           <option value='IRAE'>이레</option>
         </ServerSelectBox>
-        <Link to='/cart'>
+        <Link to={PATH.CART_PAGE}>
           <CartTextButton />
         </Link>
-        <Link to='/order-list'>
+        <Link to={PATH.ORDER_LIST_PAGE}>
           <OrderListButton>주문 목록</OrderListButton>
         </Link>
       </ButtonContainer>

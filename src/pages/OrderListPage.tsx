@@ -72,7 +72,7 @@ const Title = styled.div`
 
 const OrderListContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   gap: 42px;
 
   width: 70%;
