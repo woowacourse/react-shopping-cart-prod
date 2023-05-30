@@ -1,4 +1,4 @@
-import mockData from '../assets/mockData.json';
+import mockData from '../mocks/mockData.json';
 
 export const useMockData = () => {
   return { mockData };

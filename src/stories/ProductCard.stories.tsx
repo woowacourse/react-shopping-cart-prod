@@ -1,7 +1,7 @@
 import { RecoilRoot } from 'recoil';
 import { ProductCard } from '../components/mainPage/productCard/ProductCard';
 import { Meta, StoryObj } from '@storybook/react';
-import mockData from '../assets/mockData.json';
+import mockData from '../mocks/mockData.json';
 import { GlobalStyle } from '../GlobalStyle';
 
 const meta = {
