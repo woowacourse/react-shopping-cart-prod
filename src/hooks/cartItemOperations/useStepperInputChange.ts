@@ -24,7 +24,7 @@ const useStepperInputChange = ({ cartItemNumber, id, name, price, imageUrl, refe
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       let targetQuantity = parseInt(e.target.value, 10);
 
-      if (isNaN(targetQuantity) || targetQuantity < 1) {
+      if (isNaN(targetQuantity)) {
         targetQuantity = 1;
       } else if (targetQuantity > 99) {
         targetQuantity = 99;
