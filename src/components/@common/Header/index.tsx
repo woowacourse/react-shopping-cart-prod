@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { countCartListSelector } from 'recoil/cartList';
 import { ROUTES } from 'utils/constants';
-import SelectServer from '../SelectSever';
+import SelectServer from '../SelectServer';
 import * as S from './Header.styles';
 
 const Header = () => {
