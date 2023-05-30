@@ -6,6 +6,7 @@ import { cartSelectedItemsSelector } from '../../../stores/cartListStore.ts';
 import useCart from '../../../hooks/useCart.ts';
 import { useEffect } from 'react';
 import useSetCartListStoreFromServer from '../../../hooks/useSetCartListStoreFromServer.ts';
+import EmptyComponent from '../../@common/EmptyComponent/EmptyComponent.tsx';
 
 const CartSelectList = () => {
   const { data: cartList, status: cartListFetchingStatus, refetchCartList } = useGetCartList();
@@ -21,20 +22,26 @@ const CartSelectList = () => {
 
   return (
     <Styled.CartSelectListWrapper>
-      <Styled.CartQuantityText>배송 상품 ({cartList?.length || 0})개</Styled.CartQuantityText>
-      <Styled.CartQuantityDivider />
-      <div>
-        <div>
-          {cartList &&
-            cartList.map((cart) => {
-              return <CartItem key={cart.id} cart={cart} refetchCartList={refetchCartList} />;
-            })}
-          <Styled.SelectAllButton onClick={selectAllItems}>전체선택</Styled.SelectAllButton>
-          <span>
-            ({selectedItemsCount}/{allItemsCount})
-          </span>
-        </div>
-      </div>
+      {!cartList?.length && <EmptyComponent />}
+
+      {cartList && cartList?.length > 0 && (
+        <>
+          <Styled.CartQuantityText>배송 상품 ({cartList?.length})개</Styled.CartQuantityText>
+          <Styled.CartQuantityDivider />
+          <div>
+            <div>
+              {cartList &&
+                cartList.map((cart) => {
+                  return <CartItem key={cart.id} cart={cart} refetchCartList={refetchCartList} />;
+                })}
+              <Styled.SelectAllButton onClick={selectAllItems}>전체선택</Styled.SelectAllButton>
+              <span>
+                ({selectedItemsCount}/{allItemsCount})
+              </span>
+            </div>
+          </div>
+        </>
+      )}
     </Styled.CartSelectListWrapper>
   );
 };
