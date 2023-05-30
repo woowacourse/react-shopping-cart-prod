@@ -1,6 +1,6 @@
 import { CustomError } from 'types/error';
 
-const username = 'pizza1@pizza.com';
+const username = 'pizza2@pizza.com';
 const password = 'pizza';
 
 const base64 = btoa(`${username}:${password}`);
@@ -98,7 +98,10 @@ export const fetchDelete = async (url: string, options: RequestInit = {}): Promi
   try {
     const mergedOptions = {
       method: 'DELETE',
-      Authorization: `Basic ${base64}`,
+      headers: {
+        Authorization: `Basic ${base64}`,
+        ...options.headers,
+      },
       ...options,
     };
 
