@@ -7,9 +7,7 @@ import HeaderFallback from './components/common/Header/HeaderFallback';
 function App() {
   return (
     <div className="App">
-      <Suspense fallback={<HeaderFallback />}>
-        <Header />
-      </Suspense>
+      <Header>Twinkle Store</Header>
       <Layout>
         <Outlet />
       </Layout>

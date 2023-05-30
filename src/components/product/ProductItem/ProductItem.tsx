@@ -1,10 +1,15 @@
 import { styled } from 'styled-components';
 import Counter from '../../common/Counter/Counter';
+import CartButton from '../CartButton/CartButton';
 import Image from '../../common/Image/Image';
 import { formatPrice } from '../../../utils/formatPrice';
 import useCartService from '../../../hooks/useCartService';
-import { SmallCartIcon } from '../../../assets/svg';
 import type { Product } from '../../../types/product';
+import colors from '../../../colors';
+
+interface Foo {
+  mode: unknown;
+}
 
 const ProductItem = (product: Product) => {
   const { id, name, price, imageUrl } = product;
@@ -44,7 +49,7 @@ const ProductItem = (product: Product) => {
       <ProductImageWrapper>
         <Image src={imageUrl} loading="lazy" alt={name} size="large" />
 
-        <CartButtonWrapper>
+        <CartButtonWrapper mode={productInCart}>
           {productInCart ? (
             <Counter
               count={quantityInCart}
@@ -52,13 +57,7 @@ const ProductItem = (product: Product) => {
               onBlur={handleRemoveProduct}
             />
           ) : (
-            <CartButton
-              type="button"
-              aria-label="장바구니에 추가하기"
-              onClick={handleClickCartButton}
-            >
-              <SmallCartIcon />
-            </CartButton>
+            <CartButton onClick={handleClickCartButton} />
           )}
         </CartButtonWrapper>
       </ProductImageWrapper>
@@ -78,16 +77,25 @@ export const ItemContainer = styled.div`
   row-gap: 18px;
   width: 282px;
   height: 358px;
+  background-color: ${colors.pureBlack};
+  padding: 5px;
+  box-sizing: border-box;
+  box-shadow: 0 0 30px ${colors.pureBlack};
 `;
 
 const ProductImageWrapper = styled.div`
   position: relative;
 `;
 
-const CartButtonWrapper = styled.div`
+const CartButtonWrapper = styled.div<Foo>`
   position: absolute;
   right: 8px;
   bottom: 8px;
+  width: ${({ mode }) => (mode ? '120px' : '42px')};
+  overflow: hidden;
+  transition: 0.2s;
+  background-color: ${colors.pureBlack};
+  border-radius: 10px;
 `;
 
 const Contents = styled.div`
@@ -96,23 +104,17 @@ const Contents = styled.div`
 `;
 
 const Title = styled.p`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
+  color: #fffac8;
 `;
 
 const Price = styled.p`
   margin-top: 3px;
-  font-size: 20px;
-  font-weight: 400;
-`;
-
-const CartButton = styled.button`
-  background: #fff;
-  border: 1px solid #dddddd;
-
-  padding: 7px;
-
-  cursor: pointer;
+  font-size: 24px;
+  font-weight: 600;
+  color: ${colors.gold};
+  font-family: 'Bodoni Moda';
 `;
 
 export default ProductItem;

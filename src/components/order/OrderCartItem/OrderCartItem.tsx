@@ -3,11 +3,11 @@ import Image from '../../common/Image/Image';
 import { formatPrice } from '../../../utils/formatPrice';
 import type { CartItem } from '../../../types/product';
 
-interface OrderListItemProps {
+interface OrderProductItemProps {
   item: CartItem;
 }
 
-const OrderListItem = ({ item }: OrderListItemProps) => {
+const OrderCartItem = ({ item }: OrderProductItemProps) => {
   const { quantity, product } = item;
   const { name, price, imageUrl } = product;
   const totalPrice = price * quantity;
@@ -41,7 +41,6 @@ const Inner = styled.div`
 `;
 
 const Title = styled.span`
-  font-family: 'Noto Sans KR';
   font-size: 20px;
   line-height: 24px;
   letter-spacing: 0.5px;
@@ -49,11 +48,10 @@ const Title = styled.span`
 `;
 
 const Detail = styled.span`
-  font-family: 'Noto Sans KR';
   font-size: 16px;
   line-height: 20px;
   letter-spacing: 0.5px;
   color: #888;
 `;
 
-export default OrderListItem;
+export default OrderCartItem;

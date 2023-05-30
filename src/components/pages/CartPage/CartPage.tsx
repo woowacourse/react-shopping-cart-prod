@@ -7,6 +7,7 @@ import useCartPage from './useCartPage';
 import empty from '../../../assets/image/empty.png';
 import { ResetButton } from '../../common/ErrorFallback/ErrorFallback';
 import { useNavigate } from 'react-router-dom';
+import colors from '../../../colors';
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const Container = styled.div``;
 
 const TitleWrapper = styled.div`
   height: 67px;
-  border-bottom: 4px solid #333;
+  border-bottom: 4px solid ${colors.transparentGold};
 `;
 
 const Title = styled.h2`
@@ -87,14 +88,14 @@ const Title = styled.h2`
   line-height: 37px;
   text-align: center;
   letter-spacing: 0.5px;
-  color: #333;
+  color: ${colors.gold};
 `;
 
 const CartList = styled.ul`
   width: 735px;
 
   & > li {
-    border-bottom: 1.5px solid #ccc;
+    border-bottom: 1.5px solid ${colors.transparentGold};
   }
 
   & > li:last-child {
@@ -124,7 +125,7 @@ const AllCheckBoxContainer = styled.div`
   display: flex;
   align-items: center;
   height: 60px;
-  border-bottom: 4px solid #aaaaaa;
+  border-bottom: 2px solid ${colors.transparentGold};
 
   & > span {
     font-size: 18px;
@@ -139,6 +140,7 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
+  padding: 50px;
   width: 250px;
 `;
 
@@ -156,11 +158,12 @@ const DeleteButton = styled.button`
   font-size: 16px;
   line-height: 21px;
   text-align: center;
-  color: #333;
-  border: 1px solid #bbb;
+  color: ${colors.gold};
+  border: 1px solid ${colors.gold};
 
   &:disabled {
-    color: #bbb;
+    border-color: ${colors.transparentGold};
+    color: ${colors.transparentGold};
   }
 `;
 

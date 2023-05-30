@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import OrderListItem from './OrderListItem';
+import OrderCartItem from './OrderCartItem';
 
 const meta = {
-  title: 'order/OrderListItem',
-  component: OrderListItem,
+  title: 'order/OrderCartItem',
+  component: OrderCartItem,
   tags: ['autodocs'],
-} satisfies Meta<typeof OrderListItem>;
+} satisfies Meta<typeof OrderCartItem>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

@@ -1,5 +1,37 @@
 import { styled } from 'styled-components';
-import OrderList from '../../order/OrderList/OrderList';
+import OrderTableList from '../../order/OrderTableList/OrderTableList';
+
+const orderInfos = [
+  {
+    id: 123,
+    price: 40000,
+    orderDate: '2023-10-20T23:01:59',
+    orders: [
+      {
+        id: 3942,
+        quantity: 2,
+        product: {
+          id: 2543,
+          name: '우코우 피자',
+          price: 15000,
+          imageUrl:
+            'https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_1280.jpg',
+        },
+      },
+      {
+        id: 1029,
+        quantity: 5,
+        product: {
+          id: 2543,
+          name: '도우밥 만두',
+          price: 3000,
+          imageUrl:
+            'https://cdn.pixabay.com/photo/2016/02/17/10/41/dumplings-1204814_1280.jpg',
+        },
+      },
+    ],
+  },
+];
 
 const OrderDetailPage = () => {
   return (
@@ -7,7 +39,7 @@ const OrderDetailPage = () => {
       <TitleWrapper>
         <Title>주문 내역 상세</Title>
       </TitleWrapper>
-      <OrderList />
+      <OrderTableList orderInfos={orderInfos} />
       <OrderTotal>
         <OrderTotalHeader>결제금액 정보</OrderTotalHeader>
         <OrderTotalPrice>

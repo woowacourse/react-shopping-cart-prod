@@ -1,5 +1,7 @@
 import { ChangeEventHandler } from 'react';
 import { styled } from 'styled-components';
+import colors from '../../../colors';
+import { TbCheck } from 'react-icons/tb';
 
 interface CheckboxProps {
   id: string;
@@ -14,32 +16,48 @@ const Checkbox = ({ id, checked = false, onChange }: CheckboxProps) => {
 
   return (
     <>
-      <StyledCheckbox
-        type="checkbox"
-        id={id}
-        checked={checked}
-        onChange={handleChange}
-      />
-      <label htmlFor={id}></label>
+      <label>
+        <RealCheckbox
+          type="checkbox"
+          id={id}
+          checked={checked}
+          onChange={handleChange}
+        />
+        <VisualCheckbox>
+          <TbCheck />
+        </VisualCheckbox>
+      </label>
     </>
   );
 };
 
-const StyledCheckbox = styled.input`
+const RealCheckbox = styled.input`
   appearance: none;
+`;
+
+const VisualCheckbox = styled.span`
+  display: inline-block;
   width: 28px;
   height: 28px;
-  border: 1px solid #333;
+  border: 1px solid ${colors.gold};
   border-radius: 2px;
   transition: 0.15s;
   cursor: pointer;
 
-  &:checked {
-    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M5.707 7.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4a1 1 0 0 0-1.414-1.414L7 8.586 5.707 7.293z'/%3e%3c/svg%3e");
-    background-size: 100% 100%;
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-color: #333;
+  & * {
+    opacity: 0;
+    color: ${colors.pureBlack};
+    font-size: 26px;
+    transition: 0.15s;
+  }
+
+  ${RealCheckbox}:checked ~ & {
+    background-color: ${colors.gold};
+    box-shadow: 0 0 10px ${colors.gold};
+  }
+
+  ${RealCheckbox}:checked ~ & * {
+    opacity: 1;
   }
 `;
 

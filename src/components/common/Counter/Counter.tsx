@@ -1,9 +1,10 @@
 import { css, styled } from 'styled-components';
 import useCounter from './useCounter';
 import { isNumericString } from '../../../utils/isNumericString';
-import { MinusIcon, PlusIcon } from '../../../assets/svg';
-import type { ChangeEventHandler, FocusEventHandler } from 'react';
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 
+import type { ChangeEventHandler, FocusEventHandler } from 'react';
+import colors from '../../../colors';
 export type CounterSize = 'medium' | 'small';
 
 interface CounterProps {
@@ -38,7 +39,7 @@ const Counter = ({
   return (
     <CounterContainer size={size}>
       <CounterButton onClick={decreaseCount}>
-        <MinusIcon />
+        <AiOutlineMinus />
       </CounterButton>
       <Input
         type="text"
@@ -48,7 +49,7 @@ const Counter = ({
         onBlur={handleBlur}
       />
       <CounterButton onClick={increaseCount}>
-        <PlusIcon />
+        <AiOutlinePlus />
       </CounterButton>
     </CounterContainer>
   );
@@ -56,8 +57,9 @@ const Counter = ({
 
 const CounterContainer = styled.span<{ size: CounterSize }>`
   display: flex;
-
-  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.3s;
 
   ${({ size }) =>
     (size === 'medium' &&
@@ -66,8 +68,8 @@ const CounterContainer = styled.span<{ size: CounterSize }>`
         height: 42px;
 
         & > * {
-          width: 40px;
-          height: 40px;
+          width: 42px;
+          height: 42px;
 
           font-size: 24px;
         }
@@ -87,22 +89,33 @@ const CounterContainer = styled.span<{ size: CounterSize }>`
 
 const Input = styled.input`
   border: none;
-
   font-weight: 400;
-  color: #333;
-
+  color: ${colors.gold};
+  background-color: ${colors.pureBlack};
   text-align: center;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: ${colors.faintGold};
+  }
 `;
 
 const CounterButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  background-color: #fff;
+  background-color: ${colors.pureBlack};
   border: none;
-
   cursor: pointer;
+  transition: 0.3s;
+
+  & {
+    color: ${colors.gold};
+  }
+
+  &:hover {
+    background-color: ${colors.faintGold};
+  }
 `;
 
 export default Counter;

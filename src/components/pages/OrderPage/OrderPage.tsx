@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 import Spacer from '../../common/Spacer/Spacer';
-import OrderList from '../../order/OrderList/OrderList';
 
 const OrderPage = () => {
   return (
@@ -9,10 +8,7 @@ const OrderPage = () => {
         <Title>주문 목록</Title>
       </TitleWrapper>
       <Spacer height={28} />
-      <OrderListContainer>
-        <OrderList />
-        <OrderList />
-      </OrderListContainer>
+      <OrderListContainer></OrderListContainer>
     </>
   );
 };

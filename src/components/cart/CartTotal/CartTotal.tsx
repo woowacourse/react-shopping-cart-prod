@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import Spacer from '../../common/Spacer/Spacer';
 import { formatPrice } from '../../../utils/formatPrice';
+import colors from '../../../colors';
 
 const FREE_SHIPPING_PRICE = 30_000;
 const SHIPPING_FEE = 3_000;
@@ -73,14 +74,14 @@ const Container = styled.div`
   flex-direction: column;
   width: 448px;
   height: 410px;
-  border: 1px solid #ddd;
+  border: 1px solid ${colors.transparentGold};
 `;
 
 const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 81px;
-  border-bottom: 3px solid #dddddd;
+  border-bottom: 3px solid ${colors.transparentGold};
   padding: 0 30px;
 `;
 
@@ -89,7 +90,7 @@ const Title = styled.h3`
   font-weight: normal;
   line-height: 33px;
   letter-spacing: 0.5px;
-  color: #333333;
+  color: ${colors.gold};
 `;
 
 const Detail = styled.dl`
@@ -108,7 +109,7 @@ const PriceWrapper = styled.div`
     font-size: 20px;
     line-height: 27px;
     letter-spacing: 0.5px;
-    color: #333333;
+    color: ${colors.lightGold};
   }
 `;
 
@@ -122,14 +123,14 @@ const OrderButton = styled.button`
   width: 388px;
   height: 73px;
   margin: 0 auto;
-  background: #333333;
+  background: ${colors.gold};
   font-size: 24px;
   line-height: 21px;
   text-align: center;
-  color: #ffffff;
+  color: ${colors.pureBlack};
 
   &:disabled {
-    background-color: #afafaf;
+    background-color: ${colors.transparentGold};
   }
 `;
 
