@@ -1,14 +1,15 @@
 import { styled } from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { currentProductListState } from '../../recoil/selectors';
 import Product from './Product';
+import { ProductInfo } from '../../types';
 
-export default function ProductList() {
-  const productList = useRecoilValue(currentProductListState);
+interface Props {
+  products: ProductInfo[];
+}
 
+export default function ProductList({ products }: Props) {
   return (
     <Style.Container>
-      {productList.map((product) => (
+      {products.map((product) => (
         <li key={product.id}>
           <Product productInfo={product} />
         </li>
