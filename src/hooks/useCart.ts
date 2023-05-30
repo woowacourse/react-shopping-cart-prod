@@ -1,13 +1,16 @@
-import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
 import { cartState } from '../store/CartState';
 import { ChangeEvent, MouseEvent, useState } from 'react';
 import { removeProductItemFromCartSelector, totalPriceSelector } from '../store/CartSelector';
-import { useFetchData } from './useFetchData';
 import { serverState } from '../store/ServerState';
 import { CART_BASE_URL } from '../constants/url';
+import useMutation from './useMutation';
+import { base64 } from '../constants';
+import { CartItem } from '../types';
+import useToast from './useToast';
 
 export const useCart = () => {
-  const cart = useRecoilValue(cartState);
+  const [cart, setCart] = useRecoilState(cartState);
   const initialCheckedItems = cart.map((item) => item.id);
   const [checkedItems, setCheckedItems] = useState<number[]>(initialCheckedItems);
   const removeProductItemFromCart = useRecoilCallback(({ set }) => (id: number) => {
@@ -15,7 +18,8 @@ export const useCart = () => {
   });
   const serverUrl = useRecoilValue(serverState);
 
-  const { api } = useFetchData();
+  const { mutate, error } = useMutation<CartItem[]>(setCart);
+  const { toast } = useToast();
 
   const isChecked = (id: number) => {
     return checkedItems.includes(id);
@@ -43,7 +47,17 @@ export const useCart = () => {
     const confirmResult = window.confirm('정말로 삭제하시겠습니까?');
     if (confirmResult) {
       checkedItems.forEach((id) => {
-        api.delete(`${serverUrl}${CART_BASE_URL}/${id}`, CART_BASE_URL);
+        mutate({
+          url: `${serverUrl}${CART_BASE_URL}/${id}`,
+          method: 'DELETE',
+          bodyData: { id },
+          headers: {
+            Authorization: `Basic ${btoa(base64)}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        if (error) return;
+        toast.success(`${checkedItems.length}개의 상품을 장바구니에서 삭제했습니다.`);
         removeProductItemFromCart(id);
       });
       setCheckedItems([]);
