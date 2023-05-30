@@ -2,21 +2,12 @@ import { styled } from 'styled-components';
 import CartEmptyPlaceholder from '../components/CartEmptyPlaceholder';
 import CartItemListItem from '../components/CartItemListItem';
 import CartOrder from '../components/CartOrder';
+import PageHeader from '../components/PageHeader';
 import Checkbox from '../components/common/Checkbox';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import useCartActions from '../hooks/useCartActions';
 import cartItemsState from '../recoil/atoms/cartItemsState';
 import type { CartItem } from '../types/CartItem';
-
-const Header = styled.header`
-  padding-bottom: 32px;
-
-  border-bottom: 4px solid #333333;
-
-  text-align: center;
-  font-size: 32px;
-  font-weight: 700;
-`;
 
 const CartLayout = styled.article`
   display: grid;
@@ -131,7 +122,7 @@ const CartPageContent = (props: CartPageContentProps) => {
 const CartPage = () => {
   return (
     <>
-      <Header>장바구니</Header>
+      <PageHeader>장바구니</PageHeader>
 
       <AwaitRecoilState state={cartItemsState}>
         {(cartItems) =>
