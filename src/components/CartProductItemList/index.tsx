@@ -29,6 +29,7 @@ function CartProductItemList() {
 
   const deleteCheckedCartItem = () => {
     Promise.all(checkedCartIdList.map(id => deleteCartItem(id)));
+    setCheckedCartIdList(cartList.map(item => item.id));
   };
 
   return (

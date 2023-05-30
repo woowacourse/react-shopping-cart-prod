@@ -25,14 +25,6 @@ function DropDown({ options, selectedListHandler, currentOptionIndex }: DropDown
     close();
   };
 
-  const optionLists =
-    showOptions &&
-    options.map((data, idx) => (
-      <li key={idx} className={styles.option} onClick={handleOnChangeSelectValue}>
-        {data}
-      </li>
-    ));
-
   useOnClickOutside<HTMLDivElement>(ref, close);
 
   return (
@@ -40,7 +32,14 @@ function DropDown({ options, selectedListHandler, currentOptionIndex }: DropDown
       <label htmlFor="option" className={styles.label}>
         {currentValue}
       </label>
-      <ul className={`${styles.selectOption} ${showOptions ? styles.show : styles.hide}`}>{optionLists}</ul>
+      <ul className={`${styles.selectOption} ${showOptions ? styles.show : styles.hide}`}>
+        {showOptions &&
+          options.map((data, idx) => (
+            <li key={idx} className={styles.option} onClick={handleOnChangeSelectValue}>
+              {data}
+            </li>
+          ))}
+      </ul>
     </div>
   );
 }
