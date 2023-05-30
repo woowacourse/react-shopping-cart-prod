@@ -37,7 +37,7 @@ export const handlers = [
   rest.patch('/cart-items/:cartItemId', async (req, res) => {
     const { cartItemId } = req.params;
     const body = await req.json();
-    const quantity = Number(body.quantity);
+    const { quantity, checked } = body;
 
     const cartItem = cartItems.find((it) => String(it.id) === cartItemId) ?? null;
     if (cartItem === null) {
@@ -45,6 +45,7 @@ export const handlers = [
     }
 
     cartItem.quantity = quantity;
+    cartItem.checked = checked;
 
     return res(
       res.response(200, {
