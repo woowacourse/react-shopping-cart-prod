@@ -26,7 +26,7 @@ const OrderCartItemList = styled.div`
 `;
 
 type OrderListItemProps = PropsWithChildren<{
-  orderId: string;
+  orderId: number;
 }>;
 
 const OrderListItem = (props: OrderListItemProps) => {
