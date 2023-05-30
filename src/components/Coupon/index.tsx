@@ -19,7 +19,6 @@ function Coupon({
   const { closeModal } = useModal();
 
   const [selectedCouponId, setSelectedCouponId] = useRecoilState(selectedCouponIdState);
-  console.log(selectedCouponId);
 
   const IssuedOrUseCoupon = () => {
     if (!id) return;

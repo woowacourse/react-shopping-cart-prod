@@ -56,10 +56,20 @@ export const AmountCategory = styled.div`
   position: relative;
 `;
 
-export const Amount = styled.div``;
+export const Amount = styled.div`
+  position: relative;
+`;
 
 export const DiscountAmount = styled.div`
   position: absolute;
   right: 0;
   bottom: -22px;
+`;
+
+export const ResetButton = styled.div`
+  position: absolute;
+  right: -24px;
+  top: -3px;
+  font-size: 30px;
+  cursor: pointer;
 `;
