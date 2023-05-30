@@ -1,5 +1,6 @@
 import Header from '../components/Header/Header';
 import OrderDetailPageSection from '../components/OrderDetailPageSection/OrderDetailPageSection';
+import PaymentInfo from '../components/PaymentInfo/PaymentInfo';
 
 const OrderDetailPage = () => {
   return (
@@ -7,6 +8,7 @@ const OrderDetailPage = () => {
       <Header />
       <main>
         <OrderDetailPageSection />
+        <PaymentInfo />
       </main>
     </>
   );

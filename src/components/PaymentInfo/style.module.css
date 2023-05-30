@@ -1,0 +1,38 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.paymentBox {
+  margin-top: 28px;
+
+  width: 560px;
+  height: 92px;
+
+  background-color: rgba(7, 192, 158, 0.2);
+}
+
+.header {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 28px;
+  letter-spacing: 0.5px;
+  color: #333333;
+
+  padding: 30px;
+}
+
+.content {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 24px;
+  letter-spacing: 0.5px;
+  color: #333333;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  height: 115px;
+}
