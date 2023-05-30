@@ -2,6 +2,7 @@ import { rest } from 'msw';
 
 import { CART_STORAGE_ID, ORDER_STORAGE_ID } from '../constants/storage';
 import products from './data/products.json';
+import orders from './data/orders.json';
 import {
   addTargetProduct,
   deleteTargetProduct,
@@ -110,6 +111,10 @@ export const handlers = [
     );
 
     return res(ctx.delay(2000), ctx.status(204));
+  }),
+
+  rest.get('/orders', (_, res, ctx) => {
+    return res(ctx.delay(2000), ctx.status(200), ctx.json(orders));
   }),
 
   rest.post<OrderInfo>('/orders', (req, res, ctx) => {

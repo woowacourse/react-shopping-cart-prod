@@ -13,13 +13,13 @@ const OrderItem = ({ order }: OrderItemProps) => {
   const { orderId, orderItems } = order;
 
   return (
-    <div>
+    <section>
       <OrderTitle>
         <p>주문 번호: {orderId}</p>
         <Link to={`${orderId}`}>상세보기 &gt;</Link>
       </OrderTitle>
       <OrderedProductList orderItems={orderItems} />
-    </div>
+    </section>
   );
 };
 
