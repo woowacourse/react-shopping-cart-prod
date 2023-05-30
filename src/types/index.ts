@@ -15,3 +15,10 @@ export interface OrderItem {
   id: number;
   order: CartItem[];
 }
+
+export type ToastType = 'success' | 'error';
+
+export interface ToastItem {
+  message: string;
+  type: ToastType;
+}
