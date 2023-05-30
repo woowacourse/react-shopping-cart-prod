@@ -5,9 +5,10 @@ import styles from './index.module.scss';
 
 interface OrderItemProps {
   order: Order;
+  isListItem?: boolean;
 }
 
-function OrderItem({ order }: OrderItemProps) {
+function OrderItem({ order, isListItem }: OrderItemProps) {
   const products = order.productList.map(product => (
     <div key={product.name} className={styles['item-container']}>
       <img src={product.imageUrl} alt={product.name} />
@@ -24,7 +25,7 @@ function OrderItem({ order }: OrderItemProps) {
     <div>
       <div className={styles.header}>
         <p>주문 번호: {order.id}</p>
-        <Link to={`/order/${order.id}`}>상세 보기</Link>
+        {isListItem && <Link to={`/order/${order.id}`}>상세 보기</Link>}
       </div>
       <div>{products}</div>
     </div>

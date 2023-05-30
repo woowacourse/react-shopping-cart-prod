@@ -6,7 +6,7 @@ import styles from './index.module.scss';
 function OrderList() {
   const { orderList, loading } = useOrderList();
 
-  const listComponents = orderList?.map(order => <OrderItem key={order.id} order={order} />);
+  const listComponents = orderList?.map(order => <OrderItem key={order.id} order={order} isListItem />);
 
   if (loading) {
     return (
