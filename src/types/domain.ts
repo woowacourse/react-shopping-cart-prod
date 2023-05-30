@@ -16,6 +16,16 @@ export interface LocalProductType extends ProductType {
   cartItemId: number;
 }
 
+export interface CouponType {
+  id: number;
+  name: string;
+  minPrice: number;
+  isAvailable: boolean;
+  discountPrice: number;
+}
+
+// common
+
 export interface ToastType {
   type: "success" | "error";
   isShown: boolean;
