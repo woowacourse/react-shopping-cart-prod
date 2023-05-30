@@ -1,51 +1,73 @@
 import { styled } from 'styled-components';
+import { SetterOrUpdater } from 'recoil';
 import { CartItemInfo } from '../../types';
+import { PRODUCT } from '../../constants';
 import { useCart } from '../../hooks/useCart';
 import { TrashCanIcon } from '../../assets/svg';
-import Price from '../common/Price';
 import Stepper from '../Stepper';
-import { PRODUCT } from '../../constants';
+import Checkbox from '../common/Checkbox';
+import Price from '../common/Price';
 
 interface Props {
   cartItemInfo: CartItemInfo;
-  deleteCheckedItem: React.Dispatch<React.SetStateAction<number[]>>;
+  checkedItemIds: number[];
+  setCheckedItemIds: SetterOrUpdater<number[]>;
 }
 
-export default function CartItem({ cartItemInfo, deleteCheckedItem }: Props) {
+export default function CartItem({ cartItemInfo, checkedItemIds, setCheckedItemIds }: Props) {
   const { name, price, imageUrl } = cartItemInfo.product;
   const { updateProductQuantity, deleteFromCart } = useCart(cartItemInfo.product);
 
-  const handleDeleteCartItem = () => {
-    deleteCheckedItem((prev) => prev.filter((itemId) => itemId !== cartItemInfo.id));
+  const toggleCheckbox = (id: number) => {
+    if (checkedItemIds.includes(id)) {
+      setCheckedItemIds((prev) => prev.filter((itemId) => itemId !== id));
+      return;
+    }
+
+    setCheckedItemIds((prev) => [...prev, id]);
+  };
+
+  const deleteCartItem = () => {
+    setCheckedItemIds((prev) => prev.filter((itemId) => itemId !== cartItemInfo.id));
     deleteFromCart(cartItemInfo.id);
   };
 
   return (
     <Style.Container>
-      <Style.ImageAndNameContainer>
-        <Style.ProductImageWrapper>
-          <Style.ProductImage src={imageUrl} alt={name} />
-        </Style.ProductImageWrapper>
-        <Style.ProductName htmlFor={`${name}-checkbox`}>{name}</Style.ProductName>
-      </Style.ImageAndNameContainer>
-      <Style.TrashCanIConAndStepperAndPriceContainer>
-        <Style.DeleteCartItemButton
-          onClick={handleDeleteCartItem}
-          aria-label={`장바구니에서 ${name} 상품 삭제`}
-        >
-          <TrashCanIcon />
-        </Style.DeleteCartItemButton>
-        <Stepper
-          quantity={cartItemInfo.quantity}
-          minQuantity={1}
-          maxQuantity={PRODUCT.MAX_COUNT}
-          updateQuantity={updateProductQuantity}
+      <Style.CheckBoxWrapper>
+        <Checkbox
+          id={`${name}-checkbox`}
+          checked={checkedItemIds.includes(cartItemInfo.id)}
+          itemId={cartItemInfo.id}
+          toggleCheckbox={toggleCheckbox}
         />
-        <Price
-          price={price * cartItemInfo?.quantity}
-          label={`${name} ${cartItemInfo.quantity}개`}
-        />
-      </Style.TrashCanIConAndStepperAndPriceContainer>
+      </Style.CheckBoxWrapper>
+      <Style.ProductAndStepperContainer>
+        <Style.ImageAndNameContainer>
+          <Style.ProductImageWrapper>
+            <Style.ProductImage src={imageUrl} alt={name} />
+          </Style.ProductImageWrapper>
+          <Style.ProductName htmlFor={`${name}-checkbox`}>{name}</Style.ProductName>
+        </Style.ImageAndNameContainer>
+        <Style.TrashCanIConAndStepperAndPriceContainer>
+          <Style.DeleteCartItemButton
+            onClick={deleteCartItem}
+            aria-label={`장바구니에서 ${name} 상품 삭제`}
+          >
+            <TrashCanIcon />
+          </Style.DeleteCartItemButton>
+          <Stepper
+            quantity={cartItemInfo.quantity}
+            minQuantity={1}
+            maxQuantity={PRODUCT.MAX_COUNT}
+            updateQuantity={updateProductQuantity}
+          />
+          <Price
+            price={price * cartItemInfo?.quantity}
+            label={`${name} ${cartItemInfo.quantity}개`}
+          />
+        </Style.TrashCanIConAndStepperAndPriceContainer>
+      </Style.ProductAndStepperContainer>
     </Style.Container>
   );
 }
@@ -56,8 +78,22 @@ const Style = {
 
     /* 모바일 */
     @media screen and (max-width: 767px) {
-      flex-direction: column;
+      /* flex-direction: column; */
       position: relative;
+    }
+  `,
+
+  CheckBoxWrapper: styled.div`
+    margin-right: 20px;
+    border-radius: 2px;
+  `,
+
+  ProductAndStepperContainer: styled.div`
+    display: flex;
+
+    /* 모바일 */
+    @media screen and (max-width: 767px) {
+      flex-direction: column;
     }
   `,
 
