@@ -33,6 +33,7 @@ export const AmountWrapper = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-weight: 700;
   font-size: 18px;
   line-height: 27px;

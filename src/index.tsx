@@ -30,7 +30,7 @@ async function main() {
               title: '쿠폰 사용하기',
               component: <UseCoupon />,
               name: 'useCoupon',
-              delayMsTime: 500,
+              delayMsTime: 300,
               position: 'middle',
             },
           ]}

@@ -1,8 +1,10 @@
+import { useModal } from 'noah-modal';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
 import Button from '@Components/Button';
 import HelperMessage from '@Components/HelperMessage';
+import SecondaryButton from '@Components/SecondaryButton';
 
 import useOrderItems from '@Hooks/useOrderItems';
 
@@ -14,6 +16,7 @@ import * as S from './style';
 function PaymentAmount() {
   const { orderAmount, deliveryFee, totalOrderPrice, discountAmount } = useRecoilValue(orderAmountState);
   const cartAmount = useRecoilValue(cartItemsAmountState);
+  const { openModal } = useModal();
 
   const navigate = useNavigate();
 
@@ -45,7 +48,9 @@ function PaymentAmount() {
         </S.AmountWrapper>
         <S.AmountWrapper aria-label="쿠폰적용">
           <S.AmountCategory>쿠폰적용</S.AmountCategory>
-          <S.Amount></S.Amount>
+          <S.Amount>
+            <SecondaryButton text="쿠폰 선택" onClick={() => openModal('useCoupon')} />
+          </S.Amount>
         </S.AmountWrapper>
         <S.AmountWrapper aria-label="총 배송비">
           <S.AmountCategory>총 배송비</S.AmountCategory>

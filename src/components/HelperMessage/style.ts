@@ -32,6 +32,7 @@ export const HelperMessage = styled.div`
   z-index: 1;
   user-select: none;
   position: absolute;
+  text-align: center;
   left: -90px;
   bottom: 25px;
   min-width: 320px;

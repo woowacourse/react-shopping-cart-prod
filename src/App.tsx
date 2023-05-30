@@ -20,11 +20,7 @@ function App() {
     if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
   }, []);
 
-  const { openModal, Modal } = useModal();
-
-  const onClick = () => {
-    openModal('useCoupon');
-  };
+  const { Modal } = useModal();
 
   return (
     <>
@@ -34,7 +30,6 @@ function App() {
       </Suspense>
       <CommonPageStyle>
         <ErrorBoundary fallback={NotFound}>
-          <button onClick={onClick}>모달열기</button>
           <Outlet />
           {Modal && <Modal />}
         </ErrorBoundary>
