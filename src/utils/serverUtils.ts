@@ -6,6 +6,14 @@ interface ServerByCrewType {
 }
 
 export const SERVER_BY_CREW: ServerByCrewType = {
+  MSW: {
+    url: 'msw',
+    user: [
+      { id: 1, username: 'pizza1@pizza.com', password: 'pizza' },
+      { id: 2, username: 'pizza2@pizza.com', password: 'pizza' },
+    ],
+  },
+
   마코: {
     url: 'https://m4co.shop',
     user: [
