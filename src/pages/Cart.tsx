@@ -29,7 +29,7 @@ const Cart = () => {
         ) : (
           <Container>
             <CartProductList />
-            <TotalPriceTable />
+            <TotalPriceTable status="cart" />
           </Container>
         )}
       </Page>
