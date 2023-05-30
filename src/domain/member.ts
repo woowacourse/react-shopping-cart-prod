@@ -29,11 +29,7 @@ const updateMemberInformation = (orderList: OrderData[]) => {
 
   const newRank = Object.entries(MEMBER_RANK_PURCHASE_CONDITION).reduce(
     (foundRank: MemberRank | null, [memberRank, purchaseCondition], index): MemberRank | null => {
-      if (
-        !foundRank &&
-        index > currentMemberRankIndex &&
-        accumulatedPurchases >= purchaseCondition
-      ) {
+      if (index > currentMemberRankIndex && accumulatedPurchases >= purchaseCondition) {
         return memberRank as MemberRank;
       }
 
