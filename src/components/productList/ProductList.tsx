@@ -27,7 +27,7 @@ export default function ProductList() {
       .getCart(serverName)
       .then(setCart)
       .catch(() => {
-        showToast('error', API_ERROR_MESSAGE.getCart);
+        products && showToast('error', API_ERROR_MESSAGE.getCart);
       });
   }, [serverName]);
 
