@@ -19,7 +19,17 @@ const useCartActions = () => {
     );
   });
 
-  return { setQuantity, deleteCartItems };
+  const setChecked = useRecoilCallback(
+    ({ set }) =>
+      (productId: Product['id'], checked: boolean) =>
+        set(cartItemsState, (cartItems) =>
+          cartItems.map((cartItem) =>
+            cartItem.product.id === productId ? { ...cartItem, checked } : cartItem,
+          ),
+        ),
+  );
+
+  return { setQuantity, deleteCartItems, setChecked };
 };
 
 export default useCartActions;

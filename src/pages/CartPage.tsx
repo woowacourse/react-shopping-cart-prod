@@ -5,7 +5,6 @@ import CartOrder from '../components/CartOrder';
 import Checkbox from '../components/common/Checkbox';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import useCartActions from '../hooks/useCartActions';
-import useCartOrder from '../hooks/useCartOrder';
 import cartItemsState from '../recoil/atoms/cartItemsState';
 import type { CartItem } from '../types/CartItem';
 
@@ -83,20 +82,16 @@ const CartPageContent = (props: CartPageContentProps) => {
   const selectedCount = cartItems.filter((cartItem) => cartItem.checked).length;
   const allSelected = selectedCount === cartItems.length;
 
-  const { deleteCartItems } = useCartActions();
-  const { selectForOrder, toggleForOrder, unselectAllForOrder } = useCartOrder();
+  const { deleteCartItems, setChecked } = useCartActions();
 
-  const handleEnableAll = (cartItems: CartItem[]) => () => {
-    if (allSelected) {
-      unselectAllForOrder();
-      return;
-    }
-    cartItems.forEach((cartItem) => selectForOrder(cartItem.product.id));
+  const handleEnableAll = () => {
+    cartItems.forEach((cartItem) => setChecked(cartItem.product.id, !allSelected));
   };
 
-  const handleDeleteSelected = (cartItems: CartItem[]) => () => {
-    unselectAllForOrder();
-    deleteCartItems(cartItems.map((cartItem) => cartItem.product.id));
+  const handleDeleteSelected = () => {
+    deleteCartItems(
+      cartItems.filter((cartItem) => cartItem.checked).map((cartItem) => cartItem.product.id),
+    );
   };
 
   return (
@@ -108,7 +103,7 @@ const CartPageContent = (props: CartPageContentProps) => {
             <CartItemListItemContainer>
               <Checkbox
                 value={cartItem.checked}
-                onChange={() => toggleForOrder(cartItem.product.id)}
+                onChange={() => setChecked(cartItem.product.id, !cartItem.checked)}
               />
               <CartItemListItem
                 key={cartItem.product.id}
@@ -120,13 +115,11 @@ const CartPageContent = (props: CartPageContentProps) => {
         </CartItemList>
 
         <CartItemListController>
-          <Checkbox value={allSelected} onChange={handleEnableAll(cartItems)} />
+          <Checkbox value={allSelected} onChange={handleEnableAll} />
           <CartItemSelected>
             전체선택 ({selectedCount}/{cartItems.length}개)
           </CartItemSelected>
-          <DeleteSelectedButton onClick={handleDeleteSelected(cartItems)}>
-            선택삭제
-          </DeleteSelectedButton>
+          <DeleteSelectedButton onClick={handleDeleteSelected}>선택삭제</DeleteSelectedButton>
         </CartItemListController>
       </CartItemListSection>
 
