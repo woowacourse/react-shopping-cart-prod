@@ -15,7 +15,6 @@ const CartPage = () => {
     cart,
     checkedItemIds,
     isAllChecked,
-    calcTotalPrice,
     handleCheckboxChange,
     handleAllCheckboxChange,
     handleSelectedItemDelete,
@@ -67,7 +66,7 @@ const CartPage = () => {
           <Spacer height={20} />
         </CartList>
         <TotalWrapper>
-          <CartTotal totalProductPrice={calcTotalPrice()} />
+          <CartTotal />
         </TotalWrapper>
       </Inner>
     </Container>
@@ -140,7 +139,7 @@ const ImageContainer = styled.div`
 `;
 
 const Image = styled.img`
-  padding: 50px;
+  padding: 30px;
   width: 250px;
 `;
 

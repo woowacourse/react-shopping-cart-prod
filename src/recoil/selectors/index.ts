@@ -1,5 +1,10 @@
 import { selector } from 'recoil';
-import { serverOriginState } from '../atoms';
+import {
+  serverOriginState,
+  checkedItemIdsState,
+  cartState,
+  pointsState,
+} from '../atoms';
 import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../../constants/api';
 import { fetchCartItems } from '../../remotes/cart';
 import { fetchProducts } from '../../remotes/product';
@@ -24,5 +29,32 @@ export const cartItemsQuery = selector<CartItem[]>({
     );
 
     return cartItems;
+  },
+});
+
+export const cartPriceSelector = selector<number>({
+  key: 'cartPrice',
+  get: ({ get }) => {
+    const checkedItemIds = get(checkedItemIdsState);
+    const cart = get(cartState);
+
+    const checkedItems = cart.filter((cartItem) =>
+      checkedItemIds.has(cartItem.id),
+    );
+
+    return checkedItems.reduce(
+      (prev, item) => prev + item.product.price * item.quantity,
+      0,
+    );
+  },
+});
+
+export const finalPriceSelector = selector<number>({
+  key: 'finalPrice',
+  get: ({ get }) => {
+    const cartPrice = get(cartPriceSelector);
+    const { selectedPoints } = get(pointsState);
+
+    return cartPrice - selectedPoints;
   },
 });
