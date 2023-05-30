@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { LOCAL_STORAGE_KEY } from '../constants';
 import { cartItems, products, orderList, paymentsData } from '../data/mockData';
-import { CartItem, Order, Product } from '../types';
+import { CartItem, Order, Payments, Product } from '../types';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
 const handlers = [
@@ -162,7 +162,45 @@ const handlers = [
     return res(ctx.delay(50), ctx.status(201), ctx.json(paymentsData));
   }),
 
-  rest.get('orders', (req, res, ctx) => res(ctx.delay(2000), ctx.status(200), ctx.json(orderList))),
+  // 주문 목록 조회 api
+  rest.get('/orders', (req, res, ctx) => res(ctx.delay(2000), ctx.status(200), ctx.json(orderList))),
+
+  rest.get('/orders/:orderId', (req, res, ctx) => {
+    const { orderId } = req.params;
+
+    const orderDetail = orderList.find(order => order.id === Number(orderId));
+
+    if (!orderDetail) {
+      return res(ctx.status(401), ctx.json({ message: '존재하지 않는 주문 번호 입니다.' }));
+    }
+
+    const originalPrice = orderDetail.productList.reduce((acc, cur) => {
+      const updated = acc + cur.totalPrice;
+      return updated;
+    }, 0);
+
+    const discounts = [];
+
+    if (originalPrice >= 50_000) {
+      discounts.push({
+        discountPolicy: '5만원 이상 주문 시 10% 할인',
+        discountAmount: Math.floor(originalPrice / 1000) * 100,
+      });
+    }
+
+    const discountedPrice = originalPrice - discounts.reduce((acc, { discountAmount }) => acc + discountAmount, 0);
+    const deliveryFee = 3000;
+
+    const payments: Payments = {
+      originalPrice,
+      discounts,
+      discountedPrice,
+      deliveryFee,
+      finalPrice: discountedPrice + deliveryFee,
+    };
+
+    return res(ctx.status(200), ctx.json({ ...orderDetail, paymentAmount: payments }));
+  }),
 ];
 
 export default handlers;
