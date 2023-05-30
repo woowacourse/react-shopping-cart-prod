@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import Header from '../components/Header';
+import AppBar from '../components/AppBar';
 
 const Content = styled.main`
   margin: 0 auto;
@@ -15,7 +15,7 @@ const RootPage = () => {
 
   return (
     <>
-      <Header onNavigate={navigate} />
+      <AppBar onNavigate={navigate} />
       <Content>
         <Outlet />
       </Content>

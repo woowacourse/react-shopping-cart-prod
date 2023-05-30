@@ -7,7 +7,7 @@ import serverState from '../recoil/atoms/serverState';
 import Badge from './common/Badge';
 import AwaitRecoilState from './utils/AwaitRecoilState';
 
-const HeaderContainer = styled.header`
+const AppBarContainer = styled.header`
   width: 100%;
   height: 80px;
 
@@ -15,7 +15,7 @@ const HeaderContainer = styled.header`
   color: white;
 `;
 
-const HeaderContent = styled.div`
+const AppBarContent = styled.div`
   display: flex;
   align-items: stretch;
   justify-content: space-between;
@@ -68,7 +68,7 @@ type HeaderProps = {
   onNavigate: (to: string) => void;
 };
 
-const Header = (props: HeaderProps) => {
+const AppBar = (props: HeaderProps) => {
   const { onNavigate } = props;
   const [server, setServer] = useRecoilState(serverState);
 
@@ -80,8 +80,8 @@ const Header = (props: HeaderProps) => {
   };
 
   return (
-    <HeaderContainer>
-      <HeaderContent>
+    <AppBarContainer>
+      <AppBarContent>
         <HomeButton onClick={() => onNavigate('/')}>
           <img alt="홈" src={HomeIcon} width={44} />
           <HomeButtonText>SHOP</HomeButtonText>
@@ -103,9 +103,9 @@ const Header = (props: HeaderProps) => {
             </AwaitRecoilState>
           </MenuButton>
         </Menu>
-      </HeaderContent>
-    </HeaderContainer>
+      </AppBarContent>
+    </AppBarContainer>
   );
 };
 
-export default Header;
+export default AppBar;

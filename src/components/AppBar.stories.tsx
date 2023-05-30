@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Header from './Header';
+import AppBar from './AppBar';
 
 const meta = {
-  title: 'Header',
-  component: Header,
-} satisfies Meta<typeof Header>;
+  title: 'AppBar',
+  component: AppBar,
+} satisfies Meta<typeof AppBar>;
 
 export default meta;
 
