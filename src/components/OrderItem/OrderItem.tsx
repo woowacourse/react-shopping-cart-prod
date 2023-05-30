@@ -15,7 +15,7 @@ const OrderItem = ({ order, type }: OrderItemProps) => {
   const handleOnClick = () => {
     navigate(`/order/${order.order_id}`);
   };
-  console.log(typeof order);
+
   return (
     <Item
       flexDirection="column"

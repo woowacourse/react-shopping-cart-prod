@@ -52,7 +52,6 @@ const Loader = styled.div`
   }
 `;
 
-// 사용 예시:
 const Spinner = () => <Loader />;
 
 export default Spinner;
