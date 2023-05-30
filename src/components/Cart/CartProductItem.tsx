@@ -22,9 +22,7 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
   const { targetChecked, updateChecked, deleteChecked } =
     useChecked(cartProduct);
 
-  const toggleProductChecked: ChangeEventHandler<HTMLInputElement> = (
-    event
-  ) => {
+  const toggleProductChecked: ChangeEventHandler<HTMLInputElement> = event => {
     updateChecked(event.currentTarget.checked);
   };
 
@@ -40,17 +38,17 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
         onChange={toggleProductChecked}
         checked={targetChecked ? true : false}
       />
-      <Image src={imageUrl} alt={name} loading='lazy' size='small' />
+      <Image src={imageUrl} alt={name} loading="lazy" size="small" />
       <ProductName>{name}</ProductName>
       <CartInfoContainer>
-        <DeleteButton type='button' onClick={deleteProductAndChecked}>
+        <DeleteButton type="button" onClick={deleteProductAndChecked}>
           <TrashCanIcon />
         </DeleteButton>
         <AmountCounter
           cartItemId={id}
           count={quantity}
           minCount={1}
-          variant='medium'
+          variant="medium"
         />
         <ProductPrice>
           {(price * quantity).toLocaleString('ko-KR')}원

@@ -27,7 +27,7 @@ const ExpectedPaymentBox = () => {
         </PaymentInfoItem>
       </ExpectedPaymentInfo>
       <OrderButtonWrapper>
-        <Button type='button' autoSize disabled={isAllUnchecked}>
+        <Button type="button" autoSize disabled={isAllUnchecked}>
           주문하기
         </Button>
       </OrderButtonWrapper>
@@ -36,11 +36,15 @@ const ExpectedPaymentBox = () => {
 };
 
 const ExpectedPaymentContainer = styled.div`
-  min-width: 320px;
+  min-width: 400px;
+  height: 400px;
+  margin-top: 90px;
+
   border: 1px solid ${({ theme }) => theme.colors.gray100};
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.large}) {
-    width: 450px;
+  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+    width: 100%;
+    margin-top: 0px;
   }
 `;
 
@@ -52,7 +56,7 @@ const ExpectedPaymentTitle = styled.h2`
   font-weight: 400;
   border-bottom: 3px solid ${({ theme }) => theme.colors.gray100};
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+  @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
     font-size: 24px;
   }
 `;

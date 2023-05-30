@@ -15,14 +15,14 @@ const CartProductList = () => {
   if (cartProducts.length === 0) {
     return (
       <MessageWrapper>
-        <Message type='cartEmpty' />
+        <Message type="cartEmpty" />
       </MessageWrapper>
     );
   }
 
   return (
     <CartProductListContainer>
-      {cartProducts.map((cartProduct) => (
+      {cartProducts.map(cartProduct => (
         <li key={cartProduct.id}>
           <CartProductItem cartProduct={cartProduct} />
         </li>
