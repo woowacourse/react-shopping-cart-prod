@@ -3,7 +3,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { cartProductAtom } from '../recoil/cartProductData';
 import { deleteProduct, findTargetProduct } from '../domain/cartProductHandler';
-import { api } from '../apis/cartProducts';
+import { cartApi } from '../apis/cartProducts';
 import useProductQuantity from './useProductQuantity';
 import { hostNameAtom } from '../recoil/hostData';
 import type { Product } from '../types/product';
@@ -16,7 +16,7 @@ const useCartProducts = (product: Product) => {
   const target = findTargetProduct(cartProducts, productId);
 
   const addProduct = async () => {
-    const cartItemId = await api(hostName).then((apiInstance) => {
+    const cartItemId = await cartApi(hostName).then((apiInstance) => {
       return apiInstance.postCartProduct(product.productId);
     });
 
@@ -29,7 +29,7 @@ const useCartProducts = (product: Product) => {
 
   const removeProduct = () => {
     if (target) {
-      api(hostName).then((apiInstance) => {
+      cartApi(hostName).then((apiInstance) => {
         return apiInstance.deleteCartProduct(target.cartItemId);
       });
 

@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { cartProductAtom } from '../recoil/cartProductData';
-import { api } from '../apis/cartProducts';
+import { cartApi } from '../apis/cartProducts';
 import { findTargetProduct } from '../domain/cartProductHandler';
 import { hostNameAtom } from '../recoil/hostData';
 import { HostNameType } from '../types/server';
@@ -12,7 +12,7 @@ const updateCartProductQuantity = async (
   targetProduct: CartProduct,
   delta: number
 ) =>
-  await api(hostName).then((apiInstance) => {
+  await cartApi(hostName).then((apiInstance) => {
     return apiInstance.patchCartProduct(
       targetProduct.cartItemId,
       targetProduct.quantity + delta
@@ -29,7 +29,7 @@ const useProductQuantity = (productId: number) => {
     if (targetProduct) {
       await updateCartProductQuantity(hostName, targetProduct, delta);
 
-      const cartDetails = await api(hostName).then((apiInstance) => {
+      const cartDetails = await cartApi(hostName).then((apiInstance) => {
         return apiInstance.fetchCartProducts();
       });
 

@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { hostNameAtom } from '../recoil/hostData';
 import { cartProductAtom } from '../recoil/cartProductData';
 import { checkedItemAtom } from '../recoil/checkedProductData';
-import { api } from '../apis/cartProducts';
+import { cartApi } from '../apis/cartProducts';
 import type { CartProduct } from '../types/product';
 
 const useCheckedProducts = () => {
@@ -29,7 +29,7 @@ const useCheckedProducts = () => {
     );
 
     selectedProducts.forEach((productId) => {
-      api(hostName).then((apiInstance) => {
+      cartApi(hostName).then((apiInstance) => {
         return apiInstance.deleteCartProduct(productId);
       });
     });

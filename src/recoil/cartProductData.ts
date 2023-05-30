@@ -1,7 +1,7 @@
 import { atom, selector } from 'recoil';
 
 import type { CartDetails, CartProduct } from '../types/product';
-import { api } from '../apis/cartProducts';
+import { cartApi } from '../apis/cartProducts';
 import { hostNameAtom } from './hostData';
 
 export const cartProductAtom = atom<CartProduct[]>({
@@ -10,7 +10,7 @@ export const cartProductAtom = atom<CartProduct[]>({
     key: 'cartProductState/Default',
     get: async ({ get }) => {
       const hostName = get(hostNameAtom);
-      const response = await api(hostName).then((apiInstance) => {
+      const response = await cartApi(hostName).then((apiInstance) => {
         return apiInstance.fetchCartProducts();
       });
 
