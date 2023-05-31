@@ -1,11 +1,20 @@
-import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
+import { AtomEffect, DefaultValue, atom, selector, selectorFamily } from 'recoil';
 import { QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
 import { CartItem, Product } from '../types';
 
+const logEffect: <T>(header: string) => AtomEffect<T> =
+  (header: string) =>
+  ({ onSet }) => {
+    onSet((newValue) => {
+      console.log(`[${header}]`, newValue);
+    });
+  };
+
 export const productListState = atom<Product[]>({
   key: 'productListState',
   default: [],
+  effects: [logEffect('PRODUCTS')],
 });
 
 export const productSelector = selectorFamily({
@@ -23,6 +32,7 @@ export const productSelector = selectorFamily({
 export const cartState = atom<CartItem[]>({
   key: 'cartState',
   default: [],
+  effects: [logEffect('CART')],
 });
 
 export const quantitySelector = selectorFamily({
@@ -45,9 +55,7 @@ export const quantitySelector = selectorFamily({
 
       const quantity = newQuantity instanceof DefaultValue ? QUANTITY.INITIAL : newQuantity;
 
-      const newCart = cart.map((cartItem) =>
-        cartItem === selectedCartItem ? { ...cartItem, quantity } : cartItem
-      );
+      const newCart = cart.map((cartItem) => (cartItem === selectedCartItem ? { ...cartItem, quantity } : cartItem));
 
       set(cartState, newCart);
     },
@@ -66,6 +74,7 @@ export const cartBadgeSelector = selector({
 export const checkedItemList = atom<number[]>({
   key: 'checkedItems',
   default: [],
+  effects: [logEffect('CHECKED_ITEM_LIST')],
 });
 
 export const totalPriceSelector = selector<number>({
@@ -86,4 +95,5 @@ export const totalPriceSelector = selector<number>({
 export const serverState = atom({
   key: 'serverState',
   default: `${SERVERS.준팍}`,
+  effects: [logEffect('SERVER')],
 });
