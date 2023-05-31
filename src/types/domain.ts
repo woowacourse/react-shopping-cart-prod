@@ -1,5 +1,5 @@
 import { CartItem } from "api/cartItems";
-import { Coupon } from "api/coupon";
+import { Coupon } from "api/coupons";
 
 export interface CartProduct extends CartItem {
   isChecked: boolean;

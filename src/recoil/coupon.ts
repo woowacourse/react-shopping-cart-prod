@@ -1,6 +1,6 @@
 import { atom, selector, selectorFamily } from "recoil";
 import { serverSelectState } from "./server";
-import { getCoupons } from "api/coupon";
+import { getCoupons } from "api/coupons";
 import { UsableCoupon } from "types/domain";
 import { cartSelector } from "./cart";
 
