@@ -49,36 +49,33 @@ const useCartService = () => {
     fetchCartItem();
   };
 
-  const updateCartItemQuantity =
-    (cartId: string) => async (quantity: number) => {
-      if (!cartId) return;
+  const updateCartItemQuantity = (cartId: string) => async (quantity: number) => {
+    if (!cartId) return;
 
-      const response = await fetch(`${cartItemsUrl}/${cartId}`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${USER_AUTH_TOKEN}`,
-        },
-        body: JSON.stringify({ quantity: quantity }),
+    const response = await fetch(`${cartItemsUrl}/${cartId}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${USER_AUTH_TOKEN}`,
+      },
+      body: JSON.stringify({ quantity }),
+    });
+
+    if (!response.ok) {
+      throw new Error('장바구니를 업데이트하는 과정에서 문제가 발생했습니다.');
+    }
+
+    setCartList((prevCart) => {
+      return prevCart.map((cartItem) => {
+        if (cartItem.id !== cartId) return cartItem;
+
+        return {
+          ...cartItem,
+          quantity,
+        };
       });
-
-      if (!response.ok) {
-        throw new Error(
-          '장바구니를 업데이트하는 과정에서 문제가 발생했습니다.',
-        );
-      }
-
-      setCartList((prevCart) => {
-        return prevCart.map((cartItem) => {
-          if (cartItem.id !== cartId) return cartItem;
-
-          return {
-            ...cartItem,
-            quantity,
-          };
-        });
-      });
-    };
+    });
+  };
 
   const deleteCartItem = async (cartId: string) => {
     const response = await fetch(`${cartItemsUrl}/${cartId}`, {
@@ -92,14 +89,11 @@ const useCartService = () => {
       throw new Error('장바구니를 삭제하는 과정에서 문제가 발생했습니다.');
     }
 
-    setCartList((prevCart) =>
-      prevCart.filter((cartItem) => cartItem.id !== cartId),
-    );
+    setCartList((prevCart) => prevCart.filter((cartItem) => cartItem.id !== cartId));
   };
 
   const getCartId = (productId: number) => {
-    return cartList.filter((cartItem) => cartItem.product.id === productId)[0]
-      ?.id;
+    return cartList.filter((cartItem) => cartItem.product.id === productId)[0]?.id;
   };
 
   return {

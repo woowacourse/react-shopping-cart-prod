@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import CartIcon from '../../../assets/icons/CartIcon';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import CartIcon from '../../../assets/icons/CartIcon';
 import useCartService from '../../../hooks/useCartService';
 import { BASE_URL } from '../../../constant';
-import { useRecoilState } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
 import { isProperServerName } from '../../../types/server';
 
@@ -16,9 +16,7 @@ const Header = () => {
     navigate('/');
   };
 
-  const handleServerNameSelectChange: React.ChangeEventHandler<
-    HTMLSelectElement
-  > = (event) => {
+  const handleServerNameSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
     const selectedServerName = event.target.value;
 
     if (!isProperServerName(selectedServerName)) return;

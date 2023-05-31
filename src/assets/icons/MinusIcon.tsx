@@ -7,7 +7,7 @@ const MinusIcon = () => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 32 32"
     >
-      <path d="M22.667 15.334H9.333v1.333h13.334v-1.333z" fill="current"></path>
+      <path d="M22.667 15.334H9.333v1.333h13.334v-1.333z" fill="current" />
     </svg>
   );
 };

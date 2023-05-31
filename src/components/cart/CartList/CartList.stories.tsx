@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { useSetRecoilState } from 'recoil';
 import CartList from './CartList';
 import CheckedCartListProvider from '../../../provider/CheckedListProvider';
-import { useSetRecoilState } from 'recoil';
 import cartState from '../../../globalState/atoms/cartState';
 
 const MockCartList = () => {

@@ -15,9 +15,9 @@ const useFetch = <T>(url: string) => {
 
       const fetchedData = await response.json();
       setData(fetchedData);
-    } catch (error) {
-      if (!(error instanceof Error)) return;
-      setError(error);
+    } catch (e) {
+      if (!(e instanceof Error)) return;
+      setError(e);
     }
   };
 
@@ -28,6 +28,7 @@ const useFetch = <T>(url: string) => {
 
   const getData = () => {
     if (data === null && promise) {
+      // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw promise;
     }
 

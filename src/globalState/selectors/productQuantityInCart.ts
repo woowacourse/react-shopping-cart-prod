@@ -8,9 +8,7 @@ const productQuantityInCart = selectorFamily({
     ({ get }) => {
       const cart = get(cartState);
 
-      const product = cart.find(
-        (cartItem) => cartItem.product.id === productId,
-      );
+      const product = cart.find((cartItem) => cartItem.product.id === productId);
 
       if (!product) return 0;
 

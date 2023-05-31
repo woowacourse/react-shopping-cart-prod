@@ -12,8 +12,7 @@ import cartLoadingState from '../../../globalState/atoms/cartLoadingState';
 
 const ProductItem = (product: Product) => {
   const { id: productId, name, price, imageUrl } = product;
-  const { addCartItem, updateCartItemQuantity, deleteCartItem, getCartId } =
-    useCartService();
+  const { addCartItem, updateCartItemQuantity, deleteCartItem, getCartId } = useCartService();
   const isCartLoading = useRecoilValue(cartLoadingState);
 
   const quantityInCart = useRecoilValue(productQuantityInCart(productId));

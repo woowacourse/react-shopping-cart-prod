@@ -24,9 +24,7 @@ const router = createHashRouter([
   },
 ]);
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <React.StrictMode>
@@ -36,5 +34,5 @@ root.render(
         <RouterProvider router={router} />
       </Suspense>
     </RecoilRoot>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

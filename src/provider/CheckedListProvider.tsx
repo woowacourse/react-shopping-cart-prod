@@ -17,9 +17,7 @@ const CheckedCartListProvider = ({ children }: React.PropsWithChildren) => {
   const value = useCheckedCartList();
 
   return (
-    <CheckedCartListContext.Provider value={value}>
-      {children}
-    </CheckedCartListContext.Provider>
+    <CheckedCartListContext.Provider value={value}>{children}</CheckedCartListContext.Provider>
   );
 };
 

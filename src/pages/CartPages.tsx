@@ -1,12 +1,12 @@
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
 import Header from '../components/common/Header/Header';
 import CartList from '../components/cart/CartList/CartList';
 import PaymentAmount from '../components/cart/PaymentAmount/PaymentAmount';
 import CheckedCartListProvider from '../provider/CheckedListProvider';
 import useCartService from '../hooks/useCartService';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
 import cartLoadingState from '../globalState/atoms/cartLoadingState';
 import serverNameState from '../globalState/atoms/serverName';
 import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
@@ -30,26 +30,25 @@ const CartPage = () => {
       <Header />
       <Layout>
         <Title>장바구니</Title>
-        {isCartLoading ? (
+        {isCartLoading || cartList.length ? (
           <EmptyCartView>
-            <LoadingSpinner color="#06c09e" />
+            {isCartLoading ? (
+              <LoadingSpinner color="#06c09e" />
+            ) : (
+              <>
+                장바구니에 상품이 존재하지 않습니다.
+                <LinkButton onClick={handleLinkButtonClick}>상품 담으러 가기</LinkButton>
+              </>
+            )}
           </EmptyCartView>
-        ) : cartList.length ? (
+        ) : (
           <Contents>
             <>
               <CartList />
               <PaymentAmount />
             </>
           </Contents>
-        ) : (
-          <EmptyCartView>
-            장바구니에 상품이 존재하지 않습니다.
-            <LinkButton onClick={handleLinkButtonClick}>
-              상품 담으러 가기
-            </LinkButton>
-          </EmptyCartView>
         )}
-        {/* </Suspense> */}
       </Layout>
     </CheckedCartListProvider>
   );

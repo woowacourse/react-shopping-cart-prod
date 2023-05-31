@@ -18,13 +18,12 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   const { imageUrl, name, price } = cartItem.product;
 
   const { updateCartItemQuantity, deleteCartItem } = useCartService();
-  const { isChecked, addCheckedItem, deleteCheckedItem } =
-    useCheckedCartListValue();
+  const { isChecked, addCheckedItem, deleteCheckedItem } = useCheckedCartListValue();
   const [count, setCount] = useState(quantity);
 
-  const updateQuantity = (quantity: number) => {
-    setCount(quantity);
-    updateCartItemQuantity(id)(quantity);
+  const updateQuantity = (value: number) => {
+    setCount(value);
+    updateCartItemQuantity(id)(value);
   };
 
   const handleRemoveButtonClick = () => {

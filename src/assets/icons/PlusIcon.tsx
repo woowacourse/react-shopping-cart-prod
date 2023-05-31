@@ -10,7 +10,7 @@ const PlusIcon = () => {
       <path
         d="M22 15.333h-5.333V10h-1.334v5.333H10v1.334h5.333V22h1.334v-5.333H22v-1.334z"
         fill="current"
-      ></path>
+      />
     </svg>
   );
 };

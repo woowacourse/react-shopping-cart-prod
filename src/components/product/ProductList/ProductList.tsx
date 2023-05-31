@@ -1,11 +1,11 @@
 import { styled } from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
 import ProductItem from '../ProductItem/ProductItem';
 import useFetch from '../../../hooks/api/useFetch';
 import { Product } from '../../../types/product';
-import { useRecoilValue } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
-import { useEffect } from 'react';
 import useCartService from '../../../hooks/useCartService';
 
 const ProductList = () => {
@@ -28,9 +28,9 @@ const ProductList = () => {
   return (
     <section>
       <ProductListContainer>
-        {productList?.map((product) => (
-          <li key={product.id}>
-            <ProductItem {...product} />
+        {productList?.map(({ id, name, price, imageUrl }) => (
+          <li key={id}>
+            <ProductItem id={id} name={name} price={price} imageUrl={imageUrl} />
           </li>
         ))}
       </ProductListContainer>

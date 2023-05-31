@@ -46,12 +46,7 @@ const Counter = ({
       <CounterButton onClick={handleDecreaseButtonClick}>
         <MinusIcon />
       </CounterButton>
-      <Input
-        type="text"
-        value={count}
-        onChange={handleInputChange}
-        onBlur={handleInputBlur}
-      />
+      <Input type="text" value={count} onChange={handleInputChange} onBlur={handleInputBlur} />
       <CounterButton onClick={handleIncreaseButtonClick}>
         <PlusIcon />
       </CounterButton>

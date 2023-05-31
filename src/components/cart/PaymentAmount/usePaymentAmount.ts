@@ -7,10 +7,7 @@ const usePaymentAmount = () => {
 
   const paymentAmount = cartList
     .filter((cartItem) => checkedCartList.includes(cartItem.id))
-    .reduce(
-      (acc, cartItem) => acc + cartItem.product.price * cartItem.quantity,
-      0,
-    );
+    .reduce((acc, cartItem) => acc + cartItem.product.price * cartItem.quantity, 0);
 
   const deliveryFee = checkedCartList.length ? 3000 : 0;
 

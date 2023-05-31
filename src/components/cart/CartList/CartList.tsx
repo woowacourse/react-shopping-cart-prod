@@ -5,12 +5,8 @@ import useCartService from '../../../hooks/useCartService';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
 
 const CartList = () => {
-  const {
-    checkedCartList,
-    addAllCheckedItem,
-    deleteAllCheckedItem,
-    isAllChecked,
-  } = useCheckedCartListValue();
+  const { checkedCartList, addAllCheckedItem, deleteAllCheckedItem, isAllChecked } =
+    useCheckedCartListValue();
   const { cartList, deleteCartItem } = useCartService();
 
   const handleAllCheckBoxChange = () => {
@@ -23,16 +19,9 @@ const CartList = () => {
   };
 
   const handleDeleteCheckedListButtonClick = () => {
-    if (
-      !window.confirm(
-        `${checkedCartList.length}개의 선택한 품목들을 삭제하시겠습니까?`,
-      )
-    )
-      return;
+    if (!window.confirm(`${checkedCartList.length}개의 선택한 품목들을 삭제하시겠습니까?`)) return;
 
-    checkedCartList.forEach((checkedCartItem) =>
-      deleteCartItem(checkedCartItem),
-    );
+    checkedCartList.forEach((checkedCartItem) => deleteCartItem(checkedCartItem));
     deleteAllCheckedItem();
   };
 

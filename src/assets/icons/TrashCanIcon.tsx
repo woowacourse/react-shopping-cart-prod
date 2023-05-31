@@ -10,12 +10,7 @@ const TrashCanIcon = () => {
     >
       <path d="M0 0H24V24H0V0Z" fill="url(#pattern0)" />
       <defs>
-        <pattern
-          id="pattern0"
-          patternContentUnits="objectBoundingBox"
-          width="1"
-          height="1"
-        >
+        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
           <use href="#image0_2_205" transform="scale(0.025)" />
         </pattern>
         <image

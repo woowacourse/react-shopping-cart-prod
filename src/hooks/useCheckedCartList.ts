@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import useCartService from './useCartService';
 import { useRecoilValue } from 'recoil';
+import useCartService from './useCartService';
 import cartLoadingState from '../globalState/atoms/cartLoadingState';
 
 const useCheckedCartList = () => {
@@ -36,9 +36,9 @@ const useCheckedCartList = () => {
 
   useEffect(() => {
     if (!isCartLoading) {
-      const cartIdList = cartList.map((cartItem) => cartItem.id);
+      const checkedCartItemIds = cartList.map((cartItem) => cartItem.id);
 
-      setCheckedCartList(cartIdList);
+      setCheckedCartList(checkedCartItemIds);
     }
   }, [isCartLoading]);
 
