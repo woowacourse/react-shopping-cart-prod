@@ -3,11 +3,15 @@ import CouponItem from '../../box/CouponItem/CouponItem';
 import useCouponFetch from '../../../hooks/useCouponFetch';
 import Button from '../../common/Button/Button';
 import { useConfirmModal } from '../../../hooks/useConfirmModal';
+import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 
 const CouponList = () => {
-  const { allCoupon, addCouponAPI } = useCouponFetch();
+  const { allCoupon, addCouponAPI, isFetching } = useCouponFetch();
   const { openModal } = useConfirmModal();
 
+  if (isFetching) {
+    return <LoadingSpinner />;
+  }
   const addCoupon = async (couponId: number) => {
     addCouponAPI({ id: couponId });
   };

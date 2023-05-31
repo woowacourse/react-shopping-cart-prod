@@ -2,17 +2,19 @@ import { useMutation, useQuery } from 'react-query';
 import { CouponType, IssuableCouponType } from '../types/types';
 
 const useCouponFetch = () => {
-  const fetchAllCouponData = async () => {
-    const res = await fetch(`/coupons`, {
-      method: 'GET',
-    });
-    const data = await res.json();
-    return data;
-  };
-
-  const { data: allCoupon, refetch: IssuableRefetch } = useQuery<IssuableCouponType[]>(
+  const {
+    data: allCoupon,
+    refetch: IssuableRefetch,
+    isFetching,
+  } = useQuery<IssuableCouponType[]>(
     'allCoupon',
-    fetchAllCouponData,
+    async () => {
+      const res = await fetch(`/coupons`, {
+        method: 'GET',
+      });
+      const data = await res.json();
+      return data;
+    },
     {
       onError: (e) => {
         console.log(e);
@@ -38,7 +40,7 @@ const useCouponFetch = () => {
     },
   );
 
-  const fetchAddCoupon = useMutation(
+  const fetchAddCouponData = useMutation(
     async ({ body }: { body?: object }) => {
       const res = await fetch(`/users/coupons`, {
         method: 'POST',
@@ -61,9 +63,9 @@ const useCouponFetch = () => {
   );
 
   const addCouponAPI = (body?: object) => {
-    fetchAddCoupon.mutate({ body });
+    fetchAddCouponData.mutate({ body });
   };
-  return { allCoupon, addCouponAPI, userCoupon };
+  return { allCoupon, isFetching, addCouponAPI, userCoupon };
 };
 
 export default useCouponFetch;

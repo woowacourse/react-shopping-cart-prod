@@ -15,9 +15,10 @@ import { useCouponModal } from '../../hooks/useCouponModal';
 import useCouponFetch from '../../hooks/useCouponFetch';
 import { useEffect } from 'react';
 import { PERCENTAGE } from '../../abstract/constants';
+import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
 
 const CartPage = () => {
-  const { cartData } = useCartFetch();
+  const { cartData, isFetching } = useCartFetch();
   const { userCoupon } = useCouponFetch();
   const { openModal } = useCouponModal();
   const checkCartList = useRecoilValue(checkCartListState);
@@ -51,34 +52,38 @@ const CartPage = () => {
       title="장바구니 미션 - 장바구니페이지"
       description="우아한 테크코스 레벨 2 장바구니 미션의 장바구니페이지입니다."
     >
-      <CartPageWrapper>
-        <CartPageHead>
-          <Text size="extraLarge" weight="bold">
-            장바구니
-          </Text>
-        </CartPageHead>
-        <CartPageContent>
-          <CartListWrapper>
-            <CartList />
-          </CartListWrapper>
-          <PriceBox>
-            <Button
-              primary
-              size="small"
-              text="쿠폰보기"
-              onClick={() => {
-                openModal({});
-              }}
-            />
-            <TotalPriceBox
-              totalProductPrice={calcTotalPrice()}
-              shippingFee={checkCartList.length > 0 ? 3000 : 0}
-              isValid={checkCartList.length > 0}
-              coupon={coupon.id > 0 ? coupon : undefined}
-            />
-          </PriceBox>
-        </CartPageContent>
-      </CartPageWrapper>
+      {isFetching ? (
+        <LoadingSpinner />
+      ) : (
+        <CartPageWrapper>
+          <CartPageHead>
+            <Text size="extraLarge" weight="bold">
+              장바구니
+            </Text>
+          </CartPageHead>
+          <CartPageContent>
+            <CartListWrapper>
+              <CartList />
+            </CartListWrapper>
+            <PriceBox>
+              <Button
+                primary
+                size="small"
+                text="쿠폰보기"
+                onClick={() => {
+                  openModal({});
+                }}
+              />
+              <TotalPriceBox
+                totalProductPrice={calcTotalPrice()}
+                shippingFee={checkCartList.length > 0 ? 3000 : 0}
+                isValid={checkCartList.length > 0}
+                coupon={coupon.id > 0 ? coupon : undefined}
+              />
+            </PriceBox>
+          </CartPageContent>
+        </CartPageWrapper>
+      )}
       <ConfirmModal>
         <DeleteCartItemModal />
       </ConfirmModal>

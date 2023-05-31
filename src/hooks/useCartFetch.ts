@@ -8,24 +8,30 @@ export const useCartFetch = () => {
   const serverURL = useRecoilValue(serverState);
   const setCheckCartList = useSetRecoilState(checkCartListState);
 
-  const fetchCartData = async () => {
-    const res = await fetch(`${serverURL}/cart-items`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    });
-    const data = await res.json();
-    return data;
-  };
-
-  const { data: cartData, refetch } = useQuery<CartItemType[]>('cart', fetchCartData, {
-    onError: (e) => {
-      console.log(e);
+  const {
+    data: cartData,
+    refetch,
+    isFetching,
+  } = useQuery<CartItemType[]>(
+    'cart',
+    async () => {
+      const res = await fetch(`${serverURL}/cart-items`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Basic ${base64}`,
+        },
+      });
+      const data = await res.json();
+      return data;
     },
-  });
+    {
+      onError: (e) => {
+        console.log(e);
+      },
+    },
+  );
 
-  const mutateCartData = useMutation(
+  const fetchCartData = useMutation(
     async ({
       method,
       cartId,
@@ -50,7 +56,7 @@ export const useCartFetch = () => {
     },
   );
 
-  const fetchAddCartItem = useMutation(
+  const fetchAddCartData = useMutation(
     async ({ body }: { body?: object }) => {
       const res = await fetch(`${serverURL}/cart-items`, {
         method: 'POST',
@@ -77,16 +83,17 @@ export const useCartFetch = () => {
   );
 
   const addCartItemAPI = (body?: object) => {
-    fetchAddCartItem.mutate({ body });
+    fetchAddCartData.mutate({ body });
   };
 
   const changeCartQuantityAPI = (cartId: number, body?: object) =>
-    mutateCartData.mutate({ method: 'PATCH', cartId, body });
+    fetchCartData.mutate({ method: 'PATCH', cartId, body });
 
-  const deleteCartItemAPI = (cartId: number) => mutateCartData.mutate({ method: 'DELETE', cartId });
+  const deleteCartItemAPI = (cartId: number) => fetchCartData.mutate({ method: 'DELETE', cartId });
 
   return {
     cartData,
+    isFetching,
     addCartItemAPI,
     changeCartQuantityAPI,
     deleteCartItemAPI,

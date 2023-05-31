@@ -10,6 +10,7 @@ import { checkCartListState } from '../../../service/atom';
 
 const CartList = () => {
   const { cartData, deleteCartItemAPI } = useCartFetch();
+
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
 
   const { openModal } = useConfirmModal();
