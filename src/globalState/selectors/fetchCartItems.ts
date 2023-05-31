@@ -10,7 +10,6 @@ const fetchCartItems = selector<CartProduct[]>({
   get: async ({ get }) => {
     const serverName = get(serverNameState);
     const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
-    console.log(serverName);
 
     const response = await fetch(cartItemsUrl, {
       headers: { Authorization: `Basic ${USER_AUTH_TOKEN}` },
@@ -19,7 +18,6 @@ const fetchCartItems = selector<CartProduct[]>({
     if (response.status !== 200) throw new Error('서버에 장애가 발생했습니다.');
 
     const cartItemList = await response.json();
-    console.log(cartItemList);
     return cartItemList;
   },
 });
