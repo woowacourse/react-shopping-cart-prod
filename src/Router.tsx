@@ -4,6 +4,7 @@ import ROUTE_PATH from 'constants/routePath';
 import Layout from 'components/Layout/Layout';
 import ShoppingCartPage from 'pages/ShoppingCartPage';
 import { Suspense } from 'react';
+import OrderPage from 'pages/OrderPage';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTE_PATH.ORDER,
-        element: <div>찐 주문하는 페이지</div>,
+        element: <OrderPage />,
       },
     ],
   },
