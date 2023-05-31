@@ -3,13 +3,15 @@ import { styled } from 'styled-components';
 import { Button } from '../../common/Button/Button.styles';
 import { Text } from '../../common/Text/Text.styles';
 
+export const Container = styled.div``;
+
 export const OrderIdWrapper = styled.div`
   padding-bottom: 16px;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray2};
 `;
 
-export const OrderId = styled(Text)`
-  font-size: 18px;
+export const OrderId = styled(Text).attrs({ size: 'large' })`
+  font-weight: 600;
 `;
 
 export const OrderContainer = styled.div`
@@ -27,6 +29,7 @@ export const OrderedItemContainer = styled.li`
 
 export const ImageAndInformationContainer = styled.div`
   display: flex;
+  align-items: center;
 `;
 
 export const OrderedItemImageWrapper = styled.div`
@@ -54,6 +57,7 @@ export const OrderedItemName = styled(Text)`
   overflow: hidden;
   white-space: nowrap;
   word-break: break-all;
+  font-weight: 600;
 
   &.skeleton::after {
     font-size: 0;
@@ -72,6 +76,7 @@ export const PriceAndQuantityContainer = styled.div`
 export const OrderedItemPrice = styled(Text)`
   margin-right: 12px;
   letter-spacing: -0.2px;
+  font-weight: 600;
 
   &.skeleton::after {
     font-size: 0;
@@ -89,6 +94,7 @@ export const OrderedItemPrice = styled(Text)`
 export const OrderedItemQuantity = styled(Text)`
   font-size: 14px;
   color: ${({ theme }) => theme.color.gray5};
+  font-weight: 600;
 `;
 
 export const AddItemToCartButton = styled(Button)`

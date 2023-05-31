@@ -8,7 +8,7 @@ export const OrderedItem = ({ ...information }: OrderedItemProps) => {
   const { id, orderedItems } = information;
 
   return (
-    <>
+    <S.Container>
       <S.OrderIdWrapper>
         <S.OrderId>주문번호 {id}</S.OrderId>
       </S.OrderIdWrapper>
@@ -35,6 +35,6 @@ export const OrderedItem = ({ ...information }: OrderedItemProps) => {
           </S.OrderedItemContainer>
         ))}
       </S.OrderContainer>
-    </>
+    </S.Container>
   );
 };
