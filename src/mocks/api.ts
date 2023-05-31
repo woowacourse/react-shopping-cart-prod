@@ -4,6 +4,7 @@ import { MockCart } from './fixtures/cart';
 import { getUUID } from '../utils/uuid';
 import { getCart, getOrders, setCart, setOrders } from '../utils/localStorage';
 import { CartItem } from '../types/cart';
+import { coupons } from './fixtures/coupons';
 
 const base64 = 'Basic YUBhLmNvbToxMjM0';
 
@@ -169,4 +170,8 @@ export const getOrderDetail = rest.get('/orders/:orderId', (req, res, ctx) => {
   }
 
   return res(ctx.status(200), ctx.json(targetOrder));
+});
+
+export const getCoupons = rest.get('/coupons', (req, res, ctx) => {
+  return res(ctx.status(200), ctx.json(coupons));
 });
