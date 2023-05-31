@@ -5,6 +5,7 @@ import { useFetch } from '@hooks/useFetch';
 import { MOCK_PRODUCT_LIST } from '@mocks/handlers';
 import { SERVER_NAME, getProductPath } from '@constants/serverUrlConstants';
 import { CustomError } from '@type/error';
+import { ProductItemType } from '@type/productType';
 import { server } from '../setupTests';
 
 fetchMock.enableMocks();
@@ -22,8 +23,7 @@ describe('useFetch가 올바르게 작동하는 지 테스트', () => {
         return res(
           ctx.set('Content-Type', 'application/json'),
           ctx.status(200),
-          ctx.json(MOCK_PRODUCT_LIST),
-          ctx.delay(1200)
+          ctx.json(MOCK_PRODUCT_LIST)
         );
       })
     );
@@ -37,16 +37,15 @@ describe('useFetch가 올바르게 작동하는 지 테스트', () => {
   });
 
   test('데이터가 불러와진 후 data가 올바른 객체인지 테스트', async () => {
-    const { result } = renderHook(() => useFetch(fetchUrl));
+    const { result } = renderHook(() => useFetch<ProductItemType[]>(fetchUrl));
 
-    await waitFor(
-      () => {
-        const { data } = result.current;
+    await waitFor(async () => {
+      const { fetchData } = result.current;
 
-        expect(data).toEqual(MOCK_PRODUCT_LIST);
-      },
-      { timeout: 1500 }
-    );
+      const fetchedData = await fetchData();
+
+      expect(fetchedData).toEqual(MOCK_PRODUCT_LIST);
+    });
   });
 
   test('데이터가 불러와지기 전 로딩중이 false 인지 테스트', () => {
@@ -60,14 +59,13 @@ describe('useFetch가 올바르게 작동하는 지 테스트', () => {
   test('데이터가 불러와지면 로딩중이 true가 되는 지 테스트', async () => {
     const { result } = renderHook(() => useFetch(fetchUrl));
 
-    await waitFor(
-      () => {
-        const { isLoading } = result.current;
+    await waitFor(async () => {
+      const { isLoading, fetchData } = result.current;
 
-        expect(isLoading).toBe(false);
-      },
-      { timeout: 1500 }
-    );
+      await fetchData();
+
+      expect(isLoading).toBe(false);
+    });
   });
 
   test('데이터를 불러오기 전 에러가 false인지 테스트', () => {
@@ -80,25 +78,21 @@ describe('useFetch가 올바르게 작동하는 지 테스트', () => {
   test('fetch를 하던 중 에러가 없다면 에러가 false인지 테스트', async () => {
     const { result } = renderHook(() => useFetch(fetchUrl));
 
-    await waitFor(
-      () => {
-        const { error } = result.current;
+    await waitFor(() => {
+      const { error } = result.current;
 
-        expect(error).toBeNull();
-      },
-      { timeout: 1500 }
-    );
+      expect(error).toBeNull();
+    });
   });
 
   test('fetch를 하던 중 에러가 있다면 에러가 작동하는 지  테스트', async () => {
     const { result } = renderHook(() => useFetch('api/error'));
-    await waitFor(
-      async () => {
-        const { error } = result.current;
+    await waitFor(async () => {
+      const { error, fetchData } = result.current;
 
-        expect((error as CustomError).message as string).toBe('Error: HTTP 오류! Status: 500');
-      },
-      { timeout: 1500 }
-    );
+      await fetchData();
+
+      expect((error as CustomError).message as string).toBe('Error: HTTP 오류! Status: 500');
+    });
   });
 });

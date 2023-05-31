@@ -1,37 +1,30 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { fetchGet } from '@utils/fetchUtils';
 
 export const useFetch = <T>(
   url: string,
   options?: RequestInit
 ): {
-  data: T | null;
   isLoading: boolean;
   error: unknown | null;
-  refreshData: () => void;
+  fetchData: () => Promise<T | null>;
 } => {
-  const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<unknown | null>(null);
 
-  const refreshData = () => {
-    fetchData();
-  };
-
-  const fetchData = useCallback(async () => {
+  const fetchData = async () => {
     try {
       const data = await fetchGet<T>(url, options);
-      setData(data);
-      setIsLoading(false);
+
+      return data;
     } catch (error) {
       setError(error);
       setIsLoading(true);
+      return null;
+    } finally {
+      setIsLoading(false);
     }
-  }, [url, options]);
+  };
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  return { data, isLoading, error, refreshData };
+  return { isLoading, error, fetchData };
 };
