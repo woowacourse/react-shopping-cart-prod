@@ -1,14 +1,14 @@
 import Page from "components/common/Page";
 import ItemList from "components/ItemList";
-import LoadingSpinner from "components/common/LoadingSpinner";
 import AsyncBoundary from "components/common/AsyncBoundary";
 import ErrorInfo from "components/common/ErrorInfo";
+import ItemListSkeleton from "components/skeleton/ItemListSkeleton";
 
 const Main = () => {
   return (
     <Page>
       <AsyncBoundary
-        SuspenseFallback={<LoadingSpinner />}
+        SuspenseFallback={<ItemListSkeleton />}
         ErrorFallback={(FallbackProps) => (
           <ErrorInfo error={FallbackProps.error} />
         )}

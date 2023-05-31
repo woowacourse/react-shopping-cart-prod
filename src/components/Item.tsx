@@ -81,6 +81,7 @@ const ImageBox = styled.div`
     height: 100%;
     object-fit: cover;
     border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
   }
 
   &:hover {
