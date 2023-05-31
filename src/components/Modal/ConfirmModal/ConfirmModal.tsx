@@ -1,12 +1,12 @@
 import { PropsWithChildren } from 'react';
 import styled from '@emotion/styled';
 import ReactDOM from 'react-dom';
-import { useCouponModal } from '../../hooks/useCouponModal';
+import { useConfirmModal } from '../../../hooks/useConfirmModal';
 
 type ModalProps = PropsWithChildren;
 
-const CouponModal = ({ children }: ModalProps) => {
-  const { modalDataState, closeModal } = useCouponModal();
+const ConfirmModal = ({ children }: ModalProps) => {
+  const { modalDataState, closeModal } = useConfirmModal();
 
   return (
     <>
@@ -22,7 +22,7 @@ const CouponModal = ({ children }: ModalProps) => {
   );
 };
 
-export default CouponModal;
+export default ConfirmModal;
 
 const BottomSheetWrapper = styled.div`
   width: 100%;

@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { Text } from '../common/Text/Text';
-import { useCouponModal } from '../../hooks/useCouponModal';
-import UserCouponItem from '../box/UserCouponItem/UserCouponItem';
-import { CouponType } from '../../types/types';
-import { couponState } from '../../service/atom';
+import { Text } from '../../common/Text/Text';
+import { useCouponModal } from '../../../hooks/useCouponModal';
+import UserCouponItem from '../../box/UserCouponItem/UserCouponItem';
+import { CouponType } from '../../../types/types';
+import { couponState } from '../../../service/atom';
 import { useRecoilState } from 'recoil';
 import { useState } from 'react';
 

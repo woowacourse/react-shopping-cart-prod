@@ -11,12 +11,12 @@ import TotalPriceBox from '../box/TotalPriceBox/TotalPriceBox';
 import { Text } from '../common/Text/Text';
 import CartList from '../list/CartList/CartList';
 import PageTemplate from '../templates/PageTemplate';
-import ConfirmModal from '../ConfirmModal/ConfirmModal';
-import DeleteCartItemModal from '../ConfirmModal/DeleteCartItemModal';
+import ConfirmModal from '../Modal/ConfirmModal/ConfirmModal';
+import DeleteCartItemModal from '../Modal/ConfirmModal/DeleteCartItemModal';
 import { checkCartListState, couponState } from '../../service/atom';
 import Button from '../common/Button/Button';
-import CouponModal from '../CouponModal/CouponModal';
-import ApplyCouponModal from '../CouponModal/ApplyCouponModal';
+import CouponModal from '../Modal/CouponModal/CouponModal';
+import ApplyCouponModal from '../Modal/CouponModal/ApplyCouponModal';
 import { PERCENTAGE } from '../../abstract/constants';
 import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
 

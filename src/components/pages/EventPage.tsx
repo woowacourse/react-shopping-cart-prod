@@ -1,5 +1,5 @@
-import ConfirmModal from '../ConfirmModal/ConfirmModal';
-import AddCouponModal from '../ConfirmModal/AddCouponModal';
+import ConfirmModal from '../Modal/ConfirmModal/ConfirmModal';
+import AddCouponModal from '../Modal/ConfirmModal/AddCouponModal';
 import { Text } from '../common/Text/Text';
 import CouponList from '../list/CouponList/CouponList';
 import PageTemplate from '../templates/PageTemplate';
