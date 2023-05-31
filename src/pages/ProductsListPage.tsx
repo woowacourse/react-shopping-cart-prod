@@ -1,10 +1,9 @@
+import { Suspense } from 'react';
 import styled from 'styled-components';
 import { ErrorBoundary } from 'react-error-boundary';
-
 import Message from '../components/Common/Message';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import ProductList from '../components/Product/ProductList';
-import { Suspense } from 'react';
 
 const ProductsListPage = () => {
   return (
