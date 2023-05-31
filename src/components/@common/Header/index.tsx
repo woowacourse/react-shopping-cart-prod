@@ -34,6 +34,9 @@ const Header = () => {
             <Svg type="cart-icon" width={25} height={22} />
           </S.CartRouteButton>
           <S.CartCounter>{cartCount}</S.CartCounter>
+          <S.LinkToOrderList to={ROUTES.ORDERED_LIST}>
+            주문 목록
+          </S.LinkToOrderList>
         </S.HeaderWrapper>
       </S.HeaderContentContainer>
     </S.HeaderContainer>
