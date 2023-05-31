@@ -5,8 +5,7 @@ import GlobalStyles from '../src/styles/GlobalStyles';
 import { RecoilRoot } from 'recoil';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { BrowserRouter } from 'react-router-dom';
-import { cart } from '../src/mocks/handlers/cart';
-import { product } from '../src/mocks/handlers/product';
+import handler from '../src/mocks/handlers';
 
 const customViewport = {
   Default: {
@@ -56,7 +55,7 @@ const preview: Preview = {
       defaultViewport: 'Default',
     },
     msw: {
-      handlers: [...cart, ...product],
+      handlers: [...handler],
     },
   },
   decorators: [
