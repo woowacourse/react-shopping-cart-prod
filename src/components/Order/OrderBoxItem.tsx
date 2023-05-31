@@ -1,12 +1,14 @@
-import { ReactElement } from 'react';
+import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
 
 interface OrderBoxItemProps {
   type: 'orderList' | 'payment';
-  children: ReactElement;
 }
 
-const OrderBoxItem = ({ type, children }: OrderBoxItemProps) => {
+const OrderBoxItem = ({
+  type,
+  children,
+}: PropsWithChildren<OrderBoxItemProps>) => {
   return (
     <StyledOrderBoxItem type={type}>
       {type === 'orderList' ? (
