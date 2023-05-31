@@ -10,6 +10,7 @@ import useModal from 'src/hooks/useModal';
 import Modal from 'src/components/Common/Modal';
 import usePurchase from 'src/hooks/usePurchase';
 import { MESSAGE, ROUTE_PATH } from 'src/constants';
+import ModalNotification from 'src/components/Common/ModalNotification';
 import styles from './index.module.scss';
 
 function Cart() {
@@ -47,17 +48,11 @@ function Cart() {
       <ContentLayout title="장바구니">{ResultComponent}</ContentLayout>;
       {isFinalModalOpen && (
         <Modal closeEvent={finalCloseModal} direction="center">
-          <div>
-            <div>{MESSAGE.PAYMENTS_SUCCESSFUL}</div>
-            <div>
-              <button type="button" onClick={() => navigate(ROUTE_PATH.DEFAULT)}>
-                홈으로 돌아가기
-              </button>
-              <button type="button" onClick={() => navigate(`${ROUTE_PATH.ORDER_DETAIL(orderId)}`)}>
-                주문 내역 확인하기
-              </button>
-            </div>
-          </div>
+          <ModalNotification
+            message={{ title: MESSAGE.PAYMENTS_SUCCESSFUL, cancel: '홈으로 돌아가기', assign: '주문내역 확인하기' }}
+            cancelCallback={() => navigate(ROUTE_PATH.DEFAULT)}
+            assignCallback={() => navigate(`${ROUTE_PATH.ORDER_DETAIL(orderId)}`)}
+          />
         </Modal>
       )}
     </>

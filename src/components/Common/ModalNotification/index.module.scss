@@ -1,0 +1,44 @@
+.notification-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  width: 360px;
+  height: 160px;
+}
+
+.message-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60%;
+
+  font-size: 24px;
+  line-height: 24px;
+  font-weight: 700;
+
+  padding: 16px;
+
+  border-bottom: 1px solid #aaaaaa;
+}
+
+.button-container {
+  height: 40%;
+
+  & > button:last-child {
+    border-left: 1px solid #aaaaaa;
+  }
+}
+
+.button {
+  width: 50%;
+  height: 100%;
+
+  font-size: 20px;
+  line-height: 20px;
+
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
