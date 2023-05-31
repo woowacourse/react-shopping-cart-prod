@@ -1,5 +1,10 @@
 import { atom, selector } from "recoil";
-import { LocalProductType, ProductType, ToastType } from "../types/domain";
+import {
+  LocalProductType,
+  ProductType,
+  ToastType,
+  UserType,
+} from "../types/domain";
 import { fetchProducts } from "../api";
 import { makeLocalProducts, makeProducts } from "../utils/domain";
 import { getLocalStorage } from "../utils";
@@ -49,4 +54,17 @@ export const loginState = atom<boolean>({
   default:
     getLocalStorage(KEY_LOCALSTORAGE_LOGIN_TOKEN, DEFAULT_VALUE_LOGIN_TOKEN) &&
     true,
+});
+
+export const userState = atom<UserType>({
+  key: "userState",
+  default: { id: 1, nickname: "라잇" },
+  // default: selector<UserType>({
+  //   key: "userState/default",
+  //   get: async () => {
+  //     const response = await fetchUser();
+  //     if (!response.ok) throw new Error(response.status.toString());
+  //     return await response.json();
+  //   },
+  // }),
 });

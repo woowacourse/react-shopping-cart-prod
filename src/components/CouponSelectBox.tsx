@@ -1,17 +1,7 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { ArrowDownIcon } from "../assets";
-import { DELIVERY_FEE } from "../constants";
-import { totalPriceSelector } from "../recoil/selector";
-
-interface CouponType {
-  id: number;
-  name: string;
-  minPrice: number;
-  isAvailable: boolean;
-  discountPrice: number;
-}
 
 // {
 //   id,
@@ -23,8 +13,6 @@ interface CouponType {
 
 export const CouponSelectBox = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const totalPrice = useRecoilValue(totalPriceSelector);
-  const deliveryFee = totalPrice === 0 ? 0 : DELIVERY_FEE;
 
   return (
     <Wrapper>
@@ -35,18 +23,18 @@ export const CouponSelectBox = () => {
       {isOpen && (
         <>
           <CouponContainer>
-            <h1>반짝할인 10% 할인 쿠폰</h1>
-            <p>10,000원 이상 주문 시</p>
+            <NameBox>반짝할인 10% 할인 쿠폰</NameBox>
+            <MinPriceBox>10,000원 이상 주문 시</MinPriceBox>
             <DiscountPriceBox>-600,000원</DiscountPriceBox>
           </CouponContainer>
           <CouponContainer>
-            <h1>반짝할인 30% 할인 쿠폰</h1>
-            <p>30,000원 이상 주문 시</p>
+            <NameBox>반짝할인 30% 할인 쿠폰</NameBox>
+            <MinPriceBox>30,000원 이상 주문 시</MinPriceBox>
             <DiscountPriceBox>-3,000,000원</DiscountPriceBox>
           </CouponContainer>
           <CouponContainer>
-            <h1>배송비 무료 쿠폰</h1>
-            <p>50,000원 이상 주문 시</p>
+            <NameBox>배송비 무료 쿠폰</NameBox>
+            <MinPriceBox>50,000원 이상 주문 시</MinPriceBox>
             <DiscountPriceBox>-3,000원</DiscountPriceBox>
           </CouponContainer>
         </>
@@ -96,14 +84,12 @@ const CouponContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 15px 20px;
+  padding: 20px;
   width: 100%;
-  height: 75px;
+  height: 85px;
 
   position: relative;
-
   border-bottom: 1px solid #dddddd;
-  transition: all 0.5s ease;
 
   &:hover {
     opacity: 60%;
@@ -116,18 +102,6 @@ const CouponContainer = styled.div`
   // disabled 된 쿠폰 css
   /* background: #dddddd;
   color: var(--gray); */
-
-  & > h1 {
-    font-weight: 600;
-    font-size: 19px;
-    color: var(--dark-gray);
-  }
-
-  & > p {
-    font-weight: 500;
-    font-size: 14px;
-    color: var(--gray);
-  }
 `;
 
 const DiscountPriceBox = styled.div`
@@ -137,4 +111,17 @@ const DiscountPriceBox = styled.div`
 
   font-size: 20px;
   font-weight: 500;
+  color: var(--dark-gray);
+`;
+
+const NameBox = styled.p`
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--dark-gray);
+`;
+
+const MinPriceBox = styled.p`
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--gray);
 `;

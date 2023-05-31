@@ -24,6 +24,11 @@ export interface CouponType {
   discountPrice: number;
 }
 
+export interface UserType {
+  id: number;
+  nickname: string;
+}
+
 // common
 
 export interface ToastType {
