@@ -4,10 +4,10 @@ const MEMBER_RANK = ['일반', '실버', '골드', '플래티넘', '다이아몬
 
 const MEMBER_RANK_PURCHASE_CONDITION: Record<MemberRank, number> = {
   일반: 0,
-  실버: 10_000,
-  골드: 20_000,
-  플래티넘: 30_000,
-  다이아몬드: 50_000,
+  실버: 10000,
+  골드: 20000,
+  플래티넘: 30000,
+  다이아몬드: 50000,
 } as const;
 
 const MEMBER_DISCOUNT_RATE: Record<MemberRank, number> = {
