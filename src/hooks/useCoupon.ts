@@ -1,17 +1,17 @@
 import { useRecoilState } from "recoil";
 import { couponListState } from "recoil/coupon";
 
-export const useCoupon = (cartItemId: number) => {
+export const useCoupon = (productId: number) => {
   const [couponList, setCouponList] = useRecoilState(couponListState);
 
   const changeCoupon = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newCouponList = couponList.map((coupon) =>
-      coupon.cartItemId === cartItemId ? { ...coupon, cartItemId: null } : coupon
+      coupon.productId === productId ? { ...coupon, productId: null } : coupon
     );
 
     setCouponList(
       newCouponList.map((coupon) =>
-        coupon.couponId === Number(e.target.value) ? { ...coupon, cartItemId: cartItemId } : coupon
+        coupon.couponId === Number(e.target.value) ? { ...coupon, productId: productId } : coupon
       )
     );
   };

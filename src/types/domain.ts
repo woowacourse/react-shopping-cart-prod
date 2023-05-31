@@ -6,5 +6,5 @@ export interface CartProduct extends CartItem {
 }
 
 export interface UsableCoupon extends Coupon {
-  cartItemId: number | null;
+  productId: number | null;
 }

@@ -7,12 +7,13 @@ import { CartProduct } from "types/domain";
 import { removeCartItem } from "api/cartItems";
 import { serverSelectState } from "recoil/server";
 import { useCoupon } from "hooks/useCoupon";
+import { getDisconutedPriceByProductId } from "recoil/coupon";
 
 const CartItem = (item: CartProduct) => {
   const setProduct = useSetRecoilState(cartSelector(item.product.id));
   const selectedServer = useRecoilValue(serverSelectState);
-
-  const { couponList, changeCoupon } = useCoupon(item.id);
+  const { couponList, changeCoupon } = useCoupon(item.product.id);
+  const discountedPrice = useRecoilValue(getDisconutedPriceByProductId(item.product.id));
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProduct({
@@ -38,14 +39,17 @@ const CartItem = (item: CartProduct) => {
       <img src={item.product.imageUrl} alt={`${item.product.name} 상품 이미지`} />
       <NameBox>{item.product.name}</NameBox>
       <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
-      <PriceBox>{(item.product.price * item.quantity).toLocaleString()}원</PriceBox>
+      <PriceContainer>
+        <p>{(item.product.price * item.quantity).toLocaleString()}원</p>
+        {discountedPrice && <p>{discountedPrice.toLocaleString()}원</p>}
+      </PriceContainer>
       <SelectBox onChange={changeCoupon}>
         <option>쿠폰을 선택해주세요</option>
         {couponList.map((coupon) => (
           <option
             key={coupon.couponId}
             value={coupon.couponId}
-            disabled={coupon.cartItemId !== null}
+            disabled={coupon.productId !== null}
           >
             {coupon.name}
           </option>
@@ -115,13 +119,19 @@ const ButtonBox = styled.button`
   cursor: pointer;
 `;
 
-const PriceBox = styled.p`
+const PriceContainer = styled.div`
   position: absolute;
   bottom: 0;
   right: 0;
 
   height: fit-content;
   font-size: 16px;
+
+  & > p:not(:last-child) {
+    text-decoration: line-through;
+    font-size: 15px;
+    color: gray;
+  }
 `;
 
 const SelectBox = styled.select`

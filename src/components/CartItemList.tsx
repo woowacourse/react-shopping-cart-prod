@@ -31,7 +31,7 @@ const CartItemList = () => {
       </SelectorContainer>
       <ListBox>
         {cartList.map((item) => (
-          <CartItem key={item.id} {...item} />
+          <CartItem key={item.product.id} {...item} />
         ))}
       </ListBox>
     </Wrapper>
