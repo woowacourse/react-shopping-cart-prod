@@ -9,7 +9,7 @@ interface Props {
 const OrderListItem = ({ order }: Props) => {
   const { goOrderDetail } = useNavigatePage();
 
-  const orderItems = order.order.map((orderItem: CartItem) => (
+  const orderItems = order.orderProducts.map((orderItem: CartItem) => (
     <S.ItemWrapper>
       <S.Image src={orderItem.product.imageUrl} alt={orderItem.product.name} />
       <S.ItemInfoWrapper>
@@ -24,8 +24,8 @@ const OrderListItem = ({ order }: Props) => {
   return (
     <S.ItemsWrapper>
       <S.OrderInfoWrapper>
-        <S.OrderNumber>{`주문번호 : ${order.id}`}</S.OrderNumber>
-        <S.DetailButton onClick={() => goOrderDetail(order.id)}>{`상세보기 >`} </S.DetailButton>
+        <S.OrderNumber>{`주문번호 : ${order.orderId}`}</S.OrderNumber>
+        <S.DetailButton onClick={() => goOrderDetail(order.orderId)}>{`상세보기 >`}</S.DetailButton>
       </S.OrderInfoWrapper>
       {orderItems}
     </S.ItemsWrapper>

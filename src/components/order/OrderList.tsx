@@ -1,14 +1,13 @@
-import { useRecoilState } from 'recoil';
-import { orderState } from '../../store/OrderState';
 import OrderListItem from './OrderListItem';
 import { styled } from 'styled-components';
-import { mockOrder } from '../../mocks/mockData';
+import { OrderItem } from '../../types';
 
-const OrderList = () => {
-  const [orders, setOrders] = useRecoilState(orderState);
+type Props = {
+  orders: OrderItem[];
+};
 
-  // TODO: 현재 mock 사용중
-  const orderList = mockOrder.map((order) => <OrderListItem order={order} />);
+const OrderList = ({ orders }: Props) => {
+  const orderList = orders.map((order) => <OrderListItem order={order} />);
 
   return (
     <>
