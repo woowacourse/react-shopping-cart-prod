@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { DiscountBox } from './DiscountBox';
-import PurchaseBox from './PurchaseBox';
+import { PurchaseBox } from './PurchaseBox';
 
 const userPoint = 1000;
 

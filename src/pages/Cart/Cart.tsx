@@ -1,4 +1,3 @@
-import CartList from '../../components/Cart/CartList/index.tsx';
 import {
   CartWrapper,
   EmptyCartButton,
@@ -13,6 +12,7 @@ import { cartCountSelector } from '../../recoil/cartAtoms.ts';
 import { useNavigate } from 'react-router-dom';
 import { FatBorder, PageTitle } from '../../style/style.ts';
 import PriceCounter from '../../components/Cart/PriceCounter/PriceCounter.tsx';
+import CartList from '../../components/Cart/CartList/CartList.tsx';
 
 function Cart() {
   const cartCount = useRecoilValue(cartCountSelector);

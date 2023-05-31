@@ -1,8 +1,8 @@
-import type { OrderItem } from '../../../types/types';
+import type { OrderItem as OrderItemType } from '../../../types/types';
 import * as S from './OrderItem.style';
 
 type OrderItemProps = {
-  item: OrderItem;
+  item: OrderItemType;
 };
 
 function OrderItem({ item }: OrderItemProps) {

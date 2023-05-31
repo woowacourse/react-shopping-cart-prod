@@ -1,6 +1,5 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ProductItem } from '../../../types/types.ts';
-import CartController from '../../@common/CartController/index.tsx';
 import { modalOpenState } from '../../../recoil/modalAtoms.tsx';
 import cartIcon from '../../../assets/cart.svg';
 import { quantityByProductIdSelector } from '../../../recoil/cartAtoms.ts';
@@ -15,6 +14,7 @@ import {
   ProductName,
   ProductPrice,
 } from './ProductModalContent.style.ts';
+import { CartController } from '../../@common/CartController';
 
 function ProductModalContent({ product }: { product: ProductItem }) {
   const { name, price, imageUrl } = product;

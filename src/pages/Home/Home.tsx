@@ -1,7 +1,7 @@
-import ProductList from '../../components/Product/ProductList/index.tsx';
 import { ErrorBoundary } from 'react-error-boundary';
 import { useRecoilValue } from 'recoil';
 import { serverState } from '../../recoil/serverAtom.ts';
+import ProductList from '../../components/Product/ProductList/ProductList.tsx';
 
 function Home() {
   const server = useRecoilValue(serverState);

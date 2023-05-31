@@ -7,7 +7,7 @@ import {
   checkedCartSelector,
   switchAllCartCheckboxSelector,
 } from '../../../recoil/cartAtoms';
-import CartItem from '../CartItem';
+import { CartItem } from '../CartItem';
 import {
   CartListCheckCounter,
   CartListController,

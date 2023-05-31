@@ -1,4 +1,4 @@
-import Modal from '../../@common/Modal';
+import { Modal } from '../../@common/Modal';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { modalContentState, modalOpenState } from '../../../recoil/modalAtoms';
 

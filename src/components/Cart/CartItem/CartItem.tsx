@@ -1,5 +1,4 @@
 import type { CartItem } from '../../../types/types.ts';
-import CartController from '../../@common/CartController/index.tsx';
 import {
   CartItemControllerWrapper,
   CartItemImage,
@@ -19,6 +18,7 @@ import { serverState } from '../../../recoil/serverAtom.ts';
 import { fetchCartList } from '../../../api/api.ts';
 import { fetchDeleteCart } from '../../../api/api.ts';
 import checkIcon from '../../../assets/check.svg';
+import { CartController } from '../../@common/CartController';
 
 interface CartItemProps {
   cart: CartItem;
