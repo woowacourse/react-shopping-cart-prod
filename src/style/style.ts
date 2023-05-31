@@ -35,10 +35,12 @@ export const Row = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0 -15px;
+  justify-content: center;
 `;
 
 export const Col = styled.div`
   width: 100%;
+  max-width: 340px;
   box-sizing: border-box;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {

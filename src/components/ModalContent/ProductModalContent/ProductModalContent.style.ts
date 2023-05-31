@@ -4,6 +4,7 @@ export const ProductItemImageBox = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
+  max-width: 280px;
   padding: 0px 10px;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
@@ -34,6 +35,7 @@ export const ProductModalContentWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0 -15px;
+  justify-content: center;
 `;
 
 export const ProductName = styled.div`
