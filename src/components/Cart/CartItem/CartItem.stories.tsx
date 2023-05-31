@@ -23,7 +23,6 @@ export const Basic = {
     cart: {
       id: 1,
       quantity: 2,
-      checked: true,
       product: {
         id: 1,
         name: '귀여운 고양이',
