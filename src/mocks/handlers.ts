@@ -1,9 +1,10 @@
 import { rest } from 'msw';
 import products from './data/products.json';
-import cartProducts from './data/cartProducts.json';
+// import cart from './data/cart.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
 
-import type { Cart } from '../types/product';
+import type { Cart, CartProduct } from '../types/product';
+import { getData } from '../utils/localStorage';
 
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
@@ -19,15 +20,15 @@ export const handlers = [
   }),
 
   rest.get('/cart-items', (req, res, ctx) => {
-    return res(ctx.delay(200), ctx.status(200), ctx.json(cartProducts));
+    return res(ctx.delay(200), ctx.status(200), ctx.json(getData('cart')));
   }),
 
   rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
     const { productId } = req.body;
 
-    const storedCartProducts: Cart = cartProducts;
+    const storedCart: Cart = getData('cart');
 
-    if (findTargetProduct(storedCartProducts.cartItems, productId)) {
+    if (findTargetProduct(storedCart.cartItems, productId)) {
       return res(
         ctx.status(304),
         ctx.json({ message: '이미 상품이 있습니다' })
@@ -49,10 +50,10 @@ export const handlers = [
 
       const cartProductId = Number(cartItemId as string);
 
-      const storedCartProducts = cartProducts;
+      const storedCart: Cart = getData('cart');
 
       if (
-        !storedCartProducts.cartItems.find(
+        !storedCart.cartItems.find(
           (cartProduct) => cartProduct.cartItemId === cartProductId
         )
       ) {
@@ -75,11 +76,11 @@ export const handlers = [
 
     const cartProductId = Number(cartItemId as string);
 
-    const storedCartProducts = cartProducts;
+    const storedCart = getData('cart');
 
     if (
-      !storedCartProducts.cartItems.find(
-        (cartProduct) => cartProduct.cartItemId === cartProductId
+      !storedCart.cartItems.find(
+        (cartProduct: CartProduct) => cartProduct.cartItemId === cartProductId
       )
     ) {
       return res(
