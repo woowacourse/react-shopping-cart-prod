@@ -1,8 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 
+import { memo } from 'react';
 import { Payments } from 'src/types';
 import convertKORWon from 'src/utils';
-import usePurchase from 'src/hooks/usePurchase';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import { useRecoilValue } from 'recoil';
 import useModal from 'src/hooks/useModal';
@@ -13,11 +13,13 @@ import OrderForm from '../OrderForm';
 interface PaymentsViewProps {
   paymentAmount: Payments;
   puschaseOption: boolean;
+  purchaseCallback?: () => void;
 }
 
-function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
+function PaymentsView({ puschaseOption, paymentAmount, purchaseCallback }: PaymentsViewProps) {
   const { originalPrice, discounts, discountedPrice, deliveryFee, finalPrice } = paymentAmount;
-  const { isModalOpen, openModal, closeModal } = useModal();
+
+  const { isModalOpen: isOrderModalOpen, openModal: orderOpenModal, closeModal: orderCloseModal } = useModal();
 
   const currentServer = useRecoilValue($CurrentServerUrl);
   const checkedCartItemsId = useRecoilValue($CheckedCartIdList(currentServer));
@@ -25,15 +27,15 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
 
   const notChecked = checkedCartItemsId.length === 0;
 
-  const { purchaseCartItem } = usePurchase();
-
   const handleClick = () => {
-    openModal();
+    orderOpenModal();
   };
 
   const orderHandler = async () => {
-    await purchaseCartItem(checkedCartItemsId);
-    closeModal();
+    orderCloseModal();
+    if (purchaseCallback) {
+      purchaseCallback();
+    }
   };
 
   const discountView = discounts.length > 0 && (
@@ -78,10 +80,10 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
           </button>
         )}
       </section>
-      {isModalOpen && (
-        <Modal closeEvent={closeModal} direction="center">
+      {isOrderModalOpen && (
+        <Modal closeEvent={orderCloseModal} direction="center">
           <OrderForm
-            cancelHandler={closeModal}
+            cancelHandler={orderCloseModal}
             orderHandler={orderHandler}
             products={checkedCartItems}
             paymentAmount={paymentAmount}
@@ -92,4 +94,4 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
   );
 }
 
-export default PaymentsView;
+export default memo(PaymentsView);

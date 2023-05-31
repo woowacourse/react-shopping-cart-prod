@@ -1,20 +1,24 @@
 import { $ModalState } from 'src/recoil/atom';
 import { useRecoilState } from 'recoil';
+import { useMemo, useState } from 'react';
 
 function useModal() {
   const [isModalOpen, setIsModalOpen] = useRecoilState($ModalState);
+  const [localModalOpen, setLocalModalOpen] = useState(false);
 
   const closeModal = () => {
-    if (!setIsModalOpen) return;
+    setLocalModalOpen(false);
     setIsModalOpen(false);
   };
 
   const openModal = () => {
-    if (!setIsModalOpen) return;
+    setLocalModalOpen(true);
     setIsModalOpen(true);
   };
 
-  return { isModalOpen, openModal, closeModal };
+  const modalOpen = useMemo(() => isModalOpen && localModalOpen, [isModalOpen, localModalOpen]);
+
+  return { isModalOpen: modalOpen, openModal, closeModal };
 }
 
 export default useModal;

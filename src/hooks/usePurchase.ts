@@ -1,29 +1,27 @@
-import { MESSAGE } from 'src/constants';
+import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import useMutation from './useMutation';
-import useToast from './useToast';
 
 function usePurchase() {
-  const Toast = useToast();
   const curServer = useRecoilValue($CurrentServerUrl);
   const setCartList = useSetRecoilState($CartList(curServer));
   const setCartCheckedList = useSetRecoilState($CheckedCartIdList(curServer));
 
+  const [orderId, setOrderId] = useState<string | null>(null);
+
   const { mutateQuery: paymentItemQuery } = useMutation<Record<string, number[]>, unknown>({
     onSuccess: data => {
-      // const regex = /[^0-9]/g;
-      // const orderId = data?.headers.get('Location')?.replace(regex, '');
+      const regex = /[^0-9]/g;
+      const id = data?.headers.get('Location')?.replace(regex, '');
       const requestBody = data?.fetchInformation.bodyData;
 
       if (requestBody) {
         const { cartItemIds } = requestBody;
+        setOrderId(id ?? null);
         setCartList(prev => prev.filter(item => !cartItemIds.includes(item.id)));
         setCartCheckedList([]);
       }
-
-      // 여기서 모달 띄우기
-      Toast.success(MESSAGE.PAYMENTS_SUCCESSFUL);
     },
   });
 
@@ -37,7 +35,7 @@ function usePurchase() {
     });
   };
 
-  return { purchaseCartItem };
+  return { purchaseCartItem, orderId };
 }
 
 export default usePurchase;
