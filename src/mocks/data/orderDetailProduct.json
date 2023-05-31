@@ -1,0 +1,30 @@
+{
+  "orderId": 1,
+  "orderDateTime": "2023-05-24 08:30:21",
+  "orderItems": [
+    {
+      "quantity": 5,
+      "product": {
+        "productId": 1,
+        "price": 43400,
+        "name": "PET보틀-정사각(420ml)",
+        "imageUrl": "images/정사각-420.jpeg",
+        "stock": 1
+      }
+    },
+    {
+      "quantity": 1,
+      "product": {
+        "productId": 3,
+        "price": 41000,
+        "name": "PET보틀-정사각(370ml)",
+        "imageUrl": "images/정사각-370.jpeg",
+        "stock": 6
+      }
+    }
+  ],
+  "totalProductPrice": 258000,
+  "totalDeliveryFee": 0,
+  "usePoint": 0,
+  "totalPrice": 258000
+}
