@@ -1,8 +1,7 @@
 import ReactDOM from 'react-dom';
 import * as S from './styles/Toast.styles';
 import { useRecoilValue } from 'recoil';
-
-import { toastInfoState } from '../../atom/state';
+import { toastInfoState } from '../../atom/toastInfo';
 
 export default function Toast() {
   const { show, message, type } = useRecoilValue(toastInfoState);

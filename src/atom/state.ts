@@ -1,4 +1,4 @@
-import type { CartType, ToastInfoType } from '../types';
+import type { CartType } from '../types';
 import { atom, selector, selectorFamily } from 'recoil';
 
 export const cartState = atom<CartType>({
@@ -21,11 +21,6 @@ export const cartItemState = selectorFamily({
     },
 });
 
-export const checkedListState = atom<boolean[]>({
-  key: 'checkedListState',
-  default: [],
-});
-
 export const cartBillTotalPriceState = selector({
   key: 'cartBillTotalPriceState',
   get: ({ get }) => {
@@ -38,11 +33,7 @@ export const cartBillTotalPriceState = selector({
   },
 });
 
-export const toastInfoState = atom<ToastInfoType>({
-  key: 'toastInfoState',
-  default: {
-    show: false,
-    message: '',
-    type: 'info',
-  },
+export const checkedListState = atom<boolean[]>({
+  key: 'checkedListState',
+  default: [],
 });

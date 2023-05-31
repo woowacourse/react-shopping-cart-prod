@@ -1,7 +1,6 @@
+import { toastInfoState } from '../../atom/toastInfo';
 import type { ToastInfoType } from '../../types';
-
 import { useSetRecoilState } from 'recoil';
-import { toastInfoState } from '../../atom/state';
 
 let timeoutID: null | number = null;
 
