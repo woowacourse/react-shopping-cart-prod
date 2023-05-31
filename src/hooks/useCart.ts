@@ -22,7 +22,7 @@ const useCart = (product: Product) => {
 
   const addProduct = async () => {
     const cartItemId = await api(hostName).then((apiInstance) => {
-      return apiInstance.postCartProduct(product.productId);
+      return apiInstance.createCartProduct(product.productId);
     });
 
     if (cartItemId) {

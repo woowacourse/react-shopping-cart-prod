@@ -1,15 +1,15 @@
 import { selector } from 'recoil';
-import { fetchProducts } from '../apis/products';
+import { getProducts } from '../apis/products';
 import type { Product } from '../types/product';
 import { hostNameAtom } from './hostData';
 
-export const fetchProductsSelector = selector<Product[]>({
-  key: 'fetchProducts',
+export const getProductsSelector = selector<Product[]>({
+  key: 'getProducts',
   get: async ({ get }) => {
     const hostName = get(hostNameAtom);
 
     try {
-      const response = await fetchProducts(hostName);
+      const response = await getProducts(hostName);
       return response;
     } catch (error) {
       console.error(error);
