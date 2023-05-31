@@ -46,6 +46,7 @@ export const Header = () => {
     localStorage.clear();
     setIsLogined(false);
     showToast("success", `로그아웃 되었습니다. ✅`);
+    goPage(ROUTER_PATH.Main)();
   };
 
   return (

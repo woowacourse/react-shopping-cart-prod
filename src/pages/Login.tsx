@@ -4,13 +4,14 @@ import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { Button, Page } from "../components";
 import { KEY_LOCALSTORAGE_LOGIN_TOKEN } from "../constants";
+import { useRouter } from "../hooks/useRouter";
 import { localProductsState, loginState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";
 import { setLocalStorage } from "../utils";
 import { makeLocalProducts } from "../utils/domain";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const { goPage } = useRouter();
   const setLoginState = useSetRecoilState(loginState);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -39,7 +40,7 @@ const Login = () => {
 
     // 로그인 성공 시
     setLoginState(true);
-    navigate(ROUTER_PATH.Main);
+    goPage(ROUTER_PATH.Main)();
 
     // 로그인 실패 시
     // localStorage.clear();
@@ -78,6 +79,9 @@ const Login = () => {
           onKeyDown={handlePasswordKey}
         />
         <Button type="submit">로그인 하기</Button>
+        <Button type="button" onClick={goPage(ROUTER_PATH.Main)}>
+          다시 상품 목록 보러가기
+        </Button>
       </FormContainer>
     </Page>
   );

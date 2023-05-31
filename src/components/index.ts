@@ -4,6 +4,7 @@ export { Page } from "./Page";
 export { Button } from "./Button";
 export { Loading } from "./Loading";
 export { ErrorBox } from "./ErrorBox";
+export { GuideBox } from "./GuideBox";
 export { Toast } from "./Toast";
 export { ErrorBoundary } from "./ErrorBoundary";
 

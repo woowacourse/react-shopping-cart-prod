@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { Header, Page } from "../components";
+import { GuideBox, Header, Page } from "../components";
 import { OrderHistoryList } from "../components/OrderHistoryList";
 
 const OrderHistory = () => {
@@ -9,6 +9,11 @@ const OrderHistory = () => {
       <Page>
         <TitleBox>주문 목록</TitleBox>
         <OrderHistoryList />
+        <GuideBox
+          icon="🛒"
+          message="주문 목록이 없어요"
+          guideMessage="상품 주문하러 가기"
+        />
       </Page>
     </>
   );
