@@ -4,6 +4,7 @@ import App from '../App';
 import { PATH } from '../constants/path';
 import CartPage from '../pages/CartPage/CartPage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import { OrderDetailPage } from '../pages/OrderDetailPage/OrderDetailPage';
 import OrderPage from '../pages/OrderPage/OrderPage';
 import ProductListPage from '../pages/ProductListPage/ProductListPage';
 
@@ -25,6 +26,10 @@ const router = createBrowserRouter(
         {
           path: PATH.ORDERS,
           element: <OrderPage />,
+        },
+        {
+          path: `${PATH.ORDERS}/:orderId`,
+          element: <OrderDetailPage />,
         },
       ],
     },
