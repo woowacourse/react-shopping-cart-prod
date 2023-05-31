@@ -15,11 +15,12 @@ function App() {
 
 const Layout = styled.main`
   padding: 140px 0 60px 0;
-
-  @media screen and (min-width: 1200px) {
-    display: flex;
-    justify-content: center;
-  }
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1250px;
 `;
 
 export default App;
