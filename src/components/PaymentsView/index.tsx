@@ -2,12 +2,13 @@
 
 import { Payments } from 'src/types';
 import convertKORWon from 'src/utils';
-// import usePurchase from 'src/hooks/usePurchase';
-import { $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
+import usePurchase from 'src/hooks/usePurchase';
+import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import { useRecoilValue } from 'recoil';
 import useModal from 'src/hooks/useModal';
 import Modal from '../Common/Modal';
 import styles from './index.module.scss';
+import OrderForm from '../OrderForm';
 
 interface PaymentsViewProps {
   paymentAmount: Payments;
@@ -17,16 +18,22 @@ interface PaymentsViewProps {
 function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
   const { originalPrice, discounts, discountedPrice, deliveryFee, finalPrice } = paymentAmount;
   const { isModalOpen, openModal, closeModal } = useModal();
+
   const currentServer = useRecoilValue($CurrentServerUrl);
   const checkedCartItemsId = useRecoilValue($CheckedCartIdList(currentServer));
+  const cartItems = useRecoilValue($CartList(currentServer));
 
   const notChecked = checkedCartItemsId.length === 0;
 
-  // const { purchaseCartItem } = usePurchase();
+  const { purchaseCartItem } = usePurchase();
 
   const handleClick = () => {
     openModal();
-    // await purchaseCartItem(checkedCartItemsId);
+  };
+
+  const orderHandler = async () => {
+    await purchaseCartItem(checkedCartItemsId);
+    closeModal();
   };
 
   const discountView = discounts.length > 0 && (
@@ -43,6 +50,8 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
       </div>
     </div>
   );
+
+  const checkedCartItems = cartItems.filter(({ id }) => checkedCartItemsId.includes(id));
 
   return (
     <>
@@ -71,7 +80,12 @@ function PaymentsView({ puschaseOption, paymentAmount }: PaymentsViewProps) {
       </section>
       {isModalOpen && (
         <Modal closeEvent={closeModal} direction="center">
-          <div>모달입니다.</div>
+          <OrderForm
+            cancelHandler={closeModal}
+            orderHandler={orderHandler}
+            products={checkedCartItems}
+            paymentAmount={paymentAmount}
+          />
         </Modal>
       )}
     </>
