@@ -11,14 +11,18 @@ interface OrderFormProps {
 
 function OrderForm({ cancelHandler, orderHandler, products, paymentAmount }: OrderFormProps) {
   const { finalPrice, originalPrice, deliveryFee, discountedPrice } = paymentAmount;
+
   const itemInfo = products.map(item => (
     <div key={item.id} className={styles['item-container']}>
       <img src={item.product.imageUrl} alt={item.product.name} className={styles['product-img']} />
       <span className={styles['product-description']}>{item.product.name}</span>
       <span>{item.quantity}개</span>
-      <span>{convertKORWon(item.product.price * item.quantity)}</span>
+      <span className={`${styles.emphasize} ${styles['product-price']}`}>
+        {convertKORWon(item.product.price * item.quantity)}
+      </span>
     </div>
   ));
+
   return (
     <section className={styles['form-section']}>
       <div className={styles.header}>
@@ -26,11 +30,16 @@ function OrderForm({ cancelHandler, orderHandler, products, paymentAmount }: Ord
       </div>
       <div className={styles['content-container']}>
         <div>
-          <p className={styles['sub-title']}>주문 상품</p>
+          <div className={styles['conatier-header']}>
+            <p className={styles['sub-title']}>주문 상품</p>
+            <span>총 {products.length}개</span>
+          </div>
           <div className={styles['product-container']}>{itemInfo}</div>
         </div>
         <div className={styles['payments-container']}>
-          <p className={styles['sub-title']}>결제 금액</p>
+          <div className={styles['conatier-header']}>
+            <p className={styles['sub-title']}>결제 금액</p>
+          </div>
           <ul className={styles['payments-ul']}>
             <li>
               <span>상품 금액</span>
