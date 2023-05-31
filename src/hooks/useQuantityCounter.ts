@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { showInputErrorMessage } from '@utils/common';
 import {
   MAX_CART_QUANTITY,
@@ -84,6 +84,10 @@ export const useQuantityCounter = (
 
     updateCartItemAndSync(quantity);
   };
+
+  useEffect(() => {
+    setQuantity(initialValue);
+  }, [initialValue]);
 
   return {
     quantity,

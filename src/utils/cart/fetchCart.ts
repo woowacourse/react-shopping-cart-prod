@@ -1,6 +1,6 @@
 import { fetchDelete, fetchGet, fetchPatch, fetchPost } from '@utils/fetchUtils';
 import { ServerName, getCartPath } from '@constants/serverUrlConstants';
-import { CartItemType } from '@type/cartType';
+import { CartItemType, ServerCartItemType } from '@type/cartType';
 import { cartApiWrapper } from './cart';
 
 interface AddItemToCartApiParams {
@@ -51,7 +51,7 @@ export const updateCartItemQuantityApi = async ({
 };
 
 export const getCart = async (serverName: ServerName) => {
-  const serverCart = await fetchGet<CartItemType[]>(getCartPath(serverName));
+  const serverCart = await fetchGet<ServerCartItemType[]>(getCartPath(serverName));
   const clientCart: CartItemType[] = cartApiWrapper(serverCart);
 
   return clientCart;

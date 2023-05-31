@@ -43,9 +43,12 @@ export const useRecoilCart = () => {
   const getCartItemQuantity = (productId: number) => {
     const cartId = findCartItemById({ cart, productId });
     const findCart = cart.find((cartItem) => cartItem.id === cartId);
-    const serverCartItemQuantity = findCart ? findCart.quantity : 1;
 
-    return serverCartItemQuantity;
+    if (!findCart) {
+      return 1;
+    }
+
+    return findCart.quantity;
   };
 
   const cartFetchData = async () => {

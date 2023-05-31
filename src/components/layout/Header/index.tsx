@@ -23,12 +23,12 @@ function Header() {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchCartData = async () => {
       const cartData = await getCart(server);
       setCart(cartData);
     };
 
-    fetchData();
+    fetchCartData();
   }, [server, setCart]);
 
   return (
