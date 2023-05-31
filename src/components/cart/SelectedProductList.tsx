@@ -12,12 +12,12 @@ import SelectedProductItem from './SelectedProductItem';
 
 const SelectedProductList = ({ productCountInCart }: { productCountInCart: number }) => {
   const [cart, setCart] = useRecoilState(cartState);
-  const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
+  const [checkedItemIdList, setCheckedItemIdList] = useRecoilState<number[]>(checkedItemList);
   const server = useRecoilValue(serverState);
   const { api } = useFetchData();
   const { removeItemFromCart } = useSetCart();
 
-  const initialCheckedItems = cart.map((item) => item.id);
+  const initialCheckedItemIdList = cart.map((item) => item.id);
 
   useEffect(() => {
     api
@@ -27,21 +27,21 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
       })
       .then((data) => {
         setCart(data);
-        setCheckedItems(data.map((item: CartItem) => item.id));
+        setCheckedItemIdList(data.map((item: CartItem) => item.id));
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
-  const isAllChecked = checkedItems.length === productCountInCart && productCountInCart !== 0;
+  const isAllChecked = checkedItemIdList.length === productCountInCart && productCountInCart !== 0;
 
   const handleAllItemsCheck = () => {
-    isAllChecked ? setCheckedItems([]) : setCheckedItems(initialCheckedItems);
+    isAllChecked ? setCheckedItemIdList([]) : setCheckedItemIdList(initialCheckedItemIdList);
   };
 
   const handleCheckedItemRemove = () => {
-    removeItemFromCart(checkedItems);
-    setCheckedItems([]);
+    removeItemFromCart(checkedItemIdList);
+    setCheckedItemIdList([]);
   };
 
   return (
@@ -68,7 +68,7 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
           checked={isAllChecked}
           onChange={handleAllItemsCheck}
         />
-        <label htmlFor='select-all'>{`전체선택 (${checkedItems.length}/${productCountInCart})`}</label>
+        <label htmlFor='select-all'>{`전체선택 (${checkedItemIdList.length}/${productCountInCart})`}</label>
         <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
           선택삭제
         </Button>

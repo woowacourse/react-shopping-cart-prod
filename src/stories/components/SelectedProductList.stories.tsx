@@ -6,7 +6,7 @@ import { Checkbox } from '../../components/cart/CheckboxStyle';
 import SelectedProductItem from '../../components/cart/SelectedProductItem';
 import SelectedProductList from '../../components/cart/SelectedProductList';
 import Button from '../../components/common/Button';
-import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
+import { useSetCart } from '../../hooks/useCart';
 import { cartState, checkedItemList } from '../../recoil';
 
 const meta = {
@@ -19,8 +19,8 @@ export default meta;
 
 export const ProductListInCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
-  const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
-  const removeCheckedItemsFromCart = useRemoveCheckedItemsFromCart(checkedItems);
+  const [checkedItemIdList, setCheckedItemIdList] = useRecoilState<number[]>(checkedItemList);
+  const { removeItemFromCart } = useSetCart();
 
   useEffect(() => {
     setCart([
@@ -52,17 +52,17 @@ export const ProductListInCart = () => {
   }, []);
 
   const productCountInCart = cart.length;
-  const isAllChecked = checkedItems.length === productCountInCart && productCountInCart !== 0;
+  const isAllChecked = checkedItemIdList.length === productCountInCart && productCountInCart !== 0;
 
-  const initialCheckedItems = cart.map((item) => item.id);
+  const initialCheckedItemIdList = cart.map((item) => item.id);
 
   const handleAllItemsCheck = () => {
-    isAllChecked ? setCheckedItems([]) : setCheckedItems(initialCheckedItems);
+    isAllChecked ? setCheckedItemIdList([]) : setCheckedItemIdList(initialCheckedItemIdList);
   };
 
   const handleCheckedItemRemove = () => {
-    removeCheckedItemsFromCart();
-    setCheckedItems([]);
+    removeItemFromCart(checkedItemIdList);
+    setCheckedItemIdList([]);
   };
 
   return (
@@ -90,7 +90,7 @@ export const ProductListInCart = () => {
           checked={isAllChecked}
           onChange={handleAllItemsCheck}
         />
-        <label htmlFor='select-all'>{`전체선택 (${checkedItems.length}/${productCountInCart})`}</label>
+        <label htmlFor='select-all'>{`전체선택 (${checkedItemIdList.length}/${productCountInCart})`}</label>
         <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
           선택삭제
         </Button>

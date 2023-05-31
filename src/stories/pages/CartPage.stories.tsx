@@ -25,7 +25,7 @@ export default meta;
 
 export const Cart = () => {
   const setCart = useSetRecoilState(cartState);
-  const setCheckedItems = useSetRecoilState<number[]>(checkedItemList);
+  const setCheckedItemIdList = useSetRecoilState<number[]>(checkedItemList);
 
   useEffect(() => {
     setCart([
@@ -34,8 +34,8 @@ export const Cart = () => {
       { id: 3, quantity: 1, product: productList[2] },
       { id: 4, quantity: 10, product: productList[3] },
     ]);
-    setCheckedItems([1, 2, 3, 4]);
-  }, [setCart, setCheckedItems]);
+    setCheckedItemIdList([1, 2, 3, 4]);
+  }, [setCart, setCheckedItemIdList]);
 
   const totalPrice = useRecoilValue(totalPriceSelector);
 

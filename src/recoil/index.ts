@@ -64,7 +64,7 @@ export const cartBadgeSelector = selector({
 });
 
 export const checkedItemList = atom<number[]>({
-  key: 'checkedItems',
+  key: 'checkedItemIdList',
   default: [],
 });
 
@@ -72,8 +72,8 @@ export const totalPriceSelector = selector<number>({
   key: 'totalPriceSelector',
   get: ({ get }) => {
     const cart = get(cartState);
-    const checkedItems = get(checkedItemList);
-    const checkedProductsInCart = cart.filter((item) => checkedItems.includes(item.id));
+    const checkedItemIdList = get(checkedItemList);
+    const checkedProductsInCart = cart.filter((item) => checkedItemIdList.includes(item.id));
 
     const totalPrice = checkedProductsInCart.reduce((acc, cur) => {
       return acc + cur.product.price * cur.quantity;
