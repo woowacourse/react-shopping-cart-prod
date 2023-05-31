@@ -1,4 +1,5 @@
 import { productApiWrapper } from '@utils/productList/productList';
+import { FAKE_CART_ID } from '@constants/cartConstants';
 import { CartItemType, ServerCartItemType } from '@type/cartType';
 import { ProductItemType } from '@type/productType';
 
@@ -122,7 +123,7 @@ export const findCartItemById = ({ cart, productId }: FindCartItemByIdParams) =>
   const findCartItem = cart.find((cartItem) => cartItem.product.id === productId);
 
   if (!findCartItem) {
-    return 0;
+    return FAKE_CART_ID;
   }
 
   return findCartItem.id;

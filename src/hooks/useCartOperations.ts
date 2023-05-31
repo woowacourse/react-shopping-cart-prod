@@ -8,6 +8,7 @@ import {
   removeCartItemApi,
   updateCartItemQuantityApi,
 } from '@utils/cart/fetchCart';
+import { FAKE_CART_ID } from '@constants/cartConstants';
 import { ProductItemType } from '@type/productType';
 import { useQuantityCounter } from './useQuantityCounter';
 import { useRecoilCart } from './useRecoilCart';
@@ -17,23 +18,31 @@ export const useCartOperations = (product: ProductItemType) => {
   const cart = useRecoilValue(cartState);
   const cartId = findCartItemById({ cart, productId: product.id });
   const findCart = cart.find((cartItem) => cartItem.id === cartId);
-  const { addCartItem, updateCartListItemQuantity, getCartItemQuantity, deleteCartItem } =
-    useRecoilCart();
+
+  const {
+    addCartItem,
+    updateCartListItemQuantity,
+    getCartItemQuantity,
+    deleteCartItem,
+    cartFetchData,
+  } = useRecoilCart();
 
   const updateCartItemAndSync = async (value: number) => {
     try {
-      await updateCartItemQuantityApi({ cartId, quantity: value, serverName });
       updateCartListItemQuantity({ cartId, quantity: value });
+      await updateCartItemQuantityApi({ cartId, quantity: value, serverName });
     } catch (error) {
+      cartFetchData();
       console.error(error);
     }
   };
 
   const removeCartItemAndDelete = async () => {
     try {
-      removeCartItemApi({ cartId, serverName });
       deleteCartItem(cartId);
+      await removeCartItemApi({ cartId, serverName });
     } catch (error) {
+      cartFetchData();
       console.error(error);
     }
   };
@@ -52,10 +61,13 @@ export const useCartOperations = (product: ProductItemType) => {
 
   const onAddItemToCartAndSyncClick = async () => {
     try {
-      const cartId = await addItemToCartApi({ productId: product.id, serverName });
-      addCartItem({ cartId: Number(cartId), product });
+      addCartItem({ cartId: FAKE_CART_ID, product });
+      await addItemToCartApi({ productId: product.id, serverName });
     } catch (error) {
+      cartFetchData();
       console.error(error);
+    } finally {
+      cartFetchData();
     }
   };
 
