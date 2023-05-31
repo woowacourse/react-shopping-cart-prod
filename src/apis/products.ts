@@ -6,7 +6,5 @@ type FetchProductDataRes = Product[];
 
 export const fetchProductData =
   async (): FetchQueryRes<FetchProductDataRes> => {
-    const data = await fetchQuery.get<FetchProductDataRes>('/products');
-
-    return data;
+    return fetchQuery.get<FetchProductDataRes>('/products');
   };
