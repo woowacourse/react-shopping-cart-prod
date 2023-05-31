@@ -24,7 +24,6 @@ async function main() {
         <ThemeProvider theme={theme}>
           <GlobalStyle />
           <RouterProvider router={router} />
-          <ModalContainer />
         </ThemeProvider>
       </RecoilRoot>
     </React.StrictMode>

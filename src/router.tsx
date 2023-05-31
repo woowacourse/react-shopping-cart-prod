@@ -4,7 +4,7 @@ import Home from "./pages/Home";
 import Cart from "./pages/Cart";
 import Order from "./pages/Order";
 import OrderDetail from "./pages/OrderDetail";
-import Purchase from "./pages/Purchase";
+import Purchase from "./components/Purchase";
 
 const router = createBrowserRouter(
   [
@@ -19,10 +19,6 @@ const router = createBrowserRouter(
         {
           path: "/cart",
           element: <Cart />,
-        },
-        {
-          path: "/purchase",
-          element: <Purchase />,
         },
         {
           path: "/order",

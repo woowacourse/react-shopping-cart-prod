@@ -10,16 +10,23 @@ import {
   RealPriceText,
   Vacant,
 } from "./PurchaseBox.style";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { totalPriceSelector } from "../../recoil/cartAtoms.ts";
-import { useNavigate } from "react-router-dom";
+import { modalContentState, modalOpenState } from "../../recoil/modalAtoms.tsx";
+import Purchase from "../Purchase";
 
 function PurchaseBox() {
-  const navigate = useNavigate();
-
   const totalPrice = useRecoilValue(totalPriceSelector);
   const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
   const POINTS = 1000;
+
+  const setModalOpen = useSetRecoilState(modalOpenState);
+  const setModalContent = useSetRecoilState(modalContentState);
+
+  const openModal = () => {
+    setModalOpen(true);
+    setModalContent(<Purchase />);
+  };
 
   return (
     <>
@@ -66,7 +73,7 @@ function PurchaseBox() {
             <PurchaseButton
               onClick={() => {
                 if (confirm("결제 페이지로 이동하시겠습니까?")) {
-                  navigate("/purchase");
+                  openModal();
                 }
               }}
             >
