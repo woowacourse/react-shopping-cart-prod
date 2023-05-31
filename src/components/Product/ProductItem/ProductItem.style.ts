@@ -31,7 +31,6 @@ export const ProductDetails = styled.div`
 
 export const ProductName = styled.div`
   font-size: 16px;
-  height: 39px;
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
