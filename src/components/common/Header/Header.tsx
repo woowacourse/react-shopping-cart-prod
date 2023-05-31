@@ -6,10 +6,11 @@ import { BASE_URL } from '../../../constant';
 import serverNameState from '../../../globalState/atoms/serverName';
 import { isProperServerName } from '../../../types/server';
 import cartState from '../../../globalState/atoms/cartState';
+import { Suspense } from 'react';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 const Header = () => {
   const navigate = useNavigate();
-  const cartList = useRecoilValue(cartState);
   const [serverName, setServerName] = useRecoilState(serverNameState);
 
   const handleLogoClick = () => {
@@ -44,11 +45,27 @@ const Header = () => {
         </select>
         <CartButton onClick={handleCartButtonClick}>
           <p>장바구니</p>
-          <CartTotalQuantity>{cartList.length}</CartTotalQuantity>
+          <Suspense
+            fallback={
+              <LoadingSpinner
+                color="#06C09E"
+                diameter="26px"
+                spinnerWidth="3px"
+              />
+            }
+          >
+            <TotalCartQuantity />
+          </Suspense>
         </CartButton>
       </RightContainer>
     </HeaderContainer>
   );
+};
+
+const TotalCartQuantity = () => {
+  const cartList = useRecoilValue(cartState);
+
+  return <CartTotalQuantity>{cartList.length}</CartTotalQuantity>;
 };
 
 const HeaderContainer = styled.header`
