@@ -6,21 +6,14 @@ export const useFetch = <T>(callback: () => Promise<T>) => {
   const [error, setError] = useState<Error>();
 
   useEffect(() => {
-    callback().then((res) => {
-      try {
-        if (!res) {
-          throw new Error("주문내역 목록이 없습니다.");
+    callback()
+      .then((res) => setData(res))
+      .catch((rej) => {
+        if (rej instanceof Error) {
+          setError(rej);
         }
-        setData(res);
-      } catch (e) {
-        if (e instanceof Error) {
-          setError(e);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    });
+      })
+      .finally(() => setIsLoading(false));
   }, []);
-
   return { isLoading, data, error };
 };

@@ -26,6 +26,7 @@ export const getOrderStatement = async (): Promise<EachOrderStatement[]> => {
     //   "Content-Type": "application/json",
     // },
   });
+  if (!response.ok) throw new Error(response.statusText);
 
-  return response.status === 200 && response.json();
+  return response.json();
 };

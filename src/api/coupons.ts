@@ -12,5 +12,7 @@ export const getCoupons = async (): Promise<Omit<Coupon, "selected">[]> => {
     // },
   });
 
-  return response.status === 200 && response.json();
+  if (!response.ok) throw new Error(response.statusText);
+
+  return response.json();
 };

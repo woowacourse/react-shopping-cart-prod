@@ -10,11 +10,6 @@ const getProductList = selector<Product[]>({
 
     const products = await getProducts(selectedServer);
 
-    if (!products) {
-      alert("상품 정보 불러오기 실패!");
-      return [];
-    }
-
     return products;
   },
 });
