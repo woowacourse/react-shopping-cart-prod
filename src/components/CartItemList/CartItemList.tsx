@@ -8,7 +8,7 @@ import {
   totalAmountAtom,
 } from '../../store/cart';
 import { WIDTH } from '../../styles/mediaQuery';
-import CartItem from '../CartItem/CartItem';
+import CartItem from './CartItem/CartItem';
 import CheckBox from '../common/CheckBox/CheckBox';
 import useFetchCart from '../../hooks/useFetchCart';
 import { serverAtom } from '../../store/server';

@@ -1,12 +1,12 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import { ReactComponent as ShoppingCartImg } from '../../assets/icon/shopping-cart.svg';
-import { WIDTH } from '../../styles/mediaQuery';
-import { Product } from '../../types/responseData';
-import Counter from '../common/Counter/Counter';
+import { ReactComponent as ShoppingCartImg } from '../../../assets/icon/shopping-cart.svg';
+import { WIDTH } from '../../../styles/mediaQuery';
+import { Product } from '../../../types/responseData';
+import Counter from '../../common/Counter/Counter';
 import ProductImg from './ProductImg/ProductImg';
 import ProductInfo from './ProductInfo/ProductInfo';
-import useFetchCart from '../../hooks/useFetchCart';
+import useFetchCart from '../../../hooks/useFetchCart';
 
 type ProductCartProps = Product & {
   count: number | undefined;

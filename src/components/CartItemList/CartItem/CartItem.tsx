@@ -1,13 +1,13 @@
 import { styled } from 'styled-components';
-import ProductImg from '../ProductCard/ProductImg/ProductImg';
-import { ReactComponent as TrashCan } from '../../assets/icon/trash-can.svg';
-import Counter from '../common/Counter/Counter';
-import CheckBox from '../common/CheckBox/CheckBox';
-import { WIDTH } from '../../styles/mediaQuery';
-import useFetchCart from '../../hooks/useFetchCart';
-import { Cart } from '../../types/responseData';
+import ProductImg from '../../ProductCardList/ProductCard/ProductImg/ProductImg';
+import { ReactComponent as TrashCan } from '../../../assets/icon/trash-can.svg';
+import Counter from '../../common/Counter/Counter';
+import CheckBox from '../../common/CheckBox/CheckBox';
+import { WIDTH } from '../../../styles/mediaQuery';
+import useFetchCart from '../../../hooks/useFetchCart';
+import { Cart } from '../../../types/responseData';
 import { useRecoilState } from 'recoil';
-import { isSelectedListAtom } from '../../store/cart';
+import { isSelectedListAtom } from '../../../store/cart';
 
 interface CartItemProps {
   cart: Cart;

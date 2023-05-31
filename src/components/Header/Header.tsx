@@ -4,7 +4,7 @@ import { ReactComponent as ShoppingCartIcon } from '../../assets/icon/tiffany-co
 import { WIDTH } from '../../styles/mediaQuery';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ServerName, serverAtom } from '../../store/server';
-import CartTextButton from '../CartTextButton/CartTextButton';
+import CartTextButton from './CartTextButton/CartTextButton';
 import { PATH } from '../../store/path';
 import { cartAtom } from '../../store/cart';
 

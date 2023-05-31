@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { products } from '../../components/data/mockData';
+import { products } from '../../data/mockData';
 import { END_POINTS } from '../../constants/endPoints';
 
 export const productHandler = [

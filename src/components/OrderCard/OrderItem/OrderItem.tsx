@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
-import ProductImg from '../ProductCard/ProductImg/ProductImg';
-import { WIDTH } from '../../styles/mediaQuery';
+import ProductImg from '../../ProductCardList/ProductCard/ProductImg/ProductImg';
+import { WIDTH } from '../../../styles/mediaQuery';
 
 type OrderItemProps = {
   quantity: number;
@@ -18,7 +18,7 @@ const OrderItem = ({ quantity, name, price, imageUrl }: OrderItemProps) => {
       <DetailInfo>
         <ProductName>{name}</ProductName>
         <ProductPriceWithQuantity>
-          ₩ {(price * quantity).toLocaleString()} / 수량 : {quantity}개
+          ₩ {(price * quantity).toLocaleString()} / Qty : {quantity}
         </ProductPriceWithQuantity>
       </DetailInfo>
     </Wrapper>

@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import { WIDTH } from '../../../styles/mediaQuery';
+import { WIDTH } from '../../../../styles/mediaQuery';
 
 interface ProductInfoProps {
   name: String;

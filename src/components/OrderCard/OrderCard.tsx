@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { Order } from '../../types/responseData';
-import OrderItem from '../OrderItem/OrderItem';
+import OrderItem from './OrderItem/OrderItem';
 import { PATH } from '../../store/path';
 import { WIDTH } from '../../styles/mediaQuery';
 

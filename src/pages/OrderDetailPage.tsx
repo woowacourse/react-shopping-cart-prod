@@ -56,15 +56,14 @@ const Bill = styled.div`
   flex-direction: column;
 
   height: 320px;
-  width: 448px;
+  width: 100%;
 
-  border: 1px solid var(--grey-100);
+  border: 1px 1px 0 0 solid var(--grey-100);
 
   margin-top: 32px;
 
   @media (max-width: ${WIDTH.MD}) {
     height: 180px;
-    width: 300px;
   }
 `;
 

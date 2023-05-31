@@ -35,7 +35,12 @@ const useFetchOrder = () => {
     });
   };
 
-  return { postOrders };
+  const getOrders = async (id: number) => {
+    const response = await handleOrders('GET', {}, id);
+    return await response.json();
+  };
+
+  return { postOrders, getOrders };
 };
 
 export default useFetchOrder;

@@ -1,5 +1,5 @@
 import { rest, RestRequest } from 'msw';
-import { products } from '../../components/data/mockData';
+import { products } from '../../data/mockData';
 import { Cart } from '../../types/responseData';
 import { END_POINTS } from '../../constants/endPoints';
 
