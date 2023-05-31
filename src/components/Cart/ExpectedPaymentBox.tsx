@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import SelectBox from '../Common/SelectBox';
 import Button from '../Common/Button';
 
 import useMultipleChecked from '../../hooks/useMultipleChecked';
@@ -27,6 +28,9 @@ const ExpectedPaymentBox = () => {
           <dt>총 배송비</dt>
           <dd>{deliveryFee}원</dd>
         </PaymentInfoItem>
+        <SelectBoxWrapper>
+          <SelectBox options={['쿠폰1', '쿠폰2']} autoSize />
+        </SelectBoxWrapper>
         <PaymentInfoItem>
           <dt>총 주문금액</dt>
           <dd>{totalPrice}원</dd>
@@ -76,7 +80,7 @@ const ExpectedPaymentInfo = styled.div`
   }
 
   & > dl:last-of-type {
-    margin: 40px 0 0 0;
+    margin: 36px 0 0 0;
   }
 `;
 
@@ -91,6 +95,10 @@ const PaymentInfoItem = styled.dl`
     font-weight: 600;
     line-height: 1.5;
   }
+`;
+
+const SelectBoxWrapper = styled.div`
+  margin: 16px 0 0 0;
 `;
 
 const OrderButtonWrapper = styled.div`
