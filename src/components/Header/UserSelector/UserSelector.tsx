@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import * as S from './UserSelector.style.ts';
 import UserProfileImage from '../../../assets/user.svg';
-import useClickOutside from '../../../hooks/useClickOutside.ts';
+import useOnClickOutside from '../../../hooks/useOnClickOutside.ts';
 
 const UserSelector = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -19,7 +19,7 @@ const UserSelector = () => {
     { id: 4, name: '디노', email: 'e@e.com' },
   ];
 
-  useClickOutside<HTMLDivElement>(ref, close);
+  useOnClickOutside<HTMLDivElement>(ref, close);
 
   return (
     <S.Wrapper ref={ref}>
