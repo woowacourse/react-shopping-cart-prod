@@ -35,13 +35,18 @@ const EstimatedPaymentBox = ({ usePoint }: EstimatedPaymentBoxProps) => {
   const hostName = useRecoilValue(hostNameAtom);
 
   const submitOrder = () => {
-    const products = checkedCartProduct.map((item) => ({
-      productId: item.product.productId,
-      quantity: item.quantity,
-    }));
+    const cartItems = checkedCartProduct.map(
+      ({ cartItemId, quantity, product }) => {
+        return {
+          cartItemId,
+          quantity,
+          product,
+        };
+      }
+    );
 
     const orderData: OrderedData = {
-      products,
+      cartItems,
       totalProductPrice,
       totalDeliveryFee,
       usePoint,

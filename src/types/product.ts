@@ -31,10 +31,7 @@ export interface OrderedProduct {
 }
 
 export interface OrderedData {
-  products: {
-    productId: number;
-    quantity: number;
-  }[];
+  cartItems: CartProduct[];
   totalProductPrice: number;
   totalDeliveryFee: number;
   usePoint: number;
