@@ -9,10 +9,11 @@ import OrderHistory from "../pages/OrderHistory";
 
 export const ROUTER_PATH = {
   Main: "/",
-  Cart: "/Cart",
   Login: "/Login",
-  Order: "/Order",
+  Cart: "/Cart",
+  Order: "/Cart/Order",
   OrderHistory: "/OrderHistory",
+  OrderDetail: "/OrderHistory/Detail",
   NotFound: "/*",
 };
 
@@ -36,6 +37,10 @@ export const PageRouterProvider = () => {
     },
     {
       path: ROUTER_PATH.OrderHistory,
+      element: <OrderHistory />,
+    },
+    {
+      path: ROUTER_PATH.OrderDetail,
       element: <OrderHistory />,
     },
     { path: ROUTER_PATH.NotFound, element: <NotFound /> },
