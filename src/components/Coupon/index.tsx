@@ -31,16 +31,19 @@ function Coupon({
 
   const couponButton = isUsed ? '✖︎' : type === 'issued' ? '⬇︎' : selectedCouponId === id ? '✓' : '➡︎';
   return (
-    <S.Container isUsed={isUsed} isLoading={isLoading}>
-      <S.CouponLayout>
-        <S.CouponDescription>{description}</S.CouponDescription>
-        <S.CouponName>{name}</S.CouponName>
-        <S.CouponSubMessage>{subMessage}</S.CouponSubMessage>
-      </S.CouponLayout>
-      <S.CouponButton isLoading={isLoading} onClick={IssuedOrUseCoupon}>
-        {couponButton}
-      </S.CouponButton>
-    </S.Container>
+    <S.Wrapper>
+      <S.Container isUsed={isUsed} isLoading={isLoading}>
+        <S.CouponLayout>
+          <S.CouponDescription>{description}</S.CouponDescription>
+          <S.CouponName>{name}</S.CouponName>
+          <S.CouponSubMessage>{subMessage}</S.CouponSubMessage>
+        </S.CouponLayout>
+        <S.CouponButton isLoading={isLoading} onClick={IssuedOrUseCoupon}>
+          {couponButton}
+        </S.CouponButton>
+      </S.Container>
+      {type === 'use' && isUsed && <S.DeleteButton>쿠폰 삭제하기</S.DeleteButton>}
+    </S.Wrapper>
   );
 }
 

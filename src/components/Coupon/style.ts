@@ -1,6 +1,10 @@
 import { TextSkeletonStyle } from '@Styles/common/skeleton';
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  position: relative;
+`;
+
 type ContainerProps = {
   isUsed: boolean;
   isLoading: boolean;
@@ -52,5 +56,15 @@ export const CouponButton = styled.button<CouponButtonProps>`
   height: 60px;
   font-size: 24px;
   border-radius: 50%;
+  cursor: pointer;
+`;
+
+export const DeleteButton = styled.button`
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  font-size: 12px;
+  background-color: transparent;
+  color: #ff7975;
   cursor: pointer;
 `;
