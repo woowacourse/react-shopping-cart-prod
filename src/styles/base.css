@@ -5,6 +5,8 @@
   --white-color: #ffffff;
   --white-color-001: #f2f2f2;
   --white-color-002: #f6f1f1;
+  --gray-color-001: #aaaaaa;
+  --orange-color: rgb(255, 102, 16);
 }
 
 html {
