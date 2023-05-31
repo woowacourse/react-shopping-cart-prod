@@ -29,7 +29,7 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles['cart-item']}>
       <input type="checkbox" className={styles['check-box']} onChange={toggleCheck} checked={checked} />
       <img src={imageUrl} alt={name} className={styles.image} />
       <div className={styles['item-info']}>
@@ -39,12 +39,15 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
             <TrashBox size={24} />
           </button>
         </div>
-        <CountButton
-          size="large"
-          count={quantity}
-          handleUpButton={handleUpButton}
-          handleDownButton={handleDownButton}
-        />
+        <div className={styles['count-detail']}>
+          <p>단일 금액 : {price} 원</p>
+          <CountButton
+            size="large"
+            count={quantity}
+            handleUpButton={handleUpButton}
+            handleDownButton={handleDownButton}
+          />
+        </div>
         <div className={styles['product-price']}>{(price * quantity).toLocaleString()} 원</div>
       </div>
     </div>

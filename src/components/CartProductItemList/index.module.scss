@@ -1,54 +1,51 @@
 .container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
   letter-spacing: 0.5px;
-
   color: #333333;
-}
-
-.title {
-  font-size: 20px;
-  line-height: 33px;
-  width: 100%;
-  padding-bottom: 12px;
-
-  border-bottom: 4px solid #aaaaaa;
 }
 
 .cart-container {
   display: flex;
   flex-direction: column;
-  max-height: 60vh;
+  row-gap: 16px;
   height: 100%;
-  overflow-y: scroll;
-
-  & > div:first-child {
-    padding-bottom: 30px;
-  }
 
   & > div {
-    border-bottom: 1.5px solid #cccccc;
-    padding: 30px 0;
-  }
-
-  & > div:last-child {
-    border-bottom: none;
-    padding: 30px 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    padding: 24px 16px;
   }
 }
 
 .check-menu {
   display: flex;
   align-items: center;
-  column-gap: 12px;
+  justify-content: space-between;
+  width: 100%;
   height: 36px;
-  margin-top: 16px;
+
+  & > :first-child {
+    font-family: 'SUIT-Medium';
+    display: flex;
+    column-gap: 12px;
+    align-items: center;
+  }
 
   & > button {
     width: 100px;
     height: 100%;
-    font-size: 16px;
-    line-height: 21px;
+    font-size: 14px;
+    line-height: 14px;
+    background: var(--white-color);
 
-    border: 1px solid #bbbbbb;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+
+    &:hover {
+      background: #f8fcfb;
+    }
   }
 }
 
@@ -56,16 +53,24 @@
   appearance: none;
   -webkit-appearance: none;
 
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   background: var(--white-color);
   border: 1px solid #22a6a2;
   border-radius: 2px;
   transform: translateY(0%);
 
   &:checked {
-    background: #333333;
-    border: 1px solid #3288ff;
+    background: var(--mint-color);
+    border: 1px solid var(--mint-color);
+    &:hover {
+      background: var(--mint-color-hover);
+      border: 1px solid var(--mint-color-hover);
+    }
+  }
+
+  &:hover {
+    background: #f8fcfb;
   }
 
   &:after {
@@ -76,7 +81,7 @@
     left: 0;
     top: 0;
     background-image: url('../../assets/checked.svg');
-    background-size: 20px;
+    background-size: 16px;
     background-repeat: no-repeat;
     background-position: center;
   }
