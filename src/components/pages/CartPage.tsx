@@ -116,7 +116,6 @@ const CartPage = () => {
 export default CartPage;
 
 const CartPageWrapper = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
