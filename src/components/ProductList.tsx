@@ -5,7 +5,7 @@ import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
 import { ERROR_MESSAGE, MIN_QUANTITY } from "../constants";
-import { addCartItem } from "../api";
+import { postCartItemApi } from "../api";
 import { useState } from "react";
 import { useToast } from "../hooks/useToast";
 import { ErrorBox } from "./ErrorBox";
@@ -27,7 +27,7 @@ export const ProductList = () => {
     }
 
     try {
-      const response = await addCartItem(productId);
+      const response = await postCartItemApi(productId);
       if (!response.ok) throw new Error(response.status.toString());
 
       updateLocalProducts();

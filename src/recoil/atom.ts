@@ -5,7 +5,7 @@ import {
   ToastType,
   UserType,
 } from "../types/domain";
-import { fetchProducts } from "../api";
+import { getProductsApi } from "../api";
 import { makeLocalProducts, makeProducts } from "../utils/domain";
 import { getLocalStorage } from "../utils";
 import {
@@ -18,7 +18,7 @@ export const productsState = atom<ProductType[]>({
   default: selector<ProductType[]>({
     key: "initialProducts/default",
     get: async () => {
-      const response = await fetchProducts();
+      const response = await getProductsApi();
       if (!response.ok) throw new Error(response.status.toString());
       return await response.json();
     },
@@ -62,7 +62,7 @@ export const userState = atom<UserType>({
   // default: selector<UserType>({
   //   key: "userState/default",
   //   get: async () => {
-  //     const response = await fetchUser();
+  //     const response = await getUserApi();
   //     if (!response.ok) throw new Error(response.status.toString());
   //     return await response.json();
   //   },

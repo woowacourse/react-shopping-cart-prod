@@ -5,7 +5,7 @@ import { TrashCanIcon } from "../assets";
 import { Counter } from "./Counter";
 import { localProductsSelector } from "../recoil/selector";
 import { useCheckBox } from "../hooks/useCheckBox";
-import { deleteCartItem } from "../api";
+import { deleteCartItemApi } from "../api";
 import { selectedProductsState } from "../recoil/atom";
 import { useLocalProducts } from "../hooks/useLocalProducts";
 
@@ -28,7 +28,7 @@ export const CartProductList = () => {
 
   const handleDeleteButtonClicked = async () => {
     selectedProducts.forEach(async (product) => {
-      await deleteCartItem(product.cartItemId);
+      await deleteCartItemApi(product.cartItemId);
     });
 
     removeCheckedArray();
@@ -37,7 +37,7 @@ export const CartProductList = () => {
 
   const handleTrashCanClicked =
     (cartItemId: number, index: number) => async () => {
-      await deleteCartItem(cartItemId);
+      await deleteCartItemApi(cartItemId);
 
       removeTargetIndex(index);
       updateLocalProducts();
