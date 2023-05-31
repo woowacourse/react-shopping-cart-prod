@@ -26,7 +26,6 @@ const useGetQuery = <DataType>(fetchUrl: string, headers?: HeadersInit) => {
     await fetch(url ?? fetchUrl, { headers: headers ?? refreshHeaders })
       .then(res => res.json())
       .then(resData => {
-        console.log(resData, 2);
         setData(resData);
       })
       .catch((e: Error) => setError(e.message))
