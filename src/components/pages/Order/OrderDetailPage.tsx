@@ -5,9 +5,15 @@ import PageTemplate from '../../templates/PageTemplate';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import PriceBox from '../../box/TotalPriceBox/PriceBox';
 import { OrderDetailType } from '../../../types/types';
+import DetailList from '../../list/DetailList/DetailList';
+import { useEffect } from 'react';
 
 const OrderDetailPage = () => {
   const orderId = useParams().orderId;
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   const { data: orderDetailData, refetch } = useQuery<OrderDetailType>(
     'orderDetail',
@@ -39,7 +45,9 @@ const OrderDetailPage = () => {
       description="우아한 테크코스 레벨 2 장바구니 미션의 주문 상세보기 페이지입니다."
     >
       <DetailPageWrapper>
-        <DetailWrapper>{orderId}디테일페이지로 이동했습니다.</DetailWrapper>
+        <DetailWrapper>
+          <DetailList order={order} />
+        </DetailWrapper>
         <PriceBox
           originalPrice={originalPrice}
           discountPrice={discountPrice}
@@ -56,6 +64,7 @@ const DetailPageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  gap: 20px;
 
   @media screen and (max-width: 1320px) {
     width: 940px;
@@ -67,6 +76,10 @@ const DetailPageWrapper = styled.div`
 
   @media screen and (max-width: 660px) {
     width: 500px;
+  }
+
+  @media screen and (max-width: 510px) {
+    width: 300px;
   }
 `;
 const DetailWrapper = styled.div`
