@@ -1,8 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
+import { reset } from './reset';
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
-
+  ${reset}
+  
   body {
     margin: 0;
     font-family: 'Noto Sans KR',system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
