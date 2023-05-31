@@ -69,7 +69,7 @@ export const handlers = [
   }),
 
   // 주문 목록 불러오기
-  rest.get('/orders', async (req, res, ctx) => {
+  rest.get(FETCH_URL.orders, async (req, res, ctx) => {
     if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
     const orderItems = localStorageHelper.getValue<CartItemType[]>('orderItems');
 
@@ -77,7 +77,7 @@ export const handlers = [
   }),
 
   // 주문하기
-  rest.post('/orders', async (req, res, ctx) => {
+  rest.post(FETCH_URL.orders, async (req, res, ctx) => {
     const { id, price, couponId } = (await req.json()) as { id: number[]; price: number; couponId: number | null };
 
     const cartList = localStorageHelper.getValue<CartItemType[]>('cartItems');
@@ -113,7 +113,7 @@ export const handlers = [
   }),
 
   // 나의 쿠폰 불러오기
-  rest.get('/coupons/member', async (req, res, ctx) => {
+  rest.get(FETCH_URL.myCoupon, async (req, res, ctx) => {
     if (!localStorageHelper.hasKey('myCoupons')) localStorageHelper.setInitValue('myCoupons', []);
     const myCoupons = localStorageHelper.getValue<CouponType[]>('myCoupons');
 
@@ -121,7 +121,19 @@ export const handlers = [
   }),
 
   // 전체 쿠폰 불러오기
-  rest.get('/coupons', async (req, res, ctx) => {
+  rest.get(FETCH_URL.allCoupon, async (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(mockCouponData), ctx.delay(300));
+  }),
+
+  // 쿠폰 삭제하기
+  rest.get(`${FETCH_URL.allCoupon}/:couponId`, (req, res, ctx) => {
+    const couponId = Number(req.params.couponId);
+
+    const myCoupons = localStorageHelper.getValue<CouponType[]>('myCoupons');
+    const newMyCoupons = myCoupons.filter((coupon) => coupon.id !== couponId);
+
+    localStorageHelper.setValue('myCoupons', newMyCoupons);
+
+    return res(ctx.status(204));
   }),
 ];
