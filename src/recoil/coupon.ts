@@ -55,7 +55,7 @@ export const totalCouponDiscount = selector({
 
         if (coupon.discount.type === "rate") return sum + price * (coupon.discount.amount / 100);
         if (coupon.discount.type === "price")
-          return price < coupon.discount.amount ? price : coupon.discount.amount;
+          return price < coupon.discount.amount ? sum + price : sum + coupon.discount.amount;
         return sum;
       }, 0),
 });
