@@ -14,14 +14,18 @@ export interface CartProduct {
 
 export interface Cart {
   cartItems: CartProduct[];
-  userPoint: number;
-  minUsagePoints: number;
 }
 
-export type OrderProduct = Omit<CartProduct, 'cartItemId'>;
+export interface ScheduledOrder extends Cart {
+  totalProductPrice: number;
+  totalDeliveryFee: number;
+  usePoint: number;
+  totalPrice: number;
+}
+
 export interface Order {
   orderId: number;
   orderDateTime: string;
-  orderItems: OrderProduct[];
+  orderItems: CartProduct[];
   totalPrice: number;
 }
