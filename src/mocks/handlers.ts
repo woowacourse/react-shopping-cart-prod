@@ -1,6 +1,7 @@
 import {
   deleteCartItems,
   getCartItems,
+  getCoupons,
   getOrderDetail,
   getOrderList,
   getProducts,
@@ -18,4 +19,5 @@ export const handlers = [
   postOrder,
   getOrderList,
   getOrderDetail,
+  getCoupons,
 ];
