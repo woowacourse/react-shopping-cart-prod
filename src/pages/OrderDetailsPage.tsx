@@ -1,28 +1,37 @@
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
+import { hostNameAtom } from '../recoil/hostData';
 import OrderProductList from '../components/Order/OrderProductList';
 import PaymentInfoBox from '../components/Order/PaymentInfoBox';
 import Title from '../components/Common/Title';
-import orderProducts from '../mocks/data/orderProduct.json';
+import { orderApi } from '../apis/orderProducts';
+import type { OrderedDetails } from '../types/product';
 
 const OrderDetailsPage = () => {
-  const { orderId } = useParams();
-  const filteredOrders = orderProducts.filter(
-    (order) => order.orderId === Number(orderId)
-  );
+  const hostName = useRecoilValue(hostNameAtom);
+  const [orderDetails, setOrderDetails] = useState<OrderedDetails | null>(null);
+  const { orderId } = useParams<{ orderId?: string }>();
+  const currentOrderId = orderId!;
+
+  useEffect(() => {
+    orderApi(hostName).then((apiInstance) => {
+      apiInstance.fetchOrderDetailsProduct(currentOrderId).then((data) => {
+        setOrderDetails(data);
+      });
+    });
+  }, [hostName]);
 
   return (
     <Main>
       <Title>주문 내역 상세</Title>
-      {filteredOrders.map((orderProduct) => (
+      {orderDetails && (
         <>
-          <OrderProductList
-            orderProducts={orderProduct}
-            key={orderProduct.orderId}
-          />
-          <PaymentInfoBox totalPrice={orderProduct.totalPrice} />
+          <OrderProductList orderProducts={orderDetails} />
+          <PaymentInfoBox totalPrice={orderDetails.totalPrice} />
         </>
-      ))}
+      )}
     </Main>
   );
 };

@@ -2,8 +2,9 @@ import { rest } from 'msw';
 import products from './data/products.json';
 import cartProductsData from './data/cartProducts.json';
 import orderProducts from './data/orderProducts.json';
+import orderDetailsProducts from './data/orderDetailProducts.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
-import { OrderData } from '../types/product';
+import type { OrderedData } from '../types/product';
 
 const cartProducts = cartProductsData.cartItems;
 
@@ -26,6 +27,10 @@ export const handlers = [
 
   rest.get('/orders', (req, res, ctx) => {
     return res(ctx.delay(200), ctx.status(200), ctx.json(orderProducts));
+  }),
+
+  rest.get(`/orders/1`, (req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200), ctx.json(orderDetailsProducts));
   }),
 
   rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
@@ -62,7 +67,7 @@ export const handlers = [
     );
   }),
 
-  rest.post<{ orderData: OrderData }>('/orders', (req, res, ctx) => {
+  rest.post<{ orderData: OrderedData }>('/orders', (req, res, ctx) => {
     const orderId = Date.now();
 
     const location = `/orders/${orderId}`;

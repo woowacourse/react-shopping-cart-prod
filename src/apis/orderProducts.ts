@@ -1,5 +1,9 @@
 import { servers } from '../constants/server';
-import type { OrderData, OrderDetails } from '../types/product';
+import type {
+  OrderedData,
+  OrderedDetails,
+  OrderedProduct,
+} from '../types/product';
 import type { HostNameType } from '../types/server';
 
 const email = process.env.REACT_APP_EMAIL;
@@ -17,11 +21,25 @@ export const orderApi = async (hostName: HostNameType) => {
       },
     });
 
-    const data: OrderDetails[] = await response.json();
+    const data: OrderedProduct[] = await response.json();
     return data;
   };
 
-  const postOrderProduct = async (orderData: OrderData) => {
+  const fetchOrderDetailsProduct = async (orderId: string) => {
+    const URL = `${servers[hostName]}/orders/${orderId}`;
+
+    const response = await fetch(URL, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
+
+    const data: OrderedDetails = await response.json();
+    return data;
+  };
+
+  const postOrderProduct = async (orderData: OrderedData) => {
     const response = await fetch(URL, {
       method: 'POST',
       headers: {
@@ -46,6 +64,7 @@ export const orderApi = async (hostName: HostNameType) => {
 
   return {
     fetchOrderProducts,
+    fetchOrderDetailsProduct,
     postOrderProduct,
   };
 };
