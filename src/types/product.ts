@@ -14,6 +14,9 @@ export interface CartProduct {
 
 export interface CartDetails {
   cartItems: CartProduct[];
+}
+
+export interface Point {
   userPoint: number;
   minUsagePoint: number;
 }

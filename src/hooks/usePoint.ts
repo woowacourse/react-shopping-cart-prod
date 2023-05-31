@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { cartApi } from '../apis/cartProducts';
 import { useRecoilValue } from 'recoil';
 import { hostNameAtom } from '../recoil/hostData';
+import { fetchPoint } from '../apis/point';
 
 const usePoint = () => {
   const hostName = useRecoilValue(hostNameAtom);
@@ -15,9 +15,8 @@ const usePoint = () => {
 
   useEffect(() => {
     const fetchUserPoints = async () => {
-      const response = await await cartApi(hostName).then((apiInstance) => {
-        return apiInstance.fetchCartProducts();
-      });
+      const response = await fetchPoint(hostName);
+
       setUserPoint(response.userPoint);
       setMinUsagePoint(response.minUsagePoint);
     };
