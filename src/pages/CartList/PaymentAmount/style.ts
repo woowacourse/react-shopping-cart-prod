@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
 type WrapperProps = {
-  position: number;
+  scrollPosition: number;
 };
 
 export const Wrapper = styled.div<WrapperProps>`
-  position: ${(props) => props.position !== 0 && 'fixed'};
+  position: ${(props) => props.scrollPosition > 160 && 'fixed'};
   min-width: 360px;
   max-width: 360px;
   display: grid;
   row-gap: 20px;
 
-  top: ${(props) => 250 - props.position}px;
+  top: ${(props) => props.scrollPosition > 160 && '90'}px;
 
   @media only screen and (max-width: 1200px) {
     // 테블릿
@@ -23,11 +23,12 @@ export const Wrapper = styled.div<WrapperProps>`
 `;
 
 export const Container = styled.div`
-  border: 1px solid #dddddd;
+  /* border: 1px solid #dddddd; */
   color: #333333;
   background-color: #dddddd;
   display: grid;
   row-gap: 2px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   @media only screen and (max-width: 1200px) {
     // 테블릿
     margin-bottom: 40px;

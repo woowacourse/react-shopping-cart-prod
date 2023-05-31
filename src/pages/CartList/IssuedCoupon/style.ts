@@ -7,10 +7,10 @@ export const Container = styled.div`
   column-gap: 20px;
 
   align-self: flex-start;
-  border: 1px solid #dddddd;
   color: #333333;
   background-color: #ffffff;
   padding: 20px 30px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 `;
 
 export const IssuedCouponText = styled.div``;

@@ -20,7 +20,7 @@ import * as S from './style';
 import IssuedCoupon from '../IssuedCoupon';
 
 function PaymentAmount() {
-  const [position, setPosition] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const { orderAmount, deliveryFee, totalOrderPrice, discountAmount, couponDiscountAmount } =
     useRecoilValue(orderAmountState);
   const cartAmount = useRecoilValue(cartItemsAmountState);
@@ -45,8 +45,7 @@ function PaymentAmount() {
 
   const updateScrollYPosition = () => {
     const scrollPosition = window.scrollY;
-    if (scrollPosition > 160) return;
-    setPosition(scrollPosition);
+    setScrollPosition(scrollPosition);
   };
 
   useEffect(() => {
@@ -64,7 +63,7 @@ function PaymentAmount() {
   if (cartAmount === '0') return <></>;
 
   return (
-    <S.Wrapper position={position}>
+    <S.Wrapper scrollPosition={scrollPosition}>
       <IssuedCoupon />
       <S.Container>
         <S.Title aria-label="결제 예상 금액">결제 예상 금액</S.Title>
