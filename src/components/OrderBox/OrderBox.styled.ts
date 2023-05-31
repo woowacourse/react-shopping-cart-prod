@@ -4,7 +4,7 @@ export const OrderBox = styled.li`
   border: 1px solid var(--grey-300);
   border-radius: 8px;
 
-  margin-bottom: 35px;
+  margin-bottom: 45px;
 
   font-size: 13px;
 

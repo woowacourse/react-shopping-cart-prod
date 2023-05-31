@@ -1,10 +1,8 @@
-import { Link } from 'react-router-dom';
-
 import * as styled from './Header.styled';
 
 import { CartSize } from './CartSize/CartSize';
 
-import { CartLogo, UserIcon } from '../../assets/svg';
+import { CartLogo } from '../../assets/svg';
 import { ApiSelector } from './ApiSelector/ApiSelector';
 
 export const Header = () => {

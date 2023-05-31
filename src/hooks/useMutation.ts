@@ -36,9 +36,9 @@ export const useMutation = (method: string) => {
           );
         }
 
-        const location = response.headers.get('location');
+        const responseData = await response.json();
 
-        setState((prev) => ({ ...prev, data: { location } }));
+        setState((prev) => ({ ...prev, data: responseData }));
       } catch ({ message }) {
         const jsonData = JSON.parse(message as string);
         setState((prev) => ({ ...prev, error: jsonData }));

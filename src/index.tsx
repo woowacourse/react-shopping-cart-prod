@@ -5,11 +5,11 @@ import { RecoilRoot } from 'recoil';
 
 import { App } from './App';
 
-import { worker } from './msw/browser';
+import { worker } from './msw/worker';
 
 (async () => {
   if (process.env.REACT_APP_API_DEFAULT) {
-    return;
+    // return;
   }
 
   if (window.location.pathname === '/react-shopping-cart') {

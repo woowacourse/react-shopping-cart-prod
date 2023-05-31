@@ -30,7 +30,7 @@ export const Product = ({ item }: Props) => {
   useEffect(() => {
     if (!addCartResponseData) return;
 
-    const cartItemId = Number(addCartResponseData.location.split('/').pop());
+    const { cartItemId } = addCartResponseData;
 
     addRecoilCartItem(cartItemId, item);
 
