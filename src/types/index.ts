@@ -12,8 +12,8 @@ export interface CartItem {
 }
 
 export interface OrderItem {
-  id: number;
-  order: CartItem[];
+  orderId: number;
+  orderProducts: CartItem[];
 }
 
 export type ToastType = 'success' | 'error';
