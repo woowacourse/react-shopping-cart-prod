@@ -93,8 +93,8 @@ export const products: Product[] = [
 
 export const mockOrder = [
   {
-    id: 1,
-    order: [
+    orderId: 1,
+    orderProducts: [
       {
         id: 1,
         quantity: 3,
@@ -119,8 +119,8 @@ export const mockOrder = [
     ],
   },
   {
-    id: 2,
-    order: [
+    orderId: 2,
+    orderProducts: [
       {
         id: 1,
         quantity: 3,
