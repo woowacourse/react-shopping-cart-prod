@@ -1,77 +1,27 @@
-import { useEffect, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { Suspense } from 'react';
 import { styled } from 'styled-components';
-import Counter from '../../common/Counter/Counter';
 import Image from '../../common/Image/Image';
 import SmallCartIcon from '../../../assets/icons/SmallCartIcon';
 import { formatPrice } from '../../../utils/formatPrice';
-import useCartService from '../../../hooks/useCartService';
-import productQuantityInCart from '../../../globalState/selectors/productQuantityInCart';
 import type { Product } from '../../../types/product';
-import getCartStateController from '../../../globalState/selectors/getCartStateController';
-import getCartItemId from '../../../globalState/selectors/getCartItemId';
+import ProductCounter from '../ProductCounter/ProductCounter';
 
 const ProductItem = (product: Product) => {
-  const { id: productId, name, price, imageUrl } = product;
-  const { addCartItem, updateCartItemQuantity, deleteCartItem } = useCartService();
-
-  const cartItemId = useRecoilValue(getCartItemId(productId));
-  const quantityInCart = useRecoilValue(productQuantityInCart(productId));
-  const cartContoller = useRecoilValue(getCartStateController(cartItemId));
-
-  const [count, setCount] = useState(quantityInCart);
-
-  useEffect(() => {
-    if (count === quantityInCart) return;
-
-    setCount(quantityInCart);
-  }, [cartItemId]);
-
-  const updateCount = (quantity: number) => {
-    setCount(quantity);
-
-    if (quantity === 0 || cartItemId === null) return;
-
-    updateCartItemQuantity(cartItemId)(quantity);
-    cartContoller.set(quantity);
-  };
-
-  const handleAddCartButtonClick = async () => {
-    const newCartItemId = await addCartItem(product);
-    setCount(1);
-    cartContoller.add(newCartItemId, 1, product);
-  };
-
-  const handleNoQuantityAction = (quantity: number) => {
-    if (quantity !== 0 || cartItemId === null) return;
-
-    deleteCartItem(cartItemId);
-    cartContoller.delete();
-  };
+  const { id, name, price, imageUrl } = product;
 
   return (
     <ItemContainer>
       <ProductImageWrapper>
         <Image src={imageUrl} alt={name} size="large" />
-        <CartButtonWrapper>
-          {count ? (
-            <Counter
-              count={count}
-              updateCount={updateCount}
-              onClickedButton={handleNoQuantityAction}
-              onBlurredInput={handleNoQuantityAction}
-              onChangedInput={handleNoQuantityAction}
-            />
-          ) : (
-            <CartButton
-              type="button"
-              aria-label="장바구니에 추가하기"
-              onClick={handleAddCartButtonClick}
-            >
+        <Suspense
+          fallback={
+            <Fallback>
               <SmallCartIcon />
-            </CartButton>
-          )}
-        </CartButtonWrapper>
+            </Fallback>
+          }
+        >
+          <ProductCounter id={id} name={name} price={price} imageUrl={imageUrl} />
+        </Suspense>
       </ProductImageWrapper>
       <Contents>
         <div>
@@ -95,12 +45,6 @@ const ProductImageWrapper = styled.div`
   position: relative;
 `;
 
-const CartButtonWrapper = styled.div`
-  position: absolute;
-  right: 8px;
-  bottom: 8px;
-`;
-
 const Contents = styled.div`
   display: flex;
   justify-content: space-between;
@@ -119,13 +63,15 @@ const Price = styled.p`
   font-weight: 400;
 `;
 
-const CartButton = styled.button`
-  background: #fff;
-  border: 1px solid #dddddd;
+const Fallback = styled.div`
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
 
   padding: 7px;
 
-  cursor: pointer;
+  background: #ffffff;
+  border: 1px solid #dddddd;
 `;
 
 export default ProductItem;
