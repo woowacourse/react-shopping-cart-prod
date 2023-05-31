@@ -27,9 +27,7 @@ export const useSetCart = (productId?: number) => {
           )
         );
       })
-      .catch((error) => {
-        alert(error.message);
-      });
+      .catch((error) => alert(error.message));
   };
 
   const addToCart = async () => {
@@ -49,7 +47,7 @@ export const useSetCart = (productId?: number) => {
         },
       ]);
     } catch (error) {
-      alert(error);
+      if (error instanceof Error) alert(error.message);
     }
   };
 
@@ -65,9 +63,7 @@ export const useSetCart = (productId?: number) => {
           )
         );
       })
-      .catch((error) => {
-        alert(error.message);
-      });
+      .catch((error) => alert(error.message));
   };
 
   return { addToCart, removeItemFromCart, updateCart };
