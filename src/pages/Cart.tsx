@@ -10,7 +10,9 @@ const Cart = () => {
     <Page pageName="장바구니">
       <AsyncBoundary
         SuspenseFallback={<LoadingSpinner />}
-        ErrorFallback={() => <ErrorInfo size="L" />}
+        ErrorFallback={(FallbackProps) => (
+          <ErrorInfo size="L" error={FallbackProps.error} />
+        )}
       >
         <div style={{ display: "flex" }}>
           <CartItemList />

@@ -31,7 +31,7 @@ const OrderStatementList = () => {
     return (
       <Page pageName="주문내역">
         <Wrapper>
-          <ErrorInfo size="M" />
+          <ErrorInfo size="M" error={error} />
         </Wrapper>
       </Page>
     );

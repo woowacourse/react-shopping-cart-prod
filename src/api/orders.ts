@@ -1,6 +1,7 @@
 //실제 api와 연결할때 사용
 // import { ServerId } from "recoil/server";
 
+import { ERROR_MESSAGE } from "constants/errorType";
 import { Order, EachOrderStatement } from "types/domain";
 
 // import { SERVER_LIST, USER_TOKEN } from "./constants";
@@ -26,7 +27,9 @@ export const getOrderStatement = async (): Promise<EachOrderStatement[]> => {
     //   "Content-Type": "application/json",
     // },
   });
-  if (!response.ok) throw new Error(response.statusText);
+  const errorMessage = ERROR_MESSAGE[response.status] ?? ERROR_MESSAGE[0];
+
+  if (!response.ok) throw new Error(errorMessage);
 
   return response.json();
 };

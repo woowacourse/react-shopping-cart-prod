@@ -9,7 +9,9 @@ const Main = () => {
     <Page>
       <AsyncBoundary
         SuspenseFallback={<LoadingSpinner />}
-        ErrorFallback={() => <ErrorInfo size="L" />}
+        ErrorFallback={(FallbackProps) => (
+          <ErrorInfo size="L" error={FallbackProps.error} />
+        )}
       >
         <ItemList />
       </AsyncBoundary>
