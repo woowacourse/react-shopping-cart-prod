@@ -23,7 +23,7 @@ export const OrderedItem = ({ ...information }: OrderedItemProps) => {
                 <S.OrderedItemName>{orderedItem.product.name}</S.OrderedItemName>
                 <S.PriceAndQuantityContainer>
                   <S.OrderedItemPrice>
-                    {priceFormatter(orderedItem.product.discountedPrice)}원
+                    {priceFormatter(orderedItem.product.discountedPrice)}
                   </S.OrderedItemPrice>
                   <S.OrderedItemQuantity>{orderedItem.quantity}개 구매</S.OrderedItemQuantity>
                 </S.PriceAndQuantityContainer>

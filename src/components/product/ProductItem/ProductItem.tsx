@@ -58,11 +58,10 @@ const ProductItem = ({ ...information }: ProductItemProps) => {
             {hasDiscounted
               ? priceFormatter(information.discountedPrice)
               : priceFormatter(information.price)}
-            원
           </S.ItemPrice>
           {hasDiscounted && (
             <S.ItemOriginalPrice size="small">
-              {priceFormatter(information.price)}원
+              {priceFormatter(information.price)}
             </S.ItemOriginalPrice>
           )}
         </S.ItemPriceContainer>

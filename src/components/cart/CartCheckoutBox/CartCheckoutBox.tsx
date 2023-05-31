@@ -22,16 +22,16 @@ const CartCheckoutBox = () => {
       <S.CheckoutInformationContainer>
         <S.CheckoutInformationTextContainer>
           <Text>총 상품 가격</Text>
-          <S.CheckoutValueText>{priceFormatter(subTotal)}원</S.CheckoutValueText>
+          <S.CheckoutValueText>{priceFormatter(subTotal)}</S.CheckoutValueText>
         </S.CheckoutInformationTextContainer>
         <S.CheckoutInformationTextContainer>
           <Text>총 배송비</Text>
-          <S.CheckoutValueText>{priceFormatter(shippingFee)}원</S.CheckoutValueText>
+          <S.CheckoutValueText>{priceFormatter(shippingFee)}</S.CheckoutValueText>
         </S.CheckoutInformationTextContainer>
         <S.CheckoutTotalPriceContainer>
           <Text>결제 예상 금액</Text>
           <S.CheckoutTotalPriceValueText>
-            {priceFormatter(totalPrice)}원
+            {priceFormatter(totalPrice)}
           </S.CheckoutTotalPriceValueText>
         </S.CheckoutTotalPriceContainer>
         {isLoading ? (
