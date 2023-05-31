@@ -3,18 +3,19 @@ import { OrderListType } from '../../../types/types';
 import { Text } from '../../common/Text/Text';
 import DetailItem from '../../box/DetailItem/DetailItem';
 
-const DetailList = ({ order }: { order: OrderListType }) => {
+const DetailList = ({ order, isList = true }: { order: OrderListType; isList?: boolean }) => {
   return (
     <DetailListWrapper>
       <ListHeadWrapper>
         <Text size="small" weight="light" lineHeight="20px">
           주문번호: {order.id}
         </Text>
-        {!order.confirmState && (
+        {!isList && !order.confirmState && (
           <ButtonWrapper>
             <Button>주문확정</Button>|<Button>주문취소</Button>
           </ButtonWrapper>
         )}
+        {isList && <Button>상세보기{`>`}</Button>}
       </ListHeadWrapper>
       {order.orderProducts.map((orderProduct) => {
         return <DetailItem key={orderProduct.product.id} orderProduct={orderProduct} />;

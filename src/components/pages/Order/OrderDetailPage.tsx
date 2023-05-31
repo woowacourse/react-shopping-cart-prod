@@ -46,7 +46,7 @@ const OrderDetailPage = () => {
     >
       <DetailPageWrapper>
         <DetailWrapper>
-          <DetailList order={order} />
+          <DetailList order={order} isList={false} />
         </DetailWrapper>
         <PriceBox
           originalPrice={originalPrice}

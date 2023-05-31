@@ -4,6 +4,7 @@ import PageTemplate from '../../templates/PageTemplate';
 import DetailList from '../../list/DetailList/DetailList';
 import useOrderFetch from '../../../hooks/useOrderFetch';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const OrderPage = () => {
   useEffect(() => {
@@ -27,7 +28,11 @@ const OrderPage = () => {
             ?.slice(0)
             .reverse()
             .map((order) => {
-              return <DetailList key={order.id} order={order} />;
+              return (
+                <Link key={order.id} to={`/orders/${order.id}`}>
+                  <DetailList order={order} />
+                </Link>
+              );
             })}
         </DetailWrapper>
       </DetailPageWrapper>
