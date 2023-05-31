@@ -1,15 +1,10 @@
-import { useEffect, useRef } from 'react';
-import {
-  useRecoilRefresher_UNSTABLE,
-  useRecoilValue,
-  useResetRecoilState,
-} from 'recoil';
+import { useEffect } from 'react';
+import { useRecoilRefresher_UNSTABLE, useResetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import CartItem from '../CartItem/CartItem';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import useCartService from '../../../hooks/useCartService';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
-import serverNameState from '../../../globalState/atoms/serverName';
 import cartState from '../../../globalState/atoms/cartState';
 import fetchCartItemList from '../../../globalState/selectors/fetchCartItemList';
 
@@ -22,10 +17,8 @@ const CartList = () => {
   } = useCheckedCartListValue();
   const { cartList, deleteCartItem } = useCartService();
 
-  const serverName = useRecoilValue(serverNameState);
   const refreshFetchCartList = useRecoilRefresher_UNSTABLE(fetchCartItemList);
   const resetCart = useResetRecoilState(cartState);
-  const isMountCycle = useRef(true);
 
   const handleAllCheckBoxChange = () => {
     if (isAllChecked()) {
@@ -54,15 +47,6 @@ const CartList = () => {
     refreshFetchCartList();
     resetCart();
   }, []);
-
-  useEffect(() => {
-    if (isMountCycle.current) {
-      isMountCycle.current = false;
-      return;
-    }
-
-    resetCart();
-  }, [serverName]);
 
   return (
     <CartListContainer>

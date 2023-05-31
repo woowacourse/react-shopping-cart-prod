@@ -1,17 +1,13 @@
-import { useEffect, useRef } from 'react';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import ProductItem from '../ProductItem/ProductItem';
 import useFetch from '../../../hooks/api/useFetch';
 import { Product } from '../../../types/product';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
-import cartState from '../../../globalState/atoms/cartState';
+import useChangeServer from '../../../hooks/useChangeServer';
 
 const ProductList = () => {
-  const isMountCycle = useRef(true);
-  const resetFetchCartList = useResetRecoilState(cartState);
-
   const serverName = useRecoilValue(serverNameState);
   const productsUrl = ServerUtil.getProductsUrl(serverName);
 
@@ -23,14 +19,7 @@ const ProductList = () => {
 
   const productList = getData();
 
-  useEffect(() => {
-    if (isMountCycle.current) {
-      isMountCycle.current = false;
-      return;
-    }
-
-    resetFetchCartList();
-  }, [serverName]);
+  useChangeServer();
 
   return (
     <section>
