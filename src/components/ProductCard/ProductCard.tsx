@@ -44,7 +44,7 @@ const ProductCard = ({
 
   return (
     <Container>
-      <ProductImg imageUrl={imageUrl} />
+      <ProductImg imageUrl={imageUrl} isProductCard={true} />
       <ProductDetail>
         <ProductInfo name={name} price={price} />
         {count && count > 0 ? (

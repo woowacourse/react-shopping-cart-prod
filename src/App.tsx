@@ -25,7 +25,7 @@ const Layout = styled.div`
   display: flex;
   justify-content: center;
 
-  padding: 64px 0px;
+  padding: 32px 0px;
 
   width: 100%;
   min-width: ${WIDTH.SM};
