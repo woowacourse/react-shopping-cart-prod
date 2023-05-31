@@ -4,6 +4,7 @@ import CartPage from './pages/CartPage';
 import Header from './common/header/Header';
 import EventPage from './pages/EventPage';
 import OrderDetailPage from './pages/Order/OrderDetailPage';
+import OrderPage from './pages/Order/OrderPage';
 
 const Router = () => {
   return (
@@ -13,6 +14,7 @@ const Router = () => {
         <Route path="/" element={<ProductPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/event" element={<EventPage />} />
+        <Route path="/orders" element={<OrderPage />} />
         <Route path="/orders/:orderId" element={<OrderDetailPage />} />
       </Routes>
     </BrowserRouter>

@@ -6,14 +6,14 @@ import { Text } from '../../common/Text/Text';
 
 interface PriceBoxProps {
   originalPrice: number;
-  discountPrice: number;
+  finalPrice: number;
   shippingFee: number;
   coupon?: CouponType;
 }
 
 const PriceBox = ({
   originalPrice,
-  discountPrice,
+  finalPrice: discountPrice,
   shippingFee,
   coupon = undefined,
 }: PriceBoxProps) => {

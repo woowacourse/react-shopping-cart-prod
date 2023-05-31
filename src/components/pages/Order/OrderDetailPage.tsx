@@ -38,7 +38,7 @@ const OrderDetailPage = () => {
   if (!orderDetailData) {
     return <ErrorBox errorType="emptyList" />;
   }
-  const { originalPrice, discountPrice, coupon, ...order } = orderDetailData;
+  const { originalPrice, discountPrice: finalPrice, coupon, ...order } = orderDetailData;
   return (
     <PageTemplate
       title="장바구니 미션- 주문 상세보기 페이지"
@@ -50,7 +50,7 @@ const OrderDetailPage = () => {
         </DetailWrapper>
         <PriceBox
           originalPrice={originalPrice}
-          discountPrice={discountPrice}
+          finalPrice={finalPrice}
           shippingFee={3000}
           coupon={coupon}
         />

@@ -4,7 +4,7 @@ import { CouponType, IssuableCouponType } from '../types/types';
 const useCouponFetch = () => {
   const {
     data: allCoupon,
-    refetch: IssuableRefetch,
+    refetch: issuableRefetch,
     isFetching,
   } = useQuery<IssuableCouponType[]>(
     'allCoupon',
@@ -54,7 +54,7 @@ const useCouponFetch = () => {
     {
       onSuccess: () => {
         userCouponRefetch();
-        IssuableRefetch();
+        issuableRefetch();
       },
       onError: (e) => {
         console.log(e);

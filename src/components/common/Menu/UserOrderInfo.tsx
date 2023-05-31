@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const UserOrderInfo = () => {
   return (
-    <EventInfoWrapper to="/order">
+    <EventInfoWrapper to="/orders">
       <Text color="#ffffff" size="small">
         주문 목록
       </Text>

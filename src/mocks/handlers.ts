@@ -32,6 +32,13 @@ export const handlers = [
     await delay(200);
     return res(ctx.status(200), ctx.json(couponList));
   }),
+  rest.get('/orders', async (_, res, ctx) => {
+    const data = orderList.map((orders) => {
+      const { originalPrice, discountPrice, coupon, ...order } = orders;
+      return order;
+    });
+    return res(ctx.status(200), ctx.json(data));
+  }),
   rest.post('/orders', async (req, res, ctx) => {
     const { couponId } = await req.json<{
       couponId: number;

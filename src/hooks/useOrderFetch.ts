@@ -1,5 +1,6 @@
-import { useMutation } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { OrderListType } from '../types/types';
 
 const useOrderFetch = () => {
   const navigation = useNavigate();
@@ -30,7 +31,26 @@ const useOrderFetch = () => {
     fetchAddOrderData.mutate({ body });
   };
 
-  return { addOrderDataAPI };
+  const { data: orderListData, refetch: orderListRefetch } = useQuery<OrderListType[]>(
+    'orderList',
+    async () => {
+      const res = await fetch(`/orders`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const data = await res.json();
+      return data;
+    },
+    {
+      onError: (e) => {
+        console.log(e);
+      },
+    },
+  );
+  return { addOrderDataAPI, orderListData, orderListRefetch };
 };
 
 export default useOrderFetch;
