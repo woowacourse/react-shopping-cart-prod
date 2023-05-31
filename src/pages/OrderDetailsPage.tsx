@@ -7,11 +7,11 @@ import OrderProductList from '../components/Order/OrderProductList';
 import PaymentInfoBox from '../components/Order/PaymentInfoBox';
 import Title from '../components/Common/Title';
 import { orderApi } from '../apis/orderProducts';
-import type { OrderedDetails } from '../types/product';
+import { OrderedProduct } from '../types/product';
 
 const OrderDetailsPage = () => {
   const hostName = useRecoilValue(hostNameAtom);
-  const [orderDetails, setOrderDetails] = useState<OrderedDetails | null>(null);
+  const [orderDetails, setOrderDetails] = useState<OrderedProduct | null>(null);
   const { orderId } = useParams<{ orderId?: string }>();
   const currentOrderId = orderId!;
 

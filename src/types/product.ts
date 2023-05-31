@@ -30,12 +30,6 @@ export interface OrderedProduct {
   totalPrice: number;
 }
 
-export interface OrderedDetails extends OrderedProduct {
-  totalProductPrice: number;
-  totalDeliveryFee: number;
-  usePoint: number;
-}
-
 export interface OrderedData {
   products: {
     productId: number;

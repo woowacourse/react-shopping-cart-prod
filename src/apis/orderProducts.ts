@@ -1,9 +1,5 @@
 import { servers } from '../constants/server';
-import type {
-  OrderedData,
-  OrderedDetails,
-  OrderedProduct,
-} from '../types/product';
+import type { OrderedData, OrderedProduct } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 const email = process.env.REACT_APP_EMAIL;
@@ -35,7 +31,7 @@ export const orderApi = async (hostName: HostNameType) => {
       },
     });
 
-    const data: OrderedDetails = await response.json();
+    const data: OrderedProduct = await response.json();
     return data;
   };
 
