@@ -21,7 +21,7 @@ const StyledOrderList = styled.ul`
   width: 100%;
 
   & > li:not(:last-child) {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.gray100};
+    border-bottom: 1px solid #aaaaaa;
   }
 `;
 

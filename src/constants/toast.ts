@@ -51,4 +51,9 @@ export const TOAST_STATE = {
     variant: 'error',
     duration: 2000,
   },
+  failedGetOrderDetail: {
+    message: '주문 상세 정보를 불러오지 못했어요',
+    variant: 'error',
+    duration: 2000,
+  },
 } as const;

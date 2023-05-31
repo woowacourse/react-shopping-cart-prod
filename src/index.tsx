@@ -11,6 +11,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import ProductsListPage from './pages/ProductsListPage';
 import CartPage from './pages/CartPage';
 import OrderPage from './pages/OrderPage';
+import OrderDetailPage from './pages/OrderDetailPage';
 
 import { worker } from './mocks/browser';
 
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
         { path: '', element: <ProductsListPage /> },
         { path: '/cart', element: <CartPage /> },
         { path: '/order', element: <OrderPage /> },
+        { path: '/orderDetail', element: <OrderDetailPage /> },
       ],
     },
   ],
