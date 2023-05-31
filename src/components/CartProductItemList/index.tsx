@@ -4,6 +4,7 @@ import useCart from 'src/hooks/useCart';
 import { $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import CartProductItem from 'src/components/CartProductItem';
 import type { CartItem } from 'src/types';
+import CheckBox from '../Common/CheckBox';
 import styles from './index.module.scss';
 
 function CartProductItemList() {
@@ -47,11 +48,10 @@ function CartProductItemList() {
         ))}
       </section>
       <div className={styles['check-menu']}>
-        <input
-          type="checkbox"
-          className={styles['check-box']}
-          onChange={checkAllCartItem}
+        <CheckBox
+          changeHandler={checkAllCartItem}
           checked={cartList.length === checkedCartIdList.length}
+          size="large"
         />
         <div>전체 선택 ({`${checkedCartIdList.length}/${cartList.length}`})</div>
         <button type="button" onClick={deleteCheckedCartItem}>

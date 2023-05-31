@@ -2,6 +2,7 @@ import { ReactComponent as TrashBox } from 'src/assets/trash-box.svg';
 import CountButton from 'src/components/Common/CountButton';
 import type { CartItem } from 'src/types';
 import styles from './index.module.scss';
+import CheckBox from '../Common/CheckBox';
 
 interface CartProductItemProps {
   cartItem: CartItem;
@@ -30,7 +31,7 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
 
   return (
     <div className={styles.container}>
-      <input type="checkbox" className={styles['check-box']} onChange={toggleCheck} checked={checked} />
+      <CheckBox changeHandler={toggleCheck} checked={checked} />
       <img src={imageUrl} alt={name} className={styles.image} />
       <div className={styles['item-info']}>
         <div>
