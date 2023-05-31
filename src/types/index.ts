@@ -18,3 +18,16 @@ export interface CouponItemType {
   minAmount: string;
   isPublished: boolean;
 }
+
+export interface OrderItemType {
+  id: number;
+  name: string;
+  imageUrl: string;
+  price: number;
+  quantity: number;
+}
+
+export interface OrderItemListType {
+  id: number;
+  products: OrderItemType[];
+}
