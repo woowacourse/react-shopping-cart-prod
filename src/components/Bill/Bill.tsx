@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
+import { styled } from 'styled-components';
 import {
   useRecoilRefresher_UNSTABLE,
   useRecoilValue,
   useSetRecoilState,
 } from 'recoil';
-import { styled } from 'styled-components';
 import {
   cartAtom,
   isSelectedListAtom,
@@ -14,27 +15,25 @@ import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../store/path';
 import useFetchOrder from '../../hooks/useFetchOrder';
 import { orderAtom } from '../../store/order';
-import { useEffect, useState } from 'react';
+import {
+  DELIVERY_FEE,
+  DISCOUNT,
+  DISCOUNT_BOUNDARY,
+} from '../../constants/policy';
+import getDiscountAmount from '../../util/getDiscountAmount';
 
 const Bill = () => {
   const isSelectedList = useRecoilValue(isSelectedListAtom);
   const setCartList = useSetRecoilState(cartAtom);
   const refreshOrderList = useRecoilRefresher_UNSTABLE(orderAtom);
   const { postOrders } = useFetchOrder();
-  const totalAmount = useRecoilValue(totalAmountAtom);
-  const deliveryFee = 3000;
+  const totalProductAmount = useRecoilValue(totalAmountAtom);
   const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
-    if (totalAmount > 50000) {
-      setDiscount(5000);
-      return;
-    }
-    if (totalAmount > 30000) {
-      setDiscount(3000);
-      return;
-    }
-  }, [totalAmount]);
+    const discountAmount = getDiscountAmount(totalProductAmount);
+    setDiscount(discountAmount);
+  }, [totalProductAmount]);
 
   const navigate = useNavigate();
 
@@ -58,23 +57,29 @@ const Bill = () => {
       <SubTitle>결제예상금액</SubTitle>
       <DetailWrapper>
         <Detail>
-          총 상품가격 <span>₩ {totalAmount.toLocaleString()}</span>
+          총 상품가격 <span>₩ {totalProductAmount.toLocaleString()}</span>
         </Detail>
         <Detail>
           할인 금액 <span>− ₩ {discount.toLocaleString()}</span>
         </Detail>
         <Detail>
-          배송비 <span>₩ {deliveryFee.toLocaleString()}</span>
+          배송비 <span>₩ {DELIVERY_FEE.toLocaleString()}</span>
         </Detail>
         <TotalAmount>
           총 주문금액
           <span>
-            ₩ {(totalAmount + deliveryFee - discount).toLocaleString()}
+            ₩ {(totalProductAmount + DELIVERY_FEE - discount).toLocaleString()}
           </span>
         </TotalAmount>
         <MessageWrapper>
-          <Message>3 만원 이상 주문시 ₩ 3000 할인</Message>
-          <Message>5 만원 이상 주문시 ₩ 5000 할인</Message>
+          <Message>
+            {DISCOUNT_BOUNDARY.FIRST / 10000} 만원 이상 주문시 ₩{' '}
+            {DISCOUNT.OVER_30000} 할인
+          </Message>
+          <Message>
+            {DISCOUNT_BOUNDARY.SECOND / 10000} 만원 이상 주문시 ₩{' '}
+            {DISCOUNT.OVER_50000} 할인
+          </Message>
         </MessageWrapper>
         <OrderButton onClick={onClickOrder}>주문하기</OrderButton>
       </DetailWrapper>
@@ -115,7 +120,7 @@ const DetailWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 24px;
+  gap: 16px;
 
   width: 100%;
 

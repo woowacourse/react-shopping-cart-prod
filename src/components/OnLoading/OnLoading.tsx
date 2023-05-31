@@ -30,7 +30,7 @@ const OnLoading = () => {
       <LoadingContainer>
         {loadingText &&
           loadingText.split('').map((char, index) => (
-            <LoadingText key={index} delay={index * 0.1}>
+            <LoadingText key={index} delay={index * 0.05}>
               {char}
             </LoadingText>
           ))}
