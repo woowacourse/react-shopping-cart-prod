@@ -2,10 +2,10 @@ import type { CartProduct } from '../types/product';
 
 export const findTargetProduct = (
   cartProducts: CartProduct[],
-  cartProductId: number
+  productId: number
 ) =>
   cartProducts.find(
-    (cartProduct) => cartProductId === cartProduct.product.productId
+    (cartProduct) => productId === cartProduct.product.productId
   );
 
 export const deleteCartProduct = (
