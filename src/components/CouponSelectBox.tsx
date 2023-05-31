@@ -1,44 +1,46 @@
 import { useState } from "react";
-import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { ArrowDownIcon } from "../assets";
+import { CouponType } from "../types/domain";
 
-// {
-//   id,
-//   name,
-//   minPrice,
-//   isAvailable,
-//   discountPrice,
-// }: CouponType
+export const CouponSelectBox = ({
+  coupons,
+  onSelectHandler,
+}: {
+  coupons: CouponType[];
+  onSelectHandler: (index: number) => void;
+}) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [coupon, setCoupon] = useState<string | null>(null);
 
-export const CouponSelectBox = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const handleCouponClicked = (coupon: string, index: number) => () => {
+    onSelectHandler(index);
+    setCoupon(coupon);
+    setIsOpen(false);
+  };
 
   return (
     <Wrapper>
       <TitleContainer $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
-        <p>쿠폰적용하기</p>
+        <p>{coupon ? coupon : "쿠폰적용하기"}</p>
         <img src={ArrowDownIcon} alt="화살표" />
       </TitleContainer>
-      {isOpen && (
-        <>
-          <CouponContainer>
-            <NameBox>반짝할인 10% 할인 쿠폰</NameBox>
-            <MinPriceBox>10,000원 이상 주문 시</MinPriceBox>
-            <DiscountPriceBox>-600,000원</DiscountPriceBox>
+      {isOpen &&
+        coupons.map((coupon, index) => (
+          <CouponContainer
+            key={coupon.id}
+            onClick={handleCouponClicked(coupon.name, index)}
+            $isAvailable={coupon.isAvailable}
+          >
+            <NameBox>{coupon.name}</NameBox>
+            <MinPriceBox>
+              {coupon.minPrice.toLocaleString()}원 이상 주문 시
+            </MinPriceBox>
+            <DiscountPriceBox>
+              -{coupon.discountPrice.toLocaleString()}원
+            </DiscountPriceBox>
           </CouponContainer>
-          <CouponContainer>
-            <NameBox>반짝할인 30% 할인 쿠폰</NameBox>
-            <MinPriceBox>30,000원 이상 주문 시</MinPriceBox>
-            <DiscountPriceBox>-3,000,000원</DiscountPriceBox>
-          </CouponContainer>
-          <CouponContainer>
-            <NameBox>배송비 무료 쿠폰</NameBox>
-            <MinPriceBox>50,000원 이상 주문 시</MinPriceBox>
-            <DiscountPriceBox>-3,000원</DiscountPriceBox>
-          </CouponContainer>
-        </>
-      )}
+        ))}
     </Wrapper>
   );
 };
@@ -80,7 +82,7 @@ const TitleContainer = styled.div<{ $isOpen: boolean }>`
   }
 `;
 
-const CouponContainer = styled.div`
+const CouponContainer = styled.div<{ $isAvailable: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -99,9 +101,8 @@ const CouponContainer = styled.div`
     transform: scale(0.95);
   }
 
-  // disabled 된 쿠폰 css
-  /* background: #dddddd;
-  color: var(--gray); */
+  background: ${(props) => (props.$isAvailable ? "white" : "#dddddd")};
+  color: ${(props) => (props.$isAvailable ? "var(--dark-gray)" : "white")};
 `;
 
 const DiscountPriceBox = styled.div`

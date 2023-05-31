@@ -9,11 +9,13 @@ import { Button } from "./Button";
 interface TotalPriceTableType {
   status: "cart" | "order";
   discountPrice?: number;
+  handlePaymentClicked?: () => void;
 }
 
 export const TotalPriceTable = ({
   status,
   discountPrice,
+  handlePaymentClicked,
 }: TotalPriceTableType) => {
   const { goPage } = useRouter();
   const totalPrice = useRecoilValue(totalPriceSelector);
@@ -26,10 +28,10 @@ export const TotalPriceTable = ({
         <p>총 상품가격</p>
         <p>{totalPrice.toLocaleString()}원</p>
       </RowContainer>
-      {status === "order" && (
+      {status === "order" && discountPrice !== 0 && (
         <DiscountPriceBox>
-          <p>ㄴ 상품할인금액</p>
-          <p>-3,000원</p>
+          <p>ㄴ 쿠폰할인금액</p>
+          <p>-{discountPrice?.toLocaleString()}원</p>
         </DiscountPriceBox>
       )}
       <RowContainer>
@@ -38,16 +40,21 @@ export const TotalPriceTable = ({
       </RowContainer>
       <RowContainer>
         <p>총 주문금액</p>
-        <p>{(totalPrice + deliveryFee).toLocaleString()}원</p>
+        <p>
+          {(
+            totalPrice +
+            deliveryFee -
+            (discountPrice ? discountPrice : 0)
+          ).toLocaleString()}
+          원
+        </p>
       </RowContainer>
       {status === "cart" ? (
         <Button disabled={totalPrice === 0} onClick={goPage(ROUTER_PATH.Order)}>
           주문하기
         </Button>
       ) : (
-        <Button onClick={() => alert("결제에 성공하셨습니다~")}>
-          결제하기
-        </Button>
+        <Button onClick={handlePaymentClicked}>결제하기</Button>
       )}
     </Wrapper>
   );
