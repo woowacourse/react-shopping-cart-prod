@@ -1,55 +1,27 @@
-interface ServerByCrewType {
-  [name: string]: {
-    url: string;
-    user: { id: number; username: string; password: string }[];
-  };
-}
+import { ServerName } from 'types/ServerType';
 
-export const SERVER_BY_CREW: ServerByCrewType = {
-  MSW: {
-    url: 'msw',
-    user: [
-      { id: 1, username: 'pizza1@pizza.com', password: 'pizza' },
-      { id: 2, username: 'pizza2@pizza.com', password: 'pizza' },
-    ],
-  },
+export const USER_INFO = [
+  { id: 1, username: 'pizza1@pizza.com', password: 'pizza' },
+  { id: 2, username: 'pizza2@pizza.com', password: 'pizza' },
+] as const;
 
-  마코: {
-    url: 'https://m4co.shop',
-    user: [
-      { id: 1, username: 'pizza1@pizza.com', password: 'pizza' },
-      { id: 2, username: 'pizza2@pizza.com', password: 'pizza' },
-    ],
-  },
-  허브: {
-    url: 'https://h3rb.shop',
-    user: [
-      { id: 1, username: 'pizza1@pizza.com', password: 'pizza' },
-      { id: 2, username: 'pizza2@pizza.com', password: 'pizza' },
-    ],
-  },
-  우가: {
-    url: 'https://wuga.shop',
-    user: [
-      { id: 1, username: 'pizza1@pizza.com', password: 'pizza' },
-      { id: 2, username: 'pizza2@pizza.com', password: 'pizza' },
-    ],
-  },
+export const SERVER_BY_CREW = {
+  MSW: 'msw',
+  마코: 'https://m4co.shop',
+  허브: 'https://h3rb.shop',
+  우가: 'https://wuga.shop',
+} as const;
+
+export const CREW_NAMES = Object.keys(SERVER_BY_CREW);
+
+export const getServerURL = (serverName: ServerName) => {
+  return SERVER_BY_CREW[serverName];
 };
 
-export type CrewName = keyof typeof SERVER_BY_CREW;
+export const getCredential = (userId: number) => {
+  const userInfo = USER_INFO.find((user) => user.id === userId);
 
-export const getServerURL = (crew: CrewName) => {
-  return SERVER_BY_CREW[crew].url;
-};
+  if (!userInfo) throw new Error('id에 맞는 user가 없어 credential을 만들 수 없습니다.');
 
-export const getCredential = (crew: CrewName, userId: number) => {
-  const users = SERVER_BY_CREW[crew].user;
-  const targetUser = users.find((user) => user.id === userId);
-
-  if (!targetUser) throw new Error(`id에 해당하는 user가 존재하지 않습니다.`);
-
-  const { username, password } = targetUser;
-
-  return btoa(`${username}:${password}`);
+  return btoa(`${userInfo.username}:${userInfo.password}`);
 };
