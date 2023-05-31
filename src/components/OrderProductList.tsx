@@ -28,7 +28,7 @@ const OrderProduct = ({
   quantity,
 }: LocalProductType) => {
   return (
-    <ProductWrapper>
+    <ProductWrapper key={id}>
       <img src={imageUrl} alt="상품이미지" />
       <InfoContainer>
         <Container>

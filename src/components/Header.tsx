@@ -135,9 +135,8 @@ const NavContainer = styled.div`
   display: flex;
   align-items: center;
 
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 500;
-
   cursor: pointer;
 
   @media screen and (max-width: 850px) {
@@ -148,13 +147,12 @@ const NavContainer = styled.div`
 const CartContainer = styled.section`
   display: flex;
   align-items: center;
-  gap: 8px;
-
-  cursor: pointer;
+  gap: 10px;
 
   & > span {
     font-size: 14px;
-    color: var(--light-gray);
+    color: gray;
+    align-self: flex-end;
   }
 `;
 
@@ -176,20 +174,22 @@ const OrderBox = styled.p<{ pathname: string }>`
 `;
 
 const ItemQuantityBox = styled.div`
-  position: absolute;
-  top: -11px;
-  right: -11px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 18px;
   height: 18px;
 
+  position: absolute;
+  top: -11px;
+  right: -11px;
+
+  padding-top: 3px;
   background: var(--mintish-green);
   border-radius: 50%;
 
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   color: white;
 `;
 
@@ -197,14 +197,13 @@ const SelectBox = styled.select`
   width: 65px;
   height: 40px;
 
-  font-size: 18px;
-  font-weight: 600;
   padding: 0 5px;
-
+  margin-right: 10px;
   border-radius: 4px;
   background: var(--light-gray);
 
-  margin-right: 10px;
+  font-size: 18px;
+  font-weight: 600;
 
   @media screen and (max-width: 850px) {
     width: 70px;

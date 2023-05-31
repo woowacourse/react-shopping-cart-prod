@@ -144,6 +144,7 @@ const ProductWrapper = styled.section`
     width: 130px;
     height: 130px;
     border-radius: 5px;
+    object-fit: cover;
 
     @media screen and (max-width: 850px) {
       width: 100px;
