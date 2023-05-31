@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Providers from '../../../stories/Providers';
+import Providers from '../../stories/Providers';
 import { UserSelector } from '.';
 
 const meta = {

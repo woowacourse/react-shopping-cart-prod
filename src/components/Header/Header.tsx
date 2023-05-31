@@ -6,7 +6,7 @@ import * as S from './Header.style';
 import { useRecoilValue } from 'recoil';
 import { cartCountSelector } from '../../recoil/cartAtoms';
 import ServerSelectBox from './ServerSelectBox/ServerSelectBox.tsx';
-import UserSelector from './UserSelector/UserSelector.tsx';
+import UserSelector from '../UserSelector/UserSelector.tsx';
 import { PAGE_PATH } from '../../constants/path.ts';
 import NavCartIcon from '../../assets/nav-cart.svg';
 import NavOrderListIcon from '../../assets/list.svg';

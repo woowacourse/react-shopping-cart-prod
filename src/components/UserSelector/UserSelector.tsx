@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
-import * as S from './UserSelector.style';
+import * as S from './UserSelector.style.ts';
 import UserProfileImage from '../../../assets/user.svg';
-import useClickOutside from '../../../hooks/useClickOutside.ts';
+import useClickOutside from '../../hooks/useClickOutside.ts';
 
 const UserSelector = () => {
   const ref = useRef<HTMLDivElement>(null);
