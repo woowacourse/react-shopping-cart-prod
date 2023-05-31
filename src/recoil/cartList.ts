@@ -46,3 +46,8 @@ export const totalPriceSelector = selector({
       }, 0);
   },
 });
+
+export const couponIdAtom = atom<number[]>({
+  key: 'couponIdAtom',
+  default: [],
+});
