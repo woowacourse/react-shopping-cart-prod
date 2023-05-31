@@ -24,7 +24,7 @@ const getCartItemId = async (serverName: ServerName, productId: number) => {
 };
 
 const useCartService = () => {
-  const [cartList, setCartList] = useRecoilState(cartState);
+  const [, setCartList] = useRecoilState(cartState);
   const setCartLoading = useSetRecoilState(cartLoadingState);
 
   const serverName = useRecoilValue(serverNameState);
@@ -102,16 +102,11 @@ const useCartService = () => {
     }
   };
 
-  const getCartId = (productId: number) => {
-    return cartList.filter((cartItem) => cartItem.product.id === productId)[0]?.id;
-  };
-
   return {
     fetchCartItem,
     addCartItem,
     updateCartItemQuantity,
     deleteCartItem,
-    getCartId,
   } as const;
 };
 export default useCartService;

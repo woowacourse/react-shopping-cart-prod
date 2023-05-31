@@ -10,13 +10,15 @@ import productQuantityInCart from '../../../globalState/selectors/productQuantit
 import type { Product } from '../../../types/product';
 import cartLoadingState from '../../../globalState/atoms/cartLoadingState';
 import getCartStateController from '../../../globalState/selectors/getCartStateController';
+import getCartItemId from '../../../globalState/selectors/getCartItemId';
 
 const ProductItem = (product: Product) => {
   const { id: productId, name, price, imageUrl } = product;
-  const { addCartItem, updateCartItemQuantity, deleteCartItem, getCartId } = useCartService();
+  const { addCartItem, updateCartItemQuantity, deleteCartItem } = useCartService();
   const isCartLoading = useRecoilValue(cartLoadingState);
 
-  const [cartItemId, setCartItemId] = useState(getCartId(productId));
+  const initialCartItemId = useRecoilValue(getCartItemId(productId));
+  const [cartItemId, setCartItemId] = useState(initialCartItemId);
 
   const quantityInCart = useRecoilValue(productQuantityInCart(productId));
   const cartContoller = useRecoilValue(getCartStateController(cartItemId));
@@ -32,9 +34,9 @@ const ProductItem = (product: Product) => {
   const updateCount = (quantity: number) => {
     setCount(quantity);
 
-    if (quantity === 0) return;
+    if (quantity === 0 || cartItemId === null) return;
 
-    updateCartItemQuantity(getCartId(productId))(quantity);
+    updateCartItemQuantity(cartItemId)(quantity);
     cartContoller.set(quantity);
   };
 
@@ -46,10 +48,10 @@ const ProductItem = (product: Product) => {
   };
 
   const handleNoQuantityAction = (quantity: number) => {
-    if (quantity !== 0) return;
+    if (quantity !== 0 || cartItemId === null) return;
 
-    const cartId = getCartId(productId);
-    deleteCartItem(cartId);
+    // const cartId = getCartId(productId);
+    deleteCartItem(cartItemId);
     cartContoller.delete();
   };
 

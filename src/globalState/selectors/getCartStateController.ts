@@ -8,7 +8,7 @@ const getCartStateController = selectorFamily<
     set: (value: number) => void;
     delete: () => void;
   },
-  string
+  string | null
 >({
   key: 'getCartStateController',
 
