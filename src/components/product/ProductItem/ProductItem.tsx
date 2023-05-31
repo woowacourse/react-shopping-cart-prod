@@ -34,8 +34,8 @@ const ProductItem = (product: Product) => {
     updateCartItemQuantity(getCartId(productId))(quantity);
   };
 
-  const handleAddCartButtonClick = () => {
-    addCartItem(product);
+  const handleAddCartButtonClick = async () => {
+    await addCartItem(product);
     setIsDisplayCounter(true);
     setCount(1);
   };

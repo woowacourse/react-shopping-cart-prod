@@ -46,7 +46,7 @@ const useCartService = () => {
       throw new Error('장바구니를 추가하는 과정에서 문제가 발생했습니다.');
     }
 
-    fetchCartItem();
+    await fetchCartItem();
   };
 
   const updateCartItemQuantity = (cartId: string) => async (quantity: number) => {
