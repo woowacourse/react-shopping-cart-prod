@@ -2,12 +2,12 @@ import * as S from './ProductItem.styles';
 import Svg from 'components/@common/Svg';
 import Counter from 'components/@common/Counter';
 import { useCart } from 'components/Cart/hooks/useCart';
-import { Product } from 'types';
 import { useRecoilValue } from 'recoil';
 import { cartListAtom } from 'recoil/cartList';
+import { ProductItem as ProductItemType } from 'types/api/products';
 
 interface ProductItemProps {
-  product: Product;
+  product: ProductItemType;
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {

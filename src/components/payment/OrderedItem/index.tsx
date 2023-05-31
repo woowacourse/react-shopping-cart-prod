@@ -1,23 +1,23 @@
 import React from 'react';
-import { Order } from 'types';
 import * as S from './OrderedItem.styles';
 import ProductItemInOrder from '../ProductItemInOrder';
+import { Order } from 'types/api/orders';
 
-const OrderedItem = ({ item }: { item: Order }) => {
-  const { orderId, products } = item;
+const OrderedItem = ({ order }: { order: Order }) => {
+  const { id, orderedItems } = order;
 
   return (
     <S.Wrapper>
       <S.OrderHeader>
-        <S.OrderNumber>주문번호 : {orderId}</S.OrderNumber>
+        <S.OrderNumber>주문번호 : {id}</S.OrderNumber>
         <S.LinkToOrderDetail to="/">상세보기 ▶</S.LinkToOrderDetail>
       </S.OrderHeader>
       <S.Divider />
       <S.Container>
-        {products.map((product, ind) => (
+        {orderedItems.map((orderedItem, ind) => (
           <>
-            <ProductItemInOrder product={{ ...product, quantity: 3 }} />
-            {ind !== products.length - 1 ? <S.Divider /> : null}
+            <ProductItemInOrder orderedItem={{ ...orderedItem, quantity: 3 }} />
+            {ind !== orderedItems.length - 1 ? <S.Divider /> : null}
           </>
         ))}
       </S.Container>

@@ -3,14 +3,14 @@ import { postCartItem, patchCartItemQuantity, deleteCartItem } from 'api/cart';
 import { useToast } from 'components/@common/Toast/hooks/useToast';
 import { cartListAtom } from 'recoil/cartList';
 import { useMutate } from '../../../hooks/useMutate';
-import { Product } from 'types';
+import { ProductItem } from 'types/api/products';
 
 export const useCart = () => {
   const { request } = useMutate();
   const [cartList, setCartList] = useRecoilState(cartListAtom);
   const { toast } = useToast();
 
-  const addItem = async (product: Product) => {
+  const addItem = async (product: ProductItem) => {
     const res = await request(postCartItem({ productId: product.id }));
     const cartId = Number(
       res.headers.get('Location').replace('/cart-items/', '')

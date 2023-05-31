@@ -3,12 +3,12 @@ import Counter from 'components/@common/Counter';
 import Svg from 'components/@common/Svg';
 import { useCart } from 'components/Cart/hooks/useCart';
 import { useCheckedItemIds } from '../hooks/useCheckedItems';
-import { Cart } from 'types';
 import Modal from 'components/@common/Modal';
 import { useModal } from 'hooks/useModal';
+import { CartItem as CartItemType } from 'types/api/carts';
 
 interface CartItemProps {
-  cartItem: Cart;
+  cartItem: CartItemType;
 }
 
 const CartItem = ({ cartItem }: CartItemProps) => {

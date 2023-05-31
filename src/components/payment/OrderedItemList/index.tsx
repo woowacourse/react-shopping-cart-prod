@@ -1,61 +1,51 @@
 import React, { useState } from 'react';
 import OrderedItem from '../OrderedItem';
-import { Order } from 'types';
 import * as S from './OrderedItemList.styles';
+import { Order } from 'types/api/orders';
 
 const initialList: Order[] = [
   {
-    orderId: 1,
+    id: 1,
     orderedTime: '2023-05-28 21:20:20.316874',
-    products: [
+    orderedItems: [
       {
-        product_id: 1,
-        product_name: '치킨',
-        product_price: 7000,
-        product_imageUrl:
+        id: 1,
+        quantity: 3,
+        name: '치킨',
+        totalPrice: 7000,
+        totalDiscountPrice: 2000,
+        imageUrl:
           'https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73ff604e7b0e6900f9ac53a43965300eb9a',
       },
       {
-        product_id: 2,
-        product_name: '샐러드',
-        product_price: 16000,
-        product_imageUrl:
+        id: 2,
+        quantity: 3,
+        name: '샐러드',
+        totalPrice: 16000,
+        totalDiscountPrice: 2000,
+        imageUrl:
           'https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73ff604e7b0e6900f9ac53a43965300eb9a',
       },
       {
-        product_id: 3,
-        product_name: '피자',
-        product_price: 9700,
-        product_imageUrl:
+        id: 3,
+        quantity: 3,
+        name: '피자',
+        totalPrice: 9700,
+        totalDiscountPrice: 2000,
+        imageUrl:
           'https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73ff604e7b0e6900f9ac53a43965300eb9a',
-      },
-    ],
-    deliveryPrice: {
-      price: 0,
-    },
-    coupons: [
-      {
-        couponId: 1,
-        couponName: '전체 10% 할인 쿠폰',
-      },
-      {
-        couponId: 2,
-        couponName: '전체 2000원 할인 쿠폰',
-      },
-      {
-        couponId: 3,
-        couponName: 'DELIVERY_FREE',
       },
     ],
   },
 ];
 
 const OrderedItemList = () => {
-  const [paymentItems, setPaymentItems] = useState<Order[]>(initialList);
+  const [orderList, setOrderList] = useState<Order[]>(initialList);
+
   return (
     <S.ItemWrapper>
-      {paymentItems.map((item) => (
-        <OrderedItem item={item} />
+      {orderList.map((item) => (
+        <OrderedItem order={item} />
       ))}
     </S.ItemWrapper>
   );

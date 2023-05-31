@@ -1,9 +1,9 @@
 import { getCartList } from 'api/cart';
 import { atom, selector } from 'recoil';
-import { Cart } from 'types';
 import { serverAtom } from './server';
+import { CartItem } from 'types/api/carts';
 
-export const cartListAtom = atom<Cart[]>({
+export const cartListAtom = atom<CartItem[]>({
   key: 'cartList',
   default: selector({
     key: 'initialCartList',

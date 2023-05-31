@@ -1,21 +1,17 @@
 import React from 'react';
-import { ProductInOrder } from 'types';
 import * as S from './ProductItemInOrder.styles';
+import { OrderedItem } from 'types/api/orders';
 
-const ProductItemInOrder = ({
-  product,
-}: {
-  product: ProductInOrder & { quantity: number };
-}) => {
-  const { product_name, product_price, quantity, product_imageUrl } = product;
+const ProductItemInOrder = ({ orderedItem }: { orderedItem: OrderedItem }) => {
+  const { name, imageUrl, quantity, totalPrice } = orderedItem;
 
   return (
     <S.Container>
-      <S.Thumbnail src={product_imageUrl} alt={product_name} />
+      <S.Thumbnail src={imageUrl} alt={name} />
       <S.Detail>
-        <S.Name>{product_name}</S.Name>
+        <S.Name>{name}</S.Name>
         <S.PriceAndQuantity>
-          {product_price * quantity}원 / 수량 : {quantity}개
+          {totalPrice}원 / 수량 : {quantity}개
         </S.PriceAndQuantity>
       </S.Detail>{' '}
     </S.Container>

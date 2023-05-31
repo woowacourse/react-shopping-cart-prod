@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
-import { Cart } from 'types';
 import CartItem from '.';
+import { CartItem as CartItemType } from 'types/api/carts';
 
 const cartItem = {
   component: CartItem,
@@ -11,12 +11,14 @@ const cartItem = {
 
 export default cartItem;
 
-const mock: Cart = {
+const mock: CartItemType = {
   id: 1,
   quantity: 2,
   product: {
     id: 1,
     price: 8000,
+    salePrice: 2000,
+    isOnSale: true,
     name: '춘식이 아이템',
     imageUrl:
       'https://pbs.twimg.com/profile_images/1641252178450083841/Cn2MUfHG_400x400.jpg',
