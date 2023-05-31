@@ -1,16 +1,21 @@
-import { selector } from 'recoil';
+import { selectorFamily } from 'recoil';
+import type { Client } from '../../api';
 import type { OrderEntity } from '../../api/rest/ShoppingCartRestAPI';
-import clientState from '../atoms/clientState';
 
-const ordersQuery = selector<OrderEntity[]>({
+type OrdersQueryParams = {
+  client: Client;
+};
+
+const ordersQuery = selectorFamily<OrderEntity[], OrdersQueryParams>({
   key: 'ordersQuery',
-  get: ({ get }) => {
-    const client = get(clientState);
-    return client
-      .get('/orders')
-      .acceptOrThrow(200)
-      .then((response) => response.data);
-  },
+  get:
+    ({ client }) =>
+    () => {
+      return client
+        .get('/orders')
+        .acceptOrThrow(200)
+        .then((response) => response.data);
+    },
 });
 
 export default ordersQuery;

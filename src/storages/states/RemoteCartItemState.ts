@@ -35,14 +35,19 @@ class RemoteCartItemState extends RemoteState<Client, CartItemState> {
     // sync: create
     // id가 존재하지 않는다면 생성하는 쿼리를 보냅니다.
     if (this.synchronizedState === null || !('id' in this.synchronizedState)) {
-      this.set(lastState); // id가 없어 lastState를 업데이트할 수 없기 때문에, 우선은 다음 업데이트로 미뤄둡니다
+      // id가 없어 lastState를 업데이트할 수 없기 때문에, 우선은 생성을 먼저 하고 나중에 lastState로 설정
       return this.client
         .post('/cart-items', { productId: this.productId })
         .acceptOrThrow(201)
-        .then((response) => ({
-          id: Number(response.headers.location.split('/').pop()),
-          ...response.data,
-        }));
+        .then((response) => {
+          // 변경한 상태가 없었다면 원래 설정하려고 했던 상태로 설정
+          if (!this.hasDirtyUpdate()) this.set(lastState);
+
+          return {
+            id: Number(response.headers.location.split('/').pop()),
+            ...response.data,
+          };
+        });
     }
 
     // sync: optimize update

@@ -66,10 +66,8 @@ export abstract class RemoteState<Client extends RestClient, State extends BaseS
    * 상태 업데이트를 추가합니다. 현재 진행중인 동기화 작업이 없다면 즉시 수행됩니다.
    */
   set(state: SetOrUpdate<State>) {
-    queueMicrotask(() => {
-      this.dirtyUpdates.push(state);
-      this.flushDirtyUpdates();
-    });
+    this.dirtyUpdates.push(state);
+    this.flushDirtyUpdates();
   }
 
   hasDirtyUpdate() {

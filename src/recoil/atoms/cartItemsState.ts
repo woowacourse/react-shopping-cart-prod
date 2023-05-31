@@ -9,7 +9,7 @@ import clientState from './clientState';
 
 const internalCartItemsState = atomFamily<(CartItem | CartItemEntity)[], Client>({
   key: 'internalCartItemsState',
-  default: cartItemsQuery,
+  default: (client) => cartItemsQuery({ client }),
   effects: (client) => [syncCartItemsEffect(client)],
 });
 

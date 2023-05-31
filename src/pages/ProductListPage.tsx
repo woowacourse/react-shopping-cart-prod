@@ -1,8 +1,8 @@
 import { styled } from 'styled-components';
 import ProductListItem from '../components/ProductListItem';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
-import productsState from '../recoil/atoms/productsState';
 import cartItemsRepository from '../recoil/repositories/cartItemsRepository';
+import userProductsState from '../recoil/user/userProductsState';
 
 const ProductList = styled.ul`
   display: grid;
@@ -26,7 +26,7 @@ const ProductList = styled.ul`
 
 const ProductListPage = () => {
   return (
-    <AwaitRecoilState state={productsState}>
+    <AwaitRecoilState state={userProductsState}>
       {(products) => (
         <AwaitRecoilState state={cartItemsRepository}>
           {({ getCartItemByProductId }) => (

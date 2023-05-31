@@ -10,6 +10,10 @@ type ChangeByDownstreamHandler = (
   updater: (cartItems: (CartItem | CartItemEntity)[]) => (CartItem | CartItemEntity)[],
 ) => void;
 
+type SyncStartHandler = () => void;
+
+type SynchronizedHandler = () => void;
+
 type RemoteCartItemsStorageOptions = {
   /**
    * remote로 부터 데이터를 받아 동기화하는 간격을 설정합니다. 단위: ms
@@ -28,6 +32,12 @@ class RemoteCartItemsStorage {
 
   protected changeByDownstreamHandler: ChangeByDownstreamHandler | null = null;
 
+  protected syncStartHandler: SyncStartHandler | null = null;
+
+  protected synchronizedHandler: SynchronizedHandler | null = null;
+
+  protected sync: Promise<unknown> | null = null;
+
   constructor(
     client: Client,
     options: RemoteCartItemsStorageOptions = {
@@ -44,16 +54,18 @@ class RemoteCartItemsStorage {
   }
 
   /**
-   * 초기에 remote의 상태를 설정합니다.
+   * remote에서 받아온 상태를 토대로 동기화를 시작하기 위해 이 함수를 호출합니다.
    */
   initSet(initialCartItems: (CartItem | CartItemEntity)[]) {
     initialCartItems.forEach((cartItem) => {
       const state = this.createState(cartItem.product.id, cartItem);
       state.set(cartItem); // HACK: force trigger sync
     });
+
+    this.fireSyncEvent();
   }
 
-  createState(
+  private createState(
     productId: CartItem['product']['id'],
     synchronizedCartItem?: CartItem | CartItemEntity,
   ) {
@@ -66,7 +78,7 @@ class RemoteCartItemsStorage {
     return state;
   }
 
-  correctToExpectedState(
+  private correctToExpectedState(
     productId: CartItem['product']['id'],
     expectedCartItem: Partial<CartItem> | null,
   ) {
@@ -85,6 +97,9 @@ class RemoteCartItemsStorage {
     });
   }
 
+  /**
+   * client의 상태가 변경되었을 때 remote에 상태 변경을 통보하기 위해 호출하는 함수입니다.
+   */
   set(cartItems: CartItem[]) {
     this.states.forEach((state, productId) => {
       const isRemoved = !cartItems.some((cartItem) => cartItem.product.id === productId);
@@ -102,6 +117,23 @@ class RemoteCartItemsStorage {
       stateCreated.set(cartItem);
       this.states.set(stateCreated.productId, stateCreated);
     });
+
+    this.fireSyncEvent();
+  }
+
+  /**
+   * client <-> remote 간 상태 동기화가 시작되었을 때,
+   * 상태 동기화가 끝난 후 {@link synchronizedHandler}를 호출합니다.
+   */
+  private async fireSyncEvent() {
+    if (this.sync === null) {
+      this.syncStartHandler?.();
+      this.sync = this.waitForSync();
+      this.sync.then(() => {
+        this.synchronizedHandler?.();
+        this.sync = null;
+      });
+    }
   }
 
   reset() {
@@ -145,6 +177,20 @@ class RemoteCartItemsStorage {
    */
   onChangeByDownstream(changeByDownstreamHandler: ChangeByDownstreamHandler | null) {
     this.changeByDownstreamHandler = changeByDownstreamHandler;
+  }
+
+  /**
+   * 상태가 remote와 동기화를 시작할 때 호출됩니다.
+   */
+  onSyncStart(syncStartHandler: SyncStartHandler | null) {
+    this.syncStartHandler = syncStartHandler;
+  }
+
+  /**
+   * 상태가 remote와 동기화되었을 때 호출됩니다.
+   */
+  onSynchronized(synchronizedHandler: SynchronizedHandler | null) {
+    this.synchronizedHandler = synchronizedHandler;
   }
 }
 

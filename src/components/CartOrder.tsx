@@ -1,6 +1,9 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import synchronizedCartItemsState from '../recoil/atoms/remoteCartItemsState';
 import cartOrderPriceState from '../recoil/selectors/cartOrderPriceState';
+import userCartPointsState from '../recoil/user/userCartPointsState';
+import AwaitRecoilState from './utils/AwaitRecoilState';
 
 const CartOrderContainer = styled.form`
   min-width: 440px;
@@ -71,6 +74,7 @@ type CartOrderProps = {
 const CartOrder = (props: CartOrderProps) => {
   const { isCartEmpty } = props;
   const prices = useRecoilValue(cartOrderPriceState);
+  const { isSynchronizing } = useRecoilValue(synchronizedCartItemsState);
 
   return (
     <CartOrderContainer>
@@ -96,6 +100,26 @@ const CartOrder = (props: CartOrderProps) => {
               <PriceFieldValue>{prices.shippingFee}</PriceFieldValue>
             </PriceField>
 
+            <PriceField>
+              <PriceFieldName>적립 포인트</PriceFieldName>
+
+              <PriceFieldValue>
+                <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
+                  {(cartPoints) => <>{cartPoints.points}</>}
+                </AwaitRecoilState>
+              </PriceFieldValue>
+            </PriceField>
+
+            <PriceField>
+              <PriceFieldName>적립 비율</PriceFieldName>
+
+              <PriceFieldValue>
+                <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
+                  {(cartPoints) => <>{cartPoints.savingRate}</>}
+                </AwaitRecoilState>
+              </PriceFieldValue>
+            </PriceField>
+
             <ContentDivider />
 
             <PriceField>
@@ -105,7 +129,7 @@ const CartOrder = (props: CartOrderProps) => {
 
             <ContentDivider />
 
-            <OrderButton>주문하기</OrderButton>
+            {!isSynchronizing && <OrderButton>주문하기</OrderButton>}
           </>
         )}
       </Content>
