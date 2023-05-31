@@ -1,5 +1,5 @@
 import { useRecoilCallback, useRecoilValue } from 'recoil';
-import { cartState, serverOriginState } from '../recoil/atoms';
+import { cartState } from '../recoil/atoms/cart';
 import { CART_BASE_URL } from '../constants/api';
 import useToast from '../components/common/Toast/useToast';
 import {
@@ -8,7 +8,9 @@ import {
   removeCartItem,
   updateQuantity,
 } from '../remotes/cart';
-import type { CartItem, Product } from '../types/product';
+import { serverOriginState } from '../recoil/atoms/common';
+import type { Product } from '../types/product';
+import type { CartItem } from '../types/cart';
 
 const useCartService = () => {
   const cart = useRecoilValue(cartState);

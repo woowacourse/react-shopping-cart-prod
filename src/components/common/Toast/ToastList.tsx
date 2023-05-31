@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
-import { toastState } from '../../../recoil/atoms';
-import Toast from './Toast';
 import { styled } from 'styled-components';
+import Toast from './Toast';
+import { toastState } from '../../../recoil/atoms/common';
 
 const ToastList = () => {
   const toastList = useRecoilValue(toastState);
