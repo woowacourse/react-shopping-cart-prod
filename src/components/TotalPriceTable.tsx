@@ -60,7 +60,8 @@ const Wrapper = styled.section`
 
   max-width: 380px;
   min-width: 350px;
-  /* height: auto; */
+  height: max-content;
+
   padding-bottom: 30px;
 
   margin-top: 35px;
