@@ -46,5 +46,6 @@ export const PageRouterProvider = () => {
     },
     { path: ROUTER_PATH.NotFound, element: <NotFound /> },
   ]);
+
   return <RouterProvider router={router} />;
 };

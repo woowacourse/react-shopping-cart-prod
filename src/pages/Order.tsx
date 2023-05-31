@@ -1,15 +1,13 @@
-import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { useRouter } from "../hooks/useRouter";
-import { localProductsSelector } from "../recoil/selector";
-import { ROUTER_PATH } from "../router";
-import { Header, Page, TotalPriceTable } from "../components";
-import { OrderProductList } from "../components/OrderProductList";
-import { CouponSelectBox } from "../components/CouponSelectBox";
+import {
+  CouponSelectBox,
+  Header,
+  OrderProductList,
+  Page,
+  TotalPriceTable,
+} from "../components";
 
 const Order = () => {
-  const { goPage } = useRouter();
-
   return (
     <>
       <Header />

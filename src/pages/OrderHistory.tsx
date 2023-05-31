@@ -1,6 +1,5 @@
 import { styled } from "styled-components";
-import { GuideBox, Header, Page } from "../components";
-import { OrderHistoryList } from "../components/OrderHistoryList";
+import { GuideBox, Header, OrderHistoryList, Page } from "../components";
 
 const OrderHistory = () => {
   return (

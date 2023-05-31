@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { ArrowDownIcon } from "../assets";
 
 // {

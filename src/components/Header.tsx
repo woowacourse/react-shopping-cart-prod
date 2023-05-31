@@ -65,11 +65,8 @@ export const Header = () => {
           <p onClick={goPage(ROUTER_PATH.Login)}>로그인</p>
         ) : (
           <>
-            <CartContainer>
-              <CartBox
-                pathname={location.pathname}
-                onClick={goPage(ROUTER_PATH.Cart)}
-              >
+            <CartContainer onClick={goPage(ROUTER_PATH.Cart)}>
+              <CartBox pathname={location.pathname}>
                 {user.nickname}의 장바구니
               </CartBox>
               <CartIconBox src={CartIcon} alt="홈카트" />

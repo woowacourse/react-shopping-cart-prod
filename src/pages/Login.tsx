@@ -1,23 +1,19 @@
 import React, { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { Button, Page } from "../components";
 import { KEY_LOCALSTORAGE_LOGIN_TOKEN } from "../constants";
 import { useRouter } from "../hooks/useRouter";
-import { localProductsState, loginState } from "../recoil/atom";
+import { loginState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";
 import { setLocalStorage } from "../utils";
-import { makeLocalProducts } from "../utils/domain";
 
 const Login = () => {
   const { goPage } = useRouter();
   const setLoginState = useSetRecoilState(loginState);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
   const usernameRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleUsernameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
@@ -68,7 +64,6 @@ const Login = () => {
         </label>
         <CustomInput
           id="password"
-          ref={passwordRef}
           value={password}
           onChange={handlePasswordChanged}
           minLength={4}
@@ -140,12 +135,6 @@ const FormContainer = styled.form`
     font-weight: 700;
     margin-bottom: 20px;
   }
-`;
-
-const ValidationBox = styled.p`
-  margin: 5px 2px;
-  font-size: 10px;
-  color: red;
 `;
 
 export default Login;

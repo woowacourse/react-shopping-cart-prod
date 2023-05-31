@@ -29,8 +29,6 @@ export interface UserType {
   nickname: string;
 }
 
-// common
-
 export interface ToastType {
   type: "success" | "error";
   isShown: boolean;
