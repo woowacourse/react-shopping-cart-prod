@@ -1,18 +1,17 @@
 import { Suspense } from 'react';
 import styled from 'styled-components';
-
+import { useRecoilValue } from 'recoil';
+import { totalCartProductSelect } from '../recoil/cartProductData';
+import { checkedListSelector } from '../recoil/checkedProductData';
 import EstimatedPaymentBox from '../components/Cart/EstimatedPaymentBox';
 import CheckBox from '../components/Common/CheckBox';
 import Button from '../components/Common/Button';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import CartProductList from '../components/Cart/CartProductList';
 import UserPointInfo from '../components/Cart/UserPointInfo';
-import { useRecoilValue } from 'recoil';
-import { totalCartProductSelect } from '../recoil/cartProductData';
-import { checkedListSelector } from '../recoil/checkedProductData';
+import Title from '../components/Common/Title';
 import useCheckedProducts from '../hooks/useCheckedProducts';
 import usePoint from '../hooks/usePoint';
-import Title from '../components/Common/Title';
 
 const CartProductsListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
