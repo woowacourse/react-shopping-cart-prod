@@ -3,6 +3,7 @@ import Cart from '../Page/Cart';
 import Home from '../Page/Home';
 import NotFound from '../Page/NotFound';
 import Order from '../Page/Order';
+import OrderCheckout from '../Page/OrderCheckout';
 import OrderDetail from '../Page/OrderDetail';
 import { ROUTE_PATH } from '../constants';
 import Root from './Root';
@@ -18,6 +19,7 @@ function Router() {
         { path: ROUTE_PATH.CART, element: <Cart /> },
         { path: ROUTE_PATH.ORDER, element: <Order /> },
         { path: ROUTE_PATH.ORDER_DETAIL, element: <OrderDetail /> },
+        { path: ROUTE_PATH.ORDER_CHECKOUT, element: <OrderCheckout /> },
       ],
     },
   ]);
