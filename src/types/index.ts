@@ -26,6 +26,8 @@ interface OrderData {
   id: number;
   orderedItems: OrderedItem[];
   orderedAt: string;
+  totalItemDiscountAmount: number;
+  totalMemberDiscountAmount: number;
   totalItemPrice: number;
   discountedTotalItemPrice: number;
   shippingFee: number;
