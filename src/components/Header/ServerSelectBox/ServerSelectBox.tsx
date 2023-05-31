@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import * as S from './ServerSelectBox.style';
 import { serverState } from '../../../recoil/serverAtom';
