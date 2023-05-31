@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useCartService from '../../../hooks/useCartService';
-import type { CartItem } from '../../../types/product';
+import type { CartItem } from '../../../types/cart';
 
 const useCartPage = () => {
   const { cart, removeAllProductsFromCart } = useCartService();

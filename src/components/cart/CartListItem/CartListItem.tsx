@@ -6,7 +6,7 @@ import useCartService from '../../../hooks/useCartService';
 import { formatPrice } from '../../../utils/formatPrice';
 import Spacer from '../../common/Spacer/Spacer';
 import { TrashIcon } from '../../../assets/svg';
-import type { CartItem } from '../../../types/product';
+import type { CartItem } from '../../../types/cart';
 
 interface CartListItemProps {
   cartItem: CartItem;

@@ -4,7 +4,7 @@ import {
   CART_LOCAL_STORAGE_KEY,
   PRODUCTS_BASE_URL,
 } from '../../constants/api';
-import type { CartItem, NewCartItem } from '../../types/product';
+import { CartItem, NewCartItem } from '../../types/cart';
 
 const localStorageCart = localStorage.getItem(CART_LOCAL_STORAGE_KEY);
 // eslint-disable-next-line prefer-const

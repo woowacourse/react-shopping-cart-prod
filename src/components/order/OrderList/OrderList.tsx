@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import OrderListItem from '../OrderListItem/OrderListItem';
-import type { CartItem } from '../../../types/product';
+import type { CartItem } from '../../../types/cart';
 
 const sample = {
   id: 0,

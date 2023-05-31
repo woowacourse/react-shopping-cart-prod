@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import Image from '../../common/Image/Image';
 import { formatPrice } from '../../../utils/formatPrice';
-import type { CartItem } from '../../../types/product';
+import type { CartItem } from '../../../types/cart';
 
 interface OrderListItemProps {
   item: CartItem;
