@@ -39,6 +39,16 @@ export const fetchCartItems = async () =>
     }
   );
 
+export const fetchUser = () =>
+  fetch(`${SERVERS["루카"]}/members/my`, {
+    headers: {
+      Authorization: `Basic ${getLocalStorage(
+        KEY_LOCALSTORAGE_LOGIN_TOKEN,
+        DEFAULT_VALUE_LOGIN_TOKEN
+      )}`,
+    },
+  });
+
 export const changeQuantity = async (cartItemId: number, newQuantity: number) =>
   fetch(
     `${

@@ -5,7 +5,7 @@ import { localProductsSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
 import React, { useState } from "react";
-import { localProductsState, loginState } from "../recoil/atom";
+import { localProductsState, loginState, userState } from "../recoil/atom";
 import { makeLocalProducts, makeProducts } from "../utils/domain";
 import { getLocalStorage, setLocalStorage } from "../utils";
 import { useToast } from "../hooks/useToast";
@@ -18,9 +18,10 @@ import {
 export const Header = () => {
   const { goPage } = useRouter();
   const { showToast } = useToast();
-
+  const user = useRecoilValue(userState);
   const isLogined = useRecoilValue(loginState);
   const cartProducts = useRecoilValue(localProductsSelector);
+  const setLoginState = useSetRecoilState(loginState);
   const setLocalProducts = useSetRecoilState(localProductsState);
   const [serverOwner, setServerOwner] = useState(
     getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
@@ -40,6 +41,12 @@ export const Header = () => {
     showToast("success", `${e.target.value}의 서버로 변경되었습니다. ✅`);
   };
 
+  const logout = () => {
+    localStorage.clear();
+    setLoginState(false);
+    showToast("success", `로그아웃 되었습니다. ✅`);
+  };
+
   return (
     <Wrapper>
       <TitleContainer onClick={goPage(ROUTER_PATH.Main)}>
@@ -56,11 +63,12 @@ export const Header = () => {
           <p onClick={goPage(ROUTER_PATH.Login)}>로그인</p>
         ) : (
           <CartContainer>
-            <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>
+            <p onClick={goPage(ROUTER_PATH.Cart)}>{user.nickname}의 장바구니</p>
             {cartProducts.length > 0 && (
               <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
             )}
             <p onClick={goPage(ROUTER_PATH.OrderHistory)}>주문목록</p>
+            <p onClick={logout}>로그아웃</p>
           </CartContainer>
         )}
       </NavContainer>
@@ -116,7 +124,7 @@ const NavContainer = styled.div`
   display: flex;
   align-items: center;
 
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 500;
   color: white;
 
