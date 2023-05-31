@@ -2,8 +2,8 @@ import { selector, selectorFamily } from 'recoil';
 import { fetchCartItems } from '../../remotes/cart';
 import { serverOriginState } from '../atoms/common';
 import { CART_BASE_URL } from '../../constants/api';
-import type { CartItem } from '../../types/cart';
 import { cartState } from '../atoms/cart';
+import type { CartItem } from '../../types/cart';
 
 export const cartItemsQuery = selector<CartItem[]>({
   key: 'cartItems',
