@@ -14,6 +14,14 @@ export function SkeletonPaymentAmount() {
             <S.AmountCategory>총 상품가격</S.AmountCategory>
             <S.Amount>0 원</S.Amount>
           </S.AmountWrapper>
+          <S.AmountWrapper aria-label="할인가격">
+            <S.AmountCategory>할인가격</S.AmountCategory>
+            <S.Amount>0 원</S.Amount>
+          </S.AmountWrapper>
+          <S.AmountWrapper aria-label="쿠폰적용">
+            <S.AmountCategory>쿠폰적용</S.AmountCategory>
+            <S.Amount>0 원</S.Amount>
+          </S.AmountWrapper>
           <S.AmountWrapper aria-label="총 배송비">
             <S.AmountCategory>총 배송비</S.AmountCategory>
             <S.Amount>0 원</S.Amount>
@@ -22,7 +30,7 @@ export function SkeletonPaymentAmount() {
             <S.AmountCategory>총 주문가격</S.AmountCategory>
             <S.Amount>0 원</S.Amount>
           </S.AmountWrapper>
-          <Button backgroundColor="#22a6a2" text="주문하기" />
+          <Button backgroundColor="#22a6a2" text="주문하기" disable />
         </S.ExpectedAmountLayout>
       </S.Container>
     </>
