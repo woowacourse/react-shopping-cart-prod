@@ -163,7 +163,7 @@ const handlers = [
   }),
 
   // 주문 목록 조회 api
-  rest.get('/orders', (req, res, ctx) => res(ctx.delay(2000), ctx.status(200), ctx.json(orderList))),
+  rest.get('/orders', (req, res, ctx) => res(ctx.delay(500), ctx.status(200), ctx.json(orderList))),
 
   rest.get('/orders/:orderId', (req, res, ctx) => {
     const { orderId } = req.params;
