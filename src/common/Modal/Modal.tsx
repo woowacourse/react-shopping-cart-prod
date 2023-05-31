@@ -1,4 +1,5 @@
 import useModalExternal from '@common/hooks/useModalExternal';
+import { Container } from '@styles/style';
 import { PropsWithChildren, useCallback, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { styled } from 'styled-components';
@@ -21,8 +22,10 @@ function Modal({ isOpen, closeModal, children }: ModalProps) {
         <>
           <Background onClick={closeModal} />
           <ModalContainer>
-            <CloseButton onClick={closeModal}>X</CloseButton>
-            {children}
+            <Container>
+              <CloseButton onClick={closeModal}>X</CloseButton>
+              {children}
+            </Container>
           </ModalContainer>
         </>,
         document.body
@@ -43,6 +46,8 @@ const ModalContainer = styled.div`
   border-radius: 8px;
   background-color: #fff;
   padding: 2rem;
+  min-width: 500px;
+  overflow: scroll;
 `;
 
 const Background = styled.div`

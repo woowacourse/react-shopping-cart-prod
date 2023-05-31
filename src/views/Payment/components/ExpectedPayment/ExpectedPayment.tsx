@@ -4,19 +4,22 @@ import * as S from './ExpectedPayment.style';
 import { useCart } from '@views/Cart/recoil/cartState';
 import { DELIVERY_FEE_BASIC } from '@views/Payment/constants/orderConstants';
 import useFetchCoupons from '@views/Payment/hooks/useFetchCoupons';
+import { useState } from 'react';
+import { CouponModal } from '../CouponModal';
 
 function ExpectedPayment() {
   const { totalPrice } = useCart();
   const fetchCoupons = useFetchCoupons();
 
+  const [isOpen, setIsOpen] = useState(false);
+
   const deliveryFee = totalPrice ? DELIVERY_FEE_BASIC : 0;
   const totalPayingPrice = totalPrice + deliveryFee;
 
   const handleSeeCoupons = async () => {
-    const response = await fetchCoupons();
-    const coupons = await response.json();
-
-    console.log('>>> coupons:', coupons);
+    // const response = await fetchCoupons();
+    // const coupons = await response.json();
+    setIsOpen(true);
   };
 
   return (
@@ -46,6 +49,12 @@ function ExpectedPayment() {
           <S.PayingButton disabled={totalPrice === 0}>결제하기</S.PayingButton>
         </div>
       </S.PayingBox>
+      <CouponModal
+        isOpen={isOpen}
+        closeModal={() => {
+          setIsOpen(false);
+        }}
+      ></CouponModal>
     </S.PayingContainer>
   );
 }
