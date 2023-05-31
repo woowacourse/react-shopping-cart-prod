@@ -5,10 +5,10 @@ import Spacer from '../../common/Spacer/Spacer';
 import { formatPrice } from '../../../utils/formatPrice';
 import OrderConfirmModal from '../../order/OrderConfirmModal/OrderConfirmModal';
 import useModal from '../../common/Modal/useModal';
-import { pointQuery } from '../../../recoil/selectors';
 import { isNumericString } from '../../../utils/isNumericString';
 import { removeComma } from '../../../utils/removeComma';
 import { CloseIcon } from '../../../assets/svg';
+import { pointQuery } from '../../../recoil/selectors/point';
 
 const FREE_SHIPPING_PRICE = 30_000;
 const SHIPPING_FEE = 3_000;
@@ -166,6 +166,14 @@ const Detail = styled.dl`
   row-gap: 19px;
   padding: 30px 0;
   border-bottom: 1px solid ${(props) => props.theme.color.gray300};
+
+  & > div > dt,
+  & > div > dd {
+    font-family: 'Noto Sans KR';
+    font-size: 17px;
+    line-height: 27px;
+    letter-spacing: 0.5px;
+  }
 `;
 
 const PriceWrapper = styled.div`
@@ -173,14 +181,6 @@ const PriceWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 30px;
-
-  & > dt,
-  & > dd {
-    font-family: 'Noto Sans KR';
-    font-size: 18px;
-    line-height: 27px;
-    letter-spacing: 0.5px;
-  }
 `;
 
 const PointWrapper = styled.div`
@@ -210,7 +210,7 @@ const PointInputInner = styled.div`
 
 const PointInput = styled.input`
   width: 100px;
-  font-size: 18px;
+  font-size: 17px;
   text-align: right;
   border: none;
   padding-bottom: 2px;
@@ -245,7 +245,7 @@ const Total = styled.span`
 
 const TotalPrice = styled.dd<{ isHighlight: boolean }>`
   font-size: 20px;
-  font-weight: 700;
+  font-weight: 600;
   color: ${(props) => props.isHighlight && props.theme.color.primary};
 `;
 
