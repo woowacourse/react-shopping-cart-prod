@@ -18,15 +18,22 @@ const SpecificCouponSelect = ({ productId }: SpecificCouponSelectProps) => {
     useRecoilState(selectedCouponsState);
 
   const onCouponSelected = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    // TODO: 쿠폰 선택 시 초기화 되는 로직 구현해야함.
+    if (e.target.value === 'DEFAULT') return;
+
     const newSelectedCoupons = selectedCoupons.filter(
       (couponId) => !allCoupons.some((coupon) => coupon.id === couponId)
     );
     const newSelectedCouponId = +e.target.value;
-    setSelectedCoupons([newSelectedCouponId, ...newSelectedCoupons]);
+
+    newSelectedCoupons.push(newSelectedCouponId);
+    setSelectedCoupons([...new Set(newSelectedCoupons)]);
   };
   return (
     <CouponSelect onChange={onCouponSelected}>
-      <Coupon defaultChecked>쿠폰 선택 안함</Coupon>
+      <Coupon defaultChecked value={'DEFAULT'}>
+        쿠폰 선택 안함
+      </Coupon>
       {specificCoupons.map((coupon) => (
         <Coupon
           key={coupon.id}
