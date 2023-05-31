@@ -16,7 +16,7 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
 
   return (
     <div>
-      <S.Image src={imageUrl} alt={name} />
+      <S.Image src={imageUrl} alt={name} loading='lazy' />
       <S.InfoWrapper>
         <div>
           <S.Name htmlFor={name} title={name}>

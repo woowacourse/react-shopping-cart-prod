@@ -61,12 +61,8 @@ const CartPage = () => {
 const S = {
   Nothing: styled.img`
     display: block;
-    width: 24%;
+    height: 320px;
     margin: 0 auto;
-
-    @media (max-width: 768px) {
-      width: 100%;
-    }
   `,
 
   Link: styled(Link)`

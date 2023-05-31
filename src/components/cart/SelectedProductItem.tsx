@@ -47,7 +47,7 @@ const SelectedProductItem = ({
           checked={isChecked}
           onChange={handleCheckedItem}
         />
-        <S.Image src={`${imageUrl}`} alt={name} />
+        <S.Image src={`${imageUrl}`} alt={name} loading='lazy' />
         <S.Name htmlFor={`${cartItemId}-checkbox`} title={name}>
           {name}
         </S.Name>

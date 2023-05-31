@@ -9,7 +9,7 @@ const OrderItem = ({ imageUrl, name, price, quantity }: Cart) => {
 
   return (
     <S.Wrapper tabIndex={0}>
-      <S.Image src={`${imageUrl}`} alt={name} />
+      <S.Image src={`${imageUrl}`} alt={name} loading='lazy' />
       <div>
         <S.Name>
           {name}
