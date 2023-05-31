@@ -17,7 +17,7 @@ const useExpectedPayment = () => {
   );
 
   const calculateTotalPrice = useCallback(
-    (discountPrice: number) => {
+    (discountPrice = 0) => {
       return (totalProductPrice + deliveryFee - discountPrice).toLocaleString(
         'ko-KR'
       );

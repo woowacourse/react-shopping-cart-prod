@@ -3,55 +3,47 @@ import { ChangeEventHandler, useState } from 'react';
 import styled from 'styled-components';
 
 import Button from '../Common/Button';
+import SelectBox from '../Common/SelectBox';
 
 import useMultipleChecked from '../../hooks/useMultipleChecked';
 import useExpectedPayment from '../../hooks/useCartPrice';
 import { useGetCoupons } from '../../hooks/useGetCoupons';
 import { useOrderProducts } from '../../hooks/useOrderProducts';
+import { useGetSelectedCoupon } from '../../hooks/useGetSelectedCoupon';
 import { removeChar } from '../../utils/stringUtils';
-import { useNavigate } from 'react-router-dom';
-import SelectBox from '../Common/SelectBox';
-import { useSetRecoilState } from 'recoil';
-import { TOAST_STATE } from '../../constants/toast';
-import { toastState } from '../../states/toast/atom';
+import { Coupon } from '../../types/coupon';
+import { DEFAULT_COUPON_NAME, NO_DISCOUNT } from '../../constants/coupon';
+
+const couponNamesMocks = [
+  DEFAULT_COUPON_NAME,
+  '3000원 할인 쿠폰',
+  '1000원 할인 쿠폰',
+  '첫 주문 5000원 할인 쿠폰',
+];
 
 const ExpectedPaymentBox = () => {
   const { isAllUnchecked } = useMultipleChecked();
   const { totalProductPrice, deliveryFee, calculateTotalPrice } =
     useExpectedPayment();
   const [coupons] = useState(useGetCoupons());
+  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>();
   const [discountPrice, setDiscountPrice] = useState(0);
-  const setToastState = useSetRecoilState(toastState);
   const orderProducts = useOrderProducts();
-  const navigate = useNavigate();
+  const getSelectedCoupon = useGetSelectedCoupon();
   // const couponNames = coupons.map(coupon => coupon.name);
-  const couponNames = [
-    '3000원 할인 쿠폰',
-    '1000원 할인 쿠폰',
-    '첫 주문 5000원 할인 쿠폰',
-  ];
 
   const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = event => {
-    const selectedCouponName = event.currentTarget.value;
-    const selectedCouponsDiscountPrice = coupons.find(
-      coupon => coupon.name === selectedCouponName
-    )?.discountPrice;
+    setSelectedCoupon(getSelectedCoupon(event, coupons));
 
-    if (!selectedCouponsDiscountPrice) {
-      setToastState(TOAST_STATE.failedSelectCoupon);
-      return;
-    }
-
-    setDiscountPrice(prev => prev + selectedCouponsDiscountPrice);
-    setToastState(TOAST_STATE.successSelectCoupon);
+    setDiscountPrice(selectedCoupon ? selectedCoupon.discountPrice : 0);
   };
 
   const handleOrderClick = () => {
     const orderPrice = Number(
       removeChar(calculateTotalPrice(discountPrice), ',')
     );
-    orderProducts(orderPrice, 1);
-    navigate('/order');
+
+    orderProducts(orderPrice, selectedCoupon ? selectedCoupon.id : NO_DISCOUNT);
   };
 
   return (
@@ -72,7 +64,7 @@ const ExpectedPaymentBox = () => {
         </PaymentInfoItem>
       </ExpectedPaymentInfo>
       <OrderButtonWrapper>
-        <SelectBox options={couponNames} onChange={handleSelectChange} />
+        <SelectBox options={couponNamesMocks} onChange={handleSelectChange} />
         <Button
           type="button"
           autoSize
