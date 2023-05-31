@@ -77,6 +77,12 @@ const CartListHead = styled.div`
   border-bottom: 3px solid #aaa;
   padding: 80px 0 20px 0;
   background-color: #fff;
+
+  @media screen and (max-width: 660px) {
+    flex-direction: column;
+    gap: 6px;
+    padding: 20px 0 20px 0;
+  }
 `;
 
 const Cart = styled.div`

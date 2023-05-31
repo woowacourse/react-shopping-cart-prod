@@ -131,6 +131,10 @@ const CartPageWrapper = styled.div`
   @media screen and (max-width: 660px) {
     width: 500px;
   }
+
+  @media screen and (max-width: 510px) {
+    width: 300px;
+  }
 `;
 
 const CartListWrapper = styled.div`
