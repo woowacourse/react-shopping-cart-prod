@@ -1,16 +1,5 @@
-import { ChangeEvent } from 'react';
-import { useRecoilValue } from 'recoil';
-import cartState from '@recoil/cart/cartState';
-import serverState from '@recoil/server/serverState';
-import { useQuantityCounter } from '@hooks/useQuantityCounter';
-import { useRecoilCart } from '@hooks/useRecoilCart';
+import { useCartOperations } from '@hooks/useCartOperations';
 import Stepper from '@components/common/Stepper';
-import { findCartItemById } from '@utils/cart/cart';
-import {
-  addItemToCartApi,
-  removeCartItemApi,
-  updateCartItemQuantityApi,
-} from '@utils/cart/fetchCart';
 import { ProductItemType } from '@type/productType';
 import cartIcon from '@assets/cart.svg';
 import * as S from './CartQuantityField.style';
@@ -20,55 +9,21 @@ interface CartQuantityFieldProps {
 }
 
 function CartQuantityField({ product }: CartQuantityFieldProps) {
-  const serverName = useRecoilValue(serverState);
-  const cart = useRecoilValue(cartState);
-  const cartId = findCartItemById({ cart, productId: product.id });
-  const findCart = cart.find((cartItem) => cartItem.id === cartId);
-  const { addCartItem, updateCartListItemQuantity, getCartItemQuantity, deleteCartItem } =
-    useRecoilCart();
-
-  const updateItem = (value: number) => {
-    updateCartListItemQuantity({ cartId, quantity: value });
-    updateCartItemQuantityApi({ cartId, quantity: value, serverName });
-  };
-
-  const deleteItem = () => {
-    deleteCartItem(cartId);
-    removeCartItemApi({ cartId, serverName });
-  };
-
   const {
-    quantity,
-    onQuantityChange,
-    countInputRef,
-    increaseQuantity,
+    findCart,
+    onQuantityInputChange,
     decreaseQuantity,
+    increaseQuantity,
+    countInputRef,
+    quantity,
     onQuantityBlur,
-  } = useQuantityCounter(getCartItemQuantity(product.id), {
-    deleteItem,
-    updateItem,
-  });
-
-  const onClick = async () => {
-    const cartId = await addItemToCartApi({ productId: product.id, serverName });
-    addCartItem({ cartId: Number(cartId), product });
-  };
-
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-
-    const targetValue = Number(value);
-
-    if (isNaN(targetValue)) return;
-
-    onQuantityChange(targetValue);
-  };
-
+    onAddItemToCartAndSyncClick,
+  } = useCartOperations(product);
   return (
     <S.StepperContainer>
       {findCart ? (
         <Stepper
-          onChange={onChange}
+          onChange={onQuantityInputChange}
           onDecrease={decreaseQuantity}
           onIncrease={increaseQuantity}
           countInputRef={countInputRef}
@@ -79,7 +34,7 @@ function CartQuantityField({ product }: CartQuantityFieldProps) {
         />
       ) : (
         <S.CartIcon
-          onClick={onClick}
+          onClick={onAddItemToCartAndSyncClick}
           type="button"
           aria-label={`${product.name}를 장바구니에 담기`}
           role="cart-icon"

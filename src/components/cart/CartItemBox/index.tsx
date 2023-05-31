@@ -1,5 +1,5 @@
-import { useCartItemQuantityBy } from '@recoil/cart/withItemQuantityBy';
 import { useCartToggleSelection } from '@hooks/recoil/cart/useCartToggleSelection';
+import { useCartOperations } from '@hooks/useCartOperations';
 import CheckBox from '@components/common/CheckBox';
 import Stepper from '@components/common/Stepper';
 import deleteIcon from '@assets/delete.svg';
@@ -14,58 +14,36 @@ interface CartItemProps {
 }
 
 function CartItemBox({ cartId, productId, imageUrl, name, price }: CartItemProps) {
-  const [cartQuantity, setCartQuantity] = useCartItemQuantityBy(productId);
   const { isChecked, toggleCheck } = useCartToggleSelection(cartId);
 
-  const { quantity } = cartQuantity;
+  const {
+    onQuantityInputChange,
+    decreaseQuantity,
+    increaseQuantity,
+    countInputRef,
+    quantity,
+    onQuantityBlur,
+    removeCartItemAndDelete,
+  } = useCartOperations({ id: productId, imageUrl, name, price });
 
   return (
     <S.CartItemContainer>
-      <CheckBox
-        type="checkbox"
-        checked={isChecked}
-        onChange={() => {
-          toggleCheck();
-        }}
-        size="medium"
-      />
+      <CheckBox type="checkbox" checked={isChecked} onChange={toggleCheck} size="medium" />
       <S.ItemImageWrapper>
         <S.ItemImage src={imageUrl} />
       </S.ItemImageWrapper>
       <S.NameText>{name}</S.NameText>
-
       <S.ProductInfo>
-        <S.DeleteIcon
-          src={deleteIcon}
-          onClick={() => {
-            setCartQuantity({
-              cartId,
-              quantity: 0,
-            });
-          }}
-        />
-
+        <S.DeleteIcon src={deleteIcon} onClick={removeCartItemAndDelete} />
         <Stepper
-          onChange={(event) => {
-            setCartQuantity({
-              cartId,
-              quantity: Number(event.target.value),
-            });
-          }}
-          onIncrease={() => {
-            setCartQuantity({
-              cartId,
-              quantity: quantity + 1,
-            });
-          }}
-          onDecrease={() => {
-            if (quantity === 1) return;
-            setCartQuantity({
-              cartId,
-              quantity: quantity - 1,
-            });
-          }}
+          onChange={onQuantityInputChange}
+          onDecrease={decreaseQuantity}
+          onIncrease={increaseQuantity}
+          countInputRef={countInputRef}
           quantity={quantity}
+          onQuantityBlur={onQuantityBlur}
+          ariaIncreaseLabel={`${name}의 장바구니에 담긴 개수에서 하나 더하기`}
+          ariaDecreaseLabel={`${name}의 장바구니에 담긴 개수에서 하나 빼기`}
         />
         <S.PriceText>{`${(price * quantity).toLocaleString('ko-KR')} 원`}</S.PriceText>
       </S.ProductInfo>

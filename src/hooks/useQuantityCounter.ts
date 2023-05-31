@@ -7,15 +7,15 @@ import {
 } from '@constants/cartConstants';
 
 interface OptionsParams {
-  deleteItem: () => void;
-  updateItem: (value: number) => void;
+  removeCartItemAndDelete: () => void;
+  updateCartItemAndSync: (value: number) => void;
 }
 
 const INIT_VALUE = 1;
 
 export const useQuantityCounter = (
   initialValue: number,
-  { deleteItem, updateItem }: OptionsParams
+  { removeCartItemAndDelete, updateCartItemAndSync }: OptionsParams
 ) => {
   const countInputRef = useRef<HTMLInputElement>(null);
   const [quantity, setQuantity] = useState(initialValue);
@@ -30,7 +30,7 @@ export const useQuantityCounter = (
       return;
     }
 
-    updateItem(quantity + 1);
+    updateCartItemAndSync(quantity + 1);
     setQuantity((prev) => prev + 1);
   };
 
@@ -42,11 +42,11 @@ export const useQuantityCounter = (
     );
 
     if (quantity <= MIN_CART_QUANTITY + 1) {
-      deleteItem();
+      removeCartItemAndDelete();
       return;
     }
 
-    updateItem(quantity - 1);
+    updateCartItemAndSync(quantity - 1);
     setQuantity((prev) => prev - 1);
   };
 
@@ -72,15 +72,17 @@ export const useQuantityCounter = (
   const onQuantityBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
     const { relatedTarget, target } = event;
 
-    if (relatedTarget?.parentElement?.parentElement === target.parentElement) return;
+    const isSameDiv = relatedTarget?.parentElement?.parentElement === target.parentElement;
+
+    if (isSameDiv) return;
 
     if (quantity === 0) {
       setQuantity(INIT_VALUE);
-      deleteItem();
+      removeCartItemAndDelete();
       return;
     }
 
-    updateItem(quantity);
+    updateCartItemAndSync(quantity);
   };
 
   return {

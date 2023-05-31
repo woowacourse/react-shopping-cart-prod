@@ -9,16 +9,19 @@ import {
 
 describe('useQuantityCounter 훅 테스트 ', () => {
   const INITIAL_VALUE = 1;
-  const updateItem = (value: number) => {
+  const removeCartItemAndDelete = () => {
     return;
   };
-  const deleteItem = () => {
+  const updateCartItemAndSync = (value: number) => {
     return;
+  };
+
+  const options = {
+    updateCartItemAndSync,
+    removeCartItemAndDelete,
   };
   test('수량 증가 버튼을 누른다면 수량이 1씩 증가한다.', async () => {
-    const { result } = renderHook(() =>
-      useQuantityCounter(INITIAL_VALUE, { deleteItem, updateItem })
-    );
+    const { result } = renderHook(() => useQuantityCounter(INITIAL_VALUE, options));
 
     act(() => {
       const { increaseQuantity } = result.current;
@@ -31,9 +34,7 @@ describe('useQuantityCounter 훅 테스트 ', () => {
   });
 
   test('수량 감소 버튼을 누른다면 수량이 1씩 감소한다.', () => {
-    const { result } = renderHook(() =>
-      useQuantityCounter(INITIAL_VALUE + 1, { deleteItem, updateItem })
-    );
+    const { result } = renderHook(() => useQuantityCounter(INITIAL_VALUE + 1, options));
 
     const { decreaseQuantity } = result.current;
 
@@ -47,9 +48,7 @@ describe('useQuantityCounter 훅 테스트 ', () => {
   });
 
   test('수량 증가 버튼을 눌러도 최댓값을 넘어가지 않는다.', () => {
-    const { result } = renderHook(() =>
-      useQuantityCounter(MAX_CART_QUANTITY, { deleteItem, updateItem })
-    );
+    const { result } = renderHook(() => useQuantityCounter(MAX_CART_QUANTITY, options));
 
     const { increaseQuantity } = result.current;
 
@@ -63,9 +62,7 @@ describe('useQuantityCounter 훅 테스트 ', () => {
   });
 
   test('수량 감소 버튼을 눌러도 최솟값을 넘어가지 않는다.', () => {
-    const { result } = renderHook(() =>
-      useQuantityCounter(MIN_CART_QUANTITY, { deleteItem, updateItem })
-    );
+    const { result } = renderHook(() => useQuantityCounter(MIN_CART_QUANTITY, options));
 
     const { decreaseQuantity } = result.current;
 
@@ -79,9 +76,7 @@ describe('useQuantityCounter 훅 테스트 ', () => {
   });
 
   test('인풋에 100이 넘어가는 숫자를 적는 경우 최댓값으로 변경한다. ', () => {
-    const { result } = renderHook(() =>
-      useQuantityCounter(INITIAL_VALUE, { deleteItem, updateItem })
-    );
+    const { result } = renderHook(() => useQuantityCounter(INITIAL_VALUE, options));
 
     const { onQuantityChange } = result.current;
 
@@ -95,9 +90,7 @@ describe('useQuantityCounter 훅 테스트 ', () => {
   });
 
   test('인풋에 100이 넘어가는 숫자를 적는 경우 에러 메세지를 보여준다. ', () => {
-    const { result } = renderHook(() =>
-      useQuantityCounter(INITIAL_VALUE, { deleteItem, updateItem })
-    );
+    const { result } = renderHook(() => useQuantityCounter(INITIAL_VALUE, options));
 
     const { onQuantityChange, countInputRef } = result.current;
 
@@ -111,9 +104,7 @@ describe('useQuantityCounter 훅 테스트 ', () => {
   });
 
   test('인풋에 100이 넘어가고 에러 메세지가 뜬 상태에서 숫자를 감소할 경우 에러 메세지를 지운다. ', () => {
-    const { result } = renderHook(() =>
-      useQuantityCounter(INITIAL_VALUE, { deleteItem, updateItem })
-    );
+    const { result } = renderHook(() => useQuantityCounter(INITIAL_VALUE, options));
 
     const { onQuantityChange, decreaseQuantity, countInputRef } = result.current;
 
