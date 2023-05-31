@@ -1,6 +1,7 @@
-import { servers } from '../constants/server';
-import type { CartProduct } from '../types/product';
+import type { Cart } from '../types/product';
 import type { HostNameType } from '../types/server';
+
+import { servers } from '../constants/server';
 
 const email = process.env.REACT_APP_EMAIL;
 const password = process.env.REACT_APP_PASSWORD;
@@ -9,7 +10,7 @@ const base64 = btoa(email + ':' + password);
 export const api = async (hostName: HostNameType) => {
   const URL = `${servers[hostName]}/cart-items`;
 
-  const fetchCartProducts = async () => {
+  const getCartProducts = async () => {
     const response = await fetch(URL, {
       method: 'GET',
       headers: {
@@ -17,11 +18,12 @@ export const api = async (hostName: HostNameType) => {
       },
     });
 
-    const data: CartProduct[] = await response.json();
+    const data: Cart = await response.json();
+
     return data;
   };
 
-  const postCartProduct = async (productId: number) => {
+  const createCartProduct = async (productId: number) => {
     const response = await fetch(URL, {
       method: 'POST',
       headers: {
@@ -34,17 +36,21 @@ export const api = async (hostName: HostNameType) => {
     if (!response.ok) {
       throw new Error(response.status.toString());
     }
-
+    /*
     const location = response.headers.get('location');
-
     if (location !== null) {
       const lastSlashIndex = location.lastIndexOf('/');
       const cartItemId = location.slice(lastSlashIndex + 1);
       return cartItemId;
     }
+    */
+    return Date.now();
   };
 
-  const patchCartProduct = async (cartItemId: number, quantity: number) => {
+  const editCartProductQuantity = async (
+    cartItemId: number,
+    quantity: number
+  ) => {
     const response = await fetch(`${URL}/${cartItemId}`, {
       method: 'PATCH',
       headers: {
@@ -71,9 +77,9 @@ export const api = async (hostName: HostNameType) => {
   };
 
   return {
-    fetchCartProducts,
-    postCartProduct,
-    patchCartProduct,
+    getCartProducts,
+    createCartProduct,
+    editCartProductQuantity,
     deleteCartProduct,
   };
 };

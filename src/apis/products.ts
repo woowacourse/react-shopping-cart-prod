@@ -2,7 +2,7 @@ import { servers } from '../constants/server';
 import type { Product } from '../types/product';
 import type { HostNameType } from '../types/server';
 
-export const fetchProducts = async (hostName: HostNameType) => {
+export const getProducts = async (hostName: HostNameType) => {
   const hostURL = servers[hostName];
   const response = await fetch(`${hostURL}/products`);
 
