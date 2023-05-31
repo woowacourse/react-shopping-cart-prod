@@ -1,9 +1,16 @@
 import { rest } from 'msw';
 import products from './data/products.json';
+import point from './data/point.json';
+
 // import cart from './data/cart.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
 
-import type { Cart, CartProduct } from '../types/product';
+import type {
+  Cart,
+  CartProduct,
+  Order,
+  ScheduledOrder,
+} from '../types/product';
 import { getData } from '../utils/localStorage';
 
 export const handlers = [
@@ -23,6 +30,29 @@ export const handlers = [
     return res(ctx.delay(200), ctx.status(200), ctx.json(getData('cart')));
   }),
 
+  rest.get('/orders', (req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200), ctx.json(getData('order')));
+  }),
+
+  rest.get('/points', (req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200), ctx.json(point));
+  }),
+
+  rest.get('/orders/:orderId', (req, res, ctx) => {
+    const storedOrders: Order[] = getData('order');
+    const order = storedOrders.find(
+      (order) => order.orderId === Number(req.params.orderId)
+    );
+
+    if (!order)
+      return res(
+        ctx.status(404),
+        ctx.json({ message: '주문 내역이 없습니다' })
+      );
+
+    return res(ctx.delay(200), ctx.status(200), ctx.json(order));
+  }),
+
   rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
     const { productId } = req.body;
 
@@ -40,6 +70,12 @@ export const handlers = [
     if (!product)
       return res(ctx.status(404), ctx.json({ message: '상품이 없습니다' }));
 
+    return res(ctx.status(201), ctx.json({ message: '상품이 추가되었습니다' }));
+  }),
+
+  rest.post<{ order: ScheduledOrder }>('/orders', (req, res, ctx) => {
+    const { order } = req.body;
+    console.log(order);
     return res(ctx.status(201), ctx.json({ message: '상품이 추가되었습니다' }));
   }),
 
