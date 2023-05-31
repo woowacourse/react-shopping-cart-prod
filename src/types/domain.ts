@@ -15,3 +15,11 @@ export interface LocalProductType extends ProductType {
   quantity: number;
   cartItemId: number;
 }
+
+export interface Coupon {
+  id: number;
+  name: string;
+  minPrice: number;
+  isAvailable: boolean;
+  discountPrice: number;
+}

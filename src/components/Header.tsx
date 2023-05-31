@@ -27,6 +27,7 @@ export const Header = () => {
   ) => {
     setLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, e.target.value);
     setServerOwner(e.target.value);
+    goPage(ROUTER_PATH.Main)();
 
     const newProducts = await makeLocalProducts();
     setLocalProducts(newProducts);

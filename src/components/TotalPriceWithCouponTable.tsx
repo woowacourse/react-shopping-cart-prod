@@ -1,37 +1,32 @@
-import { useRecoilValue } from "recoil";
-import styled from "styled-components";
-import { DELIVERY_FEE } from "../constants";
-import { totalPriceSelector } from "../recoil/selector";
+import { styled } from "styled-components";
 import { Button } from "./Button";
-import { useRouter } from "../hooks/useRouter";
-import { ROUTER_PATH } from "../router";
 
-export const TotalPriceTable = () => {
-  const totalPrice = useRecoilValue(totalPriceSelector);
-  const deliveryFee = totalPrice === 0 ? 0 : DELIVERY_FEE;
-  const { goPage } = useRouter();
-
+export const TotalPriceWithCouponTable = () => {
   return (
     <Wrapper>
       <TitleBox>결제예상금액</TitleBox>
       <RowContainer>
         <p>총 상품가격</p>
-        <p>{totalPrice.toLocaleString()}원</p>
+        <p>2000원</p>
       </RowContainer>
+      <DiscountContainer>
+        <p>ㄴ 할인가격</p>
+        <p>- 10000원</p>
+      </DiscountContainer>
       <RowContainer>
         <p>배송비</p>
-        <p>{deliveryFee.toLocaleString()}원</p>
+        <p>2000원</p>
       </RowContainer>
       <RowContainer>
         <p>총 주문금액</p>
-        <p>{(totalPrice + deliveryFee).toLocaleString()}원</p>
+        <p>2000원</p>
       </RowContainer>
-      <Button disabled={totalPrice === 0} onClick={goPage(ROUTER_PATH.Payment)}>
+      <Button>
         주문하기
       </Button>
     </Wrapper>
   );
-};
+}
 
 const Wrapper = styled.section`
   display: flex;
@@ -40,14 +35,15 @@ const Wrapper = styled.section`
 
   max-width: 380px;
   min-width: 350px;
-  height: 330px;
+  width: 100%;
+  height: 360px;
   padding-bottom: 30px;
 
   margin-top: 35px;
   border: 1px solid #dddddd;
 
   @media screen and (max-width: 300px) {
-    width: 290px;
+    width: 100%;
   }
 `;
 
@@ -79,3 +75,21 @@ const RowContainer = styled.div`
     padding: 30px;
   }
 `;
+
+const DiscountContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 30px;
+
+  & > p {
+    font-weight: 400;
+    font-size: 16px;
+
+    color: #aaaaaa;
+  }
+
+  &:last-of-type {
+    padding: 30px;
+  }
+`

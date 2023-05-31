@@ -5,12 +5,14 @@ import Main from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import Order from "../pages/Order";
 import { OrderDetail } from "../components";
+import { OrderSheet } from "../pages/OrderSheet";
 
 export const ROUTER_PATH = {
   Main: "/react-shopping-cart-prod",
   Cart: "/react-shopping-cart-prod/Cart",
   Order: "/react-shopping-cart-pord/Order",
   OrderDetail: "/react-shopping-cart-pord/OrderDetail",
+  Payment: "/react-shopping-cart-pord/OrderSheet",
   NotFound: "/*",
 };
 
@@ -35,6 +37,10 @@ export const PageRouterProvider = () => {
     {
       path: ROUTER_PATH.NotFound,
       element: <NotFound />,
+    },
+    {
+      path: ROUTER_PATH.Payment,
+      element: <OrderSheet />,
     },
   ]);
   return <RouterProvider router={router} />;
