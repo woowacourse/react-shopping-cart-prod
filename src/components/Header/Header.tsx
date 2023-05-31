@@ -37,11 +37,11 @@ const Header = () => {
           <option value='ROY'>로이</option>
           <option value='IRAE'>이레</option>
         </ServerSelectBox>
-        <Link to={PATH.CART_PAGE}>
-          <CartTextButton />
-        </Link>
         <Link to={PATH.ORDER_LIST_PAGE}>
           <OrderListButton>Orders</OrderListButton>
+        </Link>
+        <Link to={PATH.CART_PAGE}>
+          <CartTextButton />
         </Link>
       </ButtonContainer>
     </Container>
@@ -113,7 +113,7 @@ const ShoppingCartIconContainer = styled.div`
 const OrderListButton = styled.h2`
   color: white;
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 300;
 
   cursor: pointer;
 `;

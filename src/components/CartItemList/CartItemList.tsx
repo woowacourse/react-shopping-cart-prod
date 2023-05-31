@@ -58,7 +58,7 @@ const CartItemList = () => {
 
   return (
     <Wrapper>
-      <SubTitle>든든 배송 상품 ({cartList.length}개)</SubTitle>
+      <SubTitle>배송 상품 ({cartList.length}개)</SubTitle>
       <Ul>
         {cartList.map((item) => {
           return (

@@ -46,15 +46,15 @@ const Bill = () => {
       <SubTitle>결제예상금액</SubTitle>
       <DetailWrapper>
         <Detail>
-          총 상품가격 <span>{totalAmount.toLocaleString()}원</span>
+          총 상품가격 <span>{totalAmount.toLocaleString()} 원</span>
         </Detail>
         <Detail>
-          총 배송비 <span>{deliveryFee.toLocaleString()}원</span>
+          총 배송비 <span>{deliveryFee.toLocaleString()} 원</span>
         </Detail>
-        <Message>10만원 이상 주문시 무료배송</Message>
+        <Message>3만원 이상 주문시 3000원 할인</Message>
         <TotalAmount>
           총 주문금액
-          <span>{(totalAmount + deliveryFee).toLocaleString()}원</span>
+          <span>{(totalAmount + deliveryFee).toLocaleString()} 원</span>
         </TotalAmount>
         <OrderButton onClick={onClickOrder}>주문하기</OrderButton>
       </DetailWrapper>
@@ -70,6 +70,7 @@ const Wrapper = styled.div`
 
   height: 410px;
   width: 448px;
+  min-width: 360px;
 
   border: 1px solid #dddddd;
   margin-top: 64px;

@@ -1,9 +1,9 @@
 import { createGlobalStyle } from 'styled-components';
+import Perpetua from '../assets/fonts/perpetua.ttf';
 
 const GlobalStyle = createGlobalStyle`
   * {
     padding: 0;
-    margin: 0;
     border: 0;
     box-sizing: border-box;
     color: #333333
@@ -27,8 +27,13 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  @font-face {
+      font-family: "Perpetua";
+      src: url("${Perpetua}");
+  }
+
   *{
-    font-family: "Helvetica Neue";
+    font-family: "Perpetua";
   }
 `;
 

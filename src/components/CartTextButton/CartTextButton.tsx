@@ -31,6 +31,8 @@ const Container = styled.div`
 
 const ShoppingCart = styled.h2`
   font-size: 24px;
+  font-weight: 300;
+
   color: #fff;
 `;
 
@@ -44,9 +46,9 @@ const CartQuantity = styled.div`
 
   background: #04c09e;
   border-radius: 100%;
+  font-weight: 300;
 
   font-size: 16px;
-  font-weight: bold;
   color: #fff;
 
   @media (max-width: ${WIDTH.MD}) {

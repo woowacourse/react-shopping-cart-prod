@@ -70,7 +70,7 @@ const CartItem = ({
         <CounterWrapper>
           <Counter plusOne={plusOne} minusOne={minusOne} quantity={quantity} />
         </CounterWrapper>
-        <Price>{(price * quantity).toLocaleString()}원</Price>
+        <Price>{(price * quantity).toLocaleString()} 원</Price>
       </DetailWrapper>
     </Wrapper>
   );

@@ -1,10 +1,14 @@
 const fetchProductList = async <T>(baseURL: string): Promise<T> => {
-  const response = await fetch(`${baseURL}/products`, {
-    method: 'GET',
-  });
-  const data = await response.json();
+  return new Promise((resolve) => {
+    setTimeout(async () => {
+      const response = await fetch(`${baseURL}/products`, {
+        method: 'GET',
+      });
+      const data = await response.json();
 
-  return data;
+      resolve(data);
+    }, 2500);
+  });
 };
 
 export default fetchProductList;

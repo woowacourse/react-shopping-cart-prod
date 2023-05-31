@@ -35,7 +35,7 @@ const Wrapper = styled.div`
 
   width: 100%;
 
-  @media (max-width: ${WIDTH.LG}) {
+  @media (max-width: ${WIDTH.XL}) {
     justify-content: start;
   }
 `;
@@ -61,13 +61,15 @@ const MainInfo = styled.div`
   display: flex;
   align-items: start;
   justify-content: center;
+  gap: 32px;
 
   width: 80%;
 
   padding: 24px;
 
-  @media (max-width: ${WIDTH.LG}) {
+  @media (max-width: ${WIDTH.XL}) {
     flex-direction: column;
     align-items: center;
+    gap: 0;
   }
 `;
