@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import { Order } from '../../types/responseData';
 import OrderItem from '../OrderItem/OrderItem';
 import { PATH } from '../../store/path';
+import { WIDTH } from '../../styles/mediaQuery';
 
 type OrderCardProps = Order & {
   showDetailButton: boolean;
@@ -78,8 +79,15 @@ const TopSection = styled.div`
   height: 92px;
 
   font-size: 16px;
+  font-weight: 200;
 
   border-bottom: 1px solid #dad8d8;
+
+  @media (max-width: ${WIDTH.MD}) {
+    height: 48px;
+
+    font-size: 12px;
+  }
 `;
 
 const BottomSection = styled.div``;

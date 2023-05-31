@@ -78,4 +78,9 @@ const OrderListContainer = styled.div`
   width: 70%;
 
   padding: 32px 0px;
+
+  @media (max-width: ${WIDTH.LG}) {
+    gap: 0;
+    padding: 12px 0px;
+  }
 `;

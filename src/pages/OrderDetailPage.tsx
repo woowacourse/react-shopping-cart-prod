@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import OrderCard from '../components/OrderCard/OrderCard';
 import { styled } from 'styled-components';
+import { WIDTH } from '../styles/mediaQuery';
 
 const OrderDetailPage = () => {
   const location = useLocation();
@@ -60,6 +61,11 @@ const Bill = styled.div`
   border: 1px solid var(--grey-100);
 
   margin-top: 32px;
+
+  @media (max-width: ${WIDTH.MD}) {
+    height: 180px;
+    width: 300px;
+  }
 `;
 
 const SubTitle = styled.div`
@@ -72,6 +78,12 @@ const SubTitle = styled.div`
   color: #333333;
   font-size: 24px;
   font-weight: 200;
+
+  @media (max-width: ${WIDTH.MD}) {
+    padding: 12px 12px;
+
+    font-size: 12px;
+  }
 `;
 
 const DetailWrapper = styled.div`
@@ -84,14 +96,27 @@ const DetailWrapper = styled.div`
   width: 100%;
 
   padding: 32px;
+
+  @media (max-width: ${WIDTH.MD}) {
+    gap: 12px;
+    padding: 16px;
+  }
 `;
 
 const SubPrice = styled.span`
   font-size: 20px;
   font-weight: 200;
+
+  @media (max-width: ${WIDTH.MD}) {
+    font-size: 12px;
+  }
 `;
 
 const TotalPrice = styled.span`
   font-size: 24px;
   font-weight: 200;
+
+  @media (max-width: ${WIDTH.MD}) {
+    font-size: 12px;
+  }
 `;

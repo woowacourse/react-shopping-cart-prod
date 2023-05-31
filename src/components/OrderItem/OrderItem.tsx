@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import ProductImg from '../ProductCard/ProductImg/ProductImg';
+import { WIDTH } from '../../styles/mediaQuery';
 
 type OrderItemProps = {
   quantity: number;
@@ -36,6 +37,13 @@ const Wrapper = styled.li`
 
   width: 100%;
   height: 180px;
+
+  @media (max-width: ${WIDTH.MD}) {
+    gap: 16px;
+
+    height: 100px;
+    padding: 4px 0;
+  }
 `;
 
 const ImageWrapper = styled.div`
@@ -46,6 +54,11 @@ const ImageWrapper = styled.div`
   height: 180px;
 
   overflow: hidden;
+
+  @media (max-width: ${WIDTH.MD}) {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 const DetailInfo = styled.div`
@@ -55,15 +68,27 @@ const DetailInfo = styled.div`
 
   padding: 24px 0;
 
-  width: auto;
+  width: 100%;
   height: 100%;
+
+  @media (max-width: ${WIDTH.MD}) {
+    padding: 16px 0;
+  }
 `;
 
 const ProductName = styled.span`
   font-size: 20px;
+
+  @media (max-width: ${WIDTH.MD}) {
+    font-size: 12px;
+  }
 `;
 
 const ProductPriceWithQuantity = styled.span`
   font-size: 16px;
   color: #888888;
+
+  @media (max-width: ${WIDTH.MD}) {
+    font-size: 10px;
+  }
 `;
