@@ -110,7 +110,7 @@ export class API {
   }
 }
 
-const serverOwner = (localStorage.getItem(SERVER_OWNER) ?? '솔로스타') as ServerOwner;
+const serverOwner = (localStorage.getItem(SERVER_OWNER) ?? '협크') as ServerOwner;
 const api = new API(BASE_URL[serverOwner]);
 
 export default api;
