@@ -6,8 +6,8 @@ interface UserPointInfoProps {
 }
 
 const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
-  const { userPoint, minUsagePoints } = usePoint();
-  const isInputDisabled = userPoint < minUsagePoints;
+  const { userPoint, minUsagePoint } = usePoint();
+  const isInputDisabled = userPoint < minUsagePoint;
 
   const handleUsedPoint = (e: React.ChangeEvent<HTMLInputElement>) => {
     const onlyNumbersRegex = /[^0-9]/g;
@@ -46,7 +46,7 @@ const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
           <span>원</span>
         </UsedPointWrapper>
         <UsedPointGuide>
-          🔔 포인트는 {minUsagePoints.toLocaleString('KR')}원 이상부터 사용
+          🔔 포인트는 {minUsagePoint.toLocaleString('KR')}원 이상부터 사용
           가능합니다
         </UsedPointGuide>
       </PointContainer>
