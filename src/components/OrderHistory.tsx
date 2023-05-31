@@ -1,4 +1,6 @@
 import { styled } from "styled-components";
+import { useRouter } from "../hooks/useRouter";
+import { ROUTER_PATH } from "../router";
 import { LocalProductType } from "../types/domain";
 
 export const OrderHistory = ({
@@ -8,11 +10,12 @@ export const OrderHistory = ({
   imageUrl,
   quantity,
 }: LocalProductType) => {
+  const { goPage } = useRouter();
   return (
     <HistoryWrapper key={id}>
       <OrderTitleContainer>
-        <p>주문 번호</p>
-        <p>상세보기 {">"}</p>
+        <span>주문 번호</span>
+        <p onClick={goPage(ROUTER_PATH.OrderDetail)}>상세보기 {">"}</p>
       </OrderTitleContainer>
       <OrderContainer>
         <img src={imageUrl} alt="상품이미지" />
@@ -38,6 +41,10 @@ const OrderTitleContainer = styled.div`
   font-size: 17px;
   background: #f6f6f6;
   border-bottom: 1px solid #aaaaaa;
+
+  & > p {
+    cursor: pointer;
+  }
 `;
 
 const HistoryWrapper = styled.div`

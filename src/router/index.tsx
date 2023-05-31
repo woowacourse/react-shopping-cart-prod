@@ -5,6 +5,7 @@ import Login from "../pages/Login";
 import Main from "../pages/Main";
 import NotFound from "../pages/NotFound";
 import Order from "../pages/Order";
+import OrderDetail from "../pages/OrderDetail";
 import OrderHistory from "../pages/OrderHistory";
 
 export const ROUTER_PATH = {
@@ -41,7 +42,7 @@ export const PageRouterProvider = () => {
     },
     {
       path: ROUTER_PATH.OrderDetail,
-      element: <OrderHistory />,
+      element: <OrderDetail />,
     },
     { path: ROUTER_PATH.NotFound, element: <NotFound /> },
   ]);
