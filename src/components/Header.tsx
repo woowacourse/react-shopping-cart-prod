@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CartIcon } from "../assets";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { localProductsSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
@@ -14,14 +14,15 @@ import {
   KEY_LOCALSTORAGE_SERVER_OWNER,
   SERVERS,
 } from "../constants";
+import { useLocation } from "react-router-dom";
 
 export const Header = () => {
+  const location = useLocation();
   const { goPage } = useRouter();
   const { showToast } = useToast();
   const user = useRecoilValue(userState);
-  const isLogined = useRecoilValue(loginState);
   const cartProducts = useRecoilValue(localProductsSelector);
-  const setLoginState = useSetRecoilState(loginState);
+  const [isLogined, setIsLogined] = useRecoilState(loginState);
   const setLocalProducts = useSetRecoilState(localProductsState);
   const [serverOwner, setServerOwner] = useState(
     getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
@@ -43,7 +44,7 @@ export const Header = () => {
 
   const logout = () => {
     localStorage.clear();
-    setLoginState(false);
+    setIsLogined(false);
     showToast("success", `로그아웃 되었습니다. ✅`);
   };
 
@@ -63,12 +64,22 @@ export const Header = () => {
           <p onClick={goPage(ROUTER_PATH.Login)}>로그인</p>
         ) : (
           <CartContainer>
-            <p onClick={goPage(ROUTER_PATH.Cart)}>{user.nickname}의 장바구니</p>
-            {cartProducts.length > 0 && (
-              <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
-            )}
-            <p onClick={goPage(ROUTER_PATH.OrderHistory)}>주문목록</p>
-            <p onClick={logout}>로그아웃</p>
+            <CartBox
+              pathname={location.pathname}
+              onClick={goPage(ROUTER_PATH.Cart)}
+            >
+              {user.nickname}의 장바구니
+              {cartProducts.length > 0 && (
+                <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
+              )}
+            </CartBox>
+            <OrderBox
+              pathname={location.pathname}
+              onClick={goPage(ROUTER_PATH.OrderHistory)}
+            >
+              주문목록
+            </OrderBox>
+            <span onClick={logout}>로그아웃</span>
           </CartContainer>
         )}
       </NavContainer>
@@ -126,7 +137,6 @@ const NavContainer = styled.div`
 
   font-size: 22px;
   font-weight: 500;
-  color: white;
 
   cursor: pointer;
 
@@ -141,25 +151,50 @@ const CartContainer = styled.section`
   gap: 8px;
 
   cursor: pointer;
+
+  & > span {
+    font-size: 14px;
+    color: var(--light-gray);
+  }
+`;
+
+const CartBox = styled.p<{ pathname: string }>`
+  position: relative;
+  z-index: 10;
+  color: ${(props) =>
+    props.pathname === ROUTER_PATH.Cart || props.pathname === ROUTER_PATH.Order
+      ? "white"
+      : "gray"};
+`;
+
+const OrderBox = styled.p<{ pathname: string }>`
+  color: ${(props) =>
+    props.pathname === ROUTER_PATH.OrderHistory ||
+    props.pathname === ROUTER_PATH.OrderDetail
+      ? "white"
+      : "gray"};
 `;
 
 const ItemQuantityBox = styled.div`
+  position: absolute;
+  top: -11px;
+  right: -11px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 18px;
+  height: 18px;
 
   background: var(--mintish-green);
   border-radius: 50%;
 
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
   color: white;
 `;
 
 const SelectBox = styled.select`
-  width: 75px;
+  width: 65px;
   height: 40px;
 
   font-size: 18px;
