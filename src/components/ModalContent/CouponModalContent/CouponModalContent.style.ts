@@ -66,10 +66,16 @@ export const DiscountPercentage = styled.div`
 `;
 
 export const Name = styled.div`
-  height: 36px;
+  display: -webkit-box;
+  height: 32px;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 0;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 export const ApplyButton = styled.button`

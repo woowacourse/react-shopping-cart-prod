@@ -28,7 +28,8 @@ const coupons = [
     minAmount: 50000,
   },
   {
-    couponName: '미리 메리크리스마스',
+    couponName:
+      '아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, ',
     discountPercent: 25,
     minAmount: 50000,
   },

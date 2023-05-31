@@ -31,14 +31,25 @@ export const ProductDetails = styled.div`
 
 export const ProductName = styled.div`
   font-size: 16px;
+  height: 39px;
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
+
 export const ProductPrice = styled.div`
+  margin-top: 8px;
   font-size: 20px;
 `;
 
-export const ProductInfo = styled.div``;
+export const ProductInfo = styled.div`
+  flex: 1;
+`;
 
 export const CartCountWrapper = styled.div`
+  flex: 0 0 26px;
   border-radius: 50%;
   background-color: #04c09e;
   width: 26px;
