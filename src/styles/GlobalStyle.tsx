@@ -26,7 +26,6 @@ const GlobalStyle = createGlobalStyle`
 
   a:hover, a:active, a:visited {
     text-decoration: none;
-    color: ${theme.color.black};
   }
 
   button {
