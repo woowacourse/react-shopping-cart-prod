@@ -5,10 +5,13 @@ import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelecto
 import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
 import { pointState } from '../../../recoil/atoms/pointAtom';
 import { ChangeEvent, useEffect, useState } from 'react';
+import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
 
 export const OrderSummarySection = () => {
   const { totalProductPrice, deliveryPrice, totalPrice, pointToAdd } =
     useRecoilValue(priceSummaryState);
+
+  const { orderByCartId } = useOrderFetch();
 
   const [point, setPoint] = useRecoilState(pointState);
   const [viewPoint, setViewPoint] = useState(0);
@@ -22,6 +25,8 @@ export const OrderSummarySection = () => {
   }, [checkedProduct.length]);
 
   const handleOrderButton = () => {
+    orderByCartId(checkedProduct, totalPrice, viewPoint, pointToAdd);
+
     localStorage.setItem('pointKey', JSON.stringify({ point: pointToAdd }));
   };
 

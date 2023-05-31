@@ -2,7 +2,7 @@ import { selector } from 'recoil';
 import { Product } from '../../types/Product';
 import { base64 } from '../../constants/user';
 
-interface Order {
+export interface Order {
   orderId: number;
   orderInfo: Product[];
 }
