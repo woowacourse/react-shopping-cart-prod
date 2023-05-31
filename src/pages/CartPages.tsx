@@ -1,40 +1,25 @@
 import { styled } from 'styled-components';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import CartList from '../components/cart/CartList/CartList';
-import PaymentAmount from '../components/cart/PaymentAmount/PaymentAmount';
+import { Suspense } from 'react';
 import CheckedCartListProvider from '../provider/CheckedListProvider';
-import cartState from '../globalState/atoms/cartState';
+import CartContents from '../components/cart/CartContents/CartContents';
+import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
 
 const CartPage = () => {
-  const navigate = useNavigate();
-  const cartList = useRecoilValue(cartState);
-
-  const handleLinkButtonClick = () => {
-    navigate('/');
-  };
-
   return (
-    <CheckedCartListProvider>
-      <Layout>
-        <Title>장바구니</Title>
-        {cartList.length ? (
-          <Contents>
-            <>
-              <CartList />
-              <PaymentAmount />
-            </>
-          </Contents>
-        ) : (
-          <EmptyCartView>
-            <>
-              장바구니에 상품이 존재하지 않습니다.
-              <LinkButton onClick={handleLinkButtonClick}>상품 담으러 가기</LinkButton>
-            </>
-          </EmptyCartView>
-        )}
-      </Layout>
-    </CheckedCartListProvider>
+    <Layout>
+      <Title>장바구니</Title>
+      <Suspense
+        fallback={
+          <Fallback>
+            <LoadingSpinner color="#04c09e" />
+          </Fallback>
+        }
+      >
+        <CheckedCartListProvider>
+          <CartContents />
+        </CheckedCartListProvider>
+      </Suspense>
+    </Layout>
   );
 };
 
@@ -59,43 +44,12 @@ const Title = styled.h2`
   text-align: center;
 `;
 
-const Contents = styled.div`
+const Fallback = styled.div`
   display: flex;
-  justify-content: space-between;
-
-  margin-top: 34px;
-
-  @media screen and (max-width: 1320px) {
-    flex-direction: column;
-    justify-content: baseline;
-    gap: 100px;
-  }
-`;
-
-const EmptyCartView = styled.div`
-  display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 20px;
 
   margin-top: 200px;
-
-  font-weight: 500;
-  font-size: 30px;
-`;
-
-const LinkButton = styled.button`
-  width: 300px;
-  padding: 20px 50px;
-  background-color: #333;
-
-  border: none;
-  border-radius: 15px;
-
-  font-size: 20px;
-  color: white;
-
-  cursor: pointer;
 `;
 
 export default CartPage;
