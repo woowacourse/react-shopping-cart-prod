@@ -1,20 +1,24 @@
 import { styled } from 'styled-components';
 import ContentLayout from 'components/@common/ContentLayout';
-import data from 'mocks/orderList.json';
 import OrderItemList from 'components/Order/OrderItemList';
+import { getOrderList } from 'api/requests';
+import { useGet } from 'hooks/useGet';
+import { Order } from 'types';
 
-const Order = () => {
+const OrderList = () => {
+  const { data } = useGet<{ orders: Order[] }>(getOrderList);
+
   return (
     <ContentLayout>
       <Title>🍋 주문목록 🍋</Title>
-      {data.orders.map((order) => (
+      {data?.orders.map((order) => (
         <OrderItemList order={order} />
       ))}
     </ContentLayout>
   );
 };
 
-export default Order;
+export default OrderList;
 
 const Title = styled.h1`
   height: 60px;
