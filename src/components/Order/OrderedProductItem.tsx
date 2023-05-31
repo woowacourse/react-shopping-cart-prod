@@ -41,7 +41,7 @@ const ItemContainer = styled.div`
 `;
 
 const ProductInfoContainer = styled.dl`
-  margin: 0 0 0 36px;
+  margin: 0 0 0 12px;
   align-self: start;
 
   & > dt {
@@ -51,6 +51,10 @@ const ProductInfoContainer = styled.dl`
   & > dd {
     margin: 20px 0 0 0;
     color: ${({ theme }) => theme.colors.gray400};
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    margin: 0 0 0 24px;
   }
 `;
 

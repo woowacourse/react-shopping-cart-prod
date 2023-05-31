@@ -31,9 +31,13 @@ const OrderTitle = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 90px;
-  padding: 0 40px;
+  padding: 0 24px;
   background: ${({ theme }) => theme.colors.gray50};
   border: 1px solid ${({ theme }) => theme.colors.gray100};
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    padding: 0 40px;
+  }
 `;
 
 export default OrderItem;

@@ -74,14 +74,12 @@ const LogoContainer = styled(Link)`
 `;
 
 const Logo = styled.h1`
-  padding: 8px 0 0;
   color: ${({ theme }) => theme.colors.white};
   font-size: 34px;
   font-weight: 900;
   letter-spacing: 0.1em;
 
   @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    padding: 10px 0 0;
     font-size: 40px;
     line-height: 40px;
   }
@@ -112,12 +110,12 @@ const ProductCountAlert = styled.span`
   text-align: center;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primary};
-  line-height: 24px;
+  line-height: 22px;
 
   @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
     width: 26px;
     height: 26px;
-    line-height: 28px;
+    line-height: 26px;
   }
 `;
 
