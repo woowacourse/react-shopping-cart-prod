@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import useCartService from '../../../hooks/useCartService';
+import useCart from '../../../hooks/useCart';
 import ServerSelect from '../ServerSelect/ServerSelect';
 import { CartIcon } from '../../../assets/svg';
 
 const Header = () => {
-  const { cart } = useCartService();
+  const { cart } = useCart();
 
   return (
     <HeaderContainer>

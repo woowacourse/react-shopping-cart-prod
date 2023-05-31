@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import Image from '../../common/Image/Image';
 import Counter from '../../common/Counter/Counter';
 import Checkbox from '../../common/Checkbox/Checkbox';
-import useCartService from '../../../hooks/useCartService';
+import useCart from '../../../hooks/useCart';
 import { formatPrice } from '../../../utils/formatPrice';
 import Spacer from '../../common/Spacer/Spacer';
 import { TrashIcon } from '../../../assets/svg';
@@ -21,7 +21,7 @@ const CartListItem = ({
 }: CartListItemProps) => {
   const { id: cartItemId, quantity, product } = cartItem;
   const { name, price, imageUrl } = product;
-  const { updateProductQuantity, removeProductFromCart } = useCartService();
+  const { updateProductQuantity, removeProductFromCart } = useCart();
 
   const handleChangeQuantity = (quantity: number) => {
     updateProductQuantity(cartItemId, quantity);

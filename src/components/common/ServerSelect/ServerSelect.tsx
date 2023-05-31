@@ -3,13 +3,13 @@ import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { BASE_URLS } from '../../../constants/api';
 import { isKeyOf } from '../../../types/typeGuards';
-import useCartService from '../../../hooks/useCartService';
+import useCart from '../../../hooks/useCart';
 import { serverOriginState } from '../../../recoil/atoms/common';
 
 const ServerSelect = () => {
   const [value, setValue] = useState('baron');
   const [serverOrigin, setServerOrigin] = useRecoilState(serverOriginState);
-  const { updateCart } = useCartService();
+  const { updateCart } = useCart();
 
   const changeServer: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.target.value;
@@ -51,6 +51,7 @@ const Select = styled.select`
   text-align: center;
   border: none;
   border-radius: 4px;
+  cursor: pointer;
 `;
 
 export default ServerSelect;

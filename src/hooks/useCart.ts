@@ -12,7 +12,7 @@ import { serverOriginState } from '../recoil/atoms/common';
 import type { Product } from '../types/product';
 import type { CartItem } from '../types/cart';
 
-const useCartService = () => {
+const useCart = () => {
   const cart = useRecoilValue(cartState);
   const serverOrigin = useRecoilValue(serverOriginState);
   const { showToast } = useToast();
@@ -87,4 +87,4 @@ const useCartService = () => {
   } as const;
 };
 
-export default useCartService;
+export default useCart;
