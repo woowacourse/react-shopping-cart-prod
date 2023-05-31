@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
 import { styled } from 'styled-components';
-import OrderBoxItem from './OrderBoxItem';
+import OrderBoxItem from '../components/Order/OrderBoxItem';
 
-import { useOrders } from '../../hooks/useOrders';
-import OrderList from './OrderList';
+import { useOrders } from '../hooks/useOrders';
+import OrderList from '../components/Order/OrderList';
 
 const ordersMock = [
   {
@@ -90,13 +90,13 @@ const ordersMock = [
   },
 ];
 
-const OrderBoxList = () => {
+const OrderBoxListPage = () => {
   // const fetchedOrders = useOrders();
   // const [orders] = useState(fetchedOrders);
   const [orders] = useState(ordersMock);
 
   return (
-    <StyledOrderBoxList>
+    <StyledOrderBoxListPage>
       {orders.map(order => {
         return (
           <OrderBoxItem key={order.orderId} id={order.orderId} type="orderList">
@@ -104,11 +104,11 @@ const OrderBoxList = () => {
           </OrderBoxItem>
         );
       })}
-    </StyledOrderBoxList>
+    </StyledOrderBoxListPage>
   );
 };
 
-const StyledOrderBoxList = styled.ul`
+const StyledOrderBoxListPage = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -121,4 +121,4 @@ const StyledOrderBoxList = styled.ul`
   }
 `;
 
-export default OrderBoxList;
+export default OrderBoxListPage;

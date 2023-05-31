@@ -28,7 +28,7 @@ const OrderBoxItem = ({
       return;
     }
 
-    navigate('/orderDetail');
+    navigate(`/order/detail/${id}`);
     setSelectedOrderIdState(id);
   };
 

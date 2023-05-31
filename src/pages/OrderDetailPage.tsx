@@ -46,8 +46,7 @@ const OrderDetailPage = () => {
   if (!orderDetail) return null;
 
   return (
-    <Main>
-      <PageTitle>주문 내역 상세</PageTitle>
+    <>
       <OrderBoxItem id={order.orderId} type="orderList">
         <OrderList orderItems={order.orderItems} />
       </OrderBoxItem>
@@ -55,19 +54,8 @@ const OrderDetailPage = () => {
         <p>총 결제금액</p>
         <p>{totalPrice}</p>
       </OrderBoxItem>
-    </Main>
+    </>
   );
 };
-
-const Main = styled.main`
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  gap: 20px;
-  max-width: 1300px;
-  height: calc(100vh - 80px);
-  margin: 0 auto;
-  padding: 0 30px;
-`;
 
 export default OrderDetailPage;

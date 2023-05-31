@@ -11,6 +11,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import ProductsListPage from './pages/ProductsListPage';
 import CartPage from './pages/CartPage';
 import OrderPage from './pages/OrderPage';
+import OrderBoxListPage from './pages/OrderBoxListPage';
 import OrderDetailPage from './pages/OrderDetailPage';
 
 import { worker } from './mocks/browser';
@@ -36,9 +37,15 @@ const router = createBrowserRouter(
       errorElement: <NotFoundPage />,
       children: [
         { path: '', element: <ProductsListPage /> },
-        { path: '/cart', element: <CartPage /> },
-        { path: '/order', element: <OrderPage /> },
-        { path: '/orderDetail', element: <OrderDetailPage /> },
+        { path: 'cart', element: <CartPage /> },
+        {
+          path: 'order',
+          element: <OrderPage />,
+          children: [
+            { path: '', element: <OrderBoxListPage /> },
+            { path: 'detail/:id', element: <OrderDetailPage /> },
+          ],
+        },
       ],
     },
   ],
