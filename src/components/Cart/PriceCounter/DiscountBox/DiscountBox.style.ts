@@ -32,11 +32,11 @@ export const PointWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 `;
 
 export const Label = styled.label`
-  display: flex;
-  align-items: center;
+  flex: 0 0 52px;
   width: 52px;
   font-weight: 700;
   font-size: 16px;
@@ -46,6 +46,7 @@ export const Label = styled.label`
 
 export const Input = styled.input`
   flex: 1;
+  width: 100%;
   text-align: end;
   padding: 8px 15px 9px;
   margin-right: 12px;

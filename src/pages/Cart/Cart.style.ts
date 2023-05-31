@@ -4,9 +4,10 @@ export const PurchaseBoxWrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 25px;
+  min-width: 360px;
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    flex: 0 0 480px;
+    flex: 0 0 40%;
   }
 `;
 

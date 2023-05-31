@@ -5,17 +5,27 @@ export const CartItemLayout = styled.div`
   justify-content: space-between;
   border-top: 1px solid ${({ theme }) => theme.color.secondary};
   padding: 25px 0px;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    flex-direction: column;
+  }
 `;
 
 export const CartItemImage = styled.img`
   height: 144px;
   width: 144px;
   margin: 0px 10px;
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    align-self: center;
+  }
 `;
 
 export const CartItemName = styled.div`
   font-size: 16px;
   width: 100%;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+  }
 `;
 
 export const CartItemTrashImage = styled.img`
@@ -32,6 +42,12 @@ export const CartItemPrice = styled.div`
 
 export const CartItemInfoWrapper = styled.div`
   width: 100%;
+
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 `;
 
 export const CartItemControllerWrapper = styled.div`

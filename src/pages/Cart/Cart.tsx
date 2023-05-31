@@ -16,14 +16,12 @@ function Cart() {
       <PageTitle>장바구니</PageTitle>
       <FatBorder />
       {cartCount > 0 ? (
-        <>
-          <S.CartWrapper>
-            <CartList />
-            <S.PurchaseBoxWrapper>
-              <PriceCounter />
-            </S.PurchaseBoxWrapper>
-          </S.CartWrapper>
-        </>
+        <S.CartWrapper>
+          <CartList />
+          <S.PurchaseBoxWrapper>
+            <PriceCounter />
+          </S.PurchaseBoxWrapper>
+        </S.CartWrapper>
       ) : (
         <S.EmptyCartWrapper>
           <S.EmptyCartTitle>텅</S.EmptyCartTitle>
