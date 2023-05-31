@@ -30,7 +30,7 @@ const CartPage = () => {
       <Header />
       <Layout>
         <Title>장바구니</Title>
-        {isCartLoading || cartList.length ? (
+        {isCartLoading || !cartList.length ? (
           <EmptyCartView>
             {isCartLoading ? (
               <LoadingSpinner color="#06c09e" />
