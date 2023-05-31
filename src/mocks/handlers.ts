@@ -129,4 +129,22 @@ export const handlers = [
 
     return res(ctx.status(201), ctx.json({ message: 'Success to Create' }));
   }),
+
+  rest.get('/orders/:orderId', (req, res, ctx) => {
+    const { orderId } = req.params;
+
+    const targetOrderId = Number(orderId as string);
+
+    const targetOrder = orders.find((order) => order.orderId === targetOrderId);
+
+    if (!targetOrder) {
+      return res(ctx.status(304), ctx.json({ message: 'Not in the Cart' }));
+    }
+
+    return res(
+      ctx.delay(2000),
+      ctx.status(200),
+      ctx.json({ order: targetOrder, totalPrice: 50000 })
+    );
+  }),
 ];

@@ -5,6 +5,7 @@ import ProductsListPage from './pages/ProductsListPage';
 import CartPage from './pages/CartPage';
 import NotFoundPage from './pages/NotFoundPage';
 import OrderListPage from './pages/OrderListPage';
+import OrderDetailPage from './pages/OrderDetailPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path='/' element={<ProductsListPage />} />
           <Route path='cart' element={<CartPage />} />
           <Route path='orders' element={<OrderListPage />} />
+          <Route path='orders/:orderId' element={<OrderDetailPage />} />
         </Route>
         <Route path='*' element={<NotFoundPage />} />
       </Routes>
