@@ -68,7 +68,7 @@ class RestClient<TRestAPI extends RestAPI = RestAPI> {
 
   post<Path extends ExtractPathFromRestAPI<TRestAPI, 'POST'>>(
     path: Path | PathGenerator<TRestAPI, 'POST', Path>,
-    body: ExtractBodyFromRestAPI<TRestAPI, 'POST'>,
+    body: ExtractBodyFromRestAPI<TRestAPI, 'POST', Path>,
   ) {
     return this.fetch('POST', path, {
       headers: {
@@ -80,7 +80,7 @@ class RestClient<TRestAPI extends RestAPI = RestAPI> {
 
   patch<Path extends ExtractPathFromRestAPI<TRestAPI, 'PATCH'>>(
     path: Path | PathGenerator<TRestAPI, 'PATCH', Path>,
-    body: ExtractBodyFromRestAPI<TRestAPI, 'PATCH'>,
+    body: ExtractBodyFromRestAPI<TRestAPI, 'PATCH', Path>,
   ) {
     return this.fetch('PATCH', path, {
       headers: {

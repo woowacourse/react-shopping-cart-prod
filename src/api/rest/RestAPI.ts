@@ -48,7 +48,8 @@ export type ExtractPathFromRestAPI<
 export type ExtractBodyFromRestAPI<
   TRestAPI extends RestAPI,
   Method extends TRestAPI['request']['method'] = TRestAPI['request']['method'],
-> = Extract<TRestAPI['request'], { method: Method }>['body'];
+  Path extends TRestAPI['request']['path'] = TRestAPI['request']['path'],
+> = Extract<TRestAPI['request'], { method: Method; path: Path }>['body'];
 
 export type ExtractResponseFromRestAPI<
   TRestAPI extends RestAPI,
