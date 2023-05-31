@@ -11,7 +11,7 @@ const useCheckCart = (cartId: number) => {
 
   const changeCheckCartList = () => {
     const existItemIndex = checkCartList.findIndex((checkCartId) => checkCartId === cartId);
-    console.log(cartId);
+
     if (check) {
       if (existItemIndex !== -1) {
         setCheckCartList((prev) => {

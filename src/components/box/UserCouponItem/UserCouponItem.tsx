@@ -2,18 +2,19 @@ import styled from '@emotion/styled';
 import type { CouponType } from '../../../types/types';
 
 import { Text } from '../../common/Text/Text';
-import { PERCENTAGE } from '../../../abstract/constants';
 
 interface UserCouponItemProps {
   totalPrice: number;
   coupon: CouponType;
+  isClicked: boolean;
+  onClick: () => void;
 }
-const UserCouponItem = ({ totalPrice, coupon }: UserCouponItemProps) => {
-  const minimum = coupon.minimum_price ? `${coupon.minimum_price}원 이상 구매시 적용가능` : '';
+const UserCouponItem = ({ totalPrice, coupon, isClicked, onClick }: UserCouponItemProps) => {
+  const minimum = coupon.minimumPrice ? `${coupon.minimumPrice}원 이상 구매시 적용가능` : '';
 
-  const available = coupon.minimum_price < totalPrice;
+  const available = coupon.minimumPrice < totalPrice;
   return (
-    <CouponItemWrapper>
+    <CouponItemWrapper color={isClicked ? '#04C09E' : '#fff'} onClick={onClick}>
       <Text color="#000000" size="small" weight="normal" lineHeight="20px">
         {coupon.name}
       </Text>
@@ -41,9 +42,11 @@ const CouponItemWrapper = styled.div`
   align-items: center;
   width: 100%;
   height: auto;
-  gap: 1px;
 
+  gap: 1px;
   padding: 3px;
+
+  background-color: ${(props) => props.color};
   border: 1px solid #000000;
   border-radius: 8px;
 `;

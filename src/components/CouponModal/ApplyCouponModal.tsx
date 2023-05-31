@@ -3,6 +3,9 @@ import { Text } from '../common/Text/Text';
 import { useCouponModal } from '../../hooks/useCouponModal';
 import UserCouponItem from '../box/UserCouponItem/UserCouponItem';
 import { CouponType } from '../../types/types';
+import { couponState } from '../../service/atom';
+import { useRecoilState } from 'recoil';
+import { useState } from 'react';
 
 interface ApplyCouponModalProps {
   totalPrice: number;
@@ -11,12 +14,23 @@ interface ApplyCouponModalProps {
 
 const ApplyCouponModal = ({ totalPrice, coupons }: ApplyCouponModalProps) => {
   const { modalDataState, closeModal } = useCouponModal();
+  const [_, setCoupon] = useRecoilState(couponState);
+  const [useCouponId, setUseCouponId] = useState<number>();
+
   const onSubmit = () => {
     modalDataState.callBack && modalDataState.callBack();
     closeModal();
+    changeCoupon();
   };
 
-  console.log(coupons);
+  const changeCoupon = () => {
+    const coupon = coupons?.find((coupon) => coupon.id === useCouponId);
+    if (coupon) setCoupon(coupon);
+  };
+
+  const changeCouponId = (couponId: number, minimumPrice: number) => {
+    if (minimumPrice < totalPrice) setUseCouponId(couponId);
+  };
 
   return (
     <ModalWrapper>
@@ -26,9 +40,17 @@ const ApplyCouponModal = ({ totalPrice, coupons }: ApplyCouponModalProps) => {
         </Text>
       </TextWrapper>
       <CouponListWrapper>
-        {coupons ? (
+        {coupons && coupons.length ? (
           coupons.map((coupon) => {
-            return <UserCouponItem key={coupon.id} coupon={coupon} totalPrice={totalPrice} />;
+            return (
+              <UserCouponItem
+                key={coupon.id}
+                coupon={coupon}
+                totalPrice={totalPrice}
+                isClicked={coupon.id === useCouponId}
+                onClick={() => changeCouponId(coupon.id, coupon.minimumPrice)}
+              />
+            );
           })
         ) : (
           <Text size="smallest" weight="light">
@@ -73,6 +95,8 @@ const ModalWrapper = styled.div`
 const CouponListWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+
   width: 330px;
   max-width: 330px;
   height: 520px;

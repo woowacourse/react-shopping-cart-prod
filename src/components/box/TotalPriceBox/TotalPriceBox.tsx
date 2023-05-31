@@ -2,20 +2,40 @@ import styled from '@emotion/styled';
 import TextList from '../../common/TextList/TextList';
 import Button from '../../common/Button/Button';
 import getPriceFormat from '../../../utils/getPriceFormat';
+import { CouponType } from '../../../types/types';
+import { Text } from '../../common/Text/Text';
 
 interface TotalPriceBoxProps {
   totalProductPrice: number;
   shippingFee: number;
+  coupon?: CouponType;
   isValid?: boolean;
 }
 
-const TotalPriceBox = ({ totalProductPrice, shippingFee, isValid = true }: TotalPriceBoxProps) => {
-  const totalPrice = getPriceFormat(totalProductPrice + shippingFee);
+const TotalPriceBox = ({
+  totalProductPrice,
+  shippingFee,
+  coupon = undefined,
+  isValid = true,
+}: TotalPriceBoxProps) => {
+  const discountPrice = coupon
+    ? totalProductPrice * coupon.discountRate + coupon.discountAmount
+    : 0;
+  const totalPrice = getPriceFormat(totalProductPrice + shippingFee - discountPrice);
 
   return (
     <TotalPriceBoxWrapper>
       <BoxInner>
         <TextList label="총 선택상품금액" text={`${getPriceFormat(totalProductPrice)}원`} />
+        <TextList
+          label="쿠폰할인"
+          text={discountPrice ? `- ${getPriceFormat(discountPrice)}원` : '적용한 쿠폰이 없습니다'}
+        />
+        {discountPrice && (
+          <Text size="smallest" weight="light" color="#5f5f5f">
+            {coupon?.name}
+          </Text>
+        )}
         <TextList label="배송비" text={`+ ${getPriceFormat(shippingFee)}원`} />
         <TotalPriceWrapper>
           <TextList label="총 주문액" text={`${totalPrice}원`} primary />
@@ -37,6 +57,7 @@ export default TotalPriceBox;
 const TotalPriceBoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
   width: 370px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   height: auto;
@@ -48,14 +69,16 @@ const TotalPriceBoxWrapper = styled.div`
 `;
 
 const BoxInner = styled.div`
-  padding: 12px 18px 24px 18px;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  align-items: flex-end;
   justify-content: center;
+  width: 100%;
+  padding: 12px 18px 24px 18px;
 `;
 
 const TotalPriceWrapper = styled.div`
+  width: 100%;
   margin: 12px 0 24px 0;
   padding: 12px 0 12px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);

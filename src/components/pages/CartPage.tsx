@@ -6,19 +6,22 @@ import styled from '@emotion/styled';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import DeleteCartItemModal from '../ConfirmModal/DeleteCartItemModal';
 import { useCartFetch } from '../../hooks/useCartFetch';
-import { useRecoilValue } from 'recoil';
-import { checkCartListState } from '../../service/atom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { checkCartListState, couponState } from '../../service/atom';
 import Button from '../common/Button/Button';
 import CouponModal from '../CouponModal/CouponModal';
 import ApplyCouponModal from '../CouponModal/ApplyCouponModal';
 import { useCouponModal } from '../../hooks/useCouponModal';
 import useCouponFetch from '../../hooks/useCouponFetch';
+import { useEffect } from 'react';
+import { PERCENTAGE } from '../../abstract/constants';
 
 const CartPage = () => {
   const { cartData } = useCartFetch();
   const { userCoupon } = useCouponFetch();
   const { openModal } = useCouponModal();
   const checkCartList = useRecoilValue(checkCartListState);
+  const [coupon, setCoupon] = useRecoilState(couponState);
 
   const calcTotalPrice = () => {
     return checkCartList.reduce((prev, curr) => {
@@ -30,6 +33,18 @@ const CartPage = () => {
       return prev + 0;
     }, 0);
   };
+
+  useEffect(() => {
+    if (calcTotalPrice() === 0 || coupon.minimumPrice > calcTotalPrice())
+      setCoupon({
+        id: -1,
+        name: '',
+        discountType: PERCENTAGE,
+        discountRate: 0.0,
+        discountAmount: 0,
+        minimumPrice: 0,
+      });
+  }, [calcTotalPrice()]);
 
   return (
     <PageTemplate
@@ -59,6 +74,7 @@ const CartPage = () => {
               totalProductPrice={calcTotalPrice()}
               shippingFee={checkCartList.length > 0 ? 3000 : 0}
               isValid={checkCartList.length > 0}
+              coupon={coupon.id > 0 ? coupon : undefined}
             />
           </PriceBox>
         </CartPageContent>
