@@ -11,7 +11,7 @@ const Cart = () => {
       <AsyncBoundary
         SuspenseFallback={<LoadingSpinner />}
         ErrorFallback={(FallbackProps) => (
-          <ErrorInfo size="L" error={FallbackProps.error} />
+          <ErrorInfo error={FallbackProps.error} />
         )}
       >
         <div style={{ display: "flex" }}>
