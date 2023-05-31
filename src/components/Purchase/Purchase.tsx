@@ -28,6 +28,11 @@ import {
   PointInput,
   PointText,
   PointInputWrapper,
+  PurchasePropertyWrapper,
+  PurchasePrimaryText,
+  PurchaseList,
+  PurchaseSecondaryText,
+  PurchaseResultText,
 } from "./Purchase.style.ts";
 
 function Purchase() {
@@ -108,12 +113,24 @@ function Purchase() {
         </PointInputWrapper>
       </PointBoxWrapper>
 
-      <div>
-        <TempText>합계 0원</TempText>
-        <TempText>- 쿠폰 0원</TempText>
-        <TempText>- 포인트 0원</TempText>
-        <TempText>최종 결제 금액 0원</TempText>
-      </div>
+      <PurchaseList>
+        <PurchasePropertyWrapper>
+          <PurchasePrimaryText>합계</PurchasePrimaryText>
+          <PurchasePrimaryText>0원</PurchasePrimaryText>
+        </PurchasePropertyWrapper>
+        <PurchasePropertyWrapper>
+          <PurchaseSecondaryText>쿠폰</PurchaseSecondaryText>
+          <PurchaseSecondaryText>- 0원</PurchaseSecondaryText>
+        </PurchasePropertyWrapper>
+        <PurchasePropertyWrapper>
+          <PurchaseSecondaryText>포인트</PurchaseSecondaryText>
+          <PurchaseSecondaryText>- 0원</PurchaseSecondaryText>
+        </PurchasePropertyWrapper>
+        <PurchasePropertyWrapper>
+          <PurchaseResultText>최종 결제 금액</PurchaseResultText>
+          <PurchaseResultText>0원</PurchaseResultText>
+        </PurchasePropertyWrapper>
+      </PurchaseList>
 
       <div>
         <TempText>배송지 선택하기</TempText>
