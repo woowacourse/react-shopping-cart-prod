@@ -1,13 +1,13 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { Suspense } from 'react';
 import CartIcon from '../../../assets/icons/CartIcon';
-import getCartLength from '../../../globalState/selectors/getCartLength';
 import ServerSelector from './ServerSelector';
+import CartButton from './CartButton';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 const Header = () => {
   const navigate = useNavigate();
-  const cartLength = useRecoilValue(getCartLength);
 
   const handleLogoClick = () => {
     navigate('/');
@@ -23,12 +23,11 @@ const Header = () => {
         <CartIcon />
         <Title>SHOP</Title>
       </Logo>
+      <ServerSelector />
       <RightContainer>
-        <ServerSelector />
-        <CartButton onClick={handleCartButtonClick}>
-          <p>장바구니</p>
-          <CartTotalQuantity>{cartLength}</CartTotalQuantity>
-        </CartButton>
+        <Suspense fallback={<LoadingSpinner color="#04c09e" diameter="32px" spinnerWidth="5px" />}>
+          <CartButton onClick={handleCartButtonClick} />
+        </Suspense>
       </RightContainer>
     </HeaderContainer>
   );
@@ -69,35 +68,11 @@ const Title = styled.h1`
 
 const RightContainer = styled.div`
   display: flex;
-  gap: 25px;
-`;
-
-const CartButton = styled.div`
-  display: flex;
-  column-gap: 6px;
-  font-size: 24px;
-
-  cursor: pointer;
-
-  @media screen and (max-width: 520px) {
-    & > p {
-      display: none;
-    }
-  }
-`;
-
-const CartTotalQuantity = styled.span`
-  display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 
-  width: 26px;
-  height: 26px;
-
-  border-radius: 50%;
-  background: #04c09e;
-
-  font-size: 16px;
+  width: 200px;
+  height: 40px;
 `;
 
 export default Header;
