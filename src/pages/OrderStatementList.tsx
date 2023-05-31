@@ -3,8 +3,8 @@ import { getOrderStatement } from "api/orders";
 import OrderStatement from "components/OrderStatement";
 import OrderStatementModal from "components/OrderStatementModal";
 import ErrorInfo from "components/common/ErrorInfo";
-import LoadingSpinner from "components/common/LoadingSpinner";
 import Page from "components/common/Page";
+import OrderStatementSkeleton from "components/skeleton/OrderStatementSkeleton";
 import { useFetch } from "hooks/useFetch";
 import { useOrderStatementModal } from "hooks/useOrderStatementModal";
 
@@ -22,7 +22,7 @@ const OrderStatementList = () => {
     return (
       <Page pageName="주문내역">
         <Wrapper>
-          <LoadingSpinner />
+          <OrderStatementSkeleton />
         </Wrapper>
       </Page>
     );
