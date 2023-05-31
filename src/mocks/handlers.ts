@@ -148,7 +148,7 @@ export const handlers = [
     if (!newCoupon) return res(ctx.status(500));
 
     myCoupons.push(newCoupon);
-    myCoupons.sort((a, b) => b.id - a.id);
+    myCoupons.sort((a, b) => a.id - b.id);
 
     localStorageHelper.setValue('myCoupons', myCoupons);
 

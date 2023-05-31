@@ -19,13 +19,13 @@ function Coupon({
   isLoading = false,
 }: Partial<CouponType> & Partial<{ subMessage: string; type: 'issued' | 'use'; isLoading: boolean }>) {
   const { closeModal } = useModal();
-  const { deleteMyCoupon } = useCoupon();
+  const { deleteMyCoupon, issuedCoupon } = useCoupon();
 
   const [selectedCouponId, setSelectedCouponId] = useRecoilState(selectedCouponIdState);
 
   const IssuedOrUseCoupon = () => {
     if (!id) return;
-    if (type === 'issued') return;
+    if (type === 'issued') return issuedCoupon(id);
     if (isUsed) return alert('이미 사용한 쿠폰입니다.');
 
     setSelectedCouponId(id);

@@ -19,12 +19,18 @@ const useCoupon = () => {
     renewMyCoupon();
   };
 
+  const issuedCoupon = async (couponId: number) => {
+    await fetchData({ url: `${FETCH_URL.allCoupon}/${couponId}`, method: FETCH_METHOD.POST, server });
+
+    renewMyCoupon();
+  };
+
   const renewMyCoupon = async () => {
     const newMyCoupons = await fetchData<CouponType[]>({ url: FETCH_URL.myCoupon, method: FETCH_METHOD.GET, server });
     setMyCoupons(newMyCoupons);
   };
 
-  return { deleteMyCoupon, renewMyCoupon };
+  return { deleteMyCoupon, issuedCoupon, renewMyCoupon };
 };
 
 export default useCoupon;
