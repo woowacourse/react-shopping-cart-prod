@@ -1,13 +1,10 @@
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  imageUrl: string;
+import { CartItem } from "api/cartItems";
+import { Coupon } from "api/coupon";
+
+export interface CartProduct extends CartItem {
+  isChecked: boolean;
 }
 
-export interface CartProduct {
-  id: number;
-  quantity: number;
-  isChecked: boolean;
-  product: Product;
+export interface UsableCoupon extends Coupon {
+  cartItemId: number | null;
 }

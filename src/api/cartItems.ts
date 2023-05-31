@@ -1,8 +1,8 @@
 import { ServerId } from "recoil/server";
-import { Product } from "types/domain";
+import { Product } from "./products";
 import { SERVER_LIST, USER_TOKEN } from "./constants";
 
-interface CartItem {
+export interface CartItem {
   id: number;
   quantity: number;
   product: Product;
