@@ -24,4 +24,14 @@ export const TOAST_STATE = {
     variant: 'error',
     duration: 2000,
   },
+  successOrderProducts: {
+    message: '상품을 주문했어요',
+    variant: 'success',
+    duration: 2000,
+  },
+  failedOrderProducts: {
+    message: '상품을 주문을 실패했어요',
+    variant: 'error',
+    duration: 2000,
+  },
 } as const;
