@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
 import { CART_URL } from '../../constants/url';
+import { useSetCart } from '../../hooks/useCart';
 import { useFetchData } from '../../hooks/useFetchData';
-import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
 import { cartState, checkedItemList, serverState } from '../../recoil';
 import { CartItem } from '../../types';
 import Button from '../common/Button';
@@ -13,9 +13,10 @@ import SelectedProductItem from './SelectedProductItem';
 const SelectedProductList = ({ productCountInCart }: { productCountInCart: number }) => {
   const [cart, setCart] = useRecoilState(cartState);
   const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
-  const removeCheckedItemsFromCart = useRemoveCheckedItemsFromCart(checkedItems);
   const server = useRecoilValue(serverState);
   const { api } = useFetchData();
+  const { removeItemFromCart } = useSetCart();
+
   const initialCheckedItems = cart.map((item) => item.id);
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
   };
 
   const handleCheckedItemRemove = () => {
-    removeCheckedItemsFromCart();
+    removeItemFromCart(checkedItems);
     setCheckedItems([]);
   };
 

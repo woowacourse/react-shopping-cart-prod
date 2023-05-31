@@ -10,7 +10,7 @@ export const useRemoveCheckedItemsFromCart = (checkedItemIdList: number[]) => {
   const { api } = useFetchData();
 
   const removeCheckedItemsFromCart = () => {
-    checkedItemIdList.forEach((id) => api.delete(`${server}${CART_URL}/${id}`));
+    api.delete(`${server}${CART_URL}`, { cartItemIdList: checkedItemIdList });
 
     setCart((prev) => prev.filter((item) => !checkedItemIdList.includes(item.id)));
   };

@@ -1,12 +1,12 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { FIRST_INDEX, ONE_ITEM_IN_CART } from '../constants';
+import { FIRST_INDEX } from '../constants';
 import { QUANTITY } from '../constants';
 import { CART_URL } from '../constants/url';
 import { cartState, productSelector, serverState } from '../recoil';
 import { CartItem } from '../types';
 import { useFetchData } from './useFetchData';
 
-export const useSetCart = (productId: number) => {
+export const useSetCart = (productId?: number) => {
   const [cart, setCart] = useRecoilState(cartState);
   const selectedProduct = useRecoilValue(productSelector(productId));
 
@@ -23,12 +23,6 @@ export const useSetCart = (productId: number) => {
   };
 
   const findCartItemId = () => cart.find((item) => item.product.id === productId)?.id;
-
-  const removeProduct = (cart: CartItem[], cartItemIndex: number) => {
-    if (cartItemIndex >= FIRST_INDEX) cart.splice(cartItemIndex, ONE_ITEM_IN_CART);
-
-    return cart;
-  };
 
   const updateCart = (value: number) => {
     const quantity = value;
@@ -72,19 +66,17 @@ export const useSetCart = (productId: number) => {
     }
   };
 
-  const removeItemFromCart = () => {
-    const cartItemId = findCartItemId();
+  const removeItemFromCart = (checkedItemIdList?: number[]) => {
+    const cartItemIdList = checkedItemIdList ? checkedItemIdList : [findCartItemId()];
 
     api
-      .delete(`${server}${CART_URL}/${cartItemId}`)
+      .delete(`${server}${CART_URL}`, { cartItemIdList })
       .then(() => {
-        setCart((prev) => {
-          const { cart, cartItemIndex, alreadyHasCartItem } = findCartItemIndex(prev);
-
-          if (alreadyHasCartItem) return removeProduct(cart, cartItemIndex);
-
-          return prev;
-        });
+        setCart((prev) =>
+          prev.filter(
+            (item) => !cartItemIdList.includes(checkedItemIdList ? item.id : item.product.id)
+          )
+        );
       })
       .catch((error) => {
         alert(error.message);
