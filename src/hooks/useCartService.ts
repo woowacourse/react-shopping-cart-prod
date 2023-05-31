@@ -1,10 +1,27 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import cartState from '../globalState/atoms/cartState';
-import type { Product } from '../types/product';
+import type { CartProduct, Product } from '../types/product';
 import serverNameState from '../globalState/atoms/serverName';
 import ServerUtil from '../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../constant';
 import cartLoadingState from '../globalState/atoms/cartLoadingState';
+import { ServerName } from '../types/server';
+
+const getCartItemId = async (serverName: ServerName, productId: number) => {
+  const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
+  const response = await fetch(cartItemsUrl, {
+    headers: {
+      Authorization: `Basic ${USER_AUTH_TOKEN}`,
+    },
+  });
+
+  if (!response.ok) throw new Error('장바구니 목록을 불러오는 과정에서 문제가 발생했습니다.');
+
+  const cart: CartProduct[] = await response.json();
+  const product = cart.find(({ product: { id } }) => id === productId);
+
+  return product ? product.id : null;
+};
 
 const useCartService = () => {
   const [cartList, setCartList] = useRecoilState(cartState);
@@ -46,7 +63,13 @@ const useCartService = () => {
       throw new Error('장바구니를 추가하는 과정에서 문제가 발생했습니다.');
     }
 
-    await fetchCartItem();
+    const cartItemId = await getCartItemId(serverName, product.id);
+
+    if (cartItemId === null) {
+      throw new Error('장바구니를 추가하는 과정에서 문제가 발생했습니다.');
+    }
+
+    return cartItemId;
   };
 
   const updateCartItemQuantity = (cartId: string) => async (quantity: number) => {
@@ -64,17 +87,6 @@ const useCartService = () => {
     if (!response.ok) {
       throw new Error('장바구니를 업데이트하는 과정에서 문제가 발생했습니다.');
     }
-
-    setCartList((prevCart) => {
-      return prevCart.map((cartItem) => {
-        if (cartItem.id !== cartId) return cartItem;
-
-        return {
-          ...cartItem,
-          quantity,
-        };
-      });
-    });
   };
 
   const deleteCartItem = async (cartId: string) => {
@@ -88,8 +100,6 @@ const useCartService = () => {
     if (!response.ok) {
       throw new Error('장바구니를 삭제하는 과정에서 문제가 발생했습니다.');
     }
-
-    setCartList((prevCart) => prevCart.filter((cartItem) => cartItem.id !== cartId));
   };
 
   const getCartId = (productId: number) => {
@@ -97,7 +107,6 @@ const useCartService = () => {
   };
 
   return {
-    cartList,
     fetchCartItem,
     addCartItem,
     updateCartItemQuantity,

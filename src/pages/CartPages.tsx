@@ -10,10 +10,12 @@ import useCartService from '../hooks/useCartService';
 import cartLoadingState from '../globalState/atoms/cartLoadingState';
 import serverNameState from '../globalState/atoms/serverName';
 import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
+import cartState from '../globalState/atoms/cartState';
 
 const CartPage = () => {
   const navigate = useNavigate();
-  const { cartList, fetchCartItem } = useCartService();
+  const { fetchCartItem } = useCartService();
+  const cartList = useRecoilValue(cartState);
   const isCartLoading = useRecoilValue(cartLoadingState);
   const serverName = useRecoilValue(serverNameState);
 

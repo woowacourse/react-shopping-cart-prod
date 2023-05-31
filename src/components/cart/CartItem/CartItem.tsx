@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import Image from '../../common/Image/Image';
 import Counter from '../../common/Counter/Counter';
@@ -8,44 +9,49 @@ import useCartService from '../../../hooks/useCartService';
 import { formatPrice } from '../../../utils/formatPrice';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
 import type { CartProduct } from '../../../types/product';
+import getCartStateController from '../../../globalState/selectors/getCartStateController';
 
 interface CartItemProps {
   cartItem: CartProduct;
 }
 
 const CartItem = ({ cartItem }: CartItemProps) => {
-  const { id, quantity } = cartItem;
+  const { id: cartItemId, quantity } = cartItem;
   const { imageUrl, name, price } = cartItem.product;
 
   const { updateCartItemQuantity, deleteCartItem } = useCartService();
   const { isChecked, addCheckedItem, deleteCheckedItem } = useCheckedCartListValue();
   const [count, setCount] = useState(quantity);
 
+  const cartContoller = useRecoilValue(getCartStateController(cartItemId));
+
   const updateQuantity = (value: number) => {
     setCount(value);
-    updateCartItemQuantity(id)(value);
+    updateCartItemQuantity(cartItemId)(value);
+    cartContoller.set(value);
   };
 
   const handleRemoveButtonClick = () => {
     if (!window.confirm('해당 물품을 장바구니에서 삭제 하시겠습니까?')) return;
 
-    deleteCartItem(id);
-    deleteCheckedItem(id);
+    deleteCartItem(cartItemId);
+    deleteCheckedItem(cartItemId);
+    cartContoller.delete();
   };
 
   const handleCheckBoxChange = () => {
-    if (isChecked(id)) {
-      deleteCheckedItem(id);
+    if (isChecked(cartItemId)) {
+      deleteCheckedItem(cartItemId);
       return;
     }
 
-    addCheckedItem(id);
+    addCheckedItem(cartItemId);
   };
 
   return (
     <CartItemContainer>
       <ItemContents>
-        <CheckBox isChecked={isChecked(id)} onChange={handleCheckBoxChange} />
+        <CheckBox isChecked={isChecked(cartItemId)} onChange={handleCheckBoxChange} />
         <Image src={imageUrl} size="medium" />
         <div>
           <Name>{name}</Name>

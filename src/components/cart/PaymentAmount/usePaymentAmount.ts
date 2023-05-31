@@ -1,8 +1,9 @@
-import useCartService from '../../../hooks/useCartService';
+import { useRecoilValue } from 'recoil';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
+import cartState from '../../../globalState/atoms/cartState';
 
 const usePaymentAmount = () => {
-  const { cartList } = useCartService();
+  const cartList = useRecoilValue(cartState);
   const { checkedCartList } = useCheckedCartListValue();
 
   const paymentAmount = cartList

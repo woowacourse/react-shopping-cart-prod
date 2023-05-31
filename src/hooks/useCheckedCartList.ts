@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import useCartService from './useCartService';
 import cartLoadingState from '../globalState/atoms/cartLoadingState';
+import cartState from '../globalState/atoms/cartState';
 
 const useCheckedCartList = () => {
-  const { cartList } = useCartService();
+  const cartList = useRecoilValue(cartState);
   const cartIdList = cartList.map((cartItem) => cartItem.id);
   const [checkedCartList, setCheckedCartList] = useState<string[]>(cartIdList);
 

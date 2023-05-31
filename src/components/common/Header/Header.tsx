@@ -1,15 +1,15 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import CartIcon from '../../../assets/icons/CartIcon';
-import useCartService from '../../../hooks/useCartService';
 import { BASE_URL } from '../../../constant';
 import serverNameState from '../../../globalState/atoms/serverName';
 import { isProperServerName } from '../../../types/server';
+import cartState from '../../../globalState/atoms/cartState';
 
 const Header = () => {
   const navigate = useNavigate();
-  const { cartList } = useCartService();
+  const cartList = useRecoilValue(cartState);
   const [serverName, setServerName] = useRecoilState(serverNameState);
 
   const handleLogoClick = () => {
