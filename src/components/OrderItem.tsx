@@ -14,7 +14,7 @@ const OrderItem = (item: Order) => {
 const Wrapper = styled.ul`
   display: flex;
   flex-flow: wrap column;
-  gap: 10px;
+  row-gap: 12px;
 
   height: 160px;
 
@@ -26,10 +26,12 @@ const ImgBox = styled.img`
   height: 100%;
   width: 180px;
   border-radius: 5px;
+
+  margin-right: 2%;
 `;
 
 const NameBox = styled.div`
-  width: 70%;
+  width: 80%;
   height: 20%;
 
   padding-top: 1%;
@@ -47,6 +49,8 @@ const NameBox = styled.div`
 `;
 
 const PriceContainer = styled.div`
+  width: 80%;
+
   color: rgba(136, 136, 136, 1);
   font-size: 16px;
   font-weight: 400;
