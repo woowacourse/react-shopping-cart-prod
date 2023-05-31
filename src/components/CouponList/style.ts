@@ -12,7 +12,7 @@ export const NoExistCouponContainer = styled.div`
   justify-items: center;
   grid-gap: 20px;
 
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 `;
 
 export const NoExistCouponImage = styled.img``;

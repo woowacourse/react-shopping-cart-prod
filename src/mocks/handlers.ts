@@ -95,7 +95,8 @@ export const handlers = [
 
     if (couponId) {
       const newMyCoupons = myCoupons.map((coupon) => {
-        return { ...coupon, isUsed: coupon.id === couponId };
+        if (coupon.id !== couponId) return coupon;
+        return { ...coupon, isUsed: true };
       });
 
       localStorageHelper.setValue('myCoupons', newMyCoupons);
