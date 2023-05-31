@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { ROUTER_PATH } from "router";
 import { cartListState } from "recoil/cart";
-import ServerSeclector from "./ServerSelector";
+import ServerSelector from "./ServerSelector";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -17,13 +17,18 @@ const Header = () => {
     navigate(ROUTER_PATH.Cart);
   };
 
+  const goToOrderList = () => {
+    navigate(ROUTER_PATH.OrderList);
+  };
+
   return (
     <Wrapper>
       <TitleContainer onClick={goToMain}>
         <img src={process.env.PUBLIC_URL + "/assets/cart-icon.svg"} alt="홈카트" />
         <Title>SHOP</Title>
       </TitleContainer>
-      <ServerSeclector />
+      <ServerSelector />
+      <ButtonBox onClick={goToOrderList}>주문 목록</ButtonBox>
       <CartContainer onClick={goToCart}>
         장바구니
         {cartCount > 0 && <ItemQuantityBox>{cartCount}</ItemQuantityBox>}
@@ -109,3 +114,23 @@ const ItemQuantityBox = styled.div`
 `;
 
 export default Header;
+
+const ButtonBox = styled.button`
+  margin-left: auto;
+  margin-right: 1.5%;
+
+  background: none;
+  font-size: 24px;
+  font-weight: 500;
+  color: white;
+
+  cursor: pointer;
+
+  @media screen and (max-width: 1200px) {
+    font-size: 20px;
+  }
+
+  @media screen and (max-width: 800px) {
+    font-size: 16px;
+  }
+`;

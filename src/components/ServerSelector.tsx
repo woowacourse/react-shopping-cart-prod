@@ -9,7 +9,7 @@ import { CartProduct } from "types/domain";
 import { useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "router";
 
-const ServerSeclector = () => {
+const ServerSelector = () => {
   const navigate = useNavigate();
   const [serverState, setServerState] = useRecoilState(serverSelectState);
 
@@ -91,4 +91,4 @@ const Input = styled.input`
   margin-right: 3px;
 `;
 
-export default ServerSeclector;
+export default ServerSelector;
