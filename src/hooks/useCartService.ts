@@ -1,10 +1,8 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import cartState from '../globalState/atoms/cartState';
+import { useRecoilValue } from 'recoil';
 import type { CartProduct, Product } from '../types/product';
 import serverNameState from '../globalState/atoms/serverName';
 import ServerUtil from '../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../constant';
-import cartLoadingState from '../globalState/atoms/cartLoadingState';
 import { ServerName } from '../types/server';
 
 const getCartItemId = async (serverName: ServerName, productId: number) => {
@@ -24,30 +22,8 @@ const getCartItemId = async (serverName: ServerName, productId: number) => {
 };
 
 const useCartService = () => {
-  const [, setCartList] = useRecoilState(cartState);
-  const setCartLoading = useSetRecoilState(cartLoadingState);
-
   const serverName = useRecoilValue(serverNameState);
   const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
-
-  const fetchCartItem = async () => {
-    setCartLoading(true);
-
-    const response = await fetch(cartItemsUrl, {
-      headers: {
-        Authorization: `Basic ${USER_AUTH_TOKEN}`,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('장바구니 목록을 불러오는 과정에서 문제가 발생했습니다.');
-    }
-
-    const fetchedCartList = await response.json();
-    setCartList(fetchedCartList);
-
-    setCartLoading(false);
-  };
 
   const addCartItem = async (product: Product) => {
     const response = await fetch(cartItemsUrl, {
@@ -103,7 +79,6 @@ const useCartService = () => {
   };
 
   return {
-    fetchCartItem,
     addCartItem,
     updateCartItemQuantity,
     deleteCartItem,

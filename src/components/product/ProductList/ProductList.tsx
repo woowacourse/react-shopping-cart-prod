@@ -1,15 +1,12 @@
 import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { useEffect } from 'react';
 import ProductItem from '../ProductItem/ProductItem';
 import useFetch from '../../../hooks/api/useFetch';
 import { Product } from '../../../types/product';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
-import useCartService from '../../../hooks/useCartService';
 
 const ProductList = () => {
-  const { fetchCartItem } = useCartService();
   const serverName = useRecoilValue(serverNameState);
   const productsUrl = ServerUtil.getProductsUrl(serverName);
 
@@ -20,10 +17,6 @@ const ProductList = () => {
   }
 
   const productList = getData();
-
-  useEffect(() => {
-    fetchCartItem();
-  }, [serverName]);
 
   return (
     <section>

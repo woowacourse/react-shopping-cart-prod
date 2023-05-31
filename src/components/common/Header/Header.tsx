@@ -1,16 +1,31 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  useRecoilRefresher_UNSTABLE,
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+} from 'recoil';
+import { useEffect } from 'react';
 import CartIcon from '../../../assets/icons/CartIcon';
 import { BASE_URL } from '../../../constant';
 import serverNameState from '../../../globalState/atoms/serverName';
 import { isProperServerName } from '../../../types/server';
 import cartState from '../../../globalState/atoms/cartState';
+import getCartLength from '../../../globalState/selectors/getCartLength';
+import fetchCartItems from '../../../globalState/selectors/fetchCartItems';
 
 const Header = () => {
   const navigate = useNavigate();
-  const cartList = useRecoilValue(cartState);
+  const cartLength = useRecoilValue(getCartLength);
   const [serverName, setServerName] = useRecoilState(serverNameState);
+  const resetCart = useResetRecoilState(cartState);
+  const resetCartFetcher = useRecoilRefresher_UNSTABLE(fetchCartItems);
+
+  useEffect(() => {
+    resetCartFetcher();
+    resetCart();
+  }, [serverName]);
 
   const handleLogoClick = () => {
     navigate('/');
@@ -42,7 +57,7 @@ const Header = () => {
         </select>
         <CartButton onClick={handleCartButtonClick}>
           <p>장바구니</p>
-          <CartTotalQuantity>{cartList.length}</CartTotalQuantity>
+          <CartTotalQuantity>{cartLength}</CartTotalQuantity>
         </CartButton>
       </RightContainer>
     </HeaderContainer>
