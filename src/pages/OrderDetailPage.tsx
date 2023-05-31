@@ -1,38 +1,52 @@
+import api from 'apis';
+import { getOrder } from 'apis/orders';
 import FlexBox from 'components/@common/FlexBox';
+import Spinner from 'components/@common/Loader';
 import OrderItem from 'components/OrderItem/OrderItem';
+import useFetch from 'hooks/useFetch';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import { atom, selectorFamily, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
+import { Order } from 'types/order';
 
-const order = {
-  order_id: 3,
-  products: [
-    {
-      name: '사과파이2',
-      price: 2200,
-      quantity: 1,
-      image_url: 'https://www.fooding.kr/files/attach/images/148/930/001/1.jpg',
+// Define an async selector to fetch the order based on the ID
+const orderSelector = selectorFamily({
+  key: 'orderSelector',
+  get:
+    (orderId: number) =>
+    async ({ get }) => {
+      const fetchedData = await getOrder(orderId);
+      console.log(fetchedData);
+      const order = fetchedData;
+      console.log(order);
+      return order;
     },
-    {
-      name: '자두파이',
-      price: 1700,
-      quantity: 1,
-      image_url: 'https://www.fooding.kr/files/attach/images/148/930/001/1.jpg',
-    },
-  ],
-  total_price: 3900,
-  used_point: 9000,
-  ordered_at: '2021-08-03 11:04:00',
-};
+});
 
 const OrderDetailPage = () => {
+  const orderId = Number(useLocation().pathname.split('/')[2]);
+  console.log(orderId);
+  const { state, contents: order } = useRecoilValueLoadable(orderSelector(orderId));
+
+  // Handle different states: 'loading', 'hasError', 'hasValue'
+  if (state === 'loading') {
+    return <Spinner />;
+  }
+
+  if (state === 'hasError') {
+    throw Error;
+  }
+
   return (
     <OrderDetailPageContainer flexDirection="column">
       <PageTitle>주문 상세</PageTitle>
       <SectionContainer gap="80px" align="flex-start" role="region">
-        <OrderItem order={order} type="detail" />
+        {order && <OrderItem order={order} type="detail" />}
         <PriceSection flexDirection="column" gap="10px">
           <Container justify="space-between">
             <SubTitle>총 상품가격</SubTitle>
-            <ProductTotalPrice>{order.total_price}</ProductTotalPrice>
+            {order && <ProductTotalPrice>{order.totalPrice}</ProductTotalPrice>}
           </Container>
         </PriceSection>
       </SectionContainer>

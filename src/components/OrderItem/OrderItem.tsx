@@ -2,7 +2,7 @@ import FlexBox from 'components/@common/FlexBox';
 import SheetProductCard from 'components/SheetLeftSection/SheetProductCardList/SheetProductCard/SheetProductCard';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Order } from 'types/order';
+import { Order, OrderProduct } from 'types/order';
 
 type OrderItemProps = {
   order: Order;
@@ -13,7 +13,7 @@ const OrderItem = ({ order, type }: OrderItemProps) => {
   const navigate = useNavigate();
 
   const handleOnClick = () => {
-    navigate(`/order/${order.order_id}`);
+    navigate(`/order/${order.orderId}`);
   };
 
   return (
@@ -25,10 +25,11 @@ const OrderItem = ({ order, type }: OrderItemProps) => {
       style={{ marginTop: type === 'detail' ? '60px' : '0' }}
     >
       <ItemHeader flexDirection="row" justify="space-between" align="center">
-        <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
-          <div> 주문번호 : {order.order_id}</div>
-          <div style={{ fontSize: '10px' }}> ({order.ordered_at})</div>
-        </div>
+        <HeaderInfo gap="4px" align="center">
+          <div> 주문번호 : {order.orderId}</div>
+          <div style={{ fontSize: '10px' }}> ({order.orderedAt})</div>
+        </HeaderInfo>
+
         {type === 'list' ? (
           <div onClick={handleOnClick} style={{ cursor: 'pointer' }}>
             상세보기
@@ -38,7 +39,7 @@ const OrderItem = ({ order, type }: OrderItemProps) => {
         )}
       </ItemHeader>
       <ItemBody flexDirection="column">
-        {order.products.map((product: any) => {
+        {order.products.map((product: OrderProduct) => {
           return <SheetProductCard sheetProduct={product} />;
         })}
       </ItemBody>
@@ -70,6 +71,8 @@ const ItemHeader = styled(FlexBox)`
   /* padding: 12px; */
   border-bottom: 1px solid #dddddd;
 `;
+
+const HeaderInfo = styled(FlexBox)``;
 
 const ItemBody = styled(FlexBox)`
   width: 100%;

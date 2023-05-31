@@ -10,13 +10,14 @@ import emptyImg from 'assets/gradiation-min.png';
 
 const SheetProductCard = ({ sheetProduct }: any) => {
   // OrderItem에서 사용되는 경우 구조가 다른 문제 해결
-  if (sheetProduct.product === undefined) {
-    sheetProduct.product = sheetProduct;
+  let product = sheetProduct.product;
+  if (product === undefined) {
+    product = sheetProduct;
   }
 
-  const { product, quantity } = sheetProduct;
+  console.log(sheetProduct);
+  const { quantity } = sheetProduct;
   const { name, price, imageUrl } = product;
-
   return (
     <CartProductCardContainer justify="flex-start" gap="16px" role="list">
       <ProductImageWrapper>

@@ -6,9 +6,9 @@ export type OrderProduct = {
 };
 
 export type Order = {
-  order_id: number,
+  orderId: number,
   products: OrderProduct[],
-  total_price: number,
-  used_point: number,
-  ordered_at: string,
+  totalPrice: number,
+  usedPoint: number,
+  orderedAt: string,
 };
