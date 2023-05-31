@@ -13,7 +13,7 @@ export const HeaderContent = styled.div`
   height: 80px;
 `;
 
-export const CartWrapper = styled.div`
+export const MenuWrapper = styled.div`
   display: flex;
   gap: 10px; 
   align-items: center;
@@ -35,12 +35,23 @@ export const NavBar = styled.div`
   align-items: center;
 `;
 
-export const CartTitle = styled.div`
-  font-size: 24px;
+export const MenuIcon = styled.div`
+  color: ${({ theme }) => theme.color.dark};
+`;
+
+export const MenuTitle = styled.div`
+  margin-top: 2px;
+  font-size: 10px;
+
   color: ${({ theme }) => theme.color.dark};
 `;
 
 export const CartCountWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+export const CartCount = styled.div`
   border-radius: 50%;
   background-color: #04c09e;
   width: 26px;
@@ -50,12 +61,7 @@ export const CartCountWrapper = styled.div`
   align-items: center;
 `;
 
-export const CartCount = styled.div`
+export const CartCountText = styled.div`
   font-size: 16px;
   color: #fff;
-`;
-
-export const SignButton = styled.div`
-  color: black;
-  cursor: pointer;
 `;

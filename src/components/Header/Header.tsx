@@ -1,22 +1,25 @@
 import titleLogo from "../../assets/logo.png";
+import { IoCart, IoList, IoPerson } from 'react-icons/io5';
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../style/style";
 import {
+  CartCountText,
   CartCount,
-  CartCountWrapper,
-  CartTitle,
+  MenuTitle,
   NavBar,
   HeaderContent,
   LogoImage,
   LogoWrapper,
   HeaderWrapper,
-  CartWrapper,
-  SignButton,
+  MenuWrapper,
+  MenuIcon,
+  CartCountWrapper,
 } from "./Header.style";
 import { useRecoilValue } from "recoil";
 import { cartCountSelector } from "../../recoil/cartAtoms";
 import ServerSelectBox from "../ServerSelectBox";
 import { modalRepository } from "../../recoil/modalAtoms.tsx";
+import Icon from "../Icon.tsx";
 
 function Header() {
   const navigate = useNavigate();
@@ -33,16 +36,38 @@ function Header() {
           </LogoWrapper>
           <NavBar>
             <ServerSelectBox />
-            <CartWrapper onClick={() => navigate("/cart")}>
-              <CartTitle>장바구니</CartTitle>
-              <CartCountWrapper>
-                <CartCount>{cartCount}</CartCount>
-              </CartCountWrapper>
-            </CartWrapper>
-            <SignButton onClick={() => navigate("/order")}>주문목록</SignButton>
-            <SignButton onClick={() => openModal(<>로그인페이지</>)}>
-              로그인
-            </SignButton>
+            <MenuWrapper onClick={() => navigate("/cart")}>
+              <MenuIcon>
+                {cartCount > 0 ? (
+                  <CartCountWrapper>
+                    <CartCount>
+                      <CartCountText>{cartCount}</CartCountText>
+                    </CartCount>
+                  </CartCountWrapper>
+                ) : (
+                  <Icon fontSize={30}>
+                    <IoCart />
+                  </Icon>
+                )}
+                <MenuTitle>장바구니</MenuTitle>
+              </MenuIcon>
+            </MenuWrapper>
+            <MenuWrapper onClick={() => navigate("/order")}>
+              <MenuIcon>
+                <Icon fontSize={30}>
+                  <IoList />
+                </Icon>
+                <MenuTitle>주문목록</MenuTitle>
+              </MenuIcon>
+            </MenuWrapper>
+            <MenuWrapper onClick={() => openModal(<>로그인페이지</>)}>
+              <MenuIcon>
+                <Icon fontSize={30}>
+                  <IoPerson />
+                </Icon>
+                <MenuTitle>로그인</MenuTitle>
+              </MenuIcon>
+            </MenuWrapper>
           </NavBar>
         </HeaderContent>
       </Container>
