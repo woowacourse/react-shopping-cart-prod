@@ -13,6 +13,7 @@ const cartProductListLengthState = selector({
 
 export const CartListLengthViewer = () => {
   const cartListLength = useRecoilValue(cartProductListLengthState);
+
   return <Style.CartAmount>{cartListLength}</Style.CartAmount>;
 };
 

@@ -8,14 +8,14 @@ import {
 import { CheckBox } from '../../../layout/checkBox/CheckBox';
 import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
 import { getCommaAddedNumber } from '../../../utils/number';
-import { isAllCheckBoxSelectedState } from '../../../recoil/selectors/cartListSelector';
+import { checkBoxSelector } from '../../../recoil/selectors/cartItemsSelector';
 import { useCartItemSelect } from '../../../hooks/cartPage/useCartItemSelect';
 import { OrderModal } from '../orderModal/OrderModal';
 import { useState } from 'react';
 
 export const CartItemsSection = () => {
   const cartItems = useRecoilValue(cartItemsState);
-  const isAllCheckBoxChecked = useRecoilValue(isAllCheckBoxSelectedState);
+  const { isAllCheckBoxChecked } = useRecoilValue(checkBoxSelector);
   const selectedCartIdList = useRecoilValue(selectedCartIdListState);
   const { totalPrice } = useRecoilValue(priceSummaryState);
 

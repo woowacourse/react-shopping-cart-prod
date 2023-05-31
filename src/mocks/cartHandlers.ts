@@ -9,7 +9,7 @@ export const cartHandlers = [
   rest.get('/cart-items', (_, res, ctx) => {
     const cartItems = getCartItemsFromLocalStorage();
 
-    return res(ctx.json(cartItems), ctx.status(200));
+    return res(ctx.json(cartItems), ctx.status(200), ctx.delay(2000));
   }),
   rest.post('/cart-items', async (req, res, ctx) => {
     const requestData = await req.json();

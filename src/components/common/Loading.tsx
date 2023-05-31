@@ -1,9 +1,14 @@
 import styled, { keyframes } from 'styled-components';
 
-export const Loading = () => {
+interface LoadingProps {
+  width?: number;
+  height?: number;
+}
+
+export const Loading = ({ width, height }: LoadingProps) => {
   return (
     <Container>
-      <StyledLoading />
+      <StyledLoading $width={width} $height={height} />
     </Container>
   );
 };
@@ -22,11 +27,11 @@ const spinnerAnimation = keyframes`
   }
 `;
 
-const StyledLoading = styled.div`
+const StyledLoading = styled.div<{ $width?: number; $height?: number }>`
   margin: 0 8px;
   transform: translate(-50%, -50%);
-  width: 30px;
-  height: 30px;
+  width: ${(props) => (props.$width ? `${props.$width}px` : `30px`)};
+  height: ${(props) => (props.$height ? `${props.$height}px` : `30px`)};
   border: 3px solid rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   border-top-color: #333;

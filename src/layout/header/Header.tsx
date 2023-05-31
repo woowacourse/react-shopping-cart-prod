@@ -6,6 +6,9 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { APIAtom } from '../../recoil/atoms/serverAtom';
 import { useCartFetch } from '../../hooks/fetch/useCartFetch';
 import { cartItemsState } from '../../recoil/atoms/cartAtom';
+import { Suspense } from 'react';
+import { Loading } from '../../components/common/Loading';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -55,7 +58,11 @@ export const Header = () => {
         </Style.LogoContainer>
         <Style.CartContainer>
           <Style.Cart onClick={() => navigate('/cart')}>장바구니</Style.Cart>
-          <CartListLengthViewer />
+          <ErrorBoundary fallback={<></>}>
+            <Suspense fallback={<Loading width={20} height={20} />}>
+              <CartListLengthViewer />
+            </Suspense>
+          </ErrorBoundary>
           <Style.Order onClick={() => navigate('/order')}>
             주문 목록
           </Style.Order>

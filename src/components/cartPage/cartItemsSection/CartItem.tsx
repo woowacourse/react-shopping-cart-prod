@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
 import { useCartItem } from '../../../hooks/cartPage/useCartItem';
 
-interface ProductSelectItemProps {
+interface CartItemProps {
   cartId: number;
   productId: number;
   name: string;
@@ -20,7 +20,7 @@ export const CartItem = ({
   name,
   price,
   imageUrl,
-}: ProductSelectItemProps) => {
+}: CartItemProps) => {
   const cartItems = useRecoilValue(cartItemsState);
   const initialQuantity =
     cartItems.find((cartItem) => cartItem.id === cartId)?.quantity ?? 1;

@@ -19,14 +19,13 @@ export const orderListState = atom<Order[]>({
   default: [],
   effects: [
     ({ setSelf, trigger }) => {
-      const getOrderList = async () => {
-        const response = await fetch('/orders', {
+      const getOrderList = () => {
+        const orderList = fetch('/orders', {
           method: 'GET',
           headers: {
             Authorization: `Basic ${base64}`,
           },
-        });
-        const orderList = await response.json();
+        }).then((res) => res.json());
 
         setSelf(orderList);
       };

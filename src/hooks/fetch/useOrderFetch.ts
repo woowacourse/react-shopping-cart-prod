@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
 import { APIAtom } from '../../recoil/atoms/serverAtom';
 import { base64 } from '../../constants/user';
-import { selectedCartItemsState } from '../../recoil/selectors/cartListSelector';
+import { selectedCartItemsSelector } from '../../recoil/selectors/cartItemsSelector';
 
 export const useOrderFetch = () => {
   const apiEndPoint = useRecoilValue(APIAtom);
-  const selectedCartItems = useRecoilValue(selectedCartItemsState);
+  const selectedCartItems = useRecoilValue(selectedCartItemsSelector);
 
   const order = (usingPoint: number) => {
     return fetch(`${apiEndPoint}/orders`, {

@@ -1,34 +1,24 @@
 import styled from 'styled-components';
 import { Layout } from '../layout';
-import { CartItemsSection } from '../components/cartPage/cartItemsSection/CartItemsSection';
-import { OrderSummarySection } from '../components/cartPage/orderSummarySection/OrderSummarySection';
-import { useRecoilValue } from 'recoil';
-import { cartItemsLengthState } from '../recoil/selectors/cartListSelector';
+import { CartContent } from '../components/cartPage';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Fallback } from '../components/error/Fallback';
+import { errorMessage } from '../constants/errorMessage';
 
 export const Cart = () => {
-  const cartItemsLength = useRecoilValue(cartItemsLengthState);
-
   return (
     <Layout>
       <Style.Header>
         <Style.HeaderTitle>장바구니</Style.HeaderTitle>
       </Style.Header>
 
-      {cartItemsLength > 0 ? (
-        <Style.Content>
-          <CartItemsSection />
-          <OrderSummarySection />
-        </Style.Content>
-      ) : (
-        <Style.EmptyCartContainer>
-          <Style.EmptyCartImage
-            src={
-              'https://cdn-mart.baemin.com/front-end/assets/20230525153657/images/defaultEmptyImage.11f8bc33139d72b546eb54f5b89e2abf.png'
-            }
-          />
-          장바구니가 비어있습니다!
-        </Style.EmptyCartContainer>
-      )}
+      <ErrorBoundary
+        FallbackComponent={() => (
+          <Fallback error={new Error(errorMessage.CART_ITEMS_FETCH_ERROR)} />
+        )}
+      >
+        <CartContent />
+      </ErrorBoundary>
     </Layout>
   );
 };
@@ -89,9 +79,12 @@ const Style = {
     }
   `,
   EmptyCartImage: styled.img`
+    width: 200px;
+    height: 200px;
+
     @media screen and (max-width: 480px) {
-      width: 80vw;
-      height: 80vw;
+      width: 60vw;
+      height: 60vw;
     }
   `,
 };

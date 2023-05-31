@@ -4,7 +4,7 @@ import { base64 } from '../../constants/user';
 export const useProductFetch = () => {
   const apiEndPoint = useRecoilValue(APIAtom);
 
-  const getProductList = async () => {
+  const getProductList = async (apiEndPoint: string) => {
     const response = await fetch(`${apiEndPoint}/products`, {
       method: 'GET',
       headers: {

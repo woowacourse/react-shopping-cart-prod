@@ -72,7 +72,7 @@ export const orderHandlers = [
   rest.get('/orders', (_, res, ctx) => {
     const orderList = getOrderListFromLocalStorage();
 
-    return res(ctx.status(200), ctx.json(orderList));
+    return res(ctx.status(200), ctx.json(orderList), ctx.delay(2000));
   }),
   rest.get('/order/:id', (req, res, ctx) => {
     const orderId = Number(req.params.id);
@@ -80,6 +80,8 @@ export const orderHandlers = [
 
     const order = orderList.find((o) => o.orderId === orderId);
 
-    return res(ctx.status(200), ctx.json(order));
+    return res.networkError('');
+
+    return res(ctx.status(200), ctx.json(order), ctx.delay(2000));
   }),
 ];

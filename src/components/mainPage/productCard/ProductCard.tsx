@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { AddCartButton } from './AddCartButton';
 import { getCommaAddedNumber } from '../../../utils/number';
+import { ErrorBoundary } from 'react-error-boundary';
 
 interface ProductCardProps {
   id: number;
@@ -19,9 +20,11 @@ export const ProductCard = ({
   return (
     <Style.Container>
       <Style.Image src={imageUrl} alt="상품 이미지" />
-      <Style.AddCartButtonContainer>
-        <AddCartButton productId={id} />
-      </Style.AddCartButtonContainer>
+      <ErrorBoundary fallback={<></>}>
+        <Style.AddCartButtonContainer>
+          <AddCartButton productId={id} />
+        </Style.AddCartButtonContainer>
+      </ErrorBoundary>
       <Style.DescriptionContainer>
         <Style.NamePriceContainer>
           <Style.Name>{name}</Style.Name>

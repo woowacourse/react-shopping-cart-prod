@@ -1,15 +1,9 @@
 import styled from 'styled-components';
 import { CartItem } from './CartItem';
-import { Product } from '../../../types/Product';
-
-interface CartItemType {
-  id: number;
-  quantity: number;
-  product: Product;
-}
+import { CartItemDetail } from '../../../recoil/atoms/cartAtom';
 
 interface CartProductListProps {
-  cartItemList: CartItemType[];
+  cartItemList: CartItemDetail[];
 }
 
 export const CartItemList = ({ cartItemList }: CartProductListProps) => {
