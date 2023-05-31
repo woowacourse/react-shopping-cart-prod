@@ -14,6 +14,7 @@ import {
   CartListTitle,
   CartListWrapper,
   CartsDeleteButton,
+  Wrapper,
 } from './CartList.style';
 import { fetchCartList, fetchDeleteCart } from '../../../api/api';
 import { serverState } from '../../../recoil/serverAtom';
@@ -39,11 +40,13 @@ function CartList() {
   };
 
   return (
-    <CartListWrapper>
+    <Wrapper>
       <CartListTitle>든든배송 상품 ({cartCount}개)</CartListTitle>
-      {cartList.map((cart) => (
-        <CartItem key={cart.id} cart={cart} />
-      ))}
+      <CartListWrapper>
+        {cartList.map((cart) => (
+          <CartItem key={cart.id} cart={cart} />
+        ))}
+      </CartListWrapper>
       <CartListController>
         <Label>
           <Input
@@ -58,7 +61,7 @@ function CartList() {
         </CartListCheckCounter>
         <CartsDeleteButton onClick={() => removeCheckedCartItems()}>선택삭제</CartsDeleteButton>
       </CartListController>
-    </CartListWrapper>
+    </Wrapper>
   );
 }
 

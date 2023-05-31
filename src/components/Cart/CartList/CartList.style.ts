@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CartListWrapper = styled.div`
+export const Wrapper = styled.div`
   width: 100%;
   box-sizing: border-box;
   padding: 25px;
@@ -8,6 +8,12 @@ export const CartListWrapper = styled.div`
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     flex: 1;
   }
+`;
+
+export const CartListWrapper = styled.div`
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 20px;
 `;
 
 export const CartListTitle = styled.div`
