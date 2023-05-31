@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import { PATH } from '../../store/path';
 import useFetchOrder from '../../hooks/useFetchOrder';
 import { orderAtom } from '../../store/order';
+import { useEffect, useState } from 'react';
 
 const Bill = () => {
   const isSelectedList = useRecoilValue(isSelectedListAtom);
@@ -21,7 +22,19 @@ const Bill = () => {
   const refreshOrderList = useRecoilRefresher_UNSTABLE(orderAtom);
   const { postOrders } = useFetchOrder();
   const totalAmount = useRecoilValue(totalAmountAtom);
-  const deliveryFee = totalAmount >= 100000 || totalAmount === 0 ? 0 : 4000;
+  const deliveryFee = 3000;
+  const [discount, setDiscount] = useState(0);
+
+  useEffect(() => {
+    if (totalAmount > 50000) {
+      setDiscount(5000);
+      return;
+    }
+    if (totalAmount > 30000) {
+      setDiscount(3000);
+      return;
+    }
+  }, [totalAmount]);
 
   const navigate = useNavigate();
 
@@ -48,13 +61,21 @@ const Bill = () => {
           총 상품가격 <span>₩ {totalAmount.toLocaleString()}</span>
         </Detail>
         <Detail>
-          총 배송비 <span>₩ {deliveryFee.toLocaleString()}</span>
+          할인 금액 <span>− ₩ {discount.toLocaleString()}</span>
         </Detail>
-        <Message>3 만원 이상 주문시 3000 원 할인</Message>
+        <Detail>
+          배송비 <span>₩ {deliveryFee.toLocaleString()}</span>
+        </Detail>
         <TotalAmount>
           총 주문금액
-          <span>₩ {(totalAmount + deliveryFee).toLocaleString()}</span>
+          <span>
+            ₩ {(totalAmount + deliveryFee - discount).toLocaleString()}
+          </span>
         </TotalAmount>
+        <MessageWrapper>
+          <Message>3 만원 이상 주문시 ₩ 3000 할인</Message>
+          <Message>5 만원 이상 주문시 ₩ 5000 할인</Message>
+        </MessageWrapper>
         <OrderButton onClick={onClickOrder}>주문하기</OrderButton>
       </DetailWrapper>
     </Wrapper>
@@ -67,7 +88,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  height: 420px;
+  height: 480px;
   width: 448px;
   min-width: 360px;
 
@@ -114,11 +135,18 @@ const Detail = styled.div`
 `;
 
 const TotalAmount = styled(Detail)`
-  margin: 12px 0px;
+  margin: 12px 0 0 0;
+`;
+
+const MessageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 `;
 
 const Message = styled.div`
   text-align: right;
+  font-size: 15px;
 
   width: 100%;
 
