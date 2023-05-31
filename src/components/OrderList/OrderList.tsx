@@ -56,7 +56,6 @@ function OrderList() {
       {orderList.map((orderItem, i) => (
         <OrderItem key={i} orderItem={orderItem} goDetail />
       ))}
-      <div>{JSON.stringify(orderList)}</div>
     </OrderListWrapper>
   );
 }
