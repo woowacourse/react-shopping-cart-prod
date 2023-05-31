@@ -1,5 +1,5 @@
 import { Meta } from '@storybook/react';
-import ServerSelectorComponent from '../../components/ServerSelector';
+import ServerSelectorComponent from '../../../components/ServerSelector';
 
 const meta = {
   component: ServerSelectorComponent,
