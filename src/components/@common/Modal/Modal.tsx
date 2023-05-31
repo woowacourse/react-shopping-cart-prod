@@ -14,9 +14,7 @@ const Modal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => 
     event.stopPropagation();
   };
 
-  if (!isOpen) {
-    return null;
-  }
+  if (!isOpen) return null;
 
   return (
     <S.ModalWrapper onClick={onClose}>

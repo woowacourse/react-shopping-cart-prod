@@ -56,13 +56,7 @@ function CartController({ product }: CartControllerProps) {
           </S.CartBox>
         </S.ControllerWrapper>
       ) : (
-        <S.AddCartButton
-          onClick={() => {
-            addCartItem(product.id);
-          }}
-        >
-          장바구니에 담기
-        </S.AddCartButton>
+        <S.AddCartButton onClick={() => addCartItem(product.id)}>장바구니에 담기</S.AddCartButton>
       )}
     </>
   );

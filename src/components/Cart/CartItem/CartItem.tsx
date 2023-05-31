@@ -1,4 +1,4 @@
-import type { CartItem } from '../../../types/types.ts';
+import type { CartItem as CartItemType } from '../../../types/types.ts';
 import * as S from './CartItem.style.ts';
 import trashIcon from '../../../assets/trash.png';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -10,7 +10,7 @@ import checkIcon from '../../../assets/check.svg';
 import { CartController } from '../../@common/CartController';
 
 interface CartItemProps {
-  cart: CartItem;
+  cart: CartItemType;
 }
 
 function CartItem({ cart }: CartItemProps) {
@@ -28,26 +28,13 @@ function CartItem({ cart }: CartItemProps) {
 
   return (
     <S.CartItemLayout>
-      <div>
-        <S.Label>
-          <S.Input type='checkbox' icon={checkIcon} checked={cart.checked} onChange={() => switchCheckbox(cart.id)} />
-        </S.Label>
-      </div>
-      <S.CartItemImage
-        src={cart.product.imageUrl}
-        onClick={() => {
-          switchCheckbox(cart.id);
-        }}
-      />
+      <S.Label>
+        <S.Input type='checkbox' icon={checkIcon} checked={cart.checked} onChange={() => switchCheckbox(cart.id)} />
+      </S.Label>
+      <S.CartItemImage src={cart.product.imageUrl} onClick={() => switchCheckbox(cart.id)} />
       <S.CartItemInfoWrapper>
         <S.CartItemInfo>
-          <S.CartItemName
-            onClick={() => {
-              switchCheckbox(cart.id);
-            }}
-          >
-            {cart.product.name}
-          </S.CartItemName>
+          <S.CartItemName onClick={() => switchCheckbox(cart.id)}>{cart.product.name}</S.CartItemName>
           <S.CartItemControllerWrapper>
             <S.CartItemTrashImage src={trashIcon} onClick={() => removeCartItem(cart.id)} />
             <CartController product={cart.product} />
