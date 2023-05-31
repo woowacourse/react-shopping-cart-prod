@@ -9,10 +9,10 @@ export const QuantityInput = styled.input`
   height: 28px;
   width: 42px;
   padding: 0px 5px;
-  border: 1px solid ${({ theme }) => theme.secondaryColor};
+  border: 1px solid ${({ theme }) => theme.colors.secondaryColor};
 
   &:focus {
-    outline: 2px solid ${({ theme }) => theme.infoColor};
+    outline: 2px solid ${({ theme }) => theme.colors.infoColor};
   }
 `;
 
@@ -20,7 +20,7 @@ export const QuantityControlButton = styled.button`
   height: 14px;
   width: 24px;
   padding: 0px;
-  border: 1px solid ${({ theme }) => theme.secondaryColor};
+  border: 1px solid ${({ theme }) => theme.colors.secondaryColor};
   line-height: 0px;
 `;
 

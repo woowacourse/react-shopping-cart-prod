@@ -9,7 +9,7 @@ export const CartItemListContainer = styled(FlexWrapper)`
   column-gap: 1rem;
   width: 100%;
   margin: 1rem;
-  border: ${({ theme }) => theme.lightColor} 1px solid;
+  border: ${({ theme }) => theme.colors.lightColor} 1px solid;
   padding: 1rem;
   border-radius: 8px;
   justify-content: start;
@@ -18,14 +18,14 @@ export const CartItemListContainer = styled(FlexWrapper)`
 
 export const DeleteCheckBox = styled.button`
   background-color: ${({ theme }) => theme.secondaryColor};
-  color: ${({ theme }) => theme.lightColor};
+  color: ${({ theme }) => theme.colors.lightColor};
   height: 3rem;
   padding: 0 1rem;
   font-weight: 600;
   border-radius: 8px;
 
   &:hover {
-    background-color: ${({ theme }) => theme.dangerColor};
+    background-color: ${({ theme }) => theme.colors.dangerColor};
   }
 `;
 

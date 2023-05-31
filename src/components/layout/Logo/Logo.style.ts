@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 export const LogoWrapper = styled.button`
   display: flex;
   align-items: center;
-  color: ${({ theme }) => theme.lightColor};
+  color: ${({ theme }) => theme.colors.lightColor};
 `;
 
 export const CartIcon = styled.img`

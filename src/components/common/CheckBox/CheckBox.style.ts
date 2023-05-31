@@ -48,13 +48,13 @@ export const StyleCheckMark = styled.span<CheckboxProps>`
   height: ${({ boxsize }) => getCheckBoxSize(boxsize || 'medium')};
   width: ${({ boxsize }) => getCheckBoxSize(boxsize || 'medium')};
 
-  background-color: ${({ theme }) => theme.lightColor};
+  background-color: ${({ theme }) => theme.colors.lightColor};
   border-radius: 3px;
-  border: 1px solid ${({ theme }) => theme.infoColor};
+  border: 1px solid ${({ theme }) => theme.colors.infoColor};
 
   ${StyleCheckBox}:checked + & {
-    background-color: ${({ theme }) => theme.primaryColor};
-    border: 1px solid ${({ theme }) => theme.successColor};
+    background-color: ${({ theme }) => theme.colors.primaryColor};
+    border: 1px solid ${({ theme }) => theme.colors.successColor};
   }
 
   &::after {

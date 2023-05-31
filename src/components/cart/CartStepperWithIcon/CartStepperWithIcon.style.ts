@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 export const CartWrapper = styled.button`
   display: flex;
-  color: ${({ theme }) => theme.lightColor};
+  color: ${({ theme }) => theme.colors.lightColor};
 `;
 
 export const CartTitle = styled.div`

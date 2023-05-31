@@ -5,7 +5,7 @@ export const CartItemContainer = styled(FlexWrapper)`
   column-gap: 1rem;
   width: 100%;
   margin: 1rem;
-  border: ${({ theme }) => theme.secondaryColor} 1px solid;
+  border: ${({ theme }) => theme.colors.secondaryColor} 1px solid;
   padding: 1rem;
   border-radius: 8px;
   width: 95%;
@@ -42,7 +42,7 @@ export const ProductInfo = styled.div`
 export const DeleteButton = styled.button`
   width: 30px;
   height: 30px;
-  background-color: ${({ theme }) => theme.primaryColor};
+  background-color: ${({ theme }) => theme.colors.primaryColor};
   border-radius: 50%;
 `;
 
