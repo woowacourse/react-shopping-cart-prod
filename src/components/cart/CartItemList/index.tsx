@@ -37,8 +37,7 @@ function CartItemList() {
         <CheckBox
           type="checkbox"
           checked={isAllChecked()}
-          onClick={() => toggleAllCartItem(!isAllChecked())}
-          readOnly
+          onChange={() => toggleAllCartItem(!isAllChecked())}
         />
         <S.CheckAllSpan>{`전체 선택 (${checkedCount} / ${productCount})`}</S.CheckAllSpan>
         <S.DeleteCheckBox onClick={deleteCheckedItems}>선택삭제</S.DeleteCheckBox>
