@@ -346,3 +346,60 @@ describe('장바구니 페이지 e2e 테스트', () => {
     cy.get('main').find('header').should('contain', '(2/2)');
   });
 });
+
+describe('주문 성공 페이지 e2e 테스트', () => {
+  beforeEach(() => {
+    cy.visit(TEST_URL);
+    cy.wait(3000);
+  });
+
+  it.skip('장바구니에 있는 상품들을 주문 성공 시 주문이 완료되었다는 메세지와 주문번호를 볼 수 있다.', () => {
+    cy.get('button[aria-label="상품 추가"]').first().click();
+    cy.get('button[aria-label="상품 추가"]').eq(2).click();
+
+    cy.get('button[aria-labelledby="cart-button"]').click();
+
+    cy.findByText('주문하기', { selector: 'button' }).click();
+
+    cy.url().should('include', '/order/success');
+    cy.get('main').should('contain', '주문이 완료되었습니다.');
+
+    cy.url().then((url) => {
+      const queryParams = new URL(url).searchParams;
+      const orderId = queryParams.get('orderId');
+
+      cy.get('main').should('contain', orderId);
+    });
+  });
+
+  it.skip('장바구니에 있는 상품들을 주문 성공 시 주문 성공 페이지에서 "쇼핑 계속하기" 버튼을 클릭해서 상품 목록 페이지로 이동할 수 있다.', () => {
+    cy.get('button[aria-label="상품 추가"]').first().click();
+    cy.get('button[aria-label="상품 추가"]').eq(2).click();
+
+    cy.get('button[aria-labelledby="cart-button"]').click();
+
+    cy.findByText('주문하기', { selector: 'button' }).click();
+
+    cy.url().should('include', '/order/success');
+
+    cy.findByText('쇼핑 계속하기', { selector: 'button' }).click();
+
+    cy.url().should('not.include', '/order/success');
+  });
+
+  it.skip('장바구니에 있는 상품들을 주문 성공 시 주문 성공 페이지에서 "주문내역 상세보기" 버튼을 클릭해서 주문내역 상세 페이지로 이동할 수 있다.', () => {
+    cy.get('button[aria-label="상품 추가"]').first().click();
+    cy.get('button[aria-label="상품 추가"]').eq(2).click();
+
+    cy.get('button[aria-labelledby="cart-button"]').click();
+
+    cy.findByText('주문하기', { selector: 'button' }).click();
+
+    cy.url().should('include', '/order/success');
+
+    cy.findByText('주문내역 상세보기', { selector: 'button' }).click();
+    cy.wait(3000);
+
+    cy.get('main').should('contain', '주문 내역 상세');
+  });
+});
