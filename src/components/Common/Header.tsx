@@ -87,6 +87,10 @@ const ControlContainer = styled.div`
   display: flex;
   justify-content: end;
   gap: 40px;
+
+  @media (max-width: 420px) {
+    gap: 20px;
+  }
 `;
 
 const SelectBox = styled.select`
@@ -102,6 +106,11 @@ const MovePageBtn = styled.button`
   color: ${({ theme }) => theme.colors.white};
   font-size: 24px;
   font-weight: 500;
+
+  @media (max-width: 420px) {
+    margin-top: 4px;
+    font-size: 13px;
+  }
 `;
 
 const ProductCountAlert = styled.p`
@@ -113,6 +122,13 @@ const ProductCountAlert = styled.p`
   background-color: ${({ theme }) => theme.colors.primary};
   line-height: 26px;
   font-size: 16px;
+
+  @media (max-width: 420px) {
+    width: 25px;
+    height: 25px;
+
+    font-size: 13px;
+  }
 `;
 
 export default Header;
