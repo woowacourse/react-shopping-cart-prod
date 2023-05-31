@@ -1,6 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import { cartSelector } from '../../store/cart';
+import { WIDTH } from '../../styles/mediaQuery';
 
 const CartTextButton = () => {
   const { cartsQuantity } = useRecoilValue(cartSelector);
@@ -19,9 +20,13 @@ const Container = styled.div`
   justify-content: start;
   gap: 8px;
 
-  width: 100px;
+  width: 85px;
 
   cursor: pointer;
+
+  @media (max-width: ${WIDTH.MD}) {
+    width: 32px;
+  }
 `;
 
 const ShoppingCart = styled.h2`
@@ -43,6 +48,10 @@ const CartQuantity = styled.div`
   font-size: 16px;
   font-weight: bold;
   color: #fff;
+
+  @media (max-width: ${WIDTH.MD}) {
+    display: none;
+  }
 `;
 
 export default CartTextButton;

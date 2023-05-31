@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { ReactComponent as ShoppingCartIcon } from '../../assets/icon/stussy-logo.svg';
+import { ReactComponent as ShoppingCartIcon } from '../../assets/icon/tiffany-co.svg';
 import { WIDTH } from '../../styles/mediaQuery';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ServerName, serverAtom } from '../../store/server';
@@ -41,7 +41,7 @@ const Header = () => {
           <CartTextButton />
         </Link>
         <Link to={PATH.ORDER_LIST_PAGE}>
-          <OrderListButton>주문 목록</OrderListButton>
+          <OrderListButton>Orders</OrderListButton>
         </Link>
       </ButtonContainer>
     </Container>
@@ -62,9 +62,11 @@ const Container = styled.div`
 
   min-width: ${WIDTH.SM};
 
-  @media (max-width: ${WIDTH.MD}) {
-    padding: 8px 12%;
+  @media (max-width: ${WIDTH.LG}) {
+    padding: 8px 16px;
+  }
 
+  @media (max-width: ${WIDTH.MD}) {
     h1 {
       font-size: 20px;
     }
@@ -90,28 +92,28 @@ const HomeButton = styled.div`
 `;
 
 const ServerSelectBox = styled.select`
-  width: 80px;
-  height: 40px;
+  width: 60px;
+  height: 30px;
+  padding-left: 2px;
 
   border: none;
   border-radius: 10px;
-
-  padding-left: 8px;
 `;
 
 const ShoppingCartIconContainer = styled.div`
   padding-top: 10px;
-  width: 60px;
+  width: 160px;
   fill: #fff;
 
   @media (max-width: ${WIDTH.MD}) {
-    width: 45px;
+    width: 120px;
   }
 `;
 
-const OrderListButton = styled.div`
+const OrderListButton = styled.h2`
   color: white;
-  font-size: 18px;
+  font-size: 24px;
+  font-weight: bold;
 
   cursor: pointer;
 `;
@@ -119,7 +121,11 @@ const OrderListButton = styled.div`
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
+
+  @media (max-width: ${WIDTH.MD}) {
+    gap: 16px;
+  }
 `;
 
 export default Header;
