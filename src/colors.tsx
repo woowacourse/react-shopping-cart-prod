@@ -12,6 +12,8 @@ const colors = {
   faintGold: '#ffcc7120',
   pureWhite: '#fff',
   red: '#f00',
+  darkOrange: '#c04912',
+  orange: '#ff7b1d',
 };
 
 export default colors;
