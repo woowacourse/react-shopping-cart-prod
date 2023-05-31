@@ -53,12 +53,12 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  height: 60px;
+  height: 75px;
 
   margin: 0;
   padding: 18px 15%;
 
-  background: #333333;
+  background: var(--main-bg-color);
 
   min-width: ${WIDTH.SM};
 
@@ -92,12 +92,19 @@ const HomeButton = styled.div`
 `;
 
 const ServerSelectBox = styled.select`
-  width: 60px;
+  display: flex;
+  align-items: center;
+
+  width: 70px;
   height: 30px;
   padding-left: 2px;
 
   border: none;
-  border-radius: 10px;
+
+  color: #fff;
+  font-size: 16px;
+
+  background-color: transparent;
 `;
 
 const ShoppingCartIconContainer = styled.div`

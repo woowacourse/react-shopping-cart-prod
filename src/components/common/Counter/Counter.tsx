@@ -25,8 +25,7 @@ const Container = styled.div`
   width: 72px;
   height: 32px;
 
-  border: 1px solid grey;
-  border-radius: 3px;
+  border: 1px solid var(--grey-100);
   -webkit-box-pack: center;
 
   @media (max-width: ${WIDTH.MD}) {

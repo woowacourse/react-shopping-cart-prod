@@ -1,7 +1,6 @@
 import {
   useRecoilRefresher_UNSTABLE,
   useRecoilValue,
-  useResetRecoilState,
   useSetRecoilState,
 } from 'recoil';
 import { styled } from 'styled-components';
@@ -46,15 +45,15 @@ const Bill = () => {
       <SubTitle>결제예상금액</SubTitle>
       <DetailWrapper>
         <Detail>
-          총 상품가격 <span>{totalAmount.toLocaleString()} 원</span>
+          총 상품가격 <span>₩ {totalAmount.toLocaleString()}</span>
         </Detail>
         <Detail>
-          총 배송비 <span>{deliveryFee.toLocaleString()} 원</span>
+          총 배송비 <span>₩ {deliveryFee.toLocaleString()}</span>
         </Detail>
-        <Message>3만원 이상 주문시 3000원 할인</Message>
+        <Message>3 만원 이상 주문시 3000 원 할인</Message>
         <TotalAmount>
           총 주문금액
-          <span>{(totalAmount + deliveryFee).toLocaleString()} 원</span>
+          <span>₩ {(totalAmount + deliveryFee).toLocaleString()}</span>
         </TotalAmount>
         <OrderButton onClick={onClickOrder}>주문하기</OrderButton>
       </DetailWrapper>
@@ -68,11 +67,11 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 
-  height: 410px;
+  height: 420px;
   width: 448px;
   min-width: 360px;
 
-  border: 1px solid #dddddd;
+  border: 1px solid var(--grey-100);
   margin-top: 64px;
 
   @media (max-width: ${WIDTH.LG}) {
@@ -83,12 +82,12 @@ const Wrapper = styled.div`
 const SubTitle = styled.div`
   width: 100%;
 
-  border-bottom: 3px solid #dddddd;
+  border-bottom: 1px solid var(--grey-100);
 
   padding: 22px 30px;
 
-  color: #333333;
   font-size: 24px;
+  font-weight: 200;
 `;
 
 const DetailWrapper = styled.div`
@@ -100,6 +99,10 @@ const DetailWrapper = styled.div`
   width: 100%;
 
   padding: 32px;
+
+  div {
+    font-weight: 200;
+  }
 `;
 
 const Detail = styled.div`
@@ -127,11 +130,18 @@ const OrderButton = styled.button`
   align-items: center;
   justify-content: center;
 
+  border: 1px solid var(--grey-100);
+
   height: 73px;
   width: 100%;
 
-  color: #fff;
   font-size: 24px;
+  font-weight: 200;
 
-  background-color: #333333;
+  transition: background-color 0.5s ease;
+
+  &:hover {
+    color: #fff;
+    background-color: var(--main-bg-color);
+  }
 `;

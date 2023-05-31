@@ -108,7 +108,9 @@ const SubTitle = styled.div`
   width: 90%;
   height: 40px;
 
-  border-bottom: 4px solid #aaaaaa;
+  font-weight: 200;
+
+  border-bottom: 1px solid #aaaaaa;
 `;
 
 const Ul = styled.ul`
@@ -133,7 +135,9 @@ const CheckBoxWrapper = styled.div`
 `;
 
 const DeleteSelectedItemsButton = styled.button`
-  border: 1px solid #bbbbbb;
+  border: 1px solid var(--grey-100);
 
   padding: 8px 12px;
+
+  font-weight: 200;
 `;

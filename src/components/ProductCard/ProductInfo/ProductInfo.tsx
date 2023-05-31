@@ -10,7 +10,7 @@ const ProductInfo = ({ name, price }: ProductInfoProps) => {
   return (
     <Styled.ProductInfo>
       <Styled.ProductName>{name}</Styled.ProductName>
-      <Styled.ProductPrice>{price.toLocaleString()}원</Styled.ProductPrice>
+      <Styled.ProductPrice>₩ {price.toLocaleString()}</Styled.ProductPrice>
     </Styled.ProductInfo>
   );
 };
@@ -23,7 +23,6 @@ const Styled = {
   `,
 
   ProductName: styled.span`
-    font-weight: 400;
     font-size: 16px;
 
     letter-spacing: 0.5px;
@@ -34,7 +33,6 @@ const Styled = {
   `,
 
   ProductPrice: styled.span`
-    font-weight: 400;
     font-size: 20px;
 
     letter-spacing: 0.5px;

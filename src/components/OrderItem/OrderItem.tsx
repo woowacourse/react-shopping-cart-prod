@@ -17,7 +17,7 @@ const OrderItem = ({ quantity, name, price, imageUrl }: OrderItemProps) => {
       <DetailInfo>
         <ProductName>{name}</ProductName>
         <ProductPriceWithQuantity>
-          {(price * quantity).toLocaleString()} 원 / 수량 : {quantity}개
+          ₩ {(price * quantity).toLocaleString()} / 수량 : {quantity}개
         </ProductPriceWithQuantity>
       </DetailInfo>
     </Wrapper>
@@ -35,10 +35,7 @@ const Wrapper = styled.li`
   padding: 24px 24px;
 
   width: 100%;
-  height: 220px;
-
-  background-color: #f6eedb;
-  border: 2px solid #fff;
+  height: 180px;
 `;
 
 const ImageWrapper = styled.div`
@@ -54,7 +51,9 @@ const ImageWrapper = styled.div`
 const DetailInfo = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  justify-content: space-between;
+
+  padding: 24px 0;
 
   width: auto;
   height: 100%;

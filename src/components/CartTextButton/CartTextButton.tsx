@@ -44,12 +44,10 @@ const CartQuantity = styled.div`
   width: 26px;
   height: 26px;
 
-  background: #04c09e;
+  background: #fff;
   border-radius: 100%;
-  font-weight: 300;
 
   font-size: 16px;
-  color: #fff;
 
   @media (max-width: ${WIDTH.MD}) {
     display: none;

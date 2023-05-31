@@ -19,7 +19,7 @@ const CartPage = () => {
             <Bill />
           </>
         ) : (
-          <Teung />
+          <EmptyCart>No item in your cart.</EmptyCart>
         )}
       </MainInfo>
     </Wrapper>
@@ -40,16 +40,34 @@ const Wrapper = styled.div`
   }
 `;
 
+const EmptyCart = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 400px;
+
+  color: #d3d3d3;
+
+  font-size: 50px;
+
+  @media (max-width: ${WIDTH.MD}) {
+    height: 100px;
+    font-size: 24px;
+  }
+`;
+
 const Title = styled.div`
   width: 70%;
 
   padding: 16px;
 
   text-align: center;
-  font-weight: bold;
+  font-weight: 200;
   font-size: 32px;
 
-  border-bottom: 4px solid #333333;
+  border-bottom: 1px solid #333333;
 
   @media (max-width: ${WIDTH.LG}) {
     padding: 4px;

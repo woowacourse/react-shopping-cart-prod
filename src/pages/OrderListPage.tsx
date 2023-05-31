@@ -59,10 +59,10 @@ const Title = styled.div`
   padding: 16px;
 
   text-align: center;
-  font-weight: bold;
+  font-weight: 300;
   font-size: 32px;
 
-  border-bottom: 4px solid #333333;
+  border-bottom: 1px solid #333333;
 
   @media (max-width: ${WIDTH.LG}) {
     padding: 4px;

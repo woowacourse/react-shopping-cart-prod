@@ -70,7 +70,7 @@ const CartItem = ({
         <CounterWrapper>
           <Counter plusOne={plusOne} minusOne={minusOne} quantity={quantity} />
         </CounterWrapper>
-        <Price>{(price * quantity).toLocaleString()} 원</Price>
+        <Price>₩ {(price * quantity).toLocaleString()}</Price>
       </DetailWrapper>
     </Wrapper>
   );
@@ -97,7 +97,7 @@ const CheckBoxWrapper = styled.div`
   padding: 8px 12px;
 `;
 
-const ProductName = styled.div`
+const ProductName = styled.span`
   width: 85%;
 `;
 

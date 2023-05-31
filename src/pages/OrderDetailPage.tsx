@@ -28,11 +28,11 @@ const OrderDetailPage = () => {
       <Bill>
         <SubTitle>결제금액 정보</SubTitle>
         <DetailWrapper>
-          <SubPrice>총 상품 금액 : {productPrice.toLocaleString()} 원</SubPrice>
-          <SubPrice>할인 금액 : - {discountPrice.toLocaleString()} 원</SubPrice>
-          <SubPrice>배송비 : {deliveryFee.toLocaleString()} 원</SubPrice>
+          <SubPrice>총 상품 금액 : ₩ {productPrice.toLocaleString()}</SubPrice>
+          <SubPrice>할인 금액 : - ₩ {discountPrice.toLocaleString()}</SubPrice>
+          <SubPrice>배송비 : ₩ {deliveryFee.toLocaleString()}</SubPrice>
           <TotalPrice>
-            총 결제 금액 : {totalPrice.toLocaleString()} 원
+            총 결제 금액 : ₩ {totalPrice.toLocaleString()}
           </TotalPrice>
         </DetailWrapper>
       </Bill>
@@ -57,19 +57,21 @@ const Bill = styled.div`
   height: 320px;
   width: 448px;
 
-  border: 1px solid #dddddd;
-  margin-top: 64px;
+  border: 1px solid var(--grey-100);
+
+  margin-top: 32px;
 `;
 
 const SubTitle = styled.div`
   width: 100%;
 
-  border-bottom: 3px solid #dddddd;
+  border-bottom: 1px solid var(--grey-100);
 
   padding: 22px 30px;
 
   color: #333333;
   font-size: 24px;
+  font-weight: 200;
 `;
 
 const DetailWrapper = styled.div`
@@ -86,9 +88,10 @@ const DetailWrapper = styled.div`
 
 const SubPrice = styled.span`
   font-size: 20px;
+  font-weight: 200;
 `;
 
 const TotalPrice = styled.span`
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 200;
 `;

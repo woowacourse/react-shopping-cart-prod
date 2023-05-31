@@ -35,7 +35,7 @@ const OrderCard = ({
     <Wrapper>
       <TopSection>
         <div>
-          주문 번호 : <span>{orderId}</span>
+          Order No : <span>{orderId}</span>
         </div>
         {showDetailButton && (
           <button onClick={onClickNavigate}>상세보기</button>
@@ -77,9 +77,9 @@ const TopSection = styled.div`
   width: 100%;
   height: 92px;
 
-  background-color: #f6f6f6;
+  font-size: 16px;
 
-  border: 1px solid #aaaaaa;
+  border-bottom: 1px solid #dad8d8;
 `;
 
 const BottomSection = styled.div``;

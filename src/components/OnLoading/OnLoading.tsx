@@ -53,7 +53,7 @@ const Wrapper = styled.div`
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(20%);
   }
   to {
     opacity: 1;

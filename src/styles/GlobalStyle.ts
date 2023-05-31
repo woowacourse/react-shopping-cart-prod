@@ -8,6 +8,11 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     color: #333333
   }
+
+  :root {
+    --main-bg-color: #0ABAB5;
+    --grey-100:#dddddd
+  }
   
   body {
     margin: 0;
@@ -25,6 +30,10 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
+  }
+
+  span{
+    font-weight: 200;
   }
 
   @font-face {
