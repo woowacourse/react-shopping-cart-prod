@@ -2,12 +2,31 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 242px;
+  width: 236px;
+  cursor: pointer;
+
+  &:hover {
+    .item-info > div:first-child > :first-child {
+      color: #bdbdbd;
+    }
+
+    img {
+      transform: scale(1.06);
+    }
+  }
+}
+
+.image-wrap {
+  width: 236px;
+  height: 236px;
+  overflow: hidden;
+  border-radius: 4px;
 }
 
 .image {
-  width: 242px;
-  height: 242px;
+  width: 236px;
+  height: 236px;
+  transition: all 0.1s linear;
 }
 
 .item-info {
@@ -15,7 +34,7 @@
   flex-direction: column;
   width: 100%;
   padding: 18px 4px;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 22px;
   letter-spacing: 0.5px;
 
@@ -28,9 +47,10 @@
     height: 26px;
   }
 
-  & :last-child {
-    font-size: 20px;
-    line-height: 20px;
+  & > :last-child {
+    font-family: 'SUIT-Bold';
+    font-size: 18px;
+    line-height: 18px;
   }
 }
 
