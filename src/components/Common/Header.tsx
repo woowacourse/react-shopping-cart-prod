@@ -91,6 +91,10 @@ const ControlContainer = styled.div`
 
 const SelectBox = styled.select`
   padding: 0 5px;
+
+  @media (max-width: 420px) {
+    height: 30px;
+  }
 `;
 
 const MovePageBtn = styled.button`

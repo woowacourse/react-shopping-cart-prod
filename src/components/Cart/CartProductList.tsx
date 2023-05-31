@@ -7,12 +7,11 @@ import { cartAtom } from '../../recoil/cartProductData';
 const CartProductList = () => {
   const cart = useRecoilValue(cartAtom);
 
-  if (cart.cartItems.length === 0)
-    return <EmptyCart>장바구니가 비었어요</EmptyCart>;
+  if (cart.length === 0) return <EmptyCart>장바구니가 비었어요</EmptyCart>;
 
   return (
     <CartProductListContainer>
-      {cart.cartItems.map((cartProduct) => (
+      {cart.map((cartProduct) => (
         <li key={cartProduct.cartItemId}>
           <CartProductItem cartProduct={cartProduct} />
         </li>

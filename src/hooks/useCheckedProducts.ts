@@ -15,11 +15,11 @@ const useCheckedProducts = () => {
   );
 
   const removeCheckedProducts = () => {
-    const updatedCartProducts = cart.cartItems.filter(
+    const updatedCartProducts = cart.filter(
       (item) => !checkedCartItemIds.includes(item.cartItemId)
     );
 
-    setCart({ ...cart, cartItems: updatedCartProducts });
+    setCart([...updatedCartProducts]);
 
     setCheckedCartItemIds(
       checkedCartItemIds.filter(
@@ -47,11 +47,11 @@ const useCheckedProducts = () => {
   };
 
   const handleAllCheckedProducts = () => {
-    if (cart.cartItems.length === checkedCartItemIds.length) {
+    if (cart.length === checkedCartItemIds.length) {
       setCheckedCartItemIds([]);
       return;
     }
-    setCheckedCartItemIds(cart.cartItems.map((item) => item.cartItemId));
+    setCheckedCartItemIds(cart.map((item) => item.cartItemId));
   };
 
   const isCheckedProduct = (cartProduct: CartProduct) => {
@@ -59,7 +59,7 @@ const useCheckedProducts = () => {
   };
 
   useEffect(() => {
-    setCheckedCartItemIds(cart.cartItems.map((item) => item.cartItemId));
+    setCheckedCartItemIds(cart.map((item) => item.cartItemId));
   }, []);
 
   return {

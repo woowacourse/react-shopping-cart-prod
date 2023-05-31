@@ -5,12 +5,7 @@ import point from './data/point.json';
 // import cart from './data/cart.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
 
-import type {
-  Cart,
-  CartProduct,
-  Order,
-  ScheduledOrder,
-} from '../types/product';
+import type { CartProduct, Order, ScheduledOrder } from '../types/product';
 import { getData } from '../utils/localStorage';
 
 export const handlers = [
@@ -56,9 +51,9 @@ export const handlers = [
   rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
     const { productId } = req.body;
 
-    const storedCart: Cart = getData('cart');
+    const storedCart: CartProduct[] = getData('cart');
 
-    if (findTargetProduct(storedCart.cartItems, productId)) {
+    if (findTargetProduct(storedCart, productId)) {
       return res(
         ctx.status(304),
         ctx.json({ message: '이미 상품이 있습니다' })
@@ -86,10 +81,10 @@ export const handlers = [
 
       const cartProductId = Number(cartItemId as string);
 
-      const storedCart: Cart = getData('cart');
+      const storedCart: CartProduct[] = getData('cart');
 
       if (
-        !storedCart.cartItems.find(
+        !storedCart.find(
           (cartProduct) => cartProduct.cartItemId === cartProductId
         )
       ) {

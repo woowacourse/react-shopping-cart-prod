@@ -1,4 +1,4 @@
-import type { Cart } from '../types/product';
+import type { CartProduct } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 import { servers } from '../constants/server';
@@ -18,7 +18,7 @@ export const api = async (hostName: HostNameType) => {
       },
     });
 
-    const data: Cart = await response.json();
+    const data: CartProduct[] = await response.json();
 
     return data;
   };

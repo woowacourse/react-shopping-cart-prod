@@ -12,11 +12,8 @@ export interface CartProduct {
   product: Product;
 }
 
-export interface Cart {
+export interface ScheduledOrder {
   cartItems: CartProduct[];
-}
-
-export interface ScheduledOrder extends Cart {
   totalProductPrice: number;
   totalDeliveryFee: number;
   usePoint: number;

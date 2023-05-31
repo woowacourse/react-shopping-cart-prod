@@ -18,23 +18,22 @@ const useCart = (product: Product) => {
     checkedCartItemIdsAtom
   );
   const { addCount, subtractCount } = useProductQuantity(productId);
-  const target = findTargetProduct(cart.cartItems, productId);
+  const target = findTargetProduct(cart, productId);
 
   const addProduct = async () => {
     const cartItemId = await api(hostName).then((apiInstance) => {
-      return apiInstance.createCartProduct(product.productId);
+      return apiInstance.createCartProduct(productId);
     });
 
     if (cartItemId) {
       const updatedCartProducts = [
-        ...cart.cartItems,
+        ...cart,
         { cartItemId: Number(cartItemId), quantity: 1, product },
       ];
 
-      const newCart = { ...cart, cartItems: updatedCartProducts };
-      setCart(newCart);
+      setCart([...updatedCartProducts]);
 
-      updateData('cart', newCart);
+      updateData('cart', updatedCartProducts);
     }
   };
 
@@ -44,17 +43,16 @@ const useCart = (product: Product) => {
         return apiInstance.deleteCartProduct(target.cartItemId);
       });
 
-      const updatedCartProducts = cart.cartItems.filter(
+      const updatedCartProducts = cart.filter(
         (cartProduct) => cartProduct.cartItemId !== target.cartItemId
       );
 
-      const newCart = { ...cart, cartItems: updatedCartProducts };
       setCheckedCartItemIds(
         checkedCartItemIds.filter((id) => id !== target.cartItemId)
       );
-      setCart(newCart);
+      setCart([...updatedCartProducts]);
 
-      updateData('cart', newCart);
+      updateData('cart', updatedCartProducts);
     }
   };
 

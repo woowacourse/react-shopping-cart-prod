@@ -1,10 +1,10 @@
-import type { Cart } from '../types/product';
+import type { CartProduct } from '../types/product';
 import { atom, selector } from 'recoil';
 
 import { api } from '../apis/cartProducts';
 import { hostNameAtom } from './hostData';
 
-export const cartAtom = atom<Cart>({
+export const cartAtom = atom<CartProduct[]>({
   key: 'cartState',
   default: selector({
     key: 'cartProductState/Default',
@@ -21,7 +21,7 @@ export const cartAtom = atom<Cart>({
 export const totalCartProductSelect = selector<number>({
   key: 'totalCartProductState',
   get: ({ get }) => {
-    const cartProducts = get(cartAtom).cartItems;
+    const cartProducts = get(cartAtom);
     return cartProducts.length;
   },
 });

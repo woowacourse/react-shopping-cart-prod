@@ -26,23 +26,22 @@ const useProductQuantity = (productId: number) => {
 
   const updateCount = async (productId: number, delta: number) => {
     // const targetProduct = findTargetProduct(cart.cartItems, productId);
-    const currentCart = cart.cartItems;
-    const targetCartProductIndex = currentCart.findIndex(
-      (cartItem) => cartItem.product.productId === productId
+    const targetCartProductIndex = cart.findIndex(
+      (item) => item.product.productId === productId
     );
-    const targetProduct = currentCart[targetCartProductIndex];
+    const targetProduct = cart[targetCartProductIndex];
 
     if (targetProduct) {
       await updateCartProductQuantity(hostName, targetProduct, delta);
 
-      const newCartItems = [...currentCart];
-      newCartItems.splice(targetCartProductIndex, 1, {
-        ...currentCart[targetCartProductIndex],
+      const newCart = [...cart];
+      newCart.splice(targetCartProductIndex, 1, {
+        ...cart[targetCartProductIndex],
         quantity: targetProduct.quantity + delta,
       });
-      const newCart = { ...cart, cartItems: newCartItems };
+
       updateData('cart', newCart);
-      setCart({ ...newCart });
+      setCart([...newCart]);
     }
   };
 
