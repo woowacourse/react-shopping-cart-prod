@@ -34,7 +34,6 @@ export const Interaction: Story = {
     await delay(700);
 
     const increaseButton = document.querySelector('button[aria-label="카운트 증가"]')!;
-    console.log(increaseButton);
     await userEvent.click(increaseButton);
 
     await delay(700);

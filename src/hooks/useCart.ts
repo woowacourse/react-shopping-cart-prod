@@ -71,7 +71,6 @@ const useCart = () => {
     ),
     {
       onSuccess: (cartItem) => {
-        console.log('success');
         setIsAdded(true);
         updateCart(cartItem);
       },
