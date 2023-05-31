@@ -17,7 +17,7 @@ export const useCartOperations = (product: ProductItemType) => {
   const serverName = useRecoilValue(serverState);
   const cart = useRecoilValue(cartState);
   const cartId = findCartItemById({ cart, productId: product.id });
-  const findCart = cart.find((cartItem) => cartItem.id === cartId);
+  const findCart = cart.find((cartItem) => cartItem.id === cartId)?.product.id === product.id;
 
   const {
     addCartItem,
