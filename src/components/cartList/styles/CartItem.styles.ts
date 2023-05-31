@@ -30,7 +30,7 @@ export const Image = styled.img`
 `;
 
 export const ProductName = styled.p`
-  width: 328px;
+  width: 322px;
 
   font-size: 20px;
   line-height: 24px;
@@ -48,7 +48,7 @@ export const ControlBox = styled.div`
   justify-content: space-between;
   align-items: end;
 
-  width: 112px;
+  width: 140px;
   height: 100%;
 `;
 

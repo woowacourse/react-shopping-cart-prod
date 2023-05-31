@@ -17,7 +17,6 @@ export default function Product({ id, name, price, imageUrl }: Props) {
   const { showToast } = useToast();
 
   const cartItem = cart.find((cartItem) => cartItem.product.id === id);
-
   const addCartItem = async () => {
     setAddLoading(true);
 
@@ -47,20 +46,20 @@ export default function Product({ id, name, price, imageUrl }: Props) {
     <>
       <S.Wrapper>
         <S.Image src={imageUrl} onError={setAltSrc} />
+        <S.ControlBox hasCartItem={cartItem === undefined}>
+          {cartItem ? (
+            <QuantityInput cartItemId={cartItem.id} min={0} max={MAX_QUANTITY} />
+          ) : (
+            <S.CartItemAddButton onClick={addCartItem} disabled={addLoading}>
+              <img src="./cart.svg" />
+            </S.CartItemAddButton>
+          )}
+        </S.ControlBox>
         <S.InfoBox>
           <S.LabelBox>
             <S.Name>{name}</S.Name>
             <S.Price>{price.toLocaleString()} 원</S.Price>
           </S.LabelBox>
-          <S.ControlBox>
-            {cartItem ? (
-              <QuantityInput cartItemId={cartItem.id} min={0} max={MAX_QUANTITY} />
-            ) : (
-              <S.CartItemAddButton onClick={addCartItem} disabled={addLoading}>
-                <img src="./cart.svg" />
-              </S.CartItemAddButton>
-            )}
-          </S.ControlBox>
         </S.InfoBox>
       </S.Wrapper>
     </>

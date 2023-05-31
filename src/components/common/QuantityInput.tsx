@@ -49,15 +49,13 @@ export default function QuantityInput({ cartItemId, min = 0, max, style }: Props
 
   return (
     <S.Wrapper style={style}>
+      <S.Counter onClick={quantityDecrease} disabled={Number(input) === min}>
+        -
+      </S.Counter>
       <S.Input type="text" value={input} onChange={onChangeInput} onBlur={onBlurInput} />
-      <S.CounterBox>
-        <S.Counter onClick={quantityIncrease} disabled={Number(input) === max}>
-          <img src="./arrowUp.svg" />
-        </S.Counter>
-        <S.Counter onClick={quantityDecrease} disabled={Number(input) === min}>
-          <img src="./arrowDown.svg" />
-        </S.Counter>
-      </S.CounterBox>
+      <S.Counter onClick={quantityIncrease} disabled={Number(input) === max}>
+        +
+      </S.Counter>
     </S.Wrapper>
   );
 }

@@ -50,12 +50,7 @@ export default function CartItem(props: Props) {
         <S.RemoveButton onClick={removeCartItem}>
           <img src="./trashCan.svg" />
         </S.RemoveButton>
-        <QuantityInput
-          cartItemId={id}
-          min={1}
-          max={MAX_QUANTITY}
-          style={{ width: '98px', height: '48px', fontSize: '24px' }}
-        />
+        <QuantityInput cartItemId={id} min={1} max={MAX_QUANTITY} />
         <S.Price>{(product.price * quantity).toLocaleString()}원</S.Price>
       </S.ControlBox>
     </S.Wrapper>

@@ -3,29 +3,39 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
   display: flex;
 
-  width: 72px;
+  width: 140px;
   height: 36px;
 
   text-align: center;
   font-size: 16px;
+
+  & > button:first-of-type {
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    border-top: 1px solid #aaaaaa;
+    border-bottom: 1px solid #aaaaaa;
+    border-left: 1px solid #aaaaaa;
+  }
+
+  & > button:last-of-type {
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-top: 1px solid #aaaaaa;
+    border-bottom: 1px solid #aaaaaa;
+    border-right: 1px solid #aaaaaa;
+  }
 `;
 
 export const Input = styled.input`
-  width: 64%;
+  width: 60px;
   height: 100%;
-  border: 1px solid #dddddd;
 
   text-align: center;
   font-size: inherit;
   color: #333333;
-`;
 
-export const CounterBox = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  width: 36%;
-  height: 100%;
+  border-top: 1px solid #aaaaaa;
+  border-bottom: 1px solid #aaaaaa;
 `;
 
 export const Counter = styled.button`
@@ -33,22 +43,11 @@ export const Counter = styled.button`
   justify-content: center;
   align-items: center;
 
-  width: 100%;
-  height: 50%;
-  border: 1px solid #dddddd;
-  background: transparent;
-
-  & > img {
-    width: 48%;
-    height: 32%;
-  }
+  width: 40px;
+  height: 36px;
+  background: #fff;
 
   &:disabled {
-    background: rgba(0, 0, 0, 0.1);
     cursor: default;
-  }
-
-  &:disabled > img {
-    visibility: hidden;
   }
 `;

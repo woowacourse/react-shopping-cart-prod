@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   width: 240px;
   height: 340px;
+  position: relative;
 
   color: #333333;
 
@@ -51,10 +52,7 @@ export const Price = styled.p`
 `;
 
 export const CartItemAddButton = styled.button`
-  width: 32px;
-  height: 30px;
-  margin-right: 10px;
-
+  margin: 2px 0 0 2px;
   background: transparent;
 
   transition: transform 0.2s;
@@ -76,6 +74,30 @@ export const CartItemAddButton = styled.button`
   }
 `;
 
-export const ControlBox = styled.div`
-  width: auto;
+export const ControlBox = styled.div<{ hasCartItem: boolean }>`
+  ${({ hasCartItem }) => getControlBoxStyle(hasCartItem)}
 `;
+
+const getControlBoxStyle = (hasCartItem: boolean) => {
+  return hasCartItem
+    ? css`
+        width: 40px;
+        height: 40px;
+        border: 1px solid #aaaaaa;
+        border-radius: 50%;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 112px;
+        right: 12px;
+      `
+    : css`
+        width: auto;
+        position: absolute;
+        bottom: 112px;
+        right: 50%;
+        transform: translateX(50%);
+      `;
+};
