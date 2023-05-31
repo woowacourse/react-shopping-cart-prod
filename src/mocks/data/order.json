@@ -7,22 +7,22 @@
         "cartItemId": 1,
         "quantity": 5,
         "product": {
-          "productId": 1,
-          "price": 10000,
-          "name": "치킨",
-          "imageUrl": "http://example.com/chicken.jpg",
-          "stock": 30
+          "productId": 2,
+          "name": "PET보틀-단지(480ml)",
+          "price": 73400,
+          "imageUrl": "images/단지-480.jpeg",
+          "stock": 20
         }
       },
       {
         "cartItemId": 2,
-        "quantity": 1,
+        "quantity": 2,
         "product": {
           "productId": 2,
-          "price": 20000,
-          "name": "피자",
-          "imageUrl": "http://example.com/pizza.jpg",
-          "stock": 30
+          "name": "PET보틀-밀크티(370ml)",
+          "price": 73400,
+          "imageUrl": "images/밀크티-370.jpeg",
+          "stock": 20
         }
       }
     ],
@@ -33,25 +33,25 @@
     "orderDateTime": "2023-05-24 08:30:21",
     "orderItems": [
       {
-        "cartItemId": 1,
-        "quantity": 5,
+        "cartItemId": 2,
+        "quantity": 2,
         "product": {
-          "productId": 1,
-          "price": 10000,
-          "name": "치킨",
-          "imageUrl": "http://example.com/chicken.jpg",
-          "stock": 30
+          "productId": 2,
+          "name": "PET보틀-밀크티(370ml)",
+          "price": 73400,
+          "imageUrl": "images/밀크티-370.jpeg",
+          "stock": 20
         }
       },
       {
-        "cartItemId": 2,
+        "cartItemId": 3,
         "quantity": 1,
         "product": {
-          "productId": 2,
-          "price": 20000,
-          "name": "피자",
-          "imageUrl": "http://example.com/pizza.jpg",
-          "stock": 30
+          "productId": 3,
+          "name": "PET보틀-정사각(370ml)",
+          "price": 41000,
+          "imageUrl": "images/정사각-370.jpeg",
+          "stock": 12
         }
       }
     ],
