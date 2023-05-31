@@ -32,23 +32,29 @@ button {
 }
 
 .cart-container {
+  position: relative;
+
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
 .cart-count {
+  position: absolute;
+  right: -4px;
+  top: -4px;
+
   display: flex;
   justify-content: center;
   align-items: center;
 
-  width: 26px;
-  height: 26px;
+  width: 16px;
+  height: 16px;
 
   border-radius: 50%;
-  background-color: var(--mint-color);
-
+  background-color: var(--orange-color);
   color: var(--white-color);
-  font-size: 16px;
+
+  font-size: 12px;
   line-height: 12px;
 }

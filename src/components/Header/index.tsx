@@ -5,6 +5,7 @@ import userServerUrlList from 'src/data/serverData';
 import useToast from 'src/hooks/useToast';
 import { $CartList, $CurrentServerUrl } from 'src/recoil/atom';
 import { setLocalStorage, getLocalStorage } from 'src/utils/localStorage';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import DropDown from '../Common/DropDown';
 import styles from './index.module.scss';
 
@@ -38,9 +39,9 @@ function Header() {
         <DropDown options={userNameList} selectedListHandler={serverSelectChange} currentOptionIndex={index} />
         <div className={styles['cart-container']}>
           <Link to="/cart" onClick={() => Toast.reset}>
-            장바구니
+            <AiOutlineShoppingCart size={28} />
           </Link>
-          <div className={styles['cart-count']}>{cartList.length}</div>
+          {cartList.length > 0 && <div className={styles['cart-count']}>{cartList.length}</div>}
         </div>
         <Link to="/order">주문 목록</Link>
       </div>
