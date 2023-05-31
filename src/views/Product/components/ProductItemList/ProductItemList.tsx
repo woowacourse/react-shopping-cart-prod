@@ -1,11 +1,9 @@
-import { useProductListBy } from '@views/Product/recoil/productListState';
 import { Column, Row } from '@styles/style';
 import { ProductItem } from '@views/Product/components/ProductItem';
-import { useServerUrl } from '@recoil/server/serverUrlState';
+import { useProductList } from '@views/Product/recoil/productListState';
 
 function ProductList() {
-  const { serverUrl } = useServerUrl();
-  const productList = useProductListBy(serverUrl);
+  const productList = useProductList();
 
   return (
     <Row>

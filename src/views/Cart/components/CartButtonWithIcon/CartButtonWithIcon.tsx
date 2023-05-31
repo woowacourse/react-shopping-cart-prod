@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './CartButtonWithIcon.style';
 
 import { useCart, useRefreshCart } from '@views/Cart/recoil/cartState';
+import { useRefreshProduct } from '@views/Product/recoil/productListState';
 
 function CartButtonWithIcon() {
   const navigate = useNavigate();
   const { cart } = useCart();
-  const resetCart = useRefreshCart();
+
+  const refreshCart = useRefreshCart();
+  const refreshProduct = useRefreshProduct();
 
   return (
     <S.CartWrapper
@@ -15,7 +18,8 @@ function CartButtonWithIcon() {
       aria-label="장바구니 페이지로 가기"
       role="button"
       onClick={() => {
-        resetCart();
+        refreshCart();
+        refreshProduct();
         navigate('/cart');
       }}
     >

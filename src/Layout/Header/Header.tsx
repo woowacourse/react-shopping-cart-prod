@@ -43,10 +43,10 @@ function Header() {
           <Logo />
           <SelectBox
             options={[
-              { value: 'MSW', name: 'MSW' },
               { value: '마코', name: '마코' },
               { value: '허브', name: '허브' },
               { value: '우가', name: '우가' },
+              { value: 'MSW', name: 'MSW' },
             ]}
             onChange={handleChangeServer}
           />

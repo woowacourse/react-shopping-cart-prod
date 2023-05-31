@@ -4,7 +4,7 @@ import { ServerName } from 'types/ServerType';
 
 const serverUrlState = atom<string>({
   key: 'serverState',
-  default: 'msw',
+  default: 'https://m4co.shop',
 });
 
 export default serverUrlState;

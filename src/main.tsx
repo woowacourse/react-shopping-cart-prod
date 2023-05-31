@@ -11,18 +11,6 @@ import { theme } from './styles/theme';
 
 import { worker } from './mocks/browser';
 
-/**
- * 프로젝트 시작할 때 products mock data 준비하도록 설정
- */
-
-// if (process.env.NODE_ENV === 'development') {
-//   worker.start({
-//     serviceWorker: {
-//       url: '/react-shopping-cart-prod/mockServiceWorker.js',
-//     },
-//   });
-// }
-
 async function main() {
   await worker.start({
     serviceWorker: {

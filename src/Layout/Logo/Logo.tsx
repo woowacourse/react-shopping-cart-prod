@@ -6,10 +6,12 @@ import logoImage from '@assets/logo.svg';
 import shopImage from '@assets/shop.svg';
 
 import { useRefreshCart } from '../../views/Cart/recoil/cartState';
+import { useRefreshProduct } from '@views/Product/recoil/productListState';
 
 function Logo() {
   const navigate = useNavigate();
-  const resetCart = useRefreshCart();
+  const refreshCart = useRefreshCart();
+  const refreshProduct = useRefreshProduct();
 
   return (
     <S.LogoWrapper
@@ -17,7 +19,8 @@ function Logo() {
       aria-label="SHOP 홈페이지로 가기"
       role="button"
       onClick={() => {
-        resetCart();
+        refreshCart();
+        refreshProduct();
 
         navigate('/');
       }}
