@@ -41,7 +41,7 @@ const HeaderContainer = styled.header`
   padding: 0 8%;
   background-color: ${(props) => props.theme.color.white};
   border-bottom: 1px solid ${(props) => props.theme.color.gray300};
-  z-index: 1;
+  z-index: ${(props) => props.theme.zIndex.header};
 `;
 
 const Logo = styled(Link)`
