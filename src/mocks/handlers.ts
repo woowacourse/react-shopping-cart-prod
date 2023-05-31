@@ -136,4 +136,22 @@ export const handlers = [
 
     return res(ctx.status(204));
   }),
+
+  // 쿠폰 발급
+  rest.post(`${FETCH_URL.allCoupon}/:couponId`, (req, res, ctx) => {
+    const couponId = Number(req.params.couponId);
+
+    const myCoupons = localStorageHelper.getValue<CouponType[]>('myCoupons');
+    const newCoupon = mockCouponData.find((coupon) => coupon.id === couponId);
+
+    if (myCoupons.find((coupon) => coupon.id === couponId)) return res(ctx.status(500));
+    if (!newCoupon) return res(ctx.status(500));
+
+    myCoupons.push(newCoupon);
+    myCoupons.sort((a, b) => b.id - a.id);
+
+    localStorageHelper.setValue('myCoupons', myCoupons);
+
+    return res(ctx.status(201));
+  }),
 ];

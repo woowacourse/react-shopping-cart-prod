@@ -1,13 +1,12 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
-import { CartItemType, CouponType, OrderItemType } from '@Types/index';
+import { CartItemType, OrderItemType } from '@Types/index';
 
 import useCoupon from '@Hooks/useCoupon';
 
 import { fetchData } from '@Utils/api';
 
 import cartItemsState from '@Atoms/cartItemsState';
-import myCouponState from '@Atoms/myCouponState';
 import orderItemsState from '@Atoms/orderItemsState';
 import selectedCouponIdState from '@Atoms/selectedCouponIdState';
 import serverState from '@Atoms/serverState';
