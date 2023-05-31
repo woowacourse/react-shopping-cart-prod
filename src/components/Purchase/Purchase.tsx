@@ -7,13 +7,13 @@ import styled from "styled-components";
 export const PurchaseTitle = styled.div`
   font-style: normal;
   font-weight: 700;
-  font-size: 32px;
+  font-size: 28px;
   line-height: 37px;
 
   text-align: center;
   letter-spacing: 0.5px;
 
-  margin: 60px 0px 30px 0px;
+  margin: 10px 0px 10px 0px;
 `;
 
 export const FatBorder = styled.hr`
@@ -22,15 +22,39 @@ export const FatBorder = styled.hr`
 
 export const ProductItemLayout = styled.div`
   display: flex;
+  border-bottom: solid 1px gray;
 `;
 
 export const ProductItemImage = styled.img`
   width: 100px;
   height: 100px;
 `;
-export const ProductItemInfo = styled.div``;
-export const ProductItemName = styled.div``;
-export const ProductItemSubTotalPrice = styled.div``;
+
+export const ProductItemList = styled.div`
+  margin-bottom: 20px;
+  width: 100%;
+`;
+export const ProductItemInfo = styled.div`
+  padding: 20px 0px 20px 0px;
+`;
+export const ProductItemName = styled.div`
+  font-style: normal;
+  font-size: 20px;
+  line-height: 37px;
+
+  letter-spacing: 0.5px;
+`;
+export const ProductItemSubTotalPrice = styled.div`
+  font-style: normal;
+  font-size: 16px;
+  line-height: 37px;
+
+  letter-spacing: 0.5px;
+`;
+
+export const TotalPrice = styled.div`
+  border: solid 1px gray;
+`;
 
 function Purchase() {
   const navigate = useNavigate();
@@ -57,28 +81,22 @@ function Purchase() {
   return (
     <div>
       <div>
-        <PurchaseTitle>구매 품목</PurchaseTitle>
+        <PurchaseTitle>결제 페이지</PurchaseTitle>
         <FatBorder />
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div>
-            {checkedCartList.map((cartItem, i) => (
-              <ProductItemLayout key={i}>
-                <ProductItemImage src={cartItem.product.imageUrl} />
-                <ProductItemInfo>
-                  <ProductItemName>{cartItem.product.name}</ProductItemName>
-                  <ProductItemSubTotalPrice>
-                    {cartItem.product.price} x {cartItem.quantity} ={" "}
-                    {cartItem.product.price * cartItem.quantity}원
-                  </ProductItemSubTotalPrice>
-                </ProductItemInfo>
-              </ProductItemLayout>
-            ))}
-          </div>
-          <div>
-            <div>총 금액</div>
-            <div>0원</div>
-          </div>
-        </div>
+        <ProductItemList>
+          {checkedCartList.map((cartItem, i) => (
+            <ProductItemLayout key={i}>
+              <ProductItemImage src={cartItem.product.imageUrl} />
+              <ProductItemInfo>
+                <ProductItemName>{cartItem.product.name}</ProductItemName>
+                <ProductItemSubTotalPrice>
+                  {cartItem.product.price}원 x {cartItem.quantity}개 ={" "}
+                  {cartItem.product.price * cartItem.quantity}원
+                </ProductItemSubTotalPrice>
+              </ProductItemInfo>
+            </ProductItemLayout>
+          ))}
+        </ProductItemList>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <div>
