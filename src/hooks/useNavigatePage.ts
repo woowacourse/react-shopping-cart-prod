@@ -11,14 +11,18 @@ const useNavigatePage = () => {
   };
 
   const goOrder = () => {
-    navigator('/order');
+    navigator('/orders');
   };
 
   const goOrderDetail = (orderId: number) => {
-    navigator(`/order/${orderId}`);
+    navigator(`/orders/${orderId}`);
   };
 
-  return { goHome, goCart, goOrder, goOrderDetail };
+  const goOrderComplete = () => {
+    navigator('/order-complete');
+  };
+
+  return { goHome, goCart, goOrder, goOrderDetail, goOrderComplete };
 };
 
 export default useNavigatePage;
