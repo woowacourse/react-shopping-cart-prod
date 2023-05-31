@@ -10,6 +10,7 @@ import ErrorPage from './pages/ErrorPage/ErrorPage.tsx';
 import ToastProvider from './providers/toast/ToastProvider.tsx';
 import OrderDetailPage from './pages/OrderDetailPage/OrderDetailPage.tsx';
 import OrderListPage from './pages/OrderListPage/OrderListPage.tsx';
+import Modal from './components/@common/Modal/Modal.tsx';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
               <Route path='/error' element={<ErrorPage />} />
             </Routes>
           </Layout>
+          <Modal />
         </BrowserRouter>
       </ToastProvider>
     </RecoilRoot>
