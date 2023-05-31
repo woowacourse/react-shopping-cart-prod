@@ -1,6 +1,6 @@
 import Header from "components/Header";
 import Page from "components/common/Page";
-import ItemList from "components/ItemList";
+import ItemList from "components/main/ItemList";
 import React from "react";
 import LoadingSpinner from "components/common/LoadingSpinner";
 import Skeleton from "components/common/Skeleton";

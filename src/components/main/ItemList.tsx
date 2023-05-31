@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Item from "components/Item";
+import Item from "components/main/Item";
 import { useRecoilValue } from "recoil";
 import { productListState } from "recoil/product";
 

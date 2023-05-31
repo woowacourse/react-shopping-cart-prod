@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { cartListState } from "recoil/cart";
 import { useRecoilValue, useResetRecoilState } from "recoil";
-import CartItem from "components/CartItem";
+import CartItem from "components/cart/CartItem";
 import { useCartCheckbox } from "hooks/useCartCheckbox";
 import { couponListState } from "recoil/coupon";
 import { useEffect } from "react";

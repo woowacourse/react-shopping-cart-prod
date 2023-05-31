@@ -1,5 +1,5 @@
 import { StoryFn, Meta } from "@storybook/react";
-import CartItem from "components/CartItem";
+import CartItem from "components/cart/CartItem";
 
 export default {
   title: "CartItem",

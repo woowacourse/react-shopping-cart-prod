@@ -2,7 +2,7 @@ import Header from "components/Header";
 import Page from "components/common/Page";
 import React from "react";
 import Skeleton from "components/common/Skeleton";
-import OrderItemList from "components/OrderDetailList";
+import OrderDetailList from "components/orderList/OrderDetailList";
 
 const OrderList = () => {
   return (
@@ -13,7 +13,7 @@ const OrderList = () => {
         <Header />
       </React.Suspense>
       <Page>
-        <OrderItemList />
+        <OrderDetailList />
       </Page>
     </>
   );
