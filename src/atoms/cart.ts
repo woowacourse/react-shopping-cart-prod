@@ -2,6 +2,7 @@ import { selector, atom, selectorFamily } from 'recoil';
 import { CartItem } from '../types/cart';
 import { fetchCart } from '../apis/cart';
 import { coupons, selectedCouponsState } from './coupons';
+import { Coupon } from '../types/coupon';
 
 export const cartState = atom({
   key: 'cart',
@@ -84,8 +85,15 @@ export const totalPriceSelector = selector({
   },
 });
 
-const getDiscountPriceByRate = (base: number, rate: number) => {
-  return Math.floor(base * (rate / 100));
+const getDiscountPrice = (coupon: Coupon, targetPrice: number) => {
+  const getDiscountPriceByRate = (base: number, rate: number) => {
+    return Math.floor(base * (rate / 100));
+  };
+
+  if (coupon.discountType === 'RATE') {
+    return getDiscountPriceByRate(targetPrice, coupon.value);
+  }
+  return coupon.value;
 };
 
 export const discountPrice = selector({
@@ -103,15 +111,8 @@ export const discountPrice = selector({
         (coupon) => coupon.id === selectedCoupons[0]
       );
       if (!applyCoupon) return totalDiscountPrice;
-      if (applyCoupon.discountType === 'RATE') {
-        totalDiscountPrice += getDiscountPriceByRate(
-          totalPrice,
-          applyCoupon.value
-        );
-      } else {
-        totalDiscountPrice += applyCoupon.value;
-      }
 
+      totalDiscountPrice += getDiscountPrice(applyCoupon, totalPrice);
       return totalDiscountPrice;
     }
 
@@ -128,14 +129,10 @@ export const discountPrice = selector({
 
       if (!applyCartItem) return totalDiscountPrice;
 
-      if (applyCoupon.discountType === 'RATE') {
-        totalDiscountPrice += getDiscountPriceByRate(
-          applyCartItem.product.price * applyCartItem.quantity,
-          applyCoupon.value
-        );
-      } else {
-        totalDiscountPrice += applyCoupon.value;
-      }
+      totalDiscountPrice += getDiscountPrice(
+        applyCoupon,
+        applyCartItem.product.price * applyCartItem.quantity
+      );
     });
 
     return totalDiscountPrice;
