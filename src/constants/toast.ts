@@ -34,4 +34,14 @@ export const TOAST_STATE = {
     variant: 'error',
     duration: 2000,
   },
+  successSelectCoupon: {
+    message: '쿠폰을 적용했어요',
+    variant: 'success',
+    duration: 2000,
+  },
+  failedSelectCoupon: {
+    message: '사용 불가능한 쿠폰이에요',
+    variant: 'error',
+    duration: 2000,
+  },
 } as const;
