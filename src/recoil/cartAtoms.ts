@@ -1,5 +1,5 @@
 import { atom, selector, selectorFamily } from 'recoil';
-import { CartItem, ReceivedCartItem } from '../types/types';
+import { CartItem } from '../types/types';
 
 export const cartState = atom<CartItem[]>({
   key: 'cartState',
@@ -14,46 +14,6 @@ export const cartCountSelector = selector({
   },
 });
 
-export const checkedCartSelector = selector({
-  key: 'checkedCartSelector',
-  get: ({ get }) => {
-    const cartList = get(cartState);
-    const checkedCartLst = cartList.filter((cartItem) => cartItem.checked);
-    return checkedCartLst;
-  },
-});
-
-export const checkedCartCountSelector = selector({
-  key: 'checkedCartCountSelector',
-  get: ({ get }) => {
-    const checkedCartList = get(checkedCartSelector);
-    return checkedCartList.length;
-  },
-});
-
-export const allCartCheckedSelector = selector({
-  key: 'allCartCheckedSelector',
-  get: ({ get }) => {
-    const cartList = get(cartState);
-    const cartCount = get(cartCountSelector);
-    if (cartCount > 0) {
-      const isAllCartItemChecked = cartList.every((cartItem) => cartItem.checked);
-      return isAllCartItemChecked;
-    }
-
-    return false;
-  },
-});
-
-export const totalPriceSelector = selector({
-  key: 'totalPriceSelector',
-  get: ({ get }) => {
-    const checkedCartList = get(checkedCartSelector);
-    const totalPrice = checkedCartList.reduce((acc, cartItem) => acc + cartItem.quantity * cartItem.product.price, 0);
-    return totalPrice;
-  },
-});
-
 export const quantityByProductIdSelector = selectorFamily({
   key: 'quantityByProductIdSelector',
   get:
@@ -65,6 +25,48 @@ export const quantityByProductIdSelector = selectorFamily({
     },
 });
 
+export const checkedCartCountSelector = selector({
+  key: 'checkedCartCountSelector',
+  get: ({ get }) => {
+    const checkedItemIdList = get(checkedItemIdListState);
+    console.log(checkedItemIdList);
+    return checkedItemIdList.length;
+  },
+});
+
+export const allCartCheckedSelector = selector({
+  key: 'allCartCheckedSelector',
+  get: ({ get }) => {
+    const cartList = get(cartState);
+    const checkedItemIdList = get(checkedItemIdListState);
+
+    return cartList.length === checkedItemIdList.length;
+  },
+});
+
+export const totalPriceSelector = selector({
+  key: 'totalPriceSelector',
+  get: ({ get }) => {
+    const cartList = get(cartState);
+    const checkedItemIdList = get(checkedItemIdListState);
+    const checkedCartList = cartList.filter((cartItem) => checkedItemIdList.includes(cartItem.id));
+
+    return checkedCartList.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0);
+  },
+});
+
+export const checkedItemIdListState = atom<number[]>({
+  key: 'checkedItemIdListState',
+  default: selector({
+    key: 'checkedItemIdListState/default',
+    get: ({ get }) => {
+      const cartList = get(cartState);
+
+      return cartList.map((cartItem) => cartItem.id);
+    },
+  }),
+});
+
 export const switchCartCheckboxSelector = selector<number>({
   key: 'switchCartCheckboxSelector',
   get: () => {
@@ -72,15 +74,11 @@ export const switchCartCheckboxSelector = selector<number>({
     return -1;
   },
   set: ({ get, set }, id) => {
-    const cartList = [...get(cartState)];
-    const targetIndex = cartList.findIndex((cartItem) => cartItem.id === (id as number));
-    const targetCart = cartList[targetIndex];
-    const updatedCart = {
-      ...targetCart,
-      checked: !targetCart.checked,
-    };
-    cartList[targetIndex] = updatedCart;
-    set(cartState, cartList);
+    const checkedItemIdList = get(checkedItemIdListState);
+
+    if (checkedItemIdList.find((cartItemId) => cartItemId === id))
+      set(checkedItemIdListState, (prev) => prev.filter((itemId) => itemId !== id));
+    else set(checkedItemIdListState, (prev) => [...prev, id as number]);
   },
 });
 
@@ -93,10 +91,7 @@ export const switchAllCartCheckboxSelector = selector<undefined>({
   set: ({ get, set }) => {
     const cartList = [...get(cartState)];
     const isAllCartItemChecked = get(allCartCheckedSelector);
-    const newCartList = cartList.map((cartItem: ReceivedCartItem) => ({
-      ...cartItem,
-      checked: !isAllCartItemChecked,
-    }));
-    set(cartState, newCartList);
+
+    set(checkedItemIdListState, isAllCartItemChecked ? [] : cartList.map((cartItem) => cartItem.id));
   },
 });

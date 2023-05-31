@@ -1,10 +1,10 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
   allCartCheckedSelector,
   cartCountSelector,
   cartState,
   checkedCartCountSelector,
-  checkedCartSelector,
+  checkedItemIdListState,
   switchAllCartCheckboxSelector,
 } from '../../../recoil/cartAtoms';
 import { CartItem } from '../CartItem';
@@ -13,24 +13,30 @@ import { fetchCartList, fetchDeleteCart } from '../../../api/api';
 import { serverState } from '../../../recoil/serverAtom';
 import { Input, Label } from '../CartItem/CartItem.style';
 import checkIcon from '../../../assets/check.svg';
+import { useEffect } from 'react';
 
 function CartList() {
   const [cartList, setCartList] = useRecoilState(cartState);
-  const checkedCartList = useRecoilValue(checkedCartSelector);
+  const [checkedItemIdList, setCheckedItemIdList] = useRecoilState(checkedItemIdListState);
   const checkedCartListCount = useRecoilValue(checkedCartCountSelector);
   const cartCount = useRecoilValue(cartCountSelector);
   const isAllCartItemChecked = useRecoilValue(allCartCheckedSelector);
   const server = useRecoilValue(serverState);
   const switchAllCheckboxes = useSetRecoilState(switchAllCartCheckboxSelector);
+  const resetItemSelection = useResetRecoilState(checkedItemIdListState);
 
   const removeCheckedCartItems = async () => {
     if (confirm('정말로 삭제 하시겠습니까?')) {
-      const targetIds = checkedCartList.map((cartList) => cartList.id);
-      await Promise.all(targetIds.map((cartId) => fetchDeleteCart(server, cartId)));
+      await Promise.all(checkedItemIdList.map((cartId) => fetchDeleteCart(server, cartId)));
       const newCartList = await fetchCartList(server);
       setCartList(newCartList);
+      setCheckedItemIdList([]);
     }
   };
+
+  useEffect(() => {
+    return () => resetItemSelection();
+  }, []);
 
   return (
     <S.Wrapper>

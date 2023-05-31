@@ -1,8 +1,8 @@
 import type { CartItem as CartItemType } from '../../../types/types.ts';
 import * as S from './CartItem.style.ts';
 import trashIcon from '../../../assets/trash.png';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { cartState, switchCartCheckboxSelector } from '../../../recoil/cartAtoms.ts';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { cartState, checkedItemIdListState, switchCartCheckboxSelector } from '../../../recoil/cartAtoms.ts';
 import { serverState } from '../../../recoil/serverAtom.ts';
 import { fetchCartList, fetchUpdateCart } from '../../../api/api.ts';
 import { fetchDeleteCart } from '../../../api/api.ts';
@@ -16,6 +16,7 @@ interface CartItemProps {
 function CartItem({ cart }: CartItemProps) {
   const switchCheckbox = useSetRecoilState(switchCartCheckboxSelector);
   const setCartList = useSetRecoilState(cartState);
+  const [checkedItemIdList, setCheckedItemIdList] = useRecoilState(checkedItemIdListState);
   const server = useRecoilValue(serverState);
 
   const removeCartItem = async (cartId: number) => {
@@ -23,20 +24,15 @@ function CartItem({ cart }: CartItemProps) {
       await fetchDeleteCart(server, cartId);
       const newCartList = await fetchCartList(server);
       setCartList(newCartList);
+      setCheckedItemIdList((prev) => prev.filter((itemId) => itemId !== cartId));
     }
   };
 
   const updateCartItemQuantity = async (newQuantity: number) => {
     if (newQuantity !== cart.quantity) {
-      const cartId = cart.id;
-      if (newQuantity === 0) {
-        if (confirm('정말로 삭제 하시겠습니까?')) {
-          await fetchDeleteCart(server, cartId);
-        }
-      } else {
-        await fetchUpdateCart(server, cartId, newQuantity);
-      }
+      await fetchUpdateCart(server, cart.id, newQuantity);
       const newCartList = await fetchCartList(server);
+
       setCartList(newCartList);
     }
   };
@@ -44,12 +40,17 @@ function CartItem({ cart }: CartItemProps) {
   return (
     <S.CartItemLayout>
       <S.Label>
-        <S.Input type='checkbox' icon={checkIcon} checked={cart.checked} onChange={() => switchCheckbox(cart.id)} />
+        <S.Input
+          type='checkbox'
+          icon={checkIcon}
+          checked={checkedItemIdList.includes(cart.id)}
+          onChange={() => switchCheckbox(cart.id)}
+        />
       </S.Label>
-      <S.CartItemImage src={cart.product.imageUrl} onClick={() => switchCheckbox(cart.id)} />
+      <S.CartItemImage src={cart.product.imageUrl} />
       <S.CartItemInfoWrapper>
         <S.CartItemInfo>
-          <S.CartItemName onClick={() => switchCheckbox(cart.id)}>{cart.product.name}</S.CartItemName>
+          <S.CartItemName>{cart.product.name}</S.CartItemName>
           <S.CartItemControllerWrapper>
             <S.CartItemTrashImage src={trashIcon} onClick={() => removeCartItem(cart.id)} />
             <StepperInput

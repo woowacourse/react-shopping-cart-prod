@@ -5,19 +5,10 @@ interface ProductItem {
   imageUrl: string;
 }
 
-interface ReceivedCartItem {
+interface CartItem {
   id: number;
   quantity: number;
   product: ProductItem;
-}
-
-interface CartItem extends ReceivedCartItem {
-  checked: boolean;
-}
-
-interface NewCartItem extends CartItem {
-  quantity: 1;
-  checked: true;
 }
 
 interface OrderItem {
@@ -36,4 +27,4 @@ interface Coupon {
   minAmount: number;
 }
 
-export type { ProductItem, ReceivedCartItem, CartItem, NewCartItem, OrderItem, Coupon };
+export type { ProductItem, CartItem, OrderItem, Coupon };

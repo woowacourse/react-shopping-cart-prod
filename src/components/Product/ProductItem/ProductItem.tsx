@@ -37,7 +37,7 @@ function ProductItem({ product }: ProductItemProps) {
               <S.CartCount>{quantity}</S.CartCount>
             </S.CartCountWrapper>
           ) : (
-            <img src={cartIcon}></img>
+            <img src={cartIcon} />
           )}
         </S.ProductDetails>
       </S.ProductItemBox>
