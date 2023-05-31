@@ -1,11 +1,11 @@
+import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import ProductItem from '../ProductItem/ProductItem';
 import useFetch from '../../../hooks/api/useFetch';
 import { Product } from '../../../types/product';
-import { useRecoilValue } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
-import { useEffect } from 'react';
 import useCartService from '../../../hooks/useCartService';
 
 const ProductList = () => {
