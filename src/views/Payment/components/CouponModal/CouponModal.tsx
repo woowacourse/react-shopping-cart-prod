@@ -1,11 +1,14 @@
 import { Modal } from '@common/Modal';
 import { Column, Row } from '@styles/style';
+import useCouponList from '@views/Payment/recoil/couponListState';
 import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
+import { CouponType } from 'types/CouponType';
 
 interface CouponModalProps {
   isOpen: boolean;
   closeModal: () => void;
+  couponList: CouponType[];
 }
 
 // {
@@ -27,11 +30,11 @@ const couponCondition = (minimumPrice: number) => {
 const couponBenefitText = (type: string, value: number) => {
   switch (type) {
     case 'percent': {
-      return `전체 금액에서 ${value}% 할인`;
+      return `전체 ${value}% 할인`;
     }
 
     case 'price': {
-      return `전체 금액에서 ${value}원 할인`;
+      return `전체 ${value}원 할인`;
     }
 
     case 'delivery': {
@@ -44,52 +47,26 @@ const couponBenefitText = (type: string, value: number) => {
   }
 };
 
-function CouponModal(props: CouponModalProps) {
-  return props.isOpen ? (
-    <Modal {...props}>
+function CouponModal({ isOpen, couponList, closeModal }: CouponModalProps) {
+  return isOpen ? (
+    <Modal isOpen={isOpen} closeModal={closeModal}>
       <CouponContainerTitle>쿠폰함</CouponContainerTitle>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {
           <CouponListWrapper>
-            <Coupon>
-              <ContentWrapper>
-                <CouponBenefit>{couponBenefitText('percent', 10)}</CouponBenefit>
-                <CouponContentPrimary>생일 쿠폰(name)</CouponContentPrimary>
-                <CouponContentSecondary>{couponCondition(50000)}</CouponContentSecondary>
-              </ContentWrapper>
-            </Coupon>
-
-            <Coupon>
-              <ContentWrapper>
-                <CouponBenefit>{couponBenefitText('percent', 10)}</CouponBenefit>
-                <CouponContentPrimary>생일 쿠폰(name)</CouponContentPrimary>
-                <CouponContentSecondary>{couponCondition(50000)}</CouponContentSecondary>
-              </ContentWrapper>
-            </Coupon>
-
-            <Coupon>
-              <ContentWrapper>
-                <CouponBenefit>{couponBenefitText('percent', 10)}</CouponBenefit>
-                <CouponContentPrimary>생일 쿠폰(name)</CouponContentPrimary>
-                <CouponContentSecondary>{couponCondition(50000)}</CouponContentSecondary>
-              </ContentWrapper>
-            </Coupon>
-
-            <Coupon>
-              <ContentWrapper>
-                <CouponBenefit>{couponBenefitText('percent', 10)}</CouponBenefit>
-                <CouponContentPrimary>생일 쿠폰(name)</CouponContentPrimary>
-                <CouponContentSecondary>{couponCondition(50000)}</CouponContentSecondary>
-              </ContentWrapper>
-            </Coupon>
-
-            <Coupon>
-              <ContentWrapper>
-                <CouponBenefit>{couponBenefitText('percent', 10)}</CouponBenefit>
-                <CouponContentPrimary>생일 쿠폰(name)</CouponContentPrimary>
-                <CouponContentSecondary>{couponCondition(50000)}</CouponContentSecondary>
-              </ContentWrapper>
-            </Coupon>
+            {couponList.map((coupon) => {
+              return (
+                <Coupon>
+                  <ContentWrapper key={coupon.id}>
+                    <CouponBenefit>{couponBenefitText(coupon.type, coupon.value)}</CouponBenefit>
+                    <CouponContentPrimary>{coupon.name}</CouponContentPrimary>
+                    <CouponContentSecondary>
+                      {couponCondition(coupon.minimumPrice)}
+                    </CouponContentSecondary>
+                  </ContentWrapper>
+                </Coupon>
+              );
+            })}
           </CouponListWrapper>
         }
       </div>
@@ -107,22 +84,6 @@ const CouponListWrapper = styled.div`
   margin: 0 auto;
 
   max-width: 300px;
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    max-width: 300px;
-  }
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    max-width: 600px;
-  }
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
-    max-width: 900px;
-  }
-
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xxl}) {
-    max-width: 1200px;
-  }
 `;
 
 const CouponBenefit = styled.p`
@@ -163,6 +124,7 @@ const Coupon = styled.button`
   justify-content: start;
   align-items: center;
   border-radius: 8px;
+  width: 30rem;
 
   padding: 5rem;
   height: 10rem;
@@ -176,4 +138,19 @@ const Coupon = styled.button`
   font-size: 20px;
   text-align: left;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+    max-width: 300px;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
+    max-width: 600px;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
+    max-width: 900px;
+  }
+
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xxl}) {
+    max-width: 1200px;
+  }
 `;

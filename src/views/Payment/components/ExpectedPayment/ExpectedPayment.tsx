@@ -6,10 +6,11 @@ import { DELIVERY_FEE_BASIC } from '@views/Payment/constants/orderConstants';
 import useFetchCoupons from '@views/Payment/hooks/useFetchCoupons';
 import { useState } from 'react';
 import { CouponModal } from '../CouponModal';
+import useCouponList from '@views/Payment/recoil/couponListState';
 
 function ExpectedPayment() {
   const { totalPrice } = useCart();
-  const fetchCoupons = useFetchCoupons();
+  const { couponList, checkCoupon, getCheckedCoupon } = useCouponList();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -54,6 +55,7 @@ function ExpectedPayment() {
         closeModal={() => {
           setIsOpen(false);
         }}
+        couponList={couponList}
       ></CouponModal>
     </S.PayingContainer>
   );
