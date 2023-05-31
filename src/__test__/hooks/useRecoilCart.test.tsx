@@ -1,4 +1,4 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { act, renderHook, waitFor } from '@testing-library/react';
 import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
 import { RecoilRoot } from 'recoil';
@@ -47,7 +47,11 @@ describe('useRecoilCart 훅 테스트', () => {
     });
 
     await waitFor(async () => {
-      expect(result.current.cart).toEqual(serverData);
+      const { cart, cartFetchData } = result.current;
+
+      await cartFetchData();
+
+      expect(cart).toEqual(serverData);
     });
   });
 
@@ -56,18 +60,20 @@ describe('useRecoilCart 훅 테스트', () => {
       wrapper: RecoilRoot,
     });
 
-    await waitFor(
-      () => {
-        const { cart, updateCartListItemQuantity } = result.current;
+    await waitFor(async () => {
+      const { cart, updateCartListItemQuantity, cartFetchData } = result.current;
+
+      await cartFetchData();
+
+      act(() => {
         updateCartListItemQuantity({
-          cartId: cartIdGenerator.value,
+          cartId: cart[0].id,
           quantity: 50,
         });
+      });
 
-        expect(cart[0].quantity).toBe(50);
-      },
-      { timeout: 1000 }
-    );
+      expect(cart[0].quantity).toBe(50);
+    });
   });
 
   test('장바구니 아이템 제거하는 경우 전역 장바구니 리스트 상태에 반영되는 지 테스트', async () => {
@@ -77,6 +83,7 @@ describe('useRecoilCart 훅 테스트', () => {
 
     await waitFor(() => {
       const { cart, deleteCartItem } = result.current;
+
       deleteCartItem(cartIdGenerator.value);
 
       expect(cart.length).toBe(0);
@@ -101,16 +108,19 @@ describe('useRecoilCart 훅 테스트', () => {
     const { result } = renderHook(() => useRecoilCart(), {
       wrapper: RecoilRoot,
     });
+    const { cartFetchData } = result.current;
+
+    await cartFetchData();
+
+    const { cart } = result.current;
 
     await waitFor(() => {
-      const { cart } = result.current;
       const keys = Object.keys(cart[0]);
 
       expect(keys).toEqual(['id', 'quantity', 'product', 'isSelect']);
     });
 
     await waitFor(() => {
-      const { cart } = result.current;
       const productKeys = Object.keys(cart[0].product);
 
       expect(productKeys).toEqual(['id', 'name', 'price', 'imageUrl']);

@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
 import {
   addItemToCart,
+  cartApiWrapper,
   findCartItemById,
   removeCartItem,
   updateCartItemQuantity,
@@ -25,11 +25,7 @@ interface AddCartItemParams {
 
 export const useRecoilCart = () => {
   const serverName = useRecoilValue(serverState);
-  const {
-    data: originData,
-    isLoading,
-    error,
-  } = useFetch<ServerCartItemType[]>(getCartPath(serverName));
+  const { isLoading, error, fetchData } = useFetch<ServerCartItemType[]>(getCartPath(serverName));
   const [cart, setCart] = useRecoilState<CartItemType[]>(cartState);
 
   const updateCartListItemQuantity = ({ cartId, quantity }: UpdateCartListItemQuantityParams) => {
@@ -52,24 +48,15 @@ export const useRecoilCart = () => {
     return serverCartItemQuantity;
   };
 
-  useEffect(() => {
+  const cartFetchData = async () => {
+    const originData = await fetchData();
+
     if (!originData) return;
-    const clientCart: CartItemType[] = originData.map((cartItem) => {
-      return {
-        id: cartItem.id,
-        quantity: cartItem.quantity,
-        product: {
-          id: cartItem.product.id,
-          name: cartItem.product.name,
-          price: cartItem.product.price,
-          imageUrl: cartItem.product.imageUrl,
-        },
-        isSelect: true,
-      };
-    });
+
+    const clientCart: CartItemType[] = cartApiWrapper(originData);
 
     setCart(clientCart);
-  }, [originData, setCart]);
+  };
 
   return {
     cart,
@@ -79,5 +66,6 @@ export const useRecoilCart = () => {
     getCartItemQuantity,
     deleteCartItem,
     addCartItem,
+    cartFetchData,
   };
 };
