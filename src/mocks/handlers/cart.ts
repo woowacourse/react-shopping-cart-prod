@@ -5,15 +5,13 @@ import {
   PRODUCTS_BASE_URL,
 } from '../../constants/api';
 import { CartItem, NewCartItem } from '../../types/cart';
+import { getLocalStorage, setLocalStorage } from '../../utils/localStorage';
 
-const localStorageCart = localStorage.getItem(CART_LOCAL_STORAGE_KEY);
+const localStorageCart: CartItem[] = getLocalStorage(CART_LOCAL_STORAGE_KEY);
 // eslint-disable-next-line prefer-const
-let cart: CartItem[] = localStorageCart ? JSON.parse(localStorageCart) : [];
+let cart: CartItem[] = localStorageCart ?? [];
 
 const isInCart = (id: number) => cart.some((cartItem) => cartItem.id === id);
-
-const updateLocalStorage = () =>
-  localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(cart));
 
 export const cartHandlers = [
   // 장바구니 목록 조회
@@ -49,7 +47,7 @@ export const cartHandlers = [
 
     cart = [...cart, newCartItem];
 
-    updateLocalStorage();
+    setLocalStorage(CART_LOCAL_STORAGE_KEY, cart);
 
     return res(
       ctx.status(201),
@@ -80,7 +78,7 @@ export const cartHandlers = [
       };
     });
 
-    updateLocalStorage();
+    setLocalStorage(CART_LOCAL_STORAGE_KEY, cart);
 
     return res(ctx.status(200));
   }),
@@ -99,7 +97,7 @@ export const cartHandlers = [
 
     cart = cart.filter((cartItem) => cartItem.id !== cartItemId);
 
-    updateLocalStorage();
+    setLocalStorage(CART_LOCAL_STORAGE_KEY, cart);
 
     return res(ctx.status(204));
   }),
