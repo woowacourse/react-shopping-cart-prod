@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import CartController from './CartController';
-import Providers from '../../../stories/Providers';
+import Providers from '../../../../stories/Providers';
 
 const meta = {
   component: CartController,

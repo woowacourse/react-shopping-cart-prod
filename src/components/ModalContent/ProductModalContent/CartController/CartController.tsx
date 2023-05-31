@@ -1,10 +1,10 @@
-import { ChangeEvent } from 'react';
-import type { ProductItem } from '../../../types/types';
+import type { ProductItem } from '../../../../types/types';
 import * as S from './CartController.style';
-import { cartState, quantityByProductIdSelector } from '../../../recoil/cartAtoms';
+import { cartState, quantityByProductIdSelector } from '../../../../recoil/cartAtoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { fetchAddCart, fetchCartList, fetchDeleteCart, fetchUpdateCart } from '../../../api/api';
-import { serverState } from '../../../recoil/serverAtom';
+import { fetchAddCart, fetchCartList, fetchDeleteCart, fetchUpdateCart } from '../../../../api/api';
+import { serverState } from '../../../../recoil/serverAtom';
+import { StepperInput } from '../../../@common/StepperInput';
 
 interface CartControllerProps {
   product: ProductItem;
@@ -24,7 +24,7 @@ function CartController({ product }: CartControllerProps) {
   };
 
   const updateCartItemQuantity = async (newQuantity: number) => {
-    if (targetCartItem) {
+    if (targetCartItem && newQuantity !== quantity) {
       const cartId = targetCartItem.id;
       if (newQuantity === 0) {
         if (confirm('정말로 삭제 하시겠습니까?')) {
@@ -38,23 +38,10 @@ function CartController({ product }: CartControllerProps) {
     }
   };
 
-  const handleChangeQuantity = (event: ChangeEvent<HTMLInputElement>) => {
-    const quantityInputValue = Number(event.target.value.replaceAll('/', '').replace(/\D/g, ''));
-    const newQuantity = quantityInputValue > 100 ? 100 : quantityInputValue;
-
-    updateCartItemQuantity(newQuantity);
-  };
-
   return (
     <>
       {quantity > 0 ? (
-        <S.ControllerWrapper>
-          <S.CartBox>
-            <S.QuantityControlButton onClick={() => updateCartItemQuantity(quantity - 1)}>-</S.QuantityControlButton>
-            <S.QuantityInput value={quantity} onChange={handleChangeQuantity} />
-            <S.QuantityControlButton onClick={() => updateCartItemQuantity(quantity + 1)}>+</S.QuantityControlButton>
-          </S.CartBox>
-        </S.ControllerWrapper>
+        <StepperInput initialValue={quantity} getValue={updateCartItemQuantity} />
       ) : (
         <S.AddCartButton onClick={() => addCartItem(product.id)}>장바구니에 담기</S.AddCartButton>
       )}

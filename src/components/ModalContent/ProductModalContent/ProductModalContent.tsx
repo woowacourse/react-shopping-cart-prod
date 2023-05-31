@@ -4,7 +4,7 @@ import { modalOpenState } from '../../../recoil/modalAtoms.tsx';
 import cartIcon from '../../../assets/cart.svg';
 import { quantityByProductIdSelector } from '../../../recoil/cartAtoms.ts';
 import * as S from './ProductModalContent.style.ts';
-import { CartController } from '../../@common/CartController';
+import { CartController } from './CartController/index.ts';
 
 function ProductModalContent({ product }: { product: ProductItem }) {
   const { name, price, imageUrl } = product;
