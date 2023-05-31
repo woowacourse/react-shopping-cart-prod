@@ -8,4 +8,9 @@ export interface Order {
   orders: OrderItem[];
 }
 
-type OrderItem = Product & CartItem['quantity'];
+export interface OrderPayload {
+  cartItemIds: Array<CartItem['id']>;
+  usePoint: number;
+}
+
+type OrderItem = Product | CartItem['quantity'];
