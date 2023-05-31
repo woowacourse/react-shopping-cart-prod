@@ -1,26 +1,32 @@
 import { SHIPPING_FEE } from "constants/cartProduct";
 import { useRecoilValue } from "recoil";
 import { cartTotalPrice } from "recoil/cart";
+import { totalCouponDiscount } from "recoil/coupon";
 import styled from "styled-components";
 
 const PurchaseOrder = () => {
   const totalPrice = useRecoilValue(cartTotalPrice);
+  const couponDiscount = useRecoilValue(totalCouponDiscount);
 
   return (
     <Wrapper>
       <TitleBox>결제 예상 금액</TitleBox>
       <TotalContainer>
         <AmountBox>
-          <p>총 상품 가격</p>
+          <p>상품 금액</p>
           <p>{totalPrice.toLocaleString()}원</p>
         </AmountBox>
         <AmountBox>
-          <p>총 배송비</p>
+          <p>배송비</p>
           <p>{(totalPrice ? SHIPPING_FEE : 0).toLocaleString()}원</p>
         </AmountBox>
         <AmountBox>
-          <p>총 주문 금액</p>
-          <p>{(totalPrice ? totalPrice + SHIPPING_FEE : 0).toLocaleString()}원</p>
+          <p>쿠폰 할인</p>
+          <p>- {couponDiscount.toLocaleString()}원</p>
+        </AmountBox>
+        <AmountBox>
+          <p>최종 결제 금액</p>
+          <p>{(totalPrice ? totalPrice + SHIPPING_FEE - couponDiscount : 0).toLocaleString()}원</p>
         </AmountBox>
       </TotalContainer>
       <OrderButton>주문하기</OrderButton>
