@@ -1,3 +1,5 @@
+import { M } from 'msw/lib/glossary-de6278a9';
+
 export const TOAST_STATE = {
   successAddProduct: {
     message: '상품을 장바구니에 추가했어요',
@@ -41,6 +43,11 @@ export const TOAST_STATE = {
   },
   failedSelectCoupon: {
     message: '사용 불가능한 쿠폰이에요',
+    variant: 'error',
+    duration: 2000,
+  },
+  failedGetOrder: {
+    message: '주문 목록을 불러오지 못했어요',
     variant: 'error',
     duration: 2000,
   },
