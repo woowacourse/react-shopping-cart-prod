@@ -1,4 +1,4 @@
-import { CartItem, ProductItem, ReceivedCartItem } from '../types/types';
+import { ProductItem } from '../types/types';
 import { url } from './url';
 import { base64 } from './auth';
 
@@ -48,13 +48,7 @@ export const fetchCartList = async (server: string) => {
       },
     });
     const data = await response.json();
-    console.log('cart-list');
-    console.log(data);
-    const checkedCartItems: CartItem[] = data.map((cartItem: ReceivedCartItem) => ({
-      ...cartItem,
-      checked: true,
-    }));
-    return checkedCartItems;
+    return data;
   } catch (error) {
     console.error(error);
     throw new Error();

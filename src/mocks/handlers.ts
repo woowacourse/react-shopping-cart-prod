@@ -27,7 +27,6 @@ export const handlers = [
     const newItem = {
       id: newItemId,
       quantity: 1,
-      checked: true,
       product: mockData.find((product) => product.id === productId),
     };
 

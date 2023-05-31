@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import Header from '.';
 import Providers from '../../stories/Providers';
 import { useSetRecoilState } from 'recoil';
 import { cartState } from '../../recoil/cartAtoms.ts';
 import type { CartItem, ProductItem } from '../../types/types.ts';
+import Header from './Header.tsx';
 
 const meta = {
   component: Header,
@@ -33,7 +33,6 @@ export const Default = {
         price: 0,
       };
       const newItem: CartItem = {
-        checked: false,
         id: 0,
         product: newProduct,
         quantity: 0,
@@ -49,7 +48,6 @@ export const Default = {
         price: 0,
       };
       const newItem: CartItem = {
-        checked: false,
         id: 0,
         product: newProduct,
         quantity: 0,

@@ -1,4 +1,4 @@
-import type { ProductItem } from '../../../types/types.ts';
+import type { ProductItem as ProductItemType } from '../../../types/types.ts';
 import * as S from './ProductItem.style.ts';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { modalContentState, modalOpenState } from '../../../recoil/modalAtoms.tsx';
@@ -7,7 +7,7 @@ import cartIcon from '../../../assets/cart.svg';
 import { quantityByProductIdSelector } from '../../../recoil/cartAtoms.ts';
 
 interface ProductItemProps {
-  product: ProductItem;
+  product: ProductItemType;
 }
 
 function ProductItem({ product }: ProductItemProps) {
