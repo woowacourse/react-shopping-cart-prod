@@ -3,11 +3,12 @@ import OrderItem from '.';
 
 const mock = {
   id: 1,
-  price: 7600,
   quantity: 3,
   name: '깜짝 놀란 춘식이',
   imageUrl:
     'https://pbs.twimg.com/profile_images/1641252178450083841/Cn2MUfHG_400x400.jpg',
+  totalPrice: 30000,
+  discountPrice: 10000,
 };
 
 const orderItem = {

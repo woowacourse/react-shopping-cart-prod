@@ -7,7 +7,7 @@ const orderItemList = {
   title: 'Order/OrderItemList',
   tags: ['autodocs'],
   args: {
-    order: data.orders[0],
+    order: data[0],
   },
 } satisfies Meta<typeof OrderItemList>;
 

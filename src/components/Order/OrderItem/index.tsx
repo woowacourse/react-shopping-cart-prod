@@ -1,7 +1,7 @@
-import { Product } from 'types';
+import { OrderProduct } from 'types';
 import * as S from './OrderItem.styles';
 
-const OrderItem = ({ item }: { item: Product }) => {
+const OrderItem = ({ item }: { item: OrderProduct }) => {
   return (
     <S.OrderItemWrapper>
       <S.OrderItemImage src={item.imageUrl} alt={item.name} />
@@ -9,10 +9,7 @@ const OrderItem = ({ item }: { item: Product }) => {
         <S.OrderProductName>{item.name}</S.OrderProductName>
         <S.PriceQuantityWrapper>
           <S.OrderPrice>
-            {new Intl.NumberFormat('ko-KR').format(
-              item.price * (item.quantity ?? 0)
-            )}
-            원
+            {new Intl.NumberFormat('ko-KR').format(item.totalPrice)}원
           </S.OrderPrice>
           <S.OrderPrice>&nbsp; / &nbsp;</S.OrderPrice>
           <S.OrderQuantity>{item.quantity}개</S.OrderQuantity>

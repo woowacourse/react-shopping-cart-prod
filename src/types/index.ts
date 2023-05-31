@@ -8,8 +8,16 @@ export interface Product {
   id: ProductId;
   price: number;
   name: string;
-  quantity?: number;
   imageUrl: string;
+  isOnSale: boolean;
+  salePrice: number;
+}
+
+export interface OrderProduct
+  extends Omit<Product, 'price' | 'isOnSale' | 'salePrice'> {
+  quantity: number;
+  totalPrice: number;
+  discountPrice: number;
 }
 
 export type CartId = number;
@@ -19,16 +27,12 @@ export type ServerName = '여우' | '루쿠' | '제이';
 export type Server = '여우' | '루쿠' | 'http://13.124.43.137:8080/';
 
 export interface Order {
-  orderId: number;
+  id: number;
   orderedTime: string;
-  products: Product[];
-  deliveryPrice: {
-    price: number;
-  };
-  coupons: Coupon[];
+  orderedItems: OrderProduct[];
 }
 
-export interface Coupon {
-  couponId: number;
-  couponName: string;
+export interface CouponType {
+  id: number;
+  name: string;
 }
