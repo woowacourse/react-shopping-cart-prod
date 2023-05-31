@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
-import { useCartSizeValue } from '../recoils/recoilCart';
-import { useSetCheckedState } from '../recoils/recoilChecked';
-import { CheckedStateType } from '../types';
+
+import { useCartSizeValue } from '@recoils/recoilCart';
+import { useSetCheckedState } from '@recoils/recoilChecked';
+
+import type { CheckedStateType } from '../types';
 
 export const useUpdateCheckbox = () => {
   const setCheckedState = useSetCheckedState();

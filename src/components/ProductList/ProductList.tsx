@@ -1,13 +1,15 @@
 import * as styled from './ProductList.styled';
 
-import { useQuery } from '../../hooks/useQuery';
-import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
-
-import { Skeleton } from './Skeleton/Skeleton';
 import { Product } from '../Product/Product';
+import { Skeleton } from './Skeleton/Skeleton';
 
-import { ProductType as IProduct } from '../../types';
-import { FETCH_URL, SKELETON_LENGTH } from '../../constants';
+import { useApiBaseUrlValue } from '@recoils/recoilApiBaseUrl';
+
+import { useQuery } from '@hooks/useQuery';
+
+import { FETCH_URL, SKELETON_LENGTH } from '@constants/index';
+
+import type { ProductType as IProduct } from '../../types';
 
 export const ProductList = () => {
   const baseUrl = useApiBaseUrlValue();

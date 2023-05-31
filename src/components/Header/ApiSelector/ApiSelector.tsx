@@ -1,8 +1,7 @@
 import { ChangeEvent } from 'react';
-
 import * as styled from './ApiSelector.styled';
 
-import { useApiBaseUrlState } from '../../../recoils/recoilApiBaseUrl';
+import { useApiBaseUrlState } from '@recoils/recoilApiBaseUrl';
 
 export const ApiSelector = () => {
   const [apiBaseUrlKey, setApiBaseUrlKey] = useApiBaseUrlState();

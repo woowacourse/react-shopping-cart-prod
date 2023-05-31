@@ -9,9 +9,9 @@ import {
 } from 'recoil';
 import { localStorageEffect } from './localStorageEffect';
 
-import { CartItemType } from '../types';
+import { LOCAL_STORAGE_KEY, RECOIL_KEY } from '@constants/index';
 
-import { LOCAL_STORAGE_KEY, RECOIL_KEY } from '../constants';
+import type { CartItemType } from '../types';
 
 export const CartState = atom<CartItemType[]>({
   key: RECOIL_KEY.CART_STATE,

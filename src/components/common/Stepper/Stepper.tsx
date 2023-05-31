@@ -1,14 +1,14 @@
 import { ChangeEvent } from 'react';
-
 import * as styled from './Stepper.styled';
 
-import { useUpdateRecoilCart } from '../../../hooks/useUpdateRecoilCart';
+import { Button } from '@components/common/Button/Button';
 
-import { Button } from '../Button/Button';
+import { useApiBaseUrlValue } from '@recoils/recoilApiBaseUrl';
 
-import { FETCH_METHOD, FETCH_URL, QUANTITY } from '../../../constants';
-import { useMutation } from '../../../hooks/useMutation';
-import { useApiBaseUrlValue } from '../../../recoils/recoilApiBaseUrl';
+import { useUpdateRecoilCart } from '@hooks/useUpdateRecoilCart';
+import { useMutation } from '@hooks/useMutation';
+
+import { FETCH_METHOD, FETCH_URL, QUANTITY } from '@constants/index';
 
 interface Props {
   cartItemId: number;

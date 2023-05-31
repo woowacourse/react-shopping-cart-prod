@@ -1,8 +1,8 @@
-import { useSetCartState } from '../recoils/recoilCart';
+import { useSetCartState } from '@recoils/recoilCart';
 
-import { QUANTITY } from '../constants';
+import { QUANTITY } from '@constants/index';
 
-import { ProductType } from '../types';
+import type { ProductType } from '../types';
 
 export const useUpdateRecoilCart = () => {
   const setCart = useSetCartState();

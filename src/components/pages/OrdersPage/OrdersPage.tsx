@@ -1,12 +1,10 @@
-import { OrderBox } from '../../OrderBox/OrderBox';
+import { OrderBox } from '@components/OrderBox/OrderBox';
 
 export const OrdersPage = () => {
   return (
-    <>
-      <ul>
-        <OrderBox />
-        <OrderBox />
-      </ul>
-    </>
+    <ul>
+      <OrderBox />
+      <OrderBox />
+    </ul>
   );
 };

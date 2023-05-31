@@ -1,9 +1,9 @@
 import * as styled from './Header.styled';
-
 import { CartSize } from './CartSize/CartSize';
 
-import { CartLogo } from '../../assets/svg';
 import { ApiSelector } from './ApiSelector/ApiSelector';
+
+import { CartLogo } from '@assets/svg';
 
 export const Header = () => {
   return (

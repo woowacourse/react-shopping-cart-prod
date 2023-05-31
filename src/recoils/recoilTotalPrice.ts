@@ -1,9 +1,9 @@
 import { selector, useRecoilValue } from 'recoil';
 
 import { CartState } from './recoilCart';
-
-import { RECOIL_KEY } from '../constants';
 import { CheckedState } from './recoilChecked';
+
+import { RECOIL_KEY } from '@constants/index';
 
 const TotalProductPrice = selector({
   key: RECOIL_KEY.TOTAL_PRODUCT_PRICE_VALUE,

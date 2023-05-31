@@ -1,17 +1,19 @@
+import { useEffect } from 'react';
 import * as styled from './Product.styled';
 
-import { CartAddIcon } from '../../assets/svg';
+import { Stepper } from '@components/common/Stepper/Stepper';
 
-import { useCartItemValue } from '../../recoils/recoilCart';
+import { useCartItemValue } from '@recoils/recoilCart';
+import { useApiBaseUrlValue } from '@recoils/recoilApiBaseUrl';
+import { useSetCheckedState } from '@recoils/recoilChecked';
 
-import { Stepper } from '../common/Stepper/Stepper';
-import { ProductType } from '../../types';
-import { useMutation } from '../../hooks/useMutation';
-import { FETCH_METHOD, FETCH_URL } from '../../constants';
-import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
-import { useEffect } from 'react';
-import { useSetCheckedState } from '../../recoils/recoilChecked';
-import { useUpdateRecoilCart } from '../../hooks/useUpdateRecoilCart';
+import { useMutation } from '@hooks/useMutation';
+import { useUpdateRecoilCart } from '@hooks/useUpdateRecoilCart';
+
+import { FETCH_METHOD, FETCH_URL } from '@constants/index';
+import { CartAddIcon } from '@assets/svg';
+
+import type { ProductType } from '../../types';
 
 interface Props {
   item: ProductType;

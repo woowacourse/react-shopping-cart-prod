@@ -1,22 +1,21 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-import { useSetCartState } from './recoils/recoilCart';
-import { useQuery } from './hooks/useQuery';
-
 import GlobalStyle from './GlobalStyle';
 
-import { useApiBaseUrlValue } from './recoils/recoilApiBaseUrl';
+import { Layout } from '@components/common/Layout/Layout';
+import { Home } from '@components/pages/Home/Home';
+import { CartPage } from '@components/pages/CartPage/CartPage';
+import { OrdersPage } from '@components/pages/OrdersPage/OrdersPage';
+import { OrderDetailPage } from '@components/pages/OrderDetailPage/OrderDetailPage';
 
-import { Layout } from './components/common/Layout/Layout';
-import { Home } from './components/pages/Home/Home';
-import { CartPage } from './components/pages/CartPage/CartPage';
-import { OrdersPage } from './components/pages/OrdersPage/OrdersPage';
-import { OrderDetailPage } from './components/pages/OrderDetailPage/OrderDetailPage';
+import { useSetCartState } from './recoils/recoilCart';
+import { useApiBaseUrlValue } from '@recoils/recoilApiBaseUrl';
 
-import { FETCH_URL, PATH } from './constants';
+import { useQuery } from './hooks/useQuery';
 
-import { type CartItemType } from './types';
+import { FETCH_URL, PATH } from '@constants/index';
+
+import type { CartItemType } from './types';
 
 export const App = () => {
   const baseUrl = useApiBaseUrlValue();

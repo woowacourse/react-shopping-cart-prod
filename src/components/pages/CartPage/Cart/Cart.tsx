@@ -1,13 +1,12 @@
 import { Link } from 'react-router-dom';
-
 import * as styled from './Cart.styled';
 
-import { useCartSizeValue } from '../../../../recoils/recoilCart';
+import { useCartSizeValue } from '@recoils/recoilCart';
 
 import { CartActions } from '../CartActions/CartActions';
 import { CartItemList } from '../CartItemList/CartItemList';
 
-import { PATH } from '../../../../constants';
+import { PATH } from '@constants/index';
 
 export const Cart = () => {
   const cartSize = useCartSizeValue();

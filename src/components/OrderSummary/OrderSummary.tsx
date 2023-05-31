@@ -1,11 +1,11 @@
 import * as styled from './OrderSummary.styled';
 
-import { useTotalProductPrice } from '../../recoils/recoilTotalPrice';
+import { Button } from '@components/common/Button/Button';
 
-import { Button } from '../common/Button/Button';
+import { useTotalProductPrice } from '@recoils/recoilTotalPrice';
+import { useCheckedLength } from '@recoils/recoilChecked';
 
-import { DELIVERY_CHARGE } from '../../constants';
-import { useCheckedLength } from '../../recoils/recoilChecked';
+import { DELIVERY_CHARGE } from '@constants/index';
 
 export const OrderSummary = () => {
   const totalProductPrice = useTotalProductPrice();

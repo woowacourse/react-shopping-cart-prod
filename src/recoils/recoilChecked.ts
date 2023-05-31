@@ -1,9 +1,9 @@
 import { atom, selector, useRecoilValue, useSetRecoilState } from 'recoil';
 import { localStorageEffect } from './localStorageEffect';
 
-import { LOCAL_STORAGE_KEY, RECOIL_KEY } from '../constants';
+import { LOCAL_STORAGE_KEY, RECOIL_KEY } from '@constants/index';
 
-import { type CheckedStateType } from '../types';
+import type { CheckedStateType } from '../types';
 
 export const CheckedState = atom<CheckedStateType>({
   key: RECOIL_KEY.CHECKED_STATE,

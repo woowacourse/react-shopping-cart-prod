@@ -1,7 +1,7 @@
 import * as styled from './OrderBox.styled';
 
-import { OrderItem } from '../OrderItem/OrderItem';
-import { OrderBoxHeader } from '../OrderBoxHeader/OrderBoxHeader';
+import { OrderItem } from '@components/OrderItem/OrderItem';
+import { OrderBoxHeader } from '@components/OrderBoxHeader/OrderBoxHeader';
 
 export const OrderBox = () => {
   const orderId = 1;
