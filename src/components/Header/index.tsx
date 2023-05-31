@@ -27,6 +27,7 @@ function Header() {
 
     setLocalStorage('name', textContent);
     setCurrentServerUrl(updateOption);
+    Toast.success(`${textContent} 서버로 변경 되었습니다!`);
   };
 
   return (
