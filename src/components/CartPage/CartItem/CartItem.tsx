@@ -6,15 +6,12 @@ import { debounce } from '../../../utils/debounce';
 import Flex from '../../common/Flex';
 import QuantityStepper from '../../common/QuantityStepper/QuantityStepper';
 import * as S from './CartItem.styles';
+import SpecificCouponSelect from '../CouponSelect/SpecificCouponSelect';
 
 type CartItemProps = CartItemType;
 
 const CartItem: React.FC<CartItemProps> = (props) => {
-  const {
-    id,
-    quantity,
-    product: { imageUrl, name, price },
-  } = props;
+  const { id, quantity, product } = props;
   const quantityRef = useRef<HTMLInputElement>(null);
   const { selectedItems, selectItem } = useCartSelector();
   const { updateCartItemMutation, deleteCartItemMutation } = useMutateCart();
@@ -32,17 +29,18 @@ const CartItem: React.FC<CartItemProps> = (props) => {
 
   return (
     <S.Root>
-      <Flex grow height="100%" align="center">
+      <Flex grow height='100%' align='center'>
         <S.Checkbox
-          type="checkbox"
+          type='checkbox'
           checked={selectedItems.has(id)}
           onChange={() => selectItem(id)}
         />
-        <S.ProductContainer height="100%" align="center" grow>
-          <S.Thumbnail alt={name} src={imageUrl} />
-          <S.Name>{name}</S.Name>
-          <S.Info dir="column" justify="space-between" align="end">
+        <S.ProductContainer height='100%' align='center' grow>
+          <S.Thumbnail alt={product.name} src={product.imageUrl} />
+          <S.Name>{product.name}</S.Name>
+          <S.Info dir='column' justify='space-between' align='end'>
             <S.DeleteButton onClick={deleteCartItem}>X</S.DeleteButton>
+            <SpecificCouponSelect productId={product.id} />
             <QuantityStepper
               max={100}
               min={1}
@@ -51,7 +49,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
               onIncrease={updateQuantity}
               onDecrease={updateQuantity}
             />
-            <S.Price>{price.toLocaleString()} 원</S.Price>
+            <S.Price>{product.price.toLocaleString()} 원</S.Price>
           </S.Info>
         </S.ProductContainer>
       </Flex>
