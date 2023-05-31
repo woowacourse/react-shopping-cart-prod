@@ -6,8 +6,9 @@ import Product from './Product';
 import SkeletonProduct from './SkeletonProduct';
 import * as api from '../../api';
 import useToast from '../hooks/useToast';
-import { cartState, serverNameState } from '../../atom/state';
+import { cartState } from '../../atom/state';
 import { API_ERROR_MESSAGE, SKELETONS_LENGTH } from '../../constants';
+import { serverNameState } from '../../atom/serverName';
 
 export default function ProductList() {
   const [products, setProducts] = useState<ProductType[] | null>(null);

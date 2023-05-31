@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import { SERVER_NAMES } from '../constants';
 import { ServerNameType } from '../types';
 import * as S from './styles/Logo.styles';
-import { serverNameState } from '../atom/state';
+import { serverNameState } from '../atom/serverName';
 
 export default function Logo() {
   const [serverName, setServerName] = useRecoilState(serverNameState);

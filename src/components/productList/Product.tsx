@@ -5,8 +5,9 @@ import * as S from './styles/Product.styles';
 import QuantityInput from '../common/QuantityInput';
 import * as api from '../../api';
 import useToast from '../hooks/useToast';
-import { cartState, serverNameState } from '../../atom/state';
+import { cartState } from '../../atom/state';
 import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE, MAX_QUANTITY } from '../../constants';
+import { serverNameState } from '../../atom/serverName';
 
 interface Props extends ProductType {}
 

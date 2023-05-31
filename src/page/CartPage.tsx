@@ -3,10 +3,11 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import * as S from './styles/CartPage.styles';
 import CartItemList from '../components/cartList/CartItemList';
 import CartBill from '../components/cartList/CartBill';
-import { cartCountState, cartState, checkedListState, serverNameState } from '../atom/state';
+import { cartCountState, cartState, checkedListState } from '../atom/state';
 import * as api from '../api';
 import useToast from '../components/hooks/useToast';
 import { API_ERROR_MESSAGE } from '../constants';
+import { serverNameState } from '../atom/serverName';
 
 export default function CartPage() {
   const serverName = useRecoilValue(serverNameState);

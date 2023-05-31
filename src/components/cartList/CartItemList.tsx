@@ -4,8 +4,9 @@ import CartItem from './CartItem';
 import CheckBox from '../common/CheckBox';
 import * as api from '../../api';
 import useToast from '../hooks/useToast';
-import { cartState, checkedListState, serverNameState } from '../../atom/state';
+import { cartState, checkedListState } from '../../atom/state';
 import { API_ERROR_MESSAGE } from '../../constants';
+import { serverNameState } from '../../atom/serverName';
 
 export default function CartItemList() {
   const serverName = useRecoilValue(serverNameState);

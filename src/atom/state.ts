@@ -1,9 +1,5 @@
-import type { CartType, ServerNameType, ToastInfoType } from '../types';
-
+import type { CartType, ToastInfoType } from '../types';
 import { atom, selector, selectorFamily } from 'recoil';
-
-import { localStorageEffect } from './effect';
-import { LOCAL_STORAGE_KEY } from '../constants';
 
 export const cartState = atom<CartType>({
   key: 'cartState',
@@ -40,12 +36,6 @@ export const cartBillTotalPriceState = selector({
 
     return checkedCart.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0);
   },
-});
-
-export const serverNameState = atom<ServerNameType>({
-  key: 'serverNameState',
-  default: 'RAON',
-  effects: [localStorageEffect(LOCAL_STORAGE_KEY.serverName)],
 });
 
 export const toastInfoState = atom<ToastInfoType>({

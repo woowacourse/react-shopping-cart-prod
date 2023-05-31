@@ -4,9 +4,10 @@ import * as S from './styles/CartItem.styles';
 import CheckBox from '../common/CheckBox';
 import QuantityInput from '../common/QuantityInput';
 import * as api from '../../api';
-import { cartState, serverNameState } from '../../atom/state';
+import { cartState } from '../../atom/state';
 import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 import useToast from '../hooks/useToast';
+import { serverNameState } from '../../atom/serverName';
 
 interface Props extends CartItemType {
   checked: boolean;
