@@ -13,16 +13,16 @@ import {
   CartWrapper,
   SignButton,
 } from "./Header.style";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { cartCountSelector } from "../../recoil/cartAtoms";
 import ServerSelectBox from "../ServerSelectBox";
-import { modalContentState, modalOpenState } from "../../recoil/modalAtoms.tsx";
-import { useModal } from "../Modal/useModal.tsx";
+import { modalRepository } from "../../recoil/modalAtoms.tsx";
 
 function Header() {
   const navigate = useNavigate();
   const cartCount = useRecoilValue(cartCountSelector);
-  const { openModal } = useModal();
+  const todoRepository = useRecoilValue(modalRepository);
+  const { openModal } = todoRepository;
 
   return (
     <HeaderWrapper>

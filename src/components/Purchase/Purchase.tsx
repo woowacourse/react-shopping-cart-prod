@@ -2,10 +2,8 @@ import { NewOrder, NewOrderItem } from "../../types/types.ts";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { checkedCartSelector } from "../../recoil/cartAtoms.ts";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 import { useState } from "react";
-import { modalContentState, modalOpenState } from "../../recoil/modalAtoms.tsx";
-import { useModal } from "../Modal/useModal.tsx";
+import { modalRepository } from "../../recoil/modalAtoms.tsx";
 import {
   Button,
   ButtonGroup,
@@ -30,7 +28,8 @@ function Purchase() {
 
   const [isCouponSelectorOpen, setCouponSelectorOpen] = useState(false);
 
-  const { closeModal } = useModal();
+  const todoRepository = useRecoilValue(modalRepository);
+  const { closeModal } = todoRepository;
 
   const purchase = () => {
     const order: NewOrder = {

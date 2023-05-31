@@ -1,13 +1,18 @@
-import { useRecoilState, useRecoilValue } from "recoil";
-import { modalContentState, modalOpenState } from "../recoil/modalAtoms";
+import { useRecoilValue } from "recoil";
+import {
+  modalContentState,
+  modalOpenState,
+  modalRepository,
+} from "../recoil/modalAtoms";
 import Modal from "../components/Modal";
 
 function ModalContainer() {
-  const [isModalOpen, setModalOpen] = useRecoilState(modalOpenState);
+  const isModalOpen = useRecoilValue(modalOpenState);
   const modalContent = useRecoilValue(modalContentState);
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+
+  const todoRepository = useRecoilValue(modalRepository);
+  const { closeModal } = todoRepository;
+
   return (
     <Modal isOpen={isModalOpen} onClose={closeModal}>
       {modalContent}
