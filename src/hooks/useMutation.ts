@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverState } from '../store/ServerState';
 import { base64 } from '../constants';
-import { CART_BASE_URL } from '../constants/url';
+import { CART_BASE_URL, ORDER_BASE_URL } from '../constants/url';
 import useToast from './useToast';
 
 type MutationMethod = 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -18,10 +18,15 @@ type DeleteBodyType = {
   id: number;
 };
 
+type OrderPostBodyType = {
+  cartIds: number[];
+  point: number;
+};
+
 interface FetchInfo {
   url: string;
   method: MutationMethod;
-  bodyData?: PostBodyType | PatchBodyType | DeleteBodyType;
+  bodyData?: PostBodyType | PatchBodyType | DeleteBodyType | OrderPostBodyType;
   headers?: HeadersInit;
 }
 
@@ -51,7 +56,7 @@ const useMutation = <T>(setRefetchData: SetDataType<T>) => {
       }
 
       if (method === 'POST' || 'DELETE') {
-        const refetchData = url.includes(CART_BASE_URL)
+        const refetchData = url.includes(CART_BASE_URL || ORDER_BASE_URL)
           ? await fetch(`${serverUrl}${baseUrl}`, {
               method: 'GET',
               headers: {
