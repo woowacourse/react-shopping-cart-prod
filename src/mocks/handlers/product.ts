@@ -5,7 +5,7 @@ import { ServerOwner } from 'types/serverOwner';
 import { SERVER_OWNER } from 'constants/storeKey';
 import BASE_URL from 'constants/apiBaseURL';
 
-const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '다즐';
+const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
 const BASE_URL_BY_OWNER = BASE_URL[serverOwner];
 
 export const product = [

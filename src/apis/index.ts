@@ -106,7 +106,7 @@ class API {
   }
 }
 
-const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '다즐';
+const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
 const api = new API(BASE_URL[serverOwner]);
 
 export default api;

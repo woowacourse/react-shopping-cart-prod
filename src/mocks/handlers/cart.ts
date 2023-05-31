@@ -21,7 +21,7 @@ const authorizationError: ErrorResponse = {
   path: '/cart-items',
 };
 
-const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '다즐';
+const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
 const BASE_URL_BY_OWNER = BASE_URL[serverOwner];
 
 export const cart = [

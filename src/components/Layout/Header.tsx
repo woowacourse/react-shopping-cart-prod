@@ -20,7 +20,7 @@ const serverOwnerOptions = Object.keys(BASE_URL).map((name) => ({ name: name, va
 
 const Header = () => {
   const cartProductCount = useRecoilValue(cartProductsState).size;
-  const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '다즐';
+  const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
 
   const handleServerOwner = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as ServerOwner;
