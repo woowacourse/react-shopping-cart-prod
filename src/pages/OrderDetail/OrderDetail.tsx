@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
-import { OrderList } from '../../components/OrderList';
+import { OrderList } from '../../components/Order/OrderList';
 import { FatBorder, PageTitle } from '../../style/style';
 import { OrderListWrapper } from '../Order/Order.style';
-import { PaymentInfoBox } from '../../components/PaymentInfoBox';
-import { PointInfoBox } from '../../components/PointInfoBox';
+import { PaymentInfoBox } from '../../components/Order/PaymentInfoBox';
+import { PointInfoBox } from '../../components/Order/PointInfoBox';
 import { OrderInfoWrapper } from './OrderDetail.style';
 
 const order = {
@@ -16,8 +16,7 @@ const order = {
       paymentPrice: 3500,
       createdAt: 'string',
       productQuantity: 3,
-      imageUrl:
-        'https://cdn.pixabay.com/photo/2016/01/03/17/59/bananas-1119790_1280.jpg',
+      imageUrl: 'https://cdn.pixabay.com/photo/2016/01/03/17/59/bananas-1119790_1280.jpg',
     },
     {
       id: 1,
@@ -26,8 +25,7 @@ const order = {
       paymentPrice: 9900,
       createdAt: 'string',
       productQuantity: 2,
-      imageUrl:
-        'https://cdn.pixabay.com/photo/2018/04/29/11/54/strawberries-3359755_1280.jpg',
+      imageUrl: 'https://cdn.pixabay.com/photo/2018/04/29/11/54/strawberries-3359755_1280.jpg',
     },
   ],
 };

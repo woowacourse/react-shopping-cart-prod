@@ -15,8 +15,8 @@ import {
 } from './Header.style';
 import { useRecoilValue } from 'recoil';
 import { cartCountSelector } from '../../recoil/cartAtoms';
-import ServerSelectBox from '../ServerSelectBox/ServerSelectBox.tsx';
-import UserSelector from '../UserSelector/UserSelector.tsx';
+import ServerSelectBox from './ServerSelectBox/ServerSelectBox.tsx';
+import UserSelector from './UserSelector/UserSelector.tsx';
 
 function Header() {
   const navigate = useNavigate();
@@ -37,9 +37,7 @@ function Header() {
                 <CartCount>{cartCount}</CartCount>
               </CartCountWrapper>
             </CartWrapper>
-            <OrderListButton onClick={() => navigate('/order')}>
-              주문목록
-            </OrderListButton>
+            <OrderListButton onClick={() => navigate('/order')}>주문목록</OrderListButton>
             <UserSelector />
           </NavBar>
         </HeaderContent>

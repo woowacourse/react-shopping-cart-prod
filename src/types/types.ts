@@ -36,11 +36,4 @@ interface Coupon {
   minAmount: number;
 }
 
-export type {
-  ProductItem,
-  ReceivedCartItem,
-  CartItem,
-  NewCartItem,
-  OrderItem,
-  Coupon,
-};
+export type { ProductItem, ReceivedCartItem, CartItem, NewCartItem, OrderItem, Coupon };

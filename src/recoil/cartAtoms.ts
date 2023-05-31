@@ -1,13 +1,13 @@
-import { atom, selector, selectorFamily } from "recoil";
-import { CartItem, ReceivedCartItem } from "../types/types";
+import { atom, selector, selectorFamily } from 'recoil';
+import { CartItem, ReceivedCartItem } from '../types/types';
 
 export const cartState = atom<CartItem[]>({
-  key: "cartState",
+  key: 'cartState',
   default: [],
 });
 
 export const cartCountSelector = selector({
-  key: "cartCountSelector",
+  key: 'cartCountSelector',
   get: ({ get }) => {
     const cartList = get(cartState);
     return cartList.length;
@@ -15,7 +15,7 @@ export const cartCountSelector = selector({
 });
 
 export const checkedCartSelector = selector({
-  key: "checkedCartSelector",
+  key: 'checkedCartSelector',
   get: ({ get }) => {
     const cartList = get(cartState);
     const checkedCartLst = cartList.filter((cartItem) => cartItem.checked);
@@ -24,7 +24,7 @@ export const checkedCartSelector = selector({
 });
 
 export const checkedCartCountSelector = selector({
-  key: "checkedCartCountSelector",
+  key: 'checkedCartCountSelector',
   get: ({ get }) => {
     const checkedCartList = get(checkedCartSelector);
     return checkedCartList.length;
@@ -32,14 +32,12 @@ export const checkedCartCountSelector = selector({
 });
 
 export const allCartCheckedSelector = selector({
-  key: "allCartCheckedSelector",
+  key: 'allCartCheckedSelector',
   get: ({ get }) => {
     const cartList = get(cartState);
     const cartCount = get(cartCountSelector);
     if (cartCount > 0) {
-      const isAllCartItemChecked = cartList.every(
-        (cartItem) => cartItem.checked
-      );
+      const isAllCartItemChecked = cartList.every((cartItem) => cartItem.checked);
       return isAllCartItemChecked;
     }
 
@@ -48,19 +46,16 @@ export const allCartCheckedSelector = selector({
 });
 
 export const totalPriceSelector = selector({
-  key: "totalPriceSelector",
+  key: 'totalPriceSelector',
   get: ({ get }) => {
     const checkedCartList = get(checkedCartSelector);
-    const totalPrice = checkedCartList.reduce(
-      (acc, cartItem) => acc + cartItem.quantity * cartItem.product.price,
-      0
-    );
+    const totalPrice = checkedCartList.reduce((acc, cartItem) => acc + cartItem.quantity * cartItem.product.price, 0);
     return totalPrice;
   },
 });
 
 export const quantityByProductIdSelector = selectorFamily({
-  key: "quantityByProductIdSelector",
+  key: 'quantityByProductIdSelector',
   get:
     (productId: number) =>
     ({ get }) => {
@@ -71,16 +66,14 @@ export const quantityByProductIdSelector = selectorFamily({
 });
 
 export const switchCartCheckboxSelector = selector<number>({
-  key: "switchCartCheckboxSelector",
+  key: 'switchCartCheckboxSelector',
   get: () => {
     // 오류 방지를 위해 아무 값이나 리턴
     return -1;
   },
   set: ({ get, set }, id) => {
     const cartList = [...get(cartState)];
-    const targetIndex = cartList.findIndex(
-      (cartItem) => cartItem.id === (id as number)
-    );
+    const targetIndex = cartList.findIndex((cartItem) => cartItem.id === (id as number));
     const targetCart = cartList[targetIndex];
     const updatedCart = {
       ...targetCart,
@@ -92,7 +85,7 @@ export const switchCartCheckboxSelector = selector<number>({
 });
 
 export const switchAllCartCheckboxSelector = selector<undefined>({
-  key: "switchAllCartCheckboxSelector",
+  key: 'switchAllCartCheckboxSelector',
   get: () => {
     // 오류 방지를 위해 아무 값이나 리턴
     return undefined;

@@ -7,4 +7,3 @@ export const getLocalStorage = <T>(key: string, initialValue: T): T => {
 export const setLocalStorage = <T>(key: string, value: T) => {
   localStorage.setItem(key, JSON.stringify(value));
 };
-
