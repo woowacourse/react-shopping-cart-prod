@@ -1,6 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { styled } from "styled-components";
-import { localProductsSelector } from "../recoil/selector";
+import { cartNumberSelector } from "../recoil/selector";
 import {
   Header,
   Page,
@@ -10,24 +10,24 @@ import {
 } from "../components";
 
 const Cart = () => {
-  const cartProducts = useRecoilValue(localProductsSelector);
+  const cartNumber = useRecoilValue(cartNumberSelector);
 
   return (
     <>
       <Header />
       <Page>
         <TitleBox>장바구니</TitleBox>
-        {cartProducts.length === 0 ? (
+        {cartNumber ? (
+          <Container>
+            <CartProductList />
+            <TotalPriceTable status="cart" />
+          </Container>
+        ) : (
           <GuideBox
             icon="🛒"
             message="장바구니가 텅 비었어요"
             guideMessage="상품 담으러 가기"
           />
-        ) : (
-          <Container>
-            <CartProductList />
-            <TotalPriceTable status="cart" />
-          </Container>
         )}
       </Page>
     </>

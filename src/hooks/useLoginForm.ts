@@ -5,10 +5,12 @@ import { KEY_LOCALSTORAGE_LOGIN_TOKEN } from "../constants";
 import { loginState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";
 import { setLocalStorage } from "../utils";
+import { useToast } from "./useToast";
 
 export const useLoginForm = () => {
+  const { showToast } = useToast();
   const navigate = useNavigate();
-  const setLoginState = useSetRecoilState(loginState);
+  const setIsLogined = useSetRecoilState(loginState);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const usernameRef = useRef<HTMLInputElement>(null);
@@ -33,11 +35,18 @@ export const useLoginForm = () => {
     e.preventDefault();
 
     // 로그인 성공 시
-    setLoginState(true);
+    setIsLogined(true);
     navigate(ROUTER_PATH.Main);
 
     // 로그인 실패 시
     // localStorage.clear();
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    setIsLogined(false);
+    showToast("success", `로그아웃 되었습니다. ✅`);
+    navigate(ROUTER_PATH.Main);
   };
 
   return {
@@ -48,5 +57,6 @@ export const useLoginForm = () => {
     handlePasswordChanged,
     handlePasswordKey,
     handleFormSubmitted,
+    logout,
   } as const;
 };

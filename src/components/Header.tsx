@@ -1,53 +1,21 @@
 import styled from "styled-components";
 import { CartIcon } from "../assets";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { localProductsSelector } from "../recoil/selector";
+import { useRecoilValue } from "recoil";
+import { cartNumberSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
-import React, { useState } from "react";
-import { localProductsState, loginState, userState } from "../recoil/atom";
-import { makeLocalProducts, makeProducts } from "../utils/domain";
-import { getLocalStorage, setLocalStorage } from "../utils";
-import { useToast } from "../hooks/useToast";
-import {
-  DEFAULT_VALUE_SERVER_OWNER,
-  KEY_LOCALSTORAGE_SERVER_OWNER,
-  SERVERS,
-} from "../constants";
+import { loginState, userState } from "../recoil/atom";
 import { useLocation } from "react-router-dom";
+import { ServerSelectBox } from "./ServerSelectBox";
+import { useLoginForm } from "../hooks/useLoginForm";
 
 export const Header = () => {
-  const location = useLocation();
   const { goPage } = useRouter();
-  const { showToast } = useToast();
+  const { logout } = useLoginForm();
+  const location = useLocation();
   const user = useRecoilValue(userState);
-  const cartProducts = useRecoilValue(localProductsSelector);
-  const [isLogined, setIsLogined] = useRecoilState(loginState);
-  const setLocalProducts = useSetRecoilState(localProductsState);
-  const [serverOwner, setServerOwner] = useState(
-    getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
-  );
-
-  const handleServerSelected = async (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, e.target.value);
-    setServerOwner(e.target.value);
-
-    const newProducts = isLogined
-      ? await makeLocalProducts()
-      : await makeProducts();
-    setLocalProducts(newProducts);
-
-    showToast("success", `${e.target.value}의 서버로 변경되었습니다. ✅`);
-  };
-
-  const logout = () => {
-    localStorage.clear();
-    setIsLogined(false);
-    showToast("success", `로그아웃 되었습니다. ✅`);
-    goPage(ROUTER_PATH.Main)();
-  };
+  const cartNumber = useRecoilValue(cartNumberSelector);
+  const isLogined = useRecoilValue(loginState);
 
   return (
     <Wrapper>
@@ -56,11 +24,7 @@ export const Header = () => {
         <p>SHOP</p>
       </TitleContainer>
       <NavContainer>
-        <SelectBox value={serverOwner} onChange={handleServerSelected}>
-          {Object.keys(SERVERS).map((server) => (
-            <option key={crypto.randomUUID()}>{server}</option>
-          ))}
-        </SelectBox>
+        <ServerSelectBox />
         {!isLogined ? (
           <p onClick={goPage(ROUTER_PATH.Login)}>로그인</p>
         ) : (
@@ -70,8 +34,8 @@ export const Header = () => {
                 {user.nickname}의 장바구니
               </CartBox>
               <CartIconBox src={CartIcon} alt="홈카트" />
-              {cartProducts.length > 0 && (
-                <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
+              {cartNumber > 0 && (
+                <ItemQuantityBox>{cartNumber}</ItemQuantityBox>
               )}
             </CartContainer>
             <OrderBox
@@ -208,22 +172,4 @@ const ItemQuantityBox = styled.div`
   font-size: 13px;
   font-weight: 600;
   color: white;
-`;
-
-const SelectBox = styled.select`
-  width: 65px;
-  height: 40px;
-
-  padding: 0 5px;
-  margin-right: 5px;
-  border-radius: 4px;
-  background: var(--light-gray);
-
-  font-size: 18px;
-  font-weight: 600;
-
-  @media screen and (max-width: 850px) {
-    width: 70px;
-    height: 37px;
-  }
 `;
