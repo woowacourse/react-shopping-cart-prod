@@ -1,14 +1,18 @@
 import Page from "components/common/Page";
 import ItemList from "components/ItemList";
-import React from "react";
 import LoadingSpinner from "components/common/LoadingSpinner";
+import AsyncBoundary from "components/common/AsyncBoundary";
+import ErrorInfo from "components/common/ErrorInfo";
 
 const Main = () => {
   return (
     <Page>
-      <React.Suspense fallback={<LoadingSpinner />}>
+      <AsyncBoundary
+        SuspenseFallback={<LoadingSpinner />}
+        ErrorFallback={() => <ErrorInfo size="L" />}
+      >
         <ItemList />
-      </React.Suspense>
+      </AsyncBoundary>
     </Page>
   );
 };

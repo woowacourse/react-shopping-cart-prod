@@ -1,9 +1,10 @@
-import { ReactNode, Suspense } from "react";
+import { ReactNode } from "react";
 import styled from "styled-components";
 import PageHeader from "./PageHeader";
 import Skeleton from "./Skeleton";
 import Header from "components/Header";
 import ServerSelector from "components/ServerSelector";
+import AsyncBoundary from "./AsyncBoundary";
 
 const Page = ({
   children,
@@ -14,20 +15,35 @@ const Page = ({
 }) => {
   return (
     <>
-      <Suspense
-        fallback={
+      <AsyncBoundary
+        SuspenseFallback={
           <Skeleton
-            {...{ background: "#333333", width: "100%", height: "70px" }}
+            {...{
+              background: "#333333",
+              width: "100%",
+              height: "70px",
+              position: "fixed",
+            }}
           />
         }
+        ErrorFallback={() => (
+          <Skeleton
+            {...{
+              background: "#333333",
+              width: "100%",
+              height: "70px",
+              position: "fixed",
+            }}
+          />
+        )}
       >
         <Header />
-      </Suspense>
-      <ServerSelector />
+      </AsyncBoundary>
       <Wrapper>
         {pageName && <PageHeader>{pageName}</PageHeader>}
         <Container>{children}</Container>
       </Wrapper>
+      <ServerSelector />
     </>
   );
 };
