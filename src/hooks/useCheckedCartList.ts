@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import serverNameState from '../globalState/atoms/serverName';
-import fetchRefreshedCartItemList from '../globalState/selectors/fetchCartItemList';
 import cartState from '../globalState/atoms/cartState';
 
 const useCheckedCartList = () => {
@@ -10,7 +9,6 @@ const useCheckedCartList = () => {
   const [checkedCartList, setCheckedCartList] = useState<string[]>(cartIdList);
 
   const serverName = useRecoilValue(serverNameState);
-  const fetchedCartList = useRecoilValue(fetchRefreshedCartItemList);
 
   const addCheckedItem = (id: string) => {
     setCheckedCartList((prevList) => [...prevList, id]);
@@ -37,8 +35,7 @@ const useCheckedCartList = () => {
   };
 
   useEffect(() => {
-    deleteAllCheckedItem();
-    fetchedCartList.map((cart) => addCheckedItem(cart.id));
+    addAllCheckedItem();
   }, [serverName]);
 
   return {
