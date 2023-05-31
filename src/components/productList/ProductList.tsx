@@ -6,7 +6,7 @@ import Product from './Product';
 import SkeletonProduct from './SkeletonProduct';
 import * as api from '../../api';
 import useToast from '../hooks/useToast';
-import { cartState } from '../../atom/state';
+import { cartState } from '../../atom/cart';
 import { API_ERROR_MESSAGE, SKELETONS_LENGTH } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 

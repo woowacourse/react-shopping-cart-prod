@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import * as S from './styles/CartBill.styles';
-import { cartBillTotalPriceState, checkedListState } from '../../atom/state';
+import { cartBillTotalPriceState, checkedListState } from '../../atom/cart';
 
 export default function CartBill() {
   const checkedList = useRecoilValue(checkedListState);

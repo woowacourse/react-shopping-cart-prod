@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import * as S from './styles/QuantityInput.styles';
 
-import { cartItemState } from '../../atom/state';
+import { cartItemState } from '../../atom/cart';
 import useQuantityInput from '../hooks/useQuantityInput';
 import { checkNaturalStringTypeNumber } from '../../utils/checkNaturalStringTypeNumber';
 

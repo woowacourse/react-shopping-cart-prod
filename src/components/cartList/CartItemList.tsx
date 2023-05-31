@@ -4,7 +4,7 @@ import CartItem from './CartItem';
 import CheckBox from '../common/CheckBox';
 import * as api from '../../api';
 import useToast from '../hooks/useToast';
-import { cartState, checkedListState } from '../../atom/state';
+import { cartState, checkedListState } from '../../atom/cart';
 import { API_ERROR_MESSAGE } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 

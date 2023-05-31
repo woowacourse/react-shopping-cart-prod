@@ -1,6 +1,6 @@
 import * as S from './styles/Header.styles';
 import { useRecoilValue } from 'recoil';
-import { cartCountState } from '../atom/state';
+import { cartCountState } from '../atom/cart';
 import Logo from './Logo';
 
 export default function Header() {

@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import * as api from '../../api';
 import useToast from './useToast';
-import { cartState } from '../../atom/state';
+import { cartState } from '../../atom/cart';
 import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
 
