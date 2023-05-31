@@ -40,7 +40,6 @@ const Wrapper = styled.div`
   z-index: 10;
   background-color: var(--color-pure-white);
   width: 100%;
-  padding: 0 20px;
   border-bottom: 1px solid var(--color-grayscale-200);
 
   :hover {
