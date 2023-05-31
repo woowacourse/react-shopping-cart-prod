@@ -18,13 +18,11 @@ const ProductItem = (product: Product) => {
   const quantityInCart = useRecoilValue(productQuantityInCart(productId));
 
   const [count, setCount] = useState(quantityInCart);
-  const [isDisplayCounter, setIsDisplayCounter] = useState(!!quantityInCart);
 
   useEffect(() => {
     if (isCartLoading) return;
 
     setCount(quantityInCart);
-    setIsDisplayCounter(!!quantityInCart);
   }, [isCartLoading]);
 
   const updateCount = (quantity: number) => {
@@ -36,7 +34,6 @@ const ProductItem = (product: Product) => {
 
   const handleAddCartButtonClick = async () => {
     await addCartItem(product);
-    setIsDisplayCounter(true);
     setCount(1);
   };
 
@@ -45,7 +42,6 @@ const ProductItem = (product: Product) => {
 
     const cartId = getCartId(productId);
     deleteCartItem(cartId);
-    setIsDisplayCounter(false);
   };
 
   return (
@@ -53,7 +49,7 @@ const ProductItem = (product: Product) => {
       <ProductImageWrapper>
         <Image src={imageUrl} alt={name} size="large" />
         <CartButtonWrapper>
-          {isDisplayCounter ? (
+          {count ? (
             <Counter
               count={count}
               updateCount={updateCount}
