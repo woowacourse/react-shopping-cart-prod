@@ -10,15 +10,24 @@ import {
   CouponBox,
   CouponBoxContainer,
   CouponSelectTitle,
+  CouponSelectHeader,
   FatBorder,
   ProductItemImage,
   ProductItemInfo,
   ProductItemLayout,
   ProductItemList,
   ProductItemName,
+  ProductItemPriceText,
   ProductItemSubTotalPrice,
   PurchaseTitle,
   TempText,
+  CouponBoxWrapper,
+  PointInputTitle,
+  PointBoxWrapper,
+  CouponSelectOpenButton,
+  PointInput,
+  PointText,
+  PointInputWrapper,
 } from "./Purchase.style.ts";
 
 function Purchase() {
@@ -52,7 +61,7 @@ function Purchase() {
   return (
     <div>
       <div>
-        <PurchaseTitle>결제 페이지</PurchaseTitle>
+        <PurchaseTitle>결제하기</PurchaseTitle>
         <FatBorder />
         <ProductItemList>
           {checkedCartList.map((cartItem, i) => (
@@ -61,35 +70,43 @@ function Purchase() {
               <ProductItemInfo>
                 <ProductItemName>{cartItem.product.name}</ProductItemName>
                 <ProductItemSubTotalPrice>
-                  {cartItem.product.price}원 x {cartItem.quantity}개 ={" "}
-                  {cartItem.product.price * cartItem.quantity}원
+                  <ProductItemPriceText>
+                    {cartItem.product.price}원 (x{cartItem.quantity})
+                  </ProductItemPriceText>
+                  <ProductItemPriceText>
+                    {cartItem.product.price * cartItem.quantity}원
+                  </ProductItemPriceText>
                 </ProductItemSubTotalPrice>
               </ProductItemInfo>
             </ProductItemLayout>
           ))}
         </ProductItemList>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <CouponSelectTitle>쿠폰 선택하기</CouponSelectTitle>
-        <button onClick={() => setCouponSelectorOpen(!isCouponSelectorOpen)}>
-          열기
-        </button>
-      </div>
-      {isCouponSelectorOpen && (
-        <CouponBoxContainer>
-          <CouponBox>쿠폰1</CouponBox>
-          <CouponBox>쿠폰1</CouponBox>
-          <CouponBox>쿠폰1</CouponBox>
-          <CouponBox>쿠폰1</CouponBox>
-        </CouponBoxContainer>
-      )}
-
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <TempText>포인트 사용하기</TempText>
-        <TempText>
-          <input value={0} />점
-        </TempText>
-      </div>
+      <CouponBoxWrapper>
+        <CouponSelectHeader
+          onClick={() => setCouponSelectorOpen(!isCouponSelectorOpen)}
+        >
+          <CouponSelectTitle>쿠폰 4장 보유중</CouponSelectTitle>
+          <CouponSelectOpenButton>
+            {isCouponSelectorOpen ? "⏶ 닫기" : "⏷ 보유쿠폰 확인하기"}
+          </CouponSelectOpenButton>
+        </CouponSelectHeader>
+        {isCouponSelectorOpen && (
+          <CouponBoxContainer>
+            <CouponBox>쿠폰1</CouponBox>
+            <CouponBox>쿠폰2</CouponBox>
+            <CouponBox>쿠폰3</CouponBox>
+            <CouponBox>쿠폰4</CouponBox>
+          </CouponBoxContainer>
+        )}
+      </CouponBoxWrapper>
+      <PointBoxWrapper>
+        <PointInputTitle>포인트 0점 사용 가능</PointInputTitle>
+        <PointInputWrapper>
+          <PointInput value={0} />
+          <PointText>점 사용하기</PointText>
+        </PointInputWrapper>
+      </PointBoxWrapper>
 
       <div>
         <TempText>합계 0원</TempText>

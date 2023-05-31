@@ -18,7 +18,7 @@ export const FatBorder = styled.hr`
 
 export const ProductItemLayout = styled.div`
   display: flex;
-  border-bottom: solid 1px gray;
+  border-bottom: solid 1px rgb(170, 170, 170);
 `;
 
 export const ProductItemImage = styled.img`
@@ -27,11 +27,11 @@ export const ProductItemImage = styled.img`
 `;
 
 export const ProductItemList = styled.div`
-  margin-bottom: 20px;
   width: 100%;
 `;
 export const ProductItemInfo = styled.div`
   padding: 20px 0px 20px 0px;
+  width: 100%;
 `;
 export const ProductItemName = styled.div`
   font-style: normal;
@@ -41,6 +41,11 @@ export const ProductItemName = styled.div`
   letter-spacing: 0.5px;
 `;
 export const ProductItemSubTotalPrice = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const ProductItemPriceText = styled.div`
   font-style: normal;
   font-size: 16px;
   line-height: 37px;
@@ -48,16 +53,38 @@ export const ProductItemSubTotalPrice = styled.div`
   letter-spacing: 0.5px;
 `;
 
+export const CouponSelectHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  padding: 10px 0px 10px 0px;
+  cursor: pointer;
+`;
+
 export const CouponSelectTitle = styled.div`
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 20px;
-  line-height: 33px;
+  line-height: 37px;
 
   letter-spacing: 0.5px;
 `;
 
-export const CouponBoxContainer = styled.div``;
+export const CouponSelectOpenButton = styled.button`
+  font-style: normal;
+  font-size: 18px;
+  line-height: 37px;
+
+  letter-spacing: 0.5px;
+`;
+
+export const CouponBoxWrapper = styled.div`
+  border-bottom: gray solid 1px;
+`;
+
+export const CouponBoxContainer = styled.div`
+  margin-bottom: 20px;
+`;
 
 export const CouponBox = styled.div`
   border-radius: 10px;
@@ -65,7 +92,56 @@ export const CouponBox = styled.div`
   color: white;
   width: 150px;
   height: 100px;
-  margin-right: 10px; /* Add margin between the coupons */
+  margin: 10px;
+  font-size: 20px;
+  text-align: center;
+  padding: 20px;
+`;
+
+export const PointBoxWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  padding: 10px 0px 10px 0px;
+  border-bottom: gray solid 1px;
+`;
+
+export const PointInputTitle = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 37px;
+
+  text-align: center;
+  letter-spacing: 0.5px;
+`;
+
+export const PointInputWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+`;
+
+export const PointInput = styled.input`
+  font-style: normal;
+  font-size: 18px;
+  line-height: 37px;
+
+  letter-spacing: 0.5px;
+
+  width: 100px;
+  border: 1px solid blue;
+  border-radius: 10px;
+
+  padding: 0px 10px;
+`;
+
+export const PointText = styled.div`
+  font-style: normal;
+  font-size: 18px;
+  line-height: 37px;
+
+  letter-spacing: 0.5px;
 `;
 
 export const Button = styled.button`
