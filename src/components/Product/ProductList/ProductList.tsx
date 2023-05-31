@@ -24,7 +24,7 @@ function ProductList() {
       );
     case 'loading':
       return (
-        <ProductListWrapper>
+        <S.ProductListWrapper>
           <Row>
             {Array.from({ length: 30 }).map((_, i) => (
               <Col key={i}>
@@ -32,7 +32,7 @@ function ProductList() {
               </Col>
             ))}
           </Row>
-        </ProductListWrapper>
+        </S.ProductListWrapper>
       );
     case 'hasError':
       throw productLoadable?.contents?.message;
