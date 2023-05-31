@@ -1,14 +1,19 @@
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import cartState from '../../../globalState/atoms/cartState';
 
-const EmptyCartView = () => {
+const EmptyCartSuspense = ({ children }: React.PropsWithChildren) => {
   const navigate = useNavigate();
+  const cartList = useRecoilValue(cartState);
 
   const handleLinkButtonClick = () => {
     navigate('/');
   };
 
-  return (
+  return cartList.length ? (
+    <>{children}</>
+  ) : (
     <EmptyCartViewContainer>
       장바구니에 상품이 존재하지 않습니다.
       <LinkButton onClick={handleLinkButtonClick}>상품 담으러 가기</LinkButton>
@@ -22,10 +27,12 @@ const EmptyCartViewContainer = styled.div`
   align-items: center;
   gap: 20px;
 
-  margin-top: 200px;
+  margin-top: 15vh;
 
   font-weight: 500;
   font-size: 30px;
+
+  text-align: center;
 `;
 
 const LinkButton = styled.button`
@@ -42,4 +49,4 @@ const LinkButton = styled.button`
   cursor: pointer;
 `;
 
-export default EmptyCartView;
+export default EmptyCartSuspense;

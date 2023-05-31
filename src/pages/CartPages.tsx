@@ -5,6 +5,7 @@ import CartList from '../components/cart/CartList/CartList';
 import PaymentAmount from '../components/cart/PaymentAmount/PaymentAmount';
 import CheckedCartListProvider from '../provider/CheckedListProvider';
 import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
+import EmptyCartSuspense from '../components/cart/EmptyCartSuspense/EmptyCartSuspense';
 
 const CartPage = () => {
   return (
@@ -14,10 +15,12 @@ const CartPage = () => {
         <Title>장바구니</Title>
         <Suspense fallback={<LoadingView />}>
           <CheckedCartListProvider>
-            <Contents>
-              <CartList />
-              <PaymentAmount />
-            </Contents>
+            <EmptyCartSuspense>
+              <Contents>
+                <CartList />
+                <PaymentAmount />
+              </Contents>
+            </EmptyCartSuspense>
           </CheckedCartListProvider>
         </Suspense>
       </Layout>
