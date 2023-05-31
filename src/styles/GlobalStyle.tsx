@@ -13,6 +13,10 @@ const GlobalStyle = createGlobalStyle`
     color: ${theme.color.black}
   }
 
+  body:has([role="dialog"]) {
+    overflow: hidden;
+  }
+
   ul,
   li {
     list-style: none;
