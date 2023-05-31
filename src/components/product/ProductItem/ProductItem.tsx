@@ -35,7 +35,11 @@ const ProductItem = ({ ...information }: ProductItemProps) => {
           <S.ItemImage src={information.imageUrl} alt={information.name} />
           <S.ItemButtonWrapper>
             {cartId ? (
-              <StepperButton count={cartQuantity} handleCountChange={handleQuantityChange} />
+              <StepperButton
+                aria-label="상품 추가"
+                count={cartQuantity}
+                handleCountChange={handleQuantityChange}
+              />
             ) : (
               <S.ItemButton
                 type="button"
