@@ -34,7 +34,7 @@ function Header() {
   return (
     <header className={styles.container}>
       <Link to="/">
-        <Logo />
+        <Logo width={240} />
       </Link>
       <nav className={styles.nav}>
         <DropDown options={userNameList} selectedListHandler={serverSelectChange} currentOptionIndex={index} />

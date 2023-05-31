@@ -1,9 +1,10 @@
 .select-box {
   position: relative;
   width: 100px;
-  height: 32px;
-  padding: 8px;
-  border-radius: 8px;
+  height: 36px;
+  padding: 8px 16px;
+  border: 1.2px solid #e0e0e0;
+  border-radius: 4px;
   background-color: var(--white-color);
   align-self: center;
   cursor: pointer;
@@ -15,6 +16,10 @@
     right: 8px;
     color: var(--mint-color);
     font-size: 20px;
+  }
+
+  &:hover {
+    background-color: #f8fcfb;
   }
 }
 
@@ -28,7 +33,7 @@
 .selectOption {
   position: absolute;
   list-style: none;
-  top: 32px;
+  top: 36px;
   left: 0;
   width: 100%;
   overflow: hidden;
