@@ -6,10 +6,13 @@ import { cartSelector } from "recoil/cart";
 import { CartProduct } from "types/domain";
 import { removeCartItem } from "api/cartItems";
 import { serverSelectState } from "recoil/server";
+import { useCoupon } from "hooks/useCoupon";
 
 const CartItem = (item: CartProduct) => {
   const setProduct = useSetRecoilState(cartSelector(item.product.id));
   const selectedServer = useRecoilValue(serverSelectState);
+
+  const { couponList, changeCoupon } = useCoupon(item.id);
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProduct({
@@ -36,6 +39,18 @@ const CartItem = (item: CartProduct) => {
       <NameBox>{item.product.name}</NameBox>
       <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
       <PriceBox>{(item.product.price * item.quantity).toLocaleString()}원</PriceBox>
+      <SelectBox onChange={changeCoupon}>
+        <option>쿠폰을 선택해주세요</option>
+        {couponList.map((coupon) => (
+          <option
+            key={coupon.couponId}
+            value={coupon.couponId}
+            disabled={coupon.cartItemId !== null}
+          >
+            {coupon.name}
+          </option>
+        ))}
+      </SelectBox>
       <QuantityCounter itemId={item.product.id} lowerBound={1} />
     </Wrapper>
   );
@@ -43,7 +58,6 @@ const CartItem = (item: CartProduct) => {
 
 const Wrapper = styled.ul`
   display: flex;
-
   position: relative;
 
   margin-bottom: 10px;
@@ -78,6 +92,7 @@ const Wrapper = styled.ul`
 
 const NameBox = styled.div`
   width: 65%;
+  height: 50%;
   margin: 15px 0 10px 10px;
 
   font-size: 17px;
@@ -107,6 +122,21 @@ const PriceBox = styled.p`
 
   height: fit-content;
   font-size: 16px;
+`;
+
+const SelectBox = styled.select`
+  position: absolute;
+  left: 32.5%;
+  bottom: 5%;
+
+  width: 30%;
+  height: fit-content;
+
+  scale: 1.2;
+
+  @media screen and (max-width: 800px) {
+    scale: 1;
+  }
 `;
 
 export default React.memo(CartItem);

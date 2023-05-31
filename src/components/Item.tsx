@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import QuantityCounter from "components/QuantityCounter";
-import { Product } from "types/domain";
+import { Product } from "api/products";
 import { addCartItem } from "api/cartItems";
 import { cartSelector } from "recoil/cart";
 import { useRecoilState, useRecoilValue } from "recoil";
