@@ -23,9 +23,25 @@ export interface CouponType {
   minimumPrice: number;
 }
 
-export type DiscountAmount = typeof PERCENTAGE | typeof DEDUCTION;
-
 export interface IssuableCouponType extends CouponType {
   issuable: boolean;
 }
+
+export interface OrderProductsType {
+  quantity: number;
+  product: ProductType;
+}
+export interface OrderListType {
+  id: number;
+  orderProducts: OrderProductsType[];
+  confirmState: boolean;
+}
+
+export interface OrderDetailType extends OrderListType {
+  originalPrice: number;
+  discountPrice: number;
+  coupon: CouponType;
+}
+export type DiscountAmount = typeof PERCENTAGE | typeof DEDUCTION;
+
 export type ServerURLType = (typeof servers)[keyof typeof servers];
