@@ -1,24 +1,24 @@
 import Page from "components/common/Page";
 import CartItemList from "components/CartItemList";
 import PurchaseOrder from "components/PurchaseOrder";
-import LoadingSpinner from "components/common/LoadingSpinner";
 import AsyncBoundary from "components/common/AsyncBoundary";
 import ErrorInfo from "components/common/ErrorInfo";
+import CartItemListSkeleton from "components/skeleton/CartItemListSkeleton";
 
 const Cart = () => {
   return (
     <Page pageName="장바구니">
-      <AsyncBoundary
-        SuspenseFallback={<LoadingSpinner />}
-        ErrorFallback={(FallbackProps) => (
-          <ErrorInfo error={FallbackProps.error} />
-        )}
-      >
-        <div style={{ display: "flex" }}>
+      <div style={{ display: "flex" }}>
+        <AsyncBoundary
+          SuspenseFallback={<CartItemListSkeleton />}
+          ErrorFallback={(FallbackProps) => (
+            <ErrorInfo error={FallbackProps.error} />
+          )}
+        >
           <CartItemList />
           <PurchaseOrder />
-        </div>
-      </AsyncBoundary>
+        </AsyncBoundary>
+      </div>
     </Page>
   );
 };
