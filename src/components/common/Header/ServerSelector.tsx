@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useRecoilState, useResetRecoilState, useRecoilRefresher_UNSTABLE } from 'recoil';
+import { styled } from 'styled-components';
 import { BASE_URL } from '../../../constant';
 import cartState from '../../../globalState/atoms/cartState';
 import serverNameState from '../../../globalState/atoms/serverName';
@@ -25,12 +26,19 @@ const ServerSelector = () => {
   };
 
   return (
-    <select onChange={handleServerNameSelectChange} value={serverName}>
+    <Select onChange={handleServerNameSelectChange} value={serverName}>
       {Object.keys(BASE_URL).map((serverNameOption) => (
         <option key={serverNameOption}>{serverNameOption}</option>
       ))}
-    </select>
+    </Select>
   );
 };
+
+const Select = styled.select`
+  margin: auto 0px auto auto;
+
+  width: 100px;
+  height: 40px;
+`;
 
 export default ServerSelector;
