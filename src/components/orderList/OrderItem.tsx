@@ -1,59 +1,62 @@
 import { Order } from "api/orders";
-import { styled } from "styled-components";
+import styled from "styled-components";
+import OrderProduct from "./OrderProduct";
 
-const OrderItem = (item: Order) => {
+interface OrderItemProps {
+  orderId: number;
+  items: Order[];
+}
+
+const OrderItem = ({ orderId, items }: OrderItemProps) => {
   return (
     <Wrapper>
-      <ImgBox src={item.product.imageUrl} alt={`${item.product.name} 상품 이미지`} />
-      <NameBox>{item.product.name}</NameBox>
-      <PriceContainer>{item.total.toLocaleString()} 원</PriceContainer>
+      <TitleContainer>
+        <Title>주문 번호: {orderId}</Title>
+        <ButtonBox>{"상세보기 >"}</ButtonBox>
+      </TitleContainer>
+      <ListBox>
+        {items.map((item) => (
+          <OrderProduct {...item} />
+        ))}
+      </ListBox>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.ul`
   display: flex;
-  flex-flow: wrap column;
-  row-gap: 12px;
+  flex-direction: column;
 
-  height: 160px;
+  height: fit-content;
 
-  border-top: 1.5px solid rgba(204, 204, 204, 1);
-  padding: 10px;
+  margin-bottom: 30px;
+
+  border: 1px solid rgba(170, 170, 170, 1);
 `;
 
-const ImgBox = styled.img`
-  height: 100%;
-  width: 180px;
-  border-radius: 5px;
+const ButtonBox = styled.button`
+  background: none;
 
-  margin-right: 2%;
+  cursor: pointer;
 `;
 
-const NameBox = styled.div`
-  width: 80%;
-  height: 20%;
+const TitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  padding-top: 1%;
+  height: 60px;
+  padding: 15px;
 
+  background: rgba(246, 246, 246, 1);
   font-size: 16px;
-  white-space: nowrap;
-
-  word-break: break-all;
-  text-overflow: ellipsis;
-  overflow: hidden;
-
-  @media screen and (max-width: 800px) {
-    font-size: 13px;
-  }
 `;
 
-const PriceContainer = styled.div`
-  width: 80%;
+const Title = styled.h2``;
 
-  color: rgba(136, 136, 136, 1);
-  font-size: 16px;
-  font-weight: 400;
+const ListBox = styled.li`
+  list-style: none;
+  row-gap: 10px;
 `;
 
 export default OrderItem;

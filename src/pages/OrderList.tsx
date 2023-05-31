@@ -2,7 +2,7 @@ import Header from "components/Header";
 import Page from "components/common/Page";
 import React from "react";
 import Skeleton from "components/common/Skeleton";
-import OrderDetailList from "components/orderList/OrderDetailList";
+import OrderItemList from "components/orderList/OrderItemList";
 import LoadingSpinner from "components/common/LoadingSpinner";
 
 const OrderList = () => {
@@ -15,7 +15,7 @@ const OrderList = () => {
       </React.Suspense>
       <Page>
         <React.Suspense fallback={<LoadingSpinner />}>
-          <OrderDetailList />
+          <OrderItemList />
         </React.Suspense>
       </Page>
     </>
