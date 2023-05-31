@@ -2,6 +2,8 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { CartItemType, CouponType, OrderItemType } from '@Types/index';
 
+import useCoupon from '@Hooks/useCoupon';
+
 import { fetchData } from '@Utils/api';
 
 import cartItemsState from '@Atoms/cartItemsState';
@@ -17,7 +19,7 @@ const useOrderItems = () => {
   const couponId = useRecoilValue(selectedCouponIdState);
   const [cartItems, setCartItems] = useRecoilState<CartItemType[]>(cartItemsState);
   const setOrderItems = useSetRecoilState(orderItemsState);
-  const setMyCoupons = useSetRecoilState(myCouponState);
+  const { renewMyCoupon } = useCoupon();
 
   const orderCartItems = async (totalOrderPrice: string) => {
     const selectedCartItems = cartItems.filter((cartItem) => cartItem.isSelected).map((cartItem) => cartItem.id);
@@ -36,8 +38,7 @@ const useOrderItems = () => {
     const newOrderItems = await fetchData<OrderItemType[]>({ url: FETCH_URL.orders, method: FETCH_METHOD.GET, server });
     setOrderItems(newOrderItems);
 
-    const newMyCoupons = await fetchData<CouponType[]>({ url: FETCH_URL.myCoupon, method: FETCH_METHOD.GET, server });
-    setMyCoupons(newMyCoupons);
+    renewMyCoupon();
 
     setCartItems(cartItems.filter((cartItem) => !cartItem.isSelected));
   };

@@ -126,7 +126,7 @@ export const handlers = [
   }),
 
   // 쿠폰 삭제하기
-  rest.get(`${FETCH_URL.allCoupon}/:couponId`, (req, res, ctx) => {
+  rest.delete(`${FETCH_URL.allCoupon}/:couponId`, (req, res, ctx) => {
     const couponId = Number(req.params.couponId);
 
     const myCoupons = localStorageHelper.getValue<CouponType[]>('myCoupons');

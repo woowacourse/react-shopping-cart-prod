@@ -3,6 +3,8 @@ import { useRecoilState } from 'recoil';
 
 import { CouponType } from '@Types/index';
 
+import useCoupon from '@Hooks/useCoupon';
+
 import selectedCouponIdState from '@Atoms/selectedCouponIdState';
 
 import * as S from './style';
@@ -17,6 +19,7 @@ function Coupon({
   isLoading = false,
 }: Partial<CouponType> & Partial<{ subMessage: string; type: 'issued' | 'use'; isLoading: boolean }>) {
   const { closeModal } = useModal();
+  const { deleteMyCoupon } = useCoupon();
 
   const [selectedCouponId, setSelectedCouponId] = useRecoilState(selectedCouponIdState);
 
@@ -27,6 +30,11 @@ function Coupon({
 
     setSelectedCouponId(id);
     closeModal('myCoupon');
+  };
+
+  const handleDeleteMyCoupon = () => {
+    if (!id) return;
+    deleteMyCoupon(id);
   };
 
   const couponButton = isUsed ? '✖︎' : type === 'issued' ? '⬇︎' : selectedCouponId === id ? '✓' : '➡︎';
@@ -42,7 +50,7 @@ function Coupon({
           {couponButton}
         </S.CouponButton>
       </S.Container>
-      {type === 'use' && isUsed && <S.DeleteButton>쿠폰 삭제하기</S.DeleteButton>}
+      {type === 'use' && isUsed && <S.DeleteButton onClick={handleDeleteMyCoupon}>쿠폰 삭제하기</S.DeleteButton>}
     </S.Wrapper>
   );
 }
