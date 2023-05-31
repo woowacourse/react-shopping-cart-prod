@@ -1,9 +1,11 @@
 import { NewOrder, NewOrderItem } from "../../types/types.ts";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { checkedCartSelector } from "../../recoil/cartAtoms.ts";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
+import { modalContentState, modalOpenState } from "../../recoil/modalAtoms.tsx";
+import { useModal } from "../Modal/useModal.tsx";
 
 export const PurchaseTitle = styled.div`
   font-style: normal;
@@ -73,12 +75,33 @@ export const CouponBox = styled.div`
   margin-right: 10px; /* Add margin between the coupons */
 `;
 
+export const Button = styled.button`
+  width: 100%;
+  background-color: ${({ color }) => color};
+  border-radius: 10px;
+  color: white;
+  padding: 10px;
+  font-size: 24px;
+  font-weight: bold;
+`;
+
+export const TempText = styled.div`
+  font-size: 18px;
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 function Purchase() {
   const navigate = useNavigate();
   const checkedCartList = useRecoilValue(checkedCartSelector);
   const POINTS = 1000;
 
-  const [isCounponSelectorOpen, setCouponSelectorOpen] = useState(false);
+  const [isCouponSelectorOpen, setCouponSelectorOpen] = useState(false);
+
+  const { closeModal } = useModal();
 
   const purchase = () => {
     const order: NewOrder = {
@@ -94,6 +117,7 @@ function Purchase() {
     };
     alert(`서버로 보낼 데이터 (아직 안보내용): ${JSON.stringify(order)}`);
     alert("결제가 완료됐습니다.");
+    closeModal();
     navigate("/order");
   };
 
@@ -119,11 +143,11 @@ function Purchase() {
       </div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <CouponSelectTitle>쿠폰 선택하기</CouponSelectTitle>
-        <button onClick={() => setCouponSelectorOpen(!isCounponSelectorOpen)}>
+        <button onClick={() => setCouponSelectorOpen(!isCouponSelectorOpen)}>
           열기
         </button>
       </div>
-      {isCounponSelectorOpen && (
+      {isCouponSelectorOpen && (
         <CouponBoxContainer>
           <CouponBox>쿠폰1</CouponBox>
           <CouponBox>쿠폰1</CouponBox>
@@ -133,32 +157,39 @@ function Purchase() {
       )}
 
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div>포인트 사용하기</div>
-        <div>
+        <TempText>포인트 사용하기</TempText>
+        <TempText>
           <input value={0} />점
-        </div>
+        </TempText>
       </div>
 
       <div>
-        <div>합계 0원</div>
-        <div>- 쿠폰 0원</div>
-        <div>- 포인트 0원</div>
-        <div>최종 결제 금액 0원</div>
+        <TempText>합계 0원</TempText>
+        <TempText>- 쿠폰 0원</TempText>
+        <TempText>- 포인트 0원</TempText>
+        <TempText>최종 결제 금액 0원</TempText>
       </div>
 
       <div>
-        <div>배송지 선택하기</div>
-        <div>
+        <TempText>배송지 선택하기</TempText>
+        <TempText>
           <input type="radio" checked /> 집
-        </div>
+        </TempText>
       </div>
       <div>
-        <div>결제수단 선택하기</div>
-        <div>
+        <TempText>결제수단 선택하기</TempText>
+        <TempText>
           <input type="radio" checked /> 카드
-        </div>
+        </TempText>
       </div>
-      <button onClick={() => purchase()}>결제하기</button>
+      <ButtonGroup>
+        <Button color="red" onClick={() => closeModal()}>
+          뒤로가기
+        </Button>
+        <Button color="green" onClick={() => purchase()}>
+          결제하기
+        </Button>
+      </ButtonGroup>
     </div>
   );
 }

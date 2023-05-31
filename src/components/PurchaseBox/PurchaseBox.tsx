@@ -14,19 +14,13 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { totalPriceSelector } from "../../recoil/cartAtoms.ts";
 import { modalContentState, modalOpenState } from "../../recoil/modalAtoms.tsx";
 import Purchase from "../Purchase";
+import { useModal } from "../Modal/useModal.tsx";
 
 function PurchaseBox() {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
   const POINTS = 1000;
-
-  const setModalOpen = useSetRecoilState(modalOpenState);
-  const setModalContent = useSetRecoilState(modalContentState);
-
-  const openModal = () => {
-    setModalOpen(true);
-    setModalContent(<Purchase />);
-  };
+  const { openModal } = useModal();
 
   return (
     <>
@@ -73,7 +67,7 @@ function PurchaseBox() {
             <PurchaseButton
               onClick={() => {
                 if (confirm("결제 페이지로 이동하시겠습니까?")) {
-                  openModal();
+                  openModal(<Purchase />);
                 }
               }}
             >
