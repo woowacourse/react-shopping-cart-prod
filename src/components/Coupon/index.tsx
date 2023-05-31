@@ -23,12 +23,13 @@ function Coupon({
   const IssuedOrUseCoupon = () => {
     if (!id) return;
     if (type === 'issued') return;
+    if (isUsed) return alert('이미 사용한 쿠폰입니다.');
 
     setSelectedCouponId(id);
     closeModal('myCoupon');
   };
 
-  const couponButton = type === 'issued' ? '⬇︎' : selectedCouponId === id ? '✓' : '➡︎';
+  const couponButton = isUsed ? '✖︎' : type === 'issued' ? '⬇︎' : selectedCouponId === id ? '✓' : '➡︎';
   return (
     <S.Container isUsed={isUsed} isLoading={isLoading}>
       <S.CouponLayout>
