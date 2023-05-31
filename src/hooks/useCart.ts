@@ -1,9 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { FIRST_INDEX } from '../constants';
 import { QUANTITY } from '../constants';
 import { CART_URL } from '../constants/url';
 import { cartState, productSelector, serverState } from '../recoil';
-import { CartItem } from '../types';
 import { useFetchData } from './useFetchData';
 
 export const useSetCart = (productId?: number) => {
@@ -14,14 +12,6 @@ export const useSetCart = (productId?: number) => {
 
   const { api } = useFetchData();
 
-  const findCartItemIndex = (prev: CartItem[]) => {
-    const cart = [...prev];
-    const cartItemIndex = prev.findIndex((item) => item.product.id === productId);
-    const alreadyHasCartItem = cartItemIndex >= FIRST_INDEX;
-
-    return { cart, cartItemIndex, alreadyHasCartItem };
-  };
-
   const findCartItemId = () => cart.find((item) => item.product.id === productId)?.id;
 
   const updateCart = (value: number) => {
@@ -31,14 +21,11 @@ export const useSetCart = (productId?: number) => {
     api
       .patch(`${server}${CART_URL}/${cartItemId}`, { quantity })
       .then(() => {
-        setCart((prev) => {
-          const { cart, cartItemIndex } = findCartItemIndex(prev);
-
-          const updatedItem = { ...prev[cartItemIndex], quantity: Number(value) };
-          cart[cartItemIndex] = updatedItem;
-
-          return cart;
-        });
+        setCart((prev) =>
+          prev.map((cartItem) =>
+            cartItem.product.id === productId ? { ...cartItem, quantity } : cartItem
+          )
+        );
       })
       .catch((error) => {
         alert(error.message);
