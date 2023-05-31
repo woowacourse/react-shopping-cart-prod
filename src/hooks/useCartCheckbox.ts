@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useRecoilCallback, useRecoilValueLoadable, useSetRecoilState } from 'recoil';
+import { useRecoilCallback } from 'recoil';
 
 import { cartIdListState } from '../store/cart';
 import {
@@ -9,25 +8,17 @@ import {
 } from '../store/cartCheckbox';
 
 const useCartCheckbox = () => {
-  const cartIdList = useRecoilValueLoadable(cartIdListState);
-  const setCheckedCartItems = useSetRecoilState(checkedCartIdListState);
-
-  useEffect(() => {
-    if (cartIdList.state === 'hasValue') {
-      setCheckedCartItems(new Set(cartIdList.contents));
-    }
-  }, [cartIdList, setCheckedCartItems]);
-
   const toggleAllCheckbox = useRecoilCallback(
     ({ snapshot, set }) =>
       async () => {
+        const cartIdList = await snapshot.getPromise(cartIdListState);
         const isAllChecked = await snapshot.getPromise(isCartAllCheckedState);
 
         set(checkedCartIdListState, () => {
-          return isAllChecked ? new Set([]) : new Set([...cartIdList.contents]);
+          return isAllChecked ? new Set([]) : new Set([...cartIdList]);
         });
       },
-    [cartIdList]
+    []
   );
 
   const toggleItemCheckbox = useRecoilCallback(
