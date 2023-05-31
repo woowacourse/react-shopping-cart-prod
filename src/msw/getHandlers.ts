@@ -13,6 +13,15 @@ export const getHandlers = [
     return res(ctx.delay(delay), ctx.status(200), ctx.json(mockData));
   }),
 
+  rest.get('/products/:id', (req, res, ctx) => {
+    const errorCode = req.url.searchParams.get('error_code');
+    if (errorCode) {
+      return res(ctx.delay(delay), ctx.status(Number(errorCode)));
+    }
+
+    return res(ctx.delay(delay), ctx.status(200));
+  }),
+
   rest.get('/cart-items', (req, res, ctx) => {
     const errorCode = req.url.searchParams.get('error_code');
     if (errorCode) {
@@ -42,7 +51,7 @@ export const getHandlers = [
     );
   }),
 
-  rest.get('/order', (req, res, ctx) => {
+  rest.get('/orders', (req, res, ctx) => {
     const errorCode = req.url.searchParams.get('error_code');
     if (errorCode) {
       return res(ctx.delay(delay), ctx.status(Number(errorCode)));

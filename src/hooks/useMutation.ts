@@ -40,7 +40,7 @@ export const useMutation = (method: string) => {
 
         setState((prev) => ({ ...prev, data: responseData }));
       } catch ({ message }) {
-        const jsonData = JSON.parse(message as string);
+        const jsonData = await JSON.parse(message as string);
         setState((prev) => ({ ...prev, error: jsonData }));
       } finally {
         setState((prev) => ({ ...prev, loading: false }));

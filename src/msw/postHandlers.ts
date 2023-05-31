@@ -32,4 +32,19 @@ export const postHandlers = [
       })
     );
   }),
+
+  rest.post('/products', (req, res, ctx) => {
+    const errorCode = req.url.searchParams.get('error_code');
+    if (errorCode) {
+      return res(ctx.delay(delay), ctx.status(Number(errorCode)));
+    }
+
+    return res(
+      ctx.delay(delay),
+      ctx.status(201),
+      ctx.json({
+        productId: 1,
+      })
+    );
+  }),
 ];
