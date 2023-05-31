@@ -109,11 +109,12 @@ const ServerSelectBox = styled.select`
 
 const ShoppingCartIconContainer = styled.div`
   padding-top: 10px;
-  width: 160px;
+  width: 200px;
   fill: #fff;
+  padding-bottom: 10px;
 
   @media (max-width: ${WIDTH.MD}) {
-    width: 120px;
+    width: 160px;
   }
 `;
 

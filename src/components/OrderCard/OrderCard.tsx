@@ -36,7 +36,7 @@ const OrderCard = ({
     <Wrapper>
       <TopSection>
         <div>
-          Order No : <span>{orderId}</span>
+          Order No. <span>{orderId}</span>
         </div>
         {showDetailButton && (
           <button onClick={onClickNavigate}>상세보기</button>

@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
 import Bill from '../components/Bill/Bill';
 import CartItemList from '../components/CartItemList/CartItemList';
-import { ReactComponent as Teung } from '../assets/img/empty-cart.svg';
 import { useRecoilValue } from 'recoil';
 import { cartSelector } from '../store/cart';
 import { WIDTH } from '../styles/mediaQuery';

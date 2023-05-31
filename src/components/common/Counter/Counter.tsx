@@ -43,8 +43,8 @@ const Count = styled.div`
   width: 40%;
   height: 100%;
 
-  border-left: 0.5px solid grey;
-  border-right: 0.5px solid grey;
+  border-left: 0.5px solid var(--grey-100);
+  border-right: 0.5px solid var(--grey-100);
 `;
 
 const Button = styled.button`
