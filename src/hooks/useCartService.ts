@@ -1,21 +1,17 @@
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import cartState from '../globalState/atoms/cartState';
 import type { Product } from '../types/product';
 import serverNameState from '../globalState/atoms/serverName';
 import ServerUtil from '../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../constant';
-import cartLoadingState from '../globalState/atoms/cartLoadingState';
 
 const useCartService = () => {
   const [cartList, setCartList] = useRecoilState(cartState);
-  const setCartLoading = useSetRecoilState(cartLoadingState);
 
   const serverName = useRecoilValue(serverNameState);
   const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
 
   const fetchCartItem = async () => {
-    setCartLoading(true);
-
     const response = await fetch(cartItemsUrl, {
       headers: {
         Authorization: `Basic ${USER_AUTH_TOKEN}`,
@@ -28,8 +24,6 @@ const useCartService = () => {
 
     const fetchedCartList = await response.json();
     setCartList(fetchedCartList);
-
-    setCartLoading(false);
   };
 
   const addCartItem = async (product: Product) => {
@@ -81,6 +75,8 @@ const useCartService = () => {
     };
 
   const deleteCartItem = async (cartId: string) => {
+    if (!cartId) return;
+
     const response = await fetch(`${cartItemsUrl}/${cartId}`, {
       method: 'DELETE',
       headers: {
