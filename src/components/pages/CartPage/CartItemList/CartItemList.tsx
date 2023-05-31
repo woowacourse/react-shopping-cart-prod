@@ -1,19 +1,19 @@
 import * as styled from './CartItemList.styled';
-import { Checkbox } from '../../styled/Checkbox';
+import { Checkbox } from '../../../styled/Checkbox';
 
-import { useUpdateRecoilCart } from '../../../hooks/useUpdateRecoilCart';
-import { useMutation } from '../../../hooks/useMutation';
-import { useUpdateCheckbox } from '../../../hooks/useUpdateCheckbox';
-import { useCartStateValue } from '../../../recoils/recoilCart';
-import { useCheckedValue } from '../../../recoils/recoilChecked';
-import { useApiBaseUrlValue } from '../../../recoils/recoilApiBaseUrl';
+import { useUpdateRecoilCart } from '../../../../hooks/useUpdateRecoilCart';
+import { useMutation } from '../../../../hooks/useMutation';
+import { useUpdateCheckbox } from '../../../../hooks/useUpdateCheckbox';
+import { useCartStateValue } from '../../../../recoils/recoilCart';
+import { useCheckedValue } from '../../../../recoils/recoilChecked';
+import { useApiBaseUrlValue } from '../../../../recoils/recoilApiBaseUrl';
 
-import { Stepper } from '../../common/Stepper/Stepper';
+import { Stepper } from '../../../common/Stepper/Stepper';
 
-import { DeleteIcon } from '../../../assets/svg';
-import { FETCH_METHOD, FETCH_URL } from '../../../constants';
+import { DeleteIcon } from '../../../../assets/svg';
+import { FETCH_METHOD, FETCH_URL } from '../../../../constants';
 
-import { type CartItemType } from '../../../types';
+import { type CartItemType } from '../../../../types';
 
 export const CartItemList = () => {
   const baseUrl = useApiBaseUrlValue();

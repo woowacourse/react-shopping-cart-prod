@@ -1,14 +1,14 @@
 import * as styled from './CartActions.styled';
-import { Checkbox } from '../../styled/Checkbox';
+import { Checkbox } from '../../../styled/Checkbox';
 
-import { useUpdateRecoilCart } from '../../../hooks/useUpdateRecoilCart';
+import { useUpdateRecoilCart } from '../../../../hooks/useUpdateRecoilCart';
 
-import { useApiBaseUrlValue } from '../../../recoils/recoilApiBaseUrl';
-import { useMutation } from '../../../hooks/useMutation';
-import { FETCH_METHOD, FETCH_URL } from '../../../constants';
-import { useUpdateCheckbox } from '../../../hooks/useUpdateCheckbox';
-import { useCartStateValue } from '../../../recoils/recoilCart';
-import { useCheckedValue } from '../../../recoils/recoilChecked';
+import { useApiBaseUrlValue } from '../../../../recoils/recoilApiBaseUrl';
+import { useMutation } from '../../../../hooks/useMutation';
+import { FETCH_METHOD, FETCH_URL } from '../../../../constants';
+import { useUpdateCheckbox } from '../../../../hooks/useUpdateCheckbox';
+import { useCartStateValue } from '../../../../recoils/recoilCart';
+import { useCheckedValue } from '../../../../recoils/recoilChecked';
 
 export const CartActions = () => {
   const baseUrl = useApiBaseUrlValue();
