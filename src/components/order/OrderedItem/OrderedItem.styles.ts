@@ -6,12 +6,19 @@ import { Text } from '../../common/Text/Text.styles';
 export const Container = styled.div``;
 
 export const OrderIdWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding-bottom: 16px;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray2};
 `;
 
 export const OrderId = styled(Text).attrs({ size: 'large' })`
   font-weight: 600;
+`;
+
+export const ShowDetail = styled(Text).attrs({ size: 'medium' })`
+  cursor: pointer;
+  font-weight: 500;
 `;
 
 export const OrderContainer = styled.div`
