@@ -20,7 +20,7 @@ import {
   ProductItemPriceText,
   ProductItemSubTotalPrice,
   PurchaseTitle,
-  TempText,
+  Option,
   CouponBoxWrapper,
   PointInputTitle,
   PointBoxWrapper,
@@ -33,6 +33,8 @@ import {
   PurchaseList,
   PurchaseSecondaryText,
   PurchaseResultText,
+  Title,
+  Box,
 } from "./Purchase.style.ts";
 
 function Purchase() {
@@ -87,6 +89,18 @@ function Purchase() {
           ))}
         </ProductItemList>
       </div>
+      <Box>
+        <Title>배송지 선택하기</Title>
+        <Option>
+          <input type="radio" checked /> 집
+        </Option>
+      </Box>
+      <Box>
+        <Title>결제수단 선택하기</Title>
+        <Option>
+          <input type="radio" checked /> 카드
+        </Option>
+      </Box>
       <CouponBoxWrapper>
         <CouponSelectHeader
           onClick={() => setCouponSelectorOpen(!isCouponSelectorOpen)}
@@ -132,18 +146,6 @@ function Purchase() {
         </PurchasePropertyWrapper>
       </PurchaseList>
 
-      <div>
-        <TempText>배송지 선택하기</TempText>
-        <TempText>
-          <input type="radio" checked /> 집
-        </TempText>
-      </div>
-      <div>
-        <TempText>결제수단 선택하기</TempText>
-        <TempText>
-          <input type="radio" checked /> 카드
-        </TempText>
-      </div>
       <ButtonGroup>
         <Button color="red" onClick={() => closeModal()}>
           뒤로가기

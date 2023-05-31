@@ -19,6 +19,7 @@ export const FatBorder = styled.hr`
 export const ProductItemLayout = styled.div`
   display: flex;
   border-bottom: solid 1px rgb(170, 170, 170);
+  align-items: center;
 `;
 
 export const ProductItemImage = styled.img`
@@ -30,7 +31,7 @@ export const ProductItemList = styled.div`
   width: 100%;
 `;
 export const ProductItemInfo = styled.div`
-  padding: 20px 0px 20px 0px;
+  padding: 20px 10px 20px 10px;
   width: 100%;
 `;
 export const ProductItemName = styled.div`
@@ -154,10 +155,6 @@ export const Button = styled.button`
   font-weight: bold;
 `;
 
-export const TempText = styled.div`
-  font-size: 18px;
-`;
-
 export const ButtonGroup = styled.div`
   display: flex;
   gap: 10px;
@@ -165,6 +162,7 @@ export const ButtonGroup = styled.div`
 
 export const PurchaseList = styled.div`
   padding: 10px;
+  margin-bottom: 10px;
 `;
 
 export const PurchasePropertyWrapper = styled.div`
@@ -199,4 +197,23 @@ export const PurchaseResultText = styled.div`
   line-height: 27px;
 
   letter-spacing: 0.5px;
+`;
+
+export const Title = styled.div`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 37px;
+
+  letter-spacing: 0.5px;
+`;
+
+export const Option = styled.div`
+  font-size: 16px;
+  margin-top: 5px;
+`;
+
+export const Box = styled.div`
+  border-bottom: solid 1px rgb(170, 170, 170);
+  padding-bottom: 10px;
 `;
