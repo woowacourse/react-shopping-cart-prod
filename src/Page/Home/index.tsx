@@ -1,11 +1,11 @@
 import ProductItemList from 'src/components/ProductItemList';
-import styles from './index.module.scss';
+import ContentLayout from 'src/components/Common/ContentLayout';
 
 function Home() {
   return (
-    <main className={styles['main-container']}>
+    <ContentLayout>
       <ProductItemList />
-    </main>
+    </ContentLayout>
   );
 }
 

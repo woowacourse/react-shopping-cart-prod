@@ -8,7 +8,7 @@ interface ContentLayoutProps extends PropsWithChildren {
 function ContentLayout({ title, children }: ContentLayoutProps) {
   return (
     <main className={styles.container}>
-      <h2 className={styles.title}>{title}</h2>
+      {title && <h2 className={styles.title}>{title}</h2>}
       {children}
     </main>
   );

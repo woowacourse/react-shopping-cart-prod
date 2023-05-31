@@ -6,6 +6,7 @@ import useToast from 'src/hooks/useToast';
 import { $CartList, $CurrentServerUrl } from 'src/recoil/atom';
 import { setLocalStorage, getLocalStorage } from 'src/utils/localStorage';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { RiBillLine } from 'react-icons/ri';
 import DropDown from '../Common/DropDown';
 import styles from './index.module.scss';
 
@@ -43,7 +44,9 @@ function Header() {
           </Link>
           {cartList.length > 0 && <div className={styles['cart-count']}>{cartList.length}</div>}
         </div>
-        <Link to="/order">주문 목록</Link>
+        <Link to="/order">
+          <RiBillLine size={28} />
+        </Link>
       </div>
     </header>
   );

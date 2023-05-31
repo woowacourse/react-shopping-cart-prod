@@ -61,6 +61,8 @@
   &::backdrop {
     background: rgba(0, 0, 0, 0.5);
   }
+
+  z-index: 101;
 }
 
 .modal-content {
@@ -71,6 +73,7 @@
   align-items: center;
 
   background: #fff;
+  z-index: 102;
 }
 
 .center-animation {
