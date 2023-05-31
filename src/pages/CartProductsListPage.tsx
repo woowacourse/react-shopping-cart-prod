@@ -18,38 +18,36 @@ const CartProductsListPage = () => {
     useCheckedProducts();
 
   return (
-    <>
-      <Main>
-        <CartProductTitle>장바구니</CartProductTitle>
-        <CartProductContent>
-          <CartProductInfo>
-            <CartProductListTitle>
-              든든배송 상품 ({totalCartProductCount}개)
-            </CartProductListTitle>
-            <Suspense fallback={<ContentListSkeleton content='product' />}>
-              <CartProductList />
-            </Suspense>
-            <SelectContainer>
-              <CheckBox
-                onChange={handleAllCheckedProducts}
-                checked={totalCartProductCount === checkedCartProductCount}
-              />
-              <TotalSelectedCount>
-                전체선택 ({checkedCartProductCount}/{totalCartProductCount})
-              </TotalSelectedCount>
-              <Button
-                designType='delete'
-                buttonLabel='선택삭제'
-                onClick={removeCheckedProducts}
-              />
-            </SelectContainer>
-          </CartProductInfo>
-        </CartProductContent>
-        <EstimatedPaymentBoxWrapper>
-          <EstimatedPaymentBox />
-        </EstimatedPaymentBoxWrapper>
-      </Main>
-    </>
+    <Main>
+      <CartProductTitle>장바구니</CartProductTitle>
+      <CartProductContent>
+        <CartProductInfo>
+          <CartProductListTitle>
+            든든배송 상품 ({totalCartProductCount}개)
+          </CartProductListTitle>
+          <Suspense fallback={<ContentListSkeleton content='product' />}>
+            <CartProductList />
+          </Suspense>
+          <SelectContainer>
+            <CheckBox
+              onChange={handleAllCheckedProducts}
+              checked={totalCartProductCount === checkedCartProductCount}
+            />
+            <TotalSelectedCount>
+              전체선택 ({checkedCartProductCount}/{totalCartProductCount})
+            </TotalSelectedCount>
+            <Button
+              designType='delete'
+              buttonLabel='선택삭제'
+              onClick={removeCheckedProducts}
+            />
+          </SelectContainer>
+        </CartProductInfo>
+      </CartProductContent>
+      <EstimatedPaymentBoxWrapper>
+        <EstimatedPaymentBox />
+      </EstimatedPaymentBoxWrapper>
+    </Main>
   );
 };
 

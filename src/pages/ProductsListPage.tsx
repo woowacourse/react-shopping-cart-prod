@@ -8,15 +8,13 @@ import { Suspense } from 'react';
 
 const ProductsListPage = () => {
   return (
-    <>
-      <Main>
-        <ErrorBoundary fallback={<Message type='error' />}>
-          <Suspense fallback={<ContentListSkeleton content='product' />}>
-            <ProductList />
-          </Suspense>
-        </ErrorBoundary>
-      </Main>
-    </>
+    <Main>
+      <ErrorBoundary fallback={<Message type='error' />}>
+        <Suspense fallback={<ContentListSkeleton content='product' />}>
+          <ProductList />
+        </Suspense>
+      </ErrorBoundary>
+    </Main>
   );
 };
 
