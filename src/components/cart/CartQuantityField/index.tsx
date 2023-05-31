@@ -19,9 +19,11 @@ function CartQuantityField({ product }: CartQuantityFieldProps) {
     onQuantityBlur,
     onAddItemToCartAndSyncClick,
   } = useCartOperations(product);
+  const isVisibleStepper = findCart && findCart.id !== 0;
+
   return (
     <S.StepperContainer>
-      {findCart ? (
+      {isVisibleStepper ? (
         <Stepper
           onChange={onQuantityInputChange}
           onDecrease={decreaseQuantity}
