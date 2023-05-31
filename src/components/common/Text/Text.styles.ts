@@ -6,6 +6,10 @@ export interface TextProps {
 
 const getSizeStyling = (size: Required<TextProps>['size']) => {
   const style = {
+    xLarge: css`
+      font-size: 20px;
+      line-height: 30px;
+    `,
     large: css`
       font-size: 18px;
       line-height: 28px;
