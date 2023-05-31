@@ -5,11 +5,11 @@ import { PERCENTAGE } from '../../../abstract/constants';
 
 const CouponItem = ({ coupon }: { coupon: CouponType }) => {
   const discount =
-    coupon.discount_type === PERCENTAGE
-      ? `${coupon.discount_rate * 100}%`
-      : `${coupon.discount_amount}원`;
+    coupon.discountType === PERCENTAGE
+      ? `${coupon.discountRate * 100}%`
+      : `${coupon.discountAmount}원`;
 
-  const minimum = coupon.minimum_price ? `${coupon.minimum_price}원 이상 구매시 적용가능` : '';
+  const minimum = coupon.minimumPrice ? `${coupon.minimumPrice}원 이상 구매시 적용가능` : '';
   return (
     <CouponItemWrapper>
       <Text color="#FFFFFF" size="small" weight="normal">

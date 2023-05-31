@@ -17,10 +17,10 @@ export interface CartItemType {
 export interface CouponType {
   id: number;
   name: string;
-  discount_type: DiscountAmount;
-  discount_rate: number;
-  discount_amount: number;
-  minimum_price: number;
+  discountType: DiscountAmount;
+  discountRate: number;
+  discountAmount: number;
+  minimumPrice: number;
 }
 
 export type DiscountAmount = typeof PERCENTAGE | typeof DEDUCTION;

@@ -15,13 +15,15 @@ export const handlers = [
     const { id } = await req.json<{ id: number }>();
     const foundCoupon = coupons.find((coupon) => coupon.id === id);
     const foundCouponIndex = coupons.findIndex((coupon) => coupon.id === id);
-    if (foundCoupon) {
+    if (foundCoupon && foundCoupon.issuable) {
       couponList.push(foundCoupon);
-      console.log(couponList);
       coupons[foundCouponIndex].issuable = false;
-      return res(ctx.status(201), ctx.text('Add Cart Item Success'));
+      return res(ctx.status(201), ctx.text('Add Coupon Success'));
     }
-    return res(ctx.status(400, 'Product Does Not Found'));
+    if (foundCoupon) {
+      return res(ctx.status(201), ctx.text(' Coupon Already Have'));
+    }
+    return res(ctx.status(400, 'Coupon Does Not Found'));
   }),
   rest.get('/users/coupons', async (_, res, ctx) => {
     await delay(200);
