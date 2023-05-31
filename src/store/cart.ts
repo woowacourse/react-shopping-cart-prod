@@ -4,7 +4,12 @@ import { getCartAPI } from '../api/cartAPI';
 import { SHIPPING_FEE, SHIPPING_FEE_EXEMPTION_CONDITION } from '../constants';
 import { changeCartItemQuantity } from '../domain/cart';
 import { CartItemData } from '../types/cart';
-import { getMemberDiscountAmount, getTotalItemDiscountAmount } from '../utils/discount';
+import {
+  getDiscountedTotalItemPrice,
+  getTotalItemDiscountAmount,
+  getTotalItemPrice,
+  getTotalMemberDiscountAmount,
+} from '../utils/costs';
 import { checkedCartIdListState } from './cartCheckbox';
 import { currentMemberInformationState } from './member';
 import { currentServerState } from './server';
@@ -71,7 +76,7 @@ const cartItemQuantityState = selectorFamily<number, number>({
     },
 });
 
-const cartListCheckoutPriceState = selector({
+const cartListCheckoutCostsState = selector({
   key: 'cartListCheckoutPrice',
   get: ({ get }) => {
     const cartList = get(cartListState);
@@ -79,22 +84,28 @@ const cartListCheckoutPriceState = selector({
     const memberInformation = get(currentMemberInformationState);
     const checkedCartItems = cartList.filter((cartItem) => checkedCartIdList.has(cartItem.id));
 
-    const subTotal = cartList
-      .filter((cartItem) => checkedCartIdList.has(cartItem.id))
-      .reduce((acc, curr) => acc + curr.product.price * curr.quantity, 0);
     const totalItemDiscountAmount = getTotalItemDiscountAmount(checkedCartItems);
-    const memberDiscountAmount = getMemberDiscountAmount(checkedCartItems, memberInformation);
-    const discountedSubTotal = subTotal - totalItemDiscountAmount - memberDiscountAmount;
+    const totalMemberDiscountAmount = getTotalMemberDiscountAmount(
+      checkedCartItems,
+      memberInformation
+    );
+    const totalItemPrice = getTotalItemPrice(checkedCartItems);
+    const discountedTotalItemPrice = getDiscountedTotalItemPrice(
+      totalItemDiscountAmount,
+      totalMemberDiscountAmount,
+      totalItemPrice
+    );
     const shippingFee =
-      discountedSubTotal > SHIPPING_FEE_EXEMPTION_CONDITION || checkedCartIdList.size === 0
+      discountedTotalItemPrice > SHIPPING_FEE_EXEMPTION_CONDITION || checkedCartIdList.size === 0
         ? 0
         : SHIPPING_FEE;
-    const totalPrice = discountedSubTotal + shippingFee;
+    const totalPrice = discountedTotalItemPrice + shippingFee;
 
     return {
-      subTotal,
-      totalItemDiscountAmount: totalItemDiscountAmount !== 0 ? -totalItemDiscountAmount : 0,
-      memberDiscountAmount: memberDiscountAmount !== 0 ? -memberDiscountAmount : 0,
+      totalItemPrice,
+      totalItemDiscountAmount,
+      totalMemberDiscountAmount,
+      discountedTotalItemPrice,
       shippingFee,
       totalPrice,
     };
@@ -108,5 +119,5 @@ export {
   cartItemIdState,
   cartListItemCountState,
   cartItemQuantityState,
-  cartListCheckoutPriceState,
+  cartListCheckoutCostsState,
 };

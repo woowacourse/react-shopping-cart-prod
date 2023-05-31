@@ -10,24 +10,7 @@ const getMemberAPI = (baseUrl: string) => {
     });
   };
 
-  const getMemberOrderList = async (memberId: number) => {
-    return await fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBERS}/${memberId}${API_ENDPOINT.ORDERS}`, {
-      method: 'GET',
-      headers: AUTHORIZED_FETCH_OPTION_HEADERS,
-    });
-  };
-
-  const getMemberOrderDetail = async (memberId: number, orderId: number) => {
-    return await fetchAPI(
-      `${baseUrl}${API_ENDPOINT.MEMBERS}/${memberId}${API_ENDPOINT.ORDERS}/${orderId}`,
-      {
-        method: 'GET',
-        headers: AUTHORIZED_FETCH_OPTION_HEADERS,
-      }
-    );
-  };
-
-  return { getMemberInfo, getMemberOrderList, getMemberOrderDetail };
+  return { getMemberInfo };
 };
 
 export { getMemberAPI };

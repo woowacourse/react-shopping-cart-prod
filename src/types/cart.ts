@@ -6,4 +6,13 @@ interface CartItemData {
   product: ProductItemData;
 }
 
-export type { CartItemData };
+interface CartCostsData {
+  totalItemDiscountAmount: number;
+  totalMemberDiscountAmount: number;
+  totalItemPrice: number;
+  discountedTotalItemPrice: number;
+  shippingFee: number;
+  totalPrice: number;
+}
+
+export type { CartItemData, CartCostsData };

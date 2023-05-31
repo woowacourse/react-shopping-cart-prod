@@ -17,9 +17,7 @@ interface PatchCartItemRequestBody {
   quantity: number;
 }
 
-interface PostOrderRequestBody {
-  cartItems: OrderCartItemsData[];
-}
+type PostOrderRequestBody = OrderCartItemsData;
 
 export type {
   HTTPErrorMessageCode,

@@ -2,11 +2,7 @@ import { useRecoilValue } from 'recoil';
 
 import HTTPError from '../../../api/utils/HTTPError';
 import { HTTP_ERROR_MESSAGE, HTTP_STATUS_CODE } from '../../../constants/api';
-import {
-  orderMemberDiscountAmountState,
-  orderState,
-  orderTotalItemDiscountAmountState,
-} from '../../../store/order';
+import { orderState } from '../../../store/order';
 import { priceFormatter } from '../../../utils/formatter';
 import * as S from './OrderDetailPurchaseInformation.styles';
 
@@ -23,9 +19,6 @@ const OrderDetailPurchaseInformation = ({ orderId }: OrderDetailPurchaseInformat
     });
   }
 
-  const totalItemDiscountAmount = useRecoilValue(orderTotalItemDiscountAmountState(orderId));
-  const memberDiscountAmount = useRecoilValue(orderMemberDiscountAmountState(orderId));
-
   return (
     <>
       <S.OrderDetailPurchaseInformationHeading size="xSmall">
@@ -41,13 +34,13 @@ const OrderDetailPurchaseInformation = ({ orderId }: OrderDetailPurchaseInformat
         <S.PurchaseInformationData>
           <S.PurchaseInformationDataLabel>상품 할인 금액</S.PurchaseInformationDataLabel>
           <S.PurchaseInformationDataDescription>
-            {priceFormatter(totalItemDiscountAmount)}원
+            {priceFormatter(-order.totalItemDiscountAmount)}원
           </S.PurchaseInformationDataDescription>
         </S.PurchaseInformationData>
         <S.PurchaseInformationData>
           <S.PurchaseInformationDataLabel>등급 할인 금액</S.PurchaseInformationDataLabel>
           <S.PurchaseInformationDataDescription>
-            {priceFormatter(memberDiscountAmount)}원
+            {priceFormatter(-order.totalMemberDiscountAmount)}원
           </S.PurchaseInformationDataDescription>
         </S.PurchaseInformationData>
         <S.PurchaseInformationData>

@@ -1,8 +1,7 @@
 import { ProductItemData } from './product';
 
-interface OrderCartItemsData {
-  cartItemId: number;
-  quantity: number;
+interface OrderCartItemsData extends OrderCostsData {
+  cartItemIds: number[];
 }
 
 interface OrderedItemData {
@@ -10,10 +9,15 @@ interface OrderedItemData {
   product: ProductItemData;
 }
 
-interface OrderData {
+interface OrderData extends OrderCostsData {
   id: number;
   orderedItems: OrderedItemData[];
   orderedAt: Date;
+}
+
+interface OrderCostsData {
+  totalItemDiscountAmount: number;
+  totalMemberDiscountAmount: number;
   totalItemPrice: number;
   discountedTotalItemPrice: number;
   shippingFee: number;

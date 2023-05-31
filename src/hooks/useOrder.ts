@@ -3,10 +3,12 @@ import { useRecoilCallback } from 'recoil';
 import { cartListState } from '../store/cart';
 import { orderListState } from '../store/order';
 import { ProductItemData } from '../types/product';
+import { useToast } from './common/useToast';
 import { useCart } from './useCart';
 
 const useOrder = () => {
-  const { isAdded, addItem, updateItemQuantity } = useCart();
+  const { addItem, updateItemQuantity } = useCart();
+  const { isAdded, setIsAdded } = useToast();
 
   const refreshOrderList = useRecoilCallback(
     ({ refresh }) =>
@@ -24,11 +26,11 @@ const useOrder = () => {
 
         if (isItemInCart) {
           updateItemQuantity({ cartItemId: isItemInCart.id, quantity: isItemInCart.quantity + 1 });
-
-          return;
+        } else {
+          addItem(product);
         }
 
-        addItem(product);
+        setIsAdded(true);
       },
     [addItem, updateItemQuantity]
   );

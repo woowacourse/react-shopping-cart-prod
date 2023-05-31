@@ -1,5 +1,5 @@
 import { API_ENDPOINT, AUTHORIZED_FETCH_OPTION_HEADERS } from '../constants/api';
-import { CartItemData } from '../types/cart';
+import { CartCostsData, CartItemData } from '../types/cart';
 import { fetchAPI } from './utils/fetchAPI';
 
 const getCartAPI = (baseUrl: string) => {
@@ -39,11 +39,18 @@ const getCartAPI = (baseUrl: string) => {
   const deleteCartItem = async (cartItemId: number): Promise<Response> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}/${cartItemId}`, {
       method: 'DELETE',
+      headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
+    });
+  };
+
+  const getCartListCosts = async (): Promise<CartCostsData> => {
+    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_COSTS}`, {
+      method: 'GET',
       headers: AUTHORIZED_FETCH_OPTION_HEADERS,
     });
   };
 
-  return { getCartList, postCartItem, patchCartItem, deleteCartItem };
+  return { getCartList, postCartItem, patchCartItem, deleteCartItem, getCartListCosts };
 };
 
 export { getCartAPI };

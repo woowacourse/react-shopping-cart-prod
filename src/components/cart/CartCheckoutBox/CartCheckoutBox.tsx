@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useRecoilValueLoadable } from 'recoil';
 
 import { useCart } from '../../../hooks/useCart';
-import { cartListCheckoutPriceState } from '../../../store/cart';
+import { cartListCheckoutCostsState } from '../../../store/cart';
 import { checkedCartIdListState } from '../../../store/cartCheckbox';
 import { currentMemberInformationState } from '../../../store/member';
 import { priceFormatter } from '../../../utils/formatter';
@@ -13,11 +13,11 @@ import * as S from './CartCheckoutBox.styles';
 
 const CartCheckoutBox = () => {
   const checkedIdList = useRecoilValueLoadable(checkedCartIdListState);
-  const cartListCheckoutPrice = useRecoilValueLoadable(cartListCheckoutPriceState);
+  const cartListCheckoutCosts = useRecoilValueLoadable(cartListCheckoutCostsState);
   const memberInformation = useRecoilValueLoadable(currentMemberInformationState);
   const { orderCheckedItems } = useCart();
 
-  const isLoading = cartListCheckoutPrice.state === 'loading';
+  const isLoading = cartListCheckoutCosts.state === 'loading';
   const isCartEmpty = checkedIdList.contents.size === 0;
 
   const handleOrder = useCallback(() => {
@@ -30,20 +30,25 @@ const CartCheckoutBox = () => {
         <S.CheckoutInformationTextContainer>
           <Text>상품 금액</Text>
           <S.CheckoutValueText>
-            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.subTotal)}원
+            {isLoading ? 0 : priceFormatter(cartListCheckoutCosts.contents.totalItemPrice)}원
           </S.CheckoutValueText>
         </S.CheckoutInformationTextContainer>
         <S.CheckoutInformationSubTextContainer>
           <Text size="small">&#8735; 상품 할인 금액</Text>
           <S.CheckoutValueText size="small">
-            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.totalItemDiscountAmount)}
+            {isLoading
+              ? 0
+              : priceFormatter(-cartListCheckoutCosts.contents.totalItemDiscountAmount)}
             원
           </S.CheckoutValueText>
         </S.CheckoutInformationSubTextContainer>
         <S.CheckoutInformationSubTextContainer>
           <Text size="small">&#8735; 등급 할인 금액</Text>
           <S.CheckoutValueText size="small">
-            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.memberDiscountAmount)}원
+            {isLoading
+              ? 0
+              : priceFormatter(-cartListCheckoutCosts.contents.totalMemberDiscountAmount)}
+            원
           </S.CheckoutValueText>
         </S.CheckoutInformationSubTextContainer>
         <S.CheckoutMembershipDiscountInformation>
@@ -55,13 +60,13 @@ const CartCheckoutBox = () => {
         <S.CheckoutInformationTextContainer>
           <Text>배송비</Text>
           <S.CheckoutValueText>
-            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.shippingFee)}원
+            {isLoading ? 0 : priceFormatter(cartListCheckoutCosts.contents.shippingFee)}원
           </S.CheckoutValueText>
         </S.CheckoutInformationTextContainer>
         <S.CheckoutTotalPriceContainer>
           <Text>결제 예정 금액</Text>
           <S.CheckoutTotalPriceValueText>
-            {isLoading ? 0 : priceFormatter(cartListCheckoutPrice.contents.totalPrice)}원
+            {isLoading ? 0 : priceFormatter(cartListCheckoutCosts.contents.totalPrice)}원
           </S.CheckoutTotalPriceValueText>
         </S.CheckoutTotalPriceContainer>
         {isLoading ? (

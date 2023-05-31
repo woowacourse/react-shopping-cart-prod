@@ -1,5 +1,5 @@
 const priceFormatter = (price: number) => {
-  return price.toLocaleString();
+  return price === 0 ? 0 : price.toLocaleString();
 };
 
 const dateFormatter = (createdAt: Date) => {

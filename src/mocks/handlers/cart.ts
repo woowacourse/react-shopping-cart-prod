@@ -8,7 +8,16 @@ import {
   removeCartItem,
   setCartData,
 } from '../../domain/cart';
+import { getMemberData } from '../../domain/member';
 import { PatchCartItemRequestBody, PostCartItemRequestBody } from '../../types/api';
+import { CartCostsData } from '../../types/cart';
+import {
+  getDiscountedTotalItemPrice,
+  getShippingFee,
+  getTotalItemDiscountAmount,
+  getTotalItemPrice,
+  getTotalMemberDiscountAmount,
+} from '../../utils/costs';
 
 const cartHandlers = [
   rest.get(API_ENDPOINT.CART_ITEMS, (req, res, ctx) => {
@@ -63,6 +72,32 @@ const cartHandlers = [
     setCartData(newCartList);
 
     return res(ctx.status(HTTP_STATUS_CODE.NO_CONTENT));
+  }),
+
+  rest.get(API_ENDPOINT.CART_COSTS, (req, res, ctx) => {
+    const cartList = getCartData();
+    const memberInformation = getMemberData();
+
+    const totalItemDiscountAmount = getTotalItemDiscountAmount(cartList);
+    const totalMemberDiscountAmount = getTotalMemberDiscountAmount(cartList, memberInformation);
+    const totalItemPrice = getTotalItemPrice(cartList);
+    const discountedTotalItemPrice = getDiscountedTotalItemPrice(
+      totalItemDiscountAmount,
+      totalMemberDiscountAmount,
+      totalItemPrice
+    );
+    const shippingFee = getShippingFee(discountedTotalItemPrice);
+
+    const order: CartCostsData = {
+      totalItemDiscountAmount,
+      totalMemberDiscountAmount,
+      totalItemPrice,
+      discountedTotalItemPrice,
+      shippingFee,
+      totalPrice: discountedTotalItemPrice + shippingFee,
+    };
+
+    return res(ctx.status(200), ctx.json(order));
   }),
 ];
 

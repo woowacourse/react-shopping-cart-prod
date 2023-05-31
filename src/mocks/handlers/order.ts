@@ -8,11 +8,11 @@ import { PostOrderRequestBody } from '../../types/api';
 
 const orderHandlers = [
   rest.post(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
-    const { cartItems } = await req.json<PostOrderRequestBody>();
+    const { cartItemIds } = await req.json<PostOrderRequestBody>();
     const currentOrderListData = getOrderListData();
 
-    const newOrderList = addOrder(currentOrderListData, cartItems);
-    const newCartList = updateCart(cartItems);
+    const newOrderList = addOrder(currentOrderListData, cartItemIds);
+    const newCartList = updateCart(cartItemIds);
     const newMemberInformation = updateMemberInformation(newOrderList);
 
     setOrderListData(newOrderList);
@@ -23,6 +23,12 @@ const orderHandlers = [
       ctx.status(HTTP_STATUS_CODE.CREATED),
       ctx.set('Location', `${API_ENDPOINT.ORDERS}/${newOrderList.at(-1)?.id}`)
     );
+  }),
+
+  rest.get(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
+    const orderList = getOrderListData();
+
+    return res(ctx.delay(500), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(orderList));
   }),
 ];
 

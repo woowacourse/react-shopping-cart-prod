@@ -1,7 +1,12 @@
-import { SHIPPING_FEE, SHIPPING_FEE_EXEMPTION_CONDITION } from '../constants';
 import { ORDERS_LOCAL_STORAGE_KEY } from '../constants/localStorage';
-import { MemberInformation } from '../types/member';
-import { OrderCartItemsData, OrderData, OrderedItemData } from '../types/order';
+import { OrderData } from '../types/order';
+import {
+  getDiscountedTotalItemPrice,
+  getShippingFee,
+  getTotalItemDiscountAmount,
+  getTotalItemPrice,
+  getTotalMemberDiscountAmount,
+} from '../utils/costs';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
 import { getCartData } from './cart';
 import { getMemberData } from './member';
@@ -14,63 +19,34 @@ const setOrderListData = (newOrderList: OrderData[]) => {
   saveToLocalStorage(ORDERS_LOCAL_STORAGE_KEY, newOrderList);
 };
 
-const getTotalOrderPrice = (orderedItems: OrderedItemData[]) => {
-  const totalPrice = orderedItems.reduce((acc, orderedItem) => {
-    return acc + orderedItem.quantity * orderedItem.product.price;
-  }, 0);
-
-  return totalPrice;
-};
-
-const getDiscountedTotalPrice = (
-  orderedItems: OrderedItemData[],
-  memberInformation: MemberInformation
-) => {
-  const discountedTotalPrice = orderedItems.reduce((acc, orderedItems) => {
-    if (orderedItems.product.discountRate > 0) {
-      return acc + orderedItems.quantity * orderedItems.product.discountedPrice;
-    }
-
-    if (memberInformation.rank !== '일반') {
-      return (
-        acc +
-        orderedItems.quantity *
-          orderedItems.product.price *
-          (1 - memberInformation.discountRate / 100)
-      );
-    }
-
-    return acc + orderedItems.quantity * orderedItems.product.price;
-  }, 0);
-
-  return discountedTotalPrice;
-};
-
-const getShippingFee = (discountedTotalItemPrice: number) => {
-  return discountedTotalItemPrice > SHIPPING_FEE_EXEMPTION_CONDITION ? 0 : SHIPPING_FEE;
-};
-
-const addOrder = (orderList: OrderData[], orderedCartItems: OrderCartItemsData[]): OrderData[] => {
+const addOrder = (orderList: OrderData[], cartItemIds: number[]): OrderData[] => {
   const currentCartData = getCartData();
   const memberInformation = getMemberData();
 
   const newOrderId = Number(new Date());
-  const orderedItems = orderedCartItems.map((orderedCartItem) => {
-    const cartItemData = currentCartData.find(
-      (cartItem) => orderedCartItem.cartItemId === cartItem.id
-    )!;
-    const { id: cartItemId, ...orderedItem } = cartItemData;
+  const orderedItems = cartItemIds.map((cartItemId) => {
+    const cartItemData = currentCartData.find((cartItem) => cartItemId === cartItem.id)!;
+    const { id, ...orderedItem } = cartItemData;
 
     return orderedItem;
   });
-  const totalItemPrice = getTotalOrderPrice(orderedItems);
-  const discountedTotalItemPrice = getDiscountedTotalPrice(orderedItems, memberInformation);
+
+  const totalItemDiscountAmount = getTotalItemDiscountAmount(orderedItems);
+  const totalMemberDiscountAmount = getTotalMemberDiscountAmount(orderedItems, memberInformation);
+  const totalItemPrice = getTotalItemPrice(orderedItems);
+  const discountedTotalItemPrice = getDiscountedTotalItemPrice(
+    totalItemDiscountAmount,
+    totalMemberDiscountAmount,
+    totalItemPrice
+  );
   const shippingFee = getShippingFee(discountedTotalItemPrice);
 
   const order = {
     id: newOrderId,
     orderedItems,
     orderedAt: new Date(),
+    totalItemDiscountAmount,
+    totalMemberDiscountAmount,
     totalItemPrice,
     discountedTotalItemPrice,
     shippingFee,
@@ -80,4 +56,4 @@ const addOrder = (orderList: OrderData[], orderedCartItems: OrderCartItemsData[]
   return [...orderList, order];
 };
 
-export { getOrderListData, setOrderListData, getDiscountedTotalPrice, addOrder };
+export { getOrderListData, setOrderListData, addOrder };

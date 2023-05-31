@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
-import { postOrder } from '../api/orderAPI';
+import { getOrderAPI } from '../api/orderAPI';
 import HTTPError from '../api/utils/HTTPError';
 import {
   CART_API_ERROR_MESSAGE,
@@ -11,8 +11,7 @@ import {
   ORDER_API_ERROR_MESSAGE,
 } from '../constants/api';
 import { PATH } from '../constants/path';
-import { TOAST_SHOW_DURATION } from '../constants/ui';
-import { cartItemQuantityState, cartListState } from '../store/cart';
+import { cartItemQuantityState, cartListCheckoutCostsState, cartListState } from '../store/cart';
 import { errorModalMessageState } from '../store/error';
 import { currentMemberInformationState } from '../store/member';
 import { currentServerState } from '../store/server';
@@ -21,25 +20,14 @@ import { CartItemData } from '../types/cart';
 import { OrderCartItemsData } from '../types/order';
 import { ProductItemData } from '../types/product';
 import { useMutationFetch } from './common/useMutationFetch';
+import { useToast } from './common/useToast';
 
 const useCart = () => {
   const currentServer = useRecoilValue(currentServerState);
   const cartAPI = useMemo(() => getCartAPI(currentServer), [currentServer]);
   const setErrorModalMessage = useSetRecoilState(errorModalMessageState);
+  const { isAdded, setIsAdded } = useToast();
   const navigate = useNavigate();
-
-  const [isAdded, setIsAdded] = useState(false);
-  const timeout = useRef<ReturnType<typeof setTimeout>>();
-
-  useEffect(() => {
-    if (isAdded) {
-      timeout.current && clearTimeout(timeout.current);
-
-      timeout.current = setTimeout(() => {
-        setIsAdded(false);
-      }, TOAST_SHOW_DURATION);
-    }
-  }, [isAdded]);
 
   const refreshCart = useRecoilCallback(
     ({ set }) =>
@@ -83,10 +71,11 @@ const useCart = () => {
     ),
     {
       onSuccess: (cartItem) => {
+        console.log('success');
         setIsAdded(true);
         updateCart(cartItem);
       },
-      onError(error) {
+      onError: (error) => {
         handleCartError(error, CART_API_ERROR_MESSAGE.ADD);
       },
     }
@@ -105,7 +94,7 @@ const useCart = () => {
       [cartAPI]
     ),
     {
-      onError(error) {
+      onError: (error) => {
         handleCartError(error, CART_API_ERROR_MESSAGE.UPDATE);
       },
     }
@@ -122,7 +111,7 @@ const useCart = () => {
       onSuccess: async () => {
         await refreshCart();
       },
-      onError(error) {
+      onError: (error) => {
         handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
       },
     }
@@ -139,7 +128,7 @@ const useCart = () => {
       onSuccess: async () => {
         await refreshCart();
       },
-      onError(error) {
+      onError: (error) => {
         handleCartError(error, CART_API_ERROR_MESSAGE.DELETE);
       },
     }
@@ -149,17 +138,15 @@ const useCart = () => {
     useRecoilCallback(
       ({ snapshot }) =>
         async (cartItemIds) => {
-          const cartList = await snapshot.getPromise(cartListState);
+          const cartListCheckoutCosts = await snapshot.getPromise(cartListCheckoutCostsState);
 
-          const OrderCartItems = cartList.reduce<OrderCartItemsData[]>((acc, curr) => {
-            if (cartItemIds.includes(curr.id)) {
-              acc.push({ cartItemId: curr.id, quantity: curr.quantity });
-            }
+          const orderCartItemsData: OrderCartItemsData = {
+            cartItemIds: [...cartItemIds],
+            ...cartListCheckoutCosts,
+          };
 
-            return acc;
-          }, []);
-
-          const response = await postOrder(currentServer, OrderCartItems);
+          const orderAPI = getOrderAPI(currentServer);
+          const response = await orderAPI.postOrder(orderCartItemsData);
           const orderId = response.headers.get('Location')?.split('/').pop()!;
 
           return orderId;
@@ -170,13 +157,13 @@ const useCart = () => {
       onSuccess: useRecoilCallback(
         ({ refresh }) =>
           async (orderId) => {
+            navigate(`${PATH.ORDER_SUCCESS}?orderId=${orderId}`);
             await refreshCart();
             refresh(currentMemberInformationState);
-            navigate(`${PATH.ORDER_SUCCESS}?orderId=${orderId}`);
           },
         [refreshCart, navigate]
       ),
-      onError(error) {
+      onError: (error) => {
         handleCartError(error, ORDER_API_ERROR_MESSAGE.ADD);
       },
     }

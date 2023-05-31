@@ -25,6 +25,7 @@ const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[SERVER[0]];
 const API_ENDPOINT = {
   PRODUCTS: '/products',
   CART_ITEMS: '/cart-items',
+  CART_COSTS: '/costs',
   ORDERS: '/orders',
   MEMBER: '/member',
   MEMBERS: '/members',

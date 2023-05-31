@@ -1,3 +1,4 @@
+import { SHIPPING_FEE, SHIPPING_FEE_EXEMPTION_CONDITION } from '../constants';
 import { MEMBER_RANK } from '../constants/member';
 import { CartItemData } from '../types/cart';
 import { MemberInformation } from '../types/member';
@@ -13,7 +14,7 @@ const getTotalItemDiscountAmount = (itemList: (CartItemData | OrderedItemData)[]
   }, 0);
 };
 
-const getMemberDiscountAmount = (
+const getTotalMemberDiscountAmount = (
   itemList: (CartItemData | OrderedItemData)[],
   memberInformation: MemberInformation
 ) => {
@@ -26,4 +27,28 @@ const getMemberDiscountAmount = (
   }, 0);
 };
 
-export { getTotalItemDiscountAmount, getMemberDiscountAmount };
+const getTotalItemPrice = (itemList: (CartItemData | OrderedItemData)[]) => {
+  return itemList.reduce((acc, curr) => {
+    return acc + curr.quantity * curr.product.price;
+  }, 0);
+};
+
+const getDiscountedTotalItemPrice = (
+  totalItemDiscountAmount: number,
+  totalMemberDiscountAmount: number,
+  totalItemPrice: number
+) => {
+  return totalItemPrice - totalItemDiscountAmount - totalMemberDiscountAmount;
+};
+
+const getShippingFee = (discountedTotalItemPrice: number) => {
+  return discountedTotalItemPrice > SHIPPING_FEE_EXEMPTION_CONDITION ? 0 : SHIPPING_FEE;
+};
+
+export {
+  getTotalItemDiscountAmount,
+  getTotalMemberDiscountAmount,
+  getTotalItemPrice,
+  getDiscountedTotalItemPrice,
+  getShippingFee,
+};

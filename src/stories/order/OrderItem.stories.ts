@@ -34,6 +34,8 @@ const meta = {
       },
     ],
     orderedAt: new Date(),
+    totalItemDiscountAmount: 0,
+    totalMemberDiscountAmount: 0,
     totalItemPrice: 117600,
     discountedTotalItemPrice: 97320,
     shippingFee: 0,
