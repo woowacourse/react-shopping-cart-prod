@@ -3,13 +3,14 @@ import { baseURLSelector } from '../store/server';
 import { AUTH } from '../constants/auth';
 import { FetchMethod } from '../types/global';
 import { OrderItem } from '../types/requestData';
+import { END_POINTS } from '../constants/endPoints';
 
 const useFetchOrder = () => {
   const baseURL = useRecoilValue(baseURLSelector);
 
   const handleOrders = async (method: FetchMethod, body: {}, id?: number) => {
     const response = await fetch(
-      `${baseURL}/cart-items/order${id ? `/${id}` : ''}`,
+      `${baseURL}${END_POINTS.ORDERS}${id ? `/${id}` : ''}`,
       {
         method,
         body: JSON.stringify(body),
@@ -28,7 +29,10 @@ const useFetchOrder = () => {
   };
 
   const postOrders = async (orderItems: OrderItem[]) => {
-    await handleOrders('POST', { orderItems });
+    await handleOrders('POST', {
+      orderItems,
+      orderTime: new Date().toISOString(),
+    });
   };
 
   return { postOrders };
