@@ -2,64 +2,65 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { hostNameAtom } from '../recoil/hostData';
-import { cartProductAtom } from '../recoil/cartProductData';
-import { checkedItemAtom } from '../recoil/checkedProductData';
+import { cartAtom } from '../recoil/cartProductData';
+import { checkedCartItemIdsAtom } from '../recoil/checkedProductData';
 import { api } from '../apis/cartProducts';
 import type { CartProduct } from '../types/product';
 
 const useCheckedProducts = () => {
   const hostName = useRecoilValue(hostNameAtom);
-  const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
-  const [checkedProducts, setCheckedProducts] = useRecoilState(checkedItemAtom);
+  const [cart, setCart] = useRecoilState(cartAtom);
+  const [checkedCartItemIds, setCheckedCartItemIds] = useRecoilState(
+    checkedCartItemIdsAtom
+  );
 
   const removeCheckedProducts = () => {
-    const selectedProducts = checkedProducts.map(
-      (cartProduct) => cartProduct.cartItemId
+    const updatedCartProducts = cart.cartItems.filter(
+      (item) => !checkedCartItemIds.includes(item.cartItemId)
     );
 
-    setCartProducts(
-      cartProducts.filter(
-        (cartProduct) => !selectedProducts.includes(cartProduct.cartItemId)
-      )
-    );
-    setCheckedProducts(
-      checkedProducts.filter(
-        (cartProduct) => !selectedProducts.includes(cartProduct.cartItemId)
+    setCart({ ...cart, cartItems: updatedCartProducts });
+
+    setCheckedCartItemIds(
+      checkedCartItemIds.filter(
+        (cartItemId) => !checkedCartItemIds.includes(cartItemId)
       )
     );
 
-    selectedProducts.forEach((productId) => {
+    checkedCartItemIds.forEach((cartItemId) => {
       api(hostName).then((apiInstance) => {
-        return apiInstance.deleteCartProduct(productId);
+        return apiInstance.deleteCartProduct(cartItemId);
       });
     });
   };
 
   const handleCheckBoxChange = (cartProduct: CartProduct) => {
-    const updatedCheckedItems = checkedProducts.includes(cartProduct)
-      ? checkedProducts.filter((item) => item !== cartProduct)
-      : [...checkedProducts, cartProduct];
-
-    setCheckedProducts(updatedCheckedItems);
+    if (isCheckedProduct(cartProduct)) {
+      setCheckedCartItemIds(
+        checkedCartItemIds.filter(
+          (cartItemId) => cartItemId !== cartProduct.cartItemId
+        )
+      );
+    } else {
+      setCheckedCartItemIds([...checkedCartItemIds, cartProduct.cartItemId]);
+    }
   };
 
   const handleAllCheckedProducts = () => {
-    if (cartProducts.length === checkedProducts.length) {
-      setCheckedProducts([]);
+    if (cart.cartItems.length === checkedCartItemIds.length) {
+      setCheckedCartItemIds([]);
       return;
     }
-    setCheckedProducts(cartProducts);
+    setCheckedCartItemIds(cart.cartItems.map((item) => item.cartItemId));
   };
 
   const isCheckedProduct = (cartProduct: CartProduct) => {
-    return checkedProducts.includes(cartProduct);
+    return checkedCartItemIds.includes(cartProduct.cartItemId);
   };
 
   useEffect(() => {
-    if (cartProducts.length > 0) {
-      setCheckedProducts(cartProducts);
-    }
-  }, [cartProducts]);
+    setCheckedCartItemIds(cart.cartItems.map((item) => item.cartItemId));
+  }, []);
 
   return {
     removeCheckedProducts,
