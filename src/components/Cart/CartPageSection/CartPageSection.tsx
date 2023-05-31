@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 
@@ -7,6 +6,7 @@ import { useModal } from '../../../hooks/useModal';
 import { cartListState } from '../../../store/cart';
 import { CartItemType } from '../../../types';
 import { priceFormatter } from '../../../utils/formatter';
+import OrderAddition from '../../Order/OrderAddition/OrderAddition';
 import Checkbox from '../../utils/Checkbox/Checkbox';
 import Modal from '../../utils/Modal/Modal';
 import CartItem from '../CartItem/CartItem';
@@ -113,7 +113,7 @@ const CartPageSection = () => {
       </div>
       {isModalOpen && (
         <Modal closeModalByClick={handleModalClose} closeModalByPress={handleModalClosePress}>
-          <div></div>
+          <OrderAddition />
         </Modal>
       )}
     </>
