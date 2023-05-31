@@ -2,14 +2,21 @@ import * as Styled from './CartPriceBox.styles.tsx';
 import { useRecoilValue } from 'recoil';
 import { cartTotalPriceSelector } from '../../../stores/cartListStore.ts';
 import useOrderItems from '../../../hooks/cartItemOperations/useOrderItems.ts';
+import useModal from '../../../hooks/useModal.ts';
+import OrderReviewList from '../../@common/Modal/ModalContents/OrderReviewList/OrderReviewList.tsx';
 
 const CartPriceBox = () => {
   const totalItemPrice = useRecoilValue(cartTotalPriceSelector);
-  const { handleOrderItems } = useOrderItems();
+  const { cartList } = useOrderItems();
+  const { openModal } = useModal();
 
   const handleOrderButton = () => {
-    handleOrderItems();
+    if (!cartList) return;
+    const selectedCartList = cartList.filter((cartItem) => cartItem.isSelected);
+    openModal(<OrderReviewList cartListForReview={selectedCartList} />);
   };
+
+  const discountedPrice = totalItemPrice >= 50000 ? 5000 : totalItemPrice >= 30000 ? 3000 : 0;
 
   return (
     <>
@@ -24,14 +31,18 @@ const CartPriceBox = () => {
                 <Styled.CartPriceText>{totalItemPrice.toLocaleString()}원</Styled.CartPriceText>
               </Styled.PriceTextWrapper>
               <Styled.PriceTextWrapper>
+                <Styled.CartPriceText> ㄴ할인가격</Styled.CartPriceText>
+                <Styled.CartPriceText>-{discountedPrice.toLocaleString()}원</Styled.CartPriceText>
+              </Styled.PriceTextWrapper>
+              <Styled.PriceTextWrapper>
                 <Styled.CartPriceText>총 배송비</Styled.CartPriceText>
                 <Styled.CartPriceText>3,000원</Styled.CartPriceText>
               </Styled.PriceTextWrapper>
               <Styled.PriceTextWrapper>
                 <Styled.CartPriceText>총 주문금액</Styled.CartPriceText>
-                <Styled.CartPriceText>{(totalItemPrice + 3000).toLocaleString()}원</Styled.CartPriceText>
+                <Styled.CartPriceText>{(totalItemPrice + 3000 - discountedPrice).toLocaleString()}원</Styled.CartPriceText>
               </Styled.PriceTextWrapper>
-              <Styled.OrderButton onClick={handleOrderButton}>주문하기</Styled.OrderButton>
+              <Styled.OrderButton onClick={handleOrderButton}>주문 검토하기</Styled.OrderButton>
             </Styled.CartPriceTextWrapper>
           </Styled.CartPriceBoxContent>
         </Styled.CartPriceBoxWrapper>
