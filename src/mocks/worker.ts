@@ -1,5 +1,6 @@
 import { rest } from "msw";
-import products from "./mockData.json";
+import products from "./data/products.json";
+import coupons from "./data/coupons.json";
 import { getCart, addCartItem, setCartItem } from "mocks/server/cart";
 
 export const handlers = [
@@ -44,5 +45,14 @@ export const handlers = [
     setCartItem(Number(cartItemId), 0);
 
     return res(ctx.delay(100), ctx.status(204));
+  }),
+
+  rest.get("*/coupons", (req, res, ctx) => {
+    return res(
+      ctx.delay(500),
+      ctx.status(200),
+      ctx.set("Content-Type", "application/json"),
+      ctx.json(coupons)
+    );
   }),
 ];

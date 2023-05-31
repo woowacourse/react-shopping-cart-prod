@@ -1,4 +1,4 @@
-import products from "mocks/mockData.json";
+import products from "mocks/data/products.json";
 
 const LOCAL_STORAGE_KEY = "server";
 
