@@ -25,19 +25,23 @@ function CouponModalContent({ coupons }: CouponModalContentProps) {
         <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
       </ModalHeader>
       <S.ContentWrapper>
-        {coupons.map(({ discountPercent, couponName, minAmount }) => (
-          <S.Label>
-            <S.Input name='coupon' type='radio' />
-            <S.Coupon>
-              <S.CouponImage src={couponIcon} />
-              <div>
-                <S.DiscountPercentage>{discountPercent}%</S.DiscountPercentage>
-                <S.Name>{couponName}</S.Name>
-                <div>{minAmount === 0 ? '전체 적용 가능' : `${minAmount.toLocaleString()}이상 구매 시 사용 가능`}</div>
-              </div>
-            </S.Coupon>
-          </S.Label>
-        ))}
+        <S.CouponWrapper>
+          {coupons.map(({ discountPercent, couponName, minAmount }) => (
+            <S.Label>
+              <S.Input name='coupon' type='radio' />
+              <S.Coupon>
+                <S.CouponImage src={couponIcon} />
+                <div>
+                  <S.DiscountPercentage>{discountPercent}%</S.DiscountPercentage>
+                  <S.Name>{couponName}</S.Name>
+                  <div>
+                    {minAmount === 0 ? '전체 적용 가능' : `${minAmount.toLocaleString()}이상 구매 시 사용 가능`}
+                  </div>
+                </div>
+              </S.Coupon>
+            </S.Label>
+          ))}
+        </S.CouponWrapper>
         <S.ApplyButton>적용하기</S.ApplyButton>
       </S.ContentWrapper>
     </>

@@ -4,10 +4,18 @@ export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
   border-top: 2px solid #333;
-  padding: 20px 0;
   background-color: #fff;
+`;
+
+export const CouponWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 400px;
+  overflow-y: auto;
+  gap: 20px;
+  margin: 40px 0;
 `;
 
 export const Label = styled.label`
@@ -31,6 +39,7 @@ export const Coupon = styled.div`
   display: flex;
   align-items: center;
   width: 280px;
+  height: 118px;
   padding: 20px;
   margin-right: 32px;
   border: 2px solid #495057;
@@ -57,6 +66,7 @@ export const DiscountPercentage = styled.div`
 `;
 
 export const Name = styled.div`
+  height: 36px;
   font-size: 12px;
   font-weight: 500;
   padding: 4px 0;
