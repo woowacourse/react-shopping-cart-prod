@@ -24,7 +24,7 @@ const Main = styled.main`
 const PageTitle = styled.h2`
   height: 120px;
   padding: 48px 0 0 0;
-  margin: 0 auto;
+  margin: 0 auto 28px;
   text-align: center;
   font-size: 32px;
   font-weight: 600;

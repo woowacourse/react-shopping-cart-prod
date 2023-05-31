@@ -1,8 +1,10 @@
 import { useRecoilValue } from 'recoil';
-import { orderSelector } from '../../states/order';
-import OrderItem from './OrderItem';
 import styled from 'styled-components';
+
+import OrderItem from './OrderItem';
 import Message from '../Common/Message';
+
+import { orderSelector } from '../../states/order';
 
 const OrderList = () => {
   const orders = useRecoilValue(orderSelector);
@@ -21,10 +23,6 @@ const OrderList = () => {
 };
 
 const OrderListContainer = styled.div`
-  & > * {
-    margin: 24px 0 0 0;
-  }
-
   & > * + * {
     margin: 48px 0 0 0;
   }

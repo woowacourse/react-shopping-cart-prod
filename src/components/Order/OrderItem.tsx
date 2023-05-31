@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
 import OrderedProductList from './OrderedProductList';
@@ -11,12 +11,15 @@ interface OrderItemProps {
 
 const OrderItem = ({ order }: OrderItemProps) => {
   const { orderId, orderItems } = order;
+  const params = useParams();
 
   return (
     <section>
       <OrderTitle>
         <p>주문 번호: {orderId}</p>
-        <Link to={`${orderId}`}>상세보기 &gt;</Link>
+        {params.orderId === undefined && (
+          <Link to={`${orderId}`}>상세보기 &gt;</Link>
+        )}
       </OrderTitle>
       <OrderedProductList orderItems={orderItems} />
     </section>
