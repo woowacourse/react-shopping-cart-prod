@@ -9,7 +9,7 @@ const CartTextButton = () => {
   return (
     <Container>
       <ShoppingCart>Cart</ShoppingCart>
-      {cartsQuantity ? <CartQuantity>{cartsQuantity}</CartQuantity> : null}
+      {Boolean(cartsQuantity) && <CartQuantity>{cartsQuantity}</CartQuantity>}
     </Container>
   );
 };

@@ -3,6 +3,7 @@ import { WIDTH } from '../styles/mediaQuery';
 import { useRecoilValue } from 'recoil';
 import OrderCard from '../components/OrderCard/OrderCard';
 import { orderAtom } from '../store/order';
+import Title from '../components/common/Title';
 
 const OrderListPage = () => {
   const orders = useRecoilValue(orderAtom);
@@ -50,23 +51,6 @@ const Wrapper = styled.div`
 
   @media (max-width: ${WIDTH.LG}) {
     justify-content: start;
-  }
-`;
-
-const Title = styled.div`
-  width: 70%;
-
-  padding: 16px;
-
-  text-align: center;
-  font-weight: 300;
-  font-size: 32px;
-
-  border-bottom: 1px solid #333333;
-
-  @media (max-width: ${WIDTH.LG}) {
-    padding: 4px;
-    font-size: 24px;
   }
 `;
 

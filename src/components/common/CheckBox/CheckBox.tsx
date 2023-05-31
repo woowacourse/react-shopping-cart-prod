@@ -11,7 +11,7 @@ const CheckBox = styled.input.attrs({ type: 'checkbox' })`
   background-image: url(${UncheckedImage});
   background-size: cover;
 
-  transition: all 0.5s ease;
+  transition: all 0.2s ease;
 
   &:checked {
     border: 1px solid var(--main-bg-color);

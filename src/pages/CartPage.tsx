@@ -4,6 +4,7 @@ import CartItemList from '../components/CartItemList/CartItemList';
 import { useRecoilValue } from 'recoil';
 import { cartSelector } from '../store/cart';
 import { WIDTH } from '../styles/mediaQuery';
+import Title from '../components/common/Title';
 
 const CartPage = () => {
   const { cartsQuantity } = useRecoilValue(cartSelector);
@@ -53,23 +54,6 @@ const EmptyCart = styled.div`
 
   @media (max-width: ${WIDTH.MD}) {
     height: 100px;
-    font-size: 24px;
-  }
-`;
-
-const Title = styled.div`
-  width: 70%;
-
-  padding: 16px;
-
-  text-align: center;
-  font-weight: 200;
-  font-size: 32px;
-
-  border-bottom: 1px solid #333333;
-
-  @media (max-width: ${WIDTH.LG}) {
-    padding: 4px;
     font-size: 24px;
   }
 `;
