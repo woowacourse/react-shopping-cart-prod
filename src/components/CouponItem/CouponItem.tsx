@@ -30,15 +30,14 @@ const CouponItem = ({ information }: { information: UsableCouponType }) => {
         </p>
       </div>
 
-      {information.isPublished || isPublish ? (
-        <button type="button" className={styles.useCoupon} disabled>
-          사용하기
-        </button>
-      ) : (
-        <button type="button" className={styles.useCoupon} onClick={onClickCouponItem}>
-          사용하기
-        </button>
-      )}
+      <button
+        type="button"
+        className={styles.useCoupon}
+        disabled={information.isPublished || isPublish}
+        onClick={onClickCouponItem}
+      >
+        사용하기
+      </button>
     </div>
   );
 };
