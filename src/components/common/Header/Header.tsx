@@ -1,42 +1,16 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import {
-  useRecoilRefresher_UNSTABLE,
-  useRecoilState,
-  useRecoilValue,
-  useResetRecoilState,
-} from 'recoil';
-import { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
 import CartIcon from '../../../assets/icons/CartIcon';
-import { BASE_URL } from '../../../constant';
-import serverNameState from '../../../globalState/atoms/serverName';
-import { isProperServerName } from '../../../types/server';
-import cartState from '../../../globalState/atoms/cartState';
 import getCartLength from '../../../globalState/selectors/getCartLength';
-import fetchCartItems from '../../../globalState/selectors/fetchCartItems';
+import ServerSelector from './ServerSelector';
 
 const Header = () => {
   const navigate = useNavigate();
   const cartLength = useRecoilValue(getCartLength);
-  const [serverName, setServerName] = useRecoilState(serverNameState);
-  const resetCart = useResetRecoilState(cartState);
-  const resetCartFetcher = useRecoilRefresher_UNSTABLE(fetchCartItems);
-
-  useEffect(() => {
-    resetCartFetcher();
-    resetCart();
-  }, [serverName]);
 
   const handleLogoClick = () => {
     navigate('/');
-  };
-
-  const handleServerNameSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const selectedServerName = event.target.value;
-
-    if (!isProperServerName(selectedServerName)) return;
-
-    setServerName(selectedServerName);
   };
 
   const handleCartButtonClick = () => {
@@ -50,11 +24,7 @@ const Header = () => {
         <Title>SHOP</Title>
       </Logo>
       <RightContainer>
-        <select onChange={handleServerNameSelectChange} value={serverName}>
-          {Object.keys(BASE_URL).map((serverNameOption) => (
-            <option key={serverNameOption}>{serverNameOption}</option>
-          ))}
-        </select>
+        <ServerSelector />
         <CartButton onClick={handleCartButtonClick}>
           <p>장바구니</p>
           <CartTotalQuantity>{cartLength}</CartTotalQuantity>
