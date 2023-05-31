@@ -9,6 +9,10 @@ export const Container = styled.div`
   margin: 0 auto;
   max-width: 100%;
 
+  @media screen and (max-width: 370px) {
+    padding: 0;
+  }
+
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     max-width: 540px;
   }

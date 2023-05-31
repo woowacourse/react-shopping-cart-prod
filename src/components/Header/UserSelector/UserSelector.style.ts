@@ -7,8 +7,8 @@ export const Wrapper = styled.div`
 `;
 
 export const UserProfileButton = styled.button`
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   overflow: hidden;
   cursor: pointer;
