@@ -11,3 +11,10 @@ export interface CartItemType {
   product: ProductItemType;
   isChecked: boolean;
 }
+
+export interface CouponItemType {
+  couponId: number;
+  couponName: string;
+  minAmount: string;
+  isPublished: boolean;
+}

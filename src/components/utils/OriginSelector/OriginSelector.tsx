@@ -7,7 +7,6 @@ import styles from './style.module.css';
 
 const OriginSelector = () => {
   const [origin, setOrigin] = useRecoilState(originState);
-  console.log(origin);
   const onChangeOrigin = (e: ChangeEvent<HTMLSelectElement>) => {
     setOrigin(ORIGIN[e.target.value]);
   };

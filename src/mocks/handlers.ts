@@ -28,6 +28,31 @@ export const handlers = [
     );
   }),
 
+  rest.get('/coupons', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.delay(1000),
+      ctx.json([
+        {
+          couponId: 1,
+          couponName: '오늘만 10%할인 쿠폰',
+          minAmount: '15000',
+          isPublished: false,
+        },
+        {
+          couponId: 2,
+          couponName: '사장님이 미쳤어요! 99%할인 쿠폰',
+          minAmount: '999999999',
+          isPublished: true,
+        },
+      ])
+    );
+  }),
+
+  rest.post('/coupons/:id', (req, res, ctx) => {
+    return res(ctx.status(201), ctx.delay(1000));
+  }),
+
   rest.patch<PostCartItemId>('/cart-items/:cartItemId', async (req, res, ctx) => {
     const { cartItemId } = await req.params;
 
@@ -59,7 +84,7 @@ export const handlers = [
     return res(ctx.status(204), ctx.delay(500));
   }),
 
-  rest.post('/cart-items', async (req, res, ctx) => {
+  rest.post('/cart-items', (req, res, ctx) => {
     return res(ctx.status(201), ctx.delay(500));
   }),
 ];

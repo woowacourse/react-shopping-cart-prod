@@ -1,25 +1,53 @@
+import { useCallback } from 'react';
+import { useMutation, useQuery } from 'react-query';
+import { useRecoilValue } from 'recoil';
+
+import useCoupon from '../../../hooks/useCoupon';
+import { couponListState } from '../../../store/coupon';
+import { CouponItemType } from '../../../types';
+import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
 import styles from './style.module.css';
 
-{
-  /* <button disabled className={styles.usedCouponText}>
-          발급완료
-        </button> */
-}
-
 const CouponListSection = () => {
+  const coupons = useRecoilValue(couponListState);
+  const { fetchCouponList, publishCoupon } = useCoupon();
+  const { isLoading } = useQuery<CouponItemType[]>('couponList', fetchCouponList);
+  const { mutate: publishCouponMutation, isLoading: publishCouponLoading } =
+    useMutation(publishCoupon);
+
+  const handlePublishCoupon = useCallback(() => {
+    publishCouponMutation(1);
+  }, [publishCouponMutation]);
+
+  if (isLoading) return <LoadingSpinner />;
   return (
     <>
-      <div className={styles.CouponBox}>
-        <div className={styles.CouponItem}>
-          <h1>오늘만 10%할인 쿠폰</h1>
-          <div>최소 주문금액 15000원</div>
-        </div>
-        <div>
-          <button type="button" className={styles.getCouponButton}>
-            발급받기
-          </button>
-        </div>
-      </div>
+      {publishCouponLoading && <LoadingSpinner />}
+      {coupons.map((item) => {
+        return (
+          <div className={styles.CouponBox}>
+            <div className={styles.CouponItem}>
+              <h1>{item.couponName}</h1>
+              <div>최소 주문금액 {item.minAmount}원</div>
+            </div>
+            <div>
+              {item.isPublished ? (
+                <button type="button" disabled className={styles.usedCouponText}>
+                  발급완료
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className={styles.getCouponButton}
+                  onClick={handlePublishCoupon}
+                >
+                  발급받기
+                </button>
+              )}
+            </div>
+          </div>
+        );
+      })}
     </>
   );
 };
