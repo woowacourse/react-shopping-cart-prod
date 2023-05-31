@@ -9,11 +9,10 @@ const reset = css`
 
   body {
     background-color: ${({ theme }) => theme.colors.white};
-    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR';
-    color: ${({ theme }) => theme.colors.black};
   }
 
   a {
+    color: ${({ theme }) => theme.colors.black};
     text-decoration: none;
     outline: none;
   }
