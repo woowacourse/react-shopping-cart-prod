@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { cartCountSelector } from '../../recoil/cartAtoms';
 import ServerSelectBox from './ServerSelectBox/ServerSelectBox.tsx';
 import UserSelector from './UserSelector/UserSelector.tsx';
+import { PAGE_PATH } from '../../constants/path.ts';
 
 function Header() {
   const navigate = useNavigate();
@@ -15,18 +16,18 @@ function Header() {
     <S.HeaderWrapper>
       <Container>
         <S.HeaderContent>
-          <S.LogoWrapper onClick={() => navigate('/')}>
+          <S.LogoWrapper onClick={() => navigate(PAGE_PATH.HOME)}>
             <S.LogoImage src={titleLogo} />
           </S.LogoWrapper>
           <S.NavBar>
             <ServerSelectBox />
-            <S.CartWrapper onClick={() => navigate('/cart')}>
+            <S.CartWrapper onClick={() => navigate(PAGE_PATH.CART)}>
               <S.CartTitle>장바구니</S.CartTitle>
               <S.CartCountWrapper>
                 <S.CartCount>{cartCount}</S.CartCount>
               </S.CartCountWrapper>
             </S.CartWrapper>
-            <S.OrderListButton onClick={() => navigate('/order')}>주문목록</S.OrderListButton>
+            <S.OrderListButton onClick={() => navigate(PAGE_PATH.ORDER)}>주문목록</S.OrderListButton>
             <UserSelector />
           </S.NavBar>
         </S.HeaderContent>

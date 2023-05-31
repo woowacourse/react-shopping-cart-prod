@@ -1,6 +1,6 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
-import mockData from '../assets/mockData.json';
+import mockData from '../mocks/mockData.json';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 import { CartItem } from '../types/types';
 

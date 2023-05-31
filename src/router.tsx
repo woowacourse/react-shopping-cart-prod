@@ -4,17 +4,18 @@ import { Cart } from './pages/Cart';
 import { Order } from './pages/Order';
 import { OrderDetail } from './pages/OrderDetail';
 import { Layout } from './components/Layout';
+import { PAGE_PATH } from './constants/path';
 
 const router = createBrowserRouter(
   [
     {
-      path: '/',
+      path: PAGE_PATH.HOME,
       element: <Layout />,
       children: [
-        { path: '/', element: <Home /> },
-        { path: '/cart', element: <Cart /> },
-        { path: '/order', element: <Order /> },
-        { path: '/order/:orderId', element: <OrderDetail /> },
+        { path: PAGE_PATH.HOME, element: <Home /> },
+        { path: PAGE_PATH.CART, element: <Cart /> },
+        { path: PAGE_PATH.ORDER, element: <Order /> },
+        { path: PAGE_PATH.ORDER_DETAIL, element: <OrderDetail /> },
       ],
     },
   ],
