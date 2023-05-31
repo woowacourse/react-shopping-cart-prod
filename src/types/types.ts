@@ -30,4 +30,17 @@ interface OrderItem {
   imageUrl: string;
 }
 
-export type { ProductItem, ReceivedCartItem, CartItem, NewCartItem, OrderItem };
+interface Coupon {
+  couponName: string;
+  discountPercent: number;
+  minAmount: number;
+}
+
+export type {
+  ProductItem,
+  ReceivedCartItem,
+  CartItem,
+  NewCartItem,
+  OrderItem,
+  Coupon,
+};

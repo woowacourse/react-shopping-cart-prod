@@ -10,7 +10,7 @@ export const Text = styled.div`
   padding-right: 24px;
   font-weight: 700;
   font-size: 16px;
-  line-height: 27px;
+  line-height: 34px;
   letter-spacing: 0.5px;
 `;
 
@@ -28,9 +28,7 @@ export const PointWrapper = styled.div`
 export const Label = styled.label`
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex: 1;
-  padding-right: 20px;
+  width: 52px;
   font-weight: 700;
   font-size: 16px;
   line-height: 27px;
@@ -41,6 +39,7 @@ export const Input = styled.input`
   flex: 1;
   text-align: end;
   padding: 8px 15px 9px;
+  margin-right: 12px;
   border: 1px solid ${({ theme }) => theme.color.secondary};
   border-radius: 4px;
 `;
