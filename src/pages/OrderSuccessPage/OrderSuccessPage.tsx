@@ -26,7 +26,7 @@ const OrderSuccessPage = () => {
       </S.SuccessMessageHeading>
       <S.OrderSuccessIdText>주문번호 {orderId}</S.OrderSuccessIdText>
       <S.HomeButton variant="primary" onClick={() => navigate(PATH.ROOT)}>
-        홈으로 이동하기
+        쇼핑 계속하기
       </S.HomeButton>
       <S.OrderDetailButton variant="secondary" onClick={handleOrderDetailButtonClick}>
         주문내역 상세보기
