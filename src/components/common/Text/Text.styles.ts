@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export interface TextProps {
-  size?: 'xSmall' | 'small' | 'medium' | 'large';
+  size?: 'xLarge' | 'xSmall' | 'small' | 'medium' | 'large';
 }
 
 const getSizeStyling = (size: Required<TextProps>['size']) => {
