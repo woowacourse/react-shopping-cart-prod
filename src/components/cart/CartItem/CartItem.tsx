@@ -63,9 +63,9 @@ const CartItem = ({
           handleCountChange={handleQuantityChange}
         />
         <S.CartItemPriceContainer>
-          <S.CustomerPrice>{priceFormatter(discountedPrice)}원</S.CustomerPrice>
+          <S.CustomerPrice>{priceFormatter(discountedPrice * quantity)}원</S.CustomerPrice>
           {discountRate > 0 && (
-            <S.OriginalPrice size="small">{priceFormatter(price)}원</S.OriginalPrice>
+            <S.OriginalPrice size="small">{priceFormatter(price * quantity)}원</S.OriginalPrice>
           )}
         </S.CartItemPriceContainer>
         <S.CartItemDeleteButton
