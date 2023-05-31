@@ -1,6 +1,6 @@
 import { selectorFamily } from 'recoil';
 import { toggleSelectCartItem } from '@utils/cart/cart';
-import cartState from './cartState';
+import cartState from '../cartState';
 
 const withItemCheckBy = selectorFamily<boolean, number>({
   key: 'cartItemCheckedState',
