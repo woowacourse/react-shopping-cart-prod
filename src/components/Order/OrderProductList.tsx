@@ -1,73 +1,84 @@
+import { useRecoilValue } from 'recoil';
+
 import styled from 'styled-components';
 
 import OrderProductItem from './OrderProductItem';
+import { orderAtom } from '../../recoil/orderProductData';
 
 const OrderProductList = () => {
-  const orderListExample = [
-    {
-      orderId: 1,
-      orderDateTime: '2023-05-24 08:30:21',
-      orderItems: [
-        // 최대 2개
-        {
-          quantity: 5,
-          product: {
-            productId: 1,
-            price: 10000,
-            name: '치킨',
-            imageUrl: 'http://example.com/chicken.jpg',
-            stock: 12,
-          },
-        },
-        {
-          quantity: 1,
-          product: {
-            productId: 2,
-            price: 20000,
-            name: '피자',
-            imageUrl: 'http://example.com/pizza.jpg',
-            stock: 11,
-          },
-        },
-      ],
-      totalPrice: 40500, // 총 주문 금액
-    },
-    {
-      orderId: 2,
-      orderDateTime: '2023-05-24 08:30:21',
-      orderItems: [
-        {
-          quantity: 5,
-          product: {
-            productId: 1,
-            price: 10000,
-            name: '치킨',
-            imageUrl: 'http://example.com/chicken.jpg',
-            stock: 12,
-          },
-        },
-        {
-          quantity: 1,
-          product: {
-            productId: 2,
-            price: 20000,
-            name: '피자',
-            imageUrl: 'http://example.com/pizza.jpg',
-            stock: 6,
-          },
-        },
-      ],
-      totalPrice: 40500,
-    },
-  ];
+  const orders = useRecoilValue(orderAtom);
+  console.log(orders);
+
+  if (orders.length === 0) return <EmptyOrder>장바구니가 비었어요</EmptyOrder>;
 
   return (
-    <div>
-      {orderListExample[0].orderItems.map((item) => (
-        <OrderProductItem orderProduct={item} />
-      ))}
-    </div>
+    <Wrapper>
+      {orders &&
+        orders.map((order) => (
+          <OrderContent key={order.orderId}>
+            <OrderInfo>
+              <p>주문번호: {order.orderId}</p>
+              <DetailButton>상세보기 &#62;</DetailButton>
+            </OrderInfo>
+            <ContentListWrapper>
+              {order.orderItems.map((item, index) => (
+                <OrderProductItem key={index} orderProduct={item} />
+              ))}
+            </ContentListWrapper>
+          </OrderContent>
+        ))}
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+`;
+
+const OrderInfo = styled.div`
+  width: 100%;
+  height: 92px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: #f6f6f6;
+
+  padding: 40px;
+
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  /* or 120% */
+
+  letter-spacing: 0.5px;
+`;
+
+const OrderContent = styled.div`
+  margin-bottom: 70px;
+  border: 1px solid #aaaaaa;
+`;
+
+const DetailButton = styled.button`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  /* or 120% */
+
+  letter-spacing: 0.5px;
+  cursor: pointer;
+`;
+
+const ContentListWrapper = styled.div``;
+
+const EmptyOrder = styled.p`
+  margin: 40px 0;
+`;
 
 export default OrderProductList;
