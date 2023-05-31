@@ -60,15 +60,18 @@ const Bill = () => {
           총 상품가격 <span>₩ {totalProductAmount.toLocaleString()}</span>
         </Detail>
         <Detail>
-          할인 금액 <span>− ₩ {discount.toLocaleString()}</span>
+          할인 금액 <span> ₩ {discount.toLocaleString()}</span>
         </Detail>
         <Detail>
-          배송비 <span>₩ {DELIVERY_FEE.toLocaleString()}</span>
+          배송비{' '}
+          <span>₩ {totalProductAmount && DELIVERY_FEE.toLocaleString()}</span>
         </Detail>
         <TotalAmount>
           총 주문금액
           <span>
-            ₩ {(totalProductAmount + DELIVERY_FEE - discount).toLocaleString()}
+            ₩{' '}
+            {totalProductAmount &&
+              (totalProductAmount + DELIVERY_FEE - discount).toLocaleString()}
           </span>
         </TotalAmount>
         <MessageWrapper>

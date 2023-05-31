@@ -30,7 +30,7 @@ const OrderDetailPage = () => {
         <SubTitle>결제금액 정보</SubTitle>
         <DetailWrapper>
           <SubPrice>총 상품 금액 : ₩ {productPrice.toLocaleString()}</SubPrice>
-          <SubPrice>할인 금액 : - ₩ {discountPrice.toLocaleString()}</SubPrice>
+          <SubPrice>할인 금액 : ₩ {discountPrice.toLocaleString()}</SubPrice>
           <SubPrice>배송비 : ₩ {deliveryFee.toLocaleString()}</SubPrice>
           <TotalPrice>
             총 결제 금액 : ₩ {totalPrice.toLocaleString()}
