@@ -5,18 +5,16 @@
   row-gap: 32px;
   letter-spacing: 0.5px;
   width: 90%;
-
-  color: #333333;
 }
 
 .title {
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 37px;
+  font-family: 'SUIT-Bold';
+  font-size: 26px;
+  line-height: 26px;
+  text-align: center;
   width: 100%;
 
-  padding: 28px 0;
-  border-bottom: 4px solid var(--primary-color);
+  padding: 28px;
 }
 
 .order-list {

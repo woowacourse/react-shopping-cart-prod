@@ -1,7 +1,7 @@
 .container {
   display: grid;
   grid-template-columns: repeat(4, 242px);
-  gap: 72px 48px;
+  gap: 32px 24px;
 }
 
 @media screen and (max-width: 1124px) {

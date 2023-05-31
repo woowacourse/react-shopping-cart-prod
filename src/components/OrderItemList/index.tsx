@@ -14,9 +14,13 @@ function OrderItemList({ orderItemList, orderNumber }: OrderItemListProps) {
   return (
     <div className={styles.container}>
       <div className={styles['list-title']}>
-        <span>주문번호: {orderNumber}</span>
+        <div>
+          <span>주문번호: {orderNumber}</span> | <span>구매 일시: {Date.now()}</span>
+        </div>
         <Link to={path}>
-          <button type="button">상세보기{'>'}</button>
+          <button type="button" className={styles['show-detail-button']}>
+            상세보기{'>'}
+          </button>
         </Link>
       </div>
       <li className={styles.list}>

@@ -8,7 +8,7 @@ function OrderItem({ name, totalPrice, quantity, imageUrl }: OrderProduct) {
       <div className={styles.information}>
         <h3>{name}</h3>
         <p>
-          {totalPrice}원 / 수량 : {quantity}개{' '}
+          {totalPrice}원 | {quantity}개{' '}
         </p>
       </div>
     </ul>
