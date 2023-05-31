@@ -1,9 +1,16 @@
 import { atom } from 'recoil';
-import { ProductItemType } from '../types';
+
+type OrderProductItemType = {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+};
 
 export type OrderItemType = {
   id: number;
-  products: ProductItemType[];
+  products: OrderProductItemType[];
 };
 
 export const orderListState = atom<OrderItemType[]>({

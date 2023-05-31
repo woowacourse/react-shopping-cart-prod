@@ -3,6 +3,7 @@ import { rest } from 'msw';
 import { CART_LIST_LOCAL_STORAGE_KEY } from '../constants';
 import initialData from '../data/mockData.json';
 import initialOrderData from '../data/mockOrderData.json';
+import initialUserCouponData from '../data/mockUserCoupon.json';
 import { CartItemType } from '../types';
 
 interface PostCartItemId {
@@ -18,6 +19,10 @@ export const handlers = [
 
   rest.get('/order-items', (req, res, ctx) => {
     return res(ctx.status(200), ctx.delay(1500), ctx.json(initialOrderData));
+  }),
+
+  rest.get('/coupons', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.delay(1500), ctx.json(initialUserCouponData));
   }),
 
   rest.get('/order-items/:id', (req, res, ctx) => {
@@ -55,6 +60,10 @@ export const handlers = [
       ctx.delay(1000),
       ctx.json([{ error: '카트 목록이 존재하지 않습니다.' }])
     );
+  }),
+
+  rest.post('/coupons/:id', (req, res, ctx) => {
+    return res(ctx.status(201), ctx.delay(500));
   }),
 
   rest.patch<PostCartItemId>('/cart-items/:cartItemId', async (req, res, ctx) => {

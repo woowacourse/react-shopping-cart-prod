@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { SetterOrUpdater } from 'recoil';
-import { OrderItemType } from '../store/order';
 
+import { OrderItemType } from '../store/order';
 import { CartItemType, ProductItemType } from '../types';
 import { isFailureHttpStatus, isSuccessHttpStatus } from '../utils/httpStatusValidator';
+import { UsableCouponType } from './../store/coupon';
 
 type fetchResult = boolean | null;
 
@@ -13,6 +14,7 @@ export const useFetch = <T>(
     | SetterOrUpdater<CartItemType[]>
     | SetterOrUpdater<OrderItemType[]>
     | SetterOrUpdater<OrderItemType>
+    | SetterOrUpdater<UsableCouponType[]>
 ) => {
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(true);

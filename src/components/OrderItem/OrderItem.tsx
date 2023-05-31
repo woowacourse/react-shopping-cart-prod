@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import NextIcon from '../../assets/next-icon.svg';
 import { OrderItemType } from '../../store/order';
 import styles from './style.module.css';
-import NextIcon from '../../assets/next-icon.svg';
-import { useNavigate } from 'react-router-dom';
-import { useCallback } from 'react';
 
 type OrderItemProps = {
   information: OrderItemType;
@@ -39,7 +40,7 @@ const OrderItem = ({ information, isDetail }: OrderItemProps) => {
                 <img className={styles.cartImage} src={product.imageUrl} alt="고기임" />
                 <div className={styles.productInfo}>
                   <p className={styles.productName}>{product.name}</p>
-                  <div className={styles.productPrice}>수량: {product.price}개</div>
+                  <div className={styles.productPrice}>수량: {product.quantity}개</div>
                 </div>
                 <div className={styles.itemCountDatas}></div>
               </div>

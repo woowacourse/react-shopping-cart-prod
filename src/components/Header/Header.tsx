@@ -4,8 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import CartIcon from '../../assets/cart-icon.svg';
-import OrderIcon from '../../assets/order-icon.svg';
+import CouponIcon from '../../assets/coupon-icon.svg';
 import Logo from '../../assets/logo.png';
+import OrderIcon from '../../assets/order-icon.svg';
 import { useFetch } from '../../hooks/useFetch';
 import { cartListState } from '../../store/cart';
 import { originState } from '../../store/origin';
@@ -33,6 +34,10 @@ const Header = () => {
 
   const navigateToOrderPage = useCallback(() => {
     navigate('/orderList');
+  }, []);
+
+  const navigateToCouponPage = useCallback(() => {
+    navigate('/coupon');
   }, []);
 
   return (
@@ -63,6 +68,15 @@ const Header = () => {
               onClick={navigateToOrderPage}
             />
             <span className={styles.label}>주문목록</span>
+          </button>
+          <button type="button">
+            <img
+              src={CouponIcon}
+              alt="coupon icon"
+              className={styles.cartIcon}
+              onClick={navigateToCouponPage}
+            />
+            <span className={styles.label}>쿠폰 발급</span>
           </button>
         </div>
       </div>
