@@ -1,28 +1,46 @@
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import styled from '@emotion/styled';
+
+import { useCartFetch } from '../../hooks/useCartFetch';
+import useOrderFetch from '../../hooks/useOrderFetch';
+import useCouponFetch from '../../hooks/useCouponFetch';
+import { useCouponModal } from '../../hooks/useCouponModal';
+
 import TotalPriceBox from '../box/TotalPriceBox/TotalPriceBox';
 import { Text } from '../common/Text/Text';
 import CartList from '../list/CartList/CartList';
 import PageTemplate from '../templates/PageTemplate';
-import styled from '@emotion/styled';
 import ConfirmModal from '../ConfirmModal/ConfirmModal';
 import DeleteCartItemModal from '../ConfirmModal/DeleteCartItemModal';
-import { useCartFetch } from '../../hooks/useCartFetch';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import { checkCartListState, couponState } from '../../service/atom';
 import Button from '../common/Button/Button';
 import CouponModal from '../CouponModal/CouponModal';
 import ApplyCouponModal from '../CouponModal/ApplyCouponModal';
-import { useCouponModal } from '../../hooks/useCouponModal';
-import useCouponFetch from '../../hooks/useCouponFetch';
-import { useEffect } from 'react';
 import { PERCENTAGE } from '../../abstract/constants';
 import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
 
 const CartPage = () => {
   const { cartData, isFetching } = useCartFetch();
-  const { userCoupon } = useCouponFetch();
+  const { userCoupon, userCouponRefetch } = useCouponFetch();
+  const { addOrderDataAPI } = useOrderFetch();
   const { openModal } = useCouponModal();
-  const checkCartList = useRecoilValue(checkCartListState);
+  const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
   const [coupon, setCoupon] = useRecoilState(couponState);
+
+  const orderCart = () => {
+    addOrderDataAPI({ selectCartIds: checkCartList, couponId: coupon.id ? coupon.id : null });
+    setCheckCartList([]);
+    setCoupon({
+      id: 0,
+      name: '',
+      discountType: PERCENTAGE,
+      discountRate: 0.0,
+      discountAmount: 0,
+      minimumPrice: 0,
+    });
+    userCouponRefetch();
+  };
 
   const calcTotalPrice = () => {
     return checkCartList.reduce((prev, curr) => {
@@ -38,7 +56,7 @@ const CartPage = () => {
   useEffect(() => {
     if (calcTotalPrice() === 0 || coupon.minimumPrice > calcTotalPrice())
       setCoupon({
-        id: -1,
+        id: 0,
         name: '',
         discountType: PERCENTAGE,
         discountRate: 0.0,
@@ -78,7 +96,8 @@ const CartPage = () => {
                 totalProductPrice={calcTotalPrice()}
                 shippingFee={checkCartList.length > 0 ? 3000 : 0}
                 isValid={checkCartList.length > 0}
-                coupon={coupon.id > 0 ? coupon : undefined}
+                coupon={coupon.id ? coupon : undefined}
+                onOrder={orderCart}
               />
             </PriceBox>
           </CartPageContent>

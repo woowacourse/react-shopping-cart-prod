@@ -8,6 +8,7 @@ import { Text } from '../../common/Text/Text';
 interface TotalPriceBoxProps {
   totalProductPrice: number;
   shippingFee: number;
+  onOrder: () => void;
   coupon?: CouponType;
   isValid?: boolean;
 }
@@ -15,6 +16,7 @@ interface TotalPriceBoxProps {
 const TotalPriceBox = ({
   totalProductPrice,
   shippingFee,
+  onOrder,
   coupon = undefined,
   isValid = true,
 }: TotalPriceBoxProps) => {
@@ -46,6 +48,7 @@ const TotalPriceBox = ({
           isValid={isValid}
           text={isValid ? `${totalPrice}원 주문하기` : '상품을 선택해주세요.'}
           width="100%"
+          onClick={onOrder}
         />
       </BoxInner>
     </TotalPriceBoxWrapper>

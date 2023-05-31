@@ -30,7 +30,7 @@ const ProductItem = ({ product }: { product: ProductType }) => {
   }, [cartItemData]);
 
   useEffect(() => {
-    const mutateCartItem = async () => {
+    const fetchCartData = async () => {
       if (cartData) {
         if (cartItemData && cartItemData.quantity !== quantity) {
           if (quantity > 0) {
@@ -44,7 +44,7 @@ const ProductItem = ({ product }: { product: ProductType }) => {
         }
       }
     };
-    mutateCartItem();
+    fetchCartData();
   }, [quantity]);
 
   return (

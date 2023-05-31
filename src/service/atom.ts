@@ -17,7 +17,7 @@ export const checkCartListState = atom<number[]>({
 export const couponState = atom<CouponType>({
   key: 'coupon',
   default: {
-    id: -1,
+    id: 0,
     name: '',
     discountType: PERCENTAGE,
     discountRate: 0.0,
