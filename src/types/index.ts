@@ -22,7 +22,7 @@ export interface CouponItemType {
 export interface OrderItemType {
   id: number;
   name: string;
-  imageUrl: string;
+  imgUrl: string;
   price: number;
   quantity: number;
 }

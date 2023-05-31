@@ -5,6 +5,7 @@ const OrderInformationPageSection = () => {
     <>
       <div className={styles.OrderListHeader}>주문 내역 상세</div>
       <hr className={styles.hr} />
+
       <div className={styles.OrderItemBox}>
         <div className={styles.OrderItemHeader}>
           <div>주문번호: 1</div>

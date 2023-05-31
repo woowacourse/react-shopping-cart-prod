@@ -1,12 +1,20 @@
 import { useCallback } from 'react';
+import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import { ORDER_INFORMATION_PAGE_LOCATE } from '../../../constants';
+import useOrders from '../../../hooks/useOrders';
+import { orderListState } from '../../../store/order';
+import { OrderItemListType } from '../../../types';
+import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
 import styles from './style.module.css';
 
-const mockData = ['', '', ''];
-
 const OrderPageSection = () => {
+  const orderList = useRecoilValue(orderListState);
+  const { fetchOrderList } = useOrders();
+  const { isLoading } = useQuery<OrderItemListType[]>('couponList', fetchOrderList);
+
   const navigate = useNavigate();
 
   const navigateToOrderInformationPage = useCallback(() => {
@@ -17,35 +25,29 @@ const OrderPageSection = () => {
     <>
       <div className={styles.OrderListHeader}>주문목록</div>
       <hr />
-      {mockData.map((item, index) => {
+      {isLoading && <LoadingSpinner />}
+      {orderList.map((listItem) => {
         return (
-          <div className={styles.OrderItemBox}>
+          <div className={styles.OrderItemBox} key={listItem.id}>
             <div className={styles.OrderItemHeader}>
-              <div>주문번호: {index + 1}</div>
+              <div>주문번호: {listItem.id}</div>
               <button type="button" onClick={navigateToOrderInformationPage}>
                 상세보기
               </button>
             </div>
-            <div className={styles.OrderItemData}>
-              <img
-                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80"
-                alt="상품예시"
-              />
-              <div>
-                <div>친환경 실링용기-ECO 19153</div>
-                <div>180,600원 / 수량 : 3개</div>
-              </div>
-            </div>
-            <div className={styles.OrderItemData}>
-              <img
-                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80"
-                alt="상품예시"
-              />
-              <div>
-                <div>친환경 실링용기-ECO 19153</div>
-                <div>180,600원 / 수량 : 3개</div>
-              </div>
-            </div>
+            {listItem.products.map((item) => {
+              return (
+                <div className={styles.OrderItemData} key={item.id}>
+                  <img src={item.imgUrl} alt="상품예시" />
+                  <div>
+                    <div>{item.name}</div>
+                    <div>
+                      {item.price}원 / 수량 : {item.quantity}개
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         );
       })}
