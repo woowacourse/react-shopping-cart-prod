@@ -1,8 +1,7 @@
-import { ChangeEventHandler } from 'react';
+import type { ChangeEventHandler } from 'react';
 import { useSetRecoilState } from 'recoil';
-
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import SelectBox from './SelectBox';
 
@@ -28,11 +27,14 @@ const Header = () => {
           <CartIcon width={51} height={44} color='white' />
           <Logo>SHOP</Logo>
         </LogoContainer>
-        <SelectBox options={SERVER_KEYS} onChange={onChange} />
-        <CartPageLink to='/cart'>
-          장바구니
-          <ProductCountAlert>{cartProductCount}</ProductCountAlert>
-        </CartPageLink>
+        <LinkWrapper>
+          <SelectBox options={SERVER_KEYS} onChange={onChange} />
+          <CartPageLink to='/cart'>
+            장바구니
+            <ProductCountAlert>{cartProductCount}</ProductCountAlert>
+          </CartPageLink>
+          <OrderPageLink to='/orders'>주문 목록</OrderPageLink>
+        </LinkWrapper>
       </HeaderContent>
     </HeaderContainer>
   );
@@ -85,6 +87,11 @@ const Logo = styled.h1`
   }
 `;
 
+const LinkWrapper = styled.div`
+  display: flex;
+  gap: 18px;
+`;
+
 const CartPageLink = styled(Link)`
   display: flex;
   color: ${({ theme }) => theme.colors.white};
@@ -111,6 +118,16 @@ const ProductCountAlert = styled.span`
     width: 26px;
     height: 26px;
     line-height: 28px;
+  }
+`;
+
+const OrderPageLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 20px;
+  font-weight: 500;
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    font-size: 24px;
   }
 `;
 
