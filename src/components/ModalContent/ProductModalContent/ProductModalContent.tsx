@@ -3,17 +3,7 @@ import { ProductItem } from '../../../types/types.ts';
 import { modalOpenState } from '../../../recoil/modalAtoms.tsx';
 import cartIcon from '../../../assets/cart.svg';
 import { quantityByProductIdSelector } from '../../../recoil/cartAtoms.ts';
-import {
-  ModalCloseButton,
-  ModalHeader,
-  ModalTitle,
-  ProductDetails,
-  ProductItemImage,
-  ProductItemImageBox,
-  ProductModalContentWrapper,
-  ProductName,
-  ProductPrice,
-} from './ProductModalContent.style.ts';
+import * as S from './ProductModalContent.style.ts';
 import { CartController } from '../../@common/CartController';
 
 function ProductModalContent({ product }: { product: ProductItem }) {
@@ -28,18 +18,18 @@ function ProductModalContent({ product }: { product: ProductItem }) {
 
   return (
     <>
-      <ModalHeader>
-        <ModalTitle>상품 정보</ModalTitle>
-        <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
-      </ModalHeader>
-      <ProductModalContentWrapper>
-        <ProductItemImageBox>
-          <ProductItemImage src={imageUrl} />
-        </ProductItemImageBox>
-        <ProductDetails>
+      <S.ModalHeader>
+        <S.ModalTitle>상품 정보</S.ModalTitle>
+        <S.ModalCloseButton onClick={closeModal}>X</S.ModalCloseButton>
+      </S.ModalHeader>
+      <S.ProductModalContentWrapper>
+        <S.ProductItemImageBox>
+          <S.ProductItemImage src={imageUrl} />
+        </S.ProductItemImageBox>
+        <S.ProductDetails>
           <div>
-            <ProductName>{name}</ProductName>
-            <ProductPrice>{price.toLocaleString()}원</ProductPrice>
+            <S.ProductName>{name}</S.ProductName>
+            <S.ProductPrice>{price.toLocaleString()}원</S.ProductPrice>
           </div>
           <div
             style={{
@@ -56,8 +46,8 @@ function ProductModalContent({ product }: { product: ProductItem }) {
             )}
             <CartController product={product} />
           </div>
-        </ProductDetails>
-      </ProductModalContentWrapper>
+        </S.ProductDetails>
+      </S.ProductModalContentWrapper>
     </>
   );
 }

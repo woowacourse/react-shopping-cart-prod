@@ -2,7 +2,7 @@ import { useRecoilValueLoadable } from 'recoil';
 import { productListSelector } from '../../../recoil/productAtoms.ts';
 import type { ProductItem as ProductItemType } from '../../../types/types.ts';
 import { Col, Row } from '../../../style/style.ts';
-import { ProductListWrapper } from './ProductList.style.ts';
+import * as S from './ProductList.style.ts';
 import { ProductItemSkeleton } from '../ProductItemSkeleton';
 import ProductItem from '../ProductItem/ProductItem.tsx';
 
@@ -12,7 +12,7 @@ function ProductList() {
   switch (productLoadable.state) {
     case 'hasValue':
       return (
-        <ProductListWrapper>
+        <S.ProductListWrapper>
           <Row>
             {productLoadable?.contents?.map((product: ProductItemType) => (
               <Col key={product.id}>
@@ -20,7 +20,7 @@ function ProductList() {
               </Col>
             ))}
           </Row>
-        </ProductListWrapper>
+        </S.ProductListWrapper>
       );
     case 'loading':
       return (

@@ -4,7 +4,7 @@ import { FatBorder, PageTitle } from '../../style/style';
 import { OrderListWrapper } from '../Order/Order.style';
 import { PaymentInfoBox } from '../../components/Order/PaymentInfoBox';
 import { PointInfoBox } from '../../components/Order/PointInfoBox';
-import { OrderInfoWrapper } from './OrderDetail.style';
+import * as S from './OrderDetail.style';
 
 const order = {
   orderId: 0,
@@ -40,10 +40,10 @@ function OrderDetail() {
       <OrderListWrapper>
         <OrderList {...order} detail={false} />
       </OrderListWrapper>
-      <OrderInfoWrapper>
+      <S.OrderInfoWrapper>
         <PaymentInfoBox />
         <PointInfoBox />
-      </OrderInfoWrapper>
+      </S.OrderInfoWrapper>
     </>
   );
 }

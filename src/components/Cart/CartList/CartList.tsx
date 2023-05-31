@@ -8,14 +8,7 @@ import {
   switchAllCartCheckboxSelector,
 } from '../../../recoil/cartAtoms';
 import { CartItem } from '../CartItem';
-import {
-  CartListCheckCounter,
-  CartListController,
-  CartListTitle,
-  CartListWrapper,
-  CartsDeleteButton,
-  Wrapper,
-} from './CartList.style';
+import * as S from './CartList.style';
 import { fetchCartList, fetchDeleteCart } from '../../../api/api';
 import { serverState } from '../../../recoil/serverAtom';
 import { Input, Label } from '../CartItem/CartItem.style';
@@ -40,14 +33,14 @@ function CartList() {
   };
 
   return (
-    <Wrapper>
-      <CartListTitle>든든배송 상품 ({cartCount}개)</CartListTitle>
-      <CartListWrapper>
+    <S.Wrapper>
+      <S.CartListTitle>든든배송 상품 ({cartCount}개)</S.CartListTitle>
+      <S.CartListWrapper>
         {cartList.map((cart) => (
           <CartItem key={cart.id} cart={cart} />
         ))}
-      </CartListWrapper>
-      <CartListController>
+      </S.CartListWrapper>
+      <S.CartListController>
         <Label>
           <Input
             type='checkbox'
@@ -56,12 +49,12 @@ function CartList() {
             onChange={() => switchAllCheckboxes(undefined)}
           />
         </Label>
-        <CartListCheckCounter onClick={() => switchAllCheckboxes(undefined)}>
+        <S.CartListCheckCounter onClick={() => switchAllCheckboxes(undefined)}>
           전체선택 ({checkedCartListCount}/{cartCount})
-        </CartListCheckCounter>
-        <CartsDeleteButton onClick={() => removeCheckedCartItems()}>선택삭제</CartsDeleteButton>
-      </CartListController>
-    </Wrapper>
+        </S.CartListCheckCounter>
+        <S.CartsDeleteButton onClick={() => removeCheckedCartItems()}>선택삭제</S.CartsDeleteButton>
+      </S.CartListController>
+    </S.Wrapper>
   );
 }
 

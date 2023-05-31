@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, MouseEvent } from 'react';
-import { ModalContent, ModalWrapper } from './Modal.style';
+import * as S from './Modal.style';
 
 const Modal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => void; children: ReactNode }) => {
   useEffect(() => {
@@ -19,9 +19,9 @@ const Modal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => 
   }
 
   return (
-    <ModalWrapper onClick={onClose}>
-      <ModalContent onClick={handleModalContentClick}>{children}</ModalContent>
-    </ModalWrapper>
+    <S.ModalWrapper onClick={onClose}>
+      <S.ModalContent onClick={handleModalContentClick}>{children}</S.ModalContent>
+    </S.ModalWrapper>
   );
 };
 

@@ -1,4 +1,4 @@
-import { PurchaseButton, PurchaseButtonWrapper, PurchaseTitle, PurchaseWrapper } from './PurchaseBox.style.ts';
+import * as S from './PurchaseBox.style.ts';
 import { useRecoilValue } from 'recoil';
 import { totalPriceSelector } from '../../../../recoil/cartAtoms.ts';
 import PaymentInfo from '../../../@common/PaymentInfo/PaymentInfo.tsx';
@@ -12,15 +12,15 @@ function PurchaseBox({ point }: PurchaseBoxProps) {
 
   return (
     <>
-      <PurchaseWrapper>
-        <PurchaseTitle>결제예상금액</PurchaseTitle>
-      </PurchaseWrapper>
-      <PurchaseWrapper>
+      <S.PurchaseWrapper>
+        <S.PurchaseTitle>결제예상금액</S.PurchaseTitle>
+      </S.PurchaseWrapper>
+      <S.PurchaseWrapper>
         <PaymentInfo totalPrice={totalPrice} point={point} />
-        <PurchaseButtonWrapper>
-          <PurchaseButton disabled={totalPrice === 0}>주문하기</PurchaseButton>
-        </PurchaseButtonWrapper>
-      </PurchaseWrapper>
+        <S.PurchaseButtonWrapper>
+          <S.PurchaseButton disabled={totalPrice === 0}>주문하기</S.PurchaseButton>
+        </S.PurchaseButtonWrapper>
+      </S.PurchaseWrapper>
     </>
   );
 }

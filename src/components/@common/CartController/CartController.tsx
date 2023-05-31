@@ -1,12 +1,6 @@
 import { ChangeEvent } from 'react';
 import type { ProductItem } from '../../../types/types';
-import {
-  AddCartButton,
-  CartBox,
-  ControllerWrapper,
-  QuantityControlButton,
-  QuantityInput,
-} from './CartController.style';
+import * as S from './CartController.style';
 import { cartState, quantityByProductIdSelector } from '../../../recoil/cartAtoms';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { fetchAddCart, fetchCartList, fetchDeleteCart, fetchUpdateCart } from '../../../api/api';
@@ -54,21 +48,21 @@ function CartController({ product }: CartControllerProps) {
   return (
     <>
       {quantity > 0 ? (
-        <ControllerWrapper>
-          <CartBox>
-            <QuantityControlButton onClick={() => updateCartItemQuantity(quantity - 1)}>-</QuantityControlButton>
-            <QuantityInput value={quantity} onChange={handleChangeQuantity} />
-            <QuantityControlButton onClick={() => updateCartItemQuantity(quantity + 1)}>+</QuantityControlButton>
-          </CartBox>
-        </ControllerWrapper>
+        <S.ControllerWrapper>
+          <S.CartBox>
+            <S.QuantityControlButton onClick={() => updateCartItemQuantity(quantity - 1)}>-</S.QuantityControlButton>
+            <S.QuantityInput value={quantity} onChange={handleChangeQuantity} />
+            <S.QuantityControlButton onClick={() => updateCartItemQuantity(quantity + 1)}>+</S.QuantityControlButton>
+          </S.CartBox>
+        </S.ControllerWrapper>
       ) : (
-        <AddCartButton
+        <S.AddCartButton
           onClick={() => {
             addCartItem(product.id);
           }}
         >
           장바구니에 담기
-        </AddCartButton>
+        </S.AddCartButton>
       )}
     </>
   );

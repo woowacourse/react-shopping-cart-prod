@@ -1,12 +1,4 @@
-import {
-  CartWrapper,
-  EmptyCartButton,
-  EmptyCartButtonWrapper,
-  EmptyCartDescription,
-  EmptyCartTitle,
-  EmptyCartWrapper,
-  PurchaseBoxWrapper,
-} from './Cart.style.ts';
+import * as S from './Cart.style.ts';
 import { useRecoilValue } from 'recoil';
 import { cartCountSelector } from '../../recoil/cartAtoms.ts';
 import { useNavigate } from 'react-router-dom';
@@ -24,21 +16,21 @@ function Cart() {
       <FatBorder />
       {cartCount > 0 ? (
         <>
-          <CartWrapper>
+          <S.CartWrapper>
             <CartList />
-            <PurchaseBoxWrapper>
+            <S.PurchaseBoxWrapper>
               <PriceCounter />
-            </PurchaseBoxWrapper>
-          </CartWrapper>
+            </S.PurchaseBoxWrapper>
+          </S.CartWrapper>
         </>
       ) : (
-        <EmptyCartWrapper>
-          <EmptyCartTitle>텅</EmptyCartTitle>
-          <EmptyCartDescription>장바구니가 비어있어요.</EmptyCartDescription>
-          <EmptyCartButtonWrapper>
-            <EmptyCartButton onClick={() => navigate('/')}>홈으로 돌아가기</EmptyCartButton>
-          </EmptyCartButtonWrapper>
-        </EmptyCartWrapper>
+        <S.EmptyCartWrapper>
+          <S.EmptyCartTitle>텅</S.EmptyCartTitle>
+          <S.EmptyCartDescription>장바구니가 비어있어요.</S.EmptyCartDescription>
+          <S.EmptyCartButtonWrapper>
+            <S.EmptyCartButton onClick={() => navigate('/')}>홈으로 돌아가기</S.EmptyCartButton>
+          </S.EmptyCartButtonWrapper>
+        </S.EmptyCartWrapper>
       )}
     </>
   );

@@ -1,5 +1,5 @@
 import { PurchasePropertyWrapper, PurchaseText, Vacant } from '../../Cart/PriceCounter/PurchaseBox/PurchaseBox.style';
-import { DiscountPropertyWrapper, DiscountText, DiscountWrapper, TotalDiscountText } from './PaymentInfo.style';
+import * as S from './PaymentInfo.style';
 
 type PaymentInfoProps = {
   totalPrice: number;
@@ -20,20 +20,20 @@ function PaymentInfo({ totalPrice, point }: PaymentInfoProps) {
         <PurchaseText>총 상품가격</PurchaseText>
         <PurchaseText>{totalPrice.toLocaleString()}원</PurchaseText>
       </PurchasePropertyWrapper>
-      <DiscountWrapper>
+      <S.DiscountWrapper>
         <PurchasePropertyWrapper>
-          <TotalDiscountText>할인</TotalDiscountText>
-          <TotalDiscountText>-{(discount.coupon + Number(point)).toLocaleString()}원</TotalDiscountText>
+          <S.TotalDiscountText>할인</S.TotalDiscountText>
+          <S.TotalDiscountText>-{(discount.coupon + Number(point)).toLocaleString()}원</S.TotalDiscountText>
         </PurchasePropertyWrapper>
-        <DiscountPropertyWrapper>
-          <DiscountText>ㄴ포인트</DiscountText>
-          <DiscountText>-{Number(point).toLocaleString().toLocaleString()}원</DiscountText>
-        </DiscountPropertyWrapper>
-        <DiscountPropertyWrapper>
-          <DiscountText>ㄴ쿠폰</DiscountText>
-          <DiscountText>-{discount.coupon.toLocaleString()}원</DiscountText>
-        </DiscountPropertyWrapper>
-      </DiscountWrapper>
+        <S.DiscountPropertyWrapper>
+          <S.DiscountText>ㄴ포인트</S.DiscountText>
+          <S.DiscountText>-{Number(point).toLocaleString().toLocaleString()}원</S.DiscountText>
+        </S.DiscountPropertyWrapper>
+        <S.DiscountPropertyWrapper>
+          <S.DiscountText>ㄴ쿠폰</S.DiscountText>
+          <S.DiscountText>-{discount.coupon.toLocaleString()}원</S.DiscountText>
+        </S.DiscountPropertyWrapper>
+      </S.DiscountWrapper>
       <PurchasePropertyWrapper>
         <PurchaseText>배송비</PurchaseText>
         <PurchaseText>+{DELIVERY_FEE.toLocaleString()}원</PurchaseText>

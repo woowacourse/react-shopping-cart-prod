@@ -1,5 +1,5 @@
 import { useRecoilState, useSetRecoilState } from 'recoil';
-import { Select } from './ServerSelectBox.style';
+import * as S from './ServerSelectBox.style';
 import { serverState } from '../../../recoil/serverAtom';
 import { ChangeEvent, useEffect } from 'react';
 import { fetchCartList } from '../../../api/api';
@@ -24,12 +24,12 @@ function ServerSelectBox() {
   }, [server]);
 
   return (
-    <Select value={server} onChange={onChangeServer}>
+    <S.Select value={server} onChange={onChangeServer}>
       <option>테스트</option>
       <option>디노</option>
       <option>레오</option>
       <option>비버</option>
-    </Select>
+    </S.Select>
   );
 }
 

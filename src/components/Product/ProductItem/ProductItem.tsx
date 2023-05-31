@@ -1,15 +1,5 @@
 import type { ProductItem } from '../../../types/types.ts';
-import {
-  CartCount,
-  CartCountWrapper,
-  ProductDetails,
-  ProductInfo,
-  ProductItemBox,
-  ProductItemImage,
-  ProductItemImageBox,
-  ProductName,
-  ProductPrice,
-} from './ProductItem.style.ts';
+import * as S from './ProductItem.style.ts';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { modalContentState, modalOpenState } from '../../../recoil/modalAtoms.tsx';
 import ProductModalContent from '../../ModalContent/ProductModalContent/ProductModalContent.tsx';
@@ -33,24 +23,24 @@ function ProductItem({ product }: ProductItemProps) {
 
   return (
     <>
-      <ProductItemBox onClick={openModal}>
-        <ProductItemImageBox>
-          <ProductItemImage src={imageUrl} loading='lazy' />
-        </ProductItemImageBox>
-        <ProductDetails>
-          <ProductInfo>
-            <ProductName>{name}</ProductName>
-            <ProductPrice>{price.toLocaleString()}원</ProductPrice>
-          </ProductInfo>
+      <S.ProductItemBox onClick={openModal}>
+        <S.ProductItemImageBox>
+          <S.ProductItemImage src={imageUrl} loading='lazy' />
+        </S.ProductItemImageBox>
+        <S.ProductDetails>
+          <S.ProductInfo>
+            <S.ProductName>{name}</S.ProductName>
+            <S.ProductPrice>{price.toLocaleString()}원</S.ProductPrice>
+          </S.ProductInfo>
           {quantity > 0 ? (
-            <CartCountWrapper>
-              <CartCount>{quantity}</CartCount>
-            </CartCountWrapper>
+            <S.CartCountWrapper>
+              <S.CartCount>{quantity}</S.CartCount>
+            </S.CartCountWrapper>
           ) : (
             <img src={cartIcon}></img>
           )}
-        </ProductDetails>
-      </ProductItemBox>
+        </S.ProductDetails>
+      </S.ProductItemBox>
     </>
   );
 }

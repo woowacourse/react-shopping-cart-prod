@@ -1,6 +1,6 @@
 import { OrderList } from '../../components/Order/OrderList';
 import { FatBorder, PageTitle } from '../../style/style';
-import { OrderListWrapper } from './Order.style';
+import * as S from './Order.style';
 
 const orders = [
   {
@@ -47,11 +47,11 @@ function Order() {
     <>
       <PageTitle>주문목록</PageTitle>
       <FatBorder />
-      <OrderListWrapper>
+      <S.OrderListWrapper>
         {orders.map((order) => (
           <OrderList {...order} />
         ))}
-      </OrderListWrapper>
+      </S.OrderListWrapper>
     </>
   );
 }

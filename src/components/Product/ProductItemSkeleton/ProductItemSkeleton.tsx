@@ -1,26 +1,18 @@
-import {
-  ProductDetails,
-  ProductInfo,
-  ProductItemBox,
-  ProductItemImage,
-  ProductItemImageBox,
-  ProductName,
-  ProductPrice,
-} from './ProductItemSkeleton.style.ts';
+import * as S from './ProductItemSkeleton.style.ts';
 
 function ProductItemSkeleton() {
   return (
-    <ProductItemBox>
-      <ProductItemImageBox>
-        <ProductItemImage />
-      </ProductItemImageBox>
-      <ProductDetails>
-        <ProductInfo>
-          <ProductName />
-          <ProductPrice />
-        </ProductInfo>
-      </ProductDetails>
-    </ProductItemBox>
+    <S.ProductItemBox>
+      <S.ProductItemImageBox>
+        <S.ProductItemImage />
+      </S.ProductItemImageBox>
+      <S.ProductDetails>
+        <S.ProductInfo>
+          <S.ProductName />
+          <S.ProductPrice />
+        </S.ProductInfo>
+      </S.ProductDetails>
+    </S.ProductItemBox>
   );
 }
 
