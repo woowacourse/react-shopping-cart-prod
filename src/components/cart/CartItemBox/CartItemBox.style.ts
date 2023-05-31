@@ -49,6 +49,8 @@ export const DeleteButton = styled.button`
 export const DeleteIcon = styled.img`
   width: 18px;
   height: 18px;
+
+  cursor: pointer;
 `;
 
 export const PriceText = styled.p`

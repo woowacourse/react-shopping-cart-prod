@@ -28,7 +28,7 @@ function CartItemBox({ cartId, productId, imageUrl, name, price }: CartItemProps
 
   return (
     <S.CartItemContainer>
-      <CheckBox type="checkbox" checked={isChecked} onChange={toggleCheck} size="medium" />
+      <CheckBox type="checkbox" checked={isChecked} onChange={toggleCheck} boxsize="medium" />
       <S.ItemImageWrapper>
         <S.ItemImage src={imageUrl} />
       </S.ItemImageWrapper>

@@ -81,4 +81,6 @@ export const StyleLabel = styled.label`
   ${StyleCheckBox}:checked + ${StyleCheckMark}::after {
     display: block;
   }
+
+  cursor: pointer;
 `;

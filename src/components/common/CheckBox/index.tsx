@@ -1,17 +1,16 @@
-import { HTMLAttributes } from 'react';
 import { StyleCheckBox, StyleCheckMark, StyleLabel } from './CheckBox.style';
 
-interface CheckBoxProps extends HTMLAttributes<HTMLInputElement> {
+interface CheckBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type?: 'checkbox';
   checked?: boolean;
   onChange?: () => void;
-  size?: 'small' | 'medium' | 'large';
+  boxsize?: 'small' | 'medium' | 'large';
 }
 
-export const CheckBox = ({ type, size, ...restProps }: CheckBoxProps) => (
+export const CheckBox = ({ type, boxsize, ...restProps }: CheckBoxProps) => (
   <StyleLabel>
-    <StyleCheckBox data-testid="checkbox" boxsize={size} type={type} {...restProps} />
-    <StyleCheckMark boxsize={size} />
+    <StyleCheckBox data-testid="checkbox" boxsize={boxsize} type={type} {...restProps} />
+    <StyleCheckMark boxsize={boxsize} />
   </StyleLabel>
 );
 
