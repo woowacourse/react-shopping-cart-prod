@@ -23,7 +23,7 @@ export const coupons = {
       id: 3,
       ownerMemberId: 1,
       name: '특정 상품 10% 할인',
-      discountType: 'Rate',
+      discountType: 'RATE',
       target: 'SPECIFIC',
       targetProductId: 1,
       value: 10,
