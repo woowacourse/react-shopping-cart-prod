@@ -1,18 +1,6 @@
 import { styled } from 'styled-components';
 
-const PointInput = () => {
-  return (
-    <S.Wrapper>
-      <S.PointLabel>사용 포인트</S.PointLabel>
-      <S.InputWrapper>
-        <S.Input type="text" placeholder="0원" />
-        <S.PointButton>전액사용</S.PointButton>
-      </S.InputWrapper>
-    </S.Wrapper>
-  );
-};
-
-const S = {
+export const S = {
   Wrapper: styled.section`
     width: 100%;
     display: flex;
@@ -51,5 +39,3 @@ const S = {
     font-size: 16px;
   `,
 };
-
-export default PointInput;
