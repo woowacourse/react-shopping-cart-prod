@@ -30,6 +30,7 @@ const MainContainer = styled.main`
 
   @media (max-width: 768px) {
     padding: 0 4.16%;
+    margin-top: 20px;
     margin-bottom: 0;
   }
 `;
