@@ -2,10 +2,12 @@ import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
 
 interface OrderBoxItemProps {
+  id?: number;
   type: 'orderList' | 'payment';
 }
 
 const OrderBoxItem = ({
+  id,
   type,
   children,
 }: PropsWithChildren<OrderBoxItemProps>) => {
@@ -13,7 +15,7 @@ const OrderBoxItem = ({
     <StyledOrderBoxItem type={type}>
       {type === 'orderList' ? (
         <TitleContainer>
-          <h2>주문번호</h2>
+          <h2>주문번호 : {id}</h2>
           <button type="button">{'상세정보 >'}</button>
         </TitleContainer>
       ) : (
@@ -57,11 +59,6 @@ const OrderBoxContents = styled.div<OrderBoxItemProps>`
   flex-direction: ${({ type }) => (type === 'orderList' ? 'column' : 'row')};
   justify-content: space-between;
   align-items: center;
-  padding: 30px;
-
-  :not(:last-child) {
-    border-bottom: 1px solid ${({ theme }) => theme.colors.gray100};
-  }
 `;
 
 export default OrderBoxItem;
