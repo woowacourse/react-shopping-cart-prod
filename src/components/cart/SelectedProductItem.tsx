@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { useSetCart } from '../../hooks/useCart';
+import { useCart } from '../../hooks/useCart';
 import { checkedItemList } from '../../recoil';
 import { Cart } from '../../types';
 import Button from '../common/Button';
@@ -21,7 +21,7 @@ const SelectedProductItem = ({
   price,
   quantity,
 }: Props) => {
-  const { removeItemFromCart } = useSetCart(productId);
+  const { removeItemFromCart } = useCart(productId);
   const [checkedItemIdList, setCheckedItemIdList] = useRecoilState<number[]>(checkedItemList);
 
   const isChecked = checkedItemIdList.includes(cartItemId);

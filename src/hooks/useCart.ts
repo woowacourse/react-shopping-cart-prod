@@ -4,7 +4,7 @@ import { CART_URL } from '../constants/url';
 import { cartState, productSelector, serverState } from '../recoil';
 import { useFetchData } from './useFetchData';
 
-export const useSetCart = (productId?: number) => {
+export const useCart = (productId?: number) => {
   const [cart, setCart] = useRecoilState(cartState);
   const selectedProduct = useRecoilValue(productSelector(productId));
 

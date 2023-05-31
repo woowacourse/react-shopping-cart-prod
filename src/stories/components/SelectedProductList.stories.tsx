@@ -6,7 +6,7 @@ import { Checkbox } from '../../components/cart/CheckboxStyle';
 import SelectedProductItem from '../../components/cart/SelectedProductItem';
 import SelectedProductList from '../../components/cart/SelectedProductList';
 import Button from '../../components/common/Button';
-import { useSetCart } from '../../hooks/useCart';
+import { useCart } from '../../hooks/useCart';
 import { cartState, checkedItemList } from '../../recoil';
 
 const meta = {
@@ -20,7 +20,7 @@ export default meta;
 export const ProductListInCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
   const [checkedItemIdList, setCheckedItemIdList] = useRecoilState<number[]>(checkedItemList);
-  const { removeItemFromCart } = useSetCart();
+  const { removeItemFromCart } = useCart();
 
   useEffect(() => {
     setCart([

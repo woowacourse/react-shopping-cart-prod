@@ -1,6 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
-import { useSetCart } from '../../hooks/useCart';
+import { useCart } from '../../hooks/useCart';
 import { quantitySelector } from '../../recoil';
 import { Product } from '../../types';
 import Button from '../common/Button';
@@ -10,7 +10,7 @@ import QuantityButton from '../QuantityButton';
 
 const ProductItem = ({ id, imageUrl, name, price }: Product) => {
   const quantity = useRecoilValue(quantitySelector(id));
-  const { addToCart } = useSetCart(id);
+  const { addToCart } = useCart(id);
 
   const handleCartClick = () => addToCart();
 

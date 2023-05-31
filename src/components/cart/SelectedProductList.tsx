@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
 import { CART_URL } from '../../constants/url';
-import { useSetCart } from '../../hooks/useCart';
+import { useCart } from '../../hooks/useCart';
 import { useFetchData } from '../../hooks/useFetchData';
 import { cartState, checkedItemList, serverState } from '../../recoil';
 import { CartItem } from '../../types';
@@ -15,7 +15,7 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
   const [checkedItemIdList, setCheckedItemIdList] = useRecoilState<number[]>(checkedItemList);
   const server = useRecoilValue(serverState);
   const { api } = useFetchData();
-  const { removeItemFromCart } = useSetCart();
+  const { removeItemFromCart } = useCart();
 
   const initialCheckedItemIdList = cart.map((item) => item.id);
 

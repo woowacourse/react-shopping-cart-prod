@@ -2,7 +2,7 @@ import { BsPlus, BsDash } from 'react-icons/bs';
 import { useSetRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
 import { QUANTITY } from '../constants';
-import { useSetCart } from '../hooks/useCart';
+import { useCart } from '../hooks/useCart';
 import { quantitySelector } from '../recoil';
 import Button from './common/Button';
 
@@ -16,7 +16,7 @@ interface Props {
 
 const QuantityButton = ({ isMainPage, productId, quantity }: Props) => {
   const setQuantity = useSetRecoilState(quantitySelector(productId));
-  const { updateCart, removeItemFromCart } = useSetCart(productId);
+  const { updateCart, removeItemFromCart } = useCart(productId);
 
   const handleQuantityStepUp = () => {
     if (quantity === MAX) return;
