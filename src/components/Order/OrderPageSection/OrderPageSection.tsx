@@ -7,6 +7,7 @@ import { ORDER_INFORMATION_PAGE_LOCATE } from '../../../constants';
 import useOrders from '../../../hooks/useOrders';
 import { orderListState } from '../../../store/order';
 import { OrderItemListType } from '../../../types';
+import { priceFormatter } from '../../../utils/formatter';
 import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
 import styles from './style.module.css';
 
@@ -17,9 +18,13 @@ const OrderPageSection = () => {
 
   const navigate = useNavigate();
 
-  const navigateToOrderInformationPage = useCallback(() => {
-    navigate(ORDER_INFORMATION_PAGE_LOCATE);
-  }, [navigate]);
+  const navigateToOrderInformationPage = useCallback(
+    (orderId: number) => {
+      const data = { id: orderId };
+      navigate(ORDER_INFORMATION_PAGE_LOCATE, { state: data });
+    },
+    [navigate]
+  );
 
   return (
     <>
@@ -31,19 +36,25 @@ const OrderPageSection = () => {
           <div className={styles.OrderItemBox} key={listItem.id}>
             <div className={styles.OrderItemHeader}>
               <div>주문번호: {listItem.id}</div>
-              <button type="button" onClick={navigateToOrderInformationPage}>
-                상세보기
+              <button
+                type="button"
+                onClick={() => {
+                  navigateToOrderInformationPage(listItem.id);
+                }}
+              >
+                상세보기 &gt;
               </button>
             </div>
             {listItem.products.map((item) => {
               return (
                 <div className={styles.OrderItemData} key={item.id}>
                   <img src={item.imgUrl} alt="상품예시" />
-                  <div>
-                    <div>{item.name}</div>
+                  <div className={styles.itemDataBox}>
                     <div>
-                      {item.price}원 / 수량 : {item.quantity}개
+                      <div>{item.name}</div>
+                      <div>수량 : {item.quantity}개</div>
                     </div>
+                    <div className={styles.priceData}>{priceFormatter(item.price)}원</div>
                   </div>
                 </div>
               );

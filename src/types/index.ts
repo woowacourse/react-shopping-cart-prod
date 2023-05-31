@@ -31,3 +31,12 @@ export interface OrderItemListType {
   id: number;
   products: OrderItemType[];
 }
+
+export interface OrderItemInformation {
+  id: number;
+  products: OrderItemType[];
+  total_amount: number;
+  delivery_amount: number;
+  discounted_amount: number;
+  address: string;
+}

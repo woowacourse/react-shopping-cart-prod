@@ -9,7 +9,7 @@
 
 .OrderItemBox {
   margin-top: 10px;
-  border: 1px solid #aaaaaa;
+  margin-bottom: 100px;
   border-radius: 5px;
 }
 
@@ -21,11 +21,11 @@
 .OrderItemHeader {
   display: flex;
   justify-content: space-between;
-  background-color: #31d4b9;
   padding: 15px;
+  border-bottom: 3px solid #068e77;
+  font-size: 20px;
+  font-weight: 600;
   margin: 0;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
 }
 
 .OrderItemData {
@@ -33,4 +33,17 @@
   display: flex;
   gap: 20px;
   border-bottom: 1px solid #aaaaaa;
+}
+
+.itemDataBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 18px;
+}
+
+.priceData {
+  margin-left: auto;
+  font-size: 20px;
 }

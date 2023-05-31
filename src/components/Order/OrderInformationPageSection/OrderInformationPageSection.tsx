@@ -1,6 +1,25 @@
+import { useQuery } from 'react-query';
+import { useLocation } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+
+import useOrders from '../../../hooks/useOrders';
+import { OrderItemInformationState } from '../../../store/order';
+import { OrderItemInformation } from '../../../types';
+import { priceFormatter } from '../../../utils/formatter';
+import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
 import styles from './style.module.css';
 
 const OrderInformationPageSection = () => {
+  const loaction = useLocation();
+  const data = loaction.state;
+  const orderData = useRecoilValue(OrderItemInformationState);
+
+  const { fetchOrderOneItem } = useOrders();
+  const { isLoading } = useQuery<OrderItemInformation>('couponList', () =>
+    fetchOrderOneItem(data.id)
+  );
+
+  if (isLoading) return <LoadingSpinner />;
   return (
     <>
       <div className={styles.OrderListHeader}>주문 내역 상세</div>
@@ -8,34 +27,28 @@ const OrderInformationPageSection = () => {
 
       <div className={styles.OrderItemBox}>
         <div className={styles.OrderItemHeader}>
-          <div>주문번호: 1</div>
+          <div>주문번호: {data.id}</div>
         </div>
-        <div className={styles.OrderItemData}>
-          <img
-            src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80"
-            alt="상품예시"
-          />
-          <div>
-            <div>친환경 실링용기-ECO 19153</div>
-            <div>180,600원 / 수량 : 3개</div>
-          </div>
-        </div>
-        <div className={styles.OrderItemData}>
-          <img
-            src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80"
-            alt="상품예시"
-          />
-          <div>
-            <div>친환경 실링용기-ECO 19153</div>
-            <div>180,600원 / 수량 : 3개</div>
-          </div>
-        </div>
+
+        {orderData.products.map((item) => {
+          return (
+            <div className={styles.OrderItemData}>
+              <img src={item.imgUrl} alt="상품예시" />
+              <div>
+                <div>{item.name}</div>
+                <div>
+                  {item.price}원 / 수량 : {item.quantity}개
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
       <div className={styles.paymentBox}>
         <div className={styles.paymentBoxHeader}>결제금액 정보</div>
         <div className={styles.paymentBoxSection}>
           <p>총 결제금액</p>
-          <p>325,600원</p>
+          <p>{priceFormatter(orderData.total_amount)}원</p>
         </div>
       </div>
     </>

@@ -1,11 +1,14 @@
+import { useCallback } from 'react';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 
 import useCartList from '../../../hooks/useCartList';
+import { useModal } from '../../../hooks/useModal';
 import { cartListState } from '../../../store/cart';
 import { CartItemType } from '../../../types';
 import { priceFormatter } from '../../../utils/formatter';
 import Checkbox from '../../utils/Checkbox/Checkbox';
+import Modal from '../../utils/Modal/Modal';
 import CartItem from '../CartItem/CartItem';
 import styles from './style.module.css';
 
@@ -21,6 +24,8 @@ const CartPageSection = () => {
     getCartItemSum,
   } = useCartList();
 
+  const { isModalOpen, handleModalOpen, handleModalClose, handleModalClosePress } = useModal();
+
   const cartItem = useRecoilValue(cartListState);
   useQuery<CartItemType[]>('cartItemData', fetchCartList);
 
@@ -33,7 +38,6 @@ const CartPageSection = () => {
   };
 
   const checkedItemLength = getCheckedList().length;
-
   const deliveryPrice = cartItem.length === 0 ? 0 : 3000;
 
   return (
@@ -96,6 +100,7 @@ const CartPageSection = () => {
                   }
                   type="button"
                   disabled={checkedItemLength === 0}
+                  onClick={handleModalOpen}
                 >
                   {checkedItemLength > 0
                     ? `총 ${checkedItemLength}개 상품 주문하기`
@@ -106,6 +111,11 @@ const CartPageSection = () => {
           </div>
         </section>
       </div>
+      {isModalOpen && (
+        <Modal closeModalByClick={handleModalClose} closeModalByPress={handleModalClosePress}>
+          <div></div>
+        </Modal>
+      )}
     </>
   );
 };
