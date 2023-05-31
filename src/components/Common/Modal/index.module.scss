@@ -1,0 +1,124 @@
+@keyframes center-appear {
+  from {
+    opacity: (0);
+  }
+  to {
+    opacity: (1);
+  }
+}
+
+@keyframes top-appear {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes bottom-appear {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes right-appear {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes left-appear {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.dialog-container {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.55);
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  margin: 0;
+  padding: 0;
+
+  border: none;
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.modal-content {
+  position: fixed;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 34px 0;
+  background: #fff;
+}
+
+.center-animation {
+  animation: center-appear 1s ease-in-out 0s both;
+}
+
+.top-animation {
+  animation: top-appear 1s ease-in-out 0s both;
+}
+.bottom-animation {
+  animation: bottom-appear 1s ease-in-out 0s both;
+}
+.right-animation {
+  animation: right-appear 1s ease-in-out 0s both;
+}
+.left-animation {
+  animation: left-appear 1s ease-in-out 0s both;
+}
+
+.center {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  background-color: white;
+  border-radius: 5px;
+
+  opacity: 0;
+}
+
+.top {
+  top: 0;
+  border-radius: 0 0 5px 5px;
+}
+
+.bottom {
+  bottom: 0;
+  border-radius: 5px 5px 0 0;
+}
+
+.right {
+  right: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.left {
+  left: 0;
+  border-radius: 0 5px 5px 0;
+}

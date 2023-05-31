@@ -37,3 +37,8 @@ export const $CartList = atomFamily<CartItem[], string>({
   key: 'CartList',
   default: async url => await getCart(url),
 });
+
+export const $ModalState = atom({
+  key: 'ModalState',
+  default: false,
+});
