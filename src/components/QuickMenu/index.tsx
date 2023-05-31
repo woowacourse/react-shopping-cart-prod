@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 
 import { Servers } from '@Types/index';
 
-import useCartItems from '@Hooks/useCartItems';
+import useServer from '@Hooks/useServer';
 
 import serverState from '@Atoms/serverState';
 
@@ -12,7 +12,7 @@ import { SERVERS, SERVERS_NAMES } from '@Constants/servers';
 import * as S from './style';
 
 function QuickMenu() {
-  const { toggleServer } = useCartItems();
+  const { toggleServer } = useServer();
   const [server, setServer] = useRecoilState(serverState);
 
   const [isHover, setIsHover] = useState(false);

@@ -1,6 +1,6 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { CartItemType, Servers, UpdateCartItem } from '@Types/index';
+import { CartItemType, UpdateCartItem } from '@Types/index';
 
 import { fetchData } from '@Utils/api';
 
@@ -20,15 +20,6 @@ const useCartItems = () => {
     if (!cartItem) return false;
 
     return cartItem.isSelected;
-  };
-
-  const toggleServer = async (server: Servers) => {
-    const data = await fetchData<CartItemType[]>({ url: FETCH_URL.cartItems, method: FETCH_METHOD.GET, server });
-    setCartItems(data);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
   };
 
   const updateCartItem: UpdateCartItem = async (url, method, body) => {
@@ -91,7 +82,6 @@ const useCartItems = () => {
 
   return {
     isEmpty,
-    toggleServer,
     updateCartItem,
     toggleSelected,
     toggleAllSelected,
