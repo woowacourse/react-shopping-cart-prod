@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { ReactComponent as Logo } from '../../assets/logo.svg';
+import { ReactComponent as ShoppingCart } from '../../assets/shopping-cart.svg';
 import userServerUrlList from '../../data/serverData';
 import useToast from '../../hooks/useToast';
 import { $CartList, $CurrentServerUrl } from '../../recoil/atom';
@@ -35,20 +36,20 @@ function Header() {
       <Link to="/">
         <Logo />
       </Link>
-      <div className={styles.cart}>
+      <nav className={styles.nav}>
         <DropDown options={userNameList} selectedListHandler={serverSelectChange} currentOptionIndex={index} />
         <Link to="/cart">
-          <button type="button" onClick={() => Toast.reset}>
-            장바구니
+          <button className={styles['cart-button']} type="button" onClick={() => Toast.reset}>
+            <ShoppingCart width={24} height={24} />
+            <p className={styles['cart-count']}>{cartList.length}</p>
           </button>
         </Link>
-        <div className={styles['cart-count']}>{cartList.length}</div>
         <Link to="/order">
           <button type="button" className={styles.order}>
             주문 목록
           </button>
         </Link>
-      </div>
+      </nav>
     </header>
   );
 }
