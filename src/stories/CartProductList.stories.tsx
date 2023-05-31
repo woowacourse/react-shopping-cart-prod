@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import CartProductList from '../components/Cart/CartProductList';
 
-import cartProductApis from '../apis/cartProducts';
+import fetchApis from '../apis/fetchApis';
 
 const meta = {
   title: 'Cart/CartProductList',
@@ -17,9 +17,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   loaders: [
     async () => {
-      const { getData } = cartProductApis('도치', '/cart-items');
+      const { getData } = fetchApis('도치');
       return {
-        products: await getData(),
+        products: await getData('/cart-items'),
       };
     },
   ],

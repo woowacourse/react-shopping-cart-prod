@@ -1,6 +1,5 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import cartProductApis from '../apis/cartProducts';
 import { cartProductState } from '../states/cartProducts';
 import {
   deleteTargetProduct,
@@ -9,17 +8,18 @@ import {
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 import { TOAST_STATE } from '../constants/toast';
+import fetchApis from '../apis/fetchApis';
 
 const useProductQuantity = (id: number, quantity: number) => {
   const serverName = useRecoilValue(serverNameState);
   const setCartProducts = useSetRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
 
-  const { patchData, deleteData } = cartProductApis(serverName, '/cart-items');
+  const { patchData, deleteData } = fetchApis(serverName);
 
   const deleteProduct = async () => {
     try {
-      await deleteData(id);
+      await deleteData(`/cart-items/${id}`);
       setCartProducts(prev => deleteTargetProduct(prev, id));
       setToastState(TOAST_STATE.successDeleteProduct);
     } catch (error) {
@@ -31,7 +31,7 @@ const useProductQuantity = (id: number, quantity: number) => {
     try {
       const updatedQuantity = quantity + 1;
 
-      await patchData(id, updatedQuantity);
+      await patchData({ quantity: updatedQuantity }, `/cart-items/${id}`);
       setCartProducts(prev => updateTargetQuantity(prev, id, updatedQuantity));
     } catch (error) {
       setToastState(TOAST_STATE.failedUpdateQuantity);
@@ -47,7 +47,7 @@ const useProductQuantity = (id: number, quantity: number) => {
         return;
       }
 
-      await patchData(id, updatedQuantity);
+      await patchData({ quantity: updatedQuantity }, `/cart-items/${id}`);
       setCartProducts(prev => updateTargetQuantity(prev, id, updatedQuantity));
     } catch (error) {
       setToastState(TOAST_STATE.failedUpdateQuantity);

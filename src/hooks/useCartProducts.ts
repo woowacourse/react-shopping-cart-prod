@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import cartProductApis from '../apis/cartProducts';
 import {
   cartProductState,
   targetCartProductState,
@@ -11,6 +10,7 @@ import type { Product } from '../types/product';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 import { TOAST_STATE } from '../constants/toast';
+import fetchApis from '../apis/fetchApis';
 
 const useCartProducts = (product: Product) => {
   const [cartItemId, setCartItemId] = useState<number>();
@@ -23,11 +23,11 @@ const useCartProducts = (product: Product) => {
   );
   const setToastState = useSetRecoilState(toastState);
 
-  const { postData } = cartProductApis(serverName, '/cart-items');
+  const { postData } = fetchApis(serverName);
 
   const addProduct = async () => {
     try {
-      const location = await postData(id);
+      const location = await postData({ productId: id }, '/cart-items');
 
       const cartItemId = Number(location?.split('/').pop());
 

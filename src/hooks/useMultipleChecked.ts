@@ -6,7 +6,6 @@ import {
   useSetRecoilState,
 } from 'recoil';
 
-import cartProductApis from '../apis/cartProducts';
 import { checkedCartProductState } from '../states/checkedCartProducts';
 import { cartProductState } from '../states/cartProducts';
 import {
@@ -17,6 +16,7 @@ import {
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 import { TOAST_STATE } from '../constants/toast';
+import fetchApis from '../apis/fetchApis';
 
 const useMultipleChecked = () => {
   const serverName = useRecoilValue(serverNameState);
@@ -25,7 +25,7 @@ const useMultipleChecked = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
 
-  const { deleteData } = cartProductApis(serverName, '/cart-items');
+  const { deleteData } = fetchApis(serverName);
 
   const isAllChecked = getIsAllChecked(cartProducts, checked);
   const isAllUnchecked = getIsAllUnchecked(checked);
@@ -46,7 +46,7 @@ const useMultipleChecked = () => {
   const deleteCheckedProducts = () => {
     try {
       checked.forEach(async item => {
-        await deleteData(item.id);
+        await deleteData(`/cart-items/${item.id}`);
       });
 
       setCartProducts(prev =>
