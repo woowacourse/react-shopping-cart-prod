@@ -63,16 +63,19 @@ export const Header = () => {
         {!isLogined ? (
           <p onClick={goPage(ROUTER_PATH.Login)}>로그인</p>
         ) : (
-          <CartContainer>
-            <CartBox
-              pathname={location.pathname}
-              onClick={goPage(ROUTER_PATH.Cart)}
-            >
-              {user.nickname}의 장바구니
+          <>
+            <CartContainer>
+              <CartBox
+                pathname={location.pathname}
+                onClick={goPage(ROUTER_PATH.Cart)}
+              >
+                {user.nickname}의 장바구니
+              </CartBox>
+              <CartIconBox src={CartIcon} alt="홈카트" />
               {cartProducts.length > 0 && (
                 <ItemQuantityBox>{cartProducts.length}</ItemQuantityBox>
               )}
-            </CartBox>
+            </CartContainer>
             <OrderBox
               pathname={location.pathname}
               onClick={goPage(ROUTER_PATH.OrderHistory)}
@@ -80,7 +83,7 @@ export const Header = () => {
               주문목록
             </OrderBox>
             <span onClick={logout}>로그아웃</span>
-          </CartContainer>
+          </>
         )}
       </NavContainer>
     </Wrapper>
@@ -134,35 +137,51 @@ const TitleContainer = styled.section`
 const NavContainer = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
 
   font-size: 21px;
   font-weight: 500;
+  color: white;
   cursor: pointer;
+
+  & > span {
+    font-size: 14px;
+    color: gray;
+  }
 
   @media screen and (max-width: 850px) {
     font-size: 18px;
   }
 `;
 
+const CartIconBox = styled.img`
+  display: none;
+  width: 25px;
+  height: 25px;
+`;
+
 const CartContainer = styled.section`
   display: flex;
   align-items: center;
-  gap: 10px;
 
-  & > span {
-    font-size: 14px;
-    color: gray;
-    align-self: flex-end;
+  position: relative;
+  z-index: 10;
+
+  @media screen and (max-width: 850px) {
+    ${CartIconBox} {
+      display: flex;
+    }
   }
 `;
 
 const CartBox = styled.p<{ pathname: string }>`
-  position: relative;
-  z-index: 10;
   color: ${(props) =>
     props.pathname === ROUTER_PATH.Cart || props.pathname === ROUTER_PATH.Order
       ? "white"
       : "gray"};
+  @media screen and (max-width: 850px) {
+    display: none;
+  }
 `;
 
 const OrderBox = styled.p<{ pathname: string }>`
@@ -198,7 +217,7 @@ const SelectBox = styled.select`
   height: 40px;
 
   padding: 0 5px;
-  margin-right: 10px;
+  margin-right: 5px;
   border-radius: 4px;
   background: var(--light-gray);
 
