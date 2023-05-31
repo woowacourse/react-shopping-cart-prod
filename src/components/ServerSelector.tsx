@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { Fragment, ChangeEvent, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
 import { SERVERS } from '../constants/url';
@@ -12,6 +12,7 @@ const ServerSelector = () => {
 
   const handleSeverChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setServer(SERVERS[value]);
+    setIsClicked(false);
   };
 
   const serverImageList = [
@@ -29,13 +30,13 @@ const ServerSelector = () => {
           <legend>서버</legend>
           <S.Wrapper>
             {Object.keys(SERVERS).map((key, index) => (
-              <>
+              <Fragment key={key}>
                 <label htmlFor={key}>
                   <img src={serverImageList[index]} alt={key} />
                   <span>{key}</span>
                 </label>
                 <input type='radio' id={key} name='서버' value={key} onChange={handleSeverChange} />
-              </>
+              </Fragment>
             ))}
           </S.Wrapper>
         </S.Fieldset>

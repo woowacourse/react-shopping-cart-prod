@@ -42,8 +42,6 @@ export const SuccessInteraction: Story = {
       await pause();
 
       await waitFor(() => {
-        userEvent.unhover(thirdServer);
-
         const selectedServer = canvas.getByText('도이 서버');
 
         expect(selectedServer).toBeVisible();
