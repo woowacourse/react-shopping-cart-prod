@@ -47,6 +47,7 @@ function DiscountBox({
     <S.Wrapper>
       <S.CouponWrapper>
         <S.Text>쿠폰</S.Text>
+        <S.CouponInfo>적용 가능한 쿠폰이 있어요!</S.CouponInfo>
         <S.AllPointButton onClick={openModal}>조회/적용</S.AllPointButton>
       </S.CouponWrapper>
       <S.PointWrapper>

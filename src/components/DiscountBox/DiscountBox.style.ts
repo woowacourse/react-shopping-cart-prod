@@ -16,7 +16,16 @@ export const Text = styled.div`
 
 export const CouponWrapper = styled.div`
   display: flex;
+  align-items: center;
   margin-bottom: 12px;
+`;
+
+export const CouponInfo = styled.div`
+  flex: 1;
+  padding: 0 4px;
+  margin-right: 12px;
+  font-size: 12px;
+  font-weight: 500;
 `;
 
 export const PointWrapper = styled.div`
