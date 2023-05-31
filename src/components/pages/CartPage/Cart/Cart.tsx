@@ -13,7 +13,7 @@ export const Cart = () => {
   const cartSize = useCartSizeValue();
 
   return (
-    <styled.CartContainer>
+    <styled.Cart>
       <styled.CartHeader>
         <CartActions />
         <span>든든배송 상품 ({cartSize}개)</span>
@@ -26,6 +26,6 @@ export const Cart = () => {
           <Link to={PATH.HOME}>상품 보러가기🚀</Link>
         </styled.NoExistItemsMessage>
       )}
-    </styled.CartContainer>
+    </styled.Cart>
   );
 };

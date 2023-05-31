@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const Content = styled.div`
+export const Main = styled.div`
   display: flex;
 
   @media screen and (min-width: 1080px) {

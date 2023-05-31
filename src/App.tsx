@@ -48,7 +48,7 @@ export const App = () => {
           <Route
             path={PATH.CART}
             Component={() => (
-              <Layout>
+              <Layout pageTitle="장바구니">
                 <CartPage />
               </Layout>
             )}
@@ -56,7 +56,7 @@ export const App = () => {
           <Route
             path={PATH.ORDERS}
             Component={() => (
-              <Layout>
+              <Layout pageTitle="주문 목록">
                 <OrdersPage />
               </Layout>
             )}
@@ -64,7 +64,7 @@ export const App = () => {
           <Route
             path={`${PATH.ORDERS}/:id`}
             Component={() => (
-              <Layout>
+              <Layout pageTitle="주문 내역 상세">
                 <OrderDetailPage />
               </Layout>
             )}
