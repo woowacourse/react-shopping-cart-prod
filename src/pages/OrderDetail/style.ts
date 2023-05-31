@@ -11,9 +11,7 @@ export const Title = styled.h2`
   padding-bottom: 30px;
 `;
 
-export const Container = styled.div`
-  margin-top: 30px;
-`;
+export const Container = styled.div``;
 
 export const ShowDetailButton = styled.button`
   font-size: 20px;
@@ -44,12 +42,23 @@ export const OrderTitle = styled.div`
   padding: 34px 30px;
 `;
 
+export const PriceWrapper = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  min-width: 45%;
+  max-width: 1320px;
+
+  @media only screen and (max-width: 768px) {
+    max-width: none;
+  }
+`;
+
 export const PriceContainer = styled.div`
   border: 1px solid #aaaaaa;
-
   max-width: 45%;
   @media only screen and (max-width: 768px) {
     max-width: none;
+    width: 100%;
   }
 `;
 

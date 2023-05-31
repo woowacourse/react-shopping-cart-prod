@@ -10,7 +10,6 @@ export const Container = styled.div`
   right: 50px;
 
   @media only screen and (max-width: 768px) {
-    // 모바일
     opacity: 0;
   }
 `;
