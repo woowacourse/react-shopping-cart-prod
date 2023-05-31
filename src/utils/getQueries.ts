@@ -7,11 +7,12 @@ export const getQueries = <T extends string>(
   search
     .replace(/^\?/, '')
     .split('&')
-    .reduce<Record<T, string>>((queries, keyValue) => {
+    .reduce<Record<T, string>>((queries, keyValue, _, search) => {
       const [key, value] = keyValue.split('=');
       const includes = getArrayMutationMethod(keyArr, 'includes');
 
-      if (!includes(key)) throw new Error('Invalid query');
+      if (!includes(key) || search.length !== keyArr.length)
+        throw new Error('Invalid query');
 
       return { ...queries, [key]: value };
     }, Object.create(Object.prototype));
