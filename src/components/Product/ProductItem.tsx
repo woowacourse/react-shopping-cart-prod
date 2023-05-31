@@ -6,7 +6,7 @@ import AmountCounter from '../Common/AmountCounter';
 
 import type { Product } from '../../types/product';
 
-import useCartProducts from '../../hooks/useCartProducts';
+import useCart from '../../hooks/useCart';
 
 interface ProductItemProps {
   product: Product;
@@ -14,8 +14,7 @@ interface ProductItemProps {
 
 const ProductItem = ({ product }: ProductItemProps) => {
   const { imageUrl, name, price } = product;
-  const { target, addProduct, addCount, subtractCount } =
-    useCartProducts(product);
+  const { target, addProduct, addCount, subtractCount } = useCart(product);
   const productExistsInCart = target && target.quantity > 0;
 
   return (

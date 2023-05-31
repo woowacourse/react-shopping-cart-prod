@@ -6,7 +6,7 @@ import AmountCounter from '../Common/AmountCounter';
 
 import type { CartProduct } from '../../types/product';
 import TrashCanIcon from '../../assets/TrashCanIcon';
-import useCartProducts from '../../hooks/useCartProducts';
+import useCart from '../../hooks/useCart';
 import useCheckedProducts from '../../hooks/useCheckedProducts';
 
 interface CartProductItemProps {
@@ -16,7 +16,7 @@ interface CartProductItemProps {
 const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
   const { quantity, product } = cartProduct;
   const { name, price, imageUrl } = product;
-  const { removeProduct, addCount, subtractCount } = useCartProducts(product);
+  const { removeProduct, addCount, subtractCount } = useCart(product);
   const { handleCheckBoxChange, isCheckedProduct } = useCheckedProducts();
 
   return (

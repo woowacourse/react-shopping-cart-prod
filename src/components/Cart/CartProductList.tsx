@@ -2,17 +2,17 @@ import styled from 'styled-components';
 
 import CartProductItem from './CartProductItem';
 import { useRecoilValue } from 'recoil';
-import { cartProductAtom } from '../../recoil/cartProductData';
+import { cartAtom } from '../../recoil/cartProductData';
 
 const CartProductList = () => {
-  const cartProducts = useRecoilValue(cartProductAtom);
+  const cart = useRecoilValue(cartAtom);
 
-  if (cartProducts.length === 0)
+  if (cart.cartItems.length === 0)
     return <EmptyCart>장바구니가 비었어요</EmptyCart>;
 
   return (
     <CartProductListContainer>
-      {cartProducts.map((cartProduct) => (
+      {cart.cartItems.map((cartProduct) => (
         <li key={cartProduct.cartItemId}>
           <CartProductItem cartProduct={cartProduct} />
         </li>
