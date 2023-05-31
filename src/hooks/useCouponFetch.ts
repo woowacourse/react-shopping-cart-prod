@@ -10,11 +10,15 @@ const useCouponFetch = () => {
     return data;
   };
 
-  const { data: allCoupon } = useQuery<IssuableCouponType[]>('allCoupon', fetchAllCouponData, {
-    onError: (e) => {
-      console.log(e);
+  const { data: allCoupon, refetch: IssuableRefetch } = useQuery<IssuableCouponType[]>(
+    'allCoupon',
+    fetchAllCouponData,
+    {
+      onError: (e) => {
+        console.log(e);
+      },
     },
-  });
+  );
 
   const fetchUserCouponData = async () => {
     const res = await fetch(`/users/coupons`, {
@@ -24,11 +28,15 @@ const useCouponFetch = () => {
     return data;
   };
 
-  const { data: userCoupon, refetch } = useQuery<CouponType[]>('userCoupon', fetchUserCouponData, {
-    onError: (e) => {
-      console.log(e);
+  const { data: userCoupon, refetch: userCouponRefetch } = useQuery<CouponType[]>(
+    'userCoupon',
+    fetchUserCouponData,
+    {
+      onError: (e) => {
+        console.log(e);
+      },
     },
-  });
+  );
 
   const fetchAddCoupon = useMutation(
     async ({ body }: { body?: object }) => {
@@ -43,7 +51,8 @@ const useCouponFetch = () => {
     },
     {
       onSuccess: () => {
-        refetch();
+        userCouponRefetch();
+        IssuableRefetch();
       },
       onError: (e) => {
         console.log(e);
