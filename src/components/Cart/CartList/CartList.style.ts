@@ -27,13 +27,17 @@ export const CartListTitle = styled.div`
   margin: 0 25px 12px 25px;
 `;
 
+export const Label = styled.label`
+  width: 28px;
+  height: 28px;
+`;
+
 export const CartListController = styled.div`
   display: flex;
-  items-align: center;
+  align-items: center;
 `;
 
 export const CartListCheckCounter = styled.div`
-  width: 100px;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -50,4 +54,5 @@ export const CartsDeleteButton = styled.button`
   border-radius: 5px;
   padding: 5px;
   width: 100px;
+  height: 36px;
 `;

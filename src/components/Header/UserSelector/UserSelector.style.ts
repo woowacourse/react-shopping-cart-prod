@@ -77,5 +77,5 @@ export const UserListTitle = styled.div`
   padding: 12px 12px 0 12px;
   font-size: 8px;
   color: #00a3f9;
-  font-weight: 800;
+  font-weight: 700;
 `;

@@ -12,7 +12,7 @@ import { CartItem } from '../CartItem';
 import * as S from './CartList.style';
 import { fetchCartList, fetchDeleteCart } from '../../../api/api';
 import { serverState } from '../../../recoil/serverAtom';
-import { Input, Label } from '../CartItem/CartItem.style';
+import { Input } from '../CartItem/CartItem.style';
 import checkIcon from '../../../assets/check.svg';
 import { useEffect } from 'react';
 
@@ -48,14 +48,14 @@ function CartList() {
         ))}
       </S.CartListWrapper>
       <S.CartListController>
-        <Label>
+        <S.Label>
           <Input
             type='checkbox'
             icon={checkIcon}
             checked={isAllCartItemChecked}
             onChange={() => switchAllCheckboxes(undefined)}
           />
-        </Label>
+        </S.Label>
         <S.CartListCheckCounter onClick={() => switchAllCheckboxes(undefined)}>
           전체선택 ({checkedCartListCount}/{cartCount})
         </S.CartListCheckCounter>
