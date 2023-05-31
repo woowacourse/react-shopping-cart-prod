@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 
 import { OrderData } from '../types';
 
@@ -27,6 +27,8 @@ export const orderListState = atom({
             },
           ],
           orderedAt: '2023:03:44',
+          totalItemDiscountAmount: 6000,
+          totalMemberDiscountAmount: 0,
           totalItemPrice: 60000,
           discountedTotalItemPrice: 54000,
           shippingFee: 3000,
@@ -61,12 +63,59 @@ export const orderListState = atom({
             },
           ],
           orderedAt: '2023:03:44',
-          totalItemPrice: 60000,
-          discountedTotalItemPrice: 54000,
+          totalItemDiscountAmount: 12000,
+          totalMemberDiscountAmount: 0,
+          totalItemPrice: 120000,
+          discountedTotalItemPrice: 108000,
           shippingFee: 3000,
-          totalPrice: 57000,
+          totalPrice: 111000,
         },
       ];
     },
   }),
+});
+
+export const detailOrderState = selectorFamily({
+  key: 'detailOrderState',
+  get:
+    (orderId: OrderData['id']) =>
+    ({ get }): OrderData => {
+      // 특정 주문 상세 정보 get
+      return {
+        id: 988923784,
+        orderedItems: [
+          {
+            quantity: 1,
+            product: {
+              id: 1,
+              name: '종이용기(1100cc)-단골이 됐으면 좋겠다',
+              price: 60000,
+              discountRate: 10,
+              discountedPrice: 54000,
+              imageUrl:
+                'https://cdn-mart.baemin.com/sellergoods/list/cba783a5-b35d-4b9d-b58e-56801594351f.jpg?h=400&w=400',
+            },
+          },
+          {
+            quantity: 1,
+            product: {
+              id: 1,
+              name: '종이용기(1100cc)-단골이 됐으면 좋겠다',
+              price: 60000,
+              discountRate: 10,
+              discountedPrice: 54000,
+              imageUrl:
+                'https://cdn-mart.baemin.com/sellergoods/list/cba783a5-b35d-4b9d-b58e-56801594351f.jpg?h=400&w=400',
+            },
+          },
+        ],
+        orderedAt: '2023:03:44',
+        totalItemDiscountAmount: 12000,
+        totalMemberDiscountAmount: 0,
+        totalItemPrice: 120000,
+        discountedTotalItemPrice: 108000,
+        shippingFee: 3000,
+        totalPrice: 111000,
+      };
+    },
 });
