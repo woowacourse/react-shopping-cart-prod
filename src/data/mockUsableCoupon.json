@@ -1,0 +1,32 @@
+[
+  {
+    "couponId": 1,
+    "couponName": "오늘만 10%할인 쿠폰",
+    "minAmount": "15000"
+  },
+  {
+    "couponId": 2,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "9999"
+  },
+  {
+    "couponId": 3,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "9999"
+  },
+  {
+    "couponId": 4,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "9999"
+  },
+  {
+    "couponId": 5,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "9999"
+  },
+  {
+    "couponId": 6,
+    "couponName": "사장님이 미쳤어요! 99%할인 쿠폰",
+    "minAmount": "9999"
+  }
+]
