@@ -1,12 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import cartState, { useRefreshCartList } from '@recoil/cart/cartState';
+import cartState from '@recoil/cart/cartState';
 import * as S from './CartStepperWithIcon.style';
 
 function CartStepperWithIcon() {
   const cart = useRecoilValue(cartState);
   const navigate = useNavigate();
-  const refresher = useRefreshCartList();
 
   return (
     <S.CartWrapper
@@ -14,7 +13,6 @@ function CartStepperWithIcon() {
       aria-label="장바구니 페이지로 가기"
       role="button"
       onClick={() => {
-        refresher();
         navigate('/cart');
       }}
     >

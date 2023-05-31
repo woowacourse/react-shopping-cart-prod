@@ -1,14 +1,18 @@
-import { ChangeEvent, Suspense } from 'react';
+import { ChangeEvent, Suspense, useEffect } from 'react';
+import { useSetRecoilState } from 'recoil';
+import cartState from '@recoil/cart/cartState';
 import { useServer } from '@hooks/recoil/server/useServer';
 import CartStepperWithIcon from '@components/cart/CartStepperWithIcon';
 import SelectBox from '@components/common/SelectBox';
 import Logo from '@components/layout/Logo';
+import { getCart } from '@utils/cart/fetchCart';
 import { SERVER_NAME } from '@constants/serverUrlConstants';
 import { Container } from '@styles/style';
 import * as S from './Header.style';
 
 function Header() {
-  const { handleServer } = useServer();
+  const { server, handleServer } = useServer();
+  const setCart = useSetRecoilState(cartState);
 
   const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.currentTarget;
@@ -17,6 +21,15 @@ function Header() {
 
     handleServer(result);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const cartData = await getCart(server);
+      setCart(cartData);
+    };
+
+    fetchData();
+  }, [server, setCart]);
 
   return (
     <S.Navbar>
