@@ -80,8 +80,6 @@ export const orderHandlers = [
 
     const order = orderList.find((o) => o.orderId === orderId);
 
-    return res.networkError('');
-
     return res(ctx.status(200), ctx.json(order), ctx.delay(2000));
   }),
 ];
