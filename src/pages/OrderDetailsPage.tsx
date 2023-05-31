@@ -7,7 +7,7 @@ import OrderProductList from '../components/Order/OrderProductList';
 import PaymentInfoBox from '../components/Order/PaymentInfoBox';
 import Title from '../components/Common/Title';
 import { orderApi } from '../apis/orderProducts';
-import { OrderedProduct } from '../types/product';
+import type { OrderedProduct } from '../types/product';
 
 const OrderDetailsPage = () => {
   const hostName = useRecoilValue(hostNameAtom);
