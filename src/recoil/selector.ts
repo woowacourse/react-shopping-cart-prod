@@ -25,3 +25,9 @@ export const totalPriceSelector = selector<number>({
       0
     ),
 });
+
+export const selectedCartItemIdsSelector = selector<number[]>({
+  key: "selectedCartItemIdsSelector",
+  get: ({ get }) =>
+    get(selectedProductsState).map((product) => product.cartItemId),
+});

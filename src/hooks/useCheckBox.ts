@@ -42,7 +42,7 @@ export const useCheckBox = () => {
   };
 
   const removeTargetIndex = (targetIndex: number) => {
-    setCheckedArray(checkedArray.filter((_, index) => index !== targetIndex));
+    setCheckedArray((prev) => prev.filter((_, index) => index !== targetIndex));
   };
 
   const allChecked = getAllChecked();

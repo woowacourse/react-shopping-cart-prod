@@ -20,7 +20,7 @@ const Cart = () => {
         {cartNumber ? (
           <Container>
             <CartProductList />
-            <TotalPriceTable status="cart" />
+            <TotalPriceTable status="cart" discountPrice={0} />
           </Container>
         ) : (
           <GuideBox

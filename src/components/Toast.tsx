@@ -43,6 +43,7 @@ const Wrapper = styled.div<{ $type: string }>`
   top: 15%;
   left: 50%;
   transform: translate(-50%);
+  z-index: 20;
 
   padding: 0 10px;
 

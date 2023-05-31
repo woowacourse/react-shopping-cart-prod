@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import {
   KEY_LOCALSTORAGE_SERVER_OWNER,
@@ -7,9 +8,11 @@ import {
 } from "../constants";
 import { useLocalProducts } from "../hooks/useLocalProducts";
 import { useToast } from "../hooks/useToast";
+import { ROUTER_PATH } from "../router";
 import { getLocalStorage, setLocalStorage } from "../utils";
 
 export const ServerSelectBox = () => {
+  const navigate = useNavigate();
   const { showToast } = useToast();
   const { updateLocalProducts } = useLocalProducts();
   const [serverOwner, setServerOwner] = useState(
@@ -21,7 +24,9 @@ export const ServerSelectBox = () => {
   ) => {
     setServerOwner(e.target.value);
     setLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, e.target.value);
-    updateLocalProducts();
+    await updateLocalProducts();
+
+    navigate(ROUTER_PATH.Main);
     showToast("success", `${e.target.value}의 서버로 변경되었습니다. ✅`);
   };
 
