@@ -1,16 +1,7 @@
-import { atomFamily } from 'recoil';
-import { fetchGet } from '@utils/fetchUtils';
-import { productListApiWrapper } from '@utils/productList/productList';
-import { ServerName, getProductPath } from '@constants/serverUrlConstants';
-import { ProductItemType, ServerProductItemType } from '@type/productType';
+import { atom } from 'recoil';
+import { ProductItemType } from '@type/productType';
 
-export const productListState = atomFamily<ProductItemType[], ServerName>({
+export const productListState = atom<ProductItemType[]>({
   key: 'productListStateFamily',
-  default: async (serverName) => {
-    const productList = await fetchGet<ServerProductItemType[]>(getProductPath(serverName));
-
-    const clientProductList = productListApiWrapper(productList);
-
-    return clientProductList;
-  },
+  default: [],
 });
