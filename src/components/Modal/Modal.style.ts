@@ -12,6 +12,7 @@ export const ModalWrapper = styled.div`
   height: 100%;
 
   background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
 `;
 
 export const ModalContent = styled.div`
@@ -21,4 +22,6 @@ export const ModalContent = styled.div`
   border-radius: 10px;
   width: 100%;
   max-width: 500px;
+  max-height: calc(100% - 40px);
+  overflow-y: auto;
 `;

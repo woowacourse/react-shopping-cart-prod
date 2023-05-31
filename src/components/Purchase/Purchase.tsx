@@ -3,6 +3,7 @@ import { useRecoilValue } from "recoil";
 import { checkedCartSelector } from "../../recoil/cartAtoms.ts";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useState } from "react";
 
 export const PurchaseTitle = styled.div`
   font-style: normal;
@@ -52,14 +53,32 @@ export const ProductItemSubTotalPrice = styled.div`
   letter-spacing: 0.5px;
 `;
 
-export const TotalPrice = styled.div`
-  border: solid 1px gray;
+export const CouponSelectTitle = styled.div`
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 33px;
+
+  letter-spacing: 0.5px;
+`;
+
+export const CouponBoxContainer = styled.div``;
+
+export const CouponBox = styled.div`
+  border-radius: 10px;
+  background-color: cornflowerblue;
+  color: white;
+  width: 150px;
+  height: 100px;
+  margin-right: 10px; /* Add margin between the coupons */
 `;
 
 function Purchase() {
   const navigate = useNavigate();
   const checkedCartList = useRecoilValue(checkedCartSelector);
   const POINTS = 1000;
+
+  const [isCounponSelectorOpen, setCouponSelectorOpen] = useState(false);
 
   const purchase = () => {
     const order: NewOrder = {
@@ -99,28 +118,32 @@ function Purchase() {
         </ProductItemList>
       </div>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div>
-          <div>쿠폰 선택하기</div>
-          <div>쿠폰1</div>
-        </div>
-        <div>
-          <div>총 할인 금액</div>
-          <div>0원</div>
-        </div>
+        <CouponSelectTitle>쿠폰 선택하기</CouponSelectTitle>
+        <button onClick={() => setCouponSelectorOpen(!isCounponSelectorOpen)}>
+          열기
+        </button>
       </div>
+      {isCounponSelectorOpen && (
+        <CouponBoxContainer>
+          <CouponBox>쿠폰1</CouponBox>
+          <CouponBox>쿠폰1</CouponBox>
+          <CouponBox>쿠폰1</CouponBox>
+          <CouponBox>쿠폰1</CouponBox>
+        </CouponBoxContainer>
+      )}
+
       <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div>포인트 사용하기</div>
         <div>
-          <div>포인트 선택하기</div>
-          <div>0점</div>
-        </div>
-        <div>
-          <div>총 할인 금액</div>
-          <div>0원</div>
+          <input value={0} />점
         </div>
       </div>
+
       <div>
-        <div>총 결제 금액</div>
-        <div>0원</div>
+        <div>합계 0원</div>
+        <div>- 쿠폰 0원</div>
+        <div>- 포인트 0원</div>
+        <div>최종 결제 금액 0원</div>
       </div>
 
       <div>
