@@ -11,6 +11,8 @@ export const ApiUrlSelector = selector({
   key: 'apiUrlSelector',
   get: ({ get }) => {
     const urlState = get(ApiBaseUrlState);
+    if ('serviceWorker' in navigator) return '';
+
     if (urlState === '이리내') return process.env.REACT_APP_API_IRINAE;
 
     if (urlState === '채채') return process.env.REACT_APP_API_CHACHA;
