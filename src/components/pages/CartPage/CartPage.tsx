@@ -8,6 +8,7 @@ import empty from '../../../assets/image/empty.png';
 import { ResetButton } from '../../common/ErrorFallback/ErrorFallback';
 import { useNavigate } from 'react-router-dom';
 import colors from '../../../colors';
+import FullWidthTitle from '../../common/FullWidthTitle/FullWidthTitle';
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -22,9 +23,7 @@ const CartPage = () => {
 
   return (
     <Container>
-      <TitleWrapper>
-        <Title>장바구니</Title>
-      </TitleWrapper>
+      <FullWidthTitle>장바구니</FullWidthTitle>
       <Spacer height={34} />
       <Inner>
         <CartList>
@@ -74,21 +73,6 @@ const CartPage = () => {
 };
 
 const Container = styled.div``;
-
-const TitleWrapper = styled.div`
-  height: 67px;
-  border-bottom: 4px solid ${colors.transparentGold};
-`;
-
-const Title = styled.h2`
-  font-family: 'Noto Sans KR';
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 37px;
-  text-align: center;
-  letter-spacing: 0.5px;
-  color: ${colors.gold};
-`;
 
 const CartList = styled.ul`
   width: 735px;
@@ -153,7 +137,6 @@ const DeleteButton = styled.button`
   width: 98px;
   height: 35px;
   margin-left: auto;
-  font-family: 'Noto Sans KR';
   font-size: 16px;
   line-height: 21px;
   text-align: center;
