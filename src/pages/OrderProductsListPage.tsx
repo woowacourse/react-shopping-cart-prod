@@ -5,11 +5,11 @@ import { hostNameAtom } from '../recoil/hostData';
 import OrderProductList from '../components/Order/OrderProductList';
 import Title from '../components/Common/Title';
 import { orderApi } from '../apis/orderProducts';
-import type { OrderDetails } from '../types/product';
+import type { OrderedProduct } from '../types/product';
 
 const OrderProductsListPage = () => {
   const hostName = useRecoilValue(hostNameAtom);
-  const [orders, setOrders] = useState<OrderDetails[]>([]);
+  const [orders, setOrders] = useState<OrderedProduct[]>([]);
 
   useEffect(() => {
     orderApi(hostName).then((apiInstance) => {

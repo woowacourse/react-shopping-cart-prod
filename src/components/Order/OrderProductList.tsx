@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import OrderProductItem from './OrderProductItem';
-import type { OrderDetails } from '../../types/product';
+import type { OrderedProduct } from '../../types/product';
 
 interface OrderProductListProps {
-  orderProducts: OrderDetails;
+  orderProducts: OrderedProduct;
   showDetailsLink?: boolean;
 }
 

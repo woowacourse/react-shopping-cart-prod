@@ -18,19 +18,25 @@ export interface CartDetails {
   minUsagePoints: number;
 }
 
-export interface OrderProduct {
+export interface OrderedProductItem {
   quantity: number;
   product: Product;
 }
 
-export interface OrderDetails {
+export interface OrderedProduct {
   orderId: number;
   orderDateTime: string;
-  orderItems: OrderProduct[];
+  orderItems: OrderedProductItem[];
   totalPrice: number;
 }
 
-export interface OrderData {
+export interface OrderedDetails extends OrderedProduct {
+  totalProductPrice: number;
+  totalDeliveryFee: number;
+  usePoint: number;
+}
+
+export interface OrderedData {
   products: {
     productId: number;
     quantity: number;

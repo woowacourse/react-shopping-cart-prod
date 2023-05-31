@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import Image from '../Common/Image';
-import type { OrderProduct } from '../../types/product';
+import type { OrderedProductItem } from '../../types/product';
 
 interface OrderProductItemProps {
-  orderProduct: OrderProduct;
+  orderProduct: OrderedProductItem;
 }
 
 const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {

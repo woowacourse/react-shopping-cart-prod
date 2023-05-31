@@ -13,7 +13,7 @@ import {
 } from '../../constants/price';
 import { hostNameAtom } from '../../recoil/hostData';
 import { orderApi } from '../../apis/orderProducts';
-import type { OrderData } from '../../types/product';
+import type { OrderedData } from '../../types/product';
 
 interface EstimatedPaymentBoxProps {
   usePoint: number;
@@ -40,7 +40,7 @@ const EstimatedPaymentBox = ({ usePoint }: EstimatedPaymentBoxProps) => {
       quantity: item.quantity,
     }));
 
-    const orderData: OrderData = {
+    const orderData: OrderedData = {
       products,
       totalProductPrice,
       totalDeliveryFee,
