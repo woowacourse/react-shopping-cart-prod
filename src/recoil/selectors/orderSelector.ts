@@ -1,4 +1,4 @@
-import { selector } from 'recoil';
+import { atom, selector } from 'recoil';
 import { Product } from '../../types/Product';
 import { base64 } from '../../constants/user';
 
@@ -19,4 +19,9 @@ export const orderListSelector = selector<Order[]>({
 
     return getOrderList.json();
   },
+});
+
+export const orderListState = atom<Order[]>({
+  key: 'orderListState',
+  default: orderListSelector,
 });

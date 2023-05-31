@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 import { getCommaAddedNumber } from '../../../utils/number';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
 import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
 import { pointState } from '../../../recoil/atoms/pointAtom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
+import { orderListState } from '../../../recoil/selectors/orderSelector';
+import { base64 } from '../../../constants/user';
 
 export const OrderSummarySection = () => {
   const { totalProductPrice, deliveryPrice, totalPrice, pointToAdd } =
@@ -25,6 +27,8 @@ export const OrderSummarySection = () => {
   }, [checkedProduct.length]);
 
   const handleOrderButton = () => {
+    if (checkedProduct.length === 0) return alert('상품을 선택해 주세요.');
+
     orderByCartId(checkedProduct, totalPrice, viewPoint, pointToAdd);
 
     localStorage.setItem('pointKey', JSON.stringify({ point: pointToAdd }));
@@ -159,8 +163,14 @@ const Style = {
   PointInput: styled.input`
     border-bottom: 1px solid #333333;
     text-align: end;
-    width: 120px;
+    width: 100px;
     font-size: 14px;
+    @media (max-width: 1080px) {
+      width: 50%;
+    }
+    @media (max-width: 480px) {
+      width: 100px;
+    }
   `,
   UsingAllPoint: styled.div`
     padding: 10px;
@@ -192,7 +202,7 @@ const Style = {
     background-color: #333333;
     font-size: 24px;
     color: #ffffff;
-    font-family: var(--baemin-font);
+    font-family: var(--font-notosanskr);
 
     padding: 12px;
     margin-bottom: 20px;

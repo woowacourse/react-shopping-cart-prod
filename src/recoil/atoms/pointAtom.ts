@@ -1,5 +1,4 @@
 import { atom } from 'recoil';
-import { base64 } from '../../constants/user';
 import { getPoint } from '../../utils/localStorage';
 
 export interface Point {

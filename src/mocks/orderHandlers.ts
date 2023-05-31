@@ -8,7 +8,9 @@ import { CartProductDetail } from '../recoil/atoms/cartAtom';
 
 export const orderHandlers = [
   rest.get('/orders', (_, res, ctx) => {
-    return res(ctx.json([]), ctx.status(200), ctx.delay(500));
+    const orderList = getOrderList();
+
+    return res(ctx.json(orderList), ctx.status(200), ctx.delay(500));
   }),
   rest.post('/orders', async (req, res, ctx) => {
     const requestData = await req.json();
@@ -46,7 +48,7 @@ export const orderHandlers = [
       JSON.stringify([
         ...orderList,
         {
-          order: orderId,
+          orderId: orderId,
           orderInfo: matchedProducts,
           originalPrice: originalPrice,
           usedPoint: usedPoint,

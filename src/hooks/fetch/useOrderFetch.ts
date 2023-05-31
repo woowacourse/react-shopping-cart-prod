@@ -5,6 +5,17 @@ import { base64 } from '../../constants/user';
 export const useOrderFetch = () => {
   const apiEndPoint = useRecoilValue(APIAtom);
 
+  const getOrder = async () => {
+    const getOrderList = await fetch('/orders', {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
+
+    return getOrderList.json();
+  };
+
   const orderByCartId = (
     cartItemId: number[],
     originalPrice: number,
@@ -26,5 +37,5 @@ export const useOrderFetch = () => {
     });
   };
 
-  return { orderByCartId };
+  return { getOrder, orderByCartId };
 };
