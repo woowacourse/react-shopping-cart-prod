@@ -1,50 +1,24 @@
-import React, { useRef, useState } from "react";
-import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { Button, Page } from "../components";
-import { KEY_LOCALSTORAGE_LOGIN_TOKEN } from "../constants";
+import { useLoginForm } from "../hooks/useLoginForm";
 import { useRouter } from "../hooks/useRouter";
-import { loginState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";
-import { setLocalStorage } from "../utils";
 
 const Login = () => {
   const { goPage } = useRouter();
-  const setLoginState = useSetRecoilState(loginState);
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const usernameRef = useRef<HTMLInputElement>(null);
-
-  const handleUsernameChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
-  };
-
-  const handlePasswordChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handlePasswordKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "ArrowUp" && usernameRef.current instanceof HTMLInputElement)
-      usernameRef.current.focus();
-  };
-
-  const submitUser = async (e: React.FormEvent) => {
-    const base64 = btoa(username + ":" + password);
-
-    setLocalStorage(KEY_LOCALSTORAGE_LOGIN_TOKEN, base64);
-    e.preventDefault();
-
-    // 로그인 성공 시
-    setLoginState(true);
-    goPage(ROUTER_PATH.Main)();
-
-    // 로그인 실패 시
-    // localStorage.clear();
-  };
+  const {
+    username,
+    password,
+    usernameRef,
+    handleUsernameChanged,
+    handlePasswordChanged,
+    handlePasswordKey,
+    handleFormSubmitted,
+  } = useLoginForm();
 
   return (
     <Page>
-      <FormContainer onSubmit={submitUser}>
+      <FormContainer onSubmit={handleFormSubmitted}>
         <p>LOGIN</p>
         <label>
           아이디<span>*</span>
