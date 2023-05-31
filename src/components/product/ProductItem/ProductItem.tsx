@@ -17,9 +17,7 @@ const ProductItem = (product: Product) => {
   const { addCartItem, updateCartItemQuantity, deleteCartItem } = useCartService();
   const isCartLoading = useRecoilValue(cartLoadingState);
 
-  const initialCartItemId = useRecoilValue(getCartItemId(productId));
-  const [cartItemId, setCartItemId] = useState(initialCartItemId);
-
+  const cartItemId = useRecoilValue(getCartItemId(productId));
   const quantityInCart = useRecoilValue(productQuantityInCart(productId));
   const cartContoller = useRecoilValue(getCartStateController(cartItemId));
 
@@ -44,13 +42,11 @@ const ProductItem = (product: Product) => {
     const newCartItemId = await addCartItem(product);
     setCount(1);
     cartContoller.add(newCartItemId, 1, product);
-    setCartItemId(newCartItemId);
   };
 
   const handleNoQuantityAction = (quantity: number) => {
     if (quantity !== 0 || cartItemId === null) return;
 
-    // const cartId = getCartId(productId);
     deleteCartItem(cartItemId);
     cartContoller.delete();
   };
