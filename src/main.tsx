@@ -8,7 +8,6 @@ import router from "./router";
 import { RecoilRoot } from "recoil";
 import "./configs/recoil";
 import { worker } from "./mocks/browser";
-import ModalContainer from "./containers/ModalContainer";
 
 async function main() {
   await worker.start({
