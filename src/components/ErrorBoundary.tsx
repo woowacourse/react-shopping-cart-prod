@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 import React from "react";
 import { ERROR_MESSAGE } from "../constants/index";
-import ErrorBox from "./ErrorBox";
+import { ErrorBox } from "./ErrorBox";
 
 interface ErrorBoundaryState {
   hasError: boolean;

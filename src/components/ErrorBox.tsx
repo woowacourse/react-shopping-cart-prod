@@ -5,7 +5,7 @@ interface ErrorType {
   status: keyof typeof ERROR_MESSAGE;
 }
 
-const ErrorBox = ({ status }: ErrorType) => {
+export const ErrorBox = ({ status }: ErrorType) => {
   return (
     <Wrapper>
       <h2>{status}</h2>
@@ -32,5 +32,3 @@ const Wrapper = styled.div`
     margin-bottom: 30px;
   }
 `;
-
-export default ErrorBox;

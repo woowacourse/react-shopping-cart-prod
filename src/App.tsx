@@ -1,5 +1,5 @@
 import { RecoilRoot } from "recoil";
-import Toast from "./components/Toast";
+import { Toast } from "./components";
 import { PageRouterProvider } from "./router";
 
 const App = () => {

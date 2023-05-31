@@ -3,7 +3,7 @@ import styled, { keyframes } from "styled-components";
 import { useRecoilValue } from "recoil";
 import { toastState } from "../recoil/atom";
 
-export default function Toast() {
+export const Toast = () => {
   const { isShown, message, type } = useRecoilValue(toastState);
 
   const root = document.querySelector("#root") as HTMLElement;
@@ -11,7 +11,7 @@ export default function Toast() {
     isShown && <Wrapper $type={type}>{message}</Wrapper>,
     root
   );
-}
+};
 
 const toastAnimaitonCycle = keyframes`
   0% {

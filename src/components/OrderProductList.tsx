@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import type { LocalProductType, ProductType } from "../types/domain";
+import type { LocalProductType } from "../types/domain";
 import styled from "styled-components";
 import { selectedProductsState } from "../recoil/atom";
 

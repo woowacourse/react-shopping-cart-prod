@@ -8,8 +8,8 @@ import { ERROR_MESSAGE, MIN_QUANTITY } from "../constants";
 import { addCartItem } from "../api";
 import { makeLocalProducts } from "../utils/domain";
 import { useState } from "react";
-import ErrorBox from "./ErrorBox";
 import { useToast } from "../hooks/useToast";
+import { ErrorBox } from "./ErrorBox";
 
 export const ProductList = () => {
   const isLogined = useRecoilValue(loginState);

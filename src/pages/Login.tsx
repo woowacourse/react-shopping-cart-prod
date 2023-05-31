@@ -1,12 +1,17 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { Button, Page } from "../components";
+import { KEY_LOCALSTORAGE_LOGIN_TOKEN } from "../constants";
+import { localProductsState, loginState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";
 import { setLocalStorage } from "../utils";
+import { makeLocalProducts } from "../utils/domain";
 
 const Login = () => {
   const navigate = useNavigate();
+  const setLoginState = useSetRecoilState(loginState);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -26,12 +31,18 @@ const Login = () => {
       usernameRef.current.focus();
   };
 
-  const submitUser = (e: React.FormEvent) => {
+  const submitUser = async (e: React.FormEvent) => {
     const base64 = btoa(username + ":" + password);
 
-    setLocalStorage("login", base64);
+    setLocalStorage(KEY_LOCALSTORAGE_LOGIN_TOKEN, base64);
     e.preventDefault();
-    navigate(ROUTER_PATH.Cart);
+
+    // 로그인 성공 시
+    setLoginState(true);
+    navigate(ROUTER_PATH.Main);
+
+    // 로그인 실패 시
+    // localStorage.clear();
   };
 
   return (
