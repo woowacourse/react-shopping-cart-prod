@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  z-index: 5;
   position: fixed;
   background-color: #333333;
   padding: 10px 0;

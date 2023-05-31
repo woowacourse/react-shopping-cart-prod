@@ -1,5 +1,27 @@
 import styled from 'styled-components';
 
+type WrapperProps = {
+  position: number;
+};
+
+export const Wrapper = styled.div<WrapperProps>`
+  position: ${(props) => props.position !== 0 && 'fixed'};
+  min-width: 360px;
+  max-width: 360px;
+  display: grid;
+  row-gap: 20px;
+
+  top: ${(props) => 250 - props.position}px;
+
+  @media only screen and (max-width: 1200px) {
+    // 테블릿
+    position: relative;
+    top: 0;
+    min-width: 100%;
+    max-width: 100%;
+  }
+`;
+
 export const Container = styled.div`
   border: 1px solid #dddddd;
   color: #333333;

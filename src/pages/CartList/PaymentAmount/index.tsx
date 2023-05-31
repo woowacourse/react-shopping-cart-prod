@@ -1,5 +1,5 @@
 import { useModal } from 'noah-modal';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
@@ -20,6 +20,7 @@ import * as S from './style';
 import IssuedCoupon from '../IssuedCoupon';
 
 function PaymentAmount() {
+  const [position, setPosition] = useState(0);
   const { orderAmount, deliveryFee, totalOrderPrice, discountAmount, couponDiscountAmount } =
     useRecoilValue(orderAmountState);
   const cartAmount = useRecoilValue(cartItemsAmountState);
@@ -42,6 +43,20 @@ function PaymentAmount() {
     navigate('/order-list');
   };
 
+  const updateScrollYPosition = () => {
+    const scrollPosition = window.scrollY;
+    if (scrollPosition > 160) return;
+    setPosition(scrollPosition);
+  };
+
+  useEffect(() => {
+    updateScrollYPosition();
+    window.addEventListener('scroll', updateScrollYPosition);
+    return () => {
+      window.removeEventListener('scroll', updateScrollYPosition);
+    };
+  }, []);
+
   useEffect(() => {
     if (convert.toNumberFromLocalPrice(orderAmount) < 50000) setSelectedCouponId(null);
   }, [orderAmount]);
@@ -49,7 +64,7 @@ function PaymentAmount() {
   if (cartAmount === '0') return <></>;
 
   return (
-    <>
+    <S.Wrapper position={position}>
       <IssuedCoupon />
       <S.Container>
         <S.Title aria-label="결제 예상 금액">결제 예상 금액</S.Title>
@@ -101,7 +116,7 @@ function PaymentAmount() {
           />
         </S.ExpectedAmountLayout>
       </S.Container>
-    </>
+    </S.Wrapper>
   );
 }
 
