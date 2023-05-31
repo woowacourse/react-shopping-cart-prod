@@ -1,20 +1,21 @@
 import styled from "styled-components";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import { localProductsState, loginState } from "../recoil/atom";
 import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
 import { ERROR_MESSAGE, MIN_QUANTITY } from "../constants";
 import { addCartItem } from "../api";
-import { makeLocalProducts } from "../utils/domain";
 import { useState } from "react";
 import { useToast } from "../hooks/useToast";
 import { ErrorBox } from "./ErrorBox";
+import { useLocalProducts } from "../hooks/useLocalProducts";
 
 export const ProductList = () => {
   const isLogined = useRecoilValue(loginState);
   const { showToast } = useToast();
-  const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
+  const { updateLocalProducts } = useLocalProducts();
+  const localProducts = useRecoilValue(localProductsState);
   const [errorStatus, setErrorStatus] = useState<
     keyof typeof ERROR_MESSAGE | null
   >(null);
@@ -29,8 +30,7 @@ export const ProductList = () => {
       const response = await addCartItem(productId);
       if (!response.ok) throw new Error(response.status.toString());
 
-      const newProducts = await makeLocalProducts();
-      setLocalProducts(newProducts);
+      updateLocalProducts();
     } catch (error: any) {
       setErrorStatus(error.message);
       console.log(error);

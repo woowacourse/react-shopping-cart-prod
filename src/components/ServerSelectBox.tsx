@@ -5,7 +5,7 @@ import {
   DEFAULT_VALUE_SERVER_OWNER,
   SERVERS,
 } from "../constants";
-import { useLocalProducts } from "../hooks/useNewProducts";
+import { useLocalProducts } from "../hooks/useLocalProducts";
 import { useToast } from "../hooks/useToast";
 import { getLocalStorage, setLocalStorage } from "../utils";
 

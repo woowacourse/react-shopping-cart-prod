@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react";
 import { MAX_LENGTH_QUANTITY, MAX_QUANTITY, MIN_QUANTITY } from "../constants";
 import { changeQuantity, deleteCartItem } from "../api";
 import { LocalProductType } from "../types/domain";
-import { makeLocalProducts } from "../utils/domain";
+import { useLocalProducts } from "./useLocalProducts";
 
 export const useQuantity = (productId: number) => {
+  const { updateLocalProducts } = useLocalProducts();
   const [errorStatus, setErrorStatus] = useState<string>("");
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
   const [quantity, setQuantity] = useState<string | undefined>("0");
@@ -42,8 +43,7 @@ export const useQuantity = (productId: number) => {
     }
 
     setQuantity(newQuantity.toString());
-    const newProducts = await makeLocalProducts();
-    setLocalProducts(newProducts);
+    updateLocalProducts();
   };
 
   const handleQuantityChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
