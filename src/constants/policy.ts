@@ -1,0 +1,3 @@
+export const BASE_SHIPPING_FEE = 3000;
+export const SHIPPING_FEE_THRESHOLD = 50000;
+export const PERCENTAGE_OF_EARN_POINTS = 10;
