@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 export const CartSize = styled.div`
   position: absolute;
   top: -6px;
-  right: 1px;
+  right: 12px;
 
   display: flex;
   justify-content: center;

@@ -47,17 +47,27 @@ export const RightWrapper = styled.div`
   align-items: center;
 `;
 
-export const CartPageLink = styled(Link)`
-  position: relative;
-
+const PageLink = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
 
   color: var(--grey-400);
-  font-size: 11px;
+  font-size: 10px;
 
   & > span {
     margin-top: 6px;
   }
+`;
+
+export const CartPageLink = styled(PageLink)`
+  position: relative;
+
+  padding-right: 12px;
+
+  border-right: 1px solid var(--grey-200);
+`;
+
+export const OrdersPageLink = styled(PageLink)`
+  padding-left: 12px;
 `;

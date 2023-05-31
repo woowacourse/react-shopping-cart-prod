@@ -1,3 +1,3 @@
 import { styled } from 'styled-components';
 
-export const OrdersList = styled.ul``;
+export const OrderDetailPage = styled.div``;

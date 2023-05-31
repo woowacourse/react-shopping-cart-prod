@@ -1,8 +1,10 @@
+import { Link } from 'react-router-dom';
+
 import * as styled from './Header.styled';
 
 import { CartSize } from './CartSize/CartSize';
 
-import { CartLogo } from '../../assets/svg';
+import { CartLogo, UserIcon } from '../../assets/svg';
 import { ApiSelector } from './ApiSelector/ApiSelector';
 
 export const Header = () => {
@@ -24,6 +26,13 @@ export const Header = () => {
             <span>장바구니</span>
             <CartSize />
           </styled.CartPageLink>
+          <styled.OrdersPageLink to="/orders">
+            <img
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gPHBhdGggZD0iTTE2IDdDMTYgOS4yMDkxNCAxNC4yMDkxIDExIDEyIDExQzkuNzkwODYgMTEgOCA5LjIwOTE0IDggN0M4IDQuNzkwODYgOS43OTA4NiAzIDEyIDNDMTQuMjA5MSAzIDE2IDQuNzkwODYgMTYgN1oiIHN0cm9rZT0iIzMzMzMzMyIgc3Ryb2tlLXdpZHRoPSIyIi8+IDxwYXRoIGQ9Ik0yMSAyMUMyMSAxNS40NzcyIDE2Ljk3MDYgMTEgMTIgMTFDNy4wMjk0NCAxMSAzIDE1LjQ3NzIgMyAyMSIgc3Ryb2tlPSIjMzMzMzMzIiBzdHJva2Utd2lkdGg9IjIiLz4gPC9zdmc+IA=="
+              alt="User Icon"
+            />
+            <span>주문 목록</span>
+          </styled.OrdersPageLink>
         </styled.RightWrapper>
       </styled.Content>
     </styled.Container>

@@ -12,9 +12,11 @@ import { Layout } from './components/common/Layout/Layout';
 import { Home } from './components/pages/Home/Home';
 import { CartPage } from './components/pages/CartPage/CartPage';
 import { OrdersPage } from './components/pages/OrdersPage/OrdersPage';
+import { OrderDetailPage } from './components/pages/OrderDetailPage/OrderDetailPage';
 
-import { CartItemType } from './types';
 import { FETCH_URL, PATH } from './constants';
+
+import { type CartItemType } from './types';
 
 export const App = () => {
   const baseUrl = useApiBaseUrlValue();
@@ -51,11 +53,22 @@ export const App = () => {
               </Layout>
             )}
           />
-          <Route path={PATH.ORDERS} Component={() => (
-            <Layout>
-              <OrdersPage />
-            </Layout>
-          )} />
+          <Route
+            path={PATH.ORDERS}
+            Component={() => (
+              <Layout>
+                <OrdersPage />
+              </Layout>
+            )}
+          />
+          <Route
+            path={`${PATH.ORDERS}/:id`}
+            Component={() => (
+              <Layout>
+                <OrderDetailPage />
+              </Layout>
+            )}
+          />
         </Routes>
       </BrowserRouter>
     </>
