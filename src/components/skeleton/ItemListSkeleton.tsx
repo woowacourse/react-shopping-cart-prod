@@ -74,8 +74,10 @@ const NameBox = styled.div`
 
   height: 18px;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.06);
   color: transparent;
+
+  border-radius: 5px;
 
   @media (max-width: 767px) {
     height: 16px;
@@ -89,7 +91,9 @@ const PriceBox = styled.p`
 
   height: 22px;
   color: transparent;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.03);
+
+  border-radius: 5px;
 
   @media (max-width: 767px) {
     height: 18px;
