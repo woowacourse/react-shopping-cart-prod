@@ -2,18 +2,23 @@ import { memo } from "react";
 import styled from "styled-components";
 import QuantityCounter from "components/QuantityCounter";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { cartCouponSelector, cartSelector } from "recoil/cart";
+import { cartSelector } from "recoil/cart";
 import { CartProduct } from "types/domain";
 import { removeCartItem } from "api/cartItems";
 import { serverSelectState } from "recoil/server";
 import CouponSelector from "./CouponSelector";
+import { useCart } from "hooks/useCart";
+import { getCouponInfo } from "recoil/coupon";
+import { calculateDiscountPrice } from "utile/calculateDiscountPrice";
 
 const CartItem = (item: CartProduct) => {
   const setProduct = useSetRecoilState(cartSelector(item.product.id));
-  const setSelectedCoupon = useSetRecoilState(
-    cartCouponSelector(item.product.id)
-  );
   const selectedServer = useRecoilValue(serverSelectState);
+  const { updateCouponIdOfCartItem } = useCart();
+
+  const coupon = useRecoilValue(getCouponInfo(item.couponId));
+  const totalPrice =
+    coupon && calculateDiscountPrice(item.product.price, item.quantity, coupon);
 
   const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProduct({
@@ -31,10 +36,6 @@ const CartItem = (item: CartProduct) => {
     }
 
     setProduct(null);
-  };
-
-  const changeCartItemCoupon = (couponId: number | undefined) => {
-    setSelectedCoupon(couponId);
   };
 
   return (
@@ -55,14 +56,22 @@ const CartItem = (item: CartProduct) => {
       </FirstPart>
       <MiddlePart>
         <NameBox>
-          {item.product.name}{" "}
-          <PriceBox>{item.product.price.toLocaleString()}원</PriceBox>
+          {item.product.name}
+          <PriceBox>
+            <span>{item.product.price.toLocaleString()}원</span>
+          </PriceBox>
         </NameBox>
-        <CouponSelector changeCartItemCoupon={changeCartItemCoupon} />
+        <CouponSelector
+          changeCartItemCoupon={updateCouponIdOfCartItem(item.product.id)}
+        />
       </MiddlePart>
       <LastPart>
         <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
         <QuantityCounter itemId={item.product.id} lowerBound={1} />
+        <TotalPriceBox className="total" isSale={item.couponId !== undefined}>
+          <span>{(item.product.price * item.quantity).toLocaleString()}원</span>
+          {totalPrice && <span> {totalPrice.toLocaleString()}원</span>}
+        </TotalPriceBox>
       </LastPart>
     </Wrapper>
   );
@@ -170,6 +179,32 @@ const PriceBox = styled.p`
   margin-top: 10px;
   font-size: 16px;
   font-weight: 400;
+`;
+
+interface TotalPriceBoxProps {
+  isSale: boolean;
+}
+
+const TotalPriceBox = styled.p<TotalPriceBoxProps>`
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 400;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+
+  & :first-child {
+    text-decoration: ${(props) => (props.isSale ? "line-through" : "")};
+    color: ${(props) => (props.isSale ? "gray" : "")};
+    font-style: ${(props) => (props.isSale ? "italic" : "")};
+    font-size: ${(props) => (props.isSale ? "14px" : "")};
+  }
+
+  & :last-child {
+    font-weight: ${(props) => (props.isSale ? "600" : "")};
+  }
 `;
 
 export default memo(CartItem);
