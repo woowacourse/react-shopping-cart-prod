@@ -1,6 +1,7 @@
 import { Fragment, ChangeEvent, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
+import { KEY_SERVER } from '../constants';
 import { SERVERS } from '../constants/url';
 import { serverState } from '../recoil';
 import Button from './common/Button';
@@ -11,6 +12,7 @@ const ServerSelector = () => {
   const [server, setServer] = useRecoilState(serverState);
 
   const handleSeverChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    localStorage.setItem(KEY_SERVER, SERVERS[value]);
     setServer(SERVERS[value]);
     setIsClicked(false);
   };

@@ -6,6 +6,7 @@ export const ROUTE_PATH: Readonly<Record<string, string>> = {
 };
 
 export const KEY_CART = 'cart';
+export const KEY_SERVER = 'server';
 
 export const QUANTITY: Readonly<Record<string, number>> = {
   INITIAL: 1,

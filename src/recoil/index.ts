@@ -1,5 +1,5 @@
 import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
-import { QUANTITY } from '../constants';
+import { KEY_SERVER, QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
 import { CartItem, Product } from '../types';
 
@@ -85,5 +85,5 @@ export const totalPriceSelector = selector<number>({
 
 export const serverState = atom({
   key: 'serverState',
-  default: `${SERVERS.준팍}`,
+  default: localStorage.getItem(KEY_SERVER) ?? `${SERVERS.준팍}`,
 });
