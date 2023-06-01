@@ -1,2 +1,1 @@
-export const getDateFromISOString = (value: string) =>
-  value.replace(/T.*/, value);
+export const getDateFromISOString = (value: string) => value.replace(/T.*/, '');
