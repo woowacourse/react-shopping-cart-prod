@@ -17,7 +17,7 @@ export const Default: Story = {
     name: '순살치킨 1KG',
     price: 9900,
     imageUrl:
-      'https://cdn-mart.baemin.com/sellergoods/main/c6f2f083-a8b8-4799-834b-444b5eaeb532.png?h=400&w=400',
+      'https://images.unsplash.com/photo-1626082929543-5bab0f090c42?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
   },
-  parameters: { msw: cartHandler },
+  // parameters: { msw: cartHandler },
 };

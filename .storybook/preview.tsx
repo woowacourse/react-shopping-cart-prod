@@ -4,6 +4,7 @@ import GlobalStyle from '../src/GlobalStyle';
 import type { Preview } from '@storybook/react';
 import { MemoryRouter } from 'react-router-dom';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
+import storybookHandlers from '../src/mocks/storybookHandlers';
 
 initialize();
 
@@ -16,6 +17,7 @@ const preview: Preview = {
         date: /Date$/,
       },
     },
+    msw: storybookHandlers,
   },
 };
 
