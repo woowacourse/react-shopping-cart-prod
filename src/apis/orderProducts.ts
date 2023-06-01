@@ -8,42 +8,40 @@ const password = process.env.REACT_APP_PASSWORD;
 const base64 = btoa(email + ':' + password);
 
 export const orderApi = async (hostName: HostNameType) => {
-  const URL = `${servers[hostName]}/orders`;
-
-  const fetchOrderProducts = async () => {
-    const response: OrderedProduct[] = await fetchData<OrderedProduct[]>(URL, {
-      method: 'GET',
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    });
-    return response;
+  const BASE_URL = `${servers[hostName]}/orders`;
+  const headers = {
+    Authorization: `Basic ${base64}`,
   };
 
-  const fetchOrderDetailsProduct = async (orderId: string) => {
-    const URL = `${servers[hostName]}/orders/${orderId}`;
-
-    const response: OrderedProduct = await fetchData<OrderedProduct>(URL, {
-      method: 'GET',
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    });
+  const fetchOrderProducts = async () => {
+    const response: OrderedProduct[] = await fetchData<OrderedProduct[]>(
+      BASE_URL,
+      {
+        method: 'GET',
+        headers,
+      }
+    );
     return response;
   };
 
   const postOrderProduct = async (orderData: OrderedData) => {
-    const headers = {
-      Authorization: `Basic ${base64}`,
-    };
+    const response = await postData(BASE_URL, headers, { orderData });
+    return response;
+  };
 
-    const response = await postData(URL, headers, { orderData });
+  const fetchOrderDetailsProduct = async (orderId: string) => {
+    const URL = `${BASE_URL}/${orderId}`;
+
+    const response: OrderedProduct = await fetchData<OrderedProduct>(URL, {
+      method: 'GET',
+      headers,
+    });
     return response;
   };
 
   return {
     fetchOrderProducts,
-    fetchOrderDetailsProduct,
     postOrderProduct,
+    fetchOrderDetailsProduct,
   };
 };
