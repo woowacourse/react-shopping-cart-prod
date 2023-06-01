@@ -1,4 +1,3 @@
-import { styled } from 'styled-components';
 import Layout from '@components/layout/Layout';
 import OrderHeader from '@components/orders/OrderHeader';
 import OrderItemList from '@components/orders/OrderItemList';
@@ -8,14 +7,12 @@ function Orders() {
   const orders = MOCK_ORDER_LIST;
   return (
     <Layout>
-      <Container>
+      <div>
         <OrderHeader text="주문 목록" />
         <OrderItemList orders={orders} />
-      </Container>
+      </div>
     </Layout>
   );
 }
-
-const Container = styled.div``;
 
 export default Orders;

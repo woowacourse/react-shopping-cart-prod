@@ -1,11 +1,13 @@
-import { useCheckCart } from '@hooks/recoil/cart/useCheckCart';
 import { FlexWrapper } from '@pages/Cart/Cart.style';
 import * as S from './ExpectedPayment.style';
 
-function ExpectedPayment() {
-  const { totalCartPrice } = useCheckCart();
-  const deliveryFee = totalCartPrice ? 3000 : 0;
-  const totalPayingPrice = totalCartPrice + deliveryFee;
+interface ExpectedPaymentProps {
+  totalPrice: number;
+  deliveryFee: number;
+}
+
+function ExpectedPayment({ totalPrice, deliveryFee }: ExpectedPaymentProps) {
+  const totalPayingPrice = totalPrice + deliveryFee;
   return (
     <S.PayingContainer>
       <S.PayingBox>
@@ -15,7 +17,7 @@ function ExpectedPayment() {
         <S.PayingBackground>
           <FlexWrapper>
             <S.ContentText>총 상품 가격</S.ContentText>
-            <S.ContentText> {totalCartPrice.toLocaleString('ko-KR')}원</S.ContentText>
+            <S.ContentText> {totalPrice.toLocaleString('ko-KR')}원</S.ContentText>
           </FlexWrapper>
           <FlexWrapper>
             <S.ContentText>총 배송비</S.ContentText>
@@ -26,7 +28,7 @@ function ExpectedPayment() {
             <S.TotalText>{totalPayingPrice.toLocaleString('ko-KR')}원</S.TotalText>
           </S.TotalPriceContainer>
         </S.PayingBackground>
-        <S.PayingButton disabled={totalCartPrice === 0}>결제하기</S.PayingButton>
+        <S.PayingButton disabled={totalPrice === 0}>결제하기</S.PayingButton>
       </S.PayingBox>
     </S.PayingContainer>
   );
