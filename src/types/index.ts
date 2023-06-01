@@ -11,9 +11,14 @@ export interface CartItem {
   product: Product;
 }
 
+export interface OrderProducts extends Product {
+  quantity: number;
+  totalPrice: number;
+}
+
 export interface OrderItem {
   orderId: number;
-  orderProducts: CartItem[];
+  orderProducts: OrderProducts[];
 }
 
 export type ToastType = 'success' | 'error';
