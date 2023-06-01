@@ -2,8 +2,8 @@ import Header from "components/Header";
 import Page from "components/common/Page";
 import React from "react";
 import Skeleton from "components/common/Skeleton";
-import OrderItemList from "components/orderList/OrderItemList";
 import LoadingSpinner from "components/common/LoadingSpinner";
+import { Outlet } from "react-router-dom";
 
 const OrderList = () => {
   return (
@@ -15,7 +15,7 @@ const OrderList = () => {
       </React.Suspense>
       <Page>
         <React.Suspense fallback={<LoadingSpinner />}>
-          <OrderItemList />
+          <Outlet />
         </React.Suspense>
       </Page>
     </>

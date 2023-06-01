@@ -1,12 +1,19 @@
 import { Order } from "api/orders";
+import React from "react";
 import { styled } from "styled-components";
 
-const OrderProduct = (product: Order) => {
+interface OrderProductPros {
+  order: Order;
+  children?: React.ReactNode;
+}
+
+const OrderProduct = ({ order, children }: OrderProductPros) => {
   return (
     <Wrapper>
-      <ImgBox src={product.product.imageUrl} alt={`${product.product.name} 상품 이미지`} />
-      <NameBox>{product.product.name}</NameBox>
-      <PriceContainer>{product.total.toLocaleString()} 원</PriceContainer>
+      <ImgBox src={order.product.imageUrl} alt={`${order.product.name} 상품 이미지`} />
+      <NameBox>{order.product.name}</NameBox>
+      <PriceContainer>{order.total.toLocaleString()}원</PriceContainer>
+      <ChildrenBox>{children}</ChildrenBox>
     </Wrapper>
   );
 };
@@ -14,6 +21,7 @@ const OrderProduct = (product: Order) => {
 const Wrapper = styled.ul`
   display: flex;
   flex-flow: wrap column;
+  align-content: flex-start;
   row-gap: 12px;
 
   height: 160px;
@@ -31,7 +39,7 @@ const ImgBox = styled.img`
 `;
 
 const NameBox = styled.div`
-  width: 80%;
+  width: 30%;
   height: 20%;
 
   padding-top: 1%;
@@ -49,11 +57,16 @@ const NameBox = styled.div`
 `;
 
 const PriceContainer = styled.div`
-  width: 80%;
+  width: 30%;
+  height: 60%;
 
   color: rgba(136, 136, 136, 1);
   font-size: 16px;
   font-weight: 400;
+`;
+
+const ChildrenBox = styled.div`
+  padding-top: 1%;
 `;
 
 export default OrderProduct;
