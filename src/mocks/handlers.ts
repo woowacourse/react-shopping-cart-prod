@@ -6,7 +6,7 @@ import point from './data/point.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
 
 import type { CartProduct, Order, ScheduledOrder } from '../types/product';
-import { getData } from '../utils/localStorage';
+import { getData, updateData } from '../utils/localStorage';
 
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
@@ -70,7 +70,20 @@ export const handlers = [
 
   rest.post<{ order: ScheduledOrder }>('/orders', (req, res, ctx) => {
     const { order } = req.body;
+    const { cartItems, totalPrice } = order;
     console.log(order);
+    const currentOrders = getData('order');
+    const updatedOrders: Order[] = [
+      ...currentOrders,
+      {
+        orderId: Date.now(),
+        orderDateTime: '2023-06-01 08:30:21',
+        orderItems: cartItems,
+        totalPrice,
+      },
+    ];
+    updateData('order', updatedOrders);
+
     return res(ctx.status(201), ctx.json({ message: '상품이 추가되었습니다' }));
   }),
 
