@@ -1,5 +1,5 @@
 import { useModal } from 'noah-modal';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { CouponType } from '@Types/index';
 
@@ -9,6 +9,9 @@ import selectedCouponIdState from '@Atoms/selectedCouponIdState';
 
 import * as S from './style';
 
+type CouponProps = Partial<CouponType> &
+  Partial<{ subMessage: string; type: 'issued' | 'use'; isLoading: boolean; isSelected?: boolean }>;
+
 function Coupon({
   id,
   name,
@@ -17,11 +20,12 @@ function Coupon({
   subMessage,
   type,
   isLoading = false,
-}: Partial<CouponType> & Partial<{ subMessage: string; type: 'issued' | 'use'; isLoading: boolean }>) {
+  isSelected = false,
+}: CouponProps) {
   const { closeModal } = useModal();
   const { deleteMyCoupon, issuedCoupon } = useCoupon();
 
-  const [selectedCouponId, setSelectedCouponId] = useRecoilState(selectedCouponIdState);
+  const setSelectedCouponId = useSetRecoilState(selectedCouponIdState);
 
   const IssuedOrUseCoupon = () => {
     if (!id) return;
@@ -37,7 +41,7 @@ function Coupon({
     deleteMyCoupon(id);
   };
 
-  const couponButton = isUsed ? '✖︎' : type === 'issued' ? '⬇︎' : selectedCouponId === id ? '✓' : '➡︎';
+  const couponButton = isUsed ? '✖︎' : type === 'issued' ? '⬇︎' : isSelected ? '✓' : '➡︎';
   return (
     <S.Wrapper>
       <S.Container isUsed={isUsed} isLoading={isLoading}>

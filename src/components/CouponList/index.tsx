@@ -5,6 +5,8 @@ import SecondaryButton from '@Components/SecondaryButton';
 
 import { CouponType } from '@Types/index';
 
+import selectedCouponIdState from '@Atoms/selectedCouponIdState';
+
 import notFound from '@Asset/notFound.png';
 
 import * as S from './style';
@@ -29,6 +31,7 @@ function CouponList<T extends CouponType>({
   redirectAction,
 }: CouponListProps<T>) {
   const coupons = useRecoilValue(couponState) as T[];
+  const selectedCouponId = useRecoilValue(selectedCouponIdState);
 
   if (coupons.length === 0) {
     return (
@@ -44,7 +47,13 @@ function CouponList<T extends CouponType>({
   return (
     <S.Container>
       {coupons.map((coupon) => (
-        <Coupon key={coupon.id} {...coupon} subMessage={couponSubMessage} type={type} />
+        <Coupon
+          key={coupon.id}
+          {...coupon}
+          subMessage={couponSubMessage}
+          type={type}
+          isSelected={selectedCouponId === coupon.id}
+        />
       ))}
     </S.Container>
   );
