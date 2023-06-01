@@ -28,7 +28,7 @@ function CartItemBox({ cartId, productId, imageUrl, name, price }: CartItemProps
 
   return (
     <S.CartItemContainer>
-      <CheckBox type="checkbox" checked={isChecked} onChange={toggleCheck} boxsize="medium" />
+      <CheckBox type="checkbox" checked={isChecked} onChange={toggleCheck} />
       <S.ItemImageWrapper>
         <S.ItemImage src={imageUrl} />
       </S.ItemImageWrapper>
@@ -36,6 +36,7 @@ function CartItemBox({ cartId, productId, imageUrl, name, price }: CartItemProps
       <S.ProductInfo>
         <S.DeleteIcon src={deleteIcon} onClick={removeCartItemAndDelete} />
         <Stepper
+          stepperStyle="large"
           onChange={onQuantityInputChange}
           onDecrease={decreaseQuantity}
           onIncrease={increaseQuantity}

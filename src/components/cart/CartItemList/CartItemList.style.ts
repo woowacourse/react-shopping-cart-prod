@@ -17,16 +17,15 @@ export const CartItemListContainer = styled(FlexWrapper)`
 `;
 
 export const DeleteCheckBox = styled.button`
-  background-color: ${({ theme }) => theme.secondaryColor};
-  color: ${({ theme }) => theme.colors.lightColor};
-  height: 3rem;
-  padding: 0 1rem;
-  font-weight: 600;
-  border-radius: 8px;
+  padding: 0.5rem 1.8rem;
 
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.dangerColor};
-  }
+  font-family: 'Noto Sans KR';
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.1rem;
+
+  color: ${({ theme }) => theme.colors.primaryColor};
+  border: 1px solid ${({ theme }) => theme.colors.secondaryColor};
 `;
 
 export const CheckAllSpan = styled.span`

@@ -1,52 +1,39 @@
 import { styled } from 'styled-components';
 
 export const ProductItemBox = styled.div`
-  /*  height: 350px; */
   padding: 8px;
 `;
 
-export const ProductItemImageBox = styled.div`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  transition: ${(props) => props.theme.transitions.default};
-
-  &:hover {
-    transform: ${({ theme }) => theme.effects.hoverScale};
-  }
-`;
-
 export const ProductItemImage = styled.img`
-  width: 90%;
   aspect-ratio: 1/1;
-  border-radius: 8px;
-  box-shadow: ${(props) => props.theme.shadows.large};
 
   object-fit: cover;
 `;
 
 export const ProductDetails = styled.div`
   display: flex;
-  justify-content: space-between;
-  padding: 2rem;
-  height: 10rem;
 
-  align-items: center;
+  margin-top: 1.8rem;
 `;
 
 export const ProductName = styled.div`
-  font-size: 1.6rem;
-  margin: 0.5rem 0;
   width: 100%;
 
-  /* TODO: 변수표현해볼것 */
+  font-weight: 400;
+  font-size: 1.6rem;
+  letter-spacing: 0.5px;
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
+
 export const ProductPrice = styled.div`
-  font-size: 2rem;
   margin: 0.5rem 0;
+
+  font-weight: 400;
+  font-size: 2rem;
+  letter-spacing: 0.5px;
 `;
 
 export const ProductInfo = styled.div`

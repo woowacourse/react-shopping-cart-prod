@@ -10,9 +10,7 @@ function ProductItem({ product }: ProductItemProps) {
   const { name, price, imageUrl } = product;
   return (
     <S.ProductItemBox>
-      <S.ProductItemImageBox>
-        <S.ProductItemImage src={imageUrl} />
-      </S.ProductItemImageBox>
+      <S.ProductItemImage src={imageUrl} />
       <S.ProductDetails>
         <S.ProductInfo>
           <S.ProductName>{name}</S.ProductName>

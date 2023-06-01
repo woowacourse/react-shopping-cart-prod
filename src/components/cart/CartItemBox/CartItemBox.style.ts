@@ -1,13 +1,13 @@
 import { styled } from 'styled-components';
 import { FlexWrapper } from '@pages/Cart/Cart.style';
+import { theme } from '@styles/theme';
 
 export const CartItemContainer = styled(FlexWrapper)`
   column-gap: 1rem;
   width: 100%;
   margin: 1rem;
-  border: ${({ theme }) => theme.colors.secondaryColor} 1px solid;
+  border-bottom: ${({ theme }) => theme.colors.secondaryColor} 1px solid;
   padding: 1rem;
-  border-radius: 8px;
   width: 95%;
 
   justify-content: start;
@@ -19,16 +19,20 @@ export const ItemImageWrapper = styled.div`
 `;
 
 export const ItemImage = styled.img`
-  width: 90%;
+  height: 100%;
   aspect-ratio: 1/1;
-  border-radius: 8px;
-  box-shadow: ${(props) => props.theme.shadows.large};
 
   object-fit: cover;
 `;
 
 export const NameText = styled.p`
-  size: 2rem;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 2.4rem;
+
+  letter-spacing: 0.5px;
+
+  color: ${theme.colors.primaryColor};
 `;
 
 export const ProductInfo = styled.div`
@@ -37,22 +41,28 @@ export const ProductInfo = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: end;
-`;
 
-export const DeleteButton = styled.button`
-  width: 30px;
-  height: 30px;
-  background-color: ${({ theme }) => theme.colors.primaryColor};
-  border-radius: 50%;
+  padding-bottom: 2.4rem;
 `;
 
 export const DeleteIcon = styled.img`
   width: 18px;
   height: 18px;
 
+  margin-bottom: 2.4rem;
+
   cursor: pointer;
 `;
 
 export const PriceText = styled.p`
-  size: 1.6rem;
+  margin-top: 2rem;
+
+  font-weight: 400;
+  font-size: 1.6rem;
+  line-height: 2.4rem;
+
+  text-align: right;
+  letter-spacing: 0.5px;
+
+  color: ${theme.colors.primaryColor};
 `;

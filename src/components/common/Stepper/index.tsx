@@ -1,7 +1,10 @@
 import { ChangeEvent } from 'react';
 import * as S from './Stepper.style';
 
+export type StepperStyleType = 'small' | 'large';
+
 interface StepperProps {
+  stepperStyle: StepperStyleType;
   quantity: number;
   onIncrease: () => void;
   onDecrease: () => void;
@@ -13,6 +16,7 @@ interface StepperProps {
 }
 
 function Stepper({
+  stepperStyle,
   quantity,
   onIncrease,
   onDecrease,
@@ -25,6 +29,7 @@ function Stepper({
   return (
     <S.CartBox>
       <S.QuantityInput
+        stepperStyle={stepperStyle}
         ref={countInputRef}
         data-testid="quantity-input"
         value={quantity === 0 ? '' : quantity}
@@ -33,6 +38,7 @@ function Stepper({
       />
       <S.ButtonBox>
         <S.QuantityControlButton
+          stepperStyle={stepperStyle}
           onClick={onIncrease}
           aria-label={ariaIncreaseLabel}
           role="increase"
@@ -40,6 +46,7 @@ function Stepper({
           ⏶
         </S.QuantityControlButton>
         <S.QuantityControlButton
+          stepperStyle={stepperStyle}
           onClick={onDecrease}
           aria-label={ariaDecreaseLabel}
           role="decrease"

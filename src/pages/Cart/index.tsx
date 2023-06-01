@@ -1,5 +1,6 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
 import { useCheckCart } from '@hooks/recoil/cart/useCheckCart';
 import CartCouponSelect from '@components/cart/CartCouponSelect';
@@ -16,6 +17,7 @@ const DELIVERY_FEE = 3000;
 
 function Cart() {
   const serverName = useRecoilValue(serverState);
+  const cart = useRecoilValue(cartState);
   const [coupons, setCoupons] = useState<CouponType[]>([]);
   const { totalCartPrice } = useCheckCart();
 
@@ -38,15 +40,20 @@ function Cart() {
     <Layout>
       <S.CartPageContainer>
         <Suspense fallback={<SkeletonCart />}>
-          <CartItemList />
-          <div>
-            <CartCouponSelect availableCouponLength={availableCouponLength} />
-            <ExpectedPayment
-              totalItemsPrice={totalCartPrice}
-              deliveryFee={DELIVERY_FEE}
-              discountPrice={0}
-            />
-          </div>
+          <S.Title>든든배송 상품 ({cart.length}개)</S.Title>
+          <S.Main>
+            <CartItemList cart={cart} />
+            <S.SelectAndPaymentWrapper>
+              <S.CartCouponSelectWrapper>
+                <CartCouponSelect availableCouponLength={availableCouponLength} />
+              </S.CartCouponSelectWrapper>
+              <ExpectedPayment
+                totalItemsPrice={totalCartPrice}
+                deliveryFee={DELIVERY_FEE}
+                discountPrice={0}
+              />
+            </S.SelectAndPaymentWrapper>
+          </S.Main>
         </Suspense>
       </S.CartPageContainer>
     </Layout>

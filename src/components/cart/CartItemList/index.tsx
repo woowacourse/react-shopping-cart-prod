@@ -1,12 +1,14 @@
-import { useRecoilValue } from 'recoil';
-import cartState from '@recoil/cart/cartState';
 import { useCheckCart } from '@hooks/recoil/cart/useCheckCart';
 import CartItemBox from '@components/cart/CartItemBox';
 import CheckBox from '@components/common/CheckBox';
+import { CartItemType } from '@type/cartType';
 import * as S from './CartItemList.style';
 
-function CartItemList() {
-  const cart = useRecoilValue(cartState);
+interface CartItemListProps {
+  cart: CartItemType[];
+}
+
+function CartItemList({ cart }: CartItemListProps) {
   const { isAllChecked, toggleAllCartItem, deleteCheckedItems, checkedCount } = useCheckCart();
   const productCount = cart.length;
 
