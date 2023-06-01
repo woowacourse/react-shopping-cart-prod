@@ -70,7 +70,7 @@ export const IssuedCoupon: Story = {
   args: {
     name: '3,000원 할인',
     description: '오픈맞이 특별 할인',
-    subMessage: '쿠폰으로 할인 받고 상품 구매하기',
+    subMessage: '쿠폰 발급 받고 상품 할인 받기',
     type: 'issued',
   },
 };
