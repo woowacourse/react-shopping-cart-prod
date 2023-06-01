@@ -33,10 +33,8 @@ const SpecificCouponSelect = ({
   }, [isCheckedCartItem]);
 
   const onCouponSelected = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (e.target.value === 'DEFAULT') {
-      setSelectedCoupons(
-        selectedCoupons.filter((couponId) => couponId !== targetCouponId)
-      );
+    if (e.target.value === 'DEFAULT' || !isCheckedCartItem) {
+      e.target.selectedIndex = 0;
       return;
     }
 
