@@ -50,7 +50,12 @@ const useOrderFetch = () => {
       },
     },
   );
-  return { addOrderDataAPI, orderListData, orderListRefetch };
+
+  return {
+    addOrderDataAPI,
+    orderListData,
+    orderListRefetch,
+  };
 };
 
 export default useOrderFetch;

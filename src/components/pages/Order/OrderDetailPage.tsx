@@ -1,39 +1,21 @@
 import { useParams } from 'react-router-dom';
-import { useQuery } from 'react-query';
 import styled from '@emotion/styled';
 import PageTemplate from '../../templates/PageTemplate';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import PriceBox from '../../box/TotalPriceBox/PriceBox';
-import { OrderDetailType } from '../../../types/types';
 import DetailList from '../../list/DetailList/DetailList';
+import useOrderDetailFetch from '../../../hooks/useOrderDetailFetch';
 import { useEffect } from 'react';
 
 const OrderDetailPage = () => {
   const orderId = useParams().orderId;
+  const { orderDetailData, deleteOrderDataAPI, confirmOrderDataAPI, refetch } = useOrderDetailFetch(
+    Number(orderId),
+  );
 
   useEffect(() => {
     refetch();
   }, []);
-
-  const { data: orderDetailData, refetch } = useQuery<OrderDetailType>(
-    'orderDetail',
-    async () => {
-      const res = await fetch(`/orders/${orderId}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      const data = await res.json();
-      return data;
-    },
-    {
-      onError: (e) => {
-        console.log(e);
-      },
-    },
-  );
 
   if (!orderDetailData) {
     return <ErrorBox errorType="emptyList" />;
@@ -46,7 +28,12 @@ const OrderDetailPage = () => {
     >
       <DetailPageWrapper>
         <DetailWrapper>
-          <DetailList order={order} isList={false} />
+          <DetailList
+            onConfirm={confirmOrderDataAPI}
+            onDelete={deleteOrderDataAPI}
+            order={order}
+            isList={false}
+          />
         </DetailWrapper>
         <PriceBox
           originalPrice={originalPrice}

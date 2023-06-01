@@ -32,13 +32,6 @@ export const handlers = [
     await delay(200);
     return res(ctx.status(200), ctx.json(couponList));
   }),
-  rest.get('/orders', async (_, res, ctx) => {
-    const data = orderList.map((orders) => {
-      const { originalPrice, discountPrice, coupon, ...order } = orders;
-      return order;
-    });
-    return res(ctx.status(200), ctx.json(data));
-  }),
   rest.post('/orders', async (req, res, ctx) => {
     const { couponId } = await req.json<{
       couponId: number;
@@ -86,11 +79,35 @@ export const handlers = [
     };
     return res(ctx.status(200), ctx.set(responseHeaders));
   }),
+  rest.get('/orders', async (_, res, ctx) => {
+    const data = orderList.map((orders) => {
+      const { originalPrice, discountPrice, coupon, ...order } = orders;
+      return order;
+    });
+    return res(ctx.status(200), ctx.json(data));
+  }),
+  rest.delete('/orders/:id', async (req, res, ctx) => {
+    const { id } = req.params;
+    const foundOrderItemIndex = orderList.findIndex((order) => order.id === Number(id));
+    if (foundOrderItemIndex !== -1) {
+      orderList.splice(foundOrderItemIndex, 1);
+      return res(ctx.status(200), ctx.text('Cart Item Delete Success'));
+    }
+    return res(ctx.status(400, 'OrderData Does Not Found'));
+  }),
+
   rest.get('/orders/:id', async (req, res, ctx) => {
     const { id } = req.params;
     const order = orderList.find((order) => order.id === Number(id));
     if (order) return res(ctx.status(200), ctx.json(order));
-    return res(ctx.status(400, 'Product Does Not Found'));
+    return res(ctx.status(400, 'Order Does Not Found'));
+  }),
+
+  rest.patch('/orders/:id/confirm', async (req, res, ctx) => {
+    const { id } = req.params;
+    const foundOrderItemIndex = orderList.findIndex((order) => order.id === Number(id));
+    orderList[foundOrderItemIndex].confirmState = true;
+    return res(ctx.status(200), ctx.text('Order Confirm Change Success'));
   }),
   // rest.get('/products', async (_, res, ctx) => {
   //   await delay(200);
