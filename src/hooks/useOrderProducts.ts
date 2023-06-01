@@ -15,12 +15,17 @@ export const useOrderProducts = () => {
   const setToastState = useSetRecoilState(toastState);
   const navigate = useNavigate();
 
-  const orderProducts = async (totalPrice: number, couponId = NO_DISCOUNT) => {
-    const dataSet = {
-      cartItemIds: checkedList.map(checked => checked.id),
-      totalPrice,
-      couponId,
-    };
+  const orderProducts = async (totalPrice: number, couponId: number | null) => {
+    const dataSet = couponId
+      ? {
+          cartItemIds: checkedList.map(checked => checked.id),
+          totalPrice,
+          couponId,
+        }
+      : {
+          cartItemIds: checkedList.map(checked => checked.id),
+          totalPrice,
+        };
 
     try {
       await postData(dataSet, '/orders');
