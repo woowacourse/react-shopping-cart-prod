@@ -9,7 +9,7 @@
   },
   {
     "couponId": 2,
-    "name": "브론즈 쿠폰 (1000)",
+    "name": "브론즈 쿠폰 (1000원)",
     "discount": {
       "type": "price",
       "amount": 1000
@@ -17,7 +17,7 @@
   },
   {
     "couponId": 3,
-    "name": "실버 쿠폰 (3000)",
+    "name": "실버 쿠폰 (3000원)",
     "discount": {
       "type": "price",
       "amount": 3000

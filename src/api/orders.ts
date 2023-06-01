@@ -1,6 +1,7 @@
 import { ServerId } from "recoil/server";
 import { SERVER_LIST, USER_TOKEN } from "./constants";
 import { Product } from "./products";
+import { Coupon } from "./coupons";
 
 export interface Orders {
   orderId: number;
@@ -10,6 +11,7 @@ export interface Orders {
 export interface Order {
   orderItemId: number;
   product: Product;
+  coupons: Coupon[];
   total: number;
   quantity: number;
 }
