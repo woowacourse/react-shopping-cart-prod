@@ -25,7 +25,7 @@ const OrderStatementModal = ({
         <span>총 결제금액: {amountPaid.toLocaleString()}원</span>
       </OrderInfo>
       <OrderList>
-        {orders.map((item, index) => {
+        {orders.map((item) => {
           return (
             <OrderBox>
               <OrderItem key={`order-item-${item.product.id}`} item={item} />
@@ -37,8 +37,16 @@ const OrderStatementModal = ({
                 <span>결제 금액</span>
                 <span> {item.total.toLocaleString()}원</span>
               </OrderDetail>
-              {item.couponIds.length === 0 && (
-                <UsedCoupon>쿠폰이 사용된 결제입니다.</UsedCoupon>
+              {item.coupons.length !== 0 && (
+                <OrderDetail>
+                  <span>적용 쿠폰</span>
+                  <span> {item.coupons[0].name}</span>
+                  <span>할인 금액</span>
+                  <span>
+                    {item.coupons[0].discount.amount}
+                    {item.coupons[0].discount.type === "price" ? "원" : "%"}
+                  </span>
+                </OrderDetail>
               )}
             </OrderBox>
           );
