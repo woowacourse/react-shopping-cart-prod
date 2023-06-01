@@ -56,15 +56,13 @@ const useMutation = <T>(setRefetchData: SetDataType<T>) => {
       }
 
       if (method === 'POST' || 'DELETE') {
-        const refetchData = url.includes(CART_BASE_URL || ORDER_BASE_URL)
-          ? await fetch(`${serverUrl}${baseUrl}`, {
-              method: 'GET',
-              headers: {
-                Authorization: `basic ${base64}`,
-                'Content-Type': 'application/json',
-              },
-            })
-          : await fetch(`${serverUrl}${baseUrl}`, { method: 'GET' });
+        const refetchData = await fetch(`${serverUrl}${baseUrl}`, {
+          method: 'GET',
+          headers: {
+            Authorization: `basic ${base64}`,
+            'Content-Type': 'application/json',
+          },
+        });
 
         setRefetchData(await refetchData.json());
       }
