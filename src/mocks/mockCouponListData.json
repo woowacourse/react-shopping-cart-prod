@@ -1,0 +1,37 @@
+[
+  {
+    "id": 0,
+    "couponName": "첫 구매 쿠폰",
+    "discountPercent": 30,
+    "discountAmount": 0,
+    "minAmount": 0
+  },
+  {
+    "id": 1,
+    "couponName": "오늘은 화이트데이니까.. 반지 선물 어때요?",
+    "discountPercent": 0,
+    "discountAmount": 10000,
+    "minAmount": 20000
+  },
+  {
+    "id": 2,
+    "couponName": "미리 메리크리스마스",
+    "discountPercent": 25,
+    "discountAmount": 0,
+    "minAmount": 50000
+  },
+  {
+    "id": 3,
+    "couponName": "아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, ",
+    "discountPercent": 25,
+    "discountAmount": 0,
+    "minAmount": 50000
+  },
+  {
+    "id": 4,
+    "couponName": "미리 메리크리스마스",
+    "discountPercent": 25,
+    "discountAmount": 0,
+    "minAmount": 50000
+  }
+]
