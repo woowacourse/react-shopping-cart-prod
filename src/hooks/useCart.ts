@@ -1,6 +1,6 @@
 import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil';
-import { cartState } from '../store/CartState';
-import { ChangeEvent, MouseEvent, useState } from 'react';
+import { cartState, checkedItemsState } from '../store/CartState';
+import { ChangeEvent, MouseEvent } from 'react';
 import { removeProductItemFromCartSelector, totalPriceSelector } from '../store/CartSelector';
 import { serverState } from '../store/ServerState';
 import { CART_BASE_URL } from '../constants/url';
@@ -11,8 +11,7 @@ import useToast from './useToast';
 
 export const useCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
-
-  const [checkedItems, setCheckedItems] = useState<number[]>([]);
+  const [checkedItems, setCheckedItems] = useRecoilState(checkedItemsState);
   const removeProductItemFromCart = useRecoilCallback(({ set }) => (id: number) => {
     set(removeProductItemFromCartSelector(id), []);
   });
@@ -66,6 +65,7 @@ export const useCart = () => {
         );
         if (error) return;
 
+        // TODO: 옮기기
         toast.success(`${checkedItems.length}개의 상품을 장바구니에서 삭제했습니다.`);
         removeProductItemFromCart(id);
       });

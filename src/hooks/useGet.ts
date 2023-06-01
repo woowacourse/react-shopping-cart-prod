@@ -1,11 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import { base64 } from '../constants';
+import useToast from './useToast';
 
 const useGet = <T>(url: string) => {
   const [data, setData] = useState<T | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     setIsLoading(true);
@@ -30,7 +32,10 @@ const useGet = <T>(url: string) => {
         return response.json();
       })
       .then((responseData) => setData(responseData))
-      .catch((error: Error) => setError(error.message))
+      .catch((error: Error) => {
+        toast.error('목록 불러오기에 실패했습니다.');
+        setError(error.message);
+      })
       .finally(() => setIsLoading(false));
   }, [url]);
 
