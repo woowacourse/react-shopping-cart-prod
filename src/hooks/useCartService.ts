@@ -47,6 +47,11 @@ const useCartService = () => {
     (cartId: string) => async (quantity: number) => {
       if (!cartId) return;
 
+      if (quantity === 0) {
+        deleteCartItem(cartId);
+        return;
+      }
+
       const response = await fetch(`${cartItemsUrl}/${cartId}`, {
         method: 'PATCH',
         headers: {
