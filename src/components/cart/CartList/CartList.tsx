@@ -7,6 +7,7 @@ import useCartService from '../../../hooks/useCartService';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
 import cartState from '../../../globalState/atoms/cartState';
 import fetchCartItemList from '../../../globalState/selectors/fetchCartItemList';
+import useChangeServer from '../../../hooks/useChangeServer';
 
 const CartList = () => {
   const {
@@ -47,6 +48,8 @@ const CartList = () => {
     refreshFetchCartList();
     resetCart();
   }, []);
+
+  useChangeServer();
 
   return (
     <CartListContainer>
