@@ -79,6 +79,7 @@ const CartProductTitle = styled(Title)`
 `;
 
 const CartProductContent = styled.div`
+  width: 100%;
   padding-top: 130px;
 `;
 

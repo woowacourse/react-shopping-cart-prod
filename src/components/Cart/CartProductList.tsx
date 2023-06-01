@@ -8,7 +8,14 @@ const CartProductList = () => {
   const cartProducts = useRecoilValue(cartProductAtom);
 
   if (cartProducts.length === 0)
-    return <EmptyCart>장바구니가 비었어요</EmptyCart>;
+    return (
+      <EmptyCart>
+        <EmptyImage
+          src={`${process.env.PUBLIC_URL}/images/텅.png`}
+          alt='빈 장바구니 이미지'
+        />
+      </EmptyCart>
+    );
 
   return (
     <CartProductListContainer>
@@ -34,8 +41,12 @@ const CartProductListContainer = styled.ul`
   }
 `;
 
-const EmptyCart = styled.p`
-  margin: 40px 0;
+const EmptyCart = styled.div`
+  text-align: center;
+`;
+
+const EmptyImage = styled.img`
+  height: 300px;
 `;
 
 export default CartProductList;
