@@ -15,7 +15,7 @@ export const getMockCartList = async (): Promise<CartItem[]> => {
   return data;
 };
 
-export const getCoupons = async (): Promise<Coupon[]> => {
+export const getMockCoupons = async (): Promise<Coupon[]> => {
   const data = await api.get(`${BASE_URL}/coupons`);
   return data;
 };
