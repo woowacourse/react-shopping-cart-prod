@@ -54,13 +54,6 @@ export const handlers = [
       return res(ctx.status(404), ctx.json({ message: '상품이 없습니다' }));
 
     const cartItemId = Date.now();
-    const newItem = {
-      cartItemId: cartItemId,
-      quantity: 1,
-      product: { ...product },
-    };
-
-    cartProducts.push(newItem);
 
     const location = `/cart-items/${cartItemId}`;
     return res(
@@ -71,6 +64,9 @@ export const handlers = [
   }),
 
   rest.post<{ orderData: OrderedData }>('/orders', (req, res, ctx) => {
+    if (!req.body)
+      return res(ctx.status(404), ctx.json({ message: '상품이 없습니다.' }));
+
     const orderId = Date.now();
 
     const location = `/orders/${orderId}`;
