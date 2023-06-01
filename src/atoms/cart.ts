@@ -20,11 +20,10 @@ export const cartItemsAmountSelector = selector({
   },
 });
 
-// TODO: 네이밍 변경
-export const selectedItemsState = atom({
-  key: 'selectedItemsState',
+export const selectedCartItemIdsState = atom({
+  key: 'selectedCartItemIdsState',
   default: selector({
-    key: 'selectedItemsStateSelector',
+    key: 'selectedCartItemIdsStateSelector',
     get: ({ get }) => {
       const cart = get(cartSelector);
 
@@ -36,12 +35,11 @@ export const selectedItemsState = atom({
   }),
 });
 
-// 선택된 카트 아이템들
-export const selectedItemsSelector = selector({
-  key: 'selectedItemsSelector',
+export const selectedCartItemIdsSelector = selector({
+  key: 'selectedCartItemIdsSelector',
   get: ({ get }) => {
     const cart = get(cartSelector);
-    const selectedItems = get(selectedItemsState);
+    const selectedItems = get(selectedCartItemIdsState);
 
     return cart.reduce<Set<CartItem['id']>>(
       (newSelectedItems, item) =>
@@ -52,13 +50,13 @@ export const selectedItemsSelector = selector({
     );
   },
   set: ({ set }, newValue) => {
-    set(selectedItemsState, newValue);
+    set(selectedCartItemIdsState, newValue);
   },
 });
 
 export const selectedItemsAmountSelector = selector({
   key: 'selectedItemsAmountSelector',
-  get: ({ get }) => get(selectedItemsSelector).size,
+  get: ({ get }) => get(selectedCartItemIdsSelector).size,
 });
 
 export const isSelectedCartId = selectorFamily({
@@ -66,7 +64,7 @@ export const isSelectedCartId = selectorFamily({
   get:
     (cartId: number) =>
     ({ get }) => {
-      const selectedCartItems = get(selectedItemsState);
+      const selectedCartItems = get(selectedCartItemIdsState);
       return selectedCartItems.has(cartId);
     },
 });
@@ -84,7 +82,7 @@ export const totalPriceSelector = selector({
   key: 'totalPriceSelector',
   get: ({ get }) => {
     const cart = get(cartSelector);
-    const selectedItems = get(selectedItemsSelector);
+    const selectedItems = get(selectedCartItemIdsSelector);
 
     return cart.reduce(
       (totalPrice, { id, quantity, product: { price } }) =>

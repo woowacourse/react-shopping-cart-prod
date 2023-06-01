@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { discountPrice, selectedItemsSelector } from '../../../atoms/cart';
+import {
+  discountPrice,
+  selectedCartItemIdsSelector,
+} from '../../../atoms/cart';
 import { totalPriceSelector } from '../../../atoms/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
 import { useMutateOrder } from '../../../hooks/order/order';
@@ -9,7 +12,7 @@ import { selectedCouponsState } from '../../../atoms/coupons';
 
 const OrderAside = () => {
   const totalPrice = useRefreshableRecoilValue(totalPriceSelector);
-  const selectedItems = useRefreshableRecoilValue(selectedItemsSelector);
+  const selectedItems = useRefreshableRecoilValue(selectedCartItemIdsSelector);
   const totalDiscountPrice = useRefreshableRecoilValue(discountPrice);
   const selectedCoupons = useRecoilValue(selectedCouponsState);
 
