@@ -5,10 +5,12 @@ import PurchaseOrder from "components/cart/PurchaseOrder";
 import React from "react";
 import Skeleton from "components/common/Skeleton";
 import LoadingSpinner from "components/common/LoadingSpinner";
+import { ErrorBoundary } from "react-error-boundary";
+import Fallback from "./Fallback";
 
 const Cart = () => {
   return (
-    <>
+    <ErrorBoundary FallbackComponent={Fallback}>
       <React.Suspense
         fallback={<Skeleton {...{ background: "#333333", width: "100%", height: "70px" }} />}
       >
@@ -20,7 +22,7 @@ const Cart = () => {
           <PurchaseOrder />
         </React.Suspense>
       </Page>
-    </>
+    </ErrorBoundary>
   );
 };
 
