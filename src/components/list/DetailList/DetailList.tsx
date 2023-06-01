@@ -22,7 +22,11 @@ const DetailList = ({ order, isList = true, onConfirm, onDelete }: DetailListPro
             <Button onClick={onDelete}>주문취소</Button>
           </ButtonWrapper>
         )}
-        {isList && <Button>상세보기{`>`}</Button>}
+        {isList && (
+          <SingleWrapper>
+            <Button>상세보기{`>`}</Button>
+          </SingleWrapper>
+        )}
       </ListHeadWrapper>
       {order.orderProducts.map((orderProduct) => {
         return <DetailItem key={orderProduct.product.id} orderProduct={orderProduct} />;
@@ -65,6 +69,18 @@ const ButtonWrapper = styled.div`
     align-self: flex-end;
   }
 `;
+
+const SingleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60px;
+
+  @media screen and (max-width: 510px) {
+    align-self: flex-end;
+  }
+`;
+
 const Button = styled.button`
   font-weight: bold;
   background-color: transparent;

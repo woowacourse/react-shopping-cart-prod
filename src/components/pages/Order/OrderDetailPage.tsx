@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styled from '@emotion/styled';
 import PageTemplate from '../../templates/PageTemplate';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
@@ -6,6 +6,7 @@ import PriceBox from '../../box/TotalPriceBox/PriceBox';
 import DetailList from '../../list/DetailList/DetailList';
 import useOrderDetailFetch from '../../../hooks/useOrderDetailFetch';
 import { useEffect } from 'react';
+import { Text } from '../../common/Text/Text';
 
 const OrderDetailPage = () => {
   const orderId = useParams().orderId;
@@ -27,6 +28,12 @@ const OrderDetailPage = () => {
       description="우아한 테크코스 레벨 2 장바구니 미션의 주문 상세보기 페이지입니다."
     >
       <DetailPageWrapper>
+        <DetailPageHead>
+          <BackButton to="/orders">{'<'}</BackButton>
+          <Text size="extraLarge" weight="bold">
+            주문 상세보기
+          </Text>
+        </DetailPageHead>
         <DetailWrapper>
           <DetailList
             onConfirm={confirmOrderDataAPI}
@@ -69,8 +76,26 @@ const DetailPageWrapper = styled.div`
     width: 300px;
   }
 `;
+
+const DetailPageHead = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+  padding: 20px 0;
+  gap: 40px;
+  margin-bottom: 8px;
+  border-bottom: 4px solid #333;
+`;
+
 const DetailWrapper = styled.div`
   width: 100%;
   height: auto;
+`;
+
+const BackButton = styled(Link)`
+  height: 45px;
+  font-weight: bold;
+  font-size: 45px;
 `;
 export default OrderDetailPage;
