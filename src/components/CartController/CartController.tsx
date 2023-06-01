@@ -7,49 +7,21 @@ import {
   QuantityControlButton,
   QuantityInput,
 } from "./CartController.style";
-import { cartState, quantityByProductIdSelector } from "../../recoil/cartAtoms";
-import { useRecoilState, useRecoilValue } from "recoil";
 import {
-  fetchAddCart,
-  fetchCartList,
-  fetchDeleteCart,
-  fetchUpdateCart,
-} from "../../api/api";
-import { serverState } from "../../recoil/serverAtom";
+  cartRepositoryState,
+  quantityByProductIdSelector,
+} from "../../recoil/cartAtoms";
+import { useRecoilValue } from "recoil";
 
 interface CartControllerProps {
   product: ProductItem;
 }
 
 function CartController({ product }: CartControllerProps) {
+  const cartRepository = useRecoilValue(cartRepositoryState);
+  const { addCartItem, updateCartItemQuantity } = cartRepository;
+
   const quantity = useRecoilValue(quantityByProductIdSelector(product.id));
-  const server = useRecoilValue(serverState);
-  const [cartList, setCartList] = useRecoilState(cartState);
-
-  const targetCartItem = cartList.find(
-    (cartItem) => cartItem.product.id === product.id
-  );
-
-  const addCartItem = async (productId: number) => {
-    await fetchAddCart(server, productId);
-    const newCartList = await fetchCartList(server);
-    setCartList(newCartList);
-  };
-
-  const updateCartItemQuantity = async (newQuantity: number) => {
-    if (targetCartItem) {
-      const cartId = targetCartItem.id;
-      if (newQuantity === 0) {
-        if (confirm("정말로 삭제 하시겠습니까?")) {
-          await fetchDeleteCart(server, cartId);
-        }
-      } else {
-        await fetchUpdateCart(server, cartId, newQuantity);
-      }
-      const newCartList = await fetchCartList(server);
-      setCartList(newCartList);
-    }
-  };
 
   const handleChangeQuantity = (event: ChangeEvent<HTMLInputElement>) => {
     const quantityInputValue = Number(
@@ -57,7 +29,7 @@ function CartController({ product }: CartControllerProps) {
     );
     const newQuantity = quantityInputValue > 100 ? 100 : quantityInputValue;
 
-    updateCartItemQuantity(newQuantity);
+    updateCartItemQuantity(product, newQuantity);
   };
 
   return (
@@ -67,7 +39,7 @@ function CartController({ product }: CartControllerProps) {
           <CartBox>
             <QuantityControlButton
               onClick={() => {
-                updateCartItemQuantity(quantity - 1);
+                updateCartItemQuantity(product, quantity - 1);
               }}
             >
               -
@@ -75,7 +47,7 @@ function CartController({ product }: CartControllerProps) {
             <QuantityInput value={quantity} onChange={handleChangeQuantity} />
             <QuantityControlButton
               onClick={() => {
-                updateCartItemQuantity(quantity + 1);
+                updateCartItemQuantity(product, quantity + 1);
               }}
             >
               +
