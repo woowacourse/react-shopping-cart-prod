@@ -18,7 +18,7 @@ const OrderDetailItemContainer = styled.div`
 const OrderDetailItemImage = styled.img`
   width: 100px;
   height: 100px;
-  background-color: beige;
+  background-color: ${({ theme }) => theme.color.gray2};
   object-fit: cover;
   border-radius: ${({ theme }) => theme.borderRadius.small};
 `;
