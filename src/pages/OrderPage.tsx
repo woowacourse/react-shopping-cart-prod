@@ -1,9 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom';
 
 import { styled } from 'styled-components';
-
 import PageTitle from '../components/Common/PageTitle';
-import OrderBoxList from './OrderBoxListPage';
 
 const OrderPage = () => {
   const pathname = useLocation().pathname;
