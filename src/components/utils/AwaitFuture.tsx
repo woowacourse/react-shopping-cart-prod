@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useMemo } from 'react';
 import type Future from '../../utils/Future';
 import ErrorBoundary from './ErrorBoundary';
 
@@ -24,8 +24,12 @@ type AwaitFutureProps<TData> = {
 const AwaitFuture = <TData,>(props: AwaitFutureProps<TData>) => {
   const { future, loadingElement, errorElement, children } = props;
 
+  // state가 변경되었을 때 새로 렌더링하기 위함
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const key = useMemo(() => Date.now(), [future]);
+
   return (
-    <ErrorBoundary fallback={errorElement}>
+    <ErrorBoundary key={key} fallback={errorElement}>
       <Suspense fallback={loadingElement}>
         <AwaitFutureLoader future={future}>{children}</AwaitFutureLoader>
       </Suspense>
