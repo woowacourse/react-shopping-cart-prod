@@ -75,6 +75,12 @@ const CartTotal = ({
     };
   }, []);
 
+  useEffect(() => {
+    if (isPointMoreThanProductPrice) {
+      setUsingPoint(maxPoint.toLocaleString('ko-KR'));
+    }
+  }, [totalProductPrice]);
+
   return (
     <>
       <Container>
@@ -125,7 +131,10 @@ const CartTotal = ({
               </PointInputWrapper>
               <UseAllPointButton
                 type="button"
-                disabled={Number(removeComma(usingPoint)) >= point}
+                disabled={
+                  Number(removeComma(usingPoint)) >= point ||
+                  totalProductPrice === Number(removeComma(usingPoint))
+                }
                 onClick={useAllPoint}
               >
                 전액사용
