@@ -1,6 +1,8 @@
 import { Order } from "api/orders";
 import styled from "styled-components";
 import OrderProduct from "./OrderProduct";
+import { useNavigate } from "react-router-dom";
+import { ROUTER_PATH } from "router";
 
 interface OrderItemProps {
   orderId: number;
@@ -8,15 +10,21 @@ interface OrderItemProps {
 }
 
 const OrderItem = ({ orderId, items }: OrderItemProps) => {
+  const navigate = useNavigate();
+
+  const goToOrderDetail = () => {
+    navigate(ROUTER_PATH.OrderDetail.replace(":id", orderId.toString()));
+  };
+
   return (
     <Wrapper>
       <TitleContainer>
         <Title>주문 번호: {orderId}</Title>
-        <ButtonBox>{"상세보기 >"}</ButtonBox>
+        <ButtonBox onClick={goToOrderDetail}>{"상세보기 >"}</ButtonBox>
       </TitleContainer>
       <ListBox>
         {items.map((item) => (
-          <OrderProduct {...item} />
+          <OrderProduct key={item.orderItemId} order={item} />
         ))}
       </ListBox>
     </Wrapper>
