@@ -8,7 +8,6 @@ import OrderProductList from './OrderProductList';
 
 const OrderList = () => {
   const orders = useRecoilValue(orderAtom);
-
   if (orders.length === 0)
     return (
       <EmptyOrder>
@@ -21,7 +20,12 @@ const OrderList = () => {
 
   return (
     <Wrapper>
-      {orders && orders.map((order) => <OrderProductList order={order} />)}
+      {orders &&
+        [...orders]
+          .reverse()
+          .map((order) => (
+            <OrderProductList order={order} isDetailed={false} />
+          ))}
     </Wrapper>
   );
 };
