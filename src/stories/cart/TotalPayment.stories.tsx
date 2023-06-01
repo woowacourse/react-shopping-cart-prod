@@ -13,6 +13,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    checkedCartItemIds: [],
     totalProductsPrice: 999999,
     deliveryFee: DELIVERY_FEE,
   },

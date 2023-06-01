@@ -1,16 +1,15 @@
 import { selector } from 'recoil';
-import { cartListState, checkedCartItemIdsState } from './atoms';
+import { cartListState, checkedCartItemIdsState, selectedHostState } from './atoms';
 import { CartItemInfo } from '../types';
 import { CART_BASE_URL } from '../constants';
 
 export const currentCartListState = selector<CartItemInfo[]>({
   key: 'currentCartList',
   get: async ({ get }) => {
-    //const host = get(selectedHostState);
+    const host = get(selectedHostState);
     const cartList = get(cartListState);
     console.log(cartList);
-    // const CART_URL = `${host}${CART_BASE_URL}`;
-    const CART_URL = CART_BASE_URL;
+    const CART_URL = `${host}${CART_BASE_URL}`;
 
     //if (cartList.length > 0) return cartList;
 

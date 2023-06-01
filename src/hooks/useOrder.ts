@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { OrderItemInfo } from '../types';
 import { ORDERS_BASE_URL } from '../constants';
 import APIHandler from '../api/APIHandler';
+import { selectedHostState } from '../recoil/atoms';
+import { useRecoilValue } from 'recoil';
 
 interface PostPayLoad {
   cartItemIds: number[];
@@ -12,9 +14,8 @@ interface PostPayLoad {
 
 export const useOrder = () => {
   const [orderList, setOrderList] = useState<OrderItemInfo[]>([]);
-  //const host = useRecoilValue(selectedHostState);
-  // const ORDERS_URL = `${host}${ORDERS_BASE_URL}`;
-  const ORDERS_URL = ORDERS_BASE_URL;
+  const host = useRecoilValue(selectedHostState);
+  const ORDERS_URL = `${host}${ORDERS_BASE_URL}`;
 
   useEffect(() => {
     const setFetchedOrderList = async () => {
@@ -23,7 +24,7 @@ export const useOrder = () => {
 
     setFetchedOrderList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [host]);
 
   const getOrderList = async () => {
     const responseResult = await APIHandler.get<OrderItemInfo[]>(ORDERS_URL);

@@ -4,7 +4,7 @@ import { SERVER } from '../constants';
 
 export const selectedHostState = atom<string>({
   key: 'selectedHost',
-  default: SERVER.박스터,
+  default: SERVER.MSW,
 });
 
 export const cartListState = atom<CartItemInfo[]>({

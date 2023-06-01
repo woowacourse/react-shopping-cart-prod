@@ -1,16 +1,15 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { cartListState } from '../recoil/atoms';
+import { cartListState, selectedHostState } from '../recoil/atoms';
 import { CartItemInfo, ProductInfo } from '../types';
 import { CART_BASE_URL } from '../constants';
 import { useSetFetchedData } from './useSetFetchedData';
 import { currentCartListState } from '../recoil/selectors';
 
 export const useCart = (productInfo?: ProductInfo) => {
-  const setCartList = useSetRecoilState(cartListState);
   const cartList = useRecoilValue(currentCartListState);
-  // const host = useRecoilValue(selectedHostState);
-  // const CART_URL = `${host}${CART_BASE_URL}`;
-  const CART_URL = CART_BASE_URL;
+  const setCartList = useSetRecoilState(cartListState);
+  const host = useRecoilValue(selectedHostState);
+  const CART_URL = `${host}${CART_BASE_URL}`;
   const { api } = useSetFetchedData<CartItemInfo[]>(CART_URL, setCartList);
 
   const getCartItem = (productId?: number) => {

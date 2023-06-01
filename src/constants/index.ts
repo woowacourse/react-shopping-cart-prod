@@ -15,8 +15,9 @@ export const URL = {
   PRODUCT_LIST: `${process.env.PUBLIC_URL}/mock/productList.json`,
 } as const;
 
-export const HOSTS = ['박스터', '밀리'];
+export const HOSTS = ['MSW', '박스터', '밀리'];
 export const SERVER: Readonly<Record<Host, string>> = {
+  MSW: '',
   박스터: 'http://15.164.219.53:8080',
   밀리: 'http://52.79.242.83:8080',
 };
