@@ -6,6 +6,7 @@ import App from './App';
 import GlobalStyle from './GlobalStyle';
 import ProductListPage from './pages/ProductListPage';
 import CartPage from './pages/CartPages';
+import CouponPage from './pages/CouponPage';
 
 const router = createHashRouter([
   {
@@ -19,6 +20,10 @@ const router = createHashRouter([
       {
         path: 'cart',
         element: <CartPage />,
+      },
+      {
+        path: 'coupons',
+        element: <CouponPage />,
       },
     ],
   },

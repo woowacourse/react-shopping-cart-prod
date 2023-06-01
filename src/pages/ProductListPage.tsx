@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import { Suspense } from 'react';
+import { Link } from 'react-router-dom';
 import ProductList from '../components/product/ProductList/ProductList';
 import ProductFallBack from '../components/product/ProductFallBack/ProductFallBack';
 import ErrorBoundary from '../errorHandler/ErrorBoundary';
@@ -7,6 +8,7 @@ import ErrorBoundary from '../errorHandler/ErrorBoundary';
 const ProductListPage = () => {
   return (
     <Layout>
+      <Link to="/coupons">쿠폰받으러가기</Link>
       <ErrorBoundary>
         <Suspense fallback={<ProductFallBack />}>
           <ProductList />
