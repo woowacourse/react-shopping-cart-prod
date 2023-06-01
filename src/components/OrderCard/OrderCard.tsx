@@ -76,7 +76,7 @@ const TopSection = styled.div`
   padding: 0 32px;
 
   width: 100%;
-  height: 92px;
+  height: 50px;
 
   font-size: 16px;
   font-weight: 200;

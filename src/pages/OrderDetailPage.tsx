@@ -68,6 +68,9 @@ const Bill = styled.div`
 `;
 
 const SubTitle = styled.div`
+  display: flex;
+  justify-content: center;
+
   width: 100%;
 
   border-bottom: 1px solid var(--grey-100);
