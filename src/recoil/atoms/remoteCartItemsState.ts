@@ -4,12 +4,12 @@ import type { CartItemEntity } from '../../api/rest/ShoppingCartRestAPI';
 import cartItemsQuery from '../queries/cartItemsQuery';
 import remoteCartItemsStorage from '../storages/remoteCartItemsStorage';
 
-type SyncStatusState = {
+type RemoteCartItemsState = {
   cartItems: CartItemEntity[];
   isSynchronizing: boolean;
 };
 
-const remoteCartItemsState = atomFamily<SyncStatusState, Client>({
+const remoteCartItemsState = atomFamily<RemoteCartItemsState, Client>({
   key: 'remoteCartItemsState',
   default: selectorFamily({
     key: 'remoteCartItemsState/default',
@@ -23,7 +23,7 @@ const remoteCartItemsState = atomFamily<SyncStatusState, Client>({
       },
   }),
   effects: (client) => [
-    ({ onSet, setSelf, getPromise }) => {
+    ({ setSelf, getPromise }) => {
       const willStorage = getPromise(remoteCartItemsStorage(client));
 
       willStorage.then((storage) =>

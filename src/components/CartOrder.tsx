@@ -77,7 +77,7 @@ const CartOrder = (props: CartOrderProps) => {
   const prices = useRecoilValue(cartOrderPriceState);
   const { isSynchronizing } = useRecoilValue(userRemoteCartItemsState);
 
-  const { mutate: order } = useOrderMutation();
+  const { order } = useOrderMutation();
 
   const handleSubmitOrder: React.FormEventHandler<HTMLFormElement> = (event) => {
     event.preventDefault();
