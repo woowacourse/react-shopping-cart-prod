@@ -1,19 +1,37 @@
 import styled from '@emotion/styled';
 import PageTemplate from '../../templates/PageTemplate';
 import DetailList from '../../list/DetailList/DetailList';
-import useOrderFetch from '../../../hooks/useOrderFetch';
-import { useEffect } from 'react';
+import { useOrderFetch } from '../../../hooks/useOrderFetch';
 import { Link } from 'react-router-dom';
 import { Text } from '../../common/Text/Text';
+import ErrorBox from '../../common/ErrorBox/ErrorBox';
+import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 
 const OrderPage = () => {
-  useEffect(() => {
-    orderListRefetch();
-  }, []);
+  const { orderListData, isError, isFetching } = useOrderFetch();
 
-  const { orderListData, orderListRefetch } = useOrderFetch();
+  if (isError) {
+    return (
+      <PageTemplate
+        title="장바구니 미션- 주문목록 페이지"
+        description="우아한 테크코스 레벨 2 장바구니 미션의 주문목록 페이지입니다."
+      >
+        <ErrorBox errorType="emptyOrder" />
+      </PageTemplate>
+    );
+  }
 
-  console.log(orderListData);
+  if (isFetching) {
+    return (
+      <PageTemplate
+        title="장바구니 미션- 주문목록 페이지"
+        description="우아한 테크코스 레벨 2 장바구니 미션의 주문목록 페이지입니다."
+      >
+        <LoadingSpinner />
+      </PageTemplate>
+    );
+  }
+
   return (
     <PageTemplate
       title="장바구니 미션- 주문목록 페이지"
@@ -27,16 +45,13 @@ const OrderPage = () => {
         </OrderPageHead>
         <OrderWrapper>
           {orderListData ? (
-            orderListData
-              .slice(0)
-              .reverse()
-              .map((order) => {
-                return (
-                  <Link key={order.id} to={`/orders/${order.id}`}>
-                    <DetailList order={order} />
-                  </Link>
-                );
-              })
+            orderListData.map((order) => {
+              return (
+                <Link key={order.id} to={`/orders/${order.id}`}>
+                  <DetailList order={order} />
+                </Link>
+              );
+            })
           ) : (
             <div>주문목록이 없습니다.</div>
           )}

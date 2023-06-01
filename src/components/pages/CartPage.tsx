@@ -3,7 +3,7 @@ import { useRecoilState } from 'recoil';
 import styled from '@emotion/styled';
 
 import { useCartFetch } from '../../hooks/useCartFetch';
-import useOrderFetch from '../../hooks/useOrderFetch';
+import { useAddOrderFetch } from '../../hooks/useOrderFetch';
 import useCouponFetch from '../../hooks/useCouponFetch';
 import { useCouponModal } from '../../hooks/useCouponModal';
 
@@ -23,7 +23,7 @@ import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
 const CartPage = () => {
   const { cartData, isFetching } = useCartFetch();
   const { userCoupon, userCouponRefetch } = useCouponFetch();
-  const { addOrderDataAPI } = useOrderFetch();
+  const { addOrderDataAPI } = useAddOrderFetch();
   const { openModal } = useCouponModal();
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
   const [coupon, setCoupon] = useRecoilState(couponState);
@@ -83,7 +83,7 @@ const CartPage = () => {
             <CartListWrapper>
               <CartList />
             </CartListWrapper>
-            <PriceBox>
+            <PriceWrapper>
               <Button
                 primary
                 size="small"
@@ -99,7 +99,7 @@ const CartPage = () => {
                 coupon={coupon.id ? coupon : undefined}
                 onOrder={orderCart}
               />
-            </PriceBox>
+            </PriceWrapper>
           </CartPageContent>
         </CartPageWrapper>
       )}
@@ -167,7 +167,7 @@ const CartPageContent = styled.div`
   }
 `;
 
-const PriceBox = styled.div`
+const PriceWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;

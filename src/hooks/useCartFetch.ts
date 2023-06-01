@@ -10,7 +10,7 @@ export const useCartFetch = () => {
 
   const {
     data: cartData,
-    refetch,
+    refetch: cartRefetch,
     isFetching,
   } = useQuery<CartItemType[]>(
     'cart',
@@ -52,7 +52,7 @@ export const useCartFetch = () => {
       }),
     {
       onSuccess: () => {
-        refetch();
+        cartRefetch();
       },
     },
   );
@@ -75,7 +75,7 @@ export const useCartFetch = () => {
         if (cartId) {
           setCheckCartList((prev) => [...prev, cartId]);
         }
-        refetch();
+        cartRefetch();
       },
       onError: (e) => {
         console.log(e);
@@ -95,6 +95,7 @@ export const useCartFetch = () => {
   return {
     cartData,
     isFetching,
+    cartRefetch,
     addCartItemAPI,
     changeCartQuantityAPI,
     deleteCartItemAPI,

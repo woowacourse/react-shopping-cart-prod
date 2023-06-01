@@ -5,22 +5,36 @@ import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import PriceBox from '../../box/TotalPriceBox/PriceBox';
 import DetailList from '../../list/DetailList/DetailList';
 import useOrderDetailFetch from '../../../hooks/useOrderDetailFetch';
-import { useEffect } from 'react';
 import { Text } from '../../common/Text/Text';
+import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 
 const OrderDetailPage = () => {
   const orderId = useParams().orderId;
-  const { orderDetailData, deleteOrderDataAPI, confirmOrderDataAPI, refetch } = useOrderDetailFetch(
-    Number(orderId),
-  );
+  const { orderDetailData, deleteOrderDataAPI, confirmOrderDataAPI, isError, isFetching } =
+    useOrderDetailFetch(Number(orderId));
 
-  useEffect(() => {
-    refetch();
-  }, []);
-
-  if (!orderDetailData) {
-    return <ErrorBox errorType="emptyList" />;
+  if (isFetching) {
+    return (
+      <PageTemplate
+        title="장바구니 미션- 주문목록 페이지"
+        description="우아한 테크코스 레벨 2 장바구니 미션의 주문목록 페이지입니다."
+      >
+        <LoadingSpinner />
+      </PageTemplate>
+    );
   }
+
+  if (isError || !orderDetailData) {
+    return (
+      <PageTemplate
+        title="장바구니 미션- 주문 상세보기 페이지"
+        description="우아한 테크코스 레벨 2 장바구니 미션의 주문 상세보기 페이지입니다."
+      >
+        <ErrorBox errorType="emptyOrder" />
+      </PageTemplate>
+    );
+  }
+
   const { originalPrice, discountPrice: finalPrice, coupon, ...order } = orderDetailData;
   return (
     <PageTemplate
