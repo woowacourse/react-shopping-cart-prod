@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
-import type { Server } from '../../config/servers';
 import servers from '../../config/servers';
+import type { Server } from '../../types/Server';
 
 const serverState = atom<Server>({
   key: 'serverState',

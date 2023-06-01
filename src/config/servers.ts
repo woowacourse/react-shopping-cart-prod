@@ -1,12 +1,8 @@
 import { joinPath } from '../api/utils/http';
+import type { Server } from '../types/Server';
 import { BASE_URL } from './environment';
 
 const API_URLS: string = import.meta.env.VITE_API_URLS;
-
-export type Server = {
-  name: string;
-  base: string;
-};
 
 const parseAPIUrl = (apiUrl: string): Server => {
   const matches = /^(?:\[(?<name>[가-힣\w\d_-]+)\])?(?<base>(?<protocol>https?:\/\/)?.+)$/.exec(

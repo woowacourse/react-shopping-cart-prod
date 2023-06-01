@@ -2,7 +2,9 @@ import { createBrowserRouter } from 'react-router-dom';
 import { BASE_URL } from './config/environment';
 import CartPage from './pages/CartPage';
 import ErrorPage from './pages/ErrorPage';
+import LoginPage from './pages/LoginPage';
 import OrderDetailPage from './pages/OrderDetailPage';
+import OrderDonePage from './pages/OrderDonePage';
 import OrderListPage from './pages/OrderListPage';
 import ProductListPage from './pages/ProductListPage';
 import RootPage from './pages/RootPage';
@@ -19,6 +21,10 @@ const router = createBrowserRouter(
           element: <ProductListPage />,
         },
         {
+          path: 'login',
+          element: <LoginPage />,
+        },
+        {
           path: 'cart',
           element: <CartPage />,
         },
@@ -31,7 +37,16 @@ const router = createBrowserRouter(
             },
             {
               path: ':orderId',
-              element: <OrderDetailPage />,
+              children: [
+                {
+                  path: '',
+                  element: <OrderDetailPage />,
+                },
+                {
+                  path: 'done',
+                  element: <OrderDonePage />,
+                },
+              ],
             },
           ],
         },
