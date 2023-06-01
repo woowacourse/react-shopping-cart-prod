@@ -1,12 +1,43 @@
+import { postOrder } from "api/orders";
 import { SHIPPING_FEE } from "constants/cartProduct";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { cartTotalPrice } from "recoil/cart";
-import { totalCouponDiscount } from "recoil/coupon";
+import { cartListState, cartTotalPrice } from "recoil/cart";
+import { couponListState, totalCouponDiscount } from "recoil/coupon";
+import { serverSelectState } from "recoil/server";
+import { ROUTER_PATH } from "router";
 import styled from "styled-components";
 
 const PurchaseOrder = () => {
+  const navigate = useNavigate();
   const totalPrice = useRecoilValue(cartTotalPrice);
   const couponDiscount = useRecoilValue(totalCouponDiscount);
+  const selectedServer = useRecoilValue(serverSelectState);
+  const cartList = useRecoilValue(cartListState);
+  const couponList = useRecoilValue(couponListState);
+
+  const requestOrder = async () => {
+    const result = await postOrder(
+      selectedServer,
+      cartList.map((item) => {
+        const coupon = couponList.find((coupon) => coupon.productId === item.product.id);
+
+        return {
+          cartItemId: item.id,
+          product: item.product,
+          quantity: item.quantity,
+          couponIds: coupon ? [coupon.couponId] : [],
+        };
+      })
+    );
+
+    if (!result) {
+      alert("주문에 실패했습니다. 다시 시도해주세요.");
+      return;
+    }
+
+    navigate(ROUTER_PATH.OrderList);
+  };
 
   return (
     <Wrapper>
@@ -29,7 +60,7 @@ const PurchaseOrder = () => {
           <p>{(totalPrice ? totalPrice + SHIPPING_FEE - couponDiscount : 0).toLocaleString()}원</p>
         </AmountBox>
       </TotalContainer>
-      <OrderButton>주문하기</OrderButton>
+      <OrderButton onClick={requestOrder}>주문하기</OrderButton>
     </Wrapper>
   );
 };
@@ -106,6 +137,8 @@ const OrderButton = styled.button`
   font-size: 19px;
   color: rgba(255, 255, 255, 1);
   background: #333333;
+
+  cursor: pointer;
 `;
 
 export default PurchaseOrder;
