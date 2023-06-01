@@ -1,12 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { ORDERS_BASE_URL } from '../constants/api';
 import { postOrder } from '../remotes/order';
-import useToast from '../components/common/Toast/useToast';
 import type { OrderPayload } from '../types/order';
 
 const useOrder = () => {
   const navigate = useNavigate();
-  const { showToast } = useToast();
 
   const sendOrder = async (orderPayload: OrderPayload) => {
     try {
@@ -22,7 +20,7 @@ const useOrder = () => {
       navigate(`${ORDERS_BASE_URL}/complete/${orderId}`);
     } catch (e) {
       if (e instanceof Error) {
-        showToast('error', e.message);
+        throw e;
       }
     }
   };

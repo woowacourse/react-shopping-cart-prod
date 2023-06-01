@@ -7,6 +7,8 @@ import Image from '../../common/Image/Image';
 import Spacer from '../../common/Spacer/Spacer';
 import { formatPrice } from '../../../utils/formatPrice';
 import useOrder from '../../../hooks/useOrder';
+import useCart from '../../../hooks/useCart';
+import useToast from '../../common/Toast/useToast';
 import type { CartItem } from '../../../types/cart';
 
 interface OrderConfirmModalProps {
@@ -25,13 +27,24 @@ const OrderConfirmModal = (props: OrderConfirmModalProps) => {
   } = props;
   const orderItems = useRecoilValue(selectedCartItems(selectedCartItemIds));
   const { sendOrder } = useOrder();
+  const { removeAllProductsFromCart } = useCart();
   const { closeModal } = useModal();
+  const { showToast } = useToast();
 
-  const handleOrder = () => {
-    sendOrder({
-      cartItemIds: Array.from(selectedCartItemIds),
-      usePoint: usingPoint,
-    });
+  const handleOrder = async () => {
+    const cartItemIds = Array.from(selectedCartItemIds);
+
+    try {
+      await sendOrder({
+        cartItemIds,
+        usePoint: usingPoint,
+      });
+      removeAllProductsFromCart(cartItemIds);
+    } catch (e) {
+      if (e instanceof Error) {
+        showToast('error', e.message);
+      }
+    }
   };
 
   return (
