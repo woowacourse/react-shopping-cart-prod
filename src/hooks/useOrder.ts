@@ -1,21 +1,18 @@
 import { useRecoilValue } from 'recoil';
 
 import orderApis from '../apis/order';
-import {
-  checkedCartProductState,
-  checkedPriceState,
-} from '../states/checkedCartProducts';
-import { DELIVERY_FEE } from '../constants/fee';
+import useCartPrice from './useCartPrice';
+import { checkedCartProductIdSelector } from '../states/checkedCartProducts';
+import { targetCouponIdState } from '../states/coupon';
 
 const useOrder = () => {
-  const checkedCartProducts = useRecoilValue(checkedCartProductState);
-  const totalProductPrice = useRecoilValue(checkedPriceState);
+  const couponId = useRecoilValue(targetCouponIdState);
+  const cartItemIds = useRecoilValue(checkedCartProductIdSelector);
 
-  const cartItemIds = checkedCartProducts.map((cartProduct) => cartProduct.id);
-  const totalPrice = totalProductPrice + DELIVERY_FEE;
+  const { totalPrice } = useCartPrice();
 
   const addOrder = () => {
-    orderApis().postOrder({ cartItemIds, totalPrice });
+    orderApis().postOrder({ cartItemIds, totalPrice, couponId });
   };
 
   return { addOrder };

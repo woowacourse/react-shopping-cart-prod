@@ -5,3 +5,8 @@ export const couponState = atom({
   key: 'couponState',
   default: couponSelector,
 });
+
+export const targetCouponIdState = atom<number | undefined>({
+  key: 'targetCouponIdState',
+  default: undefined,
+});

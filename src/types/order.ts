@@ -3,6 +3,7 @@ import type { CartProduct } from './product';
 export interface OrderInfo {
   cartItemIds: number[];
   totalPrice: number;
+  couponId?: number;
 }
 
 export interface Order {

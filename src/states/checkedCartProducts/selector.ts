@@ -20,3 +20,9 @@ export const checkedPriceState = selector({
   key: 'checkedPriceState',
   get: ({ get }) => getCheckedPrice(get(checkedCartProductState)),
 });
+
+export const checkedCartProductIdSelector = selector({
+  key: 'checkedCartProductIdSelector',
+  get: ({ get }) =>
+    get(checkedCartProductState).map((cartProduct) => cartProduct.id),
+});

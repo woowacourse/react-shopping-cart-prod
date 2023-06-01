@@ -1,24 +1,18 @@
-import { ChangeEventHandler, useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import type { ChangeEventHandler } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import {
-  couponOptionSelector,
-  targetCouponPriceSelector,
-} from '../states/coupon';
+import { couponOptionSelector, targetCouponIdState } from '../states/coupon';
 
 const useCoupons = () => {
-  const [targetCouponId, setTargetCouponId] = useState<number | null>(null);
-
   const couponOptions = useRecoilValue(couponOptionSelector);
-  const targetCouponPrice = useRecoilValue(
-    targetCouponPriceSelector(targetCouponId)
-  );
+
+  const setTargetCouponId = useSetRecoilState(targetCouponIdState);
 
   const changeTargetCoupon: ChangeEventHandler<HTMLSelectElement> = (event) => {
     setTargetCouponId(Number(event.currentTarget.value));
   };
 
-  return { couponOptions, targetCouponPrice, changeTargetCoupon };
+  return { couponOptions, changeTargetCoupon };
 };
 
 export default useCoupons;

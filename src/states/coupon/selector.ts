@@ -1,6 +1,6 @@
-import { selector, selectorFamily } from 'recoil';
+import { selector } from 'recoil';
 
-import { couponState } from './atom';
+import { couponState, targetCouponIdState } from './atom';
 import couponApis from '../../apis/coupons';
 
 export const couponSelector = selector({
@@ -17,13 +17,12 @@ export const couponOptionSelector = selector({
     })),
 });
 
-export const targetCouponPriceSelector = selectorFamily({
+export const targetCouponPriceSelector = selector({
   key: 'targetCouponPriceSelector',
-  get:
-    (targetId: number | null) =>
-    ({ get }) =>
-      targetId
-        ? get(couponState).find((coupon) => coupon.id === targetId)
-            ?.discountPrice ?? 0
-        : 0,
+  get: ({ get }) =>
+    get(targetCouponIdState)
+      ? get(couponState).find(
+          (coupon) => coupon.id === get(targetCouponIdState)
+        )?.discountPrice ?? 0
+      : 0,
 });
