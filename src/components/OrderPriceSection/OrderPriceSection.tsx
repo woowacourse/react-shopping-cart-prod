@@ -77,7 +77,6 @@ const Container = styled(Box)`
 
   @media (max-width: 768px) {
     position: initial;
-    bottom: 0;
     width: 100%;
     margin: 0;
   }
