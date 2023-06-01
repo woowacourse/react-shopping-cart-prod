@@ -43,4 +43,6 @@ export const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
   font-size: 16px;
   font-weight: 600;
   color: white;
+
+  z-index: 1;
 `;

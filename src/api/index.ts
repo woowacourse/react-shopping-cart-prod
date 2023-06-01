@@ -69,3 +69,25 @@ export const deleteCartItems = async (serverName: ServerNameType, cartItemIdList
 
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 };
+
+export const submitSignUpInfo = async (
+  serverName: ServerNameType,
+  signUpInfo: { name: string; password: string }
+) => {
+  const url = `${BASE_URL_MAP[serverName]}/users/join`;
+  const body = signUpInfo;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok && response.body) {
+    const errorMessage = (await response.json()) as { errorMessage: string };
+    throw new Error(`${errorMessage.errorMessage}`);
+  }
+  if (!response.ok) throw new Error(`${url} FETCH Error`);
+};
