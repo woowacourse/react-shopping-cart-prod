@@ -4,6 +4,7 @@ export const CART_ITEMS_KEY = 'cartItemsKey';
 export const PRODUCT_LIST_KEY = 'productListKey';
 export const USER_POINT_KEY = 'userPointKey';
 export const ORDER_LIST_KEY = 'orderListKey';
+export const SERVER_NAME = 'serverNameKey';
 
 export const getCartItemsFromLocalStorage = () => {
   const localStorageCartItems = localStorage.getItem(CART_ITEMS_KEY) ?? '[]';
@@ -54,4 +55,17 @@ export const getOrderListFromLocalStorage = () => {
   }
 
   return orderList;
+};
+
+export const getServerName = () => {
+  const localStorageServerName = localStorage.getItem(SERVER_NAME);
+  const serverName = JSON.parse(
+    localStorageServerName ?? JSON.stringify({ serverName: '' })
+  );
+
+  return serverName.serverName;
+};
+
+export const setServerName = (serverName: string) => {
+  localStorage.setItem(SERVER_NAME, JSON.stringify({ serverName }));
 };

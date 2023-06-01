@@ -98,9 +98,12 @@ export const Style = {
     }
   `,
   EmptyCartImage: styled.img`
+    width: 200px;
+    height: 200px;
+
     @media screen and (max-width: 480px) {
-      width: 80vw;
-      height: 80vw;
+      width: 70vw;
+      height: 70vw;
     }
   `,
 };
