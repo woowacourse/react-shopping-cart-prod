@@ -2,6 +2,7 @@ import { rest } from 'msw';
 
 import { CART_STORAGE_ID } from '../constants/storage';
 import products from './data/products.json';
+import cats from './data/cats.json';
 import {
   addTargetProduct,
   deleteTargetProduct,
@@ -12,15 +13,19 @@ import type { CartProduct } from '../types/product';
 
 export const handlers = [
   rest.get('/products', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(products));
+    return res(
+      ctx.status(200),
+      ctx.set('Content-Type', 'application/json'),
+      ctx.json(cats)
+    );
   }),
 
   rest.get('/products/empty', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json([]));
+    return res(ctx.status(200), ctx.json([]));
   }),
 
   rest.get('/products/error', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(400), ctx.json({ error: 'fail' }));
+    return res(ctx.status(400), ctx.json({ error: 'fail' }));
   }),
 
   rest.get('/products/network-error', (_, res) => {
@@ -30,6 +35,7 @@ export const handlers = [
   rest.get('/cart-items', (_, res, ctx) => {
     return res(
       ctx.status(200),
+      ctx.set('Content-Type', 'application/json'),
       ctx.json(JSON.parse(localStorage.getItem(CART_STORAGE_ID) ?? '[]'))
     );
   }),
@@ -45,7 +51,7 @@ export const handlers = [
       return res(ctx.status(304), ctx.json({ message: 'Already in the Cart' }));
     }
 
-    const product = products.find((product) => product.id === productId);
+    const product = products.find(product => product.id === productId);
 
     if (!product) {
       return res(ctx.status(400), ctx.json({ message: '상품이 없습니다.' }));
@@ -56,7 +62,7 @@ export const handlers = [
       JSON.stringify(addTargetProduct(storedCartProducts, product.id, product))
     );
 
-    return res(ctx.status(201), ctx.json({ message: 'Success to Create' }));
+    return res(ctx.status(201), ctx.set('location', `/${product.id}`));
   }),
 
   rest.patch<{ quantity: number }>(
@@ -82,11 +88,7 @@ export const handlers = [
         )
       );
 
-      return res(
-        ctx.delay(2000),
-        ctx.status(200),
-        ctx.json({ message: 'Success to Update' })
-      );
+      return res(ctx.status(200));
     }
   ),
 
@@ -108,6 +110,6 @@ export const handlers = [
       JSON.stringify(deleteTargetProduct(storedCartProducts, cartProductId))
     );
 
-    return res(ctx.delay(2000), ctx.status(204));
+    return res(ctx.status(204));
   }),
 ];
