@@ -4,22 +4,19 @@ import { fetchCart } from '../apis/cart';
 import { couponsSelector, selectedCouponsState } from './coupons';
 import { Coupon } from '../types/coupon';
 
-export const cartState = atom({
+export const cartSelector = selector({
   key: 'cart',
-  default: selector({
-    key: 'getMockCart',
-    get: async () => {
-      const { data } = await fetchCart();
+  get: async () => {
+    const { data } = await fetchCart();
 
-      return data;
-    },
-  }),
+    return data;
+  },
 });
 
 export const cartItemsAmountSelector = selector({
   key: 'cartItemsAmountSelector',
   get: ({ get }) => {
-    return get(cartState).length;
+    return get(cartSelector).length;
   },
 });
 
@@ -29,7 +26,7 @@ export const selectedItemsState = atom({
   default: selector({
     key: 'selectedItemsStateSelector',
     get: ({ get }) => {
-      const cart = get(cartState);
+      const cart = get(cartSelector);
 
       return cart.reduce<Set<CartItem['id']>>(
         (selectedItems, item) => selectedItems.add(item.id),
@@ -43,7 +40,7 @@ export const selectedItemsState = atom({
 export const selectedItemsSelector = selector({
   key: 'selectedItemsSelector',
   get: ({ get }) => {
-    const cart = get(cartState);
+    const cart = get(cartSelector);
     const selectedItems = get(selectedItemsState);
 
     return cart.reduce<Set<CartItem['id']>>(
@@ -79,14 +76,14 @@ export const getCartItemById = selectorFamily({
   get:
     (id: CartItem['id']) =>
     ({ get }) => {
-      return get(cartState).find((item) => item.id === id);
+      return get(cartSelector).find((item) => item.id === id);
     },
 });
 
 export const totalPriceSelector = selector({
   key: 'totalPriceSelector',
   get: ({ get }) => {
-    const cart = get(cartState);
+    const cart = get(cartSelector);
     const selectedItems = get(selectedItemsSelector);
 
     return cart.reduce(
@@ -111,8 +108,8 @@ const getDiscountPrice = (coupon: Coupon, targetPrice: number) => {
 export const discountPrice = selector({
   key: 'discountPriceSelector',
   get: ({ get }) => {
-    const cart = get(cartState);
-    const { allCoupons, specificCoupons } = get(coupons);
+    const cart = get(cartSelector);
+    const { allCoupons, specificCoupons } = get(couponsSelector);
     const selectedCoupons = get(selectedCouponsState);
     const totalPrice = get(totalPriceSelector);
 

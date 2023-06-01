@@ -1,11 +1,11 @@
-import { cartState } from '../../../atoms/cart';
+import { cartSelector } from '../../../atoms/cart';
 import { EMPTY_CART } from '../../../constants/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
 import CartItem from '../CartItem/CartItem';
 import * as S from './CartItemList.styles';
 
 const CartItemList = () => {
-  const cart = useRefreshableRecoilValue(cartState);
+  const cart = useRefreshableRecoilValue(cartSelector);
 
   return (
     <S.Root>
