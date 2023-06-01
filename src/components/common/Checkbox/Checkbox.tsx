@@ -8,7 +8,7 @@ interface CheckboxProps extends ComponentPropsWithoutRef<'input'> {}
 const Checkbox = ({ id, checked, ...attributes }: CheckboxProps) => {
   return (
     <label htmlFor={id}>
-      <S.CheckboxInput id={id} checked {...attributes} />
+      <S.CheckboxInput id={id} checked={checked} {...attributes} />
       <S.CheckboxIconWrapper aria-label={id}>
         {checked ? <CheckedIcon /> : <UncheckedIcon />}
       </S.CheckboxIconWrapper>
