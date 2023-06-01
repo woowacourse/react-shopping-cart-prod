@@ -5,6 +5,7 @@ import Layout from 'components/Layout/Layout';
 import ShoppingCartPage from 'pages/ShoppingCartPage';
 import { Suspense } from 'react';
 import OrderPage from 'pages/OrderPage';
+import OrderedListPage from 'pages/OrderedListPage';
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: ROUTE_PATH.ORDER,
         element: <OrderPage />,
+      },
+      {
+        path: ROUTE_PATH.ORDERED_LIST,
+        element: <OrderedListPage />,
       },
     ],
   },
