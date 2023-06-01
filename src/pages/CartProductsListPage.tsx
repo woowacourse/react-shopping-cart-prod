@@ -25,7 +25,7 @@ const CartProductsListPage = () => {
           <CartProductListTitle>
             든든배송 상품 ({totalCartProductCount}개)
           </CartProductListTitle>
-          <Suspense fallback={<ContentListSkeleton content='product' />}>
+          <Suspense fallback={<ContentListSkeleton content='cart' />}>
             <CartProductList />
           </Suspense>
           <SelectContainer>

@@ -10,7 +10,7 @@ const OrderProductsListPage = () => {
       <Title>주문 목록</Title>
       <OrderProductContent>
         <OrderProductInfo>
-          <Suspense fallback={<ContentListSkeleton content='product' />}>
+          <Suspense fallback={<ContentListSkeleton content='cart' />}>
             <OrderList />
           </Suspense>
         </OrderProductInfo>
