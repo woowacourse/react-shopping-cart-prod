@@ -4,6 +4,7 @@ import { CartProduct, Order } from "types/domain";
 import { getCartItems } from "api/cartItems";
 import { serverSelectState } from "./server";
 import { couponListState } from "./coupon";
+import { calculateDiscountPrice } from "utile/calculateDiscountPrice";
 
 const getCartProductList = selector<CartProduct[]>({
   key: "getCartProductList",
@@ -75,13 +76,14 @@ export const cartTotalDiscount = selector({
       .reduce((sum, item) => {
         const coupon = couponList.find(
           (coupon) => coupon.couponId === item.couponId
-        )?.discount;
+        );
 
         if (!coupon) return sum;
 
-        return coupon.type === "price"
-          ? sum + coupon.amount
-          : sum + item.product.price * item.quantity * (coupon.amount / 100);
+        return (
+          sum +
+          calculateDiscountPrice(item.product.price, item.quantity, coupon)
+        );
       }, 0);
   },
 });
