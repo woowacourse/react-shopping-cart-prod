@@ -17,6 +17,7 @@ const ProductList = () => {
 
   useEffect(() => {
     api.get(`${serverUrl}${PRODUCT_BASE_URL}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [serverUrl]);
 
   const skeleton = Array.from({ length: 12 }).map((_, index) => <Skeleton key={index} />);
