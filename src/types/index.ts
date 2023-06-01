@@ -22,6 +22,15 @@ export type OrderItemType = {
   price: number;
 };
 
+export type CouponType = {
+  id: number;
+  name: string;
+  discountAmount: number;
+  description: string;
+};
+
+export type MemberCouponType = CouponType & { isUsed: boolean };
+
 export type fetchMethod = keyof typeof FETCH_METHOD;
 
 export type UpdateCartItem = (url: string, method: fetchMethod, body?: BodyInit | null | undefined) => void;
