@@ -2,45 +2,41 @@
 import type { Client } from '../api';
 import type { CartItemEntity } from '../api/rest/ShoppingCartRestAPI';
 import type { CartItem } from '../types/CartItem';
-import RemoteCartItemState from './states/RemoteCartItemState';
+import SyncCartItemState from './states/SyncCartItemState';
 
 const DEFAULT_SYNC_INTERVAL = 30_000;
 
-type ChangeByDownstreamHandler = (
-  updater: (cartItems: (CartItem | CartItemEntity)[]) => (CartItem | CartItemEntity)[],
+type ChangeByDownstreamHandler = (updater: (cartItems: CartItem[]) => CartItem[]) => void;
+
+type SyncHandler = (
+  info: { isSynchronizing: true } | { cartItems: CartItemEntity[]; isSynchronizing: false },
 ) => void;
 
-type SyncStartHandler = () => void;
-
-type SynchronizedHandler = () => void;
-
-type RemoteCartItemsStorageOptions = {
+type SyncCartItemsStorageOptions = {
   /**
    * remote로 부터 데이터를 받아 동기화하는 간격을 설정합니다. 단위: ms
    */
   syncInterval: number;
 };
 
-class RemoteCartItemsStorage {
-  protected readonly options: RemoteCartItemsStorageOptions;
+class SyncCartItemsStorage {
+  protected readonly options: SyncCartItemsStorageOptions;
 
   protected readonly client: Client;
 
-  protected readonly states: Map<CartItem['product']['id'], RemoteCartItemState> = new Map();
+  protected readonly syncStates: Map<CartItem['product']['id'], SyncCartItemState> = new Map();
 
   protected syncIntervalHandler: NodeJS.Timer;
 
   protected changeByDownstreamHandler: ChangeByDownstreamHandler | null = null;
 
-  protected syncStartHandler: SyncStartHandler | null = null;
+  protected syncHandler: SyncHandler | null = null;
 
-  protected synchronizedHandler: SynchronizedHandler | null = null;
-
-  protected sync: Promise<unknown> | null = null;
+  protected sync: Promise<CartItemEntity[]> | null = null;
 
   constructor(
     client: Client,
-    options: RemoteCartItemsStorageOptions = {
+    options: SyncCartItemsStorageOptions = {
       syncInterval: DEFAULT_SYNC_INTERVAL,
     },
   ) {
@@ -56,32 +52,35 @@ class RemoteCartItemsStorage {
   /**
    * remote에서 받아온 상태를 토대로 동기화를 시작하기 위해 이 함수를 호출합니다.
    */
-  initSet(initialCartItems: (CartItem | CartItemEntity)[]) {
-    initialCartItems.forEach((cartItem) => {
-      const state = this.createState(cartItem.product.id, cartItem);
+  setFromRemote(cartItems: CartItemEntity[]) {
+    cartItems.forEach((cartItem) => {
+      const state = this.createState(cartItem.product.id, cartItem, cartItem);
       state.set(cartItem); // HACK: force trigger sync
     });
 
-    this.fireSyncEvent();
+    this.fireSyncEvent(cartItems);
   }
 
   private createState(
     productId: CartItem['product']['id'],
-    synchronizedCartItem?: CartItem | CartItemEntity,
+    clientCartItem?: CartItem,
+    remoteCartItem?: CartItemEntity,
   ) {
-    const state = new RemoteCartItemState(this.client, productId, synchronizedCartItem ?? null);
-    this.states.set(state.productId, state);
+    const state = new SyncCartItemState(
+      productId,
+      this.client,
+      clientCartItem ?? null,
+      remoteCartItem ?? null,
+    );
+    this.syncStates.set(productId, state);
     state.onError(() => this.doDownstreamSync());
-    state.onCorruptWhileUpstreamSync((expectedCartItem) => {
-      this.correctToExpectedState(state.productId, expectedCartItem);
+    state.onConflict((clientCartItem, remoteCartItem) => {
+      this.resolveConflict(productId, remoteCartItem);
     });
     return state;
   }
 
-  private correctToExpectedState(
-    productId: CartItem['product']['id'],
-    expectedCartItem: Partial<CartItem> | null,
-  ) {
+  private resolveConflict(productId: CartItem['product']['id'], expectedCartItem: CartItem | null) {
     this.changeByDownstreamHandler?.((cartItems) => {
       // correction: deleted
       if (expectedCartItem === null) {
@@ -100,44 +99,48 @@ class RemoteCartItemsStorage {
   /**
    * client의 상태가 변경되었을 때 remote에 상태 변경을 통보하기 위해 호출하는 함수입니다.
    */
-  set(cartItems: CartItem[]) {
-    this.states.forEach((state, productId) => {
+  setFromClient(cartItems: CartItem[]) {
+    this.syncStates.forEach((state, productId) => {
       const isRemoved = !cartItems.some((cartItem) => cartItem.product.id === productId);
 
       if (isRemoved) state.set(null);
     });
 
     cartItems.forEach((cartItem) => {
-      const state = this.states.get(cartItem.product.id);
+      const state = this.syncStates.get(cartItem.product.id);
       if (state) {
         state.set(cartItem);
         return;
       }
       const stateCreated = this.createState(cartItem.product.id);
       stateCreated.set(cartItem);
-      this.states.set(stateCreated.productId, stateCreated);
+      this.syncStates.set(cartItem.product.id, stateCreated);
     });
 
-    this.fireSyncEvent();
+    this.fireSyncEvent(cartItems);
   }
 
   /**
    * client <-> remote 간 상태 동기화가 시작되었을 때,
    * 상태 동기화가 끝난 후 {@link synchronizedHandler}를 호출합니다.
    */
-  private async fireSyncEvent() {
+  private async fireSyncEvent(cartItems: CartItem[]) {
     if (this.sync === null) {
-      this.syncStartHandler?.();
-      this.sync = this.waitForSync();
-      this.sync.then(() => {
-        this.synchronizedHandler?.();
+      this.syncHandler?.({ isSynchronizing: true });
+      this.sync = this.waitForSync().then(() => {
+        return cartItems
+          .map((cartItem) => this.syncStates.get(cartItem.product.id)?.remoteState)
+          .filter((cartItem): cartItem is CartItemEntity => Boolean(cartItem));
+      });
+      this.sync.then((cartItems) => {
+        this.syncHandler?.({ cartItems, isSynchronizing: false });
         this.sync = null;
       });
     }
   }
 
   reset() {
-    this.states.forEach((state) => {
+    this.syncStates.forEach((state) => {
       state.set(null);
       state.clear();
     });
@@ -149,7 +152,7 @@ class RemoteCartItemsStorage {
    */
   async doDownstreamSync() {
     const { data: cartItems } = await this.client.get('/cart-items').acceptOrThrow(200);
-    this.states.forEach((state) =>
+    this.syncStates.forEach((state) =>
       state.enqueueDownstreamSync(
         cartItems.find((cartItem) => cartItem.product.id === state.productId) ?? null,
       ),
@@ -158,9 +161,9 @@ class RemoteCartItemsStorage {
   }
 
   async waitForSync() {
-    while ([...this.states.values()].some((state) => state.isSynchronizing())) {
+    while ([...this.syncStates.values()].some((state) => state.isSynchronizing())) {
       await Promise.all(
-        [...this.states.values()]
+        [...this.syncStates.values()]
           .filter((state) => state.isSynchronizing())
           .map((state) => state.waitForSync()),
       );
@@ -169,7 +172,7 @@ class RemoteCartItemsStorage {
 
   clear() {
     clearInterval(this.syncIntervalHandler);
-    this.states.clear();
+    this.syncStates.clear();
   }
 
   /**
@@ -180,18 +183,11 @@ class RemoteCartItemsStorage {
   }
 
   /**
-   * 상태가 remote와 동기화를 시작할 때 호출됩니다.
+   * 상태가 remote와 동기화를 시작할 때 혹은 완료되었을 때 호출됩니다.
    */
-  onSyncStart(syncStartHandler: SyncStartHandler | null) {
-    this.syncStartHandler = syncStartHandler;
-  }
-
-  /**
-   * 상태가 remote와 동기화되었을 때 호출됩니다.
-   */
-  onSynchronized(synchronizedHandler: SynchronizedHandler | null) {
-    this.synchronizedHandler = synchronizedHandler;
+  onSync(syncHandler: SyncHandler | null) {
+    this.syncHandler = syncHandler;
   }
 }
 
-export default RemoteCartItemsStorage;
+export default SyncCartItemsStorage;

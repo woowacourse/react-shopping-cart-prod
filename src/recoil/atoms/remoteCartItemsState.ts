@@ -1,41 +1,50 @@
-import { atomFamily, selector } from 'recoil';
+import { DefaultValue, atomFamily, selectorFamily } from 'recoil';
 import type { Client } from '../../api';
+import type { CartItemEntity } from '../../api/rest/ShoppingCartRestAPI';
+import cartItemsQuery from '../queries/cartItemsQuery';
 import remoteCartItemsStorage from '../storages/remoteCartItemsStorage';
-import clientState from './clientState';
 
 type SyncStatusState = {
+  cartItems: CartItemEntity[];
   isSynchronizing: boolean;
 };
 
-const syncStatusState = atomFamily<SyncStatusState, Client>({
-  key: 'syncHeartbeat',
-  default: () => ({
-    isSynchronizing: false,
+const remoteCartItemsState = atomFamily<SyncStatusState, Client>({
+  key: 'remoteCartItemsState',
+  default: selectorFamily({
+    key: 'remoteCartItemsState/default',
+    get:
+      (client) =>
+      ({ get }) => {
+        return {
+          isSynchronizing: false,
+          cartItems: get(cartItemsQuery({ client })),
+        };
+      },
   }),
+  effects: (client) => [
+    ({ onSet, setSelf, getPromise }) => {
+      const willStorage = getPromise(remoteCartItemsStorage(client));
+
+      willStorage.then((storage) =>
+        storage.onSync((info) => {
+          setSelf((syncStatus) => {
+            if (syncStatus instanceof DefaultValue) {
+              if (info.isSynchronizing) return syncStatus;
+
+              return { cartItems: info.cartItems, isSynchronizing: info.isSynchronizing };
+            }
+
+            return {
+              cartItems: syncStatus.cartItems,
+              ...info,
+            };
+          });
+          console.log(info.isSynchronizing ? 'synchronizing ...' : 'synchronized');
+        }),
+      );
+    },
+  ],
 });
 
-const synchronizedCartItemsState = selector({
-  key: 'synchronizedCartItemsState',
-  get: ({ get, getCallback }) => {
-    const client = get(clientState);
-    const storage = get(remoteCartItemsStorage(client));
-
-    const setSynchronizing = getCallback(({ set }) => (isSynchronizing: boolean) => {
-      set(syncStatusState(client), { isSynchronizing });
-    });
-
-    storage.onSyncStart(() => {
-      setSynchronizing(true);
-      console.log('synchronizing ...');
-    });
-
-    storage.onSynchronized(() => {
-      setSynchronizing(false);
-      console.log('synchronized');
-    });
-
-    return get(syncStatusState(client));
-  },
-});
-
-export default synchronizedCartItemsState;
+export default remoteCartItemsState;

@@ -1,7 +1,7 @@
 import { selectorFamily } from 'recoil';
 import type { Client } from '../../api';
 import type { CartPointsEntity } from '../../api/rest/ShoppingCartRestAPI';
-import synchronizedCartItemsState from '../atoms/remoteCartItemsState';
+import remoteCartItemsState from '../atoms/remoteCartItemsState';
 
 type CartPointsQueryParams = {
   client: Client;
@@ -19,7 +19,7 @@ const cartPointsQuery = selectorFamily<CartPointsEntity, CartPointsQueryParams>(
   get:
     ({ client }) =>
     ({ get }) => {
-      const { isSynchronizing } = get(synchronizedCartItemsState);
+      const { isSynchronizing } = get(remoteCartItemsState(client));
       if (isSynchronizing && cachedCartPoints) {
         return cachedCartPoints;
       }

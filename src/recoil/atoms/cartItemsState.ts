@@ -1,13 +1,12 @@
 /* eslint-disable no-nested-ternary */
 import { atomFamily, DefaultValue, selector } from 'recoil';
 import type { Client } from '../../api';
-import type { CartItemEntity } from '../../api/rest/ShoppingCartRestAPI';
 import type { CartItem } from '../../types/CartItem';
 import syncCartItemsEffect from '../effects/syncCartItemsEffect';
 import cartItemsQuery from '../queries/cartItemsQuery';
 import clientState from './clientState';
 
-const internalCartItemsState = atomFamily<(CartItem | CartItemEntity)[], Client>({
+const internalCartItemsState = atomFamily<CartItem[], Client>({
   key: 'internalCartItemsState',
   default: (client) => cartItemsQuery({ client }),
   effects: (client) => [syncCartItemsEffect(client)],

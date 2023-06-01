@@ -1,14 +1,14 @@
 import type { AtomEffect } from 'recoil';
 import { DefaultValue } from 'recoil';
 import type { Client } from '../../api';
-import type { CartItemEntity } from '../../api/rest/ShoppingCartRestAPI';
 import type { CartItem } from '../../types/CartItem';
+import cartItemsQuery from '../queries/cartItemsQuery';
 import remoteCartItemsStorage from '../storages/remoteCartItemsStorage';
 
 /**
  * cartItems를 remote와 동기화하는 AtomEffect입니다.
  */
-const syncCartItemsEffect = (client: Client): AtomEffect<(CartItem | CartItemEntity)[]> => {
+const syncCartItemsEffect = (client: Client): AtomEffect<CartItem[]> => {
   return ({ onSet, setSelf, getPromise }) => {
     const willStorage = getPromise(remoteCartItemsStorage(client));
 
@@ -22,16 +22,18 @@ const syncCartItemsEffect = (client: Client): AtomEffect<(CartItem | CartItemEnt
       );
     });
 
+    getPromise(cartItemsQuery({ client })).then((cartItems) => {
+      willStorage.then((storage) => {
+        storage.setFromRemote(cartItems);
+      });
+    });
+
     onSet((newCartItems, oldCartItems, isReset) => {
       if (isReset) {
         willStorage.then((storage) => storage.reset());
         return;
       }
-      if (oldCartItems instanceof DefaultValue) {
-        willStorage.then((storage) => storage.initSet(newCartItems));
-        return;
-      }
-      willStorage.then((storage) => storage.set(newCartItems));
+      willStorage.then((storage) => storage.setFromClient(newCartItems));
     });
 
     return () => willStorage.then((storage) => storage.clear());
