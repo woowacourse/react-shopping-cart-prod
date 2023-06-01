@@ -19,7 +19,6 @@ export const useProduct = (productId: number) => {
   const newQuantity = useRecoilValue(updateCartSelector({ id: productId }));
   const serverUrl = useRecoilValue(serverState);
   const setCart = useSetRecoilState(cartState);
-
   const findCartItemId = useRecoilValue(getCartItemIdSelector(productId));
 
   const updateCart = useRecoilCallback(({ set }) => ({ id, cartId, quantity }: SelectorParams) => {
@@ -30,7 +29,7 @@ export const useProduct = (productId: number) => {
     set(removeProductItemFromCartSelector(productId), []);
   });
 
-  const { mutate, error } = useMutation<CartItem[]>(setCart);
+  const { mutate, isLoading, error } = useMutation<CartItem[]>(setCart);
 
   const { toast } = useToast();
 
@@ -55,7 +54,12 @@ export const useProduct = (productId: number) => {
       id: productId,
       cartId: findCartItemId,
       quantity: 1,
-    });
+    }); // for real
+    // updateCart({
+    //   id: productId,
+    //   cartId: productId,
+    //   quantity: 1,
+    // }); // for msw
   };
 
   const updateItem = (quantity: number) => {
@@ -65,8 +69,8 @@ export const useProduct = (productId: number) => {
       {
         url: `${serverUrl}${CART_BASE_URL}/${findCartItemId}`,
         method: 'PATCH',
-        bodyData: { quantity },
-
+        bodyData: { quantity }, // for real
+        // bodyData: { productId, quantity }, // for msw
         headers: {
           Authorization: `Basic ${base64}`,
           'Content-Type': 'application/json',
@@ -76,7 +80,8 @@ export const useProduct = (productId: number) => {
     );
     if (error) return;
 
-    updateCart({ id: productId, cartId: findCartItemId, quantity });
+    updateCart({ id: productId, cartId: findCartItemId, quantity }); // for real
+    // updateCart({ id: productId, cartId: productId, quantity }); // for msw
   };
 
   const removeItem = () => {
@@ -150,5 +155,6 @@ export const useProduct = (productId: number) => {
     addItemToCart,
     handleBlurItem,
     removeItem,
+    isLoading,
   };
 };

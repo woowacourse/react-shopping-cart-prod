@@ -94,28 +94,33 @@ export const handlers = [
 
   // 주문 조회
   rest.get(`${serverUrlObj['주노']}${ORDER_BASE_URL}`, (req, res, ctx) => {
-    console.log(getOrder());
-
     return res(ctx.delay(100), ctx.status(200), ctx.json(getOrder()));
   }),
 
-  // 주문하기
-  rest.post(`${serverUrlObj['주노']}${ORDER_BASE_URL}`, async (req, res, ctx) => {
-    const { cartIds, point } = await req.json();
+  // // 주문하기
+  // rest.post(`${serverUrlObj['주노']}${ORDER_BASE_URL}`, async (req, res, ctx) => {
+  //   const { cartIds, point } = await req.json();
 
-    if (cartIds.length === 0) {
-      return res(ctx.status(400));
-    }
+  //   if (cartIds.length === 0) {
+  //     return res(ctx.status(400));
+  //   }
 
-    const orderId = Math.random();
+  //   const orderId = Math.random();
 
-    const newOrder: OrderItem = {
-      orderId,
-      orderProducts: getCart().filter((item) => cartIds.includes(item.id)),
-    };
+  //   const newOrder: OrderItem = {
+  //     orderId,
+  //     orderProducts: getCart().filter((item) => cartIds.includes(item.id)),
+  //   };
 
-    setOrder([...getOrder(), newOrder]);
+  //   setOrder([...getOrder(), newOrder]);
 
-    return res(ctx.status(201));
-  }),
+  //   const updateCart = getCart().filter((item) => !cartIds.includes(item.id));
+
+  //   setCart(updateCart);
+
+  //   return res(ctx.status(201));
+  // }),
+
+  // 주문 상세 조회
+  // api.
 ];

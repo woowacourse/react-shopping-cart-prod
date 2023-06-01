@@ -16,6 +16,7 @@ type PriceProps = {
   price: string;
 };
 
+// TODO: 이름 변경
 const PriceWrapper = ({ totalPrice }: Props) => {
   const checkedItems = useRecoilValue(checkedItemsState);
   const { goOrderComplete } = useNavigatePage();
