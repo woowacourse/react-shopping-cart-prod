@@ -29,9 +29,12 @@ export interface Order {
   couponIds: number[];
 }
 
-export interface OrderResult extends Order {
+export interface OrderResult {
   orderItemId: number;
   total: number;
+  product: Product;
+  quantity: number;
+  coupons: Coupon[];
 }
 
 export interface EachOrderStatement {
