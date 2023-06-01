@@ -99,28 +99,3 @@ export const orderCartList = selector<Order[]>({
       });
   },
 });
-
-export const cartCouponSelector = selectorFamily<number | undefined, number>({
-  key: "cartCouponSelector",
-  get: (productId) => {
-    return ({ get }) => {
-      const targetCart = get(cartListState).find(
-        (item) => item.product.id === productId
-      );
-      return targetCart?.couponId ?? undefined;
-    };
-  },
-  set:
-    (productId) =>
-    ({ get, set }, couponId) => {
-      if (couponId instanceof DefaultValue) return;
-
-      const cartList = [...get(cartListState)].map((item) => {
-        if (item.product.id !== productId) return item;
-
-        return { ...item, couponId: couponId };
-      });
-
-      return set(cartListState, cartList);
-    },
-});
