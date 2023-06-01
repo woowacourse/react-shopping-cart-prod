@@ -30,7 +30,7 @@ export const Container = styled.div`
   }
 `;
 
-export const Row = styled.div`
+export const Row = styled.main`
   display: flex;
   flex-wrap: wrap;
   padding-left: 1rem;
