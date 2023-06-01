@@ -104,6 +104,12 @@ const TitleBox = styled.h2`
 
   font-size: 21px;
   font-weight: 400;
+
+  @media screen and (max-width: 800px) {
+    padding-bottom: 2%;
+    text-align: center;
+    font-size: 16px;
+  }
 `;
 
 const TotalContainer = styled.div`
@@ -118,6 +124,10 @@ const TotalContainer = styled.div`
     margin-top: auto;
     margin-bottom: 8%;
   }
+
+  @media screen and (max-width: 800px) {
+    gap: 10px;
+  }
 `;
 
 const AmountBox = styled.div`
@@ -127,6 +137,10 @@ const AmountBox = styled.div`
   text-align: center;
   font-size: 16px;
   font-weight: 600;
+
+  @media screen and (max-width: 800px) {
+    font-size: 15px;
+  }
 `;
 
 const OrderButton = styled.button`

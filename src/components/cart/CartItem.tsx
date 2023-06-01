@@ -74,6 +74,7 @@ const Wrapper = styled.ul`
     height: 160px;
     border-radius: 5px;
   }
+
   & > input[type="checkbox"] {
     top: 15px;
     width: 40px;
@@ -92,6 +93,12 @@ const Wrapper = styled.ul`
 
   @media screen and (max-width: 800px) {
     padding-left: 0;
+
+    & > img {
+      width: 130px;
+      height: 130px;
+      border-radius: 5px;
+    }
   }
 `;
 
@@ -138,7 +145,7 @@ const PriceContainer = styled.div`
 const SelectBox = styled.select`
   position: absolute;
   right: 20%;
-  bottom: 5%;
+  bottom: 12%;
 
   width: 30%;
   height: fit-content;

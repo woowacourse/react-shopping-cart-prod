@@ -24,7 +24,7 @@ const OrderItem = ({ orderId, items }: OrderItemProps) => {
       </TitleContainer>
       <ListBox>
         {items.map((item) => (
-          <OrderProduct key={item.orderItemId} order={item} />
+          <OrderProduct key={item.orderItemId} {...item} />
         ))}
       </ListBox>
     </Wrapper>

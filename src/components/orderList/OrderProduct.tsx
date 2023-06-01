@@ -2,18 +2,12 @@ import { Order } from "api/orders";
 import React from "react";
 import { styled } from "styled-components";
 
-interface OrderProductPros {
-  order: Order;
-  children?: React.ReactNode;
-}
-
-const OrderProduct = ({ order, children }: OrderProductPros) => {
+const OrderProduct = (order: Order) => {
   return (
     <Wrapper>
       <ImgBox src={order.product.imageUrl} alt={`${order.product.name} 상품 이미지`} />
       <NameBox>{order.product.name}</NameBox>
-      <PriceContainer>{order.total.toLocaleString()}원</PriceContainer>
-      <ChildrenBox>{children}</ChildrenBox>
+      <PriceContainer>{(order.product.price * order.quantity).toLocaleString()}원</PriceContainer>
     </Wrapper>
   );
 };
@@ -28,18 +22,27 @@ const Wrapper = styled.ul`
 
   border-top: 1.5px solid rgba(204, 204, 204, 1);
   padding: 10px;
+
+  @media screen and (max-width: 800px) {
+    height: 120px;
+  }
 `;
 
 const ImgBox = styled.img`
-  height: 100%;
   width: 180px;
+  height: 100%;
   border-radius: 5px;
 
   margin-right: 2%;
+
+  @media screen and (max-width: 800px) {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 const NameBox = styled.div`
-  width: 30%;
+  width: 60%;
   height: 20%;
 
   padding-top: 1%;
@@ -52,21 +55,21 @@ const NameBox = styled.div`
   overflow: hidden;
 
   @media screen and (max-width: 800px) {
-    font-size: 13px;
+    font-size: 15px;
   }
 `;
 
 const PriceContainer = styled.div`
-  width: 30%;
+  width: 60%;
   height: 60%;
 
   color: rgba(136, 136, 136, 1);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 400;
-`;
 
-const ChildrenBox = styled.div`
-  padding-top: 1%;
+  @media screen and (max-width: 800px) {
+    font-size: 14px;
+  }
 `;
 
 export default OrderProduct;
