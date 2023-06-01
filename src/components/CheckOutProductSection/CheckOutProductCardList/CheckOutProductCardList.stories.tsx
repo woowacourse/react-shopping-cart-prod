@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from '@storybook/react';
-import OrderProductCardList from './OrderProductCardList';
+import CheckOutProductCardList from './CheckOutProductCardList';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -8,8 +8,8 @@ const Container = styled.div`
 `;
 
 const meta = {
-  component: OrderProductCardList,
-  title: 'OrderProductCardList',
+  component: CheckOutProductCardList,
+  title: 'CheckOutProductCardList',
   decorators: [
     (Story) => (
       <Container>
@@ -17,11 +17,11 @@ const meta = {
       </Container>
     ),
   ],
-} satisfies Meta<typeof OrderProductCardList>;
+} satisfies Meta<typeof CheckOutProductCardList>;
 
 export default meta;
-type Story = StoryObj<typeof OrderProductCardList>;
+type Story = StoryObj<typeof CheckOutProductCardList>;
 
 export const Default: Story = {
-  render: () => <OrderProductCardList />,
+  render: () => <CheckOutProductCardList />,
 };

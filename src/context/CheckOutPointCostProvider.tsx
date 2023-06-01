@@ -1,14 +1,14 @@
 import { PropsWithChildren, createContext, useCallback, useState } from 'react';
 
-type OrderPointCostContextType = {
+type CheckOutPointCostContextType = {
   pointCost: number;
   changePointCost: (e: React.ChangeEvent<HTMLInputElement>, userOwnPoint: number) => void;
   allInPoint: (userOwnPoint: number) => void;
 };
 
-export const OrderPointCostContext = createContext<OrderPointCostContextType | null>(null);
+export const CheckOutPointCostContext = createContext<CheckOutPointCostContextType | null>(null);
 
-export const OrderPointCostProvider = ({ children }: PropsWithChildren) => {
+export const CheckOutPointCostProvider = ({ children }: PropsWithChildren) => {
   const [pointCost, setPointCost] = useState(0);
 
   const changePointCost = useCallback((e: React.ChangeEvent<HTMLInputElement>, userOwnPoint: number) => {
@@ -26,8 +26,8 @@ export const OrderPointCostProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   return (
-    <OrderPointCostContext.Provider value={{ pointCost, changePointCost, allInPoint }}>
+    <CheckOutPointCostContext.Provider value={{ pointCost, changePointCost, allInPoint }}>
       {children}
-    </OrderPointCostContext.Provider>
+    </CheckOutPointCostContext.Provider>
   );
 };

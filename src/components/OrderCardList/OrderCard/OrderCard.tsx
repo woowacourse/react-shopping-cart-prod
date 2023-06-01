@@ -1,10 +1,10 @@
 import Box from 'components/@common/Box';
-import OrderProductCard from 'components/OrderProductSection/OrderProductCardList/OrderProductCard/OrderProductCard';
 import ROUTE_PATH from 'constants/routePath';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Order } from 'types/order';
 import Accordion from 'components/@common/Accordion';
+import CheckOutProductCard from 'components/CheckOutProductSection/CheckOutProductCardList/CheckOutProductCard/CheckOutProductCard';
 
 type OrderCardProps = {
   order: Order;
@@ -24,7 +24,7 @@ const OrderCard = ({ order, isDetail = false }: OrderCardProps) => {
         </OrderLabel>
         <Accordion.Content>
           {products.map((product) => (
-            <OrderProductCard key={product.product.id} checkedCartProduct={product} />
+            <CheckOutProductCard key={product.product.id} checkedCartProduct={product} />
           ))}
 
           {!isDetail && (

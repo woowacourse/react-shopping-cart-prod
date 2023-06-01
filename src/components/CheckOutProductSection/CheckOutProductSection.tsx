@@ -1,18 +1,18 @@
 import styled from 'styled-components';
-import OrderProductCardList from './OrderProductCardList/OrderProductCardList';
-import OrderPointTab from './OrderPointTab/OrderPointTab';
+import CheckOutProductCardList from './CheckOutProductCardList/CheckOutProductCardList';
+import CheckOutPointTab from './CheckOutPointTab/CheckOutPointTab';
 import Box from 'components/@common/Box';
 
-const OrderProductSection = () => {
+const CheckOutProductSection = () => {
   return (
     <ProductSection flex={{ flexDirection: 'column', align: 'flex-start', gap: '50px' }}>
-      <OrderProductCardList />
-      <OrderPointTab />
+      <CheckOutProductCardList />
+      <CheckOutPointTab />
     </ProductSection>
   );
 };
 
-export default OrderProductSection;
+export default CheckOutProductSection;
 
 const ProductSection = styled(Box)`
   width: 60%;

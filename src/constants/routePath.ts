@@ -1,7 +1,7 @@
 const ROUTE_PATH = {
   ROOT: '/',
   CART: '/cart',
-  ORDER: '/order',
+  CHECKOUT: '/checkout',
   ORDER_LIST: '/orders',
   OTHER: '*',
 } as const;

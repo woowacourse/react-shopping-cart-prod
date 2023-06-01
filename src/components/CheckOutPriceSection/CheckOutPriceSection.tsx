@@ -2,15 +2,15 @@ import Box from 'components/@common/Box';
 import ROUTE_PATH from 'constants/routePath';
 import { BASE_SHIPPING_FEE, SHIPPING_FEE_THRESHOLD, PERCENTAGE_OF_EARN_POINTS } from 'constants/policy';
 import useCartCheckBox from 'hooks/useCartCheckBox';
-import useOrderPointCostContext from 'hooks/useContext/useOrderPointCostContext';
+import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { checkedCartProductsTotalPrice } from 'state/cartProducts';
 import styled from 'styled-components';
 
-const OrderPriceSection = () => {
+const CheckOutPriceSection = () => {
   const { checkedCartProductIds } = useCartCheckBox();
-  const { pointCost } = useOrderPointCostContext();
+  const { pointCost } = useCheckOutPointCostContext();
   const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPrice(checkedCartProductIds));
   const navigate = useNavigate();
 
@@ -59,7 +59,7 @@ const OrderPriceSection = () => {
       </PriceSection>
 
       <ConfirmButtonBox sizing={{ width: '100%' }}>
-        <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.ORDER)} isActive={isCheckedProductsExist}>
+        <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.CHECKOUT)} isActive={isCheckedProductsExist}>
           {orderConfirmButtonText}
         </OrderConfirmButton>
       </ConfirmButtonBox>
@@ -67,7 +67,7 @@ const OrderPriceSection = () => {
   );
 };
 
-export default OrderPriceSection;
+export default CheckOutPriceSection;
 
 const Container = styled(Box)`
   position: sticky;

@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
 import { getCheckedCartProductsState } from 'state/checkedCartProductIds';
-import OrderProductCard from './OrderProductCard/OrderProductCard';
 import styled from 'styled-components';
 import Box from 'components/@common/Box';
 import Accordion from 'components/@common/Accordion';
+import CheckOutProductCard from './CheckOutProductCard/CheckOutProductCard';
 
-const OrderProductCardList = () => {
+const CheckOutProductCardList = () => {
   const checkedCartProducts = useRecoilValue(getCheckedCartProductsState);
   const totalOrderCountText = `(총 ${checkedCartProducts.length}개)`;
 
@@ -23,7 +23,7 @@ const OrderProductCardList = () => {
         <Accordion.Content>
           <Box sizing={{ width: '100%' }} flex={{ flexDirection: 'column' }} role="list">
             {checkedCartProducts.map((checkedCartProduct) => (
-              <OrderProductCard key={checkedCartProduct.product.id} checkedCartProduct={checkedCartProduct} />
+              <CheckOutProductCard key={checkedCartProduct.product.id} checkedCartProduct={checkedCartProduct} />
             ))}
           </Box>
         </Accordion.Content>
@@ -32,7 +32,7 @@ const OrderProductCardList = () => {
   );
 };
 
-export default OrderProductCardList;
+export default CheckOutProductCardList;
 
 const Wrapper = styled.div`
   position: sticky;

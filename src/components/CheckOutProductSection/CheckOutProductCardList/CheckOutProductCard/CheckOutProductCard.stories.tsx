@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react';
-import OrderProductCard from './OrderProductCard';
+import CheckOutProductCard from './CheckOutProductCard';
 import { CartProduct } from 'types/product';
 
 const meta = {
-  component: OrderProductCard,
-  title: 'OrderProductCard',
-} satisfies Meta<typeof OrderProductCard>;
+  component: CheckOutProductCard,
+  title: 'CheckOutProductCard',
+} satisfies Meta<typeof CheckOutProductCard>;
 
 export default meta;
-type Story = StoryObj<typeof OrderProductCard>;
+type Story = StoryObj<typeof CheckOutProductCard>;
 
 const cartProducts: CartProduct = {
   quantity: 1,
@@ -21,5 +21,5 @@ const cartProducts: CartProduct = {
 };
 
 export const Default: Story = {
-  render: () => <OrderProductCard checkedCartProduct={cartProducts} />,
+  render: () => <CheckOutProductCard checkedCartProduct={cartProducts} />,
 };

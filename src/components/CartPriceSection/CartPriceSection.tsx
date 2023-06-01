@@ -37,7 +37,7 @@ const CartPriceSection = () => {
         <SubTitle>예상 주문금액</SubTitle>
         <CartTotalPrice>{cartTotalPriceText}</CartTotalPrice>
       </Container>
-      <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.ORDER)} isActive={isCheckedProductsExist}>
+      <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.CHECKOUT)} isActive={isCheckedProductsExist}>
         {orderConfirmButtonText}
       </OrderConfirmButton>
     </PriceSection>

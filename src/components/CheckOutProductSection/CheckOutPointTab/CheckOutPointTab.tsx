@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import Box from 'components/@common/Box';
-import useOrderPointCostContext from 'hooks/useContext/useOrderPointCostContext';
+import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
 import useFetch from 'hooks/useFetch';
 import { getUserOwnPoints } from 'apis/points';
 
-const OrderPointTab = () => {
+const CheckOutPointTab = () => {
   const { data: userOwnPoints, isLoading, errorState } = useFetch<number>(getUserOwnPoints);
-  const { allInPoint, changePointCost, pointCost } = useOrderPointCostContext();
+  const { allInPoint, changePointCost, pointCost } = useCheckOutPointCostContext();
 
   const handleChangePointCost = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,7 +42,7 @@ const OrderPointTab = () => {
   );
 };
 
-export default OrderPointTab;
+export default CheckOutPointTab;
 
 const TitleBox = styled(Box)`
   border-bottom: solid 1px var(--color-grayscale-200);

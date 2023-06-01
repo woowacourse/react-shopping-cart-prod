@@ -1,24 +1,24 @@
 import styled from 'styled-components';
 import FlexBox from 'components/@common/FlexBox';
-import OrderProductSection from 'components/OrderProductSection/OrderProductSection';
-import OrderPriceSection from 'components/OrderPriceSection/OrderPriceSection';
-import { OrderPointCostProvider } from 'context/OrderPointCostProvider';
+import CheckOutProductSection from 'components/CheckOutProductSection/CheckOutProductSection';
+import CheckOutPriceSection from 'components/CheckOutPriceSection/CheckOutPriceSection';
+import { CheckOutPointCostProvider } from 'context/CheckOutPointCostProvider';
 
-const OrderPage = () => {
+const CheckOutPage = () => {
   return (
     <ShoppingCartPageContainer flexDirection="column">
       <PageTitle>주문서</PageTitle>
       <SectionContainer gap="80px" align="flex-start" role="region">
-        <OrderPointCostProvider>
-          <OrderProductSection />
-          <OrderPriceSection />
-        </OrderPointCostProvider>
+        <CheckOutPointCostProvider>
+          <CheckOutProductSection />
+          <CheckOutPriceSection />
+        </CheckOutPointCostProvider>
       </SectionContainer>
     </ShoppingCartPageContainer>
   );
 };
 
-export default OrderPage;
+export default CheckOutPage;
 
 const ShoppingCartPageContainer = styled(FlexBox)`
   width: 100%;

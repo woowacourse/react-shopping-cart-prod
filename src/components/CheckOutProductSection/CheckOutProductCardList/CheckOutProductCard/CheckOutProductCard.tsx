@@ -3,11 +3,11 @@ import styled from 'styled-components';
 import type { CartProduct } from 'types/product';
 import Box from 'components/@common/Box';
 
-type OrderProductCardProps = {
+type CheckOutProductCardProps = {
   checkedCartProduct: CartProduct;
 };
 
-const OrderProductCard = ({ checkedCartProduct }: OrderProductCardProps) => {
+const CheckOutProductCard = ({ checkedCartProduct }: CheckOutProductCardProps) => {
   const { product, quantity } = checkedCartProduct;
   const { id, name, price, imageUrl } = product;
   const totalPrice = `${(price * quantity).toLocaleString('ko-KR')}원`;
@@ -53,4 +53,4 @@ const TotalPriceAndQuantity = styled.span`
   color: var(--color-grayscale-500);
 `;
 
-export default OrderProductCard;
+export default CheckOutProductCard;
