@@ -24,6 +24,7 @@ const OrderDetailPage = () => {
       <TitleWrapper>
         <Title>주문 내역 상세</Title>
       </TitleWrapper>
+      <Spacer height={28} />
       <OrderList order={order} />
       <Spacer height={30} />
       <OrderTotal>
@@ -44,7 +45,7 @@ const Container = styled.div`
 `;
 
 const TitleWrapper = styled.div`
-  height: 67px;
+  height: 40px;
 `;
 
 const Title = styled.h2`
