@@ -13,4 +13,10 @@ export interface OrderPayload {
   usePoint: number;
 }
 
-type OrderItem = Product | CartItem['quantity'];
+export type OrderItem = {
+  id: Product['id'];
+  quantity: CartItem['quantity'];
+  price: Product['price'];
+  name: Product['name'];
+  imageUrl: Product['imageUrl'];
+};
