@@ -23,10 +23,16 @@ export const orderwithIdState = selectorFamily({
   get:
     (orderId) =>
     ({ get }) => {
-      const hostName = get(hostNameAtom);
-      const response = api(hostName).then((apiInstance) => {
-        return apiInstance.getOrderDetail(Number(orderId));
-      });
-      return response;
+      const isOrderExist = get(orderAtom).find(
+        (order) => order.orderId === Number(orderId)
+      );
+
+      if (isOrderExist) {
+        const hostName = get(hostNameAtom);
+        const response = api(hostName).then((apiInstance) => {
+          return apiInstance.getOrderDetail(Number(orderId));
+        });
+        return response;
+      }
     },
 });
