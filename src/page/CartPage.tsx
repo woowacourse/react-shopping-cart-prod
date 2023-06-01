@@ -8,17 +8,22 @@ import * as api from '../api';
 import useToast from '../components/hooks/useToast';
 import { API_ERROR_MESSAGE } from '../constants';
 import { serverNameState } from '../atom/serverName';
+import { CartType } from '../types';
+import { loginState } from '../atom/login';
 
 export default function CartPage() {
   const serverName = useRecoilValue(serverNameState);
   const cartCount = useRecoilValue(cartCountState);
   const setCart = useSetRecoilState(cartState);
   const setCheckedList = useSetRecoilState(checkedListState);
+  const loginCredential = useRecoilValue(loginState);
   const { showToast } = useToast();
+
+  console.log(loginCredential);
 
   useEffect(() => {
     try {
-      api.getCart(serverName).then((cart) => {
+      api.getCart<CartType>(serverName, loginCredential).then((cart) => {
         setCart(cart);
         setCheckedList(Array(cart.length).fill(true));
       });

@@ -1,4 +1,4 @@
-import type { CartItemType } from '../../types';
+import { CartItemType, CartType } from '../../types';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import * as S from './styles/CartItem.styles';
 import CheckBox from '../common/CheckBox';
@@ -8,6 +8,7 @@ import { cartState } from '../../atom/cart';
 import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 import useToast from '../hooks/useToast';
 import { serverNameState } from '../../atom/serverName';
+import { loginState } from '../../atom/login';
 
 interface Props extends CartItemType {
   checked: boolean;
@@ -19,11 +20,12 @@ export default function CartItem(props: Props) {
   const { id, product, quantity, checked, toggleChecked, deleteChecked } = props;
   const setCart = useSetRecoilState(cartState);
   const serverName = useRecoilValue(serverNameState);
+  const loginCredential = useRecoilValue(loginState);
   const { showToast } = useToast();
 
   const removeCartItem = async () => {
     try {
-      await api.deleteCartItem(serverName, id);
+      await api.deleteCartItem(serverName, id, loginCredential);
       deleteChecked();
     } catch {
       showToast('error', API_ERROR_MESSAGE.deleteCartItem);
@@ -31,7 +33,7 @@ export default function CartItem(props: Props) {
     }
 
     try {
-      const cart = await api.getCart(serverName);
+      const cart = await api.getCart<CartType>(serverName, loginCredential);
       setCart(cart);
     } catch {
       showToast('error', API_ERROR_MESSAGE.getCart);

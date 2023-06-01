@@ -1,35 +1,44 @@
-import type { CartType, ProductType, ServerNameType } from '../types';
+import type { ServerNameType } from '../types';
 
-import { BASE_URL_MAP, USER_ID, USER_PASSWORD } from '../constants';
+import { BASE_URL_MAP } from '../constants';
 
-const Authorization = `Basic ${btoa(`${USER_ID}:${USER_PASSWORD}`)}`;
+export const getProducts = async <T>(serverName: ServerNameType) => {
+  const response = await fetch(`${BASE_URL_MAP[serverName]}/products`);
+  if (!response.ok) throw new Error(`products GET error`);
 
-const get =
-  <T>(path: string) =>
-  async (serverName: ServerNameType) => {
-    const response = await fetch(`${BASE_URL_MAP[serverName]}/${path}`, {
-      headers: {
-        Authorization,
-      },
-    });
-    if (!response.ok) throw new Error(`${path} GET error`);
+  const data: T = await response.json();
 
-    const data: T = await response.json();
+  return data;
+};
 
-    return data;
-  };
+export const getCart = async <T>(serverName: ServerNameType, loginCredential: string) => {
+  const response = await fetch(`${BASE_URL_MAP[serverName]}/cart-items`, {
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+    },
+  });
 
-export const getProducts = get<ProductType[]>('products');
+  if (!response.ok) throw new Error(`cart-items GET error`);
 
-export const getCart = get<CartType>('cart-items');
+  const data: T = await response.json();
 
-export const postCartItem = async (serverName: ServerNameType, productId: number) => {
+  return data;
+};
+
+export const postCartItem = async (
+  serverName: ServerNameType,
+  productId: number,
+  loginCredential: string
+) => {
   const url = `${BASE_URL_MAP[serverName]}/cart-items`;
   const body = { productId };
 
   const response = await fetch(url, {
     method: 'POST',
-    headers: { Authorization, 'content-Type': 'application/json' },
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+      'content-Type': 'application/json',
+    },
     body: JSON.stringify(body),
   });
 
@@ -39,33 +48,51 @@ export const postCartItem = async (serverName: ServerNameType, productId: number
 export const patchCartItemQuantity = async (
   serverName: ServerNameType,
   cartItemId: number,
-  quantity: number
+  quantity: number,
+  loginCredential: string
 ) => {
   const url = `${BASE_URL_MAP[serverName]}/cart-items/${cartItemId}`;
   const body = { quantity };
 
   const response = await fetch(url, {
     method: 'PATCH',
-    headers: { Authorization, 'content-Type': 'application/json' },
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+      'content-Type': 'application/json',
+    },
     body: JSON.stringify(body),
   });
 
   if (!response.ok) throw new Error(`${url} PATCH Error`);
 };
 
-export const deleteCartItem = async (serverName: ServerNameType, cartItemId: number) => {
+export const deleteCartItem = async (
+  serverName: ServerNameType,
+  cartItemId: number,
+  loginCredential: string
+) => {
   const url = `${BASE_URL_MAP[serverName]}/cart-items/${cartItemId}`;
 
-  const response = await fetch(url, { method: 'DELETE', headers: { Authorization } });
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: { Authorization: `Basic ${loginCredential}` },
+  });
 
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 };
 
-export const deleteCartItems = async (serverName: ServerNameType, cartItemIdList: number[]) => {
+export const deleteCartItems = async (
+  serverName: ServerNameType,
+  cartItemIdList: number[],
+  loginCredential: string
+) => {
   const ids = cartItemIdList.map(String).join(',');
   const url = `${BASE_URL_MAP[serverName]}/cart-items?ids=${ids}`;
 
-  const response = await fetch(url, { method: 'DELETE', headers: { Authorization } });
+  const response = await fetch(url, {
+    method: 'DELETE',
+    headers: { Authorization: `Basic ${loginCredential}` },
+  });
 
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 };
@@ -113,5 +140,7 @@ export const postLoginInfo = async (
   }
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 
-  return await response.json();
+  const loginToken = await response.json();
+
+  return loginToken['token'];
 };

@@ -6,16 +6,19 @@ import useToast from './useToast';
 import { cartState } from '../../atom/cart';
 import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE } from '../../constants';
 import { serverNameState } from '../../atom/serverName';
+import { CartType } from '../../types';
+import { loginState } from '../../atom/login';
 
 const useQuantityInput = (cartItemId: number) => {
   const [input, setInput] = useState('');
   const setCart = useSetRecoilState(cartState);
   const serverName = useRecoilValue(serverNameState);
+  const loginCredential = useRecoilValue(loginState);
   const { showToast } = useToast();
 
   const getCart = async () => {
     try {
-      const cart = await api.getCart(serverName);
+      const cart = await api.getCart<CartType>(serverName, loginCredential);
       setCart(cart);
     } catch {
       showToast('error', API_ERROR_MESSAGE.getCart);
@@ -24,7 +27,7 @@ const useQuantityInput = (cartItemId: number) => {
 
   const deleteCartItem = async () => {
     try {
-      await api.deleteCartItem(serverName, cartItemId);
+      await api.deleteCartItem(serverName, cartItemId, loginCredential);
       showToast('info', API_SUCCESS_MESSAGE.deleteCartItem);
     } catch {
       showToast('error', API_ERROR_MESSAGE.deleteCartItem);
@@ -36,7 +39,7 @@ const useQuantityInput = (cartItemId: number) => {
 
   const patchCartItemQuantity = async (quantity: number) => {
     try {
-      await api.patchCartItemQuantity(serverName, cartItemId, quantity);
+      await api.patchCartItemQuantity(serverName, cartItemId, quantity, loginCredential);
       showToast('info', API_SUCCESS_MESSAGE.patchCartItemQuantity);
     } catch {
       showToast('error', API_ERROR_MESSAGE.postCartItem);
