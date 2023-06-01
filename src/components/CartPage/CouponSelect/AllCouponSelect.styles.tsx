@@ -8,4 +8,5 @@ export const Select = styled.select`
   width: 35rem;
   border: 1px solid #888;
   color: #888;
+  padding: 0 1rem;
 `;
