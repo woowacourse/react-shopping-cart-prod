@@ -24,6 +24,28 @@
           "imageUrl": "images/밀크티-370.jpeg",
           "stock": 20
         }
+      },
+      {
+        "cartItemId": 3,
+        "quantity": 2,
+        "product": {
+          "productId": 2,
+          "name": "PET보틀-원형(500ml)",
+          "price": 73400,
+          "imageUrl": "images/원형-500.jpeg",
+          "stock": 20
+        }
+      },
+      {
+        "cartItemId": 4,
+        "quantity": 2,
+        "product": {
+          "productId": 2,
+          "name": "PET보틀-납작(450ml)",
+          "price": 73400,
+          "imageUrl": "images/납작-450.jpeg",
+          "stock": 20
+        }
       }
     ],
     "totalPrice": 40500
