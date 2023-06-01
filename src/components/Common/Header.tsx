@@ -1,8 +1,12 @@
-import { ChangeEventHandler } from 'react';
+import {
+  ChangeEventHandler,
+  ForwardRefExoticComponent,
+  LinkHTMLAttributes,
+} from 'react';
 import { useSetRecoilState } from 'recoil';
 
 import styled from 'styled-components';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, LinkProps, useLocation } from 'react-router-dom';
 
 import SelectBox from './SelectBox';
 
@@ -11,7 +15,7 @@ import useCartProductCount from '../../hooks/useCartProductCount';
 import { serverNameState } from '../../states/serverName';
 import { SERVER_KEYS, isServerKey } from '../../constants/server';
 
-interface StyledLinkProps {
+interface StyledLinkProps extends LinkProps {
   cartProductCount?: number;
   pathname?: string;
 }
@@ -125,7 +129,11 @@ const Logo = styled.h1`
   }
 `;
 
-const StyledLink = styled(Link)<StyledLinkProps>`
+const StyledLink = styled(
+  ({ cartProductCount, pathname, ...restProps }: StyledLinkProps) => (
+    <Link {...restProps} />
+  )
+)`
   display: flex;
   justify-content: center;
   align-items: center;
