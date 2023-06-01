@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import { ProductCard } from '../productCard/ProductCard';
 import { productItemsState } from '../../../recoil/atoms/productItemsAtom';
 import { useRecoilValue } from 'recoil';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 export const ProductCardGrid = () => {
-  const products = useRecoilValue(productItemsState);
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const products = useRecoilValue(productItemsState(apiEndPoint));
 
   return (
     <Style.Container>

@@ -30,7 +30,7 @@ export const useProductFetch = () => {
   };
 
   return {
-    getProductList,
+    getProductItems: getProductList,
     getProductDetailById,
   };
 };

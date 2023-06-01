@@ -1,20 +1,22 @@
 import { selector, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { cartItemsState } from '../../recoil/atoms/cartAtom';
+import { APIAtom } from '../../recoil/atoms/serverAtom';
 
 const cartProductListLengthState = selector({
   key: 'cartProductListLengthState',
   get: ({ get }) => {
-    const cartList = get(cartItemsState);
+    const apiEndPoint = get(APIAtom);
+    const cartList = get(cartItemsState(apiEndPoint));
 
     return cartList.length;
   },
 });
 
 export const CartListLengthViewer = () => {
-  const cartListLength = useRecoilValue(cartProductListLengthState);
+  const cartItemsLength = useRecoilValue(cartProductListLengthState);
 
-  return <Style.CartAmount>{cartListLength}</Style.CartAmount>;
+  return <Style.CartAmount>{cartItemsLength}</Style.CartAmount>;
 };
 
 const Style = {

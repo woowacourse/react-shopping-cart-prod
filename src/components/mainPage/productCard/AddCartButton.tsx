@@ -6,13 +6,15 @@ import { Loading } from '../../common/Loading';
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
 import styled from 'styled-components';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 interface AddCartButtonProps {
   productId: number;
 }
 
 export const AddCartButton = ({ productId }: AddCartButtonProps) => {
-  const cartItems = useRecoilValue(cartItemsState);
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const cartItems = useRecoilValue(cartItemsState(apiEndPoint));
   const initialQuantity =
     cartItems.find((cartItem) => cartItem.product.id === productId)?.quantity ??
     1;

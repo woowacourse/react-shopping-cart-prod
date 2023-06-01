@@ -1,14 +1,14 @@
-import { atom } from 'recoil';
+import { atom, atomFamily } from 'recoil';
 import { base64 } from '../../constants/user';
 import { Product } from '../../types/Product';
 
-export const productItemsState = atom<Product[]>({
+export const productItemsState = atomFamily<Product[], string>({
   key: 'productItemsState',
   default: [],
-  effects: [
+  effects: (apiEndPoint) => [
     ({ setSelf, trigger }) => {
       const getProductItems = () => {
-        const productItems = fetch(`/products`, {
+        const productItems = fetch(`${apiEndPoint}/products`, {
           method: 'GET',
           headers: {
             Authorization: `Basic ${base64}`,

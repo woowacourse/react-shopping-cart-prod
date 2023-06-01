@@ -12,9 +12,13 @@ import { checkBoxSelector } from '../../../recoil/selectors/cartItemsSelector';
 import { useCartItemSelect } from '../../../hooks/cartPage/useCartItemSelect';
 import { OrderModal } from '../orderModal/OrderModal';
 import { useState } from 'react';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 export const CartItemsSection = () => {
-  const cartItems = useRecoilValue(cartItemsState);
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const cartItems = useRecoilValue(cartItemsState(apiEndPoint));
+  console.log(apiEndPoint, cartItems);
+
   const { isAllCheckBoxChecked } = useRecoilValue(checkBoxSelector);
   const selectedCartIdList = useRecoilValue(selectedCartIdListState);
   const { totalPrice } = useRecoilValue(priceSummaryState);

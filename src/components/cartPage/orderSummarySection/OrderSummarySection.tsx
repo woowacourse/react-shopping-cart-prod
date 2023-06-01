@@ -13,6 +13,7 @@ import { Loading } from '../../common/Loading';
 import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
 import { userAtomState } from '../../../recoil/atoms/userAtom';
 import { orderListState } from '../../../recoil/atoms/orderAtom';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 export const OrderSummarySection = () => {
   const {
@@ -23,9 +24,10 @@ export const OrderSummarySection = () => {
     totalPointsToAdd,
     userPoint,
   } = useRecoilValue(priceSummaryState);
+  const apiEndPoint = useRecoilValue(APIAtom);
   const selectedCartIdList = useRecoilValue(selectedCartIdListState);
   const setUserPoint = useSetRecoilState(userAtomState);
-  const setOrders = useSetRecoilState(orderListState);
+  const setOrders = useSetRecoilState(orderListState(apiEndPoint));
 
   const { order, getUserPoint, getOrders } = useOrderFetch();
 

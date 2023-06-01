@@ -1,12 +1,14 @@
 import { selector } from 'recoil';
 import { cartItemsState, selectedCartIdListState } from '../atoms/cartAtom';
 import { userAtomState } from '../atoms/userAtom';
+import { APIAtom } from '../atoms/serverAtom';
 
 export const priceSummaryState = selector({
   key: 'priceSummaryState',
   get: ({ get }) => {
     const selectedCartItems = get(selectedCartIdListState);
-    const cartItems = get(cartItemsState);
+    const apiEndPoint = get(APIAtom);
+    const cartItems = get(cartItemsState(apiEndPoint));
     const userPoint = get(userAtomState);
 
     const totalProductPrice = selectedCartItems.reduce(

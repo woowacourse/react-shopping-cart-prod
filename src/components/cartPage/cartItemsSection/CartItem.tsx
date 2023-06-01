@@ -5,6 +5,7 @@ import { useSelectedCartRecoil } from '../../../hooks/recoil/useSelectedCartReco
 import { useRecoilValue } from 'recoil';
 import { cartItemsState } from '../../../recoil/atoms/cartAtom';
 import { useCartItem } from '../../../hooks/cartPage/useCartItem';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 interface CartItemProps {
   cartId: number;
@@ -21,7 +22,8 @@ export const CartItem = ({
   price,
   imageUrl,
 }: CartItemProps) => {
-  const cartItems = useRecoilValue(cartItemsState);
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const cartItems = useRecoilValue(cartItemsState(apiEndPoint));
   const initialQuantity =
     cartItems.find((cartItem) => cartItem.id === cartId)?.quantity ?? 1;
 

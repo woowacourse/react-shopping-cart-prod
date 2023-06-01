@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, atomFamily } from 'recoil';
 import { Product } from '../../types/Product';
 import { base64 } from '../../constants/user';
 
@@ -8,13 +8,13 @@ export interface CartItemDetail {
   product: Product;
 }
 
-export const cartItemsState = atom<CartItemDetail[]>({
+export const cartItemsState = atomFamily<CartItemDetail[], string>({
   key: 'cartItemsState',
   default: [],
-  effects: [
+  effects: (apiEndPoint) => [
     ({ setSelf, trigger }) => {
       const getCartItems = () => {
-        const response = fetch(`/cart-items`, {
+        const response = fetch(`${apiEndPoint}/cart-items`, {
           method: 'GET',
           headers: {
             Authorization: `Basic ${base64}`,

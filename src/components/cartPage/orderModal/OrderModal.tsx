@@ -11,6 +11,7 @@ import { Loading } from './../../common/Loading';
 import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 import { userAtomState } from '../../../recoil/atoms/userAtom';
 import { orderListState } from '../../../recoil/atoms/orderAtom';
+import { APIAtom } from '../../../recoil/atoms/serverAtom';
 
 interface OrderModalProps {
   closeModal: () => void;
@@ -27,8 +28,9 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
     totalPointsToAdd,
     userPoint,
   } = useRecoilValue(priceSummaryState);
+  const apiEndPoint = useRecoilValue(APIAtom);
   const setUserPoint = useSetRecoilState(userAtomState);
-  const setOrders = useSetRecoilState(orderListState);
+  const setOrders = useSetRecoilState(orderListState(apiEndPoint));
 
   const { order, getUserPoint, getOrders } = useOrderFetch();
 

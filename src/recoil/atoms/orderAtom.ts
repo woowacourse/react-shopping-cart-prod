@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atomFamily } from 'recoil';
 import { base64 } from '../../constants/user';
 
 export interface OrderProductInfo {
@@ -14,13 +14,13 @@ interface Order {
   orderInfo: OrderProductInfo[];
 }
 
-export const orderListState = atom<Order[]>({
+export const orderListState = atomFamily<Order[], string>({
   key: 'orderListState',
   default: [],
-  effects: [
+  effects: (apiEndPoint) => [
     ({ setSelf, trigger }) => {
       const getOrderList = () => {
-        const orderList = fetch('/orders', {
+        const orderList = fetch(`${apiEndPoint}/orders`, {
           method: 'GET',
           headers: {
             Authorization: `Basic ${base64}`,

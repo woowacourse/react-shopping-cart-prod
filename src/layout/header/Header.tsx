@@ -2,10 +2,8 @@ import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 import { CartListLengthViewer } from './CartListLengthViewer';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { APIAtom } from '../../recoil/atoms/serverAtom';
-import { useCartFetch } from '../../hooks/fetch/useCartFetch';
-import { cartItemsState } from '../../recoil/atoms/cartAtom';
 import { Suspense } from 'react';
 import { Loading } from '../../components/common/Loading';
 import { ErrorBoundary } from 'react-error-boundary';
@@ -13,21 +11,11 @@ import { ErrorBoundary } from 'react-error-boundary';
 export const Header = () => {
   const navigate = useNavigate();
   const [apiEndPoint, setAPIEndPoints] = useRecoilState(APIAtom);
-  const { getCartItems } = useCartFetch();
-  const setCartItems = useSetRecoilState(cartItemsState);
 
   const handleChangeSelectedServer: React.ChangeEventHandler<
     HTMLSelectElement
   > = (e) => {
-    setAPIEndPoints(() => {
-      const newApiEndPoint = e.target.value;
-
-      getCartItems(newApiEndPoint).then((cartItems) => {
-        setCartItems(cartItems);
-      });
-
-      return newApiEndPoint;
-    });
+    setAPIEndPoints(() => e.target.value);
   };
 
   return (

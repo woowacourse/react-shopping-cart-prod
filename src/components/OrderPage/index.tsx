@@ -3,9 +3,11 @@ import { OrderGroup } from './OrderGroup';
 import { Fragment } from 'react';
 import { orderListState } from '../../recoil/atoms/orderAtom';
 import { useRecoilValue } from 'recoil';
+import { APIAtom } from '../../recoil/atoms/serverAtom';
 
 export const OrderContent = () => {
-  const orderList = useRecoilValue(orderListState);
+  const apiEndPoint = useRecoilValue(APIAtom);
+  const orderList = useRecoilValue(orderListState(apiEndPoint));
 
   return (
     <Fragment>

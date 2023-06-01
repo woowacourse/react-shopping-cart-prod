@@ -1,10 +1,12 @@
 import { selector } from 'recoil';
 import { cartItemsState, selectedCartIdListState } from '../atoms/cartAtom';
+import { APIAtom } from '../atoms/serverAtom';
 
 export const cartItemsLengthSelector = selector({
   key: 'cartIdListLengthState',
   get: ({ get }) => {
-    const cartItems = get(cartItemsState);
+    const apiEndPoint = get(APIAtom);
+    const cartItems = get(cartItemsState(apiEndPoint));
 
     return cartItems.length;
   },
@@ -13,7 +15,8 @@ export const cartItemsLengthSelector = selector({
 export const selectedCartItemsSelector = selector({
   key: 'selectedCartItems',
   get: ({ get }) => {
-    const cartItems = get(cartItemsState);
+    const apiEndPoint = get(APIAtom);
+    const cartItems = get(cartItemsState(apiEndPoint));
     const selectedCartItemIds = get(selectedCartIdListState);
 
     return cartItems.filter((cartItem) =>
@@ -25,7 +28,8 @@ export const selectedCartItemsSelector = selector({
 export const checkBoxSelector = selector({
   key: 'isAllCheckBoxSelectedState',
   get: ({ get }) => {
-    const cartItems = get(cartItemsState);
+    const apiEndPoint = get(APIAtom);
+    const cartItems = get(cartItemsState(apiEndPoint));
     const selectedCartIdList = get(selectedCartIdListState);
     const isAllCheckBoxChecked =
       cartItems.filter((cartItem) => !selectedCartIdList.includes(cartItem.id))
