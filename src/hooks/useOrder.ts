@@ -1,10 +1,11 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { DELIVERY_FEE } from '../constants';
 import { ORDER_URL } from '../constants/url';
-import { checkedItemList, serverState, totalPriceSelector } from '../recoil';
+import { cartState, checkedItemList, serverState, totalPriceSelector } from '../recoil';
 import { useFetchData } from './useFetchData';
 
 export const useOrder = () => {
+  const [cart, setCart] = useRecoilState(cartState);
   const checkedItemIdList = useRecoilValue<number[]>(checkedItemList);
   const totalPrice = useRecoilValue(totalPriceSelector);
   const server = useRecoilValue(serverState);
@@ -16,6 +17,9 @@ export const useOrder = () => {
         cartItemIdList: checkedItemIdList,
         totalPrice: totalPrice,
         deliveryFee: DELIVERY_FEE,
+      })
+      .then(() => {
+        setCart([...cart].filter((cartItem) => !checkedItemIdList.includes(cartItem.id)));
       })
       .catch((error) => alert(error.message));
   };
