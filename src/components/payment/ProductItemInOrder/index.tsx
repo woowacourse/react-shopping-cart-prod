@@ -3,7 +3,8 @@ import * as S from './ProductItemInOrder.styles';
 import { OrderedItem } from 'types/api/orders';
 
 const ProductItemInOrder = ({ orderedItem }: { orderedItem: OrderedItem }) => {
-  const { name, imageUrl, quantity, totalPrice } = orderedItem;
+  const { name, imageUrl, quantity, totalPrice, totalDiscountPrice } =
+    orderedItem;
 
   return (
     <S.Container>
@@ -11,7 +12,7 @@ const ProductItemInOrder = ({ orderedItem }: { orderedItem: OrderedItem }) => {
       <S.Detail>
         <S.Name>{name}</S.Name>
         <S.PriceAndQuantity>
-          {totalPrice}원 / 수량 : {quantity}개
+          {totalPrice - totalDiscountPrice}원 / 수량 : {quantity}개
         </S.PriceAndQuantity>
       </S.Detail>{' '}
     </S.Container>

@@ -5,6 +5,7 @@ import CartList from 'pages/CartList';
 import NotFound from 'pages/NotFound';
 import OrderedList from 'pages/OrderedList';
 import { ROUTES } from 'utils/constants';
+import OrderDetail from 'pages/OrderDetail';
 
 const router = createBrowserRouter(
   [
@@ -29,6 +30,14 @@ const router = createBrowserRouter(
       element: (
         <Suspense>
           <OrderedList />
+        </Suspense>
+      ),
+    },
+    {
+      path: '/order_detail/:id',
+      element: (
+        <Suspense>
+          <OrderDetail />
         </Suspense>
       ),
     },
