@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Header } from '.';
+import { handlers } from '@mocks/handlers';
 
 const meta = {
   component: Header,

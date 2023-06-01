@@ -4,7 +4,7 @@ import { ServerName } from 'types/ServerType';
 
 const serverUrlState = atom<string>({
   key: 'serverState',
-  default: 'https://h3rb.shop',
+  default: 'MSW',
 });
 
 export default serverUrlState;
