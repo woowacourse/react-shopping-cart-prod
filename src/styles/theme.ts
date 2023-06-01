@@ -23,6 +23,7 @@ const zIndex = {
   header: 1,
   modalBackdrop: 10,
   modalContainer: 20,
+  toast: 30,
 };
 
 export const theme = {
