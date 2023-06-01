@@ -10,16 +10,18 @@ import { FETCH_URL } from '@Constants/servers';
 import mockCouponData from './mockCouponData.json';
 import mockData from './mockData.json';
 
+const DELAY_TIME = 300;
+
 export const handlers = [
   rest.get(FETCH_URL.products, (_, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockData), ctx.delay(300));
+    return res(ctx.status(200), ctx.json(mockData), ctx.delay(DELAY_TIME));
   }),
 
   rest.get(FETCH_URL.cartItems, (req, res, ctx) => {
     if (!localStorageHelper.hasKey('cartItems')) localStorageHelper.setInitValue('cartItems', []);
     const cartItems = localStorageHelper.getValue<CartItemType[]>('cartItems');
 
-    return res(ctx.status(200), ctx.json(cartItems), ctx.delay(300));
+    return res(ctx.status(200), ctx.json(cartItems), ctx.delay(DELAY_TIME));
   }),
 
   rest.post(FETCH_URL.cartItems, async (req, res, ctx) => {
@@ -73,7 +75,7 @@ export const handlers = [
     if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
     const orderItems = localStorageHelper.getValue<CartItemType[]>('orderItems');
 
-    return res(ctx.status(200), ctx.json(orderItems), ctx.delay(300));
+    return res(ctx.status(200), ctx.json(orderItems), ctx.delay(DELAY_TIME));
   }),
 
   // 주문하기
@@ -122,12 +124,12 @@ export const handlers = [
     if (!localStorageHelper.hasKey('myCoupons')) localStorageHelper.setInitValue('myCoupons', []);
     const myCoupons = localStorageHelper.getValue<CouponType[]>('myCoupons');
 
-    return res(ctx.status(200), ctx.json(myCoupons), ctx.delay(300));
+    return res(ctx.status(200), ctx.json(myCoupons), ctx.delay(DELAY_TIME));
   }),
 
   // 전체 쿠폰 불러오기
   rest.get(FETCH_URL.allCoupon, async (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(mockCouponData), ctx.delay(300));
+    return res(ctx.status(200), ctx.json(mockCouponData), ctx.delay(DELAY_TIME));
   }),
 
   // 쿠폰 삭제하기

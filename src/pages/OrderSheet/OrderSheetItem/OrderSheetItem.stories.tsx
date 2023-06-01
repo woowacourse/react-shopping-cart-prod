@@ -4,7 +4,7 @@ import { RecoilRoot } from 'recoil';
 import OrderSheetItem from '.';
 
 /**
- * `OrderSheetItem`은 상품 할인관 관련된 재화를 보여주는 컴포넌트입니다.
+ * `OrderSheetItem`은 주문서에 있는 상품의 컴포넌트입니다.
  */
 const meta: Meta<typeof OrderSheetItem> = {
   title: 'Product/OrderSheetItem',
