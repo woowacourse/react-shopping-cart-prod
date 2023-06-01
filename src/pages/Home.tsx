@@ -1,15 +1,14 @@
 import { styled } from 'styled-components';
+import { useProduct } from '../hooks/useProduct';
 import ProductList from '../components/product/ProductList';
-import { useRecoilValue } from 'recoil';
-import { currentProductListState } from '../recoil/selectors';
 
 export default function Home() {
-  const products = useRecoilValue(currentProductListState);
+  const { productList } = useProduct();
 
   return (
     <Style.Main>
       <Style.Content>
-        <ProductList products={products} />
+        <ProductList products={productList} />
       </Style.Content>
     </Style.Main>
   );

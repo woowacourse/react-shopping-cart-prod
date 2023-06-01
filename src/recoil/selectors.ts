@@ -1,31 +1,7 @@
 import { selector } from 'recoil';
-import {
-  cartListState,
-  checkedCartItemIdsState,
-  productListState,
-  selectedHostState,
-} from './atoms';
-import { CartItemInfo, ProductInfo } from '../types';
-import { CART_BASE_URL, PRODUCTS_BASE_URL } from '../constants';
-
-export const currentProductListState = selector<ProductInfo[]>({
-  key: 'currentProductList',
-  get: async ({ get }) => {
-    const host = get(selectedHostState);
-    const productList = get(productListState);
-
-    if (productList.length > 0) return productList;
-
-    const res = await fetch(`${host}${PRODUCTS_BASE_URL}`, {
-      headers: { 'content-type': 'application/json' },
-    });
-
-    if (!res.ok) throw new Error('상품 목록을 불러올 수 없습니다.');
-
-    const currentProductList = await res.json();
-    return currentProductList;
-  },
-});
+import { cartListState, checkedCartItemIdsState } from './atoms';
+import { CartItemInfo } from '../types';
+import { CART_BASE_URL } from '../constants';
 
 export const currentCartListState = selector<CartItemInfo[]>({
   key: 'currentCartList',
