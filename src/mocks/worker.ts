@@ -65,4 +65,6 @@ export const handlers = [
       ctx.json(orders)
     );
   }),
+
+  rest.post("*/orders", (req, res, ctx) => res(ctx.delay(300), ctx.status(204))),
 ];

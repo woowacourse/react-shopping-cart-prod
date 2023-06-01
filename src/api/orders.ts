@@ -16,6 +16,13 @@ export interface Order {
   quantity: number;
 }
 
+export interface PostOrderItem {
+  cartItemId: number;
+  product: Product;
+  quantity: number;
+  couponIds: number[];
+}
+
 export const getOrders = async (serverId: ServerId): Promise<Orders[]> => {
   const response = await fetch(`${SERVER_LIST[serverId]}/orders`, {
     method: "GET",
@@ -25,4 +32,16 @@ export const getOrders = async (serverId: ServerId): Promise<Orders[]> => {
   });
 
   return response.json();
+};
+
+export const postOrder = async (serverId: ServerId, orderItem: PostOrderItem[]) => {
+  const response = await fetch(`${SERVER_LIST[serverId]}/orders`, {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${USER_TOKEN}`,
+    },
+    body: JSON.stringify(orderItem),
+  });
+
+  return response.status === 204;
 };
