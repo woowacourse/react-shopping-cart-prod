@@ -27,7 +27,7 @@ const useOrderItems = () => {
 
     const price = Number(totalOrderPrice.replace(/,|원|\s/g, ''));
     const body = JSON.stringify({
-      id: selectedCartItems,
+      cartItemIds: selectedCartItems,
       price,
       couponId,
     });

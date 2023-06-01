@@ -78,13 +78,17 @@ export const handlers = [
 
   // 주문하기
   rest.post(FETCH_URL.orders, async (req, res, ctx) => {
-    const { id, price, couponId } = (await req.json()) as { id: number[]; price: number; couponId: number | null };
+    const { cartItemIds, price, couponId } = (await req.json()) as {
+      cartItemIds: number[];
+      price: number;
+      couponId: number | null;
+    };
 
     const cartList = localStorageHelper.getValue<CartItemType[]>('cartItems');
     const orderList = localStorageHelper.getValue<OrderItemType[]>('orderItems');
     const myCoupons = localStorageHelper.getValue<CouponType[]>('myCoupons');
 
-    const orderItems = cartList.filter((cartItem) => id.includes(cartItem.id));
+    const orderItems = cartList.filter((cartItem) => cartItemIds.includes(cartItem.id));
 
     const newOrderItem = {
       id: Date.now(),
@@ -107,7 +111,7 @@ export const handlers = [
     localStorageHelper.setValue('orderItems', orderList);
     localStorageHelper.setValue(
       'cartItems',
-      cartList.filter((cartItem) => !id.includes(cartItem.id)),
+      cartList.filter((cartItem) => !cartItemIds.includes(cartItem.id)),
     );
 
     return res(ctx.status(201));

@@ -80,8 +80,13 @@ const useCartItems = () => {
     setCartItems(cartItems.filter((cartItem) => !cartItem.isSelected));
   };
 
+  const getSelectedCartItem = () => {
+    return cartItems.filter((item) => item.isSelected);
+  };
+
   return {
     isEmpty,
+    selectedCartItem: getSelectedCartItem(),
     updateCartItem,
     toggleSelected,
     toggleAllSelected,

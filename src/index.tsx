@@ -1,10 +1,11 @@
-import AllCoupon from '@Components/Modal/AllCoupon';
-import MyCoupon from '@Components/Modal/MyCoupon';
 import { ModalProvider } from 'noah-modal';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+
+import AllCoupon from '@Components/Modal/AllCoupon';
+import MyCoupon from '@Components/Modal/MyCoupon';
 
 import { worker } from './mocks/browser';
 import router from './router';

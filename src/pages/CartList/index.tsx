@@ -1,11 +1,11 @@
 import { Suspense } from 'react';
 
+import PaymentArea from '@Components/PaymentArea';
+
 import SkeletonCartItem from './CartItem/SkeletonCartItem';
 import CartItems from './CartItems';
 import CartListSubHeader from './CartListSubHeader';
 import LoadingCartListSubHeader from './CartListSubHeader/LoadingCartListSubHeader';
-import PaymentAmount from './PaymentAmount';
-import SkeletonPaymentAmount from './PaymentAmount/SkeletonPaymentAmount';
 import * as S from './style';
 
 function CartList() {
@@ -28,11 +28,7 @@ function CartList() {
             <CartItems />
           </Suspense>
         </S.CartList>
-        <S.PaymentLayout>
-          <Suspense fallback={<SkeletonPaymentAmount />}>
-            <PaymentAmount />
-          </Suspense>
-        </S.PaymentLayout>
+        <PaymentArea />
       </S.ShoppingCartContentsLayout>
     </S.Container>
   );

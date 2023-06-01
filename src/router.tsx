@@ -4,6 +4,7 @@ import CartList from '@Pages/CartList';
 import Home from '@Pages/Home';
 import NotFound from '@Pages/NotFound';
 import OrderList from '@Pages/OrderList';
+import OrderSheet from '@Pages/OrderSheet';
 
 import App from './App';
 
@@ -20,6 +21,10 @@ const router = createBrowserRouter(
         {
           path: '/cart-list',
           element: <CartList />,
+        },
+        {
+          path: '/order-sheet',
+          element: <OrderSheet />,
         },
         {
           path: '/order-list/:orderId?',
