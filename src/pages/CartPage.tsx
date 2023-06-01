@@ -6,8 +6,8 @@ import CartOrder from '../components/CartOrder';
 import PageHeader from '../components/PageHeader';
 import Checkbox from '../components/common/Checkbox';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
-import cartItemsState from '../recoil/atoms/cartItemsState';
-import cartItemsRepository from '../recoil/repositories/cartItemsRepository';
+import userCartItemsRepository from '../recoil/user/userCartItemsRepository';
+import userCartItemsState from '../recoil/user/userCartItemsState';
 import type { CartItem } from '../types/CartItem';
 
 const CartLayout = styled.article`
@@ -74,7 +74,7 @@ const CartPageContent = (props: CartPageContentProps) => {
   const selectedCount = cartItems.filter((cartItem) => cartItem.checked).length;
   const allSelected = selectedCount === cartItems.length;
 
-  const { setChecked, removeCheckedCartItem } = useRecoilValue(cartItemsRepository);
+  const { setChecked, removeCheckedCartItem } = useRecoilValue(userCartItemsRepository);
 
   const handleEnableAll = () => {
     cartItems.forEach((cartItem) => setChecked(cartItem, !allSelected));
@@ -119,7 +119,7 @@ const CartPage = () => {
     <>
       <PageHeader>장바구니</PageHeader>
 
-      <AwaitRecoilState state={cartItemsState}>
+      <AwaitRecoilState state={userCartItemsState}>
         {(cartItems) =>
           cartItems.length === 0 ? (
             <CartEmptyPlaceholder />

@@ -64,7 +64,7 @@ type CartOrderProps = {
 
 const CartOrder = (props: CartOrderProps) => {
   const { isCartEmpty } = props;
-  const prices = useRecoilValue(cartOrderPriceState);
+  const prices = useRecoilValue(userCartOrderPriceState);
   const { isSynchronizing } = useRecoilValue(userRemoteCartItemsState);
 
   const { order } = useOrderMutation();

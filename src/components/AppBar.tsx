@@ -2,8 +2,9 @@ import { useRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import HomeIcon from '../assets/icons/home-icon.svg';
 import servers from '../config/servers';
-import cartItemsState from '../recoil/atoms/cartItemsState';
 import serverState from '../recoil/atoms/serverState';
+import userCartItemsState from '../recoil/user/userCartItemsState';
+import userProfileState from '../recoil/user/userProfileState';
 import Badge from './common/Badge';
 import AwaitRecoilState from './utils/AwaitRecoilState';
 
