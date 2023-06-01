@@ -1,7 +1,7 @@
 import type { Order } from '../types/product';
 import { atom, selector, selectorFamily } from 'recoil';
 
-import { api } from '../apis/orderProducts';
+import { api } from '../apis/order';
 import { hostNameAtom } from './hostData';
 
 export const orderAtom = atom<Order[]>({

@@ -8,6 +8,7 @@ import { Order } from '../../types/product';
 interface OrderProductListProps {
   order: Order;
 }
+
 const OrderProductList = ({ order }: OrderProductListProps) => {
   const { orderId, orderDateTime, orderItems } = order;
 

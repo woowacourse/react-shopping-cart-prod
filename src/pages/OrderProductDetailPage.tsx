@@ -17,7 +17,7 @@ const OrderProductDetailPage = () => {
       <Title>주문 내역 상세</Title>
       <OrderProductContent>
         <OrderProductInfo>
-          <Suspense fallback={<ContentListSkeleton content='product' />}>
+          <Suspense fallback={<ContentListSkeleton content='cart' />}>
             {order ? (
               <OrderProductList order={order} />
             ) : (
