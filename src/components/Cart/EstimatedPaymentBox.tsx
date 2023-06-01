@@ -1,12 +1,42 @@
+import { useRecoilValue } from 'recoil';
+
 import styled from 'styled-components';
 import Button from '../Common/Button';
-import { useRecoilValue } from 'recoil';
-import { totalPriceSelector } from '../../recoil/checkedProductData';
+import {
+  checkedCartItemsSelector,
+  totalPriceSelector,
+} from '../../recoil/checkedProductData';
+import useOrder from '../../hooks/useOrder';
+import { ScheduledOrder } from '../../types/product';
+import { useNavigate } from 'react-router-dom';
 
 const EstimatedPaymentBox = () => {
-  const totalPrice = useRecoilValue(totalPriceSelector);
-  const deliveryPrice = totalPrice ? 3000 : 0;
-  const orderPrice = totalPrice ? totalPrice + deliveryPrice : 0;
+  const navigate = useNavigate();
+  const checkedCartItems = useRecoilValue(checkedCartItemsSelector);
+  const totalProductPrice = useRecoilValue(totalPriceSelector);
+
+  const { addOrder } = useOrder();
+
+  const totalDeliveryFee = totalProductPrice ? 3000 : 0;
+  const totalPrice = totalProductPrice
+    ? totalProductPrice + totalDeliveryFee
+    : 0;
+  const usePoint = 4000;
+
+  function handleClickOrderButton() {
+    if (window.confirm('주문하시겠습니까?')) {
+      const newOrder: ScheduledOrder = {
+        cartItems: checkedCartItems,
+        totalProductPrice,
+        totalDeliveryFee,
+        usePoint,
+        totalPrice,
+      };
+      addOrder(newOrder);
+
+      navigate('/order');
+    }
+  }
 
   return (
     <EstimatedPaymentBoxContainer>
@@ -14,19 +44,23 @@ const EstimatedPaymentBox = () => {
       <EstimatedPaymentContent>
         <EstimatedPaymentInfo>
           <dt>총 상품가격</dt>
-          <dd>{totalPrice.toLocaleString('KR')}원</dd>
+          <dd>{totalProductPrice.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>총 배송비</dt>
-          <dd>{deliveryPrice.toLocaleString('KR')}원</dd>
+          <dd>{totalDeliveryFee.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
           <dt>총 주문금액</dt>
-          <dd>{orderPrice.toLocaleString('KR')}원</dd>
+          <dd>{totalPrice.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
       </EstimatedPaymentContent>
       <OrderButtonWrapper>
-        <Button designType='order' buttonLabel='주문하기' />
+        <Button
+          designType='order'
+          buttonLabel='주문하기'
+          onClick={handleClickOrderButton}
+        />
       </OrderButtonWrapper>
     </EstimatedPaymentBoxContainer>
   );
