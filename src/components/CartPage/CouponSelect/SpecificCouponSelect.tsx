@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { Coupon, CouponSelect } from './SpecificCouponSelect.styles';
 import {
-  coupons,
+  couponsSelector,
   selectedCouponsState,
   specificCouponSelector,
 } from '../../../atoms/coupons';
@@ -17,7 +17,7 @@ const SpecificCouponSelect = ({
   cartId,
   productId,
 }: SpecificCouponSelectProps) => {
-  const { allCoupons } = useRecoilValue(coupons);
+  const { allCoupons } = useRecoilValue(couponsSelector);
   const specificCoupons = useRecoilValue(specificCouponSelector(productId));
   const [selectedCoupons, setSelectedCoupons] =
     useRecoilState(selectedCouponsState);

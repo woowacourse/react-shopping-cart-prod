@@ -1,8 +1,8 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { coupons, selectedCouponsState } from '../../../atoms/coupons';
+import { couponsSelector, selectedCouponsState } from '../../../atoms/coupons';
 
 const AllSelect = () => {
-  const couponsState = useRecoilValue(coupons);
+  const couponsState = useRecoilValue(couponsSelector);
   const [selectedCoupons, setSelectedCoupons] =
     useRecoilState(selectedCouponsState);
 

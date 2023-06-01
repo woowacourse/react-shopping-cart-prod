@@ -1,7 +1,12 @@
 import { atom, selector, selectorFamily } from 'recoil';
 import { fetchCoupons } from '../apis/coupons';
 
-export const coupons = selector({
+export const selectedCouponsState = atom<number[]>({
+  key: 'selectedCouponsState',
+  default: [],
+});
+
+export const couponsSelector = selector({
   key: 'couponsSelector',
   get: async () => {
     const { data } = await fetchCoupons();
@@ -14,14 +19,9 @@ export const specificCouponSelector = selectorFamily({
   get:
     (targetCartItemId: number) =>
     ({ get }) => {
-      const { specificCoupons } = get(coupons);
+      const { specificCoupons } = get(couponsSelector);
       return specificCoupons.filter(
         (coupon) => coupon.targetProductId === targetCartItemId
       );
     },
-});
-
-export const selectedCouponsState = atom<number[]>({
-  key: 'selectedCouponsState',
-  default: [],
 });

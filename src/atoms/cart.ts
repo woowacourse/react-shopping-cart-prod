@@ -1,7 +1,7 @@
 import { selector, atom, selectorFamily } from 'recoil';
 import { CartItem } from '../types/cart';
 import { fetchCart } from '../apis/cart';
-import { coupons, selectedCouponsState } from './coupons';
+import { couponsSelector, selectedCouponsState } from './coupons';
 import { Coupon } from '../types/coupon';
 
 export const cartState = atom({
