@@ -1,13 +1,23 @@
+import { useEffect } from 'react';
+
 import useCartItems from '@Hooks/useCartItems';
 
 import * as S from './style';
 import OrderDetailSheetLayout from '../OrderDetailSheetLayout';
 import OrderSheetItem from '../OrderSheetItem';
 
-function OrderSheetItems() {
+type OrderDetailProps = {
+  setIsEmptyCartItemsTrue: () => void;
+};
+
+function OrderSheetItems({ setIsEmptyCartItemsTrue }: OrderDetailProps) {
   const { selectedCartItem } = useCartItems();
 
   const selectedCartItemAmount = selectedCartItem.length;
+
+  useEffect(() => {
+    if (!selectedCartItem.length) setIsEmptyCartItemsTrue();
+  }, []);
 
   return (
     <S.Container>

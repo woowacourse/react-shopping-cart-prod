@@ -5,12 +5,16 @@ import DiscountSheet from '../DiscountSheet';
 import OrderSheetItems from '../OrderSheetItems';
 import ShippingInformation from '../ShippingInformation';
 
-function OrderDetail() {
+type OrderDetailProps = {
+  setIsEmptyCartItemsTrue: () => void;
+};
+
+function OrderDetail({ setIsEmptyCartItemsTrue }: OrderDetailProps) {
   return (
     <S.Container>
-      <Suspense fallback={<div></div>}>
+      <Suspense fallback={<></>}>
         <ShippingInformation />
-        <OrderSheetItems />
+        <OrderSheetItems setIsEmptyCartItemsTrue={setIsEmptyCartItemsTrue} />
         <DiscountSheet />
       </Suspense>
     </S.Container>
