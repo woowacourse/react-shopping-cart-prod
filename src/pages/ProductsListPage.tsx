@@ -1,14 +1,14 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import Message from '../components/Common/Message';
 import ProductList from '../components/Product/ProductList';
-
-import useFetchCartProducts from '../hooks/useFetchCartProducts';
+import { serverNameState } from '../states/serverName';
 
 const ProductsListPage = () => {
-  const serverName = useFetchCartProducts();
+  const serverName = useRecoilValue(serverNameState);
 
   return (
     <Main>
