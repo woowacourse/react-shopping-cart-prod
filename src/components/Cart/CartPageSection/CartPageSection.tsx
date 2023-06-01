@@ -1,6 +1,10 @@
+import { useCallback } from 'react';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
+import BlankImage from '../../../assets/tung.svg';
+import { MAIN_PAGE_LOCATE } from '../../../constants';
 import useCartList from '../../../hooks/useCartList';
 import { useModal } from '../../../hooks/useModal';
 import { cartListState } from '../../../store/cart';
@@ -25,6 +29,7 @@ const CartPageSection = () => {
   } = useCartList();
 
   const { isModalOpen, handleModalOpen, handleModalClose, handleModalClosePress } = useModal();
+  const navigate = useNavigate();
 
   const cartItem = useRecoilValue(cartListState);
   useQuery<CartItemType[]>('cartItemData', fetchCartList);
@@ -36,6 +41,10 @@ const CartPageSection = () => {
   const handleSelectedItemRemove = (itemId: number) => {
     removeSelectedItem(itemId);
   };
+
+  const navigateToMainPage = useCallback(() => {
+    navigate(MAIN_PAGE_LOCATE);
+  }, [navigate]);
 
   const checkedItemLength = getCheckedList().length;
   const deliveryPrice = cartItem.length === 0 ? 0 : 3000;
@@ -63,17 +72,31 @@ const CartPageSection = () => {
         </div>
         <section className={styles.section}>
           <div className={styles.cartList}>
-            {cartItem.map((item) => (
-              <CartItem
-                quantity={item.quantity}
-                itemId={item.id}
-                key={item.id}
-                product={item.product}
-                isChecked={item.isChecked}
-                checkHandler={reverseCheckCartItem}
-                removeItem={handleSelectedItemRemove}
-              />
-            ))}
+            {cartItem.length ? (
+              cartItem.map((item) => (
+                <CartItem
+                  quantity={item.quantity}
+                  itemId={item.id}
+                  key={item.id}
+                  product={item.product}
+                  isChecked={item.isChecked}
+                  checkHandler={reverseCheckCartItem}
+                  removeItem={handleSelectedItemRemove}
+                />
+              ))
+            ) : (
+              <div className={styles.orderBoxBlank}>
+                <img src={BlankImage} alt="텅" className={styles.blankBox} />
+                <p className={styles.blankText}>장바구니가 비었어요!</p>
+                <button
+                  type="button"
+                  className={styles.mainPageButton}
+                  onClick={navigateToMainPage}
+                >
+                  메인페이지로 돌아가기
+                </button>
+              </div>
+            )}
           </div>
           <div className={styles.orderBox}>
             <div className={styles.orderBoxHeader}>결제예상금액</div>
