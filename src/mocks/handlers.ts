@@ -1,29 +1,54 @@
-import type { CartType, ProductType } from '../types';
+import type { ProductType, CartType, CouponType, OrderType, OrderDetailType } from '../types';
 
 import { rest } from 'msw';
 
-import { LOCAL_STORAGE_KEY, MOCK_URL } from '../constants';
+import { MOCK_URL } from '../constants';
 import mockProducts from './mockProducts.json';
+import mockCoupons from './mockCoupons.json';
+import mockOrders from './mockOrders.json';
+import mockOrder from './mockOrder.json';
 
 const products: ProductType[] = mockProducts;
+
+const coupons: CouponType[] = mockCoupons;
+
+const orders: OrderType[] = mockOrders;
+
+const order: OrderDetailType = mockOrder;
 
 const getProduct = (productId: number) => {
   return products.find((product) => product.id === productId) as ProductType;
 };
 
 const getCart = (): CartType => {
-  return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY.cart) ?? '[]');
+  return JSON.parse(localStorage.getItem('cart') ?? '[]');
 };
 
 const setCart = (cart: CartType) => {
-  localStorage.setItem(LOCAL_STORAGE_KEY.cart, JSON.stringify(cart));
+  localStorage.setItem('cart', JSON.stringify(cart));
 };
 
-export const handlers = [
+const handleETC = [
   rest.get(`${MOCK_URL}/products`, (_req, res, ctx) => {
     return res(ctx.delay(200), ctx.status(200), ctx.json(products));
   }),
 
+  rest.get(`${MOCK_URL}/coupons`, (_req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200), ctx.json(coupons));
+  }),
+];
+
+const handleAuth = [
+  rest.post(`${MOCK_URL}/users/login`, (_req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200), ctx.json({ token: 'YUBhLmNvbToxMjM0' }));
+  }),
+
+  rest.post(`${MOCK_URL}/users/join`, (_req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200));
+  }),
+];
+
+const handleCart = [
   rest.get(`${MOCK_URL}/cart-items`, (_req, res, ctx) => {
     return res(ctx.delay(200), ctx.status(200), ctx.json(getCart()));
   }),
@@ -57,3 +82,21 @@ export const handlers = [
     return res(ctx.delay(200), ctx.status(204));
   }),
 ];
+
+const handleOrders = [
+  rest.get(`${MOCK_URL}/orders`, (_req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200), ctx.json(orders));
+  }),
+
+  rest.get(`${MOCK_URL}/orders/:orderId`, (req, res, ctx) => {
+    const orderId = Number(req.params.orderId);
+
+    return res(ctx.delay(200), ctx.status(200), ctx.json(order));
+  }),
+
+  rest.post(`${MOCK_URL}/orders`, (_req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200));
+  }),
+];
+
+export const handlers = handleETC.concat(handleAuth, handleCart, handleOrders);

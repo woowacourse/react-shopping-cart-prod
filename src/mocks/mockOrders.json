@@ -1,0 +1,50 @@
+[
+  {
+    "orderId": 1,
+    "items": [
+      {
+        "product": {
+          "id": 1,
+          "name": "하이",
+          "price": 1000,
+          "imageUrl": "sample"
+        },
+        "quantity": 1
+      },
+      {
+        "product": {
+          "id": 2,
+          "name": "하이2",
+          "price": 2000,
+          "imageUrl": "sample"
+        },
+        "quantity": 30
+      }
+    ],
+    "orderedAt": "2023-05-30T15:30:44"
+  },
+  {
+    "orderId": 2,
+    "items": [
+      {
+        "product": {
+          "id": 3,
+          "name": "하이3",
+          "price": 1000,
+          "imageUrl": "sample"
+        },
+        "quantity": 20
+      },
+      {
+        "product": {
+          "id": 4,
+          "name": "하이4",
+          "price": 2000,
+          "imageUrl": "sample"
+        },
+        "quantity": 30
+      }
+    ],
+    "orderedAt": "2023-05-30T15:30:44"
+  }
+]

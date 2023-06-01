@@ -1,0 +1,32 @@
+{
+  "orderId": 1,
+  "items": [
+    {
+      "product": {
+        "id": 1,
+        "name": "하이",
+        "price": 1000,
+        "imageUrl": "sample"
+      },
+      "quantity": 20
+    },
+    {
+      "product": {
+        "id": 2,
+        "name": "하이2",
+        "price": 1000,
+        "imageUrl": "sample"
+      },
+      "quantity": 20
+    }
+  ],
+  "coupon": {
+    "name": "쿠폰 이름임",
+    "discountRate": 10
+  },
+  "totalPrice": 40000,
+  "couponDiscountPrice": 4000,
+  "discountedTotalPrice": 36000,
+  "deliveryPrice": 3000,
+  "orderedAt": "2023-05-30T15:30:44"
+}
