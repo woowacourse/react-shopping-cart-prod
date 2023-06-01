@@ -40,7 +40,11 @@ export const cartProductHandlers = [
       JSON.stringify(addTargetProduct(storedCartProducts, product.id, product))
     );
 
-    return res(ctx.status(201), ctx.json({ message: 'Success to Create' }));
+    return res(
+      ctx.status(201),
+      ctx.json({ message: 'Success to Create' }),
+      ctx.set('Location', `/orders/${productId}`)
+    );
   }),
 
   rest.patch<{ quantity: number }>(

@@ -28,8 +28,8 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
     updateChecked(event.currentTarget.checked);
   };
 
-  const deleteProductAndChecked = () => {
-    deleteProduct();
+  const deleteProductAndChecked = async () => {
+    await deleteProduct();
     deleteChecked();
   };
 

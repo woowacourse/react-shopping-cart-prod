@@ -1,17 +1,16 @@
-import type { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, Suspense } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import SelectBox from './SelectBox';
+import CartCountBox from '../Cart/CartCountBox';
 
 import CartIcon from '../../assets/CartIcon';
-import useCartProductCount from '../../hooks/useCartProductCount';
 import { serverNameState } from '../../states/serverName';
 import { SERVER_OPTIONS, isServerKey } from '../../constants/server';
 
 const Header = () => {
-  const cartProductCount = useCartProductCount();
   const setServerName = useSetRecoilState(serverNameState);
 
   const onChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
@@ -31,7 +30,9 @@ const Header = () => {
           <SelectBox options={SERVER_OPTIONS} onChange={onChange} />
           <CartPageLink to='/cart'>
             장바구니
-            <ProductCountAlert>{cartProductCount}</ProductCountAlert>
+            <Suspense fallback={<ProductCountAlert />}>
+              <CartCountBox />
+            </Suspense>
           </CartPageLink>
           <OrderPageLink to='/orders'>주문 목록</OrderPageLink>
         </LinkWrapper>

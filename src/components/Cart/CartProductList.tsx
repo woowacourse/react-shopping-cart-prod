@@ -2,15 +2,12 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import CartProductItem from './CartProductItem';
+import Message from '../Common/Message';
 
 import { cartProductState } from '../../states/cartProducts';
-import Message from '../Common/Message';
-import useFetchCartProducts from '../../hooks/useFetchCartProducts';
 
 const CartProductList = () => {
   const cartProducts = useRecoilValue(cartProductState);
-
-  useFetchCartProducts();
 
   if (cartProducts.length === 0) {
     return (

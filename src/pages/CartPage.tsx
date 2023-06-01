@@ -1,16 +1,27 @@
+import { Suspense } from 'react';
+import { useRecoilValue } from 'recoil';
+import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 
 import CartProductInfo from '../components/Cart/CartProductInfo';
 import ExpectedPaymentBox from '../components/Cart/ExpectedPaymentBox';
+import Message from '../components/Common/Message';
+import { serverNameState } from '../states/serverName';
 
 const CartPage = () => {
+  const serverName = useRecoilValue(serverNameState);
+
   return (
     <Main>
       <PageTitle>장바구니</PageTitle>
-      <CartProductInfo />
-      <ExpectedPaymentBoxWrapper>
-        <ExpectedPaymentBox />
-      </ExpectedPaymentBoxWrapper>
+      <ErrorBoundary key={serverName} fallback={<Message type='error' />}>
+        <Suspense fallback={<Message type='loading' />}>
+          <CartProductInfo />
+          <ExpectedPaymentBoxWrapper>
+            <ExpectedPaymentBox />
+          </ExpectedPaymentBoxWrapper>
+        </Suspense>
+      </ErrorBoundary>
     </Main>
   );
 };
