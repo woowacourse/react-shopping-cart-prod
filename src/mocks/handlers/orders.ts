@@ -1,3 +1,4 @@
+import { MSWException } from '../exceptions';
 import cartItems from '../fixtures/cart-items';
 import orders from '../fixtures/orders';
 import products from '../fixtures/products';
@@ -36,11 +37,12 @@ export const handlers = [
     const cartItemsWithProduct = requestCartItems
       .map((requestCartItem) => {
         const foundCartItem = cartItems.find((cartItem) => cartItem.id === requestCartItem.id);
-        if (!foundCartItem) throw new Error('잘못된 CartItem을 주었습니다!');
+        if (!foundCartItem) throw new MSWException(400, '잘못된 CartItem을 주었습니다!');
 
         const product =
           products.find((product) => product.id === requestCartItem.productId) ?? null;
-        if (product === null) throw new Error('존재하지 않는 상품을 구매하려 했습니다.');
+        if (product === null)
+          throw new MSWException(400, '존재하지 않는 상품을 구매하려 했습니다.');
 
         return {
           ...foundCartItem,
