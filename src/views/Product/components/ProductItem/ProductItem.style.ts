@@ -10,17 +10,12 @@ export const ProductItemImageBox = styled.div`
   justify-content: center;
   position: relative;
   transition: ${(props) => props.theme.transitions.default};
-
-  &:hover {
-    transform: ${({ theme }) => theme.effects.hoverScale};
-  }
 `;
 
 export const ProductItemImage = styled.img`
-  width: 90%;
+  width: 100%;
   aspect-ratio: 1/1;
-  border-radius: 8px;
-  box-shadow: ${(props) => props.theme.shadows.large};
+  border-radius: 4px;
 
   object-fit: cover;
 `;
