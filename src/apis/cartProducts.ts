@@ -1,5 +1,5 @@
 import { servers } from '../constants/server';
-import { fetchData } from '../utils/apiUtils';
+import { fetchData, postData } from '../utils/apiUtils';
 import type { CartProduct } from '../types/product';
 import type { HostNameType } from '../types/server';
 
@@ -21,26 +21,12 @@ export const cartApi = async (hostName: HostNameType) => {
   };
 
   const postCartProduct = async (productId: number) => {
-    const response = await fetch(URL, {
-      method: 'POST',
-      headers: {
-        Authorization: `Basic ${base64}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ productId }),
-    });
+    const headers = {
+      Authorization: `Basic ${base64}`,
+    };
 
-    if (!response.ok) {
-      throw new Error(response.status.toString());
-    }
-
-    const location = response.headers.get('location');
-
-    if (location !== null) {
-      const lastSlashIndex = location.lastIndexOf('/');
-      const cartItemId = location.slice(lastSlashIndex + 1);
-      return cartItemId;
-    }
+    const response = await postData(URL, headers, { productId });
+    return response;
   };
 
   const patchCartProduct = async (cartItemId: number, quantity: number) => {
