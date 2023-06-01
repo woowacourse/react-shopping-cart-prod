@@ -27,12 +27,6 @@ const GlobalStyle = createGlobalStyle`
     border: none;
     background-color: transparent;
     outline: none;
-    cursor: pointer;
-    transition: ${(props) => props.theme.transitions.default};
-
-    &:hover {
-      transform: ${({ theme }) => theme.effects.hoverScaleUp};
-    }
   }
 
   html,

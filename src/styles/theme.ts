@@ -97,6 +97,10 @@ const transitions = {
   0.3s ease-in-out
   */
   default: '0.3s ease-in-out',
+  /** 
+  0.3s ease-in-out color
+  */
+  hoverColor: '0.3s ease-in-out color',
 };
 
 export type ColorType = typeof colors;
@@ -112,5 +116,3 @@ export const theme: DefaultTheme = {
   effects,
   transitions,
 };
-
-export type ThemeType = typeof theme;
