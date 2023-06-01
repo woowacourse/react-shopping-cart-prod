@@ -70,7 +70,7 @@ export const deleteCartItems = async (serverName: ServerNameType, cartItemIdList
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 };
 
-export const submitSignUpInfo = async (
+export const postSignUpInfo = async (
   serverName: ServerNameType,
   signUpInfo: { name: string; password: string }
 ) => {
@@ -92,7 +92,7 @@ export const submitSignUpInfo = async (
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 };
 
-export const submitLoginInfo = async (
+export const postLoginInfo = async (
   serverName: ServerNameType,
   loginInfo: { name: string; password: string }
 ) => {

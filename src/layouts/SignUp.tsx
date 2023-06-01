@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Modal from '../components/common/Modal';
-import { submitSignUpInfo } from '../api';
+import { postSignUpInfo } from '../api';
 import { serverNameState } from '../atom/serverName';
 import useToast from '../components/hooks/useToast';
 import { useRecoilValue } from 'recoil';
@@ -29,7 +29,7 @@ export default function SignUp() {
       const password = formData.get('password');
 
       if (typeof id === 'string' && typeof password === 'string') {
-        await submitSignUpInfo(serverName, { name: id, password });
+        await postSignUpInfo(serverName, { name: id, password });
       }
 
       setIsModalOpen(false);

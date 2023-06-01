@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Modal from '../components/common/Modal';
-import { submitLoginInfo } from '../api';
+import { postLoginInfo } from '../api';
 import { serverNameState } from '../atom/serverName';
 import useToast from '../components/hooks/useToast';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -32,7 +32,7 @@ export default function Login() {
 
       if (!(typeof id === 'string' && typeof password === 'string')) return;
 
-      const loginToken = await submitLoginInfo(serverName, { name: id, password });
+      const loginToken = await postLoginInfo(serverName, { name: id, password });
 
       setIsModalOpen(false);
       showToast('info', API_SUCCESS_MESSAGE.login);
