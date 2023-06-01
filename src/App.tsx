@@ -6,6 +6,7 @@ import CartProductsListPage from './pages/CartProductsListPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Layout from './Layout';
 import OrderProductsListPage from './pages/OrderProductsListPage';
+import OrderProductDetailPage from './pages/OrderProductDetailPage';
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
             />
             <Route path='/cart' element={<CartProductsListPage />} />
             <Route path='/order' element={<OrderProductsListPage />} />
+            <Route
+              path='/order/:orderId'
+              element={<OrderProductDetailPage />}
+            />
             <Route path='*' element={<NotFoundPage />} />
           </Routes>
         </Layout>
