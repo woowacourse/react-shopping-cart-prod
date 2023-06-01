@@ -9,6 +9,7 @@ interface OrderProductItemProps {
 const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
   const { quantity } = orderProduct;
   const { name, imageUrl, price } = orderProduct.product;
+  const totalPrice = price * quantity;
 
   return (
     <OrderProductItemContainer>
@@ -16,7 +17,7 @@ const OrderProductItem = ({ orderProduct }: OrderProductItemProps) => {
       <OrderProductInfo>
         <OrderProductName>{name}</OrderProductName>
         <OrderProductDetailInfo>
-          <span>{price.toLocaleString('ko-KR')}원 / </span>
+          <span>{totalPrice.toLocaleString('ko-KR')}원 / </span>
           <span>수량 : {quantity}개</span>
         </OrderProductDetailInfo>
       </OrderProductInfo>

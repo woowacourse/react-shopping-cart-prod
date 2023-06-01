@@ -42,7 +42,7 @@ const EstimatedPaymentBox = ({ usePoint }: EstimatedPaymentBoxProps) => {
         </EstimatedPaymentInfo>
       </EstimatedPaymentContent>
       <OrderButtonWrapper>
-        <Link to={'/orders'}>
+        <Link to={'/orders/complete'}>
           <Button
             designType='order'
             buttonLabel='주문하기'
