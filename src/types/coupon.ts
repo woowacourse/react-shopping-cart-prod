@@ -3,7 +3,7 @@ export interface Coupon {
   name: string;
   ownerMemberId: number;
   discountType: 'RATE' | 'FIX';
-  target: 'ALL' | 'SPECIFIC';
+  targetType: 'ALL' | 'SPECIFIC';
   value: number;
 }
 
