@@ -108,6 +108,8 @@ const DetailWrapper = styled.div`
 `;
 
 const BackButton = styled(Link)`
+  display: flex;
+  align-items: center;
   height: 45px;
   font-weight: bold;
   font-size: 45px;

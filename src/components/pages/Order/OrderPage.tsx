@@ -44,7 +44,7 @@ const OrderPage = () => {
           </Text>
         </OrderPageHead>
         <OrderWrapper>
-          {orderListData ? (
+          {orderListData && orderListData.length !== 0 ? (
             orderListData.map((order) => {
               return (
                 <Link key={order.id} to={`/orders/${order.id}`}>
@@ -53,7 +53,7 @@ const OrderPage = () => {
               );
             })
           ) : (
-            <div>주문목록이 없습니다.</div>
+            <NoOrderTitle>주문목록이 없습니다.</NoOrderTitle>
           )}
         </OrderWrapper>
       </OrderPageWrapper>
@@ -62,8 +62,8 @@ const OrderPage = () => {
 };
 
 const OrderPageWrapper = styled.div`
-  width: 1140px;
   display: flex;
+  width: 1140px;
   flex-direction: column;
   align-items: flex-end;
   gap: 20px;
@@ -103,4 +103,11 @@ const OrderPageHead = styled.div`
   border-bottom: 4px solid #333;
 `;
 
+const NoOrderTitle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  font-weight: 500;
+`;
 export default OrderPage;
