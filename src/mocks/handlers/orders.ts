@@ -1,3 +1,4 @@
+import cartItems from '../fixtures/cart-items';
 import orders from '../fixtures/orders';
 import products from '../fixtures/products';
 import rest from '../rest';
@@ -24,7 +25,7 @@ export const handlers = [
   rest.post('/orders', async (req, res) => {
     const { profile } = req;
     const body = await req.json<typeof req.body>();
-    const { usedPoints, cartItems } = body;
+    const { usedPoints, cartItems: requestCartItems } = body;
 
     if (profile.points < usedPoints) {
       return res(
@@ -32,18 +33,24 @@ export const handlers = [
       );
     }
 
-    const cartItemsWithProduct = cartItems.map((cartItem) => {
-      const product = products.find((product) => product.id === cartItem.productId) ?? null;
-      if (product === null) throw new Error('존재하지 않는 상품을 구매하려 했습니다.');
+    const cartItemsWithProduct = requestCartItems
+      .map((requestCartItem) => {
+        const foundCartItem = cartItems.find((cartItem) => cartItem.id === requestCartItem.id);
+        if (!foundCartItem) throw new Error('잘못된 CartItem을 주었습니다!');
 
-      return {
-        ...cartItem,
-        product,
-      };
-    });
+        const product =
+          products.find((product) => product.id === requestCartItem.productId) ?? null;
+        if (product === null) throw new Error('존재하지 않는 상품을 구매하려 했습니다.');
+
+        return {
+          ...foundCartItem,
+          product,
+        };
+      })
+      .filter((cartItem) => cartItem.checked);
 
     const prices = cartItemsWithProduct.map(
-      (cartItem) => cartItem.product.price + cartItem.quantity,
+      (cartItem) => cartItem.product.price * cartItem.quantity,
     );
 
     if (prices.some((price) => price === null))
@@ -65,6 +72,6 @@ export const handlers = [
       points,
       savingRate: SAVING_RATE,
     });
-    return res(res.response(201, undefined, { location: String(orderId) }));
+    return res(res.response(201, undefined, { location: `/orders/${orderId}` }));
   }),
 ];
