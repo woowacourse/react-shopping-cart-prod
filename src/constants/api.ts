@@ -21,6 +21,7 @@ const API_ENDPOINT = {
   CART_ITEMS: '/cart-items',
   MEMBER: '/member',
   ORDERS: '/orders',
+  COSTS: '/costs',
 } as const;
 
 const FETCH_DEFAULT_OPTION = {
