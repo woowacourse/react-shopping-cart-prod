@@ -20,18 +20,23 @@ export const checkedListSelector = selector<number>({
 export const totalPriceSelector = selector<number>({
   key: 'totalPriceState',
   get: ({ get }) => {
-    const checkedCartItemIds = get(checkedCartItemIdsAtom);
-    const cartItems = get(cartAtom);
-    const checkedCartItems: CartProduct[] = cartItems.filter(
-      (item: CartProduct) => checkedCartItemIds.includes(item.cartItemId)
-    );
-    const totalPrice = checkedCartItems.reduce(
+    const totalPrice = get(checkedCartItemsSelector).reduce(
       (total, { quantity, product }) => {
         return total + quantity * product.price;
       },
       0
     );
-
     return totalPrice;
+  },
+});
+
+export const checkedCartItemsSelector = selector<CartProduct[]>({
+  key: 'checkedCartProductState',
+  get: ({ get }) => {
+    const checkedCartItemIds = get(checkedCartItemIdsAtom);
+    const checkedCartItems = get(cartAtom).filter((item) =>
+      checkedCartItemIds.includes(item.cartItemId)
+    );
+    return checkedCartItems;
   },
 });
