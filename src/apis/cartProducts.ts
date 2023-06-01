@@ -1,5 +1,5 @@
 import { servers } from '../constants/server';
-import { fetchData, postData } from '../utils/apiUtils';
+import { deleteData, fetchData, patchData, postData } from '../utils/apiUtils';
 import type { CartProduct } from '../types/product';
 import type { HostNameType } from '../types/server';
 
@@ -8,51 +8,36 @@ const password = process.env.REACT_APP_PASSWORD;
 const base64 = btoa(email + ':' + password);
 
 export const cartApi = async (hostName: HostNameType) => {
-  const URL = `${servers[hostName]}/cart-items`;
+  const BASE_URL = `${servers[hostName]}/cart-items`;
+  const headers = {
+    Authorization: `Basic ${base64}`,
+  };
 
   const fetchCartProducts = async () => {
-    const response: CartProduct[] = await fetchData<CartProduct[]>(URL, {
+    const response: CartProduct[] = await fetchData<CartProduct[]>(BASE_URL, {
       method: 'GET',
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
+      headers,
     });
     return response;
   };
 
   const postCartProduct = async (productId: number) => {
-    const headers = {
-      Authorization: `Basic ${base64}`,
-    };
-
-    const response = await postData(URL, headers, { productId });
+    const response = await postData(BASE_URL, headers, { productId });
     return response;
   };
 
   const patchCartProduct = async (cartItemId: number, quantity: number) => {
-    const response = await fetch(`${URL}/${cartItemId}`, {
-      method: 'PATCH',
-      headers: {
-        Authorization: `Basic ${base64}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ quantity }),
-    });
+    const URL = `${BASE_URL}/${cartItemId}`;
 
-    if (!response.ok) {
-      throw new Error(response.status.toString());
-    }
+    const response = await patchData(URL, headers, { quantity });
     return response;
   };
 
   const deleteCartProduct = async (cartItemId: number) => {
-    await fetch(`${URL}/${cartItemId}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `Basic ${base64}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const URL = `${BASE_URL}/${cartItemId}`;
+
+    const response = await deleteData(URL, headers);
+    return response;
   };
 
   return {

@@ -1,6 +1,6 @@
 import type { postDataType } from '../types/fetch';
 
-export const fetchData = async <T,>(
+export const fetchData = async <T>(
   url: string,
   options?: RequestInit
 ): Promise<T> => {
@@ -41,4 +41,34 @@ export const postData = async (
   }
 
   throw new Error('Location이 없습니다');
+};
+
+export const patchData = async (
+  url: string,
+  headers: HeadersInit,
+  data: object
+) => {
+  const response = await fetch(url, {
+    method: 'PATCH',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(response.status.toString());
+  }
+  return response;
+};
+
+export const deleteData = async (url: string, headers: HeadersInit) => {
+  await fetch(url, {
+    method: 'DELETE',
+    headers: {
+      ...headers,
+      'Content-Type': 'application/json',
+    },
+  });
 };
