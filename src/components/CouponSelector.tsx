@@ -1,6 +1,7 @@
+import { useCoupon } from "hooks/useCoupon";
 import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { couponListState, selectedCoupon } from "recoil/coupon";
+import { couponListState } from "recoil/coupon";
 import { styled } from "styled-components";
 
 interface CouponSelectorProps {
@@ -9,14 +10,14 @@ interface CouponSelectorProps {
 
 const CouponSelector = ({ changeCartItemCoupon }: CouponSelectorProps) => {
   const [currentCouponId, setCurrentCouponId] = useState<number | undefined>();
-  const setSelectedCoupon = useSetRecoilState(selectedCoupon(currentCouponId));
 
   const couponList = useRecoilValue(couponListState);
+  const { updateSelectCoupon } = useCoupon();
 
   const changeCoupon = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCouponId = couponList[e.target.selectedIndex - 1]?.couponId;
 
-    setSelectedCoupon(selectedCouponId);
+    updateSelectCoupon(currentCouponId)(selectedCouponId);
     setCurrentCouponId(selectedCouponId);
     changeCartItemCoupon(selectedCouponId);
   };
