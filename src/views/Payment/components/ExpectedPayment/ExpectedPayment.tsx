@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { CouponModal } from '../CouponModal';
 import useCouponList from '@views/Payment/recoil/couponListState';
 import { CouponType } from 'types/CouponType';
-import { PaymentModal } from '../PaymentModal';
+import { RiCoupon2Line } from 'react-icons/ri';
 
 const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
   if (!coupon || !totalPrice) {
@@ -32,7 +32,7 @@ const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
 
 function ExpectedPayment() {
   const { totalPrice } = useCart();
-  const { getCheckedCoupon } = useCouponList();
+  const { couponList, getCheckedCoupon } = useCouponList();
 
   const discountPrice = getDiscount(getCheckedCoupon(), totalPrice);
 
@@ -53,9 +53,17 @@ function ExpectedPayment() {
   return (
     <S.PayingContainer>
       <S.PayingBox>
-        <S.PayingBackground>
-          <S.PayingTitle>결제 예상 금액</S.PayingTitle>
-        </S.PayingBackground>
+        <S.CouponContainer>
+          <S.CouponTitleWrapper>
+            <RiCoupon2Line />
+            <S.CouponTitle>쿠폰</S.CouponTitle>
+          </S.CouponTitleWrapper>
+          <S.CouponTitle>사용 가능한 쿠폰이 {couponList.length}개 있어요.</S.CouponTitle>
+          <S.CouponButton onClick={handleSeeCoupons} disabled={totalPrice === 0}>
+            쿠폰선택
+          </S.CouponButton>
+        </S.CouponContainer>
+
         <S.PayingBackground>
           <FlexWrapper>
             <S.ContentText>총 상품 가격</S.ContentText>
@@ -76,19 +84,14 @@ function ExpectedPayment() {
             </S.TotalText>
           </S.TotalPriceContainer>
         </S.PayingBackground>
-        <div style={{ display: 'flex', columnGap: '2rem' }}>
-          <S.CouponButton onClick={handleSeeCoupons} disabled={totalPrice === 0}>
-            쿠폰선택
-          </S.CouponButton>
-          <S.PayingButton
-            onClick={() => {
-              handlePay();
-            }}
-            disabled={totalPrice === 0}
-          >
-            결제하기
-          </S.PayingButton>
-        </div>
+        <S.PayingButton
+          onClick={() => {
+            handlePay();
+          }}
+          disabled={totalPrice === 0}
+        >
+          결제하기
+        </S.PayingButton>
       </S.PayingBox>
       <CouponModal
         isOpen={isCouponOpen}

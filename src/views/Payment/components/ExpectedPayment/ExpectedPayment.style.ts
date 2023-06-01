@@ -13,25 +13,41 @@ export const PayingBox = styled(FlexColWrapper)`
   width: 90%;
   margin: 1rem;
 
-  border: ${({ theme }) => theme.secondaryColor} 1px solid;
   color: ${({ theme }) => theme.primaryColor};
 
-  padding: 2rem 1.5rem;
-  border-radius: 8px;
+  /* padding: 2rem 1.5rem; */
   justify-content: start;
 `;
 
 export const PayingBackground = styled.div`
-  border: ${({ theme }) => theme.secondaryColor} 1px solid;
+  border: ${({ theme }) => theme.grayBorderColor} 1px solid;
   padding: 1rem;
-  border-radius: 8px;
+
   margin: 0 0 2rem 0;
 `;
 
-export const PayingTitle = styled.h3`
-  font-size: 2rem;
+export const CouponContainer = styled.div`
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  background-color: ${({ theme }) => theme.grayColor};
+`;
 
-  font-weight: 800;
+export const CouponTitleWrapper = styled.div`
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+
+  font-weight: 700;
+  padding: 1rem;
+`;
+
+export const CouponTitle = styled.span`
+  padding-left: 1rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 20px;
 `;
 
 export const ContentText = styled.span`
@@ -51,11 +67,15 @@ export const TotalPriceContainer = styled(FlexWrapper)`
   color: ${({ theme }) => theme.primaryColor};
 `;
 
-export const PayingButton = styled.button`
-  background-color: ${({ theme }) => theme.infoColor};
-  border-radius: 8px;
-  font-size: 2.4rem;
-  height: 60px;
+export const CouponButton = styled.button`
+  background-color: ${({ theme }) => theme.primaryColor};
+  color: ${({ theme }) => theme.lightColor};
+
+  font-size: 1.2rem;
+  font-weight: 500;
+  width: 100%;
+  border-radius: 3px;
+  padding: 1rem 0;
   flex: 1;
 
   &:disabled {
@@ -66,7 +86,20 @@ export const PayingButton = styled.button`
   }
 `;
 
-export const CouponButton = styled(PayingButton)`
-  background-color: ${({ theme }) => theme.primaryColor};
-  color: ${({ theme }) => theme.lightColor};
+export const PayingButton = styled.button`
+  background-color: ${({ theme }) => theme.infoColor};
+
+  font-size: 1.8rem;
+  font-weight: 500;
+  width: 100%;
+  border-radius: 3px;
+  padding: 1.4rem 0;
+  flex: 1;
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.secondaryColor};
+    color: ${({ theme }) => theme.primaryColor};
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
