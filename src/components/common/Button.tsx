@@ -6,11 +6,6 @@ type ButtonSize = 'small' | 'medium';
 
 type ButtonVariant = 'contained' | 'text';
 
-type ButtonContainerProps = {
-  $size: ButtonSize;
-  $variant: ButtonVariant;
-};
-
 const stylesBySize: Record<ButtonSize, RuleSet<object>> = {
   small: css`
     padding: 16px 32px;
@@ -31,6 +26,11 @@ const stylesByVariant: Record<ButtonVariant, RuleSet<object>> = {
     background: transparent;
     color: black;
   `,
+};
+
+type ButtonContainerProps = {
+  $size: ButtonSize;
+  $variant: ButtonVariant;
 };
 
 const ButtonContainer = styled.button<ButtonContainerProps>`

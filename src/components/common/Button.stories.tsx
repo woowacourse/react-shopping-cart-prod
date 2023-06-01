@@ -16,28 +16,28 @@ export const Default: Story = {
   },
 };
 
-export const Small: Story = {
+export const SizeSmall: Story = {
   args: {
     size: 'small',
     children: '예시 버튼',
   },
 };
 
-export const Large: Story = {
+export const SizeLarge: Story = {
   args: {
     size: 'medium',
     children: '예시 버튼',
   },
 };
 
-export const Contained: Story = {
+export const VariantContained: Story = {
   args: {
     variant: 'contained',
     children: '예시 버튼',
   },
 };
 
-export const Text: Story = {
+export const VariantText: Story = {
   args: {
     variant: 'text',
     children: '예시 버튼',
