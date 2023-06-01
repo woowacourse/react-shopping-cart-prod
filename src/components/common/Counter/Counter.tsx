@@ -1,6 +1,5 @@
 import { css, styled } from 'styled-components';
-import PlusIcon from '../../../assets/icons/PlusIcon';
-import MinusIcon from '../../../assets/icons/MinusIcon';
+import { HiPlusSmall, HiMinusSmall } from 'react-icons/hi2';
 import useCounterHandler from './useCounterHandler';
 
 export type CounterSize = 'medium' | 'small';
@@ -44,11 +43,11 @@ const Counter = ({
   return (
     <CounterContainer size={size}>
       <CounterButton onClick={handleDecreaseButtonClick}>
-        <MinusIcon />
+        <HiMinusSmall size="32px" />
       </CounterButton>
       <Input type="text" value={count} onChange={handleInputChange} onBlur={handleInputBlur} />
       <CounterButton onClick={handleIncreaseButtonClick}>
-        <PlusIcon />
+        <HiPlusSmall size="32px" />
       </CounterButton>
     </CounterContainer>
   );

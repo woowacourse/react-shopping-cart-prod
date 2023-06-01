@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
 import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { FaRegTrashAlt } from 'react-icons/fa';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import Image from '../../common/Image/Image';
 import Counter from '../../common/Counter/Counter';
-import TrashCanIcon from '../../../assets/icons/TrashCanIcon';
 import useCartService from '../../../hooks/useCartService';
 import { formatPrice } from '../../../utils/formatPrice';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
@@ -60,7 +60,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
       </ItemContents>
       <ItemControllers>
         <RemoveButton onClick={handleRemoveButtonClick}>
-          <TrashCanIcon />
+          <FaRegTrashAlt size="24px" color="#cccccc" />
         </RemoveButton>
         <Counter count={count} updateCount={updateQuantity} min={1} />
         <PricePCView>{formatPrice(price)}</PricePCView>
@@ -108,7 +108,7 @@ const Name = styled.div`
 
   font-weight: 400;
   font-size: 20px;
-  color: #333;
+  color: #333333;
 
   @media screen and (max-width: 520px) {
     overflow: hidden;
@@ -141,7 +141,7 @@ const RemoveButton = styled.button`
 const PricePCView = styled.div`
   font-weight: 400;
   font-size: 16px;
-  color: #333;
+  color: #333333;
 
   @media screen and (max-width: 520px) {
     display: none;
@@ -155,7 +155,7 @@ const PriceMobileView = styled.div`
 
   font-weight: 400;
   font-size: 20x;
-  color: #333;
+  color: #333333;
 
   @media screen and (max-width: 520px) {
     display: block;

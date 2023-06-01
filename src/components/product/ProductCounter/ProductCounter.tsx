@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import SmallCartIcon from '../../../assets/icons/SmallCartIcon';
+import { BsCart4 } from 'react-icons/bs';
 import getCartItemId from '../../../globalState/selectors/getCartItemId';
 import getCartStateController from '../../../globalState/selectors/getCartStateController';
 import productQuantityInCart from '../../../globalState/selectors/productQuantityInCart';
@@ -63,7 +63,7 @@ const ProductCounter = (product: Product) => {
           aria-label="장바구니에 추가하기"
           onClick={handleAddCartButtonClick}
         >
-          <SmallCartIcon />
+          <BsCart4 size="25px" />
         </CartButton>
       )}
     </CartButtonWrapper>

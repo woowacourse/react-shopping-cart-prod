@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Suspense } from 'react';
-import CartIcon from '../../../assets/icons/CartIcon';
+import { GiShoppingCart } from 'react-icons/gi';
 import ServerSelector from './ServerSelector';
 import CartButton from './CartButton';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <Logo onClick={handleLogoClick}>
-        <CartIcon />
+        <GiShoppingCart color="#ffffff" size="55px" />
         <Title>SHOP</Title>
       </Logo>
       <ServerSelector />
@@ -61,9 +61,12 @@ const Logo = styled.div`
 `;
 
 const Title = styled.h1`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   font-size: 40px;
   font-weight: 900;
-  padding-top: 8px;
 `;
 
 const RightContainer = styled.div`

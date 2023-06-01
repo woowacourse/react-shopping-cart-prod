@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
 import { styled } from 'styled-components';
 import Image from '../../common/Image/Image';
-import SmallCartIcon from '../../../assets/icons/SmallCartIcon';
 import { formatPrice } from '../../../utils/formatPrice';
 import type { Product } from '../../../types/product';
 import ProductCounter from '../ProductCounter/ProductCounter';
+import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 
 const ProductItem = (product: Product) => {
   const { id, name, price, imageUrl } = product;
@@ -16,7 +16,7 @@ const ProductItem = (product: Product) => {
         <Suspense
           fallback={
             <Fallback>
-              <SmallCartIcon />
+              <LoadingSpinner color="#04c09e" spinnerWidth="5px" diameter="22px" />
             </Fallback>
           }
         >
