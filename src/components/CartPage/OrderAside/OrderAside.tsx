@@ -26,11 +26,15 @@ const OrderAside = () => {
       </S.TextWrapper>
       <S.TextWrapper>
         <S.Text>할인 금액</S.Text>
-        <S.Text color='red'>{totalDiscountPrice.toLocaleString()}원</S.Text>
+        <S.Text color='red'>
+          {totalPrice === 0 ? 0 : totalDiscountPrice.toLocaleString()}원
+        </S.Text>
       </S.TextWrapper>
       <S.TextWrapper>
         <S.Text>총 주문금액</S.Text>
-        <S.Text>{(totalPrice - totalDiscountPrice).toLocaleString()}원</S.Text>
+        <S.Text>
+          {Math.max(0, totalPrice - totalDiscountPrice).toLocaleString()}원
+        </S.Text>
       </S.TextWrapper>
       <S.OrderButton size='L' view='black' onClick={onOrder}>
         주문하기
