@@ -50,7 +50,7 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
     setIsLoading(true);
 
     order(usingPoint).then((res) => {
-      const orderId = res.headers.get('Location');
+      const orderId = res.headers.get('Location')?.replace('/orders/', '');
 
       closeModal();
       setIsLoading(false);

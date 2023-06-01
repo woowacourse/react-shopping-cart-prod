@@ -65,7 +65,7 @@ export const orderHandlers = [
     return res(
       ctx.json(''),
       ctx.status(200),
-      ctx.set({ Location: `${randomOrderId}` }),
+      ctx.set({ Location: `/orders/${randomOrderId}` }),
       ctx.delay(2000)
     );
   }),

@@ -50,7 +50,7 @@ export const OrderSummarySection = () => {
     setIsLoading(true);
 
     order(usingPoint).then((res) => {
-      const orderId = res.headers.get('Location');
+      const orderId = res.headers.get('Location')?.replace('/orders/', '');
 
       setIsLoading(false);
       deleteAllSelectedRecoilCartItems();
