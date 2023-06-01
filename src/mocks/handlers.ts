@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { ServerCartItemType } from '@type/cartType';
+import { OrderType } from '@type/orderType';
 import { ServerProductItemType } from '@type/productType';
 
 export const MOCK_PRODUCT_LIST: ServerProductItemType[] = [
@@ -113,6 +114,54 @@ let cartList: ServerCartItemType[] = [
   },
 ];
 
+export const MOCK_ORDER_LIST: OrderType[] = [
+  {
+    id: 1,
+    totalItemsPrice: 340000,
+    discountPrice: 0,
+    deliveryFee: 0,
+    orderItems: [
+      {
+        orderItemId: 1,
+        name: '치킨',
+        price: 10000,
+        imageUrl:
+          'https://images.unsplash.com/photo-1578874557108-9fc2cfb1121e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80',
+        quantity: 4,
+      },
+      {
+        orderItemId: 3,
+        name: '스테이크',
+        price: 100000,
+        imageUrl:
+          'https://images.unsplash.com/photo-1432139555190-58524dae6a55?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1776&q=80',
+        quantity: 2,
+      },
+    ],
+  },
+  {
+    id: 2,
+    totalItemsPrice: 30000,
+    discountPrice: 2000,
+    deliveryFee: 3000,
+    orderItems: [
+      {
+        orderItemId: 3,
+        name: '치킨',
+        price: 10000,
+        imageUrl: 'http://example.com/chicken.jpg',
+        quantity: 2,
+      },
+      {
+        orderItemId: 5,
+        name: '치킨',
+        price: 10000,
+        imageUrl: 'http://example.com/chicken.jpg',
+        quantity: 1,
+      },
+    ],
+  },
+];
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
     return res(ctx.delay(500), ctx.status(200), ctx.json(MOCK_PRODUCT_LIST));

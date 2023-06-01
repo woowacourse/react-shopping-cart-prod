@@ -37,6 +37,10 @@ const colors = {
   #888888
   */
   grayInfoColor: '#888888',
+  /** 
+  #F6F6F6
+  */
+  grayColor: '#F6F6F6',
 };
 
 const breakpoints = {

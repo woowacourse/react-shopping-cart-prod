@@ -15,6 +15,7 @@ export const Image = styled.img`
 
   margin-right: 3.3rem;
 
+  aspect-ratio: 1/1;
   object-fit: cover;
 `;
 
