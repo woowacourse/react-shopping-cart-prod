@@ -24,11 +24,27 @@ class ErrorBoundary extends React.Component<PropsWithChildren, ErrorBoundaryStat
     this.setState({ errorMessage: error.message });
   }
 
+  retry() {
+    this.setState({
+      hasError: false,
+      errorMessage: '',
+    });
+  }
+
   render() {
     const { hasError, errorMessage } = this.state;
     const { children } = this.props;
 
-    return hasError ? <h1>{errorMessage}</h1> : children;
+    return hasError ? (
+      <>
+        <h1>{errorMessage}</h1>
+        <button type="button" onClick={() => this.retry()}>
+          재시도
+        </button>
+      </>
+    ) : (
+      children
+    );
   }
 }
 
