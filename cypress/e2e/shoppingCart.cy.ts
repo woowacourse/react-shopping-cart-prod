@@ -10,6 +10,7 @@ const TEST_URL = 'http://localhost:3000/react-shopping-cart-prod';
 
 describe('상품 목록 페이지 e2e 테스트', () => {
   beforeEach(() => {
+    cy.viewport(1280, 832);
     cy.visit(TEST_URL);
     cy.wait(3000);
   });
@@ -117,6 +118,7 @@ describe('상품 목록 페이지 e2e 테스트', () => {
 
 describe('장바구니 페이지 e2e 테스트', () => {
   beforeEach(() => {
+    cy.viewport(1280, 832);
     cy.visit(TEST_URL);
     cy.wait(3000);
   });
@@ -349,6 +351,7 @@ describe('장바구니 페이지 e2e 테스트', () => {
 
 describe('주문 성공 페이지 e2e 테스트', () => {
   beforeEach(() => {
+    cy.viewport(1280, 832);
     cy.visit(TEST_URL);
     cy.wait(3000);
   });
@@ -406,6 +409,7 @@ describe('주문 성공 페이지 e2e 테스트', () => {
 
 describe('주문내역 페이지 e2e 테스트', () => {
   beforeEach(() => {
+    cy.viewport(1280, 832);
     cy.visit(TEST_URL);
     cy.wait(3000);
   });
