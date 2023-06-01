@@ -1,8 +1,6 @@
-type CouponType = 'percent';
-
 interface CouponInfo {
   id: number;
-  type: CouponType;
+  type: string;
   amount: number;
   name: string;
 }

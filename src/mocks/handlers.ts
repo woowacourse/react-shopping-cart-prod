@@ -2,6 +2,13 @@ import { rest } from 'msw';
 import mockProducts from './data/products.json';
 import Cart from './storage/Cart';
 import mockCoupons from './data/coupons.json';
+import {
+  ALL_COUPONS_PATH_NAME,
+  PRODUCTS_PATH_NAME,
+  CART_ITEMS_PATH_NAME,
+  COUPON_DOWNLOAD_PATH_NAME,
+} from '../constant';
+import UserCoupon from './storage/UserCoupon';
 
 interface PostAddCartRequestBody {
   productId: number;
@@ -11,9 +18,9 @@ interface PatchUpdateCartRequestBody {
   quantity: number;
 }
 
-const PRODUCTS_PATH_NAME = '/products';
-const CART_ITEMS_PATH_NAME = '/cart-items';
-const ALL_COUPONS_PATH_NAME = '/coupons';
+interface PostDownloadCouponRequestBody {
+  couponId: number;
+}
 
 export const productHandler = [
   rest.get(PRODUCTS_PATH_NAME, (req, res, ctx) => {
@@ -58,5 +65,19 @@ export const cartHandler = [
     Cart.setItem(Number(cartItemId), 0);
 
     return res(ctx.status(204));
+  }),
+];
+
+export const couponHandler = [
+  rest.get(ALL_COUPONS_PATH_NAME, (req, res, ctx) =>
+    res(ctx.delay(1000), ctx.status(200), ctx.json(mockCoupons))
+  ),
+
+  rest.post<PostDownloadCouponRequestBody>(COUPON_DOWNLOAD_PATH_NAME, async (req, res, ctx) => {
+    const { couponId } = await req.json();
+
+    if (UserCoupon.add(couponId)) return res(ctx.status(200));
+
+    return res(ctx.status(400));
   }),
 ];
