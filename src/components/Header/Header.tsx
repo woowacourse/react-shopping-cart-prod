@@ -21,10 +21,12 @@ import ServerSelectBox from "../ServerSelectBox";
 import { modalRepository } from "../../recoil/modalAtoms.tsx";
 import Icon from "../Icon.tsx";
 import Login from "../Login";
+import { userState } from "../../recoil/userAtom.ts";
 
 function Header() {
   const navigate = useNavigate();
   const cartCount = useRecoilValue(cartCountSelector);
+  const user = useRecoilValue(userState);
   const { openModal } = useRecoilValue(modalRepository);
 
   return (
@@ -63,18 +65,31 @@ function Header() {
                 <MenuTitle>주문목록</MenuTitle>
               </MenuIcon>
             </MenuWrapper>
-            <MenuWrapper onClick={() => openModal(<Login />)}>
-              <MenuIcon>
-                <Icon fontSize={30}>
-                  <IoPerson />
-                </Icon>
-                <MenuTitle>로그인</MenuTitle>
-              </MenuIcon>
-            </MenuWrapper>
+            {
+              user ? (
+                <MenuWrapper onClick={() => openModal(<Login />)}>
+                  <MenuIcon>
+                    <Icon fontSize={30}>
+                      <IoPerson />
+                    </Icon>
+                    <MenuTitle>로그아웃</MenuTitle>
+                  </MenuIcon>
+                </MenuWrapper>
+              ) : (
+                <MenuWrapper onClick={() => openModal(<Login />)}>
+                  <MenuIcon>
+                    <Icon fontSize={30}>
+                      <IoPerson />
+                    </Icon>
+                    <MenuTitle>로그인</MenuTitle>
+                  </MenuIcon>
+                </MenuWrapper>
+              )
+            }
           </NavBar>
         </HeaderContent>
       </Container>
-    </HeaderWrapper>
+    </HeaderWrapper >
   );
 }
 

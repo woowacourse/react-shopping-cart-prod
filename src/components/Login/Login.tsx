@@ -1,34 +1,12 @@
 import Icon from "../Icon.tsx";
 import { IoPerson } from "react-icons/io5";
-import styled from "styled-components";
-
-const LoginTitle = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 15px;
-`;
-
-const MemberList = styled.div``;
-
-const MemberWrapper = styled.div`
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid gray;
-  border-bottom: 1px solid gray;
-  cursor: pointer;
-
-  &:hover {
-    background-color: gainsboro;
-  }
-`;
-
-const MemberId = styled.div`
-  font-size: 24px;
-  margin-left: 15px;
-`;
+import { LoginTitle, MemberId, MemberList, MemberWrapper } from "./Login.style.ts";
+import { useRecoilValue } from "recoil";
+import { userRepository } from "../../recoil/userAtom.ts";
+import type { Login } from "../../types/types.ts";
 
 function Login() {
-  const members = [
+  const members: Login[] = [
     {
       id: "a@a.com",
       password: "1234",
@@ -38,12 +16,15 @@ function Login() {
       password: "1234",
     },
   ];
+
+  const { login } = useRecoilValue(userRepository);
+
   return (
     <div>
       <LoginTitle>로그인</LoginTitle>
       <MemberList>
         {members.map((member) => (
-          <MemberWrapper key={member.id}>
+          <MemberWrapper key={member.id} onClick={() => login(member)}>
             <Icon fontSize={30}>
               <IoPerson />
             </Icon>
