@@ -30,7 +30,9 @@ export const internalResponse =
     return (res) => {
       res.status = status;
       if (body !== undefined) res.body = JSON.stringify(body);
-      Object.entries(headers).forEach(([key, value]) => res.headers.set(key, value));
+      Object.entries(headers).forEach(([key, value]) => {
+        res.headers.set(key, value);
+      });
       return res;
     };
   };
