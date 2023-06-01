@@ -11,6 +11,8 @@ import ToastProvider from './providers/toast/ToastProvider.tsx';
 import OrderDetailPage from './pages/OrderDetailPage/OrderDetailPage.tsx';
 import OrderListPage from './pages/OrderListPage/OrderListPage.tsx';
 import Modal from './components/@common/Modal/Modal.tsx';
+import LoginPage from './pages/LoginPage/LoginPage.tsx';
+import routes from './constants/routes.ts';
 
 const App = () => {
   return (
@@ -22,11 +24,12 @@ const App = () => {
           <Header />
           <Layout>
             <Routes>
-              <Route path='/' element={<ListPage />} />
-              <Route path='/cart' element={<CartPage />} />
-              <Route path='/order' element={<OrderListPage />} />
-              <Route path='/order/:orderId' element={<OrderDetailPage />} />
-              <Route path='/error' element={<ErrorPage />} />
+              <Route path={routes.list} element={<ListPage />} />
+              <Route path={routes.login} element={<LoginPage />} />
+              <Route path={routes.cart} element={<CartPage />} />
+              <Route path={routes.order} element={<OrderListPage />} />
+              <Route path={`${routes.order}/:orderId`} element={<OrderDetailPage />} />
+              <Route path={routes.error} element={<ErrorPage />} />
             </Routes>
           </Layout>
           <Modal />
