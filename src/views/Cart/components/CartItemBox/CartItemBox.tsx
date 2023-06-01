@@ -2,9 +2,10 @@ import { CheckBox } from '@common/CheckBox';
 
 import * as S from './CartItemBox.style';
 import { Stepper } from '@common/Stepper';
-import deleteIcon from '@assets/delete.svg';
+
 import { useCart } from '@views/Cart/recoil/cartState';
 import { ProductItemType } from 'types/ProductType';
+import { FaTrashAlt } from 'react-icons/fa';
 
 interface CartItemProps {
   cartItemId: number;
@@ -40,14 +41,9 @@ function CartItemBox({ cartItemId, product }: CartItemProps) {
       <S.NameText>{name}</S.NameText>
 
       <S.ProductInfo>
-        <S.DeleteIcon
-          src={deleteIcon}
-          onClick={() => {
-            if (cartItemId) {
-              updateCartItemQuantity(cartItemId, 0);
-            }
-          }}
-        />
+        <S.DeleteButton>
+          <FaTrashAlt size="1.8rem" />
+        </S.DeleteButton>
 
         <Stepper
           quantity={quantity}

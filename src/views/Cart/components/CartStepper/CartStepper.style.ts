@@ -6,6 +6,12 @@ export const StepperContainer = styled.div`
 `;
 
 export const CartIcon = styled.button`
-  width: 25px;
-  height: 20px;
+  width: 4rem;
+  height: 4rem;
+  border: ${({ theme }) => theme.secondaryColor} solid 1px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.lightColor};
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

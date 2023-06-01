@@ -5,6 +5,7 @@ import { Stepper } from '@common/Stepper';
 import cartIcon from '@assets/cart.svg';
 
 import { useCart } from '@views/Cart/recoil/cartState';
+import { BsCartPlus } from 'react-icons/bs';
 
 interface CartQuantityFieldProps {
   product: ProductItemType;
@@ -48,7 +49,7 @@ function CartStepper({ product }: CartQuantityFieldProps) {
           aria-label={`${product.name}를 장바구니에 담기`}
           role="cart-icon"
         >
-          <img src={cartIcon}></img>
+          <BsCartPlus size="1.8rem" />
         </S.CartIcon>
       )}
     </S.StepperContainer>

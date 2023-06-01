@@ -1,6 +1,8 @@
 import { ChangeEvent } from 'react';
 
 import * as S from './Stepper.style';
+import { AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlineMinus } from 'react-icons/ai';
 
 interface StepperProps {
   quantity: number;
@@ -21,23 +23,14 @@ function Stepper({
 }: StepperProps) {
   return (
     <S.CartBox>
+      <S.QuantityControlButton onClick={onDecrease} aria-label={ariaDecreaseLabel} role="decrease">
+        <AiOutlineMinus size="1.5rem" />
+      </S.QuantityControlButton>
       <S.QuantityInput data-testid="quantity-input" value={quantity} onChange={onChange} />
-      <S.ButtonBox>
-        <S.QuantityControlButton
-          onClick={onIncrease}
-          aria-label={ariaIncreaseLabel}
-          role="increase"
-        >
-          ⏶
-        </S.QuantityControlButton>
-        <S.QuantityControlButton
-          onClick={onDecrease}
-          aria-label={ariaDecreaseLabel}
-          role="decrease"
-        >
-          ⏷
-        </S.QuantityControlButton>
-      </S.ButtonBox>
+
+      <S.QuantityControlButton onClick={onIncrease} aria-label={ariaIncreaseLabel} role="increase">
+        <AiOutlinePlus size="1.5rem" />
+      </S.QuantityControlButton>
     </S.CartBox>
   );
 }
