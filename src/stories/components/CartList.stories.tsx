@@ -7,6 +7,7 @@ import { within } from '@testing-library/react';
 import { setDataInLocalStorage } from '../../utils/localStorage';
 import { expect } from '@storybook/jest';
 import userEvent from '@testing-library/user-event';
+import CartPage from '../../pages/CartPage';
 
 const mockData = [
   {
@@ -40,8 +41,8 @@ const mockData = [
 ];
 
 const meta = {
-  title: 'Pages/cart/CartList',
-  component: CartList,
+  title: 'Pages/cart/CartPage',
+  component: CartPage,
   tags: ['autodocs'],
   decorators: [
     (Story) => {
@@ -52,7 +53,7 @@ const meta = {
       );
     },
   ],
-} satisfies Meta<typeof CartList>;
+} satisfies Meta<typeof CartPage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
