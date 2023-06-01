@@ -6,6 +6,7 @@ export interface OrderedItem {
   totalPrice: number;
   totalDiscountPrice: number;
 }
+
 export interface Order {
   id: number;
   orderedTime: string;

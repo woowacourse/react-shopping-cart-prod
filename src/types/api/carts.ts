@@ -18,8 +18,13 @@ export interface DeliveryPolicy {
 
 export interface PriceResult {
   cartItemsPrice: ItemPrice[];
-  deliveryPrice: number;
-  discountFromTotalPrice: number;
+  deliveryPrice: {
+    originalPrice: number;
+    discountPrice: number;
+  };
+  discountFromTotalPrice: {
+    discountPrice: number;
+  };
 }
 
 interface ItemPrice {

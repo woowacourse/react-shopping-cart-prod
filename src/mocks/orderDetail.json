@@ -1,0 +1,24 @@
+{
+  "id": 1,
+  "orderedTime": "2023-03-12",
+  "orderedItems": [
+    {
+      "id": 1,
+      "name": "치킨",
+      "price": 10000,
+      "imageUrl": "https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73ff604e7b0e6900f9ac53a43965300eb9a",
+      "totalPrice": 2000,
+      "salePrice": 1000
+    },
+    {
+      "id": 2,
+      "name": "샐러드",
+      "price": 20000,
+      "imageUrl": "https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73ff604e7b0e6900f9ac53a43965300eb9a",
+      "totalPrice": 2000,
+      "salePrice": 500
+    }
+  ],
+  "deliveryPrice": 3000,
+  "discountFromTotalPrice": 2000
+}

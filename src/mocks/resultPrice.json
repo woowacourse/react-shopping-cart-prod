@@ -1,0 +1,26 @@
+{
+  "cartItemsPrice": [
+    {
+      "cartItemId": 1,
+      "originalPrice": 20000,
+      "discountPrice": 10000
+    },
+    {
+      "cartItemId": 2,
+      "originalPrice": 20000,
+      "discountPrice": 16000
+    },
+    {
+      "cartItemId": 3,
+      "originalPrice": 13000,
+      "discountPrice": 9700
+    }
+  ],
+  "deliveryPrice": {
+    "originalPrice": 3000,
+    "discountPrice": 3000
+  },
+  "discountFromTotalPrice": {
+    "discountPrice": 4000
+  }
+}

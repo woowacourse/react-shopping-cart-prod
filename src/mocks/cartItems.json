@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "quantity": 5,
+    "product": {
+      "id": 1,
+      "price": 10000,
+      "name": "치킨",
+      "imageUrl": "https://www.google.co.kr/",
+      "isOnSale": true,
+      "salePrice": 4000
+    }
+  },
+  {
+    "id": 2,
+    "quantity": 3,
+    "product": {
+      "id": 3,
+      "price": 30000,
+      "name": "피자",
+      "imageUrl": "https://www.pizza.co.kr/",
+      "isOnSale": false,
+      "salePrice": 0
+    }
+  }
+]

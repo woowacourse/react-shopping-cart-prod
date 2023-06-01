@@ -4,8 +4,8 @@ export const ProductListWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
-  column-gap: 24px;
   margin-top: 60px;
+  column-gap: 5%;
 
   @media (min-width: 720px) and (max-width: 1100px) {
     grid-template-columns: repeat(3, 1fr);
