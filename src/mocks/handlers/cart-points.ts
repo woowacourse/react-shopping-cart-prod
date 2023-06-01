@@ -8,10 +8,9 @@ export const handlers = [
     const { user } = req;
 
     const points =
-      (cartItems.reduce(
-        (total, cartItem) => total + cartItem.product.price * cartItem.quantity,
-        0,
-      ) *
+      (cartItems
+        .filter((cartItem) => cartItem.checked)
+        .reduce((total, cartItem) => total + cartItem.product.price * cartItem.quantity, 0) *
         SAVING_RATE) /
       100;
 
