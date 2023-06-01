@@ -21,6 +21,7 @@ export const useProductFetch = () => {
     const response = await fetch(`${apiEndPoint}/products/${id}`, {
       method: 'GET',
       headers: {
+        Authorization: `Basic ${base64}`,
         'Content-Type': 'application/json',
       },
     });

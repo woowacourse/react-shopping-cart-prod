@@ -34,7 +34,7 @@ export const useOrderFetch = () => {
     return fetch(`${apiEndPoint}/point`, {
       method: 'GET',
       headers: {
-        Autorization: `Basic ${base64}`,
+        Authorization: `Basic ${base64}`,
       },
     }).then((res) => res.json());
   };
@@ -43,16 +43,16 @@ export const useOrderFetch = () => {
     return fetch(`${apiEndPoint}/order/${orderId}`, {
       method: 'GET',
       headers: {
-        Autorization: `Basic ${base64}`,
+        Authorization: `Basic ${base64}`,
       },
     }).then((res) => res.json());
   };
 
   const getOrders = async () => {
-    return fetch('/orders', {
+    return fetch(`${apiEndPoint}/orders`, {
       method: 'GET',
       headers: {
-        Autorization: `Basic ${base64}`,
+        Authorization: `Basic ${base64}`,
       },
     }).then((res) => res.json());
   };
