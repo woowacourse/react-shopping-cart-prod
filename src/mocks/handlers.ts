@@ -30,7 +30,7 @@ export const handlers = [
   }),
 
   rest.get('/points', (req, res, ctx) => {
-    return res(ctx.delay(200), ctx.status(200), ctx.json(point));
+    return res(ctx.delay(200), ctx.status(200), ctx.json(getData('point')));
   }),
 
   rest.get('/orders/:orderId', (req, res, ctx) => {
