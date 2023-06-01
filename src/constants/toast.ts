@@ -1,5 +1,3 @@
-import { M } from 'msw/lib/glossary-de6278a9';
-
 export const TOAST_STATE = {
   successAddProduct: {
     message: '상품을 장바구니에 추가했어요',

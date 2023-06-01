@@ -22,10 +22,10 @@ export const useGetSelectedCoupon = () => {
     );
 
     if (!selectedCoupon) {
-      setToastState(TOAST_STATE.failedSelectCoupon);
+      setToastState({ ...TOAST_STATE.failedSelectCoupon });
       return null;
     }
-    setToastState(TOAST_STATE.successSelectCoupon);
+    setToastState({ ...TOAST_STATE.successSelectCoupon });
 
     return selectedCoupon;
   };
