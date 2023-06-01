@@ -12,6 +12,7 @@ type ProductCartProps = Product & {
   count: number | undefined;
   cartId: number | undefined;
 };
+
 const ProductCard = ({
   id,
   name,
