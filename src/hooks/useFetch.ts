@@ -2,10 +2,12 @@ import { useRecoilValue } from 'recoil';
 import { baseURLSelector } from '../store/server';
 import { AUTH } from '../constants/auth';
 import { useCallback } from 'react';
+import { END_POINTS } from '../constants/endPoints';
 
 export type FetchMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
+type EndPointKeys = (typeof END_POINTS)[keyof typeof END_POINTS];
 
-const useFetch = (endPoint: string) => {
+const useFetch = (endPoint: EndPointKeys) => {
   const baseURL = useRecoilValue(baseURLSelector);
 
   const handleFetch = useCallback(
@@ -28,7 +30,7 @@ const useFetch = (endPoint: string) => {
       if (!data) return null;
       return JSON.parse(data);
     },
-    [baseURL]
+    [baseURL, endPoint]
   );
 
   return { handleFetch };
