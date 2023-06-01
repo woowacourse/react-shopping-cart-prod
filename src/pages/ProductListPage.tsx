@@ -4,11 +4,25 @@ import { Link } from 'react-router-dom';
 import ProductList from '../components/product/ProductList/ProductList';
 import ProductFallBack from '../components/product/ProductFallBack/ProductFallBack';
 import ErrorBoundary from '../errorHandler/ErrorBoundary';
+import CouponBannerImage from '../assets/CouponBanner.png';
+import CouponBannerImageSmall from '../assets/CouponBannerSmall.png';
 
 const ProductListPage = () => {
   return (
     <Layout>
-      <Link to="/coupons">쿠폰받으러가기</Link>
+      <BannerDiv>
+        <Link to="/coupons" aria-label="쿠폰 지급 이벤트">
+          <picture>
+            <source srcSet={CouponBannerImage} media="(min-width: 800px)" />
+            <source srcSet={CouponBannerImageSmall} media="(min-width: 0px)" />
+            <img
+              src={CouponBannerImage}
+              loading="lazy"
+              alt="쿠폰 이벤트 배너. 무너진 건물에 '우리 식당 정상 영업 합니다'라는 플랜카드가 걸려 있다."
+            />
+          </picture>
+        </Link>
+      </BannerDiv>
       <ErrorBoundary>
         <Suspense fallback={<ProductFallBack />}>
           <ProductList />
@@ -19,12 +33,21 @@ const ProductListPage = () => {
 };
 
 const Layout = styled.main`
+  display: flex;
+  flex-direction: column;
+  row-gap: 60px;
+
   padding: 140px 0 60px 0;
 
   @media screen and (min-width: 1200px) {
-    display: flex;
     justify-content: center;
   }
+`;
+
+const BannerDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export default ProductListPage;
