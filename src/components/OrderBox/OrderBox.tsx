@@ -8,14 +8,13 @@ interface OrderBoxProps {
 }
 
 export const OrderBox = ({ orderDetailData }: OrderBoxProps) => {
-  if (!orderDetailData) return <div>Loading...</div>;
   const { orderId, orderDate, orderDetails } = orderDetailData;
 
   return (
     <styled.OrderBox>
       <OrderBoxHeader orderId={orderId} orderData={orderDate} />
       {orderDetails.map((detail: any) => (
-        <OrderItem detailData={detail} />
+        <OrderItem key={detail.id} detailData={detail} />
       ))}
     </styled.OrderBox>
   );

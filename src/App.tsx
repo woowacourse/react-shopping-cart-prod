@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Suspense, useEffect } from 'react';
+import { Await, BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
 
 import { Layout } from '@components/common/Layout/Layout';
@@ -15,11 +15,12 @@ import { useQuery } from './hooks/useQuery';
 
 import { FETCH_URL, PATH } from '@constants/index';
 
-import type { CartItemType } from './types';
+import type { CartItem } from './types';
+import { Spinner } from '@components/common/Spinner/Spinner';
 
 export const App = () => {
   const baseUrl = useApiBaseUrlValue();
-  const { data: cart } = useQuery<CartItemType[]>(baseUrl + FETCH_URL.CART_ITEMS, {
+  const { data: cart } = useQuery<CartItem[]>(baseUrl + FETCH_URL.CART_ITEMS, {
     Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
   });
 
@@ -56,7 +57,9 @@ export const App = () => {
             path={PATH.ORDERS}
             Component={() => (
               <Layout pageTitle="주문 목록">
-                <OrdersPage />
+                <Suspense fallback={<Spinner />}>
+                  <OrdersPage />
+                </Suspense>
               </Layout>
             )}
           />
@@ -64,7 +67,9 @@ export const App = () => {
             path={`${PATH.ORDERS}/:id`}
             Component={() => (
               <Layout pageTitle="주문 내역 상세">
-                <OrderDetailPage />
+                <Suspense fallback={<Spinner />}>
+                  <OrderDetailPage />
+                </Suspense>
               </Layout>
             )}
           />
