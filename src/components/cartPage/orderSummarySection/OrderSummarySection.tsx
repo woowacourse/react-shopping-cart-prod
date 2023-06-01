@@ -26,7 +26,7 @@ export const OrderSummarySection = () => {
   } = useRecoilValue(priceSummaryState);
   const apiEndPoint = useRecoilValue(APIAtom);
   const selectedCartIdList = useRecoilValue(selectedCartIdListState);
-  const setUserPoint = useSetRecoilState(userAtomState);
+  const setUserPoint = useSetRecoilState(userAtomState(apiEndPoint));
   const setOrders = useSetRecoilState(orderListState(apiEndPoint));
 
   const { order, getUserPoint, getOrders } = useOrderFetch();

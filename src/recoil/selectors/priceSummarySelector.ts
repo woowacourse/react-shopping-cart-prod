@@ -9,7 +9,7 @@ export const priceSummaryState = selector({
     const selectedCartItems = get(selectedCartIdListState);
     const apiEndPoint = get(APIAtom);
     const cartItems = get(cartItemsState(apiEndPoint));
-    const userPoint = get(userAtomState);
+    const userPoint = get(userAtomState(apiEndPoint));
 
     const totalProductPrice = selectedCartItems.reduce(
       (acc, selectedCartItemId) => {

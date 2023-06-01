@@ -29,7 +29,7 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
     userPoint,
   } = useRecoilValue(priceSummaryState);
   const apiEndPoint = useRecoilValue(APIAtom);
-  const setUserPoint = useSetRecoilState(userAtomState);
+  const setUserPoint = useSetRecoilState(userAtomState(apiEndPoint));
   const setOrders = useSetRecoilState(orderListState(apiEndPoint));
 
   const { order, getUserPoint, getOrders } = useOrderFetch();
