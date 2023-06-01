@@ -1,22 +1,21 @@
 import { styled } from 'styled-components';
-import { CartItem, OrderItem } from '../../types';
+import { OrderItem } from '../../types';
 import useNavigatePage from '../../hooks/useNavigatePage';
 
 interface Props {
   order: OrderItem;
+  buttonHide?: boolean;
 }
 
-const OrderListItem = ({ order }: Props) => {
+const OrderListItem = ({ order, buttonHide = false }: Props) => {
   const { goOrderDetail } = useNavigatePage();
 
-  const orderItems = order.orderProducts.map((orderItem: CartItem) => (
+  const orderItems = order.orderProducts.map(({ name, imageUrl, price, quantity }) => (
     <S.ItemWrapper>
-      <S.Image src={orderItem.product.imageUrl} alt={orderItem.product.name} />
+      <S.Image src={imageUrl} alt={name} />
       <S.ItemInfoWrapper>
-        <S.Name>{orderItem.product.name}</S.Name>
-        <S.Price>{`${orderItem.product.price.toLocaleString()}원 / 수량 : ${
-          orderItem.quantity
-        }개`}</S.Price>
+        <S.Name>{name}</S.Name>
+        <S.Price>{`${price.toLocaleString()}원 / 수량 : ${quantity}개`}</S.Price>
       </S.ItemInfoWrapper>
     </S.ItemWrapper>
   ));
@@ -25,7 +24,11 @@ const OrderListItem = ({ order }: Props) => {
     <S.ItemsWrapper>
       <S.OrderInfoWrapper>
         <S.OrderNumber>{`주문번호 : ${order.orderId}`}</S.OrderNumber>
-        <S.DetailButton onClick={() => goOrderDetail(order.orderId)}>{`상세보기 >`}</S.DetailButton>
+        {buttonHide ? null : (
+          <S.DetailButton
+            onClick={() => goOrderDetail(order.orderId)}
+          >{`상세보기 >`}</S.DetailButton>
+        )}
       </S.OrderInfoWrapper>
       {orderItems}
     </S.ItemsWrapper>
@@ -33,7 +36,7 @@ const OrderListItem = ({ order }: Props) => {
 };
 
 const S = {
-  ItemsWrapper: styled.div`
+  ItemsWrapper: styled.li`
     width: 100%;
     height: fit-content;
     border: 1px solid #aaa;
