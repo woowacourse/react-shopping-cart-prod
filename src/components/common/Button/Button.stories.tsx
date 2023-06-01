@@ -12,6 +12,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    text: '쿠폰 적용하기',
+    text: '쿠폰 선택',
   },
 };
