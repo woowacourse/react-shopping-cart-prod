@@ -8,7 +8,7 @@ import SelectBox from './SelectBox';
 import CartIcon from '../../assets/CartIcon';
 import useCartProductCount from '../../hooks/useCartProductCount';
 import { serverNameState } from '../../states/serverName';
-import { SERVER_KEYS, isServerKey } from '../../constants/server';
+import { SERVER_OPTIONS, isServerKey } from '../../constants/server';
 
 const Header = () => {
   const cartProductCount = useCartProductCount();
@@ -28,7 +28,7 @@ const Header = () => {
           <Logo>SHOP</Logo>
         </LogoContainer>
         <LinkWrapper>
-          <SelectBox options={SERVER_KEYS} onChange={onChange} />
+          <SelectBox options={SERVER_OPTIONS} onChange={onChange} />
           <CartPageLink to='/cart'>
             장바구니
             <ProductCountAlert>{cartProductCount}</ProductCountAlert>

@@ -3,6 +3,7 @@ import { rest } from 'msw';
 import { CART_STORAGE_ID, ORDER_STORAGE_ID } from '../constants/storage';
 import products from './data/products.json';
 import orders from './data/orders.json';
+import coupons from './data/coupons.json';
 import {
   addTargetProduct,
   deleteTargetProduct,
@@ -146,5 +147,9 @@ export const handlers = [
       ctx.status(200),
       ctx.json({ order: targetOrder, totalPrice: 50000 })
     );
+  }),
+
+  rest.get('/coupons', (_, res, ctx) => {
+    return res(ctx.delay(2000), ctx.status(200), ctx.json(coupons));
   }),
 ];

@@ -20,11 +20,7 @@ const useExpectedPayment = () => {
     [deliveryFee, totalProductPrice]
   );
 
-  return {
-    totalProductPrice: totalProductPrice.toLocaleString('ko-KR'),
-    deliveryFee: deliveryFee.toLocaleString('ko-KR'),
-    totalPrice: totalPrice.toLocaleString('ko-KR'),
-  };
+  return { totalProductPrice, deliveryFee, totalPrice };
 };
 
 export default useExpectedPayment;
