@@ -17,7 +17,7 @@ const TotalCartProduct = () => {
     <Container>
       <TotalProductCountWrapper>
         <CheckBox
-          id='total-item-check'
+          id="total-item-check"
           onChange={toggleAllProductChecked}
           checked={isAllChecked}
         />
@@ -26,10 +26,10 @@ const TotalCartProduct = () => {
         </p>
       </TotalProductCountWrapper>
       <Button
-        type='button'
-        primary={false}
-        size='small'
-        border
+        type="button"
+        buttonPrimary={false}
+        size="small"
+        buttonBorder
         onClick={deleteCheckedProducts}
       >
         선택삭제

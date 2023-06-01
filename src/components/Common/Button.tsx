@@ -6,25 +6,25 @@ type ButtonSizeType = 'small' | 'medium';
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSizeType;
   autoSize?: boolean;
-  primary?: boolean;
-  border?: boolean;
+  buttonPrimary?: boolean;
+  buttonBorder?: boolean;
   children: ReactNode;
 }
 
 const Button = ({
   size = 'medium',
-  primary = true,
+  buttonPrimary = true,
   autoSize = false,
-  border = false,
+  buttonBorder = false,
   children,
   ...args
 }: ButtonProps) => {
   return (
     <StyledButton
       size={size}
-      primary={primary}
+      buttonPrimary={buttonPrimary}
       autoSize={autoSize}
-      border={border}
+      buttonBorder={buttonBorder}
       {...args}
     >
       {children}
@@ -45,21 +45,20 @@ const buttonStyles = {
   },
 };
 
-const StyledButton = styled.button<{
-  size: ButtonSizeType;
-  primary: boolean;
-  autoSize: boolean;
-  border: boolean;
-}>`
-  ${({ size }) => buttonStyles[size]}
+const StyledButton = styled(
+  ({ autoSize, buttonPrimary, buttonBorder, ...restProps }: ButtonProps) => (
+    <button {...restProps} />
+  )
+)`
+  ${({ size }) => buttonStyles[size ?? 'medium']}
   width: ${({ size, autoSize }) =>
-    autoSize ? '100%' : buttonStyles[size].width};
-  background: ${({ theme, primary }) =>
-    primary ? theme.colors.black : theme.colors.white};
-  color: ${({ theme, primary }) =>
-    primary ? theme.colors.white : theme.colors.black};
-  border: ${({ theme, border }) =>
-    border ? `1px solid ${theme.colors.gray300}` : 'none'};
+    autoSize ? '100%' : buttonStyles[size ?? 'medium'].width};
+  background: ${({ theme, buttonPrimary }) =>
+    buttonPrimary ? theme.colors.black : theme.colors.white};
+  color: ${({ theme, buttonPrimary }) =>
+    buttonPrimary ? theme.colors.white : theme.colors.black};
+  border: ${({ theme, buttonBorder }) =>
+    buttonBorder ? `1px solid ${theme.colors.gray300}` : 'none'};
 
   &:disabled {
     cursor: not-allowed;
