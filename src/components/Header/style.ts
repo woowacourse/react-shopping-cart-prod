@@ -14,7 +14,7 @@ export const Layout = styled.div`
   grid-template-columns: 1fr auto auto;
   align-items: center;
   column-gap: 30px;
-  max-width: 1200px;
+  max-width: 1080px;
   margin: auto;
   justify-content: space-between;
   @media only screen and (max-width: 1200px) {
@@ -23,6 +23,7 @@ export const Layout = styled.div`
   }
   @media only screen and (max-width: 768px) {
     // 모바일
+    grid-template-columns: 1fr auto;
     max-width: 400px;
   }
 `;
