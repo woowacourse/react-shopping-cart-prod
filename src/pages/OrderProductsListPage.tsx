@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import styled from 'styled-components';
-import OrderProductList from '../components/Order/OrderProductList';
+import OrderList from '../components/Order/OrderList';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 
 const OrderProductsListPage = () => {
@@ -11,7 +11,7 @@ const OrderProductsListPage = () => {
       <OrderProductContent>
         <OrderProductInfo>
           <Suspense fallback={<ContentListSkeleton content='product' />}>
-            <OrderProductList />
+            <OrderList />
           </Suspense>
         </OrderProductInfo>
       </OrderProductContent>
