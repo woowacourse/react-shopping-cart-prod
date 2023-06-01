@@ -1,18 +1,13 @@
-import { ChangeEventHandler, useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Spacer from '../../common/Spacer/Spacer';
 import { formatPrice } from '../../../utils/formatPrice';
 import OrderConfirmModal from '../../order/OrderConfirmModal/OrderConfirmModal';
-import useModal from '../../common/Modal/useModal';
-import { isNumericString } from '../../../utils/isNumericString';
 import { removeComma } from '../../../utils/removeComma';
 import { CloseIcon } from '../../../assets/svg';
-import { pointQuery } from '../../../recoil/selectors/point';
+import useCartTotal from './useCartTotal';
+import { FREE_SHIPPING_PRICE, SHIPPING_FEE } from '../../../constants/cart';
+import useModal from '../../common/Modal/useModal';
 import type { CartItem } from '../../../types/cart';
-
-const FREE_SHIPPING_PRICE = 30_000;
-const SHIPPING_FEE = 3_000;
 
 interface CartTotalProps {
   selectedCartItemIds: Set<CartItem['id']>;
@@ -23,63 +18,16 @@ const CartTotal = ({
   selectedCartItemIds,
   totalProductPrice,
 }: CartTotalProps) => {
-  const [usingPoint, setUsingPoint] = useState('');
-  const usingPointRef = useRef('');
-  const point = useRecoilValue(pointQuery);
-  const { isModalOpen, openModal, closeModal } = useModal();
+  const {
+    point,
+    usingPoint,
+    updateUsingPoint,
+    clearPoint,
+    useAllPoint,
+    totalOrderPrice,
+  } = useCartTotal(totalProductPrice);
+  const { isModalOpen, openModal } = useModal();
   const isFreeShipping = totalProductPrice >= FREE_SHIPPING_PRICE;
-  const isPointMoreThanProductPrice = point > totalProductPrice;
-  const maxPoint = isPointMoreThanProductPrice ? totalProductPrice : point;
-
-  const calcTotalOrderPrice = () => {
-    if (totalProductPrice <= 0) return 0;
-
-    const usingPointAmount = Number(removeComma(usingPoint));
-
-    return isFreeShipping
-      ? totalProductPrice - usingPointAmount
-      : totalProductPrice + SHIPPING_FEE - usingPointAmount;
-  };
-
-  const useAllPoint = () => {
-    if (point <= 0) return;
-
-    setUsingPoint(maxPoint.toLocaleString('ko-KR'));
-  };
-
-  const clearPoint = () => {
-    setUsingPoint('0');
-  };
-
-  const updateUsingPoint: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const value = e.target.value;
-    const valueWithoutComma = removeComma(value);
-
-    if (!isNumericString(valueWithoutComma)) return;
-
-    setUsingPoint(Number(valueWithoutComma).toLocaleString('ko-KR'));
-    usingPointRef.current = Number(valueWithoutComma).toLocaleString('ko-KR');
-
-    const currentPoint = Number(removeComma(usingPointRef.current));
-
-    if (currentPoint >= point || currentPoint >= totalProductPrice) {
-      setUsingPoint(maxPoint.toLocaleString('ko-KR'));
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (isModalOpen) {
-        closeModal();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isPointMoreThanProductPrice) {
-      setUsingPoint(maxPoint.toLocaleString('ko-KR'));
-    }
-  }, [totalProductPrice]);
 
   return (
     <>
@@ -146,14 +94,14 @@ const CartTotal = ({
         <PriceWrapper>
           <Total>총 결제금액</Total>
           <TotalPrice isHighlight={totalProductPrice > 0}>
-            {formatPrice(calcTotalOrderPrice())}
+            {formatPrice(totalOrderPrice)}
           </TotalPrice>
         </PriceWrapper>
         <Spacer height={43} />
         <OrderButton disabled={totalProductPrice === 0} onClick={openModal}>
           {totalProductPrice === 0
             ? '장바구니에 상품을 담아주세요.'
-            : `주문하기 (총 ${formatPrice(calcTotalOrderPrice())})`}
+            : `주문하기 (총 ${formatPrice(totalOrderPrice)})`}
         </OrderButton>
       </Container>
       {isModalOpen && (
@@ -161,7 +109,7 @@ const CartTotal = ({
           selectedCartItemIds={selectedCartItemIds}
           usingPoint={Number(removeComma(usingPoint))}
           totalProductPrice={totalProductPrice}
-          totalOrderPrice={calcTotalOrderPrice()}
+          totalOrderPrice={totalOrderPrice}
         />
       )}
     </>
