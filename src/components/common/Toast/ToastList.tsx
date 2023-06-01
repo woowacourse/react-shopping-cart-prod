@@ -23,6 +23,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column-reverse;
   row-gap: 10px;
+  z-index: ${(props) => props.theme.zIndex.toast};
 `;
 
 export default ToastList;
