@@ -58,4 +58,23 @@ export const handlers = [
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(true));
   }),
+
+  rest.post("/cart-items", async (req, res, ctx) => {
+    const { productId } = await req.json();
+
+    const cartItems = getLocalStorage(LOCAL_STORAGE_KEY, []);
+
+    const newItemId = Date.now();
+
+    const newItem = {
+      id: newItemId,
+      quantity: 1,
+      checked: true,
+      product: mockData.find((product) => product.id === productId),
+    };
+
+    setLocalStorage(LOCAL_STORAGE_KEY, [...cartItems, newItem]);
+    return res(ctx.delay(100), ctx.status(201), ctx.json(true));
+  }),
+
 ];

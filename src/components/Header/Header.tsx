@@ -21,13 +21,14 @@ import ServerSelectBox from "../ServerSelectBox";
 import { modalRepository } from "../../recoil/modalAtoms.tsx";
 import Icon from "../Icon.tsx";
 import Login from "../Login";
-import { userState } from "../../recoil/userAtom.ts";
+import { userRepository, userState } from "../../recoil/userAtom.ts";
 
 function Header() {
   const navigate = useNavigate();
   const cartCount = useRecoilValue(cartCountSelector);
   const user = useRecoilValue(userState);
   const { openModal } = useRecoilValue(modalRepository);
+  const { logout } = useRecoilValue(userRepository);
 
   return (
     <HeaderWrapper>
@@ -67,7 +68,7 @@ function Header() {
             </MenuWrapper>
             {
               user ? (
-                <MenuWrapper onClick={() => openModal(<Login />)}>
+                <MenuWrapper onClick={() => logout()}>
                   <MenuIcon>
                     <Icon fontSize={30}>
                       <IoPerson />
