@@ -9,3 +9,10 @@ export const getOrderList = async () => {
 
   return orderList;
 };
+
+export const getOrder = async (orderId: number) => {
+  const fetchedData = await api.get<Order>(`${URL}/${orderId}`);
+  const order = fetchedData.data;
+
+  return order;
+};
