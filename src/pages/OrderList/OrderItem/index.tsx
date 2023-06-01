@@ -8,7 +8,7 @@ import * as S from './style';
 import OrderAmount from '../OrderAmount';
 import OrderProduct from '../OrderProduct';
 
-function OrderItem({ id, date, cartItems, page, price }: OrderItemType & { page?: 'detail' }) {
+function OrderItem({ id, date, orderItems, page, price }: OrderItemType & { page?: 'detail' }) {
   const navigate = useNavigate();
 
   const moveOrderDetail = () => {
@@ -20,17 +20,18 @@ function OrderItem({ id, date, cartItems, page, price }: OrderItemType & { page?
     });
   };
 
-  const displayCartItems = () => {
-    if (page === 'detail') return cartItems;
-    if (cartItems.length < 3) return cartItems;
+  const displayOrderItems = () => {
+    if (page === 'detail') return orderItems;
+    if (orderItems.length < 3) return orderItems;
 
-    return cartItems.slice(0, 2);
+    return orderItems.slice(0, 2);
   };
 
+  console.log(orderItems);
   const displayMoveDetailPage = () => {
-    if (cartItems.length < 3) return '상세보기 ⟩';
+    if (orderItems.length < 3) return '상세보기 ⟩';
 
-    const remainsProductAmount = cartItems.length - 2;
+    const remainsProductAmount = orderItems.length - 2;
     return `${remainsProductAmount}개의 상품 더 보기 ⟩`;
   };
 
@@ -44,8 +45,8 @@ function OrderItem({ id, date, cartItems, page, price }: OrderItemType & { page?
           )}
         </S.OrderInfo>
         <S.OrderItems>
-          {displayCartItems().map((cartItem) => {
-            return <OrderProduct key={cartItem.id} {...cartItem} />;
+          {displayOrderItems().map((orderItems) => {
+            return <OrderProduct key={orderItems.id} {...orderItems} />;
           })}
         </S.OrderItems>
       </S.Container>

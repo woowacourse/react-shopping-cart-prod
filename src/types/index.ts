@@ -17,7 +17,7 @@ export type CartItemType = {
 
 export type OrderItemType = {
   id: number;
-  cartItems: CartItemType[];
+  orderItems: CartItemType[];
   date: Date;
   price: number;
 };

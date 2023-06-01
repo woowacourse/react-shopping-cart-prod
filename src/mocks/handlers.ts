@@ -92,7 +92,7 @@ export const handlers = [
 
     const newOrderItem = {
       id: Date.now(),
-      cartItems: orderItems,
+      orderItems,
       date: new Date(),
       price,
     };
