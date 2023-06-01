@@ -23,8 +23,7 @@ interface ProductItemProps {
 function ProductItem({ product }: ProductItemProps) {
   const { name, price, imageUrl } = product;
   const quantity = useRecoilValue(quantityByProductIdSelector(product.id));
-  const todoRepository = useRecoilValue(modalRepository);
-  const { openModal } = todoRepository;
+  const { openModal } = useRecoilValue(modalRepository);
 
   return (
     <>

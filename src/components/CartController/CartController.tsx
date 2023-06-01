@@ -8,7 +8,7 @@ import {
   QuantityInput,
 } from "./CartController.style";
 import {
-  cartRepositoryState,
+  cartRepository,
   quantityByProductIdSelector,
 } from "../../recoil/cartAtoms";
 import { useRecoilValue } from "recoil";
@@ -18,8 +18,7 @@ interface CartControllerProps {
 }
 
 function CartController({ product }: CartControllerProps) {
-  const cartRepository = useRecoilValue(cartRepositoryState);
-  const { addCartItem, updateCartItemQuantity } = cartRepository;
+  const { addCartItem, updateCartItemQuantity } = useRecoilValue(cartRepository);
 
   const quantity = useRecoilValue(quantityByProductIdSelector(product.id));
 

@@ -25,8 +25,7 @@ import Login from "../Login";
 function Header() {
   const navigate = useNavigate();
   const cartCount = useRecoilValue(cartCountSelector);
-  const todoRepository = useRecoilValue(modalRepository);
-  const { openModal } = todoRepository;
+  const { openModal } = useRecoilValue(modalRepository);
 
   return (
     <HeaderWrapper>
@@ -39,17 +38,20 @@ function Header() {
             <ServerSelectBox />
             <MenuWrapper onClick={() => navigate("/cart")}>
               <MenuIcon>
-                {cartCount > 0 ? (
-                  <CartCountWrapper>
-                    <CartCount>
-                      <CartCountText>{cartCount}</CartCountText>
-                    </CartCount>
-                  </CartCountWrapper>
-                ) : (
-                  <Icon fontSize={30}>
-                    <IoCart />
-                  </Icon>
-                )}
+                {
+                  cartCount > 0
+                    ? (
+                      <CartCountWrapper>
+                        <CartCount>
+                          <CartCountText>{cartCount}</CartCountText>
+                        </CartCount>
+                      </CartCountWrapper>
+                    ) : (
+                      <Icon fontSize={30}>
+                        <IoCart />
+                      </Icon>
+                    )
+                }
                 <MenuTitle>장바구니</MenuTitle>
               </MenuIcon>
             </MenuWrapper>

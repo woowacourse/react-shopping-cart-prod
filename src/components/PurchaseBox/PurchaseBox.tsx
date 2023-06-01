@@ -19,8 +19,7 @@ function PurchaseBox() {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
   const POINTS = 1000;
-  const todoRepository = useRecoilValue(modalRepository);
-  const { openModal } = todoRepository;
+  const { openModal } = useRecoilValue(modalRepository);
   return (
     <>
       <PurchaseBoxWrapper>

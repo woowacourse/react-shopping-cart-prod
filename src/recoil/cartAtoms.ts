@@ -87,8 +87,8 @@ export const cartItemByProductIdSelector = selectorFamily({
       },
 });
 
-export const cartRepositoryState = selector({
-  key: "cartRepositoryState",
+export const cartRepository = selector({
+  key: "cartRepository",
   get: ({ getCallback }) => {
     const addCartItem = getCallback(({ set, snapshot }) => async (productId: number) => {
       const server = await snapshot.getPromise(serverState);
@@ -101,9 +101,7 @@ export const cartRepositoryState = selector({
       ({ set, snapshot }) =>
         async (product: ProductItem, newQuantity: number) => {
           const server = await snapshot.getPromise(serverState);
-          const targetCartItem = await snapshot.getPromise(
-            cartItemByProductIdSelector(product.id)
-          );
+          const targetCartItem = await snapshot.getPromise(cartItemByProductIdSelector(product.id));
 
           if (targetCartItem) {
             const cartId = targetCartItem.id;
@@ -122,9 +120,7 @@ export const cartRepositoryState = selector({
 
     const switchAllCheckboxes = getCallback(({ snapshot, set }) => async () => {
       const cartList = await snapshot.getPromise(cartState);
-      const isAllCartItemChecked = await snapshot.getPromise(
-        allCartCheckedSelector
-      );
+      const isAllCartItemChecked = await snapshot.getPromise(allCartCheckedSelector);
       const newCartList = cartList.map((cartItem: CartItem) => ({
         ...cartItem,
         checked: !isAllCartItemChecked,
@@ -151,6 +147,12 @@ export const cartRepositoryState = selector({
       }
     });
 
-    return { addCartItem, updateCartItemQuantity, switchAllCheckboxes, loadCartList, removeCheckedCartItems };
+    return {
+      addCartItem,
+      updateCartItemQuantity,
+      switchAllCheckboxes,
+      loadCartList,
+      removeCheckedCartItems
+    };
   },
 });

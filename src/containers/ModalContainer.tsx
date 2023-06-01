@@ -10,8 +10,7 @@ function ModalContainer() {
   const isModalOpen = useRecoilValue(modalOpenState);
   const modalContent = useRecoilValue(modalContentState);
 
-  const todoRepository = useRecoilValue(modalRepository);
-  const { closeModal } = todoRepository;
+  const { closeModal } = useRecoilValue(modalRepository);
 
   return (
     <Modal isOpen={isModalOpen} onClose={closeModal}>

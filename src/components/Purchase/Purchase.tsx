@@ -44,8 +44,7 @@ function Purchase() {
 
   const [isCouponSelectorOpen, setCouponSelectorOpen] = useState(false);
 
-  const todoRepository = useRecoilValue(modalRepository);
-  const { closeModal } = todoRepository;
+  const { closeModal } = useRecoilValue(modalRepository);
 
   const purchase = () => {
     const order: NewOrder = {
