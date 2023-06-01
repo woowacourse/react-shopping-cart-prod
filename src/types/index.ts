@@ -22,10 +22,13 @@ interface OrderedItem {
   product: ProductItemData;
 }
 
-interface OrderData {
+interface OrderData extends CartPriceData {
   id: number;
   orderedItems: OrderedItem[];
   orderedAt: Date;
+}
+
+interface CartPriceData {
   totalItemDiscountAmount: number;
   totalMemberDiscountAmount: number;
   totalItemPrice: number;
@@ -60,4 +63,11 @@ export interface Member {
   discountRate: RANK_DISCOUNT_RATE;
 }
 
-export type { ProductItemData, CartItemData, PostCartItemRequestBody, OrderedItem, OrderData };
+export type {
+  ProductItemData,
+  CartItemData,
+  CartPriceData,
+  PostCartItemRequestBody,
+  OrderedItem,
+  OrderData,
+};

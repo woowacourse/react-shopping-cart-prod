@@ -1,4 +1,4 @@
-import { CartItemData, OrderData } from '.';
+import { CartItemData, CartPriceData } from '.';
 import { HTTP_ERROR_MESSAGE } from '../constants/api';
 
 type HTTPErrorMessageCode = keyof typeof HTTP_ERROR_MESSAGE;
@@ -19,7 +19,7 @@ interface PatchCartItemRequestBody {
   quantity: number;
 }
 
-interface PostOrdersRequestBody extends Omit<OrderData, 'id' | 'orderedItems' | 'orderedAt'> {
+interface PostOrdersRequestBody extends CartPriceData {
   cartItemIds: CartItemData['id'][];
 }
 
