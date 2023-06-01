@@ -9,7 +9,7 @@ type OrderDetailSheetProps = {
 };
 
 function OrderDetailSheet({ title, children, hasShownIcon = true }: OrderDetailSheetProps) {
-  const [isOpenCartItems, setIsOpenCartItems] = useState(!hasShownIcon);
+  const [isOpenCartItems, setIsOpenCartItems] = useState(true);
   const shownIcon = isOpenCartItems ? '▲' : '▼';
 
   return (

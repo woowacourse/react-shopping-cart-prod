@@ -1,8 +1,12 @@
 import { CartItemType } from '@Types/index';
 
+import convert from '@Utils/convert';
+
 import * as S from './style';
 
 function OrderSheetItem({ product, quantity }: CartItemType) {
+  const productTotalPrice = convert.toLocalPriceFromNumber(product.price * quantity);
+
   return (
     <S.Container>
       <S.DeliveryInfo>
@@ -14,7 +18,7 @@ function OrderSheetItem({ product, quantity }: CartItemType) {
         <S.ProductWrapper>
           <S.ProductName>{product.name}</S.ProductName>
           <S.ProductQuantity>수량 : {quantity} 개</S.ProductQuantity>
-          <S.ProductPrice>{product.price}</S.ProductPrice>
+          <S.ProductPrice>{productTotalPrice}</S.ProductPrice>
         </S.ProductWrapper>
       </S.ProductInfo>
     </S.Container>
