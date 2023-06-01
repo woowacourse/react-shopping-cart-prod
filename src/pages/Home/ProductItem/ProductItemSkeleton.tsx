@@ -1,6 +1,6 @@
 import * as S from './style';
 
-function SkeletonProductItem() {
+function ProductItemSkeleton() {
   return (
     <S.Container>
       <S.ProductItemImage></S.ProductItemImage>
@@ -14,4 +14,4 @@ function SkeletonProductItem() {
   );
 }
 
-export default SkeletonProductItem;
+export default ProductItemSkeleton;

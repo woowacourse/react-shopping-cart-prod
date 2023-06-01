@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 
 import PaymentArea from '@Components/PaymentArea';
 
-import SkeletonCartItem from './CartItem/SkeletonCartItem';
+import CartItemSkeleton from './CartItem/CartItemSkeleton';
 import CartItems from './CartItems';
 import CartListSubHeader from './CartListSubHeader';
 import LoadingCartListSubHeader from './CartListSubHeader/LoadingCartListSubHeader';
@@ -20,7 +20,7 @@ function CartList() {
             fallback={
               <S.CartListLayout>
                 {Array.from({ length: 3 }, (_, index) => (
-                  <SkeletonCartItem key={index} />
+                  <CartItemSkeleton key={index} />
                 ))}
               </S.CartListLayout>
             }

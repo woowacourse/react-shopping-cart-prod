@@ -25,9 +25,6 @@ export default meta;
 
 type Story = StoryObj<typeof CouponSkeleton>;
 
-/**
- * `DefaultCouponSkeleton`은 쿠폰의 기본적인 스토리입니다.
- */
 export const DefaultCouponSkeleton: Story = {
   args: {},
 };

@@ -2,7 +2,7 @@ import Checkbox from '@Components/Checkbox';
 
 import * as S from './style';
 
-const SkeletonCartItem = () => {
+const CartItemSkeleton = () => {
   return (
     <S.Container width="100%">
       <Checkbox size="small" />
@@ -17,4 +17,4 @@ const SkeletonCartItem = () => {
   );
 };
 
-export default SkeletonCartItem;
+export default CartItemSkeleton;
