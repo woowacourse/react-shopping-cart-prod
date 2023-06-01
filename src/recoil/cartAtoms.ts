@@ -77,6 +77,16 @@ export const quantityByProductIdSelector = selectorFamily({
     },
 });
 
+export const cartItemByProductIdSelector = selectorFamily({
+  key: "cartItemByProductIdSelector",
+  get:
+    (productId: number) =>
+    ({ get }) => {
+      const cartList = get(cartState);
+      return cartList.find((cartItem) => cartItem.product.id === productId);
+    },
+});
+
 export const cartRepositoryState = selector({
   key: "cartRepositoryState",
   get: ({ get, getCallback }) => {
@@ -88,13 +98,12 @@ export const cartRepositoryState = selector({
     });
 
     const updateCartItemQuantity = getCallback(
-      ({ set }) =>
+      ({ set, snapshot }) =>
         async (product: ProductItem, newQuantity: number) => {
           const server = get(serverState);
-          const cartList = get(cartState);
 
-          const targetCartItem = cartList.find(
-            (cartItem) => cartItem.product.id === product.id
+          const targetCartItem = await snapshot.getPromise(
+            cartItemByProductIdSelector(product.id)
           );
 
           if (targetCartItem) {
