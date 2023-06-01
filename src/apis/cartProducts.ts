@@ -1,5 +1,5 @@
 import { servers } from '../constants/server';
-import type { CartDetails } from '../types/product';
+import type { CartProduct } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 const email = process.env.REACT_APP_EMAIL;
@@ -17,7 +17,7 @@ export const cartApi = async (hostName: HostNameType) => {
       },
     });
 
-    const data: CartDetails = await response.json();
+    const data: CartProduct[] = await response.json();
     return data;
   };
 

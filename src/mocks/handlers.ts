@@ -1,13 +1,11 @@
 import { rest } from 'msw';
 import products from './data/products.json';
-import cartProductsData from './data/cartProducts.json';
+import cartProducts from './data/cartProducts.json';
 import points from './data/point.json';
 import orderProducts from './data/orderProducts.json';
 import orderDetailsProducts from './data/orderDetailProducts.json';
 import { findTargetProduct } from '../domain/cartProductHandler';
 import type { OrderedData } from '../types/product';
-
-const cartProducts = cartProductsData.cartItems;
 
 export const handlers = [
   rest.get('/products', (req, res, ctx) => {
@@ -23,7 +21,7 @@ export const handlers = [
   }),
 
   rest.get('/cart-items', (req, res, ctx) => {
-    return res(ctx.delay(200), ctx.status(200), ctx.json(cartProductsData));
+    return res(ctx.delay(200), ctx.status(200), ctx.json(cartProducts));
   }),
 
   rest.get('/points', (req, res, ctx) => {

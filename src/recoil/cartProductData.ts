@@ -14,8 +14,7 @@ export const cartProductAtom = atom<CartProduct[]>({
         return apiInstance.fetchCartProducts();
       });
 
-      const cartDetails: CartDetails = response;
-      return cartDetails.cartItems;
+      return response;
     },
   }),
 });
