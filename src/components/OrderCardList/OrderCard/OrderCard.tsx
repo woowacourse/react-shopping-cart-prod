@@ -25,10 +25,10 @@ const OrderCard = ({ order }: OrderCardProps) => {
           {products.map((product) => (
             <OrderProductCard key={product.product.id} checkedCartProduct={product} />
           ))}
+          <Box sizing={{ width: '100%' }} flex={{ justify: 'flex-end' }}>
+            <DetailLink to={`${ROUTE_PATH.ORDER_LIST}/${orderId}`}>{`주문 상세`}</DetailLink>
+          </Box>
         </Accordion.Content>
-        <Box sizing={{ width: '100%' }} flex={{ justify: 'flex-end' }}>
-          <DetailLink to={`${ROUTE_PATH.ORDER_LIST}/${orderId}`}>{`주문 상세`}</DetailLink>
-        </Box>
       </Accordion.Root>
     </Box>
   );
