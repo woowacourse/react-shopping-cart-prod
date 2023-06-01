@@ -28,9 +28,9 @@ function CouponList<T extends CouponType>({
   redirectMessage,
   redirectAction,
 }: CouponListProps<T>) {
-  const myCoupons = useRecoilValue(couponState) as T[];
+  const coupons = useRecoilValue(couponState) as T[];
 
-  if (myCoupons.length === 0) {
+  if (coupons.length === 0) {
     return (
       <S.NoExistCouponContainer>
         <S.NoExistCouponImage src={notFound} alt="not found" />
@@ -43,7 +43,7 @@ function CouponList<T extends CouponType>({
 
   return (
     <S.Container>
-      {myCoupons.map((coupon) => (
+      {coupons.map((coupon) => (
         <Coupon key={coupon.id} {...coupon} subMessage={couponSubMessage} type={type} />
       ))}
     </S.Container>

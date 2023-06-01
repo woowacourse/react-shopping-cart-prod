@@ -17,9 +17,9 @@ const allCouponState = selector({
     const myCoupon = get(myCouponState);
     const allCoupon = await fetchData<CouponType[]>({ url: FETCH_URL.allCoupon, method: FETCH_METHOD.GET, server });
 
-    const myCouponIds = myCoupon.map((coupon) => coupon.id);
+    const myCouponNames = myCoupon.map((coupon) => coupon.name);
 
-    return allCoupon.filter((coupon) => !myCouponIds.includes(coupon.id));
+    return allCoupon.filter((coupon) => !myCouponNames.includes(coupon.name));
   },
 });
 
