@@ -2,7 +2,6 @@ import { selector, selectorFamily } from 'recoil';
 
 import { getOrderAPI } from '../api/orderAPI';
 import { OrderData } from '../types/order';
-import { getTotalItemDiscountAmount } from '../utils/costs';
 import { currentServerState } from './server';
 
 const orderListState = selector<OrderData[]>({
@@ -27,37 +26,4 @@ const orderState = selectorFamily<OrderData | null, number>({
     },
 });
 
-const orderTotalItemDiscountAmountState = selectorFamily<number, number>({
-  key: 'orderTotalItemDiscountAmount',
-  get:
-    (orderId) =>
-    ({ get }) => {
-      const order = get(orderState(orderId))!;
-
-      const totalItemDiscountAmount = getTotalItemDiscountAmount(order.orderedItems);
-
-      return totalItemDiscountAmount !== 0 ? -totalItemDiscountAmount : 0;
-    },
-});
-
-const orderMemberDiscountAmountState = selectorFamily<number, number>({
-  key: 'cartListMemberDiscountAmount',
-  get:
-    (orderId) =>
-    ({ get }) => {
-      const order = get(orderState(orderId))!;
-      const totalItemDiscountAmount = get(orderTotalItemDiscountAmountState(orderId));
-      const totalDiscountedAmount = order.totalItemPrice - order.discountedTotalItemPrice;
-
-      const memberDiscountAmount = totalDiscountedAmount + totalItemDiscountAmount;
-
-      return memberDiscountAmount !== 0 ? -memberDiscountAmount : 0;
-    },
-});
-
-export {
-  orderListState,
-  orderState,
-  orderTotalItemDiscountAmountState,
-  orderMemberDiscountAmountState,
-};
+export { orderListState, orderState };
