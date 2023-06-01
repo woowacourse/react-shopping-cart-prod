@@ -9,13 +9,15 @@ import ProductItemSkeleton from './ProductItemSkeleton';
 
 import * as api from '../../api';
 import useToast from '../../hooks/useToast';
-import { cartState, serverNameState } from '../../recoil/state';
+import { tokenState, cartState, serverNameState } from '../../recoil/state';
 import { API_ERROR_MESSAGE, SKELETONS_LENGTH } from '../../constants';
 
 export default function ProductList() {
-  const [products, setProducts] = useState<ProductType[] | null>(null);
-  const setCart = useSetRecoilState(cartState);
   const serverName = useRecoilValue(serverNameState);
+  const token = useRecoilValue(tokenState);
+  const setCart = useSetRecoilState(cartState);
+
+  const [products, setProducts] = useState<ProductType[] | null>(null);
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -23,16 +25,24 @@ export default function ProductList() {
       .getProducts(serverName)
       .then(setProducts)
       .catch(() => {
+        setProducts([]);
         showToast('error', API_ERROR_MESSAGE.getProducts);
       });
+  }, [serverName]);
+
+  useEffect(() => {
+    if (token == null) {
+      setCart([]);
+      return;
+    }
 
     api
-      .getCart(serverName)
+      .getCart(serverName, token)
       .then(setCart)
       .catch(() => {
         showToast('error', API_ERROR_MESSAGE.getCart);
       });
-  }, [serverName]);
+  }, [serverName, token]);
 
   return (
     <Wrapper>
