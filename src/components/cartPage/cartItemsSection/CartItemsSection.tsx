@@ -17,7 +17,6 @@ import { APIAtom } from '../../../recoil/atoms/serverAtom';
 export const CartItemsSection = () => {
   const apiEndPoint = useRecoilValue(APIAtom);
   const cartItems = useRecoilValue(cartItemsState(apiEndPoint));
-  console.log(apiEndPoint, cartItems);
 
   const { isAllCheckBoxChecked } = useRecoilValue(checkBoxSelector);
   const selectedCartIdList = useRecoilValue(selectedCartIdListState);

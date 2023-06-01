@@ -41,8 +41,6 @@ export const CartItemsComponent = () => {
         });
       });
 
-      console.log(cartItems);
-
       return cartItems;
     });
   }, []);

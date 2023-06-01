@@ -1,4 +1,4 @@
-import { atom, atomFamily } from 'recoil';
+import { atomFamily } from 'recoil';
 import { base64 } from '../../constants/user';
 
 export const userAtomState = atomFamily<number, string>({
