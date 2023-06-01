@@ -1,5 +1,5 @@
 import { API_ENDPOINT, CART_FETCH_OPTION_HEADERS } from '../constants/api';
-import { CartPriceData, OrderData } from '../types';
+import { CartPriceData, Member, OrderData } from '../types';
 import { fetchAPI } from './fetchAPI';
 
 export const getOrderAPI = (baseUrl: string) => {
@@ -12,6 +12,13 @@ export const getOrderAPI = (baseUrl: string) => {
 
   const getOrder = async (orderId: OrderData['id']): Promise<Omit<OrderData, 'id'>> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}/${orderId}`, {
+      method: 'GET',
+      headers: { ...CART_FETCH_OPTION_HEADERS },
+    });
+  };
+
+  const getMember = async (): Promise<Member> => {
+    return await fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBER}`, {
       method: 'GET',
       headers: { ...CART_FETCH_OPTION_HEADERS },
     });
