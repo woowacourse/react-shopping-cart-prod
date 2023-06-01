@@ -45,6 +45,10 @@ const router = createHashRouter([
         element: <CartPage />,
       },
       {
+        path: 'orders/complete/:id',
+        element: <OrderCompletePage />,
+      },
+      {
         path: 'orders/:id',
         element: <OrderDetailPage />,
       },
