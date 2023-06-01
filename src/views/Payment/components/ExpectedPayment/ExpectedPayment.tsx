@@ -3,24 +3,51 @@ import * as S from './ExpectedPayment.style';
 
 import { useCart } from '@views/Cart/recoil/cartState';
 import { DELIVERY_FEE_BASIC } from '@views/Payment/constants/orderConstants';
-import useFetchCoupons from '@views/Payment/hooks/useFetchCoupons';
+
 import { useState } from 'react';
 import { CouponModal } from '../CouponModal';
 import useCouponList from '@views/Payment/recoil/couponListState';
+import { CouponType } from 'types/CouponType';
+import { PaymentModal } from '../PaymentModal';
+
+const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
+  if (!coupon || !totalPrice) {
+    return 0;
+  }
+
+  switch (coupon.type) {
+    case 'price': {
+      return coupon.value;
+    }
+
+    case 'percent': {
+      return (coupon.value / 100) * totalPrice;
+    }
+
+    case 'delivery': {
+      return coupon.value;
+    }
+  }
+};
 
 function ExpectedPayment() {
   const { totalPrice } = useCart();
-  const { couponList, checkCoupon, getCheckedCoupon } = useCouponList();
+  const { getCheckedCoupon } = useCouponList();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const discountPrice = getDiscount(getCheckedCoupon(), totalPrice);
+
+  const [isCouponOpen, setIsCouponOpen] = useState(false);
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
   const deliveryFee = totalPrice ? DELIVERY_FEE_BASIC : 0;
   const totalPayingPrice = totalPrice + deliveryFee;
 
-  const handleSeeCoupons = async () => {
-    // const response = await fetchCoupons();
-    // const coupons = await response.json();
-    setIsOpen(true);
+  const handleSeeCoupons = () => {
+    setIsCouponOpen(true);
+  };
+
+  const handlePay = () => {
+    setIsPaymentOpen(true);
   };
 
   return (
@@ -38,25 +65,37 @@ function ExpectedPayment() {
             <S.ContentText>총 배송비</S.ContentText>
             <S.ContentText>{deliveryFee.toLocaleString('ko-KR')}원</S.ContentText>
           </FlexWrapper>
+          <FlexWrapper>
+            <S.ContentText>쿠폰 할인</S.ContentText>
+            <S.ContentText>-{discountPrice.toLocaleString('ko-KR')}원</S.ContentText>
+          </FlexWrapper>
           <S.TotalPriceContainer>
             <S.TotalText>총 주문금액</S.TotalText>
-            <S.TotalText>{totalPayingPrice.toLocaleString('ko-KR')}원</S.TotalText>
+            <S.TotalText>
+              {(totalPayingPrice - discountPrice).toLocaleString('ko-KR')}원
+            </S.TotalText>
           </S.TotalPriceContainer>
         </S.PayingBackground>
         <div style={{ display: 'flex', columnGap: '2rem' }}>
           <S.CouponButton onClick={handleSeeCoupons} disabled={totalPrice === 0}>
             쿠폰선택
           </S.CouponButton>
-          <S.PayingButton disabled={totalPrice === 0}>결제하기</S.PayingButton>
+          <S.PayingButton
+            onClick={() => {
+              handlePay();
+            }}
+            disabled={totalPrice === 0}
+          >
+            결제하기
+          </S.PayingButton>
         </div>
       </S.PayingBox>
       <CouponModal
-        isOpen={isOpen}
+        isOpen={isCouponOpen}
         closeModal={() => {
-          setIsOpen(false);
+          setIsCouponOpen(false);
         }}
-        couponList={couponList}
-      ></CouponModal>
+      />
     </S.PayingContainer>
   );
 }

@@ -4,7 +4,6 @@ import { atom, selector, useRecoilState } from 'recoil';
 import fetchCoupons from '../components/utils/fetchCoupons';
 import { COUPON_PATH } from '@constants/urlConstants';
 import { CouponRemote, CouponType } from 'types/CouponType';
-import { couponList } from '@mocks/mockData';
 
 const couponListState = atom<CouponType[]>({
   key: 'couponListState',
@@ -35,14 +34,21 @@ const useCouponList = () => {
     }
 
     setCouponList((prevCouponList) => {
-      return prevCouponList.map((coupon) => {
+      const couponList: CouponType[] = prevCouponList.map((coupon) => {
         if (coupon.id === couponId) {
-          coupon.checked = true;
-          return coupon;
+          return {
+            ...coupon,
+            checked: true,
+          };
         }
-        coupon.checked = false;
-        return coupon;
+
+        return {
+          ...coupon,
+          checked: false,
+        };
       });
+
+      return couponList;
     });
   };
 

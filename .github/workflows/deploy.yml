@@ -36,7 +36,9 @@ jobs:
           node-version: 18
           cache: 'npm'
       - name: Install dependencies
-        run: yarn install
+        run: |
+          yarn install
+          cp dist/index.html dist/404.html
       - name: Build
         run: yarn build
       - name: Setup Pages

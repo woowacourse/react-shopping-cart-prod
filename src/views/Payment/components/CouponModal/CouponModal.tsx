@@ -1,5 +1,6 @@
 import { Modal } from '@common/Modal';
 import { Column, Row } from '@styles/style';
+import { useCart } from '@views/Cart/recoil/cartState';
 import useCouponList from '@views/Payment/recoil/couponListState';
 import { PropsWithChildren } from 'react';
 import { styled } from 'styled-components';
@@ -8,16 +9,7 @@ import { CouponType } from 'types/CouponType';
 interface CouponModalProps {
   isOpen: boolean;
   closeModal: () => void;
-  couponList: CouponType[];
 }
-
-// {
-//   id: 1,
-//   name: '생일 쿠폰',
-//   type: 'percent',
-//   value: 10,
-//   minimumPrice: 0,
-// }
 
 const couponCondition = (minimumPrice: number) => {
   if (!minimumPrice) {
@@ -47,7 +39,14 @@ const couponBenefitText = (type: string, value: number) => {
   }
 };
 
-function CouponModal({ isOpen, couponList, closeModal }: CouponModalProps) {
+function CouponModal({ isOpen, closeModal }: CouponModalProps) {
+  const { couponList, checkCoupon } = useCouponList();
+  const { totalPrice } = useCart();
+
+  const isValidCoupon = (totalPrice: number, minimumPrice: number) => {
+    return totalPrice < minimumPrice;
+  };
+
   return isOpen ? (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <CouponContainerTitle>쿠폰함</CouponContainerTitle>
@@ -56,8 +55,15 @@ function CouponModal({ isOpen, couponList, closeModal }: CouponModalProps) {
           <CouponListWrapper>
             {couponList.map((coupon) => {
               return (
-                <Coupon>
-                  <ContentWrapper key={coupon.id}>
+                <Coupon
+                  onClick={() => {
+                    checkCoupon(coupon.id);
+                    closeModal();
+                  }}
+                  key={coupon.id}
+                  disabled={isValidCoupon(totalPrice, coupon.minimumPrice)}
+                >
+                  <ContentWrapper>
                     <CouponBenefit>{couponBenefitText(coupon.type, coupon.value)}</CouponBenefit>
                     <CouponContentPrimary>{coupon.name}</CouponContentPrimary>
                     <CouponContentSecondary>
@@ -138,6 +144,12 @@ const Coupon = styled.button`
   font-size: 20px;
   text-align: left;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.secondaryColor};
+    cursor: not-allowed;
+  }
+
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
     max-width: 300px;
   }
