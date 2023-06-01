@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { Suspense } from 'react';
 import { GiShoppingCart } from 'react-icons/gi';
-import ServerSelector from './ServerSelector';
+import ServerSelector from '../../ServerSelector/ServerSelector';
 import CartButton from './CartButton';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 

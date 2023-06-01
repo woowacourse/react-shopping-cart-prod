@@ -1,19 +1,17 @@
 import { useEffect } from 'react';
-import { useRecoilState, useResetRecoilState, useRecoilRefresher_UNSTABLE } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { BASE_URL } from '../../../constant';
-import cartState from '../../../globalState/atoms/cartState';
-import serverNameState from '../../../globalState/atoms/serverName';
-import fetchCartItems from '../../../globalState/selectors/fetchCartItems';
-import { isProperServerName } from '../../../types/server';
+import { BASE_URL } from '../../constant';
+import cartState from '../../globalState/atoms/cartState';
+import serverNameState from '../../globalState/atoms/serverName';
+import { isProperServerName } from '../../types/server';
+import { worker } from '../../mocks/browser';
 
 const ServerSelector = () => {
   const [serverName, setServerName] = useRecoilState(serverNameState);
   const resetCart = useResetRecoilState(cartState);
-  const resetCartFetcher = useRecoilRefresher_UNSTABLE(fetchCartItems);
 
   useEffect(() => {
-    resetCartFetcher();
     resetCart();
   }, [serverName]);
 
@@ -21,6 +19,18 @@ const ServerSelector = () => {
     const selectedServerName = event.target.value;
 
     if (!isProperServerName(selectedServerName)) return;
+
+    if (serverName !== selectedServerName) {
+      if (selectedServerName === '참새MSW') {
+        worker.start({
+          serviceWorker: {
+            url: '/mockServiceWorker.js',
+          },
+        });
+      } else {
+        worker.stop();
+      }
+    }
 
     setServerName(selectedServerName);
   };
