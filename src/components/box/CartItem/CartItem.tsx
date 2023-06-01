@@ -46,12 +46,7 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
               onClick={() => openModal({ callback: deleteCartItem })}
             />
           </CartInfoHead>
-          <InputStepper
-            size="big"
-            quantity={cart.quantity}
-            setQuantity={changeQuantity}
-            minNumber={1}
-          />
+          <InputStepper size="big" quantity={quantity} setQuantity={changeQuantity} minNumber={1} />
           <CardInfoFoot>
             <Text size="smallest" weight="normal">
               {getPriceFormat(cart.product.price)} 원

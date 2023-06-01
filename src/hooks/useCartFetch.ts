@@ -11,7 +11,7 @@ export const useCartFetch = () => {
   const {
     data: cartData,
     refetch: cartRefetch,
-    isFetching,
+    isLoading,
   } = useQuery<CartItemType[]>(
     'cart',
     async () => {
@@ -94,7 +94,7 @@ export const useCartFetch = () => {
 
   return {
     cartData,
-    isFetching,
+    isLoading,
     cartRefetch,
     addCartItemAPI,
     changeCartQuantityAPI,

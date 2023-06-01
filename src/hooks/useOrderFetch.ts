@@ -10,7 +10,6 @@ export const useOrderFetch = () => {
 
   const {
     data: orderListData,
-    refetch: orderListRefetch,
     isError,
     isFetching,
   } = useQuery<OrderListType[]>(
@@ -58,6 +57,8 @@ export const useAddOrderFetch = () => {
     {
       onSuccess: async (res) => {
         queryClient.refetchQueries({ queryKey: ['cart'] });
+        queryClient.refetchQueries({ queryKey: ['userCoupon'] });
+        queryClient.refetchQueries({ queryKey: ['orderList'] });
         const orderLocation = res.headers.get('Location');
         navigation(`${orderLocation}`);
       },

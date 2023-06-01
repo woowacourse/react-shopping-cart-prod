@@ -21,8 +21,8 @@ import { PERCENTAGE } from '../../abstract/constants';
 import LoadingSpinner from '../common/LoadingSpinner/LoadingSpinner';
 
 const CartPage = () => {
-  const { cartData, isFetching } = useCartFetch();
-  const { userCoupon, userCouponRefetch } = useCouponFetch();
+  const { cartData, isLoading } = useCartFetch();
+  const { userCoupon } = useCouponFetch();
   const { addOrderDataAPI } = useAddOrderFetch();
   const { openModal } = useCouponModal();
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
@@ -39,7 +39,6 @@ const CartPage = () => {
       discountAmount: 0,
       minimumPrice: 0,
     });
-    userCouponRefetch();
   };
 
   const calcTotalPrice = () => {
@@ -70,7 +69,7 @@ const CartPage = () => {
       title="장바구니 미션 - 장바구니페이지"
       description="우아한 테크코스 레벨 2 장바구니 미션의 장바구니페이지입니다."
     >
-      {isFetching ? (
+      {isLoading ? (
         <LoadingSpinner />
       ) : (
         <CartPageWrapper>

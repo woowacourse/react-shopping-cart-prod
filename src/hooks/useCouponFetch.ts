@@ -79,7 +79,7 @@ const useCouponFetch = () => {
   const addCouponAPI = (body?: object) => {
     fetchAddCouponData.mutate({ body });
   };
-  return { allCoupon, isFetching, addCouponAPI, userCoupon, userCouponRefetch };
+  return { allCoupon, isFetching, addCouponAPI, userCoupon };
 };
 
 export default useCouponFetch;
