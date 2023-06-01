@@ -9,8 +9,8 @@ export const orderState = atom<OrderItem[]>({
 export const currentOrderSelector = selector<OrderItem>({
   key: 'currentOrderSelector',
   get: ({ get }) => {
-    const orders = get(orderState);
-    console.log('in selector', orders);
-    return orders[orders.length - 1];
+    const orderItems = get(orderState);
+
+    return orderItems[orderItems.length - 1];
   },
 });
