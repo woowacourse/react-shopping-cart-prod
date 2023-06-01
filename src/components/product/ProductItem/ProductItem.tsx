@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Counter from '../../common/Counter/Counter';
@@ -7,6 +8,7 @@ import { formatPrice } from '../../../utils/formatPrice';
 import useCartService from '../../../hooks/useCartService';
 import productQuantityInCart from '../../../globalState/selectors/productQuantityInCart';
 import type { Product } from '../../../types/product';
+import serverNameState from '../../../globalState/atoms/serverName';
 
 const ProductItem = (product: Product) => {
   const { id: productId, name, price, imageUrl } = product;
@@ -14,15 +16,23 @@ const ProductItem = (product: Product) => {
     useCartService();
 
   const quantityInCart = useRecoilValue(productQuantityInCart(productId));
-  const isDisplayCounter = !!quantityInCart;
+  const [count, setCount] = useState(quantityInCart);
+  const [isDisplayCounter, setIsDisplayCounter] = useState(!!quantityInCart);
+
+  const prevServerName = useRef('');
+  const serverName = useRecoilValue(serverNameState);
 
   const updateCount = (quantity: number) => {
+    setCount(quantity);
+
     if (quantity === 0) return;
     updateCartItemQuantity(getCartId(productId))(quantity);
   };
 
   const handleAddCartButtonClick = () => {
     addCartItem(product);
+    setCount(1);
+    setIsDisplayCounter(true);
   };
 
   const handleNoQuantityAction = (quantity: number) => {
@@ -30,7 +40,17 @@ const ProductItem = (product: Product) => {
 
     const cartId = getCartId(productId);
     deleteCartItem(cartId);
+    setIsDisplayCounter(false);
   };
+
+  useEffect(() => {
+    if (prevServerName.current === serverName) return;
+
+    setCount(quantityInCart);
+    setIsDisplayCounter(!!quantityInCart);
+
+    prevServerName.current = serverName;
+  }, [quantityInCart]);
 
   return (
     <ItemContainer>
@@ -39,7 +59,7 @@ const ProductItem = (product: Product) => {
         <CartButtonWrapper>
           {isDisplayCounter ? (
             <Counter
-              count={quantityInCart}
+              count={count}
               updateCount={updateCount}
               onClickedButton={handleNoQuantityAction}
               onBlurredInput={handleNoQuantityAction}
