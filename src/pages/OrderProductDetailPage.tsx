@@ -1,12 +1,13 @@
 import { Suspense } from 'react';
+import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 
 import styled from 'styled-components';
 
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
-import { useParams } from 'react-router-dom';
 import OrderProductList from '../components/Order/OrderProductList';
 import { orderwithIdState } from '../recoil/orderProductData';
-import { useRecoilValue } from 'recoil';
+import Message from '../components/Common/Message';
 
 const OrderProductDetailPage = () => {
   const { orderId } = useParams();
@@ -17,15 +18,13 @@ const OrderProductDetailPage = () => {
       <Title>주문 내역 상세</Title>
       <OrderProductContent>
         <OrderProductInfo>
-          <Suspense fallback={<ContentListSkeleton content='cart' />}>
-            {order ? (
+          {order ? (
+            <Suspense fallback={<ContentListSkeleton content='cart' />}>
               <OrderProductList order={order} />
-            ) : (
-              <div>
-                존재하지 않는 주문이에요! 주문 목록 페이지에서 찾아볼까요?
-              </div>
-            )}
-          </Suspense>
+            </Suspense>
+          ) : (
+            <Message type='notFound' />
+          )}
         </OrderProductInfo>
       </OrderProductContent>
     </Main>
