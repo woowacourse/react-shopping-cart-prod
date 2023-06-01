@@ -52,7 +52,7 @@
   },
   {
     "orderId": 2,
-    "orderDateTime": "2023-05-24 08:30:21",
+    "orderDateTime": "2023-05-29 08:30:21",
     "orderItems": [
       {
         "cartItemId": 2,
@@ -77,6 +77,6 @@
         }
       }
     ],
-    "totalPrice": 40500
+    "totalPrice": 709000
   }
 ]
