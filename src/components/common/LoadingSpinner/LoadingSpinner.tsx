@@ -15,7 +15,7 @@ const LoadingSpinner = (props: SpinnerProps) => {
         width: diameter ?? '77px',
         height: diameter ?? '77px',
         borderWidth: spinnerWidth ?? '7px',
-        borderTopColor: color ?? 'hotpink',
+        borderTopColor: color ?? '#06c09e',
       }}
     />
   );

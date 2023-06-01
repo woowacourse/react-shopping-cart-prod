@@ -46,13 +46,7 @@ const Header = () => {
         <CartButton onClick={handleCartButtonClick}>
           <p>장바구니</p>
           <Suspense
-            fallback={
-              <LoadingSpinner
-                color="#06C09E"
-                diameter="26px"
-                spinnerWidth="3px"
-              />
-            }
+            fallback={<LoadingSpinner diameter="26px" spinnerWidth="3px" />}
           >
             <TotalCartQuantity />
           </Suspense>

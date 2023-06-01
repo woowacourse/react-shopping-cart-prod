@@ -31,7 +31,7 @@ const CartPage = () => {
 const LoadingView = () => {
   return (
     <LoadingViewWrapper>
-      <LoadingSpinner color="#06c09e" />
+      <LoadingSpinner />
     </LoadingViewWrapper>
   );
 };
