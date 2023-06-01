@@ -1,7 +1,6 @@
 import { rest } from 'msw';
-import { products as mockProducts, cart as mockCart } from './mockData.json';
-
-const getRandomInt = (min: number, max: number) => Math.random() * (max - min) + min;
+import mockProducts from './data/products.json';
+import mockCart from './data/cart.json';
 
 interface PostAddCartRequestBody {
   productId: number;
@@ -13,6 +12,8 @@ interface PatchUpdateCartRequestBody {
 
 const PRODUCTS_PATH_NAME = `*/products`;
 const CART_ITEMS_PATH_NAME = `*/cart-items`;
+const ALL_COUPONS_PATH_NAME = '*/coupons';
+const COUPON_DOWNLOAD_PATH_NAME = '*/members/coupon';
 
 const storybookHandlers = [
   rest.get(PRODUCTS_PATH_NAME, (req, res, ctx) => res(ctx.status(200), ctx.json(mockProducts))),

@@ -1,0 +1,10 @@
+{
+  "coupons": [
+    {
+      "id": 1,
+      "type": "percent",
+      "amount": 10,
+      "name": "10% 할인 쿠폰"
+    }
+  ]
+}

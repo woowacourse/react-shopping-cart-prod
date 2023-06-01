@@ -12,6 +12,7 @@ const fetchCartItems = selector<CartProduct[]>({
     const cartItemsUrl = ServerUtil.getCartItemsUrl(serverName);
 
     const response = await fetch(cartItemsUrl, {
+      method: 'GET',
       headers: { Authorization: `Basic ${USER_AUTH_TOKEN}` },
     });
 

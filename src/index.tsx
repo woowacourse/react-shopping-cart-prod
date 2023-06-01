@@ -7,6 +7,13 @@ import GlobalStyle from './GlobalStyle';
 import ProductListPage from './pages/ProductListPage';
 import CartPage from './pages/CartPages';
 import CouponPage from './pages/CouponPage';
+import { worker } from './mocks/browser';
+
+worker.start({
+  serviceWorker: {
+    url: '/mockServiceWorker.js',
+  },
+});
 
 const router = createHashRouter([
   {
