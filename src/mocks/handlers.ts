@@ -73,7 +73,7 @@ export const handlers = [
     if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
     const orderItems = localStorageHelper.getValue<CartItemType[]>('orderItems');
 
-    return res(ctx.status(200), ctx.json(orderItems), ctx.delay(100));
+    return res(ctx.status(200), ctx.json(orderItems), ctx.delay(300));
   }),
 
   // 주문하기
