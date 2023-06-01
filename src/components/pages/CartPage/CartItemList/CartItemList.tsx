@@ -15,7 +15,7 @@ import { Stepper } from '@components/common/Stepper/Stepper';
 import { DeleteIcon } from '@assets/svg';
 import { FETCH_METHOD, FETCH_URL } from '@constants/index';
 
-import type { CartItemType } from '../../../../types';
+import type { CartItem } from '../../../../types';
 
 export const CartItemList = () => {
   const baseUrl = useApiBaseUrlValue();
@@ -27,11 +27,11 @@ export const CartItemList = () => {
   const { deleteRecoilCartItem } = useUpdateRecoilCart();
   const { toggleCheckbox } = useUpdateCheckbox();
 
-  const onChangeCheckBox = (cartItemId: CartItemType['id']) => {
+  const onChangeCheckBox = (cartItemId: CartItem['id']) => {
     toggleCheckbox(cartItemId);
   };
 
-  const onClickDeleteIcon = (cartItemId: CartItemType['id']) => {
+  const onClickDeleteIcon = (cartItemId: CartItem['id']) => {
     toggleCheckbox(cartItemId);
 
     deleteCartMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`);

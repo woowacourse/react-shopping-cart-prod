@@ -13,9 +13,9 @@ import { CheckedState } from './recoilChecked';
 
 import { LOCAL_STORAGE_KEY, RECOIL_KEY } from '@constants/index';
 
-import type { CartItemType } from '../types';
+import type { CartItem } from '../types';
 
-export const CartState = atom<CartItemType[]>({
+export const CartState = atom<CartItem[]>({
   key: RECOIL_KEY.CART_STATE,
   default: [],
   effects: [localStorageEffect(LOCAL_STORAGE_KEY.CART_STATE)],
@@ -30,7 +30,7 @@ export const CartSizeValue = selector<number>({
   },
 });
 
-const CartItemValue = selectorFamily<CartItemType | null, number>({
+const CartItemValue = selectorFamily<CartItem | null, number>({
   key: RECOIL_KEY.CART_ITEM_VALUE,
   get:
     (productId) =>

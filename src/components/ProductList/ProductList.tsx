@@ -9,7 +9,7 @@ import { useQuery } from '@hooks/useQuery';
 
 import { FETCH_URL, SKELETON_LENGTH } from '@constants/index';
 
-import type { ProductType as IProduct } from '../../types';
+import type { Product as IProduct } from '../../types';
 
 export const ProductList = () => {
   const baseUrl = useApiBaseUrlValue();

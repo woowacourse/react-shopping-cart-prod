@@ -2,8 +2,8 @@ import { Link, useLocation } from 'react-router-dom';
 import * as styled from './OrderBoxHeader.styled';
 
 interface OrderBoxHeader {
-  orderId: number;
-  orderData: string;
+  orderId: any;
+  orderData: any;
 }
 
 export const OrderBoxHeader = ({ orderId, orderData }: OrderBoxHeader) => {

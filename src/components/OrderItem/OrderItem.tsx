@@ -1,9 +1,9 @@
-import { ProductType } from 'src/types';
+import { Product } from 'src/types';
 import * as styled from './OrderItem.styled';
 
 interface OrderItemProps {
   detailData: {
-    product: ProductType;
+    product: Product;
     quantity: number;
   };
 }

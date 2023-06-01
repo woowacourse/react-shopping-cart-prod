@@ -2,12 +2,12 @@ import { useSetCartState } from '@recoils/recoilCart';
 
 import { QUANTITY } from '@constants/index';
 
-import type { ProductType } from '../types';
+import type { Product } from '../types';
 
 export const useUpdateRecoilCart = () => {
   const setCart = useSetCartState();
 
-  const addRecoilCartItem = (cartItemId: number, product: ProductType) => {
+  const addRecoilCartItem = (cartItemId: number, product: Product) => {
     setCart((prev) => [
       ...prev,
       {

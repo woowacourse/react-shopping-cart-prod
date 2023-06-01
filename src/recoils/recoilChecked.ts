@@ -3,9 +3,9 @@ import { localStorageEffect } from './localStorageEffect';
 
 import { LOCAL_STORAGE_KEY, RECOIL_KEY } from '@constants/index';
 
-import type { CheckedStateType } from '../types';
+import type { CheckedCartItems } from '../types';
 
-export const CheckedState = atom<CheckedStateType>({
+export const CheckedState = atom<CheckedCartItems>({
   key: RECOIL_KEY.CHECKED_STATE,
   default: {
     all: true,

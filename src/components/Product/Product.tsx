@@ -13,13 +13,13 @@ import { useUpdateRecoilCart } from '@hooks/useUpdateRecoilCart';
 import { FETCH_METHOD, FETCH_URL } from '@constants/index';
 import { CartAddIcon } from '@assets/svg';
 
-import type { ProductType } from '../../types';
+import type { Product as ProductType } from '../../types';
 
-interface Props {
+interface ProductProps {
   item: ProductType;
 }
 
-export const Product = ({ item }: Props) => {
+export const Product = ({ item }: ProductProps) => {
   const baseUrl = useApiBaseUrlValue();
   const { mutation: addCartMutation, data: addCartResponseData } = useMutation(FETCH_METHOD.POST);
 
