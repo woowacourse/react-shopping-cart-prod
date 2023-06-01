@@ -23,6 +23,7 @@ export const cartItemsAmountSelector = selector({
   },
 });
 
+// TODO: 네이밍 변경
 export const selectedItemsState = atom({
   key: 'selectedItemsState',
   default: selector({
@@ -38,6 +39,7 @@ export const selectedItemsState = atom({
   }),
 });
 
+// 선택된 카트 아이템들
 export const selectedItemsSelector = selector({
   key: 'selectedItemsSelector',
   get: ({ get }) => {
@@ -60,6 +62,16 @@ export const selectedItemsSelector = selector({
 export const selectedItemsAmountSelector = selector({
   key: 'selectedItemsAmountSelector',
   get: ({ get }) => get(selectedItemsSelector).size,
+});
+
+export const isSelectedCartId = selectorFamily({
+  key: 'isSelectedCartIdSelector',
+  get:
+    (cartId: number) =>
+    ({ get }) => {
+      const selectedCartItems = get(selectedItemsState);
+      return selectedCartItems.has(cartId);
+    },
 });
 
 export const getCartItemById = selectorFamily({

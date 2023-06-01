@@ -5,28 +5,48 @@ import {
   selectedCouponsState,
   specificCouponSelector,
 } from '../../../atoms/coupons';
+import { useEffect, useState } from 'react';
+import { isSelectedCartId } from '../../../atoms/cart';
 
 interface SpecificCouponSelectProps {
+  cartId: number;
   productId: number;
 }
 
-const SpecificCouponSelect = ({ productId }: SpecificCouponSelectProps) => {
+const SpecificCouponSelect = ({
+  cartId,
+  productId,
+}: SpecificCouponSelectProps) => {
   const { allCoupons } = useRecoilValue(coupons);
   const specificCoupons = useRecoilValue(specificCouponSelector(productId));
-
   const [selectedCoupons, setSelectedCoupons] =
     useRecoilState(selectedCouponsState);
+  const [targetCouponId, setTargetCouponId] = useState<number>();
+  const isCheckedCartItem = useRecoilValue(isSelectedCartId(cartId));
+
+  useEffect(() => {
+    if (!isCheckedCartItem && targetCouponId) {
+      setSelectedCoupons(
+        selectedCoupons.filter((couponId) => couponId !== targetCouponId)
+      );
+    }
+  }, [isCheckedCartItem]);
 
   const onCouponSelected = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    // TODO: 쿠폰 선택 시 초기화 되는 로직 구현해야함.
-    if (e.target.value === 'DEFAULT') return;
+    if (e.target.value === 'DEFAULT') {
+      setSelectedCoupons(
+        selectedCoupons.filter((couponId) => couponId !== targetCouponId)
+      );
+      return;
+    }
 
     const newSelectedCoupons = selectedCoupons.filter(
       (couponId) => !allCoupons.some((coupon) => coupon.id === couponId)
     );
     const newSelectedCouponId = +e.target.value;
-
     newSelectedCoupons.push(newSelectedCouponId);
+
+    setTargetCouponId(newSelectedCouponId);
     setSelectedCoupons([...new Set(newSelectedCoupons)]);
   };
   return (
