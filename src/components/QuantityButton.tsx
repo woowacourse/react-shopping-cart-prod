@@ -6,7 +6,7 @@ import { useCart } from '../hooks/useCart';
 import { quantitySelector } from '../recoil';
 import Button from './common/Button';
 
-const { MAX, MIN, STEP, NONE, INITIAL } = QUANTITY;
+const { MAX, MIN, STEP, NONE } = QUANTITY;
 
 interface Props {
   isMainPage?: true;
@@ -32,13 +32,10 @@ const QuantityButton = ({ isMainPage, productId, quantity }: Props) => {
 
     const updatedQuantity = quantity - STEP;
 
-    if (isMainPage && updatedQuantity === NONE) {
-      removeItemFromCart();
-
-      return setQuantity(INITIAL);
-    }
-
     setQuantity(updatedQuantity);
+
+    if (isMainPage && updatedQuantity === NONE) return removeItemFromCart();
+
     updateCart(updatedQuantity);
   };
 

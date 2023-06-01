@@ -58,8 +58,10 @@ export const useCart = (productId?: number) => {
       .delete(`${server}${CART_URL}`, { cartItemIdList })
       .then(() => {
         setCart((prev) =>
-          prev.filter(
-            (item) => !cartItemIdList.includes(checkedItemIdList ? item.id : item.product.id)
+          [...prev].filter(
+            (item) =>
+              !cartItemIdList.includes(checkedItemIdList ? item.id : item.product.id) &&
+              item.quantity
           )
         );
       })
