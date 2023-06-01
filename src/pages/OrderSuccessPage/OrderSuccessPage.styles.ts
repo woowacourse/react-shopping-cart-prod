@@ -2,7 +2,6 @@ import { styled } from 'styled-components';
 
 import { TickCircleIcon } from '../../assets/svg';
 import { Button } from '../../components/common/Button/Button.styles';
-import { Heading } from '../../components/common/Heading/Heading.styles';
 import { Text } from '../../components/common/Text/Text.styles';
 
 const OrderSuccessMessageContainer = styled.div`
@@ -12,6 +11,15 @@ const OrderSuccessMessageContainer = styled.div`
   flex-direction: column;
   align-items: center;
   transform: translateY(-50%);
+
+  & > .heading {
+    margin-bottom: ${({ theme }) => theme.spacer.spacing1};
+    font-weight: 500;
+
+    & > span {
+      font-weight: bold;
+    }
+  }
 `;
 
 const OrderSuccessIcon = styled(TickCircleIcon)`
@@ -22,15 +30,6 @@ const OrderSuccessIcon = styled(TickCircleIcon)`
   & path {
     stroke: ${({ theme }) => theme.color.primary};
     stroke-width: 1.5;
-  }
-`;
-
-const SuccessMessageHeading = styled(Heading)`
-  margin-bottom: ${({ theme }) => theme.spacer.spacing1};
-  font-weight: 500;
-
-  & > span {
-    font-weight: bold;
   }
 `;
 
@@ -49,7 +48,6 @@ const OrderDetailButton = styled(Button)`
 export {
   OrderSuccessMessageContainer,
   OrderSuccessIcon,
-  SuccessMessageHeading,
   OrderSuccessIdText,
   HomeButton,
   OrderDetailButton,

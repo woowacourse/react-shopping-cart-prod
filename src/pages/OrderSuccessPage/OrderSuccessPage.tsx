@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
+import Heading from '../../components/common/Heading/Heading';
 import { PATH } from '../../constants/path';
 import { useOrder } from '../../hooks/useOrder';
 import * as S from './OrderSuccessPage.styles';
@@ -20,10 +21,10 @@ const OrderSuccessPage = () => {
   return (
     <S.OrderSuccessMessageContainer>
       <S.OrderSuccessIcon />
-      <S.SuccessMessageHeading size="small">주문이 완료되었습니다.</S.SuccessMessageHeading>
-      <S.SuccessMessageHeading size="small">
+      <Heading size="small">주문이 완료되었습니다.</Heading>
+      <Heading size="small">
         <span>내일 아침</span>에 만나요!
-      </S.SuccessMessageHeading>
+      </Heading>
       <S.OrderSuccessIdText>주문번호 {orderId}</S.OrderSuccessIdText>
       <S.HomeButton variant="primary" onClick={() => navigate(PATH.ROOT)}>
         쇼핑 계속하기

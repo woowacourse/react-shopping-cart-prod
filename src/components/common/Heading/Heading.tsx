@@ -19,7 +19,7 @@ const Heading = ({ size = 'medium', children }: HeadingProps) => {
   const tag = HEADING_TAG_BY_SIZE[size];
 
   return (
-    <S.Heading as={tag} size={size}>
+    <S.Heading as={tag} size={size} className="heading">
       {children}
     </S.Heading>
   );

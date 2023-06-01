@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { HTTPErrorInfo } from '../../../api/utils/HTTPError';
 import ErrorImage from '../../../assets/png/error-image.png';
 import { PATH } from '../../../constants/path';
+import Heading from '../Heading/Heading';
 import ServerSelect from '../ServerSelect/ServerSelect';
 import * as S from './Error.styles';
 
@@ -23,7 +24,7 @@ const Error = ({ message, information, resetError }: ErrorProps) => {
     <S.ErrorWrapper>
       <S.ErrorContentContainer>
         <S.ErrorImage src={ErrorImage} alt="error" />
-        <S.ErrorHeading size="xSmall">{message}</S.ErrorHeading>
+        <Heading size="xSmall">{message}</Heading>
         {information?.BODY && <S.ErrorBodyText>{information.BODY}</S.ErrorBodyText>}
         <S.ErrorResetButton variant="primary" onClick={resetError}>
           {information?.BUTTON ?? '새로고침'}

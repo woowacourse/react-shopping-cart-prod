@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 import { Button } from '../Button/Button.styles';
-import { Heading } from '../Heading/Heading.styles';
 import { Text } from '../Text/Text.styles';
 
 const ErrorWrapper = styled.div`
@@ -22,6 +21,11 @@ const ErrorContentContainer = styled.div`
     text-align: center;
   }
 
+  & > .heading {
+    margin-bottom: ${({ theme }) => theme.spacer.spacing2};
+    font-weight: 600;
+  }
+
   & > label {
     margin-top: ${({ theme }) => theme.spacer.spacing3};
     width: 250px;
@@ -38,11 +42,6 @@ const ErrorImage = styled.img`
   margin-bottom: ${({ theme }) => theme.spacer.spacing4};
 `;
 
-const ErrorHeading = styled(Heading)`
-  margin-bottom: ${({ theme }) => theme.spacer.spacing2};
-  font-weight: 600;
-`;
-
 const ErrorBodyText = styled(Text)`
   margin-bottom: ${({ theme }) => theme.spacer.spacing2};
 `;
@@ -52,11 +51,4 @@ const ErrorResetButton = styled(Button)`
   width: 250px;
 `;
 
-export {
-  ErrorWrapper,
-  ErrorContentContainer,
-  ErrorImage,
-  ErrorHeading,
-  ErrorBodyText,
-  ErrorResetButton,
-};
+export { ErrorWrapper, ErrorContentContainer, ErrorImage, ErrorBodyText, ErrorResetButton };
