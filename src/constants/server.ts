@@ -16,12 +16,14 @@ export const SERVER = {
   },
 } as const;
 
-export const SERVER_KEYS = Object.keys(SERVER);
-
 export type ServerKey = keyof typeof SERVER;
 
-export const isServerKey = (value: unknown): value is ServerKey => {
-  const serverKey = value as ServerKey;
+export const SERVER_KEYS = Object.keys(SERVER);
 
-  return serverKey in SERVER;
-};
+export const isServerKey = (value: string): value is ServerKey =>
+  value in SERVER;
+
+export const SERVER_OPTIONS = SERVER_KEYS.map((serverKey) => ({
+  value: serverKey,
+  label: serverKey,
+}));

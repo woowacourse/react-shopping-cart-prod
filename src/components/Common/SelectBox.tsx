@@ -3,8 +3,13 @@ import styled from 'styled-components';
 
 type SelectBoxVariant = 'small';
 
+interface SelectOption {
+  value: string | number;
+  label: string;
+}
+
 interface SelectBoxProps extends SelectHTMLAttributes<HTMLSelectElement> {
-  options: string[];
+  options: SelectOption[];
   variant?: SelectBoxVariant;
   autoSize?: boolean;
 }
@@ -17,9 +22,9 @@ const SelectBox = ({
 }: SelectBoxProps) => {
   return (
     <Select variant={variant} autoSize={autoSize} {...props}>
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
+      {options.map(({ value, label }) => (
+        <option key={value} value={value}>
+          {label}
         </option>
       ))}
     </Select>
