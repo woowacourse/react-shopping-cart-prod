@@ -1,5 +1,5 @@
 import titleLogo from "../../assets/logo.png";
-import { IoCart, IoList, IoPerson } from "react-icons/io5";
+import { IoCart, IoExitOutline, IoList, IoPerson } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../style/style";
 import {
@@ -22,6 +22,7 @@ import { modalRepository } from "../../recoil/modalAtoms.tsx";
 import Icon from "../Icon.tsx";
 import Login from "../Login";
 import { userRepository, userState } from "../../recoil/userAtom.ts";
+import PersonalDropdown from "./PersonalDropdown.tsx";
 
 function Header() {
   const navigate = useNavigate();
@@ -68,14 +69,7 @@ function Header() {
             </MenuWrapper>
             {
               user ? (
-                <MenuWrapper onClick={() => logout()}>
-                  <MenuIcon>
-                    <Icon fontSize={30}>
-                      <IoPerson />
-                    </Icon>
-                    <MenuTitle>로그아웃</MenuTitle>
-                  </MenuIcon>
-                </MenuWrapper>
+                <PersonalDropdown />
               ) : (
                 <MenuWrapper onClick={() => openModal(<Login />)}>
                   <MenuIcon>
@@ -87,6 +81,7 @@ function Header() {
                 </MenuWrapper>
               )
             }
+
           </NavBar>
         </HeaderContent>
       </Container>
