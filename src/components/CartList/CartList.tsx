@@ -1,7 +1,8 @@
-import { useRecoilCallback, useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   allCartCheckedSelector,
   cartCountSelector,
+  cartRepositoryState,
   cartState,
   checkedCartCountSelector,
   checkedCartSelector,
@@ -15,7 +16,6 @@ import {
 } from "./CartList.style";
 import { fetchCartList, fetchDeleteCart } from "../../api/api";
 import { serverState } from "../../recoil/serverAtom";
-import type { ReceivedCartItem } from "../../types/types";
 
 function CartList() {
   const [cartList, setCartList] = useRecoilState(cartState);
@@ -25,21 +25,7 @@ function CartList() {
   const isAllCartItemChecked = useRecoilValue(allCartCheckedSelector);
   const server = useRecoilValue(serverState);
 
-  const switchAllCheckboxes = useRecoilCallback(
-    ({ snapshot, set }) =>
-      async () => {
-        const cartList = await snapshot.getPromise(cartState);
-        const isAllCartItemChecked = await snapshot.getPromise(
-          allCartCheckedSelector
-        );
-        const newCartList = cartList.map((cartItem: ReceivedCartItem) => ({
-          ...cartItem,
-          checked: !isAllCartItemChecked,
-        }));
-        set(cartState, newCartList);
-      },
-    []
-  );
+  const { switchAllCheckboxes } = useRecoilValue(cartRepositoryState);
 
   const removeCheckedCartItems = async () => {
     if (confirm("정말로 삭제 하시겠습니까?")) {

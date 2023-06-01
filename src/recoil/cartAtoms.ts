@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily } from "recoil";
+import { atom, selector, selectorFamily, useRecoilCallback } from "recoil";
 import { CartItem, ProductItem, ReceivedCartItem } from "../types/types";
 import {
   fetchAddCart,
@@ -121,6 +121,18 @@ export const cartRepositoryState = selector({
         }
     );
 
-    return { addCartItem, updateCartItemQuantity };
+    const switchAllCheckboxes = getCallback(({ snapshot, set }) => async () => {
+      const cartList = await snapshot.getPromise(cartState);
+      const isAllCartItemChecked = await snapshot.getPromise(
+        allCartCheckedSelector
+      );
+      const newCartList = cartList.map((cartItem: ReceivedCartItem) => ({
+        ...cartItem,
+        checked: !isAllCartItemChecked,
+      }));
+      set(cartState, newCartList);
+    });
+
+    return { addCartItem, updateCartItemQuantity, switchAllCheckboxes };
   },
 });
