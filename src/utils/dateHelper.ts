@@ -4,7 +4,7 @@ const dateHelper = {
     const month = new Date(date).getMonth();
     const today = new Date(date).getDate();
 
-    return `${year}년 ${month}월 ${today}일`;
+    return `${year}년 ${month + 1}월 ${today}일`;
   },
 };
 
