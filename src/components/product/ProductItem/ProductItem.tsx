@@ -1,79 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import Counter from '../../common/Counter/Counter';
 import Image from '../../common/Image/Image';
-import SmallCartIcon from '../../../assets/icons/SmallCartIcon';
 import { formatPrice } from '../../../utils/formatPrice';
-import useCartService from '../../../hooks/useCartService';
-import productQuantityInCart from '../../../globalState/selectors/productQuantityInCart';
 import type { Product } from '../../../types/product';
-import serverNameState from '../../../globalState/atoms/serverName';
+import CartController from '../CartController/CartController';
 
 const ProductItem = (product: Product) => {
-  const { id: productId, name, price, imageUrl } = product;
-  const { addCartItem, updateCartItemQuantity, deleteCartItem, getCartId } =
-    useCartService();
-
-  const quantityInCart = useRecoilValue(productQuantityInCart(productId));
-  const [count, setCount] = useState(quantityInCart);
-  const [isDisplayCounter, setIsDisplayCounter] = useState(!!quantityInCart);
-
-  const prevServerName = useRef('');
-  const serverName = useRecoilValue(serverNameState);
-
-  const updateCount = (quantity: number) => {
-    setCount(quantity);
-
-    if (quantity === 0) return;
-    updateCartItemQuantity(getCartId(productId))(quantity);
-  };
-
-  const handleAddCartButtonClick = () => {
-    addCartItem(product);
-    setCount(1);
-    setIsDisplayCounter(true);
-  };
-
-  const handleNoQuantityAction = (quantity: number) => {
-    if (quantity !== 0) return;
-
-    const cartId = getCartId(productId);
-    deleteCartItem(cartId);
-    setIsDisplayCounter(false);
-  };
-
-  useEffect(() => {
-    if (prevServerName.current === serverName) return;
-
-    setCount(quantityInCart);
-    setIsDisplayCounter(!!quantityInCart);
-
-    prevServerName.current = serverName;
-  }, [quantityInCart]);
+  const { name, price, imageUrl } = product;
 
   return (
     <ItemContainer>
       <ProductImageWrapper>
         <Image src={imageUrl} alt={name} size="large" />
-        <CartButtonWrapper>
-          {isDisplayCounter ? (
-            <Counter
-              count={count}
-              updateCount={updateCount}
-              onClickedButton={handleNoQuantityAction}
-              onBlurredInput={handleNoQuantityAction}
-            />
-          ) : (
-            <CartButton
-              type="button"
-              aria-label="장바구니에 추가하기"
-              onClick={handleAddCartButtonClick}
-            >
-              <SmallCartIcon />
-            </CartButton>
-          )}
-        </CartButtonWrapper>
+        <CartControllerWrapper>
+          <CartController {...product} />
+        </CartControllerWrapper>
       </ProductImageWrapper>
       <Contents>
         <div>
@@ -97,7 +37,7 @@ const ProductImageWrapper = styled.div`
   position: relative;
 `;
 
-const CartButtonWrapper = styled.div`
+const CartControllerWrapper = styled.div`
   position: absolute;
   right: 8px;
   bottom: 8px;
@@ -119,15 +59,6 @@ const Price = styled.p`
   margin-top: 3px;
   font-size: 20px;
   font-weight: 400;
-`;
-
-const CartButton = styled.button`
-  background: #fff;
-  border: 1px solid #dddddd;
-
-  padding: 7px;
-
-  cursor: pointer;
 `;
 
 export default ProductItem;
