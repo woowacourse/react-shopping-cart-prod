@@ -20,7 +20,7 @@ const OrderStatementList = () => {
 
   if (isLoading)
     return (
-      <Page pageName="주문내역">
+      <Page pageName="주문목록">
         <Wrapper>
           <OrderStatementSkeleton />
         </Wrapper>
@@ -29,7 +29,7 @@ const OrderStatementList = () => {
 
   if (error)
     return (
-      <Page pageName="주문내역">
+      <Page pageName="주문목록">
         <Wrapper>
           <ErrorInfo error={error} />
         </Wrapper>
@@ -45,7 +45,7 @@ const OrderStatementList = () => {
           closeModal={closeModal}
         />
       )}
-      <Page pageName="주문내역">
+      <Page pageName="주문목록">
         <Wrapper>
           {data &&
             data.map((order) => (
