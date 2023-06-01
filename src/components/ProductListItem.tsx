@@ -1,7 +1,5 @@
-import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import CartIcon from '../assets/icons/cart.svg';
-import cartItemsRepository from '../recoil/repositories/cartItemsRepository';
 import type { CartItem } from '../types/CartItem';
 import type { Product } from '../types/Product';
 import Stepper from './common/Stepper';
@@ -56,11 +54,12 @@ const AddCartButton = styled.button`
 type ProductListItemProps = {
   product: Product;
   cartItem?: CartItem | null;
+  showCartItem?: boolean;
+  onChangeQuantity?: (quantity: number) => void;
 };
 
 const ProductListItem = (props: ProductListItemProps) => {
-  const { product, cartItem } = props;
-  const { setQuantity } = useRecoilValue(cartItemsRepository);
+  const { product, cartItem, showCartItem = true, onChangeQuantity } = props;
 
   return (
     <ProductListItemContainer>
@@ -71,17 +70,18 @@ const ProductListItem = (props: ProductListItemProps) => {
           <ProductPrice>{product.price.toLocaleString('ko-KR')}</ProductPrice>
         </ProductInfo>
         <StepperContainer>
-          {cartItem ? (
-            <Stepper
-              min={0}
-              value={cartItem.quantity}
-              onChange={(quantity) => setQuantity(product, quantity)}
-            />
-          ) : (
-            <AddCartButton onClick={() => setQuantity(product, 1)}>
-              <img alt="카트" src={CartIcon} />
-            </AddCartButton>
-          )}
+          {showCartItem &&
+            (cartItem ? (
+              <Stepper
+                min={0}
+                value={cartItem.quantity}
+                onChange={(quantity) => onChangeQuantity?.(quantity)}
+              />
+            ) : (
+              <AddCartButton onClick={() => onChangeQuantity?.(1)}>
+                <img alt="카트" src={CartIcon} />
+              </AddCartButton>
+            ))}
         </StepperContainer>
       </ProductInfoContainer>
     </ProductListItemContainer>

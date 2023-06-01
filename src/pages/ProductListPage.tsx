@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import ProductListItem from '../components/ProductListItem';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
-import cartItemsRepository from '../recoil/repositories/cartItemsRepository';
+import userCartItemsRepository from '../recoil/user/userCartItemsRepository';
 import userProductsState from '../recoil/user/userProductsState';
 
 const ProductList = styled.ul`
@@ -28,14 +28,24 @@ const ProductListPage = () => {
   return (
     <AwaitRecoilState state={userProductsState}>
       {(products) => (
-        <AwaitRecoilState state={cartItemsRepository}>
-          {({ getCartItemByProductId }) => (
+        <AwaitRecoilState
+          state={userCartItemsRepository}
+          errorElement={
+            <ProductList>
+              {products.map((product) => (
+                <ProductListItem key={product.id} product={product} showCartItem={false} />
+              ))}
+            </ProductList>
+          }
+        >
+          {({ getCartItemByProductId, setQuantity }) => (
             <ProductList>
               {products.map((product) => (
                 <ProductListItem
                   key={product.id}
                   product={product}
                   cartItem={getCartItemByProductId(product.id)}
+                  onChangeQuantity={(quantity) => setQuantity(product, quantity)}
                 />
               ))}
             </ProductList>
