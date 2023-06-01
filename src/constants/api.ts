@@ -79,9 +79,9 @@ const CART_API_ERROR_MESSAGE = {
 
 const ORDER_API_ERROR_MESSAGE = {
   ADD: {
-    [HTTP_STATUS_CODE.BAD_REQUEST]: '장바구니에 있는 상품들을 구매할 수 없습니다.',
+    [HTTP_STATUS_CODE.BAD_REQUEST]: '일시적인 오류로 장바구니에 있는 상품들을 구매할 수 없습니다.',
     [HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR]:
-      '일시적인 장애가 발생했어요. 잠시 후 다시 시도해주세요.',
+      '일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
   },
 } as const;
 
