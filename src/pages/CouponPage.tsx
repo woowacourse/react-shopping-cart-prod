@@ -1,11 +1,24 @@
 import { styled } from 'styled-components';
+import { Suspense } from 'react';
 import CouponList from '../components/coupon/CounponList/CouponList';
+import ErrorBoundary from '../errorHandler/ErrorBoundary';
+import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
 
 const CouponPage = () => {
   return (
     <Layout>
       <Title>쿠폰 받기</Title>
-      <CouponList />
+      <ErrorBoundary>
+        <Suspense
+          fallback={
+            <Fallback>
+              <LoadingSpinner color="#04c09e" />
+            </Fallback>
+          }
+        >
+          <CouponList />
+        </Suspense>
+      </ErrorBoundary>
     </Layout>
   );
 };
@@ -26,6 +39,12 @@ const Title = styled.h2`
 
   border-bottom: 4px solid #333333;
   text-align: center;
+`;
+
+const Fallback = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default CouponPage;
