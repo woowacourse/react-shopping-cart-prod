@@ -1,4 +1,4 @@
-import { CouponType } from '@type/couponType';
+import { CouponType, ServerCouponType } from '@type/couponType';
 
 interface GetAvailableCouponsByTotalPriceParams {
   coupons: CouponType[];
@@ -42,4 +42,14 @@ export const getDiscountPrice = ({
     const percentage = 1 - coupon.value / 100;
     return totalItemsPrice * percentage + deliveryFee;
   }
+};
+
+export const couponApiWrapper = (coupons: ServerCouponType[]): CouponType[] => {
+  return coupons.map((coupon) => ({
+    id: coupon.id,
+    name: coupon.name,
+    type: coupon.type,
+    value: coupon.value,
+    minimumPrice: coupon.minimumPrice,
+  }));
 };
