@@ -4,6 +4,7 @@ import { FetchQueryRes } from './api.type';
 
 interface PostOrderRes {
   cartItemIds: number[];
+  couponIds: number[];
 }
 
 interface FetchOrdersRes {
@@ -14,9 +15,12 @@ type FetchDetailOrderRes = Order;
 
 export const postOrder: (
   payload: PostOrderRes
-) => FetchQueryRes<PostOrderRes> = ({ cartItemIds }: PostOrderRes) => {
+) => FetchQueryRes<PostOrderRes> = ({
+  cartItemIds,
+  couponIds,
+}: PostOrderRes) => {
   return authFetchQuery.post(`/orders`, {
-    body: { cartItemIds },
+    body: { cartItemIds, couponIds },
   });
 };
 

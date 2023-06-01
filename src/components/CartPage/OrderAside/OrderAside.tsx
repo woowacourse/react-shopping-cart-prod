@@ -4,16 +4,23 @@ import { totalPriceSelector } from '../../../atoms/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
 import { useMutateOrder } from '../../../hooks/order/order';
 import * as S from './OrderAside.styles';
+import { useRecoilValue } from 'recoil';
+import { selectedCouponsState } from '../../../atoms/coupons';
 
 const OrderAside = () => {
   const totalPrice = useRefreshableRecoilValue(totalPriceSelector);
   const selectedItems = useRefreshableRecoilValue(selectedItemsSelector);
   const totalDiscountPrice = useRefreshableRecoilValue(discountPrice);
+  const selectedCoupons = useRecoilValue(selectedCouponsState);
 
   const { postOrderMutation } = useMutateOrder();
   const navigate = useNavigate();
   const onOrder = async () => {
-    await postOrderMutation({ cartItemIds: [...selectedItems] });
+    await postOrderMutation({
+      cartItemIds: [...selectedItems],
+      couponIds: selectedCoupons,
+    });
+
     navigate('/order');
   };
 

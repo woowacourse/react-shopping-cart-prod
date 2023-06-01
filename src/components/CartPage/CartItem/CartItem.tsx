@@ -44,7 +44,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
           <S.Name>{product.name}</S.Name>
           <S.Info dir='column' justify='space-between' align='end'>
             <S.DeleteButton onClick={deleteCartItem}>X</S.DeleteButton>
-            <SpecificCouponSelect productId={product.id} />
+            <SpecificCouponSelect cartId={id} productId={product.id} />
             <QuantityStepper
               max={100}
               min={1}
