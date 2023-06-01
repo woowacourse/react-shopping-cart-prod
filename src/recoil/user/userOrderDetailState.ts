@@ -1,8 +1,8 @@
 import { selectorFamily } from 'recoil';
-import type { OrderEntity } from '../../api/rest/ShoppingCartRestAPI';
+import type { Order } from '../../types/Order';
 import clientState from '../atoms/clientState';
 
-const userOrderDetailState = selectorFamily<OrderEntity, OrderEntity['id']>({
+const userOrderDetailState = selectorFamily<Order, Order['id']>({
   key: 'userOrderDetailState',
   get:
     (orderId) =>

@@ -1,10 +1,9 @@
 /* eslint-disable no-nested-ternary */
-import { atomFamily, DefaultValue, selector } from 'recoil';
+import { atomFamily, DefaultValue, selectorFamily } from 'recoil';
 import type { Client } from '../../api';
 import type { CartItem } from '../../types/CartItem';
 import syncCartItemsEffect from '../effects/syncCartItemsEffect';
 import cartItemsQuery from '../queries/cartItemsQuery';
-import clientState from './clientState';
 
 const internalCartItemsState = atomFamily<CartItem[], Client>({
   key: 'internalCartItemsState',
@@ -12,23 +11,25 @@ const internalCartItemsState = atomFamily<CartItem[], Client>({
   effects: (client) => [syncCartItemsEffect(client)],
 });
 
-const cartItemsState = selector<CartItem[]>({
+const cartItemsState = selectorFamily<CartItem[], Client>({
   key: 'cartItemsState',
-  get: ({ get }) => {
-    const client = get(clientState);
-    const cartItems = get(internalCartItemsState(client));
-    return cartItems;
-  },
-  set: ({ get, set, reset }, rawNewCartItems) => {
-    const client = get(clientState);
-    if (rawNewCartItems instanceof DefaultValue) {
-      reset(internalCartItemsState(client));
-      return;
-    }
+  get:
+    (client) =>
+    ({ get }) => {
+      const cartItems = get(internalCartItemsState(client));
+      return cartItems;
+    },
+  set:
+    (client) =>
+    ({ set, reset }, rawNewCartItems) => {
+      if (rawNewCartItems instanceof DefaultValue) {
+        reset(internalCartItemsState(client));
+        return;
+      }
 
-    const newCartItems = rawNewCartItems.filter((newCartItem) => newCartItem.quantity > 0);
-    set(internalCartItemsState(client), newCartItems);
-  },
+      const newCartItems = rawNewCartItems.filter((newCartItem) => newCartItem.quantity > 0);
+      set(internalCartItemsState(client), newCartItems);
+    },
 });
 
 export default cartItemsState;

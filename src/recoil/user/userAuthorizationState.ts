@@ -1,8 +1,9 @@
 import { selector } from 'recoil';
+import type { Authorization } from '../../types/Authorization';
 import authorizationState from '../atoms/authorizationState';
 import serverState from '../atoms/serverState';
 
-const userAuthorizationState = selector({
+const userAuthorizationState = selector<Authorization | null>({
   key: 'userAuthorizationState',
   get: ({ get }) => {
     const server = get(serverState);
