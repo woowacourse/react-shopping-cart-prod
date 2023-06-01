@@ -16,5 +16,7 @@ export const getProducts = async (serverId: ServerId): Promise<Product[]> => {
     },
   });
 
+  if (response.status !== 200) throw new Error(response.statusText);
+
   return response.json();
 };

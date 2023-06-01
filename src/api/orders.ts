@@ -31,6 +31,8 @@ export const getOrders = async (serverId: ServerId): Promise<Orders[]> => {
     },
   });
 
+  if (response.status !== 200) throw new Error(response.statusText);
+
   return response.json();
 };
 

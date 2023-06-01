@@ -16,6 +16,8 @@ export const getCartItems = async (serverId: ServerId): Promise<CartItem[]> => {
     },
   });
 
+  if (response.status !== 200) throw new Error(response.statusText);
+
   return response.json();
 };
 
