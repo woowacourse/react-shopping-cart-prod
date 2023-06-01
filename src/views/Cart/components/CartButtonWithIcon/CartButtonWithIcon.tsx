@@ -5,6 +5,7 @@ import * as S from './CartButtonWithIcon.style';
 import { useCart, useRefreshCart } from '@views/Cart/recoil/cartState';
 import { useRefreshProduct } from '@views/Product/recoil/productListState';
 
+import { FiShoppingCart } from 'react-icons/fi';
 function CartButtonWithIcon() {
   const navigate = useNavigate();
   const { cart } = useCart();
@@ -13,7 +14,7 @@ function CartButtonWithIcon() {
   const refreshProduct = useRefreshProduct();
 
   return (
-    <S.CartWrapper
+    <S.CartContainer
       type="button"
       aria-label="장바구니 페이지로 가기"
       role="button"
@@ -23,13 +24,13 @@ function CartButtonWithIcon() {
         navigate('/cart');
       }}
     >
-      <S.CartTitle>
-        <S.CartText>장바구니</S.CartText>
-      </S.CartTitle>
-      <S.CartCountWrapper>
-        <S.CartCount aria-live="polite">{cart.length}</S.CartCount>
-      </S.CartCountWrapper>
-    </S.CartWrapper>
+      <S.CartWrapper>
+        <FiShoppingCart />
+        <S.CartCountWrapper>
+          <S.CartCount aria-live="polite">{cart.length}</S.CartCount>
+        </S.CartCountWrapper>
+      </S.CartWrapper>
+    </S.CartContainer>
   );
 }
 

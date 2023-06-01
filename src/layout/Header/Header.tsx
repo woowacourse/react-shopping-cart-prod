@@ -11,6 +11,8 @@ import { useResetCart } from '@views/Cart/recoil/cartState';
 import { Logo } from '@layout/Logo';
 import { isCrewNameType } from '../../types/ServerType';
 import { useCredential } from '@recoil/server/credentialState';
+import OrderListButton from '@views/Payment/components/OrderListButton/OrderListButton';
+import { styled } from 'styled-components';
 
 function Header() {
   const { setServerUrlBy } = useServerUrl();
@@ -58,7 +60,10 @@ function Header() {
             onChange={handleChangeUser}
           />
           <Suspense>
-            <CartButtonWithIcon />
+            <HeaderButtonsWrapper>
+              <OrderListButton />
+              <CartButtonWithIcon />
+            </HeaderButtonsWrapper>
           </Suspense>
         </S.HeaderWrapper>
       </Container>
@@ -67,3 +72,8 @@ function Header() {
 }
 
 export default Header;
+
+const HeaderButtonsWrapper = styled.div`
+  display: flex;
+  column-gap: 2rem;
+`;

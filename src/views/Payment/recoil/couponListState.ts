@@ -1,7 +1,7 @@
 import credentialState from '@recoil/server/credentialState';
 import serverUrlState from '@recoil/server/serverUrlState';
 import { atom, selector, useRecoilState } from 'recoil';
-import fetchCoupons from '../components/utils/fetchCoupons';
+import fetchCoupons from '../utils/fetchCoupons';
 import { COUPON_PATH } from '@constants/urlConstants';
 import { CouponRemote, CouponType } from 'types/CouponType';
 
