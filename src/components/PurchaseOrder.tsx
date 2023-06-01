@@ -13,6 +13,8 @@ const PurchaseOrder = () => {
   const navigate = useNavigate();
 
   const orderCartItem = async () => {
+    if (purchaseOrder.length === 0) return;
+
     const isSuccess = await addOrder(purchaseOrder);
 
     if (!isSuccess) {
