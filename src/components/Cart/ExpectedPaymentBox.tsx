@@ -33,6 +33,7 @@ const ExpectedPaymentBox = () => {
         <SelectBoxWrapper>
           <SelectBox
             options={couponOptions}
+            title='적용할 쿠폰을 선택해 주세요.'
             onChange={changeTargetCoupon}
             autoSize
           />

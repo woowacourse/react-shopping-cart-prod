@@ -11,17 +11,24 @@ interface SelectOption {
 interface SelectBoxProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options: SelectOption[];
   variant?: SelectBoxVariant;
+  title?: string;
   autoSize?: boolean;
 }
 
 const SelectBox = ({
   options,
+  title,
   variant = 'small',
   autoSize = false,
   ...props
 }: SelectBoxProps) => {
   return (
     <Select variant={variant} autoSize={autoSize} {...props}>
+      {title && (
+        <option value='' selected disabled>
+          {title}
+        </option>
+      )}
       {options.map(({ value, label }) => (
         <option key={value} value={value}>
           {label}
