@@ -27,7 +27,6 @@ function OrderItem({ id, date, orderItems, page, price }: OrderItemType & { page
     return orderItems.slice(0, 2);
   };
 
-  console.log(orderItems);
   const displayMoveDetailPage = () => {
     if (orderItems.length < 3) return '상세보기 ⟩';
 

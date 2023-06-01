@@ -37,6 +37,8 @@ const useCartItems = () => {
     setCartItems(newCartItems);
   };
 
+  const selectedCartItemsAmount = cartItems.filter((items) => items.isSelected).length;
+
   const toggleSelected = (id: number) => {
     if (!cartItems) return;
 
@@ -87,6 +89,7 @@ const useCartItems = () => {
   return {
     isEmpty,
     selectedCartItem: getSelectedCartItem(),
+    selectedCartItemsAmount,
     updateCartItem,
     toggleSelected,
     toggleAllSelected,

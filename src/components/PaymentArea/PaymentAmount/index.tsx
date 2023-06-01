@@ -17,14 +17,12 @@ import IssuedCoupon from '../IssuedCoupon';
 function PaymentAmount() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
   const [scrollPosition, setScrollPosition] = useState(0);
+
   const { orderAmount, deliveryFee, cartListPrice, finalOrderPrice } = useRecoilValue(orderAmountState);
   const cartAmount = useRecoilValue(cartItemsAmountState);
   const setSelectedCouponId = useSetRecoilState(selectedCouponIdState);
-
-  const displayButtonText = pathname === '/cart-list' ? '주문하기' : '결제하기';
-  const displayTotalOrderPrice = pathname === '/cart-list' ? cartListPrice : finalOrderPrice;
-  const isFixScrollPosition = pathname === '/cart-list' ? scrollPosition > 160 : scrollPosition > 120;
 
   const { orderCartItems } = useOrderItems();
 
@@ -37,6 +35,10 @@ function PaymentAmount() {
       navigate('/order-list');
     }
   };
+
+  const displayButtonText = pathname === '/cart-list' ? '주문하기' : '결제하기';
+  const displayTotalOrderPrice = pathname === '/cart-list' ? cartListPrice : finalOrderPrice;
+  const isFixScrollPosition = pathname === '/cart-list' ? scrollPosition > 160 : scrollPosition > 120;
 
   const updateScrollYPosition = () => {
     const scrollPosition = window.scrollY;
