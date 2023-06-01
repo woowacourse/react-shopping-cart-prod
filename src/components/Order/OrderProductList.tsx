@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import OrderProductItem from './OrderProductItem';
 import { Order } from '../../types/product';
+import { formatDateTime } from '../../utils/timeFormat';
 
 interface OrderProductListProps {
   order: Order;
@@ -16,7 +17,7 @@ const OrderProductList = ({ order }: OrderProductListProps) => {
     <OrderContent key={orderId}>
       <OrderInfo>
         <p>
-          주문번호: {orderId} / 주문일: {orderDateTime}
+          주문번호: {orderId} / 주문일: {formatDateTime(orderDateTime)}
         </p>
         <Link to={`/order/${orderId}`}>
           <DetailButton>상세보기 &#62;</DetailButton>
