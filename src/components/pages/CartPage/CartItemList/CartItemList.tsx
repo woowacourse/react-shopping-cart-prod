@@ -21,11 +21,11 @@ export const CartItemList = () => {
   const baseUrl = useApiBaseUrlValue();
   const { mutation: deleteCartMutation } = useMutation(FETCH_METHOD.DELETE);
 
-  const { deleteRecoilCartItem } = useUpdateRecoilCart();
-  const { toggleCheckbox } = useUpdateCheckbox();
-
   const cart = useCartStateValue();
   const checkState = useCheckedValue();
+
+  const { deleteRecoilCartItem } = useUpdateRecoilCart();
+  const { toggleCheckbox } = useUpdateCheckbox();
 
   const onChangeCheckBox = (cartItemId: CartItemType['id']) => {
     toggleCheckbox(cartItemId);

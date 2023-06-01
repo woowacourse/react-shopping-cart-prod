@@ -72,6 +72,10 @@ const GlobalStyle = createGlobalStyle`
     margin:0;
   }
 
+  li {
+    list-style: none;
+  }
+
   a {
     text-decoration: none;
     outline: none;

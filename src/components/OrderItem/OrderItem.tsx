@@ -1,6 +1,16 @@
+import { ProductType } from 'src/types';
 import * as styled from './OrderItem.styled';
 
-export const OrderItem = () => {
+interface OrderItemProps {
+  detailData: {
+    product: ProductType;
+    quantity: number;
+  };
+}
+
+export const OrderItem = ({ detailData }: OrderItemProps) => {
+  const { product, quantity } = detailData;
+
   return (
     <styled.OrderItem>
       <styled.ProductImage />

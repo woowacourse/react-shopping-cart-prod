@@ -12,7 +12,7 @@ export const postHandlers = [
       ctx.delay(delay),
       ctx.status(201),
       ctx.json({
-        cartItemId: 3,
+        cartItemId: new Date().getTime(),
       })
     );
   }),
@@ -27,7 +27,7 @@ export const postHandlers = [
       ctx.delay(delay),
       ctx.status(201),
       ctx.json({
-        orderId: 1,
+        orderId: new Date().getTime(),
         newEarnedPoint: 3_000,
       })
     );
@@ -43,7 +43,7 @@ export const postHandlers = [
       ctx.delay(delay),
       ctx.status(201),
       ctx.json({
-        productId: 1,
+        productId: new Date().getTime(),
       })
     );
   }),

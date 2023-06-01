@@ -9,6 +9,8 @@ import {
 } from 'recoil';
 import { localStorageEffect } from './localStorageEffect';
 
+import { CheckedState } from './recoilChecked';
+
 import { LOCAL_STORAGE_KEY, RECOIL_KEY } from '@constants/index';
 
 import type { CartItemType } from '../types';
@@ -40,6 +42,18 @@ const CartItemValue = selectorFamily<CartItemType | null, number>({
     },
 });
 
+const CheckedCartItemsValue = selector({
+  key: 'checkedCartItemsValue',
+  get: ({ get }) => {
+    const cart = get(CartState);
+    const checkedState = get(CheckedState);
+
+    const checkedCartItemsId = Object.keys(checkedState).map(Number);
+
+    return cart.filter((item) => checkedCartItemsId.includes(item.id));
+  },
+});
+
 export const useCartState = () => useRecoilState(CartState);
 
 export const useCartStateValue = () => useRecoilValue(CartState);
@@ -51,3 +65,5 @@ export const useCartSizeValue = () => useRecoilValue(CartSizeValue);
 export const useResetCartState = () => useResetRecoilState(CartState);
 
 export const useCartItemValue = (productId: number) => useRecoilValue(CartItemValue(productId));
+
+export const useCheckedCartItems = () => useRecoilValue(CheckedCartItemsValue);

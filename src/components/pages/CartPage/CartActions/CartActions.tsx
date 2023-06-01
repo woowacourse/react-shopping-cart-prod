@@ -16,11 +16,10 @@ export const CartActions = () => {
   const baseUrl = useApiBaseUrlValue();
   const { mutation: deleteCartMutation } = useMutation(FETCH_METHOD.DELETE);
 
-  const { deleteRecoilCartItem } = useUpdateRecoilCart();
-
   const cart = useCartStateValue();
-
   const checkedState = useCheckedValue();
+
+  const { deleteRecoilCartItem } = useUpdateRecoilCart();
   const { toggleAllCheckbox } = useUpdateCheckbox();
 
   const onChangeAllCheckbox = () => {

@@ -36,9 +36,11 @@ export const useMutation = (method: string) => {
           );
         }
 
-        const responseData = await response.json();
-
-        setState((prev) => ({ ...prev, data: responseData }));
+        if (response.headers.get('Content-Type')?.includes('application/json')) {
+          const responseData = await response.json();
+          console.log(responseData);
+          setState((prev) => ({ ...prev, data: responseData }));
+        }
       } catch ({ message }) {
         const jsonData = await JSON.parse(message as string);
         setState((prev) => ({ ...prev, error: jsonData }));

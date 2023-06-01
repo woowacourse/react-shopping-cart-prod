@@ -5,13 +5,13 @@ import { CheckedState } from './recoilChecked';
 
 import { RECOIL_KEY } from '@constants/index';
 
-const TotalProductPrice = selector({
+const TotalProductsPrice = selector({
   key: RECOIL_KEY.TOTAL_PRODUCT_PRICE_VALUE,
   get: ({ get }) => {
     const cart = get(CartState);
     const checkedItems = get(CheckedState);
 
-    const totalProductPrice = cart.reduce((totalPrice, item) => {
+    const totalProductsPrice = cart.reduce((totalPrice, item) => {
       if (checkedItems[item.id]) {
         return totalPrice + item.quantity * item.product.price;
       }
@@ -19,8 +19,8 @@ const TotalProductPrice = selector({
       return totalPrice;
     }, 0);
 
-    return totalProductPrice;
+    return totalProductsPrice;
   },
 });
 
-export const useTotalProductPrice = () => useRecoilValue(TotalProductPrice);
+export const useTotalProductsPrice = () => useRecoilValue(TotalProductsPrice);

@@ -1,7 +1,7 @@
 const PATH = Object.freeze({
   HOME: '/',
   CART: '/shopping-cart',
-  ORDERS: '/orders'
+  ORDERS: '/orders',
 });
 
 const QUANTITY = Object.freeze({
@@ -9,7 +9,7 @@ const QUANTITY = Object.freeze({
   MIN: 1,
 });
 
-const DELIVERY_CHARGE = 3000;
+const SHIPPING_FEE = 3000;
 
 const SKELETON_LENGTH = 12;
 
@@ -22,6 +22,7 @@ const FETCH_METHOD = Object.freeze({
 const FETCH_URL = Object.freeze({
   CART_ITEMS: '/cart-items',
   PRODUCTS: '/products',
+  ORDERS: '/orders',
 });
 
 const RECOIL_KEY = Object.freeze({
@@ -44,7 +45,7 @@ const LOCAL_STORAGE_KEY = Object.freeze({
 export {
   PATH,
   QUANTITY,
-  DELIVERY_CHARGE,
+  SHIPPING_FEE as DELIVERY_CHARGE,
   SKELETON_LENGTH,
   FETCH_METHOD,
   FETCH_URL,

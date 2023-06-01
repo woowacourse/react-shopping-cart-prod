@@ -31,7 +31,7 @@ export const OrderSummaryHeader = styled.h2`
 export const Content = styled.div`
   width: 100%;
 
-  padding: 30px 16px;
+  padding: 16px 16px 30px 16px;
 
   display: flex;
   flex-direction: column;
@@ -43,10 +43,13 @@ export const Content = styled.div`
 
 export const Prices = styled.div`
   width: 100%;
+
+  margin-bottom: 20px;
 `;
 
 export const Price = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-between;
 
   padding: 12px 0;
@@ -54,21 +57,77 @@ export const Price = styled.div`
   font-size: 14px;
 
   letter-spacing: 0.5px;
+`;
 
-  &:first-child {
-    padding-top: 0;
-  }
+export const TotalProductsPrice = styled(Price)``;
 
-  &:nth-child(2) {
-    padding-bottom: 26px;
-  }
+export const ShippingPrice = styled(Price)`
+  border-bottom: 1px solid var(--grey-300);
+`;
 
-  &:last-child {
-    padding: 26px 0;
-    border-top: 2px solid var(--grey-300);
-    border-bottom: 2px solid var(--grey-300);
-    margin-bottom: 24px;
-  }
+export const PaymentPrice = styled(Price)`
+  position: relative;
+`;
+
+export const EarnPoint = styled.p`
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+
+  opacity: 0.5;
+
+  font-size: 12px;
+`;
+
+export const Point = styled(Price)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: var(--primary-color);
+
+  font-size: 12px;
+`;
+
+export const PointInput = styled.input`
+  height: 25px;
+  width: 180px;
+
+  background-color: var(--grey-200);
+
+  padding-right: 5px;
+
+  border: none;
+  outline: none;
+  border-radius: 4px;
+
+  font-weight: 600;
+  text-align: right;
+`;
+
+export const UseAllPointButton = styled.button`
+  font-size: 12px;
+
+  padding: 5px 4px;
+
+  color: var(--grey-100);
+
+  background-color: var(--blue);
+
+  border: none;
+  border-radius: 4px;
+
+  cursor: pointer;
+`;
+
+export const ShippingPolicy = styled.p`
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+
+  color: var(--red);
+
+  font-size: 11px;
 `;
 
 export const OrderSummaryM = styled.div`

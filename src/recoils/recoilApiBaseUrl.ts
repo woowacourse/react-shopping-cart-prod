@@ -2,7 +2,7 @@ import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 
 import { RECOIL_KEY } from '@constants/index';
 
-export const ApiBaseUrlState = atom({
+const ApiBaseUrlState = atom({
   key: RECOIL_KEY.API_BASE_URL_STATE,
   default: process.env.REACT_APP_API_DEFAULT,
 });

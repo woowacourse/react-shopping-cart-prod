@@ -24,7 +24,7 @@ export const Button = styled.button<Partial<Props>>`
     height: 60px;
 
     border: ${(props) => props.bgColor ?? 'solid 1px var(--grey-300)'};
-    background-color: ${(props) => props.bgColor ?? 'var(--blue)'};
+    background-color: ${(props) => props.bgColor ?? 'var(--primary-color)'};
 
     color: ${(props) => props.bgColor ?? 'var(--grey-100)'};
 
