@@ -9,17 +9,27 @@ import { isNumericString } from '../../../utils/isNumericString';
 import { removeComma } from '../../../utils/removeComma';
 import { CloseIcon } from '../../../assets/svg';
 import { pointQuery } from '../../../recoil/selectors/point';
+import type { CartItem } from '../../../types/cart';
 
 const FREE_SHIPPING_PRICE = 30_000;
 const SHIPPING_FEE = 3_000;
 
-const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
+interface CartTotalProps {
+  selectedCartItemIds: Set<CartItem['id']>;
+  totalProductPrice: number;
+}
+
+const CartTotal = ({
+  selectedCartItemIds,
+  totalProductPrice,
+}: CartTotalProps) => {
   const [usingPoint, setUsingPoint] = useState('');
   const usingPointRef = useRef('');
   const point = useRecoilValue(pointQuery);
-  const { isModalOpen, openModal } = useModal();
   const { isModalOpen, openModal, closeModal } = useModal();
   const isFreeShipping = totalProductPrice >= FREE_SHIPPING_PRICE;
+  const isPointMoreThanProductPrice = point > totalProductPrice;
+  const maxPoint = isPointMoreThanProductPrice ? totalProductPrice : point;
 
   const calcTotalOrderPrice = () => {
     if (totalProductPrice <= 0) return 0;
@@ -34,7 +44,7 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
   const useAllPoint = () => {
     if (point <= 0) return;
 
-    setUsingPoint(point.toLocaleString('ko-KR'));
+    setUsingPoint(maxPoint.toLocaleString('ko-KR'));
   };
 
   const clearPoint = () => {
@@ -50,8 +60,10 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
     setUsingPoint(Number(valueWithoutComma).toLocaleString('ko-KR'));
     usingPointRef.current = Number(valueWithoutComma).toLocaleString('ko-KR');
 
-    if (Number(removeComma(usingPointRef.current)) >= point) {
-      setUsingPoint(point.toLocaleString('ko-KR'));
+    const currentPoint = Number(removeComma(usingPointRef.current));
+
+    if (currentPoint >= point || currentPoint >= totalProductPrice) {
+      setUsingPoint(maxPoint.toLocaleString('ko-KR'));
     }
   };
 
@@ -287,7 +299,8 @@ const OrderButton = styled.button`
   margin: 0 auto;
   background: ${(props) => props.theme.color.primary};
   font-family: 'Noto Sans KR';
-  font-size: 22px;
+  font-size: 20px;
+  font-weight: 500;
   line-height: 21px;
   letter-spacing: 0.4px;
   text-align: center;
