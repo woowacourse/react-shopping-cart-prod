@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import OrderCartItem from '../components/OrderCartItem';
 import OrderListItem from '../components/OrderListItem';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '../components/page/PageHeader';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import userOrdersState from '../recoil/user/userOrdersState';
 import type { Order } from '../types/Order';

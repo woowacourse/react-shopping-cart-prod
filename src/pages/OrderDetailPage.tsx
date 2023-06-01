@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import OrderCartItem from '../components/OrderCartItem';
 import OrderListItem from '../components/OrderListItem';
 import OrderPaymentDetails from '../components/OrderPaymentDetails';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '../components/page/PageHeader';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import userOrderDetailState from '../recoil/user/userOrderDetailState';
 

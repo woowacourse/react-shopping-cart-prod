@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import PageHeader from '../components/PageHeader';
+import PageHeader from '../components/page/PageHeader';
 import AwaitFuture from '../components/utils/AwaitFuture';
 import useLoginMutation from '../hooks/useLoginMutation';
 
