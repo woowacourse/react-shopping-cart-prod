@@ -1,5 +1,5 @@
 import { getCoupons } from "api/coupons";
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import { Coupon } from "types/domain";
 
 const getCouponList = selector<Coupon[]>({
@@ -21,4 +21,16 @@ const getCouponList = selector<Coupon[]>({
 export const couponListState = atom<Coupon[]>({
   key: "couponList",
   default: getCouponList,
+});
+
+export const getCouponInfo = selectorFamily<
+  Coupon | undefined,
+  number | undefined
+>({
+  key: "getCouponInfo",
+  get:
+    (couponId) =>
+    ({ get }) => {
+      return get(getCouponList).find((coupon) => coupon.couponId === couponId);
+    },
 });
