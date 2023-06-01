@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const useFetch = <T>(url: string) => {
   const [data, setData] = useState<T | null>(null);
   const [promise, setPromise] = useState<Promise<void>>();
-  const [error, setError] = useState<Error>();
+  const [error, setError] = useState<Error | null>(null);
 
   const fetchData = async () => {
     const response = await fetch(url);
@@ -15,6 +15,7 @@ const useFetch = <T>(url: string) => {
 
       const fetchedData = await response.json();
       setData(fetchedData);
+      setError(null);
     } catch (e) {
       if (!(e instanceof Error)) return;
       setError(e);
@@ -23,10 +24,13 @@ const useFetch = <T>(url: string) => {
 
   useEffect(() => {
     setData(null);
+    setError(null);
     setPromise(fetchData());
   }, [url]);
 
   const getData = () => {
+    if (error) throw error;
+
     if (data === null && promise) {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw promise;
@@ -35,7 +39,7 @@ const useFetch = <T>(url: string) => {
     return data;
   };
 
-  return { getData, error, fetchData };
+  return { getData, fetchData };
 };
 
 export default useFetch;

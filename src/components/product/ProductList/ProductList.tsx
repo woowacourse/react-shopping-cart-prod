@@ -10,11 +10,7 @@ const ProductList = () => {
   const serverName = useRecoilValue(serverNameState);
   const productsUrl = ServerUtil.getProductsUrl(serverName);
 
-  const { getData, error } = useFetch<Product[]>(productsUrl);
-
-  if (error) {
-    throw error;
-  }
+  const { getData } = useFetch<Product[]>(productsUrl);
 
   const productList = getData();
 
