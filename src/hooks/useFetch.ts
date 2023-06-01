@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 const useFetch = <T>(fetcher: () => Promise<T>) => {
   const [data, setData] = useState<T | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [errorState, setErrorState] = useState<{ isError: boolean; error: Error } | null>(null);
 
   const fetchData = useCallback(async () => {
