@@ -36,9 +36,9 @@ const ServerSelector = () => {
   }, [serverState]);
 
   const serverList: { [key in ServerId]: string } = {
-    "power-server": "파워 서버",
-    "ttaengchil-server": "땡칠 서버",
-    "ori-server": "오리 서버",
+    "power-server": "파워",
+    "ttaengchil-server": "땡칠",
+    "ori-server": "오리",
   };
 
   return (
@@ -79,8 +79,23 @@ const ServerSelector = () => {
 
 const Wrapper = styled.fieldset`
   display: flex;
-  width: 300px;
   justify-content: space-around;
+  margin-left: auto;
+
+  width: 200px;
+
+  padding: 8px;
+  border: 1px solid white;
+  border-radius: 4px;
+
+  @media screen and (max-width: 800px) {
+    flex-direction: column;
+    width: fit-content;
+
+    padding: 4px;
+
+    font-size: 13px;
+  }
 `;
 
 const InputBox = styled.label`
@@ -88,7 +103,7 @@ const InputBox = styled.label`
 `;
 
 const Input = styled.input`
-  margin-right: 3px;
+  margin-right: 6px;
 `;
 
 export default ServerSelector;
