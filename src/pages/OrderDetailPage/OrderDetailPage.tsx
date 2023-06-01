@@ -13,7 +13,7 @@ const OrderDetailPage = () => {
   const { data, fetchOrderDetail } = useGetOrderDetail(orderId as string);
 
   const handleOrderListButton = () => {
-    navigate(routes.orderList);
+    navigate(routes.order);
   };
 
   const handleProductListButton = () => {

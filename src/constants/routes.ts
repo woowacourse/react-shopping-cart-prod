@@ -1,8 +1,9 @@
 const routes = {
   list: '/',
+  login: '/login',
   cart: '/cart',
   error: '/error',
-  orderList: '/order',
+  order: '/order',
 };
 
 export default routes;

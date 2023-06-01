@@ -12,7 +12,7 @@ const OrderList = ({ orderData, hasDetailNavigateButton }: OrderListProps) => {
   const navigate = useNavigate();
 
   const handleDetailButton = () => {
-    navigate(`${routes.orderList}/${orderData.orderId}`, { state: { makeOrder: orderData } });
+    navigate(`${routes.order}/${orderData.orderId}`, { state: { makeOrder: orderData } });
   };
 
   return (

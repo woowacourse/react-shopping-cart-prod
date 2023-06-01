@@ -36,7 +36,7 @@ const Header = () => {
   };
 
   const orderListButtonHandler = () => {
-    navigate(routes.orderList);
+    navigate(routes.order);
   };
 
   return (
