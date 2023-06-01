@@ -2,14 +2,14 @@ import { TfiDownload } from 'react-icons/tfi';
 import { LuBird } from 'react-icons/lu';
 import { styled } from 'styled-components';
 
-interface CounponProps {
+interface CouponProps {
   couponName: string;
   header?: string;
   footer?: string;
   onDownloadClick?: () => void;
 }
 
-const Counpon = (props: CounponProps) => {
+const Coupon = (props: CouponProps) => {
   const { couponName, header, footer, onDownloadClick } = props;
 
   return (
@@ -107,4 +107,4 @@ const IconDiv = styled.div`
   ${iconWrapper}
 `;
 
-export default Counpon;
+export default Coupon;
