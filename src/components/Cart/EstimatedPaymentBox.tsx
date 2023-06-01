@@ -19,7 +19,7 @@ const EstimatedPaymentBox = () => {
 
   const { addOrder } = useOrder();
 
-  const totalDeliveryFee = totalProductPrice ? 3000 : 0;
+  const totalDeliveryFee = totalProductPrice >= 50000 ? 3000 : 0;
   const totalPrice = totalProductPrice
     ? totalProductPrice + totalDeliveryFee
     : 0;
@@ -52,6 +52,7 @@ const EstimatedPaymentBox = () => {
           <dt>총 배송비</dt>
           <dd>{totalDeliveryFee.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
+        <Direction>* 5만원 이상 주문 시 배송비 무료!</Direction>
         <EstimatedPaymentInfo>
           <dt>총 주문금액</dt>
           <dd>{totalPrice.toLocaleString('KR')}원</dd>
@@ -70,12 +71,12 @@ const EstimatedPaymentBox = () => {
 
 const EstimatedPaymentBoxContainer = styled.div`
   width: 448px;
-  height: 410px;
+  height: 440px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
 
   @media (max-width: 420px) {
     width: 330px;
-    height: 372px;
+    height: 420px;
   }
 `;
 
@@ -102,6 +103,13 @@ const EstimatedPaymentInfo = styled.dl`
   font-size: 20px;
   font-weight: 700;
   letter-spacing: 0.5px;
+`;
+
+const Direction = styled.p`
+  font-size: 13px;
+  color: gray;
+
+  padding-top: 12px;
 `;
 
 const OrderButtonWrapper = styled.div`
