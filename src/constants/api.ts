@@ -19,6 +19,8 @@ const DEFAULT_API_BASE_URL = API_BASE_URL_LIST[MEMBER[0]];
 const API_ENDPOINT = {
   PRODUCTS: '/products',
   CART_ITEMS: '/cart-items',
+  MEMBER: '/member',
+  ORDERS: '/orders',
 } as const;
 
 const FETCH_DEFAULT_OPTION = {
