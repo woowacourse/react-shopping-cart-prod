@@ -1,42 +1,34 @@
-import { useRecoilValue } from 'recoil';
+import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
 import OrderProductItem from './OrderProductItem';
-import { orderAtom } from '../../recoil/orderProductData';
+import { Order } from '../../types/product';
 
-const OrderProductList = () => {
-  const orders = useRecoilValue(orderAtom);
-  console.log(orders);
-
-  if (orders.length === 0) return <EmptyOrder>장바구니가 비었어요</EmptyOrder>;
+interface OrderProductListProps {
+  order: Order;
+}
+const OrderProductList = ({ order }: OrderProductListProps) => {
+  const { orderId, orderDateTime, orderItems } = order;
 
   return (
-    <Wrapper>
-      {orders &&
-        orders.map((order) => (
-          <OrderContent key={order.orderId}>
-            <OrderInfo>
-              <p>주문번호: {order.orderId}</p>
-              <DetailButton>상세보기 &#62;</DetailButton>
-            </OrderInfo>
-            <ContentListWrapper>
-              {order.orderItems.map((item, index) => (
-                <OrderProductItem key={index} orderProduct={item} />
-              ))}
-            </ContentListWrapper>
-          </OrderContent>
+    <OrderContent key={orderId}>
+      <OrderInfo>
+        <p>
+          주문번호: {orderId} / 주문일: {orderDateTime}
+        </p>
+        <Link to={`/order/${orderId}`}>
+          <DetailButton>상세보기 &#62;</DetailButton>
+        </Link>
+      </OrderInfo>
+      <div>
+        {orderItems.map((item) => (
+          <OrderProductItem orderProduct={item} />
         ))}
-    </Wrapper>
+      </div>
+    </OrderContent>
   );
 };
-
-const Wrapper = styled.div`
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-`;
 
 const OrderInfo = styled.div`
   width: 100%;
@@ -73,12 +65,6 @@ const DetailButton = styled.button`
 
   letter-spacing: 0.5px;
   cursor: pointer;
-`;
-
-const ContentListWrapper = styled.div``;
-
-const EmptyOrder = styled.p`
-  margin: 40px 0;
 `;
 
 export default OrderProductList;
