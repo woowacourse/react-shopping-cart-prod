@@ -1,4 +1,4 @@
-import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
+import { AtomEffect, DefaultValue, atom, selector, selectorFamily } from 'recoil';
 import { KEY_SERVER, QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
 import { CartItem, Product } from '../types';
@@ -20,9 +20,18 @@ export const productSelector = selectorFamily({
     },
 });
 
+const logEffect: <T>(header: string) => AtomEffect<T> =
+  (header: string) =>
+  ({ onSet }) => {
+    onSet((newValue) => {
+      console.log(`[${header}]`, newValue);
+    });
+  };
+
 export const cartState = atom<CartItem[]>({
   key: 'cartState',
   default: [],
+  effects: [logEffect('cart')],
 });
 
 export const quantitySelector = selectorFamily({
