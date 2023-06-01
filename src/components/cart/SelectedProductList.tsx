@@ -90,7 +90,6 @@ const S = {
     border-bottom: 2px solid var(--gray-color-300);
 
     & + div {
-      height: 410px;
       max-height: 410px;
       overflow-y: auto;
 
