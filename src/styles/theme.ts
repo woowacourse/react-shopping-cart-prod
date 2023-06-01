@@ -7,6 +7,9 @@ export const theme = {
   infoColor: '#04C09E',
   lightColor: '#FFFFFF',
   darkColor: '#000000',
+  grayColor: '#fafafa',
+  grayBorderColor: '#f7f7f7',
+
   breakpoints: {
     xs: '0',
     sm: '576px',
@@ -18,10 +21,6 @@ export const theme = {
   shadows: {
     normal: '0 2px 4px rgba(0, 0, 0, 0.2)',
     large: '0 4px 10px rgba(0, 0, 0, 0.3)',
-  },
-  effects: {
-    hoverScale: 'translateX(0.3rem) translateY(-0.3rem) ',
-    hoverScaleUp: 'scale(1.03)',
   },
   transitions: {
     default: '0.3s ease-in-out',

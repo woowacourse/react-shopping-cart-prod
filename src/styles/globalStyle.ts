@@ -37,9 +37,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
     transition: ${(props) => props.theme.transitions.default};
 
-    &:hover {
-      transform: ${({ theme }) => theme.effects.hoverScaleUp};
-    }
+
   }
 
   html,
