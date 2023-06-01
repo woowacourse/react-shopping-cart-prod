@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import CartListItem from '../../cart/CartListItem/CartListItem';
 import Spacer from '../../common/Spacer/Spacer';
 import CartTotal from '../../cart/CartTotal/CartTotal';
@@ -6,7 +7,6 @@ import Checkbox from '../../common/Checkbox/Checkbox';
 import useCartPage from './useCartPage';
 import empty from '../../../assets/image/empty.png';
 import { ResetButton } from '../../common/ErrorFallback/ErrorFallback';
-import { useNavigate } from 'react-router-dom';
 
 const CartPage = () => {
   const navigate = useNavigate();
@@ -68,7 +68,10 @@ const CartPage = () => {
           <Spacer height={20} />
         </CartList>
         <TotalWrapper>
-          <CartTotal totalProductPrice={calcTotalPrice()} />
+          <CartTotal
+            selectedCartItemIds={checkedItemIds}
+            totalProductPrice={calcTotalPrice()}
+          />
         </TotalWrapper>
       </Inner>
     </div>
