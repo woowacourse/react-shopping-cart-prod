@@ -1,4 +1,4 @@
-const serverNameList = ['누누', '체인저', '필립'] as const;
+const serverNameList = ['누누', '체인저', '필립', 'Mock'] as const;
 
 export type ServerName = (typeof serverNameList)[number];
 

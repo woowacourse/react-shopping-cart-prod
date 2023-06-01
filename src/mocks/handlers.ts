@@ -25,13 +25,13 @@ const CART_ITEMS_PATH_NAME = `/cart-items`;
 
 export const productHandler = [
   rest.get(PRODUCTS_PATH_NAME, (req, res, ctx) => {
-    return res(ctx.delay(3000), ctx.status(200), ctx.json(mockProducts));
+    return res(ctx.delay(1500), ctx.status(200), ctx.json(mockProducts));
   }),
 ];
 
 export const cartHandler = [
   rest.get(CART_ITEMS_PATH_NAME, (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json(cartList));
+    return res(ctx.delay(1000), ctx.status(200), ctx.json(cartList));
   }),
   rest.post<PostAddCartRequestBody>(
     CART_ITEMS_PATH_NAME,
@@ -48,7 +48,7 @@ export const cartHandler = [
       };
       cartList.push(newCartItem);
       updateLocalStorage();
-      return res(ctx.status(201));
+      return res(ctx.delay(500), ctx.status(201));
     },
   ),
   rest.patch<PatchUpdateCartRequestBody>(
@@ -71,6 +71,6 @@ export const cartHandler = [
     );
     cartList.splice(targetCartItemIndex, 1);
     updateLocalStorage();
-    return res(ctx.status(204));
+    return res(ctx.delay(500), ctx.status(204));
   }),
 ];
