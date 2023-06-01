@@ -24,4 +24,4 @@ interface OrderCostsData {
   totalPrice: number;
 }
 
-export type { OrderCartItemsData, OrderedItemData, OrderData };
+export type { OrderCartItemsData, OrderedItemData, OrderData, OrderCostsData };

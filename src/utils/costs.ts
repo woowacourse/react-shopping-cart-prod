@@ -45,10 +45,36 @@ const getShippingFee = (discountedTotalItemPrice: number) => {
   return discountedTotalItemPrice > SHIPPING_FEE_EXEMPTION_CONDITION ? 0 : SHIPPING_FEE;
 };
 
+const getCosts = (
+  itemList: (CartItemData | OrderedItemData)[],
+  memberInformation: MemberInformation
+) => {
+  const totalItemDiscountAmount = getTotalItemDiscountAmount(itemList);
+  const totalMemberDiscountAmount = getTotalMemberDiscountAmount(itemList, memberInformation);
+  const totalItemPrice = getTotalItemPrice(itemList);
+  const discountedTotalItemPrice = getDiscountedTotalItemPrice(
+    totalItemDiscountAmount,
+    totalMemberDiscountAmount,
+    totalItemPrice
+  );
+  const shippingFee = getShippingFee(discountedTotalItemPrice);
+  const totalPrice = discountedTotalItemPrice + shippingFee;
+
+  return {
+    totalItemDiscountAmount,
+    totalMemberDiscountAmount,
+    totalItemPrice,
+    discountedTotalItemPrice,
+    shippingFee,
+    totalPrice,
+  };
+};
+
 export {
   getTotalItemDiscountAmount,
   getTotalMemberDiscountAmount,
   getTotalItemPrice,
   getDiscountedTotalItemPrice,
   getShippingFee,
+  getCosts,
 };

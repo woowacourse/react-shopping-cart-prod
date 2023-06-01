@@ -1,13 +1,8 @@
 import { ORDERS_LOCAL_STORAGE_KEY } from '../constants/localStorage';
-import { OrderData } from '../types/order';
-import {
-  getDiscountedTotalItemPrice,
-  getShippingFee,
-  getTotalItemDiscountAmount,
-  getTotalItemPrice,
-  getTotalMemberDiscountAmount,
-} from '../utils/costs';
+import { OrderCostsData, OrderData, OrderedItemData } from '../types/order';
+import { getCosts } from '../utils/costs';
 import { getFromLocalStorage, saveToLocalStorage } from '../utils/localStorage';
+import { areObjectsEqual } from '../utils/validator';
 import { getCartData } from './cart';
 import { getMemberData } from './member';
 
@@ -19,38 +14,34 @@ const setOrderListData = (newOrderList: OrderData[]) => {
   saveToLocalStorage(ORDERS_LOCAL_STORAGE_KEY, newOrderList);
 };
 
-const addOrder = (orderList: OrderData[], cartItemIds: number[]): OrderData[] => {
+const getOrderedItems = (cartItemIds: number[]): OrderedItemData[] => {
   const currentCartData = getCartData();
-  const memberInformation = getMemberData();
 
-  const newOrderId = Number(new Date());
-  const orderedItems = cartItemIds.map((cartItemId) => {
+  return cartItemIds.map((cartItemId) => {
     const cartItemData = currentCartData.find((cartItem) => cartItemId === cartItem.id)!;
     const { id, ...orderedItem } = cartItemData;
 
     return orderedItem;
   });
+};
 
-  const totalItemDiscountAmount = getTotalItemDiscountAmount(orderedItems);
-  const totalMemberDiscountAmount = getTotalMemberDiscountAmount(orderedItems, memberInformation);
-  const totalItemPrice = getTotalItemPrice(orderedItems);
-  const discountedTotalItemPrice = getDiscountedTotalItemPrice(
-    totalItemDiscountAmount,
-    totalMemberDiscountAmount,
-    totalItemPrice
-  );
-  const shippingFee = getShippingFee(discountedTotalItemPrice);
+const addOrder = (
+  cartItemIds: number[],
+  clientOrderCosts: OrderCostsData,
+  orderList: OrderData[]
+): OrderData[] | null => {
+  const memberInformation = getMemberData();
+  const orderedItems = getOrderedItems(cartItemIds);
+  const serverOrderCosts = getCosts(orderedItems, memberInformation);
+  const isValidOrder = areObjectsEqual(clientOrderCosts, serverOrderCosts);
+
+  if (!isValidOrder) return null;
 
   const order = {
-    id: newOrderId,
+    id: Number(new Date()),
     orderedItems,
     orderedAt: new Date(),
-    totalItemDiscountAmount,
-    totalMemberDiscountAmount,
-    totalItemPrice,
-    discountedTotalItemPrice,
-    shippingFee,
-    totalPrice: discountedTotalItemPrice + shippingFee,
+    ...serverOrderCosts,
   };
 
   return [...orderList, order];

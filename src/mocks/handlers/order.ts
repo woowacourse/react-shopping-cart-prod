@@ -8,16 +8,21 @@ import { PostOrderRequestBody } from '../../types/api';
 
 const orderHandlers = [
   rest.post(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
-    const { cartItemIds } = await req.json<PostOrderRequestBody>();
+    const { cartItemIds, ...costs } = await req.json<PostOrderRequestBody>();
     const currentOrderListData = getOrderListData();
 
-    const newOrderList = addOrder(currentOrderListData, cartItemIds);
-    const newCartList = updateCart(cartItemIds);
+    const newOrderList = addOrder(cartItemIds, costs, currentOrderListData);
+
+    if (!newOrderList) {
+      return res(ctx.status(HTTP_STATUS_CODE.CONFLICT));
+    }
+
     const newMemberInformation = updateMemberInformation(newOrderList);
+    const newCartList = updateCart(cartItemIds);
 
     setOrderListData(newOrderList);
-    setCartData(newCartList);
     seMemberData(newMemberInformation);
+    setCartData(newCartList);
 
     return res(
       ctx.status(HTTP_STATUS_CODE.CREATED),
@@ -28,7 +33,11 @@ const orderHandlers = [
   rest.get(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
     const orderList = getOrderListData();
 
-    return res(ctx.delay(500), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(orderList));
+    return res(
+      ctx.delay(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR),
+      ctx.status(HTTP_STATUS_CODE.OK),
+      ctx.json(orderList)
+    );
   }),
 ];
 
