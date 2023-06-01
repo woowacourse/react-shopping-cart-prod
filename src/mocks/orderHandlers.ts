@@ -74,7 +74,7 @@ export const orderHandlers = [
 
     return res(ctx.status(200), ctx.json(orderList), ctx.delay(2000));
   }),
-  rest.get('/order/:id', (req, res, ctx) => {
+  rest.get('/orders/:id', (req, res, ctx) => {
     const orderId = Number(req.params.id);
     const orderList = getOrderListFromLocalStorage();
 

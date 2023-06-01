@@ -11,7 +11,7 @@ export const useOrderFetch = () => {
     return fetch(`${apiEndPoint}/orders`, {
       method: 'POST',
       headers: {
-        Autorization: `Basic ${base64}`,
+        Authorization: `Basic ${base64}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -40,7 +40,7 @@ export const useOrderFetch = () => {
   };
 
   const getOrderDetail = async (orderId: number) => {
-    return fetch(`${apiEndPoint}/order/${orderId}`, {
+    return fetch(`${apiEndPoint}/orders/${orderId}`, {
       method: 'GET',
       headers: {
         Authorization: `Basic ${base64}`,

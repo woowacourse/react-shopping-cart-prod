@@ -12,7 +12,7 @@ export const orderDetailSelector = selectorFamily<
     (orderId) =>
     async ({ get }) => {
       const apiEndPoint = get(APIAtom);
-      const response = await fetch(`${apiEndPoint}/order/${orderId}`, {
+      const response = await fetch(`${apiEndPoint}/orders/${orderId}`, {
         method: 'GET',
         headers: {
           Authorization: `Basic ${base64}`,
