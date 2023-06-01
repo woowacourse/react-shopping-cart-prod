@@ -1,5 +1,6 @@
 import { API_ENDPOINT, CART_FETCH_OPTION_HEADERS } from '../constants/api';
 import { CartPriceData, Member, OrderData } from '../types';
+import { PostOrdersRequestBody } from '../types/api';
 import { fetchAPI } from './fetchAPI';
 
 export const getOrderAPI = (baseUrl: string) => {
@@ -21,6 +22,16 @@ export const getOrderAPI = (baseUrl: string) => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBER}`, {
       method: 'GET',
       headers: { ...CART_FETCH_OPTION_HEADERS },
+    });
+  };
+
+  const postOrderList = async (orderList: PostOrdersRequestBody): Promise<Response> => {
+    const jsonData = JSON.stringify(orderList);
+
+    return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
+      method: 'POST',
+      headers: { ...CART_FETCH_OPTION_HEADERS },
+      body: jsonData,
     });
   };
 };
