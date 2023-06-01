@@ -1,18 +1,12 @@
 import styled from "styled-components";
-import { useRecoilValue } from "recoil";
-import type { LocalProductType } from "../types/domain";
-import { selectedProductsState } from "../recoil/atom";
+import type { OrderType } from "../types/domain";
 import { OrderHistory } from "./OrderHistory";
 
-export const OrderHistoryList = () => {
-  const selectedProducts = useRecoilValue<LocalProductType[]>(
-    selectedProductsState
-  );
-
+export const OrderHistoryList = ({ orders }: { orders: OrderType[] }) => {
   return (
     <Wrapper>
-      {selectedProducts.map((product) => (
-        <OrderHistory key={product.id} {...product} />
+      {orders.map((order) => (
+        <OrderHistory key={order.id} {...order} />
       ))}
     </Wrapper>
   );

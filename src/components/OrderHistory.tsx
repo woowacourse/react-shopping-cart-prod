@@ -1,32 +1,28 @@
 import { styled } from "styled-components";
 import { useRouter } from "../hooks/useRouter";
 import { ROUTER_PATH } from "../router";
-import { LocalProductType } from "../types/domain";
+import { OrderType } from "../types/domain";
 
-export const OrderHistory = ({
-  id,
-  name,
-  price,
-  imageUrl,
-  quantity,
-}: LocalProductType) => {
+export const OrderHistory = ({ id, products }: OrderType) => {
   const { goPage } = useRouter();
   return (
-    <HistoryWrapper key={id}>
+    <Wrapper key={id}>
       <OrderTitleContainer>
         <span>주문 번호</span>
         <p onClick={goPage(ROUTER_PATH.OrderDetail)}>상세보기 {">"}</p>
       </OrderTitleContainer>
-      <OrderContainer>
-        <img src={imageUrl} alt="상품이미지" />
-        <InfoContainer>
-          <NameBox>{name}</NameBox>
-          <PriceBox>
-            {(price * quantity).toLocaleString()}원 / 수량 : {quantity}개
-          </PriceBox>
-        </InfoContainer>
-      </OrderContainer>
-    </HistoryWrapper>
+      {products.map(({ id, imageUrl, name, price, quantity }) => (
+        <OrderContainer key={id}>
+          <img src={imageUrl} alt="상품이미지" />
+          <InfoContainer>
+            <NameBox>{name}</NameBox>
+            <PriceBox>
+              {(price * quantity).toLocaleString()}원 / 수량 : {quantity}개
+            </PriceBox>
+          </InfoContainer>
+        </OrderContainer>
+      ))}
+    </Wrapper>
   );
 };
 
@@ -47,7 +43,7 @@ const OrderTitleContainer = styled.div`
   }
 `;
 
-const HistoryWrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid #aaaaaa;

@@ -29,6 +29,11 @@ export interface UserType {
   nickname: string;
 }
 
+export interface OrderType {
+  id: number;
+  products: Omit<LocalProductType, "cartItemId">[];
+}
+
 export interface ToastType {
   type: "success" | "error";
   isShown: boolean;
