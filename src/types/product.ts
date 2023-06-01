@@ -10,3 +10,11 @@ export interface CartProduct {
   quantity: number;
   product: Product;
 }
+
+export type CouponType = 'percent';
+export interface Coupon {
+  id: number;
+  type: CouponType;
+  amount: number;
+  name: string;
+}
