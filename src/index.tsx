@@ -10,6 +10,9 @@ import ProductPage from './components/pages/ProductPage/ProductPage';
 import CartPage from './components/pages/CartPage/CartPage';
 import ToastList from './components/common/Toast/ToastList';
 import ErrorPage from './components/pages/ErrorPage/ErrorPage';
+import OrderPage from './components/pages/OrderPage/OrderPage';
+import OrderDetailPage from './components/pages/OrderDetailPage/OrderDetailPage';
+import OrderCompletePage from './components/pages/OrderCompletePage/OrderCompletePage';
 
 // const main = async () => {
 //   if (window.location.pathname === '/react-shopping-cart-prod') {
@@ -45,12 +48,16 @@ const router = createHashRouter([
         element: <CartPage />,
       },
       {
-        path: 'orders/complete/:id',
-        element: <OrderCompletePage />,
+        path: 'orders',
+        element: <OrderPage />,
       },
       {
         path: 'orders/:id',
         element: <OrderDetailPage />,
+      },
+      {
+        path: 'orders/complete/:id',
+        element: <OrderCompletePage />,
       },
     ],
   },
