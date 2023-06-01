@@ -1,15 +1,9 @@
 import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
-import { SHIPPING_FEE, SHIPPING_FEE_EXEMPTION_CONDITION } from '../constants';
 import { changeCartItemQuantity } from '../domain/cart';
 import { CartItemData } from '../types/cart';
-import {
-  getDiscountedTotalItemPrice,
-  getTotalItemDiscountAmount,
-  getTotalItemPrice,
-  getTotalMemberDiscountAmount,
-} from '../utils/costs';
+import { getCosts } from '../utils/costs';
 import { checkedCartIdListState } from './cartCheckbox';
 import { currentMemberInformationState } from './member';
 import { currentServerState } from './server';
@@ -84,30 +78,12 @@ const cartListCheckoutCostsState = selector({
     const memberInformation = get(currentMemberInformationState);
     const checkedCartItems = cartList.filter((cartItem) => checkedCartIdList.has(cartItem.id));
 
-    const totalItemDiscountAmount = getTotalItemDiscountAmount(checkedCartItems);
-    const totalMemberDiscountAmount = getTotalMemberDiscountAmount(
-      checkedCartItems,
-      memberInformation
-    );
-    const totalItemPrice = getTotalItemPrice(checkedCartItems);
-    const discountedTotalItemPrice = getDiscountedTotalItemPrice(
-      totalItemDiscountAmount,
-      totalMemberDiscountAmount,
-      totalItemPrice
-    );
-    const shippingFee =
-      discountedTotalItemPrice > SHIPPING_FEE_EXEMPTION_CONDITION || checkedCartIdList.size === 0
-        ? 0
-        : SHIPPING_FEE;
-    const totalPrice = discountedTotalItemPrice + shippingFee;
+    const cartCosts = getCosts(checkedCartItems, memberInformation);
 
     return {
-      totalItemPrice,
-      totalItemDiscountAmount,
-      totalMemberDiscountAmount,
-      discountedTotalItemPrice,
-      shippingFee,
-      totalPrice,
+      ...cartCosts,
+      shippingFee: checkedCartIdList.size === 0 ? 0 : cartCosts.shippingFee,
+      totalPrice: checkedCartIdList.size === 0 ? 0 : cartCosts.totalPrice,
     };
   },
 });
