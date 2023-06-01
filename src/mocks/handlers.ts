@@ -1,12 +1,13 @@
 import { rest } from 'msw';
 
-import { CartItemType } from '@Types/index';
+import { CartItemType, CouponType, MemberCouponType } from '@Types/index';
 
 import localStorageHelper from '@Utils/localStorageHelper';
 
 import { SHOPPING_QUANTITY } from '@Constants/index';
 import { FETCH_URL } from '@Constants/servers';
 
+import mockCoupon from './mockCoupon.json';
 import mockData from './mockData.json';
 
 export const handlers = [
@@ -65,5 +66,35 @@ export const handlers = [
     localStorageHelper.setValue('cartItems', newCartItems);
 
     return res(ctx.status(200));
+  }),
+
+  rest.get(FETCH_URL.totalCoupon, (_, res, ctx) => {
+    return res(ctx.status(200), ctx.json(mockCoupon), ctx.delay(100));
+  }),
+
+  rest.get(FETCH_URL.memberCoupon, (req, res, ctx) => {
+    if (!localStorageHelper.hasKey('memberCoupon')) localStorageHelper.setInitValue('memberCoupon', []);
+    const memberCoupons = localStorageHelper.getValue<MemberCouponType[]>('memberCoupon');
+
+    return res(ctx.status(200), ctx.json(memberCoupons), ctx.delay(100));
+  }),
+
+  rest.post(`${FETCH_URL.totalCoupon}/:couponId`, async (req, res, ctx) => {
+    const productId = Number(req.params.couponId);
+
+    const memberCoupons = localStorageHelper.getValue<MemberCouponType[]>('memberCoupon');
+    const couponInfo = mockCoupon.find((coupon) => coupon.id === productId);
+    const newCoupon = {
+      id: Date.now(),
+      name: couponInfo?.name,
+      discountAmount: couponInfo?.discountAmount,
+      description: couponInfo?.description,
+      isUsed: false,
+    };
+    const newCoupons = [...memberCoupons, newCoupon];
+
+    localStorageHelper.setValue('memberCoupon', newCoupons);
+
+    return res(ctx.status(201));
   }),
 ];

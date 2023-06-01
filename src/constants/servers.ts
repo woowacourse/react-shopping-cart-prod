@@ -11,6 +11,8 @@ export const FETCH_URL = {
   products: '/products',
   cartItems: '/cart-items',
   orderList: '/orders',
+  totalCoupon: '/coupons',
+  memberCoupon: '/coupons/member',
 };
 
 export const ERROR_MESSAGE = {
