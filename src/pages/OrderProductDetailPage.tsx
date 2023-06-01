@@ -20,7 +20,7 @@ const OrderProductDetailPage = () => {
         <OrderProductInfo>
           {order ? (
             <Suspense fallback={<ContentListSkeleton content='cart' />}>
-              <OrderProductList order={order} />
+              <OrderProductList order={order} isDetailed={true} />
             </Suspense>
           ) : (
             <Message type='notFound' />
