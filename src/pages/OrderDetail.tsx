@@ -4,13 +4,14 @@ import { PageTitle } from '../layout/pageTitle/PageTitle';
 import { OrderDetailItemSection } from '../components/orderDetailPage/OrderDetailItemSection';
 import { OrderDetailSummarySection } from '../components/orderPage/OrderDetailSummarySection';
 import { Suspense } from 'react';
+import Loading from '../components/common/Loading';
 
 export const OrderDetail = () => {
   return (
     <Layout>
       <PageTitle>주문 내역 상세</PageTitle>
       <Style.Content>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <OrderDetailItemSection />
           <OrderDetailSummarySection />
         </Suspense>

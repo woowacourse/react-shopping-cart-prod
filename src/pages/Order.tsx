@@ -3,13 +3,14 @@ import { Layout } from '../layout';
 import { PageTitle } from '../layout/pageTitle/PageTitle';
 import { OrderItemSection } from '../components/orderPage/OrderItemSection';
 import { Suspense } from 'react';
+import Loading from '../components/common/Loading';
 
 export const Order = () => {
   return (
     <Layout>
       <PageTitle>주문 목록</PageTitle>
       <Style.Content>
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Loading />}>
           <OrderItemSection />
         </Suspense>
       </Style.Content>
