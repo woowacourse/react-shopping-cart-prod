@@ -5,7 +5,7 @@ import useFetch from '../../../hooks/api/useFetch';
 import { Product } from '../../../types/product';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
-import useChangeServer from '../../../hooks/useChangeServer';
+import useResetCartWhenServerChange from '../../../hooks/useResetCartWhenServerChange';
 
 const ProductList = () => {
   const serverName = useRecoilValue(serverNameState);
@@ -19,7 +19,7 @@ const ProductList = () => {
 
   const productList = getData();
 
-  useChangeServer();
+  useResetCartWhenServerChange();
 
   return (
     <section>

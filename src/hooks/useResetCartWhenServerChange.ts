@@ -3,7 +3,7 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import cartState from '../globalState/atoms/cartState';
 import serverNameState from '../globalState/atoms/serverName';
 
-const useChangeServer = () => {
+const useResetCartWhenServerChange = () => {
   const isMountCycle = useRef(true);
   const resetCartState = useResetRecoilState(cartState);
   const serverName = useRecoilValue(serverNameState);
@@ -18,4 +18,4 @@ const useChangeServer = () => {
   }, [serverName]);
 };
 
-export default useChangeServer;
+export default useResetCartWhenServerChange;
