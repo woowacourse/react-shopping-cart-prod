@@ -7,7 +7,7 @@ import CheckBox from '../common/CheckBox';
 import QuantityInput from '../common/QuantityInput';
 
 import useToast from '../../hooks/useToast';
-import { cartState, serverNameState } from '../../recoil/state';
+import { cartState, serverNameState, tokenState } from '../../recoil/state';
 import * as api from '../../api';
 import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 
@@ -19,13 +19,18 @@ interface Props extends CartItemType {
 
 export default function CartItem(props: Props) {
   const { id, product, quantity, checked, toggleChecked, deleteChecked } = props;
+
   const serverName = useRecoilValue(serverNameState);
+  const token = useRecoilValue(tokenState);
   const setCart = useSetRecoilState(cartState);
+
   const { showToast } = useToast();
 
   const removeCartItem = async () => {
+    if (token === null) return;
+
     try {
-      await api.deleteCartItem(serverName, id);
+      await api.deleteCartItem(serverName, token, id);
       deleteChecked();
     } catch {
       showToast('error', API_ERROR_MESSAGE.deleteCartItem);
@@ -33,7 +38,7 @@ export default function CartItem(props: Props) {
     }
 
     try {
-      const cart = await api.getCart(serverName);
+      const cart = await api.getCart(serverName, token);
       setCart(cart);
     } catch {
       showToast('error', API_ERROR_MESSAGE.getCart);
