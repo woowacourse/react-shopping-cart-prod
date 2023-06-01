@@ -1,15 +1,16 @@
 import { FlexWrapper } from '@pages/CartPage/CartPage.style';
 import * as S from './ExpectedPayment.style';
 
-import { useCart } from '@views/Cart/recoil/cartState';
+import { useCart, useTotalPrice } from '@views/Cart/recoil/cartState';
 import { DELIVERY_FEE_BASIC } from '@views/Payment/constants/orderConstants';
 
 import { useState } from 'react';
 import { CouponModal } from '../CouponModal';
-import useCouponList from '@views/Payment/recoil/couponListState';
+import useCouponList, { useCouponSelected } from '@views/Payment/recoil/couponListState';
 import { CouponType } from 'types/CouponType';
 import { RiCoupon2Line } from 'react-icons/ri';
 import { Button } from '@common/Button';
+import { CouponMessage } from '../CouponMessage';
 
 const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
   if (!coupon || !totalPrice) {
@@ -32,10 +33,11 @@ const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
 };
 
 function ExpectedPayment() {
-  const { totalPrice } = useCart();
-  const { couponList, getCheckedCoupon } = useCouponList();
+  const totalPrice = useTotalPrice();
+  const { couponList } = useCouponList();
+  const couponSelected = useCouponSelected();
 
-  const discountPrice = getDiscount(getCheckedCoupon(), totalPrice);
+  const discountPrice = getDiscount(couponSelected, totalPrice);
 
   const [isCouponOpen, setIsCouponOpen] = useState(false);
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
@@ -59,7 +61,7 @@ function ExpectedPayment() {
             <RiCoupon2Line />
             <S.CouponTitle>쿠폰</S.CouponTitle>
           </S.CouponTitleWrapper>
-          <S.CouponTitle>사용 가능한 쿠폰이 {couponList.length}개 있어요.</S.CouponTitle>
+          <CouponMessage />
           <S.CouponButton size="m" onClick={handleSeeCoupons} disabled={totalPrice === 0}>
             쿠폰선택
           </S.CouponButton>

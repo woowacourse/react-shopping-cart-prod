@@ -1,7 +1,7 @@
 import { Modal } from '@common/Modal';
 
-import { useCart } from '@views/Cart/recoil/cartState';
-import useCouponList from '@views/Payment/recoil/couponListState';
+import { useCart, useTotalPrice } from '@views/Cart/recoil/cartState';
+import useCouponList, { useCouponSelected } from '@views/Payment/recoil/couponListState';
 
 import { styled } from 'styled-components';
 
@@ -43,7 +43,7 @@ const couponBenefitText = (type: string, value: number) => {
 
 function CouponModal({ isOpen, closeModal }: CouponModalProps) {
   const { couponList, checkCoupon } = useCouponList();
-  const { totalPrice } = useCart();
+  const totalPrice = useTotalPrice();
 
   const isValidCoupon = (totalPrice: number, minimumPrice: number) => {
     return totalPrice < minimumPrice;
@@ -61,6 +61,7 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
                   key={coupon.id}
                   onClick={() => {
                     checkCoupon(coupon.id);
+
                     closeModal();
                   }}
                   disabled={isValidCoupon(totalPrice, coupon.minimumPrice)}

@@ -6,11 +6,12 @@ interface CouponItemProps extends HTMLAttributes<HTMLButtonElement> {
   name: string;
   condition: string;
   disabled?: boolean;
+  onClick?: () => void;
 }
 
-function CouponItem({ benefit, name, condition }: CouponItemProps) {
+function CouponItem({ benefit, name, condition, onClick, disabled }: CouponItemProps) {
   return (
-    <Coupon>
+    <Coupon onClick={onClick} disabled={disabled}>
       <ContentWrapper>
         <CouponBenefit>{benefit}</CouponBenefit>
         <CouponContentPrimary>{name}</CouponContentPrimary>

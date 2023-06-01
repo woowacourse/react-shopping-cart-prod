@@ -48,7 +48,20 @@ const cartState = atom<CartItemType[]>({
   default: cartQuery,
 });
 
+export const cartTotalPrice = selector({
+  key: 'cartTotalPrice',
+  get: ({ get }) => {
+    return get(cartState).reduce((totalPrice, cartItem) => {
+      return cartItem.checked
+        ? totalPrice + cartItem.product.price * cartItem.quantity
+        : totalPrice;
+    }, 0);
+  },
+});
+
 export default cartState;
+
+export const useTotalPrice = () => useRecoilValue(cartTotalPrice);
 
 export const useResetCart = () => useResetRecoilState(cartState);
 

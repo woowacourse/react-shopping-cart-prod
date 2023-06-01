@@ -1,9 +1,10 @@
 import credentialState from '@recoil/server/credentialState';
 import serverUrlState from '@recoil/server/serverUrlState';
-import { atom, selector, useRecoilState } from 'recoil';
+import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import fetchCoupons from '../utils/fetchCoupons';
 import { COUPON_PATH } from '@constants/urlConstants';
 import { CouponRemote, CouponType } from 'types/CouponType';
+import { cartTotalPrice } from '@views/Cart/recoil/cartState';
 
 const couponListState = atom<CouponType[]>({
   key: 'couponListState',
@@ -24,6 +25,22 @@ const couponListState = atom<CouponType[]>({
     },
   }),
 });
+
+const couponSelected = selector({
+  key: 'couponSelected',
+  get: ({ get }) => {
+    const coupon = get(couponListState).find((coupon) => coupon.checked === true);
+    const totalPrice = get(cartTotalPrice);
+
+    if (!coupon) return null;
+
+    if (coupon.minimumPrice > totalPrice) return null;
+
+    return coupon;
+  },
+});
+
+export const useCouponSelected = () => useRecoilValue(couponSelected);
 
 const useCouponList = () => {
   const [couponList, setCouponList] = useRecoilState(couponListState);
@@ -52,12 +69,9 @@ const useCouponList = () => {
     });
   };
 
-  const getCheckedCoupon = () => couponList.find((coupon) => coupon.checked === true) ?? null;
-
   return {
     couponList,
     checkCoupon,
-    getCheckedCoupon,
   };
 };
 
