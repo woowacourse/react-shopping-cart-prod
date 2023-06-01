@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { isSelectedProductSelector } from '../../store/CartSelector';
 import CartIconButton from './CartIconButton';
 import { useProduct } from '../../hooks/useProduct';
+import { LoadingSpinner } from '../@common/LoadingSpinner';
 
 interface Props {
   id: number;
@@ -21,6 +22,7 @@ const ProductItem = ({ id, imgUrl, name, price }: Props) => {
     handleDecreaseItem,
     handleIncreaseItem,
     handleNumberInputChange,
+    isLoading,
   } = useProduct(id);
 
   const handleCartClick = () => {
@@ -39,14 +41,18 @@ const ProductItem = ({ id, imgUrl, name, price }: Props) => {
           </S.Price>
         </div>
         {isSelected ? (
-          <QuantityInput
-            value={newQuantity}
-            onChange={handleNumberInputChange}
-            onIncrement={handleIncreaseItem}
-            onDecrement={handleDecreaseItem}
-            onBlur={handleBlurItem}
-            id={`product${id}`}
-          />
+          isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <QuantityInput
+              value={newQuantity}
+              onChange={handleNumberInputChange}
+              onIncrement={handleIncreaseItem}
+              onDecrement={handleDecreaseItem}
+              onBlur={handleBlurItem}
+              id={`product${id}`}
+            />
+          )
         ) : (
           <CartIconButton onClick={handleCartClick} ariaLabel={id} />
         )}

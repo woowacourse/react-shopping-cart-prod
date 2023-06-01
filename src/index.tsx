@@ -10,11 +10,11 @@ const main = async () => {
     return;
   }
 
-  await worker.start({
-    serviceWorker: {
-      url: '/react-shopping-shop/mockServiceWorker.js',
-    },
-  });
+  // await worker.start({
+  //   serviceWorker: {
+  //     url: '/react-shopping-shop/mockServiceWorker.js',
+  //   },
+  // });
 
   const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
   root.render(
