@@ -9,7 +9,7 @@ const OrderPage = () => {
   return (
     <Main pathname={pathname}>
       <PageTitle>
-        {pathname === '/order/list' ? '주문 목록' : '주문 상세 정보'}
+        {pathname === '/order' ? '주문 목록' : '주문 상세 정보'}
       </PageTitle>
       <Outlet />
     </Main>
@@ -17,19 +17,23 @@ const OrderPage = () => {
 };
 
 const Main = styled.main<Record<'pathname', string>>`
-  max-width: 1300px;
-  height: calc(100vh - 80px);
-  margin: 0 auto;
-  padding: 0 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+  height: 100%;
+  padding: 0 120px;
 
-  ${({ pathname }) => {
-    if (pathname === '/order/list') return;
+  & > * {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+  }
 
-    return `display: flex;
-  		flex-direction: column;
-  		align-items: end;
-  		gap: 20px;`;
-  }}
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    padding: 0;
+  }
 `;
 
 export default OrderPage;

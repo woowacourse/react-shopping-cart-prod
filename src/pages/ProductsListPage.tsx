@@ -12,8 +12,8 @@ const ProductsListPage = () => {
 
   return (
     <Main>
-      <ErrorBoundary key={serverName} fallback={<Message type='error' />}>
-        <Suspense fallback={<Message type='loading' />}>
+      <ErrorBoundary key={serverName} fallback={<Message type="error" />}>
+        <Suspense fallback={<Message type="loading" />}>
           <ProductList />
         </Suspense>
       </ErrorBoundary>
@@ -22,9 +22,12 @@ const ProductsListPage = () => {
 };
 
 const Main = styled.main`
-  max-width: 1300px;
-  margin: 60px auto 0;
-  padding: 0 0 100px 0;
+  width: 100%;
+  padding: 60px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+    padding: 30px;
+  }
 `;
 
 export default ProductsListPage;

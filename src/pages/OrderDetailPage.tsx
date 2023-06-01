@@ -46,7 +46,7 @@ const OrderDetailPage = () => {
   if (!orderDetail) return null;
 
   return (
-    <>
+    <StyledOrderDetailPage>
       <OrderBoxItem id={order.orderId} type="orderList">
         <OrderList orderItems={order.orderItems} />
       </OrderBoxItem>
@@ -54,8 +54,20 @@ const OrderDetailPage = () => {
         <p>총 결제금액</p>
         <p>{totalPrice}</p>
       </OrderBoxItem>
-    </>
+    </StyledOrderDetailPage>
   );
 };
+
+const StyledOrderDetailPage = styled.section`
+  align-items: end;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    align-items: center;
+
+    & > li {
+      width: 100%;
+    }
+  }
+`;
 
 export default OrderDetailPage;

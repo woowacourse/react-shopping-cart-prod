@@ -19,22 +19,26 @@ const CartPage = () => {
 const Main = styled.main`
   display: flex;
   flex-direction: column;
-  position: relative;
 
-  max-width: 1300px;
-  height: calc(100vh - 80px);
-  margin: 0 auto;
-  padding: 0 30px;
+  width: 100%;
+  height: 100%;
+  padding: 0 60px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+    padding: 30px;
+  }
 `;
 
 const CartPageFlexBox = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 40px;
+  width: 100%;
   margin: 40px 0;
 
-  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     flex-direction: column;
+    gap: 0;
   }
 `;
 

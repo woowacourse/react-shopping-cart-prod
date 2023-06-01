@@ -11,7 +11,8 @@ const colors = {
 const breakPoints = {
   small: '540px',
   medium: '780px',
-  large: '1200px',
+  large: '1020px',
+  xLarge: '1260px',
 } as const;
 
 export type ColorKeys = keyof typeof colors;

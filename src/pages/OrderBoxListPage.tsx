@@ -109,12 +109,7 @@ const OrderBoxListPage = () => {
 };
 
 const StyledOrderBoxListPage = styled.ul`
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 40px;
-  width: 100%;
-  padding: 20px 0;
 
   & > li:not(:first-child) img {
     filter: grayscale(100%);

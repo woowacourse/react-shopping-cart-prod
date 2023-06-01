@@ -15,9 +15,10 @@ const OrderItem = ({ orderItem }: OrderItemProps) => {
       <Image src={imageUrl} size="small" />
       <OrderItemFlexBox>
         <h3>{name}</h3>
-        <p>
-          {price.toLocaleString('ko-KR')}원 / 수량 {quantity}개
-        </p>
+        <div>
+          <p>{price.toLocaleString('ko-KR')}원</p>
+          <p>{quantity}개</p>
+        </div>
       </OrderItemFlexBox>
     </StyledOrderItem>
   );
@@ -31,20 +32,29 @@ const StyledOrderItem = styled.li`
 `;
 
 const OrderItemFlexBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
   height: 100%;
 
   letter-spacing: 0.5px;
 
   & > h3 {
+    margin-right: 20px;
+
     font-weight: 400;
     line-height: 24px;
   }
 
-  & > p {
-    color: #888888;
+  & > div {
+    display: flex;
+    margin-top: 20px;
+
+    & > p {
+      margin-right: 8px;
+      color: #888888;
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+      flex-direction: column;
+    }
   }
 `;
 

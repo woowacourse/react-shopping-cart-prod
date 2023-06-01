@@ -15,7 +15,7 @@ const Header = () => {
   const cartProductCount = useCartProductCount();
   const setServerName = useSetRecoilState(serverNameState);
 
-  const onChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
+  const onChange: ChangeEventHandler<HTMLSelectElement> = event => {
     const serverKey = event.currentTarget.value;
 
     if (isServerKey(serverKey)) setServerName(serverKey);
@@ -24,15 +24,18 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <LogoContainer to='/'>
-          <CartIcon width={51} height={44} color='white' />
+        <LogoContainer to="/">
+          <CartIcon width={51} height={44} color="white" />
           <Logo>SHOP</Logo>
         </LogoContainer>
-        <SelectBox options={SERVER_KEYS} onChange={onChange} />
-        <CartPageLink to='/cart'>
-          장바구니
-          <ProductCountAlert>{cartProductCount}</ProductCountAlert>
-        </CartPageLink>
+        <HeaderFlexBox>
+          <SelectBox options={SERVER_KEYS} onChange={onChange} />
+          <StyledLink to="/cart">
+            장바구니
+            <ProductCountAlert>{cartProductCount}</ProductCountAlert>
+          </StyledLink>
+          <StyledLink to="/order">주문목록</StyledLink>
+        </HeaderFlexBox>
       </HeaderContent>
     </HeaderContainer>
   );
@@ -52,6 +55,31 @@ const HeaderContent = styled.div`
   height: 100%;
   margin: 0 auto;
   padding: 0 30px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.small}) {
+    justify-content: center;
+  }
+`;
+
+const HeaderFlexBox = styled.div`
+  display: flex;
+  gap: 20px;
+
+  & > select {
+    width: 100px;
+    height: 28px;
+
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.small}) {
+    & > Link > svg {
+      margin-right: 18px;
+      transform: scaleX(-1);
+    }
+  }
 `;
 
 const LogoContainer = styled(Link)`
@@ -63,11 +91,8 @@ const LogoContainer = styled(Link)`
     transform: scaleX(-1);
   }
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    & > svg {
-      margin-right: 18px;
-      transform: scaleX(-1);
-    }
+  @media (max-width: ${({ theme }) => theme.breakPoints.small}) {
+    display: none;
   }
 `;
 
@@ -77,39 +102,34 @@ const Logo = styled.h1`
   font-size: 34px;
   font-weight: 900;
   letter-spacing: 0.1em;
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    padding: 10px 0 0;
-    font-size: 40px;
-    line-height: 40px;
-  }
 `;
 
-const CartPageLink = styled(Link)`
+const StyledLink = styled(Link)`
   display: flex;
   color: ${({ theme }) => theme.colors.white};
   font-size: 20px;
   font-weight: 500;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+  @media (max-width: ${({ theme }) => theme.breakPoints.small}) {
     font-size: 24px;
   }
 `;
 
 const ProductCountAlert = styled.span`
-  display: inline-block;
-  width: 22px;
-  height: 22px;
+  width: 28px;
+  height: 28px;
   margin-left: 6px;
-  font-size: 16px;
-  text-align: center;
+
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primary};
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 28px;
+  text-align: center;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    width: 26px;
-    height: 26px;
+  @media (max-width: ${({ theme }) => theme.breakPoints.small}) {
+    width: 28px;
+    height: 28px;
+
     line-height: 28px;
   }
 `;

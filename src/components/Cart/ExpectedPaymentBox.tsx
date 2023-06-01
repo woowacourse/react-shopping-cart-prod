@@ -83,23 +83,28 @@ const ExpectedPaymentContainer = styled.div`
   height: 460px;
   margin-top: 90px;
 
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
 
-  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    min-width: 0;
     width: 100%;
     margin-top: 0px;
+
+    border: none;
   }
 `;
 
 const ExpectedPaymentTitle = styled.h2`
   height: 80px;
   padding: 0 30px;
+
+  border-bottom: 3px solid ${({ theme }) => theme.colors.gray100};
   line-height: 80px;
   font-size: 20px;
-  font-weight: 400;
-  border-bottom: 3px solid ${({ theme }) => theme.colors.gray100};
+  font-weight: 600;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    padding: 0;
     font-size: 24px;
   }
 `;
@@ -113,6 +118,10 @@ const ExpectedPaymentInfo = styled.div`
 
   & > dl:last-of-type {
     margin: 40px 0 0 0;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    padding: 0;
   }
 `;
 
@@ -142,7 +151,12 @@ const OrderButtonWrapper = styled.div`
 
     padding: 0 8px;
 
+    font-size: 20px;
     font-weight: bold;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    padding: 0;
   }
 `;
 

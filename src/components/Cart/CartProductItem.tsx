@@ -32,14 +32,16 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
   };
 
   return (
-    <CartProductContainer>
-      <CheckBox
-        id={`cart-product-check-${id}`}
-        onChange={toggleProductChecked}
-        checked={targetChecked ? true : false}
-      />
-      <Image src={imageUrl} alt={name} loading="lazy" size="small" />
-      <ProductName>{name}</ProductName>
+    <StyledCartProductItem>
+      <CartFlexBox>
+        <CheckBox
+          id={`cart-product-check-${id}`}
+          onChange={toggleProductChecked}
+          checked={targetChecked ? true : false}
+        />
+        <Image src={imageUrl} alt={name} loading="lazy" size="small" />
+        <ProductName>{name}</ProductName>
+      </CartFlexBox>
       <CartInfoContainer>
         <DeleteButton type="button" onClick={deleteProductAndChecked}>
           <TrashCanIcon />
@@ -54,16 +56,25 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
           {(price * quantity).toLocaleString('ko-KR')}원
         </ProductPrice>
       </CartInfoContainer>
-    </CartProductContainer>
+    </StyledCartProductItem>
   );
 };
 
-const CartProductContainer = styled.div`
-  position: relative;
+const StyledCartProductItem = styled.li`
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  padding: 18px 0;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    display: flex;
+  border-top: 1px solid ${({ theme }) => theme.colors.gray200};
+`;
+
+const CartFlexBox = styled.div`
+  display: flex;
+  gap: 20px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    flex-direction: column;
     column-gap: 15px;
   }
 `;
@@ -83,16 +94,12 @@ const ProductName = styled.p`
 `;
 
 const CartInfoContainer = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-between;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     position: static;
     height: initial;
   }
