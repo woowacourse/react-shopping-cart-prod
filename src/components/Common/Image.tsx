@@ -1,6 +1,5 @@
-import styled, { css } from 'styled-components';
-
 import { ImgHTMLAttributes } from 'react';
+import styled, { css } from 'styled-components';
 
 type ImageType = 'small' | 'medium';
 
@@ -9,7 +8,13 @@ interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
 }
 
 const Image = ({ size, ...props }: ImageProps) => {
-  return <ImageBox size={size} {...props} />;
+  const defaultImage = `${process.env.PUBLIC_URL}/images/error.png`;
+
+  const handleError: React.ReactEventHandler<HTMLImageElement> = (e) => {
+    e.currentTarget.src = defaultImage;
+  };
+
+  return <ImageBox size={size} onError={handleError} {...props} />;
 };
 
 const ImageStyled = {
