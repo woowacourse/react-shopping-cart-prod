@@ -27,12 +27,12 @@ const useCartTotal = (totalProductPrice: Product['price']) => {
   const usingPointRef = useRef('');
   const point = useRecoilValue(pointQuery);
   const { isModalOpen, closeModal } = useModal();
-  const isPointMoreThanProductPrice = point > totalProductPrice;
-  const maxPoint = isPointMoreThanProductPrice ? totalProductPrice : point;
   const totalOrderPrice = calcTotalOrderPrice(
     totalProductPrice,
     Number(removeComma(usingPoint)),
   );
+  const isPointMoreThanOrderPrice = point > totalOrderPrice;
+  const maxPoint = isPointMoreThanOrderPrice ? totalOrderPrice : point;
 
   const useAllPoint = () => {
     if (point <= 0) return;
@@ -69,7 +69,7 @@ const useCartTotal = (totalProductPrice: Product['price']) => {
   }, []);
 
   useEffect(() => {
-    if (isPointMoreThanProductPrice && usingPoint !== '0') {
+    if (isPointMoreThanOrderPrice && usingPoint !== '0') {
       setUsingPoint(maxPoint.toLocaleString('ko-KR'));
     }
   }, [totalProductPrice]);
