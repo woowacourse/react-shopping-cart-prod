@@ -1,5 +1,6 @@
 import { Layout } from '../layout';
-import { Style as OrderStyle } from '../components/orderPage';
+import { Style as OrderContentStyle } from '../components/orderPage';
+import { Style as OrderPageStyle } from './OrderList';
 import { OrderDetailContent } from '../components/orderDetailPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Fallback } from '../components/error/Fallback';
@@ -36,5 +37,6 @@ export const OrderDetail = () => {
 };
 
 const Style = {
-  ...OrderStyle,
+  ...OrderContentStyle,
+  ...OrderPageStyle,
 };

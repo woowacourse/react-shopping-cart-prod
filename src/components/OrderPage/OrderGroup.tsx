@@ -2,10 +2,13 @@ import styled from 'styled-components';
 import { OrderItem } from './OrderItem';
 import { OrderProductInfo } from '../../recoil/atoms/orderAtom';
 import { useNavigate } from 'react-router-dom';
+import { Fragment } from 'react';
 
 interface OrderGroupProps {
   orders: OrderProductInfo[];
   orderId: number;
+  totalProductPrice?: number;
+  totalOrderLength?: number;
   isDetailPage?: boolean;
 }
 
@@ -13,6 +16,8 @@ export const OrderGroup = ({
   orders,
   orderId,
   isDetailPage,
+  totalProductPrice,
+  totalOrderLength,
 }: OrderGroupProps) => {
   const navigate = useNavigate();
 
@@ -31,9 +36,21 @@ export const OrderGroup = ({
           상세보기
         </Style.ViewDetailButton>
       </Style.Header>
-      {orders.map((order) => (
-        <OrderItem key={order.productId * orderId} {...order} />
-      ))}
+      {totalProductPrice ? (
+        <Fragment>
+          <OrderItem
+            {...orders[0]}
+            totalProductPrice={totalProductPrice}
+            totalOrderLength={totalOrderLength}
+          />
+        </Fragment>
+      ) : (
+        <Fragment>
+          {orders.map((order) => (
+            <OrderItem key={order.productId * orderId} {...order} />
+          ))}
+        </Fragment>
+      )}
     </Style.Container>
   );
 };

@@ -29,9 +29,7 @@ export const OrderDetailContent = () => {
               <Style.PriceSummaryContentContainer>
                 <PriceCaption
                   title="총 상품 가격"
-                  price={`+ ${getCommaAddedNumber(
-                    orderDetail.originalPrice
-                  )} 원`}
+                  price={`${getCommaAddedNumber(orderDetail.originalPrice)} 원`}
                 />
                 <PriceCaption
                   title="총 배송비"
@@ -39,11 +37,13 @@ export const OrderDetailContent = () => {
                 />
                 <PriceCaption
                   title="사용한 적립금"
-                  price={`- ${getCommaAddedNumber(orderDetail.usedPoint)} 원`}
+                  price={`${
+                    orderDetail.usedPoint > 0 ? '-' : ''
+                  } ${getCommaAddedNumber(orderDetail.usedPoint)} 원`}
                   isUsedPoint={true}
                 />
                 <PriceCaption
-                  title="총 배송비"
+                  title="총 결제 금액"
                   price={`${getCommaAddedNumber(
                     orderDetail.originalPrice + 3000 - orderDetail.usedPoint
                   )} 원`}

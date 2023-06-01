@@ -12,20 +12,24 @@ export const OrderContent = () => {
   return (
     <Fragment>
       {orderList.length > 0 ? (
-        <Fragment>
-          <Style.HeaderContainer>
-            <Style.Header>주문 목록</Style.Header>
-          </Style.HeaderContainer>
-          <Style.ContentContainer>
-            {orderList.map((order) => (
+        <Style.ContentContainer>
+          {orderList.map((order) => {
+            const totalProductPrice = order.orderInfo.reduce(
+              (acc, curr) => (acc += curr.price * curr.quantity),
+              0
+            );
+
+            return (
               <OrderGroup
                 key={order.orderId}
                 orders={order.orderInfo}
                 orderId={order.orderId}
+                totalProductPrice={totalProductPrice}
+                totalOrderLength={order.orderInfo.length}
               />
-            ))}
-          </Style.ContentContainer>
-        </Fragment>
+            );
+          })}
+        </Style.ContentContainer>
       ) : (
         <Style.EmptyCartContainer>
           <Style.EmptyCartImage
@@ -41,28 +45,6 @@ export const OrderContent = () => {
 };
 
 export const Style = {
-  HeaderContainer: styled.div`
-    width: 1320px;
-    height: 69px;
-
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-
-    border-bottom: 4px solid #333333;
-
-    @media screen and (max-width: 480px) {
-      width: 90vw;
-      height: 50px;
-    }
-  `,
-  Header: styled.h1`
-    font-size: 32px;
-
-    @media screen and (max-width: 480px) {
-      font-size: 25px;
-    }
-  `,
   ContentContainer: styled.div`
     width: 1320px;
     height: max-content;

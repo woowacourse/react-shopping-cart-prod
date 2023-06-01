@@ -10,7 +10,9 @@ import { APIAtom } from '../../recoil/atoms/serverAtom';
 export const useCartRecoil = () => {
   const apiEndPoint = useRecoilValue(APIAtom);
   const [cartItems, setCartItems] = useRecoilState(cartItemsState(apiEndPoint));
-  const setSelectedCartIdList = useSetRecoilState(selectedCartIdListState);
+  const setSelectedCartIdList = useSetRecoilState(
+    selectedCartIdListState(apiEndPoint)
+  );
   const { getProductDetailById } = useProductFetch();
   const { selectedCartIdList, deleteAllSelectedCartId } =
     useSelectedCartRecoil();
@@ -23,6 +25,8 @@ export const useCartRecoil = () => {
     setCartItems((current) => {
       return [...current, { id: cartId, quantity: 1, product: product }];
     });
+
+    setSelectedCartIdList((current) => [...current, cartId]);
   };
 
   const deleteRecoilCartById = (cartId: number) => {

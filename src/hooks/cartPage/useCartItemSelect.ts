@@ -1,11 +1,13 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { selectedCartIdListState } from '../../recoil/atoms/cartAtom';
 import { useCartRecoil } from '../recoil/useCartRecoil';
 import { useCartFetch } from '../fetch/useCartFetch';
+import { APIAtom } from '../../recoil/atoms/serverAtom';
 
 export const useCartItemSelect = () => {
+  const apiEndPoint = useRecoilValue(APIAtom);
   const [selectedCartIdList, setSelectedCartIdList] = useRecoilState(
-    selectedCartIdListState
+    selectedCartIdListState(apiEndPoint)
   );
 
   const { deleteRecoilCartById, getAllCartIdList } = useCartRecoil();

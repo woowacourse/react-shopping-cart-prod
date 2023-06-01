@@ -19,7 +19,7 @@ export const CartListLengthViewer = () => {
   return <Style.CartAmount>{cartItemsLength}</Style.CartAmount>;
 };
 
-const Style = {
+export const Style = {
   CartAmount: styled.div`
     display: flex;
     justify-content: center;
@@ -31,7 +31,7 @@ const Style = {
 
     padding-top: 3px;
 
-    background-color: #04c09e;
+    background-color: rgb(42, 193, 188);
     color: white;
     font-size: 16px;
 

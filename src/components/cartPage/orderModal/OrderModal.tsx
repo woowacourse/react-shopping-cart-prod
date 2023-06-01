@@ -99,8 +99,11 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
               </Style.UseAllPointButton>
             </Style.FlexBox>
             <Style.PointCaption>
-              사용 가능 적립금 {getCommaAddedNumber(canUsingUserPoint)}원 / 총{' '}
-              {getCommaAddedNumber(userPoint)}원
+              사용 가능 적립금{' '}
+              <Style.ColoredCaption>
+                {getCommaAddedNumber(canUsingUserPoint)}원
+              </Style.ColoredCaption>{' '}
+              / 총 {getCommaAddedNumber(userPoint)}원
             </Style.PointCaption>
           </Style.PointInputContainer>
         </CaptionContainer>
@@ -120,7 +123,7 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
           onClick={handleClickOrderButton}
           disabled={isLoading}
         >
-          {isLoading ? <Loading /> : '주문하기'}
+          {isLoading ? <Loading theme="light" /> : '주문하기'}
         </Style.OrderButton>
       </Style.Content>
     </Fragment>
@@ -222,16 +225,19 @@ const Style = {
 
     text-align: end;
     position: absolute;
-    top: 45px;
+    top: 52px;
 
     font-size: 15px;
-    color: #04c092;
+    color: rgb(62, 62, 62);
+  `,
+  ColoredCaption: styled.span`
+    color: rgb(42, 193, 188);
   `,
   OrderButton: styled.button`
     width: 90vw;
     height: 50px;
 
-    background-color: #04c092;
+    background-color: rgb(42, 193, 188);
     color: white;
     border-radius: 10px;
     font-size: 20px;

@@ -5,7 +5,7 @@ import { CartListLengthViewer } from './CartListLengthViewer';
 import { useRecoilState } from 'recoil';
 import { APIAtom } from '../../recoil/atoms/serverAtom';
 import { Suspense } from 'react';
-import { Loading } from '../../components/common/Loading';
+import { Style as CartAmountStyle } from './CartListLengthViewer';
 import { ErrorBoundary } from 'react-error-boundary';
 import { setServerName } from '../../utils/localStorage';
 
@@ -53,7 +53,7 @@ export const Header = () => {
         <Style.CartContainer>
           <Style.Cart onClick={() => navigate('/cart')}>장바구니</Style.Cart>
           <ErrorBoundary fallback={<></>}>
-            <Suspense fallback={<Loading width={20} height={20} />}>
+            <Suspense fallback={<Style.CartAmount>0</Style.CartAmount>}>
               <CartListLengthViewer />
             </Suspense>
           </ErrorBoundary>
@@ -67,6 +67,7 @@ export const Header = () => {
 };
 
 const Style = {
+  ...CartAmountStyle,
   Container: styled.div`
     display: flex;
     justify-content: center;

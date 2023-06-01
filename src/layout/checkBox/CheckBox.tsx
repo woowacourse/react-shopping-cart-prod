@@ -38,8 +38,9 @@ const Style = {
     align-items: center;
     flex-shrink: 0;
 
-    border: 1px solid #22a6a2;
-    background-color: ${(props) => (props.isChecked ? '#22a6a2' : 'white')};
+    border: 1px solid rgb(42, 193, 188);
+    background-color: ${(props) =>
+      props.isChecked ? 'rgb(42, 193, 188)' : 'white'};
     cursor: pointer;
   `,
   HiddenInput: styled.input`

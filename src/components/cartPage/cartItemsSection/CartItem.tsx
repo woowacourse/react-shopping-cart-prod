@@ -123,10 +123,12 @@ const Style = {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: flex-start;
 
     @media screen and (max-width: 480px) {
       width: calc(90vw - 28px - 100px - 30px);
+
+      height: 136px;
     }
   `,
   ProductNameAndDeleteButtonContainer: styled.div`

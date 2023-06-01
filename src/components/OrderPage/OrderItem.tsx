@@ -6,6 +6,9 @@ interface OrderItemProps {
   name: string;
   price: number;
   quantity: number;
+
+  totalProductPrice?: number;
+  totalOrderLength?: number;
 }
 
 export const OrderItem = ({
@@ -13,14 +16,25 @@ export const OrderItem = ({
   name,
   price,
   quantity,
+  totalProductPrice,
+  totalOrderLength,
 }: OrderItemProps) => {
   return (
     <Style.Container>
       <Style.ProductImage src={imageUrl} alt={`${name} 이미지`} />
       <Style.DescriptionContainer>
-        <Style.ProductName>{name}</Style.ProductName>
+        <Style.ProductName>
+          {name}
+          <Style.ProductCount>
+            {totalOrderLength !== undefined && totalOrderLength - 1 > 0
+              ? ` 외 ${totalOrderLength - 1}개의 상품`
+              : ''}
+          </Style.ProductCount>
+        </Style.ProductName>
         <Style.ProductPriceAndQuantity>
-          {getCommaAddedNumber(price)}원 / 수량: {quantity}개
+          {totalProductPrice
+            ? `총 결제 금액: ${getCommaAddedNumber(totalProductPrice)}원`
+            : `${getCommaAddedNumber(price)}원 / 수량: ${quantity}개`}
         </Style.ProductPriceAndQuantity>
       </Style.DescriptionContainer>
     </Style.Container>
@@ -72,6 +86,11 @@ const Style = {
   ProductName: styled.h2`
     font-size: 20px;
     color: #5f5f5f;
+  `,
+  ProductCount: styled.h3`
+    font-size: 15px;
+
+    margin-top: 5px;
   `,
   ProductPriceAndQuantity: styled.h3`
     font-size: 16px;

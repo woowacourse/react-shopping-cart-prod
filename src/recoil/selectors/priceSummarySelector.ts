@@ -6,8 +6,8 @@ import { APIAtom } from '../atoms/serverAtom';
 export const priceSummaryState = selector({
   key: 'priceSummaryState',
   get: ({ get }) => {
-    const selectedCartItems = get(selectedCartIdListState);
     const apiEndPoint = get(APIAtom);
+    const selectedCartItems = get(selectedCartIdListState(apiEndPoint));
     const cartItems = get(cartItemsState(apiEndPoint));
     const userPoint = get(userAtomState(apiEndPoint));
 

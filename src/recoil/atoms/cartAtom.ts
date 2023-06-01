@@ -30,7 +30,25 @@ export const cartItemsState = atomFamily<CartItemDetail[], string>({
   ],
 });
 
-export const selectedCartIdListState = atom<number[]>({
+export const selectedCartIdListState = atomFamily<number[], string>({
   key: 'selectedCartIdListState',
   default: [],
+  effects: (apiEndPoint) => [
+    ({ setSelf, trigger }) => {
+      const getCartItems = async () => {
+        const response = await fetch(`${apiEndPoint}/cart-items`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Basic ${base64}`,
+            'Content-Type': 'application/json',
+          },
+        });
+        const cartItems = (await response.json()) as CartItemDetail[];
+
+        setSelf(cartItems.map((cartItem) => cartItem.id));
+      };
+
+      if (trigger === 'get') getCartItems();
+    },
+  ],
 });

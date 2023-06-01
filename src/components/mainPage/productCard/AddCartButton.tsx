@@ -79,7 +79,9 @@ export const AddCartButton = ({ productId }: AddCartButtonProps) => {
           onQuantityChange={handleChangeQuantity}
         />
       ) : isLoading ? (
-        <Loading />
+        <Style.LoadingBackground>
+          <Loading width={25} height={25} />
+        </Style.LoadingBackground>
       ) : (
         <Style.ShoppingCartImage
           src={`${process.env.PUBLIC_URL}/plusIcon.svg`}
@@ -97,5 +99,16 @@ const Style = {
     height: 35px;
 
     cursor: pointer;
+  `,
+  LoadingBackground: styled.div`
+    width: 35px;
+    height: 35px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+    background-color: white;
   `,
 };

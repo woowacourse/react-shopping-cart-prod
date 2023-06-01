@@ -17,7 +17,7 @@ export const selectedCartItemsSelector = selector({
   get: ({ get }) => {
     const apiEndPoint = get(APIAtom);
     const cartItems = get(cartItemsState(apiEndPoint));
-    const selectedCartItemIds = get(selectedCartIdListState);
+    const selectedCartItemIds = get(selectedCartIdListState(apiEndPoint));
 
     return cartItems.filter((cartItem) =>
       selectedCartItemIds.includes(cartItem.id)
@@ -30,7 +30,7 @@ export const checkBoxSelector = selector({
   get: ({ get }) => {
     const apiEndPoint = get(APIAtom);
     const cartItems = get(cartItemsState(apiEndPoint));
-    const selectedCartIdList = get(selectedCartIdListState);
+    const selectedCartIdList = get(selectedCartIdListState(apiEndPoint));
     const isAllCheckBoxChecked =
       cartItems.filter((cartItem) => !selectedCartIdList.includes(cartItem.id))
         .length === 0;

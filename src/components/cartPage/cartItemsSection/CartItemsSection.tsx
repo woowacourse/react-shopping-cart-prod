@@ -19,7 +19,9 @@ export const CartItemsSection = () => {
   const cartItems = useRecoilValue(cartItemsState(apiEndPoint));
 
   const { isAllCheckBoxChecked } = useRecoilValue(checkBoxSelector);
-  const selectedCartIdList = useRecoilValue(selectedCartIdListState);
+  const selectedCartIdList = useRecoilValue(
+    selectedCartIdListState(apiEndPoint)
+  );
   const { totalPrice } = useRecoilValue(priceSummaryState);
 
   const { deleteSelectedProduct, toggleAllCheckBoxChecked } =
@@ -200,7 +202,7 @@ const Style = {
     height: 89px;
 
     font-size: 18px;
-    color: #ff7d7d;
+    color: rgb(57 57 57);
     font-family: var(--baemin-font);
   `,
   OrderButton: styled.button`

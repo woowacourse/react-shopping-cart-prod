@@ -25,7 +25,9 @@ export const OrderSummarySection = () => {
     userPoint,
   } = useRecoilValue(priceSummaryState);
   const apiEndPoint = useRecoilValue(APIAtom);
-  const selectedCartIdList = useRecoilValue(selectedCartIdListState);
+  const selectedCartIdList = useRecoilValue(
+    selectedCartIdListState(apiEndPoint)
+  );
   const setUserPoint = useSetRecoilState(userAtomState(apiEndPoint));
   const setOrders = useSetRecoilState(orderListState(apiEndPoint));
 
@@ -95,8 +97,11 @@ export const OrderSummarySection = () => {
               </Style.UseAllPointButton>
             </Style.FlexBox>
             <Style.PointCaption>
-              사용 가능 적립금 {getCommaAddedNumber(canUsingUserPoint)}원 / 총{' '}
-              {getCommaAddedNumber(userPoint)}원
+              사용 가능 적립금{' '}
+              <Style.ColoredCaption>
+                {getCommaAddedNumber(canUsingUserPoint)}원
+              </Style.ColoredCaption>{' '}
+              / 총 {getCommaAddedNumber(userPoint)}원
             </Style.PointCaption>
           </Style.PointInputContainer>
         </CaptionContainer>
@@ -114,7 +119,7 @@ export const OrderSummarySection = () => {
           disabled={isLoading}
           onClick={handleClickOrderButton}
         >
-          {isLoading ? <Loading /> : '주문하기'}
+          {isLoading ? <Loading theme="light" /> : '주문하기'}
         </Style.OrderButton>
       </Style.Content>
     </Style.Container>
@@ -167,7 +172,7 @@ const Style = {
     align-items: center;
 
     border-radius: 10px;
-    background-color: #04c092;
+    background-color: rgb(42, 193, 188);
     font-size: 24px;
     color: #ffffff;
     font-family: var(--baemin-font);
@@ -213,9 +218,12 @@ const Style = {
   `,
   PointCaption: styled.span`
     position: absolute;
-    top: 45px;
+    top: 52px;
 
     font-size: 15px;
-    color: #04c092;
+    color: rgb(62, 62, 62);
+  `,
+  ColoredCaption: styled.span`
+    color: rgb(42, 193, 188);
   `,
 };
