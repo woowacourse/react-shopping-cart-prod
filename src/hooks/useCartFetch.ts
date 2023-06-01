@@ -18,6 +18,7 @@ export const useCartFetch = () => {
       const res = await fetch(`${serverURL}/cart-items`, {
         method: 'GET',
         headers: {
+          'Content-Type': 'application/json',
           Authorization: `Basic ${base64}`,
         },
       });

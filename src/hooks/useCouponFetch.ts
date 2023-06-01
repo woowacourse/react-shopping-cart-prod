@@ -1,7 +1,12 @@
 import { useMutation, useQuery } from 'react-query';
 import { CouponType, IssuableCouponType } from '../types/types';
+import { base64 } from '../service/apiURL';
+import { useRecoilValue } from 'recoil';
+import { serverState } from '../service/atom';
 
 const useCouponFetch = () => {
+  const serverURL = useRecoilValue(serverState);
+
   const {
     data: allCoupon,
     refetch: issuableRefetch,
@@ -9,8 +14,12 @@ const useCouponFetch = () => {
   } = useQuery<IssuableCouponType[]>(
     'allCoupon',
     async () => {
-      const res = await fetch(`/coupons`, {
+      const res = await fetch(`${serverURL}/coupons`, {
         method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${base64}`,
+        },
       });
       const data = await res.json();
       return data;
@@ -23,8 +32,12 @@ const useCouponFetch = () => {
   );
 
   const fetchUserCouponData = async () => {
-    const res = await fetch(`/users/coupons`, {
+    const res = await fetch(`${serverURL}/users/coupons`, {
       method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${base64}`,
+      },
     });
     const data = await res.json();
     return data;
@@ -42,10 +55,11 @@ const useCouponFetch = () => {
 
   const fetchAddCouponData = useMutation(
     async ({ body }: { body?: object }) => {
-      const res = await fetch(`/users/coupons`, {
+      const res = await fetch(`${serverURL}/users/coupons`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Basic ${base64}`,
         },
         body: JSON.stringify(body),
       });

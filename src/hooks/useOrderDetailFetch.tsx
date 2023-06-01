@@ -1,17 +1,22 @@
 import { useMutation, useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { OrderDetailType } from '../types/types';
+import { base64 } from '../service/apiURL';
+import { useRecoilValue } from 'recoil';
+import { serverState } from '../service/atom';
 
 const useOrderDetailFetch = (orderId: number) => {
   const navigation = useNavigate();
+  const serverURL = useRecoilValue(serverState);
 
   const { data: orderDetailData, refetch } = useQuery<OrderDetailType>(
     'orderDetail',
     async () => {
-      const res = await fetch(`/orders/${orderId}`, {
+      const res = await fetch(`${serverURL}/orders/${orderId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Basic ${base64}`,
         },
       });
 
@@ -28,10 +33,11 @@ const useOrderDetailFetch = (orderId: number) => {
   const fetchOrderData = useMutation(
     async ({ method }: { method: 'DELETE' | 'PATCH' }) => {
       const url = method == 'DELETE' ? `${orderId}` : `${orderId}/confirm`;
-      await fetch(`/orders/${url}`, {
+      await fetch(`${serverURL}/orders/${url}`, {
         method,
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Basic ${base64}`,
         },
       });
 
