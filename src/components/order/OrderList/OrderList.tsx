@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import OrderListItem from '../OrderListItem/OrderListItem';
 import type { Order } from '../../../types/order';
 import { Link } from 'react-router-dom';
+import { getDateFromISOString } from '../../../utils/getDateFromISOString';
 
 interface OrderListProps {
   order: Order;
@@ -23,7 +24,7 @@ const OrderList = ({
         {needsDetailButton ? (
           <DetailButton to={`/orders/${id}`}>상세보기 &gt;</DetailButton>
         ) : (
-          <time>주문일자 : {orderDate.toString()}</time>
+          <time>주문일자 : {getDateFromISOString(orderDate)}</time>
         )}
       </ListHeader>
       <ListWrapper>
