@@ -27,6 +27,11 @@ const Container = styled.button<{ height: string }>`
   background-color: ${theme.colors.primaryColor};
 
   cursor: pointer;
+
+  &:disabled {
+    background-color: ${theme.colors.secondaryColor};
+    cursor: not-allowed;
+  }
 `;
 
 export default Button;

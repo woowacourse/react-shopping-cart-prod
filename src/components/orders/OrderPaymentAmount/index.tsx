@@ -28,10 +28,10 @@ function OrderPaymentAmount({
           <span>할인 금액</span>
           <span>-{discountPrice}원</span>
         </S.AmountWrapper>
-        <S.AmountWrapper>
+        <S.LastAmountWrapper>
           <span>총 결제금액</span>
           <span>{totalPaymentAmount}원</span>
-        </S.AmountWrapper>
+        </S.LastAmountWrapper>
       </S.InformationWrapper>
     </div>
   );

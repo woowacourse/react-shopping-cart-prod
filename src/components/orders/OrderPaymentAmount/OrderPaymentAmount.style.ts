@@ -37,9 +37,9 @@ export const AmountWrapper = styled.div`
 
   color: ${theme.colors.primaryColor};
   background: ${theme.colors.lightColor};
+`;
 
-  &:last-child {
-    border-top: 2px solid ${theme.colors.secondaryColor};
-    padding-top: 3rem;
-  }
+export const LastAmountWrapper = styled(AmountWrapper)`
+  border-top: 2px solid ${theme.colors.secondaryColor};
+  padding-top: 4rem;
 `;

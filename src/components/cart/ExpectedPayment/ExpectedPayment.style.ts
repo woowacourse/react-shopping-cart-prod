@@ -1,14 +1,7 @@
 import { styled } from 'styled-components';
-import { FlexColWrapper, FlexWrapper } from '@pages/Cart/Cart.style';
+import { theme } from '@styles/theme';
 
-export const PayingContainer = styled.div`
-  display: flex;
-  flex: 1 1 150px;
-  align-items: start;
-  justify-content: start;
-`;
-
-export const PayingBox = styled(FlexColWrapper)`
+export const PayingBox = styled.div`
   column-gap: 1rem;
   width: 90%;
   margin: 1rem;
@@ -21,47 +14,52 @@ export const PayingBox = styled(FlexColWrapper)`
   justify-content: start;
 `;
 
-export const PayingBackground = styled.div`
-  background-color: ${({ theme }) => theme.colors.secondaryColor};
-  border: ${({ theme }) => theme.colors.secondaryColor} 1px solid;
-  padding: 1rem;
-  border-radius: 8px;
-  margin: 0 0 2rem 0;
+export const PayingContainer = styled.div`
+  display: flex;
+  flex: 50px;
+  flex-direction: column;
+  justify-content: start;
 `;
 
-export const PayingTitle = styled.h3`
-  font-size: 2rem;
+export const Title = styled.h3`
+  border: 1px solid ${theme.colors.secondaryColor};
+  padding: 3rem;
 
-  font-weight: 800;
+  font-weight: 700;
+  font-size: 2.8rem;
+  line-height: 2.8rem;
+
+  letter-spacing: 0.5px;
+
+  color: ${theme.colors.primaryColor};
+  background: ${theme.colors.grayColor};
 `;
 
-export const ContentText = styled.span`
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin: 0.5rem;
+export const InformationWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  padding: 4rem 3rem;
+  border: 1px solid ${theme.colors.secondaryColor};
+
+  gap: 3rem;
 `;
 
-export const TotalText = styled(ContentText)`
-  font-size: 1.7rem;
-  font-weight: 800;
-`;
+export const AmountWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 
-export const TotalPriceContainer = styled(FlexWrapper)`
-  border-top: ${({ theme }) => theme.colors.primaryColor} 2px solid;
-  padding-top: 0.5rem;
-  color: ${({ theme }) => theme.colors.primaryColor};
-`;
-
-export const PayingButton = styled.button`
-  background-color: ${({ theme }) => theme.colors.infoColor};
-  border-radius: 8px;
+  font-weight: 700;
   font-size: 2.4rem;
-  height: 60px;
+  line-height: 2.4rem;
 
-  &:disabled {
-    background-color: ${({ theme }) => theme.colors.secondaryColor};
-    color: ${({ theme }) => theme.colors.primaryColor};
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  letter-spacing: 0.5px;
+
+  color: ${theme.colors.primaryColor};
+  background: ${theme.colors.lightColor};
+`;
+
+export const LastAmountWrapper = styled(AmountWrapper)`
+  border-top: 2px solid ${theme.colors.secondaryColor};
+  padding-top: 4rem;
 `;

@@ -1,35 +1,36 @@
-import { FlexWrapper } from '@pages/Cart/Cart.style';
+import Button from '@components/common/Button';
 import * as S from './ExpectedPayment.style';
 
-interface ExpectedPaymentProps {
-  totalPrice: number;
+interface OrderPaymentAmountProps {
+  totalItemsPrice: number;
   deliveryFee: number;
+  discountPrice: number;
 }
 
-function ExpectedPayment({ totalPrice, deliveryFee }: ExpectedPaymentProps) {
-  const totalPayingPrice = totalPrice + deliveryFee;
+function ExpectedPayment({ totalItemsPrice, deliveryFee, discountPrice }: OrderPaymentAmountProps) {
+  const totalPaymentAmount = totalItemsPrice + deliveryFee - discountPrice;
   return (
     <S.PayingContainer>
-      <S.PayingBox>
-        <S.PayingBackground>
-          <S.PayingTitle>결제 예상 금액</S.PayingTitle>
-        </S.PayingBackground>
-        <S.PayingBackground>
-          <FlexWrapper>
-            <S.ContentText>총 상품 가격</S.ContentText>
-            <S.ContentText> {totalPrice.toLocaleString('ko-KR')}원</S.ContentText>
-          </FlexWrapper>
-          <FlexWrapper>
-            <S.ContentText>총 배송비</S.ContentText>
-            <S.ContentText>{deliveryFee.toLocaleString('ko-KR')}원</S.ContentText>
-          </FlexWrapper>
-          <S.TotalPriceContainer>
-            <S.TotalText>총 주문금액</S.TotalText>
-            <S.TotalText>{totalPayingPrice.toLocaleString('ko-KR')}원</S.TotalText>
-          </S.TotalPriceContainer>
-        </S.PayingBackground>
-        <S.PayingButton disabled={totalPrice === 0}>결제하기</S.PayingButton>
-      </S.PayingBox>
+      <S.Title>결제예상금액</S.Title>
+      <S.InformationWrapper>
+        <S.AmountWrapper>
+          <span>상품가격</span>
+          <span>{totalItemsPrice}원</span>
+        </S.AmountWrapper>
+        <S.AmountWrapper>
+          <span>배송비</span>
+          <span>{deliveryFee}원</span>
+        </S.AmountWrapper>
+        <S.AmountWrapper>
+          <span>할인 금액</span>
+          <span>-{discountPrice}원</span>
+        </S.AmountWrapper>
+        <S.LastAmountWrapper>
+          <span>총 주문금액</span>
+          <span>{totalPaymentAmount}원</span>
+        </S.LastAmountWrapper>
+        <Button text="주문하기" disabled={totalItemsPrice === 0} />
+      </S.InformationWrapper>
     </S.PayingContainer>
   );
 }

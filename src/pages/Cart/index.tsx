@@ -14,7 +14,7 @@ function Cart() {
       <S.CartPageContainer>
         <Suspense fallback={<SkeletonCart />}>
           <CartItemList />
-          <ExpectedPayment totalPrice={totalCartPrice} deliveryFee={3000} />
+          <ExpectedPayment totalItemsPrice={totalCartPrice} deliveryFee={3000} discountPrice={0} />
         </Suspense>
       </S.CartPageContainer>
     </Layout>
