@@ -13,6 +13,8 @@ const Order = () => {
   const goToPage = useGoToAnotherPage();
 
   const handleOrderButtonClick = () => {
+    if (!totalPrice) return;
+
     orderProducts();
     goToPage(ROUTE_PATH.ORDER_LIST_PAGE);
   };
