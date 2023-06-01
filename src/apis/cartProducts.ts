@@ -1,4 +1,5 @@
 import { servers } from '../constants/server';
+import { fetchData } from '../utils/apiUtils';
 import type { CartProduct } from '../types/product';
 import type { HostNameType } from '../types/server';
 
@@ -10,15 +11,13 @@ export const cartApi = async (hostName: HostNameType) => {
   const URL = `${servers[hostName]}/cart-items`;
 
   const fetchCartProducts = async () => {
-    const response = await fetch(URL, {
+    const response: CartProduct[] = await fetchData<CartProduct[]>(URL, {
       method: 'GET',
       headers: {
         Authorization: `Basic ${base64}`,
       },
     });
-
-    const data: CartProduct[] = await response.json();
-    return data;
+    return response;
   };
 
   const postCartProduct = async (productId: number) => {

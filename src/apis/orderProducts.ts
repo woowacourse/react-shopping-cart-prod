@@ -1,6 +1,7 @@
 import { servers } from '../constants/server';
 import type { OrderedData, OrderedProduct } from '../types/product';
 import type { HostNameType } from '../types/server';
+import { fetchData } from '../utils/apiUtils';
 
 const email = process.env.REACT_APP_EMAIL;
 const password = process.env.REACT_APP_PASSWORD;
@@ -10,29 +11,26 @@ export const orderApi = async (hostName: HostNameType) => {
   const URL = `${servers[hostName]}/orders`;
 
   const fetchOrderProducts = async () => {
-    const response = await fetch(URL, {
+    const response: OrderedProduct[] = await fetchData<OrderedProduct[]>(URL, {
       method: 'GET',
       headers: {
         Authorization: `Basic ${base64}`,
       },
     });
-
-    const data: OrderedProduct[] = await response.json();
-    return data;
+    return response;
   };
 
   const fetchOrderDetailsProduct = async (orderId: string) => {
     const URL = `${servers[hostName]}/orders/${orderId}`;
 
-    const response = await fetch(URL, {
+    const response: OrderedProduct = await fetchData<OrderedProduct>(URL, {
       method: 'GET',
       headers: {
         Authorization: `Basic ${base64}`,
       },
     });
 
-    const data: OrderedProduct = await response.json();
-    return data;
+    return response;
   };
 
   const postOrderProduct = async (orderData: OrderedData) => {
