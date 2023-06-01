@@ -11,11 +11,12 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
+  const { id, name, isOnSale, salePrice, price, imageUrl } = product;
   const { decreaseItemQuantity, addItem, increaseItemQuantity } = useCart();
   const cartList = useRecoilValue(cartListAtom);
-  const cartItem = cartList.find(
-    (cartItem) => cartItem.product.id === product.id
-  );
+  const cartItem = cartList.find((cartItem) => cartItem.product.id === id);
+  const finalPrice = isOnSale ? price - salePrice : price;
+  const salePercentage = ((salePrice / price) * 100).toFixed(0);
 
   const increase = () => {
     if (!cartItem) return;
@@ -33,13 +34,19 @@ const ProductItem = ({ product }: ProductItemProps) => {
 
   return (
     <S.ItemWrapper>
-      <S.ItemImage src={product.imageUrl} alt={product.name} />
+      <S.ItemImage src={imageUrl} alt={name} />
       <S.ProductWrapper>
         <div>
-          <S.ProductName>{product.name}</S.ProductName>
-          <S.ProductPrice>
-            {product.price.toLocaleString('KR')} 원
-          </S.ProductPrice>
+          <S.ProductName>{name}</S.ProductName>
+          <S.ProductPrice>{finalPrice.toLocaleString('KR')} 원</S.ProductPrice>
+          {isOnSale && (
+            <S.SalePriceBox>
+              <S.SalePercentage>{salePercentage}% </S.SalePercentage>
+              <S.ProductOriginalPrice>
+                {price.toLocaleString('KR')} 원
+              </S.ProductOriginalPrice>
+            </S.SalePriceBox>
+          )}
         </div>
         {cartItem ? (
           <Counter

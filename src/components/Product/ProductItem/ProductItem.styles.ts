@@ -21,3 +21,20 @@ export const ProductName = styled.p`
 export const ProductPrice = styled.p`
   font: ${(props) => props.theme.font.medium};
 `;
+
+export const SalePriceBox = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const SalePercentage = styled.div`
+  font: ${(props) => props.theme.font.small};
+  color: red;
+  padding-right: 10px;
+`;
+
+export const ProductOriginalPrice = styled.div`
+  font: ${(props) => props.theme.font.small};
+  color: gray;
+  text-decoration: line-through;
+`;
