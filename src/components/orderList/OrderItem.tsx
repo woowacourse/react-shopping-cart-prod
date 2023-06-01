@@ -24,8 +24,13 @@ const OrderItem = ({
           )}
         </S.Name>
         <S.Detail>
-          <Price price={totalPrice} css={textStyle} />
-          <span>&nbsp;/&nbsp;수량&nbsp;{quantity}개</span>
+          {location !== ROUTE_PATH.ORDER_LIST_PAGE && (
+            <Price price={totalPrice / quantity} css={textStyle} />
+          )}
+          <S.TotalDetail>
+            <Price price={totalPrice} css={textStyle} />
+            <span>&nbsp;/&nbsp;수량&nbsp;{quantity}개</span>
+          </S.TotalDetail>
         </S.Detail>
       </div>
     </S.Wrapper>
@@ -35,10 +40,11 @@ const OrderItem = ({
 const S = {
   Wrapper: styled.li`
     display: flex;
-    padding: 38px 0;
+    padding: 38px 0 14px;
   `,
 
   Name: styled.h3`
+    margin-top: 6px;
     font-size: 17px;
 
     & span {
@@ -62,14 +68,25 @@ const S = {
 
   Detail: styled.div`
     display: flex;
-    margin-top: 32px;
+    flex-direction: column;
+    row-gap: 14px;
     font-size: 16px;
     color: #888;
     font-size: 15px;
 
+    & > p:first-child {
+      margin-top: 20px;
+      color: var(--text-color);
+    }
+
     @media (max-width: 1270px) {
       font-size: 15px;
     }
+  `,
+
+  TotalDetail: styled.div`
+    display: flex;
+    margin-top: 32px;
   `,
 };
 

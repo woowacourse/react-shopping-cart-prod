@@ -2,7 +2,6 @@ export const ROUTE_PATH: Readonly<Record<string, string>> = {
   MAIN_PAGE: '/',
   CART_PAGE: '/cart',
   ORDER_LIST_PAGE: '/order-list',
-  ORDER_DETAIL_PAGE: '/order-detail',
   ERROR_PAGE: '/404',
 };
 

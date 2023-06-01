@@ -18,6 +18,4 @@ const meta = {
 
 export default meta;
 
-export const OrderDetailNavigator = () => {
-  return <OrderDetailNavigatorComponent orderId={1} />;
-};
+export const OrderDetailNavigator = () => <OrderDetailNavigatorComponent orderId={1} />;

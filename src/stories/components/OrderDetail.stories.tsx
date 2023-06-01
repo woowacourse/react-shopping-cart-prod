@@ -16,11 +16,12 @@ const meta = {
   ],
   args: {
     totalPrice: 3000,
+    deliveryFee: 3000,
   },
 } satisfies Meta<typeof OrderDetailComponent>;
 
 export default meta;
 
-export const OrderDetail = (args: { totalPrice: number }) => {
+export const OrderDetail = (args: { totalPrice: number; deliveryFee: number }) => {
   return <OrderDetailComponent {...args} />;
 };

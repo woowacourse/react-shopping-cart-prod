@@ -35,3 +35,7 @@ export interface OrderList {
 export interface OrderListItem extends Order {
   orderedProductCount: number;
 }
+
+export interface OrderItemDetail extends OrderList, Pick<Order, 'totalPrice'> {
+  deliveryFee: number;
+}

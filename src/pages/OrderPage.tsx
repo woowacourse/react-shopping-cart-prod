@@ -23,13 +23,15 @@ const OrderPage = () => {
       .then((data) => {
         setOrderList(data);
       });
-  }, [api, server]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [server]);
 
   return (
     <MainLayout>
       <Title title='주문 목록' />
       {orderList.map((list) => (
-        <OrderItemList {...list} />
+        <OrderItemList key={list.orderId} {...list} />
       ))}
     </MainLayout>
   );

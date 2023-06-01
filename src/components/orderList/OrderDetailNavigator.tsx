@@ -17,8 +17,11 @@ const OrderDetailNavigator = ({ orderId }: Props) => {
   return (
     <S.Head>
       주문번호&nbsp;&nbsp;|&nbsp;<S.OrderId>{orderId}</S.OrderId>
-      {location !== ROUTE_PATH.ORDER_DETAIL_PAGE && (
-        <Button css={buttonStyle} onClick={() => goToPage(ROUTE_PATH.ORDER_DETAIL_PAGE)}>
+      {location !== `${ROUTE_PATH.ORDER_LIST_PAGE}/${orderId}` && (
+        <Button
+          css={buttonStyle}
+          onClick={() => goToPage(`${ROUTE_PATH.ORDER_LIST_PAGE}/${orderId}`)}
+        >
           상세보기
           <BsChevronRight style={{ marginLeft: '4px' }} />
         </Button>

@@ -1,13 +1,13 @@
 import { BsCreditCardFill } from 'react-icons/bs';
 import { css, styled } from 'styled-components';
-import { DELIVERY_FEE } from '../../constants';
 import Price from '../Price';
 
 interface Props {
   totalPrice: number;
+  deliveryFee: number;
 }
 
-const OrderDetail = ({ totalPrice }: Props) => {
+const OrderDetail = ({ totalPrice, deliveryFee }: Props) => {
   return (
     <S.Wrapper tabIndex={0}>
       <S.Title>
@@ -18,13 +18,13 @@ const OrderDetail = ({ totalPrice }: Props) => {
         총 상품금액 <Price price={totalPrice} />
       </li>
       <li>
-        배송비 <Price price={DELIVERY_FEE} />
+        배송비 <Price price={deliveryFee} />
       </li>
       <li>
-        할인쿠폰 <Price price={DELIVERY_FEE} description='-' css={priceStyle} />
+        할인쿠폰 <Price price={deliveryFee} description='-' css={priceStyle} />
       </li>
       <li>
-        총 결제금액 <Price price={totalPrice - DELIVERY_FEE} />
+        총 결제금액 <Price price={totalPrice - deliveryFee} />
       </li>
     </S.Wrapper>
   );
@@ -33,6 +33,8 @@ const OrderDetail = ({ totalPrice }: Props) => {
 const S = {
   Wrapper: styled.ul`
     flex: 0.5;
+    max-height: 330px;
+    margin-top: 30px;
     font-size: 18px;
     color: var(--text-color);
     border: 1px solid var(--gray-color-300);
@@ -60,7 +62,7 @@ const S = {
   `,
 
   Title: styled.li`
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     padding: 22px 28px 24px;
     font-size: 20px;
     font-weight: 700;

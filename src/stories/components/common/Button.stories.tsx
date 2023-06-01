@@ -92,9 +92,9 @@ export const DeleteButton = () => {
   return <ButtonComponent css={deleteButtonStyle}>선택삭제</ButtonComponent>;
 };
 
-export const MoreButton = () => {
+export const DetailButton = () => {
   return (
-    <ButtonComponent css={moreButtonStyle}>
+    <ButtonComponent css={detailButtonStyle}>
       상세보기
       <BsChevronRight style={{ marginLeft: '4px' }} />
     </ButtonComponent>
@@ -179,7 +179,7 @@ const deleteButtonStyle = css`
   }
 `;
 
-const moreButtonStyle = css`
+const detailButtonStyle = css`
   display: flex;
 
   & > svg {
