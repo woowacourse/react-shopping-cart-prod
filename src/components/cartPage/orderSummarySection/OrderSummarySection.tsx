@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 import { getCommaAddedNumber } from '../../../utils/number';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
 import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
 import { pointState } from '../../../recoil/atoms/pointAtom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
-import { orderListState } from '../../../recoil/selectors/orderSelector';
-import { base64 } from '../../../constants/user';
 
 export const OrderSummarySection = () => {
   const { totalProductPrice, deliveryPrice, totalPrice, pointToAdd } =

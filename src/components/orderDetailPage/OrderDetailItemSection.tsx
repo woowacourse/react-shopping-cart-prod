@@ -1,37 +1,29 @@
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
-import { Product } from '../../types/Product';
-import { OrderItem } from './OrderItem';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { orderDetailSelector } from '../../recoil/selectors/orderDetailSelector';
+import { OrderDetailItem } from './OrderDetailItem';
 
-interface OrderItemListProps {
-  orderId: number;
-  orderInfo: Product[];
-}
+export const OrderDetailItemSection = () => {
+  const location = useLocation();
 
-export const OrderItemList = ({ orderId, orderInfo }: OrderItemListProps) => {
-  const moveToOrderDetail = useNavigate();
-
-  const handleDetailButton = () => {
-    moveToOrderDetail(`/orders/${orderId}`, {
-      state: orderId,
-    });
-  };
+  const orderDetail = useRecoilValue(orderDetailSelector(location.state));
 
   return (
     <Style.Container>
       <Style.Content>
         <Style.OrderHeader>
-          <div>주문번호: {orderId}</div>
-          <button onClick={handleDetailButton}>상세보기</button>
+          <div>주문번호: {location.state}</div>
         </Style.OrderHeader>
-        {orderInfo.map((item, index) => {
-          return <OrderItem key={orderId * index} product={item} />;
+        {orderDetail.orderInfo.map((item) => {
+          return (
+            <OrderDetailItem key={orderDetail.orderId} orderInfoItem={item} />
+          );
         })}
       </Style.Content>
     </Style.Container>
   );
 };
-
 const Style = {
   Container: styled.ul`
     width: 100%;
