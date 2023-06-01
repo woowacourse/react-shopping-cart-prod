@@ -15,7 +15,7 @@ const useNavigatePage = () => {
   };
 
   const goOrderDetail = (orderId: number) => {
-    navigator(`/orders/${orderId}`);
+    navigator(`/orders/${orderId}`, { state: { id: orderId } });
   };
 
   const goOrderComplete = () => {
