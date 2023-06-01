@@ -1,5 +1,5 @@
 import type { Order } from '../types/product';
-import { atom, selector } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 
 import { api } from '../apis/orderProducts';
 import { hostNameAtom } from './hostData';
@@ -16,4 +16,17 @@ export const orderAtom = atom<Order[]>({
       return response;
     },
   }),
+});
+
+export const orderwithIdState = selectorFamily({
+  key: 'orderwithIdState',
+  get:
+    (orderId) =>
+    ({ get }) => {
+      const hostName = get(hostNameAtom);
+      const response = api(hostName).then((apiInstance) => {
+        return apiInstance.getOrderDetail(Number(orderId));
+      });
+      return response;
+    },
 });
