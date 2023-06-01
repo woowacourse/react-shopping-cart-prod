@@ -1,3 +1,4 @@
+import { TextSkeletonStyle } from '@Styles/common/skeleton';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -13,14 +14,24 @@ export const UserInfo = styled.div`
   row-gap: 10px;
 `;
 
-export const UserName = styled.div`
+type LoadingProps = {
+  isLoading?: boolean;
+};
+
+export const UserName = styled.div<LoadingProps>`
   font-weight: 700;
+
+  ${(props) => props.isLoading && TextSkeletonStyle}
 `;
 
-export const UserAddress = styled.div``;
+export const UserAddress = styled.div<LoadingProps>`
+  ${(props) => props.isLoading && TextSkeletonStyle}
+`;
 
-export const UserContact = styled.div`
+export const UserContact = styled.div<LoadingProps>`
   color: #c7c8c9;
+
+  ${(props) => props.isLoading && TextSkeletonStyle}
 `;
 
 export const MemoInput = styled.input`

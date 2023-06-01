@@ -1,3 +1,4 @@
+import { TextSkeletonStyle } from '@Styles/common/skeleton';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -5,6 +6,14 @@ export const Container = styled.div`
   grid-template-columns: auto 1fr;
   align-items: center;
   column-gap: 5px;
+`;
+
+type HelperTitleProps = {
+  isLoading: boolean;
+};
+
+export const HelperTitle = styled.div<HelperTitleProps>`
+  ${(props) => props.isLoading && TextSkeletonStyle}
 `;
 
 export const Layout = styled.div`

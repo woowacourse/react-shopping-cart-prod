@@ -49,7 +49,7 @@ function DiscountSheet() {
           )}
         </S.DiscountLayout>
         <S.DiscountLayout>
-          <div>총 할인 금액</div>
+          <S.Text>총 할인 금액</S.Text>
           <S.Amount>{allDiscountAmount}</S.Amount>
         </S.DiscountLayout>
       </S.Container>

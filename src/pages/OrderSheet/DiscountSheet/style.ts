@@ -1,3 +1,4 @@
+import { TextSkeletonStyle } from '@Styles/common/skeleton';
 import styled from 'styled-components';
 
 export const Container = styled.div`
@@ -6,7 +7,17 @@ export const Container = styled.div`
   row-gap: 20px;
 `;
 
-export const Amount = styled.div``;
+type isLoadingProps = {
+  isLoading?: boolean;
+};
+
+export const Text = styled.div<isLoadingProps>`
+  ${(props) => props.isLoading && TextSkeletonStyle}
+`;
+
+export const Amount = styled.div<isLoadingProps>`
+  ${(props) => props.isLoading && TextSkeletonStyle}
+`;
 
 export const AmountWrapper = styled.div`
   display: grid;

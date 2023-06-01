@@ -2,12 +2,18 @@ import { useState } from 'react';
 
 import * as S from './style';
 
-function HelperMessage({ message, text }: { message: string; text: string }) {
+type HelperMessageProps = {
+  message: string;
+  text: string;
+  isLoading?: boolean;
+};
+
+function HelperMessage({ message, text, isLoading = false }: HelperMessageProps) {
   const [visible, setVisible] = useState(false);
 
   return (
     <S.Container>
-      {text}
+      <S.HelperTitle isLoading={isLoading}>{text}</S.HelperTitle>
       <S.Layout>
         <S.QuestionMark onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
           ?
