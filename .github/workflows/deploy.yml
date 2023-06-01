@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: |
           yarn install
-          cp dist/index.html dist/404.html
+          cp ./dist/index.html ./dist/404.html
       - name: Build
         run: yarn build
       - name: Setup Pages
