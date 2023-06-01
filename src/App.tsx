@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from 'react';
-import { Await, BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GlobalStyle from './GlobalStyle';
 
 import { Layout } from '@components/common/Layout/Layout';

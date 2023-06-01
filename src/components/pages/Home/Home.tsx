@@ -1,5 +1,12 @@
-import { ProductList } from '../../ProductList/ProductList';
+import { Suspense } from 'react';
+
+import { ProductListSkeleton } from '@components/ProductList/ProductListSkeleton/ProductListSkeleton';
+import { ProductList } from '@components/ProductList/ProductList';
 
 export const Home = () => {
-  return <ProductList />;
+  return (
+    <Suspense fallback={<ProductListSkeleton />}>
+      <ProductList />
+    </Suspense>
+  );
 };
