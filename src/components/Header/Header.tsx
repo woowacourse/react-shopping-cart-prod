@@ -31,11 +31,12 @@ const Header = () => {
       </Link>
       <ButtonContainer>
         <ServerSelectBox
-          defaultValue={serverName}
+          value={serverName}
           onChange={onChangeServerNameHandler}>
           <option value='SPLIT'>스플릿</option>
           <option value='ROY'>로이</option>
           <option value='IRAE'>이레</option>
+          <option value='ERROR'>에러</option>
         </ServerSelectBox>
         <Link to={PATH.ORDER_LIST_PAGE}>
           <OrderListButton>Orders</OrderListButton>

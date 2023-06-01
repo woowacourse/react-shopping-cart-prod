@@ -15,7 +15,7 @@ const useFetchCart = () => {
 
       setCartList((cartList) => [...cartList, { id, quantity, product }]);
     } catch (error) {
-      alert(error);
+      if (error instanceof Error) alert(error.message);
     }
   };
 
@@ -32,6 +32,7 @@ const useFetchCart = () => {
           ] as Cart[]
       );
     } catch (error) {
+      console.log(error);
       alert(error);
     }
   };

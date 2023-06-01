@@ -1,7 +1,7 @@
 import { atom, selector } from 'recoil';
 import { BASE_URL } from '../constants/baseURL';
 
-export type ServerName = 'SPLIT' | 'ROY' | 'IRAE';
+export type ServerName = 'SPLIT' | 'ROY' | 'IRAE' | 'ERROR';
 
 export const serverAtom = atom<ServerName>({
   key: 'server/name',

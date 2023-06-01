@@ -6,10 +6,15 @@ const useFetchOrder = () => {
   const { handleFetch } = useFetch(END_POINTS.ORDERS);
 
   const postOrders = async (orderItems: OrderItem[]) => {
-    await handleFetch('POST', {
-      orderItems,
-      orderTime: new Date().toISOString(),
-    });
+    try {
+      await handleFetch('POST', {
+        orderItems,
+        orderTime: new Date().toISOString(),
+      });
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) alert(error.message);
+    }
   };
 
   const getOrders = async (id: number) => {

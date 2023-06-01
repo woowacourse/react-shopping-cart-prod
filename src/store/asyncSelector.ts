@@ -12,7 +12,7 @@ export const fetchedProductListSelector = selector({
     const serverName = get(serverAtom);
     const baseURL = BASE_URL[serverName];
     const data = await fetchProductList<Product[]>(baseURL);
-
+    if (serverName === 'ERROR') throw new Error('');
     return data;
   },
 });
