@@ -70,7 +70,8 @@ const Wrapper = styled.ul`
   padding: 15px 10px 10px 10px;
 
   & > img {
-    width: 20%;
+    width: 180px;
+    height: 160px;
     border-radius: 5px;
   }
   & > input[type="checkbox"] {
@@ -95,9 +96,9 @@ const Wrapper = styled.ul`
 `;
 
 const NameBox = styled.div`
-  width: 65%;
+  width: 60%;
   height: 50%;
-  margin: 15px 0 10px 10px;
+  margin: 15px 0 10px 20px;
 
   font-size: 17px;
   white-space: nowrap;
@@ -136,7 +137,7 @@ const PriceContainer = styled.div`
 
 const SelectBox = styled.select`
   position: absolute;
-  left: 32.5%;
+  right: 20%;
   bottom: 5%;
 
   width: 30%;
