@@ -19,14 +19,16 @@ const ButtonSizes = {
 
 interface ButtonProps {
   size: ButtonSize;
-  primary: boolean;
+  primary?: boolean;
 }
 
 const Button = styled.button<ButtonProps>`
   font-weight: 600;
+  letter-spacing: 0.05rem;
   width: 100%;
   border: ${({ theme }) => theme.primaryColor} 1px solid;
   border-radius: 3px;
+  margin: 0 1rem;
 
   ${({ size }) => css`
     padding: ${ButtonSizes[size].padding};

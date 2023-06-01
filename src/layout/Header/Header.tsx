@@ -57,8 +57,8 @@ function Header() {
               />
               <SelectBox
                 options={[
-                  { value: '1', name: '유저1' },
-                  { value: '2', name: '유저2' },
+                  { value: '1', name: '치즈왕자' },
+                  { value: '2', name: '치즈공주' },
                 ]}
                 onChange={handleChangeUser}
               />

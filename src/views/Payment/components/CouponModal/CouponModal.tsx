@@ -1,10 +1,12 @@
 import { Modal } from '@common/Modal';
-import { Column, Row } from '@styles/style';
+
 import { useCart } from '@views/Cart/recoil/cartState';
 import useCouponList from '@views/Payment/recoil/couponListState';
-import { PropsWithChildren } from 'react';
+
 import { styled } from 'styled-components';
-import { CouponType } from 'types/CouponType';
+
+import { CouponItem } from '../CouponItem';
+import { Button } from '@common/Button';
 
 interface CouponModalProps {
   isOpen: boolean;
@@ -50,37 +52,55 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
   return isOpen ? (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <CouponContainerTitle>쿠폰함</CouponContainerTitle>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <ModalContentWrapper>
         {
           <CouponListWrapper>
             {couponList.map((coupon) => {
               return (
-                <Coupon
+                <CouponItem
+                  key={coupon.id}
                   onClick={() => {
                     checkCoupon(coupon.id);
                     closeModal();
                   }}
-                  key={coupon.id}
                   disabled={isValidCoupon(totalPrice, coupon.minimumPrice)}
-                >
-                  <ContentWrapper>
-                    <CouponBenefit>{couponBenefitText(coupon.type, coupon.value)}</CouponBenefit>
-                    <CouponContentPrimary>{coupon.name}</CouponContentPrimary>
-                    <CouponContentSecondary>
-                      {couponCondition(coupon.minimumPrice)}
-                    </CouponContentSecondary>
-                  </ContentWrapper>
-                </Coupon>
+                  benefit={couponBenefitText(coupon.type, coupon.value)}
+                  condition={couponCondition(coupon.minimumPrice)}
+                  name={coupon.name}
+                />
               );
             })}
           </CouponListWrapper>
         }
-      </div>
+
+        <ButtonWrapper>
+          <Button size="l">취소하기</Button>
+          <Button size="l" primary>
+            선택완료
+          </Button>
+        </ButtonWrapper>
+      </ModalContentWrapper>
     </Modal>
   ) : null;
 }
 
 export default CouponModal;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  position: absolute;
+  width: 80%;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const ModalContentWrapper = styled.div`
+  display: 'flex';
+  justify-content: 'center';
+  align-items: 'center';
+  flex-direction: 'column';
+`;
 
 const CouponListWrapper = styled.div`
   display: flex;
@@ -90,79 +110,28 @@ const CouponListWrapper = styled.div`
   margin: 0 auto;
 
   max-width: 300px;
-`;
-
-const CouponBenefit = styled.p`
-  color: ${({ theme }) => theme.infoColor};
-  font-weight: 600;
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-`;
-
-const CouponContentPrimary = styled.p`
-  color: ${({ theme }) => theme.primaryColor};
-  font-size: 1.5rem;
-  font-weight: 600;
-`;
-
-const CouponContentSecondary = styled.p`
-  color: ${({ theme }) => theme.secondaryColor};
-  font-size: 1.5rem;
-`;
-
-const ContentWrapper = styled.div`
-  display: flex;
-  flex: 1 1;
-  row-gap: 0.5rem;
-  flex-wrap: nowrap;
-  flex-direction: column;
-`;
-
-const CouponContainerTitle = styled.div`
-  font-size: 4rem;
-  text-align: center;
-  border-bottom: 2px solid ${({ theme }) => theme.primaryColor};
-  color: ${({ theme }) => theme.primaryColor};
-`;
-
-const Coupon = styled.button`
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  border-radius: 8px;
-  width: 30rem;
-
-  padding: 5rem;
-  height: 10rem;
-  margin: 10px;
-  border: 2px solid ${({ theme }) => theme.secondaryColor};
-
-  /* border-radius: 10px; */
-  background-color: ${({ theme }) => theme.lightColor};
-
-  color: #000;
-  font-size: 20px;
-  text-align: left;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-
-  &:disabled {
-    background-color: ${({ theme }) => theme.secondaryColor};
-    cursor: not-allowed;
-  }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
-    max-width: 300px;
+    max-width: 640px;
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    max-width: 600px;
+    max-width: 723px;
   }
 
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
-    max-width: 900px;
+    max-width: 1000px;
   }
+`;
 
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.xxl}) {
-    max-width: 1200px;
-  }
+const CouponContainerTitle = styled.div`
+  font-size: 2rem;
+  text-align: left;
+  font-weight: 600;
+  padding-left: 2rem;
+  padding-bottom: 0.6rem;
+  margin-bottom: 2rem;
+
+  border-bottom: 2px solid ${({ theme }) => theme.primaryColor};
+  color: ${({ theme }) => theme.primaryColor};
 `;

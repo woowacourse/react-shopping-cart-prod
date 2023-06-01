@@ -9,6 +9,7 @@ import { CouponModal } from '../CouponModal';
 import useCouponList from '@views/Payment/recoil/couponListState';
 import { CouponType } from 'types/CouponType';
 import { RiCoupon2Line } from 'react-icons/ri';
+import { Button } from '@common/Button';
 
 const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
   if (!coupon || !totalPrice) {
@@ -59,7 +60,7 @@ function ExpectedPayment() {
             <S.CouponTitle>쿠폰</S.CouponTitle>
           </S.CouponTitleWrapper>
           <S.CouponTitle>사용 가능한 쿠폰이 {couponList.length}개 있어요.</S.CouponTitle>
-          <S.CouponButton onClick={handleSeeCoupons} disabled={totalPrice === 0}>
+          <S.CouponButton size="m" onClick={handleSeeCoupons} disabled={totalPrice === 0}>
             쿠폰선택
           </S.CouponButton>
         </S.CouponContainer>
@@ -74,8 +75,10 @@ function ExpectedPayment() {
             <S.ContentText>{deliveryFee.toLocaleString('ko-KR')}원</S.ContentText>
           </FlexWrapper>
           <FlexWrapper>
-            <S.ContentText>쿠폰 할인</S.ContentText>
-            <S.ContentText>-{discountPrice.toLocaleString('ko-KR')}원</S.ContentText>
+            <S.CouponText info={discountPrice > 0}>쿠폰 할인</S.CouponText>
+            <S.CouponText info={discountPrice > 0}>
+              - {discountPrice.toLocaleString('ko-KR')}원
+            </S.CouponText>
           </FlexWrapper>
           <S.TotalPriceContainer>
             <S.TotalText>총 주문금액</S.TotalText>
@@ -84,14 +87,16 @@ function ExpectedPayment() {
             </S.TotalText>
           </S.TotalPriceContainer>
         </S.PayingBackground>
-        <S.PayingButton
+        <Button
+          size="l"
+          primary
           onClick={() => {
             handlePay();
           }}
           disabled={totalPrice === 0}
         >
           결제하기
-        </S.PayingButton>
+        </Button>
       </S.PayingBox>
       <CouponModal
         isOpen={isCouponOpen}

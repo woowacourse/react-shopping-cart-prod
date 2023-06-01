@@ -42,9 +42,13 @@ function CartItemBox({ cartItemId, product }: CartItemProps) {
 
       <S.ProductInfo>
         <S.DeleteButton>
-          <FaTrashAlt size="1.8rem" />
+          <FaTrashAlt
+            size="1.8rem"
+            onClick={() => {
+              updateCartItemQuantity(cartItemId, 0);
+            }}
+          />
         </S.DeleteButton>
-
         <Stepper
           quantity={quantity}
           onChange={(event) => {
@@ -63,6 +67,7 @@ function CartItemBox({ cartItemId, product }: CartItemProps) {
             }
           }}
         />
+
         <S.PriceText>{`${(price * quantity).toLocaleString('ko-KR')} 원`}</S.PriceText>
       </S.ProductInfo>
     </S.CartItemContainer>

@@ -2,6 +2,7 @@ import { ProductItemType } from 'types/ProductType';
 import * as S from './ProductItem.style';
 import { CartStepper } from '@views/Cart/components/CartStepper';
 import { styled } from 'styled-components';
+import { Suspense } from 'react';
 
 interface ProductItemProps {
   product: ProductItemType;
@@ -13,7 +14,6 @@ function ProductItem({ product }: ProductItemProps) {
     <S.ProductItemBox>
       <S.ProductItemImageBox>
         <S.ProductItemImage src={imageUrl} />
-
         <CartStepperWrapper>
           <CartStepper product={product} />
         </CartStepperWrapper>
