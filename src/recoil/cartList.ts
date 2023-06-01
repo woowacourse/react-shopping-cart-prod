@@ -2,6 +2,7 @@ import { getCartList } from 'api/cart';
 import { atom, selector } from 'recoil';
 import { serverAtom } from './server';
 import { CartItem } from 'types/api/carts';
+import { getMockCartList, getMockPriceResult } from 'api/mockApi';
 
 export const cartListAtom = atom<CartItem[]>({
   key: 'cartList',
@@ -9,7 +10,7 @@ export const cartListAtom = atom<CartItem[]>({
     key: 'initialCartList',
     get: async ({ get }) => {
       const server = get(serverAtom);
-      const data = await getCartList(server);
+      const data = await getMockCartList();
       return data;
     },
   }),
@@ -34,16 +35,53 @@ export const countCartListSelector = selector({
   },
 });
 
+export const priceAtom = atom({
+  key: 'priceAtom',
+  default: selector({
+    key: 'initialPrice',
+    get: async () => {
+      const data = await getMockPriceResult(2)();
+      return data;
+    },
+  }),
+});
+
 export const totalPriceSelector = selector({
   key: 'totalPriceSelector',
   get: ({ get }) => {
     const cartList = get(cartListAtom);
+    const priceList = get(priceAtom);
     const checkedItems = get(checkedItemsAtom);
+    const { cartItemsPrice } = priceList;
 
-    return cartList
-      .filter((item) => checkedItems.includes(item.id))
+    return cartItemsPrice
+      .filter((item) => checkedItems.includes(item.cartItemId))
       .reduce((acc, item) => {
-        return acc + item.product.price * item.quantity;
+        const quantity =
+          cartList.find((cartItem) => cartItem.id === item.cartItemId)
+            ?.quantity || 1;
+        return acc + item.originalPrice * quantity;
       }, 0);
+  },
+});
+
+export const totalDiscountPriceSelector = selector({
+  key: 'totalDiscountPriceSelector',
+  get: ({ get }) => {
+    const cartList = get(cartListAtom);
+    const priceList = get(priceAtom);
+    const checkItems = get(checkedItemsAtom);
+    const { cartItemsPrice, discountFromTotalPrice } = priceList;
+
+    const discountSum = cartItemsPrice
+      .filter((item) => checkItems.includes(item.cartItemId))
+      .reduce((acc, item) => {
+        const quantity =
+          cartList.find((cartItem) => cartItem.id === item.cartItemId)
+            ?.quantity || 1;
+        return acc + item.discountPrice * quantity;
+      }, 0);
+
+    return discountSum + discountFromTotalPrice.discountPrice;
   },
 });

@@ -1,11 +1,19 @@
 import React from 'react';
 import * as S from './CouponSection.styles';
 import { useGet } from 'hooks/useGet';
-import { getMockCoupons } from 'api/mockApi';
+import { getMockCoupons, getMockPriceResult } from 'api/mockApi';
 import { CheckBox } from '../CartItem/CartItem.styles';
+import { useSetRecoilState } from 'recoil';
+import { priceAtom } from 'recoil/cartList';
 
 const CouponSection = () => {
   const { data: coupons } = useGet(getMockCoupons);
+  const setPrice = useSetRecoilState(priceAtom);
+
+  const getCouponAppliedPrice = (couponId: number) => async () => {
+    const priceData = await getMockPriceResult(couponId)();
+    setPrice(priceData);
+  };
 
   return (
     <S.Container>
@@ -13,7 +21,10 @@ const CouponSection = () => {
       <S.CouponList>
         {coupons?.map((coupon) => (
           <S.CouponWrapper key={coupon.id}>
-            <CheckBox type="checkbox" />
+            <CheckBox
+              type="checkbox"
+              onChange={getCouponAppliedPrice(coupon.id)}
+            />
             <S.CouponName>{coupon.name}</S.CouponName>
           </S.CouponWrapper>
         ))}

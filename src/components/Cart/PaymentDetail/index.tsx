@@ -19,9 +19,12 @@ const PaymentDetail = () => {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const totalDiscountPrice = useRecoilValue(totalDiscountPriceSelector);
   const deliveryFee =
-    totalPrice >= (delivery?.limit || 0) ? 0 : delivery?.price || 0;
+    totalPrice - totalDiscountPrice >= (delivery?.limit || 0)
+      ? 0
+      : delivery?.price || 0;
 
-  const orderPrice = totalPrice === 0 ? 0 : totalPrice + deliveryFee;
+  const orderPrice =
+    totalPrice === 0 ? 0 : totalPrice + deliveryFee - totalDiscountPrice;
 
   const makeOrder = () => {
     moveTo(ROUTES.ORDERED_LIST);
