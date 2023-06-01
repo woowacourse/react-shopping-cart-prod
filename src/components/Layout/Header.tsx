@@ -46,7 +46,7 @@ const Header = () => {
           <CartProductCount>{cartProductCount}</CartProductCount>
           <Meaning>장바구니</Meaning>
         </FlexLink>
-        <FlexLink to={ROUTE_PATH.ORDER}>
+        <FlexLink to={ROUTE_PATH.ORDERED_LIST}>
           <Icon src={orderList} alt="주문목록" />
           <Meaning>주문목록</Meaning>
         </FlexLink>
