@@ -1,22 +1,15 @@
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { Select } from "./ServerSelectBox.style";
 import { serverState } from "../../recoil/serverAtom";
 import { ChangeEvent, useEffect } from "react";
-import { fetchCartList } from "../../api/api";
-import { cartState } from "../../recoil/cartAtoms";
+import { cartRepositoryState } from "../../recoil/cartAtoms";
 
 function ServerSelectBox() {
+  const { loadCartList } = useRecoilValue(cartRepositoryState);
   const [server, setServer] = useRecoilState(serverState);
 
   const onChangeServer = (e: ChangeEvent<HTMLSelectElement>) => {
     setServer(e.target.value);
-  };
-
-  const setCartList = useSetRecoilState(cartState);
-
-  const loadCartList = async () => {
-    const checkedCartItems = await fetchCartList(server);
-    setCartList(checkedCartItems);
   };
 
   useEffect(() => {
