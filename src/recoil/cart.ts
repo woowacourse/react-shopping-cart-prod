@@ -78,7 +78,7 @@ export const cartTotalDiscount = selector({
           (coupon) => coupon.couponId === item.couponId
         );
 
-        if (!coupon) return sum;
+        if (!coupon) return sum + item.product.price * item.quantity;
 
         return (
           sum +

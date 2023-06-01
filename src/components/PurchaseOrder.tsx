@@ -8,7 +8,7 @@ import { ROUTER_PATH } from "router";
 
 const PurchaseOrder = () => {
   const totalPrice = useRecoilValue(cartTotalPrice);
-  const totalDiscount = useRecoilValue(cartTotalDiscount);
+  const totalDiscountPrice = useRecoilValue(cartTotalDiscount);
   const purchaseOrder = useRecoilValue(orderCartList);
   const navigate = useNavigate();
 
@@ -37,13 +37,13 @@ const PurchaseOrder = () => {
         </AmountBox>
         <AmountBox>
           <p>할인 금액</p>
-          <p>- {totalDiscount.toLocaleString()}원</p>
+          <p>- {(totalPrice - totalDiscountPrice).toLocaleString()}원</p>
         </AmountBox>
         <AmountBox>
           <p>총 주문 금액</p>
           <p>
             {(totalPrice
-              ? totalPrice + SHIPPING_FEE - totalDiscount
+              ? totalDiscountPrice + SHIPPING_FEE
               : 0
             ).toLocaleString()}
             원
