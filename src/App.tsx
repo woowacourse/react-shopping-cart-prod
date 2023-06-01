@@ -17,13 +17,13 @@ import localStorageHelper from '@Utils/localStorageHelper';
 import mockMyCouponData3 from './mocks/mockMyCouponData3.json';
 
 function App() {
+  const { Modal, isModalOpen } = useModal();
+
   useEffect(() => {
     if (!localStorageHelper.hasKey('cartItems')) localStorageHelper.setInitValue('cartItems', []);
     if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
     if (!localStorageHelper.hasKey('myCoupons')) localStorageHelper.setInitValue('myCoupons', mockMyCouponData3);
   }, []);
-
-  const { Modal, isModalOpen } = useModal();
 
   return (
     <>

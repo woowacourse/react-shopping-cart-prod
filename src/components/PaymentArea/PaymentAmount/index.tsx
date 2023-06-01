@@ -4,6 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import Button from '@Components/Button';
 
+import useCartItems from '@Hooks/useCartItems';
 import useOrderItems from '@Hooks/useOrderItems';
 
 import selectedCouponIdState from '@Atoms/selectedCouponIdState';
@@ -25,8 +26,11 @@ function PaymentAmount() {
   const setSelectedCouponId = useSetRecoilState(selectedCouponIdState);
 
   const { orderCartItems } = useOrderItems();
+  const { selectedCartItemsAmount } = useCartItems();
 
   const handleOrderCartItems = () => {
+    if (!selectedCartItemsAmount) return alert('선택된 상품이 없습니다.');
+
     if (pathname === '/cart-list') {
       setSelectedCouponId(null);
       navigate('/order-sheet');
