@@ -1,35 +1,16 @@
 import { rest } from 'msw';
 
-import { CART_STORAGE_ID, ORDER_STORAGE_ID } from '../constants/storage';
-import products from './data/products.json';
-import orders from './data/orders.json';
-import coupons from './data/coupons.json';
+import products from '../data/products.json';
+import { CART_STORAGE_ID } from '../../constants/storage';
 import {
   addTargetProduct,
   deleteTargetProduct,
   findTargetProduct,
   updateTargetQuantity,
-} from '../states/cartProducts/util';
-import type { CartProduct } from '../types/product';
-import type { OrderInfo } from '../types/order';
+} from '../../states/cartProducts/util';
+import type { CartProduct } from '../../types/product';
 
-export const handlers = [
-  rest.get('/products', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(products));
-  }),
-
-  rest.get('/products/empty', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json([]));
-  }),
-
-  rest.get('/products/error', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(400), ctx.json({ error: 'fail' }));
-  }),
-
-  rest.get('/products/network-error', (_, res) => {
-    return res.networkError('Failed to Connect');
-  }),
-
+export const cartProductHandlers = [
   rest.get('/cart-items', (_, res, ctx) => {
     return res(
       ctx.status(200),
@@ -112,44 +93,5 @@ export const handlers = [
     );
 
     return res(ctx.delay(2000), ctx.status(204));
-  }),
-
-  rest.get('/orders', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(orders));
-  }),
-
-  rest.post<OrderInfo>('/orders', (req, res, ctx) => {
-    const storedOrders: OrderInfo[] = JSON.parse(
-      localStorage.getItem(ORDER_STORAGE_ID) ?? '[]'
-    );
-
-    localStorage.setItem(
-      ORDER_STORAGE_ID,
-      JSON.stringify([...storedOrders, req.body])
-    );
-
-    return res(ctx.status(201), ctx.json({ message: 'Success to Create' }));
-  }),
-
-  rest.get('/orders/:orderId', (req, res, ctx) => {
-    const { orderId } = req.params;
-
-    const targetOrderId = Number(orderId as string);
-
-    const targetOrder = orders.find((order) => order.orderId === targetOrderId);
-
-    if (!targetOrder) {
-      return res(ctx.status(304), ctx.json({ message: 'Not in the Cart' }));
-    }
-
-    return res(
-      ctx.delay(2000),
-      ctx.status(200),
-      ctx.json({ order: targetOrder, totalPrice: 50000 })
-    );
-  }),
-
-  rest.get('/coupons', (_, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(coupons));
   }),
 ];
