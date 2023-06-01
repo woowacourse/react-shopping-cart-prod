@@ -46,3 +46,9 @@ export interface Order {
   orderId: number;
   orderItems: OrderItem[];
 }
+
+export interface User {
+  id: string;
+  password: string;
+  name: string;
+}

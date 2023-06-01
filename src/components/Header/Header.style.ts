@@ -15,7 +15,7 @@ export const HeaderContent = styled.div`
 
 export const MenuWrapper = styled.div`
   display: flex;
-  gap: 10px; 
+  gap: 10px;
   align-items: center;
   cursor: pointer;
 `;
@@ -31,7 +31,7 @@ export const LogoImage = styled.img`
 
 export const NavBar = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 15px;
   align-items: center;
 `;
 

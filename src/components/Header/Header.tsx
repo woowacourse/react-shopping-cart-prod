@@ -1,5 +1,5 @@
 import titleLogo from "../../assets/logo.png";
-import { IoCart, IoList, IoPerson } from 'react-icons/io5';
+import { IoCart, IoList, IoPerson } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../style/style";
 import {
@@ -20,6 +20,7 @@ import { cartCountSelector } from "../../recoil/cartAtoms";
 import ServerSelectBox from "../ServerSelectBox";
 import { modalRepository } from "../../recoil/modalAtoms.tsx";
 import Icon from "../Icon.tsx";
+import Login from "../Login";
 
 function Header() {
   const navigate = useNavigate();
@@ -60,7 +61,7 @@ function Header() {
                 <MenuTitle>주문목록</MenuTitle>
               </MenuIcon>
             </MenuWrapper>
-            <MenuWrapper onClick={() => openModal(<>로그인페이지</>)}>
+            <MenuWrapper onClick={() => openModal(<Login />)}>
               <MenuIcon>
                 <Icon fontSize={30}>
                   <IoPerson />
