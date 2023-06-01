@@ -9,6 +9,7 @@ import { Product } from 'src/types';
 import LoadingView from 'src/components/Common/LoadingView';
 import ProductItem from 'src/components/ProductItem';
 import styles from './index.module.scss';
+import ErrorBoundary from '../ErrorBoundary';
 
 function ProductItemList() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
@@ -26,11 +27,13 @@ function ProductItemList() {
   }
 
   return (
-    <section className={styles.container}>
-      {productsData?.map((item: Product) => (
-        <ProductItem key={item.id} product={item} />
-      ))}
-    </section>
+    <ErrorBoundary fallback={<div style={{ width: '100%', height: '100%', background: 'black' }}>{error}</div>}>
+      <section className={styles.container}>
+        {productsData?.map((item: Product) => (
+          <ProductItem key={item.id} product={item} />
+        ))}
+      </section>
+    </ErrorBoundary>
   );
 }
 
