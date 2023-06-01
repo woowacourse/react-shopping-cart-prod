@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { within } from '@storybook/testing-library';
 import { RecoilRoot } from 'recoil';
 
 import ProductItem from '.';
@@ -47,30 +46,4 @@ export const LongNameProductItem: Story = {
     },
     width: '280px',
   },
-};
-
-/**
- * 상품의 카트 이미지를 누르면 구매 수량이 1이 되는 인터렉션 스토리입니다.
- */
-export const InteractionProductItem: Story = {
-  args: {
-    product: {
-      id: 1,
-      price: 20000,
-      name: '[밀키트 SET] 아메리칸식 디너',
-      imageUrl:
-        'https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80',
-    },
-    width: '280px',
-  },
-};
-
-InteractionProductItem.play = async ({ canvasElement }) => {
-  const canvas = within(canvasElement);
-
-  const shoppingCartIcon = canvas.getByTestId('shopping-cart-icon');
-
-  setTimeout(() => {
-    shoppingCartIcon.click();
-  }, 1000);
 };
