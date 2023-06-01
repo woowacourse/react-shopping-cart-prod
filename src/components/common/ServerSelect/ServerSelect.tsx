@@ -4,12 +4,14 @@ import styled from 'styled-components';
 import { BASE_URLS } from '../../../constants/api';
 import { isKeyOf } from '../../../types/typeGuards';
 import useCart from '../../../hooks/useCart';
+import useOrder from '../../../hooks/useOrder';
 import { serverOriginState } from '../../../recoil/atoms/common';
 
 const ServerSelect = () => {
   const [value, setValue] = useState('baron');
   const [serverOrigin, setServerOrigin] = useRecoilState(serverOriginState);
   const { updateCart } = useCart();
+  const { updateOrders } = useOrder();
 
   const changeServer: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.target.value;
@@ -22,6 +24,7 @@ const ServerSelect = () => {
 
   useEffect(() => {
     updateCart();
+    updateOrders();
   }, [serverOrigin]);
 
   return (

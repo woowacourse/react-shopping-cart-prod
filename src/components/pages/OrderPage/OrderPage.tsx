@@ -1,14 +1,13 @@
-import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Spacer from '../../common/Spacer/Spacer';
 import OrderList from '../../order/OrderList/OrderList';
-import { ordersQuery } from '../../../recoil/selectors/order';
 import empty from '../../../assets/image/empty.png';
 import { useNavigate } from 'react-router-dom';
 import { ResetButton } from '../../common/ErrorFallback/ErrorFallback';
+import useOrder from '../../../hooks/useOrder';
 
 const OrderPage = () => {
-  const orders = useRecoilValue(ordersQuery);
+  const { orders } = useOrder();
   const navigate = useNavigate();
 
   return (
