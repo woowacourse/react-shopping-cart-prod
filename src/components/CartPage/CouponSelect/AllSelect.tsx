@@ -1,5 +1,6 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { couponsSelector, selectedCouponsState } from '../../../atoms/coupons';
+import * as S from './AllSelect.styles';
 
 const AllSelect = () => {
   const couponsState = useRecoilValue(couponsSelector);
@@ -11,7 +12,7 @@ const AllSelect = () => {
     setSelectedCoupons([couponId]);
   };
   return (
-    <select onChange={onSelectedCouponsChange}>
+    <S.Select onChange={onSelectedCouponsChange}>
       <option defaultChecked>쿠폰을 선택하세요.</option>
       {couponsState.allCoupons.map((coupon) => (
         <option
@@ -22,7 +23,7 @@ const AllSelect = () => {
           {coupon.name}
         </option>
       ))}
-    </select>
+    </S.Select>
   );
 };
 
