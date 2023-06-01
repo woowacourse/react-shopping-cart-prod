@@ -25,7 +25,7 @@ interface OrderedItem {
 interface OrderData {
   id: number;
   orderedItems: OrderedItem[];
-  orderedAt: string;
+  orderedAt: Date;
   totalItemDiscountAmount: number;
   totalMemberDiscountAmount: number;
   totalItemPrice: number;
