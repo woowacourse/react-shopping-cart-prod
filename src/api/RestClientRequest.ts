@@ -5,11 +5,11 @@ const OK_STATUS_CODES = [
   200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301, 302, 303, 304, 307, 308,
 ] as const;
 
-class RestClientResponse<TResponse extends HttpResponse> {
-  private readonly responsePromise: Promise<TResponse>;
+class RestClientRequest<TResponse extends HttpResponse> {
+  private readonly willResponse: Promise<TResponse>;
 
-  constructor(responseFn: () => Promise<TResponse>) {
-    this.responsePromise = responseFn();
+  constructor(requestFn: () => Promise<TResponse>) {
+    this.willResponse = requestFn();
   }
 
   private assertStatusCode<StatusCode extends TResponse['statusCode']>(
@@ -24,7 +24,7 @@ class RestClientResponse<TResponse extends HttpResponse> {
   async accept<StatusCode extends TResponse['statusCode']>(
     statusCodes: StatusCode | readonly [StatusCode, ...StatusCode[]],
   ) {
-    const response = await this.responsePromise;
+    const response = await this.willResponse;
     if (!this.assertStatusCode(response, statusCodes)) {
       return null;
     }
@@ -34,7 +34,7 @@ class RestClientResponse<TResponse extends HttpResponse> {
   async acceptOrThrow<StatusCode extends TResponse['statusCode']>(
     statusCodes: StatusCode | readonly [StatusCode, ...StatusCode[]],
   ) {
-    const response = await this.responsePromise;
+    const response = await this.willResponse;
     if (!this.assertStatusCode(response, statusCodes)) {
       throw new Error(`Server responses with status code ${response.statusCode}`);
     }
@@ -46,4 +46,4 @@ class RestClientResponse<TResponse extends HttpResponse> {
   }
 }
 
-export default RestClientResponse;
+export default RestClientRequest;

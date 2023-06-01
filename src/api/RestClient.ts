@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
 import type { Authorization } from '../types/Authorization';
-import RestClientResponse from './RestClientResponse';
+import RestClientRequest from './RestClientRequest';
 import type {
   ExtractBodyFromRestAPI,
   ExtractPathFromRestAPI,
@@ -53,7 +53,7 @@ class RestClient<TRestAPI extends RestAPI = RestAPI> {
     path: Path | PathGenerator<TRestAPI, 'GET', Path>,
     fetchInit?: RequestInit,
   ) {
-    return new RestClientResponse<ExtractResponseFromRestAPI<TRestAPI, Method, Path>>(async () => {
+    return new RestClientRequest<ExtractResponseFromRestAPI<TRestAPI, Method, Path>>(async () => {
       const { authorization } = this.options;
 
       const response = await fetch(this.getUrl(path.toString()), {
