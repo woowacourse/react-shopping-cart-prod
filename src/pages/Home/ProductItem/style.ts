@@ -21,6 +21,10 @@ export const Container = styled.div<ContainerProps>`
       padding-bottom: 20px;
       border-bottom: 1px solid #dddddd;
     }
+
+    :last-child {
+      margin-bottom: 80px;
+    }
   }
 `;
 
