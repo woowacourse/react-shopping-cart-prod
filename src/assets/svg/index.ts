@@ -5,3 +5,4 @@ export { ReactComponent as MinusIcon } from './minus.svg';
 export { ReactComponent as TrashIcon } from './trash.svg';
 export { ReactComponent as CloseIcon } from './close.svg';
 export { ReactComponent as RewardIcon } from './reward.svg';
+export { ReactComponent as OrderIcon } from './order.svg';

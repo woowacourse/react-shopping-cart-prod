@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import useCart from '../../../hooks/useCart';
 import ServerSelect from '../ServerSelect/ServerSelect';
-import { CartIcon } from '../../../assets/svg';
+import { CartIcon, OrderIcon } from '../../../assets/svg';
 
 const Header = () => {
   const { cart } = useCart();
@@ -17,15 +17,19 @@ const Header = () => {
       </Logo>
       <RightContainer>
         <ServerSelect />
-        <CartButton to="/cart">
+        <CartLink to="/cart">
           <CartIcon />
-          <CartText>장바구니</CartText>
+          <span>장바구니</span>
           {cart.length > 0 && (
             <CartTotalQuantity>
               <span>{cart.length}</span>
             </CartTotalQuantity>
           )}
-        </CartButton>
+        </CartLink>
+        <OrderListLink to="/orders">
+          <OrderIcon />
+          <span>주문목록</span>
+        </OrderListLink>
       </RightContainer>
     </HeaderContainer>
   );
@@ -62,16 +66,15 @@ const RightContainer = styled.div`
   column-gap: 20px;
 `;
 
-const CartButton = styled(Link)`
+const CartLink = styled(Link)`
   display: flex;
   flex-direction: column;
   position: relative;
-  font-size: 24px;
   cursor: pointer;
-`;
 
-const CartText = styled.span`
-  font-size: 10px;
+  & > span {
+    font-size: 10px;
+  }
 `;
 
 const CartTotalQuantity = styled.span`
@@ -87,6 +90,17 @@ const CartTotalQuantity = styled.span`
   background: ${(props) => props.theme.color.orange};
   color: ${(props) => props.theme.color.white};
   font-size: 12px;
+`;
+
+const OrderListLink = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  cursor: pointer;
+
+  & > span {
+    font-size: 10px;
+  }
 `;
 
 export default Header;
