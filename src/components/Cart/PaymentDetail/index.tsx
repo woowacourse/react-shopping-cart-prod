@@ -1,19 +1,27 @@
 import { useRecoilValue } from 'recoil';
-import { totalPriceSelector } from 'recoil/cartList';
+import {
+  totalDiscountPriceSelector,
+  totalPriceSelector,
+} from 'recoil/cartList';
 import * as S from './PaymentDetail.styles';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'utils/constants';
 import Modal from 'components/@common/Modal';
 import { useModal } from 'hooks/useModal';
+import { useGet } from 'hooks/useGet';
+import { getMockDeliveryPolicy } from 'api/mockApi';
 
 const PaymentDetail = () => {
-  const totalPrice = useRecoilValue(totalPriceSelector);
-  const deliveryPrice = totalPrice >= 30000 ? 0 : 3000;
-  const discountPrice = 5000;
-  const orderPrice =
-    totalPrice === 0 ? 0 : totalPrice + deliveryPrice - discountPrice;
   const moveTo = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
+
+  const { data: delivery } = useGet(getMockDeliveryPolicy);
+  const totalPrice = useRecoilValue(totalPriceSelector);
+  const totalDiscountPrice = useRecoilValue(totalDiscountPriceSelector);
+  const deliveryFee =
+    totalPrice >= (delivery?.limit || 0) ? 0 : delivery?.price || 0;
+
+  const orderPrice = totalPrice === 0 ? 0 : totalPrice + deliveryFee;
 
   const makeOrder = () => {
     moveTo(ROUTES.ORDERED_LIST);
@@ -29,12 +37,20 @@ const PaymentDetail = () => {
       </S.Wrapper>
       <S.Wrapper>
         <S.Text>총 할인 가격</S.Text>
-        <S.Text>-{discountPrice.toLocaleString('KR')}원</S.Text>
+        <S.Text>
+          {totalDiscountPrice
+            ? '-' + totalDiscountPrice.toLocaleString('KR')
+            : 0}
+          원
+        </S.Text>
       </S.Wrapper>
       <S.Wrapper>
         <S.Text>총 배송비</S.Text>
-        <S.Text>{deliveryPrice.toLocaleString('KR')}원</S.Text>
+        <S.Text>{deliveryFee.toLocaleString('KR')}원</S.Text>
       </S.Wrapper>
+      <S.SubText>
+        주문금액 {delivery?.limit.toLocaleString('KR')}원 이상시 무료배송
+      </S.SubText>
       <S.Divider />
       <S.Wrapper>
         <S.Text>총 주문 금액</S.Text>

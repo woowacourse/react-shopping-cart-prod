@@ -53,12 +53,30 @@ export const CartProductName = styled.p`
   }
 `;
 
-export const CartProductPrice = styled.p`
+export const FinalPrice = styled.p`
   font: ${(props) => props.theme.font.small};
+`;
+
+export const SalePriceBox = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const SalePercentage = styled.div`
+  font: ${(props) => props.theme.font.small};
+  color: red;
+  padding-right: 10px;
+`;
+
+export const OriginalPrice = styled.div`
+  font: ${(props) => props.theme.font.small};
+  color: gray;
+  text-decoration: line-through;
 `;
 
 export const CounterWrapper = styled.div`
   display: flex;
+  width: 30%;
   flex-direction: column;
   align-items: flex-end;
   justify-content: space-around;

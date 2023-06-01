@@ -12,8 +12,10 @@ const CartList = () => {
         <CartItemList />
       </Suspense>
       <Wrapper>
-        <PaymentDetail />
-        <CouponSection />
+        <Suspense fallback={<div>loading...</div>}>
+          <PaymentDetail />
+          <CouponSection />
+        </Suspense>
       </Wrapper>
     </ContentLayout>
   );

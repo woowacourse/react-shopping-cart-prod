@@ -22,6 +22,13 @@ export const Text = styled.p`
   font: ${(props) => props.theme.font.small};
 `;
 
+export const SubText = styled.div`
+  color: gray;
+  text-align: center;
+  margin-bottom: 20px;
+  font: ${(props) => props.theme.font.small};
+`;
+
 export const OrderButton = styled.button`
   width: 100%;
   height: 60px;

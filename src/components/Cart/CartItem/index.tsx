@@ -15,25 +15,28 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   const { decreaseItemQuantity, increaseItemQuantity, deleteItem } = useCart();
   const { checkItem, checkedItemIds, unCheckItem } = useCheckedItemIds();
   const { isModalOpen, openModal, closeModal } = useModal();
-  const { product } = cartItem;
+  const { product, id: cartItemId, quantity } = cartItem;
+  const { name, isOnSale, price, salePrice, imageUrl } = product;
+  const finalPrice = isOnSale ? price - salePrice : price;
+  const salePercentage = ((salePrice / price) * 100).toFixed(0);
 
   const onCheckItem = () => {
-    checkItem(cartItem.id);
+    checkItem(cartItemId);
   };
 
   const onDelete = () => {
-    deleteItem(cartItem.id);
-    unCheckItem(cartItem.id);
+    deleteItem(cartItemId);
+    unCheckItem(cartItemId);
 
     closeModal();
   };
 
   const increase = () => {
-    increaseItemQuantity(cartItem.id);
+    increaseItemQuantity(cartItemId);
   };
 
   const decrease = () => {
-    decreaseItemQuantity(cartItem.id);
+    decreaseItemQuantity(cartItemId);
   };
 
   return (
@@ -41,26 +44,30 @@ const CartItem = ({ cartItem }: CartItemProps) => {
       <S.CheckBox
         type="checkbox"
         onChange={onCheckItem}
-        checked={checkedItemIds.includes(cartItem.id)}
+        checked={checkedItemIds.includes(cartItemId)}
       />
-      <S.CartItemImage src={product.imageUrl} alt={product.name} />
-      <S.CartProductName>{product.name}</S.CartProductName>
+      <S.CartItemImage src={imageUrl} alt={name} />
+      <S.CartProductName>{name}</S.CartProductName>
       <S.CounterWrapper>
         <button onClick={openModal}>
           <Svg type="trash-can" width={24} height={24} />
         </button>
         <Counter
-          count={cartItem.quantity}
+          count={quantity}
           min={1}
           increment={increase}
           decrement={decrease}
         />
-        <S.CartProductPrice>
-          {product.price.toLocaleString('KR')}원
-        </S.CartProductPrice>
+        <S.FinalPrice>{finalPrice.toLocaleString('KR')}원</S.FinalPrice>
+        {isOnSale && (
+          <S.SalePriceBox>
+            <S.SalePercentage>{salePercentage}% </S.SalePercentage>
+            <S.OriginalPrice>{price.toLocaleString('KR')} 원</S.OriginalPrice>
+          </S.SalePriceBox>
+        )}
       </S.CounterWrapper>
       <Modal
-        message={`${product.name}을(를) 삭제하시겠습니까?`}
+        message={`${name}을(를) 삭제하시겠습니까?`}
         isOpen={isModalOpen}
         onCloseModal={closeModal}
         onClickYes={onDelete}
