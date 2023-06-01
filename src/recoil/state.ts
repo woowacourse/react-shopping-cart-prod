@@ -1,9 +1,35 @@
-import type { CartType, ServerNameType, ToastInfoType } from '../types';
+import type { CartType, CouponType, ServerNameType, ToastInfoType } from '../types';
 
 import { atom, selector, selectorFamily } from 'recoil';
 
 import { localStorageEffect } from './effect';
 import { LOCAL_STORAGE_KEY } from '../constants';
+
+export const tokenState = atom<string | null>({
+  key: 'tokenState',
+  default: null,
+  effects: [localStorageEffect(LOCAL_STORAGE_KEY.token)],
+});
+
+export const serverNameState = atom<ServerNameType>({
+  key: 'serverNameState',
+  default: 'MSW',
+  effects: [localStorageEffect(LOCAL_STORAGE_KEY.serverName)],
+});
+
+export const toastInfoState = atom<ToastInfoType>({
+  key: 'toastInfoState',
+  default: {
+    show: false,
+    message: '',
+    type: 'info',
+  },
+});
+
+export const couponsState = atom<CouponType[]>({
+  key: 'couponsState',
+  default: [],
+});
 
 export const cartState = atom<CartType>({
   key: 'cartState',
@@ -39,20 +65,5 @@ export const cartBillTotalPriceState = selector({
     const checkedCart = cart.filter((_, index) => checkedList[index]);
 
     return checkedCart.reduce((acc, { product, quantity }) => acc + product.price * quantity, 0);
-  },
-});
-
-export const serverNameState = atom<ServerNameType>({
-  key: 'serverNameState',
-  default: '라온',
-  effects: [localStorageEffect(LOCAL_STORAGE_KEY.serverName)],
-});
-
-export const toastInfoState = atom<ToastInfoType>({
-  key: 'toastInfoState',
-  default: {
-    show: false,
-    message: '',
-    type: 'info',
   },
 });
