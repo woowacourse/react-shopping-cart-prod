@@ -6,6 +6,7 @@ import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
 import { pointState } from '../../../recoil/atoms/pointAtom';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
+import { useNavigate } from 'react-router-dom';
 
 export const OrderSummarySection = () => {
   const { totalProductPrice, deliveryPrice, totalPrice, pointToAdd } =
@@ -15,6 +16,7 @@ export const OrderSummarySection = () => {
 
   const [point, setPoint] = useRecoilState(pointState);
   const [viewPoint, setViewPoint] = useState(0);
+  const navigate = useNavigate();
 
   const checkedProduct = useRecoilValue(selectedCartIdListState);
 
@@ -27,7 +29,18 @@ export const OrderSummarySection = () => {
   const handleOrderButton = () => {
     if (checkedProduct.length === 0) return alert('상품을 선택해 주세요.');
 
-    orderByCartId(checkedProduct, totalPrice, viewPoint, pointToAdd);
+    const order = orderByCartId(
+      checkedProduct,
+      totalPrice,
+      viewPoint,
+      pointToAdd
+    );
+
+    order.then((response) => {
+      const orderId = response.headers.get('Location')?.replace('orders/', '');
+
+      if (orderId) navigate(`/orders-success`);
+    });
 
     localStorage.setItem('pointKey', JSON.stringify({ point: pointToAdd }));
   };
