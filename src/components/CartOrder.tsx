@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import useOrderMutation from '../hooks/useOrderMutation';
-import cartOrderPriceState from '../recoil/selectors/cartOrderPriceState';
+import userCartOrderPriceState from '../recoil/user/userCartOrderPriceState';
 import userCartPointsState from '../recoil/user/userCartPointsState';
 import userRemoteCartItemsState from '../recoil/user/userRemoteCartItemsState';
 import Button from './common/Button';
@@ -104,7 +104,7 @@ const CartOrder = (props: CartOrderProps) => {
 
               <PriceFieldValue>
                 <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
-                  {(cartPoints) => <>{cartPoints.points}</>}
+                  {(cartPoints) => cartPoints.points}
                 </AwaitRecoilState>
               </PriceFieldValue>
             </PriceField>
@@ -114,7 +114,7 @@ const CartOrder = (props: CartOrderProps) => {
 
               <PriceFieldValue>
                 <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
-                  {(cartPoints) => <>{cartPoints.savingRate}</>}
+                  {(cartPoints) => cartPoints.savingRate}
                 </AwaitRecoilState>
               </PriceFieldValue>
             </PriceField>
