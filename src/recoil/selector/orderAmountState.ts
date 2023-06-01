@@ -37,7 +37,8 @@ const orderAmountState = selector({
       return {
         orderAmount: '0',
         deliveryFee: '0',
-        totalOrderPrice: '0',
+        cartListPrice: '0',
+        finalOrderPrice: '0',
         discountAmount: null,
         couponDiscountAmount: null,
       };
@@ -54,20 +55,26 @@ const orderAmountState = selector({
     const discountAmount = calculateDiscountAmount(allPrice);
 
     const useCoupon = myCoupons.find((coupon) => coupon.id === useCouponId);
+
     const couponDiscountAmount = calculateCouponDiscountAmount(useCoupon, allPrice);
 
     const allDiscountAmount = discountAmount + (couponDiscountAmount || 0);
 
     const deliveryFee = !allPrice ? `0 원` : convert.toLocalPriceFromNumber(DELIVERY_FEE);
-    const totalOrderPrice = convert.toLocalPriceFromNumber(
+
+    const cartListPrice = convert.toLocalPriceFromNumber(allPrice + (allPrice ? DELIVERY_FEE : 0));
+
+    const finalOrderPrice = convert.toLocalPriceFromNumber(
       allPrice - allDiscountAmount + (!allPrice ? 0 : DELIVERY_FEE),
     );
 
     return {
       orderAmount,
       deliveryFee,
-      totalOrderPrice,
+      cartListPrice,
+      finalOrderPrice,
       discountAmount: isDiscounted ? `- ${convert.toLocalPriceFromNumber(discountAmount)}` : `0 원`,
+      allDiscountAmount: convert.toLocalPriceFromNumber(allDiscountAmount),
       couponDiscountAmount: couponDiscountAmount ? `- ${convert.toLocalPriceFromNumber(couponDiscountAmount)}` : null,
     };
   },
