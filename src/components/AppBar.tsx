@@ -65,6 +65,25 @@ const Option = styled.option`
   background-color: #333;
 `;
 
+const MenuProfile = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const MenuProfileUsername = styled.div`
+  font-size: 16px;
+`;
+
+const MenuProfilePoints = styled.div`
+  font-size: 12px;
+
+  &::after {
+    content: 'P';
+    margin-left: 4px;
+  }
+`;
+
 type HeaderProps = {
   onNavigate: (to: string) => void;
 };
@@ -97,12 +116,26 @@ const AppBar = (props: HeaderProps) => {
             ))}
           </Selector>
 
-          <MenuButton onClick={() => onNavigate('/cart')}>
-            장바구니{' '}
-            <AwaitRecoilState state={cartItemsState}>
-              {(cartItems) => <Badge show={cartItems.length > 0}>{cartItems.length}</Badge>}
-            </AwaitRecoilState>
-          </MenuButton>
+          <AwaitRecoilState state={userCartItemsState}>
+            {(cartItems) => (
+              <MenuButton onClick={() => onNavigate('/cart')}>
+                장바구니 <Badge show={cartItems.length > 0}>{cartItems.length}</Badge>
+              </MenuButton>
+            )}
+          </AwaitRecoilState>
+
+          <AwaitRecoilState state={userProfileState}>
+            {(profile) =>
+              profile ? (
+                <MenuProfile>
+                  <MenuProfileUsername>{profile.username}</MenuProfileUsername>
+                  <MenuProfilePoints>{profile.points}</MenuProfilePoints>
+                </MenuProfile>
+              ) : (
+                <MenuButton onClick={() => onNavigate('/login')}>로그인</MenuButton>
+              )
+            }
+          </AwaitRecoilState>
         </Menu>
       </AppBarContent>
     </AppBarContainer>
