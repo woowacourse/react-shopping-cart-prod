@@ -7,6 +7,8 @@ import serverState from '@Atoms/serverState';
 
 import cartItemsAmountState from '@Selector/cartItemsAmountState';
 
+import ROUTES from '@Constants/routes';
+
 import Logo from '@Asset/Logo.png';
 
 import * as S from './style';
@@ -18,7 +20,7 @@ function Header() {
 
   const moveMain = () => navigate('/');
 
-  const moveOrderList = () => navigate('/order-list');
+  const moveOrderList = () => navigate(ROUTES.orderList);
 
   return (
     <S.Container aria-label="페이지 헤더">

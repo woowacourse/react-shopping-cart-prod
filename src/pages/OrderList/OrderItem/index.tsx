@@ -4,6 +4,8 @@ import { OrderItemType } from '@Types/index';
 
 import dateHelper from '@Utils/dateHelper';
 
+import ROUTES from '@Constants/routes';
+
 import * as S from './style';
 import OrderAmount from '../OrderAmount';
 import OrderProduct from '../OrderProduct';
@@ -12,7 +14,7 @@ function OrderItem({ id, date, orderItems, page, price }: OrderItemType & { page
   const navigate = useNavigate();
 
   const moveOrderDetail = () => {
-    navigate(`/order-list/${id}`);
+    navigate(`${ROUTES.orderList}/${id}`);
 
     window.scrollTo({
       top: 0,

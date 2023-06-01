@@ -6,6 +6,8 @@ import NotFound from '@Pages/NotFound';
 import OrderList from '@Pages/OrderList';
 import OrderSheet from '@Pages/OrderSheet';
 
+import ROUTES from '@Constants/routes';
+
 import App from './App';
 
 const router = createBrowserRouter(
@@ -19,22 +21,22 @@ const router = createBrowserRouter(
           element: <Home />,
         },
         {
-          path: '/cart-list',
+          path: ROUTES.cartList,
           element: <CartList />,
         },
         {
-          path: '/order-sheet',
+          path: ROUTES.orderSheet,
           element: <OrderSheet />,
         },
         {
-          path: '/order-list/:orderId?',
+          path: `${ROUTES.orderList}/:orderId?`,
           element: <OrderList />,
         },
       ],
     },
   ],
   {
-    basename: '/react-shopping-cart-prod',
+    basename: ROUTES.basename,
   },
 );
 

@@ -12,6 +12,8 @@ import selectedCouponIdState from '@Atoms/selectedCouponIdState';
 import cartItemsAmountState from '@Selector/cartItemsAmountState';
 import orderAmountState from '@Selector/orderAmountState';
 
+import ROUTES from '@Constants/routes';
+
 import * as S from './style';
 import IssuedCoupon from '../IssuedCoupon';
 
@@ -31,18 +33,18 @@ function PaymentAmount() {
   const handleOrderCartItems = () => {
     if (!selectedCartItemsAmount) return alert('선택된 상품이 없습니다.');
 
-    if (pathname === '/cart-list') {
+    if (pathname === ROUTES.cartList) {
       setSelectedCouponId(null);
-      navigate('/order-sheet');
+      navigate(ROUTES.orderSheet);
     } else {
       orderCartItems(finalOrderPrice);
-      navigate('/order-list');
+      navigate(ROUTES.orderList);
     }
   };
 
-  const displayButtonText = pathname === '/cart-list' ? '주문하기' : '결제하기';
-  const displayTotalOrderPrice = pathname === '/cart-list' ? cartListPrice : finalOrderPrice;
-  const isFixScrollPosition = pathname === '/cart-list' ? scrollPosition > 160 : scrollPosition > 120;
+  const displayButtonText = pathname === ROUTES.cartList ? '주문하기' : '결제하기';
+  const displayTotalOrderPrice = pathname === ROUTES.cartList ? cartListPrice : finalOrderPrice;
+  const isFixScrollPosition = pathname === ROUTES.cartList ? scrollPosition > 160 : scrollPosition > 120;
 
   const updateScrollYPosition = () => {
     const scrollPosition = window.scrollY;
@@ -61,7 +63,7 @@ function PaymentAmount() {
 
   return (
     <S.Wrapper isFixScrollPosition={isFixScrollPosition}>
-      {pathname === '/order-sheet' && <IssuedCoupon />}
+      {pathname === ROUTES.orderSheet && <IssuedCoupon />}
       <S.Container>
         <S.Title aria-label="결제 예상 금액">결제 예상 금액</S.Title>
         <S.ExpectedAmountLayout>

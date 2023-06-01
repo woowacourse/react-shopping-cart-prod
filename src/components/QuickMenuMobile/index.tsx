@@ -8,6 +8,7 @@ import useServer from '@Hooks/useServer';
 
 import serverState from '@Atoms/serverState';
 
+import ROUTES from '@Constants/routes';
 import { SERVERS, SERVERS_NAMES } from '@Constants/servers';
 
 import * as S from './style';
@@ -25,7 +26,7 @@ function QuickMenuMobile() {
     toggleServer(value);
   };
 
-  const moveOrderList = () => navigate('/order-list');
+  const moveOrderList = () => navigate(ROUTES.orderList);
 
   if (isModalOpen) return <div></div>;
 
