@@ -3,13 +3,13 @@ import * as S from './OrderProductItem.styles';
 interface OrderProductItemProps {
   imageUrl: string;
   name: string;
-  price: number;
   quantity: number;
+  orderedPrice: number;
 }
 const OrderProductItem = ({
   imageUrl,
   name,
-  price,
+  orderedPrice,
   quantity,
 }: OrderProductItemProps) => {
   return (
@@ -18,7 +18,7 @@ const OrderProductItem = ({
       <S.ProductInfo>
         <S.ProductName>{name}</S.ProductName>
         <S.ProductQuantity>
-          {price.toLocaleString()}원 / 수량 : {quantity}개
+          {orderedPrice.toLocaleString()}원 / 수량 : {quantity}개
         </S.ProductQuantity>
       </S.ProductInfo>
     </S.Item>

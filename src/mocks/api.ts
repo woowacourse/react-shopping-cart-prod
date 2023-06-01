@@ -118,6 +118,7 @@ export const postOrder = rest.post('/orders', async (req, res, ctx) => {
       orderItemId: cartItem.product.id,
       name: cartItem.product.name,
       price: cartItem.product.price,
+      orderedPrice: cartItem.product.price - 1, // 할인 금액임을 나타내기 위해 1을 감소함.
       imageUrl: cartItem.product.imageUrl,
       quantity: cartItem.quantity,
     };
