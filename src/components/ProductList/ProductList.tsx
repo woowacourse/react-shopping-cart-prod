@@ -11,9 +11,9 @@ export const ProductList = () => {
 
   return (
     <styled.Wrapper>
-      <styled.TotalProductLength>총 {products?.length || '?'} 개의 상품</styled.TotalProductLength>
+      <styled.TotalProductLength>총 {products.length} 개의 상품</styled.TotalProductLength>
       <styled.ProductList>
-        {products?.map((product) => (
+        {products.map((product) => (
           <Product key={product.id} item={product} />
         ))}
       </styled.ProductList>
