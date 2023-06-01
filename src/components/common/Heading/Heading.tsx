@@ -3,6 +3,7 @@ import * as S from './Heading.styles';
 export interface HeadingProps {
   size?: 'xSmall' | 'small' | 'medium' | 'large' | 'xLarge' | 'xxLarge';
   children: string | string[];
+  className?: string;
 }
 
 const HEADING_TAG_BY_SIZE = {
@@ -14,11 +15,11 @@ const HEADING_TAG_BY_SIZE = {
   xSmall: 'h6',
 } as const;
 
-const Heading = ({ size = 'medium', children }: HeadingProps) => {
+const Heading = ({ size = 'medium', children, className }: HeadingProps) => {
   const tag = HEADING_TAG_BY_SIZE[size];
 
   return (
-    <S.Heading as={tag} size={size}>
+    <S.Heading className={className} as={tag} size={size}>
       {children}
     </S.Heading>
   );
