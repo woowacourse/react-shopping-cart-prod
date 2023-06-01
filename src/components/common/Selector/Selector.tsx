@@ -3,13 +3,16 @@ import { useSetRecoilState } from 'recoil';
 import { serverState } from '../../../service/atom';
 import { servers } from '../../../service/apiURL';
 import { queryClient } from '../../..';
+import { useNavigate } from 'react-router-dom';
 
 const Selector = () => {
   const setServerURL = useSetRecoilState(serverState);
+  const navigation = useNavigate();
 
   const changeServerURL = (e: ChangeEvent<HTMLSelectElement>) => {
     const changedServer = e.target.value as keyof typeof servers;
     setServerURL(servers[changedServer]);
+    navigation('/');
     queryClient.clear();
   };
 

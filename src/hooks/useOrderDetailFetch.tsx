@@ -30,18 +30,15 @@ const useOrderDetailFetch = (orderId: number) => {
     },
   );
 
-  const fetchOrderData = useMutation(
-    async ({ method }: { method: 'DELETE' | 'PATCH' }) => {
-      const url = method == 'DELETE' ? `${orderId}` : `${orderId}/confirm`;
-      await fetch(`${serverURL}/orders/${url}`, {
-        method,
+  const fetchOrderPatch = useMutation(
+    async () => {
+      await fetch(`${serverURL}/orders/${orderId}/confirm`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Basic ${base64}`,
         },
       });
-
-      if (method == 'DELETE') navigation('/orders');
     },
     {
       onSuccess: () => {
@@ -50,12 +47,24 @@ const useOrderDetailFetch = (orderId: number) => {
     },
   );
 
+  const fetchOrderDelete = useMutation(async () => {
+    await fetch(`${serverURL}/orders/${orderId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${base64}`,
+      },
+    });
+
+    navigation('/orders');
+  });
+
   const deleteOrderDataAPI = () => {
-    fetchOrderData.mutate({ method: 'DELETE' });
+    fetchOrderDelete.mutate();
   };
 
   const confirmOrderDataAPI = () => {
-    fetchOrderData.mutate({ method: 'PATCH' });
+    fetchOrderPatch.mutate();
   };
 
   return { orderDetailData, deleteOrderDataAPI, confirmOrderDataAPI, refetch };

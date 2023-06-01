@@ -21,8 +21,9 @@ const TotalPriceBox = ({
   isValid = true,
 }: TotalPriceBoxProps) => {
   const discountPrice = coupon
-    ? totalProductPrice * coupon.discountRate + coupon.discountAmount
+    ? Math.floor(totalProductPrice * coupon.discountRate + coupon.discountAmount)
     : 0;
+
   const totalPrice = getPriceFormat(totalProductPrice + shippingFee - discountPrice);
 
   return (
