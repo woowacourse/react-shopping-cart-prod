@@ -43,27 +43,29 @@ function Header() {
       <Container>
         <S.HeaderWrapper>
           <Logo />
-          <SelectBox
-            options={[
-              { value: 'MSW', name: 'MSW' },
-              { value: '허브', name: '허브' },
-              { value: '마코', name: '마코' },
-              { value: '우가', name: '우가' },
-            ]}
-            onChange={handleChangeServer}
-          />
-          <SelectBox
-            options={[
-              { value: '1', name: 'pizza1@pizza.com' },
-              { value: '2', name: 'pizza2@pizza.com' },
-            ]}
-            onChange={handleChangeUser}
-          />
+
           <Suspense>
-            <HeaderButtonsWrapper>
+            <IconWrapper style={{ display: 'flex', columnGap: '1.5rem' }}>
+              <SelectBox
+                options={[
+                  { value: 'MSW', name: 'MSW' },
+                  { value: '허브', name: '허브' },
+                  { value: '마코', name: '마코' },
+                  { value: '우가', name: '우가' },
+                ]}
+                onChange={handleChangeServer}
+              />
+              <SelectBox
+                options={[
+                  { value: '1', name: '유저1' },
+                  { value: '2', name: '유저2' },
+                ]}
+                onChange={handleChangeUser}
+              />
+
               <OrderListButton />
               <CartButtonWithIcon />
-            </HeaderButtonsWrapper>
+            </IconWrapper>
           </Suspense>
         </S.HeaderWrapper>
       </Container>
@@ -73,7 +75,7 @@ function Header() {
 
 export default Header;
 
-const HeaderButtonsWrapper = styled.div`
+const IconWrapper = styled.div`
   display: flex;
   column-gap: 2rem;
 `;

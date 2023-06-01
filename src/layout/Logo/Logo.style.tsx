@@ -12,6 +12,10 @@ export const CartIcon = styled.img`
 `;
 
 export const LogoContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   margin-right: 1rem;
 
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
