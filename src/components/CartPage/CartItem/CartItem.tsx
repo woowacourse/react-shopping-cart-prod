@@ -27,13 +27,17 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     window.confirm(DELETE_CART_ITEM) && deleteCartItemMutation(id);
   };
 
+  const checkCartItem = (e: React.ChangeEvent<HTMLInputElement>) => {
+    selectItem(id);
+  };
+
   return (
     <S.Root>
       <Flex grow height='100%' align='center'>
         <S.Checkbox
           type='checkbox'
           checked={selectedItems.has(id)}
-          onChange={() => selectItem(id)}
+          onChange={checkCartItem}
         />
         <S.ProductContainer height='100%' align='center' grow>
           <S.Thumbnail alt={product.name} src={product.imageUrl} />
