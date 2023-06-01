@@ -1,11 +1,15 @@
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Spacer from '../../common/Spacer/Spacer';
 import OrderList from '../../order/OrderList/OrderList';
-import { useRecoilValue } from 'recoil';
 import { ordersQuery } from '../../../recoil/selectors/order';
+import empty from '../../../assets/image/empty.png';
+import { useNavigate } from 'react-router-dom';
+import { ResetButton } from '../../common/ErrorFallback/ErrorFallback';
 
 const OrderPage = () => {
   const orders = useRecoilValue(ordersQuery);
+  const navigate = useNavigate();
 
   return (
     <Container>
@@ -14,9 +18,22 @@ const OrderPage = () => {
       </TitleWrapper>
       <Spacer height={28} />
       <OrderListContainer>
-        {orders.map((order) => (
-          <OrderList key={order.id} order={order} needsDetailButton isSummary />
-        ))}
+        {orders.length > 0 ? (
+          orders.map((order) => (
+            <OrderList
+              key={order.id}
+              order={order}
+              needsDetailButton
+              isSummary
+            />
+          ))
+        ) : (
+          <ImageContainer>
+            <Image src={empty} alt="텅 빈 주문 목록 이미지" />
+            <span>주문 내역이 없어요.</span>
+            <HomeButton onClick={() => navigate('/')}>주문하러 가기</HomeButton>
+          </ImageContainer>
+        )}
       </OrderListContainer>
     </Container>
   );
@@ -47,4 +64,28 @@ const OrderListContainer = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 50px;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 15px;
+  padding-top: 30px;
+
+  & > span {
+    font-size: 18px;
+    font-weight: 600;
+  }
+`;
+
+const Image = styled.img`
+  width: 250px;
+`;
+
+const HomeButton = styled(ResetButton)`
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+  background-color: ${(props) => props.theme.color.primary};
 `;
