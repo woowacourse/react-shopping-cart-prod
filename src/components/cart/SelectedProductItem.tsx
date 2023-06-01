@@ -66,13 +66,12 @@ const SelectedProductItem = ({
 const S = {
   Fieldset: styled.fieldset`
     display: flex;
-    margin: 28px 10px 0 0;
+    margin-top: 28px;
     padding-bottom: 32px;
     border-bottom: 1.5px solid #ccc;
 
     @media (max-width: 420px) {
       flex-wrap: wrap;
-      margin-right: 0;
     }
   `,
 

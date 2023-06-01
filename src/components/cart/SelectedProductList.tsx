@@ -72,6 +72,7 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
         <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
           선택삭제
         </Button>
+        <Button css={couponButtonStyle}>쿠폰선택</Button>
       </S.Fieldset>
     </S.Wrapper>
   );
@@ -113,7 +114,7 @@ const S = {
       }
 
       @media (max-width: 420px) {
-        padding: 0 10px;
+        padding: 0 20px;
       }
     }
   `,
@@ -138,6 +139,17 @@ const deleteButtonStyle = css`
 
   @media (max-width: 548px) {
     margin-left: 12px;
+  }
+`;
+
+const couponButtonStyle = css`
+  margin-left: auto;
+  padding: 4px 10px 5px;
+  border: 3px double var(--gray-color-100);
+
+  &:hover {
+    color: #fff;
+    background: var(--text-color);
   }
 `;
 
