@@ -16,6 +16,16 @@
   transition: all 0.2s ease-in;
 }
 
+.couponBox {
+  max-height: 300px;
+  overflow: scroll;
+}
+
+.couponData {
+  display: flex;
+  flex-direction: column;
+}
+
 .couponItem:hover {
   background-color: #eeeeee;
 }

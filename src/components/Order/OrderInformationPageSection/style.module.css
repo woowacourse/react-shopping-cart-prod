@@ -1,3 +1,10 @@
+.layout {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  height: fit-content;
+}
+
 .OrderListHeader {
   padding-top: 22px;
   text-align: center;
@@ -12,9 +19,16 @@
 }
 
 .OrderItemBox {
+  width: 100%;
   margin-top: 10px;
-  border: 1px solid #aaaaaa;
   border-radius: 5px;
+}
+
+.orderNumber {
+  border-bottom: 2px solid #000000;
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
 }
 
 .OrderItemBox img {
@@ -25,36 +39,58 @@
 .OrderItemHeader {
   display: flex;
   justify-content: space-between;
-  background-color: #31d4b9;
-  padding: 15px;
   margin: 0;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
 
 .OrderItemData {
-  padding: 30px;
+  padding: 10px;
   display: flex;
   gap: 20px;
   border-bottom: 1px solid #aaaaaa;
 }
 
 .paymentBox {
-  width: 40%;
-  margin-top: 20px;
+  position: sticky;
+  max-width: 400px;
+  height: 210px;
+  width: 100%;
+  margin-top: 5%;
+  top: 20%;
   border-radius: 5px;
-  margin-left: auto;
-
   border: 1px solid #aaaaaa;
 }
 .paymentBoxHeader {
   padding: 15px;
   border-bottom: 1px solid #aaaaaa;
-  background-color: #31d4b9;
 }
 
 .paymentBoxSection {
   display: flex;
   justify-content: space-between;
   padding: 30px 20px;
+}
+
+.mainPageButton {
+  margin-top: 5%;
+  color: #ffffff;
+  background-color: #04c09e;
+  height: fit-content;
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: all 0.2s ease-in;
+}
+
+.mainPageButton:hover {
+  background-color: #05b696;
+}
+
+.mainPageButtonBox {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
 }

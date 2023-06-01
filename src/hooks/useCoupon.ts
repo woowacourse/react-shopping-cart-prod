@@ -47,7 +47,26 @@ const useCoupon = () => {
     [couponList, setCouponList]
   );
 
-  return { fetchCouponList, publishCoupon };
+  const fetchMyCoupon = useCallback(
+    async (price: number) => {
+      const response = await fetch('coupons/active?total=10000', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${USER_TOKEN}`,
+        },
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        setCouponList(result);
+        return result;
+      }
+    },
+    [setCouponList]
+  );
+
+  return { fetchCouponList, publishCoupon, fetchMyCoupon };
 };
 
 export default useCoupon;

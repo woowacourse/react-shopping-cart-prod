@@ -34,6 +34,10 @@
   transition: all 0.2s ease-in;
 }
 
+.mainPageButton:hover {
+  background-color: #05b696;
+}
+
 .cartLstHeader {
   text-align: center;
   font-weight: 700;

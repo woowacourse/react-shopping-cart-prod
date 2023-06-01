@@ -100,6 +100,25 @@ export const handlers = [
     );
   }),
 
+  rest.get('coupons/active?total=10000', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.delay(1000),
+      ctx.json([
+        {
+          couponId: 1,
+          couponName: '오늘만 10%할인 쿠폰',
+          minAmount: '15000',
+        },
+        {
+          couponId: 2,
+          couponName: '사장님이 미쳤어요! 99%할인 쿠폰',
+          minAmount: '9999',
+        },
+      ])
+    );
+  }),
+
   rest.get('/orders/:id', (req, res, ctx) => {
     return res(
       ctx.status(200),
