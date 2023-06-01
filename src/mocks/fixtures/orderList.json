@@ -8,7 +8,7 @@
           "id": 1,
           "name": "도밥",
           "price": 10000,
-          "imageUrl": ""
+          "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/47ea49b2-19c5-4c2b-a98a-7a4c6e9d241a.jpg?h=400&w=400"
         }
       },
       {
@@ -17,7 +17,7 @@
           "id": 2,
           "name": "도오밥",
           "price": 20000,
-          "imageUrl": ""
+          "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/47ea49b2-19c5-4c2b-a98a-7a4c6e9d241a.jpg?h=400&w=400"
         }
       }
     ],
@@ -35,7 +35,7 @@
           "id": 3,
           "name": "도밥밥",
           "price": 40000,
-          "imageUrl": ""
+          "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/47ea49b2-19c5-4c2b-a98a-7a4c6e9d241a.jpg?h=400&w=400"
         }
       },
       {
@@ -44,7 +44,7 @@
           "id": 4,
           "name": "밥밥",
           "price": 10000,
-          "imageUrl": ""
+          "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/47ea49b2-19c5-4c2b-a98a-7a4c6e9d241a.jpg?h=400&w=400"
         }
       }
     ],
