@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useRef, useState } from 'react';
+import { ChangeEventHandler, useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Spacer from '../../common/Spacer/Spacer';
@@ -18,6 +18,7 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
   const usingPointRef = useRef('');
   const point = useRecoilValue(pointQuery);
   const { isModalOpen, openModal } = useModal();
+  const { isModalOpen, openModal, closeModal } = useModal();
   const isFreeShipping = totalProductPrice >= FREE_SHIPPING_PRICE;
 
   const calcTotalOrderPrice = () => {
@@ -53,6 +54,14 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
       setUsingPoint(point.toLocaleString('ko-KR'));
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (isModalOpen) {
+        closeModal();
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -126,7 +135,14 @@ const CartTotal = ({ totalProductPrice }: { totalProductPrice: number }) => {
             : `주문하기 (총 ${formatPrice(calcTotalOrderPrice())})`}
         </OrderButton>
       </Container>
-      {isModalOpen && <OrderConfirmModal />}
+      {isModalOpen && (
+        <OrderConfirmModal
+          selectedCartItemIds={selectedCartItemIds}
+          usingPoint={Number(removeComma(usingPoint))}
+          totalProductPrice={totalProductPrice}
+          totalOrderPrice={calcTotalOrderPrice()}
+        />
+      )}
     </>
   );
 };
