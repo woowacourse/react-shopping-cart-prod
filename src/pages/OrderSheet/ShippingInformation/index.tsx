@@ -8,7 +8,7 @@ import serverState from '@Atoms/serverState';
 import { SERVERS } from '@Constants/servers';
 
 import * as S from './style';
-import OrderDetailSheet from '../OrderDetailSheet';
+import OrderDetailSheetLayout from '../OrderDetailSheetLayout';
 
 function ShippingInformation() {
   const [isChecked, setIsChecked] = useState(false);
@@ -17,7 +17,7 @@ function ShippingInformation() {
 
   return (
     <S.Container>
-      <OrderDetailSheet title="배송정보" hasShownIcon={false}>
+      <OrderDetailSheetLayout title="배송정보" hasShownIcon={false}>
         <S.UserInfo>
           <S.UserName>{SERVERS[server].serverName}</S.UserName>
           <S.UserAddress>{SERVERS[server].address}</S.UserAddress>
@@ -28,7 +28,7 @@ function ShippingInformation() {
           <Checkbox size="small" isChecked={isChecked} updateSelectedState={() => setIsChecked(!isChecked)} />
           <S.CheckBoxText>다음에도 사용</S.CheckBoxText>
         </S.CheckBoxLayout>
-      </OrderDetailSheet>
+      </OrderDetailSheetLayout>
     </S.Container>
   );
 }

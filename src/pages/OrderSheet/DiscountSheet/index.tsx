@@ -9,7 +9,7 @@ import convert from '@Utils/convert';
 import orderAmountState from '@Selector/orderAmountState';
 
 import * as S from './style';
-import OrderDetailSheet from '../OrderDetailSheet';
+import OrderDetailSheetLayout from '../OrderDetailSheetLayout';
 
 function DiscountSheet() {
   const { openModal } = useModal();
@@ -25,7 +25,7 @@ function DiscountSheet() {
   };
 
   return (
-    <OrderDetailSheet title="할인/쿠폰" hasShownIcon={false}>
+    <OrderDetailSheetLayout title="할인/쿠폰" hasShownIcon={false}>
       <S.Container>
         <S.DiscountLayout>
           <HelperMessage
@@ -53,7 +53,7 @@ function DiscountSheet() {
           <S.Amount>{allDiscountAmount}</S.Amount>
         </S.DiscountLayout>
       </S.Container>
-    </OrderDetailSheet>
+    </OrderDetailSheetLayout>
   );
 }
 

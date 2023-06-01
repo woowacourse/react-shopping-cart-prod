@@ -2,14 +2,14 @@ import { ReactNode, useState } from 'react';
 
 import * as S from './style';
 
-type OrderDetailSheetProps = {
+type OrderDetailSheetLayoutProps = {
   title: string;
   children: ReactNode;
   hasShownIcon?: boolean;
 };
 
-function OrderDetailSheet({ title, children, hasShownIcon = true }: OrderDetailSheetProps) {
-  const [isOpenCartItems, setIsOpenCartItems] = useState(true);
+function OrderDetailSheetLayout({ title, children, hasShownIcon = true }: OrderDetailSheetLayoutProps) {
+  const [isOpenCartItems, setIsOpenCartItems] = useState(!hasShownIcon);
   const shownIcon = isOpenCartItems ? '▲' : '▼';
 
   return (
@@ -25,4 +25,4 @@ function OrderDetailSheet({ title, children, hasShownIcon = true }: OrderDetailS
   );
 }
 
-export default OrderDetailSheet;
+export default OrderDetailSheetLayout;
