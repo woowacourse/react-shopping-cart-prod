@@ -1,15 +1,14 @@
 import { styled } from 'styled-components';
 import Image from '../../common/Image/Image';
 import { formatPrice } from '../../../utils/formatPrice';
-import type { CartItem } from '../../../types/cart';
+import type { OrderItem } from '../../../types/order';
 
 interface OrderListItemProps {
-  item: CartItem;
+  orderItem: OrderItem;
 }
 
-const OrderListItem = ({ item }: OrderListItemProps) => {
-  const { quantity, product } = item;
-  const { name, price, imageUrl } = product;
+const OrderListItem = ({ orderItem }: OrderListItemProps) => {
+  const { quantity, price, name, imageUrl } = orderItem;
   const totalPrice = price * quantity;
 
   return (
@@ -28,7 +27,7 @@ const OrderListItem = ({ item }: OrderListItemProps) => {
 const Container = styled.li`
   display: flex;
   align-items: center;
-  height: 220px;
+  height: 200px;
   column-gap: 33px;
   padding: 0 26px;
 `;

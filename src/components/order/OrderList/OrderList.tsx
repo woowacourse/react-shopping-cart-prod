@@ -1,62 +1,86 @@
 import { styled } from 'styled-components';
 import OrderListItem from '../OrderListItem/OrderListItem';
-import type { CartItem } from '../../../types/cart';
+import type { Order } from '../../../types/order';
+import { Link } from 'react-router-dom';
 
-const sample = {
-  id: 0,
-  quantity: 1,
-  product: {
-    id: 1,
-    name: '순살치킨 1KG',
-    price: 9900,
-    imageUrl:
-      'https://cdn-mart.baemin.com/sellergoods/main/c6f2f083-a8b8-4799-834b-444b5eaeb532.png?h=400&w=400',
-  },
-} satisfies CartItem;
+interface OrderListProps {
+  order: Order;
+  needsDetailButton?: boolean;
+  isSummary?: boolean;
+}
 
-const OrderList = () => {
+const OrderList = ({
+  order,
+  needsDetailButton = false,
+  isSummary = false,
+}: OrderListProps) => {
+  const { id, orderDate, orders } = order;
+
   return (
     <Container>
       <ListHeader>
-        <span>주문번호: 1</span>
-        <DetailButton>상세보기 &gt;</DetailButton>
+        <span>주문번호 : {id}</span>
+        {needsDetailButton ? (
+          <DetailButton to={`/orders/${id}`}>상세보기 &gt;</DetailButton>
+        ) : (
+          <time>주문일자 : {orderDate.toString()}</time>
+        )}
       </ListHeader>
-      <OrderListItem item={sample} />
-      <OrderListItem item={sample} />
-      <OrderListItem item={sample} />
+      <ListWrapper>
+        {isSummary
+          ? orders
+              .slice(0, 3)
+              .map((orderItem) => (
+                <OrderListItem key={orderItem.id} orderItem={orderItem} />
+              ))
+          : orders.map((orderItem) => (
+              <OrderListItem key={orderItem.id} orderItem={orderItem} />
+            ))}
+      </ListWrapper>
     </Container>
   );
 };
 
 const Container = styled.ul`
-  border: 1px solid #aaa;
-
-  & > li {
-    border-bottom: 1px solid #aaa;
-  }
+  border-radius: 8px;
 `;
 
 const ListHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 92px;
+  height: 70px;
   padding: 0 30px;
-  background-color: #f6f6f6;
-  border-bottom: 1px solid #aaa;
-  font-family: 'Noto Sans KR';
-  font-size: 20px;
-  line-height: 24px;
-  letter-spacing: 0.5px;
-  color: #333;
+  color: ${(props) => props.theme.color.white};
+  background-color: ${(props) => props.theme.color.primaryLight};
+  border-top-left-radius: 8px;
+  border-top-right-radius: 4px;
+
+  & > * {
+    font-family: 'Noto Sans KR';
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: 0.5px;
+  }
 `;
 
-const DetailButton = styled.button`
-  font-family: 'Noto Sans KR';
-  font-size: 20px;
+const ListWrapper = styled.div`
+  border: 1px solid ${(props) => props.theme.color.gray300};
+  border-top: none;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+  & > li:not(:last-child) {
+    border-bottom: 1px solid ${(props) => props.theme.color.gray300};
+  }
+`;
+
+const DetailButton = styled(Link)`
+  font-size: 18px;
   line-height: 24px;
   letter-spacing: 0.5px;
-  color: #333;
+  color: ${(props) => props.theme.color.white};
 `;
 
 export default OrderList;
