@@ -12,7 +12,7 @@ const Template: StoryFn = () => {
     orderItemId: 1,
     total: 1000,
     quantity: 1,
-    couponIds: [1],
+    coupons: [],
     product: {
       id: 1,
       name: "친환경미니탕용기 158 중 (EL)",
