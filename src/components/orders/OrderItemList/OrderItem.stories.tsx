@@ -14,5 +14,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     order: MOCK_ORDER_LIST[0],
+    isDetail: true,
   },
 };

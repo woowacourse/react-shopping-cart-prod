@@ -7,10 +7,8 @@ function Orders() {
   const orders = MOCK_ORDER_LIST;
   return (
     <Layout>
-      <div>
-        <OrderHeader text="주문 목록" />
-        <OrderItemList orders={orders} />
-      </div>
+      <OrderHeader text="주문 목록" />
+      <OrderItemList orders={orders} />
     </Layout>
   );
 }

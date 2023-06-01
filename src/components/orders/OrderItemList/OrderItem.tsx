@@ -5,14 +5,15 @@ import OrderItemInfo from './OrderItemInfo';
 
 interface OrderItemProps {
   order: OrderType;
+  isDetail: boolean;
 }
 
-function OrderItem({ order }: OrderItemProps) {
+function OrderItem({ order, isDetail }: OrderItemProps) {
   return (
     <div>
       <S.Wrapper>
         <span>주문번호: {order.id}</span>
-        <Link to={`${order.id}`}>상세보기 {'>'}</Link>
+        {isDetail && <Link to={`${order.id}`}>상세보기 {'>'}</Link>}
       </S.Wrapper>
       {order.orderItems.map((orderItem) => (
         <OrderItemInfo {...orderItem} />

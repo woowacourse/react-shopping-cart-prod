@@ -10,7 +10,7 @@ function OrderItemList({ orders }: OrderItemListProps) {
   return (
     <S.Container>
       {orders.map((order) => (
-        <OrderItem order={order} />
+        <OrderItem order={order} isDetail={true} />
       ))}
     </S.Container>
   );
