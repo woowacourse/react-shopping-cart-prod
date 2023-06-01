@@ -7,7 +7,7 @@ import {
   SERVERS,
 } from "../constants";
 
-export const getProductsApi = () =>
+const getProductsApi = () =>
   fetch(
     `${
       SERVERS[
@@ -19,7 +19,7 @@ export const getProductsApi = () =>
     }/products`
   );
 
-export const getCartItemsApi = async () =>
+const getCartItemsApi = async () =>
   fetch(
     `${
       SERVERS[
@@ -39,7 +39,7 @@ export const getCartItemsApi = async () =>
     }
   );
 
-export const getUserApi = () =>
+const getUserApi = () =>
   fetch(`${SERVERS["루카"]}/members/my`, {
     headers: {
       Authorization: `Basic ${getLocalStorage(
@@ -49,7 +49,7 @@ export const getUserApi = () =>
     },
   });
 
-export const getCouponsApi = (cartItemIds: number[]) => {
+const getCouponsApi = (cartItemIds: number[]) => {
   const cartItemIdsQuery = cartItemIds
     .map((id) => "cartItemId=" + id.toString())
     .join("&");
@@ -75,10 +75,47 @@ export const getCouponsApi = (cartItemIds: number[]) => {
   );
 };
 
-export const patchQuantityApi = async (
-  cartItemId: number,
-  newQuantity: number
-) =>
+const getOrdersApi = () =>
+  fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/orders`,
+    {
+      headers: {
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
+      },
+    }
+  );
+
+const getOrderDetailApi = (orderId: number) =>
+  fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/orders/${orderId}`,
+    {
+      headers: {
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
+      },
+    }
+  );
+
+const patchQuantityApi = async (cartItemId: number, newQuantity: number) =>
   fetch(
     `${
       SERVERS[
@@ -101,7 +138,7 @@ export const patchQuantityApi = async (
     }
   );
 
-export const postCartItemApi = async (productId: number) =>
+const postCartItemApi = async (productId: number) =>
   fetch(
     `${
       SERVERS[
@@ -124,7 +161,7 @@ export const postCartItemApi = async (productId: number) =>
     }
   );
 
-export const postOrderApi = async (cartItemIds: number[], couponId: number) =>
+const postOrderApi = async (cartItemIds: number[], couponId: number) =>
   fetch(
     `${
       SERVERS[
@@ -147,7 +184,7 @@ export const postOrderApi = async (cartItemIds: number[], couponId: number) =>
     }
   );
 
-export const deleteCartItemApi = async (cartItemId: number) =>
+const deleteCartItemApi = async (cartItemId: number) =>
   fetch(
     `${
       SERVERS[
@@ -167,3 +204,16 @@ export const deleteCartItemApi = async (cartItemId: number) =>
       method: "DELETE",
     }
   );
+
+export {
+  getProductsApi,
+  getCartItemsApi,
+  getCouponsApi,
+  getUserApi,
+  getOrdersApi,
+  getOrderDetailApi,
+  patchQuantityApi,
+  postCartItemApi,
+  postOrderApi,
+  deleteCartItemApi,
+};
