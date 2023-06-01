@@ -91,3 +91,27 @@ export const submitSignUpInfo = async (
   }
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 };
+
+export const submitLoginInfo = async (
+  serverName: ServerNameType,
+  loginInfo: { name: string; password: string }
+) => {
+  const url = `${BASE_URL_MAP[serverName]}/users/login`;
+  const body = loginInfo;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok && response.body) {
+    const errorMessage = (await response.json()) as { errorMessage: string };
+    throw new Error(`${errorMessage.errorMessage}`);
+  }
+  if (!response.ok) throw new Error(`${url} FETCH Error`);
+
+  return await response.json();
+};
