@@ -37,6 +37,9 @@ const Header = () => {
               <ProductCountAlert>{totalCartProduct}</ProductCountAlert>
             </MoveCartPageBtn>
           </Link>
+          <Link to='/orders'>
+            <MoveOrderListPageBtn>주문목록</MoveOrderListPageBtn>
+          </Link>
         </ControlContainer>
       </HeaderContent>
     </HeaderContainer>
@@ -82,8 +85,7 @@ const Logo = styled.h1`
 
 const ControlContainer = styled.div`
   display: flex;
-  justify-content: end;
-  gap: 40px;
+  gap: 30px;
 `;
 
 const SelectBox = styled.select`
@@ -92,6 +94,12 @@ const SelectBox = styled.select`
 
 const MoveCartPageBtn = styled.button`
   display: flex;
+  color: ${({ theme }) => theme.colors.white};
+  font-size: 24px;
+  font-weight: 500;
+`;
+
+const MoveOrderListPageBtn = styled.button`
   color: ${({ theme }) => theme.colors.white};
   font-size: 24px;
   font-weight: 500;
