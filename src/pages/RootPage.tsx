@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import AppBar from '../components/AppBar';
+import AppBar from '../components/page/AppBar';
 
 const Content = styled.main`
   margin: 0 auto;
