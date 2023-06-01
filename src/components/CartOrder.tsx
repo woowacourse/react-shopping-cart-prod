@@ -1,8 +1,9 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import synchronizedCartItemsState from '../recoil/atoms/remoteCartItemsState';
+import useOrderMutation from '../hooks/useOrderMutation';
 import cartOrderPriceState from '../recoil/selectors/cartOrderPriceState';
 import userCartPointsState from '../recoil/user/userCartPointsState';
+import userRemoteCartItemsState from '../recoil/user/userRemoteCartItemsState';
 import AwaitRecoilState from './utils/AwaitRecoilState';
 
 const CartOrderContainer = styled.form`
@@ -74,10 +75,18 @@ type CartOrderProps = {
 const CartOrder = (props: CartOrderProps) => {
   const { isCartEmpty } = props;
   const prices = useRecoilValue(cartOrderPriceState);
-  const { isSynchronizing } = useRecoilValue(synchronizedCartItemsState);
+  const { isSynchronizing } = useRecoilValue(userRemoteCartItemsState);
+
+  const { mutate: order } = useOrderMutation();
+
+  const handleSubmitOrder: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
+
+    order({ usedPoints: 0 });
+  };
 
   return (
-    <CartOrderContainer>
+    <CartOrderContainer onSubmit={handleSubmitOrder}>
       <Title>결제예상금액</Title>
       <Divider />
 

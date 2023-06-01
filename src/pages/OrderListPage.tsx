@@ -3,7 +3,7 @@ import OrderCartItem from '../components/OrderCartItem';
 import OrderListItem from '../components/OrderListItem';
 import PageHeader from '../components/PageHeader';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
-import ordersQuery from '../recoil/queries/ordersQuery';
+import userOrdersState from '../recoil/user/userOrdersState';
 import type { Order } from '../types/Order';
 
 const OrderList = styled.div`
@@ -39,7 +39,7 @@ const OrderListPage = () => {
     <>
       <PageHeader>주문 목록</PageHeader>
 
-      <AwaitRecoilState state={ordersQuery}>
+      <AwaitRecoilState state={userOrdersState}>
         {(orders) => (
           <OrderList>
             {orders.map((order) => (

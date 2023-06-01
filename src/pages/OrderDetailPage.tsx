@@ -4,7 +4,7 @@ import OrderListItem from '../components/OrderListItem';
 import OrderPaymentDetails from '../components/OrderPaymentDetails';
 import PageHeader from '../components/PageHeader';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
-import orderDetailQuery from '../recoil/queries/orderDetailQuery';
+import userOrderDetailState from '../recoil/user/userOrderDetailState';
 
 const OrderDetailPage = () => {
   const params = useParams();
@@ -14,7 +14,7 @@ const OrderDetailPage = () => {
     <>
       <PageHeader>주문내역 상세</PageHeader>
 
-      <AwaitRecoilState state={orderDetailQuery(orderId)}>
+      <AwaitRecoilState state={userOrderDetailState(orderId)}>
         {(order) => (
           <>
             <OrderListItem orderId={order.id}>
