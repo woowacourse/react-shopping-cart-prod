@@ -8,9 +8,10 @@ import Accordion from 'components/@common/Accordion';
 
 type OrderCardProps = {
   order: Order;
+  isDetail?: boolean;
 };
 
-const OrderCard = ({ order }: OrderCardProps) => {
+const OrderCard = ({ order, isDetail = false }: OrderCardProps) => {
   const { orderId, products } = order;
 
   return (
@@ -25,9 +26,12 @@ const OrderCard = ({ order }: OrderCardProps) => {
           {products.map((product) => (
             <OrderProductCard key={product.product.id} checkedCartProduct={product} />
           ))}
-          <Box sizing={{ width: '100%' }} flex={{ justify: 'flex-end' }}>
-            <DetailLink to={`${ROUTE_PATH.ORDER_LIST}/${orderId}`}>{`주문 상세`}</DetailLink>
-          </Box>
+
+          {!isDetail && (
+            <Box sizing={{ width: '100%' }} flex={{ justify: 'flex-end' }}>
+              <DetailLink to={`${ROUTE_PATH.ORDER_LIST}/${orderId}`}>{`주문 상세`}</DetailLink>
+            </Box>
+          )}
         </Accordion.Content>
       </Accordion.Root>
     </Box>
