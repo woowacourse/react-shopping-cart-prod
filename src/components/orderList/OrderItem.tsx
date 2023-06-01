@@ -1,10 +1,16 @@
 import { useLocation } from 'react-router-dom';
 import { css, styled } from 'styled-components';
 import { ROUTE_PATH } from '../../constants';
-import { Cart } from '../../types';
+import { OrderListItem } from '../../types';
 import Price from '../Price';
 
-const OrderItem = ({ imageUrl, name, price, quantity }: Cart) => {
+const OrderItem = ({
+  imageUrl,
+  name,
+  totalPrice,
+  quantity,
+  orderedProductCount,
+}: OrderListItem) => {
   const location = useLocation().pathname;
 
   return (
@@ -13,10 +19,12 @@ const OrderItem = ({ imageUrl, name, price, quantity }: Cart) => {
       <div>
         <S.Name>
           {name}
-          {location === ROUTE_PATH.ORDER_LIST_PAGE && <span>외 {2}개의 상품</span>}
+          {location === ROUTE_PATH.ORDER_LIST_PAGE && orderedProductCount > 1 && (
+            <span>외 {orderedProductCount - 1}개의 상품</span>
+          )}
         </S.Name>
         <S.Detail>
-          <Price price={price} css={textStyle} />
+          <Price price={totalPrice} css={textStyle} />
           <span>&nbsp;/&nbsp;수량&nbsp;{quantity}개</span>
         </S.Detail>
       </div>

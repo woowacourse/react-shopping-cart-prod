@@ -22,3 +22,16 @@ export interface CartItem {
 export interface Cart extends Product {
   quantity: number;
 }
+
+export interface Order extends Omit<Cart, 'price'> {
+  totalPrice: number;
+}
+
+export interface OrderList {
+  orderId: number;
+  products: Order[];
+}
+
+export interface OrderListItem extends Order {
+  orderedProductCount: number;
+}

@@ -1,19 +1,21 @@
 import { styled } from 'styled-components';
+import { OrderList } from '../../types';
 import OrderDetailNavigator from './OrderDetailNavigator';
 import OrderItem from './OrderItem';
 
-const OrderItemList = () => {
+const OrderItemList = (orderList: OrderList) => {
+  const thumbnail = orderList.products[0];
+
   return (
     <S.List>
-      <OrderDetailNavigator orderId={1} />
+      <OrderDetailNavigator orderId={orderList.orderId} />
       <OrderItem
-        id={1}
-        name={'PET보틀-정사각(420ml)'}
-        price={10000}
-        imageUrl={
-          'https://cdn-mart.baemin.com/sellergoods/main/2ddb9f04-c15d-4647-b6e7-30afb9e8d072.jpg?h=300&w=300'
-        }
-        quantity={3}
+        id={thumbnail.id}
+        name={thumbnail.name}
+        totalPrice={thumbnail.totalPrice}
+        imageUrl={thumbnail.imageUrl}
+        quantity={thumbnail.quantity}
+        orderedProductCount={orderList.products.length}
       />
     </S.List>
   );

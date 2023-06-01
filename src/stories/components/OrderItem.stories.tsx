@@ -1,7 +1,7 @@
 import { Meta } from '@storybook/react';
 import OrderItemComponent from '../../components/orderList/OrderItem';
 import productList from '../../mock/productList.json';
-import { Cart } from '../../types';
+import { OrderListItem } from '../../types';
 
 const meta = {
   component: OrderItemComponent,
@@ -20,8 +20,9 @@ const meta = {
     id: 1,
     imageUrl: `${productList[0].imageUrl}`,
     name: 'PET보틀-정사각(420ml)',
-    price: 43400,
+    totalPrice: 43400,
     quantity: 3,
+    orderedProductCount: 3,
   },
 
   argTypes: {
@@ -51,7 +52,7 @@ const meta = {
       description: '상품의 이름을 설정할 수 있습니다.',
     },
 
-    price: {
+    totalPrice: {
       control: {
         type: 'number',
         min: 1,
@@ -66,11 +67,19 @@ const meta = {
       },
       description: '상품의 수량을 바꿀 수 있습니다.<br> 수량을 변경하면 상품의 가격도 변경됩니다.',
     },
+
+    orderedProductCount: {
+      control: {
+        type: 'number',
+        min: 1,
+      },
+      description: '주문한 상품의 수량을 바꿀 수 있습니다.',
+    },
   },
 } satisfies Meta<typeof OrderItemComponent>;
 
 export default meta;
 
-export const OrderItem = (args: Cart) => {
+export const OrderItem = (args: OrderListItem) => {
   return <OrderItemComponent {...args} />;
 };
