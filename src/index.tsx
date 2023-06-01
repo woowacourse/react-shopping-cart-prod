@@ -29,12 +29,12 @@ const root = ReactDOM.createRoot(
 );
 
 root.render(
-  <React.StrictMode>
+  <>
     <GlobalStyle />
     <RecoilRoot>
       <Suspense>
         <RouterProvider router={router} />
       </Suspense>
     </RecoilRoot>
-  </React.StrictMode>,
+  </>,
 );
