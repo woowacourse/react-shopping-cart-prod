@@ -1,14 +1,16 @@
-import { useRecoilValue } from 'recoil';
+import type { ScheduledOrder } from '../../types/product';
 
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+
 import Button from '../Common/Button';
 import {
   checkedCartItemsSelector,
   totalPriceSelector,
 } from '../../recoil/checkedProductData';
+
 import useOrder from '../../hooks/useOrder';
-import { ScheduledOrder } from '../../types/product';
-import { useNavigate } from 'react-router-dom';
 
 const EstimatedPaymentBox = () => {
   const navigate = useNavigate();
