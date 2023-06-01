@@ -57,13 +57,7 @@ export const useCart = (productId?: number) => {
     api
       .delete(`${server}${CART_URL}`, { cartItemIdList })
       .then(() => {
-        setCart((prev) =>
-          [...prev].filter(
-            (item) =>
-              !cartItemIdList.includes(checkedItemIdList ? item.id : item.product.id) &&
-              item.quantity
-          )
-        );
+        setCart((prev) => [...prev].filter((item) => !cartItemIdList.includes(item.id)));
       })
       .catch((error) => alert(error.message));
   };

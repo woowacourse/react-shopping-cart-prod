@@ -32,10 +32,9 @@ const QuantityButton = ({ isMainPage, productId, quantity }: Props) => {
 
     const updatedQuantity = quantity - STEP;
 
-    setQuantity(updatedQuantity);
-
     if (isMainPage && updatedQuantity === NONE) return removeItemFromCart();
 
+    setQuantity(updatedQuantity);
     updateCart(updatedQuantity);
   };
 
