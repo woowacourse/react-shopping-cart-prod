@@ -21,6 +21,12 @@ export interface OrderItem {
   orderProducts: OrderProducts[];
 }
 
+export interface OrderDetail extends OrderItem {
+  orderTotalPrice: number;
+  usedPoint: number;
+  createdAt: string;
+}
+
 export type ToastType = 'success' | 'error';
 
 export interface ToastItem {
