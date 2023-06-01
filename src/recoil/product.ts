@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily } from "recoil";
+import { atom, selector } from "recoil";
 import { Product } from "types/domain";
 import { getProducts } from "api/products";
 import { serverSelectState } from "./server";
