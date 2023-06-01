@@ -4,6 +4,7 @@ import useOrderMutation from '../hooks/useOrderMutation';
 import cartOrderPriceState from '../recoil/selectors/cartOrderPriceState';
 import userCartPointsState from '../recoil/user/userCartPointsState';
 import userRemoteCartItemsState from '../recoil/user/userRemoteCartItemsState';
+import Button from './common/Button';
 import AwaitRecoilState from './utils/AwaitRecoilState';
 
 const CartOrderContainer = styled.form`
@@ -55,17 +56,6 @@ const ContentDivider = styled.hr`
   height: 20px;
   background: transparent;
   border: none;
-`;
-
-const OrderButton = styled.button.attrs({ type: 'submit' })`
-  padding: 24px;
-  width: 100%;
-
-  background-color: #333333;
-
-  font-size: 24px;
-  font-weight: 400;
-  color: white;
 `;
 
 type CartOrderProps = {
@@ -138,7 +128,7 @@ const CartOrder = (props: CartOrderProps) => {
 
             <ContentDivider />
 
-            {!isSynchronizing && <OrderButton>주문하기</OrderButton>}
+            {!isSynchronizing && <Button>주문하기</Button>}
           </>
         )}
       </Content>

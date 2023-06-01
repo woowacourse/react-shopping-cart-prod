@@ -1,6 +1,7 @@
 import { useNavigate, useRouteError } from 'react-router-dom';
 import { styled } from 'styled-components';
 import Icon from '../assets/images/icon.png';
+import Button from '../components/common/Button';
 
 const Content = styled.main`
   display: flex;
@@ -20,13 +21,6 @@ const Cart = styled.img`
 
 const Title = styled.h1`
   font-size: 32px;
-`;
-
-const Button = styled.button`
-  padding: 24px 48px;
-  background: #333333;
-  font-size: 24px;
-  color: white;
 `;
 
 const ErrorPage = () => {
