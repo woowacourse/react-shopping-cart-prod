@@ -1,18 +1,6 @@
 import { styled } from 'styled-components';
 
 export const S = {
-  Title: styled.h1`
-    width: 80%;
-    text-align: center;
-    font-size: 32px;
-    font-weight: 700;
-    padding: 30px;
-    border-bottom: 4px solid #333;
-    @media all and (max-width: 479px) {
-      display: none;
-    }
-  `,
-
   Wrapper: styled.div`
     display: flex;
     flex-direction: column;

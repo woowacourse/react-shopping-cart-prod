@@ -24,6 +24,10 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
+  li {
+    list-style: none;
+  }
+
   input[type="number"]::-webkit-inner-spin-button,
   input[type="number"]::-webkit-outer-spin-button {
     width: 16px;
