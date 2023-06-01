@@ -88,6 +88,7 @@ export const handlers = [
     const { cartItemIds } = await req.json();
     const currentCartList = getLocalStorage<CartItemInfo[]>(LOCAL_STORAGE_KEY.CART);
     const currentOrderList = getLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS);
+
     const currentDate = new Date();
     const [day, month, year] = [
       currentDate.getDate(),
@@ -95,14 +96,15 @@ export const handlers = [
       currentDate.getFullYear(),
     ];
 
-    const productsInOrder = cartItemIds.map(({ id }: { id: number }) => {
-      const cartItem = currentCartList.find((cartItem) => cartItem.id === id);
+    const selectedCarts = currentCartList.filter((cartItem) => cartItemIds.includes(cartItem.id));
+
+    const productsInOrder = selectedCarts.map((cartItem) => {
       return {
-        id: cartItem?.product.id,
-        name: cartItem?.product.name,
-        price: cartItem?.product.price,
-        imageUrl: cartItem?.product.imageUrl,
-        quantity: cartItem?.quantity,
+        id: cartItem.product.id,
+        name: cartItem.product.name,
+        price: cartItem.product.price,
+        imageUrl: cartItem.product.imageUrl,
+        quantity: cartItem.quantity,
       };
     });
 
@@ -116,6 +118,9 @@ export const handlers = [
       },
     ];
 
+    const newCartList = currentCartList.filter((cartItem) => !cartItemIds.includes(cartItem.id));
+
+    updateLocalStorage<CartItemInfo[]>(LOCAL_STORAGE_KEY.CART, newCartList);
     updateLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS, newOrderList);
 
     return res(

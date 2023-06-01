@@ -24,4 +24,11 @@ export interface ProductInfoInOrder extends ProductInfo {
   quantity: number;
 }
 
+export interface ResponseResult<T> {
+  result: T | undefined;
+  statusCode: number;
+  errorCode?: number;
+  errorMessage?: string;
+}
+
 export type Host = (typeof HOSTS)[number];

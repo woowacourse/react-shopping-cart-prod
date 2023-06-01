@@ -1,14 +1,34 @@
 import { styled } from 'styled-components';
 import Price from '../common/Price';
 import Button from '../common/Button';
+import { useOrder } from '../../hooks/useOrder';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  totalProductsPrice: number;
+  checkedCartItemIds: number[];
   deliveryFee: number;
+  totalProductsPrice: number;
 }
 
-export default function TotalPayment({ totalProductsPrice, deliveryFee }: Props) {
+export default function TotalPayment({
+  totalProductsPrice,
+  deliveryFee,
+  checkedCartItemIds,
+}: Props) {
   const totalOrderPrice = totalProductsPrice + deliveryFee;
+  const navigate = useNavigate();
+
+  const { addOrderItem } = useOrder();
+
+  const handleOrderButtonClick = () => {
+    addOrderItem({
+      cartItemIds: checkedCartItemIds,
+      couponId: -1,
+      deliveryFee: deliveryFee,
+      totalOrderPrice: totalOrderPrice,
+    });
+    navigate('/order');
+  };
 
   return (
     <Style.TotalPaymentContainer>
@@ -24,6 +44,7 @@ export default function TotalPayment({ totalProductsPrice, deliveryFee }: Props)
           bgColor="var(--grey-500)"
           color="var(--grey-100)"
           fontSize="20px"
+          onClick={handleOrderButtonClick}
         >
           주문하기
         </Button>
