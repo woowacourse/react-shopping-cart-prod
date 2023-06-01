@@ -1,6 +1,6 @@
 import { PropsWithChildren, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 import useModal from './useModal';
 
 const Modal = ({ children }: PropsWithChildren) => {
@@ -38,6 +38,18 @@ const BackDrop = styled.div`
   z-index: ${(props) => props.theme.zIndex.modalBackdrop};
 `;
 
+const fadeInUp = keyframes`
+  from {
+    opacity: 0;
+    transform: translate3D(-50%, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3D(-50%, -50%, 0);
+  }
+`;
+
 const ModalContainer = styled.div`
   position: fixed;
   top: 50%;
@@ -46,6 +58,7 @@ const ModalContainer = styled.div`
   background-color: ${(props) => props.theme.color.white};
   border-radius: 8px;
   z-index: ${(props) => props.theme.zIndex.modalContainer};
+  animation: ${fadeInUp} 0.3s ease-in-out;
 `;
 
 export default Modal;
