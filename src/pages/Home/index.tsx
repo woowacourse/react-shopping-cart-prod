@@ -5,6 +5,7 @@ import { productListState } from '@recoil/product/productListState';
 import serverState from '@recoil/server/serverState';
 import ProductList from '@components/home/ProductItemList';
 import SkeletonProduct from '@components/home/SkeletonProduct';
+import Layout from '@components/layout/Layout';
 import { getProductList } from '@utils/productList/fetchProductList';
 
 function Home() {
@@ -21,11 +22,13 @@ function Home() {
   }, [serverName, setProductList]);
 
   return (
-    <ErrorBoundary fallback={<p>에러입니다</p>}>
-      <Suspense fallback={<SkeletonProduct />}>
-        <ProductList />
-      </Suspense>
-    </ErrorBoundary>
+    <Layout>
+      <ErrorBoundary fallback={<p>에러입니다</p>}>
+        <Suspense fallback={<SkeletonProduct />}>
+          <ProductList />
+        </Suspense>
+      </ErrorBoundary>
+    </Layout>
   );
 }
 

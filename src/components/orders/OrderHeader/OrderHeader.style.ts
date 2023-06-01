@@ -4,6 +4,7 @@ import { theme } from '@styles/theme';
 export const Header = styled.div`
   padding: 3rem 0;
   border-bottom: 4px solid ${theme.colors.primaryColor};
+  margin-bottom: 3rem;
 
   font-weight: 700;
   font-size: 3.2rem;
