@@ -27,9 +27,9 @@ const toastStyle = {
 
 const Container = styled.div<ToastStyleProps>`
   position: fixed;
+  bottom: 12px;
   left: 0;
   right: 0;
-  bottom: 12px;
 
   height: 48px;
   width: 50%;
@@ -51,6 +51,21 @@ const Container = styled.div<ToastStyleProps>`
 
     to {
       bottom: 12px;
+    }
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    top: 12px;
+    bottom: 0;
+
+    @keyframes slideUp {
+      from {
+        top: -300px;
+      }
+
+      to {
+        top: 12px;
+      }
     }
   }
 `;
