@@ -3,7 +3,13 @@ import { OrderListType } from '../../../types/types';
 import { Text } from '../../common/Text/Text';
 import DetailItem from '../../box/DetailItem/DetailItem';
 
-const DetailList = ({ order, isList = true }: { order: OrderListType; isList?: boolean }) => {
+interface DetailListProps {
+  order: OrderListType;
+  onConfirm?: () => void;
+  onDelete?: () => void;
+  isList?: boolean;
+}
+const DetailList = ({ order, isList = true, onConfirm, onDelete }: DetailListProps) => {
   return (
     <DetailListWrapper>
       <ListHeadWrapper>
@@ -12,7 +18,8 @@ const DetailList = ({ order, isList = true }: { order: OrderListType; isList?: b
         </Text>
         {!isList && !order.confirmState && (
           <ButtonWrapper>
-            <Button>주문확정</Button>|<Button>주문취소</Button>
+            <Button onClick={onConfirm}>주문확정</Button>|
+            <Button onClick={onDelete}>주문취소</Button>
           </ButtonWrapper>
         )}
         {isList && <Button>상세보기{`>`}</Button>}

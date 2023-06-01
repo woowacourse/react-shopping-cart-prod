@@ -42,5 +42,5 @@ export const couponModalState = atom<ModalType>({
 
 export const serverState = atom<ServerURLType>({
   key: 'serverUrl',
-  default: servers.달리,
+  default: servers.오션,
 });
