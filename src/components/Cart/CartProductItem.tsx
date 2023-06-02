@@ -15,7 +15,7 @@ interface CartProductItemProps {
 
 const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
   const { quantity, product } = cartProduct;
-  const { name, price, imageUrl } = product;
+  const { name, price, imageUrl, stock } = product;
   const { removeProduct, addCount, subtractCount } = useCart(product);
   const { handleCheckBoxChange, isCheckedProduct } = useCheckedProducts();
 
@@ -38,6 +38,7 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
           count={quantity}
           addCount={addCount}
           subtractCount={subtractCount}
+          maxCount={stock}
         />
         <p>{price.toLocaleString('ko-KR')}원</p>
       </CartProductRightWrapper>

@@ -32,6 +32,13 @@ const useProductQuantity = (productId: number) => {
     const targetProduct = cart[targetCartProductIndex];
 
     if (targetProduct) {
+      const { quantity, product } = targetProduct;
+
+      if (quantity + delta > product.stock) {
+        alert('재고 이하의 수량만 담을 수 있어요😢');
+        return;
+      }
+
       await updateCartProductQuantity(hostName, targetProduct, delta);
 
       const newCart = [...cart];

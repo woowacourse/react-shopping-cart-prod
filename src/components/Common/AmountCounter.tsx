@@ -11,7 +11,43 @@ interface AmountCounterProps {
   count: number;
   addCount: () => void;
   subtractCount: () => void;
+  maxCount: number;
 }
+
+const AmountCounter = ({
+  designType,
+  count,
+  addCount,
+  subtractCount,
+  maxCount,
+}: AmountCounterProps) => {
+  return (
+    <InputGroup designType={designType}>
+      <CounterInput
+        type='number'
+        value={count}
+        designType={designType}
+        max={maxCount}
+      />
+      <CountBtnContainer>
+        <CountBtn
+          designType={designType}
+          onClick={addCount}
+          aria-label='수량 더하기 버튼'
+        >
+          <ArrowUpIcon />
+        </CountBtn>
+        <CountBtn
+          designType={designType}
+          onClick={subtractCount}
+          aria-label='수량 빼기 버튼'
+        >
+          <ArrowDownIcon />
+        </CountBtn>
+      </CountBtnContainer>
+    </InputGroup>
+  );
+};
 
 const counterStyles = {
   main: {
@@ -39,40 +75,6 @@ const counterStyles = {
       width: 32px;
     `,
   },
-};
-
-const AmountCounter = ({
-  designType,
-  count,
-  addCount,
-  subtractCount,
-}: AmountCounterProps) => {
-  return (
-    <InputGroup designType={designType}>
-      <CounterInput
-        type='number'
-        value={count}
-        readOnly
-        designType={designType}
-      />
-      <CountBtnContainer>
-        <CountBtn
-          designType={designType}
-          onClick={addCount}
-          aria-label='수량 더하기 버튼'
-        >
-          <ArrowUpIcon />
-        </CountBtn>
-        <CountBtn
-          designType={designType}
-          onClick={subtractCount}
-          aria-label='수량 빼기 버튼'
-        >
-          <ArrowDownIcon />
-        </CountBtn>
-      </CountBtnContainer>
-    </InputGroup>
-  );
 };
 
 const InputGroup = styled.div<DesignProps>`

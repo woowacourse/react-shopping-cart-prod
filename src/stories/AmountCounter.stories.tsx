@@ -10,6 +10,7 @@ interface AmountCounterProps {
   count: number;
   addCount: () => void;
   subtractCount: () => void;
+  maxCount: number;
 }
 
 const meta: Meta = {
@@ -46,6 +47,7 @@ export const Default: Story = (args: AmountCounterProps) => {
       count={count}
       addCount={addCount}
       subtractCount={subtractCount}
+      maxCount={10}
     />
   );
 };
