@@ -1,9 +1,11 @@
 [
   {
     "orderId": 1,
+    "deliveryFee": 3000,
+    "total": 232000,
     "orderItems": [
       {
-        "orderItemId": 1,
+        "id": 1,
         "product": {
           "id": 1,
           "name": "치킨치킨치킨치킨치킨치킨치킨치킨",
@@ -24,7 +26,7 @@
         "quantity": 1
       },
       {
-        "orderItemId": 2,
+        "id": 2,
         "product": {
           "id": 2,
           "name": "샐러드",
@@ -45,7 +47,7 @@
         "quantity": 10
       },
       {
-        "orderItemId": 3,
+        "id": 3,
         "product": {
           "id": 3,
           "name": "피자",
@@ -60,9 +62,11 @@
   },
   {
     "orderId": 2,
+    "deliveryFee": 3000,
+    "total": 58400,
     "orderItems": [
       {
-        "orderItemId": 4,
+        "id": 4,
         "product": {
           "id": 4,
           "name": "햄버거",
@@ -83,7 +87,7 @@
         "quantity": 3
       },
       {
-        "orderItemId": 5,
+        "id": 5,
         "product": {
           "id": 5,
           "name": "제로 콜라",
@@ -95,7 +99,7 @@
         "quantity": 7
       },
       {
-        "orderItemId": 6,
+        "id": 6,
         "product": {
           "id": 6,
           "name": "감자튀김",

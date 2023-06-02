@@ -2,28 +2,33 @@ import { ServerId } from "recoil/server";
 import { SERVER_LIST, USER_TOKEN } from "./constants";
 import { Product } from "./products";
 import { Coupon } from "./coupons";
-
-export interface Orders {
-  orderId: number;
-  orderItems: Order[];
-}
+import { CartItem } from "./cartItems";
 
 export interface Order {
-  orderItemId: number;
+  orderId: number;
+  deliveryFee: number;
+  total: number;
+  orderItems: OrderItem[];
+}
+
+export interface OrderItem {
+  id: number;
   product: Product;
   coupons: Coupon[];
   total: number;
   quantity: number;
 }
 
-export interface PostOrderItem {
-  cartItemId: number;
-  product: Product;
-  quantity: number;
-  couponIds: number[];
+export interface PostOrderitem extends CartItem {
+  coupons: Coupon[];
 }
 
-export const getOrders = async (serverId: ServerId): Promise<Orders[]> => {
+export interface PostOrder {
+  deliveryFee: number;
+  orderItems: PostOrderitem[];
+}
+
+export const getOrders = async (serverId: ServerId): Promise<Order[]> => {
   const response = await fetch(`${SERVER_LIST[serverId]}/orders`, {
     method: "GET",
     headers: {
@@ -36,13 +41,14 @@ export const getOrders = async (serverId: ServerId): Promise<Orders[]> => {
   return response.json();
 };
 
-export const postOrder = async (serverId: ServerId, orderItem: PostOrderItem[]) => {
+export const postOrder = async (serverId: ServerId, order: PostOrder) => {
   const response = await fetch(`${SERVER_LIST[serverId]}/orders`, {
     method: "POST",
     headers: {
       Authorization: `Basic ${USER_TOKEN}`,
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(orderItem),
+    body: JSON.stringify(order),
   });
 
   return response.status === 204;
