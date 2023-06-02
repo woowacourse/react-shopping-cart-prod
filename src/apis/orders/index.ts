@@ -3,8 +3,6 @@ import { Order } from "types/order";
 
 const URL = '/orders'
 
-
-
 export const getOrders = async (): Promise<Order[]> => {
   const fetchedData = await api.get<Order[]>(URL, { id: 'a@a.com', password: 1234 });
   const orders = fetchedData.data;
@@ -17,17 +15,15 @@ export const getOrder = async (orderId?: number): Promise<Order> => {
   return order;
 };
 
+export const addOrder = async (cartItemIds: number[], point: number): Promise<number> => {
+  const fetchedData = await api.post(URL, { id: 'a@a.com', password: 1234 }, { cartItemIds, point });
 
+  const location = fetchedData.headers.get('Location');
+  if (!location) {
+    throw new Error(`장바구니 상품 추가 요청 성공시 반환되는 location이 없습니다.`);
+  }
 
-// export const addCartProducts = async (user: any, productId: Product['id']): Promise<number> => {
-//   const fetchedData = await api.post(URL, user, { productId });
+  const orderId = location.replace('/orders/', '');
 
-//   const location = fetchedData.headers.get('Location');
-//   if (!location) {
-//     throw new Error(`장바구니 상품 추가 요청 성공시 반환되는 location이 없습니다.`);
-//   }
-
-//   const cartProductId = location.replace('/cart-items/', '');
-
-//   return Number(cartProductId);
-// };
+  return Number(orderId);
+};

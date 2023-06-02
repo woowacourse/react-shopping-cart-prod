@@ -1,14 +1,18 @@
+import { addOrder } from 'apis/orders';
 import FlexBox from 'components/@common/FlexBox';
 import ROUTE_PATH from 'constants/routePath';
 import useCartCheckBox from 'hooks/useCartCheckBox';
 import useOrderPriceSection from 'hooks/useOrderPriceSection';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { pointUsageState } from 'state/pointUsageState';
 import styled from 'styled-components';
 
 export const SHIPPING_FEE = 3000;
 export const FREE_SHIPPING_FEE = 50000;
 
 const OrderPriceSection = () => {
+  const navigate = useNavigate();
   const { checkedProducts } = useCartCheckBox();
   const {
     point,
@@ -23,6 +27,20 @@ const OrderPriceSection = () => {
     isDiscounted,
     orderConfirmButtonText,
   } = useOrderPriceSection(checkedProducts);
+
+  const appliedPoint = useRecoilValue(pointUsageState).appliedPoint;
+
+  const handleOnClick = async () => {
+    try {
+      await addOrder([...checkedProducts], appliedPoint);
+      navigate(ROUTE_PATH.orderList);
+      window.location.reload();
+    } catch (e: any) {
+      window.alert(`주문에 실패했습니다. 다시 시도해주세요.\n${e.message}`);
+      console.log(e);
+      console.error(e.message);
+    }
+  };
 
   return (
     <PriceSection flexDirection="column" gap="10px">
@@ -61,7 +79,9 @@ const OrderPriceSection = () => {
       </Container>
 
       <StyledLink to={ROUTE_PATH.orderSheet}>
-        <OrderConfirmButton isActive={isCheckedProductsExist}>{orderConfirmButtonText}</OrderConfirmButton>
+        <OrderConfirmButton isActive={isCheckedProductsExist} onClick={handleOnClick}>
+          {orderConfirmButtonText}
+        </OrderConfirmButton>
       </StyledLink>
     </PriceSection>
   );
@@ -109,14 +129,16 @@ const Container = styled(FlexBox)`
 
 const TotalPriceContainer = styled(FlexBox)``;
 
-const SubTitle = styled.span`
+const Title = styled.span`
   font-size: 18px;
   font-weight: 700;
 `;
 
-const DiscountSubTitle = styled.span`
-  font-size: 18px;
-  font-weight: 700;
+const SubTitle = styled(Title)`
+  color: black;
+`;
+
+const DiscountSubTitle = styled(Title)`
   color: rgb(130, 130, 130);
 `;
 
@@ -162,7 +184,6 @@ const OrderConfirmButton = styled.button<{ isActive: boolean }>`
   font-weight: 700;
   background-color: ${({ isActive }) => (isActive ? '#2ac1bc' : '#0000000d')};
   cursor: pointer;
-  pointer-events: ${({ isActive }) => (isActive ? 'initial' : 'none')};
 
   @media (max-width: 430px) {
     margin: 0;
