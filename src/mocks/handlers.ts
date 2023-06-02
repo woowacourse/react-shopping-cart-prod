@@ -1,11 +1,20 @@
 import { rest } from 'msw';
 import { CartProduct } from '../types/product';
 import { uuid } from '../utils/uuid';
-import mockData from './mockData.json';
-import { CART_LIST_KEY } from '../constant';
+import mockProductsData from './mockProductsData.json';
+import mockCouponData from './mockCouponData.json';
+import {
+  CART_ITEMS_PATH_NAME,
+  CART_LIST_KEY,
+  COUPONS_PATH_NAME,
+  PRODUCTS_PATH_NAME,
+  USERS_COUPON_PATH_NAME,
+} from '../constant';
 import LocalStorage from '../utils/LocalStorage';
 
-const mockProducts = mockData.products;
+const mockProducts = mockProductsData.products;
+const mockCoupons = mockCouponData.coupons;
+const usersCoupon: number[] = [];
 const cartList: CartProduct[] = LocalStorage.getItem(CART_LIST_KEY) || [];
 
 const updateLocalStorage = () => {
@@ -20,9 +29,9 @@ interface PatchUpdateCartRequestBody {
   quantity: number;
 }
 
-const PRODUCTS_PATH_NAME = `/products`;
-const CART_ITEMS_PATH_NAME = `/cart-items`;
-const COUPON_PATH_NAME = `/coupons`;
+interface PostCouponsMe {
+  couponId: number;
+}
 
 export const productHandler = [
   rest.get(PRODUCTS_PATH_NAME, (req, res, ctx) => {
@@ -77,48 +86,24 @@ export const cartHandler = [
 ];
 
 export const couponHander = [
-  rest.get(COUPON_PATH_NAME, (req, res, ctx) => {
-    const couponList = {
-      coupons: [
-        {
-          id: 1,
-          type: 'percent',
-          amount: 10,
-          name: '신규 회원 환영 쿠폰',
-        },
-        {
-          id: 2,
-          type: 'amount',
-          amount: 1000,
-          name: '천원 할인 쿠폰',
-        },
-        {
-          id: 2,
-          type: 'amount',
-          amount: 1000,
-          name: '천원 할인 쿠폰',
-        },
-        {
-          id: 2,
-          type: 'amount',
-          amount: 1000,
-          name: '천원 할인 쿠폰',
-        },
-        {
-          id: 2,
-          type: 'amount',
-          amount: 1000,
-          name: '천원 할인 쿠폰',
-        },
-        {
-          id: 2,
-          type: 'amount',
-          amount: 1000,
-          name: '천원 할인 쿠폰',
-        },
-      ],
-    };
+  rest.get(COUPONS_PATH_NAME, (req, res, ctx) => {
+    const couponList = mockCoupons;
 
     return res(ctx.delay(1000), ctx.status(200), ctx.json(couponList));
+  }),
+
+  rest.get(USERS_COUPON_PATH_NAME, (req, res, ctx) => {
+    return res(ctx.delay(1000), ctx.status(200), ctx.json(usersCoupon));
+  }),
+
+  rest.post<PostCouponsMe>(USERS_COUPON_PATH_NAME, async (req, res, ctx) => {
+    const { couponId } = await req.json();
+
+    if (usersCoupon.includes(couponId)) {
+      return res(ctx.delay(500), ctx.status(400));
+    }
+
+    usersCoupon.push(couponId);
+    return res(ctx.delay(500), ctx.status(200));
   }),
 ];
