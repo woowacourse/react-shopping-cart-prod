@@ -1,17 +1,20 @@
 import { styled } from 'styled-components';
 import { Coupon } from '../../../types/product';
 import { AiOutlineDownload } from 'react-icons/ai';
+import { COUPON_TYPE_UNIT } from '../../../constant';
 
 const CouponItem = (coupon: Coupon) => {
-  const { amount, name } = coupon;
+  const { amount, type, name } = coupon;
+
+  const amountWithType = `${amount}${COUPON_TYPE_UNIT[type]}`;
 
   return (
     <CouponItemContainer>
       <CouponContents>
-        <DiscountAmount>{amount}%</DiscountAmount>
+        <DiscountAmount>{amountWithType}</DiscountAmount>
         <CouponName>{name}</CouponName>
         <CouponDescription>
-          총 주문 금액의 {amount}% 만큼 할인 적용
+          상품 금액의 {amountWithType} 만큼 할인 적용
         </CouponDescription>
       </CouponContents>
       <GetCouponButton>
@@ -38,20 +41,20 @@ const CouponContents = styled.div`
 
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 
   padding: 16px;
 `;
 
 const DiscountAmount = styled.h3`
-  font-size: 18px;
+  font-size: 22px;
   line-height: 24px;
   color: rgb(47, 52, 56);
   font-weight: 700;
 `;
 
 const CouponName = styled.p`
-  font-size: 14px;
+  font-size: 16px;
   line-height: 18px;
   color: rgb(47, 52, 56);
 
@@ -61,7 +64,7 @@ const CouponName = styled.p`
 `;
 
 const CouponDescription = styled.p`
-  font-size: 12px;
+  font-size: 14px;
   line-height: 16px;
   color: rgb(130, 140, 148);
 
