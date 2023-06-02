@@ -4,9 +4,8 @@ interface OrderCartItemsData extends OrderCostsData {
   cartItemIds: number[];
 }
 
-interface OrderedItemData {
+interface OrderedItemData extends ProductItemData {
   quantity: number;
-  product: ProductItemData;
 }
 
 interface OrderData extends OrderCostsData {

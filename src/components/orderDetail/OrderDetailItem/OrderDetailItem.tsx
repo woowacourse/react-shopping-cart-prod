@@ -8,30 +8,32 @@ import * as S from './OrderDetailItem.styles';
 
 type OrderDetailItemProps = OrderedItemData;
 
-const OrderDetailItem = ({ quantity, product }: OrderDetailItemProps) => {
+const OrderDetailItem = ({ ...information }: OrderDetailItemProps) => {
   const { isAdded, addItemToCart } = useOrder();
 
   const handleItemAddition = useCallback(() => {
+    const { quantity, ...product } = information;
+
     addItemToCart(product);
-  }, [addItemToCart, product]);
+  }, [addItemToCart, information]);
 
   return (
     <>
       <S.OrderDetailItemContainer>
-        <S.OrderDetailItemImage src={product.imageUrl} alt={product.name} />
+        <S.OrderDetailItemImage src={information.imageUrl} alt={information.name} />
         <S.OrderDetailItemInformation>
-          <S.OrderDetailItemName>{product.name}</S.OrderDetailItemName>
+          <S.OrderDetailItemName>{information.name}</S.OrderDetailItemName>
           <S.OrderDetailItemPriceContainer>
             <S.OrderDetailItemConsumerPrice as="span">
-              {priceFormatter(product.discountedPrice)}원
+              {priceFormatter(information.discountedPrice)}원
             </S.OrderDetailItemConsumerPrice>
-            {product.discountRate > 0 && (
+            {information.discountRate > 0 && (
               <S.OrderDetailItemOriginalPrice>
-                {priceFormatter(product.price)}원
+                {priceFormatter(information.price)}원
               </S.OrderDetailItemOriginalPrice>
             )}
             <S.VerticalLine />
-            <S.OrderDetailItemQuantity>{quantity}개</S.OrderDetailItemQuantity>
+            <S.OrderDetailItemQuantity>{information.quantity}개</S.OrderDetailItemQuantity>
           </S.OrderDetailItemPriceContainer>
         </S.OrderDetailItemInformation>
         <S.AddToCartButton variant="secondary" size="small" onClick={handleItemAddition}>

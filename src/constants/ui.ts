@@ -14,7 +14,7 @@ const ORDER_ITEM_DESCRIPTION_DATA = [
   {
     LABEL: '상품명',
     value: (information: OrderData) => {
-      const mainName = information.orderedItems[0].product.name;
+      const mainName = information.orderedItems[0].name;
       const subName =
         information.orderedItems.length > 1 ? ` 외 ${information.orderedItems.length - 1}건` : '';
 

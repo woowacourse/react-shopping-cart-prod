@@ -6,8 +6,11 @@ import { OrderedItemData } from '../types/order';
 
 const getTotalItemDiscountAmount = (itemList: (CartItemData | OrderedItemData)[]) => {
   return itemList.reduce((acc, curr) => {
-    if (curr.product.discountRate > 0) {
-      return acc + curr.quantity * curr.product.price * (curr.product.discountRate / 100);
+    const price = 'product' in curr ? curr.product.price : curr.price;
+    const discountRate = 'product' in curr ? curr.product.discountRate : curr.discountRate;
+
+    if (discountRate > 0) {
+      return acc + curr.quantity * price * (discountRate / 100);
     }
 
     return acc;
@@ -19,17 +22,22 @@ const getTotalMemberDiscountAmount = (
   memberInformation: MemberInformation
 ) => {
   return itemList.reduce((acc, curr) => {
-    if (memberInformation.rank === MEMBER_RANK[0] || curr.product.discountRate > 0) {
+    const price = 'product' in curr ? curr.product.price : curr.price;
+    const discountRate = 'product' in curr ? curr.product.discountRate : curr.discountRate;
+
+    if (memberInformation.rank === MEMBER_RANK[0] || discountRate > 0) {
       return acc;
     }
 
-    return acc + curr.quantity * curr.product.price * (memberInformation.discountRate / 100);
+    return acc + curr.quantity * price * (memberInformation.discountRate / 100);
   }, 0);
 };
 
 const getTotalItemPrice = (itemList: (CartItemData | OrderedItemData)[]) => {
   return itemList.reduce((acc, curr) => {
-    return acc + curr.quantity * curr.product.price;
+    const price = 'product' in curr ? curr.product.price : curr.price;
+
+    return acc + curr.quantity * price;
   }, 0);
 };
 

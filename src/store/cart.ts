@@ -2,7 +2,7 @@ import { DefaultValue, atom, selector, selectorFamily } from 'recoil';
 
 import { getCartAPI } from '../api/cartAPI';
 import { changeCartItemQuantity } from '../domain/cart';
-import { CartItemData } from '../types/cart';
+import { CartCostsData, CartItemData } from '../types/cart';
 import { getCosts } from '../utils/costs';
 import { checkedCartIdListState } from './cartCheckbox';
 import { currentMemberInformationState } from './member';
@@ -70,7 +70,7 @@ const cartItemQuantityState = selectorFamily<number, number>({
     },
 });
 
-const cartListCheckoutCostsState = selector({
+const cartListCheckoutCostsState = selector<CartCostsData>({
   key: 'cartListCheckoutPrice',
   get: ({ get }) => {
     const cartList = get(cartListState);

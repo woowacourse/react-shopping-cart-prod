@@ -19,7 +19,10 @@ const getOrderedItems = (cartItemIds: number[]): OrderedItemData[] => {
 
   return cartItemIds.map((cartItemId) => {
     const cartItemData = currentCartData.find((cartItem) => cartItemId === cartItem.id)!;
-    const { id, ...orderedItem } = cartItemData;
+    const orderedItem = {
+      quantity: cartItemData.quantity,
+      ...cartItemData.product,
+    };
 
     return orderedItem;
   });

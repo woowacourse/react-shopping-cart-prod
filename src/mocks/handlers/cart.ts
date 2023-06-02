@@ -8,9 +8,7 @@ import {
   removeCartItem,
   setCartData,
 } from '../../domain/cart';
-import { getMemberData } from '../../domain/member';
 import { PatchCartItemRequestBody, PostCartItemRequestBody } from '../../types/api';
-import { getCosts } from '../../utils/costs';
 
 const cartHandlers = [
   rest.get(API_ENDPOINT.CART_ITEMS, (req, res, ctx) => {
@@ -65,15 +63,6 @@ const cartHandlers = [
     setCartData(newCartList);
 
     return res(ctx.status(HTTP_STATUS_CODE.NO_CONTENT));
-  }),
-
-  rest.get(API_ENDPOINT.CART_COSTS, (req, res, ctx) => {
-    const cartList = getCartData();
-    const memberInformation = getMemberData();
-
-    const cartCosts = getCosts(cartList, memberInformation);
-
-    return res(ctx.delay(400), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(cartCosts));
   }),
 ];
 

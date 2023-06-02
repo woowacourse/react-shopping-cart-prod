@@ -20,8 +20,8 @@ const OrderItem = ({ ...information }: OrderItemProps) => {
       </S.OrderItemHeader>
       <S.OrderItemContent>
         <S.OrderItemImage
-          src={information.orderedItems[0].product.imageUrl}
-          alt={information.orderedItems[0].product.name}
+          src={information.orderedItems[0].imageUrl}
+          alt={information.orderedItems[0].name}
         />
         <S.OrderInformation>
           {ORDER_ITEM_DESCRIPTION_DATA.map((descriptionItem, index) => (
