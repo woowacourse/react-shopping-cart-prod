@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CouponHeader = styled.section`
+export const CouponHeader = styled.div`
   width: 600px;
   border-bottom: 1px solid #333333;
   padding-bottom: 28px;
@@ -20,4 +20,16 @@ export const CouponHeader = styled.section`
   @media (max-width: 670px) {
     width: 100%;
   }
+`;
+
+export const CouponImage = styled.img<{ isUsed: boolean }>`
+  margin-top: 24px;
+  opacity: ${({ isUsed }) => (isUsed ? 0.3 : 1)};
+  cursor: ${({ isUsed }) => (isUsed ? 'not-allowed' : 'default')};
+`;
+
+export const CouponParagraph = styled.p`
+  font-size: 16px;
+  margin-top: 8px;
+  color: #aaaaaa;
 `;

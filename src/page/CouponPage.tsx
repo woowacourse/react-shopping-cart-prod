@@ -23,19 +23,29 @@ export default function CouponPage() {
       {coupons.map(({ id, name, discountRate, expiredAt, isUsed }: CouponInfo) =>
         name.includes('신규') ? (
           <Fragment key={id}>
-            <img
+            <S.CouponImage
               src={`./join${discountRate}DiscountCoupon.svg`}
               alt={`신규가입 ${discountRate}% 할인쿠폰`}
+              isUsed={isUsed}
             />
-            <p>만료기간 : {expiredAt.split('T')[0]}</p>
+            {isUsed ? (
+              <S.CouponParagraph>쿠폰을 이미 사용했어요.</S.CouponParagraph>
+            ) : (
+              <S.CouponParagraph>만료기간 : {expiredAt.split('T')[0]}</S.CouponParagraph>
+            )}
           </Fragment>
         ) : (
           <Fragment key={id}>
-            <img
+            <S.CouponImage
               src={`./purchase${discountRate}DiscountCoupon.svg`}
               alt={`첫 구매 감사 ${discountRate}% 할인쿠폰`}
+              isUsed={isUsed}
             />
-            <p>만료기간 : {expiredAt.split('T')[0]}</p>
+            {isUsed ? (
+              <S.CouponParagraph>쿠폰을 이미 사용했어요.</S.CouponParagraph>
+            ) : (
+              <S.CouponParagraph>만료기간 : {expiredAt.split('T')[0]}</S.CouponParagraph>
+            )}
           </Fragment>
         )
       )}
