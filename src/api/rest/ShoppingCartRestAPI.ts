@@ -13,6 +13,21 @@ export type CartItemEntity = {
   product: ProductEntity;
 };
 
+export type OrderListEntity = {
+  id: number;
+  savingRate: number;
+  points: number;
+  cartItems: OrderItemEntity[];
+};
+
+export type OrderItemEntity = {
+  productId: number;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+};
+
 export type ShoppingCartRestAPI =
   | {
       request: HttpRequest<'GET', '/products'>;
@@ -54,4 +69,12 @@ export type ShoppingCartRestAPI =
   | {
       request: HttpRequest<'DELETE', '/cart-items/:cartItemId'>;
       response: HttpResponse<204> | HttpResponse<400>;
+    }
+  | {
+      request: HttpRequest<'GET', '/orders'>;
+      response: HttpResponse<200, OrderListEntity[]>;
+    }
+  | {
+      request: HttpRequest<'GET', '/orders/:orderId'>;
+      response: HttpResponse<200, OrderListEntity>;
     };
