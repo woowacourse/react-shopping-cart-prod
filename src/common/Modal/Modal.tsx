@@ -1,6 +1,7 @@
 import useModalExternal from '@common/hooks/useModalExternal';
 import { Container } from '@styles/style';
-import { PropsWithChildren, useCallback, useEffect, useRef } from 'react';
+import { PropsWithChildren } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
 import { createPortal } from 'react-dom';
 import { styled } from 'styled-components';
 
@@ -23,7 +24,9 @@ function Modal({ isOpen, closeModal, children }: ModalProps) {
           <Background onClick={closeModal} />
           <ModalContainer>
             <Container>
-              <CloseButton onClick={closeModal}>X</CloseButton>
+              <CloseButton onClick={closeModal}>
+                <AiOutlineClose size="24" />
+              </CloseButton>
               {children}
             </Container>
           </ModalContainer>
