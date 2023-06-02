@@ -2,10 +2,11 @@ import { selector } from 'recoil';
 
 import { couponState, targetCouponIdState } from './atom';
 import couponApis from '../../apis/coupons';
+import { serverNameState } from '../serverName';
 
 export const couponSelector = selector({
   key: 'couponSelector',
-  get: () => couponApis().getCoupons(),
+  get: ({ get }) => couponApis(get(serverNameState)).getCoupons(),
 });
 
 export const couponOptionSelector = selector({

@@ -4,15 +4,17 @@ import orderApis from '../apis/order';
 import useCartPrice from './useCartPrice';
 import { checkedCartProductIdSelector } from '../states/checkedCartProducts';
 import { targetCouponIdState } from '../states/coupon';
+import { serverNameState } from '../states/serverName';
 
 const useOrder = () => {
-  const couponId = useRecoilValue(targetCouponIdState);
+  const serverName = useRecoilValue(serverNameState);
   const cartItemIds = useRecoilValue(checkedCartProductIdSelector);
+  const couponId = useRecoilValue(targetCouponIdState);
 
   const { totalPrice } = useCartPrice();
 
   const addOrder = () => {
-    orderApis().postOrder({ cartItemIds, totalPrice, couponId });
+    orderApis(serverName).postOrder({ cartItemIds, totalPrice, couponId });
   };
 
   return { addOrder };
