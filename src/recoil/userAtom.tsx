@@ -2,6 +2,11 @@ import { atom, selector } from "recoil";
 import type { Sign, User } from "../types/types.ts";
 import { modalRepository } from "./modalAtoms.tsx";
 import Login from "../components/Login";
+import { setSessionStorage } from "../utils/storage.ts";
+import { SESSION_STORAGE_KEY_CART_ITEMS } from "../app/keys.ts";
+import { fetchCartList } from "../api/api.ts";
+import { cartState } from "./cartAtoms.ts";
+import { serverState } from "./serverAtom.ts";
 
 export const userState = atom<User | null>({
   key: "userState",
@@ -14,6 +19,7 @@ export const userRepository = selector({
     const login = getCallback(({ set, snapshot }) => async (member: Sign) => {
       const { closeModal } = await snapshot.getPromise(modalRepository);
       const user = await snapshot.getPromise(userState);
+      const server = await snapshot.getPromise(serverState);
 
       if (!user) {
         const name = member.id.split("@")[0];
@@ -21,14 +27,18 @@ export const userRepository = selector({
           ...member,
           name,
         };
+        setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
+        const newCartList = await fetchCartList(server);
+        set(cartState, newCartList);
         set(userState, newUser);
         closeModal();
       }
     });
 
     const logout = getCallback(({ set }) => async () => {
-      // 로그아웃
+      setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
       set(userState, null);
+      set(cartState, []);
     });
 
     const loginCheckerCallback = getCallback(
