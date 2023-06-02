@@ -64,6 +64,7 @@ const ExpectedPaymentBox = () => {
         <SelectBox
           options={[DEFAULT_COUPON_NAME, ...couponNames]}
           onChange={handleSelectChange}
+          disabled={isAllUnchecked}
         />
         <Button
           type="button"

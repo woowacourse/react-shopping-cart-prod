@@ -1,4 +1,5 @@
 import { SelectHTMLAttributes } from 'react';
+import { styled } from 'styled-components';
 
 interface SelectBoxProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options: string[];
@@ -6,14 +7,21 @@ interface SelectBoxProps extends SelectHTMLAttributes<HTMLSelectElement> {
 
 const SelectBox = ({ options, ...props }: SelectBoxProps) => {
   return (
-    <select {...props}>
-      {options.map((option) => (
+    <StyledSelectBox {...props}>
+      {options.map(option => (
         <option key={option} value={option}>
           {option}
         </option>
       ))}
-    </select>
+    </StyledSelectBox>
   );
 };
+
+const StyledSelectBox = styled.select`
+  &:disabled {
+    cursor: not-allowed;
+    background: ${({ theme }) => theme.colors.gray200};
+  }
+`;
 
 export default SelectBox;
