@@ -4,21 +4,29 @@ import Box from 'components/@common/Box';
 import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
 import useFetch from 'hooks/useFetch';
 import { getUserOwnPoints } from 'apis/points';
+import { useRecoilValue } from 'recoil';
+import { checkedCartProductsTotalPrice } from 'state/cartProducts';
+import useCartCheckBox from 'hooks/useCartCheckBox';
+import { BASE_SHIPPING_FEE, SHIPPING_FEE_THRESHOLD } from 'constants/policy';
 
 const CheckOutPointTab = () => {
   const { data: userOwnPoints, isLoading, errorState } = useFetch<number>(getUserOwnPoints);
   const { allInPoint, changePointCost, pointCost } = useCheckOutPointCostContext();
+  const { checkedCartProductIds } = useCartCheckBox();
+  const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPrice(checkedCartProductIds));
+  const shippingFee = cartTotalPrice < SHIPPING_FEE_THRESHOLD ? BASE_SHIPPING_FEE : 0;
+  const paymentAmount = cartTotalPrice + shippingFee;
 
   const handleChangePointCost = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      changePointCost(e, userOwnPoints ?? 0);
+      changePointCost(e, paymentAmount, userOwnPoints ?? 0);
     },
-    [userOwnPoints, changePointCost]
+    [userOwnPoints, paymentAmount, changePointCost]
   );
 
   const handleAllInPoint = useCallback(() => {
-    allInPoint(userOwnPoints ?? 0);
-  }, [userOwnPoints, allInPoint]);
+    allInPoint(paymentAmount, userOwnPoints ?? 0);
+  }, [paymentAmount, userOwnPoints, allInPoint]);
 
   if (isLoading) return <div>포인트 로딩중</div>;
   if (errorState?.isError) return <div>포인트 로딩 실패</div>;
