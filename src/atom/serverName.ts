@@ -5,6 +5,6 @@ import { LOCAL_STORAGE_KEY } from '../constants';
 
 export const serverNameState = atom<ServerNameType>({
   key: 'serverNameState',
-  default: 'RAON',
+  default: 'JOURNY',
   effects: [localStorageEffect(LOCAL_STORAGE_KEY.serverName)],
 });
