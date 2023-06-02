@@ -1,9 +1,20 @@
 import { styled } from 'styled-components';
 import { useOrder } from '../hooks/useOrder';
 import OrderList from '../components/order/OrderList';
+import { useCart } from '../hooks/useCart';
+import { useRecoilValue } from 'recoil';
+import { selectedHostState } from '../recoil/atoms';
+import { useEffect } from 'react';
 
 export default function Order() {
   const { orderList } = useOrder();
+  const { initCartList } = useCart();
+  const host = useRecoilValue(selectedHostState);
+
+  useEffect(() => {
+    initCartList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [host]);
 
   return (
     <Style.Main>
