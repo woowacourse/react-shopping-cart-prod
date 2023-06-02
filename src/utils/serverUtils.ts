@@ -6,10 +6,10 @@ export const USER_INFO = [
 ] as const;
 
 export const SERVER_BY_CREW = {
-  MSW: 'msw',
-  마코: 'https://m4co.shop',
   허브: 'https://h3rb.shop',
+  마코: 'https://m4co.shop',
   우가: 'https://wuga.shop',
+  MSW: 'msw',
 } as const;
 
 export const CREW_NAMES = Object.keys(SERVER_BY_CREW);

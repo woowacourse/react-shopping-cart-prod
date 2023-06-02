@@ -12,9 +12,9 @@ function OrderDetail({ orderId }: { orderId: number }) {
       <OrderItem order={order} />
       <OrderWrapper>
         <CouponText info={discountPrice > 0}>할인 금액</CouponText>
-        <CouponText info={discountPrice > 0}>{discountPrice}</CouponText>
+        <CouponText info={discountPrice > 0}>{Number(discountPrice)}</CouponText>
         <ContentText>최종 결제 금액</ContentText>
-        <ContentText>{totalItemsPrice - discountPrice}</ContentText>
+        <ContentText>{Number(totalItemsPrice) - Number(discountPrice)}</ContentText>
       </OrderWrapper>
     </>
   );

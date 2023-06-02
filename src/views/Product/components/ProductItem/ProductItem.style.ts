@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const ProductItemBox = styled.div`
   /*  height: 350px; */
-  padding: 8px;
+  width: 80%;
+  margin: 0 auto;
 `;
 
 export const ProductItemImageBox = styled.div`
@@ -34,14 +35,18 @@ export const ProductName = styled.div`
   margin: 0.5rem 0;
   width: 100%;
 
+  color: ${({ theme }) => theme.primaryColor};
+
   /* TODO: 변수표현해볼것 */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 export const ProductPrice = styled.div`
-  font-size: 2rem;
+  font-size: 2.4rem;
   margin: 0.5rem 0;
+
+  color: ${({ theme }) => theme.darkColor};
 `;
 
 export const ProductInfo = styled.div`

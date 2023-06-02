@@ -72,7 +72,6 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
             })}
           </CouponListWrapper>
         }
-
         <ButtonWrapper>
           <Button
             size="l"
@@ -115,6 +114,9 @@ const CouponListWrapper = styled.div`
   justify-content: start;
   align-items: center;
   margin: 0 auto;
+
+  max-height: 80vh;
+  overflow-y: auto;
 
   max-width: 320px;
 
