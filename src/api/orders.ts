@@ -1,10 +1,10 @@
 import { ServerId } from "recoil/server";
 
-import { Order, EachOrderStatement } from "types/domain";
+import { OrderResultStatement, Order } from "types/domain";
 
 import { SERVER_LIST, USER_TOKEN } from "./constants";
 
-export const addOrder = async (orders: Order[]): Promise<boolean> => {
+export const addOrder = async (orders: Order): Promise<boolean> => {
   const response = await fetch(
     `https://power.better-than-coupang.kro.kr/orders`,
     {
@@ -23,7 +23,7 @@ export const addOrder = async (orders: Order[]): Promise<boolean> => {
   return response.ok;
 };
 
-export const getOrderStatement = async (): Promise<EachOrderStatement[]> => {
+export const getOrderStatement = async (): Promise<OrderResultStatement[]> => {
   const response = await fetch(
     `https://power.better-than-coupang.kro.kr/orders`,
     {

@@ -1,31 +1,31 @@
 import styled from "styled-components";
-import { OrderResult } from "types/domain";
+import { OrderResultStatement } from "types/domain";
 import Modal from "./common/Modal";
 import PageHeader from "./common/PageHeader";
 import OrderItem from "./OrderItem";
 
 interface OrderStatementProps {
-  orderId: number;
-  orders: OrderResult[];
+  itemForModal: OrderResultStatement;
   closeModal: () => void;
 }
 
 const OrderStatementModal = ({
-  orderId,
-  orders,
+  itemForModal,
   closeModal,
 }: OrderStatementProps) => {
-  const amountPaid = orders.reduce((result, order) => result + order.total, 0);
+  const { orderId, orderItems, total, deliveryFee } = itemForModal;
 
   return (
     <Modal closeEvent={closeModal}>
       <PageHeader>주문 상세 내역</PageHeader>
       <OrderInfo>
         <span>주문번호: {orderId}</span>
-        <span>총 결제금액: {amountPaid.toLocaleString()}원</span>
+        <span>총 결제금액: {total.toLocaleString()}원</span>
+        <span></span>
+        <span>배송비: {deliveryFee.toLocaleString()}원</span>
       </OrderInfo>
       <OrderList>
-        {orders.map((item) => {
+        {orderItems.map((item) => {
           return (
             <OrderBox>
               <OrderItem key={`order-item-${item.product.id}`} item={item} />
@@ -57,12 +57,16 @@ const OrderStatementModal = ({
 };
 
 const OrderInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 0;
 
   font-size: 18px;
   margin: 5px 0;
+
+  & :nth-child(even) {
+    text-align: right;
+  }
 `;
 
 const OrderList = styled.div`

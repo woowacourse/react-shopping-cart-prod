@@ -10,13 +10,13 @@ import { useOrderStatementModal } from "hooks/useOrderStatementModal";
 
 import { styled } from "styled-components";
 
-import { EachOrderStatement } from "types/domain";
+import { OrderResultStatement } from "types/domain";
 
 const OrderStatementList = () => {
   const { isLoading, data, error } =
-    useFetch<EachOrderStatement[]>(getOrderStatement);
+    useFetch<OrderResultStatement[]>(getOrderStatement);
   const { itemForModal, isModalOpen, openModal, closeModal } =
-    useOrderStatementModal<EachOrderStatement>(data);
+    useOrderStatementModal<OrderResultStatement>(data);
 
   if (isLoading)
     return (
@@ -40,8 +40,7 @@ const OrderStatementList = () => {
     <>
       {isModalOpen && itemForModal && (
         <OrderStatementModal
-          orderId={itemForModal.orderId}
-          orders={itemForModal.orderItems}
+          itemForModal={itemForModal}
           closeModal={closeModal}
         />
       )}
