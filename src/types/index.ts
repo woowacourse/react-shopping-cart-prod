@@ -28,4 +28,16 @@ export interface UserOrdersType {
   shippingFee: number;
   totalProductsPrice: number;
   usedPoint: number;
-  }
+}
+
+export interface RegisterOrderType {
+  totalProductsPrice: number;
+  shippingFee: number;
+  usedPoint: number;
+  order: OrderType[];
+}
+
+export interface OrderType {
+  cartItemId: number;
+  quantity : number;
+}

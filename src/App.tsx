@@ -10,6 +10,8 @@ import { useApiBaseUrlValue } from './recoils/recoilApiBaseUrl';
 
 import { Home } from './components/pages/Home';
 import { ShoppingCart } from './components/pages/ShoppingCart';
+import { OrderList } from './components/pages/OrderList';
+import { OrderDetail } from './components/pages/OrderDetail';
 
 import { CartItemType } from './types';
 import { FETCH_URL, PATH } from './constants';
@@ -43,6 +45,8 @@ export const App = () => {
         <Routes>
           <Route path={PATH.HOME} Component={Home} />
           <Route path={PATH.CART} Component={ShoppingCart} />
+          <Route path={PATH.ORDER} Component ={OrderList} />
+          <Route path={PATH.ORDER_DETAIL} Component={OrderDetail} />
         </Routes>
       </BrowserRouter>
     </>
