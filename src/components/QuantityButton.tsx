@@ -9,12 +9,12 @@ import Button from './common/Button';
 const { MAX, MIN, STEP, NONE } = QUANTITY;
 
 interface Props {
-  isMainPage?: true;
+  isEnabledAtMin?: true;
   productId: number;
   quantity: number;
 }
 
-const QuantityButton = ({ isMainPage, productId, quantity }: Props) => {
+const QuantityButton = ({ isEnabledAtMin, productId, quantity }: Props) => {
   const setQuantity = useSetRecoilState(quantitySelector(productId));
   const { updateCart, removeItemFromCart } = useCart(productId);
 
@@ -28,11 +28,11 @@ const QuantityButton = ({ isMainPage, productId, quantity }: Props) => {
   };
 
   const handleQuantityStepDown = () => {
-    if (!isMainPage && quantity === MIN) return;
+    if (!isEnabledAtMin && quantity === MIN) return;
 
     const updatedQuantity = quantity - STEP;
 
-    if (isMainPage && updatedQuantity === NONE) return removeItemFromCart();
+    if (isEnabledAtMin && updatedQuantity === NONE) return removeItemFromCart();
 
     setQuantity(updatedQuantity);
     updateCart(updatedQuantity);
@@ -41,10 +41,10 @@ const QuantityButton = ({ isMainPage, productId, quantity }: Props) => {
   return (
     <S.Wrapper>
       <Button
-        css={buttonStyle(quantity, isMainPage)}
+        css={buttonStyle(quantity, isEnabledAtMin)}
         onClick={handleQuantityStepDown}
         aria-label='상품 수량 1개 줄이기'
-        disabled={!isMainPage && quantity === MIN}
+        disabled={!isEnabledAtMin && quantity === MIN}
       >
         <BsDash />
       </Button>
@@ -89,7 +89,7 @@ const S = {
   `,
 };
 
-const buttonStyle = (quantity: number, isMainPage?: true) => css`
+const buttonStyle = (quantity: number, isEnabledAtMin?: true) => css`
   width: 26px;
   height: 32px;
   max-width: 26px;
@@ -103,7 +103,7 @@ const buttonStyle = (quantity: number, isMainPage?: true) => css`
 
   &[aria-label='상품 수량 1개 줄이기'] {
     border-right: 0;
-    cursor: ${!isMainPage && quantity === MIN && 'default'};
+    cursor: ${!isEnabledAtMin && quantity === MIN && 'default'};
   }
 `;
 

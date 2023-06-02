@@ -25,7 +25,7 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
           <Price price={price} css={priceStyle} />
         </div>
         {quantity > 0 ? (
-          <QuantityButton isMainPage productId={id} quantity={quantity} />
+          <QuantityButton isEnabledAtMin productId={id} quantity={quantity} />
         ) : (
           <Button css={buttonStyle} onClick={handleCartClick}>
             <CartIcon css={svgStyle} />

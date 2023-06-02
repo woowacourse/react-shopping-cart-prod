@@ -33,11 +33,11 @@ export const Minimum: Story = {
       description: '상품의 수량을 바꿀 수 있습니다.<br> 수량을 변경하면 상품의 가격도 변경됩니다.',
     },
 
-    isMainPage: {
+    isEnabledAtMin: {
       control: {
         type: 'boolean',
       },
-      description: '메인 페이지일 경우(true),<br> 상품 수량이 1일 때도 수량을 줄일 수 있습니다.',
+      description: 'true일 경우,<br> 상품 수량이 1일 때도 수량을 줄일 수 있습니다.',
     },
   },
 };
