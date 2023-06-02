@@ -19,6 +19,7 @@ const LoadingErrorCard = ({ onClickRetryButton }: LoadingErrorCardProps) => {
 export default LoadingErrorCard;
 
 const ErrorImgBackground = styled(FlexBox)`
+  width: 100%;
   padding: 30px 0;
   background-color: var(--color-grayscale-100);
 `;
