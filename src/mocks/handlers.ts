@@ -4,6 +4,7 @@ import productList from './productList.json';
 import coupons from './coupons.json';
 import orderList from './orderList.json';
 import couponAppliedPrice from './couponAppliedPrice.json';
+import orderDetail from './orderDetail.json';
 
 let cartData: Cart[] = [];
 
@@ -82,8 +83,6 @@ export const handlers = [
   }),
 
   rest.get('/api/orders/:orderId', (req, res, ctx) => {
-    const orderId = Number(req.params.orderId);
-    const order = orderList.find((item) => item.id === orderId);
-    return res(ctx.status(200), ctx.json(order));
+    return res(ctx.status(200), ctx.json(orderDetail));
   }),
 ];

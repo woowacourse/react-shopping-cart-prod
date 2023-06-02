@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const OrderListWrapper = styled.ul`
   margin-bottom: 48px;
+  width: 100%;
+  padding-right: 60px;
 `;
 
 export const OrderListHeader = styled.div`
