@@ -12,7 +12,10 @@ const useCartProducts = (product: Product) => {
   const { productId } = product;
   const hostName = useRecoilValue(hostNameAtom);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
-  const { addCount, subtractCount } = useProductQuantity(productId);
+  const { addCount, subtractCount } = useProductQuantity(
+    productId,
+    product.stock
+  );
   const target = findTargetProduct(cartProducts, productId);
 
   const addProduct = async () => {
