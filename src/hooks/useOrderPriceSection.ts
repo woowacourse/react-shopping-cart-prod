@@ -17,7 +17,7 @@ const useOrderPriceSection = (checkedProducts: CheckedCartProducts) => {
   const totalDiscountPrice = isShippingFeeFree ? point.appliedPoint + SHIPPING_FEE : point.appliedPoint;
 
   const cartTotalPriceWithDiscount = cartTotalPriceWithFee - totalDiscountPrice;
-  const savePoint = Math.floor(cartTotalPriceWithDiscount * 0.01);
+  const savePoint = Math.floor(cartTotalPrice * 0.1);
 
   const productTotalPriceText = generateText(cartTotalPrice);
   const shippingFeeText = generateText(isCheckedProductsExist ? SHIPPING_FEE : 0);

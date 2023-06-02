@@ -8,6 +8,7 @@ import { useRecoilValue } from 'recoil';
 import { pointUsageState } from 'state/pointUsageState';
 import styled from 'styled-components';
 import { DiscountType } from 'types/discount';
+import ReloadRequestUI from 'ReloadRequestUI';
 
 type DiscountItemProps = {
   type: DiscountType;
@@ -17,39 +18,43 @@ const DiscountItem = ({ type }: DiscountItemProps) => {
   const { isModalOpen, openModal, closeModal } = useModal();
   const appliedPoint = useRecoilValue(pointUsageState);
 
-  //test
-  const { data, isLoading, errorState, fetchData } = useFetch<Point>(getUserPoints);
-  const userPoint = data?.point ?? 0;
+  const {
+    data: pointData,
+    isLoading: isPointLoading,
+    errorState: pointError,
+    fetchData: fetchUserPoints,
+  } = useFetch<Point>(getUserPoints);
+  const userPoint = pointData?.point ?? 0;
 
   const applyDiscount = () => {
     console.log('할인 적용');
   };
 
-  if (errorState?.isError) {
-    throw errorState.error;
+  if (isPointLoading || pointError?.isError) {
+    return isPointLoading ? (
+      <FlexBox flexDirection="column" justify="center" align="center" gap="8px" role="button">
+        <Spinner />
+      </FlexBox>
+    ) : (
+      <ReloadRequestUI reloadFunction={fetchUserPoints} />
+    );
   }
 
   return (
     <FlexBox flexDirection="column" justify="flex-start" align="flex-start" gap="8px" role="list">
       <DiscountMessageSection>
-        {isLoading ? (
-          <Spinner />
+        {appliedPoint.appliedPoint > 0 ? (
+          <Message error="error">{appliedPoint.appliedPoint}원 할인이 적용되었습니다.</Message>
         ) : (
-          <>
-            {appliedPoint.appliedPoint > 0 ? (
-              <Message style={{ color: 'red' }}>{appliedPoint.appliedPoint}원 할인이 적용되었습니다.</Message>
-            ) : (
-              <Message>사용가능한 {type}가 있습니다</Message>
-            )}
-            <Button onClick={openModal}>{appliedPoint.appliedPoint > 0 ? `할인 변경하기` : `할인 적용하기`}</Button>
-          </>
+          <Message>사용 가능한 {type}가 있습니다.</Message>
         )}
+        <Button onClick={openModal}>{appliedPoint.appliedPoint > 0 ? `할인 변경하기` : `할인 적용하기`}</Button>
 
         <DiscountModal
           userPoint={userPoint}
           isOpen={isModalOpen}
           closeModal={closeModal}
-          onClickConfirmButton={() => applyDiscount}
+          onClickConfirmButton={applyDiscount}
         />
       </DiscountMessageSection>
     </FlexBox>
@@ -69,17 +74,15 @@ const DiscountMessageSection = styled.div`
   justify-content: space-between;
 `;
 
-const Message = styled.span`
+const Message = styled.span<{ error?: string }>`
   font-size: 14px;
   line-height: 20px;
   letter-spacing: -0.2px;
   font-weight: 500;
-  color: rgb(26, 124, 255);
+  color: ${(props) => (props.error ? 'red' : 'blue')};
 `;
 
 const Button = styled.button`
-  margin: 0px;
-  outline: none;
   appearance: none;
   display: flex;
   flex-direction: column;

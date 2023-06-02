@@ -29,7 +29,7 @@ const OrderDetailPage = () => {
   console.log(orderId);
   const { state, contents: order } = useRecoilValueLoadable(orderSelector(orderId));
 
-  // Handle different states: 'loading', 'hasError', 'hasValue'
+  // states: 'loading', 'hasError', 'hasValue'
   if (state === 'loading') {
     return <Spinner />;
   }
@@ -47,6 +47,10 @@ const OrderDetailPage = () => {
           <Container justify="space-between">
             <SubTitle>총 상품가격</SubTitle>
             {order && <ProductTotalPrice>{order.totalPrice}</ProductTotalPrice>}
+          </Container>
+          <Container justify="space-between">
+            <SubTitle>사용된 포인트</SubTitle>
+            {order && <ProductTotalPrice>{order.usedPoint}</ProductTotalPrice>}{' '}
           </Container>
         </PriceSection>
       </SectionContainer>

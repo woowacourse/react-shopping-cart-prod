@@ -8,11 +8,16 @@ import OrderSheetPage from 'pages/OrderSheetPage';
 import UserSelectPage from 'pages/UserSelectPage';
 import OrderListPage from 'pages/OrderListPage';
 import OrderDetailPage from 'pages/OrderDetailPage';
+import { ErrorBoundary } from 'ErrorBoundary';
 
 const router = createBrowserRouter([
   {
     path: ROUTE_PATH.root,
-    element: <Layout />,
+    element: (
+      <ErrorBoundary>
+        <Layout />
+      </ErrorBoundary>
+    ),
     children: [
       {
         index: true,
