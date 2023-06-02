@@ -4,6 +4,7 @@ import Svg from 'components/@common/Svg';
 import { useCart } from 'components/Cart/hooks/useCart';
 import { useCheckedItemIds } from '../hooks/useCheckedItems';
 import { Cart } from 'types';
+import { formatPrice } from 'utils';
 
 interface CartItemProps {
   cartItem: Cart;
@@ -50,9 +51,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
           increment={increase}
           decrement={decrease}
         />
-        <S.CartProductPrice>
-          {product.price.toLocaleString('KR')}원
-        </S.CartProductPrice>
+        <S.CartProductPrice>{formatPrice(product.price)}원</S.CartProductPrice>
       </S.CounterWrapper>
     </S.CartItemWrapper>
   );

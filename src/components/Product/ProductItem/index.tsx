@@ -3,6 +3,7 @@ import Svg from 'components/@common/Svg';
 import Counter from 'components/@common/Counter';
 import { useCart } from 'components/Cart/hooks/useCart';
 import { Product } from 'types';
+import { calculateSalePercentage, formatPrice } from 'utils';
 
 interface ProductItemProps {
   product: Product;
@@ -37,8 +38,16 @@ const ProductItem = ({ product }: ProductItemProps) => {
         <div>
           <S.ProductName>{product.name}</S.ProductName>
           <S.ProductPrice>
-            {product.price.toLocaleString('KR')} 원
+            {product.isOnSale && (
+              <S.DiscountPercent>
+                {calculateSalePercentage(product.price, product.salePrice)}%
+              </S.DiscountPercent>
+            )}
+            {(product.price - product.salePrice).toLocaleString('KR')}원
           </S.ProductPrice>
+          {product.isOnSale && (
+            <S.DiscountPrice>{formatPrice(product.price)} 원</S.DiscountPrice>
+          )}
         </div>
         {cartItem ? (
           <Counter

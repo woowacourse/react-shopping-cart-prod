@@ -1,4 +1,5 @@
 import { OrderProduct } from 'types';
+import { formatPrice } from 'utils';
 import * as S from './OrderItem.styles';
 
 const OrderItem = ({ item }: { item: OrderProduct }) => {
@@ -8,9 +9,7 @@ const OrderItem = ({ item }: { item: OrderProduct }) => {
       <S.OrderInfoWrapper>
         <S.OrderProductName>{item.name}</S.OrderProductName>
         <S.PriceQuantityWrapper>
-          <S.OrderPrice>
-            {new Intl.NumberFormat('ko-KR').format(item.totalPrice)}원
-          </S.OrderPrice>
+          <S.OrderPrice>{formatPrice(item.totalPrice)}원</S.OrderPrice>
           <S.OrderPrice>&nbsp; / &nbsp;</S.OrderPrice>
           <S.OrderQuantity>{item.quantity}개</S.OrderQuantity>
         </S.PriceQuantityWrapper>
