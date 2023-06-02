@@ -1,9 +1,4 @@
 export const SERVER = {
-  MSW: {
-    url: '',
-    id: null,
-    password: null,
-  },
   푸우: {
     url: process.env.REACT_APP_POOH_URL,
     id: process.env.REACT_APP_ID,
@@ -16,6 +11,11 @@ export const SERVER = {
   },
   엔초: {
     url: process.env.REACT_APP_ENCHO_URL,
+    id: process.env.REACT_APP_ID,
+    password: process.env.REACT_APP_PASSWORD,
+  },
+  MSW: {
+    url: '',
     id: process.env.REACT_APP_ID,
     password: process.env.REACT_APP_PASSWORD,
   },

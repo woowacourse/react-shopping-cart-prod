@@ -17,11 +17,6 @@ import OrderDetailPage from './pages/OrderDetailPage';
 import { worker } from './mocks/browser';
 
 const main = async () => {
-  if (window.location.pathname === '/react-shopping-cart-prod') {
-    window.location.pathname = '/react-shopping-cart-prod/';
-    return;
-  }
-
   await worker.start({
     serviceWorker: {
       url: '/react-shopping-cart-prod/mockServiceWorker.js',

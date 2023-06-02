@@ -21,15 +21,15 @@ export const handlers = [
   }),
 
   rest.get('/products/empty', (_, res, ctx) => {
-    return res(ctx.status(200), ctx.json([]));
+    return res(ctx.status(200));
   }),
 
   rest.get('/products/error', (_, res, ctx) => {
-    return res(ctx.status(400), ctx.json({ error: 'fail' }));
+    return res(ctx.status(400));
   }),
 
-  rest.get('/products/network-error', (_, res) => {
-    return res.networkError('Failed to Connect');
+  rest.get('/products/network-error', (_, res, ctx) => {
+    return res(ctx.status(500));
   }),
 
   rest.get('/cart-items', (_, res, ctx) => {
@@ -48,13 +48,13 @@ export const handlers = [
     );
 
     if (findTargetProduct(storedCartProducts, productId)) {
-      return res(ctx.status(304), ctx.json({ message: 'Already in the Cart' }));
+      return res(ctx.status(304));
     }
 
     const product = products.find(product => product.id === productId);
 
     if (!product) {
-      return res(ctx.status(400), ctx.json({ message: '상품이 없습니다.' }));
+      return res(ctx.status(400));
     }
 
     localStorage.setItem(
@@ -78,7 +78,7 @@ export const handlers = [
       );
 
       if (!findTargetProduct(storedCartProducts, cartProductId)) {
-        return res(ctx.status(304), ctx.json({ message: 'Not in the Cart' }));
+        return res(ctx.status(304));
       }
 
       localStorage.setItem(
@@ -102,7 +102,7 @@ export const handlers = [
     );
 
     if (!findTargetProduct(storedCartProducts, cartProductId)) {
-      return res(ctx.status(304), ctx.json({ message: 'Not in the Cart' }));
+      return res(ctx.status(304));
     }
 
     localStorage.setItem(

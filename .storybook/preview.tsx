@@ -14,7 +14,7 @@ let options = {};
 if (location.hostname === 'jeonjeunghoon.github.io') {
   options = {
     serviceWorker: {
-      url: '/react-shopping-cart/mockServiceWorker.js',
+      url: '/react-shopping-cart-prod/mockServiceWorker.js',
     },
   };
 }
