@@ -1,9 +1,17 @@
 import { styled } from 'styled-components';
 import { CgProfile } from 'react-icons/cg';
+import { useNavigate } from 'react-router-dom';
+import ROUTER_PATH from '@router/constants/routerPath';
 
 function OrderListButton() {
+  const navigate = useNavigate();
+
   return (
-    <HeaderIconWrapper>
+    <HeaderIconWrapper
+      onClick={() => {
+        navigate(ROUTER_PATH.order);
+      }}
+    >
       <CgProfile />
     </HeaderIconWrapper>
   );

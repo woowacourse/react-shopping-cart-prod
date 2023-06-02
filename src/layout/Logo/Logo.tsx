@@ -7,11 +7,13 @@ import { GiFullPizza } from 'react-icons/gi';
 import { useRefreshCart } from '../../views/Cart/recoil/cartState';
 import { useRefreshProduct } from '@views/Product/recoil/productListState';
 import { styled } from 'styled-components';
+import { useRefreshCouponList } from '@views/Payment/recoil/couponListState';
 
 function Logo() {
   const navigate = useNavigate();
   const refreshCart = useRefreshCart();
   const refreshProduct = useRefreshProduct();
+  const refreshCoupon = useRefreshCouponList();
 
   return (
     <S.LogoWrapper
@@ -21,7 +23,7 @@ function Logo() {
       onClick={() => {
         refreshCart();
         refreshProduct();
-
+        refreshCoupon();
         navigate('/');
       }}
     >

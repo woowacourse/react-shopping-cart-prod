@@ -11,6 +11,9 @@ import { CouponType } from 'types/CouponType';
 import { RiCoupon2Line } from 'react-icons/ri';
 import { Button } from '@common/Button';
 import { CouponMessage } from '../CouponMessage';
+import useFetchOrders from '@views/Payment/hooks/useFetchOrders';
+import { useNavigate } from 'react-router-dom';
+import ROUTER_PATH from '@router/constants/routerPath';
 
 const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
   if (!coupon || !totalPrice) {
@@ -34,8 +37,10 @@ const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
 
 function ExpectedPayment() {
   const totalPrice = useTotalPrice();
-  const { couponList } = useCouponList();
+  const { getCartItemIsChecked, getCheckedItemIds } = useCart();
   const couponSelected = useCouponSelected();
+  const fetchOrders = useFetchOrders();
+  const navigator = useNavigate();
 
   const discountPrice = getDiscount(couponSelected, totalPrice);
 
@@ -49,8 +54,21 @@ function ExpectedPayment() {
     setIsCouponOpen(true);
   };
 
-  const handlePay = () => {
-    setIsPaymentOpen(true);
+  const handlePay = async () => {
+    if (couponSelected) {
+      const response = await fetchOrders.postOrder({
+        orderItemIds: getCheckedItemIds(),
+        couponId: couponSelected.id,
+      });
+
+      const location = response.headers.get('Location');
+      console.log('order_response', location?.split('/').pop());
+    } else {
+      await fetchOrders.postOrder({
+        orderItemIds: getCheckedItemIds(),
+      });
+    }
+    navigator(ROUTER_PATH.order);
   };
 
   return (

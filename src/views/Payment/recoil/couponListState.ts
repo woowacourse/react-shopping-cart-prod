@@ -1,10 +1,17 @@
 import credentialState from '@recoil/server/credentialState';
 import serverUrlState from '@recoil/server/serverUrlState';
-import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+import {
+  atom,
+  selector,
+  useRecoilRefresher_UNSTABLE,
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+} from 'recoil';
 import fetchCoupons from '../utils/fetchCoupons';
 import { COUPON_PATH } from '@constants/urlConstants';
 import { CouponRemote, CouponType } from 'types/CouponType';
-import { cartTotalPrice } from '@views/Cart/recoil/cartState';
+import { cartTotalPrice, useRefreshCart } from '@views/Cart/recoil/cartState';
 
 const couponListState = atom<CouponType[]>({
   key: 'couponListState',
@@ -23,6 +30,10 @@ const couponListState = atom<CouponType[]>({
         };
       });
     },
+    cachePolicy_UNSTABLE: {
+      eviction: 'lru',
+      maxSize: 0,
+    },
   }),
 });
 
@@ -38,9 +49,23 @@ const couponSelected = selector({
 
     return coupon;
   },
+  cachePolicy_UNSTABLE: {
+    eviction: 'lru',
+    maxSize: 0,
+  },
 });
 
 export const useCouponSelected = () => useRecoilValue(couponSelected);
+
+export const useRefreshCouponList = () => {
+  const resetCoupon = useResetRecoilState(couponListState);
+  const refreshCoupon = useRecoilRefresher_UNSTABLE(couponListState);
+
+  return () => {
+    resetCoupon();
+    refreshCoupon();
+  };
+};
 
 const useCouponList = () => {
   const [couponList, setCouponList] = useRecoilState(couponListState);
