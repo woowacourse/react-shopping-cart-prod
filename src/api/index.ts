@@ -9,14 +9,14 @@ import type {
 
 import { BASE_URL_MAP } from '../constants';
 
-export const getProducts = async (serverName: ServerNameType) => {
+export const getProducts = async (serverName: ServerNameType): Promise<ProductType[]> => {
   const url = `${BASE_URL_MAP[serverName]}/products`;
-  const response = await fetch(url, { method: 'GET' });
+  const response = await fetch(url, {
+    method: 'GET',
+  });
+
   if (!response.ok) throw new Error(`${url} GET error`);
-
-  const products: ProductType[] = await response.json();
-
-  return products;
+  return response.json();
 };
 
 export const postLogin = async (serverName: ServerNameType, name: string, password: string) => {
@@ -41,25 +41,26 @@ export const postLogin = async (serverName: ServerNameType, name: string, passwo
   return token;
 };
 
-export const postJoin = async (serverName: ServerNameType, name: string, password: string) => {
+export const postJoin = (serverName: ServerNameType, name: string, password: string) => {
   const url = `${BASE_URL_MAP[serverName]}/users/join`;
   const body = JSON.stringify({
     name,
     password,
   });
 
-  const response = await fetch(url, {
+  return fetch(url, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body,
   });
-
-  if (!response.ok) throw new Error(`${url} POST Error`);
 };
 
-export const getCoupons = async (serverName: ServerNameType, token: string) => {
+export const getCoupons = async (
+  serverName: ServerNameType,
+  token: string
+): Promise<CouponType[]> => {
   const url = `${BASE_URL_MAP[serverName]}/users/me/coupons`;
   const response = await fetch(url, {
     method: 'GET',
@@ -69,10 +70,7 @@ export const getCoupons = async (serverName: ServerNameType, token: string) => {
   });
 
   if (!response.ok) throw new Error(`${url} GET error`);
-
-  const coupons: CouponType[] = await response.json();
-
-  return coupons;
+  return response.json();
 };
 
 export const getCart = async (serverName: ServerNameType, token: string) => {
@@ -169,7 +167,10 @@ export const deleteCartItems = async (
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 };
 
-export const getOrders = async (serverName: ServerNameType, token: string) => {
+export const getOrders = async (
+  serverName: ServerNameType,
+  token: string
+): Promise<OrderType[]> => {
   const url = `${BASE_URL_MAP[serverName]}/orders`;
   const response = await fetch(url, {
     method: 'GET',
@@ -179,13 +180,14 @@ export const getOrders = async (serverName: ServerNameType, token: string) => {
   });
 
   if (!response.ok) throw new Error(`${url} GET error`);
-
-  const orders: OrderType[] = await response.json();
-
-  return orders;
+  return response.json();
 };
 
-export const getOrder = async (serverName: ServerNameType, token: string, orderId: number) => {
+export const getOrder = async (
+  serverName: ServerNameType,
+  token: string,
+  orderId: number
+): Promise<OrderDetailType> => {
   const url = `${BASE_URL_MAP[serverName]}/orders/${orderId}`;
   const response = await fetch(url, {
     method: 'GET',
@@ -195,10 +197,7 @@ export const getOrder = async (serverName: ServerNameType, token: string, orderI
   });
 
   if (!response.ok) throw new Error(`${url} GET error`);
-
-  const order: OrderDetailType = await response.json();
-
-  return order;
+  return response.json();
 };
 
 interface OrderRequestItemType {
