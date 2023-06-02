@@ -6,14 +6,14 @@ export const useOrderFetch = () => {
   const apiEndPoint = useRecoilValue(APIAtom);
 
   const getOrder = async () => {
-    const getOrderList = await fetch('/orders', {
+    const getOrderList = await fetch(`${apiEndPoint}/orders`, {
       method: 'GET',
       headers: {
         Authorization: `Basic ${base64}`,
       },
     });
 
-    return getOrderList.json();
+    if (getOrderList) return getOrderList.json();
   };
 
   const orderByCartId = (

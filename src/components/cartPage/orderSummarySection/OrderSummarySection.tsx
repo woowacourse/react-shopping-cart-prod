@@ -37,7 +37,9 @@ export const OrderSummarySection = () => {
     );
 
     order.then((response) => {
-      const orderId = response.headers.get('Location')?.replace('orders/', '');
+      const orderId = response.headers.get('Location')?.replace('/orders/', '');
+
+      console.log(orderId);
 
       setPoint({ point: point.point - viewPoint + pointToAdd });
 
