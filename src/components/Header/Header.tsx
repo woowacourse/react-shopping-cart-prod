@@ -46,9 +46,9 @@ const Header = () => {
           <Styled.LogoImage src={Logo} alt='SHOP' />
         </Styled.LogoButton>
         <Styled.ServerSelectBox onChange={onChangeServerNameHandler}>
+          <option value='IRAE'>이레 👧🏻</option>
           <option value='SPLIT'>스플릿 👨🏻‍🦱</option>
           <option value='ROY'>로이 👨🏻‍🦰</option>
-          <option value='IRAE'>이레 👧🏻</option>
         </Styled.ServerSelectBox>
         <Styled.OrderListButton onClick={orderListButtonHandler}>주문 목록 🛒</Styled.OrderListButton>
         <Styled.ShoppingCartButton onClick={handleShoppingCartButtonClick}>
