@@ -8,6 +8,7 @@ export const theme = {
   lightColor: '#FFFFFF',
   darkColor: '#000000',
   grayColor: '#fafafa',
+  grayDarkColor: '#DBD7D2',
   grayBorderColor: '#f7f7f7',
 
   breakpoints: {
