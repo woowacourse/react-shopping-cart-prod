@@ -31,7 +31,9 @@ export const Cart = () => {
 
 const Style = {
   Cart: styled.div`
-    @media screen and (max-width: 500px) {
+    width: 55%;
+
+    @media screen and (max-width: 1100px) {
       width: 100%;
     }
   `,
@@ -45,7 +47,7 @@ const Style = {
     padding: 8px 0;
 
     @media screen and (min-width: 501px) {
-      width: 735px;
+      width: 100%;
     }
 
     @media screen and (max-width: 500px) {

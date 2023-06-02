@@ -35,7 +35,7 @@ const Style = {
     }
 
     &.rectangle {
-      width: 388px;
+      width: 280px;
       height: 73px;
 
       border: ${(props) => props.bgColor ?? 'solid 1px var(--grey-300)'};
