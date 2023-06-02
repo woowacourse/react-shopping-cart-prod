@@ -16,3 +16,13 @@ export const getOrder = async (orderId: number) => {
 
   return order;
 };
+
+export const createOrder = async (cartProductIds: number[], pointCost: number) => {
+  const fetchedData = await api.post(URL, { cartItemIds: cartProductIds, point: pointCost });
+  const location = fetchedData.headers.get('Location');
+  if (!location) throw new Error(`상품 주문 요청 성공시 반환되는 location이 없습니다.`);
+
+  const orderId = location.replace('/orders/', '');
+
+  return Number(orderId);
+};

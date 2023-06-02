@@ -4,11 +4,16 @@ import { BASE_SHIPPING_FEE, SHIPPING_FEE_THRESHOLD, PERCENTAGE_OF_EARN_POINTS } 
 import useCartCheckBox from 'hooks/useCartCheckBox';
 import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { checkedCartProductsTotalPrice } from 'state/cartProducts';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+import { cartProductsState, checkedCartProductsTotalPrice } from 'state/cartProducts';
 import styled from 'styled-components';
+import { createOrder } from 'apis/orders';
+import { getCartProducts } from 'apis/cart';
+import { cartProductIdStoreState } from 'state/cartProductIdStore';
 
 const CheckOutPriceSection = () => {
+  // const updateCartProducts = useResetRecoilState(cartProductsState);
+  // const updateCartProductIdStore = useResetRecoilState(cartProductIdStoreState);
   const { checkedCartProductIds } = useCartCheckBox();
   const { pointCost } = useCheckOutPointCostContext();
   const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPrice(checkedCartProductIds));
@@ -26,8 +31,20 @@ const CheckOutPriceSection = () => {
   const orderConfirmButtonText = isCheckedProductsExist
     ? `총 ${checkedCartProductIds.size}건 주문하기(${paymentAmount.toLocaleString('ko-KR')}원)`
     : '주문하기';
-
   const earnPointsText = `${earnPoints.toLocaleString('ko-KR')}P 적립 예정`;
+
+  const addOrder = async () => {
+    try {
+      await createOrder([...checkedCartProductIds], pointCost).then(() => {
+        navigate(ROUTE_PATH.ORDER_LIST);
+        window.location.reload();
+      });
+    } catch (error) {
+      console.error(error);
+      alert('상품을 주문하지 못했어요. 다시 시도해주세요');
+      return;
+    }
+  };
 
   return (
     <Container sizing={{ width: '40%' }} flex={{ flexDirection: 'column' }}>
@@ -59,7 +76,7 @@ const CheckOutPriceSection = () => {
       </PriceSection>
 
       <ConfirmButtonBox sizing={{ width: '100%' }}>
-        <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.CHECKOUT)} isActive={isCheckedProductsExist}>
+        <OrderConfirmButton onClick={addOrder} isActive={isCheckedProductsExist}>
           {orderConfirmButtonText}
         </OrderConfirmButton>
       </ConfirmButtonBox>
