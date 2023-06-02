@@ -15,7 +15,7 @@ export const OrderDetailItemSection = () => {
         <Style.OrderHeader>
           <div>주문번호: {location.state}</div>
         </Style.OrderHeader>
-        {orderDetail.orderInfo.map((item) => {
+        {orderDetail.orderInfos.map((item) => {
           return (
             <OrderDetailItem key={orderDetail.orderId} orderInfoItem={item} />
           );

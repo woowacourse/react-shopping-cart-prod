@@ -1,8 +1,10 @@
 import { rest } from 'msw';
 import {
   ORDER_LIST_KEY,
+  POINT_KEY,
   getCartItems,
   getOrderList,
+  getPoint,
 } from '../utils/localStorage';
 import { CartProductDetail } from '../recoil/atoms/cartAtom';
 
@@ -14,7 +16,7 @@ export const orderHandlers = [
   }),
   rest.post('/orders', async (req, res, ctx) => {
     const requestData = await req.json();
-    const cartItemId = await requestData.order;
+    const cartItemIds = await requestData.order;
     const originalPrice = await requestData.originalPrice;
     const usedPoint = await requestData.usedPoint;
     const pointToAdd = await requestData.pointToAdd;
@@ -37,11 +39,20 @@ export const orderHandlers = [
       });
     };
 
-    const matchedProducts = findProductById(cartItemId, cartItem);
+    const matchedProducts = findProductById(cartItemIds, cartItem);
 
     const orderId = Math.random();
 
     const orderList = getOrderList();
+
+    const point = getPoint();
+
+    localStorage.setItem(
+      POINT_KEY,
+      JSON.stringify({
+        point: point.point - usedPoint + pointToAdd,
+      })
+    );
 
     localStorage.setItem(
       ORDER_LIST_KEY,
@@ -49,7 +60,7 @@ export const orderHandlers = [
         ...orderList,
         {
           orderId: orderId,
-          orderInfo: matchedProducts,
+          orderInfos: matchedProducts,
           originalPrice: originalPrice,
           usedPoint: usedPoint,
           pointToAdd: pointToAdd,

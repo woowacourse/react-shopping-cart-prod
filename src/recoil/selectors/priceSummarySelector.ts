@@ -1,6 +1,5 @@
 import { selector } from 'recoil';
 import { cartItemsState, selectedCartIdListState } from '../atoms/cartAtom';
-import { orderListState } from './orderSelector';
 
 export const priceSummaryState = selector({
   key: 'priceSummaryState',
@@ -24,7 +23,18 @@ export const priceSummaryState = selector({
 
     const totalPrice = totalProductPrice + deliveryPrice;
 
-    const pointToAdd = totalPrice / 10;
+    const pointToAdd = selectedCartItems.reduce((acc, selectedCartItemId) => {
+      const product = cartItems.find(
+        (cartProduct) => cartProduct.id === selectedCartItemId
+      );
+
+      if (product?.product.pointAvailable) {
+        return (acc +=
+          Number(product?.product.price) / Number(product?.product.pointRatio));
+      }
+
+      return acc;
+    }, 0);
 
     return { totalProductPrice, deliveryPrice, totalPrice, pointToAdd };
   },

@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 interface OrderItemListProps {
   orderId: number;
-  orderInfo: Product[];
+  orderInfos: Product[];
 }
 
-export const OrderItemList = ({ orderId, orderInfo }: OrderItemListProps) => {
+export const OrderItemList = ({ orderId, orderInfos }: OrderItemListProps) => {
   const moveToOrderDetail = useNavigate();
 
   const handleDetailButton = () => {
@@ -24,7 +24,7 @@ export const OrderItemList = ({ orderId, orderInfo }: OrderItemListProps) => {
           <div>주문번호: {orderId}</div>
           <button onClick={handleDetailButton}>상세보기</button>
         </Style.OrderHeader>
-        {orderInfo.map((item, index) => {
+        {orderInfos.map((item, index) => {
           return <OrderItem key={orderId * index} product={item} />;
         })}
       </Style.Content>

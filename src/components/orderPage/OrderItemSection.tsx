@@ -21,7 +21,7 @@ export const OrderItemSection = () => {
           <OrderItemList
             key={orderItem.orderId + index}
             orderId={orderItem.orderId}
-            orderInfo={orderItem.orderInfo}
+            orderInfos={orderItem.orderInfos}
           />
         );
       })}

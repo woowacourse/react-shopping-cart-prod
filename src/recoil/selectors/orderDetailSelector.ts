@@ -1,11 +1,11 @@
-import { atom, selector, selectorFamily, useRecoilValue } from 'recoil';
+import { selectorFamily, useRecoilValue } from 'recoil';
 import { Product } from '../../types/Product';
 import { base64 } from '../../constants/user';
 import { APIAtom } from '../atoms/serverAtom';
 
 export interface OrderDetail {
   orderId: number;
-  orderInfo: Product[];
+  orderInfos: Product[];
   originalPrice: number;
   usedPoint: number;
   pointToAdd: number;

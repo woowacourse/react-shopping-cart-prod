@@ -4,7 +4,7 @@ import { base64 } from '../../constants/user';
 
 export interface Order {
   orderId: number;
-  orderInfo: Product[];
+  orderInfos: Product[];
 }
 
 export const orderListSelector = selector<Order[]>({

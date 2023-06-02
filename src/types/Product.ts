@@ -4,4 +4,6 @@ export interface Product {
   price: number;
   imageUrl: string;
   quantity?: number;
+  pointRatio?: number;
+  pointAvailable?: boolean;
 }

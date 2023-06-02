@@ -42,9 +42,14 @@ export const getOrderList = () => {
 };
 
 export const getPoint = () => {
-  const localStoragePoint = localStorage.getItem(POINT_KEY) ?? '{}';
+  const localStoragePoint = localStorage.getItem(POINT_KEY);
 
-  const point = JSON.parse(localStoragePoint);
+  const point = JSON.parse(localStoragePoint ?? JSON.stringify({ point: 0 }));
+
+  if (localStoragePoint === undefined) {
+    localStorage.setItem(POINT_KEY, JSON.stringify(0));
+    return 0;
+  }
 
   return point;
 };
