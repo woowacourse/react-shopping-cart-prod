@@ -19,8 +19,6 @@ export default function CartPage() {
   const loginCredential = useRecoilValue(loginState);
   const { showToast } = useToast();
 
-  console.log(loginCredential);
-
   useEffect(() => {
     try {
       api.getCart<CartType>(serverName, loginCredential).then((cart) => {
