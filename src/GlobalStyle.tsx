@@ -34,6 +34,10 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
+  select {
+    cursor: pointer;
+  }
+
   a {
     text-decoration: none;
     color: inherit;
