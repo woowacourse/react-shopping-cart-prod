@@ -80,3 +80,8 @@ export const OrderButton = styled.button`
     height: 50px;
   }
 `;
+
+export const ToolText = styled(CartPriceText)`
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.66);
+`;

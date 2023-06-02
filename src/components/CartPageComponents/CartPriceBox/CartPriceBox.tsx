@@ -28,6 +28,9 @@ const CartPriceBox = () => {
             <Styled.CartPriceBoxDivider />
             <Styled.CartPriceTextWrapper>
               <Styled.PriceTextWrapper>
+                <Styled.ToolText>100,000 원 이상 주문 시 10% 할인</Styled.ToolText>
+              </Styled.PriceTextWrapper>
+              <Styled.PriceTextWrapper>
                 <Styled.CartPriceText>총 상품가격</Styled.CartPriceText>
                 <Styled.CartPriceText>{totalItemPrice.toLocaleString()}원</Styled.CartPriceText>
               </Styled.PriceTextWrapper>
