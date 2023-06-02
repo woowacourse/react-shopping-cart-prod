@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
+import type { OrderListEntity } from '../api/rest/ShoppingCartRestAPI';
+import { orderListState } from '../recoil/atoms/orderState';
 import { Image, ItemContainer, Name, Price, Quantity } from './common/ProductItem';
 
 const Container = styled.section`
@@ -37,30 +41,47 @@ const RowFlexBox = styled.div`
   color: ${({ theme }) => theme.colors.gray400};
 `;
 
-const OrderList = () => {
+interface OrderListProps {
+  orderList: OrderListEntity;
+}
+
+const OrderList = (props: OrderListProps) => {
+  const { orderList } = props;
+  const navigate = useNavigate();
+
+  const moveToDetailPage = () => {
+    navigate(`/order-detail/${orderList.id}`);
+  };
+
   return (
     <Container>
       <TitleSection>
-        주문번호 : 1<DetailButton>상세보기 ▷ </DetailButton>
+        주문번호 : {orderList.id}
+        <DetailButton onClick={moveToDetailPage}>상세보기 ▷ </DetailButton>
       </TitleSection>
-      <ItemContainer
-        productData={{
-          name: '친환경 실링용기-ECO 1915',
-          image: 'public/images/products/1.png',
-          price: 0,
-          quantity: 0,
-        }}
-        containerStyle={{ display: 'flex', padding: '20px' }}
-      >
-        <Image imageStyle={{ height: '141px', width: '141px' }} />
-        <ColumnFlexBox>
-          <Name fontStyle="name" />
-          <RowFlexBox>
-            <Price fontStyle="price" />/
-            <Quantity fontStyle="price" />
-          </RowFlexBox>
-        </ColumnFlexBox>
-      </ItemContainer>
+      {orderList.cartItems.map((item) => {
+        return (
+          <ItemContainer
+            key={item.productId}
+            productData={{
+              name: item.name,
+              image: item.imageUrl,
+              price: item.price,
+              quantity: item.quantity,
+            }}
+            containerStyle={{ display: 'flex', padding: '20px' }}
+          >
+            <Image imageStyle={{ height: '141px', width: '141px' }} />
+            <ColumnFlexBox>
+              <Name fontStyle="name" />
+              <RowFlexBox>
+                <Price fontStyle="price" />/
+                <Quantity fontStyle="price" />
+              </RowFlexBox>
+            </ColumnFlexBox>
+          </ItemContainer>
+        );
+      })}
     </Container>
   );
 };
