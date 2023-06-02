@@ -41,8 +41,10 @@ const useFetch = <T>({ url, method = 'GET', isNotAutomaticallyFetched = false }:
 
       setFetchState((prevState) => ({ ...prevState, status: 'loading', error: null }));
 
+      let response: Response | null = null;
+
       try {
-        const response: Response = await fetch(urlWithParam, {
+        response = await fetch(urlWithParam, {
           method,
           body: body ? JSON.stringify(body) : null,
           headers: { 'Content-Type': 'application/json', authorization: `Basic ${auth}` },
@@ -58,7 +60,7 @@ const useFetch = <T>({ url, method = 'GET', isNotAutomaticallyFetched = false }:
         setFetchState({ status: 'success', data, error: null });
       } catch (error) {
         setFetchState((prevState) => ({ ...prevState, status: 'fail', error: error as Error }));
-        // navigate('/error', { state: { error: error as Error } });
+        navigate('/error', { state: { error: error as Error, statusCode: response?.status } });
       }
     },
     [url, method, navigate, serverName]
