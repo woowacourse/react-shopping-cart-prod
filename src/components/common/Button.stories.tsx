@@ -16,6 +16,13 @@ export const Default: Story = {
   },
 };
 
+export const Disabled: Story = {
+  args: {
+    disabled: true,
+    children: '예시 버튼',
+  },
+};
+
 export const SizeSmall: Story = {
   args: {
     size: 'small',

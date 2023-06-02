@@ -36,19 +36,28 @@ type ButtonContainerProps = {
 const ButtonContainer = styled.button<ButtonContainerProps>`
   ${(props) => stylesBySize[props.$size]}
   ${(props) => stylesByVariant[props.$variant]}
+
+  ${(props) => (props.disabled ? 'opacity: 0.5;' : '')}
 `;
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   PropsWithChildren<{
     size?: ButtonSize;
     variant?: ButtonVariant;
+    disabled?: boolean;
   }>;
 
 const Button = (props: ButtonProps) => {
-  const { children, size = 'medium', variant = 'contained', ...buttonProps } = props;
+  const {
+    children,
+    size = 'medium',
+    variant = 'contained',
+    disabled = false,
+    ...buttonProps
+  } = props;
 
   return (
-    <ButtonContainer $size={size} $variant={variant} {...buttonProps}>
+    <ButtonContainer $size={size} $variant={variant} disabled={disabled} {...buttonProps}>
       {children}
     </ButtonContainer>
   );
