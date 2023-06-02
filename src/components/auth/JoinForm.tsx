@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled, { keyframes } from 'styled-components';
 
 import Input from '../common/Input';
@@ -8,12 +8,12 @@ import InputBox from '../common/InputBox';
 
 import useToast from '../../hooks/useToast';
 import { tokenState, serverNameState } from '../../recoil/state';
-import { postJoin } from '../../api';
+import { postJoin, postLogin } from '../../api';
 
 export default function JoinForm() {
   const navigate = useNavigate();
 
-  const [serverName, setServerName] = useRecoilState(serverNameState);
+  const serverName = useRecoilValue(serverNameState);
   const setToken = useSetRecoilState(tokenState);
 
   const [name, setName] = useState('');
@@ -22,12 +22,18 @@ export default function JoinForm() {
 
   const submitUser = async (event: React.FormEvent) => {
     event.preventDefault();
-    try {
-      await postJoin(serverName, name, password);
-      navigate('/');
-    } catch {
-      showToast('warning', '회원가입 실패!');
+
+    const response = await postJoin(serverName, name, password);
+    if (!response.ok) {
+      const body = await response.json();
+      showToast('error', body.errorMessage);
+      return;
     }
+
+    const token = await postLogin(serverName, name, password);
+    setToken(token);
+    navigate('/');
+    showToast('info', '가입을 축하드립니다!');
   };
 
   const validInput = name !== '' && password !== '';
@@ -39,10 +45,9 @@ export default function JoinForm() {
         <div>
           <Label>아이디</Label>
           <InputRow>
-            <InputBox width="60%">
+            <InputBox>
               <Input textType="string" value={name} setValue={setName} length={10} />
             </InputBox>
-            <RowButton type="button">중복확인</RowButton>
           </InputRow>
           <Label>비밀번호</Label>
           <InputBox>
