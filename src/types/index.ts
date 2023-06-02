@@ -17,13 +17,13 @@ export type CartItemType = {
 
 export type OrderItemType = {
   id: number;
-  cartItem: CartItemType[];
-  date: Date;
+  orderItems: CartItemType[];
+  date: string;
   price: number;
 };
 
 export type CouponType = {
-  id: number;
+  id: number | null;
   name: string;
   discountAmount: number;
   description: string;

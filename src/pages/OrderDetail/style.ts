@@ -28,7 +28,11 @@ export const OrderItemsContainer = styled.ul`
 export const OrderID = styled.div`
   font-size: 20px;
   line-height: 24px;
-  width: 140px;
+  width: 200px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const OrderTitle = styled.div`
@@ -56,9 +60,11 @@ export const PriceWrapper = styled.div`
 export const PriceContainer = styled.div`
   border: 1px solid #aaaaaa;
   max-width: 45%;
+  min-width: 450px;
   @media only screen and (max-width: 768px) {
     max-width: none;
     width: 100%;
+    min-width: 300px;
   }
 `;
 
