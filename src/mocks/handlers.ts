@@ -22,6 +22,7 @@ interface PatchUpdateCartRequestBody {
 
 const PRODUCTS_PATH_NAME = `/products`;
 const CART_ITEMS_PATH_NAME = `/cart-items`;
+const COUPON_PATH_NAME = `/coupons`;
 
 export const productHandler = [
   rest.get(PRODUCTS_PATH_NAME, (req, res, ctx) => {
@@ -72,5 +73,22 @@ export const cartHandler = [
     cartList.splice(targetCartItemIndex, 1);
     updateLocalStorage();
     return res(ctx.delay(500), ctx.status(204));
+  }),
+];
+
+export const couponHander = [
+  rest.get(COUPON_PATH_NAME, (req, res, ctx) => {
+    const couponList = {
+      coupons: [
+        {
+          id: 1,
+          type: 'percent',
+          amount: 10,
+          name: '신규 회원 환영 쿠폰',
+        },
+      ],
+    };
+
+    return res(ctx.delay(1000), ctx.status(200), ctx.json(couponList));
   }),
 ];
