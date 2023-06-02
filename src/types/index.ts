@@ -20,3 +20,12 @@ export interface OrderDetailsType {
   product: ProductType;
   quantity: number;
 }
+
+export interface UserOrdersType {
+  orderDate: string;
+  orderDetails: OrderDetailsType[];
+  orderId: number;
+  shippingFee: number;
+  totalProductsPrice: number;
+  usedPoint: number;
+  }
