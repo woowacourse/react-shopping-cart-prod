@@ -2,8 +2,29 @@ import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Header from '../common/Header';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { couponsState, serverNameState, tokenState } from '../../recoil/state';
+import { useEffect } from 'react';
+import { getCoupons } from '../../api';
+import useToast from '../../hooks/useToast';
 
 export default function RootPage() {
+  const serverName = useRecoilValue(serverNameState);
+  const token = useRecoilValue(tokenState);
+  const setCoupons = useSetRecoilState(couponsState);
+
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    if (token === null) return;
+
+    try {
+      getCoupons(serverName, token).then(setCoupons);
+    } catch {
+      showToast('error', '쿠폰가져오기 실패');
+    }
+  }, [serverName, token]);
+
   return (
     <Wrapper>
       <Header />
@@ -31,9 +52,9 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
 
-  width: 80%;
+  width: 100%;
   height: 100%;
-  padding: 60px 16px;
+  padding-top: 48px;
 
   overflow: scroll;
 `;
