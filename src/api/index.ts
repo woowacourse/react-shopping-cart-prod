@@ -144,3 +144,23 @@ export const postLoginInfo = async (
 
   return loginToken['token'];
 };
+
+export const getCoupon = async <T>(serverName: ServerNameType, loginCredential: string) => {
+  const url = `${BASE_URL_MAP[serverName]}/users/me/coupons`;
+
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+    },
+  });
+
+  if (!response.ok && response.body) {
+    const errorMessage = (await response.json()) as { errorMessage: string };
+    throw new Error(`${errorMessage.errorMessage}`);
+  }
+  if (!response.ok) throw new Error(`${url} FETCH Error`);
+
+  const data: T = await response.json();
+
+  return data;
+};

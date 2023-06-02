@@ -28,3 +28,11 @@ export interface ToastInfoType {
   message: string;
   type: 'info' | 'warning' | 'error';
 }
+
+export interface CouponInfo {
+  discountRate: number;
+  expiredAt: string;
+  id: number;
+  isUsed: boolean;
+  name: string;
+}

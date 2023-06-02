@@ -4,6 +4,7 @@ import RootPage from './page/RootPage';
 import ProductList from './components/productList/ProductList';
 import CartPage from './page/CartPage';
 import ErrorPage from './page/ErrorPage';
+import CouponPage from './page/CouponPage';
 
 const routes = [
   {
@@ -17,6 +18,10 @@ const routes = [
       {
         path: 'cart',
         element: <CartPage />,
+      },
+      {
+        path: 'coupon',
+        element: <CouponPage />,
       },
       {
         path: '*',

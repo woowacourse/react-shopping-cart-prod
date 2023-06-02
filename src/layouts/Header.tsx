@@ -1,5 +1,5 @@
 import * as S from './styles/Header.styles';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { cartCountState } from '../atom/cart';
 import Logo from './Logo';
 import { loginState } from '../atom/login';
@@ -8,18 +8,27 @@ import SignUp from './SignUp';
 
 export default function Header() {
   const cartCount = useRecoilValue(cartCountState);
-  const loginAuth = useRecoilValue(loginState);
+  const [loginCredential, setLoginCredential] = useRecoilState(loginState);
 
   return (
     <S.Wrapper>
       <S.ContentBox>
         <Logo />
-        {loginAuth ? (
+        {loginCredential ? (
           <S.RightBox>
-            <S.CartLink to="/cart">
+            <S.LinkBox to="/cart">
               장바구니
               <S.CartCount>{cartCount}</S.CartCount>
-            </S.CartLink>
+            </S.LinkBox>
+            <S.LinkBox to="/coupon">쿠폰함</S.LinkBox>
+            <S.LinkBox
+              to="/"
+              onClick={() => {
+                setLoginCredential('');
+              }}
+            >
+              로그아웃
+            </S.LinkBox>
           </S.RightBox>
         ) : (
           <S.RightBox>

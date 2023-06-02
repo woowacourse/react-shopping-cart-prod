@@ -30,11 +30,17 @@ export const RightBox = styled.div`
   justify-content: space-between;
 `;
 
-export const CartLink = styled(Link)`
+export const LinkBox = styled(Link)`
   display: flex;
 
   font-size: 24px;
   font-weight: 500;
+
+  margin-left: 32px;
+
+  &:first-of-type {
+    margin-left: 0;
+  }
 `;
 
 export const CartCount = styled.div`
