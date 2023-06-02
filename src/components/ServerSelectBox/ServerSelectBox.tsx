@@ -3,13 +3,24 @@ import { Select } from "./ServerSelectBox.style";
 import { serverState } from "../../recoil/serverAtom";
 import { ChangeEvent, useEffect } from "react";
 import { cartRepository } from "../../recoil/cartAtoms";
+import { userRepository, userState } from "../../recoil/userAtom.ts";
 
 function ServerSelectBox() {
   const { loadCartList } = useRecoilValue(cartRepository);
   const [server, setServer] = useRecoilState(serverState);
+  const user = useRecoilValue(userState);
+
+  const { logout } = useRecoilValue(userRepository);
 
   const onChangeServer = (e: ChangeEvent<HTMLSelectElement>) => {
-    setServer(e.target.value);
+    if (user) {
+      if (confirm("로그아웃 하시겠습니까?")) {
+        logout();
+        setServer(e.target.value);
+      }
+    } else {
+      setServer(e.target.value);
+    }
   };
 
   useEffect(() => {

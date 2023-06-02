@@ -47,6 +47,7 @@ export const MenuIcon = styled.div`
 export const MenuTitle = styled.div`
   margin-top: 2px;
   font-size: 10px;
+  text-align: center;
 
   color: ${({ theme }) => theme.color.dark};
 `;

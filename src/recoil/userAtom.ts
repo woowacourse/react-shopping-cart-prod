@@ -1,6 +1,6 @@
 import { atom, selector } from "recoil";
 import type { Login, User } from "../types/types.ts";
-import { modalOpenState, modalRepository } from "./modalAtoms.tsx";
+import { modalRepository } from "./modalAtoms.tsx";
 
 export const userState = atom<User | null>({
   key: "userState",
@@ -10,7 +10,6 @@ export const userState = atom<User | null>({
 export const userRepository = selector({
   key: "userRepository",
   get: ({ getCallback }) => {
-
     const login = getCallback(({ set, snapshot }) => async (member: Login) => {
       const { closeModal } = await snapshot.getPromise(modalRepository);
       const user = await snapshot.getPromise(userState);
@@ -19,7 +18,7 @@ export const userRepository = selector({
         const name = member.id.split("@")[0];
         const newUser: User = {
           ...member,
-          name
+          name,
         };
         set(userState, newUser);
         closeModal();
@@ -27,11 +26,9 @@ export const userRepository = selector({
     });
 
     const logout = getCallback(({ set }) => async () => {
-      if (confirm('로그아웃 하시겠습니까?')) {
-        set(userState, null);
-      }
+      set(userState, null);
     });
 
     return { login, logout };
-  }
+  },
 });

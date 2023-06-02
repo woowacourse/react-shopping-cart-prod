@@ -1,11 +1,19 @@
 import { useState } from "react";
 import styled from "styled-components";
-import { MenuIcon, MenuTitle, MenuWrapper } from "./Header.style";
+import {
+  CartCount,
+  CartCountText,
+  CartCountWrapper,
+  MenuIcon,
+  MenuTitle,
+  MenuWrapper,
+} from "./Header.style";
 import Icon from "../Icon";
-import { IoPerson } from "react-icons/io5";
+import { IoCart, IoPerson } from "react-icons/io5";
 import { useRecoilValue } from "recoil";
-import { userRepository } from "../../recoil/userAtom.ts";
+import { userRepository, userState } from "../../recoil/userAtom.ts";
 import { useNavigate } from "react-router-dom";
+import { cartCountSelector } from "../../recoil/cartAtoms.ts";
 
 export const DropdownWrapper = styled.div`
   position: relative;
@@ -46,10 +54,17 @@ export const Backdrop = styled.div<{ isOpen: boolean }>`
   z-index: 9998;
 `;
 
+const MenuGroup = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
 function PersonalDropdown() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const user = useRecoilValue(userState);
   const { logout } = useRecoilValue(userRepository);
+  const cartCount = useRecoilValue(cartCountSelector);
 
   const options = [
     {
@@ -58,7 +73,11 @@ function PersonalDropdown() {
     },
     {
       name: "로그아웃",
-      callback: () => logout(),
+      callback: () => {
+        if (confirm("로그아웃 하시겠습니까?")) {
+          logout();
+        }
+      },
     },
   ];
 
@@ -73,14 +92,32 @@ function PersonalDropdown() {
 
   return (
     <DropdownWrapper>
-      <MenuWrapper onClick={() => toggleDropdown()}>
-        <MenuIcon>
-          <Icon fontSize={30}>
-            <IoPerson />
-          </Icon>
-          <MenuTitle>#아이디#</MenuTitle>
-        </MenuIcon>
-      </MenuWrapper>
+      <MenuGroup>
+        <MenuWrapper onClick={() => navigate("/cart")}>
+          <MenuIcon>
+            {cartCount > 0 ? (
+              <CartCountWrapper>
+                <CartCount>
+                  <CartCountText>{cartCount}</CartCountText>
+                </CartCount>
+              </CartCountWrapper>
+            ) : (
+              <Icon fontSize={30}>
+                <IoCart />
+              </Icon>
+            )}
+            <MenuTitle>장바구니</MenuTitle>
+          </MenuIcon>
+        </MenuWrapper>
+        <MenuWrapper onClick={() => toggleDropdown()}>
+          <MenuIcon>
+            <Icon fontSize={30}>
+              <IoPerson />
+            </Icon>
+            <MenuTitle>{user?.name} 님</MenuTitle>
+          </MenuIcon>
+        </MenuWrapper>
+      </MenuGroup>
       <DropdownMenu isOpen={isOpen}>
         {options.map((option, index) => (
           <DropdownMenuItem
