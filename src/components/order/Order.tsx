@@ -1,30 +1,31 @@
+import type { OrderType } from '../../types';
+
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-interface Props {
-  length: number;
+interface Props extends OrderType {
   buttonHidden?: boolean;
 }
 
-export default function OrderItem({ length, buttonHidden = false }: Props) {
+export default function Order({ orderId, items, buttonHidden = false }: Props) {
   return (
     <Wrapper>
       <Header>
-        <span>주문번호 : 1</span>
-        {!buttonHidden && <HeaderLink to="/order/1">{'상세보기 >'}</HeaderLink>}
+        <span>주문번호 : {orderId}</span>
+        {!buttonHidden && <HeaderLink to={`/orders/${orderId}`}>{'상세보기 >'}</HeaderLink>}
       </Header>
-      {Array.from({ length }).map(() => (
-        <Item>
+      {items.map(({ product: { id, name, price, imageUrl }, quantity }) => (
+        <OrderItem key={id}>
           <Box>
-            <Image src="/emptyProduct.svg" />
+            <Image src={imageUrl} />
             <InfoBox>
-              <Label>친환경 실링용기-ECO 19153</Label>
+              <Label>{name}</Label>
               <Price>
-                {(180600).toLocaleString()}원 / 수량 : {3}개
+                {price.toLocaleString()}원 / 수량 : {quantity}개
               </Price>
             </InfoBox>
           </Box>
-        </Item>
+        </OrderItem>
       ))}
     </Wrapper>
   );
@@ -45,9 +46,9 @@ const Header = styled.div`
 
   width: 100%;
   height: 92px;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #dddddd;
   padding: 28px;
-  background: #f6f6f6;
+  background: #f6f8fa;
 
   font-size: 20px;
   color: #333333;
@@ -60,13 +61,13 @@ const HeaderLink = styled(Link)`
   color: #333333;
 `;
 
-const Item = styled.div`
+const OrderItem = styled.div`
   display: flex;
   align-items: center;
 
   width: 100%;
   height: 220px;
-  border: 1px solid #aaaaaa;
+  border: 1px solid #dddddd;
   padding: 24px;
 
   & + & {
