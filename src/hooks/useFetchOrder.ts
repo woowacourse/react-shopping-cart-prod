@@ -12,7 +12,6 @@ const useFetchOrder = () => {
         orderTime: new Date().toISOString(),
       });
     } catch (error) {
-      console.log(error);
       if (error instanceof Error) alert(error.message);
     }
   };

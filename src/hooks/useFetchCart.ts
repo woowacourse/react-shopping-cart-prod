@@ -32,7 +32,6 @@ const useFetchCart = () => {
           ] as Cart[]
       );
     } catch (error) {
-      console.log(error);
       alert(error);
     }
   };
