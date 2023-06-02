@@ -56,7 +56,7 @@ const fetchApis = (serverName: ServerKey) => {
     await handleResponseError(response);
   };
 
-  const deleteData = async <T>(endpoint: string) => {
+  const deleteData = async (endpoint: string) => {
     const url = getUrl(endpoint);
     if (!url) throw new Error('잘못된 요청입니다');
 

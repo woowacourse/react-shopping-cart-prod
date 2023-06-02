@@ -1,8 +1,4 @@
-import {
-  ChangeEventHandler,
-  ForwardRefExoticComponent,
-  LinkHTMLAttributes,
-} from 'react';
+import { ChangeEventHandler } from 'react';
 import { useSetRecoilState } from 'recoil';
 
 import styled from 'styled-components';
@@ -16,9 +12,8 @@ import { serverNameState } from '../../states/serverName';
 import { SERVER_KEYS, isServerKey } from '../../constants/server';
 import { PAGE_URLS } from '../../constants/pageUrls';
 
-interface StyledLinkProps extends LinkProps {
-  cartProductCount?: number;
-  pathname?: string;
+interface CartLinkProps extends LinkProps {
+  pathname: string;
 }
 
 const Header = () => {
@@ -43,17 +38,13 @@ const Header = () => {
           <SelectBox options={SERVER_KEYS} onChange={onChange} />
         </div>
         <div>
-          <StyledLink
-            to="/cart"
-            cartProductCount={cartProductCount}
-            pathname={pathname}
-          >
+          <CartLink to="/cart" pathname={pathname}>
             <DesktopText>장바구니</DesktopText>
             <ProductCountAlert>{cartProductCount}</ProductCountAlert>
             <MobileText>
               장바구니에 {cartProductCount}개의 상품이 있어요
             </MobileText>
-          </StyledLink>
+          </CartLink>
           <StyledLink to="/order">주문목록</StyledLink>
         </div>
       </HeaderContent>
@@ -130,11 +121,7 @@ const Logo = styled.h1`
   }
 `;
 
-const StyledLink = styled(
-  ({ cartProductCount, pathname, ...restProps }: StyledLinkProps) => (
-    <Link {...restProps} />
-  )
-)`
+const StyledLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -146,25 +133,22 @@ const StyledLink = styled(
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     font-size: 24px;
+  }
+`;
 
-    ${({ to, cartProductCount, pathname, theme }) => {
-      if (to !== PAGE_URLS.cart) return;
+const CartLink = styled(StyledLink)<CartLinkProps>`
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    display: ${({ pathname }) =>
+      pathname === PAGE_URLS.cart ? 'none' : 'block'};
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px;
+    z-index: 999;
 
-      if (pathname === PAGE_URLS.cart) return `display: none`;
-
-      return `
-				display: ${cartProductCount ? 'block' : 'none'};
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				padding: 20px;
-				z-index: 999;
-
-				text-align: center;
-				background-color: ${theme.colors.primary};
-			`;
-    }};
+    text-align: center;
+    background-color: ${({ theme }) => theme.colors.primary};
   }
 `;
 

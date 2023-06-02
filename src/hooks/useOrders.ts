@@ -10,21 +10,22 @@ import { TOAST_STATE } from '../constants/toast';
 export const useOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const serverName = useRecoilValue(serverNameState);
-  const { getData } = fetchApis(serverName);
   const setToastState = useSetRecoilState(toastState);
 
-  const getOrders = async () => {
-    try {
-      const data = await getData<Order[]>('/orders');
-      setOrders(data);
-    } catch {
-      setToastState(TOAST_STATE.failedGetOrder);
-    }
-  };
-
   useEffect(() => {
+    const { getData } = fetchApis(serverName);
+
+    const getOrders = async () => {
+      try {
+        const data = await getData<Order[]>('/orders');
+        setOrders(data);
+      } catch {
+        setToastState(TOAST_STATE.failedGetOrder);
+      }
+    };
+
     getOrders();
-  }, [serverName]);
+  }, [serverName, setToastState]);
 
   return orders;
 };
