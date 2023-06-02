@@ -21,7 +21,10 @@ export const getCheckedCartProductsState = selector({
   get: ({ get }) => {
     const cartProducts = get(cartProductsState);
     const cartCheckedProductIds = get(checkedCartProductIdsState);
-    const checkedCartProducts = [...cartCheckedProductIds].map((id) => cartProducts.get(id)) as CartProduct[];
+
+    const checkedCartProducts = [...cartProducts.entries()]
+      .filter(([cartProductId]) => cartCheckedProductIds.has(cartProductId))
+      .map(([_, cartProduct]) => cartProduct);
 
     return checkedCartProducts;
   },
