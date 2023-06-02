@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface SpinnerProps {
+export interface SpinnerProps {
   diameter?: string;
   spinnerWidth?: string;
   color?: string;

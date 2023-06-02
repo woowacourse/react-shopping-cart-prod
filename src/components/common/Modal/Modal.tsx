@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { styled } from 'styled-components';
+import LoadingView from '../LoadingView/LoadingView';
 
 interface ModalProps extends React.PropsWithChildren {
   trigger: React.ReactElement;
@@ -27,7 +28,9 @@ const Modal = ({ trigger, title, children }: ModalProps) => {
               {title}
               <CloseButton onClick={handleCloseModal} />
             </Header>
-            <Main>{children}</Main>
+            <Suspense fallback={<LoadingView />}>
+              <Main>{children}</Main>
+            </Suspense>
           </ModalContainer>
         </ModalBackground>
       )}

@@ -4,8 +4,8 @@ import Header from '../components/common/Header/Header';
 import CartList from '../components/cart/CartList/CartList';
 import PaymentAmount from '../components/cart/PaymentAmount/PaymentAmount';
 import CheckedCartListProvider from '../provider/CheckedListProvider';
-import LoadingSpinner from '../components/common/LoadingSpinner/LoadingSpinner';
 import EmptyCartSuspense from '../components/cart/EmptyCartSuspense/EmptyCartSuspense';
+import LoadingView from '../components/common/LoadingView/LoadingView';
 
 const CartPage = () => {
   return (
@@ -25,14 +25,6 @@ const CartPage = () => {
         </Suspense>
       </Layout>
     </>
-  );
-};
-
-const LoadingView = () => {
-  return (
-    <LoadingViewWrapper>
-      <LoadingSpinner />
-    </LoadingViewWrapper>
   );
 };
 
@@ -68,14 +60,6 @@ const Contents = styled.div`
     justify-content: baseline;
     gap: 100px;
   }
-`;
-
-const LoadingViewWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  margin-top: 200px;
 `;
 
 export default CartPage;
