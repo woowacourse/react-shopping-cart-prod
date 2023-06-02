@@ -1,7 +1,7 @@
 import type { ServerNameType } from './types';
 
 export const LOCAL_STORAGE_KEY = {
-  cart: 'cart',
+  token: 'token',
   serverName: 'serverName',
 };
 
@@ -25,11 +25,12 @@ export const API_ERROR_MESSAGE = {
   deleteCartItem: '아이템 삭제가 안됐어요! 다시 시도해 주세요 🙇',
 };
 
-export const SERVER_NAMES: ServerNameType[] = ['라온', '져니', '쥬니'];
+export const SERVER_NAMES: readonly ServerNameType[] = ['MSW', '라온', '져니', '쥬니'];
 
 export const BASE_URL_MAP: Record<ServerNameType, string> = {
+  MSW: MOCK_URL,
   라온: 'https://jourzura.kro.kr',
-  져니: 'https://journey-shop.kro.kr',
+  져니: 'http://journey-shop.kro.kr:8080',
   쥬니: 'https://jourzura2.kro.kr',
 };
 
