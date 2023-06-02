@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
-import type { CartItem, Order, OrdersResponses, OrderRequest } from '../types/types';
+import type { CartItem, Order, OrdersResponses, OrderRequest, Point } from '../types/types';
 import mockProductList from '../mocks/mockProductListData.json';
 import mockMemberList from '../mocks/mockMemberListData.json';
 import mockCouponList from '../mocks/mockCouponListData.json';
@@ -123,6 +123,7 @@ export const handlers = [
     const { orderInfo }: { orderInfo: OrderRequest } = await req.json();
     const uniqueId = Date.now();
     const orderList = getLocalStorage<OrdersResponses>(LOCAL_STORAGE_KEY.ORDER_LIST, { orderResponses: [] });
+    const userPoint = getLocalStorage<Point>(LOCAL_STORAGE_KEY.POINT, { pointHistories: [], totalPoint: 0 });
     const currentCouponId = orderInfo.orderDiscounts.couponIds[0];
     const currentCoupon = mockCouponList.find((coupon) => coupon.id === currentCouponId) as Coupon;
     const totalPrice: number[] = [];
@@ -162,6 +163,14 @@ export const handlers = [
     };
 
     setLocalStorage(LOCAL_STORAGE_KEY.CART_LIST, newOrderList);
+
+    setLocalStorage(
+      LOCAL_STORAGE_KEY.POINT,
+      userPoint.totalPoint - orderInfo.orderDiscounts.point + newOrderItem.paymentPrice * 0.1
+    );
+
+    mockCouponList.filter((mockCoupon) => mockCoupon.id !== currentCoupon.id);
+
     return res(ctx.delay(100), ctx.status(201), ctx.json(true));
   }),
 

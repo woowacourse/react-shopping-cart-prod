@@ -55,4 +55,15 @@ interface Coupon {
   minAmount: number;
 }
 
-export type { ProductItem, CartItem, Order, OrdersResponses, OrderRequest, OrderItem, Coupon };
+interface PointHistory {
+  orderId: number;
+  earnedPoint: number;
+  usedPoint: number;
+}
+
+interface Point {
+  pointHistories: PointHistory[];
+  totalPoint: number;
+}
+
+export type { ProductItem, CartItem, Order, OrdersResponses, OrderRequest, OrderItem, Coupon, Point };
