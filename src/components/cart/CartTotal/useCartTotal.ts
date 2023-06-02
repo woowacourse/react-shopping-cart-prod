@@ -11,15 +11,18 @@ import type { Product } from '../../../types/product';
 const getIsFreeShipping = (totalPrice: number) =>
   totalPrice >= FREE_SHIPPING_PRICE;
 
-const calcTotalOrderPrice = (
-  totalProductPrice: Product['price'],
-  usingPoint: number,
-) => {
+const calcTotalOrderPrice = (totalProductPrice: Product['price']) => {
   if (totalProductPrice <= 0) return 0;
 
   return getIsFreeShipping(totalProductPrice)
-    ? totalProductPrice - usingPoint
-    : totalProductPrice + SHIPPING_FEE - usingPoint;
+    ? totalProductPrice
+    : totalProductPrice + SHIPPING_FEE;
+};
+
+const calcTotalPaymentPrice = (totalOrderPrice: number, usingPoint: number) => {
+  if (totalOrderPrice <= 0) return 0;
+
+  return totalOrderPrice - usingPoint;
 };
 
 const useCartTotal = (totalProductPrice: Product['price']) => {
@@ -27,12 +30,13 @@ const useCartTotal = (totalProductPrice: Product['price']) => {
   const usingPointRef = useRef('');
   const point = useRecoilValue(pointQuery);
   const { isModalOpen, closeModal } = useModal();
-  const totalOrderPrice = calcTotalOrderPrice(
-    totalProductPrice,
+  const totalOrderPrice = calcTotalOrderPrice(totalProductPrice);
+  const isPointMoreThanOrderPrice = point > totalOrderPrice;
+  const maxPoint = isPointMoreThanOrderPrice ? totalOrderPrice : point;
+  const totalPaymentPrice = calcTotalPaymentPrice(
+    totalOrderPrice,
     Number(removeComma(usingPoint)),
   );
-  const isPointMoreThanProductPrice = point > totalProductPrice;
-  const maxPoint = isPointMoreThanProductPrice ? totalProductPrice : point;
 
   const useAllPoint = () => {
     if (point <= 0) return;
@@ -69,7 +73,7 @@ const useCartTotal = (totalProductPrice: Product['price']) => {
   }, []);
 
   useEffect(() => {
-    if (isPointMoreThanProductPrice && usingPoint !== '0') {
+    if (isPointMoreThanOrderPrice && usingPoint !== '0') {
       setUsingPoint(maxPoint.toLocaleString('ko-KR'));
     }
   }, [totalProductPrice]);
@@ -81,6 +85,7 @@ const useCartTotal = (totalProductPrice: Product['price']) => {
     clearPoint,
     useAllPoint,
     totalOrderPrice,
+    totalPaymentPrice,
   } as const;
 };
 

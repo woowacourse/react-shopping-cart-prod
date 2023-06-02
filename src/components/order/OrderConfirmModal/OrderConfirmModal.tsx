@@ -15,7 +15,7 @@ interface OrderConfirmModalProps {
   selectedCartItemIds: Set<CartItem['id']>;
   usingPoint: number;
   totalProductPrice: number;
-  totalOrderPrice: number;
+  totalPaymentPrice: number;
 }
 
 const OrderConfirmModal = (props: OrderConfirmModalProps) => {
@@ -23,7 +23,7 @@ const OrderConfirmModal = (props: OrderConfirmModalProps) => {
     selectedCartItemIds,
     usingPoint,
     totalProductPrice,
-    totalOrderPrice,
+    totalPaymentPrice,
   } = props;
   const orderItems = useRecoilValue(selectedCartItems(selectedCartItemIds));
   const { sendOrder } = useOrder();
@@ -91,7 +91,7 @@ const OrderConfirmModal = (props: OrderConfirmModalProps) => {
           </DetailInner>
           <DetailInner>
             <dt>총 결제금액</dt>
-            <dl>{formatPrice(totalOrderPrice)}</dl>
+            <dl>{formatPrice(totalPaymentPrice)}</dl>
           </DetailInner>
           <DetailInner>
             <dt>적립 예정 포인트</dt>

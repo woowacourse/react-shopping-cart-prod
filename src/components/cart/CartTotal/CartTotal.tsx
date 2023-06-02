@@ -25,6 +25,7 @@ const CartTotal = ({
     clearPoint,
     useAllPoint,
     totalOrderPrice,
+    totalPaymentPrice,
   } = useCartTotal(totalProductPrice);
   const { isModalOpen, openModal } = useModal();
   const isFreeShipping = totalProductPrice >= FREE_SHIPPING_PRICE;
@@ -81,7 +82,7 @@ const CartTotal = ({
                 type="button"
                 disabled={
                   Number(removeComma(usingPoint)) >= point ||
-                  totalProductPrice === Number(removeComma(usingPoint))
+                  totalOrderPrice <= Number(removeComma(usingPoint))
                 }
                 onClick={useAllPoint}
               >
@@ -94,14 +95,14 @@ const CartTotal = ({
         <PriceWrapper>
           <Total>총 결제금액</Total>
           <TotalPrice isHighlight={totalProductPrice > 0}>
-            {formatPrice(totalOrderPrice)}
+            {formatPrice(totalPaymentPrice)}
           </TotalPrice>
         </PriceWrapper>
         <Spacer height={43} />
         <OrderButton disabled={totalProductPrice === 0} onClick={openModal}>
           {totalProductPrice === 0
             ? '장바구니에 상품을 담아주세요.'
-            : `주문하기 (총 ${formatPrice(totalOrderPrice)})`}
+            : `주문하기 (총 ${formatPrice(totalPaymentPrice)})`}
         </OrderButton>
       </Container>
       {isModalOpen && (
@@ -109,7 +110,7 @@ const CartTotal = ({
           selectedCartItemIds={selectedCartItemIds}
           usingPoint={Number(removeComma(usingPoint))}
           totalProductPrice={totalProductPrice}
-          totalOrderPrice={totalOrderPrice}
+          totalPaymentPrice={totalPaymentPrice}
         />
       )}
     </>
