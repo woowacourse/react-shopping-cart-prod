@@ -1,11 +1,23 @@
 import { styled } from 'styled-components';
 import { DELIVERY_FEE } from '../../constants';
+import Point from './Point';
+import { useSetRecoilState } from 'recoil';
+import { checkedItemsState } from '../../store/CheckedItemsState';
+import { useOrder } from '../../hooks/useOrder';
 
 type Props = {
   totalPrice: number;
 };
 
 const PriceWrapper = ({ totalPrice }: Props) => {
+  const setCheckedItems = useSetRecoilState(checkedItemsState);
+
+  const { orderToItems } = useOrder();
+
+  const handleOrderButtonClick = () => {
+    orderToItems();
+    setCheckedItems([]);
+  };
   const Price = (id: string, description: string, price: string) => (
     <section id={id}>
       <li>{description}</li>
@@ -19,9 +31,10 @@ const PriceWrapper = ({ totalPrice }: Props) => {
       <S.PriceInfo>
         {Price('total-product-price', '총 상품가격', `${totalPrice.toLocaleString()}원`)}
         {Price('delivery-fee', '총 배송비', `${DELIVERY_FEE.toLocaleString()}원`)}
+        <Point />
         {Price('total-price', '총 주문금액', `${(totalPrice + DELIVERY_FEE).toLocaleString()}원`)}
       </S.PriceInfo>
-      <S.OrderButton>주문하기</S.OrderButton>
+      <S.OrderButton onClick={handleOrderButtonClick}>주문하기</S.OrderButton>
     </S.PriceWrapper>
   );
 };
