@@ -13,7 +13,7 @@ import {
 import LocalStorage from '../utils/LocalStorage';
 
 const mockProducts = mockProductsData.products;
-const mockCoupons = mockCouponData.coupons;
+const mockCoupons = mockCouponData;
 const usersCoupon: number[] = [];
 const cartList: CartProduct[] = LocalStorage.getItem(CART_LIST_KEY) || [];
 

@@ -2,11 +2,27 @@ import { styled } from 'styled-components';
 import { Coupon } from '../../../types/product';
 import { AiOutlineDownload } from 'react-icons/ai';
 import { COUPON_TYPE_UNIT } from '../../../constant';
+import useRequestGetCoupon from '../../../hooks/useCouponService';
+import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 
 const CouponItem = (coupon: Coupon) => {
-  const { amount, type, name } = coupon;
+  const { id, amount, type, name } = coupon;
+  const { requestGetCoupon, isLoading } = useRequestGetCoupon(id);
 
   const amountWithType = `${amount}${COUPON_TYPE_UNIT[type]}`;
+
+  const handleGetCoupon = async () => {
+    if (isLoading) return;
+
+    const isSuccess = await requestGetCoupon();
+
+    if (!isSuccess) {
+      alert('이미 발급받은 쿠폰입니다.');
+      return;
+    }
+
+    alert('쿠폰 발급에 성공했습니다.');
+  };
 
   return (
     <CouponItemContainer>
@@ -17,9 +33,15 @@ const CouponItem = (coupon: Coupon) => {
           상품 금액의 {amountWithType} 만큼 할인 적용
         </CouponDescription>
       </CouponContents>
-      <GetCouponButton>
-        <AiOutlineDownload />
-        <DownloadText>쿠폰 받기</DownloadText>
+      <GetCouponButton onClick={handleGetCoupon}>
+        {isLoading ? (
+          <LoadingSpinner diameter="30px" spinnerWidth="3px" color="white" />
+        ) : (
+          <>
+            <AiOutlineDownload />
+            <DownloadText>쿠폰 받기</DownloadText>
+          </>
+        )}
       </GetCouponButton>
     </CouponItemContainer>
   );
