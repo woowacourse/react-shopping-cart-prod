@@ -24,15 +24,15 @@ const couponCondition = (minimumPrice: number) => {
 const couponBenefitText = (type: string, value: number) => {
   switch (type) {
     case 'percent': {
-      return `전체 ${value}% 할인`;
+      return `${value}% 할인`;
     }
 
     case 'price': {
-      return `전체 ${value}원 할인`;
+      return `${value}원 할인`;
     }
 
     case 'delivery': {
-      return `배송료 ${value}원 할인`;
+      return `배달비 무료`;
     }
 
     default: {
@@ -61,7 +61,6 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
                   key={coupon.id}
                   onClick={() => {
                     checkCoupon(coupon.id);
-
                     closeModal();
                   }}
                   disabled={isValidCoupon(totalPrice, coupon.minimumPrice)}
@@ -75,7 +74,14 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
         }
 
         <ButtonWrapper>
-          <Button size="l">취소하기</Button>
+          <Button
+            size="l"
+            onClick={() => {
+              closeModal();
+            }}
+          >
+            취소하기
+          </Button>
           <Button size="l" primary>
             선택완료
           </Button>
@@ -110,18 +116,14 @@ const CouponListWrapper = styled.div`
   align-items: center;
   margin: 0 auto;
 
-  max-width: 300px;
+  max-width: 320px;
 
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.md}) {
+  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
     max-width: 640px;
   }
 
-  @media screen and (min-width: ${({ theme }) => theme.breakpoints.lg}) {
-    max-width: 723px;
-  }
-
   @media screen and (min-width: ${({ theme }) => theme.breakpoints.xl}) {
-    max-width: 1000px;
+    width: 960px;
   }
 `;
 

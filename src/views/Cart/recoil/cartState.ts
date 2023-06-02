@@ -174,6 +174,10 @@ export const useCart = () => {
       });
   };
 
+  const getCheckedItemIds = () => {
+    return cart.filter((item) => item.checked).map((item) => item.id);
+  };
+
   const totalPrice = cart.reduce((totalPrice, cartItem) => {
     return cartItem.checked ? totalPrice + cartItem.product.price * cartItem.quantity : totalPrice;
   }, 0);
@@ -193,6 +197,7 @@ export const useCart = () => {
     setCartItemIsChecked,
     toggleAllCartItem,
     deleteCheckedItems,
+    getCheckedItemIds,
 
     totalPrice,
   };

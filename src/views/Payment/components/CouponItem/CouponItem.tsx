@@ -13,8 +13,8 @@ function CouponItem({ benefit, name, condition, onClick, disabled }: CouponItemP
   return (
     <Coupon onClick={onClick} disabled={disabled}>
       <ContentWrapper>
-        <CouponBenefit>{benefit}</CouponBenefit>
         <CouponContentPrimary>{name}</CouponContentPrimary>
+        <CouponBenefit>{benefit}</CouponBenefit>
         <CouponContentSecondary>{condition}</CouponContentSecondary>
       </ContentWrapper>
     </Coupon>
@@ -31,9 +31,10 @@ const Coupon = styled.button`
   width: 30rem;
 
   padding-left: 2rem;
-  height: 10rem;
+  height: 12rem;
   margin: 10px;
-  border: 2px solid ${({ theme }) => theme.secondaryColor};
+  border: 1px solid ${({ theme }) => theme.primaryColor};
+  border-radius: 2px;
 
   background-color: ${({ theme }) => theme.lightColor};
 
@@ -41,6 +42,7 @@ const Coupon = styled.button`
   font-size: 20px;
   text-align: left;
 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   &:disabled {
     background-color: ${({ theme }) => theme.secondaryColor};
     cursor: not-allowed;
@@ -50,7 +52,7 @@ const Coupon = styled.button`
 const CouponBenefit = styled.p`
   color: ${({ theme }) => theme.infoColor};
   font-weight: 600;
-  font-size: 1.8rem;
+  font-size: 3rem;
   margin-bottom: 0.5rem;
 `;
 
