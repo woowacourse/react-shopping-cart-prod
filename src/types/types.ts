@@ -66,4 +66,11 @@ interface Point {
   totalPoint: number;
 }
 
-export type { ProductItem, CartItem, Order, OrdersResponses, OrderRequest, OrderItem, Coupon, Point };
+interface Member {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export type { ProductItem, CartItem, Order, OrdersResponses, OrderRequest, OrderItem, Coupon, Point, Member };

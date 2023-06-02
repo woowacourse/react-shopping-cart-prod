@@ -1,17 +1,5 @@
-import { AtomEffect, atom } from 'recoil';
-import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
-
-const localStorageEffect: <T>(key: string) => AtomEffect<T> =
-  (key: string) =>
-  ({ setSelf, onSet }) => {
-    const savedValue = getLocalStorage(key, null);
-
-    if (savedValue) setSelf(savedValue);
-
-    onSet((newValue) => {
-      setLocalStorage(key, newValue);
-    });
-  };
+import { atom } from 'recoil';
+import { localStorageEffect } from '../utils/localStorage';
 
 export const serverState = atom<string>({
   key: 'serverState',
