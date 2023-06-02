@@ -4,8 +4,8 @@ import Main from "pages/Main";
 import NotFound from "pages/NotFound";
 import Cart from "pages/Cart";
 import OrderList from "pages/OrderList";
-import OrderItemDetail from "components/orderList/OrderItemDetail";
-import OrderItemList from "components/orderList/OrderItemList";
+import OrderItemDetail from "components/orderList/OrderDetail";
+import OrderItemList from "components/orderList/OrderList";
 
 export const ROUTER_PATH = {
   Main: "/",

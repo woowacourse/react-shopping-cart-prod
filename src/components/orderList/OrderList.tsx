@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
-import OrderItem from "./OrderItem";
+import OrderItem from "./OrderListItem";
 import { useRecoilValue } from "recoil";
 import { orderListState } from "recoil/order";
 
-const OrderItemList = () => {
+const OrderList = () => {
   const orderList = useRecoilValue(orderListState);
 
   return (
@@ -40,4 +40,4 @@ const ListBox = styled.li`
   list-style: none;
 `;
 
-export default OrderItemList;
+export default OrderList;

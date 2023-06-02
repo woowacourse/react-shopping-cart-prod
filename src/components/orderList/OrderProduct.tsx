@@ -1,8 +1,8 @@
-import { Order } from "api/orders";
+import { OrderItem } from "api/orders";
 import React from "react";
 import { styled } from "styled-components";
 
-const OrderProduct = (order: Order) => {
+const OrderProduct = (order: OrderItem) => {
   return (
     <Wrapper>
       <ImgBox src={order.product.imageUrl} alt={`${order.product.name} 상품 이미지`} />

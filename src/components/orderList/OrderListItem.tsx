@@ -1,15 +1,15 @@
-import { Order } from "api/orders";
+import { OrderItem } from "api/orders";
 import styled from "styled-components";
 import OrderProduct from "./OrderProduct";
 import { useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "router";
 
-interface OrderItemProps {
+interface OrderListItemProps {
   orderId: number;
-  items: Order[];
+  items: OrderItem[];
 }
 
-const OrderItem = ({ orderId, items }: OrderItemProps) => {
+const OrderListItem = ({ orderId, items }: OrderListItemProps) => {
   const navigate = useNavigate();
 
   const goToOrderDetail = () => {
@@ -24,7 +24,7 @@ const OrderItem = ({ orderId, items }: OrderItemProps) => {
       </TitleContainer>
       <ListBox>
         {items.map((item) => (
-          <OrderProduct key={item.orderItemId} {...item} />
+          <OrderProduct key={item.id} {...item} />
         ))}
       </ListBox>
     </Wrapper>
@@ -67,4 +67,4 @@ const ListBox = styled.li`
   row-gap: 10px;
 `;
 
-export default OrderItem;
+export default OrderListItem;
