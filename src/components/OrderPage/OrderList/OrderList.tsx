@@ -1,10 +1,10 @@
-import { orderSelector } from '../../../atoms/order';
+import { ordersSelector } from '../../../atoms/order';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
 import Order from '../../common/Order/Order';
 import * as S from './OrderList.styles';
 
 const OrderList = () => {
-  const { orders } = useRefreshableRecoilValue(orderSelector);
+  const { orders } = useRefreshableRecoilValue(ordersSelector);
 
   return (
     <S.Root>
