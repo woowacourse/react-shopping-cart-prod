@@ -16,7 +16,10 @@ const SheetProductCardList = () => {
     <SheetProductFlex>
       <Title>주문상품</Title>
       {checkedProducts.map((cartProduct) => {
-        return <SheetProductCard key={cartProduct.product.id} sheetProduct={cartProduct} />;
+        if (cartProduct && cartProduct.product) {
+          return <SheetProductCard key={cartProduct.product.id} sheetProduct={cartProduct} />;
+        }
+        return null;
       })}
     </SheetProductFlex>
   );

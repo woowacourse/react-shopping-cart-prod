@@ -3,21 +3,16 @@ import SkeletonImg from 'components/@common/SkeletonImg';
 import styled from 'styled-components';
 // import { CartProduct } from 'types/product';
 import emptyImg from 'assets/gradiation-min.png';
+import { CartProduct } from 'types/product';
 
-// type SheetProductCardProps = {
-//   sheetProduct: CartProduct;
-// };
+type SheetProductCardProps = {
+  sheetProduct: CartProduct;
+};
 
-const SheetProductCard = ({ sheetProduct }: any) => {
-  // OrderItem에서 사용되는 경우 구조가 다른 문제 해결
-  let product = sheetProduct.product;
-  if (product === undefined) {
-    product = sheetProduct;
-  }
-
-  console.log(sheetProduct);
-  const { quantity } = sheetProduct;
+const SheetProductCard = ({ sheetProduct }: SheetProductCardProps) => {
+  const { quantity, product } = sheetProduct;
   const { name, price, imageUrl } = product;
+
   return (
     <CartProductCardContainer justify="flex-start" gap="16px" role="list">
       <ProductImageWrapper>
@@ -47,13 +42,6 @@ const CartProductCardContainer = styled(FlexBox)`
 const ProductImageWrapper = styled.div`
   width: 75px;
 `;
-
-// const ProductImage = styled.img`
-//   width: 75px;
-//   height: 75px;
-//   border-radius: 4px;
-//   filter: brightness(96%);
-// `;
 
 const ProductInfoContainer = styled(FlexBox)`
   position: relative;

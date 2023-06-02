@@ -1,13 +1,8 @@
-export type OrderProduct = {
-  name: string,
-  price: number,
-  quantity: number,
-  image_url: string,
-};
+import { CartProduct } from "./product";
 
 export type Order = {
   orderId: number,
-  products: OrderProduct[],
+  products: CartProduct[],
   totalPrice: number,
   usedPoint: number,
   orderedAt: string,
