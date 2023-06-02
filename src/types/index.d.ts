@@ -36,3 +36,8 @@ export interface CouponInfo {
   isUsed: boolean;
   name: string;
 }
+
+export interface PurchasingCartItemType {
+  productId: number;
+  quantity: number;
+}

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.form`
   display: flex;
   flex-direction: column;
 
   width: 448px;
-  height: 410px;
+  height: 600px;
   margin-top: 98px;
 
   @media (max-width: 1199px) {
@@ -23,7 +23,7 @@ export const TitleBox = styled.div`
   align-items: center;
 
   width: 100%;
-  height: 108px;
+  height: 80px;
   border: 1px solid #dddddd;
   padding: 0 28px;
 
@@ -32,13 +32,24 @@ export const TitleBox = styled.div`
   color: #333333;
 `;
 
+export const CouponBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  width: 100%;
+  height: 172px;
+  border: 1px solid #dddddd;
+  padding: 38px 30px;
+`;
+
 export const BillBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 
   width: 100%;
-  height: 100%;
+  height: 348px;
   border: 1px solid #dddddd;
   padding: 38px 30px;
 `;

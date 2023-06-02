@@ -1,4 +1,4 @@
-import type { ServerNameType } from '../types';
+import type { PurchasingCartItemType, ServerNameType } from '../types';
 
 import { BASE_URL_MAP } from '../constants';
 
@@ -163,4 +163,33 @@ export const getCoupon = async <T>(serverName: ServerNameType, loginCredential: 
   const data: T = await response.json();
 
   return data;
+};
+
+export const postPurchaseCartItem = async <T>(
+  serverName: ServerNameType,
+  loginCredential: string,
+  purchasingCartItems: PurchasingCartItemType[],
+  couponId: number | null
+) => {
+  const url = `${BASE_URL_MAP[serverName]}/orders`;
+  const body = { items: purchasingCartItems, couponId };
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      Authorization: `Basic ${loginCredential}`,
+      'content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok && response.body) {
+    const errorMessage = (await response.json()) as { errorMessage: string };
+    throw new Error(`${errorMessage.errorMessage}`);
+  }
+  if (!response.ok) throw new Error(`${url} FETCH Error`);
+
+  const locationHeader = response.headers.get('Location');
+
+  console.log(locationHeader);
 };
