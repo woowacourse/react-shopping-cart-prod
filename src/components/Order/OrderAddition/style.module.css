@@ -1,6 +1,7 @@
 .modalHeader {
   display: flex;
   justify-content: center;
+  padding: 0 10px;
   align-items: center;
   padding-bottom: 15px;
   border-bottom: 3px solid #cccccc;
@@ -11,6 +12,8 @@
 }
 
 .couponItem {
+  display: flex;
+  justify-content: space-between;
   padding: 30px 30px 25px 10px;
   cursor: pointer;
   transition: all 0.2s ease-in;
@@ -18,9 +21,13 @@
 
 .couponBox {
   max-height: 300px;
-  overflow: scroll;
+  overflow-y: scroll;
+  height: 240px;
 }
 
+.scroll::-webkit-scrollbar {
+  display: none;
+}
 .couponData {
   display: flex;
   flex-direction: column;
@@ -50,10 +57,18 @@
   justify-content: space-between;
 }
 
-.priceResultBox {
+.priceResultDiscount {
   display: flex;
   justify-content: space-between;
   padding-top: 30px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.priceResultBox {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
   font-size: 18px;
   font-weight: 600;
 }

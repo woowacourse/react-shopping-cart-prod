@@ -19,6 +19,14 @@ export interface CouponItemType {
   isPublished: boolean;
 }
 
+export interface selectedCouponItemType {
+  couponId: number;
+  couponName: string;
+  minAmount: string;
+  isPublished: boolean;
+  isSelected: boolean;
+}
+
 export interface OrderItemType {
   id: number;
   name: string;

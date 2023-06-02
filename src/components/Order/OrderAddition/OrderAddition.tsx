@@ -1,23 +1,62 @@
+import { useCallback, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useQuery } from 'react-query';
 import { useRecoilValue } from 'recoil';
 
 import useCartList from '../../../hooks/useCartList';
 import useCoupon from '../../../hooks/useCoupon';
+import useDiscount from '../../../hooks/useDiscount';
+import useOrders from '../../../hooks/useOrders';
 import { couponListState } from '../../../store/coupon';
 import { CouponItemType } from '../../../types';
 import { priceFormatter } from '../../../utils/formatter';
+import Alert from '../../utils/Alert/Alert';
 import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
 import styles from './style.module.css';
 
 const OrderAddition = () => {
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [couponState, setCouponState] = useState(0);
   const couponList = useRecoilValue(couponListState);
+
   const { getCartItemSum } = useCartList();
-  const { fetchMyCoupon } = useCoupon();
+  const { fetchMyCoupon, setCheckCoupon } = useCoupon();
+  const { resultPrice, discountPrice, getDiscountPrice } = useOrders();
   const money = getCartItemSum();
   const { isLoading } = useQuery<CouponItemType[]>('couponListData', () => fetchMyCoupon(money));
+  const { mainPrice, deliveryPrice } = useDiscount();
+
+  const handleAlertAccept = useCallback(
+    (couponId: number) => {
+      setCheckCoupon(couponId);
+      setIsAlertOpen(false);
+      getDiscountPrice();
+    },
+    [setCheckCoupon, getDiscountPrice]
+  );
+
+  const handleAlertCancel = useCallback(() => {
+    setIsAlertOpen(false);
+  }, []);
+
+  const handleCouponDecide = useCallback((couponId: number) => {
+    setCouponState(couponId);
+    setIsAlertOpen(true);
+  }, []);
 
   return (
     <>
+      {isAlertOpen &&
+        createPortal(
+          <Alert
+            text="쿠폰을 적용하시겠습니까?"
+            handleAccept={() => {
+              handleAlertAccept(couponState);
+            }}
+            handleCancel={handleAlertCancel}
+          />,
+          document.body
+        )}
       <div>
         <div className={styles.modalHeader}>
           <h3>쿠폰 선택</h3>
@@ -28,11 +67,17 @@ const OrderAddition = () => {
           ) : (
             couponList.map((coupon) => {
               return (
-                <li className={styles.couponItem}>
-                  <button type="button" className={styles.couponData}>
+                <li
+                  className={styles.couponItem}
+                  onClick={() => {
+                    coupon.isSelected ?? handleCouponDecide(coupon.couponId);
+                  }}
+                >
+                  <button type="button" className={styles.couponData} disabled={coupon.isSelected}>
                     <h4>{coupon.couponName}</h4>
                     <div className={styles.minimumPrice}>최소 주문금액 {coupon.minAmount}원</div>
                   </button>
+                  {coupon.isSelected && <p>선택됨!</p>}
                 </li>
               );
             })
@@ -42,16 +87,22 @@ const OrderAddition = () => {
         <div className={styles.resultBox}>
           <div className={styles.priceBox}>
             <div>총 상품가격</div>
-            <div>{priceFormatter(money)}원</div>
+            <div>{priceFormatter(mainPrice)}원</div>
           </div>
           <div className={styles.priceBox}>
             <div>총 배송비</div>
-            <div>3,000원</div>
+            <div>{priceFormatter(deliveryPrice)}원</div>
           </div>
 
-          <div className={styles.priceResultBox}>
-            <div>총 주문금액</div>
-            <div>{priceFormatter(money + 3000)}원</div>
+          <div>
+            <div className={styles.priceResultDiscount}>
+              <div>총 할인금액</div>
+              <div>{priceFormatter(discountPrice)}원</div>
+            </div>
+            <div className={styles.priceResultBox}>
+              <div>총 주문금액</div>
+              <div>{priceFormatter(resultPrice)}원</div>
+            </div>
           </div>
           <button className={styles.resultOrderButton}>주문 완료하기</button>
         </div>

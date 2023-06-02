@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import BlankImage from '../../../assets/tung.svg';
 import { MAIN_PAGE_LOCATE } from '../../../constants';
 import useCartList from '../../../hooks/useCartList';
+import useCoupon from '../../../hooks/useCoupon';
 import { useModal } from '../../../hooks/useModal';
 import { cartListState } from '../../../store/cart';
 import { CartItemType } from '../../../types';
@@ -28,7 +29,8 @@ const CartPageSection = () => {
     getCartItemSum,
   } = useCartList();
 
-  const { isModalOpen, handleModalOpen, handleModalClose, handleModalClosePress } = useModal();
+  const { isModalOpen, handleModalOpen, handleModalClose } = useModal();
+  const { resetCheckedCoupon } = useCoupon();
   const navigate = useNavigate();
 
   const cartItem = useRecoilValue(cartListState);
@@ -135,7 +137,12 @@ const CartPageSection = () => {
         </section>
       </div>
       {isModalOpen && (
-        <Modal closeModalByClick={handleModalClose} closeModalByPress={handleModalClosePress}>
+        <Modal
+          closeModalByClick={() => {
+            handleModalClose();
+            resetCheckedCoupon();
+          }}
+        >
           <OrderAddition />
         </Modal>
       )}

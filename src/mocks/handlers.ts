@@ -151,6 +151,17 @@ export const handlers = [
     );
   }),
 
+  rest.get('/coupons/discount/1234?total=30000', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.delay(500),
+      ctx.json({
+        discountedProductAmount: 27000,
+        discountAmount: 3000,
+      })
+    );
+  }),
+
   rest.post('/coupons/:id', (req, res, ctx) => {
     return res(ctx.status(201), ctx.delay(1000));
   }),

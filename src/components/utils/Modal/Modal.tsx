@@ -5,7 +5,7 @@ import styles from './style.module.css';
 
 interface ModalProps extends ComponentPropsWithoutRef<'div'> {
   closeModalByClick: () => void;
-  closeModalByPress: (event: KeyboardEvent<HTMLElement>) => void;
+  closeModalByPress?: (event: KeyboardEvent<HTMLElement>) => void;
 }
 
 const Modal = ({ children, closeModalByClick, closeModalByPress }: ModalProps) => {

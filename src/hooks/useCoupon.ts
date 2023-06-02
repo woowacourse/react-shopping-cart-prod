@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 
 import { USER_TOKEN } from '../constants';
 import { couponListState } from '../store/coupon';
+import { CouponItemType, selectedCouponItemType } from '../types';
 
 const useCoupon = () => {
   const [couponList, setCouponList] = useRecoilState(couponListState);
@@ -15,8 +16,16 @@ const useCoupon = () => {
       },
     });
 
-    const result = await response.json();
-    setCouponList(result);
+    const result = (await response.json()) as CouponItemType[];
+
+    setCouponList(
+      result.map((item) => {
+        return {
+          ...item,
+          isSelected: false,
+        };
+      })
+    );
     return result;
   }, [setCouponList]);
 
@@ -66,7 +75,28 @@ const useCoupon = () => {
     [setCouponList]
   );
 
-  return { fetchCouponList, publishCoupon, fetchMyCoupon };
+  const setCheckCoupon = useCallback(
+    (couponId: number) => {
+      const result = couponList.map((coupon) => {
+        if (coupon.couponId === couponId) {
+          return {
+            ...coupon,
+            isSelected: true,
+          };
+        }
+        return coupon;
+      }) as selectedCouponItemType[];
+
+      setCouponList(result.filter((coupon) => coupon.couponId === couponId));
+    },
+    [couponList, setCouponList]
+  );
+
+  const resetCheckedCoupon = useCallback(() => {
+    setCouponList([]);
+  }, []);
+
+  return { fetchCouponList, publishCoupon, fetchMyCoupon, setCheckCoupon, resetCheckedCoupon };
 };
 
 export default useCoupon;
