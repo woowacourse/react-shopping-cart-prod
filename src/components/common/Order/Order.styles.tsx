@@ -22,6 +22,8 @@ export const DetailButton = styled.button`
   border: none;
   font-weight: 400;
   font-size: 20px;
+
+  cursor: pointer;
 `;
 
 export const ItemList = styled.ul`
