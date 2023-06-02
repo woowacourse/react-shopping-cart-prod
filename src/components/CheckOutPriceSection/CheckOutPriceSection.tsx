@@ -1,34 +1,28 @@
 import Box from 'components/@common/Box';
 import ROUTE_PATH from 'constants/routePath';
-import { BASE_SHIPPING_FEE, SHIPPING_FEE_THRESHOLD, PERCENTAGE_OF_EARN_POINTS } from 'constants/policy';
 import useCartCheckBox from 'hooks/useCartCheckBox';
 import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { cartProductsState, checkedCartProductsTotalPrice } from 'state/cartProducts';
+import { useResetRecoilState } from 'recoil';
+import { cartProductsState } from 'state/cartProducts';
 import styled from 'styled-components';
 import { createOrder } from 'apis/orders';
+import useCheckOutPriceText from './hooks/useCheckOutPriceText';
 
 const CheckOutPriceSection = () => {
   const resetCartProducts = useResetRecoilState(cartProductsState);
   const navigate = useNavigate();
   const { checkedCartProductIds } = useCartCheckBox();
-  const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPrice(checkedCartProductIds));
   const { pointCost } = useCheckOutPointCostContext();
 
-  const isCheckedProductsExist = checkedCartProductIds.size > 0;
-  const shippingFee = cartTotalPrice < SHIPPING_FEE_THRESHOLD ? BASE_SHIPPING_FEE : 0;
-  const paymentAmount = cartTotalPrice + shippingFee - pointCost;
-  const earnPoints = Math.ceil(paymentAmount / PERCENTAGE_OF_EARN_POINTS);
-
-  const productTotalPriceText = `${cartTotalPrice.toLocaleString('ko-KR')}원`;
-  const shippingFeeText = isCheckedProductsExist ? `${shippingFee.toLocaleString('ko-KR')}원` : '0원';
-  const usedPointsText = pointCost > 0 ? `-${pointCost.toLocaleString('ko-KR')}원` : '0원';
-  const paymentAmountText = isCheckedProductsExist ? `${paymentAmount.toLocaleString('ko-KR')}원` : '0원';
-  const orderConfirmButtonText = isCheckedProductsExist
-    ? `총 ${checkedCartProductIds.size}건 주문하기(${paymentAmount.toLocaleString('ko-KR')}원)`
-    : '주문하기';
-  const earnPointsText = isCheckedProductsExist ? `${earnPoints.toLocaleString('ko-KR')}P 적립 예정` : '';
+  const {
+    productTotalPriceText,
+    shippingFeeText,
+    usedPointsText,
+    paymentAmountText,
+    orderConfirmButtonText,
+    earnPointsText,
+  } = useCheckOutPriceText();
 
   const addOrder = async () => {
     try {
@@ -69,7 +63,7 @@ const CheckOutPriceSection = () => {
         </Box>
       </PriceSection>
       <ConfirmButtonBox sizing={{ width: '100%' }}>
-        <OrderConfirmButton onClick={addOrder} isActive={isCheckedProductsExist}>
+        <OrderConfirmButton onClick={addOrder} isActive={checkedCartProductIds.size > 0}>
           {orderConfirmButtonText}
         </OrderConfirmButton>
       </ConfirmButtonBox>
