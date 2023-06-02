@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import Order from './Order';
+import Order from './OrderContents';
 import * as S from './style';
 
 const OrderList = () => {

@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import OrderItem from '@Pages/OrderList/OrderItem';
+import OrderItem from '@Pages/OrderList/PurchasedItem';
 
 import { CartItemType } from '@Types/index';
 

@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 
 import orderListState from '@Atoms/orderListState';
 
-import OrderItems from '../OrderItems';
+import OrderItems from '../PurchasedItems';
 
 const Order = () => {
   const orderList = useRecoilValue(orderListState);

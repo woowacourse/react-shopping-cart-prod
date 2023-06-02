@@ -3,7 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { CartItemType } from '@Types/index';
 
 import * as S from './style';
-import OrderItem from '../OrderItem';
+import OrderItem from '../PurchasedItem';
+
 type OrderItemsProps = {
   orderId: number;
   cartItems: CartItemType[];
