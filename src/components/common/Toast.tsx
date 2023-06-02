@@ -31,6 +31,8 @@ const popUp = keyframes`
 `;
 
 const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
+  z-index: 90;
+
   position: absolute;
   left: 50%;
   bottom: 80px;
