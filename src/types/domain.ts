@@ -23,20 +23,29 @@ export interface Coupon {
   };
 }
 
-export interface Order {
+export interface EssentialOrderItem {
   product: Product;
   quantity: number;
   coupons: Coupon[];
 }
 
-export interface OrderResult extends Order {
+export interface OrderItem extends EssentialOrderItem {
+  id: number;
+}
+
+export interface Order {
+  deliveryFee: number;
+  orderItems: OrderItem[];
+}
+
+export interface OrderResult extends EssentialOrderItem {
   orderItemId: number;
   total: number;
 }
 
-export interface EachOrderStatement {
-  deliveryFee: number;
+export interface OrderResultStatement {
   orderId: 1;
+  deliveryFee: number;
   total: number;
   orderItems: OrderResult[];
 }
