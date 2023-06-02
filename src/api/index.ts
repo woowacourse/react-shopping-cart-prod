@@ -1,10 +1,10 @@
 import type {
+  ServerNameType,
+  ProductType,
   CartType,
   CouponType,
-  OrderDetailType,
   OrderType,
-  ProductType,
-  ServerNameType,
+  OrderDetailType,
 } from '../types';
 
 import { BASE_URL_MAP } from '../constants';
