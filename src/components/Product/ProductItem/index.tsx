@@ -3,7 +3,7 @@ import Svg from 'components/@common/Svg';
 import Counter from 'components/@common/Counter';
 import { useCart } from 'components/Cart/hooks/useCart';
 import { useRecoilValue } from 'recoil';
-import { cartListAtom } from 'recoil/cartList';
+import { cartListAtom } from 'recoil/carts';
 import { ProductItem as ProductItemType } from 'types/api/products';
 
 interface ProductItemProps {

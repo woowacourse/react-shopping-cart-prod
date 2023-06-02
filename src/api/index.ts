@@ -13,7 +13,7 @@ export const fetchApi = async (url: string, options: RequestInit) => {
   return await response;
 };
 
-const username = 'b@b.com';
+const username = 'b@b.gmail.com';
 const password = '1234';
 const base64 = btoa(username + ':' + password);
 

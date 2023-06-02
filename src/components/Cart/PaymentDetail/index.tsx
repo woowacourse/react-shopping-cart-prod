@@ -1,8 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import {
-  totalDiscountPriceSelector,
-  totalPriceSelector,
-} from 'recoil/cartList';
+import { totalDiscountPriceSelector, totalPriceSelector } from 'recoil/carts';
 import * as S from './PaymentDetail.styles';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'utils/constants';

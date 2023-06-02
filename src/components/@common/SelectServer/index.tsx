@@ -4,7 +4,7 @@ import { SERVERS } from 'utils/constants';
 import { Server, ServerName } from 'types';
 import * as S from './SelectServer.styles';
 import { getCartList } from 'api/cart';
-import { cartListAtom, checkedItemsAtom } from 'recoil/cartList';
+import { cartListAtom, checkedItemsAtom } from 'recoil/carts';
 import { CartItem } from 'types/api/carts';
 
 const SelectServer = () => {

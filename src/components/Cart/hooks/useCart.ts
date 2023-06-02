@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
 import { postCartItem, patchCartItemQuantity, deleteCartItem } from 'api/cart';
 import { useToast } from 'components/@common/Toast/hooks/useToast';
-import { cartListAtom } from 'recoil/cartList';
+import { cartListAtom } from 'recoil/carts';
 import { useMutate } from '../../../hooks/useMutate';
 import { ProductItem } from 'types/api/products';
 
