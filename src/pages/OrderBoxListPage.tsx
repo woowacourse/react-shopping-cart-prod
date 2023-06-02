@@ -25,7 +25,12 @@ const OrderBoxListPage = () => {
                 id={order.orderId}
                 type="orderList"
               >
-                <OrderList key={order.orderId} orderItems={order.orderItems} />
+                <OrderBoxContents>
+                  <OrderList
+                    key={order.orderId}
+                    orderItems={order.orderItems}
+                  />
+                </OrderBoxContents>
               </OrderBoxItem>
             );
           })}
@@ -40,6 +45,26 @@ const StyledOrderBoxListPage = styled.ul`
 
   & > li:not(:first-child) img {
     filter: grayscale(100%);
+  }
+`;
+
+const OrderBoxContents = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  & > p {
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 0.5px;
+    line-height: 24px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+    & > p {
+      font-size: 20px;
+    }
   }
 `;
 

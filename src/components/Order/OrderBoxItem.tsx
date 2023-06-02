@@ -45,10 +45,10 @@ const OrderBoxItem = ({
         </TitleContainer>
       ) : (
         <TitleContainer type={type}>
-          <h2>결재금액 정보</h2>
+          <h2>결제금액 정보</h2>
         </TitleContainer>
       )}
-      <OrderBoxContents type={type}>{children}</OrderBoxContents>
+      {children}
     </StyledOrderBoxItem>
   );
 };
@@ -88,27 +88,6 @@ const TitleContainer = styled.div<Pick<OrderBoxItemProps, 'type'>>`
 
     & > button {
       font-size: 16px;
-    }
-  }
-`;
-
-const OrderBoxContents = styled.div<OrderBoxItemProps>`
-  display: flex;
-  flex-direction: ${({ type }) => (type === 'orderList' ? 'column' : 'row')};
-  justify-content: space-between;
-  align-items: center;
-  padding: ${({ type }) => (type === 'payment' ? '36px 30px' : '')};
-
-  & > p {
-    font-weight: 700;
-    font-size: 24px;
-    letter-spacing: 0.5px;
-    line-height: 24px;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
-    & > p {
-      font-size: 20px;
     }
   }
 `;
