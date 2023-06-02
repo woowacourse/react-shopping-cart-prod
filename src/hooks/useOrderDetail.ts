@@ -9,6 +9,7 @@ import fetchApis from '../apis/fetchApis';
 import { TOAST_STATE } from '../constants/toast';
 import { selectedOrderIdState } from '../states/order';
 import { DELIVERY_FEE } from './useCartPrice';
+import { FETCH_URLS } from '../constants/urls';
 
 export const useOrderDetail = () => {
   const [orderDetail, setOrderDetail] = useState<OrderDetail>();
@@ -29,7 +30,7 @@ export const useOrderDetail = () => {
     const getOrders = async () => {
       try {
         const data = await getData<OrderDetail>(
-          `/orders/${selectedOrderId ?? findSelectedOrderId()}`
+          `${FETCH_URLS.orders}/${selectedOrderId ?? findSelectedOrderId()}`
         );
 
         const totalProductsPrice = data.order.orderItems.reduce(

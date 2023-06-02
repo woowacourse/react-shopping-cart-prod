@@ -7,7 +7,7 @@ import { checkedCartProductState } from '../states/checkedCartProducts';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 import { TOAST_STATE } from '../constants/toast';
-import { PAGE_URLS } from '../constants/pageUrls';
+import { FETCH_URLS, PAGE_URLS } from '../constants/urls';
 
 export const useOrderProducts = () => {
   const checkedList = useRecoilValue(checkedCartProductState);
@@ -30,10 +30,10 @@ export const useOrderProducts = () => {
         };
 
     try {
-      await postData(dataSet, '/orders');
+      await postData(dataSet, FETCH_URLS.orders);
       deleteCheckedProductState();
       setToastState(TOAST_STATE.successOrderProducts);
-      navigate(PAGE_URLS.order);
+      navigate(PAGE_URLS.orders);
     } catch {
       setToastState(TOAST_STATE.failedOrderProducts);
     }

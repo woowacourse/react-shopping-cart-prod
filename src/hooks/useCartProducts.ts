@@ -11,6 +11,7 @@ import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 import { TOAST_STATE } from '../constants/toast';
 import fetchApis from '../apis/fetchApis';
+import { FETCH_URLS } from '../constants/urls';
 
 const useCartProducts = (product: Product) => {
   const [cartItemId, setCartItemId] = useState<number>();
@@ -27,7 +28,7 @@ const useCartProducts = (product: Product) => {
 
   const addProduct = async () => {
     try {
-      const location = await postData({ productId: id }, '/cart-items');
+      const location = await postData({ productId: id }, FETCH_URLS.cartItems);
 
       const cartItemId = Number(location?.split('/').pop());
 

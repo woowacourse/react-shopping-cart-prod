@@ -17,6 +17,7 @@ import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 import { TOAST_STATE } from '../constants/toast';
 import fetchApis from '../apis/fetchApis';
+import { FETCH_URLS } from '../constants/urls';
 
 const useMultipleChecked = () => {
   const serverName = useRecoilValue(serverNameState);
@@ -54,7 +55,7 @@ const useMultipleChecked = () => {
   const deleteCheckedProducts = () => {
     try {
       checked.forEach(async item => {
-        await deleteData(`/cart-items/${item.id}`);
+        await deleteData(`${FETCH_URLS.cartItems}/${item.id}`);
       });
 
       deleteCheckedProductState();

@@ -10,7 +10,7 @@ import CartIcon from '../../assets/CartIcon';
 import useCartProductCount from '../../hooks/useCartProductCount';
 import { serverNameState } from '../../states/serverName';
 import { SERVER_KEYS, isServerKey } from '../../constants/server';
-import { PAGE_URLS } from '../../constants/pageUrls';
+import { PAGE_URLS } from '../../constants/urls';
 
 interface CartLinkProps extends LinkProps {
   pathname: string;
@@ -31,21 +31,21 @@ const Header = () => {
     <HeaderContainer>
       <HeaderContent>
         <div>
-          <LogoContainer to="/">
+          <LogoContainer to={PAGE_URLS.main}>
             <CartIcon width={51} height={44} color="white" />
             <Logo>SHOP</Logo>
           </LogoContainer>
           <SelectBox options={SERVER_KEYS} onChange={onChange} />
         </div>
         <div>
-          <CartLink to="/cart" pathname={pathname}>
+          <CartLink to={PAGE_URLS.cart} pathname={pathname}>
             <DesktopText>장바구니</DesktopText>
             <ProductCountAlert>{cartProductCount}</ProductCountAlert>
             <MobileText>
               장바구니에 {cartProductCount}개의 상품이 있어요
             </MobileText>
           </CartLink>
-          <StyledLink to="/order">주문목록</StyledLink>
+          <StyledLink to={PAGE_URLS.orders}>주문목록</StyledLink>
         </div>
       </HeaderContent>
     </HeaderContainer>

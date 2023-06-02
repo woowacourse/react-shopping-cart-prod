@@ -3,7 +3,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
 import PageTitle from '../components/Common/PageTitle';
 
-import { PAGE_URLS } from '../constants/pageUrls';
+import { PAGE_URLS } from '../constants/urls';
 
 const OrderPage = () => {
   const pathname = useLocation().pathname;
@@ -11,7 +11,7 @@ const OrderPage = () => {
   return (
     <Main pathname={pathname}>
       <PageTitle>
-        {pathname === PAGE_URLS.order ? '주문 목록' : '주문 상세 정보'}
+        {pathname === PAGE_URLS.orders ? '주문 목록' : '주문 상세 정보'}
       </PageTitle>
       <Outlet />
     </Main>

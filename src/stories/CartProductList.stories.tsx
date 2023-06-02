@@ -3,6 +3,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import CartProductList from '../components/Cart/CartProductList';
 
 import fetchApis from '../apis/fetchApis';
+import { FETCH_URLS } from '../constants/urls';
 
 const meta = {
   title: 'Cart/CartProductList',
@@ -19,7 +20,7 @@ export const Default: Story = {
     async () => {
       const { getData } = fetchApis('도치');
       return {
-        products: await getData('/cart-items'),
+        products: await getData(FETCH_URLS.cartItems),
       };
     },
   ],

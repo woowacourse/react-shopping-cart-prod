@@ -6,6 +6,7 @@ import { styled } from 'styled-components';
 import { selectedOrderIdState } from '../../states/order';
 import { toastState } from '../../states/toast/atom';
 import { TOAST_STATE } from '../../constants/toast';
+import { PAGE_URLS } from '../../constants/urls';
 
 interface OrderBoxItemProps {
   id?: number;
@@ -28,7 +29,7 @@ const OrderBoxItem = ({
       return;
     }
 
-    navigate(`/order/detail/${id}`);
+    navigate(PAGE_URLS.orderDetail(id));
     setSelectedOrderIdState(id);
   };
 

@@ -13,12 +13,13 @@ import {
 } from '../states/cartProducts/util';
 import type { CartProduct } from '../types/product';
 import { Order, OrderDetail } from '../types/order';
+import { FETCH_URLS } from '../constants/urls';
 
 const orders: Order[] = [];
 const orderDetails: OrderDetail[] = [];
 
 export const handlers = [
-  rest.get('/products', (_, res, ctx) => {
+  rest.get(FETCH_URLS.products, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.set('Content-Type', 'application/json'),
@@ -38,7 +39,7 @@ export const handlers = [
     return res(ctx.status(500));
   }),
 
-  rest.get('/cart-items', (_, res, ctx) => {
+  rest.get(FETCH_URLS.cartItems, (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.set('Content-Type', 'application/json'),
@@ -50,7 +51,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(coupons));
   }),
 
-  rest.get('/orders', (_, res, ctx) => {
+  rest.get(FETCH_URLS.orders, (_, res, ctx) => {
     return res(ctx.status(200), ctx.json(orders));
   }),
 
@@ -65,7 +66,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(orderDetail));
   }),
 
-  rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
+  rest.post<{ productId: number }>(FETCH_URLS.cartItems, (req, res, ctx) => {
     const { productId } = req.body;
 
     const storedCartProducts: CartProduct[] = JSON.parse(
@@ -94,7 +95,7 @@ export const handlers = [
     cartItemIds: number[];
     totalPrice: number;
     couponId: number;
-  }>('/orders', (req, res, ctx) => {
+  }>(FETCH_URLS.orders, (req, res, ctx) => {
     const reqOrder = req.body;
 
     if (!Object.keys(reqOrder).every(key => key in reqOrder)) {

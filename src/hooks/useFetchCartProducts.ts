@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { serverNameState } from '../states/serverName';
 import fetchApis from '../apis/fetchApis';
 import { CartProduct } from '../types/product';
+import { FETCH_URLS } from '../constants/urls';
 
 const useFetchCartProducts = () => {
   const serverName = useRecoilValue(serverNameState);
@@ -16,7 +17,7 @@ const useFetchCartProducts = () => {
 
     const fetch = async () => {
       try {
-        const cartProducts = await getData<CartProduct[]>('/cart-items');
+        const cartProducts = await getData<CartProduct[]>(FETCH_URLS.cartItems);
         setCartProducts(cartProducts);
       } catch {
         resetCartProducts();

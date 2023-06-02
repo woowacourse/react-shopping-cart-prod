@@ -6,6 +6,7 @@ import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 import { Order } from '../types/order';
 import { TOAST_STATE } from '../constants/toast';
+import { FETCH_URLS } from '../constants/urls';
 
 export const useOrders = () => {
   const [orders, setOrders] = useState<Order[]>([]);
@@ -17,7 +18,7 @@ export const useOrders = () => {
 
     const getOrders = async () => {
       try {
-        const data = await getData<Order[]>('/orders');
+        const data = await getData<Order[]>(FETCH_URLS.orders);
         setOrders(data);
       } catch {
         setToastState(TOAST_STATE.failedGetOrder);
