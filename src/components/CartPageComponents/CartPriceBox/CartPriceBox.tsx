@@ -16,7 +16,8 @@ const CartPriceBox = () => {
     openModal(<OrderReviewList cartListForReview={selectedCartList} />);
   };
 
-  const discountedPrice = totalItemPrice >= 50000 ? 5000 : totalItemPrice >= 30000 ? 3000 : 0;
+  const discountedPrice = totalItemPrice >= 100000 ? totalItemPrice * 0.1 : 0;
+  const shippingFee = totalItemPrice >= 50000 ? 0 : 3000;
 
   return (
     <>
@@ -36,11 +37,11 @@ const CartPriceBox = () => {
               </Styled.PriceTextWrapper>
               <Styled.PriceTextWrapper>
                 <Styled.CartPriceText>총 배송비</Styled.CartPriceText>
-                <Styled.CartPriceText>3,000원</Styled.CartPriceText>
+                <Styled.CartPriceText>{shippingFee.toLocaleString()}원</Styled.CartPriceText>
               </Styled.PriceTextWrapper>
               <Styled.PriceTextWrapper>
                 <Styled.CartPriceText>총 주문금액</Styled.CartPriceText>
-                <Styled.CartPriceText>{(totalItemPrice + 3000 - discountedPrice).toLocaleString()}원</Styled.CartPriceText>
+                <Styled.CartPriceText>{(totalItemPrice + shippingFee - discountedPrice).toLocaleString()}원</Styled.CartPriceText>
               </Styled.PriceTextWrapper>
               <Styled.OrderButton onClick={handleOrderButton}>주문 검토하기</Styled.OrderButton>
             </Styled.CartPriceTextWrapper>
