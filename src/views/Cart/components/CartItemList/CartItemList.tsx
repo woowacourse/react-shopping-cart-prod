@@ -2,6 +2,7 @@ import * as S from './CartItemList.style';
 import { CartItemBox } from '@views/Cart/components/CartItemBox';
 import { CheckBox } from '@common/CheckBox';
 import { useCart } from '@views/Cart/recoil/cartState';
+import empty from '@assets/empty.png';
 
 function CartItemList() {
   const { cart, isAllChecked, checkedCartCount, toggleAllCartItem, deleteCheckedItems } = useCart();
@@ -11,7 +12,7 @@ function CartItemList() {
   if (cartLength === 0) {
     return (
       <S.CartWrapper>
-        <span style={{ textAlign: 'center', fontSize: '30px', margin: 'auto' }}>텅</span>
+        <img src={empty} style={{ margin: 'auto' }} width={'150px'} />
       </S.CartWrapper>
     );
   }

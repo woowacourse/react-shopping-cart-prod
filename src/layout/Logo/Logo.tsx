@@ -38,9 +38,11 @@ function Logo() {
 export default Logo;
 
 const LogoName = styled.p`
-  font-size: 2.3rem;
-  font-weight: 800;
+  font-size: 2.6rem;
+  font-weight: 400;
+  font-family: 'Do Hyeon';
   color: ${({ theme }) => theme.lightColor};
+
   @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
     display: none;
   }

@@ -1,4 +1,4 @@
-export interface OrderListType {
+export interface OrderType {
   id: number;
   totalItemsPrice: number;
   discountPrice: number;

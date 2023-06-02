@@ -53,6 +53,7 @@ const CouponBenefit = styled.p`
   color: ${({ theme }) => theme.infoColor};
   font-weight: 600;
   font-size: 3rem;
+  font-family: 'Do Hyeon';
   margin-bottom: 0.5rem;
 `;
 

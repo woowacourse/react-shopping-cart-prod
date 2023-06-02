@@ -23,7 +23,6 @@ const generateFetchOrders = ({ resource, credential }: generateFetchOrdersParams
     },
 
     postOrder: (bodyContent: { orderItemIds: number[]; couponId?: number }) => {
-      console.log('>>> bodyContent:', JSON.stringify(bodyContent));
       return fetch(resource, {
         method: 'POST',
         headers: {
