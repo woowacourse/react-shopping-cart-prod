@@ -86,6 +86,36 @@ export const couponHander = [
           amount: 10,
           name: '신규 회원 환영 쿠폰',
         },
+        {
+          id: 2,
+          type: 'amount',
+          amount: 1000,
+          name: '천원 할인 쿠폰',
+        },
+        {
+          id: 2,
+          type: 'amount',
+          amount: 1000,
+          name: '천원 할인 쿠폰',
+        },
+        {
+          id: 2,
+          type: 'amount',
+          amount: 1000,
+          name: '천원 할인 쿠폰',
+        },
+        {
+          id: 2,
+          type: 'amount',
+          amount: 1000,
+          name: '천원 할인 쿠폰',
+        },
+        {
+          id: 2,
+          type: 'amount',
+          amount: 1000,
+          name: '천원 할인 쿠폰',
+        },
       ],
     };
 
