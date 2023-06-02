@@ -9,6 +9,7 @@ import cartState from '../../../globalState/atoms/cartState';
 import { Suspense } from 'react';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import Modal from '../Modal/Modal';
+import CouponList from '../../coupon/CouponList/CouponList';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ const Header = () => {
       </Logo>
       <RightContainer>
         <Modal title="쿠폰 받기" trigger={<button>클릭</button>}>
-          zz
+          <CouponList />
         </Modal>
         <select onChange={handleServerNameSelectChange} value={serverName}>
           {Object.keys(BASE_URL).map((serverNameOption) => (
