@@ -28,23 +28,23 @@ const setCart = (cart: CartType) => {
   localStorage.setItem('cart', JSON.stringify(cart));
 };
 
-const handleETC = [
+const handleProducts = [
   rest.get(`${MOCK_URL}/products`, (_req, res, ctx) => {
     return res(ctx.delay(200), ctx.status(200), ctx.json(products));
   }),
-
-  rest.get(`${MOCK_URL}/coupons`, (_req, res, ctx) => {
-    return res(ctx.delay(200), ctx.status(200), ctx.json(coupons));
-  }),
 ];
 
-const handleAuth = [
+const handleUsers = [
   rest.post(`${MOCK_URL}/users/login`, (_req, res, ctx) => {
     return res(ctx.delay(200), ctx.status(200), ctx.json({ token: 'YUBhLmNvbToxMjM0' }));
   }),
 
   rest.post(`${MOCK_URL}/users/join`, (_req, res, ctx) => {
     return res(ctx.delay(200), ctx.status(200));
+  }),
+
+  rest.get(`${MOCK_URL}/users/me/coupons`, (_req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200), ctx.json(coupons));
   }),
 ];
 
@@ -99,4 +99,4 @@ const handleOrders = [
   }),
 ];
 
-export const handlers = handleETC.concat(handleAuth, handleCart, handleOrders);
+export const handlers = handleProducts.concat(handleUsers, handleCart, handleOrders);
