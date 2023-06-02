@@ -1,6 +1,6 @@
 import { DefaultValue, atom, selector, selectorFamily } from "recoil";
 import { MIN_QUANTITY } from "constants/cartProduct";
-import { CartProduct, Order } from "types/domain";
+import { CartProduct, OrderItem } from "types/domain";
 import { getCartItems } from "api/cartItems";
 import { serverSelectState } from "./server";
 import { couponListState } from "./coupon";
@@ -88,14 +88,19 @@ export const cartTotalDiscount = selector({
   },
 });
 
-export const orderCartList = selector<Order[]>({
+export const orderCartList = selector<OrderItem[]>({
   key: "orderCartList",
   get: ({ get }) => {
     return get(cartListState)
       .filter((item) => item.isChecked)
       .map((item) => {
-        const { product, quantity, couponId } = item;
-        return { product, quantity, couponIds: couponId ? [couponId] : [] };
+        const { id, product, quantity, couponId } = item;
+
+        const coupon =
+          couponId &&
+          get(couponListState).find((coupon) => coupon.couponId === couponId);
+
+        return { id, product, quantity, coupons: coupon ? [coupon] : [] };
       });
   },
 });

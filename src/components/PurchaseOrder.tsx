@@ -1,5 +1,5 @@
 import { addOrder } from "api/orders";
-import { SHIPPING_FEE } from "constants/cartProduct";
+import { DELIVERY_FEE } from "constants/cartProduct";
 import { useRecoilValue } from "recoil";
 import { cartTotalDiscount, cartTotalPrice, orderCartList } from "recoil/cart";
 import styled, { keyframes } from "styled-components";
@@ -15,7 +15,12 @@ const PurchaseOrder = () => {
   const orderCartItem = async () => {
     if (purchaseOrder.length === 0) return;
 
-    const isSuccess = await addOrder(purchaseOrder);
+    const newOrder = {
+      deliveryFee: DELIVERY_FEE,
+      orderItems: purchaseOrder,
+    };
+
+    const isSuccess = await addOrder(newOrder);
 
     if (isSuccess) {
       navigate(ROUTER_PATH.OrderList);
@@ -32,7 +37,7 @@ const PurchaseOrder = () => {
         </AmountBox>
         <AmountBox>
           <p>배송비</p>
-          <p>{(totalPrice ? SHIPPING_FEE : 0).toLocaleString()}원</p>
+          <p>{(totalPrice ? DELIVERY_FEE : 0).toLocaleString()}원</p>
         </AmountBox>
         <AmountBox>
           <p>할인 금액</p>
@@ -42,7 +47,7 @@ const PurchaseOrder = () => {
           <p>총 주문 금액</p>
           <p>
             {(totalPrice
-              ? totalDiscountPrice + SHIPPING_FEE
+              ? totalDiscountPrice + DELIVERY_FEE
               : 0
             ).toLocaleString()}
             원
