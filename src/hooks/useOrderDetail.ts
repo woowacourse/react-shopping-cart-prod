@@ -2,24 +2,31 @@ import { OrderDetail } from 'src/types';
 import { useRecoilValue } from 'recoil';
 import { $CurrentServerUrl } from 'src/recoil/atom';
 import { USER } from 'src/constants';
-import useGetQuery from './useGetQuery';
+import fetchData from 'src/api';
+import useFetch from './useFetch';
 
 interface UseOrderDetailProps {
   orderId: string | null;
 }
 
 function useOrderDetail({ orderId }: UseOrderDetailProps) {
-  if (!orderId) {
-    throw new Error('존재하지 않는 id 입니다.');
-  }
-
   const currentServer = useRecoilValue($CurrentServerUrl);
 
-  const { data: orderDetailData, loading } = useGetQuery<OrderDetail>(`${currentServer}/orders/${orderId}`, {
-    Authorization: `Basic ${btoa(USER)}`,
+  const { result: orderDetailData } = useFetch({
+    fetch: fetchData<OrderDetail>,
+    arg: {
+      url: `${currentServer}/orders/${orderId}`,
+      options: {
+        headers: {
+          Authorization: `Basic ${btoa(USER)}`,
+        },
+      },
+    },
+    key: `orders/${orderId}`,
+    suspense: true,
   });
 
-  return { orderDetailData, loading };
+  return { orderDetailData };
 }
 
 export default useOrderDetail;

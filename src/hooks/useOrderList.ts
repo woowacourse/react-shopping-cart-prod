@@ -2,16 +2,27 @@ import { Order } from 'src/types';
 import { useRecoilValue } from 'recoil';
 import { $CurrentServerUrl } from 'src/recoil/atom';
 import { USER } from 'src/constants';
-import useGetQuery from './useGetQuery';
+import fetchData from 'src/api';
+import useFetch from './useFetch';
 
 function useOrderList() {
   const currentServer = useRecoilValue($CurrentServerUrl);
 
-  const { data: orderList, loading } = useGetQuery<Order[]>(`${currentServer}/orders`, {
-    Authorization: `Basic ${btoa(USER)}`,
+  const { result: orderList } = useFetch({
+    fetch: fetchData<Order[]>,
+    arg: {
+      url: `${currentServer}/orders/`,
+      options: {
+        headers: {
+          Authorization: `Basic ${btoa(USER)}`,
+        },
+      },
+    },
+    key: `orders`,
+    suspense: true,
   });
 
-  return { orderList, loading };
+  return { orderList };
 }
 
 export default useOrderList;

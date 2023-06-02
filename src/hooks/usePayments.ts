@@ -6,7 +6,8 @@ import { useRecoilValue } from 'recoil';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from 'src/recoil/atom';
 import { USER } from 'src/constants';
 import { useEffect } from 'react';
-import useGetQuery from './useGetQuery';
+import fetchData from 'src/api';
+import useFetch from './useFetch';
 
 const getUrlParams = (data: number[], key: string) => {
   const urlParams = new URLSearchParams();
@@ -18,6 +19,7 @@ const getUrlParams = (data: number[], key: string) => {
 };
 
 function usePayments() {
+  // id가 없을 때는 요청을 보내지 않기.
   const currentServer = useRecoilValue($CurrentServerUrl);
   const cartList = useRecoilValue($CartList(currentServer));
   const cartCheckedIdList = useRecoilValue($CheckedCartIdList(currentServer));
@@ -25,14 +27,30 @@ function usePayments() {
   const urlParams = getUrlParams(cartCheckedIdList, 'cartItemIds');
   const BASE_URL = `${currentServer}/total-cart-price`;
 
-  const { data: payments, refreshQuery } = useGetQuery<Payments>(`${BASE_URL}?${urlParams}`, {
-    Authorization: `Basic ${btoa(USER)}`,
+  const { result: payments, refreshFetch } = useFetch({
+    fetch: fetchData<Payments>,
+    arg: {
+      url: `${BASE_URL}?${urlParams}`,
+      options: {
+        headers: {
+          Authorization: `Basic ${btoa(USER)}`,
+        },
+      },
+    },
+    key: 'payments',
   });
 
   useEffect(() => {
     const updatedUrlParams = getUrlParams(cartCheckedIdList, 'cartItemIds');
 
-    refreshQuery(`${BASE_URL}?${updatedUrlParams}`);
+    refreshFetch({
+      url: `${BASE_URL}?${updatedUrlParams}`,
+      options: {
+        headers: {
+          Authorization: `Basic ${btoa(USER)}`,
+        },
+      },
+    });
   }, [cartList]);
 
   return { payments };

@@ -35,7 +35,8 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
 
   render() {
     const fallbackProps = { error: this.state.error };
-
+    // 비동기에서는 에러바운더리가 실행되지 않는다.
+    // 비동기를 감싸는 함수를 만들고, 그것을 실행시켜야 한다.
     if (this.state.catch) {
       return React.createElement('div', fallbackProps, this.props.fallback);
     }
