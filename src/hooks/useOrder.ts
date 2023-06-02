@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { ORDERS_BASE_URL } from '../constants/api';
 import { fetchOrders, postOrder } from '../remotes/order';
 import { serverOriginState } from '../recoil/atoms/common';
-import type { OrderPayload } from '../types/order';
 import { ordersState } from '../recoil/atoms/orders';
+import type { OrderPayload } from '../types/order';
 
 const useOrder = () => {
   const orders = useRecoilValue(ordersState);
@@ -26,13 +26,7 @@ const useOrder = () => {
   const sendOrder = async (orderPayload: OrderPayload) => {
     try {
       const response = await postOrder(ORDERS_BASE_URL, orderPayload);
-      const headers = Array.from(response.headers);
-      const locationHeader = headers.find(([name]) => name === 'location');
-
-      if (locationHeader === undefined) return;
-
-      const [, orderUrl] = locationHeader;
-      const orderId = orderUrl.replace(`${ORDERS_BASE_URL}/`, '');
+      const orderId = getOrderIdFromHeaders(Array.from(response.headers));
 
       updateOrders();
       navigate(`${ORDERS_BASE_URL}/complete/${orderId}`);
@@ -41,6 +35,17 @@ const useOrder = () => {
         throw e;
       }
     }
+  };
+
+  const getOrderIdFromHeaders = (headers: Array<[string, string]>) => {
+    const locationHeader = headers.find(([name]) => name === 'location');
+
+    if (locationHeader === undefined) return;
+
+    const [, orderUrl] = locationHeader;
+    const orderId = orderUrl.replace(`${ORDERS_BASE_URL}/`, '');
+
+    return orderId;
   };
 
   return { orders, updateOrders, sendOrder };
