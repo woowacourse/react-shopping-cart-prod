@@ -5,7 +5,7 @@ interface Props extends CouponType {
   onClick?: () => void;
 }
 
-export default function Coupon({ name, discountRate, expiredAt, onClick }: Props) {
+export default function Coupon({ name, discountRate, expiredAt, isUsed, onClick }: Props) {
   const date = new Date(expiredAt);
   const expirationDateMessage = `사용기간 : ~ ${date.getFullYear()}.${date.getMonth()}.${date.getDate()} 까지`;
 
@@ -13,7 +13,7 @@ export default function Coupon({ name, discountRate, expiredAt, onClick }: Props
     <Wrapper onClick={onClick}>
       <HeaderBox>
         <DiscountRate>{`${discountRate}% 할인`}</DiscountRate>
-        <Tag>사용가능</Tag>
+        <Tag isUsed={isUsed}>{isUsed ? '사용완료' : '사용가능'}</Tag>
       </HeaderBox>
       <div>
         <Name>{name}</Name>
@@ -23,7 +23,6 @@ export default function Coupon({ name, discountRate, expiredAt, onClick }: Props
   );
 }
 
-// 11 / 6
 const Wrapper = styled.div<Pick<Props, 'onClick'>>`
   position: relative;
 
@@ -64,7 +63,7 @@ const DiscountRate = styled.p`
   color: #e78a34;
 `;
 
-const Tag = styled.div`
+const Tag = styled.div<{ isUsed: Props['isUsed'] }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,7 +73,7 @@ const Tag = styled.div`
   border-radius: 4px;
   padding: 0 4px;
 
-  background: #04c09e;
+  background: ${({ isUsed }) => (isUsed ? 'red' : '#04c09e')};
 
   font-size: 12px;
   font-weight: 600;
