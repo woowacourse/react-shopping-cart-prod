@@ -75,7 +75,7 @@ export const StyledLink = styled(Link)`
   margin: 64px 0;
   border-radius: 8px;
 
-  background-color: #04c09e;
+  background-color: var(--primary-color);
 
   font-size: 20px;
   font-weight: 600;

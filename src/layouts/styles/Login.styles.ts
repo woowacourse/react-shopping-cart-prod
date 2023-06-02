@@ -44,7 +44,7 @@ export const LoginInput = styled.input`
 export const LoginButton = styled.button`
   width: 160px;
   height: 40px;
-  background-color: #04c09e;
+  background-color: var(--primary-color);
   margin-top: 48px;
   font-size: 16px;
   color: #ffffff;

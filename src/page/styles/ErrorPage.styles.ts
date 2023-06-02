@@ -39,7 +39,7 @@ export const StyledLink = styled(Link)`
   height: 44px;
   margin: 64px 0;
 
-  background-color: #04c09e;
+  background-color: var(--primary-color);
   border-radius: 8px;
 
   color: #ffffff;

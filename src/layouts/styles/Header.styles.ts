@@ -53,7 +53,7 @@ export const CartCount = styled.div`
   margin-left: 8px;
   border-radius: 50%;
 
-  background: #04c09e;
+  background: var(--primary-color);
 
   font-size: 14px;
   font-weight: 700;
