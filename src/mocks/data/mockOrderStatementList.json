@@ -1,6 +1,8 @@
 [
   {
     "orderId": 1,
+    "deliveryFee": 3000,
+    "total": 356000,
     "orderItems": [
       {
         "orderItemId": 3,
@@ -81,6 +83,8 @@
   },
   {
     "orderId": 2,
+    "deliveryFee": 3000,
+    "total": 356000,
     "orderItems": [
       {
         "orderItemId": 5,
