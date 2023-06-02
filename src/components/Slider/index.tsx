@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef } from 'react';
+
+import * as S from './style';
 
 const Slider = ({ children }: React.PropsWithChildren) => {
   const childrens = React.Children.toArray(children);
@@ -66,68 +67,16 @@ const Slider = ({ children }: React.PropsWithChildren) => {
   }, []);
 
   return (
-    <Container>
-      <LeftButton onClick={moveSliceLeft}>{'<'}</LeftButton>
-      <RightButton onClick={moveSliceRight}>{'>'}</RightButton>
-      <Contents ref={slideRef} listLength={sliceItems.length}>
+    <S.Container>
+      <S.LeftButton onClick={moveSliceLeft}>{'<'}</S.LeftButton>
+      <S.RightButton onClick={moveSliceRight}>{'>'}</S.RightButton>
+      <S.Contents ref={slideRef} listLength={sliceItems.length}>
         {sliceItems.map((item, i) => (
-          <Content key={i}>{item}</Content>
+          <S.Content key={i}>{item}</S.Content>
         ))}
-      </Contents>
-    </Container>
+      </S.Contents>
+    </S.Container>
   );
 };
-const Contents = styled.ul<{ listLength: number }>`
-  display: flex;
-  flex-direction: row;
-
-  width: ${(props) => props.listLength * 100}%;
-
-  transition: 'all 500ms ease-in-out';
-`;
-
-const Content = styled.li`
-  width: 860px;
-`;
-
-const LeftButton = styled.button`
-  position: absolute;
-  left: 20px;
-
-  height: 40px;
-  width: 25px;
-  border-radius: 10px;
-  background-color: rgba(240, 240, 240, 0.7);
-  cursor: pointer;
-
-  z-index: 1;
-`;
-
-const RightButton = styled.button`
-  position: absolute;
-  right: 20px;
-
-  height: 40px;
-  width: 25px;
-  border-radius: 10px;
-  background-color: rgba(240, 240, 240, 0.7);
-  cursor: pointer;
-
-  z-index: 1;
-`;
-
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  position: relative;
-
-  margin-top: 30px;
-  overflow: hidden;
-
-  font-size: 20px;
-  background-color: lightblue;
-
-  z-index: 0;
-`;
 
 export default Slider;

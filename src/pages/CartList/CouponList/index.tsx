@@ -1,5 +1,4 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
-import styled from 'styled-components';
 
 import Coupon from '@Components/Coupon';
 
@@ -12,6 +11,8 @@ import serverState from '@Atoms/serverState';
 import usingCouponState from '@Atoms/usingCouponState';
 
 import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
+
+import * as S from './style';
 
 interface CouponListProps {
   onClose: () => void;
@@ -34,12 +35,12 @@ const CouponList = ({ onClose }: CouponListProps) => {
   };
 
   return (
-    <Container>
-      <AmountUnusedCoupon>
+    <S.Container>
+      <S.AmountUnusedCoupon>
         사용 가능 쿠폰
-        <Number> {amountUnusedCoupon}</Number>개
-      </AmountUnusedCoupon>
-      <List>
+        <S.Number> {amountUnusedCoupon}</S.Number>개
+      </S.AmountUnusedCoupon>
+      <S.List>
         {memberCoupon.map((item) => (
           <Coupon
             key={item.id}
@@ -51,31 +52,8 @@ const CouponList = ({ onClose }: CouponListProps) => {
             handleDeleteButton={makeDeleteCoupon(item)}
           />
         ))}
-      </List>
-    </Container>
+      </S.List>
+    </S.Container>
   );
 };
-const Container = styled.div``;
-
-const AmountUnusedCoupon = styled.div`
-  margin-left: 10px;
-  font-weight: 600;
-  font-size: 17px;
-  line-height: 20px;
-`;
-
-const Number = styled.span`
-  color: rgb(6, 192, 158);
-`;
-
-const List = styled.ul`
-  margin-top: 30px;
-  max-height: 730px;
-  overflow-y: auto;
-
-  & > li {
-    margin-bottom: 20px;
-  }
-`;
-
 export default CouponList;

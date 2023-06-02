@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import styled from 'styled-components';
 
 import Modal from '@Components/Modal';
 import Slider from '@Components/Slider';
@@ -17,6 +16,7 @@ import cartItemsAmountState from '@Selector/cartItemsAmountState';
 
 import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
+import * as S from './style';
 import CouponDownload from '../CouponDownLoad';
 
 const CouponBanner = () => {
@@ -67,9 +67,9 @@ const CouponBanner = () => {
     <>
       <Slider>
         {totalCoupon.map((coupon) => (
-          <Item onClick={makeOpenModal(coupon)} key={coupon.id}>
+          <S.Item onClick={makeOpenModal(coupon)} key={coupon.id}>
             {coupon.name} 받기
-          </Item>
+          </S.Item>
         ))}
       </Slider>
       {isModalOpen && (
@@ -86,18 +86,3 @@ const CouponBanner = () => {
 };
 
 export default CouponBanner;
-
-const Item = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 60px;
-  padding: 0px 60px;
-
-  font-size: 24px;
-  font-weight: 700;
-  background-color: rgb(51, 51, 51);
-  color: white;
-
-  cursor: pointer;
-`;
