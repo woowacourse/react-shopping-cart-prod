@@ -12,6 +12,9 @@ const LoginPage = () => {
       email: data.get('email'),
       password: data.get('password'),
     };
+
+    // todo: JWT 도입 예정
+    alert('JWT 도입 예정입니다. 🔑 \n' + JSON.stringify(values));
   };
 
   return (
