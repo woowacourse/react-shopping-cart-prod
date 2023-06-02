@@ -13,19 +13,27 @@ import { ShoppingCart } from './components/pages/ShoppingCart';
 
 import { CartItemType } from './types';
 import { FETCH_URL, PATH } from './constants';
+import { useSetCheckedState } from './recoils/recoilChecked';
 
 export const App = () => {
   const baseUrl = useApiBaseUrlValue();
-  const { data: cart } = useQuery<CartItemType[]>(baseUrl + FETCH_URL.CART_ITEMS, {
+  const { data: cart } = useQuery<CartItemType[]>(baseUrl+FETCH_URL.CART_ITEMS, {
     Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
   });
 
+
   const setCartState = useSetCartState();
+
+  const setCheckedState = useSetCheckedState();
 
   useEffect(() => {
     if (!cart) return;
 
     setCartState(cart);
+
+    setCheckedState({
+      all: false,
+    })
   }, [cart, setCartState]);
 
   return (

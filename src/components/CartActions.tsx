@@ -31,11 +31,12 @@ export const CartActions = () => {
 
   const onClickDeleteSelectedItemButton = () => {
     const { all, ...selectedItems } = checkedState;
+
     const targetItemsId = Object.keys(selectedItems).map(Number);
 
     deleteCartItem(...targetItemsId);
 
-    setCheckedState({ all: false });
+    setCheckedState({ all: true });
   };
 
   return (

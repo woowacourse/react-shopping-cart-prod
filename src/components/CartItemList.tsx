@@ -28,6 +28,15 @@ export const CartItemList = () => {
           all: false,
         };
       }
+
+      if(Object.keys(prev).length === cart.length){
+        return {
+          ...prev,
+          all: true,
+          [id]: true,
+        };
+      }
+
       return {
         ...prev,
         [id]: true,
@@ -89,7 +98,7 @@ const Style = {
     }
 
     @media screen and (min-width: 501px) {
-      width: 735px;
+      width: 100%;
       padding: 33px 0;
     }
 

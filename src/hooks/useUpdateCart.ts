@@ -59,7 +59,10 @@ export const useUpdateCart = () => {
 
   const deleteCartItem = (...cartId: number[]) => {
     setCart((prev) => {
-      return prev.filter((item) => !cartId.includes(item.id));
+      return prev.filter((item) => {
+
+        return !cartId.includes(Number(item.id))
+      });
     });
 
     cartId.forEach((id) => {
