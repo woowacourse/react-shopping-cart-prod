@@ -2,7 +2,7 @@ import type { ProductType } from '../../types';
 
 import { useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import QuantityInput from '../common/QuantityInput';
 
@@ -19,6 +19,7 @@ export default function ProductItem({ id, name, price, imageUrl }: Props) {
   const [cart, setCart] = useRecoilState(cartState);
 
   const [addLoading, setAddLoading] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const { showToast } = useToast();
 
   const cartItem = cart.find((cartItem) => cartItem.product.id === id);
@@ -58,10 +59,14 @@ export default function ProductItem({ id, name, price, imageUrl }: Props) {
     e.currentTarget.src = './emptyProduct.svg';
   };
 
+  const onLoadImage = () => {
+    setImageLoaded(true);
+  };
+
   return (
     <>
       <Wrapper>
-        <Image src={imageUrl} onError={setAltSrc} />
+        <Image src={imageUrl} onLoad={onLoadImage} onError={setAltSrc} imageLoaded={imageLoaded} />
         <InfoBox>
           <LabelBox>
             <Name>{name}</Name>
@@ -82,6 +87,12 @@ export default function ProductItem({ id, name, price, imageUrl }: Props) {
   );
 }
 
+const skeletonBackground = keyframes`
+  0%    { background-color: rgba(165, 165, 165, 0.1) }
+  50%   { background-color: rgba(165, 165, 165, 0.3) }
+  100%  { background-color: rgba(165, 165, 165, 0.1) }
+`;
+
 const Wrapper = styled.div`
   width: 282px;
   height: 362px;
@@ -89,9 +100,11 @@ const Wrapper = styled.div`
   color: #333333;
 `;
 
-const Image = styled.img`
+const Image = styled.img<{ imageLoaded: boolean }>`
   width: 100%;
   height: 282px;
+  animation: ${skeletonBackground} 1s infinite;
+  ${({ imageLoaded }) => (imageLoaded ? 'animation: none;' : '')}
 
   object-fit: cover;
 `;
