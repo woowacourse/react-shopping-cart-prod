@@ -1,19 +1,15 @@
 import type { CouponType } from '../../types';
 
 import styled from 'styled-components';
-import { useRecoilValue } from 'recoil';
 
 import Coupon from './Coupon';
 
-import { couponsState } from '../../recoil/state';
-
 interface Props {
+  coupons: CouponType[];
   selectCoupon?: (coupon: CouponType) => () => void;
 }
 
-export default function CouponList({ selectCoupon }: Props) {
-  const coupons = useRecoilValue(couponsState);
-
+export default function CouponList({ coupons, selectCoupon }: Props) {
   return (
     <Wrapper>
       {coupons.map((coupon) => (
