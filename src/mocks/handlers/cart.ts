@@ -5,6 +5,8 @@ import store from 'utils/storage';
 import { ServerOwner } from 'types/serverOwner';
 import { SERVER_OWNER } from 'constants/storeKey';
 import BASE_URL from 'constants/apiBaseURL';
+import getBasicKey from 'utils/getBasicKey';
+import { USER_1 } from 'constants/basicKey';
 
 type PostReqBody = {
   productId: number;
@@ -15,10 +17,7 @@ type PatchReqBody = {
 };
 
 const authorizationError: ErrorResponse = {
-  timestamp: new Date().toISOString(),
-  status: 500,
-  error: '에러 응답이 json 형식이 아닙니다.',
-  path: '/cart-items',
+  message: '인증 실패',
 };
 
 const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
@@ -33,31 +32,27 @@ export const cart = [
     const { productId } = await req.json<PostReqBody>();
     const authorization = req.headers.get('Authorization');
 
-    if (authorization !== 'Basic bob:486') {
+    if (authorization !== `Basic ${getBasicKey(USER_1.id, USER_1.password)}`) {
       return res(ctx.status(401), ctx.json(authorizationError));
     }
 
-    // https://techcourse.woowahan.com/s/zNFZ8xuU/ls/gRaMDVpX
-    // 명세상 return되는 body가 없음...
-    // 명세상 productId가 아닌, cartItemId가 반환됨...
-    // Location: /cart-items/{cartItemId}
     return res(ctx.status(201), ctx.set('Location', `/cart-items/${productId + 1000}`), ctx.json({}), ctx.delay(100));
   }),
 
   rest.patch<PatchReqBody>(`${BASE_URL_BY_OWNER}/cart-items/:cartItemId`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
-    if (authorization !== 'Basic bob:486') {
+    if (authorization !== `Basic ${getBasicKey(USER_1.id, USER_1.password)}`) {
       return res(ctx.status(401), ctx.json(authorizationError));
     }
-    // 명세상 return되는 body가 없음...
+
     return res(ctx.status(200), ctx.json({}), ctx.delay(100));
   }),
 
   rest.delete(`${BASE_URL_BY_OWNER}/cart-items/:cartItemId`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
-    if (authorization !== 'Basic bob:486') {
+    if (authorization !== `Basic ${getBasicKey(USER_1.id, USER_1.password)}`) {
       return res(ctx.status(401), ctx.json(authorizationError));
     }
 
