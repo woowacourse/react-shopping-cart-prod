@@ -23,10 +23,7 @@ const Main = styled.main<Record<'pathname', string>>`
   flex-direction: column;
   gap: 40px;
   width: 100%;
-  height: calc(100vh - 80px);
-  padding: 0 120px;
-
-  overflow-y: auto;
+  padding: 30px 120px;
 
   & > * {
     display: flex;

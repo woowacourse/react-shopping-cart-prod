@@ -12,12 +12,12 @@ const ProductList = () => {
   const products = useRecoilValue(productState(serverName));
 
   if (products.length === 0) {
-    return <Message type='empty' />;
+    return <Message type="empty" />;
   }
 
   return (
     <ProductListContainer>
-      {products.map((product) => (
+      {products.map(product => (
         <li key={product.id}>
           <ProductItem product={product} />
         </li>
@@ -32,6 +32,10 @@ const ProductListContainer = styled.ul`
   grid-template-columns: repeat(auto-fill, 282px);
   grid-row-gap: 84px;
   grid-column-gap: 48px;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
+    padding-bottom: 100px;
+  }
 `;
 
 export default ProductList;

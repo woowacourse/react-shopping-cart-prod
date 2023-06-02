@@ -23,10 +23,7 @@ const ProductsListPage = () => {
 
 const Main = styled.main`
   width: 100%;
-  height: calc(100vh - 80px);
   padding: 60px;
-
-  overflow-y: auto;
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     padding: 30px 30px 100px 30px;

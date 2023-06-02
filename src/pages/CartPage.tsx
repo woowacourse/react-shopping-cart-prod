@@ -34,9 +34,7 @@ const Main = styled.main`
 
   width: 100%;
   height: calc(100vh - 80px);
-  padding: 0 60px;
-
-  overflow-y: auto;
+  padding: 30px 120px;
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     padding: 30px;

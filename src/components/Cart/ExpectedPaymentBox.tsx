@@ -82,14 +82,12 @@ const ExpectedPaymentBox = () => {
 const ExpectedPaymentContainer = styled.div`
   min-width: 400px;
   height: 460px;
-  margin-top: 90px;
 
   border: 1px solid ${({ theme }) => theme.colors.gray300};
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     min-width: 0;
     width: 100%;
-    margin-top: 0px;
   }
 `;
 

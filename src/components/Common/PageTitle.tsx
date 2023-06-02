@@ -11,6 +11,7 @@ const PageTitle = ({ children }: PageTitleProps) => {
 const Title = styled.h2`
   width: 100%;
   text-align: center;
+  padding-bottom: 20px;
 
   border-bottom: 4px solid ${({ theme }) => theme.colors.black};
   font-size: 32px;
