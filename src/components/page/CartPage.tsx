@@ -3,36 +3,45 @@ import { Link } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
+import SubPageTemplate from '../common/SubPageTemplate';
 import CartItemList from '../cart/CartItemList';
 import CartBill from '../cart/CartBill';
-import SubHeader from '../common/SubHeader';
 
-import { cartCountState, cartState, checkedListState, serverNameState } from '../../recoil/state';
+import {
+  cartCountState,
+  cartState,
+  checkedListState,
+  serverNameState,
+  tokenState,
+} from '../../recoil/state';
 import * as api from '../../api';
 import useToast from '../../hooks/useToast';
 import { API_ERROR_MESSAGE } from '../../constants';
 
 export default function CartPage() {
   const serverName = useRecoilValue(serverNameState);
+  const token = useRecoilValue(tokenState);
   const cartCount = useRecoilValue(cartCountState);
   const setCart = useSetRecoilState(cartState);
   const setCheckedList = useSetRecoilState(checkedListState);
+
   const { showToast } = useToast();
 
   useEffect(() => {
+    if (token === null) return;
+
     try {
-      api.getCart(serverName).then((cart) => {
+      api.getCart(serverName, token).then((cart) => {
         setCart(cart);
         setCheckedList(Array(cart.length).fill(true));
       });
     } catch {
       showToast('error', API_ERROR_MESSAGE.getCart);
     }
-  }, [serverName]);
+  }, [serverName, token]);
 
   return (
-    <Wrapper>
-      <SubHeader>장바구니</SubHeader>
+    <SubPageTemplate title="장바구니">
       {cartCount !== 0 ? (
         <Main>
           <CartItemList />
@@ -48,13 +57,9 @@ export default function CartPage() {
           <StyledLink to="/">상품 담으러 가기</StyledLink>
         </EmptyCartMain>
       )}
-    </Wrapper>
+    </SubPageTemplate>
   );
 }
-
-const Wrapper = styled.div`
-  width: 100%;
-`;
 
 const Main = styled.div`
   display: flex;

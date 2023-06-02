@@ -12,6 +12,7 @@ import Order from '../order/Order';
 import { serverNameState, tokenState } from '../../recoil/state';
 import { getOrder } from '../../api';
 import OrderBill from '../order/OrderBill';
+import SubPageTemplate from '../common/SubPageTemplate';
 
 export default function OrderDetailPage() {
   const { orderId } = useParams();
@@ -41,8 +42,7 @@ export default function OrderDetailPage() {
 
   const { coupon, totalPrice, couponDiscountPrice, deliveryPrice } = order;
   return (
-    <Wrapper>
-      <SubHeader>주문 목록 상세</SubHeader>
+    <SubPageTemplate title="주문 목록 상세">
       <Main>
         <OrderBox>
           <Order {...order} buttonHidden />
@@ -54,7 +54,7 @@ export default function OrderDetailPage() {
           deliveryPrice={deliveryPrice}
         />
       </Main>
-    </Wrapper>
+    </SubPageTemplate>
   );
 }
 

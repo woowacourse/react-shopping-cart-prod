@@ -10,6 +10,7 @@ import Order from '../order/Order';
 import { serverNameState, tokenState } from '../../recoil/state';
 import { getOrders } from '../../api';
 import useToast from '../../hooks/useToast';
+import SubPageTemplate from '../common/SubPageTemplate';
 
 export default function OrdersPage() {
   const serverName = useRecoilValue(serverNameState);
@@ -29,8 +30,7 @@ export default function OrdersPage() {
   }, [serverName, token]);
 
   return (
-    <Wrapper>
-      <SubHeader>주문 목록</SubHeader>
+    <SubPageTemplate title="주문 목록">
       <Main>
         <List>
           {orders.map((order) => (
@@ -38,7 +38,7 @@ export default function OrdersPage() {
           ))}
         </List>
       </Main>
-    </Wrapper>
+    </SubPageTemplate>
   );
 }
 
