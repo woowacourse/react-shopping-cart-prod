@@ -30,12 +30,9 @@ const CartItem = (item: CartProduct) => {
   const removeItem = async () => {
     const result = await removeCartItem(selectedServer, item.id);
 
-    if (!result) {
-      alert("장바구니 상품 제거 실패!");
-      return;
+    if (result) {
+      setProduct(null);
     }
-
-    setProduct(null);
   };
 
   return (

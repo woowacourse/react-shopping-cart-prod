@@ -15,17 +15,14 @@ const Item = (item: Product) => {
 
     const cartItemId = await addCartItem(selectedServer, item.id);
 
-    if (!cartItemId) {
-      alert("장바구니 상품 추가 실패!");
-      return;
+    if (cartItemId) {
+      setCartItem({
+        id: Number(cartItemId),
+        quantity: 1,
+        isChecked: true,
+        product: item,
+      });
     }
-
-    setCartItem({
-      id: Number(cartItemId),
-      quantity: 1,
-      isChecked: true,
-      product: item,
-    });
   };
 
   return (

@@ -17,12 +17,9 @@ const PurchaseOrder = () => {
 
     const isSuccess = await addOrder(purchaseOrder);
 
-    if (!isSuccess) {
-      alert("구입 실패!");
-      return;
+    if (isSuccess) {
+      navigate(ROUTER_PATH.OrderList);
     }
-
-    navigate(ROUTER_PATH.OrderList);
   };
 
   return (

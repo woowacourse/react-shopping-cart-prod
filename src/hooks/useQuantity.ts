@@ -34,13 +34,13 @@ export const useQuantity = (productId: number) => {
           )
         : await removeCartItem(selectedServer, cartItem.id);
 
-    if (!result) {
-      alert(`장바구니 상품 수량 변경 실패!`);
-      return;
+    if (result) {
+      setQuantity(newQuantity);
+      setCartItem({
+        ...cartItem,
+        quantity: Number(newQuantity),
+      } as CartProduct);
     }
-
-    setQuantity(newQuantity);
-    setCartItem({ ...cartItem, quantity: Number(newQuantity) } as CartProduct);
   };
 
   const handleQuantityChanged = (e: React.ChangeEvent<HTMLInputElement>) => {

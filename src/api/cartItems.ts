@@ -16,7 +16,11 @@ export const getCartItems = async (serverId: ServerId): Promise<CartItem[]> => {
     },
   });
 
-  return response.json();
+  const data = await response.json();
+
+  if (!response.ok) throw new Error(data.error);
+
+  return data;
 };
 
 export const addCartItem = async (serverId: ServerId, productId: number) => {
@@ -31,7 +35,11 @@ export const addCartItem = async (serverId: ServerId, productId: number) => {
 
   const cartItemId = response.headers.get("Location")?.split("/")[2];
 
-  return response.status === 201 && cartItemId;
+  const data = await response.json();
+
+  if (!response.ok) alert(data.error);
+
+  return cartItemId;
 };
 
 export const changeItemQuantity = async (
@@ -51,7 +59,11 @@ export const changeItemQuantity = async (
     }
   );
 
-  return response.status;
+  const data = await response.json();
+
+  if (!response.ok) alert(data.error);
+
+  return response.ok;
 };
 
 export const removeCartItem = async (
@@ -68,5 +80,9 @@ export const removeCartItem = async (
     }
   );
 
-  return response.status === 204;
+  const data = await response.json();
+
+  if (!response.ok) alert(data.error);
+
+  return response.ok;
 };

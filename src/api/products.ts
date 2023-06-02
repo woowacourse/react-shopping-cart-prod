@@ -1,7 +1,6 @@
 import { ServerId } from "recoil/server";
 import { Product } from "types/domain";
 import { SERVER_LIST, USER_TOKEN } from "./constants";
-import { ERROR_MESSAGE } from "constants/errorType";
 
 export const getProducts = async (serverId: ServerId): Promise<Product[]> => {
   const response = await fetch(`${SERVER_LIST[serverId]}/products`, {
@@ -11,9 +10,9 @@ export const getProducts = async (serverId: ServerId): Promise<Product[]> => {
     },
   });
 
-  const errorMessage = ERROR_MESSAGE[response.status] ?? ERROR_MESSAGE[0];
+  const data = await response.json();
 
-  if (!response.ok) throw new Error(errorMessage);
+  if (!response.ok) throw new Error(data.error);
 
-  return response.json();
+  return data;
 };

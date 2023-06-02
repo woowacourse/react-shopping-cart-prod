@@ -1,35 +1,41 @@
-//실제 api와 연결할때 사용
-// import { ServerId } from "recoil/server";
+import { ServerId } from "recoil/server";
 
-import { ERROR_MESSAGE } from "constants/errorType";
 import { Order, EachOrderStatement } from "types/domain";
 
-// import { SERVER_LIST, USER_TOKEN } from "./constants";
+import { SERVER_LIST, USER_TOKEN } from "./constants";
 
 export const addOrder = async (orders: Order[]): Promise<boolean> => {
-  const response = await fetch(`/orders`, {
-    method: "POST",
-    // headers: {
-    //   Authorization: `Basic ${USER_TOKEN}`,
-    //   "Content-Type": "application/json",
-    // },
-    body: JSON.stringify(orders),
-  });
+  const response = await fetch(
+    `https://power.better-than-coupang.kro.kr/orders`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${USER_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orders),
+    }
+  );
+  const data = await response.json();
 
-  return response.status === 204;
+  if (!response.ok) alert(data.error);
+
+  return response.ok;
 };
 
 export const getOrderStatement = async (): Promise<EachOrderStatement[]> => {
-  const response = await fetch(`/orders`, {
-    method: "GET",
-    // headers: {
-    //   Authorization: `Basic ${USER_TOKEN}`,
-    //   "Content-Type": "application/json",
-    // },
-  });
-  const errorMessage = ERROR_MESSAGE[response.status] ?? ERROR_MESSAGE[0];
+  const response = await fetch(
+    `https://power.better-than-coupang.kro.kr/orders`,
+    {
+      method: "GET",
+      headers: {
+        Authorization: `Basic ${USER_TOKEN}`,
+      },
+    }
+  );
+  const data = await response.json();
 
-  if (!response.ok) throw new Error(errorMessage);
+  if (!response.ok) throw new Error(data.error);
 
-  return response.json();
+  return data;
 };
