@@ -5,7 +5,7 @@ import ErrorBoundary from './ErrorBoundary';
 
 type AwaitFutureLoaderProps<TData> = {
   future: Future<TData>;
-  children: (
+  children?: (
     data: TData,
   ) => PropsWithChildren extends { children?: infer Children } ? Children : never;
 };
@@ -14,14 +14,14 @@ const AwaitFutureLoader = <TData,>(props: AwaitFutureLoaderProps<TData>) => {
   const { future, children } = props;
   const data = future.unwrap();
 
-  return children(data) as React.ReactElement;
+  return children?.(data) as React.ReactElement;
 };
 
 type AwaitFutureProps<TData> = {
-  future: Future<TData>;
+  future?: Future<TData> | null;
   loadingElement?: React.ReactNode;
   errorElement?: React.ReactNode;
-  children: (
+  children?: (
     data: TData,
   ) => PropsWithChildren extends { children?: infer Children } ? Children : never;
 };
@@ -36,7 +36,7 @@ const AwaitFuture = <TData,>(props: AwaitFutureProps<TData>) => {
   return (
     <ErrorBoundary key={key} fallback={errorElement}>
       <Suspense fallback={loadingElement}>
-        <AwaitFutureLoader future={future}>{children}</AwaitFutureLoader>
+        {future && <AwaitFutureLoader future={future}>{children}</AwaitFutureLoader>}
       </Suspense>
     </ErrorBoundary>
   );
