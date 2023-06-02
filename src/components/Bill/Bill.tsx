@@ -17,8 +17,9 @@ import useFetchOrder from '../../hooks/useFetchOrder';
 import { orderAtom } from '../../store/order';
 import {
   DELIVERY_FEE,
-  DISCOUNT,
   DISCOUNT_BOUNDARY,
+  DISCOUNT_PERCENT,
+  FREE_DELIVERY_BOUNDARY,
 } from '../../constants/policy';
 import getDiscountAmount from '../../util/getDiscountAmount';
 
@@ -29,10 +30,14 @@ const Bill = () => {
   const { postOrders } = useFetchOrder();
   const totalProductAmount = useRecoilValue(totalAmountAtom);
   const [discount, setDiscount] = useState(0);
+  const [deliveryFee, setDeliveryFee] = useState(0);
 
   useEffect(() => {
     const discountAmount = getDiscountAmount(totalProductAmount);
     setDiscount(discountAmount);
+    if (totalProductAmount >= FREE_DELIVERY_BOUNDARY) setDeliveryFee(0);
+    if (totalProductAmount < FREE_DELIVERY_BOUNDARY)
+      setDeliveryFee(DELIVERY_FEE);
   }, [totalProductAmount]);
 
   const navigate = useNavigate();
@@ -63,25 +68,21 @@ const Bill = () => {
           할인 금액 <span> ₩ {discount.toLocaleString()}</span>
         </Detail>
         <Detail>
-          배송비{' '}
-          <span>₩ {totalProductAmount && DELIVERY_FEE.toLocaleString()}</span>
+          배송비
+          <span>₩ {totalProductAmount && deliveryFee.toLocaleString()}</span>
         </Detail>
         <TotalAmount>
           총 주문금액
           <span>
-            ₩{' '}
+            ₩
             {totalProductAmount &&
-              (totalProductAmount + DELIVERY_FEE - discount).toLocaleString()}
+              (totalProductAmount - discount + deliveryFee).toLocaleString()}
           </span>
         </TotalAmount>
         <MessageWrapper>
           <Message>
-            {DISCOUNT_BOUNDARY.FIRST / 10000} 만원 이상 주문시 ₩{' '}
-            {DISCOUNT.OVER_30000} 할인
-          </Message>
-          <Message>
-            {DISCOUNT_BOUNDARY.SECOND / 10000} 만원 이상 주문시 ₩{' '}
-            {DISCOUNT.OVER_50000} 할인
+            {DISCOUNT_BOUNDARY / 10000} 만원 이상 주문시 {DISCOUNT_PERCENT} %
+            할인
           </Message>
         </MessageWrapper>
         <OrderButton onClick={onClickOrder}>주문하기</OrderButton>

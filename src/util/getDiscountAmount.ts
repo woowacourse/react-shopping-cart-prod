@@ -1,8 +1,8 @@
-import { DISCOUNT, DISCOUNT_BOUNDARY } from '../constants/policy';
+import { DISCOUNT_BOUNDARY, DISCOUNT_PERCENT } from '../constants/policy';
 
 const getDiscountAmount = (totalProductAmount: number) => {
-  if (totalProductAmount > DISCOUNT_BOUNDARY.SECOND) return DISCOUNT.OVER_50000;
-  if (totalProductAmount > DISCOUNT_BOUNDARY.FIRST) return DISCOUNT.OVER_30000;
+  if (totalProductAmount > DISCOUNT_BOUNDARY)
+    return totalProductAmount * (DISCOUNT_PERCENT / 100);
   return 0;
 };
 
