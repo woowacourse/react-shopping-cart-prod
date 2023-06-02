@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Input from '../common/Input';
@@ -13,7 +13,7 @@ import { postLogin } from '../../api';
 export default function LoginForm() {
   const navigate = useNavigate();
 
-  const [serverName, setServerName] = useRecoilState(serverNameState);
+  const serverName = useRecoilValue(serverNameState);
   const setToken = useSetRecoilState(tokenState);
 
   const [name, setName] = useState('');
