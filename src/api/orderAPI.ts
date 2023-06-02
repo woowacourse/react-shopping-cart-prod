@@ -6,14 +6,14 @@ const getOrderAPI = (baseUrl: string) => {
   const getOrderList = async () => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}`, {
       method: 'GET',
-      headers: AUTHORIZED_FETCH_OPTION_HEADERS,
+      headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 
   const getOrderDetail = async (orderId: number) => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.ORDERS}/${orderId}`, {
       method: 'GET',
-      headers: AUTHORIZED_FETCH_OPTION_HEADERS,
+      headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 

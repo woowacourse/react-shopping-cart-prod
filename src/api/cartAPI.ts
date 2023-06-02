@@ -6,7 +6,7 @@ const getCartAPI = (baseUrl: string) => {
   const getCartList = async (): Promise<CartItemData[]> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_ITEMS}`, {
       method: 'GET',
-      headers: AUTHORIZED_FETCH_OPTION_HEADERS,
+      headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 
@@ -46,7 +46,7 @@ const getCartAPI = (baseUrl: string) => {
   const getCartListCosts = async (): Promise<CartCostsData> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.CART_COSTS}`, {
       method: 'GET',
-      headers: AUTHORIZED_FETCH_OPTION_HEADERS,
+      headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 

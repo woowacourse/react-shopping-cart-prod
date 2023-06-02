@@ -6,7 +6,7 @@ const getMemberAPI = (baseUrl: string) => {
   const getMemberInfo = async (): Promise<MemberInformation> => {
     return await fetchAPI(`${baseUrl}${API_ENDPOINT.MEMBER}`, {
       method: 'GET',
-      headers: AUTHORIZED_FETCH_OPTION_HEADERS,
+      headers: { Authorization: AUTHORIZED_FETCH_OPTION_HEADERS.Authorization },
     });
   };
 
