@@ -30,7 +30,7 @@ const OrderItem = ({ order, type }: OrderItemProps) => {
 
       <ItemBody flexDirection="column">
         {products.map((product: CartProduct) => {
-          return <SheetProductCard sheetProduct={product} />;
+          return <SheetProductCard key={product.product.id} sheetProduct={product} />;
         })}
       </ItemBody>
     </Item>
