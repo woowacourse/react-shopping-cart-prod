@@ -30,7 +30,11 @@ const ProductItem = ({ product }: { product: ProductType }) => {
   }, [cartItemData]);
 
   useEffect(() => {
+<<<<<<< HEAD
     const fetchCartData = async () => {
+=======
+    const mutateCartItem = async () => {
+>>>>>>> upstream/hafnium1923
       if (cartData) {
         if (cartItemData && cartItemData.quantity !== quantity) {
           if (quantity > 0) {
@@ -44,7 +48,11 @@ const ProductItem = ({ product }: { product: ProductType }) => {
         }
       }
     };
+<<<<<<< HEAD
     fetchCartData();
+=======
+    mutateCartItem();
+>>>>>>> upstream/hafnium1923
   }, [quantity]);
 
   return (

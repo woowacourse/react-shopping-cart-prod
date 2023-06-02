@@ -6,7 +6,11 @@ import CheckBox from '../../common/CheckBox/CheckBox';
 import { Text } from '../../common/Text/Text';
 import { useState } from 'react';
 import getPriceFormat from '../../../utils/getPriceFormat';
+<<<<<<< HEAD
 import { useConfirmModal } from '../../../hooks/useConfirmModal';
+=======
+import { useModal } from '../../../hooks/useModal';
+>>>>>>> upstream/hafnium1923
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import useCheckCart from '../../../hooks/useCheckCart';
 
@@ -18,7 +22,11 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
 
   const totalPrice = check ? cart.product.price : 0;
 
+<<<<<<< HEAD
   const { openModal } = useConfirmModal();
+=======
+  const { openModal } = useModal();
+>>>>>>> upstream/hafnium1923
 
   const deleteCartItem = () => {
     deleteCartItemAPI(cart.id);
@@ -46,7 +54,16 @@ const CartItem = ({ cart }: { cart: CartItemType }) => {
               onClick={() => openModal({ callback: deleteCartItem })}
             />
           </CartInfoHead>
+<<<<<<< HEAD
           <InputStepper size="big" quantity={quantity} setQuantity={changeQuantity} minNumber={1} />
+=======
+          <InputStepper
+            size="big"
+            quantity={cart.quantity}
+            setQuantity={changeQuantity}
+            minNumber={1}
+          />
+>>>>>>> upstream/hafnium1923
           <CardInfoFoot>
             <Text size="smallest" weight="normal">
               {getPriceFormat(cart.product.price)} 원

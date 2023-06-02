@@ -11,8 +11,11 @@
     "browser": true,
     "node": true,
     "es2021": true
+<<<<<<< HEAD
   },
   "rules": {
     "prettier/prettier": ["error", { "endOfLine": "auto" }]
+=======
+>>>>>>> upstream/hafnium1923
   }
 }

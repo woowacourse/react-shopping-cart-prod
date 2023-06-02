@@ -8,6 +8,7 @@ export const useCartFetch = () => {
   const serverURL = useRecoilValue(serverState);
   const setCheckCartList = useSetRecoilState(checkCartListState);
 
+<<<<<<< HEAD
   const {
     data: cartData,
     refetch: cartRefetch,
@@ -33,6 +34,26 @@ export const useCartFetch = () => {
   );
 
   const fetchCartData = useMutation(
+=======
+  const fetchCartData = async () => {
+    const res = await fetch(`${serverURL}/cart-items`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
+    const data = await res.json();
+    return data;
+  };
+
+  const { data: cartData, refetch } = useQuery<CartItemType[]>('cart', fetchCartData, {
+    onError: (e) => {
+      console.log(e);
+    },
+  });
+
+  const mutateCartData = useMutation(
+>>>>>>> upstream/hafnium1923
     async ({
       method,
       cartId,
@@ -52,12 +73,20 @@ export const useCartFetch = () => {
       }),
     {
       onSuccess: () => {
+<<<<<<< HEAD
         cartRefetch();
+=======
+        refetch();
+>>>>>>> upstream/hafnium1923
       },
     },
   );
 
+<<<<<<< HEAD
   const fetchAddCartData = useMutation(
+=======
+  const fetchAddCartItem = useMutation(
+>>>>>>> upstream/hafnium1923
     async ({ body }: { body?: object }) => {
       const res = await fetch(`${serverURL}/cart-items`, {
         method: 'POST',
@@ -75,7 +104,11 @@ export const useCartFetch = () => {
         if (cartId) {
           setCheckCartList((prev) => [...prev, cartId]);
         }
+<<<<<<< HEAD
         cartRefetch();
+=======
+        refetch();
+>>>>>>> upstream/hafnium1923
       },
       onError: (e) => {
         console.log(e);
@@ -84,6 +117,7 @@ export const useCartFetch = () => {
   );
 
   const addCartItemAPI = (body?: object) => {
+<<<<<<< HEAD
     fetchAddCartData.mutate({ body });
   };
 
@@ -96,6 +130,18 @@ export const useCartFetch = () => {
     cartData,
     isLoading,
     cartRefetch,
+=======
+    fetchAddCartItem.mutate({ body });
+  };
+
+  const changeCartQuantityAPI = (cartId: number, body?: object) =>
+    mutateCartData.mutate({ method: 'PATCH', cartId, body });
+
+  const deleteCartItemAPI = (cartId: number) => mutateCartData.mutate({ method: 'DELETE', cartId });
+
+  return {
+    cartData,
+>>>>>>> upstream/hafnium1923
     addCartItemAPI,
     changeCartQuantityAPI,
     deleteCartItemAPI,

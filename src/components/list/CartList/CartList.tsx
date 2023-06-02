@@ -3,17 +3,27 @@ import CartItem from '../../box/CartItem/CartItem';
 import CheckBox from '../../common/CheckBox/CheckBox';
 import Button from '../../common/Button/Button';
 import { Text } from '../../common/Text/Text';
+<<<<<<< HEAD
 import { useConfirmModal } from '../../../hooks/useConfirmModal';
+=======
+import { useModal } from '../../../hooks/useModal';
+>>>>>>> upstream/hafnium1923
 import { useCartFetch } from '../../../hooks/useCartFetch';
 import { useRecoilState } from 'recoil';
 import { checkCartListState } from '../../../service/atom';
 
 const CartList = () => {
   const { cartData, deleteCartItemAPI } = useCartFetch();
+<<<<<<< HEAD
 
   const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
 
   const { openModal } = useConfirmModal();
+=======
+  const [checkCartList, setCheckCartList] = useRecoilState(checkCartListState);
+
+  const { openModal } = useModal();
+>>>>>>> upstream/hafnium1923
 
   const deleteSelectCart = async () => {
     checkCartList.forEach((cartId) => {
@@ -67,6 +77,7 @@ const CartListWrapper = styled.div`
 `;
 
 const CartListHead = styled.div`
+<<<<<<< HEAD
   display: flex;
   justify-content: space-between;
   position: sticky;
@@ -83,6 +94,18 @@ const CartListHead = styled.div`
     gap: 6px;
     padding: 20px 0 20px 0;
   }
+=======
+  width: 100%;
+  border-bottom: 3px solid #aaa;
+  padding: 80px 0 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 70px;
+  background-color: #fff;
+  z-index: 30;
+>>>>>>> upstream/hafnium1923
 `;
 
 const Cart = styled.div`

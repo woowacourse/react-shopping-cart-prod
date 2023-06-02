@@ -1,7 +1,11 @@
 import { atom } from 'recoil';
 import { servers } from './apiURL';
+<<<<<<< HEAD
 import { CouponType, ServerURLType } from '../types/types';
 import { PERCENTAGE } from '../abstract/constants';
+=======
+import { ServerURLType } from '../types/types';
+>>>>>>> upstream/hafnium1923
 
 type ModalType = {
   title?: string;
@@ -14,6 +18,7 @@ export const checkCartListState = atom<number[]>({
   default: [],
 });
 
+<<<<<<< HEAD
 export const couponState = atom<CouponType>({
   key: 'coupon',
   default: {
@@ -35,6 +40,10 @@ export const confirmModalState = atom<ModalType>({
 
 export const couponModalState = atom<ModalType>({
   key: 'couponModal',
+=======
+export const deleteModalState = atom<ModalType>({
+  key: 'deleteModal',
+>>>>>>> upstream/hafnium1923
   default: {
     isOpen: false,
   },
