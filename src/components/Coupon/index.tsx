@@ -4,17 +4,26 @@ interface CouponProps {
   name?: string;
   description?: string;
   isSelect?: boolean;
+  isUsed?: boolean;
   handleClick?: () => void;
+  handleDeleteButton?: () => void;
 }
 
-const Coupon = ({ name, description, isSelect = false, handleClick }: CouponProps) => {
+const Coupon = ({
+  name,
+  description,
+  isSelect = false,
+  isUsed = false,
+  handleClick,
+  handleDeleteButton,
+}: CouponProps) => {
   return (
     <Container isSelect={isSelect}>
       <LeftContents>
         <IconContainer>
           <IconContainerLeft />
           <IconContainerRight>
-            <IconInitial>C</IconInitial>
+            <IconInitial isUsed={isUsed}>C</IconInitial>
           </IconContainerRight>
           <Hole $position="bottom:-6px" $backgroundColor="#cccccc" />
           <Hole $position="top:-6px" $backgroundColor="#eeeeee" />
@@ -24,12 +33,18 @@ const Coupon = ({ name, description, isSelect = false, handleClick }: CouponProp
         <CenterContents>
           <div>
             <Name>{name}</Name>
-            <Description>{description}</Description>
+            <Description isUsed={isUsed}>{description}</Description>
           </div>
-          <Expiration>2023-5-30 ~</Expiration>
+          <Expiration>
+            2023-5-30 ~ {isUsed && <DeleteButton onClick={handleDeleteButton}>삭제하기</DeleteButton>}
+          </Expiration>
         </CenterContents>
         <ButtonWrapper>
-          <UseButton onClick={handleClick}>{isSelect ? '✔' : '사용'}</UseButton>
+          {isUsed ? (
+            <UsedButton>사용완료</UsedButton>
+          ) : (
+            <UseButton onClick={handleClick}>{isSelect ? '✔' : '사용'}</UseButton>
+          )}
         </ButtonWrapper>
       </RightContents>
     </Container>
@@ -110,7 +125,7 @@ const IconContainerLeft = styled.div`
   background-color: #eeeeee;
 `;
 
-const IconInitial = styled.div`
+const IconInitial = styled.div<{ isUsed: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,7 +135,7 @@ const IconInitial = styled.div`
   border-radius: 15px;
   background-color: white;
 
-  color: rgb(6, 192, 158);
+  color: ${(props) => (props.isUsed ? '#aaaaaa' : 'rgb(6, 192, 158)')};
   font-size: 20px;
   font-weight: 900;
 `;
@@ -139,11 +154,11 @@ const Name = styled.div`
   color: #777777;
 `;
 
-const Description = styled.div`
+const Description = styled.div<{ isUsed: boolean }>`
   font-size: 20px;
   font-weight: 600;
   margin-top: 12px;
-  color: #333333;
+  color: ${(props) => (props.isUsed ? '#aaaaaa' : '#222222')};
 
   overflow: hidden;
   text-overflow: ellipsis;
@@ -162,6 +177,12 @@ const RightContents = styled.div`
   column-gap: 30px;
 `;
 
+const DeleteButton = styled.span`
+  margin: 0 0 0 15px;
+  font-size: 16px;
+  cursor: pointer;
+`;
+
 const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -178,6 +199,19 @@ const UseButton = styled.button`
   font-weight: 600;
   color: white;
   background-color: rgb(71, 201, 180);
+
+  cursor: pointer;
+`;
+
+const UsedButton = styled.button`
+  width: 100px;
+  height: 40px;
+  border-radius: 5px;
+
+  font-size: 17px;
+  font-weight: 600;
+  color: white;
+  background-color: #cccccc;
 
   cursor: pointer;
 `;

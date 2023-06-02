@@ -5,21 +5,32 @@ import Coupon from '@Components/Coupon';
 
 import { MemberCouponType } from '@Types/index';
 
+import { fetchData } from '@Utils/api';
+
 import memberCouponState from '@Atoms/memberCouponState';
+import serverState from '@Atoms/serverState';
 import usingCouponState from '@Atoms/usingCouponState';
+
+import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
 interface CouponListProps {
   onClose: () => void;
 }
 
 const CouponList = ({ onClose }: CouponListProps) => {
-  const memberCoupon = useRecoilValue(memberCouponState);
+  const server = useRecoilValue(serverState);
+  const [memberCoupon, setMemberCoupon] = useRecoilState(memberCouponState);
   const [usingCoupon, setUsingCoupon] = useRecoilState(usingCouponState);
 
   const amountUnusedCoupon = memberCoupon.filter((item) => !item.isUsed).length;
   const makeSelectCoupon = (coupon: MemberCouponType) => () => {
     setUsingCoupon(coupon);
     onClose();
+  };
+
+  const makeDeleteCoupon = (coupon: MemberCouponType) => async () => {
+    await fetchData({ url: `${FETCH_URL.totalCoupon}/${coupon.id}`, method: FETCH_METHOD.DELETE, server });
+    setMemberCoupon((current) => current.filter((item) => coupon.id !== item.id));
   };
 
   return (
@@ -35,7 +46,9 @@ const CouponList = ({ onClose }: CouponListProps) => {
             name={item.name}
             description={item.description}
             isSelect={item.id === usingCoupon.id}
+            isUsed={item.isUsed}
             handleClick={makeSelectCoupon(item)}
+            handleDeleteButton={makeDeleteCoupon(item)}
           />
         ))}
       </List>
