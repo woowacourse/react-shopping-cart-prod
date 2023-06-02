@@ -1,12 +1,17 @@
 import Icon from "../Icon.tsx";
 import { IoPerson } from "react-icons/io5";
-import { LoginTitle, MemberId, MemberList, MemberWrapper } from "./Login.style.ts";
+import {
+  LoginTitle,
+  MemberId,
+  MemberList,
+  MemberWrapper,
+} from "./Login.style.ts";
 import { useRecoilValue } from "recoil";
-import { userRepository } from "../../recoil/userAtom.ts";
-import type { Login } from "../../types/types.ts";
+import { userRepository } from "../../recoil/userAtom.tsx";
+import type { Sign } from "../../types/types.ts";
 
 function Login() {
-  const members: Login[] = [
+  const members: Sign[] = [
     {
       id: "a@a.com",
       password: "1234",

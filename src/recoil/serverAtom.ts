@@ -1,7 +1,7 @@
 import { AtomEffect, atom, selector } from "recoil";
 import { getLocalStorage, setLocalStorage } from "../utils/localStorage";
 import { useState } from "react";
-import { userRepository, userState } from "./userAtom.ts";
+import { userRepository, userState } from "./userAtom.tsx";
 
 const localStorageEffect: <T>(key: string) => AtomEffect<T> =
   (key: string) =>

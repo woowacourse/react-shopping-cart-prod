@@ -13,7 +13,7 @@ import { useRecoilValue } from "recoil";
 import ServerSelectBox from "../ServerSelectBox";
 import { modalRepository } from "../../recoil/modalAtoms.tsx";
 import Login from "../Login";
-import { userState } from "../../recoil/userAtom.ts";
+import { userState } from "../../recoil/userAtom.tsx";
 import PersonalDropdown from "./PersonalDropdown.tsx";
 
 function Header() {

@@ -12,6 +12,7 @@ import {
   quantityByProductIdSelector,
 } from "../../recoil/cartAtoms";
 import { useRecoilValue } from "recoil";
+import { userRepository } from "../../recoil/userAtom.tsx";
 
 interface CartControllerProps {
   product: ProductItem;
@@ -20,32 +21,45 @@ interface CartControllerProps {
 function CartController({ product }: CartControllerProps) {
   const { addCartItem, updateCartItemQuantity } =
     useRecoilValue(cartRepository);
+  const { loginCheckerCallback } = useRecoilValue(userRepository);
   const quantity = useRecoilValue(quantityByProductIdSelector(product.id));
 
   const handleChangeQuantityByInput = (
     event: ChangeEvent<HTMLInputElement>
   ) => {
-    const quantityInputValue = Number(
-      event.target.value.replaceAll("/", "").replace(/\D/g, "")
-    );
-    const newQuantity = quantityInputValue > 100 ? 100 : quantityInputValue;
+    loginCheckerCallback(() => {
+      const quantityInputValue = Number(
+        event.target.value.replaceAll("/", "").replace(/\D/g, "")
+      );
+      const newQuantity = quantityInputValue > 100 ? 100 : quantityInputValue;
 
-    updateCartItemQuantity(product, newQuantity);
+      updateCartItemQuantity(product, newQuantity);
+    });
   };
 
   const handleChangeQuantityByButton = (type: "increase" | "decrease") => {
     switch (type) {
       case "increase":
         if (quantity < 100) {
-          updateCartItemQuantity(product, quantity + 1);
+          loginCheckerCallback(() => {
+            updateCartItemQuantity(product, quantity + 1);
+          });
         }
         break;
       case "decrease":
         if (quantity > 0) {
-          updateCartItemQuantity(product, quantity - 1);
+          loginCheckerCallback(() => {
+            updateCartItemQuantity(product, quantity - 1);
+          });
         }
         break;
     }
+  };
+
+  const handleAddCartButton = () => {
+    loginCheckerCallback(() => {
+      addCartItem(product.id);
+    });
   };
 
   return (
@@ -74,11 +88,7 @@ function CartController({ product }: CartControllerProps) {
           </CartBox>
         </ControllerWrapper>
       ) : (
-        <AddCartButton
-          onClick={() => {
-            addCartItem(product.id);
-          }}
-        >
+        <AddCartButton onClick={handleAddCartButton}>
           장바구니에 담기
         </AddCartButton>
       )}

@@ -47,7 +47,7 @@ export interface Order {
   orderItems: OrderItem[];
 }
 
-export interface Login {
+export interface Sign {
   id: string;
   password: string;
 }
