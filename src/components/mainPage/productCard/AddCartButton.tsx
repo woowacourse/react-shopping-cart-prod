@@ -80,7 +80,7 @@ export const AddCartButton = ({ productId }: AddCartButtonProps) => {
         />
       ) : isLoading ? (
         <Style.LoadingBackground>
-          <Loading width={25} height={25} />
+          <Loading width={20} height={20} />
         </Style.LoadingBackground>
       ) : (
         <Style.ShoppingCartImage

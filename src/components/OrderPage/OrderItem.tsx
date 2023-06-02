@@ -87,7 +87,7 @@ const Style = {
     font-size: 20px;
     color: #5f5f5f;
   `,
-  ProductCount: styled.h3`
+  ProductCount: styled.span`
     font-size: 15px;
 
     margin-top: 5px;

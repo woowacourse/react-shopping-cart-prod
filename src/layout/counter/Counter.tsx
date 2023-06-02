@@ -22,7 +22,7 @@ export const Counter = ({ quantity, onQuantityChange }: CounterProps) => {
     if (inputCount <= 0) return onQuantityChange(1);
     if (inputCount > 999) return onQuantityChange(999);
 
-    onQuantityChange(Number(e.target.value));
+    onQuantityChange(inputCount);
   };
 
   return (

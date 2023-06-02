@@ -51,24 +51,25 @@ export const OrderSummarySection = () => {
 
     setIsLoading(true);
 
-    order(usingPoint).then((res) => {
-      if (res.status === 409) {
-        alert(
-          '주문 도중 에러가 발생했습니다! 새로고침 후 다시 시도해보시길 바랍니다!!'
-        );
+    order(usingPoint)
+      .then((res) => {
+        if (res.status === 401) return alert('로그인이 필요합니다!');
+        if (res.status === 409 || res.status === 500)
+          return alert(
+            '주문 도중 에러가 발생했습니다! 새로고침 후 다시 시도해보시길 바랍니다!!'
+          );
 
+        const orderId = res.headers.get('Location')?.replace('/orders/', '');
+
+        deleteAllSelectedRecoilCartItems();
+        getUserPoint().then((userPoint) => setUserPoint(userPoint.point));
+        getOrders().then((orders) => setOrders(orders));
+
+        if (orderId) navigate('/orderDetail', { state: { orderId } });
+      })
+      .finally(() => {
         setIsLoading(false);
-        return;
-      }
-      const orderId = res.headers.get('Location')?.replace('/orders/', '');
-
-      setIsLoading(false);
-      deleteAllSelectedRecoilCartItems();
-      getUserPoint().then((userPoint) => setUserPoint(userPoint.point));
-      getOrders().then((orders) => setOrders(orders));
-
-      if (orderId) navigate('/orderDetail', { state: { orderId } });
-    });
+      });
   };
 
   return (

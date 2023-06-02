@@ -14,7 +14,7 @@ export const orderHandlers = [
 
     const requestData = await req.json();
 
-    const order = await requestData.order;
+    const order = await requestData.cartItemIds;
     const originalPrice = await requestData.originalPrice;
     const usedPoint = await requestData.usedPoint;
     const pointToAdd = await requestData.pointToAdd;
@@ -30,7 +30,7 @@ export const orderHandlers = [
         ...orderList,
         {
           orderId: randomOrderId,
-          orderInfo: order.map((cartItemId: string) => {
+          orderInfos: order.map((cartItemId: string) => {
             const cartItem = cartItems.find((item) => item.id === cartItemId);
 
             return {

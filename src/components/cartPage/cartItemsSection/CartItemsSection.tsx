@@ -201,7 +201,7 @@ const Style = {
   DeleteSelectedItemsButton: styled.button`
     height: 89px;
 
-    font-size: 18px;
+    font-size: 16px;
     color: rgb(57 57 57);
     font-family: var(--baemin-font);
   `,
@@ -221,6 +221,6 @@ const Style = {
     box-sizing: border-box;
   `,
   Caption: styled.span`
-    color: #afafaf;
+    color: rgb(57 57 57);
   `,
 };
