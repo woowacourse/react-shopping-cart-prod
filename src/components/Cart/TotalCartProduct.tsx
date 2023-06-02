@@ -30,6 +30,7 @@ const TotalCartProduct = () => {
         buttonPrimary={false}
         size="small"
         buttonBorder
+        disabled={checkedCount === 0 ? true : false}
         onClick={deleteCheckedProducts}
       >
         선택삭제
