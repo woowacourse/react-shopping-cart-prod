@@ -43,16 +43,21 @@ const useMultipleChecked = () => {
     setChecked([]);
   };
 
+  const deleteCheckedProductState = () => {
+    setCartProducts(prev =>
+      prev.filter(cartProduct => !findTargetChecked(checked, cartProduct.id))
+    );
+
+    resetChecked();
+  };
+
   const deleteCheckedProducts = () => {
     try {
       checked.forEach(async item => {
         await deleteData(`/cart-items/${item.id}`);
       });
 
-      setCartProducts(prev =>
-        prev.filter(cartProduct => !findTargetChecked(checked, cartProduct.id))
-      );
-      setChecked([]);
+      deleteCheckedProductState();
       setToastState(TOAST_STATE.successDeleteProduct);
     } catch {
       setToastState(TOAST_STATE.failedDeleteProduct);
@@ -63,6 +68,7 @@ const useMultipleChecked = () => {
     isAllChecked,
     isAllUnchecked,
     toggleAllProductChecked,
+    deleteCheckedProductState,
     deleteCheckedProducts,
   };
 };

@@ -6,10 +6,11 @@ import { checkedCartProductState } from '../states/checkedCartProducts';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 import { TOAST_STATE } from '../constants/toast';
-import { NO_DISCOUNT } from '../constants/coupon';
+import useMultipleChecked from './useMultipleChecked';
 
 export const useOrderProducts = () => {
   const checkedList = useRecoilValue(checkedCartProductState);
+  const { deleteCheckedProductState } = useMultipleChecked();
   const serverName = useRecoilValue(serverNameState);
   const { postData } = fetchApis(serverName);
   const setToastState = useSetRecoilState(toastState);
@@ -29,8 +30,7 @@ export const useOrderProducts = () => {
 
     try {
       await postData(dataSet, '/orders');
-
-      // 성공 - 장바구니 목록 업데이트(recoil, api), 주문 목록 페이지로 이동
+      deleteCheckedProductState();
       setToastState(TOAST_STATE.successOrderProducts);
       navigate('/order');
     } catch {
