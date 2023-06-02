@@ -28,12 +28,13 @@ export const priceSummaryState = selector({
         (cartProduct) => cartProduct.id === selectedCartItemId
       );
 
-      if (product?.product.pointAvailable) {
-        return (acc +=
-          Number(product?.product.price) / Number(product?.product.pointRatio));
-      }
+      const calculatedPoint =
+        (Number(product?.product.price) *
+          Number(product?.quantity) *
+          Number(product?.product.pointRatio)) /
+        100;
 
-      return acc;
+      return (acc += calculatedPoint);
     }, 0);
 
     return { totalProductPrice, deliveryPrice, totalPrice, pointToAdd };

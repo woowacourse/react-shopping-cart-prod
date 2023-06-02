@@ -25,9 +25,9 @@ export const useOrderFetch = () => {
     return fetch(`${apiEndPoint}/orders`, {
       method: 'POST',
       body: JSON.stringify({
-        order: cartItemIds,
+        cartItemIds: cartItemIds,
         originalPrice: originalPrice,
-        usedPoint: usedPoint ?? 0,
+        usedPoint: usedPoint,
         pointToAdd: pointToAdd,
       }),
       headers: {

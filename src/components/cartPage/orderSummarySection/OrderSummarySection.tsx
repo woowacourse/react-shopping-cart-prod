@@ -15,7 +15,6 @@ export const OrderSummarySection = () => {
   const { orderByCartId } = useOrderFetch();
 
   const [point, setPoint] = useRecoilState(pointState);
-
   const [viewPoint, setViewPoint] = useState(0);
   const navigate = useNavigate();
 
@@ -39,8 +38,6 @@ export const OrderSummarySection = () => {
 
     order.then((response) => {
       const orderId = response.headers.get('Location')?.replace('orders/', '');
-
-      console.log(orderId);
 
       setPoint({ point: point.point - viewPoint + pointToAdd });
 
