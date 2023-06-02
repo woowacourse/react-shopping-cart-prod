@@ -31,6 +31,11 @@ export const couponsState = atom<CouponType[]>({
   default: [],
 });
 
+export const usableCouponsState = selector<CouponType[]>({
+  key: 'usableCouponsState',
+  get: ({ get }) => get(couponsState).filter(({ isUsed }) => !isUsed),
+});
+
 export const cartState = atom<CartType>({
   key: 'cartState',
   default: [],
