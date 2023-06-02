@@ -1,8 +1,8 @@
-import { Order, Orders, getOrders } from "api/orders";
+import { Order, OrderItem, getOrders } from "api/orders";
 import { atom, selector, selectorFamily } from "recoil";
 import { serverSelectState } from "./server";
 
-const getOrderList = selector<Orders[]>({
+const getOrderList = selector<Order[]>({
   key: "getOrderList",
   get: async ({ get }) => {
     const selectedServer = get(serverSelectState);
@@ -13,13 +13,21 @@ const getOrderList = selector<Orders[]>({
   },
 });
 
-export const orderListState = atom<Orders[]>({
+export const orderListState = atom<Order[]>({
   key: "orderList",
   default: getOrderList,
 });
 
-export const orderSelector = selectorFamily<Order[] | null, number>({
+export const orderSelector = selectorFamily<Order | null, number>({
   key: "orderSelector",
+  get:
+    (orderId) =>
+    ({ get }) =>
+      get(orderListState).find((order) => order.orderId === orderId) ?? null,
+});
+
+export const orderItemsSelector = selectorFamily<OrderItem[] | null, number>({
+  key: "orderItemsSelector",
   get:
     (orderId) =>
     ({ get }) =>

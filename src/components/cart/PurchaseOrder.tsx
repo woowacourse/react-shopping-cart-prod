@@ -17,19 +17,14 @@ const PurchaseOrder = () => {
   const couponList = useRecoilValue(couponListState);
 
   const requestOrder = async () => {
-    const result = await postOrder(
-      selectedServer,
-      cartList.map((item) => {
+    const result = await postOrder(selectedServer, {
+      deliveryFee: SHIPPING_FEE,
+      orderItems: cartList.map((item) => {
         const coupon = couponList.find((coupon) => coupon.productId === item.product.id);
 
-        return {
-          cartItemId: item.id,
-          product: item.product,
-          quantity: item.quantity,
-          couponIds: coupon ? [coupon.couponId] : [],
-        };
-      })
-    );
+        return { ...item, coupons: coupon ? [coupon] : [] };
+      }),
+    });
 
     if (!result) {
       alert("주문에 실패했습니다. 다시 시도해주세요.");
