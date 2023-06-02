@@ -7,14 +7,19 @@ import Page from "components/common/Page";
 import OrderStatementSkeleton from "components/skeleton/OrderStatementSkeleton";
 import { useFetch } from "hooks/useFetch";
 import { useOrderStatementModal } from "hooks/useOrderStatementModal";
+import { useRecoilValue } from "recoil";
+import { serverSelectState } from "recoil/server";
 
 import { styled } from "styled-components";
 
 import { OrderResultStatement } from "types/domain";
 
 const OrderStatementList = () => {
-  const { isLoading, data, error } =
-    useFetch<OrderResultStatement[]>(getOrderStatement);
+  const selectedServer = useRecoilValue(serverSelectState);
+
+  const { isLoading, data, error } = useFetch<OrderResultStatement[]>(() =>
+    getOrderStatement(selectedServer)
+  );
   const { itemForModal, isModalOpen, openModal, closeModal } =
     useOrderStatementModal<OrderResultStatement>(data);
 

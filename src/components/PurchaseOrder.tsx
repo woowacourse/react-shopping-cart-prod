@@ -5,12 +5,14 @@ import { cartTotalDiscount, cartTotalPrice, orderCartList } from "recoil/cart";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "router";
+import { serverSelectState } from "recoil/server";
 
 const PurchaseOrder = () => {
   const totalPrice = useRecoilValue(cartTotalPrice);
   const totalDiscountPrice = useRecoilValue(cartTotalDiscount);
   const purchaseOrder = useRecoilValue(orderCartList);
   const navigate = useNavigate();
+  const selectedServer = useRecoilValue(serverSelectState);
 
   const orderCartItem = async () => {
     if (purchaseOrder.length === 0) return;
@@ -20,7 +22,7 @@ const PurchaseOrder = () => {
       orderItems: purchaseOrder,
     };
 
-    const isSuccess = await addOrder(newOrder);
+    const isSuccess = await addOrder(selectedServer, newOrder);
 
     if (isSuccess) {
       navigate(ROUTER_PATH.OrderList);

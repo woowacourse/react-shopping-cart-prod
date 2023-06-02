@@ -1,11 +1,13 @@
 import { getCoupons } from "api/coupons";
 import { atom, selector, selectorFamily } from "recoil";
 import { Coupon } from "types/domain";
+import { serverSelectState } from "./server";
 
 const getCouponList = selector<Coupon[]>({
   key: "getCouponList",
   get: async ({ get }) => {
-    const coupons = await getCoupons();
+    const selectedServer = get(serverSelectState);
+    const coupons = await getCoupons(selectedServer);
 
     return coupons.map((coupon) => {
       const newCoupon: Coupon = {
