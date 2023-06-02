@@ -11,6 +11,7 @@ import {
   STANDARD_DELIVERY_FEE,
 } from '../constants/price';
 import type { OrderedData } from '../types/product';
+import { cartProductAtom } from '../recoil/cartProductData';
 
 const useEstimatedPayment = (usePoint: number) => {
   const totalProductPrice = useRecoilValue(totalPriceSelector);
@@ -25,17 +26,18 @@ const useEstimatedPayment = (usePoint: number) => {
 
   const checkedCartProduct = useRecoilValue(checkedItemAtom);
   const hostName = useRecoilValue(hostNameAtom);
+  const cartProducts = useRecoilValue(cartProductAtom);
 
   const submitOrder = () => {
-    const cartItems = checkedCartProduct.map(
-      ({ cartItemId, quantity, product }) => {
+    const cartItems = cartProducts
+      .filter((product) => checkedCartProduct.includes(product.cartItemId))
+      .map(({ cartItemId, quantity, product }) => {
         return {
           cartItemId,
           quantity,
           product,
         };
-      }
-    );
+      });
 
     const orderData: OrderedData = {
       cartItems,

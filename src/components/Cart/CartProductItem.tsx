@@ -1,13 +1,11 @@
 import styled from 'styled-components';
-
 import CheckBox from '../Common/CheckBox';
 import Image from '../Common/Image';
 import AmountCounter from '../Common/AmountCounter';
-
-import type { CartProduct } from '../../types/product';
 import TrashCanIcon from '../../assets/TrashCanIcon';
 import useCartProducts from '../../hooks/useCartProducts';
 import useCheckedProducts from '../../hooks/useCheckedProducts';
+import type { CartProduct } from '../../types/product';
 
 interface CartProductItemProps {
   cartProduct: CartProduct;
@@ -23,8 +21,8 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
     <CartProductItemContainer>
       <CheckBoxWrapper>
         <CheckBox
-          onChange={() => handleCheckBoxChange(cartProduct)}
-          checked={isCheckedProduct(cartProduct)}
+          onChange={() => handleCheckBoxChange(cartProduct.cartItemId)}
+          checked={isCheckedProduct(cartProduct.cartItemId)}
         />
       </CheckBoxWrapper>
       <Image src={imageUrl} alt={name} loading='lazy' size='small' />
