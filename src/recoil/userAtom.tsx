@@ -27,6 +27,7 @@ export const userRepository = selector({
     });
 
     const logout = getCallback(({ set }) => async () => {
+      // 로그아웃
       set(userState, null);
     });
 

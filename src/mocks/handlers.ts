@@ -1,10 +1,10 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
 import mockData from "../assets/mockData.json";
-import { getLocalStorage, setLocalStorage } from "../utils/localStorage";
+import { getSessionStorage, setSessionStorage } from "../utils/storage.ts";
 import { CartItem } from "../types/types";
 
-const LOCAL_STORAGE_KEY = 'cartItems';
+const LOCAL_STORAGE_KEY = "cartItems";
 
 export const handlers = [
   rest.get("/products", (req, res, ctx) => {
@@ -12,7 +12,7 @@ export const handlers = [
   }),
 
   rest.get("/cart-items", (req, res, ctx) => {
-    const cartItems = getLocalStorage(LOCAL_STORAGE_KEY, []);
+    const cartItems = getSessionStorage(LOCAL_STORAGE_KEY, []);
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(cartItems));
   }),
@@ -20,7 +20,7 @@ export const handlers = [
   rest.post("/cart-items", async (req, res, ctx) => {
     const { productId } = await req.json();
 
-    const cartItems = getLocalStorage(LOCAL_STORAGE_KEY, []);
+    const cartItems = getSessionStorage(LOCAL_STORAGE_KEY, []);
 
     const newItemId = Date.now();
 
@@ -31,15 +31,15 @@ export const handlers = [
       product: mockData.find((product) => product.id === productId),
     };
 
-    setLocalStorage(LOCAL_STORAGE_KEY, [...cartItems, newItem]);
+    setSessionStorage(LOCAL_STORAGE_KEY, [...cartItems, newItem]);
     return res(ctx.delay(100), ctx.status(201), ctx.json(true));
   }),
 
   rest.delete("/cart-items/:cartItemId", (req, res, ctx) => {
     const { cartItemId } = req.params;
-    const cartItems = getLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY, []);
+    const cartItems = getSessionStorage<CartItem[]>(LOCAL_STORAGE_KEY, []);
 
-    setLocalStorage(
+    setSessionStorage(
       LOCAL_STORAGE_KEY,
       cartItems.filter((item) => item.id !== Number(cartItemId))
     );
@@ -50,11 +50,13 @@ export const handlers = [
     const { cartItemId } = req.params;
     const { quantity } = await req.json();
 
-    const cartItems = getLocalStorage<CartItem[]>(LOCAL_STORAGE_KEY, []);
-    const cartItemIndex = cartItems.findIndex((item) => item.id === Number(cartItemId));
+    const cartItems = getSessionStorage<CartItem[]>(LOCAL_STORAGE_KEY, []);
+    const cartItemIndex = cartItems.findIndex(
+      (item) => item.id === Number(cartItemId)
+    );
     cartItems[cartItemIndex].quantity = quantity;
 
-    setLocalStorage(LOCAL_STORAGE_KEY, cartItems);
+    setSessionStorage(LOCAL_STORAGE_KEY, cartItems);
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(true));
   }),
@@ -62,7 +64,7 @@ export const handlers = [
   rest.post("/cart-items", async (req, res, ctx) => {
     const { productId } = await req.json();
 
-    const cartItems = getLocalStorage(LOCAL_STORAGE_KEY, []);
+    const cartItems = getSessionStorage(LOCAL_STORAGE_KEY, []);
 
     const newItemId = Date.now();
 
@@ -73,8 +75,7 @@ export const handlers = [
       product: mockData.find((product) => product.id === productId),
     };
 
-    setLocalStorage(LOCAL_STORAGE_KEY, [...cartItems, newItem]);
+    setSessionStorage(LOCAL_STORAGE_KEY, [...cartItems, newItem]);
     return res(ctx.delay(100), ctx.status(201), ctx.json(true));
   }),
-
 ];
