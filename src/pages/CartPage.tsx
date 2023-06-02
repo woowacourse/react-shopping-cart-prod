@@ -1,18 +1,30 @@
-import styled from 'styled-components';
+import { Suspense } from 'react';
+import { useRecoilValue } from 'recoil';
+import { ErrorBoundary } from 'react-error-boundary';
 
+import styled from 'styled-components';
+import PageTitle from '../components/Common/PageTitle';
+import Message from '../components/Common/Message';
 import CartProductInfo from '../components/Cart/CartProductInfo';
 import ExpectedPaymentBox from '../components/Cart/ExpectedPaymentBox';
-import PageTitle from '../components/Common/PageTitle';
+
+import { serverNameState } from '../states/serverName';
 
 const CartPage = () => {
+  const serverName = useRecoilValue(serverNameState);
+
   return (
-    <Main>
-      <PageTitle>장바구니</PageTitle>
-      <CartPageFlexBox>
-        <CartProductInfo />
-        <ExpectedPaymentBox />
-      </CartPageFlexBox>
-    </Main>
+    <ErrorBoundary key={serverName} fallback={<Message type="error" />}>
+      <Suspense fallback={<Message type="loading" />}>
+        <Main>
+          <PageTitle>장바구니</PageTitle>
+          <CartPageFlexBox>
+            <CartProductInfo />
+            <ExpectedPaymentBox />
+          </CartPageFlexBox>
+        </Main>
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 

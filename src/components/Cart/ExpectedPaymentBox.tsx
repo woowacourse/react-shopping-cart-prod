@@ -1,7 +1,6 @@
 import { ChangeEventHandler, useState } from 'react';
 
 import styled from 'styled-components';
-
 import Button from '../Common/Button';
 import SelectBox from '../Common/SelectBox';
 
@@ -14,33 +13,26 @@ import { removeChar } from '../../utils/stringUtils';
 import { Coupon } from '../../types/coupon';
 import { DEFAULT_COUPON_NAME, NO_DISCOUNT } from '../../constants/coupon';
 
-const couponNamesMocks = [
-  DEFAULT_COUPON_NAME,
-  '3000원 할인 쿠폰',
-  '1000원 할인 쿠폰',
-  '첫 주문 5000원 할인 쿠폰',
-];
-
 const ExpectedPaymentBox = () => {
   const { isAllUnchecked } = useMultipleChecked();
   const { totalProductPrice, deliveryFee, calculateTotalPrice } =
     useExpectedPayment();
-  const [coupons] = useState(useGetCoupons());
-  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>();
-  const [discountPrice, setDiscountPrice] = useState(0);
   const orderProducts = useOrderProducts();
+  const coupons = useGetCoupons();
+  const couponNames = coupons.map(coupon => coupon.name);
+  const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>();
   const getSelectedCoupon = useGetSelectedCoupon();
-  // const couponNames = coupons.map(coupon => coupon.name);
 
   const handleSelectChange: ChangeEventHandler<HTMLSelectElement> = event => {
     setSelectedCoupon(getSelectedCoupon(event, coupons));
-
-    setDiscountPrice(selectedCoupon ? selectedCoupon.discountPrice : 0);
   };
 
   const handleOrderClick = () => {
     const orderPrice = Number(
-      removeChar(calculateTotalPrice(discountPrice), ',')
+      removeChar(
+        calculateTotalPrice(selectedCoupon ? selectedCoupon.discountPrice : 0),
+        ','
+      )
     );
 
     orderProducts(orderPrice, selectedCoupon ? selectedCoupon.id : NO_DISCOUNT);
@@ -60,11 +52,19 @@ const ExpectedPaymentBox = () => {
         </PaymentInfoItem>
         <PaymentInfoItem>
           <dt>총 주문금액</dt>
-          <dd>{calculateTotalPrice(discountPrice)}원</dd>
+          <dd>
+            {calculateTotalPrice(
+              selectedCoupon ? selectedCoupon.discountPrice : 0
+            )}
+            원
+          </dd>
         </PaymentInfoItem>
       </ExpectedPaymentInfo>
       <OrderButtonWrapper>
-        <SelectBox options={couponNamesMocks} onChange={handleSelectChange} />
+        <SelectBox
+          options={[DEFAULT_COUPON_NAME, ...couponNames]}
+          onChange={handleSelectChange}
+        />
         <Button
           type="button"
           autoSize

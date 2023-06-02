@@ -13,14 +13,13 @@ export const useGetSelectedCoupon = () => {
     event: ChangeEvent<HTMLSelectElement>,
     coupons: Coupon[]
   ) => {
-    const selectedCouponName = event.currentTarget.value;
+    const selectedCouponName = event.target.value;
 
     if (selectedCouponName === DEFAULT_COUPON_NAME) return null;
 
     const selectedCoupon = coupons.find(
       coupon => coupon.name === selectedCouponName
     );
-
     if (!selectedCoupon) {
       setToastState({ ...TOAST_STATE.failedSelectCoupon });
       return null;

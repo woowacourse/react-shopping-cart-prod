@@ -14,7 +14,6 @@ export const useGetCoupons = () => {
     const getCoupons = async () => {
       try {
         const data = await getData<Coupon[]>('/coupons');
-        console.log(data);
         setCoupons(data);
       } catch {
         setCoupons([]);

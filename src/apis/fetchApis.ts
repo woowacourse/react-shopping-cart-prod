@@ -18,14 +18,6 @@ const fetchApis = (serverName: ServerKey) => {
     Authorization: `Basic ${base64}`,
   };
 
-  const handleFetchError = (
-    responseOk: boolean,
-    status: number,
-    message: string
-  ) => {
-    if (!responseOk) throw new Error(`ERROR[${status}]: ${message}`);
-  };
-
   const getData = async <T>(endpoint: string): Promise<T> => {
     const url = getUrl(endpoint);
     if (!url) throw new Error('잘못된 요청입니다');
