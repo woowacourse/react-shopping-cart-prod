@@ -44,9 +44,9 @@ const CartProductsListPage = () => {
           </SelectContainer>
         </CartProductInfo>
       </CartProductContent>
-      <EstimatedPaymentBoxWrapper>
+      <PaymentWrapper>
         <EstimatedPaymentBox />
-      </EstimatedPaymentBoxWrapper>
+      </PaymentWrapper>
     </Main>
   );
 };
@@ -106,7 +106,7 @@ const TotalSelectedCount = styled.span`
   padding: 0 13px;
 `;
 
-const EstimatedPaymentBoxWrapper = styled.div`
+const PaymentWrapper = styled.div`
   position: sticky;
   top: 30px;
   margin-top: 170px;
