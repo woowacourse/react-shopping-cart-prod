@@ -13,15 +13,11 @@ import { DELIVERY_FEE } from '../hooks/useCartPrice';
 
 const OrderDetailPage = () => {
   const serverName = useRecoilValue(serverNameState);
-  const orderDetail = useOrderDetail();
+  const { orderDetail, totalProductsPrice, discountPrice } = useOrderDetail();
 
   if (!orderDetail) return null;
 
   const { order, totalPrice } = orderDetail;
-  const totalProductsPrice = order.orderItems.reduce(
-    (acc, cur) => (acc += cur.product.price * cur.quantity),
-    0
-  );
 
   return (
     <ErrorBoundary key={serverName} fallback={<Message type="error" />}>
@@ -42,7 +38,7 @@ const OrderDetailPage = () => {
               </PaymentInfo>
               <PaymentInfo>
                 <dt>할인 금액</dt>
-                <dd>{totalProductsPrice + DELIVERY_FEE - totalPrice}</dd>
+                <dd>{discountPrice}</dd>
               </PaymentInfo>
               <PaymentInfo>
                 <dt>총 결제 금액</dt>

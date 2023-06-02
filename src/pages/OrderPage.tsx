@@ -26,6 +26,8 @@ const Main = styled.main<Record<'pathname', string>>`
   height: calc(100vh - 80px);
   padding: 0 120px;
 
+  overflow-y: auto;
+
   & > * {
     display: flex;
     flex-direction: column;
