@@ -15,3 +15,8 @@ export interface CheckedStateType {
   [key: number]: boolean;
   all: boolean;
 }
+
+export interface OrderDetailsType {
+  product: ProductType;
+  quantity: number;
+}
