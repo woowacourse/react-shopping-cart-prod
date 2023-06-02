@@ -15,8 +15,8 @@ interface Props {
 }
 
 export default function CartItem({ cartItemInfo, checkedItemIds, setCheckedItemIds }: Props) {
-  const { name, price, imageUrl } = cartItemInfo.product;
-  const { updateProductQuantity, deleteFromCart } = useCart(cartItemInfo.product);
+  const { id: productId, name, price, imageUrl } = cartItemInfo.product;
+  const { updateProductQuantity, deleteFromCart } = useCart();
 
   const toggleCheckbox = (id: number) => {
     if (checkedItemIds.includes(id)) {
@@ -60,7 +60,7 @@ export default function CartItem({ cartItemInfo, checkedItemIds, setCheckedItemI
             quantity={cartItemInfo.quantity}
             minQuantity={1}
             maxQuantity={PRODUCT.MAX_COUNT}
-            updateQuantity={updateProductQuantity}
+            updateQuantity={(quantity: number) => updateProductQuantity(productId, quantity)}
           />
           <Price
             price={price * cartItemInfo?.quantity}

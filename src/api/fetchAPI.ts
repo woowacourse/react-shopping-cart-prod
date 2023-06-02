@@ -1,27 +1,7 @@
 import { ResponseResult } from '../types';
 
-export const fetchApi = async (url: string, options: RequestInit) => {
-  try {
-    if (!navigator.onLine) throw new Error('[ERROR] 네트워크 오프라인이 감지되었습니다.');
-
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw Error(
-        `[ERROR] api 요청 중 오류가 발생했습니다. 다시 시도해주세요. (status: ${response.status})`
-      );
-    }
-
-    const contentType = response.headers.get('Content-Type');
-    if (contentType === 'application/json') return await response.json();
-
-    return response;
-  } catch (error) {
-    if (error instanceof Error) console.error(error.message);
-  }
-};
-
-const ERROR_MESSAGE: Record<number, string> = {
-  0: '[ERROR-0] 네트워크 오프라인이 감지되었습니다. 인터넷 연결을 확인해 주세요.',
+const API_ERROR_MESSAGE: Record<number, string> = {
+  0: '[ERROR-0] 서버에 연결할 수 없습니다. 인터넷 연결을 확인하고 다시 시도해 주세요.',
   1001: '[ERROR-1001] 잘못된 사용자 정보입니다. 다시 로그인 해주세요.',
   1002: '[ERROR-1002] 해당 장바구니에 대한 권한이 없습니다.',
   2001: '[ERROR-2001] 장바구니 정보가 없습니다.',
@@ -34,17 +14,18 @@ const ERROR_MESSAGE: Record<number, string> = {
   5003: '[ERROR-5003] 주문 금액이 0원 보다 커야 주문이 가능합니다.',
 };
 
-export const fetchApi2 = async <T>(
-  url: string,
-  options: RequestInit
-): Promise<ResponseResult<T>> => {
+const ERROR_MESSAGE = {
+  DEFAULT: '[ERROR] 알 수 없는 오류가 발생했습니다. 문제가 지속되면 관리자에게 문의해주세요.',
+};
+
+const fetchAPI = async <T>(url: string, options: RequestInit): Promise<ResponseResult<T>> => {
   try {
     const responseResult: ResponseResult<T> = { result: undefined, statusCode: 200 };
 
     if (!navigator.onLine) {
       responseResult.statusCode = 0;
       responseResult.errorCode = 0;
-      responseResult.errorMessage = ERROR_MESSAGE[responseResult.errorCode];
+      responseResult.errorMessage = API_ERROR_MESSAGE[responseResult.errorCode];
 
       return responseResult;
     }
@@ -55,7 +36,7 @@ export const fetchApi2 = async <T>(
       const { errorCode } = await response.json();
       responseResult.statusCode = response.status;
       responseResult.errorCode = errorCode;
-      responseResult.errorMessage = ERROR_MESSAGE[errorCode];
+      responseResult.errorMessage = API_ERROR_MESSAGE[errorCode];
     }
 
     const contentType = response.headers.get('Content-Type');
@@ -66,7 +47,9 @@ export const fetchApi2 = async <T>(
     return {
       result: undefined,
       statusCode: -1,
-      errorMessage: '[ERROR] 예기치 못한 오류가 발생했습니다.',
+      errorMessage: ERROR_MESSAGE.DEFAULT,
     };
   }
 };
+
+export default fetchAPI;
