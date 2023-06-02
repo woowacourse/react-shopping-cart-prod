@@ -7,10 +7,12 @@ import { SESSION_STORAGE_KEY_CART_ITEMS } from "../app/keys.ts";
 import { fetchCartList } from "../api/api.ts";
 import { cartState } from "./cartAtoms.ts";
 import { serverState } from "./serverAtom.ts";
+import { sessionStorageEffect } from "./storageEffect.ts";
 
 export const userState = atom<User | null>({
   key: "userState",
   default: null,
+  effects: [sessionStorageEffect<User | null>("user")],
 });
 
 export const userRepository = selector({
