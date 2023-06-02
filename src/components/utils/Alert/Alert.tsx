@@ -15,11 +15,11 @@ const Alert = ({ text, handleAccept, handleCancel }: AlertProps) => {
           <p>{text}</p>
         </div>
         <div className={styles.ButtonBox}>
-          <button className={styles.acceptButton} type="button" onClick={handleAccept}>
-            확인
-          </button>
-          <button className={styles.cancelButton} type="button" onClick={handleCancel}>
+          <button className={styles.acceptButton} type="button" onClick={handleCancel}>
             취소
+          </button>
+          <button className={styles.cancelButton} type="button" onClick={handleAccept}>
+            확인
           </button>
         </div>
       </div>

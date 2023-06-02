@@ -77,7 +77,9 @@ const OrderAddition = () => {
                     <h4>{coupon.couponName}</h4>
                     <div className={styles.minimumPrice}>최소 주문금액 {coupon.minAmount}원</div>
                   </button>
-                  {coupon.isSelected && <p>선택됨!</p>}
+                  {coupon.isSelected && (
+                    <input type="checkbox" disabled className={styles.checkbox} />
+                  )}
                 </li>
               );
             })

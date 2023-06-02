@@ -88,3 +88,15 @@
 .resultOrderButton:hover {
   background-color: #05b696;
 }
+
+.checkbox {
+  position: absolute;
+  left: 82%;
+  margin-top: 10px;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-image: url('../../../assets/unchecked-icon.svg');
+  background-size: cover;
+}
