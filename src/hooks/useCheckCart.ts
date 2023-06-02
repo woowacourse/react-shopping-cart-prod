@@ -11,11 +11,6 @@ const useCheckCart = (cartId: number) => {
 
   const changeCheckCartList = () => {
     const existItemIndex = checkCartList.findIndex((checkCartId) => checkCartId === cartId);
-<<<<<<< HEAD
-
-=======
-    console.log(cartId);
->>>>>>> upstream/hafnium1923
     if (check) {
       if (existItemIndex !== -1) {
         setCheckCartList((prev) => {

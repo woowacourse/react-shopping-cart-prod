@@ -2,16 +2,12 @@ import styled from '@emotion/styled';
 import TextList from '../../common/TextList/TextList';
 import Button from '../../common/Button/Button';
 import getPriceFormat from '../../../utils/getPriceFormat';
-<<<<<<< HEAD
 import { CouponType } from '../../../types/types';
 import { Text } from '../../common/Text/Text';
-=======
->>>>>>> upstream/hafnium1923
 
 interface TotalPriceBoxProps {
   totalProductPrice: number;
   shippingFee: number;
-<<<<<<< HEAD
   onOrder: () => void;
   coupon?: CouponType;
   isValid?: boolean;
@@ -29,19 +25,11 @@ const TotalPriceBox = ({
     : 0;
 
   const totalPrice = getPriceFormat(totalProductPrice + shippingFee - discountPrice);
-=======
-  isValid?: boolean;
-}
-
-const TotalPriceBox = ({ totalProductPrice, shippingFee, isValid = true }: TotalPriceBoxProps) => {
-  const totalPrice = getPriceFormat(totalProductPrice + shippingFee);
->>>>>>> upstream/hafnium1923
 
   return (
     <TotalPriceBoxWrapper>
       <BoxInner>
         <TextList label="총 선택상품금액" text={`${getPriceFormat(totalProductPrice)}원`} />
-<<<<<<< HEAD
         <TextList
           label="쿠폰할인"
           text={discountPrice ? `- ${getPriceFormat(discountPrice)}원` : '적용한 쿠폰이 없습니다'}
@@ -51,8 +39,6 @@ const TotalPriceBox = ({ totalProductPrice, shippingFee, isValid = true }: Total
             {coupon?.name}
           </Text>
         )}
-=======
->>>>>>> upstream/hafnium1923
         <TextList label="배송비" text={`+ ${getPriceFormat(shippingFee)}원`} />
         <TotalPriceWrapper>
           <TextList label="총 주문액" text={`${totalPrice}원`} primary />
@@ -63,10 +49,7 @@ const TotalPriceBox = ({ totalProductPrice, shippingFee, isValid = true }: Total
           isValid={isValid}
           text={isValid ? `${totalPrice}원 주문하기` : '상품을 선택해주세요.'}
           width="100%"
-<<<<<<< HEAD
           onClick={onOrder}
-=======
->>>>>>> upstream/hafnium1923
         />
       </BoxInner>
     </TotalPriceBoxWrapper>
@@ -78,10 +61,6 @@ export default TotalPriceBox;
 const TotalPriceBoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
-<<<<<<< HEAD
-
-=======
->>>>>>> upstream/hafnium1923
   width: 370px;
   border: 1px solid rgba(0, 0, 0, 0.05);
   height: auto;
@@ -93,7 +72,6 @@ const TotalPriceBoxWrapper = styled.div`
 `;
 
 const BoxInner = styled.div`
-<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -104,16 +82,6 @@ const BoxInner = styled.div`
 
 const TotalPriceWrapper = styled.div`
   width: 100%;
-=======
-  padding: 12px 18px 24px 18px;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-`;
-
-const TotalPriceWrapper = styled.div`
->>>>>>> upstream/hafnium1923
   margin: 12px 0 24px 0;
   padding: 12px 0 12px 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1);

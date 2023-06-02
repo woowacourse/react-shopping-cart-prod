@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useRecoilState } from 'recoil';
-import { deleteModalState } from '../service/atom';
+import { confirmModalState } from '../service/atom';
 import { useBodyScrollLock } from './useBodyScrollLock';
 
 type OpenModalType = {
@@ -8,7 +8,7 @@ type OpenModalType = {
 };
 
 export const useModal = () => {
-  const [modalDataState, setModalDataState] = useRecoilState(deleteModalState);
+  const [modalDataState, setModalDataState] = useRecoilState(confirmModalState);
   const { lockScroll, openScroll } = useBodyScrollLock();
 
   const closeModal = useCallback(() => {

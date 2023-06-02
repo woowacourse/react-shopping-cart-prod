@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import { DEDUCTION, PERCENTAGE } from '../abstract/constants';
-=======
->>>>>>> upstream/hafnium1923
 import { servers } from '../service/apiURL';
 
 export interface ProductType {
@@ -17,7 +14,6 @@ export interface CartItemType {
   product: ProductType;
 }
 
-<<<<<<< HEAD
 export interface CouponType {
   id: number;
   name: string;
@@ -48,6 +44,4 @@ export interface OrderDetailType extends OrderListType {
 }
 export type DiscountAmount = typeof PERCENTAGE | typeof DEDUCTION;
 
-=======
->>>>>>> upstream/hafnium1923
 export type ServerURLType = (typeof servers)[keyof typeof servers];

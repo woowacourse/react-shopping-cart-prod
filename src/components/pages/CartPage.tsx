@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from '@emotion/styled';
@@ -8,13 +7,10 @@ import { useAddOrderFetch } from '../../hooks/useOrderFetch';
 import useCouponFetch from '../../hooks/useCouponFetch';
 import { useCouponModal } from '../../hooks/useCouponModal';
 
-=======
->>>>>>> upstream/hafnium1923
 import TotalPriceBox from '../box/TotalPriceBox/TotalPriceBox';
 import { Text } from '../common/Text/Text';
 import CartList from '../list/CartList/CartList';
 import PageTemplate from '../templates/PageTemplate';
-<<<<<<< HEAD
 import ConfirmModal from '../Modal/ConfirmModal/ConfirmModal';
 import DeleteCartItemModal from '../Modal/ConfirmModal/DeleteCartItemModal';
 import { checkCartListState, couponState } from '../../service/atom';
@@ -44,18 +40,6 @@ const CartPage = () => {
       minimumPrice: 0,
     });
   };
-=======
-import styled from '@emotion/styled';
-import Modal from '../common/Modal/Modal';
-import DeleteCartItemModal from '../common/Modal/DeleteCartItemModal';
-import { useCartFetch } from '../../hooks/useCartFetch';
-import { useRecoilValue } from 'recoil';
-import { checkCartListState } from '../../service/atom';
-
-const CartPage = () => {
-  const { cartData } = useCartFetch();
-  const checkCartList = useRecoilValue(checkCartListState);
->>>>>>> upstream/hafnium1923
 
   const calcTotalPrice = () => {
     return checkCartList.reduce((prev, curr) => {
@@ -68,7 +52,6 @@ const CartPage = () => {
     }, 0);
   };
 
-<<<<<<< HEAD
   useEffect(() => {
     if (calcTotalPrice() === 0 || coupon.minimumPrice > calcTotalPrice())
       setCoupon({
@@ -81,14 +64,11 @@ const CartPage = () => {
       });
   }, [calcTotalPrice()]);
 
-=======
->>>>>>> upstream/hafnium1923
   return (
     <PageTemplate
       title="장바구니 미션 - 장바구니페이지"
       description="우아한 테크코스 레벨 2 장바구니 미션의 장바구니페이지입니다."
     >
-<<<<<<< HEAD
       {isLoading ? (
         <LoadingSpinner />
       ) : (
@@ -128,30 +108,6 @@ const CartPage = () => {
       <CouponModal>
         <ApplyCouponModal coupons={userCoupon} totalPrice={calcTotalPrice()} />
       </CouponModal>
-=======
-      <CartPageWrapper>
-        <CartPageHead>
-          <Text size="extraLarge" weight="bold">
-            장바구니
-          </Text>
-        </CartPageHead>
-        <CartPageContent>
-          <CartListWrapper>
-            <CartList />
-          </CartListWrapper>
-          <PriceBox>
-            <TotalPriceBox
-              totalProductPrice={calcTotalPrice()}
-              shippingFee={checkCartList.length > 0 ? 3000 : 0}
-              isValid={checkCartList.length > 0}
-            />
-          </PriceBox>
-        </CartPageContent>
-      </CartPageWrapper>
-      <Modal>
-        <DeleteCartItemModal />
-      </Modal>
->>>>>>> upstream/hafnium1923
     </PageTemplate>
   );
 };
@@ -159,10 +115,6 @@ const CartPage = () => {
 export default CartPage;
 
 const CartPageWrapper = styled.div`
-<<<<<<< HEAD
-=======
-  width: 100%;
->>>>>>> upstream/hafnium1923
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -176,15 +128,11 @@ const CartPageWrapper = styled.div`
   }
 
   @media screen and (max-width: 660px) {
-<<<<<<< HEAD
     width: 500px;
   }
 
   @media screen and (max-width: 510px) {
     width: 300px;
-=======
-    width: 350px;
->>>>>>> upstream/hafnium1923
   }
 `;
 
@@ -218,7 +166,6 @@ const CartPageContent = styled.div`
   }
 `;
 
-<<<<<<< HEAD
 const PriceWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -227,12 +174,6 @@ const PriceWrapper = styled.div`
   top: 150px;
   margin-top: 30px;
   gap: 6px;
-=======
-const PriceBox = styled.div`
-  position: sticky;
-  top: 150px;
-  margin-top: 30px;
->>>>>>> upstream/hafnium1923
   @media screen and (max-width: 1320px) {
     width: 100%;
   }
