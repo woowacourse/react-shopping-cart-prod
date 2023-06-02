@@ -1,17 +1,16 @@
 import { selector } from 'recoil';
-import { fetchCartList } from '../api/cartList';
-import fetchProductList from '../api/productList';
 import { Cart, Order, Product } from '../types/responseData';
 import { serverAtom } from './server';
 import { BASE_URL } from '../constants/baseURL';
-import { fetchOrderList } from '../api/orderList';
+import fetchList from '../util/fetchList';
+import { END_POINTS } from '../constants/endPoints';
 
 export const fetchedProductListSelector = selector({
   key: 'async/product-list',
   get: async ({ get }) => {
     const serverName = get(serverAtom);
     const baseURL = BASE_URL[serverName];
-    const data = await fetchProductList<Product[]>(baseURL);
+    const data = await fetchList<Product[]>(baseURL, END_POINTS.PRODUCT);
     if (serverName === 'ERROR') throw new Error('');
     return data;
   },
@@ -22,7 +21,7 @@ export const fetchedCartListSelector = selector({
   get: async ({ get }) => {
     const serverName = get(serverAtom);
     const baseURL = BASE_URL[serverName];
-    const data = await fetchCartList<Cart[]>(baseURL);
+    const data = await fetchList<Cart[]>(baseURL, END_POINTS.CART_ITEMS);
 
     return data;
   },
@@ -33,7 +32,10 @@ export const fetchedOrderListSelector = selector({
   get: async ({ get }) => {
     const serverName = get(serverAtom);
     const baseURL = BASE_URL[serverName];
-    const data = await fetchOrderList<{ orders: Order[] }>(baseURL);
+    const data = await fetchList<{ orders: Order[] }>(
+      baseURL,
+      END_POINTS.ORDERS
+    );
 
     return data.orders;
   },

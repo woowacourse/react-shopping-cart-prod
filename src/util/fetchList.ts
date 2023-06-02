@@ -1,7 +1,7 @@
 import { AUTH } from '../constants/auth';
 
-export const fetchCartList = async <T>(baseURL: string): Promise<T> => {
-  const response = await fetch(`${baseURL}/cart-items`, {
+const fetchList = async <T>(baseURL: string, endPoints: string): Promise<T> => {
+  const response = await fetch(`${baseURL}${endPoints}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -12,3 +12,5 @@ export const fetchCartList = async <T>(baseURL: string): Promise<T> => {
 
   return data;
 };
+
+export default fetchList;
