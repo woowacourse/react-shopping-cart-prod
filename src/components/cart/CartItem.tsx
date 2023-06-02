@@ -51,7 +51,9 @@ const CartItem = (item: CartProduct) => {
             value={coupon.couponId}
             disabled={coupon.productId !== null}
           >
-            {coupon.name}
+            {coupon.discount.type === "rate"
+              ? `${coupon.name} (-${coupon.discount.amount.toLocaleString()}%)`
+              : `${coupon.name} (-${coupon.discount.amount.toLocaleString()}원)`}
           </option>
         ))}
       </SelectBox>
