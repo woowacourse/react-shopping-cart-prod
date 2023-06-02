@@ -6,10 +6,7 @@ import getBasicKey from 'utils/getBasicKey';
 import store from 'utils/storage';
 
 export type ErrorResponse = {
-  timestamp: string;
-  status: number;
-  error: string;
-  path: string;
+  message: string;
 };
 
 type FetchedData<T> = {
@@ -50,10 +47,7 @@ class API {
         errorResponse = await response.json();
       } catch (error) {
         errorResponse = {
-          timestamp: new Date().toISOString(),
-          status: 500,
-          error: '에러 응답이 json 형식이 아닙니다.',
-          path: url,
+          message: '에러 응답이 json 형식이 아닙니다.',
         };
       }
 
@@ -72,10 +66,7 @@ class API {
         data = await response.json();
       } catch {
         const errorResponse: ErrorResponse = {
-          timestamp: new Date().toISOString(),
-          status: 500,
-          error: '서버 응답 형식이 json 형식이 아닙니다.',
-          path: url,
+          message: '서버 응답 형식이 json 형식이 아닙니다.',
         };
 
         throw errorResponse;
