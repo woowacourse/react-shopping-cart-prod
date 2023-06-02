@@ -23,8 +23,7 @@ export interface OrderProduct
 export type CartId = number;
 export type ProductId = number;
 
-export type ServerName = '여우' | '루쿠' | '제이';
-export type Server = '여우' | '루쿠' | 'http://13.124.43.137:8080/';
+export type ServerName = '여우' | '루쿠' | '프론트';
 
 export interface Order {
   id: number;

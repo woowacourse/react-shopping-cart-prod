@@ -13,9 +13,9 @@ export const fetchApi = async (url: string, options: RequestInit) => {
   return await response;
 };
 
-const username = 'a@a.com';
-const password = '1234';
-const base64 = btoa(username + ':' + password);
+const base64 = btoa(
+  process.env.REACT_APP_USER_EMAIL + ':' + process.env.REACT_APP_USER_PASSWORD
+);
 
 export const api = {
   get: async (url: string) => {
