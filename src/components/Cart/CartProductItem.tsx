@@ -18,7 +18,10 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
   const { id, quantity, product } = cartProduct;
   const { name, price, imageUrl } = product;
 
-  const { deleteProduct } = useProductQuantity(id, quantity);
+  const { addCount, subtractCount, deleteProduct } = useProductQuantity(
+    id,
+    quantity
+  );
   const { targetChecked, updateChecked, deleteChecked } =
     useChecked(cartProduct);
 
@@ -47,8 +50,9 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
           <TrashCanIcon />
         </DeleteButton>
         <AmountCounter
-          cartItemId={id}
           count={quantity}
+          addCount={addCount}
+          subtractCount={subtractCount}
           minCount={1}
           variant='medium'
         />

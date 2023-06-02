@@ -9,7 +9,10 @@ import {
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 
-const useProductQuantity = (id: number, quantity: number) => {
+const useProductQuantity = (
+  id: number | undefined,
+  quantity: number | undefined
+) => {
   const serverName = useRecoilValue(serverNameState);
   const setCartProducts = useSetRecoilState(cartProductState);
   const setToastState = useSetRecoilState(toastState);
@@ -18,6 +21,10 @@ const useProductQuantity = (id: number, quantity: number) => {
 
   const deleteProduct = async () => {
     try {
+      if (!id) {
+        throw new Error('장바구니에 해당 상품이 없습니다.');
+      }
+
       await deleteCartProduct(id);
       setCartProducts((prev) => deleteTargetProduct(prev, id));
       setToastState({
@@ -36,6 +43,10 @@ const useProductQuantity = (id: number, quantity: number) => {
 
   const addCount = async () => {
     try {
+      if (!quantity || !id) {
+        throw new Error('장바구니에 해당 상품이 없습니다.');
+      }
+
       const updatedQuantity = quantity + 1;
 
       await patchCartProduct(id, updatedQuantity);
@@ -53,6 +64,10 @@ const useProductQuantity = (id: number, quantity: number) => {
 
   const subtractCount = async () => {
     try {
+      if (!quantity || !id) {
+        throw new Error('장바구니에 해당 상품이 없습니다.');
+      }
+
       const updatedQuantity = quantity - 1;
 
       if (updatedQuantity === 0) {
