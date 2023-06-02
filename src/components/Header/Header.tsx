@@ -1,5 +1,5 @@
 import titleLogo from "../../assets/logo.png";
-import { IoCart, IoExitOutline, IoList, IoPerson } from "react-icons/io5";
+import { IoCart, IoList, IoPerson } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../style/style";
 import {
@@ -14,6 +14,7 @@ import {
   MenuWrapper,
   MenuIcon,
   CartCountWrapper,
+  LoginButton,
 } from "./Header.style";
 import { useRecoilValue } from "recoil";
 import { cartCountSelector } from "../../recoil/cartAtoms";
@@ -21,7 +22,7 @@ import ServerSelectBox from "../ServerSelectBox";
 import { modalRepository } from "../../recoil/modalAtoms.tsx";
 import Icon from "../Icon.tsx";
 import Login from "../Login";
-import { userRepository, userState } from "../../recoil/userAtom.ts";
+import { userState } from "../../recoil/userAtom.ts";
 import PersonalDropdown from "./PersonalDropdown.tsx";
 
 function Header() {
@@ -29,7 +30,6 @@ function Header() {
   const cartCount = useRecoilValue(cartCountSelector);
   const user = useRecoilValue(userState);
   const { openModal } = useRecoilValue(modalRepository);
-  const { logout } = useRecoilValue(userRepository);
 
   return (
     <HeaderWrapper>
@@ -42,50 +42,31 @@ function Header() {
             <ServerSelectBox />
             <MenuWrapper onClick={() => navigate("/cart")}>
               <MenuIcon>
-                {
-                  cartCount > 0
-                    ? (
-                      <CartCountWrapper>
-                        <CartCount>
-                          <CartCountText>{cartCount}</CartCountText>
-                        </CartCount>
-                      </CartCountWrapper>
-                    ) : (
-                      <Icon fontSize={30}>
-                        <IoCart />
-                      </Icon>
-                    )
-                }
+                {cartCount > 0 ? (
+                  <CartCountWrapper>
+                    <CartCount>
+                      <CartCountText>{cartCount}</CartCountText>
+                    </CartCount>
+                  </CartCountWrapper>
+                ) : (
+                  <Icon fontSize={30}>
+                    <IoCart />
+                  </Icon>
+                )}
                 <MenuTitle>장바구니</MenuTitle>
               </MenuIcon>
             </MenuWrapper>
-            <MenuWrapper onClick={() => navigate("/order")}>
-              <MenuIcon>
-                <Icon fontSize={30}>
-                  <IoList />
-                </Icon>
-                <MenuTitle>주문목록</MenuTitle>
-              </MenuIcon>
-            </MenuWrapper>
-            {
-              user ? (
-                <PersonalDropdown />
-              ) : (
-                <MenuWrapper onClick={() => openModal(<Login />)}>
-                  <MenuIcon>
-                    <Icon fontSize={30}>
-                      <IoPerson />
-                    </Icon>
-                    <MenuTitle>로그인</MenuTitle>
-                  </MenuIcon>
-                </MenuWrapper>
-              )
-            }
-
+            {user ? (
+              <PersonalDropdown />
+            ) : (
+              <LoginButton onClick={() => openModal(<Login />)}>
+                로그인
+              </LoginButton>
+            )}
           </NavBar>
         </HeaderContent>
       </Container>
-    </HeaderWrapper >
+    </HeaderWrapper>
   );
 }
 

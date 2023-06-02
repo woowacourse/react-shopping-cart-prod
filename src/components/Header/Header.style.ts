@@ -20,6 +20,11 @@ export const MenuWrapper = styled.div`
   cursor: pointer;
 `;
 
+export const LoginButton = styled.button`
+  font-size: 18px;
+  color: black;
+`;
+
 export const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
