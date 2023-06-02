@@ -30,7 +30,7 @@ export const SERVER_NAMES: readonly ServerNameType[] = ['MSW', '라온', '져니
 export const BASE_URL_MAP: Record<ServerNameType, string> = {
   MSW: MOCK_URL,
   라온: 'https://jourzura.kro.kr',
-  져니: 'http://journey-shop.kro.kr:8080',
+  져니: 'https://journey-shop.kro.kr',
   쥬니: 'https://jourzura2.kro.kr',
 };
 
