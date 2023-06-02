@@ -22,7 +22,7 @@ const CartSelectList = () => {
 
   return (
     <Styled.CartSelectListWrapper>
-      {!cartList?.length && <EmptyComponent />}
+      {!cartList?.length && cartListFetchingStatus === 'success' && <EmptyComponent />}
 
       {cartList && cartList?.length > 0 && (
         <>
