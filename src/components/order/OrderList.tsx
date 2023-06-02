@@ -23,7 +23,7 @@ const Style = {
     width: 932px;
 
     border: 1px solid var(--grey-300);
-    border-bottom: none;
+    border-bottom: 1px ridge;
     margin-bottom: 20px;
 
     /* 태블릿 */

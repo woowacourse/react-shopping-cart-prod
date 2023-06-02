@@ -45,6 +45,7 @@ export default function TotalPayment({
           color="var(--grey-100)"
           fontSize="20px"
           onClick={handleOrderButtonClick}
+          disabled={totalProductsPrice === 0}
         >
           주문하기
         </Button>

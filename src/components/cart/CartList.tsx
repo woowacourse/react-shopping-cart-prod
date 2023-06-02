@@ -64,6 +64,7 @@ export default function CartList() {
               fontSize={'12px'}
               color={'black'}
               onClick={deleteCheckedItems}
+              disabled={checkedItemIds.length === 0}
             >
               선택삭제
             </Button>

@@ -65,6 +65,9 @@ const Style = {
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    max-height: 350px;
+    overflow-y: scroll;
   `,
 
   ProductContainer: styled.li`
