@@ -97,4 +97,60 @@ export const handlers = [
 
     return res(ctx.status(201));
   }),
+
+  rest.delete(`${FETCH_URL.totalCoupon}/:couponId`, async (req, res, ctx) => {
+    const couponId = Number(req.params.couponId);
+
+    const coupons = localStorageHelper.getValue<MemberCouponType[]>('memberCoupon');
+    const newCoupons = coupons.filter((coupon) => coupon.id !== couponId);
+    localStorageHelper.setValue('memberCoupon', newCoupons);
+
+    return res(ctx.status(204));
+  }),
+
+  rest.post(FETCH_URL.orderList, async (req, res, ctx) => {
+    const body = (await req.json()) as { cartItemIds: number[]; couponId: number; price: number };
+    const cartItemIds = body.cartItemIds;
+    const couponId = body.couponId;
+    const price = body.price;
+
+    const cartItems = localStorageHelper.getValue<MemberCouponType[]>('cartItems');
+    const coupons = localStorageHelper.getValue<MemberCouponType[]>('memberCoupon');
+
+    if (couponId !== null) {
+      const couponsDeletedUsed = coupons.filter((coupon) => coupon.id !== couponId);
+      const couponInfo = coupons.find((coupon) => coupon.id === couponId);
+      const updateCoupon = {
+        id: couponInfo?.id,
+        name: couponInfo?.name,
+        discountAmount: couponInfo?.discountAmount,
+        description: couponInfo?.description,
+        isUsed: true,
+      };
+      const newCoupons = [...couponsDeletedUsed, updateCoupon];
+      localStorageHelper.setValue('memberCoupon', newCoupons);
+    }
+
+    const newCartItems = cartItems.filter((item) => !cartItemIds.includes(item.id!));
+    localStorageHelper.setValue('cartItems', newCartItems);
+
+    const id = Date.now();
+    console.log(cartItemIds, mockData);
+    const orderCartItems = cartItems.filter((item) => cartItemIds.includes(item.id!));
+    const date = new Date();
+    const orderItems = localStorageHelper.getValue<any[]>('orderItems');
+    const newOrderItem = [...orderItems, { id, price, date, orderItems: orderCartItems }];
+    localStorageHelper.setValue('orderItems', newOrderItem);
+
+    console.log(`${price}원 결제되었습니다.`);
+
+    return res(ctx.status(201));
+  }),
+
+  rest.get(FETCH_URL.orderList, (req, res, ctx) => {
+    if (!localStorageHelper.hasKey('orderItems')) localStorageHelper.setInitValue('orderItems', []);
+    const orderItems = localStorageHelper.getValue<MemberCouponType[]>('orderItems');
+
+    return res(ctx.status(200), ctx.json(orderItems), ctx.delay(100));
+  }),
 ];

@@ -1,11 +1,15 @@
 import { useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import Modal from '@Components/Modal';
 
+import cartItemsAmountState from '@Selector/cartItemsAmountState';
+
 import CouponList from '../CouponList';
 
 const UseCoupon = () => {
+  const cartAmount = useRecoilValue(cartItemsAmountState);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const closeModal = () => {
@@ -15,6 +19,8 @@ const UseCoupon = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
+
+  if (cartAmount === '0') return <></>;
 
   return (
     <Container>

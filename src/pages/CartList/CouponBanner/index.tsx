@@ -13,6 +13,8 @@ import memberCouponState from '@Atoms/memberCouponState';
 import serverState from '@Atoms/serverState';
 import totalCouponState from '@Atoms/totalCouponState';
 
+import cartItemsAmountState from '@Selector/cartItemsAmountState';
+
 import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
 import CouponDownload from '../CouponDownLoad';
@@ -20,7 +22,7 @@ import CouponDownload from '../CouponDownLoad';
 const CouponBanner = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectCoupon, setSelectCoupon] = useState<CouponType>({
-    id: -999,
+    id: null,
     name: '',
     discountAmount: 0,
     description: '',
@@ -29,6 +31,7 @@ const CouponBanner = () => {
   const [memberCoupon, setMemberCoupon] = useRecoilState(memberCouponState);
   const totalCoupon = useRecoilValue(totalCouponState);
   const server = useRecoilValue(serverState);
+  const cartAmount = useRecoilValue(cartItemsAmountState);
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -45,7 +48,7 @@ const CouponBanner = () => {
   };
 
   const isDownLoadedId = (name: string): boolean => {
-    return memberCoupon.some((coupon) => coupon.name === name);
+    return memberCoupon.filter((coupon) => !coupon.isUsed).some((coupon) => coupon.name === name);
   };
 
   const makePrintCoupon = (id: number, isDownLoaded: boolean) => () => {
@@ -57,6 +60,8 @@ const CouponBanner = () => {
     fetchData({ url: `${FETCH_URL.totalCoupon}/${id}`, method: FETCH_METHOD.POST, server });
     updateMemberCoupon();
   };
+
+  if (cartAmount === '0') return <></>;
 
   return (
     <>
@@ -71,7 +76,7 @@ const CouponBanner = () => {
         <Modal onClose={closeModal}>
           <CouponDownload
             coupon={selectCoupon}
-            handleClick={makePrintCoupon(selectCoupon.id, isDownLoadedId(selectCoupon.name))}
+            handleClick={makePrintCoupon(selectCoupon.id!, isDownLoadedId(selectCoupon.name))}
             isDownLoaded={isDownLoadedId(selectCoupon.name)}
           />
         </Modal>

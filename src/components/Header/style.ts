@@ -34,3 +34,29 @@ export const LogoText = styled.span`
   font-size: 40px;
   font-weight: 900;
 `;
+
+export const RightContents = styled.div`
+  display: flex;
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 3px;
+`;
+
+export const ButtonName = styled.div`
+  font-size: 11px;
+`;
+
+export const OrderPagebutton = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+`;
