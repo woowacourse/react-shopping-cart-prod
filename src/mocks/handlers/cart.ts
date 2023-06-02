@@ -73,7 +73,7 @@ const cartHandlers = [
 
     const cartCosts = getCosts(cartList, memberInformation);
 
-    return res(ctx.status(200), ctx.json(cartCosts));
+    return res(ctx.delay(400), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(cartCosts));
   }),
 ];
 

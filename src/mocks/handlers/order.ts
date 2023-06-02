@@ -7,6 +7,12 @@ import { addOrder, getOrderListData, setOrderListData } from '../../domain/order
 import { PostOrderRequestBody } from '../../types/api';
 
 const orderHandlers = [
+  rest.get(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
+    const orderList = getOrderListData();
+
+    return res(ctx.delay(400), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(orderList));
+  }),
+
   rest.post(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
     const { cartItemIds, ...costs } = await req.json<PostOrderRequestBody>();
     const currentOrderListData = getOrderListData();
@@ -27,16 +33,6 @@ const orderHandlers = [
     return res(
       ctx.status(HTTP_STATUS_CODE.CREATED),
       ctx.set('Location', `${API_ENDPOINT.ORDERS}/${newOrderList.at(-1)?.id}`)
-    );
-  }),
-
-  rest.get(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
-    const orderList = getOrderListData();
-
-    return res(
-      ctx.delay(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR),
-      ctx.status(HTTP_STATUS_CODE.OK),
-      ctx.json(orderList)
     );
   }),
 ];

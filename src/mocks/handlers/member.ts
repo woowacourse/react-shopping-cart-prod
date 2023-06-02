@@ -11,7 +11,7 @@ const memberHandlers = [
 
     const memberInformation = getMemberData();
 
-    return res(ctx.delay(500), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(memberInformation));
+    return res(ctx.delay(400), ctx.status(HTTP_STATUS_CODE.OK), ctx.json(memberInformation));
   }),
 ];
 
