@@ -25,7 +25,6 @@ export const CouponHeader = styled.div`
 export const CouponImage = styled.img<{ isUsed: boolean }>`
   margin-top: 24px;
   opacity: ${({ isUsed }) => (isUsed ? 0.3 : 1)};
-  cursor: ${({ isUsed }) => (isUsed ? 'not-allowed' : 'default')};
 `;
 
 export const CouponParagraph = styled.p`
