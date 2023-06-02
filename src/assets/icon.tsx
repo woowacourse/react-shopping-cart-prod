@@ -8,3 +8,28 @@ export const DownloadIcon = () => {
     </svg>
   );
 };
+
+export const BoxIcon = () => {
+  return (
+    <svg width="30" height="20" viewBox="0 0 137 107" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 102V32.5L23 5H116L132 32.5L132 102H5Z" stroke="white" strokeWidth="10" />
+      <path d="M9 37H130.5" stroke="white" strokeWidth="10" />
+      <path d="M69 37L70 5" stroke="white" strokeWidth="10" />
+    </svg>
+  );
+};
+
+export const HumanIcon = () => {
+  return (
+    <svg width="30" height="24" viewBox="0 0 95 112" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M5 112L5 97" stroke="white" strokeWidth="10" />
+      <path d="M90 112L90 97" stroke="white" strokeWidth="10" />
+      <path
+        d="M69 27C69 39.3298 59.4218 49 48 49C36.5782 49 27 39.3298 27 27C27 14.6702 36.5782 5 48 5C59.4218 5 69 14.6702 69 27Z"
+        stroke="white"
+        strokeWidth="10"
+      />
+      <path d="M5.00001 97C4.99999 53.0001 90 52.9999 90 97" stroke="white" strokeWidth="10" />
+    </svg>
+  );
+};
