@@ -50,6 +50,15 @@ export const OrderModal = ({ closeModal }: OrderModalProps) => {
     setIsLoading(true);
 
     order(usingPoint).then((res) => {
+      if (res.status === 409) {
+        alert(
+          '주문 도중 에러가 발생했습니다! 새로고침 후 다시 시도해보시길 바랍니다!!'
+        );
+
+        closeModal();
+        setIsLoading(false);
+        return;
+      }
       const orderId = res.headers.get('Location')?.replace('/orders/', '');
 
       closeModal();
