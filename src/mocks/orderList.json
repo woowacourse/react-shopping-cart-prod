@@ -8,7 +8,7 @@
         "name": "오히려 좋은 춘식이",
         "imageUrl": "https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73ff604e7b0e6900f9ac53a43965300eb9a",
         "totalPrice": 7000,
-        "discountPrice": 1000,
+        "totalDiscountPrice": 1000,
         "quantity": 3
       },
       {
@@ -16,7 +16,7 @@
         "name": "힝 춘식이",
         "imageUrl": "https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73f15b3f4e3c2033bfd702a321ec6eda72c",
         "totalPrice": 7000,
-        "discountPrice": 1000,
+        "totalDiscountPrice": 1000,
         "quantity": 3
       }
     ]
@@ -30,7 +30,7 @@
         "name": "오히려 좋은 춘식이",
         "imageUrl": "https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73ff604e7b0e6900f9ac53a43965300eb9a",
         "totalPrice": 7000,
-        "discountPrice": 1000,
+        "totalDiscountPrice": 1000,
         "quantity": 3
       }
     ]

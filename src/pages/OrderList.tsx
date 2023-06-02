@@ -6,12 +6,12 @@ import { useGet } from 'hooks/useGet';
 import { Order } from 'types';
 
 const OrderList = () => {
-  const { data } = useGet<{ orders: Order[] }>(getOrderList);
+  const { data } = useGet<Order[]>(getOrderList);
 
   return (
     <ContentLayout>
       <Title>🍋 주문목록 🍋</Title>
-      {data?.orders.map((order) => (
+      {data?.map((order) => (
         <OrderItemList order={order} />
       ))}
     </ContentLayout>

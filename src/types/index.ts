@@ -17,7 +17,7 @@ export interface OrderProduct
   extends Omit<Product, 'price' | 'isOnSale' | 'salePrice'> {
   quantity: number;
   totalPrice: number;
-  discountPrice: number;
+  totalDiscountPrice: number;
 }
 
 export type CartId = number;
@@ -29,6 +29,11 @@ export interface Order {
   id: number;
   orderedTime: string;
   orderedItems: OrderProduct[];
+}
+
+export interface OrderDetailType extends Order {
+  deliveryPrice: number;
+  discountFromTotalPrice: number;
 }
 
 export interface CouponType {

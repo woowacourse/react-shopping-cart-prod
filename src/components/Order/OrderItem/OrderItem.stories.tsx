@@ -8,7 +8,7 @@ const mock = {
   imageUrl:
     'https://pbs.twimg.com/profile_images/1641252178450083841/Cn2MUfHG_400x400.jpg',
   totalPrice: 30000,
-  discountPrice: 10000,
+  totalDiscountPrice: 10000,
 };
 
 const orderItem = {
