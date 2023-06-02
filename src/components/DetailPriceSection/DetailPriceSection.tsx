@@ -14,8 +14,8 @@ const DetailPriceSection = ({ order }: DetailPriceSectionProps) => {
 
   const totalPriceText = `${totalPrice.toLocaleString('ko-KR')}원`;
   const deliveryFeeText = `${deliveryFee.toLocaleString('ko-KR')}원`;
-  const usedPointsText = `${usedPoint.toLocaleString('ko-KR')}`;
-  const paymentAmountText = `${paymentAmount.toLocaleString('ko-KR')}`;
+  const usedPointsText = `${usedPoint.toLocaleString('ko-KR')}원`;
+  const paymentAmountText = `${paymentAmount.toLocaleString('ko-KR')}원`;
   const earnPointsText = `${earnPoints.toLocaleString('ko-KR')}P 적립`;
 
   return (
