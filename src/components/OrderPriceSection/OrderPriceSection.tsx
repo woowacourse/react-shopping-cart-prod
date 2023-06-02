@@ -33,13 +33,13 @@ const OrderPriceSection = () => {
   const handleOnClick = async () => {
     try {
       await addOrder([...checkedProducts], appliedPoint);
-      navigate(ROUTE_PATH.orderList);
-      window.location.reload();
     } catch (e: any) {
       window.alert(`주문에 실패했습니다. 다시 시도해주세요.\n${e.message}`);
       console.log(e);
       console.error(e.message);
     }
+    navigate(ROUTE_PATH.orderList);
+    window.location.reload();
   };
 
   return (
