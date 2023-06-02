@@ -72,7 +72,7 @@ const ImageBox = styled.div`
   }
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.25);
+    scale: 1.1;
     box-shadow: 0 10px 10px -3px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease;
   }
