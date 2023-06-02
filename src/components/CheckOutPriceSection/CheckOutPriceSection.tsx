@@ -8,15 +8,13 @@ import { useRecoilValue, useResetRecoilState } from 'recoil';
 import { cartProductsState, checkedCartProductsTotalPrice } from 'state/cartProducts';
 import styled from 'styled-components';
 import { createOrder } from 'apis/orders';
-import { getCartProducts } from 'apis/cart';
-import { cartProductIdStoreState } from 'state/cartProductIdStore';
 
 const CheckOutPriceSection = () => {
-  // const updateCartProducts = useResetRecoilState(cartProductsState);
-  // const updateCartProductIdStore = useResetRecoilState(cartProductIdStoreState);
   const { checkedCartProductIds } = useCartCheckBox();
   const { pointCost } = useCheckOutPointCostContext();
+  const resetCartProducts = useResetRecoilState(cartProductsState);
   const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPrice(checkedCartProductIds));
+
   const navigate = useNavigate();
 
   const isCheckedProductsExist = checkedCartProductIds.size > 0;
@@ -35,10 +33,9 @@ const CheckOutPriceSection = () => {
 
   const addOrder = async () => {
     try {
-      await createOrder([...checkedCartProductIds], pointCost).then(() => {
-        navigate(ROUTE_PATH.ORDER_LIST);
-        window.location.reload();
-      });
+      await createOrder([...checkedCartProductIds], pointCost);
+      resetCartProducts();
+      navigate(ROUTE_PATH.ORDER_LIST);
     } catch (error) {
       console.error(error);
       alert('상품을 주문하지 못했어요. 다시 시도해주세요');
