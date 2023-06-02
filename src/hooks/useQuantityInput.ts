@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import * as api from '../api';
 import useToast from './useToast';
 import { cartState, serverNameState, tokenState } from '../recoil/state';
-import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE } from '../constants';
+import { API_ERROR_MESSAGE, API_INFO_MESSAGE } from '../constants';
 
 const useQuantityInput = (cartItemId: number) => {
   const serverName = useRecoilValue(serverNameState);
@@ -26,7 +26,7 @@ const useQuantityInput = (cartItemId: number) => {
   const deleteCartItem = async (token: string) => {
     try {
       await api.deleteCartItem(serverName, token, cartItemId);
-      showToast('info', API_SUCCESS_MESSAGE.deleteCartItem);
+      showToast('info', API_INFO_MESSAGE.deleteCartItem);
     } catch {
       showToast('error', API_ERROR_MESSAGE.deleteCartItem);
     }
@@ -36,7 +36,7 @@ const useQuantityInput = (cartItemId: number) => {
     try {
       await api.patchCartItemQuantity(serverName, token, cartItemId, quantity);
       setInput(quantity.toString());
-      showToast('info', API_SUCCESS_MESSAGE.patchCartItemQuantity);
+      showToast('info', API_INFO_MESSAGE.patchCartItemQuantity);
     } catch {
       showToast('error', API_ERROR_MESSAGE.postCartItem);
     }

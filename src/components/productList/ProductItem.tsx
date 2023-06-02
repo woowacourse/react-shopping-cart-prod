@@ -9,7 +9,7 @@ import QuantityInput from '../common/QuantityInput';
 import * as api from '../../api';
 import useToast from '../../hooks/useToast';
 import { tokenState, cartState, serverNameState } from '../../recoil/state';
-import { API_ERROR_MESSAGE, API_SUCCESS_MESSAGE, MAX_QUANTITY } from '../../constants';
+import { API_ERROR_MESSAGE, API_INFO_MESSAGE, MAX_QUANTITY } from '../../constants';
 
 interface Props extends ProductType {}
 
@@ -39,7 +39,7 @@ export default function ProductItem({ id, name, price, imageUrl }: Props) {
   const portCartItem = async (token: string) => {
     try {
       await api.postCartItem(serverName, token, id);
-      showToast('info', API_SUCCESS_MESSAGE.postCartItem);
+      showToast('info', API_INFO_MESSAGE.postCartItem);
     } catch {
       showToast('error', API_ERROR_MESSAGE.postCartItem);
       setAddLoading(false);

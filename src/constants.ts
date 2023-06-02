@@ -11,7 +11,7 @@ export const MOCK_URL = 'https://backend';
 
 export const SKELETONS_LENGTH = 8;
 
-export const API_SUCCESS_MESSAGE = {
+export const API_INFO_MESSAGE = {
   postCartItem: '장바구니에 상품을 담았어요! 😆',
   patchCartItemQuantity: '수량을 변경했어요 🙂',
   deleteCartItem: '장바구니에서 상품을 뺐어요!',
@@ -30,7 +30,7 @@ export const SERVER_NAMES: readonly ServerNameType[] = ['MSW', '라온', '져니
 export const BASE_URL_MAP: Record<ServerNameType, string> = {
   MSW: MOCK_URL,
   라온: 'https://jourzura.kro.kr',
-  져니: 'https://journey-shop.kro.kr',
+  져니: 'http://journey-shop.kro.kr:8080',
   쥬니: 'https://jourzura2.kro.kr',
 };
 
