@@ -1,12 +1,13 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 
+import useMultipleChecked from './useMultipleChecked';
 import fetchApis from '../apis/fetchApis';
 import { checkedCartProductState } from '../states/checkedCartProducts';
 import { serverNameState } from '../states/serverName';
 import { toastState } from '../states/toast/atom';
 import { TOAST_STATE } from '../constants/toast';
-import useMultipleChecked from './useMultipleChecked';
+import { PAGE_URLS } from '../constants/pageUrls';
 
 export const useOrderProducts = () => {
   const checkedList = useRecoilValue(checkedCartProductState);
@@ -32,7 +33,7 @@ export const useOrderProducts = () => {
       await postData(dataSet, '/orders');
       deleteCheckedProductState();
       setToastState(TOAST_STATE.successOrderProducts);
-      navigate('/order');
+      navigate(PAGE_URLS.order);
     } catch {
       setToastState(TOAST_STATE.failedOrderProducts);
     }

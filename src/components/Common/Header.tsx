@@ -14,6 +14,7 @@ import CartIcon from '../../assets/CartIcon';
 import useCartProductCount from '../../hooks/useCartProductCount';
 import { serverNameState } from '../../states/serverName';
 import { SERVER_KEYS, isServerKey } from '../../constants/server';
+import { PAGE_URLS } from '../../constants/pageUrls';
 
 interface StyledLinkProps extends LinkProps {
   cartProductCount?: number;
@@ -147,9 +148,9 @@ const StyledLink = styled(
     font-size: 24px;
 
     ${({ to, cartProductCount, pathname, theme }) => {
-      if (to !== '/cart') return;
+      if (to !== PAGE_URLS.cart) return;
 
-      if (pathname === '/cart') return `display: none`;
+      if (pathname === PAGE_URLS.cart) return `display: none`;
 
       return `
 				display: ${cartProductCount ? 'block' : 'none'};
