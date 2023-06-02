@@ -6,6 +6,7 @@ import CartList from '../../components/cart/CartList/CartList';
 import CartListSkeleton from '../../components/cart/CartList/CartListSkeleton';
 import CartListHeader from '../../components/cart/CartListHeader/CartListHeader';
 import PageHeading from '../../components/common/PageHeading/PageHeading';
+import { useScrollToTop } from '../../hooks/common/useScrollToTop';
 import { cartIdListState } from '../../store/cart';
 import { checkedCartIdListState } from '../../store/cartCheckbox';
 import * as S from './CartPage.style';
@@ -13,6 +14,7 @@ import * as S from './CartPage.style';
 const CartPage = () => {
   const cartIdList = useRecoilValueLoadable(cartIdListState);
   const setCheckedCartItems = useSetRecoilState(checkedCartIdListState);
+  useScrollToTop();
 
   useEffect(() => {
     if (cartIdList.state === 'hasValue') {

@@ -5,9 +5,11 @@ import PageHeading from '../../components/common/PageHeading/PageHeading';
 import OrderDetailList from '../../components/orderDetail/OrderDetailList/OrderDetailList';
 import OrderDetailListFallback from '../../components/orderDetail/OrderDetailList/OrderDetailListFallback';
 import OrderDetailPurchaseInformation from '../../components/orderDetail/OrderDetailPurchaseInformation/OrderDetailPurchaseInformation';
+import { useScrollToTop } from '../../hooks/common/useScrollToTop';
 
 const OrderDetailPage = () => {
   const { orderId } = useParams();
+  useScrollToTop();
 
   return (
     <>
