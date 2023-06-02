@@ -11,7 +11,7 @@ export const useFetchData = <T>(setData?: SetDataType<T>) => {
 
   const serverUrl = useRecoilValue(serverState);
 
-  const email = 'a@a.com';
+  const email = 'b@b.com';
   const password = '1234';
   const base64 = btoa(`${email}:${password}`);
 
