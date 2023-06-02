@@ -20,7 +20,7 @@ export const OrderDetailContent = () => {
         <Fragment>
           <OrderGroup
             orderId={orderDetail.orderId}
-            orders={orderDetail?.orderInfo}
+            orders={orderDetail?.orderInfos}
             isDetailPage={true}
           />
           <Style.Container>

@@ -27,7 +27,7 @@ export const useCartFetch = () => {
   };
 
   const patchCartItemQuantity = (id: number, quantity: number) => {
-    fetch(`${apiEndPoint}/cart-items/${id}`, {
+    return fetch(`${apiEndPoint}/cart-items/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ quantity }),
       headers: {

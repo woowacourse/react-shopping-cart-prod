@@ -11,7 +11,7 @@ export interface OrderProductInfo {
 
 interface Order {
   orderId: number;
-  orderInfo: OrderProductInfo[];
+  orderInfos: OrderProductInfo[];
 }
 
 export const orderListState = atomFamily<Order[], string>({

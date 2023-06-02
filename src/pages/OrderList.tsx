@@ -2,7 +2,6 @@ import { Layout } from '../layout';
 import { OrderContent } from '../components/orderPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Fallback } from '../components/error/Fallback';
-import { errorMessage } from '../constants/errorMessage';
 import styled from 'styled-components';
 
 export const OrderList = () => {
@@ -11,11 +10,7 @@ export const OrderList = () => {
       <Style.HeaderContainer>
         <Style.Header>주문 목록</Style.Header>
       </Style.HeaderContainer>
-      <ErrorBoundary
-        FallbackComponent={() => (
-          <Fallback error={new Error(errorMessage.ORDER_ITEMS_FETCH_ERROR)} />
-        )}
-      >
+      <ErrorBoundary FallbackComponent={Fallback}>
         <OrderContent />
       </ErrorBoundary>
     </Layout>

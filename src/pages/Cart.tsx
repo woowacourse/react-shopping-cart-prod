@@ -3,7 +3,7 @@ import { Layout } from '../layout';
 import { CartContent } from '../components/cartPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Fallback } from '../components/error/Fallback';
-import { errorMessage } from '../constants/errorMessage';
+import { ErrorMessage } from '../constants/errorMessage';
 
 export const Cart = () => {
   return (
@@ -12,11 +12,7 @@ export const Cart = () => {
         <Style.HeaderTitle>장바구니</Style.HeaderTitle>
       </Style.Header>
 
-      <ErrorBoundary
-        FallbackComponent={() => (
-          <Fallback error={new Error(errorMessage.CART_ITEMS_FETCH_ERROR)} />
-        )}
-      >
+      <ErrorBoundary FallbackComponent={Fallback}>
         <CartContent />
       </ErrorBoundary>
     </Layout>

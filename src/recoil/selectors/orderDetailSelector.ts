@@ -1,4 +1,4 @@
-import { selector, selectorFamily } from 'recoil';
+import { selectorFamily } from 'recoil';
 import { APIAtom } from '../atoms/serverAtom';
 import { base64 } from '../../constants/user';
 import { OrderDetailType } from '../../pages/OrderDetail';

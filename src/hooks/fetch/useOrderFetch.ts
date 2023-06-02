@@ -15,7 +15,7 @@ export const useOrderFetch = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        order: selectedCartItems.map((cartItem) => cartItem.id),
+        cartItemIds: selectedCartItems.map((cartItem) => cartItem.id),
         originalPrice: selectedCartItems.reduce((acc, curr) => {
           return (acc += curr.product.price * curr.quantity);
         }, 0),

@@ -14,7 +14,7 @@ export const OrderContent = () => {
       {orderList.length > 0 ? (
         <Style.ContentContainer>
           {orderList.map((order) => {
-            const totalProductPrice = order.orderInfo.reduce(
+            const totalProductPrice = order.orderInfos.reduce(
               (acc, curr) => (acc += curr.price * curr.quantity),
               0
             );
@@ -22,10 +22,10 @@ export const OrderContent = () => {
             return (
               <OrderGroup
                 key={order.orderId}
-                orders={order.orderInfo}
+                orders={order.orderInfos}
                 orderId={order.orderId}
                 totalProductPrice={totalProductPrice}
-                totalOrderLength={order.orderInfo.length}
+                totalOrderLength={order.orderInfos.length}
               />
             );
           })}

@@ -4,12 +4,11 @@ import { Style as OrderPageStyle } from './OrderList';
 import { OrderDetailContent } from '../components/orderDetailPage';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Fallback } from '../components/error/Fallback';
-import { errorMessage } from '../constants/errorMessage';
 import { OrderProductInfo } from '../recoil/atoms/orderAtom';
 
 export interface OrderDetailType {
   orderId: number;
-  orderInfo: OrderProductInfo[];
+  orderInfos: OrderProductInfo[];
   originalPrice: number;
   pointToAdd: number;
   usedPoint: number;
@@ -22,13 +21,7 @@ export const OrderDetail = () => {
         <Style.Header>주문 내역 상세</Style.Header>
       </Style.HeaderContainer>
       <Style.ContentContainer>
-        <ErrorBoundary
-          FallbackComponent={() => (
-            <Fallback
-              error={new Error(errorMessage.ORDER_DETAIL_FETCH_ERROR)}
-            />
-          )}
-        >
+        <ErrorBoundary FallbackComponent={Fallback}>
           <OrderDetailContent />
         </ErrorBoundary>
       </Style.ContentContainer>
