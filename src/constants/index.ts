@@ -27,6 +27,7 @@ export const API_ERROR_MESSAGE = {
   deleteCartItem: '상품 삭제를 못했어요. 잠시 후 다시 시도해주세요.',
   signUp: '회원가입을 실패했어요. 잠시 후 다시 시도해주세요.',
   login: '로그인에 실패했어요. 잠시 후 다시 시도해주세요.',
+  coupon: '쿠폰을 받아오는데 실패했어요. 잠시 후 다시 시도해주세요.',
 };
 
 export const SERVER_NAMES: ServerNameType[] = ['RAON', 'JOURNY', 'ZUNY'];
