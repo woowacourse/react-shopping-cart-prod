@@ -58,6 +58,7 @@ const DiscountModal = ({ userPoint, isOpen, closeModal }: PropsWithChildren<Conf
             alt="closeIcon"
           />
         </ModalHeader>
+
         <ModalBody>
           <ModalSubTitle>보유 포인트 : {userPoint} p</ModalSubTitle>
           <SelectSection onSubmit={handleFormSubmit}>

@@ -2,7 +2,8 @@ import FlexBox from 'components/@common/FlexBox';
 import SheetProductCard from 'components/SheetLeftSection/SheetProductCardList/SheetProductCard/SheetProductCard';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { Order, OrderProduct } from 'types/order';
+import { Order } from 'types/order';
+import { CartProduct } from 'types/product';
 
 type OrderItemProps = {
   order: Order;
@@ -10,6 +11,7 @@ type OrderItemProps = {
 };
 
 const OrderItem = ({ order, type }: OrderItemProps) => {
+  const { orderId, orderedAt, products } = order;
   const navigate = useNavigate();
 
   const handleOnClick = () => {
@@ -17,29 +19,17 @@ const OrderItem = ({ order, type }: OrderItemProps) => {
   };
 
   return (
-    <Item
-      flexDirection="column"
-      justify="space-between"
-      align="center"
-      gap="8px"
-      style={{ marginTop: type === 'detail' ? '60px' : '0' }}
-    >
+    <Item flexDirection="column" justify="space-between" align="center" type={type}>
       <ItemHeader flexDirection="row" justify="space-between" align="center">
         <HeaderInfo gap="4px" align="center">
-          <div> 주문번호 : {order.orderId}</div>
-          <div style={{ fontSize: '10px' }}> ({order.orderedAt})</div>
+          <OrderNumber>주문번호: {orderId}</OrderNumber>
+          <OrderDate>({orderedAt})</OrderDate>
         </HeaderInfo>
-
-        {type === 'list' ? (
-          <div onClick={handleOnClick} style={{ cursor: 'pointer' }}>
-            상세보기
-          </div>
-        ) : (
-          <></>
-        )}
+        {type === 'list' && <Button onClick={handleOnClick}>상세보기</Button>}
       </ItemHeader>
+
       <ItemBody flexDirection="column">
-        {order.products.map((product: OrderProduct) => {
+        {products.map((product: CartProduct) => {
           return <SheetProductCard sheetProduct={product} />;
         })}
       </ItemBody>
@@ -49,10 +39,10 @@ const OrderItem = ({ order, type }: OrderItemProps) => {
 
 export default OrderItem;
 
-const Item = styled(FlexBox)`
+const Item = styled(FlexBox)<{ type: string }>`
   width: 100%;
+  margin-top: ${({ type }) => (type === 'detail' ? '60px' : '0')};
   margin-bottom: 20px;
-  /* border: 1px solid #dddddd; */
   background-color: rgb(242, 242, 242);
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
@@ -67,12 +57,22 @@ const ItemHeader = styled(FlexBox)`
   width: 100%;
   padding: 0px 12px 0px;
   background-color: #e7e4e4;
-
-  /* padding: 12px; */
   border-bottom: 1px solid #dddddd;
 `;
 
 const HeaderInfo = styled(FlexBox)``;
+
+const OrderNumber = styled.div`
+  font-size: 14px;
+`;
+
+const OrderDate = styled.div`
+  font-size: 10px;
+`;
+
+const Button = styled.div`
+  cursor: pointer;
+`;
 
 const ItemBody = styled(FlexBox)`
   width: 100%;

@@ -11,7 +11,7 @@ import { ServerOwner } from 'types/serverOwner';
 import BASE_URL from 'constants/apiBaseURL';
 import { SERVER_OWNER } from 'constants/storeKey';
 
-const serverOwnerOptions = Object.entries(BASE_URL).map(([name, value]) => ({ name: name, value: name }));
+const serverOwnerOptions = Object.entries(BASE_URL).map(([name, _]) => ({ name: name, value: name }));
 
 const Header = ({ children }: PropsWithChildren) => {
   const cartProductCount = useRecoilValue(cartProductsState).size;
@@ -32,7 +32,7 @@ const Header = ({ children }: PropsWithChildren) => {
       <FlexBox gap="4px">
         <FlexLink to={ROUTE_PATH.user}>설정</FlexLink>
         <SelectBox
-          value={(localStorage.getItem(SERVER_OWNER) ?? '솔로스타') as ServerOwner}
+          value={(localStorage.getItem(SERVER_OWNER) ?? '헙크') as ServerOwner}
           options={serverOwnerOptions}
           onChange={handleServerOwner}
         />
@@ -58,6 +58,10 @@ const HeaderContainer = styled.header`
   height: var(--header-height);
   padding: 0 16.66%;
   background-color: #333333;
+
+  @media (max-width: 420px) {
+    padding: 0 3.66%;
+  }
 `;
 
 const Cart = styled(CartIcon)`
