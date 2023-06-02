@@ -4,12 +4,44 @@ import { useTotalProductPrice } from '../recoils/recoilTotalPrice';
 
 import { Button } from './common/Button';
 
-import { DELIVERY_CHARGE } from '../constants';
+import { DELIVERY_CHARGE, FETCH_METHOD } from '../constants';
+import { useNavigate } from 'react-router-dom';
+import { useCartStateValue } from '../recoils/recoilCart';
+import { useApiBaseUrlValue } from '../recoils/recoilApiBaseUrl';
+import { useMutation } from '../hooks/useMutation';
+
 
 export const OrderSummary = () => {
+  const cart = useCartStateValue();
+
+  const baseUrl = useApiBaseUrlValue();
+  const { mutation, data} = useMutation(FETCH_METHOD.POST);
+
+  const cartOrder = cart.map((product)=>{
+    return {"cartItemId":Number(product.id), "quantity":product.quantity}
+  })
+
   const totalProductPrice = useTotalProductPrice();
 
+  const navigate = useNavigate();
+
   const DeliveryCharge = DELIVERY_CHARGE;
+
+  // console.log(cart)
+
+  const postCart = {
+		"totalProductsPrice": totalProductPrice, // -> 백엔드쪽에서 계산하여 비교하고 통화해야 save
+    "shippingFee": totalProductPrice >= 30000 ? 0 : 3000,
+		"usedPoint": 0,
+    "order": cartOrder
+}
+
+  const orderOnClick = () => {
+    mutation(baseUrl+'/orders', postCart)
+    console.log(postCart)
+    navigate('/order-list')
+  }
+
 
   return (
     <>
@@ -31,7 +63,7 @@ export const OrderSummary = () => {
                 <span>{(totalProductPrice + DeliveryCharge).toLocaleString('ko-kr')}원</span>
               </Style.Price>
             </Style.Prices>
-            <Button designType="rectangle">주문하기</Button>
+            <Button designType="rectangle" onClick={orderOnClick}>주문하기</Button>
           </Style.Content>
         </Style.OrderSummary>
       </>
@@ -64,7 +96,7 @@ const Style = {
     position: sticky;
     top: 100px;
 
-    width: 448px;
+    width: 370px;
     height: fit-content;
 
     margin-top: 45px;
