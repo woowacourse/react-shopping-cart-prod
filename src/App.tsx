@@ -15,22 +15,19 @@ import { useQuery } from './hooks/useQuery';
 
 import { FETCH_URL, PATH } from '@constants/index';
 
-import type { CartItem } from './types';
 import { Spinner } from '@components/common/Spinner/Spinner';
 
-export const App = () => {
-  const baseUrl = useApiBaseUrlValue();
-  const { data: cart } = useQuery<CartItem[]>(baseUrl + FETCH_URL.CART_ITEMS, {
-    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-  });
+import type { CartItem } from './types';
+import { useFetchAsync } from '@hooks/useFetchAsync';
+import { useRecoilValue } from 'recoil';
+import { cartController } from '@recoils/cartAtoms';
 
-  const setCartState = useSetCartState();
+export const App = () => {
+  const { fetchCart } = useRecoilValue(cartController);
 
   useEffect(() => {
-    if (!cart) return;
-
-    setCartState(cart);
-  }, [cart, setCartState]);
+    fetchCart();
+  }, []);
 
   return (
     <>
@@ -57,7 +54,7 @@ export const App = () => {
             path={PATH.ORDERS}
             Component={() => (
               <Layout pageTitle="주문 목록">
-                <Suspense fallback={<Spinner />}>
+                <Suspense fallback={<Spinner size="lg" />}>
                   <OrdersPage />
                 </Suspense>
               </Layout>
@@ -67,7 +64,7 @@ export const App = () => {
             path={`${PATH.ORDERS}/:id`}
             Component={() => (
               <Layout pageTitle="주문 내역 상세">
-                <Suspense fallback={<Spinner />}>
+                <Suspense fallback={<Spinner size="lg" />}>
                   <OrderDetailPage />
                 </Suspense>
               </Layout>
