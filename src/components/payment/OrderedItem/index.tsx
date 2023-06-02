@@ -3,8 +3,11 @@ import * as S from './OrderedItem.styles';
 import ProductItemInOrder from '../ProductItemInOrder';
 import { Order, OrderDetail } from 'types/api/orders';
 
-const OrderedItem = ({ order }: { order: Order | OrderDetail }) => {
+const OrderedItem = ({ order }: { order: Order | OrderDetail | undefined }) => {
+  if (!order) return null;
+
   const { id, orderedItems } = order;
+
   return (
     <S.Wrapper>
       <S.OrderHeader>

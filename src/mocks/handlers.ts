@@ -32,7 +32,15 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(orderDetail));
   }),
 
+  rest.get('api/cart-items/coupon', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(resultPrice));
+  }),
+
   rest.get('api/cart-items/coupon/2', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(resultPrice));
+  }),
+
+  rest.get('api/cart-items/coupon/1', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(resultPrice));
   }),
 ];

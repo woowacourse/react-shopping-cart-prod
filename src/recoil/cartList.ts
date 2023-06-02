@@ -1,8 +1,7 @@
-import { getCartList } from 'api/cart';
+import { getCartList, getPriceResult } from 'api/cart';
 import { atom, selector } from 'recoil';
 import { serverAtom } from './server';
 import { CartItem } from 'types/api/carts';
-import { getMockCartList, getMockPriceResult } from 'api/mockApi';
 
 export const cartListAtom = atom<CartItem[]>({
   key: 'cartList',
@@ -10,7 +9,7 @@ export const cartListAtom = atom<CartItem[]>({
     key: 'initialCartList',
     get: async ({ get }) => {
       const server = get(serverAtom);
-      const data = await getMockCartList();
+      const data = await getCartList(server);
       return data;
     },
   }),
@@ -39,8 +38,9 @@ export const priceAtom = atom({
   key: 'priceAtom',
   default: selector({
     key: 'initialPrice',
-    get: async () => {
-      const data = await getMockPriceResult(2)();
+    get: async ({ get }) => {
+      const server = get(serverAtom);
+      const data = await getPriceResult(2)(server);
       return data;
     },
   }),

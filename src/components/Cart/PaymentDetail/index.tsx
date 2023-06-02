@@ -9,13 +9,13 @@ import { ROUTES } from 'utils/constants';
 import Modal from 'components/@common/Modal';
 import { useModal } from 'hooks/useModal';
 import { useGet } from 'hooks/useGet';
-import { getMockDeliveryPolicy } from 'api/mockApi';
+import { getDeliveryPolicy } from 'api/cart';
 
 const PaymentDetail = () => {
   const moveTo = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
 
-  const { data: delivery } = useGet(getMockDeliveryPolicy);
+  const { data: delivery } = useGet(getDeliveryPolicy);
   const totalPrice = useRecoilValue(totalPriceSelector);
   const totalDiscountPrice = useRecoilValue(totalDiscountPriceSelector);
   const deliveryFee =

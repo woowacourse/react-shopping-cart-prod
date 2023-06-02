@@ -6,6 +6,6 @@ export const ROUTES = {
 
 export const SERVERS = {
   여우: 'https://www.backfoxxx.shop',
-  제이: 'https://www.woowacourse.store',
+  제이: 'api',
   루쿠: 'https://www.woowacourse.shop',
 };

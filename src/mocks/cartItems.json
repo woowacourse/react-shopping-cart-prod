@@ -6,7 +6,7 @@
       "id": 1,
       "price": 10000,
       "name": "치킨",
-      "imageUrl": "https://www.google.co.kr/",
+      "imageUrl": "https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73f15b3f4e3c2033bfd702a321ec6eda72c",
       "isOnSale": true,
       "salePrice": 4000
     }
@@ -18,7 +18,7 @@
       "id": 3,
       "price": 30000,
       "name": "피자",
-      "imageUrl": "https://www.pizza.co.kr/",
+      "imageUrl": "https://item.kakaocdn.net/do/91481c46c6ee38c33e20deba29e1f73f15b3f4e3c2033bfd702a321ec6eda72c",
       "isOnSale": false,
       "salePrice": 0
     }
