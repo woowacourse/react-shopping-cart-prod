@@ -8,9 +8,12 @@ import { OrderDetail } from '../types/order';
 import fetchApis from '../apis/fetchApis';
 import { TOAST_STATE } from '../constants/toast';
 import { selectedOrderIdState } from '../states/order';
+import { DELIVERY_FEE } from './useCartPrice';
 
 export const useOrderDetail = () => {
   const [orderDetail, setOrderDetail] = useState<OrderDetail>();
+  const [totalProductsPrice, setTotalProductsPrice] = useState(0);
+  const [discountPrice, setDiscountPrice] = useState(0);
   const selectedOrderId = useRecoilValue(selectedOrderIdState);
   const serverName = useRecoilValue(serverNameState);
   const setToastState = useSetRecoilState(toastState);
@@ -28,7 +31,18 @@ export const useOrderDetail = () => {
         const data = await getData<OrderDetail>(
           `/orders/${selectedOrderId ?? findSelectedOrderId()}`
         );
-        setOrderDetail(data);
+
+        const totalProductsPrice = data.order.orderItems.reduce(
+          (acc, cur) => (acc += cur.product.price * cur.quantity),
+          0
+        );
+
+        const discountPrice =
+          totalProductsPrice + DELIVERY_FEE - data.totalPrice;
+
+        setTotalProductsPrice(() => totalProductsPrice);
+        setDiscountPrice(() => discountPrice);
+        setOrderDetail(() => data);
       } catch {
         setToastState(TOAST_STATE.failedGetOrder);
       }
@@ -37,5 +51,5 @@ export const useOrderDetail = () => {
     getOrders();
   }, [serverName, pathname, selectedOrderId, setToastState]);
 
-  return orderDetail;
+  return { orderDetail, totalProductsPrice, discountPrice };
 };
