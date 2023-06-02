@@ -3,9 +3,7 @@ import * as S from './OrderedItem.styles';
 import ProductItemInOrder from '../ProductItemInOrder';
 import { Order, OrderDetail } from 'types/api/orders';
 
-const OrderedItem = ({ order }: { order: Order | OrderDetail | undefined }) => {
-  if (!order) return null;
-
+const OrderedItem = ({ order }: { order: Order | OrderDetail }) => {
   const { id, orderedItems } = order;
 
   return (

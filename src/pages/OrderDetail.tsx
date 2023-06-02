@@ -9,16 +9,14 @@ import { getOrderDetail } from 'api/orders';
 const OrderDetail = () => {
   const { id } = useParams();
 
-  if (!id) return null;
-
   const { data: orderDetail, isLoading } = useGet(getOrderDetail(id));
 
   if (isLoading) return null;
 
   return (
     <ContentLayout title="주문 상세 내역">
-      <OrderedItem order={orderDetail} />
-      <PaymentSection orderDetail={orderDetail} />
+      {orderDetail && <OrderedItem order={orderDetail} />}
+      {orderDetail && <PaymentSection orderDetail={orderDetail} />}
     </ContentLayout>
   );
 };
