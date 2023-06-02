@@ -19,9 +19,11 @@ export interface LocalProductType extends ProductType {
 export interface CouponType {
   id: number;
   name: string;
-  minPrice: number;
+  minOrderPrice: number;
+  maxDiscountPrice: number;
   isAvailable: boolean;
   discountPrice: number;
+  expiredAt: Date;
 }
 
 export interface UserType {
@@ -30,8 +32,12 @@ export interface UserType {
 }
 
 export interface OrderType {
-  id: number;
+  orderId: number;
   products: Omit<LocalProductType, "cartItemId">[];
+}
+
+export interface OrderDetailType extends OrderType {
+  totalPrice?: number;
 }
 
 export interface ToastType {
