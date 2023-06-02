@@ -1,5 +1,6 @@
 import { getOrder } from 'apis/orders';
 import Box from 'components/@common/Box';
+import DetailPriceSection from 'components/DetailPriceSection/DetailPriceSection';
 import LoadingErrorCard from 'components/LoadingErrorCard/LoadingErrorCard';
 import OrderCard from 'components/OrderCardList/OrderCard/OrderCard';
 import useFetch from 'hooks/useFetch';
@@ -22,7 +23,7 @@ const OrderDetailPage = () => {
         <ProductSection sizing={{ width: '60%' }}>
           {order && <OrderCard key={orderId} order={order} isDetail />}
         </ProductSection>
-        <PriceSection sizing={{ width: '40%' }}></PriceSection>
+        <PriceSection sizing={{ width: '40%' }}>{order && <DetailPriceSection order={order} />}</PriceSection>
       </SectionContainer>
     </Box>
   );
@@ -55,8 +56,8 @@ const ProductSection = styled(Box)`
 
 const PriceSection = styled(Box)`
   position: sticky;
-  top: 140px;
-  margin-top: 60px;
+  top: 120px;
+  margin-top: 40px;
   background-color: var(--color-pure-white);
 
   @media (max-width: 768px) {
