@@ -17,17 +17,20 @@ export const useFetchData = () => {
   };
 
   const api = {
-    get: (url: string, headers?: HeadersInit) => {
+    get: (url: string) => {
       return fetchData(url, {
         method: 'GET',
-        headers,
+        headers: {
+          Authorization: 'Basic YkBiLmNvbToxMjM0',
+          'Content-Type': 'application/json',
+        },
       });
     },
     post: <T>(url: string, body: T) => {
       return fetchData(url, {
         method: 'POST',
         headers: {
-          Authorization: 'Basic YUBhLmNvbToxMjM0',
+          Authorization: 'Basic YkBiLmNvbToxMjM0',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
@@ -37,18 +40,20 @@ export const useFetchData = () => {
       return fetchData(url, {
         method: 'PATCH',
         headers: {
-          Authorization: 'Basic YUBhLmNvbToxMjM0',
+          Authorization: 'Basic YkBiLmNvbToxMjM0',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(body),
       });
     },
-    delete: (url: string) => {
+    delete: <T>(url: string, body?: T) => {
       return fetchData(url, {
         method: 'DELETE',
         headers: {
-          Authorization: 'Basic YUBhLmNvbToxMjM0',
+          Authorization: 'Basic YkBiLmNvbToxMjM0',
+          'Content-Type': 'application/json',
         },
+        body: JSON.stringify(body),
       });
     },
   };
