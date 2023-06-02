@@ -16,7 +16,9 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
 
   return (
     <div>
-      <S.Image src={imageUrl} alt={name} loading='lazy' />
+      <S.ImageWrapper>
+        <S.Image src={imageUrl} alt={name} loading='lazy' />
+      </S.ImageWrapper>
       <S.InfoWrapper>
         <div>
           <S.Name htmlFor={name} title={name}>
@@ -37,8 +39,18 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
 };
 
 const S = {
+  ImageWrapper: styled.div`
+    width: 100%;
+    overflow: hidden;
+  `,
+
   Image: styled.img`
     width: 100%;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.08);
+    }
   `,
 
   InfoWrapper: styled.fieldset`
