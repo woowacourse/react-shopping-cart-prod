@@ -23,7 +23,7 @@ const CheckOutPriceSection = () => {
   const earnPoints = Math.ceil(paymentAmount / PERCENTAGE_OF_EARN_POINTS);
 
   const productTotalPriceText = `${cartTotalPrice.toLocaleString('ko-KR')}원`;
-  const shippingFeeText = isCheckedProductsExist ? `${shippingFee.toLocaleString('ko-KR')}원` : '0원';
+  const shippingFeeText = `${shippingFee.toLocaleString('ko-KR')}원`;
   const usedPointsText = `-${pointCost.toLocaleString('ko-KR')}원`;
   const paymentAmountText = isCheckedProductsExist ? `${paymentAmount.toLocaleString('ko-KR')}원` : '0원';
   const orderConfirmButtonText = isCheckedProductsExist
@@ -47,7 +47,6 @@ const CheckOutPriceSection = () => {
     <Container sizing={{ width: '40%' }} flex={{ flexDirection: 'column' }}>
       <PriceSection sizing={{ width: '100%' }} flex={{ flexDirection: 'column', align: 'flex-start', gap: '20px' }}>
         <Title>결제 금액</Title>
-
         <Box sizing={{ width: '100%' }} flex={{ justify: 'space-between' }}>
           <SubTitle>총 상품 금액</SubTitle>
           <AmountText>{productTotalPriceText}</AmountText>
@@ -60,7 +59,6 @@ const CheckOutPriceSection = () => {
           <SubTitle>포인트 사용</SubTitle>
           <AmountText>{usedPointsText}</AmountText>
         </Box>
-
         <Box sizing={{ width: '100%' }} flex={{ flexDirection: 'column', justify: 'space-between', gap: '6px' }}>
           <Box sizing={{ width: '100%' }} flex={{ justify: 'space-between' }}>
             <PaymentAmountSubTitle>최종 결제 금액</PaymentAmountSubTitle>
@@ -71,7 +69,6 @@ const CheckOutPriceSection = () => {
           </Box>
         </Box>
       </PriceSection>
-
       <ConfirmButtonBox sizing={{ width: '100%' }}>
         <OrderConfirmButton onClick={addOrder} isActive={isCheckedProductsExist}>
           {orderConfirmButtonText}
