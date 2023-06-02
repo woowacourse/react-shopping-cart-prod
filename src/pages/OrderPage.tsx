@@ -23,7 +23,7 @@ const Main = styled.main<Record<'pathname', string>>`
   flex-direction: column;
   gap: 40px;
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 80px);
   padding: 0 120px;
 
   & > * {
@@ -34,7 +34,7 @@ const Main = styled.main<Record<'pathname', string>>`
   }
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    padding: 0;
+    padding: 30px;
   }
 `;
 

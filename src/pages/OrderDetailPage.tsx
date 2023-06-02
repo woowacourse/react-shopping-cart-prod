@@ -84,10 +84,6 @@ const OrderBoxContents = styled.div`
       font-weight: 700;
     }
   }
-
-  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    padding: 0;
-  }
 `;
 
 const PaymentInfo = styled.dl`

@@ -33,10 +33,12 @@ const Main = styled.main`
   flex-direction: column;
 
   width: 100%;
-  height: 100%;
+  height: calc(100vh - 80px);
   padding: 0 60px;
 
-  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+  overflow-y: auto;
+
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     padding: 30px;
   }
 `;

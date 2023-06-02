@@ -17,8 +17,6 @@ function App() {
 const StyledApp = styled.div`
   width: 100vw;
   height: 100vh;
-
-  overflow-y: auto;
 `;
 
 export default App;

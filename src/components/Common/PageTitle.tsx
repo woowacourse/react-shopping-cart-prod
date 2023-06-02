@@ -1,4 +1,3 @@
-import { ReactElement } from 'react';
 import { styled } from 'styled-components';
 
 interface PageTitleProps {
@@ -11,7 +10,6 @@ const PageTitle = ({ children }: PageTitleProps) => {
 
 const Title = styled.h2`
   width: 100%;
-  padding-top: 48px;
   text-align: center;
 
   border-bottom: 4px solid ${({ theme }) => theme.colors.black};
@@ -19,8 +17,6 @@ const Title = styled.h2`
   font-weight: 600;
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    padding-top: 32px;
-
     border-bottom: none;
   }
 `;

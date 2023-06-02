@@ -90,8 +90,6 @@ const ExpectedPaymentContainer = styled.div`
     min-width: 0;
     width: 100%;
     margin-top: 0px;
-
-    border: none;
   }
 `;
 
@@ -105,7 +103,6 @@ const ExpectedPaymentTitle = styled.h2`
   font-weight: 600;
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    padding: 0;
     font-size: 24px;
   }
 `;
@@ -119,10 +116,6 @@ const ExpectedPaymentInfo = styled.div`
 
   & > dl:last-of-type {
     margin: 40px 0 0 0;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    padding: 0;
   }
 `;
 
@@ -154,10 +147,6 @@ const OrderButtonWrapper = styled.div`
 
     font-size: 20px;
     font-weight: bold;
-  }
-
-  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    padding: 0;
   }
 `;
 

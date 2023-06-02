@@ -139,7 +139,7 @@ const StyledLink = styled(Link)`
 const CartLink = styled(StyledLink)<CartLinkProps>`
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     display: ${({ pathname }) =>
-      pathname === PAGE_URLS.cart ? 'none' : 'block'};
+      pathname === PAGE_URLS.main ? 'block' : 'none'};
     position: absolute;
     bottom: 0;
     left: 0;

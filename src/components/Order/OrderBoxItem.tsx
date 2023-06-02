@@ -81,7 +81,7 @@ const TitleContainer = styled.div<Pick<OrderBoxItemProps, 'type'>>`
     letter-spacing: 0.5px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakPoints.medium}) {
+  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     & > h2 {
       font-size: 24px;
     }
