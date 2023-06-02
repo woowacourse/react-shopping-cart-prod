@@ -44,6 +44,9 @@ const CouponContents = styled.div`
   gap: 10px;
 
   padding: 16px;
+
+  background-color: white;
+  border-radius: 8px 0 0 8px;
 `;
 
 const DiscountAmount = styled.h3`
