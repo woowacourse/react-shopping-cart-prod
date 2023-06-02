@@ -12,3 +12,19 @@ export const fetchOrders = async (options?: WaitForOptions<FetchOrdersRes>) => {
 
   return data;
 };
+
+export interface FetchOrdersReq {
+  id: Order['orderId'];
+}
+
+export type FetchOrderRes = Order;
+
+export const fetchOrder = async (
+  { id }: FetchOrdersReq,
+  options?: WaitForOptions<FetchOrderRes>
+) => {
+  const promise = authFetchQuery.get<FetchOrderRes>(`/orders/${id}`);
+  const { data } = await waitFor(promise, options);
+
+  return data;
+};
