@@ -31,3 +31,13 @@ export const getFormattedNextDay = (baseDate: number) => {
 
   return `${dayArray[day]}요일 ${month}/${date}`;
 };
+
+export const getFormattedWon = (money: number) => {
+  const formatter = new Intl.NumberFormat('ko', { notation: 'compact' });
+
+  return formatter.format(money);
+};
+
+export const getFormattedPrice = (price: number) => {
+  return price.toLocaleString('ko-KR');
+};

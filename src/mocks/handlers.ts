@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import { ServerCartItemType } from '@type/cartType';
+import { CouponType } from '@type/couponType';
 import { OrderType } from '@type/orderType';
 import { ServerProductItemType } from '@type/productType';
 
@@ -165,7 +166,7 @@ export const MOCK_ORDER_LIST: OrderType[] = [
   },
 ];
 
-export const MOCK_COUPON_LIST = [
+export const MOCK_COUPON_LIST: CouponType[] = [
   {
     id: 1,
     name: '생일 쿠폰',
