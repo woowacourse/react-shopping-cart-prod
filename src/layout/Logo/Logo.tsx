@@ -39,4 +39,7 @@ const LogoName = styled.p`
   font-size: 2.3rem;
   font-weight: 800;
   color: ${({ theme }) => theme.lightColor};
+  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    display: none;
+  }
 `;

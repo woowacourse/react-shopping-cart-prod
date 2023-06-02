@@ -17,8 +17,4 @@ export const LogoContainer = styled.div`
   align-items: center;
 
   margin-right: 1rem;
-
-  @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    display: none;
-  }
 `;
