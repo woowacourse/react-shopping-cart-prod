@@ -11,7 +11,7 @@ export default function CheckBox({ checked, onClickCheckbox }: Props) {
 
   return (
     <S.Wrapper>
-      <input id={id} type="checkbox" checked={checked} />
+      <input id={id} type="checkbox" checked={checked} readOnly />
       <S.CheckboxLabel htmlFor={id} onClick={onClickCheckbox}>
         {checked && <img src="./whiteCheck.svg" />}
       </S.CheckboxLabel>
