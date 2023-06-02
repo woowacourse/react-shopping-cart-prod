@@ -1,11 +1,8 @@
 import styled from 'styled-components';
-import { Image, ItemContainer, Name, Price } from '../components/common/ProductItem';
+import type { OrderListEntity } from '../api/rest/ShoppingCartRestAPI';
 import OrderList from '../components/OrderList';
-
-const Container = styled.section`
-  display: flex;
-  justify-content: center;
-`;
+import AwaitRecoilState from '../components/utils/AwaitRecoilState';
+import { orderListState } from '../recoil/atoms/orderState';
 
 const Title = styled.h1`
   display: flex;
@@ -18,11 +15,29 @@ const Title = styled.h1`
   border-bottom: 4px solid ${({ theme }) => theme.colors.primary};
 `;
 
+interface OrderListsProps {
+  orderLists: OrderListEntity[];
+}
+
+const OrderListContainer = (props: OrderListsProps) => {
+  const { orderLists } = props;
+
+  return (
+    <>
+      {orderLists.map((orderList) => {
+        return <OrderList orderList={orderList} key={orderList.id} />;
+      })}
+    </>
+  );
+};
+
 const OrderListPage = () => {
   return (
     <>
       <Title>주문목록</Title>
-      <OrderList />
+      <AwaitRecoilState state={orderListState}>
+        {(orderLists) => <OrderListContainer orderLists={orderLists} />}
+      </AwaitRecoilState>
     </>
   );
 };
