@@ -57,7 +57,7 @@ const OrderButton = styled.button.attrs({ type: 'submit' })`
   padding: 24px;
   width: 100%;
 
-  background-color: #333333;
+  background-color: #000000;
 
   font-size: 24px;
   font-weight: 400;

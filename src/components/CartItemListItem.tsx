@@ -25,7 +25,7 @@ const ProductName = styled.h1`
 
   font-size: 20px;
   font-weight: 400;
-  color: #333333;
+  color: #000000;
 `;
 
 const CartController = styled.div`

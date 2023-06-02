@@ -3,7 +3,7 @@ import type { DefaultTheme } from 'styled-components';
 import type { FontType, StyleType } from '../type/theme';
 
 const colors: StyleType = {
-  primary: '#333333',
+  primary: '#000000',
   gray100: '#dddddd',
   gray200: '#aaaaaa',
   gray300: '#f6f6f6',

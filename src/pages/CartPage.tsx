@@ -12,7 +12,7 @@ import type { CartItem } from '../type';
 const Header = styled.header`
   padding-bottom: 32px;
 
-  border-bottom: 4px solid #333333;
+  border-bottom: 4px solid #000000;
 
   text-align: center;
   font-size: 32px;

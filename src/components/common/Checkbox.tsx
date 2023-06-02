@@ -4,7 +4,7 @@ const CheckboxElement = styled.input.attrs({ type: 'checkbox' })`
   width: 28px;
   height: 28px;
 
-  accent-color: #333333;
+  accent-color: #000000;
 `;
 
 type CheckboxProps = {

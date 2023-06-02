@@ -11,7 +11,7 @@ const HeaderContainer = styled.header`
   width: 100%;
   height: 80px;
 
-  background: #333;
+  background: #000000;
   color: white;
 `;
 
@@ -61,7 +61,7 @@ const Selector = styled.select`
 `;
 
 const Option = styled.option`
-  background-color: #333;
+  background-color: #000000;
 `;
 
 type HeaderProps = {
