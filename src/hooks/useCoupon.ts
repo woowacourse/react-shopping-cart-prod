@@ -94,7 +94,7 @@ const useCoupon = () => {
 
   const resetCheckedCoupon = useCallback(() => {
     setCouponList([]);
-  }, []);
+  }, [setCouponList]);
 
   return { fetchCouponList, publishCoupon, fetchMyCoupon, setCheckCoupon, resetCheckedCoupon };
 };

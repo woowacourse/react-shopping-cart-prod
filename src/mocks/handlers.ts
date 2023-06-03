@@ -100,6 +100,36 @@ export const handlers = [
     );
   }),
 
+  rest.post('/orders', (req, res, ctx) => {
+    return res(
+      ctx.status(201),
+      ctx.delay(500),
+      ctx.json({
+        id: 1,
+        products: [
+          {
+            id: 1,
+            name: '치킨',
+            imgUrl: 'image.jpeg',
+            price: 15000,
+            quantity: 1,
+          },
+          {
+            id: 3,
+            name: '피자',
+            imgUrl: 'image.jpeg',
+            price: 20000,
+            quantity: 2,
+          },
+        ],
+        total_amount: 55000,
+        delivery_amount: 2000,
+        discounted_amount: 3000,
+        address: '서울특별시 송파구 ...',
+      })
+    );
+  }),
+
   rest.get('coupons/active?total=10000', (req, res, ctx) => {
     return res(
       ctx.status(200),

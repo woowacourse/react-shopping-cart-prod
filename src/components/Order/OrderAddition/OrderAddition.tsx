@@ -19,9 +19,9 @@ const OrderAddition = () => {
   const [couponState, setCouponState] = useState(0);
   const couponList = useRecoilValue(couponListState);
 
-  const { getCartItemSum } = useCartList();
+  const { getCartItemSum, getCheckedCartItemIds } = useCartList();
   const { fetchMyCoupon, setCheckCoupon } = useCoupon();
-  const { resultPrice, discountPrice, getDiscountPrice } = useOrders();
+  const { resultPrice, discountPrice, getDiscountPrice, fetchBuyItems } = useOrders();
   const money = getCartItemSum();
   const { isLoading } = useQuery<CouponItemType[]>('couponListData', () => fetchMyCoupon(money));
   const { mainPrice, deliveryPrice } = useDiscount();
@@ -36,6 +36,7 @@ const OrderAddition = () => {
   );
 
   const handleAlertCancel = useCallback(() => {
+    setCouponState(0);
     setIsAlertOpen(false);
   }, []);
 
@@ -43,6 +44,17 @@ const OrderAddition = () => {
     setCouponState(couponId);
     setIsAlertOpen(true);
   }, []);
+
+  const handleBuyDecide = useCallback(() => {
+    fetchBuyItems({
+      memberId: 1,
+      productIds: getCheckedCartItemIds(),
+      totalAmount: getCartItemSum(),
+      deliveryAmount: 3000,
+      address: '서울특별시 송파구 송파송파송파송파송파송파',
+      couponId: couponState,
+    });
+  }, [couponState, fetchBuyItems, getCartItemSum, getCheckedCartItemIds]);
 
   return (
     <>
@@ -106,7 +118,9 @@ const OrderAddition = () => {
               <div>{priceFormatter(resultPrice)}원</div>
             </div>
           </div>
-          <button className={styles.resultOrderButton}>주문 완료하기</button>
+          <button className={styles.resultOrderButton} type="button" onClick={handleBuyDecide}>
+            주문 완료하기
+          </button>
         </div>
       </div>
     </>

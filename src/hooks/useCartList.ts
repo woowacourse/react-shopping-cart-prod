@@ -175,6 +175,13 @@ const useCartList = () => {
     }
   };
 
+  const getCheckedCartItemIds = useCallback(() => {
+    const filteredData = cartItem.filter((item) => {
+      return item.isChecked;
+    });
+    return filteredData.map((item) => item.product.id);
+  }, [cartItem]);
+
   return {
     fetchCartList,
     removeCheckedItems,
@@ -186,6 +193,7 @@ const useCartList = () => {
     getCartItemSum,
     fetchProductAddToCart,
     updateCartItemQuantity,
+    getCheckedCartItemIds,
   };
 };
 
