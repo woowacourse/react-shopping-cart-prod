@@ -1,49 +1,81 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
+import Button from '../components/common/Button';
+import Input from '../components/common/Input';
 import PageHeader from '../components/page/PageHeader';
-import AwaitFuture from '../components/utils/AwaitFuture';
+import useFutureResult from '../hooks/useFutureResult';
 import useLoginMutation from '../hooks/useLoginMutation';
 
-const LoginPage = () => {
+const Content = styled.main`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const LoginForm = styled.form`
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 72px;
+
+  width: 100%;
+  max-width: 500px;
+`;
+
+const Divider = styled.hr`
+  border: none;
+  margin-top: 48px;
+`;
+
+type LoginPageProps = {
+  onLoginSuccess?: () => void;
+};
+
+const LoginPage = (props: LoginPageProps) => {
+  const { onLoginSuccess = () => navigate('/') } = props;
+
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login, future } = useLoginMutation();
+  const loginResult = useFutureResult(future);
 
-  const handleLoginSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const handleLoginSubmit: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    login({ username, password });
+    await login({ username, password });
+    onLoginSuccess?.();
   };
 
   return (
     <>
       <PageHeader>로그인</PageHeader>
 
-      <form onSubmit={handleLoginSubmit}>
-        <input
-          type="text"
-          placeholder="아이디"
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="비밀번호"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-        />
+      <Content>
+        <LoginForm onSubmit={handleLoginSubmit}>
+          <Input
+            type="text"
+            placeholder="아이디"
+            value={username}
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="비밀번호"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          />
 
-        {future && (
-          <AwaitFuture
-            future={future}
-            loadingElement={<div>로그인 중...</div>}
-            errorElement={<div>로그인 실패...</div>}
-          >
-            {(profile) => <div>로그인 성공!</div>}
-          </AwaitFuture>
-        )}
+          {loginResult.isError && <div>로그인에 실패하였습니다. </div>}
 
-        <button type="submit">로그인</button>
-      </form>
+          <Divider />
+
+          <Button type="submit" disabled={loginResult.isLoading}>
+            로그인
+          </Button>
+        </LoginForm>
+      </Content>
     </>
   );
 };
