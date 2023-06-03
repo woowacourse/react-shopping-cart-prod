@@ -4,17 +4,20 @@ import CouponItem from './CouponItem';
 
 interface CouponListProps {
   coupons: CouponType[];
+  onCouponSelect: (coupon: CouponType) => void;
+  selectedCoupon: CouponType | null;
 }
 
-function CouponList({ coupons }: CouponListProps) {
+function CouponList({ coupons, onCouponSelect, selectedCoupon }: CouponListProps) {
   return (
     <Container>
       {coupons.map((coupon) => (
         <CouponItem
+          onCouponSelect={() => onCouponSelect(coupon)}
           key={coupon.id}
           condition={coupon.minimumPrice}
           discountValue={coupon.value}
-          isSelect={true}
+          isSelect={selectedCoupon?.id === coupon.id}
           {...coupon}
         />
       ))}
@@ -23,8 +26,8 @@ function CouponList({ coupons }: CouponListProps) {
 }
 
 const Container = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 
   gap: 5rem;
 `;

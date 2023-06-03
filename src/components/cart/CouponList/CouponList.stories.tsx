@@ -14,5 +14,6 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     coupons: MOCK_COUPON_LIST,
+    selectedCoupon: null,
   },
 };
