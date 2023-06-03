@@ -7,11 +7,12 @@ import OrderItem from './OrderItem';
 const OrderItemList = (orderList: OrderList) => {
   const orderId = useParams().id;
 
-  const thumbnail = orderList.products[0];
+  const { products, createdAt, totalPayments } = orderList;
+  const thumbnail = products[0];
 
   return (
     <S.List>
-      <OrderDetailNavigator orderId={orderList.orderId} createdAt={orderList.createdAt} />
+      <OrderDetailNavigator orderId={orderList.orderId} createdAt={createdAt} />
       {orderId ? (
         orderList.products.map((product) => (
           <OrderItem
@@ -22,6 +23,7 @@ const OrderItemList = (orderList: OrderList) => {
             imageUrl={product.imageUrl}
             quantity={product.quantity}
             orderedProductCount={orderList.products.length}
+            totalPayments={totalPayments}
           />
         ))
       ) : (
@@ -32,6 +34,7 @@ const OrderItemList = (orderList: OrderList) => {
           imageUrl={thumbnail.imageUrl}
           quantity={thumbnail.quantity}
           orderedProductCount={orderList.products.length}
+          totalPayments={totalPayments}
         />
       )}
     </S.List>

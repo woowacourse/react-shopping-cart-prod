@@ -31,10 +31,12 @@ export interface OrderList {
   orderId: number;
   products: Order[];
   createdAt: string;
+  totalPayments: number;
 }
 
 export interface OrderListItem extends Order {
   orderedProductCount: number;
+  totalPayments: number;
 }
 
 export interface OrderItemDetail extends OrderList, Pick<Order, 'totalPrice'> {

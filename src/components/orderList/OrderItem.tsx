@@ -10,27 +10,32 @@ const OrderItem = ({
   totalPrice,
   quantity,
   orderedProductCount,
+  totalPayments,
 }: OrderListItem) => {
   const location = useLocation().pathname;
+
+  const title =
+    location === ROUTE_PATH.ORDER_LIST_PAGE && orderedProductCount > 1
+      ? `${name} 외 ${orderedProductCount - 1}개의 상품`
+      : name;
 
   return (
     <S.Wrapper tabIndex={0}>
       <S.Image src={`${imageUrl}`} alt={name} loading='lazy' />
       <div>
-        <S.Name>
-          {name}
-          {location === ROUTE_PATH.ORDER_LIST_PAGE && orderedProductCount > 1 && (
-            <span>외 {orderedProductCount - 1}개의 상품</span>
-          )}
-        </S.Name>
+        <S.Name title={title}>{title}</S.Name>
         <S.Detail>
-          {location !== ROUTE_PATH.ORDER_LIST_PAGE && (
-            <Price price={totalPrice / quantity} css={textStyle} />
+          {location !== ROUTE_PATH.ORDER_LIST_PAGE ? (
+            <>
+              <Price price={totalPrice / quantity} css={textStyle} />
+              <S.TotalDetail>
+                <Price price={totalPrice} css={textStyle} />
+                <span>&nbsp;/&nbsp;수량&nbsp;{quantity}개</span>
+              </S.TotalDetail>
+            </>
+          ) : (
+            <Price price={totalPayments} css={totalPaymentStyle} />
           )}
-          <S.TotalDetail>
-            <Price price={totalPrice} css={textStyle} />
-            <span>&nbsp;/&nbsp;수량&nbsp;{quantity}개</span>
-          </S.TotalDetail>
         </S.Detail>
       </div>
     </S.Wrapper>
@@ -44,8 +49,13 @@ const S = {
   `,
 
   Name: styled.h3`
+    display: -webkit-box;
     margin-top: 6px;
     font-size: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
 
     & span {
       margin-left: 4px;
@@ -93,6 +103,10 @@ const S = {
 const textStyle = css`
   font-size: 15px;
   color: #888;
+`;
+
+const totalPaymentStyle = css`
+  padding-top: 12px;
 `;
 
 export default OrderItem;
