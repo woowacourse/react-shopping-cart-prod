@@ -17,6 +17,7 @@ export const Default: Story = {
         id: 1,
         orderNumber: 1,
         date: '2023-05-30',
+        totalOrderPrice: 1900,
         products: [
           {
             id: 1,
@@ -38,6 +39,7 @@ export const Default: Story = {
         id: 2,
         orderNumber: 2,
         date: '2023-05-31',
+        totalOrderPrice: 1400100000,
         products: [
           {
             id: 12,

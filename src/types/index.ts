@@ -17,6 +17,7 @@ export interface OrderItemInfo {
   id: number;
   orderNumber: number;
   date: string;
+  totalOrderPrice: number;
   products: ProductInfoInOrder[];
 }
 

@@ -85,7 +85,7 @@ export const handlers = [
 
   // 주문 아이템 추가
   rest.post(ORDERS_BASE_URL, async (req, res, ctx) => {
-    const { cartItemIds } = await req.json();
+    const { cartItemIds, totalOrderPrice } = await req.json();
     const currentCartList = getLocalStorage<CartItemInfo[]>(LOCAL_STORAGE_KEY.CART);
     const currentOrderList = getLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS);
 
@@ -114,6 +114,7 @@ export const handlers = [
         id: currentOrderList.length + 1,
         orderNumber: currentOrderList.length + 1,
         date: `${year}-${month}-${day}`,
+        totalOrderPrice: totalOrderPrice,
         products: productsInOrder,
       },
     ];
