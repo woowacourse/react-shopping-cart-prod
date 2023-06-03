@@ -7,10 +7,11 @@ import Modal from 'components/@common/Modal';
 import { useModal } from 'hooks/useModal';
 import { postPayment } from 'api/payments';
 import { useMutate } from 'hooks/useMutate';
-import usePrice from 'components/payment/hooks/usePrice';
+import usePrice from 'components/Cart/hooks/usePrice';
 
 const PaymentDetail = () => {
   const moveTo = useNavigate();
+  const { request } = useMutate();
   const { isModalOpen, openModal, closeModal } = useModal();
   const {
     deliveryLimit,
@@ -22,7 +23,6 @@ const PaymentDetail = () => {
   } = usePrice();
   const checkItemIds = useRecoilValue(checkedItemIdsAtom);
   const couponIds = useRecoilValue(couponAtom);
-  const { request } = useMutate();
 
   const makeOrder = () => {
     const payment = {
