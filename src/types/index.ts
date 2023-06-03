@@ -30,6 +30,7 @@ export interface Order extends Omit<Cart, 'price'> {
 export interface OrderList {
   orderId: number;
   products: Order[];
+  createdAt: string;
 }
 
 export interface OrderListItem extends Order {

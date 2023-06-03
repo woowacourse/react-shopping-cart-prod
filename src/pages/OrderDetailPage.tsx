@@ -32,13 +32,11 @@ const OrderDetailPage = () => {
 
   if (!orderItemDetail) return <></>;
 
-  const orderList = { orderId: orderItemDetail.orderId, products: orderItemDetail.products };
-
   return (
     <MainLayout>
       <Title title='주문 내역 상세' />
       <S.Wrapper>
-        <OrderItemList {...orderList} />
+        <OrderItemList {...orderItemDetail} />
         <OrderDetail
           totalPrice={orderItemDetail.totalPrice}
           deliveryFee={orderItemDetail.deliveryFee}

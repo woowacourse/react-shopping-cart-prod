@@ -5,13 +5,13 @@ import OrderDetailNavigator from './OrderDetailNavigator';
 import OrderItem from './OrderItem';
 
 const OrderItemList = (orderList: OrderList) => {
-  const thumbnail = orderList.products[0];
-
   const orderId = useParams().id;
+
+  const thumbnail = orderList.products[0];
 
   return (
     <S.List>
-      <OrderDetailNavigator orderId={orderList.orderId} />
+      <OrderDetailNavigator orderId={orderList.orderId} createdAt={orderList.createdAt} />
       {orderId ? (
         orderList.products.map((product) => (
           <OrderItem

@@ -7,16 +7,21 @@ import Button from '../common/Button';
 
 interface Props {
   orderId: number;
+  createdAt: string;
 }
 
-const OrderDetailNavigator = ({ orderId }: Props) => {
+const OrderDetailNavigator = ({ orderId, createdAt }: Props) => {
   const goToPage = useGoToAnotherPage();
 
   const location = useLocation().pathname;
 
   return (
     <S.Head>
-      주문번호&nbsp;&nbsp;|&nbsp;<S.OrderId>{orderId}</S.OrderId>
+      <p>
+        주문번호&nbsp;&nbsp;|&nbsp;
+        <S.OrderId>{orderId}</S.OrderId>
+        <span>[ {createdAt} ]</span>
+      </p>
       {location !== `${ROUTE_PATH.ORDER_LIST_PAGE}/${orderId}` && (
         <Button
           css={buttonStyle}
@@ -44,6 +49,12 @@ const S = {
   OrderId: styled.span`
     font-size: 14px;
     margin: 0 auto 0 8px;
+
+    & + span {
+      margin-left: 24px;
+      font-size: 14px;
+      color: var(--text-color);
+    }
   `,
 };
 
