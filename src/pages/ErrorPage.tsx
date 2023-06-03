@@ -10,7 +10,7 @@ const Content = styled.main`
   justify-content: center;
   gap: 24px;
 
-  margin: 60px auto auto 0;
+  margin: 60px auto 0 auto;
 
   max-width: 600px;
 `;
@@ -21,6 +21,23 @@ const Cart = styled.img`
 
 const Title = styled.h1`
   font-size: 32px;
+
+  word-break: keep-all;
+`;
+
+const ErrorDetails = styled.details`
+  width: 100%;
+`;
+
+const ErrorDetailsContent = styled.pre`
+  width: 100%;
+  min-height: 100px;
+
+  padding: 16px;
+
+  background: #eeeeee;
+
+  overflow-x: auto;
 `;
 
 const ErrorPage = () => {
@@ -33,9 +50,13 @@ const ErrorPage = () => {
 
       <Title>페이지를 표시하는 중 오류가 발생했거나, 찾으시는 페이지가 없는 것 같아요! 🥲</Title>
 
-      <pre>{String(error)}</pre>
-
       <Button onClick={() => navigate('/')}>홈으로 가기</Button>
+
+      <ErrorDetails>
+        <summary>에러 자세히 보기</summary>
+
+        <ErrorDetailsContent>{JSON.stringify(error, null, 2)}</ErrorDetailsContent>
+      </ErrorDetails>
     </Content>
   );
 };
