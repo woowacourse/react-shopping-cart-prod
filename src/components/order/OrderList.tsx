@@ -1,12 +1,27 @@
 import { styled } from 'styled-components';
-import { orders } from '../../data/mockData';
 import OrderListItems from './OrderListItems';
+import { useRecoilValue } from 'recoil';
+import { serverState } from '../../store/ServerState';
+import { useFetchData } from '../../hooks/useFetchData';
+import { useEffect, useState } from 'react';
+import { ORDER_BASE_URL } from '../../constants/url';
+import { OrderItem } from '../../types';
 
 const OrderList = () => {
+  const [orderList, setOrderList] = useState<OrderItem[]>([]);
+  const serverUrl = useRecoilValue(serverState);
+
+  const { api } = useFetchData<OrderItem[]>(setOrderList);
+
+  useEffect(() => {
+    api.get(`${serverUrl}${ORDER_BASE_URL}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serverUrl]);
+
   return (
     <>
       <S.Title>주문 목록</S.Title>
-      {orders.map((items) => (
+      {orderList.map((items) => (
         <OrderListItems key={items.orderId} items={items} />
       ))}
     </>
