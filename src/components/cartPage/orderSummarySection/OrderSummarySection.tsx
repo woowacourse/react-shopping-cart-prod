@@ -39,17 +39,20 @@ export const OrderSummarySection = () => {
     order.then((response) => {
       const orderId = response.headers.get('Location')?.replace('/orders/', '');
 
-      console.log(orderId);
-
       setPoint({ point: point.point - viewPoint + pointToAdd });
 
       if (orderId) navigate(`/orders-success`);
     });
   };
 
-  const handlePointChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (checkedProduct.length === 0) return;
-    setViewPoint(Number(e.target.value));
+  const handlePointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (isNaN(Number(value)) || checkedProduct.length === 0) {
+      e.preventDefault();
+    } else {
+      setViewPoint(Number(value));
+    }
   };
 
   const handleUsingAllPoint = () => {
@@ -79,6 +82,7 @@ export const OrderSummarySection = () => {
             type="text"
             value={viewPoint}
             placeholder={point.point ? `${point.point}` : '0'}
+            pattern="\d*"
             onChange={handlePointChange}
           />
           <Style.UsingAllPoint onClick={handleUsingAllPoint}>
