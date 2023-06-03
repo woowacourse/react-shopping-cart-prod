@@ -1,56 +1,26 @@
+import { useRecoilValue } from 'recoil';
+import { fetchOrderList } from '../../api/fetcher';
 import { OrderList } from '../../components/Order/OrderList';
+import useGetQuery from '../../hooks/useGetQuery';
 import { FatBorder, PageTitle } from '../../style/style';
+import { OrdersResponses } from '../../types/types';
 import * as S from './Order.style';
-
-const orders = [
-  {
-    orderId: 0,
-    orderItems: [
-      {
-        id: 0,
-        productName: '바나나',
-        productPrice: 3500,
-        paymentPrice: 3500,
-        createdAt: 'string',
-        productQuantity: 3,
-        imageUrl: 'https://cdn.pixabay.com/photo/2016/01/03/17/59/bananas-1119790_1280.jpg',
-      },
-      {
-        id: 1,
-        productName: '딸기',
-        productPrice: 9900,
-        paymentPrice: 9900,
-        createdAt: 'string',
-        productQuantity: 2,
-        imageUrl: 'https://cdn.pixabay.com/photo/2018/04/29/11/54/strawberries-3359755_1280.jpg',
-      },
-    ],
-  },
-  {
-    orderId: 1,
-    orderItems: [
-      {
-        id: 0,
-        productName: '바나나',
-        productPrice: 3500,
-        paymentPrice: 3500,
-        createdAt: 'string',
-        productQuantity: 1,
-        imageUrl: 'https://cdn.pixabay.com/photo/2016/01/03/17/59/bananas-1119790_1280.jpg',
-      },
-    ],
-  },
-];
+import { memberAuthorization } from '../../recoil/userAtoms';
+import { serverState } from '../../recoil/serverAtom';
 
 function Order() {
+  const memberAuth = useRecoilValue(memberAuthorization);
+  const server = useRecoilValue(serverState);
+  const { data: orders } = useGetQuery<OrdersResponses>({
+    fetcher: fetchOrderList({ server, auth: memberAuth }),
+  });
+
   return (
     <>
       <PageTitle>주문목록</PageTitle>
       <FatBorder />
       <S.OrderListWrapper>
-        {orders.map((order) => (
-          <OrderList {...order} />
-        ))}
+        {orders && orders.orderResponses.map((order) => <OrderList {...order} />)}
       </S.OrderListWrapper>
     </>
   );

@@ -11,3 +11,11 @@ export const fetchMemberPoint = ({ server, auth }: { server: string; auth: strin
     },
   });
 };
+
+export const fetchOrderList = ({ server, auth }: { server: string; auth: string }) => {
+  return fetch(`${url[server]}/orders`, {
+    headers: {
+      Authorization: `Basic ${auth}`,
+    },
+  });
+};
