@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { useId } from 'react';
+import { useEffect } from 'react';
 import useFetch from '../../../hooks/api/useFetch';
 import CouponInfo from '../../../types/coupon';
 import serverNameState from '../../../globalState/atoms/serverName';
@@ -14,14 +14,14 @@ interface CouponSelectRadioProps {
 const CouponSelectRadio = (props: CouponSelectRadioProps) => {
   const { selected, setSelected } = props;
 
-  const randomId = useId();
   const serverName = useRecoilValue(serverNameState);
   const url = ServerUtil.getUserCouponsUrl(serverName);
 
-  const { getData } = useFetch<{ coupons: CouponInfo[] }>(url, {
-    'Content-Type': 'application/json',
-    Authorization: `Basic ${USER_AUTH_TOKEN}`,
-  });
+  useEffect(() => {
+    setSelected(null);
+  }, [serverName]);
+
+  const { getData } = useFetch<{ coupons: CouponInfo[] }>(url, USER_AUTH_TOKEN);
 
   const data = getData();
 
@@ -29,12 +29,13 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
     <fieldset>
       <legend>쿠폰 선택하기: 현재 선택된 쿠폰 - {selected ? selected.name : '없음'}</legend>
       <div>
-        <label htmlFor={randomId}>
+        <label htmlFor="empty">
           <input
             type="radio"
-            id={randomId}
+            id="empty"
             checked={selected === null}
             onClick={() => setSelected(null)}
+            readOnly
           />
           <p>선택 안함</p>
         </label>
@@ -42,12 +43,13 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
           const { id, name, type, amount } = coupon;
 
           return (
-            <label htmlFor={id.toString()}>
+            <label key={id} htmlFor={id.toString()}>
               <input
                 type="radio"
                 id={id.toString()}
                 checked={!!selected && selected.id === id}
                 onClick={() => setSelected(coupon)}
+                readOnly
               />
               <p>{name}</p>
               <span aria-hidden="true">|</span>
