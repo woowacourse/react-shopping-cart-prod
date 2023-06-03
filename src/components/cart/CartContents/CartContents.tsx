@@ -1,12 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import { useState } from 'react';
 import CartList from '../CartList/CartList';
 import PaymentAmount from '../PaymentAmount/PaymentAmount';
 import getCartLength from '../../../globalState/selectors/getCartLength';
+import CouponInfo from '../../../types/coupon';
+import CouponSelectRadio from '../../coupon/CouponSelectRadio/CouponSelectRadio';
 
 const CartContents = () => {
   const navigate = useNavigate();
+
+  const [selectedCoupon, setSelectedCoupon] = useState<CouponInfo | null>(null);
   const cartLength = useRecoilValue(getCartLength);
 
   const handleLinkButtonClick = () => {
@@ -16,7 +21,8 @@ const CartContents = () => {
   return cartLength ? (
     <Contents>
       <CartList />
-      <PaymentAmount />
+      <CouponSelectRadio selected={selectedCoupon} setSelected={setSelectedCoupon} />
+      <PaymentAmount coupon={selectedCoupon} />
     </Contents>
   ) : (
     <EmptyCartView>
