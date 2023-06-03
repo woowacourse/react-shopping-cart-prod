@@ -16,7 +16,7 @@ function OrderItem({ order, isDetail }: OrderItemProps) {
         {isDetail && <Link to={`${order.id}`}>상세보기 {'>'}</Link>}
       </S.Wrapper>
       {order.orderItems.map((orderItem) => (
-        <OrderItemInfo {...orderItem} />
+        <OrderItemInfo key={orderItem.orderItemId} {...orderItem} />
       ))}
     </div>
   );
