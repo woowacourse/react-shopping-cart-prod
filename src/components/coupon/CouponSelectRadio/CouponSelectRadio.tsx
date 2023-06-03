@@ -1,5 +1,6 @@
 import { useRecoilValue } from 'recoil';
 import { useEffect } from 'react';
+import { styled } from 'styled-components';
 import useFetch from '../../../hooks/api/useFetch';
 import CouponInfo from '../../../types/coupon';
 import serverNameState from '../../../globalState/atoms/serverName';
@@ -24,12 +25,17 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
   const { getData } = useFetch<{ coupons: CouponInfo[] }>(url, USER_AUTH_TOKEN);
 
   const data = getData();
+  const currentCoupon = selected
+    ? `현재: ${selected.amount}${selected.type === 'percent' ? '%' : '원'} 할인`
+    : '고른 쿠폰이 없어요';
 
   return (
-    <fieldset>
-      <legend>쿠폰 선택하기: 현재 선택된 쿠폰 - {selected ? selected.name : '없음'}</legend>
-      <div>
-        <label htmlFor="empty">
+    <Details>
+      <Summary>
+        쿠폰 적용 <CurrentCouponSpan>({currentCoupon})</CurrentCouponSpan>
+      </Summary>
+      <FieldSet>
+        <CouponLabel htmlFor="empty">
           <input
             type="radio"
             id="empty"
@@ -37,13 +43,13 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
             onClick={() => setSelected(null)}
             readOnly
           />
-          <p>선택 안함</p>
-        </label>
+          <p>선택 안 함</p>
+        </CouponLabel>
         {data?.coupons.map((coupon) => {
           const { id, name, type, amount } = coupon;
 
           return (
-            <label key={id} htmlFor={id.toString()}>
+            <CouponLabel key={id} htmlFor={id.toString()}>
               <input
                 type="radio"
                 id={id.toString()}
@@ -51,15 +57,55 @@ const CouponSelectRadio = (props: CouponSelectRadioProps) => {
                 onClick={() => setSelected(coupon)}
                 readOnly
               />
-              <p>{name}</p>
-              <span aria-hidden="true">|</span>
               <p>{`${amount}${type === 'percent' ? '%' : '원'} 할인`}</p>
-            </label>
+              <span aria-hidden="true">|</span>
+              <p>{name}</p>
+            </CouponLabel>
           );
         })}
-      </div>
-    </fieldset>
+      </FieldSet>
+    </Details>
   );
 };
+
+const Details = styled.details`
+  border: 1px solid #dddddd;
+  color: #333333;
+`;
+
+const Summary = styled.summary`
+  padding: 20px 30px;
+  font-weight: 400;
+  font-size: 24px;
+`;
+
+const FieldSet = styled.fieldset`
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+
+  padding: 35px;
+
+  border: none;
+  border-top: 3px solid #dddddd;
+  font-size: 1.2rem;
+`;
+
+const CouponLabel = styled.label`
+  display: block;
+
+  overflow: hidden;
+  cursor: pointer;
+
+  & > * {
+    display: inline;
+    margin-right: 15px;
+  }
+`;
+
+const CurrentCouponSpan = styled.span`
+  color: #777777;
+  font-size: 1rem;
+`;
 
 export default CouponSelectRadio;
