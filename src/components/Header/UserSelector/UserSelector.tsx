@@ -1,23 +1,33 @@
-import { useRef, useState } from 'react';
+import { MouseEventHandler, useRef, useState } from 'react';
 import * as S from './UserSelector.style.ts';
 import UserProfileImage from '../../../assets/user.svg';
 import useOnClickOutside from '../../../hooks/useOnClickOutside.ts';
+import type { Point } from '../../../types/types.ts';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { memberIdState, memberListState } from '../../../recoil/userAtoms.ts';
 
-const UserSelector = () => {
+type UserSelectorProps = {
+  point: Point;
+};
+
+const UserSelector = ({ point }: UserSelectorProps) => {
+  const [currentMemberId, setCurrentMemberId] = useRecoilState(memberIdState);
+  const memberList = useRecoilValue(memberListState);
+
+  const currentMemberInfo = memberList?.find((member) => member.id === currentMemberId);
+
+  const changeCurrentUser: MouseEventHandler<HTMLLIElement> = (e) => {
+    setCurrentMemberId(e.currentTarget.value);
+  };
+
   const ref = useRef<HTMLDivElement>(null);
   const [menu, setMenu] = useState(false);
+
   const close = () => setMenu(false);
 
   const toggleMenu = () => {
     setMenu((prev) => !prev);
   };
-
-  const users = [
-    { id: 1, name: '가브리엘', email: 'b@b.com' },
-    { id: 2, name: '레오', email: 'c@c.com' },
-    { id: 3, name: '비버', email: 'd@d.com' },
-    { id: 4, name: '디노', email: 'e@e.com' },
-  ];
 
   useOnClickOutside<HTMLDivElement>(ref, close);
 
@@ -26,24 +36,28 @@ const UserSelector = () => {
       <S.UserProfileButton onClick={toggleMenu}>
         <img src={UserProfileImage} alt='user image' />
       </S.UserProfileButton>
-      <S.Menu isOpen={menu}>
-        <S.UserInfoWrapper>
-          <S.UserInfoName>파인</S.UserInfoName>
-          <S.UserInfoId>a@a.com</S.UserInfoId>
-          <S.UserInfoPoint>보유 포인트: 124p</S.UserInfoPoint>
-        </S.UserInfoWrapper>
-        <S.UserListWrapper>
-          <S.UserListTitle>계정 전환</S.UserListTitle>
-          {users.map((user) => {
-            return (
-              <S.User key={user.id}>
-                <S.UserInfoName>{user.name}</S.UserInfoName>
-                <S.UserInfoId>{user.email}</S.UserInfoId>
-              </S.User>
-            );
-          })}
-        </S.UserListWrapper>
-      </S.Menu>
+      {memberList && (
+        <S.Menu isOpen={menu}>
+          {currentMemberInfo && (
+            <S.UserInfoWrapper>
+              <S.UserInfoName>{currentMemberInfo.name}</S.UserInfoName>
+              <S.UserInfoId>{currentMemberInfo.email}</S.UserInfoId>
+              {point && <S.UserInfoPoint>보유 포인트: {point.totalPoint}p</S.UserInfoPoint>}
+            </S.UserInfoWrapper>
+          )}
+          <S.UserListWrapper>
+            <S.UserListTitle>계정 전환</S.UserListTitle>
+            {memberList
+              .filter((member) => member.id !== currentMemberId)
+              .map((user) => (
+                <S.User key={user.id} value={user.id} onClick={changeCurrentUser}>
+                  <S.UserInfoName>{user.name}</S.UserInfoName>
+                  <S.UserInfoId>{user.email}</S.UserInfoId>
+                </S.User>
+              ))}
+          </S.UserListWrapper>
+        </S.Menu>
+      )}
     </S.Wrapper>
   );
 };
