@@ -5,20 +5,23 @@ import { Order, OrderDetail } from 'types/api/orders';
 
 const OrderedItem = ({ order }: { order: Order | OrderDetail }) => {
   const { id, orderedItems } = order;
+  const isDetailPage = /order_detail/.test(location.pathname);
 
   return (
     <S.Wrapper>
       <S.OrderHeader>
         <S.OrderNumber>주문번호 : {id}</S.OrderNumber>
-        <S.LinkToOrderDetail to={`/order_detail/${id}`}>
-          상세보기 ▶
-        </S.LinkToOrderDetail>
+        {!isDetailPage && (
+          <S.LinkToOrderDetail to={`/order_detail/${id}`}>
+            상세보기 ▶
+          </S.LinkToOrderDetail>
+        )}
       </S.OrderHeader>
       <S.Divider />
       <S.Container>
         {orderedItems.map((orderedItem, ind) => (
           <>
-            <ProductItemInOrder orderedItem={{ ...orderedItem }} />
+            <ProductItemInOrder orderedItem={orderedItem} />
             {ind !== orderedItems.length - 1 ? <S.Divider /> : null}
           </>
         ))}

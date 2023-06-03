@@ -2,8 +2,9 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.li`
-  min-height: 300px;
+  width: 100%;
   border: 1px solid gray;
+  margin-bottom: 30px;
 `;
 
 export const OrderHeader = styled.div`

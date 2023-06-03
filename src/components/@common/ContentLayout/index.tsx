@@ -23,7 +23,7 @@ const ContentLayout = ({
 
 const ContentSection = styled.section`
   width: 80%;
-  margin: 140px auto 0 auto;
+  margin: 140px auto 70px auto;
 `;
 
 const Container = styled.div`
