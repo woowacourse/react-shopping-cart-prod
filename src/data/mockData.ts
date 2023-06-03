@@ -17,7 +17,7 @@ export const paymentsData: Payments = {
   // 배송비 + 물건 총 가격
   finalPrice: 0,
 };
-// export const products: Product[] | null = null;
+export const nullProducts: Product[] | null = null;
 
 export const products: Product[] | null = [
   {
