@@ -75,7 +75,7 @@ const Title = styled.span`
 const TotalPrice = styled.span`
   min-width: 100px;
   text-align: right;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   letter-spacing: -0.4px;
 `;

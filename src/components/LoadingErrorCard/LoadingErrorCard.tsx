@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import FlexBox from 'components/@common/FlexBox';
 import errorImg from 'assets/error.png';
+import Box from 'components/@common/Box';
 
 type LoadingErrorCardProps = {
   onClickRetryButton: () => void;
@@ -8,7 +8,7 @@ type LoadingErrorCardProps = {
 
 const LoadingErrorCard = ({ onClickRetryButton }: LoadingErrorCardProps) => {
   return (
-    <ErrorImgBackground flexDirection="column" gap="20px">
+    <ErrorImgBackground sizing={{ width: '100%' }} flex={{ flexDirection: 'column', gap: '20px' }}>
       <ErrorImg src={errorImg} alt="예상하지 못한 에러 발생" />
       <ErrorMessage>관리자에게 문의하세요</ErrorMessage>
       <RetryButton onClick={onClickRetryButton}>새로고침</RetryButton>
@@ -18,8 +18,7 @@ const LoadingErrorCard = ({ onClickRetryButton }: LoadingErrorCardProps) => {
 
 export default LoadingErrorCard;
 
-const ErrorImgBackground = styled(FlexBox)`
-  width: 100%;
+const ErrorImgBackground = styled(Box)`
   padding: 30px 0;
   background-color: var(--color-grayscale-100);
 `;

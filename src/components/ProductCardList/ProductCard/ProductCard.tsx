@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import FlexBox from 'components/@common/FlexBox';
 import CartQuantityStepper from 'components/CartQuantityStepper/CartQuantityStepper';
 import useShoppingCart from 'hooks/useShoppingCart';
 import type { Product } from 'types/product';
 import { useRecoilValue } from 'recoil';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
+import Box from 'components/@common/Box';
 
 type ProductCardProps = {
   product: Product;
@@ -18,7 +18,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const cartProductQuantity = targetCartProduct?.quantity ?? 0;
 
   return (
-    <FlexBox flexDirection="column" justify="flex-start" gap="8px" role="list">
+    <Box flex={{ flexDirection: 'column', justify: 'flex-start', gap: '8px' }} role="list">
       <ProductImgContainer>
         <ProductImage src={imageUrl} />
         <StepperWrapper>
@@ -31,11 +31,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
         </StepperWrapper>
       </ProductImgContainer>
 
-      <ProductInfo flexDirection="column" align="flex-start">
+      <ProductInfo sizing={{ width: '100%' }} flex={{ flexDirection: 'column', align: 'flex-start' }}>
         <Title>{name}</Title>
         <Price>{price.toLocaleString('ko-KR')}원</Price>
       </ProductInfo>
-    </FlexBox>
+    </Box>
   );
 };
 
@@ -48,15 +48,9 @@ const ProductImage = styled.img`
   height: 100%;
   border-radius: 4px;
   filter: brightness(96%);
-
-  @media (max-width: 360px) {
-    width: 100%;
-    height: 100%;
-  }
 `;
 
-const ProductInfo = styled(FlexBox)`
-  width: 100%;
+const ProductInfo = styled(Box)`
   text-align: left;
 `;
 

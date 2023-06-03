@@ -1,5 +1,4 @@
 import CheckBox from 'components/@common/CheckBox/CheckBox';
-import FlexBox from 'components/@common/FlexBox';
 import useModal from 'components/@common/Modal/hooks/useModal';
 import CartProductCardList from './CartProductCardList/CartProductCardList';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';

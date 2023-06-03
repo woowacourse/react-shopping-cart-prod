@@ -2,42 +2,36 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import CartPriceSection from 'components/CartPriceSection/CartPriceSection';
 import CartProductSection from 'components/CartProductSection/CartProductSection';
-import FlexBox from 'components/@common/FlexBox';
 import useShoppingCart from 'hooks/useShoppingCart';
 import emptyCartImg from 'assets/empty-cart.png';
 import ROUTE_PATH from 'constants/routePath';
+import Box from 'components/@common/Box';
 
 const ShoppingCartPage = () => {
   const { cartProducts } = useShoppingCart();
 
   return (
-    <ShoppingCartPageContainer flexDirection="column">
+    <Box sizing={{ width: '100%' }} flex={{ flexDirection: 'column' }}>
       <PageTitle>장바구니</PageTitle>
       {cartProducts.size ? (
-        <SectionContainer gap="80px" align="flex-start" role="region">
+        <SectionContainer sizing={{ width: '100%' }} flex={{ gap: '80px', align: 'flex-start' }} role="region">
           <CartProductSection />
           <CartPriceSection />
         </SectionContainer>
       ) : (
-        <EmptyCartImgBackground flexDirection="column" gap="20px">
+        <EmptyCartImgBackground sizing={{ width: '100%' }} flex={{ flexDirection: 'column', gap: '20px' }}>
           <EmptyCartImg src={emptyCartImg} alt="장바구니가 텅 비었습니다." />
           <EmptyCartMessage>장바구니에 담긴 상품이 없습니다.</EmptyCartMessage>
           <GoHomeLink to={ROUTE_PATH.ROOT}>홈으로 가기</GoHomeLink>
         </EmptyCartImgBackground>
       )}
-    </ShoppingCartPageContainer>
+    </Box>
   );
 };
 
 export default ShoppingCartPage;
 
-const ShoppingCartPageContainer = styled(FlexBox)`
-  width: 100%;
-`;
-
-const SectionContainer = styled(FlexBox)`
-  width: 100%;
-
+const SectionContainer = styled(Box)`
   @media (max-width: 768px) {
     flex-direction: column;
     gap: 20px;
@@ -52,8 +46,7 @@ const PageTitle = styled.h2`
   text-align: center;
 `;
 
-const EmptyCartImgBackground = styled(FlexBox)`
-  width: 100%;
+const EmptyCartImgBackground = styled(Box)`
   background-color: var(--color-grayscale-100);
   padding: 20px 0;
 `;

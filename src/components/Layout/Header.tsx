@@ -8,7 +8,6 @@ import orderList from 'assets/order-list-icon.svg';
 import ROUTE_PATH from 'constants/routePath';
 import { useRecoilValue } from 'recoil';
 import { cartProductsState } from 'state/cartProducts';
-import FlexBox from 'components/@common/FlexBox';
 import SelectBox from 'components/@common/SelectBox/SelectBox';
 import { ServerOwner } from 'types/serverOwner';
 import BASE_URL from 'constants/apiBaseURL';
@@ -34,8 +33,8 @@ const Header = () => {
       <Link to={ROUTE_PATH.ROOT}>
         <MainLogo src={mainLogo} alt="배민상회" />
       </Link>
-      <FlexBox gap="8px">
-        <SelectBoxContainer flexDirection="column" gap="4px">
+      <Box flex={{ gap: '8px' }}>
+        <SelectBoxContainer sizing={{ width: '46px', height: '50px' }} flex={{ flexDirection: 'column', gap: '4px' }}>
           <Box sizing={{ height: '24px' }}>
             <SelectBox value={serverOwner} options={serverOwnerOptions} onChange={handleServerOwner} />
           </Box>
@@ -50,7 +49,7 @@ const Header = () => {
           <Icon src={orderList} alt="주문목록" />
           <Meaning>주문목록</Meaning>
         </FlexLink>
-      </FlexBox>
+      </Box>
     </HeaderContainer>
   );
 };
@@ -112,10 +111,7 @@ const CartProductCount = styled.span`
   color: var(--color-pure-white);
 `;
 
-const SelectBoxContainer = styled(FlexBox)`
-  width: 46px;
-  height: 50px;
-
+const SelectBoxContainer = styled(Box)`
   :hover {
     background-color: var(--color-grayscale-100);
   }

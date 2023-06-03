@@ -1,32 +1,27 @@
 import styled from 'styled-components';
-import FlexBox from 'components/@common/FlexBox';
 import CheckOutProductSection from 'components/CheckOutProductSection/CheckOutProductSection';
 import CheckOutPriceSection from 'components/CheckOutPriceSection/CheckOutPriceSection';
 import { CheckOutPointCostProvider } from 'context/CheckOutPointCostProvider';
+import Box from 'components/@common/Box';
 
 const CheckOutPage = () => {
   return (
-    <ShoppingCartPageContainer flexDirection="column">
+    <Box sizing={{ width: '100%' }} flex={{ flexDirection: 'column' }}>
       <PageTitle>주문서</PageTitle>
-      <SectionContainer gap="80px" align="flex-start" role="region">
+      <SectionContainer sizing={{ width: '100%' }} flex={{ align: 'flex-start', gap: '80px' }} role="region">
         <CheckOutPointCostProvider>
           <CheckOutProductSection />
           <CheckOutPriceSection />
         </CheckOutPointCostProvider>
       </SectionContainer>
-    </ShoppingCartPageContainer>
+    </Box>
   );
 };
 
 export default CheckOutPage;
 
-const ShoppingCartPageContainer = styled(FlexBox)`
-  width: 100%;
-`;
-
-const SectionContainer = styled(FlexBox)`
+const SectionContainer = styled(Box)`
   position: relative;
-  width: 100%;
 
   @media (max-width: 768px) {
     flex-direction: column;
