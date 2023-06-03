@@ -32,11 +32,11 @@ export interface OrderList {
   products: Order[];
   createdAt: string;
   totalPayments: number;
+  orderStatus: '결제완료' | '결제취소';
 }
 
-export interface OrderListItem extends Order {
+export interface OrderListItem extends Order, Pick<OrderList, 'totalPayments' | 'orderStatus'> {
   orderedProductCount: number;
-  totalPayments: number;
 }
 
 export interface OrderItemDetail extends OrderList, Pick<Order, 'totalPrice'> {

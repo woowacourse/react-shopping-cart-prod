@@ -11,6 +11,7 @@ const OrderItem = ({
   quantity,
   orderedProductCount,
   totalPayments,
+  orderStatus,
 }: OrderListItem) => {
   const location = useLocation().pathname;
 
@@ -34,7 +35,10 @@ const OrderItem = ({
               </S.TotalDetail>
             </>
           ) : (
-            <Price price={totalPayments} css={totalPaymentStyle} />
+            <>
+              <Price price={totalPayments} css={totalPaymentStyle} />
+              <S.OrderStatus>{orderStatus}</S.OrderStatus>
+            </>
           )}
         </S.Detail>
       </div>
@@ -85,7 +89,7 @@ const S = {
     font-size: 15px;
 
     & > p:first-child {
-      margin-top: 20px;
+      margin-top: 12px;
       color: var(--text-color);
     }
 
@@ -97,6 +101,11 @@ const S = {
   TotalDetail: styled.div`
     display: flex;
     margin-top: 32px;
+  `,
+
+  OrderStatus: styled.p`
+    margin-top: 36px;
+    color: var(--red-color);
   `,
 };
 

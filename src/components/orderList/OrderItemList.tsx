@@ -7,7 +7,7 @@ import OrderItem from './OrderItem';
 const OrderItemList = (orderList: OrderList) => {
   const orderId = useParams().id;
 
-  const { products, createdAt, totalPayments } = orderList;
+  const { products, createdAt, totalPayments, orderStatus } = orderList;
   const thumbnail = products[0];
 
   return (
@@ -24,6 +24,7 @@ const OrderItemList = (orderList: OrderList) => {
             quantity={product.quantity}
             orderedProductCount={orderList.products.length}
             totalPayments={totalPayments}
+            orderStatus={orderStatus}
           />
         ))
       ) : (
@@ -35,6 +36,7 @@ const OrderItemList = (orderList: OrderList) => {
           quantity={thumbnail.quantity}
           orderedProductCount={orderList.products.length}
           totalPayments={totalPayments}
+          orderStatus={orderStatus}
         />
       )}
     </S.List>

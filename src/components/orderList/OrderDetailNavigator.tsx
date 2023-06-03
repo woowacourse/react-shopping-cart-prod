@@ -16,7 +16,7 @@ const OrderDetailNavigator = ({ orderId, createdAt }: Props) => {
   const location = useLocation().pathname;
 
   return (
-    <S.Head>
+    <S.Head tabIndex={0}>
       <p>
         주문번호&nbsp;&nbsp;|&nbsp;
         <S.OrderId>{orderId}</S.OrderId>
