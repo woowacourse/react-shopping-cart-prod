@@ -17,9 +17,11 @@ import { OrderResultStatement } from "types/domain";
 const OrderStatementList = () => {
   const selectedServer = useRecoilValue(serverSelectState);
 
-  const { isLoading, data, error } = useFetch<OrderResultStatement[]>(() =>
-    getOrderStatement(selectedServer)
+  const { isLoading, data, error } = useFetch<OrderResultStatement[]>(
+    () => getOrderStatement(selectedServer),
+    selectedServer
   );
+
   const { itemForModal, isModalOpen, openModal, closeModal } =
     useOrderStatementModal<OrderResultStatement>(data);
 

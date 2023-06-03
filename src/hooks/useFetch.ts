@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const useFetch = <T>(callback: () => Promise<T>) => {
+export const useFetch = <T>(callback: () => Promise<T>, trigger?: any) => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<T>();
   const [error, setError] = useState<Error>();
@@ -14,6 +14,7 @@ export const useFetch = <T>(callback: () => Promise<T>) => {
         }
       })
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [trigger]);
+
   return { isLoading, data, error };
 };
