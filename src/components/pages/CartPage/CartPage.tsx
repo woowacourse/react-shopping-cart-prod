@@ -4,7 +4,8 @@ import { Cart } from './Cart/Cart';
 import { OrderSummary } from '../../OrderSummary/OrderSummary';
 
 import { useCartRepository } from '@recoils/cartAtoms';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
+import { Spinner } from '@components/common/Spinner/Spinner';
 
 export const CartPage = () => {
   const { fetchCart } = useCartRepository();
@@ -16,7 +17,9 @@ export const CartPage = () => {
   return (
     <styled.Main>
       <Cart />
-      <OrderSummary />
+      <Suspense fallback={<Spinner size="lg" />}>
+        <OrderSummary />
+      </Suspense>
     </styled.Main>
   );
 };

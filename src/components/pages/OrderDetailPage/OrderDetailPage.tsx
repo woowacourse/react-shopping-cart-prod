@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 
-import { useFetchOrderDetail } from '@recoils/orderDetailAtoms';
+import { useFetchOrderDetail } from '@recoils/ordersAtoms';
 
 import { OrderBox } from '@components/OrderBox/OrderBox';
 

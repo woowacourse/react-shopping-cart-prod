@@ -1,13 +1,13 @@
 import { OrderBox } from '@components/OrderBox/OrderBox';
 
-import { useFetchOrders } from '@recoils/ordersAtoms';
+import { useFetchOrderList } from '@recoils/ordersAtoms';
 
 export const OrdersPage = () => {
-  const orders = useFetchOrders();
+  const orderList = useFetchOrderList();
 
   return (
     <ul>
-      {orders.map((order) => (
+      {orderList.map((order: any) => (
         <OrderBox key={order.orderId} orderInfo={order} />
       ))}
     </ul>

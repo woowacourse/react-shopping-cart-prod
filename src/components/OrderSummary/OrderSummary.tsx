@@ -1,86 +1,51 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as styled from './OrderSummary.styled';
 
 import { Button } from '@components/common/Button/Button';
-import { Spinner } from '@components/common/Spinner/Spinner';
 
-import { useTotalProductsPrice } from '@recoils/recoilTotalPrice';
-import { useApiBaseUrlValue } from '@recoils/recoilApiBaseUrl';
-import { useCheckedCartItems } from '@recoils/recoilCart';
-
-import { useQuery } from '@hooks/useQuery';
-import { useMutation } from '@hooks/useMutation';
+import { useTotalProductsPrice } from '@recoils/totalProductsPriceAtoms';
+import { useCheckedCartItems } from '@recoils/cartAtoms';
 
 import { isNumeric } from '@utils/index';
 
-import { DELIVERY_CHARGE, FETCH_METHOD, FETCH_URL } from '@constants/index';
-
-interface PointResponseData {
-  usablePoint: number;
-}
+import { DELIVERY_CHARGE } from '@constants/index';
+import { useOrdersRepository } from '@recoils/ordersAtoms';
+import { useFetchUsablePoint } from '@recoils/usablePointAtoms';
 
 const shippingFee = DELIVERY_CHARGE;
 
 export const OrderSummary = () => {
-  const baseUrl = useApiBaseUrlValue();
-  const { data: pointData, loading } = useQuery<PointResponseData>(`${baseUrl}/point`, {
-    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-  });
-  const {
-    mutation: orderMutation,
-    data: orderResponseData,
-    loading: orderLoading,
-  } = useMutation(FETCH_METHOD.POST);
-
-  const [pointInputValue, setPointInputValue] = useState(0);
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!orderResponseData) return;
-
-    const { orderId } = orderResponseData;
-
-    navigate(`/orders/${orderId}`);
-  }, [orderResponseData]);
+  const { fetchOrder } = useOrdersRepository();
+  const useablePoint = useFetchUsablePoint();
 
   const checkedCartItems = useCheckedCartItems();
+  const [pointInputValue, setPointInputValue] = useState(0);
 
   const totalProductsPrice = useTotalProductsPrice();
 
-  const onClickUseAppPointButton = () => {
-    if (!pointData) return;
-
-    setPointInputValue(pointData?.usablePoint);
-  };
+  const onClickUseAppPointButton = () => {};
 
   const onChangePointInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (!pointData || !isNumeric(value)) return;
+    if (!isNumeric(value)) return;
 
-    const point = Number(value);
-
-    setPointInputValue(() => {
-      if (point > pointData?.usablePoint) {
-        return pointData?.usablePoint;
-      }
-
-      return point;
-    });
+    setPointInputValue(Number(value));
   };
 
   const onClickOrderButton = () => {
-    if (orderLoading) return;
-
-    orderMutation(FETCH_URL.ORDERS, {
+    const response = fetchOrder({
       totalProductsPrice,
-      shippingFee,
+      shippingFee: 3000,
       usedPoint: pointInputValue,
       order: checkedCartItems.map(({ id, quantity }) => ({
         cartItemId: id,
         quantity,
       })),
     });
+
+    response.then(({ orderId }) => navigate(`/orders/${orderId}`));
   };
 
   const totalPaymentPrice = totalProductsPrice + shippingFee - pointInputValue;
@@ -103,17 +68,11 @@ export const OrderSummary = () => {
               <styled.Point>
                 <span>사용할 포인트</span>
                 <div>
-                  {loading ? (
-                    <Spinner size="sm" />
-                  ) : (
-                    <styled.PointInput
-                      onChange={onChangePointInput}
-                      value={pointInputValue ? pointInputValue : ''}
-                      placeholder={`사용 가능 포인트 ${pointData?.usablePoint?.toLocaleString(
-                        'ok-kr'
-                      )}`}
-                    />
-                  )}
+                  <styled.PointInput
+                    onChange={onChangePointInput}
+                    value={pointInputValue ? pointInputValue : ''}
+                    placeholder={`사용 가능 포인트 ${useablePoint.toLocaleString()}`}
+                  />
                   <styled.UseAllPointButton onClick={onClickUseAppPointButton}>
                     전액 사용
                   </styled.UseAllPointButton>
@@ -127,14 +86,9 @@ export const OrderSummary = () => {
                 </styled.EarnPoint>
               </styled.PaymentPrice>
             </styled.Prices>
-            <Button designType="rectangle" onClick={onClickOrderButton} disabled={orderLoading}>
-              {orderLoading ? (
-                <Spinner size="sm" />
-              ) : (
-                `총 ${checkedCartItems.length}건 주문하기(${totalPaymentPrice.toLocaleString(
-                  'ko-kr'
-                )}원)`
-              )}
+            <Button designType="rectangle" onClick={onClickOrderButton}>
+              총 {checkedCartItems.length}건 주문하기(${totalPaymentPrice.toLocaleString('ko-kr')}
+              원)
             </Button>
           </styled.Content>
         </styled.OrderSummary>
