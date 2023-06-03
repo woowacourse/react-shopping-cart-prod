@@ -1,10 +1,10 @@
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import { orderDetailState } from '../../store/OrderDetailState';
 
-interface Props {
-  orderTotalPrice: number;
-}
+const PaymentsInfo = () => {
+  const orderDetailList = useRecoilValue(orderDetailState);
 
-const PaymentsInfo = ({ orderTotalPrice }: Props) => {
   return (
     <S.Wrapper>
       <S.TitleWrapper>
@@ -12,7 +12,7 @@ const PaymentsInfo = ({ orderTotalPrice }: Props) => {
       </S.TitleWrapper>
       <S.TotalPaymentAmountWrapper>
         <S.Title>총 결제 금액</S.Title>
-        <S.TotalPaymentAmount>{orderTotalPrice}</S.TotalPaymentAmount>
+        <S.TotalPaymentAmount>{orderDetailList?.orderTotalPrice}</S.TotalPaymentAmount>
       </S.TotalPaymentAmountWrapper>
     </S.Wrapper>
   );
