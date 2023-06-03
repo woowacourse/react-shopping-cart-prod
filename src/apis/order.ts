@@ -19,7 +19,7 @@ const orderApis = (serverName: ServerKey) => {
   };
 
   const getOrderDetail = (orderId: number) => {
-    return getData<OrderDetail>({ url, param: orderId });
+    return getData<OrderDetail>({ url, param: orderId, headers });
   };
 
   const postOrder = (orderInfo: OrderInfo) => {

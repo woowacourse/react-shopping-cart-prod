@@ -4,10 +4,10 @@ import styled from 'styled-components';
 import OrderItem from './OrderItem';
 import Message from '../Common/Message';
 
-import { orderSelector } from '../../states/order';
+import { orderState } from '../../states/order';
 
 const OrderList = () => {
-  const orders = useRecoilValue(orderSelector);
+  const orders = useRecoilValue(orderState);
 
   if (orders.length === 0) {
     return <Message type='empty' />;

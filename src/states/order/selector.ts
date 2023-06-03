@@ -1,8 +1,9 @@
 import { selector, selectorFamily } from 'recoil';
 
 import orderApis from '../../apis/order';
-import type { Order } from '../../types/order';
+import type { Order, OrderInfo } from '../../types/order';
 import { serverNameState } from '../serverName';
+import { orderState } from './atom';
 
 export const orderSelector = selector<Order[]>({
   key: 'orderSelector',
@@ -15,4 +16,20 @@ export const orderDetailSelector = selectorFamily({
     (orderId: number) =>
     ({ get }) =>
       orderApis(get(serverNameState)).getOrderDetail(orderId),
+});
+
+export const orderHandlerSelector = selector({
+  key: 'orderHandlerSelector',
+  get: ({ get, getCallback }) => {
+    const serverName = get(serverNameState);
+    const { getOrders, postOrder } = orderApis(serverName);
+
+    const addOrder = getCallback(({ set }) => async (orderInfo: OrderInfo) => {
+      await postOrder(orderInfo);
+      const newOrders = await getOrders();
+      set(orderState, newOrders);
+    });
+
+    return { addOrder };
+  },
 });

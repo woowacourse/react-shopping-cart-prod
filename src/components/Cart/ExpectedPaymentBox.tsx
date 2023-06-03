@@ -12,11 +12,7 @@ const ExpectedPaymentBox = () => {
   const { isAllUnchecked } = useMultipleChecked();
   const { totalProductPrice, deliveryFee, totalPrice } = useCartPrice();
   const { couponOptions, changeTargetCoupon } = useCoupons();
-  const { addOrder } = useOrder();
-
-  const onClickOrderButton = () => {
-    addOrder();
-  };
+  const { orderCartProducts } = useOrder();
 
   return (
     <ExpectedPaymentContainer>
@@ -48,7 +44,7 @@ const ExpectedPaymentBox = () => {
           type='button'
           autoSize
           disabled={isAllUnchecked}
-          onClick={onClickOrderButton}
+          onClick={orderCartProducts}
         >
           주문하기
         </Button>
