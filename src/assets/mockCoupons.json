@@ -1,0 +1,16 @@
+[
+  {
+    "id": 0,
+    "couponName": "쿠폰1",
+    "discountPercent": 0,
+    "discountAmount": 0,
+    "minAmount": 0
+  },
+  {
+    "id": 1,
+    "couponName": "쿠폰2",
+    "discountPercent": 0,
+    "discountAmount": 0,
+    "minAmount": 0
+  }
+]

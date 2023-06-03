@@ -2,6 +2,7 @@
 import { rest } from "msw";
 import mockProducts from "../../assets/mockProducts.json";
 import mockMembers from "../../assets/mockMembers.json";
+import mockCoupons from "../../assets/mockCoupons.json";
 import { getSessionStorage, setSessionStorage } from "../utils/storage.ts";
 import { CartItem } from "../../types/types.ts";
 import {
@@ -101,22 +102,7 @@ export const handlers = [
       ctx.json(
         coupons.length > 0
           ? coupons
-          : [
-              {
-                id: 0,
-                couponName: "쿠폰1",
-                discountPercent: 0,
-                discountAmount: 0,
-                minAmount: 0,
-              },
-              {
-                id: 1,
-                couponName: "쿠폰2",
-                discountPercent: 0,
-                discountAmount: 0,
-                minAmount: 0,
-              },
-            ]
+          : mockCoupons
       )
     );
   }),

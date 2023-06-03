@@ -1,16 +1,11 @@
 import { NewOrder, NewOrderItem } from "../../types/types.ts";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { checkedCartSelector } from "../../app/recoil/cartAtoms.ts";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import {
   Button,
   ButtonGroup,
-  CouponBox,
-  CouponBoxContainer,
-  CouponSelectTitle,
-  CouponSelectHeader,
   FatBorder,
   ProductItemImage,
   ProductItemInfo,
@@ -21,10 +16,8 @@ import {
   ProductItemSubTotalPrice,
   PurchaseTitle,
   Option,
-  CouponBoxWrapper,
   PointInputTitle,
   PointBoxWrapper,
-  CouponSelectOpenButton,
   PointInput,
   PointText,
   PointInputWrapper,
@@ -36,13 +29,13 @@ import {
   Title,
   Box,
 } from "./Purchase.style.ts";
+import CouponSelector from "../CouponSelector";
 
 function Purchase() {
   const navigate = useNavigate();
   const checkedCartList = useRecoilValue(checkedCartSelector);
   const POINTS = 1000;
 
-  const [isCouponSelectorOpen, setCouponSelectorOpen] = useState(false);
 
   const { closeModal } = useRecoilValue(modalRepository);
 
@@ -91,37 +84,20 @@ function Purchase() {
       <Box>
         <Title>배송지 선택하기</Title>
         <Option>
-          <input type="radio" checked /> 집
+          <input type="radio" checked onChange={() => { }} /> 집
         </Option>
       </Box>
       <Box>
         <Title>결제수단 선택하기</Title>
         <Option>
-          <input type="radio" checked /> 카드
+          <input type="radio" checked onChange={() => { }} /> 카드
         </Option>
       </Box>
-      <CouponBoxWrapper>
-        <CouponSelectHeader
-          onClick={() => setCouponSelectorOpen(!isCouponSelectorOpen)}
-        >
-          <CouponSelectTitle>쿠폰 4장 보유중</CouponSelectTitle>
-          <CouponSelectOpenButton>
-            {isCouponSelectorOpen ? "⏶ 닫기" : "⏷ 보유쿠폰 확인하기"}
-          </CouponSelectOpenButton>
-        </CouponSelectHeader>
-        {isCouponSelectorOpen && (
-          <CouponBoxContainer>
-            <CouponBox>쿠폰1</CouponBox>
-            <CouponBox>쿠폰2</CouponBox>
-            <CouponBox>쿠폰3</CouponBox>
-            <CouponBox>쿠폰4</CouponBox>
-          </CouponBoxContainer>
-        )}
-      </CouponBoxWrapper>
+      <CouponSelector />
       <PointBoxWrapper>
         <PointInputTitle>포인트 0점 사용 가능</PointInputTitle>
         <PointInputWrapper>
-          <PointInput value={0} />
+          <PointInput value={0} onChange={() => { }} />
           <PointText>점 사용하기</PointText>
         </PointInputWrapper>
       </PointBoxWrapper>
