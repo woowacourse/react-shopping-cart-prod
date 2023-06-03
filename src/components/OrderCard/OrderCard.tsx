@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { Order } from '../../types/responseData';
+import { Order } from '../../types/response';
 import OrderItem from './OrderItem/OrderItem';
 import { PATH } from '../../constants/path';
 import { WIDTH } from '../../styles/mediaQuery';

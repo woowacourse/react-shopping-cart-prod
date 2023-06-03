@@ -1,6 +1,6 @@
 import { rest, RestRequest } from 'msw';
 import { products } from '../../data/mockData';
-import { Cart } from '../../types/responseData';
+import { Cart } from '../../types/response';
 import { END_POINTS } from '../../constants/endPoints';
 
 interface PatchRequest extends RestRequest {

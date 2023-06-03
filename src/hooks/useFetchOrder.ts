@@ -1,4 +1,4 @@
-import { OrderItem } from '../types/requestData';
+import { OrderItem } from '../types/request';
 import { END_POINTS } from '../constants/endPoints';
 import useFetch from './useFetch';
 

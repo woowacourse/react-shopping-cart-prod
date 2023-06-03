@@ -1,7 +1,6 @@
 import { atom, selector, selectorFamily } from 'recoil';
-import { Cart } from '../types/responseData';
+import { Cart } from '../types/response';
 import { fetchedCartListSelector } from './asyncSelector';
-import { Select } from '../types/global';
 
 export const cartAtom = atom<Cart[]>({
   key: 'cart/cart-list',
@@ -61,6 +60,12 @@ export const totalAmountAtom = atom({
   key: 'cart/total-amount',
   default: 0,
 });
+
+type Select = {
+  id: number;
+  isSelected: boolean;
+  order: { id: number; quantity: number };
+};
 
 export const isSelectedListAtom = atom<Select[]>({
   key: 'cart/is-selected-list',

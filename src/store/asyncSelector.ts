@@ -1,5 +1,5 @@
 import { selector } from 'recoil';
-import { Cart, Order, Product } from '../types/responseData';
+import { Cart, Order, Product } from '../types/response';
 import { serverAtom } from './server';
 import { BASE_URL } from '../constants/baseURL';
 import fetchList from '../util/fetchList';

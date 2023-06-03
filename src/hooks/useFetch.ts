@@ -3,8 +3,8 @@ import { baseURLSelector } from '../store/server';
 import { AUTH } from '../constants/auth';
 import { useCallback } from 'react';
 import { END_POINTS } from '../constants/endPoints';
+import { FetchMethod } from '../types/request';
 
-export type FetchMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 type EndPointKeys = (typeof END_POINTS)[keyof typeof END_POINTS];
 
 const useFetch = (endPoint: EndPointKeys) => {

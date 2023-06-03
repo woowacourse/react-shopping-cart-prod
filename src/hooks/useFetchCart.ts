@@ -1,6 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 import { cartAtom, isSelectedListAtom } from '../store/cart';
-import { Cart } from '../types/responseData';
+import { Cart } from '../types/response';
 import useFetch from './useFetch';
 import { END_POINTS } from '../constants/endPoints';
 
