@@ -4,10 +4,15 @@ import * as S from './CartCouponSelect.style';
 
 interface CartCouponSelectProps {
   availableCouponLength: number;
-  selectedCoupon?: CouponType;
+  onCouponModalOpen: () => void;
+  selectedCoupon: CouponType | null;
 }
 
-function CartCouponSelect({ availableCouponLength, selectedCoupon }: CartCouponSelectProps) {
+function CartCouponSelect({
+  availableCouponLength,
+  onCouponModalOpen,
+  selectedCoupon,
+}: CartCouponSelectProps) {
   const getMessage = () => {
     if (selectedCoupon) {
       return `${selectedCoupon.name}이 적용되었습니다.`;
@@ -25,7 +30,11 @@ function CartCouponSelect({ availableCouponLength, selectedCoupon }: CartCouponS
       <S.Title>쿠폰 (사용 가능한 쿠폰 {availableCouponLength}개)</S.Title>
       <S.InformationWrapper>
         <S.Message>{getMessage()}</S.Message>
-        <Button text="쿠폰 선택" disabled={availableCouponLength === 0} />
+        <Button
+          onClick={onCouponModalOpen}
+          text="쿠폰 선택"
+          disabled={availableCouponLength === 0}
+        />
       </S.InformationWrapper>
     </div>
   );

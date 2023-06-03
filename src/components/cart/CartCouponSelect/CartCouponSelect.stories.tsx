@@ -13,12 +13,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    selectedCoupon: null,
     availableCouponLength: 3,
   },
 };
 
 export const Empty: Story = {
   args: {
+    selectedCoupon: null,
     availableCouponLength: 0,
   },
 };
