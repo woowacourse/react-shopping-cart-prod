@@ -3,7 +3,7 @@ export interface Product {
   name: string;
   price: number;
   imageUrl: string;
+  pointRatio: number;
+  pointAvailable: boolean;
   quantity?: number;
-  pointRatio?: number;
-  pointAvailable?: boolean;
 }

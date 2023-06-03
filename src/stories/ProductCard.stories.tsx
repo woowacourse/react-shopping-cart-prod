@@ -44,5 +44,7 @@ export const ProductCardComponent: Story = {
     price: 30000,
     imageUrl:
       'https://cdn-mart.baemin.com/sellergoods/main/212310b6-6560-4895-8171-afce97bc526d.png',
+    pointRatio: 15,
+    pointAvailable: false,
   },
 };

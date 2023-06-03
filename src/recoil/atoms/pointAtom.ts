@@ -2,13 +2,9 @@ import { atom, useRecoilValue } from 'recoil';
 import { base64 } from '../../constants/user';
 import { APIAtom } from './serverAtom';
 
-interface Point {
-  point: number;
-}
-
-export const pointState = atom<Point>({
+export const pointState = atom<number>({
   key: 'pointState',
-  default: { point: 0 },
+  default: 0,
   effects: [
     ({ setSelf, trigger }) => {
       const apiEndPoint = useRecoilValue(APIAtom);
@@ -21,7 +17,7 @@ export const pointState = atom<Point>({
         });
         const point = await response.json();
 
-        setSelf(point ?? 0);
+        setSelf(point.point ? Number(point.point) : 0);
       };
 
       if (trigger === 'get') getPoint();

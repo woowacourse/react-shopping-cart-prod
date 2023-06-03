@@ -16,7 +16,7 @@ export const orderHandlers = [
   }),
   rest.post('/orders', async (req, res, ctx) => {
     const requestData = await req.json();
-    const cartItemIds = await requestData.order;
+    const cartItemIds = await requestData.cartItemIds;
     const originalPrice = await requestData.originalPrice;
     const usedPoint = await requestData.usedPoint;
     const pointToAdd = await requestData.pointToAdd;
@@ -35,17 +35,19 @@ export const orderHandlers = [
             name: productItem.product.name,
             imageUrl: productItem.product.imageUrl,
             quantity: productItem.quantity,
+            pointAvailabe: productItem.product.pointAvailable,
+            pointRatio: productItem.product.pointRatio,
           };
       });
     };
 
     const matchedProducts = findProductById(cartItemIds, cartItem);
 
+    const point = getPoint();
+
     const orderId = Math.random();
 
     const orderList = getOrderList();
-
-    const point = getPoint();
 
     localStorage.setItem(
       POINT_KEY,

@@ -4,27 +4,34 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { priceSummaryState } from '../../../recoil/selectors/priceSummarySelector';
 import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
 import { pointState } from '../../../recoil/atoms/pointAtom';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
 import { useNavigate } from 'react-router-dom';
+import { usePointInput } from '../../../hooks/pointInput/usePointInput';
 
 export const OrderSummarySection = () => {
-  const { totalProductPrice, deliveryPrice, totalPrice, pointToAdd } =
-    useRecoilValue(priceSummaryState);
+  const {
+    totalProductPrice,
+    deliveryPrice,
+    totalPrice,
+    pointToAdd,
+    availablePoint,
+  } = useRecoilValue(priceSummaryState);
 
-  const { orderByCartId } = useOrderFetch();
+  const { usingPoint, setUsingPoint, handleInputValueChange } =
+    usePointInput(availablePoint);
+
+  const { getPoint, orderByCartId } = useOrderFetch();
 
   const [point, setPoint] = useRecoilState(pointState);
-  const [viewPoint, setViewPoint] = useState(0);
+
   const navigate = useNavigate();
 
   const checkedProduct = useRecoilValue(selectedCartIdListState);
 
   useEffect(() => {
-    if (checkedProduct.length === 0) {
-      setViewPoint(0);
-    }
-  }, [checkedProduct.length]);
+    getPoint().then((point) => setPoint(point.point));
+  }, []);
 
   const handleOrderButton = () => {
     if (checkedProduct.length === 0) return alert('상품을 선택해 주세요.');
@@ -32,32 +39,24 @@ export const OrderSummarySection = () => {
     const order = orderByCartId(
       checkedProduct,
       totalProductPrice,
-      viewPoint,
+      availablePoint,
       pointToAdd
     );
 
     order.then((response) => {
       const orderId = response.headers.get('Location')?.replace('/orders/', '');
 
-      setPoint({ point: point.point - viewPoint + pointToAdd });
+      getPoint().then((point) => {
+        setPoint(point.point - pointToAdd + pointToAdd);
+      });
 
       if (orderId) navigate(`/orders-success`);
     });
   };
 
-  const handlePointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    if (isNaN(Number(value)) || checkedProduct.length === 0) {
-      e.preventDefault();
-    } else {
-      setViewPoint(Number(value));
-    }
-  };
-
   const handleUsingAllPoint = () => {
     if (checkedProduct.length === 0) return;
-    setViewPoint(point.point);
+    setUsingPoint(availablePoint);
   };
 
   return (
@@ -80,30 +79,31 @@ export const OrderSummarySection = () => {
           <Style.Caption>적립금 사용</Style.Caption>
           <Style.PointInput
             type="text"
-            value={viewPoint}
-            placeholder={point.point ? `${point.point}` : '0'}
+            value={usingPoint ? usingPoint : ''}
+            placeholder={`${getCommaAddedNumber(availablePoint)}`}
             pattern="\d*"
-            onChange={handlePointChange}
+            onChange={handleInputValueChange}
           />
           <Style.UsingAllPoint onClick={handleUsingAllPoint}>
             전액 사용
           </Style.UsingAllPoint>
         </Style.PointInputContainer>
         <Style.AvailablePoint>
-          사용 가능 적립금 {point.point ? getCommaAddedNumber(point.point) : 0}
-          원
+          <p>{`총 적립금 : ${point ? getCommaAddedNumber(point) : 0}`}원</p>
+          <p>{`사용 가능 적립금 : ${getCommaAddedNumber(availablePoint)}`}원</p>
         </Style.AvailablePoint>
+
         <Style.TotalOrderPriceSummary>
           <Style.Caption>할인 합계</Style.Caption>
           <Style.Caption>
-            {viewPoint ? `-${getCommaAddedNumber(viewPoint)}원` : `0원`}
+            {usingPoint ? `-${getCommaAddedNumber(usingPoint)}원` : `0원`}
           </Style.Caption>
         </Style.TotalOrderPriceSummary>
         <Style.TotalOrderPriceSummary>
           <Style.Caption>총 주문 금액</Style.Caption>
           <Style.Caption>
             {getCommaAddedNumber(
-              checkedProduct.length ? totalPrice - viewPoint : 0
+              checkedProduct.length ? totalPrice - usingPoint : 0
             )}
             원
           </Style.Caption>
@@ -200,7 +200,12 @@ const Style = {
   `,
   AvailablePoint: styled.div`
     font-size: 14px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    text-align: end;
+
+    & > p {
+      margin: 8px 0;
+    }
   `,
   TotalOrderPriceSummary: styled(StyledSummary)`
     margin-bottom: 20px;

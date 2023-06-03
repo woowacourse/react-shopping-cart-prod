@@ -16,6 +16,17 @@ export const useOrderFetch = () => {
     if (getOrderList) return getOrderList.json();
   };
 
+  const getPoint = async () => {
+    const getPoint = await fetch(`${apiEndPoint}/point`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
+
+    if (getPoint) return getPoint.json();
+  };
+
   const orderByCartId = (
     cartItemIds: number[],
     originalPrice: number,
@@ -27,7 +38,7 @@ export const useOrderFetch = () => {
       body: JSON.stringify({
         cartItemIds: cartItemIds,
         originalPrice: originalPrice,
-        usedPoint: usedPoint,
+        usedPoint: usedPoint ?? 0,
         pointToAdd: pointToAdd,
       }),
       headers: {
@@ -37,5 +48,5 @@ export const useOrderFetch = () => {
     });
   };
 
-  return { getOrder, orderByCartId };
+  return { getOrder, getPoint, orderByCartId };
 };

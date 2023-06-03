@@ -8,13 +8,10 @@ import { useOrderFetch } from '../../hooks/fetch/useOrderFetch';
 export const OrderItemSection = () => {
   const [orderList, setOrderListState] = useRecoilState(orderListState);
 
-  console.log(orderList);
-
   const { getOrder } = useOrderFetch();
 
   useEffect(() => {
     getOrder().then((orderList) => {
-      console.log(orderList);
       setOrderListState(orderList);
     });
   }, []);
