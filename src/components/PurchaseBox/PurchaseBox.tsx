@@ -37,28 +37,9 @@ function PurchaseBox() {
           </PurchasePropertyWrapper>
           <Vacant />
           <PurchasePropertyWrapper>
-            <PurchaseText>총 주문 금액</PurchaseText>
-            <PurchaseText>
-              {(totalPrice + DELIVERY_FEE).toLocaleString()}원
-            </PurchaseText>
-          </PurchasePropertyWrapper>
-          <PurchasePropertyWrapper>
-            <DiscountText>포인트</DiscountText>
-            <DiscountText>-{POINTS.toLocaleString()}원</DiscountText>
-          </PurchasePropertyWrapper>
-          <PurchasePropertyWrapper>
-            <DiscountText>%:쿠폰명:%</DiscountText>
-            <DiscountText>-{0}원</DiscountText>
-          </PurchasePropertyWrapper>
-          <PurchasePropertyWrapper>
-            <DiscountText>%:쿠폰명:%</DiscountText>
-            <DiscountText>-{0}원</DiscountText>
-          </PurchasePropertyWrapper>
-          <Vacant />
-          <PurchasePropertyWrapper>
-            <RealPriceText>최종 결제 금액</RealPriceText>
+            <RealPriceText>총 주문 금액</RealPriceText>
             <RealPriceText>
-              {(totalPrice + DELIVERY_FEE - POINTS).toLocaleString()}원
+              {(totalPrice + DELIVERY_FEE).toLocaleString()}원
             </RealPriceText>
           </PurchasePropertyWrapper>
           <PurchaseButtonWrapper>
@@ -69,7 +50,7 @@ function PurchaseBox() {
                 }
               }}
             >
-              주문하기
+              할인받고 결제하기
             </PurchaseButton>
           </PurchaseButtonWrapper>
         </PurchaseWrapper>

@@ -57,7 +57,7 @@ export const PurchasePropertyWrapper = styled.div`
 `;
 
 export const PurchaseButtonWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 20px;
 `;
 
 export const PurchaseButton = styled.button`

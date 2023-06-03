@@ -57,3 +57,11 @@ export interface User {
   password: string;
   name: string;
 }
+
+export interface Coupon {
+  id: number;
+  couponName: string;
+  discountPercent: number;
+  discountAmount: number;
+  minAmount: number;
+}

@@ -3,7 +3,10 @@ import { rest } from "msw";
 import mockData from "../assets/mockData.json";
 import { getSessionStorage, setSessionStorage } from "../utils/storage.ts";
 import { CartItem } from "../types/types";
-import { SESSION_STORAGE_KEY_CART_ITEMS } from "../app/keys.ts";
+import {
+  SESSION_STORAGE_KEY_CART_ITEMS,
+  SESSION_STORAGE_KEY_COUPONS,
+} from "../app/keys.ts";
 
 export const handlers = [
   rest.get("/products", (req, res, ctx) => {
@@ -82,5 +85,34 @@ export const handlers = [
 
     setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, [...cartItems, newItem]);
     return res(ctx.delay(100), ctx.status(201), ctx.json(true));
+  }),
+
+  rest.get("/coupons", async (req, res, ctx) => {
+    const coupons = getSessionStorage(SESSION_STORAGE_KEY_COUPONS, []);
+
+    return res(
+      ctx.delay(100),
+      ctx.status(200),
+      ctx.json(
+        coupons.length > 0
+          ? coupons
+          : [
+              {
+                id: 0,
+                couponName: "쿠폰1",
+                discountPercent: 0,
+                discountAmount: 0,
+                minAmount: 0,
+              },
+              {
+                id: 1,
+                couponName: "쿠폰2",
+                discountPercent: 0,
+                discountAmount: 0,
+                minAmount: 0,
+              },
+            ]
+      )
+    );
   }),
 ];
