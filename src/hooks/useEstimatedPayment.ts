@@ -4,6 +4,7 @@ import {
   checkedItemAtom,
   totalPriceSelector,
 } from '../recoil/checkedProductData';
+import { cartProductAtom } from '../recoil/cartProductData';
 import { orderApi } from '../apis/orderProducts';
 import {
   FREE_DELIVERY_THRESHOLD,
@@ -11,7 +12,6 @@ import {
   STANDARD_DELIVERY_FEE,
 } from '../constants/price';
 import type { OrderedData } from '../types/product';
-import { cartProductAtom } from '../recoil/cartProductData';
 
 const useEstimatedPayment = (usePoint: number) => {
   const totalProductPrice = useRecoilValue(totalPriceSelector);
@@ -26,7 +26,6 @@ const useEstimatedPayment = (usePoint: number) => {
 
   const checkedCartProduct = useRecoilValue(checkedItemAtom);
   const hostName = useRecoilValue(hostNameAtom);
-  // const cartProducts = useRecoilValue(cartProductAtom);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
 
   const submitOrder = () => {
