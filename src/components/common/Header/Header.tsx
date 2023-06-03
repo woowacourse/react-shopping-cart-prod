@@ -23,7 +23,7 @@ const Header = () => {
       <S.HeaderMainContentContainer>
         <S.Logo src={Logo} alt="logo" onClick={() => navigate(PATH.ROOT)} />
         <S.HeaderRightContainer>
-          <ServerSelect />
+          <ServerSelect onChange={() => navigate(PATH.ROOT)} />
           <S.CartButton
             type="button"
             aria-labelledby="cart-button"
