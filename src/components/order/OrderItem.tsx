@@ -20,7 +20,7 @@ export default function OrderItem({ orderItemInfo, isDetail = false }: Props) {
           <span>({date})</span>
         </Style.Title>
         {!isDetail && (
-          <Button designType="text" fontSize="20px" color="var(--grey-400)" aria-label="상세보기">
+          <Button designType="text" fontSize="20px" color="var(--grey-400)" title="상세보기">
             <BiDetail />
           </Button>
         )}
