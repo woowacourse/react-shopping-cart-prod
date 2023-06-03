@@ -55,5 +55,5 @@
 - [x] OrderList 컴포넌트 생성
 - [x] OrderDetailItem 컴포넌트 생성
 - [ ] CouponList 컴포넌트 생성
-- [ ] CouponItem 컴포넌트 생성
+- [x] CouponItem 컴포넌트 생성
 - [x] Modal 컴포넌트 생성

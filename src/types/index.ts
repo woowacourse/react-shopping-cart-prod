@@ -1,5 +1,22 @@
 import { HOSTS } from '../constants';
 
+export interface Coupons {
+  rateCoupon: RateCouponInfo[];
+  fixedCoupon: FixedCouponInfo[];
+}
+
+export interface RateCouponInfo {
+  id: number;
+  name: string;
+  discountRate: number;
+  expiredDate: string;
+  minOrderPrice: number;
+}
+
+export type FixedCouponInfo = Omit<RateCouponInfo, 'discountRate'> & {
+  discountPrice: number;
+};
+
 export interface ProductInfo {
   id: number;
   name: string;

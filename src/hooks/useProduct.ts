@@ -12,14 +12,14 @@ export const useProduct = () => {
 
   useEffect(() => {
     const setFetchedProductList = async () => {
-      setProductList(await getProductist());
+      setProductList(await getProductList());
     };
 
     setFetchedProductList();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [host]);
 
-  const getProductist = async () => {
+  const getProductList = async () => {
     const responseResult = await APIHandler.get<ProductInfo[]>(PRODUCTS_URL);
 
     if (responseResult.statusCode !== 200) console.log(responseResult.errorMessage);
