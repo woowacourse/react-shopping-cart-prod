@@ -6,6 +6,7 @@ import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import useCartCheckBox from 'hooks/useCartCheckBox';
 import useShoppingCart from 'hooks/useShoppingCart';
 import styled from 'styled-components';
+import Box from 'components/@common/Box';
 
 const CartProductSection = () => {
   const { checkedCartProductIds, isAllChecked, toggleCheckAllBox } = useCartCheckBox();
@@ -16,8 +17,8 @@ const CartProductSection = () => {
   const isCheckedProductExist = checkedCartProductIds.size > 0;
 
   return (
-    <ProductSection flexDirection="column" align="flex-start">
-      <CheckBoxTab justify="space-between" align="flex-end">
+    <ProductSection sizing={{ width: '60%' }} flex={{ flexDirection: 'column', align: 'flex-start' }}>
+      <CheckBoxTab sizing={{ width: '100%', height: '60px' }} flex={{ justify: 'space-between', align: 'flex-end' }}>
         <CheckBox checked={isAllChecked} onChange={toggleCheckAllBox}>
           {checkBoxLabel}
         </CheckBox>
@@ -39,21 +40,17 @@ const CartProductSection = () => {
 
 export default CartProductSection;
 
-const ProductSection = styled(FlexBox)`
-  position: relative;
-  width: 60%;
-
+const ProductSection = styled(Box)`
   @media (max-width: 768px) {
     width: 100%;
   }
 `;
 
-const CheckBoxTab = styled(FlexBox)`
+const CheckBoxTab = styled(Box)`
   position: sticky;
   top: 80px;
   z-index: 10;
-  width: 100%;
-  height: 60px;
+
   padding-bottom: 10px;
   border-bottom: 3px solid var(--color-grayscale-200);
   background-color: var(--color-pure-white);

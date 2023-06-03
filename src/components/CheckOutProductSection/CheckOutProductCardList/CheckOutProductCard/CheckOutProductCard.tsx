@@ -32,7 +32,7 @@ const CheckOutProductCard = ({ checkedCartProduct }: CheckOutProductCardProps) =
 
 const Container = styled(Box)`
   border-top: 1px solid var(--color-grayscale-200);
-  padding: 20px 20px;
+  padding: 20px;
 `;
 
 const ProductImage = styled.img`

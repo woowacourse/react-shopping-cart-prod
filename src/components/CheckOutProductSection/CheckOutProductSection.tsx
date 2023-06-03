@@ -5,7 +5,7 @@ import Box from 'components/@common/Box';
 
 const CheckOutProductSection = () => {
   return (
-    <ProductSection flex={{ flexDirection: 'column', align: 'flex-start', gap: '50px' }}>
+    <ProductSection sizing={{ width: '60%' }} flex={{ flexDirection: 'column', align: 'flex-start', gap: '50px' }}>
       <CheckOutProductCardList />
       <CheckOutPointTab />
     </ProductSection>
@@ -15,8 +15,6 @@ const CheckOutProductSection = () => {
 export default CheckOutProductSection;
 
 const ProductSection = styled(Box)`
-  width: 60%;
-
   @media (max-width: 768px) {
     width: 100%;
   }

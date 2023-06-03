@@ -1,13 +1,13 @@
 import styled from 'styled-components';
-import FlexBox from 'components/@common/FlexBox';
+import Box from 'components/@common/Box';
 import CheckBox from 'components/@common/CheckBox/CheckBox';
+import useModal from 'components/@common/Modal/hooks/useModal';
 import ConfirmModal from 'components/ConfirmModal/ConfirmModal';
 import CartQuantityStepper from 'components/CartQuantityStepper/CartQuantityStepper';
 import useShoppingCart from 'hooks/useShoppingCart';
-import useModal from 'components/@common/Modal/hooks/useModal';
+import useCartCheckBox from 'hooks/useCartCheckBox';
 import { ReactComponent as RecycleBinIcon } from 'assets/recycle-bin-icon.svg';
 import type { CartProduct } from 'types/product';
-import useCartCheckBox from 'hooks/useCartCheckBox';
 
 type CartProductCardProps = {
   cartProduct: CartProduct;
@@ -22,20 +22,18 @@ const CartProductCard = ({ cartProduct }: CartProductCardProps) => {
   const totalPrice = price * quantity;
 
   return (
-    <CartProductCardContainer justify="flex-start" gap="16px" role="list">
+    <Container sizing={{ width: '100%', height: '100%' }} flex={{ gap: '16px', justify: 'flex-start' }} role="list">
       <CheckBox checked={isChecked(id)} onChange={() => toggleCheck(id)} />
-      <ProductImageWrapper>
-        <ProductImage src={imageUrl} />
-      </ProductImageWrapper>
-      <ProductInfoContainer flexDirection="column" justify="space-between">
-        <Container>
+      <ProductImage src={imageUrl} />
+      <Box sizing={{ width: '100%', minHeight: '130px' }} flex={{ flexDirection: 'column', justify: 'space-between' }}>
+        <Box sizing={{ width: '100%', height: '100%' }}>
           <Title>{name}</Title>
           <ProductDeleteButton onClick={openModal} />
           <ConfirmModal isOpen={isModalOpen} closeModal={closeModal} onClickConfirmButton={() => deleteCartProduct(id)}>
             해당 상품을 삭제하시겠습니까??
           </ConfirmModal>
-        </Container>
-        <StepperContainer justify="flex-end">
+        </Box>
+        <StepperContainer sizing={{ width: '100%', height: '100%' }} flex={{ justify: 'flex-end' }}>
           <CartQuantityStepper
             quantity={quantity}
             initialIncrement={() => initialAddCart(product)}
@@ -44,20 +42,17 @@ const CartProductCard = ({ cartProduct }: CartProductCardProps) => {
           />
           <TotalPrice>{totalPrice.toLocaleString('ko-KR')}원</TotalPrice>
         </StepperContainer>
-      </ProductInfoContainer>
-    </CartProductCardContainer>
+      </Box>
+    </Container>
   );
 };
 
-const Container = styled(FlexBox)`
-  width: 100%;
-  height: 100%;
+const Container = styled(Box)`
+  padding: 20px 0;
+  border-top: 1px solid var(--color-grayscale-200);
 `;
 
-const StepperContainer = styled(FlexBox)`
-  width: 100%;
-  height: 100%;
-
+const StepperContainer = styled(Box)`
   @media (max-width: 1080px) {
     flex-direction: column;
     align-items: flex-end;
@@ -65,28 +60,10 @@ const StepperContainer = styled(FlexBox)`
   }
 `;
 
-const ProductInfoContainer = styled(FlexBox)`
-  position: relative;
-  width: 100%;
-  min-height: 150px;
-`;
-
-const CartProductCardContainer = styled(FlexBox)`
-  width: 100%;
-  height: 100%;
-  padding: 20px 0;
-  border-top: 1px solid var(--color-grayscale-200);
-`;
-
-const ProductImageWrapper = styled.div`
-  width: 150px;
-`;
-
 const ProductImage = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   border-radius: 4px;
-  filter: brightness(96%);
 `;
 
 const Title = styled.span`
