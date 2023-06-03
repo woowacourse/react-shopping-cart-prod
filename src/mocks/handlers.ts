@@ -188,6 +188,27 @@ export const MOCK_COUPON_LIST: CouponType[] = [
     value: 3000,
     minimumPrice: 0,
   },
+  {
+    id: 1,
+    name: '생일 쿠폰',
+    type: 'percent',
+    value: 10,
+    minimumPrice: 0,
+  },
+  {
+    id: 2,
+    name: '40000원 이상 3000원 할인 쿠폰',
+    type: 'price',
+    value: 3000,
+    minimumPrice: 40000,
+  },
+  {
+    id: 3,
+    name: '배달비 할인 쿠폰',
+    type: 'delivery',
+    value: 3000,
+    minimumPrice: 0,
+  },
 ];
 
 export const handlers = [

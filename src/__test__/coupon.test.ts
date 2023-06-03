@@ -1,4 +1,4 @@
-import { getAvailableCouponsByTotalPrice, getDiscountPrice } from '@utils/coupon/coupon';
+import { getAvailableCouponsByTotalPrice, getDiscountedTotalPrice } from '@utils/coupon/coupon';
 import { CouponType } from '@type/couponType';
 
 const coupons: CouponType[] = [
@@ -71,7 +71,7 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
       minimumPrice: 40000,
     };
 
-    const result = getDiscountPrice({ totalItemsPrice, deliveryFee, coupon: priceCoupon });
+    const result = getDiscountedTotalPrice({ totalItemsPrice, deliveryFee, coupon: priceCoupon });
 
     expect(result).toBe(40000);
   });
@@ -88,7 +88,7 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
       minimumPrice: 0,
     };
 
-    const result = getDiscountPrice({ totalItemsPrice, deliveryFee, coupon: percentCoupon });
+    const result = getDiscountedTotalPrice({ totalItemsPrice, deliveryFee, coupon: percentCoupon });
 
     expect(result).toBe(39000);
   });
@@ -105,7 +105,11 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
       minimumPrice: 0,
     };
 
-    const result = getDiscountPrice({ totalItemsPrice, deliveryFee, coupon: deliveryCoupon });
+    const result = getDiscountedTotalPrice({
+      totalItemsPrice,
+      deliveryFee,
+      coupon: deliveryCoupon,
+    });
 
     expect(result).toBe(40000);
   });
@@ -122,7 +126,7 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
       minimumPrice: 40000,
     };
 
-    const result = getDiscountPrice({ totalItemsPrice, deliveryFee, coupon: priceCoupon });
+    const result = getDiscountedTotalPrice({ totalItemsPrice, deliveryFee, coupon: priceCoupon });
 
     expect(result).toBe(3000);
   });
@@ -139,8 +143,73 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
       minimumPrice: 0,
     };
 
-    const result = () => getDiscountPrice({ totalItemsPrice, deliveryFee, coupon: deliveryCoupon });
+    const result = () =>
+      getDiscountedTotalPrice({ totalItemsPrice, deliveryFee, coupon: deliveryCoupon });
 
     expect(result).toThrow();
+  });
+
+  test('총 상품 가격이 0원일 때 쿠폰을 사용한다면 에러를 반환한다.', () => {
+    const totalItemsPrice = 0;
+    const deliveryFee = 0;
+
+    const deliveryCoupon: CouponType = {
+      id: 3,
+      name: '배달비 할인 쿠폰',
+      type: 'delivery',
+      value: 3000,
+      minimumPrice: 0,
+    };
+
+    const result = () =>
+      getDiscountedTotalPrice({ totalItemsPrice, deliveryFee, coupon: deliveryCoupon });
+
+    expect(result).toThrow();
+  });
+
+  test('정적 할인 쿠폰을 사용할 때 할인 금액을 반환한다.', () => {
+    const totalItemsPrice = 30000;
+
+    const priceCoupon: CouponType = {
+      id: 2,
+      name: '40000원 이상 3000원 할인 쿠폰',
+      type: 'price',
+      value: 3000,
+      minimumPrice: 40000,
+    };
+    const result = () => getDiscountPrice({ totalItemsPrice, coupon: priceCoupon });
+
+    expect(result).toBe(3000);
+  });
+  test('퍼센트 할인 쿠폰을 사용할 때 할인 금액을 반환한다.', () => {
+    const totalItemsPrice = 40000;
+
+    const percentCoupon: CouponType = {
+      id: 1,
+      name: '생일 쿠폰',
+      type: 'percent',
+      value: 10,
+      minimumPrice: 0,
+    };
+
+    const result = () => getDiscountPrice({ totalItemsPrice, coupon: priceCoupon });
+
+    expect(result).toBe(4000);
+  });
+
+  test('배달비 할인 쿠폰을 사용할 때 할인 금액을 반환한다.', () => {
+    const totalItemsPrice = 40000;
+
+    const deliveryCoupon: CouponType = {
+      id: 3,
+      name: '배달비 할인 쿠폰',
+      type: 'delivery',
+      value: 3000,
+      minimumPrice: 0,
+    };
+
+    const result = () => getDiscountPrice({ totalItemsPrice, coupon: deliveryCoupon });
+
+    expect(result).toBe(3000);
   });
 });

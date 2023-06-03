@@ -14,17 +14,17 @@ export const getAvailableCouponsByTotalPrice = ({
   return coupons.filter((coupon) => coupon.minimumPrice <= totalItemsPrice);
 };
 
-interface GetDiscountPriceParams {
+interface GetDiscountedTotalPriceParams {
   coupon: CouponType;
   deliveryFee: number;
   totalItemsPrice: number;
 }
 
-export const getDiscountPrice = ({
+export const getDiscountedTotalPrice = ({
   coupon,
   deliveryFee,
   totalItemsPrice,
-}: GetDiscountPriceParams) => {
+}: GetDiscountedTotalPriceParams) => {
   if (totalItemsPrice === 0) {
     throw new Error('총 상품 가격이 0원이여서 쿠폰을 사용할 수 없습니다.');
   }
@@ -43,6 +43,13 @@ export const getDiscountPrice = ({
     return totalItemsPrice * percentage + deliveryFee;
   }
 };
+
+interface GetDiscountPriceParams {
+  totalItemsPrice: number;
+  coupon: CouponType;
+}
+
+export const getDiscountPrice = ({ totalItemsPrice, coupon }: GetDiscountPriceParams) => {};
 
 export const couponApiWrapper = (coupons: ServerCouponType[]): CouponType[] => {
   return coupons.map((coupon) => ({
