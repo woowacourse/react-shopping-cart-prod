@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
 import { addCartProducts, updateCartProductsQuantity, removeCartProduct } from 'apis/cart';
@@ -6,13 +6,11 @@ import type { CheckedCartProducts, Product } from 'types/product';
 
 const useShoppingCart = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
-  const [cartProductIdStore, setCartProductIdStore] = useRecoilState(cartProductIdStoreState);
+  const cartProductIdStore = useRecoilValue(cartProductIdStoreState);
 
   const initialAddCart = async (product: Product) => {
     try {
       const cartProductId = await addCartProducts(product.id);
-
-      setCartProductIdStore((prev) => ({ ...prev, [product.id]: cartProductId }));
 
       setCartProducts((prev) => {
         const newCartProducts = new Map(prev.entries());
@@ -90,12 +88,6 @@ const useShoppingCart = () => {
       alert('상품을 삭제하지 못했어요. 다시 시도해주세요');
       return;
     }
-
-    setCartProductIdStore((prev) => {
-      const { [id]: cartProductId, ...otherIds } = prev;
-
-      return { ...otherIds };
-    });
 
     setCartProducts((prev) => {
       prev.delete(cartProductIdStore[id]);

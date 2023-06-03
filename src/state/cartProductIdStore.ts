@@ -1,21 +1,16 @@
-import { atom, selector } from 'recoil';
+import { selector } from 'recoil';
 import { CartProducts, Product } from 'types/product';
 import { cartProductsState } from './cartProducts';
 
 type CartProductIdStoreState = Record<Product['id'], number>;
 
-const defaultCartProductIdStoreState = selector({
-  key: 'defaultCartProductIdStoreState',
+export const cartProductIdStoreState = selector<CartProductIdStoreState>({
+  key: 'cartProductIdStoreState',
   get: ({ get }) => {
     const cartProducts = get(cartProductsState);
 
     return cartProductIdParser(cartProducts);
   },
-});
-
-export const cartProductIdStoreState = atom<CartProductIdStoreState>({
-  key: 'cartProductIdStoreState',
-  default: defaultCartProductIdStoreState,
 });
 
 const cartProductIdParser = (cartProducts: CartProducts): CartProductIdStoreState => {
