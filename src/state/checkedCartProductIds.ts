@@ -1,6 +1,6 @@
 import { atom, selector } from 'recoil';
 import { cartProductsState } from './cartProducts';
-import { CartProduct, CheckedCartProducts } from 'types/product';
+import { CheckedCartProducts } from 'types/product';
 
 const defaultCheckedCartProductIdsState = selector({
   key: 'defaultCartCheckedProducts',
