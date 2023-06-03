@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { theme } from '@styles/theme';
 
@@ -21,12 +22,16 @@ export const NormalMessage = styled.span`
   font-weight: 400;
 `;
 
-export const ButtonWrapper = styled.div`
+export const ButtonWrapperLink = styled.div`
   display: flex;
   justify-content: center;
 
   margin-bottom: 12rem;
   gap: 10rem;
+`;
+
+export const ButtonLink = styled(Link)`
+  width: 100%;
 `;
 
 export const Title = styled.h3`

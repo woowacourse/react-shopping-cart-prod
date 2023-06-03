@@ -1,3 +1,4 @@
+import { ROUTER_PATH } from '@router/router';
 import Button from '@components/common/Button';
 import { getFormattedNextDay } from '@utils/common';
 import OrderHeader from '../OrderHeader';
@@ -27,10 +28,14 @@ function OrderCompleteInfo({
         <S.BoldMessage>주문이 완료</S.BoldMessage>
         <S.NormalMessage>되었습니다. 감사합니다!</S.NormalMessage>
       </S.MessageWrapper>
-      <S.ButtonWrapper>
-        <Button text="홈으로" />
-        <Button text="주문내역" />
-      </S.ButtonWrapper>
+      <S.ButtonWrapperLink>
+        <S.ButtonLink to={ROUTER_PATH.HOME}>
+          <Button text="홈으로" />
+        </S.ButtonLink>
+        <S.ButtonLink to={ROUTER_PATH.ORDERS}>
+          <Button text="주문내역" />
+        </S.ButtonLink>
+      </S.ButtonWrapperLink>
       <S.Title>상품배송 정보</S.Title>
       <S.EstimatedDate>
         {getFormattedNextDay(new Date().getTime())} 도착 예정 (상품 {orderItemsCount}개)
