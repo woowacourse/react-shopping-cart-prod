@@ -16,17 +16,17 @@ const setOrder = (updatedOrder: OrderItem[]) =>
 
 export const handlers = [
   // 상품 조회
-  rest.get(`${serverUrlObj['주노']}${PRODUCT_BASE_URL}`, (req, res, ctx) =>
+  rest.get(`${serverUrlObj['MSW']}${PRODUCT_BASE_URL}`, (req, res, ctx) =>
     res(ctx.delay(100), ctx.status(200), ctx.json(products)),
   ),
 
   // 장바구니 아이템 목록 조회
-  rest.get(`${serverUrlObj['주노']}${CART_BASE_URL}`, (req, res, ctx) => {
+  rest.get(`${serverUrlObj['MSW']}${CART_BASE_URL}`, (req, res, ctx) => {
     return res(ctx.delay(100), ctx.status(200), ctx.json(getCart()));
   }),
 
   // 장바구니 아이템 추가
-  rest.post(`${serverUrlObj['주노']}${CART_BASE_URL}`, async (req, res, ctx) => {
+  rest.post(`${serverUrlObj['MSW']}${CART_BASE_URL}`, async (req, res, ctx) => {
     const { productId } = await req.json();
 
     if (getProduct(productId) === undefined) {
@@ -47,7 +47,7 @@ export const handlers = [
   }),
 
   // 장바구니 아이템 수량 변경
-  rest.patch<CartItem>(`${serverUrlObj['주노']}${CART_BASE_URL}/:id`, async (req, res, ctx) => {
+  rest.patch<CartItem>(`${serverUrlObj['MSW']}${CART_BASE_URL}/:id`, async (req, res, ctx) => {
     const { productId, quantity } = await req.json();
 
     const cartItemIndex = getCart().findIndex((item) => item.product.id === productId);
@@ -78,7 +78,7 @@ export const handlers = [
   }),
 
   // 장바구니 아이템 삭제
-  rest.delete(`${serverUrlObj['주노']}${CART_BASE_URL}/:id`, async (req, res, ctx) => {
+  rest.delete(`${serverUrlObj['MSW']}${CART_BASE_URL}/:id`, async (req, res, ctx) => {
     const { productId } = await req.json();
 
     const updatedCart = getCart().filter((item) => item.id !== productId);
@@ -93,12 +93,12 @@ export const handlers = [
   }),
 
   // 주문 조회
-  rest.get(`${serverUrlObj['주노']}${ORDER_BASE_URL}`, (req, res, ctx) => {
+  rest.get(`${serverUrlObj['MSW']}${ORDER_BASE_URL}`, (req, res, ctx) => {
     return res(ctx.delay(100), ctx.status(200), ctx.json(getOrder()));
   }),
 
   // // 주문하기
-  // rest.post(`${serverUrlObj['주노']}${ORDER_BASE_URL}`, async (req, res, ctx) => {
+  // rest.post(`${serverUrlObj['MSW']}${ORDER_BASE_URL}`, async (req, res, ctx) => {
   //   const { cartIds, point } = await req.json();
 
   //   if (cartIds.length === 0) {
