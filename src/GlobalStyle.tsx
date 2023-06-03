@@ -1,14 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
-    @font-face {
-    font-family: 'notosanskr';
-    src: url(./assets/fonts/NotoSansKR-Regular.otf);
-    }
- 
     :root {
     --vh: 100%;
-    --font-notosanskr: 'notosanskr';
     }
 
     html,

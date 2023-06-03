@@ -224,7 +224,6 @@ const Style = {
     background-color: #333333;
     font-size: 24px;
     color: #ffffff;
-    font-family: var(--font-notosanskr);
 
     padding: 12px;
     margin-bottom: 20px;
