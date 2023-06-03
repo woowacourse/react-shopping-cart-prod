@@ -5,8 +5,10 @@ import {
   Sign,
 } from "../../types/types.ts";
 import { url } from "./url.ts";
-import { base64 } from "./auth.ts";
+import { getSessionStorage } from "../utils/storage.ts";
+import { SESSION_STORAGE_KEY_BASE64 } from "../keys.ts";
 
+const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
 export const fetchAddCart = async (server: string, id: number) => {
   const response = await fetch(`${url[server]}/cart-items`, {
     method: "POST",

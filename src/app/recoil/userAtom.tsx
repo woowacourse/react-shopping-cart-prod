@@ -3,7 +3,10 @@ import type { Sign, User } from "../../types/types.ts";
 import { modalRepository } from "./modalAtoms.tsx";
 import Login from "../../components/Login";
 import { setSessionStorage } from "../utils/storage.ts";
-import { SESSION_STORAGE_KEY_CART_ITEMS } from "../keys.ts";
+import {
+  SESSION_STORAGE_KEY_BASE64,
+  SESSION_STORAGE_KEY_CART_ITEMS,
+} from "../keys.ts";
 import { fetchCartList } from "../api/api.ts";
 import { cartState } from "./cartAtoms.ts";
 import { serverState } from "./serverAtom.ts";
@@ -29,6 +32,10 @@ export const userRepository = selector({
           ...member,
           name,
         };
+        setSessionStorage(
+          SESSION_STORAGE_KEY_BASE64,
+          btoa(member.id + ":" + member.password)
+        );
         setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
         const newCartList = await fetchCartList(server);
         set(cartState, newCartList);
@@ -38,6 +45,7 @@ export const userRepository = selector({
     });
 
     const logout = getCallback(({ set }) => async () => {
+      setSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
       setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
       set(userState, null);
       set(cartState, []);

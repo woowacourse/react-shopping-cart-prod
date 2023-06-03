@@ -8,7 +8,7 @@ import {
 } from "./Login.style.ts";
 import { useRecoilValue } from "recoil";
 import { userRepository } from "../../app/recoil/userAtom.tsx";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Sign } from "../../types/types.ts";
 import { serverState } from "../../app/recoil/serverAtom.ts";
 import { fetchMembers } from "../../app/api/api.ts";
@@ -16,7 +16,6 @@ import { fetchMembers } from "../../app/api/api.ts";
 function Login() {
   const { login } = useRecoilValue(userRepository);
   const server = useRecoilValue(serverState);
-
   const [members, setMembers] = useState<Sign[]>([]);
 
   const loadMembers = async () => {
