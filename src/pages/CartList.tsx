@@ -24,7 +24,9 @@ const CartList = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   right: 60px;
+
   @media (min-width: 320px) and (max-width: 1100px) {
     position: unset;
     display: flex;
