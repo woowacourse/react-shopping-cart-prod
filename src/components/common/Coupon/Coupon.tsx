@@ -4,19 +4,22 @@ import { styled } from 'styled-components';
 
 interface CouponProps {
   couponName: string;
-  header?: string;
+  type: string;
+  amount: number;
   footer?: string;
   onDownloadClick?: () => void;
 }
 
 const Coupon = (props: CouponProps) => {
-  const { couponName, header, footer, onDownloadClick } = props;
+  const { couponName, type, amount, footer, onDownloadClick } = props;
+
+  const unit = type === 'percent' ? '%' : '원';
 
   return (
     <CouponDiv aria-label="쿠폰">
       <CouponInfoDiv aria-label="쿠폰 설명">
-        <HeaderParagraph>{header || ' '}</HeaderParagraph>
         <NameParagraph>{couponName}</NameParagraph>
+        <DiscountParagraph>{`${amount}${unit} 할인 쿠폰`}</DiscountParagraph>
         <FooterParagraph>{footer || ' '}</FooterParagraph>
       </CouponInfoDiv>
       {onDownloadClick ? (
@@ -54,25 +57,23 @@ const CouponInfoDiv = styled.div`
   width: 180px;
 
   & > p {
-    display: flex;
-    align-items: center;
-
     width: 100%;
 
+    line-height: 26px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
   }
 `;
 
-const HeaderParagraph = styled.p`
+const NameParagraph = styled.p`
   color: #ffffff;
   font-size: 0.8rem;
 `;
 
-const NameParagraph = styled.p`
+const DiscountParagraph = styled.p`
   color: #ffffff;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
 `;
 
 const FooterParagraph = styled.p`

@@ -37,11 +37,12 @@ const CouponList = () => {
 
   return (
     <CouponUl>
-      {data?.coupons.map(({ name, id }) => (
+      {data?.coupons.map(({ name, id, amount, type }) => (
         <li key={name}>
           <Coupon
             couponName={name}
-            header="우테코 레벨2 협업미션 기념"
+            type={type}
+            amount={amount}
             footer="사용 후 재발급 가능"
             onDownloadClick={makeDownloadCouponFunction(id)}
           />

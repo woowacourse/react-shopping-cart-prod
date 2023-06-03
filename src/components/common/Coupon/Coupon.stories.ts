@@ -5,10 +5,23 @@ const meta: Meta<typeof Coupon> = {
   title: 'Coupon',
   component: Coupon,
   tags: ['autodocs'],
+
   args: {
-    header: '우아한테크코스 레벨2',
     couponName: '신나는 협업 미션!',
+    type: 'percent',
+    amount: 10,
     footer: '- 당장 코딩하러 가기',
+  },
+
+  argTypes: {
+    type: {
+      name: '할인 종류',
+      options: {
+        퍼센트: 'percent',
+        원: 'amount',
+      },
+      control: { type: 'inline-radio' },
+    },
   },
 };
 
