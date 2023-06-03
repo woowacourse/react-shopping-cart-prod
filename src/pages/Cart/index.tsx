@@ -1,5 +1,7 @@
 import { Suspense, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
+import { ORDER_PATH } from '@router/router';
 import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
 import { useCheckCart } from '@hooks/recoil/cart/useCheckCart';
@@ -10,14 +12,17 @@ import ExpectedPayment from '@components/cart/ExpectedPayment';
 import SkeletonCart from '@components/cart/SkeletonCartItemList';
 import Modal from '@components/common/Modal';
 import Layout from '@components/layout/Layout';
+import { cartItemSelectedById } from '@utils/cart/cart';
 import { getAvailableCouponsByTotalPrice, getDiscountPrice } from '@utils/coupon/coupon';
 import { getCoupon } from '@utils/coupon/fetchCoupon';
+import { submitOrderApi } from '@utils/order/fetchOrder';
 import { CouponType } from '@type/couponType';
 import * as S from './Cart.style';
 
 const DELIVERY_FEE = 3000;
 
 function Cart() {
+  const navigate = useNavigate();
   const serverName = useRecoilValue(serverState);
   const cart = useRecoilValue(cartState);
   const { totalCartPrice } = useCheckCart();
@@ -38,10 +43,10 @@ function Cart() {
     setSelectedCoupon(coupon);
   };
 
-  const availableCouponLength = getAvailableCouponsByTotalPrice({
+  const availableCoupon = getAvailableCouponsByTotalPrice({
     coupons,
     totalItemsPrice: totalCartPrice,
-  }).length;
+  });
 
   const discountPrice = selectedCoupon
     ? getDiscountPrice({
@@ -49,6 +54,12 @@ function Cart() {
         totalItemsPrice: totalCartPrice,
       })
     : 0;
+
+  const onOrderClick = async () => {
+    const selectedCartId = cartItemSelectedById(cart);
+    await submitOrderApi({ cartItemIds: selectedCartId, serverName, couponId: selectedCoupon?.id });
+    navigate(ORDER_PATH.COMPLETE);
+  };
 
   useEffect(() => {
     const fetchCoupon = async () => {
@@ -78,13 +89,14 @@ function Cart() {
                 <CartCouponSelect
                   selectedCoupon={selectedCoupon}
                   onCouponModalOpen={onModalOpen}
-                  availableCouponLength={availableCouponLength}
+                  availableCouponLength={availableCoupon.length}
                 />
               </S.CartCouponSelectWrapper>
               <ExpectedPayment
                 totalItemsPrice={totalCartPrice}
                 deliveryFee={totalCartPrice ? DELIVERY_FEE : 0}
                 discountPrice={discountPrice}
+                onOrderClick={onOrderClick}
               />
             </S.SelectAndPaymentWrapper>
           </S.Main>
@@ -95,7 +107,7 @@ function Cart() {
           <CouponList
             selectedCoupon={selectedCoupon}
             onCouponSelect={onSelectCoupon}
-            coupons={coupons}
+            coupons={availableCoupon}
           />
         </Modal>
       )}

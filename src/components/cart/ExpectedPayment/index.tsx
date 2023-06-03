@@ -5,9 +5,15 @@ interface OrderPaymentAmountProps {
   totalItemsPrice: number;
   deliveryFee: number;
   discountPrice: number;
+  onOrderClick: () => void;
 }
 
-function ExpectedPayment({ totalItemsPrice, deliveryFee, discountPrice }: OrderPaymentAmountProps) {
+function ExpectedPayment({
+  totalItemsPrice,
+  deliveryFee,
+  discountPrice,
+  onOrderClick,
+}: OrderPaymentAmountProps) {
   const totalPaymentAmount = totalItemsPrice + deliveryFee - discountPrice;
   return (
     <S.PayingContainer>
@@ -29,7 +35,7 @@ function ExpectedPayment({ totalItemsPrice, deliveryFee, discountPrice }: OrderP
           <span>총 주문금액</span>
           <span>{totalPaymentAmount}원</span>
         </S.LastAmountWrapper>
-        <Button text="주문하기" disabled={totalItemsPrice === 0} />
+        <Button text="주문하기" disabled={totalItemsPrice === 0} onClick={onOrderClick} />
       </S.InformationWrapper>
     </S.PayingContainer>
   );
