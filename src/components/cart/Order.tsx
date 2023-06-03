@@ -3,7 +3,7 @@ import { css, styled } from 'styled-components';
 import { DELIVERY_FEE, ROUTE_PATH } from '../../constants';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
 import { useOrder } from '../../hooks/useOrder';
-import { totalPriceSelector } from '../../recoil';
+import { couponState, totalPriceSelector } from '../../recoil';
 import Button from '../common/Button';
 import Price from '../Price';
 
@@ -11,6 +11,7 @@ const Order = () => {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const { orderProducts } = useOrder();
   const goToPage = useGoToAnotherPage();
+  const coupon = useRecoilValue(couponState);
 
   const handleOrderButtonClick = () => {
     if (!totalPrice) return;
@@ -25,7 +26,12 @@ const Order = () => {
       <S.List>
         <Price price={totalPrice} tag='li' description='총 상품가격' />
         <Price price={DELIVERY_FEE} tag='li' description='총 배송비' />
-        <Price price={totalPrice + DELIVERY_FEE} tag='li' description='총 주문금액' />
+        <Price price={-coupon.discount} tag='li' description='할인 쿠폰' />
+        <Price
+          price={totalPrice + DELIVERY_FEE - coupon.discount}
+          tag='li'
+          description='총 주문금액'
+        />
       </S.List>
       <Button css={orderButtonStyle} onClick={handleOrderButtonClick}>
         주문하기
