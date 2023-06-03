@@ -38,7 +38,11 @@ const Header = () => {
           <SelectBox options={SERVER_KEYS} onChange={onChange} />
         </div>
         <div>
-          <CartLink to={PAGE_URLS.cart} pathname={pathname}>
+          <CartLink
+            to={PAGE_URLS.cart}
+            pathname={pathname}
+            state={cartProductCount}
+          >
             <DesktopText>장바구니</DesktopText>
             <ProductCountAlert>{cartProductCount}</ProductCountAlert>
             <MobileText>
@@ -137,8 +141,8 @@ const StyledLink = styled(Link)`
 
 const CartLink = styled(StyledLink)<CartLinkProps>`
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    display: ${({ pathname }) =>
-      pathname === PAGE_URLS.main ? 'block' : 'none'};
+    display: ${({ pathname, state }) =>
+      state !== 0 && pathname !== PAGE_URLS.cart ? 'block' : 'none'};
     position: fixed;
     bottom: 0;
     left: 0;

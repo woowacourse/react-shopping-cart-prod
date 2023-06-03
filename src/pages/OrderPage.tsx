@@ -33,7 +33,7 @@ const Main = styled.main<Record<'pathname', string>>`
   }
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    padding: 30px;
+    padding: 30px 30px 90px 30px;
   }
 `;
 
