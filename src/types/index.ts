@@ -39,3 +39,8 @@ export interface OrderListItem extends Order {
 export interface OrderItemDetail extends OrderList, Pick<Order, 'totalPrice'> {
   deliveryFee: number;
 }
+
+export interface CouponState {
+  discount: number;
+  name: string;
+}

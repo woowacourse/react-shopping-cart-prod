@@ -1,7 +1,7 @@
 import { AtomEffect, DefaultValue, atom, selector, selectorFamily } from 'recoil';
 import { KEY_SERVER, QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
-import { CartItem, Product } from '../types';
+import { CartItem, CouponState, Product } from '../types';
 
 export const productListState = atom<Product[]>({
   key: 'productListState',
@@ -95,4 +95,10 @@ export const totalPriceSelector = selector<number>({
 export const serverState = atom({
   key: 'serverState',
   default: localStorage.getItem(KEY_SERVER) ?? `${SERVERS.준팍}`,
+});
+
+export const couponState = atom<CouponState>({
+  key: 'couponState',
+  default: { discount: 0, name: '' },
+  effects: [logEffect('coupon')],
 });
