@@ -6,19 +6,9 @@ type ErrorBoundaryState<TError> = {
 };
 
 type ErrorBoundaryProps<TError> = PropsWithChildren<
-  | {
-      catches: (error: unknown) => unknown;
-      fallback?: ((error: TError) => React.ReactNode) | React.ReactNode;
-    }
-  | {
-      catchesInstanceof: new () => TError;
-      fallback?: ((error: TError) => React.ReactNode) | React.ReactNode;
-    }
+  ({ catches: (error: unknown) => unknown } | { catchesInstanceof: new () => TError }) &
+    ({ fallback?: React.ReactNode } | { fallbackRenderer?: (error: TError) => React.ReactNode })
 >;
-
-const isClass = <T,>(value: unknown): value is new () => T => {
-  return typeof value === 'function' && /^\s*class\s+/.test(value.toString());
-};
 
 class ErrorBoundary<TError> extends React.Component<
   ErrorBoundaryProps<TError>,
@@ -48,16 +38,18 @@ class ErrorBoundary<TError> extends React.Component<
   }
 
   override render() {
-    const { fallback, children } = this.props;
+    const { props } = this;
     const { caughtError } = this.state;
 
-    if (caughtError === undefined) return children;
+    if (caughtError === undefined) return props.children;
 
-    if (typeof fallback === 'function') {
-      return fallback(caughtError);
+    if ('fallbackRenderer' in props && typeof props.fallbackRenderer === 'function') {
+      return props.fallbackRenderer(caughtError);
     }
-
-    return fallback;
+    if ('fallback' in props) {
+      return props.fallback;
+    }
+    return undefined;
   }
 }
 
