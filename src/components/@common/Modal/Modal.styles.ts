@@ -37,7 +37,7 @@ export const Wrapper = styled.div`
   bottom: auto;
   margin-right: -50%;
   transform: translate(-50%, -50%);
-  animation: ${fadeIn} 1s;
+  animation: ${fadeIn} 0.3s;
   background-color: ${(props) => props.theme.color.white};
   border-radius: 10px;
 `;

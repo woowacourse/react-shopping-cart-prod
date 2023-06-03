@@ -20,11 +20,11 @@ const PaymentSection = ({ orderDetail }: { orderDetail: OrderDetail }) => {
       <S.Title>결제 금액</S.Title>
       <S.Divider />
       <S.Wrapper>
-        <S.Text>총 상품 가격</S.Text>
+        <S.Text>총 상품 금액</S.Text>
         <S.Text>{totalPrice.toLocaleString('KR')}원</S.Text>
       </S.Wrapper>
       <S.Wrapper>
-        <S.Text>총 할인 가격</S.Text>
+        <S.Text>총 할인 금액</S.Text>
         <S.Text>-{totalDiscountPrice.toLocaleString('KR')}원</S.Text>
       </S.Wrapper>
       <S.Wrapper>
@@ -33,7 +33,7 @@ const PaymentSection = ({ orderDetail }: { orderDetail: OrderDetail }) => {
       </S.Wrapper>
       <S.Divider />
       <S.Wrapper>
-        <S.Text>총 결제 가격</S.Text>
+        <S.Text>총 결제 금액</S.Text>
         <S.Text>{finalPrice.toLocaleString('KR')}원</S.Text>
       </S.Wrapper>
     </S.Container>

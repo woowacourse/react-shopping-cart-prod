@@ -20,9 +20,11 @@ export const Detail = styled.div`
 `;
 
 export const Name = styled.h3`
+  font: ${(props) => props.theme.font.medium};
   margin-bottom: 20px;
 `;
 
 export const PriceAndQuantity = styled.span`
-  color: gray;
+  font: ${(props) => props.theme.font.small};
+  color: ${(props) => props.theme.color.gray};
 `;

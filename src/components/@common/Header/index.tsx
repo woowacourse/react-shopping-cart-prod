@@ -22,7 +22,7 @@ const Header = () => {
     <S.HeaderContainer>
       <S.HeaderContentContainer>
         <S.HeaderWrapper gap={20}>
-          <S.Logo onClick={onLogoClick}>THE CHOONSIK</S.Logo>
+          <S.Logo onClick={onLogoClick}>SHOP</S.Logo>
           <S.LogoIcon onClick={onLogoClick} />
         </S.HeaderWrapper>
         <S.HeaderWrapper gap={8}>

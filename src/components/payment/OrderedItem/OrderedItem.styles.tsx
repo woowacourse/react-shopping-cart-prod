@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 
 export const Wrapper = styled.li`
   width: 100%;
-  border: 1px solid gray;
+  border: 1px solid ${(props) => props.theme.color.gray};
   margin-bottom: 30px;
 `;
 
@@ -12,6 +12,7 @@ export const OrderHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 2%;
+  font: ${(props) => props.theme.font.small};
 
   background-color: #eaeaea;
 `;
@@ -33,7 +34,7 @@ export const LinkToOrderDetail = styled(Link)`
 export const Divider = styled.div`
   width: 100%;
 
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid ${(props) => props.theme.color.gray};
 `;
 
 export const Container = styled.ul``;

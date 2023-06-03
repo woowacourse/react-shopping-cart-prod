@@ -63,7 +63,10 @@ const CartItemList = () => {
         <S.Text>
           전체 선택 ({checkedItemIds.length}/{cartList.length})개
         </S.Text>
-        <S.SelectDeleteButton onClick={openModal}>
+        <S.SelectDeleteButton
+          disabled={!checkedItemIds.length}
+          onClick={openModal}
+        >
           선택 삭제
         </S.SelectDeleteButton>
       </S.CheckBoxWrapper>
