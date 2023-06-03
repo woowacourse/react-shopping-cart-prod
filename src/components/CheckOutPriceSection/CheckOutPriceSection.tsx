@@ -1,21 +1,12 @@
-import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 import Box from 'components/@common/Box';
+import useOrder from './hooks/useOrder';
 import useCartCheckBox from 'hooks/useCartCheckBox';
-import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
 import useCheckOutPriceText from './hooks/useCheckOutPriceText';
-import { cartProductsState } from 'state/cartProducts';
-import { createOrder } from 'apis/orders';
-import { getCartProducts } from 'apis/cart';
-import ROUTE_PATH from 'constants/routePath';
 
 const CheckOutPriceSection = () => {
-  const setCartProducts = useSetRecoilState(cartProductsState);
-  const navigate = useNavigate();
+  const { handleCreateOrder } = useOrder();
   const { checkedCartProductIds } = useCartCheckBox();
-  const { pointCost } = useCheckOutPointCostContext();
-
   const {
     productTotalPriceText,
     shippingFeeText,
@@ -24,18 +15,6 @@ const CheckOutPriceSection = () => {
     orderConfirmButtonText,
     earnPointsText,
   } = useCheckOutPriceText();
-
-  const addOrder = async () => {
-    try {
-      await createOrder([...checkedCartProductIds], pointCost);
-      setCartProducts(await getCartProducts());
-      navigate(ROUTE_PATH.ORDER_LIST);
-    } catch (error) {
-      console.error(error);
-      alert('상품을 주문하지 못했어요. 다시 시도해주세요');
-      return;
-    }
-  };
 
   return (
     <Container sizing={{ width: '40%' }} flex={{ flexDirection: 'column' }}>
@@ -64,7 +43,7 @@ const CheckOutPriceSection = () => {
         </Box>
       </PriceSection>
       <ConfirmButtonBox sizing={{ width: '100%' }}>
-        <OrderConfirmButton onClick={addOrder} isActive={checkedCartProductIds.size > 0}>
+        <OrderConfirmButton onClick={handleCreateOrder} isActive={checkedCartProductIds.size > 0}>
           {orderConfirmButtonText}
         </OrderConfirmButton>
       </ConfirmButtonBox>
