@@ -1,4 +1,8 @@
-import { getAvailableCouponsByTotalPrice, getDiscountedTotalPrice } from '@utils/coupon/coupon';
+import {
+  getAvailableCouponsByTotalPrice,
+  getDiscountPrice,
+  getDiscountedTotalPrice,
+} from '@utils/coupon/coupon';
 import { CouponType } from '@type/couponType';
 
 const coupons: CouponType[] = [
@@ -177,7 +181,7 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
       value: 3000,
       minimumPrice: 40000,
     };
-    const result = () => getDiscountPrice({ totalItemsPrice, coupon: priceCoupon });
+    const result = getDiscountPrice({ totalItemsPrice, coupon: priceCoupon });
 
     expect(result).toBe(3000);
   });
@@ -192,7 +196,7 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
       minimumPrice: 0,
     };
 
-    const result = () => getDiscountPrice({ totalItemsPrice, coupon: priceCoupon });
+    const result = getDiscountPrice({ totalItemsPrice, coupon: percentCoupon });
 
     expect(result).toBe(4000);
   });
@@ -208,7 +212,7 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
       minimumPrice: 0,
     };
 
-    const result = () => getDiscountPrice({ totalItemsPrice, coupon: deliveryCoupon });
+    const result = getDiscountPrice({ totalItemsPrice, coupon: deliveryCoupon });
 
     expect(result).toBe(3000);
   });

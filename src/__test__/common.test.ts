@@ -26,7 +26,7 @@ describe('공통 유틸 함수가 올바르게 작동하는 지 확인한다.', 
     [200, 150, null], // 100보다 큰 퍼센트 입력 시
     [200, -50, null], // 음수 퍼센트 입력 시
     [200, 0.001, 0.002], // 매우 작은 소수 퍼센트 입력 시
-  ])('getPercentageNumber(%i, %i)에서 %i를 반환해야 합니다.', (total, percent, expected) => {
+  ])('(getPercentageNumber(%i, %i)에서 %i를 반환해야 합니다.) 총 숫자와 퍼센트를 입력받아 해당되는 퍼센트가 숫자 몇인지 반환한다.', (total, percent, expected) => {
     const result = getPercentageNumber({ total, percent });
 
     expect(result).toBe(expected);

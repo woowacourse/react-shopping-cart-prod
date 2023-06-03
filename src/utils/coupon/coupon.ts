@@ -1,3 +1,4 @@
+import { getPercentageNumber } from '@utils/common';
 import { CouponType, ServerCouponType } from '@type/couponType';
 
 interface GetAvailableCouponsByTotalPriceParams {
@@ -29,19 +30,11 @@ export const getDiscountedTotalPrice = ({
     throw new Error('총 상품 가격이 0원이여서 쿠폰을 사용할 수 없습니다.');
   }
 
-  if (coupon.type === 'delivery') {
-    return totalItemsPrice;
-  }
-
-  if (coupon.type === 'price') {
-    const discountedPrice = Math.max(0, totalItemsPrice - coupon.value);
-    return discountedPrice + deliveryFee;
-  }
-
-  if (coupon.type === 'percent') {
-    const percentage = 1 - coupon.value / 100;
-    return totalItemsPrice * percentage + deliveryFee;
-  }
+  return (
+    totalItemsPrice +
+    deliveryFee -
+    Math.min(totalItemsPrice, getDiscountPrice({ totalItemsPrice, coupon }))
+  );
 };
 
 interface GetDiscountPriceParams {
@@ -49,7 +42,15 @@ interface GetDiscountPriceParams {
   coupon: CouponType;
 }
 
-export const getDiscountPrice = ({ totalItemsPrice, coupon }: GetDiscountPriceParams) => {};
+export const getDiscountPrice = ({ totalItemsPrice, coupon }: GetDiscountPriceParams) => {
+  if (coupon.type === 'percent') {
+    const result = getPercentageNumber({ total: totalItemsPrice, percent: coupon.value });
+
+    return result ?? 0;
+  }
+
+  return coupon.value;
+};
 
 export const couponApiWrapper = (coupons: ServerCouponType[]): CouponType[] => {
   return coupons.map((coupon) => ({
