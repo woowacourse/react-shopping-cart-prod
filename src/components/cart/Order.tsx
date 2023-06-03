@@ -26,7 +26,11 @@ const Order = () => {
       <S.List>
         <Price price={totalPrice} tag='li' description='총 상품가격' />
         <Price price={DELIVERY_FEE} tag='li' description='총 배송비' />
-        <Price price={-coupon.priceDiscount} tag='li' description='할인 쿠폰' />
+        <Price
+          price={coupon.priceDiscount ? -coupon.priceDiscount : 0}
+          tag='li'
+          description='할인 쿠폰'
+        />
         <Price
           price={totalPrice + DELIVERY_FEE - coupon.priceDiscount}
           tag='li'
@@ -74,7 +78,7 @@ const S = {
       }
 
       &:last-child {
-        margin: 42px 30px 54px;
+        margin: 42px 30px 44px;
       }
 
       @media (max-width: 548px) {
