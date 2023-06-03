@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import CartIcon from '../assets/icons/cart.svg';
 import type { CartItem } from '../types/CartItem';
 import type { Product } from '../types/Product';
+import PriceFormat from './common/PriceFormat';
 import Stepper from './common/Stepper';
 
 const ProductListItemContainer = styled.div`
@@ -36,11 +37,6 @@ const ProductName = styled.p`
 
 const ProductPrice = styled.p`
   font-size: 20px;
-
-  &::after {
-    content: '원';
-    padding-left: 8px;
-  }
 `;
 
 const StepperContainer = styled.div`
@@ -67,7 +63,9 @@ const ProductListItem = (props: ProductListItemProps) => {
       <ProductInfoContainer>
         <ProductInfo>
           <ProductName>{product.name}</ProductName>
-          <ProductPrice>{product.price.toLocaleString('ko-KR')}</ProductPrice>
+          <ProductPrice>
+            <PriceFormat price={product.price} />
+          </ProductPrice>
         </ProductInfo>
         <StepperContainer>
           {showCartItem &&

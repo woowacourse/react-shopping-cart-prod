@@ -5,6 +5,7 @@ import userCartOrderPriceState from '../recoil/user/userCartOrderPriceState';
 import userCartPointsState from '../recoil/user/userCartPointsState';
 import userRemoteCartItemsState from '../recoil/user/userRemoteCartItemsState';
 import Button from './common/Button';
+import PriceFormat from './common/PriceFormat';
 import AwaitRecoilState from './utils/AwaitRecoilState';
 
 const CartOrderContainer = styled.form`
@@ -46,10 +47,6 @@ const PriceFieldName = styled.p``;
 
 const PriceFieldValue = styled.p`
   margin-left: auto;
-
-  &::after {
-    content: '원';
-  }
 `;
 
 const ContentDivider = styled.hr`
@@ -91,12 +88,16 @@ const CartOrder = (props: CartOrderProps) => {
           <>
             <PriceField>
               <PriceFieldName>총 상품가격</PriceFieldName>
-              <PriceFieldValue>{prices.products}</PriceFieldValue>
+              <PriceFieldValue>
+                <PriceFormat price={prices.products} />
+              </PriceFieldValue>
             </PriceField>
 
             <PriceField>
               <PriceFieldName>총 배송비</PriceFieldName>
-              <PriceFieldValue>{prices.shippingFee}</PriceFieldValue>
+              <PriceFieldValue>
+                <PriceFormat price={prices.shippingFee} />
+              </PriceFieldValue>
             </PriceField>
 
             <PriceField>
@@ -104,7 +105,7 @@ const CartOrder = (props: CartOrderProps) => {
 
               <PriceFieldValue>
                 <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
-                  {(cartPoints) => cartPoints.expectedSavePoints}
+                  {(cartPoints) => <PriceFormat price={cartPoints.expectedSavePoints} unit="P" />}
                 </AwaitRecoilState>
               </PriceFieldValue>
             </PriceField>
@@ -114,7 +115,7 @@ const CartOrder = (props: CartOrderProps) => {
 
               <PriceFieldValue>
                 <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
-                  {(cartPoints) => cartPoints.savingRate}
+                  {(cartPoints) => `${cartPoints.savingRate}%`}
                 </AwaitRecoilState>
               </PriceFieldValue>
             </PriceField>
@@ -123,7 +124,9 @@ const CartOrder = (props: CartOrderProps) => {
 
             <PriceField>
               <PriceFieldName>총 주문금액</PriceFieldName>
-              <PriceFieldValue>{prices.total}</PriceFieldValue>
+              <PriceFieldValue>
+                <PriceFormat price={prices.total} />
+              </PriceFieldValue>
             </PriceField>
 
             <ContentDivider />

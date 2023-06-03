@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import type { OrderCartItem as OrderCartItemType } from '../types/OrderCartItem';
+import PriceFormat from './common/PriceFormat';
 
 const OrderCartItemContainer = styled.div`
   display: flex;
@@ -46,7 +47,7 @@ const OrderCartItem = (props: OrderCartItemProps) => {
       <OrderDescription>
         <ProductName>{productName}</ProductName>
         <OrderPriceAndQuantity>
-          {productPrice}원 / 수량 : {quantity}개
+          <PriceFormat price={productPrice} /> / 수량 : {quantity}개
         </OrderPriceAndQuantity>
       </OrderDescription>
     </OrderCartItemContainer>

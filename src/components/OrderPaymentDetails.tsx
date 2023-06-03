@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import type { Order } from '../types/Order';
+import PriceFormat from './common/PriceFormat';
 
 const OrderPaymentDetailsContainer = styled.div`
   border: 1px solid #aaaaaa;
@@ -35,16 +36,7 @@ const PaymentDetail = styled.div<PaymentDetailProps>`
 
 const PaymentDetailName = styled.p``;
 
-type PaymentDetailContentProps = {
-  $unit?: string;
-};
-
-const PaymentDetailContent = styled.p<PaymentDetailContentProps>`
-  &::after {
-    margin-left: 4px;
-    content: '${(props) => props.$unit ?? ''}';
-  }
-`;
+const PaymentDetailContent = styled.p``;
 
 type OrderPaymentDetailsProps = {
   savingRate: Order['savingRate'];
@@ -61,15 +53,19 @@ const OrderPaymentDetails = (props: OrderPaymentDetailsProps) => {
       <Content>
         <PaymentDetail>
           <PaymentDetailName>적립 포인트</PaymentDetailName>
-          <PaymentDetailContent $unit="P">{points}</PaymentDetailContent>
+          <PaymentDetailContent>
+            <PriceFormat price={points} unit="P" />
+          </PaymentDetailContent>
         </PaymentDetail>
         <PaymentDetail>
           <PaymentDetailName>할인율</PaymentDetailName>
-          <PaymentDetailContent $unit="%">{savingRate}</PaymentDetailContent>
+          <PaymentDetailContent>{savingRate}%</PaymentDetailContent>
         </PaymentDetail>
         <PaymentDetail $accent>
           <PaymentDetailName>총 결제금액</PaymentDetailName>
-          <PaymentDetailContent $unit="원">{price}</PaymentDetailContent>
+          <PaymentDetailContent>
+            <PriceFormat price={price} />
+          </PaymentDetailContent>
         </PaymentDetail>
       </Content>
     </OrderPaymentDetailsContainer>

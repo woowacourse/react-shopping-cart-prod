@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import DeleteIcon from '../assets/icons/delete.svg';
 import userCartItemsRepository from '../recoil/user/userCartItemsRepository';
 import type { Product } from '../types/Product';
+import PriceFormat from './common/PriceFormat';
 import Stepper from './common/Stepper';
 
 const CartItemListItemContainer = styled.div`
@@ -36,12 +37,6 @@ const CartController = styled.div`
   gap: 20px;
 `;
 
-const ProductPrice = styled.h2`
-  &::after {
-    content: '원';
-  }
-`;
-
 const DeleteButton = styled.button``;
 
 type CartItemListItemProps = {
@@ -67,7 +62,7 @@ const CartItemListItem = (props: CartItemListItemProps) => {
           <img src={DeleteIcon} alt="삭제" />
         </DeleteButton>
         <Stepper variant="large" value={quantity} onChange={handleChangeQuantityWithinSafeRange} />
-        <ProductPrice>{(product.price * quantity).toLocaleString('ko')}</ProductPrice>
+        <PriceFormat price={product.price * quantity} />
       </CartController>
     </CartItemListItemContainer>
   );
