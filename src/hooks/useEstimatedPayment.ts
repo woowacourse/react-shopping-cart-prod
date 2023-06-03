@@ -57,7 +57,7 @@ const useEstimatedPayment = (usePoint: number) => {
       })
       .then(() => {
         setCartProducts([]);
-        navigate('/order-complete');
+        navigate('/orders/complete');
       })
       .catch((error) => {
         handleError(error);
