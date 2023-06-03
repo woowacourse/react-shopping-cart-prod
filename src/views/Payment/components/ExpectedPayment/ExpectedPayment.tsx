@@ -69,7 +69,7 @@ function ExpectedPayment() {
       });
       const location = response.headers.get('Location');
       const orderId = location?.split('/').pop();
-      navigate(`${ROUTER_PATH.order}/${orderId}`);
+      navigate(`${ROUTER_PATH.order}/${Number(orderId)}`);
     }
   };
 

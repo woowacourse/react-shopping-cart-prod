@@ -28,7 +28,7 @@ export const ItemImage = styled.img`
 `;
 
 export const NameText = styled.p`
-  size: 2rem;
+  font-size: 1.8rem;
 `;
 
 export const ProductInfo = styled.div`
@@ -50,5 +50,5 @@ export const DeleteIcon = styled.img`
 `;
 
 export const PriceText = styled.p`
-  size: 1.6rem;
+  font-size: 1.6rem;
 `;
