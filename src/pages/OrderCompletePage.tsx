@@ -13,11 +13,11 @@ import { S } from '../components/order/OrderCompleteItem/OrderCompleteItem.style
 const OrderCompletePage = () => {
   const serverUrl = useRecoilValue(serverState);
   const setOrder = useSetRecoilState(orderState);
-  const { data, isLoading } = useGet<OrderItem[]>(`${serverUrl}${ORDER_BASE_URL}`);
+  const { data: orderData, isLoading } = useGet<OrderItem[]>(`${serverUrl}${ORDER_BASE_URL}`);
 
   useEffect(() => {
-    if (data) setOrder(data);
-  }, [data, setOrder]);
+    if (orderData) setOrder(orderData);
+  }, [orderData, setOrder]);
 
   const currentOrder = useRecoilValue(currentOrderSelector);
 

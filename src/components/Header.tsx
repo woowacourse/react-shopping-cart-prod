@@ -19,11 +19,11 @@ const Header = () => {
   const setCart = useSetRecoilState(cartState);
   const isMobile = useIsMobile();
 
-  const { data: fetchedCartList } = useGet<CartItem[]>(`${serverUrl}${CART_BASE_URL}`);
+  const { data: cartData } = useGet<CartItem[]>(`${serverUrl}${CART_BASE_URL}`);
 
   useEffect(() => {
-    if (fetchedCartList) setCart(fetchedCartList);
-  }, [fetchedCartList, setCart, serverUrl]);
+    if (cartData) setCart(cartData);
+  }, [cartData, setCart, serverUrl]);
 
   return (
     <S.Header>
