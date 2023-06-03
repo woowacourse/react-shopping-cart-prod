@@ -27,6 +27,7 @@ export const MESSAGE = Object.freeze({
   PRODUCT_GET_FAILED: '제품 목록을 불러오는 과정에서 문제가 생겼습니다.',
   PAYMENTS_SUCCESSFUL: '주문이 완료되었습니다.',
   RESPONSE_NOT_OKAY: '응답이 온전하지 않습니다.',
+  NETWORK_ERROR: '네트워크 오프라인이 감지되었습니다. 인터넷 연결을 확인해주세요',
 });
 
 export const ROUTE_PATH = Object.freeze({

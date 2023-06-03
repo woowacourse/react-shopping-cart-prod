@@ -35,7 +35,7 @@ const useMutation = <BodyData, ResponseData>({
 
     try {
       if (!navigator.onLine) {
-        throw new Error('네트워크 오프라인이 감지되었습니다');
+        throw new Error(MESSAGE.NETWORK_ERROR);
       }
 
       const response = await fetch(url, { method, body, headers });
