@@ -1,16 +1,25 @@
 import { useRecoilValue } from 'recoil';
-import { totalDiscountPriceSelector, totalPriceSelector } from 'recoil/carts';
+import {
+  checkedItemsAtom,
+  couponAtom,
+  totalDiscountPriceSelector,
+  totalPriceSelector,
+} from 'recoil/carts';
 import * as S from './PaymentDetail.styles';
 import { useNavigate } from 'react-router-dom';
-import { ROUTES } from 'utils/constants';
+import { ROUTES, SERVERS } from 'utils/constants';
 import Modal from 'components/@common/Modal';
 import { useModal } from 'hooks/useModal';
 import { useGet } from 'hooks/useGet';
 import { getDeliveryPolicy } from 'api/cart';
+import { postPayment } from 'api/payments';
 
 const PaymentDetail = () => {
   const moveTo = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
+
+  const checkItemIds = useRecoilValue(checkedItemsAtom);
+  const couponIds = useRecoilValue(couponAtom);
 
   const { data: delivery } = useGet(getDeliveryPolicy);
   const totalPrice = useRecoilValue(totalPriceSelector);
@@ -18,11 +27,20 @@ const PaymentDetail = () => {
   const isDeliveryFree =
     totalPrice - totalDiscountPrice >= (delivery?.limit || 0);
   const deliveryFee = isDeliveryFree ? 0 : delivery?.price || 0;
-
   const orderPrice =
     totalPrice === 0 ? 0 : totalPrice + deliveryFee - totalDiscountPrice;
 
   const makeOrder = () => {
+    if (!checkItemIds.length) return;
+
+    const payment = {
+      cartItemIds: checkItemIds,
+      couponIds,
+      isDeliveryFree,
+      totalPrice: orderPrice,
+    };
+
+    postPayment(payment)(SERVERS['제이']);
     moveTo(ROUTES.ORDERED_LIST);
   };
 
