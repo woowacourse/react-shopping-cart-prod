@@ -8,9 +8,9 @@ const fetchList = async <T>(baseURL: string, endPoints: string): Promise<T> => {
       authorization: `Basic ${AUTH}`,
     },
   });
-  const data = await response.json();
+  const list = await response.json();
 
-  return data;
+  return list;
 };
 
 export default fetchList;

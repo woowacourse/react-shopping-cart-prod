@@ -10,7 +10,7 @@ type OrderCardProps = Order & {
 };
 
 const OrderCard = ({
-  orderId,
+  id,
   items,
   productPrice,
   discountPrice,
@@ -21,9 +21,9 @@ const OrderCard = ({
   const navigate = useNavigate();
 
   const onClickNavigate = () => {
-    navigate(`${PATH.ORDER_DETAIL_PAGE}/${orderId}`, {
+    navigate(`${PATH.ORDER_DETAIL_PAGE}/${id}`, {
       state: {
-        orderId,
+        id,
         items,
         productPrice,
         discountPrice,
@@ -36,7 +36,7 @@ const OrderCard = ({
     <Wrapper>
       <TopSection>
         <div>
-          Order No. <span>{orderId}</span>
+          Order No. <span>{id}</span>
         </div>
         {showDetailButton && (
           <button onClick={onClickNavigate}>상세보기</button>
@@ -49,7 +49,7 @@ const OrderCard = ({
 
           return (
             <OrderItem
-              key={`${orderId}/${productId}`}
+              key={`${id}/${productId}`}
               quantity={quantity}
               name={name}
               price={price}

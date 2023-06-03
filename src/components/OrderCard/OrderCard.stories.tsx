@@ -12,7 +12,7 @@ type Story = StoryObj<typeof OrderCard>;
 
 export const Default: Story = {
   args: {
-    orderId: 1,
+    id: 1,
     items: [
       {
         id: 1,

@@ -12,7 +12,7 @@ export type Cart = {
 };
 
 export type Order = {
-  orderId: number;
+  id: number;
   items: Cart[];
   productPrice: number;
   discountPrice: number;
