@@ -34,7 +34,7 @@ const router = createBrowserRouter(
       ),
     },
     {
-      path: '/order_detail/:id',
+      path: `${ROUTES.ORDERED_DETAIL}/:id`,
       element: (
         <Suspense>
           <OrderDetail />

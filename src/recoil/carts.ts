@@ -1,4 +1,4 @@
-import { getCartList, getPriceResult } from 'api/cart';
+import { getCartList, getPrice } from 'api/cart';
 import { atom, selector } from 'recoil';
 import { serverAtom } from './server';
 import { CartItem } from 'types/api/carts';
@@ -27,7 +27,7 @@ export const checkedItemsAtom = atom<number[]>({
   }),
 });
 
-export const countCartListSelector = selector({
+export const countCartListSelector = selector<number>({
   key: 'countCartListSelector',
   get: ({ get }) => {
     return get(cartListAtom).length;
@@ -45,7 +45,7 @@ export const priceAtom = atom({
     key: 'initialPrice',
     get: async ({ get }) => {
       const server = get(serverAtom);
-      const data = await getPriceResult('')(server);
+      const data = await getPrice([])(server);
       return data;
     },
   }),
@@ -69,7 +69,7 @@ export const totalPriceSelector = selector({
   },
 });
 
-export const totalDiscountPriceSelector = selector({
+export const totalDiscountPriceSelector = selector<number>({
   key: 'totalDiscountPriceSelector',
   get: ({ get }) => {
     const { cartItemsPrice, discountFromTotalPrice } = get(priceAtom);

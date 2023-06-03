@@ -3,11 +3,18 @@ import * as S from './OrderedItem.styles';
 import ProductItemInOrder from '../ProductItemInOrder';
 import { Order, OrderDetail } from 'types/api/orders';
 import { toKoreanDate } from 'utils/converter';
+import { ROUTES } from 'utils/constants';
 
-const OrderedItem = ({ order }: { order: Order | OrderDetail }) => {
+interface OrderedItemProps {
+  order: Order | OrderDetail;
+}
+
+const OrderedItem = ({ order }: OrderedItemProps) => {
   const { id, orderedItems, orderedTime } = order;
   const orderedDate = toKoreanDate(orderedTime);
-  const isDetailPage = /order_detail/.test(location.pathname);
+  const isDetailPage = new RegExp(ROUTES.ORDERED_DETAIL).test(
+    location.pathname
+  );
 
   return (
     <S.Wrapper>
@@ -17,7 +24,7 @@ const OrderedItem = ({ order }: { order: Order | OrderDetail }) => {
           <S.HeaderInfo>주문날짜 : {orderedDate} </S.HeaderInfo>
         </S.InfoWrapper>
         {!isDetailPage && (
-          <S.LinkToOrderDetail to={`/order_detail/${id}`}>
+          <S.LinkToOrderDetail to={`${ROUTES.ORDERED_DETAIL}/${id}`}>
             상세보기 ▶
           </S.LinkToOrderDetail>
         )}
