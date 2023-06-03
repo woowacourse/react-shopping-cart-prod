@@ -1,15 +1,10 @@
-import { atom, selector, selectorFamily } from 'recoil';
+import { atom, selectorFamily } from 'recoil';
 import { CartProducts, Product } from 'types/product';
 import { getCartProducts } from 'apis/cart';
 
-const defaultCartState = selector({
-  key: 'defaultCartState',
-  get: () => getCartProducts(),
-});
-
 export const cartProductsState = atom<CartProducts>({
   key: 'cartState',
-  default: defaultCartState,
+  default: getCartProducts(),
 });
 
 export const checkedCartProductsTotalPrice = selectorFamily<number, Set<Product['id']>>({

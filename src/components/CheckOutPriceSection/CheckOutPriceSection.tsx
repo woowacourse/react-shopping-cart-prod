@@ -1,16 +1,17 @@
+import { useSetRecoilState } from 'recoil';
+import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import Box from 'components/@common/Box';
-import ROUTE_PATH from 'constants/routePath';
 import useCartCheckBox from 'hooks/useCartCheckBox';
 import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostContext';
-import { useNavigate } from 'react-router-dom';
-import { useResetRecoilState } from 'recoil';
-import { cartProductsState } from 'state/cartProducts';
-import styled from 'styled-components';
-import { createOrder } from 'apis/orders';
 import useCheckOutPriceText from './hooks/useCheckOutPriceText';
+import { cartProductsState } from 'state/cartProducts';
+import { createOrder } from 'apis/orders';
+import { getCartProducts } from 'apis/cart';
+import ROUTE_PATH from 'constants/routePath';
 
 const CheckOutPriceSection = () => {
-  const resetCartProducts = useResetRecoilState(cartProductsState);
+  const setCartProducts = useSetRecoilState(cartProductsState);
   const navigate = useNavigate();
   const { checkedCartProductIds } = useCartCheckBox();
   const { pointCost } = useCheckOutPointCostContext();
@@ -27,7 +28,7 @@ const CheckOutPriceSection = () => {
   const addOrder = async () => {
     try {
       await createOrder([...checkedCartProductIds], pointCost);
-      resetCartProducts();
+      setCartProducts(await getCartProducts());
       navigate(ROUTE_PATH.ORDER_LIST);
     } catch (error) {
       console.error(error);
