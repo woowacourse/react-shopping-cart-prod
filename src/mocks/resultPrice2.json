@@ -3,12 +3,12 @@
     {
       "cartItemId": 1,
       "originalPrice": 10000,
-      "discountPrice": 4000
+      "discountPrice": 4600
     },
     {
       "cartItemId": 2,
       "originalPrice": 30000,
-      "discountPrice": 0
+      "discountPrice": 3000
     }
   ],
   "deliveryPrice": {
