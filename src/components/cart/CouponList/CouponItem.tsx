@@ -8,9 +8,17 @@ interface CouponItemProps {
   type: CouponKind;
   condition: number;
   isSelect: boolean;
+  onCouponSelect: () => void;
 }
 
-function CouponItem({ name, discountValue, condition, isSelect, type }: CouponItemProps) {
+function CouponItem({
+  name,
+  discountValue,
+  condition,
+  isSelect,
+  type,
+  onCouponSelect,
+}: CouponItemProps) {
   const getConditionMessage = () => {
     if (condition > 0) {
       return `${getFormattedWon(condition)}원 이상 결제 시`;
@@ -34,7 +42,7 @@ function CouponItem({ name, discountValue, condition, isSelect, type }: CouponIt
   };
 
   return (
-    <S.Container isSelect={isSelect}>
+    <S.Container onClick={onCouponSelect} isSelect={isSelect}>
       <S.Name>{name}</S.Name>
       <div>
         <S.MainValueText>{getMainValueText()}</S.MainValueText>

@@ -16,6 +16,8 @@ export const Container = styled.div<{ isSelect: boolean }>`
 
   background: ${theme.colors.lightColor};
   box-shadow: ${theme.shadows.default};
+
+  cursor: pointer;
 `;
 
 export const Name = styled.h3`
