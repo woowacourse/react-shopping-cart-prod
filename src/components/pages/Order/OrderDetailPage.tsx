@@ -7,6 +7,7 @@ import DetailList from '../../list/DetailList/DetailList';
 import useOrderDetailFetch from '../../../hooks/useOrderDetailFetch';
 import { Text } from '../../common/Text/Text';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
+import { URL } from '../../../abstract/constants';
 
 const OrderDetailPage = () => {
   const orderId = useParams().orderId;
@@ -43,7 +44,7 @@ const OrderDetailPage = () => {
     >
       <DetailPageWrapper>
         <DetailPageHead>
-          <BackButton to="/orders">{'<'}</BackButton>
+          <BackButton to={URL.ORDER}>{'<'}</BackButton>
           <Text size="extraLarge" weight="bold">
             주문 상세보기
           </Text>

@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Text } from '../../common/Text/Text';
 import ErrorBox from '../../common/ErrorBox/ErrorBox';
 import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
+import { URL } from '../../../abstract/constants';
 
 const OrderPage = () => {
   const { orderListData, isError, isFetching } = useOrderFetch();
@@ -47,7 +48,7 @@ const OrderPage = () => {
           {orderListData && orderListData.length !== 0 ? (
             orderListData.map((order) => {
               return (
-                <Link key={order.id} to={`/orders/${order.id}`}>
+                <Link key={order.id} to={`${URL.ORDER}/${order.id}`}>
                   <DetailList order={order} />
                 </Link>
               );

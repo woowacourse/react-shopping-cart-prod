@@ -3,6 +3,7 @@ import { Text } from '../Text/Text';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCartFetch } from '../../../hooks/useCartFetch';
+import { URL } from '../../../abstract/constants';
 
 const UserCartInfo = () => {
   const { cartData } = useCartFetch();
@@ -20,7 +21,7 @@ const UserCartInfo = () => {
   }, [cartData]);
 
   return (
-    <CardCounterWrapper ref={ref} to="/cart">
+    <CardCounterWrapper ref={ref} to={URL.CART}>
       {isShown && (
         <>
           <Text color="#ffffff" size="large" lineHeight="12px">

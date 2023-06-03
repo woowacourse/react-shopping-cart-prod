@@ -1,15 +1,16 @@
 import styled from '@emotion/styled';
+import { Link } from 'react-router-dom';
 import { Text } from '../Text/Text';
 import { CartIcon } from '../../../assets';
 import Menu from '../Menu/Menu';
-import { Link } from 'react-router-dom';
 import Selector from '../Selector/Selector';
+import { URL } from '../../../abstract/constants';
 
 const Header = () => {
   return (
     <HeaderWrapper>
       <HeaderInner>
-        <LogoWrapper to="/">
+        <LogoWrapper to={URL.ROOT}>
           <CartIcon fill="#FFFFFF" style={{ marginRight: '20px' }} />
           <Text color="#FFFFFF" size="largest" weight="bold" lineHeight="58px">
             SHOP

@@ -3,6 +3,7 @@ import { Text } from '../Text/Text';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCartFetch } from '../../../hooks/useCartFetch';
+import { URL } from '../../../abstract/constants';
 
 const UserCartInfo = () => {
   const { cartData } = useCartFetch();
@@ -16,7 +17,7 @@ const UserCartInfo = () => {
   }, [cartData]);
 
   return (
-    <UserCartInfoWrapper to="/cart">
+    <UserCartInfoWrapper to={URL.CART}>
       <Text color="#ffffff" size="small">
         장바구니
       </Text>
