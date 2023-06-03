@@ -25,7 +25,9 @@ function PaymentsView({ puschaseOption, paymentAmount, purchaseCallback }: Payme
   const checkedCartItemsId = useRecoilValue($CheckedCartIdList(currentServer));
   const cartItems = useRecoilValue($CartList(currentServer));
 
-  const notChecked = checkedCartItemsId.length === 0;
+  const checkedCount = checkedCartItemsId.length;
+
+  const notChecked = checkedCount === 0;
 
   const handleClick = () => {
     orderOpenModal();
@@ -76,7 +78,7 @@ function PaymentsView({ puschaseOption, paymentAmount, purchaseCallback }: Payme
       </section>
       {puschaseOption && (
         <button type="button" className={styles['payments-button']} onClick={handleClick} disabled={notChecked}>
-          주문하기
+          {notChecked ? '주문하기' : `${checkedCount}개 주문하기`}
         </button>
       )}
       {isOrderModalOpen && (

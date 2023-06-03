@@ -19,7 +19,6 @@ const getUrlParams = (data: number[], key: string) => {
 };
 
 function usePayments() {
-  // id가 없을 때는 요청을 보내지 않기.
   const currentServer = useRecoilValue($CurrentServerUrl);
   const cartList = useRecoilValue($CartList(currentServer));
   const cartCheckedIdList = useRecoilValue($CheckedCartIdList(currentServer));
@@ -51,7 +50,7 @@ function usePayments() {
         },
       },
     });
-  }, [cartList]);
+  }, [cartList, cartCheckedIdList]);
 
   return { payments };
 }
