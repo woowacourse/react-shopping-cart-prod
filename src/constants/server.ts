@@ -25,5 +25,5 @@ export const isServerKey = (value: string): value is ServerKey =>
 
 export const SERVER_OPTIONS = SERVER_KEYS.map((serverKey) => ({
   value: serverKey,
-  label: serverKey,
+  text: serverKey,
 }));
