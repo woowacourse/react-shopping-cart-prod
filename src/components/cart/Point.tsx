@@ -1,11 +1,12 @@
 import { styled } from 'styled-components';
 import { pointState } from '../../store/PointState';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { useState } from 'react';
+import { inputPointValueState } from '../../store/InputPointValueState';
 
 const Point = () => {
   const point = useRecoilValue(pointState);
-  const [inputValue, setInputValue] = useState('0');
+  const [inputPointValue, setInputPointValue] = useRecoilState(inputPointValueState);
   const [holdPoint, setHoldPoint] = useState(point);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +15,7 @@ const Point = () => {
       alert('보유한 포인트만 사용이 가능합니다.');
       return;
     }
-    setInputValue(event.target.value);
+    setInputPointValue(event.target.value);
     setHoldPoint(point - value);
   };
 
@@ -23,7 +24,7 @@ const Point = () => {
       <S.Title>Point</S.Title>
       <S.PointWrapper>
         <S.HoldPoint>보유: {holdPoint.toLocaleString()}원</S.HoldPoint>
-        <S.PointField type="number" max={point} value={inputValue} onChange={handleChange} />
+        <S.PointField type="number" max={point} value={inputPointValue} onChange={handleChange} />
       </S.PointWrapper>
     </S.Wrapper>
   );
