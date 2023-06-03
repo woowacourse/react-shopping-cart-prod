@@ -8,7 +8,7 @@ import PriceWrapper from '../PriceWrapper';
 import { LoadingSpinner } from '../../@common/LoadingSpinner';
 import { S } from './CartList.styles';
 import { Title } from '../../../style/commonStyle';
-import emptyImage from '../../../assets/empty-image.png';
+import emptyImage from '../../../assets/empty-image.svg';
 
 type Props = {
   cart: CartItem[];
@@ -34,29 +34,31 @@ const CartList = ({ cart, isLoading }: Props) => {
   ));
 
   const itemList = (
-    <S.ItemListWrapper>{isLoading ? <LoadingSpinner /> : cartList}</S.ItemListWrapper>
+    <S.ItemListWrapper>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : cart.length === 0 ? (
+        <img src={emptyImage} alt="empty-cart" />
+      ) : (
+        cartList
+      )}
+    </S.ItemListWrapper>
   );
 
   return (
     <>
       <Title>장바구니</Title>
       <S.Wrapper>
-        {cart.length === 0 ? (
-          <img src={emptyImage} alt="empty-cart" />
-        ) : (
-          <>
-            <TotalCheckbox
-              cartLength={cart.length}
-              checkedItemsCount={checkedItems.length}
-              handleCheckAllItems={handleCheckAllItems}
-              clickRemoveButton={handleRemoveCheckedItem}
-            />
-            <S.ContentWrapper>
-              {itemList}
-              <PriceWrapper totalPrice={totalPrice} />
-            </S.ContentWrapper>
-          </>
-        )}
+        <TotalCheckbox
+          cartLength={cart.length}
+          checkedItemsCount={checkedItems.length}
+          handleCheckAllItems={handleCheckAllItems}
+          clickRemoveButton={handleRemoveCheckedItem}
+        />
+        <S.ContentWrapper>
+          {itemList}
+          <PriceWrapper totalPrice={totalPrice} />
+        </S.ContentWrapper>
       </S.Wrapper>
     </>
   );
