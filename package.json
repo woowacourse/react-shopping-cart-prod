@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "start": "npm run dev -- --open",
-    "dev": "cross-env NODE_ENV=development webpack serve",
-    "build": "cross-env NODE_ENV=production webpack",
+    "dev": "NODE_ENV=development webpack serve",
+    "build": "NODE_ENV=production webpack",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
