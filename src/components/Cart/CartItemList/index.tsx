@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import * as S from './CartItemList.styles';
 import CartItem from 'components/Cart/CartItem';
 import Modal from 'components/@common/Modal';

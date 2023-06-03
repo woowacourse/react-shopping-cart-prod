@@ -5,14 +5,17 @@ import { serverAtom } from './server';
 
 export const cartListAtom = atom<Cart[]>({
   key: 'cartList',
-  default: selector({
-    key: 'initialCartList',
-    get: async ({ get }) => {
-      const server = get(serverAtom);
-      const data = await getCartList(server);
-      return data;
-    },
-  }),
+  default: [],
+});
+
+export const fetchCartListSelector = selector<Cart[]>({
+  key: 'fetchCartListSelector',
+  get: async ({ get }) => {
+    if (get(cartListAtom).length) return get(cartListAtom);
+    const server = get(serverAtom);
+    const data = await getCartList(server);
+    return data;
+  },
 });
 
 export const checkedItemsAtom = atom<number[]>({

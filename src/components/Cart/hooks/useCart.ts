@@ -1,17 +1,16 @@
-import { useRecoilState } from 'recoil';
 import {
   postCartItem,
   patchCartItemQuantity,
   deleteCartItem,
 } from 'api/requests';
 import { useToast } from 'components/@common/Toast/hooks/useToast';
-import { cartListAtom } from 'recoil/cartList';
 import { useMutate } from '../../../hooks/useMutate';
+import { useFetchCart } from './useFetchCart';
 import { Product } from 'types';
 
 export const useCart = () => {
   const { request } = useMutate();
-  const [cartList, setCartList] = useRecoilState(cartListAtom);
+  const { cartList, setCartList } = useFetchCart();
   const { toast } = useToast();
 
   const addItem = async (product: Product) => {
