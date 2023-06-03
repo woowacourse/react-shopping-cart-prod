@@ -1,18 +1,32 @@
-.container {
+.wrapper {
+  position: sticky;
+  top: 140px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
   width: 100%;
   height: fit-content;
+}
+
+.container {
+  margin: 0 0 24px 0;
+
+  background: var(--white-color--001);
 
   letter-spacing: 0.5px;
-  color: #333333;
+  color: var(--primary-color);
 
-  border: 1px solid #dddddd;
+  border: 1px solid #ededed;
+
+  border-radius: 6px;
 }
 
 .title {
   font-size: 24px;
+  font-weight: 700;
   line-height: 33px;
   padding: 28px 18px;
-  border-bottom: 3px solid #dddddd;
 }
 
 .payments-info {
@@ -34,7 +48,7 @@
   }
 
   & > ul:last-child {
-    margin: 24px 0;
+    margin-top: 24px;
   }
 }
 
@@ -61,18 +75,32 @@
 
 .payments-button {
   display: flex;
-  width: 90%;
-  height: 72px;
-  margin: 0 auto 24px auto;
   align-items: center;
   justify-content: center;
 
+  width: 100%;
+  height: 60px;
+
+  font-size: 20px;
+  font-weight: 700;
+
   color: var(--white-color);
-  background: #333333;
-  border-radius: 0px;
+  background: var(--mint-color);
+  border-radius: 6px;
 
   &:disabled {
     opacity: 0.7;
     cursor: auto;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background: var(--mint-color-hover);
+  }
+}
+
+@media (max-width: 1024px) {
+  .wrapper {
+    position: unset;
   }
 }

@@ -1,6 +1,7 @@
-import { ReactComponent as TrashBox } from 'src/assets/trash-box.svg';
+// import { ReactComponent as TrashBox } from 'src/assets/trash-box.svg';
 import CountButton from 'src/components/Common/CountButton';
 import type { CartItem } from 'src/types';
+import { RiDeleteBinLine } from 'react-icons/ri';
 import styles from './index.module.scss';
 import CheckBox from '../Common/CheckBox';
 
@@ -34,19 +35,19 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
       <CheckBox changeHandler={toggleCheck} checked={checked} />
       <img src={imageUrl} alt={name} className={styles.image} />
       <div className={styles['item-info']}>
-        <div>
-          <div className={styles['product-title']}>{name}</div>
+        <div className={styles['product-title']}>{name}</div>
+        <div className={styles['handle-container']}>
           <button type="button" onClick={handleDeleteButton}>
-            <TrashBox size={24} />
+            <RiDeleteBinLine />
           </button>
+          <CountButton
+            size="large"
+            count={quantity}
+            handleUpButton={handleUpButton}
+            handleDownButton={handleDownButton}
+          />
+          <div className={styles['product-price']}>{(price * quantity).toLocaleString()} 원</div>
         </div>
-        <CountButton
-          size="large"
-          count={quantity}
-          handleUpButton={handleUpButton}
-          handleDownButton={handleDownButton}
-        />
-        <div className={styles['product-price']}>{(price * quantity).toLocaleString()} 원</div>
       </div>
     </div>
   );

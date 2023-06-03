@@ -4,6 +4,8 @@
   grid-template-columns: 40px 20px;
   grid-template-rows: 13px 13px;
 
+  background: var(--white-color);
+
   & > * {
     display: flex;
     align-items: center;

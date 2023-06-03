@@ -11,6 +11,7 @@ import Modal from 'src/components/Common/Modal';
 import usePurchase from 'src/hooks/usePurchase';
 import { MESSAGE, ROUTE_PATH } from 'src/constants';
 import ModalNotification from 'src/components/Common/ModalNotification';
+import { getLocalStorage } from 'src/utils/localStorage';
 import styles from './index.module.scss';
 
 function Cart() {
@@ -19,6 +20,8 @@ function Cart() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
   const cartList = useRecoilValue($CartList(currentServerUrl));
   const checekdIdList = useRecoilValue($CheckedCartIdList(currentServerUrl));
+
+  const currentName = getLocalStorage('name', '');
 
   const { isModalOpen: isFinalModalOpen, openModal: finalOpenModal, closeModal: finalCloseModal } = useModal();
 
@@ -45,7 +48,7 @@ function Cart() {
 
   return (
     <>
-      <ContentLayout title="장바구니">{ResultComponent}</ContentLayout>;
+      <ContentLayout title={`${currentName}의 장바구니`}>{ResultComponent}</ContentLayout>;
       {isFinalModalOpen && (
         <Modal closeEvent={finalCloseModal} direction="center">
           <ModalNotification

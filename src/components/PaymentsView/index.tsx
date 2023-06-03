@@ -56,9 +56,8 @@ function PaymentsView({ puschaseOption, paymentAmount, purchaseCallback }: Payme
   const checkedCartItems = cartItems.filter(({ id }) => checkedCartItemsId.includes(id));
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <section className={styles.container}>
-        <h2 className={styles.title}>결제예상금액</h2>
         <li className={styles['payments-info']}>
           <ul>
             <span>상품가격</span>
@@ -74,12 +73,12 @@ function PaymentsView({ puschaseOption, paymentAmount, purchaseCallback }: Payme
             <span>{notChecked ? '0원 ' : convertKORWon(finalPrice)}</span>
           </ul>
         </li>
-        {puschaseOption && (
-          <button type="button" className={styles['payments-button']} onClick={handleClick} disabled={notChecked}>
-            주문하기
-          </button>
-        )}
       </section>
+      {puschaseOption && (
+        <button type="button" className={styles['payments-button']} onClick={handleClick} disabled={notChecked}>
+          주문하기
+        </button>
+      )}
       {isOrderModalOpen && (
         <Modal closeEvent={orderCloseModal} direction="center">
           <OrderForm
@@ -90,7 +89,7 @@ function PaymentsView({ puschaseOption, paymentAmount, purchaseCallback }: Payme
           />
         </Modal>
       )}
-    </>
+    </div>
   );
 }
 

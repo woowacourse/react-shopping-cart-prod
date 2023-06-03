@@ -23,7 +23,6 @@ function Header() {
     const updateOption = userServerUrlList[textContent ?? ''];
 
     if (updateOption === undefined) {
-      Toast.error('해당 서버가 존재하지 않습니다.');
       throw new Error('해당 서버가 존재하지 않습니다.');
     }
 

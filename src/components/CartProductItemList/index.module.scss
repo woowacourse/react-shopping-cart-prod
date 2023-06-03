@@ -16,23 +16,8 @@
 .cart-container {
   display: flex;
   flex-direction: column;
-  max-height: 60vh;
   height: 100%;
-  overflow-y: scroll;
-
-  & > div:first-child {
-    padding-bottom: 30px;
-  }
-
-  & > div {
-    border-bottom: 1.5px solid #cccccc;
-    padding: 30px 0;
-  }
-
-  & > div:last-child {
-    border-bottom: none;
-    padding: 30px 0;
-  }
+  gap: 16px;
 }
 
 .check-menu {
@@ -40,7 +25,7 @@
   align-items: center;
   column-gap: 12px;
   height: 36px;
-  margin-top: 16px;
+  margin: 16px 0;
 
   & > button {
     width: 100px;
