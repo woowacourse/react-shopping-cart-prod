@@ -5,19 +5,23 @@ type FutureResult<TData> =
   | {
       isLoading: false;
       isFulfilled: false;
+      isError: false;
     }
   | {
       isLoading: true;
       isFulfilled: false;
+      isError: false;
     }
   | {
       isLoading: false;
       isFulfilled: true;
+      isError: false;
       data: TData;
     }
   | {
       isLoading: false;
       isFulfilled: false;
+      isError: true;
       error: unknown;
     };
 
@@ -27,18 +31,18 @@ const useFutureResult = <TData>(future: Future<TData> | null): FutureResult<TDat
 
   const result: FutureResult<TData> = useMemo(() => {
     if (future === null) {
-      return { isLoading: false, isFulfilled: false };
+      return { isLoading: false, isFulfilled: false, isError: false };
     }
     try {
       const data = future.unwrap();
-      return { isLoading: false, isFulfilled: true, data };
+      return { isLoading: false, isFulfilled: true, isError: false, data };
     } catch (thrown) {
       if (thrown instanceof Promise) {
         thrown.then(rerender).catch(rerender);
 
-        return { isLoading: true, isFulfilled: false };
+        return { isLoading: true, isError: false, isFulfilled: false };
       }
-      return { isLoading: false, isFulfilled: false, error: thrown };
+      return { isLoading: false, isFulfilled: false, isError: true, error: thrown };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [future, key]);
