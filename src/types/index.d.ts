@@ -33,3 +33,10 @@ export interface ToastItem {
   message: string;
   type: ToastType;
 }
+
+export interface MemberInfo {
+  id: number;
+  email: string;
+  money: number;
+  point: number;
+}
