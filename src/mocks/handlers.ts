@@ -35,7 +35,7 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(orderDetail));
   }),
 
-  rest.get('api/cart-items/coupon/', (req, res, ctx) => {
+  rest.get('api/cart-items/coupon', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(resultPrice));
   }),
 

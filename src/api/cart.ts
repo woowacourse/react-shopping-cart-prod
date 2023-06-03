@@ -38,6 +38,11 @@ export const getDeliveryPolicy = async (
 export const getPrice =
   (couponQuery: string) =>
   async (server: string): Promise<PriceResult> => {
+    if (couponQuery === '') {
+      const data = await api.get(`${server}/cart-items/coupon`);
+      return data;
+    }
+
     const data = await api.get(`${server}/cart-items/coupon/${couponQuery}`);
     return data;
   };
