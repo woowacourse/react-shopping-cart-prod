@@ -15,7 +15,7 @@ const CouponList = () => {
   const data = getData();
 
   const makeDownloadCouponFunction = (couponId: number) => async () => {
-    const url = ServerUtil.postCouponUrl(serverName);
+    const url = ServerUtil.getUserCouponsUrl(serverName);
 
     const response = await fetch(url, {
       method: 'POST',

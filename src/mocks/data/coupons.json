@@ -5,6 +5,12 @@
       "type": "percent",
       "amount": 50,
       "name": "우테코 레벨2 협업미션 기념"
+    },
+    {
+      "id": 2,
+      "type": "percent",
+      "amount": 10,
+      "name": "삼다수 마신 기념"
     }
   ]
 }

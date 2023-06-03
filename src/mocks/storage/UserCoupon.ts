@@ -20,7 +20,9 @@ const add = (couponId: number) => {
 
   coupons.push(couponInfo);
 
-  localStorage.setItem(KEY, JSON.stringify({ coupons }));
+  const sortedCoupons = coupons.sort((one, another) => one.id - another.id);
+
+  localStorage.setItem(KEY, JSON.stringify({ coupons: sortedCoupons }));
 
   return true;
 };

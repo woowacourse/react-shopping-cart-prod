@@ -6,7 +6,7 @@ import {
   ALL_COUPONS_PATH_NAME,
   PRODUCTS_PATH_NAME,
   CART_ITEMS_PATH_NAME,
-  COUPON_DOWNLOAD_PATH_NAME,
+  USER_COUPONS_PATH_NAME,
 } from '../constant';
 import UserCoupon from './storage/UserCoupon';
 
@@ -73,11 +73,16 @@ export const couponHandler = [
     res(ctx.delay(1000), ctx.status(200), ctx.json(mockCoupons))
   ),
 
-  rest.post<PostDownloadCouponRequestBody>(COUPON_DOWNLOAD_PATH_NAME, async (req, res, ctx) => {
+  rest.post<PostDownloadCouponRequestBody>(USER_COUPONS_PATH_NAME, async (req, res, ctx) => {
     const { couponId } = await req.json();
 
     if (UserCoupon.add(couponId)) return res(ctx.status(200));
 
     return res(ctx.status(400));
+  }),
+
+  rest.get(USER_COUPONS_PATH_NAME, (req, res, ctx) => {
+    const data = UserCoupon.getAll();
+    return res(ctx.delay(2000), ctx.status(200), ctx.body(JSON.stringify(data)));
   }),
 ];

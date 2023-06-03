@@ -14,7 +14,7 @@ export const DEFAULT_SERVER_NAME = Object.keys(BASE_URL)[0] as ServerName;
 export const PRODUCTS_PATH_NAME = `/products`;
 export const CART_ITEMS_PATH_NAME = `/cart-items`;
 export const ALL_COUPONS_PATH_NAME = '/coupons';
-export const COUPON_DOWNLOAD_PATH_NAME = '/members/coupon';
+export const USER_COUPONS_PATH_NAME = '/coupons/me';
 
 export const CART_LIST_KEY = 'cart_list';
 
