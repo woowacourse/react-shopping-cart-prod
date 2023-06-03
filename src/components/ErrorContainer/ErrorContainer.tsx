@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { serverAtom } from '../../store/server';
-import { PATH } from '../../store/path';
+import { PATH } from '../../constants/path';
 
 const ErrorComponent = () => {
   const setServerName = useSetRecoilState(serverAtom);

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { Order } from '../../types/responseData';
 import OrderItem from './OrderItem/OrderItem';
-import { PATH } from '../../store/path';
+import { PATH } from '../../constants/path';
 import { WIDTH } from '../../styles/mediaQuery';
 
 type OrderCardProps = Order & {
@@ -21,7 +21,7 @@ const OrderCard = ({
   const navigate = useNavigate();
 
   const onClickNavigate = () => {
-    navigate(`${PATH.ORDER_LIST_PAGE}${PATH.ORDER_DETAIL_PAGE}/${orderId}`, {
+    navigate(`${PATH.ORDER_DETAIL_PAGE}/${orderId}`, {
       state: {
         orderId,
         items,

@@ -12,7 +12,7 @@ const OrderListPage = () => {
     <Wrapper>
       <Title>주문 목록</Title>
       <OrderListContainer>
-        {Array.from(orders).map((order) => {
+        {orders.map((order) => {
           const {
             orderId,
             items,

@@ -5,7 +5,7 @@ import { WIDTH } from '../../styles/mediaQuery';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ServerName, serverAtom } from '../../store/server';
 import CartTextButton from './CartTextButton/CartTextButton';
-import { PATH } from '../../store/path';
+import { PATH } from '../../constants/path';
 import { cartAtom } from '../../store/cart';
 
 const Header = () => {
@@ -22,7 +22,7 @@ const Header = () => {
 
   return (
     <Container>
-      <Link to='/'>
+      <Link to={PATH.PRODUCT_PAGE}>
         <HomeButton>
           <ShoppingCartIconContainer>
             <ShoppingCartIcon width='100%' />
