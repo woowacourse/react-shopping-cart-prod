@@ -36,9 +36,11 @@ export const getOrders = async (serverId: ServerId): Promise<Order[]> => {
     },
   });
 
-  if (response.status !== 200) throw new Error(response.statusText);
+  const data = await response.json();
 
-  return response.json();
+  if (!response.ok) throw new Error(data.message);
+
+  return data;
 };
 
 export const postOrder = async (serverId: ServerId, order: PostOrder) => {
@@ -51,5 +53,5 @@ export const postOrder = async (serverId: ServerId, order: PostOrder) => {
     body: JSON.stringify(order),
   });
 
-  return response.status === 204;
+  return response.ok;
 };
