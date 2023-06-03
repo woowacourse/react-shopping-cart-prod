@@ -1,15 +1,15 @@
-import FlexBox from 'components/@common/FlexBox';
-import { BASE_SHIPPING_FEE } from 'constants/policy';
-import ROUTE_PATH from 'constants/routePath';
-import useCartCheckBox from 'hooks/useCartCheckBox';
-import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { checkedCartProductsTotalPrice } from 'state/cartProducts';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import FlexBox from 'components/@common/FlexBox';
+import { checkedCartProductsTotalPriceState } from 'state/cartProducts';
+import useCartCheckBox from 'hooks/useCartCheckBox';
+import ROUTE_PATH from 'constants/routePath';
+import { BASE_SHIPPING_FEE } from 'constants/policy';
 
 const CartPriceSection = () => {
   const { checkedCartProductIds } = useCartCheckBox();
-  const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPrice(checkedCartProductIds));
+  const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPriceState);
   const navigate = useNavigate();
 
   const isCheckedProductsExist = checkedCartProductIds.size > 0;

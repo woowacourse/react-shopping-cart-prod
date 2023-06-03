@@ -1,23 +1,23 @@
-import { atom, selectorFamily } from 'recoil';
-import { CartProducts, Product } from 'types/product';
+import { atom, selector } from 'recoil';
+import { CartProducts } from 'types/product';
 import { getCartProducts } from 'apis/cart';
+import { checkedCartProductIdsState } from './checkedCartProductIds';
 
 export const cartProductsState = atom<CartProducts>({
   key: 'cartState',
   default: getCartProducts(),
 });
 
-export const checkedCartProductsTotalPrice = selectorFamily<number, Set<Product['id']>>({
-  key: 'cartTotalPriceState',
-  get:
-    (checkedProducts) =>
-    ({ get }) => {
-      const cartProducts = get(cartProductsState);
+export const checkedCartProductsTotalPriceState = selector({
+  key: 'checkedCartTotalPriceState',
+  get: ({ get }) => {
+    const checkedProductIds = get(checkedCartProductIdsState);
+    const cartProducts = get(cartProductsState);
 
-      return [...cartProducts.entries()].reduce((acc, [cartProductId, { product, quantity }]) => {
-        if (!checkedProducts.has(cartProductId)) return acc;
+    return [...cartProducts.entries()].reduce((acc, [cartProductId, { product, quantity }]) => {
+      if (!checkedProductIds.has(cartProductId)) return acc;
 
-        return acc + product.price * quantity;
-      }, 0);
-    },
+      return acc + product.price * quantity;
+    }, 0);
+  },
 });

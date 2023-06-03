@@ -5,15 +5,13 @@ import useCheckOutPointCostContext from 'hooks/useContext/useCheckOutPointCostCo
 import useFetch from 'hooks/useFetch';
 import { getUserOwnPoints } from 'apis/points';
 import { useRecoilValue } from 'recoil';
-import { checkedCartProductsTotalPrice } from 'state/cartProducts';
-import useCartCheckBox from 'hooks/useCartCheckBox';
+import { checkedCartProductsTotalPriceState } from 'state/cartProducts';
 import { BASE_SHIPPING_FEE, SHIPPING_FEE_THRESHOLD } from 'constants/policy';
 
 const CheckOutPointTab = () => {
   const { data: userOwnPoints, isLoading, errorState } = useFetch<number>(getUserOwnPoints);
   const { allInPoint, changePointCost, pointCost } = useCheckOutPointCostContext();
-  const { checkedCartProductIds } = useCartCheckBox();
-  const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPrice(checkedCartProductIds));
+  const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPriceState);
   const shippingFee = cartTotalPrice < SHIPPING_FEE_THRESHOLD ? BASE_SHIPPING_FEE : 0;
   const paymentAmount = cartTotalPrice + shippingFee;
 
