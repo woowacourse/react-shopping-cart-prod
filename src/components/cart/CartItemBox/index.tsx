@@ -36,7 +36,7 @@ function CartItemBox({ cartId, productId, imageUrl, name, price }: CartItemProps
       <S.ProductInfo>
         <S.DeleteIcon src={deleteIcon} onClick={removeCartItemAndDelete} />
         <Stepper
-          stepperStyle="large"
+          stepperstyle="large"
           onChange={onQuantityInputChange}
           onDecrease={decreaseQuantity}
           onIncrease={increaseQuantity}

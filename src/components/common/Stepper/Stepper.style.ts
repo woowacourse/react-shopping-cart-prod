@@ -6,14 +6,14 @@ export const CartBox = styled.div`
   display: flex;
 `;
 
-export const QuantityInput = styled.input<{ stepperStyle: StepperStyleType }>`
-  width: ${({ stepperStyle }) => (stepperStyle === 'small' ? '42px' : '73px')};
-  height: ${({ stepperStyle }) => (stepperStyle === 'small' ? '28px' : '60px')};
+export const QuantityInput = styled.input<{ stepperstyle: StepperStyleType }>`
+  width: ${({ stepperstyle }) => (stepperstyle === 'small' ? '42px' : '73px')};
+  height: ${({ stepperstyle }) => (stepperstyle === 'small' ? '28px' : '60px')};
 
   border: 1px solid ${({ theme }) => theme.colors.secondaryColor};
 
   font-weight: 400;
-  font-size: ${({ stepperStyle }) => (stepperStyle === 'small' ? '1.2rem' : '2.4rem')};
+  font-size: ${({ stepperstyle }) => (stepperstyle === 'small' ? '1.2rem' : '2.4rem')};
   letter-spacing: 0.5px;
 
   text-align: center;
@@ -21,19 +21,19 @@ export const QuantityInput = styled.input<{ stepperStyle: StepperStyleType }>`
   color: ${theme.colors.primaryColor};
 `;
 
-export const QuantityControlButton = styled.button<{ stepperStyle: StepperStyleType }>`
+export const QuantityControlButton = styled.button<{ stepperstyle: StepperStyleType }>`
   display: flex;
   justify-content: center;
   align-items: center;
 
-  width: ${({ stepperStyle }) => (stepperStyle === 'small' ? '24px' : '42px')};
-  height: ${({ stepperStyle }) => (stepperStyle === 'small' ? '14px' : '30px')};
+  width: ${({ stepperstyle }) => (stepperstyle === 'small' ? '24px' : '42px')};
+  height: ${({ stepperstyle }) => (stepperstyle === 'small' ? '14px' : '30px')};
 
   border: 1px solid ${({ theme }) => theme.colors.secondaryColor};
   border-left: none;
 
-  font-size: ${({ stepperStyle }) => (stepperStyle === 'small' ? '1.2rem' : '2.4rem')};
-  line-height: ${({ stepperStyle }) => (stepperStyle === 'small' ? '1.2rem' : '2.4rem')};
+  font-size: ${({ stepperstyle }) => (stepperstyle === 'small' ? '1.2rem' : '2.4rem')};
+  line-height: ${({ stepperstyle }) => (stepperstyle === 'small' ? '1.2rem' : '2.4rem')};
 
   color: ${theme.colors.primaryColor};
 

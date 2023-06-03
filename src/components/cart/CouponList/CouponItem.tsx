@@ -7,7 +7,7 @@ interface CouponItemProps {
   discountValue: number;
   type: CouponKind;
   condition: number;
-  isSelect: boolean;
+  selected: boolean;
   onCouponSelect: () => void;
 }
 
@@ -15,7 +15,7 @@ function CouponItem({
   name,
   discountValue,
   condition,
-  isSelect,
+  selected,
   type,
   onCouponSelect,
 }: CouponItemProps) {
@@ -42,7 +42,7 @@ function CouponItem({
   };
 
   return (
-    <S.Container onClick={onCouponSelect} isSelect={isSelect}>
+    <S.Container onClick={onCouponSelect} selected={selected}>
       <S.Name>{name}</S.Name>
       <div>
         <S.MainValueText>{getMainValueText()}</S.MainValueText>

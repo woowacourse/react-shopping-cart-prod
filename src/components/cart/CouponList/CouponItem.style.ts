@@ -1,7 +1,7 @@
 import { styled } from 'styled-components';
 import { theme } from '@styles/theme';
 
-export const Container = styled.div<{ isSelect: boolean }>`
+export const Container = styled.div<{ selected: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -9,8 +9,8 @@ export const Container = styled.div<{ isSelect: boolean }>`
   width: 44rem;
   height: 24rem;
 
-  border: ${({ isSelect }) =>
-    isSelect ? `3px solid ${theme.colors.dangerColor} ` : `1px solid ${theme.colors.primaryColor}`};
+  border: ${({ selected }) =>
+    selected ? `3px solid ${theme.colors.dangerColor} ` : `1px solid ${theme.colors.primaryColor}`};
   padding: 2.5rem 3rem;
   gap: 1rem;
 

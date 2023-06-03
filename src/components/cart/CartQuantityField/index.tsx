@@ -24,7 +24,7 @@ function CartQuantityField({ product }: CartQuantityFieldProps) {
     <S.StepperContainer>
       {findCart ? (
         <Stepper
-          stepperStyle="small"
+          stepperstyle="small"
           onChange={onQuantityInputChange}
           onDecrease={decreaseQuantity}
           onIncrease={increaseQuantity}

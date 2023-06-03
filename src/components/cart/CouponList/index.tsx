@@ -17,7 +17,7 @@ function CouponList({ coupons, onCouponSelect, selectedCoupon }: CouponListProps
           key={coupon.id}
           condition={coupon.minimumPrice}
           discountValue={coupon.value}
-          isSelect={selectedCoupon?.id === coupon.id}
+          selected={selectedCoupon?.id === coupon.id}
           {...coupon}
         />
       ))}

@@ -4,7 +4,7 @@ import * as S from './Stepper.style';
 export type StepperStyleType = 'small' | 'large';
 
 interface StepperProps {
-  stepperStyle: StepperStyleType;
+  stepperstyle: StepperStyleType;
   quantity: number;
   onIncrease: () => void;
   onDecrease: () => void;
@@ -16,7 +16,7 @@ interface StepperProps {
 }
 
 function Stepper({
-  stepperStyle,
+  stepperstyle,
   quantity,
   onIncrease,
   onDecrease,
@@ -29,7 +29,7 @@ function Stepper({
   return (
     <S.CartBox>
       <S.QuantityInput
-        stepperStyle={stepperStyle}
+        stepperstyle={stepperstyle}
         ref={countInputRef}
         data-testid="quantity-input"
         value={quantity === 0 ? '' : quantity}
@@ -38,7 +38,7 @@ function Stepper({
       />
       <S.ButtonBox>
         <S.QuantityControlButton
-          stepperStyle={stepperStyle}
+          stepperstyle={stepperstyle}
           onClick={onIncrease}
           aria-label={ariaIncreaseLabel}
           role="increase"
@@ -46,7 +46,7 @@ function Stepper({
           ⏶
         </S.QuantityControlButton>
         <S.QuantityControlButton
-          stepperStyle={stepperStyle}
+          stepperstyle={stepperstyle}
           onClick={onDecrease}
           aria-label={ariaDecreaseLabel}
           role="decrease"
