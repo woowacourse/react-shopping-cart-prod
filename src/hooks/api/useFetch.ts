@@ -1,12 +1,20 @@
 import { useEffect, useState } from 'react';
 
-const useFetch = <T>(url: string) => {
+const useFetch = <T>(url: string, authToken?: string) => {
   const [data, setData] = useState<T | null>(null);
   const [promise, setPromise] = useState<Promise<void>>();
   const [error, setError] = useState<Error | null>(null);
 
   const fetchData = async () => {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: authToken
+        ? {
+            'Content-Type': 'application/json',
+            Authorization: `Basic ${authToken}`,
+          }
+        : undefined,
+    });
 
     try {
       if (!response.ok) {
