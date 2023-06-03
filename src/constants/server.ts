@@ -14,6 +14,11 @@ export const SERVER = {
     id: process.env.REACT_APP_ID,
     password: process.env.REACT_APP_PASSWORD,
   },
+  msw: {
+    url: '',
+    id: 'a',
+    password: 'b',
+  },
 } as const;
 
 export type ServerKey = keyof typeof SERVER;
