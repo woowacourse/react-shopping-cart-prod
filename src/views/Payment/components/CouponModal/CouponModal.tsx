@@ -1,12 +1,13 @@
 import { Modal } from '@common/Modal';
 
-import { useCart, useTotalPrice } from '@views/Cart/recoil/cartState';
-import useCouponList, { useCouponSelected } from '@views/Payment/recoil/couponListState';
+import { useTotalPrice } from '@views/Cart/recoil/cartState';
+import useCouponList from '@views/Payment/recoil/couponListState';
 
 import { styled } from 'styled-components';
 
 import { CouponItem } from '../CouponItem';
 import { Button } from '@common/Button';
+import { useState } from 'react';
 
 interface CouponModalProps {
   isOpen: boolean;
@@ -42,7 +43,9 @@ const couponBenefitText = (type: string, value: number) => {
 };
 
 function CouponModal({ isOpen, closeModal }: CouponModalProps) {
-  const { couponList, checkCoupon } = useCouponList();
+  const { couponList, checkCoupon, resetCouponCheck } = useCouponList();
+  const [checkedCouponId, setCheckedCouponId] = useState<number | null>(null);
+
   const totalPrice = useTotalPrice();
 
   const isValidCoupon = (totalPrice: number, minimumPrice: number) => {
@@ -60,32 +63,42 @@ function CouponModal({ isOpen, closeModal }: CouponModalProps) {
                 <CouponItem
                   key={coupon.id}
                   onClick={() => {
-                    checkCoupon(coupon.id);
-                    closeModal();
+                    setCheckedCouponId(coupon.id);
                   }}
                   disabled={isValidCoupon(totalPrice, coupon.minimumPrice)}
                   benefit={couponBenefitText(coupon.type, coupon.value)}
                   condition={couponCondition(coupon.minimumPrice)}
                   name={coupon.name}
+                  selected={coupon.id === checkedCouponId}
                 />
               );
             })}
           </CouponListWrapper>
         }
-        <ButtonWrapper>
-          <Button
-            size="l"
-            onClick={() => {
-              closeModal();
-            }}
-          >
-            취소하기
-          </Button>
-          <Button size="l" primary>
-            선택완료
-          </Button>
-        </ButtonWrapper>
       </ModalContentWrapper>
+      <ButtonWrapper>
+        <Button
+          size="l"
+          onClick={() => {
+            setCheckedCouponId(null);
+            resetCouponCheck();
+            closeModal();
+          }}
+        >
+          해제하기
+        </Button>
+        <Button
+          size="l"
+          primary
+          onClick={() => {
+            if (!checkedCouponId) return;
+            checkCoupon(checkedCouponId);
+            closeModal();
+          }}
+        >
+          선택완료
+        </Button>
+      </ButtonWrapper>
     </Modal>
   ) : null;
 }
@@ -94,7 +107,7 @@ export default CouponModal;
 
 const ButtonWrapper = styled.div`
   display: flex;
-  position: absolute;
+  position: fixed;
   width: 80%;
   bottom: 2rem;
   left: 50%;
@@ -106,6 +119,9 @@ const ModalContentWrapper = styled.div`
   justify-content: 'center';
   align-items: 'center';
   flex-direction: 'column';
+  width: 100%;
+  max-height: 60vh;
+  overflow-y: auto;
 `;
 
 const CouponListWrapper = styled.div`
@@ -114,9 +130,6 @@ const CouponListWrapper = styled.div`
   justify-content: start;
   align-items: center;
   margin: 0 auto;
-
-  max-height: 80vh;
-  overflow-y: auto;
 
   max-width: 320px;
 

@@ -5,17 +5,18 @@ interface CouponItemProps extends HTMLAttributes<HTMLButtonElement> {
   benefit: string;
   name: string;
   condition: string;
+  selected?: boolean;
   disabled?: boolean;
   onClick?: () => void;
 }
 
-function CouponItem({ benefit, name, condition, onClick, disabled }: CouponItemProps) {
+function CouponItem({ benefit, name, condition, onClick, disabled, selected }: CouponItemProps) {
   return (
-    <Coupon onClick={onClick} disabled={disabled}>
+    <Coupon onClick={onClick} disabled={disabled} selected={selected}>
       <ContentWrapper>
         <CouponContentPrimary>{name}</CouponContentPrimary>
         <CouponBenefit>{benefit}</CouponBenefit>
-        <CouponContentSecondary>{condition}</CouponContentSecondary>
+        <CouponContentSecondary disabled={disabled}>{condition}</CouponContentSecondary>
       </ContentWrapper>
     </Coupon>
   );
@@ -23,7 +24,7 @@ function CouponItem({ benefit, name, condition, onClick, disabled }: CouponItemP
 
 export default CouponItem;
 
-const Coupon = styled.button`
+const Coupon = styled.button<{ selected?: boolean }>`
   display: flex;
   justify-content: start;
   align-items: center;
@@ -33,7 +34,8 @@ const Coupon = styled.button`
   padding-left: 2rem;
   height: 12rem;
   margin: 10px;
-  border: 1px solid ${({ theme }) => theme.primaryColor};
+  border: ${({ theme, selected }) =>
+    selected ? `${theme.infoColor} 3px solid` : `${theme.primaryColor} 1px solid`};
   border-radius: 2px;
 
   background-color: ${({ theme }) => theme.lightColor};
@@ -43,6 +45,7 @@ const Coupon = styled.button`
   text-align: left;
 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
   &:disabled {
     background-color: ${({ theme }) => theme.secondaryColor};
     cursor: not-allowed;
@@ -71,7 +74,7 @@ const CouponContentPrimary = styled.p`
   font-weight: 600;
 `;
 
-const CouponContentSecondary = styled.p`
-  color: ${({ theme }) => theme.secondaryColor};
+const CouponContentSecondary = styled.p<{ disabled?: boolean }>`
+  color: ${({ theme, disabled }) => (disabled ? theme.primaryColor : theme.secondaryColor)};
   font-size: 1.5rem;
 `;

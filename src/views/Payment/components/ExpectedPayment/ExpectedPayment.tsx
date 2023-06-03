@@ -6,7 +6,7 @@ import { DELIVERY_FEE_BASIC } from '@views/Payment/constants/orderConstants';
 
 import { useState } from 'react';
 import { CouponModal } from '../CouponModal';
-import useCouponList, { useCouponSelected } from '@views/Payment/recoil/couponListState';
+import { useCouponSelected } from '@views/Payment/recoil/couponListState';
 import { CouponType } from 'types/CouponType';
 import { RiCoupon2Line } from 'react-icons/ri';
 import { Button } from '@common/Button';
@@ -37,15 +37,14 @@ const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
 
 function ExpectedPayment() {
   const totalPrice = useTotalPrice();
-  const { getCartItemIsChecked, getCheckedItemIds } = useCart();
   const couponSelected = useCouponSelected();
   const fetchOrders = useFetchOrders();
   const navigator = useNavigate();
+  const { getCheckedItemIds } = useCart();
 
   const discountPrice = getDiscount(couponSelected, totalPrice);
 
   const [isCouponOpen, setIsCouponOpen] = useState(false);
-  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
   const deliveryFee = totalPrice ? DELIVERY_FEE_BASIC : 0;
   const totalPayingPrice = totalPrice + deliveryFee;
@@ -84,7 +83,6 @@ function ExpectedPayment() {
             쿠폰선택
           </S.CouponButton>
         </S.CouponContainer>
-
         <S.PayingBackground>
           <FlexWrapper>
             <S.ContentText>총 상품 가격</S.ContentText>

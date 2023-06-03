@@ -1,6 +1,5 @@
-import { useTotalPrice } from '@views/Cart/recoil/cartState';
 import useCouponMessage from '@views/Payment/hooks/useCouponMessage';
-import useCouponList, { useCouponSelected } from '@views/Payment/recoil/couponListState';
+
 import { styled } from 'styled-components';
 
 function CouponMessage() {

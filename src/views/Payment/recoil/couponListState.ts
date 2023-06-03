@@ -11,7 +11,7 @@ import {
 import fetchCoupons from '../utils/fetchCoupons';
 import { COUPON_PATH } from '@constants/urlConstants';
 import { CouponRemote, CouponType } from 'types/CouponType';
-import { cartTotalPrice, useRefreshCart } from '@views/Cart/recoil/cartState';
+import { cartTotalPrice } from '@views/Cart/recoil/cartState';
 
 const couponListState = atom<CouponType[]>({
   key: 'couponListState',
@@ -94,9 +94,21 @@ const useCouponList = () => {
     });
   };
 
+  const resetCouponCheck = () => {
+    setCouponList((prev) => {
+      return prev.map((coupon) => {
+        return {
+          ...coupon,
+          checked: false,
+        };
+      });
+    });
+  };
+
   return {
     couponList,
     checkCoupon,
+    resetCouponCheck,
   };
 };
 

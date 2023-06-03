@@ -50,7 +50,7 @@ const ModalContainer = styled.div`
   background-color: #fff;
   padding: 2rem;
   min-width: 500px;
-  overflow: scroll;
+  overflow: hidden;
 `;
 
 const Background = styled.div`
