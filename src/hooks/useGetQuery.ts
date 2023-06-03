@@ -1,35 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from 'react';
+import fetchData from 'src/api';
 
 const useGetQuery = <DataType>(fetchUrl: string, headers?: HeadersInit) => {
   const [data, setData] = useState<DataType | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchingData = async (url: string, fetchHeaders?: HeadersInit) => {
     setLoading(true);
     setError(null);
+    try {
+      const jsonData = await fetchData<DataType>({ url, options: { headers: fetchHeaders } });
 
-    fetch(fetchUrl, { headers })
-      .then(res => res.json())
-      .then(resData => {
-        setData(resData);
-      })
-      .catch((e: Error) => setError(e.message))
-      .finally(() => setLoading(false));
+      setData(jsonData);
+    } catch (responseError) {
+      if (responseError instanceof Error) {
+        setError(responseError.message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchingData(fetchUrl, headers);
   }, [fetchUrl]);
 
-  const refreshQuery = useCallback(async (url?: string, refreshHeaders?: HeadersInit) => {
-    setLoading(true);
-    setError(null);
-
-    await fetch(url ?? fetchUrl, { headers: headers ?? refreshHeaders })
-      .then(res => res.json())
-      .then(resData => {
-        setData(resData);
-      })
-      .catch((e: Error) => setError(e.message))
-      .finally(() => setLoading(false));
+  const refreshQuery = useCallback((url?: string, refreshHeaders?: HeadersInit) => {
+    fetchingData(url ?? fetchUrl, refreshHeaders);
   }, []);
 
   return { data, loading, error, refreshQuery };
