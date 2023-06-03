@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import FlexBox from 'components/@common/FlexBox';
 import useCartCheckBox from 'hooks/useCartCheckBox';
 import ROUTE_PATH from 'constants/routePath';
 import useCartPriceText from './hooks/useCartPriceText';
+import Box from 'components/@common/Box';
 
 const CartPriceSection = () => {
   const navigate = useNavigate();
@@ -12,84 +12,84 @@ const CartPriceSection = () => {
   const isCheckedProductsExist = checkedCartProductIds.size > 0;
 
   return (
-    <PriceSection flexDirection="column" gap="10px">
-      <Container justify="space-between">
-        <SubTitle>총 상품가격</SubTitle>
-        <ProductTotalPrice>{productTotalPriceText}</ProductTotalPrice>
-      </Container>
-      <Container justify="space-between">
-        <SubTitle>배송비</SubTitle>
-        <ShippingFee>{shippingFeeText}</ShippingFee>
-      </Container>
-      <Container justify="space-between">
-        <SubTitle>예상 주문금액</SubTitle>
-        <CartTotalPrice>{paymentAmountText}</CartTotalPrice>
-      </Container>
-      <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.CHECKOUT)} isActive={isCheckedProductsExist}>
-        {orderConfirmButtonText}
-      </OrderConfirmButton>
-    </PriceSection>
+    <Container sizing={{ width: '40%' }} flex={{ flexDirection: 'column' }}>
+      <PriceSection sizing={{ width: '100%' }} flex={{ flexDirection: 'column', align: 'flex-start', gap: '20px' }}>
+        <Title>결제 금액</Title>
+        <Box sizing={{ width: '100%' }} flex={{ justify: 'space-between' }}>
+          <SubTitle>총 상품가격</SubTitle>
+          <AmountText>{productTotalPriceText}</AmountText>
+        </Box>
+        <Box sizing={{ width: '100%' }} flex={{ justify: 'space-between' }}>
+          <SubTitle>배송비</SubTitle>
+          <AmountText>{shippingFeeText}</AmountText>
+        </Box>
+        <Box sizing={{ width: '100%' }} flex={{ justify: 'space-between' }}>
+          <PaymentAmountSubTitle>예상 주문금액</PaymentAmountSubTitle>
+          <PaymentAmountText>{paymentAmountText}</PaymentAmountText>
+        </Box>
+      </PriceSection>
+      <ConfirmButtonBox sizing={{ width: '100%' }}>
+        <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.CHECKOUT)} isActive={isCheckedProductsExist}>
+          {orderConfirmButtonText}
+        </OrderConfirmButton>
+      </ConfirmButtonBox>
+    </Container>
   );
 };
 
 export default CartPriceSection;
 
-const PriceSection = styled(FlexBox)`
+const Container = styled(Box)`
   position: sticky;
   top: 140px;
-  width: 40%;
   margin-top: 60px;
-  padding: 20px 26px;
-  border: 1px solid var(--color-grayscale-200);
-  background-color: var(--color-grayscale-100);
-
-  @media (max-width: 1280px) {
-    span {
-      font-size: 16px;
-    }
-  }
+  background-color: var(--color-pure-white);
 
   @media (max-width: 768px) {
-    position: sticky;
-    bottom: 0;
+    position: initial;
     width: 100%;
-    height: 250px;
     margin: 0;
-  }
-
-  @media (max-width: 430px) {
-    height: 100%;
-
-    div {
-      display: none;
-    }
   }
 `;
 
-const Container = styled(FlexBox)`
-  width: 100%;
-  height: 50px;
-  border-bottom: solid 1px var(--color-grayscale-200);
+const PriceSection = styled(Box)`
+  padding: 20px 24px;
+  border: 1px solid var(--color-grayscale-200);
+  background-color: var(--color-pure-white);
+  border-radius: 6px;
+`;
+
+const Title = styled.span`
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
 `;
 
 const SubTitle = styled.span`
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 16px;
+  color: var(--color-grayscale-500);
 `;
 
-const ProductTotalPrice = styled.span`
-  font-size: 18px;
-  font-weight: 700;
+const AmountText = styled.span`
+  font-size: 16px;
 `;
 
-const ShippingFee = styled.span`
+const PaymentAmountSubTitle = styled.span`
   font-size: 18px;
   font-weight: 700;
+  color: var(--color-pure-dark);
 `;
 
-const CartTotalPrice = styled.span`
-  font-size: 18px;
+const PaymentAmountText = styled.span`
+  font-size: 22px;
   font-weight: 700;
+  color: var(--color-primary-tone-down);
+`;
+
+const ConfirmButtonBox = styled(Box)`
+  @media (max-width: 768px) {
+    padding: 6px 0;
+  }
 `;
 
 const OrderConfirmButton = styled.button<{ isActive: boolean }>`
@@ -97,6 +97,7 @@ const OrderConfirmButton = styled.button<{ isActive: boolean }>`
   height: 50px;
   margin-top: 20px;
   border: none;
+  border-radius: 4px;
   color: ${({ isActive }) => (isActive ? 'var(--color-pure-white)' : 'var(--color-grayscale-500)')};
   font-size: 18px;
   font-weight: 700;
