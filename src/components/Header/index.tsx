@@ -33,20 +33,22 @@ function Header() {
 
   return (
     <header className={styles.container}>
-      <Link to="/">
-        <Logo />
-      </Link>
-      <div className={styles['header-nav']}>
-        <DropDown options={userNameList} selectedListHandler={serverSelectChange} currentOptionIndex={index} />
-        <div className={styles['cart-container']}>
-          <Link to="/cart" onClick={() => Toast.reset}>
-            <AiOutlineShoppingCart size={28} />
-          </Link>
-          {cartList.length > 0 && <div className={styles['cart-count']}>{cartList.length}</div>}
-        </div>
-        <Link to="/order">
-          <RiBillLine size={28} />
+      <div className={styles['header-wrapper']}>
+        <Link to="/">
+          <Logo className={styles.logo} />
         </Link>
+        <div className={styles['header-nav']}>
+          <DropDown options={userNameList} selectedListHandler={serverSelectChange} currentOptionIndex={index} />
+          <div className={styles['cart-container']}>
+            <Link to="/cart" onClick={() => Toast.reset}>
+              <AiOutlineShoppingCart size={28} />
+            </Link>
+            {cartList.length > 0 && <div className={styles['cart-count']}>{cartList.length}</div>}
+          </div>
+          <Link to="/order">
+            <RiBillLine size={28} />
+          </Link>
+        </div>
       </div>
     </header>
   );
