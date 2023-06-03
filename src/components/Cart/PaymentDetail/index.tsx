@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { checkedItemsAtom, couponAtom } from 'recoil/carts';
+import { checkedItemIdsAtom, couponAtom } from 'recoil/carts';
 import * as S from './PaymentDetail.styles';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'utils/constants';
@@ -20,7 +20,7 @@ const PaymentDetail = () => {
     finalPrice,
     isDeliveryFree,
   } = usePrice();
-  const checkItemIds = useRecoilValue(checkedItemsAtom);
+  const checkItemIds = useRecoilValue(checkedItemIdsAtom);
   const couponIds = useRecoilValue(couponAtom);
   const { request } = useMutate();
 

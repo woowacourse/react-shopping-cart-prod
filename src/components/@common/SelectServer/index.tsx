@@ -4,7 +4,7 @@ import { SERVERS } from 'utils/constants';
 import { Server, ServerName } from 'types';
 import * as S from './SelectServer.styles';
 import { getCartList } from 'api/cart';
-import { cartListAtom, checkedItemsAtom } from 'recoil/carts';
+import { cartListAtom, checkedItemIdsAtom } from 'recoil/carts';
 import { CartItem } from 'types/api/carts';
 
 const SelectServer = () => {
@@ -22,7 +22,7 @@ const SelectServer = () => {
             const cartList = await getCartList(selectedServer);
             set(cartListAtom, cartList);
             set(
-              checkedItemsAtom,
+              checkedItemIdsAtom,
               cartList.map((item: CartItem) => item.id)
             );
           } catch (error) {

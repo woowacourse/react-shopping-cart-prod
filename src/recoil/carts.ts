@@ -15,7 +15,7 @@ export const cartListAtom = atom<CartItem[]>({
   }),
 });
 
-export const checkedItemsAtom = atom<number[]>({
+export const checkedItemIdsAtom = atom<number[]>({
   key: 'checkedItemsAtom',
   default: selector({
     key: 'initialCheckedList',
@@ -56,7 +56,7 @@ export const totalPriceSelector = selector({
   get: ({ get }) => {
     const { cartItemsPrice } = get(priceAtom);
     const cartList = get(cartListAtom);
-    const checkedItems = get(checkedItemsAtom);
+    const checkedItems = get(checkedItemIdsAtom);
 
     return cartItemsPrice
       .filter((item) => checkedItems.includes(item.cartItemId))
@@ -74,7 +74,7 @@ export const totalDiscountPriceSelector = selector<number>({
   get: ({ get }) => {
     const { cartItemsPrice, discountFromTotalPrice } = get(priceAtom);
     const cartList = get(cartListAtom);
-    const checkItems = get(checkedItemsAtom);
+    const checkItems = get(checkedItemIdsAtom);
 
     const discountSum = cartItemsPrice
       .filter((item) => checkItems.includes(item.cartItemId))

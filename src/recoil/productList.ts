@@ -3,7 +3,7 @@ import { atom, selector } from 'recoil';
 import { serverAtom } from './server';
 import { ProductItem } from 'types/api/products';
 
-export const productListSelector = atom<ProductItem[]>({
+export const productListAtom = atom<ProductItem[]>({
   key: 'productList',
   default: selector({
     key: 'initialProductList',

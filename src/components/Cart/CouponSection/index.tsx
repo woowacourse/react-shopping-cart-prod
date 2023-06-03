@@ -33,9 +33,9 @@ const CouponSection = () => {
     (couponId: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
       if (!e.target.checked) {
         setCheckedCoupons((prev) => prev.filter((id) => id !== couponId));
-
         return;
       }
+
       setCheckedCoupons((prev) => [...prev, couponId]);
     };
 
