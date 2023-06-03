@@ -1,14 +1,15 @@
 import { BiDetail } from 'react-icons/bi';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 import { OrderItemInfo } from '../../types';
 import Price from '../common/Price';
 import Button from '../common/Button';
 
 interface Props {
   orderItemInfo: OrderItemInfo;
+  isDetail?: boolean;
 }
 
-export default function OrderItem({ orderItemInfo }: Props) {
+export default function OrderItem({ orderItemInfo, isDetail = false }: Props) {
   const { orderNumber, date, products } = orderItemInfo;
 
   return (
@@ -18,11 +19,13 @@ export default function OrderItem({ orderItemInfo }: Props) {
           <span>주문번호: {orderNumber}</span>
           <span>({date})</span>
         </Style.Title>
-        <Button designType="text" fontSize="20px" color="var(--grey-400)" aria-label="상세보기">
-          <BiDetail />
-        </Button>
+        {!isDetail && (
+          <Button designType="text" fontSize="20px" color="var(--grey-400)" aria-label="상세보기">
+            <BiDetail />
+          </Button>
+        )}
       </Style.TitleContainer>
-      <Style.Products>
+      <Style.Products isDetail={isDetail}>
         {products.map(({ id, name, price, imageUrl, quantity }) => (
           <Style.ProductContainer key={id}>
             <Style.ProductImageWrapper>
@@ -61,13 +64,18 @@ const Style = {
     font-size: 12px;
   `,
 
-  Products: styled.ul`
+  Products: styled.ul<{ isDetail: boolean }>`
     display: flex;
     flex-direction: column;
     gap: 10px;
 
-    max-height: 350px;
-    overflow-y: scroll;
+    ${({ isDetail }) =>
+      isDetail
+        ? ''
+        : css`
+            max-height: 350px;
+            overflow-y: scroll;
+          `};
   `,
 
   ProductContainer: styled.li`

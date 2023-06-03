@@ -24,13 +24,20 @@ export const Default: Story = {
       id: 1,
       orderNumber: 1,
       date: '2023-05-30',
-      totalOrderPrice: 1900,
+      totalOrderPrice: 201900,
       products: [
         {
           id: 1,
           name: '지구',
           price: 1000,
           imageUrl: 'https://cdn.pixabay.com/photo/2011/12/13/14/28/earth-11009__480.jpg',
+          quantity: 1,
+        },
+        {
+          id: 2,
+          name: '화성',
+          price: 200000,
+          imageUrl: 'https://cdn.pixabay.com/photo/2011/12/13/14/30/mars-11012__480.jpg',
           quantity: 1,
         },
         {
