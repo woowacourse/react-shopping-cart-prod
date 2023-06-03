@@ -7,8 +7,8 @@ import {
   MenuIcon,
   MenuTitle,
   MenuWrapper,
-} from "./Header.style";
-import Icon from "../Icon";
+} from "../Header/Header.style.ts";
+import Icon from "../Icon.tsx";
 import { IoCart, IoPerson } from "react-icons/io5";
 import { useRecoilValue } from "recoil";
 import { userRepository, userState } from "../../app/recoil/userAtom.tsx";

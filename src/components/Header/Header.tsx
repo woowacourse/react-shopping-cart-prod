@@ -14,7 +14,7 @@ import ServerSelectBox from "../ServerSelectBox";
 import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import Login from "../Login";
 import { userState } from "../../app/recoil/userAtom.tsx";
-import PersonalDropdown from "./PersonalDropdown.tsx";
+import PersonalDropdown from "../PersonalDropdown";
 
 function Header() {
   const navigate = useNavigate();
