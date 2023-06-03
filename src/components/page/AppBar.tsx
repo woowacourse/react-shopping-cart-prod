@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import { styled } from 'styled-components';
 import HomeIcon from '../../assets/icons/home-icon.svg';
 import servers from '../../config/servers';
@@ -90,6 +90,7 @@ type HeaderProps = {
 
 const AppBar = (props: HeaderProps) => {
   const { onNavigate } = props;
+  const cartItemsLoadable = useRecoilValueLoadable(userCartItemsState);
   const [server, setServer] = useRecoilState(serverState);
 
   const handleServerChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
@@ -116,13 +117,14 @@ const AppBar = (props: HeaderProps) => {
             ))}
           </Selector>
 
-          <AwaitRecoilState state={userCartItemsState}>
-            {(cartItems) => (
-              <MenuButton onClick={() => onNavigate('/cart')}>
-                장바구니 <Badge show={cartItems.length > 0}>{cartItems.length}</Badge>
-              </MenuButton>
+          <MenuButton onClick={() => onNavigate('/cart')}>
+            장바구니{' '}
+            {cartItemsLoadable.state === 'hasValue' && (
+              <Badge show={cartItemsLoadable.getValue().length > 0}>
+                {cartItemsLoadable.getValue().length}
+              </Badge>
             )}
-          </AwaitRecoilState>
+          </MenuButton>
 
           <AwaitRecoilState state={userProfileState}>
             {(profile) =>
