@@ -26,7 +26,7 @@ export const useCoupon = () => {
   const getCouponList = async () => {
     const responseResult = await APIHandler.get<Coupons>(COUPON_URL);
 
-    if (responseResult.statusCode !== 200) console.log(responseResult.errorMessage);
+    if (responseResult.statusCode !== 200) console.error(responseResult.errorMessage);
     if (responseResult.result === undefined) {
       return {
         rateCoupons: [],

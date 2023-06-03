@@ -14,7 +14,7 @@ export const useCart = () => {
   const getCartList = async () => {
     const responseResult = await APIHandler.get<CartItemInfo[]>(CART_URL);
 
-    if (responseResult.statusCode !== 200) console.log(responseResult.errorMessage);
+    if (responseResult.statusCode !== 200) console.error(responseResult.errorMessage);
     if (responseResult.result === undefined) return [];
 
     return responseResult.result;

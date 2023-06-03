@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
+import { selectedHostState } from '../recoil/atoms';
 import { ProductInfo } from '../types';
 import { PRODUCTS_BASE_URL } from '../constants';
 import APIHandler from '../api/APIHandler';
-import { useRecoilValue } from 'recoil';
-import { selectedHostState } from '../recoil/atoms';
 
 export const useProduct = () => {
   const host = useRecoilValue(selectedHostState);
@@ -22,7 +22,7 @@ export const useProduct = () => {
   const getProductList = async () => {
     const responseResult = await APIHandler.get<ProductInfo[]>(PRODUCTS_URL);
 
-    if (responseResult.statusCode !== 200) console.log(responseResult.errorMessage);
+    if (responseResult.statusCode !== 200) console.error(responseResult.errorMessage);
     if (responseResult.result === undefined) return [];
 
     return responseResult.result;
