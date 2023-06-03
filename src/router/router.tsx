@@ -3,6 +3,7 @@ import Cart from '@pages/Cart';
 import Home from '@pages/Home';
 import Orders from '@pages/Orders';
 import OrderComplete from '@pages/Orders/OrderComplete';
+import OrderDetail from '@pages/Orders/OrderDetail';
 
 export const ROUTER_PATH = {
   HOME: '/',
@@ -29,16 +30,12 @@ const router = createBrowserRouter(
       element: <Orders />,
     },
     {
+      path: `${ROUTER_PATH.ORDERS}/:orderId`,
+      element: <OrderDetail />,
+    },
+    {
       path: ORDER_PATH.COMPLETE,
-      element: (
-        <OrderComplete
-          userName="s"
-          deliveryFee={1}
-          discountPrice={1}
-          orderItemsCount={1}
-          totalItemsPrice={3}
-        />
-      ),
+      element: <OrderComplete />,
     },
   ],
   { basename: '/react-shopping-cart-prod' }
