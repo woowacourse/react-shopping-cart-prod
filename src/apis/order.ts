@@ -1,17 +1,11 @@
 import { Order } from '../types/orders';
 import { authFetchQuery } from './api';
-import { FetchQueryRes } from './api.type';
-
-interface PostOrderRes {
-  cartItemIds: number[];
-  couponIds: number[];
-}
-
-interface FetchOrdersRes {
-  orders: Order[];
-}
-
-type FetchDetailOrderRes = Order;
+import type {
+  FetchDetailOrderRes,
+  FetchOrdersRes,
+  FetchQueryRes,
+  PostOrderRes,
+} from './api.type';
 
 export const postOrder: (
   payload: PostOrderRes

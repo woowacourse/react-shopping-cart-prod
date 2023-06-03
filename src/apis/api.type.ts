@@ -1,4 +1,8 @@
-import { DuplicateKeys } from '../types/common';
+import type { CartItem } from '../types/cart';
+import type { DuplicateKeys } from '../types/common';
+import type { Coupon, SpecificCoupon } from '../types/coupon';
+import type { Order } from '../types/orders';
+import type { Product } from '../types/products';
 
 export type FetchQueryInstance = {
   [m in Lowercase<Method>]: <T>(
@@ -28,3 +32,33 @@ export type ExternalConfig = Omit<
   baseURL?: string;
   body?: unknown;
 };
+
+export interface AddCartDataReq {
+  productId: number;
+}
+
+export type FetchCartRes = CartItem[];
+
+export interface AddCartDataRes {}
+
+export interface UpdateCartItemRes {}
+
+export interface DeleteCartItemRes {}
+
+export interface FetchCouponsRes {
+  allCoupons: Coupon[];
+  specificCoupons: SpecificCoupon[];
+}
+
+export interface PostOrderRes {
+  cartItemIds: number[];
+  couponIds: number[];
+}
+
+export interface FetchOrdersRes {
+  orders: Order[];
+}
+
+export type FetchDetailOrderRes = Order;
+
+export type FetchProductDataRes = Product[];
