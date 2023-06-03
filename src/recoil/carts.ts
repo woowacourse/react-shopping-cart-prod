@@ -34,13 +34,18 @@ export const countCartListSelector = selector({
   },
 });
 
+export const couponAtom = atom<number[]>({
+  key: 'couponAtom',
+  default: [],
+});
+
 export const priceAtom = atom({
   key: 'priceAtom',
   default: selector({
     key: 'initialPrice',
     get: async ({ get }) => {
       const server = get(serverAtom);
-      const data = await getPriceResult(2)(server);
+      const data = await getPriceResult('')(server);
       return data;
     },
   }),
@@ -49,10 +54,9 @@ export const priceAtom = atom({
 export const totalPriceSelector = selector({
   key: 'totalPriceSelector',
   get: ({ get }) => {
+    const { cartItemsPrice } = get(priceAtom);
     const cartList = get(cartListAtom);
-    const priceList = get(priceAtom);
     const checkedItems = get(checkedItemsAtom);
-    const { cartItemsPrice } = priceList;
 
     return cartItemsPrice
       .filter((item) => checkedItems.includes(item.cartItemId))
@@ -68,10 +72,9 @@ export const totalPriceSelector = selector({
 export const totalDiscountPriceSelector = selector({
   key: 'totalDiscountPriceSelector',
   get: ({ get }) => {
+    const { cartItemsPrice, discountFromTotalPrice } = get(priceAtom);
     const cartList = get(cartListAtom);
-    const priceList = get(priceAtom);
     const checkItems = get(checkedItemsAtom);
-    const { cartItemsPrice, discountFromTotalPrice } = priceList;
 
     const discountSum = cartItemsPrice
       .filter((item) => checkItems.includes(item.cartItemId))

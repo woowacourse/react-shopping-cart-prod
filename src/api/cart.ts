@@ -36,7 +36,7 @@ export const getDeliveryPolicy = async (
 };
 
 export const getPriceResult =
-  (couponId: number) =>
+  (couponId: string) =>
   async (server: string): Promise<PriceResult> => {
     const data = await api.get(`${server}/cart-items/coupon/${couponId}`);
     return data;
