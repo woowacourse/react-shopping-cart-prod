@@ -33,12 +33,16 @@ const Header = () => {
           </SelectBox>
           <Link to='/cart'>
             <MoveCartPageBtn>
-              장바구니
+              <DesktopLabel>장바구니</DesktopLabel>
+              <MobileLabel>🛒</MobileLabel>
               <ProductCountAlert>{totalCartProduct}</ProductCountAlert>
             </MoveCartPageBtn>
           </Link>
           <Link to='/orders'>
-            <MoveOrderListPageBtn>주문목록</MoveOrderListPageBtn>
+            <MoveOrderListPageBtn>
+              <DesktopLabel>주문목록</DesktopLabel>
+              <MobileLabel>📝</MobileLabel>
+            </MoveOrderListPageBtn>
           </Link>
         </ControlContainer>
       </HeaderContent>
@@ -86,6 +90,10 @@ const Logo = styled.h1`
 const ControlContainer = styled.div`
   display: flex;
   gap: 30px;
+
+  @media (max-width: 640px) {
+    gap: 15px;
+  }
 `;
 
 const SelectBox = styled.select`
@@ -103,6 +111,22 @@ const MoveOrderListPageBtn = styled.button`
   color: ${({ theme }) => theme.colors.white};
   font-size: 24px;
   font-weight: 500;
+`;
+
+const DesktopLabel = styled.span`
+  display: inline;
+
+  @media (max-width: 640px) {
+    display: none;
+  }
+`;
+
+const MobileLabel = styled.span`
+  display: none;
+
+  @media (max-width: 640px) {
+    display: inline;
+  }
 `;
 
 const ProductCountAlert = styled.p`
