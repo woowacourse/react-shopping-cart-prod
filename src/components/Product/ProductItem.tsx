@@ -10,7 +10,7 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {
-  const { imageUrl, name, price } = product;
+  const { id, imageUrl, name, price } = product;
 
   return (
     <ProductContainer>
@@ -20,7 +20,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
           <ProductName>{name}</ProductName>
           <ProductPrice>{price.toLocaleString('ko-KR')} 원</ProductPrice>
         </dl>
-        <ProductCartButton product={product} />
+        <ProductCartButton productId={id} />
       </ProductInfoContainer>
     </ProductContainer>
   );

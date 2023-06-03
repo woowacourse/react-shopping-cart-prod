@@ -1,23 +1,16 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import cartProductApis from '../apis/cartProducts';
-import { cartProductState } from '../states/cartProducts';
-import {
-  deleteTargetProduct,
-  updateTargetQuantity,
-} from '../states/cartProducts/util';
-import { serverNameState } from '../states/serverName';
+import { cartProductHandlerSelector } from '../states/cartProducts';
 import { toastState } from '../states/toast/atom';
 
 const useProductQuantity = (
   id: number | undefined,
   quantity: number | undefined
 ) => {
-  const serverName = useRecoilValue(serverNameState);
-  const setCartProducts = useSetRecoilState(cartProductState);
+  const { updateTargetQuantity, deleteTargetCartProduct } = useRecoilValue(
+    cartProductHandlerSelector
+  );
   const setToastState = useSetRecoilState(toastState);
-
-  const { patchCartProduct, deleteCartProduct } = cartProductApis(serverName);
 
   const deleteProduct = async () => {
     try {
@@ -25,8 +18,7 @@ const useProductQuantity = (
         throw new Error('장바구니에 해당 상품이 없습니다.');
       }
 
-      await deleteCartProduct(id);
-      setCartProducts((prev) => deleteTargetProduct(prev, id));
+      await deleteTargetCartProduct(id);
       setToastState({
         message: '상품을 삭제했어요',
         variant: 'success',
@@ -49,10 +41,7 @@ const useProductQuantity = (
 
       const updatedQuantity = quantity + 1;
 
-      await patchCartProduct(id, updatedQuantity);
-      setCartProducts((prev) =>
-        updateTargetQuantity(prev, id, updatedQuantity)
-      );
+      await updateTargetQuantity(id, updatedQuantity);
     } catch (error) {
       setToastState({
         message: '수량 변경을 실패했습니다',
@@ -75,10 +64,7 @@ const useProductQuantity = (
         return;
       }
 
-      await patchCartProduct(id, updatedQuantity);
-      setCartProducts((prev) =>
-        updateTargetQuantity(prev, id, updatedQuantity)
-      );
+      await updateTargetQuantity(id, updatedQuantity);
     } catch (error) {
       setToastState({
         message: '수량 변경을 실패했습니다',

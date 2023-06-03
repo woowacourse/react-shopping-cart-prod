@@ -5,14 +5,13 @@ import AmountCounter from '../Common/AmountCounter';
 import CartIcon from '../../assets/CartIcon';
 import useCartProducts from '../../hooks/useCartProducts';
 import useProductQuantity from '../../hooks/useProductQuantity';
-import type { Product } from '../../types/product';
 
 interface ProductCartButtonProps {
-  product: Product;
+  productId: number;
 }
 
-const ProductCartButton = ({ product }: ProductCartButtonProps) => {
-  const { targetProduct, addProduct } = useCartProducts(product);
+const ProductCartButton = ({ productId }: ProductCartButtonProps) => {
+  const { targetProduct, addProduct } = useCartProducts(productId);
   const { addCount, subtractCount } = useProductQuantity(
     targetProduct?.id,
     targetProduct?.quantity
