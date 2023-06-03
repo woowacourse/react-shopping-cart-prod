@@ -1,5 +1,5 @@
 import { useRecoilValueLoadable } from "recoil";
-import { productListSelector } from "../../recoil/productAtoms";
+import { productListSelector } from "../../app/recoil/productAtoms";
 import type { ProductItem as ProductItemType } from "../../types/types";
 import ProductItem from "../../components/ProductItem";
 import { Col, Row } from "../../style/style";

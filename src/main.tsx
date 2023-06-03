@@ -6,8 +6,8 @@ import { theme } from "./style/theme";
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
 import { RecoilRoot } from "recoil";
-import "./configs/recoil";
-import { worker } from "./mocks/browser";
+import "./app/configs/recoil";
+import { worker } from "./app/mocks/browser";
 
 async function main() {
   await worker.start({

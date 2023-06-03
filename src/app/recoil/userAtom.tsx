@@ -1,9 +1,9 @@
 import { atom, selector } from "recoil";
-import type { Sign, User } from "../types/types.ts";
+import type { Sign, User } from "../../types/types.ts";
 import { modalRepository } from "./modalAtoms.tsx";
-import Login from "../components/Login";
+import Login from "../../components/Login";
 import { setSessionStorage } from "../utils/storage.ts";
-import { SESSION_STORAGE_KEY_CART_ITEMS } from "../app/keys.ts";
+import { SESSION_STORAGE_KEY_CART_ITEMS } from "../keys.ts";
 import { fetchCartList } from "../api/api.ts";
 import { cartState } from "./cartAtoms.ts";
 import { serverState } from "./serverAtom.ts";

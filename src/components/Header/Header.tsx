@@ -11,9 +11,9 @@ import {
 } from "./Header.style";
 import { useRecoilValue } from "recoil";
 import ServerSelectBox from "../ServerSelectBox";
-import { modalRepository } from "../../recoil/modalAtoms.tsx";
+import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import Login from "../Login";
-import { userState } from "../../recoil/userAtom.tsx";
+import { userState } from "../../app/recoil/userAtom.tsx";
 import PersonalDropdown from "./PersonalDropdown.tsx";
 
 function Header() {

@@ -1,9 +1,9 @@
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ProductItem } from "../../types/types.ts";
 import CartController from "../CartController/index.tsx";
-import { modalOpenState } from "../../recoil/modalAtoms.tsx";
+import { modalOpenState } from "../../app/recoil/modalAtoms.tsx";
 import cartIcon from "../../assets/cart.svg";
-import { quantityByProductIdSelector } from "../../recoil/cartAtoms.ts";
+import { quantityByProductIdSelector } from "../../app/recoil/cartAtoms.ts";
 import {
   ModalCloseButton,
   ModalHeader,

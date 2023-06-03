@@ -11,8 +11,8 @@ import {
   Vacant,
 } from "./PurchaseBox.style";
 import { useRecoilValue } from "recoil";
-import { totalPriceSelector } from "../../recoil/cartAtoms.ts";
-import { modalRepository } from "../../recoil/modalAtoms.tsx";
+import { totalPriceSelector } from "../../app/recoil/cartAtoms.ts";
+import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import Purchase from "../Purchase";
 
 function PurchaseBox() {

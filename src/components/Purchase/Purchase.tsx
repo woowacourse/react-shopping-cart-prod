@@ -1,9 +1,9 @@
 import { NewOrder, NewOrderItem } from "../../types/types.ts";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { checkedCartSelector } from "../../recoil/cartAtoms.ts";
+import { checkedCartSelector } from "../../app/recoil/cartAtoms.ts";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { modalRepository } from "../../recoil/modalAtoms.tsx";
+import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import {
   Button,
   ButtonGroup,

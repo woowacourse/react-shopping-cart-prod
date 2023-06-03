@@ -11,9 +11,9 @@ import {
 import Icon from "../Icon";
 import { IoCart, IoPerson } from "react-icons/io5";
 import { useRecoilValue } from "recoil";
-import { userRepository, userState } from "../../recoil/userAtom.tsx";
+import { userRepository, userState } from "../../app/recoil/userAtom.tsx";
 import { useNavigate } from "react-router-dom";
-import { cartCountSelector } from "../../recoil/cartAtoms.ts";
+import { cartCountSelector } from "../../app/recoil/cartAtoms.ts";
 
 export const DropdownWrapper = styled.div`
   position: relative;

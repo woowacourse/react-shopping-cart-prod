@@ -1,5 +1,5 @@
 import { atom, selector, selectorFamily } from "recoil";
-import { CartItem, ProductItem } from "../types/types";
+import { CartItem, ProductItem } from "../../types/types.ts";
 import {
   fetchAddCart,
   fetchCartList,
@@ -70,38 +70,43 @@ export const quantityByProductIdSelector = selectorFamily({
   key: "quantityByProductIdSelector",
   get:
     (productId: number) =>
-      ({ get }) => {
-        const cartList = get(cartState);
-        const targetCart = cartList.find((cart) => cart.product.id === productId);
-        return targetCart?.quantity ?? 0;
-      },
+    ({ get }) => {
+      const cartList = get(cartState);
+      const targetCart = cartList.find((cart) => cart.product.id === productId);
+      return targetCart?.quantity ?? 0;
+    },
 });
 
 export const cartItemByProductIdSelector = selectorFamily({
   key: "cartItemByProductIdSelector",
   get:
     (productId: number) =>
-      ({ get }) => {
-        const cartList = get(cartState);
-        return cartList.find((cartItem) => cartItem.product.id === productId);
-      },
+    ({ get }) => {
+      const cartList = get(cartState);
+      return cartList.find((cartItem) => cartItem.product.id === productId);
+    },
 });
 
 export const cartRepository = selector({
   key: "cartRepository",
   get: ({ getCallback }) => {
-    const addCartItem = getCallback(({ set, snapshot }) => async (productId: number) => {
-      const server = await snapshot.getPromise(serverState);
-      await fetchAddCart(server, productId);
-      const newCartList = await fetchCartList(server);
-      set(cartState, newCartList);
-    });
+    const addCartItem = getCallback(
+      ({ set, snapshot }) =>
+        async (productId: number) => {
+          const server = await snapshot.getPromise(serverState);
+          await fetchAddCart(server, productId);
+          const newCartList = await fetchCartList(server);
+          set(cartState, newCartList);
+        }
+    );
 
     const updateCartItemQuantity = getCallback(
       ({ set, snapshot }) =>
         async (product: ProductItem, newQuantity: number) => {
           const server = await snapshot.getPromise(serverState);
-          const targetCartItem = await snapshot.getPromise(cartItemByProductIdSelector(product.id));
+          const targetCartItem = await snapshot.getPromise(
+            cartItemByProductIdSelector(product.id)
+          );
 
           if (targetCartItem) {
             const cartId = targetCartItem.id;
@@ -120,7 +125,9 @@ export const cartRepository = selector({
 
     const switchAllCheckboxes = getCallback(({ snapshot, set }) => async () => {
       const cartList = await snapshot.getPromise(cartState);
-      const isAllCartItemChecked = await snapshot.getPromise(allCartCheckedSelector);
+      const isAllCartItemChecked = await snapshot.getPromise(
+        allCartCheckedSelector
+      );
       const newCartList = cartList.map((cartItem: CartItem) => ({
         ...cartItem,
         checked: !isAllCartItemChecked,
@@ -134,25 +141,30 @@ export const cartRepository = selector({
       set(cartState, checkedCartItems);
     });
 
-    const removeCheckedCartItems = getCallback(({ snapshot, set }) => async () => {
-      if (confirm("정말로 삭제 하시겠습니까?")) {
-        const server = await snapshot.getPromise(serverState);
-        const checkedCartList = await snapshot.getPromise(checkedCartSelector);
-        const targetIds = checkedCartList.map((cartList) => cartList.id);
-        await Promise.all(
-          targetIds.map((cartId) => fetchDeleteCart(server, cartId))
-        );
-        const newCartList = await fetchCartList(server);
-        set(cartState, newCartList);
-      }
-    });
+    const removeCheckedCartItems = getCallback(
+      ({ snapshot, set }) =>
+        async () => {
+          if (confirm("정말로 삭제 하시겠습니까?")) {
+            const server = await snapshot.getPromise(serverState);
+            const checkedCartList = await snapshot.getPromise(
+              checkedCartSelector
+            );
+            const targetIds = checkedCartList.map((cartList) => cartList.id);
+            await Promise.all(
+              targetIds.map((cartId) => fetchDeleteCart(server, cartId))
+            );
+            const newCartList = await fetchCartList(server);
+            set(cartState, newCartList);
+          }
+        }
+    );
 
     return {
       addCartItem,
       updateCartItemQuantity,
       switchAllCheckboxes,
       loadCartList,
-      removeCheckedCartItems
+      removeCheckedCartItems,
     };
   },
 });

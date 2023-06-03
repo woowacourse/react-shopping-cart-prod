@@ -12,17 +12,16 @@ import {
 } from "./CartItem.style";
 import trashIcon from "../../assets/trash.png";
 import { useRecoilCallback, useRecoilValue, useSetRecoilState } from "recoil";
-import { cartState } from "../../recoil/cartAtoms.ts";
-import { serverState } from "../../recoil/serverAtom.ts";
-import { fetchCartList } from "../../api/api.ts";
-import { fetchDeleteCart } from "../../api/api.ts";
+import { cartState } from "../../app/recoil/cartAtoms.ts";
+import { serverState } from "../../app/recoil/serverAtom.ts";
+import { fetchCartList } from "../../app/api/api.ts";
+import { fetchDeleteCart } from "../../app/api/api.ts";
 
 interface CartItemProps {
   cart: CartItem;
 }
 
 function CartItem({ cart }: CartItemProps) {
-
   const switchCheckbox = useRecoilCallback(
     ({ snapshot, set }) =>
       async (id: number) => {

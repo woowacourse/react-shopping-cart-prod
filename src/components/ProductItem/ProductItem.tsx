@@ -13,8 +13,8 @@ import {
 import { useRecoilValue } from "recoil";
 import ProductModalContent from "../ProductModalContent/ProductModalContent.tsx";
 import cartIcon from "../../assets/cart.svg";
-import { quantityByProductIdSelector } from "../../recoil/cartAtoms.ts";
-import { modalRepository } from "../../recoil/modalAtoms.tsx";
+import { quantityByProductIdSelector } from "../../app/recoil/cartAtoms.ts";
+import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 
 interface ProductItemProps {
   product: ProductItem;

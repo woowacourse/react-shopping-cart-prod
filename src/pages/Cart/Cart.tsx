@@ -3,7 +3,7 @@ import PurchaseBox from "../../components/PurchaseBox";
 import { CartTitle, CartWrapper, FatBorder } from "./Cart.style.ts";
 import { CartListTitle } from "../../components/CartList/CartList.style.ts";
 import { useRecoilValue } from "recoil";
-import { cartCountSelector } from "../../recoil/cartAtoms.ts";
+import { cartCountSelector } from "../../app/recoil/cartAtoms.ts";
 import BigAlert from "../../components/BigAlert/index.tsx";
 
 function Cart() {
@@ -22,12 +22,7 @@ function Cart() {
           </CartWrapper>
         </>
       ) : (
-        <BigAlert
-          title="텅"
-          message="장바구니가 비어있어요."
-          goBack
-          goHome
-        />
+        <BigAlert title="텅" message="장바구니가 비어있어요." goBack goHome />
       )}
     </div>
   );

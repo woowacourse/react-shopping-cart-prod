@@ -1,7 +1,7 @@
 import { selector } from "recoil";
-import type { ProductItem } from "../types/types";
-import { fetchProductList } from "../api/api";
-import { serverState } from "./serverAtom";
+import type { ProductItem } from "../../types/types.ts";
+import { fetchProductList } from "../api/api.ts";
+import { serverState } from "./serverAtom.ts";
 
 export const productListSelector = selector<ProductItem[]>({
   key: "productListSelector",

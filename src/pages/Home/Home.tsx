@@ -1,11 +1,10 @@
 import ProductList from "../../components/ProductList";
 import { ErrorBoundary } from "react-error-boundary";
 import { useRecoilValue } from "recoil";
-import { serverState } from "../../recoil/serverAtom.ts";
+import { serverState } from "../../app/recoil/serverAtom.ts";
 import BigAlert from "../../components/BigAlert";
 
 function Home() {
-
   const server = useRecoilValue(serverState);
 
   return (

@@ -3,7 +3,7 @@ import {
   modalContentState,
   modalOpenState,
   modalRepository,
-} from "../recoil/modalAtoms";
+} from "../app/recoil/modalAtoms";
 import Modal from "../components/Modal";
 
 function ModalContainer() {

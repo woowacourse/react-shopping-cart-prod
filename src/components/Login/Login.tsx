@@ -7,35 +7,43 @@ import {
   MemberWrapper,
 } from "./Login.style.ts";
 import { useRecoilValue } from "recoil";
-import { userRepository } from "../../recoil/userAtom.tsx";
-import type { Sign } from "../../types/types.ts";
+import { userRepository } from "../../app/recoil/userAtom.tsx";
+import { useEffect, useState } from "react";
+import { Sign } from "../../types/types.ts";
+import { serverState } from "../../app/recoil/serverAtom.ts";
+import { fetchMembers } from "../../app/api/api.ts";
 
 function Login() {
-  const members: Sign[] = [
-    {
-      id: "a@a.com",
-      password: "1234",
-    },
-    {
-      id: "b@b.com",
-      password: "1234",
-    },
-  ];
-
   const { login } = useRecoilValue(userRepository);
+  const server = useRecoilValue(serverState);
+
+  const [members, setMembers] = useState<Sign[]>([]);
+
+  const loadMembers = async () => {
+    const data = await fetchMembers(server);
+    setMembers(data);
+  };
+
+  useEffect(() => {
+    loadMembers();
+  }, []);
 
   return (
     <div>
       <LoginTitle>로그인</LoginTitle>
       <MemberList>
-        {members.map((member) => (
-          <MemberWrapper key={member.id} onClick={() => login(member)}>
-            <Icon fontSize={30}>
-              <IoPerson />
-            </Icon>
-            <MemberId>{member.id}</MemberId>
-          </MemberWrapper>
-        ))}
+        {members.length === 0 ? (
+          <div>로그인 할 수 없습니다.</div>
+        ) : (
+          members.map((member) => (
+            <MemberWrapper key={member.id} onClick={() => login(member)}>
+              <Icon fontSize={30}>
+                <IoPerson />
+              </Icon>
+              <MemberId>{member.id}</MemberId>
+            </MemberWrapper>
+          ))
+        )}
       </MemberList>
     </div>
   );

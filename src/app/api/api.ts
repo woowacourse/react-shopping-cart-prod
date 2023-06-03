@@ -1,6 +1,11 @@
-import { CartItem, ProductItem, ReceivedCartItem } from "../types/types";
-import { url } from "./url";
-import { base64 } from "./auth";
+import {
+  CartItem,
+  ProductItem,
+  ReceivedCartItem,
+  Sign,
+} from "../../types/types.ts";
+import { url } from "./url.ts";
+import { base64 } from "./auth.ts";
 
 export const fetchAddCart = async (server: string, id: number) => {
   const response = await fetch(`${url[server]}/cart-items`, {
@@ -73,6 +78,17 @@ export const fetchProductList = async (server: string) => {
     const data: ProductItem[] = await response.json();
     console.log("product-list");
     console.log(data);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error();
+  }
+};
+
+export const fetchMembers = async (server: string) => {
+  try {
+    const response = await fetch(`${url[server]}/members`);
+    const data: Sign[] = await response.json();
     return data;
   } catch (error) {
     console.error(error);

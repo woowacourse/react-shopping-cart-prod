@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Header from ".";
 import Providers from "../../stories/Providers";
 import { useSetRecoilState } from "recoil";
-import { cartState } from "../../recoil/cartAtoms.ts";
+import { cartState } from "../../app/recoil/cartAtoms.ts";
 import type { CartItem, ProductItem } from "../../types/types.ts";
 
 const meta = {

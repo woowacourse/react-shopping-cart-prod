@@ -10,9 +10,9 @@ import {
 import {
   cartRepository,
   quantityByProductIdSelector,
-} from "../../recoil/cartAtoms";
+} from "../../app/recoil/cartAtoms";
 import { useRecoilValue } from "recoil";
-import { userRepository } from "../../recoil/userAtom.tsx";
+import { userRepository } from "../../app/recoil/userAtom.tsx";
 
 interface CartControllerProps {
   product: ProductItem;
