@@ -43,6 +43,9 @@ interface GetDiscountPriceParams {
 }
 
 export const getDiscountPrice = ({ totalItemsPrice, coupon }: GetDiscountPriceParams) => {
+  if (totalItemsPrice === 0) return 0;
+  if (totalItemsPrice < coupon.minimumPrice) return 0;
+
   if (coupon.type === 'percent') {
     const result = getPercentageNumber({ total: totalItemsPrice, percent: coupon.value });
 

@@ -38,6 +38,18 @@ function Cart() {
     setSelectedCoupon(coupon);
   };
 
+  const availableCouponLength = getAvailableCouponsByTotalPrice({
+    coupons,
+    totalItemsPrice: totalCartPrice,
+  }).length;
+
+  const discountPrice = selectedCoupon
+    ? getDiscountPrice({
+        coupon: selectedCoupon,
+        totalItemsPrice: totalCartPrice,
+      })
+    : 0;
+
   useEffect(() => {
     const fetchCoupon = async () => {
       const coupons = await getCoupon(serverName);
@@ -48,16 +60,11 @@ function Cart() {
     fetchCoupon();
   }, [serverName]);
 
-  const availableCouponLength = getAvailableCouponsByTotalPrice({
-    coupons,
-    totalItemsPrice: totalCartPrice,
-  }).length;
-
-  const discountPrice = getDiscountPrice({
-    coupon: selectedCoupon,
-    deliveryFee: DELIVERY_FEE,
-    totalItemsPrice: totalCartPrice,
-  });
+  useEffect(() => {
+    if (discountPrice === 0) {
+      setSelectedCoupon(null);
+    }
+  }, [discountPrice]);
 
   return (
     <Layout>
@@ -76,7 +83,7 @@ function Cart() {
               </S.CartCouponSelectWrapper>
               <ExpectedPayment
                 totalItemsPrice={totalCartPrice}
-                deliveryFee={DELIVERY_FEE}
+                deliveryFee={totalCartPrice ? DELIVERY_FEE : 0}
                 discountPrice={discountPrice}
               />
             </S.SelectAndPaymentWrapper>

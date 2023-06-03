@@ -119,7 +119,7 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
   });
 
   test('사용 조건이 없는 정적 할인 쿠폰을 사용했을 때 총 상품 가격이 해당 쿠폰보다 적을 경우 0원을 반환한다.', () => {
-    const totalItemsPrice = 2000;
+    const totalItemsPrice = 200000;
     const deliveryFee = 3000;
 
     const priceCoupon: CouponType = {
@@ -132,7 +132,7 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
 
     const result = getDiscountedTotalPrice({ totalItemsPrice, deliveryFee, coupon: priceCoupon });
 
-    expect(result).toBe(3000);
+    expect(result).toBe(200000);
   });
 
   test('총 상품 가격이 0원일 때 쿠폰을 사용한다면 에러를 반환한다.', () => {
@@ -172,7 +172,7 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
   });
 
   test('정적 할인 쿠폰을 사용할 때 할인 금액을 반환한다.', () => {
-    const totalItemsPrice = 30000;
+    const totalItemsPrice = 40000;
 
     const priceCoupon: CouponType = {
       id: 2,
@@ -215,5 +215,52 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
     const result = getDiscountPrice({ totalItemsPrice, coupon: deliveryCoupon });
 
     expect(result).toBe(3000);
+  });
+
+  test('쿠폰을 사용할 때 총 가격이 쿠폰 사용 조건 금액보다 낮다면 0을 반환한다.', () => {
+    const totalItemsPrice = 40000;
+
+    const deliveryCoupon: CouponType = {
+      id: 3,
+      name: '배달비 할인 쿠폰',
+      type: 'delivery',
+      value: 3000,
+      minimumPrice: 50000,
+    };
+
+    const result = getDiscountPrice({ totalItemsPrice, coupon: deliveryCoupon });
+
+    expect(result).toBe(0);
+  });
+
+  test('쿠폰을 사용할 때 총 가격이 쿠폰 사용 조건 금액보다 낮다면 0을 반환한다.', () => {
+    const totalItemsPrice = 40000;
+
+    const deliveryCoupon: CouponType = {
+      id: 3,
+      name: '배달비 할인 쿠폰',
+      type: 'delivery',
+      value: 3000,
+      minimumPrice: 50000,
+    };
+
+    const result = getDiscountPrice({ totalItemsPrice, coupon: deliveryCoupon });
+
+    expect(result).toBe(0);
+  });
+  test('쿠폰을 사용할 때 쿠폰 사용 조건이 제한없더라도 총 가격이 0이라면  0을 반환한다.', () => {
+    const totalItemsPrice = 0;
+
+    const deliveryCoupon: CouponType = {
+      id: 3,
+      name: '배달비 할인 쿠폰',
+      type: 'delivery',
+      value: 4000,
+      minimumPrice: 0,
+    };
+
+    const result = getDiscountPrice({ totalItemsPrice, coupon: deliveryCoupon });
+
+    expect(result).toBe(0);
   });
 });
