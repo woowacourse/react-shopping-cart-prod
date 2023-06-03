@@ -12,11 +12,10 @@ import { PATH } from '@constants/index';
 
 import { Spinner } from '@components/common/Spinner/Spinner';
 
-import { useRecoilValue } from 'recoil';
-import { cartRepository } from '@recoils/cartAtoms';
+import { useCartRepository } from '@recoils/cartAtoms';
 
 export const App = () => {
-  const { fetchCart } = useRecoilValue(cartRepository);
+  const { fetchCart } = useCartRepository();
 
   useEffect(() => {
     fetchCart();

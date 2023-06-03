@@ -1,6 +1,6 @@
-import { atom, selector } from 'recoil';
+import { atom, selector, useRecoilValue } from 'recoil';
 
-import { fetchData } from '@api/fetchData';
+import { fetchAPI } from '@api/fetchAPI';
 import { CartItem } from 'src/types';
 import { localStorageEffect } from './localStorageEffect';
 
@@ -11,10 +11,10 @@ export const cartState = atom<CartItem[]>({
 });
 
 export const cartRepository = selector({
-  key: 'useCart',
+  key: 'cartRepository',
   get: ({ getCallback }) => {
     const fetchCart = getCallback(({ set }) => async () => {
-      const cartItems = await fetchData('/cart-items', {
+      const cartItems = await fetchAPI('/cart-items', {
         headers: {
           Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
         },
@@ -26,6 +26,22 @@ export const cartRepository = selector({
       set(cartState, cartItemsWithCheckedState);
     });
 
-    return { fetchCart };
+    const addCartItem = (body: { productId: number }) =>
+      getCallback(() => async () => {
+        await fetchAPI('/cart-items', {
+          method: 'POST',
+          headers: {
+            Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+            'Content-Type': 'application/json',
+          },
+          body,
+        });
+
+        await fetchCart();
+      })();
+
+    return { fetchCart, addCartItem };
   },
 });
+
+export const useCartRepository = () => useRecoilValue(cartRepository);

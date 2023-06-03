@@ -24,7 +24,9 @@ const shippingFee = DELIVERY_CHARGE;
 
 export const OrderSummary = () => {
   const baseUrl = useApiBaseUrlValue();
-  const { data: pointData, loading } = useQuery<PointResponseData>(`${baseUrl}/point`);
+  const { data: pointData, loading } = useQuery<PointResponseData>(`${baseUrl}/point`, {
+    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+  });
   const {
     mutation: orderMutation,
     data: orderResponseData,
@@ -100,20 +102,22 @@ export const OrderSummary = () => {
               </styled.ShippingPrice>
               <styled.Point>
                 <span>사용할 포인트</span>
-                {loading ? (
-                  <Spinner />
-                ) : (
-                  <styled.PointInput
-                    onChange={onChangePointInput}
-                    value={pointInputValue ? pointInputValue : ''}
-                    placeholder={`사용 가능 포인트 ${pointData?.usablePoint?.toLocaleString(
-                      'ok-kr'
-                    )}`}
-                  />
-                )}
-                <styled.UseAllPointButton onClick={onClickUseAppPointButton}>
-                  전액 사용
-                </styled.UseAllPointButton>
+                <div>
+                  {loading ? (
+                    <Spinner size="sm" />
+                  ) : (
+                    <styled.PointInput
+                      onChange={onChangePointInput}
+                      value={pointInputValue ? pointInputValue : ''}
+                      placeholder={`사용 가능 포인트 ${pointData?.usablePoint?.toLocaleString(
+                        'ok-kr'
+                      )}`}
+                    />
+                  )}
+                  <styled.UseAllPointButton onClick={onClickUseAppPointButton}>
+                    전액 사용
+                  </styled.UseAllPointButton>
+                </div>
               </styled.Point>
               <styled.PaymentPrice>
                 <span>예상 주문금액</span>
@@ -125,7 +129,7 @@ export const OrderSummary = () => {
             </styled.Prices>
             <Button designType="rectangle" onClick={onClickOrderButton} disabled={orderLoading}>
               {orderLoading ? (
-                <Spinner />
+                <Spinner size="sm" />
               ) : (
                 `총 ${checkedCartItems.length}건 주문하기(${totalPaymentPrice.toLocaleString(
                   'ko-kr'

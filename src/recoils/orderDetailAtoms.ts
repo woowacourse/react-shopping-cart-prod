@@ -1,12 +1,12 @@
 import { selectorFamily, useRecoilValue } from 'recoil';
-import { fetchData } from '@api/fetchData';
+import { fetchAPI } from '@api/fetchAPI';
 
 import { OrderDetail } from '../types';
 
 export const orderDetailSelector = selectorFamily<OrderDetail, number>({
   key: 'orderDetailSelector',
   get: (orderId) => async () => {
-    const orders = await fetchData(`/orders/${orderId}`, {
+    const orders = await fetchAPI(`/orders/${orderId}`, {
       headers: {
         Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
       },

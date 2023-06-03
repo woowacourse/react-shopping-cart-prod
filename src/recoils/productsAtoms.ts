@@ -1,12 +1,12 @@
 import { selector, useRecoilValue } from 'recoil';
-import { fetchData } from '@api/fetchData';
+import { fetchAPI } from '@api/fetchAPI';
 
 import type { Product } from '../types';
 
 export const productsSelector = selector<Product[]>({
   key: 'productsRepository',
   get: async () => {
-    const products = await fetchData('/products');
+    const products = await fetchAPI('/products');
 
     return products;
   },

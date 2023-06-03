@@ -4,8 +4,9 @@ interface OptionalProps {
   body?: object;
 }
 
-export const fetchData = async (url: string, optionalProps?: OptionalProps) => {
-  const baseUrl = 'http://3.34.190.40:8080';
+export const fetchAPI = async (url: string, optionalProps?: OptionalProps) => {
+  console.log('1');
+  const baseUrl = 'http://43.200.170.43:8080';
 
   const options: RequestInit & { Authorization?: string } = {
     method: optionalProps?.method,

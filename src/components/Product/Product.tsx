@@ -1,16 +1,10 @@
-import { useEffect } from 'react';
 import * as styled from './Product.styled';
 
 import { Stepper } from '@components/common/Stepper/Stepper';
 
 import { useCartItemValue } from '@recoils/recoilCart';
-import { useApiBaseUrlValue } from '@recoils/recoilApiBaseUrl';
-import { useSetCheckedState } from '@recoils/recoilChecked';
+import { useCartRepository } from '@recoils/cartAtoms';
 
-import { useMutation } from '@hooks/useMutation';
-import { useUpdateRecoilCart } from '@hooks/useUpdateRecoilCart';
-
-import { FETCH_METHOD, FETCH_URL } from '@constants/index';
 import { CartAddIcon } from '@assets/svg';
 
 import type { Product as ProductType } from '../../types';
@@ -20,32 +14,12 @@ interface ProductProps {
 }
 
 export const Product = ({ item }: ProductProps) => {
-  const baseUrl = useApiBaseUrlValue();
-  const { mutation: addCartMutation, data: addCartResponseData } = useMutation(FETCH_METHOD.POST);
-
-  const { addRecoilCartItem } = useUpdateRecoilCart();
-
-  const setCheckedState = useSetCheckedState();
+  const { addCartItem } = useCartRepository();
 
   const cartItem = useCartItemValue(item.id);
 
-  useEffect(() => {
-    if (!addCartResponseData) return;
-
-    const { cartItemId } = addCartResponseData;
-
-    addRecoilCartItem(cartItemId, item);
-
-    setCheckedState((prev) => ({
-      ...prev,
-      [cartItemId]: true,
-    }));
-  }, [addCartResponseData]);
-
   const onClickCartIcon = () => {
-    addCartMutation(baseUrl + FETCH_URL.CART_ITEMS, {
-      productId: item.id,
-    });
+    addCartItem({ productId: item.id });
   };
 
   return (
