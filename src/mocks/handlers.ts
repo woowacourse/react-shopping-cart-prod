@@ -1,6 +1,12 @@
 import { rest } from 'msw';
 import productList from '../mocks/productList.json';
-import { CART_BASE_URL, LOCAL_STORAGE_KEY, ORDERS_BASE_URL, PRODUCTS_BASE_URL } from '../constants';
+import {
+  CART_BASE_URL,
+  COUPON_BASE_URL,
+  LOCAL_STORAGE_KEY,
+  ORDERS_BASE_URL,
+  PRODUCTS_BASE_URL,
+} from '../constants';
 import { getLocalStorage, updateLocalStorage } from '../utils/store';
 import { CartItemInfo, OrderItemInfo } from '../types';
 
@@ -151,5 +157,55 @@ export const handlers = [
       ctx.status(201),
       ctx.set('Location', `${ORDERS_BASE_URL}/${newOrderList.at(-1)?.id}`)
     );
+  }),
+
+  // 쿠폰목록 조회
+  rest.get(COUPON_BASE_URL, (req, res, ctx) => {
+    const currentDate = new Date();
+    const threeDaysLater = new Date();
+    threeDaysLater.setDate(currentDate.getDate() + 3);
+
+    const [day, month, year] = [
+      threeDaysLater.getDate(),
+      threeDaysLater.getMonth() + 1,
+      threeDaysLater.getFullYear(),
+    ];
+
+    const couponList = {
+      rateCoupon: [
+        {
+          id: 1,
+          name: '가입 축하 5% 할인 쿠폰',
+          discountRate: 5,
+          expiredDate: `${year}-${month}-${day}`,
+          minOrderPrice: 5000000,
+        },
+        {
+          id: 2,
+          name: '10% 할인 쿠폰',
+          discountRate: 10,
+          expiredDate: `${year}-${month}-${day}`,
+          minOrderPrice: 5000000,
+        },
+      ],
+      fixedCoupon: [
+        {
+          id: 3,
+          name: '3000원 할인 쿠폰',
+          discountPrice: 3000,
+          expiredDate: `${year}-${month}-${day}`,
+          minOrderPrice: 5000000,
+        },
+        {
+          id: 4,
+          name: '10000원 할인 쿠폰',
+          discountPrice: 10000,
+          expiredDate: `${year}-${month}-${day}`,
+          minOrderPrice: 5000000,
+        },
+      ],
+    };
+
+    return res(ctx.status(200), ctx.json(couponList));
   }),
 ];

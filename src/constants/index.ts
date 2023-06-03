@@ -24,3 +24,4 @@ export const SERVER: Readonly<Record<Host, string>> = {
 export const PRODUCTS_BASE_URL = '/products';
 export const ORDERS_BASE_URL = '/orders';
 export const CART_BASE_URL = '/cart-items';
+export const COUPON_BASE_URL = '/coupons';
