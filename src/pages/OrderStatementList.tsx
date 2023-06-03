@@ -52,14 +52,16 @@ const OrderStatementList = () => {
       <Page pageName="주문목록">
         <Wrapper>
           {data &&
-            data.map((order) => (
-              <OrderStatement
-                key={order.orderId}
-                orderId={order.orderId}
-                orders={order.orderItems}
-                openModal={openModal(order)}
-              />
-            ))}
+            data
+              .map((order) => (
+                <OrderStatement
+                  key={order.orderId}
+                  orderId={order.orderId}
+                  orders={order.orderItems}
+                  openModal={openModal(order)}
+                />
+              ))
+              .reverse()}
         </Wrapper>
       </Page>
     </>
