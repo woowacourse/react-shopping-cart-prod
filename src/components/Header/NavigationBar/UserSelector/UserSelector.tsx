@@ -34,7 +34,8 @@ const UserSelector = ({ point }: UserSelectorProps) => {
   return (
     <S.Wrapper ref={ref}>
       <S.UserProfileButton onClick={toggleMenu}>
-        <img src={UserProfileImage} alt='user image' />
+        <S.UserProfileImage src={UserProfileImage} alt='user image' />
+        <S.UserName>{currentMemberInfo?.name}</S.UserName>
       </S.UserProfileButton>
       {memberList && (
         <S.Menu isOpen={menu}>

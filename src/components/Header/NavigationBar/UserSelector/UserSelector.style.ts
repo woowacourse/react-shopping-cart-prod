@@ -7,11 +7,21 @@ export const Wrapper = styled.div`
 `;
 
 export const UserProfileButton = styled.button`
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 8px;
+  font-weight: 500;
+  gap: 2px;
+  cursor: pointer;
+`;
+
+export const UserProfileImage = styled.img`
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   overflow: hidden;
-  cursor: pointer;
 `;
 
 export const Menu = styled.div<{ isOpen: boolean }>`
@@ -79,3 +89,5 @@ export const UserListTitle = styled.div`
   color: #00a3f9;
   font-weight: 700;
 `;
+
+export const UserName = styled.div``;
