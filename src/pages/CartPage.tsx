@@ -33,7 +33,6 @@ const Main = styled.main`
   flex-direction: column;
 
   width: 100%;
-  height: calc(100vh - 80px);
   padding: 30px 120px;
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
