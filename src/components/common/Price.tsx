@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 interface Props {
   price: number;
-  size: 'small' | 'medium' | 'large';
+  size: 'small' | 'medium' | 'large' | 'extra-large';
   color: string;
   tag?: string;
   label?: string;
@@ -41,6 +41,10 @@ const Style = {
 
     &.large {
       font-size: 20px;
+    }
+
+    &.extra-large {
+      font-size: 30px;
     }
 
     color: ${({ color }) => color};

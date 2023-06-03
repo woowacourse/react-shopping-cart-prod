@@ -21,7 +21,7 @@ export default function PaymentDetail({
         <Price tag="총 상품금액" price={totalProductsPrice} />
         <Price tag="배송비" price={deliveryFee} />
         <Price tag="할인금액" price={discountPrice} isDiscount={true} />
-        <Price tag="총 결제금액" price={totalOrderPrice} color={'#1c8fed '} />
+        <Price tag="총 결제금액" price={totalOrderPrice} color={'#1c8fed'} />
       </Style.DetailInfo>
     </>
   );
