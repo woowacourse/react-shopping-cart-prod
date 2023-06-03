@@ -9,6 +9,7 @@ export const DELIVERY_FEE = 3000;
 export const LOCAL_STORAGE_KEY = {
   CART: 'cart',
   ORDERS: 'orders',
+  DETAIL_ORDERS: 'detailOrders',
 } as const;
 
 export const URL = {

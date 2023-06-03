@@ -1,5 +1,6 @@
 import { rest } from 'msw';
 import productList from '../mocks/productList.json';
+import couponList from '../mocks/couponList.json';
 import {
   CART_BASE_URL,
   COUPON_BASE_URL,
@@ -8,7 +9,7 @@ import {
   PRODUCTS_BASE_URL,
 } from '../constants';
 import { getLocalStorage, updateLocalStorage } from '../utils/store';
-import { CartItemInfo, OrderItemInfo } from '../types';
+import { CartItemInfo, OrderDetailItemInfo, OrderItemInfo } from '../types';
 
 export const handlers = [
   // 상품 조회
@@ -92,31 +93,29 @@ export const handlers = [
   // 주문 상세 조회
   rest.get(`${ORDERS_BASE_URL}/:id`, (req, res, ctx) => {
     const orderId = Number(req.params.id);
-    const orderList = getLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS);
-    const orderItem = orderList.find((orderItem) => orderItem.id === orderId);
+    const orderDetailList = getLocalStorage<OrderDetailItemInfo[]>(LOCAL_STORAGE_KEY.DETAIL_ORDERS);
+    const orderDetailItem = orderDetailList.find((orderItem) => orderItem.id === orderId);
 
-    if (!orderItem) {
+    if (!orderDetailItem) {
       return res(ctx.status(404), ctx.json({ message: '해당 주문이 존재하지 않습니다.' }));
     }
-
-    const deliveryFee = 3000;
-    const beforeDiscountPrice = orderItem.totalOrderPrice + deliveryFee;
-    const orderDetailItem = {
-      ...orderItem,
-      deliveryFee: deliveryFee,
-      usingCouponName: '신규 가입 할인 쿠폰',
-      discountPrice: 3000,
-      beforeDiscountPrice: beforeDiscountPrice,
-    };
 
     return res(ctx.status(200), ctx.json(orderDetailItem));
   }),
 
   // 주문 아이템 추가
   rest.post(ORDERS_BASE_URL, async (req, res, ctx) => {
-    const { cartItemIds, totalOrderPrice } = await req.json();
+    const { cartItemIds, couponId, deliveryFee, totalOrderPrice } = await req.json();
+    const response = await fetch(COUPON_BASE_URL);
+    const rawCouponList = await response.json();
+    const couponList = [...rawCouponList.rateCoupon, ...rawCouponList.fixedCoupon];
+    const currentCoupon = couponList.find((coupon) => coupon.id === couponId);
+
     const currentCartList = getLocalStorage<CartItemInfo[]>(LOCAL_STORAGE_KEY.CART);
     const currentOrderList = getLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS);
+    const currentOrderDetailList = getLocalStorage<OrderDetailItemInfo[]>(
+      LOCAL_STORAGE_KEY.DETAIL_ORDERS
+    );
 
     const currentDate = new Date();
     const [day, month, year] = [
@@ -137,6 +136,11 @@ export const handlers = [
       };
     });
 
+    const totalProductsPrice = productsInOrder.reduce((sum, product) => {
+      const productTotal = product.price * product.quantity;
+      return sum + productTotal;
+    }, 0);
+
     const newOrderList: OrderItemInfo[] = [
       ...currentOrderList,
       {
@@ -148,10 +152,32 @@ export const handlers = [
       },
     ];
 
+    let discountPrice = 0;
+    if ('discountPrice' in currentCoupon) discountPrice = currentCoupon.discountPrice;
+    if ('discountRate' in currentCoupon) {
+      discountPrice = (totalProductsPrice + deliveryFee) * (currentCoupon.discountRate / 100);
+    }
+
+    const newOrderDetailList: OrderDetailItemInfo[] = [
+      ...currentOrderDetailList,
+      {
+        id: currentOrderList.length + 1,
+        orderNumber: currentOrderList.length + 1,
+        date: `${year}-${month}-${day}`,
+        totalOrderPrice: totalOrderPrice,
+        products: productsInOrder,
+        deliveryFee: deliveryFee,
+        usingCouponName: currentCoupon ? currentCoupon.name : '',
+        discountPrice: discountPrice,
+        beforeDiscountPrice: totalOrderPrice + discountPrice,
+      },
+    ];
+
     const newCartList = currentCartList.filter((cartItem) => !cartItemIds.includes(cartItem.id));
 
     updateLocalStorage<CartItemInfo[]>(LOCAL_STORAGE_KEY.CART, newCartList);
     updateLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS, newOrderList);
+    updateLocalStorage<OrderDetailItemInfo[]>(LOCAL_STORAGE_KEY.DETAIL_ORDERS, newOrderDetailList);
 
     return res(
       ctx.status(201),
@@ -161,51 +187,6 @@ export const handlers = [
 
   // 쿠폰목록 조회
   rest.get(COUPON_BASE_URL, (req, res, ctx) => {
-    const currentDate = new Date();
-    const threeDaysLater = new Date();
-    threeDaysLater.setDate(currentDate.getDate() + 3);
-
-    const [day, month, year] = [
-      threeDaysLater.getDate(),
-      threeDaysLater.getMonth() + 1,
-      threeDaysLater.getFullYear(),
-    ];
-
-    const couponList = {
-      rateCoupon: [
-        {
-          id: 1,
-          name: '가입 축하 5% 할인 쿠폰',
-          discountRate: 5,
-          expiredDate: `${year}-${month}-${day}`,
-          minOrderPrice: 5000000,
-        },
-        {
-          id: 2,
-          name: '10% 할인 쿠폰',
-          discountRate: 10,
-          expiredDate: `${year}-${month}-${day}`,
-          minOrderPrice: 5000000,
-        },
-      ],
-      fixedCoupon: [
-        {
-          id: 3,
-          name: '3000원 할인 쿠폰',
-          discountPrice: 3000,
-          expiredDate: `${year}-${month}-${day}`,
-          minOrderPrice: 5000000,
-        },
-        {
-          id: 4,
-          name: '10000원 할인 쿠폰',
-          discountPrice: 10000,
-          expiredDate: `${year}-${month}-${day}`,
-          minOrderPrice: 5000000,
-        },
-      ],
-    };
-
     return res(ctx.status(200), ctx.json(couponList));
   }),
 ];
