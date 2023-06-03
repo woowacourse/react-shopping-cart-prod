@@ -27,8 +27,8 @@ const OrderStatementModal = ({
       <OrderList>
         {orderItems.map((item) => {
           return (
-            <OrderBox>
-              <OrderItem key={`order-item-${item.product.id}`} item={item} />
+            <OrderBox key={`order-item-${item.product.id}`}>
+              <OrderItem item={item} />
               <OrderDetail>
                 <span>상품 금액 (1개)</span>
                 <span> {item.product.price.toLocaleString()}원</span>

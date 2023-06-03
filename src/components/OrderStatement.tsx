@@ -25,10 +25,10 @@ const OrderStatement = ({
       <Body>
         {orders.map((item, index) => {
           return (
-            <>
+            <div key={`order-box-${item.product.id}`}>
               <OrderItem key={`order-item-${item.product.id}`} item={item} />
               {index !== orderLastIndex && <Contour />}
-            </>
+            </div>
           );
         })}
       </Body>

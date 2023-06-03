@@ -31,10 +31,10 @@ const CartItemList = () => {
       <ListBox>
         {cartList.map((item, index) => {
           return (
-            <>
-              <CartItem key={item.id} {...item} />
+            <div key={item.id}>
+              <CartItem {...item} />
               {index !== cartListLastIndex && <Contour />}
-            </>
+            </div>
           );
         })}
       </ListBox>

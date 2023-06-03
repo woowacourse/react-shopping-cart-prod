@@ -3,8 +3,8 @@ import { styled } from "styled-components";
 const ItemListSkeleton = () => {
   return (
     <Wrapper>
-      {new Array(12).fill(0).map((_) => (
-        <ItemWrapper>
+      {new Array(12).fill(0).map((_, index) => (
+        <ItemWrapper key={`item-skeleton-${index}`}>
           <ImageBox>
             <div />
           </ImageBox>
