@@ -1,10 +1,10 @@
 import { ChangeEvent } from 'react';
 import * as styled from './ApiSelector.styled';
 
-import { useApiBaseUrlState } from '@recoils/recoilApiBaseUrl';
+import { useBaseApiUrlState } from '@recoils/baseApiUrlAtoms';
 
 export const ApiSelector = () => {
-  const [apiBaseUrlKey, setApiBaseUrlKey] = useApiBaseUrlState();
+  const [apiBaseUrlKey, setApiBaseUrlKey] = useBaseApiUrlState();
 
   const onChange = ({ target: { value } }: ChangeEvent<HTMLSelectElement>) => {
     setApiBaseUrlKey(value);

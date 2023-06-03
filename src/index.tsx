@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 
 import { RecoilRoot } from 'recoil';
@@ -9,7 +9,7 @@ import { worker } from './msw/worker';
 
 (async () => {
   if (process.env.REACT_APP_API_DEFAULT) {
-    // return;
+    return;
   }
 
   if (window.location.pathname === '/react-shopping-cart') {
@@ -28,7 +28,9 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-      <App />
+      <Suspense>
+        <App />
+      </Suspense>
     </RecoilRoot>
   </React.StrictMode>
 );

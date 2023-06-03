@@ -2,8 +2,7 @@ import * as styled from './Product.styled';
 
 import { Stepper } from '@components/common/Stepper/Stepper';
 
-import { useCartItemValue } from '@recoils/recoilCart';
-import { useCartRepository } from '@recoils/cartAtoms';
+import { useCartRepository, useFindCartItemByProductId } from '@recoils/cartAtoms';
 
 import { CartAddIcon } from '@assets/svg';
 
@@ -16,7 +15,7 @@ interface ProductProps {
 export const Product = ({ item }: ProductProps) => {
   const { addCartItem } = useCartRepository();
 
-  const cartItem = useCartItemValue(item.id);
+  const cartItem = useFindCartItemByProductId(item.id);
 
   const onClickCartIcon = () => {
     addCartItem({ productId: item.id });

@@ -1,54 +1,41 @@
 import * as styled from './CartItemList.styled';
 
 import { Checkbox } from '@components/styled/Checkbox';
-
-import { useCartStateValue } from '@recoils/recoilCart';
-import { useCheckedValue } from '@recoils/recoilChecked';
-import { useApiBaseUrlValue } from '@recoils/recoilApiBaseUrl';
-
-import { useUpdateRecoilCart } from '@hooks/useUpdateRecoilCart';
-import { useMutation } from '@hooks/useMutation';
-import { useUpdateCheckbox } from '@hooks/useUpdateCheckbox';
-
 import { Stepper } from '@components/common/Stepper/Stepper';
 
+import { useCartRepository, useCartState } from '@recoils/cartAtoms';
+
 import { DeleteIcon } from '@assets/svg';
-import { FETCH_METHOD, FETCH_URL } from '@constants/index';
 
 import type { CartItem } from '../../../../types';
 
 export const CartItemList = () => {
-  const baseUrl = useApiBaseUrlValue();
-  const { mutation: deleteCartMutation } = useMutation(FETCH_METHOD.DELETE);
-
-  const cart = useCartStateValue();
-  const checkState = useCheckedValue();
-
-  const { deleteRecoilCartItem } = useUpdateRecoilCart();
-  const { toggleCheckbox } = useUpdateCheckbox();
+  const [cartItems, setCartState] = useCartState();
+  const { deleteCartItem } = useCartRepository();
 
   const onChangeCheckBox = (cartItemId: CartItem['id']) => {
-    toggleCheckbox(cartItemId);
+    setCartState((prev) => {
+      return prev.map((item) => {
+        if (item.id === cartItemId) {
+          return { ...item, checked: !item.checked };
+        }
+
+        return item;
+      });
+    });
   };
 
   const onClickDeleteIcon = (cartItemId: CartItem['id']) => {
-    toggleCheckbox(cartItemId);
-
-    deleteCartMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`);
-    deleteRecoilCartItem(cartItemId);
+    deleteCartItem(cartItemId);
   };
 
   return (
     <styled.CartItemList>
-      {cart.map(({ id, quantity, product }) => (
+      {cartItems.map(({ id, quantity, product, checked }) => (
         <styled.CartItem key={id}>
           <styled.CartInfo>
             <styled.LeftInfo>
-              <Checkbox
-                type="checkbox"
-                checked={Boolean(checkState[id])}
-                onChange={() => onChangeCheckBox(id)}
-              />
+              <Checkbox type="checkbox" checked={checked} onChange={() => onChangeCheckBox(id)} />
               <styled.ProductImage path={product.imageUrl} />
               <styled.ProductName>{product.name}</styled.ProductName>
             </styled.LeftInfo>

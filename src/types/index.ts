@@ -9,6 +9,7 @@ export interface CartItem {
   id: number;
   quantity: number;
   product: Product;
+  checked: boolean;
 }
 
 export interface CheckedCartItems {

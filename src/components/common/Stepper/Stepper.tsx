@@ -3,12 +3,9 @@ import * as styled from './Stepper.styled';
 
 import { Button } from '@components/common/Button/Button';
 
-import { useApiBaseUrlValue } from '@recoils/recoilApiBaseUrl';
+import { useCartRepository } from '@recoils/cartAtoms';
 
-import { useUpdateRecoilCart } from '@hooks/useUpdateRecoilCart';
-import { useMutation } from '@hooks/useMutation';
-
-import { FETCH_METHOD, FETCH_URL, QUANTITY } from '@constants/index';
+import { QUANTITY } from '@constants/index';
 
 interface Props {
   cartItemId: number;
@@ -16,41 +13,25 @@ interface Props {
 }
 
 export const Stepper = ({ cartItemId, quantity }: Props) => {
-  const baseUrl = useApiBaseUrlValue();
-  const { mutation: updateQuantityMutation } = useMutation(FETCH_METHOD.PATCH);
-
-  const {
-    increaseRecoilProductQuantity,
-    decreaseRecoilProductQuantity,
-    updateRecoilProductQuantity,
-  } = useUpdateRecoilCart();
+  const { updateQuantity } = useCartRepository();
 
   const onClickPlusButton = () => {
     if (quantity === QUANTITY.MAX) return;
 
-    increaseRecoilProductQuantity(cartItemId, quantity + 1);
-
-    updateQuantityMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`, {
-      quantity,
-    });
+    updateQuantity(cartItemId, quantity + 1);
   };
 
   const onClickMinusButton = () => {
     if (quantity === QUANTITY.MIN) return;
 
-    decreaseRecoilProductQuantity(cartItemId, quantity - 1);
-
-    updateQuantityMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`, {
-      quantity,
-    });
+    updateQuantity(cartItemId, quantity - 1);
   };
 
   const onChangeQuantity = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    updateRecoilProductQuantity(cartItemId, Number(value) || 1);
+    const count = Number(value) || 1;
+    const quantity = count > QUANTITY.MAX ? QUANTITY.MAX : count;
 
-    updateQuantityMutation(`${baseUrl + FETCH_URL.CART_ITEMS}/${cartItemId}`, {
-      quantity,
-    });
+    updateQuantity(cartItemId, quantity);
   };
 
   return (

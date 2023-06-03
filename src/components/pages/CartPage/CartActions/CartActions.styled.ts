@@ -24,7 +24,7 @@ export const ToggleAllCheckBox = styled.div`
   }
 `;
 
-export const DeleteSelectedItemButton = styled.button`
+export const DeleteSelectedItemsButton = styled.button`
   width: 70px;
   height: 30px;
 

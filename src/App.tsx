@@ -38,7 +38,9 @@ export const App = () => {
             path={PATH.CART}
             Component={() => (
               <Layout pageTitle="장바구니">
-                <CartPage />
+                <Suspense fallback={<Spinner size="lg" />}>
+                  <CartPage />
+                </Suspense>
               </Layout>
             )}
           />

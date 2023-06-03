@@ -1,9 +1,9 @@
 import * as styled from './CartSize.styled';
 
-import { useCartSizeValue } from '@recoils/recoilCart';
+import { useCartSize } from '@recoils/cartAtoms';
 
 export const CartSize = () => {
-  const cartSize = useCartSizeValue();
+  const cartSize = useCartSize();
 
   return <styled.CartSize>{cartSize}</styled.CartSize>;
 };
