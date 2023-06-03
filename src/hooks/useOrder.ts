@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { OrderItemInfo } from '../types';
+import { useRecoilValue } from 'recoil';
+import { selectedHostState } from '../recoil/atoms';
+import { OrderDetailItemInfo, OrderItemInfo } from '../types';
 import { ORDERS_BASE_URL } from '../constants';
 import APIHandler from '../api/APIHandler';
-import { selectedHostState } from '../recoil/atoms';
-import { useRecoilValue } from 'recoil';
 
 interface PostPayLoad {
   cartItemIds: number[];
@@ -12,17 +12,18 @@ interface PostPayLoad {
   totalOrderPrice: number;
 }
 
-export const useOrder = () => {
-  const [orderList, setOrderList] = useState<OrderItemInfo[]>([]);
+export const useOrder = (orderId?: number) => {
   const host = useRecoilValue(selectedHostState);
   const ORDERS_URL = `${host}${ORDERS_BASE_URL}`;
+  const [orderList, setOrderList] = useState<OrderItemInfo[]>([]);
+  const [orderDetail, setOrderDetail] = useState<OrderDetailItemInfo | undefined>(undefined);
 
   useEffect(() => {
-    const setFetchedOrderList = async () => {
-      setOrderList(await getOrderList());
-    };
+    const setFetchedOrderList = async () => setOrderList(await getOrderList());
+    const setFetchedOrderDetail = async () => setOrderDetail(await getOrderDetailItem());
 
     setFetchedOrderList();
+    if (orderId) setFetchedOrderDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [host]);
 
@@ -31,6 +32,14 @@ export const useOrder = () => {
 
     if (responseResult.statusCode !== 200) console.log(responseResult.errorMessage);
     if (responseResult.result === undefined) return [];
+
+    return responseResult.result;
+  };
+
+  const getOrderDetailItem = async () => {
+    const responseResult = await APIHandler.get<OrderDetailItemInfo>(`${ORDERS_URL}/${orderId}`);
+
+    if (responseResult.statusCode !== 200) console.log(responseResult.errorMessage);
 
     return responseResult.result;
   };
@@ -54,5 +63,5 @@ export const useOrder = () => {
     if (responseResult.statusCode !== 200) console.log(responseResult.errorMessage);
   };
 
-  return { orderList, getOrderList, addOrderItem };
+  return { orderList, orderDetail, addOrderItem };
 };

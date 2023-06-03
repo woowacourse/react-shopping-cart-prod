@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { BiDetail } from 'react-icons/bi';
 import { css, styled } from 'styled-components';
 import { OrderItemInfo } from '../../types';
@@ -10,7 +11,8 @@ interface Props {
 }
 
 export default function OrderItem({ orderItemInfo, isDetail = false }: Props) {
-  const { orderNumber, date, products } = orderItemInfo;
+  const navigate = useNavigate();
+  const { id, orderNumber, date, products } = orderItemInfo;
 
   return (
     <>
@@ -20,7 +22,15 @@ export default function OrderItem({ orderItemInfo, isDetail = false }: Props) {
           <span>({date})</span>
         </Style.Title>
         {!isDetail && (
-          <Button designType="text" fontSize="20px" color="var(--grey-400)" title="상세보기">
+          <Button
+            designType="text"
+            fontSize="20px"
+            color="var(--grey-400)"
+            title="상세보기"
+            onClick={() => {
+              navigate('/orderDetail', { state: { orderId: id } });
+            }}
+          >
             <BiDetail />
           </Button>
         )}

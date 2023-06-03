@@ -7,6 +7,10 @@ export interface ProductInfo {
   imageUrl: string;
 }
 
+export interface ProductInfoInOrder extends ProductInfo {
+  quantity: number;
+}
+
 export interface CartItemInfo {
   id: number;
   quantity: number;
@@ -21,8 +25,11 @@ export interface OrderItemInfo {
   products: ProductInfoInOrder[];
 }
 
-export interface ProductInfoInOrder extends ProductInfo {
-  quantity: number;
+export interface OrderDetailItemInfo extends OrderItemInfo {
+  deliveryFee: number;
+  usingCouponName: string;
+  discountPrice: number;
+  beforeDiscountPrice: number;
 }
 
 export interface ResponseResult<T> {

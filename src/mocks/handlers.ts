@@ -83,6 +83,29 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(orders));
   }),
 
+  // 주문 상세 조회
+  rest.get(`${ORDERS_BASE_URL}/:id`, (req, res, ctx) => {
+    const orderId = Number(req.params.id);
+    const orderList = getLocalStorage<OrderItemInfo[]>(LOCAL_STORAGE_KEY.ORDERS);
+    const orderItem = orderList.find((orderItem) => orderItem.id === orderId);
+
+    if (!orderItem) {
+      return res(ctx.status(404), ctx.json({ message: '해당 주문이 존재하지 않습니다.' }));
+    }
+
+    const deliveryFee = 3000;
+    const beforeDiscountPrice = orderItem.totalOrderPrice + deliveryFee;
+    const orderDetailItem = {
+      ...orderItem,
+      deliveryFee: deliveryFee,
+      usingCouponName: '신규 가입 할인 쿠폰',
+      discountPrice: 3000,
+      beforeDiscountPrice: beforeDiscountPrice,
+    };
+
+    return res(ctx.status(200), ctx.json(orderDetailItem));
+  }),
+
   // 주문 아이템 추가
   rest.post(ORDERS_BASE_URL, async (req, res, ctx) => {
     const { cartItemIds, totalOrderPrice } = await req.json();

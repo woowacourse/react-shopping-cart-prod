@@ -6,6 +6,7 @@ interface Props {
   color: string;
   tag?: string;
   label?: string;
+  isDiscount?: boolean;
 }
 
 export default function Price({
@@ -14,10 +15,12 @@ export default function Price({
   color = 'inherit',
   tag,
   label = '',
+  isDiscount = false,
 }: Partial<Props>) {
   return (
     <Style.Wrapper className={size} color={color} aria-label={`${label} 가격 ${price}원`}>
       {tag && <span>{tag}</span>}
+      {isDiscount ? '-' : ''}
       {price.toLocaleString('ko-KR')}원
     </Style.Wrapper>
   );

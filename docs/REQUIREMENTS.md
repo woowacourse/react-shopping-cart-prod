@@ -53,5 +53,5 @@
   - [x] 총 주문금액을 출력하는 기능(총 상품가격 + 배송비)
 - [x] OrderItem 컴포넌트 생성
 - [x] OrderList 컴포넌트 생성
-- [ ] OrderDetail 컴포넌트 생성
+- [x] OrderDetailItem 컴포넌트 생성
 - [ ] CouponList 컴포넌트 생성
