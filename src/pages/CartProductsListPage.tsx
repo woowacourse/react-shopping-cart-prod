@@ -10,8 +10,10 @@ import ContentListSkeleton from '../components/Common/ContentListSkeleton';
 import CartProductList from '../components/Cart/CartProductList';
 import UserPointInfo from '../components/Cart/UserPointInfo';
 import Title from '../components/Common/Title';
+import Message from '../components/Common/Message';
 import useCheckedProducts from '../hooks/useCheckedProducts';
 import usePoint from '../hooks/usePoint';
+import useErrorState from '../hooks/useErrorState';
 
 const CartProductsListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
@@ -19,38 +21,45 @@ const CartProductsListPage = () => {
   const { removeCheckedProducts, handleAllCheckedProducts } =
     useCheckedProducts();
   const { userUsedPoint, handleUserUsedPointUpdate } = usePoint();
+  const { hasError } = useErrorState();
 
   return (
     <Main>
-      <CartProductTitle>장바구니</CartProductTitle>
-      <CartProductContent>
-        <CartProductInfo>
-          <CartProductListTitle>
-            든든배송 상품 ({totalCartProductCount}개)
-          </CartProductListTitle>
-          <Suspense fallback={<ContentListSkeleton content='product' />}>
-            <CartProductList />
-          </Suspense>
-          <SelectContainer>
-            <CheckBox
-              onChange={handleAllCheckedProducts}
-              checked={totalCartProductCount === checkedCartProductCount}
-            />
-            <TotalSelectedCount>
-              전체선택 ({checkedCartProductCount}/{totalCartProductCount})
-            </TotalSelectedCount>
-            <Button
-              designType='delete'
-              buttonLabel='선택삭제'
-              onClick={removeCheckedProducts}
-            />
-          </SelectContainer>
-        </CartProductInfo>
-      </CartProductContent>
-      <PaymentBoxWrapper>
-        <UserPointInfo onUserUsedPointUpdate={handleUserUsedPointUpdate} />
-        <EstimatedPaymentBox usePoint={userUsedPoint} />
-      </PaymentBoxWrapper>
+      {hasError ? (
+        <Message type='error' />
+      ) : (
+        <>
+          <CartProductTitle>장바구니</CartProductTitle>
+          <CartProductContent>
+            <CartProductInfo>
+              <CartProductListTitle>
+                든든배송 상품 ({totalCartProductCount}개)
+              </CartProductListTitle>
+              <Suspense fallback={<ContentListSkeleton content='product' />}>
+                <CartProductList />
+              </Suspense>
+              <SelectContainer>
+                <CheckBox
+                  onChange={handleAllCheckedProducts}
+                  checked={totalCartProductCount === checkedCartProductCount}
+                />
+                <TotalSelectedCount>
+                  전체선택 ({checkedCartProductCount}/{totalCartProductCount})
+                </TotalSelectedCount>
+                <Button
+                  designType='delete'
+                  buttonLabel='선택삭제'
+                  onClick={removeCheckedProducts}
+                />
+              </SelectContainer>
+            </CartProductInfo>
+          </CartProductContent>
+          <PaymentBoxWrapper>
+            <UserPointInfo onUserUsedPointUpdate={handleUserUsedPointUpdate} />
+            <EstimatedPaymentBox usePoint={userUsedPoint} />
+          </PaymentBoxWrapper>
+        </>
+      )}
     </Main>
   );
 };

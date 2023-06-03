@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { hostNameAtom } from '../recoil/hostData';
 import {
@@ -6,6 +7,7 @@ import {
 } from '../recoil/checkedProductData';
 import { cartProductAtom } from '../recoil/cartProductData';
 import { orderApi } from '../apis/orderProducts';
+import useErrorState from './useErrorState';
 import {
   FREE_DELIVERY_THRESHOLD,
   REWARD_POINT_RATE,
@@ -14,15 +16,17 @@ import {
 import type { OrderedData } from '../types/product';
 
 const useEstimatedPayment = (usePoint: number) => {
+  const navigate = useNavigate();
+  const { handleError } = useErrorState();
   const totalProductPrice = useRecoilValue(totalPriceSelector);
   const totalDeliveryFee =
     totalProductPrice === 0 || totalProductPrice >= FREE_DELIVERY_THRESHOLD
       ? 0
       : STANDARD_DELIVERY_FEE;
-  const totalPrice = totalProductPrice
-    ? totalProductPrice + totalDeliveryFee
-    : 0;
   const rewardPoints = totalProductPrice * REWARD_POINT_RATE;
+  const totalPrice = totalProductPrice
+    ? totalProductPrice + totalDeliveryFee - usePoint
+    : 0;
 
   const checkedCartProduct = useRecoilValue(checkedItemAtom);
   const hostName = useRecoilValue(hostNameAtom);
@@ -53,6 +57,10 @@ const useEstimatedPayment = (usePoint: number) => {
       })
       .then(() => {
         setCartProducts([]);
+        navigate('/order-complete');
+      })
+      .catch((error) => {
+        handleError(error);
       });
   };
 
