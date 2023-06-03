@@ -1,26 +1,15 @@
-import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import FlexBox from 'components/@common/FlexBox';
-import { checkedCartProductsTotalPriceState } from 'state/cartProducts';
 import useCartCheckBox from 'hooks/useCartCheckBox';
 import ROUTE_PATH from 'constants/routePath';
-import { BASE_SHIPPING_FEE } from 'constants/policy';
+import useCartPriceText from './hooks/useCartPriceText';
 
 const CartPriceSection = () => {
-  const { checkedCartProductIds } = useCartCheckBox();
-  const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPriceState);
   const navigate = useNavigate();
-
+  const { productTotalPriceText, shippingFeeText, paymentAmountText, orderConfirmButtonText } = useCartPriceText();
+  const { checkedCartProductIds } = useCartCheckBox();
   const isCheckedProductsExist = checkedCartProductIds.size > 0;
-  const cartTotalPriceWithFee = cartTotalPrice + BASE_SHIPPING_FEE;
-
-  const productTotalPriceText = `${cartTotalPrice.toLocaleString('ko-KR')}원`;
-  const shippingFeeText = isCheckedProductsExist ? `+${BASE_SHIPPING_FEE.toLocaleString('ko-KR')}원` : '0원';
-  const cartTotalPriceText = isCheckedProductsExist ? `${cartTotalPriceWithFee.toLocaleString('ko-KR')}원` : '0원';
-  const orderConfirmButtonText = isCheckedProductsExist
-    ? `총 ${checkedCartProductIds.size}건 주문하기(${cartTotalPriceWithFee.toLocaleString('ko-KR')}원)`
-    : '주문하기';
 
   return (
     <PriceSection flexDirection="column" gap="10px">
@@ -34,7 +23,7 @@ const CartPriceSection = () => {
       </Container>
       <Container justify="space-between">
         <SubTitle>예상 주문금액</SubTitle>
-        <CartTotalPrice>{cartTotalPriceText}</CartTotalPrice>
+        <CartTotalPrice>{paymentAmountText}</CartTotalPrice>
       </Container>
       <OrderConfirmButton onClick={() => navigate(ROUTE_PATH.CHECKOUT)} isActive={isCheckedProductsExist}>
         {orderConfirmButtonText}
