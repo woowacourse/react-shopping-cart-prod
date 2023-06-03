@@ -6,11 +6,11 @@ import { useRecoilState, useSetRecoilState } from 'recoil';
 import { couponAtom, priceAtom } from 'recoil/carts';
 import { getCoupons, getPriceResult } from 'api/cart';
 import { Coupon } from 'types/api/carts';
-import { SERVERS } from 'utils/constants';
 
 const CouponSection = () => {
   const { data: coupons } = useGet(getCoupons);
   const [checkedCoupons, setCheckedCoupons] = useRecoilState(couponAtom);
+  const { request } = useGet(getPriceResult(checkedCoupons.join(',')));
   const setPrice = useSetRecoilState(priceAtom);
 
   useEffect(() => {
@@ -19,10 +19,11 @@ const CouponSection = () => {
 
   useEffect(() => {
     const getPrice = async () => {
-      const data = await getPriceResult(checkedCoupons.join(','))(
-        SERVERS['제이']
-      );
-      setPrice(data);
+      const data = await request();
+
+      if (data) {
+        setPrice(data);
+      }
     };
 
     getPrice();

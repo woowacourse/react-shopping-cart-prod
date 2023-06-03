@@ -17,14 +17,14 @@ export const useGet = <T>(callback: (server: string) => Promise<T>) => {
     try {
       const data = await callback(server);
       setData(data);
+      return data;
     } catch (error) {
       if (!(error instanceof Error)) return;
-      setIsLoading(false);
       toast.error(error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  return { data, isLoading };
+  return { request, data, isLoading };
 };
