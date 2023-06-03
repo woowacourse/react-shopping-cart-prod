@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import OrderComplete from './OrderComplete';
+import OrderCompleteInfo from '.';
 
 const meta = {
-  component: OrderComplete,
-  title: 'Pages',
-} satisfies Meta<typeof OrderComplete>;
+  component: OrderCompleteInfo,
+  title: 'OrderCompleteInfo',
+} satisfies Meta<typeof OrderCompleteInfo>;
 
 export default meta;
 

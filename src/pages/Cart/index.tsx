@@ -25,7 +25,7 @@ function Cart() {
   const navigate = useNavigate();
   const serverName = useRecoilValue(serverState);
   const cart = useRecoilValue(cartState);
-  const { totalCartPrice } = useCheckCart();
+  const { totalCartPrice, checkedCount } = useCheckCart();
 
   const [coupons, setCoupons] = useState<CouponType[]>([]);
   const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
@@ -58,7 +58,14 @@ function Cart() {
   const onOrderClick = async () => {
     const selectedCartId = cartItemSelectedById(cart);
     await submitOrderApi({ cartItemIds: selectedCartId, serverName, couponId: selectedCoupon?.id });
-    navigate(ORDER_PATH.COMPLETE);
+    navigate(ORDER_PATH.COMPLETE, {
+      state: {
+        deliveryFee: DELIVERY_FEE,
+        discountPrice,
+        totalItemsPrice: totalCartPrice,
+        orderItemsCount: checkedCount,
+      },
+    });
   };
 
   useEffect(() => {
