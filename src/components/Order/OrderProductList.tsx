@@ -20,7 +20,7 @@ const OrderProductList = ({
       <OrderProductListHeader>
         <div>
           <OrderId>주문번호 : {orderId}</OrderId>
-          <span>{orderDateTime}</span>
+          <OrderDataTime>{orderDateTime}</OrderDataTime>
         </div>
         {showDetailsLink && (
           <OrderDetailsLink to={`/orders/${orderId}`}>
@@ -41,7 +41,6 @@ const OrderProductList = ({
 };
 
 const OrderProductContainer = styled.ul`
-  width: 1100px;
   margin: 50px 0;
   border: 1px solid ${({ theme }) => theme.colors.gray400};
 `;
@@ -58,6 +57,12 @@ const OrderProductListHeader = styled.div`
 const OrderId = styled.span`
   display: inline-block;
   margin-right: 50px;
+`;
+
+const OrderDataTime = styled.span`
+  @media (max-width: 640px) {
+    display: none;
+  }
 `;
 
 const OrderDetailsLink = styled(Link)`
