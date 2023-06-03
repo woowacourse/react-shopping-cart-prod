@@ -51,7 +51,6 @@ const PaymentAmount = (props: PaymentAmountProps) => {
 
 const PaymentAmountContainer = styled.div`
   width: 448px;
-  height: 410px;
 
   border: 1px solid #dddddd;
 
