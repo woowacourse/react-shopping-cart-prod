@@ -54,52 +54,6 @@ export const ProductItemPriceText = styled.div`
   letter-spacing: 0.5px;
 `;
 
-export const PointBoxWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-
-  padding: 10px 0px 10px 0px;
-  border-bottom: gray solid 1px;
-`;
-
-export const PointInputTitle = styled.div`
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 37px;
-
-  text-align: center;
-  letter-spacing: 0.5px;
-`;
-
-export const PointInputWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-`;
-
-export const PointInput = styled.input`
-  font-style: normal;
-  font-size: 18px;
-  line-height: 37px;
-
-  letter-spacing: 0.5px;
-
-  width: 100px;
-  border: 1px solid blue;
-  border-radius: 10px;
-
-  padding: 0px 10px;
-`;
-
-export const PointText = styled.div`
-  font-style: normal;
-  font-size: 18px;
-  line-height: 37px;
-
-  letter-spacing: 0.5px;
-`;
-
 export const Button = styled.button`
   width: 100%;
   background-color: ${({ color }) => color};

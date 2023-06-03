@@ -1,4 +1,3 @@
-import { NewOrder, NewOrderItem } from "../../types/types.ts";
 import { useRecoilValue } from "recoil";
 import { checkedCartSelector } from "../../app/recoil/cartAtoms.ts";
 import { useNavigate } from "react-router-dom";
@@ -16,11 +15,6 @@ import {
   ProductItemSubTotalPrice,
   PurchaseTitle,
   Option,
-  PointInputTitle,
-  PointBoxWrapper,
-  PointInput,
-  PointText,
-  PointInputWrapper,
   PurchasePropertyWrapper,
   PurchasePrimaryText,
   PurchaseList,
@@ -31,6 +25,7 @@ import {
 } from "./Purchase.style.ts";
 import CouponSelector from "../CouponSelector";
 import { orderRepository } from "../../app/recoil/orderAtom.ts";
+import PointSelector from "../PointSelector/PointSelector.tsx";
 
 function Purchase() {
   const navigate = useNavigate();
@@ -80,13 +75,7 @@ function Purchase() {
         </Option>
       </Box>
       <CouponSelector />
-      <PointBoxWrapper>
-        <PointInputTitle>포인트 0점 사용 가능</PointInputTitle>
-        <PointInputWrapper>
-          <PointInput value={0} onChange={() => { }} />
-          <PointText>점 사용하기</PointText>
-        </PointInputWrapper>
-      </PointBoxWrapper>
+      <PointSelector />
 
       <PurchaseList>
         <PurchasePropertyWrapper>

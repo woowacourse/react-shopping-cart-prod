@@ -67,3 +67,14 @@ export interface Coupon {
   discountAmount: number;
   minAmount: number;
 }
+
+export interface PointHistory {
+  orderId: number,
+  earnedPoint: number,
+  usedPoint: number
+}
+
+export interface Point {
+  pointHistories: PointHistory[],
+  totalPoint: 0
+}

@@ -8,6 +8,7 @@ import { CartItem } from "../../types/types.ts";
 import {
   SESSION_STORAGE_KEY_CART_ITEMS,
   SESSION_STORAGE_KEY_COUPONS,
+  SESSION_STORAGE_KEY_POINT,
 } from "../keys.ts";
 
 export const handlers = [
@@ -104,6 +105,19 @@ export const handlers = [
           ? coupons
           : mockCoupons
       )
+    );
+  }),
+
+  rest.get("/point", async (req, res, ctx) => {
+    const point = getSessionStorage(SESSION_STORAGE_KEY_POINT, {
+      pointHistories: [],
+      totalPoint: 1000
+    });
+
+    return res(
+      ctx.delay(100),
+      ctx.status(200),
+      ctx.json(point)
     );
   }),
 ];
