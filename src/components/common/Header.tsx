@@ -38,7 +38,14 @@ const S = {
     display: flex;
     max-width: 1270px;
     margin: 0 auto;
-    padding: 0 20px;
+
+    @media (max-width: 1270px) {
+      padding: 0 36px;
+    }
+
+    @media (max-width: 420px) {
+      padding: 0 28px;
+    }
   `,
 };
 
