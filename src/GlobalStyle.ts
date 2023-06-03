@@ -46,7 +46,13 @@ const GlobalStyle = createGlobalStyle`
     ::-webkit-scrollbar {
       display: none; /* for Chrome, Safari, and Opera */
     }
+
+    &:has(dialog[open]) {
+      overflow: hidden;
+    }
   }
+
+
 
   img, picture, video, canvas, svg {
     display: block;max-width:100%;
@@ -70,6 +76,15 @@ const GlobalStyle = createGlobalStyle`
   ul,
   li {
       list-style: none;
+  }
+
+  &.sr-only{
+    position:absolute;
+    z-index:-1000;
+    width:1px;
+    height:1px;
+    overflow:hidden;
+    opacity:0;
   }
 
   @font-face {
