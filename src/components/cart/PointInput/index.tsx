@@ -1,26 +1,50 @@
-import { useRecoilState } from 'recoil';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { S } from './PointInput.styles';
-import PointState from '../../../store/PointState';
-import { MouseEventHandler, useState } from 'react';
+import pointState from '../../../store/PointState';
+import { ChangeEventHandler, MouseEventHandler, useEffect, useState } from 'react';
+import memberState from '../../../store/MemberState';
+import { validatePointInput } from '../../../utils/validatePointInput';
+import PointInfo from './PointInfo';
+import PointForm from './PointForm';
 
-const PointInput = () => {
-  const [point, setPoint] = useRecoilState(PointState);
-  const [useAllPoint, setUseAllPoint] = useState(false);
+type Props = {
+  totalPrice: number;
+};
 
-  const handleToggleUseAllPoint: MouseEventHandler<HTMLButtonElement> = () => {
-    setUseAllPoint((prev) => !prev);
+const PointInput = ({ totalPrice }: Props) => {
+  const setUsedPoint = useSetRecoilState(pointState);
+  const member = useRecoilValue(memberState);
+  const [useAllPoints, setUseAllPoints] = useState(false);
+  const [inputPoint, setInputPoint] = useState('');
+
+  const handleToggleUseAllPoints: MouseEventHandler<HTMLButtonElement> = () => {
+    setUseAllPoints((prev) => !prev);
+    !useAllPoints ? setInputPoint(String(Math.min(totalPrice, member.point))) : setInputPoint('');
   };
 
-  // 토글이 아닌 disable 형태로 변환하기
+  const handlePointInputChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
+    const { value } = target;
+
+    if (validatePointInput(value, totalPrice, member.point)) return;
+    setInputPoint(value.trim());
+  };
+
+  useEffect(() => {
+    setUsedPoint(Number(inputPoint));
+  }, [inputPoint]);
+
   return (
     <S.Wrapper>
-      <S.PointLabel>보유 포인트</S.PointLabel>
-      <span>{`${point.toLocaleString()}원`}</span>
-      <S.PointLabel>사용 포인트</S.PointLabel>
-      <S.InputWrapper>
-        {useAllPoint ? `${point.toLocaleString()}원` : <S.Input type="text" placeholder="0원" />}
-        <S.PointButton onClick={handleToggleUseAllPoint}>전액사용</S.PointButton>
-      </S.InputWrapper>
+      <PointInfo memberPoint={member.point} />
+      <PointForm
+        inputPoint={inputPoint}
+        handlePointInputChange={handlePointInputChange}
+        handleToggleUseAllPoints={handleToggleUseAllPoints}
+        useAllPoints={useAllPoints}
+        totalPrice={totalPrice}
+        hasPoint={member.point}
+      />
     </S.Wrapper>
   );
 };

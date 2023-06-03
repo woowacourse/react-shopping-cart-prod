@@ -1,12 +1,20 @@
 import { styled } from 'styled-components';
 
 export const S = {
-  Wrapper: styled.section`
+  Wrapper: styled.div`
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    margin: 30px 0;
+    gap: 20px;
+
+    section {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
   `,
 
   PointLabel: styled.span`

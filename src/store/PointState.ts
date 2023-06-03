@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
-const PointState = atom({
+const pointState = atom({
   key: 'pointState',
-  default: 3000,
+  default: 0,
 });
 
-export default PointState;
+export default pointState;

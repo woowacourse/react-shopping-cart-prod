@@ -6,14 +6,16 @@ export const S = {
     flex-direction: column;
     align-items: center;
     width: 70%;
-    height: 410px;
+    height: fit-content;
+    padding: 20px 0;
     margin-top: 40px;
-    border: 1px solid #ddd;
+    border-radius: 7px;
+    border: 2px solid #ddd;
 
     & > :nth-child(1) {
       display: flex;
       align-items: flex-start;
-      padding: 20px;
+      padding: 0 20px 20px 20px;
       width: 100%;
       border-bottom: 3px solid #ddd;
     }
@@ -51,11 +53,12 @@ export const S = {
   `,
 
   OrderButton: styled.button`
-    width: calc(100% - 60px);
+    width: calc(100% - 40px);
     height: 75px;
-    font-size: 20px;
-    font-weight: 400;
+    font-size: 22px;
+    font-weight: 700;
     margin-top: 45px;
+    border-radius: 7px;
     color: #fff;
     background-color: ${(props) => (props.disabled ? '#aaa' : '#04c09e')};
   `,
@@ -65,7 +68,6 @@ export const S = {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
     list-style: none;
   `,
 };

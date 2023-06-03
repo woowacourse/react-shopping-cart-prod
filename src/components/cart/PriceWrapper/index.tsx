@@ -5,6 +5,7 @@ import PointInput from '../PointInput';
 import useOrder from '../../../hooks/useOrder';
 import useNavigatePage from '../../../hooks/useNavigatePage';
 import { S } from './PriceWrapper.styles';
+import PointState from '../../../store/PointState';
 
 type Props = {
   totalPrice: number;
@@ -19,6 +20,8 @@ type PriceProps = {
 // TODO: 이름 변경
 const PriceWrapper = ({ totalPrice }: Props) => {
   const checkedItems = useRecoilValue(checkedItemsState);
+  const usedPoint = useRecoilValue(PointState);
+
   const { goOrderComplete } = useNavigatePage();
   const { handleOrderItems } = useOrder();
 
@@ -32,7 +35,7 @@ const PriceWrapper = ({ totalPrice }: Props) => {
   };
 
   const handleOrder = () => {
-    handleOrderItems(checkedItems, 1000);
+    handleOrderItems(checkedItems, usedPoint, DELIVERY_FEE(totalPrice));
     goOrderComplete();
   };
 
@@ -50,7 +53,7 @@ const PriceWrapper = ({ totalPrice }: Props) => {
           description="총 배송비"
           price={`${DELIVERY_FEE(totalPrice).toLocaleString()}원`}
         />
-        <PointInput />
+        <PointInput totalPrice={totalPrice + DELIVERY_FEE(totalPrice)} />
         <Price
           id="total-price"
           description="총 주문금액"
@@ -59,7 +62,7 @@ const PriceWrapper = ({ totalPrice }: Props) => {
       </S.PriceInfo>
       <S.OrderButton onClick={handleOrder} disabled={totalPrice === 0}>
         {totalPrice > 0
-          ? `${(totalPrice + DELIVERY_FEE(totalPrice)).toLocaleString()}원 결제하기`
+          ? `${(totalPrice + DELIVERY_FEE(totalPrice) - usedPoint).toLocaleString()}원 결제하기`
           : '결제하기'}
       </S.OrderButton>
     </S.PriceWrapper>
