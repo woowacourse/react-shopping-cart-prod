@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Layout } from '../layout';
 import { PageTitle } from '../layout/pageTitle/PageTitle';
 import { OrderDetailItemSection } from '../components/orderDetailPage/OrderDetailItemSection';
-import { OrderDetailSummarySection } from '../components/orderPage/OrderDetailSummarySection';
+import { OrderDetailSummarySection } from '../components/orderDetailPage/OrderDetailSummarySection';
 import { Suspense } from 'react';
 import Loading from '../components/common/Loading';
 
@@ -26,9 +26,14 @@ const Style = {
     height: max-content;
 
     display: flex;
-    justify-content: center;
     gap: 70px;
 
     margin: 0 auto;
+
+    @media (max-width: 1080px) {
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
   `,
 };

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Product } from '../../types/Product';
+import { getCommaAddedNumber } from '../../utils/number';
 
 export const OrderItem = ({ product }: { product: Product }) => {
   return (
@@ -8,7 +9,8 @@ export const OrderItem = ({ product }: { product: Product }) => {
       <Style.ProductInfo>
         <p>{product.name}</p>
         <p>
-          가격: {product.price}원 / 수량: {product.quantity}개
+          가격: {getCommaAddedNumber(product.price)}원 / 수량:{' '}
+          {product.quantity}개
         </p>
       </Style.ProductInfo>
     </Style.Container>

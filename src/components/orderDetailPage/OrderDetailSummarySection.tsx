@@ -1,12 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
 import { getCommaAddedNumber } from '../../utils/number';
-import { priceSummaryState } from '../../recoil/selectors/priceSummarySelector';
 import { useRecoilValue } from 'recoil';
+import { useLocation } from 'react-router-dom';
+import { orderDetailSelector } from '../../recoil/selectors/orderDetailSelector';
 
 export const OrderDetailSummarySection = () => {
-  const { totalProductPrice, deliveryPrice, totalPrice } =
-    useRecoilValue(priceSummaryState);
+  const location = useLocation();
+
+  const orderDetail = useRecoilValue(orderDetailSelector(location.state));
 
   return (
     <Style.Container>
@@ -17,23 +18,44 @@ export const OrderDetailSummarySection = () => {
         <Style.TotalPriceSummary>
           <Style.Caption>총 상품 금액</Style.Caption>
           <Style.Caption>
-            {getCommaAddedNumber(totalProductPrice)}원
+            {getCommaAddedNumber(orderDetail.originalPrice)}원
           </Style.Caption>
         </Style.TotalPriceSummary>
-        <Style.TotalDeliveryPriceSummary>
-          <Style.Caption>총 배송비</Style.Caption>
-          <Style.Caption>{getCommaAddedNumber(deliveryPrice)}원</Style.Caption>
-        </Style.TotalDeliveryPriceSummary>
+
         <Style.PointInputContainer>
-          <Style.Caption>적립금 사용</Style.Caption>
+          <Style.Caption>사용 적립금</Style.Caption>
+          <Style.Caption>
+            {getCommaAddedNumber(orderDetail.usedPoint)}원
+          </Style.Caption>
         </Style.PointInputContainer>
 
         <Style.TotalOrderPriceSummary>
           <Style.Caption>할인 합계</Style.Caption>
+          <Style.Caption>
+            {getCommaAddedNumber(
+              orderDetail.usedPoint ? -orderDetail.usedPoint : 0
+            )}
+            원
+          </Style.Caption>
         </Style.TotalOrderPriceSummary>
+        <Style.TotalDeliveryPriceSummary>
+          <Style.Caption>배송비</Style.Caption>
+          <Style.Caption>3,000원</Style.Caption>
+        </Style.TotalDeliveryPriceSummary>
         <Style.TotalPriceSummary>
           <Style.Caption>총 주문 금액</Style.Caption>
-          <Style.Caption>{getCommaAddedNumber(totalPrice)}원</Style.Caption>
+          <Style.Caption>
+            {getCommaAddedNumber(
+              orderDetail.originalPrice + 3000 - orderDetail.usedPoint
+            )}
+            원
+          </Style.Caption>
+        </Style.TotalPriceSummary>
+        <Style.TotalPriceSummary>
+          <Style.Caption>적립 금액</Style.Caption>
+          <Style.Caption>
+            {getCommaAddedNumber(orderDetail.pointToAdd)}원
+          </Style.Caption>
         </Style.TotalPriceSummary>
       </Style.Content>
     </Style.Container>
