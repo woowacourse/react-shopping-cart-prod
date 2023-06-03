@@ -33,6 +33,10 @@ function Cart() {
     finalOpenModal();
   };
 
+  const moveHome = () => {
+    navigate('/');
+  };
+
   const ResultComponent =
     cartList.length > 0 ? (
       <section className={styles['main-view']}>
@@ -43,6 +47,9 @@ function Cart() {
       <section className={styles['main-view-blank']}>
         <AlertBlank />
         <p>장바구니가 비어있어요!</p>
+        <button type="button" onClick={moveHome}>
+          담으러 가기
+        </button>
       </section>
     );
 
