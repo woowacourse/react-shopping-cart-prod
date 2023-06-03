@@ -6,8 +6,6 @@ const useCouponMessage = () => {
   const couponSelected = useCouponSelected();
   const totalPrice = useTotalPrice();
 
-  console.log('>>> couponSelected:', couponSelected);
-
   if (!couponList.some((coupon) => coupon.checked)) {
     const availableCouponLength = couponList.reduce((acc, coupon) => {
       return coupon.minimumPrice < totalPrice ? acc + 1 : acc;
