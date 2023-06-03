@@ -2,7 +2,7 @@ import ContentLayout from 'components/@common/ContentLayout';
 import ProductItemList from 'components/Product/ProductItemList';
 import { useToast } from 'components/@common/Toast/hooks/useToast';
 
-const ProductList = () => {
+const ProductListPage = () => {
   const { renderToast } = useToast();
 
   return (
@@ -13,4 +13,4 @@ const ProductList = () => {
   );
 };
 
-export default ProductList;
+export default ProductListPage;

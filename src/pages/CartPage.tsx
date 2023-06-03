@@ -5,7 +5,7 @@ import CartItemList from 'components/Cart/CartItemList';
 import { Suspense } from 'react';
 import CouponSection from 'components/Cart/CouponSection';
 
-const CartList = () => {
+const CartPage = () => {
   return (
     <ContentLayout title="🛒 장바구니 🛒">
       <Suspense fallback={<div>loading...</div>}>
@@ -34,4 +34,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default CartList;
+export default CartPage;

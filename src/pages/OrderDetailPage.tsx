@@ -7,7 +7,7 @@ import PaymentSection from 'components/OrderDetail/PaymentSection';
 import { getOrderDetail } from 'api/orders';
 import { styled } from 'styled-components';
 
-const OrderDetail = () => {
+const OrderDetailPage = () => {
   const { id } = useParams();
 
   if (!id) return null;
@@ -24,7 +24,7 @@ const OrderDetail = () => {
   );
 };
 
-export default OrderDetail;
+export default OrderDetailPage;
 
 const Wrapper = styled.div`
   width: 80%;

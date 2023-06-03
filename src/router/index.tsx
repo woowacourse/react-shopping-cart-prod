@@ -1,11 +1,11 @@
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import ProductList from 'pages/ProductList';
-import CartList from 'pages/CartList';
+import ProductListPage from 'pages/ProductListPage';
+import CartPage from 'pages/CartPage';
 import NotFound from 'pages/NotFound';
-import OrderedList from 'pages/OrderedList';
+import OrderListPage from 'pages/OrderListPage';
 import { ROUTES } from 'utils/constants';
-import OrderDetail from 'pages/OrderDetail';
+import OrderDetailPage from 'pages/OrderDetailPage';
 
 const router = createBrowserRouter(
   [
@@ -13,7 +13,7 @@ const router = createBrowserRouter(
       path: ROUTES.PRODUCT_LIST,
       element: (
         <Suspense>
-          <ProductList />
+          <ProductListPage />
         </Suspense>
       ),
     },
@@ -21,7 +21,7 @@ const router = createBrowserRouter(
       path: ROUTES.CART_LIST,
       element: (
         <Suspense>
-          <CartList />
+          <CartPage />
         </Suspense>
       ),
     },
@@ -29,7 +29,7 @@ const router = createBrowserRouter(
       path: ROUTES.ORDERED_LIST,
       element: (
         <Suspense>
-          <OrderedList />
+          <OrderListPage />
         </Suspense>
       ),
     },
@@ -37,9 +37,10 @@ const router = createBrowserRouter(
       path: `${ROUTES.ORDERED_DETAIL}/:id`,
       element: (
         <Suspense>
-          <OrderDetail />
+          <OrderDetailPage />
         </Suspense>
       ),
+      errorElement: <NotFound />,
     },
     {
       path: '*',
