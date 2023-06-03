@@ -1,10 +1,10 @@
 import { MouseEventHandler, useRef, useState } from 'react';
 import * as S from './UserSelector.style.ts';
-import UserProfileImage from '../../../assets/user.svg';
-import useOnClickOutside from '../../../hooks/useOnClickOutside.ts';
-import type { Point } from '../../../types/types.ts';
+import UserProfileImage from '../../../../assets/user.svg';
+import useOnClickOutside from '../../../../hooks/useOnClickOutside.ts';
+import type { Point } from '../../../../types/types.ts';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { memberIdState, memberListState } from '../../../recoil/userAtoms.ts';
+import { memberIdState, memberListState } from '../../../../recoil/userAtoms.ts';
 
 type UserSelectorProps = {
   point: Point;

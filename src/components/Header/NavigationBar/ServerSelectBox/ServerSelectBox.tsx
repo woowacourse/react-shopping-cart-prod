@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import * as S from './ServerSelectBox.style';
-import { serverState } from '../../../recoil/serverAtom';
+import { serverState } from '../../../../recoil/serverAtom';
 import { ChangeEvent, useEffect } from 'react';
-import { fetchCartList } from '../../../api/api';
-import { cartState } from '../../../recoil/cartAtoms';
+import { fetchCartList } from '../../../../api/api';
+import { cartState } from '../../../../recoil/cartAtoms';
 
 function ServerSelectBox() {
   const [server, setServer] = useRecoilState(serverState);
