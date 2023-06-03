@@ -45,7 +45,7 @@ const CartPageFlexBox = styled.div`
   justify-content: space-between;
   gap: 40px;
   width: 100%;
-  margin: 40px 0;
+  margin-top: 40px;
 
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     flex-direction: column;

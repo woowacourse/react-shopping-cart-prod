@@ -23,11 +23,7 @@ const ProductsListPage = () => {
 
 const Main = styled.main`
   width: 100%;
-  padding: 60px;
-
-  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    padding: 30px 30px 100px 30px;
-  }
+  padding: 30px 30px 90px 30px;
 `;
 
 export default ProductsListPage;

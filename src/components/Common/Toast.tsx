@@ -31,10 +31,11 @@ const Container = styled.div<ToastStyleProps>`
   left: 0;
   right: 0;
 
+  width: fit-content;
   height: 48px;
-  width: 50%;
 
   margin: 0 auto;
+  padding: 0 20px;
 
   border-radius: 8px;
   ${({ variant }) => toastStyle[variant]}

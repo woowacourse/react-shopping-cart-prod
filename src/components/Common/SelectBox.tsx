@@ -18,6 +18,8 @@ const SelectBox = ({ options, ...props }: SelectBoxProps) => {
 };
 
 const StyledSelectBox = styled.select`
+  width: fit-content;
+
   &:disabled {
     cursor: not-allowed;
     background: ${({ theme }) => theme.colors.gray200};

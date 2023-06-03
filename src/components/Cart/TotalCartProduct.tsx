@@ -43,12 +43,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 27px 0 45px 0;
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
-    justify-content: start;
-    margin: 0 0 100px 0;
-  }
+  margin: 28px 0 40px 0;
 `;
 
 const TotalProductCountWrapper = styled.div`
@@ -57,10 +52,6 @@ const TotalProductCountWrapper = styled.div`
 
   & > p {
     margin: 0 0 0 12px;
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
-    margin: 0 12px 0 0;
   }
 `;
 

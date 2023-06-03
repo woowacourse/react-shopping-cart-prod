@@ -72,7 +72,6 @@ const HeaderContent = styled.div`
     gap: 40px;
 
     & > select {
-      width: 100px;
       height: 28px;
 
       text-align: center;
@@ -140,10 +139,11 @@ const CartLink = styled(StyledLink)<CartLinkProps>`
   @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
     display: ${({ pathname }) =>
       pathname === PAGE_URLS.main ? 'block' : 'none'};
-    position: absolute;
+    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
+    height: 60px;
     padding: 20px;
     z-index: 999;
 

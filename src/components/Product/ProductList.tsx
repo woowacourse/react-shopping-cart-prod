@@ -32,10 +32,6 @@ const ProductListContainer = styled.ul`
   grid-template-columns: repeat(auto-fill, 282px);
   grid-row-gap: 84px;
   grid-column-gap: 48px;
-
-  @media (max-width: ${({ theme }) => theme.breakPoints.large}) {
-    padding-bottom: 100px;
-  }
 `;
 
 export default ProductList;
