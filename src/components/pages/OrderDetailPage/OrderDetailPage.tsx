@@ -1,13 +1,16 @@
 import { useParams } from 'react-router-dom';
 
+import { useFetchOrderDetail } from '@recoils/orderDetailAtoms';
+
 import { OrderBox } from '@components/OrderBox/OrderBox';
 
-import { useFetchAsync } from '../../../hooks/useFetchAsync';
+import type { OrderDetail, OrderInfo } from '../../../types';
 
 export const OrderDetailPage = () => {
   const { id } = useParams();
 
-  const data = useFetchAsync(`orders/${id}`);
+  const { orderId, orderDate, orderDetails, ...els }: OrderDetail = useFetchOrderDetail(Number(id));
+  const orderInfo: OrderInfo = { orderId, orderDate, orderDetails };
 
-  return <OrderBox orderDetailData={data} />;
+  return <OrderBox orderInfo={orderInfo} />;
 };

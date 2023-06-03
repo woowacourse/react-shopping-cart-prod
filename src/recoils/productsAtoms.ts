@@ -7,6 +7,7 @@ export const productsSelector = selector<Product[]>({
   key: 'productsRepository',
   get: async () => {
     const products = await fetchData('/products');
+
     return products;
   },
 });

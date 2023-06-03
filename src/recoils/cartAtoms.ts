@@ -10,7 +10,7 @@ export const cartState = atom<CartItem[]>({
   effects: [localStorageEffect('cartState')],
 });
 
-export const cartController = selector({
+export const cartRepository = selector({
   key: 'useCart',
   get: ({ getCallback }) => {
     const fetchCart = getCallback(({ set }) => async () => {

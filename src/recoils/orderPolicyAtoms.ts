@@ -1,5 +1,5 @@
-import { fetchData } from '@api/fetchData';
 import { selector, useRecoilValue } from 'recoil';
+import { fetchData } from '@api/fetchData';
 
 import type { OrderPolicy } from '../types';
 

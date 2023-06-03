@@ -1,14 +1,15 @@
 import { OrderBox } from '@components/OrderBox/OrderBox';
-import { useFetchAsync } from '@hooks/useFetchAsync';
+
+import { useFetchOrders } from '@recoils/ordersAtoms';
 
 export const OrdersPage = () => {
-  const data = useFetchAsync('/orders');
-  console.log(data);
+  const orders = useFetchOrders();
 
   return (
     <ul>
-      <OrderBox />
-      <OrderBox />
+      {orders.map((order) => (
+        <OrderBox key={order.orderId} orderInfo={order} />
+      ))}
     </ul>
   );
 };

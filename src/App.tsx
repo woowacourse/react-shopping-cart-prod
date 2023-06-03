@@ -8,22 +8,15 @@ import { CartPage } from '@components/pages/CartPage/CartPage';
 import { OrdersPage } from '@components/pages/OrdersPage/OrdersPage';
 import { OrderDetailPage } from '@components/pages/OrderDetailPage/OrderDetailPage';
 
-import { useSetCartState } from './recoils/recoilCart';
-import { useApiBaseUrlValue } from '@recoils/recoilApiBaseUrl';
-
-import { useQuery } from './hooks/useQuery';
-
-import { FETCH_URL, PATH } from '@constants/index';
+import { PATH } from '@constants/index';
 
 import { Spinner } from '@components/common/Spinner/Spinner';
 
-import type { CartItem } from './types';
-import { useFetchAsync } from '@hooks/useFetchAsync';
 import { useRecoilValue } from 'recoil';
-import { cartController } from '@recoils/cartAtoms';
+import { cartRepository } from '@recoils/cartAtoms';
 
 export const App = () => {
-  const { fetchCart } = useRecoilValue(cartController);
+  const { fetchCart } = useRecoilValue(cartRepository);
 
   useEffect(() => {
     fetchCart();
