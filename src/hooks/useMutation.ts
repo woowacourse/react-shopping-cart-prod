@@ -27,12 +27,10 @@ export const useMutation = (method: string) => {
           ...(bodyData && { body: JSON.stringify(bodyData) }),
         });
 
-        const location = response.headers.get('location');
+        if (response.ok && method === 'POST') {
+          const body = await response.json();
 
-        setState((prev) => ({ ...prev, data: { location } }));
-
-        if (response.ok) {
-          return { location };
+          setState((prev) => ({ ...prev, data: body }));
         }
       } catch (error) {
         console.log(error);

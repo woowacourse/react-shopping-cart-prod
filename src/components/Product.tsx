@@ -9,7 +9,7 @@ import { useMutation } from '../hooks/useMutation';
 import { FETCH_METHOD, FETCH_URL } from '../constants';
 import { useApiBaseUrlValue } from '../recoils/recoilApiBaseUrl';
 import { useEffect } from 'react';
-import { useCheckedState } from '../recoils/recoilChecked';
+import { useSetCheckedState } from '../recoils/recoilChecked';
 
 interface Props {
   item: ProductType;
@@ -21,12 +21,12 @@ export const Product = ({ item }: Props) => {
 
   const cartItem = useCartItemValue(item.id);
 
-  const [checkedState, setCheckedState] = useCheckedState();
+  const setCheckedState = useSetCheckedState();
 
   useEffect(() => {
     if (!addCartResponseData) return;
 
-    const cartId = addCartResponseData.location.split('/').pop();
+    const cartId = addCartResponseData.cartItemId;
 
     setCart((prev) => [
       ...prev,
