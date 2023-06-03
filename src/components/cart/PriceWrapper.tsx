@@ -5,6 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { checkedItemsState } from '../../store/CheckedItemsState';
 import { useOrder } from '../../hooks/useOrder';
 import { inputPointValueState } from '../../store/InputPointValueState';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   totalPrice: number;
@@ -14,11 +15,16 @@ const PriceWrapper = ({ totalPrice }: Props) => {
   const setCheckedItems = useSetRecoilState(checkedItemsState);
   const inputPointValue = useRecoilValue(inputPointValueState);
 
+  const navigate = useNavigate();
+
   const { orderToItems } = useOrder();
 
   const handleOrderButtonClick = () => {
     orderToItems();
     setCheckedItems([]);
+
+    navigate('/');
+    window.location.reload();
   };
   const Price = (id: string, description: string, price: string) => (
     <section id={id}>
