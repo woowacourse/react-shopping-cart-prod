@@ -19,9 +19,9 @@ const TotalPriceBox = ({ totalPrice }: TotalPriceBoxProps) => {
 const TotalPriceHeader = styled.div`
   display: flex;
   align-items: center;
-  height: 90px;
+  height: 75px;
   padding: 0 24px;
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 500;
   background: ${({ theme }) => theme.colors.gray50};
   border: 1px solid ${({ theme }) => theme.colors.gray100};
@@ -31,7 +31,7 @@ const TotalPriceBody = styled.dl`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 150px;
+  height: 120px;
   padding: 0 24px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
 

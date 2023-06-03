@@ -57,7 +57,7 @@ const amountCounterStyles = {
   },
   medium: {
     group: {
-      height: '48px',
+      height: '42px',
     },
     input: {
       width: '54px',

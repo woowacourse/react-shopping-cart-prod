@@ -13,12 +13,12 @@ const Image = ({ size = 'medium', ...props }: ImageProps) => {
 
 const imageStyles = {
   small: {
-    width: '144px',
-    height: '144px',
+    width: '180px',
+    height: '120px',
   },
   medium: {
-    width: '282px',
-    height: '282px',
+    width: '270px',
+    height: '180px',
   },
 };
 

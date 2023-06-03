@@ -31,7 +31,7 @@ const OrderedProductItem = ({
 const OrderedItem = styled.li`
   display: flex;
   align-items: center;
-  height: 220px;
+  height: 180px;
   padding: 0 24px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
 `;
@@ -49,7 +49,7 @@ const ProductInfoContainer = styled.dl`
   }
 
   & > dd {
-    margin: 20px 0 0 0;
+    margin: 12px 0 0 0;
     color: ${({ theme }) => theme.colors.gray400};
   }
 

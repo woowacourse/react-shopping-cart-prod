@@ -27,7 +27,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
 };
 
 const ProductContainer = styled.div`
-  width: 282px;
+  width: 270px;
 `;
 
 const ProductInfoContainer = styled.div`
@@ -44,7 +44,7 @@ const ProductName = styled.dt`
 
 const ProductPrice = styled.dd`
   font-size: 20px;
-  line-height: 26.67px;
+  line-height: 26px;
 `;
 
 export default ProductItem;
