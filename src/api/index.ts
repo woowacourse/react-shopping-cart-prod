@@ -190,6 +190,4 @@ export const postPurchaseCartItem = async <T>(
   if (!response.ok) throw new Error(`${url} FETCH Error`);
 
   const locationHeader = response.headers.get('Location');
-
-  console.log(locationHeader);
 };
