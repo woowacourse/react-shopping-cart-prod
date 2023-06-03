@@ -4,6 +4,8 @@ import orderApis from '../../apis/order';
 import type { Order, OrderInfo } from '../../types/order';
 import { serverNameState } from '../serverName';
 import { orderState } from './atom';
+import { updateCartProductSelector } from '../cartProducts';
+import { updateCouponSelector } from '../coupon';
 
 export const orderSelector = selector<Order[]>({
   key: 'orderSelector',
@@ -23,9 +25,13 @@ export const orderHandlerSelector = selector({
   get: ({ get, getCallback }) => {
     const serverName = get(serverNameState);
     const { getOrders, postOrder } = orderApis(serverName);
+    const updateCartProduct = get(updateCartProductSelector);
+    const updateCoupon = get(updateCouponSelector);
 
     const addOrder = getCallback(({ set }) => async (orderInfo: OrderInfo) => {
       await postOrder(orderInfo);
+      await updateCartProduct();
+      await updateCoupon();
       const newOrders = await getOrders();
       set(orderState, newOrders);
     });

@@ -27,42 +27,45 @@ export const targetCartProductState = selectorFamily({
       findTargetProduct(get(cartProductState), productId, cartItemId),
 });
 
-export const cartProductHandlerSelector = selector({
-  key: 'cartProductHandlerSelector',
+export const updateCartProductSelector = selector({
+  key: 'updateCartProductSelector',
   get: ({ get, getCallback }) => {
     const serverName = get(serverNameState);
-    const {
-      getCartProducts,
-      postCartProduct,
-      patchCartProduct,
-      deleteCartProduct,
-    } = cartProductApis(serverName);
+    const { getCartProducts } = cartProductApis(serverName);
 
-    const addCart = getCallback(({ set }) => async (id: number) => {
-      const location = await postCartProduct(id);
+    const updateCartProduct = getCallback(({ set }) => async () => {
       const newCartProducts = await getCartProducts();
       set(cartProductState, newCartProducts);
-
-      return Number(location?.split('/').pop());
     });
 
-    const updateTargetQuantity = getCallback(
-      ({ set }) =>
-        async (id: number, quantity: number) => {
-          await patchCartProduct(id, quantity);
-          const newCartProducts = await getCartProducts();
-          set(cartProductState, newCartProducts);
-        }
-    );
+    return updateCartProduct;
+  },
+});
 
-    const deleteTargetCartProduct = getCallback(
-      ({ set }) =>
-        async (id: number) => {
-          await deleteCartProduct(id);
-          const newCartProducts = await getCartProducts();
-          set(cartProductState, newCartProducts);
-        }
-    );
+export const cartProductHandlerSelector = selector({
+  key: 'cartProductHandlerSelector',
+  get: ({ get }) => {
+    const serverName = get(serverNameState);
+    const updateCartProduct = get(updateCartProductSelector);
+    const { postCartProduct, patchCartProduct, deleteCartProduct } =
+      cartProductApis(serverName);
+
+    const addCart = async (id: number) => {
+      const location = await postCartProduct(id);
+      await updateCartProduct();
+
+      return Number(location?.split('/').pop());
+    };
+
+    const updateTargetQuantity = async (id: number, quantity: number) => {
+      await patchCartProduct(id, quantity);
+      await updateCartProduct();
+    };
+
+    const deleteTargetCartProduct = async (id: number) => {
+      await deleteCartProduct(id);
+      await updateCartProduct();
+    };
 
     return { addCart, updateTargetQuantity, deleteTargetCartProduct };
   },

@@ -27,3 +27,18 @@ export const targetCouponPriceSelector = selector({
         )?.discountPrice ?? 0
       : 0,
 });
+
+export const updateCouponSelector = selector({
+  key: 'updateCouponSelector',
+  get: ({ get, getCallback }) => {
+    const serverName = get(serverNameState);
+    const { getCoupons } = couponApis(serverName);
+
+    const updateCoupon = getCallback(({ set }) => async () => {
+      const newCoupons = await getCoupons();
+      set(couponState, newCoupons);
+    });
+
+    return updateCoupon;
+  },
+});
