@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../Common/Button';
 import useEstimatedPayment from '../../hooks/useEstimatedPayment';
@@ -42,13 +41,11 @@ const EstimatedPaymentBox = ({ usePoint }: EstimatedPaymentBoxProps) => {
         </EstimatedPaymentInfo>
       </EstimatedPaymentContent>
       <OrderButtonWrapper>
-        <Link to={'/orders/complete'}>
-          <Button
-            designType='order'
-            buttonLabel='주문하기'
-            onClick={submitOrder}
-          />
-        </Link>
+        <Button
+          designType='order'
+          buttonLabel='주문하기'
+          onClick={submitOrder}
+        />
       </OrderButtonWrapper>
     </EstimatedPaymentBoxContainer>
   );
