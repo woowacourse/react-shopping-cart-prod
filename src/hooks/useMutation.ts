@@ -34,6 +34,10 @@ const useMutation = <BodyData, ResponseData>({
     const body = bodyData ? JSON.stringify(bodyData) : null;
 
     try {
+      if (!navigator.onLine) {
+        throw new Error('네트워크 오프라인이 감지되었습니다');
+      }
+
       const response = await fetch(url, { method, body, headers });
       if (!response.ok) {
         throw new Error(MESSAGE.RESPONSE_NOT_OKAY);

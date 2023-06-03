@@ -25,8 +25,8 @@ const useCart = () => {
 
       Toast.success(MESSAGE.ADD_CART_SUCCESSFUL);
     },
-    onFailure: () => {
-      Toast.error(MESSAGE.ADD_CART_FAILED);
+    onFailure: message => {
+      Toast.error(message ?? MESSAGE.ADD_CART_FAILED);
     },
   });
 
@@ -40,8 +40,8 @@ const useCart = () => {
 
       Toast.success(MESSAGE.DELETE_CART_SUCCESSFUL);
     },
-    onFailure: () => {
-      Toast.error(MESSAGE.DELETE_CART_FAILED);
+    onFailure: message => {
+      Toast.error(message ?? MESSAGE.DELETE_CART_FAILED);
     },
   });
 
@@ -55,8 +55,8 @@ const useCart = () => {
         setCartList(prev => prev.map(item => (item.id === Number(cartId) ? { ...item, quantity } : item)));
       }
     },
-    onFailure: () => {
-      Toast.error(MESSAGE.MUTATE_CART_FAILED);
+    onFailure: message => {
+      Toast.error(message ?? MESSAGE.MUTATE_CART_FAILED);
     },
   });
 
