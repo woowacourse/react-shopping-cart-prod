@@ -90,8 +90,13 @@ export const fetchProductList = async (server: string) => {
 export const fetchMembers = async (server: string) => {
   try {
     const response = await fetch(`${url[server]}/members`);
-    const data: Sign[] = await response.json();
-    return data;
+    if (response.ok) {
+      const data: Sign[] = await response.json();
+      return data;
+    } else {
+      throw new Error();
+      return [];
+    }
   } catch (error) {
     console.error(error);
     throw new Error();

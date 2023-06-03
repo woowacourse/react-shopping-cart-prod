@@ -8,7 +8,7 @@ import {
 } from "./Login.style.ts";
 import { useRecoilValue } from "recoil";
 import { userRepository } from "../../app/recoil/userAtom.tsx";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { Sign } from "../../types/types.ts";
 import { serverState } from "../../app/recoil/serverAtom.ts";
 import { fetchMembers } from "../../app/api/api.ts";
@@ -32,7 +32,7 @@ function Login() {
       <LoginTitle>로그인</LoginTitle>
       <MemberList>
         {members.length === 0 ? (
-          <div>로그인 할 수 없습니다.</div>
+          <div>로그인 할 수 있는 계정이 서버에 존재하지 않습니다.</div>
         ) : (
           members.map((member) => (
             <MemberWrapper key={member.id} onClick={() => login(member)}>
