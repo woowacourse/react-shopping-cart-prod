@@ -19,3 +19,7 @@ export const getCartPath = (serverName: ServerName) => {
 export const getCouponPath = (serverName: ServerName) => {
   return `${SERVER[serverName]}/coupons`;
 };
+
+export const getOrderPath = (serverName: ServerName) => {
+  return `${SERVER[serverName]}/orders`;
+};
