@@ -39,17 +39,21 @@ const CouponSection = () => {
       setCheckedCoupons((prev) => [...prev, couponId]);
     };
 
+  const couponList = coupons?.length ? (
+    coupons?.map((coupon: Coupon) => (
+      <S.CouponWrapper key={coupon.id}>
+        <CheckBox type="checkbox" onChange={applyCoupon(coupon.id)} />
+        <S.CouponName>{coupon.name}</S.CouponName>
+      </S.CouponWrapper>
+    ))
+  ) : (
+    <S.EmptyCoupon>사용가능 한 쿠폰이 없습니다.</S.EmptyCoupon>
+  );
+
   return (
     <S.Container>
       <S.Title>쿠폰</S.Title>
-      <S.CouponList>
-        {coupons?.map((coupon: Coupon) => (
-          <S.CouponWrapper key={coupon.id}>
-            <CheckBox type="checkbox" onChange={applyCoupon(coupon.id)} />
-            <S.CouponName>{coupon.name}</S.CouponName>
-          </S.CouponWrapper>
-        ))}
-      </S.CouponList>
+      <S.CouponList>{couponList}</S.CouponList>
     </S.Container>
   );
 };

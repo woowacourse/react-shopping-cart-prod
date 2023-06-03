@@ -20,6 +20,11 @@ export const CouponList = styled.ul`
   flex-direction: column;
   gap: 20px;
   width: 80%;
+  font: ${(props) => props.theme.font.small};
+`;
+
+export const EmptyCoupon = styled.p`
+  color: ${(props) => props.theme.color.gray};
 `;
 
 export const CouponWrapper = styled.div`
@@ -28,6 +33,5 @@ export const CouponWrapper = styled.div`
 `;
 
 export const CouponName = styled.p`
-  font: ${(props) => props.theme.font.small};
   margin-left: 10px;
 `;
