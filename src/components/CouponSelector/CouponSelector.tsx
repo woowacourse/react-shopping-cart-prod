@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
 import { CouponBox, CouponBoxContainer, CouponBoxWrapper, CouponSelectHeader, CouponSelectOpenButton, CouponSelectTitle } from "./CouponSelector.style";
-import { Coupon } from "../../types/types";
+import { useRecoilValue } from "recoil";
+import { couponState, orderRepository } from "../../app/recoil/orderAtom";
 
 function CouponSelector() {
   const [isCouponSelectorOpen, setCouponSelectorOpen] = useState(false);
 
-  const [coupons, setCoupons] = useState<Coupon[]>([]);
-
-  const loadCoupons = async () => {
-
-    const response = await fetch('/coupons');
-    const data = await response.json();
-    setCoupons(data);
-  };
+  const coupons = useRecoilValue(couponState);
+  const { loadCoupons } = useRecoilValue(orderRepository);
 
   useEffect(() => {
     loadCoupons();

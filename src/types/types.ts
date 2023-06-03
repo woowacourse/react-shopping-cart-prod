@@ -22,14 +22,16 @@ export interface NewCartItem extends CartItem {
 
 export interface NewOrderItem {
   cartItemId: number;
-  quantity: number;
   productId: number;
+  quantity: number;
 }
 
 export interface NewOrder {
-  orders: NewOrderItem[];
-  couponId: number | null;
-  point: number;
+  orderItems: NewOrderItem[];
+  orderDiscounts: {
+    couponIds: number[];
+    point: number;
+  }
 }
 
 export interface OrderItem {

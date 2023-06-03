@@ -30,30 +30,16 @@ import {
   Box,
 } from "./Purchase.style.ts";
 import CouponSelector from "../CouponSelector";
+import { orderRepository } from "../../app/recoil/orderAtom.ts";
 
 function Purchase() {
   const navigate = useNavigate();
   const checkedCartList = useRecoilValue(checkedCartSelector);
-  const POINTS = 1000;
-
-
+  const { commitPurchaseItems } = useRecoilValue(orderRepository);
   const { closeModal } = useRecoilValue(modalRepository);
 
   const purchase = () => {
-    const order: NewOrder = {
-      orders: checkedCartList.map(
-        (cart): NewOrderItem => ({
-          cartItemId: cart.id,
-          quantity: cart.quantity,
-          productId: cart.product.id,
-        })
-      ),
-      couponId: null,
-      point: POINTS,
-    };
-    alert(`서버로 보낼 데이터 (아직 안보내용): ${JSON.stringify(order)}`);
-    alert("결제가 완료됐습니다.");
-    closeModal();
+    commitPurchaseItems();
     navigate("/order");
   };
 
