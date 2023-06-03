@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import ProductListItem from '../components/ProductListItem';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
+import ResponseErrorBoundary from '../components/utils/ResponseErrorBoundary';
 import userCartItemsRepository from '../recoil/user/userCartItemsRepository';
 import userProductsState from '../recoil/user/userProductsState';
 
@@ -28,9 +29,9 @@ const ProductListPage = () => {
   return (
     <AwaitRecoilState state={userProductsState}>
       {(products) => (
-        <AwaitRecoilState
-          state={userCartItemsRepository}
-          errorElement={
+        <ResponseErrorBoundary
+          catches={(response) => response.accept(401)}
+          fallback={
             <ProductList>
               {products.map((product) => (
                 <ProductListItem key={product.id} product={product} showCartItem={false} />
@@ -38,19 +39,21 @@ const ProductListPage = () => {
             </ProductList>
           }
         >
-          {({ getCartItemByProductId, setQuantity }) => (
-            <ProductList>
-              {products.map((product) => (
-                <ProductListItem
-                  key={product.id}
-                  product={product}
-                  cartItem={getCartItemByProductId(product.id)}
-                  onChangeQuantity={(quantity) => setQuantity(product, quantity)}
-                />
-              ))}
-            </ProductList>
-          )}
-        </AwaitRecoilState>
+          <AwaitRecoilState state={userCartItemsRepository}>
+            {({ getCartItemByProductId, setQuantity }) => (
+              <ProductList>
+                {products.map((product) => (
+                  <ProductListItem
+                    key={product.id}
+                    product={product}
+                    cartItem={getCartItemByProductId(product.id)}
+                    onChangeQuantity={(quantity) => setQuantity(product, quantity)}
+                  />
+                ))}
+              </ProductList>
+            )}
+          </AwaitRecoilState>
+        </ResponseErrorBoundary>
       )}
     </AwaitRecoilState>
   );
