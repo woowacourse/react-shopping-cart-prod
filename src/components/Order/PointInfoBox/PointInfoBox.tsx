@@ -6,7 +6,7 @@ function PointInfoBox() {
     <S.Wrapper>
       <S.Title>구매혜택</S.Title>
       <S.PaymentInfoWrapper>
-        <S.Description>결제금액의 10%가 적립됩니다.</S.Description>
+        <S.Description>결제금액의 1%가 적립됩니다.</S.Description>
         <PurchasePropertyWrapper>
           <PurchaseText>적립 포인트</PurchaseText>
           <PurchaseText>58p</PurchaseText>

@@ -5,41 +5,26 @@ import { OrderListWrapper } from '../Order/Order.style';
 import { PaymentInfoBox } from '../../components/Order/PaymentInfoBox';
 import { PointInfoBox } from '../../components/Order/PointInfoBox';
 import * as S from './OrderDetail.style';
-
-const order = {
-  orderId: 0,
-  orderItems: [
-    {
-      id: 0,
-      productName: '바나나',
-      productPrice: 3500,
-      paymentPrice: 3500,
-      createdAt: 'string',
-      productQuantity: 3,
-      imageUrl: 'https://cdn.pixabay.com/photo/2016/01/03/17/59/bananas-1119790_1280.jpg',
-    },
-    {
-      id: 1,
-      productName: '딸기',
-      productPrice: 9900,
-      paymentPrice: 9900,
-      createdAt: 'string',
-      productQuantity: 2,
-      imageUrl: 'https://cdn.pixabay.com/photo/2018/04/29/11/54/strawberries-3359755_1280.jpg',
-    },
-  ],
-};
+import { useRecoilValue } from 'recoil';
+import { memberAuthorization } from '../../recoil/userAtoms';
+import { serverState } from '../../recoil/serverAtom';
+import useGetQuery from '../../hooks/useGetQuery';
+import { Order } from '../../types/types';
+import { fetchOrder } from '../../api/fetcher';
 
 function OrderDetail() {
-  const params = useParams();
+  const { orderId } = useParams() as { orderId: string };
+  const memberAuth = useRecoilValue(memberAuthorization);
+  const server = useRecoilValue(serverState);
+  const { data: order } = useGetQuery<Order>({
+    fetcher: fetchOrder({ server, auth: memberAuth, orderId }),
+  });
 
   return (
     <>
       <PageTitle>주문내역상세</PageTitle>
       <FatBorder />
-      <OrderListWrapper>
-        <OrderList {...order} detail={false} />
-      </OrderListWrapper>
+      <OrderListWrapper>{order && <OrderList {...order} detail={false} />}</OrderListWrapper>
       <S.OrderInfoWrapper>
         <PaymentInfoBox />
         <PointInfoBox />

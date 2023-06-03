@@ -19,7 +19,7 @@ function OrderList({ orderId, orderItems, detail = true }: OrderListProps) {
         {detail && <S.DetailButton onClick={() => navigate(`/order/${orderId}`)}>상세보기 &gt;</S.DetailButton>}
       </S.OrderInfo>
       {orderItems.map((item) => (
-        <OrderItem item={item} />
+        <OrderItem key={item.id} item={item} />
       ))}
     </S.OrderItemList>
   );

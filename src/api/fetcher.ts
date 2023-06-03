@@ -19,3 +19,11 @@ export const fetchOrderList = ({ server, auth }: { server: string; auth: string 
     },
   });
 };
+
+export const fetchOrder = ({ server, auth, orderId }: { server: string; auth: string; orderId: string }) => {
+  return fetch(`${url[server]}/orders/${orderId}`, {
+    headers: {
+      Authorization: `Basic ${auth}`,
+    },
+  });
+};
