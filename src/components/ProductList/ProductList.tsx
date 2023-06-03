@@ -2,12 +2,10 @@ import * as styled from './ProductList.styled';
 
 import { Product } from '../Product/Product';
 
-import { useFetchAsync } from '@hooks/useFetchAsync';
-
-import type { Product as ProductType } from '../../types';
+import { useFetchProducts } from '@recoils/productsAtoms';
 
 export const ProductList = () => {
-  const products: ProductType[] = useFetchAsync('/products');
+  const products = useFetchProducts();
 
   return (
     <styled.Wrapper>
