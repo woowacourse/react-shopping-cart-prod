@@ -1,43 +1,35 @@
 import { useRecoilValue } from 'recoil';
-import {
-  checkedItemsAtom,
-  couponAtom,
-  totalDiscountPriceSelector,
-  totalPriceSelector,
-} from 'recoil/carts';
+import { checkedItemsAtom, couponAtom } from 'recoil/carts';
 import * as S from './PaymentDetail.styles';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from 'utils/constants';
 import Modal from 'components/@common/Modal';
 import { useModal } from 'hooks/useModal';
-import { useGet } from 'hooks/useGet';
-import { getDeliveryPolicy } from 'api/cart';
 import { postPayment } from 'api/payments';
 import { useMutate } from 'hooks/useMutate';
+import usePrice from 'components/payment/hooks/usePrice';
 
 const PaymentDetail = () => {
   const moveTo = useNavigate();
   const { isModalOpen, openModal, closeModal } = useModal();
-
+  const {
+    deliveryLimit,
+    deliveryPrice,
+    totalDiscountPrice,
+    totalPrice,
+    finalPrice,
+    isDeliveryFree,
+  } = usePrice();
   const checkItemIds = useRecoilValue(checkedItemsAtom);
   const couponIds = useRecoilValue(couponAtom);
   const { request } = useMutate();
-
-  const { data: delivery } = useGet(getDeliveryPolicy);
-  const totalPrice = useRecoilValue(totalPriceSelector);
-  const totalDiscountPrice = useRecoilValue(totalDiscountPriceSelector);
-  const isDeliveryFree =
-    totalPrice - totalDiscountPrice >= (delivery?.limit || 0);
-  const deliveryFee = isDeliveryFree ? 0 : delivery?.price || 0;
-  const orderPrice =
-    totalPrice === 0 ? 0 : totalPrice + deliveryFee - totalDiscountPrice;
 
   const makeOrder = () => {
     const payment = {
       cartItemIds: checkItemIds,
       couponIds,
       isDeliveryFree,
-      totalPrice: orderPrice,
+      totalPrice: finalPrice,
     };
 
     request(postPayment(payment));
@@ -63,19 +55,18 @@ const PaymentDetail = () => {
       </S.Wrapper>
       <S.Wrapper>
         <S.Text>총 배송비</S.Text>
-        <S.Text>{deliveryFee.toLocaleString('KR')}원</S.Text>
+        <S.Text>
+          {isDeliveryFree ? 0 : '+' + deliveryPrice?.toLocaleString('KR')}원
+        </S.Text>
       </S.Wrapper>
       <S.SubText>
-        {isDeliveryFree
-          ? ''
-          : `주문금액 ${delivery?.limit.toLocaleString(
-              'KR'
-            )}원 이상시 무료배송`}
+        {!isDeliveryFree &&
+          `주문금액 ${deliveryLimit?.toLocaleString('KR')}원 이상시 무료배송`}
       </S.SubText>
       <S.Divider />
       <S.Wrapper>
         <S.Text>총 주문 금액</S.Text>
-        <S.Text>{orderPrice.toLocaleString('KR')}원</S.Text>
+        <S.Text>{finalPrice.toLocaleString('KR')}원</S.Text>
       </S.Wrapper>
       <S.OrderButton disabled={!checkItemIds.length} onClick={openModal}>
         주문하기
