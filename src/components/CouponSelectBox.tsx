@@ -24,27 +24,33 @@ export const CouponSelectBox = ({
       </TitleContainer>
       {isOpen && (
         <>
-          {coupons.map((coupon) => {
-            return (
-              <CouponContainer
-                key={coupon.id}
-                available={coupon.isAvailable}
-                onClick={() => setSelectedCoupon(coupon)}
-                disabled={!coupon.isAvailable}
-              >
-                <NameBox>{coupon.name}</NameBox>
-                <ExpiredDateBox>만료기한 : {coupon.expiredAt}</ExpiredDateBox>
-                <MinPriceBox>
-                  {coupon.minOrderPrice.toLocaleString()}원 이상 주문 시
-                </MinPriceBox>
-                <DiscountPriceBox>
-                  {coupon.discountPrice
-                    ? `${coupon.discountPrice.toLocaleString()}원`
-                    : "사용불가"}
-                </DiscountPriceBox>
-              </CouponContainer>
-            );
-          })}
+          {coupons.length === 0 ? (
+            <CouponContainer available={false} disabled>
+              쿠폰이 없습니다.
+            </CouponContainer>
+          ) : (
+            coupons.map((coupon) => {
+              return (
+                <CouponContainer
+                  key={coupon.id}
+                  available={coupon.isAvailable}
+                  onClick={() => setSelectedCoupon(coupon)}
+                  disabled={!coupon.isAvailable}
+                >
+                  <NameBox>{coupon.name}</NameBox>
+                  <ExpiredDateBox>만료기한 : {coupon.expiredAt}</ExpiredDateBox>
+                  <MinPriceBox>
+                    {coupon.minOrderPrice.toLocaleString()}원 이상 주문 시
+                  </MinPriceBox>
+                  <DiscountPriceBox>
+                    {coupon.discountPrice
+                      ? `${coupon.discountPrice.toLocaleString()}원`
+                      : "사용불가"}
+                  </DiscountPriceBox>
+                </CouponContainer>
+              );
+            })
+          )}
         </>
       )}
     </Wrapper>
