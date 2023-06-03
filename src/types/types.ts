@@ -17,6 +17,7 @@ interface Order {
   usedCoupons: Coupon[];
   usedPoint: number;
   paymentPrice: number;
+  createdAt: string;
 }
 
 interface OrdersResponses {
@@ -41,8 +42,6 @@ interface OrderItem {
   id: number;
   productName: string;
   productPrice: number;
-  paymentPrice: number;
-  createdAt: string;
   productQuantity: number;
   imageUrl: string;
 }

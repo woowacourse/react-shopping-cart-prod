@@ -145,9 +145,6 @@ export const handlers = [
           id: orderItem.productId,
           productName: productItem.name,
           productPrice: productItem.price,
-          paymentPrice: paymentPrice,
-          // 2021-08-05 09:51:31
-          createdAt: new Date(uniqueId + 9 * 60 * 60 * 1000).toISOString().replace('T', ' ').slice(0, -5),
           productQuantity: orderItem.quantity,
           imageUrl: productItem?.imageUrl,
         };
@@ -156,6 +153,8 @@ export const handlers = [
       usedPoint: orderInfo.orderDiscounts.point,
       paymentPrice:
         totalPrice.reduce((acc, cur) => acc + cur, 0) - orderInfo.orderDiscounts.point - couponDiscountAmount,
+      createdAt: new Date(uniqueId + 9 * 60 * 60 * 1000).toISOString().replace('T', ' ').slice(0, -5),
+      // 2021-08-05 09:51:31
     };
 
     const newOrderList: OrdersResponses = {
