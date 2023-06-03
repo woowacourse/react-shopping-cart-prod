@@ -90,6 +90,12 @@ const Style = {
       content: 'SHOP';
       padding-left: 12px;
     }
+
+    /* 모바일 */
+    @media screen and (max-width: 767px) {
+      font-size: 24px;
+      font-weight: 900;
+    }
   `,
 
   CartButton: styled.button`
