@@ -13,16 +13,15 @@ import { ShoppingCart } from './components/pages/ShoppingCart';
 import { OrderList } from './components/pages/OrderList';
 import { OrderDetail } from './components/pages/OrderDetail';
 
-import { CartItemType } from './types';
+import { CartItemType, CheckedStateType } from './types';
 import { FETCH_URL, PATH } from './constants';
 import { useSetCheckedState } from './recoils/recoilChecked';
 
 export const App = () => {
   const baseUrl = useApiBaseUrlValue();
-  const { data: cart } = useQuery<CartItemType[]>(baseUrl+FETCH_URL.CART_ITEMS, {
+  const { data: cart } = useQuery<CartItemType[]>(baseUrl + FETCH_URL.CART_ITEMS, {
     Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
   });
-
 
   const setCartState = useSetCartState();
 
@@ -33,10 +32,18 @@ export const App = () => {
 
     setCartState(cart);
 
-    setCheckedState({
-      all: false,
-    })
-  }, [cart, setCartState]);
+    setCheckedState((prev) => {
+      const updatedCheckedState: CheckedStateType = {
+        all: true,
+      };
+
+      for (const item of cart) {
+        updatedCheckedState[item.id] = true;
+      }
+
+      return updatedCheckedState;
+    });
+  }, [cart, setCartState, setCheckedState]);
 
   return (
     <>
@@ -45,7 +52,7 @@ export const App = () => {
         <Routes>
           <Route path={PATH.HOME} Component={Home} />
           <Route path={PATH.CART} Component={ShoppingCart} />
-          <Route path={PATH.ORDER} Component ={OrderList} />
+          <Route path={PATH.ORDER} Component={OrderList} />
           <Route path={PATH.ORDER_DETAIL} Component={OrderDetail} />
         </Routes>
       </BrowserRouter>

@@ -21,6 +21,8 @@ export const Product = ({ item }: Props) => {
 
   const cartItem = useCartItemValue(item.id);
 
+  const [checkedState, setCheckedState] = useCheckedState();
+
   useEffect(() => {
     if (!addCartResponseData) return;
 
@@ -34,6 +36,13 @@ export const Product = ({ item }: Props) => {
         product: item,
       },
     ]);
+
+    setCheckedState((prev) => {
+      return {
+        ...prev,
+        [cartId]: true,
+      };
+    });
   }, [addCartResponseData]);
 
   const setCart = useSetCartState();

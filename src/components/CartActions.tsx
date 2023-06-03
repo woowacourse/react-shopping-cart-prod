@@ -36,7 +36,17 @@ export const CartActions = () => {
 
     deleteCartItem(...targetItemsId);
 
-    setCheckedState({ all: true });
+    setCheckedState((prev) => {
+      const updatedCheckedState: CheckedStateType = {
+        all: true,
+      };
+
+      cart.forEach((product) => {
+        if(!targetItemsId.includes(product.id)) updatedCheckedState[product.id] = true;
+      });
+
+      return updatedCheckedState;
+    });
   };
 
   return (
