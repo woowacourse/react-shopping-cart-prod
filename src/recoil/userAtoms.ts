@@ -1,31 +1,46 @@
 import { atom, selector } from 'recoil';
 import { localStorageEffect } from '../utils/localStorage';
-import { fetchMemberList } from '../api/auth';
-import { serverState } from './serverAtom';
-import { Member } from '../types/types';
+import { Member, Point } from '../types/types';
+import { encrypt } from '../utils/authorization';
 
-export const memberState = atom<Member>({
-  key: 'memberState',
+export const memberListState = atom<Member[]>({
+  key: 'memberListState',
   default: selector({
-    key: 'memberState/Default',
-    get: async ({ get }) => {
-      const serverOwner = get(serverState);
+    key: 'memberListState/Default',
+    get: async () => {
+      const response = await fetch('/members');
+      const memberList = response.json();
 
-      const memberList = (await fetchMemberList(serverOwner)) as Member[];
-      return memberList[0];
+      return memberList;
     },
   }),
 });
 
-export const memberPublicState = atom({
-  key: 'memberPublicState',
+export const memberIdState = atom<number>({
+  key: 'memberState',
   default: selector({
-    key: 'memberPublicState/Default',
+    key: 'memberState/Default',
     get: ({ get }) => {
-      const member = get(memberState);
-
-      return { name: member.name, email: member.email };
+      const members = get(memberListState);
+      return members[0].id;
     },
   }),
-  effects: [localStorageEffect<Pick<Member, 'email' | 'name'>>('member')],
+  effects: [localStorageEffect<number>('currentMemberId')],
+});
+
+export const memberAuthorization = selector<string>({
+  key: 'memberAuthorization',
+  get: ({ get }) => {
+    const currentMemberId = get(memberIdState);
+    const members = get(memberListState);
+    const currentMemberInfo = members.find((member) => member.id === currentMemberId);
+
+    if (!currentMemberInfo) return '';
+    return encrypt(currentMemberInfo.email, currentMemberInfo?.password);
+  },
+});
+
+export const memberPointState = atom<Point | null>({
+  key: 'memberPointState',
+  default: null,
 });
