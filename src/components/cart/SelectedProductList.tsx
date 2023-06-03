@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
+import { Modal } from 'simple-yummy-modal';
 import { css, styled } from 'styled-components';
 import { CART_URL } from '../../constants/url';
 import { useCart } from '../../hooks/useCart';
 import { useFetchData } from '../../hooks/useFetchData';
+import { useModal } from '../../hooks/useModal';
 import { cartState, checkedItemList, serverState } from '../../recoil';
 import { CartItem } from '../../types';
 import Button from '../common/Button';
@@ -16,6 +18,7 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
   const server = useRecoilValue(serverState);
   const { api } = useFetchData();
   const { removeItemFromCart } = useCart();
+  const { handleModalOpen, isModalOpen, setIsModalOpen, initialState } = useModal();
 
   const initialCheckedItemIdList = cart.map((item) => item.id);
 
@@ -45,36 +48,49 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
   };
 
   return (
-    <S.Wrapper>
-      <S.Title>{`든든배송 상품 (${productCountInCart}개)`}</S.Title>
-      <div>
-        {cart.map((item) => (
-          <SelectedProductItem
-            key={item.product.id}
-            id={item.id}
-            productId={item.product.id}
-            name={item.product.name}
-            price={item.product.price}
-            imageUrl={item.product.imageUrl}
-            quantity={item.quantity}
+    <>
+      <S.Wrapper>
+        <S.Title>{`든든배송 상품 (${productCountInCart}개)`}</S.Title>
+        <div>
+          {cart.map((item) => (
+            <SelectedProductItem
+              key={item.product.id}
+              id={item.id}
+              productId={item.product.id}
+              name={item.product.name}
+              price={item.product.price}
+              imageUrl={item.product.imageUrl}
+              quantity={item.quantity}
+            />
+          ))}
+        </div>
+        <S.Fieldset>
+          <Checkbox
+            type='checkbox'
+            id='select-all'
+            name='select-all'
+            checked={isAllChecked}
+            onChange={handleAllItemsCheck}
           />
-        ))}
-      </div>
-      <S.Fieldset>
-        <Checkbox
-          type='checkbox'
-          id='select-all'
-          name='select-all'
-          checked={isAllChecked}
-          onChange={handleAllItemsCheck}
-        />
-        <label htmlFor='select-all'>{`전체선택 (${checkedItemIdList.length}/${productCountInCart})`}</label>
-        <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
-          선택삭제
-        </Button>
-        <Button css={couponButtonStyle}>쿠폰선택</Button>
-      </S.Fieldset>
-    </S.Wrapper>
+          <label htmlFor='select-all'>{`전체선택 (${checkedItemIdList.length}/${productCountInCart})`}</label>
+          <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
+            선택삭제
+          </Button>
+          <Button css={couponButtonStyle} onClick={handleModalOpen}>
+            쿠폰선택
+          </Button>
+        </S.Fieldset>
+      </S.Wrapper>
+
+      <Modal
+        openTrigger={setIsModalOpen}
+        isTriggered={isModalOpen}
+        initialState={initialState}
+        direction='center'
+      >
+        모달
+      </Modal>
+    </>
   );
 };
 
