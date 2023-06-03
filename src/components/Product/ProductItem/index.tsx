@@ -43,7 +43,7 @@ const ProductItem = ({ product }: ProductItemProps) => {
                 {calculateSalePercentage(product.price, product.salePrice)}%
               </S.DiscountPercent>
             )}
-            {(product.price - product.salePrice).toLocaleString('KR')}원
+            {formatPrice(product.price - product.salePrice)}원
           </S.ProductPrice>
           {product.isOnSale && (
             <S.DiscountPrice>{formatPrice(product.price)} 원</S.DiscountPrice>
