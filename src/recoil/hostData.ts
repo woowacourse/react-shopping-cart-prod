@@ -3,5 +3,5 @@ import { HostNameType } from '../types/server';
 
 export const hostNameAtom = atom<HostNameType>({
   key: 'hostNameState',
-  default: '제로',
+  default: '도기',
 });

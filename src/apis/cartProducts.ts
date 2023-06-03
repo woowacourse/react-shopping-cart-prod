@@ -36,15 +36,15 @@ export const api = async (hostName: HostNameType) => {
     if (!response.ok) {
       throw new Error(response.status.toString());
     }
-    /*
+
     const location = response.headers.get('location');
     if (location !== null) {
       const lastSlashIndex = location.lastIndexOf('/');
       const cartItemId = location.slice(lastSlashIndex + 1);
       return cartItemId;
     }
-    */
-    return Date.now();
+
+    return;
   };
 
   const editCartProductQuantity = async (
