@@ -17,7 +17,7 @@ export const handlers = [
     return res(
       res.response(200, {
         savingRate: SAVING_RATE,
-        points,
+        expectedSavePoints: points,
       }),
     );
   }),

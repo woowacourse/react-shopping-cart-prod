@@ -1,7 +1,7 @@
 import type { HttpErrorResponse, HttpRequest, HttpResponse } from './RestAPI';
 
 export type ProfileEntity = {
-  points: number;
+  currentPoints: number;
 };
 
 export type ProductEntity = {
@@ -20,7 +20,7 @@ export type CartItemEntity = {
 
 export type CartPointsEntity = {
   savingRate: number;
-  points: number;
+  expectedSavePoints: number;
 };
 
 export type OrderCartItemEntity = {
@@ -34,7 +34,7 @@ export type OrderCartItemEntity = {
 export type OrderEntity = {
   id: number;
   savingRate: number;
-  points: number;
+  usedPoints: number;
   cartItems: OrderCartItemEntity[];
 };
 

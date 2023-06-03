@@ -48,7 +48,7 @@ const PaymentDetailContent = styled.p<PaymentDetailContentProps>`
 
 type OrderPaymentDetailsProps = {
   savingRate: Order['savingRate'];
-  points: Order['points'];
+  points: Order['usedPoints'];
   price: number;
 };
 

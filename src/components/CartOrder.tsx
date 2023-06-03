@@ -104,7 +104,7 @@ const CartOrder = (props: CartOrderProps) => {
 
               <PriceFieldValue>
                 <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
-                  {(cartPoints) => cartPoints.points}
+                  {(cartPoints) => cartPoints.expectedSavePoints}
                 </AwaitRecoilState>
               </PriceFieldValue>
             </PriceField>

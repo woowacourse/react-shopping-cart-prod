@@ -129,7 +129,7 @@ const AppBar = (props: HeaderProps) => {
               profile ? (
                 <MenuProfile>
                   <MenuProfileUsername>{profile.username}</MenuProfileUsername>
-                  <MenuProfilePoints>{profile.points}</MenuProfilePoints>
+                  <MenuProfilePoints>{profile.currentPoints}</MenuProfilePoints>
                 </MenuProfile>
               ) : (
                 <MenuButton onClick={() => onNavigate('/login')}>로그인</MenuButton>

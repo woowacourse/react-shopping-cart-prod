@@ -29,7 +29,7 @@ const OrderDetailPage = () => {
             </OrderListItem>
 
             <OrderPaymentDetails
-              points={order.points}
+              points={order.usedPoints}
               savingRate={order.savingRate}
               price={order.cartItems.reduce(
                 (price, orderCartItem) => price + orderCartItem.price * orderCartItem.quantity,

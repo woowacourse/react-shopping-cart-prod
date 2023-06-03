@@ -1,4 +1,4 @@
 export type CartPoints = {
   savingRate: number;
-  points: number;
+  expectedSavePoints: number;
 };

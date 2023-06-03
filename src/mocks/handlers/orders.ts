@@ -28,7 +28,7 @@ export const handlers = [
     const body = await req.json<typeof req.body>();
     const { usedPoints, cartItems: requestCartItems } = body;
 
-    if (profile.points < usedPoints) {
+    if (profile.currentPoints < usedPoints) {
       return res(
         res.response(406, { message: '소유한 포인트보다 더 많은 포인트를 사용할 수 없습니다.' }),
       );
@@ -71,7 +71,7 @@ export const handlers = [
         productId: cartItem.product.id,
         quantity: cartItem.quantity,
       })),
-      points,
+      usedPoints: points,
       savingRate: SAVING_RATE,
     });
     return res(res.response(201, undefined, { location: `/orders/${orderId}` }));

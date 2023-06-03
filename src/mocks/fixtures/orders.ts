@@ -5,7 +5,7 @@ import { BASE_URL } from '../../config/environment';
 const orders: OrderEntity[] = [
   {
     id: 1,
-    points: 49830,
+    usedPoints: 49830,
     savingRate: 10,
     cartItems: [
       {
@@ -33,7 +33,7 @@ const orders: OrderEntity[] = [
   },
   {
     id: 2,
-    points: 11970,
+    usedPoints: 11970,
     savingRate: 10,
     cartItems: [
       {
@@ -47,7 +47,7 @@ const orders: OrderEntity[] = [
   },
   {
     id: 3,
-    points: 4340,
+    usedPoints: 4340,
     savingRate: 10,
     cartItems: [
       {

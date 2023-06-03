@@ -3,6 +3,6 @@ import type { OrderCartItem } from './OrderCartItem';
 export type Order = {
   id: number;
   savingRate: number;
-  points: number;
+  usedPoints: number;
   cartItems: OrderCartItem[];
 };
