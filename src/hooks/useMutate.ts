@@ -14,7 +14,6 @@ export const useMutate = () => {
       return res;
     } catch (error) {
       if (!(error instanceof Error)) return;
-      setIsLoading(false);
       toast.error(error.message);
     } finally {
       setIsLoading(false);
