@@ -7,7 +7,7 @@ function OrderDetailPage() {
 
   return (
     <main>
-      <Suspense fallback={<h1>하잇</h1>}>
+      <Suspense>
         <OrderDetail orderId={Number(orderId)} />
       </Suspense>
     </main>

@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 function OrderPage() {
   return (
     <Container>
-      <Suspense fallback={<h1>고생하셨어요.</h1>}>
+      <Suspense>
         <OrderList />
       </Suspense>
     </Container>
