@@ -15,10 +15,9 @@ const PaymentDetail = () => {
   const { data: delivery } = useGet(getDeliveryPolicy);
   const totalPrice = useRecoilValue(totalPriceSelector);
   const totalDiscountPrice = useRecoilValue(totalDiscountPriceSelector);
-  const deliveryFee =
-    totalPrice - totalDiscountPrice >= (delivery?.limit || 0)
-      ? 0
-      : delivery?.price || 0;
+  const isDeliveryFree =
+    totalPrice - totalDiscountPrice >= (delivery?.limit || 0);
+  const deliveryFee = isDeliveryFree ? 0 : delivery?.price || 0;
 
   const orderPrice =
     totalPrice === 0 ? 0 : totalPrice + deliveryFee - totalDiscountPrice;
@@ -38,7 +37,7 @@ const PaymentDetail = () => {
       <S.Wrapper>
         <S.Text>총 할인 가격</S.Text>
         <S.Text>
-          {totalDiscountPrice
+          {totalDiscountPrice && totalPrice
             ? '-' + totalDiscountPrice.toLocaleString('KR')
             : 0}
           원
@@ -49,7 +48,11 @@ const PaymentDetail = () => {
         <S.Text>{deliveryFee.toLocaleString('KR')}원</S.Text>
       </S.Wrapper>
       <S.SubText>
-        주문금액 {delivery?.limit.toLocaleString('KR')}원 이상시 무료배송
+        {isDeliveryFree
+          ? ''
+          : `주문금액 ${delivery?.limit.toLocaleString(
+              'KR'
+            )}원 이상시 무료배송`}
       </S.SubText>
       <S.Divider />
       <S.Wrapper>
