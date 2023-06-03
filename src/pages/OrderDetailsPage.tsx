@@ -39,7 +39,7 @@ const OrderDetailsPage = () => {
 const Main = styled.section`
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 0 100px 0;
+  padding: 0 10px 100px 10px;
 `;
 
 export default OrderDetailsPage;

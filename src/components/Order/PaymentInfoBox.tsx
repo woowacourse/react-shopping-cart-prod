@@ -22,6 +22,10 @@ const PaymentInfoBoxContainer = styled.div`
   margin-bottom: 100px;
   border: 1px solid ${({ theme }) => theme.colors.gray400};
   float: right;
+
+  @media (max-width: 640px) {
+    width: 100%;
+  }
 `;
 
 const PaymentInfoBoxHeader = styled.div`
