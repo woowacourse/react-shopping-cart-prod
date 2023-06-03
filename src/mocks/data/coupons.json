@@ -11,6 +11,12 @@
       "type": "percent",
       "amount": 10,
       "name": "삼다수 마신 기념"
+    },
+    {
+      "id": 3,
+      "type": "amount",
+      "amount": 10000,
+      "name": "주말 선릉캠 출근 기념"
     }
   ]
 }

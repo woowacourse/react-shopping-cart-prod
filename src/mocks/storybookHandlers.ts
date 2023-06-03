@@ -1,6 +1,7 @@
 import { rest } from 'msw';
 import mockProducts from './data/products.json';
 import mockCart from './data/cart.json';
+import mockCoupons from './data/coupons.json';
 
 interface PostAddCartRequestBody {
   productId: number;
@@ -13,7 +14,7 @@ interface PatchUpdateCartRequestBody {
 const PRODUCTS_PATH_NAME = `*/products`;
 const CART_ITEMS_PATH_NAME = `*/cart-items`;
 const ALL_COUPONS_PATH_NAME = '*/coupons';
-const COUPON_DOWNLOAD_PATH_NAME = '*/members/coupon';
+const USER_COUPON_PATH_NAME = '*/coupons/me';
 
 const storybookHandlers = [
   rest.get(PRODUCTS_PATH_NAME, (req, res, ctx) => res(ctx.status(200), ctx.json(mockProducts))),
@@ -31,6 +32,8 @@ const storybookHandlers = [
   ),
 
   rest.delete(`${CART_ITEMS_PATH_NAME}/:cartItemId`, (req, res, ctx) => res(ctx.status(204))),
+
+  rest.get(USER_COUPON_PATH_NAME, (req, res, ctx) => res(ctx.status(200), ctx.json(mockCoupons))),
 ];
 
 export default storybookHandlers;
