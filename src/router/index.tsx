@@ -10,9 +10,9 @@ import { OrderSheet } from "../pages/OrderSheet";
 export const ROUTER_PATH = {
   Main: "/react-shopping-cart-prod",
   Cart: "/react-shopping-cart-prod/Cart",
-  Order: "/react-shopping-cart-pord/Order",
-  OrderDetail: "/react-shopping-cart-pord/OrderDetail",
-  Payment: "/react-shopping-cart-pord/OrderSheet",
+  Order: "/react-shopping-cart-prod/Order",
+  OrderDetail: "/react-shopping-cart-prod/OrderDetail",
+  Payment: "/react-shopping-cart-prod/OrderSheet",
   NotFound: "/*",
 };
 
