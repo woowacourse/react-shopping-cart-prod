@@ -99,6 +99,6 @@ export const serverState = atom({
 
 export const couponState = atom<CouponState>({
   key: 'couponState',
-  default: { discount: 0, name: '' },
+  default: { priceDiscount: 0, name: '' },
   effects: [logEffect('coupon')],
 });

@@ -43,7 +43,7 @@ export const Cart = () => {
   return (
     <div style={{ width: '1270px', display: 'flex', justifyContent: 'space-between' }}>
       <ProductListInCart />
-      <Order totalPrice={totalPrice} priceDiscount={coupon.discount} />
+      <Order totalPrice={totalPrice} priceDiscount={coupon.priceDiscount} />
     </div>
   );
 };

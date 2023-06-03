@@ -14,7 +14,7 @@ const Coupon = ({ priceDiscount, couponName }: Props) => {
 
   const handleCouponSelect = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setCoupon(() => {
-      return { discount: priceDiscount, name: value };
+      return { priceDiscount, name: value };
     });
   };
 

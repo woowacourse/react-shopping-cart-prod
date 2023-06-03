@@ -32,14 +32,18 @@ const OrderDetailPage = () => {
 
   if (!orderItemDetail) return <></>;
 
+  const { totalPrice, deliveryFee, coupon, totalPayments } = orderItemDetail;
+
   return (
     <MainLayout>
       <Title title='주문 내역 상세' />
       <S.Wrapper>
         <OrderItemList {...orderItemDetail} />
         <OrderDetail
-          totalPrice={orderItemDetail.totalPrice}
-          deliveryFee={orderItemDetail.deliveryFee}
+          totalPrice={totalPrice}
+          deliveryFee={deliveryFee}
+          coupon={coupon}
+          totalPayments={totalPayments}
         />
       </S.Wrapper>
     </MainLayout>

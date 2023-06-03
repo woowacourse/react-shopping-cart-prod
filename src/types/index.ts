@@ -41,9 +41,14 @@ export interface OrderListItem extends Order, Pick<OrderList, 'totalPayments' | 
 
 export interface OrderItemDetail extends OrderList, Pick<Order, 'totalPrice'> {
   deliveryFee: number;
+  coupon: Coupon | null;
 }
 
 export interface CouponState {
-  discount: number;
+  priceDiscount: number;
   name: string;
+}
+
+export interface Coupon extends CouponState {
+  id: number;
 }

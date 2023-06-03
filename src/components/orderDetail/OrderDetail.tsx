@@ -1,13 +1,16 @@
 import { BsCreditCardFill } from 'react-icons/bs';
 import { css, styled } from 'styled-components';
+import { Coupon } from '../../types';
 import Price from '../Price';
 
 interface Props {
   totalPrice: number;
   deliveryFee: number;
+  coupon: Coupon | null;
+  totalPayments: number;
 }
 
-const OrderDetail = ({ totalPrice, deliveryFee }: Props) => {
+const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments }: Props) => {
   return (
     <S.Wrapper tabIndex={0}>
       <S.Title>
@@ -21,10 +24,10 @@ const OrderDetail = ({ totalPrice, deliveryFee }: Props) => {
         배송비 <Price price={deliveryFee} />
       </li>
       <li>
-        할인쿠폰 <Price price={-deliveryFee} css={priceStyle} />
+        할인쿠폰 <Price price={coupon ? -coupon : 0} css={priceStyle} />
       </li>
       <li>
-        총 결제금액 <Price price={totalPrice - deliveryFee} />
+        총 결제금액 <Price price={totalPayments} />
       </li>
     </S.Wrapper>
   );

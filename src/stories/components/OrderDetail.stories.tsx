@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
 import OrderDetailComponent from '../../components/orderDetail/OrderDetail';
+import { Coupon } from '../../types';
 
 const meta = {
   component: OrderDetailComponent,
@@ -17,11 +18,20 @@ const meta = {
   args: {
     totalPrice: 3000,
     deliveryFee: 3000,
+    coupon: null,
+    totalPayments: 6000,
   },
 } satisfies Meta<typeof OrderDetailComponent>;
 
 export default meta;
 
-export const OrderDetail = (args: { totalPrice: number; deliveryFee: number }) => {
+interface Props {
+  totalPrice: number;
+  deliveryFee: number;
+  coupon: Coupon;
+  totalPayments: number;
+}
+
+export const OrderDetail = (args: Props) => {
   return <OrderDetailComponent {...args} />;
 };
