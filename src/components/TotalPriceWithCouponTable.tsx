@@ -1,32 +1,38 @@
 import { styled } from "styled-components";
 import { Button } from "./Button";
+import { totalPriceSelector } from "../recoil/selector";
+import { useRecoilValue } from "recoil";
 
-export const TotalPriceWithCouponTable = () => {
+export const TotalPriceWithCouponTable = ({
+  discountPrice,
+}: {
+  discountPrice: number | null;
+}) => {
+  const totalPrice = useRecoilValue(totalPriceSelector);
+
   return (
     <Wrapper>
       <TitleBox>결제예상금액</TitleBox>
       <RowContainer>
         <p>총 상품가격</p>
-        <p>2000원</p>
+        <p>{totalPrice.toLocaleString()}원</p>
       </RowContainer>
       <DiscountContainer>
         <p>ㄴ 할인가격</p>
-        <p>- 10000원</p>
+        <p>- {discountPrice ? discountPrice.toLocaleString() : 0}원</p>
       </DiscountContainer>
       <RowContainer>
         <p>배송비</p>
-        <p>2000원</p>
+        <p>{Number(3000).toLocaleString()}원</p>
       </RowContainer>
       <RowContainer>
         <p>총 주문금액</p>
-        <p>2000원</p>
+        <p>{(totalPrice - (discountPrice ?? 0) + 3000).toLocaleString()}원</p>
       </RowContainer>
-      <Button>
-        주문하기
-      </Button>
+      <Button>주문하기</Button>
     </Wrapper>
   );
-}
+};
 
 const Wrapper = styled.section`
   display: flex;
@@ -92,4 +98,4 @@ const DiscountContainer = styled.div`
   &:last-of-type {
     padding: 30px;
   }
-`
+`;

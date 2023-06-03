@@ -1,8 +1,19 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { ArrowDownIcon } from "../assets";
+import { Coupon } from "../types/domain";
 
-export const CouponSelectBox = () => {
+interface CouponContainerProps {
+  available: boolean;
+}
+
+export const CouponSelectBox = ({
+  coupons,
+  setSelectedCoupon,
+}: {
+  coupons: Coupon[];
+  setSelectedCoupon: React.Dispatch<React.SetStateAction<Coupon>>;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -13,21 +24,27 @@ export const CouponSelectBox = () => {
       </TitleContainer>
       {isOpen && (
         <>
-          <CouponContainer>
-            <NameBox>반짝할인 10% 할인 쿠폰</NameBox>
-            <MinPriceBox>10,000원 이상 주문 시</MinPriceBox>
-            <DiscountPriceBox>-600,000원</DiscountPriceBox>
-          </CouponContainer>
-          <CouponContainer>
-            <NameBox>반짝할인 30% 할인 쿠폰</NameBox>
-            <MinPriceBox>30,000원 이상 주문 시</MinPriceBox>
-            <DiscountPriceBox>-3,000,000원</DiscountPriceBox>
-          </CouponContainer>
-          <CouponContainer>
-            <NameBox>배송비 무료 쿠폰</NameBox>
-            <MinPriceBox>50,000원 이상 주문 시</MinPriceBox>
-            <DiscountPriceBox>-3,000원</DiscountPriceBox>
-          </CouponContainer>
+          {coupons.map((coupon) => {
+            return (
+              <CouponContainer
+                key={coupon.id}
+                available={coupon.isAvailable}
+                onClick={() => setSelectedCoupon(coupon)}
+                disabled={!coupon.isAvailable}
+              >
+                <NameBox>{coupon.name}</NameBox>
+                <ExpiredDateBox>만료기한 : {coupon.expiredAt}</ExpiredDateBox>
+                <MinPriceBox>
+                  {coupon.minOrderPrice.toLocaleString()}원 이상 주문 시
+                </MinPriceBox>
+                <DiscountPriceBox>
+                  {coupon.discountPrice
+                    ? `${coupon.discountPrice.toLocaleString()}원`
+                    : "사용불가"}
+                </DiscountPriceBox>
+              </CouponContainer>
+            );
+          })}
         </>
       )}
     </Wrapper>
@@ -71,11 +88,11 @@ const TitleContainer = styled.div<{ $isOpen: boolean }>`
   }
 `;
 
-const CouponContainer = styled.div`
+const CouponContainer = styled.button<CouponContainerProps>`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 20px;
+  gap: 5px;
+  padding: 15px;
   width: 100%;
   height: 85px;
 
@@ -87,12 +104,13 @@ const CouponContainer = styled.div`
   }
 
   &:active {
-    transform: scale(0.95);
+    transform: ${(props) => (props.available ? "scale(0.95)" : "scale(1)")};
   }
 
-  // disabled 된 쿠폰 css
-  /* background: #dddddd;
-  color: var(--gray); */
+  background: ${(props) => (props.available ? "#ffffff" : "#dddddd")};
+  color: ${(props) => (props.available ? "#000000" : "#333333")};
+
+  cursor: pointer;
 `;
 
 const DiscountPriceBox = styled.div`
@@ -115,4 +133,10 @@ const MinPriceBox = styled.p`
   font-weight: 500;
   font-size: 14px;
   color: var(--gray);
+`;
+
+const ExpiredDateBox = styled.p`
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--dark-gray);
 `;

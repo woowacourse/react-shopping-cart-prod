@@ -6,8 +6,22 @@ import {
   TotalPriceWithCouponTable,
   CouponSelectBox,
 } from "../components";
+import { useState } from "react";
+import { Coupon } from "../types/domain";
+import { useCoupon } from "../hooks/useCoupon";
 
 export const OrderSheet = () => {
+  const { coupons } = useCoupon();
+  const [selectedCoupon, setSelectedCoupon] = useState<Coupon>({
+    id: 0,
+    name: "",
+    minOrderPrice: 0,
+    maxDiscountPrice: 0,
+    isAvailable: false,
+    discountPrice: 0,
+    expiredAt: "",
+  });
+
   return (
     <>
       <Header />
@@ -16,8 +30,13 @@ export const OrderSheet = () => {
         <ContentWrapper>
           <OrderSheetList />
           <CouponPriceWrapper>
-            <CouponSelectBox></CouponSelectBox>
-            <TotalPriceWithCouponTable></TotalPriceWithCouponTable>
+            <CouponSelectBox
+              coupons={coupons}
+              setSelectedCoupon={setSelectedCoupon}
+            ></CouponSelectBox>
+            <TotalPriceWithCouponTable
+              discountPrice={selectedCoupon.discountPrice}
+            ></TotalPriceWithCouponTable>
           </CouponPriceWrapper>
         </ContentWrapper>
       </Page>

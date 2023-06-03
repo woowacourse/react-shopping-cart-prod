@@ -12,7 +12,9 @@ export const OrderSheetList = () => {
         주문 상품 ({checkedCartList.length}개)
       </OrderSheetProductQuantityText>
       <OrderSheetProductListWrapper>
-        {checkedCartList.map((checkedCartItem) => <OrderSheetProduct checkedCartItem={checkedCartItem}/>)}
+        {checkedCartList.map((checkedCartItem) => (
+          <OrderSheetProduct key={checkedCartItem.id} checkedCartItem={checkedCartItem} />
+        ))}
       </OrderSheetProductListWrapper>
     </Wrapper>
   );
