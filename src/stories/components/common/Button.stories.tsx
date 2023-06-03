@@ -105,7 +105,7 @@ const logoButtonStyle = css`
   display: flex;
   align-items: center;
   padding: 4px;
-  color: #fff;
+  color: var(--white-color);
   font-size: 34px;
   font-weight: 900;
   letter-spacing: 0.2px;
@@ -115,7 +115,7 @@ const logoButtonStyle = css`
     width: 44px;
     height: 36px;
     margin-right: 20px;
-    fill: #fff;
+    fill: var(--white-color);
   }
 
   @media (max-width: 768px) {
@@ -144,7 +144,7 @@ const cartButtonStyle = css`
   margin-right: 8px;
   font-size: 18px;
   font-weight: 500;
-  color: #fff;
+  color: var(--white-color);
   background: var(--text-color);
 `;
 
@@ -161,7 +161,7 @@ const orderButtonStyle = css`
   margin: 0 30px;
   background: var(--text-color);
   font-size: 22px;
-  color: #fff;
+  color: var(--white-color);
 
   @media (max-width: 548px) {
     padding: 20px 10px;

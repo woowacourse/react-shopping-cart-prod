@@ -38,7 +38,7 @@ const S = {
     font-weight: 400;
     text-align: center;
     line-height: 24px;
-    color: #fff;
+    color: var(--white-color);
   `,
 };
 
@@ -47,7 +47,7 @@ const buttonStyle = css`
   margin-right: 8px;
   font-size: 18px;
   font-weight: 500;
-  color: #fff;
+  color: var(--white-color);
 `;
 
 export default Cart;

@@ -70,7 +70,7 @@ const S = {
     width: 20%;
     margin: 0 auto;
     padding: 20px 0;
-    color: #fff;
+    color: var(--white-color);
     border-radius: 8px;
     text-align: center;
     text-decoration: none;

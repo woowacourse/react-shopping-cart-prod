@@ -99,7 +99,7 @@ export const HeaderCart: Story = {
   args: {
     width: '50',
     height: '44',
-    fill: '#fff',
+    fill: 'var(--white-color)',
     path: CART_PATH,
     viewBox: '0 0 51 44',
   },

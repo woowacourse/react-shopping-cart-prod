@@ -45,7 +45,7 @@ const S = {
 const buttonStyle = css`
   display: flex;
   align-items: center;
-  color: #fff;
+  color: var(--white-color);
   font-size: 34px;
   font-weight: 900;
   letter-spacing: 0.2px;
@@ -54,7 +54,7 @@ const buttonStyle = css`
     width: 44px;
     height: 36px;
     margin-right: 20px;
-    fill: #fff;
+    fill: var(--white-color);
   }
 
   @media (max-width: 768px) {

@@ -66,7 +66,7 @@ const S = {
     padding: 22px 28px 24px;
     font-size: 20px;
     font-weight: 700;
-    color: #fff;
+    color: var(--white-color);
     background: var(--text-color);
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;

@@ -8,7 +8,6 @@ import Button from './common/Button';
 
 const ServerSelector = () => {
   const [isClicked, setIsClicked] = useState(false);
-
   const [server, setServer] = useRecoilState(serverState);
 
   const handleSeverChange = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +59,7 @@ const S = {
     border-radius: 8px;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    background: #fff;
+    background: var(--white-color);
     border: 1px solid var(--gray-color-200);
     color: var(--text-color);
     cursor: pointer;
@@ -128,7 +127,7 @@ const S = {
 const buttonStyle = css`
   padding: 12px 16px 12px 20px;
   font-size: 14px;
-  color: #fff;
+  color: var(--white-color);
   background: var(--text-color);
   border-radius: 6px;
   border-top-right-radius: 0;

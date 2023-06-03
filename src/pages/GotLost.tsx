@@ -22,17 +22,18 @@ const S = {
     & h2 {
       font-size: 24px;
       font-weight: 700;
-      margin: 100px 0 46px;
+      margin: 180px 0 46px;
     }
   `,
 
   Link: styled(Link)`
     display: inherit;
     width: 20%;
+    min-width: 280px;
     padding: 14px 50px;
     margin: 0 auto;
     line-height: 1.6;
-    color: #fff;
+    color: var(--white-color);
     border-radius: 20px;
     word-break: keep-all;
     text-decoration: none;
