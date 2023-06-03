@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import usePoint from '../../hooks/usePoint';
+import useEstimatedPayment from '../../hooks/useEstimatedPayment';
 
 interface UserPointInfoProps {
   onUserUsedPointUpdate: (value: number) => void;
@@ -7,6 +8,7 @@ interface UserPointInfoProps {
 
 const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
   const { userPoint, minUsagePoint } = usePoint();
+  const { totalProductPrice } = useEstimatedPayment(userPoint);
   const isInputDisabled = userPoint < minUsagePoint;
 
   const handleUsedPoint = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,6 +22,13 @@ const UserPointInfo = ({ onUserUsedPointUpdate }: UserPointInfoProps) => {
       e.target.value = '';
       return;
     }
+
+    if (userInputPoint > totalProductPrice) {
+      alert('상품 금액을 초과하는 포인트 사용은 불가능합니다.');
+      e.target.value = '';
+      return;
+    }
+
     e.target.value = filteredInputValue;
   };
 
