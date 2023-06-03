@@ -3,6 +3,7 @@ import { selector } from 'recoil';
 import { couponState, targetCouponIdState } from './atom';
 import couponApis from '../../apis/coupons';
 import { serverNameState } from '../serverName';
+import { checkedPriceState } from '../checkedCartProducts';
 
 export const couponSelector = selector({
   key: 'couponSelector',
@@ -14,7 +15,8 @@ export const couponOptionSelector = selector({
   get: ({ get }) =>
     get(couponState).map((coupon) => ({
       value: coupon.id,
-      label: coupon.name,
+      text: coupon.name,
+      disabled: coupon.discountPrice >= get(checkedPriceState),
     })),
 });
 

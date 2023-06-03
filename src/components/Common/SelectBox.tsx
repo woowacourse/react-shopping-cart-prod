@@ -1,11 +1,10 @@
-import type { SelectHTMLAttributes } from 'react';
+import type { OptionHTMLAttributes, SelectHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 type SelectBoxVariant = 'small';
 
-interface SelectOption {
-  value: string | number;
-  label: string;
+interface SelectOption extends OptionHTMLAttributes<HTMLOptionElement> {
+  text: string;
 }
 
 interface SelectBoxProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -29,9 +28,9 @@ const SelectBox = ({
           {title}
         </option>
       )}
-      {options.map(({ value, label }) => (
-        <option key={value} value={value}>
-          {label}
+      {options.map(({ value, text, disabled }, index) => (
+        <option key={`${text}-${index}`} value={value} disabled={disabled}>
+          {text}
         </option>
       ))}
     </Select>

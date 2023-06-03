@@ -14,8 +14,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     options: [
-      { value: '아커', label: '아커' },
-      { value: '황펭', label: '황펭' },
+      { value: '아커', text: '아커' },
+      { value: '황펭', text: '황펭' },
     ],
   },
 };
