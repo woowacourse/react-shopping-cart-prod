@@ -4,13 +4,13 @@ import { useGet } from 'hooks/useGet';
 import { CheckBox } from '../CartItem/CartItem.styles';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { couponAtom, priceAtom } from 'recoil/carts';
-import { getCoupons, getPriceResult } from 'api/cart';
+import { getCoupons, getPrice } from 'api/cart';
 import { Coupon } from 'types/api/carts';
 
 const CouponSection = () => {
   const { data: coupons } = useGet(getCoupons);
   const [checkedCoupons, setCheckedCoupons] = useRecoilState(couponAtom);
-  const { request } = useGet(getPriceResult(checkedCoupons.join(',')));
+  const { request } = useGet(getPrice(checkedCoupons.join(',')));
   const setPrice = useSetRecoilState(priceAtom);
 
   useEffect(() => {

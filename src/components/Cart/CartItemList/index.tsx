@@ -19,15 +19,14 @@ const CartItemList = () => {
     checkAllItems();
   }, [server]);
 
-  const fetchedCartList =
-    cartList.length === 0 ? (
-      <S.EmptyList>장바구니가 비어있습니다.</S.EmptyList>
-    ) : (
-      cartList.map(
-        (cartItem) =>
-          cartItem && <CartItem cartItem={cartItem} key={cartItem.id} />
-      )
-    );
+  const fetchedCartList = cartList.length ? (
+    cartList.map(
+      (cartItem) =>
+        cartItem && <CartItem cartItem={cartItem} key={cartItem.id} />
+    )
+  ) : (
+    <S.EmptyList>장바구니가 비어있습니다.</S.EmptyList>
+  );
 
   const onToggleCheckAllItems = () => {
     if (checkedItemIds.length === cartList.length) {

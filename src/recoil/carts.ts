@@ -45,7 +45,7 @@ export const priceAtom = atom({
     key: 'initialPrice',
     get: async ({ get }) => {
       const server = get(serverAtom);
-      const data = await getPrice([])(server);
+      const data = await getPrice('')(server);
       return data;
     },
   }),

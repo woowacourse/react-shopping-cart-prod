@@ -35,9 +35,9 @@ export const getDeliveryPolicy = async (
   return data;
 };
 
-export const getPriceResult =
-  (couponId: string) =>
+export const getPrice =
+  (couponQuery: string) =>
   async (server: string): Promise<PriceResult> => {
-    const data = await api.get(`${server}/cart-items/coupon/${couponId}`);
+    const data = await api.get(`${server}/cart-items/coupon/${couponQuery}`);
     return data;
   };
