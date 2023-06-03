@@ -32,7 +32,9 @@ const SectionContainer = styled(Box)`
 const PageTitle = styled.h2`
   width: 100%;
   height: 80px;
-  border-bottom: 3px solid var(--color-grayscale-500);
   font-size: 32px;
-  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 28px;
+  }
 `;
