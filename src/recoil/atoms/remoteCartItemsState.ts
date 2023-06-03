@@ -16,9 +16,11 @@ const remoteCartItemsState = atomFamily<RemoteCartItemsState, Client>({
     get:
       (client) =>
       ({ get }) => {
+        const response = get(cartItemsQuery({ client }));
+
         return {
           isSynchronizing: false,
-          cartItems: get(cartItemsQuery({ client })),
+          cartItems: response.acceptOrThrow(200).data,
         };
       },
   }),

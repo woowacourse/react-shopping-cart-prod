@@ -7,8 +7,9 @@ const userProductsState = selector<Product[]>({
   key: 'userProductsState',
   get: ({ get }) => {
     const client = get(clientState);
+    const response = get(productsQuery({ client }));
 
-    return get(productsQuery({ client }));
+    return response.acceptOrThrow(200).data;
   },
 });
 

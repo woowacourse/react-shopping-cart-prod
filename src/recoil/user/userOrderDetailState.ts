@@ -1,6 +1,7 @@
 import { selectorFamily } from 'recoil';
 import type { Order } from '../../types/Order';
 import clientState from '../atoms/clientState';
+import orderDetailQuery from '../queries/orderDetailQuery';
 
 const userOrderDetailState = selectorFamily<Order, Order['id']>({
   key: 'userOrderDetailState',
@@ -8,11 +9,9 @@ const userOrderDetailState = selectorFamily<Order, Order['id']>({
     (orderId) =>
     ({ get }) => {
       const client = get(clientState);
+      const response = get(orderDetailQuery({ client, orderId }));
 
-      return client
-        .get(client.path('/orders/:orderId', orderId))
-        .acceptOrThrow(200)
-        .then((response) => response.data);
+      return response.acceptOrThrow(200).data;
     },
 });
 

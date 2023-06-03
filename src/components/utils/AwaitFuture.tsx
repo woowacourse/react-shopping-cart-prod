@@ -34,7 +34,7 @@ const AwaitFuture = <TData,>(props: AwaitFutureProps<TData>) => {
   const key = useMemo(() => Date.now(), [future]);
 
   return (
-    <ErrorBoundary key={key} fallback={errorElement}>
+    <ErrorBoundary key={key} catchesInstanceof={Error} fallback={errorElement}>
       <Suspense fallback={loadingElement}>
         {future && <AwaitFutureLoader future={future}>{children}</AwaitFutureLoader>}
       </Suspense>

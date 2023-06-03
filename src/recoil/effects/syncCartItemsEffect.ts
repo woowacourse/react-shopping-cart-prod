@@ -22,7 +22,8 @@ const syncCartItemsEffect = (client: Client): AtomEffect<CartItem[]> => {
       );
     });
 
-    getPromise(cartItemsQuery({ client })).then((cartItems) => {
+    getPromise(cartItemsQuery({ client })).then((response) => {
+      const cartItems = response.acceptOrThrow(200).data;
       willStorage.then((storage) => {
         storage.setFromRemote(cartItems);
       });

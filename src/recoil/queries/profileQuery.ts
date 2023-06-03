@@ -1,20 +1,16 @@
 import { selectorFamily } from 'recoil';
 import type { Client } from '../../api';
-import type { ProfileEntity } from '../../api/rest/ShoppingCartRestAPI';
 
 type ProfileQueryParams = {
   client: Client;
 };
 
-const profileQuery = selectorFamily<ProfileEntity, ProfileQueryParams>({
+const profileQuery = selectorFamily({
   key: 'profileQuery',
   get:
-    ({ client }) =>
+    ({ client }: ProfileQueryParams) =>
     () =>
-      client
-        .get('/profile')
-        .acceptOrThrow(200)
-        .then((response) => response.data),
+      client.get('/profile'),
 });
 
 export default profileQuery;

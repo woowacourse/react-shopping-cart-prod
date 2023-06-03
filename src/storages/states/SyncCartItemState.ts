@@ -35,7 +35,7 @@ class SyncCartItemState extends SyncState<Client, ClientState, RemoteState> {
       if (this.remoteState !== null) {
         return this.client
           .delete(this.client.path('/cart-items/:cartItemId', this.remoteState.id))
-          .acceptOrThrow(204)
+          .then((response) => response.acceptOrThrow(204))
           .then(() => null);
       }
       return null;
@@ -48,7 +48,7 @@ class SyncCartItemState extends SyncState<Client, ClientState, RemoteState> {
       // id가 없어 lastState를 업데이트할 수 없기 때문에, 우선은 생성을 먼저 하고 나중에 lastState로 설정
       return this.client
         .post('/cart-items', { productId: product.id })
-        .acceptOrThrow(201)
+        .then((response) => response.acceptOrThrow(201))
         .then((response) => {
           // 변경한 상태가 없었다면 원래 설정하려고 했던 상태로 설정
           // if (!this.hasDirtyUpdate()) this.set(lastState);
@@ -75,7 +75,7 @@ class SyncCartItemState extends SyncState<Client, ClientState, RemoteState> {
         quantity: this.clientState.quantity,
         checked: this.clientState.checked,
       })
-      .acceptOrThrow(200)
+      .then((response) => response.acceptOrThrow(200))
       .then((response) => ({ id, product, ...response.data }));
   }
 }

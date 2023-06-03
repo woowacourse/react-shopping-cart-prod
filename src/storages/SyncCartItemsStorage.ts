@@ -151,7 +151,10 @@ class SyncCartItemsStorage {
    * remote로 부터 최신 상태를 받아와 client의 상태를 동기화합니다.
    */
   async doDownstreamSync() {
-    const { data: cartItems } = await this.client.get('/cart-items').acceptOrThrow(200);
+    const cartItems = await this.client
+      .get('/cart-items')
+      .then((response) => response.acceptOrThrow(200).data);
+
     this.syncStates.forEach((state) =>
       state.enqueueDownstreamSync(
         cartItems.find((cartItem) => cartItem.product.id === state.productId) ?? null,

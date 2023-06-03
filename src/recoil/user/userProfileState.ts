@@ -11,7 +11,8 @@ const userProfileState = selector<Profile | null>({
     const authorization = get(userAuthorizationState);
     if (authorization === null) return null;
 
-    const profile = get(profileQuery({ client }));
+    const response = get(profileQuery({ client }));
+    const profile = response.acceptOrThrow(200).data;
     return { ...profile, username: authorization.username };
   },
 });

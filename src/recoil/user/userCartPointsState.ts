@@ -8,7 +8,8 @@ const userCartPointsState = selector<CartPoints>({
   get: ({ get }) => {
     const client = get(clientState);
 
-    return get(cartPointsQuery({ client }));
+    const response = get(cartPointsQuery({ client }));
+    return response.acceptOrThrow(200).data;
   },
 });
 

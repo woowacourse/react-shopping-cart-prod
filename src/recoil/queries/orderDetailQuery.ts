@@ -1,6 +1,5 @@
 import { selectorFamily } from 'recoil';
 import type { Client } from '../../api';
-import type { OrderEntity } from '../../api/rest/ShoppingCartRestAPI';
 import type { Order } from '../../types/Order';
 
 type OrderDetailQueryParams = {
@@ -8,16 +7,12 @@ type OrderDetailQueryParams = {
   orderId: Order['id'];
 };
 
-const orderDetailQuery = selectorFamily<OrderEntity, OrderDetailQueryParams>({
+const orderDetailQuery = selectorFamily({
   key: 'orderDetailQuery',
   get:
-    ({ client, orderId }) =>
-    () => {
-      return client
-        .get(client.path('/orders/:orderId', orderId))
-        .acceptOrThrow(200)
-        .then((response) => response.data);
-    },
+    ({ client, orderId }: OrderDetailQueryParams) =>
+    () =>
+      client.get(client.path('/orders/:orderId', orderId)),
 });
 
 export default orderDetailQuery;

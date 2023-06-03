@@ -1,3 +1,4 @@
+/* eslint-disable no-throw-literal */
 import type { HttpResponse } from './rest/RestAPI';
 
 // Reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
@@ -5,11 +6,23 @@ const OK_STATUS_CODES = [
   200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301, 302, 303, 304, 307, 308,
 ] as const;
 
-class RestClientRequest<TResponse extends HttpResponse> {
-  private readonly willResponse: Promise<TResponse>;
+class RestClientResponse<TResponse extends HttpResponse = HttpResponse> {
+  readonly response: TResponse;
 
-  constructor(requestFn: () => Promise<TResponse>) {
-    this.willResponse = requestFn();
+  get data() {
+    return this.response.data;
+  }
+
+  get headers() {
+    return this.response.headers;
+  }
+
+  get statusCode() {
+    return this.response.statusCode;
+  }
+
+  constructor(response: TResponse) {
+    this.response = response;
   }
 
   private assertStatusCode<StatusCode extends TResponse['statusCode']>(
@@ -21,29 +34,29 @@ class RestClientRequest<TResponse extends HttpResponse> {
     );
   }
 
-  async accept<StatusCode extends TResponse['statusCode']>(
+  accept<StatusCode extends TResponse['statusCode']>(
     statusCodes: StatusCode | readonly [StatusCode, ...StatusCode[]],
-  ) {
-    const response = await this.willResponse;
+  ): Extract<TResponse, { statusCode: StatusCode }> | null {
+    const { response } = this;
     if (!this.assertStatusCode(response, statusCodes)) {
       return null;
     }
     return response;
   }
 
-  async acceptOrThrow<StatusCode extends TResponse['statusCode']>(
+  acceptOrThrow<StatusCode extends TResponse['statusCode']>(
     statusCodes: StatusCode | readonly [StatusCode, ...StatusCode[]],
-  ) {
-    const response = await this.willResponse;
+  ): Extract<TResponse, { statusCode: StatusCode }> {
+    const { response } = this;
     if (!this.assertStatusCode(response, statusCodes)) {
-      throw new Error(`Server responses with status code ${response.statusCode}`);
+      throw this;
     }
     return response;
   }
 
-  async acceptOkOrThrow() {
+  acceptOkOrThrow() {
     return this.acceptOrThrow(OK_STATUS_CODES);
   }
 }
 
-export default RestClientRequest;
+export default RestClientResponse;

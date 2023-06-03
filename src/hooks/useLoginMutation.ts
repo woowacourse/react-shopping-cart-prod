@@ -12,10 +12,10 @@ const useLoginMutation = () => {
     client
       .withAuthorization(authorization)
       .get('/profile')
-      .acceptOrThrow(200)
-      .then((response) => {
+      .then((response) => response.acceptOrThrow(200).data)
+      .then((data) => {
         setAuthorization(authorization);
-        return response.data;
+        return data;
       }),
   );
 

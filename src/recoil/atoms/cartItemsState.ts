@@ -7,7 +7,15 @@ import cartItemsQuery from '../queries/cartItemsQuery';
 
 const internalCartItemsState = atomFamily<CartItem[], Client>({
   key: 'internalCartItemsState',
-  default: (client) => cartItemsQuery({ client }),
+  default: selectorFamily({
+    key: 'internalCartItemsState/default',
+    get:
+      (client: Client) =>
+      ({ get }) => {
+        const response = get(cartItemsQuery({ client }));
+        return response.acceptOrThrow(200).data;
+      },
+  }),
   effects: (client) => [syncCartItemsEffect(client)],
 });
 

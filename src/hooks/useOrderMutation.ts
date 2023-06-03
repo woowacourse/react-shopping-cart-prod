@@ -22,8 +22,7 @@ const useOrderMutation = () => {
             quantity: cartItem.quantity,
           })),
         })
-        .acceptOrThrow(201)
-        .then((response) => Number(response.headers.location.split('/').pop())),
+        .then((response) => Number(response.acceptOrThrow(201).headers.location.split('/').pop())),
   );
 
   return { order, ...mutationParams };

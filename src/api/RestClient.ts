@@ -1,6 +1,6 @@
 // eslint-disable-next-line max-classes-per-file
 import type { Authorization } from '../types/Authorization';
-import RestClientRequest from './RestClientRequest';
+import RestClientResponse from './RestClientResponse';
 import type {
   ExtractBodyFromRestAPI,
   ExtractPathFromRestAPI,
@@ -48,35 +48,34 @@ class RestClient<TRestAPI extends RestAPI = RestAPI> {
     return this.clone({ authorization });
   }
 
-  fetch<Method extends TRestAPI['request']['method'], Path extends TRestAPI['request']['path']>(
+  async fetch<
+    Method extends TRestAPI['request']['method'],
+    Path extends TRestAPI['request']['path'],
+  >(
     method: Method,
     path: Path | PathGenerator<TRestAPI, 'GET', Path>,
     fetchInit?: RequestInit,
-  ) {
-    return new RestClientRequest<ExtractResponseFromRestAPI<TRestAPI, Method, Path>>(async () => {
-      const { authorization } = this.options;
+  ): Promise<RestClientResponse<ExtractResponseFromRestAPI<TRestAPI, Method, Path>>> {
+    const { authorization } = this.options;
 
-      const response = await fetch(this.getUrl(path.toString()), {
-        method,
-        ...fetchInit,
-        headers: {
-          'Content-Type': 'application/json; charset=UTF-8',
-          ...(authorization
-            ? {
-                Authorization: `Basic ${btoa(
-                  `${authorization.username}:${authorization.password}`,
-                )}`,
-              }
-            : {}),
-          ...fetchInit?.headers,
-        },
-      });
+    const response = await fetch(this.getUrl(path.toString()), {
+      method,
+      ...fetchInit,
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        ...(authorization
+          ? {
+              Authorization: `Basic ${btoa(`${authorization.username}:${authorization.password}`)}`,
+            }
+          : {}),
+        ...fetchInit?.headers,
+      },
+    });
 
-      return {
-        statusCode: response.status,
-        data: await this.parseResponseData(response),
-        headers: Object.fromEntries(response.headers.entries()),
-      };
+    return new RestClientResponse({
+      statusCode: response.status,
+      data: await this.parseResponseData(response),
+      headers: Object.fromEntries(response.headers.entries()),
     });
   }
 

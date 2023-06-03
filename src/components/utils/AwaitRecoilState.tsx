@@ -40,7 +40,7 @@ const AwaitRecoilState = <T,>(props: AwaitRecoilStateProps<T>) => {
   const key = useMemo(() => Date.now(), [state, loadable]);
 
   return (
-    <ErrorBoundary key={key} fallback={errorElement}>
+    <ErrorBoundary key={key} catchesInstanceof={Error} fallback={errorElement}>
       <Suspense fallback={loadingElement}>
         {state && <AwaitRecoilStateLoader state={state}>{children}</AwaitRecoilStateLoader>}
       </Suspense>
