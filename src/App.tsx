@@ -6,6 +6,7 @@ import Header from '@Components/Header';
 import LoadingHeader from '@Components/Header/LoadingHeader';
 import QuickMenu from '@Components/QuickMenu';
 import QuickMenuMobile from '@Components/QuickMenuMobile';
+import ScrollToTop from '@Components/ScrollToTop/ScrollToTop';
 
 import ErrorBoundary from '@Pages/ErrorBoundary';
 import NotFound from '@Pages/NotFound';
@@ -33,6 +34,7 @@ function App() {
       </Suspense>
       <CommonPageStyle>
         <ErrorBoundary fallback={NotFound}>
+          <ScrollToTop />
           <Outlet />
           {Modal && <Modal />}
         </ErrorBoundary>
