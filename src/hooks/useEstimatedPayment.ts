@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { hostNameAtom } from '../recoil/hostData';
 import {
   checkedItemAtom,
@@ -26,7 +26,8 @@ const useEstimatedPayment = (usePoint: number) => {
 
   const checkedCartProduct = useRecoilValue(checkedItemAtom);
   const hostName = useRecoilValue(hostNameAtom);
-  const cartProducts = useRecoilValue(cartProductAtom);
+  // const cartProducts = useRecoilValue(cartProductAtom);
+  const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
 
   const submitOrder = () => {
     const cartItems = cartProducts
@@ -47,9 +48,13 @@ const useEstimatedPayment = (usePoint: number) => {
       totalPrice,
     };
 
-    orderApi(hostName).then((apiInstance) => {
-      return apiInstance.postOrderProduct(orderData);
-    });
+    orderApi(hostName)
+      .then((apiInstance) => {
+        return apiInstance.postOrderProduct(orderData);
+      })
+      .then(() => {
+        setCartProducts([]);
+      });
   };
 
   return {
