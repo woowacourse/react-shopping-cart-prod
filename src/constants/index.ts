@@ -17,6 +17,7 @@ export const API_SUCCESS_MESSAGE = {
   deleteCartItem: '장바구니에서 상품을 제외했어요.',
   signUp: '회원가입을 완료했어요.',
   login: '로그인을 완료했어요.',
+  purchase: '주문을 완료했어요.',
 };
 
 export const API_ERROR_MESSAGE = {

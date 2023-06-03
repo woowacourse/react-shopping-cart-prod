@@ -74,7 +74,7 @@ export default function CartItemList() {
       <S.RemoveBox>
         <CheckBox checked={allChecked} onClickCheckbox={allChecked ? uncheckAll : checkAll} />
         <S.RemoveLabel>
-          전체선택 ({checkedCount}/{checkedList.length})
+          전체선택 ({checkedCount}/{cart.length})
         </S.RemoveLabel>
         <S.RemoveButton onClick={removeCheckedCartItem}>선택삭제</S.RemoveButton>
       </S.RemoveBox>
