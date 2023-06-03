@@ -10,19 +10,23 @@ export const Wrapper = styled.li`
 export const OrderHeader = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 2%;
 
   background-color: #eaeaea;
 `;
 
-export const OrderNumber = styled.div`
+export const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const HeaderInfo = styled.div`
   width: 100%;
-  padding: 20px;
 `;
 
 export const LinkToOrderDetail = styled(Link)`
   text-decoration: none;
-  width: 150px;
-  padding: 20px;
   cursor: pointer;
 `;
 

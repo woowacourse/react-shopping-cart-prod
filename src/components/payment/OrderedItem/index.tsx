@@ -2,15 +2,20 @@ import React from 'react';
 import * as S from './OrderedItem.styles';
 import ProductItemInOrder from '../ProductItemInOrder';
 import { Order, OrderDetail } from 'types/api/orders';
+import { toKoreanDate } from 'utils/converter';
 
 const OrderedItem = ({ order }: { order: Order | OrderDetail }) => {
-  const { id, orderedItems } = order;
+  const { id, orderedItems, orderedTime } = order;
+  const orderedDate = toKoreanDate(orderedTime);
   const isDetailPage = /order_detail/.test(location.pathname);
 
   return (
     <S.Wrapper>
       <S.OrderHeader>
-        <S.OrderNumber>주문번호 : {id}</S.OrderNumber>
+        <S.InfoWrapper>
+          <S.HeaderInfo>주문번호 : {id}</S.HeaderInfo>
+          <S.HeaderInfo>주문날짜 : {orderedDate} </S.HeaderInfo>
+        </S.InfoWrapper>
         {!isDetailPage && (
           <S.LinkToOrderDetail to={`/order_detail/${id}`}>
             상세보기 ▶
