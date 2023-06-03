@@ -9,6 +9,7 @@ import { useModal } from '../../hooks/useModal';
 import { cartState, checkedItemList, serverState } from '../../recoil';
 import { CartItem } from '../../types';
 import Button from '../common/Button';
+import CouponList from '../modal/CouponList';
 import { Checkbox } from './CheckboxStyle';
 import SelectedProductItem from './SelectedProductItem';
 
@@ -87,8 +88,11 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
         isTriggered={isModalOpen}
         initialState={initialState}
         direction='center'
+        modalStyle={modalStyle}
+        buttonContent='쿠폰을 선택했어요'
+        modalButtonStyle={closeButtonStyle}
       >
-        모달
+        <CouponList />
       </Modal>
     </>
   );
@@ -107,27 +111,9 @@ const S = {
     border-bottom: 2px solid var(--gray-color-300);
 
     & + div {
+      padding-right: 12px;
       max-height: 410px;
       overflow-y: auto;
-
-      /* Scroll bar */
-      &::-webkit-scrollbar {
-        width: 5px;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        background: var(--text-color);
-      }
-      &::-webkit-scrollbar-track {
-        border-radius: 8px;
-        background: var(--gray-color-100);
-      }
-      &::-webkit-scrollbar-button:start:decrement,
-      &::-webkit-scrollbar-button:end:increment {
-        display: block;
-        height: 6px;
-        background: #fff;
-      }
 
       @media (max-width: 420px) {
         padding: 0 20px;
@@ -164,7 +150,26 @@ const couponButtonStyle = css`
   border: 3px double var(--gray-color-100);
 
   &:hover {
-    color: #fff;
+    color: var(--white-color);
+    background: var(--text-color);
+  }
+`;
+
+/* Modal Style */
+const modalStyle = css`
+  width: 400px;
+  padding: 28px 20px 32px;
+  background: #fafafa;
+`;
+
+const closeButtonStyle = css`
+  margin-top: 34px;
+  padding: 14px 0;
+  font-size: 15px;
+  border: 1px solid #888888;
+
+  &:hover {
+    color: var(--white-color);
     background: var(--text-color);
   }
 `;

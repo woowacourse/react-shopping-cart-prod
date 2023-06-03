@@ -1,12 +1,17 @@
 import { Meta } from '@storybook/react';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
+import { Modal } from 'simple-yummy-modal';
 import { css, styled } from 'styled-components';
 import { Checkbox } from '../../components/cart/CheckboxStyle';
 import SelectedProductItem from '../../components/cart/SelectedProductItem';
 import SelectedProductList from '../../components/cart/SelectedProductList';
 import Button from '../../components/common/Button';
+import CouponList from '../../components/modal/CouponList';
+import { ROUTE_PATH } from '../../constants';
 import { useCart } from '../../hooks/useCart';
+import { useModal } from '../../hooks/useModal';
 import { cartState, checkedItemList } from '../../recoil';
 
 const meta = {
@@ -21,6 +26,7 @@ export const ProductListInCart = () => {
   const [cart, setCart] = useRecoilState(cartState);
   const [checkedItemIdList, setCheckedItemIdList] = useRecoilState<number[]>(checkedItemList);
   const { removeItemFromCart } = useCart();
+  const { handleModalOpen, isModalOpen, setIsModalOpen, initialState } = useModal();
 
   useEffect(() => {
     setCart([
@@ -66,40 +72,62 @@ export const ProductListInCart = () => {
   };
 
   return (
-    <S.Wrapper>
-      <S.Title>{`든든배송 상품 (${productCountInCart}개)`}</S.Title>
-      <div>
-        {cart.map((item) => (
-          <SelectedProductItem
-            key={item.product.id}
-            id={item.id}
-            productId={item.product.id}
-            name={item.product.name}
-            price={item.product.price}
-            imageUrl={item.product.imageUrl}
-            quantity={item.quantity}
-          />
-        ))}
-      </div>
+    <>
+      <S.Wrapper>
+        <S.Title>{`든든배송 상품 (${productCountInCart}개)`}</S.Title>
+        <div>
+          {cart.map((item) => (
+            <SelectedProductItem
+              key={item.product.id}
+              id={item.id}
+              productId={item.product.id}
+              name={item.product.name}
+              price={item.product.price}
+              imageUrl={item.product.imageUrl}
+              quantity={item.quantity}
+            />
+          ))}
+        </div>
 
-      <S.Fieldset>
-        <Checkbox
-          type='checkbox'
-          id='select-all'
-          name='select-all'
-          checked={isAllChecked}
-          onChange={handleAllItemsCheck}
-        />
-        <label htmlFor='select-all'>{`전체선택 (${checkedItemIdList.length}/${productCountInCart})`}</label>
-        <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
-          선택삭제
-        </Button>
-      </S.Fieldset>
-    </S.Wrapper>
+        <S.Fieldset>
+          <Checkbox
+            type='checkbox'
+            id='select-all'
+            name='select-all'
+            checked={isAllChecked}
+            onChange={handleAllItemsCheck}
+          />
+          <label htmlFor='select-all'>{`전체선택 (${checkedItemIdList.length}/${productCountInCart})`}</label>
+          <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
+            선택삭제
+          </Button>
+          <Button css={couponButtonStyle} onClick={handleModalOpen}>
+            쿠폰선택
+          </Button>
+        </S.Fieldset>
+      </S.Wrapper>
+
+      <Modal
+        openTrigger={setIsModalOpen}
+        isTriggered={isModalOpen}
+        initialState={initialState}
+        direction='center'
+        modalStyle={modalStyle}
+        buttonContent='쿠폰을 선택했어요'
+        modalButtonStyle={closeButtonStyle}
+      >
+        <CouponList />
+      </Modal>
+    </>
   );
 };
 
-export const NothingInCart = () => <SelectedProductList productCountInCart={0} />;
+export const NothingInCart = () => (
+  <>
+    <S.Nothing src={`${process.env.PUBLIC_URL}/assets/nothing.png`} alt='장바구니가 텅 비었어요' />
+    <S.Link to={ROUTE_PATH.MAIN_PAGE}>홈으로 가기</S.Link>
+  </>
+);
 
 const S = {
   Wrapper: styled.section`
@@ -114,28 +142,10 @@ const S = {
     border-bottom: 2px solid var(--gray-color-300);
 
     & + div {
+      padding-right: 12px;
       height: 410px;
       max-height: 410px;
       overflow-y: auto;
-
-      /* Scroll bar */
-      &::-webkit-scrollbar {
-        width: 5px;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 8px;
-        background: var(--text-color);
-      }
-      &::-webkit-scrollbar-track {
-        border-radius: 8px;
-        background: var(--gray-color-100);
-      }
-      &::-webkit-scrollbar-button:start:decrement,
-      &::-webkit-scrollbar-button:end:increment {
-        display: block;
-        height: 6px;
-        background: #fff;
-      }
 
       @media (max-width: 420px) {
         padding: 0 10px;
@@ -164,6 +174,22 @@ const S = {
       padding: 20px 0 0;
     }
   `,
+
+  Link: styled(Link)`
+    display: block;
+    width: 20%;
+    margin: 0 auto;
+    padding: 20px 0;
+    color: var(--white-color);
+    border-radius: 8px;
+    text-align: center;
+    text-decoration: none;
+    background: var(--highlight-color);
+
+    &:hover {
+      transform: scale(1.01);
+    }
+  `,
 };
 
 const deleteButtonStyle = css`
@@ -174,5 +200,35 @@ const deleteButtonStyle = css`
 
   @media (max-width: 548px) {
     margin-left: 12px;
+  }
+`;
+
+const couponButtonStyle = css`
+  margin-left: auto;
+  padding: 4px 10px 5px;
+  border: 3px double var(--gray-color-100);
+
+  &:hover {
+    color: var(--white-color);
+    background: var(--text-color);
+  }
+`;
+
+/* Modal Style */
+const modalStyle = css`
+  width: 400px;
+  padding: 28px 20px 32px;
+  background: #fafafa;
+`;
+
+const closeButtonStyle = css`
+  margin-top: 34px;
+  padding: 14px 0;
+  font-size: 15px;
+  border: 1px solid #888888;
+
+  &:hover {
+    color: var(--white-color);
+    background: var(--text-color);
   }
 `;
