@@ -1,15 +1,12 @@
 import fetchMock from 'jest-fetch-mock';
 import { rest } from 'msw';
-import { MOCK_COUPON_LIST, MOCK_ORDER_LIST, MOCK_PRODUCT_LIST } from '@mocks/handlers';
-import { createCartItem } from '@utils/cart/cart';
+import { MOCK_COUPON_LIST, MOCK_ORDER_LIST } from '@mocks/handlers';
 import { getOrderDetailApi, getOrderListApi, submitOrderApi } from '@utils/order/fetchOrder';
 import { SERVER_NAME, getOrderPath } from '@constants/serverUrlConstants';
 import { OrderType } from '@type/orderType';
 import { server } from './setupTests';
 
 fetchMock.enableMocks();
-
-const [product, product2] = MOCK_PRODUCT_LIST;
 
 const fetchUrl = getOrderPath(SERVER_NAME[0]);
 
@@ -65,16 +62,13 @@ describe('주문할 때 통신이 올바르게 작동하는 지 확인한다.', 
   });
 
   test('선택된 장바구니 아이템들과 쿠폰 아이디로 주문을 한다.', async () => {
-    const cartItems = [
-      createCartItem({ cartId: 1, product }),
-      createCartItem({ cartId: 2, product: product2 }),
-    ];
+    const cartItemIds = [1, 2];
 
     const selectedCoupon = MOCK_COUPON_LIST[0];
 
     await submitOrderApi({
       serverName: SERVER_NAME[0],
-      cartItems,
+      cartItemIds,
       couponId: selectedCoupon.id,
     });
 
@@ -82,14 +76,11 @@ describe('주문할 때 통신이 올바르게 작동하는 지 확인한다.', 
   });
 
   test('선택된 장바구니 아이템들과 쿠폰을 선택하지 않고 주문을 한다.', async () => {
-    const cartItems = [
-      createCartItem({ cartId: 1, product }),
-      createCartItem({ cartId: 2, product: product2 }),
-    ];
+    const cartItemIds = [1, 2];
 
     await submitOrderApi({
       serverName: SERVER_NAME[0],
-      cartItems,
+      cartItemIds,
     });
 
     expect(postResult).toBe(SUCCESS);

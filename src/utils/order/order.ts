@@ -1,17 +1,15 @@
-import { CartItemType } from '@type/cartType';
-
 interface CreateOrderRequestBodyParams {
-  cartItems: CartItemType[];
+  cartItemIds: number[];
   couponId?: number;
 }
 
-export const createOrderRequestBody = ({ cartItems, couponId }: CreateOrderRequestBodyParams) => {
+export const createOrderRequestBody = ({ cartItemIds, couponId }: CreateOrderRequestBodyParams) => {
   if (!couponId) {
-    return { orderItemIds: cartItems.map((cartItem) => cartItem.id) };
+    return { orderItemIds: cartItemIds };
   }
 
   return {
-    orderItemIds: cartItems.map((cartItem) => cartItem.id),
+    orderItemIds: cartItemIds,
     couponId,
   };
 };

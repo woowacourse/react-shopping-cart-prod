@@ -3,6 +3,7 @@ import Layout from '@components/layout/Layout';
 import OrderHeader from '@components/orders/OrderHeader';
 import { getFormattedNextDay } from '@utils/common';
 import * as S from './OrderComplete.style';
+
 interface OrderCompleteProps {
   userName: string;
   orderItemsCount: number;
