@@ -26,7 +26,10 @@ const OrderedItem = ({ order }: { order: Order | OrderDetail }) => {
       <S.Container>
         {orderedItems.map((orderedItem, ind) => (
           <>
-            <ProductItemInOrder orderedItem={orderedItem} />
+            <ProductItemInOrder
+              key={orderedItem.id}
+              orderedItem={orderedItem}
+            />
             {ind !== orderedItems.length - 1 ? <S.Divider /> : null}
           </>
         ))}

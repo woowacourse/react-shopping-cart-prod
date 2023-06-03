@@ -6,15 +6,13 @@ import { Order } from 'types/api/orders';
 import { getOrders } from 'api/orders';
 
 const OrderedItemList = () => {
-  const { data: orderList } = useGet(getOrders);
+  const { data: orders } = useGet(getOrders);
 
-  return (
-    <S.ItemWrapper>
-      {orderList?.map((item: Order) => (
-        <OrderedItem order={item} />
-      ))}
-    </S.ItemWrapper>
-  );
+  const orderedList = orders?.length
+    ? orders?.map((item: Order) => <OrderedItem order={item} />)
+    : <S.EmptyList>주문한 상품 목록이 없습니다.</S.EmptyList>;
+
+  return <S.ItemWrapper>{orderedList}</S.ItemWrapper>;
 };
 
 export default OrderedItemList;
