@@ -1,14 +1,14 @@
 import ProductItemList from 'src/components/ProductItemList';
 import ContentLayout from 'src/components/Common/ContentLayout';
 import ErrorBoundary from 'src/components/ErrorBoundary';
-import Temp from 'src/components/Temp';
 import { Suspense } from 'react';
 import LoadingSpinner from 'src/components/Common/LoadingSpinner';
+import FetchFail from 'src/components/FetchFail';
 import styles from './index.module.scss';
 
 function Home() {
   return (
-    <ErrorBoundary fallback={<Temp />}>
+    <ErrorBoundary fallback={<FetchFail />}>
       <ContentLayout>
         <Suspense
           fallback={
