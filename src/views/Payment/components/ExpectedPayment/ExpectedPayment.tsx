@@ -39,7 +39,7 @@ function ExpectedPayment() {
   const totalPrice = useTotalPrice();
   const couponSelected = useCouponSelected();
   const fetchOrders = useFetchOrders();
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const { getCheckedItemIds } = useCart();
 
   const discountPrice = getDiscount(couponSelected, totalPrice);
@@ -61,13 +61,16 @@ function ExpectedPayment() {
       });
 
       const location = response.headers.get('Location');
-      console.log('order_response', location?.split('/').pop());
+      const orderId = location?.split('/').pop();
+      navigate(`${ROUTER_PATH.order}/${orderId}`);
     } else {
-      await fetchOrders.postOrder({
+      const response = await fetchOrders.postOrder({
         orderItemIds: getCheckedItemIds(),
       });
+      const location = response.headers.get('Location');
+      const orderId = location?.split('/').pop();
+      navigate(`${ROUTER_PATH.order}/${orderId}`);
     }
-    navigator(ROUTER_PATH.order);
   };
 
   return (
