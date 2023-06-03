@@ -19,7 +19,9 @@ export interface LocalProductType extends ProductType {
 export interface Coupon {
   id: number;
   name: string;
-  minPrice: number;
+  minOrderPrice: number;
+  maxDiscountPrice: number;
   isAvailable: boolean;
-  discountPrice: number;
+  discountPrice: number | null;
+  expiredAt: string;
 }
