@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react';
+import type React from 'react';
 import { useContext, createContext } from 'react';
 import styled from 'styled-components';
-import { theme } from '../../styles/Theme';
 
 const ProductDataContext = createContext({
   image: '',
@@ -29,42 +29,52 @@ const ProductItemContainer = styled.section<{ containerStyle: any }>`
   ${({ containerStyle }) => containerStyle}
 `;
 
-export const Image = ({ imageStyle }: any) => {
+interface ItemStyle {
+  style?: React.CSSProperties;
+}
+
+export const Image = ({ style }: ItemStyle) => {
   const { image } = useContext(ProductDataContext);
 
-  return <ProductImage imageStyle={imageStyle} src={image} alt={image} />;
+  return <ProductImage style={style} src={image} alt={image} />;
 };
 
-const ProductImage = styled.img<{ imageStyle: any }>`
-  ${({ imageStyle }) => imageStyle}
+const ProductImage = styled.img<{ style: any }>`
+  height: 100px;
+  width: 100px;
+
+  ${({ style }) => style}
 `;
 
-export const Name = ({ fontStyle }: any) => {
+export const Name = ({ style }: ItemStyle) => {
   const { name } = useContext(ProductDataContext);
 
-  return <ProductName fontStyle={fontStyle}>{name}</ProductName>;
+  return <ProductName style={style}>{name}</ProductName>;
 };
 
-const ProductName = styled.strong<{ fontStyle: any }>`
-  ${({ theme, fontStyle }) => theme.fonts[fontStyle]}
+const ProductName = styled.strong<{ style: any }>`
+  ${({ theme }) => theme.fonts.description}
+  ${({ style }) => style}
 `;
 
-export const Price = ({ fontStyle }: any) => {
+export const Price = ({ style }: ItemStyle) => {
   const { price } = useContext(ProductDataContext);
 
-  return <ProductPrice fontStyle={fontStyle}>{price}</ProductPrice>;
+  return <ProductPrice style={style}>{price.toLocaleString()}원</ProductPrice>;
 };
 
-const ProductPrice = styled.strong<{ fontStyle: any }>`
-  ${({ theme, fontStyle }) => theme.fonts[fontStyle]}
+const ProductPrice = styled.strong<{ style: any }>`
+  ${({ theme }) => theme.fonts.description}
+  ${({ style }) => style}
 `;
 
-export const Quantity = ({ fontStyle }: any) => {
+export const Quantity = ({ style }: ItemStyle) => {
   const { quantity } = useContext(ProductDataContext);
 
-  return <ProductQuantity fontStyle={fontStyle}>{quantity}</ProductQuantity>;
+  return <ProductQuantity style={style}>{quantity}개</ProductQuantity>;
 };
 
-const ProductQuantity = styled.strong<{ fontStyle: any }>`
-  ${({ theme, fontStyle }) => theme.fonts[fontStyle]}
+const ProductQuantity = styled.strong<{ style: any }>`
+  ${({ theme }) => theme.fonts.description}
+  ${({ style }) => style}
 `;
