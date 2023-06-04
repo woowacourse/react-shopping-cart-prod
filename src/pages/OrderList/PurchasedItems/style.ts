@@ -44,3 +44,10 @@ export const OrderTitle = styled.div`
 
   padding: 34px 30px;
 `;
+
+export const EmptyContent = styled.div`
+  height: 220px;
+  background-color: white;
+  border: 1px solid #aaaaaa;
+  border-top: none;
+`;
