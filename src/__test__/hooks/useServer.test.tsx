@@ -19,7 +19,7 @@ describe('useServer 훅 테스트', () => {
     });
 
     waitFor(() => {
-      expect(server).toBe('우가');
+      expect(server).toBe(SERVER_NAME[2]);
     });
   });
 });
