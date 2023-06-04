@@ -38,7 +38,7 @@ const OrderDetail = () => {
       <ResultBox>
         <PriceBox>배송비: {order?.deliveryFee.toLocaleString()}원</PriceBox>
         <PriceBox>
-          총 결제 금액: {(order?.total! + order?.deliveryFee!).toLocaleString()}원
+          최종 결제 금액: {(order?.total! + order?.deliveryFee!).toLocaleString()}원
         </PriceBox>
       </ResultBox>
     </Wrapper>
@@ -88,13 +88,20 @@ const Details = styled.div`
   border: 1px solid rgba(170, 170, 170, 1);
   border-radius: 4px;
   background: rgba(246, 246, 246, 1);
+
+  div:last-child {
+    margin-top: 8px;
+
+    font-size: 19px;
+    font-weight: 600;
+  }
 `;
 
 const ResultBox = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 
   height: 100px;
   border: 2px solid rgba(170, 170, 170, 1);
@@ -102,9 +109,14 @@ const ResultBox = styled.div`
   font-weight: 600;
 
   & > div {
-    font-size: 20px;
+    font-size: 19px;
     text-align: center;
     width: 100%;
+  }
+
+  div:last-child {
+    color: #04c09e;
+    font-size: 21px;
   }
 `;
 
