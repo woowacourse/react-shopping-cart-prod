@@ -7,23 +7,23 @@ type Props = {
 };
 
 const OrderCompleteItem = ({ order, id }: Props) => {
+  const renderPaymentItem = (label: string, value: string) => {
+    return (
+      <div>
+        <span>{label}</span>
+        <span>{value}</span>
+      </div>
+    );
+  };
+
   return (
     <>
       <S.Title>고객님의 주문이 완료되었습니다.</S.Title>
       <S.Wrapper>
         <S.PaymentWrapper>
-          <div>
-            <span>주문번호</span>
-            <span>{`${order.orderId}`}</span>
-          </div>
-          <div>
-            <span>주문일자</span>
-            <span>{`${order.createdAt}`}</span>
-          </div>
-          <div>
-            <span>결제금액</span>
-            <span>{`${order.orderTotalPrice}원`}</span>
-          </div>
+          {renderPaymentItem('주문번호', order.orderId.toString())}
+          {renderPaymentItem('주문일자', order.createdAt)}
+          {renderPaymentItem('결제금액', `${order.orderTotalPrice}원`)}
         </S.PaymentWrapper>
       </S.Wrapper>
     </>
