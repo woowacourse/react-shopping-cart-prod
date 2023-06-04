@@ -65,7 +65,7 @@ const CartItem = (item: CartProduct) => {
       <LastPart>
         <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
         <QuantityCounter itemId={item.product.id} lowerBound={1} />
-        <TotalPriceBox className="total" isSale={item.couponId !== undefined}>
+        <TotalPriceBox className="total" $sale={!!item.couponId}>
           <span>{(item.product.price * item.quantity).toLocaleString()}원</span>
           {totalPrice && <span> {totalPrice.toLocaleString()}원</span>}
         </TotalPriceBox>
@@ -179,7 +179,7 @@ const PriceBox = styled.p`
 `;
 
 interface TotalPriceBoxProps {
-  isSale: boolean;
+  $sale: boolean;
 }
 
 const TotalPriceBox = styled.p<TotalPriceBoxProps>`
@@ -193,14 +193,14 @@ const TotalPriceBox = styled.p<TotalPriceBoxProps>`
   gap: 5px;
 
   & :first-child {
-    text-decoration: ${(props) => (props.isSale ? "line-through" : "")};
-    color: ${(props) => (props.isSale ? "gray" : "")};
-    font-style: ${(props) => (props.isSale ? "italic" : "")};
-    font-size: ${(props) => (props.isSale ? "14px" : "")};
+    text-decoration: ${(props) => (props.$sale ? "line-through" : "")};
+    color: ${(props) => (props.$sale ? "gray" : "")};
+    font-style: ${(props) => (props.$sale ? "italic" : "")};
+    font-size: ${(props) => (props.$sale ? "14px" : "")};
   }
 
   & :last-child {
-    font-weight: ${(props) => (props.isSale ? "600" : "")};
+    font-weight: ${(props) => (props.$sale ? "600" : "")};
   }
 `;
 
