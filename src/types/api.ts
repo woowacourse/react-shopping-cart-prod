@@ -11,7 +11,6 @@ type APIErrorMessage = {
 
 interface PostCartItemRequestBody {
   productId: number;
-  quantity: number;
 }
 
 interface PatchCartItemRequestBody {

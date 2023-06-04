@@ -13,18 +13,13 @@ interface CartItemData {
   product: ProductItemData;
 }
 
-interface PostCartItemRequestBody {
-  productId: number;
-}
-
-interface OrderedItem {
+interface OrderedItemData extends ProductItemData {
   quantity: number;
-  product: ProductItemData;
 }
 
 interface OrderData extends CartPriceData {
   id: number;
-  orderedItems: OrderedItem[];
+  orderedItems: OrderedItemData[];
   orderedAt: Date;
 }
 
@@ -63,11 +58,4 @@ export interface Member {
   discountRate: RANK_DISCOUNT_RATE;
 }
 
-export type {
-  ProductItemData,
-  CartItemData,
-  CartPriceData,
-  PostCartItemRequestBody,
-  OrderedItem,
-  OrderData,
-};
+export type { ProductItemData, CartItemData, CartPriceData, OrderedItemData, OrderData };
