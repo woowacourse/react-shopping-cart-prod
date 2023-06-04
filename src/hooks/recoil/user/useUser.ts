@@ -1,3 +1,4 @@
+import { ChangeEvent } from 'react';
 import { useRecoilState } from 'recoil';
 import userState from '@recoil/user/userState';
 import { USER_INFORMATION } from '@constants/userConstant';
@@ -15,5 +16,11 @@ export const useUser = () => {
     setUserInfo(findUser);
   };
 
-  return { userInfo, handleUser };
+  const onUserChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const { value } = event.currentTarget;
+
+    handleUser(value);
+  };
+
+  return { userInfo, handleUser, onUserChange };
 };
