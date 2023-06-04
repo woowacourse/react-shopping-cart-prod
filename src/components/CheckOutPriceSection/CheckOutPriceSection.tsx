@@ -16,6 +16,8 @@ const CheckOutPriceSection = () => {
     earnPointsText,
   } = useCheckOutPriceText();
 
+  const isCheckedProductsExist = checkedCartProductIds.size > 0;
+
   return (
     <Container sizing={{ width: '40%' }} flex={{ flexDirection: 'column' }}>
       <PriceSection sizing={{ width: '100%' }} flex={{ flexDirection: 'column', align: 'flex-start', gap: '20px' }}>
@@ -43,7 +45,7 @@ const CheckOutPriceSection = () => {
         </Box>
       </PriceSection>
       <ConfirmButtonBox sizing={{ width: '100%' }}>
-        <OrderConfirmButton onClick={handleCreateOrder} isActive={checkedCartProductIds.size > 0}>
+        <OrderConfirmButton onClick={handleCreateOrder} isActive={isCheckedProductsExist}>
           {orderConfirmButtonText}
         </OrderConfirmButton>
       </ConfirmButtonBox>
