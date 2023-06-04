@@ -16,7 +16,6 @@ const FlexEnd = styled.div`
 
 function OrderDetail() {
   const params = useParams();
-  console.log(`${params.orderId}에서 데이터 찾아서 넘겨주기`);
 
   const orderItem: Order = {
     orderId: params.orderId ? parseInt(params.orderId) : 0,

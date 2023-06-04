@@ -1,3 +1,3 @@
-import CouponSelector from './CouponSelector';
+import CouponSelector from "./CouponSelector";
 
 export default CouponSelector;

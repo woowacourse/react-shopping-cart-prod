@@ -31,7 +31,7 @@ export interface NewOrder {
   orderDiscounts: {
     couponIds: number[];
     point: number;
-  }
+  };
 }
 
 export interface OrderItem {
@@ -69,12 +69,12 @@ export interface Coupon {
 }
 
 export interface PointHistory {
-  orderId: number,
-  earnedPoint: number,
-  usedPoint: number
+  orderId: number;
+  earnedPoint: number;
+  usedPoint: number;
 }
 
 export interface Point {
-  pointHistories: PointHistory[],
-  totalPoint: 0
+  pointHistories: PointHistory[];
+  totalPoint: 0;
 }

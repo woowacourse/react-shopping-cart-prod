@@ -53,7 +53,9 @@ function CouponSelector() {
           )}
         </CouponBoxContainer>
       )}
-      {selectedCouponIds.length > 0 && <div>[{selectedCoupon[0].couponName}] 선택됨</div>}
+      {selectedCouponIds.length > 0 && (
+        <div>[{selectedCoupon[0].couponName}] 선택됨</div>
+      )}
     </CouponBoxWrapper>
   );
 }

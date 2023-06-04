@@ -46,7 +46,8 @@ function Purchase() {
   const selectedCouponIds = useRecoilValue(selectedCouponIdSelector);
   const selectedPoint = useRecoilValue(selectedPointState);
   const expectedOrderPrice = useRecoilValue(expectedOrderPriceState);
-  const { commitPurchaseItems, updateExpectedOrderPrice } = useRecoilValue(orderRepository);
+  const { commitPurchaseItems, updateExpectedOrderPrice } =
+    useRecoilValue(orderRepository);
   const { closeModal } = useRecoilValue(modalRepository);
 
   const discountByCoupon = useRecoilValue(discountPriceByCouponSelector);
@@ -58,13 +59,7 @@ function Purchase() {
 
   useEffect(() => {
     updateExpectedOrderPrice();
-  }, [
-    totalPrice,
-    checkedCartList,
-    selectedCouponIds,
-    selectedPoint
-  ]);
-
+  }, [totalPrice, checkedCartList, selectedCouponIds, selectedPoint]);
 
   return (
     <div>
@@ -136,7 +131,13 @@ function Purchase() {
         <PurchasePropertyWrapper>
           <PurchaseResultText>최종 결제 금액</PurchaseResultText>
           <PurchaseResultText>
-            {(totalPrice - discountByCoupon - selectedPoint + DELIVERY_FEE).toLocaleString()}원
+            {(
+              totalPrice -
+              discountByCoupon -
+              selectedPoint +
+              DELIVERY_FEE
+            ).toLocaleString()}
+            원
           </PurchaseResultText>
         </PurchasePropertyWrapper>
         <div>{expectedOrderPrice}</div>

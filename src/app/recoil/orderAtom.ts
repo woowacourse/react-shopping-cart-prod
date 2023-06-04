@@ -30,23 +30,28 @@ export const selectedCouponIdSelector = selector<number[]>({
   key: "selectedCouponIdSelector",
   get: ({ get }) => {
     const selectedCoupons = get(selectedCouponState);
-    return selectedCoupons.map(coupon => coupon.id);
+    return selectedCoupons.map((coupon) => coupon.id);
   },
 });
 
 export const discountPriceByCouponSelector = selector<number>({
-  key: 'discountPriceByCouponSelector',
+  key: "discountPriceByCouponSelector",
   get: ({ get }) => {
     const totalPrice = get(totalPriceSelector);
     const selectedCoupons = get(selectedCouponState);
-    const discount = selectedCoupons.length > 0 ? (totalPrice * selectedCoupons[0]?.discountPercent / 100 + selectedCoupons[0]?.discountAmount) : 0;
+    const discount =
+      selectedCoupons.length > 0
+        ? (totalPrice * selectedCoupons[0]?.discountPercent) / 100 +
+          selectedCoupons[0]?.discountAmount
+        : 0;
     return discount;
-  }
+  },
 });
 
 export const isCouponSelectedSelector = selectorFamily<boolean, number>({
   key: "selectedCouponSelectedSelector",
-  get: (couponId: number) =>
+  get:
+    (couponId: number) =>
     ({ get }) => {
       const selectedCouponIds = get(selectedCouponIdSelector);
 
@@ -61,7 +66,7 @@ export const selectedPointState = atom({
 
 export const expectedOrderPriceState = atom({
   key: "expectedOrderPriceState",
-  default: 0
+  default: 0,
 });
 
 export const orderRepository = selector({
@@ -84,7 +89,9 @@ export const orderRepository = selector({
     const commitPurchaseItems = getCallback(({ snapshot }) => async () => {
       const checkedCartList = await snapshot.getPromise(checkedCartSelector);
       const selectedPoint = await snapshot.getPromise(selectedPointState);
-      const selectedCouponIds = await snapshot.getPromise(selectedCouponIdSelector);
+      const selectedCouponIds = await snapshot.getPromise(
+        selectedCouponIdSelector
+      );
       const { closeModal } = await snapshot.getPromise(modalRepository);
 
       const newOrder: NewOrder = {
@@ -109,48 +116,55 @@ export const orderRepository = selector({
     const updateSelectedCoupon = getCallback(
       ({ set, snapshot }) =>
         async (coupon: Coupon) => {
-          const selectedCoupons = await snapshot.getPromise(selectedCouponState);
-          console.log(coupon);
-          console.log(selectedCoupons);
-          const newSelectedCoupons = selectedCoupons[0]?.id === coupon.id ? [] : [coupon];
+          const selectedCoupons = await snapshot.getPromise(
+            selectedCouponState
+          );
+          const newSelectedCoupons =
+            selectedCoupons[0]?.id === coupon.id ? [] : [coupon];
 
           set(selectedCouponState, newSelectedCoupons);
         }
     );
 
     const updateExpectedOrderPrice = getCallback(
-      ({ set, snapshot }) => async () => {
-        console.log('yeah');
-        const totalPrice = await snapshot.getPromise(totalPriceSelector);
-        const checkedCartList = await snapshot.getPromise(checkedCartSelector);
-        const selectedCouponIds = await snapshot.getPromise(selectedCouponIdSelector);
-        const discountByCoupon = await snapshot.getPromise(discountPriceByCouponSelector);
-        const selectedPoint = await snapshot.getPromise(selectedPointState);
+      ({ set, snapshot }) =>
+        async () => {
+          const totalPrice = await snapshot.getPromise(totalPriceSelector);
+          const checkedCartList = await snapshot.getPromise(
+            checkedCartSelector
+          );
+          const selectedCouponIds = await snapshot.getPromise(
+            selectedCouponIdSelector
+          );
+          const discountByCoupon = await snapshot.getPromise(
+            discountPriceByCouponSelector
+          );
+          const selectedPoint = await snapshot.getPromise(selectedPointState);
 
+          const expectedOrderPrice =
+            totalPrice - discountByCoupon - selectedPoint;
 
-        const expectedOrderPrice = totalPrice - discountByCoupon - selectedPoint;
-
-        const query = {
-          cartItems: checkedCartList.map((cart) => {
-            return {
-              cartItemId: cart.id,
-              productId: cart.product.id,
-              quantity: cart.quantity,
-            };
-          }),
-          couponIds: [selectedCouponIds[0]],
-          usePoint: selectedPoint,
-        };
-        console.log(query);
-        set(expectedOrderPriceState, expectedOrderPrice);
-      });
+          const query = {
+            cartItems: checkedCartList.map((cart) => {
+              return {
+                cartItemId: cart.id,
+                productId: cart.product.id,
+                quantity: cart.quantity,
+              };
+            }),
+            couponIds: [selectedCouponIds[0]],
+            usePoint: selectedPoint,
+          };
+          set(expectedOrderPriceState, expectedOrderPrice);
+        }
+    );
 
     return {
       loadCoupons,
       loadPoint,
       commitPurchaseItems,
       updateSelectedCoupon,
-      updateExpectedOrderPrice
+      updateExpectedOrderPrice,
     };
   },
 });

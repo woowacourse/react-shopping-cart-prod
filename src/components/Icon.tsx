@@ -1,6 +1,14 @@
-function Icon({ fontSize, children }: { fontSize: number, children: React.ReactNode }) {
+function Icon({
+  fontSize,
+  children,
+}: {
+  fontSize: number;
+  children: React.ReactNode;
+}) {
   return (
-    <div style={{ fontSize: fontSize, display: 'flex', justifyContent: "center" }}>
+    <div
+      style={{ fontSize: fontSize, display: "flex", justifyContent: "center" }}
+    >
       {children}
     </div>
   );

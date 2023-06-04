@@ -1,3 +1,3 @@
-import PointSelector from './PointSelector';
+import PointSelector from "./PointSelector";
 
 export default PointSelector;
