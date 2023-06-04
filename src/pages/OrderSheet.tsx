@@ -12,8 +12,9 @@ import { useCoupon } from "../hooks/useCoupon";
 
 export const OrderSheet = () => {
   const { coupons } = useCoupon();
+
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon>({
-    id: 0,
+    id: null,
     name: "",
     minOrderPrice: 0,
     maxDiscountPrice: 0,
@@ -33,10 +34,11 @@ export const OrderSheet = () => {
             <CouponSelectBox
               coupons={coupons}
               setSelectedCoupon={setSelectedCoupon}
-            ></CouponSelectBox>
+            />
             <TotalPriceWithCouponTable
+              couponId={selectedCoupon.id}
               discountPrice={selectedCoupon.discountPrice}
-            ></TotalPriceWithCouponTable>
+            />
           </CouponPriceWrapper>
         </ContentWrapper>
       </Page>
