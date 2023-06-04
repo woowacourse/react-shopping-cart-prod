@@ -5,8 +5,8 @@ import { keyframes, styled } from "styled-components";
 import { ServerId } from "recoil/server";
 import { cartListState } from "recoil/cart";
 import { getCartItems } from "api/cartItems";
-import { CartProduct } from "types/domain";
 import { couponListState } from "recoil/coupon";
+import { getCoupons } from "api/coupons";
 
 const ServerSelector = () => {
   const [serverState, setServerState] = useRecoilState(serverSelectState);
@@ -15,19 +15,32 @@ const ServerSelector = () => {
   };
 
   const setCartList = useSetRecoilState(cartListState);
-  const resetCartList = useResetRecoilState(couponListState);
+  const resetCartList = useResetRecoilState(cartListState);
+
+  const setCouponList = useSetRecoilState(couponListState);
+  const resetCouponList = useResetRecoilState(couponListState);
 
   useEffect(() => {
     resetCartList();
+    resetCouponList();
     getCartItems(serverState).then((res) => {
       setCartList(
         res.map((item) => {
-          const newItem: CartProduct = {
+          return {
             ...item,
             isChecked: true,
           };
+        })
+      );
+    });
 
-          return newItem;
+    getCoupons(serverState).then((res) => {
+      setCouponList(
+        res.map((coupon) => {
+          return {
+            ...coupon,
+            isSelected: false,
+          };
         })
       );
     });
