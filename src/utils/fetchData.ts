@@ -1,6 +1,6 @@
-export const fetchData = async (url: string) => {
+export const fetchData = async (url: string, options: RequestInit) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, options);
     const data = await extractPayload(response);
 
     return data;
