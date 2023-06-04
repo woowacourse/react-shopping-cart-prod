@@ -48,9 +48,6 @@ export const OrderedItem = ({ ...information }: OrderedItemProps) => {
               </S.OrderedItemKeyValueContainer>
             </S.OrderedItemInformationContainer>
           </S.ImageAndInformationContainer>
-          <S.AddItemToCartButton size="small" variant="secondary">
-            장바구니 담기
-          </S.AddItemToCartButton>
         </S.OrderedItemContainer>
       </S.OrderContainer>
     </S.Container>
