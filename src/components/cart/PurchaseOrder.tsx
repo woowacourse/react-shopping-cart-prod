@@ -64,7 +64,9 @@ const PurchaseOrder = () => {
           <p>{(totalPrice ? totalPrice + SHIPPING_FEE - couponDiscount : 0).toLocaleString()}원</p>
         </AmountBox>
       </TotalContainer>
-      <OrderButton onClick={requestOrder}>주문하기</OrderButton>
+      <OrderButton disabled={!cartList.some((item) => item.isChecked)} onClick={requestOrder}>
+        주문하기
+      </OrderButton>
     </Wrapper>
   );
 };
@@ -157,6 +159,11 @@ const OrderButton = styled.button`
   background: #333333;
 
   cursor: pointer;
+
+  &:disabled {
+    background: darkgray;
+    cursor: default;
+  }
 `;
 
 export default PurchaseOrder;
