@@ -9,7 +9,7 @@ export const getProductListSelector = selector<ProductItemType[]>({
   get: async ({ get }) => {
     const userInfo = get(userState);
     const serverName = get(serverState);
-    const productList = getProductListApi({ serverName, userInfo });
+    const productList = await getProductListApi({ serverName, userInfo });
 
     return productList;
   },

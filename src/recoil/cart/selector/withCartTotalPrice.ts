@@ -2,8 +2,8 @@ import { selector } from 'recoil';
 import { calculateSelectCartTotalPrice } from '@utils/cart/cart';
 import cartState from '../cartState';
 
-const cartTotalPriceState = selector({
-  key: 'cartTotalPriceState',
+const withCartTotalPrice = selector({
+  key: 'withCartTotalPrice',
   get: ({ get }) => {
     const cart = get(cartState);
 
@@ -11,4 +11,4 @@ const cartTotalPriceState = selector({
   },
 });
 
-export default cartTotalPriceState;
+export default withCartTotalPrice;
