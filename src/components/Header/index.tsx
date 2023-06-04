@@ -1,25 +1,20 @@
 import styled from 'styled-components';
-import { ROUTE_PATH } from '../../constants/';
-import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
-import Cart from '../Cart';
-import CartIcon from '../icons/CartIcon';
-import Order from '../Order';
-import ServerSelector from '../ServerSelector';
+import CartNavigator from './CartNavigator';
+import MainNavigator from './MainNavigator';
+import OrderNavigator from './OrderNavigator';
+import ServerSelector from './ServerSelector';
 
 const Header = () => {
-  const goToPage = useGoToAnotherPage();
-
   return (
     <StyledHeader>
-      <Wrapper>
-        <StyledButton onClick={() => goToPage(ROUTE_PATH.MAIN_PAGE)}>
-          <CartIcon aria-label="logo-cart-icon" />
-          <Title>STORE</Title>
-        </StyledButton>
-        <ServerSelector />
-        <Cart />
-        <Order />
-      </Wrapper>
+      <Navigator>
+        <NavList>
+          <MainNavigator />
+          <ServerSelector />
+          <CartNavigator />
+          <OrderNavigator />
+        </NavList>
+      </Navigator>
     </StyledHeader>
   );
 };
@@ -62,7 +57,9 @@ const StyledHeader = styled.header`
   }
 `;
 
-const Wrapper = styled.div`
+const Navigator = styled.nav``;
+
+const NavList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -70,17 +67,5 @@ const Wrapper = styled.div`
   margin: 0 auto;
   padding: 0 20px;
 `;
-
-const StyledButton = styled.button`
-  color: #fff;
-  background: none;
-  cursor: pointer;
-
-  @media (max-width: 480px) {
-    display: flex;
-  }
-`;
-
-const Title = styled.span``;
 
 export default Header;
