@@ -5,10 +5,10 @@ import { useOrderDetailValue } from '../../recoils/recoilOrderDetail';
 import { UserOrdersType } from '../../types';
 
 import { Layout } from '../common/Layout';
-import { OrderedProductList } from '../OrderedProductList';
-import { OrderedProductTotalPrice } from '../OrderedProductTotalPrice';
+import { OrderedProductList } from '../order/OrderedProductList';
+import { OrderedProductTotalPrice } from '../order/OrderedProductTotalPrice';
 
-export const OrderDetail = () => {
+const OrderDetail = () => {
   const baseUrl = useApiBaseUrlValue();
   const orderNumber = useOrderDetailValue();
 
@@ -23,10 +23,13 @@ export const OrderDetail = () => {
       <Style.OrderDetailWrapper>
         <Style.PageTitle>주문 내역 상세</Style.PageTitle>
         <Style.Main>
-          <OrderedProductList order={data} isDetail={true}/>
+          <OrderedProductList order={data} isDetail={true} />
         </Style.Main>
         <Style.Price>
-          <OrderedProductTotalPrice totalPrice={data.totalProductsPrice} usedPoint={data.usedPoint}/>
+          <OrderedProductTotalPrice
+            totalPrice={data.totalProductsPrice}
+            usedPoint={data.usedPoint}
+          />
         </Style.Price>
       </Style.OrderDetailWrapper>
     </Layout>
@@ -84,3 +87,5 @@ const Style = {
     }
   `,
 };
+
+export default OrderDetail;

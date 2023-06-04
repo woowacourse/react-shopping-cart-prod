@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { Layout } from './common/Layout';
+import { Layout } from '../common/Layout';
 
 const Loader = () => {
   return (

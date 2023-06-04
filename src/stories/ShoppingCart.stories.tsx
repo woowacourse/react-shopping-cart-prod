@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { customViewPorts } from '../../.storybook/preview';
 
-import { ShoppingCart } from '../components/pages/ShoppingCart';
+import ShoppingCart from '../components/pages/ShoppingCart';
 
 const meta = {
   title: 'ShoppingCart/ShoppingCart',

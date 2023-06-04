@@ -5,7 +5,7 @@ import GlobalStyle from '../GlobalStyle';
 
 import { RecoilRoot } from 'recoil';
 
-import { CartItemList } from '../components/CartItemList';
+import { CartItemList } from '../components/cart/CartItemList';
 import { LOCAL_STORAGE_KEY } from '../constants';
 
 const meta = {

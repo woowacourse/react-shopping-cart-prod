@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 import { styled } from 'styled-components';
 
-import { CartSize } from './CartSize';
+import { CartSize } from '../cart/CartSize';
 
-import { CartLogo } from '../assets/svg';
-import { useApiBaseUrlState } from '../recoils/recoilApiBaseUrl';
-import { PATH } from '../constants';
+import { CartLogo } from '../../assets/svg';
+import { useApiBaseUrlState } from '../../recoils/recoilApiBaseUrl';
+import { PATH } from '../../constants';
 
 export const Header = () => {
   const [apiUrlkey, setApiUrlKey] = useApiBaseUrlState();

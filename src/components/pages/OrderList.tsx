@@ -6,9 +6,9 @@ import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
 import { UserOrdersType } from '../../types';
 
 import { Layout } from '../common/Layout';
-import { OrderedProductList } from '../OrderedProductList';
+import { OrderedProductList } from '../order/OrderedProductList';
 
-export const OrderList = () => {
+const OrderList = () => {
   const baseUrl = useApiBaseUrlValue();
   const { data } = useQuery<UserOrdersType[]>(baseUrl + '/orders', {
     Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
@@ -22,7 +22,9 @@ export const OrderList = () => {
         <Style.PageTitle>주문 목록</Style.PageTitle>
         <Style.Main>
           {data.length !== 0 ? (
-            data.map((order) => <OrderedProductList key={order.orderId} order={order} isDetail={false}/>)
+            data.map((order) => (
+              <OrderedProductList key={order.orderId} order={order} isDetail={false} />
+            ))
           ) : (
             <Style.NoExistItemsMessage>
               <p>장바구니에 등록된 상품이 존재하지 않아요🥲</p>
@@ -97,3 +99,5 @@ const Style = {
     }
   `,
 };
+
+export default OrderList;

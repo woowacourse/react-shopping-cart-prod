@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { PATH } from '../constants';
-import { useSetOrderDetail } from '../recoils/recoilOrderDetail';
-import { UserOrdersType } from '../types';
+import { PATH } from '../../constants';
+import { useSetOrderDetail } from '../../recoils/recoilOrderDetail';
+import { UserOrdersType } from '../../types';
 import { OrderedProduct } from './OrderedProduct';
 
 interface OrderedProductProps {

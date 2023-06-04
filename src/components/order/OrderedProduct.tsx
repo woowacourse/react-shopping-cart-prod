@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { OrderDetailsType } from '../types';
+import { OrderDetailsType } from '../../types';
 
 interface OrderedProductProps {
   orderDetail: OrderDetailsType;

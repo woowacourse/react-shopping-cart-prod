@@ -1,16 +1,16 @@
 import { styled } from 'styled-components';
 
-import { useUpdateCart } from '../hooks/useUpdateCart';
-import { useCartStateValue } from '../recoils/recoilCart';
-import { useCheckedState } from '../recoils/recoilChecked';
+import { useUpdateCart } from '../../hooks/useUpdateCart';
+import { useCartStateValue } from '../../recoils/recoilCart';
+import { useCheckedState } from '../../recoils/recoilChecked';
 
-import { Button } from './common/Button';
-import { Checkbox } from './styled';
+import { Button } from '../common/Button';
+import { Checkbox } from '../styled';
 
-import { GarbageIcon } from '../assets/svg';
-import { Stepper } from './Stepper';
+import { GarbageIcon } from '../../assets/svg';
+import { Stepper } from '../Stepper';
 
-import { CartItemType } from '../types';
+import { CartItemType } from '../../types';
 
 export const CartItemList = () => {
   const cart = useCartStateValue();

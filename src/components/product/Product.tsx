@@ -1,15 +1,15 @@
 import { styled } from 'styled-components';
-import { CartIcon } from '../assets/svg';
+import { CartIcon } from '../../assets/svg';
 
-import { useCartItemValue, useSetCartState } from '../recoils/recoilCart';
+import { useCartItemValue, useSetCartState } from '../../recoils/recoilCart';
 
-import { Stepper } from './Stepper';
-import { ProductType } from '../types';
-import { useMutation } from '../hooks/useMutation';
-import { FETCH_METHOD, FETCH_URL } from '../constants';
-import { useApiBaseUrlValue } from '../recoils/recoilApiBaseUrl';
+import { Stepper } from '../Stepper';
+import { ProductType } from '../../types';
+import { useMutation } from '../../hooks/useMutation';
+import { FETCH_METHOD, FETCH_URL } from '../../constants';
+import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
 import { useEffect } from 'react';
-import { useSetCheckedState } from '../recoils/recoilChecked';
+import { useSetCheckedState } from '../../recoils/recoilChecked';
 
 interface Props {
   item: ProductType;

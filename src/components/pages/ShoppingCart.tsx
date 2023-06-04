@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 
 import { Cart } from '../cart/Cart';
 import { Layout } from '../common/Layout';
-import SmallLoader from '../SmallLoader';
+import SmallLoader from '../Loader/SmallLoader';
 
 const OrderSummary = lazy(() => import('../order/OrderSummary'));
 

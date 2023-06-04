@@ -1,20 +1,20 @@
 import { styled } from 'styled-components';
 
-import { useTotalProductPrice } from '../recoils/recoilTotalPrice';
+import { useTotalProductPrice } from '../../recoils/recoilTotalPrice';
 
-import { Button } from './common/Button';
+import { Button } from '../common/Button';
 
-import { DELIVERY_CHARGE, FETCH_METHOD } from '../constants';
+import { DELIVERY_CHARGE, FETCH_METHOD } from '../../constants';
 import { useNavigate } from 'react-router-dom';
-import { useCartStateValue, useSetCartState } from '../recoils/recoilCart';
-import { useApiBaseUrlValue } from '../recoils/recoilApiBaseUrl';
-import { useMutation } from '../hooks/useMutation';
-import { useSetCheckedState } from '../recoils/recoilChecked';
-import { useQuery } from '../hooks/useQuery';
-import { Point } from '../types';
+import { useCartStateValue, useSetCartState } from '../../recoils/recoilCart';
+import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
+import { useMutation } from '../../hooks/useMutation';
+import { useSetCheckedState } from '../../recoils/recoilChecked';
+import { useQuery } from '../../hooks/useQuery';
+import { Point } from '../../types';
 import { useState } from 'react';
 
-export const OrderSummary = () => {
+const OrderSummary = () => {
   const cart = useCartStateValue();
   const [usePoint, setUsePoint] = useState<number>(0);
 
@@ -58,6 +58,8 @@ export const OrderSummary = () => {
     setUsePoint(Number(e.target.value));
   };
 
+  if(!point) return <></>;
+
   return (
     <>
       <>
@@ -86,9 +88,8 @@ export const OrderSummary = () => {
                     onChange={pointChange}
                   ></Style.PointInput>
                   <span>
-                    {point?.usablePoint && point?.usablePoint >= usePoint
-                      ? ''
-                      : '포인트가 부족합니다.'}
+                    {(point?.usablePoint >= usePoint)
+                      ? "" : '포인트가 부족합니다.'}
                   </span>
                 </Style.PointWrapper>
               </Style.Price>
@@ -100,7 +101,7 @@ export const OrderSummary = () => {
             <Button
               designType="rectangle"
               onClick={orderOnClick}
-              disabled={point?.usablePoint && point?.usablePoint >= usePoint ? false : true}
+              disabled={Boolean(point?.usablePoint && point?.usablePoint < usePoint)}
             >
               주문하기
             </Button>
@@ -139,20 +140,19 @@ export const OrderSummary = () => {
             <Mobile.Price>
               <Mobile.PointWrapper>
                 <div>
-                  {point?.usablePoint && point?.usablePoint >= usePoint
-                    ? ''
-                    : '포인트 초과.'}
+                {(point?.usablePoint >= usePoint)
+                      ? "" : '포인트 초괴'}
                 </div>
               </Mobile.PointWrapper>
             </Mobile.Price>
           </Mobile.Prices>
           <Button
-              designType="rectangle-mobile"
-              onClick={orderOnClick}
-              disabled={point?.usablePoint && point?.usablePoint >= usePoint ? false : true}
-            >
-              주문하기
-            </Button>
+            designType="rectangle-mobile"
+            onClick={orderOnClick}
+            disabled={Boolean(point?.usablePoint && point?.usablePoint < usePoint)}
+          >
+            주문하기
+          </Button>
         </Mobile.OrderSummary>
       </>
     </>
@@ -337,3 +337,5 @@ const Mobile = {
     }
   `,
 };
+
+export default OrderSummary;
