@@ -32,7 +32,7 @@ export const getCartProducts = async (): Promise<CartProducts> => {
   return cartProductsParser(cartProducts);
 };
 
-export const addCartProducts = async (productId: Product['id']): Promise<number> => {
+export const postCartProducts = async (productId: Product['id']): Promise<number> => {
   const fetchedData = await api.post(URL, { productId });
 
   const location = fetchedData.headers.get('Location');

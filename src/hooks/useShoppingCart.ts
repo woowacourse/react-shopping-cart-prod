@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { cartProductIdStoreState } from 'state/cartProductIdStore';
 import { cartProductsState } from 'state/cartProducts';
-import { addCartProducts, updateCartProductsQuantity, removeCartProduct } from 'apis/cart';
+import { postCartProducts, updateCartProductsQuantity, removeCartProduct } from 'apis/cart';
 import type { CheckedCartProducts, Product } from 'types/product';
 import { checkedCartProductIdsState } from 'state/checkedCartProductIds';
 
@@ -12,7 +12,7 @@ const useShoppingCart = () => {
 
   const initialAddCart = async (product: Product) => {
     try {
-      const cartProductId = await addCartProducts(product.id);
+      const cartProductId = await postCartProducts(product.id);
 
       setCheckedCartProductIds((prev) => new Set(prev.add(cartProductId)));
       setCartProducts((prev) => {
