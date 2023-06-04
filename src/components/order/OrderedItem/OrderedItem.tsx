@@ -2,19 +2,22 @@ import { generatePath, useNavigate } from 'react-router-dom';
 
 import { PATH } from '../../../constants/path';
 import { OrderData } from '../../../types';
-import { priceFormatter } from '../../../utils/formatter';
+import { HHMMFormatter, YYYYMMDDFormatter, priceFormatter } from '../../../utils/formatter';
 import * as S from './OrderedItem.styles';
 
 type OrderedItemProps = OrderData;
 
 export const OrderedItem = ({ ...information }: OrderedItemProps) => {
-  const { id, orderedItems } = information;
+  const { id, orderedItems, orderedAt, totalPrice } = information;
   const navigate = useNavigate();
+  const orderedItem = orderedItems[0];
 
   return (
     <S.Container>
       <S.OrderIdWrapper>
-        <S.OrderId>주문번호 {id}</S.OrderId>
+        <S.OrderId>
+          {YYYYMMDDFormatter(orderedAt)} ({HHMMFormatter(orderedAt)})
+        </S.OrderId>
         <S.ShowDetail
           onClick={() => navigate(generatePath(PATH.ORDERS_OrderId, { orderId: String(id) }))}
         >
@@ -22,27 +25,33 @@ export const OrderedItem = ({ ...information }: OrderedItemProps) => {
         </S.ShowDetail>
       </S.OrderIdWrapper>
       <S.OrderContainer>
-        {orderedItems.map((orderedItem) => (
-          <S.OrderedItemContainer>
-            <S.ImageAndInformationContainer>
-              <S.OrderedItemImageWrapper>
-                <S.OrderedItemImage src={orderedItem.imageUrl} />
-              </S.OrderedItemImageWrapper>
-              <S.OrderedItemInformationContainer>
-                <S.OrderedItemName>{orderedItem.name}</S.OrderedItemName>
-                <S.PriceAndQuantityContainer>
-                  <S.OrderedItemPrice>
-                    {priceFormatter(orderedItem.discountedPrice)}
-                  </S.OrderedItemPrice>
-                  <S.OrderedItemQuantity>{orderedItem.quantity}개 구매</S.OrderedItemQuantity>
-                </S.PriceAndQuantityContainer>
-              </S.OrderedItemInformationContainer>
-            </S.ImageAndInformationContainer>
-            <S.AddItemToCartButton size="small" variant="secondary">
-              장바구니 담기
-            </S.AddItemToCartButton>
-          </S.OrderedItemContainer>
-        ))}
+        <S.OrderedItemContainer>
+          <S.ImageAndInformationContainer>
+            <S.OrderedItemImageWrapper>
+              <S.OrderedItemImage src={orderedItem.imageUrl} />
+            </S.OrderedItemImageWrapper>
+            <S.OrderedItemInformationContainer>
+              <S.OrderedItemKeyValueContainer>
+                <S.OrderedItemKeyText>상품명</S.OrderedItemKeyText>
+                <S.OrderedItemName>
+                  {orderedItem.name}
+                  {orderedItems.length > 1 && ` 외 ${orderedItems.length}건`}
+                </S.OrderedItemName>
+              </S.OrderedItemKeyValueContainer>
+              <S.OrderedItemKeyValueContainer>
+                <S.OrderedItemKeyText>주문번호</S.OrderedItemKeyText>
+                <S.OrderedItemName>{id}</S.OrderedItemName>
+              </S.OrderedItemKeyValueContainer>
+              <S.OrderedItemKeyValueContainer>
+                <S.OrderedItemKeyText>결제금액</S.OrderedItemKeyText>
+                <S.OrderedItemName>{priceFormatter(totalPrice)}</S.OrderedItemName>
+              </S.OrderedItemKeyValueContainer>
+            </S.OrderedItemInformationContainer>
+          </S.ImageAndInformationContainer>
+          <S.AddItemToCartButton size="small" variant="secondary">
+            장바구니 담기
+          </S.AddItemToCartButton>
+        </S.OrderedItemContainer>
       </S.OrderContainer>
     </S.Container>
   );
