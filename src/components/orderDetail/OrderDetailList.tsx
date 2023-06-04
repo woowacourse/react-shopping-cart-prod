@@ -27,6 +27,7 @@ const OrderDetailList = () => {
       <S.Wrapper>
         <S.OrderInfoWrapper>
           <S.OrderNumber>주문번호: {orderDetailList?.orderId}</S.OrderNumber>
+          <S.OrderDate>{orderDetailList?.createdAt.split(' ')[0]} 주문</S.OrderDate>
         </S.OrderInfoWrapper>
         {orderDetailList?.orderProducts.map((item) => (
           <OrderDetailItem key={item.productId} item={item} />
@@ -64,6 +65,10 @@ const S = {
     @media all and (max-width: 479px) {
       display: none;
     }
+  `,
+
+  OrderDate: styled.h4`
+    font-weight: bold;
   `,
 };
 
