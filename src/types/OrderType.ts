@@ -2,6 +2,7 @@ export interface OrderType {
   id: number;
   totalItemsPrice: number;
   discountPrice: number;
+  deliveryFee: number;
   orderItems: OrderItemType[];
 }
 

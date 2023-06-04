@@ -5,7 +5,7 @@ import { styled } from 'styled-components';
 function OrderDetail({ orderId }: { orderId: number }) {
   const order = useOrderItem(orderId);
 
-  const { discountPrice, totalItemsPrice } = order;
+  const { discountPrice, totalItemsPrice, deliveryFee } = order;
 
   return (
     <>
@@ -13,8 +13,12 @@ function OrderDetail({ orderId }: { orderId: number }) {
       <OrderWrapper>
         <CouponText info={discountPrice > 0}>할인 금액</CouponText>
         <CouponText info={discountPrice > 0}>{Number(discountPrice)}</CouponText>
+        <CouponText>배송비</CouponText>
+        <CouponText>{Number(deliveryFee)}</CouponText>
         <ContentText>최종 결제 금액</ContentText>
-        <ContentText>{Number(totalItemsPrice) - Number(discountPrice)}</ContentText>
+        <ContentText>
+          {Number(totalItemsPrice) - Number(discountPrice) + Number(deliveryFee)}
+        </ContentText>
       </OrderWrapper>
     </>
   );
