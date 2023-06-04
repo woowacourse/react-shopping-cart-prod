@@ -4,6 +4,7 @@ import { addToCart, deleteCartItem, updateCartItem } from '../../apis/cart';
 import { cartState, selectedItemsSelector } from '../../atoms/cart';
 import { DELETE_CART_ITEMS } from '../../constants/cart';
 import { CartItem } from '../../types/cart';
+import { getParsedLocation } from '../../utils/getParsedLocation';
 import { waitForMutation } from '../../utils/waitFor';
 import {
   useRefreshableRecoilState,
@@ -53,7 +54,7 @@ export const useMutateCart = () => {
     quantity: number;
   }) => {
     const { headers } = await addItemToCartMutation({ productId: id });
-    const cartId = +headers.get('Location')!.replace('/cart-items/', '');
+    const cartId = getParsedLocation(headers);
 
     await updateCartItemMutation({ cartId, quantity });
   };
