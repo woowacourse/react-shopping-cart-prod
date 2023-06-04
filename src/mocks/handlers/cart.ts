@@ -22,13 +22,14 @@ const authorizationError: ErrorResponse = {
 
 const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
 const BASE_URL_BY_OWNER = BASE_URL[serverOwner];
+const URL = '/cart-items';
 
 export const cart = [
-  rest.get(`${BASE_URL_BY_OWNER}/cart-items`, (req, res, ctx) => {
+  rest.get(`${BASE_URL_BY_OWNER}${URL}`, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(cartProducts), ctx.delay(100));
   }),
 
-  rest.post<PostReqBody>(`${BASE_URL_BY_OWNER}/cart-items`, async (req, res, ctx) => {
+  rest.post<PostReqBody>(`${BASE_URL_BY_OWNER}${URL}`, async (req, res, ctx) => {
     const { productId } = await req.json<PostReqBody>();
     const authorization = req.headers.get('Authorization');
 
@@ -39,7 +40,7 @@ export const cart = [
     return res(ctx.status(201), ctx.set('Location', `/cart-items/${productId + 1000}`), ctx.json({}), ctx.delay(100));
   }),
 
-  rest.patch<PatchReqBody>(`${BASE_URL_BY_OWNER}/cart-items/:cartItemId`, async (req, res, ctx) => {
+  rest.patch<PatchReqBody>(`${BASE_URL_BY_OWNER}${URL}/:cartItemId`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (authorization !== `Basic ${getBasicKey(USER_1.id, USER_1.password)}`) {
@@ -49,7 +50,7 @@ export const cart = [
     return res(ctx.status(200), ctx.json({}), ctx.delay(100));
   }),
 
-  rest.delete(`${BASE_URL_BY_OWNER}/cart-items/:cartItemId`, async (req, res, ctx) => {
+  rest.delete(`${BASE_URL_BY_OWNER}${URL}`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (authorization !== `Basic ${getBasicKey(USER_1.id, USER_1.password)}`) {

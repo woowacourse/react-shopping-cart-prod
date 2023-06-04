@@ -11,12 +11,14 @@ import { ErrorResponse } from 'apis';
 
 const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
 const BASE_URL_BY_OWNER = BASE_URL[serverOwner];
+const URL = '/orders';
+
 const authorizationError: ErrorResponse = {
   message: '인증 실패',
 };
 
 export const orders = [
-  rest.get(`${BASE_URL_BY_OWNER}/orders`, (req, res, ctx) => {
+  rest.get(`${BASE_URL_BY_OWNER}${URL}`, (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (authorization !== `Basic ${getBasicKey(USER_1.id, USER_1.password)}`) {
@@ -26,7 +28,17 @@ export const orders = [
     return res(ctx.status(200), ctx.json(orderList));
   }),
 
-  rest.get(`${BASE_URL_BY_OWNER}/orders/1`, (req, res, ctx) => {
+  rest.get(`${BASE_URL_BY_OWNER}${URL}/:orderId`, (req, res, ctx) => {
+    const authorization = req.headers.get('Authorization');
+
+    if (authorization !== `Basic ${getBasicKey(USER_1.id, USER_1.password)}`) {
+      return res(ctx.status(401), ctx.json(authorizationError));
+    }
+
+    return res(ctx.status(200), ctx.json(order));
+  }),
+
+  rest.post(`${BASE_URL_BY_OWNER}${URL}`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (authorization !== `Basic ${getBasicKey(USER_1.id, USER_1.password)}`) {

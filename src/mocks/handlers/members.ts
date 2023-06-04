@@ -10,13 +10,14 @@ import { ErrorResponse } from 'apis';
 
 const serverOwner = store.getStorage<ServerOwner>(SERVER_OWNER) ?? '헙크';
 const BASE_URL_BY_OWNER = BASE_URL[serverOwner];
+const URL = '/members';
 
 const authorizationError: ErrorResponse = {
   message: '인증 실패',
 };
 
 export const members = [
-  rest.get(`${BASE_URL_BY_OWNER}/members/point`, (req, res, ctx) => {
+  rest.get(`${BASE_URL_BY_OWNER}${URL}/point`, (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (authorization !== `Basic ${getBasicKey(USER_1.id, USER_1.password)}`) {
