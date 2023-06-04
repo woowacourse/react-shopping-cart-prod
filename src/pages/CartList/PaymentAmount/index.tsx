@@ -1,94 +1,21 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-
 import Button from '@Components/Button';
 
-import { CartItemType, MemberCouponType, OrderItemType } from '@Types/index';
-
-import { fetchData } from '@Utils/api';
-
-import cartItemsState from '@Atoms/cartItemsState';
-import memberCouponState from '@Atoms/memberCouponState';
-import orderListState from '@Atoms/orderListState';
-import serverState from '@Atoms/serverState';
-import usingCouponState from '@Atoms/usingCouponState';
-
-import cartItemsAmountState from '@Selector/cartItemsAmountState';
-import orderAmountState from '@Selector/orderAmountState';
-
-import { DELIVERY_FEE } from '@Constants/index';
-import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
+import useOrderProducts from '@Hooks/useOrderProducts';
 
 import * as S from './style';
 
 function PaymentAmount() {
-  const [cartItems, setCartItems] = useRecoilState(cartItemsState);
-  const setMemberCoupon = useSetRecoilState(memberCouponState);
-  const setOrderList = useSetRecoilState(orderListState);
-  const price = useRecoilValue(orderAmountState);
-  const cartAmount = useRecoilValue(cartItemsAmountState);
-  const usingCoupon = useRecoilValue(usingCouponState);
-
-  const priceDisCount = price >= 100000 ? 5000 : 0;
-  const allPrice = price - priceDisCount;
-  const deliveryFee = !allPrice ? 0 : DELIVERY_FEE;
-  const selectedCartItemIds = cartItems.filter((item) => item.isSelected).map((item) => item.id);
-
-  const priceText = `${price.toLocaleString()} 원`;
-  const priceDiscountText = `${priceDisCount.toLocaleString()} 원`;
-  const couponDiscointText = `${usingCoupon.discountAmount.toLocaleString()} 원`;
-  const deliveryFeeText = `${deliveryFee.toLocaleString()} 원`;
-  const totalOrderPriceText = `${Math.max(allPrice - usingCoupon.discountAmount + deliveryFee, 0).toLocaleString()} 원`;
-
-  const navigate = useNavigate();
-
-  const server = useRecoilValue(serverState);
-  const resetUsingCoupon = useResetRecoilState(usingCouponState);
-  useEffect(() => {
-    resetUsingCoupon();
-  }, [server]);
-
-  const orderProducts = async () => {
-    if (selectedCartItemIds.length === 0) return alert('상품을 1개 이상 선택해주세요.');
-
-    const body = JSON.stringify({
-      cartItemIds: selectedCartItemIds,
-      couponId: usingCoupon.id,
-      price: Math.max(allPrice - usingCoupon.discountAmount + deliveryFee, 0),
-    });
-    await fetchData({ url: FETCH_URL.orderList, method: FETCH_METHOD.POST, body, server });
-
-    const memberCoupons = await fetchData<MemberCouponType[]>({
-      url: FETCH_URL.memberCoupon,
-      method: FETCH_METHOD.GET,
-      server,
-    });
-    setMemberCoupon(memberCoupons);
-
-    const fetchCartItems = await fetchData<CartItemType[]>({
-      url: FETCH_URL.cartItems,
-      method: FETCH_METHOD.GET,
-      server,
-    });
-
-    const fetchOrderList = await fetchData<OrderItemType[]>({
-      url: FETCH_URL.orderList,
-      method: FETCH_METHOD.GET,
-      server,
-    });
-    setOrderList(fetchOrderList);
-
-    navigate('/order-list');
-
-    const newCartItems = fetchCartItems.map((cartItem) => {
-      return {
-        ...cartItem,
-        isSelected: false,
-      };
-    });
-    setCartItems(newCartItems);
-  };
+  const {
+    cartAmount,
+    priceText,
+    priceDisCount,
+    priceDiscountText,
+    usingCoupon,
+    couponDiscointText,
+    deliveryFeeText,
+    totalOrderPriceText,
+    orderProducts,
+  } = useOrderProducts();
 
   if (cartAmount === '0') return <></>;
 

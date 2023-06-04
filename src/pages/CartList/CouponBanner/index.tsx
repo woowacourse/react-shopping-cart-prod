@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import Modal from '@Components/Modal';
 import Slider from '@Components/Slider';
