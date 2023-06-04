@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 import ProductListItem from '../components/ProductListItem';
+import Spinner from '../components/common/Spinner';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import ResponseErrorBoundary from '../components/utils/ResponseErrorBoundary';
 import userCartItemsRepository from '../recoil/user/userCartItemsRepository';
@@ -25,9 +26,32 @@ const ProductList = styled.ul`
   }
 `;
 
+const SpinnerPlaceholder = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+
+  padding: 96px 0;
+  font-size: 36px;
+`;
+
+const SpinnerDescription = styled.h1`
+  font-size: 24px;
+`;
+
 const ProductListPage = () => {
   return (
-    <AwaitRecoilState state={userProductsState}>
+    <AwaitRecoilState
+      state={userProductsState}
+      loadingElement={
+        <SpinnerPlaceholder>
+          <SpinnerDescription>제품 목록을 가져오는 중 ...</SpinnerDescription>
+          <Spinner />
+        </SpinnerPlaceholder>
+      }
+    >
       {(products) => (
         <ResponseErrorBoundary
           catches={(response) => response.accept(401)}
@@ -39,7 +63,15 @@ const ProductListPage = () => {
             </ProductList>
           }
         >
-          <AwaitRecoilState state={userCartItemsRepository}>
+          <AwaitRecoilState
+            state={userCartItemsRepository}
+            loadingElement={
+              <SpinnerPlaceholder>
+                <SpinnerDescription>장바구니 정보를 가져오는 중 ...</SpinnerDescription>
+                <Spinner />
+              </SpinnerPlaceholder>
+            }
+          >
             {({ getCartItemByProductId, setQuantity }) => (
               <ProductList>
                 {products.map((product) => (
