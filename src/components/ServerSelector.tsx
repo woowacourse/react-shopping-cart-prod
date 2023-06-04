@@ -12,27 +12,30 @@ import { ROUTER_PATH } from "router";
 const ServerSelector = () => {
   const navigate = useNavigate();
   const [serverState, setServerState] = useRecoilState(serverSelectState);
+  const setCartList = useSetRecoilState(cartListState);
 
   const chagneServer = (e: ChangeEvent<HTMLInputElement>) => {
     setServerState(e.target.id as ServerId);
     navigate(ROUTER_PATH.Main);
   };
 
-  const setCartList = useSetRecoilState(cartListState);
+  const reloadCartList = async () => {
+    const cartItems = await getCartItems(serverState);
+
+    setCartList(
+      cartItems.map((item) => {
+        const newItem: CartProduct = {
+          ...item,
+          isChecked: true,
+        };
+
+        return newItem;
+      })
+    );
+  };
 
   useEffect(() => {
-    getCartItems(serverState).then((res) => {
-      setCartList(
-        res.map((item) => {
-          const newItem: CartProduct = {
-            ...item,
-            isChecked: true,
-          };
-
-          return newItem;
-        })
-      );
-    });
+    reloadCartList();
   }, [serverState]);
 
   const serverList: { [key in ServerId]: string } = {
