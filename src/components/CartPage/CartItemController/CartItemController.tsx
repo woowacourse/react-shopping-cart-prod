@@ -1,4 +1,4 @@
-import { cartSelector, selectedItemsAmountSelector } from '../../../atoms/cart';
+import { cartSelector, selectedCartItemIdsSelector } from '../../../atoms/cart';
 import { useCartSelector, useMutateCart } from '../../../hooks/cart/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
 import Button from '../../common/Button/Button';
@@ -11,8 +11,8 @@ const CartItemController = () => {
   const { deleteSelectedCartItems } = useMutateCart();
   const cartItemsAmount = useRefreshableRecoilValue(cartSelector).length;
   const selectedItemsAmount = useRefreshableRecoilValue(
-    selectedItemsAmountSelector
-  );
+    selectedCartItemIdsSelector
+  ).size;
 
   return (
     <S.Root>

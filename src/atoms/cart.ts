@@ -13,6 +13,7 @@ export const cartSelector = selector({
   },
 });
 
+// TODO: 아래 두 selector, atom 중복됨
 export const selectedCartItemIdsState = atom({
   key: 'selectedCartItemIdsState',
   default: selector({
@@ -45,11 +46,6 @@ export const selectedCartItemIdsSelector = selector({
   set: ({ set }, newValue) => {
     set(selectedCartItemIdsState, newValue);
   },
-});
-
-export const selectedItemsAmountSelector = selector({
-  key: 'selectedItemsAmountSelector',
-  get: ({ get }) => get(selectedCartItemIdsSelector).size,
 });
 
 export const isSelectedCartId = selectorFamily({

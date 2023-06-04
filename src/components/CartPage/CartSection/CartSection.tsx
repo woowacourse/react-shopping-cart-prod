@@ -1,4 +1,4 @@
-import { selectedItemsAmountSelector } from '../../../atoms/cart';
+import { selectedCartItemIdsSelector } from '../../../atoms/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
 import CartItemController from '../CartItemController/CartItemController';
 import CartItemList from '../CartItemList/CartItemList';
@@ -7,8 +7,8 @@ import * as S from './CartSection.styles';
 
 const CartSection = () => {
   const selectedItemsAmount = useRefreshableRecoilValue(
-    selectedItemsAmountSelector
-  );
+    selectedCartItemIdsSelector
+  ).size;
 
   return (
     <S.Root>
