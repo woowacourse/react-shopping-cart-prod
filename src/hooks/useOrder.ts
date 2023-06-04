@@ -25,7 +25,10 @@ const useOrder = () => {
 
   const sendOrder = async (orderPayload: OrderPayload) => {
     try {
-      const response = await postOrder(ORDERS_BASE_URL, orderPayload);
+      const response = await postOrder(
+        `${serverOrigin}${ORDERS_BASE_URL}`,
+        orderPayload,
+      );
       const orderId = getOrderIdFromHeaders(Array.from(response.headers));
 
       updateOrders();
