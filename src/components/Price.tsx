@@ -11,29 +11,27 @@ const Price = ({ price, tag, description, css }: Props) => {
   const priceTag = tag || 'p';
 
   return (
-    <S.Price as={priceTag} css={css}>
+    <Wrapper as={priceTag} css={css}>
       {description}
       <span>{price.toLocaleString()}원</span>
-    </S.Price>
+    </Wrapper>
   );
 };
 
-const S = {
-  Price: styled.p<{ css?: CSSProp }>`
-    font-size: 17px;
-    letter-spacing: 0.5px;
-    color: var(--text-color);
+const Wrapper = styled.p<{ css?: CSSProp }>`
+  font-size: 17px;
+  letter-spacing: 0.5px;
+  color: var(--text-color);
 
-    ${(props) => props.css}
+  ${(props) => props.css}
 
-    @media (max-width: 1270px) {
-      font-size: 16px;
-    }
+  @media (max-width: 1270px) {
+    font-size: 16px;
+  }
 
-    @media (max-width: 768px) {
-      font-size: 15px;
-    }
-  `,
-};
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+`;
 
 export default Price;
