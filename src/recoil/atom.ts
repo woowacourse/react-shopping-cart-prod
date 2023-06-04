@@ -3,9 +3,9 @@ import {
   LocalProductType,
   ProductType,
   ToastType,
-  UserType,
+  MemberType,
 } from "../types/domain";
-import { getProductsApi } from "../api";
+import { getProductsApi, getMemberApi } from "../api";
 import { makeLocalProducts, makeProducts } from "../utils/domain";
 import { getLocalStorage } from "../utils";
 import {
@@ -56,14 +56,15 @@ export const loginState = atom<boolean>({
     true,
 });
 
-export const userState = atom<UserType>({
+export const userState = atom<MemberType>({
   key: "userState",
   default: { id: 1, nickname: "라잇" },
-  // default: selector<UserType>({
+  // default: selector<MemberType>({
   //   key: "userState/default",
   //   get: async () => {
-  //     const response = await getUserApi();
+  //     const response = await getMemberApi();
   //     if (!response.ok) throw new Error(response.status.toString());
+  //     console.log(response.json());
   //     return await response.json();
   //   },
   // }),
