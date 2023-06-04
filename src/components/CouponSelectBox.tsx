@@ -4,7 +4,7 @@ import { ArrowDownIcon } from "../assets";
 import { Coupon } from "../types/domain";
 
 interface CouponContainerProps {
-  available: boolean;
+  available: string;
 }
 
 export const CouponSelectBox = ({
@@ -25,7 +25,7 @@ export const CouponSelectBox = ({
       {isOpen && (
         <>
           {coupons.length === 0 ? (
-            <CouponContainer available={false} disabled>
+            <CouponContainer available="false" disabled>
               쿠폰이 없습니다.
             </CouponContainer>
           ) : (
@@ -33,7 +33,7 @@ export const CouponSelectBox = ({
               return (
                 <CouponContainer
                   key={coupon.id}
-                  available={coupon.isAvailable}
+                  available={coupon.isAvailable.toString()}
                   onClick={() => setSelectedCoupon(coupon)}
                   disabled={!coupon.isAvailable}
                 >
@@ -110,11 +110,13 @@ const CouponContainer = styled.button<CouponContainerProps>`
   }
 
   &:active {
-    transform: ${(props) => (props.available ? "scale(0.95)" : "scale(1)")};
+    transform: ${(props) =>
+      props.available === "true" ? "scale(0.95)" : "scale(1)"};
   }
 
-  background: ${(props) => (props.available ? "#ffffff" : "#dddddd")};
-  color: ${(props) => (props.available ? "#000000" : "#333333")};
+  background: ${(props) =>
+    props.available === "true" ? "#ffffff" : "#dddddd"};
+  color: ${(props) => (props.available === "true" ? "#000000" : "#333333")};
 
   cursor: pointer;
 `;
