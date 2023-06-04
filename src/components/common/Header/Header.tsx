@@ -9,25 +9,24 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 const Header = () => {
   const navigate = useNavigate();
 
-  const handleLogoClick = () => {
-    navigate('/');
-  };
+  const gotoMain = () => navigate('/');
 
-  const handleCartButtonClick = () => {
-    navigate('/cart');
-  };
+  const gotoCart = () => navigate('/cart');
+
+  const gotoOrderList = () => navigate('/orders');
 
   return (
     <HeaderContainer>
-      <Logo onClick={handleLogoClick}>
+      <Logo onClick={gotoMain}>
         <GiShoppingCart color="#ffffff" size="55px" />
         <Title>SHOP</Title>
       </Logo>
       <ServerSelector />
       <RightContainer>
         <Suspense fallback={<LoadingSpinner color="#04c09e" diameter="32px" spinnerWidth="5px" />}>
-          <CartButton onClick={handleCartButtonClick} />
+          <CartButton onClick={gotoCart} />
         </Suspense>
+        <Button onClick={gotoOrderList}>주문목록</Button>
       </RightContainer>
     </HeaderContainer>
   );
@@ -73,9 +72,24 @@ const RightContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  column-gap: 20px;
 
-  width: 200px;
+  margin-left: 20px;
   height: 40px;
+`;
+
+const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 6px;
+
+  border: none;
+  background: none;
+
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
 `;
 
 export default Header;
