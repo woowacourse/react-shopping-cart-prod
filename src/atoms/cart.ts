@@ -2,7 +2,7 @@ import { selector, atom, selectorFamily } from 'recoil';
 import { CartItem } from '../types/cart';
 import { fetchCart } from '../apis/cart';
 import { couponsSelector, selectedCouponsState } from './coupons';
-import { Coupon } from '../types/coupon';
+import { getDiscountPrice } from '../domain/discount';
 
 export const cartSelector = selector({
   key: 'cart',
@@ -58,6 +58,7 @@ export const isSelectedCartId = selectorFamily({
     },
 });
 
+// TODO: 방어코드가 필요하지 않을까?
 export const getCartItemById = selectorFamily({
   key: 'hasItemInCart',
   get:
@@ -81,17 +82,6 @@ export const totalPriceSelector = selector({
   },
 });
 
-const getDiscountPrice = (coupon: Coupon, targetPrice: number) => {
-  const getDiscountPriceByRate = (base: number, rate: number) => {
-    return Math.floor(base * (rate / 100));
-  };
-
-  if (coupon.discountType === 'RATE') {
-    return getDiscountPriceByRate(targetPrice, coupon.value);
-  }
-  return coupon.value;
-};
-
 export const discountPrice = selector({
   key: 'discountPriceSelector',
   get: ({ get }) => {
@@ -101,7 +91,7 @@ export const discountPrice = selector({
     const totalPrice = get(totalPriceSelector);
 
     let totalDiscountPrice = 0;
-    // 전체 쿠폰일 시의 로직
+
     if (allCoupons.some((coupon) => selectedCoupons.includes(coupon.id))) {
       const applyCoupon = allCoupons.find(
         (coupon) => coupon.id === selectedCoupons[0]
@@ -112,13 +102,13 @@ export const discountPrice = selector({
       return totalDiscountPrice;
     }
 
-    // 개별 주문시 할인 금액
     selectedCoupons.forEach((couponId) => {
       const applyCoupon = specificCoupons.find(
         (coupon) => coupon.id === couponId
       );
 
       if (!applyCoupon) return totalDiscountPrice;
+
       const applyCartItem = cart.find(
         (item) => item.product.id === applyCoupon.targetProductId
       );
