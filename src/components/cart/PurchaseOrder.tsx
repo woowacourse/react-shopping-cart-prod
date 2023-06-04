@@ -95,7 +95,7 @@ const Wrapper = styled.section`
     bottom: 0;
 
     width: 100%;
-    height: 30%;
+    height: fit-content;
 
     border-top: 1px solid black;
 
@@ -114,7 +114,7 @@ const TitleBox = styled.h2`
   @media screen and (max-width: 800px) {
     padding-bottom: 2%;
     text-align: center;
-    font-size: 16px;
+    font-size: 18px;
   }
 `;
 
@@ -127,12 +127,18 @@ const TotalContainer = styled.div`
   padding: 3%;
 
   div:last-child {
-    margin-top: auto;
-    margin-bottom: 8%;
+    margin-top: 4%;
+    margin-bottom: 1%;
+
+    color: #04c09e;
+    font-weight: 700;
+    font-size: 18px;
   }
 
   @media screen and (max-width: 800px) {
-    gap: 10px;
+    height: fit-content;
+    gap: 6px;
+    font-size: 16px;
   }
 `;
 
@@ -141,7 +147,7 @@ const AmountBox = styled.div`
   justify-content: space-between;
 
   text-align: center;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
 
   @media screen and (max-width: 800px) {
@@ -163,6 +169,11 @@ const OrderButton = styled.button`
   &:disabled {
     background: darkgray;
     cursor: default;
+  }
+
+  @media screen and (max-width: 800px) {
+    margin-top: auto;
+    padding: 4% 8%;
   }
 `;
 
