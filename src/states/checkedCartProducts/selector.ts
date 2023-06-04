@@ -2,6 +2,7 @@ import { selector, selectorFamily } from 'recoil';
 
 import { checkedCartProductState } from './atom';
 import { findTargetChecked, getCheckedPrice } from './utils';
+import { cartProductCountState } from '../cartProducts';
 
 export const targetCheckedState = selectorFamily({
   key: 'targetCheckedState',
@@ -25,4 +26,16 @@ export const checkedCartProductIdSelector = selector({
   key: 'checkedCartProductIdSelector',
   get: ({ get }) =>
     get(checkedCartProductState).map((cartProduct) => cartProduct.id),
+});
+
+export const allCheckedSelector = selector({
+  key: 'allCheckedSelector',
+  get: ({ get }) =>
+    get(checkedCartProductCountState) > 0 &&
+    get(checkedCartProductCountState) === get(cartProductCountState),
+});
+
+export const allUncheckedSelector = selector({
+  key: 'allUncheckedSelector',
+  get: ({ get }) => get(checkedCartProductCountState) === 0,
 });

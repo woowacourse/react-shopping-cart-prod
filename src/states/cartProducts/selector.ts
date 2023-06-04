@@ -67,6 +67,16 @@ export const cartProductHandlerSelector = selector({
       await updateCartProduct();
     };
 
-    return { addCart, updateTargetQuantity, deleteTargetCartProduct };
+    const deleteMultipleCartProducts = async (ids: number[]) => {
+      await Promise.all(ids.map((id) => deleteCartProduct(id)));
+      await updateCartProduct();
+    };
+
+    return {
+      addCart,
+      updateTargetQuantity,
+      deleteTargetCartProduct,
+      deleteMultipleCartProducts,
+    };
   },
 });
