@@ -13,7 +13,8 @@ const DotAnimation = keyframes`
 const SpinnerContainer = styled.div`
   display: inline-flex;
   gap: 0.5em;
-  padding: 0.5em;
+  padding: 0 0.5em;
+  vertical-align: middle;
 `;
 
 type DotProps = {
