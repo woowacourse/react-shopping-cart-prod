@@ -30,7 +30,6 @@ const Header = ({ children }: PropsWithChildren) => {
       </FlexLink>
 
       <FlexBox gap="4px">
-        <FlexLink to={ROUTE_PATH.user}>설정</FlexLink>
         <SelectBox
           value={(localStorage.getItem(SERVER_OWNER) ?? '헙크') as ServerOwner}
           options={serverOwnerOptions}

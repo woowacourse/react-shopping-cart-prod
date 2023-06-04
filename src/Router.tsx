@@ -32,10 +32,6 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: ROUTE_PATH.user,
-        element: <UserSelectPage />,
-      },
-      {
         path: ROUTE_PATH.orderSheet,
         element: (
           <Suspense fallback={<div>주문서 페이지 로딩중...</div>}>
