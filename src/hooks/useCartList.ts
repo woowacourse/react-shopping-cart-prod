@@ -38,13 +38,6 @@ export const useCartList = () => {
     return isAllChecked.length;
   };
 
-  const getCartItemSum = () => {
-    return cartList.reduce((acc, item) => {
-      if (item.isChecked) return acc + item.quantity * item.product.price;
-      return acc;
-    }, 0);
-  };
-
   const reverseCheckCartItem = (id: number) => {
     setCartList(
       cartList.map((item) => {
@@ -62,7 +55,6 @@ export const useCartList = () => {
   return {
     cartList,
     reverseCheckCartItem,
-    getCartItemSum,
     cartListCheckedLength,
     resetCartCheckStatusToTrue,
     resetCartCheckStatusToFalse,
