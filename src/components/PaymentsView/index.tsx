@@ -68,11 +68,11 @@ function PaymentsView({ puschaseOption, paymentAmount, purchaseCallback }: Payme
           {discountView}
           <ul>
             <span>배송비</span>
-            <span>{notChecked ? '0원 ' : convertKORWon(deliveryFee)}</span>
+            <span>{notChecked && puschaseOption ? '0원 ' : convertKORWon(deliveryFee)}</span>
           </ul>
           <ul>
             <span>총 주문금액</span>
-            <span>{notChecked ? '0원 ' : convertKORWon(finalPrice)}</span>
+            <span>{notChecked && puschaseOption ? '0원 ' : convertKORWon(finalPrice)}</span>
           </ul>
         </li>
       </section>
