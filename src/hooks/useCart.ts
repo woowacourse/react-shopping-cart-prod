@@ -4,7 +4,7 @@ import { QUANTITY } from '../constants';
 import { CART_URL } from '../constants/url';
 import { cartState, productSelector, serverState } from '../recoil';
 import { CartItem } from '../types';
-import { useFetchData } from './useFetchData';
+import useFetchData from './useFetchData';
 
 export const useSetCart = (productId: number) => {
   const [cart, setCart] = useRecoilState(cartState);
@@ -55,7 +55,7 @@ export const useSetCart = (productId: number) => {
     try {
       const response = await api.post(`${server}${CART_URL}`, { productId });
       const location = response.headers.get('location');
-      const cartId = location.replace(`${CART_URL}/`, '');
+      const cartId = location?.replace(`${CART_URL}/`, '');
 
       if (!selectedProduct) return;
 
@@ -65,6 +65,7 @@ export const useSetCart = (productId: number) => {
           id: Number(cartId),
           quantity: QUANTITY.INITIAL,
           product: selectedProduct,
+          isSelected: true,
         },
       ]);
     } catch (error) {
@@ -76,7 +77,9 @@ export const useSetCart = (productId: number) => {
     const cartItemId = findCartItemId();
 
     api
-      .delete(`${server}${CART_URL}/${cartItemId}`)
+      .delete(`${server}${CART_URL}`, {
+        cartItemIdList: [cartItemId],
+      })
       .then(() => {
         setCart((prev) => {
           const { cart, cartItemIndex, alreadyHasCartItem } = findCartItemIndex(prev);
