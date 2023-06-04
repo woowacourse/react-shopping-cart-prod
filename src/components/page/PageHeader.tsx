@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 
 const PageHeader = styled.header`
   padding-bottom: 24px;
+  margin-bottom: 32px;
 
   border-bottom: 4px solid #333333;
 
