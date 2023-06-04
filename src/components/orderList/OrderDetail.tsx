@@ -12,21 +12,19 @@ const OrderDetail = () => {
   return (
     <Wrapper>
       <Title>주문 내역 상세</Title>
-      <ListBox>
-        {orderItems?.map((orderItem) => (
-          <>
-            <OrderProduct {...orderItem} />
-            <Details>
-              <PriceBox>개당 가격: {orderItem.product.price.toLocaleString()}원</PriceBox>
-              <PriceBox>수량: {orderItem.quantity}</PriceBox>
-              {orderItem.coupons.length ? (
-                <PriceBox>할인: {orderItem.coupons[0].name}</PriceBox>
-              ) : null}
-              <PriceBox>실 결제 금액: {orderItem.total.toLocaleString()}원</PriceBox>
-            </Details>
-          </>
-        ))}
-      </ListBox>
+      {orderItems?.map((orderItem) => (
+        <ListBox key={orderItem.product.id}>
+          <OrderProduct {...orderItem} />
+          <Details>
+            <PriceBox>개당 가격: {orderItem.product.price.toLocaleString()}원</PriceBox>
+            <PriceBox>수량: {orderItem.quantity}</PriceBox>
+            {orderItem.coupons.length ? (
+              <PriceBox>할인: {orderItem.coupons[0].name}</PriceBox>
+            ) : null}
+            <PriceBox>실 결제 금액: {orderItem.total.toLocaleString()}원</PriceBox>
+          </Details>
+        </ListBox>
+      ))}
       <ResultBox>
         <PriceBox>배송비: {order?.deliveryFee.toLocaleString()}원</PriceBox>
         <PriceBox>총 결제 금액: {order?.total?.toLocaleString()}원</PriceBox>

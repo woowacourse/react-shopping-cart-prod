@@ -24,7 +24,7 @@ const OrderListItem = ({ orderId, items }: OrderListItemProps) => {
       </TitleContainer>
       <ListBox>
         {items.map((item) => (
-          <OrderProduct key={crypto.randomUUID()} {...item} />
+          <OrderProduct key={item.product.id} {...item} />
         ))}
       </ListBox>
     </Wrapper>
