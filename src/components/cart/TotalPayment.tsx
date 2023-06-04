@@ -40,14 +40,19 @@ export default function TotalPayment({
     closeCouponModal();
   };
 
-  const handleOrderButtonClick = () => {
-    addOrderItem({
+  const handleOrderButtonClick = async () => {
+    const orderDetailLocation = await addOrderItem({
       cartItemIds: checkedCartItemIds,
       couponId: coupon.id,
       deliveryFee: deliveryFee,
       totalOrderPrice: totalOrderPrice,
     });
-    navigate('/order');
+
+    if (orderDetailLocation) {
+      const orderId = orderDetailLocation.split('/').pop();
+
+      navigate(orderDetailLocation, { state: { orderId: orderId } });
+    }
   };
 
   useEffect(() => {

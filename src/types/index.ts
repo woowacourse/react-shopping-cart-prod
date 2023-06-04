@@ -52,6 +52,7 @@ export interface OrderDetailItemInfo extends OrderItemInfo {
 export interface ResponseResult<T> {
   result: T | undefined;
   statusCode: number;
+  location?: string;
   errorCode?: number;
   errorMessage?: string;
 }

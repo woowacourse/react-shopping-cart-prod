@@ -58,9 +58,9 @@ export const useOrder = (orderId?: number) => {
     };
 
     const responseResult = await APIHandler.post(ORDERS_URL, orderItem);
+    if (responseResult.statusCode !== 201) throw new Error(responseResult.errorMessage);
 
-    if (responseResult.statusCode === 200) console.log('주문 아이템 추가 완료');
-    if (responseResult.statusCode !== 200) console.error(responseResult.errorMessage);
+    return responseResult.location;
   };
 
   return { orderList, orderDetail, addOrderItem };

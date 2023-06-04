@@ -28,7 +28,7 @@ export default function OrderItem({ orderItemInfo, isDetail = false }: Props) {
             color="var(--grey-400)"
             title="상세보기"
             onClick={() => {
-              navigate('/orderDetail', { state: { orderId: id } });
+              navigate(`/orders/${id}`, { state: { orderId: id } });
             }}
           >
             <BiDetail />

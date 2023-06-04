@@ -22,11 +22,11 @@ const router = createBrowserRouter(
           element: <Cart />,
         },
         {
-          path: '/order',
+          path: '/orders',
           element: <Order />,
         },
         {
-          path: '/orderDetail',
+          path: '/orders/:id',
           element: <OrderDetail />,
         },
       ],

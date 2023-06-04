@@ -41,9 +41,8 @@ const fetchAPI = async <T>(url: string, options: RequestInit): Promise<ResponseR
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      console.log(`${options.method}요청의 response.ok가 아닙니다.`);
       const { errorCode } = await response.json();
-      console.log(`${options.method}요청의 에러코드`, errorCode);
+      console.error(`${options.method}요청의 에러코드`, errorCode);
 
       responseResult.statusCode = response.status;
       responseResult.errorCode = errorCode;
@@ -56,6 +55,9 @@ const fetchAPI = async <T>(url: string, options: RequestInit): Promise<ResponseR
 
     const contentType = response.headers.get('Content-Type');
     if (contentType === 'application/json') responseResult.result = await response.json();
+
+    const locationHeader = response.headers.get('Location');
+    if (locationHeader) responseResult.location = locationHeader;
 
     return responseResult;
   } catch (error) {
