@@ -148,3 +148,21 @@ export const fetchAddOrderList = async (
     }
   );
 };
+
+export const fetchOrderList = () => {
+  return fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/orders`,
+    {
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    }
+  );
+};
