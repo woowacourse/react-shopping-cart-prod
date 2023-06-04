@@ -12,7 +12,7 @@ const encodeCredentialsToBase64 = ({ email, password }: EncodeCredentialsToBase6
   return encodedCredentials;
 };
 
-interface AuthRequestInitProps extends RequestInit {
+export interface AuthRequestInitProps extends RequestInit {
   email: string;
   password: string;
 }

@@ -9,7 +9,7 @@ interface GetProductListProps {
   userInfo: UserInformationType;
 }
 
-export const getProductList = async ({ serverName, userInfo }: GetProductListProps) => {
+export const getProductListApi = async ({ serverName, userInfo }: GetProductListProps) => {
   const serverProductList = await fetchGet<ServerProductItemType[]>(getProductPath(serverName), {
     email: userInfo.email,
     password: userInfo.password,

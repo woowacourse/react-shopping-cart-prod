@@ -9,7 +9,7 @@ interface GetCouponProps {
   userInfo: UserInformationType;
 }
 
-export const getCoupon = async ({ serverName, userInfo }: GetCouponProps) => {
+export const getCouponApi = async ({ serverName, userInfo }: GetCouponProps) => {
   const serverCoupon = await fetchGet<ServerCouponType[]>(getCouponPath(serverName), {
     email: userInfo.email,
     password: userInfo.password,

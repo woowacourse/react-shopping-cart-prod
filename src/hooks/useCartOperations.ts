@@ -2,6 +2,7 @@ import { ChangeEvent } from 'react';
 import { useRecoilValue } from 'recoil';
 import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
+import userState from '@recoil/user/userState';
 import { findCartItemById } from '@utils/cart/cart';
 import {
   addItemToCartApi,
@@ -14,6 +15,7 @@ import { useQuantityCounter } from './useQuantityCounter';
 import { useRecoilCart } from './useRecoilCart';
 
 export const useCartOperations = (product: ProductItemType) => {
+  const userInfo = useRecoilValue(userState);
   const serverName = useRecoilValue(serverState);
   const cart = useRecoilValue(cartState);
   const cartId = findCartItemById({ cart, productId: product.id });
@@ -30,7 +32,7 @@ export const useCartOperations = (product: ProductItemType) => {
   const updateCartItemAndSync = async (value: number) => {
     try {
       updateCartListItemQuantity({ cartId, quantity: value });
-      await updateCartItemQuantityApi({ cartId, quantity: value, serverName });
+      await updateCartItemQuantityApi({ cartId, quantity: value, serverName, userInfo });
     } catch (error) {
       cartFetchData();
       console.error(error);
@@ -40,7 +42,7 @@ export const useCartOperations = (product: ProductItemType) => {
   const removeCartItemAndDelete = async () => {
     try {
       deleteCartItem(cartId);
-      await removeCartItemApi({ cartId, serverName });
+      await removeCartItemApi({ cartId, serverName, userInfo });
     } catch (error) {
       cartFetchData();
       console.error(error);
@@ -62,7 +64,7 @@ export const useCartOperations = (product: ProductItemType) => {
   const onAddItemToCartAndSyncClick = async () => {
     try {
       addCartItem({ cartId: FAKE_CART_ID, product });
-      await addItemToCartApi({ productId: product.id, serverName });
+      await addItemToCartApi({ productId: product.id, serverName, userInfo });
     } catch (error) {
       cartFetchData();
       console.error(error);

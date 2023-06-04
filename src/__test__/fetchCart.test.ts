@@ -9,6 +9,7 @@ import {
 } from '@utils/cart/fetchCart';
 import { fetchGet } from '@utils/fetchUtils';
 import { SERVER_NAME, getCartPath } from '@constants/serverUrlConstants';
+import { UserInformationType } from '@constants/userConstant';
 import { CartItemType } from '@type/cartType';
 import { server } from './setupTests';
 
@@ -24,6 +25,12 @@ const cartIdGenerator = {
   increase: () => {
     cartIdGenerator.value += 1;
   },
+};
+
+const userInfo: UserInformationType = {
+  nickname: '테스트',
+  email: 'qweqwe@asdasd.com',
+  password: 'asdasdasd',
 };
 
 const fetchUrl = getCartPath(SERVER_NAME[0]);
@@ -89,9 +96,13 @@ describe('서버와 장바구니에 대한 통신 테스트', () => {
   });
 
   test('장바구니 아이템 추가 통신 기능 올바르게 작동하는 지 확인 테스트 ', async () => {
-    const cartId = await addItemToCartApi({ productId: product.id, serverName: SERVER_NAME[0] });
+    const cartId = await addItemToCartApi({
+      productId: product.id,
+      serverName: SERVER_NAME[0],
+      userInfo,
+    });
 
-    const cart = await fetchGet<CartItemType[]>(fetchUrl);
+    const cart = await fetchGet<CartItemType[]>(fetchUrl, userInfo);
 
     if (cart === null) {
       throw new Error('장바구니 아이템을 불러올 수 없습니다');
@@ -105,9 +116,9 @@ describe('서버와 장바구니에 대한 통신 테스트', () => {
 
     serverData = [createCartItem({ cartId, product })];
 
-    await removeCartItemApi({ cartId, serverName: SERVER_NAME[0] });
+    await removeCartItemApi({ cartId, serverName: SERVER_NAME[0], userInfo });
 
-    const cart = await fetchGet<CartItemType[]>(fetchUrl);
+    const cart = await fetchGet<CartItemType[]>(fetchUrl, userInfo);
 
     expect(cart.length).toBe(0);
   });
@@ -116,9 +127,9 @@ describe('서버와 장바구니에 대한 통신 테스트', () => {
 
     serverData = [createCartItem({ cartId, product })];
 
-    await updateCartItemQuantityApi({ cartId, serverName: SERVER_NAME[0], quantity: 40 });
+    await updateCartItemQuantityApi({ cartId, serverName: SERVER_NAME[0], quantity: 40, userInfo });
 
-    const cart = await fetchGet<CartItemType[]>(fetchUrl);
+    const cart = await fetchGet<CartItemType[]>(fetchUrl, userInfo);
 
     expect(cart[0].quantity).toBe(40);
   });
@@ -130,7 +141,7 @@ describe('서버와 장바구니에 대한 통신 테스트', () => {
       createCartItem({ cartId: 3, product: product3 }),
     ];
 
-    const cart = await fetchGet<CartItemType[]>(fetchUrl);
+    const cart = await fetchGet<CartItemType[]>(fetchUrl, userInfo);
 
     expect(cart).toEqual(serverData);
   });

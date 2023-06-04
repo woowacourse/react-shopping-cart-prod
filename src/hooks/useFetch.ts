@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { fetchGet } from '@utils/fetchUtils';
+import { AuthRequestInitProps, fetchGet } from '@utils/fetchUtils';
 
 export const useFetch = <T>(
   url: string,
-  options?: RequestInit
+  options: AuthRequestInitProps
 ): {
   isLoading: boolean;
   error: unknown | null;

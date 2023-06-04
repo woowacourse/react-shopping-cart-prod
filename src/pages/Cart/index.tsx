@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { ORDER_PATH } from '@router/router';
 import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
+import userState from '@recoil/user/userState';
 import { useCheckCart } from '@hooks/recoil/cart/useCheckCart';
 import CartCouponSelect from '@components/cart/CartCouponSelect';
 import CartItemList from '@components/cart/CartItemList';
@@ -14,7 +15,7 @@ import Modal from '@components/common/Modal';
 import Layout from '@components/layout/Layout';
 import { cartItemSelectedById } from '@utils/cart/cart';
 import { getAvailableCouponsByTotalPrice, getDiscountPrice } from '@utils/coupon/coupon';
-import { getCoupon } from '@utils/coupon/fetchCoupon';
+import { getCouponApi } from '@utils/coupon/fetchCoupon';
 import { submitOrderApi } from '@utils/order/fetchOrder';
 import { CouponType } from '@type/couponType';
 import * as S from './Cart.style';
@@ -22,6 +23,7 @@ import * as S from './Cart.style';
 const DELIVERY_FEE = 3000;
 
 function Cart() {
+  const userInfo = useRecoilValue(userState);
   const navigate = useNavigate();
   const serverName = useRecoilValue(serverState);
   const cart = useRecoilValue(cartState);
@@ -57,7 +59,12 @@ function Cart() {
 
   const onOrderClick = async () => {
     const selectedCartId = cartItemSelectedById(cart);
-    await submitOrderApi({ cartItemIds: selectedCartId, serverName, couponId: selectedCoupon?.id });
+    await submitOrderApi({
+      cartItemIds: selectedCartId,
+      serverName,
+      couponId: selectedCoupon?.id,
+      userInfo,
+    });
     navigate(ORDER_PATH.COMPLETE, {
       state: {
         deliveryFee: DELIVERY_FEE,
@@ -70,13 +77,13 @@ function Cart() {
 
   useEffect(() => {
     const fetchCoupon = async () => {
-      const coupons = await getCoupon(serverName);
+      const coupons = await getCouponApi({ serverName, userInfo });
 
       setCoupons(coupons);
     };
 
     fetchCoupon();
-  }, [serverName]);
+  }, [serverName, userInfo]);
 
   useEffect(() => {
     if (discountPrice === 0) {

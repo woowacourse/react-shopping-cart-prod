@@ -1,6 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import cartState from '@recoil/cart/cartState';
 import serverState from '@recoil/server/serverState';
+import userState from '@recoil/user/userState';
 import {
   addItemToCart,
   cartApiWrapper,
@@ -24,8 +25,9 @@ interface AddCartItemParams {
 }
 
 export const useRecoilCart = () => {
+  const userInfo = useRecoilValue(userState);
   const serverName = useRecoilValue(serverState);
-  const { isLoading, error, fetchData } = useFetch<ServerCartItemType[]>(getCartPath(serverName));
+  const { isLoading, error, fetchData } = useFetch<ServerCartItemType[]>(getCartPath(serverName),userInfo);
   const [cart, setCart] = useRecoilState<CartItemType[]>(cartState);
 
   const updateCartListItemQuantity = ({ cartId, quantity }: UpdateCartListItemQuantityParams) => {

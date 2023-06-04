@@ -3,6 +3,7 @@ import { rest } from 'msw';
 import { MOCK_COUPON_LIST, MOCK_ORDER_LIST } from '@mocks/handlers';
 import { getOrderDetailApi, getOrderListApi, submitOrderApi } from '@utils/order/fetchOrder';
 import { SERVER_NAME, getOrderPath } from '@constants/serverUrlConstants';
+import { UserInformationType } from '@constants/userConstant';
 import { OrderType } from '@type/orderType';
 import { server } from './setupTests';
 
@@ -12,6 +13,12 @@ const fetchUrl = getOrderPath(SERVER_NAME[0]);
 
 const SUCCESS = 'success';
 const FAIL = 'fail';
+
+const userInfo: UserInformationType = {
+  nickname: '테스트',
+  email: 'qweqwe@asdasd.com',
+  password: 'asdasdasd',
+};
 
 describe('주문할 때 통신이 올바르게 작동하는 지 확인한다.', () => {
   const serverData: OrderType[] = MOCK_ORDER_LIST;
@@ -47,7 +54,7 @@ describe('주문할 때 통신이 올바르게 작동하는 지 확인한다.', 
   });
 
   test('주문 내역 목록을 불러온다.', async () => {
-    const orders = await getOrderListApi(SERVER_NAME[0]);
+    const orders = await getOrderListApi({ serverName: SERVER_NAME[0], userInfo });
 
     expect(orders).toEqual(serverData);
   });
@@ -56,6 +63,7 @@ describe('주문할 때 통신이 올바르게 작동하는 지 확인한다.', 
     const order = await getOrderDetailApi({
       serverName: SERVER_NAME[0],
       orderId: serverData[0].id,
+      userInfo,
     });
 
     expect(order).toEqual(serverData[0]);
@@ -70,6 +78,7 @@ describe('주문할 때 통신이 올바르게 작동하는 지 확인한다.', 
       serverName: SERVER_NAME[0],
       cartItemIds,
       couponId: selectedCoupon.id,
+      userInfo,
     });
 
     expect(postResult).toBe(SUCCESS);
@@ -81,6 +90,7 @@ describe('주문할 때 통신이 올바르게 작동하는 지 확인한다.', 
     await submitOrderApi({
       serverName: SERVER_NAME[0],
       cartItemIds,
+      userInfo,
     });
 
     expect(postResult).toBe(SUCCESS);
