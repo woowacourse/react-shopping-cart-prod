@@ -12,67 +12,79 @@ const ProductItem = ({ id, imageUrl, name, price }: Product) => {
   const { addToCart } = useSetCart(id);
 
   return (
-    <div>
-      <S.Image src={imageUrl} alt={name} />
-      <S.InfoWrapper>
-        <div>
-          <S.Name htmlFor={name} title={name}>
+    <Item>
+      <ThumbnailWrapper>
+        <Thumbnail src={imageUrl} alt={name} />
+      </ThumbnailWrapper>
+      <StyledFieldset>
+        <NamePriceWrapper>
+          <Label htmlFor={name} title={name}>
             {name}
-          </S.Name>
+          </Label>
           <Price price={price} css={priceStyle} />
-        </div>
+        </NamePriceWrapper>
         {quantity > 0 ? (
           <QuantityButton productId={id} min={0} max={10} />
         ) : (
-          <S.Button type="button" onClick={addToCart}>
+          <StyledButton type="button" onClick={addToCart}>
             <CartIcon css={svgStyle} />
-          </S.Button>
+          </StyledButton>
         )}
-      </S.InfoWrapper>
-    </div>
+      </StyledFieldset>
+    </Item>
   );
 };
 
-const S = {
-  Image: styled.img`
-    width: 100%;
-  `,
+const Item = styled.li``;
 
-  InfoWrapper: styled.fieldset`
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 6px 0;
-  `,
+const ThumbnailWrapper = styled.div`
+  overflow: hidden;
+`;
 
-  Button: styled.button`
-    align-self: start;
-    background: none;
-    cursor: pointer;
-  `,
+const Thumbnail = styled.img`
+  width: 100%;
 
-  Name: styled.label`
-    display: -webkit-box;
-    margin-right: 4px;
-    font-weight: 400;
-    line-height: 1.4;
-    letter-spacing: 0.5px;
-    color: var(--text-color);
-    opacity: 0.9;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+  &:hover {
+    transform: scale(1.15);
+  }
+`;
 
-    @media (max-width: 1270px) {
-      font-size: 15px;
-    }
+const StyledFieldset = styled.fieldset`
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 6px 0;
+`;
 
-    @media (max-width: 768px) {
-      font-size: 14px;
-    }
-  `,
-};
+const StyledButton = styled.button`
+  align-self: start;
+  background: none;
+  cursor: pointer;
+`;
+
+const Label = styled.label`
+  display: -webkit-box;
+  margin-right: 4px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0.5px;
+  color: var(--text-color);
+  opacity: 0.9;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+
+  @media (max-width: 1270px) {
+    font-size: 15px;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
+const NamePriceWrapper = styled.div``;
 
 const svgStyle = css`
   transform: scaleX(-1);
