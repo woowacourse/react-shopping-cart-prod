@@ -14,6 +14,7 @@ import totalCouponState from '@Atoms/totalCouponState';
 
 import cartItemsAmountState from '@Selector/cartItemsAmountState';
 
+import { ALERT_MESSAGE } from '@Constants/index';
 import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
 import * as S from './style';
@@ -53,7 +54,7 @@ const CouponBanner = () => {
 
   const makePrintCoupon = (id: number, isDownLoaded: boolean) => () => {
     if (isDownLoaded) {
-      alert('이미 다운로드 된 쿠폰입니다.');
+      alert(ALERT_MESSAGE.DOWNLOADED_COUPON);
       return;
     }
 

@@ -15,7 +15,7 @@ import usingCouponState from '@Atoms/usingCouponState';
 import cartItemsAmountState from '@Selector/cartItemsAmountState';
 import orderAmountState from '@Selector/orderAmountState';
 
-import { DELIVERY_FEE } from '@Constants/index';
+import { ALERT_MESSAGE, DELIVERY_FEE } from '@Constants/index';
 import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
 const useOrderProducts = () => {
@@ -46,7 +46,7 @@ const useOrderProducts = () => {
   }, [server]);
 
   const orderProducts = async () => {
-    if (selectedCartItemIds.length === 0) return alert('상품을 1개 이상 선택해주세요.');
+    if (selectedCartItemIds.length === 0) return alert(ALERT_MESSAGE.ORDER_ZERO_PRODUCT);
 
     const body = JSON.stringify({
       cartItemIds: selectedCartItemIds,
