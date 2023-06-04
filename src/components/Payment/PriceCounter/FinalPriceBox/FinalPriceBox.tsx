@@ -1,4 +1,3 @@
-import React from 'react';
 import { PaymentInfo } from '../../../@common/PaymentInfo';
 import * as S from './FinalPriceBox.style';
 import { useRecoilValue } from 'recoil';
@@ -9,6 +8,8 @@ import { PAGE_PATH } from '../../../../constants/path';
 import { orderRequestData } from '../../../../recoil/orderAtom';
 import { memberAuthorization } from '../../../../recoil/userAtoms';
 import { serverState } from '../../../../recoil/serverAtom';
+import useMutateQuery from '../../../../hooks/useMutateQuery';
+import { OrderRequest } from '../../../../types/types';
 
 function FinalPriceBox() {
   const totalPrice = useRecoilValue(totalPaymentPriceSelector);
@@ -20,15 +21,13 @@ function FinalPriceBox() {
   const couponDiscount = useRecoilValue(couponState);
   const pointDiscount = point === '' ? 0 : point;
   const couponDiscountPrice = couponDiscount ? couponDiscount.discountPrice : 0;
-
-  // const { mutateQuery } = useMutateQuery<OrderRequest>({
-  //   fetcher:() => fetchPostOrder({ server, auth: memberAuth, bodyData: finalOrderInfo }),
-  //   onSuccess: () => navigate(PAGE_PATH.ORDER),
-  // });
+  const { mutateQuery } = useMutateQuery<OrderRequest>({
+    fetcher: () => fetchPostOrder({ server, auth: memberAuth, bodyData: finalOrderInfo }),
+    onSuccess: () => navigate(PAGE_PATH.ORDER),
+  });
 
   const purchase = async () => {
-    await fetchPostOrder({ server, auth: memberAuth, bodyData: finalOrderInfo });
-    navigate(PAGE_PATH.ORDER);
+    await mutateQuery();
   };
 
   return (
