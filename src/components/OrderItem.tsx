@@ -1,12 +1,17 @@
 import { styled } from "styled-components";
+import { LocalProductType } from "../types/domain";
 
-export const OrderItem = () => {
+export const OrderItem = ({
+  orderItem,
+}: {
+  orderItem: Omit<LocalProductType, "cartItemId">;
+}) => {
   return (
     <Wrapper>
-      <ItemImage />
+      <ItemImage src={orderItem.imageUrl}/>
       <ItemDetail>
-        <ItemName>친환경 실링용기 -ECO 19153</ItemName>
-        <ItemInfo>{`${Number(3000).toLocaleString()}원 / 수량 : 3개`}</ItemInfo>
+        <ItemName>{orderItem.name}</ItemName>
+        <ItemInfo>{`${Number(orderItem.price).toLocaleString()}원 / 수량 : ${orderItem.quantity}개`}</ItemInfo>
       </ItemDetail>
     </Wrapper>
   );

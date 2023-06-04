@@ -2,25 +2,30 @@ import { styled } from "styled-components";
 import { OrderItem } from "./OrderItem";
 import { useRouter } from "../hooks/useRouter";
 import { ROUTER_PATH } from "../router";
+import { OrderItemList } from "../types/domain";
 
 type OrderListProps = {
   detail?: boolean;
+  id: number;
+  orderListItems: OrderItemList["products"];
 };
 
-export const OrderList = ({ detail }: OrderListProps) => {
+export const OrderList = ({ detail, id, orderListItems }: OrderListProps) => {
   const { goPage } = useRouter();
 
   return (
     <Wrapper>
       <OrderListHeader>
-        <p>주문번호 : 1</p>
+        <p>주문번호 : {id}</p>
         {detail && (
           <OrderDetail onClick={goPage(ROUTER_PATH.OrderDetail)}>
             상세보기 &gt;
           </OrderDetail>
         )}
       </OrderListHeader>
-      <OrderItem />
+      {orderListItems.map((item) => (
+        <OrderItem key={item.id} orderItem={item}/>
+      ))}
     </Wrapper>
   );
 };

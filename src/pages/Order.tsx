@@ -1,14 +1,24 @@
 import { styled } from "styled-components";
 import { Header, Page, OrderList } from "../components";
+import { useOrder } from "../hooks/useOrder";
 
 export const Order = () => {
+  const { orderList } = useOrder();
+
   return (
     <>
       <Header />
       <Page>
         <TitleBox>주문 목록</TitleBox>
         <OrderListWrapper>
-          <OrderList detail />
+          {orderList.map((orderListItem) => (
+            <OrderList
+              key={orderListItem.id}
+              id={orderListItem.id}
+              orderListItems={orderListItem.products}
+              detail
+            />
+          ))}
         </OrderListWrapper>
       </Page>
     </>
