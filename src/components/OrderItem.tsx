@@ -23,7 +23,7 @@ const OrderItem: React.FC<OrderItemProps> = ({ orderId, products, orderStatus, c
         <div>
           <TitleText>{orderTitle}</TitleText>
         </div>
-        {isDetailPage || <Link to={`${ROUTE_PATH.ORDER_PAGE}/${orderId}`}>상세보기</Link>}
+        {isDetailPage || <StyledLink to={`${ROUTE_PATH.ORDER_PAGE}/${orderId}`}>상세보기 &gt;</StyledLink>}
       </Title>
       {products.map((product) => (
         <OrderItemInfo key={product.id} {...product} />
@@ -47,6 +47,11 @@ const Title = styled.div`
   padding: 40px;
   border-bottom: 2px solid var(--gray-color-300);
   font-size: 20px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
 `;
 
 const TitleText = styled.div``;
