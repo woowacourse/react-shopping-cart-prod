@@ -1,6 +1,6 @@
 import { SERVER, ServerKey } from '../constants/server';
 import type { CartProduct } from '../types/product';
-import { getData, mutateData } from './utils';
+import { fetchData } from './utils';
 
 const cartProductApis = (serverName: ServerKey) => {
   const url = `${SERVER[serverName].url}/cart-items`;
@@ -14,39 +14,36 @@ const cartProductApis = (serverName: ServerKey) => {
     Authorization: `Basic ${base64}`,
   };
 
-  const getCartProducts = () => {
-    return getData<CartProduct[]>({ url, headers });
+  const getCartProducts = async () => {
+    const response = await fetchData({ url, method: 'GET', headers });
+    const cartProducts: CartProduct[] = await response.json();
+    return cartProducts;
   };
 
-  const postCartProduct = async (id: number) => {
-    const response = await mutateData({
+  const postCartProduct = (id: number) =>
+    fetchData({
       url,
       method: 'POST',
       headers,
       body: { productId: id },
-    });
+    }).then((response) => response.headers.get('location'));
 
-    return response.headers.get('location');
-  };
-
-  const patchCartProduct = (id: number, quantity: number) => {
-    return mutateData({
+  const patchCartProduct = (id: number, quantity: number) =>
+    fetchData({
       url,
       method: 'PATCH',
       param: id,
       headers,
       body: { quantity },
     });
-  };
 
-  const deleteCartProduct = async (id: number) => {
-    return mutateData({
+  const deleteCartProduct = (id: number) =>
+    fetchData({
       url,
       method: 'DELETE',
       param: id,
       headers,
     });
-  };
 
   return {
     getCartProducts,

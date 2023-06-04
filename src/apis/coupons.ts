@@ -1,6 +1,6 @@
 import { SERVER, ServerKey } from '../constants/server';
 import type { Coupon } from '../types/coupon';
-import { getData } from './utils';
+import { fetchData } from './utils';
 
 const couponApis = (serverName: ServerKey) => {
   const url = `${SERVER[serverName].url}/coupons`;
@@ -14,8 +14,10 @@ const couponApis = (serverName: ServerKey) => {
     Authorization: `Basic ${base64}`,
   };
 
-  const getCoupons = () => {
-    return getData<Coupon[]>({ url, headers });
+  const getCoupons = async () => {
+    const response = await fetchData({ url, method: 'GET', headers });
+    const coupons: Coupon[] = await response.json();
+    return coupons;
   };
 
   return { getCoupons };

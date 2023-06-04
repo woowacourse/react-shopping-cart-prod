@@ -1,4 +1,4 @@
-import { getData, mutateData } from './utils';
+import { fetchData } from './utils';
 import type { Order, OrderDetail, OrderInfo } from '../types/order';
 import { SERVER, ServerKey } from '../constants/server';
 
@@ -14,17 +14,25 @@ const orderApis = (serverName: ServerKey) => {
     Authorization: `Basic ${base64}`,
   };
 
-  const getOrders = () => {
-    return getData<Order[]>({ url, headers });
+  const getOrders = async () => {
+    const response = await fetchData({ url, method: 'GET', headers });
+    const orders: Order[] = await response.json();
+    return orders;
   };
 
-  const getOrderDetail = (orderId: number) => {
-    return getData<OrderDetail>({ url, param: orderId, headers });
+  const getOrderDetail = async (orderId: number) => {
+    const response = await fetchData({
+      url,
+      method: 'GET',
+      param: orderId,
+      headers,
+    });
+    const orderDetail: OrderDetail = await response.json();
+    return orderDetail;
   };
 
-  const postOrder = (orderInfo: OrderInfo) => {
-    return mutateData({ url, method: 'POST', headers, body: orderInfo });
-  };
+  const postOrder = (orderInfo: OrderInfo) =>
+    fetchData({ url, method: 'POST', headers, body: orderInfo });
 
   return { getOrders, getOrderDetail, postOrder };
 };

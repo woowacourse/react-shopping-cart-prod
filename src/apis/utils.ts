@@ -4,46 +4,23 @@ const handleResponseError = (response: Response) => {
   }
 };
 
-type MutateMethod = 'POST' | 'PATCH' | 'DELETE';
+type FetchMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE';
 
-interface MutateData<B> {
+interface FetchData<B> {
   url: string;
-  method: MutateMethod;
+  method: FetchMethod;
   param?: string | number;
   headers?: HeadersInit;
   body?: B;
 }
 
-type GetData<B> = Omit<MutateData<B>, 'method'>;
-
-export const getData = async <D = any, B extends {} = {}>({
-  url,
-  param,
-  headers,
-  body,
-}: GetData<B>): Promise<D> => {
-  const fetchUrl = param ? `${url}/${param}` : url;
-
-  const response = await fetch(fetchUrl, {
-    method: 'GET',
-    headers,
-    body: body ? JSON.stringify(body) : null,
-  });
-
-  handleResponseError(response);
-
-  const data: D = await response.json();
-
-  return data;
-};
-
-export const mutateData = async <B extends {}>({
+export const fetchData = async <B extends {} = {}>({
   url,
   method,
   param,
   headers,
   body,
-}: MutateData<B>) => {
+}: FetchData<B>) => {
   const fetchUrl = param ? `${url}/${param}` : url;
 
   const response = await fetch(fetchUrl, {
