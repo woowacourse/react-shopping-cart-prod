@@ -19,7 +19,7 @@ const Page = ({
         SuspenseFallback={
           <Skeleton
             {...{
-              background: "#333333",
+              background: "var(--primary-blue-color)",
               width: "100%",
               height: "70px",
               position: "fixed",
@@ -29,7 +29,7 @@ const Page = ({
         ErrorFallback={() => (
           <Skeleton
             {...{
-              background: "#333333",
+              background: "var(--primary-blue-color)",
               width: "100%",
               height: "70px",
               position: "fixed",

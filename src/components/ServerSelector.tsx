@@ -101,8 +101,8 @@ const Wrapper = styled.fieldset`
   position: fixed;
   top: 100px;
   right: 0;
-  background: #04c09e;
-  color: #333333;
+  background: var(--primary-mint-color);
+  color: var(--dark-color);
   display: flex;
 
   width: 20px;

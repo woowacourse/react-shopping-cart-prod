@@ -78,12 +78,12 @@ const ImageBox = styled.div`
     height: 100%;
     object-fit: cover;
     border-radius: 5px;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: var(--skeleton-color);
   }
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.25);
-    box-shadow: 0 10px 10px -3px rgba(0, 0, 0, 0.25);
+    background-color: var(--image-hover-color);
+    box-shadow: 0 10px 10px -3px var(--image-hover-color);
     transition: all 0.3s ease;
   }
 `;

@@ -82,7 +82,7 @@ const Wrapper = styled.section`
   width: 30%;
   height: 350px;
 
-  border: 1px solid rgba(221, 221, 221, 1);
+  border: 1px solid var(--primary-green-color);
   padding: 2%;
 
   @media (max-width: 767px) {
@@ -90,7 +90,7 @@ const Wrapper = styled.section`
     height: 80px;
 
     border-radius: 5px 0 0 5px;
-    background-color: #333333;
+    background-color: var(--primary-green-color);
     padding: 0;
 
     position: fixed;
@@ -120,7 +120,7 @@ const Wrapper = styled.section`
 `;
 
 const TitleBox = styled.h2`
-  border-bottom: 1px solid rgba(221, 221, 221, 1);
+  border-bottom: 1px solid var(--primary-green-color);
 
   padding-bottom: 5%;
 
@@ -129,7 +129,9 @@ const TitleBox = styled.h2`
   text-align: center;
 
   @media (max-width: 767px) {
-    color: rgba(255, 255, 255, 1);
+    border-bottom: 1px solid var(--light-color);
+
+    color: var(--light-color);
   }
 `;
 
@@ -150,7 +152,7 @@ const TotalContainer = styled.div`
   }
 
   @media (max-width: 767px) {
-    color: rgba(255, 255, 255, 1);
+    color: var(--light-color);
     font-size: 16px;
   }
 `;
@@ -170,14 +172,14 @@ const OrderButton = styled.button`
   padding: 7% 10%;
 
   font-size: 19px;
-  color: rgba(255, 255, 255, 1);
-  background: #333333;
+  color: var(--light-color);
+  background: var(--primary-green-color);
 
   cursor: pointer;
 
   @media (max-width: 767px) {
-    background-color: rgba(255, 255, 255, 1);
-    color: #333333;
+    background-color: var(--light-color);
+    color: var(--primary-green-color);
     font-size: 16px;
   }
 `;

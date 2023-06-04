@@ -54,7 +54,7 @@ const Wrapper = styled.section`
   height: 70px;
   padding: 0 5%;
 
-  background: #333333;
+  background: var(--primary-blue-color);
 `;
 
 const TitleContainer = styled.div`
@@ -72,7 +72,7 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.p`
-  color: white;
+  color: var(--light-color);
   font-weight: 900;
   font-size: 2rem;
 
@@ -90,7 +90,7 @@ const CartContainer = styled.div`
 
   font-size: 20px;
   font-weight: 400;
-  color: white;
+  color: var(--light-color);
 
   cursor: pointer;
 
@@ -107,18 +107,18 @@ const ItemQuantityBox = styled.div`
   width: 26px;
   height: 26px;
 
-  background: #04c09e;
+  background: var(--primary-beige-color);
   border-radius: 50%;
 
   font-size: 16px;
   font-weight: 500;
-  color: #ffffff;
+  color: var(--primary-blue-color);
 `;
 
 const OrderContainer = styled.div`
   font-size: 20px;
   font-weight: 400;
-  color: white;
+  color: var(--light-color);
 
   cursor: pointer;
 

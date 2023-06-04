@@ -24,7 +24,7 @@ const SelectorContainer = styled.div`
   color: transparent;
 
   padding-bottom: 10px;
-  border-bottom: 3px solid rgba(170, 170, 170, 1);
+  border-bottom: 3px solid var(--primary-blue-color);
 `;
 
 const PurchaseOrderSkeleton = styled.div`
@@ -32,7 +32,7 @@ const PurchaseOrderSkeleton = styled.div`
   height: 350px;
 
   border-radius: 3px;
-  border: 1px solid rgba(221, 221, 221, 1);
+  border: 1px solid var(--primary-blue-color);
 
   position: sticky;
   top: 0;

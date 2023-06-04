@@ -60,7 +60,7 @@ const SelectorContainer = styled.section`
   align-items: center;
 
   padding-bottom: 10px;
-  border-bottom: 3px solid rgba(170, 170, 170, 1);
+  border-bottom: 2px solid var(--primary-blue-color);
 
   font-size: 13px;
 
@@ -73,7 +73,7 @@ const SelectorContainer = styled.section`
   }
 
   & > button {
-    border: 1px solid rgba(187, 187, 187, 1);
+    border: 1px solid var(--primary-blue-color);
 
     padding: 6px;
 
@@ -96,7 +96,7 @@ const ListBox = styled.ul`
 
 const Contour = styled.hr`
   width: 95%;
-  border: 1px solid rgba(170, 170, 170, 0.2);
+  border: 1px solid var(--primary-beige-color);
 `;
 
 export default CartItemList;

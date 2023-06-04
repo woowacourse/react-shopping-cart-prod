@@ -51,7 +51,7 @@ const HomeButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    box-shadow: 0 10px 10px -3px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 10px 10px -3px var(--image-hover-color);
     transition: all 0.3s ease;
   }
 `;

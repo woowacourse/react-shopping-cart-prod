@@ -40,7 +40,7 @@ const Background = styled.div`
   height: 100vh;
   width: 100vw;
 
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--modal-background-color);
   z-index: 2;
 `;
 
@@ -50,7 +50,7 @@ const Main = styled.div`
   height: 80vh;
   width: 70vw;
 
-  background-color: white;
+  background-color: var(--light-color);
   z-index: 2;
 
   margin-left: 15vw;
@@ -75,8 +75,8 @@ const CloseButton = styled.button`
 
   border-radius: 50%;
 
-  background-color: #333333;
-  color: white;
+  background-color: var(--primary-blue-color);
+  color: var(--light-color);
 `;
 
 export default Modal;

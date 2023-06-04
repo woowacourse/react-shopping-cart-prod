@@ -37,7 +37,7 @@ const OrderStatement = ({
 };
 
 const Wrapper = styled.div`
-  background-color: rgba(170, 170, 170, 0.2);
+  background-color: var(--primary-beige-color);
   border-radius: 5px;
 
   width: 100%;
@@ -54,7 +54,7 @@ const Header = styled.div`
 `;
 
 const Body = styled.div`
-  background-color: white;
+  background-color: var(--light-color);
   border-radius: 5px;
 `;
 
@@ -64,7 +64,7 @@ const NextButton = styled.button`
 
 const Contour = styled.hr`
   width: 95%;
-  border: 1px solid rgba(170, 170, 170, 0.2);
+  border: 1px solid var(--primary-beige-color);
 `;
 
 export default OrderStatement;

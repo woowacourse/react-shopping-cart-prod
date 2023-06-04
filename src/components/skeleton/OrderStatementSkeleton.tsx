@@ -16,7 +16,7 @@ interface WrapperProps {
 }
 
 const Wrapper = styled.div<WrapperProps>`
-  background-color: rgba(170, 170, 170, 0.2);
+  background-color: var(--primary-beige-color);
   border-radius: 5px;
 
   height: ${(props) => props.height}px;

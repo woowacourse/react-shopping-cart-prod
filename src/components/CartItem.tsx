@@ -169,7 +169,7 @@ const NameBox = styled.div`
 const ButtonBox = styled.button`
   cursor: pointer;
 
-  background-color: rgba(0, 0, 0, 0);
+  background-color: var(--transparency-color);
 `;
 
 const PriceBox = styled.p`
@@ -194,7 +194,7 @@ const TotalPriceBox = styled.p<TotalPriceBoxProps>`
 
   & :first-child {
     text-decoration: ${(props) => (props.$sale ? "line-through" : "")};
-    color: ${(props) => (props.$sale ? "gray" : "")};
+    color: ${(props) => (props.$sale ? "var(--gray-color)" : "")};
     font-style: ${(props) => (props.$sale ? "italic" : "")};
     font-size: ${(props) => (props.$sale ? "14px" : "")};
   }

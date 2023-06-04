@@ -64,7 +64,7 @@ const ImageBox = styled.div`
   }
 
   border-radius: 5px;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: var(--skeleton-color);
 `;
 
 const NameBox = styled.div`
@@ -74,7 +74,7 @@ const NameBox = styled.div`
 
   height: 18px;
   width: 100%;
-  background-color: rgba(0, 0, 0, 0.06);
+  background-color: var(--skeleton-name-color);
   color: transparent;
 
   border-radius: 5px;
@@ -91,7 +91,7 @@ const PriceBox = styled.p`
 
   height: 22px;
   color: transparent;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: var(--skeleton-price-color);
 
   border-radius: 5px;
 

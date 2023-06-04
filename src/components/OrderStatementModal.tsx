@@ -74,7 +74,7 @@ const OrderList = styled.div`
 `;
 
 const OrderBox = styled.div`
-  border: 1px solid rgba(170, 170, 170, 0.5);
+  border: 1px solid var(--primary-blue-color);
   border-radius: 5px;
 
   margin: 13px 0;
@@ -87,7 +87,7 @@ const OrderDetail = styled.div`
 
   font-size: 15.5px;
 
-  border: 1px solid rgba(170, 170, 170, 0.3);
+  border: 1px solid var(--primary-blue-color);
   border-radius: 5px;
 
   margin: 5px 10px 10px 10px;
@@ -96,17 +96,6 @@ const OrderDetail = styled.div`
   & :nth-child(even) {
     text-align: right;
   }
-`;
-
-const UsedCoupon = styled.p`
-  text-align: right;
-  font-size: 15.5px;
-
-  border: 1px solid rgba(170, 170, 170, 0.3);
-  border-radius: 5px;
-
-  margin: 5px 10px 10px 10px;
-  padding: 5px 10px;
 `;
 
 export default OrderStatementModal;
