@@ -58,11 +58,11 @@ export const loginState = atom<boolean>({
     true,
 });
 
-export const userState = atom<MemberType>({
-  key: "userState",
+export const memberState = atom<MemberType>({
+  key: "memberState",
   default: { id: 1, nickname: "라잇" },
   // default: selector<MemberType>({
-  //   key: "userState/default",
+  //   key: "memberState/default",
   //   get: async () => {
   //     const response = await getMemberApi();
   //     if (!response.ok) throw new Error(response.status.toString());

@@ -2,7 +2,7 @@ import { useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
-import { getCouponsApi, postOrderApi } from "../api";
+import { getMyCouponsApi, postOrderApi } from "../api";
 import {
   CouponSelectBox,
   Header,
@@ -13,12 +13,12 @@ import {
 import { useToast } from "../hooks/useToast";
 import { selectedProductsState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";
-import { CouponType, LocalProductType } from "../types/domain";
+import { MyCouponType, LocalProductType } from "../types/domain";
 
 const Order = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
-  const [coupons, setCoupons] = useState<CouponType[]>([]);
+  const [coupons, setCoupons] = useState<MyCouponType[]>([]);
   const [discountPrice, setDiscountPrice] = useState<number | null>(null);
   const [selectedCouponIndex, setSelectedCouponIndex] = useState<number>(-1);
   const [selectedProducts, setSelectedProducts] = useRecoilState(
@@ -26,12 +26,12 @@ const Order = () => {
   );
 
   useLayoutEffect(() => {
-    const fetchCoupons = async () => {
+    const fetchMyCoupons = async () => {
       try {
         const requestedCartItemIds = selectedProducts.map(
           (product) => product.cartItemId
         );
-        const response = await getCouponsApi(requestedCartItemIds);
+        const response = await getMyCouponsApi(requestedCartItemIds);
         if (!response.ok) throw new Error(response.status.toString());
         const data = await response.json();
         console.log(data.coupons);
@@ -41,7 +41,7 @@ const Order = () => {
       }
     };
 
-    fetchCoupons();
+    fetchMyCoupons();
   }, []);
 
   const handleCouponSelected = (index: number) => {
@@ -79,6 +79,7 @@ const Order = () => {
           <OrderProductList />
           <PriceContainer>
             <CouponSelectBox
+              type="apply"
               coupons={coupons}
               onSelectHandler={handleCouponSelected}
             />
@@ -119,6 +120,7 @@ const Container = styled.section`
 const PriceContainer = styled.section`
   display: flex;
   flex-direction: column;
+  padding-top: 35px;
 `;
 
 export default Order;

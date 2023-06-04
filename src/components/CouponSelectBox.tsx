@@ -1,15 +1,18 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { ArrowDownIcon } from "../assets";
-import { CouponType } from "../types/domain";
+import { CouponType, MyCouponType } from "../types/domain";
 
+interface CouponSelectBoxType {
+  type: "get" | "apply";
+  coupons: MyCouponType[];
+  onSelectHandler: (index: number) => void;
+}
 export const CouponSelectBox = ({
+  type,
   coupons,
   onSelectHandler,
-}: {
-  coupons: CouponType[];
-  onSelectHandler: (index: number) => void;
-}) => {
+}: CouponSelectBoxType) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [coupon, setCoupon] = useState<string | null>(null);
 
@@ -19,39 +22,66 @@ export const CouponSelectBox = ({
     setIsOpen(false);
   };
 
+  const handleTitleClicked = () => {
+    setIsOpen(!isOpen);
+
+    if (type === "get") {
+      onSelectHandler(-1);
+      setCoupon(null);
+    }
+  };
+
   return (
     <Wrapper>
-      <TitleContainer $isOpen={isOpen} onClick={() => setIsOpen(!isOpen)}>
-        <p>{coupon ? coupon : "쿠폰적용하기"}</p>
+      <TitleContainer $isOpen={isOpen} onClick={handleTitleClicked}>
+        <p>
+          {coupon ? coupon : type === "get" ? "발급가능한쿠폰" : "쿠폰적용하기"}
+        </p>
         <img src={ArrowDownIcon} alt="화살표" />
       </TitleContainer>
       {isOpen && (
         <>
-          {coupons.map((coupon, index) => (
-            <CouponContainer
-              key={coupon.id}
-              onClick={handleCouponClicked(coupon.name, index)}
-              $isAvailable={coupon.isAvailable}
-              disabled={!coupon.isAvailable}
+          {coupons.map((coupon, index) => {
+            return type === "apply" ? (
+              <CouponContainer
+                key={coupon.id}
+                onClick={handleCouponClicked(coupon.name, index)}
+                $isAvailable={coupon.isAvailable}
+                disabled={!coupon.isAvailable}
+              >
+                <NameBox>{coupon.name}</NameBox>
+                <MinPriceBox>
+                  {coupon.minOrderPrice.toLocaleString()}원 이상 주문시 (최대
+                  {coupon.maxDiscountPrice.toLocaleString()}원)
+                </MinPriceBox>
+                {coupon.isAvailable ? (
+                  <DiscountPriceBox>
+                    -{coupon.discountPrice.toLocaleString()}원
+                  </DiscountPriceBox>
+                ) : (
+                  <DiscountPriceBox>적용불가</DiscountPriceBox>
+                )}
+              </CouponContainer>
+            ) : (
+              <CouponContainer
+                key={coupon.id}
+                onClick={handleCouponClicked(coupon.name, index)}
+                $isAvailable={true}
+              >
+                <NameBox>{coupon.name}</NameBox>
+                <MinPriceBox>
+                  {coupon.minOrderPrice.toLocaleString()}원 이상 주문 시
+                </MinPriceBox>
+              </CouponContainer>
+            );
+          })}
+          {type === "apply" && (
+            <NotAppliedCouponBox
+              onClick={handleCouponClicked("쿠폰적용하기", -1)}
             >
-              <NameBox>{coupon.name}</NameBox>
-              <MinPriceBox>
-                {coupon.minOrderPrice.toLocaleString()}원 이상 주문 시
-              </MinPriceBox>
-              {coupon.isAvailable ? (
-                <DiscountPriceBox>
-                  -{coupon.discountPrice.toLocaleString()}원
-                </DiscountPriceBox>
-              ) : (
-                <DiscountPriceBox>적용불가</DiscountPriceBox>
-              )}
-            </CouponContainer>
-          ))}
-          <NotAppliedCouponBox
-            onClick={handleCouponClicked("쿠폰적용하기", -1)}
-          >
-            쿠폰적용안함
-          </NotAppliedCouponBox>
+              쿠폰적용안함
+            </NotAppliedCouponBox>
+          )}
         </>
       )}
     </Wrapper>
@@ -63,10 +93,9 @@ const Wrapper = styled.section`
   flex-direction: column;
   align-items: center;
 
-  max-width: 380px;
+  max-width: 480px;
   width: 350px;
 
-  margin-top: 35px;
   border: 1px solid #dddddd;
   border-bottom: none;
 
