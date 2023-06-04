@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { useNavigate } from 'react-router';
 import { useRecoilValue } from 'recoil';
 import { ReactComponent as AlertBlank } from '../../assets/baemin-alert-blank.svg';
 import CartProductItemList from '../../components/CartProductItemList';
 import PaymentsView from '../../components/PaymentsView';
-import useMutation from '../../hooks/useMutation';
 import usePaymentsData from '../../hooks/usePaymentsData';
-import useToast from '../../hooks/useToast';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
 import styles from './index.module.scss';
 
@@ -14,22 +13,9 @@ function Cart() {
   const cartList = useRecoilValue($CartList(currentServerUrl));
   const paymentsData = usePaymentsData(currentServerUrl);
   const checkedCartIdList = useRecoilValue($CheckedCartIdList(currentServerUrl));
-  const Toast = useToast();
-  const { mutateQuery } = useMutation({
-    onSuccess: () => {
-      Toast.success('체크한 상품을 주문했습니다!');
-    },
-  });
+  const navigate = useNavigate();
 
-  const handleOrder = async () => {
-    await mutateQuery({
-      url: '/orders',
-      method: 'POST',
-      bodyData: {
-        cartItemIds: checkedCartIdList,
-      },
-    });
-  };
+  const handleOrder = () => navigate('/order-checkout');
 
   return (
     <main className={styles.container}>

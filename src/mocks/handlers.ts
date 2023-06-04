@@ -170,8 +170,11 @@ const handlers = [
       productList,
     };
 
+    const filteredCartItems = cartItems.filter(item => !cartItemIds.includes(item.id));
+
     orderList.push(order as OrderType);
     setLocalStorage(LOCAL_STORAGE_KEY.ORDERS, orderList);
+    setLocalStorage(LOCAL_STORAGE_KEY.CART_ITEM, filteredCartItems);
 
     return res(ctx.delay(100), ctx.status(201), ctx.set('Location', `/orders/${order.id}`));
   }),
