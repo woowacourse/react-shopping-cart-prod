@@ -35,3 +35,9 @@ export interface OrderItemList {
   id: number;
   products: Omit<LocalProductType, "cartItemId">[];
 }
+
+export interface OrderDetail extends OrderItemList {
+  discountPrice: number;
+  shippingFee: number;
+  totalProductPrice: number;
+}
