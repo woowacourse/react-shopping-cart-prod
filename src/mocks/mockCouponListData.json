@@ -23,15 +23,15 @@
   {
     "id": 3,
     "couponName": "아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, 아주 긴 이름 쿠폰, ",
-    "discountPercent": 25,
+    "discountPercent": 15,
     "discountAmount": 0,
-    "minAmount": 50000
+    "minAmount": 1000000
   },
   {
     "id": 4,
     "couponName": "미리 메리크리스마스",
-    "discountPercent": 25,
+    "discountPercent": 10,
     "discountAmount": 0,
-    "minAmount": 50000
+    "minAmount": 10000
   }
 ]
