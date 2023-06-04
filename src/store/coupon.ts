@@ -1,13 +1,22 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 
-export type UsableCouponType = {
-  couponId: number;
-  couponName: string;
-  minAmount: string;
-  isPublished: boolean;
-};
+import { CouponItemType } from './../types/index';
 
-export const usableCouponState = atom<UsableCouponType[]>({
+export const couponListState = atom<CouponItemType[]>({
   key: 'couponList',
   default: [],
+});
+
+export const checkedCouponIdState = selector({
+  key: 'couponChecked',
+  get: ({ get }) => {
+    const couponList = get(couponListState);
+
+    return couponList.find((coupon) => coupon.isChecked)?.couponId;
+  },
+});
+
+export const couponDiscountState = atom({
+  key: 'counponDiscount',
+  default: 0,
 });

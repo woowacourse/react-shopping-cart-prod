@@ -14,14 +14,8 @@ export type OrderItemType = {
 };
 
 export const orderListState = atom<OrderItemType[]>({
-  key: 'orderList',
+  key: 'orders',
   default: [],
 });
 
-export const orderItemState = atom<OrderItemType>({
-  key: 'orderList',
-  default: {
-    id: 0,
-    products: [],
-  },
-});
+
