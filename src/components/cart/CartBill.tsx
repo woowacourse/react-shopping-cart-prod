@@ -1,13 +1,15 @@
 import type { CouponType } from '../../types';
 
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 import PortalDrawer from 'react-portal-drawer';
 
 import CouponList from '../coupon/CouponList';
 
+import useBoolean from '../../hooks/useBoolean';
+import useToast from '../../hooks/useToast';
 import {
   cartBillTotalPriceState,
   cartState,
@@ -18,41 +20,35 @@ import {
   usableCouponsState,
 } from '../../recoil/state';
 import { getCoupons, postOrder } from '../../api';
-import useToast from '../../hooks/useToast';
+import { API_ERROR_MESSAGE, NO_TOKEN_REDIRECT_MESSAGE } from '../../constants';
 
-interface Props {}
-
-export default function CartBill({}: Props) {
+export default function CartBill() {
   const token = useRecoilValue(tokenState);
-  if (token === null) return <></>;
+  const { showToast } = useToast();
+
+  if (token === null) {
+    showToast('warning', NO_TOKEN_REDIRECT_MESSAGE);
+    return <Navigate to="/" />;
+  }
 
   const navigate = useNavigate();
 
   const serverName = useRecoilValue(serverNameState);
-  const checkedList = useRecoilValue(checkedListState);
-  const cartBillTotalPrice = useRecoilValue(cartBillTotalPriceState);
   const cart = useRecoilValue(cartState);
+  const cartBillTotalPrice = useRecoilValue(cartBillTotalPriceState);
+  const checkedList = useRecoilValue(checkedListState);
   const usableCoupons = useRecoilValue(usableCouponsState);
   const setCoupons = useSetRecoilState(couponsState);
 
-  const [isCouponOpen, setIsCouponOpen] = useState(false);
+  const [modalOpened, openModal, closeModal] = useBoolean(false);
   const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
-  const { showToast } = useToast();
 
   const discount = selectedCoupon ? cartBillTotalPrice * (selectedCoupon.discountRate / 100) : 0;
   const deliveryFee = checkedList.filter((checked) => checked).length === 0 ? 0 : 3000;
 
-  const openCouponModal = () => {
-    setIsCouponOpen(true);
-  };
-
-  const closeCouponModal = () => {
-    setIsCouponOpen(false);
-  };
-
   const selectCoupon = (coupon: CouponType) => () => {
     setSelectedCoupon(coupon);
-    closeCouponModal();
+    closeModal();
   };
 
   const resetCoupon = () => {
@@ -60,6 +56,8 @@ export default function CartBill({}: Props) {
   };
 
   const order = async () => {
+    if (!confirm('주문 하시겠습니까?')) return;
+
     const couponId = selectedCoupon === null ? null : selectedCoupon.id;
     const orderItems = cart
       .filter((_, index) => checkedList[index])
@@ -69,14 +67,14 @@ export default function CartBill({}: Props) {
       await postOrder(serverName, token, orderItems, couponId);
       navigate('/');
     } catch {
-      showToast('error', '주문 실패');
+      showToast('error', API_ERROR_MESSAGE.postOrder);
       return;
     }
 
     try {
       setCoupons(await getCoupons(serverName, token));
     } catch {
-      showToast('error', '쿠폰 받아오기 실패');
+      showToast('error', API_ERROR_MESSAGE.getCoupons);
     }
   };
 
@@ -85,7 +83,7 @@ export default function CartBill({}: Props) {
       <Wrapper>
         {usableCoupons.length > 0 && (
           <Box>
-            <CouponButton onClick={openCouponModal}>쿠폰선택</CouponButton>
+            <CouponButton onClick={openModal}>쿠폰선택</CouponButton>
             <CouponLabel>
               {selectedCoupon === null ? (
                 '쿠폰을 선택 해주세요'
@@ -119,8 +117,8 @@ export default function CartBill({}: Props) {
           <OrderButton onClick={order}>주문하기</OrderButton>
         </Box>
       </Wrapper>
-      {isCouponOpen && (
-        <PortalDrawer selectors="#root" requestClose={closeCouponModal}>
+      {modalOpened && (
+        <PortalDrawer selectors="#root" requestClose={closeModal}>
           <CouponList coupons={usableCoupons} selectCoupon={selectCoupon} />
         </PortalDrawer>
       )}
