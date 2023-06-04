@@ -18,13 +18,19 @@ export const OrderList = ({ detail, id, orderListItems }: OrderListProps) => {
       <OrderListHeader>
         <p>주문번호 : {id}</p>
         {detail && (
-          <OrderDetail onClick={goPage(ROUTER_PATH.OrderDetail)}>
+          <OrderDetail
+            onClick={goPage(ROUTER_PATH.OrderDetail, {
+              state: {
+                orderId: id,
+              },
+            })}
+          >
             상세보기 &gt;
           </OrderDetail>
         )}
       </OrderListHeader>
       {orderListItems.map((item) => (
-        <OrderItem key={item.id} orderItem={item}/>
+        <OrderItem key={item.id} orderItem={item} />
       ))}
     </Wrapper>
   );

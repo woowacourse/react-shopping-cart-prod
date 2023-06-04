@@ -1,12 +1,17 @@
 import { styled } from "styled-components";
+import { OrderDetail } from "../types/domain";
 
-export const OrderTotalPriceBox = () => {
+export const OrderTotalPriceBox = ({
+  totalProductPrice,
+}: {
+  totalProductPrice: OrderDetail["totalProductPrice"];
+}) => {
   return (
     <Wrapper>
       <OrderTotalPriceHeader>결제금액 정보</OrderTotalPriceHeader>
       <OrderTotalPriceContent>
         <p>총 결제금액</p>
-        <p>325,600원</p>
+        <p>{totalProductPrice.toLocaleString()}원</p>
       </OrderTotalPriceContent>
     </Wrapper>
   );
