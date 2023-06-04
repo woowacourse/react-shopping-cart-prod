@@ -10,7 +10,7 @@ export const OrderedProductTotalPrice = ({totalPrice}:OrderedProductTotalPricePr
       <Style.PaymentAmount>결제금액 정보</Style.PaymentAmount>
       <Style.TotalPriceInformation>
         <Style.TotalPriceText>총 결제금액</Style.TotalPriceText>
-        <Style.TotalPrice>{totalPrice}원</Style.TotalPrice>
+        <Style.TotalPrice>{totalPrice.toLocaleString('ko-KR')}원</Style.TotalPrice>
       </Style.TotalPriceInformation>
     </>
   );

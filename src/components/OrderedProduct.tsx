@@ -13,7 +13,7 @@ export const OrderedProduct = ({ orderDetail }: OrderedProductProps) => {
         <Style.ProductInformation>
           <Style.ProductName>{orderDetail.product.name}</Style.ProductName>
           <Style.ProductPriceAndQuantity>
-            {orderDetail.product.price}원 / 수량 : {orderDetail.quantity}개
+            {orderDetail.product.price.toLocaleString('ko-KR')}원 / 수량 : {orderDetail.quantity}개
           </Style.ProductPriceAndQuantity>
         </Style.ProductInformation>
       </Style.Product>
