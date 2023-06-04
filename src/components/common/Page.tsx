@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 import styled from "styled-components";
 import PageHeader from "./PageHeader";
-import Skeleton from "./Skeleton";
 import Header from "components/Header";
 import ServerSelector from "components/ServerSelector";
 import AsyncBoundary from "./AsyncBoundary";
+import HeaderSkeleton from "components/skeleton/HeaderSkeleton";
 
 const Page = ({
   children,
@@ -16,26 +16,8 @@ const Page = ({
   return (
     <>
       <AsyncBoundary
-        SuspenseFallback={
-          <Skeleton
-            {...{
-              background: "var(--primary-blue-color)",
-              width: "100%",
-              height: "70px",
-              position: "fixed",
-            }}
-          />
-        }
-        ErrorFallback={() => (
-          <Skeleton
-            {...{
-              background: "var(--primary-blue-color)",
-              width: "100%",
-              height: "70px",
-              position: "fixed",
-            }}
-          />
-        )}
+        SuspenseFallback={<HeaderSkeleton />}
+        ErrorFallback={() => <HeaderSkeleton />}
       >
         <Header />
       </AsyncBoundary>
