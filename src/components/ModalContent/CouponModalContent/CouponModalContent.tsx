@@ -53,7 +53,7 @@ function CouponModalContent({ coupons }: CouponModalContentProps) {
               const discountPrice = discountAmount === 0 ? (totalPrice / 100) * discountPercent : discountAmount;
 
               return (
-                <S.Label>
+                <S.Label key={id}>
                   <S.Input
                     name='coupon'
                     type='radio'

@@ -38,7 +38,7 @@ function Order() {
       <PageTitle>주문목록</PageTitle>
       <FatBorder />
       <S.OrderListWrapper>
-        {orders && orders.orderResponses.map((order) => <OrderList {...order} />)}
+        {orders && orders.orderResponses.map((order) => <OrderList key={order.orderId} {...order} />)}
       </S.OrderListWrapper>
     </>
   );
