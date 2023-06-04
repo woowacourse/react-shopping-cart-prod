@@ -3,7 +3,9 @@ import {
   KEY_LOCALSTORAGE_SERVER_OWNER,
   SERVERS,
 } from "../constants";
+import { LocalProductType } from "../types/domain";
 import { getLocalStorage } from "../utils";
+import { parseOrderListData } from "../utils/domain";
 
 // Base64로 인코딩
 const base64 = btoa(
@@ -96,3 +98,53 @@ export const deleteCartItem = async (cartItemId: number) =>
       method: "DELETE",
     }
   );
+
+export const fetchCoupons = async (cartItemIdList: number[]) => {
+  const orderQuery = cartItemIdList
+    .map((el) => {
+      return `cartItemId=${el}`;
+    })
+    .join("&");
+
+  return fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/orders/coupons?${orderQuery}`,
+    {
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    }
+  );
+};
+
+export const fetchAddOrderList = async (
+  orderListData: LocalProductType[],
+  couponId: number | null
+) => {
+  const parsedOrderListData = parseOrderListData(couponId, orderListData);
+
+  return fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/orders`,
+    {
+      headers: {
+        Authorization: `Basic ${base64}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify(parsedOrderListData),
+    }
+  );
+};
