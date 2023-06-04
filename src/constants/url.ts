@@ -8,3 +8,4 @@ export const SERVER = {
 export const PRODUCT_LIST_URL = '/products';
 export const CART_URL = '/cart-items';
 export const ORDER_URL = '/orders';
+export const COUPON_URL = '/coupons';
