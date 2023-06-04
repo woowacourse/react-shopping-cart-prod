@@ -4,7 +4,7 @@ import AmountCounter from '../Common/AmountCounter';
 
 import CartIcon from '../../assets/CartIcon';
 import useCartProducts from '../../hooks/useCartProducts';
-import useProductQuantity from '../../hooks/useProductQuantity';
+import useCartProductUpdate from '../../hooks/useCartProductUpdate';
 
 interface ProductCartButtonProps {
   productId: number;
@@ -12,7 +12,7 @@ interface ProductCartButtonProps {
 
 const ProductCartButton = ({ productId }: ProductCartButtonProps) => {
   const { targetProduct, addProduct } = useCartProducts(productId);
-  const { addCount, subtractCount } = useProductQuantity(
+  const { addCount, subtractCount } = useCartProductUpdate(
     targetProduct?.id,
     targetProduct?.quantity
   );

@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { cartProductHandlerSelector } from '../states/cartProducts';
 import { toastState } from '../states/toast/atom';
 
-const useProductQuantity = (
+const useCartProductUpdate = (
   id: number | undefined,
   quantity: number | undefined
 ) => {
@@ -77,4 +77,4 @@ const useProductQuantity = (
   return { deleteProduct, addCount, subtractCount };
 };
 
-export default useProductQuantity;
+export default useCartProductUpdate;
