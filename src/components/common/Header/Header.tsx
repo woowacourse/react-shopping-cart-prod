@@ -1,16 +1,18 @@
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValueLoadable } from 'recoil';
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 
 import CartIcon from '../../../assets/cart-icon.svg';
 import Logo from '../../../assets/logo.png';
 import OrderIcon from '../../../assets/order-icon.svg';
 import { PATH } from '../../../constants/path';
 import { cartListItemCountState } from '../../../store/cart';
+import { memberInformationState } from '../../../store/member';
 import ServerSelect from '../ServerSelect/ServerSelect';
 import * as S from './Header.styles';
 
 const Header = () => {
   const cartListItemCount = useRecoilValueLoadable(cartListItemCountState);
+  const memberInformation = useRecoilValue(memberInformationState);
   const navigate = useNavigate();
 
   return (
@@ -19,6 +21,10 @@ const Header = () => {
         <S.Logo src={Logo} alt="logo" onClick={() => navigate(PATH.ROOT)} />
         <S.HeaderRightContainer>
           <ServerSelect />
+          <S.RankAndIdContainer>
+            <S.MemberId size="xSmall">{memberInformation.id} 님</S.MemberId>
+            <S.MemberRank rank={'일반'}>{memberInformation.rank}</S.MemberRank>
+          </S.RankAndIdContainer>
           <S.OrderPageButton
             type="button"
             aria-labelledby="order-button"

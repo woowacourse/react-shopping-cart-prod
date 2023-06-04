@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 import { VerticalLine } from '../../../styles/mixin';
+import { Member, RANK } from '../../../types';
 import { Button } from '../Button/Button.styles';
+import { Text } from '../Text/Text.styles';
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -35,6 +37,31 @@ const HeaderRightContainer = styled.section`
 
 const Logo = styled.img`
   height: 40px;
+`;
+const RankAndIdContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+const MemberRank = styled.span<{ rank: Member['rank'] }>`
+  display: inline-block;
+  min-width: 38px;
+  height: 16px px;
+  margin-right: 4px;
+  padding: 0px 4px;
+  border-radius: 30px;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  letter-spacing: -0.3px;
+  vertical-align: 0px;
+  border: 1px solid ${({ theme, rank }) => theme.color.rank[rank]};
+  color: ${({ theme, rank }) => theme.color.rank[rank]};
+`;
+
+const MemberId = styled(Text)`
+  margin-right: 4px;
 `;
 
 const OrderPageButton = styled(Button)`
@@ -100,7 +127,10 @@ export {
   HeaderContainer,
   HeaderContentContainer,
   HeaderRightContainer,
+  RankAndIdContainer,
   Logo,
+  MemberRank,
+  MemberId,
   OrderPageButton,
   DividerLine,
   CartButton,
