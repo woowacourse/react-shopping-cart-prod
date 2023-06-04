@@ -6,6 +6,7 @@ import {
   KEY_LOCALSTORAGE_SERVER_OWNER,
   SERVERS,
 } from "../constants";
+import { LocalProductType } from "../types/domain";
 
 const getProductsApi = () =>
   fetch(
@@ -39,15 +40,25 @@ const getCartItemsApi = async () =>
     }
   );
 
-const getUserApi = () =>
-  fetch(`${SERVERS["루카"]}/members/my`, {
-    headers: {
-      Authorization: `Basic ${getLocalStorage(
-        KEY_LOCALSTORAGE_LOGIN_TOKEN,
-        DEFAULT_VALUE_LOGIN_TOKEN
-      )}`,
-    },
-  });
+const getMemberApi = () =>
+  fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/members/profile`,
+    {
+      headers: {
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
+      },
+    }
+  );
 
 const getCouponsApi = (cartItemIds: number[]) => {
   const cartItemIdsQuery = cartItemIds
@@ -138,6 +149,28 @@ const patchQuantityApi = async (cartItemId: number, newQuantity: number) =>
     }
   );
 
+const postLoginApi = async () =>
+  fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/auth/login`,
+    {
+      headers: {
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+    }
+  );
+
 const postCartItemApi = async (productId: number) =>
   fetch(
     `${
@@ -161,7 +194,10 @@ const postCartItemApi = async (productId: number) =>
     }
   );
 
-const postOrderApi = async (cartItemIds: number[], couponId: number) =>
+const postOrderApi = async (
+  cartItems: Omit<LocalProductType, "id">[],
+  couponId: number
+) =>
   fetch(
     `${
       SERVERS[
@@ -180,9 +216,11 @@ const postOrderApi = async (cartItemIds: number[], couponId: number) =>
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ cartItemIds: cartItemIds, couponId: couponId }),
+      body: JSON.stringify({ products: cartItems, couponId: couponId }),
     }
   );
+
+// const postLogin = () =>
 
 const deleteCartItemApi = async (cartItemId: number) =>
   fetch(
@@ -209,10 +247,11 @@ export {
   getProductsApi,
   getCartItemsApi,
   getCouponsApi,
-  getUserApi,
+  getMemberApi,
   getOrdersApi,
   getOrderDetailApi,
   patchQuantityApi,
+  postLoginApi,
   postCartItemApi,
   postOrderApi,
   deleteCartItemApi,
