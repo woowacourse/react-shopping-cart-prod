@@ -42,7 +42,7 @@ const OrderDetailNavigator = ({ orderId, createdAt, orderStatus }: Props) => {
         </Button>
       )}
       <p>
-        주문번호&nbsp;&nbsp;|&nbsp;
+        <span>주문번호&nbsp;&nbsp;|&nbsp;</span>
         <S.OrderId>{orderId}</S.OrderId>
         <span>[ {createdAt} ]</span>
       </p>
@@ -51,7 +51,7 @@ const OrderDetailNavigator = ({ orderId, createdAt, orderStatus }: Props) => {
           css={buttonStyle}
           onClick={() => goToPage(`${ROUTE_PATH.ORDER_LIST_PAGE}/${orderId}`)}
         >
-          상세보기
+          <span>상세보기</span>
           <BsChevronRight style={{ marginLeft: '4px' }} />
         </Button>
       ) : (
@@ -82,6 +82,19 @@ const S = {
         margin-right: auto;
       }
     }
+
+    @media (max-width: 420px) {
+      padding-bottom: 12px;
+
+      & button:first-child {
+        margin-right: 16px;
+
+        & + p > span:first-child,
+        & + p > span:nth-child(2) {
+          display: none;
+        }
+      }
+    }
   `,
 
   OrderId: styled.span`
@@ -92,6 +105,14 @@ const S = {
       margin-left: 28px;
       font-size: 14px;
       color: var(--text-color);
+    }
+
+    @media (max-width: 420px) {
+      & + span {
+        margin-left: 0;
+        font-size: 15px;
+        font-weight: 500;
+      }
     }
   `,
 
@@ -105,6 +126,16 @@ const buttonStyle = css`
 
   & > svg {
     padding-top: 2px;
+  }
+
+  @media (max-width: 420px) {
+    & > svg {
+      padding-top: 0;
+    }
+
+    & span {
+      display: none;
+    }
   }
 `;
 

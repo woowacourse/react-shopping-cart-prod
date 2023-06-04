@@ -13,8 +13,8 @@ interface Props extends Pick<OrderList, 'orderStatus'> {
 
 const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments, orderStatus }: Props) => {
   return (
-    <S.Wrapper>
-      <S.List tabIndex={0}>
+    <S.Wrapper tabIndex={0}>
+      <S.List>
         <S.Title>
           <BsCreditCardFill />
           결제 정보

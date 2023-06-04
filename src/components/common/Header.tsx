@@ -74,7 +74,7 @@ const buttonStyle = css`
   }
 
   @media (max-width: 480px) {
-    font-size: 24px;
+    font-size: 20px;
 
     & svg {
       align-self: center;

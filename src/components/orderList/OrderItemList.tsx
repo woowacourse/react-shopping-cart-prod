@@ -20,7 +20,11 @@ const OrderItemList = ({ tag, orderList }: Props) => {
   return (
     <S.List as={listTag}>
       <ul>
-        <OrderDetailNavigator orderId={orderList.orderId} createdAt={createdAt} orderStatus={orderStatus} />
+        <OrderDetailNavigator
+          orderId={orderList.orderId}
+          createdAt={createdAt}
+          orderStatus={orderStatus}
+        />
         {orderId ? (
           products.map((product) => (
             <OrderItem
@@ -58,6 +62,10 @@ const S = {
     flex: 1;
     margin-bottom: 50px;
     padding: 0 24px;
+
+    @media (max-width: 420px) {
+      padding: 0;
+    }
   `,
 };
 

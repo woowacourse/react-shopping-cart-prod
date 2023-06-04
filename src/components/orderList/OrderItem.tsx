@@ -79,6 +79,12 @@ const S = {
     @media (max-width: 420px) {
       flex-direction: column;
     }
+
+    & section {
+      @media (max-width: 420px) {
+        text-align: center;
+      }
+    }
   `,
 
   Name: styled.h3`
@@ -93,6 +99,10 @@ const S = {
 
     & span {
       margin-left: 4px;
+    }
+
+    @media (max-width: 420px) {
+      margin-top: 16px;
     }
   `,
 
@@ -126,6 +136,10 @@ const S = {
     @media (max-width: 1270px) {
       font-size: 15px;
     }
+
+    @media (max-width: 420px) {
+      row-gap: 0;
+    }
   `,
 
   TotalDetail: styled.div`
@@ -136,6 +150,10 @@ const S = {
   OrderStatus: styled.p`
     margin-top: 36px;
     color: var(--red-color);
+
+    @media (max-width: 420px) {
+      margin-top: 40px;
+    }
   `,
 };
 
@@ -155,6 +173,10 @@ const cancelButtonStyle = css`
   font-size: 15px;
   color: var(--text-color);
   border: 1px solid var(--gray-color-100);
+
+  @media (max-width: 420px) {
+    margin: 42px auto 0;
+  }
 `;
 
 export default OrderItem;
