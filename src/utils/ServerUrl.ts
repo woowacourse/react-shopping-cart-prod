@@ -2,6 +2,7 @@ import {
   BASE_URL,
   CART_ITEMS_PATH_NAME,
   COUPONS_PATH_NAME,
+  ORDERS_PATH_NAME,
   PRODUCTS_PATH_NAME,
   USERS_COUPON_PATH_NAME,
 } from '../constant';
@@ -19,6 +20,9 @@ const ServerUtil = {
 
   getUsersCouponUrl: (serverName: ServerName) =>
     BASE_URL[serverName] + USERS_COUPON_PATH_NAME,
+
+  getOrdersUrl: (serverName: ServerName) =>
+    BASE_URL[serverName] + ORDERS_PATH_NAME,
 };
 
 export default ServerUtil;
