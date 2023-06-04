@@ -6,7 +6,6 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import ErrorPage from './ErrorPage';
-import SubHeader from '../common/SubHeader';
 import Order from '../order/Order';
 
 import { serverNameState, tokenState } from '../../recoil/state';
