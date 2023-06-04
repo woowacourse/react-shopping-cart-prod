@@ -1,4 +1,4 @@
-interface Coupon {
+export interface Coupon {
   id: number;
   name: string;
   ownerMemberId: number;
