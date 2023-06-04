@@ -13,7 +13,7 @@ const OrderDetailPage = () => {
   const server = useRecoilValue(serverState);
   const [orderDetail, setOrderDetail] = useState<OrderDetail | null>(null);
   const { id } = useParams();
-  const { api } = useFetchData();
+  const { api, isLoading } = useFetchData();
 
   useEffect(() => {
     api
@@ -22,6 +22,8 @@ const OrderDetailPage = () => {
       .catch((error) => alert(error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server, id]);
+
+  if (isLoading) return null;
 
   if (!orderDetail) return <div>없는 주문 번호입니다.</div>;
 

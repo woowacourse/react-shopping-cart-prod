@@ -16,7 +16,7 @@ const OrderSheet = () => {
   const server = useRecoilValue(serverState);
   const goToPage = useGoToAnotherPage();
 
-  const { api } = useFetchData();
+  const { api, isLoading } = useFetchData();
   const [coupons, setCoupons] = useState<Coupon[]>([]);
 
   const [checkedCoupon, setCheckedCoupon] = useState<number>(0);
@@ -58,6 +58,8 @@ const OrderSheet = () => {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
+
+  if (isLoading) return null;
 
   return (
     <div>
