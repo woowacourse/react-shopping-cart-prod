@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { ServerSelectBox } from './ServerSelectBox';
 import * as S from './NavigationBar.style';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { serverState } from '../../../recoil/serverAtom';
 import useGetQuery from '../../../hooks/useGetQuery';
 import { Point } from '../../../types/types';
@@ -16,8 +16,8 @@ function NavigationBar() {
   const navigate = useNavigate();
   const memberAuth = useRecoilValue(memberAuthorization);
   const server = useRecoilValue(serverState);
-  const setMemberPoint = useSetRecoilState(memberPointState);
-  const { data: point } = useGetQuery<Point>({
+  const [memberPoint, setMemberPoint] = useRecoilState(memberPointState);
+  useGetQuery<Point>({
     fetcher: fetchMemberPoint({ server, auth: memberAuth }),
     onSuccess: (point) => setMemberPoint(point),
   });
@@ -32,7 +32,7 @@ function NavigationBar() {
           <S.LogoTitle>주문목록</S.LogoTitle>
         </S.Logo>
       </S.OrderListButton>
-      {point && <UserSelector point={point} />}
+      {memberPoint && <UserSelector point={memberPoint} />}
     </S.NavBar>
   );
 }

@@ -43,7 +43,7 @@ const UserSelector = ({ point }: UserSelectorProps) => {
             <S.UserInfoWrapper>
               <S.UserInfoName>{currentMemberInfo.name}</S.UserInfoName>
               <S.UserInfoId>{currentMemberInfo.email}</S.UserInfoId>
-              {point && <S.UserInfoPoint>보유 포인트: {point.totalPoint}p</S.UserInfoPoint>}
+              {point && <S.UserInfoPoint>보유 포인트: {point.totalPoint.toLocaleString()}p</S.UserInfoPoint>}
             </S.UserInfoWrapper>
           )}
           <S.UserListWrapper>
