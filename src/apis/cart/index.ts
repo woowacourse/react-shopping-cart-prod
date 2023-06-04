@@ -49,6 +49,6 @@ export const updateCartProductsQuantity = async (quantity: CartProduct['quantity
   await api.patch(`${URL}/${cartProductId}`, { quantity });
 };
 
-export const removeCartProduct = async (cartProductId: number) => {
-  await api.remove(`${URL}/${cartProductId}`);
+export const removeCartProduct = async (cartProductIds: number[]) => {
+  await api.remove(URL, { cartItemIds: cartProductIds });
 };

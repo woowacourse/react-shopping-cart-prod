@@ -7,8 +7,8 @@ import { checkedCartProductIdsState } from 'state/checkedCartProductIds';
 
 const useShoppingCart = () => {
   const [cartProducts, setCartProducts] = useRecoilState(cartProductsState);
-  const setCheckedCartProductIds = useSetRecoilState(checkedCartProductIdsState);
   const cartProductIdStore = useRecoilValue(cartProductIdStoreState);
+  const setCheckedCartProductIds = useSetRecoilState(checkedCartProductIdsState);
 
   const initialAddCart = async (product: Product) => {
     try {
@@ -85,7 +85,7 @@ const useShoppingCart = () => {
     if (!targetCartProduct) return;
 
     try {
-      await removeCartProduct(cartProductIdStore[id]);
+      await removeCartProduct([cartProductIdStore[id]]);
     } catch (error) {
       console.error(error);
       alert('상품을 삭제하지 못했어요. 다시 시도해주세요');
@@ -99,13 +99,19 @@ const useShoppingCart = () => {
     });
   };
 
-  const deleteCheckedCartProducts = (checkedCartProducts: CheckedCartProducts) => {
-    [...checkedCartProducts].forEach(async (productCartId) => {
-      const productId = Object.keys(cartProductIdStore).find((productId) => {
-        return cartProductIdStore[Number(productId)] === productCartId;
-      });
+  const deleteCheckedCartProducts = async (checkedCartProducts: CheckedCartProducts) => {
+    try {
+      await removeCartProduct([...checkedCartProducts]);
+    } catch (error) {
+      console.error(error);
+      alert('상품을 삭제하지 못했어요. 다시 시도해주세요');
+      return;
+    }
 
-      await deleteCartProduct(Number(productId));
+    setCartProducts((prev) => {
+      prev.clear();
+
+      return new Map(prev.entries());
     });
   };
 
