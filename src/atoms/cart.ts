@@ -4,6 +4,7 @@ import { CartItem } from '../types/cart';
 import { fetchCart } from '../apis/cart';
 import { SpecificCoupon } from '../types/coupon';
 import { Product } from '../types/products';
+import { selectedCouponsState } from './coupon';
 
 export const cartState = atom({
   key: 'cart',
@@ -100,20 +101,4 @@ export const totalPriceSelector = selector({
       0
     );
   },
-});
-
-export const selectedCouponsState = atom<Map<Product['id'], SpecificCoupon>>({
-  key: 'selectedCouponsState',
-  default: new Map(),
-});
-
-export const selectedCouponState = selectorFamily<
-  SpecificCoupon | null,
-  Product['id']
->({
-  key: 'selectedCouponState',
-  get:
-    (id) =>
-    ({ get }) =>
-      get(selectedCouponsState).get(id) ?? null,
 });

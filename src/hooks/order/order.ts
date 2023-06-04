@@ -2,11 +2,12 @@ import { cartState } from './../../atoms/cart';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
 import { postOrder } from '../../apis/order';
-import { selectedCouponsState, selectedItemsState } from '../../atoms/cart';
+import { selectedItemsState } from '../../atoms/cart';
 import { ordersSelector } from '../../atoms/order';
 import { PAGE_ROUTES } from '../../constants/routes';
 import { waitForMutation } from '../../utils/waitFor';
 import { getParsedLocation } from '../../utils/getParsedLocation';
+import { selectedCouponsState } from '../../atoms/coupon';
 
 export const useOrderMutate = () => {
   const navigate = useNavigate();

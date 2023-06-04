@@ -1,7 +1,10 @@
-import { useRef, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { selectedCouponsState, selectedCouponState } from '../../../atoms/cart';
-import { productCouponsSelector } from '../../../atoms/coupon';
+import { useRef } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  productCouponsSelector,
+  selectedCouponsState,
+  selectedCouponState,
+} from '../../../atoms/coupon';
 import { DELETE_CART_ITEM } from '../../../constants/cart';
 import { useCartSelector, useMutateCart } from '../../../hooks/cart/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';

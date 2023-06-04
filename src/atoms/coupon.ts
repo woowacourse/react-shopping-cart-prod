@@ -1,7 +1,8 @@
 import { SpecificCoupon } from './../types/coupon';
 import { fetchCoupons } from './../apis/coupon';
-import { selector, selectorFamily } from 'recoil';
+import { atom, selector, selectorFamily } from 'recoil';
 import { ProductCouponMap } from '../types/coupon';
+import { Product } from '../types/products';
 
 export const couponsSelector = selector({
   key: 'couponsSelector',
@@ -34,4 +35,20 @@ export const productCouponsSelector = selectorFamily({
 export const allCouponsSelector = selector({
   key: 'allCouponsSelector',
   get: ({ get }) => get(couponsSelector).allCoupons,
+});
+
+export const selectedCouponsState = atom<Map<Product['id'], SpecificCoupon>>({
+  key: 'selectedCouponsState',
+  default: new Map(),
+});
+
+export const selectedCouponState = selectorFamily<
+  SpecificCoupon | null,
+  Product['id']
+>({
+  key: 'selectedCouponState',
+  get:
+    (id) =>
+    ({ get }) =>
+      get(selectedCouponsState).get(id) ?? null,
 });
