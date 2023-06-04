@@ -28,6 +28,7 @@ const useGetQuery = <ResponseData>({ fetcher, onSuccess, onError, onSettled }: U
       onSuccess?.(responseData);
     } catch (error) {
       if (error instanceof Error) {
+        setError(error.message);
         onError?.(error.message);
       } else {
         console.error(error);
