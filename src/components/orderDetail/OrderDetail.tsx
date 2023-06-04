@@ -24,7 +24,11 @@ const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments }: Props) 
         배송비 <Price price={deliveryFee} />
       </li>
       <li>
-        할인쿠폰 <Price price={coupon ? -coupon : 0} css={priceStyle} />
+        할인쿠폰
+        <Price
+          price={coupon && coupon.priceDiscount ? -coupon.priceDiscount : 0}
+          css={priceStyle}
+        />
       </li>
       <li>
         총 결제금액 <Price price={totalPayments} />
