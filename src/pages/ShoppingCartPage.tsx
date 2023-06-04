@@ -3,7 +3,7 @@ import CartPriceSection from 'components/CartPriceSection/CartPriceSection';
 import CartProductSection from 'components/CartProductSection/CartProductSection';
 import useShoppingCart from 'hooks/useShoppingCart';
 import Box from 'components/@common/Box';
-import EmptyCartSection from 'components/EmptyCartSection/EmptyCartSection';
+import EmptyDataCard from 'components/EmptyCartSection/EmptyDataCard';
 
 const ShoppingCartPage = () => {
   const { cartProducts } = useShoppingCart();
@@ -17,7 +17,7 @@ const ShoppingCartPage = () => {
           <CartPriceSection />
         </SectionContainer>
       ) : (
-        <EmptyCartSection />
+        <EmptyDataCard>장바구니가 비어있어요</EmptyDataCard>
       )}
     </Box>
   );
