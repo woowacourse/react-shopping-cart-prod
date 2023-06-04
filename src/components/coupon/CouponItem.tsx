@@ -89,7 +89,12 @@ const Style = {
   `,
 
   Name: styled.p`
+    max-width: 200px;
     margin-bottom: 10px;
+    overflow: hidden;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
   `,
 
   Detail: styled.p`
