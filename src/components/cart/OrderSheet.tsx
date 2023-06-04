@@ -56,7 +56,7 @@ const OrderSheet = () => {
         setCoupons([]);
         alert('서버에서 쿠폰을 가져오지 못하였습니다.');
       });
-  }, [server]);
+  }, [server, api]);
 
   return (
     <div>

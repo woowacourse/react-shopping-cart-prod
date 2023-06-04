@@ -20,7 +20,7 @@ const OrderPage = () => {
         setOrders(orders);
       })
       .catch((error) => alert(error));
-  }, [server]);
+  }, [server, api]);
 
   if (!orders) return <div>없는 주문 번호입니다.</div>;
 
