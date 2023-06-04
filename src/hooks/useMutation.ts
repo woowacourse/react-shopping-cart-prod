@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { serverState } from '../store/ServerState';
 import { base64 } from '../constants';
-import { CART_BASE_URL, ORDER_BASE_URL } from '../constants/url';
 import useToast from './useToast';
 
 type MutationMethod = 'POST' | 'PUT' | 'DELETE' | 'PATCH';
@@ -21,6 +20,7 @@ type DeleteBodyType = {
 type OrderPostBodyType = {
   cartIds: number[];
   point: number;
+  deliveryFee: number;
 };
 
 interface FetchInfo {
