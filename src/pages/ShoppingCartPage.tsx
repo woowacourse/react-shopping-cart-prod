@@ -3,7 +3,7 @@ import CartPriceSection from 'components/CartPriceSection/CartPriceSection';
 import CartProductSection from 'components/CartProductSection/CartProductSection';
 import useShoppingCart from 'hooks/useShoppingCart';
 import Box from 'components/@common/Box';
-import EmptyDataCard from 'components/EmptyCartSection/EmptyDataCard';
+import EmptyDataCard from 'components/EmptyDataCard/EmptyDataCard';
 
 const ShoppingCartPage = () => {
   const { cartProducts } = useShoppingCart();
