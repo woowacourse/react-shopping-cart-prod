@@ -64,7 +64,7 @@ const ExpectedPaymentBoxSection = styled.section`
   @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
     position: sticky;
     top: 75px;
-    margin: 0;
+    margin: 75px 0 0 0;
   }
 `;
 

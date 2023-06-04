@@ -24,7 +24,11 @@ const OrderList = () => {
 
 const OrderListContainer = styled.div`
   & > * {
-    margin: 48px 0 0 0;
+    margin: 24px 0 0 0;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    margin: 36px 0 0 0;
   }
 `;
 

@@ -61,8 +61,8 @@ export interface ImageStyleProps {
 
 export const imageStyles = {
   small: {
-    width: '180px',
-    height: '120px',
+    width: '150px',
+    height: '100px',
   },
   medium: {
     width: '270px',

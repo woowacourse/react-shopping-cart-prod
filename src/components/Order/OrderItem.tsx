@@ -31,12 +31,12 @@ const OrderTitle = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 75px;
-  padding: 0 24px;
-  background: ${({ theme }) => theme.colors.gray50};
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  padding: 0 12px;
+  background: ${({ theme }) => theme.colors.gray100};
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
 
   @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    padding: 0 40px;
+    padding: 0 24px;
   }
 `;
 

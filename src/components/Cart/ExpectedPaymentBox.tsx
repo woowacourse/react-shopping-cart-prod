@@ -72,19 +72,20 @@ const ExpectedPaymentContainer = styled.div`
 
 const ExpectedPaymentTitle = styled.h2`
   height: 80px;
-  padding: 0 30px;
+  padding: 0 20px;
   line-height: 80px;
   font-size: 20px;
   font-weight: 400;
   border-bottom: 3px solid ${({ theme }) => theme.colors.gray100};
 
   @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    padding: 0 30px;
     font-size: 24px;
   }
 `;
 
 const ExpectedPaymentInfo = styled.div`
-  padding: 30px 30px 0;
+  padding: 20px 20px 0;
 
   & > dl + dl {
     margin: 16px 0 0 0;
@@ -92,6 +93,10 @@ const ExpectedPaymentInfo = styled.div`
 
   & > dl:last-of-type {
     margin: 36px 0 0 0;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    padding: 30px 30px 0;
   }
 `;
 
@@ -102,9 +107,17 @@ const PaymentInfoItem = styled.dl`
 
   & > dt,
   dd {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
     line-height: 1.5;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    & > dt,
+    dd {
+      font-size: 20px;
+      font-weight: 600;
+    }
   }
 `;
 
@@ -113,8 +126,12 @@ const SelectBoxWrapper = styled.div`
 `;
 
 const OrderButtonWrapper = styled.div`
-  padding: 0 30px 30px;
+  padding: 0 20px 20px;
   margin: 40px 0 0 0;
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    padding: 0 30px 30px;
+  }
 `;
 
 export default ExpectedPaymentBox;

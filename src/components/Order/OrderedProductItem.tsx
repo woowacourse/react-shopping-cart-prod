@@ -32,8 +32,12 @@ const OrderedItem = styled.li`
   display: flex;
   align-items: center;
   height: 180px;
-  padding: 0 24px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  padding: 0 12px;
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    padding: 0 24px;
+  }
 `;
 
 const ItemContainer = styled.div`
@@ -41,20 +45,29 @@ const ItemContainer = styled.div`
 `;
 
 const ProductInfoContainer = styled.dl`
-  margin: 0 0 0 12px;
+  margin: 0 0 0 16px;
   align-self: start;
 
   & > dt {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   & > dd {
     margin: 12px 0 0 0;
     color: ${({ theme }) => theme.colors.gray400};
+    font-size: 14px;
   }
 
   @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
     margin: 0 0 0 24px;
+
+    & > dt {
+      font-size: 20px;
+    }
+
+    & > dd {
+      font-size: 16px;
+    }
   }
 `;
 

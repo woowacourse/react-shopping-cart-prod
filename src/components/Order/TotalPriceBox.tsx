@@ -20,11 +20,16 @@ const TotalPriceHeader = styled.div`
   display: flex;
   align-items: center;
   height: 75px;
-  padding: 0 24px;
-  font-size: 20px;
+  padding: 0 12px;
+  font-size: 18px;
   font-weight: 500;
-  background: ${({ theme }) => theme.colors.gray50};
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  background: ${({ theme }) => theme.colors.gray100};
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    padding: 0 24px;
+    font-size: 20px;
+  }
 `;
 
 const TotalPriceBody = styled.dl`
@@ -32,13 +37,23 @@ const TotalPriceBody = styled.dl`
   align-items: center;
   justify-content: space-between;
   height: 120px;
-  padding: 0 24px;
-  border: 1px solid ${({ theme }) => theme.colors.gray100};
+  padding: 0 12px;
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
 
   & > dt,
   dd {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
+    padding: 0 24px;
+
+    & > dt,
+    dd {
+      font-size: 20px;
+      font-weight: 500;
+    }
   }
 `;
 
