@@ -113,7 +113,7 @@ export const orderHandler = [
     const orderInfo: PostOrdersRequestBody = await req.json();
     const orderId = Order.request(orderInfo);
 
-    if (orderId === -1) return res(ctx.status(400, 'Order Failed'));
-    return res(ctx.status(201), ctx.body(JSON.stringify({ orderId })));
+    if (orderId === -1) return res(ctx.delay(1234), ctx.status(400, 'Order Failed'));
+    return res(ctx.delay(1234), ctx.status(201), ctx.body(JSON.stringify({ orderId })));
   }),
 ];

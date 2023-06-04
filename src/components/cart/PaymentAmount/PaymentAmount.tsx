@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { formatPrice } from '../../../utils/formatPrice';
 import usePaymentAmount from './usePaymentAmount';
 import CouponInfo from '../../../types/coupon';
@@ -7,6 +9,7 @@ import cartState from '../../../globalState/atoms/cartState';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
 import { USER_AUTH_TOKEN } from '../../../constant';
+import LoadingSpinner from '../../common/LoadingSpinner/LoadingSpinner';
 
 interface PaymentAmountProps {
   coupon?: CouponInfo | null;
@@ -17,6 +20,7 @@ const PaymentAmount = (props: PaymentAmountProps) => {
   const { paymentAmount, deliveryFee, orderingItems } = usePaymentAmount();
   const serverName = useRecoilValue(serverNameState);
   const setCartState = useSetRecoilState(cartState);
+  const [isOrdering, setIsOrdering] = useState(false);
 
   const discountedPrice = (() => {
     if (!coupon) return 0;
@@ -34,6 +38,8 @@ const PaymentAmount = (props: PaymentAmountProps) => {
 
     if (!window.confirm('정말로 주문하시겠습니까?')) return;
 
+    setIsOrdering(true);
+
     const url = ServerUtil.getOrderUrl(serverName);
     const response = await fetch(url, {
       method: 'POST',
@@ -47,6 +53,8 @@ const PaymentAmount = (props: PaymentAmountProps) => {
         deliveryFee,
       }),
     });
+
+    setIsOrdering(false);
 
     if (response.status !== 201) {
       alert('추문에 실패하였습니다. 잠시 후 다시 시도해 주세요!');
@@ -88,6 +96,15 @@ const PaymentAmount = (props: PaymentAmountProps) => {
         </AmountTextContainer>
         <OrderButton onClick={() => order()}>주문하기</OrderButton>
       </Contents>
+      {isOrdering
+        ? createPortal(
+            <OrderingDiv>
+              <OrderBackdropDiv />
+              <LoadingSpinner color="#04c09e" />
+            </OrderingDiv>,
+            document.body
+          )
+        : null}
     </PaymentAmountContainer>
   );
 };
@@ -144,6 +161,27 @@ const OrderButton = styled.button`
   color: #ffffff;
 
   cursor: pointer;
+`;
+
+const OrderingDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > * {
+    z-index: 2;
+  }
+`;
+
+const OrderBackdropDiv = styled.div`
+  position: fixed;
+  left: 0;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background-color: #33333366;
 `;
 
 export default PaymentAmount;
