@@ -1,5 +1,5 @@
 import { BsCreditCardFill } from 'react-icons/bs';
-import { css, styled } from 'styled-components';
+import { styled } from 'styled-components';
 import { CouponState } from '../../types';
 import Price from '../Price';
 
@@ -25,10 +25,7 @@ const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments }: Props) 
       </li>
       <S.Coupon coupon={coupon?.name}>
         할인쿠폰
-        <Price
-          price={coupon && coupon.priceDiscount ? -coupon.priceDiscount : 0}
-          css={priceStyle}
-        />
+        <Price price={coupon && coupon.priceDiscount ? -coupon.priceDiscount : 0} />
       </S.Coupon>
       <li>
         총 결제금액 <Price price={totalPayments} />
@@ -94,9 +91,5 @@ const S = {
     }
   `,
 };
-
-const priceStyle = css`
-  font-size: 18px;
-`;
 
 export default OrderDetail;
