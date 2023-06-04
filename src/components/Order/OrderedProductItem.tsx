@@ -16,7 +16,7 @@ const OrderedProductItem = ({
   return (
     <OrderedItem>
       <ItemContainer>
-        <Image src={imageUrl} alt={name} size='small' />
+        <Image src={imageUrl} alt={name} variant='small' />
         <ProductInfoContainer>
           <dt>{name}</dt>
           <dd>

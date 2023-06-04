@@ -1,10 +1,7 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import useToast from '../../hooks/useToast';
-
-interface ToastStyleProps {
-  variant: 'success' | 'error';
-}
+import { ToastStyleProps, toastStyle } from '../../styles/component';
 
 const Toast = () => {
   const toastInfo = useToast();
@@ -12,17 +9,6 @@ const Toast = () => {
   if (toastInfo === null) return null;
 
   return <Container variant={toastInfo.variant}>{toastInfo.message}</Container>;
-};
-
-const toastStyle = {
-  success: css`
-    border: 2px solid ${({ theme }) => theme.colors.primary};
-    color: ${({ theme }) => theme.colors.primary};
-  `,
-  error: css`
-    border: 2px solid ${({ theme }) => theme.colors.error};
-    color: ${({ theme }) => theme.colors.error};
-  `,
 };
 
 const Container = styled.div<ToastStyleProps>`

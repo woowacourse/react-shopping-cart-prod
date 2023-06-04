@@ -1,29 +1,22 @@
 import type { ImgHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-type ImageSizeType = 'small' | 'medium';
+import {
+  ComponentVariant,
+  ImageStyleProps,
+  imageStyles,
+} from '../../styles/component';
 
 interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
-  size?: ImageSizeType;
+  variant?: ComponentVariant;
 }
 
-const Image = ({ size = 'medium', ...props }: ImageProps) => {
-  return <StyledImage {...props} size={size} />;
+const Image = ({ variant = 'medium', ...props }: ImageProps) => {
+  return <StyledImage {...props} variant={variant} />;
 };
 
-const imageStyles = {
-  small: {
-    width: '180px',
-    height: '120px',
-  },
-  medium: {
-    width: '270px',
-    height: '180px',
-  },
-};
-
-const StyledImage = styled.img<{ size: ImageSizeType }>`
-  ${({ size }) => imageStyles[size]}
+const StyledImage = styled.img<ImageStyleProps>`
+  ${({ variant }) => imageStyles[variant]}
 `;
 
 export default Image;

@@ -1,7 +1,11 @@
 import type { OptionHTMLAttributes, SelectHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-type SelectBoxVariant = 'small';
+import {
+  ComponentVariant,
+  SelectBoxStyleProps,
+  selectBoxStyles,
+} from '../../styles/component';
 
 interface SelectOption extends OptionHTMLAttributes<HTMLOptionElement> {
   text: string;
@@ -9,7 +13,7 @@ interface SelectOption extends OptionHTMLAttributes<HTMLOptionElement> {
 
 interface SelectBoxProps extends SelectHTMLAttributes<HTMLSelectElement> {
   options: SelectOption[];
-  variant?: SelectBoxVariant;
+  variant?: Extract<ComponentVariant, 'small'>;
   title?: string;
   autoSize?: boolean;
 }
@@ -37,18 +41,7 @@ const SelectBox = ({
   );
 };
 
-const selectBoxStyles = {
-  small: {
-    width: '60px',
-    height: '30px',
-    padding: '0 4px',
-  },
-};
-
-const Select = styled.select<{
-  variant: SelectBoxVariant;
-  autoSize: boolean;
-}>`
+const Select = styled.select<SelectBoxStyleProps>`
   ${({ variant }) => selectBoxStyles[variant]}
   width: ${({ variant, autoSize }) =>
     autoSize ? '100%' : selectBoxStyles[variant].width};

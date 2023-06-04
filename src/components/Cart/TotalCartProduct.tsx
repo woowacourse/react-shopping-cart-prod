@@ -27,7 +27,7 @@ const TotalCartProduct = () => {
       <Button
         type='button'
         primary={false}
-        size='small'
+        variant='small'
         border
         onClick={deleteCheckedProducts}
       >

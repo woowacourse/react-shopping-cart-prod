@@ -43,7 +43,7 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
         onChange={toggleProductChecked}
         checked={targetChecked ? true : false}
       />
-      <Image src={imageUrl} alt={name} loading='lazy' size='small' />
+      <Image src={imageUrl} alt={name} loading='lazy' variant='small' />
       <ProductName>{name}</ProductName>
       <CartInfoContainer>
         <DeleteButton type='button' onClick={deleteProductAndChecked}>
