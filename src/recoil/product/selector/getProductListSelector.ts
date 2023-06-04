@@ -1,16 +1,17 @@
-import { selectorFamily } from 'recoil';
-import { fetchGet } from '@utils/fetchUtils';
-import { productListApiWrapper } from '@utils/productList/productList';
-import { ServerName, getProductPath } from '@constants/serverUrlConstants';
-import { ProductItemType, ServerProductItemType } from '@type/productType';
+import { selector } from 'recoil';
+import serverState from '@recoil/server/serverState';
+import userState from '@recoil/user/userState';
+import { getProductListApi } from '@utils/productList/fetchProductList';
+import { ProductItemType } from '@type/productType';
 
-export const getProductListSelector = selectorFamily<ProductItemType[], ServerName>({
+export const getProductListSelector = selector<ProductItemType[]>({
   key: 'getProductList',
-  get: (serverName) => async () => {
-    const productList = await fetchGet<ServerProductItemType[]>(getProductPath(serverName));
+  get: async ({ get }) => {
+    const userInfo = get(userState);
+    const serverName = get(serverState);
+    const productList = getProductListApi({ serverName, userInfo });
 
-    const clientProductList = productListApiWrapper(productList);
-
-    return clientProductList;
+    return productList;
   },
+  cachePolicy_UNSTABLE: { eviction: 'most-recent' },
 });
