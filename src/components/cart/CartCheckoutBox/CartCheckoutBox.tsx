@@ -1,7 +1,15 @@
-import { useRecoilValueLoadable } from 'recoil';
+import { useRecoilValue, useRecoilValueLoadable } from 'recoil';
 
 import { SHIPPING_FEE } from '../../../constants';
-import { cartListSubTotalState } from '../../../store/cart';
+import { CART_LIST_CHECKBOX_KEY } from '../../../constants/store';
+import { useOrder } from '../../../hooks/useOrder';
+import {
+  cartListCheckedItemCostInformationState,
+  checkedCartItemListState,
+} from '../../../store/cart';
+import { checkedListState } from '../../../store/checkbox';
+import { getCartPriceInformation } from '../../../store/utils';
+import { PostOrdersRequestBody } from '../../../types/api';
 import { priceFormatter } from '../../../utils/formatter';
 import Button from '../../common/Button/Button';
 import Spinner from '../../common/Spinner/Spinner';
@@ -9,20 +17,44 @@ import { Text } from '../../common/Text/Text.styles';
 import * as S from './CartCheckoutBox.styles';
 
 const CartCheckoutBox = () => {
-  const cartListSubTotal = useRecoilValueLoadable(cartListSubTotalState);
+  const { orderCheckedCartItems } = useOrder();
+  const checkedCartItemList = useRecoilValue(checkedCartItemListState);
+  const checkedCartIdList = useRecoilValue(checkedListState(CART_LIST_CHECKBOX_KEY));
+  const costs = getCartPriceInformation(checkedCartItemList);
 
-  const isLoading = cartListSubTotal.state === 'loading';
-  const isCartEmpty = cartListSubTotal.contents === 0;
-  const subTotal = cartListSubTotal.contents > 0 ? cartListSubTotal.contents : 0;
-  const shippingFee = cartListSubTotal.contents > 0 ? SHIPPING_FEE : 0;
-  const totalPrice = subTotal + shippingFee ?? 0;
+  const cartItemsForOrder: PostOrdersRequestBody = {
+    cartItemIds: [...checkedCartIdList],
+    ...costs,
+  };
+
+  const cartListCheckedItemCostInformation = useRecoilValueLoadable<PostOrdersRequestBody>(
+    cartListCheckedItemCostInformationState
+  );
+  const isLoading = cartListCheckedItemCostInformation.state === 'loading';
+  const cartListCheckedItemCostInformationValue = cartListCheckedItemCostInformation.contents;
+
+  const isCartEmpty = cartListCheckedItemCostInformationValue === 0;
+  const discountedTotalItemPrice =
+    cartListCheckedItemCostInformationValue.discountedTotalItemPrice > 0
+      ? cartListCheckedItemCostInformationValue.discountedTotalItemPrice
+      : 0;
+  const shippingFee =
+    cartListCheckedItemCostInformationValue.shippingFee > 0
+      ? cartListCheckedItemCostInformationValue.shippingFee
+      : 0;
+  const totalPrice =
+    cartListCheckedItemCostInformationValue.totalPrice > 0
+      ? cartListCheckedItemCostInformationValue.totalPrice
+      : 0;
+
+  console.log(cartListCheckedItemCostInformation);
 
   return (
     <S.CartCheckoutBoxWrapper>
       <S.CheckoutInformationContainer>
         <S.CheckoutInformationTextContainer>
           <Text>총 상품 가격</Text>
-          <S.CheckoutValueText>{priceFormatter(subTotal)}</S.CheckoutValueText>
+          <S.CheckoutValueText>{priceFormatter(discountedTotalItemPrice)}</S.CheckoutValueText>
         </S.CheckoutInformationTextContainer>
         <S.CheckoutInformationTextContainer>
           <Text>총 배송비</Text>
@@ -39,7 +71,11 @@ const CartCheckoutBox = () => {
             <Spinner size={18} width={3} disabled />
           </Button>
         ) : (
-          <Button variant="primary" disabled={isCartEmpty}>
+          <Button
+            variant="primary"
+            disabled={isCartEmpty}
+            onClick={() => orderCheckedCartItems(cartItemsForOrder)}
+          >
             {isCartEmpty ? '상품을 담아주세요' : '주문하기'}
           </Button>
         )}
