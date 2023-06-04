@@ -1,4 +1,4 @@
-import CouponList from '../CouponList/CouponList';
+import CouponListContainer from '../CouponList/CouponList';
 import styles from './style.module.css';
 
 const CouponIssuePageSection = () => {
@@ -6,7 +6,7 @@ const CouponIssuePageSection = () => {
     <>
       <div className={styles.couponIssueHeader}>쿠폰함</div>
       <hr />
-      <CouponList />
+      <CouponListContainer type="all" />
     </>
   );
 };

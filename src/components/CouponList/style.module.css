@@ -1,10 +1,22 @@
-.container {
+.pageContainer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   place-items: center;
   row-gap: 20px;
   column-gap: 28px;
   align-items: start;
+}
+
+.modalContainer {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  place-items: center;
+  row-gap: 20px;
+  column-gap: 28px;
+  align-items: start;
+
+  height: 50vh;
+  overflow: auto;
 }
 
 @media (min-width: 720px) and (max-width: 1100px) {

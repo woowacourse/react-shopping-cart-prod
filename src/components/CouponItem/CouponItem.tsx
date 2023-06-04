@@ -1,43 +1,93 @@
-import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
-import { UsableCouponType } from '../../store/coupon';
+import { useCoupon } from '../../hooks/useCouponList';
+import { cartTotalAmountState } from '../../store/cart';
+import { couponDiscountState } from '../../store/coupon';
 import { originState } from '../../store/origin';
+import { CouponItemType } from '../../types';
 import styles from './style.module.css';
 
-const CouponItem = ({ information }: { information: UsableCouponType }) => {
-  const [isPublish, setIsPublish] = useState(false);
-  const origin = useRecoilValue(originState);
+const CouponItem = ({ coupon, type }: { coupon: CouponItemType; type: 'all' | 'usable' }) => {
+  const [, setCartDiscount] = useRecoilState(couponDiscountState);
+  const { couponList, selectCoupon, cancelSelectCoupon, publishCoupon } = useCoupon();
 
-  const onClickCouponItem = async () => {
-    try {
-      await fetch(`${origin}coupons/${information.couponId}`, {
+  const cartTotalAmount = useRecoilValue(cartTotalAmountState);
+  const origin = useRecoilValue(originState);
+  const queryClient = useQueryClient();
+
+  const publishCouponEvent = useMutation({
+    mutationFn: async () => {
+      await fetch(`${origin}coupons/${coupon.couponId}`, {
         method: 'POST',
       });
+    },
+    onSuccess: () => {
+      publishCoupon(coupon.couponId);
+      queryClient.invalidateQueries({ queryKey: ['coupons', coupon.couponId] });
+    },
+  });
 
-      setIsPublish(true);
-    } catch (error) {
-      alert(error);
-    }
+  const discountCouponEvent = useMutation({
+    mutationFn: async () => {
+      const response = await fetch(
+        `${origin}coupons/discount/${coupon.couponId}?total=${cartTotalAmount + 3000}`,
+        {
+          method: 'GET',
+        }
+      );
+
+      return response.json();
+    },
+    onSuccess: (data) => {
+      setCartDiscount(data.discountAmount);
+      selectCoupon(coupon.couponId);
+      queryClient.invalidateQueries({ queryKey: ['coupons/discount'] });
+    },
+  });
+
+  const cancelCouponEvent = () => {
+    cancelSelectCoupon();
+    setCartDiscount(0);
   };
 
+  const targetCoupon = couponList.find((couponItem) => couponItem.couponId === coupon.couponId);
+
   return (
-    <div className={styles.container}>
+    <div
+      className={targetCoupon?.isChecked ? `${styles.activeUseContainer}` : `${styles.container}`}
+    >
       <div className={styles.couponBox}>
-        <p className={styles.name}>{information.couponName}</p>
+        <p className={styles.name}>{coupon.couponName}</p>
         <p className={styles.minAmount}>
-          {Number(information.minAmount).toLocaleString('ko-KR')}원 이상 구매 시 적용
+          {Number(coupon.minAmount).toLocaleString('ko-KR')}원 이상 구매 시 적용
         </p>
       </div>
 
-      <button
-        type="button"
-        className={styles.useCoupon}
-        disabled={information.isPublished || isPublish}
-        onClick={onClickCouponItem}
-      >
-        사용하기
-      </button>
+      {type === 'all' && (
+        <button
+          type="button"
+          className={styles.useCoupon}
+          disabled={targetCoupon?.isPublished}
+          onClick={() => {
+            publishCouponEvent.mutate();
+          }}
+        >
+          발급하기
+        </button>
+      )}
+
+      {type === 'usable' && (
+        <button
+          type="button"
+          className={styles.useCoupon}
+          onClick={() => {
+            targetCoupon?.isChecked ? cancelCouponEvent() : discountCouponEvent.mutate();
+          }}
+        >
+          쿠폰 사용하기
+        </button>
+      )}
     </div>
   );
 };

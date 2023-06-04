@@ -1,32 +1,40 @@
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { Suspense } from 'react';
 
-import { useFetch } from '../../hooks/useFetch';
-import { UsableCouponType, usableCouponState } from '../../store/coupon';
-import { originState } from '../../store/origin';
+import { useCouponList } from '../../hooks/useFetchUrl';
+import CartOrderButton from '../CartOrderButton/CartOrderButton';
 import CouponItem from '../CouponItem/CouponItem';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import styles from './style.module.css';
 
-const CouponList = () => {
-  const [, setCouponList] = useRecoilState(usableCouponState);
+type CouponListContainerProps = {
+  type: 'all' | 'usable';
+};
 
-  const { data, fetchApi, isLoading } = useFetch<UsableCouponType[]>(setCouponList);
-  const origin = useRecoilValue(originState);
+type CouponListProps = {
+  type: 'all' | 'usable';
+};
 
-  useEffect(() => {
-    fetchApi.get(`${origin}coupons`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [origin]);
+const CouponList = ({ type }: CouponListProps) => {
+  const coupons = useCouponList(type);
 
   return (
-    <div className={styles.container}>
-      {isLoading && <LoadingSpinner />}
-      {data?.map((couponItem) => (
-        <CouponItem key={couponItem.couponId} information={couponItem} />
+    <>
+      {coupons?.map((coupon) => (
+        <CouponItem key={coupon.couponId} coupon={coupon} type={type} />
       ))}
-    </div>
+    </>
   );
 };
 
-export default CouponList;
+const CouponListContainer = ({ type }: CouponListContainerProps) => {
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <div className={type === 'all' ? styles.pageContainer : styles.modalContainer}>
+        <CouponList type={type} />
+        <CartOrderButton />
+      </div>
+    </Suspense>
+  );
+};
+
+export default CouponListContainer;
