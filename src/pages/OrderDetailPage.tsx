@@ -52,7 +52,7 @@ const S = {
   Wrapper: styled.section`
     width: 400px;
     max-width: 448px;
-    height: 250px;
+    height: 280px;
     max-height: 410px;
     margin-top: 40px;
     padding-bottom: 38px;
