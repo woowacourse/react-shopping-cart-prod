@@ -2,7 +2,7 @@ import { rest } from 'msw';
 
 import { API_ENDPOINT, HTTP_STATUS_CODE } from '../../constants/api';
 import productListData from '../../data/mockData.json';
-import { getCartData } from '../../domain/cart';
+import { getCartData, removeCartItem, setCartData } from '../../domain/cart';
 import { getOrderListData, setOrderListData } from '../../domain/order';
 import type { CartItemData, OrderData, OrderedItemData } from '../../types';
 import { PostOrdersRequestBody } from '../../types/api';
@@ -19,9 +19,10 @@ const orderHandlers = [
   // 장바구니 상품 주문 요청
   rest.post(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
     const orderData = await req.json<PostOrdersRequestBody>();
-    console.log('msw', orderData);
+    const currentCartData = getCartData();
+
     const orderedItemList: OrderedItemData[] = orderData.cartItemIds.map((cartItemId) => {
-      const cartItem = getCartData().find((cartItem) => cartItem.id === cartItemId)!;
+      const cartItem = currentCartData.find((cartItem) => cartItem.id === cartItemId)!;
       const product = cartItem.product;
 
       return {
@@ -30,8 +31,15 @@ const orderHandlers = [
       };
     });
 
-    const newOrderId = Number(new Date().toISOString());
+    orderData.cartItemIds.forEach((cartItemId) => {
+      const newCartList = removeCartItem(currentCartData, cartItemId);
+      if (currentCartData.length === 0 || !newCartList) {
+        return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
+      }
+      setCartData(newCartList);
+    });
 
+    const newOrderId = Math.floor(Math.random() * 10000000) + 1;
     const newOrderData: OrderData = {
       id: newOrderId,
       orderedItems: orderedItemList,
