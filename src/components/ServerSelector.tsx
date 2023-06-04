@@ -91,7 +91,7 @@ const Wrapper = styled.fieldset`
   @media screen and (max-width: 800px) {
     flex-direction: column;
     width: fit-content;
-
+    margin-left: 4%;
     padding: 4px;
 
     font-size: 13px;
