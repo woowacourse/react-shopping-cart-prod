@@ -1,6 +1,8 @@
 import { styled } from 'styled-components';
 import { formatPrice } from '../../../utils/formatPrice';
 import usePaymentAmount from './usePaymentAmount';
+import Modal from '../../common/Modal/Modal';
+import OrderSheet from '../../order/OrderSheet/OrderSheet';
 
 const PaymentAmount = () => {
   const { paymentAmount, deliveryFee } = usePaymentAmount();
@@ -21,7 +23,9 @@ const PaymentAmount = () => {
           <AmountText>총 주문금액</AmountText>
           <AmountText>{formatPrice(paymentAmount + deliveryFee)}</AmountText>
         </AmountTextContainer>
-        <OrderButton>주문하기</OrderButton>
+        <Modal title="주문서" trigger={<OrderButton>주문하기</OrderButton>}>
+          <OrderSheet />
+        </Modal>
       </Contents>
     </PaymentAmountContainer>
   );
