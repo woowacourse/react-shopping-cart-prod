@@ -27,7 +27,7 @@ export const useCart = () => {
   const addToCart = async (productId: number) => {
     const responseResult = await APIHandler.post(CART_URL, { productId: productId });
 
-    if (responseResult.statusCode !== 200) throw new Error(responseResult.errorMessage);
+    if (responseResult.statusCode !== 201) throw new Error(responseResult.errorMessage);
 
     setCartList(await getCartList());
   };
@@ -53,7 +53,7 @@ export const useCart = () => {
   const deleteFromCart = async (cartId: number) => {
     const responseResult = await APIHandler.delete(`${CART_URL}/${cartId}`);
 
-    if (responseResult.statusCode !== 200) throw new Error(responseResult.errorMessage);
+    if (responseResult.statusCode !== 204) throw new Error(responseResult.errorMessage);
 
     setCartList(await getCartList());
   };
