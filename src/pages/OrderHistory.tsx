@@ -14,7 +14,7 @@ const OrderHistory = () => {
         if (!response.ok) throw new Error(response.status.toString());
         const data = await response.json();
 
-        setOrders(data);
+        setOrders(data.orders);
       } catch (error: any) {
         console.log(error);
       }
@@ -28,12 +28,15 @@ const OrderHistory = () => {
       <Header />
       <Page>
         <TitleBox>주문 목록</TitleBox>
-        <OrderHistoryList orders={orders} />
-        <GuideBox
-          icon="🛒"
-          message="주문 목록이 없어요"
-          guideMessage="상품 주문하러 가기"
-        />
+        {orders.length !== 0 ? (
+          <OrderHistoryList orders={orders} />
+        ) : (
+          <GuideBox
+            icon="🛒"
+            message="주문 목록이 없어요"
+            guideMessage="상품 주문하러 가기"
+          />
+        )}
       </Page>
     </>
   );

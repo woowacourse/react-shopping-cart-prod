@@ -41,7 +41,7 @@ export const PageRouterProvider = () => {
       element: <OrderHistory />,
     },
     {
-      path: ROUTER_PATH.OrderDetail,
+      path: ROUTER_PATH.OrderDetail + "/:orderId",
       element: <OrderDetail />,
     },
     { path: ROUTER_PATH.NotFound, element: <NotFound /> },

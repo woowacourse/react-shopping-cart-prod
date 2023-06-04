@@ -26,7 +26,7 @@ export interface CouponType {
   expiredAt: Date;
 }
 
-export interface UserType {
+export interface MemberType {
   id: number;
   nickname: string;
 }
