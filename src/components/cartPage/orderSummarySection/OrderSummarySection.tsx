@@ -6,8 +6,10 @@ import { selectedCartIdListState } from '../../../recoil/atoms/cartAtom';
 import { pointState } from '../../../recoil/atoms/pointAtom';
 import { useEffect } from 'react';
 import { useOrderFetch } from '../../../hooks/fetch/useOrderFetch';
+import { useCartFetch } from '../../../hooks/fetch/useCartFetch';
 import { useNavigate } from 'react-router-dom';
 import { usePointInput } from '../../../hooks/pointInput/usePointInput';
+import { useCartRecoil } from '../../../hooks/recoil/useCartRecoil';
 
 export const OrderSummarySection = () => {
   const {
@@ -22,6 +24,9 @@ export const OrderSummarySection = () => {
     usePointInput(availablePoint);
 
   const { getPoint, orderByCartId } = useOrderFetch();
+  const { deleteCartItemById } = useCartFetch();
+
+  const { deleteRecoilCartById } = useCartRecoil();
 
   const [point, setPoint] = useRecoilState(pointState);
 
@@ -45,6 +50,11 @@ export const OrderSummarySection = () => {
 
     order.then((response) => {
       const orderId = response.headers.get('Location')?.replace('/orders/', '');
+
+      checkedProduct.forEach((cartItem) => {
+        deleteRecoilCartById(cartItem);
+        deleteCartItemById(cartItem);
+      });
 
       getPoint().then((point) => {
         setPoint(point.point - pointToAdd + pointToAdd);
