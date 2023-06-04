@@ -22,7 +22,8 @@ const ProductList = () => {
     api.get(`${server}${CART_URL}`).then((data) => {
       setCart(data);
     });
-  }, [server, api, setProducts, setCart]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [server]);
 
   if (isLoading) return <Spinner />;
 

@@ -20,7 +20,8 @@ const OrderDetailPage = () => {
       .get(`${server}${ORDER_URL}/${id}`)
       .then((data) => setOrderDetail(data))
       .catch((error) => alert(error));
-  }, [server, id, api]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [server, id]);
 
   if (!orderDetail) return <div>없는 주문 번호입니다.</div>;
 

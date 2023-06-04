@@ -56,7 +56,8 @@ const OrderSheet = () => {
         setCoupons([]);
         alert('서버에서 쿠폰을 가져오지 못하였습니다.');
       });
-  }, [server, api]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [server]);
 
   return (
     <div>

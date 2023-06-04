@@ -20,7 +20,8 @@ const OrderPage = () => {
         setOrders(orders);
       })
       .catch((error) => alert(error));
-  }, [server, api]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [server]);
 
   if (!orders) return <div>없는 주문 번호입니다.</div>;
 
