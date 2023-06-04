@@ -7,8 +7,11 @@ import {
   PRODUCTS_PATH_NAME,
   CART_ITEMS_PATH_NAME,
   USER_COUPONS_PATH_NAME,
+  ORDER_PATH_NAME,
 } from '../constant';
 import UserCoupon from './storage/UserCoupon';
+import Order from './storage/Order';
+import { CartProduct } from '../types/product';
 
 interface PostAddCartRequestBody {
   productId: number;
@@ -20,6 +23,12 @@ interface PatchUpdateCartRequestBody {
 
 interface PostDownloadCouponRequestBody {
   couponId: number;
+}
+
+interface PostOrdersRequestBody {
+  cartItems: CartProduct[];
+  couponIds: number[];
+  deliveryFee: number;
 }
 
 export const productHandler = [
@@ -84,5 +93,27 @@ export const couponHandler = [
   rest.get(USER_COUPONS_PATH_NAME, (req, res, ctx) => {
     const data = UserCoupon.getAll();
     return res(ctx.delay(2000), ctx.status(200), ctx.body(JSON.stringify(data)));
+  }),
+];
+
+export const orderHandler = [
+  rest.get(ORDER_PATH_NAME, (req, res, ctx) =>
+    res(ctx.status(200), ctx.body(JSON.stringify(Order.getAllOrderList())))
+  ),
+
+  rest.get(`${ORDER_PATH_NAME}/:orderId`, (req, res, ctx) => {
+    const { orderId } = req.params;
+    const orderInfo = Order.getOrderList(Number(orderId));
+
+    if (!orderInfo) return res(ctx.status(404));
+    return res(ctx.status(200), ctx.body(JSON.stringify(orderInfo)));
+  }),
+
+  rest.post<PostOrdersRequestBody>(ORDER_PATH_NAME, async (req, res, ctx) => {
+    const orderInfo: PostOrdersRequestBody = await req.json();
+    const orderId = Order.request(orderInfo);
+
+    if (orderId === -1) return res(ctx.status(400, 'Order Failed'));
+    return res(ctx.status(201), ctx.body(JSON.stringify({ orderId })));
   }),
 ];
