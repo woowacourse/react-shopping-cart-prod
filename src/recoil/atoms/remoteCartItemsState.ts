@@ -28,7 +28,9 @@ const remoteCartItemsState = atomFamily<RemoteCartItemsState, Client>({
     ({ setSelf, getPromise }) => {
       const willStorage = getPromise(remoteCartItemsStorage(client));
 
-      willStorage.then((storage) =>
+      willStorage.then((storage) => {
+        storage.doDownstreamSync();
+
         storage.onSync((info) => {
           setSelf((syncStatus) => {
             if (syncStatus instanceof DefaultValue) {
@@ -43,8 +45,8 @@ const remoteCartItemsState = atomFamily<RemoteCartItemsState, Client>({
             };
           });
           console.log(info.isSynchronizing ? 'synchronizing ...' : 'synchronized');
-        }),
-      );
+        });
+      });
     },
   ],
 });
