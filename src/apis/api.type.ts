@@ -1,3 +1,4 @@
+import { URL } from 'url';
 import { DuplicateKeys } from '../types/common';
 
 export type FetchQueryInstance = {
@@ -8,8 +9,8 @@ export type FetchQueryInstance = {
 };
 
 export type FetchQueryRes<T> = Promise<HTTPResponse<T>>;
-export type HTTPResponse<T> = {
-  headers: Headers;
+export type HTTPResponse<T = unknown> = {
+  headers: Headers & { url: URL };
   data: T;
 };
 

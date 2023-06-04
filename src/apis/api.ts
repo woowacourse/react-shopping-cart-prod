@@ -69,7 +69,7 @@ class FetchQuery implements FetchQueryInstance {
 
     if (!response.ok) handleStatusCode(response.status);
 
-    return { headers, data };
+    return { headers: Object.assign(headers, { url }), data };
   }
 
   private request<T>(...args: [Method, ...QueryParams]): FetchQueryRes<T> {
