@@ -1,4 +1,5 @@
 import { api } from 'api';
+import { PostPaymentRequest } from 'types/api';
 
 export const getProductList = async (server: string) => {
   const data = await api.get(`${server}/products`);
@@ -42,10 +43,11 @@ export const getCouponApplied = () => async (server: string) => {
   return data;
 };
 
-export const postPayments = (payload: any) => async (server: string) => {
-  const response = await api.post(`${server}/payments`, payload);
-  return response;
-};
+export const postPayments =
+  (payload: PostPaymentRequest) => async (server: string) => {
+    const response = await api.post(`${server}/payments`, payload);
+    return response;
+  };
 
 export const getOrderList = async (server: string) => {
   const data = await api.get(`${server}/orders`);

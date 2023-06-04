@@ -18,3 +18,10 @@ export interface DeliveryPrice {
 export interface DiscountFromTotalPrice {
   discountPrice: number;
 }
+
+export interface PostPaymentRequest {
+  cartItemIds: number[];
+  isDeliveryFree: boolean;
+  totalPaymentPrice: number;
+  couponIds: number[];
+}
