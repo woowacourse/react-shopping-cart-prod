@@ -25,22 +25,30 @@ export const CouponSelectBox = ({
         <p>{coupon ? coupon : "쿠폰적용하기"}</p>
         <img src={ArrowDownIcon} alt="화살표" />
       </TitleContainer>
-      {isOpen &&
-        coupons.map((coupon, index) => (
-          <CouponContainer
-            key={coupon.id}
-            onClick={handleCouponClicked(coupon.name, index)}
-            $isAvailable={coupon.isAvailable}
+      {isOpen && (
+        <>
+          {coupons.map((coupon, index) => (
+            <CouponContainer
+              key={coupon.id}
+              onClick={handleCouponClicked(coupon.name, index)}
+              $isAvailable={coupon.isAvailable}
+            >
+              <NameBox>{coupon.name}</NameBox>
+              <MinPriceBox>
+                {coupon.minOrderPrice.toLocaleString()}원 이상 주문 시
+              </MinPriceBox>
+              <DiscountPriceBox>
+                -{coupon.discountPrice.toLocaleString()}원
+              </DiscountPriceBox>
+            </CouponContainer>
+          ))}
+          <NotAppliedCouponBox
+            onClick={handleCouponClicked("쿠폰적용하기", -1)}
           >
-            <NameBox>{coupon.name}</NameBox>
-            <MinPriceBox>
-              {coupon.minPrice.toLocaleString()}원 이상 주문 시
-            </MinPriceBox>
-            <DiscountPriceBox>
-              -{coupon.discountPrice.toLocaleString()}원
-            </DiscountPriceBox>
-          </CouponContainer>
-        ))}
+            쿠폰적용안함
+          </NotAppliedCouponBox>
+        </>
+      )}
     </Wrapper>
   );
 };
@@ -103,6 +111,14 @@ const CouponContainer = styled.div<{ $isAvailable: boolean }>`
 
   background: ${(props) => (props.$isAvailable ? "white" : "#dddddd")};
   color: ${(props) => (props.$isAvailable ? "var(--dark-gray)" : "white")};
+`;
+
+const NotAppliedCouponBox = styled.div`
+  width: 100%;
+  height: 60px;
+
+  padding: 20px;
+  border-bottom: 1px solid #dddddd;
 `;
 
 const DiscountPriceBox = styled.div`
