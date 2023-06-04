@@ -3,5 +3,5 @@ import { SERVERS } from 'utils/constants';
 
 export const serverAtom = atom({
   key: 'serverAtom',
-  default: SERVERS['제이'],
+  default: SERVERS['프론트'],
 });
