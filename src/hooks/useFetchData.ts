@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { fetchApi } from '../api/fetchApi';
-import { CART_BASE_URL, ORDER_BASE_URL } from '../constants/url';
+import { CART_BASE_URL, MEMBER_BASE_URL, ORDER_BASE_URL } from '../constants/url';
 import { useRecoilValue } from 'recoil';
 import { serverState } from '../store/ServerState';
 
@@ -43,7 +43,7 @@ export const useFetchData = <T>(setData?: SetDataType<T>) => {
 
   const api = {
     get: (url: string) => {
-      url.includes(ORDER_BASE_URL) || url.includes(CART_BASE_URL)
+      url.includes(ORDER_BASE_URL) || url.includes(CART_BASE_URL) || url.includes(MEMBER_BASE_URL)
         ? fetchData(url, {
             method: 'GET',
             headers: {
