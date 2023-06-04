@@ -7,9 +7,10 @@ import { OrderedProduct } from './OrderedProduct';
 
 interface OrderedProductProps {
   order: UserOrdersType;
+  isDetail: boolean;
 }
 
-export const OrderedProductList = ({ order }: OrderedProductProps) => {
+export const OrderedProductList = ({ order, isDetail }: OrderedProductProps) => {
   const setOrderNumber = useSetOrderDetail();
 
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export const OrderedProductList = ({ order }: OrderedProductProps) => {
           <Style.OrderNumber>주문번호 : {order.orderId}</Style.OrderNumber>
           <Style.OrderDate>주문날짜 : {order.orderDate.split(' ')[0]}</Style.OrderDate>
         </Style.OrderNumberAndDate>
-        <Style.OrderDetail onClick={detailOrderClick}>상세보기</Style.OrderDetail>
+        {isDetail ? '' : <Style.OrderDetail onClick={detailOrderClick}>상세보기</Style.OrderDetail>}
       </Style.OrderNumberAndDetail>
       <Style.OrderProducts>
         {order.orderDetails &&
@@ -85,6 +86,8 @@ const Style = {
 
     text-align: right;
     letter-spacing: 0.5px;
+
+    cursor: pointer;
 
     color: #000000;
   `,

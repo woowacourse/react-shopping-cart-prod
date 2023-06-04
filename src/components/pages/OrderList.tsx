@@ -22,7 +22,7 @@ export const OrderList = () => {
         <Style.PageTitle>주문 목록</Style.PageTitle>
         <Style.Main>
           {data.length !== 0 ? (
-            data.map((order) => <OrderedProductList key={order.orderId} order={order} />)
+            data.map((order) => <OrderedProductList key={order.orderId} order={order} isDetail={false}/>)
           ) : (
             <Style.NoExistItemsMessage>
               <p>장바구니에 등록된 상품이 존재하지 않아요🥲</p>

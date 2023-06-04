@@ -10,25 +10,23 @@ import { OrderedProductTotalPrice } from '../OrderedProductTotalPrice';
 
 export const OrderDetail = () => {
   const baseUrl = useApiBaseUrlValue();
-  const { data } = useQuery<UserOrdersType[]>(baseUrl + '/orders', {
+  const orderNumber = useOrderDetailValue();
+
+  const { data } = useQuery<UserOrdersType>(baseUrl + '/orders/' + orderNumber, {
     Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
   });
 
-  const orderNumber = useOrderDetailValue();
-
   if (!data) return <></>;
-
-  const orderDetail = data.filter((order) => order.orderId === orderNumber);
 
   return (
     <Layout>
       <Style.OrderDetailWrapper>
         <Style.PageTitle>주문 내역 상세</Style.PageTitle>
         <Style.Main>
-          <OrderedProductList order={orderDetail[0]} />
+          <OrderedProductList order={data} isDetail={true}/>
         </Style.Main>
         <Style.Price>
-          <OrderedProductTotalPrice totalPrice={orderDetail[0].totalProductsPrice} />
+          <OrderedProductTotalPrice totalPrice={data.totalProductsPrice} />
         </Style.Price>
       </Style.OrderDetailWrapper>
     </Layout>
