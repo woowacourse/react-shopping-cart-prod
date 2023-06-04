@@ -47,7 +47,7 @@ const CartItemListController = styled.div`
   }
 `;
 
-const CartItemSelected = styled.p`
+const CartItemSelected = styled.strong`
   font-size: 16px;
 
   margin-left: 10px;
@@ -98,7 +98,7 @@ const CartPageContent = (props: CartPageContentProps) => {
         </CartItemListController>
         <CartItemList>
           {cartItems.map((cartItem) => (
-            <CartItemListItemContainer>
+            <CartItemListItemContainer key={cartItem.product.id}>
               <Checkbox
                 value={!cartItem.unselectedForOrder}
                 onChange={() => toggleForOrder(cartItem.product.id)}

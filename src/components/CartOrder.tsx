@@ -35,16 +35,16 @@ const ContentPlaceholder = styled.h2`
   color: #444444;
 `;
 
-const PriceField = styled.p`
+const PriceField = styled.div`
   display: flex;
   margin-bottom: 10px;
 `;
 
-const PriceFieldName = styled.p<{ marked?: boolean }>`
+const PriceFieldName = styled.strong<{ marked?: boolean }>`
   color: ${({ marked }) => marked && '#0078ff'};
 `;
 
-const PriceFieldValue = styled.p`
+const PriceFieldValue = styled.strong`
   margin-left: auto;
 `;
 
