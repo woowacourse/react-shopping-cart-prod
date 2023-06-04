@@ -24,11 +24,17 @@ function OrderDetail() {
     <>
       <PageTitle>주문내역상세</PageTitle>
       <FatBorder />
-      <OrderListWrapper>{order && <OrderList {...order} detail={false} />}</OrderListWrapper>
-      <S.OrderInfoWrapper>
-        <PaymentInfoBox />
-        <PointInfoBox />
-      </S.OrderInfoWrapper>
+      {order && (
+        <>
+          <OrderListWrapper>
+            <OrderList {...order} detail={false} />
+          </OrderListWrapper>
+          <S.OrderInfoWrapper>
+            <PaymentInfoBox {...order} />
+            <PointInfoBox paymentPrice={order.paymentPrice} />
+          </S.OrderInfoWrapper>
+        </>
+      )}
     </>
   );
 }
