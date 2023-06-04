@@ -12,6 +12,8 @@ import { useEffect } from 'react';
 import { cartState } from '../../recoil/cartAtoms';
 import { PAGE_PATH } from '../../constants/path';
 import { useNavigate } from 'react-router-dom';
+import { LoadingSpinner } from '../../components/@common/LoadingSpinner';
+import { EmptyCartWrapper } from '../Cart/Cart.style';
 
 function Order() {
   const memberAuth = useRecoilValue(memberAuthorization);
@@ -19,7 +21,11 @@ function Order() {
   const setCartList = useSetRecoilState(cartState);
   const setMemberPoint = useSetRecoilState(memberPointState);
   const navigate = useNavigate();
-  const { data: orders, getData: refreshOrders } = useGetQuery<OrdersResponses>({
+  const {
+    data: orders,
+    loading,
+    getData: refreshOrders,
+  } = useGetQuery<OrdersResponses>({
     fetcher: () => fetchOrderList({ server, auth: memberAuth }),
   });
 
@@ -43,9 +49,15 @@ function Order() {
       <PageTitle>주문목록</PageTitle>
       <FatBorder />
       <S.OrderListWrapper>
-        {orders && orders.orderResponses.length !== 0 ? (
-          [...orders.orderResponses].reverse().map((order) => <OrderList key={order.orderId} {...order} />)
-        ) : (
+        {loading && (
+          <EmptyCartWrapper>
+            <LoadingSpinner />
+          </EmptyCartWrapper>
+        )}
+        {orders &&
+          orders.orderResponses.length !== 0 &&
+          [...orders.orderResponses].reverse().map((order) => <OrderList key={order.orderId} {...order} />)}
+        {orders && orders.orderResponses.length === 0 && (
           <S.EmptyOrderWrapper>
             <S.Title>텅</S.Title>
             <S.Description>주문 목록이 없어요.</S.Description>

@@ -18,7 +18,7 @@ function NavigationBar() {
   const memberAuth = useRecoilValue(memberAuthorization);
   const server = useRecoilValue(serverState);
   const [memberPoint, setMemberPoint] = useRecoilState(memberPointState);
-  const { getData: getPoint } = useGetQuery<Point>({
+  const { getData: getPoint, loading } = useGetQuery<Point>({
     fetcher: () => fetchMemberPoint({ server, auth: memberAuth }),
     onSuccess: (point) => setMemberPoint(point),
   });
@@ -40,7 +40,8 @@ function NavigationBar() {
           <S.LogoTitle>주문목록</S.LogoTitle>
         </S.Logo>
       </S.OrderListButton>
-      {memberPoint && <UserSelector point={memberPoint} />}
+      {loading && <S.SkeletonUserSelector />}
+      {!loading && memberPoint && <UserSelector point={memberPoint} />}
     </S.NavBar>
   );
 }

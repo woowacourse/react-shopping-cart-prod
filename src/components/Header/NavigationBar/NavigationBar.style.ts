@@ -27,3 +27,9 @@ export const OrderListButton = styled.button`
   font-size: 20px;
   color: ${({ theme }) => theme.color.dark};
 `;
+
+export const SkeletonUserSelector = styled.div`
+  width: 44px;
+  height: 41px;
+  background-color: gainsboro;
+`;

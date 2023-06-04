@@ -6,6 +6,7 @@ import { PAGE_PATH } from '../../constants/path.ts';
 import NavigationBar from './NavigationBar/NavigationBar.tsx';
 import * as S from './Header.style';
 import { Suspense } from 'react';
+import HeaderSkeleton from './NavigationBar/HeaderSkeleton.tsx';
 
 function Header() {
   const navigate = useNavigate();
@@ -18,7 +19,7 @@ function Header() {
             <S.BigLogoImage src={bigTitleLogo} />
             <S.SmallLogoImage src={smallTitleLogo} />
           </S.LogoWrapper>
-          <Suspense fallback={<div>로딩중</div>}>
+          <Suspense fallback={<HeaderSkeleton />}>
             <NavigationBar />
           </Suspense>
         </S.HeaderContent>
