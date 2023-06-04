@@ -109,7 +109,9 @@ const useShoppingCart = () => {
     }
 
     setCartProducts((prev) => {
-      prev.clear();
+      checkedCartProducts.forEach((id) => {
+        prev.delete(id);
+      });
 
       return new Map(prev.entries());
     });
