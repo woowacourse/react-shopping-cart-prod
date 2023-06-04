@@ -49,6 +49,11 @@ const Wrapper = styled.div<Pick<Props, 'onClick'>>`
     transform: scale(1.03);
     ${({ onClick }) => (onClick ? 'cursor: pointer;' : '')}
   }
+
+  @media (max-width: 448px) {
+    width: 264px;
+    height: 144px;
+  }
 `;
 
 const HeaderBox = styled.div`
@@ -62,9 +67,13 @@ const DiscountRate = styled.p`
   font-size: 32px;
   font-weight: 900;
   color: #e78a34;
+
+  @media (max-width: 448px) {
+    font-size: 28px;
+  }
 `;
 
-const Tag = styled.div<{ isUsed: Props['isUsed'] }>`
+const Tag = styled.div<Pick<Props, 'isUsed'>>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -86,6 +95,12 @@ const Name = styled.p`
 
   font-size: 18px;
   font-weight: 900;
+
+  @media (max-width: 448px) {
+    margin-bottom: 8px;
+
+    font-size: 14px;
+  }
 `;
 
 const ExpirationDate = styled.p`
@@ -94,4 +109,8 @@ const ExpirationDate = styled.p`
   font-size: 14px;
   font-weight: 600;
   color: #333333;
+
+  @media (max-width: 448px) {
+    font-size: 10px;
+  }
 `;

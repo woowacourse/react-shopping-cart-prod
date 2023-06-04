@@ -30,4 +30,8 @@ const Wrapper = styled.div`
   padding-top: 8px;
 
   overflow: scroll;
+
+  @media (max-width: 448px) {
+    grid-template-columns: repeat(1, 264px);
+  }
 `;

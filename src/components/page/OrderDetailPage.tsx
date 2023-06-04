@@ -27,13 +27,10 @@ export default function OrderDetailPage() {
   if (orderId == undefined) return <ErrorPage />;
 
   const serverName = useRecoilValue(serverNameState);
-
   const [order, setOrder] = useState<OrderDetailType | null>(null);
   const [loadFinish, setLoadFinish] = useState(false);
 
   useEffect(() => {
-    if (token === null) return;
-
     api
       .getOrder(serverName, token, Number(orderId))
       .then(setOrder)
@@ -43,7 +40,7 @@ export default function OrderDetailPage() {
       .finally(() => {
         setLoadFinish(true);
       });
-  }, [serverName, token]);
+  }, [serverName]);
 
   if (loadFinish === false) return <></>;
   if (order === null) return <ErrorPage />;
@@ -81,4 +78,8 @@ const Main = styled.div`
 
 const OrderBox = styled.div`
   width: 60%;
+
+  @media (max-width: 448px) {
+    width: 100%;
+  }
 `;

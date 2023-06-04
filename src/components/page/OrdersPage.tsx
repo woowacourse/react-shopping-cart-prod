@@ -16,6 +16,7 @@ import { NO_TOKEN_REDIRECT_MESSAGE } from '../../constants';
 export default function OrdersPage() {
   const token = useRecoilValue(tokenState);
   const { showToast } = useToast();
+
   if (token === null) {
     showToast('warning', NO_TOKEN_REDIRECT_MESSAGE);
     return <Navigate to="/" />;

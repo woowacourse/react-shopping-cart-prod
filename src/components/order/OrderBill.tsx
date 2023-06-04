@@ -95,6 +95,10 @@ const CouponLabel = styled.div`
   height: 32px;
 
   font-size: 20px;
+
+  @media (max-width: 448px) {
+    flex-direction: column;
+  }
 `;
 
 const Row = styled.div`

@@ -110,7 +110,7 @@ const ContentBox = styled.div`
   height: 100%;
   padding: 0 16px;
 
-  @media (max-width: 612px) {
+  @media (max-width: 1272px) {
     width: 100%;
   }
 `;
@@ -127,7 +127,7 @@ const LogoTitle = styled.h1`
   margin-left: 24px;
   padding-bottom: 4px;
 
-  @media (max-width: 612px) {
+  @media (max-width: 942px) {
     display: none;
   }
 `;
@@ -137,6 +137,10 @@ const ServerName = styled.p`
 
   text-align: center;
   font-size: 28px;
+
+  @media (max-width: 942px) {
+    display: none;
+  }
 `;
 
 const MenuBox = styled.div`
@@ -148,11 +152,13 @@ const MenuBox = styled.div`
 
   & > * {
     margin-left: 40px;
-  }
 
-  @media (max-width: 612px) {
-    & > * {
-      margin-left: 40px;
+    @media (max-width: 612px) {
+      margin-left: 24px;
+    }
+
+    @media (max-width: 448px) {
+      margin-left: 16px;
     }
   }
 `;
@@ -219,4 +225,8 @@ const CountBox = styled.div`
 
   font-size: 14px;
   font-weight: 700;
+
+  @media (max-width: 942px) {
+    display: none;
+  }
 `;

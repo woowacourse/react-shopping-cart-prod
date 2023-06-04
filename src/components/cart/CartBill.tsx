@@ -191,6 +191,12 @@ const CouponLabel = styled.div`
   height: 32px;
 
   font-size: 16px;
+
+  @media (max-width: 448px) {
+    flex-direction: column;
+
+    height: 64px;
+  }
 `;
 
 const ResetButton = styled.button`

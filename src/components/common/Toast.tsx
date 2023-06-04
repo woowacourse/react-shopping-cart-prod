@@ -30,7 +30,7 @@ const popUp = keyframes`
   }
 `;
 
-const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
+const Wrapper = styled.div<Pick<ToastInfoType, 'type'>>`
   z-index: 90;
 
   position: absolute;
@@ -59,4 +59,8 @@ const Wrapper = styled.div<{ type: ToastInfoType['type'] }>`
   animation: ${popUp} 1.6s linear;
   transform: translateX(-50%);
   transition: all 0.3s;
+
+  @media (max-width: 448px) {
+    font-size: 12px;
+  }
 `;
