@@ -12,7 +12,7 @@ const OrderList = () => {
     <ContentLayout>
       <Title>🍋 주문목록 🍋</Title>
       {data?.map((order) => (
-        <OrderItemList order={order} />
+        <OrderItemList order={order} key={order.id} />
       ))}
     </ContentLayout>
   );
