@@ -33,7 +33,7 @@ const CartCheckoutBox = () => {
   const isLoading = cartListCheckedItemCostInformation.state === 'loading';
   const cartListCheckedItemCostInformationValue = cartListCheckedItemCostInformation.contents;
 
-  const isCartEmpty = cartListCheckedItemCostInformationValue === 0;
+  const isCartEmpty = checkedCartIdList.size === 0;
   const discountedTotalItemPrice =
     cartListCheckedItemCostInformationValue.discountedTotalItemPrice > 0
       ? cartListCheckedItemCostInformationValue.discountedTotalItemPrice
