@@ -5,6 +5,11 @@ interface ProductItem {
   imageUrl: string;
 }
 
+interface CartItemResponses {
+  cartItems: CartItem[];
+  totalPrice: number;
+}
+
 interface CartItem {
   id: number;
   quantity: number;
@@ -72,4 +77,15 @@ interface Member {
   password: string;
 }
 
-export type { ProductItem, CartItem, Order, OrdersResponses, OrderRequest, OrderItem, Coupon, Point, Member };
+export type {
+  ProductItem,
+  CartItemResponses,
+  CartItem,
+  Order,
+  OrdersResponses,
+  OrderRequest,
+  OrderItem,
+  Coupon,
+  Point,
+  Member,
+};

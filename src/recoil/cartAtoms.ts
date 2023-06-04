@@ -21,6 +21,7 @@ export const quantityByProductIdSelector = selectorFamily({
     ({ get }) => {
       const cartList = get(cartState);
       const targetCart = cartList.find((cart) => cart.product.id === productId);
+
       return targetCart?.quantity ?? 0;
     },
 });
@@ -29,7 +30,7 @@ export const checkedCartCountSelector = selector({
   key: 'checkedCartCountSelector',
   get: ({ get }) => {
     const checkedItemIdList = get(checkedItemIdListState);
-    console.log(checkedItemIdList);
+
     return checkedItemIdList.length;
   },
 });
@@ -65,6 +66,16 @@ export const checkedItemIdListState = atom<number[]>({
       return cartList.map((cartItem) => cartItem.id);
     },
   }),
+});
+
+export const checkedItemListState = selector({
+  key: 'checkedItemListState',
+  get: ({ get }) => {
+    const cartList = get(cartState);
+    const checkedItemIdList = get(checkedItemIdListState);
+
+    return cartList.filter((item) => checkedItemIdList.includes(item.id));
+  },
 });
 
 export const switchCartCheckboxSelector = selector<number>({
