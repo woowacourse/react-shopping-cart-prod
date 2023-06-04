@@ -1,17 +1,22 @@
+import { lazy, Suspense } from 'react';
 import { styled } from 'styled-components';
 
-import { Cart } from '../Cart';
+import { Cart } from '../cart/Cart';
 import { Layout } from '../common/Layout';
-import { OrderSummary } from '../OrderSummary';
+import SmallLoader from '../SmallLoader';
 
-export const ShoppingCart = () => {
+const OrderSummary = lazy(() => import('../order/OrderSummary'));
+
+const ShoppingCart = () => {
   return (
     <Layout>
       <Style.ShoppingCartWrapper>
         <Style.PageTitle>장바구니</Style.PageTitle>
         <Style.Main>
           <Cart />
-          <OrderSummary />
+          <Suspense fallback={<SmallLoader />}>
+            <OrderSummary />
+          </Suspense>
         </Style.Main>
       </Style.ShoppingCartWrapper>
     </Layout>
@@ -63,3 +68,5 @@ const Style = {
     }
   `,
 };
+
+export default ShoppingCart;
