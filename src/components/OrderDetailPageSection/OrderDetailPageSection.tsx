@@ -1,28 +1,31 @@
-import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { useFetch } from '../../hooks/useFetch';
-import { orderItemState, OrderItemType } from '../../store/order';
-import { originState } from '../../store/origin';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+
 import OrderItem from '../OrderItem/OrderItem';
+import PaymentInfo from '../PaymentInfo/PaymentInfo';
 
 const OrderDetailPageSection = () => {
   const { id } = useParams();
-  const [, setOrderItem] = useRecoilState(orderItemState);
-  const { data, fetchApi, isLoading } = useFetch<OrderItemType>(setOrderItem);
-  const origin = useRecoilValue(originState);
 
-  useEffect(() => {
-    fetchApi.get(`${origin}order-items/${id}`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [origin]);
+  const { data } = useQuery({
+    queryKey: ['orders', id],
+
+    queryFn: async () => {
+      const response = await fetch(`${origin}/orders/${id}`);
+
+      if (!response.ok) {
+        throw new Error(`${response.status} Response was not ok`);
+      }
+
+      return response.json();
+    },
+  });
 
   return (
-    <div>
-      {isLoading && <LoadingSpinner />}
-      {data && <OrderItem information={data} isDetail />}
-    </div>
+    <>
+      <OrderItem information={data} isDetail />
+      <PaymentInfo totalAmount={data.totalProductAmount} />
+    </>
   );
 };
 
