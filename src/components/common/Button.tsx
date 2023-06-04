@@ -21,6 +21,10 @@ const stylesByVariant: Record<ButtonVariant, RuleSet<object>> = {
   contained: css`
     background: #333333;
     color: white;
+
+    &[disabled] {
+      background: #666666;
+    }
   `,
   text: css`
     background: transparent;
@@ -37,7 +41,9 @@ const ButtonContainer = styled.button<ButtonContainerProps>`
   ${(props) => stylesBySize[props.$size]}
   ${(props) => stylesByVariant[props.$variant]}
 
-  ${(props) => (props.disabled ? 'opacity: 0.5;' : '')}
+  &[disabled] {
+    cursor: not-allowed;
+  }
 `;
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
