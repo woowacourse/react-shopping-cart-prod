@@ -7,13 +7,11 @@ import { ROUTER_PATH } from "../router";
 import { Button } from "./Button";
 
 interface TotalPriceTableType {
-  status: "cart" | "order";
-  discountPrice?: number;
+  discountPrice?: number | null;
   handlePaymentClicked?: () => void;
 }
 
 export const TotalPriceTable = ({
-  status,
   discountPrice,
   handlePaymentClicked,
 }: TotalPriceTableType) => {
@@ -28,7 +26,7 @@ export const TotalPriceTable = ({
         <p>총 상품가격</p>
         <p>{totalPrice.toLocaleString()}원</p>
       </RowContainer>
-      {status === "order" && discountPrice !== 0 && (
+      {discountPrice && (
         <DiscountPriceBox>
           <p>ㄴ 쿠폰할인금액</p>
           <p>-{discountPrice?.toLocaleString()}원</p>
@@ -49,12 +47,12 @@ export const TotalPriceTable = ({
           원
         </p>
       </RowContainer>
-      {status === "cart" ? (
+      {discountPrice ? (
+        <Button onClick={handlePaymentClicked}>결제하기</Button>
+      ) : (
         <Button disabled={totalPrice === 0} onClick={goPage(ROUTER_PATH.Order)}>
           주문하기
         </Button>
-      ) : (
-        <Button onClick={handlePaymentClicked}>결제하기</Button>
       )}
     </Wrapper>
   );

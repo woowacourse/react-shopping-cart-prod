@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { styled } from "styled-components";
 import { getCouponsApi, postOrderApi } from "../api";
 import {
@@ -11,26 +11,31 @@ import {
   TotalPriceTable,
 } from "../components";
 import { useToast } from "../hooks/useToast";
-import { selectedCartItemIdsSelector } from "../recoil/selector";
+import { selectedProductsState } from "../recoil/atom";
 import { ROUTER_PATH } from "../router";
-import { CouponType } from "../types/domain";
+import { CouponType, LocalProductType } from "../types/domain";
 
 const Order = () => {
   const { showToast } = useToast();
   const navigate = useNavigate();
   const [coupons, setCoupons] = useState<CouponType[]>([]);
-  const [discountPrice, setDiscountPrice] = useState<number>(0);
+  const [discountPrice, setDiscountPrice] = useState<number | null>(null);
   const [selectedCouponIndex, setSelectedCouponIndex] = useState<number>(-1);
-  const cartItemIds = useRecoilValue<number[]>(selectedCartItemIdsSelector);
+  const [selectedProducts, setSelectedProducts] = useRecoilState(
+    selectedProductsState
+  );
 
   useLayoutEffect(() => {
     const fetchCoupons = async () => {
       try {
-        const response = await getCouponsApi(cartItemIds);
+        const requestedCartItemIds = selectedProducts.map(
+          (product) => product.cartItemId
+        );
+        const response = await getCouponsApi(requestedCartItemIds);
         if (!response.ok) throw new Error(response.status.toString());
         const data = await response.json();
-
-        setCoupons(data);
+        console.log(data.coupons);
+        setCoupons(data.coupons);
       } catch (error: any) {
         console.log(error);
       }
@@ -41,12 +46,23 @@ const Order = () => {
 
   const handleCouponSelected = (index: number) => {
     setSelectedCouponIndex(index);
+    if (index === -1) {
+      setDiscountPrice(null);
+      return;
+    }
     setDiscountPrice(coupons[index].discountPrice);
   };
 
   const handlePaymentClicked = async () => {
     try {
-      await postOrderApi(cartItemIds, selectedCouponIndex);
+      const payloads: Omit<LocalProductType, "id">[] = selectedProducts.map(
+        (product) => {
+          const newProduct = structuredClone(product);
+          delete newProduct.id;
+          return newProduct;
+        }
+      );
+      await postOrderApi(payloads, coupons[selectedCouponIndex].id);
       navigate(ROUTER_PATH.Main);
       showToast("success", "결제가 완료되었습니다 👍🏻");
     } catch (error: any) {
@@ -67,7 +83,6 @@ const Order = () => {
               onSelectHandler={handleCouponSelected}
             />
             <TotalPriceTable
-              status="order"
               discountPrice={discountPrice}
               handlePaymentClicked={handlePaymentClicked}
             />

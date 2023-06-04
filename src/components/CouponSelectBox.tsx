@@ -32,14 +32,19 @@ export const CouponSelectBox = ({
               key={coupon.id}
               onClick={handleCouponClicked(coupon.name, index)}
               $isAvailable={coupon.isAvailable}
+              disabled={!coupon.isAvailable}
             >
               <NameBox>{coupon.name}</NameBox>
               <MinPriceBox>
                 {coupon.minOrderPrice.toLocaleString()}원 이상 주문 시
               </MinPriceBox>
-              <DiscountPriceBox>
-                -{coupon.discountPrice.toLocaleString()}원
-              </DiscountPriceBox>
+              {coupon.isAvailable ? (
+                <DiscountPriceBox>
+                  -{coupon.discountPrice.toLocaleString()}원
+                </DiscountPriceBox>
+              ) : (
+                <DiscountPriceBox>적용불가</DiscountPriceBox>
+              )}
             </CouponContainer>
           ))}
           <NotAppliedCouponBox
@@ -65,8 +70,6 @@ const Wrapper = styled.section`
   border: 1px solid #dddddd;
   border-bottom: none;
 
-  cursor: pointer;
-
   @media screen and (max-width: 300px) {
     width: 290px;
   }
@@ -90,7 +93,7 @@ const TitleContainer = styled.div<{ $isOpen: boolean }>`
   }
 `;
 
-const CouponContainer = styled.div<{ $isAvailable: boolean }>`
+const CouponContainer = styled.button<{ $isAvailable: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -101,14 +104,19 @@ const CouponContainer = styled.div<{ $isAvailable: boolean }>`
   position: relative;
   border-bottom: 1px solid #dddddd;
 
-  &:hover {
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+
+  &:not(:disabled):hover {
     opacity: 60%;
   }
 
-  &:active {
+  &:not(:disabled):active {
     transform: scale(0.95);
   }
 
+  transition: all 0.3s ease;
   background: ${(props) => (props.$isAvailable ? "white" : "#dddddd")};
   color: ${(props) => (props.$isAvailable ? "var(--dark-gray)" : "white")};
 `;
@@ -119,6 +127,16 @@ const NotAppliedCouponBox = styled.div`
 
   padding: 20px;
   border-bottom: 1px solid #dddddd;
+
+  cursor: pointer;
+  &:hover {
+    opacity: 60%;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+  transition: all 0.3s ease;
 `;
 
 const DiscountPriceBox = styled.div`
@@ -128,17 +146,14 @@ const DiscountPriceBox = styled.div`
 
   font-size: 20px;
   font-weight: 500;
-  color: var(--dark-gray);
 `;
 
 const NameBox = styled.p`
   font-weight: 600;
   font-size: 19px;
-  color: var(--dark-gray);
 `;
 
 const MinPriceBox = styled.p`
   font-weight: 500;
   font-size: 14px;
-  color: var(--gray);
 `;
