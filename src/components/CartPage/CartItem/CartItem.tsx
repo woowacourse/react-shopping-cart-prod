@@ -1,4 +1,6 @@
 import { useRef, useState } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { selectedCouponsState, selectedCouponState } from '../../../atoms/cart';
 import { productCouponsSelector } from '../../../atoms/coupon';
 import { DELETE_CART_ITEM } from '../../../constants/cart';
 import { useCartSelector, useMutateCart } from '../../../hooks/cart/cart';
@@ -20,13 +22,12 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     product: { id: productId, imageUrl, name, price },
   } = props;
 
-  const [selectedCoupon, setSelectedCoupon] = useState<SpecificCoupon | null>(
-    null
-  );
-
+  const selectedCoupon = useRecoilValue(selectedCouponState(productId));
   const quantityRef = useRef<HTMLInputElement>(null);
   const { selectedItems, selectItem } = useCartSelector();
   const { updateCartItemMutation, deleteCartItemMutation } = useMutateCart();
+  const setSelectedCouponState = useSetRecoilState(selectedCouponsState);
+
   const productCoupons = useRefreshableRecoilValue(
     productCouponsSelector(productId)
   );
@@ -43,7 +44,10 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   const selectCoupon = (id: SpecificCoupon['id']) => {
     const targetCoupon = productCoupons?.find((coupon) => coupon.id === id);
 
-    setSelectedCoupon(targetCoupon ?? null);
+    targetCoupon &&
+      setSelectedCouponState((prev) =>
+        new Map(prev).set(productId, targetCoupon)
+      );
   };
 
   const updateQuantity = debounce(() =>

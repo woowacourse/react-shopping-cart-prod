@@ -1,6 +1,9 @@
+import { getDiscountInfo } from './../utils/discount';
 import { selector, atom, selectorFamily } from 'recoil';
 import { CartItem } from '../types/cart';
 import { fetchCart } from '../apis/cart';
+import { SpecificCoupon } from '../types/coupon';
+import { Product } from '../types/products';
 
 export const cartState = atom({
   key: 'cart',
@@ -74,11 +77,43 @@ export const totalPriceSelector = selector({
   get: ({ get }) => {
     const cart = get(cartState);
     const selectedItems = get(selectedItemsSelector);
+    const selectedCoupons = get(selectedCouponsState);
 
     return cart.reduce(
-      (totalPrice, { id, quantity, product: { price } }) =>
-        selectedItems.has(id) ? totalPrice + quantity * price : totalPrice,
+      (totalPrice, { id, quantity, product: { id: productId, price } }) => {
+        let discountedPrice = price;
+        const selectedCoupon = selectedCoupons.get(productId);
+
+        if (selectedCoupon) {
+          const { discountType, value } = selectedCoupon;
+
+          discountedPrice = getDiscountInfo(price, {
+            discountType,
+            value,
+          }).discountedPrice;
+        }
+
+        return selectedItems.has(id)
+          ? totalPrice + quantity * discountedPrice
+          : totalPrice;
+      },
       0
     );
   },
+});
+
+export const selectedCouponsState = atom<Map<Product['id'], SpecificCoupon>>({
+  key: 'selectedCouponsState',
+  default: new Map(),
+});
+
+export const selectedCouponState = selectorFamily<
+  SpecificCoupon | null,
+  Product['id']
+>({
+  key: 'selectedCouponState',
+  get:
+    (id) =>
+    ({ get }) =>
+      get(selectedCouponsState).get(id) ?? null,
 });
