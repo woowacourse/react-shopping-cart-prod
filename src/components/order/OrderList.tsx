@@ -29,28 +29,6 @@ const OrderList = () => {
 };
 
 const S = {
-  Wrapper: styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 90%;
-    margin-bottom: 50%;
-
-    @media all and (max-width: 479px) {
-      & > :first-child {
-        font-size: 20px;
-        margin-top: 30px;
-        input {
-          width: 24px;
-        }
-
-        button {
-          width: fit-content;
-        }
-      }
-    }
-  `,
-
   Title: styled.h1`
     width: 80%;
     text-align: center;
