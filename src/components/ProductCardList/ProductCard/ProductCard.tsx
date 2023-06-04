@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import emptyCartImg from 'assets/gradiation-min.png';
+import emptyCartImg from 'assets/skeleton-img.png';
 import FlexBox from 'components/@common/FlexBox';
 import CartQuantityStepper from 'components/CartQuantityStepper/CartQuantityStepper';
 import useShoppingCart from 'hooks/useShoppingCart';
