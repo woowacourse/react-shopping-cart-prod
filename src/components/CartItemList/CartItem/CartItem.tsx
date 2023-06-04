@@ -7,7 +7,7 @@ import { WIDTH } from '../../../constants/mediaQuery';
 import useFetchCart from '../../../hooks/useFetchCart';
 import { Cart } from '../../../types/response';
 import { useRecoilState } from 'recoil';
-import { isSelectedListAtom } from '../../../store/cart';
+import { selectedItemListAtom } from '../../../store/cart';
 
 interface CartItemProps {
   cart: Cart;
@@ -23,7 +23,7 @@ const CartItem = ({
   const { name, imageUrl, price } = product;
   const { updateCartItem, deleteCartItem } = useFetchCart();
   const [isSelectedList, setIsSelectedList] =
-    useRecoilState(isSelectedListAtom);
+    useRecoilState(selectedItemListAtom);
   const cartItemState = isSelectedList.find((item) => item.id === id);
 
   const toggleSelect = () => {

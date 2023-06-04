@@ -1,12 +1,12 @@
 import { useSetRecoilState } from 'recoil';
-import { cartAtom, isSelectedListAtom } from '../store/cart';
+import { cartAtom, selectedItemListAtom } from '../store/cart';
 import { Cart } from '../types/response';
 import useFetch from './useFetch';
 import { END_POINTS } from '../constants/endPoints';
 
 const useFetchCart = () => {
   const setCartList = useSetRecoilState(cartAtom);
-  const setIsSelectedList = useSetRecoilState(isSelectedListAtom);
+  const setIsSelectedList = useSetRecoilState(selectedItemListAtom);
   const { handleFetch } = useFetch(END_POINTS.CART_ITEMS);
 
   const addToCart = async (productId: number) => {

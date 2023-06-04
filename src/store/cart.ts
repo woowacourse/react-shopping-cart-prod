@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily } from 'recoil';
+import { atom, selector } from 'recoil';
 import { Cart } from '../types/response';
 import { fetchedCartListSelector } from './asyncSelector';
 
@@ -16,17 +16,6 @@ export const cartSelector = selector({
 
     return { cartsQuantity };
   },
-});
-
-export const cartSelectorFamily = selectorFamily({
-  key: 'cart/selector-family',
-  get:
-    (id: number) =>
-    ({ get }) => {
-      const cartList = get(cartAtom);
-
-      return cartList.find((item) => item.id === id) as Cart;
-    },
 });
 
 export const checkedValue = selector({
@@ -62,7 +51,19 @@ type SelectedItem = {
   order: { id: number; quantity: number };
 };
 
-export const isSelectedListAtom = atom<SelectedItem[]>({
-  key: 'cart/is-selected-list',
+export const selectedItemListAtom = atom<SelectedItem[]>({
+  key: 'selected-item',
   default: [],
+});
+
+export const selectedItemSelector = selector({
+  key: 'cart/selected-item',
+  get: ({ get }) => {
+    const selectedItemList = get(selectedItemListAtom);
+    const selectedItemCount = selectedItemList.filter(
+      (item) => item.isSelected === true
+    ).length;
+
+    return { selectedItemCount };
+  },
 });

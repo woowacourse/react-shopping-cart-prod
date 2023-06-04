@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { isSelectedListAtom } from '../../store/cart';
+import { selectedItemListAtom } from '../../store/cart';
 import { WIDTH } from '../../constants/mediaQuery';
 import useFetchOrder from '../../hooks/useFetchOrder';
 import {
@@ -12,33 +12,33 @@ import {
 import { billSelector, totalProductPriceAtom } from '../../store/bill';
 
 const Bill = () => {
-  const isSelectedList = useRecoilValue(isSelectedListAtom);
+  const selectedItemList = useRecoilValue(selectedItemListAtom);
   const totalProductPrice = useRecoilValue(totalProductPriceAtom);
   const { deliveryFee, discountAmount, totalOrderAmount } =
     useRecoilValue(billSelector);
   const { postOrders } = useFetchOrder();
 
   const onClickOrder = useCallback(async () => {
-    const orders = isSelectedList
+    const orders = selectedItemList
       .filter((item) => item.isSelected)
       .map((item) => item.order);
     await postOrders(orders);
-  }, [isSelectedList]);
+  }, [selectedItemList]);
 
   return (
     <Wrapper>
       <SubTitle>결제예상금액</SubTitle>
       <DetailWrapper>
-        <Detail>
+        <DetailItem>
           총 상품가격 <span>₩ {totalProductPrice.toLocaleString()}</span>
-        </Detail>
-        <Detail>
+        </DetailItem>
+        <DetailItem>
           할인 금액 <span> ₩ {discountAmount.toLocaleString()}</span>
-        </Detail>
-        <Detail>
+        </DetailItem>
+        <DetailItem>
           배송비
           <span>₩ {totalProductPrice && deliveryFee.toLocaleString()}</span>
-        </Detail>
+        </DetailItem>
         <TotalAmount>
           총 주문금액
           <span>₩{totalProductPrice && totalOrderAmount.toLocaleString()}</span>
@@ -102,7 +102,7 @@ const DetailWrapper = styled.div`
   }
 `;
 
-const Detail = styled.div`
+const DetailItem = styled.div`
   display: flex;
   justify-content: space-between;
 
@@ -110,7 +110,7 @@ const Detail = styled.div`
   font-weight: bold;
 `;
 
-const TotalAmount = styled(Detail)`
+const TotalAmount = styled(DetailItem)`
   margin: 12px 0 0 0;
 `;
 

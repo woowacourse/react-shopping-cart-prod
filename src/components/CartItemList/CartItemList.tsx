@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { cartAtom, checkedValue, isSelectedListAtom } from '../../store/cart';
+import {
+  cartAtom,
+  checkedValue,
+  selectedItemListAtom,
+  selectedItemSelector,
+} from '../../store/cart';
 import { WIDTH } from '../../constants/mediaQuery';
 import CartItem from './CartItem/CartItem';
 import CheckBox from '../common/CheckBox/CheckBox';
@@ -14,37 +19,34 @@ const CartItemList = () => {
   const [cartList, setCartList] = useRecoilState(cartAtom);
   const { ALL_CHECKED, NO_CHECKED } = useRecoilValue(checkedValue);
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
-  const [isSelectedList, setIsSelectedList] =
-    useRecoilState(isSelectedListAtom);
-  const setTotalAmount = useSetRecoilState(totalProductPriceAtom);
+  const [selectedItemList, setSelectedItemList] =
+    useRecoilState(selectedItemListAtom);
+  const setTotalProductPrice = useSetRecoilState(totalProductPriceAtom);
   const serverName = useRecoilValue(serverAtom);
+  const { selectedItemCount } = useRecoilValue(selectedItemSelector);
 
   useEffect(() => {
-    setIsSelectedList(ALL_CHECKED);
+    setSelectedItemList(ALL_CHECKED);
   }, [serverName]);
 
   useEffect(() => {
-    const total = isSelectedList.reduce((a, b) => {
+    const total = selectedItemList.reduce((a, b) => {
       if (b.isSelected) {
         let cart = cartList.find((item) => item.id === b.id);
         if (cart) return a + cart.quantity * cart.product.price;
       }
       return a;
     }, 0);
-    setTotalAmount(total);
-  }, [isSelectedList, cartList]); //총 주문금액은 quantity랑 선택 상태에 의존하니까
+    setTotalProductPrice(total);
+  }, [selectedItemList, cartList]); //총 주문금액은 quantity랑 선택 상태에 의존하니까
 
   const toggleSelectAll = () => {
     setIsAllSelected(!isAllSelected);
-    setIsSelectedList(!isAllSelected ? ALL_CHECKED : NO_CHECKED);
-  };
-
-  const countSelectedItems = () => {
-    return isSelectedList.filter((item) => item.isSelected === true).length;
+    setSelectedItemList(!isAllSelected ? ALL_CHECKED : NO_CHECKED);
   };
 
   const deleteSelectedItems = () => {
-    isSelectedList.forEach((item) => {
+    selectedItemList.forEach((item) => {
       if (item.isSelected) {
         deleteCartItem(item.id);
         setCartList((prev) => [...prev.filter((cart) => cart.id !== item.id)]);
@@ -70,7 +72,7 @@ const CartItemList = () => {
           <CheckBoxWrapper>
             <CheckBox onClick={toggleSelectAll} checked={isAllSelected} />
             <span>
-              전체선택 ({countSelectedItems()}/{cartList.length})
+              전체선택 ({selectedItemCount}/{cartList.length})
             </span>
             <DeleteSelectedItemsButton onClick={deleteSelectedItems}>
               선택삭제
