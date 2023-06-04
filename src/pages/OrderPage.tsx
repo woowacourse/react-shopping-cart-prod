@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import Nothing from '../components/common/Nothing';
 import Spinner from '../components/common/Spinner';
 import Title from '../components/common/Title';
@@ -8,14 +8,12 @@ import MainLayout from '../components/PageMainLayout';
 import { IMAGE_PATH } from '../constants';
 import { ORDER_URL } from '../constants/url';
 import { useFetchData } from '../hooks/useFetchData';
-import { serverState } from '../recoil';
-import { OrderList } from '../types';
+import { orderListState, serverState } from '../recoil';
 
 const OrderPage = () => {
   const server = useRecoilValue(serverState);
   const { api, isLoading } = useFetchData();
-
-  const [orderList, setOrderList] = useState<OrderList[]>([]);
+  const [orderList, setOrderList] = useRecoilState(orderListState);
 
   useEffect(() => {
     api

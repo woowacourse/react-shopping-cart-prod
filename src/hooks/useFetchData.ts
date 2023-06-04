@@ -43,7 +43,7 @@ export const useFetchData = () => {
         body: JSON.stringify(body),
       });
     },
-    delete: <T>(url: string, body: T) => {
+    delete: <T>(url: string, body?: T) => {
       return fetchData(url, {
         method: 'DELETE',
         headers: {
