@@ -14,6 +14,10 @@ export interface ToastInfoType {
 
 export type ServerNameType = 'MSW' | '라온' | '져니' | '쥬니';
 
+export interface LoginResponse {
+  token: string;
+}
+
 export interface ProductType {
   id: number;
   name: string;
