@@ -18,7 +18,7 @@ const Container = styled.div<ToastStyleProps>`
   bottom: 12px;
 
   height: 48px;
-  width: 50%;
+  width: 80%;
 
   margin: 0 auto;
 
@@ -38,6 +38,10 @@ const Container = styled.div<ToastStyleProps>`
     to {
       bottom: 12px;
     }
+  }
+
+  @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
+    width: 50%;
   }
 `;
 
