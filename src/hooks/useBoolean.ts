@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-type switchTrue = () => void;
-type switchFalse = () => void;
+type SwitchTrue = () => void;
+type SwitchFalse = () => void;
 
-const useBoolean = (initialState: boolean): [boolean, switchTrue, switchFalse] => {
+const useBoolean = (initialState: boolean): [boolean, SwitchTrue, SwitchFalse] => {
   const [boolean, setBoolean] = useState(initialState);
 
   const switchTrue = () => {
