@@ -12,6 +12,7 @@ import {
   DEFAULT_VALUE_LOGIN_TOKEN,
   KEY_LOCALSTORAGE_LOGIN_TOKEN,
 } from "../constants";
+import { localStorageEffect } from "./effect";
 
 export const productsState = atom<ProductType[]>({
   key: "products",
@@ -38,6 +39,7 @@ export const localProductsState = atom<LocalProductType[]>({
 export const selectedProductsState = atom<LocalProductType[]>({
   key: "selectedProducts",
   default: [],
+  effects: [localStorageEffect("orderProducts")],
 });
 
 export const toastState = atom<ToastType>({
