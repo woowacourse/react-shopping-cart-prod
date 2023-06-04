@@ -1,31 +1,18 @@
-import { Suspense, useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { Suspense } from 'react';
 import { ROUTER_PATH } from '@router/router';
-import cartState from '@recoil/cart/cartState';
 import { useServer } from '@hooks/recoil/server/useServer';
 import { useUser } from '@hooks/recoil/user/useUser';
 import CartStepperWithIcon from '@components/cart/CartStepperWithIcon';
 import SelectBox from '@components/common/SelectBox';
 import Logo from '@components/layout/Logo';
-import { getCartApi } from '@utils/cart/fetchCart';
 import { SERVER_NAME } from '@constants/serverUrlConstants';
 import { USER_INFORMATION } from '@constants/userConstant';
 import { Container } from '@styles/style';
 import * as S from './Header.style';
 
 function Header() {
-  const { userInfo, onUserChange } = useUser();
-  const { server, onServerChange } = useServer();
-  const setCart = useSetRecoilState(cartState);
-
-  useEffect(() => {
-    const fetchCartData = async () => {
-      const cartData = await getCartApi({ serverName: server, userInfo });
-      setCart(cartData);
-    };
-
-    fetchCartData();
-  }, [server, setCart, userInfo]);
+  const { onUserChange } = useUser();
+  const { onServerChange } = useServer();
 
   return (
     <S.Navbar>
