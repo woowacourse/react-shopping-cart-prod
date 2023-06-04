@@ -1,76 +1,20 @@
 import { atom, selector, selectorFamily } from 'recoil';
 
-import { OrderData } from '../types';
+import { OrderData, OrderedItemData } from '../types';
+import { getOrderAPI } from './../api/orderAPI';
+import { currentServerState } from './server';
 
 export const orderListState = atom({
   key: 'orderListState',
   default: selector<OrderData[]>({
     key: 'orderListState/default',
-    get: ({ get }) => {
+    get: async ({ get }) => {
       // 사용자별 주문 전체 목록 get
+      const currentServer = get(currentServerState);
+      const orderAPI = getOrderAPI(currentServer);
+      const orderList = await orderAPI.getOrderList();
 
-      return [
-        {
-          id: 1123124124,
-          orderedItems: [
-            {
-              quantity: 1,
-              product: {
-                id: 1,
-                name: '종이용기(1100cc)-단골이 됐으면 좋겠다',
-                price: 60000,
-                discountRate: 10,
-                discountedPrice: 54000,
-                imageUrl:
-                  'https://cdn-mart.baemin.com/sellergoods/list/cba783a5-b35d-4b9d-b58e-56801594351f.jpg?h=400&w=400',
-              },
-            },
-          ],
-          orderedAt: new Date(),
-          totalItemDiscountAmount: 6000,
-          totalMemberDiscountAmount: 0,
-          totalItemPrice: 60000,
-          discountedTotalItemPrice: 54000,
-          shippingFee: 3000,
-          totalPrice: 57000,
-        },
-        {
-          id: 988923784,
-          orderedItems: [
-            {
-              quantity: 1,
-              product: {
-                id: 1,
-                name: '종이용기(1100cc)-단골이 됐으면 좋겠다',
-                price: 60000,
-                discountRate: 10,
-                discountedPrice: 54000,
-                imageUrl:
-                  'https://cdn-mart.baemin.com/sellergoods/list/cba783a5-b35d-4b9d-b58e-56801594351f.jpg?h=400&w=400',
-              },
-            },
-            {
-              quantity: 1,
-              product: {
-                id: 1,
-                name: '종이용기(1100cc)-단골이 됐으면 좋겠다',
-                price: 60000,
-                discountRate: 10,
-                discountedPrice: 54000,
-                imageUrl:
-                  'https://cdn-mart.baemin.com/sellergoods/list/cba783a5-b35d-4b9d-b58e-56801594351f.jpg?h=400&w=400',
-              },
-            },
-          ],
-          orderedAt: new Date(),
-          totalItemDiscountAmount: 12000,
-          totalMemberDiscountAmount: 0,
-          totalItemPrice: 120000,
-          discountedTotalItemPrice: 108000,
-          shippingFee: 3000,
-          totalPrice: 111000,
-        },
-      ];
+      return orderList;
     },
   }),
 });
@@ -78,44 +22,10 @@ export const orderListState = atom({
 export const detailOrderState = selectorFamily({
   key: 'detailOrderState',
   get:
-    (orderId: OrderData['id']) =>
+    (orderId: OrderedItemData['id']) =>
     ({ get }): OrderData => {
-      // 특정 주문 상세 정보 get
-      return {
-        id: 988923784,
-        orderedItems: [
-          {
-            quantity: 1,
-            product: {
-              id: 1,
-              name: '종이용기(1100cc)-단골이 됐으면 좋겠다',
-              price: 60000,
-              discountRate: 10,
-              discountedPrice: 54000,
-              imageUrl:
-                'https://cdn-mart.baemin.com/sellergoods/list/cba783a5-b35d-4b9d-b58e-56801594351f.jpg?h=400&w=400',
-            },
-          },
-          {
-            quantity: 1,
-            product: {
-              id: 1,
-              name: '종이용기(1100cc)-단골이 됐으면 좋겠다',
-              price: 60000,
-              discountRate: 10,
-              discountedPrice: 54000,
-              imageUrl:
-                'https://cdn-mart.baemin.com/sellergoods/list/cba783a5-b35d-4b9d-b58e-56801594351f.jpg?h=400&w=400',
-            },
-          },
-        ],
-        orderedAt: new Date(),
-        totalItemDiscountAmount: 12000,
-        totalMemberDiscountAmount: 0,
-        totalItemPrice: 120000,
-        discountedTotalItemPrice: 108000,
-        shippingFee: 3000,
-        totalPrice: 111000,
-      };
+      const orderList = get(orderListState);
+
+      return orderList.find((orderData) => orderData.id === orderId)!;
     },
 });
