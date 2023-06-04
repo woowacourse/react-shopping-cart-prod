@@ -12,6 +12,11 @@ export const modalState = atom<boolean>({
   default: false,
 });
 
+export const menuState = atom<boolean>({
+  key: 'menuState',
+  default: false,
+});
+
 export const serverOriginState = atom<string>({
   key: 'serverOriginState',
   default: BASE_URLS['baron'],

@@ -2,10 +2,13 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import useCart from '../../../hooks/useCart';
 import ServerSelect from '../ServerSelect/ServerSelect';
-import { CartIcon, OrderIcon } from '../../../assets/svg';
+import { CartIcon, OrderIcon, UserIcon } from '../../../assets/svg';
+import useMenu from '../../user/UserMenu/useMenu';
+import UserMenu from '../../user/UserMenu/UserMenu';
 
 const Header = () => {
   const { cart } = useCart();
+  const { isMenuOpen, isActive, openMenu, menuRef } = useMenu();
 
   return (
     <HeaderContainer>
@@ -17,7 +20,14 @@ const Header = () => {
       </Logo>
       <RightContainer>
         <ServerSelect />
-        <CartLink to="/cart">
+        <UserInfo onClick={openMenu} ref={menuRef}>
+          <UserInfoInner>
+            <UserIcon />
+            <span>나의상회</span>
+          </UserInfoInner>
+          {isMenuOpen && <UserMenu isActive={isActive} />}
+        </UserInfo>
+        <LinkWrapper to="/cart">
           <CartIcon />
           <span>장바구니</span>
           {cart.length > 0 && (
@@ -25,11 +35,11 @@ const Header = () => {
               <span>{cart.length}</span>
             </CartTotalQuantity>
           )}
-        </CartLink>
-        <OrderListLink to="/orders">
+        </LinkWrapper>
+        <LinkWrapper to="/orders">
           <OrderIcon />
           <span>주문목록</span>
-        </OrderListLink>
+        </LinkWrapper>
       </RightContainer>
     </HeaderContainer>
   );
@@ -66,9 +76,25 @@ const RightContainer = styled.div`
   column-gap: 20px;
 `;
 
-const CartLink = styled(Link)`
+const UserInfo = styled.div`
+  position: relative;
+`;
+
+const UserInfoInner = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+
+  & > span {
+    font-size: 10px;
+  }
+`;
+
+const LinkWrapper = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: relative;
   cursor: pointer;
 
@@ -90,17 +116,6 @@ const CartTotalQuantity = styled.span`
   background: ${(props) => props.theme.color.orange};
   color: ${(props) => props.theme.color.white};
   font-size: 12px;
-`;
-
-const OrderListLink = styled(Link)`
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  cursor: pointer;
-
-  & > span {
-    font-size: 10px;
-  }
 `;
 
 export default Header;

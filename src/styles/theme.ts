@@ -21,6 +21,7 @@ const color = {
 
 const zIndex = {
   header: 1,
+  menu: 2,
   modalBackdrop: 10,
   modalContainer: 20,
   toast: 30,
