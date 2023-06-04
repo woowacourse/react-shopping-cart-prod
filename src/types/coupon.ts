@@ -1,23 +1,21 @@
-export interface AllCoupon {
-  id: string;
+interface Coupon {
+  id: number;
   name: string;
-  ownerMemberId: string;
-  discountType: string;
-  targetType: string;
+  ownerMemberId: number;
+  discountType: 'RATE' | 'FIX';
   value: number;
 }
 
-export interface SpecificCoupon {
-  id: string;
-  name: string;
-  ownerMemberId: string;
-  discountType: 'RATE' | 'FIX';
+export interface AllCoupon extends Coupon {
+  targetType: 'ALL';
+}
+
+export interface SpecificCoupon extends Coupon {
   targetType: 'ALL' | 'SPECIFIC';
-  targetProductId: string;
-  value: number;
+  targetProductId: number;
 }
 
 export type ProductCouponMap = Record<
   SpecificCoupon['targetProductId'],
-  Omit<SpecificCoupon, 'targetProductId'>[]
+  SpecificCoupon[]
 >;
