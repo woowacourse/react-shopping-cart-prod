@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
-import * as api from '../api';
 import useToast from './useToast';
 import { cartState, serverNameState, tokenState } from '../recoil/state';
+import api from '../api';
 import { API_ERROR_MESSAGE, API_INFO_MESSAGE } from '../constants';
 
 const useQuantityInput = (cartItemId: number) => {
