@@ -9,7 +9,10 @@ import { updateCouponSelector } from '../coupon';
 
 export const orderSelector = selector<Order[]>({
   key: 'orderSelector',
-  get: ({ get }) => orderApis(get(serverNameState)).getOrders(),
+  get: ({ get }) =>
+    orderApis(get(serverNameState))
+      .getOrders()
+      .then((orders) => orders.reverse()),
 });
 
 export const orderDetailSelector = selectorFamily({
@@ -30,9 +33,11 @@ export const orderHandlerSelector = selector({
 
     const addOrder = getCallback(({ set }) => async (orderInfo: OrderInfo) => {
       await postOrder(orderInfo);
-      await updateCartProduct();
-      await updateCoupon();
-      const newOrders = await getOrders();
+      const [newOrders] = await Promise.all([
+        getOrders(),
+        updateCartProduct(),
+        updateCoupon(),
+      ]);
       set(orderState, newOrders);
     });
 

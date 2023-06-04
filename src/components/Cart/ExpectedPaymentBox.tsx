@@ -10,9 +10,10 @@ import useCoupons from '../../hooks/useCoupons';
 
 const ExpectedPaymentBox = () => {
   const { isAllUnchecked } = useMultipleChecked();
-  const { totalProductPrice, deliveryFee, totalPrice } = useCartPrice();
-  const { couponOptions, changeTargetCoupon } = useCoupons();
-  const { orderCartProducts } = useOrder();
+  const { couponOptions, currentCouponId, changeTargetCoupon } = useCoupons();
+  const { totalProductPrice, deliveryFee, couponPrice, totalPrice } =
+    useCartPrice(currentCouponId);
+  const { orderCartProducts } = useOrder(currentCouponId, totalPrice);
 
   return (
     <ExpectedPaymentContainer>
@@ -25,6 +26,13 @@ const ExpectedPaymentBox = () => {
         <PaymentInfoItem>
           <dt>총 배송비</dt>
           <dd>{deliveryFee.toLocaleString('ko-KR')}원</dd>
+        </PaymentInfoItem>
+        <PaymentInfoItem>
+          <dt>총 할인금액</dt>
+          <dd>
+            {couponPrice > 0 && '-'}
+            {couponPrice.toLocaleString('ko-KR')}원
+          </dd>
         </PaymentInfoItem>
         <SelectBoxWrapper>
           <SelectBox

@@ -3,13 +3,15 @@ import { useRecoilValue } from 'recoil';
 import useMultipleChecked from './useMultipleChecked';
 import { DELIVERY_FEE } from '../constants/fee';
 import { checkedPriceState } from '../states/checkedCartProducts';
-import { targetCouponPriceSelector } from '../states/coupon';
+import { currentCouponPriceSelector } from '../states/coupon';
 
-const useCartPrice = () => {
+const useCartPrice = (currentCouponId: number | undefined) => {
   const { isAllUnchecked } = useMultipleChecked();
 
   const totalProductPrice = useRecoilValue(checkedPriceState);
-  const couponPrice = useRecoilValue(targetCouponPriceSelector);
+  const couponPrice = useRecoilValue(
+    currentCouponPriceSelector(currentCouponId)
+  );
   const deliveryFee = isAllUnchecked ? 0 : DELIVERY_FEE;
   const totalPrice = totalProductPrice + deliveryFee - couponPrice;
 

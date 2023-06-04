@@ -1,6 +1,6 @@
-import { selector } from 'recoil';
+import { selector, selectorFamily } from 'recoil';
 
-import { couponState, targetCouponIdState } from './atom';
+import { couponState } from './atom';
 import couponApis from '../../apis/coupons';
 import { serverNameState } from '../serverName';
 import { checkedPriceState } from '../checkedCartProducts';
@@ -20,14 +20,15 @@ export const couponOptionSelector = selector({
     })),
 });
 
-export const targetCouponPriceSelector = selector({
-  key: 'targetCouponPriceSelector',
-  get: ({ get }) =>
-    get(targetCouponIdState)
-      ? get(couponState).find(
-          (coupon) => coupon.id === get(targetCouponIdState)
-        )?.discountPrice ?? 0
-      : 0,
+export const currentCouponPriceSelector = selectorFamily({
+  key: 'currentCouponPriceSelector',
+  get:
+    (currentCouponId: number | undefined) =>
+    ({ get }) =>
+      currentCouponId
+        ? get(couponState).find((coupon) => coupon.id === currentCouponId)
+            ?.discountPrice ?? 0
+        : 0,
 });
 
 export const updateCouponSelector = selector({
