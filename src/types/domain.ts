@@ -30,3 +30,8 @@ export interface Order {
   couponId: Coupon["id"];
   products: Omit<LocalProductType, "id">[];
 }
+
+export interface OrderItemList {
+  id: number;
+  products: Omit<LocalProductType, "cartItemId">[];
+}
