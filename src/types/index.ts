@@ -34,7 +34,7 @@ export type Order = {
   orderStatus: string;
 };
 
-export type OrderDetail = Omit<Order, 'createdAT' | 'orderStatus'> & {
+export type OrderDetail = Order & {
   totalPrice: number;
   deliveryFee: number;
   coupon: Coupon;
