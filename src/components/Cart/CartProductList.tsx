@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import CartProductItem from './CartProductItem';
-import Message from '../Common/Message';
+import EmptyMessage from '../Common/EmptyMessage';
 
 import { cartProductState } from '../../states/cartProducts';
 
@@ -12,7 +12,7 @@ const CartProductList = () => {
   if (cartProducts.length === 0) {
     return (
       <MessageWrapper>
-        <Message type='cartEmpty' />
+        <EmptyMessage type='cart' />
       </MessageWrapper>
     );
   }

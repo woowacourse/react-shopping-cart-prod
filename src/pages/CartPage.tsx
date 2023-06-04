@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import CartProductInfo from '../components/Cart/CartProductInfo';
 import ExpectedPaymentBox from '../components/Cart/ExpectedPaymentBox';
 import Message from '../components/Common/Message';
+import ErrorMessage from '../components/Common/ErrorMessage';
 import { serverNameState } from '../states/serverName';
 
 const CartPage = () => {
@@ -14,7 +15,7 @@ const CartPage = () => {
   return (
     <Main>
       <PageTitle>장바구니</PageTitle>
-      <ErrorBoundary key={serverName} fallback={<Message type='error' />}>
+      <ErrorBoundary key={serverName} fallback={<ErrorMessage type='cart' />}>
         <Suspense fallback={<Message type='loading' />}>
           <CartProductInfo />
           <ExpectedPaymentBoxWrapper>

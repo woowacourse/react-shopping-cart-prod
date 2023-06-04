@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import OrderItem from './OrderItem';
-import Message from '../Common/Message';
+import EmptyMessage from '../Common/EmptyMessage';
 
 import { orderState } from '../../states/order';
 
@@ -10,7 +10,7 @@ const OrderList = () => {
   const orders = useRecoilValue(orderState);
 
   if (orders.length === 0) {
-    return <Message type='empty' />;
+    return <EmptyMessage type='order' />;
   }
 
   return (

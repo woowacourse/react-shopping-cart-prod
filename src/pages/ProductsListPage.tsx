@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import Message from '../components/Common/Message';
 import ProductList from '../components/Product/ProductList';
+import ErrorMessage from '../components/Common/ErrorMessage';
 import { serverNameState } from '../states/serverName';
 
 const ProductsListPage = () => {
@@ -12,7 +13,10 @@ const ProductsListPage = () => {
 
   return (
     <Main>
-      <ErrorBoundary key={serverName} fallback={<Message type='error' />}>
+      <ErrorBoundary
+        key={serverName}
+        fallback={<ErrorMessage type='product' />}
+      >
         <Suspense fallback={<Message type='loading' />}>
           <ProductList />
         </Suspense>

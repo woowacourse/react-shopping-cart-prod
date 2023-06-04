@@ -2,7 +2,7 @@ import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import ProductItem from './ProductItem';
-import Message from '../Common/Message';
+import EmptyMessage from '../Common/EmptyMessage';
 
 import { productState } from '../../states/products';
 
@@ -10,7 +10,7 @@ const ProductList = () => {
   const products = useRecoilValue(productState);
 
   if (products.length === 0) {
-    return <Message type='empty' />;
+    return <EmptyMessage type='product' />;
   }
 
   return (
