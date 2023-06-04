@@ -53,9 +53,13 @@ function Purchase() {
 
   const discountByCoupon = useRecoilValue(discountPriceByCouponSelector);
 
-  const purchase = () => {
-    commitPurchaseItems();
-    navigate("/order");
+  const purchase = async () => {
+    const response = await commitPurchaseItems();
+    if (response) {
+      navigate("/order");
+    } else {
+      alert("something was wrong");
+    }
   };
 
   useEffect(() => {

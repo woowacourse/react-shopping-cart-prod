@@ -103,6 +103,7 @@ export const orderRepository = selector({
     });
 
     const commitPurchaseItems = getCallback(({ snapshot }) => async () => {
+      const server = await snapshot.getPromise(serverState);
       const checkedCartList = await snapshot.getPromise(checkedCartSelector);
       const selectedPoint = await snapshot.getPromise(selectedPointState);
       const selectedCouponIds = await snapshot.getPromise(
@@ -111,22 +112,38 @@ export const orderRepository = selector({
       const { closeModal } = await snapshot.getPromise(modalRepository);
 
       const newOrder: NewOrder = {
-        orderItems: checkedCartList.map((item) => {
-          return {
-            cartItemId: item.id,
-            productId: item.product.id,
-            quantity: item.quantity,
-          };
-        }),
+        orderItems: checkedCartList.map((item) => ({
+          cartItemId: item.id,
+          productId: item.product.id,
+          quantity: item.quantity,
+        })),
         orderDiscounts: {
           couponIds: selectedCouponIds,
           point: selectedPoint,
         },
       };
 
-      alert(JSON.stringify(newOrder));
-      alert("결제가 완료됐습니다.");
-      closeModal();
+      const response = await fetch(`${url[server]}/orders`, {
+        method: "POST",
+        body: JSON.stringify(newOrder),
+        headers: {
+          Authorization: `Basic ${base64}`,
+        },
+      });
+
+      console.log(response);
+
+      const data = await response.json();
+
+      alert(JSON.stringify(data));
+      if (response.ok) {
+        alert("결제가 완료됐습니다.");
+        closeModal();
+      } else {
+        alert("뭔가 문제가 있군요");
+      }
+
+      return response.ok;
     });
 
     const updateSelectedCoupon = getCallback(
@@ -171,6 +188,8 @@ export const orderRepository = selector({
             couponIds: [selectedCouponIds[0]],
             usePoint: selectedPoint,
           };
+          // 추후에 서버로 쿼리 날려서 계산 값을 검증할 예정
+
           set(expectedOrderPriceState, expectedOrderPrice);
         }
     );
