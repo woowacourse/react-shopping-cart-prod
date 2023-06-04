@@ -1,16 +1,15 @@
-import { OrderType } from '@type/orderType';
+import { useRecoilValue } from 'recoil';
+import { orderListState } from '@recoil/order/orderListState';
 import OrderItem from './OrderItem';
 import * as S from './OrderItemList.style';
 
-interface OrderItemListProps {
-  orders: OrderType[];
-}
+function OrderItemList() {
+  const orders = useRecoilValue(orderListState);
 
-function OrderItemList({ orders }: OrderItemListProps) {
   return (
     <S.Container>
       {orders.map((order) => (
-        <OrderItem key={order.id} order={order} isDetail={true} />
+        <OrderItem key={order.id} order={order} isVisibleDetail={true} />
       ))}
     </S.Container>
   );
