@@ -1,20 +1,23 @@
 import { PriceCounter } from '../../components/Payment/PriceCounter';
 import { PaymentList } from '../../components/Payment/PaymentList';
-import useOrderProcess from '../../hooks/useOrderProcess';
 import { FatBorder, PageTitle } from '../../style/style';
 import * as S from './Payment.style';
 import { useRecoilValue } from 'recoil';
 import { memberPublicInformation } from '../../recoil/userAtoms';
+import { orderState } from '../../recoil/orderAtom';
+import { useNavigate } from 'react-router-dom';
+import { PAGE_PATH } from '../../constants/path';
 
 function Payment() {
-  const { order, validOrder } = useOrderProcess();
+  const order = useRecoilValue(orderState);
   const consumer = useRecoilValue(memberPublicInformation);
+  const navigate = useNavigate();
 
   return (
     <>
       <PageTitle>주문/결제</PageTitle>
       <FatBorder />
-      {validOrder && order ? (
+      {order ? (
         <S.PaymentWrapper>
           <S.PaymentInfoWrapper>
             <S.PaymentInfo>
@@ -44,7 +47,10 @@ function Payment() {
           </S.PurchaseBoxWrapper>
         </S.PaymentWrapper>
       ) : (
-        <div>유효하지 않은 주문</div>
+        <S.InvalidWrapper>
+          유효하지 않은 주문입니다
+          <S.CartButton onClick={() => navigate(PAGE_PATH.CART)}>장바구니로 돌아가기</S.CartButton>
+        </S.InvalidWrapper>
       )}
     </>
   );

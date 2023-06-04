@@ -3,8 +3,9 @@ import * as S from './UserSelector.style.ts';
 import UserProfileImage from '../../../../assets/user.svg';
 import useOnClickOutside from '../../../../hooks/useOnClickOutside.ts';
 import type { Point } from '../../../../types/types.ts';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { memberIdState, memberListState } from '../../../../recoil/userAtoms.ts';
+import { orderState } from '../../../../recoil/orderAtom.ts';
 
 type UserSelectorProps = {
   point: Point;
@@ -13,11 +14,13 @@ type UserSelectorProps = {
 const UserSelector = ({ point }: UserSelectorProps) => {
   const [currentMemberId, setCurrentMemberId] = useRecoilState(memberIdState);
   const memberList = useRecoilValue(memberListState);
+  const setOrderState = useSetRecoilState(orderState);
 
   const currentMemberInfo = memberList?.find((member) => member.id === currentMemberId);
 
   const changeCurrentUser: MouseEventHandler<HTMLLIElement> = (e) => {
     setCurrentMemberId(e.currentTarget.value);
+    setOrderState(null);
   };
 
   const ref = useRef<HTMLDivElement>(null);

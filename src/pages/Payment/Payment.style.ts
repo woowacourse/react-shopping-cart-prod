@@ -65,3 +65,22 @@ export const Sticky = styled.div`
   top: 100px;
   transition: top 0.1s ease 0s;
 `;
+
+export const InvalidWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 60vh;
+  font-size: 2rem;
+`;
+
+export const CartButton = styled.button`
+  width: 200px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: ${({ theme }) => theme.color.primary};
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+`;
