@@ -4,7 +4,7 @@ import Header from './common/Header';
 const Layout = () => {
   return (
     <>
-      <Header title='STORE' />
+      <Header />
       <Outlet />
     </>
   );

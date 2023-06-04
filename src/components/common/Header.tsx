@@ -3,86 +3,84 @@ import { ROUTE_PATH } from '../../constants/';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
 import Cart from '../Cart';
 import CartIcon from '../icons/CartIcon';
+import Order from '../Order';
 import ServerSelector from '../ServerSelector';
 
-interface Props {
-  title: string;
-}
-
-const Header = ({ title }: Props) => {
+const Header = () => {
   const goToPage = useGoToAnotherPage();
 
   return (
-    <S.Header>
-      <S.Wrapper>
-        <S.Button onClick={() => goToPage(ROUTE_PATH.MAIN_PAGE)}>
-          <CartIcon aria-label='logo-cart-icon' />
-          <span>{title}</span>
-        </S.Button>
+    <StyledHeader>
+      <Wrapper>
+        <StyledButton onClick={() => goToPage(ROUTE_PATH.MAIN_PAGE)}>
+          <CartIcon aria-label="logo-cart-icon" />
+          <Title>STORE</Title>
+        </StyledButton>
         <ServerSelector />
         <Cart />
-      </S.Wrapper>
-    </S.Header>
+        <Order />
+      </Wrapper>
+    </StyledHeader>
   );
 };
 
-const S = {
-  Header: styled.header`
-    width: 100%;
-    height: 80px;
-    margin-bottom: 62px;
-    background: var(--text-color);
-    font-size: 34px;
-    font-weight: 900;
-    line-height: 80px;
-    letter-spacing: 0.2px;
+const StyledHeader = styled.header`
+  width: 100%;
+  height: 80px;
+  margin-bottom: 62px;
+  background: var(--text-color);
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 80px;
+  letter-spacing: 0.2px;
+
+  & svg {
+    width: 44px;
+    height: 36px;
+    margin-right: 20px;
+    fill: #fff;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 28px;
 
     & svg {
-      width: 44px;
-      height: 36px;
-      margin-right: 20px;
-      fill: #fff;
+      width: 40px;
+      margin-right: 16px;
     }
+  }
 
-    @media (max-width: 768px) {
-      font-size: 28px;
+  @media (max-width: 480px) {
+    font-size: 24px;
 
-      & svg {
-        width: 40px;
-        margin-right: 16px;
-      }
+    & svg {
+      align-self: center;
+      width: 34px;
+      margin-right: 8px;
+      padding: 2px;
     }
+  }
+`;
 
-    @media (max-width: 480px) {
-      font-size: 24px;
+const Wrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  max-width: 1270px;
+  margin: 0 auto;
+  padding: 0 20px;
+`;
 
-      & svg {
-        align-self: center;
-        width: 34px;
-        margin-right: 8px;
-        padding: 2px;
-      }
-    }
-  `,
+const StyledButton = styled.button`
+  color: #fff;
+  background: none;
+  cursor: pointer;
 
-  Button: styled.button`
-    color: #fff;
-    background: none;
-    cursor: pointer;
-
-    @media (max-width: 480px) {
-      display: flex;
-    }
-  `,
-
-  Wrapper: styled.div`
+  @media (max-width: 480px) {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    max-width: 1270px;
-    margin: 0 auto;
-    padding: 0 20px;
-  `,
-};
+  }
+`;
+
+const Title = styled.span``;
 
 export default Header;
