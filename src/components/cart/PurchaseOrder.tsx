@@ -1,9 +1,10 @@
-import { postOrder } from "api/orders";
+import { getOrders, postOrder } from "api/orders";
 import { SHIPPING_FEE } from "constants/cartProduct";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { cartListState, cartTotalPrice } from "recoil/cart";
 import { couponListState, totalCouponDiscount } from "recoil/coupon";
+import { orderListState } from "recoil/order";
 import { serverSelectState } from "recoil/server";
 import { ROUTER_PATH } from "router";
 import styled from "styled-components";
@@ -15,6 +16,13 @@ const PurchaseOrder = () => {
   const selectedServer = useRecoilValue(serverSelectState);
   const cartList = useRecoilValue(cartListState);
   const couponList = useRecoilValue(couponListState);
+  const setOrderList = useSetRecoilState(orderListState);
+
+  const reloadOrderList = async () => {
+    const orderList = await getOrders(selectedServer);
+
+    setOrderList(orderList);
+  };
 
   const requestOrder = async () => {
     const result = await postOrder(selectedServer, {
@@ -31,6 +39,7 @@ const PurchaseOrder = () => {
       return;
     }
 
+    reloadOrderList();
     navigate(ROUTER_PATH.OrderList);
   };
 
