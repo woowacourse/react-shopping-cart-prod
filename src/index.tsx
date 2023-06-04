@@ -14,25 +14,6 @@ import OrderPage from './components/pages/OrderPage/OrderPage';
 import OrderDetailPage from './components/pages/OrderDetailPage/OrderDetailPage';
 import OrderCompletePage from './components/pages/OrderCompletePage/OrderCompletePage';
 
-// const main = async () => {
-//   if (window.location.pathname === '/react-shopping-cart-prod') {
-//     window.location.pathname = '/react-shopping-cart-prod/';
-//     return;
-//   }
-
-//   await worker.start({
-//     serviceWorker: {
-//       url: '/react-shopping-cart-prod/mockServiceWorker.js',
-//     },
-//   });
-// };
-
-// if (process.env.NODE_ENV === 'development') {
-//   worker.start();
-// } else {
-//   main();
-// }
-
 const router = createHashRouter([
   {
     path: '/',
