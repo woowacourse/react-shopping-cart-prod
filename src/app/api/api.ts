@@ -3,6 +3,7 @@ import {
   ProductItem,
   ReceivedCartItem,
   Sign,
+  User,
 } from "../../types/types.ts";
 import { url } from "./url.ts";
 import { getSessionStorage } from "../utils/storage.ts";
@@ -61,7 +62,7 @@ export const fetchCartList = async (server: string) => {
     const data = await response.json();
     console.log("cart-list");
     console.log(data);
-    const checkedCartItems: CartItem[] = data.map(
+    const checkedCartItems: CartItem[] = data.cartItems.map(
       (cartItem: ReceivedCartItem) => ({
         ...cartItem,
         checked: true,
@@ -91,7 +92,7 @@ export const fetchMembers = async (server: string) => {
   try {
     const response = await fetch(`${url[server]}/members`);
     if (response.ok) {
-      const data: Sign[] = await response.json();
+      const data: User[] = await response.json();
       return data;
     } else {
       throw new Error();

@@ -25,7 +25,7 @@ function ServerSelectBox() {
 
   useEffect(() => {
     loadCartList();
-  }, [server]);
+  }, [server, user]);
 
   return (
     <Select value={server} onChange={onChangeServer}>

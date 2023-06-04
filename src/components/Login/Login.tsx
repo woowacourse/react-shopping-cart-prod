@@ -9,17 +9,18 @@ import {
 import { useRecoilValue } from "recoil";
 import { userRepository } from "../../app/recoil/userAtom.tsx";
 import { useEffect, useState } from "react";
-import { Sign } from "../../types/types.ts";
+import { User } from "../../types/types.ts";
 import { serverState } from "../../app/recoil/serverAtom.ts";
 import { fetchMembers } from "../../app/api/api.ts";
 
 function Login() {
   const { login } = useRecoilValue(userRepository);
   const server = useRecoilValue(serverState);
-  const [members, setMembers] = useState<Sign[]>([]);
+  const [members, setMembers] = useState<User[]>([]);
 
   const loadMembers = async () => {
     const data = await fetchMembers(server);
+    console.log(data);
     setMembers(data);
   };
 
@@ -39,7 +40,7 @@ function Login() {
               <Icon fontSize={30}>
                 <IoPerson />
               </Icon>
-              <MemberId>{member.id}</MemberId>
+              <MemberId>{member.name}</MemberId>
             </MemberWrapper>
           ))
         )}

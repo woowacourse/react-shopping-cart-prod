@@ -22,20 +22,15 @@ export const userState = atom<User | null>({
 export const userRepository = selector({
   key: "userRepository",
   get: ({ getCallback }) => {
-    const login = getCallback(({ set, snapshot }) => async (member: Sign) => {
+    const login = getCallback(({ set, snapshot }) => async (member: User) => {
       const { closeModal } = await snapshot.getPromise(modalRepository);
       const user = await snapshot.getPromise(userState);
       const server = await snapshot.getPromise(serverState);
 
       if (!user) {
-        const name = member.id.split("@")[0];
-        const newUser: User = {
-          ...member,
-          name,
-        };
         setSessionStorage(
           SESSION_STORAGE_KEY_BASE64,
-          btoa(member.id + ":" + member.password)
+          btoa(member.email + ":" + member.password)
         );
         setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
         setSessionStorage(SESSION_STORAGE_KEY_POINT, {
@@ -44,7 +39,7 @@ export const userRepository = selector({
         });
         const newCartList = await fetchCartList(server);
         set(cartState, newCartList);
-        set(userState, newUser);
+        set(userState, member);
         closeModal();
       }
     });

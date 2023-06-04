@@ -7,6 +7,7 @@ import {
   fetchUpdateCart,
 } from "../api/api.ts";
 import { serverState } from "./serverAtom.ts";
+import { userState } from "./userAtom.tsx";
 
 export const cartState = atom<CartItem[]>({
   key: "cartState",
@@ -136,9 +137,12 @@ export const cartRepository = selector({
     });
 
     const loadCartList = getCallback(({ snapshot, set }) => async () => {
+      const user = await snapshot.getPromise(userState);
       const server = await snapshot.getPromise(serverState);
-      const checkedCartItems = await fetchCartList(server);
-      set(cartState, checkedCartItems);
+      if (user) {
+        const checkedCartItems = await fetchCartList(server);
+        set(cartState, checkedCartItems);
+      }
     });
 
     const removeCheckedCartItems = getCallback(

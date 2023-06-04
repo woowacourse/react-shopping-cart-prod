@@ -55,9 +55,10 @@ export interface Sign {
 }
 
 export interface User {
-  id: string;
-  password: string;
+  id: number;
   name: string;
+  email: string;
+  password: string;
 }
 
 export interface Coupon {
