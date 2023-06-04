@@ -9,7 +9,7 @@ import {
   KEY_LOCALSTORAGE_SERVER_OWNER,
   SERVERS,
 } from "../constants";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { localProductsState } from "../recoil/atom";
 import { makeLocalProducts } from "../utils/domain";
 import { getLocalStorage, setLocalStorage } from "../utils";
@@ -32,6 +32,19 @@ export const Header = () => {
     const newProducts = await makeLocalProducts();
     setLocalProducts(newProducts);
   };
+
+  const setNewLocalProducts = async () => {
+    try {
+      const newProducts = await makeLocalProducts();
+      setLocalProducts(newProducts);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    setNewLocalProducts();
+  }, []);
 
   return (
     <Wrapper>
