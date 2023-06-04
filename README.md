@@ -101,7 +101,7 @@
 
 ### ⚠️ API ErrorCode 명세
 
-```json
+```tsx
 
 API Status / HTTP Status
 
