@@ -30,6 +30,8 @@ const getDiscountedTotalItemPrice = (orderedItemList: CartItemData[]) => {
 };
 
 const getShippingFee = (orderedItemList: CartItemData[]) => {
+  if (getDiscountedTotalItemPrice(orderedItemList) === 0) return 0;
+
   return getDiscountedTotalItemPrice(orderedItemList) >= 50000 ? 0 : 3000;
 };
 
