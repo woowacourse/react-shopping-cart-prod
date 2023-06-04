@@ -25,7 +25,10 @@ export const handlers = [
     const cartItem = { id: productId, product: productItem, quantity: 1 };
     cartData.push(cartItem);
 
-    return res(ctx.status(201));
+    return res(
+      ctx.status(201),
+      ctx.set({ Location: `/cart-items/${productId}` })
+    );
   }),
 
   rest.patch('/api/cart-items/:cartId', async (req, res, ctx) => {
@@ -41,7 +44,7 @@ export const handlers = [
       })
       .filter((cartItem) => cartItem.quantity !== 0);
 
-    return res(ctx.status(200));
+    return res(ctx.status(200), ctx.set({ Location: `/cart-items/${cartId}` }));
   }),
 
   rest.delete('/api/cart-items/:cartId', async (req, res, ctx) => {
@@ -53,7 +56,7 @@ export const handlers = [
   }),
 
   rest.get('/api/coupons', (req, res, ctx) => {
-    return res(ctx.delay(2000), ctx.status(200), ctx.json(coupons));
+    return res(ctx.status(200), ctx.json(coupons));
   }),
 
   rest.get('/api/delivery-policy', (req, res, ctx) => {
@@ -64,11 +67,11 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(deliveryPolicy));
   }),
 
-  rest.get('/cart-items/coupon?id=1,2,3', (req, res, ctx) => {
+  rest.get('/api/cart-items/coupons?id=1,2,3', (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(couponAppliedPrice));
   }),
 
-  rest.post('/payments', async (req, res, ctx) => {
+  rest.post('/api/payments', async (req, res, ctx) => {
     const payments = {
       cartItemIds: [2, 5, 6],
       isDeliveryFree: true,
