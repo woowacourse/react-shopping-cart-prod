@@ -32,7 +32,10 @@ const CouponList = () => {
 
     if (Math.floor(response.status / 100) === 4) {
       alert('이미 발급받은 쿠폰입니다!');
+      return;
     }
+
+    alert('쿠폰이 발급되었습니다.');
   };
 
   return (
