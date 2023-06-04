@@ -17,11 +17,16 @@ export interface LocalProductType extends ProductType {
 }
 
 export interface Coupon {
-  id: number;
+  id: number | null;
   name: string;
   minOrderPrice: number;
   maxDiscountPrice: number;
   isAvailable: boolean;
   discountPrice: number | null;
   expiredAt: string;
+}
+
+export interface Order {
+  couponId: Coupon["id"];
+  products: Omit<LocalProductType, "id">[];
 }
