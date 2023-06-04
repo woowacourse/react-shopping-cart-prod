@@ -18,7 +18,7 @@ export const CartPage = () => {
     <styled.Main>
       <Cart />
       <Suspense fallback={<Spinner size="lg" />}>
-        <OrderSummary />
+        <OrderSummary fetchCart={fetchCart} />
       </Suspense>
     </styled.Main>
   );
