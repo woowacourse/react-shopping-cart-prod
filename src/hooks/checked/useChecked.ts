@@ -2,7 +2,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import {
   checkedCartProductState,
-  targetCheckedState,
+  targetCheckedSelector,
 } from '../../states/checkedCartProducts';
 import {
   addCartProductChecked,
@@ -12,7 +12,7 @@ import { CartProduct } from '../../types/product';
 
 export const useChecked = (cartProduct: CartProduct) => {
   const { id } = cartProduct;
-  const targetChecked = useRecoilValue(targetCheckedState(id));
+  const targetChecked = useRecoilValue(targetCheckedSelector(id));
   const setChecked = useSetRecoilState(checkedCartProductState);
 
   const updateChecked = (isChecked: boolean) => {

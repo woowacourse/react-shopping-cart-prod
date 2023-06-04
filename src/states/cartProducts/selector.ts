@@ -14,13 +14,13 @@ export const cartProductSelector = selector({
   },
 });
 
-export const cartProductCountState = selector({
-  key: 'cartProductCountState',
+export const cartProductCountSelector = selector({
+  key: 'cartProductCountSelector',
   get: ({ get }) => get(cartProductState).length,
 });
 
-export const targetCartProductState = selectorFamily({
-  key: 'targetCartProductState',
+export const targetCartProductSelector = selectorFamily({
+  key: 'targetCartProductSelector',
   get:
     ({ productId, cartItemId }: { productId: number; cartItemId?: number }) =>
     ({ get }) =>

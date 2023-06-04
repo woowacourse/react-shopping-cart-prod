@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 
 import { useMultipleChecked } from '../checked';
-import { checkedPriceState } from '../../states/checkedCartProducts';
+import { checkedPriceSelector } from '../../states/checkedCartProducts';
 import { currentCouponPriceSelector } from '../../states/coupon';
 
 const DELIVERY_FEE = 3_000;
@@ -9,7 +9,7 @@ const DELIVERY_FEE = 3_000;
 export const useCartPrice = (currentCouponId: number | undefined) => {
   const { isAllUnchecked } = useMultipleChecked();
 
-  const totalProductPrice = useRecoilValue(checkedPriceState);
+  const totalProductPrice = useRecoilValue(checkedPriceSelector);
   const couponPrice = useRecoilValue(
     currentCouponPriceSelector(currentCouponId)
   );
