@@ -1,39 +1,7 @@
 import { rest } from 'msw';
+import { DELIVERY_FEE } from '../../constants';
 import { SERVER, ORDER_URL } from '../../constants/url';
-
-const orders = [
-  {
-    orderId: 1,
-    products: [
-      {
-        id: 1,
-        name: 'foo',
-        imageUrl: 'https://cdn-mart.baemin.com/sellergoods/main/2ddb9f04-c15d-4647-b6e7-30afb9e8d072.jpg?h=300&w=300',
-        quantity: 4,
-        totalPrice: 40000,
-      },
-      {
-        id: 2,
-        name: 'bar',
-        imageUrl: 'https://cdn-mart.baemin.com/sellergoods/main/ac90cb6d-70ad-4271-a25e-03e4db9a9960.jpg?h=300&w=300',
-        quantity: 3,
-        totalPrice: 30000,
-      },
-    ],
-  },
-  {
-    orderId: 2,
-    products: [
-      {
-        id: 2,
-        name: 'bar',
-        imageUrl: 'https://cdn-mart.baemin.com/sellergoods/main/ac90cb6d-70ad-4271-a25e-03e4db9a9960.jpg?h=300&w=300',
-        quantity: 3,
-        totalPrice: 30000,
-      },
-    ],
-  },
-];
+import orders from '../orders.json';
 
 export const orderHandlers = [
   // 주문 목록 조회
@@ -43,9 +11,22 @@ export const orderHandlers = [
 
   // 주문 상세 정보 조회
   rest.get(`${SERVER.MSW}${ORDER_URL}/:id`, async (req, res, ctx) => {
-    const { id } = req.params;
-    const order = orders.find(({ orderId }) => orderId === Number(id));
+    const COUPON_DISCOUNT = 5000;
 
-    return res(ctx.status(201), ctx.json(order));
+    const { id } = req.params;
+    const order = orders.find(({ orderId }) => orderId === Number(id))!;
+    const orderDetail = {
+      ...order,
+      totalPrice: order.totalPayments - DELIVERY_FEE + COUPON_DISCOUNT,
+      deliveryFee: DELIVERY_FEE,
+      coupon: { id: 1, name: '여름 맞이 할인', priceDiscount: COUPON_DISCOUNT },
+    };
+
+    return res(ctx.status(200), ctx.json(orderDetail));
+  }),
+
+  // 주문 하기
+  rest.post(`${SERVER.MSW}${ORDER_URL}`, async (req, res, ctx) => {
+    return res(ctx.status(201));
   }),
 ];
