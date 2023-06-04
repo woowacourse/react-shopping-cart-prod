@@ -61,13 +61,13 @@ export const totalAmountAtom = atom({
   default: 0,
 });
 
-type Select = {
+type SelectedItem = {
   id: number;
   isSelected: boolean;
   order: { id: number; quantity: number };
 };
 
-export const isSelectedListAtom = atom<Select[]>({
+export const isSelectedListAtom = atom<SelectedItem[]>({
   key: 'cart/is-selected-list',
   default: [],
 });
