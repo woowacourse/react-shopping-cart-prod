@@ -19,6 +19,7 @@ function Order() {
   const { data: orders } = useGetQuery<OrdersResponses>({
     fetcher: () => fetchOrderList({ server, auth: memberAuth }),
   });
+
   useGetQuery<Point>({
     fetcher: () => fetchMemberPoint({ server, auth: memberAuth }),
     onSuccess: (point) => setMemberPoint(point),
@@ -38,7 +39,7 @@ function Order() {
       <PageTitle>주문목록</PageTitle>
       <FatBorder />
       <S.OrderListWrapper>
-        {orders && orders.orderResponses.map((order) => <OrderList key={order.orderId} {...order} />)}
+        {orders && [...orders.orderResponses].reverse().map((order) => <OrderList key={order.orderId} {...order} />)}
       </S.OrderListWrapper>
     </>
   );
