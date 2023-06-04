@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import LoadingSpinner from '../../components/Common/LoadingSpinner';
@@ -58,13 +58,6 @@ function OrderCheckout() {
     () => {
       navigate(path);
     };
-
-  useEffect(() => {
-    if (paymentsData?.finalPrice === 0) {
-      navigate('/');
-      Toast.error('잘못된 페이지 접근입니다.');
-    }
-  }, [paymentsData, navigate, Toast]);
 
   return (
     <main className={styles.container}>

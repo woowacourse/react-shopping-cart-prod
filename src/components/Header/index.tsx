@@ -15,6 +15,7 @@ function Header() {
   const cartList = useRecoilValue($CartList(currentServerUrl));
   const setCurrentServerUrl = useSetRecoilState($CurrentServerUrl);
   const Toast = useToast();
+
   const userNameList = Object.keys(userServerUrlList);
   const index = userNameList.findIndex(name => name === getLocalStorage('name', '로지'));
 
@@ -48,7 +49,7 @@ function Header() {
         <Link to="/cart">
           <button className={styles['cart-button']} type="button" onClick={() => Toast.reset}>
             <ShoppingCart width={24} height={24} />
-            <p className={styles['cart-count']}>{cartList.length}</p>
+            <div className={styles['cart-count']}>{cartList.length}</div>
           </button>
         </Link>
       </nav>

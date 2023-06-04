@@ -6,20 +6,21 @@ import CartProductItemList from '../../components/CartProductItemList';
 import PaymentsView from '../../components/PaymentsView';
 import usePaymentsData from '../../hooks/usePaymentsData';
 import { $CartList, $CheckedCartIdList, $CurrentServerUrl } from '../../recoil/atom';
+import { getLocalStorage } from '../../utils/localStorage';
 import styles from './index.module.scss';
 
 function Cart() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
   const cartList = useRecoilValue($CartList(currentServerUrl));
-  const paymentsData = usePaymentsData(currentServerUrl);
   const checkedCartIdList = useRecoilValue($CheckedCartIdList(currentServerUrl));
+  const paymentsData = usePaymentsData(currentServerUrl);
   const navigate = useNavigate();
 
   const handleOrder = () => navigate('/order-checkout');
 
   return (
     <main className={styles.container}>
-      <h2 className={styles.title}>MSW의 장바구니</h2>
+      <h2 className={styles.title}>{getLocalStorage('name', '')}의 장바구니</h2>
       {cartList.length > 0 ? (
         <section className={styles['main-view']}>
           <CartProductItemList />

@@ -6,7 +6,7 @@ import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
 const handlers = [
   // 제품 목록
-  rest.get('/products', (req, res, ctx) => res(ctx.delay(2000), ctx.status(200), ctx.json(products))),
+  rest.get('/products', (req, res, ctx) => res(ctx.delay(1000), ctx.status(200), ctx.json(products))),
 
   // 제품 추가
   rest.post('/products', (req, res, ctx) => {
