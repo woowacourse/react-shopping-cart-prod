@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { LOCAL_STORAGE_KEY } from '../constants';
 import { cartItems, orderList, paymentsData, products } from '../data/mockData';
-import { CartItem, OrderDetailType, OrderProduct, OrderType, PaymentsData, Product } from '../types';
+import { CartItem, OrderDetailType, OrderProduct, OrderType, Product } from '../types';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
 
 const handlers = [
@@ -124,7 +124,7 @@ const handlers = [
     }
 
     const discountedPrice = originalPrice - discounts.reduce((acc, { discountAmount }) => acc + discountAmount, 0);
-    const deliveryFee = 3000;
+    const deliveryFee = originalPrice === 0 ? 0 : 3000;
 
     paymentsData.originalPrice = originalPrice;
     paymentsData.discounts = discounts;
@@ -176,26 +176,42 @@ const handlers = [
     setLocalStorage(LOCAL_STORAGE_KEY.ORDERS, orderList);
     setLocalStorage(LOCAL_STORAGE_KEY.CART_ITEM, filteredCartItems);
 
-    return res(ctx.delay(100), ctx.status(201), ctx.set('Location', `/orders/${order.id}`));
+    return res(ctx.delay(3000), ctx.status(201), ctx.set('Location', `/orders/${order.id}`));
   }),
 
   // 주문 내역 상세 조회
   rest.get<OrderDetailType>(`/orders/:orderId`, async (req, res, ctx) => {
     const { orderId } = req.params;
-    const filteredOrder = orderList.find((order: OrderType) => order.id === Number(orderId));
-    const currentPaymentsData = getLocalStorage<PaymentsData>(LOCAL_STORAGE_KEY.PAYMENTS, {
-      originalPrice: 0,
-      discounts: [],
-      discountedPrice: 0,
-      deliveryFee: 0,
-      finalPrice: 0,
-    });
+    const filteredOrder = orderList.find((order: OrderType) => order.id === Number(orderId)) as OrderType;
 
-    if (filteredOrder && currentPaymentsData) {
+    const originalPrice = filteredOrder.productList.reduce((acc, item) => acc + item.totalPrice, 0);
+
+    const discounts = [];
+
+    if (originalPrice >= 50_000) {
+      discounts.push({
+        discountPolicy: '5만원 이상 주문 시 10% 할인',
+        discountAmount: Math.floor(originalPrice / 1000) * 100,
+      });
+    }
+
+    const discountedPrice = originalPrice - discounts.reduce((acc, { discountAmount }) => acc + discountAmount, 0);
+
+    const deliveryFee = originalPrice === 0 ? 0 : 3000;
+
+    const paymentAmount = {
+      originalPrice,
+      discounts,
+      discountedPrice,
+      deliveryFee,
+      finalPrice: discountedPrice + deliveryFee,
+    };
+
+    if (filteredOrder && paymentAmount) {
       const responseWithId: OrderDetailType = {
         productList: filteredOrder.productList,
         id: Number(orderId),
-        paymentAmount: currentPaymentsData,
+        paymentAmount,
       };
       return res(ctx.status(200), ctx.json(responseWithId));
     }
