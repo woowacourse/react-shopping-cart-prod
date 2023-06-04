@@ -5,6 +5,10 @@ export const Container = styled.div`
   height: fit-content;
   padding: 24px;
   border: 1px solid ${(props) => props.theme.color.gray};
+
+  @media (min-width: 320px) and (max-width: 479px) {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.p`

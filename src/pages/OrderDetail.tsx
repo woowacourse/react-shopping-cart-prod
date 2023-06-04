@@ -28,6 +28,9 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 0 40px;
+  @media (min-width: 320px) and (max-width: 479px) {
+    flex-direction: column;
+  }
 `;
 
 const Title = styled.h1`
