@@ -1,7 +1,7 @@
 import { AtomEffect, DefaultValue, atom, selector, selectorFamily } from 'recoil';
 import { QUANTITY } from '../constants';
-import { SERVERS } from '../constants/url';
-import { CartItem, Product } from '../types';
+import { SERVER } from '../constants/url';
+import { CartItem, Product, ServerName, ServerUrl } from '../types';
 
 const logEffect: <T>(header: string) => AtomEffect<T> =
   (header: string) =>
@@ -11,8 +11,8 @@ const logEffect: <T>(header: string) => AtomEffect<T> =
     });
   };
 
-export const productListState = atom<Product[]>({
-  key: 'productListState',
+export const productsState = atom<Product[]>({
+  key: 'productsState',
   default: [],
   effects: [logEffect('PRODUCTS')],
 });
@@ -22,10 +22,9 @@ export const productSelector = selectorFamily({
   get:
     (id) =>
     ({ get }) => {
-      const productList = get(productListState);
-      const selectedProduct = productList.find((product) => product.id === id);
+      const productList = get(productsState);
 
-      return selectedProduct;
+      return productList.find((product) => product.id === id);
     },
 });
 
@@ -43,7 +42,9 @@ export const quantitySelector = selectorFamily({
       const cart = get(cartState);
       const selectedCartItem = cart.find((item) => item.product.id === id);
 
-      if (!selectedCartItem) return QUANTITY.NONE;
+      if (!selectedCartItem) {
+        return QUANTITY.NONE;
+      }
       return selectedCartItem.quantity;
     },
 
@@ -52,7 +53,6 @@ export const quantitySelector = selectorFamily({
     ({ get, set }, newQuantity) => {
       const cart = get(cartState);
       const selectedCartItem = cart.find((item) => item.product.id === id);
-
       const quantity = newQuantity instanceof DefaultValue ? QUANTITY.INITIAL : newQuantity;
 
       const newCart = cart.map((cartItem) => (cartItem === selectedCartItem ? { ...cartItem, quantity } : cartItem));
@@ -64,36 +64,55 @@ export const quantitySelector = selectorFamily({
 export const cartBadgeSelector = selector({
   key: 'cartBadgeSelector',
   get: ({ get }) => {
-    const cart = get(cartState);
-    const selectedProducts = new Set(cart);
-
-    return selectedProducts;
+    return get(cartState).length;
   },
 });
 
-export const checkedItemList = atom<number[]>({
-  key: 'checkedItems',
-  default: [],
-  effects: [logEffect('CHECKED_ITEM_LIST')],
+export const selectedCartItems = selector({
+  key: 'selectedCartItems',
+  get: ({ get }) => {
+    return get(cartState)
+      .filter(({ isSelected }) => isSelected)
+      .map(({ id }) => id);
+  },
+  set: ({ get, set }, newValue) => {
+    if (newValue instanceof DefaultValue) return;
+
+    const cartItems = get(cartState);
+    const newCartItems = cartItems.map((cartItem) => {
+      if (newValue.includes(cartItem.id)) {
+        return { ...cartItem, isSelected: !cartItem.isSelected };
+      }
+      return cartItem;
+    });
+
+    set(cartState, newCartItems);
+  },
 });
 
 export const totalPriceSelector = selector<number>({
   key: 'totalPriceSelector',
   get: ({ get }) => {
     const cart = get(cartState);
-    const checkedItems = get(checkedItemList);
-    const checkedProductsInCart = cart.filter((item) => checkedItems.includes(item.id));
+    const selectedProductsInCart = cart.filter(({ isSelected }) => isSelected);
 
-    const totalPrice = checkedProductsInCart.reduce((acc, cur) => {
-      return acc + cur.product.price * cur.quantity;
+    const totalPrice = selectedProductsInCart.reduce((total, { quantity, product: { price } }) => {
+      return total + quantity * price;
     }, 0);
 
     return totalPrice;
   },
 });
 
-export const serverState = atom({
-  key: 'serverState',
-  default: `${SERVERS.준팍}`,
+export const serverNameState = atom<ServerName>({
+  key: 'serverNameState',
+  default: 'MSW',
   effects: [logEffect('SERVER')],
+});
+
+export const serverState = selector<ServerUrl>({
+  key: 'serverState',
+  get: ({ get }) => {
+    return SERVER[get(serverNameState)];
+  },
 });
