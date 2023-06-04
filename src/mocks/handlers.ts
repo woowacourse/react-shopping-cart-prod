@@ -47,10 +47,10 @@ export const handlers = [
     const { cartItemId } = req.params;
     const cartItems = getLocalStorage<CartItemResponses>(LOCAL_STORAGE_KEY.CART_LIST, { cartItems: [], totalPrice: 0 });
 
-    setLocalStorage(
-      LOCAL_STORAGE_KEY.CART_LIST,
-      cartItems.cartItems.filter((item) => item.id !== Number(cartItemId))
-    );
+    setLocalStorage(LOCAL_STORAGE_KEY.CART_LIST, {
+      cartItems: cartItems.cartItems.filter((item) => item.id !== Number(cartItemId)),
+      totalPrice: 0,
+    });
     return res(ctx.delay(100), ctx.status(204));
   }),
 
@@ -99,7 +99,7 @@ export const handlers = [
 
     const orderList = getLocalStorage<OrdersResponses>(LOCAL_STORAGE_KEY.ORDER_LIST, { orderResponses: [] });
     const orderItem = orderList.orderResponses.find((order: Order) => order.orderId === Number(orderId));
-    console.log(orderItem);
+
     return res(ctx.delay(100), ctx.status(200), ctx.json(orderItem));
   }),
 
