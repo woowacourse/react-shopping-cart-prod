@@ -1,4 +1,4 @@
-import { CartProduct, CartProducts, Product } from 'types/product';
+import { CartPriceInfo, CartProduct, CartProducts, Product } from 'types/product';
 import api from 'apis';
 
 const URL = '/cart-items';
@@ -51,4 +51,14 @@ export const updateCartProductsQuantity = async (quantity: CartProduct['quantity
 
 export const removeCartProduct = async (cartProductIds: number[]) => {
   await api.remove(URL, { cartItemIds: cartProductIds });
+};
+
+export const getCartPriceInfo = async (checkedCartProductIds: number[]): Promise<CartPriceInfo> => {
+  const params = new URLSearchParams();
+  checkedCartProductIds.map((id) => params.append('item', `${id}`));
+
+  const fetchedData = await api.get<CartPriceInfo>(`${URL}/price?${params.toString()}`);
+  const cartPriceInfo = fetchedData.data;
+
+  return cartPriceInfo;
 };
