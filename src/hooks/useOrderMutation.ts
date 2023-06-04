@@ -1,4 +1,4 @@
-import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
+import { useRecoilRefresher_UNSTABLE as useRecoilRefresher, useRecoilValue } from 'recoil';
 import clientState from '../recoil/atoms/clientState';
 import ordersQuery from '../recoil/queries/ordersQuery';
 import profileQuery from '../recoil/queries/profileQuery';
@@ -15,8 +15,8 @@ const useOrderMutation = () => {
   const { cartItems } = useRecoilValue(userRemoteCartItemsState);
   const { doDownstreamSync } = useRecoilValue(userCartItemsRepository);
 
-  const refreshProfile = useRecoilRefresher_UNSTABLE(profileQuery({ client }));
-  const refreshOrders = useRecoilRefresher_UNSTABLE(ordersQuery({ client }));
+  const refreshProfile = useRecoilRefresher(profileQuery({ client }));
+  const refreshOrders = useRecoilRefresher(ordersQuery({ client }));
 
   const refreshStates = () => {
     refreshProfile();
