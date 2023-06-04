@@ -2,6 +2,7 @@
 export const ROUTES = {
   PRODUCT_LIST: '/',
   CART_LIST: '/cart',
+  ORDER_LIST: '/order',
 } as const;
 
 export const SERVERS = {

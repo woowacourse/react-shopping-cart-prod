@@ -2,12 +2,13 @@ import { useNavigate } from 'react-router-dom';
 import * as S from './OrderItemList.styles';
 import OrderItem from '../OrderItem';
 import { Order } from 'types';
+import { ROUTES } from 'utils/constants';
 
 const OrderItemList = ({ order }: { order: Order }) => {
   const navigate = useNavigate();
 
   const onDetailButtonClick = () => {
-    navigate(`/order/${order.id}`);
+    navigate(`${ROUTES.ORDER_LIST}/${order.id}`);
   };
 
   return (

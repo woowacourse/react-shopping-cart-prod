@@ -5,6 +5,7 @@ import NotFound from 'pages/NotFound';
 import OrderDetail from 'pages/OrderDetail';
 import OrderList from 'pages/OrderList';
 import Root from './Root';
+import { ROUTES } from 'utils/constants';
 
 const router = createBrowserRouter(
   [
@@ -14,19 +15,19 @@ const router = createBrowserRouter(
       errorElement: <NotFound />,
       children: [
         {
-          path: '/',
+          path: `${ROUTES.PRODUCT_LIST}`,
           element: <ProductList />,
         },
         {
-          path: '/cart',
+          path: `${ROUTES.CART_LIST}`,
           element: <CartList />,
         },
         {
-          path: '/order',
+          path: `${ROUTES.ORDER_LIST}`,
           element: <OrderList />,
         },
         {
-          path: '/order/:orderId',
+          path: `${ROUTES.ORDER_LIST}/:orderId`,
           element: <OrderDetail />,
         },
       ],
