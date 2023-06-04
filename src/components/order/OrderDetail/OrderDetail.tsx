@@ -1,9 +1,11 @@
 import { styled } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { GrFormNextLink } from 'react-icons/gr';
+import { useSetRecoilState } from 'recoil';
 import OrderInfo from '../../../types/order';
 import OrderedProduct from '../OrderedProduct/OrderedProduct';
 import { formatPrice } from '../../../utils/formatPrice';
+import orderDetailState from '../../../globalState/atoms/orderDetail';
 
 interface OrderDetailProps extends OrderInfo {
   showPayments?: boolean;
@@ -11,6 +13,17 @@ interface OrderDetailProps extends OrderInfo {
 
 const OrderDetail = (props: OrderDetailProps) => {
   const { id, actualPrice, deliveryFee, cartItems, originalPrice, showPayments } = props;
+
+  const setOrderDetailState = useSetRecoilState(orderDetailState);
+
+  const setOrderDetails = () =>
+    setOrderDetailState({
+      id,
+      actualPrice,
+      deliveryFee,
+      cartItems,
+      originalPrice,
+    });
 
   const originalPriceFormatted = formatPrice(originalPrice);
   const deliveryFeeFormatted = formatPrice(deliveryFee);
@@ -22,13 +35,21 @@ const OrderDetail = (props: OrderDetailProps) => {
       <details open>
         <Summary>
           <OrderIdParagraph>주문 번호 : {id}</OrderIdParagraph>
-          <Link to="/">
-            상세보기 <GrFormNextLink size="23px" color="#333333" />
-          </Link>
+          {!showPayments ? (
+            <Link onClick={setOrderDetails} to="/order-details">
+              상세보기 <GrFormNextLink size="23px" color="#333333" />
+            </Link>
+          ) : null}
         </Summary>
         <div>
-          {cartItems.map(({ quantity, product: { imageUrl, name, price } }) => (
-            <OrderedProduct name={name} price={price} quantity={quantity} imageUrl={imageUrl} />
+          {cartItems.map(({ id: cartItemId, quantity, product: { imageUrl, name, price } }) => (
+            <OrderedProduct
+              key={cartItemId}
+              name={name}
+              price={price}
+              quantity={quantity}
+              imageUrl={imageUrl}
+            />
           ))}
         </div>
       </details>
@@ -91,6 +112,8 @@ const Summary = styled.summary`
     justify-content: center;
 
     margin-right: 39px;
+
+    color: #333333;
   }
 `;
 
