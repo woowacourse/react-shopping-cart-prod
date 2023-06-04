@@ -24,26 +24,18 @@ export const useQuantity = (productId: number) => {
 
     try {
       if (newQuantity === 0) {
-        const response = await deleteCartItem(currentLocalProduct.cartItemId);
-        if (!response.ok) {
-          throw new Error(response.status.toString());
-        }
-      } else {
-        const response = await changeQuantity(
-          currentLocalProduct.cartItemId,
-          Number(newQuantity)
-        );
-        if (!response.ok) {
-          throw new Error(response.status.toString());
-        }
+        await deleteCartItem(currentLocalProduct.cartItemId);
+        return;
       }
+
+      await changeQuantity(currentLocalProduct.cartItemId, Number(newQuantity));
     } catch (error: any) {
       setErrorStatus(error.message);
+    } finally {
+      setQuantity(newQuantity.toString());
+      const newProducts = await makeLocalProducts();
+      setLocalProducts(newProducts);
     }
-
-    setQuantity(newQuantity.toString());
-    const newProducts = await makeLocalProducts();
-    setLocalProducts(newProducts);
   };
 
   const handleQuantityChanged = (e: React.ChangeEvent<HTMLInputElement>) => {

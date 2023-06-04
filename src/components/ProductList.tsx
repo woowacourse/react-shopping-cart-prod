@@ -4,50 +4,45 @@ import { localProductsState } from "../recoil/atom";
 import type { LocalProductType } from "../types/domain";
 import { CartGrayIcon } from "../assets";
 import { Counter } from "./Counter";
-import { ERROR_MESSAGE, MIN_QUANTITY } from "../constants";
+import { MIN_QUANTITY } from "../constants";
 import { addCartItem } from "../api";
 import { makeLocalProducts } from "../utils/domain";
 import { useState } from "react";
-import ErrorBox from "./ErrorBox";
 
 export const ProductList = () => {
   const [localProducts, setLocalProducts] = useRecoilState(localProductsState);
-  const [errorStatus, setErrorStatus] = useState<
-    keyof typeof ERROR_MESSAGE | null
-  >(null);
 
-  const handleCartClicked = (productId: number) => async () => {
+  const [error, setError] = useState<null | Error>(null);
+
+  const handleCartClicked = async (productId: number) => {
     try {
-      const response = await addCartItem(productId);
-      if (!response.ok) throw new Error(response.status.toString());
+      await addCartItem(productId);
 
       const newProducts = await makeLocalProducts();
       setLocalProducts(newProducts);
     } catch (error: any) {
-      setErrorStatus(error.message);
+      setError(error);
       console.log(error);
     }
   };
 
+  if (error) throw error;
+
   return (
     <Wrapper>
-      {errorStatus ? (
-        <ErrorBox status={errorStatus} />
-      ) : (
-        localProducts.map((product: LocalProductType) => (
-          <Product
-            key={product.id}
-            {...product}
-            handleCartClicked={handleCartClicked(product.id)}
-          />
-        ))
-      )}
+      {localProducts.map((product: LocalProductType) => (
+        <Product
+          key={product.id}
+          {...product}
+          handleCartClicked={handleCartClicked}
+        />
+      ))}
     </Wrapper>
   );
 };
 
 interface ProductType extends LocalProductType {
-  handleCartClicked: () => void;
+  handleCartClicked: (productId: number) => Promise<void>;
 }
 
 const Product = ({
@@ -58,6 +53,10 @@ const Product = ({
   quantity,
   handleCartClicked,
 }: ProductType) => {
+  const handleOnCartIcon = async () => {
+    await handleCartClicked(id);
+  };
+
   return (
     <ProductWrapper>
       <img src={imageUrl} alt="상품이미지" />
@@ -65,7 +64,7 @@ const Product = ({
       <PriceBox>{price.toLocaleString()}원</PriceBox>
       <IconContainer>
         {quantity === MIN_QUANTITY ? (
-          <img src={CartGrayIcon} alt={"카트"} onClick={handleCartClicked} />
+          <img src={CartGrayIcon} alt={"카트"} onClick={handleOnCartIcon} />
         ) : (
           <Counter productId={id} deleteable />
         )}

@@ -5,99 +5,53 @@ import {
 } from "../constants";
 import { LocalProductType } from "../types/domain";
 import { getLocalStorage } from "../utils";
-import { parseOrderListData } from "../utils/domain";
+import { parseExpiredDate, parseOrderListData } from "../utils/domain";
 
 // Base64로 인코딩
 const base64 = btoa(
   process.env.REACT_APP_USERNAME + ":" + process.env.REACT_APP_PASSWORD
 );
 
-export const fetchProducts = () =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/products`
-  );
+const request = async (path: string, init?: RequestInit) => {
+  const base =
+    SERVERS[
+      getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
+    ];
+  const response = await fetch([base, path].join(""), {
+    ...init,
+    headers: {
+      Authorization: `Basic ${base64}`,
+      "Content-Type": "application/json",
+      ...init?.headers,
+    },
+  });
 
-export const fetchCartItems = async () =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/cart-items`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    }
-  );
+  if (!response.ok) throw new Error(response.status.toString());
+  return response;
+};
+
+export const fetchProducts = () =>
+  request("/products").then((response) => response.json());
+
+export const fetchCartItems = () =>
+  request(`/cart-items`).then((response) => response.json());
 
 export const changeQuantity = async (cartItemId: number, newQuantity: number) =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/cart-items/${cartItemId}`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-        "Content-Type": "application/json",
-      },
-      method: "PATCH",
-      body: JSON.stringify({ quantity: newQuantity }),
-    }
-  );
+  request(`/cart-items/${cartItemId}`, {
+    method: "PATCH",
+    body: JSON.stringify({ quantity: newQuantity }),
+  });
 
 export const addCartItem = async (productId: number) =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/cart-items`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({ productId: productId }),
-    }
-  );
+  request(`/cart-items`, {
+    method: "POST",
+    body: JSON.stringify({ productId: productId }),
+  });
 
 export const deleteCartItem = async (cartItemId: number) =>
-  fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/cart-items/${cartItemId}`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-      method: "DELETE",
-    }
-  );
+  request(`/cart-items/${cartItemId}`, {
+    method: "DELETE",
+  });
 
 export const fetchCoupons = async (cartItemIdList: number[]) => {
   const orderQuery = cartItemIdList
@@ -106,21 +60,9 @@ export const fetchCoupons = async (cartItemIdList: number[]) => {
     })
     .join("&");
 
-  return fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/orders/coupons?${orderQuery}`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    }
-  );
+  return request(`/orders/coupons?${orderQuery}`)
+    .then((response) => response.json())
+    .then((data) => parseExpiredDate(data.coupons));
 };
 
 export const fetchAddOrderList = async (
@@ -129,40 +71,14 @@ export const fetchAddOrderList = async (
 ) => {
   const parsedOrderListData = parseOrderListData(couponId, orderListData);
 
-  return fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/orders`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify(parsedOrderListData),
-    }
-  );
+  return request(`/orders`, {
+    method: "POST",
+    body: JSON.stringify(parsedOrderListData),
+  });
 };
 
 export const fetchOrderList = (orderId?: number) => {
-  return fetch(
-    `${
-      SERVERS[
-        getLocalStorage(
-          KEY_LOCALSTORAGE_SERVER_OWNER,
-          DEFAULT_VALUE_SERVER_OWNER
-        )
-      ]
-    }/orders/${orderId ?? ''}`,
-    {
-      headers: {
-        Authorization: `Basic ${base64}`,
-      },
-    }
+  return request(`/orders/${orderId ?? ""}`).then((response) =>
+    response.json()
   );
 };

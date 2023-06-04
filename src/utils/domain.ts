@@ -10,15 +10,8 @@ import {
 
 export const makeLocalProducts = async (): Promise<LocalProductType[]> => {
   try {
-    const productsResponse = await fetchProducts();
-    const cartItemsresponse = await fetchCartItems();
-    if (!productsResponse.ok)
-      throw new Error(productsResponse.status.toString());
-    if (!cartItemsresponse.ok)
-      throw new Error(cartItemsresponse.status.toString());
-
-    const products = await productsResponse.json();
-    const cartItems = await cartItemsresponse.json();
+    const products = await fetchProducts();
+    const cartItems = await fetchCartItems();
 
     return products.map((product: ProductType) => {
       const cartItem = cartItems.find(

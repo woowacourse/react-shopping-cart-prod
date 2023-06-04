@@ -12,17 +12,8 @@ export const useOrderDetail = (orderId: number) => {
   });
 
   const getOrderDetailList = async () => {
-    try {
-      const response = await fetchOrderList(orderId);
-
-      if (!response.ok) throw new Error(response.status.toString());
-
-      const orderDetailListData = await response.json();
-
-      setOrderDetailList(orderDetailListData);
-    } catch (error) {
-      console.log(error);
-    }
+    const orderDetailListData = await fetchOrderList(orderId);
+    setOrderDetailList(orderDetailListData);
   };
 
   useEffect(() => {

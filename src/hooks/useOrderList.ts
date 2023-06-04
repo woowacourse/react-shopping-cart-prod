@@ -6,17 +6,8 @@ export const useOrderList = () => {
   const [orderList, setOrderList] = useState<OrderItemList[]>([]);
 
   const getOrderList = async () => {
-    try {
-      const response = await fetchOrderList();
-
-      if (!response.ok) throw new Error(response.status.toString());
-
-      const orderListData = await response.json();
-
-      setOrderList(orderListData.orders);
-    } catch (error) {
-      console.log(error);
-    }
+    const orderListData = await fetchOrderList();
+    setOrderList(orderListData.orders);
   };
 
   useEffect(() => {
