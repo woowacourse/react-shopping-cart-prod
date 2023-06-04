@@ -6,7 +6,7 @@ export const OrderHistoryList = ({ orders }: { orders: OrderType[] }) => {
   return (
     <Wrapper>
       {orders.map((order) => (
-        <OrderHistory key={order.id} {...order} />
+        <OrderHistory key={order.orderId} {...order} />
       ))}
     </Wrapper>
   );
@@ -19,6 +19,6 @@ const Wrapper = styled.section`
   width: 85%;
   max-width: 1000px;
 
-  max-height: 500px;
+  max-height: 800px;
   overflow: scroll;
 `;

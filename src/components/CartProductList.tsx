@@ -63,7 +63,7 @@ export const CartProductList = () => {
             id="allProduct"
             type="checkbox"
             checked={allChecked}
-            onClick={handleAllCheckBox}
+            onChange={handleAllCheckBox}
           />
         </CheckBoxLabel>
         <p>
