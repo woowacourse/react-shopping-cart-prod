@@ -117,6 +117,8 @@ const AppBar = (props: HeaderProps) => {
             ))}
           </Selector>
 
+          <MenuButton onClick={() => onNavigate('/orders')}>주문목록</MenuButton>
+
           <MenuButton onClick={() => onNavigate('/cart')}>
             장바구니{' '}
             {cartItemsLoadable.state === 'hasValue' && (
