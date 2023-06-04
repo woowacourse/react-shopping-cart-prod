@@ -1,58 +1,57 @@
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useMutation } from '@tanstack/react-query';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { useCartList } from '../../hooks/useCartList';
-import { useFetch } from '../../hooks/useFetch';
-import { cartListState } from '../../store/cart';
+import { useModal } from '../../hooks/useModal';
+import {
+  cartCheckedIdState,
+  cartCheckedState,
+  cartListState,
+  cartTotalAmountState,
+} from '../../store/cart';
 import { originState } from '../../store/origin';
-import { CartItemType } from '../../types';
 import { priceFormatter } from '../../utils/formatter';
 import CartItem from '../CartItem/CartItem';
 import Checkbox from '../Checkbox/Checkbox';
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+import CouponList from '../CouponList/CouponList';
+import Modal from '../Modal/Modal';
 import styles from './style.module.css';
 
 const CartPageSection = () => {
-  const [cartItem, setCartItemList] = useRecoilState(cartListState);
+  const origin = useRecoilValue(originState);
+  const setCartList = useSetRecoilState(cartListState);
+  const cartCheckedCount = useRecoilValue(cartCheckedState);
+  const cartTotalAmount = useRecoilValue(cartTotalAmountState);
+  const cartCheckedId = useRecoilValue(cartCheckedIdState);
+
   const {
     cartList,
-    getCartItemSum,
     reverseCheckCartItem,
     resetCartCheckStatusToTrue,
     resetCartCheckStatusToFalse,
-    cartListCheckedLength,
   } = useCartList();
-  const origin = useRecoilValue(originState);
-  const { fetchApi, isLoading } = useFetch<CartItemType[]>(setCartItemList);
-  useEffect(() => {
-    fetchApi.get(`${origin}cart-items`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [origin]);
+  const { isModalOpen, handleModalOpen, handleModalClose, handleModalClosePress } = useModal();
+  const mutation = useMutation({
+    mutationFn: async (data: { cartItemId: number[] }) => {
+      await fetch(`${origin}cart-items`, {
+        method: 'DELETE',
+        body: JSON.stringify(data),
+      });
+    },
+    onSuccess: (data, variable, context) => {
+      const deletedNewCart = cartList.filter(
+        (cartItem) => !variable.cartItemId.includes(cartItem.id)
+      );
+      setCartList(deletedNewCart);
+    },
+  });
 
-  const checkedItemRemove = () => {
-    setCartItemList(
-      cartItem.filter((item) => {
-        if (item.isChecked === true) {
-          fetchApi.delete(`${origin}cart-items/${item.id}`);
-          return false;
-        }
-
-        return true;
-      })
-    );
+  const handleChoiceProductEvent = () => {
+    handleModalOpen();
   };
 
-  const selectedItemRemove = (itemId: number) => {
-    fetchApi.delete(`${origin}cart-items/${itemId}`);
-    setCartItemList(
-      cartItem.filter((item: CartItemType) => {
-        return item.id !== itemId;
-      })
-    );
-  };
-
-  const cartListLength = cartListCheckedLength();
-  const deliveryPrice = cartListLength === 0 ? 0 : 3000;
+  const deliveryPrice = cartList?.length === 0 ? 0 : 3000;
+  const allChecked = cartCheckedCount === cartList.length;
 
   return (
     <>
@@ -61,37 +60,43 @@ const CartPageSection = () => {
       <div className={styles.cartListSection}>
         <div className={styles.deleteBox}>
           <Checkbox
-            checked={cartListLength === cartList.length}
-            clickEvent={
-              cartListLength === cartList.length
-                ? resetCartCheckStatusToFalse
-                : resetCartCheckStatusToTrue
-            }
+            checked={allChecked}
+            clickEvent={() => {
+              allChecked ? resetCartCheckStatusToFalse() : resetCartCheckStatusToTrue();
+            }}
           />
           <p>
-            전체 선택({cartListLength}/{cartItem?.length})
+            전체 선택({cartList?.length}/{cartCheckedCount})
           </p>
-          <button type="button" className={styles.deleteButton} onClick={checkedItemRemove}>
+          <button
+            type="button"
+            className={styles.deleteButton}
+            onClick={() =>
+              mutation.mutate({
+                cartItemId: cartCheckedId,
+              })
+            }
+          >
             선택 삭제
           </button>
         </div>
         <section className={styles.section}>
           <div className={styles.cartList}>
-            {!isLoading ? (
-              cartItem.map((item) => (
-                <CartItem
-                  quantity={item.quantity}
-                  itemId={item.id}
-                  key={item.id}
-                  product={item.product}
-                  isChecked={item.isChecked}
-                  checkHandler={reverseCheckCartItem}
-                  removeItem={selectedItemRemove}
-                />
-              ))
-            ) : (
-              <LoadingSpinner />
-            )}
+            {cartList.map((cartItem) => (
+              <CartItem
+                quantity={cartItem.quantity}
+                itemId={cartItem.id}
+                key={cartItem.id}
+                product={cartItem.product}
+                isChecked={cartItem.isChecked}
+                checkHandler={reverseCheckCartItem}
+                removeItem={() =>
+                  mutation.mutate({
+                    cartItemId: [cartItem.id],
+                  })
+                }
+              />
+            ))}
           </div>
           <div className={styles.orderBox}>
             <div className={styles.orderBoxHeader}>결제예상금액</div>
@@ -100,7 +105,7 @@ const CartPageSection = () => {
               <div>
                 <div className={styles.resultText}>
                   <div>총 상품가격</div>
-                  <div>{priceFormatter(getCartItemSum())}원</div>
+                  <div>{priceFormatter(cartTotalAmount)}원</div>
                 </div>
                 <div className={styles.resultText}>
                   <div>총 배송비</div>
@@ -110,21 +115,27 @@ const CartPageSection = () => {
               <div>
                 <div className={styles.resultPrice}>
                   <div>총 주문금액</div>
-                  <div>{priceFormatter(getCartItemSum() + deliveryPrice)}원</div>
+                  <div>{priceFormatter(cartTotalAmount + deliveryPrice)}원</div>
                 </div>
                 <button
-                  className={cartListLength > 0 ? styles.orderButton : styles.orderButtonDisabled}
+                  className={cartCheckedCount > 0 ? styles.orderButton : styles.orderButtonDisabled}
                   type="button"
-                  disabled={cartListLength === 0}
+                  disabled={cartCheckedCount === 0}
+                  onClick={handleChoiceProductEvent}
                 >
-                  {cartListLength > 0
-                    ? `총 ${cartListLength}개 상품 주문하기`
+                  {cartCheckedCount > 0
+                    ? `총 ${cartCheckedCount}개 상품 주문하기`
                     : '상품을 선택해주세요'}
                 </button>
               </div>
             </div>
           </div>
         </section>
+        {isModalOpen && (
+          <Modal closeModalByClick={handleModalClose} closeModalByPress={handleModalClosePress}>
+            <CouponList type="usable" />
+          </Modal>
+        )}
       </div>
     </>
   );
