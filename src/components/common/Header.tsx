@@ -11,6 +11,7 @@ import CouponList from '../coupon/CouponList';
 import { tokenState, cartCountState, serverNameState, couponsState } from '../../recoil/state';
 import useToast from '../../hooks/useToast';
 import { SERVER_NAMES } from '../../constants';
+import useBoolean from '../../hooks/useBoolean';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ export default function Header() {
   const [token, setToken] = useRecoilState(tokenState);
   const [serverName, setServerName] = useRecoilState(serverNameState);
 
-  const [isCouponOpen, setIsCouponOpen] = useState(false);
+  const [couponModalOpened, openCouponModal, closeCouponModal] = useBoolean(false);
   const { showToast } = useToast();
 
   const onChangeSelect = ({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) => {
@@ -38,14 +39,6 @@ export default function Header() {
   const logout = () => {
     setToken(null);
     navigate('/');
-  };
-
-  const openCouponModal = () => {
-    setIsCouponOpen(true);
-  };
-
-  const closeCouponModal = () => {
-    setIsCouponOpen(false);
   };
 
   return (
@@ -85,7 +78,7 @@ export default function Header() {
           </MenuBox>
         </ContentBox>
       </Wrapper>
-      {isCouponOpen && (
+      {couponModalOpened && (
         <PortalDrawer selectors="#root" requestClose={closeCouponModal}>
           <CouponList coupons={coupons} />
         </PortalDrawer>

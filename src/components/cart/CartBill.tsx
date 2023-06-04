@@ -40,7 +40,7 @@ export default function CartBill() {
   const usableCoupons = useRecoilValue(usableCouponsState);
   const setCoupons = useSetRecoilState(couponsState);
 
-  const [modalOpened, openModal, closeModal] = useBoolean(false);
+  const [couponModalOpened, openCouponModal, closeCouponModal] = useBoolean(false);
   const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
 
   const discount = selectedCoupon ? cartBillTotalPrice * (selectedCoupon.discountRate / 100) : 0;
@@ -48,7 +48,7 @@ export default function CartBill() {
 
   const selectCoupon = (coupon: CouponType) => () => {
     setSelectedCoupon(coupon);
-    closeModal();
+    closeCouponModal();
   };
 
   const resetCoupon = () => {
@@ -91,7 +91,7 @@ export default function CartBill() {
       <Wrapper>
         {usableCoupons.length > 0 && (
           <Box>
-            <CouponButton onClick={openModal}>쿠폰선택</CouponButton>
+            <CouponButton onClick={openCouponModal}>쿠폰선택</CouponButton>
             <CouponLabel>
               {selectedCoupon === null ? (
                 '쿠폰을 선택 해주세요'
@@ -125,8 +125,8 @@ export default function CartBill() {
           <OrderButton onClick={order}>주문하기</OrderButton>
         </Box>
       </Wrapper>
-      {modalOpened && (
-        <PortalDrawer selectors="#root" requestClose={closeModal}>
+      {couponModalOpened && (
+        <PortalDrawer selectors="#root" requestClose={closeCouponModal}>
           <CouponList coupons={usableCoupons} selectCoupon={selectCoupon} />
         </PortalDrawer>
       )}
