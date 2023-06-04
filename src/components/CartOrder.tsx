@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
@@ -93,15 +93,22 @@ const CartOrder = (props: CartOrderProps) => {
   const orderResult = useFutureResult(future);
 
   const [inputUsedPoints, setInputUsedPoints] = useState('0');
-  const [usedPoints, setUsedPoints] = useState(0);
+  const [rawUsedPoints, setUsedPoints] = useState(0);
+  const maxUsedPoints = Math.min(prices.total, profile.currentPoints);
+  const usedPoints = Math.max(0, Math.min(maxUsedPoints, rawUsedPoints));
+
+  useEffect(() => {
+    setInputUsedPoints(String(usedPoints));
+  }, [usedPoints, prices.total]);
+
   const handleChangeUsedPoints = (value: string) => {
     if (!/^\d+$/.test(value)) {
       alert('숫자만 입력 가능합니다.');
       return;
     }
     const newUsedPoints = Number(value);
-    if (newUsedPoints < 0 || profile.currentPoints < newUsedPoints) {
-      alert(`최소 0부터 ${profile.currentPoints}까지 사용 가능합니다.`);
+    if (newUsedPoints < 0 || maxUsedPoints < newUsedPoints) {
+      alert(`최소 0부터 ${maxUsedPoints}까지 사용 가능합니다.`);
       return;
     }
     setUsedPoints(newUsedPoints);
