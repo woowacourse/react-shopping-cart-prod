@@ -10,7 +10,7 @@ export const orderListState = atom<OrderItemListType[]>({
 export const OrderItemInformationState = atom<OrderItemInformation>({
   key: 'orderItemInformation',
   default: {
-    id: 0,
+    orderId: 0,
     products: [],
     total_amount: 0,
     delivery_amount: 0,

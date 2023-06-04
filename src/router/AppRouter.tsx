@@ -6,11 +6,13 @@ import {
   MAIN_PAGE_LOCATE,
   ORDER_INFORMATION_PAGE_LOCATE,
   ORDER_LIST_PAGE_LOCATE,
+  ORDER_SUCCESS_PAGE,
 } from '../constants';
 import CartListPage from '../pages/CartListPage';
 import CouponListPage from '../pages/CouponListPage';
 import OrderInformationPage from '../pages/OrderInformationPage';
 import OrderListPage from '../pages/OrderListPage';
+import OrderSuccessPage from '../pages/OrderSuccessPage';
 import ProductListPage from '../pages/ProductListPage';
 
 const router = createBrowserRouter(
@@ -34,6 +36,10 @@ const router = createBrowserRouter(
     {
       path: COUPON_LIST_PAGE_LOCATE,
       element: <CouponListPage />,
+    },
+    {
+      path: ORDER_SUCCESS_PAGE,
+      element: <OrderSuccessPage />,
     },
   ],
   {

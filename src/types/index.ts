@@ -41,7 +41,7 @@ export interface OrderItemListType {
 }
 
 export interface OrderItemInformation {
-  id: number;
+  orderId: number;
   products: OrderItemType[];
   total_amount: number;
   delivery_amount: number;

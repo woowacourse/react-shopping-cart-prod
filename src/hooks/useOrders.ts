@@ -6,7 +6,7 @@ import { OrderItemInformationState, orderListState } from '../store/order';
 import useDiscount from './useDiscount';
 
 interface BuyInformation {
-  memberId: number;
+  orderId: number;
   productIds: number[];
   totalAmount: number;
   deliveryAmount: number;
@@ -59,14 +59,14 @@ const useOrders = () => {
   }, [setResultPrice, setDiscountPrice]);
 
   const fetchBuyItems = useCallback(async (itemDatas: BuyInformation) => {
-    await fetch('/orders', {
+    const response = await fetch('/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Basic ${USER_TOKEN}`,
       },
       body: JSON.stringify({
-        memberId: itemDatas.memberId,
+        orderId: itemDatas.orderId,
         productIds: itemDatas.productIds,
         totalAmount: itemDatas.totalAmount,
         deliveryAmount: itemDatas.deliveryAmount,
@@ -74,6 +74,12 @@ const useOrders = () => {
         couponId: itemDatas.couponId,
       }),
     });
+    const result = await response.json();
+
+    return {
+      ok: response.ok,
+      body: result.id,
+    };
   }, []);
 
   return {

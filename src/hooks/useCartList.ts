@@ -116,7 +116,10 @@ const useCartList = () => {
           'Content-Type': 'application/json',
           Authorization: `Basic ${USER_TOKEN}`,
         },
-        body: JSON.stringify({}),
+        body: JSON.stringify({
+          productId: information.id,
+          quantity: itemQuantity,
+        }),
       });
 
       if (response.ok) {

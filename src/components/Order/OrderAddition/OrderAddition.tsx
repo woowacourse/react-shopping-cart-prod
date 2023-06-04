@@ -1,8 +1,10 @@
 import { useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
+import { ORDER_SUCCESS_PAGE } from '../../../constants';
 import useCartList from '../../../hooks/useCartList';
 import useCoupon from '../../../hooks/useCoupon';
 import useDiscount from '../../../hooks/useDiscount';
@@ -15,6 +17,7 @@ import LoadingSpinner from '../../utils/LoadingSpinner/LoadingSpinner';
 import styles from './style.module.css';
 
 const OrderAddition = () => {
+  const navigate = useNavigate();
   const [isAlertOpen, setIsAlertOpen] = useState(false);
   const [couponState, setCouponState] = useState(0);
   const couponList = useRecoilValue(couponListState);
@@ -47,14 +50,18 @@ const OrderAddition = () => {
 
   const handleBuyDecide = useCallback(() => {
     fetchBuyItems({
-      memberId: 1,
+      orderId: 1,
       productIds: getCheckedCartItemIds(),
       totalAmount: getCartItemSum(),
       deliveryAmount: 3000,
       address: '서울특별시 송파구 송파송파송파송파송파송파',
       couponId: couponState,
+    }).then((result) => {
+      if (result.ok) {
+        navigate(ORDER_SUCCESS_PAGE, { state: { id: result.body } });
+      }
     });
-  }, [couponState, fetchBuyItems, getCartItemSum, getCheckedCartItemIds]);
+  }, [couponState, fetchBuyItems, getCartItemSum, getCheckedCartItemIds, navigate]);
 
   return (
     <>

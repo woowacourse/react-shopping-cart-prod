@@ -5,5 +5,6 @@ export const MAIN_PAGE_LOCATE = '/';
 export const CART_PAGE_LOCATE = '/cartList';
 export const ORDER_LIST_PAGE_LOCATE = '/orderList';
 export const COUPON_LIST_PAGE_LOCATE = '/couponList';
+export const ORDER_SUCCESS_PAGE = '/orderSuccess';
 export const ORDER_INFORMATION_PAGE_LOCATE = '/orderInformation';
 export const USER_TOKEN = btoa('a@a.com:1234');
