@@ -119,8 +119,8 @@ export const handlers = [
 
     const currentDate = new Date();
     const [day, month, year] = [
-      currentDate.getDate(),
-      currentDate.getMonth() + 1,
+      currentDate.getDate().toString().padStart(2, '0'),
+      (currentDate.getMonth() + 1).toString().padStart(2, '0'),
       currentDate.getFullYear(),
     ];
 
@@ -153,8 +153,10 @@ export const handlers = [
     ];
 
     let discountPrice = 0;
-    if ('discountPrice' in currentCoupon) discountPrice = currentCoupon.discountPrice;
-    if ('discountRate' in currentCoupon) {
+    if (currentCoupon && 'discountPrice' in currentCoupon) {
+      discountPrice = currentCoupon.discountPrice;
+    }
+    if (currentCoupon && 'discountRate' in currentCoupon) {
       discountPrice = (totalProductsPrice + deliveryFee) * (currentCoupon.discountRate / 100);
     }
 
