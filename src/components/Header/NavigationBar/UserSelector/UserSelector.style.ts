@@ -28,7 +28,7 @@ export const Menu = styled.div<{ isOpen: boolean }>`
   position: absolute;
   right: 0px;
   top: 40px;
-  width: 200px;
+  width: 224px;
   margin-top: 4px;
   padding: 8px;
   background: #f2f4f6;
@@ -54,6 +54,11 @@ export const UserInfoName = styled.div`
 `;
 
 export const UserInfoId = styled.div`
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   font-size: 14px;
   color: #666;
 `;

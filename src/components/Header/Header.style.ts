@@ -4,6 +4,10 @@ export const HeaderWrapper = styled.div`
   width: 100vw;
   color: ${({ theme }) => theme.color.light};
   border-bottom: 1px solid ${({ theme }) => theme.color.secondary};
+  position: sticky;
+  background-color: #fff;
+  top: 0;
+  z-index: 444;
 `;
 
 export const HeaderContent = styled.div`
