@@ -70,5 +70,17 @@
     "name": "공작",
     "price": 10000,
     "imageUrl": "https://images.unsplash.com/photo-1536514900905-0d5511b9d489?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+  },
+  {
+    "id": 13,
+    "name": "넓적부리 황새",
+    "price": 121600,
+    "imageUrl": "https://images.unsplash.com/photo-1601617637993-f9f976d7b305?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=927&q=80"
+  },
+  {
+    "id": 14,
+    "name": "오목눈이",
+    "price": 7700,
+    "imageUrl": "https://images.unsplash.com/photo-1640374577565-4cd9da10bb80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2670&q=80"
   }
 ]
