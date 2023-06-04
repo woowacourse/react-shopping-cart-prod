@@ -5,7 +5,7 @@ export type ServerName = 'SPLIT' | 'ROY' | 'IRAE' | 'ERROR';
 
 export const serverAtom = atom<ServerName>({
   key: 'server/name',
-  default: 'IRAE',
+  default: 'SPLIT',
 });
 
 export const baseURLSelector = selector({

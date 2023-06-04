@@ -38,7 +38,7 @@ const useFetch = (endPoint: EndPointKeys) => {
       const data = await response.text();
       if (!data) return null;
 
-      return await response.json();
+      return await JSON.parse(data);
     },
     [baseURL, endPoint, isSignedIn]
   );
