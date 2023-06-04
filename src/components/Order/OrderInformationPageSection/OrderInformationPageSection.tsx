@@ -40,7 +40,7 @@ const OrderInformationPageSection = () => {
           {orderData.products.map((item) => {
             return (
               <div className={styles.OrderItemData}>
-                <img src={item.imgUrl} alt="상품예시" />
+                <img src={item.imageUrl} alt="상품예시" />
                 <div>
                   <div>{item.name}</div>
                   <div>
@@ -56,7 +56,7 @@ const OrderInformationPageSection = () => {
           <div className={styles.paymentBoxHeader}>결제금액 정보</div>
           <div className={styles.paymentBoxSection}>
             <p>총 결제금액</p>
-            <p>{priceFormatter(orderData.total_amount)}원</p>
+            <p>{priceFormatter(orderData.discountedProductAmount)}원</p>
           </div>
           <div className={styles.mainPageButtonBox}>
             <button className={styles.mainPageButton} onClick={navigateToMainPage}>

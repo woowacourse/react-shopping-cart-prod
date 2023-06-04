@@ -30,7 +30,7 @@ export interface selectedCouponItemType {
 export interface OrderItemType {
   id: number;
   name: string;
-  imgUrl: string;
+  imageUrl: string;
   price: number;
   quantity: number;
 }
@@ -40,11 +40,16 @@ export interface OrderItemListType {
   products: OrderItemType[];
 }
 
+export interface BeforeBuyItemType {
+  id: number;
+  quantity: number;
+}
+
 export interface OrderItemInformation {
   orderId: number;
   products: OrderItemType[];
-  total_amount: number;
-  delivery_amount: number;
-  discounted_amount: number;
+  totalProductAmount: number;
+  deliveryAmount: number;
+  discountedProductAmount: number;
   address: string;
 }

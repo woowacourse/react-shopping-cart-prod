@@ -1,4 +1,4 @@
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
@@ -6,6 +6,7 @@ import { useRecoilValue } from 'recoil';
 import CartIcon from '../../assets/cart-icon.svg';
 import CouponIcon from '../../assets/coupon-icon.svg';
 import Logo from '../../assets/logo.png';
+import menuIcon from '../../assets/menu-icon.svg';
 import orderListIcon from '../../assets/order-list-icon.svg';
 import {
   CART_PAGE_LOCATE,
@@ -56,14 +57,14 @@ const Header = () => {
         <OriginSelector />
         <img src={Logo} alt="logo" className={styles.logo} onClick={navigateToMainPage} />
         <div className={styles.navigateButtons}>
-          <button type="button" onClick={couponListPage}>
+          <button type="button" onClick={couponListPage} className={styles.couponIconBox}>
             <img src={CouponIcon} alt="쿠폰 아이콘" />
             <div className={styles.cartItemCountBox}>
               <span className={styles.label}>쿠폰목록</span>
             </div>
           </button>
 
-          <button type="button" onClick={navigateToCartPage}>
+          <button type="button" onClick={navigateToCartPage} className={styles.cartIconBox}>
             {cartItemList.length > 0 && (
               <div className={styles.cartItemCountBox}>
                 <span className={styles.cartItemCount}>{cartItemList.length}</span>
@@ -72,7 +73,7 @@ const Header = () => {
             <img src={CartIcon} alt="cart icon" className={styles.cartIcon} />
             <span className={styles.label}>장바구니</span>
           </button>
-          <button type="button" onClick={navigateToOrderListPage}>
+          <button type="button" onClick={navigateToOrderListPage} className={styles.orderIconBox}>
             <img src={orderListIcon} alt="order-list-icon" className={styles.orderListIcon} />
             <span className={styles.label}>주문목록</span>
           </button>

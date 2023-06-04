@@ -12,9 +12,9 @@ export const OrderItemInformationState = atom<OrderItemInformation>({
   default: {
     orderId: 0,
     products: [],
-    total_amount: 0,
-    delivery_amount: 0,
-    discounted_amount: 0,
+    totalProductAmount: 0,
+    deliveryAmount: 0,
+    discountedProductAmount: 0,
     address: '',
   },
 });

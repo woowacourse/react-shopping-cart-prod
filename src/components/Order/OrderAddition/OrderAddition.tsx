@@ -22,7 +22,7 @@ const OrderAddition = () => {
   const [couponState, setCouponState] = useState(0);
   const couponList = useRecoilValue(couponListState);
 
-  const { getCartItemSum, getCheckedCartItemIds } = useCartList();
+  const { getCartItemSum, getCheckedCartItems } = useCartList();
   const { fetchMyCoupon, setCheckCoupon } = useCoupon();
   const { resultPrice, discountPrice, getDiscountPrice, fetchBuyItems } = useOrders();
   const money = getCartItemSum();
@@ -33,9 +33,9 @@ const OrderAddition = () => {
     (couponId: number) => {
       setCheckCoupon(couponId);
       setIsAlertOpen(false);
-      getDiscountPrice();
+      getDiscountPrice(getCartItemSum(), couponState);
     },
-    [setCheckCoupon, getDiscountPrice]
+    [setCheckCoupon, getDiscountPrice, getCartItemSum, couponState]
   );
 
   const handleAlertCancel = useCallback(() => {
@@ -50,9 +50,8 @@ const OrderAddition = () => {
 
   const handleBuyDecide = useCallback(() => {
     fetchBuyItems({
-      orderId: 1,
-      productIds: getCheckedCartItemIds(),
-      totalAmount: getCartItemSum(),
+      products: getCheckedCartItems(),
+      totalProductAmount: getCartItemSum(),
       deliveryAmount: 3000,
       address: '서울특별시 송파구 송파송파송파송파송파송파',
       couponId: couponState,
@@ -61,7 +60,7 @@ const OrderAddition = () => {
         navigate(ORDER_SUCCESS_PAGE, { state: { id: result.body } });
       }
     });
-  }, [couponState, fetchBuyItems, getCartItemSum, getCheckedCartItemIds, navigate]);
+  }, [couponState, fetchBuyItems, getCartItemSum, getCheckedCartItems, navigate]);
 
   return (
     <>

@@ -1,15 +1,17 @@
 import { useCallback } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { USER_TOKEN } from '../constants';
 import { couponListState } from '../store/coupon';
+import { originState } from '../store/origin';
 import { CouponItemType, selectedCouponItemType } from '../types';
 
 const useCoupon = () => {
   const [couponList, setCouponList] = useRecoilState(couponListState);
+  const origin = useRecoilValue(originState);
 
   const fetchCouponList = useCallback(async () => {
-    const response = await fetch('/coupons', {
+    const response = await fetch(`${origin}/coupons`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Basic ${USER_TOKEN}`,
@@ -27,11 +29,11 @@ const useCoupon = () => {
       })
     );
     return result;
-  }, [setCouponList]);
+  }, [origin, setCouponList]);
 
   const publishCoupon = useCallback(
     async (couponId: number) => {
-      const response = await fetch('/coupons/1', {
+      const response = await fetch(`${origin}/coupons/${couponId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,12 +55,12 @@ const useCoupon = () => {
         );
       }
     },
-    [couponList, setCouponList]
+    [couponList, origin, setCouponList]
   );
 
   const fetchMyCoupon = useCallback(
     async (price: number) => {
-      const response = await fetch('coupons/active?total=10000', {
+      const response = await fetch(`${origin}/coupons/active?total=${price}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -72,7 +74,7 @@ const useCoupon = () => {
         return result;
       }
     },
-    [setCouponList]
+    [origin, setCouponList]
   );
 
   const setCheckCoupon = useCallback(

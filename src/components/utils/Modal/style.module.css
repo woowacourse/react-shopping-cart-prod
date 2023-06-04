@@ -44,8 +44,11 @@
   .content {
     position: fixed;
     display: flex;
+    height: 500px;
     bottom: 0%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -20%);
+    height: 80%;
+    /* transform: translateX(-50%); */
     width: 100%;
     padding: 15px;
     background-color: white;

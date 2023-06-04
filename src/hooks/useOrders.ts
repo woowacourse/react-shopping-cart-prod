@@ -1,25 +1,28 @@
 import { useCallback } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { USER_TOKEN } from '../constants';
 import { OrderItemInformationState, orderListState } from '../store/order';
+import { originState } from '../store/origin';
+import { BeforeBuyItemType } from '../types';
 import useDiscount from './useDiscount';
 
 interface BuyInformation {
-  orderId: number;
-  productIds: number[];
-  totalAmount: number;
+  products: BeforeBuyItemType[];
+  totalProductAmount: number;
   deliveryAmount: number;
   address: string;
   couponId: number;
 }
 
 const useOrders = () => {
+  const origin = useRecoilValue(originState);
   const { discountPrice, resultPrice, setDiscountPrice, setResultPrice } = useDiscount();
   const [, setOrderList] = useRecoilState(orderListState);
   const [, setOrderInformation] = useRecoilState(OrderItemInformationState);
+
   const fetchOrderList = useCallback(async () => {
-    const response = await fetch('/orders', {
+    const response = await fetch(`${origin}/orders`, {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Basic ${USER_TOKEN}`,
@@ -28,59 +31,76 @@ const useOrders = () => {
     const result = await response.json();
     setOrderList(result);
     return result;
-  }, [setOrderList]);
+  }, [origin, setOrderList]);
 
   const fetchOrderOneItem = useCallback(
     async (id: number) => {
-      const response = await fetch(`/orders/${id}`, {
+      const response = await fetch(`${origin}/orders/${id}`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Basic ${USER_TOKEN}`,
         },
       });
       const result = await response.json();
+      console.log(result);
       setOrderInformation(result);
       return result;
     },
-    [setOrderInformation]
+    [origin, setOrderInformation]
   );
 
-  const getDiscountPrice = useCallback(async () => {
-    const response = await fetch('/coupons/discount/1234?total=30000', {
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${USER_TOKEN}`,
-      },
-    });
+  const getDiscountPrice = useCallback(
+    async (total: number, couponId: number) => {
+      const response = await fetch(`${origin}/coupons/${couponId}/discount/?total=${total}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${USER_TOKEN}`,
+        },
+      });
 
-    const result = await response.json();
-    setDiscountPrice(result.discountAmount);
-    setResultPrice(result.discountedProductAmount);
-  }, [setResultPrice, setDiscountPrice]);
+      const result = await response.json();
+      setDiscountPrice(result.discountAmount);
+      setResultPrice(result.discountedProductAmount);
+    },
+    [origin, setDiscountPrice, setResultPrice]
+  );
 
-  const fetchBuyItems = useCallback(async (itemDatas: BuyInformation) => {
-    const response = await fetch('/orders', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Basic ${USER_TOKEN}`,
-      },
-      body: JSON.stringify({
-        orderId: itemDatas.orderId,
-        productIds: itemDatas.productIds,
-        totalAmount: itemDatas.totalAmount,
-        deliveryAmount: itemDatas.deliveryAmount,
-        address: itemDatas.address,
-        couponId: itemDatas.couponId,
-      }),
-    });
-    const result = await response.json();
+  const fetchBuyItems = useCallback(
+    async (itemDatas: BuyInformation) => {
+      const requestData =
+        itemDatas.couponId === 0
+          ? {
+              products: itemDatas.products,
+              totalProductAmount: itemDatas.totalProductAmount,
+              deliveryAmount: itemDatas.deliveryAmount,
+              address: itemDatas.address,
+              couponId: null,
+            }
+          : {
+              products: itemDatas.products,
+              totalProductAmount: itemDatas.totalProductAmount,
+              deliveryAmount: itemDatas.deliveryAmount,
+              address: itemDatas.address,
+              couponId: itemDatas.couponId,
+            };
 
-    return {
-      ok: response.ok,
-      body: result.id,
-    };
-  }, []);
+      const response = await fetch(`${origin}/orders`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Basic ${USER_TOKEN}`,
+        },
+        body: JSON.stringify(requestData),
+      });
+      const result = await response.json();
+
+      return {
+        ok: response.ok,
+        body: result.id,
+      };
+    },
+    [origin]
+  );
 
   return {
     resultPrice,

@@ -178,11 +178,17 @@ const useCartList = () => {
     }
   };
 
-  const getCheckedCartItemIds = useCallback(() => {
-    const filteredData = cartItem.filter((item) => {
+  const getCheckedCartItems = useCallback(() => {
+    const filterdData = cartItem.filter((item) => {
       return item.isChecked;
     });
-    return filteredData.map((item) => item.product.id);
+
+    return filterdData.map((item) => {
+      return {
+        id: item.product.id,
+        quantity: item.quantity,
+      };
+    });
   }, [cartItem]);
 
   return {
@@ -196,7 +202,7 @@ const useCartList = () => {
     getCartItemSum,
     fetchProductAddToCart,
     updateCartItemQuantity,
-    getCheckedCartItemIds,
+    getCheckedCartItems,
   };
 };
 

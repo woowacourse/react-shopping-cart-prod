@@ -15,17 +15,20 @@ const CouponListSection = () => {
   const { mutate: publishCouponMutation, isLoading: publishCouponLoading } =
     useMutation(publishCoupon);
 
-  const handlePublishCoupon = useCallback(() => {
-    publishCouponMutation(1);
-  }, [publishCouponMutation]);
-
+  const handlePublishCoupon = useCallback(
+    (couponId: number) => {
+      publishCouponMutation(couponId);
+    },
+    [publishCouponMutation]
+  );
+  console.log(coupons);
   if (isLoading) return <LoadingSpinner />;
   return (
     <>
       {publishCouponLoading && <LoadingSpinner />}
-      {coupons.map((item) => {
+      {coupons.map((item, index) => {
         return (
-          <div className={styles.CouponBox}>
+          <div className={styles.CouponBox} key={index}>
             <div className={styles.CouponItem}>
               <h1>{item.couponName}</h1>
               <div>최소 주문금액 {item.minAmount}원</div>
@@ -39,7 +42,9 @@ const CouponListSection = () => {
                 <button
                   type="button"
                   className={styles.getCouponButton}
-                  onClick={handlePublishCoupon}
+                  onClick={() => {
+                    handlePublishCoupon(item.couponId);
+                  }}
                 >
                   발급받기
                 </button>

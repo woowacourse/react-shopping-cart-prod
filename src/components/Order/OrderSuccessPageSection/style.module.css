@@ -7,7 +7,7 @@
   align-items: center;
 }
 .orderSuccessSVG {
-  width: 20vh;
+  width: 300px;
   opacity: 0;
   animation: view-success-img 1s forwards;
 }
@@ -26,7 +26,7 @@
 .orderResultButton {
   background-color: #eeeeee;
   cursor: pointer;
-  width: 20vh;
+  width: 180px;
   padding: 15px;
   font-size: 15px;
   border-radius: 5px;
@@ -41,7 +41,7 @@
   background-color: #04c09e;
   cursor: pointer;
   color: #ffffff;
-  width: 20vh;
+  width: 180px;
   padding: 15px;
   font-size: 15px;
   border-radius: 5px;
@@ -58,6 +58,7 @@
   gap: 20px;
   animation: view-success-button 1s forwards;
   opacity: 0;
+
   animation-delay: 0.5s;
 }
 @keyframes view-success-button {

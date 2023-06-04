@@ -31,37 +31,39 @@ const OrderPageSection = () => {
       <div className={styles.OrderListHeader}>주문목록</div>
       <hr />
       {isLoading && <LoadingSpinner />}
-      {orderList.map((listItem) => {
-        return (
-          <div className={styles.OrderItemBox} key={listItem.id}>
-            <div className={styles.OrderItemHeader}>
-              <div>주문번호: {listItem.id}</div>
-              <button
-                type="button"
-                onClick={() => {
-                  navigateToOrderInformationPage(listItem.id);
-                }}
-              >
-                상세보기 &gt;
-              </button>
-            </div>
-            {listItem.products.map((item) => {
-              return (
-                <div className={styles.OrderItemData} key={item.id}>
-                  <img src={item.imgUrl} alt="상품예시" />
-                  <div className={styles.itemDataBox}>
-                    <div>
-                      <div>{item.name}</div>
-                      <div>수량 : {item.quantity}개</div>
-                    </div>
-                    <div className={styles.priceData}>{priceFormatter(item.price)}원</div>
-                  </div>
+      {orderList.length
+        ? orderList.map((listItem) => {
+            return (
+              <div className={styles.OrderItemBox} key={listItem.id}>
+                <div className={styles.OrderItemHeader}>
+                  <div>주문번호: {listItem.id}</div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigateToOrderInformationPage(listItem.id);
+                    }}
+                  >
+                    상세보기 &gt;
+                  </button>
                 </div>
-              );
-            })}
-          </div>
-        );
-      })}
+                {listItem.products.map((item) => {
+                  return (
+                    <div className={styles.OrderItemData} key={item.id}>
+                      <img src={item.imageUrl} alt="상품예시" />
+                      <div className={styles.itemDataBox}>
+                        <div>
+                          <div>{item.name}</div>
+                          <div>수량 : {item.quantity}개</div>
+                        </div>
+                        <div className={styles.priceData}>{priceFormatter(item.price)}원</div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })
+        : ''}
     </>
   );
 };
