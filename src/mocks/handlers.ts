@@ -1,5 +1,4 @@
 import { rest } from 'msw';
-import { CartProduct } from '../types/product';
 import { uuid } from '../utils/uuid';
 import mockProductsData from './mockProductsData.json';
 import mockCouponData from './mockCouponData.json';
@@ -11,10 +10,11 @@ import {
   USERS_COUPON_PATH_NAME,
 } from '../constant';
 import LocalStorage from '../utils/LocalStorage';
+import type { CartProduct, Coupon } from '../types/product';
 
 const mockProducts = mockProductsData.products;
 const mockCoupons = mockCouponData;
-const usersCoupon: number[] = [];
+const usersCoupon: Coupon[] = [];
 const cartList: CartProduct[] = LocalStorage.getItem(CART_LIST_KEY) || [];
 
 const updateLocalStorage = () => {
@@ -93,17 +93,25 @@ export const couponHander = [
   }),
 
   rest.get(USERS_COUPON_PATH_NAME, (req, res, ctx) => {
-    return res(ctx.delay(1000), ctx.status(200), ctx.json(usersCoupon));
+    return res(
+      ctx.delay(1000),
+      ctx.status(200),
+      ctx.json({ coupons: usersCoupon }),
+    );
   }),
 
   rest.post<PostCouponsMe>(USERS_COUPON_PATH_NAME, async (req, res, ctx) => {
     const { couponId } = await req.json();
 
-    if (usersCoupon.includes(couponId)) {
+    if (usersCoupon.some((coupon) => coupon.id === couponId)) {
       return res(ctx.delay(500), ctx.status(400));
     }
 
-    usersCoupon.push(couponId);
+    const targetCoupon = mockCoupons.coupons.find(
+      (coupon) => coupon.id === couponId,
+    );
+
+    usersCoupon.push(targetCoupon as Coupon);
     return res(ctx.delay(500), ctx.status(200));
   }),
 ];
