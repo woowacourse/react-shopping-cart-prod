@@ -1,5 +1,6 @@
-import { getCouponApplied } from 'api/requests';
+import { getCouponApplied, postPayments } from 'api/requests';
 import { useGet } from 'hooks/useGet';
+import { useMutate } from 'hooks/useMutate';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { cartListAtom, checkedItemsAtom, couponIdAtom } from 'recoil/cartList';
@@ -8,19 +9,29 @@ import { formatPrice } from 'utils';
 import * as S from './PaymentDetail.styles';
 
 const PaymentDetail = () => {
-  const dependency = useRecoilValue(couponIdAtom);
+  const couponIds = useRecoilValue(couponIdAtom);
   const checkedItems = useRecoilValue(checkedItemsAtom);
   const cartList = useRecoilValue(cartListAtom);
 
+  const { request } = useMutate();
+
   const { data } = useGet<CouponAppliedPriceResponse>(
     getCouponApplied(),
-    dependency
+    couponIds
   );
 
   const navigate = useNavigate();
 
   const onOrderButtonClick = () => {
     navigate('/order');
+    request(
+      postPayments({
+        cartItemIds: checkedItems,
+        isDeliveryFree: true,
+        totalPaymentPrice: calculateOrderPrice(),
+        couponIds: couponIds,
+      })
+    );
   };
 
   const calculateDeliveryPrice = () => {
