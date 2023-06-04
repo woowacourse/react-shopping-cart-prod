@@ -6,12 +6,14 @@ type MessageType =
   | 'empty'
   | 'notFound'
   | 'loading'
-  | 'orderCompleted';
+  | 'orderCompleted'
+  | 'orderFailed';
 
 interface MessageProps {
   type: MessageType;
   homeLink?: boolean;
   orderLink?: boolean;
+  cartLink?: boolean;
 }
 
 const message = {
@@ -41,12 +43,18 @@ const message = {
       "해당 주문에 대한 정보는 '주문목록' 페이지에서 확인하실 수 있습니다.",
     imageSrc: 'images/배달.jpg',
   },
+  orderFailed: {
+    title: '결제가 실패하였습니다.',
+    description: '다시 결제를 시도해주세요.',
+    imageSrc: 'images/error.png',
+  },
 };
 
 const Message = ({
   type,
   homeLink = false,
   orderLink = false,
+  cartLink = false,
 }: MessageProps) => {
   return (
     <MessageSection>
@@ -60,7 +68,8 @@ const Message = ({
       <MessageDesc>{message[type].description}</MessageDesc>
       <LinkBtnWrapper>
         {homeLink && <LinkBtn to='/'>홈으로 가기</LinkBtn>}
-        {orderLink && <LinkBtn to='/orders'>주문목록 </LinkBtn>}
+        {orderLink && <LinkBtn to='/orders'>주문목록</LinkBtn>}
+        {cartLink && <LinkBtn to='/cart'>장바구니</LinkBtn>}
       </LinkBtnWrapper>
     </MessageSection>
   );

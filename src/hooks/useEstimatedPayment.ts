@@ -7,7 +7,6 @@ import {
 } from '../recoil/checkedProductData';
 import { cartProductAtom } from '../recoil/cartProductData';
 import { orderApi } from '../apis/orderProducts';
-import useErrorState from './useErrorState';
 import {
   FREE_DELIVERY_THRESHOLD,
   REWARD_POINT_RATE,
@@ -17,7 +16,6 @@ import type { OrderedData } from '../types/product';
 
 const useEstimatedPayment = (usePoint: number) => {
   const navigate = useNavigate();
-  const { handleError } = useErrorState();
   const totalProductPrice = useRecoilValue(totalPriceSelector);
   const totalDeliveryFee =
     totalProductPrice === 0 || totalProductPrice >= FREE_DELIVERY_THRESHOLD
@@ -61,8 +59,8 @@ const useEstimatedPayment = (usePoint: number) => {
         setCheckedCartProduct([]);
         navigate('/orders/complete');
       })
-      .catch((error) => {
-        handleError(error);
+      .catch(() => {
+        navigate('/orders/fail');
       });
   };
 
