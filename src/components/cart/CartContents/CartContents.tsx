@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import CartList from '../CartList/CartList';
 import PaymentAmount from '../PaymentAmount/PaymentAmount';
 import getCartLength from '../../../globalState/selectors/getCartLength';
@@ -21,8 +21,12 @@ const CartContents = () => {
   return cartLength ? (
     <Contents>
       <CartList />
-      <CouponSelectRadio selected={selectedCoupon} setSelected={setSelectedCoupon} />
-      <PaymentAmount coupon={selectedCoupon} />
+      <PaymentDiv>
+        <Suspense fallback={<CouponFallbackDiv>쿠폰 목록을 불러오고 있어요.</CouponFallbackDiv>}>
+          <CouponSelectRadio selected={selectedCoupon} setSelected={setSelectedCoupon} />
+        </Suspense>
+        <PaymentAmount coupon={selectedCoupon} />
+      </PaymentDiv>
     </Contents>
   ) : (
     <EmptyCartView>
@@ -69,6 +73,23 @@ const LinkButton = styled.button`
   color: white;
 
   cursor: pointer;
+`;
+
+const CouponFallbackDiv = styled.div`
+  padding: 20px 30px;
+
+  border: 1px solid #dddddd;
+  color: #333333;
+  font-weight: 400;
+  font-size: 24px;
+`;
+
+const PaymentDiv = styled.div`
+  width: 450px;
+
+  @media screen and (max-width: 1320px) {
+    width: 100%;
+  }
 `;
 
 export default CartContents;

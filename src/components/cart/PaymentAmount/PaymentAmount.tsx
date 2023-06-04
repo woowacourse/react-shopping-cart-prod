@@ -114,6 +114,7 @@ const PaymentAmount = (props: PaymentAmountProps) => {
 };
 
 const PaymentAmountContainer = styled.div`
+  margin-top: 30px;
   width: 448px;
 
   border: 1px solid #dddddd;
