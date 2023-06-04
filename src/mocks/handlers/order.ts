@@ -34,7 +34,7 @@ export const orderHandlers = [
 
   // 주문하기
   rest.post(ORDERS_BASE_URL, async (req, res, ctx) => {
-    const { cartItemIds, usePoint } = await req.json();
+    const { cartItemIds } = await req.json();
     const cart: CartItem[] = await fetchCartItems(CART_BASE_URL);
 
     const orderItems = cart.filter((cartItem) =>

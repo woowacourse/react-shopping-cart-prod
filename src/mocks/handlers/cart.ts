@@ -4,8 +4,8 @@ import {
   CART_LOCAL_STORAGE_KEY,
   PRODUCTS_BASE_URL,
 } from '../../constants/api';
-import { CartItem, NewCartItem } from '../../types/cart';
 import { getLocalStorage, setLocalStorage } from '../../utils/localStorage';
+import type { CartItem, NewCartItem } from '../../types/cart';
 
 const localStorageCart: CartItem[] = getLocalStorage(CART_LOCAL_STORAGE_KEY);
 // eslint-disable-next-line prefer-const
@@ -17,7 +17,6 @@ export const cartHandlers = [
   // 장바구니 목록 조회
   rest.get(CART_BASE_URL, (req, res, ctx) => {
     return res(ctx.status(200), ctx.json(cart));
-    // return res(ctx.status(404));
   }),
 
   // 장바구니 아이템 추가
