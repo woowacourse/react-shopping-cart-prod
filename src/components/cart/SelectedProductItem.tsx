@@ -1,7 +1,7 @@
 import { useRecoilState } from 'recoil';
 import { css, styled } from 'styled-components';
 import { useSetCart } from '../../hooks/useCart';
-import { checkedItemList } from '../../recoil';
+import { selectedCartItems } from '../../recoil';
 import { Product } from '../../types';
 import Button from '../common/Button';
 import { Checkbox } from '../common/CheckboxStyle';
@@ -9,10 +9,10 @@ import TrashCanIcon from '../icons/TrashCanIcon';
 import Price from '../Price';
 import QuantityButton from './QuantityButton';
 
-interface Props extends Product {
+type SelectedProductItemProps = Product & {
   quantity: number;
   productId: number;
-}
+};
 
 const SelectedProductItem = ({
   id: cartItemId,
@@ -21,97 +21,95 @@ const SelectedProductItem = ({
   name,
   price,
   quantity,
-}: Props) => {
+}: SelectedProductItemProps) => {
   const { removeItemFromCart } = useSetCart(productId);
-  const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
+  const [checkedItems, setCheckedItems] = useRecoilState(selectedCartItems);
 
-  const isChecked = checkedItems.includes(cartItemId);
+  const isSelected = checkedItems.includes(cartItemId);
 
   const handleCheckedItem = () => {
-    isChecked
-      ? setCheckedItems((prev) => prev.filter((itemId) => itemId !== cartItemId))
-      : setCheckedItems((prev) => [...prev, cartItemId]);
+    setCheckedItems([cartItemId]);
   };
 
   const handleTrashCanClick = () => {
-    setCheckedItems((prev) => prev.filter((itemId) => itemId !== cartItemId));
+    setCheckedItems([cartItemId]);
     removeItemFromCart();
   };
 
   return (
     <div>
-      <S.Fieldset>
+      <Fieldset>
         <Checkbox
-          type='checkbox'
+          type="checkbox"
           id={`${cartItemId}-checkbox`}
           name={name}
-          checked={isChecked}
+          checked={isSelected}
           onChange={handleCheckedItem}
         />
-        <S.Image src={`${imageUrl}`} alt={name} />
-        <S.Name htmlFor={`${cartItemId}-checkbox`} title={name}>
+        <Image src={`${imageUrl}`} alt={name} />
+        <Label htmlFor={`${cartItemId}-checkbox`} title={name}>
           {name}
-        </S.Name>
+        </Label>
         <S.Wrapper>
           <Button css={trashCanButtonStyle} onClick={handleTrashCanClick}>
             <TrashCanIcon patternId={cartItemId} imageSize={{ width: '40', height: '40' }} />
           </Button>
-          <QuantityButton productId={productId} quantity={quantity} />
+          <QuantityButton productId={productId} min={1} max={10} />
           <Price price={price * quantity} />
         </S.Wrapper>
-      </S.Fieldset>
+      </Fieldset>
     </div>
   );
 };
 
-const S = {
-  Fieldset: styled.fieldset`
-    display: flex;
-    margin: 28px 10px 0 0;
-    padding-bottom: 32px;
-    border-bottom: 1.5px solid #ccc;
+const Fieldset = styled.fieldset`
+  display: flex;
+  margin: 28px 10px 0 0;
+  padding-bottom: 32px;
+  border-bottom: 1.5px solid #ccc;
 
-    @media (max-width: 420px) {
-      flex-wrap: wrap;
-      margin-right: 0;
-    }
-  `,
+  @media (max-width: 420px) {
+    flex-wrap: wrap;
+    margin-right: 0;
+  }
+`;
 
-  Image: styled.img`
-    width: 144px;
-    margin-right: 20px;
+const Image = styled.img`
+  width: 144px;
+  margin-right: 20px;
 
-    @media (max-width: 548px) {
-      margin-right: 8px;
-    }
+  @media (max-width: 548px) {
+    margin-right: 8px;
+  }
 
-    @media (max-width: 420px) {
-      width: 100%;
-      margin: 10px 0 0;
-    }
-  `,
+  @media (max-width: 420px) {
+    width: 100%;
+    margin: 10px 0 0;
+  }
+`;
 
-  Name: styled.label`
-    display: -webkit-box;
+const Label = styled.label`
+  display: -webkit-box;
+  height: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  font-size: 16px;
+
+  @media (max-width: 548px) {
+    height: 14px;
+    font-size: 14px;
+  }
+
+  @media (max-width: 420px) {
     height: 16px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
+    margin: 16px auto;
     font-size: 16px;
+  }
+`;
 
-    @media (max-width: 548px) {
-      height: 14px;
-      font-size: 14px;
-    }
-
-    @media (max-width: 420px) {
-      height: 16px;
-      margin: 16px auto;
-      font-size: 16px;
-    }
-  `,
-
+const S = {
   Wrapper: styled.div`
     display: flex;
     gap: 32px;

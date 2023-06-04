@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
 import { CART_URL } from '../../constants/url';
-import { useFetchData } from '../../hooks/useFetchData';
+import useFetchData from '../../hooks/useFetchData';
 import { useRemoveCheckedItemsFromCart } from '../../hooks/useRemoveCheckedItemsFromCart';
-import { cartState, checkedItemList, serverState } from '../../recoil';
+import { cartState, selectedCartItems, serverState } from '../../recoil';
+import { CartItem } from '../../types';
 import Button from '../common/Button';
 import { Checkbox } from '../common/CheckboxStyle';
 import Spinner from '../Spinner';
@@ -12,27 +13,18 @@ import SelectedProductItem from './SelectedProductItem';
 
 const SelectedProductList = () => {
   const [cart, setCart] = useRecoilState(cartState);
-  const [checkedItems, setCheckedItems] = useRecoilState<number[]>(checkedItemList);
+  const [checkedItems, setCheckedItems] = useRecoilState(selectedCartItems);
   const removeCheckedItemsFromCart = useRemoveCheckedItemsFromCart(checkedItems);
   const server = useRecoilValue(serverState);
   const { api, isLoading } = useFetchData();
 
-  const initialCheckedItems = cart.map((item) => item.id);
-
-  useEffect(() => {
-    setCheckedItems(initialCheckedItems);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   useEffect(() => {
     api
-      .get(`${server}${CART_URL}`, {
-        Authorization: 'Basic YUBhLmNvbToxMjM0',
-        'Content-Type': 'application/json',
-      })
+      .get(`${server}${CART_URL}`)
       .then((data) => {
-        setCart(data);
-      });
+        setCart(data.map((item: CartItem) => ({ ...item, isSelected: true })));
+      })
+      .catch((error) => alert(error));
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
@@ -41,7 +33,7 @@ const SelectedProductList = () => {
   const isAllChecked = checkedItems.length === productCountInCart && productCountInCart !== 0;
 
   const handleAllItemsCheck = () => {
-    isAllChecked ? setCheckedItems([]) : setCheckedItems(initialCheckedItems);
+    setCheckedItems(cart.map(({ id }) => id));
   };
 
   const handleCheckedItemRemove = () => {
@@ -55,10 +47,7 @@ const SelectedProductList = () => {
     <S.Wrapper>
       <S.Title>{`든든배송 상품 (${productCountInCart}개)`}</S.Title>
       {productCountInCart === 0 ? (
-        <S.Nothing
-          src={`${process.env.PUBLIC_URL}/assets/nothing.png`}
-          alt='장바구니가 텅 비었어요'
-        />
+        <S.Nothing src={`${process.env.PUBLIC_URL}/assets/nothing.png`} alt="장바구니가 텅 비었어요" />
       ) : (
         <div>
           {cart.map((item) => (
@@ -77,13 +66,13 @@ const SelectedProductList = () => {
 
       <S.Fieldset>
         <Checkbox
-          type='checkbox'
-          id='select-all'
-          name='select-all'
+          type="checkbox"
+          id="select-all"
+          name="select-all"
           checked={isAllChecked}
           onChange={handleAllItemsCheck}
         />
-        <label htmlFor='select-all'>{`전체선택 (${checkedItems.length}/${productCountInCart})`}</label>
+        <label htmlFor="select-all">{`전체선택 (${checkedItems.length}/${productCountInCart})`}</label>
         <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
           선택삭제
         </Button>
