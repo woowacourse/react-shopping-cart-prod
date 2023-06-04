@@ -1,9 +1,29 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import baemin from '../../../assets/image/baemin.png';
 import { RewardIcon } from '../../../assets/svg';
+import { ORDERS_BASE_URL } from '../../../constants/api';
+import { savedPointByOrderQuery } from '../../../recoil/selectors/point';
+import { orderQuery } from '../../../recoil/selectors/order';
+import { formatPrice } from '../../../utils/formatPrice';
+import usePoint from '../../../hooks/usePoint';
 
 const OrderCompletePage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  if (id === undefined) {
+    navigate('/error');
+
+    return <></>;
+  }
+
+  const orderId = Number(id);
+  const { price: totalOrderPrice } = useRecoilValue(orderQuery(orderId));
+  const savedPointByOrder = useRecoilValue(savedPointByOrderQuery(orderId));
+  const { point } = usePoint();
+
   return (
     <Container>
       <Title>주문을 완료했어요.</Title>
@@ -11,24 +31,25 @@ const OrderCompletePage = () => {
       <Detail>
         <DetailInner>
           <dt>총 주문금액</dt>
-          <dd>40,200원</dd>
+          <dd>{formatPrice(totalOrderPrice)}</dd>
         </DetailInner>
         <DetailInner>
           <dt>적립 포인트</dt>
-          <dd>+ 1,000원</dd>
+          <dd>+ {formatPrice(savedPointByOrder)}</dd>
         </DetailInner>
         <DetailInner>
           <dt>보유 포인트</dt>
           <PointWrapper>
             <RewardIcon />
-            <dd>1,000원</dd>
+            <dd>{formatPrice(point)}</dd>
           </PointWrapper>
         </DetailInner>
       </Detail>
       <LinkContainer>
         <StyledLink to={'/'}>메인 페이지로 이동</StyledLink>
-        {/* TODO: navigate to order detail by orderId */}
-        <StyledLink to={'/'}>주문 상세 내역 보기</StyledLink>
+        <StyledLink to={`${ORDERS_BASE_URL}/${id}`}>
+          주문 상세 내역 보기
+        </StyledLink>
       </LinkContainer>
     </Container>
   );
@@ -38,9 +59,9 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  padding-top: 20px;
   row-gap: 20px;
+  overflow: hidden;
 `;
 
 const Title = styled.h2`
@@ -80,9 +101,9 @@ const DetailInner = styled.div`
 `;
 
 const PointWrapper = styled.div`
-  width: 83px;
+  min-width: 83px;
   display: flex;
-  justify-content: space-between;
+  column-gap: 5px;
 
   & > dd {
     font-weight: 600;
