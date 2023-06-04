@@ -14,7 +14,9 @@ const OrderDetailPage = () => {
   const { data: order, isLoading, errorState, fetchData } = useFetch<Order>(() => getOrder(Number(orderId)));
 
   if (isLoading) return <div>주문 상세 정보 로딩중</div>;
-  if (errorState?.isError) return <LoadingErrorCard onClickRetryButton={fetchData}></LoadingErrorCard>;
+  if (errorState?.isError) {
+    return <LoadingErrorCard onClickRetryButton={fetchData}>{errorState.error.message}</LoadingErrorCard>;
+  }
 
   return (
     <Box sizing={{ width: '100%' }} flex={{ flexDirection: 'column' }}>

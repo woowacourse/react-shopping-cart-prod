@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 import errorImg from 'assets/error.png';
 import Box from 'components/@common/Box';
+import { PropsWithChildren } from 'react';
 
 type LoadingErrorCardProps = {
   onClickRetryButton: () => void;
 };
 
-const LoadingErrorCard = ({ onClickRetryButton }: LoadingErrorCardProps) => {
+const LoadingErrorCard = ({ children, onClickRetryButton }: PropsWithChildren<LoadingErrorCardProps>) => {
   return (
     <ErrorImgBackground sizing={{ width: '100%' }} flex={{ flexDirection: 'column', gap: '20px' }}>
       <ErrorImg src={errorImg} alt="예상하지 못한 에러 발생" />
-      <ErrorMessage>관리자에게 문의하세요</ErrorMessage>
+      <ErrorMessage>{children}</ErrorMessage>
       <RetryButton onClick={onClickRetryButton}>새로고침</RetryButton>
     </ErrorImgBackground>
   );

@@ -8,7 +8,9 @@ const ProductListPage = () => {
   const { data: products, errorState, isLoading, fetchData } = useFetch<Product[]>(getProducts);
 
   if (isLoading) return <div>상품목록 로딩중...</div>;
-  if (errorState?.isError) return <LoadingErrorCard onClickRetryButton={fetchData} />;
+  if (errorState?.isError) {
+    return <LoadingErrorCard onClickRetryButton={fetchData}>{errorState.error.message}</LoadingErrorCard>;
+  }
 
   return <ProductCardList products={products ?? []} />;
 };
