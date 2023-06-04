@@ -100,24 +100,16 @@ export const handlers = [
     return res(
       ctx.delay(100),
       ctx.status(200),
-      ctx.json(
-        coupons.length > 0
-          ? coupons
-          : mockCoupons
-      )
+      ctx.json(coupons.length > 0 ? coupons : mockCoupons)
     );
   }),
 
   rest.get("/point", async (req, res, ctx) => {
     const point = getSessionStorage(SESSION_STORAGE_KEY_POINT, {
       pointHistories: [],
-      totalPoint: 1000
+      totalPoint: 0,
     });
 
-    return res(
-      ctx.delay(100),
-      ctx.status(200),
-      ctx.json(point)
-    );
+    return res(ctx.delay(100), ctx.status(200), ctx.json(point));
   }),
 ];

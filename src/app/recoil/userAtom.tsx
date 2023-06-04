@@ -6,6 +6,7 @@ import { setSessionStorage } from "../utils/storage.ts";
 import {
   SESSION_STORAGE_KEY_BASE64,
   SESSION_STORAGE_KEY_CART_ITEMS,
+  SESSION_STORAGE_KEY_POINT,
 } from "../keys.ts";
 import { fetchCartList } from "../api/api.ts";
 import { cartState } from "./cartAtoms.ts";
@@ -37,6 +38,10 @@ export const userRepository = selector({
           btoa(member.id + ":" + member.password)
         );
         setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
+        setSessionStorage(SESSION_STORAGE_KEY_POINT, {
+          pointHistories: [],
+          totalPoint: 1000,
+        });
         const newCartList = await fetchCartList(server);
         set(cartState, newCartList);
         set(userState, newUser);
