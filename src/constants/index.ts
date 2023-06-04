@@ -1,3 +1,5 @@
+import { CouponState } from '../types';
+
 export const ROUTE_PATH: Readonly<Record<string, string>> = {
   MAIN_PAGE: '/',
   CART_PAGE: '/cart',
@@ -21,3 +23,9 @@ export const NOT_NUMBER = /[^0-9]/g;
 export const MAX_NUMBER_LENGTH = 2;
 
 export const DELIVERY_FEE = 3000;
+
+export const INITIAL_COUPON_STATE: Readonly<CouponState> = {
+  id: 0,
+  priceDiscount: 0,
+  name: '',
+};

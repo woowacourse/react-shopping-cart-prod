@@ -1,5 +1,5 @@
 import { AtomEffect, DefaultValue, atom, selector, selectorFamily } from 'recoil';
-import { KEY_SERVER, QUANTITY } from '../constants';
+import { INITIAL_COUPON_STATE, KEY_SERVER, QUANTITY } from '../constants';
 import { SERVERS } from '../constants/url';
 import { CartItem, CouponState, Product } from '../types';
 
@@ -99,6 +99,6 @@ export const serverState = atom({
 
 export const selectedCoupon = atom<CouponState>({
   key: 'selectedCoupon',
-  default: { id: 0, priceDiscount: 0, name: '' },
+  default: INITIAL_COUPON_STATE,
   effects: [logEffect('coupon')],
 });
