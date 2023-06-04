@@ -23,7 +23,7 @@ const MainContainer = styled.main`
 
 const meta = {
   component: ProductCardList,
-  title: 'ProductCardList',
+  title: 'product-list-page/ProductCardList',
   decorators: [
     (Story) => (
       <MainContainer>

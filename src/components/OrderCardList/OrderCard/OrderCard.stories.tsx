@@ -3,7 +3,7 @@ import OrderCard from './OrderCard';
 
 const meta = {
   component: OrderCard,
-  title: 'OrderCard',
+  title: 'order-list-page/OrderCard',
 } satisfies Meta<typeof OrderCard>;
 
 export default meta;

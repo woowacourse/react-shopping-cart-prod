@@ -3,7 +3,7 @@ import CartPriceSection from './CartPriceSection';
 
 const meta = {
   component: CartPriceSection,
-  title: 'CartPriceSection',
+  title: 'shopping_cart_page/CartPriceSection',
 } satisfies Meta<typeof CartPriceSection>;
 
 export default meta;

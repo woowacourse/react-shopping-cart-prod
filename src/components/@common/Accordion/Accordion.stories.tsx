@@ -18,7 +18,7 @@ const ExampleContent = styled.div`
 
 const meta = {
   component: Accordion.Root,
-  title: 'Accordion',
+  title: 'Common/Accordion',
   decorators: [
     (Story) => (
       <Container>

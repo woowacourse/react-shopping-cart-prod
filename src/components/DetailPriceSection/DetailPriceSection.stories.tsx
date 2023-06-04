@@ -3,7 +3,7 @@ import DetailPriceSection from './DetailPriceSection';
 
 const meta = {
   component: DetailPriceSection,
-  title: 'DetailPriceSection',
+  title: 'order-detail-page/DetailPriceSection',
 } satisfies Meta<typeof DetailPriceSection>;
 
 export default meta;

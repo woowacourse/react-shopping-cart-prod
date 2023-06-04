@@ -4,7 +4,7 @@ import { CartProduct } from 'types/product';
 
 const meta = {
   component: CheckOutProductCard,
-  title: 'CheckOutProductCard',
+  title: 'checkout-page/CheckOutProductCard',
 } satisfies Meta<typeof CheckOutProductCard>;
 
 export default meta;

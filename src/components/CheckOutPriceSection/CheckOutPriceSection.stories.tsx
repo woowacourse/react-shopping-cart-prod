@@ -3,7 +3,7 @@ import CheckOutPriceSection from './CheckOutPriceSection';
 
 const meta = {
   component: CheckOutPriceSection,
-  title: 'CheckOutPriceSection',
+  title: 'checkout-page/CheckOutPriceSection',
 } satisfies Meta<typeof CheckOutPriceSection>;
 
 export default meta;

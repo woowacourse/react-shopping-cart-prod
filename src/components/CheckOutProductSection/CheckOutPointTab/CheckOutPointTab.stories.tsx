@@ -4,7 +4,7 @@ import { CheckOutPointCostProvider } from 'context/CheckOutPointCostProvider';
 
 const meta = {
   component: CheckOutPointTab,
-  title: 'CheckOutPointTab',
+  title: 'checkout-page/CheckOutPointTab',
   decorators: [
     (Story) => (
       <CheckOutPointCostProvider>

@@ -9,7 +9,7 @@ const Container = styled.div`
 
 const meta = {
   component: CheckOutProductCardList,
-  title: 'CheckOutProductCardList',
+  title: 'checkout-page/CheckOutProductCardList',
   decorators: [
     (Story) => (
       <Container>

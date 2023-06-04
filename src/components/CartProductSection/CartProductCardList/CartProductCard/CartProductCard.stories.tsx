@@ -4,7 +4,7 @@ import { CartProduct } from 'types/product';
 
 const meta = {
   component: CartProductCard,
-  title: 'CartProductCard',
+  title: 'shopping_cart_page/CartProductCard',
   argTypes: {
     cartProduct: {
       description: '장바구니의 각 상품 입니다.',

@@ -3,7 +3,7 @@ import EmptyDataCard from './EmptyDataCard';
 
 const meta = {
   component: EmptyDataCard,
-  title: 'EmptyCartSection',
+  title: 'EmptyDataCard',
   argTypes: {
     children: {
       description: '데이터가 비어있음을 설명하는 메세지입니다.',

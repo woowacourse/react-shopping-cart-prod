@@ -10,7 +10,7 @@ const Container = styled.div`
 
 const meta = {
   component: SelectBox,
-  title: 'SelectBox',
+  title: 'Common/SelectBox',
   decorators: [
     (Story) => (
       <Container>
