@@ -5,7 +5,7 @@ import type { FontType, StyleType } from '../type/theme';
 const colors: StyleType = {
   primary: '#000000',
   gray100: '#dddddd',
-  gray200: '#aaaaaa',
+  gray200: '#d9dddc',
   gray300: '#f6f6f6',
   gray400: '#888888',
   blue_green: '#04c09e',
@@ -63,6 +63,24 @@ const fonts: StyleType = {
     weight: 700,
     size: 20,
     lineHeight: 26,
+  }),
+  text: FONT({
+    family: 'Noto Sans KR, sans-serif',
+    weight: 300,
+    size: 18,
+    lineHeight: 12,
+  }),
+  description: FONT({
+    family: 'Noto Sans KR, sans-serif',
+    weight: 700,
+    size: 14,
+    lineHeight: 21,
+  }),
+  button: FONT({
+    family: 'Noto Sans KR, sans-serif',
+    weight: 400,
+    size: 12,
+    lineHeight: 12,
   }),
 };
 
