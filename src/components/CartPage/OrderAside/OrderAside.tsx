@@ -1,10 +1,12 @@
 import { totalPriceSelector } from '../../../atoms/cart';
 import { DELIVERY_FEE } from '../../../constants/cart';
 import { useRefreshableRecoilValue } from '../../../hooks/common/useRefreshableAtom';
+import { useOrderMutate } from '../../../hooks/order/order';
 import * as S from './OrderAside.styles';
 
 const OrderAside = () => {
   const totalPrice = useRefreshableRecoilValue(totalPriceSelector);
+  const { order } = useOrderMutate();
 
   return (
     <S.Root>
@@ -23,7 +25,7 @@ const OrderAside = () => {
           {totalPrice ? (totalPrice + DELIVERY_FEE).toLocaleString() : 0}원
         </S.Text>
       </S.TextWrapper>
-      <S.OrderButton size="L" view="black">
+      <S.OrderButton size="L" view="black" onClick={order}>
         주문하기
       </S.OrderButton>
     </S.Root>
