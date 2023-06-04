@@ -6,25 +6,44 @@ import { Button } from '@components/common/Button/Button';
 
 import { useTotalProductsPrice } from '@recoils/totalProductsPriceAtoms';
 import { useCheckedCartItems } from '@recoils/cartAtoms';
+import { useOrdersRepository } from '@recoils/ordersAtoms';
+import { useFetchOrderPolicy } from '@recoils/orderPolicyAtoms';
+import { useFetchUsablePoint } from '@recoils/usablePointAtoms';
 
 import { isNumeric } from '@utils/index';
 
-import { DELIVERY_CHARGE } from '@constants/index';
-import { useOrdersRepository } from '@recoils/ordersAtoms';
-import { useFetchUsablePoint } from '@recoils/usablePointAtoms';
-
-const shippingFee = DELIVERY_CHARGE;
-
-export const OrderSummary = () => {
+export const OrderSummary = ({ fetchCart }: any) => {
   const navigate = useNavigate();
 
   const { fetchOrder } = useOrdersRepository();
-  const useablePoint = useFetchUsablePoint();
+  const usablePoint = useFetchUsablePoint();
+
+  const { freeShippingThreshold, shippingFee, pointPercentage } = useFetchOrderPolicy();
 
   const checkedCartItems = useCheckedCartItems();
   const [pointInputValue, setPointInputValue] = useState(0);
 
   const totalProductsPrice = useTotalProductsPrice();
+
+  const totalPaymentPrice = totalProductsPrice + shippingFee - pointInputValue;
+  const totalShippingFee = totalProductsPrice >= freeShippingThreshold ? 0 : shippingFee;
+
+  const onClickOrderButton = async () => {
+    const response = fetchOrder({
+      totalProductsPrice,
+      shippingFee: totalShippingFee,
+      usedPoint: pointInputValue,
+      order: checkedCartItems.map(({ id, quantity }) => ({
+        cartItemId: id,
+        quantity,
+      })),
+    });
+
+    response.then(async ({ orderId }) => {
+      await fetchCart();
+      navigate(`/orders/${orderId}`);
+    });
+  };
 
   const onClickUseAppPointButton = () => {};
 
@@ -33,22 +52,6 @@ export const OrderSummary = () => {
 
     setPointInputValue(Number(value));
   };
-
-  const onClickOrderButton = () => {
-    const response = fetchOrder({
-      totalProductsPrice,
-      shippingFee: 3000,
-      usedPoint: pointInputValue,
-      order: checkedCartItems.map(({ id, quantity }) => ({
-        cartItemId: id,
-        quantity,
-      })),
-    });
-
-    response.then(({ orderId }) => navigate(`/orders/${orderId}`));
-  };
-
-  const totalPaymentPrice = totalProductsPrice + shippingFee - pointInputValue;
 
   return (
     <>
@@ -63,26 +66,25 @@ export const OrderSummary = () => {
               </styled.TotalProductsPrice>
               <styled.ShippingPrice>
                 <span>배송비</span>
-                <span>+ {shippingFee.toLocaleString('ko-kr')}원</span>
+                <span>+ {totalShippingFee.toLocaleString('ko-kr')} 원</span>
               </styled.ShippingPrice>
               <styled.Point>
                 <span>사용할 포인트</span>
-                <div>
-                  <styled.PointInput
-                    onChange={onChangePointInput}
-                    value={pointInputValue ? pointInputValue : ''}
-                    placeholder={`사용 가능 포인트 ${useablePoint.toLocaleString()}`}
-                  />
-                  <styled.UseAllPointButton onClick={onClickUseAppPointButton}>
-                    전액 사용
-                  </styled.UseAllPointButton>
-                </div>
+                <styled.PointInput
+                  onChange={onChangePointInput}
+                  value={pointInputValue ? pointInputValue : ''}
+                  placeholder={`사용 가능 포인트 ${usablePoint?.toLocaleString()}`}
+                />
+                <styled.UseAllPointButton onClick={onClickUseAppPointButton}>
+                  전액 사용
+                </styled.UseAllPointButton>
               </styled.Point>
               <styled.PaymentPrice>
                 <span>예상 주문금액</span>
                 <span>{totalPaymentPrice.toLocaleString('ko-kr')}원</span>
                 <styled.EarnPoint>
-                  +{Math.floor(totalPaymentPrice / 10).toLocaleString('ko-kr')}원 적립예정
+                  +{Math.floor(totalPaymentPrice / pointPercentage).toLocaleString('ko-kr')}원
+                  적립예정
                 </styled.EarnPoint>
               </styled.PaymentPrice>
             </styled.Prices>

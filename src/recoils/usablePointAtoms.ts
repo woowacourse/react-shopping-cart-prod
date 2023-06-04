@@ -4,7 +4,7 @@ import { selector, useRecoilValue } from 'recoil';
 import type { UsablePoint } from '../types';
 
 export const usablePointSelector = selector<UsablePoint>({
-  key: 'orderPolicySelector',
+  key: 'usablePointSelector',
   get: async () => {
     const { usablePoint } = await fetchAPI('/point', {
       headers: {

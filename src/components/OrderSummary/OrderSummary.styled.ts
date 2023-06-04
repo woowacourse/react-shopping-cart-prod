@@ -91,15 +91,15 @@ export const Point = styled(Price)`
 
 export const PointInput = styled.input`
   height: 25px;
-  width: 180px;
+  width: 140px;
 
   background-color: var(--grey-200);
 
   padding-right: 5px;
 
-  border: none;
   outline: none;
-  border-radius: 4px;
+  border: none;
+  border-bottom: 1px solid var(--grey-400);
 
   font-weight: 600;
   text-align: right;
@@ -112,10 +112,9 @@ export const UseAllPointButton = styled.button`
 
   color: var(--grey-100);
 
-  background-color: var(--blue);
+  background-color: var(--grey-400);
 
   border: none;
-  border-radius: 4px;
 
   cursor: pointer;
 `;

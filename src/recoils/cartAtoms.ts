@@ -61,7 +61,7 @@ export const cartRepository = selector({
   get: ({ getCallback }) => {
     const fetchCartItems = getCallback(({ set, snapshot }) => async () => {
       const localCartItems = await snapshot.getPromise(cartState);
-      console.log(localCartItems);
+
       const cartItems = await fetchAPI('/cart-items', {
         headers: {
           Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
