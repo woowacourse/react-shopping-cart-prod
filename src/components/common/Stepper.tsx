@@ -1,18 +1,16 @@
 import type { RuleSet } from 'styled-components';
 import { css, styled } from 'styled-components';
-import ArrowDown from '../../assets/icons/arrow-down.svg';
-import ArrowUp from '../../assets/icons/arrow-up.svg';
 
 type StepperVariant = 'small' | 'large';
 
 const InputContainerStylesByVariant: Record<StepperVariant, RuleSet<object>> = {
   small: css({
-    width: '70px',
+    width: '50px',
     height: '26px',
     fontSize: '12px',
   }),
   large: css({
-    width: '120px',
+    width: '80px',
     height: '60px',
     fontSize: '24px',
   }),
@@ -27,14 +25,16 @@ const InputContainer = styled.div<InputContainerProps>`
 
   display: flex;
   align-items: stretch;
+
+  height: 25px;
+  margin-top: 5px;
 `;
 
 const Input = styled.input`
-  flex: 1;
   width: 100%;
-  border: 1px solid #e5e5e5;
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
   text-align: center;
-  font-size: 1em;
+  font-size: 10px;
 
   outline: none;
 `;
@@ -64,9 +64,11 @@ const InputButton = styled.button<InputButtonProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 50%;
-  border: 1px solid #e5e5e5;
+  border: 1px solid ${({ theme }) => theme.colors.gray300};
   cursor: pointer;
+
+  background-color: ${({ theme }) => theme.colors.gray300};
+  ${({ theme }) => theme.fonts.text}
 `;
 
 type StepperProps = {
@@ -91,15 +93,13 @@ const Stepper = (props: StepperProps) => {
 
   return (
     <InputContainer $variant={variant}>
+      <InputButton $variant={variant} onClick={handleClick('decrease')}>
+        -
+      </InputButton>
       <Input value={value} readOnly />
-      <div>
-        <InputButton $variant={variant} onClick={handleClick('increase')}>
-          <img alt="증가" src={ArrowUp} />
-        </InputButton>
-        <InputButton $variant={variant} onClick={handleClick('decrease')}>
-          <img alt="감소" src={ArrowDown} />
-        </InputButton>
-      </div>
+      <InputButton $variant={variant} onClick={handleClick('increase')}>
+        +
+      </InputButton>
     </InputContainer>
   );
 };
