@@ -36,6 +36,7 @@ export interface OrderList {
 }
 
 export interface OrderListItem extends Order, Pick<OrderList, 'totalPayments' | 'orderStatus'> {
+  orderId?: number;
   orderedProductCount: number;
 }
 

@@ -33,7 +33,7 @@ export const useFetchData = () => {
         body: JSON.stringify(body),
       });
     },
-    patch: <T>(url: string, body: T) => {
+    patch: <T>(url: string, body?: T) => {
       return fetchData(url, {
         method: 'PATCH',
         headers: {

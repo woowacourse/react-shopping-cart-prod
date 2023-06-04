@@ -22,7 +22,7 @@ const OrderItemList = ({ tag, orderList }: Props) => {
       <ul>
         <OrderDetailNavigator orderId={orderList.orderId} createdAt={createdAt} />
         {orderId ? (
-          orderList.products.map((product) => (
+          products.map((product) => (
             <OrderItem
               key={product.id}
               id={product.id}
@@ -30,7 +30,7 @@ const OrderItemList = ({ tag, orderList }: Props) => {
               totalPrice={product.totalPrice}
               imageUrl={product.imageUrl}
               quantity={product.quantity}
-              orderedProductCount={orderList.products.length}
+              orderedProductCount={products.length}
               totalPayments={totalPayments}
               orderStatus={orderStatus}
             />
@@ -38,6 +38,7 @@ const OrderItemList = ({ tag, orderList }: Props) => {
         ) : (
           <OrderItem
             id={thumbnail.id}
+            orderId={orderList.orderId}
             name={thumbnail.name}
             totalPrice={thumbnail.totalPrice}
             imageUrl={thumbnail.imageUrl}
