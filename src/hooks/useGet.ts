@@ -3,7 +3,10 @@ import { useToast } from 'components/@common/Toast/hooks/useToast';
 import { serverAtom } from 'recoil/server';
 import { useRecoilValue } from 'recoil';
 
-export const useGet = <T>(callback: (server: string) => Promise<T>) => {
+export const useGet = <T>(
+  callback: (server: string) => Promise<T>,
+  dependency?: unknown
+) => {
   const [data, setData] = useState<T>();
   const [isLoading, setIsLoading] = useState(true);
   const { toast } = useToast();
@@ -11,7 +14,7 @@ export const useGet = <T>(callback: (server: string) => Promise<T>) => {
 
   useEffect(() => {
     request();
-  }, [server]);
+  }, [server, dependency]);
 
   const request = async () => {
     try {
