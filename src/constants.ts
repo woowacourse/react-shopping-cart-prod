@@ -18,6 +18,7 @@ export const API_INFO_MESSAGE = {
   postCartItem: '장바구니에 상품을 담았어요! 😆',
   patchCartItemQuantity: '수량을 변경했어요 🙂',
   deleteCartItem: '장바구니에서 상품을 뺐어요!',
+  postOrder: '주문되었습니다! 😆',
 };
 
 export const API_ERROR_MESSAGE = {

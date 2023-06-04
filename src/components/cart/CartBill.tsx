@@ -20,7 +20,7 @@ import {
   usableCouponsState,
 } from '../../recoil/state';
 import api from '../../api';
-import { API_ERROR_MESSAGE, NO_TOKEN_REDIRECT_MESSAGE } from '../../constants';
+import { API_ERROR_MESSAGE, API_INFO_MESSAGE, NO_TOKEN_REDIRECT_MESSAGE } from '../../constants';
 
 export default function CartBill() {
   const token = useRecoilValue(tokenState);
@@ -55,27 +55,35 @@ export default function CartBill() {
     setSelectedCoupon(null);
   };
 
+  const refreshCoupons = () => {
+    api
+      .getCoupons(serverName, token)
+      .then(setCoupons)
+      .catch(() => {
+        showToast('error', API_ERROR_MESSAGE.getCoupons);
+      });
+  };
+
   const order = async () => {
     if (!confirm('주문 하시겠습니까?')) return;
 
-    const couponId = selectedCoupon === null ? null : selectedCoupon.id;
-    const orderItems = cart
-      .filter((_, index) => checkedList[index])
-      .map(({ product: { id }, quantity }) => ({ productId: id, quantity }));
+    const checkedCartItems = cart.filter((_, index) => checkedList[index]);
+    const orderItems = checkedCartItems.map(({ product: { id }, quantity }) => ({
+      productId: id,
+      quantity,
+    }));
+    const couponId = selectedCoupon && selectedCoupon.id;
 
     try {
       await api.postOrder(serverName, token, orderItems, couponId);
-      navigate('/');
     } catch {
       showToast('error', API_ERROR_MESSAGE.postOrder);
       return;
     }
 
-    try {
-      setCoupons(await api.getCoupons(serverName, token));
-    } catch {
-      showToast('error', API_ERROR_MESSAGE.getCoupons);
-    }
+    showToast('info', API_INFO_MESSAGE.postOrder);
+    refreshCoupons();
+    navigate('/');
   };
 
   return (
