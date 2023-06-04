@@ -9,12 +9,14 @@ const SignInPage = () => {
       <h1>Sign In</h1>
       <Form>
         <InputContainer>
-          ID : <Input onChange={onChageId} />
+          ID : <Input type='email' onChange={onChageId} />
         </InputContainer>
         <InputContainer>
-          Password : <Input onChange={onChagePassword} />
+          Password : <Input type='password' onChange={onChagePassword} />
         </InputContainer>
-        <SubmitButton onClick={onClickSubmit}>submit</SubmitButton>
+        <SubmitButtonContainer>
+          <SubmitButton onClick={onClickSubmit}>submit</SubmitButton>
+        </SubmitButtonContainer>
       </Form>
     </Wrapper>
   );
@@ -37,7 +39,6 @@ const Form = styled.form`
   align-items: center;
   justify-content: center;
   gap: 48px;
-  background-color: #ddd;
 
   width: 500px;
   height: 250px;
@@ -54,11 +55,30 @@ const InputContainer = styled.div`
 const Input = styled.input`
   width: 300px;
   height: 40px;
+  padding: 0px 8px;
+
+  font-size: 16px;
+  font-family: sans-serif;
+  letter-spacing: 1px;
 
   border: 1px solid black;
+`;
+
+const SubmitButtonContainer = styled.div`
+  display: flex;
+  justify-content: end;
+
+  width: 100%;
 `;
 
 const SubmitButton = styled.button`
   border: 1px solid black;
   padding: 8px;
+
+  transition: background-color 0.5s ease;
+
+  &:hover {
+    color: #fff;
+    background-color: var(--main-bg-color);
+  }
 `;

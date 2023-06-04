@@ -39,12 +39,14 @@ const Header = () => {
           <option value='ERROR'>에러</option>
         </ServerSelectBox>
         <Link to={PATH.ORDER_LIST_PAGE}>
-          <OrderListButton>Orders</OrderListButton>
+          <Button>Orders</Button>
         </Link>
         <Link to={PATH.CART_PAGE}>
           <CartTextButton />
         </Link>
-        <Link to={PATH.SIGN_IN}>로그인</Link>
+        <Link to={PATH.SIGN_IN}>
+          <Button>login</Button>
+        </Link>
       </ButtonContainer>
     </Container>
   );
@@ -107,6 +109,11 @@ const ServerSelectBox = styled.select`
   font-size: 16px;
 
   background-color: transparent;
+
+  @media (max-width: ${WIDTH.MD}) {
+    font-size: 12px;
+    width: 50px;
+  }
 `;
 
 const ShoppingCartIconContainer = styled.div`
@@ -120,12 +127,16 @@ const ShoppingCartIconContainer = styled.div`
   }
 `;
 
-const OrderListButton = styled.h2`
+const Button = styled.h2`
   color: white;
   font-size: 24px;
   font-weight: 300;
 
   cursor: pointer;
+
+  @media (max-width: ${WIDTH.MD}) {
+    font-size: 16px;
+  }
 `;
 
 const ButtonContainer = styled.div`
