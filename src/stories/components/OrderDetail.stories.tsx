@@ -1,6 +1,6 @@
 import { Meta } from '@storybook/react';
 import OrderDetailComponent from '../../components/orderDetail/OrderDetail';
-import { Coupon } from '../../types';
+import { CouponState } from '../../types';
 
 const meta = {
   component: OrderDetailComponent,
@@ -28,7 +28,7 @@ export default meta;
 interface Props {
   totalPrice: number;
   deliveryFee: number;
-  coupon: Coupon;
+  coupon: CouponState;
   totalPayments: number;
 }
 

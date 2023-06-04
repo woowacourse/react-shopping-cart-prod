@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import Header from '../../components/common/Header';
 import productList from '../../mock/productList.json';
 import CartPage from '../../pages/CartPage';
-import { cartState, checkedItemList, couponState, totalPriceSelector } from '../../recoil';
+import { cartState, checkedItemList, selectedCoupon, totalPriceSelector } from '../../recoil';
 import { Order } from '../components/Order.stories';
 import { ProductListInCart } from '../components/SelectedProductList.stories';
 
@@ -38,7 +38,7 @@ export const Cart = () => {
   }, [setCart, setCheckedItemIdList]);
 
   const totalPrice = useRecoilValue(totalPriceSelector);
-  const coupon = useRecoilValue(couponState);
+  const coupon = useRecoilValue(selectedCoupon);
 
   return (
     <div style={{ width: '1270px', display: 'flex', justifyContent: 'space-between' }}>

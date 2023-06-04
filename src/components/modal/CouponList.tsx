@@ -1,20 +1,39 @@
+import { useEffect, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import { COUPON_URL } from '../../constants/url';
+import { useFetchData } from '../../hooks/useFetchData';
+import { serverState } from '../../recoil';
+import { CouponState } from '../../types';
 import Coupon from './Coupon';
 
 const CouponList = () => {
+  const server = useRecoilValue(serverState);
+  const [coupons, setCoupons] = useState<CouponState[]>([]);
+  const { api } = useFetchData();
+
+  useEffect(() => {
+    api
+      .get(`${server}${COUPON_URL}`, {
+        Authorization: 'Basic YUBhLmNvbToxMjM0',
+        'Content-Type': 'application/json',
+      })
+      .then((data) => {
+        setCoupons(data);
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [server]);
+
   return (
     <S.Wrapper role='document' tabIndex={0}>
       <legend id='title-dialog'>쿠폰 선택</legend>
       <S.ListWrapper>
-        <S.CouponList>
-          <Coupon priceDiscount={3000} couponName='배송비 3,000원 할인 쿠폰' />
-        </S.CouponList>
-        <S.CouponList>
-          <Coupon priceDiscount={5000} couponName='여름맞이 5,000원 할인 쿠폰' />
-        </S.CouponList>
-        <S.CouponList>
-          <Coupon priceDiscount={10000} couponName='야미 쿠폰' />
-        </S.CouponList>
+        {coupons.map((coupon) => (
+          <S.CouponList key={coupon.id}>
+            <Coupon id={coupon.id} priceDiscount={coupon.priceDiscount} name={coupon.name} />
+          </S.CouponList>
+        ))}
       </S.ListWrapper>
     </S.Wrapper>
   );

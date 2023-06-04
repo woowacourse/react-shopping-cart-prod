@@ -1,12 +1,12 @@
 import { BsCreditCardFill } from 'react-icons/bs';
 import { css, styled } from 'styled-components';
-import { Coupon } from '../../types';
+import { CouponState } from '../../types';
 import Price from '../Price';
 
 interface Props {
   totalPrice: number;
   deliveryFee: number;
-  coupon: Coupon | null;
+  coupon: CouponState | null;
   totalPayments: number;
 }
 

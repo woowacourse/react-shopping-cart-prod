@@ -97,8 +97,8 @@ export const serverState = atom({
   default: localStorage.getItem(KEY_SERVER) ?? `${SERVERS.준팍}`,
 });
 
-export const couponState = atom<CouponState>({
-  key: 'couponState',
-  default: { priceDiscount: 0, name: '' },
+export const selectedCoupon = atom<CouponState>({
+  key: 'selectedCoupon',
+  default: { id: 0, priceDiscount: 0, name: '' },
   effects: [logEffect('coupon')],
 });

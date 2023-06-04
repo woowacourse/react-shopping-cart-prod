@@ -3,7 +3,7 @@ import { css, styled } from 'styled-components';
 import { DELIVERY_FEE, ROUTE_PATH } from '../../constants';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
 import { useOrder } from '../../hooks/useOrder';
-import { couponState, totalPriceSelector } from '../../recoil';
+import { selectedCoupon, totalPriceSelector } from '../../recoil';
 import Button from '../common/Button';
 import Price from '../Price';
 
@@ -11,7 +11,7 @@ const Order = () => {
   const totalPrice = useRecoilValue(totalPriceSelector);
   const { orderProducts } = useOrder();
   const goToPage = useGoToAnotherPage();
-  const coupon = useRecoilValue(couponState);
+  const coupon = useRecoilValue(selectedCoupon);
 
   const handleOrderButtonClick = () => {
     if (!totalPrice) return;

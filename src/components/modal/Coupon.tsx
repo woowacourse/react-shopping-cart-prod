@@ -2,50 +2,41 @@ import { ChangeEvent } from 'react';
 import { BsChevronRight } from 'react-icons/bs';
 import { useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import { couponState } from '../../recoil';
+import { selectedCoupon } from '../../recoil';
+import { CouponState } from '../../types';
 
-interface Props {
-  priceDiscount: number;
-  couponName: string;
-}
-
-const Coupon = ({ priceDiscount, couponName }: Props) => {
-  const setCoupon = useSetRecoilState(couponState);
+const Coupon = ({ id, priceDiscount, name }: CouponState) => {
+  const setCoupon = useSetRecoilState(selectedCoupon);
 
   const handleCouponSelect = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setCoupon(() => {
-      return { priceDiscount, name: value };
+      return { id: Number(value), priceDiscount, name };
     });
   };
 
   return (
     <>
-      <S.Wrapper htmlFor={couponName}>
+      <S.Wrapper htmlFor={`${id}`}>
         <S.Coupon>
           <p>{priceDiscount}</p>
           <S.Circle aria-hidden='true' />
           <S.Circle aria-hidden='true' />
         </S.Coupon>
-        <S.CouponName>{couponName}</S.CouponName>
+        <S.CouponName>{name}</S.CouponName>
         <S.dottedLine aria-hidden='true' className='dotted-line'>
           <S.SmallCircle />
           <S.SmallCircle />
         </S.dottedLine>
         <BsChevronRight aria-hidden='true' />
       </S.Wrapper>
-      <input
-        type='radio'
-        id={couponName}
-        name='쿠폰'
-        value={couponName}
-        onChange={handleCouponSelect}
-      />
+      <input type='radio' id={`${id}`} name='쿠폰' value={id} onChange={handleCouponSelect} />
     </>
   );
 };
 
 const S = {
   Wrapper: styled.label`
+    position: relative;
     display: flex;
     border: 1px solid #888;
     border-radius: 4px;
@@ -54,7 +45,7 @@ const S = {
 
     & > svg {
       position: absolute;
-      right: 48px;
+      right: 16px;
       align-self: center;
       fill: #767676;
     }
