@@ -28,3 +28,5 @@ export const BOX_SIZE = {
 } as const;
 
 export const DELIVERY_FEE = 3000;
+export const PRODUCT_DISCOUNT_LIMIT = 100000;
+export const PROUDCT_DISCOUNT_AMOUNT = 100000;

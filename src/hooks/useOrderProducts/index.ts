@@ -15,7 +15,7 @@ import usingCouponState from '@Atoms/usingCouponState';
 import cartItemsAmountState from '@Selector/cartItemsAmountState';
 import orderAmountState from '@Selector/orderAmountState';
 
-import { ALERT_MESSAGE, DELIVERY_FEE } from '@Constants/index';
+import { ALERT_MESSAGE, DELIVERY_FEE, PRODUCT_DISCOUNT_LIMIT, PROUDCT_DISCOUNT_AMOUNT } from '@Constants/index';
 import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
 const useOrderProducts = () => {
@@ -26,7 +26,7 @@ const useOrderProducts = () => {
   const cartAmount = useRecoilValue(cartItemsAmountState);
   const usingCoupon = useRecoilValue(usingCouponState);
 
-  const priceDisCount = price >= 100000 ? 5000 : 0;
+  const priceDisCount = price >= PRODUCT_DISCOUNT_LIMIT ? PROUDCT_DISCOUNT_AMOUNT : 0;
   const allPrice = price - priceDisCount;
   const deliveryFee = !allPrice ? 0 : DELIVERY_FEE;
   const selectedCartItemIds = cartItems.filter((item) => item.isSelected).map((item) => item.id);
