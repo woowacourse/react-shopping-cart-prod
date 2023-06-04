@@ -1,12 +1,12 @@
 import { Meta } from '@storybook/react';
 import { css, styled } from 'styled-components';
-import OrderComponent from '../../components/cart/Order';
+import OrderSheet from '../../components/cart/OrderSheet';
 import Button from '../../components/common/Button';
 import Price from '../../components/Price';
 import { DELIVERY_FEE } from '../../constants';
 
 const meta = {
-  component: OrderComponent,
+  component: OrderSheet,
   title: 'Components/Cart/Order',
   tags: ['autodocs'],
   args: {
@@ -17,11 +17,10 @@ const meta = {
       controls: {
         type: 'number',
       },
-      description:
-        '총 상품금액을 입력하면 총 상품금액과 총 배송비를 합한 금액이 `총 주문금액`으로 나옵니다.',
+      description: '총 상품금액을 입력하면 총 상품금액과 총 배송비를 합한 금액이 `총 주문금액`으로 나옵니다.',
     },
   },
-} satisfies Meta<typeof OrderComponent>;
+} satisfies Meta<typeof OrderSheet>;
 
 export default meta;
 
