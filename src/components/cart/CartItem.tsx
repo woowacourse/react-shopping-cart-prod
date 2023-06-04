@@ -44,7 +44,7 @@ const CartItem = (item: CartProduct) => {
         {discountedPrice !== null && <p>{discountedPrice.toLocaleString()}원</p>}
       </PriceContainer>
       <SelectBox onChange={changeCoupon}>
-        <option>쿠폰을 선택해주세요</option>
+        <option>{couponList.length ? "쿠폰을 선택해주세요" : "사용 가능한 쿠폰이 없습니다"}</option>
         {couponList.map((coupon) => (
           <option
             key={coupon.couponId}
