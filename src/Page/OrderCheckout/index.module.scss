@@ -293,7 +293,6 @@
   font-size: 18px;
   display: flex;
   width: 100%;
-  max-width: 422px;
   height: 60px;
   margin: 0 auto;
   align-items: center;
@@ -358,5 +357,19 @@
       border: 1px solid var(--mint-color-hover);
       background: var(--mint-color-hover);
     }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .checkout-main {
+    display: flex;
+    flex-direction: column;
+    row-gap: 32px;
+    margin-bottom: 32px;
+    height: 100px;
+  }
+
+  .payments-button {
+    margin-bottom: 32px;
   }
 }

@@ -11,7 +11,7 @@ function PaymentsView({ paymentsData }: PaymentsViewProps) {
 
   return (
     <section className={styles.container}>
-      <h2 className={styles.title}>결제예상금액</h2>
+      <h2 className={styles.title}>결제 금액</h2>
       <li className={styles['payments-info']}>
         <ul>
           <span>총 상품금액</span>

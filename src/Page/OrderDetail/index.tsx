@@ -15,8 +15,8 @@ function OrderDetail() {
       <div className={styles['order-list']}>
         {orderDetail && (
           <>
-            <OrderItemList orderItemList={orderDetail.productList} orderNumber={orderDetail.id} />
             <PaymentsView paymentsData={orderDetail.paymentAmount} />
+            <OrderItemList orderItemList={orderDetail.productList} orderNumber={orderDetail.id} />
           </>
         )}
       </div>

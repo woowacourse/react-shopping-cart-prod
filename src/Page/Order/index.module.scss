@@ -22,3 +22,18 @@
   flex-direction: column;
   row-gap: 50px;
 }
+
+.main-view-blank {
+  display: flex;
+  flex-direction: column;
+  row-gap: 24px;
+
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+
+  & > p {
+    font-family: 'SUIT-Regular';
+    font-size: 28px;
+  }
+}

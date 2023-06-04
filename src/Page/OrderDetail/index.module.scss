@@ -10,13 +10,11 @@
 }
 
 .title {
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 37px;
+  font-family: 'SUIT-Bold';
+  font-size: 26px;
   width: 100%;
-
   padding: 28px 0;
-  border-bottom: 4px solid var(--primary-color);
+  text-align: center;
 }
 
 .order-list {
