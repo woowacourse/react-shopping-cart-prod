@@ -1,8 +1,8 @@
 import * as S from './LoadingSpinner.style';
 
 type LoadingSpinnerProps = {
-  $width: number;
-  $height: number;
+  $width?: number;
+  $height?: number;
 };
 
 function LoadingSpinner({ $width = 48, $height = 48 }: LoadingSpinnerProps) {

@@ -99,3 +99,10 @@ export const UserPoint = styled.p`
   padding: 4px 0 0 56px;
   font-size: 12px;
 `;
+
+export const Skeleton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+`;

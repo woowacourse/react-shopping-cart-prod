@@ -14,6 +14,7 @@ import {
   pointState,
   totalPaymentPriceSelector,
 } from '../../../../recoil/orderAtom';
+import { LoadingSpinner } from '../../../@common/LoadingSpinner';
 
 type DiscountBoxProps = {
   userPoint: number;
@@ -28,7 +29,7 @@ function DiscountBox({ userPoint }: DiscountBoxProps) {
   const [currentCoupon, setCurrentCoupon] = useRecoilState(couponState);
   const memberAuth = useRecoilValue(memberAuthorization);
   const server = useRecoilValue(serverState);
-  const { data: coupons } = useGetQuery<Coupon[]>({
+  const { data: coupons, loading } = useGetQuery<Coupon[]>({
     fetcher: () => fetchCouponList({ server, auth: memberAuth }),
   });
 
@@ -50,10 +51,9 @@ function DiscountBox({ userPoint }: DiscountBoxProps) {
     };
   }, []);
 
-  if (!coupons) return <></>;
-
   const openModal = () => {
     setModalState(true);
+    if (!coupons) return;
     setModalContentState(<CouponModalContent coupons={coupons} />);
   };
 
@@ -65,20 +65,32 @@ function DiscountBox({ userPoint }: DiscountBoxProps) {
     <S.Wrapper>
       <S.CouponWrapper>
         <S.Text>쿠폰</S.Text>
-        <S.CouponInfo>
-          {currentCoupon && (
-            <>
-              <S.CouponName>{currentCoupon?.couponName}</S.CouponName>
-              <S.DeleteCouponButton onClick={deleteCoupon}>x</S.DeleteCouponButton>
-            </>
-          )}
-          {!currentCoupon &&
-            totalPrice !== 0 &&
-            coupons.some((coupon) => coupon.minAmount <= totalPrice) &&
-            '사용 가능한 쿠폰이 있어요!'}
-          {!currentCoupon && coupons.every((coupon) => coupon.minAmount > totalPrice) && '사용 가능한 쿠폰이 없습니다.'}
-        </S.CouponInfo>
-        <S.AllPointButton onClick={openModal}>조회/적용</S.AllPointButton>
+        {loading ? (
+          <S.Skeleton>
+            <LoadingSpinner $width={20} $height={20} />
+          </S.Skeleton>
+        ) : (
+          <>
+            <S.CouponInfo>
+              {currentCoupon && (
+                <>
+                  <S.CouponName>{currentCoupon?.couponName}</S.CouponName>
+                  <S.DeleteCouponButton onClick={deleteCoupon}>x</S.DeleteCouponButton>
+                </>
+              )}
+              {!currentCoupon &&
+                coupons &&
+                totalPrice !== 0 &&
+                coupons.some((coupon) => coupon.minAmount <= totalPrice) &&
+                '사용 가능한 쿠폰이 있어요!'}
+              {!currentCoupon &&
+                coupons &&
+                coupons.every((coupon) => coupon.minAmount > totalPrice) &&
+                '사용 가능한 쿠폰이 없습니다.'}
+            </S.CouponInfo>
+            <S.AllPointButton onClick={openModal}>조회/적용</S.AllPointButton>
+          </>
+        )}
       </S.CouponWrapper>
       <S.PointWrapper>
         <S.Label>포인트</S.Label>
