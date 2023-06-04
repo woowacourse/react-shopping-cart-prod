@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 
+import PageTitle from '../components/Common/PageTitle';
 import OrderList from '../components/Order/OrderList';
 import Message from '../components/Common/Message';
 import ErrorMessage from '../components/Common/ErrorMessage';
@@ -21,14 +22,6 @@ const OrderListPage = () => {
 
 const OrderListPageContainer = styled.section`
   padding: 0 0 60px;
-`;
-
-const PageTitle = styled.h2`
-  height: 60px;
-  text-align: center;
-  font-size: 32px;
-  font-weight: 600;
-  border-bottom: 4px solid ${({ theme }) => theme.colors.black};
 `;
 
 export default OrderListPage;

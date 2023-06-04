@@ -3,10 +3,12 @@ import { useRecoilValue } from 'recoil';
 import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 
+import PageTitle from '../components/Common/PageTitle';
 import CartProductInfo from '../components/Cart/CartProductInfo';
 import ExpectedPaymentBox from '../components/Cart/ExpectedPaymentBox';
 import Message from '../components/Common/Message';
 import ErrorMessage from '../components/Common/ErrorMessage';
+
 import { serverNameState } from '../states/serverName';
 
 const CartPage = () => {
@@ -30,14 +32,6 @@ const CartPage = () => {
     </>
   );
 };
-
-const PageTitle = styled.h2`
-  height: 60px;
-  text-align: center;
-  font-size: 32px;
-  font-weight: 600;
-  border-bottom: 4px solid ${({ theme }) => theme.colors.black};
-`;
 
 const CartWrapper = styled.div`
   height: calc(100% - 60px);

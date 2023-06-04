@@ -1,9 +1,10 @@
 import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import styled from 'styled-components';
 
+import PageTitle from '../components/Common/PageTitle';
 import OrderDetail from '../components/Order/OrderDetail';
 import Message from '../components/Common/Message';
-import { ErrorBoundary } from 'react-error-boundary';
 import ErrorMessage from '../components/Common/ErrorMessage';
 
 const OrderDetailPage = () => {
@@ -21,14 +22,6 @@ const OrderDetailPage = () => {
 
 const OrderDetailPageContainer = styled.div`
   padding: 0 0 60px;
-`;
-
-const PageTitle = styled.h2`
-  height: 60px;
-  text-align: center;
-  font-size: 32px;
-  font-weight: 600;
-  border-bottom: 4px solid ${({ theme }) => theme.colors.black};
 `;
 
 export default OrderDetailPage;
