@@ -31,6 +31,8 @@ export const Header = () => {
                   setCartItems(cartItems);
                 });
 
+                navigate('/');
+
                 return newApiEndPoint;
               });
             }}
