@@ -1,4 +1,4 @@
-import type { LoginResponse } from '../../types';
+import type { LoginResponseType } from '../../types';
 
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,6 +11,7 @@ import InputBox from '../common/InputBox';
 import { tokenState, serverNameState } from '../../recoil/state';
 import useToast from '../../hooks/useToast';
 import api from '../../api';
+import { API_ERROR_MESSAGE } from '../../constants';
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -29,13 +30,14 @@ export default function LoginForm() {
       if (!response.ok) {
         const body = await response.json();
         showToast('warning', body.errorMessage);
+        return;
       }
 
-      const { token }: LoginResponse = await response.json();
+      const { token }: LoginResponseType = await response.json();
       setToken(token);
       navigate('/');
-    } catch {
-      showToast('warning', '로그인 통신 에러');
+    } catch (e) {
+      showToast('warning', API_ERROR_MESSAGE.postLogin);
     }
   };
 

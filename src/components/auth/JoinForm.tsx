@@ -1,4 +1,4 @@
-import type { LoginResponse } from '../../types';
+import type { LoginResponseType } from '../../types';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -26,7 +26,7 @@ export default function JoinForm() {
   const autoLogin = async () => {
     try {
       const response = await api.postLogin(serverName, name, password);
-      const { token }: LoginResponse = await response.json();
+      const { token }: LoginResponseType = await response.json();
       setToken(token);
     } catch {
       showToast('error', API_ERROR_MESSAGE.postLogin);
