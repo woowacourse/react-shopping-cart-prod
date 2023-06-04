@@ -37,6 +37,10 @@ export const handlers = [
     return res(ctx.status(201), ctx.delay(1500));
   }),
 
+  rest.patch('/coupons/:couponId', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.delay(1500));
+  }),
+
   rest.get('/coupons/active', (req, res, ctx) => {
     return res(ctx.status(200), ctx.delay(1500), ctx.json(initialUsableCouponData));
   }),
