@@ -19,9 +19,9 @@ const PurchaseOrder = () => {
   const setOrderList = useSetRecoilState(orderListState);
 
   const reloadOrderList = async () => {
-    const orderList = await getOrders(selectedServer);
+    const orders = await getOrders(selectedServer);
 
-    setOrderList(orderList);
+    setOrderList(orders);
   };
 
   const requestOrder = async () => {

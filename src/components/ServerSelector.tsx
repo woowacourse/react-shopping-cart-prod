@@ -8,11 +8,14 @@ import { getCartItems } from "api/cartItems";
 import { CartProduct } from "types/domain";
 import { useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "router";
+import { getOrders } from "api/orders";
+import { orderListState } from "recoil/order";
 
 const ServerSelector = () => {
   const navigate = useNavigate();
   const [serverState, setServerState] = useRecoilState(serverSelectState);
   const setCartList = useSetRecoilState(cartListState);
+  const setOrderList = useSetRecoilState(orderListState);
 
   const chagneServer = (e: ChangeEvent<HTMLInputElement>) => {
     setServerState(e.target.id as ServerId);
@@ -34,8 +37,15 @@ const ServerSelector = () => {
     );
   };
 
+  const reloadOrderList = async () => {
+    const orders = await getOrders(serverState);
+
+    setOrderList(orders);
+  };
+
   useEffect(() => {
     reloadCartList();
+    reloadOrderList();
   }, [serverState]);
 
   const serverList: { [key in ServerId]: string } = {
