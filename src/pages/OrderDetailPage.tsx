@@ -32,7 +32,7 @@ const OrderDetailPage = () => {
 
   if (!orderItemDetail) return <></>;
 
-  const { totalPrice, deliveryFee, coupon, totalPayments } = orderItemDetail;
+  const { totalPrice, deliveryFee, coupon, totalPayments, orderStatus } = orderItemDetail;
 
   return (
     <MainLayout>
@@ -44,6 +44,7 @@ const OrderDetailPage = () => {
           deliveryFee={deliveryFee}
           coupon={coupon}
           totalPayments={totalPayments}
+          orderStatus={orderStatus}
         />
       </S.Wrapper>
     </MainLayout>

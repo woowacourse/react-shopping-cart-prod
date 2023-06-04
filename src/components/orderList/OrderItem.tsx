@@ -83,6 +83,7 @@ const S = {
 
   Name: styled.h3`
     display: -webkit-box;
+    height: 18px;
     margin-top: 6px;
     font-size: 17px;
     overflow: hidden;

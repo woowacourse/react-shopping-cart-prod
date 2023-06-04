@@ -19,5 +19,5 @@ const meta = {
 export default meta;
 
 export const OrderDetailNavigator = () => (
-  <OrderDetailNavigatorComponent orderId={1} createdAt='2023-06-04' />
+  <OrderDetailNavigatorComponent orderId={1} createdAt='2023-06-04' orderStatus='결제완료' />
 );

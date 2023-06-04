@@ -1,41 +1,54 @@
-import { BsCreditCardFill } from 'react-icons/bs';
-import { styled } from 'styled-components';
-import { CouponState } from '../../types';
+import { BsCreditCardFill, BsFillCartDashFill } from 'react-icons/bs';
+import { css, styled } from 'styled-components';
+import { CouponState, OrderList } from '../../types';
 import Price from '../Price';
 
-interface Props {
+interface Props extends Pick<OrderList, 'orderStatus'> {
   totalPrice: number;
   deliveryFee: number;
   coupon: CouponState | null;
   totalPayments: number;
 }
 
-const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments }: Props) => {
+const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments, orderStatus }: Props) => {
   return (
-    <S.Wrapper tabIndex={0}>
-      <S.Title>
-        <BsCreditCardFill />
-        결제 정보
-      </S.Title>
-      <li>
-        총 상품금액 <Price price={totalPrice} />
-      </li>
-      <li>
-        배송비 <Price price={deliveryFee} />
-      </li>
-      <S.Coupon coupon={coupon?.name}>
-        할인쿠폰
-        <Price price={coupon && coupon.priceDiscount ? -coupon.priceDiscount : 0} />
-      </S.Coupon>
-      <li>
-        총 결제금액 <Price price={totalPayments} />
-      </li>
+    <S.Wrapper>
+      <S.List tabIndex={0}>
+        <S.Title>
+          <BsCreditCardFill />
+          결제 정보
+        </S.Title>
+        <li>
+          총 상품금액 <Price price={totalPrice} />
+        </li>
+        <li>
+          배송비 <Price price={deliveryFee} />
+        </li>
+        <S.Coupon coupon={coupon?.name}>
+          할인쿠폰
+          <Price price={coupon && coupon.priceDiscount ? -coupon.priceDiscount : 0} />
+        </S.Coupon>
+        <li>
+          총 결제금액 <Price price={totalPayments} />
+        </li>
+      </S.List>
+      {orderStatus === '결제취소' && (
+        <S.Return>
+          <S.Title>
+            <BsFillCartDashFill />
+            환불 금액
+          </S.Title>
+          <li>
+            총 환불금 <Price price={totalPayments} css={returnStyle} />
+          </li>
+        </S.Return>
+      )}
     </S.Wrapper>
   );
 };
 
 const S = {
-  Wrapper: styled.ul`
+  Wrapper: styled.div`
     position: sticky;
     top: 80px;
     flex: 0.5;
@@ -45,7 +58,9 @@ const S = {
     color: var(--text-color);
     border: 1px solid var(--gray-color-300);
     border-radius: 4px;
+  `,
 
+  List: styled.ul`
     & li {
       display: flex;
       align-items: center;
@@ -82,14 +97,43 @@ const S = {
     position: relative;
 
     &::after {
+      content: '${(props) => props.coupon}';
       position: absolute;
       right: 28px;
       bottom: -24px;
-      content: '${(props) => props.coupon}';
       font-size: 12px;
       color: var(--gray-color-300);
     }
   `,
+
+  Return: styled.ul`
+    margin-top: 32px;
+    font-size: 18px;
+    color: var(--text-color);
+    border: 1px solid var(--gray-color-300);
+    border-radius: 4px;
+
+    & li:first-child {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    & li {
+      display: flex;
+      align-items: center;
+
+      & + li:last-child {
+        justify-content: space-between;
+        padding: 24px 28px 38px;
+        font-weight: 600;
+      }
+    }
+  `,
 };
+
+const returnStyle = css`
+  color: var(--red-color);
+`;
 
 export default OrderDetail;

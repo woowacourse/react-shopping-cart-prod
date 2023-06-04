@@ -7,15 +7,16 @@ import { ORDER_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
 import { useGoToAnotherPage } from '../../hooks/useGoToAnotherPage';
 import { orderListState, serverState } from '../../recoil';
+import { OrderList } from '../../types';
 import Button from '../common/Button';
 import TrashCanIcon from '../icons/TrashCanIcon';
 
-interface Props {
+interface Props extends Pick<OrderList, 'orderStatus'> {
   orderId: number;
   createdAt: string;
 }
 
-const OrderDetailNavigator = ({ orderId, createdAt }: Props) => {
+const OrderDetailNavigator = ({ orderId, createdAt, orderStatus }: Props) => {
   const goToPage = useGoToAnotherPage();
   const location = useLocation().pathname;
 
@@ -45,7 +46,7 @@ const OrderDetailNavigator = ({ orderId, createdAt }: Props) => {
         <S.OrderId>{orderId}</S.OrderId>
         <span>[ {createdAt} ]</span>
       </p>
-      {location !== `${ROUTE_PATH.ORDER_LIST_PAGE}/${orderId}` && (
+      {location !== `${ROUTE_PATH.ORDER_LIST_PAGE}/${orderId}` ? (
         <Button
           css={buttonStyle}
           onClick={() => goToPage(`${ROUTE_PATH.ORDER_LIST_PAGE}/${orderId}`)}
@@ -53,6 +54,8 @@ const OrderDetailNavigator = ({ orderId, createdAt }: Props) => {
           상세보기
           <BsChevronRight style={{ marginLeft: '4px' }} />
         </Button>
+      ) : (
+        <S.OrderStatus>{orderStatus}</S.OrderStatus>
       )}
     </S.Head>
   );
@@ -90,6 +93,10 @@ const S = {
       font-size: 14px;
       color: var(--text-color);
     }
+  `,
+
+  OrderStatus: styled.p`
+    color: var(--red-color);
   `,
 };
 
