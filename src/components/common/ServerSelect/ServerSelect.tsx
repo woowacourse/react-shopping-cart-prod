@@ -5,6 +5,7 @@ import { BASE_URLS } from '../../../constants/api';
 import { isKeyOf } from '../../../types/typeGuards';
 import useCart from '../../../hooks/useCart';
 import useOrder from '../../../hooks/useOrder';
+import usePoint from '../../../hooks/usePoint';
 import { serverOriginState } from '../../../recoil/atoms/common';
 
 const ServerSelect = () => {
@@ -12,19 +13,21 @@ const ServerSelect = () => {
   const [serverOrigin, setServerOrigin] = useRecoilState(serverOriginState);
   const { updateCart } = useCart();
   const { updateOrders } = useOrder();
+  const { updatePoint } = usePoint();
 
   const changeServer: ChangeEventHandler<HTMLSelectElement> = (e) => {
     const value = e.target.value;
 
     if (isKeyOf(BASE_URLS, value)) {
-      setValue(() => e.target.value);
-      setServerOrigin(() => BASE_URLS[value]);
+      setValue(e.target.value);
+      setServerOrigin(BASE_URLS[value]);
     }
   };
 
   useEffect(() => {
     updateCart();
     updateOrders();
+    updatePoint();
   }, [serverOrigin]);
 
   return (
