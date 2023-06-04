@@ -1,28 +1,20 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { memo, useCallback, useEffect } from 'react';
+import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 
 import CartIcon from '../../assets/cart-icon.svg';
 import CouponIcon from '../../assets/coupon-icon.svg';
 import Logo from '../../assets/logo.png';
 import OrderIcon from '../../assets/order-icon.svg';
-import { useFetch } from '../../hooks/useFetch';
 import { cartListState } from '../../store/cart';
-import { originState } from '../../store/origin';
-import { CartItemType } from '../../types';
 import OriginSelector from '../OriginSelector/OriginSelector';
 import styles from './style.module.css';
 
 const Header = () => {
   const navigate = useNavigate();
-  const [cartItemList, setCartItemList] = useRecoilState(cartListState);
-  const origin = useRecoilValue(originState);
-
-  const { fetchApi } = useFetch<CartItemType[]>(setCartItemList);
-  useEffect(() => {
-    fetchApi.get(`${origin}cart-items`);
-  }, [origin]);
+  const cartItemList = useRecoilValue(cartListState);
+  // cartList 상태 동기화
 
   const navigateToMainPage = useCallback(() => {
     navigate('/');
@@ -33,7 +25,7 @@ const Header = () => {
   }, []);
 
   const navigateToOrderPage = useCallback(() => {
-    navigate('/orderList');
+    navigate('/orders');
   }, []);
 
   const navigateToCouponPage = useCallback(() => {
