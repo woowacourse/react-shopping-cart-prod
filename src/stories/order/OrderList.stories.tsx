@@ -16,7 +16,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   loaders: [
     async () => ({
-      products: await orderApis('msw').getOrders(),
+      products: await orderApis('황펭').getOrders(),
     }),
   ],
 };

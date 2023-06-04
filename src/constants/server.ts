@@ -14,7 +14,7 @@ export const SERVER = {
     id: process.env.REACT_APP_ID,
     password: process.env.REACT_APP_PASSWORD,
   },
-  msw: {
+  황펭: {
     url: '',
     id: 'a',
     password: 'b',
