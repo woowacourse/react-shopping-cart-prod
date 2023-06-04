@@ -1,33 +1,37 @@
 import type { OrderType } from '../../types';
 
 import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
-import SubHeader from '../common/SubHeader';
+import SubPageTemplate from '../common/SubPageTemplate';
 import Order from '../order/Order';
 
+import useToast from '../../hooks/useToast';
 import { serverNameState, tokenState } from '../../recoil/state';
 import { getOrders } from '../../api';
-import useToast from '../../hooks/useToast';
-import SubPageTemplate from '../common/SubPageTemplate';
+import { NO_TOKEN_REDIRECT_MESSAGE } from '../../constants';
 
 export default function OrdersPage() {
-  const serverName = useRecoilValue(serverNameState);
   const token = useRecoilValue(tokenState);
+  const { showToast } = useToast();
+  if (token === null) {
+    showToast('warning', NO_TOKEN_REDIRECT_MESSAGE);
+    return <Navigate to="/" />;
+  }
+
+  const serverName = useRecoilValue(serverNameState);
 
   const [orders, setOrders] = useState<OrderType[]>([]);
-  const { showToast } = useToast();
 
   useEffect(() => {
-    if (token === null) return;
-
     getOrders(serverName, token)
       .then(setOrders)
       .catch(() => {
         showToast('error', '주문목록 불러오기 실패');
       });
-  }, [serverName, token]);
+  }, [serverName]);
 
   return (
     <SubPageTemplate title="주문 목록">
@@ -41,10 +45,6 @@ export default function OrdersPage() {
     </SubPageTemplate>
   );
 }
-
-const Wrapper = styled.div`
-  width: 80%;
-`;
 
 const Main = styled.div`
   display: flex;

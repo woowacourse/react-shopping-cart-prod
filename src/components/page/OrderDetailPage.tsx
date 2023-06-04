@@ -1,24 +1,32 @@
 import type { OrderDetailType } from '../../types';
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 import ErrorPage from './ErrorPage';
+import SubPageTemplate from '../common/SubPageTemplate';
 import Order from '../order/Order';
+import OrderBill from '../order/OrderBill';
 
+import useToast from '../../hooks/useToast';
 import { serverNameState, tokenState } from '../../recoil/state';
 import { getOrder } from '../../api';
-import OrderBill from '../order/OrderBill';
-import SubPageTemplate from '../common/SubPageTemplate';
+import { NO_TOKEN_REDIRECT_MESSAGE } from '../../constants';
 
 export default function OrderDetailPage() {
+  const token = useRecoilValue(tokenState);
+  const { showToast } = useToast();
+  if (token === null) {
+    showToast('warning', NO_TOKEN_REDIRECT_MESSAGE);
+    return <Navigate to="/" />;
+  }
+
   const { orderId } = useParams();
   if (orderId == undefined) return <ErrorPage />;
 
   const serverName = useRecoilValue(serverNameState);
-  const token = useRecoilValue(tokenState);
 
   const [order, setOrder] = useState<OrderDetailType | null>(null);
   const [loadFinish, setLoadFinish] = useState(false);
@@ -56,10 +64,6 @@ export default function OrderDetailPage() {
     </SubPageTemplate>
   );
 }
-
-const Wrapper = styled.div`
-  width: 80%;
-`;
 
 const Main = styled.div`
   display: flex;
