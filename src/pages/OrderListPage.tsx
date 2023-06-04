@@ -1,11 +1,11 @@
 import OrderList from '../components/order/OrderList';
-import { OrderListWrapper } from '../style/ContentLayout';
+import { Wrapper } from '../style/ContentLayout';
 
 const OrderListPage = () => {
   return (
-    <OrderListWrapper>
+    <Wrapper>
       <OrderList />
-    </OrderListWrapper>
+    </Wrapper>
   );
 };
 

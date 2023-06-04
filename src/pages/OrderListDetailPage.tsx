@@ -1,13 +1,13 @@
 import OrderDetailList from '../components/orderDetail/OrderDetailList';
 import PaymentsInfo from '../components/orderDetail/PaymentsInfo';
-import { OrderListDetailWrapper } from '../style/ContentLayout';
+import { Wrapper } from '../style/ContentLayout';
 
 const OrderListDetailPage = () => {
   return (
-    <OrderListDetailWrapper>
+    <Wrapper>
       <OrderDetailList />
       <PaymentsInfo />
-    </OrderListDetailWrapper>
+    </Wrapper>
   );
 };
 
