@@ -37,7 +37,7 @@ function CouponSelector() {
         <CouponSelectTitle>
           {selectedCouponIds.length
             ? "쿠폰 (선택됨)"
-            : `쿠폰 ${coupons.length}장 보유중`}
+            : `쿠폰 (${coupons.length}장 보유중)`}
         </CouponSelectTitle>
         <CouponSelectOpenButton>
           {isCouponSelectorOpen ? "⏶ 닫기" : "⏷ 보유쿠폰 확인하기"}

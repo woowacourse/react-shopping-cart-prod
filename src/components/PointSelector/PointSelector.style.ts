@@ -47,8 +47,23 @@ export const PointInput = styled.input`
 
 export const PointText = styled.div`
   font-style: normal;
+  font-size: 14px;
+  line-height: 37px;
+
+  letter-spacing: 0.5px;
+`;
+
+export const PointDescription = styled.div`
+  font-style: normal;
   font-size: 18px;
   line-height: 37px;
 
   letter-spacing: 0.5px;
+`;
+
+export const PointButton = styled.button`
+  text-align: center;
+  border: 1px gray solid;
+  border-radius: 5px;
+  padding: 5px;
 `;

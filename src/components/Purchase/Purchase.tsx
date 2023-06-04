@@ -25,6 +25,7 @@ import {
   PurchaseResultText,
   Title,
   Box,
+  Vacant,
 } from "./Purchase.style.ts";
 import CouponSelector from "../CouponSelector";
 import {
@@ -128,19 +129,13 @@ function Purchase() {
             + {DELIVERY_FEE.toLocaleString()}원
           </PurchasePrimaryText>
         </PurchasePropertyWrapper>
+        <Vacant />
         <PurchasePropertyWrapper>
           <PurchaseResultText>최종 결제 금액</PurchaseResultText>
           <PurchaseResultText>
-            {(
-              totalPrice -
-              discountByCoupon -
-              selectedPoint +
-              DELIVERY_FEE
-            ).toLocaleString()}
-            원
+            {(expectedOrderPrice + DELIVERY_FEE).toLocaleString()}원
           </PurchaseResultText>
         </PurchasePropertyWrapper>
-        <div>{expectedOrderPrice}</div>
       </PurchaseList>
 
       <ButtonGroup>

@@ -1,5 +1,7 @@
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import {
+  PointButton,
+  PointDescription,
   PointInput,
   PointInputTitle,
   PointInputWrapper,
@@ -12,7 +14,6 @@ import { ChangeEvent, useEffect } from "react";
 import {
   orderRepository,
   pointState,
-  selectedCouponState,
   selectedPointState,
 } from "../../app/recoil/orderAtom";
 
@@ -44,15 +45,19 @@ function PointSelector() {
     <PointSelectorWrapper>
       <PointSelectorHeader>
         <PointInputTitle>포인트 사용하기</PointInputTitle>
+        <PointInputWrapper>
+          <PointText>
+            잔여 포인트: {point.totalPoint.toLocaleString()}점
+          </PointText>
+          <PointButton onClick={handlePointButton}>
+            포인트 전액 사용
+          </PointButton>
+        </PointInputWrapper>
       </PointSelectorHeader>
-      <PointSelectorInput>
-        <div>잔여 포인트: {point.totalPoint.toLocaleString()}점</div>
-        <button onClick={handlePointButton}>포인트 전액 사용</button>
-      </PointSelectorInput>
       <PointSelectorInput>
         <PointInputWrapper>
           <PointInput value={selectedPoints} onChange={handlePointInput} />
-          <PointText>점 사용하기</PointText>
+          <PointDescription>점 사용하기</PointDescription>
         </PointInputWrapper>
       </PointSelectorInput>
     </PointSelectorWrapper>

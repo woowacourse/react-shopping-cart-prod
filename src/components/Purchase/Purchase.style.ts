@@ -126,3 +126,7 @@ export const Box = styled.div`
   border-bottom: solid 1px rgb(170, 170, 170);
   padding-bottom: 10px;
 `;
+
+export const Vacant = styled.div`
+  margin: 10px 0px 0px 0px;
+`;
