@@ -35,7 +35,6 @@ const OrderPriceSection = () => {
       await addOrder([...checkedProducts], appliedPoint);
     } catch (e: any) {
       window.alert(`주문에 실패했습니다. 다시 시도해주세요.\n${e.message}`);
-      console.log(e);
       console.error(e.message);
     }
     navigate(ROUTE_PATH.orderList);

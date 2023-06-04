@@ -1,11 +1,13 @@
 import FlexBox from 'components/@common/FlexBox';
 import Modal, { ModalProps } from 'components/@common/Modal/Modal';
 import { useState, PropsWithChildren } from 'react';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { pointUsageState } from 'state/pointUsageState';
 import styled from 'styled-components';
 import Option from './DiscountOption';
 import { options } from 'constants/discountOption';
+import useCartCheckBox from 'hooks/useCartCheckBox';
+import { checkedCartProductsTotalPrice } from 'state/cartProducts';
 
 interface ConfirmModalProps extends ModalProps {
   onClickConfirmButton: () => void;
@@ -17,12 +19,15 @@ const DiscountModal = ({ userPoint, isOpen, closeModal }: PropsWithChildren<Conf
   const [pointUsage, setPointUsage] = useRecoilState(pointUsageState);
   const [selectedOption, setSelectedOption] = useState(pointUsage.checkedBy ?? 'none');
 
-  const handleOptionChange = (option: string) => {
-    const optionToPoints: { [key: string]: number } = {
-      none: 0,
-      all: userPoint,
-    };
+  const { checkedProducts } = useCartCheckBox();
+  const cartTotalPrice = useRecoilValue(checkedCartProductsTotalPrice(checkedProducts));
 
+  const optionToPoints: { [key: string]: number } = {
+    none: 0,
+    all: Math.min(userPoint, cartTotalPrice),
+  };
+
+  const handleOptionChange = (option: string) => {
     setSelectedOption(option);
     setPoint(optionToPoints[option]);
   };
