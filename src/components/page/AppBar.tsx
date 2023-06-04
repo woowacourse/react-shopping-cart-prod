@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { useRecoilState, useRecoilValueLoadable } from 'recoil';
 import { styled } from 'styled-components';
 import HomeIcon from '../../assets/icons/home-icon.svg';
@@ -7,7 +8,6 @@ import userCartItemsState from '../../recoil/user/userCartItemsState';
 import userProfileState from '../../recoil/user/userProfileState';
 import Badge from '../common/Badge';
 import Spinner from '../common/Spinner';
-import AwaitRecoilState from '../utils/AwaitRecoilState';
 
 const AppBarContainer = styled.header`
   width: 100%;
@@ -94,6 +94,7 @@ type HeaderProps = {
 const AppBar = (props: HeaderProps) => {
   const { onNavigate } = props;
   const cartItemsLoadable = useRecoilValueLoadable(userCartItemsState);
+  const profileLoadable = useRecoilValueLoadable(userProfileState);
   const [server, setServer] = useRecoilState(serverState);
 
   const handleServerChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
@@ -131,21 +132,16 @@ const AppBar = (props: HeaderProps) => {
             )}
           </MenuButton>
 
-          <AwaitRecoilState
-            state={userProfileState}
-            loadingElement={<Spinner color="currentColor" />}
-          >
-            {(profile) =>
-              profile ? (
-                <MenuProfile>
-                  <MenuProfileUsername>{profile.username}</MenuProfileUsername>
-                  <MenuProfilePoints>{profile.currentPoints}</MenuProfilePoints>
-                </MenuProfile>
-              ) : (
-                <MenuButton onClick={() => onNavigate('/login')}>로그인</MenuButton>
-              )
-            }
-          </AwaitRecoilState>
+          {profileLoadable.state === 'loading' ? (
+            <Spinner color="currentColor" />
+          ) : profileLoadable.state === 'hasValue' ? (
+            <MenuProfile>
+              <MenuProfileUsername>{profileLoadable.getValue().username}</MenuProfileUsername>
+              <MenuProfilePoints>{profileLoadable.getValue().currentPoints}</MenuProfilePoints>
+            </MenuProfile>
+          ) : (
+            <MenuButton onClick={() => onNavigate('/login')}>로그인</MenuButton>
+          )}
         </Menu>
       </AppBarContent>
     </AppBarContainer>
