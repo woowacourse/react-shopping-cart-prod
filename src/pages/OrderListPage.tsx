@@ -11,8 +11,9 @@ const Title = styled.h1`
   width: 100%;
   padding: 30px 0;
 
-  ${({ theme }) => theme.fonts.title}
-  border-bottom: 4px solid ${({ theme }) => theme.colors.primary};
+  ${({ theme }) => theme.fonts.text}
+  font-weight: 600;
+  border-bottom: 10px solid ${({ theme }) => theme.colors.gray300};
 `;
 
 interface OrderListsProps {
