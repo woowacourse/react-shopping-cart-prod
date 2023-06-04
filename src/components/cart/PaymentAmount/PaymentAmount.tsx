@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import { formatPrice } from '../../../utils/formatPrice';
 import usePaymentAmount from './usePaymentAmount';
 import CouponInfo from '../../../types/coupon';
@@ -21,6 +22,8 @@ const PaymentAmount = (props: PaymentAmountProps) => {
   const serverName = useRecoilValue(serverNameState);
   const setCartState = useSetRecoilState(cartState);
   const [isOrdering, setIsOrdering] = useState(false);
+
+  const navigate = useNavigate();
 
   const discountedPrice = (() => {
     if (!coupon) return 0;
@@ -62,12 +65,13 @@ const PaymentAmount = (props: PaymentAmountProps) => {
     }
 
     const { orderId } = await response.json();
-    alert(`주문에 성공하였습니다!! 주문번호 ${orderId}`);
 
     setCartState((prevCart) => {
       const orderedCartItemIds = orderingItems.map(({ id }) => id);
       return prevCart.filter(({ id }) => !orderedCartItemIds.includes(id));
     });
+
+    navigate('/order-complete', { replace: true, state: { orderId } });
   };
 
   return (

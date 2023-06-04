@@ -15,6 +15,7 @@ export const PRODUCTS_PATH_NAME = `/products`;
 export const CART_ITEMS_PATH_NAME = `/cart-items`;
 export const ALL_COUPONS_PATH_NAME = '/coupons';
 export const USER_COUPONS_PATH_NAME = '/coupons/me';
+export const ORDER_PATH_NAME = '/orders';
 
 export const CART_LIST_KEY = 'cart_list';
 

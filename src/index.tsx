@@ -8,6 +8,7 @@ import ProductListPage from './pages/ProductListPage';
 import CartPage from './pages/CartPages';
 import CouponPage from './pages/CouponPage';
 import { worker } from './mocks/browser';
+import OrderCompletePage from './pages/OrderCompletePage';
 
 worker.start({
   serviceWorker: {
@@ -31,6 +32,10 @@ const router = createHashRouter([
       {
         path: 'coupons',
         element: <CouponPage />,
+      },
+      {
+        path: 'order-complete',
+        element: <OrderCompletePage />,
       },
     ],
   },
