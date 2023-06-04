@@ -1,5 +1,3 @@
-import type { postDataType } from '../types/fetch';
-
 export const fetchData = async <T>(
   url: string,
   options?: RequestInit
@@ -17,7 +15,7 @@ export const fetchData = async <T>(
 export const postData = async (
   url: string,
   headers: HeadersInit,
-  data: postDataType
+  data: object
 ): Promise<string> => {
   const response = await fetch(url, {
     method: 'POST',

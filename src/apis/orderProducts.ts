@@ -25,7 +25,7 @@ export const orderApi = async (hostName: HostNameType) => {
   };
 
   const postOrderProduct = async (orderData: OrderedData) => {
-    const response = await postData(BASE_URL, headers, { orderData });
+    const response = await postData(BASE_URL, headers, orderData);
     return response;
   };
 
