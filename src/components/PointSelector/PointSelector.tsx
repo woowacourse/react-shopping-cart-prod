@@ -1,4 +1,4 @@
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import {
   PointInput,
   PointInputTitle,
@@ -12,6 +12,7 @@ import { ChangeEvent, useEffect } from "react";
 import {
   orderRepository,
   pointState,
+  selectedCouponIdsState,
   selectedPointState,
 } from "../../app/recoil/orderAtom";
 
@@ -19,10 +20,11 @@ function PointSelector() {
   const point = useRecoilValue(pointState);
   const [selectedPoints, setSelectedPoints] =
     useRecoilState(selectedPointState);
+  const resetSelectedPoints = useResetRecoilState(selectedPointState);
   const { loadPoint } = useRecoilValue(orderRepository);
 
   useEffect(() => {
-    setSelectedPoints(0);
+    resetSelectedPoints();
     loadPoint();
   }, []);
 

@@ -32,15 +32,3 @@ export const CouponBoxWrapper = styled.div`
 export const CouponBoxContainer = styled.div`
   margin-bottom: 20px;
 `;
-
-export const CouponBox = styled.div`
-  border-radius: 10px;
-  background-color: cornflowerblue;
-  color: white;
-  width: 150px;
-  height: 100px;
-  margin: 10px;
-  font-size: 20px;
-  text-align: center;
-  padding: 20px;
-`;
