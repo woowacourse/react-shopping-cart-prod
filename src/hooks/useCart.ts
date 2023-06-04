@@ -1,3 +1,4 @@
+import { useErrorBoundary } from 'react-error-boundary';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { cartListState, selectedHostState } from '../recoil/atoms';
 import { CartItemInfo } from '../types';
@@ -5,19 +6,26 @@ import { CART_BASE_URL } from '../constants';
 import APIHandler from '../api/APIHandler';
 
 export const useCart = () => {
+  const { showBoundary } = useErrorBoundary();
   const host = useRecoilValue(selectedHostState);
   const CART_URL = `${host}${CART_BASE_URL}`;
   const [cartList, setCartList] = useRecoilState(cartListState);
 
-  const initCartList = async () => setCartList(await getCartList());
+  const initCartList = async () => {
+    const newCartList = await getCartList();
+    if (newCartList) setCartList(newCartList);
+  };
 
   const getCartList = async () => {
-    const responseResult = await APIHandler.get<CartItemInfo[]>(CART_URL);
+    try {
+      const responseResult = await APIHandler.get<CartItemInfo[]>(CART_URL);
 
-    if (responseResult.statusCode !== 200) console.error(responseResult.errorMessage);
-    if (responseResult.result === undefined) return [];
+      if (responseResult.statusCode !== 200) throw new Error(responseResult.errorMessage);
 
-    return responseResult.result;
+      return responseResult.result;
+    } catch (error) {
+      showBoundary(error);
+    }
   };
 
   const getCartItem = (productId: number) => {
@@ -25,37 +33,50 @@ export const useCart = () => {
   };
 
   const addToCart = async (productId: number) => {
-    const responseResult = await APIHandler.post(CART_URL, { productId: productId });
+    try {
+      const responseResult = await APIHandler.post(CART_URL, { productId: productId });
 
-    if (responseResult.statusCode !== 201) throw new Error(responseResult.errorMessage);
+      if (responseResult.statusCode !== 201) throw new Error(responseResult.errorMessage);
 
-    setCartList(await getCartList());
+      initCartList();
+    } catch (error) {
+      showBoundary(error);
+    }
   };
 
   const updateProductQuantity = async (productId: number, quantity: number) => {
-    const currentCartItem = getCartItem(productId);
-    if (!currentCartItem) throw new Error('[ERROR] 장바구니에 상품 정보가 없습니다.');
+    try {
+      const currentCartItem = getCartItem(productId);
 
-    if (quantity <= 0) {
-      deleteFromCart(currentCartItem.id);
-      return;
+      if (!currentCartItem) throw new Error('[ERROR] 장바구니에 상품 정보가 없습니다.');
+
+      if (quantity <= 0) {
+        deleteFromCart(currentCartItem.id);
+        return;
+      }
+
+      const responseResult = await APIHandler.patch(`${CART_URL}/${currentCartItem.id}`, {
+        quantity: quantity,
+      });
+
+      if (responseResult.statusCode !== 200) throw new Error(responseResult.errorMessage);
+
+      initCartList();
+    } catch (error) {
+      showBoundary(error);
     }
-
-    const responseResult = await APIHandler.patch(`${CART_URL}/${currentCartItem.id}`, {
-      quantity: quantity,
-    });
-
-    if (responseResult.statusCode !== 200) throw new Error(responseResult.errorMessage);
-
-    setCartList(await getCartList());
   };
 
   const deleteFromCart = async (cartId: number) => {
-    const responseResult = await APIHandler.delete(`${CART_URL}/${cartId}`);
+    try {
+      const responseResult = await APIHandler.delete(`${CART_URL}/${cartId}`);
 
-    if (responseResult.statusCode !== 204) throw new Error(responseResult.errorMessage);
+      if (responseResult.statusCode !== 204) throw new Error(responseResult.errorMessage);
 
-    setCartList(await getCartList());
+      initCartList();
+    } catch (error) {
+      showBoundary(error);
+    }
   };
 
   return { cartList, initCartList, getCartItem, addToCart, updateProductQuantity, deleteFromCart };

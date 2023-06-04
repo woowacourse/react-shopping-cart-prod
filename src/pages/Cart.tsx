@@ -1,23 +1,14 @@
-import { useEffect } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { styled } from 'styled-components';
-import { useRecoilValue } from 'recoil';
-import { selectedHostState } from '../recoil/atoms';
-import { useCart } from '../hooks/useCart';
-import CartList from '../components/cart/CartList';
+import CartPageContent from '../components/cart/CartPageContent';
 
 export default function Cart() {
-  const host = useRecoilValue(selectedHostState);
-  const { initCartList } = useCart();
-
-  useEffect(() => {
-    initCartList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [host]);
-
   return (
     <Style.Main>
       <Style.Title>장바구니</Style.Title>
-      <CartList />
+      <ErrorBoundary fallback={<div>장바구니 목록에서 something wrong</div>}>
+        <CartPageContent />
+      </ErrorBoundary>
     </Style.Main>
   );
 }

@@ -1,3 +1,4 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import { styled } from 'styled-components';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { checkedCartItemIdsState } from '../../recoil/atoms';
@@ -70,11 +71,13 @@ export default function CartList() {
             </Button>
           </Style.TotalCheckboxAndDeleteButtonContainer>
         </Style.CartItemsContainer>
-        <TotalPayment
-          checkedCartItemIds={checkedItemIds}
-          deliveryFee={totalProductsPrice > 0 ? DELIVERY_FEE : 0}
-          totalProductsPrice={totalProductsPrice}
-        />
+        <ErrorBoundary fallback={<div>결제예상금액에서 something wrong</div>}>
+          <TotalPayment
+            checkedCartItemIds={checkedItemIds}
+            deliveryFee={totalProductsPrice > 0 ? DELIVERY_FEE : 0}
+            totalProductsPrice={totalProductsPrice}
+          />
+        </ErrorBoundary>
       </Style.CartItemsAndPaymentContainer>
     </Style.Container>
   );

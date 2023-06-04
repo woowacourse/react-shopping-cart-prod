@@ -1,14 +1,14 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import { styled } from 'styled-components';
-import { useProduct } from '../hooks/useProduct';
-import ProductList from '../components/product/ProductList';
+import ProductPageContent from '../components/product/ProductPageContent';
 
 export default function Home() {
-  const { productList } = useProduct();
-
   return (
     <Style.Main>
       <Style.Content>
-        <ProductList products={productList} />
+        <ErrorBoundary fallback={<div>상품목록에서 something wrong</div>}>
+          <ProductPageContent />
+        </ErrorBoundary>
       </Style.Content>
     </Style.Main>
   );

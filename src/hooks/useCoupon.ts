@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useErrorBoundary } from 'react-error-boundary';
 import { useRecoilValue } from 'recoil';
 import { selectedHostState } from '../recoil/atoms';
 import { Coupons, FixedCouponInfo, RateCouponInfo } from '../types';
@@ -6,6 +7,7 @@ import { COUPON_BASE_URL } from '../constants';
 import APIHandler from '../api/APIHandler';
 
 export const useCoupon = () => {
+  const { showBoundary } = useErrorBoundary();
   const host = useRecoilValue(selectedHostState);
   const COUPON_URL = `${host}${COUPON_BASE_URL}`;
   const [rateCoupons, setRateCoupons] = useState<RateCouponInfo[]>([]);
@@ -24,19 +26,23 @@ export const useCoupon = () => {
   }, [host]);
 
   const getCouponList = async () => {
-    const responseResult = await APIHandler.get<Coupons>(COUPON_URL);
+    try {
+      const responseResult = await APIHandler.get<Coupons>(COUPON_URL);
 
-    if (responseResult.statusCode !== 200) console.error(responseResult.errorMessage);
-    if (responseResult.result === undefined) {
+      if (responseResult.statusCode !== 200) throw new Error(responseResult.errorMessage);
+      if (responseResult.result === undefined) throw new Error(responseResult.errorMessage);
+
+      const { rateCoupon, fixedCoupon } = responseResult.result;
+
+      return { rateCoupons: rateCoupon, fixedCoupons: fixedCoupon };
+    } catch (error) {
+      showBoundary(error);
+
       return {
         rateCoupons: [],
         fixedCoupons: [],
       };
     }
-
-    const { rateCoupon, fixedCoupon } = responseResult.result;
-
-    return { rateCoupons: rateCoupon, fixedCoupons: fixedCoupon };
   };
 
   return { rateCoupons, fixedCoupons };

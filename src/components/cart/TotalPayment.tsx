@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { useOrder } from '../../hooks/useOrder';
-import { useCoupon } from '../../hooks/useCoupon';
 import Modal from '../common/Modal';
 import Price from '../common/Price';
 import Button from '../common/Button';
-import CouponList from '../coupon/CouponList';
+import CouponModalContent from '../coupon/CouponModalContent';
 
 interface Props {
   checkedCartItemIds: number[];
@@ -22,7 +22,6 @@ export default function TotalPayment({
 }: Props) {
   const navigate = useNavigate();
   const { addOrderItem } = useOrder();
-  const { rateCoupons, fixedCoupons } = useCoupon();
   const [coupon, setCoupon] = useState({ id: -1, discountPrice: 0, minOrderPrice: 9999999999999 });
   const couponModalRef = useRef<HTMLDialogElement>(null);
   const orderPrice = totalProductsPrice + deliveryFee;
@@ -100,18 +99,13 @@ export default function TotalPayment({
       </Style.PriceAndOrderButtonContainer>
       {createPortal(
         <Modal ref={couponModalRef} closeModal={closeCouponModal}>
-          <div>
-            <Style.ModalTitle>쿠폰목록</Style.ModalTitle>
-            <CouponList
+          <ErrorBoundary fallback={<div>쿠폰에서 something wrong</div>}>
+            <CouponModalContent
               totalProductsPrice={totalProductsPrice}
-              rateCoupons={rateCoupons}
-              fixedCoupons={fixedCoupons}
               handleCouponSelect={handleCouponSelect}
+              closeCouponModal={closeCouponModal}
             />
-          </div>
-          <button className="sr-only" onClick={closeCouponModal}>
-            쿠폰선택창 닫기
-          </button>
+          </ErrorBoundary>
         </Modal>,
         document.body
       )}
@@ -153,17 +147,5 @@ const Style = {
   TotalOrderPriceWrapper: styled.div`
     padding: 7px;
     background-color: #f6f6f6;
-  `,
-
-  ModalTitle: styled.p`
-    width: 100%;
-
-    border-bottom: 4px solid var(--grey-400);
-    padding-bottom: 30px;
-    margin-bottom: 20px;
-
-    font-size: 24px;
-    color: var(--grey-400);
-    text-align: center;
   `,
 };

@@ -1,25 +1,14 @@
+import { ErrorBoundary } from 'react-error-boundary';
 import { styled } from 'styled-components';
-import { useOrder } from '../hooks/useOrder';
-import OrderList from '../components/order/OrderList';
-import { useCart } from '../hooks/useCart';
-import { useRecoilValue } from 'recoil';
-import { selectedHostState } from '../recoil/atoms';
-import { useEffect } from 'react';
+import OrderPageContent from '../components/order/OrderPageContent';
 
 export default function Order() {
-  const { orderList } = useOrder();
-  const { initCartList } = useCart();
-  const host = useRecoilValue(selectedHostState);
-
-  useEffect(() => {
-    initCartList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [host]);
-
   return (
     <Style.Main>
       <Style.Title>주문목록</Style.Title>
-      <OrderList orders={orderList} />
+      <ErrorBoundary fallback={<div>주문목록에서 something wrong</div>}>
+        <OrderPageContent />
+      </ErrorBoundary>
     </Style.Main>
   );
 }
