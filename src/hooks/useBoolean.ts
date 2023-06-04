@@ -1,6 +1,9 @@
 import { useState } from 'react';
 
-const useBoolean = (initialState: boolean) => {
+type switchTrue = () => void;
+type switchFalse = () => void;
+
+const useBoolean = (initialState: boolean): [boolean, switchTrue, switchFalse] => {
   const [boolean, setBoolean] = useState(initialState);
 
   const switchTrue = () => {
@@ -11,7 +14,7 @@ const useBoolean = (initialState: boolean) => {
     setBoolean(false);
   };
 
-  return [boolean, switchTrue, switchFalse] as const;
+  return [boolean, switchTrue, switchFalse];
 };
 
 export default useBoolean;
