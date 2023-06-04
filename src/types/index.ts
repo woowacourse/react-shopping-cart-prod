@@ -30,3 +30,10 @@ export interface OrderItemDetails extends OrderItem {
   usedPoint: number;
   createdAt: string;
 }
+
+export interface MemberTypes {
+  id: number;
+  email: string;
+  money: number;
+  point: number;
+}
