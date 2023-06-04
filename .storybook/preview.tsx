@@ -1,6 +1,6 @@
 import React from 'react';
 import { RecoilRoot } from 'recoil';
-import '../src/styles/index.css';
+import '../src/styles/index.scss';
 import type { Preview } from '@storybook/react';
 import { MemoryRouter } from 'react-router-dom';
 import { initializeWorker, mswDecorator } from 'msw-storybook-addon';
