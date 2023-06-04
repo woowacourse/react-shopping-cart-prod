@@ -9,7 +9,7 @@ type CheckOutProductCardProps = {
 
 const CheckOutProductCard = ({ checkedCartProduct }: CheckOutProductCardProps) => {
   const { product, quantity } = checkedCartProduct;
-  const { id, name, price, imageUrl } = product;
+  const { name, price, imageUrl } = product;
   const totalPrice = `${(price * quantity).toLocaleString('ko-KR')}원`;
 
   return (
