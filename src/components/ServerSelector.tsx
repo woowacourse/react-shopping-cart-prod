@@ -1,46 +1,20 @@
 import { ChangeEvent, useEffect } from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { serverSelectState } from "recoil/server";
 import { styled } from "styled-components";
 import { ServerId } from "recoil/server";
-import { cartListState } from "recoil/cart";
-import { getCartItems } from "api/cartItems";
-import { CartProduct } from "types/domain";
 import { useNavigate } from "react-router-dom";
 import { ROUTER_PATH } from "router";
-import { getOrders } from "api/orders";
-import { orderListState } from "recoil/order";
+import { useReloadFromServer } from "hooks/useReloadFromServer";
 
 const ServerSelector = () => {
   const navigate = useNavigate();
   const [serverState, setServerState] = useRecoilState(serverSelectState);
-  const setCartList = useSetRecoilState(cartListState);
-  const setOrderList = useSetRecoilState(orderListState);
+  const { reloadCartList, reloadOrderList } = useReloadFromServer();
 
   const chagneServer = (e: ChangeEvent<HTMLInputElement>) => {
     setServerState(e.target.id as ServerId);
     navigate(ROUTER_PATH.Main);
-  };
-
-  const reloadCartList = async () => {
-    const cartItems = await getCartItems(serverState);
-
-    setCartList(
-      cartItems.map((item) => {
-        const newItem: CartProduct = {
-          ...item,
-          isChecked: true,
-        };
-
-        return newItem;
-      })
-    );
-  };
-
-  const reloadOrderList = async () => {
-    const orders = await getOrders(serverState);
-
-    setOrderList(orders);
   };
 
   useEffect(() => {
