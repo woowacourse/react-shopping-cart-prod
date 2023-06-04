@@ -5,7 +5,7 @@ import CartListItem from '../CartListItem';
 import Checkbox from '../../@common/Checkbox';
 import TotalCheckbox from '../TotalCheckbox';
 import PriceWrapper from '../PriceWrapper';
-import { LoadingSpinner } from '../../@common/LoadingSpinner';
+import { LoadingSpinner } from '../../@common/LoadingSpinner/LoadingSpinner';
 import { S } from './CartList.styles';
 import { Title } from '../../../style/commonStyle';
 import emptyImage from '../../../assets/empty-image.svg';
