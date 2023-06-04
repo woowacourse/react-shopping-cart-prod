@@ -8,6 +8,7 @@ import { fetchCartList, fetchUpdateCart } from '../../../api/api.ts';
 import { fetchDeleteCart } from '../../../api/api.ts';
 import checkIcon from '../../../assets/check.svg';
 import StepperInput from '../../@common/StepperInput/StepperInput.tsx';
+import { memberAuthorization } from '../../../recoil/userAtoms.ts';
 
 interface CartItemProps {
   cart: CartItemType;
@@ -16,24 +17,25 @@ interface CartItemProps {
 function CartItem({ cart }: CartItemProps) {
   const switchCheckbox = useSetRecoilState(switchCartCheckboxSelector);
   const setCartList = useSetRecoilState(cartState);
+  const memberAuth = useRecoilValue(memberAuthorization);
   const [checkedItemIdList, setCheckedItemIdList] = useRecoilState(checkedItemIdListState);
   const server = useRecoilValue(serverState);
 
   const removeCartItem = async (cartId: number) => {
     if (confirm('정말로 삭제 하시겠습니까?')) {
-      await fetchDeleteCart(server, cartId);
-      const newCartList = await fetchCartList(server);
-      setCartList(newCartList);
+      await fetchDeleteCart(server, cartId, memberAuth);
+      const newCartList = await fetchCartList(server, memberAuth);
+      setCartList(newCartList.cartItems);
       setCheckedItemIdList((prev) => prev.filter((itemId) => itemId !== cartId));
     }
   };
 
   const updateCartItemQuantity = async (newQuantity: number) => {
     if (newQuantity !== cart.quantity) {
-      await fetchUpdateCart(server, cart.id, newQuantity);
-      const newCartList = await fetchCartList(server);
+      await fetchUpdateCart(server, cart.id, newQuantity, memberAuth);
+      const newCartList = await fetchCartList(server, memberAuth);
 
-      setCartList(newCartList);
+      setCartList(newCartList.cartItems);
     }
   };
 

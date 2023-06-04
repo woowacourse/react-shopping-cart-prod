@@ -15,6 +15,7 @@ import { serverState } from '../../../recoil/serverAtom';
 import { Input } from '../CartItem/CartItem.style';
 import checkIcon from '../../../assets/check.svg';
 import { useEffect } from 'react';
+import { memberAuthorization } from '../../../recoil/userAtoms';
 
 function CartList() {
   const [cartList, setCartList] = useRecoilState(cartState);
@@ -25,12 +26,13 @@ function CartList() {
   const server = useRecoilValue(serverState);
   const switchAllCheckboxes = useSetRecoilState(switchAllCartCheckboxSelector);
   const resetItemSelection = useResetRecoilState(checkedItemIdListState);
+  const memberAuth = useRecoilValue(memberAuthorization);
 
   const removeCheckedCartItems = async () => {
     if (confirm('정말로 삭제 하시겠습니까?')) {
-      await Promise.all(checkedItemIdList.map((cartId) => fetchDeleteCart(server, cartId)));
-      const newCartList = await fetchCartList(server);
-      setCartList(newCartList);
+      await Promise.all(checkedItemIdList.map((cartId) => fetchDeleteCart(server, cartId, memberAuth)));
+      const newCartList = await fetchCartList(server, memberAuth);
+      setCartList(newCartList.cartItems);
       setCheckedItemIdList([]);
     }
   };

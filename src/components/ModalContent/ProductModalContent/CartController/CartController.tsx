@@ -5,6 +5,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { fetchAddCart, fetchCartList, fetchDeleteCart, fetchUpdateCart } from '../../../../api/api';
 import { serverState } from '../../../../recoil/serverAtom';
 import { StepperInput } from '../../../@common/StepperInput';
+import { memberAuthorization } from '../../../../recoil/userAtoms';
 
 interface CartControllerProps {
   product: ProductItem;
@@ -14,13 +15,14 @@ function CartController({ product }: CartControllerProps) {
   const quantity = useRecoilValue(quantityByProductIdSelector(product.id));
   const server = useRecoilValue(serverState);
   const [cartList, setCartList] = useRecoilState(cartState);
+  const memberAuth = useRecoilValue(memberAuthorization);
 
   const targetCartItem = cartList.find((cartItem) => cartItem.product.id === product.id);
 
   const addCartItem = async (productId: number) => {
-    await fetchAddCart(server, productId);
-    const newCartList = await fetchCartList(server);
-    setCartList(newCartList);
+    await fetchAddCart(server, productId, memberAuth);
+    const newCartList = await fetchCartList(server, memberAuth);
+    setCartList(newCartList.cartItems);
   };
 
   const updateCartItemQuantity = async (newQuantity: number) => {
@@ -28,13 +30,13 @@ function CartController({ product }: CartControllerProps) {
       const cartId = targetCartItem.id;
       if (newQuantity === 0) {
         if (confirm('정말로 삭제 하시겠습니까?')) {
-          await fetchDeleteCart(server, cartId);
+          await fetchDeleteCart(server, cartId, memberAuth);
         }
       } else {
-        await fetchUpdateCart(server, cartId, newQuantity);
+        await fetchUpdateCart(server, cartId, newQuantity, memberAuth);
       }
-      const newCartList = await fetchCartList(server);
-      setCartList(newCartList);
+      const newCartList = await fetchCartList(server, memberAuth);
+      setCartList(newCartList.cartItems);
     }
   };
 
