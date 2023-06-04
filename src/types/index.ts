@@ -39,5 +39,9 @@ export interface RegisterOrderType {
 
 export interface OrderType {
   cartItemId: number;
-  quantity : number;
+  quantity: number;
+}
+
+export interface Point {
+  usablePoint: number;
 }

@@ -7,9 +7,9 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   designType: 'square' | 'rectangle';
 }
 
-export const Button = ({ bgColor, designType, ...props }: Partial<Props>) => {
+export const Button = ({ bgColor, designType, disabled, ...props }: Partial<Props>) => {
   return (
-    <Style.Button className={designType} {...props}>
+    <Style.Button className={designType} {...props} disabled={disabled}>
       {props.children}
     </Style.Button>
   );

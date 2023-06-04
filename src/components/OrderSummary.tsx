@@ -6,20 +6,31 @@ import { Button } from './common/Button';
 
 import { DELIVERY_CHARGE, FETCH_METHOD } from '../constants';
 import { useNavigate } from 'react-router-dom';
-import { useCartStateValue } from '../recoils/recoilCart';
+import { useCartStateValue, useSetCartState } from '../recoils/recoilCart';
 import { useApiBaseUrlValue } from '../recoils/recoilApiBaseUrl';
 import { useMutation } from '../hooks/useMutation';
-
+import { useSetCheckedState } from '../recoils/recoilChecked';
+import { useQuery } from '../hooks/useQuery';
+import { Point } from '../types';
+import { useState } from 'react';
 
 export const OrderSummary = () => {
   const cart = useCartStateValue();
+  const [usePoint, setUsePoint] = useState<number>(0);
 
   const baseUrl = useApiBaseUrlValue();
-  const { mutation, data} = useMutation(FETCH_METHOD.POST);
+  const { mutation } = useMutation(FETCH_METHOD.POST);
 
-  const cartOrder = cart.map((product)=>{
-    return {"cartItemId":Number(product.id), "quantity":product.quantity}
-  })
+  const { data: point } = useQuery<Point>(baseUrl + '/point', {
+    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+  });
+
+  const cartOrder = cart.map((product) => {
+    return { cartItemId: Number(product.id), quantity: product.quantity };
+  });
+
+  const setCart = useSetCartState();
+  const setChecked = useSetCheckedState();
 
   const totalProductPrice = useTotalProductPrice();
 
@@ -27,21 +38,25 @@ export const OrderSummary = () => {
 
   const DeliveryCharge = DELIVERY_CHARGE;
 
-  // console.log(cart)
-
   const postCart = {
-		"totalProductsPrice": totalProductPrice, // -> 백엔드쪽에서 계산하여 비교하고 통화해야 save
-    "shippingFee": totalProductPrice >= 30000 ? 0 : 3000,
-		"usedPoint": 0,
-    "order": cartOrder
-}
+    totalProductsPrice: totalProductPrice, // -> 백엔드쪽에서 계산하여 비교하고 통화해야 save
+    shippingFee: totalProductPrice >= 30000 ? 0 : 3000,
+    usedPoint: 0,
+    order: cartOrder,
+  };
 
   const orderOnClick = () => {
-    mutation(baseUrl+'/orders', postCart)
-    console.log(postCart)
-    navigate('/order-list')
-  }
+    mutation(baseUrl + '/orders', postCart);
 
+    setCart([]);
+    setChecked({ all: true });
+
+    navigate('/order-list');
+  };
+
+  const pointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsePoint(Number(e.target.value));
+  };
 
   return (
     <>
@@ -59,11 +74,36 @@ export const OrderSummary = () => {
                 <span>{DeliveryCharge.toLocaleString('ko-kr')}원</span>
               </Style.Price>
               <Style.Price>
+                <span>보유 포인트</span>
+                <span>{point ? point.usablePoint.toLocaleString('ko-kr') + '원' : '0원'}</span>
+              </Style.Price>
+              <Style.Price>
+                <span>사용할 포인트</span>
+                <Style.PointWrapper>
+                  <Style.PointInput
+                    type="number"
+                    value={usePoint === 0 ? '' : usePoint}
+                    onChange={pointChange}
+                  ></Style.PointInput>
+                  <span>
+                    {point?.usablePoint && point?.usablePoint >= usePoint
+                      ? ''
+                      : '포인트가 부족합니다.'}
+                  </span>
+                </Style.PointWrapper>
+              </Style.Price>
+              <Style.Price>
                 <span>총 주문금액</span>
                 <span>{(totalProductPrice + DeliveryCharge).toLocaleString('ko-kr')}원</span>
               </Style.Price>
             </Style.Prices>
-            <Button designType="rectangle" onClick={orderOnClick}>주문하기</Button>
+            <Button
+              designType="rectangle"
+              onClick={orderOnClick}
+              disabled={point?.usablePoint && point?.usablePoint >= usePoint ? false : true}
+            >
+              주문하기
+            </Button>
           </Style.Content>
         </Style.OrderSummary>
       </>
@@ -149,8 +189,39 @@ const Style = {
 
     letter-spacing: 0.5px;
 
-    &:first-child {
+    &:first-child,
+    &:nth-child(3) {
       margin-bottom: 20px;
+    }
+  `,
+
+  PointWrapper: styled.div`
+    display: flex;
+    flex-direction: column;
+
+    & > span {
+      margin-top: 9px;
+      color: red;
+      font-size: 9px;
+      text-align: center;
+    }
+  `,
+
+  PointInput: styled.input`
+    width: 120px;
+    height: 32px;
+    font-size: 15px;
+
+    text-align: right;
+
+    border: 0.5px solid gray;
+
+    background-color: rgb(245, 245, 245);
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
     }
   `,
 };
