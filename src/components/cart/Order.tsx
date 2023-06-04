@@ -20,22 +20,16 @@ const Order = () => {
     goToPage(ROUTE_PATH.ORDER_LIST_PAGE);
   };
 
+  const discount = coupon.priceDiscount ? -coupon.priceDiscount : 0;
+
   return (
     <S.Wrapper>
       <S.Title>결제예상금액</S.Title>
       <S.List>
         <Price price={totalPrice} tag='li' description='총 상품가격' />
         <Price price={DELIVERY_FEE} tag='li' description='총 배송비' />
-        <Price
-          price={coupon.priceDiscount ? -coupon.priceDiscount : 0}
-          tag='li'
-          description='할인 쿠폰'
-        />
-        <Price
-          price={totalPrice + DELIVERY_FEE - coupon.priceDiscount}
-          tag='li'
-          description='총 주문금액'
-        />
+        <Price price={discount} tag='li' description='할인 쿠폰' />
+        <Price price={totalPrice + DELIVERY_FEE - discount} tag='li' description='총 주문금액' />
       </S.List>
       <Button css={orderButtonStyle} onClick={handleOrderButtonClick}>
         주문하기
