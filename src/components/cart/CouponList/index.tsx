@@ -1,14 +1,17 @@
+import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import withAvailableCoupon from '@recoil/coupon/selector/withAvailableCoupon';
 import { CouponType } from '@type/couponType';
 import CouponItem from './CouponItem';
 
 interface CouponListProps {
-  coupons: CouponType[];
   onCouponSelect: (coupon: CouponType) => void;
   selectedCoupon: CouponType | null;
 }
 
-function CouponList({ coupons, onCouponSelect, selectedCoupon }: CouponListProps) {
+function CouponList({ onCouponSelect, selectedCoupon }: CouponListProps) {
+  const coupons = useRecoilValue(withAvailableCoupon);
+
   return (
     <Container>
       {coupons.map((coupon) => (

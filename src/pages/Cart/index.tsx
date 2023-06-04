@@ -1,37 +1,15 @@
-import { Suspense, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import { ORDER_PATH } from '@router/router';
-import cartState from '@recoil/cart/cartState';
-import serverState from '@recoil/server/serverState';
-import userState from '@recoil/user/userState';
-import { useCheckCart } from '@hooks/recoil/cart/useCheckCart';
-import CartCouponSelect from '@components/cart/CartCouponSelect';
-import CartItemList from '@components/cart/CartItemList';
+import { Suspense, useState } from 'react';
+import CartListArea from '@components/cart/CartListArea';
 import CouponList from '@components/cart/CouponList';
-import ExpectedPayment from '@components/cart/ExpectedPayment';
 import SkeletonCart from '@components/cart/SkeletonCartItemList';
 import Modal from '@components/common/Modal';
 import Layout from '@components/layout/Layout';
-import { cartItemSelectedById } from '@utils/cart/cart';
-import { getAvailableCouponsByTotalPrice, getDiscountPrice } from '@utils/coupon/coupon';
-import { getCouponApi } from '@utils/coupon/fetchCoupon';
-import { submitOrderApi } from '@utils/order/fetchOrder';
 import { CouponType } from '@type/couponType';
 import * as S from './Cart.style';
 
-const DELIVERY_FEE = 3000;
-
 function Cart() {
-  const userInfo = useRecoilValue(userState);
-  const navigate = useNavigate();
-  const serverName = useRecoilValue(serverState);
-  const cart = useRecoilValue(cartState);
-  const { totalCartPrice, checkedCount } = useCheckCart();
-
-  const [coupons, setCoupons] = useState<CouponType[]>([]);
-  const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedCoupon, setSelectedCoupon] = useState<CouponType | null>(null);
 
   const onModalOpen = () => {
     setIsModalOpen(true);
@@ -45,84 +23,26 @@ function Cart() {
     setSelectedCoupon(coupon);
   };
 
-  const availableCoupon = getAvailableCouponsByTotalPrice({
-    coupons,
-    totalItemsPrice: totalCartPrice,
-  });
-
-  const discountPrice = selectedCoupon
-    ? getDiscountPrice({
-        coupon: selectedCoupon,
-        totalItemsPrice: totalCartPrice,
-      })
-    : 0;
-
-  const onOrderClick = async () => {
-    const selectedCartId = cartItemSelectedById(cart);
-    await submitOrderApi({
-      cartItemIds: selectedCartId,
-      serverName,
-      couponId: selectedCoupon?.id,
-      userInfo,
-    });
-    navigate(ORDER_PATH.COMPLETE, {
-      state: {
-        deliveryFee: DELIVERY_FEE,
-        discountPrice,
-        totalItemsPrice: totalCartPrice,
-        orderItemsCount: checkedCount,
-      },
-    });
+  const resetSelectedCoupon = () => {
+    setSelectedCoupon(null);
   };
-
-  useEffect(() => {
-    const fetchCoupon = async () => {
-      const coupons = await getCouponApi({ serverName, userInfo });
-
-      setCoupons(coupons);
-    };
-
-    fetchCoupon();
-  }, [serverName, userInfo]);
-
-  useEffect(() => {
-    if (discountPrice === 0) {
-      setSelectedCoupon(null);
-    }
-  }, [discountPrice]);
 
   return (
     <Layout>
       <S.CartPageContainer>
         <Suspense fallback={<SkeletonCart />}>
-          <S.Title>든든배송 상품 ({cart.length}개)</S.Title>
-          <S.Main>
-            <CartItemList cart={cart} />
-            <S.SelectAndPaymentWrapper>
-              <S.CartCouponSelectWrapper>
-                <CartCouponSelect
-                  selectedCoupon={selectedCoupon}
-                  onCouponModalOpen={onModalOpen}
-                  availableCouponLength={availableCoupon.length}
-                />
-              </S.CartCouponSelectWrapper>
-              <ExpectedPayment
-                totalItemsPrice={totalCartPrice}
-                deliveryFee={totalCartPrice ? DELIVERY_FEE : 0}
-                discountPrice={discountPrice}
-                onOrderClick={onOrderClick}
-              />
-            </S.SelectAndPaymentWrapper>
-          </S.Main>
+          <CartListArea
+            onModalOpen={onModalOpen}
+            selectedCoupon={selectedCoupon}
+            resetSelectedCoupon={resetSelectedCoupon}
+          />
         </Suspense>
       </S.CartPageContainer>
       {isModalOpen && (
         <Modal onModalClose={onModalClose} title="쿠폰함">
-          <CouponList
-            selectedCoupon={selectedCoupon}
-            onCouponSelect={onSelectCoupon}
-            coupons={availableCoupon}
-          />
+          <Suspense fallback={<SkeletonCart />}>
+            <CouponList selectedCoupon={selectedCoupon} onCouponSelect={onSelectCoupon} />
+          </Suspense>
         </Modal>
       )}
     </Layout>
