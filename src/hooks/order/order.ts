@@ -26,10 +26,14 @@ export const useOrderMutate = () => {
   });
 
   const order = () => {
-    postOrderMutate({
-      cartItemIds: [...selectedItems],
-      couponIds: [...selectedCoupons.keys()],
-    });
+    const cartItemIds = [...selectedItems];
+    const couponIds = [...selectedCoupons.keys()];
+
+    if (cartItemIds.length)
+      postOrderMutate({
+        cartItemIds,
+        couponIds,
+      });
   };
 
   return { order };
