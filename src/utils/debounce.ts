@@ -1,4 +1,4 @@
-let debounceId: NodeJS.Timeout | null = null;
+let debounceId: ReturnType<typeof setTimeout> | null = null;
 
 export const debounce = (callback: VoidFunction) => {
   return () => {
