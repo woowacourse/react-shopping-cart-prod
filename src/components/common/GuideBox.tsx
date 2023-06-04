@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
-import { useRouter } from "../hooks/useRouter";
-import { Button } from "../components";
-import { ROUTER_PATH } from "../router";
+import { useRouter } from "../../hooks/useRouter";
+import { Button } from "../../components";
+import { ROUTER_PATH } from "../../router";
 
 interface GuideType {
   icon: string;

@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import styled, { keyframes } from "styled-components";
 import { useRecoilValue } from "recoil";
-import { toastState } from "../recoil/atom";
+import { toastState } from "../../recoil/atom";
 
 export const Toast = () => {
   const { isShown, message, type } = useRecoilValue(toastState);

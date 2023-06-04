@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import { ERROR_MESSAGE } from "../constants/index";
+import { ERROR_MESSAGE } from "../../constants/index";
 
 interface ErrorType {
   status: keyof typeof ERROR_MESSAGE;

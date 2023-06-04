@@ -1,6 +1,6 @@
 import type { PropsWithChildren } from "react";
 import React from "react";
-import { ERROR_MESSAGE } from "../constants/index";
+import { ERROR_MESSAGE } from "../../constants/index";
 import { ErrorBox } from "./ErrorBox";
 
 interface ErrorBoundaryState {
