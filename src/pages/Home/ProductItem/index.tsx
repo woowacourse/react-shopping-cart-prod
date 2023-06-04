@@ -1,8 +1,8 @@
-import { useRecoilValue } from 'recoil';
-
 import QuantityController from '@Components/QuantityController';
 
-import cartItemState from '@Selector/cartItemState';
+import useCartItems from '@Hooks/useCartItems';
+
+import { SHOPPING_QUANTITY } from '@Constants/index';
 
 import * as S from './style';
 
@@ -17,8 +17,11 @@ type ProductItemProps = {
 };
 
 function ProductItem({ product, width }: ProductItemProps) {
-  const { name, price, imageUrl } = product;
-  const { quantity, cartItemId } = useRecoilValue(cartItemState(product.id));
+  const { getCartItem } = useCartItems();
+  const { name, price, imageUrl, id } = product;
+  const cartItem = getCartItem(id);
+  const quantity = cartItem ? cartItem.quantity : SHOPPING_QUANTITY.MIN;
+  const cartItemId = cartItem ? cartItem.id : undefined;
 
   const textPrice = `${price.toLocaleString()} 원`;
 

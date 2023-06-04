@@ -3,9 +3,9 @@ import { useRecoilValue } from 'recoil';
 
 import PageTitle from '@Components/PageTitle';
 
-import serverState from '@Atoms/serverState';
+import useCartItems from '@Hooks/useCartItems';
 
-import cartItemsAmountState from '@Selector/cartItemsAmountState';
+import serverState from '@Atoms/serverState';
 
 import * as S from './style';
 import CartAmount from '../CartAmount';
@@ -13,10 +13,10 @@ import CartListController from '../CartListController';
 import LoadingCartListController from '../CartListController/LoadingCartListController';
 
 function CartListSubHeader() {
-  const cartAmount = useRecoilValue(cartItemsAmountState);
+  const { cartItemsAmount } = useCartItems();
   const server = useRecoilValue(serverState);
 
-  if (cartAmount === '0') return <></>;
+  if (cartItemsAmount === '0') return <></>;
 
   return (
     <>

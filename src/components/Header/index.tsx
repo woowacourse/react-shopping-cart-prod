@@ -3,9 +3,9 @@ import { useRecoilValue } from 'recoil';
 
 import CartBadge from '@Components/CartBadge';
 
-import serverState from '@Atoms/serverState';
+import useCartItems from '@Hooks/useCartItems';
 
-import cartItemsAmountState from '@Selector/cartItemsAmountState';
+import serverState from '@Atoms/serverState';
 
 import ROUTES from '@Constants/routes';
 
@@ -15,7 +15,9 @@ import * as S from './style';
 
 function Header() {
   const navigate = useNavigate();
-  const cartItemsAmount = useRecoilValue(cartItemsAmountState);
+
+  const { cartItemsAmount } = useCartItems();
+
   const server = useRecoilValue(serverState);
 
   const moveMain = () => navigate('/');

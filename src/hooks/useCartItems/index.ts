@@ -7,13 +7,35 @@ import { fetchData } from '@Utils/api';
 import cartItemsState from '@Atoms/cartItemsState';
 import serverState from '@Atoms/serverState';
 
+import { SHOPPING_QUANTITY } from '@Constants/index';
 import { FETCH_METHOD, FETCH_URL } from '@Constants/servers';
 
 const useCartItems = () => {
   const server = useRecoilValue(serverState);
   const [cartItems, setCartItems] = useRecoilState<CartItemType[]>(cartItemsState);
 
+  const cartItemAmount = () => {
+    const cartItemsAmount = cartItems ? cartItems.length : 0;
+
+    if (cartItemsAmount > SHOPPING_QUANTITY.MAX) return `${SHOPPING_QUANTITY.MAX}+`;
+    return String(cartItemsAmount);
+  };
+
+  const getCartItem = (productId: number) => {
+    const cartItem = cartItems.find((item) => item.product.id === productId);
+
+    return cartItem;
+  };
+
   const isEmpty = cartItems ? !cartItems.length : 0;
+
+  const isAllSelected = cartItems.every((cartItem) => cartItem.isSelected);
+
+  const isAllUnSelected = cartItems.every((cartItem) => !cartItem.isSelected);
+
+  const getSelectedCartItem = () => {
+    return cartItems.filter((item) => item.isSelected);
+  };
 
   const isSelected = (id: number) => {
     const cartItem = cartItems.find((cartItem) => cartItem.id === id);
@@ -36,8 +58,6 @@ const useCartItems = () => {
 
     setCartItems(newCartItems);
   };
-
-  const selectedCartItemsAmount = cartItems.filter((items) => items.isSelected).length;
 
   const toggleSelected = (id: number) => {
     if (!cartItems) return;
@@ -82,14 +102,15 @@ const useCartItems = () => {
     setCartItems(cartItems.filter((cartItem) => !cartItem.isSelected));
   };
 
-  const getSelectedCartItem = () => {
-    return cartItems.filter((item) => item.isSelected);
-  };
-
   return {
     isEmpty,
+    cartItemsAmount: cartItemAmount(),
     selectedCartItem: getSelectedCartItem(),
-    selectedCartItemsAmount,
+    selectedCartItemsAmount: getSelectedCartItem().length,
+    isAllSelected,
+    isAllUnSelected,
+    getCartItem,
+    isSelected,
     updateCartItem,
     toggleSelected,
     toggleAllSelected,

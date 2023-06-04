@@ -9,7 +9,6 @@ import useOrderItems from '@Hooks/useOrderItems';
 
 import selectedCouponIdState from '@Atoms/selectedCouponIdState';
 
-import cartItemsAmountState from '@Selector/cartItemsAmountState';
 import orderAmountState from '@Selector/orderAmountState';
 
 import ROUTES from '@Constants/routes';
@@ -23,8 +22,9 @@ function PaymentAmount() {
 
   const [scrollPosition, setScrollPosition] = useState(0);
 
+  const { cartItemsAmount } = useCartItems();
+
   const { orderAmount, deliveryFee, cartListPrice, finalOrderPrice } = useRecoilValue(orderAmountState);
-  const cartAmount = useRecoilValue(cartItemsAmountState);
   const setSelectedCouponId = useSetRecoilState(selectedCouponIdState);
 
   const { orderCartItems } = useOrderItems();
@@ -59,7 +59,7 @@ function PaymentAmount() {
     };
   }, []);
 
-  if (cartAmount === '0') return <></>;
+  if (cartItemsAmount === '0') return <></>;
 
   return (
     <S.Wrapper isFixScrollPosition={isFixScrollPosition}>
