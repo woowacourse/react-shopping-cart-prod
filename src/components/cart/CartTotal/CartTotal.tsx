@@ -109,7 +109,6 @@ const CartTotal = ({
         <OrderConfirmModal
           selectedCartItemIds={selectedCartItemIds}
           usingPoint={Number(removeComma(usingPoint))}
-          totalProductPrice={totalProductPrice}
           totalPaymentPrice={totalPaymentPrice}
         />
       )}

@@ -15,17 +15,11 @@ import type { CartItem } from '../../../types/cart';
 interface OrderConfirmModalProps {
   selectedCartItemIds: Set<CartItem['id']>;
   usingPoint: number;
-  totalProductPrice: number;
   totalPaymentPrice: number;
 }
 
 const OrderConfirmModal = (props: OrderConfirmModalProps) => {
-  const {
-    selectedCartItemIds,
-    usingPoint,
-    totalProductPrice,
-    totalPaymentPrice,
-  } = props;
+  const { selectedCartItemIds, usingPoint, totalPaymentPrice } = props;
   const orderItems = useRecoilValue(selectedCartItems(selectedCartItemIds));
   const { sendOrder } = useOrder();
   const { updateCart } = useCart();
@@ -99,7 +93,7 @@ const OrderConfirmModal = (props: OrderConfirmModalProps) => {
           <DetailInner>
             <dt>적립 예정 포인트</dt>
             <Point>
-              + {formatPrice(Math.floor(totalProductPrice * 0.025))}
+              + {formatPrice(Math.floor(totalPaymentPrice * 0.025))}
             </Point>
           </DetailInner>
         </Detail>
