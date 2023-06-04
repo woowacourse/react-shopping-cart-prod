@@ -4,12 +4,18 @@ import mockProducts from "../../assets/mockProducts.json";
 import mockMembers from "../../assets/mockMembers.json";
 import mockCoupons from "../../assets/mockCoupons.json";
 import { getSessionStorage, setSessionStorage } from "../utils/storage.ts";
-import { ProductItem, ResponseCartItem } from "../../types/types.ts";
+import {
+  Coupon,
+  NewOrder,
+  ProductItem,
+  ResponseCartItem,
+} from "../../types/types.ts";
 import {
   SESSION_STORAGE_KEY_CART_ITEMS,
   SESSION_STORAGE_KEY_COUPONS,
   SESSION_STORAGE_KEY_POINT,
 } from "../keys.ts";
+import orderItem from "../../components/OrderItem/OrderItem.tsx";
 
 export const handlers = [
   rest.get("/products", (req, res, ctx) => {
@@ -17,10 +23,13 @@ export const handlers = [
   }),
 
   rest.get("/cart-items", (req, res, ctx) => {
-    const originalCartItems = getSessionStorage<ResponseCartItem>(SESSION_STORAGE_KEY_CART_ITEMS, {
-      cartItems: [],
-      totalPrice: 0
-    });
+    const originalCartItems = getSessionStorage<ResponseCartItem>(
+      SESSION_STORAGE_KEY_CART_ITEMS,
+      {
+        cartItems: [],
+        totalPrice: 0,
+      }
+    );
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(originalCartItems));
   }),
@@ -28,10 +37,13 @@ export const handlers = [
   rest.post("/cart-items", async (req, res, ctx) => {
     const { productId } = await req.json();
 
-    const originalCartItems = getSessionStorage<ResponseCartItem>(SESSION_STORAGE_KEY_CART_ITEMS, {
-      cartItems: [],
-      totalPrice: 0
-    });
+    const originalCartItems = getSessionStorage<ResponseCartItem>(
+      SESSION_STORAGE_KEY_CART_ITEMS,
+      {
+        cartItems: [],
+        totalPrice: 0,
+      }
+    );
 
     const newItemId = Date.now();
 
@@ -39,7 +51,9 @@ export const handlers = [
       id: newItemId,
       quantity: 1,
       checked: true,
-      product: mockProducts.find((product) => product.id === productId) as ProductItem,
+      product: mockProducts.find(
+        (product) => product.id === productId
+      ) as ProductItem,
     };
 
     const newCarts = [...originalCartItems.cartItems, newItem];
@@ -49,7 +63,7 @@ export const handlers = [
       totalPrice: newCarts.reduce(
         (acc, cartItem) => acc + cartItem.quantity * cartItem.product.price,
         0
-      )
+      ),
     });
     return res(ctx.delay(100), ctx.status(201), ctx.json(true));
   }),
@@ -60,22 +74,21 @@ export const handlers = [
       SESSION_STORAGE_KEY_CART_ITEMS,
       {
         cartItems: [],
-        totalPrice: 0
+        totalPrice: 0,
       }
     );
 
-    const newCarts = originalCartItems.cartItems.filter((item) => item.id !== Number(cartItemId));
-
-    setSessionStorage<ResponseCartItem>(
-      SESSION_STORAGE_KEY_CART_ITEMS,
-      {
-        cartItems: newCarts,
-        totalPrice: newCarts.reduce(
-          (acc, cartItem) => acc + cartItem.quantity * cartItem.product.price,
-          0
-        )
-      }
+    const newCarts = originalCartItems.cartItems.filter(
+      (item) => item.id !== Number(cartItemId)
     );
+
+    setSessionStorage<ResponseCartItem>(SESSION_STORAGE_KEY_CART_ITEMS, {
+      cartItems: newCarts,
+      totalPrice: newCarts.reduce(
+        (acc, cartItem) => acc + cartItem.quantity * cartItem.product.price,
+        0
+      ),
+    });
     return res(ctx.delay(100), ctx.status(204));
   }),
 
@@ -87,7 +100,7 @@ export const handlers = [
       SESSION_STORAGE_KEY_CART_ITEMS,
       {
         cartItems: [],
-        totalPrice: 0
+        totalPrice: 0,
       }
     );
     const cartItemIndex = originalCartItems.cartItems.findIndex(
@@ -99,7 +112,10 @@ export const handlers = [
       0
     );
 
-    setSessionStorage<ResponseCartItem>(SESSION_STORAGE_KEY_CART_ITEMS, originalCartItems);
+    setSessionStorage<ResponseCartItem>(
+      SESSION_STORAGE_KEY_CART_ITEMS,
+      originalCartItems
+    );
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(true));
   }),
@@ -125,5 +141,59 @@ export const handlers = [
     });
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(point));
+  }),
+
+  rest.post("/orders", async (req, res, ctx) => {
+    const body: NewOrder = await req.json();
+    const { orderItems, orderDiscounts } = body;
+    const { couponIds, point } = orderDiscounts;
+
+    const totalPrice = orderItems.reduce((acc, orderItem) => {
+      const targetPrice = mockProducts.find(
+        (product) => product.id === orderItem.productId
+      );
+      const productPrice = targetPrice === undefined ? 0 : targetPrice.price;
+
+      return acc + orderItem.quantity * productPrice ?? 0;
+    }, 0);
+
+    const targetCoupon = mockCoupons.find(
+      (coupon) => coupon.id === couponIds[0]
+    );
+
+    const discountByCoupon = targetCoupon
+      ? (totalPrice * targetCoupon.discountPercent) / 100 +
+        targetCoupon.discountAmount
+      : 0;
+
+    const realPrice = totalPrice - discountByCoupon - point;
+    const newPoint = realPrice * 0.01; // 배송비를 제외한 결제 금액의 1%를 적립하기로 함
+
+    const cartItems = getSessionStorage<ResponseCartItem>(
+      SESSION_STORAGE_KEY_CART_ITEMS,
+      {
+        cartItems: [],
+        totalPrice: 0,
+      }
+    );
+
+    const orderIds = orderItems.map((orderItem) => orderItem.cartItemId);
+    const newCartItems = cartItems.cartItems.filter(
+      (cartItem) => !orderIds.includes(cartItem.id)
+    );
+
+    setSessionStorage<ResponseCartItem>(SESSION_STORAGE_KEY_CART_ITEMS, {
+      cartItems: newCartItems,
+      totalPrice: newCartItems.reduce(
+        (acc, cartItem) => acc + cartItem.quantity * cartItem.product.price,
+        0
+      ),
+    });
+
+    // 주문 목록에 저장한다.
+    // 기존 장바구니에서 제거한다.
+    // 포인트를 적립한다.
+
+    return res(ctx.delay(100), ctx.status(200), ctx.json(true));
   }),
 ];
