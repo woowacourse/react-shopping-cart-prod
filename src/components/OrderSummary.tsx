@@ -119,11 +119,40 @@ export const OrderSummary = () => {
               <div>{DeliveryCharge.toLocaleString('ko-kr')}</div>
             </Mobile.Price>
             <Mobile.Price>
+              <div>보유 포인트</div>
+              <div>{point ? point.usablePoint.toLocaleString('ko-kr') + '원' : '0원'}</div>
+            </Mobile.Price>
+            <Mobile.Price>
               <div>총 주문금액</div>
               <div>{(totalProductPrice + DeliveryCharge).toLocaleString('ko-kr')}원</div>
             </Mobile.Price>
+            <Mobile.Price>
+              <div>사용할 포인트</div>
+              <Mobile.PointWrapper>
+                <Mobile.PointInput
+                  type="number"
+                  value={usePoint === 0 ? '' : usePoint}
+                  onChange={pointChange}
+                ></Mobile.PointInput>
+              </Mobile.PointWrapper>
+            </Mobile.Price>
+            <Mobile.Price>
+              <Mobile.PointWrapper>
+                <div>
+                  {point?.usablePoint && point?.usablePoint >= usePoint
+                    ? ''
+                    : '포인트 초과.'}
+                </div>
+              </Mobile.PointWrapper>
+            </Mobile.Price>
           </Mobile.Prices>
-          <Mobile.OrderButton>주문하기</Mobile.OrderButton>
+          <Button
+              designType="rectangle-mobile"
+              onClick={orderOnClick}
+              disabled={point?.usablePoint && point?.usablePoint >= usePoint ? false : true}
+            >
+              주문하기
+            </Button>
         </Mobile.OrderSummary>
       </>
     </>
@@ -236,7 +265,7 @@ const Mobile = {
     justify-content: space-between;
 
     width: 100%;
-    height: 80px;
+    height: 150px;
 
     padding: 16px;
 
@@ -278,15 +307,33 @@ const Mobile = {
     }
   `,
 
-  OrderButton: styled.button`
+  PointWrapper: styled.div`
+    display: flex;
+    flex-direction: row;
+
+    & > div {
+      margin-top: 9px;
+      color: red;
+      font-size: 9px;
+      text-align: center;
+    }
+  `,
+
+  PointInput: styled.input`
     width: 100px;
+    height: 15px;
+    font-size: 15px;
 
-    background-color: var(--primary-color);
-    color: var(--grey-100);
+    text-align: right;
 
-    font-weight: 600;
+    border: 0.5px solid gray;
 
-    border: none;
-    border-radius: 10px;
+    background-color: rgb(245, 245, 245);
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
   `,
 };

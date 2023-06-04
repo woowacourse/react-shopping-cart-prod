@@ -52,6 +52,17 @@ const Style = {
 
     background: #f6f6f6;
     border: 1px solid #aaaaaa;
+
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+
+    letter-spacing: 0.5px;
+
+    @media screen and (max-width: 700px) {
+      font-size: 15px;
+    }
+
   `,
 
   OrderNumberAndDate: styled.div`
@@ -59,21 +70,10 @@ const Style = {
   `,
 
   OrderNumber: styled.span`
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-
-    letter-spacing: 0.5px;
-
     color: #333333;
   `,
 
   OrderDate: styled.span`
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
-
-    letter-spacing: 0.5px;
 
     margin-left: 40px;
 
@@ -81,11 +81,7 @@ const Style = {
   `,
 
   OrderDetail: styled.span`
-    font-size: 20px;
-    line-height: 24px;
-
     text-align: right;
-    letter-spacing: 0.5px;
 
     cursor: pointer;
 

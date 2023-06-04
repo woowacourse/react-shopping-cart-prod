@@ -46,7 +46,7 @@ const Style = {
       width: 96px;
       height: 98px;
 
-      margin: 0 6px;
+      margin: 10px;
     }
   `,
 
@@ -64,6 +64,10 @@ const Style = {
     margin: 42px 0 30px 0;
 
     color: #333333;
+
+    @media screen and (max-width: 500px) {
+      margin: 30px 0 10px 0;
+    }
   `,
 
   ProductPriceAndQuantity: styled.span`
@@ -74,5 +78,9 @@ const Style = {
     letter-spacing: 0.5px;
 
     color: #888888;
+
+    @media screen and (max-width: 500px) {
+      font-size: 15px;
+    }
   `,
 };
