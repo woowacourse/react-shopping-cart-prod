@@ -1,4 +1,4 @@
-import { atom, selector, selectorFamily, useRecoilState, useRecoilValue } from 'recoil';
+import { atom, selector, selectorFamily, useRecoilValue } from 'recoil';
 
 import { fetchAPI } from '@api/fetchAPI';
 import { localStorageEffect } from './localStorageEffect';
@@ -59,7 +59,7 @@ export const findCartItemByProductIdSelector = selectorFamily<CartItem | undefin
 export const cartRepository = selector({
   key: 'cartRepository',
   get: ({ getCallback }) => {
-    const fetchCartItems = getCallback(({ set, snapshot }) => async () => {
+    const fetchCartItems = getCallback(({ set, snapshot }) => async (cartItemId?: number) => {
       const localCartItems = await snapshot.getPromise(cartState);
 
       const cartItems = await fetchAPI('/cart-items', {
@@ -68,64 +68,91 @@ export const cartRepository = selector({
         },
       });
 
+      const isChecked = (targetId: number) => {
+        if (targetId === cartItemId) return true;
+
+        return localCartItems.find((localItem) => localItem.id === targetId)?.checked;
+      };
+
       const cartItemsWithCheckedState = cartItems.map((cartItem: any) => ({
         ...cartItem,
-        checked: localCartItems.find((item) => item.id === cartItem.id)?.checked,
+        checked: isChecked(cartItem.id),
       }));
 
       set(cartState, cartItemsWithCheckedState);
     });
 
-    const addCartItem = (body: { productId: number }) => {
-      getCallback(() => async () => {
-        await fetchAPI('/cart-items', {
-          method: 'POST',
-          headers: {
-            Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-            'Content-Type': 'application/json',
-          },
-          body,
-        });
+    const addCartItem = getCallback(() => async (body: { productId: number }) => {
+      const { cartItemId } = await fetchAPI('/cart-items', {
+        method: 'POST',
+        headers: {
+          Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+          'Content-Type': 'application/json',
+        },
+        body,
+      });
 
-        await fetchCartItems();
-      })();
+      await fetchCartItems(cartItemId);
+    });
+
+    const updateQuantity = getCallback(() => async (cartItemId: number, quantity: number) => {
+      await fetchAPI(`/cart-items/${cartItemId}`, {
+        method: 'PATCH',
+        headers: {
+          Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+          'Content-Type': 'application/json',
+        },
+        body: {
+          quantity,
+        },
+      });
+
+      await fetchCartItems();
+    });
+
+    const toggleCheckbox = getCallback(({ snapshot, set }) => async (cartItemId: number) => {
+      const cartItems = await snapshot.getPromise(cartState);
+      const updatedCartItems = cartItems.map((item) => {
+        if (item.id === cartItemId) {
+          return { ...item, checked: !item.checked };
+        }
+
+        return item;
+      });
+
+      set(cartState, updatedCartItems);
+    });
+
+    const toggleAllCheckboxBy = getCallback(({ snapshot, set }) => async (checked: boolean) => {
+      const cartItems = await snapshot.getPromise(cartState);
+      const updatedCartItems = cartItems.map((item) => ({ ...item, checked }));
+
+      set(cartState, updatedCartItems);
+    });
+
+    const deleteCartItem = getCallback(() => async (cartId: number) => {
+      await fetchAPI(`/cart-items/${cartId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+        },
+      });
+
+      await fetchCartItems();
+    });
+
+    return {
+      fetchCartItems,
+      addCartItem,
+      deleteCartItem,
+      updateQuantity,
+      toggleCheckbox,
+      toggleAllCheckboxBy,
     };
-
-    const updateQuantity = (cartItemId: number, quantity: number) => {
-      getCallback(() => async () => {
-        await fetchAPI(`/cart-items/${cartItemId}`, {
-          method: 'PATCH',
-          headers: {
-            Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-            'Content-Type': 'application/json',
-          },
-          body: {
-            quantity,
-          },
-        });
-
-        await fetchCartItems();
-      })();
-    };
-
-    const deleteCartItem = (cartId: number) => {
-      getCallback(() => async () => {
-        await fetchAPI(`/cart-items/${cartId}`, {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
-          },
-        });
-
-        await fetchCartItems();
-      })();
-    };
-
-    return { fetchCart: fetchCartItems, addCartItem, deleteCartItem, updateQuantity };
   },
 });
 
-export const useCartState = () => useRecoilState(cartState);
+export const useCartItems = () => useRecoilValue(cartState);
 
 export const useCheckedCartItems = () => useRecoilValue(checkedCartItemsSelector);
 

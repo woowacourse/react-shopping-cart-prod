@@ -3,26 +3,18 @@ import * as styled from './CartItemList.styled';
 import { Checkbox } from '@components/styled/Checkbox';
 import { Stepper } from '@components/common/Stepper/Stepper';
 
-import { useCartRepository, useCartState } from '@recoils/cartAtoms';
+import { useCartRepository, useCartItems } from '@recoils/cartAtoms';
 
 import { DeleteIcon } from '@assets/svg';
 
 import type { CartItem } from '../../../../types';
 
 export const CartItemList = () => {
-  const [cartItems, setCartState] = useCartState();
-  const { deleteCartItem } = useCartRepository();
+  const cartItems = useCartItems();
+  const { deleteCartItem, toggleCheckbox } = useCartRepository();
 
   const onChangeCheckBox = (cartItemId: CartItem['id']) => {
-    setCartState((prev) => {
-      return prev.map((item) => {
-        if (item.id === cartItemId) {
-          return { ...item, checked: !item.checked };
-        }
-
-        return item;
-      });
-    });
+    toggleCheckbox(cartItemId);
   };
 
   const onClickDeleteIcon = (cartItemId: CartItem['id']) => {

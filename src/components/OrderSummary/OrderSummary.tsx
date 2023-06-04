@@ -10,7 +10,7 @@ import { useFetchOrderPolicy } from '@recoils/orderPolicyAtoms';
 
 import { usePoint } from '@hooks/usePoint';
 
-export const OrderSummary = ({ fetchCart }: any) => {
+export const OrderSummary = ({ fetchCartItems }: any) => {
   const navigate = useNavigate();
 
   const { fetchOrder } = useOrdersRepository();
@@ -41,7 +41,7 @@ export const OrderSummary = ({ fetchCart }: any) => {
     });
 
     response.then(async ({ orderId }) => {
-      await fetchCart();
+      await fetchCartItems();
       navigate(`/orders/${orderId}`);
     });
   };

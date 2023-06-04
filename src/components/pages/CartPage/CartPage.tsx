@@ -8,17 +8,17 @@ import { Suspense, useEffect } from 'react';
 import { Spinner } from '@components/common/Spinner/Spinner';
 
 export const CartPage = () => {
-  const { fetchCart } = useCartRepository();
+  const { fetchCartItems } = useCartRepository();
 
   useEffect(() => {
-    fetchCart();
+    fetchCartItems();
   }, []);
 
   return (
     <styled.Main>
       <Cart />
       <Suspense fallback={<Spinner size="lg" />}>
-        <OrderSummary fetchCart={fetchCart} />
+        <OrderSummary fetchCartItems={fetchCartItems} />
       </Suspense>
     </styled.Main>
   );

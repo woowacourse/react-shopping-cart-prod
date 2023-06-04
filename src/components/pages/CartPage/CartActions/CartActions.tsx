@@ -5,22 +5,20 @@ import { Checkbox } from '@components/styled/Checkbox';
 
 import {
   useCartRepository,
-  useCartState,
+  useCartItems,
   useCheckedCartItems,
   useIsAllCartChecked,
 } from '@recoils/cartAtoms';
 
 export const CartActions = () => {
-  const [cartItems, setCartItems] = useCartState();
+  const cartItems = useCartItems();
   const isAllChecked = useIsAllCartChecked();
   const checkedCartItems = useCheckedCartItems();
 
-  const { deleteCartItem } = useCartRepository();
+  const { deleteCartItem, toggleAllCheckboxBy } = useCartRepository();
 
   const onChangeAllCheckbox = ({ target: { checked } }: ChangeEvent<HTMLInputElement>) => {
-    setCartItems((prev) => {
-      return prev.map((item) => ({ ...item, checked }));
-    });
+    toggleAllCheckboxBy(checked);
   };
 
   const onClickDeleteCheckedItemsButton = () => {

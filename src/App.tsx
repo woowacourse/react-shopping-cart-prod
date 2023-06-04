@@ -5,10 +5,10 @@ import { useCartRepository } from '@recoils/cartAtoms';
 import { Router } from './router';
 
 export const App = () => {
-  const { fetchCart } = useCartRepository();
+  const { fetchCartItems } = useCartRepository();
 
   useEffect(() => {
-    fetchCart();
+    fetchCartItems();
   }, []);
 
   return (
