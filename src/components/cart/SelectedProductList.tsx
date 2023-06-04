@@ -19,7 +19,7 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
   const server = useRecoilValue(serverState);
   const { api } = useFetchData();
   const { removeItemFromCart } = useCart();
-  const { handleModalOpen, isModalOpen, setIsModalOpen, initialState } = useModal();
+  const { handleModalOpen, isModalOpen, setIsModalOpen, initialState, coupon } = useModal();
 
   const initialCheckedItemIdList = cart.map((item) => item.id);
 
@@ -89,7 +89,7 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
         initialState={initialState}
         direction='center'
         modalStyle={modalStyle}
-        buttonContent='쿠폰을 선택했어요'
+        buttonContent={coupon.priceDiscount ? '쿠폰을 선택했어요' : '나중에 선택할게요'}
         modalButtonStyle={closeButtonStyle}
       >
         <CouponList />
