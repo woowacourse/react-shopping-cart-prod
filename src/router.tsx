@@ -6,12 +6,14 @@ import { OrderDetail } from './pages/OrderDetail';
 import { Layout } from './components/Layout';
 import { PAGE_PATH } from './constants/path';
 import { Payment } from './pages/Payment';
+import { NotFound } from './pages/NotFound';
 
 const router = createBrowserRouter(
   [
     {
       path: PAGE_PATH.HOME,
       element: <Layout />,
+      errorElement: <NotFound />,
       children: [
         { path: PAGE_PATH.HOME, element: <Home /> },
         { path: PAGE_PATH.CART, element: <Cart /> },
