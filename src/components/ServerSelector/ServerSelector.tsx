@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../constant';
 import cartState from '../../globalState/atoms/cartState';
 import serverNameState from '../../globalState/atoms/serverName';
@@ -10,9 +11,11 @@ import { worker } from '../../mocks/browser';
 const ServerSelector = () => {
   const [serverName, setServerName] = useRecoilState(serverNameState);
   const resetCart = useResetRecoilState(cartState);
+  const navigate = useNavigate();
 
   useEffect(() => {
     resetCart();
+    navigate('/', { replace: true });
   }, [serverName]);
 
   const handleServerNameSelectChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
