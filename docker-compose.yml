@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  backend-1:
+    build:
+      context: ./docker
+      dockerfile: ./backend/Dockerfile
+      args:
+        GITHUB_REPOSITORY: https://github.com/kevstevie/jwp-shopping-order
+        GITHUB_REPOSITORY_BRANCH: step2
+    ports:
+      - 8001:8080
+
+  backend-2:
+    build:
+      context: ./docker
+      dockerfile: ./backend/Dockerfile
+      args:
+        GITHUB_REPOSITORY: https://github.com/kiarakim/jwp-shopping-order
+        GITHUB_REPOSITORY_BRANCH: step2
+    ports:
+      - 8002:8080
+
+  backend-3:
+    build:
+      context: ./docker
+      dockerfile: ./backend/Dockerfile
+      args:
+        GITHUB_REPOSITORY: https://github.com/MoonJeWoong/jwp-shopping-order
+        GITHUB_REPOSITORY_BRANCH: step2
+    ports:
+      - 8003:8080
