@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { PATH } from '../../constants';
 import { useQuery } from '../../hooks/useQuery';
 import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
 import { UserOrdersType } from '../../types';
@@ -12,12 +14,21 @@ export const OrderList = () => {
     Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
   });
 
+  if (!data) return <></>;
+
   return (
     <Layout>
       <Style.OrderListWrapper>
         <Style.PageTitle>주문 목록</Style.PageTitle>
         <Style.Main>
-          {data && data.map((order) => <OrderedProductList key={order.orderId} order={order} />)}
+          {data.length !== 0 ? (
+            data.map((order) => <OrderedProductList key={order.orderId} order={order} />)
+          ) : (
+            <Style.NoExistItemsMessage>
+              <p>장바구니에 등록된 상품이 존재하지 않아요🥲</p>
+              <Link to={PATH.HOME}>상품 보러가기🚀</Link>
+            </Style.NoExistItemsMessage>
+          )}
         </Style.Main>
       </Style.OrderListWrapper>
     </Layout>
@@ -60,6 +71,29 @@ const Style = {
       font-size: 20px;
 
       margin-bottom: 80px;
+    }
+  `,
+
+  NoExistItemsMessage: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 200px;
+
+    color: var(--grey-300);
+
+    & > p {
+      font-size: 20px;
+      margin-bottom: 30px;
+
+      line-height: 25px;
+    }
+
+    & > a {
+      color: var(--grey-400);
+      border-bottom: 3px solid var(--grey-400);
     }
   `,
 };
