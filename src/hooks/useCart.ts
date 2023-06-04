@@ -14,6 +14,7 @@ import { PATH } from '../constants/path';
 import { cartItemQuantityState, cartListCheckoutCostsState, cartListState } from '../store/cart';
 import { errorModalMessageState } from '../store/error';
 import { currentMemberInformationState } from '../store/member';
+import { orderListState } from '../store/order';
 import { currentServerState } from '../store/server';
 import { APIErrorMessage } from '../types/api';
 import { CartItemData } from '../types/cart';
@@ -159,6 +160,7 @@ const useCart = () => {
             navigate(`${PATH.ORDER_SUCCESS}?orderId=${orderId}`);
             await refreshCart();
             refresh(currentMemberInformationState);
+            refresh(orderListState);
           },
         [refreshCart, navigate]
       ),

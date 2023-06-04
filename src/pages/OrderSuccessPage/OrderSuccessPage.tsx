@@ -3,7 +3,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Heading from '../../components/common/Heading/Heading';
 import { PATH } from '../../constants/path';
-import { useOrder } from '../../hooks/useOrder';
 import * as S from './OrderSuccessPage.styles';
 
 const OrderSuccessPage = () => {
@@ -11,12 +10,9 @@ const OrderSuccessPage = () => {
   const [searchParams] = useSearchParams();
   const orderId = searchParams.get('orderId');
 
-  const { refreshOrderList } = useOrder();
-
   const handleOrderDetailButtonClick = useCallback(() => {
-    refreshOrderList();
     navigate(`${PATH.ORDER}/${orderId}`);
-  }, [navigate, orderId, refreshOrderList]);
+  }, [navigate, orderId]);
 
   return (
     <S.OrderSuccessMessageContainer>

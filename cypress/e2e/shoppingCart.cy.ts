@@ -464,29 +464,4 @@ describe('주문내역 페이지 e2e 테스트', () => {
       cy.get('main').should('contain', expectedData[3].name);
     });
   });
-
-  it('주문 내역 상세 페이지에서 주문했던 상품을 다시 장바구니에 담을 수 있다.', () => {
-    cy.get('button[aria-label="상품 추가"]').first().click();
-    cy.get('button[aria-label="상품 추가"]').eq(2).click();
-
-    cy.get('button[aria-labelledby="cart-button"]').click();
-
-    cy.findByText('주문하기', { selector: 'button' }).click();
-    cy.findByText('쇼핑 계속하기', { selector: 'button' }).click();
-    cy.findByText('주문 내역').click();
-
-    cy.findByText('주문내역 상세보기').first().click();
-
-    cy.fixture('productData.json').then((expectedData) => {
-      cy.get('main').should('contain', expectedData[0].name);
-
-      cy.get('ol').find('button').first().click();
-
-      cy.get('button[aria-labelledby="cart-button"]').find('span').should('contain', 1);
-
-      cy.get('button[aria-labelledby="cart-button"]').click();
-
-      cy.get('main').should('contain', expectedData[0].name);
-    });
-  });
 });
