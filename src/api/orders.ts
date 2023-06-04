@@ -38,7 +38,8 @@ export const getOrders = async (serverId: ServerId): Promise<Order[]> => {
 
   const data = await response.json();
 
-  if (!response.ok) throw new Error(data.message);
+  if (!response.ok)
+    throw new Error(data.message ?? "오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
 
   return data;
 };
