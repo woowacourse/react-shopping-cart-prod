@@ -16,9 +16,9 @@ const useShoppingCart = () => {
 
       setCheckedCartProductIds((prev) => new Set(prev.add(cartProductId)));
       setCartProducts((prev) => {
-        const newCartProducts = new Map(prev.entries());
+        prev.set(cartProductId, { quantity: 1, product });
 
-        return newCartProducts.set(cartProductId, { quantity: 1, product });
+        return new Map(prev.entries());
       });
     } catch (error) {
       console.error(error);
@@ -47,12 +47,12 @@ const useShoppingCart = () => {
     }
 
     setCartProducts((prev) => {
-      const newCartProducts = new Map(prev.entries());
-
-      return newCartProducts.set(cartProductIdStore[id], {
+      prev.set(cartProductIdStore[id], {
         quantity: prevQuantity - 1,
         product: targetCartProduct.product,
       });
+
+      return new Map(prev.entries());
     });
   };
 
@@ -71,12 +71,12 @@ const useShoppingCart = () => {
     }
 
     setCartProducts((prev) => {
-      const newCartProducts = new Map(prev.entries());
-
-      return newCartProducts.set(cartProductIdStore[id], {
+      prev.set(cartProductIdStore[id], {
         quantity: prevQuantity + 1,
         product: targetCartProduct.product,
       });
+
+      return new Map(prev.entries());
     });
   };
 
