@@ -1,42 +1,23 @@
-import api from 'apis';
 import { getOrder } from 'apis/orders';
 import FlexBox from 'components/@common/FlexBox';
 import Spinner from 'components/@common/Loader';
+import LoadingErrorCard from 'components/LoadingErrorCard/LoadingErrorCard';
 import OrderItem from 'components/OrderItem/OrderItem';
 import useFetch from 'hooks/useFetch';
-import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { atom, selectorFamily, useRecoilValue, useRecoilValueLoadable } from 'recoil';
 import styled from 'styled-components';
 import { Order } from 'types/order';
 
-// Define an async selector to fetch the order based on the ID
-const orderSelector = selectorFamily({
-  key: 'orderSelector',
-  get:
-    (orderId: number) =>
-    async ({ get }) => {
-      const fetchedData = await getOrder(orderId);
-      console.log(fetchedData);
-      const order = fetchedData;
-      console.log(order);
-      return order;
-    },
-});
-
 const OrderDetailPage = () => {
   const orderId = Number(useLocation().pathname.split('/')[2]);
-  console.log(orderId);
-  const { state, contents: order } = useRecoilValueLoadable(orderSelector(orderId));
 
-  // states: 'loading', 'hasError', 'hasValue'
-  if (state === 'loading') {
-    return <Spinner />;
-  }
+  const { data, isLoading, errorState, fetchData } = useFetch<Order>(() => getOrder(orderId));
 
-  if (state === 'hasError') {
-    throw Error;
-  }
+  if (isLoading) return <Spinner />;
+  if (errorState?.isError) return <LoadingErrorCard onClickRetryButton={fetchData} />;
+  if (!data) return null;
+
+  const order = data;
 
   return (
     <OrderDetailPageContainer flexDirection="column">
@@ -45,12 +26,12 @@ const OrderDetailPage = () => {
         {order && <OrderItem order={order} type="detail" />}
         <PriceSection flexDirection="column" gap="10px">
           <Container justify="space-between">
-            <SubTitle>총 상품가격</SubTitle>
-            {order && <ProductTotalPrice>{order.totalPrice}</ProductTotalPrice>}
+            <SubTitle>총 금액</SubTitle>
+            {order && <ProductTotalPrice>{order.totalPrice.toLocaleString('ko-KR')}원</ProductTotalPrice>}
           </Container>
           <Container justify="space-between">
-            <SubTitle>사용된 포인트</SubTitle>
-            {order && <ProductTotalPrice>{order.usedPoint}</ProductTotalPrice>}{' '}
+            <SubTitle>사용 포인트</SubTitle>
+            {order && <ProductTotalPrice>{order.usedPoint.toLocaleString('ko-KR')}p</ProductTotalPrice>}
           </Container>
         </PriceSection>
       </SectionContainer>
