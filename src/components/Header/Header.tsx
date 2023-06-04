@@ -2,13 +2,15 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { ReactComponent as ShoppingCartIcon } from '../../assets/icon/tiffany-co.svg';
 import { WIDTH } from '../../constants/mediaQuery';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import { ServerName, serverAtom } from '../../store/server';
 import CartTextButton from './CartTextButton/CartTextButton';
 import { PATH } from '../../constants/path';
 import { cartAtom } from '../../store/cart';
+import { loginState } from '../../store/loginState';
 
 const Header = () => {
+  const isSignedIn = useRecoilValue(loginState);
   const [serverName, setServerName] = useRecoilState(serverAtom);
   const resetCartList = useResetRecoilState(cartAtom);
 
@@ -38,15 +40,20 @@ const Header = () => {
           <option value='IRAE'>이레</option>
           <option value='ERROR'>에러</option>
         </ServerSelectBox>
-        <Link to={PATH.ORDER_LIST_PAGE}>
-          <Button>Orders</Button>
-        </Link>
-        <Link to={PATH.CART_PAGE}>
-          <CartTextButton />
-        </Link>
-        <Link to={PATH.SIGN_IN}>
-          <Button>login</Button>
-        </Link>
+        {isSignedIn ? (
+          <>
+            <Link to={PATH.ORDER_LIST_PAGE}>
+              <Button>Orders</Button>
+            </Link>
+            <Link to={PATH.CART_PAGE}>
+              <CartTextButton />
+            </Link>
+          </>
+        ) : (
+          <Link to={PATH.SIGN_IN}>
+            <Button>login</Button>
+          </Link>
+        )}
       </ButtonContainer>
     </Container>
   );
