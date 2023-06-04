@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import OrderCartItem from '../components/OrderCartItem';
 import OrderListItem from '../components/OrderListItem';
+import LoadingPlaceholder from '../components/common/LoadingPlaceholder';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import userOrderDetailState from '../recoil/user/userOrderDetailState';
 import type { Order } from '../types/Order';
@@ -58,13 +59,20 @@ const OrderDonePage = () => {
 
   return (
     <Content>
-      <Title>주문이 완료되었습니다!</Title>
+      <AwaitRecoilState
+        state={userOrderDetailState(orderId)}
+        loadingElement={<LoadingPlaceholder title="주문 정보를 불러오고 있습니다 ..." />}
+      >
+        {(order) => (
+          <>
+            <Title>주문이 완료되었습니다!</Title>
 
-      <OrderContainer>
-        <AwaitRecoilState state={userOrderDetailState(orderId)}>
-          {(order) => <OrderDone order={order} />}
-        </AwaitRecoilState>
-      </OrderContainer>
+            <OrderContainer>
+              <OrderDone order={order} />
+            </OrderContainer>
+          </>
+        )}
+      </AwaitRecoilState>
     </Content>
   );
 };

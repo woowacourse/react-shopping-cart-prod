@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import OrderCartItem from '../components/OrderCartItem';
 import OrderListItem from '../components/OrderListItem';
+import LoadingPlaceholder from '../components/common/LoadingPlaceholder';
 import PageHeader from '../components/page/PageHeader';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import userOrdersState from '../recoil/user/userOrdersState';
@@ -39,7 +40,10 @@ const OrderListPage = () => {
     <>
       <PageHeader>주문 목록</PageHeader>
 
-      <AwaitRecoilState state={userOrdersState}>
+      <AwaitRecoilState
+        state={userOrdersState}
+        loadingElement={<LoadingPlaceholder title="주문 목록을 불러오는 중입니다 ..." />}
+      >
         {(orders) => (
           <OrderList>
             {orders.map((order) => (

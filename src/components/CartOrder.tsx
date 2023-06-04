@@ -8,6 +8,7 @@ import userCartPointsState from '../recoil/user/userCartPointsState';
 import userRemoteCartItemsState from '../recoil/user/userRemoteCartItemsState';
 import Button from './common/Button';
 import PriceFormat from './common/PriceFormat';
+import Spinner from './common/Spinner';
 import AwaitRecoilState from './utils/AwaitRecoilState';
 
 const CartOrderContainer = styled.form`
@@ -116,7 +117,7 @@ const CartOrder = (props: CartOrderProps) => {
               <PriceFieldName>적립 포인트</PriceFieldName>
 
               <PriceFieldValue>
-                <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
+                <AwaitRecoilState state={userCartPointsState} loadingElement={<Spinner />}>
                   {(cartPoints) => (
                     <>
                       <PriceFormat price={cartPoints.expectedSavePoints} unit="P" /> (
@@ -138,7 +139,9 @@ const CartOrder = (props: CartOrderProps) => {
 
             <ContentDivider />
 
-            <Button disabled={orderResult.isLoading || isSynchronizing}>주문하기</Button>
+            <Button disabled={orderResult.isLoading || isSynchronizing}>
+              {orderResult.isLoading ? <Spinner /> : '주문하기'}
+            </Button>
           </>
         )}
       </Content>

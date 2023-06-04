@@ -4,6 +4,7 @@ import CartEmptyPlaceholder from '../components/CartEmptyPlaceholder';
 import CartItemListItem from '../components/CartItemListItem';
 import CartOrder from '../components/CartOrder';
 import Checkbox from '../components/common/Checkbox';
+import LoadingPlaceholder from '../components/common/LoadingPlaceholder';
 import PageHeader from '../components/page/PageHeader';
 import AwaitRecoilState from '../components/utils/AwaitRecoilState';
 import userCartItemsRepository from '../recoil/user/userCartItemsRepository';
@@ -119,7 +120,10 @@ const CartPage = () => {
     <>
       <PageHeader>장바구니</PageHeader>
 
-      <AwaitRecoilState state={userCartItemsState}>
+      <AwaitRecoilState
+        state={userCartItemsState}
+        loadingElement={<LoadingPlaceholder title="장바구니 정보를 불러오는 중입니다 ..." />}
+      >
         {(cartItems) =>
           cartItems.length === 0 ? (
             <CartEmptyPlaceholder />
