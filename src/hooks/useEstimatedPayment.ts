@@ -28,9 +28,10 @@ const useEstimatedPayment = (usePoint: number) => {
     ? totalProductPrice + totalDeliveryFee - usePoint
     : 0;
 
-  const checkedCartProduct = useRecoilValue(checkedItemAtom);
   const hostName = useRecoilValue(hostNameAtom);
   const [cartProducts, setCartProducts] = useRecoilState(cartProductAtom);
+  const [checkedCartProduct, setCheckedCartProduct] =
+    useRecoilState(checkedItemAtom);
 
   const submitOrder = () => {
     const cartItems = cartProducts
@@ -57,6 +58,7 @@ const useEstimatedPayment = (usePoint: number) => {
       })
       .then(() => {
         setCartProducts([]);
+        setCheckedCartProduct([]);
         navigate('/orders/complete');
       })
       .catch((error) => {
