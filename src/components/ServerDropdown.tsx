@@ -28,7 +28,11 @@ const ServerDropdown = () => {
 
 const S = {
   Dropdown: styled.select`
-    width: 50px;
+    width: 60px;
+    height: 40px;
+    font-size: 18px;
+    background-color: transparent;
+    border: none;
   `,
 };
 

@@ -54,12 +54,16 @@ const S = {
     }
   `,
   MinusButton: styled(Button)`
+    background-color: white;
     border: solid var(--gray-color-200);
     border-width: 1px 0px 1px 1px;
+    border-radius: 7px 0px 0px 7px;
   `,
   PlusButton: styled(Button)`
+    background-color: white;
     border: solid var(--gray-color-200);
     border-width: 1px 1px 1px 0px;
+    border-radius: 0px 7px 7px 0px;
   `,
 };
 
