@@ -1,3 +1,5 @@
+import type { LoginResponse } from '../../types';
+
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -20,14 +22,20 @@ export default function LoginForm() {
   const [password, setPassword] = useState('');
   const { showToast } = useToast();
 
-  const submitUser = async (event: React.FormEvent) => {
+  const login = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const token = await postLogin(serverName, name, password);
+      const response = await postLogin(serverName, name, password);
+      if (!response.ok) {
+        const body = await response.json();
+        showToast('warning', body.errorMessage);
+      }
+
+      const { token }: LoginResponse = await response.json();
       setToken(token);
       navigate('/');
-    } catch (error) {
-      showToast('warning', '아이디, 비밀번호를 확인해주세요');
+    } catch {
+      showToast('warning', '로그인 통신 에러');
     }
   };
 
@@ -52,7 +60,7 @@ export default function LoginForm() {
             />
           </InputBox>
         </div>
-        <Button type="submit" onClick={submitUser} disabled={!validInput}>
+        <Button type="submit" onClick={login} disabled={!validInput}>
           로그인
         </Button>
       </LoginFormWrapper>

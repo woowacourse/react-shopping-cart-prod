@@ -11,20 +11,22 @@ export const MOCK_URL = 'https://backend';
 
 export const SKELETONS_LENGTH = 8;
 
-export const REDIRECT_MESSAGE = '로그인이 필요한 페이지 입니다.';
+export const NO_TOKEN_REDIRECT_MESSAGE = '로그인이 필요한 페이지 입니다.';
 
 export const API_INFO_MESSAGE = {
-  postJoin: '🎉 가입을 축하드립니다! 쿠폰을 확인해주세요. 🎉',
+  postJoin: '🎉 가입을 축하드립니다. 쿠폰함을 확인해주세요! 🎉',
   postCartItem: '장바구니에 상품을 담았어요! 😆',
   patchCartItemQuantity: '수량을 변경했어요 🙂',
   deleteCartItem: '장바구니에서 상품을 뺐어요!',
 };
 
 export const API_ERROR_MESSAGE = {
+  postJoin: '회원가입 요청이 안됐어요! 다시 시도해 주세요 🙇',
+  postLogin: '로그인 요청이 안됐어요! 다시 시도해 주세요 🙇',
   getProducts: '상품 목록을 가져오지 못했어요! 페이지를 새로고침 해주세요 🙇',
   getCart: '장바구니 목록을 가져오지 못했어요! 페이지를 새로고침 해주세요 🙇',
   getCoupons: '쿠폰 목록을 가져오지 못했어요! 페이지를 새로고침 해주세요 🙇',
-  postCartItem: '상품이 추가되지 않았어요! 다시 시도해주세요 🙇',
+  postCartItem: '상품이 추가되지 않았어요! 나중에 다시 시도해주세요 🙇',
   patchCartItemQuantity: '수량이 변경되지 않았어요! 다시 시도해주세요 🙇',
   postOrder: '주문이 되지 않았어요! 다시 시도해주세요 🙇',
   deleteCartItem: '아이템 삭제가 안됐어요! 다시 시도해 주세요 🙇',

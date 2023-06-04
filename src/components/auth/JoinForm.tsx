@@ -1,3 +1,5 @@
+import type { LoginResponse } from '../../types';
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -9,6 +11,7 @@ import InputBox from '../common/InputBox';
 import useToast from '../../hooks/useToast';
 import { tokenState, serverNameState } from '../../recoil/state';
 import { postJoin, postLogin } from '../../api';
+import { API_ERROR_MESSAGE, API_INFO_MESSAGE } from '../../constants';
 
 export default function JoinForm() {
   const navigate = useNavigate();
@@ -20,20 +23,35 @@ export default function JoinForm() {
   const [password, setPassword] = useState('');
   const { showToast } = useToast();
 
-  const submitUser = async (event: React.FormEvent) => {
+  const autoLogin = async () => {
+    try {
+      const response = await postLogin(serverName, name, password);
+      const { token }: LoginResponse = await response.json();
+      setToken(token);
+    } catch {
+      showToast('error', API_ERROR_MESSAGE.postLogin);
+    } finally {
+      navigate('/');
+    }
+  };
+
+  const join = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const response = await postJoin(serverName, name, password);
-    if (!response.ok) {
-      const body = await response.json();
-      showToast('error', body.errorMessage);
+    try {
+      const response = await postJoin(serverName, name, password);
+      if (!response.ok) {
+        const body = await response.json();
+        showToast('warning', body.errorMessage);
+        return;
+      }
+    } catch {
+      showToast('error', API_ERROR_MESSAGE.postJoin);
       return;
     }
 
-    const token = await postLogin(serverName, name, password);
-    setToken(token);
-    navigate('/');
-    showToast('info', '가입을 축하드립니다!');
+    await autoLogin();
+    showToast('info', API_INFO_MESSAGE.postJoin, 2000);
   };
 
   const validInput = name !== '' && password !== '';
@@ -60,7 +78,7 @@ export default function JoinForm() {
             />
           </InputBox>
         </div>
-        <Button type="submit" onClick={submitUser} disabled={!validInput}>
+        <Button type="submit" onClick={join} disabled={!validInput}>
           회원가입
         </Button>
       </Wrapper>
@@ -129,8 +147,4 @@ const Button = styled.button`
   &:disabled {
     background: #a7efe1;
   }
-`;
-
-const RowButton = styled(Button)`
-  width: 30%;
 `;
