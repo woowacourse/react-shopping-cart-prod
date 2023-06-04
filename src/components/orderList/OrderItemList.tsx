@@ -4,47 +4,56 @@ import { OrderList } from '../../types';
 import OrderDetailNavigator from './OrderDetailNavigator';
 import OrderItem from './OrderItem';
 
-const OrderItemList = (orderList: OrderList) => {
+interface Props {
+  tag?: string;
+  orderList: OrderList;
+}
+
+const OrderItemList = ({ tag, orderList }: Props) => {
   const orderId = useParams().id;
 
   const { products, createdAt, totalPayments, orderStatus } = orderList;
   const thumbnail = products[0];
 
+  const listTag = tag || 'li';
+
   return (
-    <S.List>
-      <OrderDetailNavigator orderId={orderList.orderId} createdAt={createdAt} />
-      {orderId ? (
-        orderList.products.map((product) => (
+    <S.List as={listTag}>
+      <ul>
+        <OrderDetailNavigator orderId={orderList.orderId} createdAt={createdAt} />
+        {orderId ? (
+          orderList.products.map((product) => (
+            <OrderItem
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              totalPrice={product.totalPrice}
+              imageUrl={product.imageUrl}
+              quantity={product.quantity}
+              orderedProductCount={orderList.products.length}
+              totalPayments={totalPayments}
+              orderStatus={orderStatus}
+            />
+          ))
+        ) : (
           <OrderItem
-            key={product.id}
-            id={product.id}
-            name={product.name}
-            totalPrice={product.totalPrice}
-            imageUrl={product.imageUrl}
-            quantity={product.quantity}
+            id={thumbnail.id}
+            name={thumbnail.name}
+            totalPrice={thumbnail.totalPrice}
+            imageUrl={thumbnail.imageUrl}
+            quantity={thumbnail.quantity}
             orderedProductCount={orderList.products.length}
             totalPayments={totalPayments}
             orderStatus={orderStatus}
           />
-        ))
-      ) : (
-        <OrderItem
-          id={thumbnail.id}
-          name={thumbnail.name}
-          totalPrice={thumbnail.totalPrice}
-          imageUrl={thumbnail.imageUrl}
-          quantity={thumbnail.quantity}
-          orderedProductCount={orderList.products.length}
-          totalPayments={totalPayments}
-          orderStatus={orderStatus}
-        />
-      )}
+        )}
+      </ul>
     </S.List>
   );
 };
 
 const S = {
-  List: styled.ul`
+  List: styled.li`
     flex: 1;
     margin-bottom: 50px;
     padding: 0 24px;

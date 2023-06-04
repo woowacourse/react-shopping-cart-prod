@@ -30,9 +30,11 @@ const OrderPage = () => {
   return (
     <MainLayout>
       <Title title='주문 목록' />
-      {orderList.map((list) => (
-        <OrderItemList key={list.orderId} {...list} />
-      ))}
+      <ul>
+        {orderList.map((list) => (
+          <OrderItemList key={list.orderId} orderList={list} />
+        ))}
+      </ul>
     </MainLayout>
   );
 };

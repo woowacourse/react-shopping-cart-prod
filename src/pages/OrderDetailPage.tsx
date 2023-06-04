@@ -38,7 +38,7 @@ const OrderDetailPage = () => {
     <MainLayout>
       <Title title='주문 내역 상세' />
       <S.Wrapper>
-        <OrderItemList {...orderItemDetail} />
+        <OrderItemList orderList={orderItemDetail} tag='div' />
         <OrderDetail
           totalPrice={totalPrice}
           deliveryFee={deliveryFee}

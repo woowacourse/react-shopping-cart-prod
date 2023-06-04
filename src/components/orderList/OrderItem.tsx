@@ -23,7 +23,7 @@ const OrderItem = ({
   return (
     <S.Wrapper tabIndex={0}>
       <S.Image src={`${imageUrl}`} alt={name} loading='lazy' />
-      <div>
+      <section>
         <S.Name title={title}>{title}</S.Name>
         <S.Detail>
           {location !== ROUTE_PATH.ORDER_LIST_PAGE ? (
@@ -41,7 +41,7 @@ const OrderItem = ({
             </>
           )}
         </S.Detail>
-      </div>
+      </section>
     </S.Wrapper>
   );
 };
