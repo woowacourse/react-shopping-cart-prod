@@ -6,13 +6,16 @@ const usePaymentAmount = () => {
   const cartList = useRecoilValue(cartState);
   const { checkedCartList } = useCheckedCartListValue();
 
-  const paymentAmount = cartList
-    .filter((cartItem) => checkedCartList.includes(cartItem.id))
-    .reduce((acc, cartItem) => acc + cartItem.product.price * cartItem.quantity, 0);
+  const orderingItems = cartList.filter((cartItem) => checkedCartList.includes(cartItem.id));
+
+  const paymentAmount = orderingItems.reduce(
+    (acc, cartItem) => acc + cartItem.product.price * cartItem.quantity,
+    0
+  );
 
   const deliveryFee = checkedCartList.length ? 3000 : 0;
 
-  return { paymentAmount, deliveryFee };
+  return { paymentAmount, deliveryFee, orderingItems };
 };
 
 export default usePaymentAmount;

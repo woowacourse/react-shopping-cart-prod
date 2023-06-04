@@ -1,7 +1,12 @@
 import { styled } from 'styled-components';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { formatPrice } from '../../../utils/formatPrice';
 import usePaymentAmount from './usePaymentAmount';
 import CouponInfo from '../../../types/coupon';
+import cartState from '../../../globalState/atoms/cartState';
+import serverNameState from '../../../globalState/atoms/serverName';
+import ServerUtil from '../../../utils/ServerUrl';
+import { USER_AUTH_TOKEN } from '../../../constant';
 
 interface PaymentAmountProps {
   coupon?: CouponInfo | null;
@@ -9,7 +14,9 @@ interface PaymentAmountProps {
 
 const PaymentAmount = (props: PaymentAmountProps) => {
   const { coupon } = props;
-  const { paymentAmount, deliveryFee } = usePaymentAmount();
+  const { paymentAmount, deliveryFee, orderingItems } = usePaymentAmount();
+  const serverName = useRecoilValue(serverNameState);
+  const setCartState = useSetRecoilState(cartState);
 
   const discountedPrice = (() => {
     if (!coupon) return 0;
@@ -18,6 +25,42 @@ const PaymentAmount = (props: PaymentAmountProps) => {
   })();
 
   const finalPrice = Math.max(Math.floor(paymentAmount - discountedPrice) + deliveryFee, 0);
+
+  const order = async () => {
+    if (!orderingItems.length) {
+      alert('주문할 상품이 없습니다!');
+      return;
+    }
+
+    if (!window.confirm('정말로 주문하시겠습니까?')) return;
+
+    const url = ServerUtil.getOrderUrl(serverName);
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${USER_AUTH_TOKEN}`,
+      },
+      body: JSON.stringify({
+        cartItems: orderingItems,
+        couponIds: coupon ? [coupon.id] : [],
+        deliveryFee,
+      }),
+    });
+
+    if (response.status !== 201) {
+      alert('추문에 실패하였습니다. 잠시 후 다시 시도해 주세요!');
+      return;
+    }
+
+    const { orderId } = await response.json();
+    alert(`주문에 성공하였습니다!! 주문번호 ${orderId}`);
+
+    setCartState((prevCart) => {
+      const orderedCartItemIds = orderingItems.map(({ id }) => id);
+      return prevCart.filter(({ id }) => !orderedCartItemIds.includes(id));
+    });
+  };
 
   return (
     <PaymentAmountContainer>
@@ -43,7 +86,7 @@ const PaymentAmount = (props: PaymentAmountProps) => {
           <AmountText> 최종 금액</AmountText>
           <AmountText>{formatPrice(finalPrice)}</AmountText>
         </AmountTextContainer>
-        <OrderButton>주문하기</OrderButton>
+        <OrderButton onClick={() => order()}>주문하기</OrderButton>
       </Contents>
     </PaymentAmountContainer>
   );
