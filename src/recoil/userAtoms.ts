@@ -2,13 +2,17 @@ import { atom, selector } from 'recoil';
 import { localStorageEffect } from '../utils/localStorage';
 import { Member, Point } from '../types/types';
 import { encrypt } from '../utils/authorization';
+import { fetchMemberList } from '../api/fetcher';
+import { serverState } from './serverAtom';
 
 export const memberListState = atom<Member[]>({
   key: 'memberListState',
   default: selector({
     key: 'memberListState/Default',
-    get: async () => {
-      const response = await fetch('/members');
+    get: async ({ get }) => {
+      const server = get(serverState);
+      const response = await fetchMemberList({ server: server });
+
       const memberList = response.json();
 
       return memberList;
@@ -37,6 +41,17 @@ export const memberAuthorization = selector<string>({
 
     if (!currentMemberInfo) return '';
     return encrypt(currentMemberInfo.email, currentMemberInfo?.password);
+  },
+});
+
+export const memberPublicInformation = selector<Pick<Member, 'name' | 'email'>>({
+  key: 'memberPublicInformation',
+  get: ({ get }) => {
+    const currentMemberId = get(memberIdState);
+    const members = get(memberListState);
+    const currentMemberInfo = members.find((member) => member.id === currentMemberId) as Pick<Member, 'name' | 'email'>;
+
+    return { name: currentMemberInfo.name, email: currentMemberInfo.email };
   },
 });
 
