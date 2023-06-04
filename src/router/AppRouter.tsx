@@ -4,13 +4,13 @@ import CartListPage from '../pages/CartListPage';
 import CouponIssuePage from '../pages/CouponIssuePage';
 import OrderDetailPage from '../pages/OrderDetailPage';
 import OrderListPage from '../pages/OrderListPage';
-import ProductListPage from '../pages/ProductListPage';
+import ProductListPageContainer from '../pages/ProductListPage';
 
 const router = createBrowserRouter(
   [
     {
       path: '/',
-      element: <ProductListPage />,
+      element: <ProductListPageContainer />,
     },
     {
       path: '/coupon',
@@ -21,11 +21,11 @@ const router = createBrowserRouter(
       element: <CartListPage />,
     },
     {
-      path: '/orderList',
+      path: '/orders',
       element: <OrderListPage />,
     },
     {
-      path: '/orderList/:id',
+      path: '/orders/:id',
       element: <OrderDetailPage />,
     },
   ],
