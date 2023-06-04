@@ -26,3 +26,33 @@ export const deleteCartItem = (cartId: number) => async (server: string) => {
   const response = await api.delete(`${server}/cart-items/${cartId}`);
   return response;
 };
+
+export const getCoupons = async (server: string) => {
+  const data = await api.get(`${server}/coupons`);
+  return data;
+};
+
+export const getDeliveryPolicy = async (server: string) => {
+  const data = await api.get(`${server}/delivery-policy`);
+  return data;
+};
+
+export const getCouponApplied = () => async (server: string) => {
+  const data = await api.get(`${server}/cart-items/coupons?id=1,2,3`);
+  return data;
+};
+
+export const postPayments = (payload: any) => async (server: string) => {
+  const response = await api.post(`${server}/payments`, payload);
+  return response;
+};
+
+export const getOrderList = async (server: string) => {
+  const data = await api.get(`${server}/orders`);
+  return data;
+};
+
+export const getOrderDetail = (orderId: number) => async (server: string) => {
+  const data = await api.get(`${server}/orders/${orderId}`);
+  return data;
+};
