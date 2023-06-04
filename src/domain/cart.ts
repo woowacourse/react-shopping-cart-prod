@@ -38,12 +38,21 @@ const changeCartItemQuantity = (cartList: CartItemData[], cartItemId: number, qu
   });
 };
 
-const removeCartItem = (cartList: CartItemData[], cartItemId: number) => {
-  const hasItem = checkItemInCart(cartList, cartItemId);
+const removeCartItem = (cartList: CartItemData[], cartItemId: number | number[]) => {
+  let cartItemIdArray: number[] = [];
 
-  if (!hasItem) return null;
+  if (Array.isArray(cartItemId)) {
+    cartItemIdArray = cartItemId;
+  } else {
+    cartItemIdArray = [cartItemId];
+  }
 
-  return cartList.filter((cartItem) => cartItem.id !== cartItemId);
+  cartItemIdArray.forEach((id) => {
+    const hasItem = checkItemInCart(cartList, id);
+    if (!hasItem) return null;
+  });
+
+  return cartList.filter((cartItem) => !cartItemIdArray.includes(cartItem.id));
 };
 
 export {

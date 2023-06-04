@@ -7,6 +7,6 @@ export const memberHandlers = [
   rest.get(API_ENDPOINT.MEMBER, (req, res, ctx) => {
     const member = getMember();
 
-    return res(ctx.status(200), ctx.json(member));
+    return res(ctx.delay(200), ctx.status(200), ctx.json(member));
   }),
 ];

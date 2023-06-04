@@ -31,13 +31,8 @@ const orderHandlers = [
       };
     });
 
-    orderData.cartItemIds.forEach((cartItemId) => {
-      const newCartList = removeCartItem(currentCartData, cartItemId);
-      if (currentCartData.length === 0 || !newCartList) {
-        return res(ctx.status(HTTP_STATUS_CODE.NOT_FOUND));
-      }
-      setCartData(newCartList);
-    });
+    const newCartList = removeCartItem(currentCartData, orderData.cartItemIds);
+    setCartData(newCartList);
 
     const newOrderId = Math.floor(Math.random() * 10000000) + 1;
     const newOrderData: OrderData = {
@@ -80,11 +75,6 @@ const orderHandlers = [
     const order = orderList.find((order) => order.id === Number(orderId));
 
     return res(ctx.status(HTTP_STATUS_CODE.OK), ctx.json(order));
-  }),
-
-  // 멤버 등급 조회
-  rest.get(`/member`, (req, res, ctx) => {
-    return res(ctx.status(HTTP_STATUS_CODE.OK));
   }),
 ];
 
