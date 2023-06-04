@@ -1,4 +1,3 @@
-import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as styled from './OrderSummary.styled';
 
@@ -8,25 +7,26 @@ import { useTotalProductsPrice } from '@recoils/totalProductsPriceAtoms';
 import { useCheckedCartItems } from '@recoils/cartAtoms';
 import { useOrdersRepository } from '@recoils/ordersAtoms';
 import { useFetchOrderPolicy } from '@recoils/orderPolicyAtoms';
-import { useFetchUsablePoint } from '@recoils/usablePointAtoms';
 
-import { isNumeric } from '@utils/index';
+import { usePoint } from '@hooks/usePoint';
 
 export const OrderSummary = ({ fetchCart }: any) => {
   const navigate = useNavigate();
 
   const { fetchOrder } = useOrdersRepository();
-  const usablePoint = useFetchUsablePoint();
 
   const { freeShippingThreshold, shippingFee, pointPercentage } = useFetchOrderPolicy();
 
   const checkedCartItems = useCheckedCartItems();
-  const [pointInputValue, setPointInputValue] = useState(0);
 
   const totalProductsPrice = useTotalProductsPrice();
 
+  const { usablePoint, pointInputValue, onChangePointInput, onClickUseAllPointButton } = usePoint(
+    totalProductsPrice,
+    shippingFee
+  );
+
   const totalPaymentPrice = totalProductsPrice + shippingFee - pointInputValue;
-  const maxUsablePoint = totalProductsPrice + shippingFee;
   const totalShippingFee = totalProductsPrice >= freeShippingThreshold ? 0 : shippingFee;
 
   const onClickOrderButton = async () => {
@@ -44,28 +44,6 @@ export const OrderSummary = ({ fetchCart }: any) => {
       await fetchCart();
       navigate(`/orders/${orderId}`);
     });
-  };
-
-  const onClickUseAllPointButton = () => {
-    if (usablePoint >= maxUsablePoint) {
-      return setPointInputValue(maxUsablePoint);
-    }
-
-    return setPointInputValue(usablePoint);
-  };
-
-  const onChangePointInput = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (!isNumeric(value)) return;
-
-    if (Number(value) >= usablePoint) {
-      return setPointInputValue(usablePoint);
-    }
-
-    if (Number(value) >= maxUsablePoint) {
-      return setPointInputValue(maxUsablePoint);
-    }
-
-    setPointInputValue(Number(value));
   };
 
   return (
@@ -89,7 +67,7 @@ export const OrderSummary = ({ fetchCart }: any) => {
                   <styled.PointInput
                     onChange={onChangePointInput}
                     value={pointInputValue ? pointInputValue : ''}
-                    placeholder={`사용 가능 포인트 ${usablePoint?.toLocaleString()}`}
+                    placeholder={`사용 가능 포인트 ${usablePoint.toLocaleString()}`}
                   />
                   <styled.UseAllPointButton onClick={onClickUseAllPointButton}>
                     전액 사용
@@ -106,7 +84,7 @@ export const OrderSummary = ({ fetchCart }: any) => {
               </styled.PaymentPrice>
             </styled.Prices>
             <Button designType="rectangle" onClick={onClickOrderButton}>
-              총 {checkedCartItems.length}건 주문하기(${totalPaymentPrice.toLocaleString('ko-kr')}
+              총 {checkedCartItems.length}건 주문하기({totalPaymentPrice.toLocaleString('ko-kr')}
               원)
             </Button>
           </styled.Content>
