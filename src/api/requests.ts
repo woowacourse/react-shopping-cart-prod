@@ -38,10 +38,12 @@ export const getDeliveryPolicy = async (server: string) => {
   return data;
 };
 
-export const getCouponApplied = () => async (server: string) => {
-  const data = await api.get(`${server}/cart-items/coupons?id=1,2,3`);
-  return data;
-};
+export const getCouponApplied =
+  (couponIds: number[]) => async (server: string) => {
+    const params = couponIds.join(',');
+    const data = await api.get(`${server}/cart-items/coupons?id=${params}`);
+    return data;
+  };
 
 export const postPayments =
   (payload: PostPaymentRequest) => async (server: string) => {

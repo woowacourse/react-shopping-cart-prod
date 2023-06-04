@@ -17,7 +17,7 @@ const PaymentDetail = () => {
   const { request } = useMutate();
 
   const { data } = useGet<CouponAppliedPriceResponse>(
-    getCouponApplied(),
+    getCouponApplied(couponIds),
     couponIds
   );
 
