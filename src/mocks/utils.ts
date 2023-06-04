@@ -19,13 +19,13 @@ export const getTotalMemberDiscountAmount = (orderedItemList: OrderedItemData[])
 
 export const getTotalItemPrice = (orderedItemList: OrderedItemData[]) => {
   return orderedItemList.reduce((prev, curr) => {
-    return prev + curr.price;
+    return prev + curr.quantity * curr.price;
   }, 0);
 };
 
 export const getDiscountedTotalItemPrice = (orderedItemList: OrderedItemData[]) => {
   return orderedItemList.reduce((prev, curr) => {
-    return prev + curr.discountedPrice;
+    return prev + curr.quantity * curr.discountedPrice;
   }, 0);
 };
 
