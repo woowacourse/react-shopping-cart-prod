@@ -1,9 +1,13 @@
 import { fetchGet, fetchPost } from '@utils/fetchUtils';
 import { ServerName, getOrderPath } from '@constants/serverUrlConstants';
-import { createOrderRequestBody } from './order';
+import { OrderType, ServerOrderType } from '@type/orderType';
+import { createOrderRequestBody, orderDetailApiWrapper, orderListApiWrapper } from './order';
 
 export const getOrderListApi = async (serverName: ServerName) => {
-  return await fetchGet(getOrderPath(serverName));
+  const serverOrderList = await fetchGet<OrderType[]>(getOrderPath(serverName));
+  const clientOrderList = orderListApiWrapper(serverOrderList);
+
+  return clientOrderList;
 };
 
 interface GetOrderDetailApiParams {
@@ -12,7 +16,12 @@ interface GetOrderDetailApiParams {
 }
 
 export const getOrderDetailApi = async ({ serverName, orderId }: GetOrderDetailApiParams) => {
-  return await fetchGet(`${getOrderPath(serverName)}/${orderId}`);
+  const serverOrderDetail = await fetchGet<ServerOrderType>(
+    `${getOrderPath(serverName)}/${orderId}`
+  );
+  const clientOrderDetail = orderDetailApiWrapper(serverOrderDetail);
+
+  return clientOrderDetail;
 };
 
 interface SubmitOrderApiParams {
