@@ -87,7 +87,9 @@ const OrderDetail = (props: OrderDetailProps) => {
 };
 
 const OrderDetailDiv = styled.div`
+  margin: auto;
   width: 100%;
+  max-width: 1320px;
 `;
 
 const Summary = styled.summary`

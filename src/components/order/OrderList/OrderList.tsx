@@ -40,7 +40,9 @@ const OrderList = () => {
 };
 
 const Section = styled.section`
-  margin: 0 50px;
+  margin: auto;
+  width: 100%;
+  max-width: 1320px;
 
   & > * {
     margin-bottom: 50px;
