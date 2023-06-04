@@ -1,14 +1,15 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
-import Modal from '../../common/Modal/Modal';
-import useModal from '../../common/Modal/useModal';
 import { selectedCartItems } from '../../../recoil/selectors/cart';
+import Modal from '../../common/Modal/Modal';
 import Image from '../../common/Image/Image';
 import Spacer from '../../common/Spacer/Spacer';
-import { formatPrice } from '../../../utils/formatPrice';
+import useModal from '../../common/Modal/useModal';
 import useOrder from '../../../hooks/useOrder';
 import useCart from '../../../hooks/useCart';
 import useToast from '../../common/Toast/useToast';
+import usePoint from '../../../hooks/usePoint';
+import { formatPrice } from '../../../utils/formatPrice';
 import type { CartItem } from '../../../types/cart';
 
 interface OrderConfirmModalProps {
@@ -27,7 +28,8 @@ const OrderConfirmModal = (props: OrderConfirmModalProps) => {
   } = props;
   const orderItems = useRecoilValue(selectedCartItems(selectedCartItemIds));
   const { sendOrder } = useOrder();
-  const { removeAllProductsFromCart } = useCart();
+  const { updateCart } = useCart();
+  const { updatePoint } = usePoint();
   const { closeModal } = useModal();
   const { showToast } = useToast();
 
@@ -39,7 +41,8 @@ const OrderConfirmModal = (props: OrderConfirmModalProps) => {
         cartItemIds,
         usePoint: usingPoint,
       });
-      removeAllProductsFromCart(cartItemIds);
+      updateCart();
+      updatePoint();
     } catch (e) {
       if (e instanceof Error) {
         showToast('error', e.message);
