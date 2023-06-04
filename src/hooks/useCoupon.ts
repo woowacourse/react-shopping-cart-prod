@@ -12,7 +12,7 @@ export const useCoupon = () => {
   const getCoupon = async () => {
     try {
       const response = await fetchCoupons(
-        checkedCartList.map((checkedCartItem) => checkedCartItem.id)
+        checkedCartList.map((checkedCartItem) => checkedCartItem.cartItemId)
       );
 
       if (!response.ok) throw new Error(response.status.toString());
