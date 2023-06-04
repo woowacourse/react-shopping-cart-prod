@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import Button from '../components/common/Button';
 import Input from '../components/common/Input';
+import Spinner from '../components/common/Spinner';
 import PageHeader from '../components/page/PageHeader';
 import useFutureResult from '../hooks/useFutureResult';
 import useLoginMutation from '../hooks/useLoginMutation';
@@ -72,7 +73,7 @@ const LoginPage = (props: LoginPageProps) => {
           <Divider />
 
           <Button type="submit" disabled={loginResult.isLoading}>
-            로그인
+            {loginResult.isLoading ? <Spinner /> : '로그인'}
           </Button>
         </LoginForm>
       </Content>
