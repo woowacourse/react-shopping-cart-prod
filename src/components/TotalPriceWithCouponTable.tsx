@@ -3,23 +3,26 @@ import { Button } from "./Button";
 import { totalPriceSelector } from "../recoil/selector";
 import { useRecoilValue } from "recoil";
 import { useOrder } from "../hooks/useOrder";
-import { selectedProductsState } from "../recoil/atom";
+import { LocalProductType } from "../types/domain";
 
 export const TotalPriceWithCouponTable = ({
   discountPrice,
   couponId,
+  setIsOrderComplete,
+  orderList,
 }: {
   discountPrice: number | null;
   couponId: number | null;
+  setIsOrderComplete: React.Dispatch<React.SetStateAction<boolean>>;
+  orderList: LocalProductType[];
 }) => {
   const totalPrice = useRecoilValue(totalPriceSelector);
-
-  const orderList = useRecoilValue(selectedProductsState);
 
   const { addOrderList } = useOrder();
 
   const handleOrderButton = async () => {
     await addOrderList(orderList, couponId);
+    setIsOrderComplete(true);
   };
 
   return (
@@ -41,7 +44,7 @@ export const TotalPriceWithCouponTable = ({
         <p>총 주문금액</p>
         <p>{(totalPrice - (discountPrice ?? 0) + 3000).toLocaleString()}원</p>
       </RowContainer>
-      <Button onClick={handleOrderButton}>주문하기</Button>
+      <Button onClick={handleOrderButton}>주문확정</Button>
     </Wrapper>
   );
 };

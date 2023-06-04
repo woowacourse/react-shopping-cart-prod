@@ -2,19 +2,19 @@ import { styled } from "styled-components";
 import { LocalProductType } from "../types/domain";
 
 interface OrderSheetProductPropsType {
-  checkedCartItem: LocalProductType;
+  orderItem: LocalProductType;
 }
 
-export const OrderSheetProduct = (props: OrderSheetProductPropsType) => {
+export const OrderSheetProduct = ({
+  orderItem,
+}: OrderSheetProductPropsType) => {
   return (
     <Wrapper>
-      <img src={props.checkedCartItem.imageUrl} alt="상품이미지" />
+      <img src={orderItem.imageUrl} alt="상품이미지" />
       <Container>
-        <NameText>{props.checkedCartItem.name}</NameText>
-        <QuantityText>수량 : {props.checkedCartItem.quantity}개</QuantityText>
-        <PriceText>
-          상품 개당 : {props.checkedCartItem.price.toLocaleString()}원
-        </PriceText>
+        <NameText>{orderItem.name}</NameText>
+        <QuantityText>수량 : {orderItem.quantity}개</QuantityText>
+        <PriceText>상품 개당 : {orderItem.price.toLocaleString()}원</PriceText>
       </Container>
     </Wrapper>
   );

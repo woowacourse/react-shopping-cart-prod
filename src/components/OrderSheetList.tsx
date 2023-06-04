@@ -1,19 +1,16 @@
 import { styled } from "styled-components";
 import { OrderSheetProduct } from "./OrderSheetProduct";
-import { useRecoilValue } from "recoil";
-import { selectedProductsState } from "../recoil/atom";
+import { LocalProductType } from "../types/domain";
 
-export const OrderSheetList = () => {
-  const checkedCartList = useRecoilValue(selectedProductsState);
-
+export const OrderSheetList = ({orderList} : {orderList: LocalProductType[]}) => {
   return (
     <Wrapper>
       <OrderSheetProductQuantityText>
-        주문 상품 ({checkedCartList.length}개)
+        주문 상품 ({orderList.length}개)
       </OrderSheetProductQuantityText>
       <OrderSheetProductListWrapper>
-        {checkedCartList.map((checkedCartItem) => (
-          <OrderSheetProduct key={checkedCartItem.id} checkedCartItem={checkedCartItem} />
+        {orderList.map((orderItem) => (
+          <OrderSheetProduct key={orderItem.id} orderItem={orderItem} />
         ))}
       </OrderSheetProductListWrapper>
     </Wrapper>
