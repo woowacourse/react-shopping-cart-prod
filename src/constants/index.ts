@@ -1,5 +1,10 @@
 import { CouponState } from '../types';
 
+export const IMAGE_PATH: Readonly<Record<string, string>> = {
+  EMPTY_CART: `${process.env.PUBLIC_URL}/assets/nothing.png`,
+  EMPTY_ORDER_LIST: `${process.env.PUBLIC_URL}/assets/empty.png`,
+};
+
 export const ROUTE_PATH: Readonly<Record<string, string>> = {
   MAIN_PAGE: '/',
   CART_PAGE: '/cart',
