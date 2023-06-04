@@ -11,7 +11,11 @@ export interface CartItem {
   product: Product;
 }
 
-export interface OrderProducts extends Product {
+export interface OrderProducts {
+  productId: number;
+  imageUrl: string;
+  name: string;
+  price: number;
   quantity: number;
   totalPrice: number;
 }
@@ -19,9 +23,6 @@ export interface OrderProducts extends Product {
 export interface OrderItem {
   orderId: number;
   orderProducts: OrderProducts[];
-}
-
-export interface OrderDetail extends OrderItem {
   orderTotalPrice: number;
   usedPoint: number;
   createdAt: string;
