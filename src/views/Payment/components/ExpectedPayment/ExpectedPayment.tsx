@@ -14,40 +14,19 @@ import { CouponMessage } from '../CouponMessage';
 import useFetchOrders from '@views/Payment/hooks/useFetchOrders';
 import { useNavigate } from 'react-router-dom';
 import ROUTER_PATH from '@router/constants/routerPath';
-
-const getDiscount = (coupon: CouponType | null, totalPrice: number) => {
-  if (!coupon || !totalPrice) {
-    return 0;
-  }
-
-  switch (coupon.type) {
-    case 'price': {
-      return coupon.value;
-    }
-
-    case 'percent': {
-      return (coupon.value / 100) * totalPrice;
-    }
-
-    case 'delivery': {
-      return coupon.value;
-    }
-  }
-};
+import useExpectedPriceContent from '@views/Payment/hooks/useExpectedPrice';
 
 function ExpectedPayment() {
-  const totalPrice = useTotalPrice();
-  const couponSelected = useCouponSelected();
-  const fetchOrders = useFetchOrders();
-  const navigate = useNavigate();
-  const { getCheckedItemIds } = useCart();
-
-  const discountPrice = getDiscount(couponSelected, totalPrice);
-
   const [isCouponOpen, setIsCouponOpen] = useState(false);
 
-  const deliveryFee = totalPrice ? DELIVERY_FEE_BASIC : 0;
-  const totalPayingPrice = totalPrice + deliveryFee;
+  const fetchOrders = useFetchOrders();
+  const couponSelected = useCouponSelected();
+  const { getCheckedItemIds } = useCart();
+
+  const { deliveryFee, discountPrice, expectedPrice, totalPrice } =
+    useExpectedPriceContent(couponSelected);
+
+  const navigate = useNavigate();
 
   const handleSeeCoupons = () => {
     setIsCouponOpen(true);
@@ -98,9 +77,7 @@ function ExpectedPayment() {
           </FlexWrapper>
           <S.TotalPriceContainer>
             <S.TotalText>총 주문금액</S.TotalText>
-            <S.TotalText>
-              {(totalPayingPrice - discountPrice).toLocaleString('ko-KR')}원
-            </S.TotalText>
+            <S.TotalText>{expectedPrice.toLocaleString('ko-KR')}원</S.TotalText>
           </S.TotalPriceContainer>
         </S.PayingBackground>
         <Button
