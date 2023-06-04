@@ -22,7 +22,7 @@ interface Order {
   usedCoupons: Coupon[];
   usedPoint: number;
   paymentPrice: number;
-  createdAt: string;
+  createAt: string;
 }
 
 interface OrdersResponses {
