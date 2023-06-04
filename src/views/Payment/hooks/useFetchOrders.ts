@@ -1,7 +1,7 @@
 import { ORDER_PATH } from '@constants/urlConstants';
 import { useCredential } from '@recoil/server/credentialState';
 import { useServerUrl } from '@recoil/server/serverUrlState';
-import generateFetchOrders from '../utils/fetchOrders';
+import generateFetchOrders from '../remote/fetchOrders';
 
 const useFetchOrders = () => {
   const { serverUrl } = useServerUrl();

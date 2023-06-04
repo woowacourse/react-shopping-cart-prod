@@ -1,6 +1,6 @@
 import { useCredential } from '@recoil/server/credentialState';
 import { useServerUrl } from '@recoil/server/serverUrlState';
-import fetchCoupons from '../utils/fetchCoupons';
+import fetchCoupons from '../remote/fetchCoupons';
 import { COUPON_PATH } from '@constants/urlConstants';
 
 const useFetchCoupons = () => {

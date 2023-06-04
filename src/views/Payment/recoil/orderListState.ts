@@ -1,9 +1,10 @@
 import credentialState from '@recoil/server/credentialState';
 import serverUrlState from '@recoil/server/serverUrlState';
 import { atom, selector, useRecoilValue } from 'recoil';
-import generateFetchOrders from '../utils/fetchOrders';
+
 import { ORDER_PATH } from '@constants/urlConstants';
 import { OrderType } from 'types/OrderType';
+import generateFetchOrders from '../remote/fetchOrders';
 
 const orderListState = atom<OrderType[]>({
   key: 'orderListState',

@@ -8,7 +8,7 @@ import {
   useRecoilValue,
   useResetRecoilState,
 } from 'recoil';
-import fetchCoupons from '../utils/fetchCoupons';
+import fetchCoupons from '../remote/fetchCoupons';
 import { COUPON_PATH } from '@constants/urlConstants';
 import { CouponRemote, CouponType } from 'types/CouponType';
 import { cartTotalPrice } from '@views/Cart/recoil/cartState';
