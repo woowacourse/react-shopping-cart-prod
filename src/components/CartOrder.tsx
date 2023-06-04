@@ -1,5 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import useFutureResult from '../hooks/useFutureResult';
 import useOrderMutation from '../hooks/useOrderMutation';
 import userCartOrderPriceState from '../recoil/user/userCartOrderPriceState';
 import userCartPointsState from '../recoil/user/userCartPointsState';
@@ -26,6 +28,9 @@ const Divider = styled.hr`
 `;
 
 const Content = styled.section`
+  display: flex;
+  flex-direction: column;
+
   padding: 30px;
 `;
 
@@ -57,19 +62,24 @@ const ContentDivider = styled.hr`
 
 type CartOrderProps = {
   isCartEmpty: boolean;
+  onOrderDone?: (orderId: number) => void;
 };
 
 const CartOrder = (props: CartOrderProps) => {
-  const { isCartEmpty } = props;
+  const navigate = useNavigate();
+  const { isCartEmpty, onOrderDone = (orderId) => navigate(`/orders/${orderId}/done`) } = props;
+
   const prices = useRecoilValue(userCartOrderPriceState);
   const { isSynchronizing } = useRecoilValue(userRemoteCartItemsState);
 
-  const { order } = useOrderMutation();
+  const { order, future } = useOrderMutation();
+  const orderResult = useFutureResult(future);
 
-  const handleSubmitOrder: React.FormEventHandler<HTMLFormElement> = (event) => {
+  const handleSubmitOrder: React.FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
 
-    order({ usedPoints: 0 });
+    const orderId = await order({ usedPoints: 0 });
+    onOrderDone(orderId);
   };
 
   return (
@@ -100,22 +110,19 @@ const CartOrder = (props: CartOrderProps) => {
               </PriceFieldValue>
             </PriceField>
 
+            <ContentDivider />
+
             <PriceField>
               <PriceFieldName>적립 포인트</PriceFieldName>
 
               <PriceFieldValue>
                 <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
-                  {(cartPoints) => <PriceFormat price={cartPoints.expectedSavePoints} unit="P" />}
-                </AwaitRecoilState>
-              </PriceFieldValue>
-            </PriceField>
-
-            <PriceField>
-              <PriceFieldName>적립 비율</PriceFieldName>
-
-              <PriceFieldValue>
-                <AwaitRecoilState state={userCartPointsState} loadingElement="계산중...">
-                  {(cartPoints) => `${cartPoints.savingRate}%`}
+                  {(cartPoints) => (
+                    <>
+                      <PriceFormat price={cartPoints.expectedSavePoints} unit="P" /> (
+                      {cartPoints.savingRate}%)
+                    </>
+                  )}
                 </AwaitRecoilState>
               </PriceFieldValue>
             </PriceField>
@@ -131,7 +138,7 @@ const CartOrder = (props: CartOrderProps) => {
 
             <ContentDivider />
 
-            {!isSynchronizing && <Button>주문하기</Button>}
+            <Button disabled={orderResult.isLoading || isSynchronizing}>주문하기</Button>
           </>
         )}
       </Content>
