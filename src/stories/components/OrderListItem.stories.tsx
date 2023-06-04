@@ -21,7 +21,7 @@ const meta = {
         "orderId": 1,
         "orderProducts": [
           {
-            "id": 24,
+            "productId": 24,
             "name": "친환경 실링 용기",
             "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/2ddb9f04-c15d-4647-b6e7-30afb9e8d072.jpg?h=300&w=300",
             "quantity": 3,
@@ -29,14 +29,17 @@ const meta = {
             "totalPrice": 180000
           },
           {
-            "id": 25,
+            "productId": 25,
             "name": "친환경 실링 용기222",
             "imageUrl": "https://cdn-mart.baemin.com/sellergoods/main/2ddb9f04-c15d-4647-b6e7-30afb9e8d072.jpg?h=300&w=300",
             "quantity": 1,
             "price": 50000,
             "totalPrice": 50000
           }
-        ]
+        ],
+        "orderTotalPrice": 31000,
+        "usedPoint": 200,
+        "createdAt": "2023-05-26 21:00:01"
       },
      
   },
