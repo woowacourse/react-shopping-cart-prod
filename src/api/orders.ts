@@ -16,9 +16,9 @@ export const addOrder = async (
     },
     body: JSON.stringify(orders),
   });
-  const data = await response.json();
 
-  if (!response.ok) alert(data.error);
+  if (!response.ok)
+    alert("'주문하기'를 실패하였습니다. 잠시후 다시 시도해주세요.");
 
   return response.ok;
 };

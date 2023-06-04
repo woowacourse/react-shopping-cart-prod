@@ -35,9 +35,8 @@ export const addCartItem = async (serverId: ServerId, productId: number) => {
 
   const cartItemId = response.headers.get("Location")?.split("/")[2];
 
-  const data = await response.json();
-
-  if (!response.ok) alert(data.error);
+  if (!response.ok)
+    alert("'장바구니에 넣기'를 실패하였습니다. 잠시후 다시 시도해주세요.");
 
   return cartItemId;
 };
@@ -59,9 +58,8 @@ export const changeItemQuantity = async (
     }
   );
 
-  const data = await response.json();
-
-  if (!response.ok) alert(data.error);
+  if (!response.ok)
+    alert("'수량 변경'을 실패하였습니다. 잠시후 다시 시도해주세요.");
 
   return response.ok;
 };
@@ -80,9 +78,8 @@ export const removeCartItem = async (
     }
   );
 
-  const data = await response.json();
-
-  if (!response.ok) alert(data.error);
+  if (!response.ok)
+    alert("'장바구니 물품 삭제'를 실패하였습니다. 잠시후 다시 시도해주세요.");
 
   return response.ok;
 };
