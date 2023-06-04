@@ -13,6 +13,10 @@ const ROUTER = createBrowserRouter(
       element: <App />,
       children: [
         {
+          path: '',
+          element: <ProductPage />,
+        },
+        {
           path: PATH.PRODUCT_PAGE,
           element: <ProductPage />,
         },
