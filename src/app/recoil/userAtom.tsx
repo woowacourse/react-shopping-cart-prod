@@ -32,7 +32,10 @@ export const userRepository = selector({
           SESSION_STORAGE_KEY_BASE64,
           btoa(member.email + ":" + member.password)
         );
-        setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
+        setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, {
+          cartItems: [],
+          totalPrice: 0
+        });
         setSessionStorage(SESSION_STORAGE_KEY_POINT, {
           pointHistories: [],
           totalPoint: 1000,
@@ -46,7 +49,10 @@ export const userRepository = selector({
 
     const logout = getCallback(({ set }) => async () => {
       setSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
-      setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
+      setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, {
+        cartItems: [],
+        totalPrice: 0
+      });
       set(userState, null);
       set(cartState, []);
     });

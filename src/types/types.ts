@@ -5,13 +5,19 @@ export interface ProductItem {
   imageUrl: string;
 }
 
-export interface ReceivedCartItem {
+export interface OriginalCartItem {
   id: number;
   quantity: number;
   product: ProductItem;
 }
 
-export interface CartItem extends ReceivedCartItem {
+
+export interface ResponseCartItem {
+  cartItems: OriginalCartItem[];
+  totalPrice: number;
+}
+
+export interface CartItem extends OriginalCartItem {
   checked: boolean;
 }
 

@@ -1,9 +1,10 @@
 import {
   CartItem,
   ProductItem,
-  ReceivedCartItem,
+  OriginalCartItem,
   Sign,
   User,
+  ResponseCartItem,
 } from "../../types/types.ts";
 import { url } from "./url.ts";
 import { getSessionStorage } from "../utils/storage.ts";
@@ -59,11 +60,11 @@ export const fetchCartList = async (server: string) => {
         Authorization: `Basic ${base64}`,
       },
     });
-    const data = await response.json();
+    const data: ResponseCartItem = await response.json();
     console.log("cart-list");
     console.log(data);
     const checkedCartItems: CartItem[] = data.cartItems.map(
-      (cartItem: ReceivedCartItem) => ({
+      (cartItem: OriginalCartItem) => ({
         ...cartItem,
         checked: true,
       })

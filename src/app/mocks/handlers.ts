@@ -4,7 +4,7 @@ import mockProducts from "../../assets/mockProducts.json";
 import mockMembers from "../../assets/mockMembers.json";
 import mockCoupons from "../../assets/mockCoupons.json";
 import { getSessionStorage, setSessionStorage } from "../utils/storage.ts";
-import { CartItem } from "../../types/types.ts";
+import { ProductItem, ResponseCartItem } from "../../types/types.ts";
 import {
   SESSION_STORAGE_KEY_CART_ITEMS,
   SESSION_STORAGE_KEY_COUPONS,
@@ -17,15 +17,21 @@ export const handlers = [
   }),
 
   rest.get("/cart-items", (req, res, ctx) => {
-    const cartItems = getSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
+    const originalCartItems = getSessionStorage<ResponseCartItem>(SESSION_STORAGE_KEY_CART_ITEMS, {
+      cartItems: [],
+      totalPrice: 0
+    });
 
-    return res(ctx.delay(100), ctx.status(200), ctx.json(cartItems));
+    return res(ctx.delay(100), ctx.status(200), ctx.json(originalCartItems));
   }),
 
   rest.post("/cart-items", async (req, res, ctx) => {
     const { productId } = await req.json();
 
-    const cartItems = getSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
+    const originalCartItems = getSessionStorage<ResponseCartItem>(SESSION_STORAGE_KEY_CART_ITEMS, {
+      cartItems: [],
+      totalPrice: 0
+    });
 
     const newItemId = Date.now();
 
@@ -33,23 +39,42 @@ export const handlers = [
       id: newItemId,
       quantity: 1,
       checked: true,
-      product: mockProducts.find((product) => product.id === productId),
+      product: mockProducts.find((product) => product.id === productId) as ProductItem,
     };
 
-    setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, [...cartItems, newItem]);
+    const newCarts = [...originalCartItems.cartItems, newItem];
+
+    setSessionStorage<ResponseCartItem>(SESSION_STORAGE_KEY_CART_ITEMS, {
+      cartItems: newCarts,
+      totalPrice: newCarts.reduce(
+        (acc, cartItem) => acc + cartItem.quantity * cartItem.product.price,
+        0
+      )
+    });
     return res(ctx.delay(100), ctx.status(201), ctx.json(true));
   }),
 
   rest.delete("/cart-items/:cartItemId", (req, res, ctx) => {
     const { cartItemId } = req.params;
-    const cartItems = getSessionStorage<CartItem[]>(
+    const originalCartItems = getSessionStorage<ResponseCartItem>(
       SESSION_STORAGE_KEY_CART_ITEMS,
-      []
+      {
+        cartItems: [],
+        totalPrice: 0
+      }
     );
 
-    setSessionStorage(
+    const newCarts = originalCartItems.cartItems.filter((item) => item.id !== Number(cartItemId));
+
+    setSessionStorage<ResponseCartItem>(
       SESSION_STORAGE_KEY_CART_ITEMS,
-      cartItems.filter((item) => item.id !== Number(cartItemId))
+      {
+        cartItems: newCarts,
+        totalPrice: newCarts.reduce(
+          (acc, cartItem) => acc + cartItem.quantity * cartItem.product.price,
+          0
+        )
+      }
     );
     return res(ctx.delay(100), ctx.status(204));
   }),
@@ -58,36 +83,25 @@ export const handlers = [
     const { cartItemId } = req.params;
     const { quantity } = await req.json();
 
-    const cartItems = getSessionStorage<CartItem[]>(
+    const originalCartItems = getSessionStorage<ResponseCartItem>(
       SESSION_STORAGE_KEY_CART_ITEMS,
-      []
+      {
+        cartItems: [],
+        totalPrice: 0
+      }
     );
-    const cartItemIndex = cartItems.findIndex(
+    const cartItemIndex = originalCartItems.cartItems.findIndex(
       (item) => item.id === Number(cartItemId)
     );
-    cartItems[cartItemIndex].quantity = quantity;
+    originalCartItems.cartItems[cartItemIndex].quantity = quantity;
+    originalCartItems.totalPrice = originalCartItems.cartItems.reduce(
+      (acc, cartItem) => acc + cartItem.quantity * cartItem.product.price,
+      0
+    );
 
-    setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, cartItems);
+    setSessionStorage<ResponseCartItem>(SESSION_STORAGE_KEY_CART_ITEMS, originalCartItems);
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(true));
-  }),
-
-  rest.post("/cart-items", async (req, res, ctx) => {
-    const { productId } = await req.json();
-
-    const cartItems = getSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, []);
-
-    const newItemId = Date.now();
-
-    const newItem = {
-      id: newItemId,
-      quantity: 1,
-      checked: true,
-      product: mockProducts.find((product) => product.id === productId),
-    };
-
-    setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, [...cartItems, newItem]);
-    return res(ctx.delay(100), ctx.status(201), ctx.json(true));
   }),
 
   rest.get("/members", (req, res, ctx) => {
