@@ -1,28 +1,13 @@
-import { useEffect } from 'react';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
 import styled, { css } from 'styled-components';
-import { toastState } from '../../states/toast/atom';
+
+import useToast from '../../hooks/useToast';
 
 interface ToastStyleProps {
   variant: 'success' | 'error';
 }
 
 const Toast = () => {
-  const toastInfo = useRecoilValue(toastState);
-  const resetToastState = useResetRecoilState(toastState);
-
-  useEffect(() => {
-    if (toastInfo === null) return;
-
-    const closeTimeout = setTimeout(() => {
-      resetToastState();
-      clearTimeout(closeTimeout);
-    }, toastInfo.duration);
-
-    return () => {
-      clearTimeout(closeTimeout);
-    };
-  }, [resetToastState, toastInfo]);
+  const toastInfo = useToast();
 
   if (toastInfo === null) return null;
 
@@ -31,12 +16,12 @@ const Toast = () => {
 
 const toastStyle = {
   success: css`
-    border: 3px solid green;
-    color: green;
+    border: 2px solid ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.primary};
   `,
   error: css`
-    border: 3px solid red;
-    color: red;
+    border: 2px solid ${({ theme }) => theme.colors.error};
+    color: ${({ theme }) => theme.colors.error};
   `,
 };
 
@@ -51,10 +36,10 @@ const Container = styled.div<ToastStyleProps>`
 
   margin: 0 auto;
 
-  border-radius: 8px;
+  border-radius: 4px;
   ${({ variant }) => toastStyle[variant]}
-  background-color: #ffffff;
-  line-height: 48px;
+  background-color: ${({ theme }) => theme.colors.white};
+  line-height: 44px;
   text-align: center;
 
   animation: 0.3s slideUp;
