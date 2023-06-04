@@ -37,5 +37,12 @@ const Style = {
 
     color: white;
     cursor: pointer;
+
+    /* 모바일 */
+    @media screen and (max-width: 767px) {
+      padding-right: 3px;
+
+      font-size: 12px;
+    }
   `,
 };
