@@ -101,7 +101,7 @@
 
 ### ⚠️ API ErrorCode 명세
 
-```http
+```json
 
 API Status / HTTP Status
 
