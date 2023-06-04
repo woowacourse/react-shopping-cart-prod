@@ -1,5 +1,3 @@
-import { Coupon } from "../types/domain";
-
 export const getLocalStorage = <T>(key: string, defaultValue: T): T => {
   const data = localStorage.getItem(key);
   if (!data) return defaultValue;
@@ -16,13 +14,4 @@ export const getLocalStorage = <T>(key: string, defaultValue: T): T => {
 
 export const setLocalStorage = <T>(key: string, data: T) => {
   localStorage.setItem(key, JSON.stringify(data));
-};
-
-export const parseExpiredDate = (coupons: Coupon[]) => {
-  const parsedCoupons = coupons.map((coupon) => {
-    const expiredAt = coupon.expiredAt.split("T")[0];
-    return { ...coupon, expiredAt };
-  });
-
-  return parsedCoupons;
 };
