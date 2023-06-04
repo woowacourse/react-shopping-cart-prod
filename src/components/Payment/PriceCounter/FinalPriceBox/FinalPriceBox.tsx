@@ -3,9 +3,7 @@ import { PaymentInfo } from '../../../@common/PaymentInfo';
 import * as S from './FinalPriceBox.style';
 import { useRecoilValue } from 'recoil';
 import { couponState, pointState, totalPaymentPriceSelector } from '../../../../recoil/orderAtom';
-import useMutateQuery from '../../../../hooks/useMutateQuery';
 import { fetchPostOrder } from '../../../../api/fetcher';
-import { OrderRequest } from '../../../../types/types';
 import { useNavigate } from 'react-router-dom';
 import { PAGE_PATH } from '../../../../constants/path';
 import { orderRequestData } from '../../../../recoil/orderAtom';
@@ -24,7 +22,7 @@ function FinalPriceBox() {
   const couponDiscountPrice = couponDiscount ? couponDiscount.discountPrice : 0;
 
   // const { mutateQuery } = useMutateQuery<OrderRequest>({
-  //   fetcher: fetchPostOrder({ server, auth: memberAuth, bodyData: finalOrderInfo }),
+  //   fetcher:() => fetchPostOrder({ server, auth: memberAuth, bodyData: finalOrderInfo }),
   //   onSuccess: () => navigate(PAGE_PATH.ORDER),
   // });
 

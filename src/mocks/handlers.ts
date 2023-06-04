@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
 import { rest } from 'msw';
 import { getLocalStorage, setLocalStorage } from '../utils/localStorage';
-import type { CartItem, Order, OrdersResponses, OrderRequest, Point, CartItemResponses } from '../types/types';
+import type { Order, OrdersResponses, OrderRequest, Point, CartItemResponses } from '../types/types';
 import mockProductList from '../mocks/mockProductListData.json';
 import mockMemberList from '../mocks/mockMemberListData.json';
 import mockCouponList from '../mocks/mockCouponListData.json';
@@ -80,7 +80,7 @@ export const handlers = [
 
   // 포인트 조회 GET(로컬 스토리지 반영)
   rest.get('/point', (_, res, ctx) => {
-    const point = getLocalStorage(LOCAL_STORAGE_KEY.POINT, { pointHistories: [], totalPoint: 10000000000 });
+    const point = getLocalStorage(LOCAL_STORAGE_KEY.POINT, { pointHistories: [], totalPoint: 1000 });
 
     setLocalStorage(LOCAL_STORAGE_KEY.POINT, point);
     return res(ctx.delay(100), ctx.status(200), ctx.json(point));

@@ -17,7 +17,7 @@ function OrderDetail() {
   const memberAuth = useRecoilValue(memberAuthorization);
   const server = useRecoilValue(serverState);
   const { data: order } = useGetQuery<Order>({
-    fetcher: fetchOrder({ server, auth: memberAuth, orderId }),
+    fetcher: () => fetchOrder({ server, auth: memberAuth, orderId }),
   });
 
   return (

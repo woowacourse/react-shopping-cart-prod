@@ -18,7 +18,7 @@ function NavigationBar() {
   const server = useRecoilValue(serverState);
   const [memberPoint, setMemberPoint] = useRecoilState(memberPointState);
   useGetQuery<Point>({
-    fetcher: fetchMemberPoint({ server, auth: memberAuth }),
+    fetcher: () => fetchMemberPoint({ server, auth: memberAuth }),
     onSuccess: (point) => setMemberPoint(point),
   });
 

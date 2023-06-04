@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 interface useMutateQueryArgs<ResponseData> {
-  fetcher: Promise<Response>;
+  fetcher: () => Promise<Response>;
   onSuccess?: (data: { response: ResponseData; headers: Headers }) => void;
   onError?: (error?: string) => void;
   onSettled?: () => void;
@@ -15,7 +15,7 @@ const useMutateQuery = <ResponseData>({ fetcher, onSuccess, onError, onSettled }
     setLoading(true);
 
     try {
-      const response = await fetcher;
+      const response = await fetcher();
 
       if (!response.ok) {
         setError(response.statusText);

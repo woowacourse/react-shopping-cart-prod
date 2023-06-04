@@ -29,7 +29,7 @@ function DiscountBox({ userPoint }: DiscountBoxProps) {
   const memberAuth = useRecoilValue(memberAuthorization);
   const server = useRecoilValue(serverState);
   const { data: coupons } = useGetQuery<Coupon[]>({
-    fetcher: fetchCouponList({ server, auth: memberAuth }),
+    fetcher: () => fetchCouponList({ server, auth: memberAuth }),
   });
 
   const onChangePoint = (e: ChangeEvent<HTMLInputElement>) => {

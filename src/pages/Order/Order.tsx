@@ -17,10 +17,10 @@ function Order() {
   const setCartList = useSetRecoilState(cartState);
   const setMemberPoint = useSetRecoilState(memberPointState);
   const { data: orders } = useGetQuery<OrdersResponses>({
-    fetcher: fetchOrderList({ server, auth: memberAuth }),
+    fetcher: () => fetchOrderList({ server, auth: memberAuth }),
   });
   useGetQuery<Point>({
-    fetcher: fetchMemberPoint({ server, auth: memberAuth }),
+    fetcher: () => fetchMemberPoint({ server, auth: memberAuth }),
     onSuccess: (point) => setMemberPoint(point),
   });
 
