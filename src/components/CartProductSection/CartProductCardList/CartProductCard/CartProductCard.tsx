@@ -64,6 +64,8 @@ const ProductImage = styled.img`
   width: 130px;
   height: 130px;
   border-radius: 4px;
+
+  filter: brightness(97%);
 `;
 
 const Title = styled.span`
