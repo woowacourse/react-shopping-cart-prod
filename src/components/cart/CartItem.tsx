@@ -41,7 +41,7 @@ const CartItem = (item: CartProduct) => {
       <ButtonBox onClick={removeItem}>🗑️</ButtonBox>
       <PriceContainer>
         <p>{(item.product.price * item.quantity).toLocaleString()}원</p>
-        {discountedPrice && <p>{discountedPrice.toLocaleString()}원</p>}
+        {discountedPrice !== null && <p>{discountedPrice.toLocaleString()}원</p>}
       </PriceContainer>
       <SelectBox onChange={changeCoupon}>
         <option>쿠폰을 선택해주세요</option>
