@@ -8,7 +8,7 @@ type Props = {
 };
 
 const OrderList = ({ orders }: Props) => {
-  const orderList = orders.map((order) => <OrderListItem order={order} />);
+  const orderList = orders.map((order) => <OrderListItem key={order.orderId} order={order} />);
 
   return (
     <>
@@ -24,6 +24,12 @@ const S = {
     flex-direction: column;
     width: 80vw;
     gap: 100px;
+    transition: transform 0.3s ease;
+
+    li:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    }
   `,
 };
 

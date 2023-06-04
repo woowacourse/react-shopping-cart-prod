@@ -23,7 +23,7 @@ const OrderDetailPage = () => {
         {isLoading ? null : (
           <>
             <OrderWrapper>
-              {orderDetail ? <OrderListItem order={orderDetail} buttonHide={true} /> : null}
+              {orderDetail ? <OrderListItem order={orderDetail} isList={true} /> : null}
             </OrderWrapper>
             <div>{orderDetail ? <OrderDetailItem orderDetail={orderDetail} /> : null}</div>
           </>

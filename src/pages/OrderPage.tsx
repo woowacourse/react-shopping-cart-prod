@@ -7,7 +7,7 @@ import { serverState } from '../store/ServerState';
 import { ORDER_BASE_URL } from '../constants/url';
 import { useEffect } from 'react';
 import { OrderItem } from '../types';
-import { LoadingSpinner } from '../components/@common/LoadingSpinner';
+import { LoadingSpinner } from '../components/@common/LoadingSpinner/LoadingSpinner';
 
 const OrderPage = () => {
   const [orders, setOrders] = useRecoilState(orderState);
