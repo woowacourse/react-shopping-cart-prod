@@ -1,22 +1,16 @@
-import { useNavigate } from 'react-router-dom';
 import ContentLayout from '../ContentLayout';
+import { FallbackProps } from '../ErrorBoundary';
 import Header from '../Header';
 import * as S from './ErrorComponent.styles';
 
-const ErrorComponent = () => {
-  const navigate = useNavigate();
-
-  const onReload = () => {
-    navigate(0);
-  };
-
+const ErrorComponent = ({ message, resetError }: FallbackProps) => {
   return (
     <ContentLayout>
       <S.Wrapper>
         <Header />
         <img src={process.env.PUBLIC_URL + '/error.png'} />
-        <S.ErrorMessage>잘못된 요청입니다.</S.ErrorMessage>
-        <S.ReloadButton onClick={onReload}>다시 시도하기</S.ReloadButton>
+        <S.ErrorMessage>{message}</S.ErrorMessage>
+        <S.ReloadButton onClick={resetError}>다시 시도하기</S.ReloadButton>
       </S.Wrapper>
     </ContentLayout>
   );
