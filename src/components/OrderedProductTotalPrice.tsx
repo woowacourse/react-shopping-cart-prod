@@ -1,17 +1,27 @@
 import { styled } from 'styled-components';
 
 interface OrderedProductTotalPriceProps {
-  totalPrice:number
+  totalPrice: number;
+  usedPoint: number;
 }
 
-export const OrderedProductTotalPrice = ({totalPrice}:OrderedProductTotalPriceProps) => {
+export const OrderedProductTotalPrice = ({
+  totalPrice,
+  usedPoint,
+}: OrderedProductTotalPriceProps) => {
   return (
     <>
       <Style.PaymentAmount>결제금액 정보</Style.PaymentAmount>
-      <Style.TotalPriceInformation>
-        <Style.TotalPriceText>총 결제금액</Style.TotalPriceText>
-        <Style.TotalPrice>{totalPrice.toLocaleString('ko-KR')}원</Style.TotalPrice>
-      </Style.TotalPriceInformation>
+      <Style.TotalPriceInformations>
+        <Style.Information>
+          <span>총 결제금액</span>
+          <span>{(totalPrice - usedPoint).toLocaleString('ko-KR')}원</span>
+        </Style.Information>
+        <Style.Information>
+          <span>사용한 포인트</span>
+          <span>{usedPoint.toLocaleString('ko-KR')}원</span>
+        </Style.Information>
+      </Style.TotalPriceInformations>
     </>
   );
 };
@@ -36,11 +46,22 @@ const Style = {
     letter-spacing: 0.5px;
 
     color: #333333;
+
+    @media screen and (max-width: 700px) {
+      width: 500px;
+    }
+
+    @media screen and (max-width: 600px) {
+      width: 300px;
+
+      font-size: 20px;
+    }
   `,
 
-  TotalPriceInformation: styled.div`
+  TotalPriceInformations: styled.div`
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: space-evenly;
     align-items: center;
 
     width: 560px;
@@ -50,25 +71,48 @@ const Style = {
 
     background: #ffffff;
     border: 1px solid #aaaaaa;
+
+    @media screen and (max-width: 700px) {
+      width: 500px;
+    }
+
+    @media screen and (max-width: 600px) {
+      width: 300px;
+    }
   `,
 
-  TotalPriceText: styled.span`
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 24px;
+  Information: styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-    letter-spacing: 0.5px;
+    width: 560px;
 
-    color: #333333;
-  `,
+    padding: 0 30px;
 
-  TotalPrice: styled.span`
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 24px;
+    & > span {
+      font-size: 24px;
+      line-height: 24px;
 
-    letter-spacing: 0.5px;
+      color: #333333;
+    }
 
-    color: #333333;
+    @media screen and (max-width: 700px) {
+      width: 500px;
+    }
+
+    @media screen and (max-width: 600px) {
+      width: 300px;
+
+      & > span {
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 20px;
+
+        letter-spacing: 0.5px;
+
+        color: #333333;
+      }
+    }
   `,
 };

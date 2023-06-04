@@ -26,7 +26,7 @@ export const OrderDetail = () => {
           <OrderedProductList order={data} isDetail={true}/>
         </Style.Main>
         <Style.Price>
-          <OrderedProductTotalPrice totalPrice={data.totalProductsPrice} />
+          <OrderedProductTotalPrice totalPrice={data.totalProductsPrice} usedPoint={data.usedPoint}/>
         </Style.Price>
       </Style.OrderDetailWrapper>
     </Layout>
@@ -78,5 +78,9 @@ const Style = {
     align-items: flex-end;
 
     margin-top: 28px;
+
+    @media screen and (max-width: 700px) {
+      align-items: center;
+    }
   `,
 };
