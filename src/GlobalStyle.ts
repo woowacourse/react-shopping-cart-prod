@@ -37,6 +37,8 @@ export const GlobalStyle = createGlobalStyle`
     --gray-color-300: #f6f6f6;
     --text-color: #333;
     --mint-color: #04c092;
+    --mint-color-002: #4ea685;
+    --mint-color-003: #57b894;
     --white-color: #ffffff;
     --mint-color-hover: #439a97;
   }
