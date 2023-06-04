@@ -1,20 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { styled } from 'styled-components';
-import {
-  useRecoilRefresher_UNSTABLE,
-  useRecoilValue,
-  useSetRecoilState,
-} from 'recoil';
-import {
-  cartAtom,
-  isSelectedListAtom,
-  totalAmountAtom,
-} from '../../store/cart';
+import { useRecoilValue } from 'recoil';
+import { isSelectedListAtom, totalAmountAtom } from '../../store/cart';
 import { WIDTH } from '../../constants/mediaQuery';
-import { useNavigate } from 'react-router-dom';
-import { PATH } from '../../constants/path';
 import useFetchOrder from '../../hooks/useFetchOrder';
-import { orderAtom } from '../../store/order';
 import {
   DELIVERY_FEE,
   DISCOUNT_BOUNDARY,
@@ -25,8 +14,6 @@ import getDiscountAmount from '../../util/getDiscountAmount';
 
 const Bill = () => {
   const isSelectedList = useRecoilValue(isSelectedListAtom);
-  const setCartList = useSetRecoilState(cartAtom);
-  const refreshOrderList = useRecoilRefresher_UNSTABLE(orderAtom);
   const { postOrders } = useFetchOrder();
   const totalProductAmount = useRecoilValue(totalAmountAtom);
   const [discount, setDiscount] = useState(0);
@@ -40,22 +27,12 @@ const Bill = () => {
       setDeliveryFee(DELIVERY_FEE);
   }, [totalProductAmount]);
 
-  const navigate = useNavigate();
-
-  const onClickOrder = async () => {
+  const onClickOrder = useCallback(async () => {
     const orders = isSelectedList
       .filter((item) => item.isSelected)
       .map((item) => item.order);
     await postOrders(orders);
-    setCartList((prev) =>
-      prev.filter((cart) => {
-        if (orders.find((order) => order.id === cart.product.id)) return false;
-        return true;
-      })
-    );
-    refreshOrderList();
-    navigate(`${PATH.ORDER_LIST_PAGE}`);
-  };
+  }, [isSelectedList]);
 
   return (
     <Wrapper>
