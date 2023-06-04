@@ -9,3 +9,10 @@ export const OrderBoxHeader = styled.div`
 
   border-bottom: 3px solid var(--grey-300);
 `;
+
+export const OrderDate = styled.span`
+  margin-left: 15px;
+  font-size: 11px;
+
+  opacity: 0.6;
+`;

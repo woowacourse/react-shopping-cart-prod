@@ -10,13 +10,20 @@ export const OrderItem = styled.div`
   }
 `;
 
-export const ProductImage = styled.div`
+export const ProductImage = styled.div<{ path: string }>`
   width: 120px;
   height: 120px;
 
   margin-right: 30px;
 
   background-color: var(--grey-300);
+
+  background-image: ${(props) => `url(${props.path})`};
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  border-radius: 4px;
 `;
 
 export const OrderInfo = styled.div`

@@ -14,7 +14,7 @@ export const OrderBox = ({ orderInfo }: OrderBoxProps) => {
 
   return (
     <styled.OrderBox>
-      <OrderBoxHeader orderId={orderId} orderData={orderDate} />
+      <OrderBoxHeader orderId={orderId} orderDate={orderDate} />
       {orderDetails.map((detail: OrderSummary) => (
         <OrderItem key={detail.product.id} detailData={detail} />
       ))}
