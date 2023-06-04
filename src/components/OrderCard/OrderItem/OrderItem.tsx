@@ -53,8 +53,6 @@ const ImageWrapper = styled.div`
   width: 180px;
   height: 180px;
 
-  overflow: hidden;
-
   @media (max-width: ${WIDTH.MD}) {
     width: 100px;
     height: 100px;
@@ -65,10 +63,10 @@ const DetailInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 1;
 
   padding: 24px 0;
 
-  width: 100%;
   height: 100%;
 
   @media (max-width: ${WIDTH.MD}) {

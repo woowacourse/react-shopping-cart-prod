@@ -90,4 +90,8 @@ const TopSection = styled.div`
   }
 `;
 
-const BottomSection = styled.div``;
+const BottomSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;

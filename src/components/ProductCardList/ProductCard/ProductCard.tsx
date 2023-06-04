@@ -45,7 +45,9 @@ const ProductCard = ({
 
   return (
     <Container>
-      <ProductImg imageUrl={imageUrl} isProductCard={true} />
+      <ImageWrapper>
+        <ProductImg imageUrl={imageUrl} isProductCard={true} />
+      </ImageWrapper>
       <ProductDetail>
         <ProductInfo name={name} price={price} />
         {count && count > 0 ? (
@@ -86,6 +88,16 @@ const ShoppingCart = styled.button`
 
   @media (max-width: ${WIDTH.MD}) {
     width: 20px;
+  }
+`;
+
+const ImageWrapper = styled.div`
+  width: 282px;
+  height: 282px;
+
+  @media (max-width: ${WIDTH.MD}) {
+    width: 160px;
+    height: 160px;
   }
 `;
 

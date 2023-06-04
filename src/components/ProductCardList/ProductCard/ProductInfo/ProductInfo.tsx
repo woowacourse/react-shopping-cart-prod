@@ -8,38 +8,40 @@ interface ProductInfoProps {
 }
 const ProductInfo = ({ name, price }: ProductInfoProps) => {
   return (
-    <Styled.ProductInfo>
-      <Styled.ProductName>{name}</Styled.ProductName>
-      <Styled.ProductPrice>₩ {price.toLocaleString()}</Styled.ProductPrice>
-    </Styled.ProductInfo>
+    <Wrapper>
+      <ProductName>{name}</ProductName>
+      <ProductPrice>₩ {price.toLocaleString()}</ProductPrice>
+    </Wrapper>
   );
 };
 
-const Styled = {
-  ProductInfo: styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  `,
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 
-  ProductName: styled.span`
-    font-size: 16px;
+  @media (max-width: ${WIDTH.MD}) {
+    width: 115px;
+  }
+`;
 
-    letter-spacing: 0.5px;
+const ProductName = styled.span`
+  font-size: 16px;
+  letter-spacing: 0.5px;
 
-    @media (max-width: ${WIDTH.MD}) {
-      font-size: 9px;
-    }
-  `,
+  @media (max-width: ${WIDTH.MD}) {
+    font-size: 9px;
+  }
+`;
 
-  ProductPrice: styled.span`
-    font-size: 20px;
+const ProductPrice = styled.span`
+  font-size: 20px;
 
-    letter-spacing: 0.5px;
+  letter-spacing: 0.5px;
 
-    @media (max-width: ${WIDTH.MD}) {
-      font-size: 12px;
-    }
-  `,
-};
+  @media (max-width: ${WIDTH.MD}) {
+    font-size: 12px;
+  }
+`;
+
 export default memo(ProductInfo);
