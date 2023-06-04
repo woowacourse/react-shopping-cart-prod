@@ -1,9 +1,7 @@
 import { fetchAPI } from '@api/fetchAPI';
 import { selector, useRecoilValue } from 'recoil';
 
-import type { UsablePoint } from '../types';
-
-export const usablePointSelector = selector<UsablePoint>({
+export const usablePointSelector = selector<number>({
   key: 'usablePointSelector',
   get: async () => {
     const { usablePoint } = await fetchAPI('/point', {
