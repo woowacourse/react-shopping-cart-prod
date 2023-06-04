@@ -22,7 +22,7 @@ const ProductList = () => {
     api.get(`${server}${CART_URL}`).then((data) => {
       setCart(data);
     });
-  }, [server]);
+  }, [server, api, setProducts, setCart]);
 
   if (isLoading) return <Spinner />;
 
