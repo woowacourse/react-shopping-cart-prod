@@ -13,7 +13,6 @@ const Payment = ({ order }: { order: OrderDetailType }) => {
       (acc, cur) => acc + cur.totalDiscountPrice,
       0
     );
-    console.log(salePrice);
     return salePrice + order.discountFromTotalPrice;
   };
 
