@@ -1,10 +1,19 @@
 import { fetchGet } from '@utils/fetchUtils';
 import { ServerName, getProductPath } from '@constants/serverUrlConstants';
+import { UserInformationType } from '@constants/userConstant';
 import { ServerProductItemType } from '@type/productType';
 import { productListApiWrapper } from './productList';
 
-export const getProductList = async (serverName: ServerName) => {
-  const serverProductList = await fetchGet<ServerProductItemType[]>(getProductPath(serverName));
+interface GetProductListProps {
+  serverName: ServerName;
+  userInfo: UserInformationType;
+}
+
+export const getProductList = async ({ serverName, userInfo }: GetProductListProps) => {
+  const serverProductList = await fetchGet<ServerProductItemType[]>(getProductPath(serverName), {
+    email: userInfo.email,
+    password: userInfo.password,
+  });
   const clientProductList = productListApiWrapper(serverProductList);
 
   return clientProductList;

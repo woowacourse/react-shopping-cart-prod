@@ -1,28 +1,30 @@
 import { fetchDelete, fetchGet, fetchPatch, fetchPost } from '@utils/fetchUtils';
 import { ServerName, getCartPath } from '@constants/serverUrlConstants';
+import { UserInformationType } from '@constants/userConstant';
 import { CartItemType, ServerCartItemType } from '@type/cartType';
 import { cartApiWrapper } from './cart';
 
 interface AddItemToCartApiParams {
   productId: number;
   serverName: ServerName;
+  userInfo: UserInformationType;
 }
 
-interface RemoveCartItemApiParams {
-  cartId: number;
-  serverName: ServerName;
-}
-
-interface UpdateCartItemQuantityApiParams {
-  cartId: number;
-  serverName: ServerName;
-  quantity: number;
-}
-
-export const addItemToCartApi = async ({ productId, serverName }: AddItemToCartApiParams) => {
-  const response = await fetchPost(getCartPath(serverName), {
-    productId,
-  });
+export const addItemToCartApi = async ({
+  productId,
+  serverName,
+  userInfo,
+}: AddItemToCartApiParams) => {
+  const response = await fetchPost(
+    getCartPath(serverName),
+    {
+      productId,
+    },
+    {
+      email: userInfo.email,
+      password: userInfo.password,
+    }
+  );
 
   if (!response) {
     throw new Error('장바구니에 아이템을 추가하지 못했습니다.');
@@ -38,20 +40,56 @@ export const addItemToCartApi = async ({ productId, serverName }: AddItemToCartA
   return cartId;
 };
 
-export const removeCartItemApi = async ({ cartId, serverName }: RemoveCartItemApiParams) => {
-  await fetchDelete(`${getCartPath(serverName)}/${cartId}`);
+interface RemoveCartItemApiParams {
+  cartId: number;
+  serverName: ServerName;
+  userInfo: UserInformationType;
+}
+
+export const removeCartItemApi = async ({
+  cartId,
+  serverName,
+  userInfo,
+}: RemoveCartItemApiParams) => {
+  await fetchDelete(`${getCartPath(serverName)}/${cartId}`, {
+    email: userInfo.email,
+    password: userInfo.password,
+  });
 };
+
+interface UpdateCartItemQuantityApiParams {
+  cartId: number;
+  serverName: ServerName;
+  quantity: number;
+  userInfo: UserInformationType;
+}
 
 export const updateCartItemQuantityApi = async ({
   cartId,
   serverName,
   quantity,
+  userInfo,
 }: UpdateCartItemQuantityApiParams) => {
-  await fetchPatch(`${getCartPath(serverName)}/${cartId}`, { quantity });
+  await fetchPatch(
+    `${getCartPath(serverName)}/${cartId}`,
+    { quantity },
+    {
+      email: userInfo.email,
+      password: userInfo.password,
+    }
+  );
 };
 
-export const getCart = async (serverName: ServerName) => {
-  const serverCart = await fetchGet<ServerCartItemType[]>(getCartPath(serverName));
+interface GetCartApiProps {
+  serverName: ServerName;
+  userInfo: UserInformationType;
+}
+
+export const getCartApi = async ({ serverName, userInfo }: GetCartApiProps) => {
+  const serverCart = await fetchGet<ServerCartItemType[]>(getCartPath(serverName), {
+    email: userInfo.email,
+    password: userInfo.password,
+  });
   const clientCart: CartItemType[] = cartApiWrapper(serverCart);
 
   return clientCart;

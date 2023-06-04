@@ -1,17 +1,32 @@
 import { CustomError } from 'types/error';
 
-const username = 'pizza2@pizza.com';
-const password = 'pizza';
+interface EncodeCredentialsToBase64Props {
+  email: string;
+  password: string;
+}
 
-const base64 = btoa(`${username}:${password}`);
+const encodeCredentialsToBase64 = ({ email, password }: EncodeCredentialsToBase64Props) => {
+  const credentials = `${email}:${password}`;
+  const encodedCredentials = btoa(credentials);
 
-export const fetchGet = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
+  return encodedCredentials;
+};
+
+interface AuthRequestInitProps extends RequestInit {
+  email: string;
+  password: string;
+}
+
+export const fetchGet = async <T>(url: string, options: AuthRequestInitProps): Promise<T> => {
   try {
     const mergedOptions = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${encodeCredentialsToBase64({
+          email: options.email,
+          password: options.password,
+        })}`,
         ...options.headers,
       },
       ...options,
@@ -37,7 +52,7 @@ export const fetchGet = async <T>(url: string, options: RequestInit = {}): Promi
 export const fetchPost = async <T>(
   url: string,
   body: T,
-  options: RequestInit = {}
+  options: AuthRequestInitProps
 ): Promise<Response> => {
   try {
     const mergedOptions = {
@@ -45,7 +60,10 @@ export const fetchPost = async <T>(
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${encodeCredentialsToBase64({
+          email: options.email,
+          password: options.password,
+        })}`,
         ...options.headers,
       },
       ...options,
@@ -67,7 +85,7 @@ export const fetchPost = async <T>(
 export const fetchPatch = async <T>(
   url: string,
   body: T,
-  options: RequestInit = {}
+  options: AuthRequestInitProps
 ): Promise<Response> => {
   try {
     const mergedOptions = {
@@ -75,7 +93,10 @@ export const fetchPatch = async <T>(
       body: JSON.stringify(body),
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${encodeCredentialsToBase64({
+          email: options.email,
+          password: options.password,
+        })}`,
         ...options.headers,
       },
       ...options,
@@ -94,12 +115,18 @@ export const fetchPatch = async <T>(
   }
 };
 
-export const fetchDelete = async (url: string, options: RequestInit = {}): Promise<Response> => {
+export const fetchDelete = async (
+  url: string,
+  options: AuthRequestInitProps
+): Promise<Response> => {
   try {
     const mergedOptions = {
       method: 'DELETE',
       headers: {
-        Authorization: `Basic ${base64}`,
+        Authorization: `Basic ${encodeCredentialsToBase64({
+          email: options.email,
+          password: options.password,
+        })}`,
         ...options.headers,
       },
       ...options,
