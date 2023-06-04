@@ -1,28 +1,15 @@
 import { styled } from "styled-components";
 import { cartListState } from "recoil/cart";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import CartItem from "components/cart/CartItem";
 import { useCartCheckbox } from "hooks/useCartCheckbox";
-import { couponListState } from "recoil/coupon";
 import { useEffect } from "react";
-import { getCoupons } from "api/coupons";
-import { serverSelectState } from "recoil/server";
+import { useReloadFromServer } from "hooks/useReloadFromServer";
 
 const CartItemList = () => {
   const cartList = useRecoilValue(cartListState);
   const { isAllchecked, checkedCount, setAllCheckbox, removeCheckedItem } = useCartCheckbox();
-  const selectedServer = useRecoilValue(serverSelectState);
-  const setCouponList = useSetRecoilState(couponListState);
-
-  const reloadCouponList = async () => {
-    const coupons = await getCoupons(selectedServer);
-
-    setCouponList(
-      coupons.map((coupon) => {
-        return { ...coupon, productId: null };
-      })
-    );
-  };
+  const { reloadCouponList } = useReloadFromServer();
 
   useEffect(() => {
     reloadCouponList();
