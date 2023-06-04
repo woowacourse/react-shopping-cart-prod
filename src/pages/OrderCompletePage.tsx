@@ -17,7 +17,7 @@ const OrderCompletePage = () => {
     <Section>
       <p>주문이 완료되었습니다!!</p>
       <p>주문번호: {orderId}</p>
-      <LinkButton>주문 목록으로 가기</LinkButton>
+      <LinkButton onClick={() => navigate('/orders')}>주문 목록으로 가기</LinkButton>
       <LinkButton onClick={() => navigate('/', { replace: true })}>초기 화면으로 가기</LinkButton>
     </Section>
   );
