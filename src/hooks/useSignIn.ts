@@ -1,21 +1,26 @@
 import { useRef } from 'react';
 import { END_POINTS } from '../constants/endPoints';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { baseURLSelector } from '../store/server';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from '../constants/path';
+import { loginState, tokenAtom } from '../store/loginState';
 
 const useSignIn = () => {
   const baseURL = useRecoilValue(baseURLSelector);
+  const setIsSignedIn = useSetRecoilState(loginState);
+  const setToken = useSetRecoilState(tokenAtom);
+
   const idRef = useRef('');
   const passwordRef = useRef('');
+
   const navigate = useNavigate();
 
   const onChageId = (e: React.ChangeEvent<HTMLInputElement>) => {
     idRef.current = e.target.value;
   };
 
-  const onChagePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     passwordRef.current = e.target.value;
   };
 
@@ -23,7 +28,11 @@ const useSignIn = () => {
     try {
       e.preventDefault();
       const body = { id: idRef, password: passwordRef };
-      await handleFetch(body);
+      const token = await handleFetch(body);
+
+      setIsSignedIn(() => true);
+      setToken(() => token);
+
       navigate(PATH.PRODUCT_PAGE);
     } catch (error) {
       alert('로그인 요청이 실패했습니다.');
@@ -47,7 +56,7 @@ const useSignIn = () => {
     return await response.json();
   };
 
-  return { onChageId, onChagePassword, onClickSubmit };
+  return { onChageId, onChangePassword, onClickSubmit };
 };
 
 export default useSignIn;

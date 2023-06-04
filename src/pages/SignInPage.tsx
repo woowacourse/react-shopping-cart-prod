@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 import useSignIn from '../hooks/useSignIn';
 
 const SignInPage = () => {
-  const { onChageId, onChagePassword, onClickSubmit } = useSignIn();
+  const { onChageId, onChangePassword, onClickSubmit } = useSignIn();
 
   return (
     <Wrapper>
@@ -22,7 +22,7 @@ const SignInPage = () => {
           <Input
             type='password'
             autoComplete='current-password'
-            onChange={onChagePassword}
+            onChange={onChangePassword}
             required
           />
         </InputContainer>
