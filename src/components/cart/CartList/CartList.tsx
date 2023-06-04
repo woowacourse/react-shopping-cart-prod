@@ -11,9 +11,9 @@ import useResetCartWhenServerChange from '../../../hooks/useResetCartWhenServerC
 
 const CartList = () => {
   const {
-    checkedCartList,
-    addAllCheckedItem,
-    deleteAllCheckedItem,
+    checkedCartIdList,
+    checkAllCartItem,
+    uncheckAllCartItem,
     isAllChecked,
   } = useCheckedCartListValue();
   const { cartList, deleteCartItem } = useCartService();
@@ -23,25 +23,25 @@ const CartList = () => {
 
   const handleAllCheckBoxChange = () => {
     if (isAllChecked()) {
-      deleteAllCheckedItem();
+      uncheckAllCartItem();
       return;
     }
 
-    addAllCheckedItem();
+    checkAllCartItem();
   };
 
   const handleDeleteCheckedListButtonClick = () => {
     if (
       !window.confirm(
-        `${checkedCartList.length}개의 선택한 품목들을 삭제하시겠습니까?`,
+        `${checkedCartIdList.length}개의 선택한 품목들을 삭제하시겠습니까?`,
       )
     )
       return;
 
-    checkedCartList.forEach((checkedCartItem) =>
+    checkedCartIdList.forEach((checkedCartItem) =>
       deleteCartItem(checkedCartItem),
     );
-    deleteAllCheckedItem();
+    uncheckAllCartItem();
   };
 
   useEffect(() => {
@@ -65,10 +65,10 @@ const CartList = () => {
       <AllCheckContainer>
         <CheckBox
           isChecked={isAllChecked()}
-          labelText={`전체 선택 (${checkedCartList.length}/${cartList.length})`}
+          labelText={`전체 선택 (${checkedCartIdList.length}/${cartList.length})`}
           onChange={handleAllCheckBoxChange}
         />
-        {!!checkedCartList.length && (
+        {!!checkedCartIdList.length && (
           <DeleteCheckedListButton onClick={handleDeleteCheckedListButtonClick}>
             선택 삭제
           </DeleteCheckedListButton>

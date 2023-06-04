@@ -18,7 +18,7 @@ const CartItem = ({ cartItem }: CartItemProps) => {
   const { imageUrl, name, price } = cartItem.product;
 
   const { updateCartItemQuantity, deleteCartItem } = useCartService();
-  const { isChecked, addCheckedItem, deleteCheckedItem } =
+  const { isChecked, checkCartItem, uncheckCartItem } =
     useCheckedCartListValue();
   const [count, setCount] = useState(quantity);
 
@@ -31,16 +31,16 @@ const CartItem = ({ cartItem }: CartItemProps) => {
     if (!window.confirm('해당 물품을 장바구니에서 삭제 하시겠습니까?')) return;
 
     deleteCartItem(id);
-    deleteCheckedItem(id);
+    uncheckCartItem(id);
   };
 
   const handleCheckBoxChange = () => {
     if (isChecked(id)) {
-      deleteCheckedItem(id);
+      uncheckCartItem(id);
       return;
     }
 
-    addCheckedItem(id);
+    checkCartItem(id);
   };
 
   return (

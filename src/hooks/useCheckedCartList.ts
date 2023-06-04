@@ -5,52 +5,58 @@ import cartState from '../globalState/atoms/cartState';
 
 const useCheckedCartList = () => {
   const cartList = useRecoilValue(cartState);
-  const cartIdList = cartList.map((cartItem) => cartItem.id);
-  const [checkedCartList, setCheckedCartList] = useState<string[]>(cartIdList);
+  const cartIdList = cartList.map((cartItemId) => cartItemId.id);
+  const [checkedCartIdList, setCheckedCartList] =
+    useState<string[]>(cartIdList);
 
   const serverName = useRecoilValue(serverNameState);
   const prevServerName = useRef('');
 
-  const addCheckedItem = (id: string) => {
+  const checkCartItem = (id: string) => {
     setCheckedCartList((prevList) => [...prevList, id]);
   };
 
-  const deleteCheckedItem = (targetId: string) => {
+  const uncheckCartItem = (targetId: string) => {
     setCheckedCartList((prevList) => prevList.filter((id) => id !== targetId));
   };
 
-  const isChecked = (id: string) => {
-    return checkedCartList.includes(id);
+  const checkAllCartItem = () => {
+    setCheckedCartList(cartList.map((cartItemId) => cartItemId.id));
   };
 
-  const addAllCheckedItem = () => {
-    setCheckedCartList(cartList.map((cartItem) => cartItem.id));
-  };
-
-  const deleteAllCheckedItem = () => {
+  const uncheckAllCartItem = () => {
     setCheckedCartList([]);
   };
 
+  const isChecked = (id: string) => {
+    return checkedCartIdList.includes(id);
+  };
+
   const isAllChecked = () => {
-    return cartList.length === checkedCartList.length;
+    return cartList.length === checkedCartIdList.length;
+  };
+
+  const getCheckedItemList = () => {
+    return cartList.filter((cart) => checkedCartIdList.includes(cart.id));
   };
 
   useEffect(() => {
     if (prevServerName.current === serverName) return;
 
-    deleteAllCheckedItem();
-    addAllCheckedItem();
+    uncheckAllCartItem();
+    checkAllCartItem();
 
     prevServerName.current = serverName;
   }, [cartList]);
 
   return {
-    checkedCartList,
-    addCheckedItem,
-    deleteCheckedItem,
+    checkedCartIdList,
+    checkCartItem,
+    uncheckCartItem,
+    checkAllCartItem,
+    uncheckAllCartItem,
+    getCheckedItemList,
     isChecked,
-    addAllCheckedItem,
-    deleteAllCheckedItem,
     isAllChecked,
   };
 };
