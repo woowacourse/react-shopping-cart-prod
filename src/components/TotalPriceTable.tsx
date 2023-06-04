@@ -4,7 +4,7 @@ import { DELIVERY_FEE } from "../constants";
 import { useRouter } from "../hooks/useRouter";
 import { totalPriceSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
-import { Button } from "./Button";
+import { Button } from "../components";
 
 interface TotalPriceTableType {
   discountPrice?: number | null;

@@ -60,7 +60,28 @@ const getMemberApi = () =>
     }
   );
 
-const getCouponsApi = (cartItemIds: number[]) => {
+const getCouponsApi = () =>
+  fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/coupons`,
+    {
+      headers: {
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+const getMyCouponsApi = (cartItemIds: number[]) => {
   const cartItemIdsQuery = cartItemIds
     .map((id) => "cartItemId=" + id.toString())
     .join("&");
@@ -220,7 +241,31 @@ const postOrderApi = async (
     }
   );
 
-// const postLogin = () =>
+const postCouponApi = async (couponId: number) => {
+  const now = new Date();
+
+  return fetch(
+    `${
+      SERVERS[
+        getLocalStorage(
+          KEY_LOCALSTORAGE_SERVER_OWNER,
+          DEFAULT_VALUE_SERVER_OWNER
+        )
+      ]
+    }/coupons/${couponId}`,
+    {
+      headers: {
+        Authorization: `Basic ${getLocalStorage(
+          KEY_LOCALSTORAGE_LOGIN_TOKEN,
+          DEFAULT_VALUE_LOGIN_TOKEN
+        )}`,
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ expiredAt: now }),
+    }
+  );
+};
 
 const deleteCartItemApi = async (cartItemId: number) =>
   fetch(
@@ -247,6 +292,7 @@ export {
   getProductsApi,
   getCartItemsApi,
   getCouponsApi,
+  getMyCouponsApi,
   getMemberApi,
   getOrdersApi,
   getOrderDetailApi,
@@ -254,5 +300,6 @@ export {
   postLoginApi,
   postCartItemApi,
   postOrderApi,
+  postCouponApi,
   deleteCartItemApi,
 };

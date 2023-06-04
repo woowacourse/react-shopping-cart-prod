@@ -8,7 +8,7 @@ import { ERROR_MESSAGE, MIN_QUANTITY } from "../constants";
 import { postCartItemApi } from "../api";
 import { useState } from "react";
 import { useToast } from "../hooks/useToast";
-import { ErrorBox } from "./ErrorBox";
+import { ErrorBox } from "../components";
 import { useLocalProducts } from "../hooks/useLocalProducts";
 
 export const ProductList = () => {

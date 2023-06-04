@@ -3,6 +3,7 @@ import { RouterProvider } from "react-router-dom";
 import Cart from "../pages/Cart";
 import Login from "../pages/Login";
 import Main from "../pages/Main";
+import MyPage from "../pages/MyPage";
 import NotFound from "../pages/NotFound";
 import Order from "../pages/Order";
 import OrderDetail from "../pages/OrderDetail";
@@ -12,6 +13,7 @@ export const ROUTER_PATH = {
   Main: "/",
   Login: "/Login",
   Cart: "/Cart",
+  MyPage: "/MyPage",
   Order: "/Cart/Order",
   OrderHistory: "/OrderHistory",
   OrderDetail: "/OrderHistory/Detail",
@@ -25,12 +27,16 @@ export const PageRouterProvider = () => {
       element: <Main />,
     },
     {
+      path: ROUTER_PATH.Login,
+      element: <Login />,
+    },
+    {
       path: ROUTER_PATH.Cart,
       element: <Cart />,
     },
     {
-      path: ROUTER_PATH.Login,
-      element: <Login />,
+      path: ROUTER_PATH.MyPage,
+      element: <MyPage />,
     },
     {
       path: ROUTER_PATH.Order,

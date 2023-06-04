@@ -10,7 +10,6 @@ const Wrapper = styled.button`
   width: 90%;
   height: 40px;
 
-  margin-top: 20px;
   border-radius: 5px;
   background: var(--dark-gray);
   color: white;

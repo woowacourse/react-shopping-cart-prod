@@ -20,6 +20,9 @@ export interface CouponType {
   id: number;
   name: string;
   minOrderPrice: number;
+}
+
+export interface MyCouponType extends CouponType {
   maxDiscountPrice: number;
   isAvailable: boolean;
   discountPrice: number;

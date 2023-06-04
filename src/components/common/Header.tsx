@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import { CartIcon } from "../../assets";
+import { CartIcon, HumanIcon } from "../../assets";
 import { useRecoilValue } from "recoil";
 import { cartNumberSelector } from "../../recoil/selector";
 import { ROUTER_PATH } from "../../router";
 import { useRouter } from "../../hooks/useRouter";
-import { loginState, userState } from "../../recoil/atom";
+import { loginState, memberState } from "../../recoil/atom";
 import { useLocation } from "react-router-dom";
 import { ServerSelectBox } from "./../ServerSelectBox";
 import { useLoginForm } from "../../hooks/useLoginForm";
@@ -13,7 +13,7 @@ export const Header = () => {
   const { goPage } = useRouter();
   const { logout } = useLoginForm();
   const location = useLocation();
-  const user = useRecoilValue(userState);
+  const user = useRecoilValue(memberState);
   const cartNumber = useRecoilValue(cartNumberSelector);
   const isLogined = useRecoilValue(loginState);
 
@@ -38,12 +38,17 @@ export const Header = () => {
                 <ItemQuantityBox>{cartNumber}</ItemQuantityBox>
               )}
             </CartContainer>
-            <OrderBox
+            <MypageBox
               pathname={location.pathname}
-              onClick={goPage(ROUTER_PATH.OrderHistory)}
+              onClick={goPage(ROUTER_PATH.MyPage)}
             >
-              주문목록
-            </OrderBox>
+              마이페이지
+            </MypageBox>
+            <HumanIconBox
+              onClick={goPage(ROUTER_PATH.MyPage)}
+              src={HumanIcon}
+              alt="홈카트"
+            />
             <span onClick={logout}>로그아웃</span>
           </>
         )}
@@ -96,6 +101,12 @@ const TitleContainer = styled.section`
   }
 `;
 
+const HumanIconBox = styled.img`
+  display: none;
+  width: 25px;
+  height: 25px;
+`;
+
 const NavContainer = styled.div`
   display: flex;
   align-items: center;
@@ -113,6 +124,11 @@ const NavContainer = styled.div`
 
   @media screen and (max-width: 850px) {
     font-size: 18px;
+  }
+  @media screen and (max-width: 850px) {
+    ${HumanIconBox} {
+      display: flex;
+    }
   }
 `;
 
@@ -146,12 +162,15 @@ const CartBox = styled.p<{ pathname: string }>`
   }
 `;
 
-const OrderBox = styled.p<{ pathname: string }>`
+const MypageBox = styled.p<{ pathname: string }>`
   color: ${(props) =>
     props.pathname === ROUTER_PATH.OrderHistory ||
     props.pathname === ROUTER_PATH.OrderDetail
       ? "white"
       : "gray"};
+  @media screen and (max-width: 850px) {
+    display: none;
+  }
 `;
 
 const ItemQuantityBox = styled.div`
