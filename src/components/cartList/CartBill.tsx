@@ -8,6 +8,7 @@ import { couponState } from '../../atom/coupon';
 import { CartType } from '../../types';
 import useToast from '../hooks/useToast';
 import { API_SUCCESS_MESSAGE } from '../../constants';
+import { useState } from 'react';
 
 export default function CartBill() {
   const [cart, setCart] = useRecoilState(cartState);
@@ -16,8 +17,13 @@ export default function CartBill() {
   const deliveryFee = checkedList.filter((checked) => checked).length === 0 ? 0 : 3000;
   const serverName = useRecoilValue(serverNameState);
   const loginCredential = useRecoilValue(loginState);
-  const coupons = useRecoilValue(couponState);
+  const [coupons, setCoupons] = useRecoilState(couponState);
   const { showToast } = useToast();
+  const [selectedCoupon, setSelectedCoupon] = useState(0);
+  const couponDiscountPrice =
+    ((cartBillTotalPrice + deliveryFee) *
+      coupons.filter((coupon) => coupon.id === selectedCoupon)[0]?.discountRate) /
+      100 || 0;
 
   const handleSubmitPurchaseCartItems = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -46,13 +52,17 @@ export default function CartBill() {
     showToast('info', API_SUCCESS_MESSAGE.purchase);
   };
 
+  const handleCouponSelected = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCoupon(Number(e.target.value));
+  };
+
   return (
     <S.Wrapper onSubmit={handleSubmitPurchaseCartItems}>
       <S.TitleBox>결제예상금액</S.TitleBox>
       <S.CouponBox>
         <S.BillRow>
           <p>쿠폰</p>
-          <select name="couponKind">
+          <select name="couponKind" onChange={handleCouponSelected}>
             <option value="null">선택 안함</option>
             {coupons.map(({ id, name }) => (
               <option key={id} value={id}>
@@ -72,8 +82,12 @@ export default function CartBill() {
           <p>{deliveryFee.toLocaleString()}원</p>
         </S.BillRow>
         <S.BillRow>
+          <p>쿠폰 할인 금액</p>
+          <p>{couponDiscountPrice.toLocaleString()}원</p>
+        </S.BillRow>
+        <S.BillRow>
           <p>총 주문금액</p>
-          <p>{(cartBillTotalPrice + deliveryFee).toLocaleString()}원</p>
+          <p>{(cartBillTotalPrice + deliveryFee - couponDiscountPrice).toLocaleString()}원</p>
         </S.BillRow>
         <S.OrderButton>주문하기</S.OrderButton>
       </S.BillBox>
