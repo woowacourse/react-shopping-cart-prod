@@ -1,5 +1,5 @@
 import { atom, selector, selectorFamily } from "recoil";
-import { Coupon, NewOrder, Point } from "../../types/types";
+import { CartItem, Coupon, NewOrder, Point } from "../../types/types";
 import { checkedCartSelector, totalPriceSelector } from "./cartAtoms";
 import { modalRepository } from "./modalAtoms";
 
@@ -34,43 +34,34 @@ export const selectedCouponIdSelector = selector<number[]>({
   },
 });
 
-export const expectedOrderPrice = selector({
-  key: "expectedOrderPrice",
-  get: async ({ get }) => {
+export const discountPriceByCouponSelector = selector<number>({
+  key: 'discountPriceByCouponSelector',
+  get: ({ get }) => {
     const totalPrice = get(totalPriceSelector);
-    const couponIds = get(selectedCouponState);
-
-    const expectedOrderPrice = totalPrice;
-
-    const query = {
-      cartItems: [
-        {
-          cartItemId: 0,
-          productId: 0,
-          quantity: 0,
-        },
-      ],
-      couponIds: [0],
-      usePoint: 0,
-    };
-    return expectedOrderPrice;
-  },
+    const selectedCoupons = get(selectedCouponState);
+    const discount = selectedCoupons.length > 0 ? (totalPrice * selectedCoupons[0]?.discountPercent / 100 + selectedCoupons[0]?.discountAmount) : 0;
+    return discount;
+  }
 });
 
 export const isCouponSelectedSelector = selectorFamily<boolean, number>({
   key: "selectedCouponSelectedSelector",
-  get:
-    (couponId: number) =>
-      ({ get }) => {
-        const selectedCouponIds = get(selectedCouponIdSelector);
+  get: (couponId: number) =>
+    ({ get }) => {
+      const selectedCouponIds = get(selectedCouponIdSelector);
 
-        return selectedCouponIds.includes(couponId);
-      },
+      return selectedCouponIds.includes(couponId);
+    },
 });
 
 export const selectedPointState = atom({
   key: "selectedPointState",
   default: 0,
+});
+
+export const expectedOrderPriceState = atom({
+  key: "expectedOrderPriceState",
+  default: 0
 });
 
 export const orderRepository = selector({
@@ -127,11 +118,39 @@ export const orderRepository = selector({
         }
     );
 
+    const updateExpectedOrderPrice = getCallback(
+      ({ set, snapshot }) => async () => {
+        console.log('yeah');
+        const totalPrice = await snapshot.getPromise(totalPriceSelector);
+        const checkedCartList = await snapshot.getPromise(checkedCartSelector);
+        const selectedCouponIds = await snapshot.getPromise(selectedCouponIdSelector);
+        const discountByCoupon = await snapshot.getPromise(discountPriceByCouponSelector);
+        const selectedPoint = await snapshot.getPromise(selectedPointState);
+
+
+        const expectedOrderPrice = totalPrice - discountByCoupon - selectedPoint;
+
+        const query = {
+          cartItems: checkedCartList.map((cart) => {
+            return {
+              cartItemId: cart.id,
+              productId: cart.product.id,
+              quantity: cart.quantity,
+            };
+          }),
+          couponIds: [selectedCouponIds[0]],
+          usePoint: selectedPoint,
+        };
+        console.log(query);
+        set(expectedOrderPriceState, expectedOrderPrice);
+      });
+
     return {
       loadCoupons,
       loadPoint,
       commitPurchaseItems,
       updateSelectedCoupon,
+      updateExpectedOrderPrice
     };
   },
 });

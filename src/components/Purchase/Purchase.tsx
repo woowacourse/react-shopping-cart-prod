@@ -29,24 +29,42 @@ import {
 import CouponSelector from "../CouponSelector";
 import {
   deliveryFeeState,
+  discountPriceByCouponSelector,
+  expectedOrderPriceState,
   orderRepository,
+  selectedCouponIdSelector,
   selectedPointState,
 } from "../../app/recoil/orderAtom.ts";
 import PointSelector from "../PointSelector/PointSelector.tsx";
+import { useEffect } from "react";
 
 function Purchase() {
   const navigate = useNavigate();
   const DELIVERY_FEE = useRecoilValue(deliveryFeeState);
-  const checkedCartList = useRecoilValue(checkedCartSelector);
   const totalPrice = useRecoilValue(totalPriceSelector);
+  const checkedCartList = useRecoilValue(checkedCartSelector);
+  const selectedCouponIds = useRecoilValue(selectedCouponIdSelector);
   const selectedPoint = useRecoilValue(selectedPointState);
-  const { commitPurchaseItems } = useRecoilValue(orderRepository);
+  const expectedOrderPrice = useRecoilValue(expectedOrderPriceState);
+  const { commitPurchaseItems, updateExpectedOrderPrice } = useRecoilValue(orderRepository);
   const { closeModal } = useRecoilValue(modalRepository);
+
+  const discountByCoupon = useRecoilValue(discountPriceByCouponSelector);
 
   const purchase = () => {
     commitPurchaseItems();
     navigate("/order");
   };
+
+  useEffect(() => {
+    updateExpectedOrderPrice();
+  }, [
+    totalPrice,
+    checkedCartList,
+    selectedCouponIds,
+    selectedPoint
+  ]);
+
 
   return (
     <div>
@@ -101,7 +119,7 @@ function Purchase() {
         </PurchasePropertyWrapper>
         <PurchasePropertyWrapper>
           <PurchaseSecondaryText>쿠폰</PurchaseSecondaryText>
-          <PurchaseSecondaryText>- 0원</PurchaseSecondaryText>
+          <PurchaseSecondaryText>- {discountByCoupon}원</PurchaseSecondaryText>
         </PurchasePropertyWrapper>
         <PurchasePropertyWrapper>
           <PurchaseSecondaryText>포인트</PurchaseSecondaryText>
@@ -118,9 +136,10 @@ function Purchase() {
         <PurchasePropertyWrapper>
           <PurchaseResultText>최종 결제 금액</PurchaseResultText>
           <PurchaseResultText>
-            {(totalPrice - selectedPoint + DELIVERY_FEE).toLocaleString()}원
+            {(totalPrice - discountByCoupon - selectedPoint + DELIVERY_FEE).toLocaleString()}원
           </PurchaseResultText>
         </PurchasePropertyWrapper>
+        <div>{expectedOrderPrice}</div>
       </PurchaseList>
 
       <ButtonGroup>
