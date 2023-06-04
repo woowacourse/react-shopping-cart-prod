@@ -263,4 +263,20 @@ describe('쿠폰에 관련된 함수가 올바르게 작동해야 한다.', () =
 
     expect(result).toBe(0);
   });
+
+  test('할인되는 가격보다 총 장바구니 가격이 더 낮다면 총 장바구니 가격을 반환한다.', () => {
+    const totalItemsPrice = 8900;
+
+    const priceCoupon: CouponType = {
+      id: 1,
+      name: '생일 쿠폰',
+      type: 'price',
+      value: 10000,
+      minimumPrice: 0,
+    };
+
+    const result = getDiscountPrice({ totalItemsPrice, coupon: priceCoupon });
+
+    expect(result).toBe(8900);
+  });
 });

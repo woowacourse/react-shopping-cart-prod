@@ -52,6 +52,10 @@ export const getDiscountPrice = ({ totalItemsPrice, coupon }: GetDiscountPricePa
     return result ?? 0;
   }
 
+  if (coupon.type === 'price') {
+    return Math.min(coupon.value, totalItemsPrice);
+  }
+
   return coupon.value;
 };
 
