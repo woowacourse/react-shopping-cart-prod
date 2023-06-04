@@ -10,20 +10,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const item = {
-  id: 0,
-  quantity: 1,
-  product: {
-    id: 1,
-    name: '순살치킨 1KG',
-    price: 9900,
-    imageUrl:
-      'https://cdn-mart.baemin.com/sellergoods/main/c6f2f083-a8b8-4799-834b-444b5eaeb532.png?h=400&w=400',
-  },
-};
-
 export const Default: Story = {
   args: {
-    item,
+    orderItem: {
+      id: 1685864058206,
+      quantity: 1,
+      price: 16900,
+      name: '서울우유 비요뜨 쵸코링 138g x12개',
+      imageUrl:
+        'https://cdn-mart.baemin.com/sellergoods/main/73f2e0cf-1504-448f-b8f7-7ef47889fc85.jpg?h=400&w=400',
+    },
   },
 };
