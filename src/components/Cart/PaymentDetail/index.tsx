@@ -27,7 +27,7 @@ const PaymentDetail = () => {
     request(
       postPayments({
         cartItemIds: checkedItems,
-        isDeliveryFree: true,
+        isDeliveryFree: calculateDeliveryPrice() === 0,
         totalPaymentPrice: calculateOrderPrice(),
         couponIds: couponIds,
       })
