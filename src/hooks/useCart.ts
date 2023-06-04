@@ -9,7 +9,6 @@ export const useCart = (productId?: number) => {
   const selectedProduct = useRecoilValue(productSelector(productId));
 
   const server = useRecoilValue(serverState);
-
   const { api } = useFetchData();
 
   const findCartItemId = () => cart.find((item) => item.product.id === productId)?.id;

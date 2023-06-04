@@ -32,8 +32,10 @@ export interface OrderList {
   products: Order[];
   createdAt: string;
   totalPayments: number;
-  orderStatus: '결제완료' | '결제취소';
+  orderStatus: OrderStatus;
 }
+
+export type OrderStatus = '결제완료' | '결제취소';
 
 export interface OrderListItem extends Order, Pick<OrderList, 'totalPayments' | 'orderStatus'> {
   orderId?: number;

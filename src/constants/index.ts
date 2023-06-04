@@ -1,4 +1,4 @@
-import { CouponState } from '../types';
+import { CouponState, OrderStatus } from '../types';
 
 export const IMAGE_PATH: Readonly<Record<string, string>> = {
   EMPTY_CART: `${process.env.PUBLIC_URL}/assets/nothing.png`,
@@ -33,4 +33,9 @@ export const INITIAL_COUPON_STATE: Readonly<CouponState> = {
   id: 0,
   priceDiscount: 0,
   name: '',
+};
+
+export const ORDER_STATUS: Readonly<Record<string, OrderStatus>> = {
+  PAID: '결제완료',
+  CANCEL: '결제취소',
 };

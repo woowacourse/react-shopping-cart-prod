@@ -1,5 +1,6 @@
 import { BsCreditCardFill, BsFillCartDashFill } from 'react-icons/bs';
 import { css, styled } from 'styled-components';
+import { ORDER_STATUS } from '../../constants';
 import { CouponState, OrderList } from '../../types';
 import Price from '../Price';
 
@@ -32,7 +33,7 @@ const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments, orderStat
           총 결제금액 <Price price={totalPayments} />
         </li>
       </S.List>
-      {orderStatus === '결제취소' && (
+      {orderStatus === ORDER_STATUS.CANCEL && (
         <S.Return>
           <S.Title>
             <BsFillCartDashFill />

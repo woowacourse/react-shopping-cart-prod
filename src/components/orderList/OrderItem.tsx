@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { css, styled } from 'styled-components';
-import { ROUTE_PATH } from '../../constants';
+import { ORDER_STATUS, ROUTE_PATH } from '../../constants';
 import { ORDER_URL } from '../../constants/url';
 import { useFetchData } from '../../hooks/useFetchData';
 import { serverState } from '../../recoil';
@@ -35,7 +35,7 @@ const OrderItem = ({
     api
       .patch(`${server}${ORDER_URL}/${orderId}`)
       .then(() => {
-        setChangedStatus('결제취소');
+        setChangedStatus(ORDER_STATUS.CANCEL);
       })
       .catch((error) => alert(error.message));
   };
@@ -62,9 +62,9 @@ const OrderItem = ({
           )}
         </S.Detail>
       </section>
-      {location === ROUTE_PATH.ORDER_LIST_PAGE && orderStatus === '결제완료' && (
+      {location === ROUTE_PATH.ORDER_LIST_PAGE && orderStatus === ORDER_STATUS.PAID && (
         <Button onClick={handleCancelButtonClick} css={cancelButtonStyle}>
-          결제취소
+          {ORDER_STATUS.CANCEL}
         </Button>
       )}
     </S.Wrapper>

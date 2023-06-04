@@ -1,5 +1,6 @@
 import { Meta } from '@storybook/react';
 import OrderDetailComponent from '../../components/orderDetail/OrderDetail';
+import { ORDER_STATUS } from '../../constants';
 import { CouponState, OrderList } from '../../types';
 
 const meta = {
@@ -20,7 +21,7 @@ const meta = {
     deliveryFee: 3000,
     coupon: null,
     totalPayments: 6000,
-    orderStatus: '결제완료',
+    orderStatus: ORDER_STATUS.PAID,
   },
 } satisfies Meta<typeof OrderDetailComponent>;
 
