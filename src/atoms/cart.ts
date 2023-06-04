@@ -13,13 +13,6 @@ export const cartSelector = selector({
   },
 });
 
-export const cartItemsAmountSelector = selector({
-  key: 'cartItemsAmountSelector',
-  get: ({ get }) => {
-    return get(cartSelector).length;
-  },
-});
-
 export const selectedCartItemIdsState = atom({
   key: 'selectedCartItemIdsState',
   default: selector({
