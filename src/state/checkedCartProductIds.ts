@@ -1,6 +1,7 @@
 import { atom, selector } from 'recoil';
 import { cartProductsState } from './cartProducts';
 import { CheckedCartProducts } from 'types/product';
+import { getCartPriceInfo } from 'apis/cart';
 
 const defaultCheckedCartProductIdsState = selector({
   key: 'defaultCartCheckedProducts',
@@ -27,5 +28,20 @@ export const getCheckedCartProductsState = selector({
       .map(([_, cartProduct]) => cartProduct);
 
     return checkedCartProducts;
+  },
+});
+
+export const cartPriceInfoState = selector({
+  key: 'cartPriceInfoState',
+  get: async ({ get }) => {
+    const checkedProductIds = get(checkedCartProductIdsState);
+
+    if (checkedProductIds.size === 0) {
+      return { totalPrice: 0, deliveryFee: 0 };
+    }
+
+    const totalPriceInfo = await getCartPriceInfo([...checkedProductIds]);
+
+    return totalPriceInfo;
   },
 });
