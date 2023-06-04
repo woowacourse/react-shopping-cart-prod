@@ -94,7 +94,7 @@ const CartTotal = ({
         <Spacer height={41} />
         <PriceWrapper>
           <Total>총 결제금액</Total>
-          <TotalPrice isHighlight={totalProductPrice > 0}>
+          <TotalPrice $isHighlight={totalProductPrice > 0}>
             {formatPrice(totalPaymentPrice)}
           </TotalPrice>
         </PriceWrapper>
@@ -228,10 +228,10 @@ const Total = styled.span`
   font-weight: 700;
 `;
 
-const TotalPrice = styled.dd<{ isHighlight: boolean }>`
+const TotalPrice = styled.dd<{ $isHighlight: boolean }>`
   font-size: 20px;
   font-weight: 600;
-  color: ${(props) => props.isHighlight && props.theme.color.primary};
+  color: ${(props) => props.$isHighlight && props.theme.color.primary};
 `;
 
 const OrderDetail = styled.div`
