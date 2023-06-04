@@ -12,14 +12,27 @@ import useGetQuery from '../../hooks/useGetQuery';
 import { Order } from '../../types/types';
 import { fetchOrder } from '../../api/fetcher';
 import { NotFound } from '../NotFound';
+import { useEffect } from 'react';
 
 function OrderDetail() {
   const { orderId } = useParams() as { orderId: string };
   const memberAuth = useRecoilValue(memberAuthorization);
   const server = useRecoilValue(serverState);
-  const { data: order, error } = useGetQuery<Order>({
+  const {
+    data: order,
+    error,
+    getData: refreshOrders,
+  } = useGetQuery<Order>({
     fetcher: () => fetchOrder({ server, auth: memberAuth, orderId }),
   });
+
+  const loadItemList = async () => {
+    await refreshOrders();
+  };
+
+  useEffect(() => {
+    loadItemList();
+  }, [server, memberAuth]);
 
   return (
     <>

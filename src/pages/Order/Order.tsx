@@ -19,7 +19,7 @@ function Order() {
   const setCartList = useSetRecoilState(cartState);
   const setMemberPoint = useSetRecoilState(memberPointState);
   const navigate = useNavigate();
-  const { data: orders } = useGetQuery<OrdersResponses>({
+  const { data: orders, getData: refreshOrders } = useGetQuery<OrdersResponses>({
     fetcher: () => fetchOrderList({ server, auth: memberAuth }),
   });
 
@@ -28,13 +28,14 @@ function Order() {
     onSuccess: (point) => setMemberPoint(point),
   });
 
-  const loadCartList = async () => {
+  const loadItemList = async () => {
+    await refreshOrders();
     const checkedCartItems = await fetchCartList(server, memberAuth);
     setCartList(checkedCartItems.cartItems);
   };
 
   useEffect(() => {
-    loadCartList();
+    loadItemList();
   }, [server, memberAuth]);
 
   return (
