@@ -23,13 +23,13 @@ const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments }: Props) 
       <li>
         배송비 <Price price={deliveryFee} />
       </li>
-      <li>
+      <S.Coupon coupon={coupon?.name}>
         할인쿠폰
         <Price
           price={coupon && coupon.priceDiscount ? -coupon.priceDiscount : 0}
           css={priceStyle}
         />
-      </li>
+      </S.Coupon>
       <li>
         총 결제금액 <Price price={totalPayments} />
       </li>
@@ -39,8 +39,10 @@ const OrderDetail = ({ totalPrice, deliveryFee, coupon, totalPayments }: Props) 
 
 const S = {
   Wrapper: styled.ul`
+    position: sticky;
+    top: 80px;
     flex: 0.5;
-    max-height: 330px;
+    max-height: 338px;
     margin-top: 30px;
     font-size: 18px;
     color: var(--text-color);
@@ -62,7 +64,7 @@ const S = {
       font-weight: 500;
 
       & + li:last-child {
-        padding: 52px 28px 48px;
+        padding: 64px 28px 38px;
         font-weight: 600;
       }
     }
@@ -77,6 +79,19 @@ const S = {
     background: var(--text-color);
     border-top-right-radius: 4px;
     border-top-left-radius: 4px;
+  `,
+
+  Coupon: styled.li<{ coupon?: string }>`
+    position: relative;
+
+    &::after {
+      position: absolute;
+      right: 28px;
+      bottom: -24px;
+      content: '${(props) => props.coupon}';
+      font-size: 12px;
+      color: var(--gray-color-300);
+    }
   `,
 };
 
