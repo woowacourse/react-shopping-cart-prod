@@ -26,13 +26,13 @@ export const OrderedItem = ({ ...information }: OrderedItemProps) => {
           <S.OrderedItemContainer>
             <S.ImageAndInformationContainer>
               <S.OrderedItemImageWrapper>
-                <S.OrderedItemImage src={orderedItem.product.imageUrl} />
+                <S.OrderedItemImage src={orderedItem.imageUrl} />
               </S.OrderedItemImageWrapper>
               <S.OrderedItemInformationContainer>
-                <S.OrderedItemName>{orderedItem.product.name}</S.OrderedItemName>
+                <S.OrderedItemName>{orderedItem.name}</S.OrderedItemName>
                 <S.PriceAndQuantityContainer>
                   <S.OrderedItemPrice>
-                    {priceFormatter(orderedItem.product.discountedPrice)}
+                    {priceFormatter(orderedItem.discountedPrice)}
                   </S.OrderedItemPrice>
                   <S.OrderedItemQuantity>{orderedItem.quantity}개 구매</S.OrderedItemQuantity>
                 </S.PriceAndQuantityContainer>
