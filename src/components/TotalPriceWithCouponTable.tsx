@@ -2,8 +2,8 @@ import { styled } from "styled-components";
 import { Button } from "./Button";
 import { totalPriceSelector } from "../recoil/selector";
 import { useRecoilValue } from "recoil";
-import { useOrder } from "../hooks/useOrder";
 import { LocalProductType } from "../types/domain";
+import { useOrder } from "../hooks/useOrder";
 
 export const TotalPriceWithCouponTable = ({
   discountPrice,
@@ -18,10 +18,10 @@ export const TotalPriceWithCouponTable = ({
 }) => {
   const totalPrice = useRecoilValue(totalPriceSelector);
 
-  const { addOrderList } = useOrder();
+  const { addOrder } = useOrder();
 
   const handleOrderButton = async () => {
-    await addOrderList(orderList, couponId);
+    await addOrder(orderList, couponId);
     setIsOrderComplete(true);
   };
 

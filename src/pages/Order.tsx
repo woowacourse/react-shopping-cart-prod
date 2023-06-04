@@ -1,9 +1,9 @@
 import { styled } from "styled-components";
 import { Header, Page, OrderList } from "../components";
-import { useOrder } from "../hooks/useOrder";
+import { useOrderList } from "../hooks/useOrderList";
 
 export const Order = () => {
-  const { orderList } = useOrder();
+  const { orderList } = useOrderList();
 
   return (
     <>
