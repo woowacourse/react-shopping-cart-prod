@@ -18,7 +18,7 @@ const OrderItemList = ({ order }: { order: Order }) => {
         <button onClick={onDetailButtonClick}>상세보기 {'>'} </button>
       </S.OrderListHeader>
       {order.orderedItems.map((item) => (
-        <OrderItem item={item} />
+        <OrderItem item={item} key={item.id} />
       ))}
     </S.OrderListWrapper>
   );
