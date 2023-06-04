@@ -5,7 +5,7 @@ import {
   cartProductHandlerSelector,
   targetCartProductSelector,
 } from '../../states/cartProducts';
-import { toastState } from '../../states/toast/atom';
+import { toastState } from '../../states/toast';
 
 export const useCartProducts = (productId: number) => {
   const [cartItemId, setCartItemId] = useState<number>();

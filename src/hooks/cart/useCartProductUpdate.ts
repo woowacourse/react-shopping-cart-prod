@@ -1,7 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { cartProductHandlerSelector } from '../../states/cartProducts';
-import { toastState } from '../../states/toast/atom';
+import { toastState } from '../../states/toast';
 
 export const useCartProductUpdate = (
   id: number | undefined,

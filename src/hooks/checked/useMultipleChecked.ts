@@ -9,7 +9,7 @@ import {
 } from '../../states/checkedCartProducts';
 import { cartProductHandlerSelector } from '../../states/cartProducts';
 
-import { toastState } from '../../states/toast/atom';
+import { toastState } from '../../states/toast';
 
 export const useMultipleChecked = () => {
   const checkedCartProductIds = useRecoilValue(checkedCartProductIdSelector);

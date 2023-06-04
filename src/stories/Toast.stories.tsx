@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 
 import Toast from '../components/Common/Toast';
 import { useSetRecoilState } from 'recoil';
-import { toastState } from '../states/toast/atom';
+import { toastState } from '../states/toast';
 import { useEffect } from 'react';
 
 const meta = {

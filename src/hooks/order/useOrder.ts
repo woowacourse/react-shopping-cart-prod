@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { checkedCartProductIdSelector } from '../../states/checkedCartProducts';
 import { orderHandlerSelector } from '../../states/order';
-import { toastState } from '../../states/toast/atom';
+import { toastState } from '../../states/toast';
 
 export const useOrder = (couponId: number | undefined, totalPrice: number) => {
   const cartItemIds = useRecoilValue(checkedCartProductIdSelector);
