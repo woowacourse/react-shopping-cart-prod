@@ -4,7 +4,7 @@ import { API_ENDPOINT, HTTP_STATUS_CODE } from '../../constants/api';
 import productListData from '../../data/mockData.json';
 import { getCartData } from '../../domain/cart';
 import { getOrderListData, setOrderListData } from '../../domain/order';
-import type { CartItemData, OrderData, OrderedItem } from '../../types';
+import type { CartItemData, OrderData, OrderedItemData } from '../../types';
 import { PostOrdersRequestBody } from '../../types/api';
 import {
   getDiscountedTotalItemPrice,
@@ -19,13 +19,14 @@ const orderHandlers = [
   // 장바구니 상품 주문 요청
   rest.post(API_ENDPOINT.ORDERS, async (req, res, ctx) => {
     const orderData = await req.json<PostOrdersRequestBody>();
-    const orderedItemList: OrderedItem[] = orderData.cartItemIds.map((cartItemId) => {
+    console.log('msw', orderData);
+    const orderedItemList: OrderedItemData[] = orderData.cartItemIds.map((cartItemId) => {
       const cartItem = getCartData().find((cartItem) => cartItem.id === cartItemId)!;
       const product = cartItem.product;
 
       return {
         quantity: cartItem.quantity, // cartItemId로 quantity 알 수 있지 않나?
-        product,
+        ...product,
       };
     });
 
