@@ -10,7 +10,7 @@ export const useFetchCart = () => {
     if (cartListResponse.state === 'hasValue') {
       setCartList(cartListResponse.contents);
     }
-  }, [cartListResponse, setCartList]);
+  }, []);
 
   return { cartList, setCartList };
 };
