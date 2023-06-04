@@ -5,6 +5,7 @@ import { Order } from './pages/Order';
 import { OrderDetail } from './pages/OrderDetail';
 import { Layout } from './components/Layout';
 import { PAGE_PATH } from './constants/path';
+import { Payment } from './pages/Payment';
 
 const router = createBrowserRouter(
   [
@@ -14,6 +15,7 @@ const router = createBrowserRouter(
       children: [
         { path: PAGE_PATH.HOME, element: <Home /> },
         { path: PAGE_PATH.CART, element: <Cart /> },
+        { path: PAGE_PATH.PAYMENT, element: <Payment /> },
         { path: PAGE_PATH.ORDER, element: <Order /> },
         { path: PAGE_PATH.ORDER_DETAIL, element: <OrderDetail /> },
       ],
