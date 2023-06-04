@@ -71,7 +71,7 @@ const S = {
   `,
 
   EmailInfoContainer: styled.div`
-    position: absolute;
+    position: fixed;
     top: 30%;
     left: 60%;
     width: 70%;
@@ -82,7 +82,7 @@ const S = {
   `,
 
   PointInfoContainer: styled.div`
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 60%;
     width: 70%;
