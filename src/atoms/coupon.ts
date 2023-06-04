@@ -1,5 +1,6 @@
+import { SpecificCoupon } from './../types/coupon';
 import { fetchCoupons } from './../apis/coupon';
-import { selector } from 'recoil';
+import { selector, selectorFamily } from 'recoil';
 import { ProductCouponMap } from '../types/coupon';
 
 export const couponsSelector = selector({
@@ -7,10 +8,14 @@ export const couponsSelector = selector({
   get: async () => {
     const { allCoupons, specificCoupons } = await fetchCoupons();
     const productCoupons = specificCoupons.reduce<ProductCouponMap>(
-      (productCoupon, { targetProductId, ...restInfo }) => ({
-        ...productCoupon,
-        [targetProductId]: [...(productCoupon.targetProductId ?? []), restInfo],
+      (productCoupons, coupon) => ({
+        ...productCoupons,
+        [coupon.targetProductId]: [
+          ...(productCoupons[coupon.targetProductId] ?? []),
+          coupon,
+        ],
       }),
+
       Object.create(Object.prototype)
     );
 
@@ -18,9 +23,12 @@ export const couponsSelector = selector({
   },
 });
 
-export const productCouponsSelector = selector({
+export const productCouponsSelector = selectorFamily({
   key: 'productCouponsSelector',
-  get: ({ get }) => get(couponsSelector).productCoupons,
+  get:
+    (id: SpecificCoupon['targetProductId']) =>
+    ({ get }) =>
+      get(couponsSelector).productCoupons[id],
 });
 
 export const allCouponsSelector = selector({
