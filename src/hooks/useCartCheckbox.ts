@@ -32,7 +32,7 @@ export const useCartCheckbox = () => {
     const newList = cartList.filter((item) => !removedList.includes(item));
 
     if (checkedList.length !== removedList.length)
-      alert("삭제 요청이 일부 실패하였습니다. 새로고침 후 다시 시도해주세요.");
+      alert("삭제 요청이 일부 실패하였습니다. 잠시 후 다시 시도해주세요.");
 
     setCartList(newList);
   };

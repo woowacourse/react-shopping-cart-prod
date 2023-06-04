@@ -14,7 +14,7 @@ const Item = (item: Product) => {
     const cartItemId = await addCartItem(selectedServer, item.id);
 
     if (!cartItemId) {
-      alert("장바구니 상품 추가 실패!");
+      alert("서버와의 통신이 원활하지 않습니다. 잠시후 다시 시도해주세요.");
       return;
     }
 

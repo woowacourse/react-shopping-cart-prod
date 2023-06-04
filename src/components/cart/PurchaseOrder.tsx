@@ -35,7 +35,7 @@ const PurchaseOrder = () => {
     });
 
     if (!result) {
-      alert("주문에 실패했습니다. 다시 시도해주세요.");
+      alert("주문에 실패했습니다. 잠시 후 다시 시도해주세요.");
       return;
     }
 

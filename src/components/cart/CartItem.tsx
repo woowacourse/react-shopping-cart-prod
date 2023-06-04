@@ -26,7 +26,7 @@ const CartItem = (item: CartProduct) => {
     const result = await removeCartItem(selectedServer, item.id);
 
     if (!result) {
-      alert("장바구니 상품 제거 실패!");
+      alert("서버와의 통신이 원활하지 않습니다. 잠시후 다시 시도해주세요.");
       return;
     }
 

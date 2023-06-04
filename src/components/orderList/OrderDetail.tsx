@@ -11,7 +11,7 @@ const OrderDetail = () => {
 
   return (
     <Wrapper>
-      <Title>주문 내역 상세</Title>
+      <Title>주문 상세 정보</Title>
       {orderItems?.map((orderItem) => (
         <ListBox key={orderItem.product.id}>
           <OrderProduct {...orderItem} />

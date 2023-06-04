@@ -7,7 +7,7 @@ const OrderProduct = (order: OrderItem) => {
     <Wrapper>
       <ImgBox src={order.product.imageUrl} alt={`${order.product.name} 상품 이미지`} />
       <NameBox>{order.product.name}</NameBox>
-      <PriceContainer>{(order.product.price * order.quantity).toLocaleString()}원</PriceContainer>
+      <PriceBox>{(order.product.price * order.quantity).toLocaleString()}원</PriceBox>
     </Wrapper>
   );
 };
@@ -43,7 +43,7 @@ const ImgBox = styled.img`
 
 const NameBox = styled.div`
   width: 60%;
-  height: 20%;
+  height: fit-content;
 
   padding-top: 1%;
 
@@ -59,9 +59,9 @@ const NameBox = styled.div`
   }
 `;
 
-const PriceContainer = styled.div`
+const PriceBox = styled.div`
   width: 60%;
-  height: 60%;
+  height: fit-content;
 
   color: rgba(136, 136, 136, 1);
   font-size: 15px;
