@@ -3,6 +3,7 @@ import type { Client } from '../../api';
 import type { CartItem } from '../../types/CartItem';
 import type { Product } from '../../types/Product';
 import cartItemsState from '../atoms/cartItemsState';
+import remoteCartItemsStorage from '../storages/remoteCartItemsStorage';
 
 type CartItemsRepository = {
   getCartItems(): CartItem[];
@@ -15,6 +16,7 @@ type CartItemsRepository = {
   removeCartItem(cartItem: CartItem): void;
   removeCartItemByProductId(productId: Product['id']): void;
   removeCheckedCartItem(): void;
+  doDownstreamSync(): void;
 };
 
 const cartItemsRepository = selectorFamily<CartItemsRepository, Client>({
@@ -23,6 +25,7 @@ const cartItemsRepository = selectorFamily<CartItemsRepository, Client>({
     (client) =>
     ({ get, getCallback }) => {
       const cartItems = get(cartItemsState(client));
+      const storage = get(remoteCartItemsStorage(client));
 
       return {
         getCartItems() {
@@ -81,6 +84,9 @@ const cartItemsRepository = selectorFamily<CartItemsRepository, Client>({
             cartItems.filter((cartItem) => !cartItem.checked),
           );
         }),
+        doDownstreamSync: () => {
+          storage.doDownstreamSync();
+        },
       };
     },
 });
