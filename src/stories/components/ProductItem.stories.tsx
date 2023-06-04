@@ -3,8 +3,8 @@ import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import ProductItemComponent from '../../components/main/ProductItem';
 import { PRODUCT_LIST_URL } from '../../constants/url';
-import { useFetchData } from '../../hooks/useFetchData';
-import { productListState, serverState } from '../../recoil';
+import useFetchData from '../../hooks/useFetchData';
+import { productsState, serverState } from '../../recoil';
 import { Product } from '../../types';
 
 const meta = {
@@ -52,12 +52,15 @@ export default meta;
 
 export const ProductItem = (args: Product) => {
   const { api } = useFetchData();
-  const setProductList = useSetRecoilState(productListState);
+  const setProducts = useSetRecoilState(productsState);
   const server = useRecoilValue(serverState);
   useEffect(() => {
-    api.get(`${server}${PRODUCT_LIST_URL}`).then((data) => {
-      setProductList(data);
-    });
+    api
+      .get(`${server}${PRODUCT_LIST_URL}`)
+      .then((data: Product[]) => {
+        setProducts(data);
+      })
+      .catch((error) => alert(error));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
