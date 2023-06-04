@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const ContentWrapper = styled.div`
   display: flex;
@@ -35,11 +35,11 @@ export const Input = styled.input`
   }
 `;
 
-export const Coupon = styled.div`
+export const Coupon = styled.div<{ unavailable: boolean }>`
   display: flex;
   align-items: center;
   width: 280px;
-  height: 118px;
+  height: 124px;
   padding: 20px;
   margin-right: 32px;
   border: 2px solid #495057;
@@ -51,6 +51,17 @@ export const Coupon = styled.div`
   &:hover {
     transform: scale(1.02);
   }
+
+  ${({ unavailable }) =>
+    unavailable &&
+    css`
+      & * {
+        color: #495057 !important;
+      }
+      &:hover {
+        transform: none;
+      }
+    `}
 `;
 
 export const CouponImage = styled.img`
@@ -74,6 +85,20 @@ export const Name = styled.div`
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+`;
+
+export const DiscountAmount = styled.div`
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 4px;
+  color: #069ff6;
+`;
+
+export const Unavailable = styled.div`
+  font-size: 12px;
+  font-weight: 700;
+  color: red !important;
+  margin-top: 4px;
 `;
 
 export const ApplyButton = styled.button`
