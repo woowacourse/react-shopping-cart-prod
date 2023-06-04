@@ -1,4 +1,4 @@
-import { PurchasePropertyWrapper, PurchaseText } from '../../Cart/PriceCounter/PurchaseBox/PurchaseBox.style';
+import { PurchasePropertyWrapper, PurchaseText } from '../../Cart/PurchaseBox/PurchaseBox.style';
 import * as S from './PointInfoBox.style';
 
 function PointInfoBox() {

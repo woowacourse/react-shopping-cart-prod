@@ -3,9 +3,9 @@ import { useRecoilValue } from 'recoil';
 import { cartCountSelector } from '../../recoil/cartAtoms.ts';
 import { useNavigate } from 'react-router-dom';
 import { FatBorder, PageTitle } from '../../style/style.ts';
-import PriceCounter from '../../components/Cart/PriceCounter/PriceCounter.tsx';
 import CartList from '../../components/Cart/CartList/CartList.tsx';
 import { PAGE_PATH } from '../../constants/path.ts';
+import PurchaseBox from '../../components/Cart/PurchaseBox/PurchaseBox.tsx';
 
 function Cart() {
   const cartCount = useRecoilValue(cartCountSelector);
@@ -19,7 +19,7 @@ function Cart() {
         <S.CartWrapper>
           <CartList />
           <S.PurchaseBoxWrapper>
-            <PriceCounter />
+            <PurchaseBox />
           </S.PurchaseBoxWrapper>
         </S.CartWrapper>
       ) : (
