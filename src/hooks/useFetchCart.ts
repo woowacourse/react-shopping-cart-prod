@@ -16,7 +16,7 @@ const useFetchCart = () => {
 
       setCartList((cartList) => [...cartList, { id, quantity, product }]);
     } catch (error) {
-      alert('장바구니 추가 요청이 실패했습니다.');
+      error ? alert(error) : alert('장바구니 추가 요청이 실패했습니다.');
     }
   };
 
@@ -33,7 +33,7 @@ const useFetchCart = () => {
           ] as Cart[]
       );
     } catch (error) {
-      alert('수량 변경 요청이 실패했습니다.');
+      error ? alert(error) : alert('수량 변경 요청이 실패했습니다.');
     }
   };
 
@@ -43,7 +43,7 @@ const useFetchCart = () => {
       setCartList((cartList) => [...cartList.filter((item) => item.id !== id)]);
       setIsSelectedList((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
-      alert('장바구니 삭제 요청이 실패했습니다.');
+      error ? alert(error) : alert('장바구니 삭제 요청이 실패했습니다.');
     }
   };
 
