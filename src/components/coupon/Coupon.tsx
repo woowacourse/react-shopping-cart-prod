@@ -1,5 +1,6 @@
+import type { CouponType } from '../../types';
+
 import styled from 'styled-components';
-import { CouponType } from '../../types';
 
 interface Props extends CouponType {
   onClick?: () => void;

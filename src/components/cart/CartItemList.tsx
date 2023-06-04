@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import CartItem from './CartItem';
 import CheckBox from '../common/CheckBox';
 
-import * as api from '../../api';
+import api from '../../api';
 import useToast from '../../hooks/useToast';
 import { cartState, checkedListState, serverNameState, tokenState } from '../../recoil/state';
 import { API_ERROR_MESSAGE } from '../../constants';

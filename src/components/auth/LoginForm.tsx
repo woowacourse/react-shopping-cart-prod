@@ -10,7 +10,7 @@ import InputBox from '../common/InputBox';
 
 import { tokenState, serverNameState } from '../../recoil/state';
 import useToast from '../../hooks/useToast';
-import { postLogin } from '../../api';
+import api from '../../api';
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export default function LoginForm() {
   const login = async (event: React.FormEvent) => {
     event.preventDefault();
     try {
-      const response = await postLogin(serverName, name, password);
+      const response = await api.postLogin(serverName, name, password);
       if (!response.ok) {
         const body = await response.json();
         showToast('warning', body.errorMessage);

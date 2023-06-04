@@ -7,6 +7,7 @@ import SubPageTemplate from '../common/SubPageTemplate';
 import CartItemList from '../cart/CartItemList';
 import CartBill from '../cart/CartBill';
 
+import useToast from '../../hooks/useToast';
 import {
   cartCountState,
   cartState,
@@ -14,8 +15,7 @@ import {
   serverNameState,
   tokenState,
 } from '../../recoil/state';
-import * as api from '../../api';
-import useToast from '../../hooks/useToast';
+import api from '../../api';
 import { API_ERROR_MESSAGE } from '../../constants';
 
 export default function CartPage() {

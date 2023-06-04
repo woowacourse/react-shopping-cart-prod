@@ -19,7 +19,7 @@ import {
   tokenState,
   usableCouponsState,
 } from '../../recoil/state';
-import { getCoupons, postOrder } from '../../api';
+import api from '../../api';
 import { API_ERROR_MESSAGE, NO_TOKEN_REDIRECT_MESSAGE } from '../../constants';
 
 export default function CartBill() {
@@ -64,7 +64,7 @@ export default function CartBill() {
       .map(({ product: { id }, quantity }) => ({ productId: id, quantity }));
 
     try {
-      await postOrder(serverName, token, orderItems, couponId);
+      await api.postOrder(serverName, token, orderItems, couponId);
       navigate('/');
     } catch {
       showToast('error', API_ERROR_MESSAGE.postOrder);
@@ -72,7 +72,7 @@ export default function CartBill() {
     }
 
     try {
-      setCoupons(await getCoupons(serverName, token));
+      setCoupons(await api.getCoupons(serverName, token));
     } catch {
       showToast('error', API_ERROR_MESSAGE.getCoupons);
     }

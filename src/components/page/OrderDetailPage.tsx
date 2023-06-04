@@ -12,7 +12,7 @@ import OrderBill from '../order/OrderBill';
 
 import useToast from '../../hooks/useToast';
 import { serverNameState, tokenState } from '../../recoil/state';
-import { getOrder } from '../../api';
+import api from '../../api';
 import { NO_TOKEN_REDIRECT_MESSAGE } from '../../constants';
 
 export default function OrderDetailPage() {
@@ -34,7 +34,8 @@ export default function OrderDetailPage() {
   useEffect(() => {
     if (token === null) return;
 
-    getOrder(serverName, token, Number(orderId))
+    api
+      .getOrder(serverName, token, Number(orderId))
       .then(setOrder)
       .catch(() => {
         setOrder(null);

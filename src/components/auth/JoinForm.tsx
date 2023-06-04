@@ -10,7 +10,7 @@ import InputBox from '../common/InputBox';
 
 import useToast from '../../hooks/useToast';
 import { tokenState, serverNameState } from '../../recoil/state';
-import { postJoin, postLogin } from '../../api';
+import api from '../../api';
 import { API_ERROR_MESSAGE, API_INFO_MESSAGE } from '../../constants';
 
 export default function JoinForm() {
@@ -25,7 +25,7 @@ export default function JoinForm() {
 
   const autoLogin = async () => {
     try {
-      const response = await postLogin(serverName, name, password);
+      const response = await api.postLogin(serverName, name, password);
       const { token }: LoginResponse = await response.json();
       setToken(token);
     } catch {
@@ -39,7 +39,7 @@ export default function JoinForm() {
     event.preventDefault();
 
     try {
-      const response = await postJoin(serverName, name, password);
+      const response = await api.postJoin(serverName, name, password);
       if (!response.ok) {
         const body = await response.json();
         showToast('warning', body.errorMessage);

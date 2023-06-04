@@ -6,9 +6,9 @@ import styled, { keyframes } from 'styled-components';
 
 import QuantityInput from '../common/QuantityInput';
 
-import * as api from '../../api';
 import useToast from '../../hooks/useToast';
 import { tokenState, cartState, serverNameState } from '../../recoil/state';
+import api from '../../api';
 import { API_ERROR_MESSAGE, API_INFO_MESSAGE, MAX_QUANTITY } from '../../constants';
 
 interface Props extends ProductType {}

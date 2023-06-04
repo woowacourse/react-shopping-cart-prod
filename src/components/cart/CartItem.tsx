@@ -8,7 +8,7 @@ import QuantityInput from '../common/QuantityInput';
 
 import useToast from '../../hooks/useToast';
 import { cartState, serverNameState, tokenState } from '../../recoil/state';
-import * as api from '../../api';
+import api from '../../api';
 import { API_ERROR_MESSAGE, MAX_QUANTITY } from '../../constants';
 
 interface Props extends CartItemType {

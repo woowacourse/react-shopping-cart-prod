@@ -1,12 +1,13 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import Header from '../common/Header';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { couponsState, serverNameState, tokenState } from '../../recoil/state';
-import { useEffect } from 'react';
-import { getCoupons } from '../../api';
+
 import useToast from '../../hooks/useToast';
+import { couponsState, serverNameState, tokenState } from '../../recoil/state';
+import api from '../../api';
 
 export default function RootPage() {
   const serverName = useRecoilValue(serverNameState);
@@ -19,7 +20,7 @@ export default function RootPage() {
     if (token === null) return;
 
     try {
-      getCoupons(serverName, token).then(setCoupons);
+      api.getCoupons(serverName, token).then(setCoupons);
     } catch {
       showToast('error', '쿠폰가져오기 실패');
     }

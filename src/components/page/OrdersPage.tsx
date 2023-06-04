@@ -10,7 +10,7 @@ import Order from '../order/Order';
 
 import useToast from '../../hooks/useToast';
 import { serverNameState, tokenState } from '../../recoil/state';
-import { getOrders } from '../../api';
+import api from '../../api';
 import { NO_TOKEN_REDIRECT_MESSAGE } from '../../constants';
 
 export default function OrdersPage() {
@@ -26,7 +26,8 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState<OrderType[]>([]);
 
   useEffect(() => {
-    getOrders(serverName, token)
+    api
+      .getOrders(serverName, token)
       .then(setOrders)
       .catch(() => {
         showToast('error', '주문목록 불러오기 실패');

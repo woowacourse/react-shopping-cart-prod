@@ -7,9 +7,9 @@ import styled from 'styled-components';
 import ProductItem from './ProductItem';
 import ProductItemSkeleton from './ProductItemSkeleton';
 
-import * as api from '../../api';
 import useToast from '../../hooks/useToast';
 import { tokenState, cartState, serverNameState } from '../../recoil/state';
+import api from '../../api';
 import { API_ERROR_MESSAGE, SKELETONS_LENGTH } from '../../constants';
 
 export default function ProductList() {
