@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import LoadingSpinner from '../../components/Common/LoadingSpinner';
@@ -13,12 +13,14 @@ function OrderCheckout() {
   const currentServerUrl = useRecoilValue($CurrentServerUrl);
   const [cartList, setCartList] = useRecoilState($CartList(currentServerUrl));
   const [checkedCartIdList, setCheckedCartIdList] = useRecoilState($CheckedCartIdList(currentServerUrl));
-  const paymentsData = usePaymentsData(currentServerUrl);
+
   const [checkedPolicyList, setCheckedPolicyList] = useState<string[]>([]);
-  const checkedCartList = cartList.filter(item => checkedCartIdList.includes(item.id));
-  const Toast = useToast();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const paymentsData = usePaymentsData(currentServerUrl);
   const navigate = useNavigate();
+  const Toast = useToast();
+
   const { mutateQuery, loading } = useMutation({
     onSuccess: () => {
       setIsModalOpen(true);
@@ -29,6 +31,8 @@ function OrderCheckout() {
       Toast.error('결제에 실패했습니다...');
     },
   });
+
+  const checkedCartList = cartList.filter(item => checkedCartIdList.includes(item.id));
 
   const handleCheckPolicy: React.ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const policy = target.value;
@@ -48,6 +52,19 @@ function OrderCheckout() {
       },
     });
   };
+
+  const handleClickNavigate =
+    (path: string): React.MouseEventHandler<HTMLButtonElement> =>
+    () => {
+      navigate(path);
+    };
+
+  useEffect(() => {
+    if (paymentsData?.finalPrice === 0) {
+      navigate('/');
+      Toast.error('잘못된 페이지 접근입니다.');
+    }
+  }, [paymentsData, navigate, Toast]);
 
   return (
     <main className={styles.container}>
@@ -157,14 +174,19 @@ function OrderCheckout() {
           </button>
         </div>
       </div>
-      <Modal isModalOpen={isModalOpen} closeModal={() => setIsModalOpen(false)} direction="center">
+      <Modal
+        isModalOpen={isModalOpen}
+        closeModal={() => setIsModalOpen(false)}
+        direction="center"
+        useBackDropClose={false}
+      >
         <div className={styles.modal}>
           <img className={styles['success-image']} src="/payments-success.png" alt="결제 성공" />
           <div className={styles['modal-button-container']}>
-            <button type="button" onClick={() => navigate('/')}>
+            <button type="button" onClick={handleClickNavigate('/')}>
               쇼핑 계속하기
             </button>
-            <button type="button" onClick={() => navigate('/order')}>
+            <button type="button" onClick={handleClickNavigate('/order')}>
               주문현황 보기
             </button>
           </div>

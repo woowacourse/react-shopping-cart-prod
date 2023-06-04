@@ -16,12 +16,10 @@ function CartProductItem({ cartItem, toggleCheck, checked, mutateQuantity, delet
   const { id, product, quantity } = cartItem;
   const { name, imageUrl, price } = product;
 
-  const handleDeleteButton = () => {
-    deleteCartItem(id);
-  };
-  const handleUpButton = () => {
-    mutateQuantity(id, quantity + 1);
-  };
+  const handleDeleteButton = () => deleteCartItem(id);
+
+  const handleUpButton = () => mutateQuantity(id, quantity + 1);
+
   const handleDownButton = () => {
     if (quantity > 1) {
       mutateQuantity(id, quantity - 1);

@@ -10,11 +10,12 @@ interface DropDownProps {
 }
 
 function DropDown({ options, selectedListHandler, currentOptionIndex }: DropDownProps) {
-  const ref = useRef<HTMLDivElement>(null);
   const [currentValue, setCurrentValue] = useState(options[currentOptionIndex]);
   const [showOptions, setShowOptions] = useState<boolean>(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const toggle = () => setShowOptions(prev => !prev);
+
   const close = () => setShowOptions(false);
 
   const handleOnChangeSelectValue: React.MouseEventHandler<HTMLLIElement> = event => {
