@@ -1,17 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
-import {
-  cartAtom,
-  checkedValue,
-  isSelectedListAtom,
-  totalAmountAtom,
-} from '../../store/cart';
+import { cartAtom, checkedValue, isSelectedListAtom } from '../../store/cart';
 import { WIDTH } from '../../constants/mediaQuery';
 import CartItem from './CartItem/CartItem';
 import CheckBox from '../common/CheckBox/CheckBox';
 import useFetchCart from '../../hooks/useFetchCart';
 import { serverAtom } from '../../store/server';
+import { totalProductPriceAtom } from '../../store/bill';
 
 const CartItemList = () => {
   const { deleteCartItem } = useFetchCart();
@@ -20,7 +16,7 @@ const CartItemList = () => {
   const [isAllSelected, setIsAllSelected] = useState<boolean>(true);
   const [isSelectedList, setIsSelectedList] =
     useRecoilState(isSelectedListAtom);
-  const setTotalAmount = useSetRecoilState(totalAmountAtom);
+  const setTotalAmount = useSetRecoilState(totalProductPriceAtom);
   const serverName = useRecoilValue(serverAtom);
 
   useEffect(() => {

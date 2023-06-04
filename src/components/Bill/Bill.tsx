@@ -1,31 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { styled } from 'styled-components';
 import { useRecoilValue } from 'recoil';
-import { isSelectedListAtom, totalAmountAtom } from '../../store/cart';
+import { isSelectedListAtom } from '../../store/cart';
 import { WIDTH } from '../../constants/mediaQuery';
 import useFetchOrder from '../../hooks/useFetchOrder';
 import {
-  DELIVERY_FEE,
   DISCOUNT_BOUNDARY,
   DISCOUNT_PERCENT,
   FREE_DELIVERY_BOUNDARY,
 } from '../../constants/policy';
-import getDiscountAmount from '../../util/getDiscountAmount';
+import { billSelector, totalProductPriceAtom } from '../../store/bill';
 
 const Bill = () => {
   const isSelectedList = useRecoilValue(isSelectedListAtom);
+  const totalProductPrice = useRecoilValue(totalProductPriceAtom);
+  const { deliveryFee, discountAmount, totalOrderAmount } =
+    useRecoilValue(billSelector);
   const { postOrders } = useFetchOrder();
-  const totalProductAmount = useRecoilValue(totalAmountAtom);
-  const [discount, setDiscount] = useState(0);
-  const [deliveryFee, setDeliveryFee] = useState(0);
-
-  useEffect(() => {
-    const discountAmount = getDiscountAmount(totalProductAmount);
-    setDiscount(discountAmount);
-    if (totalProductAmount >= FREE_DELIVERY_BOUNDARY) setDeliveryFee(0);
-    if (totalProductAmount < FREE_DELIVERY_BOUNDARY)
-      setDeliveryFee(DELIVERY_FEE);
-  }, [totalProductAmount]);
 
   const onClickOrder = useCallback(async () => {
     const orders = isSelectedList
@@ -39,26 +30,25 @@ const Bill = () => {
       <SubTitle>결제예상금액</SubTitle>
       <DetailWrapper>
         <Detail>
-          총 상품가격 <span>₩ {totalProductAmount.toLocaleString()}</span>
+          총 상품가격 <span>₩ {totalProductPrice.toLocaleString()}</span>
         </Detail>
         <Detail>
-          할인 금액 <span> ₩ {discount.toLocaleString()}</span>
+          할인 금액 <span> ₩ {discountAmount.toLocaleString()}</span>
         </Detail>
         <Detail>
           배송비
-          <span>₩ {totalProductAmount && deliveryFee.toLocaleString()}</span>
+          <span>₩ {totalProductPrice && deliveryFee.toLocaleString()}</span>
         </Detail>
         <TotalAmount>
           총 주문금액
-          <span>
-            ₩
-            {totalProductAmount &&
-              (totalProductAmount - discount + deliveryFee).toLocaleString()}
-          </span>
+          <span>₩{totalProductPrice && totalOrderAmount.toLocaleString()}</span>
         </TotalAmount>
         <MessageWrapper>
           <Message>
-            {DISCOUNT_BOUNDARY / 10000} 만원 이상 주문시 {DISCOUNT_PERCENT} %
+            * {FREE_DELIVERY_BOUNDARY / 10000} 만원 이상 구매시 배송비 무료
+          </Message>
+          <Message>
+            * {DISCOUNT_BOUNDARY / 10000} 만원 이상 주문시 {DISCOUNT_PERCENT} %
             할인
           </Message>
         </MessageWrapper>

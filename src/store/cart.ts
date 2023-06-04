@@ -56,11 +56,6 @@ export const checkedValue = selector({
   },
 });
 
-export const totalAmountAtom = atom({
-  key: 'cart/total-amount',
-  default: 0,
-});
-
 type SelectedItem = {
   id: number;
   isSelected: boolean;
