@@ -12,7 +12,7 @@ export const ROUTER_PATH = {
   Cart: "/react-shopping-cart-prod/Cart",
   Order: "/react-shopping-cart-prod/Order",
   OrderDetail: "/react-shopping-cart-prod/OrderDetail",
-  Payment: "/react-shopping-cart-prod/OrderSheet",
+  OrderSheet: "/react-shopping-cart-prod/OrderSheet",
   NotFound: "/*",
 };
 
@@ -39,7 +39,7 @@ export const PageRouterProvider = () => {
       element: <NotFound />,
     },
     {
-      path: ROUTER_PATH.Payment,
+      path: ROUTER_PATH.OrderSheet,
       element: <OrderSheet />,
     },
   ]);

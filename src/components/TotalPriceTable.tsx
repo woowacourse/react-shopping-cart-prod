@@ -26,7 +26,7 @@ export const TotalPriceTable = () => {
         <p>총 주문금액</p>
         <p>{(totalPrice + deliveryFee).toLocaleString()}원</p>
       </RowContainer>
-      <Button disabled={totalPrice === 0} onClick={goPage(ROUTER_PATH.Payment)}>
+      <Button disabled={totalPrice === 0} onClick={goPage(ROUTER_PATH.OrderSheet)}>
         주문하기
       </Button>
     </Wrapper>
