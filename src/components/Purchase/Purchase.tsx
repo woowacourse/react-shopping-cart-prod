@@ -1,5 +1,8 @@
 import { useRecoilValue } from "recoil";
-import { checkedCartSelector } from "../../app/recoil/cartAtoms.ts";
+import {
+  checkedCartSelector,
+  totalPriceSelector,
+} from "../../app/recoil/cartAtoms.ts";
 import { useNavigate } from "react-router-dom";
 import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import {
@@ -24,12 +27,19 @@ import {
   Box,
 } from "./Purchase.style.ts";
 import CouponSelector from "../CouponSelector";
-import { orderRepository } from "../../app/recoil/orderAtom.ts";
+import {
+  deliveryFeeState,
+  orderRepository,
+  selectedPointState,
+} from "../../app/recoil/orderAtom.ts";
 import PointSelector from "../PointSelector/PointSelector.tsx";
 
 function Purchase() {
   const navigate = useNavigate();
+  const DELIVERY_FEE = useRecoilValue(deliveryFeeState);
   const checkedCartList = useRecoilValue(checkedCartSelector);
+  const totalPrice = useRecoilValue(totalPriceSelector);
+  const selectedPoint = useRecoilValue(selectedPointState);
   const { commitPurchaseItems } = useRecoilValue(orderRepository);
   const { closeModal } = useRecoilValue(modalRepository);
 
@@ -51,10 +61,14 @@ function Purchase() {
                 <ProductItemName>{cartItem.product.name}</ProductItemName>
                 <ProductItemSubTotalPrice>
                   <ProductItemPriceText>
-                    {cartItem.product.price}원 (x{cartItem.quantity})
+                    {cartItem.product.price.toLocaleString()}원 (x
+                    {cartItem.quantity})
                   </ProductItemPriceText>
                   <ProductItemPriceText>
-                    {cartItem.product.price * cartItem.quantity}원
+                    {(
+                      cartItem.product.price * cartItem.quantity
+                    ).toLocaleString()}
+                    원
                   </ProductItemPriceText>
                 </ProductItemSubTotalPrice>
               </ProductItemInfo>
@@ -65,22 +79,25 @@ function Purchase() {
       <Box>
         <Title>배송지 선택하기</Title>
         <Option>
-          <input type="radio" checked onChange={() => { }} /> 집
+          <input type="radio" checked onChange={undefined} readOnly /> 집
         </Option>
       </Box>
       <Box>
         <Title>결제수단 선택하기</Title>
         <Option>
-          <input type="radio" checked onChange={() => { }} /> 카드
+          <input type="radio" checked onChange={undefined} readOnly /> 카드
         </Option>
       </Box>
+
       <CouponSelector />
       <PointSelector />
 
       <PurchaseList>
         <PurchasePropertyWrapper>
           <PurchasePrimaryText>합계</PurchasePrimaryText>
-          <PurchasePrimaryText>0원</PurchasePrimaryText>
+          <PurchasePrimaryText>
+            {totalPrice.toLocaleString()}원
+          </PurchasePrimaryText>
         </PurchasePropertyWrapper>
         <PurchasePropertyWrapper>
           <PurchaseSecondaryText>쿠폰</PurchaseSecondaryText>
@@ -88,11 +105,21 @@ function Purchase() {
         </PurchasePropertyWrapper>
         <PurchasePropertyWrapper>
           <PurchaseSecondaryText>포인트</PurchaseSecondaryText>
-          <PurchaseSecondaryText>- 0원</PurchaseSecondaryText>
+          <PurchaseSecondaryText>
+            - {selectedPoint.toLocaleString()}원
+          </PurchaseSecondaryText>
+        </PurchasePropertyWrapper>
+        <PurchasePropertyWrapper>
+          <PurchasePrimaryText>배송비</PurchasePrimaryText>
+          <PurchasePrimaryText>
+            + {DELIVERY_FEE.toLocaleString()}원
+          </PurchasePrimaryText>
         </PurchasePropertyWrapper>
         <PurchasePropertyWrapper>
           <PurchaseResultText>최종 결제 금액</PurchaseResultText>
-          <PurchaseResultText>0원</PurchaseResultText>
+          <PurchaseResultText>
+            {(totalPrice - selectedPoint + DELIVERY_FEE).toLocaleString()}원
+          </PurchaseResultText>
         </PurchasePropertyWrapper>
       </PurchaseList>
 

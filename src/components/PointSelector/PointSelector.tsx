@@ -46,7 +46,7 @@ function PointSelector() {
         <PointInputTitle>포인트 사용하기</PointInputTitle>
       </PointSelectorHeader>
       <PointSelectorInput>
-        <div>잔여 포인트: {point.totalPoint}점</div>
+        <div>잔여 포인트: {point.totalPoint.toLocaleString()}점</div>
         <button onClick={handlePointButton}>포인트 전액 사용</button>
       </PointSelectorInput>
       <PointSelectorInput>

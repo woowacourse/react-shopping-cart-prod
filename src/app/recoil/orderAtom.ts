@@ -1,7 +1,12 @@
 import { atom, selector, selectorFamily } from "recoil";
 import { Coupon, NewOrder, Point } from "../../types/types";
-import { checkedCartSelector } from "./cartAtoms";
+import { checkedCartSelector, totalPriceSelector } from "./cartAtoms";
 import { modalRepository } from "./modalAtoms";
+
+export const deliveryFeeState = atom({
+  key: "deliveryFeeState",
+  default: 3000,
+});
 
 export const couponState = atom<Coupon[]>({
   key: "couponState",
@@ -19,6 +24,52 @@ export const pointState = atom<Point>({
 export const selectedCouponIdsState = atom<number[]>({
   key: "selectedCouponIdsState",
   default: [],
+});
+
+export const selectedCoupon = selector<Coupon>({
+  key: "selectedCoupon",
+  get: ({ get }) => {
+    const coupons = get(couponState);
+    const couponIds = get(selectedCouponIdsState);
+    if (couponIds.length > 0) {
+      const couponId = couponIds[0];
+      const targetCoupon = coupons.find((coupon) => coupon.id === couponId);
+      if (targetCoupon) {
+        return targetCoupon;
+      }
+    } else {
+      return {
+        id: -1,
+        couponName: "",
+        discountPercent: 0,
+        discountAmount: 0,
+        minAmount: 0,
+      };
+    }
+  },
+});
+
+export const expectedOrderPrice = selector({
+  key: "expectedOrderPrice",
+  get: async ({ get }) => {
+    const totalPrice = get(totalPriceSelector);
+    const couponIds = get(selectedCouponIdsState);
+
+    const expectedOrderPrice = totalPrice;
+
+    const query = {
+      cartItems: [
+        {
+          cartItemId: 0,
+          productId: 0,
+          quantity: 0,
+        },
+      ],
+      couponIds: [0],
+      usePoint: 0,
+    };
+    return expectedOrderPrice;
+  },
 });
 
 export const isCouponSelectedSelector = selectorFamily<boolean, number>({

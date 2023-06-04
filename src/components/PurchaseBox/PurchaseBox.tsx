@@ -14,12 +14,13 @@ import { useRecoilValue } from "recoil";
 import { totalPriceSelector } from "../../app/recoil/cartAtoms.ts";
 import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
 import Purchase from "../Purchase";
+import { deliveryFeeState } from "../../app/recoil/orderAtom.ts";
 
 function PurchaseBox() {
   const totalPrice = useRecoilValue(totalPriceSelector);
-  const DELIVERY_FEE = totalPrice > 0 ? 3000 : 0;
-  const POINTS = 1000;
+  const DELIVERY_FEE = useRecoilValue(deliveryFeeState);
   const { openModal } = useRecoilValue(modalRepository);
+
   return (
     <>
       <PurchaseBoxWrapper>

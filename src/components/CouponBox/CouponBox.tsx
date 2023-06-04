@@ -15,7 +15,7 @@ function CouponBox({ coupon }: { coupon: Coupon }) {
 
   return (
     <CouponWrapper onClick={() => handleClickCoupon(coupon.id)}>
-      <input type="checkbox" checked={isCouponSelected} onChange={() => {}} />
+      <input type="checkbox" checked={isCouponSelected} onChange={undefined} />
       {coupon.couponName}
     </CouponWrapper>
   );
