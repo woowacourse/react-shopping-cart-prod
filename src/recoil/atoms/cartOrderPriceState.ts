@@ -4,7 +4,6 @@ import cartItemsState from './cartItemsState';
 
 type CartOrderPriceState = {
   products: number;
-  shippingFee: number;
   total: number;
 };
 
@@ -18,11 +17,9 @@ const cartOrderPriceState = selectorFamily<CartOrderPriceState, Client>({
       const productsPrice = cartItems
         .filter((cartItem) => cartItem.checked)
         .reduce((sum, cartItem) => sum + cartItem.quantity * cartItem.product.price, 0);
-      const shippingFee = productsPrice > 0 ? 3000 : 0;
 
       const prices = {
         products: productsPrice,
-        shippingFee,
       };
 
       return {
