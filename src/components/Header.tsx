@@ -36,6 +36,9 @@ const Header = () => {
         <Link to="order-list">
           <S.OrderButton>주문 목록</S.OrderButton>
         </Link>
+        <Link to="member">
+          <S.MemberButton>마이 정보</S.MemberButton>
+        </Link>
       </S.Wrapper>
     </S.Header>
   );
@@ -100,6 +103,15 @@ const S = {
 
   OrderButton: styled.button`
     width: 100px;
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: transparent;
+  `,
+
+  MemberButton: styled.button`
+    /* width: 100px; */
     color: var(--text-color);
     font-size: 20px;
     font-weight: 700;
