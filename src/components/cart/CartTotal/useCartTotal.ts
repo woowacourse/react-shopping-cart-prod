@@ -1,10 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { pointQuery } from '../../../recoil/selectors/point';
 import useModal from '../../common/Modal/useModal';
 import { FREE_SHIPPING_PRICE, SHIPPING_FEE } from '../../../constants/cart';
 import { removeComma } from '../../../utils/removeComma';
 import { isNumericString } from '../../../utils/isNumericString';
+import usePoint from '../../../hooks/usePoint';
 import type { ChangeEventHandler } from 'react';
 import type { Product } from '../../../types/product';
 
@@ -28,7 +27,7 @@ const calcTotalPaymentPrice = (totalOrderPrice: number, usingPoint: number) => {
 const useCartTotal = (totalProductPrice: Product['price']) => {
   const [usingPoint, setUsingPoint] = useState('');
   const usingPointRef = useRef('');
-  const point = useRecoilValue(pointQuery);
+  const { point } = usePoint();
   const { isModalOpen, closeModal } = useModal();
   const totalOrderPrice = calcTotalOrderPrice(totalProductPrice);
   const isPointMoreThanOrderPrice = point > totalOrderPrice;
