@@ -16,7 +16,7 @@ const OrderItem = ({ information, isDetail }: OrderItemProps) => {
 
   const navigateToOrderDetailPage = useCallback(
     (orderId: number) => () => {
-      navigate(`/orderList/${orderId}`);
+      navigate(`/orders/${orderId}`);
     },
     []
   );

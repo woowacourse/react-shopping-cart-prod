@@ -1,4 +1,4 @@
-import OrderList from '../OrderList/OrderList';
+import OrderListContainer from '../OrderList/OrderList';
 import styles from './style.module.css';
 
 const OrderPageSection = () => {
@@ -6,7 +6,7 @@ const OrderPageSection = () => {
     <>
       <div className={styles.cartLstHeader}>주문목록</div>
       <hr />
-      <OrderList />
+      <OrderListContainer />
     </>
   );
 };

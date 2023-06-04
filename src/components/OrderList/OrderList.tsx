@@ -1,29 +1,39 @@
-import { useEffect } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { useFetch } from '../../hooks/useFetch';
-import { OrderItemType, orderListState } from '../../store/order';
-import { originState } from '../../store/origin';
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { useNavigate } from 'react-router-dom';
+
+import { useOrderList } from '../../hooks/useFetchUrl';
+import ErrorFallback from '../ErrorFallback/ErrorFallback';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import OrderItem from '../OrderItem/OrderItem';
 import styles from './style.module.css';
 
 const OrderList = () => {
-  const [, setOrderList] = useRecoilState(orderListState);
-  const { data, fetchApi, isLoading } = useFetch<OrderItemType[]>(setOrderList);
-  const origin = useRecoilValue(originState);
-  useEffect(() => {
-    fetchApi.get(`${origin}order-items`);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [origin]);
+  const orderList = useOrderList();
 
   return (
     <div className={styles.container}>
-      {isLoading && <LoadingSpinner />}
-      {data?.map((orderItem) => (
+      {orderList?.map((orderItem) => (
         <OrderItem key={orderItem.id} information={orderItem} />
       ))}
     </div>
   );
 };
 
-export default OrderList;
+const OrderListContainer = () => {
+  const navigate = useNavigate();
+  return (
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onReset={() => {
+        navigate('/');
+      }}
+    >
+      <Suspense fallback={<LoadingSpinner />}>
+        <OrderList />
+      </Suspense>
+    </ErrorBoundary>
+  );
+};
+
+export default OrderListContainer;
