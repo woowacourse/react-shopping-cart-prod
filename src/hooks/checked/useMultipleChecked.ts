@@ -10,6 +10,7 @@ import {
 import { cartProductHandlerSelector } from '../../states/cartProducts';
 
 import { toastState } from '../../states/toast';
+import { DELETE_MESSAGE } from '../../constants/toast';
 
 export const useMultipleChecked = () => {
   const checkedCartProductIds = useRecoilValue(checkedCartProductIdSelector);
@@ -41,17 +42,9 @@ export const useMultipleChecked = () => {
     try {
       await deleteMultipleCartProducts(checkedCartProductIds);
       setCheckedCartProducts([]);
-      setToastState({
-        message: '선택한 상품을 장바구니에서 삭제했습니다',
-        variant: 'success',
-        duration: 2000,
-      });
+      setToastState(DELETE_MESSAGE.success);
     } catch {
-      setToastState({
-        message: '상품 삭제를 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(DELETE_MESSAGE.error);
     }
   };
 

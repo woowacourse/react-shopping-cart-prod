@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { checkedCartProductIdSelector } from '../../states/checkedCartProducts';
 import { orderHandlerSelector } from '../../states/order';
 import { toastState } from '../../states/toast';
+import { ORDER_MESSAGE } from '../../constants/toast';
 
 export const useOrder = (couponId: number | undefined, totalPrice: number) => {
   const cartItemIds = useRecoilValue(checkedCartProductIdSelector);
@@ -16,17 +17,9 @@ export const useOrder = (couponId: number | undefined, totalPrice: number) => {
     try {
       await addOrder({ cartItemIds, totalPrice, couponId });
       navigate('/orders');
-      setToastState({
-        message: '선택한 상품을 주문했습니다',
-        variant: 'success',
-        duration: 2000,
-      });
+      setToastState(ORDER_MESSAGE.success);
     } catch {
-      setToastState({
-        message: '선택한 상품 주문에 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(ORDER_MESSAGE.error);
     }
   };
 

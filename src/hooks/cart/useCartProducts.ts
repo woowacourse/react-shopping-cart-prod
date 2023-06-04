@@ -6,6 +6,7 @@ import {
   targetCartProductSelector,
 } from '../../states/cartProducts';
 import { toastState } from '../../states/toast';
+import { ADD_MESSAGE } from '../../constants/toast';
 
 export const useCartProducts = (productId: number) => {
   const [cartItemId, setCartItemId] = useState<number>();
@@ -25,17 +26,9 @@ export const useCartProducts = (productId: number) => {
       }
 
       setCartItemId(cartItemId);
-      setToastState({
-        message: '상품 추가를 성공했습니다.',
-        variant: 'success',
-        duration: 2000,
-      });
+      setToastState(ADD_MESSAGE.success);
     } catch {
-      setToastState({
-        message: '상품 추가를 실패했습니다.',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(ADD_MESSAGE.error);
     }
   };
 

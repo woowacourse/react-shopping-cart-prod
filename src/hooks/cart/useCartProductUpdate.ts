@@ -2,6 +2,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 
 import { cartProductHandlerSelector } from '../../states/cartProducts';
 import { toastState } from '../../states/toast';
+import { DELETE_MESSAGE, QUANTITY_MESSAGE } from '../../constants/toast';
 
 export const useCartProductUpdate = (
   id: number | undefined,
@@ -19,17 +20,9 @@ export const useCartProductUpdate = (
       }
 
       await deleteTargetCartProduct(id);
-      setToastState({
-        message: '상품을 삭제했어요',
-        variant: 'success',
-        duration: 2000,
-      });
+      setToastState(DELETE_MESSAGE.success);
     } catch (error) {
-      setToastState({
-        message: '상품 삭제를 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(DELETE_MESSAGE.error);
     }
   };
 
@@ -43,11 +36,7 @@ export const useCartProductUpdate = (
 
       await updateTargetQuantity(id, updatedQuantity);
     } catch (error) {
-      setToastState({
-        message: '수량 변경을 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(QUANTITY_MESSAGE.error);
     }
   };
 
@@ -66,11 +55,7 @@ export const useCartProductUpdate = (
 
       await updateTargetQuantity(id, updatedQuantity);
     } catch (error) {
-      setToastState({
-        message: '수량 변경을 실패했습니다',
-        variant: 'error',
-        duration: 2000,
-      });
+      setToastState(QUANTITY_MESSAGE.error);
     }
   };
 
