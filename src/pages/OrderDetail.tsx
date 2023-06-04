@@ -27,6 +27,7 @@ export default OrderDetail;
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  margin: 0 40px;
 `;
 
 const Title = styled.h1`
