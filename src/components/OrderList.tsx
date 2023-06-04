@@ -1,15 +1,13 @@
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import type { OrderListEntity } from '../api/rest/ShoppingCartRestAPI';
-import { orderListState } from '../recoil/atoms/orderState';
 import { Image, ItemContainer, Name, Price, Quantity } from './common/ProductItem';
 
 const Container = styled.section`
   width: 100%;
-  margin-top: 28px;
+  margin-top: 10px;
 
-  border: 1px solid ${({ theme }) => theme.colors.gray200};
+  border-bottom: 10px solid ${({ theme }) => theme.colors.gray300};
 `;
 
 const TitleSection = styled.section`
@@ -18,10 +16,16 @@ const TitleSection = styled.section`
   align-items: center;
 
   width: 100%;
-  height: 92px;
+  height: 50px;
   padding: 0 30px;
 
-  background-color: ${({ theme }) => theme.colors.gray300};
+  ${({ theme }) => theme.fonts.text}
+  font-weight: 800;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.gray200};
+
+  & > div > strong {
+    color: #0078ff;
+  }
 `;
 
 const DetailButton = styled.button``;
@@ -29,16 +33,33 @@ const DetailButton = styled.button``;
 const ColumnFlexBox = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: flex-end;
 
-  margin-left: 33px;
+  margin-left: 20px;
 `;
 
-const RowFlexBox = styled.div`
+const PointSection = styled.section`
+  margin: 0 30px;
+
+  ${({ theme }) => theme.fonts.description}
+`;
+
+const SavingRate = styled.div`
   display: flex;
+  justify-content: space-between;
 
-  margin-top: 10px;
+  width: 100%;
+  margin-bottom: 5px;
 
-  color: ${({ theme }) => theme.colors.gray400};
+  color: #0078ff;
+`;
+
+const Point = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  margin-bottom: 5px;
+  width: 100%;
 `;
 
 interface OrderListProps {
@@ -56,8 +77,10 @@ const OrderList = (props: OrderListProps) => {
   return (
     <Container>
       <TitleSection>
-        주문번호 : {orderList.id}
-        <DetailButton onClick={moveToDetailPage}>상세보기 ▷ </DetailButton>
+        <div>
+          주문번호 <strong>{orderList.id}</strong>
+        </div>
+        <DetailButton onClick={moveToDetailPage}>〉</DetailButton>
       </TitleSection>
       {orderList.cartItems.map((item) => {
         return (
@@ -69,19 +92,25 @@ const OrderList = (props: OrderListProps) => {
               price: item.price,
               quantity: item.quantity,
             }}
-            containerStyle={{ display: 'flex', padding: '20px' }}
+            containerStyle={{ display: 'flex', padding: '20px 20px 20px 30px' }}
           >
-            <Image imageStyle={{ height: '141px', width: '141px' }} />
+            <Image />
             <ColumnFlexBox>
-              <Name fontStyle="name" />
-              <RowFlexBox>
-                <Price fontStyle="price" />/
-                <Quantity fontStyle="price" />
-              </RowFlexBox>
+              <Name />
+              <Quantity style={{ color: '#888888' }} />
+              <Price style={{ fontSize: '16px' }} />
             </ColumnFlexBox>
           </ItemContainer>
         );
       })}
+      <PointSection>
+        <SavingRate>
+          <p>적립율</p> <p>{orderList.savingRate}%</p>
+        </SavingRate>
+        <Point>
+          <p>포인트</p> <p>{orderList.points.toLocaleString()}</p>
+        </Point>
+      </PointSection>
     </Container>
   );
 };
