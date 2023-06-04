@@ -1,6 +1,7 @@
+import { useRefreshableRecoilValue } from './../common/useRefreshableAtom';
 import { cartState } from './../../atoms/cart';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilRefresher_UNSTABLE, useRecoilValue } from 'recoil';
+import { useRecoilRefresher_UNSTABLE } from 'recoil';
 import { postOrder } from '../../apis/order';
 import { selectedItemsState } from '../../atoms/cart';
 import { ordersSelector } from '../../atoms/order';
@@ -13,8 +14,8 @@ export const useOrderMutate = () => {
   const navigate = useNavigate();
   const refreshCart = useRecoilRefresher_UNSTABLE(cartState);
   const refreshOrder = useRecoilRefresher_UNSTABLE(ordersSelector);
-  const selectedCoupons = useRecoilValue(selectedCouponsState);
-  const selectedItems = useRecoilValue(selectedItemsState);
+  const selectedCoupons = useRefreshableRecoilValue(selectedCouponsState);
+  const selectedItems = useRefreshableRecoilValue(selectedItemsState);
 
   const postOrderMutate = waitForMutation(postOrder, {
     onSuccess(_, { headers }) {

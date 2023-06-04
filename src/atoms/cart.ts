@@ -2,8 +2,6 @@ import { getDiscountInfo } from './../utils/discount';
 import { selector, atom, selectorFamily } from 'recoil';
 import { CartItem } from '../types/cart';
 import { fetchCart } from '../apis/cart';
-import { SpecificCoupon } from '../types/coupon';
-import { Product } from '../types/products';
 import { selectedCouponsState } from './coupon';
 
 export const cartState = atom({
