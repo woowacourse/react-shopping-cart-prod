@@ -10,25 +10,29 @@ interface OrderedProductProps {
 }
 
 export const OrderedProductList = ({ order }: OrderedProductProps) => {
-  const setOrderNumber = useSetOrderDetail()
+  const setOrderNumber = useSetOrderDetail();
 
   const navigate = useNavigate();
 
   const detailOrderClick = () => {
-    setOrderNumber(order.orderId)
+    setOrderNumber(order.orderId);
 
-    navigate(PATH.ORDER_DETAIL)
-  }
+    navigate(PATH.ORDER_DETAIL);
+  };
   return (
     <>
       <Style.OrderNumberAndDetail>
-        <Style.OrderNumber >주문번호 : {order.orderId}</Style.OrderNumber>
-        <Style.OrderDetail onClick={detailOrderClick}>
-          상세보기
-        </Style.OrderDetail>
+        <Style.OrderNumberAndDate>
+          <Style.OrderNumber>주문번호 : {order.orderId}</Style.OrderNumber>
+          <Style.OrderDate>주문날짜 : {order.orderDate.split(' ')[0]}</Style.OrderDate>
+        </Style.OrderNumberAndDate>
+        <Style.OrderDetail onClick={detailOrderClick}>상세보기</Style.OrderDetail>
       </Style.OrderNumberAndDetail>
       <Style.OrderProducts>
-      {order.orderDetails && order.orderDetails.map((product)=> <OrderedProduct key={product.product.id} orderDetail={product}/>)}
+        {order.orderDetails &&
+          order.orderDetails.map((product) => (
+            <OrderedProduct key={product.product.id} orderDetail={product} />
+          ))}
       </Style.OrderProducts>
     </>
   );
@@ -49,12 +53,28 @@ const Style = {
     border: 1px solid #aaaaaa;
   `,
 
+  OrderNumberAndDate: styled.div`
+    display: flex;
+  `,
+
   OrderNumber: styled.span`
     font-weight: 400;
     font-size: 20px;
     line-height: 24px;
 
     letter-spacing: 0.5px;
+
+    color: #333333;
+  `,
+
+  OrderDate: styled.span`
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+
+    letter-spacing: 0.5px;
+
+    margin-left: 40px;
 
     color: #333333;
   `,
@@ -71,5 +91,5 @@ const Style = {
 
   OrderProducts: styled.div`
     margin-bottom: 50px;
-  `
+  `,
 };
