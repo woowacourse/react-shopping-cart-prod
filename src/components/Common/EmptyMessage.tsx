@@ -29,7 +29,7 @@ const MessageSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 320px;
+  min-width: 360px;
   transform: translate(-50%, -50%);
 `;
 

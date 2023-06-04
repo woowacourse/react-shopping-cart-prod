@@ -1,26 +1,15 @@
-import { ChangeEventHandler, Suspense } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import SelectBox from './SelectBox';
+import ServerNameSelectBox from '../ServerName/ServerNameSelectBox';
 import CartCountBox from '../Cart/CartCountBox';
 
 import CartIcon from '../../assets/CartIcon';
 import OrderIcon from '../../assets/OrderIcon';
-import { serverNameState } from '../../states/serverName';
-import { SERVER_OPTIONS, isServerKey } from '../../constants/server';
 import { PATH } from '../../constants/path';
 
 const Header = () => {
-  const setServerName = useSetRecoilState(serverNameState);
-
-  const onChange: ChangeEventHandler<HTMLSelectElement> = (event) => {
-    const serverKey = event.currentTarget.value;
-
-    if (isServerKey(serverKey)) setServerName(serverKey);
-  };
-
   return (
     <HeaderContainer>
       <HeaderContent>
@@ -28,7 +17,7 @@ const Header = () => {
           <Logo>SHOP</Logo>
         </LogoContainer>
         <LinkWrapper>
-          <SelectBox options={SERVER_OPTIONS} onChange={onChange} />
+          <ServerNameSelectBox />
           <CartPageLink to={`/${PATH.cart}`}>
             <CartIcon width={32} height={24} color='white' />
             <span>장바구니</span>

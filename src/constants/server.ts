@@ -27,8 +27,3 @@ export const SERVER_KEYS = Object.keys(SERVER);
 
 export const isServerKey = (value: string): value is ServerKey =>
   value in SERVER;
-
-export const SERVER_OPTIONS = SERVER_KEYS.map((serverKey) => ({
-  value: serverKey,
-  text: serverKey,
-}));

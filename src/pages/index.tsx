@@ -3,16 +3,24 @@ import { Outlet } from 'react-router-dom';
 import Header from '../components/Common/Header';
 import Toast from '../components/Common/Toast';
 import styled from 'styled-components';
+import { ErrorBoundary } from 'react-error-boundary';
+import NotFoundPage from './NotFoundPage';
+import { useRecoilValue } from 'recoil';
+import { serverNameState } from '../states/serverName';
 
-const App = () => (
-  <>
-    <Header />
-    <Main>
-      <Outlet />
-    </Main>
-    <Toast />
-  </>
-);
+const App = () => {
+  const serverName = useRecoilValue(serverNameState);
+
+  return (
+    <ErrorBoundary key={serverName} fallback={<NotFoundPage />}>
+      <Header />
+      <Main>
+        <Outlet />
+      </Main>
+      <Toast />
+    </ErrorBoundary>
+  );
+};
 
 const Main = styled.main`
   position: relative;

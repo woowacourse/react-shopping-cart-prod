@@ -32,8 +32,13 @@ const SelectBox = ({
           {title}
         </option>
       )}
-      {options.map(({ value, text, disabled }, index) => (
-        <option key={`${text}-${index}`} value={value} disabled={disabled}>
+      {options.map(({ value, text, disabled, selected }, index) => (
+        <option
+          key={`${text}-${index}`}
+          value={value}
+          disabled={disabled}
+          selected={selected}
+        >
           {text}
         </option>
       ))}
