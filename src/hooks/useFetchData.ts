@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { fetchApi } from '../api/fetchApi';
 
-export const useFetchData = () => {
+const useFetchData = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async (url: string, body: RequestInit) => {
@@ -60,3 +60,5 @@ export const useFetchData = () => {
 
   return { api, isLoading };
 };
+
+export default useFetchData;
