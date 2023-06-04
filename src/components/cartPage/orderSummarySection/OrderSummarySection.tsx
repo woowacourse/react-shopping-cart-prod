@@ -23,16 +23,14 @@ export const OrderSummarySection = () => {
   const { usingPoint, setUsingPoint, handleInputValueChange } =
     usePointInput(availablePoint);
 
+  const [point, setPoint] = useRecoilState(pointState);
+  const checkedProduct = useRecoilValue(selectedCartIdListState);
+
   const { getPoint, orderByCartId } = useOrderFetch();
   const { deleteCartItemById } = useCartFetch();
-
   const { deleteRecoilCartById } = useCartRecoil();
 
-  const [point, setPoint] = useRecoilState(pointState);
-
   const navigate = useNavigate();
-
-  const checkedProduct = useRecoilValue(selectedCartIdListState);
 
   useEffect(() => {
     getPoint().then((point) => setPoint(point.point));
