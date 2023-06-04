@@ -38,7 +38,7 @@ const ProductCartButton = ({ productId }: ProductCartButtonProps) => {
 const ProductAddButton = styled.button`
   position: absolute;
   top: 0;
-  right: 14px;
+  right: 0;
 `;
 
 export default ProductCartButton;

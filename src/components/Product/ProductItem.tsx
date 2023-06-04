@@ -35,7 +35,6 @@ const ProductInfoContainer = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 18px;
-  padding: 0 14px;
 `;
 
 const ProductName = styled.dt`

@@ -18,7 +18,7 @@ const OrderDetailPage = () => {
 const Main = styled.main`
   max-width: 1300px;
   margin: 0 auto;
-  padding: 0 30px 100px;
+  padding: 0 20px 100px;
 `;
 
 const PageTitle = styled.h2`

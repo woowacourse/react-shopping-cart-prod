@@ -9,21 +9,17 @@ const CartCountBox = () => {
 };
 
 const ProductCountAlert = styled.span`
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin-left: 6px;
-  font-size: 16px;
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  padding: 0 0 0 0.3px;
+  font-size: 10px;
   text-align: center;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primary};
-  line-height: 24px;
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    width: 26px;
-    height: 26px;
-    line-height: 28px;
-  }
+  line-height: 16px;
 `;
 
 export default CartCountBox;

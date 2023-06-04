@@ -32,7 +32,7 @@ const Main = styled.main`
   max-width: 1300px;
   height: calc(100vh - 80px);
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 20px;
   overflow-y: auto;
 
   &::-webkit-scrollbar {

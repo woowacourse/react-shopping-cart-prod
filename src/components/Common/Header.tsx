@@ -9,6 +9,7 @@ import CartCountBox from '../Cart/CartCountBox';
 import CartIcon from '../../assets/CartIcon';
 import { serverNameState } from '../../states/serverName';
 import { SERVER_OPTIONS, isServerKey } from '../../constants/server';
+import OrderIcon from '../../assets/OrderIcon';
 
 const Header = () => {
   const setServerName = useSetRecoilState(serverNameState);
@@ -23,18 +24,21 @@ const Header = () => {
     <HeaderContainer>
       <HeaderContent>
         <LogoContainer to='/'>
-          <CartIcon width={51} height={44} color='white' />
           <Logo>SHOP</Logo>
         </LogoContainer>
         <LinkWrapper>
           <SelectBox options={SERVER_OPTIONS} onChange={onChange} />
           <CartPageLink to='/cart'>
-            장바구니
+            <CartIcon width={32} height={24} color='white' />
+            <span>장바구니</span>
             <Suspense fallback={<ProductCountAlert />}>
               <CartCountBox />
             </Suspense>
           </CartPageLink>
-          <OrderPageLink to='/orders'>주문 목록</OrderPageLink>
+          <OrderPageLink to='/orders'>
+            <OrderIcon width={40} height={24} color='white' />
+            <span>주문목록</span>
+          </OrderPageLink>
         </LinkWrapper>
       </HeaderContent>
     </HeaderContainer>
@@ -51,82 +55,64 @@ const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1250px;
+  max-width: 1300px;
   height: 100%;
   margin: 0 auto;
-  padding: 0 30px;
+  padding: 0 20px;
 `;
 
 const LogoContainer = styled(Link)`
   display: flex;
   align-items: center;
-
-  & > svg {
-    margin-right: 12px;
-    transform: scaleX(-1);
-  }
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    & > svg {
-      margin-right: 18px;
-      transform: scaleX(-1);
-    }
-  }
 `;
 
 const Logo = styled.h1`
   color: ${({ theme }) => theme.colors.white};
-  font-size: 34px;
+  font-size: 28px;
   font-weight: 900;
   letter-spacing: 0.1em;
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    font-size: 40px;
-    line-height: 40px;
-  }
 `;
 
 const LinkWrapper = styled.div`
   display: flex;
+  align-items: center;
   gap: 18px;
 `;
 
-const CartPageLink = styled(Link)`
+const PageLink = styled(Link)`
+  position: relative;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   color: ${({ theme }) => theme.colors.white};
-  font-size: 20px;
-  font-weight: 500;
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    font-size: 24px;
-  }
+  font-size: 10px;
+  line-height: 12px;
 `;
 
 const ProductCountAlert = styled.span`
-  display: inline-block;
-  width: 22px;
-  height: 22px;
-  margin-left: 6px;
-  font-size: 16px;
+  position: absolute;
+  top: -4px;
+  right: -2px;
+  width: 16px;
+  height: 16px;
+  padding: 0 0 0 0.3px;
+  font-size: 10px;
   text-align: center;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.colors.primary};
-  line-height: 22px;
+  line-height: 16px;
+`;
 
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    width: 26px;
-    height: 26px;
-    line-height: 26px;
+const CartPageLink = styled(PageLink)`
+  & > svg {
+    margin: 0 4px 4px 0;
+    transform: scaleX(-1);
   }
 `;
 
-const OrderPageLink = styled(Link)`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 20px;
-  font-weight: 500;
-
-  @media (min-width: ${({ theme }) => theme.breakPoints.small}) {
-    font-size: 24px;
+const OrderPageLink = styled(PageLink)`
+  & > svg {
+    margin: 0 0 4px;
   }
 `;
 
