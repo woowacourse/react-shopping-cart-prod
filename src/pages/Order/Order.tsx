@@ -10,12 +10,15 @@ import { serverState } from '../../recoil/serverAtom';
 import { fetchCartList } from '../../api/api';
 import { useEffect } from 'react';
 import { cartState } from '../../recoil/cartAtoms';
+import { PAGE_PATH } from '../../constants/path';
+import { useNavigate } from 'react-router-dom';
 
 function Order() {
   const memberAuth = useRecoilValue(memberAuthorization);
   const server = useRecoilValue(serverState);
   const setCartList = useSetRecoilState(cartState);
   const setMemberPoint = useSetRecoilState(memberPointState);
+  const navigate = useNavigate();
   const { data: orders } = useGetQuery<OrdersResponses>({
     fetcher: () => fetchOrderList({ server, auth: memberAuth }),
   });
@@ -39,7 +42,15 @@ function Order() {
       <PageTitle>주문목록</PageTitle>
       <FatBorder />
       <S.OrderListWrapper>
-        {orders && [...orders.orderResponses].reverse().map((order) => <OrderList key={order.orderId} {...order} />)}
+        {orders && orders.orderResponses.length !== 0 ? (
+          [...orders.orderResponses].reverse().map((order) => <OrderList key={order.orderId} {...order} />)
+        ) : (
+          <S.EmptyOrderWrapper>
+            <S.Title>텅</S.Title>
+            <S.Description>주문 목록이 없어요.</S.Description>
+            <S.HomeButton onClick={() => navigate(PAGE_PATH.HOME)}>상품 구입하러 가기</S.HomeButton>
+          </S.EmptyOrderWrapper>
+        )}
       </S.OrderListWrapper>
     </>
   );
