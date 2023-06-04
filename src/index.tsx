@@ -8,6 +8,8 @@ import { worker } from './mocks/browser';
 import GlobalStyle from './styles';
 import theme from './styles/theme';
 import { RecoilRoot } from 'recoil';
+import { ErrorBoundary } from 'react-error-boundary';
+import NotFoundPage from './pages/NotFoundPage';
 
 const main = async () => {
   if (window.location.pathname === '/react-shopping-cart-prod') {
@@ -30,7 +32,9 @@ root.render(
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <App />
+        <ErrorBoundary fallback={<NotFoundPage />}>
+          <App />
+        </ErrorBoundary>
       </ThemeProvider>
     </RecoilRoot>
   </React.StrictMode>

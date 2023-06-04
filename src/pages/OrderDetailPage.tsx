@@ -3,14 +3,17 @@ import styled from 'styled-components';
 
 import OrderDetail from '../components/Order/OrderDetail';
 import Message from '../components/Common/Message';
+import { ErrorBoundary } from 'react-error-boundary';
 
 const OrderDetailPage = () => {
   return (
     <Main>
       <PageTitle>주문 내역 상세</PageTitle>
-      <Suspense fallback={<Message type='loading' />}>
-        <OrderDetail />
-      </Suspense>
+      <ErrorBoundary fallback={<Message type='error' />}>
+        <Suspense fallback={<Message type='loading' />}>
+          <OrderDetail />
+        </Suspense>
+      </ErrorBoundary>
     </Main>
   );
 };
