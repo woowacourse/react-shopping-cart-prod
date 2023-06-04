@@ -15,13 +15,19 @@ const ProductList = () => {
   const { api, isLoading } = useFetchData();
 
   useEffect(() => {
-    api.get(`${server}${PRODUCT_LIST_URL}`).then((data) => {
-      setProducts(data);
-    });
+    api
+      .get(`${server}${PRODUCT_LIST_URL}`)
+      .then((data) => {
+        setProducts(data);
+      })
+      .catch(() => alert('서버에서 상품 목록을 가져오지 못하였습니다.'));
 
-    api.get(`${server}${CART_URL}`).then((data) => {
-      setCart(data);
-    });
+    api
+      .get(`${server}${CART_URL}`)
+      .then((data) => {
+        setCart(data);
+      })
+      .catch(() => alert('서버에서 장바구니 목록을 가져오지 못하였습니다.'));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [server]);
 
