@@ -47,7 +47,7 @@ const NameBox = styled.div`
 
   padding-top: 1%;
 
-  font-size: 16px;
+  font-size: 18px;
   white-space: nowrap;
 
   word-break: break-all;
@@ -55,7 +55,7 @@ const NameBox = styled.div`
   overflow: hidden;
 
   @media screen and (max-width: 800px) {
-    font-size: 15px;
+    font-size: 17px;
   }
 `;
 
@@ -64,11 +64,11 @@ const PriceBox = styled.div`
   height: fit-content;
 
   color: rgba(136, 136, 136, 1);
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 400;
 
   @media screen and (max-width: 800px) {
-    font-size: 14px;
+    font-size: 16px;
   }
 `;
 

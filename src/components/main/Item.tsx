@@ -80,9 +80,9 @@ const ImageBox = styled.div`
 
 const NameBox = styled.div`
   width: 190px;
-  margin: 15px 0 10px 10px;
+  margin: 10px 0 10px 10px;
 
-  font-size: 16px;
+  font-size: 17px;
   white-space: nowrap;
 
   word-break: break-all;
@@ -90,7 +90,8 @@ const NameBox = styled.div`
   overflow: hidden;
 
   @media screen and (max-width: 800px) {
-    font-size: 13px;
+    margin: 5px 0 5px 5px;
+    font-size: 18px;
   }
 `;
 
@@ -100,7 +101,9 @@ const PriceBox = styled.p`
   font-size: 20px;
 
   @media screen and (max-width: 800px) {
-    font-size: 16px;
+    margin-left: 5px;
+
+    font-size: 20px;
   }
 `;
 

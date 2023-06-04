@@ -71,9 +71,10 @@ const PriceBox = styled.div`
   white-space: nowrap;
   word-break: break-all;
   text-overflow: ellipsis;
+  font-size: 18px;
 
   @media screen and (max-width: 800px) {
-    font-size: 15px;
+    font-size: 16px;
   }
 `;
 
@@ -98,10 +99,10 @@ const ResultBox = styled.div`
   height: 100px;
   border: 2px solid rgba(170, 170, 170, 1);
   background: rgba(246, 246, 246, 1);
-  font-size: 18px;
   font-weight: 600;
 
   & > div {
+    font-size: 20px;
     text-align: center;
     width: 100%;
   }

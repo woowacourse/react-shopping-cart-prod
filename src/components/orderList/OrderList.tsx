@@ -1,5 +1,5 @@
 import { styled } from "styled-components";
-import OrderItem from "./OrderListItem";
+import OrderListItem from "./OrderListItem";
 import { useRecoilValue } from "recoil";
 import { orderListState } from "recoil/order";
 
@@ -11,7 +11,7 @@ const OrderList = () => {
       <Title>주문 목록</Title>
       <ListBox>
         {orderList.map((item) => (
-          <OrderItem key={item.orderId} orderId={item.orderId} items={item.orderItems} />
+          <OrderListItem key={item.orderId} orderId={item.orderId} items={item.orderItems} />
         ))}
       </ListBox>
     </Wrapper>

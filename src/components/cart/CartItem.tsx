@@ -109,7 +109,7 @@ const NameBox = styled.div`
   height: 50%;
   margin: 15px 0 10px 20px;
 
-  font-size: 17px;
+  font-size: 18px;
   white-space: nowrap;
 
   word-break: break-all;
@@ -117,7 +117,8 @@ const NameBox = styled.div`
   overflow: hidden;
 
   @media screen and (max-width: 800px) {
-    font-size: 13px;
+    margin: 5px 0 0 10px;
+    font-size: 16px;
   }
 `;
 
@@ -135,11 +136,11 @@ const PriceContainer = styled.div`
   right: 0;
 
   height: fit-content;
-  font-size: 16px;
+  font-size: 18px;
 
   & > p:not(:last-child) {
     text-decoration: line-through;
-    font-size: 15px;
+    font-size: 16px;
     color: gray;
   }
 `;
@@ -152,10 +153,11 @@ const SelectBox = styled.select`
   width: 30%;
   height: fit-content;
 
-  scale: 1.2;
+  font-size: 18px;
 
   @media screen and (max-width: 800px) {
-    scale: 1;
+    font-size: 17px;
+    right: 23%;
   }
 `;
 
