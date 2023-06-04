@@ -4,6 +4,7 @@ import type { Client } from '../../api';
 import type { CartItem } from '../../types/CartItem';
 import syncCartItemsEffect from '../effects/syncCartItemsEffect';
 import cartItemsQuery from '../queries/cartItemsQuery';
+import remoteCartItemsState from './remoteCartItemsState';
 
 const internalCartItemsState = atomFamily<CartItem[], Client>({
   key: 'internalCartItemsState',
@@ -25,6 +26,7 @@ const cartItemsState = selectorFamily<CartItem[], Client>({
     (client) =>
     ({ get }) => {
       const cartItems = get(internalCartItemsState(client));
+      const remoteCartItems = get(remoteCartItemsState(client));
       return cartItems;
     },
   set:
