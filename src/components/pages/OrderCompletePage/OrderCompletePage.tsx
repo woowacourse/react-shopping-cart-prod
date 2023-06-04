@@ -101,11 +101,12 @@ const DetailInner = styled.div`
 `;
 
 const PointWrapper = styled.div`
-  min-width: 83px;
+  min-width: 70px;
   display: flex;
   column-gap: 5px;
 
   & > dd {
+    margin-left: auto;
     font-weight: 600;
     color: ${(props) => props.theme.color.primary};
   }
