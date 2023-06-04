@@ -5,6 +5,7 @@ import { checkedCartProductIdSelector } from '../../states/checkedCartProducts';
 import { orderHandlerSelector } from '../../states/order';
 import { toastState } from '../../states/toast';
 import { ORDER_MESSAGE } from '../../constants/toast';
+import { PATH } from '../../constants/path';
 
 export const useOrder = (couponId: number | undefined, totalPrice: number) => {
   const cartItemIds = useRecoilValue(checkedCartProductIdSelector);
@@ -16,7 +17,7 @@ export const useOrder = (couponId: number | undefined, totalPrice: number) => {
   const orderCartProducts = async () => {
     try {
       await addOrder({ cartItemIds, totalPrice, couponId });
-      navigate('/orders');
+      navigate(`/${PATH.order}`);
       setToastState(ORDER_MESSAGE.success);
     } catch {
       setToastState(ORDER_MESSAGE.error);

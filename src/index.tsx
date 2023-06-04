@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
@@ -14,6 +14,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import { worker } from './mocks/browser';
 import GlobalStyle from './styles';
 import theme from './styles/theme';
+import { PATH } from './constants/path';
 
 const main = async () => {
   if (window.location.pathname === '/react-shopping-cart-prod') {
@@ -35,28 +36,26 @@ const router = createBrowserRouter(
       element: <App />,
       errorElement: <NotFoundPage />,
       children: [
-        { path: '', element: <ProductsListPage /> },
-        { path: 'cart', element: <CartPage /> },
-        { path: 'orders', element: <OrderListPage /> },
-        { path: 'orders/:orderId', element: <OrderDetailPage /> },
+        { path: PATH.product, element: <ProductsListPage /> },
+        { path: PATH.cart, element: <CartPage /> },
+        { path: PATH.order, element: <OrderListPage /> },
+        { path: `${PATH.order}/:orderId`, element: <OrderDetailPage /> },
       ],
     },
   ],
   { basename: process.env.PUBLIC_URL }
 );
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
+  <StrictMode>
     <RecoilRoot>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <RouterProvider router={router} />
       </ThemeProvider>
     </RecoilRoot>
-  </React.StrictMode>
+  </StrictMode>
 );
 
 main();

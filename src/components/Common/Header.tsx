@@ -10,6 +10,7 @@ import CartIcon from '../../assets/CartIcon';
 import OrderIcon from '../../assets/OrderIcon';
 import { serverNameState } from '../../states/serverName';
 import { SERVER_OPTIONS, isServerKey } from '../../constants/server';
+import { PATH } from '../../constants/path';
 
 const Header = () => {
   const setServerName = useSetRecoilState(serverNameState);
@@ -23,19 +24,19 @@ const Header = () => {
   return (
     <HeaderContainer>
       <HeaderContent>
-        <LogoContainer to='/'>
+        <LogoContainer to={`/${PATH.product}`}>
           <Logo>SHOP</Logo>
         </LogoContainer>
         <LinkWrapper>
           <SelectBox options={SERVER_OPTIONS} onChange={onChange} />
-          <CartPageLink to='/cart'>
+          <CartPageLink to={`/${PATH.cart}`}>
             <CartIcon width={32} height={24} color='white' />
             <span>장바구니</span>
             <Suspense fallback={<ProductCountAlert />}>
               <CartCountBox />
             </Suspense>
           </CartPageLink>
-          <OrderPageLink to='/orders'>
+          <OrderPageLink to={`/${PATH.order}`}>
             <OrderIcon width={40} height={24} color='white' />
             <span>주문목록</span>
           </OrderPageLink>
