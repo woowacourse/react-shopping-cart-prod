@@ -7,8 +7,8 @@ import CheckBox from '../Common/CheckBox';
 
 import TrashCanIcon from '../../assets/TrashCanIcon';
 import type { CartProduct } from '../../types/product';
-import useCartProductUpdate from '../../hooks/useCartProductUpdate';
-import useChecked from '../../hooks/useChecked';
+import { useCartProductUpdate } from '../../hooks/cart';
+import { useChecked } from '../../hooks/checked';
 
 interface CartProductItemProps {
   cartProduct: CartProduct;

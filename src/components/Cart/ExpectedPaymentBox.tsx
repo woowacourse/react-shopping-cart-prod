@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import SelectBox from '../Common/SelectBox';
 import Button from '../Common/Button';
 
-import useMultipleChecked from '../../hooks/useMultipleChecked';
-import useCartPrice from '../../hooks/useCartPrice';
-import useOrder from '../../hooks/useOrder';
-import useCoupons from '../../hooks/useCoupons';
+import { useMultipleChecked } from '../../hooks/checked';
+import { useCartPrice } from '../../hooks/cart';
+import { useOrder } from '../../hooks/order';
+import { useCoupons } from '../../hooks/coupon';
 
 const ExpectedPaymentBox = () => {
   const { isAllUnchecked } = useMultipleChecked();

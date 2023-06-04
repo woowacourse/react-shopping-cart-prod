@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import AmountCounter from '../Common/AmountCounter';
 
 import CartIcon from '../../assets/CartIcon';
-import useCartProducts from '../../hooks/useCartProducts';
-import useCartProductUpdate from '../../hooks/useCartProductUpdate';
+import { useCartProducts, useCartProductUpdate } from '../../hooks/cart';
 
 interface ProductCartButtonProps {
   productId: number;

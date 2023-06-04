@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CartProductList from './CartProductList';
 import TotalCartProduct from './TotalCartProduct';
 
-import useCartProductCount from '../../hooks/useCartProductCount';
+import { useCartProductCount } from '../../hooks/cart';
 
 const CartProductInfo = () => {
   const cartProductCount = useCartProductCount();

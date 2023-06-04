@@ -1,9 +1,9 @@
 import { ChangeEventHandler, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-import { couponOptionSelector } from '../states/coupon';
+import { couponOptionSelector } from '../../states/coupon';
 
-const useCoupons = () => {
+export const useCoupons = () => {
   const [currentCouponId, setCurrentCouponId] = useState<number>();
   const couponOptions = useRecoilValue(couponOptionSelector);
 
@@ -13,5 +13,3 @@ const useCoupons = () => {
 
   return { couponOptions, currentCouponId, changeTargetCoupon };
 };
-
-export default useCoupons;

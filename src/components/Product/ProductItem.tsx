@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 import Image from '../Common/Image';
+import ProductCartButton from './ProductCartButton';
 
 import type { Product } from '../../types/product';
-import ProductCartButton from './ProductCartButton';
 
 interface ProductItemProps {
   product: Product;

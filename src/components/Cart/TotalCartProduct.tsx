@@ -3,9 +3,8 @@ import styled from 'styled-components';
 import CheckBox from '../Common/CheckBox';
 import Button from '../Common/Button';
 
-import useCartProductCount from '../../hooks/useCartProductCount';
-import useCheckedCount from '../../hooks/useCheckedCount';
-import useMultipleChecked from '../../hooks/useMultipleChecked';
+import { useCartProductCount } from '../../hooks/cart';
+import { useCheckedCount, useMultipleChecked } from '../../hooks/checked';
 
 const TotalCartProduct = () => {
   const cartProductCount = useCartProductCount();

@@ -1,9 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 
-import { orderDetailSelector } from '../states/order';
+import { orderDetailSelector } from '../../states/order';
 
-const useOrderDetail = () => {
+export const useOrderDetail = () => {
   const { orderId } = useParams();
 
   if (!orderId) {
@@ -14,5 +14,3 @@ const useOrderDetail = () => {
 
   return orderDetail;
 };
-
-export default useOrderDetail;

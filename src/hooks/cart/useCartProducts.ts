@@ -4,10 +4,10 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   cartProductHandlerSelector,
   targetCartProductState,
-} from '../states/cartProducts';
-import { toastState } from '../states/toast/atom';
+} from '../../states/cartProducts';
+import { toastState } from '../../states/toast/atom';
 
-const useCartProducts = (productId: number) => {
+export const useCartProducts = (productId: number) => {
   const [cartItemId, setCartItemId] = useState<number>();
 
   const targetProduct = useRecoilValue(
@@ -41,5 +41,3 @@ const useCartProducts = (productId: number) => {
 
   return { targetProduct, addProduct };
 };
-
-export default useCartProducts;

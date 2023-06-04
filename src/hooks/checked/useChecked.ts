@@ -3,14 +3,14 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   checkedCartProductState,
   targetCheckedState,
-} from '../states/checkedCartProducts';
+} from '../../states/checkedCartProducts';
 import {
   addCartProductChecked,
   deleteCartProductChecked,
-} from '../states/checkedCartProducts/utils';
-import { CartProduct } from '../types/product';
+} from '../../states/checkedCartProducts/utils';
+import { CartProduct } from '../../types/product';
 
-const useChecked = (cartProduct: CartProduct) => {
+export const useChecked = (cartProduct: CartProduct) => {
   const { id } = cartProduct;
   const targetChecked = useRecoilValue(targetCheckedState(id));
   const setChecked = useSetRecoilState(checkedCartProductState);
@@ -29,5 +29,3 @@ const useChecked = (cartProduct: CartProduct) => {
 
   return { targetChecked, updateChecked, deleteChecked };
 };
-
-export default useChecked;

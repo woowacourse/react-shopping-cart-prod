@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import OrderItem from './OrderItem';
 import TotalPriceBox from './TotalPriceBox';
 
-import useOrderDetail from '../../hooks/useOrderDetail';
+import { useOrderDetail } from '../../hooks/order';
 
 const OrderDetail = () => {
   const { order, totalPrice } = useOrderDetail();

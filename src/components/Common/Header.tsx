@@ -7,9 +7,9 @@ import SelectBox from './SelectBox';
 import CartCountBox from '../Cart/CartCountBox';
 
 import CartIcon from '../../assets/CartIcon';
+import OrderIcon from '../../assets/OrderIcon';
 import { serverNameState } from '../../states/serverName';
 import { SERVER_OPTIONS, isServerKey } from '../../constants/server';
-import OrderIcon from '../../assets/OrderIcon';
 
 const Header = () => {
   const setServerName = useSetRecoilState(serverNameState);

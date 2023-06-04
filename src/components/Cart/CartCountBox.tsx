@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import useCartProductCount from '../../hooks/useCartProductCount';
+import { useCartProductCount } from '../../hooks/cart';
 
 const CartCountBox = () => {
   const cartProductCount = useCartProductCount();

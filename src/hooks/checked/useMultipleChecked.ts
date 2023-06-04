@@ -6,18 +6,18 @@ import {
   useSetRecoilState,
 } from 'recoil';
 
-import cartProductApis from '../apis/cartProducts';
-import { checkedCartProductState } from '../states/checkedCartProducts';
-import { cartProductState } from '../states/cartProducts';
+import cartProductApis from '../../apis/cartProducts';
+import { checkedCartProductState } from '../../states/checkedCartProducts';
+import { cartProductState } from '../../states/cartProducts';
 import {
   findTargetChecked,
   getIsAllChecked,
   getIsAllUnchecked,
-} from '../states/checkedCartProducts/utils';
-import { serverNameState } from '../states/serverName';
-import { toastState } from '../states/toast/atom';
+} from '../../states/checkedCartProducts/utils';
+import { serverNameState } from '../../states/serverName';
+import { toastState } from '../../states/toast/atom';
 
-const useMultipleChecked = () => {
+export const useMultipleChecked = () => {
   const serverName = useRecoilValue(serverNameState);
   const [checked, setChecked] = useRecoilState(checkedCartProductState);
   const resetChecked = useResetRecoilState(checkedCartProductState);
@@ -70,5 +70,3 @@ const useMultipleChecked = () => {
     deleteCheckedProducts,
   };
 };
-
-export default useMultipleChecked;
