@@ -5,6 +5,7 @@ import {
   CouponSelectHeader,
   CouponSelectOpenButton,
   CouponSelectTitle,
+  SelectedCouponText,
 } from "./CouponSelector.style";
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import {
@@ -54,7 +55,9 @@ function CouponSelector() {
         </CouponBoxContainer>
       )}
       {selectedCouponIds.length > 0 && (
-        <div>[{selectedCoupon[0].couponName}] 선택됨</div>
+        <SelectedCouponText>
+          ✅ 선택하신 [{selectedCoupon[0].couponName}] 쿠폰을 적용했습니다.
+        </SelectedCouponText>
       )}
     </CouponBoxWrapper>
   );

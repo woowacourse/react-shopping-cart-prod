@@ -32,3 +32,8 @@ export const CouponBoxWrapper = styled.div`
 export const CouponBoxContainer = styled.div`
   margin-bottom: 20px;
 `;
+
+export const SelectedCouponText = styled.div`
+  font-size: 14px;
+  margin-bottom: 20px;
+`;
