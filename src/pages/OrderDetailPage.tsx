@@ -1,16 +1,29 @@
+import { Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { useNavigate } from 'react-router-dom';
+
+import ErrorFallback from '../components/ErrorFallback/ErrorFallback';
 import Header from '../components/Header/Header';
+import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import OrderDetailPageSection from '../components/OrderDetailPageSection/OrderDetailPageSection';
-import PaymentInfo from '../components/PaymentInfo/PaymentInfo';
 
 const OrderDetailPage = () => {
+  const navigate = useNavigate();
+
   return (
-    <>
-      <Header />
-      <main>
-        <OrderDetailPageSection />
-        <PaymentInfo />
-      </main>
-    </>
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onReset={() => {
+        navigate('/');
+      }}
+    >
+      <Suspense fallback={<LoadingSpinner />}>
+        <Header />
+        <main>
+          <OrderDetailPageSection />
+        </main>
+      </Suspense>
+    </ErrorBoundary>
   );
 };
 
