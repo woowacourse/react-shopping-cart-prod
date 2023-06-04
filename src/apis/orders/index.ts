@@ -4,19 +4,19 @@ import { Order } from "types/order";
 const URL = '/orders'
 
 export const getOrders = async (): Promise<Order[]> => {
-  const fetchedData = await api.get<Order[]>(URL, { id: 'a@a.com', password: 1234 });
+  const fetchedData = await api.get<Order[]>(URL);
   const orders = fetchedData.data;
   return orders;
 };
 
 export const getOrder = async (orderId?: number): Promise<Order> => {
-  const fetchedData = await api.get<Order>(`${URL}/${orderId}`, { id: 'a@a.com', password: 1234 });
+  const fetchedData = await api.get<Order>(`${URL}/${orderId}`);
   const order = fetchedData.data;
   return order;
 };
 
 export const addOrder = async (cartItemIds: number[], point: number): Promise<number> => {
-  const fetchedData = await api.post(URL, { id: 'a@a.com', password: 1234 }, { cartItemIds, point });
+  const fetchedData = await api.post(URL, { cartItemIds, point });
 
   const location = fetchedData.headers.get('Location');
   if (!location) {

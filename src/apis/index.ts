@@ -1,13 +1,11 @@
 import BASE_URL from 'constants/apiBaseURL';
+import { USER_1 } from 'constants/basicKey';
 import { SERVER_OWNER } from 'constants/storeKey';
 import type { ServerOwner } from 'types/serverOwner';
 import getBasicKey from 'utils/getBasicKey';
 
 export type ErrorResponse = {
-  timestamp: string;
-  status: number;
-  error: string;
-  path: string;
+  message: string;
 };
 
 type FetchedData<T> = {
@@ -15,25 +13,21 @@ type FetchedData<T> = {
   headers: Headers;
 };
 
-export class API {
+class API {
   private baseUrl: string;
 
   constructor(baseUrl: string) {
     this.baseUrl = baseUrl;
   }
 
-  async fetcher<T>(url: string, method: string, user?: { id: string, password: number }, body?: unknown,): Promise<FetchedData<T>> {
-    let headers = new Headers({
-      'Content-Type': 'application/json',
-    });
-
-    if (user) {
-      headers.append('Authorization', `Basic ${getBasicKey(user.id, user.password)}`);
-    }
-
+  async fetcher<T>(url: string, method: string, body?: unknown): Promise<FetchedData<T>> {
     const options: RequestInit = {
       method: method,
-      headers: headers,
+
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${getBasicKey(USER_1.id, USER_1.password)}`,
+      },
     };
 
     if (body) {
@@ -53,10 +47,7 @@ export class API {
         errorResponse = await response.json();
       } catch (error) {
         errorResponse = {
-          timestamp: new Date().toISOString(),
-          status: 500,
-          error: '에러 응답이 json 형식이 아닙니다.',
-          path: url,
+          message: '에러 응답이 json 형식이 아닙니다.',
         };
       }
 
@@ -64,7 +55,7 @@ export class API {
     }
 
     let data = null;
-    headers = response.headers;
+    const headers = response.headers;
 
     if (response.status === 204) {
       return { data: data as T, headers };
@@ -75,10 +66,7 @@ export class API {
         data = await response.json();
       } catch {
         const errorResponse: ErrorResponse = {
-          timestamp: new Date().toISOString(),
-          status: 500,
-          error: '서버 응답 형식이 json 형식이 아닙니다.',
-          path: url,
+          message: '서버 응답 형식이 json 형식이 아닙니다.',
         };
 
         throw errorResponse;
@@ -88,21 +76,20 @@ export class API {
     return { data: data as T, headers };
   }
 
-  async get<T>(url: string, user?: { id: string, password: number }): Promise<FetchedData<T>> {
-    if (user) return await this.fetcher<T>(url, 'GET', { id: user.id, password: user.password });
+  async get<T>(url: string): Promise<FetchedData<T>> {
     return await this.fetcher<T>(url, 'GET');
   }
 
-  async post<T>(url: string, user: { id: string, password: number }, body: unknown): Promise<FetchedData<T>> {
-    return await this.fetcher<T>(url, 'POST', user, body);
+  async post<T>(url: string, body: unknown): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'POST', body);
   }
 
-  async remove<T>(url: string, user: { id: string, password: number }): Promise<FetchedData<T>> {
-    return await this.fetcher<T>(url, 'DELETE', user);
+  async remove<T>(url: string, body: unknown): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'DELETE', body);
   }
 
-  async patch<T>(url: string, user: { id: string, password: number }, body: unknown): Promise<FetchedData<T>> {
-    return await this.fetcher<T>(url, 'PATCH', user, body);
+  async patch<T>(url: string, body: unknown): Promise<FetchedData<T>> {
+    return await this.fetcher<T>(url, 'PATCH', body);
   }
 
   setBaseUrl(url: string) {
@@ -110,7 +97,7 @@ export class API {
   }
 }
 
-const serverOwner = (localStorage.getItem(SERVER_OWNER) ?? '헙크') as ServerOwner;
+const serverOwner = (localStorage.getItem(SERVER_OWNER) ?? '다즐') as ServerOwner;
 const api = new API(BASE_URL[serverOwner]);
 
 export default api;

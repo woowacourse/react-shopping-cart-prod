@@ -25,14 +25,14 @@ const cartProductsParser = (data: any): CartProducts => {
   return new Map(parsedCartProducts);
 };
 
-export const getCartProducts = async (user: any): Promise<CartProducts> => {
-  const fetchedData = await api.get<ServerCartProduct[]>(URL, user);
+export const getCartProducts = async (): Promise<CartProducts> => {
+  const fetchedData = await api.get<ServerCartProduct[]>(URL);
   const cartProducts = fetchedData.data;
   return cartProductsParser(cartProducts);
 };
 
-export const addCartProducts = async (user: any, productId: Product['id']): Promise<number> => {
-  const fetchedData = await api.post(URL, user, { productId });
+export const addCartProducts = async (productId: Product['id']): Promise<number> => {
+  const fetchedData = await api.post(URL, { productId });
 
   const location = fetchedData.headers.get('Location');
   if (!location) {
@@ -44,10 +44,10 @@ export const addCartProducts = async (user: any, productId: Product['id']): Prom
   return Number(cartProductId);
 };
 
-export const updateCartProductsQuantity = async (user: any, quantity: CartProduct['quantity'], cartProductId: number) => {
-  await api.patch(`${URL}/${cartProductId}`, user, { quantity });
+export const updateCartProductsQuantity = async (quantity: CartProduct['quantity'], cartProductId: number) => {
+  await api.patch(`${URL}/${cartProductId}`, { quantity });
 };
 
-export const removeCartProduct = async (user: any, cartProductId: number) => {
-  await api.remove(`${URL}/${cartProductId}`, user);
+export const removeCartProduct = async (cartProductId: number) => {
+  await api.remove(`${URL}/${cartProductId}`, {});
 };

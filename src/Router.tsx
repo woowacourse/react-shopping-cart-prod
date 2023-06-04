@@ -5,7 +5,6 @@ import Layout from 'components/Layout/Layout';
 import ShoppingCartPage from 'pages/ShoppingCartPage';
 import { Suspense } from 'react';
 import OrderSheetPage from 'pages/OrderSheetPage';
-import UserSelectPage from 'pages/UserSelectPage';
 import OrderListPage from 'pages/OrderListPage';
 import OrderDetailPage from 'pages/OrderDetailPage';
 import { ErrorBoundary } from 'ErrorBoundary';

@@ -1,14 +1,12 @@
 import { atom, selector, selectorFamily } from 'recoil';
 import { CartProducts, Product } from 'types/product';
 import { getCartProducts } from 'apis/cart';
-import { userState } from './userState';
 
 const defaultCartState = selector({
   key: 'defaultCartState',
   get: ({ get }) => {
-    const { id, password } = get(userState); // Replace `userIdState` with your Recoil atom representing the user ID
 
-    return getCartProducts({ id, password });
+    return getCartProducts();
   },
 });
 
