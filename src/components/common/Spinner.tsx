@@ -19,12 +19,13 @@ const SpinnerContainer = styled.div`
 
 type DotProps = {
   $index: number;
+  $color: string;
 };
 
 const Dot = styled.div<DotProps>`
   width: 0.4em;
   height: 0.4em;
-  background: #333333;
+  background: ${(props) => props.$color};
   border-radius: 50%;
 
   animation: ${DotAnimation} 0.4s;
@@ -33,12 +34,18 @@ const Dot = styled.div<DotProps>`
   animation-direction: alternate;
 `;
 
-const Spinner = () => {
+type SpinnerProps = {
+  color?: 'currentColor' | string;
+};
+
+const Spinner = (props: SpinnerProps) => {
+  const { color = '#333333' } = props;
+
   return (
     <SpinnerContainer>
-      <Dot $index={0} />
-      <Dot $index={1} />
-      <Dot $index={2} />
+      <Dot $index={0} $color={color} />
+      <Dot $index={1} $color={color} />
+      <Dot $index={2} $color={color} />
     </SpinnerContainer>
   );
 };

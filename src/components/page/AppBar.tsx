@@ -6,6 +6,7 @@ import serverState from '../../recoil/atoms/serverState';
 import userCartItemsState from '../../recoil/user/userCartItemsState';
 import userProfileState from '../../recoil/user/userProfileState';
 import Badge from '../common/Badge';
+import Spinner from '../common/Spinner';
 import AwaitRecoilState from '../utils/AwaitRecoilState';
 
 const AppBarContainer = styled.header`
@@ -43,6 +44,7 @@ const HomeButtonText = styled.h1`
 
 const Menu = styled.nav`
   display: flex;
+  align-items: center;
   gap: 24px;
 
   padding: 4px 24px;
@@ -51,6 +53,7 @@ const Menu = styled.nav`
 const MenuButton = styled.button`
   display: flex;
   align-items: center;
+  align-self: stretch;
   gap: 6px;
 
   font-size: 24px;
@@ -128,7 +131,10 @@ const AppBar = (props: HeaderProps) => {
             )}
           </MenuButton>
 
-          <AwaitRecoilState state={userProfileState}>
+          <AwaitRecoilState
+            state={userProfileState}
+            loadingElement={<Spinner color="currentColor" />}
+          >
             {(profile) =>
               profile ? (
                 <MenuProfile>
