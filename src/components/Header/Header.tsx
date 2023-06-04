@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { ReactComponent as ShoppingCartIcon } from '../../assets/icon/tiffany-co.svg';
-import { WIDTH } from '../../styles/mediaQuery';
+import { WIDTH } from '../../constants/mediaQuery';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ServerName, serverAtom } from '../../store/server';
 import CartTextButton from './CartTextButton/CartTextButton';

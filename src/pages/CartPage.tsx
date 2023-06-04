@@ -3,7 +3,7 @@ import Bill from '../components/Bill/Bill';
 import CartItemList from '../components/CartItemList/CartItemList';
 import { useRecoilValue } from 'recoil';
 import { cartSelector } from '../store/cart';
-import { WIDTH } from '../styles/mediaQuery';
+import { WIDTH } from '../constants/mediaQuery';
 import Title from '../components/common/Title';
 
 const CartPage = () => {

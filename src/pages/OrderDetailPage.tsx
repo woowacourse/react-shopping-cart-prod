@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import OrderCard from '../components/OrderCard/OrderCard';
 import { styled } from 'styled-components';
-import { WIDTH } from '../styles/mediaQuery';
+import { WIDTH } from '../constants/mediaQuery';
 
 const OrderDetailPage = () => {
   const location = useLocation();

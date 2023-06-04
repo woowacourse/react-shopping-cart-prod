@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import ProductImg from '../../ProductCardList/ProductCard/ProductImg/ProductImg';
-import { WIDTH } from '../../../styles/mediaQuery';
+import { WIDTH } from '../../../constants/mediaQuery';
 
 type OrderItemProps = {
   quantity: number;

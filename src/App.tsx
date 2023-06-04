@@ -4,7 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import Header from './components/Header/Header';
 import OnLoading from './components/OnLoading/OnLoading';
-import { WIDTH } from './styles/mediaQuery';
+import { WIDTH } from './constants/mediaQuery';
 import { ErrorBoundary } from 'react-error-boundary';
 import { serverAtom } from './store/server';
 import ErrorComponent from './components/ErrorContainer/ErrorContainer';

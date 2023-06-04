@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { WIDTH } from '../styles/mediaQuery';
+import { WIDTH } from '../constants/mediaQuery';
 import { useRecoilValue } from 'recoil';
 import OrderCard from '../components/OrderCard/OrderCard';
 import { orderAtom } from '../store/order';

@@ -3,7 +3,7 @@ import ProductImg from '../../ProductCardList/ProductCard/ProductImg/ProductImg'
 import { ReactComponent as TrashCan } from '../../../assets/icon/trash-can.svg';
 import Counter from '../../common/Counter/Counter';
 import CheckBox from '../../common/CheckBox/CheckBox';
-import { WIDTH } from '../../../styles/mediaQuery';
+import { WIDTH } from '../../../constants/mediaQuery';
 import useFetchCart from '../../../hooks/useFetchCart';
 import { Cart } from '../../../types/response';
 import { useRecoilState } from 'recoil';

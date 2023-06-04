@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import { WIDTH } from '../../../styles/mediaQuery';
+import { WIDTH } from '../../../constants/mediaQuery';
 
 interface CounterProps {
   plusOne: () => void;

@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 import { Order } from '../../types/response';
 import OrderItem from './OrderItem/OrderItem';
 import { PATH } from '../../constants/path';
-import { WIDTH } from '../../styles/mediaQuery';
+import { WIDTH } from '../../constants/mediaQuery';
 
 type OrderCardProps = Order & {
   showDetailButton: boolean;

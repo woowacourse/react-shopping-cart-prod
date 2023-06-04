@@ -1,7 +1,7 @@
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
 import { fetchedProductListSelector } from '../../store/asyncSelector';
-import { WIDTH } from '../../styles/mediaQuery';
+import { WIDTH } from '../../constants/mediaQuery';
 import ProductCard from './ProductCard/ProductCard';
 import { cartAtom } from '../../store/cart';
 

@@ -7,7 +7,7 @@ import {
   isSelectedListAtom,
   totalAmountAtom,
 } from '../../store/cart';
-import { WIDTH } from '../../styles/mediaQuery';
+import { WIDTH } from '../../constants/mediaQuery';
 import CartItem from './CartItem/CartItem';
 import CheckBox from '../common/CheckBox/CheckBox';
 import useFetchCart from '../../hooks/useFetchCart';
