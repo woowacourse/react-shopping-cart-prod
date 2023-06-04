@@ -1,7 +1,13 @@
 import { atom, selector, selectorFamily } from "recoil";
-import { CartItem, Coupon, NewOrder, Point } from "../../types/types";
+import { Coupon, NewOrder, Point } from "../../types/types";
 import { checkedCartSelector, totalPriceSelector } from "./cartAtoms";
 import { modalRepository } from "./modalAtoms";
+import { url } from "../api/url.ts";
+import { serverState } from "./serverAtom.ts";
+import { getSessionStorage } from "../utils/storage.ts";
+import { SESSION_STORAGE_KEY_BASE64 } from "../keys.ts";
+
+const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
 
 export const deliveryFeeState = atom({
   key: "deliveryFeeState",
@@ -72,15 +78,25 @@ export const expectedOrderPriceState = atom({
 export const orderRepository = selector({
   key: "orderRepository",
   get: ({ getCallback }) => {
-    const loadCoupons = getCallback(({ set }) => async () => {
-      const response = await fetch("/coupons"); // 인증 추가와 함께 api.ts로 이전 예정
+    const loadCoupons = getCallback(({ set, snapshot }) => async () => {
+      const server = await snapshot.getPromise(serverState);
+      const response = await fetch(`${url[server]}/coupons`, {
+        headers: {
+          Authorization: `Basic ${base64}`,
+        },
+      }); // 인증 추가와 함께 api.ts로 이전 예정
       const data = await response.json();
 
       set(couponState, data);
     });
 
-    const loadPoint = getCallback(({ set }) => async () => {
-      const response = await fetch("/point"); // 인증 추가와 함께 api.ts로 이전 예정
+    const loadPoint = getCallback(({ set, snapshot }) => async () => {
+      const server = await snapshot.getPromise(serverState);
+      const response = await fetch(`${url[server]}/point`, {
+        headers: {
+          Authorization: `Basic ${base64}`,
+        },
+      }); // 인증 추가와 함께 api.ts로 이전 예정
       const data = await response.json();
 
       set(pointState, data);
