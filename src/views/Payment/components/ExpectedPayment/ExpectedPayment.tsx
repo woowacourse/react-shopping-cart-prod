@@ -54,23 +54,18 @@ function ExpectedPayment() {
   };
 
   const handlePay = async () => {
-    if (couponSelected) {
-      const response = await fetchOrders.postOrder({
-        orderItemIds: getCheckedItemIds(),
-        couponId: couponSelected.id,
-      });
+    const requestBody = couponSelected
+      ? { orderItemIds: getCheckedItemIds(), couponId: couponSelected.id }
+      : {
+          orderItemIds: getCheckedItemIds(),
+        };
 
-      const location = response.headers.get('Location');
-      const orderId = location?.split('/').pop();
-      navigate(`${ROUTER_PATH.order}/${orderId}`);
-    } else {
-      const response = await fetchOrders.postOrder({
-        orderItemIds: getCheckedItemIds(),
-      });
-      const location = response.headers.get('Location');
-      const orderId = location?.split('/').pop();
-      navigate(`${ROUTER_PATH.order}/${Number(orderId)}`);
-    }
+    const response = await fetchOrders.postOrder(requestBody);
+    const orderId = response.headers.get('Location')?.split('/').pop();
+
+    if (!orderId) throw new Error('주문 후 orderId를 조회할 수 없습니다.');
+
+    navigate(`${ROUTER_PATH.order}/${Number(orderId)}`);
   };
 
   return (
