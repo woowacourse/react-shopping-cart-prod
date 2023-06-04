@@ -8,14 +8,14 @@ import { CouponWrapper } from "./CouponBox.style.ts";
 
 function CouponBox({ coupon }: { coupon: Coupon }) {
   const isCouponSelected = useRecoilValue(isCouponSelectedSelector(coupon.id));
-  const { updateSelectedCouponId } = useRecoilValue(orderRepository);
-  const handleClickCoupon = (couponId: number) => {
-    updateSelectedCouponId(couponId);
+  const { updateSelectedCoupon } = useRecoilValue(orderRepository);
+  const handleClickCoupon = (coupon: Coupon) => {
+    updateSelectedCoupon(coupon);
   };
 
   return (
-    <CouponWrapper onClick={() => handleClickCoupon(coupon.id)}>
-      <input type="checkbox" checked={isCouponSelected} onChange={undefined} />
+    <CouponWrapper onClick={() => handleClickCoupon(coupon)}>
+      <input type="checkbox" checked={isCouponSelected} readOnly />
       {coupon.couponName}
     </CouponWrapper>
   );

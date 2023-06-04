@@ -10,17 +10,17 @@ import { useRecoilValue, useResetRecoilState } from "recoil";
 import {
   couponState,
   orderRepository,
-  selectedCouponIdsState,
+  selectedCouponState,
+  selectedCouponIdSelector,
 } from "../../app/recoil/orderAtom";
 import CouponBox from "../CouponBox";
 
 function CouponSelector() {
   const [isCouponSelectorOpen, setCouponSelectorOpen] = useState(false);
-  const selectedCouponIds = useRecoilValue(selectedCouponIdsState);
-  const resetSelectedCouponIdsState = useResetRecoilState(
-    selectedCouponIdsState
-  );
   const coupons = useRecoilValue(couponState);
+  const selectedCoupon = useRecoilValue(selectedCouponState);
+  const selectedCouponIds = useRecoilValue(selectedCouponIdSelector);
+  const resetSelectedCouponIdsState = useResetRecoilState(selectedCouponState);
   const { loadCoupons } = useRecoilValue(orderRepository);
 
   useEffect(() => {
@@ -53,6 +53,7 @@ function CouponSelector() {
           )}
         </CouponBoxContainer>
       )}
+      {selectedCouponIds.length > 0 && <div>[{selectedCoupon[0].couponName}] 선택됨</div>}
     </CouponBoxWrapper>
   );
 }

@@ -21,31 +21,16 @@ export const pointState = atom<Point>({
   },
 });
 
-export const selectedCouponIdsState = atom<number[]>({
-  key: "selectedCouponIdsState",
+export const selectedCouponState = atom<Coupon[]>({
+  key: "selectedCouponState",
   default: [],
 });
 
-export const selectedCoupon = selector<Coupon>({
-  key: "selectedCoupon",
+export const selectedCouponIdSelector = selector<number[]>({
+  key: "selectedCouponIdSelector",
   get: ({ get }) => {
-    const coupons = get(couponState);
-    const couponIds = get(selectedCouponIdsState);
-    if (couponIds.length > 0) {
-      const couponId = couponIds[0];
-      const targetCoupon = coupons.find((coupon) => coupon.id === couponId);
-      if (targetCoupon) {
-        return targetCoupon;
-      }
-    } else {
-      return {
-        id: -1,
-        couponName: "",
-        discountPercent: 0,
-        discountAmount: 0,
-        minAmount: 0,
-      };
-    }
+    const selectedCoupons = get(selectedCouponState);
+    return selectedCoupons.map(coupon => coupon.id);
   },
 });
 
@@ -53,7 +38,7 @@ export const expectedOrderPrice = selector({
   key: "expectedOrderPrice",
   get: async ({ get }) => {
     const totalPrice = get(totalPriceSelector);
-    const couponIds = get(selectedCouponIdsState);
+    const couponIds = get(selectedCouponState);
 
     const expectedOrderPrice = totalPrice;
 
@@ -76,11 +61,11 @@ export const isCouponSelectedSelector = selectorFamily<boolean, number>({
   key: "selectedCouponSelectedSelector",
   get:
     (couponId: number) =>
-    ({ get }) => {
-      const selectedCouponIds = get(selectedCouponIdsState);
+      ({ get }) => {
+        const selectedCouponIds = get(selectedCouponIdSelector);
 
-      return selectedCouponIds.includes(couponId);
-    },
+        return selectedCouponIds.includes(couponId);
+      },
 });
 
 export const selectedPointState = atom({
@@ -108,10 +93,9 @@ export const orderRepository = selector({
     const commitPurchaseItems = getCallback(({ snapshot }) => async () => {
       const checkedCartList = await snapshot.getPromise(checkedCartSelector);
       const selectedPoint = await snapshot.getPromise(selectedPointState);
-      const selectedCouponIds = await snapshot.getPromise(
-        selectedCouponIdsState
-      );
+      const selectedCouponIds = await snapshot.getPromise(selectedCouponIdSelector);
       const { closeModal } = await snapshot.getPromise(modalRepository);
+
       const newOrder: NewOrder = {
         orderItems: checkedCartList.map((item) => {
           return {
@@ -131,17 +115,15 @@ export const orderRepository = selector({
       closeModal();
     });
 
-    const updateSelectedCouponId = getCallback(
+    const updateSelectedCoupon = getCallback(
       ({ set, snapshot }) =>
-        async (couponId: number) => {
-          const selectedCoupons = await snapshot.getPromise(
-            selectedCouponIdsState
-          );
+        async (coupon: Coupon) => {
+          const selectedCoupons = await snapshot.getPromise(selectedCouponState);
+          console.log(coupon);
+          console.log(selectedCoupons);
+          const newSelectedCoupons = selectedCoupons[0]?.id === coupon.id ? [] : [coupon];
 
-          set(
-            selectedCouponIdsState,
-            selectedCoupons[0] === couponId ? [] : [couponId]
-          );
+          set(selectedCouponState, newSelectedCoupons);
         }
     );
 
@@ -149,7 +131,7 @@ export const orderRepository = selector({
       loadCoupons,
       loadPoint,
       commitPurchaseItems,
-      updateSelectedCouponId,
+      updateSelectedCoupon,
     };
   },
 });

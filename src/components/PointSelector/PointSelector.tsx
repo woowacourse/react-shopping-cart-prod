@@ -12,7 +12,7 @@ import { ChangeEvent, useEffect } from "react";
 import {
   orderRepository,
   pointState,
-  selectedCouponIdsState,
+  selectedCouponState,
   selectedPointState,
 } from "../../app/recoil/orderAtom";
 
