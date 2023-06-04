@@ -36,23 +36,21 @@ const ProductList = () => {
 const S = {
   Wrapper: styled.div`
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+    grid-template-columns: repeat(4, 210px);
     grid-template-rows: repeat(3, 1fr);
     gap: 86px 4%;
-    max-width: 1270px;
-    margin: 0 auto;
-    padding: 0 20px 120px;
 
     @media all and (min-width: 768px) and (max-width: 1023px) {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(3, 225px);
     }
 
     @media all and (min-width: 480px) and (max-width: 767px) {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 235px);
     }
 
     @media all and (max-width: 479px) {
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: repeat(1, 286px);
     }
   `,
 };
