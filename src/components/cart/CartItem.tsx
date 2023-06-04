@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import CheckBox from '../common/CheckBox';
 import QuantityInput from '../common/QuantityInput';
+import Image from '../common/Image';
 
 import useToast from '../../hooks/useToast';
 import { cartState, serverNameState, tokenState } from '../../recoil/state';
@@ -45,14 +46,12 @@ export default function CartItem(props: Props) {
     }
   };
 
-  const setAltSrc = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.src = '/emptyProduct.svg';
-  };
-
   return (
     <Wrapper>
       <CheckBox checked={checked} onClickCheckbox={toggleChecked} />
-      <Image src={product.imageUrl} onError={setAltSrc} />
+      <ImageBox>
+        <Image src={product.imageUrl} />
+      </ImageBox>
       <ProductName>{product.name}</ProductName>
       <ControlBox>
         <RemoveButton onClick={removeCartItem}>
@@ -88,11 +87,9 @@ const Wrapper = styled.div`
   }
 `;
 
-const Image = styled.img`
+const ImageBox = styled.div`
   width: 144px;
   height: 144px;
-
-  object-fit: cover;
 
   @media (max-width: 448px) {
     width: 96px;

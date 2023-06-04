@@ -3,6 +3,8 @@ import type { OrderType } from '../../types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import Image from '../common/Image';
+
 interface Props extends OrderType {
   buttonHidden?: boolean;
 }
@@ -16,15 +18,17 @@ export default function Order({ orderId, items, buttonHidden = false }: Props) {
       </Header>
       {items.map(({ product: { id, name, price, imageUrl }, quantity }) => (
         <OrderItem key={id}>
-          <Box>
-            <Image src={imageUrl} />
+          <OrderItemBox>
+            <ImageBox>
+              <Image src={imageUrl} />
+            </ImageBox>
             <InfoBox>
               <Label>{name}</Label>
               <Price>
                 {price.toLocaleString()}원 / 수량 : {quantity}개
               </Price>
             </InfoBox>
-          </Box>
+          </OrderItemBox>
         </OrderItem>
       ))}
     </Wrapper>
@@ -75,14 +79,14 @@ const OrderItem = styled.div`
   }
 `;
 
-const Box = styled.div`
+const OrderItemBox = styled.div`
   display: flex;
 
   width: 100%;
   height: 142px;
 `;
 
-const Image = styled.img`
+const ImageBox = styled.div`
   width: 142px;
   height: 142px;
 `;
