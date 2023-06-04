@@ -7,7 +7,7 @@ import { Counter } from "./Counter";
 import { ERROR_MESSAGE, MIN_QUANTITY } from "../constants";
 import { addCartItem } from "../api";
 import { makeLocalProducts } from "../utils/domain";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ErrorBox from "./ErrorBox";
 
 export const ProductList = () => {
@@ -28,6 +28,20 @@ export const ProductList = () => {
       console.log(error);
     }
   };
+
+  const setNewLocalProducts = async () => {
+    try {
+      const newProducts = await makeLocalProducts();
+      setLocalProducts(newProducts);
+    } catch (error: any) {
+      setErrorStatus(error.message);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    setNewLocalProducts();
+  }, []);
 
   return (
     <Wrapper>
