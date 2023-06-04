@@ -1,17 +1,20 @@
 import { styled } from 'styled-components';
+import useSignIn from '../hooks/useSignIn';
 
 const SignInPage = () => {
+  const { onChageId, onChagePassword, onClickSubmit } = useSignIn();
+
   return (
     <Wrapper>
       <h1>Sign In</h1>
       <Form>
         <InputContainer>
-          ID : <Input />
+          ID : <Input onChange={onChageId} />
         </InputContainer>
         <InputContainer>
-          Password : <Input />
+          Password : <Input onChange={onChagePassword} />
         </InputContainer>
-        <SubmitButton>submit</SubmitButton>
+        <SubmitButton onClick={onClickSubmit}>submit</SubmitButton>
       </Form>
     </Wrapper>
   );
