@@ -12,7 +12,7 @@ const ProductsListPage = () => {
   const serverName = useRecoilValue(serverNameState);
 
   return (
-    <Main>
+    <ProductListSection>
       <ErrorBoundary
         key={serverName}
         fallback={<ErrorMessage type='product' />}
@@ -21,14 +21,12 @@ const ProductsListPage = () => {
           <ProductList />
         </Suspense>
       </ErrorBoundary>
-    </Main>
+    </ProductListSection>
   );
 };
 
-const Main = styled.main`
-  max-width: 1300px;
-  margin: 60px auto 0;
-  padding: 0 0 100px 0;
+const ProductListSection = styled.section`
+  padding: 0 0 60px;
 `;
 
 export default ProductsListPage;

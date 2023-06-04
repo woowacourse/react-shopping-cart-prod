@@ -45,7 +45,7 @@ const Container = styled.div`
 
   @media (min-width: ${({ theme }) => theme.breakPoints.medium}) {
     justify-content: start;
-    margin: 0 0 100px 0;
+    margin: 0 0 60px;
   }
 `;
 

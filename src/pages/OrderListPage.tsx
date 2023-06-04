@@ -8,27 +8,23 @@ import ErrorMessage from '../components/Common/ErrorMessage';
 
 const OrderListPage = () => {
   return (
-    <Main>
+    <OrderListPageContainer>
       <PageTitle>주문 목록</PageTitle>
       <ErrorBoundary fallback={<ErrorMessage type='order' />}>
         <Suspense fallback={<Message type='loading' />}>
           <OrderList />
         </Suspense>
       </ErrorBoundary>
-    </Main>
+    </OrderListPageContainer>
   );
 };
 
-const Main = styled.main`
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 20px 100px;
+const OrderListPageContainer = styled.section`
+  padding: 0 0 60px;
 `;
 
 const PageTitle = styled.h2`
-  height: 120px;
-  padding: 48px 0 0 0;
-  margin: 0 auto 28px;
+  height: 60px;
   text-align: center;
   font-size: 32px;
   font-weight: 600;

@@ -49,6 +49,7 @@ const Header = () => {
 const HeaderContainer = styled.header`
   width: 100%;
   height: 80px;
+  z-index: 2;
   background-color: ${({ theme }) => theme.colors.black};
 `;
 

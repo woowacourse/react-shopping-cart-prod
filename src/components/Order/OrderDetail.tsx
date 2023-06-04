@@ -21,6 +21,7 @@ const OrderDetail = () => {
 const OrderDetailContainer = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 48px 0 0 0;
 `;
 
 const TotalPriceContainer = styled.section`

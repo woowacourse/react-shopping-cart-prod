@@ -8,27 +8,23 @@ import ErrorMessage from '../components/Common/ErrorMessage';
 
 const OrderDetailPage = () => {
   return (
-    <Main>
+    <OrderDetailPageContainer>
       <PageTitle>주문 내역 상세</PageTitle>
       <ErrorBoundary fallback={<ErrorMessage type='orderDetail' />}>
         <Suspense fallback={<Message type='loading' />}>
           <OrderDetail />
         </Suspense>
       </ErrorBoundary>
-    </Main>
+    </OrderDetailPageContainer>
   );
 };
 
-const Main = styled.main`
-  max-width: 1300px;
-  margin: 0 auto;
-  padding: 0 20px 100px;
+const OrderDetailPageContainer = styled.div`
+  padding: 0 0 60px;
 `;
 
 const PageTitle = styled.h2`
-  height: 120px;
-  padding: 48px 0 0 0;
-  margin: 0 auto 28px;
+  height: 60px;
   text-align: center;
   font-size: 32px;
   font-weight: 600;

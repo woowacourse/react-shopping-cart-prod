@@ -23,7 +23,7 @@ const OrderList = () => {
 };
 
 const OrderListContainer = styled.div`
-  & > * + * {
+  & > * {
     margin: 48px 0 0 0;
   }
 `;
