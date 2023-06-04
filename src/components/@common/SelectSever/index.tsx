@@ -38,7 +38,7 @@ const SelectServer = () => {
         루쿠
       </option>
       <option value="프론트" selected={server === SERVERS['프론트']}>
-        제이
+        프론트
       </option>
     </S.SelectBox>
   );
