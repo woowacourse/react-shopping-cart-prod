@@ -16,13 +16,13 @@ const useFetchCart = () => {
 
       setCartList((cartList) => [...cartList, { id, quantity, product }]);
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      alert('장바구니 추가 요청이 실패했습니다.');
     }
   };
 
   const updateCartItem = async (id: number, quantity: number) => {
     try {
-      handleFetch('PATCH', { quantity }, id);
+      await handleFetch('PATCH', { quantity }, id);
       setCartList(
         (cartList) =>
           [
@@ -33,17 +33,17 @@ const useFetchCart = () => {
           ] as Cart[]
       );
     } catch (error) {
-      alert(error);
+      alert('수량 변경 요청이 실패했습니다.');
     }
   };
 
   const deleteCartItem = async (id: number) => {
     try {
-      handleFetch('DELETE', {}, id);
+      await handleFetch('DELETE', {}, id);
       setCartList((cartList) => [...cartList.filter((item) => item.id !== id)]);
       setIsSelectedList((prev) => prev.filter((item) => item.id !== id));
     } catch (error) {
-      alert(error);
+      alert('장바구니 삭제 요청이 실패했습니다.');
     }
   };
 

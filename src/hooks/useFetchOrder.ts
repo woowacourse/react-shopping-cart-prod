@@ -12,16 +12,11 @@ const useFetchOrder = () => {
         orderTime: new Date().toISOString(),
       });
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      alert('주문 요청이 실패했습니다.');
     }
   };
 
-  const getOrders = async (id: number) => {
-    const response = await handleFetch('GET', {}, id);
-    return await response.json();
-  };
-
-  return { postOrders, getOrders };
+  return { postOrders };
 };
 
 export default useFetchOrder;

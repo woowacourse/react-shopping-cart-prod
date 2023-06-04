@@ -24,11 +24,12 @@ const useFetch = (endPoint: EndPointKeys) => {
         }
       );
 
-      if (!response.ok) throw new Error(`error code : ${response.status}`);
+      if (!response.ok) throw new Error('요청을 처리할 수 없습니다.');
 
       const data = await response.text();
       if (!data) return null;
-      return JSON.parse(data);
+
+      return await response.json();
     },
     [baseURL, endPoint]
   );
