@@ -39,7 +39,7 @@ const Wrapper = styled.div<{ $type: string }>`
   height: 45px;
   border-radius: 5px;
 
-  position: absolute;
+  position: fixed;
   top: 15%;
   left: 50%;
   transform: translate(-50%);
