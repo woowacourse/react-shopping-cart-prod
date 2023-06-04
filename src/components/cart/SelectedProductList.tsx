@@ -127,6 +127,11 @@ const S = {
     padding: 36px 0 48px;
     font-size: 16px;
 
+    & > label {
+      text-align: center;
+      line-height: 1.26;
+    }
+
     @media (max-width: 548px) {
       font-size: 14px;
       padding: 20px 0 0;

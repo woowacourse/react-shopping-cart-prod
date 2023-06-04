@@ -51,6 +51,10 @@ const S = {
     margin-top: 40px;
     padding-bottom: 38px;
     border: 1px solid var(--gray-color-100);
+
+    @media (max-width: 548px) {
+      max-height: initial;
+    }
   `,
 
   Title: styled.h3`
