@@ -31,7 +31,7 @@ const Header = () => {
       <ButtonBox onClick={goToOrderList}>주문 목록</ButtonBox>
       <CartContainer onClick={goToCart}>
         장바구니
-        {cartCount > 0 && <ItemQuantityBox>{cartCount}</ItemQuantityBox>}
+        <ItemQuantityBox quantity={cartCount}>{cartCount}</ItemQuantityBox>
       </CartContainer>
     </Wrapper>
   );
@@ -98,7 +98,8 @@ const CartContainer = styled.section`
   }
 `;
 
-const ItemQuantityBox = styled.div`
+const ItemQuantityBox = styled.div<{ quantity: number }>`
+  visibility: ${(props) => (props.quantity < 1 ? "hidden" : "visible")};
   display: flex;
   align-items: center;
   justify-content: center;
