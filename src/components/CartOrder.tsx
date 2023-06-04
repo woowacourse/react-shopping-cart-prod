@@ -1,50 +1,51 @@
+import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { styled } from 'styled-components';
+import pointState from '../recoil/atoms/pointState';
+import userState from '../recoil/atoms/userState';
+import cartItemsQuery from '../recoil/queries/cartItemsQuery';
 import cartOrderPriceState from '../recoil/selectors/cartOrderPriceState';
+import PriceInput from './PriceInput';
 
 const CartOrderContainer = styled.form`
+  margin-top: 20px;
   min-width: 440px;
-  border: 1px solid #dddddd;
 `;
 
 const Title = styled.h1`
-  padding: 20px 30px;
+  padding: 0 30px;
 
-  font-size: 24px;
-  font-weight: 400;
-`;
+  ${({ theme }) => theme.fonts.description}
+  font-size: 15px;
 
-const Divider = styled.hr`
-  height: 3px;
-  background-color: #dddddd;
+  & > strong {
+    color: ${({ theme }) => theme.colors.gray400};
+  }
 `;
 
 const Content = styled.section`
   padding: 30px;
+  margin-bottom: 40px;
+
+  ${({ theme }) => theme.fonts.description}
 `;
 
 const ContentPlaceholder = styled.h2`
-  font-size: 16px;
   text-align: center;
   color: #444444;
 `;
 
 const PriceField = styled.p`
   display: flex;
-  margin-bottom: 20px;
-
-  font-size: 20px;
-  font-weight: 700;
+  margin-bottom: 10px;
 `;
 
-const PriceFieldName = styled.p``;
+const PriceFieldName = styled.p<{ marked?: boolean }>`
+  color: ${({ marked }) => marked && '#0078ff'};
+`;
 
 const PriceFieldValue = styled.p`
   margin-left: auto;
-
-  &::after {
-    content: '원';
-  }
 `;
 
 const ContentDivider = styled.hr`
@@ -53,32 +54,70 @@ const ContentDivider = styled.hr`
   border: none;
 `;
 
-const OrderButton = styled.button.attrs({ type: 'submit' })`
-  padding: 24px;
-  width: 100%;
+const OrderButton = styled.button`
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
 
-  background-color: #000000;
+  padding: 15px 0;
 
-  font-size: 24px;
-  font-weight: 400;
+  border-radius: 10px;
+
+  background-color: #0078ff;
   color: white;
+  ${({ theme }) => theme.fonts.description}
+
+  & strong {
+    margin: 0 5px;
+  }
 `;
 
 type CartOrderProps = {
-  isCartEmpty: boolean;
+  selectedCount: number;
 };
 
 const CartOrder = (props: CartOrderProps) => {
-  const { isCartEmpty } = props;
+  const { selectedCount } = props;
   const prices = useRecoilValue(cartOrderPriceState);
+  const userInfo = useRecoilValue(userState);
+  const [usingPoint, setUsingPoint] = useState(0);
+  const cartItems = useRecoilValue(cartItemsQuery);
+
+  const getOrderItems = () => {
+    const userCartData = cartItems.map((item) => {
+      return {
+        id: item.id,
+        productId: item.product.id,
+        quantity: item.quantity,
+      };
+    });
+
+    fetch('http://13.124.87.248:8080/orders', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        Authorization: `Basic ${btoa('b@b.com:1234')}`,
+      },
+      body: JSON.stringify({
+        usedPoints: usingPoint,
+        cartItems: userCartData,
+      }),
+    }).then((res) => console.log(res));
+  };
+
+  const handleInputField = (value: any) => {
+    setUsingPoint(value);
+  };
 
   return (
     <CartOrderContainer>
-      <Title>결제예상금액</Title>
-      <Divider />
+      <Title>
+        결제할 상품<strong> 총 {selectedCount}개</strong>
+      </Title>
 
       <Content>
-        {isCartEmpty ? (
+        {selectedCount === 0 ? (
           <>
             <ContentDivider />
             <ContentPlaceholder>주문할 상품을 선택해주세요!</ContentPlaceholder>
@@ -87,25 +126,38 @@ const CartOrder = (props: CartOrderProps) => {
         ) : (
           <>
             <PriceField>
-              <PriceFieldName>총 상품가격</PriceFieldName>
-              <PriceFieldValue>{prices.products}</PriceFieldValue>
+              <PriceFieldName>상품금액</PriceFieldName>
+              <PriceFieldValue>{prices.products}원</PriceFieldValue>
             </PriceField>
 
             <PriceField>
               <PriceFieldName>총 배송비</PriceFieldName>
-              <PriceFieldValue>{prices.shippingFee}</PriceFieldValue>
+              <PriceFieldValue>{prices.shippingFee}원</PriceFieldValue>
+            </PriceField>
+
+            <PriceField>
+              <PriceFieldName marked>적립금</PriceFieldName>
+              <PriceFieldValue>
+                <PriceInput
+                  useablePoint={userInfo.currentPoints}
+                  handleInputField={handleInputField}
+                />
+              </PriceFieldValue>
             </PriceField>
 
             <ContentDivider />
 
             <PriceField>
-              <PriceFieldName>총 주문금액</PriceFieldName>
-              <PriceFieldValue>{prices.total}</PriceFieldValue>
+              <PriceFieldName>결제금액</PriceFieldName>
+              <PriceFieldValue>{prices.total - usingPoint}원</PriceFieldValue>
             </PriceField>
 
             <ContentDivider />
 
-            <OrderButton>주문하기</OrderButton>
+            <OrderButton onClick={getOrderItems}>
+              <strong>총{selectedCount}개</strong> |{' '}
+              <strong>{prices.total - usingPoint}원 결제하기</strong>
+            </OrderButton>
           </>
         )}
       </Content>
