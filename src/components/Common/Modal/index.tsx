@@ -8,19 +8,20 @@ interface Props {
   direction: Direction;
   children: React.ReactNode;
   closeModal: () => void;
+  useBackDropClose: boolean;
 }
 
-function Modal({ isModalOpen, closeModal, children, direction }: Props) {
+function Modal({ isModalOpen, closeModal, children, direction, useBackDropClose }: Props) {
   const $modalRoot = document.getElementById('modal-root') as HTMLElement;
 
   const dialogKeyDownListener = (event: React.KeyboardEvent<HTMLDialogElement>) => {
-    if (event.key === 'Escape') {
+    if (useBackDropClose && event.key === 'Escape') {
       closeModal();
     }
   };
 
   const dialogBackdropListener = (event: React.MouseEvent<HTMLDialogElement>) => {
-    if (event.target === event.currentTarget) {
+    if (useBackDropClose && event.target === event.currentTarget) {
       closeModal();
     }
   };
