@@ -149,7 +149,7 @@ export const fetchAddOrderList = async (
   );
 };
 
-export const fetchOrderList = () => {
+export const fetchOrderList = (orderId?: number) => {
   return fetch(
     `${
       SERVERS[
@@ -158,7 +158,7 @@ export const fetchOrderList = () => {
           DEFAULT_VALUE_SERVER_OWNER
         )
       ]
-    }/orders`,
+    }/orders/${orderId ?? ''}`,
     {
       headers: {
         Authorization: `Basic ${base64}`,
