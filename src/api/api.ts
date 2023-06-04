@@ -58,8 +58,7 @@ export const fetchProductList = async (server: string) => {
   try {
     const response = await fetch(`${url[server]}/products`);
     const data: ProductItem[] = await response.json();
-    console.log('product-list');
-    console.log(data);
+
     return data;
   } catch (error) {
     console.error(error);

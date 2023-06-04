@@ -10,6 +10,7 @@ export const cartCountSelector = selector({
   key: 'cartCountSelector',
   get: ({ get }) => {
     const cartList = get(cartState);
+
     return cartList.length;
   },
 });
