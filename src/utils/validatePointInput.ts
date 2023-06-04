@@ -1,7 +1,13 @@
-import { NOT_NUMBER_REGEX } from '../constants';
+const removeComma = (input: string) => {
+  return input.replace(',', '');
+};
 
 export const validatePointInput = (input: string, totalPrice: number, point: number) => {
-  if (Number(input) > point) return true;
-  if (Number(input) > totalPrice) return true;
-  return !NOT_NUMBER_REGEX.test(input);
+  const parsedInput = Number(removeComma(input));
+
+  if (parsedInput > point) return false;
+
+  if (parsedInput > totalPrice) return false;
+
+  return true;
 };

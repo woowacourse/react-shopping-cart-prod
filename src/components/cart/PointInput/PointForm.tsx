@@ -23,17 +23,24 @@ const PointForm = ({
       <S.PointLabel>사용 포인트</S.PointLabel>
       <S.InputWrapper>
         {useAllPoints ? (
-          `${totalPrice < hasPoint ? totalPrice : hasPoint.toLocaleString()}원`
+          <>
+            {`${totalPrice < hasPoint ? totalPrice.toLocaleString() : hasPoint.toLocaleString()}`}
+            <span>원</span>
+            <S.CloseButton onClick={handleToggleUseAllPoints}>x</S.CloseButton>
+          </>
         ) : (
-          <S.Input
-            value={inputPoint}
-            type="text"
-            placeholder="0원"
-            onChange={handlePointInputChange}
-          />
+          <>
+            <S.Input
+              value={inputPoint}
+              type="text"
+              placeholder="0"
+              onChange={handlePointInputChange}
+            />
+            <span>원</span>
+          </>
         )}
         <S.PointButton
-          disabled={totalPrice === 0 || hasPoint === 0}
+          disabled={totalPrice === 0 || hasPoint === 0 || useAllPoints}
           onClick={handleToggleUseAllPoints}
         >
           전액사용

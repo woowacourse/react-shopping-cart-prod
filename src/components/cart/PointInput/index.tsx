@@ -26,8 +26,10 @@ const PointInput = ({ totalPrice }: Props) => {
   const handlePointInputChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     const { value } = target;
 
-    if (validatePointInput(value, totalPrice, member.point)) return;
-    setInputPoint(value.trim());
+    if (!validatePointInput(value, totalPrice, member.point)) return;
+
+    const parsedValue = value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거 후 숫자로 변환
+    setInputPoint(parsedValue);
   };
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const PointInput = ({ totalPrice }: Props) => {
     <S.Wrapper>
       <PointInfo memberPoint={member.point} />
       <PointForm
-        inputPoint={inputPoint}
+        inputPoint={Number(inputPoint).toLocaleString()}
         handlePointInputChange={handlePointInputChange}
         handleToggleUseAllPoints={handleToggleUseAllPoints}
         useAllPoints={useAllPoints}

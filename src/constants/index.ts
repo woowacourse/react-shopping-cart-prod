@@ -12,4 +12,4 @@ export const email = 'a@a.com';
 export const password = '1234';
 export const base64 = btoa(`${email}:${password}`);
 
-export const NOT_NUMBER_REGEX = /^[0-9\s]*$/;
+export const NUMBER_REGEX = /[^0-9]/g;
