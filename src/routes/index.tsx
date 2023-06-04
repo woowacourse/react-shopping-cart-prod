@@ -5,6 +5,7 @@ import CartPage from '../pages/CartPage';
 import OrderListPage from '../pages/OrderListPage';
 import OrderDetailPage from '../pages/OrderDetailPage';
 import { PATH } from '../constants/path';
+import SignInPage from '../pages/SignInPage';
 
 const ROUTER = createBrowserRouter(
   [
@@ -19,6 +20,10 @@ const ROUTER = createBrowserRouter(
         {
           path: PATH.PRODUCT_PAGE,
           element: <ProductPage />,
+        },
+        {
+          path: PATH.SIGN_IN,
+          element: <SignInPage />,
         },
         {
           path: PATH.CART_PAGE,

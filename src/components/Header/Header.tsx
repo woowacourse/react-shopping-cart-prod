@@ -44,6 +44,7 @@ const Header = () => {
         <Link to={PATH.CART_PAGE}>
           <CartTextButton />
         </Link>
+        <Link to={PATH.SIGN_IN}>로그인</Link>
       </ButtonContainer>
     </Container>
   );
