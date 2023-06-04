@@ -12,7 +12,7 @@ type Story = StoryObj<typeof meta>;
 
 export const RateCoupon: Story = {
   args: {
-    orderPrice: 5000000,
+    totalProductsPrice: 5000000,
     couponItemInfo: {
       id: 1,
       name: '가입 축하 5% 할인 쿠폰',
@@ -25,7 +25,7 @@ export const RateCoupon: Story = {
 
 export const DisabledRateCoupon: Story = {
   args: {
-    orderPrice: 0,
+    totalProductsPrice: 0,
     couponItemInfo: {
       id: 1,
       name: '가입 축하 5% 할인 쿠폰',
@@ -38,7 +38,7 @@ export const DisabledRateCoupon: Story = {
 
 export const FixedCoupon: Story = {
   args: {
-    orderPrice: 5000000,
+    totalProductsPrice: 5000000,
     couponItemInfo: {
       id: 3,
       name: '3000원 할인 쿠폰',
@@ -51,7 +51,7 @@ export const FixedCoupon: Story = {
 
 export const DisabledFixedCoupon: Story = {
   args: {
-    orderPrice: 0,
+    totalProductsPrice: 0,
     couponItemInfo: {
       id: 3,
       name: '3000원 할인 쿠폰',

@@ -3,12 +3,16 @@ import { FixedCouponInfo, RateCouponInfo } from '../../types';
 import Price from '../common/Price';
 
 interface Props {
-  orderPrice: number;
+  totalProductsPrice: number;
   couponItemInfo: RateCouponInfo | FixedCouponInfo;
   handleCouponSelect: ({ couponId, discountPrice, minOrderPrice }: Record<string, number>) => void;
 }
 
-export default function CouponItem({ orderPrice, couponItemInfo, handleCouponSelect }: Props) {
+export default function CouponItem({
+  totalProductsPrice,
+  couponItemInfo,
+  handleCouponSelect,
+}: Props) {
   const { id, name, expiredDate, minOrderPrice } = couponItemInfo;
 
   const selectCoupon = () => {
@@ -22,7 +26,7 @@ export default function CouponItem({ orderPrice, couponItemInfo, handleCouponSel
     }
 
     if ('discountRate' in couponItemInfo) {
-      const discountPrice = orderPrice * (couponItemInfo.discountRate / 100);
+      const discountPrice = totalProductsPrice * (couponItemInfo.discountRate / 100);
 
       handleCouponSelect({
         couponId: id,
@@ -33,7 +37,7 @@ export default function CouponItem({ orderPrice, couponItemInfo, handleCouponSel
   };
 
   return (
-    <Style.Container onClick={selectCoupon} disabled={orderPrice < minOrderPrice}>
+    <Style.Container onClick={selectCoupon} disabled={totalProductsPrice < minOrderPrice}>
       <Style.Title>
         {'discountPrice' in couponItemInfo && (
           <Price price={couponItemInfo.discountPrice} size="extra-large" />
@@ -44,6 +48,7 @@ export default function CouponItem({ orderPrice, couponItemInfo, handleCouponSel
       <Style.Detail className="min-order-price">
         <span>최소 주문금액:</span>
         <Price price={minOrderPrice} size="small" />
+        <span>(배송비 제외)</span>
       </Style.Detail>
       <Style.Detail>
         <span>사용기한: </span>
@@ -99,7 +104,7 @@ const Style = {
 
   Detail: styled.p`
     display: flex;
-    gap: 5px;
+    gap: 3px;
 
     font-size: 10px;
     color: var(--grey-300);
@@ -110,6 +115,6 @@ const Style = {
 
     position: absolute;
     top: 30%;
-    left: 60%;
+    left: 63%;
   `,
 };

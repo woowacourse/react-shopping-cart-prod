@@ -51,10 +51,10 @@ export default function TotalPayment({
   };
 
   useEffect(() => {
-    if (orderPrice < coupon.minOrderPrice) {
+    if (totalProductsPrice < coupon.minOrderPrice) {
       setCoupon({ id: -1, discountPrice: 0, minOrderPrice: 9999999999999 });
     }
-  }, [orderPrice, coupon.minOrderPrice]);
+  }, [totalProductsPrice, coupon.minOrderPrice]);
 
   return (
     <Style.TotalPaymentContainer>
@@ -98,7 +98,7 @@ export default function TotalPayment({
           <div>
             <Style.ModalTitle>쿠폰목록</Style.ModalTitle>
             <CouponList
-              orderPrice={orderPrice}
+              totalProductsPrice={totalProductsPrice}
               rateCoupons={rateCoupons}
               fixedCoupons={fixedCoupons}
               handleCouponSelect={handleCouponSelect}

@@ -3,14 +3,14 @@ import { RateCouponInfo, FixedCouponInfo } from '../../types';
 import CouponItem from './CouponItem';
 
 interface Props {
-  orderPrice: number;
+  totalProductsPrice: number;
   rateCoupons: RateCouponInfo[];
   fixedCoupons: FixedCouponInfo[];
   handleCouponSelect: ({ couponId, discountPrice, minOrderPrice }: Record<string, number>) => void;
 }
 
 export default function CouponList({
-  orderPrice,
+  totalProductsPrice,
   rateCoupons,
   fixedCoupons,
   handleCouponSelect,
@@ -20,7 +20,7 @@ export default function CouponList({
       {rateCoupons.map((rateCoupon) => (
         <li key={rateCoupon.id}>
           <CouponItem
-            orderPrice={orderPrice}
+            totalProductsPrice={totalProductsPrice}
             couponItemInfo={rateCoupon}
             handleCouponSelect={handleCouponSelect}
           />
@@ -29,7 +29,7 @@ export default function CouponList({
       {fixedCoupons.map((fixedCoupon) => (
         <li key={fixedCoupon.id}>
           <CouponItem
-            orderPrice={orderPrice}
+            totalProductsPrice={totalProductsPrice}
             couponItemInfo={fixedCoupon}
             handleCouponSelect={handleCouponSelect}
           />

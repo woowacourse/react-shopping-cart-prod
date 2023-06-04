@@ -12,7 +12,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Defatul: Story = {
   args: {
-    orderPrice: 5000000,
+    totalProductsPrice: 5000000,
     rateCoupons: [
       {
         id: 1,
