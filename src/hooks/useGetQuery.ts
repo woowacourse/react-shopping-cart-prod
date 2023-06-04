@@ -36,7 +36,7 @@ const useGetQuery = <ResponseData>({ fetcher, onSuccess, onError, onSettled }: U
       onSettled?.();
       setLoading(false);
     }
-  }, []);
+  }, [fetcher]);
 
   useEffect(() => {
     getData();

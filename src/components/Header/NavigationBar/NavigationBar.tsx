@@ -11,16 +11,24 @@ import NavOrderListIcon from '../../../assets/list.svg';
 import { UserSelector } from './UserSelector';
 import { memberAuthorization, memberPointState } from '../../../recoil/userAtoms';
 import { CartBox } from './CartBox';
+import { useEffect } from 'react';
 
 function NavigationBar() {
   const navigate = useNavigate();
   const memberAuth = useRecoilValue(memberAuthorization);
   const server = useRecoilValue(serverState);
   const [memberPoint, setMemberPoint] = useRecoilState(memberPointState);
-  useGetQuery<Point>({
+  const { getData: getPoint } = useGetQuery<Point>({
     fetcher: () => fetchMemberPoint({ server, auth: memberAuth }),
     onSuccess: (point) => setMemberPoint(point),
   });
+
+  useEffect(() => {
+    const refreshPoint = async () => {
+      await getPoint();
+    };
+    refreshPoint();
+  }, [server, memberAuth]);
 
   return (
     <S.NavBar>
