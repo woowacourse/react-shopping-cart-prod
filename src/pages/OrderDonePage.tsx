@@ -25,8 +25,6 @@ const OrderContainer = styled.div`
   align-self: stretch;
 `;
 
-const OrderPrice = styled.div``;
-
 type OrderDoneProps = {
   order: Order;
 };
@@ -35,21 +33,17 @@ const OrderDone = (props: OrderDoneProps) => {
   const { order } = props;
 
   return (
-    <>
-      <OrderListItem orderId={order.id}>
-        {order.cartItems.map((orderCartItem) => (
-          <OrderCartItem
-            key={orderCartItem.productId}
-            productName={orderCartItem.name}
-            productPrice={orderCartItem.price}
-            quantity={orderCartItem.quantity}
-            imageUrl={orderCartItem.imageUrl}
-          />
-        ))}
-      </OrderListItem>
-
-      <div>({order.savingRate}%)</div>
-    </>
+    <OrderListItem order={order}>
+      {order.cartItems.map((orderCartItem) => (
+        <OrderCartItem
+          key={orderCartItem.productId}
+          productName={orderCartItem.name}
+          productPrice={orderCartItem.price}
+          quantity={orderCartItem.quantity}
+          imageUrl={orderCartItem.imageUrl}
+        />
+      ))}
+    </OrderListItem>
   );
 };
 

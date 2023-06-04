@@ -14,13 +14,23 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    orderId: 13290,
+    order: {
+      id: 13290,
+      cartItems: [],
+      savingRate: 10,
+      usedPoints: 0,
+    },
   },
 };
 
 export const WithOrderCartItem: Story = {
   args: {
-    orderId: 12830,
+    order: {
+      id: 13290,
+      cartItems: [],
+      savingRate: 10,
+      usedPoints: 0,
+    },
     children: (
       <>
         <OrderCartItem

@@ -21,7 +21,7 @@ const OrderListItemRenderer = (props: OrderListItemRendererProps) => {
   const { order } = props;
 
   return (
-    <OrderListItem orderId={order.id}>
+    <OrderListItem order={order}>
       {order.cartItems.map((orderCartItem) => (
         <OrderCartItem
           key={orderCartItem.productId}

@@ -21,7 +21,7 @@ const OrderDetailPage = () => {
       >
         {(order) => (
           <>
-            <OrderListItem orderId={order.id}>
+            <OrderListItem order={order}>
               {order.cartItems.map((orderCartItem) => (
                 <OrderCartItem
                   productName={orderCartItem.name}
