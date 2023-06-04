@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import type { Order } from '../types/Order';
 import PriceFormat from './common/PriceFormat';
@@ -54,7 +54,6 @@ type OrderListItemProps = PropsWithChildren<{
 
 const OrderListItem = (props: OrderListItemProps) => {
   const { order, children } = props;
-  const navigate = useNavigate();
 
   const totalPrice = order.cartItems.reduce(
     (totalPrice, cartItem) => totalPrice + cartItem.price * cartItem.quantity,
@@ -66,8 +65,8 @@ const OrderListItem = (props: OrderListItemProps) => {
     <OrderListItemContainer>
       <OrderHeader>
         <OrderHeaderContent>주문번호: {order.id}</OrderHeaderContent>
-        <OrderHeaderContent onClick={() => navigate(`/orders/${order.id}`)}>
-          상세보기 ›
+        <OrderHeaderContent>
+          <Link to={`/orders/${order.id}`}>상세보기 ›</Link>
         </OrderHeaderContent>
       </OrderHeader>
 
