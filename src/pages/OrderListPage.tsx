@@ -46,9 +46,11 @@ const OrderListPage = () => {
       >
         {(orders) => (
           <OrderList>
-            {orders.map((order) => (
-              <OrderListItemRenderer key={order.id} order={order} />
-            ))}
+            {[...orders]
+              .sort((orderA, orderB) => orderB.id - orderA.id)
+              .map((order) => (
+                <OrderListItemRenderer key={order.id} order={order} />
+              ))}
           </OrderList>
         )}
       </AwaitRecoilState>
