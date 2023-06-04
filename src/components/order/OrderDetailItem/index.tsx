@@ -1,6 +1,7 @@
 import { DELIVERY_FEE } from '../../../constants';
 import { OrderItem } from '../../../types';
 import { S } from './OrderDetailItem.styles';
+
 type Props = {
   orderDetail: OrderItem;
 };
@@ -9,32 +10,28 @@ const OrderDetailItem = ({ orderDetail }: Props) => {
   const totalProductPrice =
     orderDetail.orderTotalPrice - DELIVERY_FEE(orderDetail.orderTotalPrice) + orderDetail.usedPoint;
   const deliveryFee = DELIVERY_FEE(orderDetail.orderTotalPrice);
+
+  const formatPrice = (price: number) => {
+    return price.toLocaleString() + '원';
+  };
+
+  const renderDetailItem = (label: string, value: string) => {
+    return (
+      <S.InfoWrapper>
+        <span>{label}</span>
+        <span>{value}</span>
+      </S.InfoWrapper>
+    );
+  };
+
   return (
     <S.Wrapper>
-      <S.InfoWrapper>
-        <span>주문 번호</span>
-        <span> {orderDetail.orderId}</span>
-      </S.InfoWrapper>
-      <S.InfoWrapper>
-        <span>주문 일자</span>
-        <span> {orderDetail.createdAt}</span>
-      </S.InfoWrapper>
-      <S.InfoWrapper>
-        <span>총 상품금액</span>
-        <span>{`${totalProductPrice.toLocaleString()}원`}</span>
-      </S.InfoWrapper>
-      <S.InfoWrapper>
-        <span>배송비</span>
-        <span>{`${deliveryFee.toLocaleString()}원`}</span>
-      </S.InfoWrapper>
-      <S.InfoWrapper>
-        <span>사용한 포인트</span>
-        <span>{`-${orderDetail.usedPoint.toLocaleString()}원`}</span>
-      </S.InfoWrapper>
-      <S.InfoWrapper>
-        <span>총 결제금액</span>
-        <span>{`${orderDetail.orderTotalPrice.toLocaleString()}원`}</span>
-      </S.InfoWrapper>
+      {renderDetailItem('주문 번호', orderDetail.orderId.toString())}
+      {renderDetailItem('주문 일자', orderDetail.createdAt)}
+      {renderDetailItem('총 상품금액', formatPrice(totalProductPrice))}
+      {renderDetailItem('배송비', formatPrice(deliveryFee))}
+      {renderDetailItem('사용한 포인트', `- ${formatPrice(orderDetail.usedPoint)}`)}
+      {renderDetailItem('총 결제금액', formatPrice(orderDetail.orderTotalPrice))}
     </S.Wrapper>
   );
 };
