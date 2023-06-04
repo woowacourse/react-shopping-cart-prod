@@ -18,31 +18,14 @@ export const S = {
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    width: 80%;
-    margin-top: 50px;
-  `,
-
-  OrderWrapper: styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     width: 100%;
-    border: 1px solid black;
-    border-radius: 7px;
-    padding: 20px;
-
-    & > :nth-child(n) {
-      border-bottom: 1px solid black;
-    }
-
-    & > :last-child {
-      border-bottom: none;
-    }
+    margin-top: 50px 0px;
   `,
 
   ItemWrapper: styled.div`
     display: flex;
     flex-direction: row;
+    padding: 10px 0;
   `,
 
   InfoWrapper: styled.div`
@@ -57,7 +40,7 @@ export const S = {
   `,
 
   Image: styled.img`
-    width: 60px;
+    width: 70px;
     height: auto;
   `,
 
@@ -71,6 +54,47 @@ export const S = {
   ButtonWrapper: styled.section`
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 40%;
+
+    @media all and (min-width: 768px) and (max-width: 1023px) {
+      width: 60%;
+    }
+
+    @media all and (min-width: 480px) and (max-width: 767px) {
+      width: 70%;
+    }
+
+    @media all and (max-width: 479px) {
+      width: 80%;
+    }
+  `,
+
+  PaymentWrapper: styled.section`
+    width: 40%;
+    border: 1px solid #aaa;
+    border-radius: 7px;
+    padding: 20px;
+    margin-top: 50px 0px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    @media all and (min-width: 768px) and (max-width: 1023px) {
+      width: 60%;
+    }
+
+    @media all and (min-width: 480px) and (max-width: 767px) {
+      width: 70%;
+    }
+
+    @media all and (max-width: 479px) {
+      width: 80%;
+    }
+
+    & > :nth-child(n) {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
   `,
 };

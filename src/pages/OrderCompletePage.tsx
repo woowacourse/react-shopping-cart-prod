@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { currentOrderSelector, orderState } from '../store/OrderState';
 import { OrderListWrapper } from '../style/ContentLayout';
@@ -6,44 +7,35 @@ import { serverState } from '../store/ServerState';
 import { ORDER_BASE_URL } from '../constants/url';
 import { useEffect } from 'react';
 import { OrderItem } from '../types';
-import { LoadingSpinner } from '../components/@common/LoadingSpinner';
+import { LoadingSpinner } from '../components/@common/LoadingSpinner/LoadingSpinner';
 import OrderCompleteItem from '../components/order/OrderCompleteItem';
 import { S } from '../components/order/OrderCompleteItem/OrderCompleteItem.styles';
+import useNavigatePage from '../hooks/useNavigatePage';
 
 const OrderCompletePage = () => {
   const serverUrl = useRecoilValue(serverState);
   const setOrder = useSetRecoilState(orderState);
   const { data: orderData, isLoading } = useGet<OrderItem[]>(`${serverUrl}${ORDER_BASE_URL}`);
+  const { goHome, goOrderDetail } = useNavigatePage();
 
   useEffect(() => {
     if (orderData) setOrder(orderData);
-  }, [orderData, setOrder]);
+  }, [orderData]);
 
   const currentOrder = useRecoilValue(currentOrderSelector);
-
-  const order = currentOrder ? (
-    currentOrder.orderProducts.map(({ id, price, quantity, imageUrl, name }) => {
-      return (
-        <S.ItemWrapper key={id}>
-          <S.Image src={imageUrl} alt={name} />
-          <S.InfoWrapper>
-            <span>{name}</span>
-            <span>{`${quantity}개 ${price * quantity}원`}</span>
-          </S.InfoWrapper>
-        </S.ItemWrapper>
-      );
-    })
-  ) : (
-    <LoadingSpinner />
-  );
+  const id = currentOrder ? currentOrder.orderId : null;
 
   return isLoading ? (
     <LoadingSpinner />
-  ) : (
+  ) : currentOrder && id ? (
     <OrderListWrapper>
-      <OrderCompleteItem order={order} id={currentOrder.orderId} />
+      <OrderCompleteItem order={currentOrder} id={id} />
+      <S.ButtonWrapper>
+        <S.HomeButton onClick={goHome}>홈으로 가기</S.HomeButton>
+        <S.DetailButton onClick={() => goOrderDetail(id)}>주문 상세 내역 보기</S.DetailButton>
+      </S.ButtonWrapper>
     </OrderListWrapper>
-  );
+  ) : null;
 };
 
 export default OrderCompletePage;
