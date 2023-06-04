@@ -9,10 +9,22 @@ const SignInPage = () => {
       <h1>Sign In</h1>
       <Form>
         <InputContainer>
-          ID : <Input type='email' onChange={onChageId} />
+          ID :
+          <Input
+            type='email'
+            autoComplete='email'
+            onChange={onChageId}
+            required
+          />
         </InputContainer>
         <InputContainer>
-          Password : <Input type='password' onChange={onChagePassword} />
+          Password :
+          <Input
+            type='password'
+            autoComplete='current-password'
+            onChange={onChagePassword}
+            required
+          />
         </InputContainer>
         <SubmitButtonContainer>
           <SubmitButton onClick={onClickSubmit}>submit</SubmitButton>
