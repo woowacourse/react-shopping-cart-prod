@@ -4,7 +4,10 @@ interface ButtonProps {
   primary?: boolean;
   size: 'small' | 'big';
   text: string;
+  fontSize?: number;
   width?: string | number;
+  height?: string | number;
+  borderRadius?: number;
   isValid?: boolean;
   onClick?: () => void;
 }
@@ -37,19 +40,19 @@ const ButtonStyle = styled.button<Omit<ButtonProps, 'text'>>`
         border: 1px solid #bbb;
     `}
 
-  ${({ size, width }) =>
+  ${({ size, width, height }) =>
     size === 'big'
       ? `
         font-weight: 700;
         font-size: 18px;
         width: ${width ? (typeof width === 'string' ? width : width + 'px') : '338px'};
-        height: 60px;
+        height: ${height ? (typeof height === 'string' ? height : height + 'px') : '60px'};
     `
       : `
         font-weight: 400;
         font-size: 16px;
         width: ${width ? (typeof width === 'string' ? width : width + 'px') : '98px'};
-        height: 35px;
+        height:  ${height ? (typeof height === 'string' ? height : height + 'px') : '35px'};
     `}
 
     ${({ isValid }) =>
@@ -59,4 +62,12 @@ const ButtonStyle = styled.button<Omit<ButtonProps, 'text'>>`
         background-color: rgba(0,0,0,0.05);
         color: rgb(177, 179, 181)
     `}
+
+    ${({ borderRadius }) =>
+    borderRadius &&
+    `
+        border-radius: ${borderRadius}px;
+    `}
+
+    ${({ fontSize }) => fontSize && `font-size: ${fontSize}px;`}
 `;
