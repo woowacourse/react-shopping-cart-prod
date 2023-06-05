@@ -8,6 +8,7 @@ import {
   Point,
   OrderedGroup,
   ResponseOrdered,
+  NewOrder,
 } from "../../types/types.ts";
 import { url } from "./url.ts";
 import { getSessionStorage } from "../utils/storage.ts";
@@ -136,6 +137,24 @@ export const fetchPoint = async (server: string) => {
     } else {
       throw new Error();
     }
+  } catch (error) {
+    console.error(error);
+    throw new Error();
+  }
+};
+
+export const fetchOrder = async (server: string, newOrder: NewOrder) => {
+  try {
+    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
+    const response = await fetch(`${url[server]}/orders`, {
+      method: "POST",
+      body: JSON.stringify(newOrder),
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
+
+    return response.ok;
   } catch (error) {
     console.error(error);
     throw new Error();

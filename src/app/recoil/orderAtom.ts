@@ -10,7 +10,7 @@ import { url } from "../api/url.ts";
 import { serverState } from "./serverAtom.ts";
 import { getSessionStorage } from "../utils/storage.ts";
 import { SESSION_STORAGE_KEY_BASE64 } from "../keys.ts";
-import { fetchCoupons, fetchPoint } from "../api/api.ts";
+import { fetchCoupons, fetchOrder, fetchPoint } from "../api/api.ts";
 
 const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
 
@@ -119,15 +119,9 @@ export const orderRepository = selector({
         },
       };
 
-      const response = await fetch(`${url[server]}/orders`, {
-        method: "POST",
-        body: JSON.stringify(newOrder),
-        headers: {
-          Authorization: `Basic ${base64}`,
-        },
-      });
+      const response = await fetchOrder(server, newOrder);
 
-      if (response.ok) {
+      if (response) {
         alert("결제가 완료됐습니다.");
         loadCartList();
         closeModal();
@@ -135,7 +129,7 @@ export const orderRepository = selector({
         alert("뭔가 문제가 있군요");
       }
 
-      return response.ok;
+      return response;
     });
 
     const updateSelectedCoupon = getCallback(
