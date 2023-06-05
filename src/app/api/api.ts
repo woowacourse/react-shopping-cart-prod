@@ -173,7 +173,12 @@ export const fetchOrder = async (server: string, newOrder: NewOrder) => {
 
 export const fetchOrderedItem = async (server: string, orderId: string) => {
   try {
-    const response = await fetch(`${url[server]}/orders/${orderId}`);
+    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
+    const response = await fetch(`${url[server]}/orders/${orderId}`, {
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
     if (response.ok) {
       const data: OrderedGroup = await response.json();
       return data;
@@ -188,7 +193,12 @@ export const fetchOrderedItem = async (server: string, orderId: string) => {
 
 export const fetchOrderedList = async (server: string) => {
   try {
-    const response = await fetch(`${url[server]}/orders`);
+    const base64 = getSessionStorage(SESSION_STORAGE_KEY_BASE64, "");
+    const response = await fetch(`${url[server]}/orders`, {
+      headers: {
+        Authorization: `Basic ${base64}`,
+      },
+    });
     if (response.ok) {
       const data: ResponseOrdered = await response.json();
       return data;
