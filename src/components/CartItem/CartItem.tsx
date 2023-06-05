@@ -1,10 +1,11 @@
+import { useMutation } from '@tanstack/react-query';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { TrashCan } from '../../assets';
-import { useFetch } from '../../hooks/useFetch';
-import { cartListState } from '../../store/cart';
+import { tokenized } from '../../constants';
+import { cartListState, cartProductQuantityState } from '../../store/cart';
 import { originState } from '../../store/origin';
-import { CartItemType, ProductItemType } from '../../types';
+import { ProductItemType } from '../../types';
 import { priceFormatter } from '../../utils/formatter';
 import Checkbox from '../Checkbox/Checkbox';
 import StepperButton from '../StepperButton/StepperButton';
@@ -28,23 +29,38 @@ const CartItem = ({
   removeItem,
 }: CartItemProps) => {
   const [cartList, setCartList] = useRecoilState(cartListState);
-  const { fetchApi } = useFetch<ProductItemType[]>(setCartList);
+  const pdQuanitiy = useRecoilValue(cartProductQuantityState(product.id));
   const origin = useRecoilValue(originState);
 
-  const updateCartItemQuantity = (quantity: number) => {
-    fetchApi.patch(`${origin}cart-items/${itemId}`, { quantity });
+  const mutation = useMutation({
+    mutationFn: async (data: { quantity: number }) => {
+      await fetch(`${origin}cart-items/${itemId}`, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': `application/json`,
+          Authorization: `Basic ${tokenized}`,
+        },
+      });
+    },
 
-    setCartList(
-      cartList.map((item: CartItemType) => {
-        if (item.id === itemId) {
-          return {
-            ...item,
-            quantity: quantity,
-          };
-        }
-        return item;
-      })
-    );
+    onSuccess: (data, variable) => {
+      setCartList(
+        cartList.map((item) => {
+          if (item.id === itemId) {
+            return {
+              ...item,
+              quantity: variable.quantity,
+            };
+          }
+          return item;
+        })
+      );
+    },
+  });
+
+  const updateCartItemQuantity = (quantity: number) => {
+    mutation.mutate({ quantity });
   };
 
   return (
@@ -70,7 +86,7 @@ const CartItem = ({
               removeItem(itemId);
             }}
           />
-          <StepperButton count={quantity} itemId={itemId} updateCount={updateCartItemQuantity} />
+          <StepperButton count={pdQuanitiy} itemId={itemId} updateCount={updateCartItemQuantity} />
           <div className={styles.resultPrice}>{priceFormatter(product.price * quantity)}원</div>
         </div>
       </div>

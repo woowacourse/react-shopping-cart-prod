@@ -39,6 +39,10 @@ const CouponItem = ({ coupon, type }: { coupon: CouponItemType; type: 'all' | 'u
         `${origin}coupons/${coupon.couponId}/discount?total=${cartTotalAmount + 3000}`,
         {
           method: 'GET',
+          headers: {
+            'Content-Type': `application/json`,
+            Authorization: `Basic ${tokenized}`,
+          },
         }
       );
 

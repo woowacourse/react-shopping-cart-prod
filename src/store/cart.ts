@@ -68,6 +68,18 @@ export const cartItemState = selectorFamily({
     },
 });
 
+export const cartProductQuantityState = selectorFamily({
+  key: 'cartProductQuantity',
+  get:
+    (productId) =>
+    ({ get }) => {
+      const cartList = get(cartListState);
+      const cart = cartList.find((cartItem) => cartItem.product.id === productId);
+
+      return !cart ? 0 : cart.quantity;
+    },
+});
+
 export const cartOrderDataState = selector({
   key: 'cartOrderData',
   get: ({ get }) => {
