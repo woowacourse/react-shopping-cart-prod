@@ -64,7 +64,7 @@ const ExpectedPaymentBox = () => {
         />
         <Button
           type="button"
-          autoSize
+          isAutoSize
           disabled={isAllUnchecked}
           onClick={handleOrderClick}
         >

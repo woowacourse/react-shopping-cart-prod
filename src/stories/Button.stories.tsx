@@ -20,15 +20,15 @@ export const Default: Story = {
 };
 
 export const primary: Story = {
-  args: { ...DEFAULT_ARGS, buttonPrimary: true },
+  args: { ...DEFAULT_ARGS, hasPrimary: true },
 };
 
 export const Secondary: Story = {
-  args: { ...DEFAULT_ARGS, buttonPrimary: false },
+  args: { ...DEFAULT_ARGS, hasPrimary: false },
 };
 
 export const SecondaryWithBorder: Story = {
-  args: { ...DEFAULT_ARGS, buttonPrimary: false, buttonBorder: true },
+  args: { ...DEFAULT_ARGS, hasPrimary: false, hasBorder: true },
 };
 
 export const Disabled: Story = {

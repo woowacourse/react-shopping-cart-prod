@@ -5,26 +5,26 @@ type ButtonSizeType = 'small' | 'medium';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSizeType;
-  autoSize?: boolean;
-  buttonPrimary?: boolean;
-  buttonBorder?: boolean;
+  isAutoSize?: boolean;
+  hasPrimary?: boolean;
+  hasBorder?: boolean;
   children: ReactNode;
 }
 
 const Button = ({
   size = 'medium',
-  buttonPrimary = true,
-  autoSize = false,
-  buttonBorder = false,
+  hasPrimary = true,
+  isAutoSize = false,
+  hasBorder = false,
   children,
   ...args
 }: ButtonProps) => {
   return (
     <StyledButton
       size={size}
-      buttonPrimary={buttonPrimary}
-      autoSize={autoSize}
-      buttonBorder={buttonBorder}
+      hasPrimary={hasPrimary}
+      isAutoSize={isAutoSize}
+      hasBorder={hasBorder}
       {...args}
     >
       {children}
@@ -46,19 +46,19 @@ const buttonStyles = {
 };
 
 const StyledButton = styled(
-  ({ autoSize, buttonPrimary, buttonBorder, ...restProps }: ButtonProps) => (
+  ({ isAutoSize, hasPrimary, hasBorder, ...restProps }: ButtonProps) => (
     <button {...restProps} />
   )
 )`
   ${({ size }) => buttonStyles[size ?? 'medium']}
-  width: ${({ size, autoSize }) =>
-    autoSize ? '100%' : buttonStyles[size ?? 'medium'].width};
-  background: ${({ theme, buttonPrimary }) =>
-    buttonPrimary ? theme.colors.black : theme.colors.white};
-  color: ${({ theme, buttonPrimary }) =>
-    buttonPrimary ? theme.colors.white : theme.colors.black};
-  border: ${({ theme, buttonBorder }) =>
-    buttonBorder ? `1px solid ${theme.colors.gray300}` : 'none'};
+  width: ${({ size, isAutoSize }) =>
+    isAutoSize ? '100%' : buttonStyles[size ?? 'medium'].width};
+  background: ${({ theme, hasPrimary }) =>
+    hasPrimary ? theme.colors.black : theme.colors.white};
+  color: ${({ theme, hasPrimary }) =>
+    hasPrimary ? theme.colors.white : theme.colors.black};
+  border: ${({ theme, hasBorder }) =>
+    hasBorder ? `1px solid ${theme.colors.gray300}` : 'none'};
 
   &:disabled {
     cursor: not-allowed;

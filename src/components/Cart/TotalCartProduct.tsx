@@ -27,9 +27,9 @@ const TotalCartProduct = () => {
       </TotalProductCountWrapper>
       <Button
         type="button"
-        buttonPrimary={false}
+        hasPrimary={false}
         size="small"
-        buttonBorder
+        hasBorder={true}
         disabled={!checkedCount}
         onClick={deleteCheckedProducts}
       >
