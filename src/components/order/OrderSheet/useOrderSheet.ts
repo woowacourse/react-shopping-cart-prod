@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCheckedCartListValue } from '../../../provider/CheckedListProvider';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import serverNameState from '../../../globalState/atoms/serverName';
 import ServerUtil from '../../../utils/ServerUrl';
 import type { Coupon } from '../../../types/product';
 import { USER_AUTH_TOKEN } from '../../../constant';
+import cartState from '../../../globalState/atoms/cartState';
 
 const useOrderSheet = () => {
   const navigate = useNavigate();
+  const serverName = useRecoilValue(serverNameState);
+  const OrdersUrl = ServerUtil.getOrdersUrl(serverName);
 
-  const { getCheckedItemList } = useCheckedCartListValue();
+  const { checkedCartIdList, getCheckedItemList } = useCheckedCartListValue();
   const checkedCartList = getCheckedItemList();
   const [selectedCoupon, setSelectedCoupon] = useState<Coupon | null>(null);
+  const setCartList = useSetRecoilState(cartState);
 
   const handleChangeCoupon = (coupon: Coupon | null) => {
     setSelectedCoupon(coupon);
@@ -46,9 +50,6 @@ const useOrderSheet = () => {
   };
 
   const handleOrder = async () => {
-    const serverName = useRecoilValue(serverNameState);
-    const OrdersUrl = ServerUtil.getOrdersUrl(serverName);
-
     const couponIds = selectedCoupon ? [selectedCoupon.id] : [];
     const orderBody = {
       cartItems: checkedCartList,
@@ -68,6 +69,13 @@ const useOrderSheet = () => {
     if (!response.ok) {
       throw new Error('주문 과정에서 에러가 발생했습니다.');
     }
+
+    setCartList((prevCartList) => {
+      const restOfCartList = prevCartList.filter(
+        (cart) => !checkedCartIdList.includes(cart.id),
+      );
+      return restOfCartList;
+    });
 
     navigate('/order');
   };
