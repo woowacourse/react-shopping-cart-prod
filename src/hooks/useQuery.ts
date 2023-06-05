@@ -15,7 +15,7 @@ export const useQuery = <T>(url: string, headers?: HeadersInit) => {
 
   useEffect(() => {
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   const fetchData = async () => {

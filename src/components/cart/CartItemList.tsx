@@ -29,7 +29,7 @@ export const CartItemList = () => {
         };
       }
 
-      if(Object.keys(prev).length === cart.length){
+      if (Object.keys(prev).length === cart.length) {
         return {
           ...prev,
           all: true,

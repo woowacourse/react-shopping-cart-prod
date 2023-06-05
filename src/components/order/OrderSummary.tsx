@@ -54,7 +54,6 @@ const OrderSummary = () => {
   const orderOnClick = () => {
     mutation(baseUrl + '/orders', postCart);
 
-
     setCart([]);
     setChecked({ all: true });
 
@@ -113,7 +112,10 @@ const OrderSummary = () => {
             <Button
               designType="rectangle"
               onClick={orderOnClick}
-              disabled={Boolean(totalProductPrice<usePoint || (point?.usablePoint && point?.usablePoint < usePoint))}
+              disabled={Boolean(
+                totalProductPrice < usePoint ||
+                  (point?.usablePoint && point?.usablePoint < usePoint)
+              )}
             >
               주문하기
             </Button>
@@ -169,7 +171,9 @@ const OrderSummary = () => {
           <Button
             designType="rectangle-mobile"
             onClick={orderOnClick}
-            disabled={Boolean(totalProductPrice<usePoint || (point?.usablePoint && point?.usablePoint < usePoint))}
+            disabled={Boolean(
+              totalProductPrice < usePoint || (point?.usablePoint && point?.usablePoint < usePoint)
+            )}
           >
             주문하기
           </Button>

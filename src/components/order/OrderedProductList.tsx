@@ -62,7 +62,6 @@ const Style = {
     @media screen and (max-width: 700px) {
       font-size: 15px;
     }
-
   `,
 
   OrderNumberAndDate: styled.div`
@@ -74,7 +73,6 @@ const Style = {
   `,
 
   OrderDate: styled.span`
-
     margin-left: 40px;
 
     color: #333333;

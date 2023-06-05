@@ -3,7 +3,7 @@ const PATH = Object.freeze({
   HOME: '/',
   CART: '/shopping-cart',
   ORDER: '/order-list',
-  ORDER_DETAIL: '/order-detail'
+  ORDER_DETAIL: '/order-detail',
 });
 
 const QUANTITY = Object.freeze({

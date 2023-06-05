@@ -42,7 +42,7 @@ export const CartActions = () => {
       };
 
       cart.forEach((product) => {
-        if(!targetItemsId.includes(product.id)) updatedCheckedState[product.id] = true;
+        if (!targetItemsId.includes(product.id)) updatedCheckedState[product.id] = true;
       });
 
       return updatedCheckedState;

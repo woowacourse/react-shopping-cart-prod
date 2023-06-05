@@ -60,8 +60,7 @@ export const useUpdateCart = () => {
   const deleteCartItem = (...cartId: number[]) => {
     setCart((prev) => {
       return prev.filter((item) => {
-
-        return !cartId.includes(Number(item.id))
+        return !cartId.includes(Number(item.id));
       });
     });
 
