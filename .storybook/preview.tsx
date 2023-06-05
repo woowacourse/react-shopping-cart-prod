@@ -6,7 +6,15 @@ import { MemoryRouter } from 'react-router-dom';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import storybookHandlers from '../src/mocks/storybookHandlers';
 
-initialize();
+if (window.location.pathname === '/react-shopping-cart/storybook') {
+  window.location.pathname += '/';
+}
+
+initialize({
+  serviceWorker: {
+    url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
+  }
+});
 
 const preview: Preview = {
   parameters: {
