@@ -1,5 +1,5 @@
 import OrderInfo from '../../types/order';
-import { CartProduct, Product } from '../../types/product';
+import { CartProduct } from '../../types/product';
 import Cart from './Cart';
 import UserCoupon from './UserCoupon';
 
@@ -44,7 +44,6 @@ const request = ({ cartItems: userCart, couponIds, deliveryFee }: OrderRequestFo
   // 쿠폰 검증
   const isValidCouponIds = couponIds.every((id) => serverUserCouponIds.includes(id));
   if (!isValidCouponIds) return -1;
-  console.log('쿠폰 검증 통과');
 
   // 장바구니 검증
   const orderingProducts: CartProduct[] = [];
@@ -56,10 +55,8 @@ const request = ({ cartItems: userCart, couponIds, deliveryFee }: OrderRequestFo
 
     orderingProducts.push(serverCartProduct);
   });
-  console.log(orderingProducts);
 
   if (orderingProducts.length !== userCart.length) return -1;
-  console.log('장바구니 검증 통과');
 
   // 배송비 검증: 현재 3000원 고정
   if (deliveryFee !== 3000) return -1;

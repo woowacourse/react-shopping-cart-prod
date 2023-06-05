@@ -56,7 +56,6 @@ const useCartItemApi = () => {
 
     if (mayBeCartItemId !== null) {
       cartItemId = mayBeCartItemId;
-      console.log(mayBeCartItemId);
     } else {
       cartItemId = await getCartItemId(serverName, product.id);
     }
