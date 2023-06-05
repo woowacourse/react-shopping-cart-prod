@@ -6,14 +6,14 @@ import { OrderItem } from '../OrderItem';
 type OrderListProps = {
   orderId: number;
   orderItems: OrderItemType[];
-  createAt: string;
+  createdAt: string;
   detail?: boolean;
 };
 
-function OrderList({ orderId, orderItems, createAt, detail = true }: OrderListProps) {
+function OrderList({ orderId, orderItems, createdAt, detail = true }: OrderListProps) {
   const navigate = useNavigate();
 
-  const [datePart, timePart] = createAt.split(' ');
+  const [datePart, timePart] = createdAt.split(' ');
   const [year, month, day] = datePart.split('-');
   const [hour, minute, second] = timePart.split(':');
   const fixedSecond = second.split('.')[0];
@@ -21,7 +21,7 @@ function OrderList({ orderId, orderItems, createAt, detail = true }: OrderListPr
   const date = new Date(isoString);
   date.setHours(date.getHours() + 9);
   const updatedDateString = date.toISOString().replace('T', ' ').slice(0, -5);
-  console.log(createAt, updatedDateString);
+  console.log(createdAt, updatedDateString);
 
   return (
     <S.OrderItemList>
