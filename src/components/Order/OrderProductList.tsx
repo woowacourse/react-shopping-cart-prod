@@ -1,13 +1,13 @@
+import type { OrderType } from '../../types/product';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import OrderProductItem from './OrderProductItem';
-import { Order } from '../../types/product';
+import OrderItem from './OrderItem';
 import { formatDateTime } from '../../utils/timeFormat';
 
 interface OrderProductListProps {
-  order: Order;
+  order: OrderType;
   isDetailed: boolean;
 }
 
@@ -28,7 +28,7 @@ const OrderProductList = ({ order, isDetailed }: OrderProductListProps) => {
         </OrderInfo>
         <div>
           {orderItems.map((item) => (
-            <OrderProductItem orderProduct={item} />
+            <OrderItem orderProduct={item} />
           ))}
         </div>
       </OrderContent>

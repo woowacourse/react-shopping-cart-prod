@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import CartProductItem from '../components/Cart/CartProductItem';
+import CartItem from '../components/Cart/CartItem';
 
 const meta = {
-  title: 'Cart/CartProductItem',
-  component: CartProductItem,
+  title: 'Cart/CartItem',
+  component: CartItem,
   tags: ['autodocs'],
   argTypes: {},
-} satisfies Meta<typeof CartProductItem>;
+} satisfies Meta<typeof CartItem>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -26,6 +26,6 @@ const mockProduct = {
 
 export const Default: Story = {
   args: {
-    cartProduct: mockProduct,
+    cartItem: mockProduct,
   },
 };

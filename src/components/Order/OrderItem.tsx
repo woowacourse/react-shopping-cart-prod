@@ -1,14 +1,14 @@
-import type { CartItem } from '../../types/product';
+import type { CartItemType } from '../../types/product';
 
 import styled from 'styled-components';
 
 import Image from '../Common/Image';
 
 interface OrderItemProps {
-  orderProduct: CartItem;
+  orderProduct: CartItemType;
 }
 
-const OrderProductItem = ({ orderProduct }: OrderItemProps) => {
+const OrderItem = ({ orderProduct }: OrderItemProps) => {
   const { quantity, product } = orderProduct;
   const { name, price, imageUrl } = product;
 
@@ -67,4 +67,4 @@ const Price = styled.p`
 
   color: #888888;
 `;
-export default OrderProductItem;
+export default OrderItem;

@@ -1,4 +1,4 @@
-import type { ScheduledOrder } from '../../types/product';
+import type { ScheduledOrderType } from '../../types/product';
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -54,7 +54,7 @@ const EstimatedPaymentBox = () => {
     }
 
     if (window.confirm('주문하시겠습니까?')) {
-      const newOrder: ScheduledOrder = {
+      const newOrder: ScheduledOrderType = {
         cartItems: checkedCartItems,
         totalProductPrice,
         totalDeliveryFee,
@@ -101,6 +101,10 @@ const EstimatedPaymentBox = () => {
           </dd>
         </EstimatedPaymentInfo>
         <EstimatedPaymentInfo>
+          <dt>적립 예상 포인트</dt>
+          <dd>{(totalProductPrice * 0.05).toLocaleString('KR')}원</dd>
+        </EstimatedPaymentInfo>
+        <EstimatedPaymentInfo>
           <dt>총 주문금액</dt>
           <dd>{totalPrice.toLocaleString('KR')}원</dd>
         </EstimatedPaymentInfo>
@@ -118,12 +122,12 @@ const EstimatedPaymentBox = () => {
 
 const EstimatedPaymentBoxContainer = styled.div`
   width: 448px;
-  height: 620px;
+  height: 700px;
   border: 1px solid ${({ theme }) => theme.colors.gray100};
 
   @media (max-width: 420px) {
     width: 330px;
-    height: 590px;
+    height: 650px;
   }
 `;
 

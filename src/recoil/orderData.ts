@@ -1,10 +1,10 @@
-import type { Order } from '../types/product';
+import type { OrderType } from '../types/product';
 import { atom, selector, selectorFamily } from 'recoil';
 
 import { api } from '../apis/order';
 import { hostNameAtom } from './hostData';
 
-export const orderAtom = atom<Order[]>({
+export const orderAtom = atom<OrderType[]>({
   key: 'orderState',
   default: selector({
     key: 'orderState/Default',

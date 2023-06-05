@@ -1,4 +1,4 @@
-import type { Product } from '../../types/product';
+import type { ProductType } from '../../types/product';
 
 import styled from 'styled-components';
 
@@ -9,7 +9,7 @@ import AmountCounter from '../Common/AmountCounter';
 import useCart from '../../hooks/useCart';
 
 interface ProductItemProps {
-  product: Product;
+  product: ProductType;
 }
 
 const ProductItem = ({ product }: ProductItemProps) => {

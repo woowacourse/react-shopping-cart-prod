@@ -1,4 +1,4 @@
-export interface Point {
+export interface PointType {
   userPoint: number;
   minUsagePoint: number;
 }

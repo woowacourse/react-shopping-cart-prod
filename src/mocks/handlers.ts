@@ -1,4 +1,8 @@
-import type { CartItem, Order, ScheduledOrder } from '../types/product';
+import type {
+  CartItemType,
+  OrderType,
+  ScheduledOrderType,
+} from '../types/product';
 import { rest } from 'msw';
 import products from './data/products.json';
 // import point from './data/point.json';
@@ -24,33 +28,33 @@ export const handlers = [
     return res(ctx.delay(200), ctx.status(200), ctx.json(getData('cart')));
   }),
 
-  rest.get('/orders', (req, res, ctx) => {
-    return res(ctx.delay(200), ctx.status(200), ctx.json(getData('order')));
+  rest.get('/orderTypes', (req, res, ctx) => {
+    return res(ctx.delay(200), ctx.status(200), ctx.json(getData('orderType')));
   }),
 
   rest.get('/points', (req, res, ctx) => {
     return res(ctx.delay(200), ctx.status(200), ctx.json(getData('point')));
   }),
 
-  rest.get('/orders/:orderId', (req, res, ctx) => {
-    const storedOrders: Order[] = getData('order');
-    const order = storedOrders.find(
-      (order) => order.orderId === Number(req.params.orderId)
+  rest.get('/orderTypes/:orderTypeId', (req, res, ctx) => {
+    const storedOrderTypes: OrderType[] = getData('orderType');
+    const orderType = storedOrderTypes.find(
+      (orderType) => orderType.orderId === Number(req.params.orderTypeId)
     );
 
-    if (!order)
+    if (!orderType)
       return res(
         ctx.status(404),
         ctx.json({ message: '주문 내역이 없습니다' })
       );
 
-    return res(ctx.delay(200), ctx.status(200), ctx.json(order));
+    return res(ctx.delay(200), ctx.status(200), ctx.json(orderType));
   }),
 
   rest.post<{ productId: number }>('/cart-items', (req, res, ctx) => {
     const { productId } = req.body;
 
-    const storedCart: CartItem[] = getData('cart');
+    const storedCart: CartItemType[] = getData('cart');
 
     if (findTargetProduct(storedCart, productId)) {
       return res(
@@ -67,21 +71,20 @@ export const handlers = [
     return res(ctx.status(201), ctx.json({ message: '상품이 추가되었습니다' }));
   }),
 
-  rest.post<{ order: ScheduledOrder }>('/orders', (req, res, ctx) => {
+  rest.post<{ order: ScheduledOrderType }>('/orderTypes', (req, res, ctx) => {
     const { order } = req.body;
     const { cartItems, totalPrice } = order;
-    console.log(order);
-    const currentOrders = getData('order');
-    const updatedOrders: Order[] = [
-      ...currentOrders,
+    const currentOrderTypes = getData('orderType');
+    const updatedOrderTypes: OrderType[] = [
+      ...currentOrderTypes,
       {
-        orderId: Date.now(),
-        orderDateTime: '2023-06-01 08:30:21',
-        orderItems: cartItems,
+        orderTypeId: Date.now(),
+        orderTypeDateTime: '2023-06-01 08:30:21',
+        orderTypeItems: cartItems,
         totalPrice,
       },
     ];
-    updateData('order', updatedOrders);
+    updateData('orderType', updatedOrderTypes);
 
     return res(ctx.status(201), ctx.json({ message: '상품이 추가되었습니다' }));
   }),
@@ -93,7 +96,7 @@ export const handlers = [
 
       const cartProductId = Number(cartItemId as string);
 
-      const storedCart: CartItem[] = getData('cart');
+      const storedCart: CartItemType[] = getData('cart');
 
       if (
         !storedCart.find(
@@ -114,7 +117,7 @@ export const handlers = [
     }
   ),
 
-  rest.delete('/cart-items/:cartItemId', (req, res, ctx) => {
+  rest.delete('/cart-items/:cartItemTypeId', (req, res, ctx) => {
     const { cartItemId } = req.params;
 
     const cartProductId = Number(cartItemId as string);
@@ -122,8 +125,8 @@ export const handlers = [
     const storedCart = getData('cart');
 
     if (
-      !storedCart.cartItems.find(
-        (cartProduct: CartItem) => cartProduct.cartItemId === cartProductId
+      !storedCart.cartItemTypes.find(
+        (cartProduct: CartItemType) => cartProduct.cartItemId === cartProductId
       )
     ) {
       return res(

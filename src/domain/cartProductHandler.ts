@@ -1,10 +1,12 @@
-import type { CartItem } from '../types/product';
+import type { CartItemType } from '../types/product';
 
-export const findTargetProduct = (cartItems: CartItem[], productId: number) =>
-  cartItems.find((cartItem) => productId === cartItem.product.productId);
+export const findTargetProduct = (
+  cartItems: CartItemType[],
+  productId: number
+) => cartItems.find((cartItem) => productId === cartItem.product.productId);
 
 export const deleteCartProduct = (
-  cartItems: CartItem[],
+  cartItems: CartItemType[],
   productId: number
-): CartItem[] =>
+): CartItemType[] =>
   cartItems.filter((cartItem) => cartItem.product.productId !== productId);

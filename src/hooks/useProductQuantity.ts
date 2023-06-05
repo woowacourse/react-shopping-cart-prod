@@ -1,4 +1,4 @@
-import type { CartItem } from '../types/product';
+import type { CartItemType } from '../types/product';
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -9,7 +9,7 @@ import { HostNameType } from '../types/server';
 
 const updateCartProductQuantity = async (
   hostName: HostNameType,
-  targetProduct: CartItem,
+  targetProduct: CartItemType,
   delta: number
 ) =>
   await api(hostName).then((apiInstance) => {

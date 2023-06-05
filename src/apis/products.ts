@@ -1,4 +1,4 @@
-import type { Product } from '../types/product';
+import type { ProductType } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 import { servers } from '../constants/server';
@@ -11,6 +11,6 @@ export const getProducts = async (hostName: HostNameType) => {
     throw new Error(response.status.toString());
   }
 
-  const data: Product[] = await response.json();
+  const data: ProductType[] = await response.json();
   return data;
 };

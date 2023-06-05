@@ -1,4 +1,4 @@
-import type { CartItem } from '../types/product';
+import type { CartItemType } from '../types/product';
 
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -16,11 +16,11 @@ const useCheckedProducts = () => {
   );
 
   const removeCheckedProducts = () => {
-    const updatedCartProducts = cart.filter(
+    const updatedCartItems = cart.filter(
       (item) => !checkedCartItemIds.includes(item.cartItemId)
     );
 
-    setCart([...updatedCartProducts]);
+    setCart([...updatedCartItems]);
 
     setCheckedCartItemIds(
       checkedCartItemIds.filter(
@@ -35,19 +35,19 @@ const useCheckedProducts = () => {
     });
   };
 
-  const handleCheckBoxChange = (cartProduct: CartItem) => {
-    if (isCheckedProduct(cartProduct)) {
+  const handleCheckBoxChange = (cartItem: CartItemType) => {
+    if (isCheckedProduct(cartItem)) {
       setCheckedCartItemIds(
         checkedCartItemIds.filter(
-          (cartItemId) => cartItemId !== cartProduct.cartItemId
+          (cartItemId) => cartItemId !== cartItem.cartItemId
         )
       );
     } else {
-      setCheckedCartItemIds([...checkedCartItemIds, cartProduct.cartItemId]);
+      setCheckedCartItemIds([...checkedCartItemIds, cartItem.cartItemId]);
     }
   };
 
-  const handleAllCheckedProducts = () => {
+  const handleAllCheckedCartItems = () => {
     if (cart.length === checkedCartItemIds.length) {
       setCheckedCartItemIds([]);
       return;
@@ -55,7 +55,7 @@ const useCheckedProducts = () => {
     setCheckedCartItemIds(cart.map((item) => item.cartItemId));
   };
 
-  const isCheckedProduct = (cartItem: CartItem) => {
+  const isCheckedProduct = (cartItem: CartItemType) => {
     return checkedCartItemIds.includes(cartItem.cartItemId);
   };
 
@@ -66,7 +66,7 @@ const useCheckedProducts = () => {
   return {
     removeCheckedProducts,
     handleCheckBoxChange,
-    handleAllCheckedProducts,
+    handleAllCheckedCartItems,
     isCheckedProduct,
   };
 };

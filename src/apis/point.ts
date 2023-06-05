@@ -1,4 +1,4 @@
-import type { Point } from '../types/point';
+import type { PointType } from '../types/point';
 import type { HostNameType } from '../types/server';
 
 import { servers } from '../constants/server';
@@ -19,7 +19,7 @@ export const api = async (hostName: HostNameType) => {
       throw new Error(response.status.toString());
     }
 
-    const data: Point = await response.json();
+    const data: PointType = await response.json();
     return data;
   };
 

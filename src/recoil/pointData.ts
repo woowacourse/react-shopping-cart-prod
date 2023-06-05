@@ -1,10 +1,10 @@
-import type { Point } from '../types/point';
+import type { PointType } from '../types/point';
 
 import { atom, selector } from 'recoil';
 import { api } from '../apis/point';
 import { hostNameAtom } from './hostData';
 
-export const userPointAtom = atom<Point>({
+export const userPointAtom = atom<PointType>({
   key: 'userPointatom',
   default: selector({
     key: 'userPointState/Default',

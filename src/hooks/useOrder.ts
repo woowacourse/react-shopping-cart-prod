@@ -1,4 +1,4 @@
-import type { ScheduledOrder } from '../types/product';
+import type { ScheduledOrderType } from '../types/product';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
 import { api } from '../apis/order';
@@ -18,7 +18,7 @@ const useOrder = () => {
 
   const hostName = useRecoilValue(hostNameAtom);
 
-  const addOrder = async (newOrder: ScheduledOrder) => {
+  const addOrder = async (newOrder: ScheduledOrderType) => {
     const orderId = await api(hostName).then((apiInstance) => {
       return apiInstance.createOrder(newOrder);
     });

@@ -1,29 +1,29 @@
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 
-import CartProductItem from './CartProductItem';
+import CartItem from './CartItem';
 import { cartAtom } from '../../recoil/cartItemData';
 import Message from '../Common/Message';
 
-const CartProductList = () => {
+const CartItemList = () => {
   const cart = useRecoilValue(cartAtom);
 
   return (
-    <CartProductListContainer>
+    <CartItemListContainer>
       {cart.length === 0 ? (
         <Message type='empty_cart' link='/' />
       ) : (
         cart.map((cartProduct) => (
           <li key={cartProduct.cartItemId}>
-            <CartProductItem cartProduct={cartProduct} />
+            <CartItem cartItem={cartProduct} />
           </li>
         ))
       )}
-    </CartProductListContainer>
+    </CartItemListContainer>
   );
 };
 
-const CartProductListContainer = styled.ul`
+const CartItemListContainer = styled.ul`
   width: 700px;
 
   & > li {
@@ -36,4 +36,4 @@ const CartProductListContainer = styled.ul`
   }
 `;
 
-export default CartProductList;
+export default CartItemList;

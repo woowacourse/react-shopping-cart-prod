@@ -6,7 +6,7 @@ import EstimatedPaymentBox from '../components/Cart/EstimatedPaymentBox';
 import CheckBox from '../components/Common/CheckBox';
 import Button from '../components/Common/Button';
 import ContentListSkeleton from '../components/Common/ContentListSkeleton';
-import CartProductList from '../components/Cart/CartProductList';
+import CartItemList from '../components/Cart/CartItemList';
 
 import { totalCartProductSelect } from '../recoil/cartItemData';
 import { checkedListSelector } from '../recoil/checkedCartItemData';
@@ -15,7 +15,7 @@ import useCheckedProducts from '../hooks/useCheckedProducts';
 const CartItemsListPage = () => {
   const totalCartProductCount = useRecoilValue(totalCartProductSelect);
   const checkedCartProductCount = useRecoilValue(checkedListSelector);
-  const { removeCheckedProducts, handleAllCheckedProducts } =
+  const { removeCheckedProducts, handleAllCheckedCartItems } =
     useCheckedProducts();
 
   return (
@@ -27,11 +27,11 @@ const CartItemsListPage = () => {
             든든배송 상품 ({totalCartProductCount}개)
           </CartProductListTitle>
           <Suspense fallback={<ContentListSkeleton content='cart' />}>
-            <CartProductList />
+            <CartItemList />
           </Suspense>
           <SelectContainer>
             <CheckBox
-              onChange={handleAllCheckedProducts}
+              onChange={handleAllCheckedCartItems}
               checked={totalCartProductCount === checkedCartProductCount}
             />
             <TotalSelectedCount>

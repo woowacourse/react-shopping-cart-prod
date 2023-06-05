@@ -1,4 +1,4 @@
-import type { Product } from '../types/product';
+import type { ProductType } from '../types/product';
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
@@ -9,7 +9,7 @@ import { cartAtom } from '../recoil/cartItemData';
 import { hostNameAtom } from '../recoil/hostData';
 import { checkedCartItemIdsAtom } from '../recoil/checkedCartItemData';
 
-const useCart = (product: Product) => {
+const useCart = (product: ProductType) => {
   const { productId } = product;
   const hostName = useRecoilValue(hostNameAtom);
   const [cart, setCart] = useRecoilState(cartAtom);

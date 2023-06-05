@@ -1,11 +1,11 @@
-import type { Product } from '../types/product';
+import type { ProductType } from '../types/product';
 
 import { selector } from 'recoil';
 
 import { getProducts } from '../apis/products';
 import { hostNameAtom } from './hostData';
 
-export const getProductsSelector = selector<Product[]>({
+export const getProductsSelector = selector<ProductType[]>({
   key: 'getProducts',
   get: async ({ get }) => {
     const hostName = get(hostNameAtom);

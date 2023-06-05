@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { getProductsSelector } from '../../recoil/productData';
 
-import ProductItem from './ProductItem';
+import Product from './Product';
 import Message from '../Common/Message';
 
 const ProductList = () => {
@@ -14,7 +14,7 @@ const ProductList = () => {
     <ProductListContainer>
       {products.map((product) => (
         <li key={product.productId}>
-          <ProductItem product={product} />
+          <Product product={product} />
         </li>
       ))}
     </ProductListContainer>

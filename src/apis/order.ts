@@ -1,4 +1,4 @@
-import type { Order, ScheduledOrder } from '../types/product';
+import type { OrderType, ScheduledOrderType } from '../types/product';
 import type { HostNameType } from '../types/server';
 
 import { servers } from '../constants/server';
@@ -15,7 +15,7 @@ export const api = async (hostName: HostNameType) => {
       },
     });
 
-    const data: Order[] = await response.json();
+    const data: OrderType[] = await response.json();
 
     return data;
   };
@@ -33,12 +33,12 @@ export const api = async (hostName: HostNameType) => {
       throw new Error(response.status.toString());
     }
 
-    const data: Order = await response.json();
+    const data: OrderType = await response.json();
 
     return data;
   };
 
-  const createOrder = async (order: ScheduledOrder) => {
+  const createOrder = async (order: ScheduledOrderType) => {
     const response = await fetch(URL, {
       method: 'POST',
       headers: {

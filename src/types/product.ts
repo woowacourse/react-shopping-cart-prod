@@ -1,4 +1,4 @@
-export interface Product {
+export interface ProductType {
   productId: number;
   name: string;
   price: number;
@@ -6,23 +6,23 @@ export interface Product {
   stock: number;
 }
 
-export interface CartItem {
+export interface CartItemType {
   cartItemId: number;
   quantity: number;
-  product: Product;
+  product: ProductType;
 }
 
-export interface ScheduledOrder {
-  cartItems: CartItem[];
+export interface ScheduledOrderType {
+  cartItems: CartItemType[];
   totalProductPrice: number;
   totalDeliveryFee: number;
   usePoint: number;
   totalPrice: number;
 }
 
-export interface Order {
+export interface OrderType {
   orderId: number;
   orderDateTime: string;
-  orderItems: CartItem[];
+  orderItems: CartItemType[];
   totalPrice: number;
 }
