@@ -1,6 +1,6 @@
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { menuState } from '../../../recoil/atoms/common';
-import { useEffect, useRef, useState } from 'react';
 
 const useMenu = () => {
   const [isMenuOpen, setIsMenuOpen] = useRecoilState(menuState);
