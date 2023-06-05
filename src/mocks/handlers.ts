@@ -218,11 +218,14 @@ const requestPostOrders = ({
   cartList = serverCartList.filter((serverCart) => {
     return !userCartIds.includes(serverCart.id);
   });
+
   if (coupon) {
     usersCoupon = usersCoupon.filter((couponId) => {
       return !couponIds.includes(couponId.id);
     });
   }
+
+  orders.push(orderInfo);
 
   return orderInfo.id;
 };
