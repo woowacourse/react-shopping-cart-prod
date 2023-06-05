@@ -38,7 +38,7 @@ export const OrderHistory = ({
           </PaymentTitleBox>
           <PaymentInfoBox>
             <p>총 결제금액</p>
-            <p>{totalProductPrice}</p>
+            <p>{totalProductPrice.toLocaleString()}원</p>
           </PaymentInfoBox>
         </>
       )}
