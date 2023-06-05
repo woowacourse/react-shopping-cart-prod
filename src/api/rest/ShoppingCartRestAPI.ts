@@ -16,7 +16,7 @@ export type CartItemEntity = {
 export type OrderListEntity = {
   id: number;
   savingRate: number;
-  points: number;
+  usedPoints: number;
   cartItems: OrderItemEntity[];
 };
 
