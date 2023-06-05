@@ -1,20 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import patrick from '../../assets/patrick.jpg';
-import { Button } from '../common/Button';
+import { PATH } from '../../constants';
 
 const NotFound = () => {
-  const navigate = useNavigate();
-  const goToMainPage = () => {
-    navigate('/');
-  };
   return (
     <Style.NotFoundWrapper>
       <span>아뇨 뚱인데요?~ 페이지를 찾을 수 없다구요!</span>
       <Style.ImgWrapper />
-      <Button onClick={goToMainPage} designType="rectangle">
-        홈으로~~
-      </Button>
+      <Style.NoExistItemsMessage>
+        <p>잘못된 페이지를 요청했거나 에러가 발생했습니다 🥲</p>
+        <Link to={PATH.HOME}>돌아가기🚀</Link>
+      </Style.NoExistItemsMessage>
     </Style.NotFoundWrapper>
   );
 };
@@ -26,7 +23,10 @@ const Style = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    color: #f56e6e;
   `,
+
   ImgWrapper: styled.img.attrs({
     src: patrick,
     alt: '404페이지', // 대체 텍스트
@@ -34,7 +34,30 @@ const Style = {
     width: 245px;
     height: 430px;
 
-    margin-bottom: 30px;
+    margin: 10px 0;
+  `,
+
+  NoExistItemsMessage: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 200px;
+
+    color: var(--grey-300);
+
+    & > p {
+      font-size: 20px;
+      margin-bottom: 30px;
+
+      line-height: 25px;
+    }
+
+    & > a {
+      color: var(--grey-400);
+      border-bottom: 3px solid var(--grey-400);
+    }
   `,
 };
 
