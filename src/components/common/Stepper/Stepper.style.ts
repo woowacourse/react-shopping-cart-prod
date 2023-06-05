@@ -40,6 +40,11 @@ export const QuantityControlButton = styled.button<{ stepperstyle: StepperStyleT
   &:first-child {
     border-bottom: none;
   }
+
+  &:disabled {
+    color: ${theme.colors.secondaryColor};
+    cursor: not-allowed;
+  }
 `;
 
 export const ButtonBox = styled.div`

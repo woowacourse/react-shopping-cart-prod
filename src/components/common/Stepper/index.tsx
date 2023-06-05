@@ -13,6 +13,7 @@ interface StepperProps {
   ariaDecreaseLabel?: string;
   countInputRef: React.RefObject<HTMLInputElement>;
   onQuantityBlur: (event: React.FocusEvent<HTMLInputElement>) => void;
+  isCartPage: boolean;
 }
 
 function Stepper({
@@ -25,6 +26,7 @@ function Stepper({
   ariaDecreaseLabel,
   countInputRef,
   onQuantityBlur,
+  isCartPage,
 }: StepperProps) {
   return (
     <S.CartBox>
@@ -50,6 +52,7 @@ function Stepper({
           onClick={onDecrease}
           aria-label={ariaDecreaseLabel}
           role="decrease"
+          disabled={isCartPage && quantity === 1}
         >
           ⏷
         </S.QuantityControlButton>

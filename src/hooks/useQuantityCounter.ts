@@ -4,6 +4,7 @@ import {
   MAX_CART_QUANTITY,
   MIN_CART_QUANTITY,
   QUANTITY_ERROR_MESSAGE,
+  QUANTITY_MINIMUM_ERROR_MESSAGE,
 } from '@constants/cartConstants';
 
 interface OptionsParams {
@@ -69,12 +70,25 @@ export const useQuantityCounter = (
     setQuantity(value);
   };
 
-  const onQuantityBlur = async (event: React.FocusEvent<HTMLInputElement>) => {
+  const onQuantityBlur = async (event: React.FocusEvent<HTMLInputElement>, isCartPage: boolean) => {
     const { relatedTarget, target } = event;
 
     const isSameDiv = relatedTarget?.parentElement?.parentElement === target.parentElement;
 
+    const isCartPageAndZero = isCartPage && quantity === 0;
     if (isSameDiv) return;
+
+    showInputErrorMessage(isCartPageAndZero, countInputRef.current, QUANTITY_MINIMUM_ERROR_MESSAGE);
+
+    if (isCartPageAndZero) {
+      showInputErrorMessage(
+        isCartPageAndZero,
+        countInputRef.current,
+        QUANTITY_MINIMUM_ERROR_MESSAGE
+      );
+
+      return;
+    }
 
     if (quantity === 0) {
       setQuantity(INIT_VALUE);

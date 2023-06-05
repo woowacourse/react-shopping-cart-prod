@@ -30,9 +30,10 @@ function CartQuantityField({ product }: CartQuantityFieldProps) {
           onIncrease={increaseQuantity}
           countInputRef={countInputRef}
           quantity={quantity}
-          onQuantityBlur={onQuantityBlur}
+          onQuantityBlur={(event) => onQuantityBlur(event, false)}
           ariaIncreaseLabel={`${product.name}의 장바구니에 담긴 개수에서 하나 더하기`}
           ariaDecreaseLabel={`${product.name}의 장바구니에 담긴 개수에서 하나 빼기`}
+          isCartPage={false}
         />
       ) : (
         <S.CartIcon
