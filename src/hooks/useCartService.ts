@@ -39,7 +39,27 @@ const useCartService = () => {
       throw new Error('장바구니를 추가하는 과정에서 문제가 발생했습니다.');
     }
 
-    const cartItemId = await getCartItemId(serverName, product.id);
+    /*
+      현재 API 명세: response에 location으로 cartItemId를 알려줌
+      예정 API 명세: response에 body로 cartItemId를 알려줌
+      현재 서버 설정으로 location에 접근이 불가한 상태라 임시로 다시 장바구니를 받아서 확인
+      추후 서버 구현이 완료되면 예정 api 명세가 되므로 수정 예정
+    */
+    let cartItemId = null;
+    let mayBeCartItemId;
+
+    try {
+      ({ cartItemId: mayBeCartItemId } = await response.json());
+    } catch {
+      mayBeCartItemId = null;
+    }
+
+    if (mayBeCartItemId !== null) {
+      cartItemId = mayBeCartItemId;
+      console.log(mayBeCartItemId);
+    } else {
+      cartItemId = await getCartItemId(serverName, product.id);
+    }
 
     if (cartItemId === null) {
       throw new Error('장바구니를 추가하는 과정에서 문제가 발생했습니다.');
