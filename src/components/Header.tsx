@@ -1,50 +1,14 @@
 import styled from "styled-components";
 import { CartIcon } from "../assets";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { localProductsSelector } from "../recoil/selector";
 import { ROUTER_PATH } from "../router";
 import { useRouter } from "../hooks/useRouter";
-import {
-  DEFAULT_VALUE_SERVER_OWNER,
-  KEY_LOCALSTORAGE_SERVER_OWNER,
-  SERVERS,
-} from "../constants";
-import React, { useEffect, useState } from "react";
-import { localProductsState } from "../recoil/atom";
-import { makeLocalProducts } from "../utils/domain";
-import { getLocalStorage, setLocalStorage } from "../utils";
+import { ServerSelectBox } from "./ServerSelectBox";
 
 export const Header = () => {
   const { goPage } = useRouter();
-  const setLocalProducts = useSetRecoilState(localProductsState);
   const cartProducts = useRecoilValue(localProductsSelector);
-  const [serverOwner, setServerOwner] = useState(
-    getLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, DEFAULT_VALUE_SERVER_OWNER)
-  );
-
-  const handleServerSelected = async (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setLocalStorage(KEY_LOCALSTORAGE_SERVER_OWNER, e.target.value);
-    setServerOwner(e.target.value);
-    goPage(ROUTER_PATH.Main)();
-
-    const newProducts = await makeLocalProducts();
-    setLocalProducts(newProducts);
-  };
-
-  const setNewLocalProducts = async () => {
-    try {
-      const newProducts = await makeLocalProducts();
-      setLocalProducts(newProducts);
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    setNewLocalProducts();
-  }, []);
 
   return (
     <Wrapper>
@@ -53,11 +17,7 @@ export const Header = () => {
         <p>SHOP</p>
       </TitleContainer>
       <InfoContainer>
-        <ServerSelectBox value={serverOwner} onChange={handleServerSelected}>
-          {Object.keys(SERVERS).map((server) => (
-            <option key={crypto.randomUUID()}>{server}</option>
-          ))}
-        </ServerSelectBox>
+        <ServerSelectBox />
         <CartContainer>
           <p onClick={goPage(ROUTER_PATH.Cart)}>장바구니</p>
           {cartProducts.length > 0 && (
@@ -142,18 +102,6 @@ const ItemQuantityBox = styled.div`
   font-size: 16px;
   font-weight: 500;
   color: white;
-`;
-
-const ServerSelectBox = styled.select`
-  width: 75px;
-  height: 40px;
-
-  font-size: 18px;
-  font-weight: 600;
-  padding: 0 5px;
-
-  border-radius: 4px;
-  background: var(--light-gray);
 `;
 
 const CartContainer = styled.section`
