@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
-import { appliedCouponState, serverState } from '../../../service/atom';
+import { appliedCouponState, checkCartListState, serverState } from '../../../service/atom';
 import { servers } from '../../../service/apiURL';
 import { queryClient } from '../../..';
 import styled from '@emotion/styled';
@@ -8,10 +8,12 @@ import styled from '@emotion/styled';
 const Selector = () => {
   const setServerURL = useSetRecoilState(serverState);
   const resetAppliedCoupon = useResetRecoilState(appliedCouponState);
+  const checkCartList = useResetRecoilState(checkCartListState);
 
   const changeServerURL = (e: ChangeEvent<HTMLSelectElement>) => {
     const changedServer = e.target.value as keyof typeof servers;
     resetAppliedCoupon();
+    checkCartList();
     setServerURL(servers[changedServer]);
     queryClient.clear();
   };
