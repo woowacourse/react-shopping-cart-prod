@@ -5,19 +5,21 @@ import mockMembers from "../../assets/mockMembers.json";
 import mockCoupons from "../../assets/mockCoupons.json";
 import { getSessionStorage, setSessionStorage } from "../utils/storage.ts";
 import {
-  Coupon,
   NewOrder,
+  OrderedGroup,
+  OrderedItem,
   Point,
   PointHistory,
   ProductItem,
   ResponseCartItem,
+  ResponseOrdered,
 } from "../../types/types.ts";
 import {
   SESSION_STORAGE_KEY_CART_ITEMS,
   SESSION_STORAGE_KEY_COUPONS,
+  SESSION_STORAGE_KEY_ORDERS,
   SESSION_STORAGE_KEY_POINT,
 } from "../keys.ts";
-import orderItem from "../../components/OrderItem/OrderItem.tsx";
 
 export const handlers = [
   rest.get("/products", (req, res, ctx) => {
@@ -151,6 +153,7 @@ export const handlers = [
     const { couponIds, point } = orderDiscounts;
 
     const newOrderId = Date.now();
+    const usedPoint = point;
 
     const totalPrice = orderItems.reduce((acc, orderItem) => {
       const targetPrice = mockProducts.find(
@@ -170,7 +173,7 @@ export const handlers = [
       targetCoupon.discountAmount
       : 0;
 
-    const realPrice = totalPrice - discountByCoupon - point;
+    const realPrice = totalPrice - discountByCoupon - usedPoint;
 
     // 기존 장바구니에서 제거하는 기능 시작
     const cartItems = getSessionStorage<ResponseCartItem>(
@@ -209,19 +212,43 @@ export const handlers = [
     const newHistory: PointHistory = {
       orderId: newOrderId,
       earnedPoint: newPoint,
-      usedPoint: point
+      usedPoint: usedPoint
     };
     const newUserPoint: Point = {
       pointHistories: [...originalPointHistories, newHistory],
-      totalPoint: Math.floor(originalTotalPoint + newPoint - point)
+      totalPoint: Math.floor(originalTotalPoint + newPoint - usedPoint)
     };
 
     setSessionStorage(SESSION_STORAGE_KEY_POINT, newUserPoint);
     // 끝
 
 
-    // 주문 목록에 저장한다.
+    // 주문 목록에 저장하는 기능 시작
+    const originalOrderList = getSessionStorage<ResponseOrdered>(SESSION_STORAGE_KEY_ORDERS, { orderResponses: [] });
+    const newOrderItems: OrderedItem[] = orderItems.map(orderItem => {
+      const targetProduct = mockProducts.find(product => product.id === orderItem.productId);
 
+      return {
+        id: orderItem.cartItemId,
+        productName: targetProduct?.name as string,
+        productPrice: targetProduct?.price as number,
+        imageUrl: targetProduct?.imageUrl as string,
+        productQuantity: orderItem.quantity,
+        paymentPrice: targetProduct ? targetProduct?.price * orderItem.quantity : 0
+      };
+    });
+
+    const usedCoupon = mockCoupons.find(coupon => coupon.id === couponIds[0]);
+    const newOrder: OrderedGroup = {
+      orderId: newOrderId,
+      orderItems: newOrderItems,
+      usedCoupons: usedCoupon ? [usedCoupon] : [],
+      usedPoint: usedPoint,
+      paymentPrice: totalPrice,
+      createAt: new Date(newOrderId).toISOString(),
+    };
+    setSessionStorage<ResponseOrdered>(SESSION_STORAGE_KEY_ORDERS, { orderResponses: [...originalOrderList.orderResponses, newOrder] });
+    // 끝
     return res(ctx.delay(100), ctx.status(200), ctx.json(true));
   }),
 ];

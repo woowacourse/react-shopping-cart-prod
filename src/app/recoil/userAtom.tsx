@@ -1,12 +1,11 @@
 import { atom, selector } from "recoil";
-import type { Sign, User } from "../../types/types.ts";
+import type { User } from "../../types/types.ts";
 import { modalRepository } from "./modalAtoms.tsx";
 import Login from "../../components/Login";
 import { setSessionStorage } from "../utils/storage.ts";
 import {
   SESSION_STORAGE_KEY_BASE64,
   SESSION_STORAGE_KEY_CART_ITEMS,
-  SESSION_STORAGE_KEY_POINT,
 } from "../keys.ts";
 import { fetchCartList } from "../api/api.ts";
 import { cartState } from "./cartAtoms.ts";
@@ -35,10 +34,6 @@ export const userRepository = selector({
         setSessionStorage(SESSION_STORAGE_KEY_CART_ITEMS, {
           cartItems: [],
           totalPrice: 0
-        });
-        setSessionStorage(SESSION_STORAGE_KEY_POINT, {
-          pointHistories: [],
-          totalPoint: 1000,
         });
         const newCartList = await fetchCartList(server);
         set(cartState, newCartList);
