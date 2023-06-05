@@ -6,7 +6,6 @@ import { hostNameAtom } from '../recoil/hostData';
 import { orderAtom } from '../recoil/orderProductData';
 import { checkedCartItemIdsAtom } from '../recoil/checkedProductData';
 import { cartAtom } from '../recoil/cartProductData';
-import { updateData } from '../utils/localStorage';
 import { userPointAtom } from '../recoil/pointData';
 
 const useOrder = () => {
@@ -15,7 +14,7 @@ const useOrder = () => {
     checkedCartItemIdsAtom
   );
   const [order, setOrder] = useRecoilState(orderAtom);
-  const point = useRecoilValue(userPointAtom);
+  const [point, setPoint] = useRecoilState(userPointAtom);
 
   const hostName = useRecoilValue(hostNameAtom);
 
@@ -38,10 +37,10 @@ const useOrder = () => {
         ...point,
         userPoint: point.userPoint - newOrder.usePoint,
       };
-      updateData('cart', updatedCartProducts);
-      updateData('point', updatedPoints);
+
       setCart(updatedCartProducts);
       setCheckedCartItemIds([]);
+      setPoint(updatedPoints);
     }
   };
 

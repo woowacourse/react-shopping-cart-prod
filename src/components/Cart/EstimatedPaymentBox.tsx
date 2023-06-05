@@ -22,24 +22,24 @@ const EstimatedPaymentBox = () => {
   const { addOrder } = useOrder();
   const [pointInput, setPointInput] = useState('0');
 
-  const totalDeliveryFee = totalProductPrice >= 50000 ? 3000 : 0;
+  const totalDeliveryFee = totalProductPrice < 50000 ? 3000 : 0;
   const totalPrice =
     totalProductPrice > 0 && !isNaN(Number(pointInput))
       ? totalProductPrice + totalDeliveryFee - Number(pointInput)
       : 0;
-  useEffect(() => {
-    console.log(pointInput);
-  }, [pointInput]);
 
   const handlePointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const onlyNumbersRegex = /^[0-9\b]+$/;
 
-    if (value === '' || onlyNumbersRegex.test(value)) {
+    if (
+      value === '' ||
+      (onlyNumbersRegex.test(value) && Number(value) <= userPoint)
+    ) {
       setPointInput(value);
-    } else {
-      setPointInput('0');
+      return;
     }
+    setPointInput('0');
   };
 
   const handlePointButton = () => {
@@ -47,8 +47,8 @@ const EstimatedPaymentBox = () => {
   };
 
   const handleClickOrderButton = () => {
-    if (Number(pointInput) < minUsagePoint) {
-      alert('포인트는 3000원 이상으로 입력해주세요!');
+    if (Number(pointInput) < minUsagePoint && Number(pointInput) > 0) {
+      alert(`포인트는 ${minUsagePoint}원 이상으로 입력해주세요!`);
       setPointInput('0');
       return;
     }
@@ -91,7 +91,9 @@ const EstimatedPaymentBox = () => {
             <PointButton onClick={handlePointButton}>전체 사용</PointButton>
           </PointController>
         </EstimatedPaymentInfo>
-        <Direction>* 포인트는 3000원 이상부터 사용 가능합니다.</Direction>
+        <Direction>
+          * 포인트는 {minUsagePoint}원 이상부터 사용 가능합니다.
+        </Direction>
         <EstimatedPaymentInfo>
           <dt>포인트 사용</dt>
           <dd style={{ color: 'red' }}>

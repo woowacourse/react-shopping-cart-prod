@@ -32,8 +32,6 @@ const useCart = (product: Product) => {
       ];
 
       setCart([...updatedCartProducts]);
-
-      updateData('cart', updatedCartProducts);
     }
   };
 
@@ -51,8 +49,6 @@ const useCart = (product: Product) => {
         checkedCartItemIds.filter((id) => id !== target.cartItemId)
       );
       setCart([...updatedCartProducts]);
-
-      updateData('cart', updatedCartProducts);
     }
   };
 

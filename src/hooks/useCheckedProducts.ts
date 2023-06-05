@@ -1,11 +1,12 @@
+import type { CartProduct } from '../types/product';
+
 import { useEffect } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 
+import { api } from '../apis/cartProducts';
 import { hostNameAtom } from '../recoil/hostData';
 import { cartAtom } from '../recoil/cartProductData';
 import { checkedCartItemIdsAtom } from '../recoil/checkedProductData';
-import { api } from '../apis/cartProducts';
-import type { CartProduct } from '../types/product';
 
 const useCheckedProducts = () => {
   const hostName = useRecoilValue(hostNameAtom);
