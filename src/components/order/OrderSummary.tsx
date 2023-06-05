@@ -11,7 +11,7 @@ import { useApiBaseUrlValue } from '../../recoils/recoilApiBaseUrl';
 import { useMutation } from '../../hooks/useMutation';
 import { useSetCheckedState } from '../../recoils/recoilChecked';
 import { useQuery } from '../../hooks/useQuery';
-import { Point } from '../../types';
+import { Discount, Point } from '../../types';
 import { useState } from 'react';
 
 const OrderSummary = () => {
@@ -19,9 +19,13 @@ const OrderSummary = () => {
   const [usePoint, setUsePoint] = useState<number>(0);
 
   const baseUrl = useApiBaseUrlValue();
-  const { mutation } = useMutation(FETCH_METHOD.POST);
+  const { mutation, error } = useMutation(FETCH_METHOD.POST);
 
   const { data: point } = useQuery<Point>(baseUrl + '/point', {
+    Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
+  });
+
+  const { data: discount } = useQuery<Discount>(baseUrl + '/order-policy', {
     Authorization: `Basic ${btoa(process.env.REACT_APP_API_CREDENTIAL!)}`,
   });
 
@@ -38,15 +42,18 @@ const OrderSummary = () => {
 
   const DeliveryCharge = DELIVERY_CHARGE;
 
+  if (!point || !discount) return <></>;
+
   const postCart = {
-    totalProductsPrice: totalProductPrice, // -> 백엔드쪽에서 계산하여 비교하고 통화해야 save
-    shippingFee: totalProductPrice >= 30000 ? 0 : 3000,
-    usedPoint: 0,
+    totalProductsPrice: totalProductPrice,
+    shippingFee: totalProductPrice >= discount.freeShippingThreshold ? 0 : 3000,
+    usedPoint: usePoint,
     order: cartOrder,
   };
 
   const orderOnClick = () => {
     mutation(baseUrl + '/orders', postCart);
+
 
     setCart([]);
     setChecked({ all: true });
@@ -57,8 +64,6 @@ const OrderSummary = () => {
   const pointChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsePoint(Number(e.target.value));
   };
-
-  if(!point) return <></>;
 
   return (
     <>
@@ -73,7 +78,12 @@ const OrderSummary = () => {
               </Style.Price>
               <Style.Price>
                 <span>총 배송비</span>
-                <span>{DeliveryCharge.toLocaleString('ko-kr')}원</span>
+                <span>
+                  {totalProductPrice >= discount.freeShippingThreshold
+                    ? 0
+                    : DeliveryCharge.toLocaleString('ko-kr')}
+                  원
+                </span>
               </Style.Price>
               <Style.Price>
                 <span>보유 포인트</span>
@@ -87,15 +97,17 @@ const OrderSummary = () => {
                     value={usePoint === 0 ? '' : usePoint}
                     onChange={pointChange}
                   ></Style.PointInput>
-                  <span>
-                    {(point?.usablePoint >= usePoint)
-                      ? "" : '포인트가 부족합니다.'}
-                  </span>
+                  <span>{point?.usablePoint >= usePoint ? '' : '포인트가 부족합니다.'}</span>
                 </Style.PointWrapper>
               </Style.Price>
               <Style.Price>
                 <span>총 주문금액</span>
-                <span>{(totalProductPrice + DeliveryCharge).toLocaleString('ko-kr')}원</span>
+                <span>
+                  {totalProductPrice >= discount.freeShippingThreshold
+                    ? (totalProductPrice - usePoint).toLocaleString('ko-kr')
+                    : (totalProductPrice + DeliveryCharge - usePoint).toLocaleString('ko-kr')}
+                  원
+                </span>
               </Style.Price>
             </Style.Prices>
             <Button
@@ -117,7 +129,13 @@ const OrderSummary = () => {
             </Mobile.Price>
             <Mobile.Price>
               <div>배송비</div>
-              <div>{DeliveryCharge.toLocaleString('ko-kr')}</div>
+              <div>
+                {' '}
+                {totalProductPrice >= discount.freeShippingThreshold
+                  ? 0
+                  : DeliveryCharge.toLocaleString('ko-kr')}
+                원
+              </div>
             </Mobile.Price>
             <Mobile.Price>
               <div>보유 포인트</div>
@@ -125,7 +143,12 @@ const OrderSummary = () => {
             </Mobile.Price>
             <Mobile.Price>
               <div>총 주문금액</div>
-              <div>{(totalProductPrice + DeliveryCharge).toLocaleString('ko-kr')}원</div>
+              <div>
+                {totalProductPrice >= discount.freeShippingThreshold
+                  ? (totalProductPrice - usePoint).toLocaleString('ko-kr')
+                  : (totalProductPrice + DeliveryCharge - usePoint).toLocaleString('ko-kr')}
+                원
+              </div>
             </Mobile.Price>
             <Mobile.Price>
               <div>사용할 포인트</div>
@@ -139,10 +162,7 @@ const OrderSummary = () => {
             </Mobile.Price>
             <Mobile.Price>
               <Mobile.PointWrapper>
-                <div>
-                {(point?.usablePoint >= usePoint)
-                      ? "" : '포인트 초괴'}
-                </div>
+                <div>{point?.usablePoint >= usePoint ? '' : '포인트 초괴'}</div>
               </Mobile.PointWrapper>
             </Mobile.Price>
           </Mobile.Prices>

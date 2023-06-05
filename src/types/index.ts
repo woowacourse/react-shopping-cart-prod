@@ -45,3 +45,9 @@ export interface OrderType {
 export interface Point {
   usablePoint: number;
 }
+
+export interface Discount {
+  freeShippingThreshold: number;
+  pointPercentage: number;
+  shippingFee: number;
+}

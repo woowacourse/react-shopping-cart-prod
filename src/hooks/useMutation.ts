@@ -29,7 +29,6 @@ export const useMutation = (method: string) => {
 
         if (response.ok && method === 'POST') {
           const body = await response.json();
-
           setState((prev) => ({ ...prev, data: body }));
         }
       } catch (error) {
