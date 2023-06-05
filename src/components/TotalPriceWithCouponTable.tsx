@@ -1,9 +1,11 @@
 import { styled } from "styled-components";
 import { Button } from "./Button";
 import { totalPriceSelector } from "../recoil/selector";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { LocalProductType } from "../types/domain";
 import { fetchAddOrderList } from "../api";
+import { makeLocalProducts } from "../utils/domain";
+import { localProductsState } from "../recoil/atom";
 
 export const TotalPriceWithCouponTable = ({
   discountPrice,
@@ -18,9 +20,14 @@ export const TotalPriceWithCouponTable = ({
 }) => {
   const totalPrice = useRecoilValue(totalPriceSelector);
 
+  const setLocalProducts = useSetRecoilState(localProductsState);
+
   const handleOrderButton = async () => {
     await fetchAddOrderList(orderList, couponId);
     setIsOrderComplete(true);
+
+    const newProducts = await makeLocalProducts();
+    setLocalProducts(newProducts);
   };
 
   return (
