@@ -1,13 +1,19 @@
 /* eslint-disable no-restricted-globals */
+import { useRecoilValue } from 'recoil';
 import { ReactComponent as AlertBlank } from '../../assets/baemin-alert-blank.svg';
 import OrderItemList from '../../components/OrderItemList';
+import { USER } from '../../constants';
 import useGetQuery from '../../hooks/useGetQuery';
+import { $CurrentServerUrl } from '../../recoil/atom';
 import { OrderType } from '../../types';
 import formatDateToKorean from '../../utils/formatDateToKorean';
 import styles from './index.module.scss';
 
 function Order() {
-  const { data: orderList } = useGetQuery<OrderType[]>('/orders');
+  const currentServerUrl = useRecoilValue($CurrentServerUrl);
+  const { data: orderList } = useGetQuery<OrderType[]>(`${currentServerUrl}/orders`, {
+    Authorization: `Basic ${btoa(USER)}`,
+  });
 
   return (
     <main className={styles.container}>

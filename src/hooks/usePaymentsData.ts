@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
+import { USER } from '../constants';
 import { $CartList, $CheckedCartIdList } from '../recoil/atom';
 import useGetQuery from './useGetQuery';
 import type { PaymentsData } from '../types';
@@ -15,11 +16,12 @@ const usePaymentsData = (currentServerUrl: string) => {
   });
 
   const { data: paymentsData, refreshQuery: refreshPaymentsData } = useGetQuery<PaymentsData>(
-    `/total-cart-price?${queryParams.toString()}`,
+    `${currentServerUrl}/total-cart-price?${queryParams.toString()}`,
+    { Authorization: `Basic ${btoa(USER)}` },
   );
 
   useEffect(() => {
-    refreshPaymentsData(`/total-cart-price?${queryParams.toString()}`);
+    refreshPaymentsData(`${currentServerUrl}/total-cart-price?${queryParams.toString()}`);
   }, [cartList]);
 
   return paymentsData;

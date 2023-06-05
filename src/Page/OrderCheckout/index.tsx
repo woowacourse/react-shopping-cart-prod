@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import LoadingSpinner from '../../components/Common/LoadingSpinner';
 import OrderSuccessModal from '../../components/OrderSuccessModal';
+import { USER } from '../../constants';
 import useMutation from '../../hooks/useMutation';
 import usePaymentsData from '../../hooks/usePaymentsData';
 import useToast from '../../hooks/useToast';
@@ -45,9 +46,8 @@ function OrderCheckout() {
     await mutateQuery({
       url: '/orders',
       method: 'POST',
-      bodyData: {
-        cartItemIds: checkedCartIdList,
-      },
+      bodyData: { cartItemIds: checkedCartIdList },
+      headers: { Authorization: `Basic ${btoa(USER)}` },
     });
   };
 
