@@ -47,7 +47,6 @@ export const Default: Story = (args: AmountCounterProps) => {
       count={count}
       addCount={addCount}
       subtractCount={subtractCount}
-      maxCount={10}
     />
   );
 };

@@ -11,7 +11,6 @@ interface AmountCounterProps {
   count: number;
   addCount: () => void;
   subtractCount: () => void;
-  maxCount: number;
 }
 
 const AmountCounter = ({
@@ -19,15 +18,14 @@ const AmountCounter = ({
   count,
   addCount,
   subtractCount,
-  maxCount,
 }: AmountCounterProps) => {
   return (
     <InputGroup designtype={designtype}>
       <CounterInput
         type='number'
-        defaultValue={count}
+        value={count}
         designtype={designtype}
-        max={maxCount}
+        readOnly
       />
       <CountBtnContainer>
         <CountBtn

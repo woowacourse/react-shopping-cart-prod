@@ -37,7 +37,6 @@ const ProductItem = ({ product }: ProductItemProps) => {
                 count={target.quantity}
                 addCount={addCount}
                 subtractCount={subtractCount}
-                maxCount={stock}
               />
             ) : (
               <ProductCartBtn

@@ -44,6 +44,7 @@ const useProductQuantity = (productId: number) => {
         ...cart[targetCartProductIndex],
         quantity: targetProduct.quantity + delta,
       });
+      console.log(newCart);
 
       setCart([...newCart]);
     }

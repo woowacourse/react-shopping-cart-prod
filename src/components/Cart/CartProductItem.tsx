@@ -38,7 +38,6 @@ const CartProductItem = ({ cartProduct }: CartProductItemProps) => {
           count={quantity}
           addCount={addCount}
           subtractCount={subtractCount}
-          maxCount={stock}
         />
         <p>{price.toLocaleString('ko-KR')}원</p>
       </CartProductRightWrapper>
