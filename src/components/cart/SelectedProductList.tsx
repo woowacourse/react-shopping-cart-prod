@@ -75,10 +75,10 @@ const SelectedProductList = ({ productCountInCart }: { productCountInCart: numbe
           />
           <label htmlFor='select-all'>{`전체선택 (${checkedItemIdList.length}/${productCountInCart})`}</label>
           <Button css={deleteButtonStyle} onClick={handleCheckedItemRemove}>
-            선택삭제
+            선택 삭제
           </Button>
           <Button css={couponButtonStyle} onClick={handleModalOpen}>
-            쿠폰선택
+            쿠폰 선택
           </Button>
         </S.Fieldset>
       </S.Wrapper>
@@ -126,6 +126,8 @@ const S = {
     align-items: center;
     padding: 36px 0 48px;
     font-size: 16px;
+    word-break: keep-all;
+    word-wrap: break-word;
 
     & > label {
       text-align: center;
