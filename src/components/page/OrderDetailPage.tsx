@@ -79,7 +79,7 @@ const Main = styled.div`
 const OrderBox = styled.div`
   width: 60%;
 
-  @media (max-width: 448px) {
+  @media (max-width: 1184px) {
     width: 100%;
   }
 `;
