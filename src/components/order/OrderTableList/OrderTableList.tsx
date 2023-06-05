@@ -1,6 +1,4 @@
 import { styled } from 'styled-components';
-import { useRecoilValueLoadable } from 'recoil';
-import { ordersQuery } from '../../../recoil/selectors';
 import OrderTable from '../OrderTable/OrderTable';
 import Spinner from '../../common/Spinner/Spinner';
 import ErrorComponent from '../../common/Error/ErrorComponent';
