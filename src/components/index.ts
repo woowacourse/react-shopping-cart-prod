@@ -1,3 +1,4 @@
+export { OrderDetailContent } from "./OrderDetailContent";
 export { CouponSelectBox } from "./CouponSelectBox";
 export { OrderTotalPriceBox } from "./OrderTotalPriceBox";
 export { OrderDetail } from "./../pages/OrderDetail";
@@ -15,3 +16,4 @@ export { ErrorBoundary } from "./ErrorBoundary";
 export { OrderSheetList } from "./OrderSheetList";
 export { OrderSheetProduct } from "./OrderSheetProduct";
 export { TotalPriceWithCouponTable } from "./TotalPriceWithCouponTable";
+export { ServerSelectBox } from "./ServerSelectBox";

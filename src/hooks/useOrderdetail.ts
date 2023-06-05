@@ -11,10 +11,18 @@ export const useOrderDetail = (orderId: number) => {
     totalProductPrice: 0,
   });
 
+  const [error, setError] = useState<Error | null>(null);
+
   const getOrderDetailList = async () => {
-    const orderDetailListData = await fetchOrderList(orderId);
-    setOrderDetailList(orderDetailListData);
+    try {
+      const orderDetailListData = await fetchOrderList(orderId);
+      setOrderDetailList(orderDetailListData);
+    } catch (error: any) {
+      setError(error);
+    }
   };
+
+  if (error) throw error;
 
   useEffect(() => {
     getOrderDetailList();
