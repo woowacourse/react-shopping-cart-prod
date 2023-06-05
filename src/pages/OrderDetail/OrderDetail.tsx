@@ -39,7 +39,7 @@ function OrderDetail() {
 
   useEffect(() => {
     loadOrderedItem();
-  }, []);
+  }, [params]);
 
   return (
     <OrderListWrapper>

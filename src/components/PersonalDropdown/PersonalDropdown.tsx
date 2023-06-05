@@ -14,6 +14,8 @@ import { useRecoilValue } from "recoil";
 import { userRepository, userState } from "../../app/recoil/userAtom.tsx";
 import { useNavigate } from "react-router-dom";
 import { cartCountSelector } from "../../app/recoil/cartAtoms.ts";
+import { modalRepository } from "../../app/recoil/modalAtoms.tsx";
+import Point from "../Point";
 
 export const DropdownWrapper = styled.div`
   position: relative;
@@ -65,11 +67,16 @@ function PersonalDropdown() {
   const user = useRecoilValue(userState);
   const { logout } = useRecoilValue(userRepository);
   const cartCount = useRecoilValue(cartCountSelector);
+  const { openModal } = useRecoilValue(modalRepository);
 
   const options = [
     {
+      name: "포인트",
+      callback: () => openModal(<Point />),
+    },
+    {
       name: "주문목록",
-      callback: () => navigate("order"),
+      callback: () => navigate("/order"),
     },
     {
       name: "로그아웃",
